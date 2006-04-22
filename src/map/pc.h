@@ -212,14 +212,6 @@ int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
 int pc_candrop(struct map_session_data *sd,int item_id);
 
-struct pc_base_job{
-	int job; //E‹ÆA‚½‚¾‚µ“]¶E‚â—{qE‚Ìê‡‚ÍŒ³‚ÌE‹Æ‚ğ•Ô‚·(”pƒvƒŠ¨ƒvƒŠ)
-	int type; //ƒmƒr 0, ˆêŸE 1, “ñŸE 2, ƒXƒpƒmƒr 3
-	int upper; //’Êí 0, “]¶ 1, —{q 2
-};
-
-struct pc_base_job pc_calc_base_job(int b_class);//“]¶‚â—{qE‚ÌŒ³‚ÌE‹Æ‚ğ•Ô‚·
-int pc_calc_base_job2(int b_class);	// Celest
 int pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 

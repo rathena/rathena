@@ -303,10 +303,10 @@ int inter_log(char *fmt,...)
 	return 0;
 }
 
-/*======================================================
+/*======================================================
  * Does a mysql_ping to all connection handles. [Skotlex]
- *------------------------------------------------------
- */
+ *------------------------------------------------------
+ */
 int inter_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
@@ -373,7 +373,7 @@ int inter_init(const char *file)
 	//i=add_timer_interval(gettick()+autosave_interval,inter_save_timer,0,0,autosave_interval);
 
 	if (connection_ping_interval) {
-		add_timer_func_list(inter_sql_ping, "inter_sql_ping");
+		add_timer_func_list(inter_sql_ping, "inter_sql_ping");
 		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
 				inter_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}

@@ -214,32 +214,31 @@ void read_gm_account(void) {
 	MYSQL_RES* sql_res ;
 	MYSQL_ROW sql_row;
 
-	if(login_gm_read)
+	if(!login_gm_read)
+		return;
+	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`> '0'",login_db_account_id,login_db_level,login_db,login_db_level);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return; //Failed to read GM list!
+	}
+
+	if (gm_account_db != NULL)
 	{
-		sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`> '0'",login_db_account_id,login_db_level,login_db,login_db_level);
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return; //Failed to read GM list!
-		}
+		aFree(gm_account_db);
+		gm_account_db = NULL;
+	}
+	GM_num = 0;
 
-		if (gm_account_db != NULL)
-		{
-			aFree(gm_account_db);
-			gm_account_db = NULL;
+	sql_res = mysql_store_result(&mysql_handle);
+	if (sql_res) {
+		gm_account_db = (struct gm_account*)aCalloc((size_t)mysql_num_rows(sql_res), sizeof(struct gm_account));
+		while ((sql_row = mysql_fetch_row(sql_res))) {
+			gm_account_db[GM_num].account_id = atoi(sql_row[0]);
+			gm_account_db[GM_num].level = atoi(sql_row[1]);
+			GM_num++;
 		}
-		GM_num = 0;
-
-		sql_res = mysql_store_result(&mysql_handle);
-		if (sql_res) {
-			gm_account_db = (struct gm_account*)aCalloc((size_t)mysql_num_rows(sql_res), sizeof(struct gm_account));
-			while ((sql_row = mysql_fetch_row(sql_res))) {
-				gm_account_db[GM_num].account_id = atoi(sql_row[0]);
-				gm_account_db[GM_num].level = atoi(sql_row[1]);
-				GM_num++;
-			}
-			mysql_free_result(sql_res);
-		}
+		mysql_free_result(sql_res);
 	}
 }
 
@@ -253,29 +252,28 @@ void send_GM_accounts(int fd) {
 	unsigned char buf[32767];
 	int len;
 
-	if(login_gm_read)
+	if(!login_gm_read)
+		return;
+	len = 4;
+	WBUFW(buf,0) = 0x2732;
+	for(i = 0; i < GM_num; i++)
+		// send only existing accounts. We can not create a GM account when server is online.
+		if (gm_account_db[i].level > 0) {
+			WBUFL(buf,len) = gm_account_db[i].account_id;
+			WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
+			len += 5;
+			if (len >= 32000) {
+			ShowWarning("send_GM_accounts: Too many accounts! Only %d out of %d were sent.\n", i, GM_num);
+			break;
+		}
+	}
+	WBUFW(buf,2) = len;
+	if (fd == -1)
+		charif_sendallwos(-1, buf, len);
+	else
 	{
-		len = 4;
-		WBUFW(buf,0) = 0x2732;
-		for(i = 0; i < GM_num; i++)
-			// send only existing accounts. We can not create a GM account when server is online.
-			if (gm_account_db[i].level > 0) {
-				WBUFL(buf,len) = gm_account_db[i].account_id;
-				WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
-				len += 5;
-				if (len >= 32000) {
-				ShowWarning("send_GM_accounts: Too many accounts! Only %d out of %d were sent.\n", i, GM_num);
-				break;
-			}
-		}
-		WBUFW(buf,2) = len;
-		if (fd == -1)
-			charif_sendallwos(-1, buf, len);
-		else
-		{
-			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd,len);
-		}
+		memcpy(WFIFOP(fd,0), buf, len);
+		WFIFOSET(fd,len);
 	}
 	return;
 }
@@ -406,7 +404,7 @@ int mmo_auth_sqldb_init(void) {
 	}
 
 	if (connection_ping_interval) {
-		add_timer_func_list(login_sql_ping, "login_sql_ping");
+		add_timer_func_list(login_sql_ping, "login_sql_ping");
 		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
 				login_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}
@@ -1831,11 +1829,8 @@ int parse_login(int fd) {
 					WFIFOSET(fd,3);
 					session[fd]->func_parse=parse_fromchar;
 					realloc_fifo(fd,FIFOSIZE_SERVERLINK,FIFOSIZE_SERVERLINK);
-					if(login_gm_read)
-					{
-						// send GM account to char-server
-						send_GM_accounts(fd);
-					}
+					// send GM account to char-server
+					send_GM_accounts(fd);
 				} else {
 					WFIFOW(fd, 0) =0x2711;
 					WFIFOB(fd, 2)=3;
@@ -2194,8 +2189,8 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n",w2);
 		} 
-		else if(strcmpi(w1,"connection_ping_interval")==0) {
-			connection_ping_interval = atoi(w2);
+		else if(strcmpi(w1,"connection_ping_interval")==0) {
+			connection_ping_interval = atoi(w2);
 		}
 		else if(strcmpi(w1,"default_codepage")==0){
 			strcpy(default_codepage, w2);
@@ -2289,10 +2284,8 @@ int do_init(int argc,char **argv){
 	ShowInfo("finished mmo_auth_sqldb_init()\n");
 	
 	if(login_gm_read)
-	{
 		//Read account information.
 		read_gm_account();
-	}
 
 	//set default parser as parse_login function
 	set_defaultparse(parse_login);

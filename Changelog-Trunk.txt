@@ -3,6 +3,17 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/04/22
+	* Added Option constants for Carts, fixed OPTION_FLYING (it conflicts with
+	  OPTION_XMAS?) [Skotlex]
+	* Updated clif.c to check for OPTION_WEDDING|OPTION_XMAS instead of view
+	  class to block attacks and skill usage. [Skotlex]
+	* Cleaned up change-cart code. [Skotlex]
+	* Modified SC_XMAS to not change your view anymore and only set the proper
+	  option value (OPTION_XMAS) [Skotlex]
+	* Cleaned up the code regarding char_gm reading. [Skotlex]
+	* Changed the option field to unsigned short to make room for the higher
+	  values. [Skotlex]
 2006/04/21
 	* SC_CLOAKING's val4 now holds whether cloaking ends or not on attack.
 	  [Skotlex]

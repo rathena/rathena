@@ -4088,7 +4088,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = 5*(2+type-SC_ASPDPOTION0);
 			break;
 
-		case SC_XMAS: // Xmas Suit [Valaris]
 		case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
 		{
 			struct view_data *vd = status_get_viewdata(bl);
@@ -4746,6 +4745,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SIGHTTRASHER:
 			sc->option |= OPTION_SIGHTTRASHER;
 			break;
+		case SC_XMAS: // Xmas Suit [Valaris]
+			sc->option |= OPTION_XMAS;
+			break;
 		case SC_FUSION:
 			sc->option |= OPTION_FLYING;
 			break;
@@ -4957,10 +4959,11 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_SWOO: // [marquis007]
 			case SC_SKA: // [marquis007]
 			case SC_KNOWLEDGE:
+			case SC_KEEPING:
+			case SC_BARRIER:
 				calc_flag = 1;
 				break;
 
-			case SC_XMAS: // Xmas Suit [Valaris]
 			case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
 			{
 				struct view_data *vd = status_get_viewdata(bl);
@@ -5254,6 +5257,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 		case SC_SIGHTTRASHER:
 			sc->option &= ~OPTION_SIGHTTRASHER;
+			opt_flag = 1;
+			break;
+		case SC_XMAS: // Xmas Suit [Valaris]
+			sc->option &= ~OPTION_XMAS;
 			opt_flag = 1;
 			break;
 		case SC_FUSION:

@@ -3306,98 +3306,6 @@ int pc_checkequip(struct map_session_data *sd,int pos)
 }
 
 /*==========================================
- * ?生職や養子職の元の職業を返す
- *------------------------------------------
- */
-struct pc_base_job pc_calc_base_job(int b_class)
-{
-	struct pc_base_job bj;
-	if(b_class < JOB_NOVICE_HIGH){
-		if (b_class == JOB_KNIGHT2)
-			bj.job = JOB_KNIGHT;
-		else if (b_class == JOB_CRUSADER2)
-			bj.job = JOB_CRUSADER;
-		else
-			bj.job = b_class;
-		bj.upper = 0;
-	}else if(b_class >= JOB_NOVICE_HIGH && b_class <= JOB_PALADIN2){ //High Jobs
-		if (b_class == JOB_LORD_KNIGHT2)
-			bj.job = JOB_KNIGHT;
-		else if (b_class == JOB_PALADIN2)
-			bj.job = JOB_CRUSADER;
-		else
-			bj.job = b_class - JOB_NOVICE_HIGH;
-		bj.upper = 1;
-	}else if(b_class >= JOB_TAEKWON && b_class <= JOB_SOUL_LINKER){
-		if (b_class == JOB_STAR_GLADIATOR2)
-			bj.job = 24 + JOB_STAR_GLADIATOR - JOB_TAEKWON;
-		else
-			bj.job = 24 + b_class - JOB_TAEKWON;
-		bj.upper = 0;
-	}else{	//Baby Classes
-		if (b_class == JOB_SUPER_BABY)
-			bj.job = JOB_SUPER_NOVICE;
-		else if (b_class == JOB_BABY_KNIGHT2)
-			bj.job = JOB_KNIGHT;
-		else if (b_class == JOB_BABY_CRUSADER2)
-			bj.job = JOB_CRUSADER;
-		else
-			bj.job = b_class - JOB_BABY;
-		bj.upper = 2;
-	}
-
-	if(bj.job == JOB_NOVICE){
-		bj.type = 0;
-	}else if(bj.job <= JOB_THIEF || bj.job == JOB_TAEKWON){
-		bj.type = 1;
-	}else{
-		bj.type = 2;
-	}
-
-	return bj;
-}
-
-/*==========================================
- * For quick calculating [Celest]
- *------------------------------------------
- */
-int pc_calc_base_job2 (int b_class)
-{
-	if(b_class < JOB_NOVICE_HIGH)
-	{
-		if (b_class == JOB_KNIGHT2)
-			return JOB_KNIGHT;
-		if (b_class == JOB_CRUSADER2)
-			return JOB_CRUSADER;
-		return b_class;
-	}
-	if(b_class >= JOB_NOVICE_HIGH && b_class < JOB_BABY)
-	{
-		if (b_class == JOB_LORD_KNIGHT2)
-			return JOB_KNIGHT;
-		if (b_class == JOB_PALADIN2)
-			return JOB_CRUSADER;
-		return b_class - JOB_NOVICE_HIGH;
-	}
-	if(b_class >= JOB_TAEKWON && b_class <= JOB_SOUL_LINKER	)
-	{
-		if (b_class == JOB_STAR_GLADIATOR2)
-			return 24 + JOB_STAR_GLADIATOR - JOB_TAEKWON;
-		return 24 + b_class - JOB_TAEKWON;
-	}
-	//Baby Classes
-	{
-		if (b_class == JOB_SUPER_BABY)
-			return JOB_SUPER_NOVICE;
-		if (b_class == JOB_BABY_KNIGHT2)
-			return JOB_KNIGHT;
-		if (b_class == JOB_BABY_CRUSADER2)
-			return JOB_CRUSADER;
-		return b_class - JOB_BABY;
-	}
-}
-
-/*==========================================
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------
@@ -5622,22 +5530,18 @@ int pc_setoption(struct map_session_data *sd,int type)
  */
 int pc_setcart(struct map_session_data *sd,int type)
 {
-	int cart[6]={0x0000,0x0008,0x0080,0x0100,0x0200,0x0400};
-	int option, i;
+	int cart[6]={0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
+	int option;
 	nullpo_retr(0, sd);
 	
 	if (type < 0 || type > 5)
 		return 0; //Never trust the values sent by the client! [Skotlex]
 
-	option = sd->sc.option;
-	for (i = 0; i < 6; i++)
-	{	//This should preserve the current option, only modifying the cart bit.
-		if (i == type)
-			option |= cart[i];
-		else
-			option &= ~cart[i];
-	}
 	if(pc_checkskill(sd,MC_PUSHCART)>0){ // プッシュカ?トスキル所持
+		option = sd->sc.option;
+		//This should preserve the current option, only modifying the cart bit.
+		option&=~(OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5);
+		option|=cart[type];
 		if(!pc_iscarton(sd)){ // カ?トを付けていない
 			pc_setoption(sd,option);
 			clif_cart_itemlist(sd);

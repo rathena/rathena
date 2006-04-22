@@ -339,30 +339,30 @@ int isGM(int account_id) {
 }
 
 void read_gm_account(void) {
-	if(char_gm_read)
-	{
-		if (gm_account != NULL)
-			aFree(gm_account);
-		GM_num = 0;
+	if(!char_gm_read)
+		return;
+	
+	if (gm_account != NULL)
+		aFree(gm_account);
+	GM_num = 0;
 
-		sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,gm_db,login_db_level,lowest_gm_level);
-		if (mysql_query(&lmysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		lsql_res = mysql_store_result(&lmysql_handle);
-		if (lsql_res) {
-			gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * (size_t)mysql_num_rows(lsql_res), 1);
-			while ((lsql_row = mysql_fetch_row(lsql_res))) {
-				gm_account[GM_num].account_id = atoi(lsql_row[0]);
-				gm_account[GM_num].level = atoi(lsql_row[1]);
-				GM_num++;
-			}
-		}
-
-		mysql_free_result(lsql_res);
-		mapif_send_gmaccounts();
+	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,gm_db,login_db_level,lowest_gm_level);
+	if (mysql_query(&lmysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
+	lsql_res = mysql_store_result(&lmysql_handle);
+	if (lsql_res) {
+		gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * (size_t)mysql_num_rows(lsql_res), 1);
+		while ((lsql_row = mysql_fetch_row(lsql_res))) {
+			gm_account[GM_num].account_id = atoi(lsql_row[0]);
+			gm_account[GM_num].level = atoi(lsql_row[1]);
+			GM_num++;
+		}
+	}
+
+	mysql_free_result(lsql_res);
+	mapif_send_gmaccounts();
 }
 
 int compare_item(struct item *a, struct item *b) {
@@ -2054,11 +2054,9 @@ int parse_tologin(int fd) {
 			break;
 
 		case 0x2732:
-			if(!char_gm_read)
-			{
-				if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-					return 0;
-			  {
+			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
+				return 0;
+			if(!char_gm_read) {
 				unsigned char buf[32000];
 				if (gm_account != NULL)
 					aFree(gm_account);
@@ -2075,9 +2073,8 @@ int parse_tologin(int fd) {
 				memcpy(buf, RFIFOP(fd,0), RFIFOW(fd,2));
 				WBUFW(buf,0) = 0x2b15;
 				mapif_sendall(buf, RFIFOW(fd,2));
-			  }
-				RFIFOSKIP(fd,RFIFOW(fd,2));
 			}
+			RFIFOSKIP(fd,RFIFOW(fd,2));
 			break;
 
 		// Receive GM accounts [Freya login server packet by Yor]
@@ -3895,8 +3892,8 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"use_sql_db")==0){ // added for sql item_db read for char server [Valaris]
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus("Using SQL dbs: %s\n",w2);
-		} else if(strcmpi(w1,"connection_ping_interval")==0) {
-			connection_ping_interval = config_switch(w2);
+		} else if(strcmpi(w1,"connection_ping_interval")==0) {
+			connection_ping_interval = config_switch(w2);
 		//custom columns for login database
 		}else if(strcmpi(w1,"login_db_level")==0){
 			strcpy(login_db_level,w2);

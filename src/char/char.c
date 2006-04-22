@@ -3322,8 +3322,8 @@ int parse_char(int fd) {
 			WFIFOL(fd,2) = cd->char_id;
 			memcpy(WFIFOP(fd,6), mapindex_id2name(cd->last_point.map), MAP_NAME_LENGTH);
 			ShowInfo("Character selection '%s' (account: %d, slot: %d).\n", cd->name, sd->account_id, ch);
-						    
-			// Andvanced subnet check [LuzZza]
+			
+			// Advanced subnet check [LuzZza]
 			if((subnet_map_ip = lan_subnetcheck((long *)p)))
 				WFIFOL(fd,22) = subnet_map_ip;
 			else
