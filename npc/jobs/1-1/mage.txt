@@ -79,10 +79,10 @@ L_BeMage:
 	if(SkillPoint > 0) mes "You need to use up all of your skill points before I can make you a Mage.";
 	if(SkillPoint > 0) close;
 
-	mes ".....The color's not quit right.... there is a little to much percipitate..... hmmm......";
+	mes ".....The color's not quit right.... there is a little to much precipitate..... hmmm......";
 	next;
 	mes "[Expert Mage]";
-	mes "Well it's not perfect but it seems you worked very hard on this so...... alright! I'll let you pass!  You are now officialy qualified to become a mage!";
+	mes "Well it's not perfect but it seems you worked very hard on this so...... alright! I'll let you pass!  You are now officially qualified to become a mage!";
 	emotion e_no1;
 	next;
 	mes "[Expert Mage]";
@@ -98,7 +98,7 @@ L_BeMage:
 
 	callfunc "F_ClearJobVar";		// clears all job variables for the current player
 	mes "[Expert Mage]";
-	mes "'Welcome to My World~ teh hehe.  I've always wanted to say that.  Anyways, congratulations!.  You're one of us now so let's be friends okays!";
+	mes "'Welcome to My World~ teh hehe.  I've always wanted to say that.  Anyways, congratulations!  You're one of us now so let's be friends okays!";
 	emotion e_heh;
 	next;
 	mes "[Expert Mage]";
@@ -107,7 +107,7 @@ L_BeMage:
 
 	L_Retry:
 		mes "I'm sorry but the solution you have is no good.  I'm afraid that you didn't pass the test.  You can try again though.";
-		mes "Let me exlpain the test for you once more okays.";
+		mes "Let me explain the test for you once more okays.";
 		emotion e_swt;
 		next;
 		delitem 1090,1;//Items: Unknown_Test_Tube,
@@ -286,7 +286,7 @@ geffen_in.gat,164,112,1	script	Mixing Machine	111,{
 			L_Input:
 			input @INPUT;
 			mes "[Mixing Machine]";
-			mes "You have inputed the number ^5555FF"+@INPUT+".  Is this correct?";
+			mes "You have inputted the number ^5555FF"+@INPUT+".  Is this correct?";
 			next;
 			menu "Yes.",-, "No.",L_Input;
 

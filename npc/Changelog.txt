@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/22
+	* Fixed some typos in the mage quest thanks to decayed.cell [Playtester]
 04/21
 	* Fixed Chung E / Green Maiden spawn in Louyang [Playtester]
 04/20
