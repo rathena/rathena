@@ -2073,7 +2073,7 @@ int status_calc_def2(struct block_list *bl, int def2)
 		if(sc->data[SC_SUN_COMFORT].timer!=-1)
 			def2 += (status_get_lv(bl) + status_get_dex(bl) + status_get_luk(bl))/2;
 		if(sc->data[SC_ANGELUS].timer!=-1)
-			def2 += def2 * (10+5*sc->data[SC_ANGELUS].val1)/100;
+			def2 += def2 * (5*sc->data[SC_ANGELUS].val1)/100;
 		if(sc->data[SC_CONCENTRATION].timer!=-1)
 			def2 -= def2 * 5*sc->data[SC_CONCENTRATION].val1/100;
 		if(sc->data[SC_POISON].timer!=-1)
