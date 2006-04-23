@@ -27,6 +27,7 @@
 
 =========================
 04/22
+	* Updated Kiel/Odin mob stat to kRO official guidebook [Vicious]
 	* Major fix to the Einbroch mobs [Playtester]
 	- stats and drops should now be to 99% official
 04/21
