@@ -20,6 +20,7 @@ OPT += -O2
 # OPT += -rdynamic
 OPT += -ffast-math
 # OPT += -fbounds-checking
+# OPT += -fstack-protector
 # OPT += -fomit-frame-pointer
 OPT += -Wall -Wno-sign-compare
 # OPT += -DCHRIF_OLDINFO

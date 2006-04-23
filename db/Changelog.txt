@@ -26,6 +26,10 @@
 	-----
 
 =========================
+
+04/23
+	* Increased all chase/follow skill rates by 10 since their trigger rate has
+	  been decreased by that much due to the unit-data update. [Skotlex]
 04/22
 	* Updated Kiel/Odin mob stat to kRO official guidebook [Vicious]
 	* Major fix to the Einbroch mobs [Playtester]
