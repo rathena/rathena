@@ -1710,7 +1710,7 @@
 7092,Drifting_Air,Drifting Air,3,,10,500,,,,,,,,,,,,,{},{},{}
 7093,Cogwheel,Cogwheel,3,,756,10,,,,,,,,,,,,,{},{},{}
 7094,Fragment,Fragment,3,,672,10,,,,,,,,,,,,,{},{},{}
-7095,Metal_Fragment,Metal Fragment,3,,10,10,,,,,,,,,,,,,{},{},{}
+7095,Metal_Fragment,Metal Fragment,3,,294,10,,,,,,,,,,,,,{},{},{}
 7096,Lava,Lava,3,,554,10,,,,,,,,,,,,,{},{},{}
 7097,Burning_Heart,Burning Heart,3,,462,10,,,,,,,,,,,,,{},{},{}
 7098,Live_Coal,Live Coal,3,,319,10,,,,,,,,,,,,,{},{},{}
@@ -2124,10 +2124,10 @@
 7507,Hard_Piece_of_Steel,Hard Piece of Steel,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7508,Elisia's_Ring,Elisia's Ring,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7509,Gorgeous_Keycard,Gorgeous Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7510,Valhalla's_Flower,Valhalla's Flower,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7511,Darkness_Rune,Darkness Rune,3,,10,10,,,,,,0,2,,,,,,{},{},{}
+7510,Valhalla's_Flower,Valhalla's Flower,3,,50000,10,,,,,,0,2,,,,,,{},{},{}
+7511,Darkness_Rune,Darkness Rune,3,1263,,10,,,,,,0,2,,,,,,{},{},{}
 7512,Burnt_Pieces,Burnt Pieces,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7513,Pocket_Watch,Pocket Watch,3,,10,10,,,,,,0,2,,,,,,{},{},{}
+7513,Pocket_Watch,Pocket Watch,3,,855,10,,,,,,0,2,,,,,,{},{},{}
 7514,Monster_Ticket,Monster Ticket,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7515,Interesting_Medal,Interesting Medal,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7516,Green_Keycard,Green Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
