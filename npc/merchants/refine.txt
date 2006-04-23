@@ -36,6 +36,7 @@
 //= 1.9 - Rewrote repairman, removed the Steel from repair cost [DracoRPG]
 //= 2.0 - Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
 //= 2.0a - Added weight checks thanks to Neouni [Playtester]
+//= 2.0b - Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
 //============================================================
 
 
@@ -201,13 +202,13 @@ yuno_in01.gat,164,26,6	script	Disturb	88,{
 	callfunc "refinemain";
 	end;
 }
-ein_in01.gat,24,87,6	script	Katamo	826,{
-	set @name$,"Katamo";
+ein_in01.gat,24,87,6	script	Manthasman	826,{
+	set @name$,"Manthasman Pruhag";
 	callfunc "refinemain";
 	end;
 }
-lhz_in02.gat,282,20,7	script	Marc	869,{
-	set @name$,"Marc";
+lhz_in02.gat,282,20,7	script	Fulerr	869,{
+	set @name$,"Fulerr";
 	callfunc "refinemain";
 	end;
 }
@@ -588,13 +589,13 @@ yuno_in01.gat,171,26,6	script	Dillemat	88,{
 	callfunc "phramain";
 	end;
 }
-ein_in01.gat,15,87,7	script	Gorly	86,{
-	set @name$,"Gorly";
+ein_in01.gat,15,87,7	script	Tirehaus	86,{
+	set @name$,"Tirehaus";
 	callfunc "phramain";
 	end;
 }
-lhz_in02.gat,278,24,3	script	Kato	86,{
-	set @name$,"Kato";
+lhz_in02.gat,278,24,3	script	Krugg	86,{
+	set @name$,"Krugg";
 	callfunc "phramain";
 	end;
 }
@@ -681,13 +682,13 @@ yuno_in01.gat,171,22,6	script	Delayt	88,{
 	callfunc "orimain";
 	end;
 }
-ein_in01.gat,18,82,6	script	Dati	84,{
-	set @name$,"Dati";
+ein_in01.gat,18,82,6	script	Matestein	84,{
+	set @name$,"Matestein";
 	callfunc "orimain";
 	end;
 }
-lhz_in02.gat,281,24,5	script	Gadamari	84,{
-	set @name$,"Gadamari";
+lhz_in02.gat,281,24,5	script	Fruel	84,{
+	set @name$,"Fruel";
 	callfunc "orimain";
 	end;
 }
