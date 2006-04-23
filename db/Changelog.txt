@@ -28,6 +28,7 @@
 =========================
 
 04/23
+	* NPC_CHANGE<property> should be self, not target [Vicious]
 	* Increased all chase/follow skill rates by 10 since their trigger rate has
 	  been decreased by that much due to the unit-data update. [Skotlex]
 04/22
