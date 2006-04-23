@@ -29,6 +29,7 @@ Date		Added
 ======
 04/23
 	* Added an ingredient seller to Morroc, thanks to Muad_Dib [MasterOfMuppets]
+	* Fixed the names of the Lighthalzen and Einbroch refiners, thanks to Muad_Dib [Kargha]
 04/22
 	* Fixed some typos in the mage quest thanks to decayed.cell [Playtester]
 04/21
