@@ -2412,7 +2412,14 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 			map[m].zone = 0;
 		}
 	}
-
+	else if (strcmpi(w3,"jexp")==0) {
+		map[m].jexp = (state) ? atoi(w4) : 100;
+		if( map[m].jexp < 0 ) map[m].jexp = 100;
+	}
+	else if (strcmpi(w3,"bexp")==0) {
+		map[m].bexp = (state) ? atoi(w4) : 100;
+		if( map[m].bexp < 0 ) map[m].bexp = 100;
+	}
 	return 0;
 }
 

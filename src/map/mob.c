@@ -1861,13 +1861,29 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		else
 			job_exp = (unsigned int)(job_exp*per);
 	
-		//mapflags: noexp check [Lorky]
+/*		//mapflags: noexp check [Lorky]
 		if (map[md->bl.m].flag.nobaseexp == 1)	base_exp=0; 
 		else if (base_exp < 1) base_exp = 1;
 		
 		if (map[md->bl.m].flag.nojobexp == 1)	job_exp=0; 
 		else if (job_exp < 1) job_exp = 1;
-		
+*/
+		if (map[md->bl.m].flag.nobaseexp == 1)
+			base_exp=0; 
+		else if (base_exp < 1)
+			base_exp = (map[md->bl.m].bexp<=100) ? 1 : map[md->bl.m].bexp/100;
+		else if ( map[md->bl.m].bexp != 100 )
+			base_exp=(int)((double)base_exp*((double)map[md->bl.m].bexp/100.0));
+
+		if (map[md->bl.m].flag.nojobexp == 1)
+			job_exp=0; 
+		else if (job_exp < 1)
+			job_exp = (map[md->bl.m].jexp<=100) ? 1 : map[md->bl.m].jexp/100;
+		else if ( map[md->bl.m].bexp != 100 )
+			job_exp=(int)((double)job_exp*((double)map[md->bl.m].jexp/100.0));
+ 		
+	
+			
 		//end added Lorky 
 		if((pid=tmpsd[i]->status.party_id)>0){	// パーティに入っている
 			int j;

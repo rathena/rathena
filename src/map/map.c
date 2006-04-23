@@ -3057,7 +3057,11 @@ int map_readallmaps (void)
 
 				map[i].bxs = (map[i].xs + BLOCK_SIZE - 1) / BLOCK_SIZE;
 				map[i].bys = (map[i].ys + BLOCK_SIZE - 1) / BLOCK_SIZE;
-
+				
+				// default experience multiplicator
+				map[i].jexp = 100;
+				map[i].bexp = 100;
+				
 				size = map[i].bxs * map[i].bys * sizeof(struct block_list*);
 				map[i].block = (struct block_list**)aCalloc(size, 1);
 				map[i].block_mob = (struct block_list**)aCalloc(size, 1);
