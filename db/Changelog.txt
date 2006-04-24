@@ -28,6 +28,7 @@
 =========================
 
 04/24
+	* Fixed Running's cast time [Playtester]
 	* Fixed Item 2520 and Item 662 according to info from Haplo [Playtester]
 04/23
 	* Updated mob_skill_db: all idle and walk skills had their rate up x10. [Skotlex]
