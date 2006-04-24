@@ -174,9 +174,9 @@ int mob_parse_dataset(struct spawn_data *data) {
 	if (!data->level)
 		data->level = mob_db(data->class_)->lv;
 
-	if(battle_config.override_mob_names==1 || strcmp(data->name,"--en--")==0)
+	if(strcmp(data->name,"--en--")==0)
 		strncpy(data->name,mob_db(data->class_)->name,NAME_LENGTH-1);
-	else if(battle_config.override_mob_names==2 || strcmp(data->name,"--ja--")==0)
+	else if(strcmp(data->name,"--ja--")==0)
 		strncpy(data->name,mob_db(data->class_)->jname,NAME_LENGTH-1);
 
 	return 1;

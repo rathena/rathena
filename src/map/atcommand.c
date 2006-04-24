@@ -3532,7 +3532,7 @@ int atcommand_monstersmall(
 			my = sd->bl.y + (rand() % 11 - 5);
 		else
 			my = y;
-		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id+MAX_MOB_DB, 1, "") != 0) ? 1 : 0;
+		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id, 1, "2") != 0) ? 1 : 0;
 	}
 
 	if (count != 0)
@@ -3609,7 +3609,7 @@ int atcommand_monsterbig(
 			my = sd->bl.y + (rand() % 11 - 5);
 		else
 			my = y;
-		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id+2*MAX_MOB_DB, 1, "") != 0) ? 1 : 0;
+		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id, 1, "4") != 0) ? 1 : 0;
 	}
 
 	if (count != 0)
@@ -7526,12 +7526,14 @@ int
 atcommand_grind2(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int i, x, y, id;
+	int i;
+	short x, y;
 
-	for (i =  1000; i <2000; i++) {
-		x = sd->bl.x + (rand() % 10 - 5);
-		y = sd->bl.y + (rand() % 10 - 5);
-		id = mob_once_spawn(sd, "this", x, y, "--ja--", i, 1, "");
+	for (i = 1000; i < MAX_MOB_DB; i++) {
+		if (!mobdb_checkid(i))
+			continue;
+		map_search_freecell(&sd->bl, 0, &x,  &y, 5, 5, 0);
+		mob_once_spawn(sd, "this", x, y, "--ja--", i, 1, "");
 	}
 
 	return 0;
