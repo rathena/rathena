@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/24
+	* Corrected mob_spawn_delay/boss_spawn_delay/plant_spawn_delay settings
+	  (they were named rate rather than delay in monster.conf) [Skotlex]
 	* Cleaned up @grind2, @monsterbig, @monstersmall. [Skotlex]
 	* Modified override_mobs_names to work only on the mob spawn files instead
 	  of everywhere (so now script-summoned mobs should keep their custom names
