@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/23
+	* Added new column to mob_db Sprite_Name to hold the mob's sprite name.
+	  Columns Name and JName now hold the mob's english and kro names
+	  respectively. [Skotlex]
+	- Currently both Name and Jname have the KRO names, so someone will have to
+	  update the Name column with the english Mob Names.
+	* Updated mob_db.sql and mob_db2.sql to latest. [Skotlex]
+	* Added battle_config option override_mob_names to make the spawned mob use
+	  the mob_db names instead of the specified names in the spawn files.
+	  Defaults to 0, 1 is to use Name column while 2 is to use the JName column
+	  (see battle/monster.conf) [Skotlex]
 	* Idle skills won't trigger while the mob is walking (that is for the state
 	  "walk") [Skotlex]
 	* Idle skills will now trigger each IDLE_SKILL_INTERVAL iterations (10
