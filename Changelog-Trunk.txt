@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/24
+	* Added logging of deleted characters when the char_log is enabled.
+	  [Skotlex]
 	* Fixed skill_delayfix not altering delay at all after you reached 150.
 	  [Skotlex]
 	* Applied ers to pet loot drops and cleaned up the pet loot drop function.
