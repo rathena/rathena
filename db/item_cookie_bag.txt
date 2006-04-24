@@ -13,6 +13,9 @@
 572,Lucky Cookie,1000000
 539,Piece of Cake,1000000
 564,Rice Ball,1000000
+12122,Sesame Pastry,1000000
+12123,Honey Pastry,1000000
+12124,Rainbow Cake,1000000
 558,Chocolate,1000000
 559,Hand-made Chocolate,1000000
 560,Hand-made White Chocolate,1000000
@@ -48,6 +51,5 @@
 571,Lucky Candy Cane,1000000
 538,Well-baked Cookie,1000000
 572,Lucky Cookie,1000000
-12122,Sesame Pastry,1000000
-12123,Honey Pastry,1000000
-12124,Rainbow Cake,1000000
+539,Piece of Cake,1000000
+564,Rice Ball,1000000

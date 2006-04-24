@@ -318,3 +318,156 @@
 4136,Khalitzburg Card,100000
 4139,Joker Card,100000
 4141,Evil Druid Card,100000
+4149,Gargoyle Card,100000
+4150,Goat Card,100000
+4151,Gajomart Card,100000
+4152,Galapago Card,100000
+4153,Crab Card,100000
+4154,Dumpling Child Card,100000
+4156,Goblin Steamrider Card,100000
+4157,Goblin Archer Card,100000
+4158,Sky Deleter Card,100000
+4159,Nine Tail Card,100000
+4160,Firelock Soldier Card,100000
+4161,Grand Peco Card,100000
+4162,Grizzly Card,100000
+4164,Gullinbursti Card,100000
+4165,Gig Card,100000
+4166,Nightmare Terror Card,100000
+4167,Neraid Card,100000
+4170,Dark Frame Card,100000
+4172,The Paper Card,100000
+4173,Demon Fungus Card,100000
+4175,Poisonous Toad Card,100000
+4176,Dullahan Card,100000
+4177,Dryad Card,100000
+4178,Dragon Tail Card,100000
+4180,Driller Card,100000
+4181,Disguise Card,100000
+4182,Diabolic Card,100000
+4184,Lava Golem Card,100000
+4185,Rideword Card,100000
+4186,Raggler Card,100000
+4187,Raydric Archer Card,100000
+4188,Leib Olmai Card,100000
+4189,Wraith Dead Card,100000
+4190,Wraith Card,100000
+4191,Loli Ruri Card,100000
+4192,Rotar Zairo Card,100000
+4193,Lude Card,100000
+4194,Rybio Card,100000
+4195,Leaf Cat Card,100000
+4196,Marin Card,100000
+4199,Merman Card,100000
+4200,Megalith Card,100000
+4201,Majoruros Card,100000
+4202,Civil Servant Card,100000
+4204,Mini Demon Card,100000
+4205,Mimic Card,100000
+4206,Myst Case Card,100000
+4208,Miyabi Doll Card,100000
+4209,Violy Card,100000
+4210,Wanderer Card,100000
+4212,Bongun Card,100000
+4213,Brilight Card,100000
+4214,Bloody Murderer Card,100000
+4215,Blazer Card,100000
+4216,Sasquatch Card,100000
+4217,Enchanted Peach Tree Card,100000
+4218,Succubus Card,100000
+4219,Sage Worm Card,100000
+4220,Solider Card,100000
+4221,Skeleton General Card,100000
+4222,Skeleton Prisoner Card,100000
+4223,Stalactic Golem Card,100000
+4224,Stem Worm Card,100000
+4225,Stone Shooter Card,100000
+4226,Sting Card,100000
+4227,Spring Rabbit Card,100000
+4228,Sleeper Card,100000
+4230,Shinobi Card,100000
+4231,Increase Soil Card,100000
+4232,Hermit Plant Card,100000
+4233,Baby Leopard Card,100000
+4234,Anolian Card,100000
+4235,Christmas Cookie Card,100000
+4237,Owl Duke Card,100000
+4238,Owl Baron Card,100000
+4239,Iron Fist Card,100000
+4240,Arclouze Card,100000
+4242,Apocalipse Card,100000
+4244,Alarm Card,100000
+4245,Am Mut Card,100000
+4246,Assaulter Card,100000
+4247,Aster Card,100000
+4248,Ancient Mummy Card,100000
+4249,Ancient Worm Card,100000
+4251,Elder Card,100000
+4252,Alligator Card,100000
+4253,Alice Card,100000
+4255,Orc Lady Card,100000
+4256,Orc Archer Card,100000
+4257,Wild Rose Card,100000
+4258,Evil Nymph Card,100000
+4259,Wooden Golem Card,100000
+4260,Wootan Shooter Card,100000
+4261,Wootan Fighter Card,100000
+4262,Cloud Hermit Card,100000
+4264,Wind Ghost Card,100000
+4265,Li Me Mang Ryang Card,100000
+4267,Explosion Card,100000
+4268,Injustice Card,100000
+4269,Incubus Card,100000
+4270,Giant Spider Card,100000
+4271,Giant Hornet Card,100000
+4272,Dancing Dragon Card,100000
+4273,Shell Fish Card,100000
+4274,Zombie Master Card,100000
+4275,Zombie Prisoner Card,100000
+4277,Zherlthsh Card,100000
+4278,Gibbet Card,100000
+4279,Earth Deleter Card,100000
+4280,Geographer Card,100000
+4281,Zipper Bear Card,100000
+4282,Tengu Card,100000
+4283,Greatest General Card,100000
+4284,Chepet Card,100000
+4285,Choco Card,100000
+4286,Karakasa Card,100000
+4287,Kapha Card,100000
+4288,Carat Card,100000
+4289,Caterpillar Card,100000
+4290,Cat O' Nine Tails Card,100000
+4292,Kobold Archer Card,100000
+4293,Cookie Card,100000
+4294,Quve Card,100000
+4295,Kraben Card,100000
+4296,Cramp Card,100000
+4297,Cruiser Card,100000
+4298,Creamy Fear Card,100000
+4299,Clock Card,100000
+4300,Chimera Card,100000
+4301,Killer Mantis Card,100000
+4304,Tamruan Card,100000
+4229,Clock Tower Manager Card,100000
+4307,Beetle King Card,100000
+4308,Tri Joint Card,100000
+4309,Parasite Card,100000
+4310,Panzer Goblin Card,100000
+4311,Permeter Card,100000
+4312,Seal Card,100000
+4313,Punk Card,100000
+4314,Penomena Card,100000
+4315,Pest Card,100000
+4316,False Angel Card,100000
+4319,Freezer Card,100000
+4321,Hylozoist Card,100000
+4322,High Orc Card,100000
+4323,Garm Baby Card,100000
+4325,Harpy Card,100000
+4326,Sea-Otter Card,100000
+4327,Bloody Butterfly Card,100000
+4328,Hyegun Card,100000
+4329,Phendark Card,100000
+4331,Heater Card,100000
+4243,Antonio Card,100000

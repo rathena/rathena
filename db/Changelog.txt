@@ -28,6 +28,8 @@
 =========================
 
 04/24
+	* Updated OBB, OCA, Cookie Bag, Giftbox, OVB drops to X.2(X.3?)
+	  ItemSummonList provided by Peter [Vicious]
 	* Fixed Running's cast time [Playtester]
 	* Fixed Item 2520 and Item 662 according to info from Haplo [Playtester]
 04/23
