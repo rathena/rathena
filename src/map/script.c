@@ -135,6 +135,7 @@ char tmp_sql[65535];
 unsigned char* parse_subexpr(unsigned char *,int);
 #ifndef TXT_ONLY
 int buildin_query_sql(struct script_state *st);
+int buildin_escape_sql(struct script_state *st);
 #endif
 int buildin_atoi(struct script_state *st);
 int buildin_axtoi(struct script_state *st);
@@ -455,6 +456,7 @@ struct {
 	{buildin_axtoi,"axtoi","s"},
 #ifndef TXT_ONLY
 	{buildin_query_sql, "query_sql", "s*"},
+	{buildin_escape_sql, "escape_sql", "s"},
 #endif
 	{buildin_atoi,"atoi","s"},
 	{buildin_mes,"mes","s"},
@@ -9726,6 +9728,17 @@ int buildin_query_sql(struct script_state *st) {
 		}
 	}
 
+	return 0;
+}
+
+//Allows escaping of a given string.
+int buildin_escape_sql(struct script_state *st) {
+	char *t_query, *query;
+	query = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	
+	t_query = aCallocA(strlen(query)*2+1,sizeof(char));
+	jstrescapecpy(t_query,query);
+	push_str(st->stack,C_STR,(unsigned char *)t_query);
 	return 0;
 }
 #endif

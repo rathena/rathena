@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/24
+	* Added script command escape_sql. It will return an escaped string for use
+	  in the sql_query script command (in case you want to use input of players
+	  in your queries). [Skotlex]
+	* Removed the skill packet from TK_RUN as the client ignores the walkok
+	  packet sent right after it. It displays just fine on the client now. [Skotlex]
 	* Added DNS Blocklist support. Set in login_athena.conf.
 	  I'll make it more customizable tomorrow, I coded it pretty bad. [Zido]
 	* Corrected mob_spawn_delay/boss_spawn_delay/plant_spawn_delay settings

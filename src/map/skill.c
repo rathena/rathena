@@ -4138,7 +4138,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				i = status_change_end(bl, type, -1);
 			else
 				i = sc_start4(bl,type,100,skilllv,unit_getdir(bl),0,0,0);
-			clif_skill_nodamage(src,bl,skillid,skilllv,i);
+//			If the client receives a skill-use packet inmediately before
+//			a walkok packet, it will discard the walk packet! [Skotlex]
+//			clif_skill_nodamage(src,bl,skillid,skilllv,i);
 		break;
 	case AS_CLOAKING:		/* ƒNƒ??ƒLƒ“ƒO */
 		if(tsc && tsc->data[type].timer!=-1 )
