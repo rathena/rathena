@@ -8330,6 +8330,8 @@ int skill_delayfix(struct block_list *bl, int skill_id, int skill_lv)
 		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 		if (scale > 0)
 			time = time * scale / battle_config.castrate_dex_scale;
+		else //To be capped later to minimum.
+			time = 0;
 	}
 
 	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayrate != 100)

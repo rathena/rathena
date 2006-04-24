@@ -52,7 +52,6 @@ int pet_equipitem(struct map_session_data *sd,int index);
 int pet_unequipitem(struct map_session_data *sd);
 int pet_food(struct map_session_data *sd);
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd);
-int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data);
 int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
 int pet_attackskill(struct pet_data *pd, int target_id);
 int pet_skill_support_timer(int tid, unsigned int tick, int id, int data); // [Skotlex]

@@ -10,6 +10,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/ers.h"
 
 #include "pc.h"
 #include "status.h"
@@ -28,6 +29,9 @@
 #define MIN_PETTHINKTIME 100
 
 struct pet_db pet_db[MAX_PET_DB];
+
+static struct eri *item_drop_ers; //For loot drops delay structures.
+static struct eri *item_drop_list_ers;
 
 static int dirx[8]={0,-1,-1,-1,0,1,1,1};
 static int diry[8]={1,1,0,-1,-1,-1,0,1};
@@ -320,18 +324,6 @@ int pet_hungry_timer_delete(struct map_session_data *sd)
 
 	return 0;
 }
-
-struct delay_item_drop {
-	int m,x,y;
-	int nameid,amount;
-	struct map_session_data *first_sd,*second_sd,*third_sd;
-};
-
-struct delay_item_drop2 {
-	int m,x,y;
-	struct item item_data;
-	struct map_session_data *first_sd,*second_sd,*third_sd;
-};
 
 int pet_performance(struct map_session_data *sd)
 {
@@ -1082,52 +1074,70 @@ int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	return 0;
 }
 
+static int pet_delay_item_drop(int tid,unsigned int tick,int id,int data)
+{
+	struct item_drop_list *list;
+	struct item_drop *ditem, *ditem_prev;
+	list=(struct item_drop_list *)id;
+	ditem = list->item;
+	while (ditem) {
+		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
+			list->m,list->x,list->y,
+			list->first_sd,list->second_sd,list->third_sd,0);
+		ditem_prev = ditem;
+		ditem = ditem->next;
+		ers_free(item_drop_ers, ditem_prev);
+	}
+	ers_free(item_drop_list_ers, list);
+	return 0;
+}
+
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 {
 	int i,flag=0;
-	struct delay_item_drop2 *ditem_floor, ditem;
-	if(pd && pd->loot && pd->loot->count) {
-		memset(&ditem, 0, sizeof(struct delay_item_drop2));
-		ditem.m = pd->bl.m;
-		ditem.x = pd->bl.x;
-		ditem.y = pd->bl.y;
-		ditem.first_sd = 0;
-		ditem.second_sd = 0;
-		ditem.third_sd = 0;
-		for(i=0;i<pd->loot->count;i++) {
-			memcpy(&ditem.item_data,&pd->loot->item[i],sizeof(pd->loot->item[0]));
-			// —Ž‚Æ‚³‚È‚¢‚Å’¼ÚPC‚ÌItem—“‚Ö
-			if(sd){
-				if((flag = pc_additem(sd,&ditem.item_data,ditem.item_data.amount))){
-					clif_additem(sd,0,0,flag);
-					map_addflooritem(&ditem.item_data,ditem.item_data.amount,ditem.m,ditem.x,ditem.y,ditem.first_sd,ditem.second_sd,ditem.third_sd,0);
-				}
-			}
-			else {
-				ditem_floor=(struct delay_item_drop2 *)aCalloc(1,sizeof(struct delay_item_drop2));
-				memcpy(ditem_floor, &ditem, sizeof(struct delay_item_drop2));
-				add_timer(gettick()+540+i,pet_delay_item_drop2,(int)ditem_floor,0);
+	struct item_drop_list *dlist;
+	struct item_drop *ditem;
+	struct item *it;
+	if(!pd || !pd->loot || !pd->loot->count)
+		return 0;
+	dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
+	dlist->m = pd->bl.m;
+	dlist->x = pd->bl.x;
+	dlist->y = pd->bl.y;
+	dlist->first_sd = NULL;
+	dlist->second_sd = NULL;
+	dlist->third_sd = NULL;
+	dlist->item = NULL;
+
+	for(i=0;i<pd->loot->count;i++) {
+		it = &pd->loot->item[i];
+		if(sd){
+			if((flag = pc_additem(sd,it,it->amount))){
+				clif_additem(sd,0,0,flag);
+				ditem = ers_alloc(item_drop_ers, struct item_drop);
+				memcpy(&ditem->item_data, it, sizeof(struct item));
+				ditem->next = dlist->item;
+				dlist->item = ditem->next;
 			}
 		}
-		//The smart thing to do is use pd->loot->max (thanks for pointing it out, Shinomori)
-		memset(pd->loot->item,0,pd->loot->max * sizeof(struct item));
-		pd->loot->count = 0;
-		pd->loot->weight = 0;
-		pd->ud.canact_tick = gettick()+10000;	//	10*1000ms‚ÌŠÔE‚í‚È‚¢
+		else {
+			ditem = ers_alloc(item_drop_ers, struct item_drop);
+			memcpy(&ditem->item_data, it, sizeof(struct item));
+			ditem->next = dlist->item;
+			dlist->item = ditem->next;
+		}
 	}
+	//The smart thing to do is use pd->loot->max (thanks for pointing it out, Shinomori)
+	memset(pd->loot->item,0,pd->loot->max * sizeof(struct item));
+	pd->loot->count = 0;
+	pd->loot->weight = 0;
+	pd->ud.canact_tick = gettick()+10000;	//	10*1000ms‚ÌŠÔE‚í‚È‚¢
+
+	if (dlist->item)
+		add_timer(gettick()+540,pet_delay_item_drop,(int)dlist,0);
+	else
+		ers_free(item_drop_list_ers, dlist);
 	return 1;
-}
-
-int pet_delay_item_drop2(int tid,unsigned int tick,int id,int data)
-{
-	struct delay_item_drop2 *ditem;
-
-	ditem=(struct delay_item_drop2 *)id;
-
-	map_addflooritem(&ditem->item_data,ditem->item_data.amount,ditem->m,ditem->x,ditem->y,ditem->first_sd,ditem->second_sd,ditem->third_sd,0);
-
-	aFree(ditem);
-	return 0;
 }
 
 /*==========================================
@@ -1384,10 +1394,13 @@ int do_init_pet(void)
 	memset(pet_db,0,sizeof(pet_db));
 	read_petdb();
 
+	item_drop_ers = ers_new((uint32)sizeof(struct item_drop));
+	item_drop_list_ers = ers_new((uint32)sizeof(struct item_drop_list));
+	
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
-	add_timer_func_list(pet_delay_item_drop2,"pet_delay_item_drop2");	
+	add_timer_func_list(pet_delay_item_drop,"pet_delay_item_drop");	
 	add_timer_func_list(pet_skill_support_timer, "pet_skill_support_timer"); // [Skotlex]
 	add_timer_func_list(pet_recovery_timer,"pet_recovery_timer"); // [Valaris]
 	add_timer_func_list(pet_heal_timer,"pet_heal_timer"); // [Valaris]
@@ -1404,5 +1417,7 @@ int do_final_pet(void) {
 			pet_db[i].script = NULL;
 		}
 	}
+	ers_destroy(item_drop_ers);
+	ers_destroy(item_drop_list_ers);
 	return 0;
 }

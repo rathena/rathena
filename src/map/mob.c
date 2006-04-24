@@ -1383,23 +1383,6 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
 }
 
 /*==========================================
- * The structure object for item drop with delay
- * Since it is only two being able to pass [ int ] a timer function
- * Data is put in and passed to this structure object.
- *------------------------------------------
- */
-struct item_drop {
-	struct item item_data;
-	struct item_drop *next;
-};
-
-struct item_drop_list {
-	int m,x,y;
-	struct map_session_data *first_sd,*second_sd,*third_sd;
-	struct item_drop *item;
-};
-
-/*==========================================
  * Initializes the delay drop structure for mob-dropped items.
  *------------------------------------------
  */
@@ -2617,10 +2600,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		if (DIFF_TICK(tick, md->skilldelay[i]) < ms[i].delay)
 			continue;
 
-		// ó‘Ô”»’è
-		if (ms[i].state != MSS_ANY && ms[i].state != md->state.skillstate)
-			continue;
-
+		if (ms[i].state != md->state.skillstate && md->state.skillstate != MSS_DEAD) {
+			if (ms[i].state == MSS_ANY || (ms[i].state == MSS_ANYTARGET && md->target_id))
+				; //ANYTARGET works with any state as long as there's a target. [Skotlex]
+			else
+				continue;
+		}
 		if (rand() % 10000 > ms[i].permillage) //Lupus (max value = 10000)
 			continue;
 
@@ -3478,7 +3463,7 @@ static int mob_readskilldb(void)
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
 	}, state[] = {
-		{	"any",		MSS_ANY	},
+		{	"any",		MSS_ANY	}, //All states except Dead
 		{	"idle",		MSS_IDLE	},
 		{	"walk",		MSS_WALK	},
 		{	"loot",		MSS_LOOT	},
@@ -3487,6 +3472,7 @@ static int mob_readskilldb(void)
 		{	"angry",		MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
 		{	"chase",		MSS_RUSH		}, //Chase escaping target
 		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
+		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
 	}, target[] = {
 		{	"target",	MST_TARGET	},
 		{	"self",		MST_SELF	},

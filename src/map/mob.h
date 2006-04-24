@@ -106,6 +106,25 @@ enum {
 	MSS_ANGRY,   //Mob retaliating from being attacked.
 	MSS_RUSH,    //Mob following a player after being attacked.
 	MSS_FOLLOW,  //Mob following a player without being attacked.
+	MSS_ANYTARGET,
+};
+
+
+/*==========================================
+ * The structure object for item drop with delay
+ * Since it is only two being able to pass [ int ] a timer function
+ * Data is put in and passed to this structure object.
+ *------------------------------------------
+ */
+struct item_drop {
+	struct item item_data;
+	struct item_drop *next;
+};
+
+struct item_drop_list {
+	int m,x,y;
+	struct map_session_data *first_sd,*second_sd,*third_sd;
+	struct item_drop *item;
 };
 
 struct mob_db* mob_db(int class_);
