@@ -69,6 +69,8 @@ struct _subnet {
 
 int subnet_count = 0;
 
+int use_dnsbl=0;
+
 char account_filename[1024] = "save/account.txt";
 char GM_account_filename[1024] = "conf/GM_account.txt";
 char login_log_filename[1024] = "log/login.log";
@@ -1153,8 +1155,38 @@ int mmo_auth(struct mmo_account* account, int fd) {
 	char ip[16];
 	unsigned char *sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr;
 	char user_password[256];
+	char r_ip[16]; // [Zido]
+	char ip_dnsbl[256]; // [Zido]
 
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
+
+	// Start DNS Blacklist check [Zido]
+	if(use_dnsbl) {
+		sprintf(r_ip, "%d.%d.%d.%d", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
+		
+		sprintf(ip_dnsbl,"%s.opm.blitzed.org",r_ip);
+		if(gethostbyname(ip_dnsbl)!=NULL) {
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
+			return 3;
+		}
+		sprintf(ip_dnsbl,"%s.sbl.deltaanime.net",r_ip);
+		if(gethostbyname(ip_dnsbl)!=NULL) {
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
+			return 3;
+		}
+		sprintf(ip_dnsbl,"%s.dnsbl.njabl.org",r_ip);
+		if(gethostbyname(ip_dnsbl)!=NULL) {
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
+			return 3;
+		}
+		sprintf(ip_dnsbl,"%s.sbl-xbl.spamhaus.org",r_ip);
+		if(gethostbyname(ip_dnsbl)!=NULL) {
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
+			return 3;
+		}
+	}
+	// End DNS Blacklist check [Zido]
+
 
 	len = strlen(account->userid) - 2;
 	// Account creation with _M/_F
@@ -3740,6 +3772,8 @@ int login_config_read(const char *cfgName) {
 					online_check = atoi(w2);
 			} else if (strcmpi(w1, "import") == 0) {
 				login_config_read(w2);
+			} else if(strcmpi(w1,"use_dnsbl")==0) { // [Zido]
+				use_dnsbl=atoi(w2);
 			}
 		}
 	}
