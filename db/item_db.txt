@@ -146,7 +146,7 @@
 659,Her_Heart,Her Heart,11,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
 660,Forbidden_Red_Candle,Forbidden Red Candle,11,,10000,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
 661,Soft_Apron,Soft Apron,11,,10000,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
-662,Authoritative_Badge,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect 507,5; sc_start SC_SpeedUp0,240000,0; },{},{}
+662,Authoritative_Badge,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,240000,0; },{},{}
 663,Songpyun,Songpyun,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
 664,Gift_Box_,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
@@ -1060,7 +1060,7 @@
 2517,Vali's_Manteau,Vali's Manteau,5,,10,600,,4,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Neutral,15; },{},{}
 2518,Morpheus's_Shawl,Morpheus's Shawl,5,,10,600,,3,,0,0xFFFFFFFE,7,2,4,,33,1,0,{ bonus bMaxSPrate,10; bonus bMdef,3; },{},{}
 2519,Morrigane's_Manteau,Morrigane's Manteau,5,,10,600,,3,,0,0xFFFFFFFE,7,2,4,,61,1,0,{ bonus bLuk,2; bonus bFlee2,8; },{},{}
-2520,Goibne's_Spaulders,Goibne's Spaulders,5,,10,700,,3,,0,0xFFFFFFFE,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; },{},{}
+2520,Goibne's_Spaulders,Goibne's Spaulders,5,,10,700,,3,,0,0xFFFFFFFE,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; bonus bVit,1; },{},{}
 2521,Angelic_Cardigan,Angelic Cardigan,5,,10,400,,2,,0,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
 2522,Undershirt,Undershirt,5,,10,150,,2,,0,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; },{},{}
 2523,Undershirt_,Undershirt,5,,10,150,,2,,1,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)==0) end; bonus bAgi,5; bonus bFlee,10; },{},{}
