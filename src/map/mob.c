@@ -34,6 +34,7 @@
 #include "irc.h"
 
 #define MIN_MOBTHINKTIME 100
+#define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
 
 #define MOB_LAZYSKILLPERC 10	// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
 #define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
@@ -983,9 +984,9 @@ int mob_randomwalk(struct mob_data *md,int tick)
 
 	nullpo_retr(0, md);
 
-	speed=status_get_speed(&md->bl);
 	if(DIFF_TICK(md->next_walktime,tick)<0 && unit_can_move(&md->bl)){
 		int i,x,y,c,d=12-md->move_fail_count;
+		speed=status_get_speed(&md->bl);
 		if(d<5) d=5;
 		for(i=0;i<retrycount;i++){	// Search of a movable place
 			int r=rand();
@@ -1247,11 +1248,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		}
 	}
 
-	// When there's no target, it is idling.
-	md->state.skillstate = MSS_IDLE;
-	if (mobskill_use(md, tick, -1))
-		return 0;
-
+	if(md->ud.walktimer == -1) {
+		// When there's no target, it is idling.
+		// Is it terribly exploitable to reuse the walkcounter for idle state skills? [Skotlex]
+		md->state.skillstate = MSS_IDLE;
+		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
+			return 0;
+	}
 	// Nothing else to do... except random walking.
 	// Slaves do not random walk! [Skotlex]
 	if (can_move && !md->master_id)
@@ -2685,7 +2688,6 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		//Execute skill	
 		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
 		{
-			// êŠw’è
 			struct block_list *bl = NULL;
 			short x = 0, y = 0;
 			if (ms[i].target <= MST_AROUND) {
@@ -2735,7 +2737,6 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			if (!flag) md->skillidx = -1; //Skill failed.
 			return flag;
 		} else {
-			// IDw’è
 			if (ms[i].target <= MST_MASTER) {
 				struct block_list *bl;
 				switch (ms[i].target) {

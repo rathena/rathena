@@ -28,6 +28,7 @@
 =========================
 
 04/23
+	* Updated mob_skill_db: all idle and walk skills had their rate up x10. [Skotlex]
 	* Put in most of the Kiel Hyre monster drops, at temporary low rates. [MasterOfMuppets]
 	* Updated some loot sell prices for the Kiel Hyre/Odin Temple monsters [MasterOfMuppets]
 	* NPC_CHANGE<property> should be self, not target [Vicious]

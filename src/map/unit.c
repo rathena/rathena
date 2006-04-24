@@ -190,12 +190,11 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
 		}
 	} else if (md) {
-		if (ud->target && ud->state.attack_continue) {
-			if(md->min_chase > md->db->range2) md->min_chase--;
-			if(!(ud->walk_count%WALK_SKILL_INTERVAL) &&
-				mobskill_use(md, tick, -1))
-				return 0;
-		}
+		if (md->min_chase > md->db->range2) md->min_chase--;
+		//Walk skills are triggered regardless of target due to the idle-walk mob state.
+		if(!(ud->walk_count%WALK_SKILL_INTERVAL) &&
+			mobskill_use(md, tick, -1))
+			return 0;
 	}
 
 	if(ud->state.change_walk_target)

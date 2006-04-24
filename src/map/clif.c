@@ -981,7 +981,45 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	lv = status_get_lv(bl);
 	
 	if(pcdb_checkid(vd->class_)) { 
-#if PACKETVER > 3
+#if PACKETVER > 6
+		//Packet 0x22c, still in construction. [Skotlex]
+		memset(buf,0,packet_len_table[0x22c]);
+
+		WBUFW(buf,0)=0x22c;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)= sc->opt1;
+			WBUFW(buf,10)= sc->opt2;
+			WBUFL(buf,12)= sc->option;
+			WBUFL(buf,48)= sc->opt3;
+		}
+		WBUFW(buf,16)=vd->class_;
+		WBUFW(buf,18)=vd->hair_style;
+		WBUFW(buf,20)=vd->weapon;
+		WBUFW(buf,22)=vd->shield;
+		WBUFW(buf,24)=vd->head_bottom;
+		WBUFL(buf,26)=gettick();
+		WBUFW(buf,30)=vd->head_top;
+		WBUFW(buf,32)=vd->head_mid;
+		WBUFW(buf,34)=vd->hair_color;
+		WBUFW(buf,36)=vd->cloth_color;
+		WBUFW(buf,38)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFL(buf,40)=guild_id;
+		WBUFW(buf,44)=emblem_id;
+		if (sd) {
+			WBUFW(buf,46)=sd->status.manner;
+			WBUFB(buf,52)=sd->status.karma;
+		}
+		WBUFB(buf,53)=vd->sex;
+		WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y);
+		WBUFB(buf,59)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFB(buf,60)=0;
+		WBUFB(buf,61)=0;
+		WBUFW(buf,62)=clif_setlevel(lv);
+
+		return packet_len_table[0x22c];	
+#elif PACKETVER > 3
 		memset(buf,0,packet_len_table[0x1da]);
 
 		WBUFW(buf,0)=0x1da;

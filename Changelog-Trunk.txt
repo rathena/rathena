@@ -3,6 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/23
+	* Idle skills won't trigger while the mob is walking (that is for the state
+	  "walk") [Skotlex]
+	* Idle skills will now trigger each IDLE_SKILL_INTERVAL iterations (10
+	  currently) [Skotlex]
+	* Added support for walk packet 0x22c, will be used when PACKETVER is set
+	  to 7 or above (packetver is still set to 6 for now) [Skotlex]
+	* Normal walking will now also trigger mob skills (due to the walk skill
+	  condition)  [Skotlex]
 	* additional experience multiplicator as mapflags which is based off battle.conf
 	  so with battle.conf rates 200 and "mapflag <jexp/bexp> 200" it will be 4x 
 	  on this specific map and 2x anywhere else [Jbain]
