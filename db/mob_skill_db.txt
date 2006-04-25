@@ -2935,8 +2935,8 @@
 1646,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1646,Lord Knight Seyren@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
 1646,Lord Knight Seyren@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1195,,,,,
-//1646,Lord Knight Seyren@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1641,1642,1643,1644,1645,
-//1646,Lord Knight Seyren@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1641,1642,1643,1644,1645,
+1646,Lord Knight Seyren@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1641,1642,1643,1644,1645,
+1646,Lord Knight Seyren@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1641,1642,1643,1644,1645,
 1646,Lord Knight Seyren@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1641,1642,1643,1644,1645,
 1646,Lord Knight Seyren@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
 1646,Lord Knight Seyren@SM_BASH,attack,5,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
@@ -2967,8 +2967,8 @@
 1647,Assassin Cross Eremes@NPC_POISONATTACK,attack,188,10,1000,0,5000,yes,target,always,0,,,,,,
 1647,Assassin Cross Eremes@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
 1647,Assassin Cross Eremes@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1132,,,,,
-//1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1642,1643,1644,1645,
-//1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1642,1643,1644,1645,
+1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1642,1643,1644,1645,
+1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1642,1643,1644,1645,
 1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1642,1643,1644,1645,
 1647,Assassin Cross Eremes@TF_POISON,attack,52,10,1000,0,10000,yes,target,always,0,,,,,,
 1648,Whitesmith Harword@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
@@ -2993,8 +2993,8 @@
 1648,Whitesmith Harword@NPC_SHIELDBRAKE,attack,346,10,1000,0,5000,yes,target,always,0,,,,,,19
 1648,Whitesmith Harword@NPC_SPLASHATTACK,attack,174,1,1000,0,0,yes,target,attackpcgt,2,,,,,,
 1648,Whitesmith Harword@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1195,,,,,
-//1648,Whitesmith Harword@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1643,1644,1645,
-//1648,Whitesmith Harword@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1643,1644,1645,
+1648,Whitesmith Harword@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1643,1644,1645,
+1648,Whitesmith Harword@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1643,1644,1645,
 1648,Whitesmith Harword@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1641,1643,1644,1645,
 1649,High Priest Magaleta@AL_DECAGI,chase,30,10,2000,0,10000,yes,target,always,0,,,,,,
 1649,High Priest Magaleta@AL_HEAL,attack,28,11,10000,0,2000,yes,friend,friendhpltmaxrate,5,,,,,,3
@@ -3024,8 +3024,8 @@
 1649,High Priest Magaleta@NPC_HOLYATTACK,attack,189,10,1000,0,5000,yes,target,always,0,,,,,,
 1649,High Priest Magaleta@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
 1649,High Priest Magaleta@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1132,,,,,
-//1649,High Priest Magaleta@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
-//1649,High Priest Magaleta@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
+1649,High Priest Magaleta@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
+1649,High Priest Magaleta@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
 1649,High Priest Magaleta@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1641,1642,1644,1645,
 1649,High Priest Magaleta@PR_LEXAETERNA,attack,78,1,1000,0,5000,yes,target,always,0,,,,,,29
 1649,High Priest Magaleta@PR_LEXAETERNA,chase,78,1,1000,0,5000,yes,target,always,0,,,,,,29
