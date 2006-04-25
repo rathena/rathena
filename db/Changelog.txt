@@ -27,6 +27,9 @@
 
 =========================
 
+04/25
+	* Updated the header in the mob db text files [Playtester]
+	- the order is now SpriteName,kROName,iROName
 04/24
 	* Updated OBB, OCA, Cookie Bag, Giftbox, OVB drops to X.2(X.3?)
 	  ItemSummonList provided by Peter [Vicious]
