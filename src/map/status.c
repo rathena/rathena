@@ -3948,12 +3948,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			clif_emotion(bl,4);
 			break;
 		case SC_MAXIMIZEPOWER:		/* マキシマイズパワ?(SPが1減る時間,val2にも) */
-			if (!(flag&4))
-			{
-				if(bl->type != BL_PC)
-					tick = 5000;
-				val2 = tick;
-			}
+			if (flag&4)
+				break;
+			val2 = tick>0?tick:60000;
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2;			/* 猛毒付?確率(%) */
@@ -4179,7 +4176,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (flag&4)
 				break;
 			calc_flag = 1; // [Celest]
-			val2 = tick;
+			val2 = tick>0?tick:60000;
 			val3 = type==SC_CLOAKING ? 130-val1*3 : 135-val1*5;
 			if (!val4)
 			{ //val4 signals eternal cloaking (not cancelled on attack) [Skotlex]
