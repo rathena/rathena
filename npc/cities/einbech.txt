@@ -536,7 +536,7 @@ einbech.gat,148,242,5	script	Jung	855,{
 	mes "people who's lived";
 	mes "in both Einbech and";
 	mes "Einbroch for a long time,";
-	mes "So I gyess I'm one of the";
+	mes "So I guess I'm one of the";
 	mes "best guides of this area.";
 	next;
 	mes "[Jung]";
