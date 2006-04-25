@@ -43,22 +43,38 @@ izlude.gat,54,139,1	script	Swordsman Association	111,{
 //Bonne-----------------------------------------------------------------------------------
 izlude.gat,55,74,2	script	Bonne	90,{
 	mes "[Bonne]";
+	mes "Greetings!";
 	mes "Izlude welcomes you.";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is the satellite city of Prontera, capital of the kingdom of Rune-Midgard.";
+	mes "Izlude is the satelite city of";
+	mes "Prontera, capital of the";
+	mes "kingdom of Rune-Midgard.";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is veeeerrrrry important not only because the Swordsman Association resides here, but also because we guard and secure the coast line.";
+	mes "Izlude is key to our kingdom";
+	mes "because of the Swordsman";
+	mes "Association located here, as well";
+	mes "as the fact that Izlude is in";
+	mes "charge of protecting the";
+	mes "Rune-Midgard coastline.";
 	next;
 	mes "[Bonne]";
-	mes "As for this bridge, though it might look weak and feeble, it is actually state of the art, built with the most sophisticated technology the earth's ever seen.";
+	mes "I know, this bridge might look weak";
+	mes "and fragile, but it is actually";
+	mes "state of the art, built with the";
+	mes "most sophisticated technology.";
 	next;
 	mes "[Bonne]";
-	mes "No matter how strong storms may be, or how many people may stand on it, this bridge will NEEEEVER collapse. You could test it, if you'd like.";
+	mes "No matter how strong storms may be,";
+	mes "or how many people may stand on it,";
+	mes "this bridge will NEEEEVER";
+	mes "collapse.";
 	next;
 	mes "[Bonne]";
-	mes "Please enjoy your visit here at Izlude.";
+	mes "Please enjoy";
+	mes "your visit";
+	mes "here in Izlude.";
 	close;
 }
 
@@ -68,21 +84,38 @@ izlude.gat,119,121,1	script	Cuskoal	124,{
 	set @TEMP, rand(2);
 	mes "[Cuskoal]";
 	if(@TEMP != 0) goto L_R0;
-	mes "The Arena is THE place for capable young people from every part of the Rune-Midgard Kingdom to test their skills.";
-	mes "You could battle with monsters of different levels. How many stages you can survive through will determine your ability level";
+	mes "The Arena here is THE place for";
+	mes "capable young people from all over";
+	mes "the Rune-Midgarts Kingdom to";
+	mes "challenge themsleves and test their";
+	mes "skills.";
 	next;
 	mes "[Cuskoal]";
-	mes "So What'd you say?";
+	mes "You can battle with monsters of";
+	mes "different levels. So, the number of";
+	mes "stages you survive will be a";
+	mes "testiment to you battle powers.";
+	next;
+	mes "[Cuskoal]";
+	mes "So, whaddya say?";
 	close;
 
 	L_R0:
-		mes "The pubs in Prontera are always full of people, from local and out-of-towners. They are very boisterous.";
+		mes "The pubs in Prontera are always";
+		mes "full of people from local areas and";
+		mes "from out-of-town. It can get pretty";
+		mes "busy.";
 		next;
 		mes "[Cuskoal]";
-		mes "They're always a good place for information and rumors because people are constantly coming in and out with them.";
+		mes "It's a pretty good place to stop by";
+		mes "for general information and to";
+		mes "listen to rumors.";
 		next;
 		mes "[Cuskoal]";
-		mes "If you listen to the people carefully, you just might get lucky and get very useful information for yourself.";
+		mes "So if you listen carefully, you";
+		mes "just might get lucky abd learn some";
+		mes "very usefull information for";
+		mes "yourself.";
 		close;
 }
 
@@ -91,25 +124,53 @@ izlude.gat,135,78,2	script	Charfri	91,{
 	set @TEMP,rand(2);
 	mes "[Charfri]";
 	if(@TEMP != 0) goto L_R0;
-	mes "Some people insult our city by referring to it as just being the satellite city of Prontera.... but Izlude is actually an excellent city.";
-	mes "It's home to the Izlude Swordsman Association and is situated next to the sea and the beautiful island of Byalan.";
+	mes "Some people may think Izlude is";
+	mes "just a satelite city of Prontera,";
+	mes "and not really that important...";
 	next;
 	mes "[Charfri]";
-	mes "You'll have to board on a ship at the port to get to Byalan Island.  There is a dangerous dungeon on the island, so don't go there if you plan on wandering around aimlessly.";
+	mes "But Izlude is a beautiful town";
+	mes "right next to the ocean, as well as";
+	mes "beautiful Byalan Island.";
+	next;
+	mes "[Charfri]";
+	mes "You'll have to board on a ship at";
+	mes "the port to get to Byalan Island.";
+	mes "There are dangerous dungeons on";
+	mes "that island, so don't go snooping";
+	mes "around just anywhere.";
 	close;
 
 	L_R0:
-		mes "Though it is very beautiful, the Byalan Island has a mysterious dungeon extending deep under the sea.";
+		mes "Though it is very beautiful, Byalan";
+		mes "Island has a mysterious dungeon";
+		mes "that exstends deep under the sea.";
 		next;
 		mes "[Charfri]";
-		mes "People who've been there have said that some parts of the dungeon are actually underwater.";
+		mes "People who've actually been there";
+		mes "have said that if you go deep";
+		mes "enough, the dungeon actually";
+		mes "descends underwater.";
 		next;
 		mes "[Charfri]";
-		mes "Those who saw the underwater view said it was just so fantastic that they've kept dreaming of it ever since.";
-		mes "Unfortunately the monsters there are too strong for ordinary people to visit there.";
+		mes "Surprisingly, once you're";
+		mes "underwater, you can breathe just";
+		mes "like a fish. Maybe some kind of";
+		mes "supernatural force is in effect.";
 		next;
 		mes "[Charfri]";
-		mes "I wish I could get a glimpse of the underwater view everyone talks about.... alas I can only dream.";
+		mes "Ah...";
+		mes "The people who've seen the";
+		mes "underwater view say it is so";
+		mes "fantastic that they've kept";
+		mes "dreaming of it ever since.";
+		next;
+		mes "[Charfri]";
+		mes "But unfortunately, the monsters are";
+		mes "too strong for ordinary people to";
+		mes "merely go sight seeing there.";
+		mes "Still, just once, I'd like to go";
+		mes "down there...";
 		close;
 }
 
@@ -118,56 +179,117 @@ izlude.gat,150,118,3	script	Dega	84,{
 	set @TEMP,rand(3);
 	mes "[Dega]";
 	if(@TEMP != 0) goto L_R0;
-	mes "Mt. Mjornir located north of Prontera is extremely tough to travel through.  Not only is the trek up the mountain difficult, but extremely aggressive insects live there too.";
+	mes "Mt. Mjolnir, located north of";
+	mes "Prontera, is a tough";
+	mes "and steep climb.";
 	next;
 	mes "[Dega]";
-	mes "I mean, some of them just start attacking you for no reason whatsoever.";
+	mes "Aside from the dangers of the";
+	mes "mountain itself, insanely vicious";
+	mes "insects live there too. I mean,";
+	mes "they'll just attack you for no";
+	mes "reason.";
 	next;
 	mes "[Dega]";
-	mes "If you ever want to go through Mt.  Mjornir, make sure you prepare yourself and build up your confidence.  Otherwise, go around it.";
+	mes "If you ever want to visit somewhere";
+	mes "pas Mt. Mjolnir, then you prepare";
+	mes "your self for the challenge. Or you";
+	mes "could walk around it.";
 	close;
 
 	L_R0:
 		if(@TEMP != 1) goto L_R1;
-		mes "Some monsters in Rune-Midgard can detect the use of a spell by a character before it is used.";
+		mes "Some monsters in the world have the.";
+		mes "unique ability to sense mystical";
+		mes "energy, and can detect Magic spells";
+		mes "before they are cast.";
 		next;
 		mes "[Dega]";
-		mes "Golems that live in the desert are one of those monsters.  If you underestimate their sluggish movement and try to cast a spell on them...,";
+		mes "Golem of the desert is one of them.";
+		mes "Don't underestimate it due to it's";
+		mes "sluggishness...";
 		next;
 		mes "[Dega]";
-		mes "(snaps fingers) just like that they'll disappear from your sight.";
+		mes "If you try to cast magic near it,";
+		mes "it will notice and saunter over to";
+		mes "smash you. So you better watch out";
+		mes "for Golem.";
 		close;
 	L_R1:
-		mes "There is a very delightful place where you can find every type of Poring.";
-		mes "It is somewhere near the bridge, connecting the forest and the desert on the way to the city called Payon to the Southeast from here.";
+		mes "Theres a very delightful place";
+		mes "where you can find every";
+		mes "type of Poring.";
 		next;
 		mes "[Dega]";
-		mes "There are not only pink Porings but also orange Drops, which can be found at the desert, and green PoPoring.";
+		mes "It's somewhere near the bridge";
+		mes "connecting the forest and the";
+		mes "desert, on the way to the city of";
+		mes "Payon which is Southeast from";
+		mes "here.";
 		next;
 		mes "[Dega]";
-		mes "But be careful, before you know it, you might be face to face with a Ghostring that floats around in the air like a ghost.";
-		mes "Although most porings tend to be very cute and gentle, Ghostring is an EXCEPTION. It is very, very dangerous.";
+		mes "There are not only pink Porings but";
+		mes "also Drops, which can be found at";
+		mes "the desert, and the green";
+		mes "Poporing.";
 		next;
 		mes "[Dega]";
-		mes "If you are lucky enough, you might even bump into and Angelring.  It's a Poring with wings like an angel.";
+		mes "But be careful, before you realize";
+		mes "it, you may come face to face with";
+		mes "Ghostring, a deadly Poring that";
+		mes "floats around the air like a";
+		mes "ghost.";
+		next;
+		mes "[Dega]";
+		mes "Well, of course, they are all very";
+		mes "cute, but Ghostring is an";
+		mes "EXCEPTION. It is very very";
+		mes "dangerous.";
+		next;
+		mes "[Dega]";
+		mes "If you are lucky enough, you might";
+		mes "even bump into Angeling, the";
+		mes "Poring with Angel wings.";
 		next;
 		menu "Ghostring?",-,"Angelring?",M1,"End Conversation.",MEnd;
 
 			mes "[Dega]";
-			mes "Ghostring is a grayish Poring that floats around in the air like a ghost. Since it's ghostlike, physical attack can't do any damage to it.";
+			mes "Ghostring is a grayish Poring that";
+			mes "floats around in the air like a";
+			mes "ghost. Just like other ghosts,";
+			mes "physical attacks can't do any";
+			mes "damage to it.";
 			next;
 			mes "[Dega]";
-			mes "Those who rely on physical attacks, like Swordsmen and Archers, will most likely have to run for their lives if they bump into a Ghostring.";
+			mes "Those whose main attack methods are";
+			mes "physical like Swordman and Archer";
+			mes "might have to run for their lives";
+			mes "when facing Ghostrings.";
 			next;
 			mes "[Dega]";
-			mes "Of course there is hope for people in those job classes.  If equipped with weapons with elemental properties, a Ghostring CAN be defeated.";
+			mes "But don't leave just yet~! There is";
+			mes "great news for people with those";
+			mes "jobs. Making a weapon of some";
+			mes "elemental property is the key.";
 			next;
+			mes "[Dega]";
+			mes "This way, even a Swordman or an";
+			mes "Archer can inflict damage, the way";
+			mes "Magic does, on Ghostrings.";
 			close;
 		M1:
 			mes "[Dega]";
-			mes "Unlike Ghostrings, Angelrings can be hit by physical attacks but are in turn immune to Magic attacks.";
-			mes "So Mages and Acolytes will have difficulty against Angelrings.";
+			mes "Angelings are immune to Magic";
+			mes "attacks. If people who can only";
+			mes "attack with Magic face an";
+			mes "Angeling, then it's time for";
+			mes "them to run.";
 			next;
+			mes "[Dega]";
+			mes "If you've got an extra knife or";
+			mes "sword, you could give it a shot.";
+			mes "But it will be very difficult";
+			mes "alone, don't you think?";
 			close;
 		MEnd:
 			mes "[Dega]";
@@ -177,20 +299,48 @@ izlude.gat,150,118,3	script	Dega	84,{
 
 //Kylick-------------------------------------------------------------------------------------
 izlude.gat,150,143,4	script	Kylick	97,{
+	set @TEMP,rand(2);
 	mes "[Kylick]";
-	mes "Don't you think Binoculars are really COOL?! YOU can see SUPER FAR AWAY...";
-	emotion e_ic;
+	if (@TEMP != 0) goto L_R0;
+
+	mes "Don't you think Binoculars";
+	mes "are really COOL?! You can";
+	mes "see all sorts of places...!";
 	next;
 	mes "[Kylick]";
-	mes "... Ahem~! We, here at Izlude, are responsible for maintaining peace, not only on land, but also at sea.";
+	mes "Here in Izlude, we are responsible";
+	mes "for maintaining peace not only on";
+	mes "land but also at sea. That's why";
+	mes "this city has a huge telescope.";
 	next;
-	mes "[Kylick]";
-	mes "That's why we have that huge Periscope to constantly watch over the sea and help prevent any serious problems beforehand.";
+	mes "This telescope constantly watches";
+	mes "over the sea, so that we can";
+	mes "prevent any serious trouble from";
+	mes "happening. You know...";
 	next;
-	mes "[Kylick]";
-	mes "After all, being well prepared is always better than being unprepared.";
-	emotion e_ok;
+	mes "An ounce of";
+	mes "prevention is worth";
+	mes "a pound of cure";
+	mes "after all, right?";
 	close;
+
+	L_R0:
+		mes "I was thinking, even though the";
+		mes "people of Izlude live so close to";
+		mes "the ocean...";
+		next;
+		mes "[Kylick]";
+		mes "There are other cultures that have";
+		mes "completely developed by living off";
+		mes "of the sea. Of course, I'm talking";
+		mes "about Amatsu.";
+		next;
+		mes "[Kylick]";
+		mes "I hear the cuisine there is really";
+		mes "good! Although the idea of eating";
+		mes "raw fish is new to me, I would love";
+		mes "to go there, and try it just once!";
+		close;
 }
 
 // Soldier ------------------------------------------------------------------------------
@@ -198,259 +348,437 @@ izlude.gat,124,178,4	script	Soldier	105,{
 	mes "[Soldier]";
 	mes "HeHeHeHe... HaHaHaHa";
 	mes "Huh? Why am I so happy?";
-	mes "you want to know?";
-	emotion e_heh;
+	mes "You wanna know?";
 	next;
 	menu "Sure, why?",-, "Not really, I don't care.",M_1;
 	
 		mes "[Soldier]";
-		mes "Ah~~ There is not much for us to do these days. Merchants buy items which monsters drop.... you knew that, right?";
+		mes "Ah~~ There's not much for us to do";
+		mes "these days. You see, Merchants buy";
+		mes "items dropped by monsters. But you";
+		mes "knew that, right?";
 		next;
 		menu "Of course",sM_0, "Eh? Really?",sM_1;
 		
 		sM_0:
 			mes "[Soldier]";
-			mes "HaHa In fact, that was actually our job.";
-			mes "But there were more and more hunters who come in order to get paid. So it was just too much to handle.";
+			mes "HaHa, in fact, that used to be part";
+			mes "of our job. But tere were more and";
+			mes "more hunters who come in order to";
+			mes "get paid, so it became too much to";
+			mes "handle.";
 			next;
 			mes "[Soldier]";
-			mes "We had to work over time every day.  Ah~~~ that was a nightmare!!!...~~~";
-			emotion e_wah;
+			mes "We had to work overtime every day.";
+			mes "Ah, it was a nightmare...! Anyways,";
+			mes "the government eventually made a";
+			mes "wise decision in creating the";
+			mes "Registration System.";
 			next;
 			mes "[Soldier]";
-			mes "Anyways, the government made a smart move and created the Registration System.";
-			mes "The Office of Prize Compensation only pays those who have been registered.";
+			mes "The Office of Prize Compensation";
+			mes "only pays those who have the";
+			mes "Registration. Of course, you'd have";
+			mes "to be a merchant and stay in the";
+			mes "same place all day long.";
 			next;
 			mes "[Soldier]";
-			mes "The requirements for registration are for a merchant to secure sufficient funds and to stay at one place all the time.";
-			mes "The Office gives away the registration to any merchant who fullfills those requirements.";
+			mes "The Office gives away the";
+			mes "registration to any merchant who";
+			mes "fulfills those requirements. So";
+			mes "nowadays, the hunters sell their";
+			mes "goods to the registered merchants.";
 			next;
 			mes "[Soldier]";
-			mes "So there aren't too many people that come to us any more. I mean we are still busy, but that's nothing compared to how it was before~~";
+			mes "So nowadays, the hunters sell their";
+			mes "goods to the registered merchants.";
+			mes "Not too many people come to us for";
+			mes "that anymore.";
 			next;
 			mes "[Soldier]";
-			mes "People who have suffered are able to appreciate even the slightest in comforts.";
-			next;
-			mes "[Soldier]";
-			mes "HaHaHaHaHa!";
-			emotion e_heh;
+			mes "I mean we are still busy, but";
+			mes "that's nothing compared to how it";
+			mes "was before. People who have felt";
+			mes "suffering know how to appreciate";
+			mes "even the slightest comfort.";
 			close;
 		sM_1:
 			mes "[Soldier]";
-			mes "What?! What do you mean you didn't know?!";
-			emotion e_what;
+			mes "What?! What do you mean you didn't";
+			mes "know?! Well, you know you can get";
+			mes "items by killing monsters. If you";
+			mes "bring and sell those to a merchant,";
+			mes "you can make some money.";
 			next;
 			mes "[Soldier]";
-			mes "Hm... well... you know you could get items by killing monsters right?";
-			mes "You could make some money out of it by selling those items to a merchant.";
+			mes "HaHa, in fact, that used to be part";
+			mes "of our job. But tere were more and";
+			mes "more hunters who come in order to";
+			mes "get paid, so it became too much to";
+			mes "handle.";
 			next;
-			goto sM_0;
+			mes "[Soldier]";
+			mes "We had to work overtime every day.";
+			mes "Ah, it was a nightmare...! Anyways,";
+			mes "the government eventually made a";
+			mes "wise decision in creating the";
+			mes "Registration System.";
+			next;
+			mes "[Soldier]";
+			mes "The Office of Prize Compensation";
+			mes "only pays those who have the";
+			mes "Registration. Of course, you'd have";
+			mes "to be a merchant and stay in the";
+			mes "same place all day long.";
+			next;
+			mes "[Soldier]";
+			mes "The Office gives away the";
+			mes "registration to any merchant who";
+			mes "fulfills those requirements. So";
+			mes "nowadays, the hunters sell their";
+			mes "goods to the registered merchants.";
+			next;
+			mes "[Soldier]";
+			mes "I mean we are still busy, but";
+			mes "that's nothing compared to how it";
+			mes "was before. People who have felt";
+			mes "suffering know how to appreciate";
+			mes "even the slightest comfort.";
+			close;
 	M_1:
 		mes "[Soldier]";
-		mes "OK Good bye~~";
+		mes "Okay Good bye~~";
 		close;
 }
 
 //Red-------------------------------------------------------------------------------------
 izlude.gat,58,126,1	script	Red	98,{
+
 	mes "[Red]";
-	mes "The only skill that a Swordsman needs is 'Bash'! 'Bash'! 'Bash'! ONLY 'Bash'!";
-	mes "There's no need to waste any time and effort on other minor skills ~~ unless you're some kind of wuss!";
-	emotion e_gg;
+	mes "The only slill that's needed for a";
+	mes "Swordman is ^FF0000Bash^000000! Bash, Bash and";
+	mes "ONLY ^FF0000BASH^000000! No need to waste time";
+	mes "and effort for smaller skills!";
+	mes "Everything else is for cowards and";
+	mes "wusses!";
 	next;
 	mes "[Cebalis]";
-	mes "What are you talking about?";
-	emotion e_what;
+	mes "What are you talking about!? The";
+	mes "ideal Swordman resolutely stands";
+	mes "alone, surrounded by countless";
+	mes "enemies and smashing them all with";
+	mes "one awesome attack.";
 	next;
 	mes "[Cebalis]";
-	mes "The mark of a true Swordsman is the ability to bravely stand alone against a mob of enemies and SQUASH them ALL!";
+	mes "^FF0000MAGNUM BREAK^000000";
+	mes "That's right, Magnum Break";
+	mes "is the skill that does";
+	mes "the job right~!!";
 	next;
 	mes "[Cebalis]";
-	mes "AND the only skill that can do that is 'Magnum Break'!!";
-	next;
-	mes "[Cebalis]";
-	mes "It's a little bit risky to use because the explosive impact it creates may hit un-intended targets... which will then come after you... ";
-	mes "but its a risk a Swordsman SHOULD BE willing to take!!";
-	next;
-	mes "[Red]";
-	mes "That's exactly why you're a dumb, idiot! The mark of a true Swordsman?! I still remember the last time you used 'Magnum Break'....";
-	emotion e_pif;
-	next;
-	mes "[Red]";
-	mes "You were just busy running away from all of those Porings that got hit by that stupid skill! You weakling!";
-	mes "'Bash' hits ONE target with DEADLY PRECISION!! No need to fear accicental mobs.";
-	next;
-	mes "[Cebalis]";
-	mes "Ahem..... Why do you always have to bring up insignificant incidents that have long since passed?";
-	mes "I'm TELLING YOU, 'Magnum Break' is THE skill for a SWORDSMAN~!!";
-	next;
-	mes "[Cebalis]";
-	mes "'Bash' is just a stepping stone to getting 'Magnum Break'.  After all you need 5 levels of 'Bash before you can get level 1 'Magnum Break'.";
+	mes "Well... Sometimes the explosive";
+	mes "damage might accidentally hit some";
+	mes "wandering monsters, and those guys";
+	mes "end up coming after you, but that's";
+	mes "a risk a Swordman should be willing";
+	mes "to take!!";
 	next;
 	mes "[Red]";
-	mes "Ooohhh maaaann.....";
-	emotion e_dots;
+	mes "That's exactly why you're dumb, you";
+	mes "idiot! And what's this about the";
+	mes "'the ideal Swordman?' I still";
+	mes "remember the last time you used";
+	mes "Magnum Break...";
 	next;
 	mes "[Red]";
-	mes "Hey! You there! which do you think is better? 'Bash', a powerful and precise blow used on a single enemy. ";
-	mes "or 'Magnum Break', a fiery strike that does splash damage to many enemies??";
+	mes "You ended up running away from all";
+	mes "those monsters you hit with that";
+	mes "stupid skill! Weakling! All those";
+	mes "Porings around you got hit and they";
+	mes "all tried to kill you.";
+	next;
+	mes "[Cebalis]";
+	mes "Hmpf. As I recall, you were running";
+	mes "away too, apparently too busy to";
+	mes "use your precious bash. In any";
+	mes "case, Magnum Break is THE skill for";
+	mes "a Swordman~!!";
+	next;
+	mes "[Cebalis]";
+	mes "Something simplistic like Bash";
+	mes "is just one of the little steps";
+	mes "towards Magnum Break.";
+	next;
+	mes "[Red]";
+	mes "Oh man~";
+	mes "Hey, I know you just";
+	mes "heard everything.";
+	mes "So what do you think?";
+	next;
+	mes "[Red]";
+	mes "Which one do you think is better?";
+	mes "The critical damage skill, ^FF0000Bash^000000, or";
+	mes "the Splash damage skill, ^FF0000Magnum^000000";
+	mes "^FF0000Break^000000?";
 	next;
 	menu "Bash",-,"Magnum Break",L1;
 	
 		mes "[Red]";
 		if( baseClass == Job_Swordman ) goto L00;
-		mes "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great person!";
-		mes "Hahaha!! Undoubtedly only 'Bash' is suitable for a Swordsman.  Please tell that to this BONEHEAD over here!! Hahaha.";
-		emotion e_no1;
+		mes "Hahahaha!! See!? Someone who";
+		mes "pursues a different job agrees with";
+		mes "me~! You really are a great guy!";
+		mes "Hahaha!! Undoubtedly, onlu ^FF0000Bash^000000";
+		mes "suits a Swordman. Please tell that";
+		mes "to this NIMROD over here~ Hahaha!";
 		close;
 		
 		L00:
-			mes "Hahahaha!!! I knew you'd choose 'Bash'!! Without a doubt only 'Bash' suits a Swordsman.  Please tell that to the BONEHEAD over there!! Hahaha.";
-			emotion e_no1;
+			mes "Hahahaha!!! I knew you'd see things";
+			mes "my way! you ARE a great guy!!";
+			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
+			mes "Swordman. Please tell that to this";
+			mes "BONEHAD over here~ Hahaha!";
 			next;
 			mes "[Red]";
-			mes "Hm, Let me give you a bit of advice.  After you achieve level 5 'Bash', the amount of SP the skill consumes doubles, so keep an eye on your SP gauge.";
+			mes "Hmm, let me give you a bit of";
+			mes "advice. After you achieve level 5";
+			mes "'Bash', the amount of SP consumed";
+			mes "by the skill increased greatly, so";
+			mes "watch out for your SP.";
 			close;
 	L1:
 		mes "[Cebalis]";
 		if( baseClass == Job_Swordman ) goto L01;
-		mes "Right! 'Magnum Break' is THE BEST!!! You know what you're talking about, huh? I don't know why this bonehead is so stubborn.";
+		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
+		mes "You know what you're talking about,";
+		mes "eh? I don't know why this jerkface";
+		mes "is being sooooo stubborn.";
 		close;
 
 		L01:
-			mes "Darn Right!! 'Magnum Break' IS the BETTER skill!! You know what your talking about freind. HaHaHa.";
+			mes "Alright!! ^FF0000Magnum Break^000000 is the";
+			mes "BEST!! Now you're talking~!! You";
+			mes "know the stuff~HaHaHa!";
 			next;
 			mes "[Cebalis]";
-			mes "You want some useful information? Okay, let me tell ya! 'Magnum Break' has the elemental Property of 'Fire'.";
-			mes "It won't be too effective against monsters with the 'Water' property, but it works great against 'Undead' and 'Earth' property monsters.!";
+			mes "You wanna know some useful";
+			mes "information? Okay, lemme tell";
+			mes "ya! Magnum Break has Fire";
+			mes "Property.";
 			next;
 			mes "[Cebalis]";
-			mes "And most importantly, check your surroundings before you use it.  If you don't you may end up taking on more monsters than you can handle.";
+			mes "So it won't be too effective";
+			mes "against monsters with the Water";
+			mes "property, but this is THE skill to";
+			mes "use against Undead and Earth";
+			mes "property monsters!";
+			next;
+			mes "[Cebalis]";
+			mes "And most importantly, look around";
+			mes "before you use it. Otherwise you'll";
+			mes "be in BIG trouble~";
 			close;
 }
 
 //Cebalis-------------------------------------------------------------------------------------
 izlude.gat,56,126,7	script	Cebalis	85,{
-	mes "[Cebalis]";
-	mes "The mark of a true Swordsman is the ability to bravely stand alone against a mob of enemies and SQUASH them ALL!!";
-	emotion e_gg;
-	next;
-	mes "[Cebalis]";
-	mes "AND the only skill that can do that is 'Magnum Break'!!";
-	next;
-	mes "[Cebalis]";
-	mes "It's a little bit risky to use because the explosive impact it creates may hit un-intended targets...which will then come after you...";
-	mes "but its a risk a Swordsman SHOULD BE willing to take!";
-	next;
+
 	mes "[Red]";
-	mes "What are you talking about?";
-	next;	
-	mes "[Red]";
-	mes "The only skill that a Swordsman needs is 'Bash'! 'Bash'! 'Bash'! ONLY 'Bash'!";
-	mes "There's no need to waste any time and effort on other minor skills ~~ unless you're some kind of wuss!";
-	next;
-	mes "[Red]";
-	mes "That's exactly why you're a dumb, idiot! The mark of a true Swordsman?! I still remember the last time you used 'Magnum Break'....";
-	next;
-	mes "[Red]";
-	mes "You were just busy running away from all of the Porings that got hit by that stupid skill! You weakling!";
-	mes "'Bash' hits ONE target with DEADLY PRECISION!! No need to fear accidental mobs.";
+	mes "The only slill that's needed for a";
+	mes "Swordman is ^FF0000Bash^000000! Bash, Bash and";
+	mes "ONLY ^FF0000BASH^000000! No need to waste time";
+	mes "and effort for smaller skills!";
+	mes "Everything else is for cowards and";
+	mes "wusses!";
 	next;
 	mes "[Cebalis]";
-	mes "Ahem... Why do you always have to bring up insignificant incidents that have long since passed?";
-	mes "I'm TELLING YOU, 'Magnum Break' is the skill for a SWORDSMAN~!!";
-	emotion e_swt;
+	mes "What are you talking about!? The";
+	mes "ideal Swordman resolutely stands";
+	mes "alone, surrounded by countless";
+	mes "enemies and smashing them all with";
+	mes "one awesome attack.";
 	next;
 	mes "[Cebalis]";
-	mes "'Bash' is just a stepping stone to getting 'Magnum Break'.  After all you need 5 levels of 'Bash before you can get level 1 'Magnum Break'.";
+	mes "^FF0000MAGNUM BREAK^000000";
+	mes "That's right, Magnum Break";
+	mes "is the skill that does";
+	mes "the job right~!!";
+	next;
+	mes "[Cebalis]";
+	mes "Well... Sometimes the explosive";
+	mes "damage might accidentally hit some";
+	mes "wandering monsters, and those guys";
+	mes "end up coming after you, but that's";
+	mes "a risk a Swordman should be willing";
+	mes "to take!!";
 	next;
 	mes "[Red]";
-	mes "Ooohhh maaaann.....";
+	mes "That's exactly why you're dumb, you";
+	mes "idiot! And what's this about the";
+	mes "'the ideal Swordman?' I still";
+	mes "remember the last time you used";
+	mes "Magnum Break...";
 	next;
 	mes "[Red]";
-	mes "Hey! You there! what do you think is better? 'Bash', a powerful and precise blow used on a single enemy,.......";
-	mes "or 'Magnum Break', a fiery strike that does splash damage to many enemies??";
+	mes "You ended up running away from all";
+	mes "those monsters you hit with that";
+	mes "stupid skill! Weakling! All those";
+	mes "Porings around you got hit and they";
+	mes "all tried to kill you.";
+	next;
+	mes "[Cebalis]";
+	mes "Hmpf. As I recall, you were running";
+	mes "away too, apparently too busy to";
+	mes "use your precious bash. In any";
+	mes "case, Magnum Break is THE skill for";
+	mes "a Swordman~!!";
+	next;
+	mes "[Cebalis]";
+	mes "Something simplistic like Bash";
+	mes "is just one of the little steps";
+	mes "towards Magnum Break.";
+	next;
+	mes "[Red]";
+	mes "Oh man~";
+	mes "Hey, I know you just";
+	mes "heard everything.";
+	mes "So what do you think?";
+	next;
+	mes "[Red]";
+	mes "Which one do you think is better?";
+	mes "The critical damage skill, ^FF0000Bash^000000, or";
+	mes "the Splash damage skill, ^FF0000Magnum^000000";
+	mes "^FF0000Break^000000?";
 	next;
 	menu "Bash",-,"Magnum Break",L1;
 	
 		mes "[Red]";
 		if( baseClass == Job_Swordman ) goto L00;
-		mes "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great person!";
-		mes "Hahaha!! Undoubtedly only 'Bash' is suitable for a Swordsman.  Please tell that to this BONEHEAD over here!! Hahaha.";
+		mes "Hahahaha!! See!? Someone who";
+		mes "pursues a different job agrees with";
+		mes "me~! You really are a great guy!";
+		mes "Hahaha!! Undoubtedly, onlu ^FF0000Bash^000000";
+		mes "suits a Swordman. Please tell that";
+		mes "to this NIMROD over here~ Hahaha!";
 		close;
 		
 		L00:
-			mes "Hahahaha!!! I knew you'd choose 'Bash'!! Without a doubt only 'Bash' suits a Swordsman.  Please tell that to the BONEHEAD over there!! Hahaha.";
+			mes "Hahahaha!!! I knew you'd see things";
+			mes "my way! you ARE a great guy!!";
+			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
+			mes "Swordman. Please tell that to this";
+			mes "BONEHAD over here~ Hahaha!";
 			next;
 			mes "[Red]";
-			mes "Hm, Let me give you a bit of advice.  After you achieve level 5 'Bash', the amount of SP the skill consumes doubles, so keep an eye on your SP gauge.";
+			mes "Hmm, let me give you a bit of";
+			mes "advice. After you achieve level 5";
+			mes "'Bash', the amount of SP consumed";
+			mes "by the skill increased greatly, so";
+			mes "watch out for your SP.";
 			close;
 	L1:
 		mes "[Cebalis]";
 		if( baseClass == Job_Swordman ) goto L01;
-		mes "Right! 'Magnum Break' is THE BEST!!! You know what you're talking about, huh? I don't know why this bonehead is so stubborn.";
-		emotion e_no1;
+		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
+		mes "You know what you're talking about,";
+		mes "eh? I don't know why this jerkface";
+		mes "is being sooooo stubborn.";
 		close;
 
 		L01:
-			mes "Darn Right!! 'Magnum Break' IS the BETTER skill!! You know what your talking about friend. HaHaHa.";
-			emotion e_no1;
+			mes "Alright!! ^FF0000Magnum Break^000000 is the";
+			mes "BEST!! Now you're talking~!! You";
+			mes "know the stuff~HaHaHa!";
 			next;
 			mes "[Cebalis]";
-			mes "You want some useful information? Okay, let me tell ya! 'Magnum Break' has the elemental Property of 'Fire'.";
-			mes "It won't be too effective against monsters with the 'Water' property, but it works great against 'Undead' and 'Earth' property monsters.!";
+			mes "You wanna know some useful";
+			mes "information? Okay, lemme tell";
+			mes "ya! Magnum Break has Fire";
+			mes "Property.";
 			next;
 			mes "[Cebalis]";
-			mes "And most importantly, check your surroundings before you use it.  If you don't you may end up taking on more monsters than you can handle.";
+			mes "So it won't be too effective";
+			mes "against monsters with the Water";
+			mes "property, but this is THE skill to";
+			mes "use against Undead and Earth";
+			mes "property monsters!";
+			next;
+			mes "[Cebalis]";
+			mes "And most importantly, look around";
+			mes "before you use it. Otherwise you'll";
+			mes "be in BIG trouble~";
 			close;
 }
 
 //Aaron-------------------------------------------------------------------------------------
 izlude_in.gat,125,164,5	script	Aaron	65,{
 	mes "[Aaron]";
-	mes "Hm? A Swordsman?..........";
-	emotion e_what;
+	mes "Don't you think Strong VIT and";
+	mes "training in a unique breathing";
+	mes "method wich enables quick HP";
+	mes "recovery are the greatest";
+	mes "advantages for a Swordman?";
 	next;
 	mes "[Aaron]";
-	mes "Do you think strong VIT and a highly trained and unique breathing method enabling quick HP recovery, are the greatest advantages of a Swordsman?";
+	mes "If you train your skills very hard,";
+	mes "you can even see your HP";
+	mes "recovering. The amount of";
+	mes "recovered depends on";
+	mes "vitality, or VIT.";
 	next;
 	mes "[Aaron]";
-	mes "If you train hard enough, you can even notice your HP recovering. The amount that recovers depends on your VIT level.";
+	mes "So if you invest more of your stats";
+	mes "in VIT, you'll recover more HP";
+	mes "overall when resting.";
 	next;
 	mes "[Aaron]";
-	mes "So if you invest in your VIT more, then the recovery amount will increase accordingly.";
+	mes "But of course, it'd be good to have";
+	mes "high Attack, wouldn't it? You can";
+	mes "either acquire a good weapon or";
+	mes "bring up your STR to support you";
+	mes "Attack.";
 	next;
 	mes "[Aaron]";
-	mes "But of course it'd be good to have a high Attack, wouldn't it? You can either acquire a good weapon or increase your STR level to enhance your Attack.";
+	mes "You know you'll need some strength";
+	mes "anyways to swing good weapons";
+	mes "easily, anyway.";
 	next;
 	mes "[Aaron]";
-	mes "You will also need strength to handle weapons more easily as well as to increase the amount of weight you can carry.";
+	mes "Another important thing is how";
+	mes "accurate you can hit your";
+	mes "opponents. DEX is the key here. If";
+	mes "you train DEX, then the gap between";
+	mes "the MIN and MAX damage will also";
+	mes "decrease.";
 	next;
 	mes "[Aaron]";
-	mes "Another important thing is how accurate you can hit your opponents. DEX is the key here.  Dexterity also decreases the gap between the MIN and MAX damage you can deal.";
-	next;
-	mes "[Aaron]";
-	mes "Hm... Are you bored? Want me to go on?";
-	emotion e_hmm;
+	mes "Hm...";
+	mes "Are you bored by all this talk? Or";
+	mes "do you want me to go on?";
 	next;
 	menu "Tell me more please.",-,"End conversation",LEnd;
 	
 		mes "[Aaron]";
-		mes "Hm... in that case, I'll explain about the other attributes to you briefly.  In order to attack and evade quickly, you've got to have a good amount of AGI.";
+		mes "Hmm...";
+		mes "In that case, I'll explain about";
+		mes "the other attributes to you";
+		mes "briefly. In order to attack and";
+		mes "evade quickly, you've gotta pay";
+		mes "attention to AGI.";
 		next;
 		mes "[Aaron]";
-		mes "A high AGI level will ensure that you can avoid attacks making you almost unhittable.";
-		next;
-		mes "[Aaron]";
-		mes "In case you want to land more critical hits, it's a good idea to invest in LUK.  INT increases max SP, which is needed to use various skills.";
-		next;
-		mes "[Aaron]";
-		mes "Well it's up to you on what you type of attributes you focus on.";
-		next;
+		mes "In case you want to make more";
+		mes "critical hits, it's a good idea to";
+		mes "invest in LUK. INT also increases";
+		mes "Max SP, which is needed to use";
+		mes "various skils... But it's really";
+		mes "up to you.";
+		close;
 	LEnd:
 		mes "[Aaron]";
-		mes "OK, train hard~~";
-		emotion e_no1;
+		mes "Okay then,";
+		mes "train hard~~";
 		close;
 }
 
@@ -458,59 +786,112 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 izlude.gat,182,186,6	script	Edgar	709,{
 	
 	mes "[Edgar]";
-	mes "Izlude is connected with Alberta by the harbor at the west.  There is soo much traffic between the 2 cities that I sometimes feel like an Albertian.  Hahahah";
+	mes "My town, Izlude is connected to";
+	mes "Alberta by the harbor in the West.";
+	mes "There is so much traffic between";
+	mes "us, I almost become an Albertian.";
+	mes "Hehehe~";
+	next;
+	mes "[Edgar]";
+	mes "There's this guy I know pretty";
+	mes "well, Phelix, who lives in Alberta.";
+	mes "That guy is really stingy... He";
+	mes "charges for everything!";
+	next;
+	mes "[Edgar]";
+	mes "But he's a really nice guy and";
+	mes "likes helping other people. He has";
+	mes "a good heart and will give you his";
+	mes "support if you meet his price.";
+	next;
+	mes "[Edgar]";
+	mes "Lately, people in alberta say that";
+	mes "he is really trying to help folks";
+	mes "and that his demand for Jellopies";
+	mes "is just a coverup. Well, you";
+	mes "should take a look at what he has";
+	mes "to offer.";
 M_Menu:
 	next;
-	menu "Tell me more",-,"Can you tell me the way to Alberta?",M_1,"End Conversation",M_End;
+	menu "Can you tell me the way to Alberta?",-,"End Conversation",M_End;
 	
 		mes "[Edgar]";
-		mes "I have a friend named Phelix in Alberta.  He is a little stingy but he's a generally nice guy and likes helping others.";
-		mes "He has a big heart and can help you get some useful items in exchange for monster drops.";
+		mes "Huh? Well, you can use your feet";
+		mes "and just walk. But if you have";
+		mes "money, I'd like to suggest that you";
+		mes "take a ship.";
 		next;
-		mes "[Edgar]";
-		mes "Lately those in Alberta have been saying that he is helping out people in exchange for Jellopies or something like that.";
-		mes "You might be able to save some zeny if you talk to him.";
-		goto M_Menu;
-
-	M_1:
-		mes "[Edgar]";
-		mes "Well you can always walk there.  It's south of here and past the city of Payon.  However the walk is rather long so I suggest you take a ship over there.";
-		next;
-		menu "Ok gotcha.",-,"Sick of walking and no money now.",sM_1;
+		menu "Ok, gotcha.",-,"But I'm sick of walking and I'm broke!",sM_1;
 		
 			mes "[Edgar]";
 			mes "Alright, Take  Care~";
-			goto M_Menu;
+			close;
 
 		sM_1:
+			if (iz_move_alberta == 1) goto sM_2:
 			mes "[Edgar]";
-			mes "Hmm..., you hate to walk and are low on money, but you want to go there...(sigh)...Oh boy...";
-			emotion e_swt;
+			mes "Okay...";
+			mes "You don't want to walk AND you've";
+			mes "got no cash, but you still want to";
+			mes "go there? Oh geez.";
 			next;
 			mes "[Edgar]";
-			mes "Well I am the captain of a small ship so I could bring you there at the low price of 250 Zeny.";
+			mes "Fine fine. Me, being the captain of";
+			mes "a ship, can afford to bring you";
+			mes "there at a lower price. How does";
+			mes "250 Zeny sound?";
 			next;
-			menu "Alright~!",-,"Bah, what a rip off!!!",sm_1b;
+			menu "Alrighty~?",-,"Bah, what a rip off!!",sm_1b;
 			
-				if(Zeny < 250) goto sl_NoZeny;
 				set iz_move_alberta,1;
+				if(Zeny < 250) goto sl_NoZeny;
 				set Zeny, Zeny - 250;
 				warp "alberta.gat",195,164;
-				
-				sl_NoZeny:
-					mes "[Edgar]";
-					mes "Oh boy you don't have enough money! Go get more.";
-					close;
 
 			sm_1b:
 				mes "[Edgar]";
-				mes "What!!... ahg... bah... guh... I'm NOT ripping you off!!!...";
-				emotion e_omg;
+				mes "Boy oh boy,";
+				mes "if you think";
+				mes "that's a rip off...";
 				close;
+
+			sM_2:
+				mes "[Edgar]";
+				mes "So are you heading to Alberta";
+				mes "again? Let me give you the same";
+				mes "discount and only charge 250 Zeny,";
+				mes "just like the last time.";
+				mes "How's that sound?";
+				next;
+				menu "Alrighty~!",-,"Why are you being so nice to me?!",sM_2b;
+
+				if(Zeny < 250) goto sl_NoZeny;
+				set Zeny, Zeny - 250;
+				warp "alberta.gat",195,164;
+
+			sM_2b:
+				mes "[Edgar]";
+				mes "It's just the way I am. That, and";
+				mes "your devilish smile reminds me of";
+				mes "my beloved blond haired son who";
+				mes "left home years ago to become a";
+				mes "Sailor on his own ship. Bless his";
+				mes "soul, wherever he is.";
+				close;
+
+				sl_NoZeny:
+					mes "[Edgar]";
+					mes "Um...";
+					mes "This isn't";
+					mes "enough money.";
+					mes "Go and get";
+					mes "some more.";
+					close;
 
 	M_End:
 		mes "[Edgar]";
-		mes "Well I've got other business to attend too.";
+		mes "Yeah, alright.";
+		mes "See you later~";
 		close;
 
 }
@@ -518,30 +899,41 @@ M_Menu:
 //Sailor-------------------------------------------------------------------------------------
 izlude.gat,201,181,2	script	Sailor	100,{
 	mes "[Sailor]";
-	mes "Hey Everybody, Attention! Come and Ride the Wind on a Fantastic Ship!!! Come on! Hurry up!";
+	mes "Hey Everybody!";
+	mes "Attention, attention!";
+	mes "Come and Ride the Wind";
+	mes "on a Fantastic Ship!";
+	mes "Hurry, hurry"
 	next;
 	menu "Byalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L1,"Cancel",LEnd;
 	
-		if(Zeny < 150) goto sl_NoZeny;
+		if(Zeny < 150) goto sl_NoZenyBya;
 		set Zeny, Zeny - 150;
 		warp "izlu2dun.gat",107,50;
 		close;
 	L1:
-		if(Zeny < 500) goto sl_NoZeny;
+		if(Zeny < 500) goto sl_NoZenyMar;
 		set Zeny, Zeny - 500;
 		warp "alberta.gat",188,169;
 	LEnd:
 		close;
-	sl_NoZeny:
+	sl_NoZenyBya:
 		mes "[Sailor]";
-		mes "You don't have enough money!";
+		mes "150 Zeny!";
+		mes "Only 150 Zeny to ride!";
+		close;
+	sl_NoZenyMar:
+		mes "[Sailor]";
+		mes "500 Zeny!";
+		mes "Only 500 Zeny to ride!";
 		close;
 }
 
 //Sailor-------------------------------------------------------------------------------------
 izlu2dun.gat,108,27,4	script	Sailor	100,{
 	mes "[Sailor]";
-	mes "Wanna return?";
+	mes "Wanna";
+	mes "head back?";
 	next;
 	menu "Yeah, I am Tired to Death.",-,"Nope I love this place.",L1;
 	

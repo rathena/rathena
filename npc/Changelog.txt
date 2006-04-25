@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/25
+	* Re-made the Izlude NPCs with new dialogues among other things. Thanks to Muad_Dib [Kargha]
 	* Added two Alberta NPCs thanks to Sousuke [Playtester]
 	* Cube Room Quest: fixed "free stick" bug, thx 2 Neouni [Lupus]
 04/23
