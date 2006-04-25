@@ -1885,8 +1885,11 @@ int parse_login(int fd) {
 			break;
 
 		case 0x7532:
-		default:
 			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
+			session[fd]->eof = 1;
+			break;
+		default:
+			ShowStatus ("Abnormal end of connection (ip: %s): Unknown packet 0x%x " RETCODE, ip, RFIFOW(fd,0));
 			session[fd]->eof = 1;
 			return 0;
 		}
