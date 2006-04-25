@@ -27,6 +27,7 @@
 
 =========================
 04/25
+	* Updated Mode and Delays of Odin Temple mobs(using Frus delays for now) [Playtester]
 	* Fixed Element, Race, aDelay, aMotion and Range of Plasma and Breeze [Playtester]
 	* Updated the remaining mob names [Playtester]
 	* Updated the iRO and kRO mob names [Playtester]
