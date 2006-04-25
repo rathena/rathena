@@ -299,7 +299,7 @@ int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char*
 int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen) {
 	z_stream stream;
 	int err;
-
+	memset(&stream, 0, sizeof(stream));
 	stream.next_in = (Bytef*)source;
 	stream.avail_in = (uInt)sourceLen;
 	/* Check for source > 64K on 16-bit machine: */
