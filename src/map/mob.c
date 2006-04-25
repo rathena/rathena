@@ -74,8 +74,7 @@ int mobdb_searchname(const char *str)
 		mob = mob_db(i);
 		if(mob == mob_dummy) //Skip dummy mobs.
 			continue;
-		if(strcmpi(mob->name,str)==0 || strcmpi(mob->jname,str)==0 ||
-			memcmp(mob->name,str,NAME_LENGTH)==0 || memcmp(mob->jname,str,NAME_LENGTH)==0)
+		if(strcmpi(mob->name,str)==0 || strcmpi(mob->jname,str)==0 || strcmpi(mob->sprite,str)==0)
 			return i;
 	}
 

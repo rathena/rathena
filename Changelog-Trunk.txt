@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/24
+	* All GMs will be sent to the char server through packet 0x2aff now.
+	  (previously hidden gms were not sent to the char-server as online) [Skotlex]
+	* Made mob_searchname compare versus sprite, name and jname now. [Skotlex]
 	* Added script command escape_sql. It will return an escaped string for use
 	  in the sql_query script command (in case you want to use input of players
 	  in your queries). [Skotlex]
