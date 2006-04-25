@@ -245,7 +245,7 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 	switch (target->type)
 	{
 		case BL_MOB:
-			r_damage =  mob_damage(src,(TBL_MOB*)target, damage,0);
+			r_damage =  mob_damage(src,(TBL_MOB*)target, damage,flag&2?3:0);
 			break;
 		case BL_PC:
 			r_damage = pc_damage(src,(TBL_PC*)target,damage);

@@ -4910,7 +4910,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_SUICIDE:			/* Ž©Œˆ */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		battle_damage(NULL, src,status_get_hp(src),0,3); //Suicidal Mobs should give neither exp (flag&1) not items (flag&2) [Skotlex]
+		battle_damage(NULL, src,status_get_hp(src),0,3); //Suicidal Mobs should give neither exp nor items. (flag&2 passed to battle_damage) [Skotlex]
 		break;
 
 	case NPC_SUMMONSLAVE:		/* Žè‰º?¢Š« */
