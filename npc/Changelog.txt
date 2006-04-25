@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/25
+	* Added two Alberta NPCs thanks to Sousuke [Playtester]
 	* Cube Room Quest: fixed "free stick" bug, thx 2 Neouni [Lupus]
 04/23
 	* Rearranged Ingredient Sellers. Removed doubled seller from Morocc [Lupus]

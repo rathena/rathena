@@ -18,9 +18,13 @@
 //= 1.6 Fixed some typos, optimized, added Gotanblue#2 to be able to return back to Alberta [Lupus]
 //= 1.7 Fixed Phelix bugs [Lupus]
 //= 1.8 Got rid of 2 useless variables, fixed Turtle Island Quest exploit [Lupus]
+//= 1.9 Added two NPCs shown at RO Magazine [Playtester]
 //============================================================ 
 
-
+//NewsPaper(?)
+alberta.gat,148,53,1	script	Newspaper Girl	831,{end;}
+//???
+alberta.gat,148,60,3	script	Man	833,{end;}
 
 // Young Man -----------------------------------------------------------
 alberta_in.gat,20,183,6	script	Young Man	49,{
