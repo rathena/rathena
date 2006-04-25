@@ -744,8 +744,6 @@ void npc_timerevent_quit(struct map_session_data *sd) {
 int npc_gettimerevent_tick(struct npc_data *nd)
 {
 	int tick;
-	struct map_session_data *sd =NULL;
-
 	nullpo_retr(0, nd);
 
 	tick=nd->u.scr.timer;

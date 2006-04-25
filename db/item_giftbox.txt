@@ -1,106 +1,87 @@
 // Gift Box Obtainable Items Database
 //
 // Structure of Database:
-// ItemID,DummyName,Rate
+// GroupID,ItemID,Rate
 
-0,Rough Oridecon,756
-756,Rough Oridecon,10000
-756,Rough Oridecon,10000
-756,Rough Oridecon,10000
-756,Rough Oridecon,10000
-756,Rough Oridecon,10000
-757,Rough Elunium,10000
-757,Rough Elunium,10000
-984,Oridecon,10000
-984,Oridecon,10000
-985,Elunium,10000
-714,Emperium,10000
-999,Steel,10000
-1000,Star Crumb,10000
-994,Flame Heart,10000
-995,Mystic Frozen,10000
-996,Rough Wind,10000
-997,Great Nature,10000
-975,Scarlet Dyestuff,10000
-976,Lemon Dyestuff,10000
-978,Cobaltblue Dyestuff,10000
-979,Darkgreen Dyestuff,10000
-980,Orange Dyestuff,10000
-981,Violet Dyestuff,10000
-982,White Dyestuff,10000
-983,Black Dyestuff,10000
-969,Gold,10000
-718,Garnet,10000
-719,Amethyst,10000
-720,Aquamarine,10000
-721,Emerald,10000
-722,Pearl,10000
-723,Ruby,10000
-724,Cursed Ruby,10000
-725,Sardonyx,10000
-726,Sapphire,10000
-727,Opal,10000
-728,Topaz,10000
-729,Zircon,10000
-730,1carat Diamond,10000
-731,2carat Diamond,10000
-732,3carat Diamond,10000
-733,Cracked Diamond,10000
-734,Red Frame,10000
-735,Chung Jah,10000
-736,China,10000
-737,Black Ladle,10000
-738,Pencil Case,10000
-739,Rouge,10000
-740,Puppet,10000
-741,Poring Doll,10000
-742,Chonchon Doll,10000
-743,Spore Doll,10000
-744,Bouquet,10000
-745,Wedding Bouquet,10000
-746,Glass Bead,10000
-747,Crystal Mirror,10000
-748,Witherless Rose,10000
-749,Frozen Rose,10000
-750,Baphomet Doll,10000
-751,Osiris Doll,10000
-752,Grasshopper Doll,10000
-753,Yoyo Doll,10000
-754,Raccoon Doll,10000
-706,Four Leaf Clover,10000
-4005,Santa Poring Card,10000
-7034,Red Stocking,10000
-501,Red Potion,10000
-502,Orange Potion,10000
-503,Yellow Potion,10000
-504,White Potion,10000
-505,Blue Potion,10000
-506,Green Potion,10000
-526,Royal Jelly,10000
-529,Candy,10000
-530,Candy Cane,10000
-537,Pet Food,10000
-538,Well-baked Cookie,10000
-539,Piece of Cake,10000
-603,Old Blue Box,10000
-617,Old Purple Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-644,Gift Box,10000
-1558,Girl's Diary,10000
+4,756,1	//Rough Oridecon
+4,756,1	//Rough Oridecon
+4,756,1	//Rough Oridecon
+4,756,1	//Rough Oridecon
+4,756,1	//Rough Oridecon
+4,757,1	//Rough Elunium
+4,757,1	//Rough Elunium
+4,984,1	//Oridecon
+4,984,1	//Oridecon
+4,985,1	//Elunium
+4,714,1	//Emperium
+4,999,1	//Steel
+4,1000,1	//Star Crumb
+4,994,1	//Flame Heart
+4,995,1	//Mystic Frozen
+4,996,1	//Rough Wind
+4,997,1	//Great Nature
+4,975,1	//Scarlet Dyestuff
+4,976,1	//Lemon Dyestuff
+4,978,1	//Cobaltblue Dyestuff
+4,979,1	//Darkgreen Dyestuff
+4,980,1	//Orange Dyestuff
+4,981,1	//Violet Dyestuff
+4,982,1	//White Dyestuff
+4,983,1	//Black Dyestuff
+4,969,1	//Gold
+4,718,1	//Garnet
+4,719,1	//Amethyst
+4,720,1	//Aquamarine
+4,721,1	//Emerald
+4,722,1	//Pearl
+4,723,1	//Ruby
+4,724,1	//Cursed Ruby
+4,725,1	//Sardonyx
+4,726,1	//Sapphire
+4,727,1	//Opal
+4,728,1	//Topaz
+4,729,1	//Zircon
+4,730,1	//1carat Diamond
+4,731,1	//2carat Diamond
+4,732,1	//3carat Diamond
+4,733,1	//Cracked Diamond
+4,734,1	//Red Frame
+4,735,1	//Chung Jah
+4,736,1	//China
+4,737,1	//Black Ladle
+4,738,1	//Pencil Case
+4,739,1	//Rouge
+4,740,1	//Puppet
+4,741,1	//Poring Doll
+4,742,1	//Chonchon Doll
+4,743,1	//Spore Doll
+4,744,1	//Bouquet
+4,745,1	//Wedding Bouquet
+4,746,1	//Glass Bead
+4,747,1	//Crystal Mirror
+4,748,1	//Witherless Rose
+4,749,1	//Frozen Rose
+4,750,1	//Baphomet Doll
+4,751,1	//Osiris Doll
+4,752,1	//Grasshopper Doll
+4,753,1	//Yoyo Doll
+4,754,1	//Raccoon Doll
+4,706,1	//Four Leaf Clover
+4,4005,1	//Santa Poring Card
+4,7034,1	//Red Stocking
+4,501,1	//Red Potion
+4,502,1	//Orange Potion
+4,503,1	//Yellow Potion
+4,504,1	//White Potion
+4,505,1	//Blue Potion
+4,506,1	//Green Potion
+4,526,1	//Royal Jelly
+4,529,1	//Candy
+4,530,1	//Candy Cane
+4,537,1	//Pet Food
+4,538,1	//Well-baked Cookie
+4,539,1	//Piece of Cake
+4,603,1	//Old Blue Box
+4,617,1	//Old Purple Box
+4,644,20	//Gift Box
+4,1558,1	//Girl's Diary

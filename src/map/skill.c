@@ -6653,13 +6653,13 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case UNT_ROKISWEIL:
 	case UNT_INTOABYSS:
 	case UNT_SIEGFRIED:
+	case UNT_HERMODE:
 		 //Needed to check when a dancer/bard leaves their ensemble area.
 		if (sg->src_id==bl->id && (!sc || sc->data[SC_SPIRIT].timer == -1 || sc->data[SC_SPIRIT].val2 != SL_BARDDANCER))
 			return sg->skill_id;
 		if (sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
 		break;
-	
 	case UNT_WHISTLE:
 	case UNT_ASSASSINCROSS:
 	case UNT_POEMBRAGI:
@@ -6668,11 +6668,18 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case UNT_DONTFORGETME:
 	case UNT_FORTUNEKISS:
 	case UNT_SERVICEFORYOU:
-	case UNT_HERMODE:
 		if (sg->src_id==bl->id && (!sc || sc->data[SC_SPIRIT].timer == -1 || sc->data[SC_SPIRIT].val2 != SL_BARDDANCER))
 			return 0;
-		if (sc && sc->data[type].timer==-1)
+		if (!sc)
+			break;
+		if (sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
+		else if (sc->data[type].val4 == 1) {
+			//Readjust timers since the effect will not last long.
+			sc->data[type].val4 = 0;
+			delete_timer(sc->data[type].timer, status_change_timer);
+			sc->data[type].timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type);
+		}
 		break;
 /* Basilica does not knocks back...
 	case UNT_BASILICA:
@@ -7188,6 +7195,7 @@ static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int ti
 				delete_timer(sc->data[type].timer, status_change_timer);
 				//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
 				//not possible on our current implementation.
+				sc->data[type].val4 = 1; //Store the fact that this is a "reduced" duration effect.
 				sc->data[type].timer = add_timer(tick+skill_get_time2(skill_id,1), status_change_timer, bl->id, type);
 			}
 			break;

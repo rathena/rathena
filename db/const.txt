@@ -347,6 +347,34 @@ RC_Dragon	9
 RC_Boss	10
 RC_NonBoss	11
 
+IG_BlueBox	1
+IG_VioletBox	2
+IG_CardAlbum	3
+IG_GiftBox	4
+IG_ScrollBox	5
+IG_FingingOre	6
+IG_CookieBag	7
+IG_Potion	8
+IG_Herb	9
+IG_Fruit	10
+IG_Meat	11
+IG_Candy	12
+IG_Juice	13
+IG_Fish	14
+IG_Box	15
+IG_Gemstone	16
+IG_Jellopy	17
+IG_Ore	18
+IG_Food	19
+IG_Recovery	20
+IG_Mineral	21
+IG_Taming	22
+IG_Scroll	23
+IG_Quiver	24
+IG_Mask	25
+IG_Accesory	26
+IG_Jewel	27
+
 SC_STONE	0
 SC_FREEZE	1
 SC_STAN	2

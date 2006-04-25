@@ -1985,7 +1985,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 		// Ore Discovery [Celest]
 		if (sd == mvp_sd && !map[md->bl.m].flag.nomobloot && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rand()%10000) {
-			ditem = mob_setdropitem(itemdb_searchrandomid(6), 1);
+			ditem = mob_setdropitem(itemdb_searchrandomid(IG_FINDINGORE), 1);
 			if (drop_ore<0) drop_ore=8; //we have only 10 slots in LOG, there's a check to not overflow (9th item usually a card, so we use 8th slot)
 			log_item[drop_ore] = ditem->item_data.nameid; //it's for logging only
 			drop_items++; //we count if there were any drops
@@ -2020,7 +2020,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 					if (drop_rate < rand()%10000 +1)
 						continue;
 					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id :
-						itemdb_searchrandomgroup(sd->add_drop[i].group);
+						itemdb_searchrandomid(sd->add_drop[i].group);
 
 					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate);
 				}

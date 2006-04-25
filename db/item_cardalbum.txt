@@ -1,473 +1,472 @@
 // Old Card Album Obtainable Items Database
 //
 // Structure of Database:
-// ItemID,DummyName,Rate
+// GroupID,ItemID,Rate
 
-0,Poring Card,4001
-4001,Poring Card,100000
-4001,Poring Card,100000
-4001,Poring Card,100000
-4001,Poring Card,100000
-4001,Poring Card,100000
-4001,Poring Card,100000
-4001,Poring Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4002,Fabre Card,100000
-4003,Pupa Card,100000
-4003,Pupa Card,100000
-4003,Pupa Card,100000
-4003,Pupa Card,100000
-4003,Pupa Card,100000
-4003,Pupa Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4004,Drops Card,100000
-4005,Santa Poring Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4006,Lunatic Card,100000
-4007,Peco Peco Egg Card,100000
-4007,Peco Peco Egg Card,100000
-4007,Peco Peco Egg Card,100000
-4007,Peco Peco Egg Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4008,Picky Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4009,Chonchon Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4010,Willow Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4011,Picky Egg Card,100000
-4012,Thief Bug Egg Card,100000
-4012,Thief Bug Egg Card,100000
-4012,Thief Bug Egg Card,100000
-4012,Thief Bug Egg Card,100000
-4012,Thief Bug Egg Card,100000
-4013,Andre Egg Card,100000
-4013,Andre Egg Card,100000
-4013,Andre Egg Card,100000
-4013,Andre Egg Card,100000
-4013,Andre Egg Card,100000
-4014,Roda Frog Card,100000
-4014,Roda Frog Card,100000
-4014,Roda Frog Card,100000
-4014,Roda Frog Card,100000
-4014,Roda Frog Card,100000
-4015,Condor Card,100000
-4015,Condor Card,100000
-4015,Condor Card,100000
-4015,Condor Card,100000
-4015,Condor Card,100000
-4016,Thief Bug Card,100000
-4016,Thief Bug Card,100000
-4016,Thief Bug Card,100000
-4016,Thief Bug Card,100000
-4016,Thief Bug Card,100000
-4017,Savage Babe Card,100000
-4017,Savage Babe Card,100000
-4017,Savage Babe Card,100000
-4017,Savage Babe Card,100000
-4017,Savage Babe Card,100000
-4019,Hornet Card,100000
-4019,Hornet Card,100000
-4019,Hornet Card,100000
-4019,Hornet Card,100000
-4019,Hornet Card,100000
-4020,Farmiliar Card,100000
-4020,Farmiliar Card,100000
-4020,Farmiliar Card,100000
-4020,Farmiliar Card,100000
-4020,Farmiliar Card,100000
-4021,Rocker Card,100000
-4021,Rocker Card,100000
-4021,Rocker Card,100000
-4021,Rocker Card,100000
-4021,Rocker Card,100000
-4022,Spore Card,100000
-4022,Spore Card,100000
-4022,Spore Card,100000
-4022,Spore Card,100000
-4022,Spore Card,100000
-4023,Baby Desert Wolf Card,100000
-4023,Baby Desert Wolf Card,100000
-4023,Baby Desert Wolf Card,100000
-4023,Baby Desert Wolf Card,100000
-4023,Baby Desert Wolf Card,100000
-4024,Plankton Card,100000
-4024,Plankton Card,100000
-4024,Plankton Card,100000
-4024,Plankton Card,100000
-4024,Plankton Card,100000
-4025,Skeleton Card,100000
-4025,Skeleton Card,100000
-4025,Skeleton Card,100000
-4025,Skeleton Card,100000
-4025,Skeleton Card,100000
-4026,Female Thief Bug Card,100000
-4026,Female Thief Bug Card,100000
-4026,Female Thief Bug Card,100000
-4027,Kukre Card,100000
-4027,Kukre Card,100000
-4027,Kukre Card,100000
-4028,Tarou Card,100000
-4028,Tarou Card,100000
-4028,Tarou Card,100000
-4029,Wolf Card,100000
-4029,Wolf Card,100000
-4029,Wolf Card,100000
-4030,Mandragora Card,100000
-4030,Mandragora Card,100000
-4030,Mandragora Card,100000
-4031,Peco Peco Card,100000
-4031,Peco Peco Card,100000
-4031,Peco Peco Card,100000
-4032,Ambernite Card,100000
-4032,Ambernite Card,100000
-4032,Ambernite Card,100000
-4033,Poporing Card,100000
-4033,Poporing Card,100000
-4033,Poporing Card,100000
-4034,Wormtail Card,100000
-4034,Wormtail Card,100000
-4034,Wormtail Card,100000
-4035,Hydra Card,100000
-4035,Hydra Card,100000
-4035,Hydra Card,100000
-4036,Muka Card,100000
-4036,Muka Card,100000
-4036,Muka Card,100000
-4037,Snake Card,100000
-4037,Snake Card,100000
-4037,Snake Card,100000
-4038,Zombie Card,100000
-4038,Zombie Card,100000
-4038,Zombie Card,100000
-4039,Stainer Card,100000
-4039,Stainer Card,100000
-4039,Stainer Card,100000
-4040,Creamy Card,100000
-4040,Creamy Card,100000
-4040,Creamy Card,100000
-4041,Coco Card,100000
-4041,Coco Card,100000
-4041,Coco Card,100000
-4042,Steel Chonchon Card,100000
-4042,Steel Chonchon Card,100000
-4042,Steel Chonchon Card,100000
-4043,Andre Card,100000
-4043,Andre Card,100000
-4043,Andre Card,100000
-4044,Smokie Card,100000
-4044,Smokie Card,100000
-4044,Smokie Card,100000
-4045,Horn Card,100000
-4045,Horn Card,100000
-4045,Horn Card,100000
-4046,Martin Card,100000
-4046,Martin Card,100000
-4046,Martin Card,100000
-4047,Ghostring Card,100000
-4048,Poison Spore Card,100000
-4048,Poison Spore Card,100000
-4048,Poison Spore Card,100000
-4049,Vadon Card,100000
-4049,Vadon Card,100000
-4049,Vadon Card,100000
-4050,Male Thief Bug Card,100000
-4050,Male Thief Bug Card,100000
-4050,Male Thief Bug Card,100000
-4051,Yoyo Card,100000
-4051,Yoyo Card,100000
-4051,Yoyo Card,100000
-4052,Elder Willow Card,100000
-4052,Elder Willow Card,100000
-4052,Elder Willow Card,100000
-4053,Vitata Card,100000
-4054,Angeling Card,100000
-4055,Marina Card,100000
-4055,Marina Card,100000
-4055,Marina Card,100000
-4056,Dustiness Card,100000
-4056,Dustiness Card,100000
-4056,Dustiness Card,100000
-4057,Metaller Card,100000
-4057,Metaller Card,100000
-4058,Thara Frog Card,100000
-4058,Thara Frog Card,100000
-4060,Goblin Card,100000
-4060,Goblin Card,100000
-4061,Cornutus Card,100000
-4061,Cornutus Card,100000
-4062,Anacondaq Card,100000
-4062,Anacondaq Card,100000
-4063,Caramel Card,100000
-4063,Caramel Card,100000
-4064,Zerom Card,100000
-4064,Zerom Card,100000
-4065,Kaho Card,100000
-4065,Kaho Card,100000
-4066,Orc Warrior Card,100000
-4066,Orc Warrior Card,100000
-4067,Megalodon Card,100000
-4067,Megalodon Card,100000
-4068,Scorpion Card,100000
-4068,Scorpion Card,100000
-4069,Drainliar Card,100000
-4069,Drainliar Card,100000
-4070,Eggyra Card,100000
-4070,Eggyra Card,100000
-4071,Orc Zombie Card,100000
-4071,Orc Zombie Card,100000
-4072,Golem Card,100000
-4072,Golem Card,100000
-4073,Pirate Skeleton Card,100000
-4073,Pirate Skeleton Card,100000
-4074,Bigfoot Card,100000
-4074,Bigfoot Card,100000
-4075,Argos Card,100000
-4075,Argos Card,100000
-4076,Magnolia Card,100000
-4076,Magnolia Card,100000
-4077,Phen Card,100000
-4077,Phen Card,100000
-4078,Savage Card,100000
-4078,Savage Card,100000
-4079,Mantis Card,100000
-4079,Mantis Card,100000
-4080,Flora Card,100000
-4080,Flora Card,100000
-4081,Hode Card,100000
-4081,Hode Card,100000
-4082,Desert Wolf Card,100000
-4083,Rafflesia Card,100000
-4084,Marine Sphere Card,100000
-4085,Orc Skeleton Card,100000
-4086,Soldier Skeleton Card,100000
-4087,Giearth Card,100000
-4088,Frilldora Card,100000
-4089,Swordfish Card,100000
-4090,Munak Card,100000
-4091,Kobold Card,100000
-4092,Skeleton Worker Card,100000
-4093,Obeaune Card,100000
-4094,Archer Skeleton Card,100000
-4095,Marse Card,100000
-4096,Zenorc Card,100000
-4097,Matyr Card,100000
-4098,Dokebi Card,100000
-4099,Pasana Card,100000
-4100,Sohee Card,100000
-4101,Sandman Card,100000
-4102,Whisper Card,100000
-4103,Horong Card,100000
-4104,Requiem Card,100000
-4105,Marc Card,100000
-4106,Mummy Card,100000
-4107,Verit Card,100000
-4108,Myst Card,100000
-4109,Jakk Card,100000
-4110,Ghoul Card,100000
-4111,Strouf Card,100000
-4112,Marduk Card,100000
-4113,Marionette Card,100000
-4114,Argiope Card,100000
-4115,Hunter Fly Card,100000
-4116,Isis Card,100000
-4117,Sidewinder Card,100000
-4118,Earth Petite Card,100000
-4119,Bathory Card,100000
-4120,Sky Petite Card,100000
-4122,Deviruchi Card,100000
-4125,Deviace Card,100000
-4127,Nightmare Card,100000
-4129,Bapho Jr. Card,100000
-4133,Raydric Card,100000
-4136,Khalitzburg Card,100000
-4139,Joker Card,100000
-4141,Evil Druid Card,100000
-4149,Gargoyle Card,100000
-4150,Goat Card,100000
-4151,Gajomart Card,100000
-4152,Galapago Card,100000
-4153,Crab Card,100000
-4154,Dumpling Child Card,100000
-4156,Goblin Steamrider Card,100000
-4157,Goblin Archer Card,100000
-4158,Sky Deleter Card,100000
-4159,Nine Tail Card,100000
-4160,Firelock Soldier Card,100000
-4161,Grand Peco Card,100000
-4162,Grizzly Card,100000
-4164,Gullinbursti Card,100000
-4165,Gig Card,100000
-4166,Nightmare Terror Card,100000
-4167,Neraid Card,100000
-4170,Dark Frame Card,100000
-4172,The Paper Card,100000
-4173,Demon Fungus Card,100000
-4175,Poisonous Toad Card,100000
-4176,Dullahan Card,100000
-4177,Dryad Card,100000
-4178,Dragon Tail Card,100000
-4180,Driller Card,100000
-4181,Disguise Card,100000
-4182,Diabolic Card,100000
-4184,Lava Golem Card,100000
-4185,Rideword Card,100000
-4186,Raggler Card,100000
-4187,Raydric Archer Card,100000
-4188,Leib Olmai Card,100000
-4189,Wraith Dead Card,100000
-4190,Wraith Card,100000
-4191,Loli Ruri Card,100000
-4192,Rotar Zairo Card,100000
-4193,Lude Card,100000
-4194,Rybio Card,100000
-4195,Leaf Cat Card,100000
-4196,Marin Card,100000
-4199,Merman Card,100000
-4200,Megalith Card,100000
-4201,Majoruros Card,100000
-4202,Civil Servant Card,100000
-4204,Mini Demon Card,100000
-4205,Mimic Card,100000
-4206,Myst Case Card,100000
-4208,Miyabi Doll Card,100000
-4209,Violy Card,100000
-4210,Wanderer Card,100000
-4212,Bongun Card,100000
-4213,Brilight Card,100000
-4214,Bloody Murderer Card,100000
-4215,Blazer Card,100000
-4216,Sasquatch Card,100000
-4217,Enchanted Peach Tree Card,100000
-4218,Succubus Card,100000
-4219,Sage Worm Card,100000
-4220,Solider Card,100000
-4221,Skeleton General Card,100000
-4222,Skeleton Prisoner Card,100000
-4223,Stalactic Golem Card,100000
-4224,Stem Worm Card,100000
-4225,Stone Shooter Card,100000
-4226,Sting Card,100000
-4227,Spring Rabbit Card,100000
-4228,Sleeper Card,100000
-4230,Shinobi Card,100000
-4231,Increase Soil Card,100000
-4232,Hermit Plant Card,100000
-4233,Baby Leopard Card,100000
-4234,Anolian Card,100000
-4235,Christmas Cookie Card,100000
-4237,Owl Duke Card,100000
-4238,Owl Baron Card,100000
-4239,Iron Fist Card,100000
-4240,Arclouze Card,100000
-4242,Apocalipse Card,100000
-4244,Alarm Card,100000
-4245,Am Mut Card,100000
-4246,Assaulter Card,100000
-4247,Aster Card,100000
-4248,Ancient Mummy Card,100000
-4249,Ancient Worm Card,100000
-4251,Elder Card,100000
-4252,Alligator Card,100000
-4253,Alice Card,100000
-4255,Orc Lady Card,100000
-4256,Orc Archer Card,100000
-4257,Wild Rose Card,100000
-4258,Evil Nymph Card,100000
-4259,Wooden Golem Card,100000
-4260,Wootan Shooter Card,100000
-4261,Wootan Fighter Card,100000
-4262,Cloud Hermit Card,100000
-4264,Wind Ghost Card,100000
-4265,Li Me Mang Ryang Card,100000
-4267,Explosion Card,100000
-4268,Injustice Card,100000
-4269,Incubus Card,100000
-4270,Giant Spider Card,100000
-4271,Giant Hornet Card,100000
-4272,Dancing Dragon Card,100000
-4273,Shell Fish Card,100000
-4274,Zombie Master Card,100000
-4275,Zombie Prisoner Card,100000
-4277,Zherlthsh Card,100000
-4278,Gibbet Card,100000
-4279,Earth Deleter Card,100000
-4280,Geographer Card,100000
-4281,Zipper Bear Card,100000
-4282,Tengu Card,100000
-4283,Greatest General Card,100000
-4284,Chepet Card,100000
-4285,Choco Card,100000
-4286,Karakasa Card,100000
-4287,Kapha Card,100000
-4288,Carat Card,100000
-4289,Caterpillar Card,100000
-4290,Cat O' Nine Tails Card,100000
-4292,Kobold Archer Card,100000
-4293,Cookie Card,100000
-4294,Quve Card,100000
-4295,Kraben Card,100000
-4296,Cramp Card,100000
-4297,Cruiser Card,100000
-4298,Creamy Fear Card,100000
-4299,Clock Card,100000
-4300,Chimera Card,100000
-4301,Killer Mantis Card,100000
-4304,Tamruan Card,100000
-4229,Clock Tower Manager Card,100000
-4307,Beetle King Card,100000
-4308,Tri Joint Card,100000
-4309,Parasite Card,100000
-4310,Panzer Goblin Card,100000
-4311,Permeter Card,100000
-4312,Seal Card,100000
-4313,Punk Card,100000
-4314,Penomena Card,100000
-4315,Pest Card,100000
-4316,False Angel Card,100000
-4319,Freezer Card,100000
-4321,Hylozoist Card,100000
-4322,High Orc Card,100000
-4323,Garm Baby Card,100000
-4325,Harpy Card,100000
-4326,Sea-Otter Card,100000
-4327,Bloody Butterfly Card,100000
-4328,Hyegun Card,100000
-4329,Phendark Card,100000
-4331,Heater Card,100000
-4243,Antonio Card,100000
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4001,1	//Poring Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4002,1	//Fabre Card
+3,4003,1	//Pupa Card
+3,4003,1	//Pupa Card
+3,4003,1	//Pupa Card
+3,4003,1	//Pupa Card
+3,4003,1	//Pupa Card
+3,4003,1	//Pupa Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4004,1	//Drops Card
+3,4005,1	//Santa Poring Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4006,1	//Lunatic Card
+3,4007,1	//Peco Peco Egg Card
+3,4007,1	//Peco Peco Egg Card
+3,4007,1	//Peco Peco Egg Card
+3,4007,1	//Peco Peco Egg Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4008,1	//Picky Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4009,1	//Chonchon Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4010,1	//Willow Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4011,1	//Picky Egg Card
+3,4012,1	//Thief Bug Egg Card
+3,4012,1	//Thief Bug Egg Card
+3,4012,1	//Thief Bug Egg Card
+3,4012,1	//Thief Bug Egg Card
+3,4012,1	//Thief Bug Egg Card
+3,4013,1	//Andre Egg Card
+3,4013,1	//Andre Egg Card
+3,4013,1	//Andre Egg Card
+3,4013,1	//Andre Egg Card
+3,4013,1	//Andre Egg Card
+3,4014,1	//Roda Frog Card
+3,4014,1	//Roda Frog Card
+3,4014,1	//Roda Frog Card
+3,4014,1	//Roda Frog Card
+3,4014,1	//Roda Frog Card
+3,4015,1	//Condor Card
+3,4015,1	//Condor Card
+3,4015,1	//Condor Card
+3,4015,1	//Condor Card
+3,4015,1	//Condor Card
+3,4016,1	//Thief Bug Card
+3,4016,1	//Thief Bug Card
+3,4016,1	//Thief Bug Card
+3,4016,1	//Thief Bug Card
+3,4016,1	//Thief Bug Card
+3,4017,1	//Savage Babe Card
+3,4017,1	//Savage Babe Card
+3,4017,1	//Savage Babe Card
+3,4017,1	//Savage Babe Card
+3,4017,1	//Savage Babe Card
+3,4019,1	//Hornet Card
+3,4019,1	//Hornet Card
+3,4019,1	//Hornet Card
+3,4019,1	//Hornet Card
+3,4019,1	//Hornet Card
+3,4020,1	//Farmiliar Card
+3,4020,1	//Farmiliar Card
+3,4020,1	//Farmiliar Card
+3,4020,1	//Farmiliar Card
+3,4020,1	//Farmiliar Card
+3,4021,1	//Rocker Card
+3,4021,1	//Rocker Card
+3,4021,1	//Rocker Card
+3,4021,1	//Rocker Card
+3,4021,1	//Rocker Card
+3,4022,1	//Spore Card
+3,4022,1	//Spore Card
+3,4022,1	//Spore Card
+3,4022,1	//Spore Card
+3,4022,1	//Spore Card
+3,4023,1	//Baby Desert Wolf Card
+3,4023,1	//Baby Desert Wolf Card
+3,4023,1	//Baby Desert Wolf Card
+3,4023,1	//Baby Desert Wolf Card
+3,4023,1	//Baby Desert Wolf Card
+3,4024,1	//Plankton Card
+3,4024,1	//Plankton Card
+3,4024,1	//Plankton Card
+3,4024,1	//Plankton Card
+3,4024,1	//Plankton Card
+3,4025,1	//Skeleton Card
+3,4025,1	//Skeleton Card
+3,4025,1	//Skeleton Card
+3,4025,1	//Skeleton Card
+3,4025,1	//Skeleton Card
+3,4026,1	//Female Thief Bug Card
+3,4026,1	//Female Thief Bug Card
+3,4026,1	//Female Thief Bug Card
+3,4027,1	//Kukre Card
+3,4027,1	//Kukre Card
+3,4027,1	//Kukre Card
+3,4028,1	//Tarou Card
+3,4028,1	//Tarou Card
+3,4028,1	//Tarou Card
+3,4029,1	//Wolf Card
+3,4029,1	//Wolf Card
+3,4029,1	//Wolf Card
+3,4030,1	//Mandragora Card
+3,4030,1	//Mandragora Card
+3,4030,1	//Mandragora Card
+3,4031,1	//Peco Peco Card
+3,4031,1	//Peco Peco Card
+3,4031,1	//Peco Peco Card
+3,4032,1	//Ambernite Card
+3,4032,1	//Ambernite Card
+3,4032,1	//Ambernite Card
+3,4033,1	//Poporing Card
+3,4033,1	//Poporing Card
+3,4033,1	//Poporing Card
+3,4034,1	//Wormtail Card
+3,4034,1	//Wormtail Card
+3,4034,1	//Wormtail Card
+3,4035,1	//Hydra Card
+3,4035,1	//Hydra Card
+3,4035,1	//Hydra Card
+3,4036,1	//Muka Card
+3,4036,1	//Muka Card
+3,4036,1	//Muka Card
+3,4037,1	//Snake Card
+3,4037,1	//Snake Card
+3,4037,1	//Snake Card
+3,4038,1	//Zombie Card
+3,4038,1	//Zombie Card
+3,4038,1	//Zombie Card
+3,4039,1	//Stainer Card
+3,4039,1	//Stainer Card
+3,4039,1	//Stainer Card
+3,4040,1	//Creamy Card
+3,4040,1	//Creamy Card
+3,4040,1	//Creamy Card
+3,4041,1	//Coco Card
+3,4041,1	//Coco Card
+3,4041,1	//Coco Card
+3,4042,1	//Steel Chonchon Card
+3,4042,1	//Steel Chonchon Card
+3,4042,1	//Steel Chonchon Card
+3,4043,1	//Andre Card
+3,4043,1	//Andre Card
+3,4043,1	//Andre Card
+3,4044,1	//Smokie Card
+3,4044,1	//Smokie Card
+3,4044,1	//Smokie Card
+3,4045,1	//Horn Card
+3,4045,1	//Horn Card
+3,4045,1	//Horn Card
+3,4046,1	//Martin Card
+3,4046,1	//Martin Card
+3,4046,1	//Martin Card
+3,4047,1	//Ghostring Card
+3,4048,1	//Poison Spore Card
+3,4048,1	//Poison Spore Card
+3,4048,1	//Poison Spore Card
+3,4049,1	//Vadon Card
+3,4049,1	//Vadon Card
+3,4049,1	//Vadon Card
+3,4050,1	//Male Thief Bug Card
+3,4050,1	//Male Thief Bug Card
+3,4050,1	//Male Thief Bug Card
+3,4051,1	//Yoyo Card
+3,4051,1	//Yoyo Card
+3,4051,1	//Yoyo Card
+3,4052,1	//Elder Willow Card
+3,4052,1	//Elder Willow Card
+3,4052,1	//Elder Willow Card
+3,4053,1	//Vitata Card
+3,4054,1	//Angeling Card
+3,4055,1	//Marina Card
+3,4055,1	//Marina Card
+3,4055,1	//Marina Card
+3,4056,1	//Dustiness Card
+3,4056,1	//Dustiness Card
+3,4056,1	//Dustiness Card
+3,4057,1	//Metaller Card
+3,4057,1	//Metaller Card
+3,4058,1	//Thara Frog Card
+3,4058,1	//Thara Frog Card
+3,4060,1	//Goblin Card
+3,4060,1	//Goblin Card
+3,4061,1	//Cornutus Card
+3,4061,1	//Cornutus Card
+3,4062,1	//Anacondaq Card
+3,4062,1	//Anacondaq Card
+3,4063,1	//Caramel Card
+3,4063,1	//Caramel Card
+3,4064,1	//Zerom Card
+3,4064,1	//Zerom Card
+3,4065,1	//Kaho Card
+3,4065,1	//Kaho Card
+3,4066,1	//Orc Warrior Card
+3,4066,1	//Orc Warrior Card
+3,4067,1	//Megalodon Card
+3,4067,1	//Megalodon Card
+3,4068,1	//Scorpion Card
+3,4068,1	//Scorpion Card
+3,4069,1	//Drainliar Card
+3,4069,1	//Drainliar Card
+3,4070,1	//Eggyra Card
+3,4070,1	//Eggyra Card
+3,4071,1	//Orc Zombie Card
+3,4071,1	//Orc Zombie Card
+3,4072,1	//Golem Card
+3,4072,1	//Golem Card
+3,4073,1	//Pirate Skeleton Card
+3,4073,1	//Pirate Skeleton Card
+3,4074,1	//Bigfoot Card
+3,4074,1	//Bigfoot Card
+3,4075,1	//Argos Card
+3,4075,1	//Argos Card
+3,4076,1	//Magnolia Card
+3,4076,1	//Magnolia Card
+3,4077,1	//Phen Card
+3,4077,1	//Phen Card
+3,4078,1	//Savage Card
+3,4078,1	//Savage Card
+3,4079,1	//Mantis Card
+3,4079,1	//Mantis Card
+3,4080,1	//Flora Card
+3,4080,1	//Flora Card
+3,4081,1	//Hode Card
+3,4081,1	//Hode Card
+3,4082,1	//Desert Wolf Card
+3,4083,1	//Rafflesia Card
+3,4084,1	//Marine Sphere Card
+3,4085,1	//Orc Skeleton Card
+3,4086,1	//Soldier Skeleton Card
+3,4087,1	//Giearth Card
+3,4088,1	//Frilldora Card
+3,4089,1	//Swordfish Card
+3,4090,1	//Munak Card
+3,4091,1	//Kobold Card
+3,4092,1	//Skeleton Worker Card
+3,4093,1	//Obeaune Card
+3,4094,1	//Archer Skeleton Card
+3,4095,1	//Marse Card
+3,4096,1	//Zenorc Card
+3,4097,1	//Matyr Card
+3,4098,1	//Dokebi Card
+3,4099,1	//Pasana Card
+3,4100,1	//Sohee Card
+3,4101,1	//Sandman Card
+3,4102,1	//Whisper Card
+3,4103,1	//Horong Card
+3,4104,1	//Requiem Card
+3,4105,1	//Marc Card
+3,4106,1	//Mummy Card
+3,4107,1	//Verit Card
+3,4108,1	//Myst Card
+3,4109,1	//Jakk Card
+3,4110,1	//Ghoul Card
+3,4111,1	//Strouf Card
+3,4112,1	//Marduk Card
+3,4113,1	//Marionette Card
+3,4114,1	//Argiope Card
+3,4115,1	//Hunter Fly Card
+3,4116,1	//Isis Card
+3,4117,1	//Sidewinder Card
+3,4118,1	//Earth Petite Card
+3,4119,1	//Bathory Card
+3,4120,1	//Sky Petite Card
+3,4122,1	//Deviruchi Card
+3,4125,1	//Deviace Card
+3,4127,1	//Nightmare Card
+3,4129,1	//Bapho Jr. Card
+3,4133,1	//Raydric Card
+3,4136,1	//Khalitzburg Card
+3,4139,1	//Joker Card
+3,4141,1	//Evil Druid Card
+3,4149,1	//Gargoyle Card
+3,4150,1	//Goat Card
+3,4151,1	//Gajomart Card
+3,4152,1	//Galapago Card
+3,4153,1	//Crab Card
+3,4154,1	//Dumpling Child Card
+3,4156,1	//Goblin Steamrider Card
+3,4157,1	//Goblin Archer Card
+3,4158,1	//Sky Deleter Card
+3,4159,1	//Nine Tail Card
+3,4160,1	//Firelock Soldier Card
+3,4161,1	//Grand Peco Card
+3,4162,1	//Grizzly Card
+3,4164,1	//Gullinbursti Card
+3,4165,1	//Gig Card
+3,4166,1	//Nightmare Terror Card
+3,4167,1	//Neraid Card
+3,4170,1	//Dark Frame Card
+3,4172,1	//The Paper Card
+3,4173,1	//Demon Fungus Card
+3,4175,1	//Poisonous Toad Card
+3,4176,1	//Dullahan Card
+3,4177,1	//Dryad Card
+3,4178,1	//Dragon Tail Card
+3,4180,1	//Driller Card
+3,4181,1	//Disguise Card
+3,4182,1	//Diabolic Card
+3,4184,1	//Lava Golem Card
+3,4185,1	//Rideword Card
+3,4186,1	//Raggler Card
+3,4187,1	//Raydric Archer Card
+3,4188,1	//Leib Olmai Card
+3,4189,1	//Wraith Dead Card
+3,4190,1	//Wraith Card
+3,4191,1	//Loli Ruri Card
+3,4192,1	//Rotar Zairo Card
+3,4193,1	//Lude Card
+3,4194,1	//Rybio Card
+3,4195,1	//Leaf Cat Card
+3,4196,1	//Marin Card
+3,4199,1	//Merman Card
+3,4200,1	//Megalith Card
+3,4201,1	//Majoruros Card
+3,4202,1	//Civil Servant Card
+3,4204,1	//Mini Demon Card
+3,4205,1	//Mimic Card
+3,4206,1	//Myst Case Card
+3,4208,1	//Miyabi Doll Card
+3,4209,1	//Violy Card
+3,4210,1	//Wanderer Card
+3,4212,1	//Bongun Card
+3,4213,1	//Brilight Card
+3,4214,1	//Bloody Murderer Card
+3,4215,1	//Blazer Card
+3,4216,1	//Sasquatch Card
+3,4217,1	//Enchanted Peach Tree Card
+3,4218,1	//Succubus Card
+3,4219,1	//Sage Worm Card
+3,4220,1	//Solider Card
+3,4221,1	//Skeleton General Card
+3,4222,1	//Skeleton Prisoner Card
+3,4223,1	//Stalactic Golem Card
+3,4224,1	//Stem Worm Card
+3,4225,1	//Stone Shooter Card
+3,4226,1	//Sting Card
+3,4227,1	//Spring Rabbit Card
+3,4228,1	//Sleeper Card
+3,4230,1	//Shinobi Card
+3,4231,1	//Increase Soil Card
+3,4232,1	//Hermit Plant Card
+3,4233,1	//Baby Leopard Card
+3,4234,1	//Anolian Card
+3,4235,1	//Christmas Cookie Card
+3,4237,1	//Owl Duke Card
+3,4238,1	//Owl Baron Card
+3,4239,1	//Iron Fist Card
+3,4240,1	//Arclouze Card
+3,4242,1	//Apocalipse Card
+3,4244,1	//Alarm Card
+3,4245,1	//Am Mut Card
+3,4246,1	//Assaulter Card
+3,4247,1	//Aster Card
+3,4248,1	//Ancient Mummy Card
+3,4249,1	//Ancient Worm Card
+3,4251,1	//Elder Card
+3,4252,1	//Alligator Card
+3,4253,1	//Alice Card
+3,4255,1	//Orc Lady Card
+3,4256,1	//Orc Archer Card
+3,4257,1	//Wild Rose Card
+3,4258,1	//Evil Nymph Card
+3,4259,1	//Wooden Golem Card
+3,4260,1	//Wootan Shooter Card
+3,4261,1	//Wootan Fighter Card
+3,4262,1	//Cloud Hermit Card
+3,4264,1	//Wind Ghost Card
+3,4265,1	//Li Me Mang Ryang Card
+3,4267,1	//Explosion Card
+3,4268,1	//Injustice Card
+3,4269,1	//Incubus Card
+3,4270,1	//Giant Spider Card
+3,4271,1	//Giant Hornet Card
+3,4272,1	//Dancing Dragon Card
+3,4273,1	//Shell Fish Card
+3,4274,1	//Zombie Master Card
+3,4275,1	//Zombie Prisoner Card
+3,4277,1	//Zherlthsh Card
+3,4278,1	//Gibbet Card
+3,4279,1	//Earth Deleter Card
+3,4280,1	//Geographer Card
+3,4281,1	//Zipper Bear Card
+3,4282,1	//Tengu Card
+3,4283,1	//Greatest General Card
+3,4284,1	//Chepet Card
+3,4285,1	//Choco Card
+3,4286,1	//Karakasa Card
+3,4287,1	//Kapha Card
+3,4288,1	//Carat Card
+3,4289,1	//Caterpillar Card
+3,4290,1	//Cat O' Nine Tails Card
+3,4292,1	//Kobold Archer Card
+3,4293,1	//Cookie Card
+3,4294,1	//Quve Card
+3,4295,1	//Kraben Card
+3,4296,1	//Cramp Card
+3,4297,1	//Cruiser Card
+3,4298,1	//Creamy Fear Card
+3,4299,1	//Clock Card
+3,4300,1	//Chimera Card
+3,4301,1	//Killer Mantis Card
+3,4304,1	//Tamruan Card
+3,4229,1	//Clock Tower Manager Card
+3,4307,1	//Beetle King Card
+3,4308,1	//Tri Joint Card
+3,4309,1	//Parasite Card
+3,4310,1	//Panzer Goblin Card
+3,4311,1	//Permeter Card
+3,4312,1	//Seal Card
+3,4313,1	//Punk Card
+3,4314,1	//Penomena Card
+3,4315,1	//Pest Card
+3,4316,1	//False Angel Card
+3,4319,1	//Freezer Card
+3,4321,1	//Hylozoist Card
+3,4322,1	//High Orc Card
+3,4323,1	//Garm Baby Card
+3,4325,1	//Harpy Card
+3,4326,1	//Sea-Otter Card
+3,4327,1	//Bloody Butterfly Card
+3,4328,1	//Hyegun Card
+3,4329,1	//Phendark Card
+3,4331,1	//Heater Card
+3,4243,1	//Antonio Card

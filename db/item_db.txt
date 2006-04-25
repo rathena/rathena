@@ -92,7 +92,7 @@
 //===================================================================
 601,Fly_Wing,Fly Wing,2,60,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
 602,Butterfly_Wing,Butterfly Wing,2,300,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "SavePoint",0,0; },{},{}
-603,Old_Blue_Box,Old Blue Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -1,1; },{},{}
+603,Old_Blue_Box,Old Blue Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BlueBox),1; },{},{}
 604,Dead_Branch,Dead Branch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",0,0,"--ja--",-1,1,""; },{},{}
 605,Anodyne,Anodyne,11,2000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 8,1,"Endure"; },{},{}
 606,Aloevera,Aloevera,11,1500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 6,1,"Provoke"; },{},{}
@@ -107,9 +107,9 @@
 614,Golden_Hammer,Golden Hammer,2,3000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 2; },{},{}
 615,Oridecon_Hammer,Oridecon Hammer,2,5000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 3; },{},{}
 // Item Givers
-616,Old_Card_Album,Old Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -3,1; },{},{}
-617,Old_Purple_Box,Old Purple Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -2,1; },{},{}
-618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -5,1; },{},{}
+616,Old_Card_Album,Old Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CardAlbum),1; },{},{}
+617,Old_Purple_Box,Old Purple Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_VioletBox),1; },{},{}
+618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_ScrollBox),1; },{},{}
 // Pet Tames
 619,Unripe_Apple,Unripe Apple,11,1000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
 620,Orange_Juice,Orange Juice,11,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1113; },{},{}
@@ -136,7 +136,7 @@
 641,Contract_in_Shadow,Contracts in Shadow,11,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1109; },{},{}
 642,Book_of_the_Devil,Book of the Devil,11,1800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1101; },{},{}
 643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ bpet; },{},{}
-644,Gift_Box,Gift Box,2,2,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
+644,Gift_Box,Gift Box,2,2,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 // ASPD Potions
 645,Concentration_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0x00E7DEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
@@ -149,10 +149,10 @@
 662,Authoritative_Badge,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,240000,0; },{},{}
 663,Songpyun,Songpyun,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
-664,Gift_Box_,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
-665,Gift_Box__,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
-666,Gift_Box___,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
-667,Gift_Box____,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
+664,Gift_Box_,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+665,Gift_Box__,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+666,Gift_Box___,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+667,Gift_Box____,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 668,Red_Envelope,Red_Envelope,2,1,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); },{},{}
 669,Rice-Cake_Soup,Rice-Cake Soup,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
 // Coins
@@ -487,8 +487,8 @@
 1139,Tirfing,Tirfing,4,,10,1000,200,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Dark; bonus2 bHPLossRate,35,10000; },{},{}
 1140,Byeollungum,Byeollungum,4,,10,900,150,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus2 bSubRace,RC_NonBoss,-10; bonus2 bAddRace,RC_Boss,5; bonus bAllStats,2; },{},{}
 1141,Immaterial_Sword,Immaterial Sword,4,,10,900,140,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Ghost; bonus2 bSPDrainRate,1,30; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon,0; },{},{}
-1142,Jeweled_Sword,Jeweled Sword,4,,10,2200,104,,1,0,0x000654E2,7,2,2,3,68,1,2,{ bonus2 bAddMonsterDropItemGroup,20,5; },{},{}
-1143,Gaia_Sword,Gaia Sword,4,,10,2500,115,,1,0,0x000654E2,7,2,2,3,74,1,2,{ bonus2 bAddMonsterDropItemGroup,11,5; },{},{}
+1142,Jeweled_Sword,Jeweled Sword,4,,10,2200,104,,1,0,0x000654E2,7,2,2,3,68,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Jewel,5; },{},{}
+1143,Gaia_Sword,Gaia Sword,4,,10,2500,115,,1,0,0x000654E2,7,2,2,3,74,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Ore,5; },{},{}
 1144,Sashimi,Sashimi,4,,10,1400,75,,1,0,0x000654E2,7,2,2,3,48,1,2,{ bonus bAtkEle,Ele_Wind; bonus3 bAddMonsterDropItem,544,5,4000; },{},{}
 1145,Holy_Avenger,Holy Avenger,4,,10,1350,125,,1,0,0x00004000,7,2,2,3,75,1,2,{ bonus bAtkEle,Ele_Holy; },{},{}
 1146,Town_Sword,Town Sword,4,42000,,800,100,,1,1,0x00000001,7,2,2,3,30,1,2,{},{},{}
@@ -1286,9 +1286,9 @@
 4149,Gargoyle_Card,Gargoyle Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12028,4,10; },{},{}
 4150,Goat_Card,Goat Card,6,,10,10,,,,,,,,16,,,,,{ if(getrefine()>=6) end; bonus bDef,2; bonus bMdef,5; },{},{}
 4151,Gajomart_Card,Gajomart Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Plant,-20; bonus2 bExpAddRace,RC_Plant,10; },{},{}
-4152,Galapago_Card,Galapago Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,6,50; bonus3 bAddMonsterDropItemGroup,6,4,4000; },{},{}
+4152,Galapago_Card,Galapago Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,IG_Juice,50; bonus3 bAddMonsterDropItemGroup,IG_Juice,RC_Insect,4000; },{},{}
 4153,Crab_Card,Crab Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddDamageClass,1266,30; if(isequipped(4247,4273)==0) end; bonus3 bAddMonsterDropItem,544,5,3000; bonus2 bAddEle,Ele_Water,30; },{},{}
-4154,Dumpling_Child_Card,Dumpling Child Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,5,50; bonus3 bAddMonsterDropItemGroup,5,7,4000; },{},{}
+4154,Dumpling_Child_Card,Dumpling Child Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,IG_Candy,50; bonus3 bAddMonsterDropItemGroup,IG_Candy,RC_DemiHuman,4000; },{},{}
 4155,Goblin_Leader_Card,Goblin Leader Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,1,30; },{},{}
 4156,Goblin_Steamrider_Card,Goblin Steamrider Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Formless,7; },{},{}
 4157,Goblin_Archer_Card,Goblin Archer Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Undead,7; },{},{}
@@ -1330,7 +1330,7 @@
 4193,Lude_Card,Lude Card,6,,10,10,,,,,,,,136,,,,,{ if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) bonus4 bAutoSpellWhenHit,8,1,200,0; },{},{}
 4194,Rybio_Card,Rybio Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stan,1000+2000*(readparam(bDex)>=77); },{},{}
 4195,Leaf_Cat_Card,Leaf Cat Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSubEle,Ele_Water,10; bonus3 bAddMonsterDropItem,991,5,500; },{},{}
-4196,Marin_Card,Marin Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,10,500; },{},{}
+4196,Marin_Card,Marin Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Jellopy,500; },{},{}
 4197,Mastering_Card,Mastering Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk,1; if(isequipped(4001)) bonus bFlee,18; },{},{}
 4198,Maya_Purple_Card,Maya Purple Card,6,,10,10,,,,,,,,769,,,,,{ bonus bIntravision,0; },{},{}
 4199,Merman_Card,Merman Card,6,,10,10,,,,,,,,64,,,,,{ bonus bHPrecovRate,10; bonus bSPrecovRate,10; if(isequipped(4297,4234,4252,4178)==0) end; bonus bAgi,5; bonus bDex,3; bonus bLongAtkRate,20; bonus bPerfectHitAddRate,20; if(BaseClass != Job_Archer) end; bonus2 bExpAddRace,RC_Brute,5; bonus2 bWeaponComaRace,RC_Brute,100; },{},{}
@@ -1349,11 +1349,11 @@
 4212,Bongun_Card,Bongun Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,5,1,20; bonus2 bAddSkillBlow,5,5; bonus2 bAddDamageByClass,1026,100; },{},{}
 4213,Brilight_Card,Brilight Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Silence,2000; },{},{}
 4214,Bloody_Murderer_Card,Bloody Murderer Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Insect,7; },{},{}
-4215,Blazer_Card,Blazer Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,12,500; },{},{}
+4215,Blazer_Card,Blazer Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Food,500; },{},{}
 4216,Sasquatch_Card,Sasquatch Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Freeze,2000; },{},{}
 4217,Enchanted_Peach_Tree_Card,Enchanted Peach Tree Card,6,,10,10,,,,,,,,32,,,,,{ bonus4 bAutoSpell,28,1+9*(getskilllv(28)==10),20,0; if(isequipped(4280,4185,4293,4312)==0) end; bonus bVit,10; bonus bCastrate,-10; bonus bUseSPRate,-10; if(BaseClass != Job_Acolyte) end; bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,30; bonus2 bSubRace,RC_Demon,30; },{},{}
 4218,Succubus_Card,Succubus Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,1000; bonus bVit,-3+4*isequipped(4269); bonus bHPrecovRate,-20+30*isequipped(4269); },{},{}
-4219,Sage_Worm_Card,Sage Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,9,500; },{},{}
+4219,Sage_Worm_Card,Sage Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Gemstone,500; },{},{}
 4220,Solider_Card,Solider Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDef,2; bonus bMdef,2; },{},{}
 4221,Skeleton_General_Card,Skeleton General Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Insect,-20; bonus2 bExpAddRace,RC_Insect,10; },{},{}
 4222,Skeleton_Prisoner_Card,Skeleton Prisoner Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,1000+2000*(isequipped(4025)); },{},{}
@@ -1361,12 +1361,12 @@
 4224,Stem_Worm_Card,Stem Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12032,2,10; },{},{}
 4225,Stone_Shooter_Card,Stone Shooter Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,10; bonus bHit,10; },{},{}
 4226,Sting_Card,Sting Card,6,,10,10,,,,,,,,32,,,,,{ bonus bDef,2; if(getrefine()>8) bonus bMdef,5; },{},{}
-4227,Spring_Rabbit_Card,Spring Rabbit Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,4,50; bonus3 bAddMonsterDropItem,517,2,5000; bonus3 bAddMonsterDropItem,528,2,5000; },{},{}
+4227,Spring_Rabbit_Card,Spring Rabbit Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,IG_Meat,50; bonus3 bAddMonsterDropItemGroup,IG_Meat,RC_Brute,5000; },{},{}
 4228,Sleeper_Card,Sleeper Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12031,5,10; },{},{}
 4229,Clock_Tower_Manager_Card,Clock Tower Manager Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus bCastrate,-5; if(isequipped(4244,4299,4313)==0) end; bonus bDef,3; bonus bMdef,3; },{},{}
 4230,Shinobi_Card,Shinobi Card,6,,10,10,,,,,,,,136,,,,,{ bonus bAgi,1; bonus4 bAutoSpellWhenHit,135,5,100,0; },{},{}
 4231,Increase_Soil_Card,Increase Soil Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bAddDamageByClass,1285,-50; bonus2 bAddDamageByClass,1286,-50; bonus2 bAddDamageByClass,1287,-50; },{},{}
-4232,Hermit_Plant_Card,Hermit Plant Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,2,50; bonus3 bAddMonsterDropItemGroup,2,3,4000; },{},{}
+4232,Hermit_Plant_Card,Hermit Plant Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,IG_Herb,50; bonus3 bAddMonsterDropItemGroup,IG_Herb,RC_Plant,4000; },{},{}
 4233,Baby_Leopard_Card,Baby Leopard Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,3; if(BaseClass != Job_Merchant) end; bonus bUnbreakableArmor,0; },{},{}
 4234,Anolian_Card,Anolian Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,45,1+9*(getskilllv(45)==10),30,0; },{},{}
 4235,Christmas_Cookie_Card,Christmas Cookie Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Angel,-20; bonus2 bExpAddRace,RC_Angel,10; },{},{}
@@ -1416,7 +1416,7 @@
 4279,Earth_Deleter_Card,Earth Deleter Card,6,,10,10,,,,,,,,16,,,,,{ bonus bSPrecovRate,-100; bonus bSPGainValue,10; },{ },{ heal 0,-100; }
 4280,Geographer_Card,Geographer Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,34,2+8*(getskilllv(34)==10),30,0; },{},{}
 4281,Zipper_Bear_Card,Zipper Bear Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus2 bSPDrainValue,-1,0; if(BaseClass == Job_Merchant) bonus bUnbreakableWeapon,0; },{},{}
-4282,Tengu_Card,Tengu Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,13,500; },{},{}
+4282,Tengu_Card,Tengu Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Recovery,500; },{},{}
 4283,Greatest_General_Card,Greatest General Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpell,261,5,2+18*(BaseClass == Job_Acolyte),0; },{},{}
 4284,Chepet_Card,Chepet Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,28,5,50; },{},{}
 4285,Choco_Card,Choco Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee2,5; bonus bFlee,10; },{},{}
@@ -1453,14 +1453,14 @@
 4316,False_Angel_Card,False Angel Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_Angel,5; },{ },{ heal 0,-5; }
 4317,Mobster_Card,Mobster Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,15; if(BaseClass == Job_Thief) bonus bCritical,4; },{},{}
 4318,Stormy_Knight_Card,Stormy Knight Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,89,2,20; bonus2 bAddEffWhenHit,Eff_Freeze,2000; },{},{}
-4319,Freezer_Card,Freezer Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHP,300; if(getrefine()>=9) bonus2 bSkillAtk,5,10; if(isequipped(4246,4311,4220,4331)==0) end; bonus bStr,10; bonus bMaxHPrate,20; bonus bHPrecovRate,50; bonus4 bAutoSpell,112,1,3,0; bonus2 bAddMonsterDropItem,501,100; if(BaseClass != Job_Swordman) end; bonus2 bAddItemHealRate,1,50; },{},{}
+4319,Freezer_Card,Freezer Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHP,300; if(getrefine()>=9) bonus2 bSkillAtk,5,10; if(isequipped(4246,4311,4220,4331)==0) end; bonus bStr,10; bonus bMaxHPrate,20; bonus bHPrecovRate,50; bonus4 bAutoSpell,112,1,3,0; bonus2 bAddMonsterDropItem,501,100; if(BaseClass != Job_Swordman) end; bonus2 bAddItemHealRate,IG_Potion,50; },{},{}
 4320,Bloody_Knight_Card,Bloody Knight Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,83,1,20; },{},{}
 4321,Hylozoist_Card,Hylozoist Card,6,,10,10,,,,,,,,136,,,,,{ bonus bClassChange,100; },{},{}
 4322,High_Orc_Card,High Orc Card,6,,10,10,,,,,,,,32,,,,,{ bonus bDef,1; bonus bShortWeaponDamageReturn,5; },{},{}
 4323,Garm_Baby_Card,Garm Baby Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,15,3,50+250*isequipped(4324); },{},{}
 4324,Garm_Card,Garm Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Freeze,5000; },{},{}
 4325,Harpy_Card,Harpy Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bSkillAtk,11,5; if(isequipped(4191,4208,4258,4309,4327)==0) end; bonus bMaxHP,500; bonus bDef,5; bonus bMDef,5; bonus2 bSkillAtk,14,10; bonus2 bSkillAtk,19,10; bonus2 bSkillAtk,20,10; if(BaseClass != Job_Mage) end; bonus bMatkRate,3; bonus bCastrate,-15; },{},{}
-4326,Sea-Otter_Card,Sea-Otter Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,7,50; bonus3 bAddMonsterDropItem,544,5,5000; bonus3 bAddMonsterDropItem,551,5,5000; },{},{}
+4326,Sea-Otter_Card,Sea-Otter Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddItemHealRate,IG_Fish,50; bonus3 bAddMonsterDropItemGroup,IG_Fish,RC_Fish,5000; },{},{}
 4327,Bloody_Butterfly_Card,Bloody Butterfly Card,6,,10,10,,,,,,,,136,,,,,{ bonus bCastrate,30; bonus bNoCastCancel,0; bonus2 bSkillAtk,18,5; },{},{}
 4328,Hyegun_Card,Hyegun Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee,15; bonus bCritical,1; if(isequipped(4090,4212)) bonus bAllStats,1; },{},{}
 4329,Phendark_Card,Phendark Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_DemiHuman,5; },{ },{ heal 0,-5; }
@@ -2243,7 +2243,7 @@
 12020,Cursed_Water,Cursed_Water,0,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SHADOWWEAPON, 1200000, 1; },{},{}
 12021,Pork,Pork,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12022,Galbi,Galbi,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
-12023,Wrapped_Box,Wrapped Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -4,1; },{},{}
+12023,Wrapped_Box,Wrapped Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 12024,Red_Pouch,Red Pouch,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,1000); },{},{}
 12025,Dano_Festival_Egg,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12026,Dano_Festival_Egg_,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -2328,14 +2328,14 @@
 12102,Grilled_Skewer,Grilled Skewer,0,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // New Monster Summoners & Item Givers
 12103,Bloody_Branch,Bloody Branch,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",0,0,"--ja--",-3,1,""; },{},{}
-12104,Random_Quiver,Random Quiver,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(17),1; },{},{}
-12105,Taming_Item_Giftset,Taming Item Giftset,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(15),3; },{},{}
-12106,Jewel_Box,Jewel Case,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(19),1; },{},{}
-12107,Wrapped_Mask,Wrapped Mask,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(18),1; },{},{}
-12108,Bundle_of_Spells,Bundle of Spells,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(16),5; },{},{}
+12104,Random_Quiver,Random Quiver,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Quiver),1; },{},{}
+12105,Taming_Item_Giftset,Taming Item Giftset,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Taming),3; },{},{}
+12106,Jewel_Box,Jewel Case,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Jewel),1; },{},{}
+12107,Wrapped_Mask,Wrapped Mask,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Mask),1; },{},{}
+12108,Bundle_of_Spells,Bundle of Spells,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Scroll),5; },{},{}
 12109,Poring_Box,Poring Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",0,0,"--ja--",-2,1,""; },{},{}
-12110,First_Aid_Box,First Aid Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(1),5; },{},{}
-12111,Wrapped_Food,Wrapped Food,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(3),1; getitem groupranditem(4),1; getitem groupranditem(7),1; },{},{}
+12110,First_Aid_Box,First Aid Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Potion),5; },{},{}
+12111,Wrapped_Food,Wrapped Food,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Fruit),1; getitem groupranditem(IG_Meat),1; getitem groupranditem(IG_Fish),1; },{},{}
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}
 12113,Vermilion_the_Beach,Vermilion the Beach,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Stan,10000,1; },{},{}
 // Elemental Converters
@@ -2358,7 +2358,7 @@
 12128,Court_Cooking_Set,Court Cooking Set,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
 12129,Legendary_Cooking_Set,Legendary Cooking Set,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
 //
-12130,Cookie_Bag,Cookie Bag,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem -7,1; },{},{}
+12130,Cookie_Bag,Cookie Bag,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; },{},{}
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
 12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5)==MDiceCone)end; set MDiceCone,gettime(5); percentheal 50,50; },{},{}

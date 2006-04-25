@@ -3945,7 +3945,7 @@ int buildin_grouprandomitem(struct script_state *st)
 	int group;
 
 	group = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	push_val(st->stack, C_INT, itemdb_searchrandomgroup(group));
+	push_val(st->stack, C_INT, itemdb_searchrandomid(group));
 	return 0;
 }
 
