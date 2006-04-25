@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/25
+	* Moved the mapflag skill restrictions from skill_checkcondition to
+	  skillnotok, this makes auto-spells not work in maps where they aren't
+	  allowed. [Skotlex]
+	* Added TK_HIGHJUMP to skillnotok, the skill is blocked in noteleport maps
+	  (with the exception of gvg ones) [Skotlex]
 	* Modified and simplified the random item group format. It now is
 	  <GroupID>,<ItemID>,<Rate>, where Rate normally is 1, greater numbers is the
 	  equivalent of adding the line multiple times. Also has support for import

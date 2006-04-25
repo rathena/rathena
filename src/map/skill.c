@@ -835,7 +835,33 @@ int skillnotok(int skillid, struct map_session_data *sd)
 
 	switch (skillid) {
 		case AL_WARP:
+			if(map[sd->bl.m].flag.nowarp) {
+				clif_skill_teleportmessage(sd,0);
+				return 1;
+			}
+			return 0;
+		break;
 		case AL_TELEPORT:
+			if(map[sd->bl.m].flag.noteleport) {
+				clif_skill_teleportmessage(sd,0);
+				return 1;
+			}
+			return 0;
+		case TK_HIGHJUMP:
+			if(map[sd->bl.m].flag.noteleport && !map_flag_gvg(sd->bl.m))
+		  	{	//Can't be used on noteleport maps, except for gvg maps [Skotlex]
+				clif_skill_fail(sd,skillid,0,0);
+				return 1;
+			}
+			break;
+		case WE_CALLPARTNER:
+		case WE_CALLPARENT:
+		case WE_CALLBABY:
+			if (map[sd->bl.m].flag.nomemo) {
+				clif_skill_teleportmessage(sd,1);
+				return 1;
+			}
+			break;	
 		case MC_VENDING:
 		case MC_IDENTIFY:
 			return 0; // always allowed
@@ -845,9 +871,8 @@ int skillnotok(int skillid, struct map_session_data *sd)
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
-		default:
-			return (map[sd->bl.m].flag.noskill);
 	}
+	return (map[sd->bl.m].flag.noskill);
 }
 
 /* ƒXƒLƒ‹ƒ†ƒjƒbƒg‚Ì”z’u?î•ñ‚ð•Ô‚· */
@@ -6462,32 +6487,16 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		count=1;	// Leave this at 1 [Valaris]
 		break;
 	case WE_CALLPARTNER:
-		if (!sd)
-			return NULL;
-		if (map[src->m].flag.nomemo) {
-			clif_skill_teleportmessage(sd,1);
-			return NULL;
-		}
-		val1 = sd->status.partner_id;
+		if (sd ) val1 = sd->status.partner_id;
 		break;
 	case WE_CALLPARENT:
-		if (!sd)
-			return NULL;
-		if (map[src->m].flag.nomemo) {
-			clif_skill_teleportmessage(sd,1);
-			return NULL;
+		if (sd) {
+			val1 = sd->status.father;
+		 	val2 = sd->status.mother;
 		}
-		val1 = sd->status.father;
-	 	val2 = sd->status.mother;
 		break;
 	case WE_CALLBABY:
-		if (!sd)
-			return NULL;
-		if (map[src->m].flag.nomemo) {
-			clif_skill_teleportmessage(sd,1);
-			return NULL;
-		}
-		val1 = sd->status.child;
+		if (sd) val1 = sd->status.child;
 		break;
 	}
 
@@ -7717,20 +7726,10 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case AL_WARP:
 		if(!(type&2)) //Delete the item when the portal has been selected (type&2). [Skotlex]
 			delitem_flag = 0;
-		if(map[sd->bl.m].flag.nowarp) {
-			clif_skill_teleportmessage(sd,0);
-			return 0;
-		}
 		if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 			clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
 			return 0;
 		}				
-		break;
-	case AL_TELEPORT:
-		if(map[sd->bl.m].flag.noteleport) {
-			clif_skill_teleportmessage(sd,0);
-			return 0;
-		}
 		break;
 	case MO_CALLSPIRITS:	/* ?Œ÷ */
 		if(sd->spiritball >= lv) {
