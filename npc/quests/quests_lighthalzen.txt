@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.4a
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you couls skip
 //=	a part of quest...)
 //= 1.5 Fixed Mobster's OnDead event(it has to start with "On"!) [Playtester]
+//= 1.5a Fixed "free stick" bug, thx 2 Neouni [Lupus]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -749,11 +750,11 @@ L_1:
 	mes "With another stick to make it larger.";
 	if (srod2 == 1) goto L1_1;
 	if (srod1 == 0) set srod1,1;
-	if (srod1 == 0) close;
+	close;
 
 L1_1:
 	set srod1,1;
-	if (@bad == 0) next;
+	if (@bed == 0) next;
 	mes "It looks similar to the 'small stick' that you";
 	mes "found under the bed.";
 	next;

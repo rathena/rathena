@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+04/25
+	* Cube Room Quest: fixed "free stick" bug, thx 2 Neouni [Lupus]
 04/23
 	* Rearranged Ingredient Sellers. Removed doubled seller from Morocc [Lupus]
 	* Added an ingredient seller to Morroc, thanks to Muad_Dib [MasterOfMuppets]
