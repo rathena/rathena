@@ -26,8 +26,9 @@
 	-----
 
 =========================
-
 04/25
+	* Updated the iRO and kRO mob names [Playtester]
+	- mob names done up to ID 1491, working on the rest now
 	* Updated the header in the mob db text files [Playtester]
 	- the order is now SpriteName,kROName,iROName
 04/24
