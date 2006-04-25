@@ -374,6 +374,14 @@ IG_Quiver	24
 IG_Mask	25
 IG_Accesory	26
 IG_Jewel	27
+IG_GiftBox_1	28
+IG_GiftBox_2	29
+IG_GiftBox_3	30
+IG_GiftBox_4	31
+IG_EggBoy	32
+IG_EggGirl	33
+IG_GiftBoxChina	34
+
 
 SC_STONE	0
 SC_FREEZE	1
