@@ -3887,7 +3887,10 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	WFIFOW(fd,10)=unit->bl.x;
 	WFIFOW(fd,12)=unit->bl.y;
 	//Use invisible unit id for traps.
-	WFIFOB(fd,14)=(skill_get_inf2(unit->group->skill_id)&INF2_TRAP?UNT_ATTACK_SKILLS:unit->group->unit_id);
+	if (battle_config.traps_setting&1 && skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
+		WFIFOB(fd,14)=UNT_ATTACK_SKILLS;
+	else
+		WFIFOB(fd,14)=unit->group->unit_id;
 	WFIFOB(fd,15)=0;
 	WFIFOSET(fd,packet_len_table[0x11f]);
 

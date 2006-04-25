@@ -6402,7 +6402,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 				if (limit < 0)	//This can happen... 
 					limit = skill_get_time(skillid,skilllv);
 			}
-			skill_clear_element_field(src);
+			skill_clear_group(src,1);
 		}
 		break;
 	}
@@ -8915,27 +8915,39 @@ int skill_attack_area(struct block_list *bl,va_list ap)
  *
  *------------------------------------------
  */
-int skill_clear_element_field(struct block_list *bl)
+int skill_clear_group(struct block_list *bl, int flag)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
-	int i;
+	struct skill_unit_group *group[MAX_SKILLUNITGROUP];
+	int i, count=0;
 
 	nullpo_retr(0, bl);
 	if (!ud) return 0;
-	
-	for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++) {
+
+	//All groups to be deleted are first stored on an array since the array elements shift around when you delete them. [Skotlex]
+	for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++)
+	{
 		switch (ud->skillunit[i]->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
-				skill_delunitgroup(bl, ud->skillunit[i]);
+				if (flag&1)
+					group[count++]= ud->skillunit[i];
+				break;
+			default:
+				if (flag&2 && skill_get_inf2(ud->skillunit[i]->skill_id)&INF2_TRAP)
+					group[count++]= ud->skillunit[i];
+				break;
 		}
-	}
-	return 1;
-}
 
+	}
+	for (i=0;i<count;i++);
+		skill_delunitgroup(bl, group[i]);
+	return count;
+}
+	
 /*==========================================
  * Returns the first element field found [Skotlex]
  *------------------------------------------

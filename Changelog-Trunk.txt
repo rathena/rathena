@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/25
+	* Added battle config traps_setting to determine how traps should behave.
+	  With &1 traps are invisible if you didn't see them get set up. With &2
+	  traps will be removed after changing maps. The default is 2.
+	  (battle/skill.conf) [Skotlex]
 	* Cleaned up a bit the implementation of SC_MAXIMIZEPOWER, SC_CHASEWALK and
 	  SC_CLOAKING to prevent infinite looping timers. [Skotlex]
 	* Fixed NPC_SUICIDE dropping items. [Skotlex]

@@ -3599,6 +3599,7 @@ static const struct battle_data_short {
 	{ "player_damage_delay_rate",          &battle_config.pc_damage_delay_rate		},
 	{ "defunit_not_enemy",                 &battle_config.defnotenemy				},
 	{ "gvg_traps_target_all",	            &battle_config.vs_traps_bctall			},
+	{ "traps_setting",	                  &battle_config.traps_setting	},
 	{ "clear_skills_on_death",             &battle_config.clear_unit_ondeath },
 	{ "random_monster_checklv",            &battle_config.random_monster_checklv	},
 	{ "attribute_recover",                 &battle_config.attr_recover				},
@@ -3974,6 +3975,7 @@ void battle_set_defaults() {
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
 	battle_config.vs_traps_bctall=BL_PC;
+	battle_config.traps_setting=0;
 	battle_config.clear_unit_ondeath=BL_ALL;
 	battle_config.random_monster_checklv=1;
 	battle_config.attr_recover=1;
