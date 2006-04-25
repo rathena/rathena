@@ -27,6 +27,7 @@
 
 =========================
 04/25
+	* Updated the remaining mob names [Playtester]
 	* Updated the iRO and kRO mob names [Playtester]
 	- mob names done up to ID 1491, working on the rest now
 	* Updated the header in the mob db text files [Playtester]
