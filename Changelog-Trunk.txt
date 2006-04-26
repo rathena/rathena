@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/26
+	* Changed the skill_wall_check to use shoot-path seeking. May fix
+	  skill_wall_check setting. [Skotlex]
 	* Fixed typo in skill.c: skill_clear_group [Lance]
 
 2006/04/25
