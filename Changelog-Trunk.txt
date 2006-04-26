@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/26
+	* When Taekwons level up they get Bless and Agi Up level 10 instead of the
+	  S.Novice bonuses. [Skotlex]
+	* Increased number of hits for TK kicks. 3 hits for TK_COUNTER and
+	  TK_TURNKICK, 2 hits for TK_STORMKICK and TK_DOWNKICK (until further
+	  information arrives) [Skotlex]
 	* Modified how changebase script command works, the change caused by it is
 	  permanent (at least until logout). Updated the Tuxedo and Wedding dress to
 	  use onequip/onunequip scripts to change the look. [Skotlex]

@@ -3776,14 +3776,19 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		pc_heal(sd,sd->status.max_hp,sd->status.max_sp);
 
 		//スパノビはキリエ、イムポ、マニピ、グロ、サフラLv1がかかる
-		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE || (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON){
+		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		{
 			sc_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,1,skill_get_time(PR_KYRIE,1));
 			sc_start(&sd->bl,SkillStatusChangeTable[PR_IMPOSITIO],100,1,skill_get_time(PR_IMPOSITIO,1));
 			sc_start(&sd->bl,SkillStatusChangeTable[PR_MAGNIFICAT],100,1,skill_get_time(PR_MAGNIFICAT,1));
 			sc_start(&sd->bl,SkillStatusChangeTable[PR_GLORIA],100,1,skill_get_time(PR_GLORIA,1));
 			sc_start(&sd->bl,SkillStatusChangeTable[PR_SUFFRAGIUM],100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		} else
+		if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON)
+		{
+			sc_start(&sd->bl,SkillStatusChangeTable[AL_INCAGI],100,10,skill_get_time(AL_INCAGI,10));
+			sc_start(&sd->bl,SkillStatusChangeTable[AL_BLESSING],100,10,skill_get_time(AL_BLESSING,10));
 		}
-
 		clif_misceffect(&sd->bl,0);
 		//LORDALFA - LVLUPEVENT
 		if (script_config.event_script_type == 0) {
