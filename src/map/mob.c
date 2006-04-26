@@ -3066,7 +3066,7 @@ static int mob_makedummymobdb(int class_)
 }
 
 //Adjusts the drop rate of item according to the criteria given. [Skotlex]
-static int mob_drop_adjust(int rate, int rate_adjust, int rate_min, int rate_max)
+static unsigned int mob_drop_adjust(unsigned int rate, int rate_adjust, unsigned short rate_min, unsigned short rate_max)
 {
 	if (battle_config.logarithmic_drops && rate_adjust > 0) //Logarithmic drops equation by Ishizu-Chan
 		//Equation: Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
@@ -3174,7 +3174,8 @@ static int mob_readdb(void)
 			mob_db_data[class_]->dmotion=atoi(str[29]);
 
 			for(i=0;i<10;i++){ // 8 -> 10 Lupus
-				int rate = 0,rate_adjust,type,ratemin,ratemax;
+				int rate = 0,rate_adjust,type;
+				unsigned short ratemin,ratemax;
 				struct item_data *id;
 				mob_db_data[class_]->dropitem[i].nameid=atoi(str[30+i*2]);
 				if (!mob_db_data[class_]->dropitem[i].nameid) {
@@ -3800,7 +3801,8 @@ static int mob_read_sqldb(void)
 				mob_db_data[class_]->dmotion = TO_INT(29);
 
 				for (i = 0; i < 10; i++){ // 8 -> 10 Lupus
-					int rate = 0, rate_adjust, type, ratemin, ratemax;
+					int rate = 0, rate_adjust, type;
+					unsigned short ratemin, ratemax;
 					struct item_data *id;
 					mob_db_data[class_]->dropitem[i].nameid=TO_INT(30+i*2);
 					if (!mob_db_data[class_]->dropitem[i].nameid) {

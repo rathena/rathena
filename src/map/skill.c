@@ -2644,7 +2644,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				if (sc->data[SC_COMBO].timer != -1) //This is one is here to make combo end even if skill failed. 
 					status_change_end(src,SC_COMBO,-1);
 			}
-			if(!check_distance_bl(src, bl, 1)) { //Need to move to target.
+			if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
 				struct unit_data *ud;
 				int dx,dy;
 
