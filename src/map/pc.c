@@ -452,9 +452,9 @@ int pc_calcweapontype(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->weapontype1 != W_FIST &&	sd->weapontype2 == W_FIST)
+	if(sd->weapontype1 != W_FIST && sd->weapontype2 == W_FIST)
 		sd->status.weapon = sd->weapontype1;
-	else if(sd->weapontype1 == W_FIST &&	sd->weapontype2 != W_FIST)// ¶Žè•Ší Only
+	else if(sd->weapontype1 == W_FIST && sd->weapontype2 != W_FIST)// ¶Žè•Ší Only
 		sd->status.weapon = sd->weapontype2;
 	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_DAGGER)// ?’Z?
 		sd->status.weapon = MAX_WEAPON_TYPE+1;
@@ -1269,7 +1269,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.atk_ele=val;
 		else if(sd->state.lr_flag == 2)
-
 			sd->arrow_ele=val;
 		break;
 	case SP_DEFELE:
@@ -3820,7 +3819,6 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		if(!battle_config.multi_level_up && sd->status.job_exp > next-1)
 			sd->status.job_exp = next-1;
 
-
 		sd->status.job_level ++;
 		  
 		clif_updatestatus(sd,SP_JOBLEVEL);
@@ -4427,7 +4425,6 @@ int pc_resetfeel(struct map_session_data* sd)
 {
 	int i;
 	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
-
 	nullpo_retr(0, sd);
 
 	for (i=0; i<3; i++)
@@ -6041,7 +6038,6 @@ int pc_cleareventtimer(struct map_session_data *sd)
 			if (p) aFree(p);
 		}
 
-
 	return 0;
 }
 
@@ -7389,7 +7385,6 @@ int pc_readdb(void)
 			skill_tree[atoi(split[0])][j].need[k].id=atoi(split[k*2+m]);
 			skill_tree[atoi(split[0])][j].need[k].lv=atoi(split[k*2+m+1]);
 		}
-		
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","skill_tree.txt");

@@ -3857,7 +3857,7 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
  */
 int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *unit)
 {
-	int fd/*, unit_id*/; // Unused? [Lance]
+	int fd;
 	struct block_list *bl;
 
 	fd=sd->fd;
@@ -3904,7 +3904,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOL(fd, 6)=unit->group->src_id;
 	WFIFOW(fd,10)=unit->bl.x;
-	WFIFOW(fd,12)=unit_id;
+	WFIFOW(fd,12)=unit->bl.y;
 	WFIFOB(fd,14)=unit->group->unit_id;
 	WFIFOB(fd,15)=1;
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
@@ -8094,14 +8094,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//[LuzZza]
 		clif_guild_send_onlineinfo(sd);
 
-/* Unneccesary due to mapflag "nosave" [Skotlex]
-//		Stop players from spawning inside castles [Valaris]
-		{
-			struct guild_castle *gc=guild_mapname2gc(map[sd->bl.m].name);
-			if (gc)
-				pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,2);
-			}
-*/
 	} else
 	//New 'night' effect by dynamix [Skotlex]
 	if (night_flag && map[sd->bl.m].flag.nightenabled)

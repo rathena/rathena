@@ -1565,8 +1565,6 @@ static struct Damage battle_calc_weapon_attack(
 					else if (!sd)
 						skillratio += 150; //Max damage for non players.
 					break;
-				case NPC_COMBOATTACK:
-					break;
 				case NPC_RANDOMATTACK:
 					skillratio += rand()%150-50;
 					break;

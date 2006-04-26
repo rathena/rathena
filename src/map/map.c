@@ -2737,7 +2737,7 @@ static int map_loadafm (struct map_data *m, char *fn)
 		xs = m->xs = afm_size[0];
 		ys = m->ys = afm_size[1];
 		m->water_height = map_waterheight(m->name);
-
+		// check this, unsigned where it might not need to be
 		m->gat = (unsigned char*)aCallocA(xs * ys, 1);
 
 		for (y = 0; y < ys; y++) {

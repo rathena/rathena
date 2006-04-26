@@ -1376,10 +1376,6 @@ extern MYSQL mmysql_handle;
 extern MYSQL_RES*	sql_res ;
 extern MYSQL_ROW	sql_row ;
 
-extern MYSQL lmysql_handle;
-extern MYSQL_RES*	lsql_res ;
-extern MYSQL_ROW	lsql_row ;
-
 extern MYSQL charsql_handle;
 extern MYSQL_RES*	charsql_res;
 extern MYSQL_ROW	charsql_row;

@@ -610,7 +610,6 @@ const struct skill_name_db skill_names[] = {
 static const int dirx[8]={0,-1,-1,-1,0,1,1,1};
 static const int diry[8]={1,1,0,-1,-1,-1,0,1};
 
-
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
@@ -3195,17 +3194,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				return 0;
 			}
 		}
+		//These are actually ground placed.
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
-			//These are actually ground placed.
-			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
-
 		//Until they're at right position - gs_ground- [Vicious]
 		case NJ_KAENSIN:	/*‰Î‰Šw*/
 		case GS_DESPERADO:	/*ƒfƒXƒyƒ‰[ƒh*/
-			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
-			break;
-		
 		case NJ_HYOUSYOURAKU:
 		case NJ_RAIGEKISAI:
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
@@ -3982,7 +3976,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			ar=skilllv/3;
 			skill_brandishspear_first(&tc,dir,x,y);
 			skill_brandishspear_dir(&tc,dir,4);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			/* ”Í?‡C */
 			if(skilllv == 10){
 				for(c=1;c<4;c++){
@@ -5901,6 +5894,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		map_foreachinarea( status_change_timer_sub,
 			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
 			src,status_get_sc(src),SC_SIGHT,tick);
+		if(battle_config.traps_setting&1)
 		map_foreachinarea( skill_reveal_trap,
 			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
 		break;
@@ -6465,7 +6459,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		count=1;	// Leave this at 1 [Valaris]
 		break;
 	case WE_CALLPARTNER:
-		if (sd ) val1 = sd->status.partner_id;
+		if (sd) val1 = sd->status.partner_id;
 		break;
 	case WE_CALLPARENT:
 		if (sd) {
@@ -9586,13 +9580,6 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 			group->bl_flag,bl,tick);
 		if (!unit->alive)
 			return 0;
-	/*Apparently magnus shouldn't get it's cells deleted like this. [Skotlex]
-		// ƒ}ƒOƒkƒX‚Í”­“®‚µ‚½ƒ†ƒjƒbƒg‚Í?í?œ‚·‚é
-		if (group->skill_id==PR_MAGNUS && unit->val2) {
-			skill_delunit(unit);
-			return 0;
-		}
-	*/
 	}
 	/* ŽžŠÔ?Ø‚ê?í?œ */
 	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit)){

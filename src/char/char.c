@@ -3068,7 +3068,6 @@ int lan_subnetcheck(long *p) {
 }
 
 int parse_char(int fd) {
-	
 	int i, ch;
 	unsigned short cmd;
 	char email[40];

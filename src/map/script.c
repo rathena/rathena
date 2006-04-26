@@ -23,6 +23,7 @@
 #include "../common/lock.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "clif.h"
@@ -45,11 +46,6 @@
 #include "charcommand.h"
 #include "log.h"
 #include "unit.h"
-
-#if !defined(TXT_ONLY) && defined(MAPREGSQL)
-#include "strlib.h"
-#endif
-
 #include "irc.h"
 
 #define SCRIPT_BLOCK_SIZE 256
