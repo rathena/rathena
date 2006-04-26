@@ -593,7 +593,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 {
 	static int calculating = 0; //Check for recursive call preemption. [Skotlex]
 	int b_speed,b_max_hp,b_max_sp,b_hp,b_sp,b_weight,b_max_weight,b_paramb[6],b_parame[6],b_hit,b_flee;
-	int b_aspd,b_watk,b_def,b_watk2,b_def2,b_flee2,b_critical,b_attackrange,b_matk1,b_matk2,b_mdef,b_mdef2,b_class;
+	int b_aspd,b_watk,b_def,b_watk2,b_def2,b_flee2,b_critical,b_attackrange,b_matk1,b_matk2,b_mdef,b_mdef2;
 	int b_base_atk;
 	struct skill b_skill[MAX_SKILL];
 	int i,bl,index;
@@ -629,9 +629,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	b_mdef = sd->mdef;
 	b_mdef2 = sd->mdef2;
 	b_base_atk = sd->base_atk;
-	b_class = sd->vd.class_;
-	if (sd->special_state.changebase) //Clear suit. (if equipment is still on, vd.class_ will revert back to b_class's value)
-		sd->vd.class_ = sd->status.class_;
 	
 	pc_calc_skilltree(sd);	// スキルツリ?の計算
 	
@@ -1600,13 +1597,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		return 0;
 	}
 	
-	if(b_class != sd->vd.class_) {
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->vd.weapon);
-		clif_changelook(&sd->bl,LOOK_SHIELD,sd->vd.shield);
-		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-	}
-
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
 	if(b_speed != sd->speed)

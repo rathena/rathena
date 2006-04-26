@@ -6348,10 +6348,8 @@ int buildin_changebase(struct script_state *st)
 		return 0;
 	}
 
-	if(!sd->disguise && !sd->special_state.changebase) {
+	if(!sd->disguise && vclass != sd->vd.class_)
 		status_set_viewdata(&sd->bl, vclass);
-		sd->special_state.changebase =1; //Character on suit.
-	}
 
 	return 0;
 }

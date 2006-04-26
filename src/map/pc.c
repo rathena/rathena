@@ -4874,9 +4874,6 @@ int pc_readparam(struct map_session_data *sd,int type)
 		val= sd->status.job_level;
 		break;
 	case SP_CLASS:
-		if(val>=27 && val < 45)
-			val+=3978;
-		else
 		val= sd->status.class_;
 		break;
 	case SP_BASEJOB: //Base job, extracting upper type.
