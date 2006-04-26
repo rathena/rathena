@@ -903,7 +903,7 @@ izlude.gat,201,181,2	script	Sailor	100,{
 	mes "Attention, attention!";
 	mes "Come and Ride the Wind";
 	mes "on a Fantastic Ship!";
-	mes "Hurry, hurry"
+	mes "Hurry, hurry";
 	next;
 	menu "Byalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L1,"Cancel",LEnd;
 	
