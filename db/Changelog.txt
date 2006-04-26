@@ -26,9 +26,12 @@
 	-----
 
 =========================
+04/26
+	* Updated drop rates of Remover/Gemini with help of Tharis [Playtester]
+	- droprate is now 1/2 of the guessed values
 04/25
 	* Updated OBB/OCA/etc [Vicious]
-	* Re-enabled Biolab's summon summmoning [Vicious[
+	* Re-enabled Biolab's summon summmoning [Vicious]
 04/25
 	* Fixed price of yummy fish 150z -> 250z [Playtester]
 	* Updated Mode and Delays of Odin Temple mobs(using Frus delays for now) [Playtester]
