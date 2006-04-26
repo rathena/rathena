@@ -2,6 +2,9 @@ Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
+2006/04/26
+	* Fixed typo in skill.c: skill_clear_group [Lance]
+
 2006/04/25
 	* Added battle config traps_setting to determine how traps should behave.
 	  With &1 traps are invisible if you didn't see them get set up. With &2
@@ -121,6 +124,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  [Skotlex]
 	* Armor defense is no longer reduced by the amount of characters targetting
 	  you. [Skotlex]
+
 2006/04/19
 	* Updated the doc/script_commands.txt documentation in regards to npc mob
 	  spawn lines. [Skotlex]
@@ -142,6 +146,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  $@partynameaid). By default it returns party member names. [Skotlex]
 	* Updated script_commands.txt with the updated behaviour of getpartymember.
 	  [Skotlex]
+
 2006/04/18
 	* Fixed a typo in map_search_freecell which was returning incorrect cells
 	  according to the ranges given. [Skotlex]

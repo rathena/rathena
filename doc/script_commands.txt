@@ -5079,7 +5079,7 @@ Note: rid2name may not produce correct character names since rid = account id.
 ---------------------------------------
 
 *function <function name>;
-*<function name>();
+*<function name>;
 *function <function name> {
 <code>
 }
@@ -5087,9 +5087,8 @@ Note: rid2name may not produce correct character names since rid = account id.
 (Skotlex stop being so selfish and give us all the commands T~T! J/k lol :P)
 
 This works like callfunc, but doesn't support arguments like callfunc. It's used for cleaner
-and fast script that doesn't require arguments for it to work. Labels must start with SF_
-(SubFunctions I guess). Also they must be inside a script. They're not separated scripts
-and they work more like labels.
+and fast script that doesn't require arguments for it to work. Also they must be inside a script. 
+They're not separated scripts and they work more like labels.
 
 Note it looks like the normal declaration
 
@@ -5097,7 +5096,7 @@ Usage:
 
 You first Declare the function with function <function name>;.
 
-Put the rest of your code. You can use then <function name>(); to call the function. If it returns a value is unsure,
+Put the rest of your code. You can use then <function name>; to call the function. If it returns a value is unsure,
 test it if you want and give us some comments ;3
 
 And at least, but inside the script itself, put the function <function name> {<code>}.
@@ -5114,7 +5113,7 @@ next;
 if (Zeny > 50) && (BaseLevel > 50) {
 	mes "Welcome";
 	next;
-	SF_Selling();
+	SF_Selling;
 	close;
 } else
 
@@ -5145,6 +5144,7 @@ function SF_Selling {
 		close;
 		}
 	}
+	return;
 }
 
 

@@ -8943,7 +8943,7 @@ int skill_clear_group(struct block_list *bl, int flag)
 		}
 
 	}
-	for (i=0;i<count;i++);
+	for (i=0;i<count;i++)
 		skill_delunitgroup(bl, group[i]);
 	return count;
 }

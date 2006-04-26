@@ -10874,7 +10874,6 @@ int run_func(struct script_state *st)
 int run_script_main(struct script_state *st)
 {
 	int c/*,rerun_pos*/;
-	struct block_list *bl;
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	struct script_stack *stack=st->stack;
@@ -10886,6 +10885,7 @@ int run_script_main(struct script_state *st)
 			st->state = RUN;
 		}
 	} else {
+		struct block_list *bl;
 		st->state = RUN;
 		if(st->oid && st->rid && (bl = map_id2bl(st->oid))){
 			if(bl->type == BL_PC){
