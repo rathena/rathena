@@ -29,7 +29,7 @@ alberta_in.gat,180,15,1	shop	Armor Dealer	101,2101:-1,2103:-1,2401:-1,2403:-1,24
 alberta_in.gat,188,21,1	shop	Weapon Dealer	49,1750:-1,1751:-1,1101:-1,1104:-1,1107:-1,1201:-1,1204:-1,1207:-1,1601:-1,1701:-1,1301:-1,1351:-1,1354:-1,1357:-1,1360:-1,1771:-1
 alberta_in.gat,175,97,4	shop	Weapon Dealer	82,1146:-1,1245:-1
 //alberta_in.gat,18,59,5	shop	Miner	48,1010:-1,1011:-1
-alberta.gat,169,136,4	shop	Ingredient Seller	750,579:-1
+alberta.gat,167,135,4	shop	Ingredient Seller	712,579:-1
 
 //=======================================================
 //AL DE BARAN
