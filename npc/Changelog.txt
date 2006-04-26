@@ -27,6 +27,10 @@ Nexon
 
 Date		Added
 ======
+04/26
+	* functions_kafra.txt was pretty buggy, including a zeny exploit (free warps). Thanks to OZ over IRC 
+	  for pointing out. It needs more optimization too. [erKURITA]
+	* eAAC Update: quest_warper.txt [erKURITA]
 04/25
 	* Re-made the Izlude NPCs with new dialogues among other things. Thanks to Muad_Dib [Kargha]
 	* Added two Alberta NPCs thanks to Sousuke [Playtester]
