@@ -828,7 +828,7 @@ M_Menu:
 			close;
 
 		sM_1:
-			if (iz_move_alberta == 1) goto sM_2:
+			if (iz_move_alberta == 1) goto sM_2;
 			mes "[Edgar]";
 			mes "Okay...";
 			mes "You don't want to walk AND you've";
