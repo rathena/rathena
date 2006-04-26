@@ -1412,9 +1412,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	int rate;
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
-	struct mob_data *md=NULL;
-	struct mob_data *dstmd=NULL;
-//	struct pet_data *pd=NULL; Pet's can't be inflicted!
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
@@ -1427,30 +1424,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
-	switch (src->type) {
-		case BL_PC:
-			sd = (struct map_session_data *)src;
-			break;
-		case BL_MOB:
-			md = (struct mob_data *)src;
-			break;
-		case BL_PET:	//Only mobs/players can be affected. [Skotlex]
-//			pd = (struct pet_data *)src;
-//			break;
-		default:
-			return 0;
-	}
-	
-	switch (bl->type) {
-		case BL_PC:
-			dstsd=(struct map_session_data *)bl;
-			break;
-		case BL_MOB:
-			dstmd=(struct mob_data *)bl;
-			break;
-		default:
-			return 0;
-	}
+	BL_CAST(BL_PC, src, sd);
+	BL_CAST(BL_PC, bl, dstsd);
 
 	switch(skillid){
 	case 0: //Normal Attack - Nothing here yet.
@@ -1920,6 +1895,10 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case SL_STUN:
 				if (skilllv >= 7 && sd->sc.data[SC_COMBO].timer == -1)
 					sc_start4(src,SC_COMBO,100,SL_SMA,skilllv,0,0,skill_get_time2(skillid, skilllv));
+				break;
+			case GS_FULLBUSTER:
+				//Can't attack nor use items until skill's delay expires. [Skotlex]
+				sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
 				break;
 		}	//Switch End
 	}
@@ -3039,7 +3018,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_DUST:
 	case GS_FULLBUSTER:
 	case GS_FLING:
-	
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:

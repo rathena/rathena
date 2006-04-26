@@ -408,6 +408,7 @@ int buildin_npcshopitem(struct script_state *st); // [Lance]
 int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
+int buildin_getbattleflag(struct script_state *st);
 // [zBuffer] List of player cont commands --->
 int buildin_rid2name(struct script_state *st);
 int buildin_pcwalkxy(struct script_state *st);
@@ -737,6 +738,7 @@ struct {
 	{buildin_equip,"equip","i"},
 	{buildin_autoequip,"autoequip","ii"},
 	{buildin_setbattleflag,"setbattleflag","ss"},
+	{buildin_getbattleflag,"getbattleflag","s"},
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
@@ -9553,8 +9555,15 @@ int buildin_setbattleflag(struct script_state *st){
 	if (battle_set_value(flag, value) == 0)
 		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'",flag);
 	else
-        ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.",flag,value);
+		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.",flag,value);
 
+	return 0;
+}
+
+int buildin_getbattleflag(struct script_state *st){
+	char *flag;
+	flag = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	push_val(st->stack,C_INT,battle_get_value(flag));
 	return 0;
 }
 

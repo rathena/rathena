@@ -3939,22 +3939,19 @@ int battle_set_value(char *w1, char *w2) {
 			*battle_data_int[i].val = battle_config_switch(w2);
 			return 1;
 		}
-/*			
-                  int val =  battle_config_switch(w2);
-                  switch(battle_data[i].size) {
-                  case 1:
-                    *((unsigned char *) battle_data[i].val) = val;
-                    break;
-                  case 2:
-                    *((unsigned short *) battle_data[i].val) = val;
-                    break;
-                  case 4:
-                    *((unsigned int *) battle_data[i].val) = val;
-                    break;
-                  }
-                  return 1;
+	return 0;
+}
+
+int battle_get_value(char *w1) {
+	int i;
+	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
+		if (strcmpi(w1, battle_data_short[i].str) == 0) {
+			return * battle_data_short[i].val;
 		}
-*/
+	for(i = 0; i < sizeof(battle_data_int) / (sizeof(battle_data_int[0])); i++)
+		if (strcmpi(w1, battle_data_int[i].str) == 0) {
+			return *battle_data_int[i].val;
+		}
 	return 0;
 }
 
@@ -4064,7 +4061,7 @@ void battle_set_defaults() {
 	battle_config.shop_exp=0;
 	battle_config.combo_delay_rate=100;
 	battle_config.item_check=1;
-	battle_config.item_use_interval=500;
+	battle_config.item_use_interval=100; //Use some very low value that won't bother players, but should cap bots.
 	battle_config.wedding_modifydisplay=0;
 	battle_config.wedding_ignorepalette=0;
 	battle_config.xmas_ignorepalette=0; // [Valaris]

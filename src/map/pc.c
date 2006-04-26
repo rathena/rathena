@@ -2671,6 +2671,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
  */
 int pc_useitem(struct map_session_data *sd,int n)
 {
+	unsigned int tick = gettick();
 	int amount;
 	unsigned char *script;
 
@@ -2684,8 +2685,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	 //Prevent mass item usage. [Skotlex]
-	 if (battle_config.item_use_interval &&
-			DIFF_TICK(sd->canuseitem_tick, gettick()) > 0)
+	if(DIFF_TICK(sd->canuseitem_tick, tick) > 0)
 		return 0;
 
 	if (sd->sc.count && (
@@ -2719,8 +2719,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 		 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
 			 potion_flag = 3; //Even more effective potions.
 	}
-	if (battle_config.item_use_interval)
-		sd->canuseitem_tick= gettick() + battle_config.item_use_interval; //Update item use time.
+
+	sd->canuseitem_tick= tick + battle_config.item_use_interval; //Update item use time.
 	run_script(script,0,sd->bl.id,0);
 	potion_flag = 0;
 	return 1;
