@@ -2764,6 +2764,8 @@ int atcommand_baselevelup(
 			for (i = 0; i > -level; i--)
 				status_point += (sd->status.base_level + i + 14) / 5;
 			if (sd->status.status_point < status_point)
+				pc_resetstate(sd);
+			if (sd->status.status_point < status_point)
 				sd->status.status_point = 0;
 			else
 				sd->status.status_point -= status_point;
