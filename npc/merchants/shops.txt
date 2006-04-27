@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.4a
+//= 1.4b
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //=	Added Bucket Hat to Flu Mask dealer and modified it's name to a more logical one :P [erKURITA]
 //= 1.4 Added an ingredient seller to Morroc, thanks to Muad_Dib [MasterOfMuppets]
 //= a Removed doubled Morocc Ing.Seller, arranged the rest Ing.Sellers according to the city names [Lupus]
+//= 1.4b Commented out temp Gunslinger shops. [Lupus]
 //============================================================ 
 
 
@@ -93,8 +94,10 @@ ein_in01.gat,109,27,4	shop	Two-Hand Weapon Dealer	850,1116:-1,1151:-1,1154:-1,11
 ein_in01.gat,119,26,4	shop	Weapon Dealer	855,1247:-1,1248:-1,1249:-1,13000:-1
 einbroch.gat,138,66,3	shop	Head Gear Dealer	850,5114,:-1,2218:-1
 einbroch.gat,82,199,3	shop	Paddler	855,512:-1,645:-1,1750:-1,501:-1
-einbroch.gat,235,106,3	shop	Ammo Dealer	847,13200:-1,13201:-1,13202:-1,13203:-1,13204:-1,13205:-1,13206:-1,13207:-1
-einbroch.gat,232,106,3	shop	Gun Dealer	847,13150:-1,13100:-1,13101:-1,13102:-1,13103:-1,13104:-1,13105:-1,13106:-1,13151:-1,13152:-1,13153:-1,13154:-1,13155:-1,13156:-1,13157:-1,13158:-1,13159:-1,13160:-1,13161:-1,13162:-1
+//Temp shops! Normally you can't buy all the equipment & ammo.
+//Use official GUNSLINGER SHOPS
+//einbroch.gat,235,106,3	shop	Ammo Dealer	847,13200:-1,13201:-1,13202:-1,13203:-1,13204:-1,13205:-1,13206:-1,13207:-1
+//einbroch.gat,232,106,3	shop	Gun Dealer	847,13150:-1,13100:-1,13101:-1,13102:-1,13103:-1,13104:-1,13105:-1,13106:-1,13151:-1,13152:-1,13153:-1,13154:-1,13155:-1,13156:-1,13157:-1,13158:-1,13159:-1,13160:-1,13161:-1,13162:-1
 
 //=======================================================
 //GEFFEN

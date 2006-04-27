@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/26
+	* Commented out temp Gunslinger shops. [Lupus]
 	* Fixed Food Seller in Alberta thanks to Sousuke [Playtester]
 	* functions_kafra.txt was pretty buggy, including a zeny exploit (free warps). Thanks to OZ over IRC 
 	  for pointing out. It needs more optimization too. [erKURITA]
