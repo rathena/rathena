@@ -4404,7 +4404,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,24)=dst->x;
 	WBUFW(buf,26)=dst->y;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,28)=-1
+		WBUFW(buf,28)=-1;
 	} else {
 		WBUFW(buf,28)=damage;
 	}
