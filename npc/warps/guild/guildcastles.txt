@@ -103,7 +103,7 @@ aldeg_cas04.gat,132,231,4	script	aldg408r	45,1,1,{
 w2:	warp "aldeg_cas04.gat",111,210; end;
 w3:	warp "aldeg_cas04.gat",129,212; end;
 w4:	warp "aldeg_cas04.gat",129,212; end;
-w5:	warp "aldeg_cas04.gat",14,192; end;
+w5:	warp "aldeg_cas04.gat",14,196; end;
 }
 aldeg_cas05.gat,194,71,0	warp	aldg501	1,1,aldeg_cas05.gat,129,194
 aldeg_cas05.gat,125,194,0	warp	aldg501-1	1,1,aldeg_cas05.gat,199,70
