@@ -293,7 +293,7 @@ ACMD_FUNC(main); // LuzZza
 
 ACMD_FUNC(clone); // [Valaris]
 ACMD_FUNC(tonpc); // LuzZza
-ACMD_FUNC(commands); // LuzZza
+ACMD_FUNC(commands); // [Skotlex]
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`

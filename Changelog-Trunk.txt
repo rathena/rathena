@@ -3,6 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/04/27
+	* Changebase script command will also refresh the weapon sprites (in case
+	  you changed into Wedding/Xmas class) [Skotlex]
+	* Small change in the pet_ai that should stop the "strange" catch-up
+	  behaviour of pets when you are much faster than them. [Skotlex]
+	* Corrected the unequip script of the wedding dress/tuxedo (it should be
+	  Class, not bClass), item_db.sql was also corrected. [Skotlex]
+	* Small change in the pet_ai that should stop the "strange" catch-up
+	  behaviour of pets when you are much faster than them. [Skotlex]
 	* Now when you do @baselevel to reduce your level and you don't have enough
 	  stat points to deduct, you will get a stat-reset and THEN your stat points
 	  will be reduced. [Skotlex]
