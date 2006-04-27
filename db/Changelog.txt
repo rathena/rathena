@@ -26,6 +26,10 @@
 	-----
 
 =========================
+04/27
+	* Corrected the hit value of the TK kicks (from single hit "6" to multi-hit
+	  "8") [Skotlex]
+	* All TK kicks do 3 hits now. [Skotlex]
 04/26
 	* Updated drop rates of Remover/Gemini with help of Tharis [Playtester]
 	- droprate is now 1/2 of the guessed values

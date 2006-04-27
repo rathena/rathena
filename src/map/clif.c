@@ -3795,10 +3795,15 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	WBUFL(buf,10)=tick;
 	WBUFL(buf,14)=sdelay;
 	WBUFL(buf,18)=ddelay;
-	WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
+	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+		WBUFW(buf,22)=-1;
+		WBUFW(buf,27)=-1;
+	} else {
+		WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
+		WBUFW(buf,27)=damage2;
+	}
 	WBUFW(buf,24)=div;
 	WBUFB(buf,26)=type;
-	WBUFW(buf,27)=damage2;
 	clif_send(buf,packet_len_table[0x8a],src,AREA);
 
 	if(disguised(src)) {
@@ -4307,7 +4312,11 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,12)=tick;
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
-	WBUFW(buf,24)=damage;
+	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+		WBUFW(buf,24)=-1;
+	} else {
+		WBUFW(buf,24)=damage;
+	}
 	WBUFW(buf,26)=skill_lv;
 	WBUFW(buf,28)=div;
 	WBUFB(buf,30)=type;
@@ -4334,7 +4343,11 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,12)=tick;
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
-	WBUFL(buf,24)=damage;
+	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+		WBUFL(buf,24)=-1;
+	} else {
+		WBUFL(buf,24)=damage;
+	}
 	WBUFW(buf,28)=skill_lv;
 	WBUFW(buf,30)=div;
 	WBUFB(buf,32)=type;
@@ -4390,7 +4403,11 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,20)=ddelay;
 	WBUFW(buf,24)=dst->x;
 	WBUFW(buf,26)=dst->y;
-	WBUFW(buf,28)=damage;
+	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+		WBUFW(buf,28)=-1
+	} else {
+		WBUFW(buf,28)=damage;
+	}
 	WBUFW(buf,30)=skill_lv;
 	WBUFW(buf,32)=div;
 	WBUFB(buf,34)=type;
