@@ -2853,7 +2853,7 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 	mob_db_data[class_]->size=status_get_size(&sd->bl);
 	mob_db_data[class_]->race=status_get_race(&sd->bl);
 	mob_db_data[class_]->element=status_get_element(&sd->bl);
-	mob_db_data[class_]->mode=mode?mode:(MD_AGGRESSIVE|MD_ASSIST|MD_CANATTACK|MD_CANMOVE);
+	mob_db_data[class_]->mode=mode?mode:(MD_AGGRESSIVE|MD_ASSIST|MD_CASTSENSOR|MD_CANATTACK|MD_CANMOVE);
 	mob_db_data[class_]->speed=status_get_speed(&sd->bl);
 	mob_db_data[class_]->adelay=status_get_adelay(&sd->bl);
 	mob_db_data[class_]->amotion=status_get_amotion(&sd->bl);
@@ -2871,8 +2871,8 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 		memset (&ms[i], 0, sizeof(struct mob_skill));
 		ms[i].skill_id = skill_id;
 		ms[i].skill_lv = sd->status.skill[skill_id].lv;
-		ms[i].state = -1;
-		ms[i].permillage = 500; //Default chance for moving/idle skills.
+		ms[i].state = MSS_ANY;
+		ms[i].permillage = 1000; //Default chance of all skills: 10%
 		ms[i].emotion = -1;
 		ms[i].cancel = 0;
 		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
@@ -2882,24 +2882,22 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 		if (inf&INF_ATTACK_SKILL) {
 			ms[i].target = MST_TARGET;
 			ms[i].cond1 = MSC_ALWAYS;
-			if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
-				ms[i].state = MSS_RUSH;
-			} else {
+			if (skill_get_range(skill_id, ms[i].skill_lv)  > 3)
+				ms[i].state = MSS_ANYTARGET;
+			else
 				ms[i].state = MSS_BERSERK;
-				ms[i].permillage = 2500;
-			}
 		} else if(inf&INF_GROUND_SKILL) {
 			//Normal aggressive mob, disable skills that cannot help them fight
 			//against players (those with flags UF_NOMOB and UF_NOPC are specific 
 			//to always aid players!) [Skotlex]
 			if (!(flag&1) && skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
 				continue;
-			ms[i].permillage = 1000;
 			if (skill_get_inf2(skill_id)&INF2_TRAP) { //Traps!
 				ms[i].state = MSS_IDLE;
 				ms[i].target = MST_AROUND2;
 				ms[i].delay = 60000;
 			} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+				ms[i].state = MSS_ANYTARGET;
 				ms[i].target = MST_TARGET;
 				ms[i].cond1 = MSC_ALWAYS;
 			} else { //Target allies
@@ -2912,10 +2910,9 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 				ms[i].target = MST_TARGET;
 				ms[i].cond1 = MSC_ALWAYS;
 				if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
-					ms[i].state = MSS_RUSH;
+					ms[i].state = MSS_ANYTARGET;
 				} else {
 					ms[i].state = MSS_BERSERK;
-					ms[i].permillage = 2500;
 				}
 			} else { //Self skill
 				ms[i].target = MST_SELF;
