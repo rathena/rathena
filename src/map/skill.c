@@ -3179,21 +3179,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
-		case WE_CALLPARTNER:
-		case WE_CALLPARENT:
-		case WE_CALLBABY: 
-		{	//Find a random spot to place the skill. [Skotlex]
-			short x,y;
-			i = skill_get_splash(skillid, skilllv);
-			x = src->x + i;
-			y = src->y + i;
-			if (map_random_dir(src, &x, &y))
-				return skill_castend_pos2(src,x,y,skillid,skilllv,tick,0);
-			else {
-				if (sd) clif_skill_fail(sd,skillid,0,0);
-				return 0;
-			}
-		}
 		//These are actually ground placed.
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
@@ -5605,6 +5590,21 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 		return 0;
 	}
 
+	switch (ud->skillid) {
+		//These three should become skill_castend_pos
+		case WE_CALLPARTNER:
+		case WE_CALLPARENT:
+		case WE_CALLBABY: 
+			//Find a random spot to place the skill. [Skotlex]
+			inf2 = skill_get_splash(ud->skillid, ud->skilllv);
+			ud->skillx = src->x + inf2;
+			ud->skilly = src->y + inf2;
+			if (!map_random_dir(src, &ud->skillx, &ud->skilly)) {
+				ud->skillx = src->x;
+				ud->skilly = src->y;
+			}
+			return skill_castend_pos(tid,tick,id,data);
+	}
 
 	if(ud->skillid != SA_CASTCANCEL ) {
 		if( ud->skilltimer != tid ) {
