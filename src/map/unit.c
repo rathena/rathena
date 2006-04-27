@@ -1474,6 +1474,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		unit_stop_attack(bl);
 	if (ud->skilltimer != -1)
 		unit_skillcastcancel(bl,0);
+	ud->attackabletime = ud->canmove_tick = ud->canact_tick = gettick();
 	clif_clearchar_area(bl,clrtype);
 	
 	if (clrtype == 1) //Death. Remove all status changes.

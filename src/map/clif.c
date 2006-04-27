@@ -8194,6 +8194,24 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	clif_servertick(sd);
 }
 
+static int clif_walktoxy_timer(int tid, unsigned int tick, int id, int data)
+{
+	struct map_session_data *sd;
+	short x,y;
+
+	if (!session[id] || (sd = session[id]->session_data) == NULL)
+		return 0;
+	
+	if (!unit_can_move(&sd->bl))
+		return 0;
+
+	x = data>>16;
+	y = data&0xffff;
+
+	unit_walktoxy(&sd->bl, x, y, 0);
+	return 1;
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -8201,6 +8219,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	int x, y;
 	int cmd;
+	unsigned int tick;
 	RFIFOHEAD(fd);
 
 	if (pc_isdead(sd)) {
@@ -8215,8 +8234,6 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 
 	pc_stop_attack(sd);
-	if (!unit_can_move(&sd->bl))
-		return;
 
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
@@ -8228,9 +8245,17 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
 	//Set last idle time... [Skotlex]
 	sd->idletime = last_tick;
-
+	
+	tick = gettick();
+	if (DIFF_TICK(sd->ud.canmove_tick, tick) > 0 &&
+		DIFF_TICK(sd->ud.canmove_tick, tick) < 2000)
+  	{	// Delay walking command. [Skotlex]
+		add_timer(sd->ud.canmove_tick+1, clif_walktoxy_timer, fd, (x<<16)|y);
+		return;
+	}
+	if (!unit_can_move(&sd->bl))
+		return;
 	unit_walktoxy(&sd->bl, x, y, 0);
-
 }
 
 /*==========================================
@@ -11625,7 +11650,7 @@ int do_init_clif(void) {
 	add_timer_func_list(clif_clearchar_delay_sub, "clif_clearchar_delay_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 	add_timer_func_list(clif_nighttimer, "clif_nighttimer");
-
+	add_timer_func_list(clif_walktoxy_timer, "clif_walktoxy_timer");
 	return 0;
 }
 
