@@ -1,14 +1,15 @@
 //===== eAthena Script ======================================= 
 //= Ninja Job Quest
-//===== By: ================================================== 
+//===== Initial Version by: ================================== 
 //= Lord Gywall
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Temp Ninja Quest
 //===== Additional Comments: ================================= 
+//= 1.1 Removed tRO specific questions; minor fixes. [blackhole89]
 //= 1.0 Fixed minor things [Lupus]
 //============================================================ 
 
@@ -20,61 +21,55 @@ amatsu.gat,46,137,4	script	Ninja Master	730,{
 	mes "Hey! Get lost!";
 	close;
 N_Novice:
-	mes "Oh, A novice.. I guess your here to learn the ways of a Ninja.";
+	mes "Oh, a novice.. I guess your here to learn the ways of a Ninja.";
 	next;
-	menu "I wish to become a Ninja",N_Question,"What are the requirements",N_Require,"Leave",-;
+	menu "I wish to become a Ninja",N_Question,"What are the requirements?",N_Require,"Leave",-;
 	close;
 
 N_Question:
 	mes "[Ninja Master]";
 	if(JobLevel<10 || SkillPoint) goto N_Bad;
-	set @qnumber,rand(1,5);
+	set @qnumber,rand(1,4);
 	if(@qnumber==1) goto N_Q1;
 	if(@qnumber==2) goto N_Q2;
 	if(@qnumber==3) goto N_Q3;
-	if(@qnumber==4) goto N_Q4;
 	mes "Where can you find a Poison Toad?";
 	menu "Amatsu Field",N_C,"Louyang Field",N_W,"Prontera Field",N_W,"Einbroch Field",N_W;
 N_Q1:
-	mes "[Gunslinger]";
-	mes "Which of these places does not have it's own fields?";
+	mes "[Ninja Master]";
+	mes "Which of these places does not have its own fields?";
 	next;
 	menu "Geffen",N_W,"Alberta",N_C,"Payon",N_W,"Lighthalzen",N_W;
 N_Q2:
-	mes "[Gunslinger]";
-	mes "Dammit.. Which one is a fake weapon?";
+	mes "[Ninja Master]";
+	mes "Dammit.. which one is a fake weapon?";
 	next;
 	menu "Dirk",N_W,"Coward",N_W,"Stardust Blade",N_W,"Myrital",N_C;
 N_Q3:
-	mes "[Gunslinger]";
-	mes "It's Night and what new creature walks fields?";
-	next;
-	menu "Familiar",N_W,"Shadowring",N_C,"Zombie",N_W,"Willow",N_W;
-N_Q4:
-	mes "[Gunslinger]";
-	mes "What one is the odd one out?";
+	mes "[Ninja Master]";
+	mes "Which is the odd one out?";
 	next;
 	menu "Super Novice",N_W,"Gunslinger",N_W,"TaeKwon",N_C,"Ninja",N_W;
 N_C:
-	mes "[Gunslinger]";
+	mes "[Ninja Master]";
 	mes "..That's right.";
 	mes "You can be a ninja from this day forward.";
 	next;
 	jobchange Job_Ninja;
 	mes "[Ninja Master]";
-	mes "Congratulations. Now go train.";
+	mes "Congratulations. Now go train~ desu!";
 	close;
 N_W:
 	mes "Argh.. Dammit, you baka!";
 	next;
-	menu "Try Again",N_Question,"Give up",-;
+	menu "Try again",N_Question,"Give up",-;
 	close;
 N_Bad:
-	mes "Wait a second.. Your either too low in job level or you have Skill Points.";
+	mes "Wait a second.. Your either too low in job level or you have skill points left...";
 	close;
 N_Require:
 	mes "[Ninja Master]";
-	mes "Your required to correctly answer a question I fire at you randomly.";
+	mes "You have to correctly answer a question I fire at you randomly.";
 	mes "Your job level must be at least 10 before trying.";
 	close;
 }
