@@ -2872,7 +2872,7 @@ int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const 
 		ms[i].skill_id = skill_id;
 		ms[i].skill_lv = sd->status.skill[skill_id].lv;
 		ms[i].state = MSS_ANY;
-		ms[i].permillage = 1000; //Default chance of all skills: 10%
+		ms[i].permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
 		ms[i].emotion = -1;
 		ms[i].cancel = 0;
 		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
