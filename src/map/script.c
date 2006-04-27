@@ -6664,7 +6664,7 @@ int buildin_setmapflag(struct script_state *st)
 {
 	int m,i;
 	char *str;
-	char *val;
+	char *val=NULL;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	i=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -6786,10 +6786,10 @@ int buildin_setmapflag(struct script_state *st)
 				map[m].flag.nocommand=1;
 				break;
 			case MF_JEXP:
-				map[m].jexp = (atoi(val) < 0) ? 100 : atoi(val);
+				map[m].jexp = (!val || atoi(val) < 0) ? 100 : atoi(val);
 				break;
 			case MF_BEXP:
-				map[m].bexp = (atoi(val) < 0) ? 100 : atoi(val);
+				map[m].bexp = (!val || atoi(val) < 0) ? 100 : atoi(val);
 				break;
 		}
 	}
