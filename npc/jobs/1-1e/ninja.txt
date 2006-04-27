@@ -3,12 +3,13 @@
 //===== Initial Version by: ================================== 
 //= Lord Gywall
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Temp Ninja Quest
 //===== Additional Comments: ================================= 
+//= 1.1b Fixed the below fix. [blackhole89]
 //= 1.1 Removed tRO specific questions; minor fixes. [blackhole89]
 //= 1.0 Fixed minor things [Lupus]
 //============================================================ 
@@ -36,17 +37,14 @@ N_Question:
 	mes "Where can you find a Poison Toad?";
 	menu "Amatsu Field",N_C,"Louyang Field",N_W,"Prontera Field",N_W,"Einbroch Field",N_W;
 N_Q1:
-	mes "[Ninja Master]";
 	mes "Which of these places does not have its own fields?";
 	next;
 	menu "Geffen",N_W,"Alberta",N_C,"Payon",N_W,"Lighthalzen",N_W;
 N_Q2:
-	mes "[Ninja Master]";
 	mes "Dammit.. which one is a fake weapon?";
 	next;
 	menu "Dirk",N_W,"Coward",N_W,"Stardust Blade",N_W,"Myrital",N_C;
 N_Q3:
-	mes "[Ninja Master]";
 	mes "Which is the odd one out?";
 	next;
 	menu "Super Novice",N_W,"Gunslinger",N_W,"TaeKwon",N_C,"Ninja",N_W;
@@ -65,7 +63,7 @@ N_W:
 	menu "Try again",N_Question,"Give up",-;
 	close;
 N_Bad:
-	mes "Wait a second.. Your either too low in job level or you have skill points left...";
+	mes "Wait a second.. You're either too low in job level or you have skill points left...";
 	close;
 N_Require:
 	mes "[Ninja Master]";
