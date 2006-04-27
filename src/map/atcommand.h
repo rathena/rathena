@@ -268,7 +268,7 @@ enum AtCommandType {
 
 	AtCommand_Clone, // [Valaris]
 	AtCommand_ToNPC, // LuzZza
-	
+	AtCommand_Commands, // [Skotlex]	
 	// end <- Ahem, guys, don't place AtCommands after AtCommand_Unknown! [Skotlex]
 	AtCommand_Unknown,
 	AtCommand_MAX

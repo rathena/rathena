@@ -293,6 +293,7 @@ ACMD_FUNC(main); // LuzZza
 
 ACMD_FUNC(clone); // [Valaris]
 ACMD_FUNC(tonpc); // LuzZza
+ACMD_FUNC(commands); // LuzZza
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -607,6 +608,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Clone,				"@slaveclone",		50, atcommand_clone },
 	{ AtCommand_Clone,				"@evilclone",		50, atcommand_clone }, // [Valaris]
 	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
+	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -1156,6 +1158,39 @@ int duel_reject(
 // @ command processing functions
  *------------------------------------------
  */
+
+/*==========================================
+ * @commands Lists available @ commands to you.
+ *------------------------------------------
+ */
+int atcommand_commands(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int i,count=0,level;
+	nullpo_retr(-1, sd);
+	level = pc_isGM(sd);
+	
+	clif_displaymessage(fd, msg_txt(273));
+	memset(atcmd_output, 0, sizeof atcmd_output);
+	for (i = 0; atcommand_info[i].type != AtCommand_None; i++)
+		if (atcommand_info[i].level <= level) {
+			count++;
+			strcat(atcmd_output, atcommand_info[i].command);
+			strcat(atcmd_output, " ");
+			if (!(count%10)) {
+				clif_displaymessage(fd, atcmd_output);
+				memset(atcmd_output, 0, sizeof atcmd_output);
+			}
+		}
+	
+	if (count) {
+		sprintf(atcmd_output, msg_txt(274), count);
+		clif_displaymessage(fd, atcmd_output);
+	} else
+		clif_displaymessage(fd, msg_txt(275));
+		
+	return 0;
+}
 
 /*==========================================
  * @send (used for testing packet sends from the client)
