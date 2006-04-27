@@ -197,6 +197,9 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			return 0;
 	}
 
+	if(tid == -1) //A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
+		return 0;
+		
 	if(ud->state.change_walk_target)
 		return unit_walktoxy_sub(bl);
 
@@ -1192,7 +1195,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		return 0;
 	if(ud->attacktimer != tid){
 		if(battle_config.error_log)
-			printf("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
+			ShowError("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
 		return 0;
 	}
 	BL_CAST( BL_PC , src, sd);
@@ -1344,7 +1347,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	else
 		ret=delete_timer( ud->skilltimer, skill_castend_id );
 	if(ret<0)
-		printf("delete timer error : skillid : %d\n",ret);
+		ShowError("delete timer error : skillid : %d\n",ret);
 	
 	if(bl->type==BL_MOB) ((TBL_MOB*)bl)->skillidx  = -1;
 

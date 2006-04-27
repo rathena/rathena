@@ -1520,7 +1520,6 @@ int mob_respawn(int tid, unsigned int tick, int id,int data )
 	md->last_thinktime = tick;
 	md->next_walktime = tick+rand()%50+5000;
 	md->last_linktime = tick;
-	unit_dataset(&md->bl);
 	map_addblock(&md->bl);
 	mob_heal(md,data*status_get_max_hp(&md->bl)/100);
 	clif_spawn(&md->bl);

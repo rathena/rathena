@@ -38,7 +38,6 @@ struct item_data {
 	unsigned char *script;	//Default script for everything.
 	unsigned char *equip_script;	//Script executed once when equipping.
 	unsigned char *unequip_script;//Script executed once when unequipping.
-	
 	struct {
 		unsigned available : 1;
 		unsigned value_notdc : 1;
@@ -120,7 +119,6 @@ struct item_data* itemdb_exists(int nameid);
 int itemdb_group(int nameid);
 
 int itemdb_searchrandomid(int flags);
-int itemdb_searchrandomgroup(int groupid);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
