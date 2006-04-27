@@ -5126,14 +5126,14 @@ int pc_heal(struct map_session_data *sd,int hp,int sp)
 		sp = sd->status.max_sp - sd->status.sp;
 	sd->status.sp+=sp;
 
+	if(sd->status.sp <= 0)
+		sd->status.sp = 0;
 
 	if(sd->status.hp <= 0) {
 		sd->status.hp = 0;
 		pc_damage(NULL,sd,1);
 		hp = 0;
 	}
-	if(sd->status.sp <= 0)
-		sd->status.sp = 0;
 	
 	if(hp)
 		clif_updatestatus(sd,SP_HP);
