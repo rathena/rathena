@@ -57,7 +57,9 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 	
-	if (ud->target && ud->chaserange >0) {
+	if (ud->target && ud->chaserange>1) {
+		//Generally speaking, the walk path is already to an adjacent tile
+		//so we only need to shorten the path if the range is greater than 1.
 		int dir;
 		//Trim the last part of the path to account for range,
 		//but always move at least one cell when requested to move.
@@ -1149,15 +1151,6 @@ int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, i
 	wpd.path_len=0;
 	wpd.path_pos=0;
 	wpd.path_half=0;
-	
-#ifndef CELL_NOSTACK
-	//Skip direct path seeking when in nostacking mode.
-	if(path_search_real(&wpd,bl->m,bl->x,bl->y,tbl->x,tbl->y,easy,CELL_CHKNOREACH)!=-1) {
-		if (x) *x = tbl->x;
-		if (y) *y = tbl->y;
-		return 1;
-	}
-#endif
 	
 	// It judges whether it can adjoin or not.
 	dx=tbl->x - bl->x;
