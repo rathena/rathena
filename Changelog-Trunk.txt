@@ -2,6 +2,12 @@ Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
+2006/04/27
+	* Added 3rd argument to script command 'setmapflag' thx to Jbain [Lupus]
+		setmapflag "prontera.gat",mf_pvp;
+		setmapflag "prontera.gat",mf_jexp,100;
+	  Now you can dinamically increase/decrease EXP rate on set maps
+	  e.g. you can lower EXP on the cmd_fild02 ^_-
 2006/04/26
 	* Updated sql-files/item_db.sql to current. [Skotlex]
 	* Item use interval is set to a default of 100ms now since that should be

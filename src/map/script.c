@@ -607,7 +607,7 @@ struct {
 	{buildin_detachrid,"detachrid",""},
 	{buildin_isloggedin,"isloggedin","i"},
 	{buildin_setmapflagnosave,"setmapflagnosave","ssii"},
-	{buildin_setmapflag,"setmapflag","si"},
+	{buildin_setmapflag,"setmapflag","si*"},
 	{buildin_removemapflag,"removemapflag","si"},
 	{buildin_pvpon,"pvpon","s"},
 	{buildin_pvpoff,"pvpoff","s"},
@@ -6629,7 +6629,7 @@ enum {  MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENA
 	MF_NOWARP,MF_FREE,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,
 	MF_INDOORS,MF_NOGO,MF_CLOUDS,MF_CLOUDS2,MF_FIREWORKS,MF_GVG_CASTLE,MF_GVG_DUNGEON,MF_NIGHTENABLED,
 	MF_NOBASEEXP, MF_NOJOBEXP, MF_NOMOBLOOT, MF_NOMVPLOOT, MF_NORETURN, MF_NOWARPTO, MF_NIGHTMAREDROP,
-	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP };
+	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP, MF_JEXP, MF_BEXP };
 
 int buildin_setmapflagnosave(struct script_state *st)
 {
@@ -6658,9 +6658,13 @@ int buildin_setmapflag(struct script_state *st)
 {
 	int m,i;
 	char *str;
+	char *val;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	i=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	if(st->end>st->start+4){
+		val=conv_str(st,& (st->stack->stack_data[st->start+4]));
+	}
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
@@ -6774,6 +6778,12 @@ int buildin_setmapflag(struct script_state *st)
 				break;
 			case MF_NOCOMMAND:
 				map[m].flag.nocommand=1;
+				break;
+			case MF_JEXP:
+				map[m].jexp = (atoi(val) < 0) ? 100 : atoi(val);
+				break;
+			case MF_BEXP:
+				map[m].bexp = (atoi(val) < 0) ? 100 : atoi(val);
 				break;
 		}
 	}
@@ -6904,6 +6914,12 @@ int buildin_removemapflag(struct script_state *st)
 				break;
 			case MF_NOCOMMAND:
 				map[m].flag.nocommand=0;
+				break;
+			case MF_JEXP:
+				map[m].jexp=100;
+				break;
+			case MF_BEXP:
+				map[m].bexp=100;
 				break;
 		}
 	}
