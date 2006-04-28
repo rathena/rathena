@@ -27,6 +27,7 @@
 
 =========================
 04/28
+	* Storm Kick's range increased to 2. [Skotlex]
 	* Lowered drop rates of Bio Lab 3 normal mobs [Playtester]
 	- not finished yet, need 12 item drop slots...
 	* Range of Flying Sidekick 10->8 cells [Lupus]
