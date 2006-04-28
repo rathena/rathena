@@ -4447,42 +4447,72 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_fail(sd,skillid,0,0);
 			break;
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-
 		if (dstsd) {
 			for (i=0;i<11;i++) {
-				if (dstsd->equip_index[i]>=0 && dstsd->inventory_data[dstsd->equip_index[i]]) {
-					if (equip &EQP_WEAPON && (i == 9 || (i == 8 && dstsd->inventory_data[dstsd->equip_index[8]]->type == 4)) && !(dstsd->unstripable_equip &EQP_WEAPON) && !(tsc && tsc->data[SC_CP_WEAPON].timer != -1)) {
+				if (dstsd->equip_index[i]<0 || !dstsd->inventory_data[dstsd->equip_index[i]])
+					continue;
+				switch (i) {
+				case 8: //Shield / left-hand weapon
+					if(dstsd->inventory_data[dstsd->equip_index[8]]->type == 5)
+					{ //Shield
+						if (equip&EQP_SHIELD &&
+							!(dstsd->unstripable_equip&EQP_SHIELD) &&
+						  	!(tsc && tsc->data[SC_CP_SHIELD].timer != -1)
+						){
+							sclist[1] = SC_STRIPSHIELD; // Okay, we found a shield to strip - It is really a shield, not a two-handed weapon or a left-hand weapon
+							pc_unequipitem(dstsd,dstsd->equip_index[i],3);
+						}
+						continue;
+					}
+					//Continue to weapon
+				case 9:
+					if (equip &EQP_WEAPON &&
+						!(dstsd->unstripable_equip&EQP_WEAPON) &&
+				  		!(tsc && tsc->data[SC_CP_WEAPON].timer != -1)
+					) {
 						sclist[0] = SC_STRIPWEAPON; // Okay, we found a weapon to strip - It can be a right-hand, left-hand or two-handed weapon
 						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
-					} else if (equip &EQP_SHIELD && i == 8 && dstsd->inventory_data[dstsd->equip_index[8]]->type == 5 && !(dstsd->unstripable_equip &EQP_SHIELD) && !(tsc && tsc->data[SC_CP_SHIELD].timer != -1)) {
-						sclist[1] = SC_STRIPSHIELD; // Okay, we found a shield to strip - It is really a shield, not a two-handed weapon or a left-hand weapon
-						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
-					} else if (equip &EQP_ARMOR && i == 7 && !(dstsd->unstripable_equip &EQP_ARMOR) && !(tsc && tsc->data[SC_CP_ARMOR].timer != -1)) {
+					}
+					break;
+				case 7: //Armor
+					if (equip &EQP_ARMOR && 
+						!(dstsd->unstripable_equip &EQP_ARMOR) &&
+					  	!(tsc && tsc->data[SC_CP_ARMOR].timer != -1)
+					) {
 						sclist[2] = SC_STRIPARMOR; // Okay, we found an armor to strip
 						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
-					} else if (equip &EQP_HELM && i == 6 && !(dstsd->unstripable_equip &EQP_HELM) && !(tsc && tsc->data[SC_CP_HELM].timer != -1)) {
+					}
+					break;
+				case 6: //Helm  
+					if (equip &EQP_HELM &&
+						!(dstsd->unstripable_equip &EQP_HELM) &&
+						!(tsc && tsc->data[SC_CP_HELM].timer != -1)
+					 ) {
 						sclist[3] = SC_STRIPHELM; // Okay, we found a helm to strip
 						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
 					}
+					break;
 				}
 			}
-		} else if (dstmd && !(status_get_mode(bl)&MD_BOSS)) {
-			if (equip &EQP_WEAPON)
+		} else if (!(status_get_mode(bl)&MD_BOSS)) {
+			if (equip&EQP_WEAPON && !(tsc && tsc->data[SC_CP_WEAPON].timer != -1))
 				sclist[0] = SC_STRIPWEAPON;
-			if (equip &EQP_SHIELD)
+			if (equip&EQP_SHIELD && !(tsc && tsc->data[SC_CP_SHIELD].timer != -1))
 				sclist[1] = SC_STRIPSHIELD;
-			if (equip &EQP_ARMOR)
+			if (equip&EQP_ARMOR && !(tsc && tsc->data[SC_CP_ARMOR].timer != -1))
 				sclist[2] = SC_STRIPARMOR;
-			if (equip &EQP_HELM)
+			if (equip&EQP_HELM && !(tsc && tsc->data[SC_CP_HELM].timer != -1))
 				sclist[3] = SC_STRIPHELM;
 		}
-
+		equip = 0; //Reuse equip to hold how many stats are invoked.
 		for (i=0;i<4;i++) {
-			if (sclist[i] != 0) // Start the SC only if an equipment was stripped from this location
-			   sc_start(bl,sclist[i],100,skilllv,skill_get_time(skillid,skilllv)+strip_fix/2);
+			if (sclist[i]) // Start the SC only if an equipment was stripped from this location
+			equip+=sc_start(bl,sclist[i],100,skilllv,skill_get_time(skillid,skilllv)+strip_fix/2);
 		}
-
+		if (equip)
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		else if (sd) //Nothing stripped.
+			clif_skill_fail(sd,skillid,0,0);
 		break;
 		}
 
@@ -5009,19 +5039,28 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case PF_HPCONVERSION:			/* ライフ置き換え */
-		clif_skill_nodamage(src, bl, skillid, skilllv, 1);
-		if (sd) {
+		{
 			int hp, sp;
-			hp = sd->status.max_hp / 10; //基本はHPの10%
+			hp = status_get_max_hp(src) / 10; //基本はHPの10%
 			sp = hp * 10 * skilllv / 100;
-			if (sd->status.sp + sp > sd->status.max_sp)
-				sp = sd->status.max_sp - sd->status.sp;
-			// we need to check with the sp that was taken away when casting too
-			if (sd->status.sp + skill_get_sp(skillid, skilllv) >= sd->status.max_sp)
-				hp = sp = 0;
-			pc_heal(sd, -hp, sp);
-			clif_heal(sd->fd, SP_SP, sp);
-			clif_updatestatus(sd, SP_SP);
+			if (hp >= status_get_hp(bl)) {
+				if (sd) clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
+			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+			if (dstsd) {
+				if (sp > dstsd->status.max_sp - dstsd->status.sp)
+					sp = dstsd->status.max_sp - dstsd->status.sp;
+				// we need to check with the sp that was taken away when casting too
+				if (skill_get_sp(skillid, skilllv) >= dstsd->status.max_sp - dstsd->status.sp)
+					hp = sp = 0;
+			}
+			battle_heal(src,bl,-hp, sp, 0);
+			if (dstsd && dstsd->fd)
+		  	{
+				clif_heal(dstsd->fd, SP_SP, sp);
+				clif_updatestatus(dstsd, SP_SP);
+			}
 		}
 		break;
 	case HT_REMOVETRAP:				/* リム?ブトラップ */
