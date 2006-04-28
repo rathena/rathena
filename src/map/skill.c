@@ -1021,8 +1021,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					; //Not enough SP to cast
 				else {
 					battle_heal(bl, bl, 200*tsc->data[SC_KAAHI].val1, -5*tsc->data[SC_KAAHI].val1, 1);
-					if(dstsd && dstsd->fd)
-						clif_heal(dstsd->fd,SP_HP,200*tsc->data[SC_KAAHI].val1);
+					clif_skill_nodamage(NULL,bl,AL_HEAL,200*tsc->data[SC_KAAHI].val1,1);
 				}
 			}
 		}
@@ -2296,17 +2295,12 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 		if(src->prev == NULL)
 			break;
 		if(skl->target_id) {
-			struct block_list tbl;
 			target = map_id2bl(skl->target_id);
-			if(!target && skl->skill_id == RG_INTIMIDATE) {
-				target = &tbl; //Required since it has to warp.
-				target->type = BL_NUL;
-				target->m = src->m;
-				target->prev = target->next = NULL;
-			}
+			if(!target && skl->skill_id == RG_INTIMIDATE)
+				target = src; //Required since it has to warp.
 			if(target == NULL)
 				break;	
-			if(target->prev == NULL && skl->skill_id != RG_INTIMIDATE)
+			if(target->prev == NULL)
 				break;
 			if(src->m != target->m)
 				break;
@@ -2320,8 +2314,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id,int data )
 					if (unit_warp(src,-1,-1,-1,3) == 0) {
 						short x,y;
 						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
-						if (!status_isdead(target))
-						unit_warp(target, -1, x, y, 3);
+						if (target != src && !status_isdead(target))
+							unit_warp(target, -1, x, y, 3);
 					}
 					break;
 				case BA_FROSTJOKE:			/* 寒いジョ?ク */
@@ -2995,13 +2989,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			int heal = skill_attack( (skillid == NPC_BLOODDRAIN) ? BF_WEAPON : BF_MAGIC,
 					src, src, bl, skillid, skilllv, tick, flag);
 			if (heal > 0){
-				struct block_list tbl;
-				tbl.id = 0;
-				tbl.type = BL_NUL;
-				tbl.m = src->m;
-				tbl.x = src->x;
-				tbl.y = src->y;
-				clif_skill_nodamage(&tbl, src, AL_HEAL, heal, 1);
+				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
 				battle_heal(NULL, src, heal, 0, 0);
 			}
 		}
@@ -4502,7 +4490,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_BERSERKPITCHER:
 	case AM_POTIONPITCHER:		/* ポ?ションピッチャ? */
 		{
-			struct block_list tbl;
 			int i,x,hp = 0,sp = 0,bonus=100;
 			if(sd) {
 				x = skilllv%11 - 1;
@@ -4561,16 +4548,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(dstsd)
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
-			tbl.id = 0;
-			tbl.type = BL_NUL;
-			tbl.m = src->m;
-			tbl.x = src->x;
-			tbl.y = src->y;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(hp > 0 || (skillid == AM_POTIONPITCHER && hp <= 0 && sp <= 0))
-				clif_skill_nodamage(&tbl,bl,AL_HEAL,hp,1);
+				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 			if(sp > 0)
-				clif_skill_nodamage(&tbl,bl,MG_SRECOVERY,sp,1);
+				clif_skill_nodamage(NULL,bl,MG_SRECOVERY,sp,1);
 			battle_heal(src,bl,hp,sp,0);
 		}
 		break;
@@ -5200,18 +5182,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	// Slim Pitcher
 	case CR_SLIMPITCHER:
 		if (potion_hp) {
-			struct block_list tbl;
 			int hp = potion_hp;
 			hp = hp * (100 + (status_get_vit(bl)<<1))/100;
 			if (dstsd) {
 				hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10)/100;
 			}
-			tbl.id = 0;
-			tbl.type = BL_NUL;
-			tbl.m = src->m;
-			tbl.x = src->x;
-			tbl.y = src->y;
-			clif_skill_nodamage(&tbl,bl,AL_HEAL,hp,1);
+			clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 			battle_heal(NULL,bl,hp,0,0);
 		}
 		break;

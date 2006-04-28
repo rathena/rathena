@@ -4440,26 +4440,26 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,
 {
 	unsigned char buf[32];
 
-	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
 	WBUFW(buf,0)=0x11a;
 	WBUFW(buf,2)=skill_id;
 	WBUFW(buf,4)=(heal > SHRT_MAX)? SHRT_MAX:heal;
 	WBUFL(buf,6)=dst->id;
-	WBUFL(buf,10)=src->id;
+	WBUFL(buf,10)=src?src->id:0;
 	WBUFB(buf,14)=fail;
-	clif_send(buf,packet_len_table[0x11a],src,AREA);
+	clif_send(buf,packet_len_table[0x11a],dst,AREA);
 
-	if(disguised(src)) {
-		WBUFL(buf,10)=-src->id;
-		clif_send(buf,packet_len_table[0x115],src,SELF);
-	}
 	if (disguised(dst)) {
 		WBUFL(buf,6)=-dst->id;
-		if (disguised(src))
-			WBUFL(buf,10)=src->id;
 		clif_send(buf,packet_len_table[0x115],dst,SELF);
+	}
+
+	if(src && disguised(src)) {
+		WBUFL(buf,10)=-src->id;
+		if (disguised(dst))
+			WBUFL(buf,6)=dst->id;
+		clif_send(buf,packet_len_table[0x115],src,SELF);
 	}
 
 	return fail;
