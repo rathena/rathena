@@ -1940,7 +1940,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		)))
 			;	//No normal loot.
 		else
-		for (i = 0; i < 10; i++) { // 8 -> 10 Lupus
+		for (i = 0; i < MAX_MOB_DROP; i++) {
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			drop_rate = md->db->dropitem[i].p;
@@ -3171,18 +3171,19 @@ static int mob_readdb(void)
 			mob_db_data[class_]->amotion=atoi(str[28]);
 			mob_db_data[class_]->dmotion=atoi(str[29]);
 
-			for(i=0;i<10;i++){ // 8 -> 10 Lupus
+			for(i=0;i<MAX_MOB_DROP;i++){
 				int rate = 0,rate_adjust,type;
 				unsigned short ratemin,ratemax;
 				struct item_data *id;
-				mob_db_data[class_]->dropitem[i].nameid=atoi(str[30+i*2]);
+				k=30+i*2;
+				mob_db_data[class_]->dropitem[i].nameid=atoi(str[k]);
 				if (!mob_db_data[class_]->dropitem[i].nameid) {
 					//No drop.
 					mob_db_data[class_]->dropitem[i].p = 0;
 					continue;
 				}
 				type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
-				rate = atoi(str[31+i*2]);
+				rate = atoi(str[k+1]);
 				if (class_ >= 1324 && class_ <= 1363)
 				{	//Treasure box drop rates [Skotlex]
 					rate_adjust = battle_config.item_rate_treasure;
@@ -3240,9 +3241,11 @@ static int mob_readdb(void)
 					id->mob[k].id = class_;
 				}
 			}
+			//Since MAX_MOB_DROP can change, we use k as base for the rest of fields. [Skotlex]
+			k=30+i*2;
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
-			mob_db_data[class_]->mexp=atoi(str[50])*battle_config.mvp_exp_rate/100;
-			mob_db_data[class_]->mexpper=atoi(str[51]);
+			mob_db_data[class_]->mexp=atoi(str[k])*battle_config.mvp_exp_rate/100;
+			mob_db_data[class_]->mexpper=atoi(str[k+1]);
 			//Now that we know if it is an mvp or not,
 			//apply battle_config modifiers [Skotlex]
 			maxhp = (double)mob_db_data[class_]->max_hp;
@@ -3259,13 +3262,13 @@ static int mob_readdb(void)
 			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
 				struct item_data *id;
-				mob_db_data[class_]->mvpitem[i].nameid=atoi(str[52+i*2]);
+				mob_db_data[class_]->mvpitem[i].nameid=atoi(str[k+2+i*2]);
 				if (!mob_db_data[class_]->mvpitem[i].nameid) {
 					//No item....
 					mob_db_data[class_]->mvpitem[i].p = 0;
 					continue;
 				}
-				mob_db_data[class_]->mvpitem[i].p= mob_drop_adjust(atoi(str[53+i*2]), battle_config.item_rate_mvp,
+				mob_db_data[class_]->mvpitem[i].p= mob_drop_adjust(atoi(str[k+3+i*2]), battle_config.item_rate_mvp,
 					battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 				//calculate and store Max available drop chance of the MVP item
@@ -3798,18 +3801,19 @@ static int mob_read_sqldb(void)
 				mob_db_data[class_]->amotion = TO_INT(28);
 				mob_db_data[class_]->dmotion = TO_INT(29);
 
-				for (i = 0; i < 10; i++){ // 8 -> 10 Lupus
+				for (i = 0; i < MAX_MOB_DROP; i++){ // 8 -> 10 Lupus
 					int rate = 0, rate_adjust, type;
 					unsigned short ratemin, ratemax;
 					struct item_data *id;
-					mob_db_data[class_]->dropitem[i].nameid=TO_INT(30+i*2);
+					k=30+i*2;
+					mob_db_data[class_]->dropitem[i].nameid=TO_INT(k);
 					if (!mob_db_data[class_]->dropitem[i].nameid) {
 						//No drop.
 						mob_db_data[class_]->dropitem[i].p = 0;
 						continue;
 					}
 					type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
-					rate = TO_INT(31+i*2);
+					rate = TO_INT(k+1);
 					if (class_ >= 1324 && class_ <= 1363)
 					{	//Treasure box drop rates [Skotlex]
 						rate_adjust = battle_config.item_rate_treasure;
@@ -3867,9 +3871,10 @@ static int mob_read_sqldb(void)
 						id->mob[k].id = class_;
 					}
 				}
+				k=30+i*2;
 				// MVP EXP Bonus, Chance: MEXP,ExpPer
-				mob_db_data[class_]->mexp = TO_INT(50) * battle_config.mvp_exp_rate / 100;
-				mob_db_data[class_]->mexpper = TO_INT(51);
+				mob_db_data[class_]->mexp = TO_INT(k) * battle_config.mvp_exp_rate / 100;
+				mob_db_data[class_]->mexpper = TO_INT(k+1);
 				//Now that we know if it is an mvp or not,
 				//apply battle_config modifiers [Skotlex]
 				maxhp = (double)mob_db_data[class_]->max_hp;
@@ -3886,13 +3891,13 @@ static int mob_read_sqldb(void)
 				// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 				for (i=0; i<3; i++) {
 					struct item_data *id;
-					mob_db_data[class_]->mvpitem[i].nameid = TO_INT(52+i*2);
+					mob_db_data[class_]->mvpitem[i].nameid = TO_INT(k+2+i*2);
 					if (!mob_db_data[class_]->mvpitem[i].nameid) {
 						//No item....
 						mob_db_data[class_]->mvpitem[i].p = 0;
 						continue;
 					}
-					mob_db_data[class_]->mvpitem[i].p = mob_drop_adjust(TO_INT(53+i*2),
+					mob_db_data[class_]->mvpitem[i].p = mob_drop_adjust(TO_INT(k+3+i*2),
 						battle_config.item_rate_mvp, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 					//calculate and store Max available drop chance of the MVP item

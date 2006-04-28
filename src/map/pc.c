@@ -2938,12 +2938,12 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	if (skill < 1)
 		return 0;
 
-	j = i = rand()%10; //Pick one mobs drop slot.
+	j = i = rand()%MAX_MOB_DROP; //Pick one mobs drop slot.
 	do {
 		//if it's empty, we check one by one, till find an item
 		i--;
 		if(i<0)
-		i=9; //9th slot
+		i=MAX_MOB_DROP-1; 
 		itemid = md->db->dropitem[i].nameid;
 		//now try all 10 slots till success
 		if(itemid <= 0 || (itemdb_type(itemid) == 6 && pc_checkskill(sd,TF_STEAL) <= 5))
