@@ -5674,7 +5674,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 			break;
 			
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
-			unit_stop_walking(src,0);
+			unit_stop_walking(src,1);
 		
 		if (ud->skillid == SA_MAGICROD)
 			ud->canact_tick = tick;
@@ -5787,7 +5787,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
-		unit_stop_walking(src,0);
+		unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
