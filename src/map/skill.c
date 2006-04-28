@@ -2638,7 +2638,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 					status_change_end(src,SC_COMBO,-1);
 			}
 			if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
-				struct unit_data *ud;
 				int dx,dy;
 
 				if (!unit_can_move(src)) { //You need to be able to move to attack/reach target.
@@ -2664,7 +2663,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 					skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 				else if (sd)
 					clif_skill_fail(sd,skillid,0,0);
-				
+				/* Should be uneeded as you "slide", not run to the target.
+				struct unit_data *ud;
 				ud = unit_bl2ud(src);
 				if (ud) {
 					if(dx < 0) dx = -dx;
@@ -2676,6 +2676,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 					if(DIFF_TICK(ud->canact_tick,ud->canmove_tick)<0)
 						ud->canact_tick = ud->canmove_tick;
 				}
+				*/
 			}
 			else //Assume minimum distance of 1 for Charge.
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,skillid == KN_CHARGEATK?1:flag);
@@ -5680,7 +5681,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 			ud->canact_tick = tick;
 		else
 			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d)\n",
@@ -5789,7 +5790,7 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 		unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
 
 		if (ud->skilltimer == -1) {
@@ -8277,7 +8278,7 @@ int skill_delayfix(struct block_list *bl, int skill_id, int skill_lv)
 		if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
 			time = status_get_adelay(bl); //Use attack delay as default delay.
 		else
-			time = 300;	// default delay, according to official servers
+			time = battle_config.default_skill_delay;
 	} else if (time < 0)
 		time = -time + status_get_adelay(bl);	// if set to <0, the attack delay is added.
 

@@ -3831,6 +3831,8 @@ static const struct battle_data_short {
 	{ "finding_ore_rate",                  &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",                     &battle_config.exp_calc_type}, // [celest]
 	{ "min_skill_delay_limit",             &battle_config.min_skill_delay_limit}, // [celest]
+	{ "default_skill_delay",               &battle_config.default_skill_delay}, // [Skotlex]
+
 	{ "require_glory_guild",               &battle_config.require_glory_guild}, // [celest]
 	{ "idle_no_share",                     &battle_config.idle_no_share}, // [celest], for a feature by [MouseJstr]
 	{ "party_even_share_bonus",            &battle_config.party_even_share_bonus}, 
@@ -4231,6 +4233,7 @@ void battle_set_defaults() {
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
 	battle_config.min_skill_delay_limit = 100;
+	battle_config.default_skill_delay = 300; //Default skill delay according to official servers.
 	battle_config.require_glory_guild = 0;
 	battle_config.idle_no_share = 0;
 	battle_config.party_even_share_bonus = 0;

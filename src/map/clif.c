@@ -8108,8 +8108,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
+		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
 		//[LuzZza]
-		clif_guild_send_onlineinfo(sd);
+		//clif_guild_send_onlineinfo(sd);
 
 	} else
 	//New 'night' effect by dynamix [Skotlex]

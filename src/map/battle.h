@@ -359,6 +359,7 @@ extern struct Battle_Config {
 	unsigned short finding_ore_rate; // orn
 	unsigned short exp_calc_type;
 	unsigned short min_skill_delay_limit;
+	unsigned short default_skill_delay;
 	unsigned short require_glory_guild;
 	unsigned short idle_no_share;
 	unsigned short party_even_share_bonus;
