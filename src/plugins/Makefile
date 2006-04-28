@@ -22,6 +22,11 @@ httpd.$(PLUGINEXT): httpd.c
 	../common/obj/utils.o ../common/obj/ers.o
 	@touch $@
 
+sig.$(PLUGINEXT): sig.c
+	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
+	../common/obj/showmsg.o
+	@touch $@
+
 gui.$(PLUGINEXT): ../../plugins/gui.conf
 httpd.$(PLUGINEXT): ../../plugins/httpd.conf
 upnp.$(PLUGINEXT): ../../plugins/upnp.conf
@@ -42,9 +47,5 @@ clean:
 
 sample.$(PLUGINEXT): sample.c $(COMMON_H)
 sig.$(PLUGINEXT): sig.c $(COMMON_H)
-	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
-	../common/obj/showmsg.o
-	@touch $@
-
 pid.$(PLUGINEXT): pid.c $(COMMON_H)
 gui.$(PLUGINEXT): gui.c $(COMMON_H)
