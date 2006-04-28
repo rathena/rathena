@@ -972,6 +972,7 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 	md->state.skillstate=MSS_IDLE;
 	md->next_walktime=tick+rand()%3000+3000;
 	mob_stop_attack(md);
+	md->ud.target = 0;
 	return 0;
 }
 /*==========================================
