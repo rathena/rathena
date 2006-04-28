@@ -26,6 +26,9 @@
 	-----
 
 =========================
+04/28
+	* Updated drop rates of the Bio Lab 1&2 mobs [Playtester]
+	- using 1/2 of the guessed values again
 04/27
 	* Corrected the hit value of the TK kicks (from single hit "6" to multi-hit
 	  "8") [Skotlex]
