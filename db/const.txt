@@ -317,6 +317,7 @@ bSPVanishRate	2042
 Eff_Stone	0
 Eff_Freeze	1
 Eff_Stan	2
+Eff_Stun	2
 Eff_Sleep	3
 Eff_Poison	4
 Eff_Curse	5
@@ -389,6 +390,7 @@ IG_GiftBoxChina	34
 SC_STONE	0
 SC_FREEZE	1
 SC_STAN	2
+SC_STUN	2
 SC_SLEEP	3
 SC_POISON	4
 SC_CURSE	5

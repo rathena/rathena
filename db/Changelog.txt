@@ -27,6 +27,9 @@
 
 =========================
 04/28
+	* Fixed the "stun" typo that has been in eAthena for ages [Playtester]
+	- SC_STAN --> SC_STUN
+	- Eff_Stan --> Eff_Stun
 	* Storm Kick's range increased to 2. [Skotlex]
 	* Lowered drop rates of Bio Lab 3 normal mobs [Playtester]
 	- not finished yet, need 12 item drop slots...
