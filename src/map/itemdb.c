@@ -9,6 +9,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/grfio.h"
+#include "../common/strlib.h"
 #include "map.h"
 #include "battle.h"
 #include "itemdb.h"
@@ -75,9 +76,9 @@ static int itemdb_searchname_array_sub(DBKey key,void * data,va_list ap)
 	str=va_arg(ap,char *);
 	if (item == dummy_item)
 		return 1; //Invalid item.
-	if(strstr(item->jname,str))
+	if(stristr(item->jname,str))
 		return 0;
-	if(strstr(item->name,str))
+	if(stristr(item->name,str))
 		return 0;
 	return strcmpi(item->jname,str);
 }

@@ -14,6 +14,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "clif.h"
@@ -84,9 +85,9 @@ static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 {
 	if (mob == mob_dummy)
 		return 1; //Invalid item.
-	if(strstr(mob->jname,str))
+	if(stristr(mob->jname,str))
 		return 0;
-	if(strstr(mob->name,str))
+	if(stristr(mob->name,str))
 		return 0;
 	return strcmpi(mob->jname,str);
 }

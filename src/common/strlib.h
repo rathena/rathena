@@ -20,4 +20,5 @@ char *_strtok_r(char *s1, const char *s2, char **lasts);
 // custom functions
 int remove_control_chars(unsigned char *);
 char *trim(char *str, const char *delim);
+const char *stristr(const char *haystack, const char *needle);
 #endif

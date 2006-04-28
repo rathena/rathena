@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "strlib.h"
 #include "utils.h"
@@ -135,6 +136,40 @@ char *trim(char *str, const char *delim)
 	}
 	strcpy(str,buf);
 	return str;
+}
+
+
+//stristr: Case insensitive version of strstr, code taken from 
+//http://www.daniweb.com/code/snippet313.html, Dave Sinkula
+//
+const char *stristr(const char *haystack, const char *needle)
+{
+	if ( !*needle )
+	{
+		return haystack;
+	}
+	for ( ; *haystack; ++haystack )
+	{
+		if ( toupper(*haystack) == toupper(*needle) )
+		{
+			/*
+			* Matched starting char -- loop through remaining chars.
+			*/
+			const char *h, *n;
+			for ( h = haystack, n = needle; *h && *n; ++h, ++n )
+			{
+				if ( toupper(*h) != toupper(*n) )
+				{
+					break;
+				}
+			}
+			if ( !*n ) /* matched all of 'needle' to null termination */
+			{
+				return haystack; /* return the start of the match */
+			}
+		}
+	}
+	return 0;
 }
 
 #ifdef __WIN32
