@@ -992,8 +992,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 						sd->status.skill[id].id=id;
 						sd->status.skill[id].lv=1;
 						sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
+						flag=1;
 					}
-					flag=1;
 				} else if (f){
 					sd->status.skill[id].id=id;
 					flag=1;
@@ -2919,7 +2919,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 //** pc.c:
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 {
-	int i,j,skill,itemid,flag;
+	int i,skill,itemid,flag;
 	struct mob_data *md;
 	struct item tmp_item;
 
