@@ -2416,7 +2416,9 @@ static int skill_reveal_trap( struct block_list *bl,va_list ap )
 	TBL_SKILL *su = (TBL_SKILL*)bl;
 	if (su->alive && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 	{	//Reveal trap.
-		clif_changetraplook(bl, su->group->unit_id);
+		//Change look is not good enough, the client ignores it as an actual trap still. [Skotlex]
+		//clif_changetraplook(bl, su->group->unit_id);
+		clif_skill_setunit(su);
 		return 1;
 	}
 	return 0;
