@@ -979,8 +979,8 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	//if (nd->class_<0)	// イベント系は常にOK
-	//	return 0;
+	if (nd->class_<0)	// イベント系は常にOK
+		return 0;
 
 	// エリア判定
 	if (nd->bl.m!=sd->bl.m ||

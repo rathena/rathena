@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/29
+	* Clones can't be class-changed now [Skotlex]
+	* Readded the class == -1 distance check in npc_checknear [Skotlex]
+	* Replaced check sd->trade_partner for sd->state.trading in clif.c [Skotlex]
 	* Using malloc for memory allocations that doesn't need to be pre-initialized.
 	* Eliminated initializations for pointers returned by calloc.
 	* Moved grfio_final to do_init since it's not used after server boot.

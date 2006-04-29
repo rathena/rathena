@@ -2226,7 +2226,8 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
-	if(sd && sd->classchange && tmd && !(t_mode&MD_BOSS) && !tmd->guardian_data && (tmd->class_ < 1324 || tmd->class_ > 1363) && (rand()%10000 < sd->classchange))
+	if(sd && sd->classchange && tmd && !(t_mode&MD_BOSS) && !tmd->guardian_data && (tmd->class_ < 1324 || tmd->class_ > 1363) 
+		&& !mob_is_clone(tmd->class_) && (rand()%10000 < sd->classchange))
 	{	//Classchange:
 		struct mob_db *mob;
 		int k, class_;

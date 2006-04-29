@@ -9113,7 +9113,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 void clif_parse_NpcBuySellSelected(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-	if (sd->trade_partner != 0)
+	if (sd->state.trading)
 		return;
 	npc_buysellsel(sd,RFIFOL(fd,2),RFIFOB(fd,6));
 }
@@ -9133,7 +9133,7 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->trade_partner || !sd->npc_shopid){
+	if (sd->state.trading|| !sd->npc_shopid){
 		fail = 1;
 	}else{
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
@@ -9171,7 +9171,7 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->trade_partner || !sd->npc_shopid){
+	if (sd->state.trading|| !sd->npc_shopid){
 		fail = 1;
 	}else{
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
@@ -9787,7 +9787,7 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 void clif_parse_UseCard(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-	if (sd->trade_partner != 0)
+	if (sd->state.trading!= 0)
 		return;
 	clif_use_card(sd,RFIFOW(fd,2)-2);
 }
@@ -9798,7 +9798,7 @@ void clif_parse_UseCard(int fd,struct map_session_data *sd)
 void clif_parse_InsertCard(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-	if (sd->trade_partner != 0)
+	if (sd->state.trading!= 0)
 		return;
 	pc_insert_card(sd,RFIFOW(fd,2)-2,RFIFOW(fd,4)-2);
 }
