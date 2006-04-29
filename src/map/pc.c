@@ -2927,8 +2927,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		return 0;
 	
 	md=(struct mob_data *)bl;
-
-	if(md->state.steal_flag>battle_config.skill_steal_max_tries || status_get_mode(bl)&MD_BOSS || md->master_id ||
+//temp steal disable [Lupus]
+	if(1 || md->state.steal_flag>battle_config.skill_steal_max_tries || status_get_mode(bl)&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
 		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
 		md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1 //status change check
