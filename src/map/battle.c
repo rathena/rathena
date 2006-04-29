@@ -3826,6 +3826,7 @@ static const struct battle_data_short {
 	{ "pk_min_level",                      &battle_config.pk_min_level}, // [celest]
 	{ "skill_steal_type",                  &battle_config.skill_steal_type}, // [celest]
 	{ "skill_steal_rate",                  &battle_config.skill_steal_rate}, // [celest]
+	{ "skill_steal_max_tries",			&battle_config.skill_steal_max_tries}, // [Lupus]
 //	{ "night_darkness_level",              &battle_config.night_darkness_level}, // [celest]
 	{ "motd_type",                         &battle_config.motd_type}, // [celest]
 	{ "allow_atcommand_when_mute",         &battle_config.allow_atcommand_when_mute}, // [celest]
@@ -4226,6 +4227,7 @@ void battle_set_defaults() {
 	battle_config.pk_min_level = 55;
 	battle_config.skill_steal_type = 1;
 	battle_config.skill_steal_rate = 100;
+	battle_config.skill_steal_max_tries = 256;
 //	battle_config.night_darkness_level = 9;
 	battle_config.motd_type = 0;
 	battle_config.allow_atcommand_when_mute = 0;
@@ -4488,6 +4490,9 @@ void battle_validate_conf() {
 		battle_config.mob_max_sc_def = 10000;
 	if (battle_config.sg_miracle_skill_ratio > 10000)
 		battle_config.sg_miracle_skill_ratio = 10000;
+
+	if (battle_config.skill_steal_max_tries > 256)
+		battle_config.skill_steal_max_tries = 256;	
 
 #ifdef CELL_NOSTACK
 	if (battle_config.cell_stack_limit < 1)

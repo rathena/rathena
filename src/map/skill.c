@@ -967,7 +967,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,0xf00000);
 			}
 			// Gank
-			if(dstmd && !dstmd->state.steal_flag && sd->status.weapon != W_BOW && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
+			if(dstmd && dstmd->state.steal_flag<battle_config.skill_steal_max_tries && sd->status.weapon != W_BOW && (skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
 				(skill*15 + 55) + (skill2 = pc_checkskill(sd,TF_STEAL))*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill2,1);
