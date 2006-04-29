@@ -27,6 +27,9 @@
 
 =========================
 04/29
+	* More fixes in the mob db [Playtester]
+	- fixed more drops
+	- kRO name for Goblin Steamrider is "Steam Goblin"
 	* Started fixing the drops of mobs with more than 8 different items [Playtester]
 	* Added new hats ViewID, thanks to Lost_Kakashi [Lupus]
 	* Added new cards set 4332-4407. Thanks to virpyre,vicious_pucca,reddozen and the others ^_-
