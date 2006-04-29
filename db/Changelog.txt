@@ -27,6 +27,8 @@
 
 =========================
 04/29
+	* Item ID 7344 is now called "Shinokas Case File" [Playtester]
+	- when someone is making the quest please make sure the guy is called Shinokas
 	* Updated drops of Bio Lab 3 MVPs [Playtester]
 	- drop rate is 1/10 of the guessed values (until skills/delays are finished)
 	- also fixed a typo in the item db

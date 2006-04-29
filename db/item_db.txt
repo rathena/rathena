@@ -1962,7 +1962,7 @@
 7341,Old_Pendant,Old Pendant,3,,10,0,,,,,,,,,,,,,{},{},{}
 7342,File_Folder,File Folder,3,,10,0,,,,,,,,,,,,,{},{},{}
 7343,Sealed_File_Folder,Sealed File Folder,3,,10,0,,,,,,,,,,,,,{},{},{}
-7344,Cinocas_Case_File,Cinocas Case File,3,,10,0,,,,,,,,,,,,,{},{},{}
+7344,Shinokas_Case_File,Shinokas Case File,3,,10,0,,,,,,,,,,,,,{},{},{}
 7345,Handcuffs,Handcuffs,3,,362,10,,,,,,,,,,,,,{},{},{}
 7346,Ymir's_Heart_Piece,Ymir's Heart Piece,3,,10,0,,,,,,,,,,,,,{},{},{}
 7347,Research_Chart,Research Chart,3,,420,10,,,,,,,,,,,,,{},{},{}
