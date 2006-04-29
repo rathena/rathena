@@ -294,6 +294,7 @@ ACMD_FUNC(main); // LuzZza
 ACMD_FUNC(clone); // [Valaris]
 ACMD_FUNC(tonpc); // LuzZza
 ACMD_FUNC(commands); // [Skotlex]
+ACMD_FUNC(noask); //LuzZza
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -609,6 +610,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Clone,				"@evilclone",		50, atcommand_clone }, // [Valaris]
 	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
 	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
+	{ AtCommand_NoAsk,				"@noask",			1, atcommand_noask }, // [LuzZza]
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -10188,6 +10190,27 @@ int atcommand_main(
 			// Main chat currently disabled. Usage: @main <on|off>, @main <message>.
 			clif_displaymessage(fd, msg_txt(385));
 	}
+	return 0;
+}
+
+/*=====================================
+ * Autorejecting Invites/Deals [LuzZza]
+ * Usage: @noask
+ *-------------------------------------
+ */
+int atcommand_noask(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+	if(sd->state.noask) {
+		clif_displaymessage(fd, msg_txt(391)); // Autorejecting is deactivated.
+		sd->state.noask = 0;
+	} else {
+		clif_displaymessage(fd, msg_txt(390)); // Autorejecting is activated.
+		sd->state.noask = 1;
+	}
+	
 	return 0;
 }
 

@@ -506,6 +506,7 @@ struct map_session_data {
 		unsigned showexp :1;
 		unsigned showzeny :1;
 		unsigned mainchat :1; //[LuzZza] 
+		unsigned noask :1; // [LuzZza]
 		unsigned trading :1; //[Skotlex] is 1 only after a trade has started.
 		unsigned deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
 		unsigned party_sent :1;

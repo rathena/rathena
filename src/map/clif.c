@@ -9317,7 +9317,17 @@ void clif_parse_ChatLeave(int fd,struct map_session_data *sd)
  */
 void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 {
-	RFIFOHEAD(fd);
+	struct map_session_data *t_sd;
+	
+	RFIFOHEAD(fd);	
+	t_sd = map_id2sd(RFIFOL(sd->fd,2));
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
 
 	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 1){
 		trade_traderequest(sd,RFIFOL(sd->fd,2));
@@ -10019,7 +10029,19 @@ void clif_parse_CreateParty2(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_PartyInvite(int fd, struct map_session_data *sd) {
-	RFIFOHEAD(fd);
+	
+	struct map_session_data *t_sd;
+	
+	RFIFOHEAD(fd);	
+	t_sd = map_id2sd(RFIFOL(sd->fd,2));
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
+	
 	party_invite(sd, RFIFOL(fd,2));
 }
 
@@ -10235,7 +10257,19 @@ void clif_parse_GuildChangeNotice(int fd,struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_GuildInvite(int fd,struct map_session_data *sd) {
-	RFIFOHEAD(fd);
+
+	struct map_session_data *t_sd;
+	
+	RFIFOHEAD(fd);	
+	t_sd = map_id2sd(RFIFOL(sd->fd,2));
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
+
 	guild_invite(sd,RFIFOL(fd,2));
 }
 
@@ -10290,7 +10324,19 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd) {
-	RFIFOHEAD(fd);
+	
+	struct map_session_data *t_sd;
+	
+	RFIFOHEAD(fd);	
+	t_sd = map_id2sd(RFIFOL(sd->fd,2));
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
+	
 	guild_reqalliance(sd,RFIFOL(fd,2));
 }
 
@@ -10317,7 +10363,19 @@ void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_GuildOpposition(int fd, struct map_session_data *sd) {
-	RFIFOHEAD(fd);
+	
+	struct map_session_data *t_sd;
+	
+	RFIFOHEAD(fd);	
+	t_sd = map_id2sd(RFIFOL(sd->fd,2));
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
+	
 	guild_opposition(sd,RFIFOL(fd,2));
 }
 
@@ -10846,6 +10904,13 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd) {
 		return;
 	}
 
+	// @noask [LuzZza]
+	if(f_sd->state.noask) {
+		// Your request has been rejected by autoreject option.
+		clif_displaymessage(fd, msg_txt(392));
+		return;
+	}
+
 	// Friend already exists
 	for (i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id != 0; i++) {
 		if (sd->status.friends[i].char_id == f_sd->status.char_id) {
@@ -10861,7 +10926,7 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd) {
 	}
 		
 	f_fd = f_sd->fd;
-	WFIFOHEAD(fd,packet_len_table[0x207]);
+	WFIFOHEAD(f_fd,packet_len_table[0x207]);
 	WFIFOW(f_fd,0) = 0x207;
 	WFIFOL(f_fd,2) = sd->status.account_id;
 	WFIFOL(f_fd,6) = sd->status.char_id;
