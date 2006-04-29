@@ -27,6 +27,7 @@
 
 =========================
 04/30
+	* Added new hats ViewID, thanks to Lost_Kakashi [Lupus]
 	* Added new cards set 4332-4407. Thanks to virpyre,vicious_pucca,reddozen and the others ^_-
 	- Fixed some bugs and typos in the new cards effects. Probably there are more [Lupus]
 	  Note: ON finishing adjusting STEAL skill, we'd start adding cards into MOBs drops.

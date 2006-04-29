@@ -1612,8 +1612,12 @@
 5143,Kabuki_Mask,Kabuki Mask,5,,10,1000,,5,,1,0xFFFFFFFE,7,2,769,,10,1,214,{ bonus2 bResEff,EFf_Silence,3000; },{},{}
 5144,Gamble_Hat,Gambler Hat,5,,10,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,16,{ bonus bLuk,5; },{},{}
 5145,Carnival_Jester,Carnival Jester,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,89,{},{},{}
-5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{ bonus bVit,1; bonus2 bSubRace,2,7; skill 86,1; },{},{}
-5147,Baseball_Hat,Baseball Hat,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{},{},{}
+5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,215,{ bonus bVit,1; bonus2 bSubRace,RC_Brute,7; skill 86,1; },{},{}
+5147,Baseball_Hat,Baseball Hat,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
+5148,National_Holiday_Cap,National Holiday Cap,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
+5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
+5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
+
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -2448,12 +2452,7 @@
 13303,Kazema_Shuriken_Rekka,Kazema Shuriken Rekka,4,78000,,1500,185,,1,0,0x02000000,7,2,2,4,55,1,22,{ bonus bDex,-2; bonus bAtkEle,3; bonus4 bAutoSpell,19,5,20,1; },{},{}
 
 
-
 // Temp Plugs. Please check http://opensvn.csie.org/EnglishTranslation/data/ for info about the items.
-
-5148,Unknown5148,Unknown5148,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{},{},{}
-5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,0,{},{},{}
-5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,0,{},{},{}
 
 7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
 7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{},{},{}
