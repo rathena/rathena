@@ -282,6 +282,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 	cd->bl.x = nd->bl.x;
 	cd->bl.y = nd->bl.y;
 	cd->bl.type = BL_CHAT;
+	cd->bl.prev= cd->bl.next = NULL;
 	cd->owner_ = (struct block_list *)nd;
 	cd->owner = &cd->owner_;
 	if (strlen(ev) > 49)
