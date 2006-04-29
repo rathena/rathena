@@ -4370,7 +4370,8 @@ int pc_resetstate(struct map_session_data* sd)
 
 /*==========================================
  * /resetskill
- * if flag is 1, perform block resync and status_calc call.
+ * if flag&1, perform block resync and status_calc call.
+ * if flag&2, just count total amount of skill points used by player, do not really reset.
  *------------------------------------------
  */
 int pc_resetskill(struct map_session_data* sd, int flag)
@@ -4391,10 +4392,12 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 						skill_point += skill;
 					else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
 						skill_point += (sd->status.skill[i].flag - 2);
-					sd->status.skill[i].lv = 0;
-					sd->status.skill[i].flag = 0;
+					if (!(flag&2)) {
+						sd->status.skill[i].lv = 0;
+						sd->status.skill[i].flag = 0;
+					}
 			}
-			else if (battle_config.quest_skill_reset && (inf2&INF2_QUEST_SKILL))
+			else if (battle_config.quest_skill_reset && (inf2&INF2_QUEST_SKILL) && !(flag&2))
 			{
 				sd->status.skill[i].lv = 0;
 				sd->status.skill[i].flag = 0;
@@ -4404,18 +4407,19 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		}
 	}
 	
-	if (sd->status.skill_point > USHRT_MAX - skill_point)
-		sd->status.skill_point = USHRT_MAX;
-	else
-		sd->status.skill_point += skill_point;
+	if (!(flag&2)) {
+		if (sd->status.skill_point > USHRT_MAX - skill_point)
+			sd->status.skill_point = USHRT_MAX;
+		else
+			sd->status.skill_point += skill_point;
 	
-	if (flag) {
-		clif_updatestatus(sd,SP_SKILLPOINT);
-		clif_skillinfoblock(sd);
-		status_calc_pc(sd,0);
+		if (flag&1) {
+			clif_updatestatus(sd,SP_SKILLPOINT);
+			clif_skillinfoblock(sd);
+			status_calc_pc(sd,0);
+		}
 	}
-
-	return 0;
+	return skill_point;
 }
 
 /*==========================================

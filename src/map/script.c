@@ -271,6 +271,7 @@ int buildin_birthpet(struct script_state *st);
 int buildin_resetlvl(struct script_state *st);
 int buildin_resetstatus(struct script_state *st);
 int buildin_resetskill(struct script_state *st);
+int buildin_skillpointcount(struct script_state *st);
 int buildin_changebase(struct script_state *st);
 int buildin_changesex(struct script_state *st);
 int buildin_waitingroom(struct script_state *st);
@@ -594,6 +595,7 @@ struct {
 	{buildin_resetlvl,"resetlvl","i"},
 	{buildin_resetstatus,"resetstatus",""},
 	{buildin_resetskill,"resetskill",""},
+	{buildin_skillpointcount,"skillpointcount",""},
 	{buildin_changebase,"changebase","i"},
 	{buildin_changesex,"changesex",""},
 	{buildin_waitingroom,"waitingroom","si*"},
@@ -6318,6 +6320,18 @@ int buildin_resetskill(struct script_state *st)
 	struct map_session_data *sd;
 	sd=script_rid2sd(st);
 	pc_resetskill(sd,1);
+	return 0;
+}
+
+/*==========================================
+ * Counts total amount of skill points.
+ *------------------------------------------
+ */
+int buildin_skillpointcount(struct script_state *st)
+{
+	struct map_session_data *sd;
+	sd=script_rid2sd(st);
+	push_val(st->stack,C_INT,sd->status.skill_point + pc_resetskill(sd,2));
 	return 0;
 }
 

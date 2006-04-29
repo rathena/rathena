@@ -2160,7 +2160,7 @@ int status_calc_speed(struct block_list *bl, int speed)
 		if(sc->data[SC_DONTFORGETME].timer!=-1)
 			speed += speed * sc->data[SC_DONTFORGETME].val3/100;
 		if(sc->data[SC_DEFENDER].timer!=-1)
-			speed += speed * (55-5*sc->data[SC_DEFENDER].val1)/100;
+			speed += speed * (35-5*sc->data[SC_DEFENDER].val1)/100;
 		if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
 			speed += speed * 25/100;
 		if(sc->data[SC_JOINTBEAT].timer!=-1) {
@@ -4229,7 +4229,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					for (i = 0; i < 5; i++)
 					{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-							status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,val2,0,0,tick,1);
+							status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,5+val1*5,0,0,tick,1);
 					}
 			}
 			break;

@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/29
+	* added script command skillpointcount. Returns total amount of skill
+	  points a char has (the value returned is the same that SkillPoint would
+	  have after invoking a skill reset) [Skotlex]
+	* Modified Defender. Speed reduction is 35-5*lv%, damage reduction on
+	  devoted chars is 5+5*lv%. These values are custom, but should be closer to
+	  "reality" than what we had. [Skotlex]
+	* When you have the wrong ammo type equipped, the equip arrows first
+	  message will be sent, as suggested by Haplo [Skotlex]
 	* Changed checks of item's identify field from 0/1 to 0/non-zero [Skotlex]
 	* Corrected TK_JUMPKICK to place the caster on the tile next to the target
 	  rather than on top of it. [Skotlex]
