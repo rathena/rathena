@@ -27,6 +27,7 @@
 
 =========================
 04/29
+	* Updated mob delays to current info [Playtester]
 	* More fixes in the mob db [Playtester]
 	- fixed more drops
 	- kRO name for Goblin Steamrider is "Steam Goblin"
