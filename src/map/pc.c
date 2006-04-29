@@ -2929,13 +2929,16 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	md=(struct mob_data *)bl;
 
 
-	if(md->state.steal_flag>battle_config.skill_steal_max_tries || status_get_mode(bl)&MD_BOSS || md->master_id ||
+	if(1 || md->state.steal_flag>battle_config.skill_steal_max_tries || status_get_mode(bl)&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
 		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
 		md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1 //status change check
   	)
 		return 0;
 	
+	if(md->state.steal_flag < battle_config.skill_steal_max_tries)
+		md->state.steal_flag++;
+
 	skill = battle_config.skill_steal_type == 1
 		? (sd->paramc[4] - md->db->dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
 		: sd->paramc[4] - md->db->dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
@@ -2954,9 +2957,6 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	}
 	if (i == MAX_MOB_DROP)
 		return 0;
-
-	if(md->state.steal_flag < battle_config.skill_steal_max_tries)
-		md->state.steal_flag++;
 
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = itemid;
