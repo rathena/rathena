@@ -284,7 +284,7 @@ int npc_event_export(char *lname,void *data,va_list ap)
 		unsigned char buf[51];
 		char *p=strchr(lname,':');
 		// エクスポートされる
-		ev=(struct event_data *) aCalloc(sizeof(struct event_data), 1);
+		ev=(struct event_data *) aMalloc(sizeof(struct event_data));
 		if (ev==NULL) {
 			ShowFatalError("npc_event_export: out of memory !\n");
 			exit(1);
@@ -459,11 +459,12 @@ int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 				ShowError("npc_addeventimer: Event %s does not exists.\n", name);
 			return 1; //Event does not exists!
 		}
-		evname =(unsigned char *) aCallocA(NAME_LENGTH, sizeof(char));
+		evname =(unsigned char *) aMallocA(NAME_LENGTH*sizeof(char));
 		if(evname==NULL){
 			ShowFatalError("npc_addeventtimer: out of memory !\n");exit(1);
 		}
 		memcpy(evname,name,NAME_LENGTH-1);
+		evname[NAME_LENGTH-1] = '\0';
 		nd->eventtimer[i]=add_timer(gettick()+tick,
 			npc_event_timer,nd->bl.id,(int)evname);
 	}else
@@ -1397,7 +1398,7 @@ void npc_addsrcfile (char *name)
 		nsl = nsl->next;
 	}
 
-	nsl = (struct npc_src_list *) aCalloc (1, sizeof(*nsl) + strlen(name));
+	nsl = (struct npc_src_list *) aMalloc (sizeof(*nsl) + strlen(name));
 	nsl->next = NULL;
 	strncpy(nsl->name, name, strlen(name) + 1);
 	if (npc_src_first == NULL)
@@ -1704,7 +1705,7 @@ static int npc_skip_script (char *w1,char *w2,char *w3,char *w4,char *first_line
 	unsigned char line[1024];
 	int curly_count = 0;
 	
-	srcbuf = (unsigned char *)aCallocA(srcsize, sizeof(char));
+	srcbuf = (unsigned char *)aMallocA(srcsize*sizeof(char));
 	if (strchr(first_line, '{')) {
 		strcpy((char *)srcbuf, strchr(first_line, '{'));
 		startline = *lines;
@@ -1746,7 +1747,6 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	unsigned char line[1024];
 	int i;
 	struct npc_data *nd;
-	int evflag = 0;
 	struct dbt *label_db;
 	char *p;
 	struct npc_label_list *label_dup = NULL;
@@ -1768,7 +1768,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	if (strcmp(w2, "script") == 0){
 		// parsing script with curly
 		int curly_count = 0;
-		srcbuf = (unsigned char *)aCallocA(srcsize, sizeof(char));
+		srcbuf = (unsigned char *)aMallocA(srcsize*sizeof(char));
 		if (strchr(first_line, '{')) {
 			strcpy((char *)srcbuf, strchr(first_line, '{'));
 			startline = *lines;
@@ -1834,7 +1834,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		if (xs >= 0) xs = xs * 2 + 1;
 		if (ys >= 0) ys = ys * 2 + 1;
 
-		if (class_ >= -1) { // -1 NPCs use OnTouch [Lance]
+		if (m >= 0) {
 			for (i = 0; i < ys; i++) {
 				for (j = 0; j < xs; j++) {
 					if (map_getcell(m, x - xs/2 + j, y - ys/2 + i, CELL_CHKNOPASS))
@@ -1850,10 +1850,6 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		class_ = atoi(w4);
 		nd->u.scr.xs = 0;
 		nd->u.scr.ys = 0;
-	}
-
-	if (class_ < 0 && m >= 0) {	// イベント型NPC
-		evflag = 1;
 	}
 
 	while ((p = strchr(w3,':'))) {
@@ -1886,18 +1882,21 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		nd->eventtimer[i] = -1;
 	if (m >= 0) {
 		nd->n = map_addnpc(m, nd);
-		if (class_ >= 0)
-			status_set_viewdata(&nd->bl, nd->class_);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
 		map_addblock(&nd->bl);
-		if (evflag) {	// イベント型
+		// Unused. You can always use On::XXXX events. Have this removed to improve perfomance.
+		/*if (evflag) {	// イベント型
 			struct event_data *ev = (struct event_data *)aCalloc(1, sizeof(struct event_data));
 			ev->nd = nd;
 			ev->pos = 0;
 			strdb_put(ev_db, nd->exname, ev);
 		} else {
+			clif_spawn(&nd->bl);
+		}*/
+		if (class_ >= 0){
+			status_set_viewdata(&nd->bl, nd->class_);
 			clif_spawn(&nd->bl);
 		}
 	} else {
@@ -1943,7 +1942,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 
 				// remember the label is max 50 chars + eos; see the strdb_init below
 				// generate the data and insert it
-				ev=(struct event_data *)aCalloc(1,sizeof(struct event_data));
+				ev=(struct event_data *)aMalloc(sizeof(struct event_data));
 				ev->nd=nd;
 				ev->pos=pos;
 				if (strdb_put(ev_db,buf,ev) != NULL) //There was already another event of the same name?
@@ -1963,7 +1962,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 			struct npc_timerevent_list *te = nd->u.scr.timer_event;
 			int j, k = nd->u.scr.timeramount;
 			if (te == NULL)
-				te = (struct npc_timerevent_list *)aCallocA(1,sizeof(struct npc_timerevent_list));
+				te = (struct npc_timerevent_list *)aMallocA(sizeof(struct npc_timerevent_list));
 			else
 				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
 			for (j = 0; j < k; j++){
@@ -1997,7 +1996,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 	struct dbt *user_db;
 	
 	// スクリプトの解析
-	srcbuf = (unsigned char *) aCallocA (srcsize, sizeof(char));
+	srcbuf = (unsigned char *) aMallocA (srcsize*sizeof(char));
 	if (strchr(first_line,'{')) {
 		strcpy(srcbuf, strchr(first_line,'{'));
 		startline = *lines;
@@ -2036,7 +2035,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 		return 1;
 	}
 
-	p = (char *) aCallocA (50, sizeof(char));
+	p = (char *) aMallocA (50*sizeof(char));
 	strncpy(p, w3, 50);
 
 	user_db = script_get_userfunc_db();

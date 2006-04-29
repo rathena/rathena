@@ -6499,12 +6499,13 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	group->bl_flag= skill_get_unit_bl_target(skillid);
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
-		group->valstr=(char *) aCallocA(MESSAGE_SIZE, sizeof(char));
+		group->valstr=(char *) aMallocA(MESSAGE_SIZE*sizeof(char));
 		if(group->valstr==NULL){
 			ShowFatalError("skill_castend_map: out of memory !\n");
 			exit(1);
 		}
 		memcpy(group->valstr,talkie_mes,MESSAGE_SIZE-1);
+		group->valstr[MESSAGE_SIZE-1] = '\0';
 	}
 
 	//Why redefine local variables when the ones of the function can be reused? [Skotlex]
@@ -9374,9 +9375,9 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	group->group_id=skill_unit_group_newid++;
 	if(skill_unit_group_newid<=0)
 		skill_unit_group_newid = MAX_SKILL_DB;
-	group->unit=(struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
+	group->unit=(struct skill_unit *)aMalloc(count*sizeof(struct skill_unit));
 	group->unit_count=count;
-	group->val1=group->val2=0;
+	group->val1=group->val2=group->val3=0;
 	group->skill_id=skillid;
 	group->skill_lv=skilllv;
 	group->unit_id=unit_id;

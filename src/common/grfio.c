@@ -591,7 +591,7 @@ void* grfio_reads(char *fname, int *size)
 				lentry.declen = ftell(in);
 			}
 			fseek(in,0,0);	// SEEK_SET
-			buf2 = (unsigned char *)aCallocA(lentry.declen + 1024, 1);
+			buf2 = (unsigned char *)aMallocA(lentry.declen + 1024);
 			fread(buf2, 1, lentry.declen, in);
 			fclose(in);
 			strncpy(lentry.fn, fname, sizeof(lentry.fn) - 1);
@@ -611,11 +611,11 @@ void* grfio_reads(char *fname, int *size)
 		char *gfname = gentry_table[entry->gentry - 1];
 		in = fopen(gfname, "rb");
 		if(in != NULL) {
-			unsigned char *buf = (unsigned char *)aCallocA(entry->srclen_aligned + 1024, 1);
+			unsigned char *buf = (unsigned char *)aMallocA(entry->srclen_aligned + 1024);
 			fseek(in, entry->srcpos, 0);
 			fread(buf, 1, entry->srclen_aligned, in);
 			fclose(in);
-			buf2 = (unsigned char *)aCallocA(entry->declen + 1024, 1);
+			buf2 = (unsigned char *)aMallocA(entry->declen + 1024);
 			if (entry->type == 1 || entry->type == 3 || entry->type == 5) {
 				uLongf len;
 				if (entry->cycle >= 0)
@@ -694,7 +694,7 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	if (grf_version == 0x01) {	//****** Grf version 01xx ******
 		list_size = grf_size - ftell(fp);
-		grf_filelist = (unsigned char *) aCallocA(list_size, 1);
+		grf_filelist = (unsigned char *) aMallocA(list_size);
 		/*if (grf_filelist == NULL){
 			fclose(fp);
 			ShowError("out of memory : grf_filelist\n");
@@ -770,13 +770,13 @@ static int grfio_entryread(char *gfname,int gentry)
 			return 4;
 		}
 
-		rBuf = (unsigned char *)aCallocA(rSize , 1);	// Get a Read Size
+		rBuf = (unsigned char *)aMallocA(rSize);	// Get a Read Size
 		/*if (rBuf==NULL) {
 			fclose(fp);
 			ShowError("out of memory : grf compress entry table buffer\n");
 			return 3;
 		}*/
-		grf_filelist = (unsigned char *)aCallocA(eSize , 1);	// Get a Extend Size
+		grf_filelist = (unsigned char *)aMallocA(eSize);	// Get a Extend Size
 		/*if (grf_filelist==NULL) {
 			aFree(rBuf);
 			fclose(fp);
@@ -952,7 +952,7 @@ char *grfio_alloc_ptr(char *fname)
 		memset(gentry_table + (gentry_maxentry - GENTRY_ADDS), 0, sizeof(char*) * GENTRY_ADDS);
 	}
 	len = strlen( fname );
-	buf = (char*)aCallocA(len + 1, 1);
+	buf = (char*)aMallocA(len + 1);
 	strcpy(buf, fname);
 	gentry_table[gentry_entrys++] = buf;
 

@@ -2738,7 +2738,7 @@ static int map_loadafm (struct map_data *m, char *fn)
 		ys = m->ys = afm_size[1];
 		m->water_height = map_waterheight(m->name);
 		// check this, unsigned where it might not need to be
-		m->gat = (unsigned char*)aCallocA(xs * ys, 1);
+		m->gat = (unsigned char*)aMallocA(xs * ys);
 
 		for (y = 0; y < ys; y++) {
 			str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
@@ -2834,20 +2834,13 @@ int map_readaf2 (struct map_data *m)
  */
 int map_readgat (struct map_data *m)
 {
-	char fn[256], *pt;
+	char fn[256];
 	char *gat;
 	int wh,x,y,xs,ys;
 	struct gat_1cell {float high[4]; int type;} *p = NULL;
 	
 	if (strstr(m->name,".gat") == NULL)
 		return 0;
-
-	if ((pt = strstr(m->name,"<")) != NULL) { // [MouseJstr]
-		char buf[64];
-		*pt++ = '\0';
-		sprintf(buf,"data\\%s", pt);
-		m->alias = aStrdup(buf);
-	}
 
 	sprintf(fn,"data\\%s",m->name);
 
@@ -2859,7 +2852,7 @@ int map_readgat (struct map_data *m)
 
 	xs = m->xs = *(int*)(gat+6);
 	ys = m->ys = *(int*)(gat+10);
-	m->gat = (unsigned char *)aCallocA(m->xs * m->ys, sizeof(unsigned char));
+	m->gat = (unsigned char *)aMallocA((m->xs * m->ys)*sizeof(unsigned char));
 
 	m->water_height = wh = map_waterheight(m->name);
 	for (y = 0; y < ys; y++) {
@@ -3068,10 +3061,12 @@ int map_readallmaps (void)
 
 				size = map[i].bxs * map[i].bys * sizeof(int);
 				map[i].block_count = (int*)aCallocA(size, 1);
-				memset(map[i].block_count, 0, size);
+				// Already initialized in aCallocA
+				//memset(map[i].block_count, 0, size);
 
 				map[i].block_mob_count = (int*)aCallocA(size, 1);
-				memset(map[i].block_mob_count, 0, size);
+				// Already initialized in aCallocA
+				//memset(map[i].block_mob_count, 0, size);
 
 				uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 
@@ -3129,20 +3124,15 @@ int parse_console(char *buf) {
 	int m, n;
 	struct map_session_data *sd;
 
-	sd = (struct map_session_data*)aCalloc(sizeof(*sd), 1);
+	sd = (struct map_session_data*)aCalloc(sizeof(struct map_session_data), 1);
 
 	sd->fd = 0;
 	strcpy( sd->status.name , "console");
 
-	type = (char *)aMallocA(64);
-	command = (char *)aMallocA(64);
-	map = (char *)aMallocA(64);
-	buf2 = (char *)aMallocA(72);
-
-	memset(type,0,64);
-	memset(command,0,64);
-	memset(map,0,64);
-	memset(buf2,0,72);
+	type = (char *)aCallocA(64,1);
+	command = (char *)aCallocA(64,1);
+	map = (char *)aCallocA(64,1);
+	buf2 = (char *)aCallocA(72,1);
 
 	if ( ( n = sscanf(buf, "%[^:]:%[^:]:%99s %d %d[^\n]", type , command , map , &x , &y )) < 5 )
 		if ( ( n = sscanf(buf, "%[^:]:%[^\n]", type , command )) < 2 )
@@ -3593,9 +3583,11 @@ void do_final(void) {
 
 	ShowStatus("Terminating...\n");
 
-	// we probably don't need the cache open at all times 'yet', so this is closed by mapsource_final [celest]
+	//we probably don't need the cache open at all times 'yet', so this is closed by mapsource_final [celest]
 	//map_cache_close();
-	grfio_final();
+
+	// We probably don't need the grfio after server bootup 'yet' too. So this is closed near the end of do_init [Lance]
+	//grfio_final();
 
 	for (i = 0; i < map_num; i++)
 		if (map[i].m >= 0)
@@ -3886,6 +3878,8 @@ int do_init(int argc, char *argv[]) {
 
 	if (battle_config.pk_mode == 1)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
+
+	grfio_final(); // Unused after reading all maps.
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 

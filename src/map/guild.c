@@ -482,7 +482,7 @@ int guild_npc_request_info(int guild_id,const char *event)
 	if(event==NULL || *event==0)
 		return guild_request_info(guild_id);
 
-	ev=(struct eventlist *)aCalloc(1,sizeof(struct eventlist));
+	ev=(struct eventlist *)aMalloc(sizeof(struct eventlist));
 	memcpy(ev->name,event,strlen(event));
 	//The one in the db becomes the next event from this.
 	ev->next=idb_put(guild_infoevent_db,guild_id,ev);
@@ -1680,7 +1680,7 @@ int guild_addcastleinfoevent(int castle_id,int index,const char *name)
 	if( name==NULL || *name==0 )
 		return 0;
 
-	ev=(struct eventlist *)aCalloc(1,sizeof(struct eventlist));
+	ev=(struct eventlist *)aMalloc(sizeof(struct eventlist));
 	memcpy(ev->name,name,sizeof(ev->name));
 	//The next event becomes whatever was currently stored.
 	ev->next= idb_put(guild_castleinfoevent_db,code,ev);
@@ -1904,7 +1904,7 @@ int guild_agit_break(struct mob_data *md)
 
 	nullpo_retr(0, md);
 
-	evname=(char *)aCallocA(strlen(md->npc_event) + 1, sizeof(char));
+	evname=(char *)aMallocA((strlen(md->npc_event) + 1)*sizeof(char));
 
 	strcpy(evname,md->npc_event);
 // Now By User to Run [OnAgitBreak] NPC Event...

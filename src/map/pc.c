@@ -7106,8 +7106,8 @@ int pc_read_gm_account(int fd)
 	if (gm_account != NULL)
 		aFree(gm_account);
 	GM_num = 0;
-	gm_account = (struct gm_account *) aCallocA(((RFIFOW(fd,2) - 4) / 5), sizeof(struct gm_account));
-	for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
+	gm_account = (struct gm_account *) aMallocA(((RFIFOW(fd,2) - 4) / 5)*sizeof(struct gm_account));
+	for (i = 4; i < RFIFOW(fd,2); i += 5) {
 		gm_account[GM_num].account_id = RFIFOL(fd,i);
 		gm_account[GM_num].level = (int)RFIFOB(fd,i+4);
 		//printf("GM account: %d -> level %d\n", gm_account[GM_num].account_id, gm_account[GM_num].level);

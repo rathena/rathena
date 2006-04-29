@@ -2436,7 +2436,7 @@ char* conv_str(struct script_state *st,struct script_data *data)
 	get_val(st,data);
 	if(data->type==C_INT){
 		char *buf;
-		buf=(char *)aCallocA(ITEM_NAME_LENGTH,sizeof(char));
+		buf=(char *)aMallocA(ITEM_NAME_LENGTH*sizeof(char));
 		snprintf(buf,ITEM_NAME_LENGTH, "%d",data->u.num);
 		data->type=C_STR;
 		data->u.str=buf;
@@ -2783,7 +2783,7 @@ int buildin_menu(struct script_state *st)
 			conv_str(st,& (st->stack->stack_data[i]));
 			len+=(int)strlen(st->stack->stack_data[i].u.str)+1;
 		}
-		buf=(char *)aCallocA(len+1,sizeof(char));
+		buf=(char *)aMallocA((len+1)*sizeof(char));
 		buf[0]=0;
 		for(i=st->start+2,len=0;i<st->end;i+=2){
 			strcat(buf,st->stack->stack_data[i].u.str);
@@ -4275,8 +4275,9 @@ char *buildin_getpartyname_sub(int party_id)
 
 	if(p!=NULL){
 		char *buf;
-		buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
+		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
 		memcpy(buf, p->name, NAME_LENGTH-1);
+		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
 
@@ -4343,8 +4344,9 @@ char *buildin_getguildname_sub(int guild_id)
 
 	if(g!=NULL){
 		char *buf;
-		buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
+		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
 		memcpy(buf, g->name, NAME_LENGTH-1);
+		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
 	return NULL;
@@ -4372,8 +4374,9 @@ char *buildin_getguildmaster_sub(int guild_id)
 
 	if(g!=NULL){
 		char *buf;
-		buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
+		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
 		memcpy(buf, g->master, NAME_LENGTH-1);
+		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
 
@@ -4416,8 +4419,8 @@ int buildin_getguildmasterid(struct script_state *st)
 int buildin_strcharinfo(struct script_state *st)
 {
 	struct map_session_data *sd;
-	char *buf;
 	int num;
+	char *buf;
 
 	sd=script_rid2sd(st);
 	if (!sd) { //Avoid crashing....
@@ -4427,9 +4430,7 @@ int buildin_strcharinfo(struct script_state *st)
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	switch(num){
 		case 0:
-			buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
-			memcpy(buf, sd->status.name, NAME_LENGTH-1);
-			push_str(st->stack,C_STR,(unsigned char *) buf);
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) sd->status.name);
 			break;
 		case 1:
 			buf=buildin_getpartyname_sub(sd->status.party_id);
@@ -4497,7 +4498,7 @@ int buildin_getequipname(struct script_state *st)
 	struct item_data* item;
 	char *buf;
 
-	buf=(char *)aCallocA(64,sizeof(char));
+	buf=(char *)aMallocA(64*sizeof(char));
 	sd=script_rid2sd(st);
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	i=pc_checkequip(sd,equip[num-1]);
@@ -5312,7 +5313,7 @@ int buildin_gettimestr(struct script_state *st)
 	fmtstr=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	maxlen=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	tmpstr=(char *)aCallocA(maxlen+1,sizeof(char));
+	tmpstr=(char *)aMallocA((maxlen+1)*sizeof(char));
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
 	tmpstr[maxlen]='\0';
 
@@ -7146,18 +7147,15 @@ int buildin_getcastlename(struct script_state *st)
 	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	struct guild_castle *gc;
 	int i;
-	char *buf=NULL;
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		if( (gc=guild_castle_search(i)) != NULL ){
 			if(strcmp(mapname,gc->map_name)==0){
-				buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
-				memcpy(buf, gc->castle_name, NAME_LENGTH-1);
 				break;
 			}
 		}
 	}
-	if(buf)
-	push_str(st->stack,C_STR,(unsigned char *) buf);
+	if(gc)
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) gc->castle_name);
 	else
 		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
 	return 0;
@@ -7709,22 +7707,12 @@ int buildin_strmobinfo(struct script_state *st)
 	switch (num) {
 	case 1:
 		{
-			char *buf;
-			buf=(char *) aCallocA(NAME_LENGTH, sizeof(char));
-//			buf=mob_db(class_)->name;
-// for string assignments you would need to go for c++ [Shinomori]
-			memcpy(buf, mob_db(class_)->name, NAME_LENGTH-1);
-			push_str(st->stack,C_STR,(unsigned char *) buf);
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->name);
 			break;
 		}
 	case 2:
 		{
-			char *buf;
-			buf=(char *) aCallocA(NAME_LENGTH, sizeof(char));
-//			buf=mob_db(class_).jname;
-// for string assignments you would need to go for c++ [Shinomori]
-			memcpy(buf,mob_db(class_)->jname, NAME_LENGTH-1);
-			push_str(st->stack,C_STR,(unsigned char *) buf);
+			push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->jname);
 			break;
 		}
 	case 3:
@@ -7820,9 +7808,9 @@ int buildin_getitemname(struct script_state *st)
 		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
 		return 0;
 	}
-	item_name=(char *)aCallocA(ITEM_NAME_LENGTH,sizeof(char));
+	item_name=(char *)aMallocA(ITEM_NAME_LENGTH*sizeof(char));
 
-	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH-1);
+	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
 	push_str(st->stack,C_STR,(unsigned char *) item_name);
 	return 0;
 }
@@ -7936,7 +7924,7 @@ int buildin_petskillbonus(struct script_state *st)
 		if (pd->bonus->timer != -1)
 			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
 	} else //init
-		pd->bonus = (struct pet_bonus *) aCalloc(1, sizeof(struct pet_bonus));
+		pd->bonus = (struct pet_bonus *) aMalloc(sizeof(struct pet_bonus));
 
 	pd->bonus->type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	pd->bonus->val=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7982,10 +7970,10 @@ int buildin_petloot(struct script_state *st)
 		aFree(pd->loot->item);
 	}
 	else
-		pd->loot = (struct pet_loot *)aCalloc(1, sizeof(struct pet_loot));
+		pd->loot = (struct pet_loot *)aMalloc(sizeof(struct pet_loot));
 
 	pd->loot->item = (struct item *)aCalloc(max,sizeof(struct item));
-	memset(pd->loot->item,0,max * sizeof(struct item));
+	//memset(pd->loot->item,0,max * sizeof(struct item));
 	
 	pd->loot->max=max;
 	pd->loot->count = 0;
@@ -8230,7 +8218,7 @@ int buildin_petrecovery(struct script_state *st)
 		if (pd->recovery->timer != -1)
 			delete_timer(pd->recovery->timer, pet_recovery_timer);
 	} else //Init
-		pd->recovery = (struct pet_recovery *)aCalloc(1, sizeof(struct pet_recovery));
+		pd->recovery = (struct pet_recovery *)aMalloc(sizeof(struct pet_recovery));
 		
 	pd->recovery->type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	pd->recovery->delay=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8263,7 +8251,7 @@ int buildin_petheal(struct script_state *st)
 				delete_timer(pd->s_skill->timer, pet_heal_timer);
 		}
 	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aCalloc(1, sizeof(struct pet_skill_support)); 
+		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support)); 
 	
 	pd->s_skill->id=0; //This id identifies that it IS petheal rather than pet_skillsupport
 	//Use the lv as the amount to heal
@@ -8295,7 +8283,7 @@ int buildin_petskillattack(struct script_state *st)
 
 	pd=sd->pd;
 	if (pd->a_skill == NULL)
-		pd->a_skill = (struct pet_skill_attack *)aCalloc(1, sizeof(struct pet_skill_attack));
+		pd->a_skill = (struct pet_skill_attack *)aMalloc(sizeof(struct pet_skill_attack));
 				
 	pd->a_skill->id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	pd->a_skill->lv=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8320,7 +8308,7 @@ int buildin_petskillattack2(struct script_state *st)
 
 	pd=sd->pd;
 	if (pd->a_skill == NULL)
-		pd->a_skill = (struct pet_skill_attack *)aCalloc(1, sizeof(struct pet_skill_attack));
+		pd->a_skill = (struct pet_skill_attack *)aMalloc(sizeof(struct pet_skill_attack));
 				
 	pd->a_skill->id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	pd->a_skill->lv=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8354,7 +8342,7 @@ int buildin_petskillsupport(struct script_state *st)
 				delete_timer(pd->s_skill->timer, pet_heal_timer);
 		}
 	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aCalloc(1, sizeof(struct pet_skill_support)); 
+		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support)); 
 	
 	pd->s_skill->id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	pd->s_skill->lv=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8584,11 +8572,8 @@ int buildin_getpetinfo(struct script_state *st)
 				break;
 			case 2:
 				if(sd->pet.name)
-				{	//Shamelessly copied from strcharinfo() [Skotlex]
-					char *buf;
-					buf=(char *)aCallocA(NAME_LENGTH,sizeof(char));
-					memcpy(buf, sd->pet.name, NAME_LENGTH-1);
-					push_str(st->stack,C_STR,(unsigned char *) buf);
+				{
+					push_str(st->stack,C_CONSTSTR,(unsigned char *) sd->pet.name);
 				}
 				else
 					push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
@@ -8674,7 +8659,7 @@ int buildin_select(struct script_state *st)
 			conv_str(st,& (st->stack->stack_data[i]));
 			len+=(int)strlen(st->stack->stack_data[i].u.str)+1;
 		}
-		buf=(char *)aCalloc(len+1,sizeof(char));
+		buf=(char *)aMalloc((len+1)*sizeof(char));
 		buf[0]=0;
 		for(i=st->start+2,len=0;i<st->end;i++){
 			strcat(buf,st->stack->stack_data[i].u.str);
@@ -8937,7 +8922,7 @@ int buildin_getsavepoint(struct script_state *st)
 	y=sd->status.save_point.y;
 	switch(type){
 		case 0:
-			mapname=(char *) aCallocA(MAP_NAME_LENGTH+1, sizeof(char));
+			mapname=(char *) aMallocA((MAP_NAME_LENGTH+1)*sizeof(char));
 			memcpy(mapname, mapindex_id2name(sd->status.save_point.map), MAP_NAME_LENGTH);
 			mapname[MAP_NAME_LENGTH]='\0';
 			push_str(st->stack,C_STR,(unsigned char *) mapname);
@@ -9761,7 +9746,7 @@ int buildin_escape_sql(struct script_state *st) {
 	char *t_query, *query;
 	query = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	
-	t_query = aCallocA(strlen(query)*2+1,sizeof(char));
+	t_query = aMallocA((strlen(query)*2+1)*sizeof(char));
 	jstrescapecpy(t_query,query);
 	push_str(st->stack,C_STR,(unsigned char *)t_query);
 	return 0;
@@ -10592,8 +10577,8 @@ void op_add(struct script_state* st)
 		st->stack->stack_data[st->stack->sp-1].u.num += st->stack->stack_data[st->stack->sp].u.num;
 	} else { // ss‚Ì—\’è
 		char *buf;
-		buf=(char *)aCallocA(strlen(st->stack->stack_data[st->stack->sp-1].u.str)+
-				strlen(st->stack->stack_data[st->stack->sp].u.str)+1,sizeof(char));
+		buf=(char *)aMallocA((strlen(st->stack->stack_data[st->stack->sp-1].u.str)+
+				strlen(st->stack->stack_data[st->stack->sp].u.str)+1)*sizeof(char));
 		strcpy(buf,st->stack->stack_data[st->stack->sp-1].u.str);
 		strcat(buf,st->stack->stack_data[st->stack->sp].u.str);
 		if(st->stack->stack_data[st->stack->sp-1].type==C_STR) 
@@ -11072,7 +11057,7 @@ int run_script(unsigned char *script,int pos,int rid,int oid)
 		sd->npc_scriptstate = 0;
 	} else {
 		// the script is different, make new script_state and stack
-		st.stack = aCalloc (1, sizeof(struct script_stack));
+		st.stack = aMalloc (sizeof(struct script_stack));
 		st.stack->sp = 0;
 		st.stack->sp_max = 64;
 		st.stack->stack_data = (struct script_data *) aCalloc (st.stack->sp_max,sizeof(st.stack->stack_data[0]));
@@ -11194,7 +11179,7 @@ int mapreg_setregstr(int num,const char *str)
 		mapreg_dirty=1;
 		return 0;
 	}
-	p=(char *)aCallocA(strlen(str)+1, sizeof(char));
+	p=(char *)aMallocA((strlen(str)+1)*sizeof(char));
 	strcpy(p,str);
 	
 	if (idb_put(mapregstr_db,num,p))
@@ -11236,7 +11221,7 @@ static int script_load_mapreg(void)
 				ShowError("%s: %s broken data !\n",mapreg_txt,buf1);
 				continue;
 			}
-			p=(char *)aCallocA(strlen(buf2) + 1,sizeof(char));
+			p=(char *)aMallocA((strlen(buf2) + 1)*sizeof(char));
 			strcpy(p,buf2);
 			s= add_str((unsigned char *) buf1);
 			idb_put(mapregstr_db,(i<<24)|s,p);
@@ -11277,7 +11262,7 @@ static int script_load_mapreg(void)
 			strcpy(buf1,sql_row[0]);
 			if( buf1[strlen(buf1)-1]=='$' ){
 				i = atoi(sql_row[1]);
-				p=(char *)aCallocA(strlen(sql_row[2]) + 1,sizeof(char));
+				p=(char *)aMallocA((strlen(sql_row[2]) + 1)*sizeof(char));
 				strcpy(p,sql_row[2]);
 				s= add_str((unsigned char *) buf1);
 				idb_put(mapregstr_db,(i<<24)|s,p);

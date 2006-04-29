@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 // graph creation is enabled
-#define ENABLE_GRAPH
+// #define ENABLE_GRAPH
 
 #ifdef ENABLE_GRAPH
 

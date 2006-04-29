@@ -889,7 +889,7 @@ int msg_config_read(const char *cfgName) {
 				if (msg_number >= 0 && msg_number < MAX_MSG) {
 					if (msg_table[msg_number] != NULL)
 						aFree(msg_table[msg_number]);
-					msg_table[msg_number] = (char *)aCalloc(strlen(w2) + 1, sizeof (char));
+					msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
 					strcpy(msg_table[msg_number],w2);
 				//	printf("message #%d: '%s'.\n", msg_number, msg_table[msg_number]);
 				}
@@ -1951,8 +1951,8 @@ int atcommand_whozeny(
 		clif_displaymessage(fd, msg_table[28]); // No player found.
 		return 0;
 	}	
-	zeny = (int *)aCallocA(users, sizeof(int));
-	counted = (int *)aCallocA(users, sizeof(int));
+	zeny = (int *)aMallocA(users*sizeof(int));
+	counted = (int *)aMallocA(users*sizeof(int));
 	for (i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i])) {
 				memcpy(player_name, pl_sd->status.name, NAME_LENGTH);

@@ -465,7 +465,7 @@ void chrif_authreq(struct map_session_data *sd)
 			aFree(auth_data->char_dat);
 		idb_remove(auth_db, sd->bl.id);
 	} else { //data from char server has not arrived yet.
-		auth_data = aCalloc(1, sizeof(struct auth_node));
+		auth_data = aMalloc(sizeof(struct auth_node));
 		auth_data->sd = sd;
 		auth_data->fd = sd->fd;
 		auth_data->account_id = sd->bl.id;
@@ -511,8 +511,8 @@ void chrif_authok(int fd) {
 		return;
 	}
 	// Awaiting for client to connect.
-	auth_data = (struct auth_node *)aCalloc(1, sizeof(struct auth_node));
-	auth_data->char_dat = (struct mmo_charstatus *) aCalloc(1, sizeof(struct mmo_charstatus));
+	auth_data = (struct auth_node *)aMalloc(sizeof(struct auth_node));
+	auth_data->char_dat = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 
 	auth_data->account_id=RFIFOL(fd, 4);
 	auth_data->login_id1=RFIFOL(fd, 8);

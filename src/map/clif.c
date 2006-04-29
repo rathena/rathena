@@ -751,7 +751,7 @@ static int clif_clearchar_delay_sub(int tid, unsigned int tick, int id, int data
 
 int clif_clearchar_delay(unsigned int tick, struct block_list *bl, int type) {
 	struct block_list *tbl;
-	tbl = aCalloc(1, sizeof (struct block_list));
+	tbl = aMalloc(sizeof (struct block_list));
 	memcpy (tbl, bl, sizeof (struct block_list));
 	add_timer(tick, clif_clearchar_delay_sub, (int)tbl, type);
 
@@ -4811,7 +4811,7 @@ int clif_GMmessage(struct block_list *bl, char* mes, int len, int flag)
 	int lp;
 
 	lp = (flag & 0x10) ? 8 : 4;
-	buf = (unsigned char*)aCallocA(len + lp + 8, sizeof(unsigned char));
+	buf = (unsigned char*)aMallocA((len + lp + 8)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = len + lp;
@@ -4885,7 +4885,7 @@ void clif_MainChatMessage(char* message) {
 int clif_announce(struct block_list *bl, char* mes, int len, unsigned long color, int flag)
 {
 	unsigned char *buf;
-	buf = (unsigned char*)aCallocA(len + 16, sizeof(unsigned char));
+	buf = (unsigned char*)aMallocA((len + 16)*sizeof(unsigned char));
 	WBUFW(buf,0) = 0x1c3;
 	WBUFW(buf,2) = len + 16;
 	WBUFL(buf,4) = color;
@@ -7062,7 +7062,7 @@ int clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
 	struct map_session_data *sd;
 	unsigned char *buf;
 
-	buf = (unsigned char*)aCallocA(len + 4, sizeof(unsigned char));
+	buf = (unsigned char*)aMallocA((len + 4)*sizeof(unsigned char));
 
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 4;
@@ -7368,7 +7368,7 @@ int clif_disp_onlyself(struct map_session_data *sd, char *mes, int len)
 
 	nullpo_retr(0, sd);
 
-	buf = (unsigned char*)aCallocA(len + 5, sizeof(unsigned char));
+	buf = (unsigned char*)aMallocA((len + 5)*sizeof(unsigned char));
 
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 5;
@@ -8458,7 +8458,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	if (RFIFOW(fd,2)+4 < 128)
 		buf = buf2; //Use a static buffer.
 	else
-		buf = (unsigned char*)aCallocA(RFIFOW(fd,2) + 4, sizeof(char));
+		buf = (unsigned char*)aMallocA((RFIFOW(fd,2) + 4)*sizeof(char));
 
 	// send message to others
 	WBUFW(buf,0) = 0x8d;
@@ -8759,7 +8759,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 
 	//printf("clif_parse_Wis: message: '%s'.\n", RFIFOP(fd,28));
 
-	gm_command = (char*)aCallocA(strlen((const char*)RFIFOP(fd,28)) + 28, sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
+	gm_command = (char*)aMallocA((strlen((const char*)RFIFOP(fd,28)) + 28)*sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
 
 	sprintf(gm_command, "%s : %s", sd->status.name, RFIFOP(fd,28));
 	if ((is_charcommand(fd, sd, gm_command, 0) != CharCommand_None) ||
@@ -8787,8 +8787,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		whisper_tmp += 4; //Skip the NPC: string part.
 		if ((npc = npc_name2id(whisper_tmp)))	
 		{
-			whisper_tmp=(char *)aCallocA(strlen((char *)(RFIFOP(fd,28)))+1,sizeof(char));
-			whisper_tmp[0]=0;
+			whisper_tmp=(char *)aMallocA((strlen((char *)(RFIFOP(fd,28)))+1)*sizeof(char));
 		   
 			sprintf(whisper_tmp, "%s", (const char*)RFIFOP(fd,28));  
 			for( j=0;whisper_tmp[j]!='\0';j++)
@@ -8807,8 +8806,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 			split_data[i][j-k]='\0';
 			
 			aFree(whisper_tmp);
-			whisper_tmp=(char *)aCallocA(15,sizeof(char));
-			whisper_tmp[0]=0;
+			whisper_tmp=(char *)aMallocA(15*sizeof(char));
 			
 			for (j=0;j<=10;j++)
 			{
@@ -8817,8 +8815,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 			}//You don't need to zero them, just reset them [Kevin]
 			
 			aFree(whisper_tmp);
-			whisper_tmp=(char *)aCallocA(strlen(npc->name)+18,sizeof(char));
-			whisper_tmp[0]=0;
+			whisper_tmp=(char *)aMallocA((strlen(npc->name)+18)*sizeof(char));
 			
 			sprintf(whisper_tmp, "%s::OnWhisperGlobal", npc->name);
 			npc_event(sd,whisper_tmp,0); // Calls the NPC label 

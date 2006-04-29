@@ -148,7 +148,7 @@ int irc_parse(int fd)
       	return 0;
 	}
 	if (session[fd]->session_data == NULL){
-		irc_si = (struct IRC_Session_Info*)aCalloc(1, sizeof(struct IRC_Session_Info));
+		irc_si = (struct IRC_Session_Info*)aMalloc(sizeof(struct IRC_Session_Info));
 		irc_si->fd = fd;
 		irc_si->state = 0;
 		session[fd]->session_data = irc_si;
@@ -157,7 +157,7 @@ int irc_parse(int fd)
 		irc_si->fd = fd;
 	}
 	if(RFIFOREST(fd) > 0){
-		char *incoming_string=aCalloc(RFIFOREST(fd),sizeof(char));
+		char *incoming_string=aMalloc(RFIFOREST(fd)*sizeof(char));
 		memcpy(incoming_string,RFIFOP(fd,0),RFIFOREST(fd));
 		send_to_parser(fd,incoming_string,"\n");
 		RFIFOSKIP(fd,RFIFOREST(fd));
