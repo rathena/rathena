@@ -2919,7 +2919,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 //** pc.c: Small Steal Item fix by fritz
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 {
-	int i,j,skill,itemid,flag;
+	int i,skill,itemid,flag;
 	struct mob_data *md;
 	struct item tmp_item;
 
