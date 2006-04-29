@@ -50,7 +50,7 @@ static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 char *current_file = NULL;
-int dummy_npc_id=0;
+//int dummy_npc_id=0;
 int npc_get_new_npc_id(void){ return npc_id++; }
 
 static struct dbt *ev_db;
@@ -2793,7 +2793,7 @@ int do_init_npc(void)
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 
 	// Init dummy NPC
-	dummy_npc_id = npc_get_new_npc_id();
+	//dummy_npc_id = npc_get_new_npc_id();
 
 	return 0;
 }
