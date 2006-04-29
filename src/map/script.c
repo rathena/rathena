@@ -10898,9 +10898,10 @@ int run_script_main(struct script_state *st)
 		struct block_list *bl;
 		st->state = RUN;
 		if(st->oid && st->rid && (bl = map_id2bl(st->oid))){
-			if(bl->type == BL_PC){
+			// Perfomance impact, use buildin_doevent instead for interactive item scripts.
+			/*if(bl->type == BL_PC){
 				clif_sendfakenpc(((TBL_PC *)bl),dummy_npc_id);
-			} else if(bl->type == BL_NPC){
+			} else */if(bl->type == BL_NPC){
 				if(npc_checknear(((TBL_PC *)bl), bl->id))
 					clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
 			}

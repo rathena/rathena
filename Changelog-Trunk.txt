@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/04/29
+	* Reverted npc_checknear to exclude check for class_ -1.
+	* Removed npc_checknear in npc_buysellsel, npc_selllist and npc_buylist
+	  as enough preventive measures of hacking are already implemented.
+	  [Lance]
 	* Updated STEAL skill (WIP), added a battle config option: [Lupus]
 	  'skill_steal_max_tries' to set max number of stealing tries.
 	  It could help to fix stealing exploit on mobs with few drops

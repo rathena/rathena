@@ -979,8 +979,9 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	if (nd->class_<0)	// イベント系は常にOK
-		return 0;
+	// Reprecated, please do not uncomment this. [Lance]
+	//if (nd->class_<0)	// イベント系は常にOK
+	//	return 0;
 
 	// エリア判定
 	if (nd->bl.m!=sd->bl.m ||
@@ -1084,8 +1085,8 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 
 	nullpo_retr(1, sd);
 
-	if (npc_checknear(sd,id))
-		return 1;
+	//if (npc_checknear(sd,id))
+	//	return 1;
 
 	nd=(struct npc_data *)map_id2bl(id);
 	if (nd->bl.subtype!=SHOP) {
@@ -1119,8 +1120,8 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 	nullpo_retr(3, sd);
 	nullpo_retr(3, item_list);
 
-	if (npc_checknear(sd,sd->npc_shopid))
-		return 3;
+	//if (npc_checknear(sd,sd->npc_shopid))
+	//	return 3;
 
 	nd=(struct npc_data*)map_id2bl(sd->npc_shopid);
 	if (nd->bl.subtype!=SHOP)
@@ -1213,8 +1214,8 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	if (npc_checknear(sd,sd->npc_shopid))
-		return 1;
+	//if (npc_checknear(sd,sd->npc_shopid))
+	//	return 1;
 	for(i=0,z=0;i<n;i++) {
 		int nameid;
 		if (item_list[i*2]-2 <0 || item_list[i*2]-2 >=MAX_INVENTORY)
