@@ -545,7 +545,7 @@
 1227,Weeder_Knife,Weeder Knife,4,,10,400,80,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bIgnoreDefRace,RC_Plant; bonus2 bAddRace,RC_Plant,15; bonus2 bSubRace,RC_Plant,15; },{},{}
 1228,Combat_Knife,Combat Knife,4,,10,400,80,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Demon,-10; },{},{}
 1229,Kitchen_Knife,Kitchen Knife,4,,10,500,75,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bCritical,30; bonus2 bAddRace,RC_DemiHuman,3; bonus3 bAddMonsterDropItem,517,2,5000; },{},{}
-1230,Ice_Pick,Ice_Pick,4,,10,600,80,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; },{},{}
+1230,Ice_Pick,Ice Pick,4,,10,600,80,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; },{},{}
 1231,Bazerald,Bazerald,4,,10,500,70,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bAtkEle,Ele_Fire; bonus bInt,5; bonus bMatkRate,10; },{},{}
 1232,Assassin_Dagger,Assassin Dagger,4,,10,600,140,,1,0,0x00001000,7,2,2,4,36,1,1,{ bonus bMaxHPrate,20; bonus bMaxSPrate,15; bonus bAspdRate,2; bonus bAtkEle,Ele_Dark; },{},{}
 1233,Exorciser,Exorciser,4,,10,700,90,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bIgnoreDefRace,RC_Demon; bonus2 bSubRace,RC_Demon,5; bonus2 bSubRace,RC_DemiHuman,-10; },{},{}

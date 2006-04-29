@@ -27,6 +27,9 @@
 
 =========================
 04/29
+	* Updated drops of Bio Lab 3 MVPs [Playtester]
+	- drop rate is 1/10 of the guessed values (until skills/delays are finished)
+	- also fixed a typo in the item db
 	* Updated drops of Bio Lab 3 mobs [Playtester]
 	* Updated mob delays to current info [Playtester]
 	* More fixes in the mob db [Playtester]
