@@ -881,7 +881,7 @@ struct mob_data {
 	struct {
 		unsigned skillstate : 8;
 		unsigned aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
-		unsigned steal_flag : 8; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
+		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned steal_coin_flag : 1;
 		unsigned soul_change_flag : 1; // Celest
 		unsigned alchemist: 1;
