@@ -2561,12 +2561,23 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 	case TK_JUMPKICK:
+	{
+		short x, y;
+		x = bl->x;
+		y = bl->y;
 		if (!unit_can_move(src))
 			break;
+		if (src->x < bl->x) x--;
+		else if (src->x > bl->x) x++;
+		if (src->y < bl->y) y--;
+		else if (src->y > bl->y) y++;
+		if (map_getcell(bl->m, x, y, CELL_CHKNOPASS))
+		{	x = bl->x; y = bl->y; }
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (unit_movepos(src, bl->x, bl->y, 0, 0))
-			clif_slide(src,bl->x,bl->y);
+		if (unit_movepos(src, x, y, 0, 0))
+			clif_slide(src,src->x,src->y);
 		break;
+	}
 	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
 		// Separate weapon and magic attacks
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);

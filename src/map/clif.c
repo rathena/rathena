@@ -5224,7 +5224,7 @@ int clif_item_identify_list(struct map_session_data *sd)
 	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
 	WFIFOW(fd,0)=0x177;
 	for(i=c=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].identify!=1){
+		if(sd->status.inventory[i].nameid > 0 && !sd->status.inventory[i].identify){
 			WFIFOW(fd,c*2+4)=i+2;
 			c++;
 		}
@@ -5340,7 +5340,7 @@ int clif_item_refine_list(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x221;
 	for(i=c=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].refine < skilllv &&
-			sd->status.inventory[i].identify==1 && (wlv=itemdb_wlv(sd->status.inventory[i].nameid)) >=1 &&
+			sd->status.inventory[i].identify && (wlv=itemdb_wlv(sd->status.inventory[i].nameid)) >=1 &&
 			refine_item[wlv]!=-1 && !(sd->status.inventory[i].equip&0x0022)){
 			WFIFOW(fd,c*13+ 4)=i+2;
 			WFIFOW(fd,c*13+ 6)=sd->status.inventory[i].nameid;
@@ -5700,7 +5700,7 @@ int clif_openvending(struct map_session_data *sd,int id,struct vending *vending)
 		WBUFL(buf,8+n*22)=vending[i].value;
 		WBUFW(buf,12+n*22)=(index=vending[i].index)+2;
 		WBUFW(buf,14+n*22)=vending[i].amount;
-		if(sd->status.cart[index].nameid <= 0 || sd->status.cart[index].amount <= 0 || sd->status.cart[index].identify==0 ||
+		if(sd->status.cart[index].nameid <= 0 || sd->status.cart[index].amount <= 0 || !sd->status.cart[index].identify ||
 			sd->status.cart[index].attribute==1) // Prevent unidentified and broken items from being sold [Valaris]
 			continue;
 		data = itemdb_search(sd->status.cart[index].nameid);
@@ -9103,7 +9103,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if(sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1 )
 		return;
 
-	if(sd->status.inventory[index].identify != 1) {		// –¢ŠÓ’è
+	if(!sd->status.inventory[index].identify) {		// –¢ŠÓ’è
 		clif_equipitemack(sd,index,0,0);	// fail
 		return;
 	}
