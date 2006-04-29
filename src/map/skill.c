@@ -9375,7 +9375,7 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	group->group_id=skill_unit_group_newid++;
 	if(skill_unit_group_newid<=0)
 		skill_unit_group_newid = MAX_SKILL_DB;
-	group->unit=(struct skill_unit *)aMalloc(count*sizeof(struct skill_unit));
+	group->unit=(struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
 	group->unit_count=count;
 	group->val1=group->val2=group->val3=0;
 	group->skill_id=skillid;
