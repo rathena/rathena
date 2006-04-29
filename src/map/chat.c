@@ -45,7 +45,7 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 	cd->bl.x = sd->bl.x;
 	cd->bl.y = sd->bl.y;
 	cd->bl.type = BL_CHAT;
-
+	cd->bl.next = cd->bl.prev = NULL;
 	cd->bl.id = map_addobject(&cd->bl);	
 	if(cd->bl.id==0){
 		clif_createchat(sd,1);

@@ -982,7 +982,6 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	
 	if(pcdb_checkid(vd->class_)) { 
 #if PACKETVER > 6
-		//Packet 0x22c, still in construction. [Skotlex]
 		memset(buf,0,packet_len_table[0x22c]);
 
 		WBUFW(buf,0)=0x22c;
@@ -1094,6 +1093,32 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 #endif
 	}
 	//Non-player sprites only require a few fields.
+#if PACKETVER > 6
+	memset(buf,0,packet_len_table[0x22c]);
+
+	WBUFW(buf,0)=0x22c;
+	WBUFL(buf,2)=bl->id;
+	WBUFW(buf,6)=status_get_speed(bl);
+	if (sc) {
+		WBUFW(buf,8)=sc->opt1;
+		WBUFW(buf,10)=sc->opt2;
+		WBUFL(buf,12)=sc->option;
+		WBUFL(buf,48)=sc->opt3;
+	}
+	WBUFW(buf,16)=vd->class_;
+	WBUFW(buf,18)=vd->hair_style; //For pets
+	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
+	WBUFL(buf,26)=gettick();
+	WBUFW(buf,38)=unit_getdir(bl);
+	WBUFL(buf,40)=guild_id;
+	WBUFL(buf,44)=emblem_id;
+	WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y);
+	WBUFB(buf,59)=0x88; // Deals with acceleration in directions. [Valaris]
+	WBUFB(buf,60)=0;
+	WBUFB(buf,61)=0;
+	WBUFW(buf,62)=clif_setlevel(lv);
+	return packet_len_table[0x22c];
+#else
 	memset(buf,0,packet_len_table[0x7b]);
 
 	WBUFW(buf,0)=0x7b;
@@ -1117,19 +1142,30 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	WBUFB(buf,56)=5;
 	WBUFB(buf,57)=5;
 	WBUFW(buf,58)=clif_setlevel(lv);
-
 	return packet_len_table[0x7b];
+#endif
 }
 
 //Modifies the buffer for disguise characters and sends it to self.
 //Flag = 0: change id to negative, buf will have disguise data.
 //Flag = 1: change id to positive, class and option to make your own char invisible.
 //Luckily, the offsets that need to be changed are the same in packets 0x78, 0x7b, 0x1d8 and 0x1da
+//But no longer holds true for packet 0x22c
 static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag) {
+
 	if (flag) {
-		WBUFL(buf,2)=sd->bl.id;
-		WBUFW(buf,12)=OPTION_INVISIBLE;
-		WBUFW(buf,14)=sd->status.class_;
+#if PACKETVER > 6
+		if (WBUFW(buf,0)==0x22c) {
+			WBUFL(buf,12)=OPTION_INVISIBLE;
+			WBUFW(buf,16)=sd->status.class_;
+		} else {
+#endif
+			WBUFL(buf,2)=sd->bl.id;
+			WBUFW(buf,12)=OPTION_INVISIBLE;
+			WBUFW(buf,14)=sd->status.class_;
+#if PACKETVER > 6
+		}
+#endif
 	} else {
 		WBUFL(buf,2)=-sd->bl.id;
 	}
@@ -3035,12 +3071,30 @@ int clif_changeoption(struct block_list* bl)
 
 	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
-
+	if (!sc) return 0; //How can an option change if there's no sc?
+	
+#if PACKETVER > 6
+	WBUFW(buf,0) = 0x229;
+	WBUFL(buf,2) = bl->id;
+	WBUFW(buf,6) = sc->opt1;
+	WBUFW(buf,8) = sc->opt2;
+	WBUFL(buf,10) = sc->option;
+	WBUFB(buf,14) = 0;	// ??
+	if(disguised(bl)) {
+		clif_send(buf,packet_len_table[0x229],bl,AREA_WOS);
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf,packet_len_table[0x229],bl,SELF);
+		WBUFL(buf,2) = bl->id;
+		WBUFL(buf,10) = OPTION_INVISIBLE;
+		clif_send(buf,packet_len_table[0x229],bl,SELF);
+	} else
+		clif_send(buf,packet_len_table[0x229],bl,AREA);
+#else
 	WBUFW(buf,0) = 0x119;
 	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = sc?sc->opt1:0;
-	WBUFW(buf,8) = sc?sc->opt2:0;
-	WBUFW(buf,10) = sc?sc->option:0;
+	WBUFW(buf,6) = sc->opt1;
+	WBUFW(buf,8) = sc->opt2;
+	WBUFW(buf,10) = sc->option;
 	WBUFB(buf,12) = 0;	// ??
 	if(disguised(bl)) {
 		clif_send(buf,packet_len_table[0x119],bl,AREA_WOS);
@@ -3051,6 +3105,7 @@ int clif_changeoption(struct block_list* bl)
 		clif_send(buf,packet_len_table[0x119],bl,SELF);
 	} else
 		clif_send(buf,packet_len_table[0x119],bl,AREA);
+#endif
 
 	return 0;
 }

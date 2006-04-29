@@ -985,10 +985,14 @@ int pc_calc_skilltree(struct map_session_data *sd)
 					f=0; // Do not unlock normal skills when Basic Skills is not maxed out (can happen because of skill reset)
 			}
 			if(sd->status.skill[id].id==0 ){
-				if(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1 && skill_get_inf2(id)&INF2_SPIRIT_SKILL) { //Enable Spirit Skills. [Skotlex]
-					sd->status.skill[id].id=id;
-					sd->status.skill[id].lv=1;
-					sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
+				if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
+				{	//Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
+					if (sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1)
+					{	//Enable Spirit Skills. [Skotlex]
+						sd->status.skill[id].id=id;
+						sd->status.skill[id].lv=1;
+						sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
+					}
 					flag=1;
 				} else if (f){
 					sd->status.skill[id].id=id;
