@@ -1923,7 +1923,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		int drop_ore = -1, drop_items = 0; //slot N for DROP LOG, number of dropped items
-		int log_item[10]; //8 -> 10 Lupus
+		int log_item[MAX_MOB_DROP];
 		memset(&log_item,0,sizeof(log_item));
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
