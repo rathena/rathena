@@ -2577,12 +2577,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
+
+	case NJ_SHADOWJUMP:	//[blackhole89]
 	case TK_JUMPKICK:
 	{
 		short x, y;
 		x = bl->x;
 		y = bl->y;
-		if (!unit_can_move(src))
+		if (skillid == TK_JUMPKICK && !unit_can_move(src))
 			break;
 		if (src->x < bl->x) x--;
 		else if (src->x > bl->x) x++;
@@ -2590,7 +2592,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		else if (src->y > bl->y) y++;
 		if (map_getcell(bl->m, x, y, CELL_CHKNOPASS))
 		{	x = bl->x; y = bl->y; }
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		if (skillid == TK_JUMPKICK)
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, x, y, 0, 0))
 			clif_slide(src,src->x,src->y);
 		break;
@@ -4693,21 +4696,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_blown(src,bl,skill_get_blewcount(skillid,skilllv)|0x10000);
-		break;
-
-	case NJ_SHADOWJUMP:	//[blackhole89]
-		{
-			if (sd && !(sd->sc.count && sd->sc.data[SC_HIDING].timer != -1)) {
-				map_freeblock_unlock();
-				return 1;
-			}
-
-			clif_skill_nodamage(src,src,NJ_SHADOWJUMP,skilllv,1);
-			if(map_getcell(src->m,x,y,CELL_CHKPASS)) {
-				unit_movepos(src, x, y, 1, 0);
-				clif_slide(src,x,y);
-			}
-		}
 		break;
 
 	case TK_HIGHJUMP:
