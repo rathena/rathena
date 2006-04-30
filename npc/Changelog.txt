@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/30
+	* Added the correct spawns for Ancient Geffenia(gef_dun03) [Playtester]
 	* Added some tabs to the Pickpocket Quest so it's more readable [Playtester]
 	* Added first version Gywall's Pickpocket Quest [Playtester]
 	* Updated several job quests so they work again thanks to sodaboy581 [Playtester]
