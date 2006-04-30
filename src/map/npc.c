@@ -1887,7 +1887,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
 		map_addblock(&nd->bl);
-		// Unused. You can always use On::XXXX events. Have this removed to improve perfomance.
+		// Unused. You can always use xxx::OnXXXX events. Have this removed to improve perfomance.
 		/*if (evflag) {	// ƒCƒxƒ“ƒgŒ^
 			struct event_data *ev = (struct event_data *)aCalloc(1, sizeof(struct event_data));
 			ev->nd = nd;

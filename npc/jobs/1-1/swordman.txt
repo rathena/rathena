@@ -183,7 +183,7 @@ L_Done:
 
 // -- Swordsman --
 izlude_in.gat,65,171,5	script	Swordsman	85,{
-	doevent "Swordsman";
+	doevent "Swordsman::OnStart";
 	end;
 }
 

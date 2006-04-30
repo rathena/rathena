@@ -1383,7 +1383,7 @@ L_Test:
 	mes "Okay lets start the test now.";
 	next;
 	warp "job_knt.gat",143,57;
-	doevent "ev_Test";
+	doevent "ev_Test::OnStart";
 	end;
 
 	L_ReTest:
@@ -1395,10 +1395,10 @@ L_Test:
 		mes "This point shouldn't be kept just when you have tests, it should be kept when you're training in real life...";
 		next;
 		mes "[Sir Edmund]";
-		mes "OKay now, try again.";
+		mes "Okay now, try again.";
 		next;
 		warp "job_knt.gat",143,57;
-		doevent "ev_Test";
+		doevent "ev_Test::OnStart";
 		end;
 
 	L_Done:
@@ -1419,6 +1419,7 @@ L_Test:
 
 // Test -----------------------------
 job_knt.gat,1,1,1	script	ev_Test	-1,{
+OnStart:
 	killmonster "job_knt.gat","ev_Test::OnMyMobDead";
 	monster "job_knt.gat",141,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
 	monster "job_knt.gat",145,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
