@@ -27,6 +27,8 @@
 
 =========================
 04/30
+	* Final updates for Bio Lab drop rates thanks to Muad_Dib [Playtester]
+	- they should be official to 99% now
 	* Updated Bio Lab drop rates to Aegis X.2 thanks to Muad_Dib [Playtester]
 	* Fixed the name of Wind Demon = "Fuuma" shurikens [Playtester]
 04/29
