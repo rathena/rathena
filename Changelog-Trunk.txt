@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/04/30
+	* Fixed fake NPC missing code. Thanks to Skotlex for pointing out. [Lance]
+
 2006/04/29
 	* Changed the HT_DETECTING method from invoking clif_changetraplook to
 	  clif_skill_setunit since in the first the client ignores the fact that it
