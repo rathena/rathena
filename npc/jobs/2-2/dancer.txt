@@ -778,7 +778,7 @@ OnTimer71000:
 	donpcevent "::OnDE1";
 	mapannounce "job_duncer.gat","Bijou:  Kill the monster using Arrow Shower!",8;
 	set @skillcheck,Sp;
-	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie";
+	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie::OnStart";
 	end;
 OnTimer76000:
 	killmonsterall "job_duncer.gat";
@@ -837,6 +837,8 @@ L_SUB5:
 	return;
 }
 job_duncer.gat,0,0,0	script	jddie	-1,{
+
+OnStart:
 	if (@skillcheck==Sp) set @check,1;
 	if (@check==0) mapannounce "job_duncer.gat","Dancer: Well done, you were very skillful, and have passed the test.",8;
 	if (@check==1) mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to use arrow shower to kill the monster",8;
