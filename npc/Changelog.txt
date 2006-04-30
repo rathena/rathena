@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/30
+	* Made Geffen Tower 1 in eamobs a bit more crowded [Playtester]
 	* Added the correct spawns for Ancient Geffenia(gef_dun03) [Playtester]
 	* Added some tabs to the Pickpocket Quest so it's more readable [Playtester]
 	* Added first version Gywall's Pickpocket Quest [Playtester]

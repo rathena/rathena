@@ -13,7 +13,7 @@
 //==================================================
 // gef_dun00 - Geffen Dungeon F1
 //==================================================
-gef_dun00.gat,0,0,0,0	monster	Poison Spore	1077,24,0,0,0
+gef_dun00.gat,0,0,0,0	monster	Poison Spore	1077,35,0,0,0
 gef_dun00.gat,0,0,0,0	monster	Poporing	1031,10,0,0,0
 gef_dun00.gat,0,0,0,0	monster	Hunter Fly	1035,1,600000,300000,0
 gef_dun00.gat,89,111,3,3	monster	Black Mushroom	1084,3,600000,300000,1
