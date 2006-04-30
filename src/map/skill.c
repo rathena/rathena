@@ -2732,6 +2732,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				skill_castend_damage_id);
 			//Skill-attack at the end in case it has knockback. [Skotlex]
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
+			if (sd)
+				battle_consume_ammo(sd, skillid, -skilllv);
 		}
 		break;
 
@@ -6853,6 +6855,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 
 	case UNT_ATTACK_SKILLS:
 		skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+		if (sg->skill_id == AC_SHOWER)
+			sg->val2++; //Store count of hitted enemies to know when to delete an arrow.
 		break;
 
 	case UNT_FIREPILLAR_WAITING:
@@ -9476,6 +9480,8 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 			status_change_end(src,SC_GOSPEL,-1);
 		}
 	}
+	if (group->skill_id == AC_SHOWER && group->val2 && src->type==BL_PC)
+		battle_consume_ammo((TBL_PC*)src, group->skill_id, -group->skill_lv); //Delete arrow if at least one target was hit.
 
 	group->alive_count=0;
 	if(group->unit!=NULL){

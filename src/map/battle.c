@@ -934,12 +934,18 @@ static void battle_calc_base_damage(struct block_list *src, struct block_list *t
  * Consumes ammo for the given skill.
  *------------------------------------------
  */
-static void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
+void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 {
 	int qty=1;
 	if (!battle_config.arrow_decrement)
 		return;
 	
+	if (skill == AC_SHOWER) {
+		//Can't consume arrows this way as it triggers per target, gotta wait for the direct invocation with lv -1
+		if (lv > 0)
+			return;
+		lv *= -1;
+	}
 	if (skill)
 	{
 		qty = skill_get_ammo_qty(skill, lv);
