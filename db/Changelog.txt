@@ -27,8 +27,7 @@
 
 =========================
 04/30
-	* Updating Bio Lab drop rates to Aegis X.2 thanks to Muad_Dib [Playtester]
-	- Part 1
+	* Updated Bio Lab drop rates to Aegis X.2 thanks to Muad_Dib [Playtester]
 	* Fixed the name of Wind Demon = "Fuuma" shurikens [Playtester]
 04/29
 	* Item ID 7344 is now called "Shinokas Case File" [Playtester]
