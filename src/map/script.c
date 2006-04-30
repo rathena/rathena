@@ -10915,8 +10915,9 @@ int run_script_main(struct script_state *st)
 			// Perfomance impact, use buildin_doevent instead for interactive item scripts.
 			/*if(bl->type == BL_PC){
 				clif_sendfakenpc(((TBL_PC *)bl),dummy_npc_id);
-			} else */if(bl->type == BL_NPC){
-				if(npc_checknear(((TBL_PC *)bl), bl->id))
+			} else */
+			if(bl->type == BL_NPC){
+				if(npc_checknear(((TBL_PC *)map_id2bl(st->rid)), bl->id))
 					clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
 			}
 		}
