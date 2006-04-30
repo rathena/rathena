@@ -58,4 +58,4 @@ mjolnir_11.gat,174,20,0	warp	mjol010	4,2,prt_fild02.gat,173,379
 mjolnir_11.gat,20,220,0	warp	mjol16-1	2,4,mjolnir_10.gat,381,220
 mjolnir_12.gat,199,378,0	warp	mjol012	2,2,aldebaran.gat,138,37
 mjolnir_12.gat,220,26,0	warp	mjol08-1	3,2,mjolnir_05.gat,220,379
-mjolnir_12.gat,43,22,0	warp	mjol17	1,1,prt_maze01.gat,17,111
+mjolnir_12.gat,44,17,0	warp	mjol17	1,1,prt_maze01.gat,17,111

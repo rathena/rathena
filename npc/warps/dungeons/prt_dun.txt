@@ -66,7 +66,7 @@ prt_maze01.gat,194,94,0	warp	mazewarp5134	1,1,prt_maze01.gat,58,191	/*To No.1-2*
 prt_maze01.gat,168,94,0	warp	mazewarp5135	1,1,prt_maze01.gat,191,139	/*To No.1-10*/
 // 1st Floor No.16
 prt_maze01.gat,14,74,0	warp	mazewarp5136	1,1,prt_maze01.gat,151,22	/*To No.1-24*/
-prt_maze01.gat,14,45,0	warp	mazewarp5137	1,1,mjolnir_12.gat,44,20
+prt_maze01.gat,14,45,0	warp	mazewarp5137	1,1,mjolnir_12.gat,44,21
 prt_maze01.gat,5,58,0	warp	mazewarp5138	1,1,prt_maze01.gat,48,104	/*To No.1-12*/
 // 1st Floor No.17
 prt_maze01.gat,74,74,0	warp	mazewarp5139	1,1,prt_maze01.gat,58,191	/*To No.1-2*/
