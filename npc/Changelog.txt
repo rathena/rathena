@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/30
+	* Updated several job quests so they work again thanks to sodaboy581 [Playtester]
 	* Fixed mjolnir_12 -> prt_maze01 warp [Playtester]
 04/27
 	* Fixed an Aldebaran Castle 4 warp again [Playtester]

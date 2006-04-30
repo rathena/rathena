@@ -645,7 +645,7 @@ OnStart:
 	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room
 	killmonsterall "job_hunte.gat";
 	warpwaitingpc "job_hunte.gat", 90, 67;
-	donpcevent "Ev_HntRm";
+	donpcevent "Ev_HntRm::OnStart";
 	end;
 
 }
@@ -654,6 +654,7 @@ OnStart:
 // Ev_HntRm: Test room --------------------------------------------------------
 job_hunte.gat,1,1,1	script	Ev_HntRm	-1,{
 
+OnStart:
 	disablenpc "SwitchHnt";
 	disablenpc "ExitHnt";
 	set $@HntMob, 4;
@@ -664,7 +665,7 @@ job_hunte.gat,1,1,1	script	Ev_HntRm	-1,{
 	monster "job_hunte.gat",53,73,"Job Change Monster",1041,1,"Ev_HntRm::OnMyMobDead1";
 	monster "job_hunte.gat",125,70,"Job Change Monster",1016,1,"Ev_HntRm::OnMyMobDead1";
 	monster "job_hunte.gat",90,92,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
-	donpcevent "Ev_HntRm2";
+	donpcevent "Ev_HntRm2::OnStart";
 	initnpctimer "TimerHnt";
 	end;
 
@@ -683,6 +684,7 @@ OnMyMobDead1:
 // Ev_HntRm2: Spawns the Decoy Monsters ----------------------------------------
 job_hunte.gat,1,1,1	script	Ev_HntRm2	-1,{
 
+OnStart:
 	// Decoy Monsters
 	monster "job_hunte.gat",85,100,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
 	monster "job_hunte.gat",72,102,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";

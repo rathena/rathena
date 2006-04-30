@@ -881,7 +881,7 @@ NEXT_o:
 	mes "Let me make sure it's empty first.";
 	next;
 	if( getmapusers("job_cru.gat")>0 ) goto EXIT1;
-	killmonster "job_cru.gat","CR_KILL";
+	killmonster "job_cru.gat","CR_KILL::OnStart";
 	savepoint "prt_in.gat",81,100;
 	set CRUS_Q, 12;
 	warp "job_cru",167,175;
@@ -1007,7 +1007,9 @@ NEXT19:
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 job_cru.gat,23,42,0	script	CR_DEAD	-1,{
-	killmonster "job_cru.gat","CR_DEAD";
+
+OnStart:
+	killmonster "job_cru.gat","CR_DEAD::OnStart";
 	set @CRU1,0;
 	enablenpc "CR_TST_2";
 	warp "prt_castle.gat",162,27;
@@ -1026,44 +1028,44 @@ job_cru.gat,23,42,0	script	CR_TST_2	139,8,8,{
 	set @CRU1,1;
 	mapannounce "job_cru.gat","Please endure here and go to the exit.",8;
 
-	monster "job_cru.gat",10,43,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",14,47,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",26,46,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",31,46,"Requium",1913,1,"CR_DEAD";
-	monster "job_cru.gat",16,52,"Raydric Archer",1914,0,"CR_DEAD";
-	monster "job_cru.gat",22,53,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",28,49,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",12,54,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",17,55,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",21,57,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",30,58,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",11,64,"Raydric Archer",1914,1,"CR_DEAD";
-	monster "job_cru.gat",19,67,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",24,62,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",13,70,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",18,69,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",29,67,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",32,68,"Requium",1913,1,"CR_DEAD";
-	monster "job_cru.gat",16,75,"Raydric Archer",1914,1,"CR_DEAD";
-	monster "job_cru.gat",21,74,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",27,76,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",14,78,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",19,76,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",24,79,"Requium",1913,1,"CR_DEAD";
-	monster "job_cru.gat",14,83,"Raydric Archer",1914,1,"CR_DEAD";
-	monster "job_cru.gat",18,85,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",22,84,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",33,86,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",13,89,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",17,92,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",23,90,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",26,88,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",17,97,"Khalitzburg",1911,1,"CR_DEAD";
-	monster "job_cru.gat",23,100,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",31,101,"Ghoul",1910,1,"CR_DEAD";
-	monster "job_cru.gat",13,103,"Raydric Archer",1914,1,"CR_DEAD";
-	monster "job_cru.gat",22,105,"Injustice",1912,1,"CR_DEAD";
-	monster "job_cru.gat",30,107,"Khalitzburg",1911,1,"CR_DEAD";
+	monster "job_cru.gat",10,43,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",14,47,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",26,46,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",31,46,"Requium",1913,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",16,52,"Raydric Archer",1914,0,"CR_DEAD::OnStart";
+	monster "job_cru.gat",22,53,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",28,49,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",12,54,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",17,55,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",21,57,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",30,58,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",11,64,"Raydric Archer",1914,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",19,67,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",24,62,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",13,70,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",18,69,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",29,67,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",32,68,"Requium",1913,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",16,75,"Raydric Archer",1914,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",21,74,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",27,76,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",14,78,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",19,76,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",24,79,"Requium",1913,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",14,83,"Raydric Archer",1914,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",18,85,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",22,84,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",33,86,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",13,89,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",17,92,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",23,90,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",26,88,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",17,97,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",23,100,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",31,101,"Ghoul",1910,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",13,103,"Raydric Archer",1914,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",22,105,"Injustice",1912,1,"CR_DEAD::OnStart";
+	monster "job_cru.gat",30,107,"Khalitzburg",1911,1,"CR_DEAD::OnStart";
 	disablenpc "CR_TST_2";
 	end;
 	EXIT:
@@ -1080,7 +1082,7 @@ job_cru.gat,23,109,0	script	CR_EXT_1	139,1,1,{
 
 if (@CRU1 == 0) goto JUMP;
 	set CRUS_Q,7;
-	killmonster "job_cru.gat","CR_DEAD";
+	killmonster "job_cru.gat","CR_DEAD::OnStart";
 	enablenpc "CR_TST_2";
 JUMP:
 	warp "prt_castle.gat",162,28;
@@ -1097,6 +1099,7 @@ JUMP:
 
 job_cru.gat,167,175,0	script	CR_KILL	-1,{
 
+OnStart:
 	if (@CRU2 == 43) goto good;
 
 	set @CRU2,@CRU2 +1;
@@ -1113,49 +1116,49 @@ job_cru.gat,167,175,0	script	CR_TST_4	139,1,1,{
 	if(CRUS_Q != 12) goto EXIT;
 	set @CRU2,1;
 	announce "Defeat all the enemies.",3;
-	monster "job_cru.gat",163,42,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",171,66,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",163,89,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",171,115,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",166,141,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",168,166,"Bongun",1188,1,"CR_KILL";
-	monster "job_cru.gat",164,170,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",173,153,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",164,138,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",166,128,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",171,117,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",163,102,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",172,84,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",162,76,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",167,65,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",171,58,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",162,48,"Munak",1026,1,"CR_KILL";
-	monster "job_cru.gat",170,33,"Munak",1026,1,"CR_KILL";	
-	monster "job_cru.gat",170,26,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",166,37,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",171,47,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",165,61,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",172,65,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",163,77,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",164,86,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",165,98,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",170,101,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",163,110,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",164,117,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",166,129,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",165,139,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",166,151,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",168,160,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",162,169,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",171,171,"Skeleton",1076,1,"CR_KILL";
-	monster "job_cru.gat",162,32,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",165,51,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",172,73,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",170,92,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",173,111,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",170,124,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",171,147,"Zombie",1015,1,"CR_KILL";
-	monster "job_cru.gat",163,162,"Zombie",1015,1,"CR_KILL";
+	monster "job_cru.gat",163,42,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,66,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",163,89,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,115,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",166,141,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",168,166,"Bongun",1188,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",164,170,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",173,153,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",164,138,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",166,128,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,117,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",163,102,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",172,84,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",162,76,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",167,65,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,58,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",162,48,"Munak",1026,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",170,33,"Munak",1026,1,"CR_KILL::OnStart";	
+	monster "job_cru.gat",170,26,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",166,37,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,47,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",165,61,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",172,65,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",163,77,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",164,86,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",165,98,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",170,101,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",163,110,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",164,117,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",166,129,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",165,139,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",166,151,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",168,160,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",162,169,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,171,"Skeleton",1076,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",162,32,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",165,51,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",172,73,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",170,92,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",173,111,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",170,124,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",171,147,"Zombie",1015,1,"CR_KILL::OnStart";
+	monster "job_cru.gat",163,162,"Zombie",1015,1,"CR_KILL::OnStart";
 	disablenpc "CR_TST_4";
 	EXIT:
 	end;

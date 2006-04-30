@@ -452,7 +452,7 @@ OnStart:
 	disablenpc "prst2_1";
 	warpwaitingpc "job_prist.gat", 24, 44;
 	killmonsterall "job_prist.gat";
-	donpcevent "PrstTest2_1";
+	donpcevent "PrstTest2_1::OnStart";
 	end;
 }
 
@@ -461,6 +461,8 @@ OnStart:
 //				Test 2, Part 1: Kill the Zombies				              \\
 //********************************************************************************************************************************\\
 job_prist.gat,1,1,1	script	PrstTest2_1	-1,{
+
+OnStart:
 	set $@PrstRm, 1;		//used to determine what areawarp and areaannounce to use
 	enablenpc "Zombie1_Trig";
 	enablenpc "Zombie2_Trig";

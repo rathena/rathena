@@ -1144,12 +1144,14 @@ OnStart:
 	disablenpc "firewarpS";
 	killmonsterall "job_wiz.gat";		//makes sure there are no left over mobs from other testers
 	warpwaitingpc "job_wiz.gat",114,169;
-	donpcevent "WaterRm";
+	donpcevent "WaterRm::OnStart";
 	end;
 }
 
 // Room of Water  -----------------------------------------------------------------------------
 job_wiz.gat,1,1,1	script	WaterRm	-1,{
+
+OnStart:
 	set $@WzRm, 1;		// used to determine which map area(room) to make time announcements in
 	set $@WzMOB, 8;		//used as a counter for the monsters that are summoned
 	monster "job_wiz.gat",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
@@ -1202,6 +1204,8 @@ OnMyMobDead2:
 
 // Room of Earth -----------------------------------------------------------------------------------------------
 job_wiz.gat,1,1,1	script	EarthRm	-1,{
+
+OnStart:
 	set $@WzRm, 2;
 	set $@WzMOB, 10;
 	monster "job_wiz.gat",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
@@ -1258,6 +1262,8 @@ OnMyMobDead2:
 
 // Room of Fire ------------------------------------------------------------------------------------------------------------
 job_wiz.gat,1,1,1	script	FireRm	-1,{
+
+OnStart:
 	set $@WzRm, 3;
 	set $@WzMOB, 7;
 	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
@@ -1368,7 +1374,7 @@ job_wiz.gat,129,169,1	script	waterwarpE::waterwrp	45,1,1,{
 OnTimer30000:
 	stopnpctimer "waterwrp";
 	areawarp "job_wiz.gat", 98, 154, 129, 185, "job_wiz.gat",116,98;
-	donpcevent "EarthRm";
+	donpcevent "EarthRm::OnStart";
 	end;
 }
 job_wiz.gat,98,169,1	duplicate(waterwrp)	waterwarpW	45,1,1
@@ -1382,7 +1388,7 @@ job_wiz.gat,131,98,1	script	earthwarpE::earthwrp	45,1,1,{
 OnTimer30000:
 	stopnpctimer "earthwrp";
 	areawarp "job_wiz.gat", 100, 82, 131, 113, "job_wiz.gat",47,98;
-	donpcevent "FireRm";
+	donpcevent "FireRm::OnStart";
 	end;
 }
 job_wiz.gat,100,98,1	duplicate(earthwrp)	earthwarpW	45,1,1

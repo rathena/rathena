@@ -848,12 +848,14 @@ OnStart:
 	killmonster "job_knt.gat", "KntLvl2::OnMyMobDead";
 	killmonster "job_knt.gat", "KntLvl3::OnMyMobDead";
 	warpwaitingpc "job_knt.gat",43,146;
-	donpcevent "KntLvl1";
+	donpcevent "KntLvl1::OnStart";
 	end;
 }
 
 // First Level ---------------------------------------------------------
 job_knt.gat,1,1,1	script	KntLvl1	-1,{
+
+OnStart:
 	set $@KntRm, 1;
 	set $@KntMob,12;
 	monster "job_knt.gat",39,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
@@ -878,13 +880,15 @@ OnMyMobDead:
 	stopnpctimer "TimerKnt";
 	areaannounce "job_knt.gat", 24, 126, 63, 165, "[Sir Windsor]: Get ready for the second level....",8;
 	set $@KntMob, 0;
-	addtimer 5000, "KntLvl2";
+	addtimer 5000, "KntLvl2::OnStart";
 	end;
 }
 
 
 // Second Level ---------------------------------------------------------
 job_knt.gat,1,1,1	script	KntLvl2	-1,{
+
+OnStart:
 	set $@KntRm, 2;
 	set $@KntMob,12;
 	monster "job_knt.gat",53,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
@@ -910,13 +914,15 @@ OnMyMobDead:
 	stopnpctimer "TimerKnt";
 	areaannounce "job_knt.gat", 24, 32, 63, 71, "[Sir Windsor]: Get ready for the third level....",8;
 	set $@KntMob, 0;
-	addtimer 5000, "KntLvl3";
+	addtimer 5000, "KntLvl3::OnStart";
 	end;
 
 }
 
 // Third Level ---------------------------------------------------------------
 job_knt.gat,1,1,1	script	KntLvl3	-1,{
+
+OnStart:
 	set $@KntRm, 3;
 	set $@KntMob,7;
 	monster "job_knt.gat",136,152,"Knife Goblin Bro",1122,1,"KntLvl3::OnMyMobDead";
@@ -1419,6 +1425,7 @@ L_Test:
 
 // Test -----------------------------
 job_knt.gat,1,1,1	script	ev_Test	-1,{
+
 OnStart:
 	killmonster "job_knt.gat","ev_Test::OnMyMobDead";
 	monster "job_knt.gat",141,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
