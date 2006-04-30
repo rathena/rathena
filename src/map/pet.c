@@ -1120,14 +1120,14 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 				ditem = ers_alloc(item_drop_ers, struct item_drop);
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
-				dlist->item = ditem->next;
+				dlist->item = ditem;
 			}
 		}
 		else {
 			ditem = ers_alloc(item_drop_ers, struct item_drop);
 			memcpy(&ditem->item_data, it, sizeof(struct item));
 			ditem->next = dlist->item;
-			dlist->item = ditem->next;
+			dlist->item = ditem;
 		}
 	}
 	//The smart thing to do is use pd->loot->max (thanks for pointing it out, Shinomori)
