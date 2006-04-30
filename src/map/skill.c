@@ -3691,7 +3691,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GROUNDDRIFT:
 	case NJ_TATAMIGAESHI:
 	case NJ_KASUMIKIRI:
-	case NJ_SHADOWJUMP:
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
 	case NJ_NEN:
@@ -4694,6 +4693,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_blown(src,bl,skill_get_blewcount(skillid,skilllv)|0x10000);
+		break;
+
+	case NJ_SHADOWJUMP:	//[blackhole89]
+		{
+			if (sd && !(sd->sc.count && sd->sc.data[SC_HIDING].timer != -1)) {
+				map_freeblock_unlock();
+				return 1;
+			}
+
+			clif_skill_nodamage(src,src,NJ_SHADOWJUMP,skilllv,1);
+			if(map_getcell(src->m,x,y,CELL_CHKPASS)) {
+				unit_movepos(src, x, y, 1, 0);
+				clif_slide(src,x,y);
+			}
+		}
 		break;
 
 	case TK_HIGHJUMP:
@@ -8076,7 +8090,6 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 
 	//Not implemented yet [Vicious]
 	case NJ_KASUMIKIRI:
-	case NJ_SHADOWJUMP:
 	case NJ_KIRIKAGE:
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
