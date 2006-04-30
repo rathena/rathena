@@ -27,6 +27,8 @@
 
 =========================
 04/30
+	* Added Hellion Revenant [Playtester]
+	- his skills are still missing
 	* Changed chance of Demon Pungus Card and Killer Mantis Card to 10% [Playtester]
 	* Final updates for Bio Lab drop rates thanks to Muad_Dib [Playtester]
 	- they should be official to 99% now
