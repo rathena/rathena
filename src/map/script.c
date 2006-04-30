@@ -271,7 +271,6 @@ int buildin_birthpet(struct script_state *st);
 int buildin_resetlvl(struct script_state *st);
 int buildin_resetstatus(struct script_state *st);
 int buildin_resetskill(struct script_state *st);
-int buildin_skillpointcount(struct script_state *st);
 int buildin_changebase(struct script_state *st);
 int buildin_changesex(struct script_state *st);
 int buildin_waitingroom(struct script_state *st);
@@ -595,7 +594,6 @@ struct {
 	{buildin_resetlvl,"resetlvl","i"},
 	{buildin_resetstatus,"resetstatus",""},
 	{buildin_resetskill,"resetskill",""},
-	{buildin_skillpointcount,"skillpointcount",""},
 	{buildin_changebase,"changebase","i"},
 	{buildin_changesex,"changesex",""},
 	{buildin_waitingroom,"waitingroom","si*"},
@@ -6324,18 +6322,6 @@ int buildin_resetskill(struct script_state *st)
 }
 
 /*==========================================
- * Counts total amount of skill points.
- *------------------------------------------
- */
-int buildin_skillpointcount(struct script_state *st)
-{
-	struct map_session_data *sd;
-	sd=script_rid2sd(st);
-	push_val(st->stack,C_INT,sd->status.skill_point + pc_resetskill(sd,2));
-	return 0;
-}
-
-/*==========================================
  *
  *------------------------------------------
  */
@@ -10917,8 +10903,10 @@ int run_script_main(struct script_state *st)
 				clif_sendfakenpc(((TBL_PC *)bl),dummy_npc_id);
 			} else */
 			if(bl->type == BL_NPC){
-				if(npc_checknear(((TBL_PC *)map_id2bl(st->rid)), bl->id))
-					clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
+				if((bl = map_id2bl(st->rid))){ // Should be type PC now
+					if(npc_checknear(((TBL_PC *)bl), st->oid))
+						clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
+				}
 			}
 		}
 	}
