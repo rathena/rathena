@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 04/30
+	* Added some tabs to the Pickpocket Quest so it's more readable [Playtester]
 	* Added first version Gywall's Pickpocket Quest [Playtester]
 	* Updated several job quests so they work again thanks to sodaboy581 [Playtester]
 	* Fixed mjolnir_12 -> prt_maze01 warp [Playtester]

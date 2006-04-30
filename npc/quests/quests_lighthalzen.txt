@@ -1220,113 +1220,116 @@ L4_1:
 // Tested on: eAthena SVN Stable (Unknown version)
 // Version History:
 // 1.0 - Completed and working
+
 lighthalzen.gat,240,216,4	script	Man#Pickpocket1	870,2,2,{
-end;
+	end;
 OnTouch:
-callfunc "F_LHZPick",33,1;
-close;
+	callfunc "F_LHZPick",33,1;
+	close;
 }
+
 lighthalzen.gat,220,169,4	script	Man#Pickpocket2	870,2,2,{
-end;
+	end;
 OnTouch:
-callfunc "F_LHZPick",33,2;
-close;
+	callfunc "F_LHZPick",33,2;
+	close;
 }
+
 lighthalzen.gat,164,127,4	script	Man#Pickpocket3	870,2,2,{
-end;
+	end;
 OnTouch:
-callfunc "F_LHZPick",20,3;
-if(@caught!=1) close;
-mes "[Strange Man]";
-mes "Ayee! I'm trapped.";
-mes "If you will forgive me,";
-mes "I can give you something good.";
-mes "["+strcharinfo(0)+"]";
-mes "You're forgiven, now what is this";
-mes "good thing you mentioned?";
-next;
-mes "[Strange Man]";
-mes "The lower part of your body,";
-mes "will produce a strong power";
-mes "once you've taken the secret potion.";
-mes "It's very useful";
-mes "when you want to run quickly";
-next;
-mes "[Strange Man]";
-mes "I will sell you them for a bargin";
-mes "price of 15,000 zeny to a maximum";
-mes "of three potions.";
-mes "How many do you want?";
-next;
-input @number;
-if(@number>3) set @number,3;
-set @cost,15000*@number;
-if(Zeny<@cost) goto L_Zeny;
-//please check that you add the script to it.
-set Zeny,zeny-@cost;
-getitem 12016,@number; //Speed Potion
-mes "[Strange Man]";
-mes "Thanks for your money.";
-if(rand(1,2)==1) goto L_Reset;
-disablenpc "Man#Pickpocket3";
-enablenpc "Man#Pickpocket2";
-close;
+	callfunc "F_LHZPick",20,3;
+	if(@caught!=1) close;
+	mes "[Strange Man]";
+	mes "Ayee! I'm trapped.";
+	mes "If you will forgive me,";
+	mes "I can give you something good.";
+	mes "["+strcharinfo(0)+"]";
+	mes "You're forgiven, now what is this";
+	mes "good thing you mentioned?";
+	next;
+	mes "[Strange Man]";
+	mes "The lower part of your body,";
+	mes "will produce a strong power";
+	mes "once you've taken the secret potion.";
+	mes "It's very useful";
+	mes "when you want to run quickly";
+	next;
+	mes "[Strange Man]";
+	mes "I will sell you them for a bargin";
+	mes "price of 15,000 zeny to a maximum";
+	mes "of three potions.";
+	mes "How many do you want?";
+	next;
+	input @number;
+	if(@number>3) set @number,3;
+	set @cost,15000*@number;
+	if(Zeny<@cost) goto L_Zeny;
+	//please check that you add the script to it.
+	set Zeny,zeny-@cost;
+	getitem 12016,@number; //Speed Potion
+	mes "[Strange Man]";
+	mes "Thanks for your money.";
+	if(rand(1,2)==1) goto L_Reset;
+	disablenpc "Man#Pickpocket3";
+	enablenpc "Man#Pickpocket2";
+	close;
 L_Reset:
-disablenpc "Man#Pickpocket3";
-enablenpc "Man#Pickpocket1";
-close;
+	disablenpc "Man#Pickpocket3";
+	enablenpc "Man#Pickpocket1";
+	close;
 L_Zeny:
-mes "[Strange Man]";
-mes "Too bad.";
-mes "No zeny makes you a poor man.";
-close;
+	mes "[Strange Man]";
+	mes "Too bad.";
+	mes "No zeny makes you a poor man.";
+	close;
 OnInit:
-disablenpc "Man#Pickpocket2";
-disablenpc "Man#Pickpocket3";
+	disablenpc "Man#Pickpocket2";
+	disablenpc "Man#Pickpocket3";
 }
 
 function	script	F_LHZPick	{
-if(Zeny<100) set Zeny,0;
-if(Zeny>=100) set Zeny,zeny-100;
-mes "Pickpocket";
-next;
-if(rand(0,100)<getarg(0)) goto L_Caught;
-mes "Hehehehe....";
-return;
+	if(Zeny<100) set Zeny,0;
+	if(Zeny>=100) set Zeny,zeny-100;
+	mes "Pickpocket";
+	next;
+	if(rand(0,100)<getarg(0)) goto L_Caught;
+	mes "Hehehehe....";
+	return;
 L_Caught:
-mes "(You notice the man put his";
-mes "hand in your pocket!)";
-mes "["+strcharinfo(0)+"]";
-mes "Eh!? What are you doing!";
-mes "You are!! Stealing my money?!";
-mes "[Strange Man]";
-mes "Ah! I'm caught!";
-mes "["+strcharinfo(0)+"]";
-mes "You're a pickpocket?!?";
-mes "[Strange Man]";
-mes "Hehehehe....";
-next;
-set @rand,rand(1,4);
-if(getarg(1)==1 && @rand<4) goto L_MoveB;
-if(getarg(1)==2 && @rand<4) goto L_MoveA;
-if(getarg(1)==1 && @rand==4) goto L_MoveC1;
-if(getarg(1)==2 && @rand==4) goto L_MoveC2;
-set @caught,1;
-return;
+	mes "(You notice the man put his";
+	mes "hand in your pocket!)";
+	mes "["+strcharinfo(0)+"]";
+	mes "Eh!? What are you doing!";
+	mes "You are!! Stealing my money?!";
+	mes "[Strange Man]";
+	mes "Ah! I'm caught!";
+	mes "["+strcharinfo(0)+"]";
+	mes "You're a pickpocket?!?";
+	mes "[Strange Man]";
+	mes "Hehehehe....";
+	next;
+	set @rand,rand(1,4);
+	if(getarg(1)==1 && @rand<4) goto L_MoveB;
+	if(getarg(1)==2 && @rand<4) goto L_MoveA;
+	if(getarg(1)==1 && @rand==4) goto L_MoveC1;
+	if(getarg(1)==2 && @rand==4) goto L_MoveC2;
+	set @caught,1;
+	return;
 L_MoveA:
-disablenpc "Man#Pickpocket2";
-enablenpc "Man#Pickpocket1";
-return;
+	disablenpc "Man#Pickpocket2";
+	enablenpc "Man#Pickpocket1";
+	return;
 L_MoveB:
-disablenpc "Man#Pickpocket1";
-enablenpc "Man#Pickpocket2";
-return;
+	disablenpc "Man#Pickpocket1";
+	enablenpc "Man#Pickpocket2";
+	return;
 L_MoveC1:
-disablenpc "Man#Pickpocket1";
-enablenpc "Man#Pickpocket3";
-return;
+	disablenpc "Man#Pickpocket1";
+	enablenpc "Man#Pickpocket3";
+	return;
 L_MoveC2:
-disablenpc "Man#Pickpocket2";
-enablenpc "Man#Pickpocket3";
-return;
+	disablenpc "Man#Pickpocket2";
+	enablenpc "Man#Pickpocket3";
+	return;
 }
