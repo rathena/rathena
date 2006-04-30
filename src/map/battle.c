@@ -1050,7 +1050,6 @@ static struct Damage battle_calc_weapon_attack(
 	}
 
 	if(sd) {
-		sd->state.attack_type = BF_WEAPON;
 		if (sd->skillblown[0].id != 0)
 		{	//Apply the bonus blewcount. [Skotlex]
 			for (i = 0; i < 5 && sd->skillblown[i].id != 0 && sd->skillblown[i].id != skill_num; i++);
@@ -2385,7 +2384,6 @@ struct Damage battle_calc_magic_attack(
 
 	//Set miscellaneous data that needs be filled
 	if(sd) {
-		sd->state.attack_type = BF_MAGIC;
 		sd->state.arrow_atk = 0;
 		if (sd->skillblown[0].id != 0)
 		{	//Apply the bonus blewcount. [Skotlex]
@@ -2762,7 +2760,6 @@ struct Damage  battle_calc_misc_attack(
 	md.dmg_lv=ATK_DEF;
 
 	if( bl->type == BL_PC && (sd=(struct map_session_data *)bl) ) {
-		sd->state.attack_type = BF_MISC;
 		sd->state.arrow_atk = 0;
 		if (sd->skillblown[0].id != 0)
 		{	//Apply the bonus blewcount. [Skotlex]

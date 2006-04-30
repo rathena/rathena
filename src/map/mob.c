@@ -1715,12 +1715,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	if(sd) {
 		int sp = 0, hp = 0;
-		if (sd->state.attack_type == BF_MAGIC && sd->ud.skilltarget == md->bl.id && (i=pc_checkskill(sd,HW_SOULDRAIN))>0)
-		{	//Soul Drain should only work on targetted spells [Skotlex]
-			if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
-			clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,i,1);
-			sp += (status_get_lv(&md->bl))*(95+15*i)/100;
-		}
 		sp += sd->sp_gain_value;
 		sp += sd->sp_gain_race[race];
 		sp += sd->sp_gain_race[mode&MD_BOSS?10:11];
@@ -2035,7 +2029,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
 		}
 		if (dlist->item) //There are drop items.
-			add_timer(tick + ((!battle_config.delay_battle_damage || (sd && sd->state.attack_type == BF_MAGIC))?500:0),
+			add_timer(tick + (!battle_config.delay_battle_damage?500:0),
 				mob_delay_item_drop, (int)dlist, 0);
 		else //No drops
 			ers_free(item_drop_list_ers, dlist);

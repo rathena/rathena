@@ -1451,6 +1451,21 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 
+	if(sd && bl->type == BL_MOB && status_isdead(bl) && skill_get_inf(skillid)!=INF_GROUND_SKILL && (rate=pc_checkskill(sd,HW_SOULDRAIN))>0)
+	{	//Soul Drain should only work on targetted spells [Skotlex]
+		int sp;
+		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
+		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
+		sp = (status_get_lv(bl))*(95+15*rate)/100;
+		if (sp > 0) {
+			if(sd->status.sp + sp > sd->status.max_sp)
+				sp = sd->status.max_sp - sd->status.sp;
+			sd->status.sp += sp;
+			if (sp > 0 && battle_config.show_hp_sp_gain)
+				clif_heal(sd->fd,SP_SP,sp);
+		}
+	}
+
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
 	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{
