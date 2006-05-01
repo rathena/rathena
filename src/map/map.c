@@ -673,7 +673,79 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
-						&& check_distance_bl(center, bl, range)
+//						&& check_distance_bl(center, bl, range)
+						&& bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+				}
+			}
+		}
+
+	if(bl_list_count>=BL_LIST_MAX) {
+		if(battle_config.error_log)
+			ShowWarning("map_foreachinrange: block count too many!\n");
+	}
+
+	map_freeblock_lock();	// メモリからの解放を禁止する
+
+	for(i=blockcount;i<bl_list_count;i++)
+		if(bl_list[i]->prev)	// 有?かどうかチェック
+			returnCount += func(bl_list[i],ap);
+
+	map_freeblock_unlock();	// 解放を許可する
+
+	va_end(ap);
+	bl_list_count = blockcount;
+	return returnCount;	//[Skotlex]
+}
+
+/*==========================================
+ * Same as foreachinrange, but there must be a shoot-able range between center and target to be counted in. [Skotlex]
+ *------------------------------------------
+ */
+int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list *center, int range,int type,...) {
+	va_list ap;
+	int bx,by,m;
+	int returnCount =0;	//total sum of returned values of func() [Skotlex]
+	struct block_list *bl=NULL;
+	int blockcount=bl_list_count,i,c;
+	int x0,x1,y0,y1;
+	m = center->m;
+	if (m < 0)
+		return 0;
+	va_start(ap,type);
+	x0 = center->x-range;
+	x1 = center->x+range;
+	y0 = center->y-range;
+	y1 = center->y+range;
+	
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 >= map[m].xs) x1 = map[m].xs-1;
+	if (y1 >= map[m].ys) y1 = map[m].ys-1;
+	
+	if (type&~BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
+			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
+				bl = map[m].block[bx+by*map[m].bxs];
+				c = map[m].block_count[bx+by*map[m].bxs];
+				for(i=0;i<c && bl;i++,bl=bl->next){
+					if(bl && bl->type&type
+						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+						&& path_search_long(NULL,center->m,center->x,center->y,bl->x,bl->y)
+					  	&& bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+				}
+			}
+		}
+	if(type&BL_MOB)
+		for(by=y0/BLOCK_SIZE;by<=y1/BLOCK_SIZE;by++){
+			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
+				bl = map[m].block_mob[bx+by*map[m].bxs];
+				c = map[m].block_mob_count[bx+by*map[m].bxs];
+				for(i=0;i<c && bl;i++,bl=bl->next){
+					if(bl
+						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+						&& path_search_long(NULL,center->m,center->x,center->y,bl->x,bl->y)
 						&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
 				}

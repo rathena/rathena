@@ -9639,8 +9639,12 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 
 	/* onplace_timerƒCƒxƒ“ƒgŒÄ‚Ñ?o‚µ */
 	if (unit->range>=0 && group->interval!=-1) {
-		map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range,
-			group->bl_flag,bl,tick);
+		if (battle_config.skill_wall_check)
+			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range,
+				group->bl_flag,bl,tick);
+		else
+			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range,
+				group->bl_flag,bl,tick);
 		if (!unit->alive)
 			return 0;
 	}
