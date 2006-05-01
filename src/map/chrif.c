@@ -465,13 +465,13 @@ void chrif_authreq(struct map_session_data *sd)
 			aFree(auth_data->char_dat);
 		idb_remove(auth_db, sd->bl.id);
 	} else { //data from char server has not arrived yet.
-		auth_data = aMalloc(sizeof(struct auth_node));
+		auth_data = aCalloc(1,sizeof(struct auth_node));
 		auth_data->sd = sd;
 		auth_data->fd = sd->fd;
 		auth_data->account_id = sd->bl.id;
 		auth_data->login_id1 = sd->login_id1;
 		auth_data->node_created = gettick();
-		idb_put(auth_db, sd->bl.id, auth_data);
+		uidb_put(auth_db, sd->bl.id, auth_data);
 	}
 	return;
 }
