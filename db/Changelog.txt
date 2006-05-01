@@ -27,6 +27,7 @@
 
 =========================
 05/01
+	* Modified the AM_TWILIGHT* skills to require 200 medicine bowls. [Skotlex]
 	* Added effect of Speed Potion [Playtester]
 	* Removed Kraben Card drop from G_Kraben [Playtester]
 	* Fixed a typo in the Armeyer Dinze card thanks to theultramage [Playtester]

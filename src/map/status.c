@@ -437,8 +437,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
 				sc->data[SC_SILENCE].timer != -1 || 
 				sc->data[SC_STEELBODY].timer != -1 ||
-				sc->data[SC_BERSERK].timer != -1 ||
-				sc->data[SC_SKA].timer != -1
+				sc->data[SC_BERSERK].timer != -1
 			))
 				return 0;
 			//Skill blocking.
@@ -4430,7 +4429,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val4 = gettick(); //Store time at which you started running.
 			calc_flag = 1;
 			break;
-
+		case SC_KAAHI:
+			val2 = 200*val1; //HP heal
+			val3 = 5*val1; //SP cost
+			break;
 		case SC_TRICKDEAD:			/* Ž€‚ñ‚¾‚Ó‚è */
 		{
 			struct view_data *vd = status_get_viewdata(bl);
@@ -4561,7 +4563,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CLOSECONFINE:
 		case SC_SKILLRATE_UP:
 		case SC_KAIZEL:
-		case SC_KAAHI:
 		case SC_INTRAVISION:
 		case SC_BASILICA:
 		case SC_MAXOVERTHRUST:

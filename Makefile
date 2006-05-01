@@ -23,6 +23,7 @@ OPT += -ffast-math
 # OPT += -fstack-protector
 # OPT += -fomit-frame-pointer
 OPT += -Wall -Wno-sign-compare
+# OPT += -DMAPREGSQL
 # OPT += -DCHRIF_OLDINFO
 # OPT += -DPCRE_SUPPORT
 # OPT += -DGCOLLECT

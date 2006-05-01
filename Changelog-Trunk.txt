@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/01
+	* Fixed AL_WARP displaying "Unknown Area" selections when you don't have
+	  all memo points used up. [Skotlex]
+	* Fixed alive_count not being reset on skill unitsetting, which leads to
+	  some groups not being cleared once all their units expire. [Skotlex]
+	* Optimized Kaahi/Kahai, will now only show the amount of HP healed. Moved
+	  to skill_counter additional effect so it may trigger even on miss. [Skotlex]
+	* SKA no longer blocks skills. [Skotlex]
 	* Optimized fake npc system. Added npc_checknear back to npc_buysellsel. [Lance]
 
 2006/04/30

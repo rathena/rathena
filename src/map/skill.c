@@ -1016,14 +1016,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				sc_start4(bl,SC_POISON,2*tsc->data[SC_SPLASHER].val1+10,
 					tsc->data[SC_SPLASHER].val1,0,0,0,
 					skill_get_time2(tsc->data[SC_SPLASHER].val2,tsc->data[SC_SPLASHER].val1));
-			if(tsc->data[SC_KAAHI].timer != -1) {
-				if (dstsd && dstsd->status.sp < 5*tsc->data[SC_KAAHI].val1)
-					; //Not enough SP to cast
-				else {
-					battle_heal(bl, bl, 200*tsc->data[SC_KAAHI].val1, -5*tsc->data[SC_KAAHI].val1, 1);
-					clif_skill_nodamage(NULL,bl,AL_HEAL,200*tsc->data[SC_KAAHI].val1,1);
-				}
-			}
 		}
 	}
 	break;
@@ -1410,7 +1402,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	int rate;
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
-
+	struct status_change *tsc;
+	
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
@@ -1422,11 +1415,28 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
+	tsc = status_get_sc(bl);
+	if (tsc && !tsc->count)
+		tsc = NULL;
+	
 	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, bl, dstsd);
 
 	switch(skillid){
-	case 0: //Normal Attack - Nothing here yet.
+	case 0: //Normal Attack
+		if(tsc && tsc->data[SC_KAAHI].timer != -1) {
+			if (dstsd && dstsd->status.sp < tsc->data[SC_KAAHI].val3)
+				; //Not enough SP to cast
+			else {
+				int hp = status_get_max_hp(bl) - status_get_hp(bl);
+				if (hp > tsc->data[SC_KAAHI].val2)
+					hp = tsc->data[SC_KAAHI].val2;
+				if (hp) {
+					battle_heal(bl, bl, hp, -tsc->data[SC_KAAHI].val3, 1);
+					clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
+				}
+			}
+		}
 		break;
 	case MO_EXTREMITYFIST:			/* ˆ¢?C—…”e™€Œ? */
 		//ˆ¢?C—…‚ğg‚¤‚Æ5•ªŠÔ©‘R‰ñ•œ‚µ‚È‚¢‚æ‚¤‚É‚È‚é
@@ -6027,9 +6037,9 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case AL_WARP:				/* ƒ??ƒvƒ|?ƒ^ƒ‹ */
 		if(sd) {
 			clif_skill_warppoint(sd,skillid,skilllv,mapindex_id2name(sd->status.save_point.map),
-				(skilllv>1)?mapindex_id2name(sd->status.memo_point[0].map):"",
-				(skilllv>2)?mapindex_id2name(sd->status.memo_point[1].map):"",
-				(skilllv>3)?mapindex_id2name(sd->status.memo_point[2].map):"");
+				(skilllv>1 && sd->status.memo_point[0].map)?mapindex_id2name(sd->status.memo_point[0].map):"",
+				(skilllv>2 && sd->status.memo_point[1].map)?mapindex_id2name(sd->status.memo_point[1].map):"",
+				(skilllv>3 && sd->status.memo_point[2].map)?mapindex_id2name(sd->status.memo_point[2].map):"");
 		}
 		break;
 
