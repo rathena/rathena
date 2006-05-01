@@ -511,7 +511,7 @@ void chrif_authok(int fd) {
 		return;
 	}
 	// Awaiting for client to connect.
-	auth_data = (struct auth_node *)aMalloc(sizeof(struct auth_node));
+	auth_data = (struct auth_node *)aCalloc(1,sizeof(struct auth_node));
 	auth_data->char_dat = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 
 	auth_data->account_id=RFIFOL(fd, 4);
