@@ -979,9 +979,9 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	// Reprecated, please do not uncomment this. [Lance]
-	//if (nd->class_<0)	// イベント系は常にOK
-	//	return 0;
+
+	if (nd->class_<0)	// イベント系は常にOK
+		return 0;
 
 	// エリア判定
 	if (nd->bl.m!=sd->bl.m ||
@@ -1026,13 +1026,14 @@ int npc_click(struct map_session_data *sd,int id)
 		return 1;
 	}
 
+
 	if (npc_checknear(sd,id))
 		return 1;
 
 	nd=(struct npc_data *)map_id2bl(id);
 
-	//Disabled npc.
-	if (nd->sc.option&OPTION_INVISIBLE)
+	//Hidden/Disabled npc.
+	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
 		return 1;
 
 	sd->npc_id=id;
@@ -1085,8 +1086,8 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 
 	nullpo_retr(1, sd);
 
-	//if (npc_checknear(sd,id))
-	//	return 1;
+	if (npc_checknear(sd,id))
+		return 1;
 
 	nd=(struct npc_data *)map_id2bl(id);
 	if (nd->bl.subtype!=SHOP) {

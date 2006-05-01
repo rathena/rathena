@@ -10909,20 +10909,7 @@ int run_script_main(struct script_state *st)
 			st->state = RUN;
 		}
 	} else {
-		struct block_list *bl;
 		st->state = RUN;
-		if(st->oid && st->rid && (bl = map_id2bl(st->oid))){
-			// Perfomance impact, use buildin_doevent instead for interactive item scripts.
-			/*if(bl->type == BL_PC){
-				clif_sendfakenpc(((TBL_PC *)bl),dummy_npc_id);
-			} else */
-			if(bl->type == BL_NPC){
-				if((bl = map_id2bl(st->rid))){ // Should be type PC now
-					if(npc_checknear(((TBL_PC *)bl), st->oid))
-						clif_sendfakenpc(((struct map_session_data *)bl),st->oid);
-				}
-			}
-		}
 	}
 	while( st->state == RUN) {
 		c= get_com((unsigned char *) st->script,&st->pos);

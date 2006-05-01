@@ -1809,9 +1809,15 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 	int fd;
 	int slen = strlen(mes) + 8;
+	struct block_list *bl = map_id2bl(npcid);
 	WFIFOHEAD(fd, slen);
 
 	nullpo_retr(0, sd);
+
+	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
 	WFIFOW(fd,0)=0xb7;
@@ -1829,8 +1835,14 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
  */
 int clif_scriptinput(struct map_session_data *sd, int npcid) {
 	int fd;
+	struct block_list *bl = map_id2bl(npcid);
 
 	nullpo_retr(0, sd);
+
+	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   clif_sendfakenpc(sd, npcid);
 	
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len_table[0x142]);
@@ -1847,8 +1859,14 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
  */
 int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	int fd;
+	struct block_list *bl = map_id2bl(npcid);
 
 	nullpo_retr(0, sd);
+
+	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len_table[0x1d4]);
