@@ -3330,6 +3330,14 @@ void status_set_viewdata(struct block_list *bl, int class_)
 					class_ = JOB_BABY_CRUSADER2;
 					break;
 				}
+				if (sd->vd.class_ == JOB_WEDDING)
+					sd->sc.option&=~OPTION_WEDDING;
+				if (sd->vd.class_ == JOB_XMAS)
+					sd->sc.option&=~OPTION_XMAS;
+				if (class_ == JOB_WEDDING)
+					sd->sc.option|=OPTION_WEDDING;
+				if (class_ == JOB_XMAS)
+					sd->sc.option|=OPTION_XMAS;
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
 				sd->vd.head_top = sd->status.head_top;

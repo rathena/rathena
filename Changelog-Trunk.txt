@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/01
+	* status_setviewdata will set your option accordingly when the previous/new
+	  view-class is wedding or xmas suit. [Skotlex]
 	* Added function map_foreachinshootrange, behaves the same way as
 	  map_foreachinrange, but it also performs a "shoot-path" check before
 	  invoking the function. Used in the skill subtimer function if

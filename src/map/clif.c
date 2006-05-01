@@ -780,7 +780,7 @@ void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand)
 #if PACKETVER > 3
 	struct item_data *id;
 #endif
-	if (sd->vd.class_ == JOB_XMAS || sd->vd.class_ == JOB_WEDDING)
+	if (sd->sc.option&(OPTION_XMAS|OPTION_WEDDING))
 	{
 		*rhand = *lhand = 0;
 		return;
@@ -2682,7 +2682,6 @@ int clif_changelook(struct block_list *bl,int type,int val)
 	unsigned char buf[32];
 	struct map_session_data *sd = NULL;
 	struct view_data *vd;
-	nullpo_retr(0, bl);
 	vd = status_get_viewdata(bl);
 	nullpo_retr(0, vd);
 	
