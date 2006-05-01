@@ -8808,7 +8808,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	struct npc_data *npc;
 	char split_data[10][50];
 	int j=0,k=0;
-	char *whisper_tmp;    
+	char target[NAME_LENGTH+1];
 	char output[256];  
 	RFIFOHEAD(fd);
 
@@ -8827,19 +8827,21 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
 		return;
 
+	memcpy(&target,RFIFOP(fd, 4),NAME_LENGTH);
+	target[NAME_LENGTH]='\0';
+	
 	//Chat Logging type 'W' / Whisper
 	if(log_config.chat&1 //we log everything then
 		|| ( log_config.chat&2 //if Whisper bit is on
 		&& ( !agit_flag || !(log_config.chat&16) ))) //if WOE ONLY flag is off or AGIT is OFF
-		log_chat("W", 0, sd->status.char_id, sd->status.account_id, (char*)mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, (char*)RFIFOP(fd, 4), (char*)RFIFOP(fd, 28));
+		log_chat("W", 0, sd->status.char_id, sd->status.account_id, (char*)mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, (char*)RFIFOP(fd, 28));
 
 
 	//-------------------------------------------------------//
 	//   Lordalfa - Paperboy - To whisper NPC commands       //
 	//-------------------------------------------------------//
-	whisper_tmp = (char*) RFIFOP(fd,4);
-	if (whisper_tmp[0] && (strncasecmp(whisper_tmp,"NPC:",4) == 0) && (strlen(whisper_tmp) >4))   {
-		whisper_tmp += 4; //Skip the NPC: string part.
+	if (target[0] && (strncasecmp(target,"NPC:",4) == 0) && (strlen(target) >4))   {
+		char *whisper_tmp = target+4; //Skip the NPC: string part.
 		if ((npc = npc_name2id(whisper_tmp)))	
 		{
 			whisper_tmp=(char *)aMallocA((strlen((char *)(RFIFOP(fd,28)))+1)*sizeof(char));
@@ -8881,7 +8883,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	}		
 	
 	// Main chat [LuzZza]
-	if(strcmpi((const char*)RFIFOP(fd,4), main_chat_nick) == 0) {
+	if(strcmpi(target, main_chat_nick) == 0) {
 		if(!sd->state.mainchat) {
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
 			return;
@@ -8896,16 +8898,16 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	}
 
 	// searching destination character
-	dstsd = map_nick2sd((char*)RFIFOP(fd,4));
+	dstsd = map_nick2sd(target);
 	// player is not on this map-server
 	if (dstsd == NULL ||
 	// At this point, don't send wisp/page if it's not exactly the same name, because (example)
 	// if there are 'Test' player on an other map-server and 'test' player on this map-server,
 	// and if we ask for 'Test', we must not contact 'test' player
 	// so, we send information to inter-server, which is the only one which decide (and copy correct name).
-	    strcmp(dstsd->status.name, (const char*)RFIFOP(fd,4)) != 0) // not exactly same name
+	    strcmp(dstsd->status.name, target) != 0) // not exactly same name
 		// send message to inter-server
-		intif_wis_message(sd, (char*)RFIFOP(fd,4), (char*)RFIFOP(fd,28), RFIFOW(fd,2)-28);
+		intif_wis_message(sd, target, (char*)RFIFOP(fd,28), RFIFOW(fd,2)-28);
 	// player is on this map-server
 	else {
 		// if you send to your self, don't send anything to others
