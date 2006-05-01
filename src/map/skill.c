@@ -9490,7 +9490,6 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 				skill_delunit(&group->unit[i]);
 	}
 	if(group->valstr!=NULL){
-		//Supposedly Free remembers the size of the original Calloc/Malloc, so this should be safe [Skotlex]
 		aFree(group->valstr);
 		group->valstr=NULL;
 	}

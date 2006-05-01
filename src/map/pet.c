@@ -958,7 +958,7 @@ static int pet_ai_sub_hard(struct pet_data *pd,unsigned int tick)
 		pd->speed = (sd->speed>>1);
 		if(pd->speed <= 0)
 			pd->speed = 1;
-		if (!unit_walktobl(&pd->bl, &sd->bl, 3, 0));
+		if (!unit_walktobl(&pd->bl, &sd->bl, 3, 0))
 			pet_randomwalk(pd,tick);
 		return 0;
 	}
