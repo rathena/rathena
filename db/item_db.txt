@@ -2476,7 +2476,7 @@
 4344,Anopheles_Card,Anopheles Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12058,RC_Insect,1; },{},{}
 4345,Hill_Wind_Card,Hill Wind Card,6,,10,10,,,,,,,,16,,,,,{ bonus bInt,readparam(bStr)/18; },{},{}
 4346,Egnigem_Cenia_Card,Egnigem Cenia Card,6,,10,10,,,,,,,,16,,,,,{ bonus bStr,readparam(bInt)/18; },{},{}
-4347,Armeyer_Dinze_Card,Armeyer Dinze Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddMonsterDropItem,12053,RC_Fisht,1; },{},{}
+4347,Armeyer_Dinze_Card,Armeyer Dinze Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddMonsterDropItem,12053,RC_Fish,1; },{},{}
 4348,Wikebine_Tres_Card,Wikebine Tres Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,217,1,50; if(isequipped(4039,4210,4257,4230)==0) end; bonus bStr,6; bonus bAgi,4; bonus2 bSkillAtk,212,10; bonus3 bAutoSpell,217,5,50; if(BaseClass != Job_Rogue) end; bonus bUseSPrate,-20; bonus3 bAutoSpell,219,1,20; },{},{}
 4349,Errende_Ebecee_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpellWhenHit,25,1,5; },{},{}
 4350,Laurell_Weinder_Card,Laurell Weinder Card,6,,10,10,,,,,,,,16,,,,,{ bonus bSPGainValue,10; bonus bDamageWhenUnequip,100; bonus bLoseSPWhenUnequip,100; bonus bHPrecovRate,-20; bonus bSPrecovRate,-20; },{},{}
