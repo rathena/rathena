@@ -27,6 +27,7 @@
 
 =========================
 05/01
+	* Removed Kraben Card drop from G_Kraben [Playtester]
 	* Fixed a typo in the Armeyer Dinze card thanks to theultramage [Playtester]
 04/30
 	* Changed TK_RUN's state from none to move_enable. [Skotlex]
