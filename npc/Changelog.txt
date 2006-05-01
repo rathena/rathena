@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+05/01
+	* Fixed an NPC in Morroc who still said the Dragon Fly is North [Playtester]
 04/30
 	* Made Geffen Tower 1 in eamobs a bit more crowded [Playtester]
 	* Added the correct spawns for Ancient Geffenia(gef_dun03) [Playtester]

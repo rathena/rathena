@@ -286,7 +286,7 @@ morocc.gat,234,273,3	script	Fly Man Armani	54,{
 	emotion e_ic;
 	next;
 	mes "[Fly Man Armani]";
-	mes "I saw the rare ^ff0000Dragon Fly^000000 just North of here! It was incredible!!";
+	mes "I saw the rare ^ff0000Dragon Fly^000000 just South of here! It was incredible!!";
 	next;
 	menu "What... Dragon Fly?!",M_0,"So what?",M_1;
 	
