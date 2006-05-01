@@ -5751,7 +5751,9 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 			ud->canact_tick = tick;
 		else
 			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+	
+		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
+			unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d)\n",

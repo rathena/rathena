@@ -27,6 +27,7 @@
 
 =========================
 04/30
+	* Changed TK_RUN's state from none to move_enable. [Skotlex]
 	* Added Hellion Revenant [Playtester]
 	- his skills are still missing
 	* Changed chance of Demon Pungus Card and Killer Mantis Card to 10% [Playtester]
