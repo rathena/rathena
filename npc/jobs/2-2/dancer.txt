@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Script check #1. [Lance]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -30,17 +31,20 @@ job_duncer.gat,69,165,1	script	wwarp	45,1,1,{
 	mes "This is the way out, this will cancel your quest if you leave";
 	next;
 	menu "Leave the quest",-,"Cancel",L_Can;
-	Warp	"comodo.gat",193,149;
+	warp "comodo.gat",193,149;
+	end;
 L_Can:
 	close;
 }
+
 //= Warp man, takes you to the quest map (Comodo Theater)
 comodo.gat,193,151,4	script	Bor Robin	86,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Gypsy,"Gypsy","Bor Robin";
 
 	mes "[Bor Robin]";
 	mes "Well...... alot of people seem to be coming here lately.";
-	mes " ";
+	next;
+	mes "[Bor Robin]";
 	mes "They used to become dancers instantaneously.";
 	mes "I seen right before my eyes, more than I could count.";
 	mes "Now only people who are worthly can become dancers.";
@@ -67,12 +71,11 @@ L1:
 }
 //= 1st quest NPC, asks for Items and/or money, then passes you onto the next NPC
 job_duncer.gat,43,93,4	script	Aire	724,{
-	if ((basejob == 3) && (Sex == 0)) goto Larcher;
-	if (basejob == 20) goto Ldancer;
+	if ((BaseJob == 3) && (Sex == 0)) goto Larcher;
+	if (BaseJob == 20) goto Ldancer;
 	if (Upper==1) goto LUpper1;
 	mes "[Aire]";
 	mes "Hi "+strcharinfo(0)+", you are only allowed to stay in this room any where else is off limits to you.";
-	mes "";
 	next;
 	mes "[Aire]";
 	mes "We can't just let anyone become a dancer, there is no reason other than this for people to be here.";
@@ -112,7 +115,6 @@ Larcher:
 	mes "[Aire]";
 	mes "So what do you say?";
 	mes "Are you proposing you become a dancer? or will you be leaving like many before you.";
-	next;
 	menu "Fill in the form",L1,"Leave",-;
 		mes "[Aire]";
 		mes "If you do reconcider please return to me.";
@@ -198,7 +200,7 @@ ItemSet3:
 	close;
 
 LItem1:
-	if ((Countitem(938) >= 20) && (Countitem(501) >= 5) && (Countitem(909) >= 3) && (Countitem(2403) >= 1) && (Zeny >= 10000)) goto LItem1OK;
+	if ((countitem(938) >= 20) && (countitem(501) >= 5) && (countitem(909) >= 3) && (countitem(2403) >= 1) && (Zeny >= 10000)) goto LItem1OK;
 	mes "[Aire]";
 	mes "Something is wrong here.";
 	mes "Seems you dont have enough items, we need everything that was asked for.";
@@ -218,7 +220,7 @@ LItem1:
 	mes "see you back here soon";
 	close;
 LItem2:
-	if ((Countitem(1055) >= 5) && (Countitem(2405) >= 1) && (Zeny >= 10000)) goto LItem2OK;
+	if ((countitem(1055) >= 5) && (countitem(2405) >= 1) && (Zeny >= 10000)) goto LItem2OK;
 	mes "Something is wrong here.";
 	mes "Seems you dont have enough items, we need everything that was asked for.";
 	mes "They are all necessary for you to be taught.";
@@ -235,7 +237,7 @@ LItem2:
 	mes "see you back here soon";
 	close;
 LItem3:
-	if ((Countitem(965) >= 2) && (Countitem(503) >= 5) && (Countitem(909) >= 20) && (Countitem(1020) >= 10) && (Countitem(2401) >= 1)) goto LItem3OK;
+	if ((countitem(965) >= 2) && (countitem(503) >= 5) && (countitem(909) >= 20) && (countitem(1020) >= 10) && (countitem(2401) >= 1)) goto LItem3OK;
 	mes "Something is wrong here.";
 	mes "Seems you dont have enough items, we need everything that was asked for.";
 	mes "They are all necessary for you to be taught.";
@@ -300,7 +302,7 @@ LStart4:
 Llowlv:
 	mes "[Aire]";
 	mes "Huh......";
-	mes "I am very sorry, but you have not met our minimun job lvl requirments.";
+	mes "I am very sorry, but you have not met our minimun job level requirments.";
 	next;
 	mes "[Aire]";
 	mes "You need to be at least above Job Lvl 40.";
@@ -318,8 +320,8 @@ LUpper1:
 }
 //= 2nd "Quest" and Job changer for after the 3rd Quest
 job_duncer.gat,95,93,4	script	Bijou	101,{
-	if ((basejob == 3) && (Sex == 0)) goto LArcher;
-	if (basejob == 20) goto LDancer;
+	if ((BaseJob == 3) && (Sex == 0)) goto LArcher;
+	if (BaseJob == 20) goto LDancer;
 	mes "[Bijou]";
 	mes "Welcome to our Dance Theater, there are many dancers around here.";
 	next;
@@ -665,21 +667,26 @@ Ljobchange:
 	next;
 	mes "[Bijou]";
 	mes "This is present from me!";
-	if (@item == 0) getitem 1950,1;
-	if (@item == 0) mes "Now take this Rope, and be the best dancer you can be!";	
-	if (@item == 1) getitem 1953,1;
-	if (@item == 1) mes "Since you are very experienced I have given you a Line, instead of a simple Rope the normal people would get.";
-	if (@item == 1) mes "Now take you Line, and be the best dancer you can be!";
+	if (@item == 0){
+		getitem 1950,1;
+ 		mes "Now take this Rope, and be the best dancer you can be!";
+	} else {
+		if (@item == 1) {
+			getitem 1953,1;
+			mes "Since you are very experienced I have given you a Line, instead of a simple Rope the normal people would get.";
+			mes "Now take you Line, and be the best dancer you can be!";
+		}
+	}
 	close;
 
 }
 //=Start of the 3rd quest is here, once complete you go back to Bijou to change job
 job_duncer.gat,32,152,6	script	Guide::dancew	69,{
-	close;
+	end;
 OnWarp:
 	warpwaitingpc "job_duncer.gat",70,112,1;
 	disablewaitingroomevent;
-	initnpctimer "jobDq";
+	doevent "jobDq::OnStart";
 	end;
 OnInit:
 	waitingroom "Dance lesson waiting room",20,"dancew::OnWarp",1;
@@ -687,6 +694,12 @@ OnInit:
 }
 job_duncer.gat,0,0,0	script	jobDq	-1,{
 	end;
+
+OnStart:
+	attachnpctimer;
+	initnpctimer;
+	end;
+
 OnTimer1000:
 	mapannounce "job_duncer.gat","Bijou: The test begins, Total time allowed is 1 minute.",8;
 	end;
