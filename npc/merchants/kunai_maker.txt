@@ -1,0 +1,104 @@
+//===== eAthena Script =======================================
+//= Kunai "Trader" @ que_ng.gat
+//===== By: ==================================================
+//= erKURITA
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0
+//===== Description: =========================================
+//= NPC that trades you a few shurikens + ninja stones for 
+//= elemental kunais.
+//===== Additional Comments: =================================
+//= 1.0 Added the npc. It uses a function that sends the item 
+//=	  id of the 2 required items plus the amount. Can trade
+//= 	  up to 500 units (5,000 kunais) at once. [erKURITA]
+//============================================================
+que_ng.gat,72,29,3	script	Kunai Seller	83,{
+mes "[Jin]";
+mes "Hi, I sell elemental enchanted kunais. I'll trade you some elemental stones and one kind of shurikens for a determined elemental Kunai";
+next;
+mes "[Jin]";
+mes "What would you like to trade some? It's free";
+switch(select("10 Poison Kunais:10 Icycle Kunais:10 Rough Wind Kunais:10 Black Soil Kunai:10 Explosion Kunai:Nothing at the Moment")) {
+//Callfunc usage: callfunc "Kunai_Trade",itemreqid1,itemreqct1,itemreqid2,itemreqct2,itemidtrade;
+	case 1:
+		next;
+		callfunc "Kunai_Trade",13250,20,7524,1,13259;
+		close;
+	case 2:
+		next;
+		callfunc "Kunai_Trade",13251,8,7522,2,13255;
+		goto L_Bye;
+	case 3:
+		next;
+		callfunc "Kunai_Trade",13252,4,7523,2,13257;
+		goto L_Bye;
+	case 4:
+		next;
+		callfunc "Kunai_Trade",13253,2,7524,1,13256;
+		goto L_Bye;
+	case 5:
+		next;
+		callfunc "Kunai_Trade",13254,1,7521,2,13258;
+		goto L_Bye;
+	case 6:
+		next;
+		goto L_Bye;
+	}
+L_Bye:
+	next;
+	mes "[Jin]";
+	mes "Good bye and hope to see you again then";
+	close;
+}
+
+function	script	Kunai_Trade	-1,{
+
+mes "[Jin]";
+if (MaxWeight*50/100 < Weight) {
+	if (MaxWeight*90/100 < Weight) {
+		mes "Sorry but you have more than 90% weight. Your kunais might drop. I can't give you anything.";
+		next;
+		goto L_Menu;
+	} else
+	mes "You have 50% or more weight, do you still want to continue?";
+	menu "Yes",-,"No, thanks",L_Return;
+}
+
+mes "Would you like to trade my 10 "+getitemname(getarg(4))+" for yours "+getarg(1)+" "+getitemname(getarg(0))+" and "+getarg(3)+" "+getitemname(getarg(2))+" ?";
+switch(select("Yes:I'll think about it")) {
+	case 1:
+		next; 
+		mes "[Jin]";
+		if (countitem(getarg(0)) < getarg(1) || countitem(getarg(2)) < getarg(3)) {
+			mes "Sorry but you're missing one of the required items. Please get them";
+			close;
+		} else
+		mes "How many do you want to trade? I can only trade you 500 units at once, and remember 1 unit = 10 kunais of your wish";
+		input @trade;
+		next;
+		mes "[Jin]";
+		if (@trade > 500) {
+			mes "Sorry, but I told you I could only trade you 500 units at once. Try again";
+			close;
+		} else if (@trade == 0) {
+			mes "Sorry, but 1 unit is the minimun I can trade. Try again please.";
+			close;
+		} else if ((countitem(getarg(0)) < @trade*getarg(1)) || (countitem(getarg(2)) < @trade*getarg(3))) {
+ 			mes "Sorry, but you don't have enough items to trade "+@trade+" unit(s). Get more please";
+			close;
+		} else
+		mes "Here you go, enjoy them";
+		delitem getarg(0),getarg(1)*@trade;
+		delitem getarg(2),getarg(3)*@trade;
+		getitem getarg(4),10*@trade;
+		next;
+		return;
+	case 2:
+		return;
+	}
+L_Bye:
+return;
+
+}

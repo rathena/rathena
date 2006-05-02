@@ -1473,3 +1473,10 @@ amatsu.gat,261,197,4	script	Legendary Sakura Tree	111,{
 	mes "they always reach an agreement^000000";
 	close;
 }
+
+//| Ninja map portion dummy npcs, commented by default.
+//que_ng.gat,27,18,3	script	Seaman	709,{end;}
+//que_ng.gat,28,45,3	script	Man	86,{end;}
+//que_ng.gat,28,50,3	script	Seaman2	709,{end;}
+//que_ng.gat,22,62,3	script	Seaman2	709,{end;}
+//que_ng.gat,30,65,3	script	Ninja Sensei	730,{end;}

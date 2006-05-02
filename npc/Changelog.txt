@@ -27,6 +27,13 @@ Nexon
 
 Date		Added
 ======
+05/02
+	* Added kunai_maker.txt to make elemental kunais. [erKURITA]
+	* Added new npcs @ que_ng.gat ninja map portion. [erKURITA]
+	* Added new shops @ que_ng.gat ninja map portion. [erKURITA]
+	* Commented wrong shops @ amatsu.txt. [erKURITA]
+	* Added que_ng.gat ninja map portion's warp. [erKURITA]
+	* Modified and corrected the gunslinger quest. [erKURITA]
 05/01
 	* Fixed an NPC in Morroc who still said the Dragon Fly is North [Playtester]
 04/30

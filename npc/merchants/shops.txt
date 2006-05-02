@@ -16,6 +16,9 @@
 //= 1.4 Added an ingredient seller to Morroc, thanks to Muad_Dib [MasterOfMuppets]
 //= a Removed doubled Morocc Ing.Seller, arranged the rest Ing.Sellers according to the city names [Lupus]
 //= 1.4b Commented out temp Gunslinger shops. [Lupus]
+//= 1.5 Removed Temp gunslinger shops and moved up the official ones. [erKURITA]
+//=	  Added Official Ninja shops in their correct location and commented a few
+//=	  shops. Thanks to RockmanEXE and Muad_Dib [erKURITA]
 //============================================================ 
 
 
@@ -46,22 +49,25 @@ aldebaran.gat,166,109,7	shop	Ingredient Seller	750,580:-1,7482:-1	//temp goods
 //=======================================================
 //AMATSU
 //=======================================================
-//Fruit merchant opens a zeny exploit (due to Juice Maker NPC)
-amatsu.gat,176,126,4	shop	Fruit Merchant	53,512:-1,513:-1,515:-1,516:-1
+//|Removed the following shops according to RockmanEXe's info. Some were removed anyway.
+//amatsu.gat,176,126,4	shop	Fruit Merchant	53,512:-1,513:-1,515:-1,516:-1
 //amatsu.gat,169,111,6	shop	Tool Dealer	83,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,506:-1,525:-1,601:-1,602:-1,1065:-1,2239:-1
-amatsu.gat,180,102,3	shop	Flower Girl	96,712:-1,744:-1,2612:-1
-amatsu.gat,189,99,7	shop	Butcher	49,517:-1,528:-1,540:-1,541:-1
-amatsu.gat,169,119,6	shop	Gift Merchant	91,734:-1,735:-1,736:-1,737:-1,746:-1
-amatsu.gat,183,127,5	shop	Milk Merchant	90,519:-1
-//1st set
+//amatsu.gat,180,102,3	shop	Flower Girl	96,712:-1,744:-1,2612:-1
+//amatsu.gat,189,99,7	shop	Butcher	49,517:-1,528:-1,540:-1,541:-1
+//amatsu.gat,169,119,6	shop	Gift Merchant	91,734:-1,735:-1,736:-1,737:-1,746:-1
+//amatsu.gat,183,127,5	shop	Milk Merchant	90,519:-1
 //ama_in01.gat,96,28,4	shop	Weapon Dealer	54,1750:-1,1751:-1,1701:-1,1201:-1,1204:-1,1207:-1,1601:-1,1101:-1,1104:-1,1107:-1,1110:-1,1113:-1,1122:-1,1119:-1,1123:-1,1126:-1,1157:-1,1129:-1,1116:-1,1301:-1,1771:-1
 //ama_in01.gat,103,24,1	shop	Armor Dealer	48,2101:-1,2103:-1,2401:-1,2403:-1,2501:-1,2503:-1,2220:-1,2226:-1,2301:-1,2303:-1,2305:-1,2328:-1,2307:-1,2309:-1,2312:-1,2314:-1
-ama_in01.gat,101,18,8	shop	Weapon Dealer	47,1401:-1,1404:-1,1407:-1,1451:-1,1454:-1,1457:-1,1460:-1,1463:-1,1410:-1
+//ama_in01.gat,101,18,8	shop	Weapon Dealer	47,1401:-1,1404:-1,1407:-1,1451:-1,1454:-1,1457:-1,1460:-1,1463:-1,1410:-1
 //2nd set
+//|<= end of removed shops
 ama_in01.gat,89,28,4	shop	Armor Dealer	757,2211:-1,2401:-1,2403:-1,2501:-1,2503:-1,2101:-1,2103:-1,2305:-1,2321:-1,2332:-1,2314:-1,2627:-1
 ama_in01.gat,102,28,4	shop	Weapon Dealer	766,1207:-1,1216:-1,1107:-1,1122:-1,1116:-1,1154:-1,1407:-1,1457:-1,1354:-1,1519:-1
 ama_in01.gat,24,30,4	shop	Tool Dealer	763,1750:-1,1770:-1,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,601:-1,602:-1,1065:-1
-amatsu.gat,205,150,2	shop	Ingredient Seller	750,7453:-1,579:-1
+amatsu.gat,205,150,2	shop	Ingredient Seller	83,7453:-1,579:-1
+//| Official Ninja Shops
+que_ng.gat,72,31,2	shop	Shuriken Dealer	83,13250:-1,13251:-1,13252:-1,13253:-1,13254:-1
+que_ng.gat,73,26,5	shop	Tool Dealer	83,2117:-1,7521:-1,7522:-1,7523:-1,7524:-1
 
 //=======================================================
 //AYOTHAYA
@@ -94,11 +100,9 @@ ein_in01.gat,109,27,4	shop	Two-Hand Weapon Dealer	850,1116:-1,1151:-1,1154:-1,11
 ein_in01.gat,119,26,4	shop	Weapon Dealer	855,1247:-1,1248:-1,1249:-1,13000:-1
 einbroch.gat,138,66,3	shop	Head Gear Dealer	850,5114,:-1,2218:-1
 einbroch.gat,82,199,3	shop	Paddler	855,512:-1,645:-1,1750:-1,501:-1
-//Temp shops! Normally you can't buy all the equipment & ammo.
-//Use official GUNSLINGER SHOPS
-//einbroch.gat,235,106,3	shop	Ammo Dealer	847,13200:-1,13201:-1,13202:-1,13203:-1,13204:-1,13205:-1,13206:-1,13207:-1
-//einbroch.gat,232,106,3	shop	Gun Dealer	847,13150:-1,13100:-1,13101:-1,13102:-1,13103:-1,13104:-1,13105:-1,13106:-1,13151:-1,13152:-1,13153:-1,13154:-1,13155:-1,13156:-1,13157:-1,13158:-1,13159:-1,13160:-1,13161:-1,13162:-1
-
+//Official Gunslingers shops.
+que_ng.gat,179,91,4	shop	Gunner#Gun Seller	900,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1
+que_ng.gat,180,79,4	shop	Gunner#Ammo Seller	900,13200:-1,13201:-1,13202:-1
 //=======================================================
 //GEFFEN
 //=======================================================
@@ -295,14 +299,6 @@ yuno.gat,133,171,2	shop	Ingredient Seller	750,7457:-1,7482:-1
 //= Monk shop, sells Knuckle weapons)
 //=======================================================
 prt_monk.gat,135,263,3	shop	Blacksmith	726,1801:-1,1803:-1,1805:-1
-
-
-//=======================================================
-// GUNSLINGER SHOPS
-//=======================================================
-que_ng.gat,179,91,4	shop	Gunner#Gunner1	900,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1
-que_ng.gat,180,79,4	shop	Gunner#Gunner2	900,13200:-1,13201:-1,13202:-1
-
 
 //===== Additional Comments(old): ================================= 
 //= swapped shop titles in GONRYUN, thanks to Kashy

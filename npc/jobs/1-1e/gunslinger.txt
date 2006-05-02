@@ -15,6 +15,8 @@
 //= but it does the things it has to do :P
 //===== Additional Comments: ================================= 
 //= 1.0 Made the NPC [erKURITA]
+//= 1.5 Couple fixes to the npc, aswell as adding the missing
+//=	  3 green herbs. [erKURITA]
 //============================================================ 
 
 que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
@@ -27,7 +29,7 @@ if (Class == Job_Novice) {
 		mes @npcname$;
 		mes "So, you've comeback?";
 		next;
-		if (gs_quest == 3) {
+		if (gs_quest == 5) {
 			if (SkillPoint > 0) {
 				mes @npcname$;
 				mes "Err, excuse me, but you still have Skill Points left. You have to use them all first before I can turn you into a Gunslinger";
@@ -60,12 +62,14 @@ if (Class == Job_Novice) {
 		mes "But you still haven't done what I told you, need me to repeat it?";
 		switch (select ("Yes, Please:No, Thanks")) {
 			case 1:
+				next;
 				mes @npcname$;
 				mes "You need to go to Payon. At the small wooden wall and in the south exit, Mr. Tanieh will be there waiting to ask you a few things. Go now then";
 				close2;
 				set @npcname$,0;
 				end;
 			case 2:
+				next;
 				mes @npcname$;
 				mes "Then GET GOING! Don't you want to become a gunslinger, do you?";
 				close2;
@@ -78,6 +82,7 @@ if (Class == Job_Novice) {
 	mes "Hi ^0000CC"+strcharinfo(0)+"^000000,I need you to do something for me first, will you?";
 	switch (select ("Yes:No")) {
 			case 1:
+			next;
 			mes @npcname$;
 			mes "Good, I need you to go to Payon and do a few things from Mr. Tanieh";
 			next;
@@ -88,6 +93,7 @@ if (Class == Job_Novice) {
 			set @npcname$,0;
 			end;
 		case 2:
+			next;
 			mes @npcname$;
 			mes "Too bad for you son";
 			close2;
@@ -116,25 +122,27 @@ if (gs_quest == 1) {
 	mes "So, will you do it, please?";
 	switch (select ("Yes, I will:Sorry I can't now")) {
 		case 1:
+			next;
 			mes @npcname$;
 			mes "Thanks very much!! Ok, here's what I need:";
 			mes "^33CCFF 3 Feathers^000000";
 			mes "^009933 3 Zargons^000000";
 			mes "^660066 3 Rainbow Shells^000000";
-			set @randtrunk,rand(1,5);
-			if (@randtrunk == 1) {
+			mes "^009900 3 Green Herbs^000000";
+			set randtrunk,rand(1,5);
+			if (randtrunk == 1) {
 				mes "^663300 1 Trunk^000000";
 				set trunk,1019;
-			} else if (@randtrunk == 2) {
+			} else if (randtrunk == 2) {
 				mes "^663300 1 Fine-Grained Trunk^000000";
 				set trunk,1066;
-			} else if (@randtrunk == 3) {
+			} else if (randtrunk == 3) {
 				mes "^663300 1 Solid Trunk^000000";
 				set trunk,1067;
-			} else if (@randtrunk == 4) {
+			} else if (randtrunk == 4) {
 				mes "^663300 1 Barren Trunk^000000";
 				set trunk,1068;
-			} else if (@randtrunk == 5) {
+			} else if (randtrunk == 5) {
 				mes "^663300 1 Thin Trunk";
 				set trunk,7186;
 			} 
@@ -143,14 +151,15 @@ if (gs_quest == 1) {
 			mes @npcname$;
 			mes "Hurry please, I am not sure if my wife will last any longer... oh dear";
 			close2;
-			set @npcname$,0;
+			set @npcname$,"";
 			set gs_quest,2;
 			end;
 		case 2:
+			next;
 			mes @npcname$;
 			mes "Oh, what am I going to do now...";
 			close2;
-			set @npcname$,0;
+			set @npcname$,"";
 			end;
 		}
 
@@ -160,72 +169,82 @@ if (gs_quest == 1) {
 		next;
 		switch (select("Yes I did:No I forgot which items I had to bring")) {
 			case 1:
-				if (countitem(949) < 3) {
-				mes @npcname$;
-				mes "Sorry, you're missing a few Feathers";
-				close2;
-				set @npcname$,0;
-				end;
-			} else if (countitem(912) < 3) {
-				mes @npcname$;
-				mes "Sorry, you're missing a few Zargons";
-				close2;
-				set @npcname$,0;
-				end;
-			} else if (countitem(1013) < 3) {
-				mes @npcname$;
-				mes "Sorry, you're missing a few Rainbow Shells";
-				close2;
-				set @npcname$,0;
-				end;
-			} else if (countitem(trunk) < 1) {
-				mes @npcname$;
-				mes "Sorry, you don't have the exact Trunk";
-				close2;
-				set @npcname$,0;
-				end;
-			} else if (countitem(935) < 10) {
-				mes @npcname$;
-				mes "Sorry, you're missing a few Shells";
-				close2;
-				set @npcname$,0;
-				end;
-			} else
-				mes @npcname$;
-				mes "GREAT! You brought them all! Thanks very much!";
-				delitem 949,3;
-				delitem 912,3;
-				delitem 1013,3;
-				delitem trunk,1;
-				delitem 935,10;
 				next;
-				mes @npcname$;
-				mes "Oh my~~ You've been of great help. I'll recommend you to the Einbroch Armory for your job change. Go talk again with the Einbroch Armsmith. He'll change you. Thanks again and see you.";
-				close2;
-				set gs_quest,3;
-				set @npcname$,0;
-				set trunk,0;
-				end;
+				if (countitem(949) < 3) {
+					mes @npcname$;
+					mes "Sorry, you're missing a few Feathers";
+					close2;
+					set @npcname$,"";
+					end;
+				} else if (countitem(912) < 3) {
+					mes @npcname$;
+					mes "Sorry, you're missing a few Zargons";
+					close2;
+					set @npcname$,"";
+					end;
+				} else if (countitem(1013) < 3) {
+					mes @npcname$;
+					mes "Sorry, you're missing a few Rainbow Shells";
+					close2;
+					set @npcname$,"";
+					end;
+				} else if (countitem(trunk) < 1) {
+					mes @npcname$;
+					mes "Sorry, you don't have the exact Trunk";
+					close2;
+					set @npcname$,"";
+					end;
+				} else if (countitem(511) < 3) {
+						mes @npcname$;
+						mes "Sorry, you're missing a few Green Herbs";
+						close2;
+						set @npcname$,"";
+						end;
+				} else if (countitem(935) < 10) {
+					mes @npcname$;
+					mes "Sorry, you're missing a few Shells";
+					close2;
+					set @npcname$,"";
+					end;
+				} else
+					mes @npcname$;
+					mes "GREAT! You brought them all! Thanks very much!";
+					delitem 949,3;
+					delitem 912,3;
+					delitem 1013,3;
+					delitem trunk,1;
+					delitem 935,10;
+					delitem 511,3;
+					next;
+					mes @npcname$;
+					mes "Oh my~~ You've been of great help. I'll recommend you to the Einbroch Armory for your job change.";
+					close2;
+					set gs_quest,3;
+					set @npcname$,0;
+					set trunk,0;
+					set randtrunk,0;
+					end;
 			case 2:
+			next;
 				mes @npcname$;
 				mes "Ok, I'll tell you again, so please take note!:";
 				mes "^33CCFF 3 Feathers^000000";
 				mes "^009933 3 Zargons^000000";
 				mes "^660066 3 Rainbow Shells^000000";
-				set @randtrunk,rand(1,5);
-			if (@randtrunk == 1) {
+				mes "^009900 3 Green Herbs^000000";
+			if (randtrunk == 1) {
 				mes "^663300 1 Trunk^000000";
 				set trunk,1019;
-			} else if (@randtrunk == 2) {
+			} else if (randtrunk == 2) {
 				mes "^663300 1 Fine-Grained Trunk^000000";
 				set trunk,1066;
-			} else if (@randtrunk == 3) {
+			} else if (randtrunk == 3) {
 				mes "^663300 1 Solid Trunk^000000";
 				set trunk,1067;
-			} else if (@randtrunk == 4) {
+			} else if (randtrunk == 4) {
 				mes "^663300 1 Barren Trunk^000000";
 				set trunk,1068;
-			} else if (@randtrunk == 5) {
+			} else if (randtrunk == 5) {
 				mes "^663300 1 Thin Trunk";
 				set trunk,7186;
 			} 
@@ -234,16 +253,45 @@ if (gs_quest == 1) {
 				mes @npcname$;
 				mes "Hurry please, I am not sure if my wife will last any longer... oh dear";
 				close2;
-				set @npcname$,0;
+				set @npcname$,"";
 				end;
 			}
-	} else if (Class == 24) || (gs_quest == 3) {
-	mes @npcname$;
-	mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients";
-	close2;
-	set @npcname$,0;
-	end;
-	}
+	} else if (gs_quest == 3) || (gs_quest == 4) {
+		if (countitem(519) > 1) && (gs_quest == 4) {
+			mes @npcname$;
+			mes "THAT'S IT!! I was missing the Milk! Oh yes, thanks so much, will you give it to me?";
+			switch(select("Yes, take it please:Sorry but I need it)) {
+				case 1:
+					next;
+					mes @npcname$;
+					mes "Thanks so much! Go talk again with the Einbroch Armsmith. He'll change you. Thanks again and see you.";
+					delitem 519,1;
+					close2;
+					set gs_quest,5;
+					set @npcname$,"";
+					end;
+				case 2:
+					next;
+					mes @npcname$;
+					mes "OH please, I need it so much, thing about it please";
+					close2;
+					set @npcname$,"";
+					end;
+			}
+		} else					
+		mes @npcname$;
+		mes "*sigh* All I need now is wait. Thanks for your help... but I believe there's something missing.."
+		close2;
+		set @npcname$,"";
+		set gs_quest,4;
+		end;
+	} else if (Class == 24) || (gs_quest == 5) {
+		mes @npcname$;
+		mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients";
+		close2;
+		set @npcname$,0;
+		end;
+	} 
 mes @npcname$;
 mes "Hi son, how you doing? Nice day eh?";
 close2;

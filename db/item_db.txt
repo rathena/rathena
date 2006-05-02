@@ -2138,10 +2138,10 @@
 7517,Gold_Coin,Golden Coin,3,,10,100,,,,,,0,2,,,,,,{},{},{}
 7518,Women's_Medal,Women's Medal,3,,10,10,,,,,,0,2,,,,,,{},{},{}
 // Ninja Stones
-7521,Burning_Stone,Burning Stone,3,70,,10,,,,,,7,2,,,,,,{},{},{}
-7522,Freezing_Stone,Freezing Stone,3,70,,10,,,,,,7,2,,,,,,{},{},{}
-7523,Windchime_Stone,Windchime Stone,3,70,,10,,,,,,7,2,,,,,,{},{},{}
-7524,Fang_,Fang,3,70,,20,,,,,,7,2,,,,,,{},{},{}
+7521,Burning_Stone,Burning Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7522,Freezing_Stone,Freezing Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7523,Windchime_Stone,Windchime Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7524,Fang_,Fang,3,300,,20,,,,,,7,2,,,,,,{},{},{}
 //
 7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
 7526,Application,Application,3,,10,0,,,,,,,,,,,,,{},{},{}
