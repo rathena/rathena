@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/02
+	* Lowered the duration of Speed Potion to 5 seconds [Playtester]
 05/01
 	* Fixed Jump Kick's range to 9. [Skotlex]
 	* Modified the AM_TWILIGHT* skills to require 200 medicine bowls. [Skotlex]
