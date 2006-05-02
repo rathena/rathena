@@ -27,6 +27,7 @@
 
 =========================
 05/02
+	* Lowered all card drop rates to 0.01% as they are in Aegis X.2 [Playtester]
 	* Updating old/wrong mob drops to Aegis X.2 drops [Playtester]
 	- progress 10%
 	* Changed the prices of the ninja stones according to official. [erKURITA]
