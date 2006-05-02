@@ -822,8 +822,10 @@ int npc_event (struct map_session_data *sd, const unsigned char *eventname, int 
 	int xs,ys;
 	unsigned char mobevent[100];
 
-	if (sd == NULL)
+	if (sd == NULL) {
 		nullpo_info(NLP_MARK);
+		return 0;
+	}
 
 	if (ev == NULL && eventname && strcmp(((eventname)+strlen(eventname)-9),"::OnTouch") == 0)
 		return 1;
