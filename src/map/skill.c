@@ -5543,11 +5543,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_FEEL:
 		if (sd) {
 			if(!sd->feel_map[skilllv-1].index) {
-				for (i = 0; i<3 && sd->feel_map[i].index != sd->mapindex; i++);
-				if (i < 3) {	//Avoid memorizing already known maps. [Skotlex]
-					clif_skill_fail(sd, skillid, 0, 0);
-					break;
-				}
+				//AuronX reported you CAN memorize the same map as all three. [Skotlex]
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				clif_parse_ReqFeel(sd->fd,sd, skilllv);
 			}

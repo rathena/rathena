@@ -27,6 +27,7 @@
 
 =========================
 05/01
+	* Fixed Jump Kick's range to 9. [Skotlex]
 	* Modified the AM_TWILIGHT* skills to require 200 medicine bowls. [Skotlex]
 	* Added effect of Speed Potion [Playtester]
 	* Removed Kraben Card drop from G_Kraben [Playtester]

@@ -364,7 +364,9 @@ int unit_run(struct block_list *bl)
 	}
 
 	if(to_x == bl->x && to_y == bl->y) {
+		//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 		status_change_end(bl,SC_RUN,-1);
+		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,sc->data[SC_RUN].val1)|0x10000);
 		return 0;
 	}
 	unit_walktoxy(bl, to_x, to_y, 1);
