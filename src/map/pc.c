@@ -2952,7 +2952,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		itemid = md->db->dropitem[i].nameid;
 		if(itemid <= 0 || (itemid>4000 && itemid<5000 && pc_checkskill(sd,TF_STEAL) <= 5))
 			continue;
-		if(rand() % 10000 <= md->db->dropitem[i].p*skill/100)
+		if(rand() % 10000 < md->db->dropitem[i].p*skill/100)
 			break;
 	}
 	if (i == MAX_MOB_DROP)

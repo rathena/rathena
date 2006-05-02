@@ -8715,9 +8715,6 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if (clif_cant_act(sd) || sd->sc.option&OPTION_HIDE)
-		return;
-	
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD].timer != -1 ||
 	 	sd->sc.data[SC_AUTOCOUNTER].timer != -1 ||
@@ -8740,8 +8737,13 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	switch(action_type) {
 	case 0x00: // once attack
 	case 0x07: // continuous attack
+
+		if (clif_cant_act(sd) || sd->sc.option&OPTION_HIDE)
+			return;
+
 		if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
 			return;
+
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
 			if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
 				clif_skill_fail(sd, 1, 4, 0);
@@ -8753,23 +8755,41 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		unit_attack(&sd->bl, target_id, action_type != 0);
 		break;
 	case 0x02: // sitdown
-		if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 3) {
-			if (sd->ud.skilltimer != -1) //No sitting while casting :P
-				break;
-			if (sd->sc.count && (
-				sd->sc.data[SC_DANCING].timer != -1 ||
-				(sd->sc.data[SC_GRAVITATION].timer != -1 && sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF)
-			)) //No sitting during these states neither.
-			break;
-			pc_setsit(sd);
-			skill_gangsterparadise(sd, 1); // ギャングスターパラダイス設定 fixed Valaris
-			skill_rest(sd, 1); // TK_HPTIME sitting down mode [Dralnu]
-			clif_sitting(sd);
-		} else
+		if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 3) {
 			clif_skill_fail(sd, 1, 0, 2);
+			break;
+		}
+		if(pc_issit(sd)) {
+			//Bugged client? Just refresh them.
+			WBUFW(buf, 0) = 0x8a;
+			WBUFL(buf, 2) = sd->bl.id;
+			WBUFB(buf,26) = 2;
+			clif_send(buf, packet_len_table[0x8a], &sd->bl, SELF);
+			return;
+		}
+
+		if (sd->ud.skilltimer != -1 || sd->sc.opt1)
+			break;
+
+		if (sd->sc.count && (
+			sd->sc.data[SC_DANCING].timer != -1 ||
+			(sd->sc.data[SC_GRAVITATION].timer != -1 && sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF)
+		)) //No sitting during these states neither.
+		break;
+		pc_setsit(sd);
+		skill_gangsterparadise(sd, 1); // ギャングスターパラダイス設定 fixed Valaris
+		skill_rest(sd, 1); // TK_HPTIME sitting down mode [Dralnu]
+		clif_sitting(sd);
 		break;
 	case 0x03: // standup
-		pc_setstand(sd);
+		if (!pc_issit(sd)) {
+			//Bugged client? Just refresh them.
+			WBUFW(buf, 0) = 0x8a;
+			WBUFL(buf, 2) = sd->bl.id;
+			WBUFB(buf,26) = 3;
+			clif_send(buf, packet_len_table[0x8a], &sd->bl, SELF);
+			return;
+		}
 		skill_gangsterparadise(sd, 0); // ギャングスターパラダイス解除 fixed Valaris
 		skill_rest(sd, 0); // TK_HPTIME standing up mode [Dralnu]
 		WBUFW(buf, 0) = 0x8a;
