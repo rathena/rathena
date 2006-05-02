@@ -1934,9 +1934,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case ASC_METEORASSAULT:
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
-	case SG_SUN_WARM:
-	case SG_MOON_WARM:
-	case SG_STAR_WARM:
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case KN_BRANDISHSPEAR:
@@ -2016,7 +2013,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		if (su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 			damage = 0; //Only Heaven's drive may damage traps. [Skotlex]
 	}
-	if (!dmg.amotion) {  // do not really deal damage for ASC_BREAKER's 1st attack
+	if (!dmg.amotion) {
 		battle_damage(src,bl,damage,dmg.dmotion,0); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if (dmg.dmg_lv == ATK_DEF || damage > 0) {
 			if (!status_isdead(bl))
@@ -3716,10 +3713,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
+	{
+		struct skill_unit_group *sg;
+		if (!tsc) break;
+		sg = skill_unitsetting(bl,skillid,skilllv,src->x,src->y,0);
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,skilllv,0,skillid,
-				skill_get_splash(skillid,skilllv),skill_get_time(skillid,skilllv)));
+			sc_start4(bl,type,100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv)));
 		break;
+	}
 
 	case CG_MOONLIT:		/* ŒŽ–¾‚è‚Ìò‚É—Ž‚¿‚é‰Ô‚Ñ‚ç */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5025,14 +5026,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_POWERUP:
 		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
-		// another random guess xP
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,SC_INCALLSTATUS,100,skilllv*5,skill_get_time(skillid, skilllv)));
+//From experience it appears powerup is more hit, not +all stats.
+		sc_start(bl,SC_INCDEX,100,10*skilllv,skill_get_time(skillid, skilllv));
+//		sc_start(bl,SC_INCALLSTATUS,100,skilllv*5,skill_get_time(skillid, skilllv));
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
 	case NPC_AGIUP:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,SC_INCAGI,100,skilllv*10,skill_get_time(skillid, skilllv)));
+			sc_start(bl,SC_INCAGI,100,10*skilllv,skill_get_time(skillid, skilllv)));
 		break;
 
 	case NPC_INVISIBLE:
@@ -6862,11 +6864,24 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		}
 
 	case UNT_ATTACK_SKILLS:
-		skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		if (sg->skill_id == AC_SHOWER)
-			sg->val2++; //Store count of hitted enemies to know when to delete an arrow.
+		switch (sg->skill_id) 
+		{
+			case SG_SUN_WARM: //SG skills [Komurka]
+			case SG_MOON_WARM:
+			case SG_STAR_WARM:
+				if(bl->type==BL_PC)
+					//Only damage SP [Skotlex]
+					pc_damage_sp((TBL_PC*)bl, 60, 0);
+				else if(!sd || pc_damage_sp(sd, 2, 0) >= 0)
+					//Otherwise, Knockback attack.
+					skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+			case AC_SHOWER:
+				sg->val2++; //Store count of hitted enemies to know when to delete an arrow.
+			default:
+				skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
+		}
 		break;
-
 	case UNT_FIREPILLAR_WAITING:
 		skill_unitsetting(ss,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
 		skill_delunit(src);
@@ -9488,6 +9503,16 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 			status_change_end(src,SC_GOSPEL,-1);
 		}
 	}
+	if (group->skill_id == SG_SUN_WARM ||
+		group->skill_id == SG_MOON_WARM ||
+		group->skill_id == SG_STAR_WARM) {
+		struct status_change *sc = status_get_sc(src);
+		if(sc && sc->data[SC_WARM].timer != -1) {
+			sc->data[SC_WARM].val4 = 0;
+			status_change_end(src,SC_WARM,-1);
+		}
+	}
+
 	if (group->skill_id == AC_SHOWER && group->val2 && src->type==BL_PC)
 		battle_consume_ammo((TBL_PC*)src, group->skill_id, -group->skill_lv); //Delete arrow if at least one target was hit.
 

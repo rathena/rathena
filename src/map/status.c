@@ -3883,10 +3883,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				if (sc->data[type].val2 && !val2)
 					return 0;
 			break;
-			case SC_GOSPEL:
-				 //Must not override a casting gospel char.
-				if (sc->data[type].val4 == BCT_SELF)
-					return 0;
+			case SC_WARM:
+			{	//Fetch the Group, half the attack interval. [Skotlex]
+				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val4;
+				if (group)
+					group->interval/=2;
+				return 1;
+			}
 			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
@@ -3908,6 +3911,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
 				break;
+			case SC_GOSPEL:
+				 //Must not override a casting gospel char.
+				if (sc->data[type].val4 == BCT_SELF)
+					return 0;
 			default:
 				if(sc->data[type].val1 > val1)
 					return 1; //Return true to not mess up skill animations. [Skotlex
@@ -4279,13 +4286,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			break;
 
-		case SC_WARM: //SG skills [Komurka]
-			if (!(flag&4)) {
-				val2 = tick/100;
-				tick = 100;
-			}
-			break;
-
 		case SC_GOSPEL:
 			if (val4 == BCT_SELF) {	// self effect
 				if (flag&4)
@@ -4578,6 +4578,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ASSUMPTIO:		/* アスムプティオ */
 		case SC_SLEEP:
 		case SC_SMA:
+		case SC_WARM: 
 			break;
 		// gs_something1 [Vicious]
 		case SC_MADNESSCANCEL:
@@ -5175,6 +5176,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				if (vd) vd->dead_sit = 0;
 				break;
 			}
+			case SC_WARM:
+				if (sc->data[type].val4) { //Clear the group.
+					struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val4;
+					sc->data[type].val4 = 0;
+					skill_delunitgroup(bl, group);
+				}
+				break;
 
 			//gs_something2 [Vicious]
 			case SC_MADNESSCANCEL:
@@ -5412,16 +5420,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 					bl->id, data);
 				return 0;
 			}
-		}
-		break;
-
-	case SC_WARM: //SG skills [Komurka]
-		if( (--sc->data[type].val2)>0){
-			map_foreachinrange( status_change_timer_sub, bl,
-				sc->data[type].val4,BL_CHAR,
-				bl,sc,type,tick);
-			sc->data[type].timer=add_timer(tick+100, status_change_timer,bl->id, data);
-			return 0;
 		}
 		break;
 
@@ -5754,20 +5752,6 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 			{	//sc_ check prevents a single round of Sight Blaster hitting multiple opponents. [Skotlex]
 				skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,1,tick,0);
 				sc->data[type].val2 = 0; //This signals it to end.
-			}
-		}
-		break;
-	case SC_WARM: //SG skills [Komurka]
-		if(sc && sc->data[type].val2 &&
-			battle_check_target( src,bl, BCT_ENEMY ) > 0)
-	 	{
-			if(tsd)
-				//Only damage SP [Skotlex]
-				pc_damage_sp(tsd, 60, 0);
-			else { //Otherwise, Knockback attack.
-				if(sd && pc_damage_sp(sd, 2, 0) <= 0)
-					sd->sc.data[type].val2 = 0; //Makes it end on the next tick.
-				skill_attack(BF_WEAPON,src,src,bl,sc->data[type].val3,sc->data[type].val1,tick,0);
 			}
 		}
 		break;

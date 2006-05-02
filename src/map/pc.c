@@ -2939,6 +2939,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		? (sd->paramc[4] - md->db->dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
 		: sd->paramc[4] - md->db->dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
 
+	skill+= sd->add_steal_rate; //Better make the steal_Rate addition affect % rather than an absolute on top of the total drop rate. [Skotlex]
+		
 	if (skill < 1)
 		return 0;
 
@@ -2950,7 +2952,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		itemid = md->db->dropitem[i].nameid;
 		if(itemid <= 0 || (itemid>4000 && itemid<5000 && pc_checkskill(sd,TF_STEAL) <= 5))
 			continue;
-		if(rand() % 10000 <= ((md->db->dropitem[i].p * skill) / 100 + sd->add_steal_rate))
+		if(rand() % 10000 <= md->db->dropitem[i].p*skill/100)
 			break;
 	}
 	if (i == MAX_MOB_DROP)
@@ -2977,7 +2979,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 		}
 		
 		if(log_config.steal) {	//this drop log contains ALL stolen items [Lupus]
-			int log_item[10]; //for stolen items logging Lupus
+			int log_item[MAX_MOB_DROP]; //for stolen items logging Lupus
 			memset(&log_item,0,sizeof(log_item));
 			log_item[i] = itemid; //i == monster's drop slot
 			log_drop(sd, md->class_, log_item);
