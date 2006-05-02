@@ -1092,7 +1092,7 @@ int pc_checkweighticon(struct map_session_data *sd)
 int pc_disguise(struct map_session_data *sd, int class_) {
 	if (!class_ && !sd->disguise)
 		return 0;
-	if (class_ && (sd->disguise || pc_isriding(sd)))
+	if (class_ && (sd->disguise == class_ || pc_isriding(sd)))
 		return 0;
 
 	pc_stop_walking(sd, 0);
