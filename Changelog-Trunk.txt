@@ -3,7 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2006/05/01
+2006/05/02
+	* Kaite now works against all types of spells. [Skotlex]
+	* Kaupe now works against all skills. [Skotlex]
+	* Sanctuary now won't damage non-enemies. [Skotlex]
+	* Blessing now will always give you bonus stats even if you are wearing
+	  undead armor. [Skotlex]
 	* Modified how Rogue's treasure works so that you get +1% to your steal
 	  rate rather than +0.01% to the final rate. [Skotlex]
 	* Rewrote Warmth to use ground-skill-units, it should behave now like in
@@ -16,6 +21,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  behaves). [Skotlex]
 	* Allowed SG_FEEL memorizing the same map for all three. [Skotlex]
 	* SC_FUSION won't end when you die now. [Skotlex]
+2006/05/01
 	* Added knockback when you run into a wall during running. However
 	  position is not being refreshed on the client yet... [Skotlex]
 	* Fixed pc_disguise not allowing you to "redisguise". [Skotlex]

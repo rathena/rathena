@@ -461,7 +461,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_FOGWALL].timer != -1 && flag&BF_MAGIC
 			&& rand()%100 < 75 && !(skill_get_inf(skill_num)&INF_GROUND_SKILL))
 			return 0;
-
+   	
+		if(sc->data[SC_KAUPE].timer != -1 && rand()%100 < sc->data[SC_KAUPE].val2)
+		{
+			if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
+				status_change_end(bl, SC_KAUPE, -1);
+			return 0;
+		}
+ 
 		//Now damage increasing effects
 		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
 			damage<<=1;
@@ -1363,11 +1370,7 @@ static struct Damage battle_calc_weapon_attack(
 
 		if(rand()%100 >= hitrate)
 			wd.dmg_lv = ATK_FLEE;
-		else if (tsc && tsc->data[SC_KAUPE].timer != -1 && rand()%100 < tsc->data[SC_KAUPE].val2) {
-			if (--tsc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
-				status_change_end(target, SC_KAUPE, -1);
-			wd.dmg_lv = ATK_FLEE;
-		} else
+		else
 			flag.hit =1;
 	}	//End hit/miss calculation
 

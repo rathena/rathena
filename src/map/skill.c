@@ -1743,7 +1743,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if (sc && !sc->count)
 		sc = NULL; //Don't need it.
 	
-	if (attack_type&BF_MAGIC && sc && sc->data[SC_KAITE].timer != -1 && src == dsrc
+	if (attack_type&BF_MAGIC && sc && sc->data[SC_KAITE].timer != -1
 		&& !(status_get_mode(src)&MD_BOSS) && (sd || status_get_lv(dsrc) <= 80) //Works on players or mobs with level under 80.
 	) { //Bounce back the skill.
 		if (--sc->data[SC_KAITE].val2 <= 0)
@@ -6833,11 +6833,12 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		{
 			int race = status_get_race(bl);
 
-			if (battle_check_undead(race, status_get_elem_type(bl)) || race==RC_DEMON) {
-				if (skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0)) {
+			if (battle_check_undead(race, status_get_elem_type(bl)) || race==RC_DEMON)
+		  	{	//Only damage enemies with offensive Sanctuary. [Skotlex]
+				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
+					skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0))
 					// reduce healing count if this was meant for damaging [hekate]
 					sg->val1 -= 2;
-				}
 			} else {
 				int heal = sg->val2;
 				if (status_get_hp(bl) >= status_get_max_hp(bl))

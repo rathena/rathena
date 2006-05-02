@@ -1675,10 +1675,10 @@ int status_calc_str(struct block_list *bl, int str)
 		if(sc->data[SC_SPURT].timer!=-1)
 			str += 10; //Bonus is +!0 regardless of skill level
 		if(sc->data[SC_BLESSING].timer != -1){
-			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
+			if(sc->data[SC_BLESSING].val2)
+				str += sc->data[SC_BLESSING].val2;
+			else
 				str >>= 1;
-			else str += sc->data[SC_BLESSING].val1;
 		}
 		if(sc->data[SC_NEN].timer!=-1)
 			str += sc->data[SC_NEN].val1;
@@ -1755,10 +1755,10 @@ int status_calc_int(struct block_list *bl, int int_)
   		if(sc->data[SC_TRUESIGHT].timer!=-1)
 			int_ += 5;
 		if(sc->data[SC_BLESSING].timer != -1){
-			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
+			if (sc->data[SC_BLESSING].val2)
+				int_ += sc->data[SC_BLESSING].val2;
+			else
 				int_ >>= 1;
-			else int_ += sc->data[SC_BLESSING].val1;
 		}
 		if(sc->data[SC_STRIPHELM].timer!=-1 && bl->type != BL_PC)
 			int_ -= int_ * 8*sc->data[SC_STRIPHELM].val1/100;
@@ -1787,10 +1787,10 @@ int status_calc_dex(struct block_list *bl, int dex)
 		if(sc->data[SC_QUAGMIRE].timer!=-1)
 			dex -= sc->data[SC_QUAGMIRE].val1*(bl->type==BL_PC?5:10);
 		if(sc->data[SC_BLESSING].timer != -1){
-			int race = status_get_race(bl);
-			if(battle_check_undead(race,status_get_elem_type(bl)) || race == RC_DEMON)
+			if (sc->data[SC_BLESSING].val2)
+				dex += sc->data[SC_BLESSING].val2;
+			else
 				dex >>= 1;
-			else dex += sc->data[SC_BLESSING].val1;
 		}
 		if(sc->data[SC_INCREASING].timer!=-1)
 			dex += 4;	// added based on skill updates [Reddozen]
@@ -3753,7 +3753,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			 return 0;
 		 switch (type) {
 			case SC_BLESSING:
-			  if (!undead_flag || race != RC_DEMON)
+			  if (!undead_flag && race != RC_DEMON)
 				  break;
 			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
@@ -3768,7 +3768,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	//Before overlapping fail, one must check for status cured.
 	switch (type) {
 	case SC_BLESSING:
-		if (!undead_flag && race!=RC_DEMON) {
+		if ((!undead_flag && race!=RC_DEMON) || bl->type == BL_PC) {
 			if (sc->data[SC_CURSE].timer!=-1)
 				status_change_end(bl,SC_CURSE,-1);
 			if (sc->data[SC_STONE].timer!=-1 && sc->data[SC_STONE].val2==0)
@@ -4441,13 +4441,19 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 200*val1; //HP heal
 			val3 = 5*val1; //SP cost
 			break;
+		case SC_BLESSING:
+			if ((!undead_flag && race!=RC_DEMON) || bl->type == BL_PC)
+				val2 = val1;
+			else
+				val2 = 0; //0 -> Half stat.
+			calc_flag = 1;
+			break;
 		case SC_TRICKDEAD:			/* 死んだふり */
 		{
 			struct view_data *vd = status_get_viewdata(bl);
 			if (vd) vd->dead_sit = 1;
 			break;
 		}
-		case SC_BLESSING:
 		case SC_CONCENTRATION:	/* コンセントレ?ション */case SC_ETERNALCHAOS:		/* エタ?ナルカオス */
 		case SC_DRUMBATTLE:			/* ?太鼓の響き */
 		case SC_NIBELUNGEN:			/* ニ?ベルングの指輪 */
