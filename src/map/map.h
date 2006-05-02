@@ -253,9 +253,7 @@ enum {
 #define OPTION_WEDDING 0x1000
 #define OPTION_RUWACH 0x2000
 #define OPTION_CHASEWALK 0x4000
-#define OPTION_XMAS	0x8000
-
-#define OPTION_FLYING 0x10000
+#define OPTION_FLYING 0x8000
 //TODO: Get these Missing options...
 #define OPTION_SIGHTTRASHER 0x0001
 

@@ -1917,7 +1917,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case SL_STIN:
 			case SL_STUN:
 				if (skilllv >= 7 && sd->sc.data[SC_COMBO].timer == -1)
-					sc_start4(src,SC_COMBO,100,SL_SMA,skilllv,0,0,skill_get_time2(skillid, skilllv));
+					sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA, skilllv));
 				break;
 			case GS_FULLBUSTER:
 				//Can't attack nor use items until skill's delay expires. [Skotlex]
@@ -5419,7 +5419,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start4(bl,SC_SPIRIT,100,skilllv,skillid,0,0,skill_get_time(skillid,skilllv)));
-		sc_start4(src,SC_COMBO,100,SL_SMA,skilllv,0,0,skill_get_time2(skillid,skilllv));
+		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		break;
 	case SL_HIGH:
 		if (sd && !(dstsd && (dstsd->class_&JOBL_UPPER) && !(dstsd->class_&JOBL_2) && dstsd->status.base_level < 70)) {
@@ -5428,7 +5428,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start4(bl,type,100,skilllv,skillid,0,0,skill_get_time(skillid,skilllv)));
-		sc_start4(src,SC_COMBO,100,SL_SMA,skilllv,0,0,skill_get_time2(skillid,skilllv));
+		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		break;
 
 	case SL_SKA: // [marquis007]
@@ -5463,7 +5463,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		sc_start4(src,SC_COMBO,100,SL_SMA,skilllv,0,0,skill_get_time2(skillid,skilllv));
+		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		break;
 		
 	// New guild skills [Celest]
@@ -7913,7 +7913,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		break;
 	case SL_SMA:
 		if(type) break; //Only do the combo check when the target is selected (type == 0)
-		if(sd->sc.data[SC_COMBO].timer == -1 || sd->sc.data[SC_COMBO].val1 != skill)
+		if(sd->sc.data[SC_SMA].timer == -1)
 			return 0;
 		break;	
 

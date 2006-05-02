@@ -241,7 +241,7 @@ enum {
 	SC_SUITON,
 	SC_NEN,
 	SC_KNOWLEDGE,
-	
+	SC_SMA,	//Not combined with SC_COMBO because SMA has it's own visual effect. [Skotlex].
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
 extern int SkillStatusChangeTable[MAX_SKILL];
@@ -352,7 +352,7 @@ enum {
 	SI_KAIZEL		= 156,
 	SI_KAAHI		= 157,
 	SI_KAUPE		= 158,
-// 159 = blue sparks and item-heal sound effect. Looks like item-use effect.
+	SI_SMA		= 159,
 // 160
 	SI_ONEHAND		= 161,
 	SI_WARM			= 165,	

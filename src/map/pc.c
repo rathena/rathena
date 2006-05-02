@@ -5513,16 +5513,6 @@ int pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_FALCON) && sd->sc.option&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,SI_FALCON,0);
 
-	//SG flying [Komurka]
-	if (type&OPTION_FLYING && !(sd->sc.option&OPTION_FLYING)) //Flying ON
-	{
-		if (sd->status.class_==JOB_STAR_GLADIATOR)
-			clif_changelook(&sd->bl,LOOK_BASE,JOB_STAR_GLADIATOR2);
-	}
-	else if (!(type&OPTION_FLYING) && sd->sc.option&OPTION_FLYING) //Flying OFF
-		if (sd->vd.class_ != sd->status.class_)
-			clif_changelook(&sd->bl,LOOK_BASE,sd->status.class_);
-
 	sd->sc.option=type;
 	clif_changeoption(&sd->bl);
 	status_calc_pc(sd,0);

@@ -267,6 +267,7 @@ void initChangeTables(void) {
 	set_sc(SL_SWOO,                 SC_SWOO,                SI_BLANK);
 	set_sc(SL_SKE,                  SC_SKE,                 SI_BLANK);
 	set_sc(SL_SKA,                  SC_SKA,                 SI_BLANK);
+	set_sc(SL_SMA,                  SC_SMA,                 SI_SMA);
 	set_sc(ST_PRESERVE,             SC_PRESERVE,            SI_PRESERVE);
 	set_sc(PF_DOUBLECASTING,        SC_DOUBLECAST,          SI_DOUBLECAST);
 	set_sc(HW_GRAVITATION,          SC_GRAVITATION,         SI_BLANK);
@@ -3332,12 +3333,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				}
 				if (sd->vd.class_ == JOB_WEDDING)
 					sd->sc.option&=~OPTION_WEDDING;
-				if (sd->vd.class_ == JOB_XMAS)
-					sd->sc.option&=~OPTION_XMAS;
 				if (class_ == JOB_WEDDING)
 					sd->sc.option|=OPTION_WEDDING;
-				if (class_ == JOB_XMAS)
-					sd->sc.option|=OPTION_XMAS;
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
 				sd->vd.head_top = sd->status.head_top;
@@ -3871,6 +3868,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			status_change_end(bl,SC_DECREASEAGI,-1);
 			return 0;
 		}
+	case SC_FUSION:
+		if(sc->data[SC_SPIRIT].timer!=-1 )
+			status_change_end(bl,SC_SPIRIT,-1);
 		break;
 	}
 	//Check for overlapping fails
@@ -4577,6 +4577,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
 		case SC_ASSUMPTIO:		/* アスムプティオ */
 		case SC_SLEEP:
+		case SC_SMA:
 			break;
 		// gs_something1 [Vicious]
 		case SC_MADNESSCANCEL:
@@ -4740,9 +4741,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_SIGHTTRASHER:
 			sc->option |= OPTION_SIGHTTRASHER;
-			break;
-		case SC_XMAS: // Xmas Suit [Valaris]
-			sc->option |= OPTION_XMAS;
 			break;
 		case SC_FUSION:
 			sc->option |= OPTION_FLYING;
@@ -5253,10 +5251,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 		case SC_SIGHTTRASHER:
 			sc->option &= ~OPTION_SIGHTTRASHER;
-			opt_flag = 1;
-			break;
-		case SC_XMAS: // Xmas Suit [Valaris]
-			sc->option &= ~OPTION_XMAS;
 			opt_flag = 1;
 			break;
 		case SC_FUSION:
@@ -5817,6 +5811,7 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 			case SC_WEIGHT50:
 			case SC_WEIGHT90:
 			case SC_COMBO:
+			case SC_SMA:
 			case SC_DANCING:
 			case SC_GUILDAURA:
 			case SC_SAFETYWALL:
