@@ -2591,8 +2591,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		short x, y;
 		x = bl->x;
 		y = bl->y;
-		if (skillid == TK_JUMPKICK && !unit_can_move(src))
-			break;
 		if (src->x < bl->x) x--;
 		else if (src->x > bl->x) x++;
 		if (src->y < bl->y) y--;
@@ -2677,10 +2675,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
 				int dx,dy;
 
-				if (!unit_can_move(src)) { //You need to be able to move to attack/reach target.
-					if (sd) clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
 				dx = bl->x - src->x;
 				dy = bl->y - src->y;
 				if(dx > 0) dx++;
@@ -4715,14 +4709,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int x,y, dir = unit_getdir(src);
 
-			if (!unit_can_move(src)) {
-				map_freeblock_unlock();
-				return 1;
-			}
-
 			x = src->x + dirx[dir]*skilllv*2;
 			y = src->y + diry[dir]*skilllv*2;
-
 			
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skilllv,1);
 			if(map_getcell(src->m,x,y,CELL_CHKPASS)) {
@@ -7822,6 +7810,10 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case MO_EXTREMITYFIST:					// ˆ¢?C—…”e–PŒ?
 //		if(sd->sc.data[SC_EXTREMITYFIST].timer != -1) //To disable Asura during the 5 min skill block uncomment this...
 //			return 0;
+		if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer == -1) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
 		if(sd->sc.data[SC_BLADESTOP].timer!=-1)
 			spiritball--;
 		else if (sd->sc.data[SC_COMBO].timer != -1) {
