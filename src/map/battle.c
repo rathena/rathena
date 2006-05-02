@@ -3920,10 +3920,15 @@ static const struct battle_data_int {
 // eAthena additions
 	{ "item_rate_mvp",                     &battle_config.item_rate_mvp		},
 	{ "item_rate_common",                  &battle_config.item_rate_common	},	// Added by RoVeRT
+	{ "item_rate_common_boss",                   &battle_config.item_rate_common_boss	},	// [Reddozen]
 	{ "item_rate_equip",                   &battle_config.item_rate_equip	},
+	{ "item_rate_equip_boss",                   &battle_config.item_rate_equip_boss	},	// [Reddozen]
 	{ "item_rate_card",                    &battle_config.item_rate_card	},	// End Addition
+	{ "item_rate_card_boss",                    &battle_config.item_rate_card_boss	},	// [Reddozen]
 	{ "item_rate_heal",                    &battle_config.item_rate_heal	},	// Added by Valaris
+	{ "item_rate_heal_boss",                    &battle_config.item_rate_heal_boss	},	// [Reddozen]
 	{ "item_rate_use",                     &battle_config.item_rate_use	},	// End
+	{ "item_rate_use_boss",                     &battle_config.item_rate_use_boss	},	// [Reddozen]
 	{ "item_rate_adddrop",                 &battle_config.item_rate_adddrop	},	// End
 	{ "item_rate_treasure",                &battle_config.item_rate_treasure }, // End
 	{ "day_duration",                      &battle_config.day_duration	}, // added by [Yor]
@@ -4173,10 +4178,15 @@ void battle_set_defaults() {
 // eAthena additions
 	battle_config.item_rate_mvp=100;
 	battle_config.item_rate_common = 100;
+	battle_config.item_rate_common_boss = battle_config.item_rate_common;	// [Reddozen]
 	battle_config.item_rate_equip = 100;
+	battle_config.item_rate_equip_boss = battle_config.item_rate_equip;	// [Reddozen]
 	battle_config.item_rate_card = 100;
+	battle_config.item_rate_card_boss = battle_config.item_rate_card;	// [Reddozen]
 	battle_config.item_rate_heal = 100;		// Added by Valaris
+	battle_config.item_rate_heal_boss = battle_config.item_rate_heal;	// [Reddozen]
 	battle_config.item_rate_use = 100;		// End
+	battle_config.item_rate_use_boss = battle_config.item_rate_use;	// [Reddozen]
 	battle_config.item_rate_adddrop = 100;
 	battle_config.item_rate_treasure = 100;
 	battle_config.logarithmic_drops = 0;

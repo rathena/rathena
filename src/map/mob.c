@@ -3222,32 +3222,52 @@ static int mob_readdb(void)
 					ratemin = battle_config.item_drop_treasure_min;
 					ratemax = battle_config.item_drop_treasure_max;
 				}
-				else switch (type)
+				else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 				{
 				case 0:
-					rate_adjust = battle_config.item_rate_heal; 
+					if (mob_db_data[class_]->mexp > 0)
+						rate_adjust = battle_config.item_rate_heal_boss;
+					else {
+						rate_adjust = battle_config.item_rate_heal;
+					}
 					ratemin = battle_config.item_drop_heal_min;
 					ratemax = battle_config.item_drop_heal_max;
 					break;
 				case 2:
-					rate_adjust = battle_config.item_rate_use;
+					if (mob_db_data[class_]->mexp > 0)
+						rate_adjust = battle_config.item_rate_use_boss;
+					else {
+						rate_adjust = battle_config.item_rate_use;
+					}
 					ratemin = battle_config.item_drop_use_min;
 					ratemax = battle_config.item_drop_use_max;
 					break;
 				case 4:
 				case 5:
 				case 8:		// Changed to include Pet Equip
-					rate_adjust = battle_config.item_rate_equip;
+					if (mob_db_data[class_]->mexp > 0)
+						rate_adjust = battle_config.item_rate_equip_boss;
+					else {
+						rate_adjust = battle_config.item_rate_equip;
+					}
 					ratemin = battle_config.item_drop_equip_min;
 					ratemax = battle_config.item_drop_equip_max;
 					break;
 				case 6:
-					rate_adjust = battle_config.item_rate_card;
+					if (mob_db_data[class_]->mexp > 0)
+						rate_adjust = battle_config.item_rate_card_boss;
+					else {
+						rate_adjust = battle_config.item_rate_card;
+					}
 					ratemin = battle_config.item_drop_card_min;
 					ratemax = battle_config.item_drop_card_max;
 					break;
 				default:
-					rate_adjust = battle_config.item_rate_common;
+					if (mob_db_data[class_]->mexp > 0)
+						rate_adjust = battle_config.item_rate_common_boss;
+					else {
+						rate_adjust = battle_config.item_rate_common;
+					}
 					ratemin = battle_config.item_drop_common_min;
 					ratemax = battle_config.item_drop_common_max;
 					break;
@@ -3851,32 +3871,52 @@ static int mob_read_sqldb(void)
 						ratemin = battle_config.item_drop_treasure_min;
 						ratemax = battle_config.item_drop_treasure_max;
 					}
-					else switch(type)
+					else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 					{
-					case 0:							// Added by Valaris
-						rate_adjust = battle_config.item_rate_heal;
+					case 0:	// Val added heal restrictions
+						if (mob_db_data[class_]->mexp > 0)
+							rate_adjust = battle_config.item_rate_heal_boss;
+						else {
+							rate_adjust = battle_config.item_rate_heal;
+						}
 						ratemin = battle_config.item_drop_heal_min;
 						ratemax = battle_config.item_drop_heal_max;
 						break;
 					case 2:
-						rate_adjust = battle_config.item_rate_use;
+						if (mob_db_data[class_]->mexp > 0)
+							rate_adjust = battle_config.item_rate_use_boss;
+						else {
+							rate_adjust = battle_config.item_rate_use;
+						}
 						ratemin = battle_config.item_drop_use_min;
-						ratemax = battle_config.item_drop_use_max;	// End
+						ratemax = battle_config.item_drop_use_max;
 						break;
 					case 4:
 					case 5:
-					case 8:	// Changed to include Pet Equip
-						rate_adjust = battle_config.item_rate_equip;
+					case 8:		// Changed to include Pet Equip
+						if (mob_db_data[class_]->mexp > 0)
+							rate_adjust = battle_config.item_rate_equip_boss;
+						else {
+							rate_adjust = battle_config.item_rate_equip;
+						}
 						ratemin = battle_config.item_drop_equip_min;
 						ratemax = battle_config.item_drop_equip_max;
 						break;
 					case 6:
-						rate_adjust = battle_config.item_rate_card;
+						if (mob_db_data[class_]->mexp > 0)
+							rate_adjust = battle_config.item_rate_card_boss;
+						else {
+							rate_adjust = battle_config.item_rate_card;
+						}
 						ratemin = battle_config.item_drop_card_min;
 						ratemax = battle_config.item_drop_card_max;
 						break;
 					default:
-						rate_adjust = battle_config.item_rate_common;
+						if (mob_db_data[class_]->mexp > 0)
+							rate_adjust = battle_config.item_rate_common_boss;
+						else {
+							rate_adjust = battle_config.item_rate_common;
+						}
 						ratemin = battle_config.item_drop_common_min;
 						ratemax = battle_config.item_drop_common_max;
 						break;

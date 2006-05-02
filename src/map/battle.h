@@ -272,8 +272,9 @@ extern struct Battle_Config {
 	unsigned short mob_attack_attr_none;
 	unsigned short mob_ghostring_fix;
 	unsigned short pc_attack_attr_none;
-	int item_rate_mvp, item_rate_common,item_rate_card,item_rate_equip,
-		item_rate_heal, item_rate_use, item_rate_treasure,	// Added by RoVeRT, Additional Heal and Usable item rate by Val
+	int item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,	// added support for MVP drops [Reddozen]
+		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
+		item_rate_use_boss, item_rate_treasure,	// Added by RoVeRT, Additional Heal and Usable item rate by Val
 		item_rate_adddrop;
 	
 	unsigned short logarithmic_drops;
