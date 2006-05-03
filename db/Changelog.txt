@@ -27,6 +27,7 @@
 
 =========================
 05/03
+	* Removed all Novice Job bonusses [Playtester]
 	* Reverted the changes to Killer Mantis and Demon Pungus card [Playtester]
 	- the base effect rate is 20%, but target's defense can lower the rate
 	* Fixed bugs in every New Card with getrefine() check [Lupus]
