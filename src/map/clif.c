@@ -8790,6 +8790,7 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 			clif_send(buf, packet_len_table[0x8a], &sd->bl, SELF);
 			return;
 		}
+		pc_setstand(sd);
 		skill_gangsterparadise(sd, 0); // ギャングスターパラダイス解除 fixed Valaris
 		skill_rest(sd, 0); // TK_HPTIME standing up mode [Dralnu]
 		WBUFW(buf, 0) = 0x8a;

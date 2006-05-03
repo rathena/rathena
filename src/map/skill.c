@@ -2732,8 +2732,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 				skill_castend_damage_id);
 			//Skill-attack at the end in case it has knockback. [Skotlex]
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
-			if (sd)
-				battle_consume_ammo(sd, skillid, -skilllv);
 		}
 		break;
 
@@ -3136,6 +3134,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 
 	map_freeblock_unlock();	
 
+	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow on last invocation to this skill.
+		battle_consume_ammo(sd, skillid, skilllv);
 	return 0;
 }
 
@@ -5104,7 +5104,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			   (su->group->src_id == src->id || map_flag_vs(bl->m)) &&
 				(skill_get_inf2(su->group->skill_id) & INF2_TRAP))
 			{	
-				if(sd && su->group->val3 != BD_INTOABYSS)
+				if(sd && !su->group->state.into_abyss)
 				{	//Avoid collecting traps when it does not costs to place them down. [Skotlex]
 					if(battle_config.skill_removetrap_type){
 						for(i=0;i<10;i++) {
@@ -5605,6 +5605,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if (dstmd) //Mob skill event for no damage skills (damage ones are handled in battle_calc_damage) [Skotlex]
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skillid<<16));
 	
+	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow on last invocation to this skill.
+		battle_consume_ammo(sd, skillid, skilllv);
+
 	map_freeblock_unlock();
 	return 0;
 }
@@ -5976,11 +5979,13 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case AC_SHOWER:	//Ground-placed skill implementation.
 	case GS_DESPERADO:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		break;
 
 	case RG_GRAFFITI:			/* Graffiti [Valaris] */
 		skill_clear_unitgroup(src);
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		flag|=1;
 		break;
 
 	case RG_CLEANER: // [Valaris]
@@ -5993,6 +5998,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case SA_LANDPROTECTOR:	/* ƒ‰ƒ“ƒhƒvƒ?ƒeƒNƒ^? */
 	case NJ_SUITON:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		flag|=1;
 		break;
 
 	case WZ_METEOR:				//ƒ?ƒeƒIƒXƒg?ƒ€
@@ -6128,6 +6134,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			sg = skill_unitsetting(src,skillid,skilllv,x,y,0);	
 			sc_start4(src,SkillStatusChangeTable[skillid],100,
 				skilllv,0,BCT_SELF,(int)sg,skill_get_time(skillid,skilllv));
+			flag|=1;
 		}
 		break;
 
@@ -6156,12 +6163,11 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case GS_GROUNDDRIFT:		/* ƒOƒ‰ƒEƒ“ƒhƒhƒŠƒtƒg*/
 	case NJ_KAENSIN:			/* ‰Î‰Šw*/
 	case NJ_BAKUENRYU:			/* ”š‰Š—´*/
-		skill_unitsetting(src,skillid,skilllv,x,y,0);
-		break;
-		
 	case NJ_HYOUSYOURAKU:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
+		flag|=1;
 		break;
+		
 	case NJ_RAIGEKISAI:
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
@@ -6172,6 +6178,9 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	if (sc && sc->data[SC_MAGICPOWER].timer != -1)
 		status_change_end(&sd->bl,SC_MAGICPOWER,-1);
 
+	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow if a ground skill was not invoked. [Skotlex]
+		battle_consume_ammo(sd, skillid, skilllv);
+		
 	return 0;
 }
 
@@ -6387,8 +6396,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	case HT_FLASHER:			/* ƒtƒ‰ƒbƒVƒƒ? */
 	case HT_FREEZINGTRAP:		/* ƒtƒŠ?ƒWƒ“ƒOƒgƒ‰ƒbƒv */
 	case HT_BLASTMINE:			/* ƒuƒ‰ƒXƒgƒ}ƒCƒ“ */
-		if (sc && sc->data[SC_INTOABYSS].timer != -1)
-			val3 = BD_INTOABYSS;	//Store into abyss state, to know it shouldn't give traps back. [Skotlex]
 		if (map_flag_gvg(src->m))
 			limit *= 4; // longer trap times in WOE [celest]
 		if (battle_config.vs_traps_bctall && map_flag_vs(src->m)
@@ -6515,9 +6522,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 	}
 
-	if (val3==0 && (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)))
-		val3 = HW_MAGICPOWER; //Store the magic power flag. [Skotlex]
-		
+	
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
 		skillid,skilllv,skill_get_unit_id(skillid,flag&1), limit, interval));
 	group->val1=val1;
@@ -6525,6 +6530,10 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	group->val3=val3;
 	group->target_flag=target;
 	group->bl_flag= skill_get_unit_bl_target(skillid);
+	group->state.into_abyss = (sc && sc->data[SC_INTOABYSS].timer != -1); //Store into abyss state, to know it shouldn't give traps back. [Skotlex]
+	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)); //Store the magic power flag. [Skotlex]
+	group->state.ammo_consume = (sd && sd->state.arrow_atk); //Store if this skill needs to consume ammo.
+	
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
 		group->valstr=(char *) aMallocA(MESSAGE_SIZE*sizeof(char));
@@ -6788,7 +6797,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,0)-1);
 	}
 	//Temporarily set magic power to have it take effect. [Skotlex]
-	if (sg->val3 == HW_MAGICPOWER && sc && sc->data[SC_MAGICPOWER].timer == -1 && sc->data[SC_MAGICPOWER].val1 > 0)
+	if (sg->state.magic_power && sc && sc->data[SC_MAGICPOWER].timer == -1 && sc->data[SC_MAGICPOWER].val1 > 0)
 	{
 		if (sd)
 		{	//This is needed since we are not going to recall status_calc_pc...
@@ -6863,8 +6872,6 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 					//Otherwise, Knockback attack.
 					skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
-			case AC_SHOWER:
-				sg->val2++; //Store count of hitted enemies to know when to delete an arrow.
 			default:
 				skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
 		}
@@ -6893,7 +6900,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-			sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		}
 		break;
 
@@ -6930,7 +6937,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		sg->unit_id = UNT_USED_TRAPS;
 		clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-		sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+		sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		break;
 
 	case UNT_BLASTMINE:
@@ -6949,7 +6956,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		sg->unit_id = UNT_USED_TRAPS;
 		clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-		sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+		sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		break;
 		
 	case UNT_TALKIEBOX:
@@ -6961,7 +6968,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 			sg->limit = DIFF_TICK(tick, sg->tick) + 5000;
 			sg->val2 = -1; //“¥‚ñ‚¾
-			sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		}
 		break;
 
@@ -7089,7 +7096,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 		break;
 	}
-	if (sg->val3 == HW_MAGICPOWER && sc && sc->data[SC_MAGICPOWER].timer < 0 && sc->data[SC_MAGICPOWER].val1 > 0)
+	if (sg->state.magic_power && sc && sc->data[SC_MAGICPOWER].timer < 0 && sc->data[SC_MAGICPOWER].val1 > 0)
 	{	//Unset Magic Power.
 		if (sd)
 		{
@@ -7148,7 +7155,7 @@ int skill_unit_onout(struct skill_unit *src,struct block_list *bl,unsigned int t
 		if(target && target == bl){
 			status_change_end(bl,SC_ANKLE,-1);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1000;
-			sg->val3 = BD_INTOABYSS; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 		}
 		else
 			return 0;
@@ -8265,6 +8272,8 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 
 	if(!(type&1))
 		return 1;
+
+	sd->state.arrow_atk = ammo?1:0; //Update arrow-atk state on cast-end.
 
 	if(delitem_flag) {
 		for(i=0;i<10;i++) {
@@ -9509,8 +9518,8 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 		}
 	}
 
-	if (group->skill_id == AC_SHOWER && group->val2 && src->type==BL_PC)
-		battle_consume_ammo((TBL_PC*)src, group->skill_id, -group->skill_lv); //Delete arrow if at least one target was hit.
+	if (src->type==BL_PC && group->state.ammo_consume)
+		battle_consume_ammo((TBL_PC*)src, group->skill_id, group->skill_lv);
 
 	group->alive_count=0;
 	if(group->unit!=NULL){
@@ -9687,7 +9696,7 @@ int skill_unit_timer_sub( struct block_list *bl, va_list ap )
 					struct block_list *src=map_id2bl(group->src_id);
 					if(group->unit_id == UNT_ANKLESNARE && group->val2);
 					else{
-						if(src && src->type==BL_PC && group->val3 != BD_INTOABYSS)
+						if(src && src->type==BL_PC && !group->state.into_abyss)
 						{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
 							struct item item_tmp;
 							memset(&item_tmp,0,sizeof(item_tmp));

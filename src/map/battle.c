@@ -947,12 +947,6 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 	if (!battle_config.arrow_decrement)
 		return;
 	
-	if (skill == AC_SHOWER) {
-		//Can't consume arrows this way as it triggers per target, gotta wait for the direct invocation with lv -1
-		if (lv > 0)
-			return;
-		lv *= -1;
-	}
 	if (skill)
 	{
 		qty = skill_get_ammo_qty(skill, lv);
@@ -1071,31 +1065,14 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 	//Set miscellaneous data that needs be filled regardless of hit/miss
-	if(sd) {
-		if (!skill_num) //Ammo condition for weapons is lower below.
-		switch (sd->status.weapon) {
-			case W_BOW:
-			case W_REVOLVER:
-			case W_RIFLE:
-			case W_SHOTGUN:
-			case W_GATLING:
-			case W_GRENADE:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-				flag.arrow = 1;
-				break;
-		}
-	} else if (status_get_range(src) > 3)
-		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-
-	if(skill_num && 
-		(skill_get_ammotype(skill_num) ||
-		(sd && skill_isammotype(sd, skill_num)))
-	){
-		//Skills that require a consumable are also long-ranged arrow-types
+	if(
+		(sd && sd->state.arrow_atk) ||
+		(!sd && ((skill_num && skill_get_ammotype(skill_num)) || status_get_range(src)>3))
+	) {	
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;
 	}
-
+	
 	if(skill_num){
 		wd.flag=(wd.flag&~BF_SKILLMASK)|BF_SKILL;
 		switch(skill_num)
@@ -1164,11 +1141,6 @@ static struct Damage battle_calc_weapon_attack(
 	if(is_boss(target)) //Bosses can't be knocked-back
 		wd.blewcount = 0;
 
-	if (sd)
-	{	//Arrow consumption
-		sd->state.arrow_atk = flag.arrow;
-	}
-
 /* Apparently counter attack no longer causes you to be critical'ed by mobs. [Skotlex]
 	//Check for counter 
 	if(!skill_num)
@@ -1186,8 +1158,6 @@ static struct Damage battle_calc_weapon_attack(
 			wd.type=0x0b;
 			wd.dmg_lv=ATK_LUCKY;
 			if (wd.div_ < 0) wd.div_*=-1;
-			if (sd && flag.arrow)
-				battle_consume_ammo(sd, skill_num, skill_lv);
 			return wd;
 		}
 	}
@@ -1376,8 +1346,6 @@ static struct Damage battle_calc_weapon_attack(
 
 	if(tsd && tsd->special_state.no_weapon_damage) {
 		if (wd.div_ < 0) wd.div_*=-1;
-		if (sd && flag.arrow)
-			battle_consume_ammo(sd, skill_num, skill_lv);
 		return wd;
 	}
 
@@ -2144,11 +2112,8 @@ static struct Damage battle_calc_weapon_attack(
 		if (flag.lh && (flag.hit || wd.damage2>0))
 			wd.damage2 = 1;
 		if (!(battle_config.skill_min_damage&1)) 
-		{	//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
-			if (sd && flag.arrow)
-				battle_consume_ammo(sd, skill_num, skill_lv);
+			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;
-		}
 	}
 	
 	if(sd && !skill_num && !flag.cri)
@@ -2207,8 +2172,6 @@ static struct Damage battle_calc_weapon_attack(
 			if(wd.damage > 0 && wd.damage2 < 1) wd.damage2 = 1;
 			flag.lh = 1;
 		}
-		if (flag.arrow) //Consume the arrow.
-			battle_consume_ammo(sd, skill_num, skill_lv);
 	}
 	
 	if(wd.damage > 0 || wd.damage2 > 0)
@@ -3117,11 +3080,13 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	race = status_get_race(target);
 	ele = status_get_elem_type(target);
 
-	if (sd && (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-		&& sd->equip_index[10] < 0)
-  	{
-		clif_arrow_fail(sd,0);
-		return 0;
+	if (sd)
+	{
+		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
+		if (sd->state.arrow_atk && sd->equip_index[10]<0) {
+			clif_arrow_fail(sd,0);
+			return 0;
+		}
 	}
 
 	if (sc && sc->data[SC_CLOAKING].timer != -1 && !sc->data[SC_CLOAKING].val4)
@@ -3175,6 +3140,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			
 	wd = battle_calc_weapon_attack(src,target, 0, 0,0);
 
+	if (sd && sd->state.arrow_atk) //Consume arrow.
+		battle_consume_ammo(sd, 0, 0);
+	
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
 		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
