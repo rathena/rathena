@@ -451,7 +451,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_DODGE].timer != -1 && !sc->opt1 &&
 			(flag&BF_LONG || sc->data[SC_SPURT].timer != -1)
 			&& rand()%100 < 20) {
-			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (sc->data[SC_COMBO].timer == -1)
 				sc_start4(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 0, 0, 2000);
@@ -464,6 +463,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
    	
 		if(sc->data[SC_KAUPE].timer != -1 && rand()%100 < sc->data[SC_KAUPE].val2)
 		{
+			clif_skill_nodamage(bl,bl,SL_KAUPE,1,1);
 			if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
 				status_change_end(bl, SC_KAUPE, -1);
 			return 0;

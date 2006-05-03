@@ -27,6 +27,7 @@
 
 =========================
 05/03
+	* Fusion's cast time reduced to 0. [Skotlex]
 	* Removed all Novice Job bonusses [Playtester]
 	* Reverted the changes to Killer Mantis and Demon Pungus card [Playtester]
 	- the base effect rate is 20%, but target's defense can lower the rate

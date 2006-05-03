@@ -1746,6 +1746,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if (attack_type&BF_MAGIC && sc && sc->data[SC_KAITE].timer != -1
 		&& !(status_get_mode(src)&MD_BOSS) && (sd || status_get_lv(dsrc) <= 80) //Works on players or mobs with level under 80.
 	) { //Bounce back the skill.
+		clif_skill_nodamage(bl,bl,SL_KAITE,sc->data[SC_KAITE].val1,1);
 		if (--sc->data[SC_KAITE].val2 <= 0)
 			status_change_end(bl, SC_KAITE, -1);
 		bl = src; //Just make the skill attack yourself @.@

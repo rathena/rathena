@@ -8185,6 +8185,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if (sd->sc.option&OPTION_RIDING)
 			clif_status_load(&sd->bl, SI_RIDING, 1);
 
+		//Auron reported that This skill only triggers when you logon on the map o.O [Skotlex]
+		if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
+			if(sd->bl.m == sd->feel_map[0].m
+				|| sd->bl.m == sd->feel_map[1].m
+				|| sd->bl.m == sd->feel_map[2].m)
+				sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
+		}
+
 		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
 		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
@@ -8229,12 +8237,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	} else {
 		ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
 			npc_event_doall_id(script_config.loadmap_event_name, sd->bl.id), script_config.loadmap_event_name);
-	}
-	if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
-		if(sd->bl.m == sd->feel_map[0].m
-			|| sd->bl.m == sd->feel_map[1].m
-			|| sd->bl.m == sd->feel_map[2].m)
-			sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
 	}
 
 	if (
@@ -9235,9 +9237,9 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->state.trading|| !sd->npc_shopid){
+	if (sd->state.trading|| !sd->npc_shopid)
 		fail = 1;
-	}else{
+	else{
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
 			sprintf(npc_ev, "%s::OnBuyItem", nd->exname);
 			for(i=0;i<n;i++){
@@ -9273,9 +9275,9 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->state.trading|| !sd->npc_shopid){
+	if (sd->state.trading|| !sd->npc_shopid)
 		fail = 1;
-	}else{
+	else{
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
 			sprintf(npc_ev, "%s::OnSellItem", nd->exname);
 			for(i=0;i<n;i++){
@@ -11261,10 +11263,7 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	WFIFOW(fd,30)=i;
 	WFIFOSET(fd, packet_len_table[0x20e]);
 	
-	if (sd->bl.m == sd->feel_map[i].m && 
-		(i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0)
-		sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
-
+	clif_skill_nodamage(&sd->bl,&sd->bl,sd->menuskill_id,sd->menuskill_lv,1);
 	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
