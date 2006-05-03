@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/02
+	* Implemented desperado as explained by Rockman-EXE. The skill-effect is
+	  not showing up though, I'll need some logged packets to see what's missing.
+	  [Skotlex]
 	* Removed the unit_can_move checks in skill cast-end, they should be
 	  performed in skill_check_require when the skill's state is move_enabled.
 	  [Skotlex]

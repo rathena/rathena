@@ -1932,7 +1932,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case SM_MAGNUM:
 	case AS_SPLASHER:
 	case ASC_METEORASSAULT:
-	case GS_DESPERADO:
 	case GS_SPREADATTACK:
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
@@ -3205,8 +3204,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
 		//Until they're at right position - gs_ground- [Vicious]
+		case GS_DESPERADO:
 		case NJ_KAENSIN:	/*‰Î‰Šw*/
-		case GS_DESPERADO:	/*ƒfƒXƒyƒ‰[ƒh*/
 		case NJ_HYOUSYOURAKU:
 		case NJ_RAIGEKISAI:
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
@@ -3968,7 +3967,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case ASC_METEORASSAULT:	/* ƒ?ƒeƒIƒAƒTƒ‹ƒg */
-	case GS_DESPERADO:
 	case GS_SPREADATTACK:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub, src,
@@ -5976,6 +5974,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case AC_SHOWER:	//Ground-placed skill implementation.
+	case GS_DESPERADO:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
 
@@ -6154,7 +6153,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		break;
 	
 	//Until they're at right position - gs_unit- [Vicious]
-	case GS_DESPERADO:			/* ƒfƒXƒyƒ‰[ƒh*/
 	case GS_GROUNDDRIFT:		/* ƒOƒ‰ƒEƒ“ƒhƒhƒŠƒtƒg*/
 	case NJ_KAENSIN:			/* ‰Î‰Šw*/
 	case NJ_BAKUENRYU:			/* ”š‰Š—´*/
@@ -6871,6 +6869,11 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 				skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
 		}
 		break;
+	case UNT_DESPERADO:
+		if (!(rand()%10)) //Has a low chance of connecting. [Skotlex]
+			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+		break;
+
 	case UNT_FIREPILLAR_WAITING:
 		skill_unitsetting(ss,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
 		skill_delunit(src);
