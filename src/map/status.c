@@ -4438,8 +4438,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			calc_flag = 1;
 			break;
 		case SC_KAAHI:
-			val2 = 200*val1; //HP heal
-			val3 = 5*val1; //SP cost
+			if(flag&4)
+				break;
+			val2 = tick/500;
+			val3 = 200*val1; //HP heal
+			tick = 500;
 			break;
 		case SC_BLESSING:
 			if ((!undead_flag && race!=RC_DEMON) || bl->type == BL_PC)
@@ -5428,7 +5431,30 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 		}
 		break;
-
+		
+	case SC_KAAHI:
+		if(sc->data[type].val4) { //Heal
+			sc->data[type].val4 = 0;
+			if (sd && sd->status.sp < 5*sc->data[SC_KAAHI].val1)
+				; //Not enough SP to cast
+			else {
+				int hp = status_get_max_hp(bl) - status_get_hp(bl);
+				if (hp > sc->data[SC_KAAHI].val2)
+					hp = sc->data[SC_KAAHI].val2;
+				if (hp) {
+					battle_heal(bl, bl, hp, -5*sc->data[SC_KAAHI].val1, 1);
+					clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
+				}
+			}
+		}
+		if( (--sc->data[type].val2)>0 ){
+			sc->data[type].timer=add_timer(
+				500+tick, status_change_timer,
+				bl->id, data);
+			return 0;
+		}
+		break;
+		
 	case SC_PROVOKE:	/* プロボック/オ?トバ?サ?ク */
 		if(sc->data[type].val2!=0){	/* オ?トバ?サ?ク（１秒ごとにHPチェック） */
 			if(sd && sd->status.hp>sd->status.max_hp>>2)	/* 停止 */

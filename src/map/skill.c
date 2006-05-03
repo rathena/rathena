@@ -1424,19 +1424,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	switch(skillid){
 	case 0: //Normal Attack
-		if(tsc && tsc->data[SC_KAAHI].timer != -1) {
-			if (dstsd && dstsd->status.sp < tsc->data[SC_KAAHI].val3)
-				; //Not enough SP to cast
-			else {
-				int hp = status_get_max_hp(bl) - status_get_hp(bl);
-				if (hp > tsc->data[SC_KAAHI].val2)
-					hp = tsc->data[SC_KAAHI].val2;
-				if (hp) {
-					battle_heal(bl, bl, hp, -tsc->data[SC_KAAHI].val3, 1);
-					clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
-				}
-			}
-		}
+		if(tsc && tsc->data[SC_KAAHI].timer != -1)
+			tsc->data[SC_KAAHI].val4++; //Activate heal.
 		break;
 	case MO_EXTREMITYFIST:			/* ˆ¢?C—…”e™€Œ? */
 		//ˆ¢?C—…‚ðŽg‚¤‚Æ5•ªŠÔŽ©‘R‰ñ•œ‚µ‚È‚¢‚æ‚¤‚É‚È‚é
