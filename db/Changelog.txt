@@ -26,6 +26,10 @@
 	-----
 
 =========================
+05/03
+	* Fixed bugs in every New Card with getrefine() check [Lupus]
+	- optimized some IF() conditions of the new cards
+	- temp fix of getrefine bonus 4379,Blue_Acidus_Card (probably item desc is wrong)
 05/02
 	* Corrected Desperado ammo consumption (should be 10) [Skotlex]
 	* Lowered all card drop rates to 0.01% as they are in Aegis X.2 [Playtester]
