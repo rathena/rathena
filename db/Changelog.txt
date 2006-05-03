@@ -27,6 +27,8 @@
 
 =========================
 05/03
+	* Reverted the changes to Killer Mantis and Demon Pungus card [Playtester]
+	- the base effect rate is 20%, but target's defense can lower the rate
 	* Fixed bugs in every New Card with getrefine() check [Lupus]
 	- optimized some IF() conditions of the new cards
 	- temp fix of getrefine bonus 4379,Blue_Acidus_Card (probably item desc is wrong)
