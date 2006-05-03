@@ -356,7 +356,7 @@
 334,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_MALE#I Will Protect You#
 335,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_FEMALE#I Look up to You#
 336,9,6,4,0,1,3,1,1,yes,0,4,1,none,0	//WE_CALLPARTNER#I miss You#
-337,9,6,1,-1,0,0,1,1,no,0,0,0,weapon,0	//ITM_TOMAHAWK#Throw Tomahawk#
+337,9,6,1,-1,0,0,1,1,no,0,2,0,weapon,0	//ITM_TOMAHAWK#Throw Tomahawk#
 338,-1,8,1,7,0,0,0,-2,no,0,2,0,weapon,0	//NPC_DARKCROSS#Cross of Darkness#
 339,0,6,4,7,0,0,10,1,no,33,258,0,magic,0		//NPC_GRANDDARKNESS#Grand cross of Darkness#
 340,9,8,1,7,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,2,0,magic,0	//NPC_DARKSTRIKE#Soul Strike of Darkness#

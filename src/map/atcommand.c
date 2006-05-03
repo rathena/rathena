@@ -1835,11 +1835,11 @@ int atcommand_whomap(
 	}
 
 	if (count == 0)
-		sprintf(atcmd_output, msg_table[54], map[map_id].name); // No player found in map '%s'.
+		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
 	else if (count == 1)
-		sprintf(atcmd_output, msg_table[55], map[map_id].name); // 1 player found in map '%s'.
+		sprintf(atcmd_output, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
 	else {
-		sprintf(atcmd_output, msg_table[56], count, map[map_id].name); // %d players found in map '%s'.
+		sprintf(atcmd_output, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, atcmd_output);
 

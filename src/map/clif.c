@@ -1334,13 +1334,19 @@ int clif_spawn(struct block_list *bl)
 
 	} else {	//Mob spawn packet.
 		struct status_change *sc = status_get_sc(bl);
+		memset(buf,0,sizeof(buf));
 		WBUFW(buf,0)=0x7c;
 		WBUFL(buf,2)=bl->id;
 		WBUFW(buf,6)=status_get_speed(bl);
-		WBUFW(buf,8)=sc?sc->opt1:0;
-		WBUFW(buf,10)=sc?sc->opt2:0;
-		WBUFW(buf,12)=sc?sc->option:0;
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFW(buf,12)=sc->option;
+		}
 		WBUFW(buf,20)=vd->class_;
+		WBUFW(buf,22)=vd->hair_style;  //Required for pets.
+		WBUFW(buf,24)=vd->head_bottom;	//Pet armor
+
 		WBUFPOS(buf,36,bl->x,bl->y);
 		clif_send(buf,packet_len_table[0x7c],bl,AREA_WOS);
 		if (disguised(bl)) {
