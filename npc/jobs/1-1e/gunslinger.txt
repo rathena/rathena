@@ -257,7 +257,7 @@ if (gs_quest == 1) {
 				end;
 			}
 	} else if (gs_quest == 3) || (gs_quest == 4) {
-		if (countitem(519) > 1) && (gs_quest == 4) {
+		if (countitem(519) >= 1) && (gs_quest == 4) {
 			mes @npcname$;
 			mes "THAT'S IT!! I was missing the Milk! Oh yes, thanks so much, will you give it to me?";
 			switch(select("Yes, take it please:Sorry but I need it")) {
@@ -280,7 +280,7 @@ if (gs_quest == 1) {
 			}
 		} else					
 		mes @npcname$;
-		mes "*sigh* All I need now is wait. Thanks for your help... but I believe there's something missing.."
+		mes "*sigh* All I need now is wait. Thanks for your help... but I believe there's something missing..";
 		close2;
 		set @npcname$,"";
 		set gs_quest,4;
