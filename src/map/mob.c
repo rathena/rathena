@@ -982,46 +982,48 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 int mob_randomwalk(struct mob_data *md,int tick)
 {
 	const int retrycount=20;
+	int i,x,y,c,d;
 	int speed;
 
 	nullpo_retr(0, md);
 
-	if(DIFF_TICK(md->next_walktime,tick)<0 && unit_can_move(&md->bl)){
-		int i,x,y,c,d=12-md->move_fail_count;
-		speed=status_get_speed(&md->bl);
-		if(d<5) d=5;
-		for(i=0;i<retrycount;i++){	// Search of a movable place
-			int r=rand();
-			x=r%(d*2+1)-d;
-			y=r/(d*2+1)%(d*2+1)-d;
-			x+=md->bl.x;
-			y+=md->bl.y;
+	if(DIFF_TICK(md->next_walktime,tick)>0 || !unit_can_move(&md->bl))
+		return 0;
+	
+	d =12-md->move_fail_count;
+	if(d<5) d=5;
+	for(i=0;i<retrycount;i++){	// Search of a movable place
+		int r=rand();
+		x=r%(d*2+1)-d;
+		y=r/(d*2+1)%(d*2+1)-d;
+		x+=md->bl.x;
+		y+=md->bl.y;
 
-			if((map_getcell(md->bl.m,x,y,CELL_CHKPASS)) && unit_walktoxy(&md->bl,x,y,1)){
-				md->move_fail_count=0;
-				break;
-			}
-			if(i+1>=retrycount){
-				md->move_fail_count++;
-				if(md->move_fail_count>1000){
-					if(battle_config.error_log)
-						ShowWarning("MOB cant move. random spawn %d, class = %d\n",md->bl.id,md->class_);
-					md->move_fail_count=0;
-					mob_spawn(md);
-				}
-			}
+		if((map_getcell(md->bl.m,x,y,CELL_CHKPASS)) && unit_walktoxy(&md->bl,x,y,1)){
+			break;
 		}
-		for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
-			if(md->ud.walkpath.path[i]&1)
-				c+=speed*14/10;
-			else
-				c+=speed;
-		}
-		md->next_walktime = tick+rand()%3000+3000+c;
-		md->state.skillstate=MSS_WALK;
-		return 1;
 	}
-	return 0;
+	if(i==retrycount){
+		md->move_fail_count++;
+		if(md->move_fail_count>1000){
+			if(battle_config.error_log)
+				ShowWarning("MOB cant move. random spawn %d, class = %d\n",md->bl.id,md->class_);
+			md->move_fail_count=0;
+			mob_spawn(md);
+		}
+		return 0;
+	}
+	speed=status_get_speed(&md->bl);
+	for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
+		if(md->ud.walkpath.path[i]&1)
+			c+=speed*14/10;
+		else
+			c+=speed;
+	}
+	md->state.skillstate=MSS_WALK;
+	md->move_fail_count=0;
+	md->next_walktime = tick+rand()%3000+3000+c;
+	return 1;
 }
 
 /*==========================================
@@ -1259,15 +1261,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	}
 	// Nothing else to do... except random walking.
 	// Slaves do not random walk! [Skotlex]
-	if (can_move && !md->master_id)
-	{
-		if (DIFF_TICK(md->next_walktime, tick) > 7000 &&
-			(md->ud.walkpath.path_len == 0 || md->ud.walkpath.path_pos >= md->ud.walkpath.path_len))
-			md->next_walktime = tick + 3000 + rand() % 2000;
-		// Random movement
-		if (mob_randomwalk(md,tick))
-			return 0;
-	}
+	if (can_move && !md->master_id && DIFF_TICK(md->next_walktime, tick) <= 0)
+		mob_randomwalk(md,tick);
 
 	return 0;
 }
