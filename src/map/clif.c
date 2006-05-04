@@ -4338,8 +4338,11 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
-
+	if (!sd) {	//Since this is the most common nullpo.... 
+		ShowDebug("clif_skill_fail: Error, received NULL sd for skill %d\n", skill_id);
+		return 0;
+	}
+	
 	fd=sd->fd;
 
 	// reset all variables [celest]

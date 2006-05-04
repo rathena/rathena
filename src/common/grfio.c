@@ -858,7 +858,7 @@ static void grfio_resourcecheck(void)
 	FILE *fp;
 
 	// read resnametable from data directory and return if successful
-	sprintf(restable, "%sresnametable.txt", data_dir);
+	sprintf(restable, "%sdata\\resnametable.txt", data_dir);
 	for (ptr = &restable[0]; *ptr != 0; ptr++)
 		if (*ptr == '\\') *ptr = '/';
 
@@ -869,15 +869,15 @@ static void grfio_resourcecheck(void)
 				// we only need the map names and text files
 				(strstr(w2, ".gat") || strstr(w2, ".txt")))
 			{
-				sprintf(src, "%s", w1);
-				sprintf(dst, "%s", w2);
+				sprintf(src, "data\\%s", w1);
+				sprintf(dst, "data\\%s", w2);
 				entry = filelist_find(dst);
 				// create new entries reusing the original's info
 				if (entry != NULL) {
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = grfio_alloc_ptr(w2);
+					fentry.fnd = grfio_alloc_ptr(dst);
 					filelist_modify(&fentry);
 					i++;
 				}
@@ -906,7 +906,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = grfio_alloc_ptr(w2);
+					fentry.fnd = grfio_alloc_ptr(dst);
 					filelist_modify(&fentry);
 					i++;
 				}

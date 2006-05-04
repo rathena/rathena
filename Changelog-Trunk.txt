@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/04
+	* Stun time for using ES magic on non-mobs reduced to 0.5 secs. [Skotlex]
+	* Eska is now usable on bosses. [Skotlex]
+	* Swoo will stun you if attempted on an already 'swooned' enemy. [Skotlex]
+	* clif_skill_failed will print out a debug line with the skill_id (since
+	  the current null_po does not helps at all to fix it) [Skotlex]
+	* Applied TheUltraMage's suggested fixes to the grfio module. [Skotlex]
 	* Rewrote Kaahi to behave as it should. It will heal whatever amount of
 	  damage accumulates in the time2 interval (500ms by default) after being
 	  hit. [Skotlex]

@@ -10,5 +10,6 @@ grf: C:\Program Files\Gravity\RO\sdata.grf
 
 //------ Others ---------------------------
 
-// Data Directory
+//Path to directory that contains the data dir 
+//NOTE: Path must include trailing backslash, only one data_dir entry is supported.
 //data_dir: C:\Program Files\Gravity\RO\

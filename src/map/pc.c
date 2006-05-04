@@ -6255,13 +6255,17 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
 	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
+
+	if((sd->status.inventory[n].equip&0x0022) && 
+		sd->weapontype1 == 0 && sd->weapontype2 == 0)
+		skill_enchant_elemental_end(&sd->bl,-1);
+	
 	sd->status.inventory[n].equip=0;
-	if(flag&1)
+
+	if(flag&1) {
 		pc_checkallowskill(sd);
-	if(sd->weapontype1 == 0 && sd->weapontype2 == 0)
-		skill_enchant_elemental_end(&sd->bl,-1);  //•ŠíŽ‚¿¾‚¦‚Í–³?Œ‚Å?«•t?‰ðœ
-	if(flag&1)
 		status_calc_pc(sd,0);
+	}
 
 	if(sd->sc.count && sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(RC_DEMIHUMAN,sd->def_ele))
 		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
