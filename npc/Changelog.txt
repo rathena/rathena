@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+05/04
+	* Fixed a missing " in the gunslinger jobquest script [Playtester]
 05/02
 	* Added kunai_maker.txt to make elemental kunais. [erKURITA]
 	* Added new npcs @ que_ng.gat ninja map portion. [erKURITA]
