@@ -1424,8 +1424,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	switch(skillid){
 	case 0: //Normal Attack
-		if(tsc && tsc->data[SC_KAAHI].timer != -1)
-			tsc->data[SC_KAAHI].val4++; //Activate heal.
+		if(tsc && tsc->data[SC_KAAHI].timer != -1 && tsc->data[SC_KAAHI].val4 == -1)
+			tsc->data[SC_KAAHI].val4 = add_timer(
+				tick+skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI].val1), 
+				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
 		break;
 	case MO_EXTREMITYFIST:			/* ˆ¢?C—…”e™€Œ? */
 		//ˆ¢?C—…‚ğg‚¤‚Æ5•ªŠÔ©‘R‰ñ•œ‚µ‚È‚¢‚æ‚¤‚É‚È‚é
@@ -9844,13 +9846,9 @@ int skill_unit_move_unit_group( struct skill_unit_group *group, int m,int dx,int
 	if (group->unit==NULL)
 		return 0;
 
-	i = skill_get_unit_flag(group->skill_id); //Check the flag...
-	if (!(
-		(i&UF_DANCE && !(i&UF_ENSEMBLE)) || //Only non ensemble dances and traps can be moved.
-		skill_get_inf2(group->skill_id)&INF2_TRAP
-	))
+	if (skill_get_unit_flag(group->skill_id)&UF_ENSEMBLE) //Ensembles may not be moved around.
 		return 0;
-		
+
 	m_flag = (int *) aMalloc(sizeof(int)*group->unit_count);
 	memset(m_flag,0,sizeof(int)*group->unit_count);// ˆÚ“®ƒtƒ‰ƒO
 	//    m_flag
