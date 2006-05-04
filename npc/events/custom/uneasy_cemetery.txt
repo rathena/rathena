@@ -58,12 +58,12 @@ L_Start_Undead:
 	enablenpc "Mother Mathana";
 //call some monsters in the city
 	set $@UNEASY_MOB, 65;
-	monster "prontera.gat",0,0,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
+	areamonster "prontera.gat",0,0,0,0,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
 //in the Cemetery
 	monster "prontera.gat",268,349,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
 	monster "prontera.gat",269,350,"Ghoul",1036,5,"Uneasy_Check::OnZombieDead";
 //announce
-	mapannounce "prontera.gat","[Mother Mathana]: The cememtery has became restless!  In the name of Odin, hurry to the Sanctuary! Save the city of Prontera!",0;
+	mapannounce "prontera.gat","[Mother Mathana]: The cememtery has become restless!  In the name of Odin, hurry to the Sanctuary! Save the city of Prontera!",0;
 }
 
 prontera.gat,257,313,5	script	Mother Mathana	79,{

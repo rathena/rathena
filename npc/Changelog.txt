@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 05/04
+	* Hopefully fixed the custom Prontera Cemetery Event [Playtester]
 	* Fixed a missing " in the gunslinger jobquest script [Playtester]
 	- some others fixes as well thanks to sodaboy581 and css25
 	- some typo fixed as well
