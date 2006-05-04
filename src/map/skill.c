@@ -7096,18 +7096,8 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 			sc->data[SC_MAGICPOWER].timer = -1;
 	}
 	
-	if (bl->type == BL_MOB && ss != bl) {	/* ƒXƒLƒ‹Žg—p?Œ?‚ÌMOBƒXƒLƒ‹ */
-		struct mob_data *md = (struct mob_data *)bl;
-		if (!md) return 0;
-		if (battle_config.mob_changetarget_byskill == 1) {
-			int target = md->target_id;
-			if (ss->type == BL_PC)
-				md->target_id = ss->id;
-			mobskill_use(md, tick, MSC_SKILLUSED|(skillid << 16));
-			md->target_id = target;
-		} else
-			mobskill_use(md, tick, MSC_SKILLUSED|(skillid << 16));
-	}
+	if (bl->type == BL_MOB && ss != bl)
+		mobskill_event((TBL_MOB*)bl, ss, tick, MSC_SKILLUSED|(skillid<<16));
 
 	return skillid;
 }

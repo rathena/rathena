@@ -864,7 +864,7 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	target= va_arg(ap,struct block_list**);
 
 	if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
-		mob_can_reach(md,bl,dist, MSS_LOOT) && 
+		mob_can_reach(md,bl,dist+1, MSS_LOOT) && 
 		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
 	) {
 		(*target) = bl;
