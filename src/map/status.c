@@ -239,7 +239,7 @@ void initChangeTables(void) {
 	set_sc(PF_FOGWALL,              SC_FOGWALL,             SI_BLANK);
 	set_sc(PF_SPIDERWEB,            SC_SPIDERWEB,           SI_BLANK);
 	set_sc(WE_BABY,                 SC_BABY,                SI_BLANK);
-	set_sc(TK_RUN,                  SC_RUN,                 SI_BLANK);
+	set_sc(TK_RUN,                  SC_RUN,                 SI_RUN);
 	set_sc(TK_RUN,                  SC_SPURT,               SI_SPURT);
 	set_sc(TK_READYSTORM,           SC_READYSTORM,          SI_READYSTORM);
 	set_sc(TK_READYDOWN,            SC_READYDOWN,           SI_READYDOWN);
@@ -3202,8 +3202,6 @@ int status_get_size(struct block_list *bl)
 	nullpo_retr(1, bl);
 	switch (bl->type) {
 		case BL_MOB:
-			if (((struct mob_data *)bl)->sc.data[SC_SWOO].timer != -1) // [marquis007]
-				return 0;
 			return ((struct mob_data *)bl)->db->size;
 		case BL_PET:	
 			return ((struct pet_data *)bl)->db->size;
@@ -5339,7 +5337,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			clif_changeoption(bl);
 
 		if (sd && calc_flag)
-			status_calc_pc((struct map_session_data *)bl,0);	/* ステ?タス再計算 */
+			status_calc_pc(sd,0);
 	}
 
 	return 1;

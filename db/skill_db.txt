@@ -481,11 +481,11 @@
 459,0,6,4,0,3,-1,1,1,no,0,8,0,weapon,0 //BS_ADRENALINE2#Full Adrenaline Rush#
 460,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_HUNTER#Spirit of the Hunter#
 461,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SOULLINKER#Spirit of the Soul Linker#
-462,9,6,16,0,1,0,7,1,no,0,0,0,magic,0 //SL_KAIZEL#Kaizel#
-463,9,6,16,0,1,0,7,1,no,0,0,0,magic,0 //SL_KAAHI#Kahai#
-464,9,6,16,0,1,0,3,1,no,0,0,0,magic,0 //SL_KAUPE#Kauf#
-465,9,6,16,0,1,0,7,1,no,0,0,0,magic,0 //SL_KAITE#Kaite#
-466,0,0,0,0,0,0,7,0,no,0,0,0,magic,0 //SL_KAINA#Kaina#
+462,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAIZEL#Kaizel#
+463,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAAHI#Kahai#
+464,9,6,16,0,1,0,3,1,yes,0,0,0,magic,0 //SL_KAUPE#Kauf#
+465,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAITE#Kaite#
+466,0,0,0,0,0,0,7,0,yes,0,0,0,magic,0 //SL_KAINA#Kaina#
 467,9,6,1,-2,0,0,7,1,no,0,0,0,magic,2	//SL_STIN#Estin#
 468,9,6,1,-2,0,0,7,1,no,0,0,0,magic,0	//SL_STUN#Estern#
 469,9,8,1,-2,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//SL_SMA#Esma#

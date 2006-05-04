@@ -28,6 +28,7 @@
 =========================
 
 05/04
+	* All KA-spells are interruptable. [Skotlex]
 	* Modified NPC_STUNATTACK: Max level is 5, stun duration is 1+lv seconds
 	  (these duration values are guessed, but they are better than the previous
 	  5+lv seconds) [Skotlex]
