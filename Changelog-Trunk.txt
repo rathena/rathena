@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/04
+	* Some clean-ups in the mob_ai [Skotlex]
 	* Improved atcommand autoloot, now displays droprate in percents and notices
 	  player if autoloot is already on or off. Also simplified the code [Harbin, Kain],
 	  commited by erKURITA

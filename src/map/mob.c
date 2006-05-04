@@ -792,7 +792,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
-		if (((struct map_session_data*)bl)->state.gangsterparadise &&
+		if (((TBL_PC*)bl)->state.gangsterparadise &&
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
 	case BL_MOB:
@@ -1038,7 +1038,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	int dist;
 	int mode;
 	int search_size;
-	int view_range, can_move, can_walk;
+	int view_range, can_move;
 
 	md = (struct mob_data*)bl;
 	tick = va_arg(ap, unsigned int);
@@ -1068,8 +1068,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 
 	can_move = (mode&MD_CANMOVE)&&unit_can_move(&md->bl);
 	//Since can_move is false when you are casting or the damage-delay kicks in, some special considerations
-	//must be taken to avoid unlocking the target or triggering rude-attacked skills in said cases. [Skotlex]
-	can_walk = DIFF_TICK(tick, md->ud.canmove_tick) > 0;
 
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
@@ -1079,7 +1077,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			(md->ud.walktimer != -1 && !check_distance_bl(&md->bl, tbl, md->min_chase)) ||
 			(
 				tbl->type == BL_PC && !(mode&MD_BOSS) &&
-				((struct map_session_data*)tbl)->state.gangsterparadise
+				((TBL_PC*)tbl)->state.gangsterparadise
 		)) {	//Unlock current target.
 			if (battle_config.mob_ai&8) //Inmediately stop chasing.
 				mob_stop_walking(md,1);
@@ -1184,6 +1182,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
+
+				if (!can_move) //Stuck. Wait before walking.
+					return 0;
+
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 				if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
 					(
@@ -1222,7 +1224,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
-				if (!can_move)	// 動けない状態にある
+				if (!can_move) //Stuck. Wait before walking.
 					return 0;
 				md->state.skillstate = MSS_LOOT;	// ルート時スキル使用
 				if (!unit_walktobl(&md->bl, tbl, 0, 1))

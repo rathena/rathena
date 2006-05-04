@@ -562,7 +562,6 @@ int unit_stop_walking(struct block_list *bl,int type)
 		unit_walktoxy_timer(-1, tick, bl->id, ud->walkpath.path_pos);
 	}
 
-//	if(md) { md->state.skillstate = MSS_IDLE; }
 	if(type&0x01)
 		clif_fixpos(bl);
 	

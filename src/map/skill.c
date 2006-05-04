@@ -4340,12 +4340,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_get_time2(skillid, skilllv) * (100-(status_get_int(bl)+status_get_vit(bl))/2)/100,10);
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstmd){
-			dstmd->attacked_id=0;
-			dstmd->target_id=0;
-			dstmd->state.skillstate=MSS_IDLE;
-			dstmd->next_walktime=tick+rand()%3000+3000;
-		}
+		if(dstmd)
+			mob_unlocktarget(dstmd,tick);
 		break;
 
 	case WZ_ESTIMATION:			/* ƒ‚ƒ“ƒXƒ^??î•ñ */
