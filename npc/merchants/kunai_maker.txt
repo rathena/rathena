@@ -23,27 +23,21 @@ mes "What would you like to trade some? It's free";
 switch(select("10 Poison Kunais:10 Icycle Kunais:10 Rough Wind Kunais:10 Black Soil Kunai:10 Explosion Kunai:Nothing at the Moment")) {
 //Callfunc usage: callfunc "Kunai_Trade",itemreqid1,itemreqct1,itemreqid2,itemreqct2,itemidtrade;
 	case 1:
-		next;
 		callfunc "Kunai_Trade",13250,20,7524,1,13259;
-		close;
+		goto L_Bye;
 	case 2:
-		next;
 		callfunc "Kunai_Trade",13251,8,7522,2,13255;
 		goto L_Bye;
 	case 3:
-		next;
 		callfunc "Kunai_Trade",13252,4,7523,2,13257;
 		goto L_Bye;
 	case 4:
-		next;
 		callfunc "Kunai_Trade",13253,2,7524,1,13256;
 		goto L_Bye;
 	case 5:
-		next;
 		callfunc "Kunai_Trade",13254,1,7521,2,13258;
 		goto L_Bye;
 	case 6:
-		next;
 		goto L_Bye;
 	}
 L_Bye:
@@ -54,14 +48,13 @@ L_Bye:
 }
 
 function	script	Kunai_Trade	-1,{
-
+next;
 mes "[Jin]";
 if (MaxWeight*50/100 < Weight) {
 	if (MaxWeight*90/100 < Weight) {
 		mes "Sorry but you have more than 90% weight. Your kunais might drop. I can't give you anything.";
-		next;
-		goto L_Menu;
-	} else
+		return;
+	}
 	mes "You have 50% or more weight, do you still want to continue?";
 	menu "Yes",-,"No, thanks",L_Return;
 }
@@ -98,7 +91,6 @@ switch(select("Yes:I'll think about it")) {
 	case 2:
 		return;
 	}
-L_Bye:
-return;
-
+L_Return:
+	return;
 }
