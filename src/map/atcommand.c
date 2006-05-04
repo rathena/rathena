@@ -7735,33 +7735,75 @@ atcommand_changeleader(
  *------------------------------------------
  *by Upa-Kun
  */
-int
-atcommand_autoloot(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int rate;
-	double drate;
 	nullpo_retr(-1, sd);
-	if (!message || !*message) {
-		if (sd->state.autoloot)
-			rate = 0;
-		else
-			rate = 10000;
-	} else {
-		drate = atof(message);
-		rate = (int)(drate*100);
+
+	// autoloot command without value
+	if(!message || !*message)
+	{
+		// autoloot on -> off
+		if(sd->state.autoloot)
+		{
+			clif_displaymessage(fd, "Autoloot is now off.");
+			sd->state.autoloot = 0;
+			return 0;
+		// autoloot off -> on
+		} else {
+			clif_displaymessage(fd, "Autoloot is now on.");
+			sd->state.autoloot = 10000;
+			return 0;
+		}
 	}
-	if (rate < 0) rate = 0;
-	
+
+	// autoloot command with value
+	unsigned int rate;
+
+	// get maximum droprate limit
+	rate = atoi(message) * 100;
+
+	// check for invalid value
+	if(rate < 0 || rate > 10000)
+	{
+		clif_displaymessage(fd, "Invalid value. Choose value between 0 and 100.");
+		return 0;
+	}
+
+	// autoloot value is 0, turn autoloot off
+	if(rate == 0)
+	{
+		if(sd->state.autoloot == 0)
+		{
+			clif_displaymessage(fd, "Autoloot is already off.");
+			return 0;
+		} else {
+			clif_displaymessage(fd, "Autoloot is now off.");
+			sd->state.autoloot = 0;
+			return 0;
+		}
+	}
+
+	// autoloot value is 100, turn autoloot on
+	if(rate == 10000)
+	{
+		if(sd->state.autoloot == 10000)
+		{
+			clif_displaymessage(fd, "Autoloot is already on.");
+			return 0;
+		} else {
+			clif_displaymessage(fd, "Autoloot is now on.");
+			sd->state.autoloot = 10000;
+			return 0;
+		}
+	}
+
+	// autoloot value is between 0 and 100
+	snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %d percent and below.", (rate / 100));
+	clif_displaymessage(fd, atcmd_output);
 	sd->state.autoloot = rate;
-	if (sd->state.autoloot) { 
-		snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %0.02f%% and below.",((double)sd->state.autoloot)/100.);
-		clif_displaymessage(fd, atcmd_output);
-	}else 
-		clif_displaymessage(fd, "Autoloot is now off.");
-	return 0;  
-}   
+
+	return 0;
+}
 
 
 /*==========================================
