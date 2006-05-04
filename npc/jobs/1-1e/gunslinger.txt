@@ -103,7 +103,7 @@ if (Class == Job_Novice) {
 
 	} else 
 		mes @npcname$;
-		mes "Hi son, how's life threathing you?";
+		mes "Hi son, how's life treating you?";
 		close;
 }
 
