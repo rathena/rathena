@@ -870,7 +870,6 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 		(*target) = bl;
 		md->target_id=bl->id;
 		md->min_chase=md->db->range3;
-		md->next_walktime = gettick() + 500; //So that the mob may go after the item inmediately.
 	}
 	return 0;
 }
@@ -1131,7 +1130,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					md->target_id = md->attacked_id; // set target
 					md->state.aggressive = 0; //Retaliating.
 					md->attacked_count = 0;
-					md->min_chase = dist+md->db->range2;
+					md->min_chase = dist+md->db->range3;
 					if(md->min_chase>MAX_MINCHASE)
 						md->min_chase=MAX_MINCHASE;
 					tbl = abl; //Set the new target
