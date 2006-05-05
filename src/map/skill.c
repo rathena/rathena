@@ -9458,8 +9458,6 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group)
 	int i,j;
 
 	nullpo_retr(0, group);
-	if(group->unit_count<=0)
-		return 0;
 
 	if (!src) src=map_id2bl(group->src_id);
 	ud = unit_bl2ud(src);	
