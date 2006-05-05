@@ -10824,7 +10824,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 		sd->doridori_counter++;
 	
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON
+	if ((sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON
 		&& sd->state.rest && (level = pc_checkskill(sd,TK_SPTIME)))
 		sc_start(&sd->bl,SkillStatusChangeTable[TK_SPTIME],100,level,skill_get_time(TK_SPTIME, level));
 	return;

@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/05
+	* The Rest bonus activated by using /doridori while in rest should now
+	  trigger with all the class tree (TK/SL/SG) [Skotlex]
 	* Fixed Kaupe always triggering when the one who was under Kaupe was a
 	  player rather than the one attacking... [Skotlex]
 	* /doridori now won't double the HP/SP regen of TKs, it only activates
