@@ -3221,7 +3221,7 @@ static int mob_readdb(void)
 				else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 				{
 				case 0:
-					if (mob_db_data[class_]->mexp > 0)
+					if (mob_db_data[class_]->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_heal_boss;
 					else {
 						rate_adjust = battle_config.item_rate_heal;
@@ -3230,7 +3230,7 @@ static int mob_readdb(void)
 					ratemax = battle_config.item_drop_heal_max;
 					break;
 				case 2:
-					if (mob_db_data[class_]->mexp > 0)
+					if (mob_db_data[class_]->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_use_boss;
 					else {
 						rate_adjust = battle_config.item_rate_use;
@@ -3241,7 +3241,7 @@ static int mob_readdb(void)
 				case 4:
 				case 5:
 				case 8:		// Changed to include Pet Equip
-					if (mob_db_data[class_]->mexp > 0)
+					if (mob_db_data[class_]->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_equip_boss;
 					else {
 						rate_adjust = battle_config.item_rate_equip;
@@ -3250,7 +3250,7 @@ static int mob_readdb(void)
 					ratemax = battle_config.item_drop_equip_max;
 					break;
 				case 6:
-					if (mob_db_data[class_]->mexp > 0)
+					if (mob_db_data[class_]->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_card_boss;
 					else {
 						rate_adjust = battle_config.item_rate_card;
@@ -3259,7 +3259,7 @@ static int mob_readdb(void)
 					ratemax = battle_config.item_drop_card_max;
 					break;
 				default:
-					if (mob_db_data[class_]->mexp > 0)
+					if (mob_db_data[class_]->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_common_boss;
 					else {
 						rate_adjust = battle_config.item_rate_common;
@@ -3870,7 +3870,7 @@ static int mob_read_sqldb(void)
 					else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 					{
 					case 0:	// Val added heal restrictions
-						if (mob_db_data[class_]->mexp > 0)
+						if (mob_db_data[class_]->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_heal_boss;
 						else {
 							rate_adjust = battle_config.item_rate_heal;
@@ -3879,7 +3879,7 @@ static int mob_read_sqldb(void)
 						ratemax = battle_config.item_drop_heal_max;
 						break;
 					case 2:
-						if (mob_db_data[class_]->mexp > 0)
+						if (mob_db_data[class_]->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_use_boss;
 						else {
 							rate_adjust = battle_config.item_rate_use;
@@ -3890,7 +3890,7 @@ static int mob_read_sqldb(void)
 					case 4:
 					case 5:
 					case 8:		// Changed to include Pet Equip
-						if (mob_db_data[class_]->mexp > 0)
+						if (mob_db_data[class_]->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_equip_boss;
 						else {
 							rate_adjust = battle_config.item_rate_equip;
@@ -3899,7 +3899,7 @@ static int mob_read_sqldb(void)
 						ratemax = battle_config.item_drop_equip_max;
 						break;
 					case 6:
-						if (mob_db_data[class_]->mexp > 0)
+						if (mob_db_data[class_]->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_card_boss;
 						else {
 							rate_adjust = battle_config.item_rate_card;
@@ -3908,7 +3908,7 @@ static int mob_read_sqldb(void)
 						ratemax = battle_config.item_drop_card_max;
 						break;
 					default:
-						if (mob_db_data[class_]->mexp > 0)
+						if (mob_db_data[class_]->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_common_boss;
 						else {
 							rate_adjust = battle_config.item_rate_common;
