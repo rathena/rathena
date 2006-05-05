@@ -1184,7 +1184,9 @@ int atcommand_commands(const int fd, struct map_session_data* sd,
 				memset(atcmd_output, 0, sizeof atcmd_output);
 			}
 		}
-	
+	if (count%10)
+		clif_displaymessage(fd, atcmd_output);
+
 	if (count) {
 		sprintf(atcmd_output, msg_txt(274), count);
 		clif_displaymessage(fd, atcmd_output);
