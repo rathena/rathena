@@ -3932,8 +3932,17 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				break;
 			case SC_GOSPEL:
 				 //Must not override a casting gospel char.
-				if (sc->data[type].val4 == BCT_SELF)
+				if(sc->data[type].val4 == BCT_SELF)
 					return 0;
+				if(sc->data[type].val1 > val1)
+					return 1;
+				break;
+			case SC_ENDURE:
+				if(sc->data[type].val4 && !val4)
+					return 1; //Don't let you override infinite endure.
+				if(sc->data[type].val1 > val1)
+					return 1;
+				break;
 			case SC_KAAHI:
 				if(sc->data[type].val1 > val1)
 					return 1;
@@ -4302,7 +4311,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_BERSERK:		/* ƒo?ƒT?ƒN */
 			if (sc->data[SC_ENDURE].timer == -1 || !sc->data[SC_ENDURE].val4)
-				sc_start4(bl, SC_ENDURE, 100, 1,0,0,1, tick);
+				sc_start4(bl, SC_ENDURE, 100,10,0,0,1, tick);
 			if(sd && !(flag&4)){
 				sd->status.hp = sd->status.max_hp * 3;
 				sd->status.sp = 0;
