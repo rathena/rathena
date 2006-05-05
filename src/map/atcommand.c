@@ -7737,6 +7737,9 @@ atcommand_changeleader(
  */
 int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	// autoloot command with value
+	unsigned int rate;
+
 	nullpo_retr(-1, sd);
 
 	// autoloot command without value
@@ -7757,7 +7760,7 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	}
 
 	// autoloot command with value
-	unsigned int rate;
+	//unsigned int rate; // Moved to top due to decleration error after executional block. [Zido]
 
 	// get maximum droprate limit
 	rate = atoi(message) * 100;
