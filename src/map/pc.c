@@ -6817,7 +6817,7 @@ static int pc_natural_heal_sp(struct map_session_data *sd)
 
 	if(sd->nshealsp > 0) {
 		if(sd->inchealsptick >= battle_config.natural_heal_skill_interval && sd->status.sp < sd->status.max_sp) {
-			if(sd->doridori_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+			if(sd->doridori_counter) {
 				bonus = sd->nshealsp*2;
 				sd->doridori_counter = 0;
 			} else
@@ -6858,12 +6858,6 @@ static int pc_spirit_heal_hp(struct map_session_data *sd)
 
 	if(sd->inchealspirithptick >= interval) {
 		bonus_hp = sd->nsshealhp;
-		if(sd->doridori_counter && pc_checkskill(sd,TK_HPTIME) > 0) {
-		  	//TK_HPTIME doridori provided bonus [Dralnu]
-			bonus_hp += sd->nsshealhp;
-			if (!sd->nsshealsp) //If there's sp regen, this gets clear in the next function. [Skotlex]
-				sd->doridori_counter = 0;
-		}
 		while(sd->inchealspirithptick >= interval) {
 			if(pc_issit(sd)) {
 				sd->inchealspirithptick -= interval;
@@ -6904,11 +6898,6 @@ static int pc_spirit_heal_sp(struct map_session_data *sd)
 
 	if(sd->inchealspiritsptick >= interval) {
 		bonus_sp = sd->nsshealsp;
-		if(sd->doridori_counter && pc_checkskill(sd,TK_SPTIME) > 0) {
-			//TK_SPTIME doridori provided bonus [Dralnu]
-			bonus_sp += sd->nsshealsp;
-			sd->doridori_counter = 0;
-		}
 		while(sd->inchealspiritsptick >= interval) {
 			if(pc_issit(sd)) {
 				sd->inchealspiritsptick -= interval;

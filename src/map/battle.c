@@ -1304,7 +1304,10 @@ static struct Damage battle_calc_weapon_attack(
 		}
 
 		hitrate+= status_get_hit(src) - flee;
-		
+
+		if((sc && sc->data[SC_FOGWALL].timer!=-1) || (tsc && tsc->data[SC_FOGWALL].timer!=-1))
+			hitrate-=50;
+			
 		if(sd && flag.arrow)
 			hitrate += sd->arrow_hit;
 		if(skill_num)

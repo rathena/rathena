@@ -1311,7 +1311,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		// Basic INT-MDEF value
 		sd->mdef2 += sd->paramc[3];
 
-		// sd->mdef2 = status_calc_mdef2(&sd->bl,sd->mdef2);
+		sd->mdef2 = status_calc_mdef2(&sd->bl,sd->mdef2);
 
 		// Apply relative modifiers from equipment
 		if(sd->mdef2_rate != 100)
@@ -2953,20 +2953,24 @@ int status_get_mdef2(struct block_list *bl)
 	int mdef2=0;
 	nullpo_retr(0, bl);
 
-	if(bl->type == BL_PC)
-		return ((struct map_session_data *)bl)->mdef2 + (((struct map_session_data *)bl)->paramc[2]>>1);
-	else if(bl->type == BL_MOB)
-		mdef2 = ((struct mob_data *)bl)->db->int_ + (((struct mob_data *)bl)->db->vit>>1);
-	else if(bl->type == BL_PET) {	//<Skotlex> Use pet's stats
-		if (battle_config.pet_lv_rate && ((struct pet_data *)bl)->status)
-			mdef2 = ((struct pet_data *)bl)->status->int_ +(((struct pet_data *)bl)->status->vit>>1);
+	switch(bl->type)
+	{
+	case BL_PC:
+		return ((TBL_PC*)bl)->mdef2 + (((TBL_PC*)bl)->paramc[2]>>1);
+	case BL_MOB:
+		mdef2 = ((TBL_MOB*)bl)->db->int_ + (((TBL_MOB*)bl)->db->vit>>1);
+		break;
+	case BL_PET:
+		//<Skotlex> Use pet's stats
+		if (battle_config.pet_lv_rate && ((TBL_PET*)bl)->status)
+			mdef2 = ((TBL_PET*)bl)->status->int_ +(((TBL_PET*)bl)->status->vit>>1);
 		else
-			mdef2 = ((struct pet_data *)bl)->db->int_ + (((struct pet_data *)bl)->db->vit>>1);
+			mdef2 = ((TBL_PET*)bl)->db->int_ + (((TBL_PET*)bl)->db->vit>>1);
+		break;
 	}
 
 	mdef2 = status_calc_mdef2(bl,mdef2);
 	if(mdef2 < 0) mdef2 = 0;
-	
 	return mdef2;
 }
 /*==========================================
