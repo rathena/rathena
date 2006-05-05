@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/05
+	* Now when walkdelay is set to 0, characters will stop walking when hit,
+	  but will not have any walk delay. (previously setting walk delay to 0 would
+	  not even stop characters from walking when hit) [Skotlex]
 2006/05/04
 	* Some people think its sexy to declare variables after blocks of code. Fixed. [Zido]
 	* Fixed a possible infinite loop in skill_clear_unit_group [Skotlex]

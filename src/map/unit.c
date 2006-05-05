@@ -674,9 +674,14 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	ud->canmove_tick = tick + delay;
 	if (ud->walktimer != -1)
 	{	//Stop walking, if chasing, readjust timers.
-		unit_stop_walking(bl,3);
-		if(ud->target)
-			add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+		if (delay == 1)
+		{	//Minimal delay (walk-delay) disabled. Just stop walking.
+			unit_stop_walking(bl,1);
+		} else {
+			unit_stop_walking(bl,3);
+			if(ud->target)
+				add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
+		}
 	}
 	return 1;
 }
