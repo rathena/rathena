@@ -8239,12 +8239,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			npc_event_doall_id(script_config.loadmap_event_name, sd->bl.id), script_config.loadmap_event_name);
 	}
 
-	if (
-	    pc_checkskill(sd,SG_SUN_COMFORT)  ||
-	    pc_checkskill(sd,SG_MOON_COMFORT) ||
-	    pc_checkskill(sd,SG_STAR_COMFORT))
-		status_calc_pc(sd,0);
-	
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
 

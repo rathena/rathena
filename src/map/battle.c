@@ -210,9 +210,9 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 			status_change_end(target, SC_CLOAKING, -1);
 		if (sc->data[SC_CHASEWALK].timer != -1)
 			status_change_end(target, SC_CHASEWALK, -1);
-		if (sc->data[SC_ENDURE].timer != -1 && sc->data[SC_ENDURE].val1 <= 10) {
+		if (sc->data[SC_ENDURE].timer != -1 && !sc->data[SC_ENDURE].val4) {
 			//Endure count is only reduced by non-players on non-gvg maps.
-			//if val1 is greater than 10, this is infinite endure. [Skotlex]
+			//val4 signals infinite endure. [Skotlex]
 			if (src && src->type != BL_PC && !map_flag_gvg(target->m)
 				&& --(sc->data[SC_ENDURE].val2) < 0)
 				status_change_end(target, SC_ENDURE, -1);

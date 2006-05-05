@@ -277,7 +277,7 @@ bNoMagicDamage	2003
 bNoWeaponDamage	2004
 bNoGemStone	2005
 bNoCastCancel2	2006
-bInfiniteEndure	2007
+
 bUnbreakableWeapon	2008
 bUnbreakableArmor	2009
 bUnbreakableHelm	2010

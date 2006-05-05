@@ -27,6 +27,7 @@
 
 =========================
 05/05
+	* Hammer fall's stun duration is now 1+lv seconds. [Skotlex]
 	* Removed drops from Bio Lab mobs than are not in X.2 [Playtester]
 05/04
 	* All KA-spells are interruptable. [Skotlex]

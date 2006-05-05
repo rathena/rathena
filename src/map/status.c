@@ -821,7 +821,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				if(!c)
 					continue;
 				data = itemdb_exists(c);
-				if (!data || !data->script)
+				if(!data)
+					continue;
+				if(first&1 && data->equip_script)
+			  	{	//Execute equip-script on login
+					run_script(data->equip_script,0,sd->bl.id,0);
+					if (!calculating)
+						return 1;
+				}
+				if(!data->script)
 					continue;
 				if(data->flag.no_equip) { //Card restriction checks.
 					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&map[sd->bl.m].zone)
@@ -868,6 +876,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			continue;
 		
 		sd->def += sd->inventory_data[index]->def;
+
+		if(first&1 && sd->inventory_data[index]->equip_script)
+	  	{	//Execute equip-script on login
+			run_script(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
+			if (!calculating)
+				return 1;
+		}
+
 		if(sd->inventory_data[index]->type == 4) {
 			int r,wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
@@ -884,12 +900,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 			if (wd == &sd->left_weapon) {
 				sd->attackrange_ += sd->inventory_data[index]->range;
-				sd->state.lr_flag = 1;
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-				sd->state.lr_flag = 0;
+				if(sd->inventory_data[index]->script) {
+					sd->state.lr_flag = 1;
+					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+					sd->state.lr_flag = 0;
+				}
 			} else {
 				sd->attackrange += sd->inventory_data[index]->range;
-				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				if(sd->inventory_data[index]->script)
+					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			}
 			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;
@@ -908,9 +927,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 		else if(sd->inventory_data[index]->type == 5) {
 			refinedef += sd->status.inventory[index].refine*refinebonus[0][0];
-			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
-			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
-				return 1;
+			if(sd->inventory_data[index]->script) {
+				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
+					return 1;
+			}
 		}
 	}
 
@@ -2100,7 +2121,7 @@ int status_calc_mdef(struct block_list *bl, int mdef)
 			return 90;
 		if(sc->data[SC_SKA].timer != -1) // [marquis007]
 			return 90; // should it up mdef too?
-		if(sc->data[SC_ENDURE].timer!=-1)
+		if(sc->data[SC_ENDURE].timer!=-1 && sc->data[SC_ENDURE].val4 == 0)
 			mdef += sc->data[SC_ENDURE].val1;
 	}
 
@@ -3938,8 +3959,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_ENDURE:				/* インデュア */
 			if(tick <= 0) tick = 1000 * 60;
-			calc_flag = 1; // for updating mdef
 			val2 = 7; // [Celest]
+			if (!val4)
+				calc_flag = 1; // for updating mdef
 			break;
 		case SC_AUTOBERSERK:
 			{
@@ -4279,8 +4301,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_BERSERK:		/* バ?サ?ク */
-			if (sc->data[SC_ENDURE].timer == -1 || sc->data[SC_ENDURE].val1 <= 10)
-				sc_start(bl, SC_ENDURE, 100, 11, tick);
+			if (sc->data[SC_ENDURE].timer == -1 || !sc->data[SC_ENDURE].val4)
+				sc_start4(bl, SC_ENDURE, 100, 1,0,0,1, tick);
 			if(sd && !(flag&4)){
 				sd->status.hp = sd->status.max_hp * 3;
 				sd->status.sp = 0;
@@ -4450,7 +4472,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				break;
 			}
 			val2 = 200*val1; //HP heal
-			val3 = 5*val2; //SP cost 
+			val3 = 5*val1; //SP cost 
 			val4 = -1;	//Kaahi Timer.
 			break;
 		case SC_BLESSING:
@@ -4876,7 +4898,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 		switch(type){	/* 異常の種類ごとの?理 */
 			case SC_PROVOKE:			/* プロボック */
-			case SC_ENDURE: // celest
 			case SC_CONCENTRATE:		/* 集中力向上 */
 			case SC_BLESSING:			/* ブレッシング */
 			case SC_ANGELUS:			/* アンゼルス */
@@ -4975,6 +4996,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_KEEPING:
 			case SC_BARRIER:
 				calc_flag = 1;
+				break;
+
+			case SC_ENDURE: // celest
+				calc_flag = (sc->data[type].val4==0);
 				break;
 
 			case SC_WEDDING:	//結婚用(結婚衣裳になって?くのが?いとか)
@@ -5481,7 +5506,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_ENDURE:	/* インデュア */
-		if(sc->data[type].val1 > 10 || (sd && sd->special_state.infinite_endure))
+		if(sc->data[type].val4)
 	  	{
 			sc->data[type].timer=add_timer(1000*60+tick,status_change_timer, bl->id, data);
 			return 0;

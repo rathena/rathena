@@ -1257,7 +1257,7 @@
 4120,Sky_Petite_Card,Sky Petite Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Dragon,30; },{},{}
 4121,Phreeoni_Card,Phreeoni Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,100; },{},{}
 4122,Deviruchi_Card,Deviruchi Card,6,,10,10,,,,,,,,769,,,,,{ bonus bStr,1; bonus2 bResEff,Eff_Blind,10000; },{},{}
-4123,Eddga_Card,Eddga Card,6,,10,10,,,,,,,,64,,,,,{ bonus bInfiniteEndure,0; bonus bMaxHPrate,-25; },{},{}
+4123,Eddga_Card,Eddga Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-25; },{ sc_start4 SC_ENDURE,60000,10,0,0,1; },{ sc_end SC_ENDURE; }
 4124,Medusa_Card,Medusa Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Demon,15; bonus2 bResEff,Eff_Stone,10000; },{},{}
 4125,Deviace_Card,Deviace Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_DemiHuman,7; bonus2 bAddRace,RC_Brute,7; bonus2 bAddRace,RC_Plant,7; bonus2 bAddRace,RC_Insect,7; },{},{}
 4126,Minorous_Card,Minorous Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddSize,2,15; bonus bBaseAtk,5; },{},{}
