@@ -1725,33 +1725,11 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 // Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y) //g—pƒXƒLƒ‹‚ªƒtƒ?ƒXƒgƒmƒ”ƒ@‚Å?Adsrc‚Æbl‚ª“¯‚¶?ê?Š‚È‚ç‰½‚à‚µ‚È‚¢
 		return 0;
-	if(sd && sd->chatID) //pÒ‚ªPC‚Åƒ`ƒƒƒbƒg’†‚È‚ç‰½‚à‚µ‚È‚¢
-		return 0;
 
-//‰½‚à‚µ‚È‚¢”»’è‚±‚±‚Ü‚Å
-
-	sc= status_get_sc(bl);
-	if (sc && !sc->count)
-		sc = NULL; //Don't need it.
-	
-	if (attack_type&BF_MAGIC && sc && sc->data[SC_KAITE].timer != -1
-		&& !(status_get_mode(src)&MD_BOSS) && (sd || status_get_lv(dsrc) <= 80) //Works on players or mobs with level under 80.
-	) { //Bounce back the skill.
-		clif_skill_nodamage(bl,bl,SL_KAITE,sc->data[SC_KAITE].val1,1);
-		if (--sc->data[SC_KAITE].val2 <= 0)
-			status_change_end(bl, SC_KAITE, -1);
-		bl = src; //Just make the skill attack yourself @.@
-		sc = status_get_sc(bl);
-		tsd = (bl->type == BL_PC)?(struct map_session_data *)bl:NULL;
-		if (sc && !sc->count)
-			sc = NULL; //Don't need it.
-		if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
-			return 0; //Spirit of Wizard blocks bounced back spells.
-	}
-	
 	type=-1;
 	lv=(flag>>20)&0xf;
-	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xff ); //ƒ_ƒ??ƒWŒvZ
+	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xff );
+
 
 	//Skotlex: Adjusted to the new system
 	if(src->type==BL_PET && (struct pet_data *)src)
@@ -1768,29 +1746,47 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		}
 	}
 
-//ƒ}ƒWƒbƒNƒƒbƒh?—‚±‚±‚©‚ç
-	if(attack_type&BF_MAGIC && sc && sc->data[SC_MAGICROD].timer != -1 && src == dsrc) { //–‚–@U?‚Åƒ}ƒWƒbƒNƒƒbƒh?‘Ô‚Åsrc=dsrc‚È‚ç
-		dmg.damage = dmg.damage2 = 0; //ƒ_ƒ?ƒW0
-		dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
-		if(tsd) {
-			int sp = skill_get_sp(skillid,skilllv); //g—p‚³‚ê‚½ƒXƒLƒ‹‚ÌSP‚ğ‹z?
-			sp = sp * sc->data[SC_MAGICROD].val2 / 100; //‹z?—¦ŒvZ
-			if(skillid == WZ_WATERBALL && skilllv > 1) //ƒEƒH?ƒ^?ƒ{?ƒ‹Lv1ˆÈã
-				sp = sp/((skilllv|1)*(skilllv|1)); //‚³‚ç‚ÉŒvZH
-			if(sp > 0x7fff) sp = 0x7fff; //SP‘½‚·‚¬‚Ìê‡‚Í—˜_Å‘å’l
-			else if(sp < 1) sp = 1; //1ˆÈ‰º‚Ìê‡‚Í1
-			if(tsd->status.sp + sp > tsd->status.max_sp) { //‰ñ•œSP+Œ»İ‚ÌSP‚ªMSP‚æ‚è‘å‚«‚¢ê‡
-				sp = tsd->status.max_sp - tsd->status.sp; //SP‚ğMSP-Œ»İSP‚É‚·‚é
-				tsd->status.sp = tsd->status.max_sp; //Œ»İ‚ÌSP‚ÉMSP‚ğ‘ã“ü
+	sc= status_get_sc(bl);
+	if (sc && !sc->count) sc = NULL; //Don't need it.
+
+	if (attack_type&BF_MAGIC) {
+	 	if(sc && sc->data[SC_KAITE].timer != -1 && (dmg.damage || dmg.damage2)
+			&& !(status_get_mode(src)&MD_BOSS) && (sd || status_get_lv(dsrc) <= 80) 
+		) {	//Works on players or mobs with level under 80.
+			clif_skill_nodamage(bl,bl,SL_KAITE,sc->data[SC_KAITE].val1,1);
+			if (--sc->data[SC_KAITE].val2 <= 0)
+				status_change_end(bl, SC_KAITE, -1);
+			bl = src; //Just make the skill attack yourself @.@
+			sc = status_get_sc(bl);
+			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;
+			if (sc && !sc->count)
+				sc = NULL; //Don't need it.
+			if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
+			{	//Spirit of Wizard blocks bounced back spells.
+				dmg.damage = dmg.damage2 = 0;
+				dmg.dmg_lv = ATK_FLEE;
 			}
-			else //‰ñ•œSP+Œ»İ‚ÌSP‚ªMSP‚æ‚è¬‚³‚¢ê‡‚Í‰ñ•œSP‚ğ‰ÁZ
-				tsd->status.sp += sp;
-			clif_heal(tsd->fd,SP_SP,sp); //SP‰ñ•œƒGƒtƒFƒNƒg‚Ì•\¦
-			tsd->ud.canact_tick = tick + skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
 		}
-		clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1); //ƒ}ƒWƒbƒNƒƒbƒhƒGƒtƒFƒNƒg‚ğ•\¦
+	
+		if(sc && sc->data[SC_MAGICROD].timer != -1 && src == dsrc) {
+			dmg.damage = dmg.damage2 = 0;
+			dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
+			if(tsd) {
+				int sp = skill_get_sp(skillid,skilllv);
+				sp = sp * sc->data[SC_MAGICROD].val2 / 100;
+				if(skillid == WZ_WATERBALL && skilllv > 1)
+					sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
+				if(sp > SHRT_MAX) sp = SHRT_MAX;
+				else if(sp < 1) sp = 1;
+				if(sp > tsd->status.max_sp - tsd->status.sp)
+					sp = tsd->status.max_sp - tsd->status.sp;
+				tsd->status.sp += sp;
+				clif_heal(tsd->fd,SP_SP,sp);
+				tsd->ud.canact_tick = tick + skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
+			}
+			clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1);
+		}
 	}
-//ƒ}ƒWƒbƒNƒƒbƒh?—‚±‚±‚Ü‚Å
 
 	damage = dmg.damage + dmg.damage2;
 
