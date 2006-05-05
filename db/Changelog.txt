@@ -26,7 +26,8 @@
 	-----
 
 =========================
-
+05/05
+	* Removed drops from Bio Lab mobs than are not in X.2 [Playtester]
 05/04
 	* All KA-spells are interruptable. [Skotlex]
 	* Modified NPC_STUNATTACK: Max level is 5, stun duration is 1+lv seconds
