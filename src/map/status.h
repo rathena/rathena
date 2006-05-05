@@ -228,7 +228,7 @@ enum {
 	SC_KAITE,
 	SC_SWOO, // [marquis007]
 	SC_SKA, // [marquis007]
-	SC_TKDORI, // [marquis007]
+	SC_TKREST, // [marquis007]
 	SC_MIRACLE, //SG 'hidden' skill [Komurka]
 	//Ninja/GS states
 	SC_MADNESSCANCEL,
@@ -375,7 +375,7 @@ enum {
 	SI_CLOSECONFINE2	= 201,
 	SI_MADNESSCANCEL	= 203,	//[blackhole89]
 	SI_GATLINGFEVER		= 204,
-	// 205 = Gloria again
+	SI_TKREST = 205, // 205 = Gloria again (but TK- Happy State looks like it)
 	SI_MAEMI			= 206,
 	// 207 = crash
 	SI_NEN				= 208,

@@ -3592,6 +3592,8 @@ static const struct battle_data_short {
 	{ "mvp_hp_rate",                       &battle_config.mvp_hp_rate				},
 	{ "monster_hp_rate",                   &battle_config.monster_hp_rate			},
 	{ "monster_max_aspd",                  &battle_config.monster_max_aspd			},
+	{ "view_range_rate",                   &battle_config.view_range_rate },
+	{ "chase_range_rate",                  &battle_config.chase_range_rate },
 	{ "atcommand_gm_only",                 &battle_config.atc_gmonly				},
 	{ "atcommand_spawn_quantity_limit",    &battle_config.atc_spawn_quantity_limit	},
 	{ "atcommand_slave_clone_limit",       &battle_config.atc_slave_clone_limit},
@@ -3984,6 +3986,8 @@ void battle_set_defaults() {
 	battle_config.mvp_hp_rate=100;
 	battle_config.monster_hp_rate=100;
 	battle_config.monster_max_aspd=199;
+	battle_config.view_range_rate=100;
+	battle_config.chase_range_rate=100;
 	battle_config.atc_gmonly=0;
 	battle_config.atc_spawn_quantity_limit=0;
 	battle_config.atc_slave_clone_limit=0;

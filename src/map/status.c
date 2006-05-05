@@ -247,7 +247,7 @@ void initChangeTables(void) {
 	set_sc(TK_READYTURN,            SC_READYTURN,           SI_READYTURN);
 	set_sc(TK_READYCOUNTER,         SC_READYCOUNTER,        SI_READYCOUNTER);
 	set_sc(TK_DODGE,                SC_DODGE,               SI_DODGE);
-	set_sc(TK_SPTIME,               SC_TKDORI,              SI_BLANK);
+	set_sc(TK_SPTIME,               SC_TKREST,              SI_TKREST);
 	set_sc(TK_SEVENWIND,            SC_GHOSTWEAPON,         SI_GHOSTWEAPON);
 	set_sc(TK_SEVENWIND,            SC_SHADOWWEAPON,        SI_SHADOWWEAPON);
 	set_sc(SG_SUN_WARM,             SC_WARM,                SI_WARM);
@@ -1457,7 +1457,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->nhealhp = sd->nhealhp*sd->hprecov_rate/100;
 
 	if(sd->nhealhp < 1) sd->nhealhp = 1;
-	if(sd->nhealhp > 0x7fff) sd->nhealhp = 0x7fff;
+	if(sd->nhealhp > SHRT_MAX) sd->nhealhp = SHRT_MAX;
 
 	// Skill-related HP recovery
 	if((skill=pc_checkskill(sd,SM_RECOVERY)) > 0)
@@ -1465,11 +1465,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// Skill-related HP recovery (only when sit)
 	if((skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
 		sd->nsshealhp = skill*4 + (sd->status.max_hp*skill/500);
-	if((skill=pc_checkskill(sd,TK_HPTIME)) > 0 && sd->state.rest == 1)
+	if((skill=pc_checkskill(sd,TK_HPTIME)) > 0 &&
+		(sd->state.rest || sd->sc.data[SC_TKREST].timer!=-1))
 		sd->nsshealhp = skill*30 + (sd->status.max_hp*skill/500);
 
-	if(sd->nshealhp > 0x7fff) sd->nshealhp = 0x7fff;
-	if(sd->nsshealhp > 0x7fff) sd->nsshealhp = 0x7fff;
+	if(sd->nshealhp > SHRT_MAX) sd->nshealhp = SHRT_MAX;
+	if(sd->nsshealhp > SHRT_MAX) sd->nsshealhp = SHRT_MAX;
 
 // ----- SP MAX AND REGEN CALCULATION -----
 
@@ -1524,7 +1525,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->nhealsp = sd->nhealsp*sd->sprecov_rate/100;
 
 		if(sd->nhealsp < 1) sd->nhealsp = 1;
-		if(sd->nhealsp > 0x7fff) sd->nhealsp = 0x7fff;
+		if(sd->nhealsp > SHRT_MAX) sd->nhealsp = SHRT_MAX;
 
 		// Skill-related SP recovery
 		if((skill=pc_checkskill(sd,MG_SRECOVERY)) > 0)
@@ -1534,13 +1535,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		// Skill-related SP recovery (only when sit)
 		if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
 			sd->nsshealsp = skill*2 + (sd->status.max_sp*skill/500);
-		if((skill=pc_checkskill(sd,TK_SPTIME)) > 0 && sd->state.rest == 1) {
+		if((skill=pc_checkskill(sd,TK_SPTIME)) > 0 &&
+			(sd->state.rest || sd->sc.data[SC_TKREST].timer!=-1))
+		{
 			sd->nsshealsp = skill*3 + (sd->status.max_sp*skill/500);
 			if ((skill=pc_checkskill(sd,SL_KAINA)) > 0) //Power up Enjoyable Rest
 				sd->nsshealsp += (30+10*skill)*sd->nsshealsp/100;
 		}
-		if(sd->nshealsp > 0x7fff) sd->nshealsp = 0x7fff;
-		if(sd->nsshealsp > 0x7fff) sd->nsshealsp = 0x7fff;
+		if(sd->nshealsp > SHRT_MAX) sd->nshealsp = SHRT_MAX;
+		if(sd->nsshealsp > SHRT_MAX) sd->nsshealsp = SHRT_MAX;
 	}
 
 // ----- MISC CALCULATIONS -----
@@ -4467,7 +4470,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 		}
 			break;
-		case SC_TKDORI:
+		case SC_TKREST:
 			val2 = 11-val1; //Chance to consume: 11-skilllv%
 			break;
 		case SC_RUN:
@@ -4849,7 +4852,7 @@ int status_change_clear(struct block_list *bl,int type)
 		// Do not reset Xmas status when killed. [Valaris]
 		if(sc->data[i].timer == -1 ||
 			(type == 0 &&
-			(i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT || i == SC_FUSION)))
+			(i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT || i == SC_FUSION || i == SC_TKREST)))
 			continue;
 
 		status_change_end(bl, i, -1);

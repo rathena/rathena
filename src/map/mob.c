@@ -3152,6 +3152,22 @@ static int mob_readdb(void)
 			mob_db_data[class_]->luk=atoi(str[19]);
 			mob_db_data[class_]->range2=atoi(str[20]);
 			mob_db_data[class_]->range3=atoi(str[21]);
+			if (battle_config.view_range_rate!=100)
+			{
+				mob_db_data[class_]->range2=
+					mob_db_data[class_]->range2
+					*battle_config.view_range_rate/100;
+				if (mob_db_data[class_]->range2<1)
+					mob_db_data[class_]->range2=1;
+			}
+			if (battle_config.chase_range_rate!=100)
+			{
+				mob_db_data[class_]->range3=
+					mob_db_data[class_]->range3
+					*battle_config.chase_range_rate/100;
+				if (mob_db_data[class_]->range3<mob_db_data[class_]->range2)
+					mob_db_data[class_]->range3=mob_db_data[class_]->range2;
+			}
 			mob_db_data[class_]->size=atoi(str[22]);
 			mob_db_data[class_]->race=atoi(str[23]);
 			mob_db_data[class_]->element=atoi(str[24]);

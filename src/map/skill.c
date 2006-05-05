@@ -7625,7 +7625,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			//Consume
 			sd->itemid = sd->itemindex = -1;
 			if(skill == WZ_EARTHSPIKE 
-				&& sd->sc.data[SC_TKDORI].timer != -1 && rand()%100 > sd->sc.data[SC_TKDORI].val2) // [marquis007]
+				&& sd->sc.data[SC_TKREST].timer != -1 && rand()%100 > sd->sc.data[SC_TKREST].val2) // [marquis007]
 				; //Do not consume item.
 			else
 				pc_delitem(sd,i,1,0);

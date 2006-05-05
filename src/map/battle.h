@@ -135,6 +135,8 @@ extern struct Battle_Config {
 	unsigned short mvp_hp_rate;
 	unsigned short monster_hp_rate;
 	unsigned short monster_max_aspd;
+	unsigned short view_range_rate;
+	unsigned short chase_range_rate;
 	unsigned short atc_gmonly;
 	unsigned short atc_spawn_quantity_limit;
 	unsigned short atc_slave_clone_limit;
