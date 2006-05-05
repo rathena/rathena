@@ -8228,16 +8228,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
 // Lance
-	if (script_config.event_script_type == 0) {
-		struct npc_data *npc;
-		if ((npc = npc_name2id(script_config.loadmap_event_name))) {  
-			run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id);
-			ShowStatus("Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.loadmap_event_name);
-		}
-	} else {
-		ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
-			npc_event_doall_id(script_config.loadmap_event_name, sd->bl.id), script_config.loadmap_event_name);
-	}
+	npc_script_event(sd, NPCE_LOADMAP);
 
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]

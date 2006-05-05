@@ -1648,18 +1648,8 @@ int map_quit(struct map_session_data *sd) {
 	if(!sd->state.waitingdisconnect) {
 		if (sd->npc_timer_id != -1) //Cancel the event timer.
 			npc_timerevent_quit(sd);
-		if (sd->state.event_disconnect) {
-			if (script_config.event_script_type == 0) {
-				struct npc_data *npc;
-				if ((npc = npc_name2id(script_config.logout_event_name))) {
-					run_script(npc->u.scr.script,0,sd->bl.id,npc->bl.id); // PCLogoutNPC
-					ShowStatus("Event '"CL_WHITE"%s"CL_RESET"' executed.\n", script_config.logout_event_name);
-				}
-			} else {
-				ShowStatus("%d '"CL_WHITE"%s"CL_RESET"' events executed.\n",
-					npc_event_doall_id(script_config.logout_event_name, sd->bl.id), script_config.logout_event_name);
-			}
-		}
+		if (sd->state.event_disconnect)
+			npc_script_event(sd, NPCE_LOGOUT);
 		if (sd->pd) unit_free(&sd->pd->bl);
 		unit_free(&sd->bl);
 		pc_clean_skilltree(sd);

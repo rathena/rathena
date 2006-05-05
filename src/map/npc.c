@@ -67,6 +67,14 @@ static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data npc_viewdb[MAX_NPC_CLASS];
 
+static struct
+{	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
+	struct npc_data *nd;
+	struct event_data *event[UCHAR_MAX];
+	unsigned char *event_name[UCHAR_MAX];
+	unsigned char event_count;
+} script_event[NPCE_MAX];
+
 struct view_data* npc_get_viewdata(int class_)
 {	//Returns the viewdata for normal npc classes.
 	if (class_ == INVISIBLE_CLASS)
@@ -2535,6 +2543,96 @@ void npc_parsesrcfile (char *name)
 	return;
 }
 
+int npc_script_event(TBL_PC* sd, int type) {
+	int i;
+	if (type < 0 || type >= NPCE_MAX)
+		return 0;
+	if (!sd) {
+		if (battle_config.error_log)
+			ShowError("npc_script_event: NULL sd. Event Type %d\n", type);
+		return 0;
+	}
+	if (script_event[type].nd) {
+		TBL_NPC *nd = script_event[type].nd;
+		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
+		return 1;
+	} else if (script_event[type].event_count) {
+		for (i = 0; i<script_event[type].event_count; i++) {
+			npc_event_sub(sd,script_event[type].event[i],script_event[type].event_name[i]);
+		}
+		return i;
+	} 
+	return 0;
+}
+
+static int npc_read_event_script_sub(DBKey key,void *data,va_list ap)
+{
+	unsigned char *p = key.str;
+	unsigned char *name = va_arg(ap,unsigned char *);
+	struct event_data **event_buf = va_arg(ap,struct event_data**);
+	unsigned char **event_name = va_arg(ap,unsigned char **);
+	unsigned char *count = va_arg(ap,char *);;
+
+	if (*count >= UCHAR_MAX) return 0;
+	
+	if((p=strchr(p,':')) && p && strcmpi(name,p)==0 )
+	{
+		event_buf[*count] = (struct event_data *)data;
+		event_name[*count] = key.str;
+		(*count)++;
+		return 1;
+	}
+	return 0;
+}
+
+static void npc_read_event_script(void)
+{
+	int i;
+	unsigned char buf[64]="::";
+	struct {
+		char *name;
+		char *event_name;
+	} config[] = {
+		{"Login Event",script_config.login_event_name},
+		{"Logout Event",script_config.logout_event_name},
+		{"Load Map Event",script_config.loadmap_event_name},
+		{"Base LV Up Event",script_config.baselvup_event_name},
+		{"Job LV Up Event",script_config.joblvup_event_name},
+		{"Die Event",script_config.die_event_name},
+		{"Kill PC Event",script_config.kill_pc_event_name},
+		{"Kill NPC Event",script_config.kill_mob_event_name},
+	};
+
+	for (i = 0; i < NPCE_MAX; i++) {
+		if (script_event[i].nd)
+			script_event[i].nd = NULL;
+		if (script_event[i].event_count)
+			script_event[i].event_count = 0;
+		if (!script_config.event_script_type) {
+			//Use a single NPC as event source.
+			script_event[i].nd = npc_name2id(config[i].event_name);
+		} else {
+			//Use an array of Events
+			strncpy(buf+2,config[i].event_name,62);
+			ev_db->foreach(ev_db,npc_read_event_script_sub,buf,
+				&script_event[i].event,
+				&script_event[i].event_name,
+				&script_event[i].event_count);
+		}
+	}
+	if (battle_config.etc_log) {
+		//Print summary.
+		for (i = 0; i < NPCE_MAX; i++) {
+			if(!script_config.event_script_type) {
+				if (script_event[i].nd)
+					ShowInfo("%s: Using NPC named '%s'.\n", config[i].name, config[i].event_name);
+				else
+					ShowInfo("%s: No NPC found with name '%s'.\n", config[i].name, config[i].event_name);
+			} else
+				ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
+		}
+	}
+}
 static int npc_read_indoors (void)
 {
 	char *buf, *p;
@@ -2646,6 +2744,9 @@ int npc_reload (void)
 		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - npc_new_min, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
+	//Re-read the NPC Script Events cache.
+	npc_read_event_script();
+	
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"
 	CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
@@ -2787,7 +2888,8 @@ int do_init_npc(void)
 		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
-
+	memset(script_event, 0, sizeof(script_event));
+	npc_read_event_script();
 	//Debug function to locate all endless loop warps.
 	npc_debug_warps();
 	
