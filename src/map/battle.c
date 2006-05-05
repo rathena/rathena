@@ -463,7 +463,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
    	
 		if(sc->data[SC_KAUPE].timer != -1 &&
 			rand()%100 < sc->data[SC_KAUPE].val2 &&
-			(bl->type == BL_PC || !skill_num))
+			(src->type == BL_PC || !skill_num))
 		{	//Kaupe only blocks all skills of players.
 			clif_skill_nodamage(bl,bl,SL_KAUPE,1,1);
 			if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
