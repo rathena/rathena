@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+05/06
+	* Fixed the warp in the Turbo Track Room [Playtester]
 05/04
 	* Hopefully fixed the custom Prontera Cemetery Event [Playtester]
 	* Fixed a missing " in the gunslinger jobquest script [Playtester]
