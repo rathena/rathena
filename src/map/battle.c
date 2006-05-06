@@ -3815,7 +3815,6 @@ static const struct battle_data_short {
 	{ "exp_calc_type",                     &battle_config.exp_calc_type}, // [celest]
 	{ "min_skill_delay_limit",             &battle_config.min_skill_delay_limit}, // [celest]
 	{ "default_skill_delay",               &battle_config.default_skill_delay}, // [Skotlex]
-
 	{ "require_glory_guild",               &battle_config.require_glory_guild}, // [celest]
 	{ "idle_no_share",                     &battle_config.idle_no_share}, // [celest], for a feature by [MouseJstr]
 	{ "party_even_share_bonus",            &battle_config.party_even_share_bonus}, 
