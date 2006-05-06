@@ -26,6 +26,12 @@
 	-----
 
 =========================
+
+05/06
+	* Replaced every "if(!cond) end; cmd1; cmd2;" with "if(cond) { cmd1; cmd2; }"
+	  in item scripts, reads better for the eyes and for PHP scripts [DracoRPG]
+	* Changed Doppelganger Card's attack delay reduction bonus to non-stackable
+	  (bAspdRate instead of bAspdAddRate) as every other such bonus is [DracoRPG]
 05/05
 	* Hammer fall's stun duration is now 1+lv seconds. [Skotlex]
 	* Removed drops from Bio Lab mobs than are not in X.2 [Playtester]
