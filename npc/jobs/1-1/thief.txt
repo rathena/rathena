@@ -44,8 +44,8 @@ M_Menu:
 
 		M_0:
 		mes "[Thief Guide]";
-		mes "Hmph... you sound a little cocky....  Ya know, being a Thief isn't all it's cracked up to be....";
-		mes "That reminds me.... I must have been at lvl 9 or 10.... it was my first robbery....";
+		mes "Hmph... you sound a little cocky....  Yah know, being a Thief isn't all it's cracked up to be....";
+		mes "That reminds me.... I must have been at lvl 9 or 10 when I did my first robbery....";
 		next;
 		mes "[Thief Guide]";
 		mes "Hahahaha... I can still remember the look on that guy's face...";
@@ -54,7 +54,7 @@ M_Menu:
 		mes "[Thief Guide]";
 		mes "But anyways... I assume you're here to become a thief...";
 		next;
-		menu "-You got it.",sM_0a, "-Nope.  Just wasting your time. ^ ^",sM_0b, "-Why did you steal from that man?",sM_0c;
+		menu "You got it.",sM_0a, "Nope.  Just wasting your time. ^ ^",sM_0b, "Why did you steal from that man?",sM_0c;
 
 		sM_0a:
 			goto L_Test;
@@ -82,50 +82,52 @@ M_Menu:
 
 	L_Test:
 		mes "[Thief Guide]";
-		mes "Ok then.  First, fill out this application form.";
+		mes "Okay then; first, fill out this application form.";
 		next;
-		mes "(you fill out the form and hand it back)";
+		mes "^0000FF(You fill out the form and hand it back)^000000";
 		next;
 		if(JobLevel < 10) goto sL_JobLvl;
 
 		mes "[Thief Guide]";
-		mes "Alrighty ^ff0000"+ strcharinfo(0) + "^000000, if that IS your real name..... looks like you've got quite a 'record' here.";
+		mes "Alrighty ^FF0000"+ strcharinfo(0) + "^000000, if that IS your real name..... looks like you've got quite a 'record' here.";
 		mes "Let's see.... aggravated assualt... felony larson..... hmm....";
 		next;
 		mes "[Thief Guide]";
-		mes "Ah, here we go...... you've got the job and skill requirements to become a Thief.  Now all you gota do is pass the Morroc Thief Test.";
+		mes "Ah, here we go...... you've got the job and skill requirements to become a Thief.  Now all you've got to do is pass the ^FF0000Morroc Thief Test^000000.";
 		next;
 
 		L_Explain:
 		mes "[Thief Guide]";
-		mes "   The test will require you to ^ff0000'sneak'^000000 into ^ff0000'Shibu's Farm'^000000, and ^ff0000'steal'^000000 some ^aaaa00'Mushrooms'^000000.";
-		mes "   There are ^ff00002^000000 kinds of ^aaaa00Mushrooms^000000 on the farm, ^ffbb00Orange Net Mushrooms^000000 and ^ffbb00Orange Gooey Mushrooms^000000.";
+		mes "   The test will require you to ^FF0000'sneak'^000000 into ^FF0000'Shibu's Farm'^000000, and ^FF0000'borrow'^000000 some ^AAAA00'Mushrooms'^000000.";
+		mes "   There are ^ff00002^000000 kinds of ^AAAA00Mushrooms^000000 on the farm, ^FFBB00Orange Net Mushrooms^000000 and ^FFBB00Orange Gooey Mushrooms^000000.";
 		next;
 		mes "[Thief Guide]";
-		mes "'Shibu' just happens to be the worst merchant scammer in Morroc, in case your wondering why he's our target.";
+		mes "'Shibu just happens to be the worst merchant scammer in Morroc, in case you're wondering why he's our target.";
 		next;
 		mes "[Thief Guide]";
-		mes "   Bring the Mushrooms back here and someone will give you a score based on the type, and the amount of mushrooms you get.";
-		mes "   1 Orange Net Mushroom = ^0000ff3 points^000000 while 1 Orange Gooey Mushroom = ^0000ff1 point^000000.  You need 25 points to pass the test.";
+		mes "   Bring the Mushrooms back here and someone will give you a score based on the type and the amount of mushrooms you get.";
+		mes "   1 Orange Net Mushroom = ^0000FF3 points^000000 while 1 Orange Gooey Mushroom = ^0000FF1 point^000000.  You need ^FF000025^000000 points to pass the test.";
 		next;
 		mes "[Thief Guide]";
 		mes "   In order to get into Shibu's Farm you'll need to talk to one of our 'associates'.  You can find him just ouside of this pyramid standing near some columns.";
-		mes "   He goes by the name ^ddcc00'Irrelevant Man'^000000.";
+		mes "   He goes by the name ^DDCC00'Irrelevant Man'^000000.";
 		next;
 		mes "[Thief Guide]";
 		mes "   Here are his exact coordinates just in case you are 'directionaly challenged': '^FF0000141, 125^000000'.";
 		mes  "  Find him and he'll show you a secrect way into the Farm.";
 		next;
 		mes "[Thief Guide]";
-		mes "   This sounds easy but ^009900do you know there are Monsters which keep Mushrooms from the robbery^000000?";				//had to leave the engrish in, it was to good not too.  d^_^b
-		mes "   Please ^0000ffget yourself out of the Fairy Tales^000000 and ^ff0000'Brace up your nerves. That will be the toughest experience to you^000000.";
+		mes "   This sounds easy but ^009900do know, there are Monsters who guard Mushrooms^000000?";
+				// had to leave the engrish in, it was to good not too.  d^_^b
+				// And I took it out.  :D  [KillerBox]
+		mes "   Stop reading Fairy Tales and ^FF0000brace up your nerves; this will be the toughest experience ever^000000.";
 		next;
 		mes "[Thief Guide]";
-		mes "   So, I will give you one tip. ^ff0000Elaborate the Strategy^000000 before you going inside the Farm.";
+		mes "   So, I will give you one tip. ^FF0000Elaborate the Strategy^000000 before you going inside the Farm.";
 		next;
 		mes "[Thief Guide]";
-		mes "   Try to steal the mushrooms as quickly as you can.  You may even have to ^0000ffunequip some weapons or armor^000000.";
-		mes "   You don't want to get killed while doing this... at the very least try to give me the mushrooms first.... then you can go get yourself killed... HA!";
+		mes "   Try to steal the mushrooms as quickly as you can.  You may even have to ^0000FFunequip some weapons or armor to attack faster^000000.";
+		mes "   Try not to get killed while doing this... at the very least try to give me the mushrooms first.... then you can go get yourself killed... HA!";
 		next;
 		mes "[Thief Guide]";
 		mes "   If you don't have any questions... then GET moving!";
@@ -135,7 +137,7 @@ M_Menu:
 
 		sL_JobLvl:
 			mes "[Thief Guide]";
-			mes "Err I can see how ambitious you are......but we can't hand a gun to a baby only for that? Come back when you learn all Basic Skills.";
+			mes "Err... I can see how ambitious you are, but we can't hand a gun to a baby only for that. Come back when you learn all Basic Skills.";
 			close;
 
 	L_Back:
@@ -175,16 +177,19 @@ M_Menu:
 
 	L_1:
 		mes "[Thief Guide]";
-		mes "So how was the Mushroom Farm.  Did ya have much fun?";
+		mes "So how was the Mushroom Farm?  Did yah have much fun?";
 		next;
 		menu "Yeah, kinda Cool.",M_Cool,"It was horrible.",M_Not;
 
 		M_Cool:
 			mes "[Thief Guide]";
-			mes "   Wow! I like you! Fabulous! Everyone before you was `S@#$ Bloody As#$%^&s'.";
+			mes "   Wow! I like you! Fabulous! Everyone before you was #&$@ bloody As#$%^&s#!";
 			next;
 			mes "[Thief Guide]";
-			mes "...... You won't take my place, will you? If you have any ambition like that, I will kick your ^ff0000'ASS OUT OF YOUR BUTT'^000000!";	//this is just too much lol.
+			mes "...... You won't take my place, will you?  If you have any ambition like that, I'll ^ff0000DESTROY YOU^000000!";
+			// mes "...... You won't take my place, will you?  If you have any ambition like that, I will kick your ^ff0000'ASS OUT OF YOUR BUTT'^000000!";
+			// this is just too much lol.
+			// That line before was just too precious to delete.  [KillerBox]
 			emotion e_gasp;
 			next;
 			mes "[Thief Guide]";
@@ -192,7 +197,7 @@ M_Menu:
 			close;
 		M_Not:
 			mes "[Thief Guide]";
-			mes "   I know what ya mean.  I was there before and it was awfull.  All those smelly mushrooms and aggressive monsters.";
+			mes "   I know what yah mean.  I was there before and it was awful:  all those smelly mushrooms and aggressive monsters.";
 			next;
 			mes "[Thief Guide]";
 			mes "   Eeewww! Yuuuckk! Still, in order to pass the test you need to go get some mushrooms.";
@@ -257,9 +262,8 @@ L_4:
 
 	L_High:
 		mes "[Comrade Brad]";
-		mes "Ooooh.  Above 25, kewl.  You passed the Test!";
+		mes "Ooooh.  Above 25, you will make an excellent thief.";
 		next;
-
 	L_Final:
 		mes "[Comrade Brad]";
 		mes "Congratulations ^ff0000"+strcharinfo(0)+"^000000, you passed the official Thief Test!  You can now become a Thief!!";
@@ -282,7 +286,7 @@ L_4:
 		next;
 		mes "[Comrade Brad]";
 		mes "However, If you bring disgrace to our Guild, or ever betray us, we will not hesitate to have you......";
-		mes "how shall I say..... ^ff0000'REMOVED'^000000 from the Thief Guild.";
+		mes "How shall I say, ^ff0000'REMOVED'^000000 from the Thief Guild.";
 		emotion e_gg;
 		next;
 		mes "[Comrade Brad]";
@@ -291,7 +295,7 @@ L_4:
 
 		sL_SkPoint:
 			mes "[Comrade Brad]";
-			mes "But before that happens please use up all of your skill points ok?";
+			mes "But before that happens please use up all of your skill points, okay?";
 			close;
 
 }
@@ -347,7 +351,7 @@ L_Thief:
 	emotion e_no1;
 	next;
 	mes "[Irrelevant Man]";
-	mes "Don't worry about Shibu's Farm.  Let the newbies handle that.  Why don't ya go out and kill some stronger monsters.";
+	mes "Don't worry about Shibu's Farm.  Let the newbies handle that.  Why don't yah go out and kill some stronger monsters?";
 	close;
 
 L_Novice:
@@ -368,7 +372,7 @@ L_2:
 	mes "Lets see here.....(checks his list).... you're ^ff0000"+ strcharinfo(0) +"^000000 right?  Good.";
 	next;
 	mes "[Irrelevant Man]";
-	mes "Ok! I'm gonna show you the way in but keep quite.  I can't guarantee your safety so watch your back.";
+	mes "Okay! I'm gonna show you the way in but keep quite.  I can't guarantee your safety so watch your back.";
 	next;
 
 	L_Warp:
@@ -399,7 +403,7 @@ L_3:
 	emotion e_heh;
 	next;
 	mes "[Irrelevant Man]";
-	mes "Just kidding..... NOT!!.  Anywho I'll let ya back in!";
+	mes "Just kidding..... NOT!!.  Anywho I'll let yah back in!";
 	next;
 	menu "Ready",M_Yes,"Not yet",M_No;
 
@@ -408,7 +412,7 @@ L_3:
 
 	M_No:
 		mes "[Irrelevant Man]";
-		mes "Ok, let me know when you are.";
+		mes "Okay, let me know when you are.";
 		close;
 
 }

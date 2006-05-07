@@ -19,7 +19,6 @@ geffen.gat,127,49,5	script	Elven Ears Quest	84,{
 	mes "Ah, the ^61B031Elven Ears ^000000Quest!"; 
 	next; 
 	menu "Requirements",L_Bl, "Make Item",-, "Cancel",L_Cancel; 
-
 	mes "[Elven Ears quest]";
 	mes "Good good, let me just check"; 
 	if(countitem(2213)<1 || countitem(1040)<20 || countitem(919)<20) goto L_NoMake; 
@@ -36,6 +35,7 @@ geffen.gat,127,49,5	script	Elven Ears Quest	84,{
 	close;
 
 L_NoMake:
+	next;
 	mes "[Elven Ears Quest]";
 	mes "You don't have the requirements.";
 	mes "Please come back another time...";
@@ -47,18 +47,18 @@ L_Bl:
 	mes "^362ED620 Elder Pixie Mustaches^000000"; 
 	mes "and ^362ED620 Animal Skin^000000";
 	next;
-
 	menu "Accept",-, "Leave",L_Leave;
-
 	mes "When you are done, bring the items to me.  Ok good luck finding those items.";
 	close;
 
 L_Leave:
+	next;
 	mes "[Elven Ears quest]";
 	mes "Maybe another time?";
 	close;
 
 L_Cancel:
+	next;
 	mes "[Elven Ears quest]";
 	mes "Aw, what a shame";
 	mes "Giving up already?";

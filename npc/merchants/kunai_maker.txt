@@ -16,7 +16,7 @@
 //============================================================
 que_ng.gat,72,29,3	script	Kunai Seller	83,{
 mes "[Jin]";
-mes "Hi, I sell elemental enchanted kunais. I'll trade you some elemental stones and one kind of shurikens for a determined elemental Kunai";
+mes "Hi, I sell elemental enchanted kunais. I'll trade you some elemental stones and one kind of shuriken for a determined elemental Kunai";
 next;
 mes "[Jin]";
 mes "What would you like to trade some? It's free";
@@ -48,49 +48,50 @@ L_Bye:
 }
 
 function	script	Kunai_Trade	-1,{
-next;
-mes "[Jin]";
-if (MaxWeight*50/100 < Weight) {
-	if (MaxWeight*90/100 < Weight) {
-		mes "Sorry but you have more than 90% weight. Your kunais might drop. I can't give you anything.";
-		return;
+	next;
+	mes "[Jin]";
+	if (MaxWeight*50/100 < Weight) {
+		if (MaxWeight*90/100 < Weight) {
+			mes "Sorry but you have more than 90% weight. Your kunais might drop. I can't give you anything.";
+			return;
+		}
+		mes "You have 50% or more weight, do you still want to continue?";
+		menu "Yes",-,"No, thanks",L_Return;
 	}
-	mes "You have 50% or more weight, do you still want to continue?";
-	menu "Yes",-,"No, thanks",L_Return;
-}
 
-mes "Would you like to trade my 10 "+getitemname(getarg(4))+" for yours "+getarg(1)+" "+getitemname(getarg(0))+" and "+getarg(3)+" "+getitemname(getarg(2))+" ?";
-switch(select("Yes:I'll think about it")) {
-	case 1:
-		next; 
-		mes "[Jin]";
-		if (countitem(getarg(0)) < getarg(1) || countitem(getarg(2)) < getarg(3)) {
-			mes "Sorry but you're missing one of the required items. Please get them";
-			close;
-		} else
-		mes "How many do you want to trade? I can only trade you 500 units at once, and remember 1 unit = 10 kunais of your wish";
-		input @trade;
-		next;
-		mes "[Jin]";
-		if (@trade > 500) {
-			mes "Sorry, but I told you I could only trade you 500 units at once. Try again";
-			close;
-		} else if (@trade == 0) {
-			mes "Sorry, but 1 unit is the minimun I can trade. Try again please.";
-			close;
-		} else if ((countitem(getarg(0)) < @trade*getarg(1)) || (countitem(getarg(2)) < @trade*getarg(3))) {
- 			mes "Sorry, but you don't have enough items to trade "+@trade+" unit(s). Get more please";
-			close;
-		} else
-		mes "Here you go, enjoy them";
-		delitem getarg(0),getarg(1)*@trade;
-		delitem getarg(2),getarg(3)*@trade;
-		getitem getarg(4),10*@trade;
-		next;
-		return;
-	case 2:
-		return;
-	}
+	mes "Would you like to trade my 10 "+getitemname(getarg(4))+" for your "+getarg(1)+" "+getitemname(getarg(0))+" and "+getarg(3)+" "+getitemname(getarg(2))+" ?";
+	switch(select("Yes:I'll think about it")) {
+		case 1:
+			next; 
+			mes "[Jin]";
+			if (countitem(getarg(0)) < getarg(1) || countitem(getarg(2)) < getarg(3)) {
+				mes "Sorry but you're missing one of the required items. Please get them";
+				close;
+			} else
+			mes "How many do you want to trade? I can only trade you ^FF0000500^000000 units at once.";
+			mes "^00FF001 Unit^000000 ^FF0000=^000000 ^0000FF10 Kunais^000000 of your desire";
+			input @trade;
+			next;
+			mes "[Jin]";
+			if (@trade > 500) {
+				mes "Sorry, but I told you I could only trade you 500 units at once. Try again";
+				close;
+			} else if (@trade < 1) {
+				mes "Sorry, but 1 unit is the minimun I can trade. Try again please.";
+				close;
+			} else if ((countitem(getarg(0)) < @trade*getarg(1)) || (countitem(getarg(2)) < @trade*getarg(3))) {
+ 				mes "Sorry, but you don't have enough items to trade "+@trade+" unit(s). Get more please";
+				close;
+			} else
+			mes "Here you go, enjoy them";
+			delitem getarg(0),getarg(1)*@trade;
+			delitem getarg(2),getarg(3)*@trade;
+			getitem getarg(4),10*@trade;
+			next;
+			return;
+		case 2:
+			return;
+		}
 L_Return:
 	return;
 }

@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 05/07
+	* Fixed some grammar errors in Thief Job, Kunai, and others [KillerBox]
 	* Fixed Sea Otter Quest thanks to nolider [Playtester]
 05/06
 	* Fixed the warp in the Turbo Track Room [Playtester]
