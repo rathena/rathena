@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/05
+	* Optimized clif.c clif_scriptmenu/input/inputstr to check for sd->state.using_fake_npc
+	  before sending one (as it's not required to send twice).
+	* Reinitialize sd->state.using_fake_npc in clif_parse_LoadEndAck (for scripts that warps
+	  players and still continues execution to work). [Lance]
 	* Updated item_db.sql to current. [Skotlex]
 	* Fixed a bug in @commands, most likely the reason some people were still
 	  getting crashes. [Skotlex]

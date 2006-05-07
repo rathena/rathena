@@ -1821,9 +1821,9 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 
 	nullpo_retr(0, sd);
 
-	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
 	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
@@ -1846,9 +1846,9 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
 
 	nullpo_retr(0, sd);
 
-	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
 	   clif_sendfakenpc(sd, npcid);
 	
 	fd=sd->fd;
@@ -1870,9 +1870,9 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 
 	nullpo_retr(0, sd);
 
-	if (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
 	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
@@ -8132,6 +8132,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// Show hp after displacement [LuzZza]
 	if(sd->status.party_id)
 	    clif_party_hp(sd);
+
+	sd->state.using_fake_npc = 0;
 
 	// pvp
 	//if(sd->pvp_timer!=-1 && !battle_config.pk_mode) /PVP Client crash fix* Removed timer deletion
