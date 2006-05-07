@@ -28,7 +28,7 @@
 =========================
 05/07
 	* Updating drops to Aegis X.2 [Playtester]
-	- progress 20%
+	- progress 25%
 05/06
 	* Replaced every "if(!cond) end; cmd1; cmd2;" with "if(cond) { cmd1; cmd2; }"
 	  in item scripts, reads better for the eyes and for PHP scripts [DracoRPG]
