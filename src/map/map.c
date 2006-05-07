@@ -3556,9 +3556,6 @@ int map_sql_close(void){
 	ShowStatus("Close Map DB Connection....\n");
 
 	if (log_config.sql_logs)
-//Updating this if each time there's a log_config addition is too much of a hassle.	[Skotlex]
-		/*&& (log_config.branch || log_config.drop || log_config.mvpdrop ||
-		log_config.present || log_config.produce || log_config.refine || log_config.trade))*/
 	{
 		mysql_close(&logmysql_handle);
 		ShowStatus("Close Log DB Connection....\n");

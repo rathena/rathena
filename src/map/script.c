@@ -3737,9 +3737,6 @@ int buildin_getitem(struct script_state *st)
 	if((nameidsrc = nameid)<0) { // Save real ID of the source Box [Lupus]
 		nameid=itemdb_searchrandomid(-nameid);
 
-		if(log_config.present > 0)
-			log_present(sd, -nameidsrc, nameid); //fixed missing ID by Lupus
-
 		flag = 1;
 	}
 
@@ -4718,9 +4715,6 @@ int buildin_successrefitem(struct script_state *st)
 	if(i >= 0) {
 		ep=sd->status.inventory[i].equip;
 
-		if(log_config.refine > 0)
-			log_refine(sd, i, 1);
-
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.pick > 0 ) {
 			log_pick(sd, "N", 0, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
@@ -4773,9 +4767,6 @@ int buildin_failedrefitem(struct script_state *st)
 	sd=script_rid2sd(st);
 	i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
-		if(log_config.refine > 0)
-			log_refine(sd, i, 0);
-
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.pick > 0 ) {
 			log_pick(sd, "N", 0, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);

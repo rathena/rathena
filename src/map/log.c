@@ -198,46 +198,6 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 	return 0;
 }
 
-
-int log_drop(struct map_session_data *sd, int monster_id, int *log_drop)
-{
-	FILE *logfp;
-	int i,flag = 0;
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-	nullpo_retr(0, sd);
-	for (i = 0; i<10; i++) { //Should we log these items? [Lupus]
-		flag += should_log_item(log_config.drop,log_drop[i],1);
-	}
-	if (flag==0) return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
-
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`drop_date`, `kill_char_id`, `monster_id`, `item1`, `item2`, `item3`, `item4`, `item5`, `item6`, `item7`, `item8`, `item9`, `itemCard`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s') ", log_config.log_drop_db, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], log_drop[8], log_drop[9], mapindex_id2name(sd->mapindex));
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_drop,"a+")) != NULL) {
-			
-
-			time_t curtime;
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d,%d,%d,%d,%d,%d,%d,%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_drop[0], log_drop[1], log_drop[2], log_drop[3], log_drop[4], log_drop[5], log_drop[6], log_drop[7], log_drop[8], log_drop[9], RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 1; //Logged
-}
-
 int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 {
 	FILE *logfp;
@@ -268,352 +228,6 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 	return 0;
 }
 
-int log_present(struct map_session_data *sd, int source_type, int nameid)
-{
-	FILE *logfp;
-#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
-#endif
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-	nullpo_retr(0, sd);
-	if(!should_log_item(log_config.present,nameid,1)) return 0;	//filter [Lupus]
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`present_date`, `src_id`, `account_id`, `char_id`, `char_name`, `nameid`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%s', '%d', '%s') ",
-			log_config.log_present_db, source_type, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), nameid, mapindex_id2name(sd->mapindex));
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{	
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_present,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, source_type, nameid, RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 0;
-}
-
-int log_produce(struct map_session_data *sd, int nameid, int slot1, int slot2, int slot3, int success)
-{
-	FILE *logfp;
-#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
-#endif
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-	nullpo_retr(0, sd);
-	if(!should_log_item(log_config.produce,nameid,1)) return 0;	//filter [Lupus]
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`produce_date`, `account_id`, `char_id`, `char_name`, `nameid`, `slot1`, `slot2`, `slot3`, `map`, `success`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%s', '%d') ",
-			log_config.log_produce_db, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), nameid, slot1, slot2, slot3, mapindex_id2name(sd->mapindex), success);
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_produce,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d,%d\t%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, nameid, slot1, slot2, slot3, success, RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 0;
-}
-
-int log_refine(struct map_session_data *sd, int n, int success)
-{
-	FILE *logfp;
-	int log_card[MAX_SLOTS];
-	int item_level;
-	int i;
-#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
-#endif
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-
-	nullpo_retr(0, sd);
-
-	if(success == 0)
-		item_level = sd->status.inventory[n].refine; //leaving there 0 wasn't informative! we have SUCCESS field anyways
-	else
-		item_level = sd->status.inventory[n].refine + 1;
-	if(!should_log_item(log_config.refine,sd->status.inventory[n].nameid,1) || log_config.refine_items_log>item_level) return 0;	//filter [Lupus]
-	for(i=0;i<MAX_SLOTS;i++)
-		log_card[i] = sd->status.inventory[n].card[i];
-
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		char *str_p = tmp_sql;
-		str_p += sprintf(str_p, "INSERT DELAYED INTO `%s` (`refine_date`, `account_id`, `char_id`, `char_name`, `nameid`, `refine`"
-			", `map`, `success`, `item_level`", log_config.log_refine_db);
-		
-		for (i=0; i < MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", `card%d`", i);
-		
-		str_p += sprintf(str_p, ") VALUES (NOW(), '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d'",
-			sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name),
-			sd->status.inventory[n].nameid, sd->status.inventory[n].refine, mapindex_id2name(sd->mapindex), success, item_level);
-		
-		for(i=0; i<MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", '%d'", log_card[i]);
-
-		strcat(tmp_sql,")");
-
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_refine,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d,%d\t",
-				timestring, sd->status.name, sd->status.account_id, sd->status.char_id,
-				sd->status.inventory[n].nameid, sd->status.inventory[n].refine);
-
-			for (i=0; i<MAX_SLOTS; i++)
-				fprintf(logfp,"%d,",log_card[i]);
-		
-			fprintf(logfp,"\t%d,%d%s", success, item_level, RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 0;
-}
-
-int log_tostorage(struct map_session_data *sd,int n, int guild) 
-{
-  FILE *logfp;
-  int i;
-
-  if(log_config.enable_logs <= 0 || log_config.storage == 0 || log_config.log_storage[0] == '\0')
-    return 0;
-
-  nullpo_retr(0, sd);
-  if(sd->status.inventory[n].nameid==0 || sd->inventory_data[n] == NULL)
-    return 1;
-
-  if(sd->status.inventory[n].amount < 0)
-    return 1;
-
-  if((logfp=fopen(log_config.log_trade,"a+")) != NULL) {
-		time(&curtime);
-		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-		fprintf(logfp,"%s - to %s: %s[%d:%d]\t%d\t%d\t%d\t",
-		timestring, guild ? "guild_storage": "storage", sd->status.name, sd->status.account_id, sd->status.char_id, 
-      sd->status.inventory[n].nameid, sd->status.inventory[n].amount, sd->status.inventory[n].refine);
-	 
-	 for (i=0; i<MAX_SLOTS; i++)
-		 fprintf(logfp, "%d,", sd->status.inventory[n].card[i]);
-	
-	 fprintf(logfp, "%s", RETCODE);
-    fclose(logfp);
-  }
-  return 0;
-}
-
-int log_fromstorage(struct map_session_data *sd,int n, int guild) 
-{
-  FILE *logfp;
-  int i;
-
-  if(log_config.enable_logs <= 0 || log_config.storage == 0 || log_config.log_storage[0] == '\0')
-    return 0;
-
-  nullpo_retr(0, sd);
-
-  if(sd->status.inventory[n].nameid==0 || sd->inventory_data[n] == NULL)
-    return 1;
-
-  if(sd->status.inventory[n].amount < 0)
-    return 1;
-
-  if((logfp=fopen(log_config.log_trade,"a+")) != NULL) {
-	time(&curtime);
-	fprintf(logfp,"%s - from %s: %s[%d:%d]\t%d\t%d\t%d\t",
-		timestring, guild ? "guild_storage": "storage", sd->status.name, sd->status.account_id, sd->status.char_id, 
-      sd->status.inventory[n].nameid, sd->status.inventory[n].amount, sd->status.inventory[n].refine);
-	 
-	 for (i=0; i<MAX_SLOTS; i++)
-		 fprintf(logfp, "%d,", sd->status.inventory[n].card[i]);
-	
-	 fprintf(logfp, "%s", RETCODE);
-
-    fclose(logfp);
-  }
-  return 0;
-}
-
-int log_trade(struct map_session_data *sd, struct map_session_data *target_sd, int n,int amount)
-{
-	FILE *logfp;
-	int log_nameid, log_amount, log_refine, log_card[MAX_SLOTS];
-	int i;
-#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2],t_name2[NAME_LENGTH*2];
-#endif
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-
-	nullpo_retr(0, sd);
-
-	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
-		return 1;
-
-	if(sd->status.inventory[n].amount < 0)
-		return 1;
-	if(!should_log_item(log_config.trade,sd->status.inventory[n].nameid,sd->status.inventory[n].amount)) return 0;	//filter [Lupus]
-	log_nameid = sd->status.inventory[n].nameid;
-	log_amount = sd->status.inventory[n].amount;
-	log_refine = sd->status.inventory[n].refine;
-
-	for(i=0;i<MAX_SLOTS;i++)
-		log_card[i] = sd->status.inventory[n].card[i];
-
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		char *str_p = tmp_sql;
-		str_p += sprintf(str_p, "INSERT DELAYED INTO `%s` (`trade_date`, `src_account_id`, `src_char_id`, `src_char_name`, `des_account_id`, `des_char_id`, `des_char_name`, `nameid`, `amount`, `refine`, `map`",
-			log_config.log_trade_db);
-
-		for (i=0; i < MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", `card%d`", i);
-		
-		str_p += sprintf(str_p, ") VALUES (NOW(), '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%s'",
-			sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name),
-			target_sd->status.account_id, target_sd->status.char_id, jstrescapecpy(t_name2, target_sd->status.name),
-			log_nameid, log_amount, log_refine, mapindex_id2name(sd->mapindex));
-		
-		for(i=0; i<MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", '%d'", log_card[i]);
-
-		strcat(tmp_sql, ")");
-		
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_trade,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%s[%d:%d]\t%d\t%d\t%d\t",
-				timestring, sd->status.name, sd->status.account_id, sd->status.char_id,
-				target_sd->status.name, target_sd->status.account_id, target_sd->status.char_id,
-				log_nameid, log_amount, log_refine);
-
-			for (i=0; i<MAX_SLOTS; i++)
-				fprintf(logfp, "%d,", sd->status.inventory[n].card[i]);
-	
-			fprintf(logfp, "%s", RETCODE);
-
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 0;
-}
-
-int log_vend(struct map_session_data *sd,struct map_session_data *vsd,int n,int amount, int zeny)
-{
-	FILE *logfp;
-	int log_nameid, log_amount, log_refine, log_card[MAX_SLOTS];
-	int i;
-#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2],t_name2[NAME_LENGTH*2];
-#endif
-
-	if(log_config.enable_logs <= 0)
-		return 0;
-	nullpo_retr(0, sd);
-
-	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
-		return 1;
-	if(sd->status.inventory[n].amount< 0)
-		return 1;
-	if(!should_log_item(log_config.vend,sd->status.inventory[n].nameid,sd->status.inventory[n].amount)) return 0;	//filter [Lupus]
-	log_nameid = sd->status.inventory[n].nameid;
-	log_amount = sd->status.inventory[n].amount;
-	log_refine = sd->status.inventory[n].refine;
-	for(i=0;i<MAX_SLOTS;i++)
-		log_card[i] = sd->status.inventory[n].card[i];
-
-#ifndef TXT_ONLY
-	if(log_config.sql_logs > 0)
-	{
-		char *str_p = tmp_sql;
-		str_p += sprintf(str_p, "INSERT DELAYED INTO `%s` (`vend_date`, `vend_account_id`, `vend_char_id`, `vend_char_name`, `buy_account_id`, `buy_char_id`, `buy_char_name`, `nameid`, `amount`, `refine`, `map`, `zeny`",
-			log_config.log_vend_db); 	
-
-		for (i=0; i < MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", `card%d`", i);
-
-		str_p += sprintf(str_p, ") VALUES (NOW(), '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%s', '%d'",
-			sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name),
-			vsd->status.account_id, vsd->status.char_id, jstrescapecpy(t_name2, vsd->status.name),
-			log_nameid, log_amount, log_refine, mapindex_id2name(sd->mapindex), zeny);
-		
-		for(i=0; i<MAX_SLOTS; i++)
-			str_p += sprintf(str_p, ", '%d'", log_card[i]);
-
-		strcat(tmp_sql, ")");
-		
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_vend,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%s[%d:%d]\t%d\t%d\t%d\t",
-				timestring, sd->status.name, sd->status.account_id, sd->status.char_id,
-				vsd->status.name, vsd->status.account_id, vsd->status.char_id,
-				log_nameid, log_amount, log_refine);
-
-			for(i=0; i<MAX_SLOTS; i++)
-				fprintf(logfp, "%d,", sd->status.inventory[n].card[i]);
-			
-			fprintf(logfp, "\t%d%s", zeny, RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
-	}
-#endif
-	return 0;
-}
 
 int log_atcommand(struct map_session_data *sd, const char *message)
 {
@@ -798,24 +412,6 @@ int log_config_read(char *cfgName)
 				log_config.branch = (atoi(w2));
 			} else if(strcmpi(w1,"log_pick") == 0) {
 				log_config.pick = (atoi(w2));
-			} else if(strcmpi(w1,"log_drop") == 0) {
-				log_config.drop = (atoi(w2));
-			} else if(strcmpi(w1,"log_steal") == 0) {
-				log_config.steal = (atoi(w2));
-			} else if(strcmpi(w1,"log_mvpdrop") == 0) {
-				log_config.mvpdrop = (atoi(w2));
-			} else if(strcmpi(w1,"log_present") == 0) {
-				log_config.present = (atoi(w2));
-			} else if(strcmpi(w1,"log_produce") == 0) {
-				log_config.produce = (atoi(w2));
-			} else if(strcmpi(w1,"log_refine") == 0) {
-				log_config.refine = (atoi(w2));
-			} else if(strcmpi(w1,"log_trade") == 0) {
-				log_config.trade = (atoi(w2));
-			} else if(strcmpi(w1,"log_storage") == 0) {
-				log_config.storage = (atoi(w2));
-			} else if(strcmpi(w1,"log_vend") == 0) {
-				log_config.vend = (atoi(w2));
 			} else if(strcmpi(w1,"log_zeny") == 0) {
 				log_config.zeny = (atoi(w2));
 			} else if(strcmpi(w1,"log_gm") == 0) {
@@ -824,6 +420,8 @@ int log_config_read(char *cfgName)
 				log_config.npc = (atoi(w2));
 			} else if(strcmpi(w1, "log_chat") == 0) {
 				log_config.chat = (atoi(w2));
+			} else if(strcmpi(w1,"log_mvpdrop") == 0) {
+				log_config.mvpdrop = (atoi(w2));
 			}
 
 #ifndef TXT_ONLY
@@ -839,41 +437,10 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_zeny_db, w2);
 				if(log_config.zeny == 1)
 					ShowNotice("Logging Zeny to table `%s`\n", w2);
-			} else if(strcmpi(w1, "log_drop_db") == 0) {
-				strcpy(log_config.log_drop_db, w2);
-				if(log_config.drop == 1)
-					ShowNotice("Logging Item Drops to table `%s`\n", w2);
 			} else if(strcmpi(w1, "log_mvpdrop_db") == 0) {
 				strcpy(log_config.log_mvpdrop_db, w2);
 				if(log_config.mvpdrop == 1)
 					ShowNotice("Logging MVP Drops to table `%s`\n", w2);
-			} else if(strcmpi(w1, "log_present_db") == 0) {
-				strcpy(log_config.log_present_db, w2);
-				if(log_config.present == 1)
-					ShowNotice("Logging Present Usage & Results to table `%s`\n", w2);
-			} else if(strcmpi(w1, "log_produce_db") == 0) {
-				strcpy(log_config.log_produce_db, w2);
-				if(log_config.produce == 1)
-					ShowNotice("Logging Producing to table `%s`\n", w2);
-			} else if(strcmpi(w1, "log_refine_db") == 0) {
-				strcpy(log_config.log_refine_db, w2);
-				if(log_config.refine == 1)
-					ShowNotice("Logging Refining to table `%s`\n", w2);
-			} else if(strcmpi(w1, "log_trade_db") == 0) {
-				strcpy(log_config.log_trade_db, w2);
-				if(log_config.trade == 1)
-					ShowNotice("Logging Item Trades to table `%s`\n", w2);
-//			} else if(strcmpi(w1, "log_storage_db") == 0) {
-//				strcpy(log_config.log_storage_db, w2);
-//				if(log_config.storage == 1)
-//				{
-//					printf("Logging Item Storages");
-//					printf(" to table `%s`\n", w2);
-//				}
-			} else if(strcmpi(w1, "log_vend_db") == 0) {
-				strcpy(log_config.log_vend_db, w2);
-				if(log_config.vend == 1)
-					ShowNotice("Logging Vending to table `%s`\n", w2);
 			} else if(strcmpi(w1, "log_gm_db") == 0) {
 				strcpy(log_config.log_gm_db, w2);
 				if(log_config.gm > 0)
@@ -893,10 +460,6 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_branch, w2);
 				if(log_config.branch > 0 && log_config.sql_logs < 1)
 					ShowNotice("Logging Dead Branch Usage to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_drop_file") == 0) {
-				strcpy(log_config.log_drop, w2);
-				if(log_config.drop > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Item Drops to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_pick_file") == 0) {
 				strcpy(log_config.log_pick, w2);
 				if(log_config.pick > 0 && log_config.sql_logs < 1)
@@ -909,30 +472,6 @@ int log_config_read(char *cfgName)
 				strcpy(log_config.log_mvpdrop, w2);
 				if(log_config.mvpdrop > 0 && log_config.sql_logs < 1)
 					ShowNotice("Logging MVP Drops to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_present_file") == 0) {
-				strcpy(log_config.log_present, w2);
-				if(log_config.present > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Present Usage & Results to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_produce_file") == 0) {
-				strcpy(log_config.log_produce, w2);
-				if(log_config.produce > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Producing to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_refine_file") == 0) {
-				strcpy(log_config.log_refine, w2);
-				if(log_config.refine > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Refining to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_trade_file") == 0) {
-				strcpy(log_config.log_trade, w2);
-				if(log_config.trade > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Item Trades to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_storage_file") == 0) {
-				strcpy(log_config.log_storage, w2);
-				if(log_config.storage > 0 && log_config.sql_logs < 1)
-					ShowNotice("Logging Item Storages to file `%s`.txt\n", w2);
-			} else if(strcmpi(w1, "log_vend_file") == 0) {
-				strcpy(log_config.log_vend, w2);
-				if(log_config.vend > 0  && log_config.sql_logs < 1)
-					ShowNotice("Logging Vending to file `%s`.txt\n", w2);
 			} else if(strcmpi(w1, "log_gm_file") == 0) {
 				strcpy(log_config.log_gm, w2);
 				if(log_config.gm > 0 && log_config.sql_logs < 1)

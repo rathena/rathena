@@ -10180,8 +10180,9 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 			}
 		}
 
-		if(log_config.produce > 0)
-			log_produce(sd,nameid,slot1,slot2,slot3,1);
+//		if(log_config.produce > 0)
+//			log_produce(sd,nameid,slot1,slot2,slot3,1);
+//TODO update PICKLOG
 
 		if(equip){
 			clif_produceeffect(sd,0,nameid);
@@ -10255,8 +10256,9 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 		}
 	}
 	//Failure	
-	if(log_config.produce)
-		log_produce(sd,nameid,slot1,slot2,slot3,0);
+//	if(log_config.produce)
+//		log_produce(sd,nameid,slot1,slot2,slot3,0);
+//TODO update PICKLOG
 
 	if(equip){
 		clif_produceeffect(sd,1,nameid);

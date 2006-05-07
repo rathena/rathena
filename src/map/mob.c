@@ -1912,9 +1912,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	if (!(type&1)) {
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
-		int drop_ore = -1, drop_items = 0; //slot N for DROP LOG, number of dropped items
-		int log_item[MAX_MOB_DROP];
-		memset(&log_item,0,sizeof(log_item));
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
@@ -1952,13 +1949,10 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 //			if (10000 < rand()%10000+drop_rate) { //May be better if MAX_RAND is too low?
 			if (drop_rate < rand() % 10000 + 1) { //fixed 0.01% impossible drops bug [Lupus]
-				drop_ore = i; //we remember an empty slot to put there ORE DISCOVERY drop later.
 				continue;
 			}
-			drop_items++; //we count if there were any drops
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
-			log_item[i] = ditem->item_data.nameid;
 
 			//A Rare Drop Global Announce by Lupus
 			if(drop_rate<=battle_config.rare_drop_announce) {
@@ -1977,15 +1971,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		// Ore Discovery [Celest]
 		if (sd == mvp_sd && !map[md->bl.m].flag.nomobloot && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rand()%10000) {
 			ditem = mob_setdropitem(itemdb_searchrandomid(IG_FINDINGORE), 1);
-			if (drop_ore<0) drop_ore=8; //we have only 10 slots in LOG, there's a check to not overflow (9th item usually a card, so we use 8th slot)
-			log_item[drop_ore] = ditem->item_data.nameid; //it's for logging only
-			drop_items++; //we count if there were any drops
 			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10);
 		}
-
-		//this drop log contains ALL dropped items + ORE (if there was ORE Recovery) [Lupus]
-		if(sd && log_config.drop > 0 && drop_items) //we check were there any drops.. and if not - don't write the log
-			log_drop(sd, md->class_, log_item); //mvp_sd
 
 		if(sd) {
 			int itemid = 0;

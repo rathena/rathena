@@ -165,13 +165,6 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		}
 		//Logs
 
-		//Old VENDING log added by Lupus
-		if(log_config.vend > 0) {
-			log_vend(sd,vsd, idx, amount, (int)z); // for Item + Zeny. log.
-			//we log ZENY only with the 1st item. Then zero it for the rest items
-			z = 0;
-		}
-
 		// vending item
 		pc_additem(sd, &vsd->status.cart[idx], amount);
 		vsd->vending[vend_list[i]].amount -= amount;

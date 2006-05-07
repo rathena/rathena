@@ -2961,13 +2961,6 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 			log_pick(sd, "P", 0, itemid, 1, NULL);
 		}
 		
-		if(log_config.steal) {	//this drop log contains ALL stolen items [Lupus]
-			int log_item[MAX_MOB_DROP]; //for stolen items logging Lupus
-			memset(&log_item,0,sizeof(log_item));
-			log_item[i] = itemid; //i == monster's drop slot
-			log_drop(sd, md->class_, log_item);
-		}
-
 		//A Rare Steal Global Announce by Lupus
 		if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
 			struct item_data *i_data;

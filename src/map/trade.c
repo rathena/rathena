@@ -484,7 +484,6 @@ void trade_tradecommit(struct map_session_data *sd) {
 
 							if (sd->status.inventory[n].amount < sd->deal.item[trade_i].amount)
 								sd->deal.item[trade_i].amount = sd->status.inventory[n].amount;
-                                                        log_trade(sd, target_sd, n, sd->deal.item[trade_i].amount);
 
 							flag = pc_additem(target_sd, &sd->status.inventory[n], sd->deal.item[trade_i].amount);
 							if (flag == 0) {
@@ -506,8 +505,6 @@ void trade_tradecommit(struct map_session_data *sd) {
 
 							if (target_sd->status.inventory[n].amount < target_sd->deal.item[trade_i].amount)
 								target_sd->deal.item[trade_i].amount = target_sd->status.inventory[n].amount;
-
-							log_trade(target_sd, sd, n, target_sd->deal.item[trade_i].amount);
 
 							flag = pc_additem(sd, &target_sd->status.inventory[n], target_sd->deal.item[trade_i].amount);
 							if (flag == 0) {
