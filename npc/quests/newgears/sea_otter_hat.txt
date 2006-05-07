@@ -4,7 +4,7 @@
 //= Halca (1.0)
 //= Mass Zero (1.1)
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= Any eAthena Version.
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.3 Fixed possible exploit [Lupus]
 //= 1.4 Fixed required item (Lazy Racoon Hat -> Racoon Hat),
 //=     thanks to frugal [DracoRPG]
+//= 1.5 Transformation Leaf -> Smokie Leaf [Playtester]
 //============================================================
 
 xmas.gat,184,267,4	script	Pretty Rency	818,{
@@ -23,7 +24,7 @@ xmas.gat,184,267,4	script	Pretty Rency	818,{
  mes "[Pretty Rency]";
  mes "The requirements for this item, are very simple:";
  mes "1 Raccoon Hat,";
- mes "1 Transformation Leaf";
+ mes "1 Smokie Leaf";
  next;
  mes "[Pretty Rency]";
  mes "Do you have these items?";
@@ -32,7 +33,7 @@ xmas.gat,184,267,4	script	Pretty Rency	818,{
 
  if(countitem(5033) < 1 || countitem(5064) < 1) GOTO L_NOITEM;//Items: Raccoon Hat, Transformation Leaf,
  delitem 5033,1;//Items: Raccoon Hat,
- delitem 5064,1;//Items: Transformation Leaf,
+ delitem 5064,1;//Items: Smokie Leaf,
  mes "[Pretty Rency]";
  mes "Congratulations!";
  next;
