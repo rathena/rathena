@@ -61,7 +61,7 @@ enum {
 #define pc_stop_walking(sd, type) { if (sd->ud.walktimer!=-1) unit_stop_walking(&sd->bl, type); }
 
 //Checks if the given class value corresponds to a player class. [Skotlex]
-#define pcdb_checkid(class_) ((class_ >= JOB_NOVICE && class_ <= JOB_XMAS) || (class_ >= JOB_NOVICE_HIGH && class_ <= JOB_SOUL_LINKER))
+#define pcdb_checkid(class_) (class_ <= JOB_XMAS || (class_ >= JOB_NOVICE_HIGH && class_ <= JOB_SOUL_LINKER))
 
 int pc_isGM(struct map_session_data *sd);
 int pc_iskiller(struct map_session_data *src, struct map_session_data *target); // [MouseJstr]

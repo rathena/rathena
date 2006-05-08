@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/08
+	* Increased max number of tries to find a random spot in maps to 1000 since
+	  some maps have so many non-walkable tiles it's hard to find one in just 100
+	  tries. [Skotlex]
+	* status_set_viewdata will remove the Wedding Option status when you set a
+	  class that is not wedding.  [Skotlex]
 	* hide_gvg_damage will now send 1 instead of -1 as damage. [Skotlex]
 	* idletime will now be updated on attack-request, not on sit/standup
 	  [Skotlex]

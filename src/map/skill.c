@@ -1101,7 +1101,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case TF_THROWSTONE:		/* ?ﾎ投げ */
-		sc_start(bl,SC_STUN,3,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,SC_STUN,3,skilllv,skill_get_time(skillid,skilllv));
 		sc_start(bl,SC_BLIND,3,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1139,7 +1139,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case RG_RAID:		/* サプライズアタック */
-		sc_start(bl,SC_STUN,(10+3*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,SC_STUN,(10+3*skilllv),skilllv,skill_get_time(skillid,skilllv));
 		sc_start(bl,SC_BLIND,(10+3*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 

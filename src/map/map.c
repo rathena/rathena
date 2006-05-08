@@ -1478,7 +1478,7 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 		tries = rx2*ry2;
 		if (tries > 100) tries = 100;
 	} else
-		tries = 100;
+		tries = 1000; //Must retry a lot for maps with many non-walkable tiles.
 	
 	while(tries--) {
 		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);

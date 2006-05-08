@@ -3355,10 +3355,10 @@ void status_set_viewdata(struct block_list *bl, int class_)
 					class_ = JOB_BABY_CRUSADER2;
 					break;
 				}
-				if (sd->vd.class_ == JOB_WEDDING)
-					sd->sc.option&=~OPTION_WEDDING;
 				if (class_ == JOB_WEDDING)
 					sd->sc.option|=OPTION_WEDDING;
+				else if (sd->sc.option&OPTION_WEDDING)
+					sd->sc.option&=~OPTION_WEDDING; //If not going to display it, then remove the option.
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
 				sd->vd.head_top = sd->status.head_top;
