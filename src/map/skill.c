@@ -1812,8 +1812,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if(sd) {
 		//Sorry for removing the Japanese comments, but they were actually distracting 
 		//from the actual code and I couldn't understand a thing anyway >.< [Skotlex]
-		if (skillid && sd->sc.data[SC_COMBO].timer != -1)
-			status_change_end(src,SC_COMBO,-1); //Interrupt previous combo if you used a skill already. [Skotlex]
 		switch(skillid)
 		{
 			case MO_TRIPLEATTACK:
@@ -1904,7 +1902,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				break;
 			case SL_STIN:
 			case SL_STUN:
-				if (skilllv >= 7 && sd->sc.data[SC_COMBO].timer == -1)
+				if (skilllv >= 7 && sd->sc.data[SC_SMA].timer == -1)
 					sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA, skilllv));
 				break;
 			case GS_FULLBUSTER:
@@ -2645,8 +2643,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 					status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
 				if (sc->data[SC_BLADESTOP].timer != -1)
 					status_change_end(src,SC_BLADESTOP,-1);
-				if (sc->data[SC_COMBO].timer != -1) //This is one is here to make combo end even if skill failed. 
-					status_change_end(src,SC_COMBO,-1);
 			}
 			if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
 				int dx,dy;
@@ -4662,7 +4658,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
 					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
 					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
-					|| i==SC_SAFETYWALL
+					|| i==SC_SAFETYWALL || i==SC_SMA
 					)
 					continue;
 				if(i==SC_BERSERK) tsc->data[i].val4=1; //Mark a dispelled berserk to avoid setting hp to 100.
@@ -7821,19 +7817,19 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case TK_STORMKICK:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
-		if(sd->sc.data[SC_COMBO].timer != -1 && sd->sc.data[SC_COMBO].val1 == skill)
-			break; //Combo ready.
+		if(sd->sc.data[SC_COMBO].timer == -1)
+			return 0; //Combo needs to be ready
 		if (pc_istop10fame(sd->char_id,MAPID_TAEKWON))
 		{	//Unlimited Combo
-			if (skill == sd->skillid_old)
-				return 0; //Can't repeat previous combo skill.
-			if (type&1) {
-				//On cast-end, set this skill as previous one.
-				sd->skillid_old = skill;
-				sd->skilllv_old = lv;
+			if (skill == sd->skillid_old) {
+				status_change_end(&sd->bl, SC_COMBO, -1);
+				sd->skillid_old = sd->skilllv_old = 0;
+				return 0; //Can't repeat previous combo skill.				
 			}
 			break;
-		}
+		} else 
+		if(sd->sc.data[SC_COMBO].val1 == skill)
+			break; //Combo ready.
 		return 0;
 	case BD_ADAPTATION:				/* ƒAƒhƒŠƒu */
 		{
@@ -8262,7 +8258,22 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	if(spiritball > 0)				// Ÿ†‹…?Á”ï
 		pc_delspiritball(sd,spiritball,0);
 
-
+	if (sd->sc.data[SC_COMBO].timer!=-1)
+	{	//End combo state after skill is invoked. [Skotlex]
+		switch (skill) {
+		case TK_TURNKICK:
+		case TK_STORMKICK:
+		case TK_DOWNKICK:
+		case TK_COUNTER:
+			//set this skill as previous one.
+			sd->skillid_old = skill;
+			sd->skilllv_old = lv;
+			if (pc_istop10fame(sd->char_id,MAPID_TAEKWON))
+				break; //Do not end combo state.
+		default:
+			status_change_end(&sd->bl,SC_COMBO,-1);
+		}
+	}
 	return 1;
 }
 
