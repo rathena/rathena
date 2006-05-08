@@ -664,7 +664,7 @@ int party_exp_share(struct party *p,int map,unsigned int base_exp,unsigned int j
 
 	for (i = c = 0; i < MAX_PARTY; i++)
 		if ((sd[c] = p->member[i].sd)!=NULL && sd[c]->bl.m == map && !pc_isdead(sd[c])) {
-			if (battle_config.idle_no_share && (pc_issit(sd[c]) || sd[c]->chatID || (sd[c]->idletime < (last_tick - battle_config.idle_no_share))))
+			if (battle_config.idle_no_share && (sd[c]->chatID || (sd[c]->idletime < (last_tick - battle_config.idle_no_share))))
 				continue;
 			c++;
 		}

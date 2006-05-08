@@ -3872,8 +3872,8 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	WBUFL(buf,14)=sdelay;
 	WBUFL(buf,18)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,22)=-1;
-		WBUFW(buf,27)=-1;
+		WBUFW(buf,22)=1;
+		WBUFW(buf,27)=1;
 	} else {
 		WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
 		WBUFW(buf,27)=damage2;
@@ -4392,7 +4392,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,24)=-1;
+		WBUFW(buf,24)=1;
 	} else {
 		WBUFW(buf,24)=damage;
 	}
@@ -4423,7 +4423,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFL(buf,24)=-1;
+		WBUFL(buf,24)=1;
 	} else {
 		WBUFL(buf,24)=damage;
 	}
@@ -4483,7 +4483,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,24)=dst->x;
 	WBUFW(buf,26)=dst->y;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,28)=-1;
+		WBUFW(buf,28)=1;
 	} else {
 		WBUFW(buf,28)=damage;
 	}
@@ -8723,8 +8723,6 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 
 	target_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	action_type = RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
-	//Regardless of what they have to do, they have just requested an action, no longer idle. [Skotlex]
-	sd->idletime = last_tick;
 
 	if(target_id<0) // for disguises [Valaris]
 		target_id-=(target_id*2);
@@ -8747,6 +8745,8 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		}
 		if (sd->invincible_timer != -1)
 			pc_delinvincibletimer(sd);
+
+		sd->idletime = last_tick;
 		unit_attack(&sd->bl, target_id, action_type != 0);
 		break;
 	case 0x02: // sitdown
