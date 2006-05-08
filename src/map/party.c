@@ -278,7 +278,7 @@ int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 int party_member_added(int party_id,int account_id,int char_id, int flag)
 {
 	struct map_session_data *sd = map_id2sd(account_id),*sd2;
-	
+	struct party *p = party_search(party_id);
 	if(sd == NULL || sd->status.char_id != char_id){
 		if (flag == 0) {
 			if(battle_config.error_log)
@@ -287,23 +287,28 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		}
 		return 0;
 	}
-	
 	sd->party_invite=0;
 	sd->party_invite_account=0;
-	
+
+	if (!p) {
+		if(battle_config.error_log)
+			ShowError("party_member_added: party %d not found.\n",party_id);
+		intif_party_leave(party_id,account_id,char_id);
+		return 0;
+	}
+
 	sd2=map_id2sd(sd->party_invite_account);
+	if(!flag) {
+		sd->state.party_sent=0;
+		sd->status.party_id=party_id;
+		party_check_conflict(sd);
+		clif_party_join_info(p,sd);
+		clif_charnameupdate(sd); //Update char name's display [Skotlex]
+		clif_party_hp(sd);
+		clif_party_xy(sd);
+	}
 	if (sd2)
 		clif_party_inviteack(sd2,sd->status.name,flag?2:0);
-	if(flag)
-		return 0;
-	
-	sd->state.party_sent=0;
-	sd->status.party_id=party_id;
-
-	party_check_conflict(sd);
-	clif_charnameupdate(sd); //Update char name's display [Skotlex]
-	clif_party_hp(sd);
-	clif_party_xy(sd);
 	return 0;
 }
 // パーティ除名要求

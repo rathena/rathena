@@ -4851,11 +4851,13 @@ int status_change_clear(struct block_list *bl,int type)
 		return 0;
 	for(i = 0; i < SC_MAX; i++)
 	{
-		//Type 0: PC killed -> EDP and Meltdown must not be dispelled. [Skotlex]
-		// Do not reset Xmas status when killed. [Valaris]
+		//Type 0: PC killed -> Place here stats that do not dispel on death.
 		if(sc->data[i].timer == -1 ||
-			(type == 0 &&
-			(i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT || i == SC_FUSION || i == SC_TKREST)))
+			(type == 0 && (
+				i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT ||
+				i == SC_FUSION || i == SC_TKREST || i == SC_READYSTORM ||
+			  	i == SC_READYDOWN || i == SC_READYCOUNTER || i == SC_READYTURN
+			)))
 			continue;
 
 		status_change_end(bl, i, -1);

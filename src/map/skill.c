@@ -2924,12 +2924,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case SL_STIN:
 	case SL_STUN:
 	case SL_SMA:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
 			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		else
+			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+				status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
 		
 	/* ‚»‚Ì‘¼ */
@@ -5389,36 +5389,36 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SL_SKA: // [marquis007]
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
 			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		else
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		//Stun happens regardless.
+		status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
+		
 	case SL_SWOO:
 		if (sd && (
 			(!battle_config.allow_es_magic_pc && bl->type != BL_MOB) ||
 			(tsc && tsc->data[type].timer != -1)
-		)) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		))
 			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		else
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
 
 	case SL_SKE:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
 			clif_skill_fail(sd,skillid,0,0);
-			break;
+		else {
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+			sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
+		status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
 		
 	// New guild skills [Celest]

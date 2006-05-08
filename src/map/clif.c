@@ -5822,6 +5822,25 @@ int clif_party_main_info(struct party *p, int fd)
 	return 1;
 }
 
+int clif_party_join_info(struct party *p, struct map_session_data *sd)
+{
+	unsigned char buf[96];
+	WBUFW(buf,0)=0x1e9;
+	WBUFL(buf,2)= sd->status.account_id;
+	WBUFL(buf,6)= 0; //Apparently setting this to 1 makes you adoptable.
+	WBUFW(buf,10)=sd->bl.x;
+	WBUFW(buf,12)=sd->bl.y;
+	WBUFB(buf,14)=0; //Uncomfirmed byte.
+	memcpy(WBUFP(buf,15), p->name, NAME_LENGTH);
+	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
+	memcpy(WBUFP(buf,63), mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
+	WBUFB(buf,79) = (p->item&1)?1:0;
+	WBUFB(buf,80) = (p->item&2)?1:0;
+	clif_send(buf,packet_len_table[0x1e9],&sd->bl,PARTY_WOS);
+	return 1;
+}
+
+
 /*==========================================
  * パーティ情報送信
  *------------------------------------------
@@ -6041,8 +6060,8 @@ int clif_party_hp(struct map_session_data *sd)
 
 	WBUFW(buf,0)=0x106;
 	WBUFL(buf,2)=sd->status.account_id;
-	WBUFW(buf,6)=(sd->status.hp > 0x7fff)? 0x7fff:sd->status.hp;
-	WBUFW(buf,8)=(sd->status.max_hp > 0x7fff)? 0x7fff:sd->status.max_hp;
+	WBUFW(buf,6)=(sd->status.hp > SHRT_MAX)?SHRT_MAX:sd->status.hp;
+	WBUFW(buf,8)=(sd->status.max_hp > SHRT_MAX)?SHRT_MAX:sd->status.max_hp;
 	clif_send(buf,packet_len_table[0x106],&sd->bl,PARTY_AREA_WOS);
 	return 0;
 }
@@ -11269,6 +11288,23 @@ void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv) {
 	sd->menuskill_lv=skilllv;
 }
 
+void clif_parse_AdoptRequest(int fd,struct map_session_data *sd) {
+	//TODO: add somewhere the adopt code, checks for exploits, etc, etc.
+	//Missing packets are the client's reply packets to the adopt request one. 
+	//[Skotlex]
+	int account_id;
+	struct map_session_data *sd2;
+	RFIFOHEAD(fd);
+	
+	account_id = RFIFOL(fd,2);
+	sd2 = map_id2sd(account_id);
+	if(sd2 && sd2->fd && sd2 != sd && sd2->status.party_id == sd->status.party_id) {	//FIXME: No checks whatsoever are in place yet!
+		fd = sd2->fd;
+		WFIFOHEAD(fd,packet_len_table[0x1f9]);
+		WFIFOW(fd,0)=0x1f9;
+		WFIFOSET(fd, packet_len_table[0x1f9]);
+	}
+}
 /*==========================================
  * パケットデバッグ
  *------------------------------------------
@@ -11645,8 +11681,8 @@ static int packetdb_readdb(void)
 		{clif_parse_Taekwon,"taekwon"},
 		{clif_parse_RankingPk,"rankingpk"},
 		{clif_parse_FeelSaveOk,"feelsaveok"},
+		{clif_parse_AdoptRequest,"adopt"},
 		{clif_parse_debug,"debug"},
-
 		{NULL,NULL}
 	};
 
