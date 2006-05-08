@@ -676,9 +676,9 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	{	//Stop walking, if chasing, readjust timers.
 		if (delay == 1)
 		{	//Minimal delay (walk-delay) disabled. Just stop walking.
-			unit_stop_walking(bl,1);
+			unit_stop_walking(bl,0);
 		} else {
-			unit_stop_walking(bl,3);
+			unit_stop_walking(bl,2);
 			if(ud->target)
 				add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 		}

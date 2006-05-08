@@ -6243,8 +6243,9 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 					return 0;
 				}
 			}
-			
-			lv = sd->skillitem==skill_num?sd->menuskill_lv:pc_checkskill(sd,skill_num);
+		
+			//When it's an item-used warp-portal, the skill-lv used is lost.. assume max level.
+			lv = sd->skillitem==skill_num?skill_get_max(skill_num):pc_checkskill(sd,skill_num);
 			wx = sd->menuskill_lv>>16;
 			wy = sd->menuskill_lv&0xffff;
 			
