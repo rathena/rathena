@@ -3,6 +3,20 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/08
+	* Removed SP_DISGUISE from the bonus list (onequip/onunequip should be used
+	  with the disguise/undisguise script commands instead). [Skotlex]
+	* Moved Sharp Shooting display to the block with Auto-Counter (since that's
+	  the other skill that can show critical as well) [Skotlex]
+	* Corrected some fields in the standing still packet (guild emblem being
+	  stored as a Long when it should be Short) [Skotlex]
+	* Modified most fields of view_data to be unsigned shorts rather than
+	  signed ones. [Skotlex]
+	* On-Touch NPCs will now make you stop walking when you trigger them.
+	  [Skotlex]
+	* ShadowJump/JumpKick will make you land on the target's cell now.
+	  [Skotlex]
+	* Fixed Kaahi triggering only once per skill duration. [Skotlex]
 2006/05/07
 	* Fixed readme/changelog.html [KillerBox]
 	* Removed old logs. [Lupus]

@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/08
+	* Reduced stun duration of most skills to 3 secs. [Skotlex]
 05/07
 	* Updating drops to Aegis X.2 [Playtester]
 	- progress 25%

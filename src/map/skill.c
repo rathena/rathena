@@ -1924,7 +1924,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case KN_BRANDISHSPEAR:
-	case SN_SHARPSHOOTING:
 		{	//Only display skill animation for skill's target.
 			struct unit_data *ud = unit_bl2ud(src);
 			if (ud && ud->skilltarget == bl->id)
@@ -1955,6 +1954,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
+	case SN_SHARPSHOOTING:
 		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
 	case CR_GRANDCROSS:
@@ -2574,22 +2574,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 
 	case NJ_SHADOWJUMP:	//[blackhole89]
 	case TK_JUMPKICK:
-	{
-		short x, y;
-		x = bl->x;
-		y = bl->y;
-		if (src->x < bl->x) x--;
-		else if (src->x > bl->x) x++;
-		if (src->y < bl->y) y--;
-		else if (src->y > bl->y) y++;
-		if (map_getcell(bl->m, x, y, CELL_CHKNOPASS))
-		{	x = bl->x; y = bl->y; }
 		if (skillid == TK_JUMPKICK)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (unit_movepos(src, x, y, 0, 0))
+		if (unit_movepos(src, bl->x, bl->y, 0, 0))
 			clif_slide(src,src->x,src->y);
 		break;
-	}
 	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
 		// Separate weapon and magic attacks
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);

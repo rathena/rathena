@@ -775,7 +775,7 @@ int clif_clearchar_id(int id, int type, int fd) {
 	return 0;
 }
 
-void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand)
+void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lhand)
 {
 #if PACKETVER > 3
 	struct item_data *id;
@@ -884,7 +884,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,30)=vd->cloth_color;
 		WBUFW(buf,32)=sd?sd->head_dir:dir;
 		WBUFL(buf,34)=guild_id;
-		WBUFL(buf,38)=emblem_id;
+		WBUFW(buf,38)=emblem_id;
 		if (sd) {
 			WBUFW(buf,40)=sd->status.manner;
 			WBUFB(buf,44)=sd->status.karma;
@@ -907,6 +907,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 			WBUFW(buf,8)=sc->opt1;
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
+			WBUFW(buf,42)=sc->opt3;
 		}
 		WBUFW(buf,14)=vd->class_;
 		WBUFW(buf,16)=vd->hair_style;
@@ -920,10 +921,8 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,32)=sd?sd->head_dir:dir;
 		WBUFL(buf,34)=guild_id;
 		WBUFL(buf,38)=emblem_id;
-		if (sd) {
-			WBUFW(buf,42)=sd->status.manner;
+		if (sd)
 			WBUFB(buf,44)=sd->status.karma;
-		}
 		WBUFB(buf,45)=vd->sex;
 		WBUFPOS(buf,46,bl->x,bl->y);
 		WBUFB(buf,48)|=dir&0x0f;
@@ -944,6 +943,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,8)=sc->opt1;
 		WBUFW(buf,10)=sc->opt2;
 		WBUFW(buf,12)=sc->option;
+		WBUFW(buf,42)=sc->opt3;
 	}
 	WBUFW(buf,14)=vd->class_;
 	WBUFW(buf,16)=vd->hair_style;  //Required for pets.

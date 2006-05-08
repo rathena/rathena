@@ -947,7 +947,6 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 			if (sd->sc.option&6 ||
 				(!battle_config.duel_allow_teleport && sd->duel_group)) // duel rstrct [LuzZza]
 				break;
-			skill_stop_dancing(&sd->bl);
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0);
 			break;
 		case SCRIPT:
@@ -961,8 +960,10 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 
 			sprintf(name,"%s::OnTouch", map[m].npc[i]->exname); // It goes here too. exname being the unique identifier. [Lance]
 
-			if( npc_event(sd,name,0)>0 )
+			if( npc_event(sd,name,0)>0 ) {
+				pc_stop_walking(sd,1); //Make it stop walking!
 				npc_click(sd,map[m].npc[i]->bl.id);
+			}
 			//aFree(name);
 			break;
 		}

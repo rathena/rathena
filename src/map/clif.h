@@ -323,7 +323,7 @@ int clif_disp_overhead(struct map_session_data *sd, char* mes);
 int do_final_clif(void);
 int do_init_clif(void);
 
-void clif_get_weapon_view(TBL_PC* sd, short *rhand, short *lhand);
+void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lhand);
 
 int clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv); 

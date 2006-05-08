@@ -1465,8 +1465,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	// Skill-related HP recovery (only when sit)
 	if((skill=pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
 		sd->nsshealhp = skill*4 + (sd->status.max_hp*skill/500);
-	if((skill=pc_checkskill(sd,TK_HPTIME)) > 0 &&
-		(sd->state.rest || sd->sc.data[SC_TKREST].timer!=-1))
+	if((skill=pc_checkskill(sd,TK_HPTIME)) > 0 && sd->state.rest)
 		sd->nsshealhp = skill*30 + (sd->status.max_hp*skill/500);
 
 	if(sd->nshealhp > SHRT_MAX) sd->nshealhp = SHRT_MAX;
@@ -1535,8 +1534,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		// Skill-related SP recovery (only when sit)
 		if((skill = pc_checkskill(sd,MO_SPIRITSRECOVERY)) > 0)
 			sd->nsshealsp = skill*2 + (sd->status.max_sp*skill/500);
-		if((skill=pc_checkskill(sd,TK_SPTIME)) > 0 &&
-			(sd->state.rest || sd->sc.data[SC_TKREST].timer!=-1))
+		if((skill=pc_checkskill(sd,TK_SPTIME)) > 0 && sd->state.rest)
 		{
 			sd->nsshealsp = skill*3 + (sd->status.max_sp*skill/500);
 			if ((skill=pc_checkskill(sd,SL_KAINA)) > 0) //Power up Enjoyable Rest
@@ -3894,6 +3892,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			status_change_end(bl,SC_DECREASEAGI,-1);
 			return 0;
 		}
+		break;
 	case SC_FUSION:
 		if(sc->data[SC_SPIRIT].timer!=-1 )
 			status_change_end(bl,SC_SPIRIT,-1);
@@ -5394,9 +5393,17 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	sc=status_get_sc(bl);
 	if (!sc || data != SC_KAAHI || sc->data[data].timer==-1)
 		return 0;
-
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->status.sp < sc->data[data].val3)
+	if(sc->data[data].val4 != tid) {
+		if (battle_config.error_log)
+			ShowError("kaahi_heal_timer: Timer mismatch: %d != %d\n", tid, sc->data[data].val4);
+		sc->data[data].val4=-1;
 		return 0;
+	}
+		
+	if (bl->type == BL_PC && ((TBL_PC*)bl)->status.sp < sc->data[data].val3) {
+		sc->data[data].val4=-1;
+		return 0;
+	}
 
 	hp = status_get_max_hp(bl) - status_get_hp(bl);
 	if (hp > sc->data[data].val2)
@@ -5405,6 +5412,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 		battle_heal(bl, bl, hp, -sc->data[data].val3, 1);
 		clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 	}
+	sc->data[data].val4=-1;
 	return 1;
 }
 
@@ -6097,6 +6105,7 @@ int do_init_status(void)
 		exit(1);
 	}
 	add_timer_func_list(status_change_timer,"status_change_timer");
+	add_timer_func_list(kaahi_heal_timer,"kaahi_heal_timer");
 	initChangeTables();
 	status_readdb();
 	status_calc_sigma();

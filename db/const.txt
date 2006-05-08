@@ -260,7 +260,7 @@ bAllStats		1073
 bAgiVit			1074
 bAgiDexStr		1075
 bPerfectHide		1076
-bDisguise		1077
+
 bClassChange	1078
 bHPDrainValue	1079
 bSPDrainValue	1080
