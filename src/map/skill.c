@@ -1176,7 +1176,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-		sc_start(bl,SkillStatusChangeTable[skillid],100,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
+		sc_start(bl,SkillStatusChangeTable[skillid],50+10*skilllv,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
 		break;
 
 	case NPC_MENTALBREAKER:

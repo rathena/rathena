@@ -195,13 +195,13 @@
 173,1,6,4,3,2,5,10,1,no,0,2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
 174,-1,6,1,-1,2,3,10,1,no,0,2,0,weapon,0	//NPC_SPLASHATTACK#Range attack#
 175,0,0,4,0,1,0,10,1,no,0,2,0,misc,0	//NPC_SUICIDE#Suicide#
-176,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_POISON#Poison Attack#
-177,7,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
-178,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
+176,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_POISON#Poison Attack#
+177,7,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
+178,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
 179,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,7,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
-181,7,6,1,7,0,0,10,1,no,0,2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
-182,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
+180,7,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+181,7,6,1,7,0,0,5,1,no,0,2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
+182,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
 183,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
 184,-1,6,1,1,0,0,10,1,no,0,2,0,weapon,0	//NPC_WATERATTACK#Water Attribute Attack#
 185,-1,6,1,2,0,0,10,1,no,0,2,0,weapon,0	//NPC_GROUNDATTACK#Earth Attribute Attack#
@@ -464,22 +464,22 @@
 442,0,0,0,0,0,0,3,0,no,0,0,0,none,0	//SG_FRIEND#Friend of the Sun, Moon and Stars#
 443,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//SG_KNOWLEDGE#Knowledge of the Sun, Moon and Stars#
 444,0,6,4,0,1,0,1,1,no,0,0,0,misc,0	//SG_FUSION#Union of the Sun, Moon and Stars#
-445,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_ALCHEMIST#Spirit of the Alchemist#
+445,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ALCHEMIST#Spirit of the Alchemist#
 446,9,6,16,0,1,0,1,1,yes,0,3080,0,none,0	//AM_BERSERKPITCHER#Berserk Pitcher#
-447,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_MONK#Spirit of the Monk#
-448,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_STAR#Spirit of the Star Knight#
-449,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_SAGE#Spirit of the Professor#
-450,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_CRUSADER#Spirit of the Crusader#
-451,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_SUPERNOVICE#Spirit of the Supernovice#
-452,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_KNIGHT#Spirit of the Knight#
-453,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_WIZARD#Spirit of the Wizard#
-454,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_PRIEST#Spirit of the Priest#
-455,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_BARDDANCER#Spirit of the Artist#
-456,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_ROGUE#Spirit of the Rogue#
-457,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_ASSASIN#Spirit of the Assasin#
-458,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_BLACKSMITH#Spirit of the Blacksmith#
+447,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_MONK#Spirit of the Monk#
+448,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_STAR#Spirit of the Star Knight#
+449,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SAGE#Spirit of the Professor#
+450,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_CRUSADER#Spirit of the Crusader#
+451,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SUPERNOVICE#Spirit of the Supernovice#
+452,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_KNIGHT#Spirit of the Knight#
+453,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_WIZARD#Spirit of the Wizard#
+454,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_PRIEST#Spirit of the Priest#
+455,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_BARDDANCER#Spirit of the Artist#
+456,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ROGUE#Spirit of the Rogue#
+457,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ASSASIN#Spirit of the Assasin#
+458,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_BLACKSMITH#Spirit of the Blacksmith#
 459,0,6,4,0,3,-1,1,1,no,0,8,0,weapon,0 //BS_ADRENALINE2#Full Adrenaline Rush#
-460,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_HUNTER#Spirit of the Hunter#
+460,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_HUNTER#Spirit of the Hunter#
 461,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SOULLINKER#Spirit of the Soul Linker#
 462,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAIZEL#Kaizel#
 463,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAAHI#Kahai#
