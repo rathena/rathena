@@ -84,7 +84,9 @@ int mobdb_searchname(const char *str)
 static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 {
 	if (mob == mob_dummy)
-		return 1; //Invalid item.
+		return 1; //Invalid mob.
+	if(!mob->base_exp && !mob->job_exp)
+		return 1; //Discount slave-mobs (no exp) as requested by Playtester. [Skotlex]
 	if(stristr(mob->jname,str))
 		return 0;
 	if(stristr(mob->name,str))
@@ -3267,7 +3269,9 @@ static int mob_readdb(void)
 				mob_db_data[class_]->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 
 				//calculate and store Max available drop chance of the item
-				if (mob_db_data[class_]->dropitem[i].p) {
+				if (mob_db_data[class_]->dropitem[i].p &&
+					(class_ < 1324 || class_ > 1363) //Skip treasure chests.
+				) {
 					id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
 					if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->dropitem[i].p) ) {
 					//item has bigger drop chance or sold in shops

@@ -232,7 +232,7 @@ void initChangeTables(void) {
 	set_sc(CG_MARIONETTE,           SC_MARIONETTE2,         SI_MARIONETTE2);
 	set_sc(LK_SPIRALPIERCE,         SC_STOP,                SI_BLANK);
 	set_sc(LK_HEADCRUSH,            SC_BLEEDING,            SI_BLEEDING);
-	set_sc(LK_JOINTBEAT,            SC_JOINTBEAT,           SI_BLANK);
+	set_sc(LK_JOINTBEAT,            SC_JOINTBEAT,           SI_JOINTBEAT);
 	set_sc(HW_NAPALMVULCAN,         SC_CURSE,               SI_BLANK);
 	set_sc(PF_MINDBREAKER,          SC_MINDBREAKER,         SI_BLANK);
 	set_sc(PF_MEMORIZE,             SC_MEMORIZE,            SI_BLANK);
