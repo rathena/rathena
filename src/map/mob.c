@@ -1069,7 +1069,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	mode = status_get_mode(&md->bl);
 
 	can_move = (mode&MD_CANMOVE)&&unit_can_move(&md->bl);
-	//Since can_move is false when you are casting or the damage-delay kicks in, some special considerations
 
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
@@ -1093,13 +1092,12 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	{
 		if (md->attacked_id == md->target_id)
 		{
-			/* Currently being unable to move shouldn't trigger rude-attacked conditions.
-			if (!can_move && !battle_check_range (&md->bl, tbl, md->db->range))
+			if (!can_move && (battle_config.mob_ai&2) &&
+				!battle_check_range(&md->bl, tbl, md->db->range))
 			{	//Rude-attacked.
 				if (md->attacked_count++ > 3)
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
-			*/
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||

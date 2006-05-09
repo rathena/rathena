@@ -552,7 +552,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (flag&BF_MAGIC) {
 				if(!(skill_get_inf(skill_num)&INF_GROUND_SKILL) && rand()%100 < 75)
 					return 0;
-			} else 
+			} else if (flag&BF_WEAPON)
 				damage >>=1;
 		}
 	}
