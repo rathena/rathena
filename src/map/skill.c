@@ -2013,9 +2013,8 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		skill_blown(dsrc,bl,dmg.blewcount);
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
-	if (dmg.amotion) {  // do not really deal damage for ASC_BREAKER's 1st attack
+	if (dmg.amotion)
 		battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion,0);
-	}
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(status_get_mode(bl)&MD_BOSS)/* && !map_flag_gvg(src->m)*/) {
 		int s_lv = status_get_lv(src),t_lv = status_get_lv(bl);
@@ -2575,7 +2574,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		if (skillid == TK_JUMPKICK)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
-			clif_slide(src,src->x,src->y);
+			clif_slide(src,bl->x,bl->y);
 		break;
 	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
 		// Separate weapon and magic attacks
@@ -9412,6 +9411,7 @@ struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 		skill_unit_group_newid = MAX_SKILL_DB;
 	group->unit=(struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
 	group->unit_count=count;
+	group->alive_count=0;
 	group->val1=group->val2=group->val3=0;
 	group->skill_id=skillid;
 	group->skill_lv=skilllv;

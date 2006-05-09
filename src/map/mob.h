@@ -10,7 +10,7 @@
 #define MAX_RANDOMMONSTER 3
 #define MAX_MOB_RACE_DB 6
 #define MAX_MOB_DB 10000
-#define MAX_MOB_DROP 15
+#define MAX_MOB_DROP 10
 	/* Change this to increase the table size in your mob_db to accomodate
 		a larger mob database. Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
 	*/

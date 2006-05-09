@@ -3147,9 +3147,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			
 	wd = battle_calc_weapon_attack(src,target, 0, 0,0);
 
-	if (sd && sd->state.arrow_atk) //Consume arrow.
-		battle_consume_ammo(sd, 0, 0);
-	
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
 		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
