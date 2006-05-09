@@ -4099,10 +4099,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 20+val1;
 			break;
 
-		case SC_BLADESTOP:		/* ”’nŽæ‚è */
-			if(val2==2) clif_bladestop((struct block_list *)val3,(struct block_list *)val4,1);
-			break;
-
 		case SC_MOONLIT:
 			val2 = bl->id;
 			skill_setmapcell(bl,CG_MOONLIT, val1, CELL_SETMOONLIT);
@@ -5093,14 +5089,17 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				}
 				break;
 			case SC_BLADESTOP:
+				if(sc->data[type].val4)
 				{
-					struct status_change *tsc = status_get_sc((struct block_list *)sc->data[type].val4);
-					//•Ð•û‚ªØ‚ê‚½‚Ì‚Å‘ŠŽè‚Ì”’n?‘Ô‚ªØ‚ê‚Ä‚È‚¢‚Ì‚È‚ç‰ðœ
+					struct block_list *tbl = (struct block_list *)sc->data[type].val4;
+					struct status_change *tsc = status_get_sc(tbl);
+					sc->data[type].val4 = 0;
 					if(tsc && tsc->data[SC_BLADESTOP].timer!=-1)
-						status_change_end((struct block_list *)sc->data[type].val4,SC_BLADESTOP,-1);
-
-					if(sc->data[type].val2==2)
-						clif_bladestop((struct block_list *)sc->data[type].val3,(struct block_list *)sc->data[type].val4,0);
+					{
+						tsc->data[SC_BLADESTOP].val4 = 0;
+						status_change_end(tbl,SC_BLADESTOP,-1);
+					}
+					clif_bladestop(bl,tbl,0);
 				}
 				break;
 			case SC_DANCING:

@@ -3122,13 +3122,14 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			int skilllv = tsc->data[SC_BLADESTOP_WAIT].val1;
 			int duration = skill_get_time2(MO_BLADESTOP,skilllv);
 			status_change_end(target, SC_BLADESTOP_WAIT, -1);
-			clif_damage(src, target, tick, status_get_amotion(src), 1, 0, 1, 0, 0); //Display MISS.
-			sc_start4(target, SC_BLADESTOP, 100, skilllv, 2, (int)target, (int)src, duration);
-			skilllv = sd?pc_checkskill(sd, MO_BLADESTOP):1;
-			sc_start4(src, SC_BLADESTOP, 100, skilllv, 1, (int)src, (int)target, duration);
-			return 0;
+			if(sc_start4(src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, (int)target, duration))
+		  	{	//Target locked.
+				clif_damage(src, target, tick, status_get_amotion(src), 1, 0, 1, 0, 0); //Display MISS.
+				clif_bladestop(target,src,1);
+				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0,(int)src, duration);
+				return 0;
+			}
 		}
-
 	}
 	//Recycled the damage variable rather than use a new one... [Skotlex]
 	if(sd && (damage = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0) // triple blow works with bows ^^ [celest]
