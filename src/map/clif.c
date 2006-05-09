@@ -2968,7 +2968,7 @@ int clif_arrow_create_list(struct map_session_data *sd)
 	for (i = 0, c = 0; i < MAX_SKILL_ARROW_DB; i++) {
 		if (skill_arrow_db[i].nameid > 0 &&
 			(j = pc_search_inventory(sd, skill_arrow_db[i].nameid)) >= 0 &&
-			!sd->status.inventory[j].equip)
+			!sd->status.inventory[j].equip && sd->status.inventory[j].identify)
 		{
 			if ((j = itemdb_viewid(skill_arrow_db[i].nameid)) > 0)
 				WFIFOW(fd,c*2+4) = j;

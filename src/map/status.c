@@ -2046,9 +2046,9 @@ int status_calc_def(struct block_list *bl, int def)
 			return 0;
 		if(sc->data[SC_KEEPING].timer!=-1)
 			return 100;
+		if(sc->data[SC_SKA].timer != -1)
+			return rand()%100; //Reports indicate SKA actually randomizes defense.
 		if(sc->data[SC_STEELBODY].timer!=-1)
-			return 90;
-		if(sc->data[SC_SKA].timer != -1) // [marquis007]
 			return 90;
 		if(sc->data[SC_DRUMBATTLE].timer!=-1)
 			def += sc->data[SC_DRUMBATTLE].val3;
