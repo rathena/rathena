@@ -1108,7 +1108,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	}
 	WBUFW(buf,16)=vd->class_;
 	WBUFW(buf,18)=vd->hair_style; //For pets
-	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
+	WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 	WBUFL(buf,26)=gettick();
 	WBUFW(buf,38)=unit_getdir(bl);
 	WBUFL(buf,40)=guild_id;
