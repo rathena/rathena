@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/09
+	* Fix on pc_skill which fixes overlapping when one gets more than one bonus
+	  for the same skill. [Skotlex]
+	* Updated main.sql's loginlog table structure. [Skotlex]
+	* Added svn_update6533.sql to update the loginlog structure as suggested by
+	  theultramage. [Skotlex]
 	* Cleaned up somewhat the implementation of BladeStop. [Skotlex]
 	* Fixed the head_bottom (pet-armor) position in packet 0x22c (walk packet)
 	  when crafted for non-players. [Skotlex]

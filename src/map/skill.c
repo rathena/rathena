@@ -4087,7 +4087,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				dstsd->char_id == sd->status.partner_id ||
 				dstsd->char_id == sd->status.child
 			)) {
-				status_change_start(src,SC_STUN,10000,skilllv,0,0,0,3000,8);
+				status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,8);
 				clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
