@@ -419,7 +419,6 @@ enum {
 #define OPT2_POISON 0x001
 #define OPT2_CURSE 0x002
 #define OPT2_SILENCE 0x004
-//0x008 Odd howl sound, Signum crucis?
 #define OPT2_SIGNUMCRUCIS 0x008
 #define OPT2_BLIND 0x010
 //0x020 - nothing

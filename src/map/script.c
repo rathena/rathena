@@ -537,7 +537,7 @@ struct {
 	{buildin_end,"end",""},
 //	{buildin_end,"break",""}, this might confuse advanced scripting support [Eoe]
 	{buildin_checkoption,"checkoption","i"},
-	{buildin_setoption,"setoption","i"},
+	{buildin_setoption,"setoption","i*"},
 	{buildin_setcart,"setcart",""},
 	{buildin_checkcart,"checkcart","*"},		//fixed by Lupus (added '*')
 	{buildin_setfalcon,"setfalcon",""},
@@ -5079,10 +5079,26 @@ int buildin_setoption(struct script_state *st)
 {
 	int type;
 	struct map_session_data *sd;
-
+	int flag=0;
+	
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if(st->end>st->start+3 )
+		flag=conv_num(st,&(st->stack->stack_data[st->start+3]) );
+	
 	sd=script_rid2sd(st);
-	pc_setoption(sd,type);
+	if (!sd) return 0;
+	
+	switch (flag) {
+		case 1: //Add option
+			pc_setoption(sd,sd->sc.option|type);
+			break;
+		case 2: //Remove option
+			pc_setoption(sd,sd->sc.option&~type);
+			break;
+		default:	//Set option
+			pc_setoption(sd,type);
+			break;
+	}
 
 	return 0;
 }

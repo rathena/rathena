@@ -2654,7 +2654,7 @@ Note: Break won't work anymore, it has been commented out in src/map/script.c:
 *checkoption(<option number>)
 *checkoption1(<option number>)
 *checkoption2(<option number>)
-*setoption <option number>;
+*setoption <option number>{,type};
 
 The 'setoption' series of functions check for a so-called option that is set on 
 the invoking character. 'Options' are used to store status conditions and a lot 
@@ -2669,19 +2669,15 @@ Option numbers valid for the first version of this command are:
 2  - Frozen.
 3  - Stunned.
 4  - Sleeping.
-32 - Riding a Peco.
-
-'setoption' will set options on the invoking character. There are no second and 
-third versions of this command, so you can only change the 
-petrified/frozen/stunned/sleeping/riding status in this manner.
+6	- Petrifying (the state where you can still walk)
 
 Option numbers valid for the second version of this command are:
 
 1 - Poisoned.
 2 - Cursed.
 4 - Silenced.
-8 - Blinded (Notice that unless you specfy variable night darkness in the 
-    configuration, all characters will be 'blinded' during the night)
+8 - Signum Crucis (plays a howl-like sound effect, but otherwise no visible effects are displayed)
+16 - Blinded.
 
 Option numbers valid for the third version of this command are:
 
@@ -2697,9 +2693,13 @@ Option numbers valid for the third version of this command are:
 2048 - Orc head present.
 4096 - The character is wearing a wedding sprite.
 8192 - Ruwach is in effect.
+16384 - Chasewalk in effect.
 
 Option numbers are bitmasks - add up option numbers to check for all of them 
 being present at the same time in one go.
+
+'setoption' will set options on the invoking character. There are no second and 
+third versions of this command, so you can only change the values in the last list (cloak, cart, ruwach, etc). if flag is 1, the option will be added to what the character currently has; if 2, the option is removed; otherwise (or if omitted) the option is set to what is passed (that is, all other set option values are removed).
 
 This is definitely not a complete list of available option flag numbers. Ask a 
 core developer for the full list.

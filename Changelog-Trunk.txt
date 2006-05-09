@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/09
+	* Updated setoption script command to receive a second (optional) argument
+	  flag. If the flag is 1, the option is added to what the player currently
+	  has; likewise using flag 2 removes only that option. No flag (or any other
+	  value) is the older behaviour of removing all other options and setting
+	  specificly what is passed. [Skotlex]
+	* Updated script_commands information for setoption due to this change.
+	  [Skotlex]
 	* Small fix in npc-created chat rooms to properly include the terminating 0
 	  on the chat's event. [Skotlex]
 	* Fixed Fog of Wall's symmetry in respect to Misc attacks, they no longer
