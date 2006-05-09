@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/09
+	* More Aegis X.2 drop updates [Playtester]
 05/08
 	* Corrected Stun Duration for Meteor assault to 3 secs. [Skotlex]
 	* Reduced Stun duration of multiple skills to 3 secs. Skills affected:
