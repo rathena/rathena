@@ -290,7 +290,7 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* t
 		memcpy(cd->npc_event,ev,49);
 		cd->npc_event[49] = '\0';
 	} else
-		memcpy(cd->npc_event,ev,strlen(ev));
+		memcpy(cd->npc_event,ev,strlen(ev)+1); //Include the \0
 
 	cd->bl.id = map_addobject(&cd->bl);	
 	if(cd->bl.id==0){
