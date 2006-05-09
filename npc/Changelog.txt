@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+05/09
+	* Inn now costs 5k at every level [Playtester]
 05/07
 	* Fixed some grammar errors in Thief Job, Kunai, and others [KillerBox]
 	* Fixed Sea Otter Quest thanks to nolider [Playtester]

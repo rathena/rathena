@@ -141,11 +141,11 @@ function	script	F_InnMaid	{
 		savepoint getarg(2),getarg(3),getarg(4);
 		close;
 	Mrent:
-		set @cost,50;
-		if(BaseLevel > 15) set @cost,100;
-		if(BaseLevel > 30) set @cost,200;
-		if(BaseLevel > 50) set @cost,300;
-		if(BaseLevel > 75) set @cost,400;
+		set @cost,5000;
+		//if(BaseLevel > 15) set @cost,100;
+		//if(BaseLevel > 30) set @cost,200;
+		//if(BaseLevel > 50) set @cost,300;
+		//if(BaseLevel > 75) set @cost,400;
 		mes getarg(0);
 		mes "It will cost " + @cost + " zeny to rent a room for 1 night.";
 		mes "In the morning your HP and SP will be fully recovered.";
