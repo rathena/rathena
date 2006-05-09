@@ -4982,7 +4982,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_POWERUP:
 		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
 //From experience it appears powerup is more hit, not +all stats.
-		sc_start(bl,SC_INCDEX,100,10*skilllv,skill_get_time(skillid, skilllv));
+		sc_start(bl,SC_INCDEX,100,20*skilllv,skill_get_time(skillid, skilllv));
 //		sc_start(bl,SC_INCALLSTATUS,100,skilllv*5,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;

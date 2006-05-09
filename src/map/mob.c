@@ -1597,10 +1597,14 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	if(!(type&2)) {
 		int id = 0;
 		if (src) {
+			md->attacked_players++;
+			if (!md->attacked_players) //Counter overflow o.O
+				md->attacked_players++;
+			
 			switch (src->type) {
 				case BL_PC: 
 					id = sd->status.char_id;
-					if(rand()%1000 < 1000/++(md->attacked_players))
+					if(rand()%1000 < 1000/md->attacked_players)
 						md->attacked_id = sd->bl.id;
 					break;
 				case BL_PET:
@@ -1611,7 +1615,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 						damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
 					}
 					//Let mobs retaliate against the pet's master [Skotlex]
-					if(rand()%1000 < 1000/++(md->attacked_players))
+					if(rand()%1000 < 1000/md->attacked_players)
 						md->attacked_id = pd->msd->bl.id;
 					break;
 				}
@@ -1622,7 +1626,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 						struct map_session_data* msd = map_id2sd(md2->master_id);
 						if (msd) id = msd->status.char_id;
 					}
-					if(rand()%1000 < 1000/++(md->attacked_players))
+					if(rand()%1000 < 1000/md->attacked_players)
 					{	//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
 						if (md2->master_id && battle_config.retaliate_to_master)
 							md->attacked_id = md2->master_id;

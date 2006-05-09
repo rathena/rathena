@@ -6133,7 +6133,7 @@ int buildin_sc_start(struct script_state *st)
 		val4 = 1; //Mark that this was a thrown sc_effect
 	}
 	if (bl)
-		sc_start4(bl,type,100,val1,0,0,val4,tick);
+		status_change_start(bl,type,10000,val1,0,0,val4,tick,11);
 	return 0;
 }
 
@@ -6161,7 +6161,7 @@ int buildin_sc_start2(struct script_state *st)
 	}
 
 	if(bl)
-		status_change_start(bl,type,per,val1,0,0,val4,tick,0);
+		status_change_start(bl,type,per,val1,0,0,val4,tick,11);
 	return 0;
 }
 
@@ -6191,7 +6191,7 @@ int buildin_sc_start4(struct script_state *st)
 		tick/=2;
 	}
 	if (bl)
-		sc_start4(bl,type,100,val1,val2,val3,val4,tick);
+		status_change_start(bl,type,10000,val1,val2,val3,val4,tick,11);
 	return 0;
 }
 

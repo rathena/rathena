@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/09
+	* Script commands sc_start, sc_start2 and sc_start4 will now start
+	  regardless of sc defense of the target player (that is, they cannot be
+	  avoided/blocked) [Skotlex]
+	* Fixed a possible counter overflow in attacked_count, changed the var size
+	  to unsigned char since the code can handle the overflow now. [Skotlex]
+	* Multiple targets again reduces armor defense, as reported by Tharis.
+	  [Skotlex]
+	* Increased dex bonus of NPC_POWERUP to +20 per level. [Skotlex]
+	* Fog of Wall's -50 hit reduction is now only for ranged attacks. [Skotlex]
 2006/05/08
 	* Reverted the change that was making ES skills stun the caster always.
 	  [Skotlex]
