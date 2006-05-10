@@ -1162,37 +1162,49 @@ int duel_reject(
  */
 
 /*==========================================
- * @commands Lists available @ commands to you.
+ * @commands Lists available @ commands to you (code 98% from Meruru)
  *------------------------------------------
  */
-int atcommand_commands(const int fd, struct map_session_data* sd,
+int atcommand_commands(
+	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int i,count=0,level;
-	nullpo_retr(-1, sd);
-	level = pc_isGM(sd);
-	
-	clif_displaymessage(fd, msg_txt(273));
-	memset(atcmd_output, 0, sizeof atcmd_output);
-	for (i = 0; atcommand_info[i].type != AtCommand_Unknown; i++)
-		if (atcommand_info[i].level <= level && atcommand_info[i].command) {
-			count++;
-			strcat(atcmd_output, atcommand_info[i].command);
-			strcat(atcmd_output, " ");
-			if (!(count%10)) {
-				clif_displaymessage(fd, atcmd_output);
-				memset(atcmd_output, 0, sizeof atcmd_output);
-			}
-		}
-	if (count%10)
-		clif_displaymessage(fd, atcmd_output);
+	char cz_line_buff[MESSAGE_SIZE+1];
 
-	if (count) {
-		sprintf(atcmd_output, msg_txt(274), count);
-		clif_displaymessage(fd, atcmd_output);
-	} else
-		clif_displaymessage(fd, msg_txt(275));
-		
+	register char *lpcz_cur = cz_line_buff;
+	register unsigned int ui_slen;
+
+	int i_cur_cmd,gm_lvl = pc_isGM(sd), count = 0;
+
+	memset(cz_line_buff,' ',MESSAGE_SIZE);
+	cz_line_buff[MESSAGE_SIZE] = 0;
+
+	clif_displaymessage(fd, msg_txt(273));
+
+	for (i_cur_cmd = 0;atcommand_info[i_cur_cmd].type != AtCommand_Unknown;i_cur_cmd++)
+	{
+		if(gm_lvl  < atcommand_info[i_cur_cmd].level)
+		continue;
+
+		count++;
+		ui_slen = (unsigned int)strlen(atcommand_info[i_cur_cmd].command);
+
+		//rember not <= bc we need null terminator
+		if(((MESSAGE_SIZE+(int)cz_line_buff)-(int)lpcz_cur) < (int)ui_slen)
+		{
+			clif_displaymessage(fd,(char*)cz_line_buff);
+			lpcz_cur = cz_line_buff;
+			memset(cz_line_buff,' ',MESSAGE_SIZE);
+			cz_line_buff[MESSAGE_SIZE] = 0;
+		}
+
+		memcpy(lpcz_cur,atcommand_info[i_cur_cmd].command,ui_slen);
+		lpcz_cur += ui_slen+(10-ui_slen%10);
+	}
+
+	clif_displaymessage(fd,(char*)cz_line_buff);
+	sprintf(atcmd_output, msg_txt(274), count); //There will always be at least 1 command (@commands)
+	clif_displaymessage(fd, atcmd_output);	
 	return 0;
 }
 
