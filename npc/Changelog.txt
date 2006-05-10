@@ -28,6 +28,8 @@ Nexon
 Date		Added
 ======
 05/10
+	* Fixed some typos and grammatical errors on the Job Dancer quest...
+	  [Skotlex]
 	* Fixed Inn dialogues [Playtester]
 05/09
 	* Inn now costs 5k at every level [Playtester]
