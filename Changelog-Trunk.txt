@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/09
+	* Rewrote/cleaned up trade.c for a more clean trading implementation.
+	  [Skotlex]
+	* Added @request commands, sends a request to all connected GMs of
+	  lowest_gm_level or above as a whisper message. Defaults to gm level 20
+	  users (UNTESTED). [Skotlex]
 	* Modified @commands to use Meruru's code which is faster and does a fair
 	  attempt at tabulating the commands presented. [Skotlex]
 	* Updated SKA to return a random value between 0 and 99 each time

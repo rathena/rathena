@@ -1821,8 +1821,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 					pc_checkskill(sd, MO_CHAINCOMBO) > 0)
 					delay += 300 * battle_config.combo_delay_rate / 100;
 				sc_start4(src,SC_COMBO,100,MO_TRIPLEATTACK,skilllv,0,0,delay);
-				sd->ud.attackabletime = tick + delay;
-				unit_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src, delay);
 				
 				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
@@ -1836,8 +1834,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 					(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,MO_CHAINCOMBO,skilllv,0,0,delay);
-				sd->ud.attackabletime = tick + delay;
-				unit_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1852,8 +1848,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,MO_COMBOFINISH,skilllv,0,0,delay);
-				sd->ud.attackabletime = tick + delay;
-				unit_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1867,8 +1861,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,CH_TIGERFIST,skilllv,0,0,delay);
-				sd->ud.attackabletime = tick + delay;
-				unit_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}
@@ -1878,8 +1870,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 				if(damage < status_get_hp(bl))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,CH_CHAINCRUSH,skilllv,0,0,delay);
-				sd->ud.attackabletime = tick + delay;
-				unit_set_walkdelay(src, tick, delay, 1);
 				clif_combo_delay(src,delay);
 				break;
 			}

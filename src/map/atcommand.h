@@ -270,7 +270,7 @@ enum AtCommandType {
 	AtCommand_ToNPC, // LuzZza
 	AtCommand_Commands, // [Skotlex]
 	AtCommand_NoAsk, // [LuzZza]
-	
+	AtCommand_Request, // [Skotlex], supposedly taken from Freya (heard the command was there, but I haven't seen the code yet)
 	// end <- Ahem, guys, don't place AtCommands after AtCommand_Unknown! [Skotlex]
 	AtCommand_Unknown,
 	AtCommand_MAX

@@ -4452,20 +4452,20 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			switch (val1) { //Val1 contains the skill id
 				case TK_STORMKICK:
 					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
-					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_DOWNKICK:
 					clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
-					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_TURNKICK:
 					clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
-					if (ud) ud->attackabletime = gettick()+tick;
 					break;
 				case TK_COUNTER:
 					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
-					if (ud) ud->attackabletime = gettick()+tick;
 					break;
+			}
+			if (ud) {
+				ud->attackabletime = gettick()+tick;
+				unit_set_walkdelay(bl, gettick(), tick, 1);
 			}
 		}
 			break;

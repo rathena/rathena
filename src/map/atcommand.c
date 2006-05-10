@@ -295,6 +295,7 @@ ACMD_FUNC(clone); // [Valaris]
 ACMD_FUNC(tonpc); // LuzZza
 ACMD_FUNC(commands); // [Skotlex]
 ACMD_FUNC(noask); //LuzZza
+ACMD_FUNC(request); //LuzZza
 
 /*==========================================
  *AtCommandInfo atcommand_info[]\‘¢‘Ì‚Ì’è‹`
@@ -611,6 +612,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
 	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
 	{ AtCommand_NoAsk,				"@noask",			1, atcommand_noask }, // [LuzZza]
+	{ AtCommand_Request,				"@request",			20, atcommand_request }, // [LuzZza]
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -10270,6 +10272,27 @@ int atcommand_noask(
 		sd->state.noask = 1;
 	}
 	
+	return 0;
+}
+
+/*=====================================
+ * Send a @request message to all GMs of lowest_gm_level.
+ * Usage: @request <petition>
+ *-------------------------------------
+ */
+int atcommand_request(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	if (!message || !*message) {
+		clif_displaymessage(sd->fd,msg_txt(275));
+		return -1;
+	}
+
+	sprintf(atcmd_output, msg_txt(276), message);
+	intif_wis_message_to_gm(sd->status.name, lowest_gm_level, atcmd_output);
+	clif_disp_onlyself(sd, atcmd_output, strlen(atcmd_output));
+	clif_displaymessage(sd->fd,msg_txt(277));
 	return 0;
 }
 
