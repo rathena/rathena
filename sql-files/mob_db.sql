@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS `mob_db`;
 CREATE TABLE `mob_db` (
   `ID` mediumint(9) unsigned NOT NULL default '0',
   `Sprite` text NOT NULL,
-  `KName` text NOT NULL,
-  `EName` text NOT NULL,
+  `kName` text NOT NULL,
+  `iName` text NOT NULL,
   `LV` tinyint(6) unsigned NOT NULL default '0',
   `HP` int(9) unsigned NOT NULL default '0',
   `SP` mediumint(9) unsigned NOT NULL default '0',
