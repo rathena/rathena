@@ -2625,54 +2625,38 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	
 	case KN_CHARGEATK:
 	case MO_EXTREMITYFIST:	/* ˆ¢?C—…”e–PŒ? */
+		if (skillid == MO_EXTREMITYFIST && sc && sc->count)
 		{
-			if (skillid == MO_EXTREMITYFIST && sc && sc->count)
-			{
-				if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
-					status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
-				if (sc->data[SC_BLADESTOP].timer != -1)
-					status_change_end(src,SC_BLADESTOP,-1);
-			}
-			if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
-				int dx,dy;
-
-				dx = bl->x - src->x;
-				dy = bl->y - src->y;
-				if(dx > 0) dx++;
-				else if(dx < 0) dx--;
-				if (dy > 0) dy++;
-				else if(dy < 0) dy--;
-
-				if (skillid == KN_CHARGEATK) //Store distance in flag [Skotlex]
-					flag = distance_bl(src, bl);
-				
-				if (!unit_movepos(src, src->x+dx, src->y+dy, 1, 1)) {
-					if (sd) clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
-				clif_slide(src,src->x,src->y);
-				if (skillid != MO_EXTREMITYFIST || battle_check_target(src, bl, BCT_ENEMY) > 0) //Check must be done here because EF should be broken this way.. [Skotlex]
-					skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-				else if (sd)
-					clif_skill_fail(sd,skillid,0,0);
-				/* Should be uneeded as you "slide", not run to the target.
-				struct unit_data *ud;
-				ud = unit_bl2ud(src);
-				if (ud) {
-					if(dx < 0) dx = -dx;
-					if(dy < 0) dy = -dy;
-					if(dy > dx) dx = dy;
-					dy = status_get_speed(src);
-					ud->attackabletime = tick + 100 + dy*dx;
-					unit_set_walkdelay(src, tick, 100 + dy*dx, 1);
-					if(DIFF_TICK(ud->canact_tick,ud->canmove_tick)<0)
-						ud->canact_tick = ud->canmove_tick;
-				}
-				*/
-			}
-			else //Assume minimum distance of 1 for Charge.
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,skillid == KN_CHARGEATK?1:flag);
+			if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
+				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
+			if (sc->data[SC_BLADESTOP].timer != -1)
+				status_change_end(src,SC_BLADESTOP,-1);
 		}
+		if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
+			int dx,dy;
+
+			dx = bl->x - src->x;
+			dy = bl->y - src->y;
+			if(dx > 0) dx++;
+			else if(dx < 0) dx--;
+			if (dy > 0) dy++;
+			else if(dy < 0) dy--;
+
+			if (skillid == KN_CHARGEATK) //Store distance in flag [Skotlex]
+				flag = distance_bl(src, bl);
+			
+			if (!unit_movepos(src, src->x+dx, src->y+dy, 1, 1)) {
+				if (sd) clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
+			clif_slide(src,src->x,src->y);
+			if (skillid != MO_EXTREMITYFIST || battle_check_target(src, bl, BCT_ENEMY) > 0) //Check must be done here because EF should be broken this way.. [Skotlex]
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			else if (sd)
+				clif_skill_fail(sd,skillid,0,0);
+		}
+		else //Assume minimum distance of 1 for Charge.
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,skillid == KN_CHARGEATK?1:flag);
 		break;
 
 	/* •?ŠíŒn”Í??U?ƒXƒLƒ‹ */
@@ -7767,10 +7751,6 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	case MO_EXTREMITYFIST:					// ˆ¢?C—…”e–PŒ?
 //		if(sd->sc.data[SC_EXTREMITYFIST].timer != -1) //To disable Asura during the 5 min skill block uncomment this...
 //			return 0;
-		if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer == -1) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
 		if(sd->sc.data[SC_BLADESTOP].timer!=-1)
 			spiritball--;
 		else if (sd->sc.data[SC_COMBO].timer != -1) {
@@ -7781,6 +7761,10 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			else if (sd->sc.data[SC_COMBO].val1 == CH_CHAINCRUSH)
 				spiritball = sd->spiritball?sd->spiritball:1;
 			//It should consume whatever is left as long as it's at least 1.
+		} else if(!unit_can_move(&sd->bl))
+	  	{	//Placed here as ST_MOVE_ENABLE should not apply if rooted or on a combo. [Skotlex]
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
 		}
 		break;
 

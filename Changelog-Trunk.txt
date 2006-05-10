@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/10
+	* Changed the state of Asura back to explosionspirits, added a hardcoded
+	  move_enable check when invoking Asura and NOT while in BladeStop or a
+	  Combo. [Skotlex]
 	* Added back SC_XMAS to status.c, it got lost sometime during all the
 	  previous reworkings. [Skotlex]
 	* Changed wedding costumes to use setoption rather than changebase.
