@@ -2699,7 +2699,8 @@ Option numbers are bitmasks - add up option numbers to check for all of them
 being present at the same time in one go.
 
 'setoption' will set options on the invoking character. There are no second and 
-third versions of this command, so you can only change the values in the last list (cloak, cart, ruwach, etc). if flag is 1, the option will be added to what the character currently has; if 2, the option is removed; otherwise (or if omitted) the option is set to what is passed (that is, all other set option values are removed).
+third versions of this command, so you can only change the values in the last
+list (cloak, cart, ruwach, etc). if flag is 1 (default when omitted), the option will be added to what the character currently has; if 0, the option is removed. 
 
 This is definitely not a complete list of available option flag numbers. Ask a 
 core developer for the full list.

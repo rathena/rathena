@@ -1024,7 +1024,7 @@ REPLACE INTO `item_db` VALUES (2334,'Mage_Coat','Mage Coat','5',NULL,'10','600',
 REPLACE INTO `item_db` VALUES (2335,'Thief_Clothes','Thief Clothes','5','74000',NULL,'100',NULL,'6',NULL,'0',0x02021040,'7','2','16',NULL,'0','1','0',' bonus bAgi,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2336,'Thief_Clothes_','Thief Clothes','5','74000',NULL,'100',NULL,'6',NULL,'1',0x00021040,'7','2','16',NULL,'0','1','0',' bonus bAgi,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2337,'Ninja_Suit','Ninja Suit','5',NULL,'10','1500',NULL,'7',NULL,'0',0x00021040,'7','2','16',NULL,'50','1','0',' bonus bAgi,1; bonus bMdef,3; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2338,'Wedding_Dress','Wedding Dress','5','43000',NULL,'500',NULL,'0',NULL,'0',0xFFFFFFFE,'7','0','16',NULL,'0','1','0',' bonus bMdef,15; ',' changebase Job_Wedding; ','changebase Class;');
+REPLACE INTO `item_db` VALUES (2338,'Wedding_Dress','Wedding Dress','5','43000',NULL,'500',NULL,'0',NULL,'0',0xFFFFFFFE,'7','0','16',NULL,'0','1','0',' bonus bMdef,15; ',' setoption Option_Wedding,1; ',' setoption Option_Wedding,0; ');
 REPLACE INTO `item_db` VALUES (2339,'Pantie','Pantie','5','1000',NULL,'100',NULL,'4',NULL,'0',0xFFFFFFFF,'7','2','16',NULL,'0','1','0',NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2340,'Novice_Breastplate','Novice Breastplate','5','89000',NULL,'500',NULL,'4',NULL,'1',0x00000001,'7','2','16',NULL,'10','1','0',NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2341,'Legion_Plate_Armor','Legion Plate Armor','5','94000',NULL,'5500',NULL,'11',NULL,'0',0x00004000,'7','2','16',NULL,'70','1','0',NULL,NULL,NULL);
@@ -1817,7 +1817,7 @@ REPLACE INTO `item_db` VALUES (7166,'Soft_Silk','Soft Silk','3',NULL,'600','10',
 REPLACE INTO `item_db` VALUES (7167,'Strange_Steel_Piece','Strange Steel Piece','3',NULL,'215','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (7168,'Giant_Butterfly_Wing','Giant Butterfly Wing','3',NULL,'307','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (7169,'Ba_Gua','Ba_Gua','3',NULL,'1400','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (7170,'Tuxedo','Tuxedo','5','43000',NULL,'10',NULL,'0',NULL,'0',0xFFFFFFFE,'7','1','16',NULL,'0','1','0',NULL,' changebase Job_Wedding; ','changebase Class;');
+REPLACE INTO `item_db` VALUES (7170,'Tuxedo','Tuxedo','5','43000',NULL,'10',NULL,'0',NULL,'0',0xFFFFFFFE,'7','1','16',NULL,'0','1','0',NULL,' setoption Option_Wedding,1; ',' setoption Option_Wedding,0; ');
 REPLACE INTO `item_db` VALUES (7171,'Leopard_Skin','Leopard Skin','3',NULL,'141','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (7172,'Leopard_Claw','Leopard Claw','3',NULL,'145','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (7173,'Bun_Buster_Bag','Bun Buster Bag','3',NULL,'10','10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);

@@ -5079,7 +5079,7 @@ int buildin_setoption(struct script_state *st)
 {
 	int type;
 	struct map_session_data *sd;
-	int flag=0;
+	int flag=1;
 	
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	if(st->end>st->start+3 )
@@ -5087,19 +5087,13 @@ int buildin_setoption(struct script_state *st)
 	
 	sd=script_rid2sd(st);
 	if (!sd) return 0;
-	
-	switch (flag) {
-		case 1: //Add option
-			pc_setoption(sd,sd->sc.option|type);
-			break;
-		case 2: //Remove option
-			pc_setoption(sd,sd->sc.option&~type);
-			break;
-		default:	//Set option
-			pc_setoption(sd,type);
-			break;
-	}
 
+	if (flag) {//Add option
+		if (type&OPTION_WEDDING && !battle_config.wedding_modifydisplay)
+			type&=~OPTION_WEDDING; //Do not show the wedding sprites
+		pc_setoption(sd,sd->sc.option|type);
+	} else//Remove option
+		pc_setoption(sd,sd->sc.option&~type);
 	return 0;
 }
 

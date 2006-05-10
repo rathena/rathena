@@ -78,6 +78,8 @@ Job_Star_Gladiator	4047
 Job_Star_Gladiator2	4048
 Job_Soul_Linker	4049
 
+Option_Wedding	0x1000
+
 bc_all	0
 bc_map	1
 bc_area	2
