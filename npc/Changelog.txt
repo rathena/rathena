@@ -27,6 +27,8 @@ Nexon
 
 Date		Added
 ======
+05/10
+	* Fixed Inn dialogues [Playtester]
 05/09
 	* Inn now costs 5k at every level [Playtester]
 05/07

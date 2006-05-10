@@ -78,7 +78,7 @@ OnTimerWarp:
 //====================== Geffen ======================================
 geffen_in.gat,70,64,5	script	Inn Maid::Betty	53,{
 
-	callfunc "F_InnMaid","[Betty]","Inn","geffen_in.gat",74,60;
+	callfunc "F_InnMaid","[Betty]","Geffen Inn","geffen_in.gat",74,60;
 	addtimer 3900, "Betty::OnTimerWarp";
 	close;
 
@@ -91,7 +91,7 @@ OnTimerWarp:
 //======================= Payon ======================================
 payon_in01.gat,131,62,5	script	Inn Maid::SunHee	53,{
 
-	callfunc "F_InnMaid","[Sun Hee]","Inn","payon_in01.gat",132,56;
+	callfunc "F_InnMaid","[Sun Hee]","Payon Inn","payon_in01.gat",132,56;
 	addtimer 3900, "SunHee::OnTimerWarp";
 	close;
 
@@ -130,40 +130,37 @@ OnTimerWarp:
 //======================= Inn Function ==============================
 function	script	F_InnMaid	{
 	mes getarg(0);
-	mes "Welcome to Nenkaras " + getarg(1) + ".  What can I do for you?";
+	mes "Welcome to '" + getarg(1) + "'.";
+	mes "How may I help you?";
 	next;
-	menu "Save",Msave, "Rent a Room",Mrent, "Nothing",Mend;
+	menu "Save",Msave, "Take a Rest -> 5000 zeny",Mrent, "Cancel",Mend;
 
 	Msave:
 		mes getarg(0);
-		mes "Location Saved.";
-		mes "I am waiting for another job to do.";
+		mes "Your respawn point";
+		mes "has been saved.";
+		mes "Thank you,";
+		mes "please come again.";
 		savepoint getarg(2),getarg(3),getarg(4);
 		close;
 	Mrent:
-		set @cost,5000;
-		//if(BaseLevel > 15) set @cost,100;
-		//if(BaseLevel > 30) set @cost,200;
-		//if(BaseLevel > 50) set @cost,300;
-		//if(BaseLevel > 75) set @cost,400;
+		if(Zeny < 5000) goto NoZeny;
 		mes getarg(0);
-		mes "It will cost " + @cost + " zeny to rent a room for 1 night.";
-		mes "In the morning your HP and SP will be fully recovered.";
-		next;
-		menu "Ok.",-,"No thanks.",Mend;
+		mes "Thank you.";
+		mes "I hope you";
+		mes "enjoy your rest~";
 		
-		mes getarg(0);
-		mes "Thank you and enjoy your stay here.";
-		emotion 15;
-		if(Zeny < @cost) goto NoZeny;
-		set Zeny,Zeny - @cost;
+		set Zeny,Zeny - 5000;
 		sc_start SC_BLIND,500000,1;
 		percentheal 100,100;
 		return;
 
 		NoZeny:
 			mes getarg(0);
-			mes "I'm sorry but you don't have enough money.";
+			mes "I'm sorry, but the service charge";
+			mes "is 5,000 zeny. Please make sure";
+			mes "that you have enough money to check";
+			mes "in next time, okay?";
 			close;
 	Mend:
 		mes getarg(0);
