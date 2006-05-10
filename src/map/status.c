@@ -4130,6 +4130,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
+		case SC_XMAS:
 		{
 			struct view_data *vd = status_get_viewdata(bl);
 			if (vd) {
@@ -5016,6 +5017,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				break;
 
 			case SC_WEDDING:	//Œ‹¥—p(Œ‹¥ˆßÖ‚É‚È‚Á‚Ä?‚­‚Ì‚ª?‚¢‚Æ‚©)
+			case SC_XMAS:
 			{
 				struct view_data *vd = status_get_viewdata(bl);
 				if (vd) {

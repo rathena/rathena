@@ -1571,45 +1571,45 @@ int parse_login(int fd) {
                     server_num=0;
 				for(i = 0; i < MAX_SERVERS; i++) {
 					if (server_fd[i] >= 0) {
-						    // Andvanced subnet check [LuzZza]
-							if((subnet_char_ip = lan_subnetcheck((long *)p)))
-								WFIFOL(fd,47+server_num*32) = subnet_char_ip;
-							else
-								WFIFOL(fd,47+server_num*32) = server[i].ip;
-                            WFIFOW(fd,47+server_num*32+4) = server[i].port;
-                            memcpy(WFIFOP(fd,47+server_num*32+6), server[i].name, 20);
-                            WFIFOW(fd,47+server_num*32+26) = server[i].users;
-                            WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;
-                            WFIFOW(fd,47+server_num*32+30) = server[i].new_;
-                            server_num++;
-                        }
-                    }
-                    // if at least 1 char-server
-                    if (server_num > 0) {
-                        WFIFOW(fd,0)=0x69;
-                        WFIFOW(fd,2)=47+32*server_num;
-                        WFIFOL(fd,4)=account.login_id1;
-                        WFIFOL(fd,8)=account.account_id;
-                        WFIFOL(fd,12)=account.login_id2;
-                        WFIFOL(fd,16)=0;
-                        memcpy(WFIFOP(fd,20),account.lastlogin,24);
-                        WFIFOB(fd,46)=account.sex;
-                        WFIFOSET(fd,47+32*server_num);
-                        if(auth_fifo_pos>=AUTH_FIFO_SIZE)
-                            auth_fifo_pos=0;
-                        auth_fifo[auth_fifo_pos].account_id=account.account_id;
-                        auth_fifo[auth_fifo_pos].login_id1=account.login_id1;
-                        auth_fifo[auth_fifo_pos].login_id2=account.login_id2;
-                        auth_fifo[auth_fifo_pos].sex=account.sex;
-                        auth_fifo[auth_fifo_pos].delflag=0;
-                        auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr.sin_addr.s_addr;
-                        auth_fifo_pos++;
-                    } else {
-                        WFIFOW(fd,0) = 0x81;
-                        WFIFOB(fd,2) = 1; // 01 = Server closed
-                        WFIFOSET(fd,3);
-                    }
-            }
+						// Andvanced subnet check [LuzZza]
+						if((subnet_char_ip = lan_subnetcheck((long *)p)))
+							WFIFOL(fd,47+server_num*32) = subnet_char_ip;
+						else
+							WFIFOL(fd,47+server_num*32) = server[i].ip;
+						WFIFOW(fd,47+server_num*32+4) = server[i].port;
+						memcpy(WFIFOP(fd,47+server_num*32+6), server[i].name, 20);
+						WFIFOW(fd,47+server_num*32+26) = server[i].users;
+						WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;
+						WFIFOW(fd,47+server_num*32+30) = server[i].new_;
+						server_num++;
+					}
+				}
+				// if at least 1 char-server
+				if (server_num > 0) {
+					WFIFOW(fd,0)=0x69;
+					WFIFOW(fd,2)=47+32*server_num;
+					WFIFOL(fd,4)=account.login_id1;
+					WFIFOL(fd,8)=account.account_id;
+					WFIFOL(fd,12)=account.login_id2;
+					WFIFOL(fd,16)=0;
+					memcpy(WFIFOP(fd,20),account.lastlogin,24);
+					WFIFOB(fd,46)=account.sex;
+					WFIFOSET(fd,47+32*server_num);
+					if(auth_fifo_pos>=AUTH_FIFO_SIZE)
+						auth_fifo_pos=0;
+					auth_fifo[auth_fifo_pos].account_id=account.account_id;
+					auth_fifo[auth_fifo_pos].login_id1=account.login_id1;
+					auth_fifo[auth_fifo_pos].login_id2=account.login_id2;
+					auth_fifo[auth_fifo_pos].sex=account.sex;
+					auth_fifo[auth_fifo_pos].delflag=0;
+					auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr.sin_addr.s_addr;
+					auth_fifo_pos++;
+				} else {
+					WFIFOW(fd,0) = 0x81;
+					WFIFOB(fd,2) = 1; // 01 = Server closed
+					WFIFOSET(fd,3);
+				}
+			}
       } else {
 		char tmp_sql[512];
 		char error[64];

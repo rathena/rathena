@@ -441,6 +441,25 @@ enum {
 #define OPT3_AURASHIELD 0x800 //Assumptio
 #define OPT3_HEAT 0x1000 //Warmth Skills
 
+#define OPTION_SIGHT 0x0001
+#define OPTION_HIDE 0x0002
+#define OPTION_CLOAK 0x0004
+#define OPTION_CART1 0x0008
+#define OPTION_FALCON 0x0010
+#define OPTION_RIDING 0x0020
+#define OPTION_INVISIBLE 0x0040
+#define OPTION_CART2 0x0080
+#define OPTION_CART3 0x0100
+#define OPTION_CART4 0x0200
+#define OPTION_CART5 0x0400
+#define OPTION_ORCISH 0x0800
+#define OPTION_WEDDING 0x1000
+#define OPTION_RUWACH 0x2000
+#define OPTION_CHASEWALK 0x4000
+#define OPTION_FLYING 0x8000
+//TODO: Get these Missing options...
+#define OPTION_SIGHTTRASHER 0x0001
+
 // ÉpÉâÉÅÅ[É^èäìæån battle.c ÇÊÇËà⁄ìÆ
 int status_get_class(struct block_list *bl);
 int status_get_lv(struct block_list *bl);
