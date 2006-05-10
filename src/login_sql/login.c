@@ -65,6 +65,7 @@ void Gettimeofday(struct timeval *timenow)
 // global variable
 //-----------------------------------------------------
 int use_dnsbl=0; // [Zido]
+char dnsbl_servs[1024];
 int server_num;
 int new_account_flag = 0; //Set from config too XD [Sirius]
 int bind_ip_set_ = 0;
@@ -576,6 +577,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	char tmpstr[256];
 	char t_uid[256], t_pass[256];
 	char user_password[256];
+	char *dnsbl_serv;
 
 	//added for account creation _M _F
 	int len;
@@ -595,27 +597,22 @@ int mmo_auth( struct mmo_account* account , int fd){
 	// Start DNS Blacklist check [Zido]
 	if(use_dnsbl) {
 		sprintf(r_ip, "%d.%d.%d.%d", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
-		
-		sprintf(ip_dnsbl,"%s.opm.blitzed.org",r_ip);
+
+		dnsbl_serv=strtok(dnsbl_servs,",");
+		sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
 		if(gethostbyname(ip_dnsbl)!=NULL) {
-			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 			return 3;
 		}
-		sprintf(ip_dnsbl,"%s.sbl.deltaanime.net",r_ip);
-		if(gethostbyname(ip_dnsbl)!=NULL) {
-			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
-			return 3;
+
+		while((dnsbl_serv=strtok(dnsbl_servs,","))!=NULL) {
+			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
+			if(gethostbyname(ip_dnsbl)!=NULL) {
+				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
+				return 3;
+			}
 		}
-		sprintf(ip_dnsbl,"%s.dnsbl.njabl.org",r_ip);
-		if(gethostbyname(ip_dnsbl)!=NULL) {
-			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
-			return 3;
-		}
-		sprintf(ip_dnsbl,"%s.sbl-xbl.spamhaus.org",r_ip);
-		if(gethostbyname(ip_dnsbl)!=NULL) {
-			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",r_ip);
-			return 3;
-		}
+
 	}
 	// End DNS Blacklist check [Zido]
 
@@ -2171,6 +2168,8 @@ int login_config_read(const char *cfgName){
 			login_config_read(w2);
 		} else if(strcmpi(w1,"use_dnsbl")==0) { // [Zido]
 			use_dnsbl=atoi(w2);
+		} else if(strcmpi(w1,"dnsbl_servers")==0) { // [Zido]
+				strcpy(dnsbl_servs,w2);
 		}
  	}
 	fclose(fp);
