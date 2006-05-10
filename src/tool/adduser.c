@@ -37,10 +37,11 @@ int main(int argc, char *argv[]) {
 
 	int next_id, id;
 	char line[1024];
+	FILE *FPaccin,*FPaccout;
 
 	// Check to see if account.txt exists.
 	printf("Checking if '%s' file exists...\n", account_txt);
-	FILE *FPaccin = fopen(account_txt, "r");
+	FPaccin = fopen(account_txt, "r");
 	if (FPaccin == NULL) {
 		printf("'%s' file not found!\n", account_txt);
 		printf("Run the setup wizard please.\n");
@@ -90,7 +91,7 @@ int main(int argc, char *argv[]) {
 		scanf("%s", &sex);
 	}
 
-	FILE *FPaccout = fopen(account_txt, "r+");
+	FPaccout = fopen(account_txt, "r+");
 	fseek(FPaccout, 0, SEEK_END);
 	fprintf(FPaccout, "%i	%s	%s	-	%s	-\r\n", next_id, username, password, sex);
 	close(FPaccout);

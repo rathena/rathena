@@ -3295,9 +3295,7 @@ int parse_fromlogin(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 		  {
-			char md5str[64] = "", md5bin[32], md5key[RFIFOW(fd,2) - 4 + 1];
-			memcpy(md5key, RFIFOP(fd,4), RFIFOW(fd,2) - 4);
-			md5key[sizeof(md5key)-1] = '0';
+			char md5str[64] = "", md5bin[32];
 			if (passenc == 1) {
 				strncpy(md5str, (const char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 				strcat(md5str, loginserveradminpassword);
