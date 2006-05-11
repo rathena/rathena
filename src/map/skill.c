@@ -1259,7 +1259,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case TK_DOWNKICK:
-		sc_start(bl,SC_STUN,100,skilllv,skill_get_time(skillid,skilllv));
+		sc_start(bl,SC_STUN,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 			
 	case TK_JUMPKICK:
@@ -1284,6 +1284,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				status_change_end(bl, SC_ADRENALINE2, -1);
 		}		
 		break;
+	case TK_TURNKICK:
 	case MO_BALKYOUNG: //Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
 		if(attack_type == BF_MISC) //70% base stun chance...
 			sc_start(bl,SC_STUN,70,skilllv,skill_get_time2(skillid,skilllv));
@@ -4955,7 +4956,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_POWERUP:
 		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
 //From experience it appears powerup is more hit, not +all stats.
-		sc_start(bl,SC_INCDEX,100,20*skilllv,skill_get_time(skillid, skilllv));
+		sc_start(bl,SC_INCDEX,100,25*skilllv,skill_get_time(skillid, skilllv));
 //		sc_start(bl,SC_INCALLSTATUS,100,skilllv*5,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
@@ -5361,24 +5362,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		break;
 
-	case SL_SKA: // [marquis007]
 	case SL_SWOO:
-	case SL_SKE:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
-			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-
-		if (skillid == SL_SWOO && tsc && tsc->data[type].timer != -1) {
+		if (tsc && tsc->data[type].timer != -1) {
 			sc_start(src,SC_STUN,100,skilllv,10000);
 			break;
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+	case SL_SKA: // [marquis007]
+	case SL_SKE:
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
+			clif_skill_fail(sd,skillid,0,0);
+		else
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		
 		if (skillid == SL_SKE)
 			sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
+
+		//Regardless of who you target, caster gets stunned for 0.5 [Skotlex]
+		status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
 		
 	// New guild skills [Celest]

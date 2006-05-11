@@ -1223,52 +1223,59 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 {
 	double z;
 	int i,skill,itemamount=0;
-
+	struct npc_data *nd;
+	
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
+	nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
+	if (!nd) return 1;
+	nd = nd->master_nd; //For OnSell triggers.
+	
 	//if (npc_checknear(sd,sd->npc_shopid))
 	//	return 1;
 	for(i=0,z=0;i<n;i++) {
-		int nameid;
-		if (item_list[i*2]-2 <0 || item_list[i*2]-2 >=MAX_INVENTORY)
-			return 1;
-		nameid=sd->status.inventory[item_list[i*2]-2].nameid;
-		if (nameid == 0 ||
-		   sd->status.inventory[item_list[i*2]-2].amount < item_list[i*2+1])
-			return 1;
-		if (itemdb_value_notoc(nameid))
-			z+=(double)itemdb_value_sell(nameid) * item_list[i*2+1];
+		int nameid, idx, qty;
+		idx = item_list[i*2]-2;
+		qty = item_list[i*2+1];
+		
+		if (idx <0 || idx >=MAX_INVENTORY || qty < 0)
+			break;
+		
+		nameid=sd->status.inventory[idx].nameid;
+		if (nameid == 0 || !sd->inventory_data[idx] ||
+		   sd->status.inventory[idx].amount < qty)
+			break;
+		
+		if (sd->inventory_data[idx]->flag.value_notoc)
+			z+=(double)qty*sd->inventory_data[idx]->value_sell;
 		else
-			z+=(double)pc_modifysellvalue(sd,itemdb_value_sell(nameid)) * item_list[i*2+1];
-		itemamount+=item_list[i*2+1];
+			z+=(double)qty*pc_modifysellvalue(sd,sd->inventory_data[idx]->value_sell);
+
+		if(sd->inventory_data[idx]->type==7 && sd->status.inventory[idx].card[0] == (short)0xff00)
+		{
+			if(search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0)
+				intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1],sd->status.inventory[idx].card[2]));
+		}
+
+		if(log_config.pick) //Logs items, Sold to NPC (S)hop [Lupus]
+			log_pick(sd, "S", 0, nameid, qty, &sd->status.inventory[idx]);
+
+		if(nd) {
+			setd_sub(sd, "@sold_nameid", i, (void *)(int)sd->status.inventory[idx].nameid);
+			setd_sub(sd, "@sold_quantity", i, (void *)(int)qty);
+		}
+		itemamount+=qty;
+		pc_delitem(sd,idx,qty,0);
 	}
 
 	if (z > MAX_ZENY) z = MAX_ZENY;
 
-	//Logs (S)hopping Zeny [Lupus]
-	if(log_config.zeny > 0 )
+	if(log_config.zeny) //Logs (S)hopping Zeny [Lupus]
 		log_zeny(sd, "S", sd, (int)z);
-	//Logs
 
 	pc_getzeny(sd,(int)z);
-	for(i=0;i<n;i++) {
-		int item_id=item_list[i*2]-2;
-		if(	sd->status.inventory[item_id].nameid>0 && sd->inventory_data[item_id] != NULL &&
-			sd->inventory_data[item_id]->type==7 && sd->status.inventory[item_id].amount>0 &&
-			sd->status.inventory[item_id].card[0] == (short)0xff00)
-				if(search_petDB_index(sd->status.inventory[item_id].nameid, PET_EGG) >= 0)
-					intif_delete_petdata(MakeDWord(sd->status.inventory[item_id].card[1],sd->status.inventory[item_id].card[2]));
-
-		//Logs items, Sold to NPC (S)hop [Lupus]
-		if(sd && log_config.pick > 0 )
-			log_pick(sd, "S", 0, sd->status.inventory[item_id].nameid, -item_list[i*2+1], &sd->status.inventory[item_id]);
-		//Logs
-
-		pc_delitem(sd,item_id,item_list[i*2+1],0);
-	}
-
-	//¤lŒoŒ±’l
+	
 	if (battle_config.shop_exp > 0 && z > 0 && (skill = pc_checkskill(sd,MC_OVERCHARGE)) > 0) {
 		if (sd->status.skill[MC_OVERCHARGE].flag != 0)
 			skill = sd->status.skill[MC_OVERCHARGE].flag - 2;
@@ -1279,9 +1286,22 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 			pc_gainexp(sd,0,(int)z);
 		}
 	}
-
+		
+	if(nd) {
+		unsigned char npc_ev[51];
+	  	sprintf(npc_ev, "%s::OnSellItem", nd->exname);
+		npc_event(sd, npc_ev, 0);
+	}
+	
+	if (i<n) {
+		//Error/Exploit... of some sort. If we return 1, the client will not mark
+		//any item as deleted even though a few were sold. In such a case, we
+		//have no recourse but to kick them out so their inventory will refresh
+		//correctly on relog. [Skotlex]
+		if (i) clif_setwaitclose(sd->fd);
+		return 1;
+	}
 	return 0;
-
 }
 
 int npc_remove_map (struct npc_data *nd)

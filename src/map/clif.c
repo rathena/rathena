@@ -9272,30 +9272,18 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
  */
 void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 {
-	int fail=0,n,i;
+	int fail=0,n;
 	unsigned short *item_list;
-	unsigned char npc_ev[51];
-	struct npc_data *nd;
 	RFIFOHEAD(fd);
 
 	n = (RFIFOW(fd,2)-4) /4;
 	item_list = (unsigned short*)RFIFOP(fd,4);
 
-	if (sd->state.trading|| !sd->npc_shopid)
+	if (sd->state.trading || !sd->npc_shopid)
 		fail = 1;
-	else{
-		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
-			sprintf(npc_ev, "%s::OnSellItem", nd->exname);
-			for(i=0;i<n;i++){
-				setd_sub(sd, "@sold_nameid", i, (void *)((int)sd->status.inventory[item_list[i*2]-2].nameid));
-				setd_sub(sd, "@sold_quantity", i, (void *)((int)item_list[i*2+1]));
-			}
-			npc_event(sd, npc_ev, 0);
-			fail = 0;
-		}else{
-			fail = npc_selllist(sd,n,item_list);
-		}
-	}
+	else
+		fail = npc_selllist(sd,n,item_list);
+	
 	sd->npc_shopid = 0; //Clear shop data.
 
 	WFIFOHEAD(fd,packet_len_table[0xcb]);

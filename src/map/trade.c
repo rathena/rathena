@@ -187,21 +187,21 @@ int impossible_trade_check(struct map_session_data *sd) {
  * Checks if trade is possible (against zeny limits, inventory limits, etc)
  *------------------------------------------
  */
-int trade_check(struct map_session_data *sd, struct map_session_data *target_sd) {
+int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 	struct item inventory[MAX_INVENTORY];
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
 	int trade_i, i, amount, n;
 
 	// check zenys value against hackers (Zeny was already checked on time of adding, but you never know when you lost some zeny since then.
-	if(sd->deal.zeny > sd->status.zeny || (target_sd->status.zeny + sd->deal.zeny) > MAX_ZENY)
+	if(sd->deal.zeny > sd->status.zeny || (tsd->status.zeny > MAX_ZENY - sd->deal.zeny))
 		return 0;
-	if(target_sd->deal.zeny > target_sd->status.zeny || (sd->status.zeny + target_sd->deal.zeny) > MAX_ZENY)
+	if(tsd->deal.zeny > tsd->status.zeny || (sd->status.zeny > MAX_ZENY - tsd->deal.zeny))
 		return 0;
 
 	// get inventory of player
 	memcpy(&inventory, &sd->status.inventory, sizeof(struct item) * MAX_INVENTORY);
-	memcpy(&inventory2, &target_sd->status.inventory, sizeof(struct item) * MAX_INVENTORY);
+	memcpy(&inventory2, &tsd->status.inventory, sizeof(struct item) * MAX_INVENTORY);
 
 	// check free slot in both inventory
 	for(trade_i = 0; trade_i < 10; trade_i++) {
@@ -240,10 +240,10 @@ int trade_check(struct map_session_data *sd, struct map_session_data *target_sd)
 //						memset(&inventory[n], 0, sizeof(struct item));
 			}
 		}
-		amount = target_sd->deal.item[trade_i].amount;
+		amount = tsd->deal.item[trade_i].amount;
 		if (!amount)
 			continue;
-		n = target_sd->deal.item[trade_i].index;
+		n = tsd->deal.item[trade_i].index;
 		if (amount > inventory2[n].amount)
 			return 0;
 		// search if it's possible to add item (for full inventory)
@@ -297,8 +297,8 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 	
 	if (index == 0)
 	{	//Adding Zeny
-		if (amount >= 0 && amount <= MAX_ZENY && amount <= sd->status.zeny && // check amount
-			(target_sd->status.zeny + amount) <= MAX_ZENY) // fix positiv overflow
+		if (amount >= 0 && amount <= sd->status.zeny && // check amount
+			(amount <= MAX_ZENY - target_sd->status.zeny)) // fix positiv overflow
 		{	//Check Ok
 			sd->deal.zeny = amount;
 			clif_tradeadditem(sd, target_sd, 0, amount);
