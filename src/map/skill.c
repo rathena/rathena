@@ -5362,36 +5362,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SL_SKA: // [marquis007]
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
-			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		break;
 	case SL_SWOO:
-		if (sd && (
-			(!battle_config.allow_es_magic_pc && bl->type != BL_MOB) ||
-			(tsc && tsc->data[type].timer != -1)
-		)) {
-			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
-			clif_skill_fail(sd,skillid,0,0);
-			break;
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		break;
-
 	case SL_SKE:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 			clif_skill_fail(sd,skillid,0,0);
 			break;
 		}
+
+		if (skillid == SL_SWOO && tsc && tsc->data[type].timer != -1) {
+			sc_start(src,SC_STUN,100,skilllv,10000);
+			break;
+		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
+		
+		if (skillid == SL_SKE)
+			sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 		break;
 		
 	// New guild skills [Celest]
