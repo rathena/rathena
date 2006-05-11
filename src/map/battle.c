@@ -3147,6 +3147,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			
 	wd = battle_calc_weapon_attack(src,target, 0, 0,0);
 
+	if (sd && sd->state.arrow_atk) //Consume arrow.
+		battle_consume_ammo(sd, 0, 0);
+	
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
 		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
@@ -4156,15 +4159,15 @@ void battle_set_defaults() {
 // eAthena additions
 	battle_config.item_rate_mvp=100;
 	battle_config.item_rate_common = 100;
-	battle_config.item_rate_common_boss = battle_config.item_rate_common;	// [Reddozen]
+	battle_config.item_rate_common_boss = 100;	// [Reddozen]
 	battle_config.item_rate_equip = 100;
-	battle_config.item_rate_equip_boss = battle_config.item_rate_equip;	// [Reddozen]
+	battle_config.item_rate_equip_boss = 100;	// [Reddozen]
 	battle_config.item_rate_card = 100;
-	battle_config.item_rate_card_boss = battle_config.item_rate_card;	// [Reddozen]
+	battle_config.item_rate_card_boss = 100;	// [Reddozen]
 	battle_config.item_rate_heal = 100;		// Added by Valaris
-	battle_config.item_rate_heal_boss = battle_config.item_rate_heal;	// [Reddozen]
+	battle_config.item_rate_heal_boss = 100;	// [Reddozen]
 	battle_config.item_rate_use = 100;		// End
-	battle_config.item_rate_use_boss = battle_config.item_rate_use;	// [Reddozen]
+	battle_config.item_rate_use_boss = 100;	// [Reddozen]
 	battle_config.item_rate_adddrop = 100;
 	battle_config.item_rate_treasure = 100;
 	battle_config.logarithmic_drops = 0;
