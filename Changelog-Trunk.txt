@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/11
+	* Fixed the definition of the KEY in the loginlog, thanks to TheUltraMage
+	  [Skotlex]
 	* NPC_POWERUP and NPC_AGIUP now cause a increase in hit/flee (respectively)
 	  of 40% per level. [Skotlex]
 	* Changed a bit the MAX_ZENY checks in trade.c to prevent overflows.
