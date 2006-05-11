@@ -289,7 +289,7 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	
 	if (x <= 0 || y <= 0) {
 		if (sd)
-			map_search_freecell(&sd->bl, 0, &x, &y, 1, 1, 0);
+			map_search_freecell(&sd->bl, m, &x, &y, 1, 1, 0);
 		else
 		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1))
 			return 0;	//Not solved?

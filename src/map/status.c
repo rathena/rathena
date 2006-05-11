@@ -206,6 +206,8 @@ void initChangeTables(void) {
 	set_sc(NPC_STOP,                SC_STOP,                SI_BLANK);
 	set_sc(NPC_BREAKWEAPON,         SC_BROKENWEAPON,        SI_BROKENWEAPON);
 	set_sc(NPC_BREAKARMOR,          SC_BROKENARMOR,         SI_BROKENARMOR);
+	set_sc(NPC_POWERUP,             SC_INCHITRATE,          SI_BLANK);
+	set_sc(NPC_AGIUP,               SC_INCFLEERATE,         SI_BLANK);
 	set_sc(NPC_INVISIBLE,           SC_CLOAKING,            SI_CLOAKING);
 	set_sc(LK_AURABLADE,            SC_AURABLADE,           SI_AURABLADE);
 	set_sc(LK_PARRYING,             SC_PARRYING,            SI_PARRYING);
