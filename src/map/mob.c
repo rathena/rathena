@@ -263,7 +263,8 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
-	int m, count, lv = 255;
+	int m, count, lv = 255, rand_flag=0;
+	
 	
 	if(sd) lv = sd->status.base_level;
 
@@ -287,20 +288,25 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	}
 	strncpy(data.eventname, event, 50);
 	
-	if (x <= 0 || y <= 0) {
-		if (sd)
-			map_search_freecell(&sd->bl, m, &x, &y, 1, 1, 0);
-		else
-		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1))
-			return 0;	//Not solved?
+	if (sd && (x < 0 || y < 0))
+	{	//Locate spot around player.
+		map_search_freecell(&sd->bl, m, &x, &y, 1, 1, 0);
+		data.x = x;
+		data.y = y;
 	}
-	data.x = x;
-	data.y = y;
+
+	if (x <= 0 || y <= 0 || map_getcell(m,x,y,CELL_CHKNOREACH))
+		rand_flag = 1; //Randomize spot on map for each mob.
 
 	if (!mob_parse_dataset(&data))
 		return 0;
 	
 	for (count = 0; count < amount; count++) {
+		if (rand_flag) { //Get a random cell for this mob.
+			map_search_freecell(NULL, m, &x, &y, -1, -1, 1);
+			data.x = x;
+			data.y = y;
+		}
 		md =mob_spawn_dataset (&data);
 
 		if (class_ < 0 && battle_config.dead_branch_active)

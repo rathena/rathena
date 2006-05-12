@@ -121,7 +121,7 @@ REPLACE INTO `item_db` VALUES (586,'Mother\'s_Cake','Mother\'s Cake','0',NULL,NU
 REPLACE INTO `item_db` VALUES (601,'Fly_Wing','Fly Wing','2','60',NULL,'50',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' warp "Random",0,0; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (602,'Butterfly_Wing','Butterfly Wing','2','300',NULL,'50',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' warp "SavePoint",0,0; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (603,'Old_Blue_Box','Old Blue Box','2','10000',NULL,'200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_BlueBox),1; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (604,'Dead_Branch','Dead Branch','2','50',NULL,'50',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",0,0,"--ja--",-1,1,""; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (604,'Dead_Branch','Dead Branch','2','50',NULL,'50',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",-1,-1,"--ja--",-1,1,""; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (605,'Anodyne','Anodyne','11','2000',NULL,'100',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' itemskill 8,1,"Endure"; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (606,'Aloevera','Aloevera','11','1500',NULL,'100',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' itemskill 6,1,"Provoke"; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (607,'Yggdrasil_Berry','Yggdrasil Berry','0','2',NULL,'300',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' percentheal 100,100; ',NULL,NULL);
@@ -2359,13 +2359,13 @@ REPLACE INTO `item_db` VALUES (12100,'Nine_Tail_Dish','Nine Tail Dish','0','1000
 REPLACE INTO `item_db` VALUES (12101,'Citron','Citron','0',NULL,'10','300',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12102,'Grilled_Skewer','Grilled Skewer','0',NULL,'10','300',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 -- // New Monster Summoners & Item Givers
-REPLACE INTO `item_db` VALUES (12103,'Bloody_Branch','Bloody Branch','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",0,0,"--ja--",-3,1,""; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12103,'Bloody_Branch','Bloody Branch','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",-1,-1,"--ja--",-3,1,""; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12104,'Random_Quiver','Random Quiver','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Quiver),1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12105,'Taming_Item_Giftset','Taming Item Giftset','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Taming),3; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12106,'Jewel_Box','Jewel Case','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Jewel),1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12107,'Wrapped_Mask','Wrapped Mask','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Mask),1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12108,'Bundle_of_Spells','Bundle of Spells','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Scroll),5; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12109,'Poring_Box','Poring Box','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",0,0,"--ja--",-2,1,""; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12109,'Poring_Box','Poring Box','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' monster "this",-1,-1,"--ja--",-2,1,""; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12110,'First_Aid_Box','First Aid Box','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Potion),5; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12111,'Wrapped_Food','Wrapped Food','2',NULL,'5000','200',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' getitem groupranditem(IG_Fruit),1; getitem groupranditem(IG_Meat),1; getitem groupranditem(IG_Fish),1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12112,'Tropical_Sograt','Tropical Sograt','0',NULL,'500','100',NULL,NULL,NULL,NULL,0xFFFFFFFF,'7','2',NULL,NULL,NULL,NULL,NULL,' sc_start SC_Curse,10000,1; ',NULL,NULL);

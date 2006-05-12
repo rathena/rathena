@@ -1621,8 +1621,8 @@ int skill_blown( struct block_list *src, struct block_list *target,int count)
 
 	nullpo_retr(0, src);
 
-	if (src != target && map_flag_gvg(target->m) && target->type != BL_SKILL)
-		return 0; //No knocking back in WoE, except for skills... because traps CAN be knocked back.
+	if (src != target && map_flag_gvg(target->m))
+		return 0; //No knocking back in WoE
 	if (!count&0xffff)
 		return 0; //Actual knockback distance is 0.
 	
@@ -5363,17 +5363,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 	case SL_SKA: // [marquis007]
 	case SL_SKE:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
+		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			clif_skill_fail(sd,skillid,0,0);
-		else
+			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
+		} else
 			clif_skill_nodamage(src,bl,skillid,skilllv,
 				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		
 		if (skillid == SL_SKE)
 			sc_start(src,SC_SMA,100,skilllv,skill_get_time(SL_SMA,skilllv));
 
-		//Regardless of who you target, caster gets stunned for 0.5 [Skotlex]
-		status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 		break;
 		
 	// New guild skills [Celest]
