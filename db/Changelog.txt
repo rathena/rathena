@@ -26,7 +26,9 @@
 	-----
 
 =========================
-
+05/12
+	* Updating drops to Aegis X.2 [Playtester]
+	- progress 30%
 05/11
 	* Moved TK_DOWNKICK's stun time from time to time2 [Skotlex]
 	* Added TK_TURNKICK's stun time in skill_cast_db (2secs in time2) [Skotlex]
