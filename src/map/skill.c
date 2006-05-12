@@ -1731,7 +1731,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	lv=(flag>>20)&0xf;
 	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xff );
 
-
 	//Skotlex: Adjusted to the new system
 	if(src->type==BL_PET && (struct pet_data *)src)
 	{ // [Valaris]
@@ -6446,7 +6445,6 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 	}
 
-	
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
 		skillid,skilllv,skill_get_unit_id(skillid,flag&1), limit, interval));
 	group->val1=val1;

@@ -5830,7 +5830,7 @@ int clif_party_join_info(struct party *p, struct map_session_data *sd)
 	WBUFL(buf,6)= 0; //Apparently setting this to 1 makes you adoptable.
 	WBUFW(buf,10)=sd->bl.x;
 	WBUFW(buf,12)=sd->bl.y;
-	WBUFB(buf,14)=0; //Uncomfirmed byte.
+	WBUFB(buf,14)=0; //Unconfirmed byte.
 	memcpy(WBUFP(buf,15), p->name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,63), mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);

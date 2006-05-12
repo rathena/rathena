@@ -7988,7 +7988,6 @@ int buildin_petloot(struct script_state *st)
 		pd->loot = (struct pet_loot *)aMalloc(sizeof(struct pet_loot));
 
 	pd->loot->item = (struct item *)aCalloc(max,sizeof(struct item));
-	//memset(pd->loot->item,0,max * sizeof(struct item));
 	
 	pd->loot->max=max;
 	pd->loot->count = 0;

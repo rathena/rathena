@@ -1952,9 +1952,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
 //			if (10000 < rand()%10000+drop_rate) { //May be better if MAX_RAND is too low?
-			if (drop_rate < rand() % 10000 + 1) { //fixed 0.01% impossible drops bug [Lupus]
+			if (drop_rate < rand() % 10000 + 1) //fixed 0.01% impossible drops bug [Lupus]
 				continue;
-			}
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 
@@ -3289,7 +3288,7 @@ static int mob_readdb(void)
 			}
 
 			if (mob_db_data[class_]->max_hp <= 0) {
-				ShowWarning ("Mob %d (%s) has no HP, using poring data for it\n", class_, mob_db_data[class_]->name);
+				ShowWarning ("Mob %d (%s) has no HP, using poring data for it\n", class_, mob_db_data[class_]->sprite);
 				mob_makedummymobdb(class_);
 			}
 		}

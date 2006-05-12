@@ -3871,7 +3871,6 @@ static const struct battle_data_short {
 	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
 	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 	{ "override_mob_names", 				&battle_config.override_mob_names },
-
 };
 
 static const struct battle_data_int {
