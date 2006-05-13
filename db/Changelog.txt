@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/13
+	* Fixed Medusa drops and updated Treasure Box drops [Playtester]
 05/12
 	* Updated cast times of Kaupe and Kaahi. [Skotlex]
 	* SMA has dex reducable casttime now. [Skotlex]
