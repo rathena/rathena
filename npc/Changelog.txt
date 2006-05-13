@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 05/13
+	* Fixed the new shops [Playtester]
 	* Added missing shops at Beacon Island [Playtester]
 05/12
 	* Added DTS (Dungeon Teleport System) Warper NPC [Evera]
