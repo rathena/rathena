@@ -913,12 +913,12 @@ function	script	F_DTS_Warp	{
 	Lteleenabled: 							//Shows DTS tele selections
 	switch(getarg(0)){
 	case 0:
-		mes "[Cool Event Corp. Voting Staff]"; 			//Unofficial Text
-		mes "Thank you for selecting Cool";
-		mes "Event Corp. for the Dungeon";
-		mes "Teleport Service in the";
-		mes "election. Where would you";
-		mes "like to go today?"; 				//End unofficial text
+		mes "[Cool Event Corp. Voting Staff]";
+		mes "Please remember that we";
+		mes "cannot accept Free Warp Tickets";
+		mes "or award Special Reserve Points";
+		mes "for this service. Now, please";
+		mes "choose your destination.";
 		setarray @dtswarpmap$[0],"Bailand, Level 4","Clock Tower, Basement 3";
 		setarray @dtswarp$[0],@dtswarpmap$[0]+" -> 4,000z",
 		@dtswarpmap$[1]+" -> 4,000z","Cancel";
