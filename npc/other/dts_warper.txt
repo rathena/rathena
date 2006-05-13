@@ -1,0 +1,1079 @@
+//===== eAthena Script ======================================= 
+//= Dungeon Teleport Service (Cool Event Corp and Kafra Corp competition)
+//===== By: ================================================== 
+//= Evera
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: =========================================
+//= All-included file of Cool Event Corp NPCs with Kafra voting system.
+//= Kafra DTS voting system must be implemented in Kafra to use!
+//===== Variables: ===========================================
+//=Server - 	$dtscool 		= # of votes for Cool Corp
+//=		$dtskafra 		= # of votes for Kafra
+//=		$dtsstatus 		= Status for DTS 0, election; 1, Cool Corp enabled, won last; 2, Kafra enabled, won last;
+//=					= 3, Cool corp enabled, lost last; 4, Kafra enabled, lost last.
+//=		$dtslast		= Last election results, same legend as above
+//=		$dtsglobalelig		= 0 for normal eligibility system, 1 for eligibility for everyone
+//=					= Set through GM-eligibility fixing
+//=		$dtsgivevote_(id)	= Gives 'charname' voting rights next time they talk to a NPC in this script
+//=					= Given through GM vote-give thing. 0 for normal, 1 for voting rights.
+//=Character -	dtseligible 		= eligibility status, 0 not eligible, 1 eligible, 2 eligible & voted, 3 tried for elig.
+//=					= (By default, 1/4 chance of being able to vote. set to 1 after having random selection;
+//=					= not used if $dtsglobalelig == 1) 
+//=NPC Func. -	arg(0) 			= 0, Cool Event Corp Voting Staff; 1, Kafra Corp Voting Staff
+//=		arg(1)			= Kafra only, Cool Corp script does not use. Changes illus for different sprites.
+//=					= 0 = 4_f_kafra6 (yellow ponytail, classic outfit, spr 112)
+//=					= 1 = 4_f_kafra5 (pink hair, classic outfit, spr 113)
+//=					= 2 = 4_f_kafra4 (orange short hair, classic outfit, spr 114)
+//=					= 3 = 4_f_kafra3 (brown bangs, classic outfit, spr 115)
+//=					= 4 = 4_f_kafra2 (brown ponytale, classic outfit, spr 116)
+//=					= 5 = 4_f_kafra1 (blue hair, classic outfit, spr 117)
+//=					= 6 = 4_f_agentkafra (purp hair, black outfit, spr 859)
+//=					= 7 = 4_f_kafra8 (blue hair, brown outfit, spr 860)
+//=					= 8 = 4_f_kafra9 (red hair, brown outfit, spr 861)
+//=Temporary - 	@dtstemp		= Temporary buffer, used in GM vote-fixing
+//=		@dtstemps$		= Temporary buffer, like above, but a string.
+//=		$@dtstempg		= Temporary buffer, but global
+//===== Additional Comments: ================================= 
+//= Some unofficial translations, need Dungeon maps/coords/prices
+//= Also includes unofficial GM-enabled tweaking for script
+//= Includes NPCs in Cool Event Corp headquarters
+//= Also known as Zondaman in other languages
+//= Pretty sure there are more locations I didn't find.
+//= Uses random (1/4) chance of being eligible to vote. Real quest is that you can vote after doing
+//= President's Quest, which isn't yet released.
+//===== Version History: ====================================
+//= 1.2 Mushed some variables together, optimized a bit
+//= 1.1	SVN release, removed from major town (found true info after research),
+//=	put more arg(2) parameters, fixed a few bugs [Evera] (5/11/06)
+//= 1.0	Initial release [Evera] (5/10/06)
+//============================================================ 
+
+//Yuno
+yuno.gat,153,191,4	script	Cool Event Voting Staff	874,{
+	callfunc "F_DTS_Warp",0,0;
+}
+yuno.gat,162,191,6	script	Kafra Voting Staff	861,{
+	callfunc "F_DTS_Warp",1,8;
+}
+//Lighthalzen
+lighthalzen.gat,154,60,6	script	Cool Event Voting Staff	874,{
+	callfunc "F_DTS_Warp",0,0;
+}
+//Prontera
+prontera.gat,147,125,4	script	Cool Event Voting	874,{
+	callfunc "F_DTS_Warp",0,0;
+}
+prontera.gat,164,125,6	script	Kafra Voting Staff	115,{
+	callfunc "F_DTS_Warp",1,3;
+}
+
+//Cool Event Staff Headquarters NPCs
+//Kudiuu (Maintenance Guy)
+lhz_in02.gat,20,274,6	script	Maintenance Guy	851,{
+	mes "[Kudiuu]";
+	mes "Holy...!";
+	mes "Will this place";
+	mes "ever get cleaned up?!";
+	mes "*Cough cough* There's";
+	mes "so much dust here, it's";
+	mes "almost a health hazard!";
+	close;
+}
+//Cesuna (Zondaman at desk)
+lhz_in02.gat,36,284,1	script	Cool Event Staff	874,{
+	mes "[Cesuna]";
+	mes "Ack! I'm totally";
+	mes "swamped with all this";
+	mes "work! But I don't wannna";
+	mes "do any of it. That's it!";
+	mes "I totally need a break";
+	next;
+	mes "[Cesuna]";
+	mes "*Sigh...*";
+	mes "I wonder if Saera";
+	mes "would ever consider";
+	mes "going out with me?";
+	mes "That would be nice~";
+	close;
+}
+//Jellarin (Event planner)
+lhz_in02.gat,40,279,3	script	Event Planner	833,{
+	mes "[Jellarin]";
+	mes "I don't like this.";
+	mes "But I don't like that";
+	mes "idea either. What will";
+	mes "I do for a new event, eh?";
+	next;
+	mes "[Jellarin]";
+	mes "I need something";
+	mes "major, something that'll";
+	mes "really shake up the world,";
+	mes "something epochal, but what?";
+	mes "Hey, do you have any ideas";
+	close;
+}
+//Baoto (Cool Event Manager)
+lhz_in02.gat,110,283,5	script	Cool Event Manager	853,{
+	mes "[Baoto]";
+	mes "Hmmm...";
+	mes "The employees seem";
+	mes "to be having too much";
+	mes "fun amongst themselves";
+	mes "recently. This does not";
+	mes "bode well at all...";
+	next;
+	mes "[Baoto]";
+	mes "It looks like I'm";
+	mes "just going to have to";
+	mes "start cracking that whip";
+	mes "more often and much";
+	mes "harder. Ha ha ha ha!";
+	close;
+}
+//Saera (Secretary), contains GM menu
+lhz_in02.gat,36,274,3	script	Cool Event Staff	831,{
+	if(getd("$dtsgivevote_"+getcharid(0)) == 1){			//Check to see if GM enabled eligibility
+		set dtseligible,1;
+		setd "$dtsgivevote_"+getcharid(0),0;
+	}
+	mes "[Saera]";
+	mes "Welcome to the";
+	mes "temporary headquarters";
+	mes "of Cool Event Corporation";
+	mes "How may I help you today?";
+	next;
+	if(getgmlevel()>60){ 						//Unofficial Text, GM-configurable settings for Event (GM level above 60 required)
+		mes "Why, I didn't even";
+		mes "notice you there,";
+		mes strcharinfo(0)+". What would";
+		mes "you like to do today?";
+		next;
+		menu "Fix Vote",Lfixvote,"Set current teleporter",Lsettele,
+		"Set last election winner",Lsetlast,
+		"Set eligiblity for players",Lseteligibility,
+		"Manually run vote check",Lmanuvotecheck,
+		"Change day to check votes",Lchangeday,
+		"Temporary headquarters?",Ltemphead,			//Normal NPC menu
+		"Voting",Lvoting,
+		"No, thanks.",Lnothx;
+	}
+	menu "Temporary headquarters?",Ltemphead,
+	"Voting",Lvoting,"No, thanks.",Lnothx;
+
+	Ltemphead:
+		mes "[Saera]";
+		mes "Our headquarters building";
+		mes "is currently undergoing";
+		mes "reconstruction, so we are";
+		mes "basing our operations in";
+		mes "this place for the meantime";
+		close;
+
+	Lvoting:
+		mes "[Saera]";
+		mes "Currently, Kafra Corporation";
+		mes "and Cool Event Corp are working";
+		mes "on a collaborative program that";
+		mes "will provide direct teleport";
+		mes "services to dungeons.";
+		next;
+		mes "[Saera]";
+		mes "Due to technical issues,";
+		mes "both companies cannot provide";
+		mes "teleport services to the same";
+		mes "dungeon. Therefore, we will be";
+		mes "selecting our valued customers";
+		mes "to choose the company they want.";
+		next;
+		if($dtsglobalelig == 1){				//Check for global elig
+			mes "[Saera]";					//Unofficial text
+			mes "Global eligiblity is enabled.";
+			mes "Please vote at the nearest";
+			mes "Voting Staff, please.";			//End unofficial text
+			close;
+		}
+		switch(dtseligible){
+			case 0:
+				set @randapply,rand(3);			//Gives random(1/4) chance of being eligible
+				switch(@randapply){			//Unofficial, until President's quest is completed
+				case 0:
+				case 1:
+				case 2:
+					mes "[Saera]";
+					mes "Only a limited number of";
+					mes "voters will be chosen, so";
+					mes "you can check your voting";
+					mes "eligibility at the headquarters";
+					mes "of both participating companies.";
+					mes "Thank you for your patronage~";
+					set dtseligible,3;
+					close;
+					break;
+				case 3:
+					set dtseligible,1;
+					break;
+				default: break;
+				}
+			case 1:
+				mes "[Saera]";
+				mes "It appears that you are";
+				mes "eligible to vote";
+				mes "so please cast your";
+				mes "vote at any Voting Staff";
+				mes "representative. Thank you~";
+				close;
+				break;
+			case 2:
+				mes "[Saera]";
+				mes "You are eligible to vote, but";
+				mes "you have already voted. Thank";
+				mes "you for your participation";
+				close;
+				break;
+			case 3:
+			default:
+				mes "[Saera]";
+				mes "Only a limited number of";
+				mes "voters will be chosen, so";
+				mes "you can check your voting";
+				mes "eligibility at the headquarters";
+				mes "of both participating companies.";
+				mes "Thank you for your patronage~";
+				close;
+				break;
+		}
+
+	Lnothx:
+		mes "[Saera]";
+		mes "Thank you.";
+		mes "Have a good day.";
+		close;
+									//GM options start
+	Lfixvote:							//Fix Vote
+		mes "[Saera]";
+		mes "Umm, sure..";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		mes "Which one would you like to change?";
+		next;
+		menu "Kafra",Lfixkafra,"Cool Event Corp",Lfixcool;
+
+	Lfixkafra:
+		mes "[Saera]";
+		mes "Let me find the papers...";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		mes "Please input new vote for Kafra";
+		input @dtstemp;					//Set buffer for Kafra vote
+		next;
+		mes "[Saera]";
+		mes "You inputted "+@dtstemp+" for Kafra";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		mes "Are you sure you would like to";
+		mes "make these changes?";
+		next;
+		menu "Yes",Lfixkafray,"No",Lnothx;			//Confirmation
+
+	Lfixkafray:
+		set $dtskafra,@dtstemp;				//Set buffer to Kafra vote
+		mes "[Saera]";
+		mes "Okay, you fixed the vote";
+		mes "of Kafra Corp.";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		close;
+
+	Lfixcool:
+		mes "[Saera]";
+		mes "Let me find the papers...";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		mes "Please input new vote for Cool Event Corp";
+		input @dtstemp;					//Set buffer for Cool vote
+		next;
+		mes "[Saera]";
+		mes "You inputted "+@dtstemp+" for Cool Event Corp";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		mes "Are you sure you would like to";
+		mes "make these changes?";
+		next;
+		menu "Yes",Lfixcooly,"No",Lnothx;			//Confirmaiton
+
+	Lfixcooly:
+		set $dtscool,@dtstemp;				//Set buffer to Cool vote
+		mes "[Saera]";
+		mes "Okay, you fixed the vote";
+		mes "of Cool Event Corp.";
+		mes "Current Kafra vote: "+$dtskafra;
+		mes "Current Cool Event Corp vote: "+$dtscool;
+		close;
+
+	Lsettele:							//Set current DTS tele
+		mes "[Saera]";
+		mes "Type Kafra for Kafra-enabled warp,";
+		mes "Cool for Cool Event Corp-enabled";
+		mes "warp ,Election for election mode,";
+		mes "or Cancel to cancel.";
+		switch($dtsstatus){
+			case 0: mes "The election is currently in election mode"; break;
+			case 3:
+			case 5:
+			case 1: mes "Cool Event Corp is currently the DTS warper."; break;
+			case 4:
+			case 6:
+			case 2: mes "Kafra Corp is currently the DTS warper."; break;
+			default: break;
+		}
+		next;
+		input @dtstemps$;
+		mes "Let me find the papers...";
+		next;
+		if(@dtstemps$ == "Election" || @dtstemps$ == "election"){
+			set $dtsstatus,0;
+			mes "[Saera]";
+			mes "Set to election mode.";
+			close;
+		}
+		if(@dtstemps$ == "Cool" || @dtstemps$ == "cool"){
+			switch($dtstatus){
+				case 2:
+				case 4:
+				case 6:
+					set $dtsstatus,3;
+					break;
+				case 3:
+				case 5:
+					set $dtsstatus,1;
+					break;
+				default: break;
+			}
+			mes "[Saera]";
+			mes "Cool Event Corp. is now the DTS warper.";
+			close;
+		}
+		if(@dtstemps$ == "Kafra" || @dtstemps$ == "kafra"){
+			switch($dtsstatus){
+				case 1:
+				case 3:
+				case 5:
+					set $dtsstatus,4;
+					break;
+				case 4:
+				case 6:
+					set $dtsstatus,2;
+					break;
+				default: break;
+			}
+			mes "[Saera]";
+			mes "Kafra Corp. is now the DTS warper.";
+			close;
+		}
+		if(@dtstemps$ == "Cancel" || @dtstemps$ == "cancel") goto Lnothx;
+		mes "[Saera]";
+		mes "Please input a correct name";
+		mes "for the election";
+		next;
+		goto Lsettele;
+
+	Lsetlast:							//Set last winner
+		mes "[Saera]";
+		mes "Type Kafra for election records to show Kafra,";
+		mes "Cool for Cool for election records to show Cool Event Corp,";
+		mes "None for no winner in election records,";
+		mes "or Cancel to cancel.";
+		switch($dtsstatus){
+			case 5:
+			case 6:
+			case 0: mes "There was no previous winner"; break;
+			case 1:
+			case 4: mes "Cool Event Corp was the last winner"; break;
+			case 3:
+			case 2: mes "Kafra Corp was the last winner"; break;
+			default: break;
+		}
+		next;
+		input @dtstemps$;
+		mes "[Saera]";
+		mes "Let me find the papers...";
+		next;
+		if(@dtstemps$ == "None" || @dtstemps$ == "none"){
+			switch($dtsstatus){
+				case 1:
+				case 3:
+					set $dtsstatus,5;
+					break;
+				case 2:
+				case 4:
+					set $dtsstatus,6;
+					break;
+				default: break;
+			}
+			mes "[Saera]";
+			mes "Set records to show no previous winner.";
+			close;
+		}
+		if(@dtstemps$ == "Cool" || @dtstemps$ == "cool"){
+			switch($dtsstatus){
+				case 2:
+				case 6:
+					set $dtsstatus,4;
+					break;
+				case 3:
+				case 5:
+					set $dtsstatus,1;
+					break;
+				default: break;
+			}
+			mes "[Saera]";
+			mes "Cool Event Corp. is now the previous winner.";
+			close;
+		}
+		if(@dtstemps$ == "Kafra" || @dtstemps$ == "kafra"){
+			switch($dtsstatus){
+				case 1:
+				case 5:
+					set $dtsstatus,3;
+					break;
+				case 4:
+				case 6:
+					set $dtsstatus,2;
+				default: break;
+			}
+			mes "[Saera]";
+			mes "Kafra Corp. is now the previous winner.";
+			close;
+		}
+		if(@dtstemps$ == "Cancel" || @dtstemps$ == "cancel") goto Lnothx;
+		mes "[Saera]";
+		mes "Please input a correct name";
+		mes "for previous winner";
+		next;
+		goto Lsetlast;
+
+	Lseteligibility:						//Set player eligibility
+		mes "[Saera]";
+		mes "Input the name of the character";
+		mes "you wish to give voting rights.";
+		mes "If the character voted, this will";
+		mes "also clear their vote";
+		switch($dtsglobalelig){ 
+			case 0: mes "Type All to give everyone voting rights."; break;
+			case 1: mes "Type Removeall to remove global voting rights"; break;
+			default: mes "Type All to give everyone voting rights."; break;
+		}
+		next;
+		input @seteligibility$;
+		mes "[Saera]";
+		mes "Let me find the papers...";
+		next;
+		if(@seteligibility$ == "All" || @seteligibility$ == "all") set $dtsglobalelig,1;
+		if(@seteligibility$ == "Removeall" && @seteligibility$ == "removeall") set $dtsglobalelig,0;
+		if(@seteligibility$ != "All" && @seteligibility$ != "all") setd "$dtsgivevote_"+getcharid(0,@seteligibility$),1;
+		mes "[Saera]";
+		mes "Eligibility options set.";
+		mes "Would you like to set the eligiblity options on another character?";
+		next;
+		menu "Yes",Lseteligibility,"No",Lnothx;
+
+	Lmanuvotecheck:
+		mes "[Saera]";
+		mes "Are you sure you would like to run";
+		mes "the vote check again?";
+		next;
+		menu "Yes",Lmanuvoteyes,"No",Lnothx;
+
+	Lmanuvoteyes:
+		if($dtscool == $dtskafra){
+			set $@dtstemp,rand(1,2);
+			if($@dtstemp == 1) set $dtscool,$dtscool+100;
+			else set $dtskafra,$dtskafra+100;
+		}
+		if($dtscool > $dtskafra){
+			switch($dtsstatus){
+				case 3:
+				case 5:
+					set $dtsstatus,1;
+					break;
+				case 2:
+				case 4:
+				case 6:
+					set $dtsstatus,3;
+					break;
+				default: break;
+			}
+			set $dtscool,0;
+			set $dtskafra,0;
+		}
+		else{
+			switch($dtsstatus){
+				case 1:
+				case 3:
+				case 5:
+					set $dtsstatus,4;
+					break;
+				case 4:
+				case 6:
+					set $dtsstatus,2;
+					break;
+				default: break;
+			}
+			set $dtscool,0;
+			set $dtskafra,0;
+		}
+		mes "[Saera]";
+		mes "Vote check run again.";
+		switch($dtsstatus){
+			case 0: mes "The election is currently in election mode"; break;
+			case 3:
+			case 5:
+			case 1: mes "Cool Event Corp is currently the DTS warper."; break;
+			case 4:
+			case 6:
+			case 2: mes "Kafra Corp is currently the DTS warper."; break;
+			default: break;
+		}
+		close;
+
+	Lchangeday:
+		mes "[Saera]";
+		mes "Okay, please input the";
+		mes "day you would like to change";
+		mes "the vote-checking to.";
+		mes "Please type Mon-Sun, or type out the";
+		mes "entire day. Thank you~";
+		next;
+		mes "[Saera]";
+		mes "Let me find the papers...";
+		input @dtschangeday$;
+		next;
+		mes "[Saera]";
+		mes "You requested the vote day";
+		if(@dtschangeday$ == "Mon" || @dtschangeday$ == "mon" || 
+		@dtschangeday$ == "Monday" || @dtschangeday$ == "monday"){
+		mes "to be changed to Monday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Tue" || @dtschangeday$ == "tue" || 
+		@dtschangeday$ == "Tuesday" || @dtschangeday$ == "tuesday"){
+		mes "to be changed to Tuesday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Wed" || @dtschangeday$ == "wed" || 
+		@dtschangeday$ == "Wednesday" || @dtschangeday$ == "wednesday"){
+		mes "to be changed to Wednesday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Thu" || @dtschangeday$ == "thu" || 
+		@dtschangeday$ == "Thursday" || @dtschangeday$ == "thursday"){
+		mes "to be changed to Thursday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Fri" || @dtschangeday$ == "fri" || 
+		@dtschangeday$ == "Friday" || @dtschangeday$ == "friday"){
+		mes "to be changed to Friday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Sat" || @dtschangeday$ == "sat" || 
+		@dtschangeday$ == "Saturday" || @dtschangeday$ == "saturday"){
+		mes "to be changed to Saturday.";
+		goto Ldayconfirm;
+		}
+		if(@dtschangeday$ == "Sun" || @dtschangeday$ == "sun" || 
+		@dtschangeday$ == "Sunday" || @dtschangeday$ == "sunday"){
+		mes "to be changed to Sunday.";
+		goto Ldayconfirm;
+		}
+		mes ", but you specified an invalid";
+		mes "day. What action would you like";
+		mes "to take?";
+		next;
+		menu "Re-input day",Lchangeday,"Cancel",Lnothx;
+
+	Ldayconfirm:
+		mes "Are you sure you would like to";
+		mes "change the check to this day?";
+		next;
+		menu "Yes",Ldayset,"No",Lnothx,"Input another day",Lchangeday;
+
+	Ldayset:
+		if(@dtschangeday$ == "Mon" || @dtschangeday$ == "mon" || 
+		@dtschangeday$ == "Monday" || @dtschangeday$ == "monday")
+		set $dtsday,1;
+		if(@dtschangeday$ == "Tue" || @dtschangeday$ == "tue" || 
+		@dtschangeday$ == "Tuesday" || @dtschangeday$ == "tuesday")
+		set $dtsday,2;
+		if(@dtschangeday$ == "Wed" || @dtschangeday$ == "wed" || 
+		@dtschangeday$ == "Wednesday" || @dtschangeday$ == "wednesday")
+		set $dtsday,3;
+		if(@dtschangeday$ == "Thu" || @dtschangeday$ == "thu" || 
+		@dtschangeday$ == "Thursday" || @dtschangeday$ == "thursday")
+		set $dtsday,4;
+		if(@dtschangeday$ == "Fri" || @dtschangeday$ == "fri" || 
+		@dtschangeday$ == "Friday" || @dtschangeday$ == "friday")
+		set $dtsday,5;
+		if(@dtschangeday$ == "Sat" || @dtschangeday$ == "sat" || 
+		@dtschangeday$ == "Saturday" || @dtschangeday$ == "saturday")
+		set $dtsday,6;
+		if(@dtschangeday$ == "Sun" || @dtschangeday$ == "sun" || 
+		@dtschangeday$ == "Sunday" || @dtschangeday$ == "sunday")
+		set $dtsday,0;
+		mes "[Saera]";
+		mes "Successfully changed the day.";
+		close;
+}
+
+//Function for Voting Staff NPC
+function	script	F_DTS_Warp	{
+	if(dtseligible == 0){						//Gives random(1/4) chance of being eligible
+		set @randapply,rand(4);
+		if(@randapply == 0) set dtseligible,1;
+	}
+	if(getd("$dtsgivevote_"+getcharid(0)) == 1){			//Check to see if GM enabled eligibility
+		set dtseligible,1;
+		setd "$dtsgivevote_"+getcharid(0),0;
+	}
+	switch(getarg(0)){
+	case 0:
+		cutin "zonda_01",2;
+		mes "[Cool Event Corp. Voting Staff]";
+		mes "Hello! Don't forget to make";
+		mes "your voice be heard and make";
+		mes "sure you vote in the elections";
+		mes "between Cool Event Corp. and";
+		mes "Kafra Corporation for control of";
+		mes "the Dungeon Teleport Service!";
+		break;
+	case 1:
+		switch(getarg(1)){
+		case 0: cutin "kafra_06",2; break;			//Finding arguments to find which illust to use
+		case 1: cutin "kafra_05",2; break;			//Used Red hair "kafra_09" for black outfit kafra
+		case 2: cutin "kafra_04",2; break;			//because I couldn't find a suitable illust
+		case 3: cutin "kafra_03",2; break;
+		case 4: cutin "kafra_02",2; break;
+		case 5: cutin "kafra_01",2; break;
+		case 6: cutin "kafra_09",2; break;
+		case 7: cutin "kafra_08",2; break;
+		case 8: cutin "kafra_09",2; break;
+		default: cutin "kafra_09",2; break;
+		}
+		mes "[Kafra Voting Staff]";
+		mes "Greetings, adventurer.";
+		mes "As you may be aware, we";
+		mes "are holding an election to";
+		mes "provide the Dungeon Teleport";
+		mes "Service. How may I help you?";
+		break;
+	}
+	next;
+	menu "Reason for Election",Lelection,"Cast a Vote",Lvote,
+	"Use Teleport Service",Lteleport,"Cancel",Lcancel;
+
+	Lelection: 							//Reason for election explanation
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "Cool Event Corp. has been";
+			mes "planning to provide a new";
+			mes "Dungeon Teleport Service to";	
+			mes "its customers, a service not";
+			mes "already provided by the Kafra";
+			mes "Corporation. However...";
+			next;
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "Kafra Corporation, which";
+			mes "already monopolizes the";
+			mes "public teleportation market,";
+			mes "actually also had plans to";
+			mes "provide a similar service.";
+			next;
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "Because of technological";
+			mes "limitations, only one company";
+			mes "can be chosen as the provider";
+			mes "of this Dungeon Teleport Service.";
+			mes "Hence, we will let the customers";
+			mes "decide through these elections.";
+			next;
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "Multiple elections will be";
+			mes "held so that our customers";
+			mes "can test out the special services";
+			mes "of each company for themselves.";
+			mes "However, keep in mind that you";
+			mes "must be eligible in order to vote.";
+			next;
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "For voter eligibility";
+			mes "details, please visit our";
+			mes "headquarters in the city of";
+			mes "Lighthalzen located in the";
+			mes "Schwaltzvalt Republic.";
+			mes "Thank you for your time.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "Cool Event Corp and the";
+			mes "Kafra Corporation have both";
+			mes "been planning to provide a";
+			mes "Teleport Service to dungeons.";
+			next;
+			mes "[Kafra Voting Staff]";
+			mes "But due to technological";
+			mes "limitations, only one company";
+			mes "can serve as provider for this";
+			mes "Dungeon Teleport Service at a";
+			mes "time. There, both companies have";
+			mes "agreed to hold special elections";
+			next;
+			mes "[Kafra Voting Staff]";
+			mes "Each company has its own";
+			mes "policies and guarantees in";
+			mes "regards to the Dungeon Teleport";
+			mes "Service, and in this election, the";
+			mes "customers will ultimately decide";
+			mes "and choose what's best for them.";
+			next;
+			mes "[Kafra Voting Staff]";
+			mes "For now, the Dungeon";
+			mes "Teleport Service will be";
+			mes "provided in a series of trial";
+			mes "periods. This way, customers can";
+			mes "see the benefits of both companies";
+			mes "before making the final decision";
+			next;
+			mes "[Kafra Voting Staff]";
+			mes "If you are qualified,";
+			mes "please vote in each election";
+			mes "to decide which company will";
+			mes "provide the Dungeon Teleport";
+			mes "Service for the next trial period.";
+			mes "Thank you for your support~";
+			break;
+		}
+		goto Lend;
+
+	Lvote: //If you clicked you wanted to vote
+		if(dtseligible == 1) goto Leligible; 			//Var check if eligible
+		if($dtsglobalelig == 1) goto Leligible;			//Var check for global elig.
+		goto Lnoteligible;
+
+	Lnoteligible: 							//Text displayed if wanted to vote, but not eligible/voted
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "I'm sorry, but you are not";
+			mes "eligible to vote at this time.";
+			mes "Please visit our headquarters";
+			mes "in Lighthalzen for information";
+			mes "related to acquiring voting";
+			mes "rights. Thank you for your time.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "Oh, I'm so sorry, but you";
+			mes "are currently not qualified to";
+			mes "vote. For voting qualification";
+			mes "information, please visit the";
+			mes "Al De Baran Kafra Headquarters.";
+			mes "Thank you and have a nice day.";
+			break;
+		}
+		goto Lend;
+
+	Leligible: 							//Text displayed if eligible to vote
+		if(dtseligible == 3 && $dtsglobalelig == 0 || dtseligible == 2) goto Lnoteligible;//Var check if voted
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]"; 		//Unofficial text
+			mes "Checking your credentials, you";
+			mes "are able to vote for the";
+			mes "Dungeon Teleport Service";
+			mes "elections. Who would you like";
+			mes "to vote for?";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "It appears that you qualify";
+			mes "to vote for the Dungeon";
+			mes "Teleport Service elections.";
+			mes "Who would you like to vote for";		//End Unofficial text
+			break;
+		}
+		next;
+		menu "Cool Event Corp.",Lvotecool,"Kafra Corp.",Lvotekafra;
+	
+	Lvotecool:
+		set $dtscool,$dtscool+1;				//Adds 1 to $dtscool count
+		set dtseligible,2;						//Sets var so that you can't vote over and over
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "Thank you for voting for us.";
+			mes "Your vote has been counted,";
+			mes "and we appreciate your input";
+			mes "Thank you and have a good day.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "We thank you for your vote.";
+			mes "Your opinion matters very much";
+			mes "and has been counted for Cool";
+			mes "Event Corp.";
+			break;
+		}
+		goto Lend;
+
+	Lvotekafra:
+		setd $dtskafra,$dtskafra+1; 				//Adds 1 to $dtskafra count
+		set dtseligible,2; 					//Sets var to prevent cheating
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";		//Unofficial Text
+			mes "Thank you for your opinion.";
+			mes "Your vote for Kafra corp.";
+			mes "has been counted. Thank";
+			mes "you and have a good day.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "Your vote for us has been";
+			mes "counted. We thank you very";
+			mes "much for your input, and";
+			mes "we hope that we meet your";
+			mes "adventuring needs and";
+			mes "standards of excellence.";
+			break;
+		}
+		goto Lend;						//End Unofficial text
+
+	Lteleport: 							//Selected Teleport
+		switch(getarg(0)){
+		case 0:
+			switch($dtsstatus){
+				case 0: goto Lteleelect; break;		//Check if it's time to elect
+				case 3:
+				case 5:
+				case 1: goto Lteleenabled; break;	//Check if Cool is enabled to DTS
+				default: break;
+			}
+			mes "[Cool Event Corp. Voting Staff]";		//Text if Kafra won DTS elect.
+			mes "I'm sorry, but Cool Event";
+			mes "Corp. does not currently offer";
+			mes "the Dungeon Teleport Service";
+			mes "due to the results of the last";
+			mes "election. Please vote for us";
+			mes "next time, alright? Good day~";
+			break;
+		case 1:
+			switch($dtsstatus){
+				case 0: goto Lteleelect; break;		//Check if it's time to elect
+				case 4:
+				case 6:
+				case 2: goto Lteleenabled; break; 	//Check if Kafra is enabled to DTS
+				default: break;
+			}
+			mes "[Kafra Voting Staff]";
+			mes "We're sorry, but Kafra Corp";
+			mes "doesn't currently offer the";
+			mes "Dungeon Teleport System due";
+			mes "to last election's results,";
+			mes "Please vote for Kafra Corp";
+			mes "next time~";
+			break;
+		}
+		goto Lend;
+
+	Lteleelect: 							//During elections, displayed if asking for tele
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";
+			mes "I'm sorry, but the";
+			mes "Dungeon Teleport Service is";
+			mes "unavailable during elections";
+			mes "and will be reactivated after the";
+			mes "election results are announced.";
+			mes "Thank you and have a nice day.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "Sorry, but the elections for";
+			mes "which Dungeon Teleport System";
+			mes "to use is currently going on";
+			mes "right now. We are unable to";
+			mes "vote until results are announced";
+			break;
+		}
+		goto Lend;
+
+	Lteleenabled: 							//Shows DTS tele selections
+	switch(getarg(0)){
+	case 0:
+		mes "[Cool Event Corp. Voting Staff]"; 			//Unofficial Text
+		mes "Thank you for selecting Cool";
+		mes "Event Corp. for the Dungeon";
+		mes "Teleport Service in the";
+		mes "election. Where would you";
+		mes "like to go today?"; 				//End unofficial text
+		setarray @dtswarpmap$[0],"Bailand, Level 4","Clock Tower, Basement 3";
+		setarray @dtswarp$[0],@dtswarpmap$[0]+" -> 4,000z",
+		@dtswarpmap$[1]+" -> 4,000z","Cancel";
+		if($dtsstatus == 2){ 
+			set @dtswarpmap$[2],"Glastheim Entrance";
+			setarray @dtswarp[2],@dtswarpmap[2]+" -> 4,000z","Cancel";
+		}
+		break;
+	case 1:
+		mes "[Kafra Voting Staff]";
+		mes "Thank you for choosing the";
+		mes "Dungeon Teleport Service";
+		mes "Please keep in mind that the";
+		mes "Free Warp Tickets and Kafra";
+		mes "Special Reserve Points do not";
+		mes "apply in this special service.";
+		setarray @dtswarpmap$[0],"Toy Factory, Level 2","Clock Tower, Level 3";
+		setarray @dtswarp$[0],@dtswarpmap$[0]+" -> 4,000z",
+		@dtswarpmap$[1]+" -> 4,000z","Cancel";
+		if($dtsstatus == 1){ 
+			set @dtswarpmap$[2],"Lava Dungeon, Level 2";
+			setarray @dtswarp$[2],@dtswarpmap$[2]+" -> 4,000z","Cancel";
+		}
+		break;
+	}
+	next;
+	menu @dtswarp$[0],Ldtswarp0,@dtswarp$[1],		//Array set above
+	Ldtswarp1,@dtswarp$[2],Ldtswarp2;
+
+	Ldtswarp0:
+		set @num, 0;
+		goto Lwarp;
+
+	Ldtswarp1:
+		set @num, 1;
+		goto Lwarp;
+
+	Ldtswarp2:
+		set @num, 2;
+		goto Lwarp;
+
+	Lwarp:
+		if (@dtswarp$[@num] == "Cancel") goto Lcancel;
+		if (Zeny<4000) goto Lnomoney;
+		set Zeny, Zeny-@dtswarpcost[@num];
+		if (@dtswarpmap$[@num] == "Toy Factory, Level 2") warp "xmas_dun02.gat",130,123;
+ //Maps to warp to
+		if (@dtswarpmap$[@num] == "Clock Tower, Level 3") warp "alde_dun03.gat",265,22;
+
+		if (@dtswarpmap$[@num] == "Lava Dungeon, Level 2") warp "mag_dun02.gat",47,40;
+
+		if (@dtswarpmap$[@num] == "Bailand, Level 4") warp "iz_dun03.gat",32,63;
+
+		if (@dtswarpmap$[@num] == "Clock Tower, Basement 3") warp "alde_dun03.gat",277,178;
+
+		if (@dtswarpmap$[@num] == "Glastheim Entrance") warp "glast_01.gat",375,304;
+
+		cutin "", 255;
+		end;
+	Lnomoney:
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]"; 		//Unofficial Text
+			mes "Umm, apparently you don't have";
+			mes "adequate funds for your";
+			mes "selected warp. Please check";
+			mes "that you have the correct amount";
+			mes "of money, and try again later";
+			break;
+		case 1:
+			mes "[Kafra Voting STaff]";
+			mes "It appears as if you don't";
+			mes "have enough zeny for the warp";
+			mes "Please check your funds and";
+			mes "try again.";
+			break;
+		}
+		goto Lend;						//End unofficial text
+
+	Lcancel: 							//Selected Cancel on first menu
+		switch(getarg(0)){
+		case 0:
+			mes "[Cool Event Corp. Voting Staff]";	
+			mes "Cool Event Corp. is always";
+			mes "working to make sure that";
+			mes "not only are our customers";
+			mes "satisfied, but that we also";
+			mes "exceed your utmost standards.";
+			mes "Thank you and have a good day.";
+			break;
+		case 1:
+			mes "[Kafra Voting Staff]";
+			mes "We, here at Kafra Corporation,";
+			mes "are alwyas endeavoring to provide";
+			mes "you with the best services. We hope";
+			mes "that we meet your adventuring needs";
+			mes "and the standards of excellence.";
+			break;
+		}
+		goto Lend;
+	Lend:
+		close2;
+		cutin "", 255;
+		end;
+}
+
+//Elections administration NPC (hidden)
+-	script DTS_Admin -1,{
+	OnHour1:
+		if($dtsday == gettime(4)) goto Lcheck;			//Works only at 1am
+		end;							//Goes to Lcheck for ability of manual check.
+	Lcheck:								//Checks to see if today is day to count votes
+		if($dtscool == $dtskafra){				//Counts votes for Kafra and Cool Corp,
+			set $@dtstempg,rand(1,2);			//and sets $dtsstatus accordingly.
+			if($@dtstempg == 1) set $dtscool,$dtscool+100;	//Random value if tied
+			else set $dtskafra,$dtskafra+100;
+		}
+		if($dtscool > $dtskafra){
+			switch($dtsstatus){
+				case 3:
+				case 5:
+					set $dtsstatus,1;
+					break;
+				case 2:
+				case 4:
+				case 6:
+					set $dtsstatus,3;
+					break;
+				default: break;
+			}
+			set $dtscool,0;
+			set $dtskafra,0;
+		}
+		else{
+			switch($dtsstatus){
+				case 1:
+				case 3:
+				case 5:
+					set $dtsstatus,4;
+					break;
+				case 4:
+				case 6:
+					set $dtsstatus,2;
+					break;
+				default: break;
+			}
+			set $dtscool,0;
+			set $dtskafra,0;
+		}
+		end;
+	OnInit:
+		if($dtsdaydef == 0) goto Lselfconfig;			//If $dtsdaydef is 0 (not run before), start self config
+		end;
+	Lselfconfig:							//Self config, for first time run.
+		set $dtsday,gettime(4);					//Sets day to count votes and change services
+		set $dtsdaydef,1;					//Sets $dtsdaydef 1 to avoid self config again
+		end;							//GM can change day by talking to NPC in Cool Corp Headquarters
+}
