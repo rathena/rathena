@@ -27,6 +27,7 @@
 
 =========================
 05/13
+	* Some more drop updates [Playtester]
 	* Fixed Medusa drops and updated Treasure Box drops [Playtester]
 05/12
 	* Updated cast times of Kaupe and Kaahi. [Skotlex]
