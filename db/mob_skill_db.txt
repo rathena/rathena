@@ -3059,8 +3059,8 @@
 1650,Sniper Shecil@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1650,Sniper Shecil@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
 1650,Sniper Shecil@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1132,,,,,
-//1650,Sniper Shecil@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
-//1650,Sniper Shecil@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
+1650,Sniper Shecil@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
+1650,Sniper Shecil@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
 1650,Sniper Shecil@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1641,1642,1643,1645,
 1650,Sniper Shecil@NPC_WINDATTACK,attack,187,10,1000,0,5000,yes,target,always,0,,,,,,
 1651,High Wizard Katrinn@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
@@ -3073,8 +3073,8 @@
 1651,High Wizard Katrinn@NPC_CHANGEHOLY,attack,167,1,10000,500,6000000,no,self,myhpltmaxrate,40,,,,,,9
 1651,High Wizard Katrinn@NPC_CHANGETELEKINESIS,attack,169,1,10000,500,6000000,no,self,myhpltmaxrate,10,,,,,,9
 1651,High Wizard Katrinn@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1195,,,,,
-//1651,High Wizard Katrinn@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
-//1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
+1651,High Wizard Katrinn@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
+1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@WZ_FIREPILLAR,attack,80,10,2000,200,0,yes,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_FIREPILLAR,idle,80,10,5000,200,2000,yes,self,always,0,,,,,,

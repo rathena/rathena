@@ -27,6 +27,7 @@
 
 =========================
 05/13
+	* Uncommented Summon skill of Katrinn and Shecil [Playtester]  
 	* Some more drop updates [Playtester]
 	- progress 40%
 	* Fixed Medusa drops and updated Treasure Box drops [Playtester]
