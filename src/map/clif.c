@@ -1822,14 +1822,14 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 	int fd;
 	int slen = strlen(mes) + 8;
-	struct block_list *bl = map_id2bl(npcid);
+	struct block_list *bl = NULL;
 	WFIFOHEAD(fd, slen);
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
@@ -1848,13 +1848,13 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
  */
 int clif_scriptinput(struct map_session_data *sd, int npcid) {
 	int fd;
-	struct block_list *bl = map_id2bl(npcid);
+	struct block_list *bl = NULL;
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
 	
 	fd=sd->fd;
@@ -1872,13 +1872,13 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
  */
 int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	int fd;
-	struct block_list *bl = map_id2bl(npcid);
+	struct block_list *bl = NULL;
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (bl->type == BL_PC || bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
 
 	fd=sd->fd;
