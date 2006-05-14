@@ -626,7 +626,7 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "4. What item is required for stone curse?";
 				next;
-				menu "Red Blood",sM0_3b, "Blue Gem",sM0_3b, "Yellow Gem",sM0_3b, "Red Gem",sM0_3a;
+				menu "Red Blood",sM0_3b, "Blue Gemstone",sM0_3b, "Yellow Gemstone",sM0_3b, "Red Gemstone",sM0_3a;
 
 				sM0_3a:
 					set @SCORE, @SCORE + 10;
@@ -636,7 +636,7 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "5. What isn't required for Safety Wall?";
 				next;
-				menu "Napalm Beat Lv 4",sM0_4b, "Soul Strike Lv 5",sM0_4b, "SP Recovery Lv. 6",sM0_4b, "Ice Wall Lv 7",sM0_4a;
+				menu "Napalm Beat Lv 4",sM0_4b, "Soul Strike Lv 5",sM0_4b, "SP Recovery Lv 6",sM0_4a, "Ice Wall Lv 7",sM0_4a;
 
 				sM0_4a:
 					set @SCORE, @SCORE + 10;
@@ -664,9 +664,9 @@ L_Mage:
 				sM0_6b:
 
 				mes "[Raul Expagarus]";
-				mes "8. Lvl 6 Safety Wall sp consumtion, and number of hits absorbed?";
+				mes "8. Lvl 6 Safety Wall SP consumption, and number of hits absorbed?";
 				next;
-				menu "SP 40, 6hits",sM0_7b, "SP 35, 6hits",sM0_7b, "SP 40, 7hits",sM0_7a, "SP 35, 7hits",sM0_7b;
+				menu "SP 40, 6hits",sM0_7b, "SP 35, 6hits",sM0_7b, "SP 40, 7hits",sM0_7b, "SP 35, 7hits",sM0_7a;
 
 				sM0_7a:
 					set @SCORE, @SCORE + 10;
@@ -674,7 +674,7 @@ L_Mage:
 				sM0_7b:
 
 				mes "[Raul Expagarus]";
-				mes "9. Lv. 10 Thunder Storm's Sp Consume";
+				mes "9. Lv. 10 Thunder Storm's SP Consume";
 				next;
 				menu "84",sM0_8b, "74",sM0_8a, "64",sM0_8b, "54",sM0_8b;
 
@@ -737,7 +737,7 @@ L_Mage:
 				sM1_3b:
 
 				mes "[Raul Expagarus]";
-				mes "5. Baby Desert Wolves vs Familiar, which one wins?";
+				mes "5. Baby Desert Wolves vs Farmiliar, which one wins?";
 				next;
 				menu "Baby Desert Wolf",sM1_4a, "Farmiliar",sM1_4b, "Tie",sM1_4b, "Don't Know",sM1_4b;
 
@@ -769,7 +769,7 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "8. Which monster has the highest magic def?";
 				next;
-				menu "Horong",sM1_7b, "ChonChon",sM1_7b, "Andre",sM1_7b, "Caramel",sM1_7a;
+				menu "Horong",sM1_7a, "ChonChon",sM1_7b, "Andre",sM1_7b, "Caramel",sM1_7b;
 
 				sM1_7a:
 					set @SCORE, @SCORE + 10;
@@ -842,7 +842,7 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "5. Which card has nothing to do with INT?";
 				next;
-				menu "Andre Card",sM2_4b, "Soldier Andre Card",sM2_4a, "Baby Desert Wolf Card",sM2_4b, "Elder Willow Card",sM2_4b;
+				menu "Andre Larva Card",sM2_4b, "Soldier Andre Card",sM2_4a, "Baby Desert Wolf Card",sM2_4b, "Elder Willow Card",sM2_4b;
 
 				sM2_4a:
 					set @SCORE, @SCORE + 10;
@@ -872,7 +872,7 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "8. Which Item can't be equiped by mages?";
 				next;
-				menu "Knife",sM2_7b, "Cap",sM2_7a, "Sandel",sM2_7b, "Eye of Dullahan",sM2_7b;
+				menu "Knife",sM2_7b, "Cap",sM2_7a, "Sandals",sM2_7b, "Eye of Dullahan",sM2_7b;
 
 				sM2_7a:
 					set @SCORE, @SCORE + 10;
