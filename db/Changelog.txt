@@ -28,6 +28,7 @@
 =========================
 05/14
 	* More Aegis X.2 drop updates [Playtester]
+	- progress 45%
 05/13
 	* Hopefully fixed Skeggiolds summon endless slaves [Playtester]
 	* Added a hopefully better implementation of Amon Ra thanks to Tharis [Playtester]
