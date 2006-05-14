@@ -304,9 +304,12 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	for (count = 0; count < amount; count++) {
 		if (rand_flag) { //Get a random cell for this mob.
 			map_search_freecell(NULL, m, &x, &y, -1, -1, 1);
-			data.x = x;
-			data.y = y;
 		}
+
+		// This should ALWAYS be done. [blackhole89]
+		data.x = x;
+		data.y = y;
+
 		md =mob_spawn_dataset (&data);
 
 		if (class_ < 0 && battle_config.dead_branch_active)
