@@ -27,6 +27,7 @@
 
 =========================
 05/13
+	* Hopefully fixed Skeggiolds summon endless slaves [Playtester]
 	* Added a hopefully better implementation of Amon Ra thanks to Tharis [Playtester]
 	- also fixed name of Apocalypse
 	* Uncommented Summon skill of Katrinn and Shecil [Playtester]  
