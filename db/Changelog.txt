@@ -27,6 +27,8 @@
 
 =========================
 05/13
+	* Added a hopefully better implementation of Amon Ra thanks to Tharis [Playtester]
+	- also fixed name of Apocalypse
 	* Uncommented Summon skill of Katrinn and Shecil [Playtester]  
 	* Some more drop updates [Playtester]
 	- progress 40%
