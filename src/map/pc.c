@@ -2704,7 +2704,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 
 	sd->canuseitem_tick= tick + battle_config.item_use_interval; //Update item use time.
-	run_script(script,0,sd->bl.id,0);
+	run_script(script,0,sd->bl.id,fake_npc_id);
 	potion_flag = 0;
 	return 1;
 }

@@ -1076,14 +1076,19 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 		ShowWarning("npc_scriptcont: sd->npc_id (%d) is not id (%d).\n", sd->npc_id, id);
 		return 1;
 	}
-	if (npc_checknear(sd,id)){
-		ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
-		return 1;
+
+	if(sd->npc_id != fake_npc_id){ // Not item script
+		if (npc_checknear(sd,id)){
+			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
+			return 1;
+		}
+
+		nd=(struct npc_data *)map_id2bl(id);
+
+		sd->npc_pos=run_script(nd->u.scr.script,sd->npc_pos,sd->bl.id,id);
+	} else { // Item script, continue execution...
+		sd->npc_pos=run_script(sd->npc_scriptroot,sd->npc_pos,sd->bl.id,id);
 	}
-
-	nd=(struct npc_data *)map_id2bl(id);
-
-	sd->npc_pos=run_script(nd->u.scr.script,sd->npc_pos,sd->bl.id,id);
 
 	return 0;
 }
@@ -2920,7 +2925,7 @@ int do_init_npc(void)
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 
 	// Init dummy NPC
-	//dummy_npc_id = npc_get_new_npc_id();
+	fake_npc_id = npc_get_new_npc_id();
 
 	return 0;
 }

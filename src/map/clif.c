@@ -763,13 +763,19 @@ int clif_clearchar_delay(unsigned int tick, struct block_list *bl, int type) {
  *------------------------------------------
  */
 int clif_clearchar_id(int id, int type, int fd) {
-	unsigned char buf[16];
+	/*unsigned char buf[16];
 
 	WBUFW(buf,0) = 0x80;
 	WBUFL(buf,2) = id;
 	WBUFB(buf,6) = type;
 	WFIFOHEAD(fd, packet_len_table[0x80]);
 	memcpy(WFIFOP(fd,0), buf, 7);
+	WFIFOSET(fd, packet_len_table[0x80]);*/
+
+	WFIFOHEAD(fd, packet_len_table[0x80]);
+	WFIFOW(fd,0)	= 0x80;
+	WFIFOL(fd,2)	= id;
+	WFIFOB(fd,6)	= (char)type; // Why use int for a char in the first place?
 	WFIFOSET(fd, packet_len_table[0x80]);
 
 	return 0;
