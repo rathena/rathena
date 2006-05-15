@@ -737,9 +737,9 @@ L_Mage:
 				sM1_3b:
 
 				mes "[Raul Expagarus]";
-				mes "5. Baby Desert Wolves vs Farmiliar, which one wins?";
+				mes "5. Baby Desert Wolves vs Familiar, which one wins?";
 				next;
-				menu "Baby Desert Wolf",sM1_4a, "Farmiliar",sM1_4b, "Tie",sM1_4b, "Don't Know",sM1_4b;
+				menu "Baby Desert Wolf",sM1_4a, "Familiar",sM1_4b, "Tie",sM1_4b, "Don't Know",sM1_4b;
 
 				sM1_4a:
 					set @SCORE, @SCORE + 10;
