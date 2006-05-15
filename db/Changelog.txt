@@ -27,6 +27,7 @@
 
 =========================
 05/15
+	* Spirit skills now have 500ms delay. [Skotlex]
 	* Changed speed of G_Khalitzburg (very fast now) [Playtester]
 	* Improved some skills of Amon Ra [Playtester]
 05/14

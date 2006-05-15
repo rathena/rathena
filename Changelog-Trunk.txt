@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/15
+	* KA* skills can now be casted on other Soul Linkers as well without the
+	  Spirit requirement. [Skotlex]
+	* Soul Drain will now show the SP drained regardless of drain display
+	  settings. [Skotlex]
+	* SC_COMBO state will now end in skill_attack rather than
+	  skill_check_condition (as it is required there to apply damage bonuses
+	  based on combo-casted skills) [Skotlex]
 	* Fixed Option_Wedding in const.txt (0x1000 won't work, it has to be 4096)
 	  [Skotlex]
 	* Fixed the nocast flag 2 (not usable in pvp) returning true in pk-mode

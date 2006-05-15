@@ -1461,12 +1461,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
 		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
 		sp = (status_get_lv(bl))*(95+15*rate)/100;
-		if (sp > 0) {
-			if(sd->status.sp + sp > sd->status.max_sp)
-				sp = sd->status.max_sp - sd->status.sp;
+		if(sp > sd->status.max_sp - sd->status.sp)
+			sp = sd->status.max_sp - sd->status.sp;
+		if (sp) {
 			sd->status.sp += sp;
-			if (sp > 0 && battle_config.show_hp_sp_gain)
-				clif_heal(sd->fd,SP_SP,sp);
+			clif_heal(sd->fd,SP_SP,sp);
 		}
 	}
 
@@ -1814,6 +1813,22 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	if(sd) {
 		//Sorry for removing the Japanese comments, but they were actually distracting 
 		//from the actual code and I couldn't understand a thing anyway >.< [Skotlex]
+		if (sd->sc.data[SC_COMBO].timer!=-1)
+		{	//End combo state after skill is invoked. [Skotlex]
+			switch (skillid) {
+			case TK_TURNKICK:
+			case TK_STORMKICK:
+			case TK_DOWNKICK:
+			case TK_COUNTER:
+				//set this skill as previous one.
+				sd->skillid_old = skillid;
+				sd->skilllv_old = skilllv;
+				if (pc_istop10fame(sd->char_id,MAPID_TAEKWON))
+					break; //Do not end combo state.
+			default:
+				status_change_end(src,SC_COMBO,-1);
+			}
+		}
 		switch(skillid)
 		{
 			case MO_TRIPLEATTACK:
@@ -4058,6 +4073,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (sd) {
 			if (!dstsd || !(
 				(sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SOULLINKER) ||
+				(dstsd->class_&MAPID_BASEMASK) == MAPID_SOUL_LINKER ||
 				dstsd->char_id == sd->char_id ||
 				dstsd->char_id == sd->status.partner_id ||
 				dstsd->char_id == sd->status.child
@@ -8214,22 +8230,6 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	if(spiritball > 0)				// Ÿ†‹…?Á”ï
 		pc_delspiritball(sd,spiritball,0);
 
-	if (sd->sc.data[SC_COMBO].timer!=-1)
-	{	//End combo state after skill is invoked. [Skotlex]
-		switch (skill) {
-		case TK_TURNKICK:
-		case TK_STORMKICK:
-		case TK_DOWNKICK:
-		case TK_COUNTER:
-			//set this skill as previous one.
-			sd->skillid_old = skill;
-			sd->skilllv_old = lv;
-			if (pc_istop10fame(sd->char_id,MAPID_TAEKWON))
-				break; //Do not end combo state.
-		default:
-			status_change_end(&sd->bl,SC_COMBO,-1);
-		}
-	}
 	return 1;
 }
 
