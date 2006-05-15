@@ -46,7 +46,7 @@ lhz_dun02.gat,0,0,0,0	monster	Armeyer Dinze	1654,50,0,0,0
 lhz_dun02.gat,0,0,0,0	monster	Errende Ebecee	1655,50,0,0,0
 lhz_dun02.gat,0,0,0,0	monster	Kavach Icarus	1656,50,0,0,0
 lhz_dun02.gat,0,0,0,0	monster	Laurell Weinder	1657,50,0,0,0
-lhz_dun01.gat,0,0,0,0	monster	Gemini-S58	1681,10,1800000,900000,1
+lhz_dun02.gat,0,0,0,0	monster	Gemini-S58	1681,10,1800000,900000,1
 lhz_dun02.gat,0,0,0,0	monster	Egnigem Cenia	1658,1,7200000,3600000,1
 
 //========================================================================================

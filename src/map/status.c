@@ -4633,6 +4633,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SLEEP:
 		case SC_SMA:
 		case SC_WARM: 
+		case SC_BLADESTOP:
 			break;
 		// gs_something1 [Vicious]
 		case SC_MADNESSCANCEL:
