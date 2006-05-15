@@ -1045,12 +1045,13 @@ OnStart:
 	if ((getwaitingroomstate(33)) == 0) end;		// stops the rest of the script from running if there is no one in the waiting room
 	killmonsterall "in_moc_16.gat";
 	warpwaitingpc "in_moc_16.gat", 65, 150;
-	donpcevent "SinTest2";
+	donpcevent "SinTest2::OnStart";
 	end;
 }
 
 // Job Change Monsters ======================>\\
 in_moc_16.gat,1,1,0	script	SinTest2	-1,{
+OnStart:
 	set $@SinMob, 6;
 	disablenpc "sinWarp1";
 	// Target Monsters
@@ -1258,7 +1259,7 @@ OnTimer600:
 	next;
 	set ASSIN_Q2, 1;
 	disablenpc "Thomas";
-	donpcevent "SinTest2_2";
+	donpcevent "SinTest2_2::OnStart";
 	close;
 L_ReTest:
 	mes "[Thomas]";
@@ -1269,7 +1270,7 @@ L_ReTest:
 	percentheal 100, 100;
 	next;
 	disablenpc "Thomas";
-	donpcevent "SinTest2_2";
+	donpcevent "SinTest2_2::OnStart";
 	close;
 OnTouch:
 	warp "in_moc_16.gat",87,99;
@@ -1280,6 +1281,7 @@ OnTouch:
 
 // SinTest2_2 ===============================>\\
 in_moc_16.gat,1,1,1	script	SinTest2_2	-1,{
+OnStart:
 	monster "in_moc_16.gat", 81, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
 	monster "in_moc_16.gat", 83, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
 	monster "in_moc_16.gat", 85, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
