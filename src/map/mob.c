@@ -1187,7 +1187,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			{	//Out of range...
 				if (!(mode&MD_CANMOVE))
 				{	//Can't chase. Attempt to use a ranged skill at least?
-					mobskill_use(md, tick, MSC_LONGRANGEATTACKED);
+					md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
+					mobskill_use(md, tick, -1);
 					mob_unlocktarget(md,tick);
 					return 0;
 				}
