@@ -800,7 +800,7 @@ static void report_src(struct script_state *st) {
 
 static void check_event(struct script_state *st, unsigned char *event){
 	if(event != NULL && event[0] != '\0' && !strstr(event,"::")){
-		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT'.\n");
+		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",event);
 		report_src(st);
 	}
 	return;
