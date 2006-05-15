@@ -2441,9 +2441,9 @@
 1510,Hylozoist@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,9
 1511,Amon Ra@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1511,Amon Ra@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1511,Amon Ra@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,29
-1511,Amon Ra@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,29
-1511,Amon Ra@NPC_DARKBLESSING,attack,203,1,5000,0,2000,no,target,always,0,,,,,,
+1511,Amon Ra@NPC_BLOODDRAIN,any,199,1,2000,0,5000,yes,target,always,0,,,,,,29
+1511,Amon Ra@NPC_BLOODDRAIN,any,199,1,2000,0,5000,yes,target,always,0,,,,,,29
+1511,Amon Ra@NPC_DARKBLESSING,any,203,1,5000,0,2000,no,target,always,0,,,,,,
 1511,Amon Ra@NPC_SUMMONMONSTER,any,209,6,5000,0,10000,no,self,casttargeted,0,1474,1477,1438,,,9
 1511,Amon Ra@NPC_SUMMONMONSTER,any,209,6,5000,0,10000,no,self,longrangeattacked,0,1474,1477,1438,,,9
 1511,Amon Ra@WZ_FIREPILLAR,idle,80,30,10000,0,2000,yes,around2,always,0,,,,,,
