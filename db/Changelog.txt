@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/15
+	* Improved some skills of Amon Ra [Playtester]
 05/14
 	* More Aegis X.2 drop updates [Playtester]
 	- progress 45%

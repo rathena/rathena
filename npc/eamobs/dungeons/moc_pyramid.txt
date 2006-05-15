@@ -62,7 +62,7 @@ moc_pryd06.gat,0,0,0,0	monster	Arclouse	1194,20,0,0,0
 moc_pryd06.gat,100,90,80,50	monster	Mimic	1191,10,600000,300000,0
 moc_pryd06.gat,100,90,80,50	monster	Ancient Mummy	1297,10,600000,300000,0
 moc_pryd06.gat,0,0,0,0	monster	Verit	1032,15,0,0,0
-moc_pryd06.gat,102,166,1,1	monster	Amon Ra	1511,1,3600000,1600000,0
+moc_pryd06.gat,102,86,0,0	monster	Amon Ra	1511,1,3600000,1600000,0
 moc_pryd06.gat,0,0,0,0	monster	Ghoul	1036,10,0,0,0
 moc_pryd06.gat,0,0,0,0	monster	Mummy	1041,10,0,0,0
 moc_pryd06.gat,0,0,0,0	monster	Isis	1029,10,0,0,0

@@ -28,6 +28,7 @@ Nexon
 Date		Added
 ======
 05/15
+	* Fixed Amon Ra's spawning location [Playtester]
 	* Corrected 10 Geminis spawning in Lhz1 rather than 2. [Skotlex]
 05/14
 	* Fixed the quiz in the Wizard Job quest a bit [Playtester]
