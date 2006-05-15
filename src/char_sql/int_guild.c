@@ -1752,6 +1752,10 @@ int mapif_parse_GuildCastleDataSave(int fd,int castle_id,int index,int value)   
 					(g)?g->name:"??" ,gid, (value)?"occupy":"abandon", castle_id);
 		}
 		gc.guild_id = value;
+		if(gc.guild_id == 0) {
+			//Delete guardians.
+			memset(&gc.guardian, 0, sizeof(gc.guardian));
+		}
 		break;
 	case 2: gc.economy = value; break;
 	case 3: gc.defense = value; break;
