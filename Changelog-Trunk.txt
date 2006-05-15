@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/15
+	* Some adjustments of how disguising + gm-hiding work together. [Skotlex]
 	* Fixed clif_GlobalMessage being the exact same function as clif_message
 	  (the first should send to ALL_CLIENT and the later should send to
 	  AREA_CHAT_WOS). Should fix globalmes script command. [Skotlex]

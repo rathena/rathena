@@ -1085,6 +1085,12 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	if (class_ && (sd->disguise == class_ || pc_isriding(sd)))
 		return 0;
 
+	if(sd->sc.option&OPTION_INVISIBLE)
+  	{	//Character is invisible. Stealth class-change. [Skotlex]
+		sd->disguise = class_; //viewdata is set on uncloaking.
+		return 2;
+	}
+	
 	pc_stop_walking(sd, 0);
 	clif_clearchar(&sd->bl, 0);
 

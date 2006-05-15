@@ -1311,8 +1311,6 @@ int clif_spawn(struct block_list *bl)
 
 	if (pcdb_checkid(vd->class_))
 	{	//Player spawn packet.
-		if(((TBL_PC *)bl)->status.option & OPTION_INVISIBLE)
-			return 0;
 		clif_set0078(bl, vd, buf);
 #if PACKETVER > 3
 		if (WBUFW(buf,0)==0x78) {
@@ -1480,11 +1478,8 @@ int clif_move(struct block_list *bl) {
 	
 	len = clif_set007b(bl,vd,ud,buf);
 	clif_send(buf,len,bl,AREA_WOS);
-	if (disguised(bl)){
-		if(((TBL_PC *)bl)->status.option & OPTION_INVISIBLE)
-			return 0;
+	if (disguised(bl))
 		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
-	}
 		
 	//Stupid client that needs this resent every time someone walks :X
 	if(vd->cloth_color)
@@ -3734,9 +3729,6 @@ void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return;
 
-	if(bl->type == BL_PC && ((TBL_PC *)bl)->status.option & OPTION_INVISIBLE)
-		return;
-
 	ud = unit_bl2ud(bl);
 	if (ud && ud->walktimer != -1)
 	{
@@ -3813,8 +3805,6 @@ int clif_fixpos2(struct block_list* bl)
 		len = clif_set0078(bl,vd,buf);
 
 	if (disguised(bl)) {
-		if(((TBL_PC *)bl)->status.option & OPTION_INVISIBLE)
-			return 0;
 		clif_send(buf,len,bl,AREA_WOS);
 		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
 		clif_setdisguise((TBL_PC*)bl, buf, len, 1);
@@ -4118,7 +4108,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	{	//tsd has lost sight of the bl object.
 		switch(bl->type){
 		case BL_PC:
-			if (((TBL_PC*)bl)->vd.class_ != INVISIBLE_CLASS || !(((TBL_PC*)bl)->status.option & OPTION_INVISIBLE))
+			if (((TBL_PC*)bl)->vd.class_ != INVISIBLE_CLASS)
 				clif_clearchar_id(bl->id,0,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
