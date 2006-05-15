@@ -2306,6 +2306,12 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	}
 	else if (strcmpi(w3,"pvp")==0) {
 		map[m].flag.pvp=state;
+		if (state) {
+			map[m].flag.gvg=0;
+			map[m].flag.gvg=0;
+			map[m].flag.gvg_dungeon=0;
+			map[m].flag.gvg_castle=0;
+		}
 	}
 	else if (strcmpi(w3,"pvp_noparty")==0) {
 		map[m].flag.pvp_noparty=state;
@@ -2348,15 +2354,18 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	}
 	else if (strcmpi(w3,"gvg")==0) {
 		map[m].flag.gvg=state;
+		if (state) map[m].flag.pvp=0;
 	}
 	else if (strcmpi(w3,"gvg_noparty")==0) {
 		map[m].flag.gvg_noparty=state;
 	}
 	else if (strcmpi(w3,"gvg_dungeon")==0) {
 		map[m].flag.gvg_dungeon=state;
+		if (state) map[m].flag.pvp=0;
 	}
 	else if (strcmpi(w3,"gvg_castle")==0) {
 		map[m].flag.gvg_castle=state;
+		if (state) map[m].flag.pvp=0;
 	}
 	else if (strcmpi(w3,"nozenypenalty")==0) {
 		map[m].flag.nozenypenalty=state;
