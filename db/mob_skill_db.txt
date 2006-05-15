@@ -1228,9 +1228,9 @@
 1272,Dark Lord@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,no,self,slavele,3,1605,,,,,
 1272,Dark Lord@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,no,self,slavele,3,1605,,,,,
 1272,Dark Lord@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1302,,,,,
-1272,Dark Lord@WZ_METEOR,attack,83,10,5000,500,2000,no,target,always,0,,,,,,
-1272,Dark Lord@WZ_METEOR,chase,83,10,5000,500,2000,no,target,always,0,,,,,,
-1272,Dark Lord@WZ_METEOR,chase,83,10,5000,500,2000,no,target,skillused,18,,,,,,
+1272,Dark Lord@WZ_METEOR,attack,83,30,5000,500,2000,no,target,always,0,,,,,,
+1272,Dark Lord@WZ_METEOR,chase,83,30,5000,500,2000,no,target,always,0,,,,,,
+1272,Dark Lord@WZ_METEOR,chase,83,30,5000,500,2000,no,target,skillused,18,,,,,,
 1273,Orc Lady@AL_INCAGI,chase,29,1,500,700,5000,no,self,always,0,,,,,,30
 1273,Orc Lady@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,3,,,,,
 1273,Orc Lady@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,

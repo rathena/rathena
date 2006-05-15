@@ -27,6 +27,11 @@
 
 =========================
 05/15
+	* Fixed implementation of MVP Meteor Storm [Playtester]
+	- Dark Lord and Amon Ra use it
+	- Meteors drop in an area of 31x31 tiles
+	- each Meteor has 7x7 tiles splash damage
+	- each Meteor does 15 hits
 	* Spirit skills now have 500ms delay. [Skotlex]
 	* Changed speed of G_Khalitzburg (very fast now) [Playtester]
 	* Improved some skills of Amon Ra [Playtester]
