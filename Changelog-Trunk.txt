@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/15
+	* Small changes to the skill.conf
+	- Monsters now can place ground skills on top of each other by default
+	- Land_Skill_Limit format changed and set to "Only Players" by default
 	* When reading mapflags, when a map is set to be pvp or gvg, the other will
 	  be turned off (disables pvp mapflags in gvg maps for pk-servers) [Skotlex]
 	* Firepillar's damage per hit is now 100% MATK (rather than 20%) when the

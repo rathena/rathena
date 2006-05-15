@@ -27,6 +27,10 @@
 
 =========================
 05/15
+	* More Amon Ra related changes [Playtester]
+	- Dark Blessing and Blood Sucker now have a range of 9 tiles
+	- Small fixes on his skills again
+	- G_Khalitzburg is a bit slower now
 	* Fixed implementation of MVP Meteor Storm [Playtester]
 	- Dark Lord and Amon Ra use it
 	- Meteors drop in an area of 31x31 tiles
