@@ -4889,7 +4889,7 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item.
 
 Valid types are:
-	0 - Buy Price; 1 - Sell Price; 2 - Item Type; 3 - Allowed Classes;
+	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
 	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
 		if = 0, then monsters don't drop it at all (rare or a quest item)
 		if = 10000, then this item is sold in NPC shops only

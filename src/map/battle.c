@@ -2530,7 +2530,8 @@ struct Damage battle_calc_magic_attack(
 						skillratio += (100+skill_lv*10)*2/3-100;
 						break;
 					case WZ_FIREPILLAR:
-						skillratio -= 80;
+						if (skill_lv <= 10)
+							skillratio -= 80;
 						break;
 					case WZ_SIGHTRASHER:
 						skillratio += 20*skill_lv;

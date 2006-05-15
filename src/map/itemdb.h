@@ -12,15 +12,11 @@ struct item_data {
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 	char prefix[NAME_LENGTH],suffix[NAME_LENGTH];
 	char cardillustname[64];
+	//Do not add stuff between value_buy and wlv (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
 	int type;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it) [Lupus]
-	struct {
-		unsigned short chance;
-		int id;
-	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
-
 	int sex;
 	int equip;
 	int weight;
@@ -35,6 +31,10 @@ struct item_data {
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	unsigned class_upper : 3; //Specifies if the upper-type can equip it (1: normal, 2: upper, 3: baby)
+	struct {
+		unsigned short chance;
+		int id;
+	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
 	unsigned char *script;	//Default script for everything.
 	unsigned char *equip_script;	//Script executed once when equipping.
 	unsigned char *unequip_script;//Script executed once when unequipping.
