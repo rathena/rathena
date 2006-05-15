@@ -4173,7 +4173,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if (strlen(md->name) + strlen(skill_db[skillid].desc) > 120)
 				break; //Message won't fit on buffer. [Skotlex]
 			sprintf(temp,"%s : %s !!",md->name,skill_db[skillid].desc);
-			clif_GlobalMessage(&md->bl,temp);
+			clif_message(&md->bl,temp);
 		}
 		break;
 

@@ -4938,7 +4938,7 @@ void clif_GlobalMessage(struct block_list *bl,char *message)
 	WBUFW(buf,2)=len+8;
 	WBUFL(buf,4)=bl->id;
 	strncpy((char *) WBUFP(buf,8),message,len);
-	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,AREA_CHAT_WOC);
+	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
 /*==========================================
