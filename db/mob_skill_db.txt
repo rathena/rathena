@@ -2448,8 +2448,8 @@
 1511,Amon Ra@NPC_SUMMONMONSTER,any,209,5,5000,0,10000,no,self,longrangeattacked,0,1474,1477,1438,,,9
 1511,Amon Ra@WZ_FIREPILLAR,idle,80,30,10000,0,1000,yes,around2,always,0,,,,,,
 1511,Amon Ra@WZ_FIREPILLAR,angry,80,30,10000,0,1000,yes,around2,always,0,,,,,,
-1511,Amon Ra@WZ_METEOR,any,83,30,10000,0,10000,yes,self,casttargeted,,,,,,,
-1511,Amon Ra@WZ_METEOR,any,83,30,10000,0,10000,yes,self,longrangeattacked,,,,,,,
+1511,Amon Ra@WZ_METEOR,any,83,30,10000,0,5000,yes,self,casttargeted,,,,,,,
+1511,Amon Ra@WZ_METEOR,any,83,30,10000,0,5000,yes,self,longrangeattacked,,,,,,,
 1512,Hyegun@AS_SONICBLOW,attack,136,5,500,1000,30000,no,target,always,0,,,,,,
 1512,Hyegun@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1512,Hyegun@NPC_CRITICALSLASH,attack,170,1,500,0,5000,yes,target,always,0,,,,,,
