@@ -797,6 +797,14 @@ static void report_src(struct script_state *st) {
 		break;
 	}
 }
+
+static void check_event(struct script_state *st, unsigned char *event){
+	if(event != NULL && event[0] != '\0' && !strstr(event,"::")){
+		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT'.\n");
+		report_src(st);
+	}
+	return;
+}
 /*==========================================
  * 文字列のハッシュを計算
  *------------------------------------------
@@ -5483,8 +5491,10 @@ int buildin_monster(struct script_state *st)
 	str	=conv_str(st,& (st->stack->stack_data[st->start+5]));
 	class_=conv_num(st,& (st->stack->stack_data[st->start+6]));
 	amount=conv_num(st,& (st->stack->stack_data[st->start+7]));
-	if( st->end>st->start+8 )
+	if( st->end>st->start+8 ){
 		event=conv_str(st,& (st->stack->stack_data[st->start+8]));
+		check_event(st, event);
+	}
 
 	if (class_ >= 0 && !mobdb_checkid(class_)) {
 		ShowWarning("buildin_monster: Attempted to spawn non-existing monster class %d\n", class_);
@@ -5510,8 +5520,10 @@ int buildin_areamonster(struct script_state *st)
 	str	=conv_str(st,& (st->stack->stack_data[st->start+7]));
 	class_=conv_num(st,& (st->stack->stack_data[st->start+8]));
 	amount=conv_num(st,& (st->stack->stack_data[st->start+9]));
-	if( st->end>st->start+10 )
+	if( st->end>st->start+10 ){
 		event=conv_str(st,& (st->stack->stack_data[st->start+10]));
+		check_event(st, event);
+	}
 
 	mob_once_spawn_area(map_id2sd(st->rid),map,x0,y0,x1,y1,str,class_,amount,event);
 	return 0;
@@ -5545,6 +5557,8 @@ int buildin_killmonster(struct script_state *st)
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
 	if(strcmp(event,"All")==0)
 		allflag = 1;
+	else
+		check_event(st, event);
 
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
@@ -5599,6 +5613,8 @@ int buildin_clone(struct script_state *st) {
 	if( st->end>st->start+10 )
 		duration=conv_num(st,& (st->stack->stack_data[st->start+10]));
 
+	check_event(st, event);
+
 	sd = map_charid2sd(char_id);
 	if (master_id) {
 		msd = map_charid2sd(master_id);
@@ -5622,6 +5638,7 @@ int buildin_doevent(struct script_state *st)
 {
 	char *event;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	check_event(st, event);
 	npc_event(map_id2sd(st->rid),event,0);
 	return 0;
 }
@@ -5633,6 +5650,7 @@ int buildin_donpcevent(struct script_state *st)
 {
 	char *event;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	check_event(st, event);
 	npc_event_do(event);
 	return 0;
 }
@@ -5646,6 +5664,7 @@ int buildin_addtimer(struct script_state *st)
 	int tick;
 	tick=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
+	check_event(st, event);
 	pc_addeventtimer(script_rid2sd(st),tick,event);
 	return 0;
 }
@@ -5657,6 +5676,7 @@ int buildin_deltimer(struct script_state *st)
 {
 	char *event;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	check_event(st, event);
 	pc_deleventtimer(script_rid2sd(st),event);
 	return 0;
 }
@@ -5670,6 +5690,7 @@ int buildin_addtimercount(struct script_state *st)
 	int tick;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	tick=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	check_event(st, event);
 	pc_addeventtimercount(script_rid2sd(st),event,tick);
 	return 0;
 }
@@ -7191,6 +7212,7 @@ int buildin_getcastledata(struct script_state *st)
 				j=i;
 		if(j>=0){
 			event=conv_str(st,& (st->stack->stack_data[st->start+4]));
+			check_event(st, event);
 			guild_addcastleinfoevent(j,17,event);
 		}
 	}
@@ -7297,8 +7319,10 @@ int buildin_requestguildinfo(struct script_state *st)
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	char *event=NULL;
 
-	if( st->end>st->start+3 )
+	if( st->end>st->start+3 ){
 		event=conv_str(st,& (st->stack->stack_data[st->start+3]));
+		check_event(st, event);
+	}
 
 	if(guild_id>0)
 		guild_npc_request_info(guild_id,event);
@@ -7569,6 +7593,7 @@ int buildin_mobcount(struct script_state *st)	// Added by RoVeRT
 	int m,c=0;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
+	check_event(st, event);
 
 	if( (m=map_mapname2mapid(mapname))<0 ) {
 		push_val(st->stack,C_INT,-1);
@@ -7767,6 +7792,8 @@ int buildin_guardian(struct script_state *st)
 	event=conv_str(st,& (st->stack->stack_data[st->start+8]));
 	if( st->end>st->start+9 )
 		guardian=conv_num(st,& (st->stack->stack_data[st->start+9]));
+
+	check_event(st, event);
 
 	mob_spawn_guardian(map_id2sd(st->rid),map,x,y,str,class_,amount,event,guardian);
 
@@ -9171,8 +9198,10 @@ int buildin_summon(struct script_state *st)
 		_class=conv_num(st,& (st->stack->stack_data[st->start+3]));
 		if( st->end>st->start+4 )
 			timeout=conv_num(st,& (st->stack->stack_data[st->start+4]));
-		if( st->end>st->start+5 )
+		if( st->end>st->start+5 ){
 			event=conv_str(st,& (st->stack->stack_data[st->start+5]));
+			check_event(st, event);
+		}
 
 		id=mob_once_spawn(sd, "this", 0, 0, str,_class,1,event);
 		if((md=(struct mob_data *)map_id2bl(id))){
@@ -10222,8 +10251,10 @@ int buildin_spawnmob(struct script_state *st){
 	x		=conv_num(st,& (st->stack->stack_data[st->start+5]));
 	y		=conv_num(st,& (st->stack->stack_data[st->start+6]));
 	// When?
-	if( st->end > st->start+8 )
+	if( st->end > st->start+8 ){
 		event=conv_str(st,& (st->stack->stack_data[st->start+7]));
+		check_event(st, event);
+	}
 		
 	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,event);
 	if(id){
