@@ -26,6 +26,9 @@
 	-----
 
 =========================
+05/16
+	* More Aegis X.2 drop updates [Playtester]
+	- progress 50%
 05/15
 	* More Amon Ra related changes [Playtester]
 	- Dark Blessing and Blood Sucker now have a range of 9 tiles
