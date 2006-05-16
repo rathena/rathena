@@ -44,7 +44,7 @@
 //= Pretty sure there are more locations I didn't find.
 //= Uses random (1/4) chance of being eligible to vote. Real quest is that you can vote after doing
 //= President's Quest, which isn't yet released.
-//= Default time to check votes is Sunday at 0:00. GM Configurable through Saera.
+//= Default time to check votes is Sunday at 1:00. GM Configurable through Saera.
 //===== Version History: ====================================
 //= 1.3 Removed selfconfig [Evera]
 //= 1.2 Mushed some variables together, optimized a bit [Evera]
