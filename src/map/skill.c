@@ -825,7 +825,7 @@ int skillnotok(int skillid, struct map_session_data *sd)
 		if(!battle_config.pk_mode && skill_get_nocast (skillid) & 2)
 			return 1;
 		if(battle_config.pk_mode && skill_get_nocast (skillid) & 16)
-		return 1;
+			return 1;
 	}
 	if(map_flag_gvg(sd->bl.m) && skill_get_nocast (skillid) & 4)
 		return 1;
@@ -5792,6 +5792,15 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 			
 		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv, 1))	/* 使用条件チェック */
 			break;
+
+		if(md) {
+			md->last_thinktime=tick + (tid==-1?status_get_adelay(src):status_get_amotion(src));
+			if(md->skillidx >= 0) {
+				md->skilldelay[md->skillidx]=tick;
+				if (md->db->skill[md->skillidx].emotion >= 0)
+					clif_emotion(src, md->db->skill[md->skillidx].emotion);
+			}
+		}
 
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",

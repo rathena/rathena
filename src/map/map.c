@@ -1484,6 +1484,9 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);
 		*y = (ry >= 0)?(rand()%ry2-ry+by):(rand()%(map[m].ys-2)+1);
 		
+		if (*x == bx && *y == by)
+			continue; //Avoid picking the same target tile.
+		
 		if (map_getcell(m,*x,*y,CELL_CHKREACH))
 		{
 			if(flag&2 && !unit_can_reach_pos(src, *x, *y, 1))
