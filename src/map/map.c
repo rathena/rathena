@@ -1474,6 +1474,13 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 		by = src->y;
 		m = src->m;
 	}
+	if (!rx && !ry) {
+		//No range? Return the target cell then....
+		*x = bx;
+		*y = by;
+		return map_getcell(m,*x,*y,CELL_CHKREACH);
+	}
+	
 	if (rx >= 0 && ry >= 0) {
 		tries = rx2*ry2;
 		if (tries > 100) tries = 100;
