@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/16
+	* Modified "hide woe damage" to send the number of hits rather than 1 as
+	  damage Because when the damage is less than the number of hits, the client
+	  will display MISS. [Skotlex]
 	* Fire Pillar will now do 200%MATK damage per hit when level is >10.
 	  [Skotlex]
 	* Blood Drain always hits now. [Skotlex]
