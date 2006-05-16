@@ -99,7 +99,7 @@ moc_ruins.gat,61,156,5	script	Kafra	114,{
 gef_fild10.gat,73,340,4	script	Kafra	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetOrcCoal";
-	callfunc "F_Kafra",0,0,1;
+	callfunc "F_Kafra",0,6,1;
 
 	M_Save:
 		savepoint "gef_fild10.gat",54,326;

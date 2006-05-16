@@ -22,12 +22,16 @@ MasterOfMuppets
 	* Updating Items / Scripts
 Nexon
 	* Adding in the new Abyss/Thanatos/Lighthalzen NPC's and optimizing them.
+Evera
+	* Everything.
+	* Gathering iRO information and comparing them to eA scripts.
 
 == Changelog ==
 
 Date		Added
 ======
 05/15
+	* Fixed DTS warper, optimized Kafra and changed pay cave and orc village kafra [Evera]
 	* Fixed Amon Ra's spawning location [Playtester]
 	* Corrected 10 Geminis spawning in Lhz1 rather than 2. [Skotlex]
 05/14

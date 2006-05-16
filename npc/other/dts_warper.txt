@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -44,8 +44,10 @@
 //= Pretty sure there are more locations I didn't find.
 //= Uses random (1/4) chance of being eligible to vote. Real quest is that you can vote after doing
 //= President's Quest, which isn't yet released.
+//= Default time to check votes is Sunday at 0:00. GM Configurable through Saera.
 //===== Version History: ====================================
-//= 1.2 Mushed some variables together, optimized a bit
+//= 1.3 Removed selfconfig [Evera]
+//= 1.2 Mushed some variables together, optimized a bit [Evera]
 //= 1.1	SVN release, removed from major town (found true info after research),
 //=	put more arg(2) parameters, fixed a few bugs [Evera] (5/11/06)
 //= 1.0	Initial release [Evera] (5/10/06)
@@ -1027,7 +1029,7 @@ function	script	F_DTS_Warp	{
 
 //Elections administration NPC (hidden)
 -	script DTS_Admin -1,{
-	OnHour1:
+	OnHour01:
 		if($dtsday == gettime(4)) goto Lcheck;			//Works only at 1am
 		end;							//Goes to Lcheck for ability of manual check.
 	Lcheck:								//Checks to see if today is day to count votes
@@ -1069,11 +1071,4 @@ function	script	F_DTS_Warp	{
 			set $dtskafra,0;
 		}
 		end;
-	OnInit:
-		if($dtsdaydef == 0) goto Lselfconfig;			//If $dtsdaydef is 0 (not run before), start self config
-		end;
-	Lselfconfig:							//Self config, for first time run.
-		set $dtsday,gettime(4);					//Sets day to count votes and change services
-		set $dtsdaydef,1;					//Sets $dtsdaydef 1 to avoid self config again
-		end;							//GM can change day by talking to NPC in Cool Corp Headquarters
 }

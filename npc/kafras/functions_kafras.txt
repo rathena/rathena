@@ -5,7 +5,7 @@
 //= eAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 4.0
+//= 5.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -32,6 +32,7 @@
 //=	Note: You can change '1337' value to another to raise password protection
 //= 5.0 Fixed the close2;....close; end; lines. Who let them slip away? =/ [erKURITA]
 //=	  Also, the kafra upon warp was giving back the zeny. Removed. [erKURITA]
+//= 5.1 Optimized a little, added no tele/save arg's [Evera]
 //============================================================ 
 
 
@@ -43,80 +44,140 @@
 function	script	F_Kafra	{
 	set @kafPass, 0;
 	mes "[Kafra]";
-	if(getarg(0)==0) mes "Welcome to Kafra Corp.  We will stay with you wherever you go.";
-	//Niflheim
-	if(getarg(0)==1) mes "Welcome... Kafra Services.... Will be with you even if you die.....";
-	//Guilds Castles
-	if(getarg(0)==2) mes "Welcome, ^5533FF" + GetGuildName(@GID) + "^000000 members.  We will stay with you wherever you go";
-	//Amatsu
-	if(getarg(0)==3) mes "So, have you come from a faraway land to study our culture, or are you just sightseeing?";
-	if(getarg(0)==3) mes "In either case, why not stay awhile?";
-	if(getarg(0)==3) mes "The air is eternally heavy with the";
-	if(getarg(0)==3) mes "scent of pleasant wildflowers.";
-	//Louyang, Ayothaya
-	if(getarg(0)==4) mes "With our many Kafra";
-	if(getarg(0)==4) mes "service locations, you're never";
-	if(getarg(0)==4) mes "far from home.";
+	switch(getarg(0)){
+		default:
+		case 0:
+			mes "Welcome to Kafra Corp.  We will stay with you wherever you go.";
+			break;
+		//Niflheim
+		case 1:
+			mes "Welcome... Kafra Services.... Will be with you even if you die.....";
+			break;
+		//Guilds Castles
+		case 2:
+			mes "Welcome, ^5533FF" + GetGuildName(@GID) + "^000000 members.  We will stay with you wherever you go";
+			break;
+		//Amatsu
+		case 3:
+			mes "So, have you come from a faraway land to study our culture, or are you just sightseeing?";
+			mes "In either case, why not stay awhile?";
+			mes "The air is eternally heavy with the";
+			mes "scent of pleasant wildflowers.";
+			break;
+		//Louyang, Ayothaya
+		case 4:
+			mes "With our many Kafra";
+			mes "service locations, you're never";
+			mes "far from home.";
+			break;
+	}
 	next;
 
 	M_Menu:
-//Guilds Kafra
-	if(getarg(0)==2) menu "-Use Storage",M_FStorage, "-Use Guild Storage",M_GStorage, "-Rent a Cart",M_Cart, "-Use Teleport Service",M_Teleport, "-Cancel",M_End;
-//only Save & Storage
-	if(getarg(1)==1) menu "-Save",M_Save,"-Use Storage",M_Storage, "-Cancel",M_End;
-//only Storage
-	if(getarg(1)==2) menu "-Use Storage",M_Storage, "-Cancel",M_End;
-//Common w/o teleport
-	if(getarg(1)==3) menu	"-Save",M_Save, "-Use Storage",M_Storage, "-Rent a Cart",M_Cart, "-Kafra Pass",M_Pass, 
-		"-Other Information Check",M_Info, "-Cancel",M_End;
-//Common Kafra (with Teleport Notice in Einbroch)
-	if(getarg(1)==4) menu	"-Save",M_Save, "-Use Storage",M_Storage, "-Use Teleport Service",M_NoTeleport, "-Rent a Cart",M_Cart, "-Kafra Pass",M_Pass, 
-		"-Other Information Check",M_Info, "-Cancel",M_End;
-//Common Kafra
-	menu	"-Save",M_Save, "-Use Storage",M_Storage, "-Use Teleport Service",M_Teleport, "-Rent a Cart",M_Cart, "-Kafra Pass",M_Pass, 
-		"-Other Information Check",M_Info, "-Cancel",M_End;
+	//Guilds Kafra
+		cleararray @K_Menu0$[0],"",7;
+	if(getarg(0)==2) {
+		setarray @K_Menu0$[0],"-Use Storage","-Use Guild Storage","-Rent a Cart","-Use Teleport Service","-Cancel";
+	}
+	switch(getarg(1)){
+		//only Save & Storage
+		case 1:
+			setarray @K_Menu0$[0],"-Save","-Use Storage","-Cancel";
+			break;
+		//only Storage
+		case 2:
+			setarray @K_Menu0$[0],"-Use Storage","-Cancel";
+			break;
+		//Common w/o teleport
+		case 3: 
+			setarray @K_Menu0$[0],"-Save","-Use Storage","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			break;
+		//Case 4 is Einbroch no tele message.
+		//Common w/o save and teleport
+		case 5:
+			setarray @K_Menu0$[0],"-Use Storage","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			break;
+		//Only storage and other info check
+		case 6:
+			setarray @K_Menu0$[0],"-Use Storage","-Other Information Check","-Cancel";
+		//Common Kafra
+		default:
+			setarray @K_Menu0$[0],"-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			break;
+	}
+	menu 	@K_Menu0$[0],K_Menu0,@K_Menu0$[1],K_Menu1,@K_Menu0$[2],K_Menu2,
+		@K_Menu0$[3],K_Menu3,@K_Menu0$[4],K_Menu4,@K_Menu0$[5],K_Menu5,
+		@K_Menu0$[6],K_Menu6,@K_Menu0$[7],K_Menu7;
+	K_Menu0:
+		set @num,0;
+		goto K_Menuf;
+	K_Menu1:
+		set @num,1;
+		goto K_Menuf;
+	K_Menu2:
+		set @num,2;
+		goto K_Menuf;
+	K_Menu3:
+		set @num,3;
+		goto K_Menuf;
+	K_Menu4:
+		set @num,4;
+		goto K_Menuf;
+	K_Menu5:
+		set @num,5;
+		goto K_Menuf;
+	K_Menu6:
+		set @num,6;
+		goto K_Menuf;
+	K_Menu7:
+		set @num,7;
+	K_Menuf:
+		if (@K_Menu0$[@num] == "-Save") return;
+		if (@K_Menu0$[@num] == "-Use Storage"){
+			//Don't charge for a common Kafra Storage in your Castle
+			if(getarg(0) == 2) callfunc "F_KafStor",2;
+			else callfunc "F_KafStor",0;
+			next;
+			goto M_Menu;
+		}
+		if (@K_Menu0$[@num] == "-Use Teleport Service"){
+			if(getarg(1) == 4){				//Check for Einbroch Tele notice
+				mes "[Kafra]";
+				mes "Because of the ^FF0000Limited Transport Agreement^000000, the Kafra Corporation cannot provide Teleport Services in the Schwarzwald Republic.";
+				next;
+				mes "[Kafra]";
+				mes "We ask that you please";
+				mes "use the Airship Service";
+				mes "instead. Thank you for your";
+				mes "understanding and cooperation.";
+				next;
+				goto M_Menu;
+			}
+			callfunc "F_KafTele",getarg(0);
+			goto M_Menu;
+		}
+		if (@K_Menu0$[@num] == "-Rent a Cart"){
+			if(callfunc("F_KafCart",getarg(0)) == 1) next;
+			goto M_Menu;
+		}
+		if (@K_Menu0$[@num] == "-Kafra Pass"){
+			if(callfunc("F_KafPass") == 1) next;
+			goto M_Menu;
+		}
+		if (@K_Menu0$[@num] == "-Other Information Check"){
+			callfunc "F_KafInfo",getarg(2);
+			goto M_Menu;
+		}
+		if (@K_Menu0$[@num] == "-Cancel"){
+			callfunc "F_KafEnd",getarg(0),0;
+			end;
+		}
+		if (@K_Menu0$[@num] == "-Use Guild Storage"){
+			callfunc "F_KafStor",1;
+			next;
+			goto M_Menu;
+		}
 
-	M_Save:
-		return;
-	M_Storage:
-		callfunc "F_KafStor",0;
-		next;
-		goto M_Menu;
-	M_GStorage:
-		callfunc "F_KafStor",1;
-		next;
-		goto M_Menu;
-	//Don't charge for a common Kafra Storage in your Castle
-	M_FStorage:
-		callfunc "F_KafStor",2;
-		next;
-		goto M_Menu;
-	M_Teleport:
-		callfunc "F_KafTele",getarg(0);
-		goto M_Menu;
-	M_Cart:
-		if(callfunc("F_KafCart",getarg(0)) == 1) next;
-		goto M_Menu;
-	M_Pass:
-		if(callfunc("F_KafPass") == 1) next;
-		goto M_Menu;
-	M_Info:
-		callfunc "F_KafInfo",getarg(2);
-		goto M_Menu;
-	M_End:
-		callfunc "F_KafEnd",getarg(0),0;
-		end;
-	M_NoTeleport:
-		mes "[Kafra]";
-		mes "Because of the ^FF0000Limited Transport Agreement^000000, the Kafra Corporation cannot provide Teleport Services in the Schwarzwald Republic.";
-		next;
-		mes "[Kafra]";
-		mes "We ask that you please";
-		mes "use the Airship Service";
-		mes "instead. Thank you for your";
-		mes "understanding and cooperation.";
-		next;
-		goto M_Menu;
 }
 
 
@@ -237,13 +298,15 @@ function	script	F_KafCart	{
 	if(getarg(0) == 2) goto L_Guild;
 	mes "[Kafra]";
 	if(@kafPass==0) mes "The Cart Fee is 800 Zeny.  Do you want to Rent a Cart?";
-	if(@kafPass==1) mes "Since you're using a Kafra Pass, you can rent a cart for free!";
+	else mes "Since you're using a Kafra Pass, you can rent a cart for free!";
 	next;
 	menu "-Rent a Cart.",-, "-Cancel.",M_End;
 
 		if(Zeny<800 && kafPass==0) goto sL_CartFee;
-		if(@kafPass==0) set Zeny,Zeny-800;
-		if(@kafPass==0) set RESRVPTS, RESRVPTS + 48;
+		if(@kafPass==0) {
+			set Zeny,Zeny-800;
+			if(@kafPass==0) set RESRVPTS, RESRVPTS + 48;
+		}
 	L_Guild:
 		setcart;
 		mes "[Kafra]";

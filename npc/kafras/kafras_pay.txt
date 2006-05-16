@@ -48,7 +48,7 @@ payon.gat,175,226,4	script	Kafra	116,{
 pay_arche.gat,55,123,8	script	Kafra	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetPay";
-	callfunc "F_Kafra",0,0,1;
+	callfunc "F_Kafra",0,5,1;
 
 	M_Save:
 		savepoint "pay_arche.gat",49,144;
