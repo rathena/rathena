@@ -5254,7 +5254,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					sc->data[type].val4=-1;
 				}
 				break;
-
+			case SC_COMBO: //Clear last used skill when it is part of a combo.
+				if (sd && sd->skillid_old == sc->data[type].val1)
+					sd->skillid_old = sd->skilllv_old = 0;
+				break;
 			//gs_something2 [Vicious]
 			case SC_MADNESSCANCEL:
 			case SC_ADJUSTMENT:

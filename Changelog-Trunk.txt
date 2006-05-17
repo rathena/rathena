@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/17
+	* Added check to clear previous skill when combo time ends. Should fix TK
+	  Rankers being unable to initiate a combo with the same kick their previous
+	  combo was finished with. [Skotlex]
 	* Power Up and Agi Up now increase Hit/Flee by 20%/lv [Skotlex]
 2006/05/16
 	* Modified "hide woe damage" to send the number of hits rather than 1 as
