@@ -733,9 +733,13 @@ int mob_spawn (struct mob_data *md)
 static int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mode)
 {
 	// if the monster was provoked ignore the above rule [celest]
-	if(md->state.provoke_flag && md->state.provoke_flag != target->id &&
-		!battle_config.mob_ai&4)
-		return 0;
+	if(md->state.provoke_flag)
+	{	
+		if (md->state.provoke_flag == target->id)
+			return 1;
+		else if (!battle_config.mob_ai&4)
+			return 0;
+	}
 	
 	switch (md->state.skillstate) {
 		case MSS_BERSERK: //Only Assist, Angry or Aggressive+CastSensor mobs can change target while attacking.
