@@ -30,6 +30,8 @@ Evera
 
 Date		Added
 ======
+05/17
+	* Now the Inns are like on official servers [Playtester]
 05/15
 	* Fixed DTS warper, optimized Kafra and changed pay cave and orc village kafra [Evera]
 	* Fixed Amon Ra's spawning location [Playtester]
