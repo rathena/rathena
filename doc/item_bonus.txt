@@ -123,7 +123,7 @@ bonus3 bAddMonsterDropItem,n,x,y;	When killing monsters from race x with physica
 						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
-bonus3 bAutoSpell,n,x,y;		Auto Spell casting of spell n at level x with y% chance
+bonus3 bAutoSpell,n,x,y;		Auto Spell casting of spell n at level x with y/10% chance
 
 // bAddDamageClass, bAddMagicDamageClass and bAddMonsterDropItem it is setting possible up to 10. Those which exceed 10 are ignored.
 // those which can be used with the arrow are only bCritical, bAtkEle, bHit, bAddEle, bAddRace, bAddSize and bAddEff. The other things are ignored.
