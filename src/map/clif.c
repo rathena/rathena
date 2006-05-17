@@ -10541,7 +10541,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd) {
 		memcpy(monster_item_name, RFIFOP(fd,2), NAME_LENGTH);
 
 		if (mobdb_searchname(monster_item_name) != 0) {
-			if (pc_isGM(sd) >= (level =get_atcommand_level(AtCommand_Monster)))
+			if (pc_isGM(sd) >= (level =get_atcommand_level(AtCommand_Spawn)))	// changed from AtCommand_Monster for Skots [Reddozen]
 			{
 				atcommand_monster(fd, sd, "@spawn", monster_item_name); // as @spawn
 				if(log_config.gm && level >= log_config.gm)
