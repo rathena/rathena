@@ -27,6 +27,7 @@
 
 =========================
 05/18
+	* Corrected LoV's effect range for levels 11+ to range 8. [Skotlex]
 	* Added new items 2006-04-25 ... 2006-05-16. Thanks to Landarma [Lupus]
 05/16
 	* More Aegis X.2 drop updates [Playtester]

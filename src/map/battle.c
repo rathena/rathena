@@ -557,17 +557,21 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 	}
 	
-	if (battle_config.pk_mode && bl->type == BL_PC && damage > 0) {
-		if (flag & BF_WEAPON) {
+	if (battle_config.pk_mode && sd && damage > 0)
+  	{
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.pk_weapon_damage_rate/100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.pk_magic_damage_rate/100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.pk_misc_damage_rate/100;
+		} else { //Normal attacks get reductions based on range.
 			if (flag & BF_SHORT)
-				damage = damage * 80/100;
+				damage = damage * battle_config.pk_short_damage_rate/100;
 			if (flag & BF_LONG)
-				damage = damage * 70/100;
+				damage = damage * battle_config.pk_long_damage_rate/100;
 		}
-		if (flag & BF_MAGIC)
-			damage = damage * 60/100;
-		if(flag & BF_MISC)
-			damage = damage * 60/100;
 		if(damage < 1) damage  = 1;
 	}
 
@@ -3718,6 +3722,11 @@ static const struct battle_data_short {
 	{ "gvg_magic_attack_damage_rate",      &battle_config.gvg_magic_damage_rate	},
 	{ "gvg_misc_attack_damage_rate",       &battle_config.gvg_misc_damage_rate		},
 	{ "gvg_flee_penalty",                  &battle_config.gvg_flee_penalty			},
+	{ "pk_short_attack_damage_rate",      &battle_config.pk_short_damage_rate	},
+	{ "pk_long_attack_damage_rate",       &battle_config.pk_long_damage_rate		},
+	{ "pk_weapon_attack_damage_rate",     &battle_config.pk_weapon_damage_rate	},
+	{ "pk_magic_attack_damage_rate",      &battle_config.pk_magic_damage_rate	},
+	{ "pk_misc_attack_damage_rate",       &battle_config.pk_misc_damage_rate		},
 	{ "mob_changetarget_byskill",          &battle_config.mob_changetarget_byskill},
 	{ "attack_direction_change",           &battle_config.attack_direction_change },
 	{ "land_skill_limit",                  &battle_config.land_skill_limit		},
@@ -4116,6 +4125,13 @@ void battle_set_defaults() {
 	battle_config.gvg_misc_damage_rate = 60;
 	battle_config.gvg_flee_penalty = 20;
 	battle_config.gvg_eliminate_time = 7000;
+
+	battle_config.pk_short_damage_rate = 80;
+	battle_config.pk_long_damage_rate = 70;
+	battle_config.pk_weapon_damage_rate = 60;
+	battle_config.pk_magic_damage_rate = 60;
+	battle_config.pk_misc_damage_rate = 60;
+
 	battle_config.mob_changetarget_byskill = 0;
 	battle_config.attack_direction_change = BL_ALL;
 	battle_config.land_skill_limit = BL_ALL;
