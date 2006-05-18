@@ -1220,6 +1220,15 @@ static int clif_set0192(int fd, int m, int x, int y, int type) {
 	return 0;
 }
 
+// new and improved weather display [Valaris]
+static void clif_weather_sub(int fd, int id, int type) {
+	WFIFOHEAD(fd, packet_len_table[0x1f3]);
+	WFIFOW(fd,0) = 0x1f3;
+	WFIFOL(fd,2) = id;
+	WFIFOL(fd,6) = type;
+	WFIFOSET(fd,packet_len_table[0x1f3]);
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -1236,48 +1245,26 @@ static void clif_weather_check(struct map_session_data *sd) {
 		|| map[m].flag.rain
 		|| map[m].flag.clouds2)
 	{
-		WFIFOHEAD(fd, packet_len_table[0x7c]);
-		WFIFOW(fd,0)=0x7c;
-		WFIFOL(fd,2)=-10;
-		WFIFOW(fd,6)=0;
-		WFIFOW(fd,8)=0;
-		WFIFOW(fd,10)=0;
-		WFIFOW(fd,12)=OPTION_INVISIBLE;
-		WFIFOW(fd,20)=100;
-		WFIFOPOS(fd,36,sd->bl.x,sd->bl.y);
-		WFIFOSET(fd,packet_len_table[0x7c]);
-
 		if (map[m].flag.snow)
-			clif_weather_sub(fd, 162);
+			clif_weather_sub(fd, sd->bl.id, 162);
 		if (map[m].flag.clouds)
-			clif_weather_sub(fd, 233);
+			clif_weather_sub(fd, sd->bl.id, 233);
 		if (map[m].flag.clouds2)
-			clif_weather_sub(fd, 516);
+			clif_weather_sub(fd, sd->bl.id, 516);
 		if (map[m].flag.fog)
-			clif_weather_sub(fd, 515);
+			clif_weather_sub(fd, sd->bl.id, 515);
 		if (map[m].flag.fireworks) {
-			clif_weather_sub(fd, 297);
-			clif_weather_sub(fd, 299);
-			clif_weather_sub(fd, 301);
+			clif_weather_sub(fd, sd->bl.id, 297);
+			clif_weather_sub(fd, sd->bl.id, 299);
+			clif_weather_sub(fd, sd->bl.id, 301);
 		}
 		if (map[m].flag.sakura)
-			clif_weather_sub(fd, 163);
+			clif_weather_sub(fd, sd->bl.id, 163);
 		if (map[m].flag.leaves)
-			clif_weather_sub(fd, 333);
+			clif_weather_sub(fd, sd->bl.id, 333);
 		if (map[m].flag.rain)
-			clif_weather_sub(fd, 161);
+			clif_weather_sub(fd, sd->bl.id, 161);
 	}
-}
-
-// new and improved weather display [Valaris]
-int clif_weather_sub(int fd, int type) {
-	WFIFOHEAD(fd, packet_len_table[0x1f3]);
-	WFIFOW(fd,0) = 0x1f3;
-	WFIFOL(fd,2) = -10;
-	WFIFOL(fd,6) = type;
-	WFIFOSET(fd,packet_len_table[0x1f3]);
-
-	return 0;
 }
 
 int clif_weather(int m) {
@@ -1287,12 +1274,6 @@ int clif_weather(int m) {
 
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (sd = session[i]->session_data) != NULL && sd->state.auth && sd->bl.m == m) {
-			WFIFOHEAD(sd->fd, packet_len_table[0x80]);
-			WFIFOW(sd->fd,0) = 0x80;
-			WFIFOL(sd->fd,2) = -10;
-			WFIFOB(sd->fd,6) = 0;
-			WFIFOSET(sd->fd,packet_len_table[0x80]);
-
 			clif_weather_check(sd);
 		}
 	}
@@ -1490,7 +1471,7 @@ int clif_move(struct block_list *bl) {
 	case BL_PC:
 		{
 			TBL_PC *sd = ((TBL_PC*)bl);
-			clif_movepc(sd);
+//			clif_movepc(sd);
 			if(sd->state.size==2) // tiny/big players [Valaris]
 				clif_specialeffect(&sd->bl,423,0);
 			else if(sd->state.size==1)

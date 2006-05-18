@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/18
+	* Applied an experimental weather code that should lower bandwidth usage to
+	  near-none, which's only disadvantage should be the weather not clearing out
+	  until moving to another map (even when the mapflag is removed from the
+	  current map). Please test and report if there's any anomalies with it.
+	  [Skotlex]
 	* NPC_AGIUP will now give movement boost of 50% [Skotlex]
 	* Fixed WZ_WATERBALL number of hits when used by non-players. [Skotlex]
 	* MO_BODYRELOCATION will send the slide packet with the actual src's
