@@ -2840,7 +2840,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			int range = skilllv/2;
 			//Rain doesn't affect WATERBALL (Rain has been removed at kRO) [Lupus]
 			//int cnt = (!map[src->m].flag.rain) ? skill_count_water(src,range) - 1 : skill_get_num(skillid,skilllv) - 1;
-			int cnt = (src->type==BL_PC)?skill_count_water(src,range):range*range;
+			int cnt = (src->type==BL_PC)?skill_count_water(src,range):++range*range;
 			cnt--;
 			if (cnt > 0)
 				skill_addtimerskill(src,tick+150,bl->id,0,0,
@@ -4972,8 +4972,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_POWERUP:
 		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
-		//Power up is atkrate increase + hit% increase.
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,20*skilllv,skill_get_time(skillid, skilllv)));
+		break;
+		
 	case NPC_AGIUP:
+		sc_start(bl,SC_SPEEDUP1,100,skilllv,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,20*skilllv,skill_get_time(skillid, skilllv)));
 		break;
@@ -5984,7 +5988,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case MO_BODYRELOCATION:
 		if (unit_movepos(src, x, y, 1, 1)) {
-			clif_slide(src, x, y);
+			clif_slide(src, src->x, src->y);
 			if (sd) skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;

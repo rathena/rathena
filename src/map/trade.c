@@ -157,7 +157,7 @@ int impossible_trade_check(struct map_session_data *sd) {
 		{ // if more than the player have -> hack
 			sprintf(message_to_gm, msg_txt(538), sd->status.name, sd->status.account_id); // Hack on trade: character '%s' (account: %d) try to trade more items that he has.
 			intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message_to_gm);
-			sprintf(message_to_gm, msg_txt(539), sd->status.inventory[index].amount, sd->status.inventory[index].nameid, sd->deal.item[i].amount); // This player has %d of a kind of item (id: %d), and try to trade %d of them.
+			sprintf(message_to_gm, msg_txt(539), inventory[index].amount, inventory[index].nameid, sd->deal.item[i].amount); // This player has %d of a kind of item (id: %d), and try to trade %d of them.
 			intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message_to_gm);
 			// if we block people
 			if (battle_config.ban_hack_trade < 0) {
@@ -446,7 +446,7 @@ void trade_tradecommit(struct map_session_data *sd) {
 	
 	sd->state.deal_locked = 2;
 	
-	if (sd->state.deal_locked < 2 || tsd->state.deal_locked < 2)
+	if (tsd->state.deal_locked < 2)
 		return; //Not yet time for trading.
 
 	//Now is a good time (to save on resources) to check that the trade can indeed be made and it's not exploitable.

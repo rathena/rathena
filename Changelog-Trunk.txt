@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/18
+	* NPC_AGIUP will now give movement boost of 50% [Skotlex]
+	* Fixed WZ_WATERBALL number of hits when used by non-players. [Skotlex]
+	* MO_BODYRELOCATION will send the slide packet with the actual src's
+	  coordinates rather than selected tile. [Skotlex]
 2006/05/17
 	* Modified mob_can_changetarget to return true always when the new target
 	  is the provoked-by character. Fixes provoke not making the mob change
