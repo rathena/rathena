@@ -4467,8 +4467,8 @@ void battle_validate_conf() {
 		battle_config.mob_remove_delay = 15000;
 	if (battle_config.dynamic_mobs > 1)
 		battle_config.dynamic_mobs = 1;	//The flag will be used in assignations
-	if (battle_config.mob_max_skilllvl> 11 || battle_config.mob_max_skilllvl<1 )
-		battle_config.mob_max_skilllvl = 11;
+	if (battle_config.mob_max_skilllvl> MAX_SKILL_LEVEL || battle_config.mob_max_skilllvl<1 )
+		battle_config.mob_max_skilllvl = MAX_SKILL_LEVEL;
 
 	if (battle_config.firewall_hits_on_undead < 1)
 		battle_config.firewall_hits_on_undead = 1;
