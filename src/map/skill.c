@@ -2148,30 +2148,24 @@ static int skill_check_unit_range_sub( struct block_list *bl,va_list ap )
 	return 1;
 }
 
-int skill_check_unit_range(int m,int x,int y,int skillid,int skilllv)
+static int skill_check_unit_range(struct block_list *bl,int x,int y,int skillid,int skilllv)
 {
-	int range = skill_get_unit_range(skillid, skilllv);
+	//Non players do not check for the skill's splash-trigger area.
+	int range = bl->type==BL_PC?skill_get_unit_range(skillid, skilllv):0;
 	int layout_type = skill_get_unit_layout_type(skillid,skilllv);
 	if (layout_type==-1 || layout_type>MAX_SQUARE_LAYOUT) {
 		ShowError("skill_check_unit_range: unsupported layout type %d for skill %d\n",layout_type,skillid);
 		return 0;
 	}
 
-	// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
 	range += layout_type;
-	return map_foreachinarea(skill_check_unit_range_sub,m,
+	return map_foreachinarea(skill_check_unit_range_sub,bl->m,
 			x-range,y-range,x+range,y+range,BL_SKILL,skillid);
 }
 
 static int skill_check_unit_range2_sub( struct block_list *bl,va_list ap )
 {
-	int *c;
 	int skillid;
-
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, c = va_arg(ap,int *));
 
 	if(bl->prev == NULL)
 		return 0;
@@ -2183,17 +2177,14 @@ static int skill_check_unit_range2_sub( struct block_list *bl,va_list ap )
 	if (skillid==HP_BASILICA && bl->type==BL_PC)
 		return 0;
 
-	if (skillid==AM_DEMONSTRATION && bl->type==BL_MOB && ((struct mob_data*)bl)->class_ == MOBID_EMPERIUM)
+	if (skillid==AM_DEMONSTRATION && bl->type==BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM)
 		return 0; //Allow casting Bomb/Demonstration Right under emperium [Skotlex]
-	
-	(*c)++;
-
 	return 1;
 }
 
-int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid, int skilllv)
+static int skill_check_unit_range2(struct block_list *bl, int x,int y,int skillid, int skilllv)
 {
-	int c = 0, range, type;
+	int range, type;
 
 	switch (skillid) {	// to be expanded later
 	case WZ_ICEWALL:
@@ -2206,7 +2197,6 @@ int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid
 				ShowError("skill_check_unit_range2: unsupported layout type %d for skill %d\n",layout_type,skillid);
 				return 0;
 			}
-			// ‚Æ‚è‚ ‚¦‚¸?³•ûŒ`‚Ìƒ†ƒjƒbƒgƒŒƒCƒAƒEƒg‚Ì‚İ‘Î‰
 			range = skill_get_unit_range(skillid,skilllv) + layout_type;
 		}
 		break;
@@ -2219,11 +2209,9 @@ int skill_check_unit_range2(struct block_list *bl, int m,int x,int y,int skillid
 	else
 		type = BL_PC;
 
-	map_foreachinarea(skill_check_unit_range2_sub, m,
+	return map_foreachinarea(skill_check_unit_range2_sub, bl->m,
 		x - range, y - range, x + range, y + range,
-		type, &c, skillid);
-
-	return c;
+		type, skillid);
 }
 
 int skill_guildaura_sub (struct block_list *bl,va_list ap)
@@ -5760,13 +5748,13 @@ int skill_castend_pos( int tid, unsigned int tick, int id,int data )
 
 		if (!(battle_config.skill_reiteration && src->type&battle_config.skill_reiteration) &&
 			skill_get_unit_flag(ud->skillid)&UF_NOREITERATION &&
-			skill_check_unit_range(src->m,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
+			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
 		)
 			break;
 
 		if (battle_config.skill_nofootset && src->type&battle_config.skill_nofootset &&
 			skill_get_unit_flag(ud->skillid)&UF_NOFOOTSET &&
-			skill_check_unit_range2(src, src->m,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
+			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
 		)
 			break;
 		
@@ -6253,7 +6241,7 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 				return 0;
 			}
 			
-			if(skill_check_unit_range2(&sd->bl,sd->bl.m,wx,wy,skill_num,lv) > 0) {
+			if(skill_check_unit_range2(&sd->bl,wx,wy,skill_num,lv) > 0) {
 				clif_skill_fail(sd,0,0,0);
 				skill_failed(sd);
 				return 0;

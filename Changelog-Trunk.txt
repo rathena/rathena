@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/18
+	* skill reiteration code now does not checks for the trigger-area of the
+	  skill in the case of non-players, which means mobs can now place traps in
+	  cells adjacent to each other. [Skotlex]
 	* Applied an experimental weather code that should lower bandwidth usage to
 	  near-none, which's only disadvantage should be the weather not clearing out
 	  until moving to another map (even when the mapflag is removed from the
