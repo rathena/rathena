@@ -27,6 +27,7 @@
 
 =========================
 05/18
+	* Fixed MVP Fire Pillar --> 12 hits, 5x5 range [Playtester]
 	* Corrected LoV's effect range for levels 11+ to range 8. [Skotlex]
 	* Added new items 2006-04-25 ... 2006-05-16. Thanks to Landarma [Lupus]
 05/16
