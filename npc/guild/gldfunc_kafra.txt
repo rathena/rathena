@@ -33,6 +33,6 @@ L_StartG:
 	set @wrpP[0], 0;
 	set @wrpD$[0], getarg(1);
 	setarray @wrpC$[0], @wrpD$[0], "Cancel", "", "", "","";
-	callfunc "F_Kafra",2;
+	callfunc "F_Kafra",2,0,0;
 	end;
 }
