@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/18
+	* Added new items 2006-04-25 ... 2006-05-16. Thanks to Landarma [Lupus]
 05/16
 	* More Aegis X.2 drop updates [Playtester]
 	- progress 50%

@@ -1016,6 +1016,7 @@
 2355,Angelic_Protection,Angelic Protection,5,,10,600,,4,,1,0x00000001,7,2,16,,40,1,0,{ bonus bMdef,20; if(isequipped(2116,2420,2521,5125)) { bonus bMaxHP,900; bonus bMaxSP,100; bonus4 bAutoSpellWhenHit,361,1,20,0; } },{},{}
 2356,Holy_Cloth_of_Benefit,Holy Cloth of Benefit,5,,10,2500,,5,,1,0x00008100,7,2,16,,70,1,,{ bonus bMdef,5; bonus2 bResEff,Eff_Blind,8000; },{},{}
 2357,Valkyrie's_Armor,Valkyrie's Armor,5,,10,2800,,6,,1,0xFFFFFFFE,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stun,5000; },{},{}
+2358,Angel's_Dress,Angel's Dress,5,,,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,1,,{ bonus bLuk,4; },{},{}
 // Footgears
 //===================================================================
 2401,Sandals,Sandals,5,400,,200,,1,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
@@ -1133,6 +1134,8 @@
 2667,Glove_of_Archer,Gloves of Archer,5,,10,300,,0,,0,0xFFFFFFFE,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; },{},{}
 2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{},{},{}
 2669,RJC_Necklace,RJC Necklace,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxSP,10; },{},{}
+2670,Unknown2676,Unknown2676,5,,,100,,1,,1,0xFFFFFFFF,7,2,136,,30,0,,{ bonus bFlee,5; },{},{}
+
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; },{},{}
@@ -1617,6 +1620,12 @@
 5148,National_Holiday_Cap,National Holiday Cap,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
+5151,Note_Headphone,Note Headphone,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; },{},{}
+5152,Unknown5152,Unknown5152,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
+5153,Angeling_Hairpin,Angeling Hairpin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
+5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
+5155,Father's_Beard,Father's Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{},{ bonus bAtk,20; }
+5156,Father's_Mask,Father's Mask,5,,,100,,1,,,0xFFFFFFFF,7,2,1,,,,8,{ bonus bMatkRate,1; },{},{}
 
 // More Etc Items
 //===================================================================
@@ -2165,6 +2174,20 @@
 7544,Number_43_Ball,Number 43 Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
 7545,Number_44_Ball,Number 44 Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
 7546,Number_45_Ball,Number 45 Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
+7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
+7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{},{},{}
+7549,Brazilian_Flag,Brazilian Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
+7550,6.13_Ticket,6.13 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7551,6.18_Ticket,6.18 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7552,6.22_Ticket,6.22 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7553,Lotus_,Lotus,3,,,10,,,,,,,,,,,,,{},{},{}
+7554,Striped_Candle,Striped Candle,3,,,10,,,,,,,,,,,,,{},{},{}
+7555,Green_Incense,Green Incense,3,,,10,,,,,,,,,,,,,{},{},{}
+7556,Missing_Heart,Missing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
+7557,Invitation_Letter,Invitation Letter to Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
+7558,Invitation_Ticket,Invitation Ticket to Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
+7559,Key_of_Secret_Garden,Key of Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
+7560,Missing_Heart_,Missing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
@@ -2384,6 +2407,7 @@
 12149,Bullet_Casing,Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; },{},{}
 12150,Shell_of_Blood_Casing,Shell of Blood Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; },{},{}
 12151,Silver_Bullet_Casing,Silver Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; },{},{}
+12152,Special_Gift,Special Gift,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers
@@ -2453,13 +2477,6 @@
 
 
 // Temp Plugs. Please check http://opensvn.csie.org/EnglishTranslation/data/ for info about the items.
-
-7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
-7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{},{},{}
-7549,Brazilian_Flag,Brazilian Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
-7550,6.13_Ticket,6.13 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7551,6.18_Ticket,6.18 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7552,6.22_Ticket,6.22 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
 
 4332,Waste_Stove_Card,Waste Stove Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,5; bonus bInt,1; if(isequipped(4185,4293,4312)) { bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus4 bAutoSpell,32,1,100,1; bonus2 bSkillAtk,271,10; if(BaseClass == Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel,0; } } },{},{}
 4333,Venomous_Card,Venomous Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Poison,3000; bonus2 bAddEff,Eff_Poison,3000; },{},{}
@@ -2537,3 +2554,4 @@
 4405,Frus_Card,Frus Card,6,,10,10,,,,,,,,2,,,,,{},{},{}
 4406,Skeggiold_Card,Skeggiold Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bMagicAddEle,Ele_Holy,100; },{},{}
 4407,Valkyrie_Randgris_Card,Valkyrie Randgris Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,289,1,100; },{},{}
+
