@@ -9432,9 +9432,6 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-
-	if (clif_trading(sd))
-		return;
 	pc_getitemfromcart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
 
@@ -9951,7 +9948,7 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd) {
 	
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
 	item_amount = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
-	if (item_index < 0 || item_index >= MAX_INVENTORY)
+	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 
 	if (sd->state.storage_flag == 1)
@@ -9968,9 +9965,6 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd) {
 	int item_index, item_amount;
 	RFIFOHEAD(fd);
 
-	if (clif_trading(sd))
-		return;
-	
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-1;
 	item_amount = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 
@@ -9987,7 +9981,7 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd) {
 void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (clif_trading(sd))
+	if(sd->vender_id)	
 		return;
 
 	if (sd->state.storage_flag == 1)
@@ -10003,7 +9997,7 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd) {
 void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (clif_trading(sd))
+	if (sd->vender_id)
 		return;
 	if (sd->state.storage_flag == 1)
 		storage_storagegettocart(sd, RFIFOW(fd,2)-1, RFIFOL(fd,4));
@@ -10152,8 +10146,6 @@ void clif_parse_VendingListReq(int fd, struct map_session_data *sd) {
  */
 void clif_parse_PurchaseReq(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	if (clif_trading(sd))
-		return;
 	vending_purchasereq(sd, RFIFOW(fd,2), RFIFOL(fd,4), RFIFOP(fd,8));
 }
 

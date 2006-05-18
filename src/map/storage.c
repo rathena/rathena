@@ -123,52 +123,51 @@ int storage_delete(int account_id)
  */
 int storage_storageopen(struct map_session_data *sd)
 {
-//#ifdef TXT_ONLY
 	struct storage *stor;
-//#endif
 	nullpo_retr(0, sd);
 
 	if(sd->state.finalsave) //Refuse to open storage when you had your last save done.
 		return 1;
+
+	if(sd->state.storage_flag)
+		return 1; //Already open?
 	
-	if( pc_can_give_items(pc_isGM(sd)) ) { //check is this GM level is allowed to put items to storage
+	if(pc_can_give_items(pc_isGM(sd)))
+  	{ //check is this GM level is allowed to put items to storage
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return 1;
 	}
-//Storage loading always from sql idea from Komurka [Skotlex] - removed as it opens exploits when server lags.
-//#ifdef TXT_ONLY
-	if((stor = idb_get(storage_db,sd->status.account_id)) != NULL) {
-		if (stor->storage_status == 0 && sd->state.storage_flag == 0) {
-			stor->storage_status = 1;
-			sd->state.storage_flag = 1;
-			clif_storageitemlist(sd,stor);
-			clif_storageequiplist(sd,stor);
-			clif_updatestorageamount(sd,stor);
-			return 0;
-		}
-	} else
-//#endif
+	
+	if((stor = idb_get(storage_db,sd->status.account_id)) == NULL)
+  	{	//Request storage.
 		intif_request_storage(sd->status.account_id);
+		return 1;
+	}
+  
+	if (stor->storage_status)
+  		return 1; //Already open/player already has it open...
 
-	return 1;
+	stor->storage_status = 1;
+	sd->state.storage_flag = 1;
+	clif_storageitemlist(sd,stor);
+	clif_storageequiplist(sd,stor);
+	clif_updatestorageamount(sd,stor);
+	return 0;
 }
 
 /*==========================================
- * カプラ倉庫へアイテム追加
+ * Internal add-item function.
  *------------------------------------------
  */
-int storage_additem(struct map_session_data *sd,struct storage *stor,struct item *item_data,int amount)
+static int storage_additem(struct map_session_data *sd,struct storage *stor,struct item *item_data,int amount)
 {
 	struct item_data *data;
 	int i;
 
-	nullpo_retr(1, sd);
-	nullpo_retr(1, stor);
-	nullpo_retr(1, item_data);
-
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
-	nullpo_retr(1, data = itemdb_search(item_data->nameid));
+	
+	data = itemdb_search(item_data->nameid);
 
 	if (!itemdb_canstore(item_data->nameid, pc_isGM(sd)))
 	{	//Check if item is storable. [Skotlex]
@@ -176,46 +175,38 @@ int storage_additem(struct map_session_data *sd,struct storage *stor,struct item
 		return 1;
 	}
 	
-	i=MAX_STORAGE;
-	if(!itemdb_isequip2(data)){
-		// 装備品ではないので、既所有品なら個数のみ変化させる
+	if(!itemdb_isequip2(data)){ //Stackable
 		for(i=0;i<MAX_STORAGE;i++){
 			if( compare_item (&stor->storage_[i], item_data)) {
-				if(stor->storage_[i].amount+amount > MAX_AMOUNT)
+				if(amount > MAX_AMOUNT - stor->storage_[i].amount)
 					return 1;
 				stor->storage_[i].amount+=amount;
 				clif_storageitemadded(sd,stor,i,amount);
-				break;
+				stor->dirty = 1;
+				return 0;
 			}
 		}
 	}
-	if(i>=MAX_STORAGE){
-		// 装備品か未所有品だったので空き欄へ追加
-		for(i=0;i<MAX_STORAGE;i++){
-			if(stor->storage_[i].nameid==0){
-				memcpy(&stor->storage_[i],item_data,sizeof(stor->storage_[0]));
-				stor->storage_[i].amount=amount;
-				stor->storage_amount++;
-				clif_storageitemadded(sd,stor,i,amount);
-				clif_updatestorageamount(sd,stor);
-				break;
-			}
-		}
-		if(i>=MAX_STORAGE)
-			return 1;
-	}
+	//Add item
+	for(i=0;i<MAX_STORAGE && stor->storage_[i].nameid;i++);
+	
+	if(i>=MAX_STORAGE)
+		return 1;
 
+	memcpy(&stor->storage_[i],item_data,sizeof(stor->storage_[0]));
+	stor->storage_[i].amount=amount;
+	stor->storage_amount++;
+	clif_storageitemadded(sd,stor,i,amount);
+	clif_updatestorageamount(sd,stor);
 	stor->dirty = 1;
 	return 0;
 }
 /*==========================================
- * カプラ倉庫アイテムを減らす
+ * Internal del-item function
  *------------------------------------------
  */
-int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
+static int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
 {
-	nullpo_retr(1, sd);
-	nullpo_retr(1, stor);
 
 	if(stor->storage_[n].nameid==0 || stor->storage_[n].amount<amount)
 		return 1;
@@ -232,7 +223,7 @@ int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int a
 	return 0;
 }
 /*==========================================
- * カプラ倉庫へ入れる
+ * Add an item to the storage from the inventory.
  *------------------------------------------
  */
 int storage_storageadd(struct map_session_data *sd,int index,int amount)
@@ -242,22 +233,28 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
-	if( (stor->storage_amount <= MAX_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
-		if(index>=0 && index<MAX_INVENTORY) { // valid index
-                  if( (amount <= sd->status.inventory[index].amount) && (amount > 0) ) { //valid amount
-//                    log_tostorage(sd, index, 0);
-                    if(storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
-                      // remove item from inventory
-                      pc_delitem(sd,index,amount,0);
-                  } // valid amount
-		}// valid index
-	}// storage not full & storage open
+	if((stor->storage_amount > MAX_STORAGE) || !stor->storage_status)
+		return 0; // storage full / storage closed
 
-	return 0;
+	if(index<0 || index>=MAX_INVENTORY)
+		return 0;
+
+	if(sd->status.inventory[index].nameid <= 0)
+		return 0; //No item on that spot
+	
+	if(amount < 1 || amount < sd->status.inventory[index].amount)
+  		return 0;
+
+//	log_tostorage(sd, index, 0);
+	if(storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
+  // remove item from inventory
+		pc_delitem(sd,index,amount,0);
+
+	return 1;
 }
 
 /*==========================================
- * カプラ倉庫から出す
+ * Retrieve an item from the storage.
  *------------------------------------------
  */
 int storage_storageget(struct map_session_data *sd,int index,int amount)
@@ -268,22 +265,25 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
-	if(stor->storage_status == 1) { //  storage open
-		if(index>=0 && index<MAX_STORAGE) { // valid index
-			if( (amount <= stor->storage_[index].amount) && (amount > 0) ) { //valid amount
-				if((flag = pc_additem(sd,&stor->storage_[index],amount)) == 0)
-					storage_delitem(sd,stor,index,amount);
-				//else //taken out because it can dupe items if the above fails somehow :) [Kevin]
-					//clif_additem(sd,0,0,flag);
-//                                log_fromstorage(sd, index, 0);
-			} // valid amount
-		}// valid index
-	}// storage open
+	
+	if(index<0 || index>=MAX_STORAGE)
+		return 0;
 
-	return 0;
+	if(stor->storage_[index].nameid <= 0)
+		return 0; //Nothing there
+	
+	if(amount < 1 || amount > stor->storage_[index].amount)
+		return 0;
+
+	if((flag = pc_additem(sd,&stor->storage_[index],amount)) == 0)
+		storage_delitem(sd,stor,index,amount);
+	else
+		clif_additem(sd,0,0,flag);
+//	log_fromstorage(sd, index, 0);
+	return 1;
 }
 /*==========================================
- * カプラ倉庫へカートから入れる
+ * Move an item from cart to storage.
  *------------------------------------------
  */
 int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
@@ -293,20 +293,26 @@ int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
-	if( (stor->storage_amount <= MAX_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
-		if(index>=0 && index<MAX_INVENTORY) { // valid index
-			if( (amount <= sd->status.cart[index].amount) && (amount > 0) ) { //valid amount
-				if(storage_additem(sd,stor,&sd->status.cart[index],amount)==0)
-					pc_cart_delitem(sd,index,amount,0);
-			} // valid amount
-		}// valid index
-	}// storage not full & storage open
+	if(stor->storage_amount > MAX_STORAGE || !stor->storage_status)
+  		return 0; // storage full / storage closed
 
-	return 0;
+	if(index< 0 || index>=MAX_CART)
+  		return 0;
+
+	if(sd->status.cart[index].nameid <= 0)
+		return 0; //No item there.
+	
+	if(amount < 1 || amount > sd->status.cart[index].amount)
+		return 0;
+
+	if(storage_additem(sd,stor,&sd->status.cart[index],amount)==0)
+		pc_cart_delitem(sd,index,amount,0);
+
+	return 1;
 }
 
 /*==========================================
- * カプラ倉庫からカートへ出す
+ * Get from Storage to the Cart
  *------------------------------------------
  */
 int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
@@ -316,17 +322,22 @@ int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
-	if(stor->storage_status == 1) { //  storage open
-		if(index>=0 && index<MAX_STORAGE) { // valid index
-			if( (amount <= stor->storage_[index].amount) && (amount > 0) ) { //valid amount
-				if(pc_cart_additem(sd,&stor->storage_[index],amount)==0){
-					storage_delitem(sd,stor,index,amount);
-				}
-			} // valid amount
-		}// valid index
-	}// storage open
+	if(!stor->storage_status)
+		return 0;
+ 
+	if(index< 0 || index>=MAX_STORAGE)
+		return 0;
+	
+	if(stor->storage_[index].nameid <= 0)
+		return 0; //Nothing there.
+	
+	if(amount < 1 || amount > stor->storage_[index].amount)
+		return 0;
+	
+	if(pc_cart_additem(sd,&stor->storage_[index],amount)==0)
+		storage_delitem(sd,stor,index,amount);
 
-	return 0;
+	return 1;
 }
 
 
@@ -342,15 +353,16 @@ int storage_storageclose(struct map_session_data *sd)
 	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
 
 	clif_storageclose(sd);
-	chrif_save(sd, 0); //This will invoke the storage save function as well. [Skotlex]
+	if (stor->storage_status)
+		chrif_save(sd,0); //This will invoke the storage save function as well. [Skotlex]
 	
 	stor->storage_status=0;
-	sd->state.storage_flag = 0;
+	sd->state.storage_flag=0;
 	return 0;
 }
 
 /*==========================================
- * ログアウト時開いているカプラ倉庫の保存
+ * When quitting the game.
  *------------------------------------------
  */
 int storage_storage_quit(struct map_session_data *sd, int flag)
@@ -447,26 +459,26 @@ int storage_guild_storageopen(struct map_session_data *sd)
 	if(sd->state.finalsave) //Refuse to open storage when you had your last save done.
 		return 1;
 	
+	if(sd->state.storage_flag)
+		return 1; //Can't open both storages at a time.
+	
 	if( pc_can_give_items(pc_isGM(sd)) ) { //check is this GM level can open guild storage and store items [Lupus]
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return 1;
 	}
 
-	if((gstor = guild2storage2(sd->status.guild_id)) != NULL) {
-		if(gstor->storage_status)
-			return 1;
-		if(sd->state.storage_flag)
-			return 1; //Can't open both storages at a time.
-		gstor->storage_status = 1;
-		sd->state.storage_flag = 2;
-		clif_guildstorageitemlist(sd,gstor);
-		clif_guildstorageequiplist(sd,gstor);
-		clif_updateguildstorageamount(sd,gstor);
+	if((gstor = guild2storage2(sd->status.guild_id)) == NULL) {
+		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
 		return 0;
 	}
-	else
-		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
-
+	if(gstor->storage_status)
+		return 1;
+	
+	gstor->storage_status = 1;
+	sd->state.storage_flag = 2;
+	clif_guildstorageitemlist(sd,gstor);
+	clif_guildstorageequiplist(sd,gstor);
+	clif_updateguildstorageamount(sd,gstor);
 	return 0;
 }
 
@@ -489,34 +501,29 @@ int guild_storage_additem(struct map_session_data *sd,struct guild_storage *stor
 		return 1;
 	}
 
-	i=MAX_GUILD_STORAGE;
-	if(!itemdb_isequip2(data)){
-		// 装備品ではないので、既所有品なら個数のみ変化させる
+	if(!itemdb_isequip2(data)){ //Stackable
 		for(i=0;i<MAX_GUILD_STORAGE;i++){
 			if(compare_item(&stor->storage_[i], item_data)) {
 				if(stor->storage_[i].amount+amount > MAX_AMOUNT)
 					return 1;
 				stor->storage_[i].amount+=amount;
 				clif_guildstorageitemadded(sd,stor,i,amount);
-				break;
+				stor->dirty = 1;
+				return 0;
 			}
 		}
 	}
-	if(i>=MAX_GUILD_STORAGE){
-		// 装備品か未所有品だったので空き欄へ追加
-		for(i=0;i<MAX_GUILD_STORAGE;i++){
-			if(stor->storage_[i].nameid==0){
-				memcpy(&stor->storage_[i],item_data,sizeof(stor->storage_[0]));
-				stor->storage_[i].amount=amount;
-				stor->storage_amount++;
-				clif_guildstorageitemadded(sd,stor,i,amount);
-				clif_updateguildstorageamount(sd,stor);
-				break;
-			}
-		}
-		if(i>=MAX_GUILD_STORAGE)
-			return 1;
-	}
+	//Add item
+	for(i=0;i<MAX_GUILD_STORAGE && stor->storage_[i].nameid;i++);
+	
+	if(i>=MAX_GUILD_STORAGE)
+		return 1;
+	
+	memcpy(&stor->storage_[i],item_data,sizeof(stor->storage_[0]));
+	stor->storage_[i].amount=amount;
+	stor->storage_amount++;
+	clif_guildstorageitemadded(sd,stor,i,amount);
+	clif_updateguildstorageamount(sd,stor);
 	stor->dirty = 1;
 	return 0;
 }
@@ -545,21 +552,25 @@ int storage_guild_storageadd(struct map_session_data *sd,int index,int amount)
 	struct guild_storage *stor;
 
 	nullpo_retr(0, sd);
+	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+		
+	if (!stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE)
+		return 0;
+	
+	if(index<0 || index>=MAX_INVENTORY)
+		return 0;
 
-	if((stor=guild2storage2(sd->status.guild_id)) != NULL) {
-		if( (stor->storage_amount <= MAX_GUILD_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
-			if(index>=0 && index<MAX_INVENTORY) { // valid index
-				if( (amount <= sd->status.inventory[index].amount) && (amount > 0) ) { //valid amount
-//                                        log_tostorage(sd, index, 1);
-					if(guild_storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
-					// remove item from inventory
-						pc_delitem(sd,index,amount,0);
-				} // valid amount
-			}// valid index
-		}// storage not full & storage open
-	}
+	if(sd->status.inventory[index].nameid <= 0)
+		return 0;
+	
+	if(amount < 1 || amount > sd->status.inventory[index].amount)
+		return 0;
 
-	return 0;
+//	log_tostorage(sd, index, 1);
+	if(guild_storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
+		pc_delitem(sd,index,amount,0);
+
+	return 1;
 }
 
 int storage_guild_storageget(struct map_session_data *sd,int index,int amount)
@@ -568,20 +579,25 @@ int storage_guild_storageget(struct map_session_data *sd,int index,int amount)
 	int flag;
 
 	nullpo_retr(0, sd);
+	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 
-	if((stor=guild2storage2(sd->status.guild_id)) != NULL) {
-		if(stor->storage_status == 1) { //  storage open
-			if(index>=0 && index<MAX_GUILD_STORAGE) { // valid index
-				if( (amount <= stor->storage_[index].amount) && (amount > 0) ) { //valid amount
-					if((flag = pc_additem(sd,&stor->storage_[index],amount)) == 0)
-						guild_storage_delitem(sd,stor,index,amount);
-					else
-						clif_additem(sd,0,0,flag);
-//                                        log_fromstorage(sd, index, 1);
-				} // valid amount
-			}// valid index
-		}// storage open
-	}
+	if(!stor->storage_status)
+  		return 0;
+	
+	if(index<0 || index>=MAX_GUILD_STORAGE)
+		return 0;
+
+	if(stor->storage_[index].nameid <= 0)
+		return 0;
+	
+	if(amount < 1 || amount > stor->storage_[index].amount)
+	  	return 0;
+
+	if((flag = pc_additem(sd,&stor->storage_[index],amount)) == 0)
+		guild_storage_delitem(sd,stor,index,amount);
+	else
+		clif_additem(sd,0,0,flag);
+//	log_fromstorage(sd, index, 1);
 
 	return 0;
 }
@@ -591,19 +607,24 @@ int storage_guild_storageaddfromcart(struct map_session_data *sd,int index,int a
 	struct guild_storage *stor;
 
 	nullpo_retr(0, sd);
+	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 
-	if((stor=guild2storage2(sd->status.guild_id)) != NULL) {
-		if( (stor->storage_amount <= MAX_GUILD_STORAGE) && (stor->storage_status == 1) ) { // storage not full & storage open
-			if(index>=0 && index<MAX_INVENTORY) { // valid index
-				if( (amount <= sd->status.cart[index].amount) && (amount > 0) ) { //valid amount
-					if(guild_storage_additem(sd,stor,&sd->status.cart[index],amount)==0)
-						pc_cart_delitem(sd,index,amount,0);
-				} // valid amount
-			}// valid index
-		}// storage not full & storage open
-	}
+	if(!stor->storage_status || stor->storage_amount > MAX_GUILD_STORAGE)
+		return 0;
 
-	return 0;
+	if(index<0 || index>=MAX_CART)
+		return 0;
+
+	if(sd->status.cart[index].nameid <= 0)
+		return 0;
+	
+	if(amount < 1 || amount > sd->status.cart[index].amount)
+		return 0;
+
+	if(guild_storage_additem(sd,stor,&sd->status.cart[index],amount)==0)
+		pc_cart_delitem(sd,index,amount,0);
+
+	return 1;
 }
 
 int storage_guild_storagegettocart(struct map_session_data *sd,int index,int amount)
@@ -611,20 +632,24 @@ int storage_guild_storagegettocart(struct map_session_data *sd,int index,int amo
 	struct guild_storage *stor;
 
 	nullpo_retr(0, sd);
+	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 
-	if((stor=guild2storage2(sd->status.guild_id)) != NULL) {
-		if(stor->storage_status == 1) { //  storage open
-			if(index>=0 && index<MAX_GUILD_STORAGE) { // valid index
-				if( (amount <= stor->storage_[index].amount) && (amount > 0) ) { //valid amount
-					if(pc_cart_additem(sd,&stor->storage_[index],amount)==0){
-						guild_storage_delitem(sd,stor,index,amount);
-					}
-				} // valid amount
-			}// valid index
-		}// storage open
-	}
+	if(!stor->storage_status)
+	  	return 0;
 
-	return 0;
+	if(index<0 || index>=MAX_GUILD_STORAGE)
+	  	return 0;
+	
+	if(stor->storage_[index].nameid<=0)
+		return 0;
+	
+	if(amount < 1 || amount > stor->storage_[index].amount)
+		return 0;
+
+	if(pc_cart_additem(sd,&stor->storage_[index],amount)==0)
+		guild_storage_delitem(sd,stor,index,amount);
+
+	return 1;
 }
 
 int storage_guild_storagesave(int account_id, int guild_id)

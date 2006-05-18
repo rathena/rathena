@@ -4,6 +4,16 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/18
+	* Rewrote/cleaned up several functions in storage.c [Skotlex]
+	* Optimized pc_additem comparisons to account for items with more than four
+	  slots. [Skotlex]
+	* Updated clif.c to enable retrieval of items from cart/storage while
+	  trading. Exception is retrieving items from the cart while vending.
+	  [Skotlex]
+	- The reasoning is that an ongoing trade will not get "corrupted" if you
+	  earn items before it is commited (only if you lose items from your
+	  inventory), and it is an annoyance when you realize the stuff you want to
+	  trade is on the cart/storage.
 	* skill reiteration code now does not checks for the trigger-area of the
 	  skill in the case of non-players, which means mobs can now place traps in
 	  cells adjacent to each other. [Skotlex]
