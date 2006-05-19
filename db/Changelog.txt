@@ -27,6 +27,7 @@
 
 =========================
 05/19
+	* Fixed some SPRITE names of mobs [Playtester]
 	* Fixed item names of new items thanks to Haplo [Playtester]
 05/18
 	* Amon Ra's and Dark Lord's Fire Pillar & Meteor Storm now have Level 11 rather than 30 [Playtester]
