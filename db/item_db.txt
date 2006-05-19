@@ -1134,7 +1134,7 @@
 2667,Glove_of_Archer,Gloves of Archer,5,,10,300,,0,,0,0xFFFFFFFE,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; },{},{}
 2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{},{},{}
 2669,RJC_Necklace,RJC Necklace,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxSP,10; },{},{}
-2670,Unknown2676,Unknown2676,5,,,100,,1,,1,0xFFFFFFFF,7,2,136,,30,0,,{ bonus bFlee,5; },{},{}
+2670,Ring_of_Longing,Ring of Longing,5,,,100,,1,,1,0xFFFFFFFF,7,2,136,,30,0,,{ bonus bFlee,5; },{},{}
 
 // Cards
 //===================================================================
@@ -1617,14 +1617,14 @@
 5145,Carnival_Jester,Carnival Jester,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,89,{},{},{}
 5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,215,{ bonus bVit,1; bonus2 bSubRace,RC_Brute,7; skill 86,1; },{},{}
 5147,Baseball_Hat,Baseball Hat,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
-5148,National_Holiday_Cap,National Holiday Cap,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
+5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
-5151,Note_Headphone,Note Headphone,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; },{},{}
-5152,Unknown5152,Unknown5152,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
-5153,Angeling_Hairpin,Angeling Hairpin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
+5151,Note_Headphones,Note Headphones,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; },{},{}
+5152,Seal Crown,Seal Crown,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
+5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
-5155,Father's_Beard,Father's Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{},{ bonus bAtk,20; }
+5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{},{ bonus bAtk,20; }
 5156,Father's_Mask,Father's Mask,5,,,100,,1,,,0xFFFFFFFF,7,2,1,,,,8,{ bonus bMatkRate,1; },{},{}
 
 // More Etc Items
@@ -2154,7 +2154,7 @@
 //
 7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
 7526,Application,Application,3,,10,0,,,,,,,,,,,,,{},{},{}
-7527,Unknown7527,Unknown7527,3,,10,100,,,,,,,,,,,,,{},{},{}
+7527,Book_About_True_Life,Book About True Life,3,,10,100,,,,,,,,,,,,,{},{},{}
 7528,Lottery_Ticket,Lottery Ticket,3,,10,0,,,,,,,,,,,,,{},{},{}
 7529,Stolen_Sandal,Stolen Sandal,3,,10,0,,,,,,,,,,,,,{},{},{}
 7530,Amatsu_Tour_Guide,Amatsu Tour Guide,3,,10,0,,,,,,,,,,,,,{},{},{}
@@ -2183,11 +2183,11 @@
 7553,Lotus_,Lotus,3,,,10,,,,,,,,,,,,,{},{},{}
 7554,Striped_Candle,Striped Candle,3,,,10,,,,,,,,,,,,,{},{},{}
 7555,Green_Incense,Green Incense,3,,,10,,,,,,,,,,,,,{},{},{}
-7556,Missing_Heart,Missing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
-7557,Invitation_Letter,Invitation Letter to Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
-7558,Invitation_Ticket,Invitation Ticket to Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
-7559,Key_of_Secret_Garden,Key of Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
-7560,Missing_Heart_,Missing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
+7556,Longing_Heart,Longing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
+7557,Invitation_Letter,Invitation Letter,3,,,10,,,,,,,,,,,,,{},{},{}
+7558,Invitation_Ticket,Invitation Ticket,3,,,10,,,,,,,,,,,,,{},{},{}
+7559,Key_to_the_Secret_Garden,Key to the Secret Garden,3,,,10,,,,,,,,,,,,,{},{},{}
+7560,Longing_Heart_,Longing Heart,3,,,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}

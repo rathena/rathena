@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/19
+	* Fixed item names of new items thanks to Haplo [Playtester]
 05/18
 	* Amon Ra's and Dark Lord's Fire Pillar & Meteor Storm now have Level 11 rather than 30 [Playtester]
 	* Fixed MVP Fire Pillar --> 12 hits, 5x5 range [Playtester]
