@@ -2471,8 +2471,8 @@
 1518,Bacsojin@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
 1518,Bacsojin@NPC_INVISIBLE,chase,353,1,2000,1000,30000,yes,self,always,0,,,,,,29
 1518,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,yes,target,always,0,,,,,,6
-1518,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,yes,self,slavele,1,1631,,,,,
-1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,yes,self,slavele,1,1631,,,,,
+1518,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,yes,self,slavele,1,1519,,,,,
+1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,yes,self,slavele,1,1519,,,,,
 1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,yes,self,onspawn,0,1519,,,,,
 1518,Bacsojin@PR_SANCTUARY,attack,70,10,2000,0,10000,yes,self,always,0,,,,,,18
 1518,Bacsojin@WZ_WATERBALL,attack,86,5,1000,0,5000,yes,target,always,0,,,,,,
@@ -2645,7 +2645,7 @@
 1630,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,yes,target,always,0,,,,,,6
 1630,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,0,5000,no,self,slavele,1,1631,,,,,
 1630,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,5000,no,self,slavele,1,1631,,,,,
-1630,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1519,,,,,
+1630,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1631,,,,,
 1630,Bacsojin@PR_SANCTUARY,attack,70,10,2000,0,10000,yes,self,always,0,,,,,,18
 1630,Bacsojin@WZ_WATERBALL,attack,86,5,1000,0,5000,yes,target,always,0,,,,,,
 1630,Bacsojin@WZ_WATERBALL,chase,86,3,2000,1000,5000,yes,target,always,0,,,,,,

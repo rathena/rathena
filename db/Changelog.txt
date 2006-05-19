@@ -27,6 +27,7 @@
 
 =========================
 05/19
+	* Fixed Bascojin's mob summoning [Playtester]
 	* Fixed some SPRITE names of mobs [Playtester]
 	* Fixed item names of new items thanks to Haplo [Playtester]
 05/18
