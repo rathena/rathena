@@ -2570,24 +2570,30 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	struct mob_skill *ms;
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
 	struct mob_data *fmd = NULL;
-	int i;
+	int i,j;
 
 	nullpo_retr (0, md);
 	nullpo_retr (0, ms = md->db->skill);
 
-	if (battle_config.mob_skill_rate == 0 || md->ud.skilltimer != -1)
+	if (!battle_config.mob_skill_rate || md->ud.skilltimer != -1 || !md->db->maxskill)
 		return 0;
 
 	if (event < 0 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
 		return 0; //Skill act delay only affects non-event skills.
-	
-	for (i = 0; i < md->db->maxskill; i++) {
-		int c2 = ms[i].cond2, flag = 0;		
 
-		// ƒfƒBƒŒƒC’†
+	//Pick a random starting position and loop from that.
+	j = rand()%md->db->maxskill;
+	for (i = j+1; i != j; i++) {
+		int c2, flag = 0;		
+
+		if (i == md->db->maxskill)
+			i = 0;
+
 		if (DIFF_TICK(tick, md->skilldelay[i]) < ms[i].delay)
 			continue;
 
+		c2 = ms[i].cond2;
+		
 		if (ms[i].state != md->state.skillstate && md->state.skillstate != MSS_DEAD) {
 			if (ms[i].state == MSS_ANY || (ms[i].state == MSS_ANYTARGET && md->target_id))
 				; //ANYTARGET works with any state as long as there's a target. [Skotlex]

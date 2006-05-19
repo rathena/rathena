@@ -2401,8 +2401,10 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	i = MAX_INVENTORY;
 
-	if (!itemdb_isequip2(data)){ //Stackable
+	if (!itemdb_isequip2(data))
+	{ //Stackable
 		for (i = 0; i < MAX_INVENTORY; i++)
+		{
 			if(sd->status.inventory[i].nameid == item_data->nameid &&
 				memcmp(&sd->status.inventory[i].card,&item_data->card,
 					sizeof(item_data->card))==0)
@@ -2413,6 +2415,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 				clif_additem(sd,i,amount,0);
 				break;
 			}
+		}
 	}
 	if (i >= MAX_INVENTORY){
 		i = pc_search_inventory(sd,0);
