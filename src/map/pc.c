@@ -2423,7 +2423,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 		// clear equips field first, just in case
 		if (item_data->equip)
 			item_data->equip = 0;
-		memcpy(&sd->status.inventory[i], item_data, sizeof(item_data));
+		memcpy(&sd->status.inventory[i], item_data, sizeof(sd->status.inventory[0]));
 		sd->status.inventory[i].amount = amount;
 		sd->inventory_data[i] = data;
 		clif_additem(sd,i,amount,0);
