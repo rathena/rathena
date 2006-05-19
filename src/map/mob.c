@@ -2570,7 +2570,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	struct mob_skill *ms;
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
 	struct mob_data *fmd = NULL;
-	int i,j;
+	int i,n;
 
 	nullpo_retr (0, md);
 	nullpo_retr (0, ms = md->db->skill);
@@ -2582,8 +2582,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		return 0; //Skill act delay only affects non-event skills.
 
 	//Pick a random starting position and loop from that.
-	j = rand()%md->db->maxskill;
-	for (i = j+1; i != j; i++) {
+	i = rand()%md->db->maxskill;
+	for (n = 0; n < md->db->maxskill; i++, n++) {
 		int c2, flag = 0;		
 
 		if (i == md->db->maxskill)
