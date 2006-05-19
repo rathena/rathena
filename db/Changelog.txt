@@ -27,6 +27,9 @@
 
 =========================
 05/19
+	* Major fix to the mob_skill_db [Playtester]
+	- traps are now placed around2 rather than self
+	- all idle skills should work now
 	* More fixes on Amon Ra [Playtester]
 	* Fixed Bascojin's mob summoning [Playtester]
 	* Fixed some SPRITE names of mobs [Playtester]
