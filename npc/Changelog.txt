@@ -30,6 +30,8 @@ Evera
 
 Date		Added
 ======
+05/19
+	* Commented a warp that stands in the middle of nowhere [Playtester]
 05/17
 	* Now the Inns are like on official servers [Playtester]
 05/15

@@ -106,10 +106,11 @@ ein_fild08.gat,164,380,0	warp	ein_fd02a	1,1,einbroch.gat,150,28
 //==========================================================================
 //Einbroch - Gunslinger Map Portion (Ninja's map is the same: que_ng.gat)
 //==========================================================================
-einbroch.gat,137,149,0	warp	gswarp1	1,1,que_ng.gat,138,167
+einbroch.gat,136,199,0	warp	gswarp1	1,1,que_ng.gat,138,167
 que_ng.gat,130,166,0	warp	gswarp2	1,1,einbroch.gat,130,197
 que_ng.gat,178,162,0	warp	gswarp3	1,1,que_ng.gat,176,86
 que_ng.gat,170,85,0	warp	gswarp4	1,1,que_ng.gat,182,161
 que_ng.gat,165,137,0	warp	gswarp5	1,1,que_ng.gat,177,41
 que_ng.gat,172,42,0	warp	gswarp6	1,1,que_ng.gat,160,139
-einbroch.gat,136,199,0	warp	gswarp7	1,1,que_ng.gat,138,167
+//This one seems to be wrong
+//einbroch.gat,137,149,0	warp	gswarp7	1,1,que_ng.gat,138,167
