@@ -1191,14 +1191,19 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			{	//Out of range...
 				if (!(mode&MD_CANMOVE))
 				{	//Can't chase. Attempt to use a ranged skill at least?
-					md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
-					mobskill_use(md, tick, -1);
-					mob_unlocktarget(md,tick);
+					md->state.skillstate = MSS_IDLE;
+					if (!mobskill_use(md, tick, -1))
+						mob_unlocktarget(md,tick);
 					return 0;
 				}
 
-				if (!can_move) //Stuck. Wait before walking.
+				if (!can_move)
+			  	{	//Stuck. Use an idle skill. o.O'
+					md->state.skillstate = MSS_IDLE;
+					if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+						mobskill_use(md, tick, -1);
 					return 0;
+				}
 
 				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
 				if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
