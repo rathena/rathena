@@ -2384,7 +2384,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 {
 	struct item_data *data;
 	int i;
-	int w;
+	unsigned int w;
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
