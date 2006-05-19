@@ -2826,14 +2826,20 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		if (skilllv>1) {
 			int range = skilllv/2;
-			//Rain doesn't affect WATERBALL (Rain has been removed at kRO) [Lupus]
-			//int cnt = (!map[src->m].flag.rain) ? skill_count_water(src,range) - 1 : skill_get_num(skillid,skilllv) - 1;
-			int cnt = (src->type==BL_PC)?skill_count_water(src,range):++range*range;
+			int cnt;
+		  	if (sd)
+				cnt = skill_count_water(src,range);
+			else {
+				range = 2*range+1;
+				cnt = range*range;
+			}
 			cnt--;
 			if (cnt > 0)
 				skill_addtimerskill(src,tick+150,bl->id,0,0,
 					skillid,skilllv,cnt,flag);
-		}
+		} else if (sd) //Eat up deluge tiles.
+			skill_count_water(src,0);
+
 		break;
 
 	case PR_BENEDICTIO:			/* ?¹??~•Ÿ */

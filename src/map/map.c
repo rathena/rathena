@@ -3951,6 +3951,11 @@ int do_init(int argc, char *argv[]) {
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
 	grfio_final(); // Unused after reading all maps.
+	//However, some reload functions still use it,disable them.
+	battle_config.cardillust_read_grffile =
+	battle_config.item_equip_override_grffile =
+	battle_config.item_slots_override_grffile =
+	battle_config.item_name_override_grffile = 0;
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 
