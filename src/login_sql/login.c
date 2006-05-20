@@ -643,8 +643,8 @@ int mmo_auth( struct mmo_account* account , int fd){
 	jstrescapecpy(t_uid,account->userid);
 
 	if (account->passwdenc==PASSWORDENC) {
-		memset(t_pass, 0, sizeof(t_pass));
-		memcpy(t_pass, account->passwd, strlen(account->passwd));
+		memcpy(t_pass, account->passwd, NAME_LENGTH);
+		t_pass[24] = '\0';
 	} else
 		jstrescapecpy(t_pass, account->passwd);
 
@@ -1533,9 +1533,9 @@ int parse_login(int fd) {
 
 			ShowInfo("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
 			account.version = RFIFOL(fd, 2);
-			account.userid = (char*)RFIFOP(fd, 6);
+			memcpy(account.userid,RFIFOP(fd, 6),NAME_LENGTH);
 			account.userid[23] = '\0';
-			account.passwd = (char*)RFIFOP(fd, 30);
+			memcpy(account.passwd,RFIFOP(fd, 30),NAME_LENGTH);
 			account.passwd[23] = '\0';
 #ifdef PASSWORDENC
 			account.passwdenc= (RFIFOW(fd,0)==0x64)?0:PASSWORDENC;
@@ -1817,9 +1817,9 @@ int parse_login(int fd) {
 					ShowInfo("server connection request %s @ %d.%d.%d.%d:%d (%d.%d.%d.%d)\n",
 						RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58),
 						p[0], p[1], p[2], p[3]);
-				account.userid = (char*)RFIFOP(fd, 2);
+				memcpy(account.userid,RFIFOP(fd, 2),NAME_LENGTH);
 				account.userid[23] = '\0';
-				account.passwd = (char*)RFIFOP(fd, 26);
+				memcpy(account.passwd,RFIFOP(fd, 26),NAME_LENGTH);
 				account.passwd[23] = '\0';
 				account.passwdenc = 0;
 				server_name = RFIFOP(fd,60);

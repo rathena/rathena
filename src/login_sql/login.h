@@ -30,8 +30,8 @@
 
 struct mmo_account {
 	int version;	//Added by sirius for versioncheck
-	char* userid;
-	char* passwd;
+	char userid[NAME_LENGTH];
+	char passwd[NAME_LENGTH];
 	int passwdenc;
 	
 	

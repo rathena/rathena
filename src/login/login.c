@@ -35,7 +35,6 @@ void Gettimeofday(struct timeval *timenow)
 #include <string.h>
 #include <stdarg.h>
 
-#include "login.h"
 #include "../common/core.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -47,6 +46,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
+#include "login.h"
 
 #ifdef PASSWORDENC
 #include "md5calc.h"
@@ -1093,10 +1093,10 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email) {
 
 	auth_dat[i].account_id = account_id_count++;
 
-	strncpy(auth_dat[i].userid, account->userid, 24);
+	strncpy(auth_dat[i].userid, account->userid, NAME_LENGTH);
 	auth_dat[i].userid[23] = '\0';
 
-	strncpy(auth_dat[i].pass, account->passwd, 32);
+	strncpy(auth_dat[i].pass, account->passwd, NAME_LENGTH);
 	auth_dat[i].pass[23] = '\0';
 
 	memcpy(auth_dat[i].lastlogin, "-", 2);
@@ -1233,7 +1233,7 @@ int mmo_auth(struct mmo_account* account, int fd) {
 		if(use_md5_passwds)
 			MD5_String(account->passwd, user_password);
 		else
-			memcpy(user_password, account->passwd, 25);
+			memcpy(user_password, account->passwd, NAME_LENGTH);
 		encpasswdok = 0;
 #ifdef PASSWORDENC
 		ld = (struct login_session_data*)session[fd]->session_data;
@@ -2147,19 +2147,16 @@ int parse_admin(int fd) {
 				return 0;
 			{
 				struct mmo_account ma;
-				ma.userid = (char*)RFIFOP(fd, 2);
+				memcpy(ma.userid,RFIFOP(fd, 2),NAME_LENGTH);
 				ma.userid[23] = '\0';
-				memcpy(ma.passwd, RFIFOP(fd, 26), 24);
+				memcpy(ma.passwd, RFIFOP(fd, 26), NAME_LENGTH);
 				ma.passwd[23] = '\0';
 				memcpy(ma.lastlogin, "-", 2);
 				ma.sex = RFIFOB(fd,50);
 				WFIFOW(fd,0) = 0x7931;
 				WFIFOL(fd,2) = 0xffffffff;
 				memcpy(WFIFOP(fd,6), RFIFOP(fd,2), 24);
-				if (strlen(ma.userid) > 23 || strlen(ma.passwd) > 23) {
-					login_log("'ladmin': Attempt to create an invalid account (account or pass is too long, ip: %s)" RETCODE,
-					          ip);
-				} else if (strlen(ma.userid) < 4 || strlen(ma.passwd) < 4) {
+				if (strlen(ma.userid) < 4 || strlen(ma.passwd) < 4) {
 					login_log("'ladmin': Attempt to create an invalid account (account or pass is too short, ip: %s)" RETCODE,
 					          ip);
 				} else if (ma.sex != 'F' && ma.sex != 'M') {
@@ -3091,7 +3088,7 @@ int parse_login(int fd) {
 				return 0;
 			
 			account.version = RFIFOL(fd, 2);	//for exe version check [Sirius]
-			account.userid = (char*)RFIFOP(fd,6);
+			memcpy(account.userid,RFIFOP(fd,6),NAME_LENGTH);
 			account.userid[23] = '\0';
 			remove_control_chars((unsigned char *)account.userid);
 			if (RFIFOW(fd,0) == 0x64) {
@@ -3246,10 +3243,10 @@ int parse_login(int fd) {
 			{
 				int GM_value, len;
 				char* server_name;
-				account.userid = (char*)RFIFOP(fd,2);
+				memcpy(account.userid,RFIFOP(fd,2),NAME_LENGTH);
 				account.userid[23] = '\0';
 				remove_control_chars((unsigned char *)account.userid);
-				memcpy(account.passwd, RFIFOP(fd,26), 24);
+				memcpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH);
 				account.passwd[23] = '\0';
 				remove_control_chars((unsigned char *)account.passwd);
 				account.passwdenc = 0;
