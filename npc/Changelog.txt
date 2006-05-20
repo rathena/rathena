@@ -31,6 +31,7 @@ Evera
 Date		Added
 ======
 05/19
+	* Translated sample/gstorage_test.txt
 	* Commented a warp that stands in the middle of nowhere [Playtester]
 05/17
 	* Now the Inns are like on official servers [Playtester]

@@ -1,3 +1,40 @@
+/* Guild Warehouse Service Test-Script 
+prontera.gat,165,188,4	script	Guild Warehouse	112,{
+	cutin "kafra_06",2;
+
+	mes "[Guild Warehouse Coupler]";
+	mes "This is the guild warehouse coupler service."; 
+	mes "You will not receive zeny for this is a test.";
+	next;
+	menu "Access Guild Warehouse", GS_OPEN, "Exit", GS_EXIT3;
+
+GS_OPEN:
+	set @flag,guildopenstorage(0);
+	if(@flag == 1) goto GS_EXIT1;
+	if(@flag == 2) goto GS_EXIT2;
+	goto GS_EXIT4;
+
+GS_EXIT1:
+	mes "[Guild Warehouse]";
+	mes "The guild warehouse is being used right now.";
+	mes "Please wait a while, then come back.";
+	goto GS_EXIT4;
+
+GS_EXIT2:
+	mes "[Guild Warehouse]";
+	mes "You can't use this service if you're not in a guild!";
+	goto GS_EXIT4;
+
+GS_EXIT3:
+	mes "[Guild Warehouser]";
+	mes "Come back whenever you want.";
+
+GS_EXIT4:
+	cutin "kafra_06",255;
+	close;
+}
+*/
+
 // カプラギルド倉庫サービス	テストスクリプト
 prontera.gat,165,188,4	script	ギルド倉庫カプラ	112,{
 	cutin "kafra_06",2;
