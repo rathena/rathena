@@ -3659,7 +3659,8 @@ void do_final(void) {
 
 	// We probably don't need the grfio after server bootup 'yet' too. So this is closed near the end of do_init [Lance]
 	if((battle_config.cardillust_read_grffile || battle_config.item_equip_override_grffile || 
-		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile))
+		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile ||
+		battle_config.skill_sp_override_grffile))
 		grfio_final();
 
 	for (i = 0; i < map_num; i++)
@@ -3953,7 +3954,8 @@ int do_init(int argc, char *argv[]) {
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
 	if(!(battle_config.cardillust_read_grffile || battle_config.item_equip_override_grffile || 
-		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile))
+		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile ||
+		battle_config.skill_sp_override_grffile))
 		grfio_final(); // Unused after reading all maps.
 
 	//However, some reload functions still use it,disable them.
