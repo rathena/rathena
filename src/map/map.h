@@ -733,6 +733,8 @@ struct map_session_data {
 	struct pet_data *pd;
 	int pet_hungry_timer;
 
+	struct homun_data *hd;	// [blackhole89]
+
 	struct{
 		int  m; //-1 - none, other: map index corresponding to map name.
 		unsigned short index; //map index
@@ -874,6 +876,7 @@ struct mob_data {
 	struct {
 		int id;
 		int dmg;
+		unsigned char to_homun; //[blackhole89] - determines whether this damage was dealt by homunculus or its master
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	struct item *lootitem;
@@ -901,6 +904,43 @@ struct mob_data {
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[50];
+};
+
+/* [blackhole89] */
+struct homun_data {
+	struct block_list bl;
+	struct unit_data  ud;
+	struct view_data *vd;
+	struct status_change sc;
+
+	char name[NAME_LENGTH];
+	int id;
+	short speed;
+	short class_;
+
+	struct map_session_data *master; //pointer back to its master
+
+	short hunger_rate;
+
+	struct {
+		int id;		//0 = none
+		int level;
+	} hskill[4];	//skills (max. 4 for now)
+
+	int alive;	//does it live
+
+	int target_id,attacked_id;
+
+	int amotion,dmotion;
+
+	short level;
+	short atk,matk,hit,crit,def,mdef,flee,flee2;	//flee2 is not transmitted; lucky flee
+	short regenhp,regensp;
+	short str,agi,vit,int_,dex,luk;	//According to various sources, they do have these though they aren't transfered to client.
+	short hp,max_hp;
+	short sp,max_sp;
+	unsigned long exp,exp_next;
+	short skillpts;
 };
 
 struct pet_data {

@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/21
+	* Part A of the Homunculus code.
+	  This only features the structures, status_* and clif_* (packets) and is
+	  not functional yet in any conventional way, but doesn't interfere
+	  with present functionality either.
+	  Main purpose is helping me to keep my work organized. [blackhole89]
 	* Fixed the "fake" mute status bug. [Zido]
 	* Speed up array size calculation and deletion. [Lance]
 	* Player must learn the skill before doing auto-spell [Lance]

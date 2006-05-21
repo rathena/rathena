@@ -330,6 +330,13 @@ void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv);
 void clif_feel_info(struct map_session_data *sd, int feel_level);
 void clif_hate_mob(struct map_session_data *sd, int skilllv,int mob_id);
 void clif_mission_mob(struct map_session_data *sd, unsigned short mob_id, unsigned short progress);
+
+// [blackhole89]
+int clif_spawnhomun(struct homun_data *hd);
+int clif_homunack(struct map_session_data *sd);
+int clif_homuninfo(struct map_session_data *sd);
+int clif_homuninsight(struct block_list *bl,va_list ap);
+int clif_homunoutsight(struct block_list *bl,va_list ap);
 #endif
 
 

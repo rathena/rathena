@@ -2395,6 +2395,8 @@ int status_get_range(struct block_list *bl)
 		return ((struct map_session_data *)bl)->attackrange;
 	if(bl->type==BL_PET)
 		return ((struct pet_data *)bl)->db->range;
+	if(bl->type==BL_HOMUNCULUS)
+		return 1; //[blackhole89]
 	return 0;
 }
 /*==========================================
@@ -2409,6 +2411,8 @@ int status_get_hp(struct block_list *bl)
 		return ((struct mob_data *)bl)->hp;
 	if(bl->type==BL_PC)
 		return ((struct map_session_data *)bl)->status.hp;
+	if(bl->type==BL_HOMUNCULUS)
+		return ((struct homun_data *)bl)->hp;
 	return 1;
 }
 /*==========================================
@@ -2422,6 +2426,8 @@ int status_get_max_hp(struct block_list *bl)
 
 	if(bl->type==BL_PC)
 		return ((struct map_session_data *)bl)->status.max_hp;
+	else if(bl->type==BL_HOMUNCULUS)
+		return ((struct homun_data *)bl)->max_hp; //[blackhole89]
 	else {
 		int max_hp = 1;
 
@@ -2471,6 +2477,8 @@ int status_get_str(struct block_list *bl)
 				str = ((struct pet_data *)bl)->status->str;
 			else
 				str = ((struct pet_data *)bl)->db->str;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			str = ((struct homun_data *)bl)->str;
 		}
 
 		str = status_calc_str(bl,str);
@@ -2505,6 +2513,8 @@ int status_get_agi(struct block_list *bl)
 				agi = ((struct pet_data *)bl)->status->agi;
 			else
 				agi = ((struct pet_data *)bl)->db->agi;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			agi = ((struct homun_data *)bl)->agi;
 		}
 
 		agi = status_calc_agi(bl,agi);
@@ -2538,6 +2548,8 @@ int status_get_vit(struct block_list *bl)
 				vit = ((struct pet_data *)bl)->status->vit;
 			else
 				vit = ((struct pet_data *)bl)->db->vit;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			vit = ((struct homun_data *)bl)->vit;
 		}
 
 		vit = status_calc_vit(bl,vit);
@@ -2571,6 +2583,8 @@ int status_get_int(struct block_list *bl)
 				int_ = ((struct pet_data *)bl)->status->int_;
 			else
 				int_ = ((struct pet_data *)bl)->db->int_;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			int_ = ((struct homun_data *)bl)->int_;
 		}
 
 		int_ = status_calc_int(bl,int_);
@@ -2604,6 +2618,8 @@ int status_get_dex(struct block_list *bl)
 				dex = ((struct pet_data *)bl)->status->dex;
 			else
 				dex = ((struct pet_data *)bl)->db->dex;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			dex = ((struct homun_data *)bl)->dex;
 		}
 
 		dex = status_calc_dex(bl,dex);
@@ -2637,6 +2653,8 @@ int status_get_luk(struct block_list *bl)
 				luk = ((struct pet_data *)bl)->status->luk;
 			else
 				luk = ((struct pet_data *)bl)->db->luk;
+		} else if(bl->type == BL_HOMUNCULUS) { //[blackhole89]
+			luk = ((struct homun_data *)bl)->luk;
 		}
 
 		luk = status_calc_luk(bl,luk);
@@ -2766,6 +2784,9 @@ int status_get_atk(struct block_list *bl)
 			else
 				atk = ((struct pet_data*)bl)->db->atk1;
 		break;
+		case BL_HOMUNCULUS:	//[blackhole89]
+			atk = ((struct homun_data*)bl)->atk;
+			break;
 	}
 	// Absolute, then relative modifiers from status changes (shared between PC and NPC)
 	atk = status_calc_watk(bl,atk);
@@ -2810,6 +2831,9 @@ int status_get_atk2(struct block_list *bl)
 			else
 				atk2 = ((struct pet_data*)bl)->db->atk2;
 		break;
+		case BL_HOMUNCULUS:	//[blackhole89]
+			atk2 = ((struct homun_data*)bl)->atk;
+			break;
 	}		  
 
 	// Absolute, then relative modifiers from status changes (shared between PC and NPC)
@@ -2994,6 +3018,8 @@ int status_get_speed(struct block_list *bl)
 		speed = ((struct pet_data *)bl)->speed;
 	else if(bl->type==BL_NPC)	//Added BL_NPC (Skotlex)
 		speed = ((struct npc_data *)bl)->speed;
+	else if(bl->type==BL_HOMUNCULUS) //[blackhole89]
+		speed = ((struct homun_data *)bl)->speed;
 
 	speed = status_calc_speed(bl,speed);
 
@@ -3023,6 +3049,10 @@ int status_get_adelay(struct block_list *bl)
 			adelay = ((struct pet_data *)bl)->db->adelay;
 			aspd_rate = 100;
 			break;
+		case BL_HOMUNCULUS:
+			adelay = 500;	//temp; this should go into the structure later
+			aspd_rate=100;	//[blackhole89]
+			break;
 		default:
 			adelay=4000;
 			aspd_rate = 100;
@@ -3049,6 +3079,7 @@ int status_get_amotion(struct block_list *bl)
 				aspd_rate -= aspd_rate * 10*((struct mob_data *)bl)->guardian_data->guardup_lv/100; // Strengthen Guardians - custom value +10% ASPD / lv
 		} else if(bl->type==BL_PET)
 			amotion = ((struct pet_data *)bl)->db->amotion;
+		else if(bl->type==BL_HOMUNCULUS) ((struct homun_data *)bl)->amotion;	//[blackhole89]
 
 		aspd_rate = status_calc_aspd_rate(bl,aspd_rate);
 
@@ -3078,6 +3109,7 @@ int status_get_dmotion(struct block_list *bl)
 	}
 	else if(bl->type==BL_PET)
 		ret=((struct pet_data *)bl)->db->dmotion;
+	else if(bl->type==BL_HOMUNCULUS) ((struct homun_data *)bl)->dmotion;	//[blackhole89]
 	else
 		return 2000;
 
@@ -3256,6 +3288,8 @@ int status_get_mode(struct block_list *bl)
 	}
 	if(bl->type==BL_PC)
 		return (MD_CANMOVE|MD_LOOTER|MD_CANATTACK);
+	if(bl->type==BL_HOMUNCULUS)		//[blackhole89]
+		return (MD_CANMOVE|MD_CANATTACK);
 	if(bl->type==BL_PET)
 		return ((struct pet_data *)bl)->db->mode;
 	if (bl->type==BL_SKILL)
@@ -3315,6 +3349,8 @@ struct view_data *status_get_viewdata(struct block_list *bl)
 			return &((TBL_PET*)bl)->vd;
 		case BL_NPC:
 			return ((TBL_NPC*)bl)->vd;
+		case BL_HOMUNCULUS: //[blackhole89]
+			return ((struct homun_data*)bl)->vd;
 	}
 	return NULL;
 }
@@ -3411,6 +3447,15 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
 		}
 	break;
+	case BL_HOMUNCULUS:		//[blackhole89]
+		{
+			struct homun_data *hd = (struct homun_data*)bl;
+			if (vd)
+				hd->vd = vd;
+			else if (battle_config.error_log)
+				ShowError("status_set_viewdata (HOMUNCULUS): No view data for class %d\n", class_);
+		}
+		break;
 	}
 	vd = status_get_viewdata(bl);
 	if (vd && vd->cloth_color && (
@@ -3430,6 +3475,8 @@ struct status_change *status_get_sc(struct block_list *bl)
 		return &((TBL_PC*)bl)->sc;
 	case BL_NPC:
 		return &((TBL_NPC*)bl)->sc;
+	case BL_HOMUNCULUS: //[blackhole89]
+		return &((struct homun_data*)bl)->sc;
 	}
 	return NULL;
 }
