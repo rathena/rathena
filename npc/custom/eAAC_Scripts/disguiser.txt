@@ -1,62 +1,62 @@
-===== eAthena Script ======================================= 
-= Disguiser Quesr
-===== By ================================================== 
-= PalasX (httpcashaan.dontexist.org)
-===== Current Version ===================================== 
-= v1.20 Unified
-===== Compatible With ===================================== 
-= SVN 5690+ (getmonsterinfo)
-===== Description ========================================= 
-= Baphomet disguises you if you find all his brothers.
-===== Additional Comments ================================= 
-= Gotta find them all in order
-= Dynamically edits item 2614(eye of dullahan) with
-= 	setitemscript 2614,{bonus bdisguise,var_disguise;};
-=     so your SVN better support it
-= Uses GetMonsterInfo to pull monster names from server, but
-=     without sql_query, the mob IDs are set statically
-= Went crazy with the functions, the script is TINY now )
-============================================================ 
+//===== eAthena Script ======================================= 
+//= Disguiser Quesr
+//===== By: ================================================== 
+//= PalasX (http://cashaan.dontexist.org)
+//===== Current Version: ===================================== 
+//= v1.20 Unified
+//===== Compatible With: ===================================== 
+//= SVN 5690+ (getmonsterinfo)
+//===== Description: ========================================= 
+//= Baphomet disguises you if you find all his brothers.
+//===== Additional Comments: ================================= 
+//= Gotta find them all in order
+//= Dynamically edits item 2614(eye of dullahan) with
+//= 	setitemscript 2614,"{bonus bdisguise,var_disguise;}";
+//=     so your SVN better support it
+//= Uses GetMonsterInfo to pull monster names from server, but
+//=     without sql_query, the mob IDs are set statically
+//= Went crazy with the functions, the script is TINY now :)
+//============================================================ 
 
-
-Places all of our NPCs
-
+//////////////////////////
+//Places all of our NPCs//
+//////////////////////////
 prt_fild05.gat,277,226,5	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,0,quest_disguise;
+	callfunc "PXC_Disguiser",0,quest_disguise;
 Close;
 }
 
 moc_fild10.gat,34,283,4	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,1,quest_disguise;
+	callfunc "PXC_Disguiser",1,quest_disguise;
 close;
 }
 
 gef_fild00.gat,97,123,4	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,2,quest_disguise;
+	callfunc "PXC_Disguiser",2,quest_disguise;
 close;
 }
 
 pay_fild01.gat,369,305,4	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,3,quest_disguise;
+	callfunc "PXC_Disguiser",3,quest_disguise;
 close;
 }
 
 pay_fild03.gat,313,40,4	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,4,quest_disguise;
+	callfunc "PXC_Disguiser",4,quest_disguise;
 close;
 }
 
 prt_fild08.gat,362,185,4	script	Dullahan Master	736,{
-	callfunc PXC_Disguiser,5,quest_disguise;
+	callfunc "PXC_Disguiser",5,quest_disguise;
 	close;
 
 
-
- edits the item used 
-
-OnInit
-	EDIT EYE OF DULLAHAN
-	setitemscript 2614,{ bonus bdisguise,var_disguise; };
+//////////////////////////
+// edits the item used ///
+//////////////////////////
+OnInit:
+	//EDIT EYE OF DULLAHAN
+	setitemscript 2614,"{ bonus bdisguise,var_disguise; }";
 	end;
 }
 
@@ -64,113 +64,113 @@ OnInit
 
 
 
-
- Function.	Takes
-	INTEGER, the order number that the bapho should be visited
-	VARIABLE, the quest progression variable quest_disguise. may be changed if conflicts occur
-
-		Puts
-	Everything the NPC does.  If you are at the right one, increase your order variable, if not, tell you where to head next on the list, when you finish, offer you to change ring properties.
-	Whenever you dont have a ring, the script will push one on you in ALL instances (wrong NPC, right NPC, and done quest).
-	
+//////////////////////////
+// Function.	Takes:
+//	INTEGER, the order number that the bapho should be visited
+//	VARIABLE, the quest progression variable quest_disguise. may be changed if conflicts occur
+//
+//		Puts:
+//	Everything the NPC does.  If you are at the right one, increase your order variable, if not, tell you where to head next on the list, when you finish, offer you to change ring properties.
+//	Whenever you dont have a ring, the script will push one on you in ALL instances (wrong NPC, right NPC, and done quest).
+//////////////////////////	
 
 function	script	PXC_Disguiser	{
 
-	setarray $@PXC_Next$[0],Culvert,Morocc,Geffen,Payon,Alberta,Izlude;
+	setarray $@PXC_Next$[0],"Culvert","Morocc","Geffen","Payon","Alberta","Izlude";
 
-	if(var_disguise  1) goto Complete;
+	if(var_disguise > 1) goto Complete;
 	if(getarg(0) == 5 && getarg(1) == 5) goto Last;
 	if(getarg(0) == getarg(1)) goto Quest;
 
-NotMe
-	mes [Baphomet];
-	mes You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around +$@PXC_Next$[getarg(1)]+ Next!;
+NotMe:
+	mes "[Baphomet]";
+	mes "You must visit us in the proper order, as is Thor's will.  Only then can we teach you the power of self-transmutation! Hunt around "+$@PXC_Next$[getarg(1)]+" Next!";
 	next;
-	if(countitem(2614)  1) goto NeedRing;
+	if(countitem(2614) < 1) goto NeedRing;
 	close;
 
-Cancel
-	mes [Baphomet];
-	mes Later.;
+Cancel:
+	mes "[Baphomet]";
+	mes "Later.";
 	close;
 
-Quest
+Quest:
 	set quest_disguise,getarg(1)+1;
-	mes [Baphomet];
-	mes What am I doing here  Find my brothers and you shall learn a great secret.  It is one of the secret and ancient powers of Thor! Search around +$@PXC_Next$[getarg(1)]+ next!;
+	mes "[Baphomet]";
+	mes "What am I doing here?  Find my brothers and you shall learn a great secret.  It is one of the secret and ancient powers of Thor! Search around "+$@PXC_Next$[getarg(1)]+" next!";
 	next;
-	if(countitem(2614)  1) goto NeedRing;
+	if(countitem(2614) < 1) goto NeedRing;
 	close;
 
-NeedRing
-	mes [Baphomet];
-	mes You will need an Eye of Dullahan ring in order to obtain our secret.  I can sell you one for 500,000 zeny. Simply bring me the money, and I'll offer it unto Thor in trade!;
+NeedRing:
+	mes "[Baphomet]";
+	mes "You will need an Eye of Dullahan ring in order to obtain our secret.  I can sell you one for 500,000 zeny. Simply bring me the money, and I'll offer it unto Thor in trade!";
 	next;
-	menu Buy Ring,-,Forget it!,Cancel;
-	if(Zeny  500000) goto Cancel;
+	menu "Buy Ring",-,"Forget it!",Cancel;
+	if(Zeny < 500000) goto Cancel;
 	set Zeny,Zeny-500000;
 	getitem 2614,1;
-	mes [Baphomet];
-	mes Here is your ring.;
+	mes "[Baphomet]";
+	mes "Here is your ring.";
 	next;
 	goto Cancel;
 	close;
 
-Last
+Last:
 	set quest_disguise,0;
 	set var_disguise,1002;
-	mes [Baphomet];
-	mes I am the last of the six.  Forgive us for giving such horrible directions, for we, too, are born from Thor's left eye, and have a terrible mean streak.  Plus, being monsters, we're complete and total idiots with a shoddy A.I.!  You shall now receive your reward.;
+	mes "[Baphomet]";
+	mes "I am the last of the six.  Forgive us for giving such horrible directions, for we, too, are born from Thor's left eye, and have a terrible mean streak.  Plus, being monsters, we're complete and total idiots with a shoddy A.I.!  You shall now receive your reward.";
 	next;
 	goto Complete;
 
 
-Complete
-	if(countitem(2614)  1) goto NeedRing;
+Complete:
+	if(countitem(2614) < 1) goto NeedRing;
 
-	mes [Baphomet];
-	mes Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.;
+	mes "[Baphomet]";
+	mes "Several millenia ago, Thor, the creator breathed life onto Midgar.  In the beginning, all was well, but Thor's left eye proved to be the bane of our existance. As it's gaze set upon our land, all the monsters were let loose from within Thor's soul.  Thor cast out his own eye, the only thing that could control the monsters.  Your ring is made from his eye, and will give you the same powers.";
 	next;
-	mes [Baphomet];
-	mes I can change your ring's mystical properties. Which monster spirit shall I weave into your ring;
+	mes "[Baphomet]";
+	mes "I can change your ring's mystical properties. Which monster spirit shall I weave into your ring?";
 	next;
 
-	if(getarg(0)==0) callfunc PXC_DoMenu,1001,1125;
-	if(getarg(0)==1) callfunc PXC_DoMenu,1126,1250;
-	if(getarg(0)==2) callfunc PXC_DoMenu,1251,1375;
-	if(getarg(0)==3) callfunc PXC_DoMenu,1376,1500;
-	if(getarg(0)==4) callfunc PXC_DoMenu,1503,1625;
-	if(getarg(0)==5) callfunc PXC_DoMenu,1626,1721;
+	if(getarg(0)==0) callfunc "PXC_DoMenu",1001,1125;
+	if(getarg(0)==1) callfunc "PXC_DoMenu",1126,1250;
+	if(getarg(0)==2) callfunc "PXC_DoMenu",1251,1375;
+	if(getarg(0)==3) callfunc "PXC_DoMenu",1376,1500;
+	if(getarg(0)==4) callfunc "PXC_DoMenu",1503,1625;
+	if(getarg(0)==5) callfunc "PXC_DoMenu",1626,1721;
 
 	close;
 	end;
 }
 
-
- FUNCTION.
-	Takes
-	integer, first monster ID to show
-	integer, last monster ID to show
-
+//////////////////////////
+// FUNCTION.
+//	Takes:
+//	integer, first monster ID to show
+//	integer, last monster ID to show
+//////////////////////////
 function	script	PXC_DoMenu	{
 
-	set menu options to mob names, doing the first one manualy so we dont have an empty 
+	//set menu options to mob names, doing the first one manualy so we dont have an empty :
 	set $@menu$, getmonsterinfo(getarg(0),MOB_NAME);
 
-	for(set $@i, getarg(0)+1; $@i = getarg(1); set $@i, $@i + 1){
-	set $@menu$, $@menu$ +  + getmonsterinfo($@i,MOB_NAME);
+	for(set $@i, getarg(0)+1; $@i <= getarg(1); set $@i, $@i + 1){
+	set $@menu$, $@menu$ + ":" + getmonsterinfo($@i,MOB_NAME);
 	}
 
-	Fire our menu
+	//Fire our menu
 	set @menu, select($@menu$);
 
-	Zero deliminated (off-by-one errors sux0r!!!)
+	//Zero deliminated (off-by-one errors sux0r!!!)
 	set @menu, @menu-1;
 
-	congratulate our user
-	mes Behold, whilst you wear this ring, your form shall become that of a +getmonsterinfo(@menu + getarg(0),MOB_NAME);
+	//congratulate our user
+	mes "Behold, whilst you wear this ring, your form shall become that of a "+getmonsterinfo(@menu + getarg(0),MOB_NAME);
 
-	update our variable, with @menu offset addded to the base getarg(0)
+	//update our variable, with @menu offset addded to the base getarg(0)
 	set var_disguise, @menu + getarg(0);
 
 	close;

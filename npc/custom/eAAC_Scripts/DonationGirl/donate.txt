@@ -15,9 +15,13 @@
 //=	  options for GMs.
 //= 2.1 - Made few changes including the add/remove items
 //=	  feature.
+//= 3.0 - All strings inputed by a user and user/char names
+//=	  in sql queries are now escaped. Each item has a
+//=	  price rather than a quantity. This script can work
+//=	  with decimals.
 //===== Compatible With =====================================
-//= eAthena - any version that contains the sql_query
-//=	      function (4368)
+//= eAthena - any version that contains the escape_sql
+//=	      function (Stable 6299 OR Trunk 6262)
 //===== Description =========================================
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.
@@ -30,15 +34,13 @@
 //===========================================================
 //= Thanks to Vich for helping me with the SQL syntax.
 //= Thanks to Lance for helping me with the the arrays and 
-//= for implementing this feature. XD
+//= for implementing query_sql.
+//= Thanks to Skotlex for implementing escape_sql.
 //===========================================================
 
 prontera.gat,145,179,5	script	Donation Girl	714,{
 
-//Set how many 'dollars' per reward.
-set @currency, 10;
-
-if (getgmlevel(99) == 99) goto L_GM;
+if (getgmlevel() >= 80) goto L_GM;
 L_START:
 mes "[Donation Girl]";
 mes "Hello! I'm the Donation Girl!";
@@ -48,7 +50,7 @@ next;
 menu "More info",-,"Make a claim",L_CHECK,"Statistics",L_STATS;
 L_INFO:
 mes "[Donation Girl]";
-mes "Every month, we (the admins) are required to pay hundreds of dollars to keep this server running.";
+mes "Each month, a lot of money is paid to keep this server running.";
 next;
 mes "[Donation Girl]";
 mes "You can support us by donating any amount of money.";
@@ -56,27 +58,27 @@ next;
 mes "[Donation Girl]";
 mes "To show our appreciation, we will gladly give you a reward.";
 next;
-next;
-menu "Continue",L_START,"Cancel",L_CLOSE;
+menu "Continue",L_START,"Cancel",-;
 close;
 
 L_CHECK:
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+getcharid(3)+"", @amount;
-query_sql "SELECT `claimed` FROM `donate` WHERE `account_id` = "+getcharid(3)+"", @claimed;
-set @value, @amount-@claimed;
-if(@value>=@currency) goto L_CLAIM;
+query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @amount$;
+query_sql "SELECT `claimed` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @claimed$;
+query_sql "SELECT MIN(price) FROM `donate_item_db`", @min$;
+query_sql "SELECT "+@amount$+" - "+@claimed$+"", @value$;
+query_sql "SELECT "+@value$+" >= "+@min$+"", @enough;
+if(@enough) goto L_CLAIM;
 mes "[Donation Girl]";
-mes "Sorry, but I have no records of your donation.";
+mes "Sorry, you do not have enough to make a claim.";
 mes "If you have donated but have not made a claim,";
 mes "Please give us time to process your donation.";
 close;
 
 L_CLAIM:
-set @items, @value/@currency;
 mes "[Donation Girl]";
 mes "Thankyou for donating!";
-mes "You are able to claim "+@items+" item(s).";
-mes "Would you like to claim them now?";
+mes "You have $"+@value$+" worth of credit!";
+mes "Would you like to claim an item now?";
 next;
 menu "No",-,"Yes",L_YES;
 mes "[Donation Girl]";
@@ -96,37 +98,52 @@ set $@menu$, $@name$[0];
 set @menu, (select($@menu$))-1;
 
 query_sql "SELECT ID FROM `donate_item_db` WHERE name = '"+$@name$[@menu]+"'", @id;
-query_sql "SELECT amount FROM `donate_item_db` WHERE ID = "+@id+"", @amount;
+query_sql "SELECT price FROM `donate_item_db` WHERE ID = "+@id+"", @price$;
+query_sql "SELECT TRUNCATE("+@value$+" / "+@price$+",0)", @max;
+//query_sql "SELECT "+@value$+" div "+@price$+"", @max;
 
-if (checkweight(@id,@amount) == 0) goto L_OVERWEIGHT;
-mes "Are you sure you want to claim "+@amount+" "+$@name$[@menu]+"?";
+mes "[Donation Girl]";
+mes ""+$@name$[@menu]+"s cost $"+@price$+" each.";
+mes "How many "+$@name$[@menu]+"s would you like to claim?";
+mes "Maximum: "+@max+".";
+input @quantity;
+
+if(@quantity>@max) {
+	mes "[Donation Girl]";
+	mes "Sorry, but you do not have enough to claim "+@quantity+" "+$@name$[@menu]+"s.";
+	next;
+	goto L_CLAIM;
+	}
+
+if(!@quantity) {
+	mes "[Donation Girl]";
+	mes "You can't have 0 as an amount!";
+	next;
+	goto L_CLAIM;
+	}
+
+if (checkweight(@id,@quantity) == 0) {
+	mes "[Donation Girl]";
+	mes "I'm sorry, but you cannot carry "+@quantity+" "+$@name$[@menu]+"s.";
+	next;
+	goto L_CLAIM;
+	}
+
+query_sql "SELECT "+@quantity+" * "+@price$+"", @total$;
+mes "Are you sure you want to claim "+@quantity+" "+$@name$[@menu]+"s for $"+@total$+"?";
 next;
-menu "No",L_YES,"Yes",-;
-getitem @id,@amount;
-query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@currency+" WHERE `account_id` = '"+getcharid(3)+"'";
-set @amount, 0;
-set @claimed, 0;
-set @value, 0;
-set @items, 0;
+menu "No",L_CLAIM,"Yes",-;
+query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total$+" WHERE `account_id` = '"+escape_sql(getcharid(3))+"'";
+getitem @id,@quantity;
 mes "[Donation Girl]";
 mes "Thankyou for donating! We hope you enjoy your gift!";
 close;
 
-L_OVERWEIGHT:
-set @amount, 0;
-set @claimed, 0;
-set @value, 0;
-set @items, 0;
-mes "[Donation Girl]";
-mes "I'm sorry, but you cannot carry so many things.";
-close;
-
 L_STATS:
 mes "[Donation Girl]";
-query_sql "SELECT SUM(amount) FROM `donate`", @total; 
-mes "Our fund is at a total of $"+@total+"";
+query_sql "SELECT SUM(amount) FROM `donate`", @total$; 
+mes "Our fund is at a total of $"+@total$+"";
 next;
-set @total, 0;
 menu "More info",L_INFO,"Make a claim",L_CHECK,"Statistics",L_STATS;
 close;
 
@@ -151,27 +168,25 @@ L_NEWITEM:
 mes "[GM Menu]";
 mes "Please enter the item name:";
 input @itemname$;
-query_sql "SELECT `id` FROM `item_db` WHERE `name_english` = '"+@itemname$+"'", @iid;
-query_sql "SELECT `id` FROM `donate_item_db` WHERE `name` = '"+@itemname$+"'", @check;
+query_sql "SELECT `id` FROM `item_db` WHERE `name_english` = '"+escape_sql(@itemname$)+"'", @iid;
+query_sql "SELECT `id` FROM `donate_item_db` WHERE `name` = '"+escape_sql(@itemname$)+"'", @check;
 if(@iid==0) goto L_INONE;
-next;
 mes "[GM Menu]";
-mes "Please enter the amount claimable of "+@itemname$+" per donation";
-input @quantity;
-if(@quantity==0) goto L_ZERO;
+mes "Please enter the cost of each "+@itemname$+":";
+input @cost$;
+query_sql "SELECT "+escape_sql(@cost$)+" = 0", @invalid;
+if(@invalid) goto L_ZERO;
+query_sql "SELECT CAST('"+escape_sql(@cost$)+"' AS DECIMAL)", @cost$;
 mes "[GM Menu]";
-mes "You have specified that donators can claim "+@quantity+" "+@itemname$+"s.";
+mes "You have specified that donators can claim "+@itemname$+"s for $"+@cost$+" each.";
 mes "Would you like to continue?";
 next;
 menu "No",L_ITEM,"Yes",-;
 if(@check!=0) goto L_REPLACE;
-query_sql "INSERT INTO `donate_item_db` VALUES ('"+@iid+"', '"+@itemname$+"', '"+@quantity+"')";
+query_sql "INSERT INTO `donate_item_db` VALUES ('"+@iid+"', '"+escape_sql(@itemname$)+"', '"+@cost$+"')";
 mes "[GM Menu]";
 mes "Item added successfully!";
 next;
-set @itemname$, 0;
-set @iid, 0;
-set @quantity, 0;
 menu "Add annother item",L_NEWITEM,"Remove an item",L_DELITEM,"View all items",L_ALLITEMS;
 close;
 
@@ -181,13 +196,10 @@ mes "Item "+@itemname$+" already exists in the database.";
 mes "Would you like to replace it?";
 next;
 menu "No",L_ITEM,"Yes",-;
-query_sql "REPLACE INTO `donate_item_db` VALUES ('"+@iid+"', '"+@itemname$+"', '"+@quantity+"')";
+query_sql "REPLACE INTO `donate_item_db` VALUES ('"+@iid+"', '"+@itemname$+"', '"+@cost$+"')";
 mes "[GM Menu]";
 mes "Item replaced successfully!";
 next;
-set @itemname$, 0;
-set @iid, 0;
-set @quantity, 0;
 menu "Add annother item",L_NEWITEM,"Remove an item",L_DELITEM,"View all items",L_ALLITEMS;
 close;
 
@@ -195,15 +207,13 @@ L_INONE:
 mes "[GM Menu]";
 mes "Item "+@itemname$+" does not exist.";
 next;
-set @itemname$, 0;
-set @iid, 0;
 goto L_ITEM;
 
 L_DELITEM:
 mes "[GM Menu]";
 mes "Please enter the item name:";
 input @itemname$;
-query_sql "SELECT `id` FROM `donate_item_db` WHERE `name` = '"+@itemname$+"'", @iid;
+query_sql "SELECT `id` FROM `donate_item_db` WHERE `name` = '"+escape_sql(@itemname$)+"'", @iid;
 if(@iid==0) goto L_INONE;
 next;
 mes "[GM Menu]";
@@ -215,56 +225,61 @@ query_sql "DELETE FROM `donate_item_db` WHERE `id` = '"+@iid+"'";
 mes "[GM Menu]";
 mes "Item deleted successfully!";
 next;
-set @itemname$, 0;
-set @iid, 0;
 menu "Add an item",L_NEWITEM,"Remove another item",L_DELITEM,"View all items",L_ALLITEMS;
 close;
 
 L_ALLITEMS:
 mes "[GM Menu]";
 query_sql "SELECT `name` FROM `donate_item_db` ORDER BY `name` ASC", @items$;
-query_sql "SELECT `amount` FROM `donate_item_db` ORDER BY `name` ASC", @itemamount;
+query_sql "SELECT `price` FROM `donate_item_db` ORDER BY `name` ASC", @itemamount$;
 for(set @i, 0; @i < getarraysize(@items$); set @i, @i + 1){
-		mes ""+@items$[@i]+" - "+@itemamount[@i]+"";
+		mes ""+@items$[@i]+" - $"+@itemamount$[@i]+"";
 	}
 next;
-set @items$, 0;
-set @itemamount, 0;
 goto L_GM;
 
 L_DONATE:
 mes "[GM Menu]";
 mes "Please enter the donator's username:";
 input @donator$;
-query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+@donator$+"'", @aid;
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated;
+query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
 if(@aid==0) goto L_NONE;
-if(@donated>0) mes ""+@donator$+" has donated $"+@donated+".";
-if(@donated==0) mes ""+@donator$+" has not donated before.";
+query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated$;
+query_sql "SELECT "+@donated$+" > 0", @donated;
+switch(@donated) {
+	case 0:
+		mes ""+@donator$+" has not donated before.";
+		break;
+	case 1:
+		mes ""+@donator$+" has donated $"+@donated+".";
+		break;
+	}
 next;
 mes "[GM Menu]";
 mes "Please enter the amount donated by "+@donator$+"";
-input @donating;
-if(@donating==0) goto L_ZERO;
+input @donating$;
+query_sql "SELECT "+escape_sql(@donating$)+" = 0", @invalid;
+if(@invalid) goto L_ZERO;
+query_sql "SELECT CAST('"+escape_sql(@donating$)+"' AS DECIMAL)", @donating$;
 mes "[GM Menu]";
-mes "You have specified that "+@donator$+" has donated $"+@donating+".";
+mes "You have specified that "+@donator$+" has donated $"+@donating$+".";
 mes "Would you like to continue?";
 next;
 menu "No",L_GM,"Yes",-;
-if(@donated>0) query_sql "UPDATE `donate` SET `amount` = `amount` + "+@donating+" WHERE `account_id` = '"+@aid+"'";
-if(@donated==0) query_sql "INSERT INTO `donate` VALUES ('"+@aid+"', '"+@donating+"', '0')";
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @newdonated;
+switch(@donated) {
+	case 0:
+		query_sql "INSERT INTO `donate` VALUES ('"+@aid+"', '"+@donating$+"', '0')";
+		break;
+	case 1:
+		query_sql "UPDATE `donate` SET `amount` = `amount` + "+@donating$+" WHERE `account_id` = '"+@aid+"'";
+		break;
+	}
+query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @newdonated$;
 mes "[GM Menu]";
 mes "Donation added successfully!";
-mes ""+@donator$+" has donated a total of $"+@newdonated+"";
+mes ""+@donator$+" has donated a total of $"+@newdonated$+"";
 next;
-set @donator$, 0;
-set @aid, 0;
-set @donated, 0;
-set @donating, 0;
-set @newdonated, 0;
 goto L_GM;
-close;
 
 L_ZERO:
 mes "[GM Menu]";
@@ -276,27 +291,24 @@ L_NONE:
 mes "[GM Menu]";
 mes "Account name "+@donator$+" does not exist.";
 next;
-set @donator$, 0;
-set @aid, 0;
-set @donated, 0;
-set @donating, 0;
-set @newdonated, 0;
 goto L_GM;
 
 L_REMOVE:
 mes "[GM Menu]";
 mes "Please enter the donator's username:";
 input @donator$;
-query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+@donator$+"'", @aid;
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated;
+query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
 if(@aid==0) goto L_NONE;
-if(@donated>0) mes ""+@donator$+" has donated $"+@donated+".";
+query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated$;
+query_sql "SELECT "+@donated$+" > 0", @donated;
+
 if(@donated==0) {
 	query_sql "DELETE FROM `donate` WHERE `account_id` = '"+@aid+"'";
 	mes ""+@donator$+" is not a donator and has been deleted from the donation database.";
 	goto L_GM;
-	close;
 	}
+
+mes ""+@donator$+" has donated $"+@donated$+".";
 next;
 menu "Deduct an amount from "+@donator$+"",L_MINUS,"Remove "+@donator$+" from the donation database",L_DELETE;
 close;
@@ -304,23 +316,21 @@ close;
 L_MINUS:
 mes "[GM Menu]";
 mes "Please enter the amount "+@donator$+" is to be deducted by:";
-input @deduct;
+input @deduct$;
+query_sql "SELECT "+escape_sql(@deduct$)+" = 0", @invalid;
+if(@invalid) goto L_ZERO;
+query_sql "SELECT CAST('"+escape_sql(@deduct$)+"' AS DECIMAL)", @deduct$;
 mes "[GM Menu]";
-mes "You have specified that "+@donator$+" is to be deducted by $"+@deduct+".";
+mes "You have specified that "+@donator$+" is to be deducted by $"+@deduct$+".";
 mes "Would you like to continue?";
 next;
 menu "No",L_GM,"Yes",-;
-query_sql "UPDATE `donate` SET `amount` = `amount` - "+@deduct+" WHERE `account_id` = '"+@aid+"'";
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @afterdeduct;
+query_sql "UPDATE `donate` SET `amount` = `amount` - "+@deduct$+" WHERE `account_id` = '"+@aid+"'";
+query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @afterdeduct$;
 mes "[GM Menu]";
 mes "Donation deducted successfully!";
-mes ""+@donator$+" has donated a total of $"+@afterdeduct+"";
+mes ""+@donator$+" has donated a total of $"+@afterdeduct$+"";
 next;
-set @donator$, 0;
-set @aid, 0;
-set @donated, 0;
-set @deduct, 0;
-set @afterdeduct, 0;
 goto L_GM;
 
 L_DELETE:
@@ -333,27 +343,19 @@ query_sql "DELETE FROM `donate` WHERE `account_id` = '"+@aid+"'";
 mes "[GM Menu]";
 mes "Donator deleted successfully!";
 next;
-set @donator$, 0;
-set @aid, 0;
-set @donated, 0;
 goto L_GM;
 
 L_VIEWALL:
 mes "[GM Menu]";
 query_sql "SELECT `account_id` FROM `donate` ORDER BY `amount` DESC", @donatoraid;
-query_sql "SELECT `amount` FROM `donate` ORDER BY `amount` DESC", @donatedamount;
+query_sql "SELECT `amount` FROM `donate` ORDER BY `amount` DESC", @donatedamount$;
 for(set @i, 0; @i < getarraysize(@donatoraid); set @i, @i + 1){
 	query_sql "SELECT `userid` FROM `login` WHERE `account_id` = '"+@donatoraid[@i]+"'", @donateruserid$;
 	for(set @j, 0; @j < getarraysize(@donateruserid$); set @j, @j + 1){
-		mes ""+@donateruserid$[@j]+" - "+@donatedamount[@i]+"";
+		mes ""+@donateruserid$[@j]+" - "+@donatedamount$[@i]+"";
 	}
 }
 next;
-set @donatoraid, 0;
-set @donatedamount, 0;
-set @donateruserid$, 0;
 goto L_GM;
 
-L_CLOSE:
-close;
 }

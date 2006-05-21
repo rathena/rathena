@@ -378,10 +378,10 @@ L_Payoff:
 	next;
 	if (@zenyamount > Zeny) goto L_Overzeny;
 	set Zeny,Zeny-@totalzeny;
-	getitem 673,@bronzecoins;
-	getitem 677,@silvercoins;
-	getitem 671,@goldcoins;
-	getitem 674,@mithrilcoins;
+	getitem @bronzecoinid,@bronzecoins;
+	getitem @silvercoinid,@silvercoins;
+	getitem @goldcoinid,@goldcoins;
+	getitem @mithrilcoinid,@mithrilcoins;
 	mes @npcname$;
 	mes "There you go, here's your coins";
 	next;
