@@ -9810,7 +9810,7 @@ void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 
 	// Exploit prevention if crafted packets (without null) is being sent. [Lance]
 	memcpy(sd->npc_str,RFIFOP(fd,8),message_len); 
-	sd->npc_str[message_len-1]=0;
+	sd->npc_str[message_len]=0;
 
 	npc_scriptcont(sd,RFIFOL(fd,4));
 }
