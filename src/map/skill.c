@@ -8640,7 +8640,9 @@ int skill_autospell(struct map_session_data *sd,int skillid)
 	nullpo_retr(0, sd);
 
 	skilllv = sd->menuskill_lv;
-	if(skilllv <= 0) return 0;
+	lv=pc_checkskill(sd,skillid);
+
+	if(skilllv <= 0 || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
 
 	if(skillid==MG_NAPALMBEAT)	maxlv=3;
 	else if(skillid==MG_COLDBOLT || skillid==MG_FIREBOLT || skillid==MG_LIGHTNINGBOLT){
@@ -8662,11 +8664,11 @@ int skill_autospell(struct map_session_data *sd,int skillid)
 	else if(skillid==MG_FROSTDIVER) maxlv=1;
 	else return 0;
 
-	if(maxlv > (lv=pc_checkskill(sd,skillid)))
+	if(maxlv > lv)
 		maxlv = lv;
 
 	sc_start4(&sd->bl,SC_AUTOSPELL,100,skilllv,skillid,maxlv,0,	// val1:スキルID val2:使用?ﾅ大Lv
-		skill_get_time(SA_AUTOSPELL,skilllv));// にしてみたけどbscriptが?曹ｫ易い????H
+	skill_get_time(SA_AUTOSPELL,skilllv));// にしてみたけどbscriptが?曹ｫ易い????H
 	return 0;
 }
 
