@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/21
+	* Fixed the "fake" mute status bug. [Zido]
+
 2006/05/19
 	* Speed up array size calculation and deletion. [Lance]
 	* Player must learn the skill before doing auto-spell [Lance]

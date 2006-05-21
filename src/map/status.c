@@ -4151,8 +4151,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_NOCHAT:	//ƒ`ƒƒƒbƒg‹ÖŽ~?‘Ô
 			{
-				if(!battle_config.muting_players)
+				if(!battle_config.muting_players) {
+					sd->status.manner = 0; //Zido
+					status_change_end(&sd->bl,SC_NOCHAT,-1); //Zido
 					return 0;
+				}
 				
 				if (!(flag&4))
 					tick = 60000;
