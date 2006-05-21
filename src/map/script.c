@@ -3424,12 +3424,17 @@ int buildin_copyarray(struct script_state *st)
  */
 static int getarraysize(struct script_state *st,int num,int postfix)
 {
-	int i=(num>>24),c=-1; // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
-	for(;i<128;i++){
-		// num must be the first elements of array [Eoe / jA 1127]
-		void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24));
-		if(postfix=='$' && *((char*)v) ) c=i;
-		if(postfix!='$' && (int)v )c=i;
+	int i=(num>>24),c=(i==0? -1:i); // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
+	if(postfix == '$'){
+		for(;i<128;i++){
+			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24));
+			if(*((char*)v)) c=i;
+		}
+	}else{
+		for(;i<128;i++){
+			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24));
+			if((int)v) c=i;
+		}
 	}
 	return c+1;
 }
@@ -3476,9 +3481,13 @@ int buildin_deletearray(struct script_state *st)
 	for(i=0;i<sz;i++){
 		set_reg(sd,num+(i<<24),name, get_val2(st,num+((i+count)<<24) ) );
 	}
-	for(;i<(128-(num>>24));i++){
-		if( postfix!='$' ) set_reg(sd,num+(i<<24),name, 0);
-		if( postfix=='$' ) set_reg(sd,num+(i<<24),name, (void *) "");
+
+	if(postfix != '$'){
+		for(;i<(128-(num>>24));i++)
+			set_reg(sd,num+(i<<24),name, 0);
+	} else {
+		for(;i<(128-(num>>24));i++)
+			set_reg(sd,num+(i<<24),name, (void *) "");
 	}
 	return 0;
 }
