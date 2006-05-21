@@ -1,11 +1,11 @@
 //===== eAthena Script =======================================
 //= eAthena Jobchanger AKA Job Master
 //===== By: ==================================================
-//= eAthena Dev Team [LunatikBunnie] (Editted by Amada`)
+//= eAthena Dev Team [Ori:LunatikBunnie] [Cur:Lance]
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= eAthena SVN Trunk 6674
 //===== Description: =========================================
 //= Changes your job without asking too much
 //= For other info, please contact me at Lunatikbunnie@gmail.com 
@@ -14,437 +14,154 @@
 //=    script leaves grabage variable: 'lastJob'
 //= 1.4 Added NJ/GS, changed all job numbers to Job_* constants. 
 //=    All credits go to pxxx [Skotlex]
+//= 1.5 Rewrite everything from scratch. [Lance]
 //============================================================
-
-// ------------------------------ Start ------------------------------
 prontera.gat,153,193,6	script	Job Master	123,{
-// Variable Setup
-	set @MinimumJB, 40; //Minimum job level for changing between 2nd and advance Class (Default : 40)
-	set @GivePlat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
-	set @SupNovM, 45; //Base Level to change into Super Novice (Default : 45)
-// Check Jobtype
-	if(Upper == 1 && Class >= Job_Lord_Knight) goto L_cantCh;
-	if(SkillPoint != 0) goto L_skillUsed;
-	if(Class == Job_Novice) goto L_novice;
-	if(JobLevel <10) goto L_notEn;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Knight) || (lastJob ==Job_Crusader))) goto L_cHsword;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Wizard) || (lastJob ==Job_Sage))) goto L_cHmage;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Hunter) || (lastJob ==Job_Bard) || (lastJob ==Job_Dancer))) goto L_cHarcher;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Priest) || (lastJob ==Job_Monk))) goto L_cHacolyte;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Blacksmith) || (lastJob ==Job_Alchem))) goto L_cHmerchant;
-	if((Class ==Job_Novice_High) && ((lastJob ==Job_Assassin) || (lastJob ==Job_Rogue))) goto L_cHthief;
-	if(JobLevel <@MinimumJB) goto L_notEn;
-	if(Class ==Job_Swordman) goto L_iSword;
-	if(Class ==Job_Mage) goto L_iMage;
-	if(Class ==Job_Archer) goto L_iArcher;
-	if(Class ==Job_Acolyte) goto L_iAcolyte;
-	if(Class ==Job_Merchant) goto L_iMerchant;
-	if(Class ==Job_Thief) goto L_iThief;
-	if(Class ==Job_Taekwon) goto L_iTaekwon;
-	if(checkfalcon(0) || checkcart(0) || checkriding(0)) goto L_remove;
-	if(lastJob ==Job_Knight) goto L_iKnight;
-	if(lastJob ==Job_Priest) goto L_iPriest;
-	if(lastJob ==Job_Wizard) goto L_iWizard;
-	if(lastJob ==Job_Blacksmith) goto L_iBlacksmith;
-	if(lastJob ==Job_Hunter) goto L_iHunter;
-	if(lastJob ==Job_Assassin) goto L_iAssassin;
-	if(lastJob ==Job_Crusader) goto L_iCrusader;
-	if(lastJob ==Job_Monk) goto L_iMonk;
-	if(lastJob ==Job_Sage) goto L_iSage;
-	if(lastJob ==Job_Rogue) goto L_iRogue;
-	if(lastJob ==Job_Alchem) goto L_iAlchemist;
-	if(lastJob ==Job_Bard) goto L_iBard;
-	if(lastJob ==Job_Dancer) goto L_iDancer;
-	if((Class >=Job_Knight) && (Class <=Job_Crusader2)) goto L_rebirth;
+	mes "^ff0000[Job Master]^000000";
+	if(Upper == 1 && Class >= Job_Lord_Knight) goto L_noReq;
+	if(SkillPoint != 0){
+		mes "I'm sorry, please use up all your skill points before changing jobs";
+		mes "Please come again soon!";
+		close;
+	}
+	if(JobLevel < 10) goto L_LvError;
+	switch(Class){
+		case Job_Novice_High:
+		case Job_Baby:
+		case Job_Novice:
+			skill 142,1,0;
+			skill 143,1,0;
+			mes "Welcome, please select the job you wish to change into";
+			if(lastJob != 0 && Class == Job_Novice_High){
+				set @target_job, BaseClass + 4001;
+			} else {
+				switch(select("Swordsman","Mage","Archer","Acolyte","Merchant","Thief",
+					      	"Super Novice","Taekwon","Gunslinger","Ninja")){
+						case 7:
+							if(Class == Job_Novice_High) goto L_noReq;
+							if($@JC_SupNovM > BaseLevel) goto L_BvError;
+							set @target_job, Job_SuperNovice;
+							break;
+						case 8:
+							if(Class == Job_Novice_High) goto L_noReq;
+							if(Upper == 2) goto L_noReq;
+							set @target_job, Job_Taekwon;
+							break;
+						case 9:
+						case 10:
+							if(Class == Job_Novice_High) goto L_noReq;
+							set @target_job, @menu + 15;
+							break;
+						default:
+							set @target_job, @menu;
+							if(Class == Job_Novice_High) set @target_job, @target_job + 4001;
+							break;
+				}
+			}
+			mes "Are you sure?";
+			if(select("No","Yes") == 2){
+				callfunc "Job_Change", @target_job;
+				if(@target_job == Job_Gunsliger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {
+					callfunc "F_ClearJobVar";
+				} else {
+					if($@JC_Plat) goto L_GivePlat;
+				}
+			}
+			close;
+			break;
+		default:
+			if(JobLevel < $@JC_MinimumJB) goto L_LvError;
+			deletearray @job_opt, getarraysize(@job_opt);
+			if(Class < Job_Knight || Class == Job_Taekwon || (Class > Job_Baby && Class < Job_Baby_Knight) || (Class > Job_Novice_High && Class < Job_Lord_Knight))
+				if(lastJob != 0){
+					set @target_job, lastJob + 4001;
+				} else {
+					switch(Class){
+						case Job_Swordman_High:
+						case Job_Baby_Swordman:
+						case Job_Swordman:
+							set @job_opt[0], Job_Knight;
+							set @job_opt[1], Job_Crusader;
+							break;
+						case Job_Mage_High:
+						case Job_Baby_Mage:
+						case Job_Mage:
+							set @job_opt[0], Job_Wizard;
+							set @job_opt[1], Job_Sage;
+							break;
+						case Job_Archer_High:
+						case Job_Baby_Archer:
+						case Job_Archer:
+							set @job_opt[0], Job_Hunter;
+							if(Sex == 0)
+								set @job_opt[1], Job_Dancer;
+							else
+								set @job_opt[1], Job_Bard;
+							break;
+						case Job_Acolyte_High:
+						case Job_Baby_Acolyte:
+						case Job_Acolyte:
+							set @job_opt[0], Job_Priest;
+							set @job_opt[1], Job_Monk;
+							break;
+						case Job_Merchant_High:
+						case Job_Baby_Merchant:
+						case Job_Merchant:
+							set @job_opt[0], Job_Blacksmith;
+							set @job_opt[1], Job_Alchem;
+							break;
+						case Job_Thief_High:
+						case Job_Baby_Theif:
+						case Job_Theif:
+							set @job_opt[0], Job_Assassin;
+							set @job_opt[1], Job_Rogue;
+							break;						
+						default:
+							set @job_opt[0], Job_Star_Gladiator;
+							set @job_opt[1], Job_Soul_Linker;
+							break;
+					}
+					mes "Welcome, please select the job you wish to change into";
+					set @target_job, @job_opt[select(callfunc("getJobName",@job_opt[0]), callfunc("getJobName",@job_opt[1]))-1];
+					if(Class > Job_Novice_High && Class < Job_Lord_Knight) set @target_job, @target_job + 4001;
+				}
+				mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
+				if(select("No","Yes")==2){
+					callfunc "Job_Change", @target_job;
+					if(@target_job == Job_Star_Gladiator || @target_job == Job_Soul_Linker) {
+						callfunc "F_ClearJobVar";
+					} else {
+						if($@JC_Plat) goto L_GivePlat;
+					}
+				}
+				close;
+			}
+			if(checkfalcon(0) || checkcart(0) || checkriding(0)) goto L_remove;
+			if((Class >=Job_Knight) && (Class <=Job_Crusader2)){
+				mes "Do you want to reborn?";
+				if(select("Yes","No")==1){
+					if(BaseLevel < 99 && JobLevel < 50) goto L_cantCh;
+					set lastJob, Class;
+					if(Class == Job_Knight2){
+						set lastJob, Job_Knight;
+					} else {
+						if(Class == Job_Crusader2){
+							set lastJob, Job_Crusader;
+						}
+					}
+					jobchange Job_Novice_High;
+					resetlvl(1);
+					skill 142,1,0;
+					skill 143,1,0;
+				}
+				close;
+			}
+			
+	}
+	mes "Looks like something has gone wrong. Please report to the eAthena Development Team about this error.";
 	close;
 
-// Novice
-	L_novice:
-		skill 142,1,0;
-		skill 143,1,0;
-		if(JobLevel<10) goto L_notEn;
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Swordsman",L_sword,"Mage",L_mage,"Archer",L_archer,"Acolyte",L_acolyte,"Merchant",L_merchant,"Thief",L_thief,"Super Novice",L_superN,"Taekwon",L_taekwon,"Gunslinger",L_gun,"Ninja",L_ninja;
-// Change to Swordsman
-			L_sword:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Swordman;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Mage
-			L_mage:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Mage;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Archer
-			L_archer:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Archer;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Acolyte
-			L_acolyte:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Acolyte;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Merchant
-			L_merchant:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Merchant;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Thief
-			L_thief:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Thief;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Super Novice
-			L_superN:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				if(BaseLevel<@SupNovM) goto L_notSup;
-				jobchange Job_SuperNovice;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Taekwon
-			L_taekwon:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Taekwon;
-				callfunc "F_ClearJobVar";
-				close;
-// Change to Gunslinger
-			L_gun:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Gunslinger;
-				callfunc "F_ClearJobVar";
-				close;
-// Change to Ninja
-			L_ninja:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Ninja;
-				callfunc "F_ClearJobVar";
-				close;
-
-// Change to Knight/Crusader
-	L_iSword:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Knight",L_knight,"Crusader",L_crusader;
-			L_knight:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Knight;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_crusader:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Crusader;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Wizard/Sage
-	L_iMage:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Wizard",L_wizard,"Sage",L_sage;
-			L_wizard:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Wizard;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_sage:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Sage;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Hunter/Bard/Dancer
-	L_iArcher:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Hunter",L_hunter,"Bard/Dancer",L_bandd;
-			L_hunter:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Hunter;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_bandd:
-				if(sex==0) goto L_dancer;
-				if(sex==1) goto L_bard;
-				L_bard:
-					mes "Are you SURE?";
-					menu "No",L_quit,"Yes",-;
-					jobchange Job_Bard;
-					if(@GivePlat) goto L_GivePlat;
-					close;
-				L_dancer:
-					mes "Are you SURE?";
-					menu "No",L_quit,"Yes",-;
-					jobchange Job_Dancer;
-					if(@GivePlat) goto L_GivePlat;
-					close;
-// Change to Priest/Monk
-	L_iAcolyte:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Priest",L_priest,"Monk",L_monk;
-			L_priest:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Priest;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_monk:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Monk;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Blacksmith/Alchemist
-	L_iMerchant:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Blacksmith",L_blacksmith,"Alchemist",L_alchemist;
-			L_blacksmith:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Blacksmith;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_alchemist:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Alchem;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Assassin/Rogue
-	L_iThief:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Assassin",L_assassin,"Rogue",L_rogue;
-			L_assassin:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Assassin;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-			L_rogue:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Rogue;
-				if(@GivePlat) goto L_GivePlat;
-				close;
-// Change to Star Gladiator/Soul Linker
-	L_iTaekwon:
-		mes "^ff0000[Job Master]^000000";
-		mes "Welcome, please select the job you wish to change into";
-		menu "Star Gladiator",L_SG,"Soul Linker",L_SL;
-			L_SG:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Star_Gladiator;
-				callfunc "F_ClearJobVar";
-				close;
-			L_SL:
-				mes "Are you SURE?";
-				menu "No",L_quit,"Yes",-;
-				jobchange Job_Soul_Linker;
-				callfunc "F_ClearJobVar";
-				close;
-// Rebirth
-	L_rebirth:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to reborn?";
-		next;
-		mes "Are you SURE?";
-		menu "No",L_quit,"Yes",-;
-		if ((BaseLevel < 99) || (JobLevel < 50)) goto L_cantCh;
-		set lastJob, readparam(19);
-		if(lastJob == Job_Knight2) set lastJob,Job_Knight;
-		if(lastJob == Job_Crusader2) set lastJob,Job_Crusader;
-		jobchange Job_Novice_High;
-		resetlvl(1);
-		skill 142,1,0;
-		skill 143,1,0;
-		mes "^ff0000[Job Master]^000000";
-		mes "You are now reborn.";
-		mes "Please come again soon.";
-		close;
-	L_cHsword:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Swordsman?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Swordman_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;
-	L_cHmage:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Mage?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Mage_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;
-	L_cHarcher:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Archer?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Archer_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;
-	L_cHacolyte:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Acolyte?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Acolyte_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;
-	L_cHmerchant:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Merchant?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Merchant_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;
-	L_cHthief:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Thief?";
-		next;
-		menu "No",L_quit,"Yes",-;
-		jobchange Job_Thief_High;
-		mes "^ff0000[Job Master]^000000";
-		mes "Thank you, please come again soon!";
-		close;	
-// Change to Lord Knight
-	L_iKnight:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Lord Knight?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Lord_Knight;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Paladin
-	L_iCrusader:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Paladin?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Paladin;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to High Priest
-	L_iPriest:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Priest?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_High_Priest;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Champion
-	L_iMonk:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Champion?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Champion;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Whitesmith
-	L_iBlacksmith:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Whitesmith?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Whitesmith;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Creator
-	L_iAlchemist:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Creator?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Creator;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to High Wizard
-	L_iWizard:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a High Wizard?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_High_Wizard;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Professor
-	L_iSage:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Professor?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Professor;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Sniper
-	L_iHunter:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Sniper?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Sniper;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Clown
-	L_iBard:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Clown?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Clown;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Gypsy
-	L_iDancer:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Gypsy?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Gypsy;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Assassin Cross
-	L_iAssassin:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into an Assassin Cross?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Assassin_Cross;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Change to Stalker
-	L_iRogue:
-		mes "^ff0000[Job Master]^000000";
-		mes "Do you want to change into a Stalker?";
-		menu "No",L_quit,"Yes",-;
-			jobchange Job_Stalker;
-			if(@GivePlat) goto L_GivePlat;
-			close;
-// Giving Platinum Skills
-	L_GivePlat:
+L_GivePlat:
 		if (BaseClass==Job_SuperNovice) goto L_sSuperN;
 		if (BaseClass==Job_Swordman) goto L_sSword;
 		if (BaseClass==Job_Mage) goto L_sMage;
@@ -461,6 +178,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			skill 144,1,0;
 			skill 145,1,0;
 			skill 146,1,0;
+			close;
 		L_sMage:
 			skill 142,1,0;
 			skill 157,1,0;
@@ -487,33 +205,36 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			skill 151,1,0;
 			skill 152,1,0;
 			close;
-	L_quit:
-		close;
-// Errors
-	L_cantCh:
-		mes "^ff0000[Job Master]^000000";
-		mes "I'm sorry, you do not meet the requirements to change";
-		mes "Please come again soon!";
-		close;
-	L_skillUsed:
-		mes "^ff0000[Job Master]^000000";
-		mes "I'm sorry, please use up all your skill points before changing jobs";
-		mes "Please come again soon!";
-		close;
-	L_notEn:
-		mes "^ff0000[Job Master]^000000";
-		mes "I'm sorry, you do not seem to have enough Job Levels";
-		mes "Please come again soon!";
-		close;
-	L_notSup:
-		mes "^ff0000[Job Master]^000000";
-		mes "I'm sorry, you do not seem to have enough Base Levels";
-		mes "Please come again soon!";
-		close;
-	L_remove:
-		mes "^ff0000[Job Master]^000000";
-		mes "Please remove your cart,falcon or peco";
-		mes "Please come again soon!";
-		close;
+
+L_cantCh:
+	mes "I'm sorry, you do not meet the requirements to change";
+	mes "Please come again soon!";
+	close;
+
+L_LvError:
+	mes "I'm sorry, you do not seem to have enough Job Levels";
+	mes "Please come again soon!";
+	close;
+
+L_BvError:
+	mes "I'm sorry, you do not seem to have enough Base Levels";
+	mes "Please come again soon!";
+	close;
+
+L_noReq:
+	mes "I'm sorry, you do not meet the requirements to change";
+	mes "Please come again soon!";
+	close;
+
+L_remove:
+	mes "Please remove your cart,falcon or peco";
+	mes "Please come again soon!";
+	close;
+
+OnInit:
+	// Variable Setup
+	set $@JC_MinimumJB, 40; //Minimum job level for changing between 2nd and advance Class (Default : 40)
+	set $@JC_Plat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
+	set $@JC_SupNovM, 45; //Base Level to change into Super Novice (Default : 45)
+	end;
 }
-// ------------------------------ End -------------------

@@ -380,6 +380,17 @@ function	script	getJobName	{
 			return "Star Gladiator";
 		case Job_Soul_Linker:
 			return "Soul Linker";
+		case Job_Ninja:
+			return "Ninja";
+		case Job_Gunslinger:
+			return "Gunslinger";
+		case Job_Xmas:
+			return "Christmas";
+		case Option_Wedding:
+			if(Sex == 0)
+				return "Bride";
+			else
+				return "Bridegroom";
 		default:
 			return "omghaxor";
 	}
