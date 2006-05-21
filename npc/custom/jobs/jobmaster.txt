@@ -33,7 +33,33 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			skill 143,1,0;
 			mes "Welcome, please select the job you wish to change into";
 			if(lastJob != 0 && Class == Job_Novice_High){
-				set @target_job, BaseClass + 4001;
+				switch(lastJob){
+					case Job_Knight:
+					case Job_Crusader:
+						set @target_job, Job_Swordman_High;
+						break;
+					case Job_Monk:
+					case Job_Priest:
+						set @target_job, Job_Acolyte_High;
+						break;
+					case Job_Alchem:
+					case Job_Blacksmith:
+						set @target_job, Job_Merchant_High;
+						break;
+					case Job_Rogue:
+					case Job_Assassin:
+						set @target_job, Job_Thief_High;
+						break;
+					case Job_Wizard:
+					case Job_Sage:
+						set @target_job, Job_Mage_High;
+						break;
+					case Job_Hunter:
+					case Job_Bard:
+					case Job_Dancer:
+						set @target_job, Job_Archer_High;
+						break;
+				}
 			} else {
 				switch(select("Swordsman","Mage","Archer","Acolyte","Merchant","Thief",
 					      	"Super Novice","Taekwon","Gunslinger","Ninja")){
