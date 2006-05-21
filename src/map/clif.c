@@ -9800,14 +9800,18 @@ void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd)
  */
 void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 {
+	unsigned short message_len = RFIFOW(fd,2)-7;
 	RFIFOHEAD(fd);
 
-	if(RFIFOW(fd,2)-7 >= sizeof(sd->npc_str)){
+	if(message_len >= sizeof(sd->npc_str)){
 		ShowWarning("clif: input string too long !\n");
-		memcpy(sd->npc_str,RFIFOP(fd,8),sizeof(sd->npc_str));
-		sd->npc_str[sizeof(sd->npc_str)-1]=0;
-	} else
-		strcpy(sd->npc_str,(char*)RFIFOP(fd,8));
+		message_len = sizeof(sd->npc_str);
+	}
+
+	// Exploit prevention if crafted packets (without null) is being sent. [Lance]
+	memcpy(sd->npc_str,RFIFOP(fd,8),message_len); 
+	sd->npc_str[message_len-1]=0;
+
 	npc_scriptcont(sd,RFIFOL(fd,4));
 }
 
