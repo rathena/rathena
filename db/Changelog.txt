@@ -26,6 +26,9 @@
 	-----
 
 =========================
+05/21
+	* Incantation Samurai Card now ignores def of all non-boss races [Playtester]
+	- should include players now
 05/19
 	* Major fix to the mob_skill_db [Playtester]
 	- traps are now placed around2 rather than self
