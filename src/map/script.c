@@ -124,6 +124,8 @@ char tmp_sql[65535];
 // --------------------------------------------------------
 #endif
 
+static struct linkdb_node *sleep_db;
+
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
  *------------------------------------------
@@ -428,6 +430,10 @@ int buildin_mobtalk(struct script_state *st);
 int buildin_mobemote(struct script_state *st);
 int buildin_mobattach(struct script_state *st);
 // <--- [zBuffer] List of mob control commands
+int buildin_sleep(struct script_state *st);
+int buildin_sleep2(struct script_state *st);
+int buildin_awake(struct script_state *st);
+int buildin_getvariableofnpc(struct script_state *st);
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -763,6 +769,10 @@ struct {
 	{buildin_mobemote,"mobemote","*"},
 	{buildin_mobattach,"mobattach","*"},
 // <--- [zBuffer] List of mob control commands
+{buildin_sleep,"sleep","i"},
+	{buildin_sleep2,"sleep2","i"},
+	{buildin_awake,"awake","s"},
+	{buildin_getvariableofnpc,"getvariableofnpc","is"},
 	{NULL,NULL,NULL},
 };
 
@@ -2162,10 +2172,11 @@ static void read_constdb(void)
  * スクリプトの解析
  *------------------------------------------
  */
-unsigned char* parse_script(unsigned char *src,int line)
+struct script_code* parse_script(unsigned char *src,int line)
 {
 	unsigned char *p, *tmpp;
 	int i;
+	struct script_code *code;
 	static int first = 1;
 
 	if (first) {
@@ -2275,7 +2286,11 @@ unsigned char* parse_script(unsigned char *src,int line)
 #endif
 
 	startptr = NULL; //Clear pointer to prevent future references to a src that may be free'd. [Skotlex]
-	return (unsigned char *) script_buf;
+	code = aCalloc(1, sizeof(struct script_code));
+	code->script_buf  = script_buf;
+	code->script_size = script_size;
+	code->script_vars = NULL;
+	return code;
 }
 
 //
@@ -2330,7 +2345,17 @@ int get_val(struct script_state*st,struct script_data* data)
 					if(sd)
 					data->u.str = pc_readaccountregstr(sd,name);
 				}
- 			}else{
+ 			}else if(prefix=='\'') {
+				struct linkdb_node **n;
+				if( data->ref ) {
+					n = data->ref;
+				} else if( name[1] == '@' ) {
+					n = st->stack->var_function;
+				} else {
+					n = &st->script->script_vars;
+				}
+				data->u.str = linkdb_search(n, (void*)data->u.num );
+			}else{
 				if(sd)
 				data->u.str = pc_readglobalreg_str(sd,name);
  			} // [zBuffer]
@@ -2362,6 +2387,16 @@ int get_val(struct script_state*st,struct script_data* data)
 					if(sd)
 					data->u.num = pc_readaccountreg(sd,name);
 				}
+			}else if(prefix=='\''){
+				struct linkdb_node **n;
+				if( data->ref ) {
+					n = data->ref;
+				} else if( name[1] == '@' ) {
+					n = st->stack->var_function;
+				} else {
+					n = &st->script->script_vars;
+				}
+				data->u.num = (int)linkdb_search(n, (void*)data->u.num);
 			}else{
 				if(sd)
 				data->u.num = pc_readglobalreg(sd,name);
@@ -2374,11 +2409,12 @@ int get_val(struct script_state*st,struct script_data* data)
  * 変数の読み取り2
  *------------------------------------------
  */
-void* get_val2(struct script_state*st,int num)
+void* get_val2(struct script_state*st,int num,struct linkdb_node **ref)
 {
 	struct script_data dat;
 	dat.type=C_NAME;
 	dat.u.num=num;
+	dat.ref = ref;
 	get_val(st,&dat);
 	if( dat.type==C_INT ) return (void*)dat.u.num;
 	else return (void*)dat.u.str;
@@ -2388,7 +2424,7 @@ void* get_val2(struct script_state*st,int num)
  * 変数設定用
  *------------------------------------------
  */
-static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
+static int set_reg(struct script_state*st,struct map_session_data *sd,int num,char *name,void *v,struct linkdb_node** ref)
 {
 	char prefix=*name;
 	char postfix=name[strlen(name)-1];
@@ -2404,7 +2440,24 @@ static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
 				pc_setaccountreg2str(sd,name,str);
 			else
 				pc_setaccountregstr(sd,name,str);
- 		}else{
+ 		}else if(prefix=='\'') {
+			char *p;
+			struct linkdb_node **n;
+			if( ref ) {
+				n = ref;
+			} else if( name[1] == '@' ) {
+				n = st->stack->var_function;
+			} else {
+				n = &st->script->script_vars;
+			}
+			p = linkdb_search(n, (void*)num);
+			if(p) {
+				linkdb_erase(n, (void*)num);
+				aFree(p);
+			}
+			if( ((char*)v)[0] )
+				linkdb_insert(n, (void*)num, aStrdup(v));
+		}else{
 			pc_setglobalreg_str(sd,name,str);
  		} // [zBuffer]
 
@@ -2425,6 +2478,20 @@ static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
 				pc_setaccountreg2(sd,name,val);
 			else
 				pc_setaccountreg(sd,name,val);
+		}else if(prefix == '\'') {
+			struct linkdb_node **n;
+			if( ref ) {
+				n = ref;
+			} else if( name[1] == '@' ) {
+				n = st->stack->var_function;
+			} else {
+				n = &st->script->script_vars;
+			}
+			if( val == 0 ) {
+				linkdb_erase(n, (void*)num);
+			} else {
+				linkdb_replace(n, (void*)num, (void*)val);
+			}
 		}else{
 			pc_setglobalreg(sd,name,val);
 		}
@@ -2434,7 +2501,7 @@ static int set_reg(struct map_session_data *sd,int num,char *name,void *v)
 
 int set_var(struct map_session_data *sd, char *name, void *val)
 {
-    return set_reg(sd, add_str((unsigned char *) name), name, val);
+    return set_reg(NULL, sd, add_str((unsigned char *) name), name, val, NULL);
 }
 
 /*==========================================
@@ -2495,7 +2562,18 @@ void push_val(struct script_stack *stack,int type,int val)
 //		printf("push (%d,%d)-> %d\n",type,val,stack->sp);
 	stack->stack_data[stack->sp].type=type;
 	stack->stack_data[stack->sp].u.num=val;
+	stack->stack_data[stack->sp].ref   = NULL;
 	stack->sp++;
+}
+
+/*==========================================
+ * スタックへ数値＋リファレンスをプッシュ
+ *------------------------------------------
+ */
+
+void push_val2(struct script_stack *stack,int type,int val,struct linkdb_node** ref) {
+	push_val(stack,type,val);
+	stack->stack_data[stack->sp-1].ref = ref;
 }
 
 /*==========================================
@@ -2515,6 +2593,7 @@ void push_str(struct script_stack *stack,int type,unsigned char *str)
 //		printf("push (%d,%x)-> %d\n",type,str,stack->sp);
 	stack->stack_data[stack->sp].type=type;
 	stack->stack_data[stack->sp].u.str=(char *) str;
+	stack->stack_data[stack->sp].ref   = NULL;
 	stack->sp++;
 }
 
@@ -2532,7 +2611,10 @@ void push_copy(struct script_stack *stack,int pos)
 		push_str(stack,C_STR,(unsigned char *) aStrdup(stack->stack_data[pos].u.str));
 		break;
 	default:
-		push_val(stack,stack->stack_data[pos].type,stack->stack_data[pos].u.num);
+		push_val2(
+			stack,stack->stack_data[pos].type,stack->stack_data[pos].u.num,
+			stack->stack_data[pos].ref
+		);
 		break;
 	}
 }
@@ -2557,6 +2639,24 @@ void pop_stack(struct script_stack* stack,int start,int end)
 }
 
 /*==========================================
+ * スクリプト依存変数、関数依存変数の解放
+ *------------------------------------------
+ */
+void script_free_vars(struct linkdb_node **node) {
+	struct linkdb_node *n = *node;
+	while(n) {
+		char *name   = str_buf + str_data[(int)(n->key)&0x00ffffff].str;
+		char postfix = name[strlen(name)-1];
+		if( postfix == '$' ) {
+			// 文字型変数なので、データ削除
+			aFree(n->data);
+		}
+		n = n->next;
+	}
+	linkdb_final( node );
+}
+
+/*==========================================
  * Free's the whole stack. Invoked when clearing a character. [Skotlex]
  *------------------------------------------
  */
@@ -2570,10 +2670,22 @@ void script_free_stack(struct script_stack* stack)
 			//ShowDebug ("script_free_stack: freeing %p at sp=%d.\n", stack->stack_data[i].u.str, i);
 			aFree(stack->stack_data[i].u.str);
 			stack->stack_data[i].type = C_INT;
+		}else if( i > 0 && stack->stack_data[i].type == C_RETINFO ) {
+			struct linkdb_node** n = (struct linkdb_node**)stack->stack_data[i-1].u.num;
+			script_free_vars( n );
+			aFree( n );
 		}
 	}
+	script_free_vars( stack->var_function );
+	aFree(stack->var_function);
 	aFree (stack->stack_data);
 	aFree (stack);
+}
+
+void script_free_code(struct script_code* code) {
+	script_free_vars( &code->script_vars );
+	aFree( code->script_buf );
+	aFree( code );
 }
 
 int axtoi(char *hexStg) {
@@ -2657,23 +2769,41 @@ int buildin_goto(struct script_state *st)
  */
 int buildin_callfunc(struct script_state *st)
 {
-	char *scr;
+	struct script_code *scr, *oldscr;
 	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
-	if( (scr=(char *) strdb_get(userfunc_db,(unsigned char*)str)) ){
+	if( (scr=(struct script_code *) strdb_get(userfunc_db,(unsigned char*)str)) ){
 		int i,j;
+		struct linkdb_node **oldval = st->stack->var_function;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
 			push_copy(st->stack,i);
 
 		push_val(st->stack,C_INT,j);				// 引数の数をプッシュ
 		push_val(st->stack,C_INT,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
 		push_val(st->stack,C_INT,(int)st->script);	// 現在のスクリプトをプッシュ
+		push_val(st->stack,C_INT,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
 		push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
 
+		oldscr = st->script;
 		st->pos=0;
 		st->script=scr;
-		st->stack->defsp=st->start+4+j;
+		st->stack->defsp=st->start+5+j;
 		st->state=GOTO;
+		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
+
+		// ' 変数の引き継ぎ
+		for(i = 0; i < j; i++) {
+			struct script_data *s = &st->stack->stack_data[st->stack->sp-6-i];
+			if( s->type == C_NAME && !s->ref ) {
+				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
+				// '@ 変数の引き継ぎ
+				if( name[0] == '\'' && name[1] == '@' ) {
+					s->ref = oldval;
+				} else if( name[0] == '\'' ) {
+					s->ref = &oldscr->script_vars;
+				}
+			}
+		}
 	}else{
 		ShowWarning("script:callfunc: function not found! [%s]\n",str);
 		st->state=END;
@@ -2694,17 +2824,32 @@ int buildin_callsub(struct script_state *st)
 		st->state=END;
 		return 1;
 	} else {
+		struct linkdb_node **oldval = st->stack->var_function;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
 			push_copy(st->stack,i);
 
 		push_val(st->stack,C_INT,j);				// 引数の数をプッシュ
 		push_val(st->stack,C_INT,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
 		push_val(st->stack,C_INT,(int)st->script);	// 現在のスクリプトをプッシュ
+		push_val(st->stack,C_INT,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
 		push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
 
 		st->pos=pos;
-		st->stack->defsp=st->start+4+j;
+		st->stack->defsp=st->start+5+j;
 		st->state=GOTO;
+		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
+
+		// ' 変数の引き継ぎ
+		for(i = 0; i < j; i++) {
+			struct script_data *s = &st->stack->stack_data[st->stack->sp-6-i];
+			if( s->type == C_NAME && !s->ref ) {
+				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
+				// '@ 変数の引き継ぎ
+				if( name[0] == '\'' && name[1] == '@' ) {
+					s->ref = oldval;
+				}
+			}
+		}
 	}
 	return 0;
 }
@@ -2717,13 +2862,13 @@ int buildin_getarg(struct script_state *st)
 {
 	int num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	int max,stsp;
-	if( st->stack->defsp<4 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO ){
+	if( st->stack->defsp<5 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO ){
 		ShowWarning("script:getarg without callfunc or callsub!\n");
 		st->state=END;
 		return 1;
 	}
-	max=conv_num(st,& (st->stack->stack_data[st->stack->defsp-4]));
-	stsp=st->stack->defsp - max -4;
+	max=conv_num(st,& (st->stack->stack_data[st->stack->defsp-5]));
+	stsp=st->stack->defsp - max -5;
 	if( num >= max ){
 		ShowWarning("script:getarg arg1(%d) out of range(%d) !\n",num,max);
 		st->state=END;
@@ -3248,7 +3393,7 @@ int buildin_input(struct script_state *st)
 		if( postfix=='$' ){
 			// 文字列
 			if(st->end>st->start+2){ // 引数1個
-				set_reg(sd,num,name,(void*)sd->npc_str);
+				set_reg(st,sd,num,name,(void*)sd->npc_str,st->stack->stack_data[st->start+2].ref);
 			}else{
 				ShowError("buildin_input: string discarded !!\n");
 				return 1;
@@ -3267,10 +3412,10 @@ int buildin_input(struct script_state *st)
 
 		// 数値
 		if(st->end>st->start+2){ // 引数1個
-			set_reg(sd,num,name,(void*)sd->npc_amount);
+			set_reg(st,sd,num,name,(void*)sd->npc_amount,st->stack->stack_data[st->start+2].ref);
 		} else {
 			// ragemu互換のため
-			pc_setreg(sd,add_str((unsigned char *) "l14"),sd->npc_amount);
+			//pc_setreg(sd,add_str((unsigned char *) "l14"),sd->npc_amount);
 		}
 		return 0;
 	}
@@ -3301,18 +3446,18 @@ int buildin_set(struct script_state *st)
 		return 1;
 	}
 
-	if( prefix!='$' )
+	if( prefix!='$' && prefix!='\'' )
 		sd=script_rid2sd(st);
 
 
 	if( postfix=='$' ){
 		// 文字列
 		char *str = conv_str(st,& (st->stack->stack_data[st->start+3]));
-		set_reg(sd,num,name,(void*)str);
+		set_reg(st,sd,num,name,(void*)str,st->stack->stack_data[st->start+2].ref);
 	}else{
 		// 数値
 		int val = conv_num(st,& (st->stack->stack_data[st->start+3]));
-		set_reg(sd,num,name,(void*)val);
+		set_reg(st,sd,num,name,(void*)val,st->stack->stack_data[st->start+2].ref);
 	}
 
 	return 0;
@@ -3330,11 +3475,11 @@ int buildin_setarray(struct script_state *st)
 	char postfix=name[strlen(name)-1];
 	int i,j;
 
-	if( prefix!='$' && prefix!='@' ){
+	if( prefix!='$' && prefix!='@' && prefix!='\''){
 		ShowWarning("buildin_setarray: illegal scope !\n");
 		return 1;
 	}
-	if( prefix!='$' )
+	if( prefix!='$' && prefix!='\'' )
 		sd=script_rid2sd(st);
 
 	for(j=0,i=st->start+3; i<st->end && j<128;i++,j++){
@@ -3343,7 +3488,7 @@ int buildin_setarray(struct script_state *st)
 			v=(void*)conv_str(st,& (st->stack->stack_data[i]));
 		else
 			v=(void*)conv_num(st,& (st->stack->stack_data[i]));
-		set_reg( sd, num+(j<<24), name, v);
+		set_reg(st, sd, num+(j<<24), name, v, st->stack->stack_data[st->start+2].ref);
 	}
 	return 0;
 }
@@ -3375,7 +3520,7 @@ int buildin_cleararray(struct script_state *st)
 		v=(void*)conv_num(st,& (st->stack->stack_data[st->start+3]));
 
 	for(i=0;i<sz;i++)
-		set_reg(sd,num+(i<<24),name,v);
+		set_reg(st,sd,num+(i<<24),name,v,st->stack->stack_data[st->start+2].ref);
 	return 0;
 }
 /*==========================================
@@ -3396,48 +3541,60 @@ int buildin_copyarray(struct script_state *st)
 	int sz=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	int i;
 
-	if( prefix!='$' && prefix!='@' && prefix2!='$' && prefix2!='@' ){
-		ShowWarning("buildin_copyarray: illegal scope !\n");
-		return 1;
+	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
+		printf("buildin_copyarray: illeagal scope !\n");
+		return 0;
+	}
+	if( prefix2!='$' && prefix2!='@' && prefix2!='\'' ) {
+		printf("buildin_copyarray: illeagal scope !\n");
+		return 0;
 	}
 	if( (postfix=='$' || postfix2=='$') && postfix!=postfix2 ){
-		ShowError("buildin_copyarray: type mismatch !\n");
-		return 1;
+		printf("buildin_copyarray: type mismatch !\n");
+		return 0;
 	}
-	if( prefix!='$' || prefix2!='$' )
+	if( (prefix!='$' && prefix != '\'') || (prefix2!='$' && prefix2 != '\'') )
 		sd=script_rid2sd(st);
 
-	// if two array is the same and (num > num2), bottom-up copy is required [Eoe / jA 1116]
 	if((num & 0x00FFFFFF) == (num2 & 0x00FFFFFF) && (num & 0xFF000000) > (num2 & 0xFF000000)) {
+		// 同じ配列で、num > num2 の場合大きい方からコピーしないといけない
 		for(i=sz-1;i>=0;i--)
-			set_reg(sd,num+(i<<24),name, get_val2(st,num2+(i<<24)) );
+			set_reg(
+				st,sd,num+(i<<24),name,
+				get_val2(st,num2+(i<<24),st->stack->stack_data[st->start+3].ref),
+				st->stack->stack_data[st->start+2].ref
+			);
 	} else {
 		for(i=0;i<sz;i++)
-			set_reg(sd,num+(i<<24),name, get_val2(st,num2+(i<<24)) );
+			set_reg(
+				st,sd,num+(i<<24),name,
+				get_val2(st,num2+(i<<24),st->stack->stack_data[st->start+3].ref),
+				st->stack->stack_data[st->start+2].ref
+			);
 	}
-
 	return 0;
 }
 /*==========================================
  * 配列変数のサイズ所得
  *------------------------------------------
  */
-static int getarraysize(struct script_state *st,int num,int postfix)
+static int getarraysize(struct script_state *st,int num,int postfix,struct linkdb_node** ref)
 {
 	int i=(num>>24),c=(i==0? -1:i); // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
 	if(postfix == '$'){
 		for(;i<128;i++){
-			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24));
+			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24),ref);
 			if(*((char*)v)) c=i;
 		}
 	}else{
 		for(;i<128;i++){
-			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24));
+			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24),ref);
 			if((int)v) c=i;
 		}
 	}
 	return c+1;
 }
+
 int buildin_getarraysize(struct script_state *st)
 {
 	int num=st->stack->stack_data[st->start+2].u.num;
@@ -3445,12 +3602,12 @@ int buildin_getarraysize(struct script_state *st)
 	char prefix=*name;
 	char postfix=name[strlen(name)-1];
 
-	if( prefix!='$' && prefix!='@' ){
+	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
 		ShowWarning("buildin_copyarray: illegal scope !\n");
 		return 1;
 	}
 
-	push_val(st->stack,C_INT,getarraysize(st,num,postfix) );
+	push_val(st->stack,C_INT,getarraysize(st,num,postfix,st->stack->stack_data[st->start+2].ref));
 	return 0;
 }
 /*==========================================
@@ -3465,7 +3622,7 @@ int buildin_deletearray(struct script_state *st)
 	char prefix=*name;
 	char postfix=name[strlen(name)-1];
 	int count=1;
-	int i,sz=getarraysize(st,num,postfix)-(num>>24)-count+1;
+	int i,sz=getarraysize(st,num,postfix,st->stack->stack_data[st->start+2].ref)-(num>>24)-count+1;
 
 
 	if( (st->end > st->start+3) )
@@ -3479,15 +3636,19 @@ int buildin_deletearray(struct script_state *st)
 		sd=script_rid2sd(st);
 
 	for(i=0;i<sz;i++){
-		set_reg(sd,num+(i<<24),name, get_val2(st,num+((i+count)<<24) ) );
+		set_reg(
+			st,sd,num+(i<<24),name,
+			get_val2(st,num+((i+count)<<24),st->stack->stack_data[st->start+2].ref),
+			st->stack->stack_data[st->start+2].ref
+		);
 	}
 
 	if(postfix != '$'){
 		for(;i<(128-(num>>24));i++)
-			set_reg(sd,num+(i<<24),name, 0);
+			set_reg(st,sd,num+(i<<24),name, 0,st->stack->stack_data[st->start+2].ref);
 	} else {
 		for(;i<(128-(num>>24));i++)
-			set_reg(sd,num+(i<<24),name, (void *) "");
+			set_reg(st,sd,num+(i<<24),name, (void *) "",st->stack->stack_data[st->start+2].ref);
 	}
 	return 0;
 }
@@ -9112,7 +9273,7 @@ int buildin_getmapxy(struct script_state *st){
         else
             sd=NULL;
 
-        set_reg(sd,num,name,(void*)mapname);
+        set_reg(st,sd,num,name,(void*)mapname,NULL);
 
      //Set MapX
         num=st->stack->stack_data[st->start+3].u.num;
@@ -9123,7 +9284,7 @@ int buildin_getmapxy(struct script_state *st){
             sd=script_rid2sd(st);
         else
             sd=NULL;
-        set_reg(sd,num,name,(void*)x);
+        set_reg(st,sd,num,name,(void*)x,NULL);
 
 
      //Set MapY
@@ -9136,7 +9297,7 @@ int buildin_getmapxy(struct script_state *st){
         else
             sd=NULL;
 
-        set_reg(sd,num,name,(void*)y);
+        set_reg(st,sd,num,name,(void*)y,NULL);
 
      //Return Success value
         push_val(st->stack,C_INT,0);
@@ -9726,7 +9887,7 @@ int buildin_distance(struct script_state *st){
 // [zBuffer] List of dynamic var commands --->
 void setd_sub(struct map_session_data *sd, char *varname, int elem, void *value)
 {
-	set_reg(sd, add_str((unsigned char *) varname)+(elem<<24), varname, value);
+	set_reg(NULL, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value, NULL);
 	return;
 }
 
@@ -9980,7 +10141,7 @@ int buildin_setitemscript(struct script_state *st)
 
 	if (i_data && script!=NULL && script[0]=='{') {
 		if(i_data->script!=NULL)
-			aFree(i_data->script);
+			script_free_code(i_data->script);
 		i_data->script = parse_script((unsigned char *) script, 0);
 		push_val(st->stack,C_INT,1);
 	} else
@@ -10542,6 +10703,107 @@ int buildin_mobattach(struct script_state *st){
 }
 
 // <--- [zBuffer] List of mob control commands
+
+// sleep <mili sec>
+int buildin_sleep(struct script_state *st) {
+	int tick = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	struct map_session_data *sd = map_id2sd(st->rid);
+	if(sd && sd->npc_id == st->oid) {
+		sd->npc_id = 0;
+	}
+	st->rid = 0;
+	if(tick <= 0) {
+		// 何もしない
+	} else if( !st->sleep.tick ) {
+		// 初回実行
+		st->state = RERUNLINE;
+		st->sleep.tick = tick;
+	} else {
+		// 続行
+		st->sleep.tick = 0;
+	}
+	return 0;
+}
+
+// sleep2 <mili sec>
+int buildin_sleep2(struct script_state *st) {
+	int tick = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if( tick <= 0 ) {
+		// 0ms の待機時間を指定された
+		push_val(st->stack,C_INT,map_id2sd(st->rid) != NULL);
+	} else if( !st->sleep.tick ) {
+		// 初回実行時
+		st->state = RERUNLINE;
+		st->sleep.tick = tick;
+	} else {
+		push_val(st->stack,C_INT,map_id2sd(st->rid) != NULL);
+		st->sleep.tick = 0;
+	}
+	return 0;
+}
+
+/*==========================================
+ * 指定NPCの全てのsleepを再開する
+ *------------------------------------------
+ */
+int buildin_awake(struct script_state *st)
+{
+	struct npc_data *nd;
+	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
+
+	nd = npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+2])));
+	if(nd == NULL)
+		return 0;
+
+	while( node ) {
+		if( (int)node->key == nd->bl.id) {
+			struct script_state *tst    = node->data;
+			struct map_session_data *sd = map_id2sd(tst->rid);
+
+			if( tst->sleep.timer == -1 ) {
+				node = node->next;
+				continue;
+			}
+			if( sd && sd->char_id != tst->sleep.charid )
+				tst->rid = 0;
+
+			delete_timer(tst->sleep.timer, run_script_timer);
+			node = script_erase_sleepdb(node);
+			tst->sleep.timer = -1;
+			run_script_main(tst);
+		} else {
+			node = node->next;
+		}
+	}
+	return 0;
+}
+
+// getvariableofnpc(<param>, <npc name>);
+int buildin_getvariableofnpc(struct script_state *st)
+{
+	if( st->stack->stack_data[st->start+2].type != C_NAME ) {
+		// 第一引数が変数名じゃない
+		printf("getvariableofnpc: param not name\n");
+		push_val(st->stack,C_INT,0);
+	} else {
+		int num = st->stack->stack_data[st->start+2].u.num;
+		char *var_name = str_buf+str_data[num&0x00ffffff].str;
+		char *npc_name = conv_str(st,& (st->stack->stack_data[st->start+3]));
+		struct npc_data *nd = npc_name2id(npc_name);
+		if( var_name[0] != '\'' || var_name[1] == '@' ) {
+			// ' 変数以外はダメ
+			printf("getvariableofnpc: invalid scope %s\n", var_name);
+			push_val(st->stack,C_INT,0);
+		} else if( nd == NULL || nd->bl.subtype != SCRIPT || !nd->u.scr.script) {
+			// NPC が見つからない or SCRIPT以外のNPC
+			printf("getvariableofnpc: can't find npc %s\n", npc_name);
+			push_val(st->stack,C_INT,0);
+		} else {
+			push_val2(st->stack,C_NAME,num, &nd->u.scr.script->script_vars );
+		}
+	}
+	return 0;
+}
 //
 // 実行部main
 //
@@ -10913,18 +11175,21 @@ int run_func(struct script_state *st)
 		int i;
 
 		pop_stack(st->stack,st->stack->defsp,start_sp);	// 復帰に邪魔なスタック削除
-		if(st->stack->defsp<4 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO){
+		if(st->stack->defsp<5 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO){
 			ShowWarning("script:run_func(return) return without callfunc or callsub!\n");
 			st->state=END;
 			report_src(st);
 			return 1;
 		}
-		i = conv_num(st,& (st->stack->stack_data[st->stack->defsp-4]));					// 引数の数所得
+		script_free_vars( st->stack->var_function );
+		aFree(st->stack->var_function);
+		i = conv_num(st,& (st->stack->stack_data[st->stack->defsp-5]));					// 引数の数所得
 		st->pos=conv_num(st,& (st->stack->stack_data[st->stack->defsp-1]));				// スクリプト位置の復元
-		st->script=(char*)conv_num(st,& (st->stack->stack_data[st->stack->defsp-2]));	// スクリプトを復元
-		st->stack->defsp=conv_num(st,& (st->stack->stack_data[st->stack->defsp-3]));	// 基準スタックポインタを復元
+		st->script=(struct script_code *)conv_num(st,& (st->stack->stack_data[st->stack->defsp-3]));	// スクリプトを復元
+		st->stack->var_function = (struct linkdb_node**)st->stack->stack_data[st->stack->defsp-2].u.num; // 関数依存変数
+		st->stack->defsp=conv_num(st,& (st->stack->stack_data[st->stack->defsp-4]));	// 基準スタックポインタを復元
 
-		pop_stack(st->stack,olddefsp-4-i,olddefsp);		// 要らなくなったスタック(引数と復帰用データ)削除
+		pop_stack(st->stack,olddefsp-5-i,olddefsp);		// 要らなくなったスタック(引数と復帰用データ)削除
 
 		st->state=GOTO;
 	}
@@ -10942,6 +11207,7 @@ int run_script_main(struct script_state *st)
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	struct script_stack *stack=st->stack;
+	TBL_PC *sd=NULL;
 
 	if(st->state == RERUNLINE) {
 		st->state = RUN;
@@ -10953,7 +11219,7 @@ int run_script_main(struct script_state *st)
 		st->state = RUN;
 	}
 	while( st->state == RUN) {
-		c= get_com((unsigned char *) st->script,&st->pos);
+		c= get_com((unsigned char *) st->script->script_buf,&st->pos);
 		switch(c){
 		case C_EOL:
 			if(stack->sp!=stack->defsp){
@@ -10970,19 +11236,19 @@ int run_script_main(struct script_state *st)
 			// rerun_pos=st->pos;
 			break;
 		case C_INT:
-			push_val(stack,C_INT,get_num((unsigned char *) st->script,&st->pos));
+			push_val(stack,C_INT,get_num((unsigned char *) st->script->script_buf,&st->pos));
 			break;
 		case C_POS:
 		case C_NAME:
-			push_val(stack,c,(*(int*)(st->script+st->pos))&0xffffff);
+			push_val(stack,c,(*(int*)(st->script->script_buf+st->pos))&0xffffff);
 			st->pos+=3;
 			break;
 		case C_ARG:
 			push_val(stack,c,0);
 			break;
 		case C_STR:
-			push_str(stack,C_CONSTSTR,(unsigned char *) (st->script+st->pos));
-			while(st->script[st->pos++]);
+			push_str(stack,C_CONSTSTR,(unsigned char *) (st->script->script_buf+st->pos));
+			while(st->script->script_buf[st->pos++]);
 			break;
 		case C_FUNC:
 			run_func(st);
@@ -11041,31 +11307,40 @@ int run_script_main(struct script_state *st)
 			st->state=END;
 		}
 	}
-	switch(st->state){
-	case STOP:
-		break;
-	case END:
-		{
-			struct map_session_data *sd=map_id2sd(st->rid);
-			st->pos=-1;
-			if(sd && (sd->npc_id==st->oid || sd->state.using_fake_npc)){
-				if(sd->state.using_fake_npc){
-					clif_clearchar_id(sd->npc_id, 0, sd->fd);
-					sd->state.using_fake_npc = 0;
+	sd = map_id2sd(st->rid);
+	if(st->sleep.tick > 0) {
+		// スタック情報をsleep_dbに保存
+		unsigned int tick = gettick()+st->sleep.tick;
+		st->sleep.charid = sd ? sd->char_id : 0;
+		st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
+		linkdb_insert(&sleep_db, (void*)st->oid, st);
+	} else {
+		switch(st->state){
+		case STOP:
+			break;
+		case END:
+			{
+				struct map_session_data *sd=map_id2sd(st->rid);
+				st->pos=-1;
+				if(sd && (sd->npc_id==st->oid || sd->state.using_fake_npc)){
+					if(sd->state.using_fake_npc){
+						clif_clearchar_id(sd->npc_id, 0, sd->fd);
+						sd->state.using_fake_npc = 0;
+					}
+					npc_event_dequeue(sd);
 				}
-				npc_event_dequeue(sd);
 			}
+			break;
+		case RERUNLINE:
+			// Do not call function of commands two time! [ Eoe / jA 1094 ]
+			// For example: select "1", "2", callsub(...);
+			// If current script position is changed, callsub will be called two time.
+			// 
+			// {
+			// 	st->pos=rerun_pos;
+			// }
+			break;
 		}
-		break;
-	case RERUNLINE:
-		// Do not call function of commands two time! [ Eoe / jA 1094 ]
-		// For example: select "1", "2", callsub(...);
-		// If current script position is changed, callsub will be called two time.
-		// 
-		// {
-		// 	st->pos=rerun_pos;
-		// }
-		break;
 	}
 
 	return 0;
@@ -11075,20 +11350,20 @@ int run_script_main(struct script_state *st)
  * スクリプトの実行
  *------------------------------------------
  */
-int run_script(unsigned char *script,int pos,int rid,int oid)
+int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
 	struct script_state st;
-	struct map_session_data *sd;
-	unsigned char *rootscript = script;
+	struct map_session_data *sd=NULL;
 
 	//Variables for backing up the previous script and restore it if needed. [Skotlex]
-	unsigned char *bck_script = NULL;
-	unsigned char *bck_scriptroot = NULL;
+	struct script_code *bck_script = NULL;
+	struct script_code *bck_scriptroot = NULL;
 	int bck_scriptstate = 0;
 	struct script_stack *bck_stack = NULL;
 	
-	if (script == NULL || pos < 0)
+	if (rootscript == NULL || pos < 0)
 		return -1;
+
 	memset(&st, 0, sizeof(struct script_state));
 
 	if ((sd = map_id2sd(rid)) && sd->stack && sd->npc_scriptroot == rootscript){
@@ -11108,6 +11383,7 @@ int run_script(unsigned char *script,int pos,int rid,int oid)
 		st.stack->sp_max = 64;
 		st.stack->stack_data = (struct script_data *) aCalloc (st.stack->sp_max,sizeof(st.stack->stack_data[0]));
 		st.stack->defsp = st.stack->sp;
+		st.stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
 		st.state  = RUN;
 		st.script = rootscript;
 	
@@ -11122,6 +11398,7 @@ int run_script(unsigned char *script,int pos,int rid,int oid)
 	st.pos = pos;
 	st.rid = rid;
 	st.oid = oid;
+	st.sleep.timer = -1;
 	// let's run that stuff
 	run_script_main(&st);
 
@@ -11153,6 +11430,57 @@ int run_script(unsigned char *script,int pos,int rid,int oid)
 	}
 
 	return st.pos;
+}
+
+/*==========================================
+ * 指定ノードをsleep_dbから削除
+ *------------------------------------------
+ */
+/*==========================================
+ * 指定ノードをsleep_dbから削除
+ *------------------------------------------
+ */
+struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n)
+{
+	struct linkdb_node *retnode;
+
+	if( n == NULL)
+		return NULL;
+	if( n->prev == NULL )
+		sleep_db = n->next;
+	else
+		n->prev->next = n->next;
+	if( n->next )
+		n->next->prev = n->prev;
+	retnode = n->next;
+	aFree( n );
+	return retnode;		// 次のノードを返す
+}
+
+
+/*==========================================
+ * sleep用タイマー関数
+ *------------------------------------------
+ */
+int run_script_timer(int tid, unsigned int tick, int id, int data)
+{
+	struct script_state *st     = (struct script_state *)data;
+	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
+	struct map_session_data *sd = map_id2sd(st->rid);
+
+	if( sd && sd->char_id != id ) {
+		st->rid = 0;
+	}
+	while( node && st->sleep.timer != -1 ) {
+		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
+			script_erase_sleepdb(node);
+			st->sleep.timer = -1;
+			break;
+		}
+		node = node->next;
+	}
+	run_script_main(st);
+	return 0;
 }
 
 
@@ -11567,6 +11895,16 @@ int do_final_script()
 	mapregstr_db->destroy(mapregstr_db,NULL);
 	scriptlabel_db->destroy(scriptlabel_db,NULL);
 	userfunc_db->destroy(userfunc_db,NULL);
+	if(sleep_db) {
+		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
+		while(n) {
+			struct script_state *st = (struct script_state *)n->data;
+			script_free_stack(st->stack);
+			free(st);
+			n = n->next;
+		}
+		linkdb_final(&sleep_db);
+	}
 
 	if (str_data)
 		aFree(str_data);

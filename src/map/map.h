@@ -538,7 +538,7 @@ struct map_session_data {
 	int npc_menu;
 	int npc_amount;
 	struct script_stack *stack;
-	unsigned char *npc_script,*npc_scriptroot;
+	struct script_code *npc_script,*npc_scriptroot;
 	int  npc_scriptstate;
 	char npc_str[256];
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
@@ -805,7 +805,7 @@ struct npc_data {
 
 	union {
 		struct {
-			unsigned char *script;
+			struct script_code *script;
 			short xs,ys;
 			int guild_id;
 			int timer,timerid,timeramount,rid;

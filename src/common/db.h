@@ -731,4 +731,18 @@ void db_init(void);
  */
 void db_final(void);
 
+// Link DB System - From jAthena
+struct linkdb_node {
+	struct linkdb_node *next;
+	struct linkdb_node *prev;
+	void               *key;
+	void               *data;
+};
+
+void  linkdb_insert ( struct linkdb_node** head, void *key, void* data); // 重複を考慮しない
+void  linkdb_replace( struct linkdb_node** head, void *key, void* data); // 重複を考慮する
+void* linkdb_search ( struct linkdb_node** head, void *key);
+void* linkdb_erase  ( struct linkdb_node** head, void *key);
+void  linkdb_final  ( struct linkdb_node** head );
+
 #endif

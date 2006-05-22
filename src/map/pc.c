@@ -2661,7 +2661,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 {
 	unsigned int tick = gettick();
 	int amount;
-	unsigned char *script;
+	struct script_code *script;
 
 	nullpo_retr(0, sd);
 

@@ -862,7 +862,7 @@ static int itemdb_read_sqldb(void)
 					// ----------
 					
 					if (id->script)
-						aFree(id->script);
+						script_free_code(id->script);
 					if (sql_row[19] != NULL) {
 						if (sql_row[19][0] == '{')
 							id->script = parse_script((unsigned char *) sql_row[19], 0);
@@ -873,7 +873,7 @@ static int itemdb_read_sqldb(void)
 					} else id->script = NULL;
 	
 					if (id->equip_script)
-						aFree(id->equip_script);
+						script_free_code(id->equip_script);
 					if (sql_row[20] != NULL) {
 						if (sql_row[20][0] == '{')
 							id->equip_script = parse_script((unsigned char *) sql_row[20], 0);
@@ -884,7 +884,7 @@ static int itemdb_read_sqldb(void)
 					} else id->equip_script = NULL;
 	
 					if (id->unequip_script)
-						aFree(id->unequip_script);
+						script_free_code(id->unequip_script);
 					if (sql_row[21] != NULL) {
 						if (sql_row[21][0] == '{')
 							id->unequip_script = parse_script((unsigned char *) sql_row[21], 0);
@@ -1030,7 +1030,7 @@ static int itemdb_readdb(void)
 			id->sex = itemdb_gendercheck(id); //Apply gender filtering.
 
 			if (id->script) {
-				aFree(id->script);
+				script_free_code(id->script);
 				id->script=NULL;
 			}
 			if (id->equip_script) {
@@ -1130,17 +1130,17 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 	flag = va_arg(ap, int);
 	if (id->script)
 	{
-		aFree(id->script);
+		script_free_code(id->script);
 		id->script = NULL;
 	}
 	if (id->equip_script)
 	{
-		aFree(id->equip_script);
+		script_free_code(id->equip_script);
 		id->equip_script = NULL;
 	}
 	if (id->unequip_script)
 	{
-		aFree(id->unequip_script);
+		script_free_code(id->unequip_script);
 		id->unequip_script = NULL;
 	}
 	// Whether to clear the item data (exception: do not clear the dummy item data
@@ -1162,11 +1162,11 @@ void do_final_itemdb(void)
 	item_db->destroy(item_db, itemdb_final_sub, 1);
 	if (dummy_item) {
 		if (dummy_item->script)
-			aFree(dummy_item->script);
+			script_free_code(dummy_item->script);
 		if (dummy_item->equip_script)
-			aFree(dummy_item->equip_script);
+			script_free_code(dummy_item->equip_script);
 		if (dummy_item->unequip_script)
-			aFree(dummy_item->unequip_script);
+			script_free_code(dummy_item->unequip_script);
 		aFree(dummy_item);
 		dummy_item = NULL;
 	}

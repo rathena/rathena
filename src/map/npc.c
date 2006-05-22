@@ -1780,7 +1780,8 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
 	char mapname[MAP_NAME_LENGTH];
-	unsigned char *srcbuf = NULL, *script;
+	unsigned char *srcbuf = NULL;
+	struct script_code *script;
 	int srcsize = 65536;
 	int startline = 0;
 	unsigned char line[1024];
@@ -1838,7 +1839,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 			script = NULL;
 		} else {
 			// printf("Ok line %d\n",*lines);
-			script = (unsigned char *) parse_script((unsigned char *) srcbuf, startline);
+			script = parse_script((unsigned char *) srcbuf, startline);
 		}
 		if (script == NULL) {
 			// script parse error?
@@ -1857,7 +1858,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 			ShowError("bad duplicate name (in %s)! (not exist) : %s\n", current_file, srcname);
 			return 0;
 		}
-		script = (unsigned char *)nd2->u.scr.script;
+		script = nd2->u.scr.script;
 		label_dup = nd2->u.scr.label_list;
 		label_dupnum = nd2->u.scr.label_list_num;
 		src_id = nd2->bl.id;
@@ -2027,7 +2028,8 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
  */
 static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *first_line, FILE *fp, int *lines)
 {
-	unsigned char *srcbuf, *script, *p;
+	unsigned char *srcbuf, *p;
+	struct script_code *script;
 	int srcsize = 65536;
 	int startline = 0;
 	char line[1024];

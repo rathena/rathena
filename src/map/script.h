@@ -35,30 +35,45 @@ struct script_data {
 		int num;
 		char *str;
 	} u;
+	struct linkdb_node** ref; // ƒŠƒtƒ@ƒŒƒ“ƒX
 };
 
 // Moved defsp from script_state to script_stack since
 // it must be saved when script state is RERUNLINE. [Eoe / jA 1094]
+struct script_code {
+	int script_size;
+	unsigned char* script_buf;
+	struct linkdb_node* script_vars;
+};
 struct script_stack {
 	int sp,sp_max,defsp;
 	struct script_data *stack_data;
+	struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
 };
 struct script_state {
 	struct script_stack *stack;
 	int start,end;
 	int pos,state;
 	int rid,oid;
-	unsigned char *script,*new_script;
+	//unsigned char *script,*new_script;
 	int new_pos,new_defsp;
+	struct script_code *script, *scriptroot;
+	struct sleep_data {
+		int tick,timer,charid;
+	} sleep;
 };
 
-unsigned char * parse_script(unsigned char *,int);
-int run_script(unsigned char *,int,int,int);
+struct script_code *parse_script(unsigned char *,int);
+int run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 char* conv_str(struct script_state *st,struct script_data *data);
 void setd_sub(struct map_session_data *sd, char *varname, int elem, void *value);
+int run_script_timer(int tid, unsigned int tick, int id, int data);
+int run_script_main(struct script_state *st);
+struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
+void script_free_code(struct script_code* code);
 
 struct dbt* script_get_label_db(void);
 struct dbt* script_get_userfunc_db(void);
