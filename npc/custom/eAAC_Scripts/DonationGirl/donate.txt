@@ -19,6 +19,8 @@
 //=	  in sql queries are now escaped. Each item has a
 //=	  price rather than a quantity. This script can work
 //=	  with decimals.
+//= 3.1 - Added quotes to some queries, fixed a variable and
+//=	  removed a comment.
 //===== Compatible With =====================================
 //= eAthena - any version that contains the escape_sql
 //=	      function (Stable 6299 OR Trunk 6262)
@@ -26,8 +28,8 @@
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.
 //===== Comments ============================================
-//= This script uses an sql table (donate) to store 
-//= variables for the amount donated by a user.
+//= This script uses sql tables to store variables for the
+//= amount donated by users and the items claimable.
 //===== Installation ========================================
 //= You must execute donate.sql and donate_item_db.sql before
 //= using this script.
@@ -41,6 +43,7 @@
 prontera.gat,145,179,5	script	Donation Girl	714,{
 
 if (getgmlevel() >= 80) goto L_GM;
+
 L_START:
 mes "[Donation Girl]";
 mes "Hello! I'm the Donation Girl!";
@@ -65,8 +68,8 @@ L_CHECK:
 query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @amount$;
 query_sql "SELECT `claimed` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @claimed$;
 query_sql "SELECT MIN(price) FROM `donate_item_db`", @min$;
-query_sql "SELECT "+@amount$+" - "+@claimed$+"", @value$;
-query_sql "SELECT "+@value$+" >= "+@min$+"", @enough;
+query_sql "SELECT '"+@amount$+"' - '"+@claimed$+"'", @value$;
+query_sql "SELECT '"+@value$+"' >= '"+@min$+"'", @enough;
 if(@enough) goto L_CLAIM;
 mes "[Donation Girl]";
 mes "Sorry, you do not have enough to make a claim.";
@@ -100,7 +103,6 @@ set @menu, (select($@menu$))-1;
 query_sql "SELECT ID FROM `donate_item_db` WHERE name = '"+$@name$[@menu]+"'", @id;
 query_sql "SELECT price FROM `donate_item_db` WHERE ID = "+@id+"", @price$;
 query_sql "SELECT TRUNCATE("+@value$+" / "+@price$+",0)", @max;
-//query_sql "SELECT "+@value$+" div "+@price$+"", @max;
 
 mes "[Donation Girl]";
 mes ""+$@name$[@menu]+"s cost $"+@price$+" each.";
@@ -245,13 +247,13 @@ input @donator$;
 query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
 if(@aid==0) goto L_NONE;
 query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated$;
-query_sql "SELECT "+@donated$+" > 0", @donated;
+query_sql "SELECT '"+@donated$+"' > 0", @donated;
 switch(@donated) {
 	case 0:
 		mes ""+@donator$+" has not donated before.";
 		break;
 	case 1:
-		mes ""+@donator$+" has donated $"+@donated+".";
+		mes ""+@donator$+" has donated $"+@donated$+".";
 		break;
 	}
 next;
@@ -300,7 +302,7 @@ input @donator$;
 query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
 if(@aid==0) goto L_NONE;
 query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid+"", @donated$;
-query_sql "SELECT "+@donated$+" > 0", @donated;
+query_sql "SELECT '"+@donated$+"' > 0", @donated;
 
 if(@donated==0) {
 	query_sql "DELETE FROM `donate` WHERE `account_id` = '"+@aid+"'";
