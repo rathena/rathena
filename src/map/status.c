@@ -3079,7 +3079,8 @@ int status_get_amotion(struct block_list *bl)
 				aspd_rate -= aspd_rate * 10*((struct mob_data *)bl)->guardian_data->guardup_lv/100; // Strengthen Guardians - custom value +10% ASPD / lv
 		} else if(bl->type==BL_PET)
 			amotion = ((struct pet_data *)bl)->db->amotion;
-		else if(bl->type==BL_HOMUNCULUS) ((struct homun_data *)bl)->amotion;	//[blackhole89]
+		else if(bl->type==BL_HOMUNCULUS)
+			amotion = ((struct homun_data *)bl)->amotion;	//[blackhole89]
 
 		aspd_rate = status_calc_aspd_rate(bl,aspd_rate);
 
@@ -3109,7 +3110,8 @@ int status_get_dmotion(struct block_list *bl)
 	}
 	else if(bl->type==BL_PET)
 		ret=((struct pet_data *)bl)->db->dmotion;
-	else if(bl->type==BL_HOMUNCULUS) ((struct homun_data *)bl)->dmotion;	//[blackhole89]
+	else if(bl->type==BL_HOMUNCULUS)
+		ret=((struct homun_data *)bl)->dmotion;	//[blackhole89]
 	else
 		return 2000;
 
@@ -3614,7 +3616,7 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 			rate = 100*status_get_mdef(bl);
 		break;
 		case SC_STUN:	//Reduction in duration is the same as reduction in rate.
-			rate = status_get_sc_def(bl, type);
+			rate = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
 		break;
 		case SC_DPOISON:			/* –Ò“Å */
 		case SC_POISON:				/* “Å */
