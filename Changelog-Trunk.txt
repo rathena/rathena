@@ -14,6 +14,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Player must learn the skill before doing auto-spell [Lance]
 	* Exploit prevention in clif_parse_NpcStringInput [Lance]
 	* SC_SPEARSQUICKEN -> SC_SPEARQUICKEN normalized enum name [Lupus]
+	* Thanks to damirych & Falcon for [2006/04/30] STEAL skill [Lupus]
 2006/05/20
 	* grfio_final moved back if any of GRF overriding is enabled so servers
 	  with such configuration will not have different values after reloading. [Lance]
