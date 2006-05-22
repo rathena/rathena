@@ -1416,7 +1416,7 @@ int do_final_pet(void) {
 	int i;
 	for(i = 0;i < MAX_PET_DB; i++) {
 		if(pet_db[i].script) {
-			aFree(pet_db[i].script);
+			script_free_code(pet_db[i].script);
 			pet_db[i].script = NULL;
 		}
 	}
