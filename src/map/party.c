@@ -776,7 +776,10 @@ return 0;
 // party_foreachsamemap(party_sub_count, sd, 0, &c);
 int party_sub_count(struct block_list *bl, va_list ap)
 {
-	return 1;
+	if(!(((TBL_PC *)bl)->state.autotrade) && (((TBL_PC *)bl)->idletime < (last_tick - battle_config.idle_no_share)))
+		return 1;
+	else
+		return 0;
 }
 
 // 同じマップのパーティメンバー全体に処理をかける
