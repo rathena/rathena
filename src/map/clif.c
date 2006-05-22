@@ -1371,11 +1371,11 @@ int clif_spawn(struct block_list *bl)
 int clif_homunack(struct map_session_data *sd)
 {
 	struct homun_data *hd = sd->hd;
+	unsigned char buf[64];
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, sd->hd);
 
-	unsigned char buf[64];
 	//memset(buf,0,packet_len_table[0x230]);
 	memset(buf,0,12); //not yet set that stuff
 	WBUFW(buf,0)=0x230;
@@ -1390,11 +1390,11 @@ int clif_homunack(struct map_session_data *sd)
 int clif_homuninfo(struct map_session_data *sd)
 {
 	struct homun_data *hd = sd->hd;
+	unsigned char buf[128];
 	
 	nullpo_retr(0, sd);
 	nullpo_retr(0, sd->hd);
 
-	unsigned char buf[128];
 	memset(buf,0,71); //packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),hd->name,NAME_LENGTH);
@@ -1418,13 +1418,14 @@ int clif_homuninfo(struct map_session_data *sd)
 	WBUFW(buf,67)=hd->skillpts;
 	WBUFW(buf,69)=0x21;
 	clif_send(buf,/*packet_len_table[0x22e]*/71,&sd->bl,SELF); 
+	return 0;
 }
 
 // like skillinfoblock, just for homunculi.
 int clif_homunskillinfoblock(struct map_session_data *sd)
 {
 	int fd;
-	int i,c,len=4,id, inf2;
+	int i,c,len=4,id/*, inf2*/;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, sd->hd);

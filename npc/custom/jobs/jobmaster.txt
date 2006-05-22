@@ -34,54 +34,54 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			mes "Welcome, please select the job you wish to change into";
 			if(lastJob != 0 && Class == Job_Novice_High){
 				switch(lastJob){
-		case Job_Knight:
-		case Job_Crusader:
-			set @target_job, Job_Swordman_High;
-			break;
-		case Job_Monk:
-		case Job_Priest:
-			set @target_job, Job_Acolyte_High;
-			break;
-		case Job_Alchem:
-		case Job_Blacksmith:
-			set @target_job, Job_Merchant_High;
-			break;
-		case Job_Rogue:
-		case Job_Assassin:
-			set @target_job, Job_Thief_High;
-			break;
-		case Job_Wizard:
-		case Job_Sage:
-			set @target_job, Job_Mage_High;
-			break;
-		case Job_Hunter:
-		case Job_Bard:
-		case Job_Dancer:
-			set @target_job, Job_Archer_High;
-			break;
-				}
+					case Job_Knight:
+					case Job_Crusader:
+						set @target_job, Job_Swordman_High;
+						break;
+					case Job_Monk:
+					case Job_Priest:
+						set @target_job, Job_Acolyte_High;
+						break;
+					case Job_Alchem:
+					case Job_Blacksmith:
+						set @target_job, Job_Merchant_High;
+						break;
+					case Job_Rogue:
+					case Job_Assassin:
+						set @target_job, Job_Thief_High;
+						break;
+					case Job_Wizard:
+					case Job_Sage:
+						set @target_job, Job_Mage_High;
+						break;
+					case Job_Hunter:
+					case Job_Bard:
+					case Job_Dancer:
+						set @target_job, Job_Archer_High;
+						break;
+							}
 			} else {
 				switch(select("Swordsman","Mage","Archer","Acolyte","Merchant","Thief",
 					"Super Novice","Taekwon","Gunslinger","Ninja")){
-		case 7:
-			if(Class == Job_Novice_High) goto L_noReq;
-			if($@JC_SupNovM > BaseLevel) goto L_BvError;
-			set @target_job, Job_SuperNovice;
-			break;
-		case 8:
-			if(Class == Job_Novice_High) goto L_noReq;
-			if(Upper == 2) goto L_noReq;
-			set @target_job, Job_Taekwon;
-			break;
-		case 9:
-		case 10:
-			if(Class == Job_Novice_High) goto L_noReq;
-			set @target_job, @menu + 15;
-			break;
-		default:
-			set @target_job, @menu;
-			if(Class == Job_Novice_High) set @target_job, @target_job + 4001;
-			break;
+						case 7:
+							if(Class == Job_Novice_High) goto L_noReq;
+							if($@JC_SupNovM > BaseLevel) goto L_BvError;
+							set @target_job, Job_SuperNovice;
+							break;
+						case 8:
+							if(Class == Job_Novice_High) goto L_noReq;
+							if(Upper == 2) goto L_noReq;
+							set @target_job, Job_Taekwon;
+							break;
+						case 9:
+						case 10:
+							if(Class == Job_Novice_High) goto L_noReq;
+							set @target_job, @menu + 15;
+							break;
+						default:
+							set @target_job, @menu;
+							if(Class == Job_Novice_High) set @target_job, @target_job + 4001;
+							break;
 					}
 			}
 			mes "Are you sure?";
@@ -103,49 +103,49 @@ prontera.gat,153,193,6	script	Job Master	123,{
 					set @target_job, lastJob + 4001;
 				} else {
 					switch(Class){
-		case Job_Swordman_High:
-		case Job_Baby_Swordman:
-		case Job_Swordman:
-			set @job_opt[0], Job_Knight;
-			set @job_opt[1], Job_Crusader;
-			break;
-		case Job_Mage_High:
-		case Job_Baby_Mage:
-		case Job_Mage:
-			set @job_opt[0], Job_Wizard;
-			set @job_opt[1], Job_Sage;
-			break;
-		case Job_Archer_High:
-		case Job_Baby_Archer:
-		case Job_Archer:
-			set @job_opt[0], Job_Hunter;
-			if(Sex == 0)
-				set @job_opt[1], Job_Dancer;
-			else
-				set @job_opt[1], Job_Bard;
-			break;
-		case Job_Acolyte_High:
-		case Job_Baby_Acolyte:
-		case Job_Acolyte:
-			set @job_opt[0], Job_Priest;
-			set @job_opt[1], Job_Monk;
-			break;
-		case Job_Merchant_High:
-		case Job_Baby_Merchant:
-		case Job_Merchant:
-			set @job_opt[0], Job_Blacksmith;
-			set @job_opt[1], Job_Alchem;
-			break;
-		case Job_Thief_High:
-		case Job_Baby_Theif:
-		case Job_Theif:
-			set @job_opt[0], Job_Assassin;
-			set @job_opt[1], Job_Rogue;
-			break;						
-		default:
-			set @job_opt[0], Job_Star_Gladiator;
-			set @job_opt[1], Job_Soul_Linker;
-			break;
+						case Job_Swordman_High:
+						case Job_Baby_Swordman:
+						case Job_Swordman:
+							set @job_opt[0], Job_Knight;
+							set @job_opt[1], Job_Crusader;
+							break;
+						case Job_Mage_High:
+						case Job_Baby_Mage:
+						case Job_Mage:
+							set @job_opt[0], Job_Wizard;
+							set @job_opt[1], Job_Sage;
+							break;
+						case Job_Archer_High:
+						case Job_Baby_Archer:
+						case Job_Archer:
+							set @job_opt[0], Job_Hunter;
+							if(Sex == 0)
+								set @job_opt[1], Job_Dancer;
+							else
+								set @job_opt[1], Job_Bard;
+							break;
+						case Job_Acolyte_High:
+						case Job_Baby_Acolyte:
+						case Job_Acolyte:
+							set @job_opt[0], Job_Priest;
+							set @job_opt[1], Job_Monk;
+							break;
+						case Job_Merchant_High:
+						case Job_Baby_Merchant:
+						case Job_Merchant:
+							set @job_opt[0], Job_Blacksmith;
+							set @job_opt[1], Job_Alchem;
+							break;
+						case Job_Thief_High:
+						case Job_Baby_Theif:
+						case Job_Theif:
+							set @job_opt[0], Job_Assassin;
+							set @job_opt[1], Job_Rogue;
+							break;						
+						default:
+							set @job_opt[0], Job_Star_Gladiator;
+							set @job_opt[1], Job_Soul_Linker;
+							break;
 					}
 					mes "Welcome, please select the job you wish to change into";
 					set @target_job, @job_opt[select(callfunc("getJobName",@job_opt[0]), callfunc("getJobName",@job_opt[1]))-1];
