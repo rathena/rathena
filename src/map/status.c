@@ -165,7 +165,7 @@ void initChangeTables(void) {
 	set_sc(CR_DEVOTION,             SC_DEVOTION,            SI_DEVOTION);
 	set_sc(CR_PROVIDENCE,           SC_PROVIDENCE,          SI_PROVIDENCE);
 	set_sc(CR_DEFENDER,             SC_DEFENDER,            SI_DEFENDER);
-	set_sc(CR_SPEARQUICKEN,         SC_SPEARSQUICKEN,       SI_SPEARQUICKEN);
+	set_sc(CR_SPEARQUICKEN,         SC_SPEARQUICKEN,       SI_SPEARQUICKEN);
 	set_sc(MO_STEELBODY,            SC_STEELBODY,           SI_STEELBODY);
 	set_sc(MO_BLADESTOP,            SC_BLADESTOP_WAIT,      SI_BLANK);
 	set_sc(MO_EXPLOSIONSPIRITS,     SC_EXPLOSIONSPIRITS,    SI_EXPLOSIONSPIRITS);
@@ -2222,8 +2222,8 @@ int status_calc_aspd_rate(struct block_list *bl, int aspd_rate)
 				aspd_rate -= (sc->data[SC_ADRENALINE2].val2 || !battle_config.party_skill_penalty)?30:20;
 			else if(sc->data[SC_ADRENALINE].timer!=-1)
 				aspd_rate -= (sc->data[SC_ADRENALINE].val2 || !battle_config.party_skill_penalty)?30:20;
-			else if(sc->data[SC_SPEARSQUICKEN].timer!=-1)
-				aspd_rate -= sc->data[SC_SPEARSQUICKEN].val2;
+			else if(sc->data[SC_SPEARQUICKEN].timer!=-1)
+				aspd_rate -= sc->data[SC_SPEARQUICKEN].val2;
 			else if(sc->data[SC_ASSNCROS].timer!=-1 && (bl->type!=BL_PC || ((struct map_session_data*)bl)->status.weapon != W_BOW))
 				aspd_rate -= sc->data[SC_ASSNCROS].val2;
 		}
@@ -3803,7 +3803,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 		case SC_CONCENTRATE:
 		case SC_INCREASEAGI:
-		case SC_SPEARSQUICKEN:
+		case SC_SPEARQUICKEN:
 		case SC_TRUESIGHT:
 		case SC_WINDWALK:
 		case SC_CARTBOOST:
@@ -3871,8 +3871,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			status_change_end(bl,SC_ADRENALINE,-1);
 		if(sc->data[SC_ADRENALINE2].timer!=-1 )
 			status_change_end(bl,SC_ADRENALINE2,-1);
-		if(sc->data[SC_SPEARSQUICKEN].timer!=-1 )
-			status_change_end(bl,SC_SPEARSQUICKEN,-1);
+		if(sc->data[SC_SPEARQUICKEN].timer!=-1 )
+			status_change_end(bl,SC_SPEARQUICKEN,-1);
 		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
 			status_change_end(bl,SC_TWOHANDQUICKEN,-1);
 		if(sc->data[SC_CARTBOOST].timer!=-1 )
@@ -4143,7 +4143,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			} else val2 = 0;
 			break;
 
-		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
+		case SC_SPEARQUICKEN:		/* スピアクイッケン */
 			calc_flag = 1;
 			val2 = 20+val1;
 			break;
@@ -4771,7 +4771,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		//OPT3
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
-		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
+		case SC_SPEARQUICKEN:		/* スピアクイッケン */
 		case SC_CONCENTRATION:	/* コンセントレ?ション */
 			sc->opt3 |= 1;
 			opt_flag = 0;
@@ -4982,7 +4982,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			case SC_LOUD:				/* ラウドボイス */
 			case SC_QUAGMIRE:			/* クァグマイア */
 			case SC_PROVIDENCE:			/* プロヴィデンス */
-			case SC_SPEARSQUICKEN:		/* スピアクイッケン */
+			case SC_SPEARQUICKEN:		/* スピアクイッケン */
 			case SC_VOLCANO:
 			case SC_DELUGE:
 			case SC_VIOLENTGALE:
@@ -5392,7 +5392,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		//opt3
 		case SC_TWOHANDQUICKEN:		/* 2HQ */
 		case SC_ONEHAND:		/* 1HQ */
-		case SC_SPEARSQUICKEN:		/* スピアクイッケン */
+		case SC_SPEARQUICKEN:		/* スピアクイッケン */
 		case SC_CONCENTRATION:		/* コンセントレ?ション */
 			sc->opt3 &= ~1;
 			break;
