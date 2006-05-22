@@ -1381,7 +1381,7 @@ int npc_unload (struct npc_data *nd)
 			aFree(nd->u.scr.timer_event);
 		if (nd->u.scr.src_id == 0) {
 			if(nd->u.scr.script) {
-				aFree(nd->u.scr.script);
+				script_free_code(nd->u.scr.script);
 				nd->u.scr.script = NULL;
 			}
 			if (nd->u.scr.label_list) {

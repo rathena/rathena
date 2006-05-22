@@ -11882,6 +11882,15 @@ int script_config_read(char *cfgName)
 	return script_config_read_sub(cfgName);
 }
 
+static int do_final_userfunc_sub (DBKey key,void *data,va_list ap){
+	struct script_code *code = (struct script_code *)data;
+	if(code){
+		script_free_vars( &code->script_vars );
+		aFree( code->script_buf );
+	}
+	return 0;
+}
+
 /*==========================================
  * I—¹
  *------------------------------------------
@@ -11894,7 +11903,7 @@ int do_final_script()
 	mapreg_db->destroy(mapreg_db,NULL);
 	mapregstr_db->destroy(mapregstr_db,NULL);
 	scriptlabel_db->destroy(scriptlabel_db,NULL);
-	userfunc_db->destroy(userfunc_db,NULL);
+	userfunc_db->destroy(userfunc_db,do_final_userfunc_sub);
 	if(sleep_db) {
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
 		while(n) {
