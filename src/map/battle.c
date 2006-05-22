@@ -1606,8 +1606,6 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case MO_INVESTIGATE:
 					skillratio += 75*skill_lv;
-					ATK_RATE(2*(def1 + def2));
-					flag.idef= flag.idef2= 1;
 					break;
 				case MO_EXTREMITYFIST:
 					if (sd)
@@ -1903,15 +1901,22 @@ static struct Damage battle_calc_weapon_attack(
 				vit_def = def2 + (vit_def>0?rand()%vit_def:0);
 			}
 			
-			if (sd && battle_config.player_defense_type)
+			if (sd && battle_config.player_defense_type) {
 				vit_def += def1*battle_config.player_defense_type;
-			else if (md && battle_config.monster_defense_type)
+				def1 = 0;
+			} else if (md && battle_config.monster_defense_type) {
 				vit_def += def1*battle_config.monster_defense_type;
-			else if(pd && battle_config.pet_defense_type)
+				def1 = 0;
+			} else if(pd && battle_config.pet_defense_type) {
 				vit_def += def1*battle_config.pet_defense_type;
-			else
+				def1 = 0;
+			}
+			if(skill_num == MO_INVESTIGATE) { //Must use adjusted defense
+				ATK_RATE(2*(def1 + vit_def));
+			} else {
 				ATK_RATE2(flag.idef?100:100-def1, flag.idef2?100:100-def1);
-			ATK_ADD2(flag.idef?0:-vit_def, flag.idef2?0:-vit_def);
+				ATK_ADD2(flag.idef?0:-vit_def, flag.idef2?0:-vit_def);
+			}
 		}
 
 		//Post skill/vit reduction damage increases

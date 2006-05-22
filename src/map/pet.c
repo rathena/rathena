@@ -25,6 +25,7 @@
 #include "npc.h"
 #include "script.h"
 #include "skill.h"
+#include "unit.h"
 
 #define MIN_PETTHINKTIME 100
 

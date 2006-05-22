@@ -8327,9 +8327,11 @@ int buildin_misceffect(struct script_state *st)
 	int type;
 
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if(st->oid)
-		clif_misceffect2(map_id2bl(st->oid),type);
-	else{
+	if(st->oid) {
+		struct block_list *bl = map_id2bl(st->oid);
+		if (bl)
+			clif_misceffect2(bl,type);
+	} else{
 		struct map_session_data *sd=script_rid2sd(st);
 		if(sd)
 			clif_misceffect2(&sd->bl,type);
