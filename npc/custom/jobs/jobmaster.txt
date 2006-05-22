@@ -84,7 +84,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 							break;
 					}
 			}
-			mes "Are you sure?";
+			mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
 			if(select("No","Yes") == 2){
 				callfunc "Job_Change", @target_job;
 				if(@target_job == Job_Gunsliger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {

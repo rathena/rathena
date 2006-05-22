@@ -68,8 +68,10 @@ function	script	F_ClearJobVar	{
 //////////////////////////////////////////////////////////////////////////////////
 
 function	script	Job_Change	{
-	if (Upper==0) jobchange getarg(0); //Change Job For Common
-	if (Upper==2) jobchange getarg(0) + Job_Baby; //Change Job For Baby Class
+	if (Upper<2) 
+		jobchange getarg(0); // Common jobchange
+	else 
+		jobchange getarg(0) + Job_Baby; //Change Job For Baby Class
 	return;
 }
 

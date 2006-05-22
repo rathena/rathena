@@ -30,6 +30,8 @@ Evera
 
 Date		Added
 ======
+05/22
+	* Global_Functions fix. Jobmaster fix. [Lance]
 05/19
 	* eAAC Update + Fix [erKURITA]
 	* Translated sample/gstorage_test.txt
