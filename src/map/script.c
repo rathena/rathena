@@ -11966,9 +11966,20 @@ int script_reload()
 	
 	mapreg_db->clear(mapreg_db, NULL);
 	mapregstr_db->clear(mapreg_db, NULL);
-	userfunc_db->clear(mapreg_db, NULL);
+	userfunc_db->clear(mapreg_db,do_final_userfunc_sub);
 	scriptlabel_db->clear(mapreg_db, NULL);
-	
+
+	if(sleep_db) {
+		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
+		while(n) {
+			struct script_state *st = (struct script_state *)n->data;
+			script_free_stack(st->stack);
+			free(st);
+			n = n->next;
+		}
+		linkdb_final(&sleep_db);
+	}
+
 	script_load_mapreg();
 	return 0;
 }
