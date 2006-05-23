@@ -594,7 +594,8 @@ L_Mage:
 				mes "Cough, here are the questions!";
 				next;
 				mes "[Raul Expagarus]";
-				mes "1. What ISN'T required for fire wall?";
+				mes "1. Which of the following is not";
+				mes "necessary to learn Fire Wall?";
 				next;
 				menu "Fire Bolt Lv 4",sM0_0b, "Fire Ball Lv 5",sM0_0b, "Sight Lv 1",sM0_0b, "Napalm Beat Lv 4",sM0_0a;
 
@@ -604,9 +605,12 @@ L_Mage:
 				sM0_0b:
 
 				mes "[Raul Expagarus]";
-				mes "2. What happens to a monster's element after it's frozen by Frost Diver?";
+				mes "2. Regardless of it's previous";
+				mes "attribute. What does the monster's";
+				mes "attribute change to when you cast";
+				mes "Frost Diver on it?";
 				next;
-				menu "Changes to Water",sM0_1a, "Changes to Earth",sM0_1b, "Changes to Fire",sM0_1b, "Changes to Wind",sM0_1b;
+				menu "Water",sM0_1a, "Earth",sM0_1b, "Fire",sM0_1b, "Wind",sM0_1b;
 
 				sM0_1a:
 					set @SCORE, @SCORE + 10;
@@ -614,9 +618,12 @@ L_Mage:
 				sM0_1b:
 
 				mes "[Raul Expagarus]";
-				mes "3. When you max out Napalm Beat, how many times matk will the dmg be?";
+				mes "3. When you completely master";
+				mes "Napalm Beat, what is the ratio of";
+				mes "the increased MATK using that";
+				mes "spell?";
 				next;
-				menu "1.6x",sM0_2b, "1.7x",sM0_2a, "2x",sM0_2b, "20x",sM0_2b;
+				menu "1.6 times",sM0_2b, "1.7 times",sM0_2a, "2 times",sM0_2b, "20 times",sM0_2b;
 
 				sM0_2a:
 					set @SCORE, @SCORE + 10;
@@ -624,7 +631,8 @@ L_Mage:
 				sM0_2b:
 
 				mes "[Raul Expagarus]";
-				mes "4. What item is required for stone curse?";
+				mes "4. What item do you need when";
+				mes "casting Stone Curse?";
 				next;
 				menu "Red Blood",sM0_3b, "Blue Gemstone",sM0_3b, "Yellow Gemstone",sM0_3b, "Red Gemstone",sM0_3a;
 
@@ -634,9 +642,10 @@ L_Mage:
 				sM0_3b:
 
 				mes "[Raul Expagarus]";
-				mes "5. What isn't required for Safety Wall?";
+				mes "5. Which of the following is not";
+				mes "required to master Safety Wall?";
 				next;
-				menu "Napalm Beat Lv 4",sM0_4b, "Soul Strike Lv 5",sM0_4b, "SP Recovery Lv 6",sM0_4a, "Ice Wall Lv 7",sM0_4a;
+				menu "Napalm Beat Lv 4",sM0_4b, "Soul Strike Lv 5",sM0_4b, "SP Recovery Lv 6",sM0_4a, "Safety Wall Lv 7",sM0_4b;
 
 				sM0_4a:
 					set @SCORE, @SCORE + 10;
@@ -644,7 +653,10 @@ L_Mage:
 				sM0_4b:
 
 				mes "[Raul Expagarus]";
-				mes "6. How much SP will you regain every 10 sec with lvl 7 SP Rec.?";
+				mes "6. Without the INT bonus, what";
+				mes "amount of SP is recovered every 10";
+				mes "seconds when you have learned";
+				mes "Increase SP Recovery Lv 7?";
 				next;
 				menu "14",sM0_5b, "21",sM0_5a, "28",sM0_5b, "35",sM0_5b;
 
@@ -654,9 +666,12 @@ L_Mage:
 				sM0_5b:
 
 				mes "[Raul Expagarus]";
-				mes "7. You have 50% SP, how much dmg will Energy Coat reduce and how much sp will it use?";
+				mes "7. Using Energy Coat, when you have";
+				mes "50% of your SP remaining, how much";
+				mes "SP is used when hit, and what";
+				mes "percentage is damage reduced by?";
 				next;
-				menu "dmg 18%, SP1.5%",sM0_6b, "dmg18%, SP2%",sM0_6a, "dmg 24%, SP1.5%",sM0_6b, "dmg 24%, SP2%",sM0_6b;
+				menu "Damage 18% SP1.5%",sM0_6b, "Damage 18% SP2%",sM0_6a, "Damage 24% SP1.5%",sM0_6b, "Damage 24% SP2%",sM0_6b;
 
 				sM0_6a:
 					set @SCORE, @SCORE + 10;
@@ -664,7 +679,9 @@ L_Mage:
 				sM0_6b:
 
 				mes "[Raul Expagarus]";
-				mes "8. Lvl 6 Safety Wall SP consumption, and number of hits absorbed?";
+				mes "8. How much SP is consumed and how";
+				mes "many times can you avoid attacks";
+				mes "when using Safety Wall Lv 6?";
 				next;
 				menu "SP 40, 6hits",sM0_7b, "SP 35, 6hits",sM0_7b, "SP 40, 7hits",sM0_7b, "SP 35, 7hits",sM0_7a;
 
@@ -674,7 +691,8 @@ L_Mage:
 				sM0_7b:
 
 				mes "[Raul Expagarus]";
-				mes "9. Lv. 10 Thunder Storm's SP Consume";
+				mes "9. How much SP is needed when using";
+				mes "Lv 10 Thunderstorm?";
 				next;
 				menu "84",sM0_8b, "74",sM0_8a, "64",sM0_8b, "54",sM0_8b;
 
@@ -684,7 +702,8 @@ L_Mage:
 				sM0_8b:
 
 				mes "[Raul Expagarus]";
-				mes "10. What would be a good skill to use in Byalan Dungeon?";
+				mes "10. Which skill is most useful";
+				mes "training in the Byalan Dungeon?";
 				next;
 				menu "Lightning Bolt",sM0_9a, "Fire Bolt",sM0_9b, "Ice Bolt",sM0_9b, "Sight",sM0_9b;
 
@@ -697,9 +716,10 @@ L_Mage:
 			//Monster Quiz
 			R_1:
 				mes "[Raul Expagarus]";
-				mes "1. What drops a slot guard?";
+				mes "1. Which monster can you obtain a";
+				mes "slotted Guard from?";
 				next;
-				menu "Thief Bug",sM1_0b, "Peco Peco",sM1_0b, "Pupa",sM1_0a, "Mace Kobold",sM1_0b;
+				menu "Thief Bug",sM1_0b, "Peco Peco",sM1_0b, "Pupa",sM1_0a, "Kobold (Hammer)",sM1_0b;
 
 				sM1_0a:
 					set @SCORE, @SCORE + 10;
@@ -707,7 +727,9 @@ L_Mage:
 				sM1_0b:
 
 				mes "[Raul Expagarus]";
-				mes "2. Which monster is the easiest for magicians?";
+				mes "2. Which of the following is the";
+				mes "easiest monster for a low level";
+				mes "Mage to hunt?";
 				next;
 				menu "Flora",sM1_1a, "Gierth",sM1_1b, "Golem",sM1_1b, "Myst",sM1_1b;
 
@@ -717,17 +739,21 @@ L_Mage:
 				sM1_1b:
 
 				mes "[Raul Expagarus]";
-				mes "3. What monster is completly immune to Stone Curse?";
+				mes "3. Which monster will not be";
+				mes "affected by Stone Curse?";
 				next;
-				menu "Elder Willow",sM1_2b, "Evil Druid",sM1_2a, "Baek-Ryuhn-Oak",sM1_2b, "Marc",sM1_2b;
+				menu "Elder Willow",sM1_2b, "Evil Druid",sM1_2a, "Magnolia",sM1_2b, "Marc",sM1_2b;
 
 				sM1_2a:
 					set @SCORE, @SCORE + 10;
 
 				sM1_2b:
-:
+
 				mes "[Raul Expagarus]";
-				mes "4. How much dmg do you do with a wind spell to a Water 3 monster?";
+				mes "4. When attacking a Lv 3 water";
+				mes "attribute monster with a wind";
+				mes "attribute weapon, what is the";
+				mes "damage percentage?";
 				next;
 				menu "125%",sM1_3b, "150%",sM1_3b, "175%",sM1_3b, "200%",sM1_3a;
 
@@ -737,9 +763,11 @@ L_Mage:
 				sM1_3b:
 
 				mes "[Raul Expagarus]";
-				mes "5. Baby Desert Wolves vs Familiar, which one wins?";
+				mes "5. If a Baby Desert Wolf and a";
+				mes "Familiar fought, which one would";
+				mes "win?";
 				next;
-				menu "Baby Desert Wolf",sM1_4a, "Familiar",sM1_4b, "Tie",sM1_4b, "Don't Know",sM1_4b;
+				menu "Baby Desert Wolf",sM1_4a, "Familiar",sM1_4b, "Neither",sM1_4b, "I don't know",sM1_4b;
 
 				sM1_4a:
 					set @SCORE, @SCORE + 10;
@@ -747,7 +775,8 @@ L_Mage:
 				sM1_4b:
 
 				mes "[Raul Expagarus]";
-				mes "6. Which monster can't be tamed as a pet?";
+				mes "6. Which of the following cannot be";
+				mes "a Cute Pet?";
 				next;
 				menu "Poporing",sM1_5b, "Roda Frog",sM1_5a, "Smokie",sM1_5b, "Poison Spore",sM1_5b;
 
@@ -757,9 +786,10 @@ L_Mage:
 				sM1_5b:
 
 				mes "[Raul Expagarus]";
-				mes "7. Which monster is weak against fire?.";
+				mes "7. Choose the monster that is weak";
+				mes "against a fire attribute attack.";
 				next;
-				menu "Knife Goblin",sM1_6b, "Mace Goblin",sM1_6b, "Flail Goblin",sM1_6b, "Hammer Goblin",sM1_6a;
+				menu "Dagger Goblin",sM1_6b, "Mace Goblin",sM1_6b, "Morningstar Goblin",sM1_6b, "Hammer Goblin",sM1_6a;
 
 				sM1_6a:
 					set @SCORE, @SCORE + 10;
@@ -767,9 +797,10 @@ L_Mage:
 				sM1_6b:
 
 				mes "[Raul Expagarus]";
-				mes "8. Which monster has the highest magic def?";
+				mes "8. Which of the following monsters";
+				mes "has the highest defence?";
 				next;
-				menu "Horong",sM1_7a, "ChonChon",sM1_7b, "Andre",sM1_7b, "Caramel",sM1_7b;
+				menu "Horn",sM1_7b, "Chonchon",sM1_7b, "Andre",sM1_7b, "Caramel",sM1_7a;
 
 				sM1_7a:
 					set @SCORE, @SCORE + 10;
@@ -777,9 +808,10 @@ L_Mage:
 				sM1_7b:
 
 				mes "[Raul Expagarus]";
-				mes "9. Pick the monster that doesn't belong.";
+				mes "9. Choose the monster that's a";
+				mes "different species.";
 				next;
-				menu "Poring",sM1_8b, "Mastering",sM1_8b, "Ghostring",sM1_8b, "Spore",sM1_8a;
+				menu "Poring",sM1_8b, "Mastering",sM1_8b, "Ghostring",sM1_8a, "Spore",sM1_8b;
 
 				sM1_8a:
 					set @SCORE, @SCORE + 10;
@@ -787,7 +819,8 @@ L_Mage:
 				sM1_8b:
 
 				mes "[Raul Expagarus]";
-				mes "10. Which is not a undead?";
+				mes "10. Which of the following is not";
+				mes "an Undead monster?";
 				next;
 				menu "Drake",sM1_9b, "Megalodon",sM1_9b, "Deviace",sM1_9a, "Khalitzburg",sM1_9b;
 
@@ -800,7 +833,8 @@ L_Mage:
 			//Wizard Quiz
 			R_2:
 				mes "[Raul Expagarus]";
-				mes "1. What is the most important stat for a Wizard?";
+				mes "1. Which stat is most important";
+				mes "for a Mage?";
 				next;
 				menu "INT",sM2_0a, "AGI",sM2_0b, "DEX",sM2_0b, "VIT",sM2_0b;
 
@@ -810,9 +844,10 @@ L_Mage:
 				sM2_0b:
 
 				mes "[Raul Expagarus]";
-				mes "2. Which element doesn't have a bolt spell?";
+				mes "2. Which attribute does not have a";
+				mes "'Bolt' type attack?";
 				next;
-				menu "water",sM2_1b, "earth",sM2_1a, "fire",sM2_1b, "wind",sM2_1b;
+				menu "Water",sM2_1b, "Earth",sM2_1a, "Fire",sM2_1b, "Wind",sM2_1b;
 
 				sM2_1a:
 					set @SCORE, @SCORE + 10;
@@ -820,9 +855,10 @@ L_Mage:
 				sM2_1b:
 
 				mes "[Raul Expagarus]";
-				mes "3. What is NOT a characteristic of a Wizard?";
+				mes "3. Choose the one that does not";
+				mes "relate to a mage.";
 				next;
-				menu "Weak physical abilites",sM2_2b, "Distance Attacks",sM2_2b, "Good money maker",sM2_2a, "High Magic Def",sM2_2b;
+				menu "Weak physical strength.",sM2_2b, "Attacks at a distance.",sM2_2b, "Good at selling stuff.",sM2_2a, "Magic Defense is high.",sM2_2b;
 
 				sM2_2a:
 					set @SCORE, @SCORE + 10;
@@ -830,7 +866,8 @@ L_Mage:
 				sM2_2b:
 
 				mes "[Raul Expagarus]";
-				mes "4. Which town is the home of Wizards?";
+				mes "4. Which town is the home of the";
+				mes "Mages?";
 				next;
 				menu "Prontera",sM2_3b, "Morroc",sM2_3b, "Alberta",sM2_3b, "Geffen",sM2_3a;
 
@@ -840,7 +877,8 @@ L_Mage:
 				sM2_3b:
 
 				mes "[Raul Expagarus]";
-				mes "5. Which card has nothing to do with INT?";
+				mes "5. Which of the following cards has?";
+				mes "nothing to do with INT?";
 				next;
 				menu "Andre Larva Card",sM2_4b, "Soldier Andre Card",sM2_4a, "Baby Desert Wolf Card",sM2_4b, "Elder Willow Card",sM2_4b;
 
@@ -850,9 +888,10 @@ L_Mage:
 				sM2_4b:
 
 				mes "[Raul Expagarus]";
-				mes "6. What is superior about the mage class compared to others?";
+				mes "6. What is the Mage good at";
+				mes "compared to other job classes?";
 				next;
-				menu "Close Range Combat",sM2_5b, "High Dodge",sM2_5b, "Dance Skills",sM2_5b, "Magical Power",sM2_5a;
+				menu "Exceptional Vocal Ability",sM2_5b, "Exceptional Acting Ability",sM2_5b, "Exceptional Dance Skills",sM2_5b, "Exceptional Magic Skills",sM2_5a;
 
 				sM2_5a:
 					set @SCORE, @SCORE + 10;
@@ -860,7 +899,8 @@ L_Mage:
 				sM2_5b:
 
 				mes "[Raul Expagarus]";
-				mes "7. What is the INT bonus at job lvl 40?";
+				mes "7. What is the INT bonus at Job Lv";
+				mes "40 for a mage?";
 				next;
 				menu "8",sM2_6b, "7",sM2_6b, "6",sM2_6b, "5",sM2_6a;
 
@@ -870,7 +910,7 @@ L_Mage:
 				sM2_6b:
 
 				mes "[Raul Expagarus]";
-				mes "8. Which Item can't be equiped by mages?";
+				mes "8. Which item can't be equipped by mages?";
 				next;
 				menu "Knife",sM2_7b, "Cap",sM2_7a, "Sandals",sM2_7b, "Eye of Dullahan",sM2_7b;
 
@@ -880,9 +920,11 @@ L_Mage:
 				sM2_7b:
 
 				mes "[Raul Expagarus]";
-				mes "9. During the mage test, which stone is NOT one of the Catalysts?";
+				mes "9. Which of the following is the";
+				mes "catalyst when making the Mage test";
+				mes "solution 3?";
 				next;
-				menu "Yellow Gemstone",sM2_8b, "Red Gemstone",sM2_8b, "Blue Gemstone",sM2_8b, "Red Blood",sM2_8a;
+				menu "Blue Gemstone",sM2_8a, "Red Gemstone",sM2_8b, "Yellow Gemstone",sM2_8b, "Red Blood",sM2_8b;
 
 				sM2_8a:
 					set @SCORE, @SCORE + 10;
@@ -890,9 +932,10 @@ L_Mage:
 				sM2_8b:
 
 				mes "[Raul Expagarus]";
-				mes "10. Which card has nothing to do with magic?";
+				mes "10. Which card is irrelevant to";
+				mes "magic?";
 				next;
-				menu "Marduk Card",sM2_9b, "Baek-Rhyun-Oak Card",sM2_9a, "Willow Card",sM2_9b, "Maya Card",sM2_9b;
+				menu "Marduk Card",sM2_9b, "Magnolia Card",sM2_9a, "Willow Card",sM2_9b, "Maya Card",sM2_9b;
 
 				sM2_9a:
 					set @SCORE, @SCORE + 10;
@@ -1010,9 +1053,11 @@ L_Mage:
 			set @SCORE, 0;
 
 			mes "[Raul Expagarus]";
-			mes "1. Which monster doesn't exist?";
+			mes "1. Choose the monster with a";
+			mes "different attribute than the";
+			mes "others.";
 			next;
-			menu "Mantis",sM_0b, "Cunner Tooth",sM_0a, "Giearth",sM_0b, "Caramel",sM_0b;
+			menu "Mantis",sM_0b, "Cornutus",sM_0a, "Giearth",sM_0b, "Caramel",sM_0b;
 
 			sM_0a:
 				set @SCORE, @SCORE + 20;
@@ -1020,9 +1065,10 @@ L_Mage:
 			sM_0b:
 
 			mes "[Raul Expagarus]";
-			mes "2. Which monster is NOT a animal type?";
+			mes "2. Choose the monster that is not a";
+			mes "looting one.";
 			next;
-			menu "Yoyo",sM_1b, "Bigfoot",sM_1b, "Metaller",sM_1b, "Zerom",sM_1a;
+			menu "Yoyo",sM_1b, "Magnolia",sM_1b, "Metaller",sM_1b, "Zerom",sM_1a;
 
 			sM_1a:
 				set @SCORE, @SCORE + 20;
@@ -1030,7 +1076,8 @@ L_Mage:
 			sM_1b:
 
 			mes "[Raul Expagarus]";
-			mes "3. Which monster has no cast sense?";
+			mes "3. Which of these monsters does not";
+			mes "recognize casting?";
 			next;
 			menu "Marina",sM_2a, "Vitata",sM_2b, "Scorpion",sM_2b, "Giearth",sM_2b;
 
@@ -1040,7 +1087,8 @@ L_Mage:
 			sM_2b:
 
 			mes "[Raul Expagarus]";
-			mes "4. What's a good spell to use on Marin Spheres?";
+			mes "4. Chose the spell that would be";
+			mes "efficient against a Marine Sphere.";
 			next;
 			menu "Cold Bolt",sM_3b, "Fire Bolt",sM_3b, "Lightning Bolt",sM_3a, "Stone Curse",sM_3b;
 
@@ -1050,7 +1098,8 @@ L_Mage:
 			sM_3b:
 
 			mes "[Raul Expagarus]";
-			mes "5. Which monster can move?";
+			mes "5. Choose the monster that can";
+			mes "move.";
 			next;
 			menu "Hydra",sM_4b, "Mandragora",sM_4b, "Greatest General",sM_4b, "Frilldora",sM_4a;
 
