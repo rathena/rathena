@@ -7528,7 +7528,10 @@ int skill_isammotype(TBL_PC *sd, int skill)
 }
 
 /*==========================================
- * ƒXƒLƒ‹g—p?Œ??i?‚Åg—p¸”s?j
+ * Checks that you have the requirements for casting a skill.
+ * Flag:
+ * &1: finished casting the skill (invoke hp/sp/item consumption)
+ * &2: picked menu entry (Warp Portal, Teleport and other menu based skills)
  *------------------------------------------
  */
 int skill_check_condition(struct map_session_data *sd,int skill, int lv, int type)
@@ -7756,7 +7759,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		if(sd->sc.data[SC_COMBO].val1 != MO_COMBOFINISH && sd->sc.data[SC_COMBO].val1 != CH_TIGERFIST)
 			return 0;
 		break;
-	case MO_EXTREMITYFIST:					// ˆ¢?C—…”e–PŒ?
+	case MO_EXTREMITYFIST:
 //		if(sd->sc.data[SC_EXTREMITYFIST].timer != -1) //To disable Asura during the 5 min skill block uncomment this...
 //			return 0;
 		if(sd->sc.data[SC_BLADESTOP].timer!=-1)
@@ -7769,7 +7772,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 			else if (sd->sc.data[SC_COMBO].val1 == CH_CHAINCRUSH)
 				spiritball = sd->spiritball?sd->spiritball:1;
 			//It should consume whatever is left as long as it's at least 1.
-		} else if(!unit_can_move(&sd->bl))
+		} else if(!type && !unit_can_move(&sd->bl)) //Check only on begin casting.
 	  	{	//Placed here as ST_MOVE_ENABLE should not apply if rooted or on a combo. [Skotlex]
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
@@ -8162,7 +8165,8 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		}
 		break;
 	case ST_MOVE_ENABLE:
-		if(!unit_can_move(&sd->bl)) {
+		//Check only on begin casting. [Skotlex]
+		if(!type && !unit_can_move(&sd->bl)) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}

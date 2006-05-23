@@ -995,6 +995,8 @@ static struct Damage battle_calc_weapon_attack(
 		unsigned cri : 1;		//Critical hit
 		unsigned idef : 1;	//Ignore defense
 		unsigned idef2 : 1;	//Ignore defense (left weapon)
+		unsigned pdef : 2;	//Pierces defense (Investigate/Ice Pick)
+		unsigned pdef2 : 2;	//1: Use def+def2/50, 2: Use def+def2/100	
 		unsigned infdef : 1;	//Infinite defense (plants)
 		unsigned arrow : 1;	//Attack is arrow-based
 		unsigned rh : 1;		//Attack considers right hand (wd.damage)
@@ -1606,6 +1608,7 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case MO_INVESTIGATE:
 					skillratio += 75*skill_lv;
+					flag.pdef = flag.pdef2 = 2;
 					break;
 				case MO_EXTREMITYFIST:
 					if (sd)
@@ -1822,25 +1825,21 @@ static struct Damage battle_calc_weapon_attack(
 				&& skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS
 			  	&& !flag.cri)
 			{	//Elemental/Racial adjustments
-				char raceele_flag=0, raceele_flag_=0;
 				if(sd->right_weapon.def_ratio_atk_ele & (1<<t_ele) ||
 					sd->right_weapon.def_ratio_atk_race & (1<<t_race) ||
 					sd->right_weapon.def_ratio_atk_race & (is_boss(target)?1<<10:1<<11)
 				)
-					raceele_flag = flag.idef = 1;
+					flag.pdef = 1;
 
 				if(sd->left_weapon.def_ratio_atk_ele & (1<<t_ele) ||
 					sd->left_weapon.def_ratio_atk_race & (1<<t_race) ||
 					sd->left_weapon.def_ratio_atk_race & (is_boss(target)?1<<10:1<<11)
 				) {	//Pass effect onto right hand if configured so. [Skotlex]
 					if (battle_config.left_cardfix_to_right && flag.rh)
-						raceele_flag = flag.idef = 1;
+						flag.pdef = 1;
 					else
-						raceele_flag_ = flag.idef2 = 1;
+						flag.pdef2 = 1;
 				}
-
-				if (raceele_flag || raceele_flag_)
-					ATK_RATE2(raceele_flag?(def1 + def2):100, raceele_flag_?(def1 + def2):100);
 			}
 
 			if (skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS)
@@ -1911,12 +1910,19 @@ static struct Damage battle_calc_weapon_attack(
 				vit_def += def1*battle_config.pet_defense_type;
 				def1 = 0;
 			}
-			if(skill_num == MO_INVESTIGATE) { //Must use adjusted defense
-				ATK_RATE(2*(def1 + vit_def));
-			} else {
-				ATK_RATE2(flag.idef?100:100-def1, flag.idef2?100:100-def1);
-				ATK_ADD2(flag.idef?0:-vit_def, flag.idef2?0:-vit_def);
-			}
+			if (def1 > 100) def1 = 100;
+			ATK_RATE2(
+				flag.idef ?100:
+				(flag.pdef ?flag.pdef *(def1 + vit_def):
+				100-def1),
+			  	flag.idef2?100:
+				(flag.pdef2?flag.pdef2*(def1 + vit_def):
+				100-def1)
+			);
+			ATK_ADD2(
+				flag.idef ||flag.pdef ?0:-vit_def,
+				flag.idef2||flag.pdef2?0:-vit_def
+			);
 		}
 
 		//Post skill/vit reduction damage increases
