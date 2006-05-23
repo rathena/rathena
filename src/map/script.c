@@ -11350,8 +11350,10 @@ int run_script_main(struct script_state *st)
 			break;
 	}
 
-	if(st->state == END)
+	if(st->state == END) {
 		script_free_stack (st->stack);
+		st->stack = NULL;
+	}
 
 	return 0;
 }
@@ -11374,7 +11376,7 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	if (rootscript == NULL || pos < 0)
 		return -1;
 
-	st = calloc(sizeof(struct script_state), 1);
+	st = aCalloc(sizeof(struct script_state), 1);
 
 	if ((sd = map_id2sd(rid)) && sd->stack && sd->npc_scriptroot == rootscript){
 		// we have a stack for the same script, should continue exec.
@@ -11412,12 +11414,12 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	// let's run that stuff
 	run_script_main(st);
 
-	if(st){
-		if(st->sleep.tick > 0) {
-			// スタック情報をsleep_dbに保存
-			unsigned int tick = gettick()+st->sleep.tick;
-			st->sleep.charid = sd ? sd->char_id : 0;
-			st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
+	if(st->state != END){ 
+		if(st->sleep.tick > 0)
+	  	{	//Delay execution
+			st->sleep.charid = sd?sd->char_id:0;
+			st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
+				run_script_timer, st->sleep.charid, (int)st);
 			linkdb_insert(&sleep_db, (void*)st->oid, st);
 		} else if (sd) {
 			// script is not finished, store data in sd.
@@ -11428,25 +11430,27 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			if (bck_stack) //Get rid of the backup as it can't be restored.
 				script_free_stack (bck_stack);
 		}
-	} else {
-		// and if there was a sd associated - zero vars.
-		if (sd) {
-			//Clear or restore previous script.
-			sd->npc_script      = bck_script;
-			sd->npc_scriptroot  = bck_scriptroot;
-			sd->npc_scriptstate = bck_scriptstate;
-			sd->stack = bck_stack;
-			//Since the script is done, save any changed account variables [Skotlex]
-			if (sd->state.reg_dirty&2)
-				intif_saveregistry(sd,2);
-			if (sd->state.reg_dirty&1)
-				intif_saveregistry(sd,1);
-		}
-		//aFree(st);
-		return 0;
+		return st->pos;
 	}
-
-	return st->pos;
+	//Script finished.
+	if (sd)
+  	{	//Clear or restore previous script.
+		sd->npc_script      = bck_script;
+		sd->npc_scriptroot  = bck_scriptroot;
+		sd->npc_scriptstate = bck_scriptstate;
+		sd->stack = bck_stack;
+		//Since the script is done, save any changed account variables [Skotlex]
+		if (sd->state.reg_dirty&2)
+			intif_saveregistry(sd,2);
+		if (sd->state.reg_dirty&1)
+			intif_saveregistry(sd,1);
+	}
+	if(st->stack) {
+		script_free_stack (st->stack);
+		st->stack = NULL;
+	}
+	aFree(st);
+	return 0;
 }
 
 /*==========================================
