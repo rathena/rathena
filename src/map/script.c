@@ -11224,7 +11224,6 @@ int run_script_main(struct script_state *st)
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	struct script_stack *stack=st->stack;
-	TBL_PC *sd=NULL;
 
 	if(st->state == RERUNLINE) {
 		st->state = RUN;
@@ -11324,20 +11323,12 @@ int run_script_main(struct script_state *st)
 			st->state=END;
 		}
 	}
-	sd = map_id2sd(st->rid);
-	if(st->sleep.tick > 0) {
-		// スタック情報をsleep_dbに保存
-		unsigned int tick = gettick()+st->sleep.tick;
-		st->sleep.charid = sd ? sd->char_id : 0;
-		st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
-		linkdb_insert(&sleep_db, (void*)st->oid, st);
-	} else {
-		switch(st->state){
+	switch(st->state){
 		case STOP:
 			break;
 		case END:
 			{
-				struct map_session_data *sd=map_id2sd(st->rid);
+				struct map_session_data *sd=st->rid?map_id2sd(st->rid):NULL;
 				st->pos=-1;
 				if(sd && (sd->npc_id==st->oid || sd->state.using_fake_npc)){
 					if(sd->state.using_fake_npc){
@@ -11357,8 +11348,10 @@ int run_script_main(struct script_state *st)
 			// 	st->pos=rerun_pos;
 			// }
 			break;
-		}
 	}
+
+	if(st->state == END)
+		script_free_stack (st->stack);
 
 	return 0;
 }
@@ -11369,7 +11362,7 @@ int run_script_main(struct script_state *st)
  */
 int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
-	struct script_state st;
+	struct script_state *st;
 	struct map_session_data *sd=NULL;
 
 	//Variables for backing up the previous script and restore it if needed. [Skotlex]
@@ -11381,13 +11374,13 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	if (rootscript == NULL || pos < 0)
 		return -1;
 
-	memset(&st, 0, sizeof(struct script_state));
+	st = calloc(sizeof(struct script_state), 1);
 
 	if ((sd = map_id2sd(rid)) && sd->stack && sd->npc_scriptroot == rootscript){
 		// we have a stack for the same script, should continue exec.
-		st.script = sd->npc_script;
-		st.stack = sd->stack;
-		st.state  = sd->npc_scriptstate;
+		st->script = sd->npc_script;
+		st->stack = sd->stack;
+		st->state  = sd->npc_scriptstate;
 		// and clear vars
 		sd->stack           = NULL;
 		sd->npc_script      = NULL;
@@ -11395,14 +11388,14 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 		sd->npc_scriptstate = 0;
 	} else {
 		// the script is different, make new script_state and stack
-		st.stack = aMalloc (sizeof(struct script_stack));
-		st.stack->sp = 0;
-		st.stack->sp_max = 64;
-		st.stack->stack_data = (struct script_data *) aCalloc (st.stack->sp_max,sizeof(st.stack->stack_data[0]));
-		st.stack->defsp = st.stack->sp;
-		st.stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
-		st.state  = RUN;
-		st.script = rootscript;
+		st->stack = aMalloc (sizeof(struct script_stack));
+		st->stack->sp = 0;
+		st->stack->sp_max = 64;
+		st->stack->stack_data = (struct script_data *) aCalloc (st->stack->sp_max,sizeof(st->stack->stack_data[0]));
+		st->stack->defsp = st->stack->sp;
+		st->stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
+		st->state  = RUN;
+		st->script = rootscript;
 	
 		if (sd && sd->stack) {	// if there's a sd and a stack - back it up and restore it if possible.
 			bck_script      = sd->npc_script;
@@ -11412,41 +11405,48 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			sd->stack = NULL;
 		}
 	}
-	st.pos = pos;
-	st.rid = rid;
-	st.oid = oid;
-	st.sleep.timer = -1;
+	st->pos = pos;
+	st->rid = rid;
+	st->oid = oid;
+	st->sleep.timer = -1;
 	// let's run that stuff
-	run_script_main(&st);
+	run_script_main(st);
 
-	sd = map_id2sd(st.rid);
-	if (st.state != END && sd) {
-		// script is not finished, store data in sd.
-		sd->npc_script      = st.script;
-		sd->npc_scriptroot  = rootscript;
-		sd->npc_scriptstate = st.state;
-		sd->stack           = st.stack;
-		if (bck_stack) //Get rid of the backup as it can't be restored.
-			script_free_stack (bck_stack);
+	if(st->sleep.tick > 0) {
+		// スタック情報をsleep_dbに保存
+		unsigned int tick = gettick()+st->sleep.tick;
+		st->sleep.charid = sd ? sd->char_id : 0;
+		st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
+		linkdb_insert(&sleep_db, (void*)st->oid, st);
 	} else {
-		// we are done with stuff, free the stack
-		script_free_stack (st.stack);
-		// and if there was a sd associated - zero vars.
-		if (sd) {
-			//Clear or restore previous script.
-			sd->npc_script      = bck_script;
-			sd->npc_scriptroot  = bck_scriptroot;
-			sd->npc_scriptstate = bck_scriptstate;
-			sd->stack = bck_stack;
-			//Since the script is done, save any changed account variables [Skotlex]
-			if (sd->state.reg_dirty&2)
-				intif_saveregistry(sd,2);
-			if (sd->state.reg_dirty&1)
-				intif_saveregistry(sd,1);
+		if (st->state != END && sd) {
+			// script is not finished, store data in sd.
+			sd->npc_script      = st->script;
+			sd->npc_scriptroot  = rootscript;
+			sd->npc_scriptstate = st->state;
+			sd->stack           = st->stack;
+			if (bck_stack) //Get rid of the backup as it can't be restored.
+				script_free_stack (bck_stack);
+		} else {
+			// and if there was a sd associated - zero vars.
+			if (sd) {
+				//Clear or restore previous script.
+				sd->npc_script      = bck_script;
+				sd->npc_scriptroot  = bck_scriptroot;
+				sd->npc_scriptstate = bck_scriptstate;
+				sd->stack = bck_stack;
+				//Since the script is done, save any changed account variables [Skotlex]
+				if (sd->state.reg_dirty&2)
+					intif_saveregistry(sd,2);
+				if (sd->state.reg_dirty&1)
+					intif_saveregistry(sd,1);
+			}
+			//aFree(st);
+			return 0;
 		}
 	}
 
-	return st.pos;
+	return st->pos;
 }
 
 /*==========================================
