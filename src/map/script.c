@@ -11412,14 +11412,14 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	// let's run that stuff
 	run_script_main(st);
 
-	if(st->sleep.tick > 0) {
-		// スタック情報をsleep_dbに保存
-		unsigned int tick = gettick()+st->sleep.tick;
-		st->sleep.charid = sd ? sd->char_id : 0;
-		st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
-		linkdb_insert(&sleep_db, (void*)st->oid, st);
-	} else {
-		if (st->state != END && sd) {
+	if(st){
+		if(st->sleep.tick > 0) {
+			// スタック情報をsleep_dbに保存
+			unsigned int tick = gettick()+st->sleep.tick;
+			st->sleep.charid = sd ? sd->char_id : 0;
+			st->sleep.timer  = add_timer(tick, run_script_timer, st->sleep.charid, (int)st);
+			linkdb_insert(&sleep_db, (void*)st->oid, st);
+		} else if (sd) {
 			// script is not finished, store data in sd.
 			sd->npc_script      = st->script;
 			sd->npc_scriptroot  = rootscript;
@@ -11427,23 +11427,23 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			sd->stack           = st->stack;
 			if (bck_stack) //Get rid of the backup as it can't be restored.
 				script_free_stack (bck_stack);
-		} else {
-			// and if there was a sd associated - zero vars.
-			if (sd) {
-				//Clear or restore previous script.
-				sd->npc_script      = bck_script;
-				sd->npc_scriptroot  = bck_scriptroot;
-				sd->npc_scriptstate = bck_scriptstate;
-				sd->stack = bck_stack;
-				//Since the script is done, save any changed account variables [Skotlex]
-				if (sd->state.reg_dirty&2)
-					intif_saveregistry(sd,2);
-				if (sd->state.reg_dirty&1)
-					intif_saveregistry(sd,1);
-			}
-			//aFree(st);
-			return 0;
 		}
+	} else {
+		// and if there was a sd associated - zero vars.
+		if (sd) {
+			//Clear or restore previous script.
+			sd->npc_script      = bck_script;
+			sd->npc_scriptroot  = bck_scriptroot;
+			sd->npc_scriptstate = bck_scriptstate;
+			sd->stack = bck_stack;
+			//Since the script is done, save any changed account variables [Skotlex]
+			if (sd->state.reg_dirty&2)
+				intif_saveregistry(sd,2);
+			if (sd->state.reg_dirty&1)
+				intif_saveregistry(sd,1);
+		}
+		//aFree(st);
+		return 0;
 	}
 
 	return st->pos;
