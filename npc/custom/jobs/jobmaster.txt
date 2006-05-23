@@ -166,7 +166,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 			if((Class >=Job_Knight) && (Class <=Job_Crusader2)){
 				mes "Do you want to reborn?";
 				if(select("Yes","No")==1){
-					if(BaseLevel < 99 && JobLevel < 50) goto L_cantCh;
+					if(BaseLevel < 99 || JobLevel < 50) goto L_cantCh;
 					set lastJob, Class;
 					if(Class == Job_Knight2){
 						set lastJob, Job_Knight;

@@ -31,6 +31,8 @@ Evera
 Date		Added
 ======
 05/23
+	* Fixed a bug in the new Job Master [Playtester]
+	- he rebirthed you even if you haven't reached level 99...
 	* Changed the questions of the Wizard Quiz to official ones [Playtester]
 05/22
 	* Global_Functions fix. Jobmaster fix. [Lance]
