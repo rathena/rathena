@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/23
+	* Amon Ra now uses Meteor Storm on self until we find out how it really works [Playtester]
 05/21
 	* Incantation Samurai Card now ignores def of all non-boss races [Playtester]
 	- should include players now

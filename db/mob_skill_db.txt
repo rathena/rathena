@@ -2449,8 +2449,8 @@
 1511,Amon Ra@NPC_SUMMONMONSTER,idle,209,5,5000,0,10000,no,self,longrangeattacked,0,1474,1477,1438,,,9
 1511,Amon Ra@NPC_SUMMONMONSTER,attack,209,5,5000,0,10000,no,self,casttargeted,0,1474,1477,1438,,,9
 1511,Amon Ra@NPC_SUMMONMONSTER,attack,209,5,5000,0,10000,no,self,longrangeattacked,0,1474,1477,1438,,,9
-1511,Amon Ra@WZ_METEOR,idle,83,11,10000,0,0,yes,target,casttargeted,,,,,,,9
-1511,Amon Ra@WZ_METEOR,idle,83,11,10000,0,0,yes,target,longrangeattacked,,,,,,,9
+1511,Amon Ra@WZ_METEOR,idle,83,11,10000,0,0,yes,self,casttargeted,,,,,,,9
+1511,Amon Ra@WZ_METEOR,idle,83,11,10000,0,0,yes,self,longrangeattacked,,,,,,,9
 1511,Amon Ra@WZ_FIREPILLAR,idle,80,11,10000,0,2000,yes,around2,always,0,,,,,,
 1511,Amon Ra@WZ_FIREPILLAR,idle,80,11,10000,0,2000,yes,around2,always,0,,,,,,
 1511,Amon Ra@NPC_DARKBLESSING,attack,203,1,5000,0,2000,no,target,always,0,,,,,,
