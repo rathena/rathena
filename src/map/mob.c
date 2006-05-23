@@ -1968,7 +1968,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			//Drops affected by luk as a % increase [Skotlex] 
 			if (src && battle_config.drops_by_luk2 > 0)
 				drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.0);
-			if (sd && battle_config.pk_mode == 1 && (md->db->lv - sd->status.base_level >= 20))
+			if (sd && battle_config.pk_mode &&
+				(int)(md->db->lv - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
 //			if (10000 < rand()%10000+drop_rate) { //May be better if MAX_RAND is too low?

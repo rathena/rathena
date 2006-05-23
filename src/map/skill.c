@@ -1455,7 +1455,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 
-	if(sd && bl->type == BL_MOB && status_isdead(bl) && skill_get_inf(skillid)!=INF_GROUND_SKILL && (rate=pc_checkskill(sd,HW_SOULDRAIN))>0)
+	if(sd && bl->type == BL_MOB && status_isdead(bl) &&
+		skillid && skill_get_type(skillid)==BF_MAGIC &&
+	 	skill_get_inf(skillid)!=INF_GROUND_SKILL &&
+	  	(rate=pc_checkskill(sd,HW_SOULDRAIN))>0)
 	{	//Soul Drain should only work on targetted spells [Skotlex]
 		int sp;
 		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
