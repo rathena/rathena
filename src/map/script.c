@@ -1043,11 +1043,11 @@ static unsigned char *skip_space(unsigned char *p)
 static unsigned char *skip_word(unsigned char *p)
 {
 	// prefix
+	if(*p=='\'') p++;
 	if(*p=='$') p++;	// MAP鯖内共有変数用
 	if(*p=='@') p++;	// 一時的変数用(like weiss)
 	if(*p=='#') p++;	// account変数用
 	if(*p=='#') p++;	// ワールドaccount変数用
-	if(*p=='\'') p++;
 
 	while(isalnum(*p)||*p=='_'|| *p>=0x81)
 		if(*p>=0x81 && p[1]){

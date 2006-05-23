@@ -8622,7 +8622,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
     			sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requests name of invisible chars.", sd->status.name, sd->status.account_id);
 				ShowWarning(gm_msg);
 			    // information is sended to all online GM
-			  //  intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
+				intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 			return;
 		}
 		clif_charnameack(fd, bl);
