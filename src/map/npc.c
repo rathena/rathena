@@ -985,12 +985,13 @@ int npc_checknear(struct map_session_data *sd,int id)
 		return 0;
 
 	nd=(struct npc_data *)map_id2bl(id);
-	if (nd==NULL || nd->bl.type!=BL_NPC) {
+	if (nd==NULL) {
 		if (battle_config.error_log)
 			ShowWarning("no such npc : %d\n",id);
 		return 1;
 	}
-
+	if (nd->bl.type!=BL_NPC) //Disguised character or something else...
+		return 1;
 
 	if (nd->class_<0)	// ƒCƒxƒ“ƒgŒn‚Íí‚ÉOK
 		return 0;

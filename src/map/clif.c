@@ -7822,7 +7822,9 @@ int clif_charnameack (int fd, struct block_list *bl)
 			struct party *p = NULL;
 			struct guild *g = NULL;
 			
-			nullpo_retr(0, ssd);
+			//Requesting your own "shadow" name. [Skotlex]
+			if (ssd->fd == fd && ssd->disguise)
+				WBUFL(buf,2) = -bl->id; 
 
 			if (strlen(ssd->fakename)>1) {
 				memcpy(WBUFP(buf,6), ssd->fakename, NAME_LENGTH);
@@ -8605,28 +8607,28 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 	
 	account_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	if(account_id<0) // for disguises [Valaris]
-		account_id-=account_id*2;
 
+	if(account_id<0 && -account_id == sd->bl.id) // for disguises [Valaris]
+		account_id= sd->bl.id;
+
+	bl = map_id2bl(account_id);
 	//Is this possible? Lagged clients could request names of already gone mobs/players. [Skotlex]
-	if ((bl = map_id2bl(account_id)) != NULL) {	
-		sc = status_get_sc(bl);
-		if (sc && (
-			(sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) && !sd->special_state.intravision) ||
-			(sc->option&OPTION_INVISIBLE && !disguised(bl)))
-		) {
-			//Asked name of invisible player, this shouldn't be possible!
-			//Possible bot? Thanks to veider and qspirit
-			//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
-    			unsigned char gm_msg[256];
-    			sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requests name of invisible chars.", sd->status.name, sd->status.account_id);
-				ShowWarning(gm_msg);
-			    // information is sended to all online GM
-				intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
-			return;
-		}
-		clif_charnameack(fd, bl);
+	if (!bl) return;
+
+	sc = status_get_sc(bl);
+	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl))
+	{
+		//Asked name of invisible player, this shouldn't be possible!
+		//Possible bot? Thanks to veider and qspirit
+		//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
+		unsigned char gm_msg[256];
+		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requests name of invisible chars.", sd->status.name, sd->status.account_id);
+		ShowWarning(gm_msg);
+		 // information is sended to all online GM
+		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
+		return;
 	}
+	clif_charnameack(fd, bl);
 }
 
 /*==========================================
@@ -8878,8 +8880,8 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 	target_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	action_type = RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 
-	if(target_id<0) // for disguises [Valaris]
-		target_id-=(target_id*2);
+	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
+		target_id = sd->bl.id;
 		
 	switch(action_type) {
 	case 0x00: // once attack
@@ -9345,9 +9347,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 
 	if (clif_cant_act(sd))
 		return;
-	//Clicked on a negative ID? Player disguised as NPC! [Skotlex]
-	if (RFIFOL(fd,2) < 0)
-		return;
+
 	npc_click(sd,RFIFOL(fd,2));
 }
 
@@ -9682,8 +9682,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
 	
-	if(target_id<0) // for disguises [Valaris]
-		target_id*=-1;
+	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
+		target_id = sd->bl.id;
 		
 	if (sd->skillitem >= 0 && sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
