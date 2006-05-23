@@ -69,9 +69,10 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid);
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
 char* conv_str(struct script_state *st,struct script_data *data);
-void setd_sub(struct map_session_data *sd, char *varname, int elem, void *value);
+void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value);
 int run_script_timer(int tid, unsigned int tick, int id, int data);
 int run_script_main(struct script_state *st);
+
 struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
 void script_free_code(struct script_code* code);
 

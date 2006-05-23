@@ -9902,9 +9902,9 @@ int buildin_distance(struct script_state *st){
 
 // <--- [zBuffer] List of mathematics commands
 // [zBuffer] List of dynamic var commands --->
-void setd_sub(struct map_session_data *sd, char *varname, int elem, void *value)
+void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value)
 {
-	set_reg(NULL, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value, NULL);
+	set_reg(st, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value,NULL);
 	return;
 }
 
@@ -9924,9 +9924,9 @@ int buildin_setd(struct script_state *st)
 		sd = script_rid2sd(st);
 
 	if(varname[strlen(varname)-1] != '$') {
-		setd_sub(sd, varname, elem, (void *)atoi(value));
+		setd_sub(st,sd, varname, elem, (void *)atoi(value));
 	} else {
-		setd_sub(sd, varname, elem, (void *)value);
+		setd_sub(st,sd, varname, elem, (void *)value);
 	}
 	
 	return 0;
@@ -9955,12 +9955,12 @@ int buildin_query_sql(struct script_state *st) {
 			if((sql_res = mysql_store_result(&mmysql_handle))){
 				if(name[strlen(name)-1] != '$') {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(sd, name, i, (void *)atoi(sql_row[0]));
+						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]));
 						i++;
 					}
 				} else {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(sd, name, i, (void *)sql_row[0]);
+						setd_sub(st,sd, name, i, (void *)sql_row[0]);
 						i++;
 					}
 				}
@@ -10495,30 +10495,30 @@ int buildin_getmobdata(struct script_state *st) {
 	} else {
 		num=st->stack->stack_data[st->start+2].u.num;
 		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-		setd_sub(map_id2sd(st->rid),name,0,(void *)(int)md->class_);
-		setd_sub(map_id2sd(st->rid),name,1,(void *)(int)md->level);
-		setd_sub(map_id2sd(st->rid),name,2,(void *)(int)md->hp);
-		setd_sub(map_id2sd(st->rid),name,3,(void *)(int)md->max_hp);
-		setd_sub(map_id2sd(st->rid),name,4,(void *)(int)md->master_id);
-		setd_sub(map_id2sd(st->rid),name,5,(void *)(int)md->bl.m);
-		setd_sub(map_id2sd(st->rid),name,6,(void *)(int)md->bl.x);
-		setd_sub(map_id2sd(st->rid),name,7,(void *)(int)md->bl.y);
-		setd_sub(map_id2sd(st->rid),name,8,(void *)(int)md->speed);
-		setd_sub(map_id2sd(st->rid),name,9,(void *)(int)md->mode);
-		setd_sub(map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai);
-		setd_sub(map_id2sd(st->rid),name,11,(void *)(int)md->db->option);
-		setd_sub(map_id2sd(st->rid),name,12,(void *)(int)md->vd->sex);
-		setd_sub(map_id2sd(st->rid),name,13,(void *)(int)md->vd->class_);
-		setd_sub(map_id2sd(st->rid),name,14,(void *)(int)md->vd->hair_style);
-		setd_sub(map_id2sd(st->rid),name,15,(void *)(int)md->vd->hair_color);
-		setd_sub(map_id2sd(st->rid),name,16,(void *)(int)md->vd->head_bottom);
-		setd_sub(map_id2sd(st->rid),name,17,(void *)(int)md->vd->head_mid);
-		setd_sub(map_id2sd(st->rid),name,18,(void *)(int)md->vd->head_top);
-		setd_sub(map_id2sd(st->rid),name,19,(void *)(int)md->vd->cloth_color);
-		setd_sub(map_id2sd(st->rid),name,20,(void *)(int)md->vd->shield);
-		setd_sub(map_id2sd(st->rid),name,21,(void *)(int)md->vd->weapon);
-		setd_sub(map_id2sd(st->rid),name,22,(void *)(int)md->vd->shield);
-		setd_sub(map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir);
+		setd_sub(st,map_id2sd(st->rid),name,0,(void *)(int)md->class_);
+		setd_sub(st,map_id2sd(st->rid),name,1,(void *)(int)md->level);
+		setd_sub(st,map_id2sd(st->rid),name,2,(void *)(int)md->hp);
+		setd_sub(st,map_id2sd(st->rid),name,3,(void *)(int)md->max_hp);
+		setd_sub(st,map_id2sd(st->rid),name,4,(void *)(int)md->master_id);
+		setd_sub(st,map_id2sd(st->rid),name,5,(void *)(int)md->bl.m);
+		setd_sub(st,map_id2sd(st->rid),name,6,(void *)(int)md->bl.x);
+		setd_sub(st,map_id2sd(st->rid),name,7,(void *)(int)md->bl.y);
+		setd_sub(st,map_id2sd(st->rid),name,8,(void *)(int)md->speed);
+		setd_sub(st,map_id2sd(st->rid),name,9,(void *)(int)md->mode);
+		setd_sub(st,map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai);
+		setd_sub(st,map_id2sd(st->rid),name,11,(void *)(int)md->db->option);
+		setd_sub(st,map_id2sd(st->rid),name,12,(void *)(int)md->vd->sex);
+		setd_sub(st,map_id2sd(st->rid),name,13,(void *)(int)md->vd->class_);
+		setd_sub(st,map_id2sd(st->rid),name,14,(void *)(int)md->vd->hair_style);
+		setd_sub(st,map_id2sd(st->rid),name,15,(void *)(int)md->vd->hair_color);
+		setd_sub(st,map_id2sd(st->rid),name,16,(void *)(int)md->vd->head_bottom);
+		setd_sub(st,map_id2sd(st->rid),name,17,(void *)(int)md->vd->head_mid);
+		setd_sub(st,map_id2sd(st->rid),name,18,(void *)(int)md->vd->head_top);
+		setd_sub(st,map_id2sd(st->rid),name,19,(void *)(int)md->vd->cloth_color);
+		setd_sub(st,map_id2sd(st->rid),name,20,(void *)(int)md->vd->shield);
+		setd_sub(st,map_id2sd(st->rid),name,21,(void *)(int)md->vd->weapon);
+		setd_sub(st,map_id2sd(st->rid),name,22,(void *)(int)md->vd->shield);
+		setd_sub(st,map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir);
 	}
 	return 0;
 }

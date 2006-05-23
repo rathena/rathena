@@ -1267,8 +1267,8 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 			log_pick(sd, "S", 0, nameid, qty, &sd->status.inventory[idx]);
 
 		if(nd) {
-			setd_sub(sd, "@sold_nameid", i, (void *)(int)sd->status.inventory[idx].nameid);
-			setd_sub(sd, "@sold_quantity", i, (void *)(int)qty);
+			setd_sub(NULL,sd, "@sold_nameid", i, (void *)(int)sd->status.inventory[idx].nameid);
+			setd_sub(NULL,sd, "@sold_quantity", i, (void *)(int)qty);
 		}
 		itemamount+=qty;
 		pc_delitem(sd,idx,qty,0);
