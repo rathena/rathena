@@ -125,6 +125,7 @@ char tmp_sql[65535];
 #endif
 
 static struct linkdb_node *sleep_db;
+#define not_server_variable(prefix) (prefix != '$' && prefix != '\'')
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -1046,6 +1047,7 @@ static unsigned char *skip_word(unsigned char *p)
 	if(*p=='@') p++;	// 一時的変数用(like weiss)
 	if(*p=='#') p++;	// account変数用
 	if(*p=='#') p++;	// ワールドaccount変数用
+	if(*p=='\'') p++;
 
 	while(isalnum(*p)||*p=='_'|| *p>=0x81)
 		if(*p>=0x81 && p[1]){
@@ -2325,7 +2327,7 @@ int get_val(struct script_state*st,struct script_data* data)
 		char prefix=*name;
 		char postfix=name[strlen(name)-1];
 
-		if(prefix!='$'){
+		if(not_server_variable(prefix)){
 			if((sd=script_rid2sd(st))==NULL)
 				ShowError("get_val error name?:%s\n",name);
 		}
@@ -2885,7 +2887,20 @@ int buildin_getarg(struct script_state *st)
 int buildin_return(struct script_state *st)
 {
 	if(st->end>st->start+2){	// 戻り値有り
+		struct script_data *sd;
 		push_copy(st->stack,st->start+2);
+		sd = &st->stack->stack_data[st->stack->sp-1];
+		if(sd->type == C_NAME) {
+			char *name = str_buf + str_data[sd->u.num&0x00ffffff].str;
+			if( name[0] == '\'' && name[1] == '@') {
+				// '@ 変数を参照渡しにすると危険なので値渡しにする
+				get_val(st,sd);
+			} else if( name[0] == '\'' && !sd->ref) {
+				// ' 変数は参照渡しでも良いが、参照元が設定されていないと
+				// 元のスクリプトの値を差してしまうので補正する。
+				sd->ref = &st->script->script_vars;
+			}
+		}
 	}
 	st->state=RETFUNC;
 	return 0;
@@ -3446,7 +3461,7 @@ int buildin_set(struct script_state *st)
 		return 1;
 	}
 
-	if( prefix!='$' && prefix!='\'' )
+	if(not_server_variable(prefix))
 		sd=script_rid2sd(st);
 
 
@@ -3479,7 +3494,7 @@ int buildin_setarray(struct script_state *st)
 		ShowWarning("buildin_setarray: illegal scope !\n");
 		return 1;
 	}
-	if( prefix!='$' && prefix!='\'' )
+	if(not_server_variable(prefix))
 		sd=script_rid2sd(st);
 
 	for(j=0,i=st->start+3; i<st->end && j<128;i++,j++){
@@ -3507,11 +3522,11 @@ int buildin_cleararray(struct script_state *st)
 	int i;
 	void *v;
 
-	if( prefix!='$' && prefix!='@' ){
+	if( prefix!='$' && prefix!='@' && prefix!='\''){
 		ShowWarning("buildin_cleararray: illegal scope !\n");
 		return 1;
 	}
-	if( prefix!='$' )
+	if( not_server_variable(prefix) )
 		sd=script_rid2sd(st);
 
 	if( postfix=='$' )
@@ -3553,7 +3568,7 @@ int buildin_copyarray(struct script_state *st)
 		printf("buildin_copyarray: type mismatch !\n");
 		return 0;
 	}
-	if( (prefix!='$' && prefix != '\'') || (prefix2!='$' && prefix2 != '\'') )
+	if( not_server_variable(prefix) || not_server_variable(prefix2) )
 		sd=script_rid2sd(st);
 
 	if((num & 0x00FFFFFF) == (num2 & 0x00FFFFFF) && (num & 0xFF000000) > (num2 & 0xFF000000)) {
@@ -3628,11 +3643,11 @@ int buildin_deletearray(struct script_state *st)
 	if( (st->end > st->start+3) )
 		count=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	if( prefix!='$' && prefix!='@' ){
+	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
 		ShowWarning("buildin_deletearray: illegal scope !\n");
 		return 1;
 	}
-	if( prefix!='$' )
+	if( not_server_variable(prefix) )
 		sd=script_rid2sd(st);
 
 	for(i=0;i<sz;i++){
@@ -9270,7 +9285,7 @@ int buildin_getmapxy(struct script_state *st){
         name=(char *)(str_buf+str_data[num&0x00ffffff].str);
         prefix=*name;
 
-        if( prefix!='$' )
+        if(not_server_variable(prefix))
             sd=script_rid2sd(st);
         else
             sd=NULL;
@@ -9282,7 +9297,7 @@ int buildin_getmapxy(struct script_state *st){
         name=(char *)(str_buf+str_data[num&0x00ffffff].str);
         prefix=*name;
 
-        if( prefix!='$' )
+        if(not_server_variable(prefix))
             sd=script_rid2sd(st);
         else
             sd=NULL;
@@ -9294,7 +9309,7 @@ int buildin_getmapxy(struct script_state *st){
         name=(char *)(str_buf+str_data[num&0x00ffffff].str);
         prefix=*name;
 
-        if( prefix!='$' )
+        if(not_server_variable(prefix))
             sd=script_rid2sd(st);
         else
             sd=NULL;
