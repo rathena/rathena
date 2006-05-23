@@ -5458,6 +5458,7 @@ int pc_setoption(struct map_session_data *sd,int type)
 		}
 	}
 
+	clif_changeoption(&sd->bl);
 	status_calc_pc(sd,0);
 	return 0;
 }
