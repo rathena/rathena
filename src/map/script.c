@@ -11965,9 +11965,9 @@ int script_reload()
 		script_save_mapreg();
 	
 	mapreg_db->clear(mapreg_db, NULL);
-	mapregstr_db->clear(mapreg_db, NULL);
-	userfunc_db->clear(mapreg_db,do_final_userfunc_sub);
-	scriptlabel_db->clear(mapreg_db, NULL);
+	mapregstr_db->clear(mapregstr_db, NULL);
+	userfunc_db->clear(userfunc_db,do_final_userfunc_sub);
+	scriptlabel_db->clear(scriptlabel_db, NULL);
 
 	if(sleep_db) {
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
