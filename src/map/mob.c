@@ -2427,11 +2427,12 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		{	//Scale HP
 			md->hp = (md->max_hp*md2->hp)/md2->max_hp;
 		}
-		mob_spawn(md);
-		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
 
 		if(skill_id == NPC_SUMMONSLAVE)
 			md->master_id=md2->bl.id;
+
+		mob_spawn(md);
+		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
 	}
 	return 0;
 }
