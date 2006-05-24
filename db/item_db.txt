@@ -2354,13 +2354,13 @@
 12101,Citron,Citron,0,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12102,Grilled_Skewer,Grilled Skewer,0,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // New Monster Summoners & Item Givers
-12103,Bloody_Branch,Bloody Branch,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-3,1,""; },{},{}
+12103,Bloody_Branch,Bloody Branch,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",0,0,"--ja--",-3,1,""; },{},{}
 12104,Random_Quiver,Random Quiver,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Quiver),1; },{},{}
 12105,Taming_Item_Giftset,Taming Item Giftset,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Taming),3; },{},{}
 12106,Jewel_Box,Jewel Case,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Jewel),1; },{},{}
 12107,Wrapped_Mask,Wrapped Mask,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Mask),1; },{},{}
 12108,Bundle_of_Spells,Bundle of Spells,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Scroll),5; },{},{}
-12109,Poring_Box,Poring Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-2,1,""; },{},{}
+12109,Poring_Box,Poring Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",0,0,"--ja--",-2,1,""; },{},{}
 12110,First_Aid_Box,First Aid Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Potion),5; },{},{}
 12111,Wrapped_Food,Wrapped Food,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Fruit),1; getitem groupranditem(IG_Meat),1; getitem groupranditem(IG_Fish),1; },{},{}
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}

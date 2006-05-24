@@ -288,27 +288,25 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
 	}
 	strncpy(data.eventname, event, 50);
 	
-	if (sd && (x < 0 || y < 0))
-	{	//Locate spot around player.
+	if (sd && (x < 0 || y < 0)) //Locate spot around player.
 		map_search_freecell(&sd->bl, m, &x, &y, 1, 1, 0);
-		data.x = x;
-		data.y = y;
-	}
 
 	if (x <= 0 || y <= 0 || map_getcell(m,x,y,CELL_CHKNOREACH))
 		rand_flag = 1; //Randomize spot on map for each mob.
-
+	else {
+		data.x = x;
+		data.y = y;
+	}
 	if (!mob_parse_dataset(&data))
 		return 0;
 	
 	for (count = 0; count < amount; count++) {
 		if (rand_flag) { //Get a random cell for this mob.
 			map_search_freecell(NULL, m, &x, &y, -1, -1, 1);
+			// This should ALWAYS be done. [blackhole89]
+			data.x = x;
+			data.y = y;
 		}
-
-		// This should ALWAYS be done. [blackhole89]
-		data.x = x;
-		data.y = y;
 
 		md =mob_spawn_dataset (&data);
 

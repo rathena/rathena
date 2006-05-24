@@ -392,7 +392,7 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	unit_stop_walking(bl,1);
 	unit_stop_attack(bl);
 
-	if(checkpath && (map_getcell(bl->m,bl->x,bl->y, CELL_CHKNOPASS) || path_search_real(&wpd,bl->m,bl->x,bl->y,dst_x,dst_y,easy, CELL_CHKNOREACH)))
+	if(checkpath && (map_getcell(bl->m,dst_x,dst_y, CELL_CHKNOPASS) || path_search_real(&wpd,bl->m,bl->x,bl->y,dst_x,dst_y,easy, CELL_CHKNOREACH)))
 		return 0;
 
 	dir = map_calc_dir(bl, dst_x,dst_y);
