@@ -31,6 +31,9 @@ Evera
 Date		Added
 ======
 05/24
+	* Fixed the Thanatos Floor 12 warp [Playtester]
+	- coordinates are just guessed
+	- whoever does the quest should fix the warps there anyways
 	* Commented the custom Geffenia Fountain by default [Playtester]
 	* Added the Novice Exchange Quest provided by Dr.Evil [Playtester]
 	- exchange novice loot for Red Potions
