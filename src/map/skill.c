@@ -6008,8 +6008,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 				md->mode = MD_CANATTACK|MD_AGGRESSIVE;
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, id, 0);
 			}
-			// To-do: ?｢還されるモンスタ?[には?｢還したプレ?[ヤ?[の名前が付きます
-			// (attach name of player?)
 		}
 		break;
 	case AM_SPHEREMINE:	// スフィア?マイン

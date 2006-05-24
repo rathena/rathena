@@ -714,7 +714,10 @@ int party_share_loot(struct party *p, TBL_PC *sd, struct item *item_data)
 				i++;
 				if (i >= MAX_PARTY)
 					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
-				if ((psd=p->member[i].sd)==NULL || sd->bl.m != psd->bl.m)
+				if ((psd=p->member[i].sd)==NULL || sd->bl.m != psd->bl.m ||
+					pc_isdead(psd) || (battle_config.idle_no_share && (
+					psd->chatID || psd->vender_id || (psd->idletime < (last_tick - battle_config.idle_no_share)))
+				))
 					continue;
 				
 				if (pc_additem(psd,item_data,item_data->amount))
@@ -729,7 +732,11 @@ int party_share_loot(struct party *p, TBL_PC *sd, struct item *item_data)
 			int count=0;
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
-				if ((psd[count]=p->member[i].sd) && psd[count]->bl.m == sd->bl.m)
+				if ((psd[count]=p->member[i].sd) && psd[count]->bl.m == sd->bl.m &&
+					!pc_isdead(psd[count]) && (!battle_config.idle_no_share || (
+						!psd[count]->chatID && !psd[count]->vender_id &&
+					  	(psd[count]->idletime >= (last_tick - battle_config.idle_no_share)))
+				))
 					count++;
 			}
 			if (count > 0) { //Pick a random member.
