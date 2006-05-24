@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/24
+	* The clif_skill_poseffect packet will not be invoked in Snap unless the
+	  skill was successful. May fix the client-position lag. [Skotlex]
 	* Merged item_db.sql from stable (the one from stable was more recent than
 	  the one of trunk...) [Skotlex]
 	* Corrected SL KA* spells not working on other Soul Linkers. [Skotlex]

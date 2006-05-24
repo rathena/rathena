@@ -5856,8 +5856,7 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 		sc = NULL; //Unneeded.
 	
 	if(skillid != WZ_METEOR &&
-		skillid != AM_CANNIBALIZE &&
-		skillid != AM_SPHEREMINE &&
+		skillid != MO_BODYRELOCATION &&
 		skillid != CR_CULTIVATION)
 		clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 
@@ -5985,7 +5984,8 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 
 	case MO_BODYRELOCATION:
 		if (unit_movepos(src, x, y, 1, 1)) {
-			clif_slide(src, src->x, src->y);
+			clif_skill_poseffect(src,skillid,skilllv,src->x,src->y,tick);
+//			clif_slide(src, src->x, src->y); //Poseffect is the one that makes the char snap on the client...
 			if (sd) skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
@@ -6010,7 +6010,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 			}
 			// To-do: ?｢還されるモンスタ?[には?｢還したプレ?[ヤ?[の名前が付きます
 			// (attach name of player?)
-			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 		}
 		break;
 	case AM_SPHEREMINE:	// スフィア?マイン
@@ -6027,7 +6026,6 @@ int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skil
 				md->special_state.ai = 2;
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, id, 0);
 			}
-			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 		}
 		break;
 
