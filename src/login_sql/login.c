@@ -1733,16 +1733,16 @@ int parse_login(int fd) {
 				}
 				//check query result
 				sql_res = mysql_store_result(&mysql_handle) ;
-				sql_row = mysql_fetch_row(sql_res);	//row fetching
+				sql_row = sql_res?mysql_fetch_row(sql_res):NULL;	//row fetching
 
-				if (atoi(sql_row[0]) >= dynamic_pass_failure_ban_how_many ) {
+				if (sql_row && atoi(sql_row[0]) >= dynamic_pass_failure_ban_how_many ) {
 					sprintf(tmpsql,"INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%d.%d.%d.*', NOW() , NOW() +  INTERVAL %d MINUTE ,'Password error ban: %s')", p[0], p[1], p[2], dynamic_pass_failure_ban_how_long, t_uid);
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 					}
 				}
-				mysql_free_result(sql_res);
+				if(sql_res) mysql_free_result(sql_res);
 			}
 			else if (result == -2){	//dynamic banned - add ip to ban list.
 				sprintf(tmpsql,"INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%d.%d.%d.*', NOW() , NOW() +  INTERVAL 1 MONTH ,'Dynamic banned user id : %s')", p[0], p[1], p[2], t_uid);
@@ -1761,15 +1761,13 @@ int parse_login(int fd) {
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
             }
             sql_res = mysql_store_result(&mysql_handle) ;
-            if (sql_res)	{
-                sql_row = mysql_fetch_row(sql_res);	//row fetching
-            }
+				sql_row = sql_res?mysql_fetch_row(sql_res):NULL;	//row fetching
 			//cannot connect login failed
 			memset(WFIFOP(fd,0),'\0',23);
 			WFIFOW(fd,0)=0x6a;
 			WFIFOB(fd,2)=result;
 			if (result == 6) { // 6 = Your are Prohibited to log in until %s
-				if (atol(sql_row[0]) != 0) { // if account is banned, we send ban timestamp
+				if (sql_row && atol(sql_row[0]) != 0) { // if account is banned, we send ban timestamp
 					char tmpstr[256];
 					time_t ban_until_time;
 					ban_until_time = atol(sql_row[0]);

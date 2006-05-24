@@ -654,7 +654,7 @@ struct {
 	{buildin_classchange,"classchange","ii"},
 	{buildin_misceffect,"misceffect","i"},
 	{buildin_soundeffect,"soundeffect","si"},
-	{buildin_soundeffectall,"soundeffectall","*"},	// SoundEffectAll [Codemaster]
+	{buildin_soundeffectall,"soundeffectall","si*"},	// SoundEffectAll [Codemaster]
 	{buildin_strmobinfo,"strmobinfo","ii"},	// display mob data [Valaris]
 	{buildin_guardian,"guardian","siisii*i"},	// summon guardians
 	{buildin_guardianinfo,"guardianinfo","i"},	// display guardian data [Valaris]
