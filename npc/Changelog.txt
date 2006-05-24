@@ -30,6 +30,9 @@ Evera
 
 Date		Added
 ======
+05/24
+	* Added the Novice Exchange Quest provided by Dr.Evil [Playtester]
+	- exchange novice loot for Red Potions
 05/23
 	* Fixed a bug in the new Job Master [Playtester]
 	- he rebirthed you even if you haven't reached level 99...
