@@ -26,6 +26,10 @@
 	-----
 
 =========================
+05/24
+	* Final Aegis X.2 update [Playtester]
+	- added mob_db_a.txt in case someone wants to use 100% official X.2 drop rates
+	- now starting to add after-X.2 drops
 05/23
 	* Amon Ra now uses Meteor Storm on self until we find out how it really works [Playtester]
 05/21
