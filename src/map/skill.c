@@ -4070,7 +4070,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (sd) {
 			if (!dstsd || !(
 				(sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SOULLINKER) ||
-				(dstsd->class_&MAPID_BASEMASK) == MAPID_SOUL_LINKER ||
+				(dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER ||
 				dstsd->char_id == sd->char_id ||
 				dstsd->char_id == sd->status.partner_id ||
 				dstsd->char_id == sd->status.child
@@ -8678,7 +8678,7 @@ int skill_autospell(struct map_session_data *sd,int skillid)
 		maxlv = lv;
 
 	sc_start4(&sd->bl,SC_AUTOSPELL,100,skilllv,skillid,maxlv,0,	// val1:スキルID val2:使用?ﾅ大Lv
-	skill_get_time(SA_AUTOSPELL,skilllv));// にしてみたけどbscriptが?曹ｫ易い????H
+		skill_get_time(SA_AUTOSPELL,skilllv));// にしてみたけどbscriptが?曹ｫ易い????H
 	return 0;
 }
 
