@@ -27,6 +27,7 @@
 
 =========================
 05/24
+	* Added cooking drops to the mob_db [Playtester]
 	* Final Aegis X.2 update [Playtester]
 	- added mob_db_a.txt in case someone wants to use 100% official X.2 drop rates
 	- now starting to add after-X.2 drops
