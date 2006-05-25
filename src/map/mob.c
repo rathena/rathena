@@ -906,6 +906,9 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		return 0;
 	}
 
+	if(bl->type == BL_MOB && ((TBL_MOB *)bl)->master_id && ((TBL_MOB *)bl)->master_id != md->master_id) // Just in case something screws up
+		md->master_id = ((TBL_MOB *)bl)->master_id;
+
 	if(status_get_mode(&md->bl)&MD_CANMOVE)
 	{	//If the mob can move, follow around. [Check by Skotlex]
 		
@@ -997,7 +1000,7 @@ int mob_randomwalk(struct mob_data *md,int tick)
 
 	nullpo_retr(0, md);
 
-	if(DIFF_TICK(md->next_walktime,tick)>0 || !unit_can_move(&md->bl))
+	if(DIFF_TICK(md->next_walktime,tick)>0 || md->state.no_random_walk || !unit_can_move(&md->bl))
 		return 0;
 	
 	d =12-md->move_fail_count;
@@ -1509,6 +1512,23 @@ int mob_deleteslave_sub(struct block_list *bl,va_list ap)
 		mob_damage(NULL,md,md->hp,1);
 	return 0;
 }
+
+int mob_convertslave_sub(struct block_list *bl,va_list ap)
+{
+	struct mob_data *md;
+	int id, master;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, md = (struct mob_data *)bl);
+
+	id=va_arg(ap,int);
+	master=va_arg(ap,int);
+
+	if(md->master_id > 0 && md->master_id == id )
+		md->master_id = master;
+	return 0;
+}
 /*==========================================
  *
  *------------------------------------------
@@ -1518,6 +1538,14 @@ int mob_deleteslave(struct mob_data *md)
 	nullpo_retr(0, md);
 
 	map_foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
+	return 0;
+}
+
+int mob_convertslave(struct mob_data *md)
+{
+	nullpo_retr(0, md);
+
+	map_foreachinmap(mob_convertslave_sub, md->bl.m, BL_MOB,md->bl.id,md->master_id);
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]

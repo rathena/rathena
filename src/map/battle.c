@@ -3439,7 +3439,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.
 			} else {
-				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
+				//if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 			}
 			if (md->master_id && (s_bl = map_id2bl(md->master_id)) == NULL)

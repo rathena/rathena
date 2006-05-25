@@ -425,6 +425,7 @@ int buildin_mobwalk(struct script_state *st);
 int buildin_getmobdata(struct script_state *st);
 int buildin_setmobdata(struct script_state *st);
 int buildin_mobattack(struct script_state *st);
+int buildin_mobrandomwalk(struct script_state *st);
 int buildin_mobstop(struct script_state *st);
 int buildin_mobassist(struct script_state *st);
 int buildin_mobtalk(struct script_state *st);
@@ -761,6 +762,7 @@ struct {
 	{buildin_spawnmob,"spawnmob","*"},
 	{buildin_removemob,"removemob","*"},
 	{buildin_mobwalk,"mobwalk","*"},
+	{buildin_mobrandomwalk,"mobrandomwalk","*"},
 	{buildin_getmobdata,"getmobdata","*"},
 	{buildin_setmobdata,"setmobdata","*"},
 	{buildin_mobattack,"mobattack","*"},
@@ -10469,18 +10471,23 @@ int buildin_removemob(struct script_state *st) {
 }
 
 int buildin_mobwalk(struct script_state *st){
-	int id,x,y;
+	int id,x,y = 0;
 	struct block_list *bl = NULL;
 
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	x = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	y = conv_num(st, & (st->stack->stack_data[st->start+4]));
+	if(st->end > st->start+4)
+		y = conv_num(st, & (st->stack->stack_data[st->start+4]));
 
 	bl = map_id2bl(id);
-	if(bl && bl->type == BL_MOB)
-		push_val(st->stack,C_INT,unit_walktoxy(bl,x,y,0)); // We'll use harder calculations.
-	else
+	if(bl && bl->type == BL_MOB){
+		if(y)
+			push_val(st->stack,C_INT,unit_walktoxy(bl,x,y,0)); // We'll use harder calculations.
+		else
+			push_val(st->stack,C_INT,unit_walktobl(bl,map_id2bl(x),1,65025));
+	} else {
 		push_val(st->stack,C_INT,0);
+	}
 
 	return 0;
 }
@@ -10491,9 +10498,9 @@ int buildin_getmobdata(struct script_state *st) {
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
-		ShowWarning("buildin_getmobdata: Error in argiment!\n");
+		ShowWarning("buildin_getmobdata: Error in argument!\n");
 	} else {
-		num=st->stack->stack_data[st->start+2].u.num;
+		num=st->stack->stack_data[st->start+3].u.num;
 		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
 		setd_sub(st,map_id2sd(st->rid),name,0,(void *)(int)md->class_);
 		setd_sub(st,map_id2sd(st->rid),name,1,(void *)(int)md->level);
@@ -10626,9 +10633,10 @@ int buildin_mobattack(struct script_state *st) {
 		if (sd) bl = &sd->bl;
 		md = (struct mob_data *)map_id2bl(id);
 		if (md && md->bl.type == BL_MOB) {
-			md->target_id = sd->bl.id;
+			md->target_id = bl->id;
 			md->special_state.ai = 1;
-			md->min_chase = distance_bl(bl,&md->bl) + md->db->range2;
+			//md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
+			unit_walktobl(&md->bl, bl, 65025, 2);
 		}
 	}
 
@@ -10645,9 +10653,19 @@ int buildin_mobstop(struct script_state *st) {
 	if(bl && bl->type == BL_MOB){
 		unit_stop_attack(bl);
 		unit_stop_walking(bl,0);
-		((TBL_MOB*)bl)->master_id = bl->id; // Quick hack to stop random walking.
+		((TBL_MOB *)bl)->target_id = 0;
 	}
 
+	return 0;
+}
+
+int buildin_mobrandomwalk(struct script_state *st){
+	int id = conv_num(st, &(st->stack->stack_data[st->start+2]));
+	int flag = conv_num(st, &(st->stack->stack_data[st->start+3]));
+	struct mob_data *md = (struct mob_data *)map_id2bl(id);
+	if(md->bl.type == BL_MOB){
+		md->state.no_random_walk = flag>0?0:1;
+	}
 	return 0;
 }
 
@@ -10671,7 +10689,8 @@ int buildin_mobassist(struct script_state *st) {
 					md->target_id = ud->target;
 				else if (ud->skilltarget)
 					md->target_id = ud->skilltarget;
-				md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
+				if(md->target_id)
+					unit_walktobl(&md->bl, map_id2bl(md->target_id), 65025, 2);
 			}
 		}
 	}
@@ -11353,9 +11372,12 @@ int run_script_main(struct script_state *st)
 	if(st->state == END) {
 		script_free_stack (st->stack);
 		st->stack = NULL;
+		aFree(st);
+		st = NULL;
+		return 0;
 	}
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -11411,52 +11433,50 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	st->rid = rid;
 	st->oid = oid;
 	st->sleep.timer = -1;
-	// let's run that stuff
-	run_script_main(st);
 
-	if(st->state != END){ 
-		if(st->sleep.tick > 0)
-	  	{	//Delay execution
-			st->sleep.charid = sd?sd->char_id:0;
-			st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-				run_script_timer, st->sleep.charid, (int)st);
-			linkdb_insert(&sleep_db, (void*)st->oid, st);
-		} else if (sd) {
-			// script is not finished, store data in sd.
-			sd->npc_script      = st->script;
-			sd->npc_scriptroot  = rootscript;
-			sd->npc_scriptstate = st->state;
-			sd->stack           = st->stack;
-			if (bck_stack) //Get rid of the backup as it can't be restored.
-				script_free_stack (bck_stack);
+	if(run_script_main(st)){
+		if(st->state != END){ 
+			pos = st->pos;
+			if(st->sleep.tick > 0)
+	  		{	//Delay execution
+				st->sleep.charid = sd?sd->char_id:0;
+				st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
+					run_script_timer, st->sleep.charid, (int)st);
+				linkdb_insert(&sleep_db, (void*)st->oid, st);
+			} else if (sd) {
+				// script is not finished, store data in sd.
+				sd->npc_script      = st->script;
+				sd->npc_scriptroot  = rootscript;
+				sd->npc_scriptstate = st->state;
+				sd->stack           = st->stack;
+				if (bck_stack) //Get rid of the backup as it can't be restored.
+					script_free_stack (bck_stack);
+				aFree(st);
+			}
+			return pos;
+		} else {
+			if(st->stack)
+				script_free_stack(st->stack);
+			aFree(st);
 		}
-		return st->pos;
+	} else {
+		//Script finished.
+		if (sd)
+  		{	//Clear or restore previous script.
+			sd->npc_script      = bck_script;
+			sd->npc_scriptroot  = bck_scriptroot;
+			sd->npc_scriptstate = bck_scriptstate;
+			sd->stack = bck_stack;
+			//Since the script is done, save any changed account variables [Skotlex]
+			if (sd->state.reg_dirty&2)
+				intif_saveregistry(sd,2);
+			if (sd->state.reg_dirty&1)
+				intif_saveregistry(sd,1);
+		}
 	}
-	//Script finished.
-	if (sd)
-  	{	//Clear or restore previous script.
-		sd->npc_script      = bck_script;
-		sd->npc_scriptroot  = bck_scriptroot;
-		sd->npc_scriptstate = bck_scriptstate;
-		sd->stack = bck_stack;
-		//Since the script is done, save any changed account variables [Skotlex]
-		if (sd->state.reg_dirty&2)
-			intif_saveregistry(sd,2);
-		if (sd->state.reg_dirty&1)
-			intif_saveregistry(sd,1);
-	}
-	if(st->stack) {
-		script_free_stack (st->stack);
-		st->stack = NULL;
-	}
-	aFree(st);
 	return 0;
 }
 
-/*==========================================
- * 指定ノードをsleep_dbから削除
- *------------------------------------------
- */
 /*==========================================
  * 指定ノードをsleep_dbから削除
  *------------------------------------------
