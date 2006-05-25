@@ -27,6 +27,7 @@
 
 =========================
 05/25
+	* Modified some drops and added drops to Ferus and Dragon Egg [Playtester]
 	* Updated the Exp of some mobs accordings to the last kRO patch thanks to Muad_Dib [Playtester]
 	* More fixes on MVP exp and changed some mob modes [Playtester]
 	* Fixed Sidewinder card to raise the chance of Double Attack if you have mastered it [Playtester]
