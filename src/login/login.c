@@ -4112,7 +4112,7 @@ int do_init(int argc, char **argv) {
 	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
 	display_conf_warnings(); // not in login_config_read, because we can use 'import' option, and display same message twice or more
 	save_config_in_log(); // not before, because log file name can be changed
-	login_lan_config_read((argc > 1) ? argv[1] : LAN_CONF_NAME);
+	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
 
 	srand((unsigned int)time(NULL));
 

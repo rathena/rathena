@@ -2279,7 +2279,7 @@ int do_init(int argc,char **argv){
 	//read login configue
 	login_config_read( (argc>1)?argv[1]:LOGIN_CONF_NAME );
 	sql_config_read(SQL_CONF_NAME);
-	login_lan_config_read((argc > 1) ? argv[1] : LAN_CONF_NAME);
+	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
 	//Generate Passworded Key.
 	ShowInfo("Initializing md5key...\n");
 	memset(md5key, 0, sizeof(md5key));

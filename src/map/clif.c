@@ -322,6 +322,8 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				//Check if hidden, better to modify the char's buffer than the
 				//given buffer to prevent intravision affecting the packet as 
 				//it's being received by everyone. [Skotlex]
+				/* New implemenation... not quite correct yet as the client no longer
+				 * displays correctly the SI_INTRAVISION effect.
 				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 )
 						&& bl != src_bl && WFIFOW(sd->fd,0) == 0x0196)
 				{	//New intravision method, just modify the status change/start packet. [Skotlex]
@@ -332,8 +334,9 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 							WFIFOW(sd->fd,2) = SI_INTRAVISION;
 					}
 				}
+				*/
 
-				/* Previous implementation.
+				// Previous implementation.
 					if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
 
 					struct status_change *sc = status_get_sc(src_bl);
@@ -357,7 +360,6 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 						}
 					}
 				}
-				*/
 				WFIFOSET(sd->fd,len);
 			}
 		}

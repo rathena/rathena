@@ -54,7 +54,7 @@
 #define MAX_CART 100
 #define MAX_SKILL 1100 // Bumped to 1100 for new quest skills, will need to further increase one day... [DracoRPG]
 #define GLOBAL_REG_NUM 96
-#define ACCOUNT_REG_NUM 32
+#define ACCOUNT_REG_NUM 64
 #define ACCOUNT_REG2_NUM 16
 //Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
 #define MAX_REG_NUM 96
