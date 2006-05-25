@@ -399,8 +399,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	if(flag&BF_LONG && map_getcell(bl->m, bl->x, bl->y, CELL_CHKPNEUMA) &&
 		((flag&BF_WEAPON && skill_num != NPC_GUIDEDATTACK) ||
-		(flag&BF_MISC && skill_num !=  PA_PRESSURE) ||
-		(flag&BF_MAGIC && skill_num == ASC_BREAKER))){ // It should block only physical part of Breaker! [Lupus], on the contrary, players all over the boards say it completely blocks Breaker x.x' [Skotlex]
+		(flag&BF_MISC && skill_num != PA_PRESSURE)
+		)){
 		return 0;
 	}
 	
@@ -474,8 +474,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		//Now damage increasing effects
 		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
 			damage<<=1;
-			if (skill_num != ASC_BREAKER || flag & BF_MAGIC) //Only end it on the second attack of breaker. [Skotlex]
-				status_change_end( bl,SC_AETERNA,-1 );
+			status_change_end( bl,SC_AETERNA,-1 );
 		}
 
 		if(sc->data[SC_SPIDERWEB].timer!=-1)	// [Celest]
@@ -1985,6 +1984,9 @@ static struct Damage battle_calc_weapon_attack(
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
+	if(skill_num==ASC_BREAKER) //Breaker's int-based damage.
+		ATK_ADD(rand()%500 + 500 + skill_lv * status_get_int(src) * 5);
+
 	if ((sd && (skill_num || !battle_config.pc_attack_attr_none)) ||
 		(md && (skill_num || !battle_config.mob_attack_attr_none)) ||
 		(pd && (skill_num || !battle_config.pet_attack_attr_none)))
@@ -2373,9 +2375,6 @@ struct Damage battle_calc_magic_attack(
 	else if (s_ele == -2) //Use status element
 		s_ele = status_get_attack_sc_element(src);
 	
-	if (skill_num == ASC_BREAKER) // Soul Breaker's magical part is neutral, although pl=-1 for the physical part to take weapon element
-		s_ele = 0;
-
 	//Set miscellaneous data that needs be filled
 	if(sd) {
 		sd->state.arrow_atk = 0;
@@ -2422,7 +2421,6 @@ struct Damage battle_calc_magic_attack(
 			flag.elefix = 0;
 			break;
 		case PR_ASPERSIO:
-		case ASC_BREAKER:
 			flag.imdef = 1;
 		case PF_SOULBURN: //Does not ignores mdef
 			flag.elefix = 0;
@@ -2485,9 +2483,6 @@ struct Damage battle_calc_magic_attack(
 					return ad;
 				} else
 					ad.damage = tsd->status.sp * 2;
-				break;
-			case ASC_BREAKER:
-				ad.damage = rand()%500 + 500 + skill_lv * status_get_int(src) * 5;
 				break;
 			case HW_GRAVITATION:
 				ad.damage = 200+200*skill_lv;

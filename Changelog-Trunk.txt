@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/25
+	* Simplified ASC_BREAKER by making it a BF_WEAPON attack with an additional
+	  int-based damage component (which is added right before elemental
+	  modifiers) as described by AuronX. Pending further refining. [Skotlex]
 	* Resolved differences between Stable/Trunk msg_athena.conf. [Lupus]
 		Fixed atcommand @request MSG numbers accordinly.
 		On adding new MSG strings, plzm reserve them in STABLE msg_athena.conf, too

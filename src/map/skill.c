@@ -1704,7 +1704,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	struct status_change *sc;
 	struct map_session_data *sd=NULL, *tsd=NULL;
 	int type,lv,damage,rdamage=0;
-	static int tmpdmg = 0;
 
 	if(skillid > 0 && skilllv <= 0) return 0;
 
@@ -1944,17 +1943,6 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
 
-	case ASC_BREAKER:	// [celest]
-		if (attack_type&BF_WEAPON) { // the 1st attack won't really deal any damage
-			tmpdmg = damage;	// store the temporary weapon damage
-			return 0; //Wait for the second iteration to do all the work below.
-		} 
-		if (tmpdmg == 0 || damage == 0)	// if one or both attack(s) missed, display a 'miss'
-			clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, 0, dmg.div_, skillid, skilllv, type);
-		damage += tmpdmg;	// add weapon and magic damage
-		tmpdmg = 0;	// clear the temporary weapon damage
-		dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, skilllv, type);
-		break;
 	case NPC_SELFDESTRUCTION:
 		if(src->type==BL_PC)
 			dmg.blewcount = 10;
@@ -2546,6 +2534,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case HT_POWER:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
+	case ASC_BREAKER:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -2573,11 +2562,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
 			clif_slide(src,bl->x,bl->y);
-		break;
-	case ASC_BREAKER:				/* ソウルブレ?カ? */	// [DracoRPG]
-		// Separate weapon and magic attacks
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	
 	case SN_SHARPSHOOTING:			/* シャ?プシュ?ティング */
