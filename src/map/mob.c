@@ -679,7 +679,7 @@ int mob_spawn (struct mob_data *md)
 	if (!md->level) // [Valaris]
 		md->level=md->db->lv;
 
-	md->master_id = 0;
+//	md->master_id = 0;
 	md->master_dist = 0;
 
 	md->state.aggressive = md->db->mode&MD_ANGRY?1:0;
