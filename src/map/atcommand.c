@@ -5759,18 +5759,20 @@ int atcommand_mapinfo(
 		strcat(atcmd_output, "NoBranch | ");
 	if (map[m_id].flag.notrade)
 		strcat(atcmd_output, "NoTrade | ");
+	if (map[m_id].flag.novending)
+		strcat(atcmd_output, "NoVending | ");
 	if (map[m_id].flag.nodrop)
 		strcat(atcmd_output, "NoDrop | ");
 	if (map[m_id].flag.noskill)
 		strcat(atcmd_output, "NoSkill | ");
 	if (map[m_id].flag.noicewall)
 		strcat(atcmd_output, "NoIcewall | ");
-	if (map[m_id].flag.nocommand)
-		strcat(atcmd_output, "NoCommand | ");
 		
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,"Other Flags: ");
+	if (map[m_id].flag.nocommand)
+		strcat(atcmd_output, "NoCommand | ");
 	if (map[m_id].flag.nobaseexp)
 		strcat(atcmd_output, "NoBaseEXP | ");
 	if (map[m_id].flag.nojobexp)
@@ -10285,14 +10287,14 @@ int atcommand_request(
 	const char* command, const char* message)
 {
 	if (!message || !*message) {
-		clif_displaymessage(sd->fd,msg_txt(275));
+		clif_displaymessage(sd->fd,msg_txt(277));
 		return -1;
 	}
 
-	sprintf(atcmd_output, msg_txt(276), message);
+	sprintf(atcmd_output, msg_txt(278), message);
 	intif_wis_message_to_gm(sd->status.name, lowest_gm_level, atcmd_output);
 	clif_disp_onlyself(sd, atcmd_output, strlen(atcmd_output));
-	clif_displaymessage(sd->fd,msg_txt(277));
+	clif_displaymessage(sd->fd,msg_txt(279));
 	return 0;
 }
 

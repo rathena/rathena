@@ -31,6 +31,8 @@ Evera
 Date		Added
 ======
 05/25
+	* Added a custom Market Place to clear Prontera streets from annoying shops. [Lupus]
+		'novending' mapflag sample: Try it and adjust the script as you want. 
 	* Optimized a bit scripted warps, got rid of 'anthell' perm var [Lupus]
 05/24
 	* Removed Blue Potions from Yuno Shops [Playtester]

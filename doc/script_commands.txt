@@ -3753,8 +3753,8 @@ mf_noteleport, mf_nowarp, mf_nogo) storing location when disconnected
 (mf_nosave), dead branch usage (mf_nobranch), penalties upon death 
 (mf_nopenalty, mf_nozenypenalty), PVP behavior (mf_pvp, mf_pvp_noparty, 
 mf_pvp_noguild, mf_nopvp), WoE behavior (mf_gvg,mf_gvg_noparty), ability to use 
-skills or open up trade deals (mf_notrade, mf_noskill, mf_noicewall), current 
-weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds, 
+skills or open up trade deals (mf_notrade, mf_novending, mf_noskill, mf_noicewall),
+current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds, 
 mf_fireworks) and whether day/night will be in effect on this map (mf_indoors).
 
 ---------------------------------------

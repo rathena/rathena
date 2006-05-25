@@ -205,6 +205,10 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 	int vending_skill_lvl;
 	nullpo_retv(sd);
 
+	if (map[sd->bl.m].flag.novending) {
+		clif_displaymessage (sd->fd, msg_txt(276));
+		return; //Can't vend in novending mapflag maps.
+	}
 	//check shopname len
 	if(message[0] == '\0')
 		return;

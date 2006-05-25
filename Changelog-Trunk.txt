@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/25
+	* Resolved differences between Stable/Trunk msg_athena.conf. [Lupus]
+		Fixed atcommand @request MSG numbers accordinly.
+		On adding new MSG strings, plzm reserve them in STABLE msg_athena.conf, too
+	* Added NoVending mapflag. You may disable vending in the streets [Lupus]
 	* Increased capacity for Account Variables to 64 [Skotlex]
 	* Reverted Intravision implementation to that of stable's. [Skotlex]
 	* Corrected Login Server taking it's first argument as both login config
