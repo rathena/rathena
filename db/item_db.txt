@@ -1254,7 +1254,7 @@
 4114,Argiope_Card,Argiope Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Poison; bonus bDef,1; },{},{}
 4115,Hunter_Fly_Card,Hunter Fly Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bHpDrainRate,30,15; },{},{}
 4116,Isis_Card,Isis Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Dark,30; bonus bFlee,5; },{},{}
-4117,Sidewinder_Card,Sidewinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus bDoubleRate,5; },{},{}
+4117,Sidewinder_Card,Sidewinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus bDoubleRate,5+45*(getskilllv(48)==10); },{},{}
 4118,Earth_Petite_Card,Earth Petite Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Dragon,20; },{},{}
 4119,Bathory_Card,Bathory Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Dark; },{},{}
 4120,Sky_Petite_Card,Sky Petite Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Dragon,30; },{},{}

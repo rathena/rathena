@@ -27,6 +27,7 @@
 
 =========================
 05/25
+	* Fixed Sidewinder card to raise the chance of Double Attack if you have mastered it [Playtester]
 	* MVP Exp is now 1/2 of the Base Exp as pointed out by Tharis [Playtester]
 	- Removed MVP drops of Hydro and Event Kiel as they are supposely no MVPs
 05/24
