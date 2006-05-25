@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Morroc Fields
 //===== Additional Comments: =================================
-//= No Comment!
+//= 1.1 changed 'anthell' to @anthell [Lupus]
 //============================================================
 
 //= Sograt Dessert ===========================================
@@ -37,7 +37,7 @@ moc_fild04.gat,14,146,0	warp	mocf07-2	1,11,moc_fild05.gat,378,119
 moc_fild04.gat,14,98,0	warp	mocf07	1,11,moc_fild05.gat,378,119
 moc_fild04.gat,175,18,0	warp	mocf08	3,2,moc_fild08.gat,170,380
 moc_fild04.gat,19,206,0	warp	mocf09	3,15,moc_fild05.gat,373,208
-moc_fild04.gat,219,327,0	script	mocf016	45,3,4,{ set anthell,0; warp "anthell01.gat",35,262; }
+moc_fild04.gat,219,327,0	script	mocf016	45,3,4,{ set @anthell,0; warp "anthell01.gat",35,262; }
 moc_fild04.gat,292,381,0	warp	mocf01-2	10,1,moc_fild01.gat,76,25
 moc_fild04.gat,314,381,0	warp	mocf01-3	10,1,moc_fild01.gat,76,25
 moc_fild04.gat,336,381,0	warp	mocf01-4	10,1,moc_fild01.gat,76,25
@@ -86,7 +86,7 @@ moc_fild14.gat,16,278,0	warp	mocf25	2,6,moc_fild15.gat,364,276
 moc_fild14.gat,196,382,0	warp	mocf16-1	4,2,moc_fild08.gat,204,19
 moc_fild15.gat,104,16,0	warp	mocf26	9,2,moc_fild16.gat,125,380
 moc_fild15.gat,158,363,0	warp	mocf18-1	6,2,moc_fild09.gat,126,23
-moc_fild15.gat,258,253,0	script	mocf017	45,3,3,{ set anthell,1; warp "anthell01.gat",35,262; }
+moc_fild15.gat,258,253,0	script	mocf017	45,3,3,{ set @anthell,1; warp "anthell01.gat",35,262; }
 moc_fild15.gat,348,18,0	warp	mocf27	5,2,moc_fild16.gat,334,379
 moc_fild15.gat,367,276,0	warp	mocf25-1	2,4,moc_fild14.gat,19,278
 moc_fild15.gat,38,105,0	warp	mocf23-1	2,4,moc_fild11.gat,376,197

@@ -30,6 +30,8 @@ Evera
 
 Date		Added
 ======
+05/25
+	* Optimized a bit scripted warps, got rid of 'anthell' perm var [Lupus]
 05/24
 	* Removed Blue Potions from Yuno Shops [Playtester]
 	* Fixed the Thanatos Floor 12 warp [Playtester]

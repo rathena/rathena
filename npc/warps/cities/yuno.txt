@@ -4,7 +4,7 @@
 //= Nana (1.0)
 //= Sara-chan (1.1)
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 5+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 - Added Yuno Airport warps
 //= 1.2 Moved all airports to Airplane Warps [Lupus]
 //= 1.3 Dr.Evil's yuno_05 warps update [Lupus]
+//= 1.4 optimized [Lupus]
 //============================================================
 
 //= Yuno City ================================================
@@ -81,113 +82,110 @@ yuno_in02.gat,82,14,0	warp	yun61	1,1,yuno_in05.gat,192,194
 yuno_in05.gat,196,194,0	warp	yun62	1,1,yuno_in02.gat,85,14
 // Yuno In05 (Entering Random Warps) -------------------------------------------
 yuno_in05.gat,153,141,0	script	#yun63	45,1,1,{
-	set @warp0,rand(2);
-	if(@warp0==0) goto w1;
-	if(@warp0==1) goto w2;
-w1:	warp "yuno_in05",192,102; end;
-w2:	warp "yuno_in05",145,82;  end;
+	if(rand(2)){
+		warp "yuno_in05",192,102;
+	} else {
+		warp "yuno_in05",145,82;
+	}
+	end;
 }
 // Yuno In05 (Random Warps - Cross Shaped) -------------------------------------
 yuno_in05.gat,196,102,0	script	#yun64	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",169,102; end;
+	warp "yuno_in05",169,102; end;
 w2:	warp "yuno_in05",128,82;  end;
 w3:	warp "yuno_in05",156,141; end;
 }
 yuno_in05.gat,181,116,0	script	#yun65	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,94; end;
+	warp "yuno_in05",181,94; end;
 w2:	warp "yuno_in05",176,13; end;
 w3:	warp "yuno_in05",136,75; end;
 }
 yuno_in05.gat,165,102,0	script	#yun66	45,1,1,{
-	set @warp0,rand(2);
-	if(@warp0==0) goto w1;
-	if(@warp0==1) goto w2;
-w1:	warp "yuno_in05",192,102; end;
-w2:	warp "yuno_in05",145,82;  end;
+	if(rand(2)){
+		warp "yuno_in05",192,102;
+	} else {
+		warp "yuno_in05",145,82;
+	}
+	end;
 }
 yuno_in05.gat,181,91,0	script	#yun67	45,1,1,{
-	set @warp0,rand(2);
-	if(@warp0==0) goto w1;
-	if(@warp0==1) goto w2;
-w1:	warp "yuno_in05",181,112; end;
-w2:	warp "yuno_in05",176,48;  end;
+	if(rand(2)){
+		warp "yuno_in05",181,112;
+	} else {
+		warp "yuno_in05",176,48;
+	}
+	end;
 }
 // Yuno In05 (Random Warps - T-Shaped) -----------------------------------------
 yuno_in05.gat,148,82,0	script	#yun68	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",169,102; end;
+	warp "yuno_in05",169,102; end;
 w2:	warp "yuno_in05",128,82;  end;
 w3:	warp "yuno_in05",156,141; end;
 }
 yuno_in05.gat,125,82,0	script	#yun69	45,1,1,{
-	set @warp0,rand(2);
-	if(@warp0==0) goto w1;
-	if(@warp0==1) goto w2;
-w1:	warp "yuno_in05",192,102; end;
-w2:	warp "yuno_in05",145,82;  end;
+	if(rand(2)){
+		warp "yuno_in05",192,102;
+	} else {
+		warp "yuno_in05",145,82;
+	}
+	end;
 }
 yuno_in05.gat,136,71,0	script	#yun70	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,112; end;
+	warp "yuno_in05",181,112; end;
 w2:	warp "yuno_in05",16,185;  end;
 w3:	warp "yuno_in05",176,48;  end;
 }
 // Yuno In05 (Random Warps - Other) --------------------------------------------
 yuno_in05.gat,16,188,0	script	#yun71	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,94; end;
+	warp "yuno_in05",181,94; end;
 w2:	warp "yuno_in05",176,13; end;
 w3:	warp "yuno_in05",136,75; end;
 }
 yuno_in05.gat,176,9,0	script	#yun72	45,1,1,{
-	set @warp0,rand(2);
-	if(@warp0==0) goto w1;
-	if(@warp0==1) goto w2;
-w1:	warp "yuno_in05",181,112; end;
-w2:	warp "yuno_in05",176,48;  end;
+	if(rand(2)){
+		warp "yuno_in05",181,112;
+	} else {
+		warp "yuno_in05",176,48;
+	}
+	end;
 }
 yuno_in05.gat,176,52,0	script	#yun73	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,94; end;
+	warp "yuno_in05",181,94; end;
 w2:	warp "yuno_in05",176,13; end;
 w3:	warp "yuno_in05",136,75; end;
 }
 // Yuno In05 (Destination - Room) ----------------------------------------------
 yuno_in05.gat,40,178,0	script	#yun74	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,94; end;
+	warp "yuno_in05",181,94; end;
 w2:	warp "yuno_in05",176,13; end;
 w3:	warp "yuno_in05",136,75; end;
 }
 yuno_in05.gat,47,186,0	script	#yun75	45,1,1,{
 	set @warp0,rand(3);
-	if(@warp0==0) goto w1;
 	if(@warp0==1) goto w2;
 	if(@warp0==2) goto w3;
-w1:	warp "yuno_in05",181,94; end;
+	warp "yuno_in05",181,94; end;
 w2:	warp "yuno_in05",176,13; end;
 w3:	warp "yuno_in05",136,75; end;
 }
