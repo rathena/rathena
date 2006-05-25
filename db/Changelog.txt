@@ -26,6 +26,9 @@
 	-----
 
 =========================
+05/25
+	* MVP Exp is now 1/2 of the Base Exp as pointed out by Tharis [Playtester]
+	- Removed MVP drops of Hydro and Event Kiel as they are supposely no MVPs
 05/24
 	* Added cooking drops to the mob_db [Playtester]
 	* Final Aegis X.2 update [Playtester]
