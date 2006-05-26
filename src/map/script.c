@@ -10322,20 +10322,25 @@ int buildin_rid2name(struct script_state *st){
 }
 
 int buildin_pcwalkxy(struct script_state *st){
-	int id, x, y;
+	int id, x, y = 0;
 	struct map_session_data *sd = NULL;
 
 	id = conv_num(st, & (st->stack->stack_data[st->start + 2]));
 	x = conv_num(st, & (st->stack->stack_data[st->start + 3]));
-	y = conv_num(st, & (st->stack->stack_data[st->start + 4]));
+	if(st->end > st->start + 4)
+		y = conv_num(st, & (st->stack->stack_data[st->start + 4]));
 
 	if(id)
 		sd = map_id2sd(id);
 	else
 		sd = script_rid2sd(st);
 
-	if(sd)
-		unit_walktoxy(&sd->bl, x, y, 0);
+	if(sd){
+		if(y)
+			unit_walktoxy(&sd->bl, x, y, 0);
+		else
+			unit_walktobl(&sd->bl, map_id2bl(x), 65535, 1);
+	}
 
 	return 0;
 }

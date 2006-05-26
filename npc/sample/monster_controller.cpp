@@ -68,11 +68,17 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
 				break;
 		}
+
 		if(.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_ATTACK)
-			set .@action_type$, "attacked by";
+			set .@action_type$, "Attacked by";
+		else if(.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_DETECT)
+			set .@action_type$, "Detected";
+		else if (.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_ASSIST)
+			set .@action_type$, "Killed by";
 		else
-			set .@action_type$, "detected";
-		announce "Action " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", bc_all;
+			set .@action_type$, "Assisting";
+
+		announce "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", bc_all;
 		deletearray .ai_action, 4;
 		end;
 	}

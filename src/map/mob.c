@@ -972,6 +972,13 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 					tbl = NULL;
 			}
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
+				if(md->nd){
+					setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)4, &md->nd->u.scr.script->script_vars);
+					setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)tbl->type, &md->nd->u.scr.script->script_vars);
+					setd_sub(NULL, NULL, ".ai_action", 2, (void *)tbl->id, &md->nd->u.scr.script->script_vars);
+					setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+					run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+				}
 				md->target_id=tbl->id;
 				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
 				if(md->min_chase>MAX_MINCHASE)
@@ -2153,10 +2160,15 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			guild_agit_break(md);
 	}
 
-		// SCRIPTŽÀs
-	if(md->npc_event[0]){
-//		if(battle_config.battle_log)
-//			printf("mob_damage : run event : %s\n",md->npc_event);
+	if(md->nd){
+		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)3, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+	} else if(md->npc_event[0]){
+		//		if(battle_config.battle_log)
+		//			printf("mob_damage : run event : %s\n",md->npc_event);
 		if(src && src->type == BL_PET)
 			sd = ((struct pet_data *)src)->msd;
 		if(sd && battle_config.mob_npc_event_type)
