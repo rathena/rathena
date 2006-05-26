@@ -152,6 +152,11 @@ int fame_list_size_chemist = MAX_FAME_LIST;
 int fame_list_size_smith = MAX_FAME_LIST;
 int fame_list_size_taekwon = MAX_FAME_LIST;
 
+// Char-server-side stored fame lists [DracoRPG]
+struct fame_list smith_fame_list[MAX_FAME_LIST];
+struct fame_list chemist_fame_list[MAX_FAME_LIST];
+struct fame_list taekwon_fame_list[MAX_FAME_LIST];
+
 // check for exit signal
 // 0 is saving complete
 // other is char_id
@@ -2201,7 +2206,43 @@ int save_accreg2(unsigned char* buf, int len) {
 	}
 	return 0;
 }
+
+// Send map-servers the fame ranking lists
+int char_send_fame_list(int fd) {
+	int i, len = 8;
+	unsigned char buf[32000];
+	
+	WBUFW(buf,0) = 0x2b1b;
+
+	for(i = 0; i < fame_list_size_smith && smith_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &smith_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add blacksmith's block length
+	WBUFW(buf, 6) = len;
+
+	for(i = 0; i < fame_list_size_chemist && chemist_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &chemist_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add alchemist's block length
+	WBUFW(buf, 4) = len;
+
+	for(i = 0; i < fame_list_size_taekwon && taekwon_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &taekwon_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add total packet length
+	WBUFW(buf, 2) = len;
+
+	// send to all map-servers
+	mapif_sendall(buf, len);
+
+	return 0;
+}
+
 int search_mapserver(unsigned short map, long ip, short port);
+
 
 int parse_frommap(int fd) {
 	int i = 0, j = 0;
@@ -2249,7 +2290,7 @@ int parse_frommap(int fd) {
 	}
 
 	while(RFIFOREST(fd) >= 2 && !session[fd]->eof) {
-//		printf("parse_frommap : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
+	//ShowDebug("Received packet 0x%4x (%d bytes) from map-server (connection %d)\n", RFIFOW(fd, 0), RFIFOREST(fd), fd);
 
 		switch(RFIFOW(fd, 0)) {
 
@@ -2575,9 +2616,6 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 			break;
 
-		//Packet 0x2b10 deprecated in favor of packet 0x3004 for registry saving. [Skotlex]
-		//case 0x2b10:
-
 		// Map server send information to change an email of an account -> login-server
 		case 0x2b0c:
 			if (RFIFOREST(fd) < 86)
@@ -2704,6 +2742,61 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd, 44);
 			break;
 
+//		case 0x2b0f: Not used anymore, available for future use
+
+		// Update and send fame ranking list [DracoRPG]
+		case 0x2b10:
+			if (RFIFOREST(fd) < 10)
+				return 0;
+			{
+				int i, j;
+				int id = RFIFOL(fd, 2);
+				int fame = RFIFOL(fd, 6);
+				char type = RFIFOB(fd, 10);
+				char pos = RFIFOB(fd, 11);
+				int size;
+				struct fame_list *list;
+
+				switch(type) {
+					case 1:
+						size = fame_list_size_smith;
+						list = smith_fame_list;
+						break;
+					case 2:
+						size = fame_list_size_chemist;
+						list = chemist_fame_list;
+						break;
+					case 3:
+						size = fame_list_size_taekwon;
+						list = taekwon_fame_list;
+						break;
+					default:
+						return 0;
+				}
+
+				if(pos) // If the player's already in the list, remove the entry and shift the following ones 1 step up
+					memmove(list + pos - 1, list + pos, (size - pos) * sizeof(struct fame_list));
+					list[size].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
+
+				for(i = 0; i < size; i++) // Find the position where the player has to be inserted
+					if(fame >= list[i].fame) { // When found someone with less or as much fame, insert just above
+						memmove(list + i + 1, list + i, (size - i - 1) * sizeof(struct fame_list));
+						list[i].id = id;
+						list[i].fame = fame;
+						for(j = 0; j < char_num; j++) // Look for the player's name
+							if(char_dat[j].status.char_id == id) {
+								strncpy(list[j].name, char_dat[j].status.name, NAME_LENGTH);
+								break;
+							}
+						break;
+					}
+
+				char_send_fame_list(fd);
+			}
+
+			RFIFOSKIP(fd,12);
+			break;
+
 		// Recieve rates [Wizputer]
 		case 0x2b16:
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
@@ -2746,83 +2839,88 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd,10);
 			break;
 
-		// Request sending of fame list
+		// Build and send fame ranking lists [DracoRPG]
 		case 0x2b1a:
 			if (RFIFOREST(fd) < 2)
 				return 0;
 		{
-			int len = 8, num = 0;
-			unsigned char buf[32000];
+			int i;
 			struct fame_list fame_item;
 
-			WBUFW(buf,0) = 0x2b1b;
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='10' OR `class`='4011'OR `class`='4033') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_smith);
+			// Empty ranking lists
+			memset(smith_fame_list, 0, sizeof(smith_fame_list));
+			memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
+			memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+			// Build Blacksmith ranking list
+			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='10' OR `class`='4011' OR `class`='4033') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_smith);
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
 			sql_res = mysql_store_result(&mysql_handle);
 			if (sql_res) {
+				i = 0;
 				while((sql_row = mysql_fetch_row(sql_res))) {
 					fame_item.id = atoi(sql_row[0]);
 					fame_item.fame = atoi(sql_row[1]);
 					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
 
-					memcpy(WBUFP(buf,len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
-					if (++num == fame_list_size_smith)
+					smith_fame_list[i] = fame_item;
+
+					if (++i == fame_list_size_smith)
 						break;
 				}
    			mysql_free_result(sql_res);
 			}
-			WBUFW(buf, 6) = len; //Blacksmith block size
-
-			num = 0;
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='18' OR `class`='4019' OR `class`='4041') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_chemist);
+			// Build Alchemist ranking list
+			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='18' OR `class`='4019' OR `class`='4041') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_chemist);
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
 			sql_res = mysql_store_result(&mysql_handle);
 			if (sql_res) {
+				i = 0;
 				while((sql_row = mysql_fetch_row(sql_res))) {
 					fame_item.id = atoi(sql_row[0]);
 					fame_item.fame = atoi(sql_row[1]);
 					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
-					memcpy(WBUFP(buf,len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
-					if (++num == fame_list_size_chemist)
+
+					chemist_fame_list[i] = fame_item;
+
+					if (++i == fame_list_size_chemist)
 						break;
 				}
-				mysql_free_result(sql_res);
+   			mysql_free_result(sql_res);
 			}
-			WBUFW(buf, 4) = len; //Alchemist block size
-
-			num = 0;
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND `class`='4046' ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_taekwon);
+			// Build Taekwon ranking list
+			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='4048') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_taekwon);
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
 			sql_res = mysql_store_result(&mysql_handle);
 			if (sql_res) {
+				i = 0;
 				while((sql_row = mysql_fetch_row(sql_res))) {
 					fame_item.id = atoi(sql_row[0]);
 					fame_item.fame = atoi(sql_row[1]);
 					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
-					memcpy(WBUFP(buf,len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
-					if (++num == fame_list_size_taekwon)
+
+					taekwon_fame_list[i] = fame_item;
+
+					if (++i == fame_list_size_taekwon)
 						break;
 				}
-				mysql_free_result(sql_res);
+   			mysql_free_result(sql_res);
 			}
-			WBUFW(buf, 2) = len; //Total packet length
 
-			mapif_sendall(buf, len);
+			char_send_fame_list(fd);
+
 			RFIFOSKIP(fd,2);
 			break;
 		}
+
 		//Request saving sc_data of a player. [Skotlex]
 		case 0x2b1c:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))

@@ -133,6 +133,11 @@ int fame_list_size_chemist = MAX_FAME_LIST;
 int fame_list_size_smith = MAX_FAME_LIST;
 int fame_list_size_taekwon = MAX_FAME_LIST;
 
+// Char-server-side stored fame lists [DracoRPG]
+struct fame_list smith_fame_list[MAX_FAME_LIST];
+struct fame_list chemist_fame_list[MAX_FAME_LIST];
+struct fame_list taekwon_fame_list[MAX_FAME_LIST];
+
 // Initial position (it's possible to set it in conf file)
 struct point start_point = { 0, 53, 111};
 
@@ -1771,14 +1776,14 @@ int e_mail_check(char *email) {
 //----------------------------------------------------------------------
 // Force disconnection of an online player (with account value) by [Yor]
 //----------------------------------------------------------------------
-int disconnect_player(int accound_id) {
+int disconnect_player(int account_id) {
 	int i;
 	struct char_session_data *sd;
 
 	// disconnect player if online on char-server
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
-			if (sd->account_id == accound_id) {
+			if (sd->account_id == account_id) {
 				session[i]->eof = 1;
 				return 1;
 			}
@@ -2403,7 +2408,42 @@ int char_account_reg_reply(int fd,int account_id,int char_id) {
 	return 0;
 }
 
+// Send map-servers the fame ranking lists
+int char_send_fame_list(int fd) {
+	int i, len = 8;
+	unsigned char buf[32000];
+	
+	WBUFW(buf,0) = 0x2b1b;
+
+	for(i = 0; i < fame_list_size_smith && smith_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &smith_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add blacksmith's block length
+	WBUFW(buf, 6) = len;
+
+	for(i = 0; i < fame_list_size_chemist && chemist_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &chemist_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add alchemist's block length
+	WBUFW(buf, 4) = len;
+
+	for(i = 0; i < fame_list_size_taekwon && taekwon_fame_list[i].id; i++) {
+		memcpy(WBUFP(buf, len), &taekwon_fame_list[i], sizeof(struct fame_list));
+		len += sizeof(struct fame_list);
+	}
+	// add total packet length
+	WBUFW(buf, 2) = len;
+
+	// send to all map-servers
+	mapif_sendall(buf, len);
+
+	return 0;
+}
+
 int search_mapserver(unsigned short map, long ip, short port);
+
 
 int parse_frommap(int fd) {
 	int i, j;
@@ -2440,7 +2480,7 @@ int parse_frommap(int fd) {
 	}
 
 	while(RFIFOREST(fd) >= 2 && !session[fd]->eof) {
-//		printf("parse_frommap: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
+		//ShowDebug("Received packet 0x%4x (%d bytes) from map-server (connection %d)\n", RFIFOW(fd, 0), RFIFOREST(fd), fd);
 
 		switch(RFIFOW(fd,0)) {
 
@@ -2457,7 +2497,6 @@ int parse_frommap(int fd) {
 				WFIFOHEAD(login_fd, 2);
 				WFIFOW(login_fd,0) = 0x2709;
 				WFIFOSET(login_fd, 2);
-//				printf("char : request from map-server to reload GM accounts -> login-server.\n");
 			}
 			RFIFOSKIP(fd,2);
 			break;
@@ -2708,7 +2747,6 @@ int parse_frommap(int fd) {
 			else
 				memcpy(WFIFOP(fd,6), unknown_char_name, NAME_LENGTH);
 			WFIFOSET(fd,6+NAME_LENGTH);
-			//WFIFOSET(fd,30);
 			RFIFOSKIP(fd,6);
 			break;
 
@@ -2847,10 +2885,60 @@ int parse_frommap(int fd) {
 			break;
 		  }
 
-//		case 0x2b0f: not more used (available for futur usage)
+//		case 0x2b0f: Not used anymore, available for future use
 
-		//Packet 0x2b10 deprecated in favor of packet 0x3004 for registry saving. [Skotlex]
-		//case 0x2b10:
+		// Update and send fame ranking list [DracoRPG]
+		case 0x2b10:
+			if (RFIFOREST(fd) < 10)
+				return 0;
+			{
+				int i, j;
+				int id = RFIFOL(fd, 2);
+				int fame = RFIFOL(fd, 6);
+				char type = RFIFOB(fd, 10);
+				char pos = RFIFOB(fd, 11);
+				int size;
+				struct fame_list *list;
+
+				switch(type) {
+					case 1:
+						size = fame_list_size_smith;
+						list = smith_fame_list;
+						break;
+					case 2:
+						size = fame_list_size_chemist;
+						list = chemist_fame_list;
+						break;
+					case 3:
+						size = fame_list_size_taekwon;
+						list = taekwon_fame_list;
+						break;
+					default:
+						return 0;
+				}
+
+				if(pos) // If the player's already in the list, remove the entry and shift the following ones 1 step up
+					memmove(list + pos - 1, list + pos, (size - pos) * sizeof(struct fame_list));
+					list[size].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
+
+				for(i = 0; i < size; i++) // Find the position where the player has to be inserted
+					if(fame >= list[i].fame) { // When found someone with less or as much fame, insert just above
+						memmove(list + i + 1, list + i, (size - i - 1) * sizeof(struct fame_list));
+						list[i].id = id;
+						list[i].fame = fame;
+						for(j = 0; j < char_num; j++) // Look for the player's name
+							if(char_dat[j].status.char_id == id) {
+								strncpy(list[j].name, char_dat[j].status.name, NAME_LENGTH);
+								break;
+							}
+						break;
+					}
+
+				char_send_fame_list(fd);
+			}
+
+			RFIFOSKIP(fd,12);
+			break;
 
 		// Recieve rates [Wizputer]
 		case 0x2b16:
@@ -2864,7 +2952,6 @@ int parse_frommap(int fd) {
 		case 0x2b17:
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			//printf("Setting %d char offline\n",RFIFOL(fd,2));
 			set_char_offline(RFIFOL(fd,2),RFIFOL(fd,6));
 			RFIFOSKIP(fd,10);
 			break;
@@ -2880,28 +2967,18 @@ int parse_frommap(int fd) {
 		case 0x2b19:
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			//printf("Setting %d char online\n",RFIFOL(fd,2));
 			set_char_online(id, RFIFOL(fd,2),RFIFOL(fd,6));
 			RFIFOSKIP(fd,10);
 			break;
 
-		// Request sending of fame list
+		// Build and send fame ranking lists [DracoRPG]
 		case 0x2b1a:
 			if (RFIFOREST(fd) < 2)
 				return 0;
 		{
-			int i, j, k, len = 8;
-			unsigned char buf[32000];
+			int i, j, k;
 			struct fame_list fame_item;
-			//struct mmo_charstatus *dat;
-			//dat = (struct mmo_charstatus *)aCalloc(char_num, sizeof(struct mmo_charstatus *));
 			CREATE_BUFFER(id, int, char_num);
-			
-			// copy character list into buffer
-			//for (i = 0; i < char_num; i++)
-			//	dat[i] = char_dat[i];
-			// sort according to fame
-			// qsort(dat, char_num, sizeof(struct mmo_charstatus *), sort_fame);
 
 			for(i = 0; i < char_num; i++) {
 				id[i] = i;
@@ -2915,9 +2992,11 @@ int parse_frommap(int fd) {
 				}
 			}
 
-			// starting to send to map
-			WBUFW(buf,0) = 0x2b1b;
-			// add list for blacksmiths
+			// Empty ranking lists
+			memset(smith_fame_list, 0, sizeof(smith_fame_list));
+			memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
+			memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+			// Build Blacksmith ranking list
 			for (i = 0, j = 0; i < char_num && j < fame_list_size_smith; i++) {
 				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 10 ||
 					char_dat[id[i]].status.class_ == 4011 ||
@@ -2926,16 +3005,13 @@ int parse_frommap(int fd) {
 					fame_item.id = char_dat[id[i]].status.char_id;
 					fame_item.fame = char_dat[id[i]].status.fame;
 					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-					
-					memcpy(WBUFP(buf, len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
+
+					smith_fame_list[j] = fame_item;
+
 					j++;
 				}
 			}
-			// add blacksmith's block length
-			WBUFW(buf, 6) = len;
-			
-			// add list for alchemists
+			// Build Alchemist ranking list
 			for (i = 0, j = 0; i < char_num && j < fame_list_size_chemist; i++) {
 				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 18 ||
 					char_dat[id[i]].status.class_ == 4019 ||
@@ -2944,39 +3020,34 @@ int parse_frommap(int fd) {
 					fame_item.id = char_dat[id[i]].status.char_id;
 					fame_item.fame = char_dat[id[i]].status.fame;
 					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-					
-					memcpy(WBUFP(buf, len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
+
+					chemist_fame_list[j] = fame_item;
+
 					j++;
 				}
 			}
-			// add alchemist's block length
-			WBUFW(buf, 4) = len;
-
-			// adding list for taekwons
+			// Build Taekwon ranking list
 			for (i = 0, j = 0; i < char_num && j < fame_list_size_taekwon; i++) {
 				if (char_dat[id[i]].status.fame && char_dat[id[i]].status.class_ == 4046)
 				{
 					fame_item.id = char_dat[id[i]].status.char_id;
 					fame_item.fame = char_dat[id[i]].status.fame;
 					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-					
-					memcpy(WBUFP(buf, len), &fame_item, sizeof(struct fame_list));
-					len += sizeof(struct fame_list);
+
+					taekwon_fame_list[j] = fame_item;
+
 					j++;
 				}
 			}
-			// add total packet length
-			WBUFW(buf, 2) = len;
 
-			// sending to all maps
-			mapif_sendall(buf, len);
-			// done!
-			//aFree(dat);
 			DELETE_BUFFER(id);
+
+			char_send_fame_list(fd);
+
 			RFIFOSKIP(fd,2);
 			break;
 		}
+
 		//Request to save status change data. [Skotlex]
 		case 0x2b1c:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))

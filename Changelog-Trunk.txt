@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/26
+	* Rewrote fame rank lists system to reduce char-server load, as requested by
+	  Skotlex: now it has a copy of those lists, and updates only the proper one
+	  when needed instead of rebuilding all from saves everytime (which required
+	  to always save the character before rebuilding the lists) [DracoRPG]
+	  - Note it hasn't been compiled nor tested with SQL, please do it for me
 2006/05/25
 	* Simplified ASC_BREAKER by making it a BF_WEAPON attack with an additional
 	  int-based damage component (which is added right before elemental

@@ -242,7 +242,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type) {
 	return 0;
 }
 
-// Increases a player's  and displays a notice to him
+// Increases a player's fame points and displays a notice to him
 void pc_addfame(struct map_session_data *sd,int count) {
     nullpo_retv(sd);
 	sd->status.fame += count;
@@ -251,41 +251,40 @@ void pc_addfame(struct map_session_data *sd,int count) {
 	switch(sd->class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH: // Blacksmith
             clif_fame_blacksmith(sd,count);
-            break;
+			break;
 		case MAPID_ALCHEMIST: // Alchemist
             clif_fame_alchemist(sd,count);
-            break;
+			break;
 		case MAPID_TAEKWON: // Taekwon
             clif_fame_taekwon(sd,count);
-            break;	
+			break;	
 	}
-	//FIXME: Is this needed? It places unnecessary stress on the char server.... >.< [Skotlex]
-	chrif_save(sd,0); // Save to allow up-to-date fame list refresh
-	chrif_reqfamelist(); // Refresh the fame list
+	chrif_updatefamelist(sd);
 }
 
-// Check whether a player ID is in the Top 10 fame list of its job
-int pc_istop10fame(int char_id,int job) {
+// Check whether a player ID is in the fame rankers' list of its job, returns his/her position if so, 0 else
+unsigned char pc_famerank(int char_id,int job) {
     int i;
+
 	switch(job){
-	case MAPID_BLACKSMITH: // Blacksmith
-	    for(i=0;i<MAX_FAME_LIST;i++){
-			if(smith_fame_list[i].id==char_id)
-			    return smith_fame_list[i].fame;
-		}
-		break;
-	case MAPID_ALCHEMIST: // Alchemist
-	    for(i=0;i<MAX_FAME_LIST;i++){
-	        if(chemist_fame_list[i].id==char_id)
-	            return chemist_fame_list[i].fame;
-		}
-		break;
-	case MAPID_TAEKWON: // Taekwon
-	    for(i=0;i<MAX_FAME_LIST;i++){
-	        if(taekwon_fame_list[i].id==char_id)
-	            return taekwon_fame_list[i].fame;
-		}
-		break;
+		case MAPID_BLACKSMITH: // Blacksmith
+		    for(i = 0; i < MAX_FAME_LIST; i++){
+				if(smith_fame_list[i].id == char_id)
+				    return i + 1;
+			}
+			break;
+		case MAPID_ALCHEMIST: // Alchemist
+			for(i = 0; i < MAX_FAME_LIST; i++){
+				if(chemist_fame_list[i].id == char_id)
+					return i + 1;
+			}
+			break;
+		case MAPID_TAEKWON: // Taekwon
+			for(i = 0; i < MAX_FAME_LIST; i++){
+				if(taekwon_fame_list[i].id == char_id)
+					return i + 1;
+			}
+			break;
 	}
 
 	return 0;
@@ -991,7 +990,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			}
 		}
 	} while(flag);
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_istop10fame(sd->char_id, MAPID_TAEKWON)) {
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON)) {
 		//Grant all Taekwon Tree, but only as bonus skills in case they drop from ranking. [Skotlex]
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
 			if ((skill_get_inf2(id)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)))
@@ -2701,7 +2700,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		pc_delitem(sd,n,1,1);
 	}
 	if(sd->status.inventory[n].card[0]==0x00fe &&
-		pc_istop10fame(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
+		pc_famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
 	{
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
 		 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
@@ -5271,7 +5270,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	sd->status.class_ = job;
 	status_set_viewdata(&sd->bl, job);
-	fame_flag = pc_istop10fame(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
+	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
@@ -5305,7 +5304,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
 		chrif_save(sd,0);
-		chrif_reqfamelist();
+		chrif_buildfamelist();
 	} else if (sd->status.fame > 0) {
 		//It may be that now they are famous?
  		switch (sd->class_&MAPID_UPPERMASK) {
@@ -5313,7 +5312,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			case MAPID_ALCHEMIST:
 			case MAPID_TAEKWON:
 				chrif_save(sd,0);
-				chrif_reqfamelist();
+				chrif_buildfamelist();
 			break;
 		}
 	}

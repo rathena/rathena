@@ -73,18 +73,18 @@ static const int packet_len_table[0x3d] = {
 //2b0d: Incomming, chrif_changedsex -> 'Change sex of acc XY'
 //2b0e: Outgoing, chrif_char_ask_name -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incomming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
-//2b10: FREE
+//2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
 //2b11: Outgoing, chrif_changesex -> 'change sex of acc X'
 //2b12: Incomming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
 //2b13: Incomming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incomming, chrif_accountban -> 'not sure: kick the player with message XY'
-//2b15: Incomming, chrif_recvgmaccounts -> 'recive gm accs from charserver (seems to be incomplete !)'
+//2b15: Incomming, chrif_recvgmaccounts -> 'recieve gm accs from charserver (seems to be incomplete !)'
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends motd / rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
 //2b19: Outgoing, chrif_char_online -> 'tell the charserver that the char .. is online'
-//2b1a: Outgoing, chrif_reqfamelist -> 'Request the fame list (top10)'
-//2b1b: Incomming, chrif_recvfamelist -> 'answer of 2b1a ..... the famelist top10^^'
+//2b1a: Outgoing, chrif_buildfamelist -> 'Build the fame ranking lists and send them'
+//2b1b: Incomming, chrif_recvfamelist -> 'Receive fame ranking lists'
 //2b1c: Outgoing, chrif_save_scdata -> 'Send sc_data of player for saving.'
 //2b1d: Incomming, chrif_load_scdata -> 'received sc_data of player for loading.'
 //2b1e: FREE
@@ -1107,19 +1107,50 @@ int chrif_recvgmaccounts(int fd)
  * Request/Receive top 10 Fame character list
  *------------------------------------------
  */
-int chrif_reqfamelist(void)
+
+int chrif_updatefamelist(struct map_session_data *sd)
+{
+	char type;
+	chrif_check(-1);
+
+	switch(sd->class_&MAPID_UPPERMASK) {
+		case MAPID_BLACKSMITH:
+			type = 1;
+			break;
+		case MAPID_ALCHEMIST:
+			type = 2;
+			break;
+		case MAPID_TAEKWON:
+			type = 3;
+			break;
+		default:
+			return 0;
+	}
+
+    WFIFOHEAD(char_fd, 12);
+	WFIFOW(char_fd, 0) = 0x2b10;
+	WFIFOL(char_fd, 2) = sd->char_id;
+	WFIFOL(char_fd, 6) = sd->status.fame;
+	WFIFOB(char_fd, 10) = type;
+	WFIFOB(char_fd, 11) = pc_famerank(sd->char_id, sd->class_&MAPID_UPPERMASK);
+	WFIFOSET(char_fd, 12);
+
+	return 0;
+}
+
+int chrif_buildfamelist(void)
 {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 2);
-	WFIFOW(char_fd,0) = 0x2b1a;
+    WFIFOHEAD(char_fd, 2);
+	WFIFOW(char_fd, 0) = 0x2b1a;
 	WFIFOSET(char_fd, 2);
 
 	return 0;
 }
 
 int chrif_recvfamelist(int fd)
-{	// response from 0x2b1b
+{
 	int num, size;
 	int total = 0, len = 8;
 	RFIFOHEAD(fd);
@@ -1128,21 +1159,21 @@ int chrif_recvfamelist(int fd)
 	memset (chemist_fame_list, 0, sizeof(chemist_fame_list));
 	memset (taekwon_fame_list, 0, sizeof(taekwon_fame_list));
 
-	size = RFIFOW(fd,6); //Blacksmith block size
+	size = RFIFOW(fd, 6); //Blacksmith block size
 	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&smith_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
 	}
 	total += num;
 
-	size = RFIFOW(fd,4); //Alchemist block size
+	size = RFIFOW(fd, 4); //Alchemist block size
 	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&chemist_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
 	}
 	total += num;
 
-	size = RFIFOW(fd,2); //Total packet length
+	size = RFIFOW(fd, 2); //Total packet length
 	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
 		memcpy(&taekwon_fame_list[num], RFIFOP(fd,len), sizeof(struct fame_list));
  		len += sizeof(struct fame_list);
@@ -1254,7 +1285,7 @@ int chrif_load_scdata(int fd)
 
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, sizeof(buf) + 10);
+	WFIFOHEAD(char_fd, sizeof(buf) + 10);
 	WFIFOW(char_fd,0) = 0x2b16;
 	WFIFOW(char_fd,2) = base_rate;
 	WFIFOW(char_fd,4) = job_rate;
@@ -1426,7 +1457,7 @@ int chrif_parse(int fd)
 
 		switch(cmd) {
 		case 0x2af9: chrif_connectack(fd); break;
-		case 0x2afb: chrif_sendmapack(fd); chrif_reqfamelist(); break;
+		case 0x2afb: chrif_sendmapack(fd); chrif_buildfamelist(); break;
 		case 0x2afd: chrif_authok(fd); break;
 		case 0x2b00: map_setusers(fd); break;
 		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
