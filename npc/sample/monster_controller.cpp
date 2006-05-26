@@ -53,15 +53,15 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 				break;
 			case AI_ACTION_TAR_TYPE_MOB:
 				set .@action_from$, "Monster";
-				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				set .@action_name$, rid2name(.ai_action[AI_ACTION_TAR]);
 				break;
 			case AI_ACTION_TAR_TYPE_PET:
 				set .@action_from$, "Pet";
-				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				set .@action_name$, rid2name(.ai_action[AI_ACTION_TAR]);
 				break;
 			case AI_ACTION_TAR_TYPE_HOMUN:
 				set .@action_from$, "Homunculus";
-				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				set .@action_name$, rid2name(.ai_action[AI_ACTION_TAR]);
 				break;
 			default:
 				set .@action_from$, "Unknown";

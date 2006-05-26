@@ -3440,6 +3440,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						if(((TBL_PET *)t_bl)->msd->bl.id == md->master_id)
 							state |= BCT_PARTY;
 						break;
+					case BL_HOMUNCULUS:
+						if(((struct homun_data *)t_bl)->master->bl.id == md->master_id)
+							state |= BCT_PARTY;
+						break;
 				} 
 				state |= BCT_ENEMY;
 				break;

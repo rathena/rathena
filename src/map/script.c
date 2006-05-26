@@ -10306,8 +10306,15 @@ int buildin_rid2name(struct script_state *st){
 			case BL_NPC:
 				push_str(st->stack,C_CONSTSTR,((struct npc_data *)bl)->exname);
 				break;
+			case BL_PET:
+				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->name);
+				break;
+			case BL_HOMUNCULUS:
+				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->name);
+				break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
+				push_str(st->stack,C_CONSTSTR,"");
 				break;
 		}
 	}
