@@ -10545,88 +10545,89 @@ int buildin_getmobdata(struct script_state *st) {
 }
 
 int buildin_setmobdata(struct script_state *st){
-	int id, value;
+	int id, value, value2;
 	struct mob_data *md = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	value = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
+	value2 = conv_num(st, & (st->stack->stack_data[st->start+4]));
+	if(!(md = (struct mob_data *)map_id2bl(id))){
 		ShowWarning("buildin_setmobdata: Error in argument!\n");
 	} else {
-		switch(id){
+		switch(value){
 			case 0:
-				md->class_ = (short)value;
+				md->class_ = (short)value2;
 				break;
 			case 1:
-				md->level = (unsigned short)value;
+				md->level = (unsigned short)value2;
 				break;
 			case 2:
-				md->hp = value;
+				md->hp = value2;
 				break;
 			case 3:
-				md->max_hp = value;
+				md->max_hp = value2;
 				break;
 			case 4:
-				md->master_id = value;
+				md->master_id = value2;
 				break;
 			case 5:
-				md->bl.m = (short)value;
+				md->bl.m = (short)value2;
 				break;
 			case 6:
-				md->bl.x = (short)value;
+				md->bl.x = (short)value2;
 				break;
 			case 7:
-				md->bl.y = (short)value;
+				md->bl.y = (short)value2;
 				break;
 			case 8:
-				md->speed = (short)value;
+				md->speed = (short)value2;
 				break;
 			case 9:
-				md->mode = (short)value;
+				md->mode = (short)value2;
 				break;
 			case 10:
-				md->special_state.ai = (unsigned int)value;
+				md->special_state.ai = (unsigned int)value2;
 				break;
 			case 11:
-				md->db->option = (short)value;
+				md->db->option = (short)value2;
 				break;
 			case 12:
-				md->vd->sex = value;
+				md->vd->sex = value2;
 				break;
 			case 13:
-				md->vd->class_ = value;
+				md->vd->class_ = value2;
 				break;
 			case 14:
-				md->vd->hair_style = (short)value;
+				md->vd->hair_style = (short)value2;
 				break;
 			case 15:
-				md->vd->hair_color = (short)value;
+				md->vd->hair_color = (short)value2;
 				break;
 			case 16:
-				md->vd->head_bottom = (short)value;
+				md->vd->head_bottom = (short)value2;
 				break;
 			case 17:
-				md->vd->head_mid = (short)value;
+				md->vd->head_mid = (short)value2;
 				break;
 			case 18:
-				md->vd->head_top = (short)value;
+				md->vd->head_top = (short)value2;
 				break;
 			case 19:
-				md->vd->cloth_color = (short)value;
+				md->vd->cloth_color = (short)value2;
 				break;
 			case 20:
-				md->vd->shield = value;
+				md->vd->shield = value2;
 				break;
 			case 21:
-				md->vd->weapon = (short)value;
+				md->vd->weapon = (short)value2;
 				break;
 			case 22:
-				md->vd->shield = (short)value;
+				md->vd->shield = (short)value2;
 				break;
 			case 23:
-				md->ud.dir = (unsigned char)value;
+				md->ud.dir = (unsigned char)value2;
 				break;
 			case 24:
-				md->state.killer = value>0?1:0;
+				md->state.killer = value2>0?1:0;
 				break;
 			default:
 				ShowError("buildin_setmobdata: argument id is not identified.");
