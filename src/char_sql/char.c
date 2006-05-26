@@ -2784,8 +2784,8 @@ int parse_frommap(int fd) {
 						list[i].id = id;
 						list[i].fame = fame;
 						for(j = 0; j < char_num; j++) // Look for the player's name
-							if(char_dat[j].status.char_id == id) {
-								strncpy(list[j].name, char_dat[j].status.name, NAME_LENGTH);
+							if(char_dat[j].char_id == id) {
+								strncpy(list[j].name, char_dat[j].name, NAME_LENGTH);
 								break;
 							}
 						break;
