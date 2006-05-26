@@ -760,17 +760,17 @@ struct {
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of mob control commands --->
 	{buildin_spawnmob,"spawnmob","*"},
-	{buildin_removemob,"removemob","*"},
-	{buildin_mobwalk,"mobwalk","*"},
-	{buildin_mobrandomwalk,"mobrandomwalk","*"},
-	{buildin_getmobdata,"getmobdata","*"},
-	{buildin_setmobdata,"setmobdata","*"},
-	{buildin_mobattack,"mobattack","*"},
-	{buildin_mobstop,"mobstop","*"},
-	{buildin_mobassist,"mobassist","*"},
-	{buildin_mobtalk,"mobtalk","*"},
-	{buildin_mobemote,"mobemote","*"},
-	{buildin_mobattach,"mobattach","*"},
+	{buildin_removemob,"removemob","i"},
+	{buildin_mobwalk,"mobwalk","i*"},
+	{buildin_mobrandomwalk,"mobrandomwalk","ii"},
+	{buildin_getmobdata,"getmobdata","i*"},
+	{buildin_setmobdata,"setmobdata","iii"},
+	{buildin_mobattack,"mobattack","i*"},
+	{buildin_mobstop,"mobstop","i"},
+	{buildin_mobassist,"mobassist","i*"},
+	{buildin_mobtalk,"mobtalk","is"},
+	{buildin_mobemote,"mobemote","ii"},
+	{buildin_mobattach,"mobattach","i*"},
 // <--- [zBuffer] List of mob control commands
 {buildin_sleep,"sleep","i"},
 	{buildin_sleep2,"sleep2","i"},
@@ -10630,7 +10630,7 @@ int buildin_setmobdata(struct script_state *st){
 				md->state.killer = value2>0?1:0;
 				break;
 			default:
-				ShowError("buildin_setmobdata: argument id is not identified.");
+				ShowError("buildin_setmobdata: argument value2 is not identified.");
 				break;
 		}
 	}
