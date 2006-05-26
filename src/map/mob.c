@@ -2169,7 +2169,7 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 			guild_agit_break(md);
 	}
 
-	if(src->type == BL_MOB){
+	if(src && src->type == BL_MOB){
 		struct mob_data *smd = (struct mob_data *)src;
 		if(smd->nd){
 			setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)5, &smd->nd->u.scr.script->script_vars);
