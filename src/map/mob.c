@@ -799,7 +799,19 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	target= va_arg(ap,struct block_list**);
 
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
-	if ((*target) == bl || battle_check_target(&md->bl,bl,BCT_ENEMY)<=0 || !status_check_skilluse(&md->bl, bl, 0, 0))
+	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
+		return 0;
+
+	if(md->nd){
+		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)2, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)bl->type, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 2, (void *)bl->id, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+		return 0; // We have script handling the work.
+	}
+
+	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
 
 	switch (bl->type)
@@ -905,9 +917,6 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			mob_damage(NULL,md,md->hp,0);
 		return 0;
 	}
-
-	if(bl->type == BL_MOB && ((TBL_MOB *)bl)->master_id && ((TBL_MOB *)bl)->master_id != md->master_id) // Just in case something screws up
-		md->master_id = ((TBL_MOB *)bl)->master_id;
 
 	if(status_get_mode(&md->bl)&MD_CANMOVE)
 	{	//If the mob can move, follow around. [Check by Skotlex]
@@ -1320,7 +1329,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 
 	ap = va_arg(app, va_list);
 
-	if (battle_config.mob_ai&32 && map[md->bl.m].users>0)
+	if (md->nd || (battle_config.mob_ai&32 && map[md->bl.m].users>0))
 		return mob_ai_sub_hard(&md->bl, ap);
 
 	tick=va_arg(ap,unsigned int);
@@ -1494,6 +1503,33 @@ int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+int mob_convertslave_sub(struct block_list *bl,va_list ap)
+{
+	struct mob_data *md, *md2 = NULL;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, md = (struct mob_data *)bl);
+
+	md2=va_arg(ap,TBL_MOB *);
+
+	if(md->master_id > 0 && md->master_id == md2->bl.id){
+		md->master_id = md2->master_id;
+		md->state.killer = md2->state.killer;
+		md->special_state.ai = md2->special_state.ai;
+	}
+
+	return 0;
+}
+
+int mob_convertslave(struct mob_data *md)
+{
+	nullpo_retr(0, md);
+
+	map_foreachinmap(mob_convertslave_sub, md->bl.m, BL_MOB, md);
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -1512,23 +1548,6 @@ int mob_deleteslave_sub(struct block_list *bl,va_list ap)
 		mob_damage(NULL,md,md->hp,1);
 	return 0;
 }
-
-int mob_convertslave_sub(struct block_list *bl,va_list ap)
-{
-	struct mob_data *md;
-	int id, master;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md = (struct mob_data *)bl);
-
-	id=va_arg(ap,int);
-	master=va_arg(ap,int);
-
-	if(md->master_id > 0 && md->master_id == id )
-		md->master_id = master;
-	return 0;
-}
 /*==========================================
  *
  *------------------------------------------
@@ -1538,14 +1557,6 @@ int mob_deleteslave(struct mob_data *md)
 	nullpo_retr(0, md);
 
 	map_foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
-	return 0;
-}
-
-int mob_convertslave(struct mob_data *md)
-{
-	nullpo_retr(0, md);
-
-	map_foreachinmap(mob_convertslave_sub, md->bl.m, BL_MOB,md->bl.id,md->master_id);
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
@@ -1592,7 +1603,6 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 	int ret, mode;
 	int drop_rate;
 	int race;
-	char buffer[64];
 	
 	nullpo_retr(0, md); //srcはNULLで呼ばれる場合もあるので、他でチェック
 
@@ -1601,12 +1611,11 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	if(src){
 		if(md->nd){
-			sprintf(buffer, "$@%d_attacker", md->bl.id);
-			set_var(NULL, buffer, (void *)src->id);
-			sprintf(buffer, "$@%d_attacktype", md->bl.id);
-			set_var(NULL, buffer, (void *)(int)src->type);
-			sprintf(buffer, "%s::OnDamage", md->nd->exname);
-			npc_event_do(buffer);
+			setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)1, &md->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+			run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
 		}
 		if(src->type == BL_PC) {
 			sd = (struct map_session_data *)src;

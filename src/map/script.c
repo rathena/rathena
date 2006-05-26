@@ -9910,9 +9910,9 @@ int buildin_distance(struct script_state *st){
 
 // <--- [zBuffer] List of mathematics commands
 // [zBuffer] List of dynamic var commands --->
-void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value)
+void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value, struct linkdb_node **ref)
 {
-	set_reg(st, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value,NULL);
+	set_reg(st, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value, ref);
 	return;
 }
 
@@ -9932,9 +9932,9 @@ int buildin_setd(struct script_state *st)
 		sd = script_rid2sd(st);
 
 	if(varname[strlen(varname)-1] != '$') {
-		setd_sub(st,sd, varname, elem, (void *)atoi(value));
+		setd_sub(st,sd, varname, elem, (void *)atoi(value),NULL);
 	} else {
-		setd_sub(st,sd, varname, elem, (void *)value);
+		setd_sub(st,sd, varname, elem, (void *)value,NULL);
 	}
 	
 	return 0;
@@ -9963,12 +9963,12 @@ int buildin_query_sql(struct script_state *st) {
 			if((sql_res = mysql_store_result(&mmysql_handle))){
 				if(name[strlen(name)-1] != '$') {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]));
+						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]),NULL);
 						i++;
 					}
 				} else {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)sql_row[0]);
+						setd_sub(st,sd, name, i, (void *)sql_row[0],NULL);
 						i++;
 					}
 				}
@@ -10298,13 +10298,13 @@ int buildin_rid2name(struct script_state *st){
 	if((bl = map_id2bl(rid))){
 		switch(bl->type){
 			case BL_MOB:
-				push_str(st->stack,C_STR,((struct mob_data *)bl)->name);
+				push_str(st->stack,C_CONSTSTR,((struct mob_data *)bl)->name);
 				break;
 			case BL_PC:
-				push_str(st->stack,C_STR,((struct map_session_data *)bl)->status.name);
+				push_str(st->stack,C_CONSTSTR,((struct map_session_data *)bl)->status.name);
 				break;
 			case BL_NPC:
-				push_str(st->stack,C_STR,((struct npc_data *)bl)->exname);
+				push_str(st->stack,C_CONSTSTR,((struct npc_data *)bl)->exname);
 				break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
@@ -10508,30 +10508,31 @@ int buildin_getmobdata(struct script_state *st) {
 	} else {
 		num=st->stack->stack_data[st->start+3].u.num;
 		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-		setd_sub(st,map_id2sd(st->rid),name,0,(void *)(int)md->class_);
-		setd_sub(st,map_id2sd(st->rid),name,1,(void *)(int)md->level);
-		setd_sub(st,map_id2sd(st->rid),name,2,(void *)(int)md->hp);
-		setd_sub(st,map_id2sd(st->rid),name,3,(void *)(int)md->max_hp);
-		setd_sub(st,map_id2sd(st->rid),name,4,(void *)(int)md->master_id);
-		setd_sub(st,map_id2sd(st->rid),name,5,(void *)(int)md->bl.m);
-		setd_sub(st,map_id2sd(st->rid),name,6,(void *)(int)md->bl.x);
-		setd_sub(st,map_id2sd(st->rid),name,7,(void *)(int)md->bl.y);
-		setd_sub(st,map_id2sd(st->rid),name,8,(void *)(int)md->speed);
-		setd_sub(st,map_id2sd(st->rid),name,9,(void *)(int)md->mode);
-		setd_sub(st,map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai);
-		setd_sub(st,map_id2sd(st->rid),name,11,(void *)(int)md->db->option);
-		setd_sub(st,map_id2sd(st->rid),name,12,(void *)(int)md->vd->sex);
-		setd_sub(st,map_id2sd(st->rid),name,13,(void *)(int)md->vd->class_);
-		setd_sub(st,map_id2sd(st->rid),name,14,(void *)(int)md->vd->hair_style);
-		setd_sub(st,map_id2sd(st->rid),name,15,(void *)(int)md->vd->hair_color);
-		setd_sub(st,map_id2sd(st->rid),name,16,(void *)(int)md->vd->head_bottom);
-		setd_sub(st,map_id2sd(st->rid),name,17,(void *)(int)md->vd->head_mid);
-		setd_sub(st,map_id2sd(st->rid),name,18,(void *)(int)md->vd->head_top);
-		setd_sub(st,map_id2sd(st->rid),name,19,(void *)(int)md->vd->cloth_color);
-		setd_sub(st,map_id2sd(st->rid),name,20,(void *)(int)md->vd->shield);
-		setd_sub(st,map_id2sd(st->rid),name,21,(void *)(int)md->vd->weapon);
-		setd_sub(st,map_id2sd(st->rid),name,22,(void *)(int)md->vd->shield);
-		setd_sub(st,map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir);
+		setd_sub(st,map_id2sd(st->rid),name,0,(void *)(int)md->class_,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,1,(void *)(int)md->level,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,2,(void *)(int)md->hp,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,3,(void *)(int)md->max_hp,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,4,(void *)(int)md->master_id,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,5,(void *)(int)md->bl.m,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,6,(void *)(int)md->bl.x,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,7,(void *)(int)md->bl.y,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,8,(void *)(int)md->speed,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,9,(void *)(int)md->mode,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,10,(void *)(int)md->special_state.ai,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,11,(void *)(int)md->db->option,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,12,(void *)(int)md->vd->sex,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,13,(void *)(int)md->vd->class_,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,14,(void *)(int)md->vd->hair_style,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,15,(void *)(int)md->vd->hair_color,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,16,(void *)(int)md->vd->head_bottom,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,17,(void *)(int)md->vd->head_mid,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,18,(void *)(int)md->vd->head_top,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,19,(void *)(int)md->vd->cloth_color,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,20,(void *)(int)md->vd->shield,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,21,(void *)(int)md->vd->weapon,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,22,(void *)(int)md->vd->shield,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,23,(void *)(int)md->ud.dir,NULL);
+		setd_sub(st,map_id2sd(st->rid),name,24,(void *)(int)md->state.killer,NULL);
 	}
 	return 0;
 }
@@ -10617,6 +10618,9 @@ int buildin_setmobdata(struct script_state *st){
 			case 23:
 				md->ud.dir = (unsigned char)value;
 				break;
+			case 24:
+				md->state.killer = value>0?1:0;
+				break;
 			default:
 				ShowError("buildin_setmobdata: argument id is not identified.");
 				break;
@@ -10647,6 +10651,7 @@ int buildin_mobattack(struct script_state *st) {
 	if((md = (struct mob_data *)map_id2bl(id))){
 		if (md && md->bl.type == BL_MOB) {
 			md->state.killer = 1;
+			md->special_state.ai = 1;
 			if(bl){
 				md->target_id = bl->id;
 				unit_walktobl(&md->bl, bl, 65025, 2);
@@ -10698,6 +10703,8 @@ int buildin_mobassist(struct script_state *st) {
 		if(md && md->bl.type == BL_MOB) {
 			ud = unit_bl2ud(bl);
 			md->master_id = bl->id;
+			md->state.killer = 1;
+			mob_convertslave(md);
 			if (ud) {
 				if (ud->target)
 					md->target_id = ud->target;
@@ -10746,9 +10753,22 @@ int buildin_mobemote(struct script_state *st) {
 int buildin_mobattach(struct script_state *st){
 	int id;
 	struct mob_data *md = NULL;
+	struct npc_data *nd = NULL;
+	char *npcname = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
-		md->nd = (struct npc_data *)map_id2bl(st->oid);
+	if(st->end > st->start + 3){
+		npcname = conv_str(st, & (st->stack->stack_data[st->start+3]));
+	}
+
+	if(npcname)
+		nd = npc_name2id(npcname);
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if(nd)
+		if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
+			md->nd = nd;
+
 	return 0;
 }
 

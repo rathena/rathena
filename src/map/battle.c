@@ -3426,8 +3426,24 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB*md = (TBL_MOB*)s_bl;
-			if(md->state.killer) // Is on a rampage too :D
+			if(md->state.killer){ // Is on a rampage too :D
+				switch(t_bl->type){
+					case BL_MOB:
+						if(md->master_id != 0 && ((TBL_MOB *)t_bl)->master_id == md->master_id)
+							state |= BCT_PARTY;
+						break;
+					case BL_PC:
+						if(t_bl->id == md->master_id)
+							state |= BCT_PARTY;
+						break;
+					case BL_PET:
+						if(((TBL_PET *)t_bl)->msd->bl.id == md->master_id)
+							state |= BCT_PARTY;
+						break;
+				} 
 				state |= BCT_ENEMY;
+				break;
+			}
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
 			if (!md->special_state.ai) { //Normal mobs.

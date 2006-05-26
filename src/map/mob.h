@@ -175,6 +175,7 @@ int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
 int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id);
 int mob_countslave(struct block_list *bl);
+int mob_convertslave(struct mob_data *md);
 
 int mob_is_clone(int class_);
 

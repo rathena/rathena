@@ -44,6 +44,39 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 		return;
 	}
 
+	if(getarraysize(.ai_action) == 4){
+		announce "[Mob Control] AI Action Received from " + .ai_action[AI_ACTION_SRC] + "!",bc_all;
+		switch(.ai_action[AI_ACTION_TAR_TYPE]){
+			case AI_ACTION_TAR_TYPE_PC:
+				set .@action_from$, "Player";
+				set .@action_name$, rid2name(.ai_action[AI_ACTION_TAR]);
+				break;
+			case AI_ACTION_TAR_TYPE_MOB:
+				set .@action_from$, "Monster";
+				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				break;
+			case AI_ACTION_TAR_TYPE_PET:
+				set .@action_from$, "Pet";
+				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				break;
+			case AI_ACTION_TAR_TYPE_HOMUN:
+				set .@action_from$, "Homunculus";
+				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				break;
+			default:
+				set .@action_from$, "Unknown";
+				set .@action_name$, ""+.ai_action[AI_ACTION_TAR];
+				break;
+		}
+		if(.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_ATTACK)
+			set .@action_type$, "attacked by";
+		else
+			set .@action_type$, "detected";
+		announce "Action " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", bc_all;
+		deletearray .ai_action, 4;
+		end;
+	}
+
 L_MainMenu:
 	mes "[Monster Controller]";
 	mes "Current active monsters:";
