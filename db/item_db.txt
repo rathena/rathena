@@ -2357,7 +2357,7 @@
 12103,Bloody_Branch,Bloody Branch,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-3,1,""; },{},{}
 12104,Random_Quiver,Random Quiver,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Quiver),1; },{},{}
 12105,Taming_Item_Giftset,Taming Item Giftset,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Taming),3; },{},{}
-12106,Jewel_Box,Jewel Case,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Jewel),1; },{},{}
+12106,Jeweled_Box,Jeweled Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Accesory),1; },{},{}
 12107,Wrapped_Mask,Wrapped Mask,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Mask),1; },{},{}
 12108,Bundle_of_Spells,Bundle of Spells,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Scroll),5; },{},{}
 12109,Poring_Box,Poring Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-2,1,""; },{},{}

@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/26
+	* Fixed 12106,Jeweled_Box. Now giving an accessory [Lupus]
 05/25
 	* Modified some drops and added drops to Ferus and Dragon Egg [Playtester]
 	* Updated the Exp of some mobs accordings to the last kRO patch thanks to Muad_Dib [Playtester]
