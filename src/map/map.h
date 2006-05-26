@@ -871,6 +871,7 @@ struct mob_data {
 		unsigned soul_change_flag : 1; // Celest
 		unsigned alchemist: 1;
 		unsigned no_random_walk: 1;
+		unsigned killer: 1;
 		int provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data; 

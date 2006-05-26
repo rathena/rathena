@@ -125,7 +125,7 @@ char tmp_sql[65535];
 #endif
 
 static struct linkdb_node *sleep_db;
-#define not_server_variable(prefix) (prefix != '$' && prefix != '\'')
+#define not_server_variable(prefix) (prefix != '$' && prefix != '.')
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -1045,7 +1045,7 @@ static unsigned char *skip_space(unsigned char *p)
 static unsigned char *skip_word(unsigned char *p)
 {
 	// prefix
-	if(*p=='\'') p++;
+	if(*p=='.') p++;
 	if(*p=='$') p++;	// MAP鯖内共有変数用
 	if(*p=='@') p++;	// 一時的変数用(like weiss)
 	if(*p=='#') p++;	// account変数用
@@ -2349,7 +2349,7 @@ int get_val(struct script_state*st,struct script_data* data)
 					if(sd)
 					data->u.str = pc_readaccountregstr(sd,name);
 				}
- 			}else if(prefix=='\'') {
+ 			}else if(prefix=='.') {
 				struct linkdb_node **n;
 				if( data->ref ) {
 					n = data->ref;
@@ -2391,7 +2391,7 @@ int get_val(struct script_state*st,struct script_data* data)
 					if(sd)
 					data->u.num = pc_readaccountreg(sd,name);
 				}
-			}else if(prefix=='\''){
+			}else if(prefix=='.'){
 				struct linkdb_node **n;
 				if( data->ref ) {
 					n = data->ref;
@@ -2444,7 +2444,7 @@ static int set_reg(struct script_state*st,struct map_session_data *sd,int num,ch
 				pc_setaccountreg2str(sd,name,str);
 			else
 				pc_setaccountregstr(sd,name,str);
- 		}else if(prefix=='\'') {
+ 		}else if(prefix=='.') {
 			char *p;
 			struct linkdb_node **n;
 			if( ref ) {
@@ -2482,7 +2482,7 @@ static int set_reg(struct script_state*st,struct map_session_data *sd,int num,ch
 				pc_setaccountreg2(sd,name,val);
 			else
 				pc_setaccountreg(sd,name,val);
-		}else if(prefix == '\'') {
+		}else if(prefix == '.') {
 			struct linkdb_node **n;
 			if( ref ) {
 				n = ref;
@@ -2801,9 +2801,9 @@ int buildin_callfunc(struct script_state *st)
 			if( s->type == C_NAME && !s->ref ) {
 				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
 				// '@ 変数の引き継ぎ
-				if( name[0] == '\'' && name[1] == '@' ) {
+				if( name[0] == '.' && name[1] == '@' ) {
 					s->ref = oldval;
-				} else if( name[0] == '\'' ) {
+				} else if( name[0] == '.' ) {
 					s->ref = &oldscr->script_vars;
 				}
 			}
@@ -2849,7 +2849,7 @@ int buildin_callsub(struct script_state *st)
 			if( s->type == C_NAME && !s->ref ) {
 				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
 				// '@ 変数の引き継ぎ
-				if( name[0] == '\'' && name[1] == '@' ) {
+				if( name[0] == '.' && name[1] == '@' ) {
 					s->ref = oldval;
 				}
 			}
@@ -2894,10 +2894,10 @@ int buildin_return(struct script_state *st)
 		sd = &st->stack->stack_data[st->stack->sp-1];
 		if(sd->type == C_NAME) {
 			char *name = str_buf + str_data[sd->u.num&0x00ffffff].str;
-			if( name[0] == '\'' && name[1] == '@') {
+			if( name[0] == '.' && name[1] == '@') {
 				// '@ 変数を参照渡しにすると危険なので値渡しにする
 				get_val(st,sd);
-			} else if( name[0] == '\'' && !sd->ref) {
+			} else if( name[0] == '.' && !sd->ref) {
 				// ' 変数は参照渡しでも良いが、参照元が設定されていないと
 				// 元のスクリプトの値を差してしまうので補正する。
 				sd->ref = &st->script->script_vars;
@@ -3492,7 +3492,7 @@ int buildin_setarray(struct script_state *st)
 	char postfix=name[strlen(name)-1];
 	int i,j;
 
-	if( prefix!='$' && prefix!='@' && prefix!='\''){
+	if( prefix!='$' && prefix!='@' && prefix!='.'){
 		ShowWarning("buildin_setarray: illegal scope !\n");
 		return 1;
 	}
@@ -3524,7 +3524,7 @@ int buildin_cleararray(struct script_state *st)
 	int i;
 	void *v;
 
-	if( prefix!='$' && prefix!='@' && prefix!='\''){
+	if( prefix!='$' && prefix!='@' && prefix!='.'){
 		ShowWarning("buildin_cleararray: illegal scope !\n");
 		return 1;
 	}
@@ -3558,11 +3558,11 @@ int buildin_copyarray(struct script_state *st)
 	int sz=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	int i;
 
-	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
+	if( prefix!='$' && prefix!='@' && prefix!='.' ){
 		printf("buildin_copyarray: illeagal scope !\n");
 		return 0;
 	}
-	if( prefix2!='$' && prefix2!='@' && prefix2!='\'' ) {
+	if( prefix2!='$' && prefix2!='@' && prefix2!='.' ) {
 		printf("buildin_copyarray: illeagal scope !\n");
 		return 0;
 	}
@@ -3619,7 +3619,7 @@ int buildin_getarraysize(struct script_state *st)
 	char prefix=*name;
 	char postfix=name[strlen(name)-1];
 
-	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
+	if( prefix!='$' && prefix!='@' && prefix!='.' ){
 		ShowWarning("buildin_copyarray: illegal scope !\n");
 		return 1;
 	}
@@ -3645,7 +3645,7 @@ int buildin_deletearray(struct script_state *st)
 	if( (st->end > st->start+3) )
 		count=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	if( prefix!='$' && prefix!='@' && prefix!='\'' ){
+	if( prefix!='$' && prefix!='@' && prefix!='.' ){
 		ShowWarning("buildin_deletearray: illegal scope !\n");
 		return 1;
 	}
@@ -10626,23 +10626,31 @@ int buildin_setmobdata(struct script_state *st){
 }
 
 int buildin_mobattack(struct script_state *st) {
-	int id;
-	char *target;
+	int id = 0;
+	char *target = NULL;
 	struct mob_data *md = NULL;
 	struct map_session_data *sd = NULL;
 	struct block_list *bl = NULL;
 	
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+	if(st->end > st->start + 3)
+		target = conv_str(st, & (st->stack->stack_data[st->start+3]));
 
-	if((sd = map_nick2sd(target)) != NULL || (bl = map_id2bl(atoi(target))) != NULL) {
-		if (sd) bl = &sd->bl;
-		md = (struct mob_data *)map_id2bl(id);
+	if(target){
+		sd = map_nick2sd(target);
+		if(!sd)
+			bl = map_id2bl(atoi(target));
+		else
+			bl = &sd->bl;
+	}
+
+	if((md = (struct mob_data *)map_id2bl(id))){
 		if (md && md->bl.type == BL_MOB) {
-			md->target_id = bl->id;
-			md->special_state.ai = 1;
-			//md->min_chase = distance_bl(&md->bl,map_id2bl(md->target_id)) + md->db->range2;
-			unit_walktobl(&md->bl, bl, 65025, 2);
+			md->state.killer = 1;
+			if(bl){
+				md->target_id = bl->id;
+				unit_walktobl(&md->bl, bl, 65025, 2);
+			}
 		}
 	}
 
@@ -10832,7 +10840,7 @@ int buildin_getvariableofnpc(struct script_state *st)
 		char *var_name = str_buf+str_data[num&0x00ffffff].str;
 		char *npc_name = conv_str(st,& (st->stack->stack_data[st->start+3]));
 		struct npc_data *nd = npc_name2id(npc_name);
-		if( var_name[0] != '\'' || var_name[1] == '@' ) {
+		if( var_name[0] != '.' || var_name[1] == '@' ) {
 			// ' 変数以外はダメ
 			printf("getvariableofnpc: invalid scope %s\n", var_name);
 			push_val(st->stack,C_INT,0);

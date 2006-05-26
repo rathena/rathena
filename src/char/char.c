@@ -2917,9 +2917,10 @@ int parse_frommap(int fd) {
 						return 0;
 				}
 
-				if(pos) // If the player's already in the list, remove the entry and shift the following ones 1 step up
+				if(pos){ // If the player's already in the list, remove the entry and shift the following ones 1 step up
 					memmove(list + pos - 1, list + pos, (size - pos) * sizeof(struct fame_list));
 					list[size].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
+				}
 
 				for(i = 0; i < size; i++) // Find the position where the player has to be inserted
 					if(fame >= list[i].fame) { // When found someone with less or as much fame, insert just above

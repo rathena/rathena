@@ -3426,6 +3426,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB*md = (TBL_MOB*)s_bl;
+			if(md->state.killer) // Is on a rampage too :D
+				state |= BCT_ENEMY;
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
 			if (!md->special_state.ai) { //Normal mobs.
@@ -3434,7 +3436,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.
 			} else {
-				//if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
+				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 			}
 			if (md->master_id && (s_bl = map_id2bl(md->master_id)) == NULL)
