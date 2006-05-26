@@ -27,6 +27,7 @@
 
 =========================
 05/26
+	* Added missing Odin drops (guessed) [Playtester]
 	* Updated Kiel and added Odin mob drops [Playtester]
 	- low drop rates as long as not known
 	- still missing Makeup Kit, Angel Hairband and not sure which Survivor's Rod
