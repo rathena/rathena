@@ -31,6 +31,7 @@ Evera
 Date		Added
 ======
 05/25
+	* Fixed Abyss Lake spawns [Playtester]
 	* Fixed Thanatos Tower spawns [Playtester]
 	* Added a custom Market Place to clear Prontera streets from annoying shops. [Lupus]
 		'novending' mapflag sample: Try it and adjust the script as you want. 
