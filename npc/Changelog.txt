@@ -30,6 +30,9 @@ Evera
 
 Date		Added
 ======
+05/26
+	* Uncommented Odin and Kiel spawn files, they are mostly safe to use [Playtester]
+	- you still can't access Kiel's place, though
 05/25
 	* Fixed Abyss Lake spawns [Playtester]
 	* Fixed Thanatos Tower spawns [Playtester]
