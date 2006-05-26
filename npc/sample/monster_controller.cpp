@@ -69,14 +69,26 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 				break;
 		}
 
-		if(.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_ATTACK)
-			set .@action_type$, "Attacked by";
-		else if(.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_DETECT)
-			set .@action_type$, "Detected";
-		else if (.ai_action[AI_ACTION_TYPE] == AI_ACTION_TYPE_ASSIST)
-			set .@action_type$, "Killed by";
-		else
-			set .@action_type$, "Assisting";
+		switch(.ai_action[AI_ACTION_TYPE]){
+			case AI_ACTION_TYPE_ATTACK:
+				set .@action_type$, "Attacked by";
+				break;
+			case AI_ACTION_TYPE_DETECT:
+				set .@action_type$, "Detected";
+				break;
+			case AI_ACTION_TYPE_DEAD:
+				set .@action_type$, "Killed by";
+				break;
+			case AI_ACTION_TYPE_ASSIST:
+				set .@action_type$, "Assisting";
+				break;
+			case AI_ACTION_TYPE_UNLOCK:
+				set .@action_type$, "Unlocked target";
+				break;
+			case AI_ACTION_TYPE_KILL:
+				set .@action_type$, "Killed";
+				break;
+		}
 
 		announce "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", bc_all;
 		deletearray .ai_action, 4;

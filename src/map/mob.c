@@ -808,7 +808,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 		setd_sub(NULL, NULL, ".ai_action", 2, (void *)bl->id, &md->nd->u.scr.script->script_vars);
 		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
 		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-		return 0; // We have script handling the work.
+		return 1; // We have script handling the work.
 	}
 
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
@@ -996,6 +996,15 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 int mob_unlocktarget(struct mob_data *md,int tick)
 {
 	nullpo_retr(0, md);
+
+	if(md->nd){
+		struct block_list *tbl = map_id2bl(md->target_id);
+		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)6, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)(tbl?tbl->type:0), &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 2, (void *)(tbl?tbl->id:0), &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+	}
 
 	md->target_id=0;
 	md->state.skillstate=MSS_IDLE;
@@ -2158,6 +2167,17 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 		ShowNotice("MOB.C: Run NPC_Event[OnAgitBreak].\n");
 		if (agit_flag == 1) //Call to Run NPC_Event[OnAgitBreak]
 			guild_agit_break(md);
+	}
+
+	if(src->type == BL_MOB){
+		struct mob_data *smd = (struct mob_data *)src;
+		if(smd->nd){
+			setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)5, &smd->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)md->bl.type, &smd->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 2, (void *)md->bl.id, &smd->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 3, (void *)smd->bl.id, &smd->nd->u.scr.script->script_vars);
+			run_script(smd->nd->u.scr.script, 0, 0, smd->nd->bl.id);
+		}
 	}
 
 	if(md->nd){

@@ -4527,37 +4527,48 @@ int pc_damage(struct block_list *src,struct map_session_data *sd,int damage)
 	}
 	clif_clearchar_area(&sd->bl,1);
 
-	if (src && src->type == BL_PC) {
-		struct map_session_data *ssd = (struct map_session_data *)src;
-		if (ssd) {
-			if (sd->state.event_death)
-				pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
-			if (ssd->state.event_kill_pc) {
-				pc_setglobalreg(ssd, "killedrid", sd->bl.id);
-				npc_script_event(ssd, NPCE_KILLPC);
+	if (src) {
+		if(src->type == BL_MOB){
+			struct mob_data *smd = (struct mob_data *)src;
+			if(smd->nd){
+				setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)5, &smd->nd->u.scr.script->script_vars);
+				setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)sd->bl.type, &smd->nd->u.scr.script->script_vars);
+				setd_sub(NULL, NULL, ".ai_action", 2, (void *)sd->bl.id, &smd->nd->u.scr.script->script_vars);
+				setd_sub(NULL, NULL, ".ai_action", 3, (void *)smd->bl.id, &smd->nd->u.scr.script->script_vars);
+				run_script(smd->nd->u.scr.script, 0, 0, smd->nd->bl.id);
 			}
-			if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
-				ssd->status.manner -= 5;
-				if(ssd->status.manner < 0)
-					sc_start(src,SC_NOCHAT,100,0,0);
-
-			// PK/Karma system code (not enabled yet) [celest]
-			// originally from Kade Online, so i don't know if any of these is correct ^^;
-			// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
-			// karma going down = more 'good' / more honourable.
-			// The Karma System way...
-				/*if (sd->status.karma > ssd->status.karma) {	// If player killed was more evil
-					sd->status.karma--;
-					ssd->status.karma--;
+		} else if(src->type == BL_PC){
+			struct map_session_data *ssd = (struct map_session_data *)src;
+			if (ssd) {
+				if (sd->state.event_death)
+					pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
+				if (ssd->state.event_kill_pc) {
+					pc_setglobalreg(ssd, "killedrid", sd->bl.id);
+					npc_script_event(ssd, NPCE_KILLPC);
 				}
-				else if (sd->status.karma < ssd->status.karma)	// If player killed was more good
-					ssd->status.karma++;*/
+				if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
+					ssd->status.manner -= 5;
+					if(ssd->status.manner < 0)
+						sc_start(src,SC_NOCHAT,100,0,0);
 
-			// or the PK System way...
-				/* if (sd->status.karma > 0)	// player killed is dishonourable?
-					ssd->status.karma--; // honour points earned
-				sd->status.karma++;	// honour points lost */
-				// To-do: Receive exp on certain occasions
+				// PK/Karma system code (not enabled yet) [celest]
+				// originally from Kade Online, so i don't know if any of these is correct ^^;
+				// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
+				// karma going down = more 'good' / more honourable.
+				// The Karma System way...
+					/*if (sd->status.karma > ssd->status.karma) {	// If player killed was more evil
+						sd->status.karma--;
+						ssd->status.karma--;
+					}
+					else if (sd->status.karma < ssd->status.karma)	// If player killed was more good
+						ssd->status.karma++;*/
+
+				// or the PK System way...
+					/* if (sd->status.karma > 0)	// player killed is dishonourable?
+						ssd->status.karma--; // honour points earned
+					sd->status.karma++;	// honour points lost */
+					// To-do: Receive exp on certain occasions
+				}
 			}
 		}
 	} else {
