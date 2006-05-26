@@ -27,6 +27,9 @@
 
 =========================
 05/26
+	* Updated Kiel and added Odin mob drops [Playtester]
+	- low drop rates as long as not known
+	- still missing Makeup Kit, Angel Hairband and not sure which Survivor's Rod
 	* Fixed 12106,Jeweled_Box. Now giving an accessory [Lupus]
 05/25
 	* Modified some drops and added drops to Ferus and Dragon Egg [Playtester]
