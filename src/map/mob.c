@@ -2182,8 +2182,8 @@ int mob_damage(struct block_list *src,struct mob_data *md,int damage,int type)
 
 	if(md->nd){
 		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)3, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)(src?src->type:0), &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 2, (void *)(src?src->id:0), &md->nd->u.scr.script->script_vars);
 		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
 		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
 	} else if(md->npc_event[0]){
