@@ -30,6 +30,8 @@ Evera
 
 Date		Added
 ======
+05/27
+	* Implemented the friendship quest. *finally* [MasterOfMuppets]
 05/26
 	* Modified Kiel spawn file [Playtester]
 	- only one Aliza each floor
