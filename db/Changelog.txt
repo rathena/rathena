@@ -27,6 +27,7 @@
 
 =========================
 05/26
+	* Added Red Chile drop to Kraben & small aMotion fix [Playtester]
 	* Added missing Odin drops (guessed) [Playtester]
 	* Updated Kiel and added Odin mob drops [Playtester]
 	- low drop rates as long as not known
