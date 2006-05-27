@@ -31,6 +31,9 @@ Evera
 Date		Added
 ======
 05/26
+	* Modified Kiel spawn file [Playtester]
+	- only one Aliza each floor
+	- Kiel D-01 spawns every 2 hours on floor 2
 	* Uncommented Odin and Kiel spawn files, they are mostly safe to use [Playtester]
 	- you still can't access Kiel's place, though
 05/25

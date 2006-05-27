@@ -13,19 +13,17 @@
 //==================================================
 // kh_dun01 - Machine doll factory, 1st floor
 //==================================================
-kh_dun01.gat,0,0,0,0	monster	Alice	1275,10,900000,450000,0
-kh_dun01.gat,0,0,0,0	monster	Alicel	1735,15,300000,150000,0
-kh_dun01.gat,0,0,0,0	monster	Aliot	1736,10,600000,300000,0
-kh_dun01.gat,0,0,0,0	monster	Aliza	1737,35,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Constant	1738,15,0,0,0
+kh_dun01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+kh_dun01.gat,0,0,0,0	monster	Alicel	1735,40,0,0,0
+kh_dun01.gat,0,0,0,0	monster	Aliot	1736,35,0,0,0
+kh_dun01.gat,0,0,0,0	monster	Aliza	1737,1,0,0,0
+kh_dun01.gat,0,0,0,0	monster	Constant	1738,30,0,0,0
 
 //==================================================
 // kh_dun02 - Machine doll factory, 2nd floor
 //==================================================
-kh_dun02.gat,0,0,0,0	monster	Alicel	1735,30,600000,300000,0
-kh_dun02.gat,0,0,0,0	monster	Aliot	1736,20,300000,150000,0
-kh_dun02.gat,0,0,0,0	monster	Aliza	1737,15,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Constant	1738,20,0,0,0
-// We have to little info about these
-//kh_dun02.gat,0,0,0,0	monster	Kiel	1733,1,1800000,900000,1
-//kh_dun02.gat,0,0,0,0	monster	Kiel D-01	1734,1,7200000,3600000,1
+kh_dun02.gat,0,0,0,0	monster	Alicel	1735,50,0,0,0
+kh_dun02.gat,0,0,0,0	monster	Aliot	1736,45,0,0,0
+kh_dun02.gat,0,0,0,0	monster	Aliza	1737,1,0,0,0
+kh_dun02.gat,0,0,0,0	monster	Constant	1738,40,0,0,0
+kh_dun02.gat,0,0,0,0	monster	Kiel D-01	1734,1,7200000,3600000,1
