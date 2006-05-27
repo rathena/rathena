@@ -180,15 +180,15 @@
 158,3,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_PIERCINGATT#Thrusting attack#
 159,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_MENTALBREAKER#Spirit Destruction#
 160,9,6,1,0,0,0,10,1,no,0,2,0,weapon,0	//NPC_RANGEATTACK#Stand off attack#
-161,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_ATTRICHANGE#Run Attribute Change#
-162,0,0,4,1,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEWATER#Water Attribute Change#
-163,0,0,4,2,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEGROUND#Earth Attribute Change#
-164,0,0,4,3,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEFIRE#Fire Attribute Change#
-165,0,0,4,4,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEWIND#Wind Attribute Change#
-166,0,0,4,5,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEPOISON#Poison Attribute Change#
-167,0,0,4,6,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEHOLY#Holy Attribute Change#
-168,0,0,4,7,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
-169,0,0,4,8,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
+161,0,0,4,0,1,0,1,1,no,0,2,0,magic,0	//NPC_ATTRICHANGE#Run Attribute Change#
+162,0,0,4,1,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEWATER#Water Attribute Change#
+163,0,0,4,2,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEGROUND#Earth Attribute Change#
+164,0,0,4,3,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEFIRE#Fire Attribute Change#
+165,0,0,4,4,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEWIND#Wind Attribute Change#
+166,0,0,4,5,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEPOISON#Poison Attribute Change#
+167,0,0,4,6,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEHOLY#Holy Attribute Change#
+168,0,0,4,7,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
+169,0,0,4,8,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
 170,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
 171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
 172,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#

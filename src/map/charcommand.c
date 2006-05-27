@@ -422,15 +422,6 @@ int charcommand_petfriendly(
 					pl_sd->pet.intimate = friendly;
 					clif_send_petstatus(pl_sd);
 					clif_pet_emotion(pl_sd->pd,0);
-					if (battle_config.pet_status_support) {
-						if ((pl_sd->pet.intimate > 0 && t <= 0) ||
-							(pl_sd->pet.intimate <= 0 && t > 0)) {
-							if (pl_sd->bl.prev != NULL)
-								status_calc_pc(pl_sd, 0);
-							else
-								status_calc_pc(pl_sd, 2);
-						}
-					}
 					clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
 					clif_displaymessage(sd->fd, msg_table[182]); // Pet friendly value changed!
 				} else {
@@ -1317,7 +1308,7 @@ int charcommand_baselevel(
 				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
 				clif_updatestatus(pl_sd, SP_STATUSPOINT);
 				status_calc_pc(pl_sd, 0);
-				pc_heal(pl_sd, pl_sd->status.max_hp, pl_sd->status.max_sp);
+				status_percent_heal(&pl_sd->bl, 100, 100);
 				clif_misceffect(&pl_sd->bl, 0);
 				clif_displaymessage(fd, msg_table[65]); // Character's base level raised.
 			} else {

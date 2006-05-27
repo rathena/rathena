@@ -2113,9 +2113,7 @@ int atcommand_speed(
 
 	speed = atoi(message);
 	if (speed >= MIN_WALK_SPEED && speed <= MAX_WALK_SPEED) {
-		sd->speed = speed;
-		//sd->walktimer = x;
-		//‚±‚Ì•¶‚ð’Ç‰Á by ‚ê‚
+		sd->battle_status.speed = speed;
 		clif_updatestatus(sd, SP_SPEED);
 		clif_displaymessage(fd, msg_table[8]); // Speed changed.
 	} else {
@@ -2381,7 +2379,7 @@ int atcommand_die(
 {
 	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,1);
-	pc_damage(NULL, sd, sd->status.hp);
+	status_kill(&sd->bl);
 	clif_displaymessage(fd, msg_table[13]); // A pity! You've died.
 
 	return 0;
@@ -2407,7 +2405,7 @@ int atcommand_kill(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
-			pc_damage(NULL, pl_sd, pl_sd->status.hp);
+			status_kill(&pl_sd->bl);
 			clif_displaymessage(fd, msg_table[14]); // Character killed.
 		} else {
 			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
@@ -2501,37 +2499,46 @@ int atcommand_heal(
 	sscanf(message, "%d %d", &hp, &sp);
 
 	if (hp == 0 && sp == 0) {
-		hp = sd->status.max_hp - sd->status.hp;
-		sp = sd->status.max_sp - sd->status.sp;
-	} else {
-		if (hp > 0 && (hp > sd->status.max_hp || hp > (sd->status.max_hp - sd->status.hp))) // fix positiv overflow
-			hp = sd->status.max_hp - sd->status.hp;
-		else if (hp < 0 && (hp < -sd->status.max_hp || hp < (1 - sd->status.hp))) // fix negativ overflow
-			hp = 1 - sd->status.hp;
-		if (sp > 0 && (sp > sd->status.max_sp || sp > (sd->status.max_sp - sd->status.sp))) // fix positiv overflow
-			sp = sd->status.max_sp - sd->status.sp;
-		else if (sp < 0 && (sp < -sd->status.max_sp || sp < (1 - sd->status.sp))) // fix negativ overflow
-			sp = 1 - sd->status.sp;
-	}
-
-	if (hp > 0) // display like heal
-		clif_heal(fd, SP_HP, hp);
-	else if (hp < 0) // display like damage
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
-	if (sp > 0) // no display when we lost SP
-		clif_heal(fd, SP_SP, sp);
-
-	if (hp != 0 || sp != 0) {
-		pc_heal(sd, hp, sp);
-		if (hp >= 0 && sp >= 0)
-			clif_displaymessage(fd, msg_table[17]); // HP, SP recovered.
+		if (!status_heal(&sd->bl, sd->battle_status.max_hp, sd->battle_status.max_sp, 2))
+			clif_displaymessage(fd, msg_table[157]); // HP and SP are already with the good value.
 		else
-			clif_displaymessage(fd, msg_table[156]); // HP or/and SP modified.
-	} else {
-		clif_displaymessage(fd, msg_table[157]); // HP and SP are already with the good value.
-		return -1;
+			clif_displaymessage(fd, msg_table[17]); // HP, SP recovered.
+		return 0;
+	}
+	
+	if(hp > 0 && sp >= 0) {
+		if(!status_heal(&sd->bl, hp, sp, 2))
+			clif_displaymessage(fd, msg_table[157]); // HP and SP are already with the good value.
+		else
+			clif_displaymessage(fd, msg_table[17]); // HP, SP recovered.
+		return 0;
 	}
 
+	if(hp < 0 && sp <= 0) {
+		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		clif_displaymessage(fd, msg_table[156]); // HP or/and SP modified.
+		return 0;
+	}
+
+	//Opposing signs.
+	if (hp) {
+		if (hp > 0)
+			status_heal(&sd->bl, hp, 0, 2);
+		else {
+			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
+			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		}
+	}
+
+	if (sp) {
+		if (sp > 0)
+			status_heal(&sd->bl, 0, sp, 2);
+		else
+			status_damage(NULL, &sd->bl, 0, -sp, 0, 0);
+	}
+
+	clif_displaymessage(fd, msg_table[156]); // HP or/and SP modified.
 	return 0;
 }
 
@@ -2767,7 +2774,7 @@ int atcommand_baselevelup(
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
 		clif_updatestatus(sd, SP_STATUSPOINT);
 		status_calc_pc(sd, 0);
-		pc_heal(sd, sd->status.max_hp, sd->status.max_sp);
+		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
 		clif_displaymessage(fd, msg_table[21]); /* Base level raised. */
 	} else {
@@ -3691,7 +3698,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 		return 0; //Do not touch WoE mobs!
 	
 	if (flag)
-		mob_damage(NULL, md, md->hp, 2);
+		status_kill(bl);
 	else
 		unit_remove_map(&md->bl,1);
 	
@@ -4841,7 +4848,7 @@ int atcommand_doom(
 	pl_allsd = map_getallusers(&users);
 	for(i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
-			pc_damage(NULL, pl_sd, pl_sd->status.hp);
+			status_kill(&pl_sd->bl);
 			clif_displaymessage(pl_sd->fd, msg_table[61]); // The holy messenger has given judgement.
 		}
 	}
@@ -4867,7 +4874,7 @@ int atcommand_doommap(
 		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && sd->bl.m == pl_sd->bl.m &&
 			pc_isGM(sd) >= pc_isGM(pl_sd))	// you can doom only lower or same gm level
 		{
-			pc_damage(NULL, pl_sd, pl_sd->status.hp);
+			status_kill(&pl_sd->bl);
 //			clif_specialeffect(&pl_sd->bl,450,1);
 			clif_displaymessage(pl_sd->fd, msg_table[61]); // The holy messenger has given judgement.
 		}
@@ -8247,8 +8254,6 @@ atcommand_summon(
 {
 	char name[NAME_LENGTH];
 	int mob_id = 0;
-	int x = 0;
-	int y = 0;
 	int id = 0;
 	int duration = 0;
 	struct mob_data *md;
@@ -8271,18 +8276,17 @@ atcommand_summon(
 	if(mob_id == 0 || mobdb_checkid(mob_id) == 0)
 		return -1;
 
-	x = sd->bl.x + (rand() % 10 - 5);
-	y = sd->bl.y + (rand() % 10 - 5);
+	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, -1, -1, "--ja--", mob_id, "");
 
-	id = mob_once_spawn(sd,"this", x, y, "--ja--", mob_id, 1, "");
-	if((md=(struct mob_data *)map_id2bl(id))){
+	if(md){
 		md->master_id=sd->bl.id;
 		md->special_state.ai=1;
-		md->mode=md->db->mode|MD_AGGRESSIVE;
 		md->deletetimer=add_timer(tick+(duration*60000),mob_timer_delete,id,0);
 		clif_misceffect2(&md->bl,344);
+		mob_spawn(md);
+		sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
+		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,md->bl.x,md->bl.y,tick);
 	}
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,x,y,tick);
 
 	return 0;
 }
@@ -9115,7 +9119,7 @@ int atcommand_killid(
    {
       if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
-            pc_damage(NULL, pl_sd, pl_sd->status.hp);
+            status_kill(&pl_sd->bl);
             clif_displaymessage(fd, msg_table[14]); // Character killed.
          } else {
             clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
@@ -9163,7 +9167,7 @@ int atcommand_killid2(
    {
       if ((pl_sd = (struct map_session_data *) session[session_id]->session_data) != NULL) {
          if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kill only lower or same level
-            pc_damage(NULL, pl_sd, pl_sd->status.hp);
+            status_kill(&pl_sd->bl);
             clif_displaymessage(fd, msg_table[14]); // Character killed.
          } else {
             clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
@@ -9417,19 +9421,17 @@ int atcommand_mobinfo(
 		else
 			sprintf(atcmd_output, "Monster: '%s'/'%s' (%d)", mob->name, mob->jname, mob_id);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, " Level:%d  HP:%d  SP:%d  Base EXP:%d  Job EXP:%d", mob->lv, mob->max_hp, mob->max_sp, mob->base_exp, mob->job_exp);
+		sprintf(atcmd_output, " Level:%d  HP:%d  SP:%d  Base EXP:%d  Job EXP:%d", mob->lv, mob->status.max_hp, mob->status.max_sp, mob->base_exp, mob->job_exp);
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, " DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d", mob->def, mob->mdef, mob->str, mob->agi, mob->vit, mob->int_, mob->dex, mob->luk);
+		sprintf(atcmd_output, " DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d",
+			mob->status.def, mob->status.mdef, mob->status.str, mob->status.agi,
+			mob->status.vit, mob->status.int_, mob->status.dex, mob->status.luk);
 		clif_displaymessage(fd, atcmd_output);
-		if (mob->element < 20) {
-			//Element - None, Level 0
-			i = 0;
-			j = 0;
-		} else {
-			i = mob->element % 20 + 1;
-			j = mob->element / 20;
-		}
-		sprintf(atcmd_output, " ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)", mob->atk1, mob->atk2, mob->range, mob->range2 , mob->range3, msize[mob->size], mrace[mob->race], melement[i], j);
+		
+		sprintf(atcmd_output, " ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)",
+			mob->status.rhw.atk, mob->status.rhw.atk2, mob->status.rhw.range,
+			mob->range2 , mob->range3, msize[mob->status.size],
+			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);
 		// drops
 		clif_displaymessage(fd, " Drops:");
@@ -10195,7 +10197,7 @@ int atcommand_clone(
 		y = sd->bl.y;
 	}
 		
-	if((x = mob_clone_spawn(pl_sd, (char*)mapindex_id2name(sd->mapindex), x, y, "", master, 0, flag?1:0, 0)) > 0) {
+	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, 0, flag?1:0, 0)) > 0) {
 		clif_displaymessage(fd, msg_txt(128+flag*2));
 		return 0;
 	}

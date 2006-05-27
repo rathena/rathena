@@ -1206,8 +1206,6 @@ int guild_skillup(struct map_session_data *sd,int skill_num,int flag)
 		g->skill[idx].lv < guild_skill_get_max(skill_num) ){
 		intif_guild_skillup(g->guild_id,skill_num,sd->status.account_id,flag);
 	}
-	status_calc_pc (sd, 0); // Celest
-
 	return 0;
 }
 // スキルポイント割り振り通知

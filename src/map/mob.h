@@ -36,19 +36,14 @@ struct mob_skill {
 
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
-	unsigned short lv;
-	int max_hp,max_sp;
 	unsigned int base_exp,job_exp;
-	int atk1,atk2;
-	int def,mdef;
-	int str,agi,vit,int_,dex,luk;
-	int range,range2,range3;
-	int size,race,element,mode;
+	unsigned int mexp,mexpper;
+	int range2,range3;
 	short race2;	// celest
-	int speed,adelay,amotion,dmotion;
-	int mexp,mexpper;
+	unsigned short lv;
 	struct { int nameid,p; } dropitem[MAX_MOB_DROP];
 	struct { int nameid,p; } mvpitem[3];
+	struct status_data status;
 	struct view_data vd;
 	short option;
 	int summonper[MAX_RANDOMMONSTER];
@@ -133,6 +128,8 @@ int mobdb_searchname(const char *str);
 int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int class_);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
+	short x, short y, const char *mobname, int class_, const char *event);
 int mob_once_spawn(struct map_session_data *sd,char *mapname,
 	short x,short y,const char *mobname,int class_,int amount,const char *event);
 int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
@@ -151,8 +148,9 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
-int mob_damage(struct block_list *,struct mob_data*,int,int);
-int mob_heal(struct mob_data*,int);
+void mob_damage(struct mob_data *md, struct block_list *src, int damage);
+int mob_dead(struct mob_data *md, struct block_list *src, int type);
+void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) { if (md->ud.walktimer != -1) unit_stop_walking(&md->bl, type); }
 #define mob_stop_attack(md) { if (md->ud.attacktimer != -1) unit_stop_attack(&md->bl); }
@@ -179,7 +177,7 @@ int mob_convertslave(struct mob_data *md);
 
 int mob_is_clone(int class_);
 
-int mob_clone_spawn(struct map_session_data *sd, char *map, int x, int y, const char *event, int master_id, int mode, int flag, unsigned int duration);
+int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char *event, int master_id, int mode, int flag, unsigned int duration);
 int mob_clone_delete(int class_);
 
 void mob_reload(void);

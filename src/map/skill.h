@@ -224,10 +224,9 @@ void skill_identify(struct map_session_data *sd,int idx);
 void skill_weaponrefine(struct map_session_data *sd,int idx); // [Celest]
 int skill_autospell(struct map_session_data *md,int skillid);
 
-#define skill_calc_heal(bl,skill_lv) (( status_get_lv(bl)+status_get_int(bl) )/8 *(4+ skill_lv*8))
+int skill_calc_heal(struct block_list *bl, int skill_lv);
 
-// その他
-int skill_check_cloaking(struct block_list *bl);
+int skill_check_cloaking(struct block_list *bl, struct status_change *sc);
 
 // ステ?タス異常
 int skill_enchant_elemental_end(struct block_list *bl, int type);

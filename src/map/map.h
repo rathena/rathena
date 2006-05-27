@@ -280,6 +280,20 @@ enum {
 	RC_MAX
 };
 
+enum {
+	ELE_NEUTRAL=0,
+	ELE_WATER,
+	ELE_EARTH,
+	ELE_FIRE,
+	ELE_WIND,
+	ELE_POISON,
+	ELE_HOLY,
+	ELE_DARK,
+	ELE_GHOST,
+	ELE_UNDEAD,
+	ELE_MAX
+};
+
 struct block_list {
 	struct block_list *next,*prev;
 	int id;
@@ -378,6 +392,37 @@ struct unit_data {
 	} state;
 };
 
+//Basic damage info of a weapon
+//Required because players have two of these, one in status_data and another
+//for their left hand weapon.
+struct weapon_atk {
+	unsigned short atk, atk2;
+	unsigned short range;
+	unsigned char ele;
+};
+
+//For holding basic status (which can be modified by status changes)
+struct status_data {
+	unsigned int
+		hp, sp,
+		max_hp, max_sp;
+	unsigned short
+		str, agi, vit, int_, dex, luk,
+		batk,
+		matk_min, matk_max,
+		hit, flee, cri, flee2,
+		def2, mdef2,
+		speed,
+		amotion, adelay, dmotion,
+		mode;
+	short aspd_rate;
+	unsigned char
+		def, mdef,
+		def_ele, ele_lv,
+		size, race;
+	struct weapon_atk rhw, *lhw; //Right Hand/Left Hand Weapon. Only players have a lhw (hence it's a pointer)
+};
+
 struct script_reg {
 	int index;
 	int data;
@@ -410,9 +455,6 @@ struct weapon_data {
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
 	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
-	int watk;
-	int watk2;
-	int atk_ele;
 	int overrefine;
 	int star;
 	int ignore_def_ele;
@@ -460,6 +502,8 @@ struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
+	struct status_data base_status, battle_status;
+	struct weapon_atk base_lhw, battle_lhw; //Left-hand weapon atk data.
 	struct status_change sc;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
@@ -529,9 +573,9 @@ struct map_session_data {
 	int cart_weight,cart_max_weight,cart_num,cart_max_num;
 	int fd;
 	unsigned short mapindex;
-	short speed,prev_speed;
+	unsigned short prev_speed,prev_adelay;
 	unsigned char head_dir;
-	unsigned int client_tick,server_tick;
+	unsigned int client_tick;
 	int npc_id,areanpc_id,npc_shopid;
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_pos;
@@ -572,15 +616,10 @@ struct map_session_data {
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
 
-	struct weapon_data right_weapon;
-	struct weapon_data left_weapon;
+	struct weapon_data right_weapon, left_weapon;
 	
-	int paramc[6],paramcard[6];
-
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
-
-	int paramb[6];
-	int parame[6];
+	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
 	int subele[10];
 	int subrace[RC_MAX];
 	int subrace2[RC_MAX];
@@ -624,16 +663,7 @@ struct map_session_data {
 	} add_drop[MAX_PC_BONUS];
 	// zeroed structures end here
 	// zeroed vars start here.
-	int hit;
-	int flee, flee2;
-	int critical;
-	int aspd;
-	int def, def2;
-	int mdef, mdef2;
-	int def_ele;
-	int matk1, matk2;
-	int base_atk;
-	int arrow_atk,arrow_ele,arrow_cri,arrow_hit,arrow_range;
+	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
 	int critical_def,double_rate;
 	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
@@ -653,8 +683,9 @@ struct map_session_data {
 	int hp_loss_rate;
 	int sp_loss_rate;
 	int classchange; // [Valaris]
+	int speed_add_rate, aspd_add_rate;
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
-
+	
 	short attackrange,attackrange_;
 	short splash_range, splash_add_range;
 	short add_steal_rate;
@@ -674,13 +705,11 @@ struct map_session_data {
 
 	// zeroed vars end here.
 
-	int amotion,dmotion;
 	int castrate,delayrate,hprate,sprate,dsprate;
 	int atk_rate;
 	int aspd_rate,speed_rate,hprecov_rate,sprecov_rate;
 	int matk_rate;
 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
-	int speed_add_rate, aspd_add_rate;
 
 	int hp_loss_tick;
 	int sp_loss_tick;
@@ -729,9 +758,7 @@ struct map_session_data {
 	struct vending vending[MAX_VENDING];
 
 	struct s_pet pet;
-	struct pet_db *petDB;
 	struct pet_data *pd;
-	int pet_hungry_timer;
 
 	struct homun_data *hd;	// [blackhole89]
 
@@ -855,13 +882,18 @@ struct mob_data {
 	struct block_list bl;
 	struct unit_data  ud;
 	struct view_data *vd;
+	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct {
 		unsigned size : 2; //Small/Big monsters.
 		unsigned cached : 1; //Cached mobs for dynamic mob unloading [Skotlex]
-		unsigned ai : 3; //Special ai for summoned monsters.
+		unsigned ai : 2; //Special ai for summoned monsters.
+							//0: Normal mob.
+							//1: Standard summon, attacks mobs.
+							//2: Alchemist Marine Sphere
+							//3: Alchemist Summon Flora
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {
 		unsigned skillstate : 8;
@@ -883,13 +915,11 @@ struct mob_data {
 	struct spawn_data *spawn; //Spawn data.
 	struct item *lootitem;
 	short spawn_n;	//Spawn data index on the map server.
-	short class_,mode;
-	short speed;
+	short class_;
 	short attacked_count;
-	unsigned short level;
 	unsigned char attacked_players;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
-	int hp, max_hp;
+	int level;
 	int target_id,attacked_id;
 	unsigned int next_walktime;
 	unsigned int last_deadtime,last_spawntime,last_thinktime,last_linktime;
@@ -898,7 +928,6 @@ struct mob_data {
 	short min_chase;
 	
 	int deletetimer;
-	int def_ele;
 	int master_id,master_dist;
 
 	struct npc_data *nd;
@@ -949,25 +978,21 @@ struct pet_data {
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
+	struct status_data status;
 	struct mob_db *db;
+	struct pet_db *petDB;
+	int pet_hungry_timer;
 	int target_id;
 	short n;
 	short class_;
-	short speed;
+	short equip;
 	char name[NAME_LENGTH];
 	struct {
-		unsigned skillstate : 8 ;
-		short skillbonus;
+		unsigned skillbonus : 1;
 	} state;
-	short equip;
 	int move_fail_count;
 	unsigned int next_walktime,last_thinktime;
 	short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
-	struct pet_status { //Pet Status data
-		short level;
-		short atk1,atk2;
-		short str,agi,vit,int_,dex,luk;
-	} *status;  //[Skotlex]
 
 	struct pet_recovery { //Stat recovery
 		unsigned short type;	//Status Change id
@@ -1166,8 +1191,10 @@ enum {
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
-	//Before adding another, note that 1077 (SP_FREE, previously disguise) and
-	//2007 (SP_FREE, previously Infinite Endure) are available!
+	//Before adding another, note that
+	//1077 (SP_FREE, previously disguise),
+	//2007 (SP_FREE2, previously Infinite Endure)
+	//are available!
 };
 
 enum {

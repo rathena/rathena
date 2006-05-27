@@ -514,9 +514,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,3);
 		if (sc) {
-			if (sc->option&OPTION_CLOAK)
-				skill_check_cloaking(bl);
 			if (sc->count) {
+				if (sc->data[SC_CLOAKING].timer != -1)
+					skill_check_cloaking(bl, sc);
 				if (sc->data[SC_DANCING].timer != -1) {
 					//Cancel Moonlight Petals if moved from casting position. [Skotlex]
 					if (sc->data[SC_DANCING].val1 == CG_MOONLIT)
@@ -1663,7 +1663,6 @@ int map_quit(struct map_session_data *sd) {
 		if (sd->pd) unit_free(&sd->pd->bl);
 		unit_free(&sd->bl);
 		pc_clean_skilltree(sd);
-		status_calc_pc(sd,4);
 		if(sd->pet.intimate > 0)
 			intif_save_petdata(sd->status.account_id,&sd->pet);
 		chrif_save(sd,1);
@@ -1954,7 +1953,7 @@ int mob_cache_cleanup_sub(struct block_list *bl, va_list ap) {
 	if (!md->special_state.cached)
 		return 0;
 	if (!battle_config.mob_remove_damaged && 
-		md->hp < md->db->max_hp) //don't use status_get_maxhp for speed (by the time you have to remove a mob, their status changes should have expired anyway)
+		md->status.hp < md->status.max_hp)
 		return 0; //Do not remove damaged mobs.
 	
 	unit_free(&md->bl);

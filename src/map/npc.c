@@ -2170,7 +2170,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	}
 
 	//Apply the spawn delay fix [Skotlex]
-	mode = mob_db(class_)->mode;
+	mode = mob_db(class_)->status.mode;
 	if (mode & MD_BOSS) {	//Bosses
 		if (battle_config.boss_spawn_delay != 100)
 		{
@@ -2457,10 +2457,12 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"jexp")==0) {
 		map[m].jexp = (state) ? atoi(w4) : 100;
 		if( map[m].jexp < 0 ) map[m].jexp = 100;
+		map[m].flag.nojobexp = (map[m].jexp==0)?1:0;
 	}
 	else if (strcmpi(w3,"bexp")==0) {
 		map[m].bexp = (state) ? atoi(w4) : 100;
 		if( map[m].bexp < 0 ) map[m].bexp = 100;
+		 map[m].flag.nobaseexp = (map[m].bexp==0)?1:0;
 	}
 	return 0;
 }

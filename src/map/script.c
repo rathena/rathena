@@ -3323,11 +3323,15 @@ int buildin_warpguild(struct script_state *st)
  */
 int buildin_heal(struct script_state *st)
 {
+	struct map_session_data *sd;
 	int hp,sp;
-
+	
+	sd = script_rid2sd(st);
+	if (!sd) return 0;
+	
 	hp=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	sp=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	pc_heal(script_rid2sd(st),hp,sp);
+	status_heal(&sd->bl, hp, sp, 1);
 	return 0;
 }
 /*==========================================
@@ -5779,7 +5783,7 @@ int buildin_killmonsterall(struct script_state *st)
  */
 int buildin_clone(struct script_state *st) {
 	struct map_session_data *sd, *msd=NULL;
-	int char_id,master_id=0,x,y, mode = 0, flag = 0;
+	int char_id,master_id=0,x,y, mode = 0, flag = 0, m;
 	unsigned int duration = 0;
 	char *map,*event="";
 
@@ -5803,7 +5807,11 @@ int buildin_clone(struct script_state *st) {
 
 	check_event(st, event);
 
+	m = map_mapname2mapid(map);
+	if (m < 0) return 0;
+
 	sd = map_charid2sd(char_id);
+
 	if (master_id) {
 		msd = map_charid2sd(master_id);
 		if (msd)
@@ -5812,7 +5820,7 @@ int buildin_clone(struct script_state *st) {
 			master_id = 0;
 	}
 	if (sd) //Return ID of newly crafted clone.
-		push_val(st->stack,C_INT,mob_clone_spawn(sd, map, x, y, event, master_id, mode, flag, 1000*duration));
+		push_val(st->stack,C_INT,mob_clone_spawn(sd, m, x, y, event, master_id, mode, flag, 1000*duration));
 	else //Failed to create clone.
 		push_val(st->stack,C_INT,0);
 
@@ -7940,23 +7948,19 @@ int buildin_strmobinfo(struct script_state *st)
 
 	switch (num) {
 	case 1:
-		{
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->name);
-			break;
-		}
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->name);
+		break;
 	case 2:
-		{
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->jname);
-			break;
-		}
+		push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->jname);
+		break;
 	case 3:
 		push_val(st->stack,C_INT,mob_db(class_)->lv);
 		break;
 	case 4:
-		push_val(st->stack,C_INT,mob_db(class_)->max_hp);
+		push_val(st->stack,C_INT,mob_db(class_)->status.max_hp);
 		break;
 	case 5:
-		push_val(st->stack,C_INT,mob_db(class_)->max_sp);
+		push_val(st->stack,C_INT,mob_db(class_)->status.max_sp);
 		break;
 	case 6:
 		push_val(st->stack,C_INT,mob_db(class_)->base_exp);
@@ -8680,7 +8684,7 @@ int buildin_nude(struct script_state *st)
 		}
 
 	if(calcflag)
-		status_calc_pc(sd,1);
+		status_calc_pc(sd,0);
 
 	return 0;
 }
@@ -9386,30 +9390,29 @@ int buildin_summon(struct script_state *st)
 	char *str,*event="";
 	struct map_session_data *sd;
 	struct mob_data *md;
+	int tick = gettick();
 
 	sd=script_rid2sd(st);
-	if (sd) {
-		int tick = gettick();
-		str	=conv_str(st,& (st->stack->stack_data[st->start+2]));
-		_class=conv_num(st,& (st->stack->stack_data[st->start+3]));
-		if( st->end>st->start+4 )
-			timeout=conv_num(st,& (st->stack->stack_data[st->start+4]));
-		if( st->end>st->start+5 ){
-			event=conv_str(st,& (st->stack->stack_data[st->start+5]));
-			check_event(st, event);
-		}
-
-		id=mob_once_spawn(sd, "this", 0, 0, str,_class,1,event);
-		if((md=(struct mob_data *)map_id2bl(id))){
-			md->master_id=sd->bl.id;
-			md->special_state.ai=1;
-			md->mode=mob_db(md->class_)->mode|0x04;
-			md->deletetimer=add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,id,0);
-			clif_misceffect2(&md->bl,344);
-		}
-		clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	if (!sd) return 0;
+	
+	str	=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	_class=conv_num(st,& (st->stack->stack_data[st->start+3]));
+	if( st->end>st->start+4 )
+		timeout=conv_num(st,& (st->stack->stack_data[st->start+4]));
+	if( st->end>st->start+5 ){
+		event=conv_str(st,& (st->stack->stack_data[st->start+5]));
+		check_event(st, event);
 	}
 
+	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	id=mob_once_spawn(sd, "this", 0, 0, str,_class,1,event);
+	md=(struct mob_data *)map_id2bl(id);
+	if (!md) return 0;
+	md->master_id=sd->bl.id;
+	md->special_state.ai=1;
+	md->deletetimer=add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,id,0);
+	clif_misceffect2(&md->bl,344);
+	sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	return 0;
 }
 
@@ -10212,12 +10215,12 @@ int buildin_getmonsterinfo(struct script_state *st)
 	int mob_id;
 
 	mob_id	= conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if (mob_id <= 1000 || (mob = mob_db(mob_id))==NULL) {
+	if (!mobdb_checkid(mob_id)) {
 		ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i", mob_id);
 		push_val(st->stack, C_INT, -1);
 		return -1;
 	}
-		
+	mob = mob_db(mob_id);
 	switch ( conv_num(st,& (st->stack->stack_data[st->start+3])) ) {
 		case 0: //Name
 			push_str(st->stack,C_CONSTSTR, (unsigned char *) mob->jname);
@@ -10226,7 +10229,7 @@ int buildin_getmonsterinfo(struct script_state *st)
 			push_val(st->stack,C_INT, mob->lv);
 			break;
 		case 2: //MaxHP
-			push_val(st->stack,C_INT, mob->max_hp);
+			push_val(st->stack,C_INT, mob->status.max_hp);
 			break;
 		case 3: //Base EXP
 			push_val(st->stack,C_INT, mob->base_exp);
@@ -10235,37 +10238,37 @@ int buildin_getmonsterinfo(struct script_state *st)
 			push_val(st->stack,C_INT, mob->job_exp);
 			break;
 		case 5: //Atk1
-			push_val(st->stack,C_INT, mob->atk1);
+			push_val(st->stack,C_INT, mob->status.rhw.atk);
 			break;
 		case 6: //Atk2
-			push_val(st->stack,C_INT, mob->atk2);
+			push_val(st->stack,C_INT, mob->status.rhw.atk2);
 			break;
 		case 7: //Def
-			push_val(st->stack,C_INT, mob->def);
+			push_val(st->stack,C_INT, mob->status.def);
 			break;
 		case 8: //Mdef
-			push_val(st->stack,C_INT, mob->mdef);
+			push_val(st->stack,C_INT, mob->status.mdef);
 			break;
 		case 9: //Str
-			push_val(st->stack,C_INT, mob->str);
+			push_val(st->stack,C_INT, mob->status.str);
 			break;
 		case 10: //Agi
-			push_val(st->stack,C_INT, mob->agi);
+			push_val(st->stack,C_INT, mob->status.agi);
 			break;
 		case 11: //Vit
-			push_val(st->stack,C_INT, mob->vit);
+			push_val(st->stack,C_INT, mob->status.vit);
 			break;
 		case 12: //Int
-			push_val(st->stack,C_INT, mob->int_);
+			push_val(st->stack,C_INT, mob->status.int_);
 			break;
 		case 13: //Dex
-			push_val(st->stack,C_INT, mob->dex);
+			push_val(st->stack,C_INT, mob->status.dex);
 			break;
 		case 14: //Luk
-			push_val(st->stack,C_INT, mob->luk);
+			push_val(st->stack,C_INT, mob->status.luk);
 			break;
 		case 15: //Range
-			push_val(st->stack,C_INT, mob->range);
+			push_val(st->stack,C_INT, mob->status.rhw.range);
 			break;
 		case 16: //Range2
 			push_val(st->stack,C_INT, mob->range2);
@@ -10274,16 +10277,16 @@ int buildin_getmonsterinfo(struct script_state *st)
 			push_val(st->stack,C_INT, mob->range3);
 			break;
 		case 18: //Size
-			push_val(st->stack,C_INT, mob->size);
+			push_val(st->stack,C_INT, mob->status.size);
 			break;
 		case 19: //Race
-			push_val(st->stack,C_INT, mob->race);
+			push_val(st->stack,C_INT, mob->status.race);
 			break;
 		case 20: //Element
-			push_val(st->stack,C_INT, mob->element);
+			push_val(st->stack,C_INT, mob->status.def_ele);
 			break;
 		case 21: //Mode
-			push_val(st->stack,C_INT, mob->mode);
+			push_val(st->stack,C_INT, mob->status.mode);
 			break;
 		default: //wrong Index
 			push_val(st->stack,C_INT,-1);
@@ -10448,7 +10451,6 @@ int buildin_pcstopfollow(struct script_state *st) {
 int buildin_spawnmob(struct script_state *st){
 	int class_,x,y,id;
 	char *str,*map,*event="";
-	struct mob_data *md = NULL;
 
 	// Who?
 	str		=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -10465,13 +10467,7 @@ int buildin_spawnmob(struct script_state *st){
 	}
 		
 	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,event);
-	if(id){
-		md = (struct mob_data *)map_id2bl(id);
-		if(md){
-			md->mode = md->db->mode;
-		}
-		push_val(st->stack,C_INT,id);
-	}
+	push_val(st->stack,C_INT,id);
 
 	return 0;
 }
@@ -10516,37 +10512,39 @@ int buildin_getmobdata(struct script_state *st) {
 	struct mob_data *md = NULL;
 	struct map_session_data *sd = st->rid?map_id2sd(st->rid):NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	if(!(md = (struct mob_data *)map_id2bl(id)) || st->stack->stack_data[st->start+3].type!=C_NAME ){
+	
+	if(!(md = (struct mob_data *)map_id2bl(id)) || md->bl.type != BL_MOB || st->stack->stack_data[st->start+3].type!=C_NAME ){
 		ShowWarning("buildin_getmobdata: Error in argument!\n");
-	} else {
-		num=st->stack->stack_data[st->start+3].u.num;
-		name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-		setd_sub(st,sd,name,0,(void *)(int)md->class_,NULL);
-		setd_sub(st,sd,name,1,(void *)(int)md->level,NULL);
-		setd_sub(st,sd,name,2,(void *)(int)md->hp,NULL);
-		setd_sub(st,sd,name,3,(void *)(int)md->max_hp,NULL);
-		setd_sub(st,sd,name,4,(void *)(int)md->master_id,NULL);
-		setd_sub(st,sd,name,5,(void *)(int)md->bl.m,NULL);
-		setd_sub(st,sd,name,6,(void *)(int)md->bl.x,NULL);
-		setd_sub(st,sd,name,7,(void *)(int)md->bl.y,NULL);
-		setd_sub(st,sd,name,8,(void *)(int)md->speed,NULL);
-		setd_sub(st,sd,name,9,(void *)(int)(md->mode?md->mode:md->db->mode),NULL);
-		setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,NULL);
-		setd_sub(st,sd,name,11,(void *)(int)md->db->option,NULL);
-		setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,NULL);
-		setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,NULL);
-		setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,NULL);
-		setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,NULL);
-		setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,NULL);
-		setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,NULL);
-		setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,NULL);
-		setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,NULL);
-		setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,NULL);
-		setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,NULL);
-		setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,NULL);
-		setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,NULL);
-		setd_sub(st,sd,name,24,(void *)(int)md->state.killer,NULL);
+		return -1;
 	}
+	
+	num=st->stack->stack_data[st->start+2].u.num;
+	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	setd_sub(st,sd,name,0,(void *)(int)md->class_,NULL);
+	setd_sub(st,sd,name,1,(void *)(int)md->level,NULL);
+	setd_sub(st,sd,name,2,(void *)(int)md->status.hp,NULL);
+	setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,NULL);
+	setd_sub(st,sd,name,4,(void *)(int)md->master_id,NULL);
+	setd_sub(st,sd,name,5,(void *)(int)md->bl.m,NULL);
+	setd_sub(st,sd,name,6,(void *)(int)md->bl.x,NULL);
+	setd_sub(st,sd,name,7,(void *)(int)md->bl.y,NULL);
+	setd_sub(st,sd,name,8,(void *)(int)md->status.speed,NULL);
+	setd_sub(st,sd,name,9,(void *)(int)md->status.mode,NULL);
+	setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,NULL);
+	setd_sub(st,sd,name,11,(void *)(int)md->sc.option,NULL);
+	setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,NULL);
+	setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,NULL);
+	setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,NULL);
+	setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,NULL);
+	setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,NULL);
+	setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,NULL);
+	setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,NULL);
+	setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,NULL);
+	setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,NULL);
+	setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,NULL);
+	setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,NULL);
+	setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,NULL);
+	setd_sub(st,sd,name,24,(void *)(int)md->state.killer,NULL);
 	return 0;
 }
 
@@ -10556,89 +10554,89 @@ int buildin_setmobdata(struct script_state *st){
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	value = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	value2 = conv_num(st, & (st->stack->stack_data[st->start+4]));
-	if(!(md = (struct mob_data *)map_id2bl(id))){
+	if(!(md = (struct mob_data *)map_id2bl(id)) || md->bl.type != BL_MOB){
 		ShowWarning("buildin_setmobdata: Error in argument!\n");
-	} else {
-		switch(value){
-			case 0:
-				md->class_ = (short)value2;
-				break;
-			case 1:
-				md->level = (unsigned short)value2;
-				break;
-			case 2:
-				md->hp = value2;
-				break;
-			case 3:
-				md->max_hp = value2;
-				break;
-			case 4:
-				md->master_id = value2;
-				break;
-			case 5:
-				md->bl.m = (short)value2;
-				break;
-			case 6:
-				md->bl.x = (short)value2;
-				break;
-			case 7:
-				md->bl.y = (short)value2;
-				break;
-			case 8:
-				md->speed = (short)value2;
-				break;
-			case 9:
-				md->mode = (short)value2;
-				break;
-			case 10:
-				md->special_state.ai = (unsigned int)value2;
-				break;
-			case 11:
-				md->db->option = (short)value2;
-				break;
-			case 12:
-				md->vd->sex = value2;
-				break;
-			case 13:
-				md->vd->class_ = value2;
-				break;
-			case 14:
-				md->vd->hair_style = (short)value2;
-				break;
-			case 15:
-				md->vd->hair_color = (short)value2;
-				break;
-			case 16:
-				md->vd->head_bottom = (short)value2;
-				break;
-			case 17:
-				md->vd->head_mid = (short)value2;
-				break;
-			case 18:
-				md->vd->head_top = (short)value2;
-				break;
-			case 19:
-				md->vd->cloth_color = (short)value2;
-				break;
-			case 20:
-				md->vd->shield = value2;
-				break;
-			case 21:
-				md->vd->weapon = (short)value2;
-				break;
-			case 22:
-				md->vd->shield = (short)value2;
-				break;
-			case 23:
-				md->ud.dir = (unsigned char)value2;
-				break;
-			case 24:
-				md->state.killer = value2>0?1:0;
-				break;
-			default:
-				ShowError("buildin_setmobdata: argument value2 is not identified.");
-				break;
-		}
+		return -1;
+	}
+	switch(value){
+		case 0:
+			md->class_ = (short)value2;
+			break;
+		case 1:
+			md->level = (unsigned short)value2;
+			break;
+		case 2:
+			md->status.hp = value2;
+			break;
+		case 3:
+			md->status.max_hp = value2;
+			break;
+		case 4:
+			md->master_id = value2;
+			break;
+		case 5:
+			md->bl.m = (short)value2;
+			break;
+		case 6:
+			md->bl.x = (short)value2;
+			break;
+		case 7:
+			md->bl.y = (short)value2;
+			break;
+		case 8:
+			md->status.speed = (short)value2;
+			break;
+		case 9:
+			md->status.mode = (short)value2;
+			break;
+		case 10:
+			md->special_state.ai = (unsigned int)value2;
+			break;
+		case 11:
+			md->sc.option = (short)value2;
+			break;
+		case 12:
+			md->vd->sex = value2;
+			break;
+		case 13:
+			md->vd->class_ = value2;
+			break;
+		case 14:
+			md->vd->hair_style = (short)value2;
+			break;
+		case 15:
+			md->vd->hair_color = (short)value2;
+			break;
+		case 16:
+			md->vd->head_bottom = (short)value2;
+			break;
+		case 17:
+			md->vd->head_mid = (short)value2;
+			break;
+		case 18:
+			md->vd->head_top = (short)value2;
+			break;
+		case 19:
+			md->vd->cloth_color = (short)value2;
+			break;
+		case 20:
+			md->vd->shield = value2;
+			break;
+		case 21:
+			md->vd->weapon = (short)value2;
+			break;
+		case 22:
+			md->vd->shield = (short)value2;
+			break;
+		case 23:
+			md->ud.dir = (unsigned char)value2;
+			break;
+		case 24:
+			md->state.killer = value2>0?1:0;
+			break;
+		default:
+			ShowError("buildin_setmobdata: argument id is not identified.");
+			return -1;
 	}
 	return 0;
 }

@@ -28,7 +28,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 int battle_calc_return_damage(struct block_list *bl, int *damage, int flag);
 void battle_drain(struct map_session_data *sd, struct map_session_data *tsd, int rdamage, int ldamage, int race, int boss);
 
-int battle_attr_fix(struct block_list *src, struct block_list *target, int damage,int atk_elem,int def_elem);
+int battle_attr_fix(struct block_list *src, struct block_list *target, int damage,int atk_elem,int def_type, int def_lv);
 
 // ダメージ最終計算
 int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
@@ -47,10 +47,7 @@ enum {	// 最終計算のフラグ
 	BF_SKILLMASK= 0x0f00,
 };
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int ddelay, int flag);
-int battle_damage(struct block_list *bl,struct block_list *target,int damage,int walkdelay,int flag);
-int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp,int flag);
-
+int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int ddelay);
 
 // 通常攻撃処理まとめ
 int battle_weapon_attack( struct block_list *bl,struct block_list *target,
@@ -235,9 +232,7 @@ extern struct Battle_Config {
 	unsigned short vit_penalty_type;
 	unsigned short vit_penalty_count;
 	unsigned short vit_penalty_num;
-	unsigned short player_defense_type;
-	unsigned short monster_defense_type;
-	unsigned short pet_defense_type;
+	unsigned short weapon_defense_type;
 	unsigned short magic_defense_type;
 	unsigned short skill_reiteration;
 	unsigned short skill_nofootset;
@@ -275,10 +270,8 @@ extern struct Battle_Config {
 	unsigned short show_steal_in_same_party;
 	unsigned short party_share_type;
 	unsigned short party_show_share_picker;
-	unsigned short pet_attack_attr_none;
-	unsigned short mob_attack_attr_none;
 	unsigned short mob_ghostring_fix;
-	unsigned short pc_attack_attr_none;
+	unsigned short attack_attr_none;
 	int item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,	// added support for MVP drops [Reddozen]
 		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
 		item_rate_use_boss, item_rate_treasure,	// Added by RoVeRT, Additional Heal and Usable item rate by Val

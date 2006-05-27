@@ -38,7 +38,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 int pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 int search_petDB_index(int key,int type);
-int pet_hungry_timer_delete(struct map_session_data *sd);
+int pet_hungry_timer_delete(struct pet_data *pd);
 int pet_data_init(struct map_session_data *sd);
 int pet_birth_process(struct map_session_data *sd);
 int pet_recv_petdata(int account_id,struct s_pet *p,int flag);
@@ -49,10 +49,7 @@ int pet_get_egg(int account_id,int pet_id,int flag);
 int pet_menu(struct map_session_data *sd,int menunum);
 int pet_change_name(struct map_session_data *sd,char *name);
 int pet_equipitem(struct map_session_data *sd,int index);
-int pet_unequipitem(struct map_session_data *sd);
-int pet_food(struct map_session_data *sd);
 int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd);
-int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
 int pet_attackskill(struct pet_data *pd, int target_id);
 int pet_skill_support_timer(int tid, unsigned int tick, int id, int data); // [Skotlex]
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data); // [Valaris]

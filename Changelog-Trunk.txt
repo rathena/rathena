@@ -3,6 +3,49 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/27
+	- Added structure status_data which holds status-related information (str,
+	  agi, etc, speed, amotion, adelay, dmotion, weapon-damage, race, size, etc)
+	  and weapon_atk structure with the weapon specific info (atk, atk2, element)
+	  to be used by all combat structures (TODO: Homun needs to be updated to use
+	  it). This in change involves a LOT of changes throughout the code and many
+	  optimizations were done as well. Partial list (see svn changelog for complete
+	  changes): [Skotlex]
+	- NOTE: Changes are substantial! I tested a bunch of stuff and all the
+	  skills I changed the most, but it is possible there are unnoticed bugs
+	  remaining to fix!
+	- Cleaned up TBL_PC, TBL_MOB, TBL_PC and mob_db structures to use status_data.
+	- Split damage received functions into pc_damage/pc_dead and mob_damage/mob_dead
+	- Added status functions to deal with damage and healing (status_damage,
+	  status_heal, status_percent_change) and a bunch of defines for easier
+	  handling of them (status_percent_heal, status_percent_damage,
+	  status_fix_damage, status_kill, etc). Objects must be hurt/healed through
+	  THIS, pc_damage/mob_damage most no longer be directly invoked!
+	- Rewrote and cleaned up battle_calc_misc_attack
+	- Merged config options pc_attack_attr_none, mob_attack_attr_none,
+	  pet_attack_attr_none into attack_attr_none (type 4)
+	- Removed config options player_defense_type, monster_defense_type,
+	  pet_defense_type in favor of weapon_defense_type
+	- Modified skill_calc_heal to take into account the MEDITATION bonus.
+	- Modified Slim Pitcher so it will work when casted by non-players. Will
+	  now also work with SP-healing items.
+	- Rewrote Freedom of Cast code to use function status_freecast_switch to
+	  switch adelay/speed when cast begins/ends.
+	- Modified Magic Power to store amplified MATK/MATK2 in val3/val4 for
+	  easier updating when used in conjunction with ground skills.
+	- Fixed Asura Strike being usable from within a combo regardless of combo skill.
+	- Added status_calc_bl which does status-change related calculations using
+	  as base the base_status of the bl object and the SCB_* flag passed. This is
+	  invoked on status changes, and status_calc_pc will no longer be invoked
+	  (which results on much faster status-change calculations).
+	- pc_clean_skilltree will now also remove item-granted skills.
+	- Learning skills will now only invoke status_calc_pc when the skill is passive.
+	- Cleaned up pc_check_base/job_lvup to only invoke the lv-up related
+	  packets and functions ONCE regardless of skill-levls earned.
+	- Cleaned up pc_ regen related functions.
+	- Made player-sprite mobs have item pickup animation and walkdelay when taking items.
+	- Clones will copy a player's base status rather than battle status (so
+	  status-change alterations are not cloned)
 2006/05/26
 	* Part B of the homunculus code. [blackhole89]
 	  While most of the homunculus handling functions are in now, it still lacks
