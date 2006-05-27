@@ -604,6 +604,23 @@ const struct skill_name_db skill_names[] = {
  { WZ_STORMGUST, "WZ_STORMGUST", "Storm_Gust" } ,
  { WZ_VERMILION, "WZ_VERMILION", "Lord_of_Vermilion" } ,
  { WZ_WATERBALL, "WZ_WATERBALL", "Water_Ball" } ,
+ //[blackhole89]
+ { HLIF_HEAL, "HLIF_HEAL", "Healing_Touch" },
+ { HLIF_AVOID, "HLIF_AVOID", "Avoid" },
+ { HLIF_BRAIN, "HLIF_BRAIN", "Brain_Surgery" },
+ { HLIF_CHANGE, "HLIF_CHANGE", "Change" },
+ { HAMI_CASTLE, "HAMI_CASTLE", "Castling" },
+ { HAMI_DEFENCE, "HAMI_DEFENCE", "Defense" },
+ { HAMI_SKIN, "HAMI_SKIN", "Adamantium_Skin" },
+ { HAMI_BLOODLUST, "HAMI_BLOODLUST", "Bloodlust" },
+ { HFLI_MOON, "HFLI_MOON", "Moonlight" },
+ { HFLI_FLEET, "HFLI_FLEET", "Fleeting_Move" },
+ { HFLI_SPEED, "HFLI_SPEED", "Speed" },
+ { HFLI_SBR44, "HFLI_SBR44", "S.B.R.44" },
+ { HVAN_CAPRICE, "HVAN_CAPRICE", "Caprice" },
+ { HVAN_CHAOTIC, "HVAN_CHAOTIC", "Benediction_of_Chaos" },
+ { HVAN_INSTRUCT, "HVAN_INSTRUCT", "Instruct" },
+ { HVAN_EXPLOSION, "HVAN_EXPLOSION", "Bio_Explosion" },
  { 0, "UNKNOWN_SKILL", "Unknown_Skill" }
 };
 
@@ -2807,6 +2824,27 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case WZ_SIGHTBLASTER:
 	case WZ_SIGHTRASHER:		/* サイトラッシャ?[ */
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
+	case HVAN_CAPRICE: //[blackhole89]
+		{
+			int ran=rand()%4;
+			int sid;
+			switch(ran)
+			{
+			case 0: sid=MG_COLDBOLT; break;
+			case 1: sid=MG_FIREBOLT; break;
+			case 2: sid=MG_LIGHTNINGBOLT; break;
+			case 3: sid=WZ_EARTHSPIKE; break;
+			}
+		//	if(sd && sd->hd)
+		//		skill_attack(BF_MAGIC,(struct block_list*)sd->hd,(struct block_list*)sd->hd,bl,sid,skilllv,tick,flag);
+		//	else if(sd) clif_skill_fail(sd,skillid,0,0);
+			skill_attack(BF_MAGIC,src,src,bl,sid,skilllv,tick,flag);
+		}
+		break;
+	case HFLI_MOON:
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	case WZ_WATERBALL:			/* ウォ?タ?ボ?ル */

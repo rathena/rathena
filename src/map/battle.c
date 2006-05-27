@@ -24,6 +24,8 @@
 #include "guild.h"
 #include "party.h"
 
+#include "mercenary.h"
+
 #define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
 
 int attr_fix_table[4][10][10];
@@ -250,6 +252,9 @@ int battle_damage(struct block_list *src,struct block_list *target,int damage, i
 		case BL_PC:
 			r_damage = pc_damage(src,(TBL_PC*)target,damage);
 			break;
+		case BL_HOMUNCULUS:	//[blackhole89]
+			r_damage = merc_damage(src,(struct homun_data*)target,damage,0);
+			break;
 		case BL_SKILL:
 			r_damage = skill_unit_ondamaged((struct skill_unit *)target, src, damage, gettick());
 			break;
@@ -288,6 +293,8 @@ int battle_heal(struct block_list *bl,struct block_list *target,int hp,int sp, i
 		return mob_heal((struct mob_data *)target,hp);
 	else if (target->type == BL_PC)
 		return pc_heal((struct map_session_data *)target,hp,sp);
+	else if (target->type == BL_HOMUNCULUS)	//[blackhole89]
+		return merc_heal((struct homun_data *)target,hp,sp);
 	return 0;
 }
 
@@ -977,6 +984,7 @@ static struct Damage battle_calc_weapon_attack(
 {
 	struct map_session_data *sd=NULL, *tsd=NULL;
 	struct mob_data *md=NULL, *tmd=NULL;
+	struct homun_data *hd=NULL, *thd=NULL;	//[blackhole89]
 	struct pet_data *pd=NULL;//, *tpd=NULL; (Noone can target pets)
 	struct Damage wd;
 	short skill=0;
@@ -1045,6 +1053,9 @@ static struct Damage battle_calc_weapon_attack(
 		case BL_PET:
 			pd=(struct pet_data *)src;
 			break;
+		case BL_HOMUNCULUS:
+			hd=(struct homun_data *)src;	//[blackhole89]
+			break;
 	}
 	switch (target->type)
 	{
@@ -1061,6 +1072,9 @@ static struct Damage battle_calc_weapon_attack(
 		case BL_PET://Cannot target pets
 			memset(&wd,0,sizeof(wd));	
 			return wd;
+		case BL_HOMUNCULUS:
+			thd=(struct homun_data *)target;	//[blackhole89]
+			break;
 	}
 
 	if(sd) {
@@ -1157,7 +1171,7 @@ static struct Damage battle_calc_weapon_attack(
 			flag.cri = 1;
 	}	//End counter-check
 */
-	if (!skill_num && (tsd || battle_config.enemy_perfect_flee))
+	if (!skill_num && (tsd || thd || battle_config.enemy_perfect_flee))
 	{	//Check for Lucky Dodge
 		short flee2 = status_get_flee2(target);
 		if (rand()%1000 < flee2)
@@ -1197,7 +1211,7 @@ static struct Damage battle_calc_weapon_attack(
 
 	//Check for critical
 	if(!flag.cri &&
-		(sd || battle_config.enemy_critical_rate) &&
+		(sd || hd || battle_config.enemy_critical_rate) &&
 		(!skill_num || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING || skill_num == NJ_KIRIKAGE))
 	{
 		short cri = status_get_critical(src);
@@ -3289,12 +3303,22 @@ int battle_check_undead(int race,int element)
  */
 int battle_check_target( struct block_list *src, struct block_list *target,int flag)
 {
-	int m,state = 0; //Initial state none
+	int m,state = 0,s_is_homun=0,t_is_homun=0; //Initial state none
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
 	struct block_list *s_bl= src, *t_bl= target;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, target);
+
+	//[blackhole89] -- check homunculus' targeting by their masters.
+	if(src->type == BL_HOMUNCULUS) {
+		s_bl=src=(struct block_list *)((struct homun_data*)src)->master;	//Whoever is the master's enemy is the homunculus' enemy.
+		s_is_homun=1;
+	}
+	if(target->type == BL_HOMUNCULUS) {
+		t_bl=target=(struct block_list *)((struct homun_data*)target)->master;	//...and vice versa.
+		t_is_homun=1;
+	}
 
 	m = target->m;
 	if (flag&BCT_ENEMY && !map_flag_gvg(m) && !(status_get_mode(src)&MD_BOSS))
@@ -3339,7 +3363,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_PC:
 		{
 			TBL_PC *sd = (TBL_PC*)t_bl;
-			if (sd->invincible_timer != -1 || pc_isinvisible(sd))
+			if (sd->invincible_timer != -1 || (pc_isinvisible(sd) && !t_is_homun))	//[blackhole89] targeted homunculi ignore master's visibility
 				return -1; //Cannot be targeted yet.
 			if (sd->state.monster_ignore && src->type == BL_MOB)
 				return 0; //option to have monsters ignore GMs [Valaris]
@@ -3485,8 +3509,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 0;
 	}
 	
-	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all players/mobs
-		if (target->type == BL_MOB || target->type == BL_PC)
+	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all players/mobs/homunculi [blackhole89]
+		if (target->type == BL_MOB || target->type == BL_PC || target->type == BL_HOMUNCULUS)
 			return 1;
 		else
 			return -1;
