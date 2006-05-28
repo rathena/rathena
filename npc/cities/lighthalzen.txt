@@ -1754,7 +1754,7 @@ lhz_in03.gat,183,82,6	script	Drunken Man#Drunken_Man2	870,{
 
 // ---------------------------------------------------------------------------
 
-lighthalzen.gat,180,83,6	script	Citizen	86,{
+lhz_dun03.gat,180,83,6	script	Citizen	86,{
 
 	mes "[Mitchell]";
 	mes "You know, everyone";

@@ -30,9 +30,6 @@ Evera
 
 Date		Added
 ======
-05/28
-	* Fixed a mistake causing an NPC to appear in bio labs 3 instead of Lighthalzen [MasterOfMuppets]
-	- Thanks to theultramage for pointing it out.
 05/27
 	* Updated DTS Warper; Now uses 3 global vars, 2 are vote #, 1 is etc in binary values. [Evera]
 	* Implemented the friendship quest. *finally* [MasterOfMuppets]
