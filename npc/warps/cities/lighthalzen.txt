@@ -14,6 +14,7 @@
 //= 1.4 Lighthalzen warp, taken from korean eA site [Vicious]
 //= 1.4a Corrected warp for 'lhz013a' [Zephiris]
 //= 1.5 Added a few missing warps, thanks to Kargha [MasterOfMuppets]
+//= 1.6 Added a few more missing warps. [MasterOfMuppets]
 //============================================================
 
 lighthalzen.gat,196,46,0	warp	lhz010	1,1,lhz_in02.gat,282,83
@@ -123,3 +124,12 @@ lhz_in03.gat,190,100,0	warp	lhz044a	1,1,lhz_in03.gat,189,34
 
 lighthalzen.gat,339,240,0	warp	lhz045	1,1,lhz_in03.gat,180,87
 lhz_in03.gat,180,90,0	warp	lhz045a	1,1,lighthalzen.gat,339,242
+
+lhz_in01.gat,40,224,0	warp	lhz046	1,1,lhz_in01.gat,19,129
+lhz_in01.gat,15,129,0	warp	lhz046a	1,1,lhz_in01.gat,34,224
+
+lhz_in01.gat,58,130,0	warp	lhz047	1,1,lhz_in01.gat,193,127
+lhz_in01.gat,191,127,0	warp	lhz047a	1,1,lhz_in01.gat,56,130
+
+lhz_in01.gat,43,115,0	warp	lhz048	1,1,lhz_in01.gat,278,130
+lhz_in01.gat,278,132,0	warp	lhz048a	1,1,lhz_in01.gat,43,117

@@ -15,6 +15,7 @@
 //= 0.4 More Town NPCs. [Musashiden]
 //= 0.5 Added a BIG load of Lighthalzen NPCs. [musashiden]
 //= 0.6 Fixed some typos+Coordinates. [Musashiden]
+//= 0.7 Implemented some more crap NPCs and the second entrance to biolabs [MasterOfMuppets]
 //=============================================================
 
 lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
@@ -1819,5 +1820,238 @@ lhz_in03.gat,184,38,2	script	Loudmouth	55,{
 	mes "look for? What, you";
 	mes "don't believe me?!";
 	close;
+
+}
+// ---------------------------------------------------------------------------
+
+lhz_in01.gat,114,181,3	script	Representative::LhzRep	71,{
+
+	mes "[Representative]";
+	mes "Greetings, and welcome";
+	mes "to the Rekenber Corporation.";
+	mes "How may I be of service today?";
+	next;
+	menu "Building Information.",-;
+
+loopback:
+	mes "[Representative]";
+	mes "Please tell me";
+	mes "which floor you'd like";
+	mes "to know more about.";
+	next;
+	menu "1F",s_1,"2F",s_2,"B1",s_B,"Cancel",-;
+
+	mes "[Representative]";
+	mes "We are always doing our";
+	mes "best to provide the best";
+	mes "services to our customers.";
+	mes "Remember that Rekenber";
+	mes "is the name you can trust.";
+	mes "Thank you and have a nice day.";
+	close;
+
+s_1:
+	mes "[Representative]";
+	mes "The ^3131FFRekenber Library^000000 can";
+	mes "be found at the end of the";
+	mes "left hallway. Our library is";
+	mes "a great resource of innovative";
+	mes "ideas and information for our";
+	mes "system development employees.";
+	next;
+	mes "[Representative]";
+	mes "The ^3131FFBall Room^000000, where";
+	mes "various official events are";
+	mes "usually held, can be accessed";
+	mes "through the right hallway.";
+	next;
+	goto loopback;
+
+s_2:
+	mes "[Representative]";
+	mes "Please use the stairs";
+	mes "located on both sides of";
+	mes "the Help Desk to go to the";
+	mes "Second Floor. The Second";
+	mes "Floor is mostly used for";
+	mes "administrative purposes.";
+	next;
+	mes "[Representative]";
+	mes "There, you can find";
+	mes "the ^3131FFConference Room^000000,";
+	mes "^3131FFSecretary Office^000000, the";
+	mes "^3131FFAuditorium^000000 and the";
+	mes "^3131FFChairman's Office^000000.";
+	next;
+	goto loopback;
+s_B:
+	mes "[Representative]";
+	mes "The first underground floor";
+	mes "is used by the ^3131FFRegenshirm^000000,";
+	mes "our laboratory affiliate. For";
+	mes "security reasons, this floor";
+	mes "is not accessible to visitors";
+	next;
+	goto loopback;
+	
+}
+
+lhz_in01.gat,26,247,2	duplicate(LhzRep)	Representative	71
+
+lhz_in01.gat,173,28,4	script	Guard::LhzRekGuard	868,{
+
+	mes "[Guard]";
+	mes "This is a";
+	mes "restricted area.";
+	mes "Please keep clear";
+	mes "if you do not have";
+	mes "special authorization.";
+	mes "Thank you for your cooperating.";
+	close;
+
+}
+
+lhz_in01.gat,180,28,4	duplicate(LhzRekGuard)	Guard	868
+
+lhz_in01.gat,72,209,4	script	Guide	862,{
+
+	mes "[Lasoei]";
+	mes "Oh phooey.";
+	mes "The same customers";
+	mes "are always coming in,";
+	mes "day after day. Can it";
+	mes "get any less exciting?";
+	next;
+	mes "[Lasoei]";
+	mes "Oh...!";
+	mes "W-welcome~";
+	mes "C-can I help you";
+	mes "with anything?";
+	close;
+
+}
+
+lhz_in01.gat,72,195,8	script	Guide	90,{
+
+	mes "[Geonuii]";
+	mes "Greetings. This path";
+	mes "leads to the Library and";
+	mes "the Laboratory. Please be";
+	mes "aware that these places";
+	mes "are restricted from access";
+	mes "by the general public.";
+	close;
+
+}
+
+lhz_in01.gat,73,188,4	script	Guide	862,{
+
+	mes "[Bonnie]";
+	mes "Oh no...";
+	mes "Where did I put it?";
+	close;
+
+}
+
+lhz_in01.gat,34,226,4	script	Rekenber Guard	867,{
+
+	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	mes "[Rekenber Guard]";
+	mes "This is a restricted";
+	mes "area! Please show";
+	mes "some ID immediately!";
+	next;
+	menu "ID?",s_ID,"Cancel",-;
+
+	mes "[Rekenber Guard]";
+	mes "Unless you have special";
+	mes "authorization, nobody is";
+	mes "allowed into the Underground";
+	mes "Laboratory for security reasons.";
+	close;
+
+s_ID:
+	mes "[Rekenber Guard]";
+	mes "I don't know how you";
+	mes "adventurers do things in";
+	mes "Rune-Midgard, but over here";
+	mes "we have laws about trespassing!";
+	close;
+
+s_Staff:
+	mes "[Rekenber Guard]";
+	mes "^3131FF(Whoa, it's a member";
+	mes "of the staff)^000000 Good day!";
+	close2;
+	warp "lhz_in01.gat",37,225;
+	end;
+
+}
+
+lhz_in01.gat,19,129,0	script	LhzHiddenTrg1::LhzTrig	-1,1,1{
+OnTouch:
+	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	mes "[Rekenber Guard]";
+	mes "This area is restricted";
+	mes "to the public! Who are you";
+	mes "and how did you get in here?!";
+	mes "Hey, I need backup right away!";
+	close2;
+	warp "lhz_in01.gat",34,224;
+	end;
+
+s_Staff:
+	mes "[Rekenber Guard]";
+	mes "Keep your eyes open.";
+	mes "I've heard rumors that some";
+	mes "adventurers from Rune-Midgard";
+	mes "are trying to sneak into here!";
+	mes "I know the security here is";
+	mes "pretty much failsafe, but...";
+	close;
+
+}
+
+lhz_in01.gat,23,137,0	duplicate(LhzTrig)	LhzHiddenTrg2	-1,1,1
+
+lhz_in01.gat,24,131,2	duplicate(LhzTrig)	Rekenber Guard	867
+
+lhz_in01.gat,25,141,4	script	Regenschirm Guard	868,{
+
+	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	mes "[Regenschirm Guard]";
+	mes "This area is restricted";
+	mes "to the public! Who are you";
+	mes "and how did you get in here?!";
+	mes "Hey, I need backup right away!";
+	close2;
+	warp "lhz_in01.gat",34,224;
+	end;
+
+s_Staff:
+	mes "[Regenschirm Guard]";
+	mes "Do you wish to";
+	mes "go underground?";
+	next;
+	menu "Yes",s_Yes,"No",-;
+
+	mes "[Regenschirm Guard]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Yes:
+	if(getequipid(7) == 2657 || getequipid(8) == 2657)goto s_Auth;
+	mes "[Regenschirm Guard]";
+	mes "I'm sorry but I can't let";
+	mes "staff without proper autorization";
+	mes "pass. Only staff memebers with";
+	mes "Laboratory Passports are allowed";
+	mes "to enter the underground.";
+	close;
+
+s_Auth:
+	warp "lhz_dun01.gat",150,288;
+	end;
 
 }

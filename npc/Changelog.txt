@@ -31,6 +31,10 @@ Evera
 Date		Added
 ======
 05/27
+	* Implemented the second entrance to biolabs and added some crap NPCs [MasterOfMuppets]
+	- The sewer pipe does no longer REQUIRE a lab passport, but it requires completion of the cube quest
+	- The second entrance to biolabs does not REQUIRE completion of the cube quest, but it does require
+	  a lab passport.
 	* Updated DTS Warper; Now uses 3 global vars, 2 are vote #, 1 is etc in binary values. [Evera]
 	* Implemented the friendship quest. *finally* [MasterOfMuppets]
 05/26
