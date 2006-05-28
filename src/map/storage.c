@@ -242,7 +242,7 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
 	if(sd->status.inventory[index].nameid <= 0)
 		return 0; //No item on that spot
 	
-	if(amount < 1 || amount < sd->status.inventory[index].amount)
+	if(amount < 1 || amount > sd->status.inventory[index].amount)
   		return 0;
 
 //	log_tostorage(sd, index, 0);

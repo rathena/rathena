@@ -4,9 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/28
-	- Suppressed compilation warnings (unsigned and signed mismatches) [Lance]
+	* Fixed unable to store n items into storage unless n was the total amount
+	  of items you had. [Skotlex]
+	* Suppressed compilation warnings (unsigned and signed mismatches) [Lance]
 2006/05/27
-	- Added structure status_data which holds status-related information (str,
+	* Added structure status_data which holds status-related information (str,
 	  agi, etc, speed, amotion, adelay, dmotion, weapon-damage, race, size, etc)
 	  and weapon_atk structure with the weapon specific info (atk, atk2, element)
 	  to be used by all combat structures (TODO: Homun needs to be updated to use
