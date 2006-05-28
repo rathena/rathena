@@ -31,6 +31,7 @@ Evera
 Date		Added
 ======
 05/27
+	* Updated DTS Warper; Now uses 3 global vars, 2 are vote #, 1 is etc in binary values. [Evera]
 	* Implemented the friendship quest. *finally* [MasterOfMuppets]
 05/26
 	* Modified Kiel spawn file [Playtester]
