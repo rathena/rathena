@@ -216,6 +216,7 @@ void initChangeTables(void) {
 	set_sc(CR_SPEARQUICKEN, SC_SPEARQUICKEN, SI_SPEARQUICKEN, SCB_ASPD);
 	set_sc(MO_STEELBODY, SC_STEELBODY, SI_STEELBODY, SCB_DEF|SCB_MDEF|SCB_ASPD|SCB_SPEED);
 	add_sc(MO_BLADESTOP, SC_BLADESTOP_WAIT);
+	add_sc(MO_BLADESTOP, SC_BLADESTOP);
 	set_sc(MO_EXPLOSIONSPIRITS, SC_EXPLOSIONSPIRITS, SI_EXPLOSIONSPIRITS, SCB_CRI);
 	add_sc(MO_EXTREMITYFIST, SC_EXTREMITYFIST);
 	add_sc(SA_MAGICROD, SC_MAGICROD);
@@ -595,9 +596,6 @@ int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag)
 	}
 	
 	if(sp) {
-		if (bl->type != BL_PC)
-			sp = 0; //Only players get SP changes
-	
 		if(sp > status->max_sp - status->sp)
 			sp = status->max_sp - status->sp;
 	}
@@ -656,6 +654,39 @@ int status_percent_change(struct block_list *src,struct block_list *target,char 
 	return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
 }
 
+int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp)
+{
+	struct status_data *status;
+	unsigned int hp, sp;
+	if (!status_isdead(bl)) return 0;
+
+	status = status_get_status_data(bl);
+	if (status == &dummy_status)
+		return 0; //Invalid target.
+	
+	hp = status->max_hp * per_hp/100;
+	sp = status->max_sp * per_hp/100;
+
+	if(hp > status->max_hp - status->hp)
+		hp = status->max_hp - status->hp;
+
+	if(sp > status->max_sp - status->sp)
+		sp = status->max_sp - status->sp;
+	
+	status->hp += hp;
+	status->sp += sp;
+
+	clif_resurrection(bl, 1);
+	switch (bl->type) {
+		case BL_MOB:
+			mob_revive((TBL_MOB*)bl, hp);
+			break;
+		case BL_PC:
+			pc_revive((TBL_PC*)bl, hp, sp);
+			break;
+	}
+	return 1;
+}
 /*==========================================
  * Checks whether the src can use the skill on the target,
  * taking into account status/option of both source/target. [Skotlex]

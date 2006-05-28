@@ -4735,7 +4735,15 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	return 1;
 }
 
-//
+void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp)
+{
+	if(hp) clif_updatestatus(sd,SP_HP);
+	if(sp) clif_updatestatus(sd,SP_SP);
+
+	pc_setstand(sd);
+	if(battle_config.pc_invincible_time > 0)
+		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+}
 // script? ˜A
 //
 /*==========================================

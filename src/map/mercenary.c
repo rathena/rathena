@@ -61,7 +61,7 @@ char32 merc_skillname[20] = {"NULL","HLIF_HEAL","HLIF_AVOID","HLIF_BRAIN","HLIF_
 							"HFLI_MOON","HFLI_FLEET","HFLI_SPEED","HFLI_SBR44",
 							"HVAN_CAPRICE","HVAN_CHAOTIC","HVAN_INSTRUCT","HVAN_EXPLOSION"};
 
-void merc_load_exptables();
+void merc_load_exptables(void);
 void merc_save(struct map_session_data *sd);
 int mercskill_castend_id( int tid, unsigned int tick, int id,int data );
 
@@ -78,7 +78,7 @@ static int diry[8]={1,1,0,-1,-1,-1,0,1};
 
 static unsigned long hexptbl[126];
 
-void merc_load_exptables()
+void merc_load_exptables(void)
 {
 	FILE *fl;
 	int i;
@@ -95,7 +95,7 @@ void merc_load_exptables()
 	fclose(fl);
 }
 
-char *merc_skill_get_name(id)
+char *merc_skill_get_name(int id)
 {
 	return merc_skillname[id-8000];
 }

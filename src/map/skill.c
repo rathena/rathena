@@ -3254,7 +3254,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			status_zap(src, sstatus->hp-1, sstatus->sp-1);
 			break;
-		} else if (dstsd && pc_isdead(dstsd) && flag&1) { //Revive
+		} else if (status_isdead(bl) && flag&1) { //Revive
 			skill_area_temp[0]++; //Count it in, then fall-through to the Resurrection code.
 			skilllv = 3; //Resurrection level 3 is used
 		} else //Invalid target, skip resurrection.
@@ -3266,40 +3266,39 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_fail(sd,skillid,0,0);
 			break;
 		}
-		if(dstsd && pc_isdead(dstsd)) {
-			int per = 0;
-			if (map[bl->m].flag.pvp && dstsd->pvp_point < 0)
+		if (!status_isdead(bl))
+			break;
+		{	
+			int per = 0, sper = 0;
+			if (map[bl->m].flag.pvp && dstsd && dstsd->pvp_point < 0)
 				break;
 
-			clif_skill_nodamage(src,bl,ALL_RESURRECTION,skilllv,1); //Both Redemption and Res show this skill-animation.
 			switch(skilllv){
 			case 1: per=10; break;
 			case 2: per=30; break;
 			case 3: per=50; break;
 			case 4: per=80; break;
 			}
-			tstatus->hp = 1;
-			if (dstsd->special_state.restart_full_recover) 
-				status_percent_heal(bl, 100, 100);
-			else
-				status_percent_heal(bl, per, 0);	
-			pc_setstand(dstsd);
-			if(battle_config.pc_invincible_time > 0)
-				pc_setinvincibletimer(dstsd, battle_config.pc_invincible_time);
-			clif_resurrection(bl, 1);
-			if(sd && battle_config.resurrection_exp > 0) {
-				int exp = 0,jexp = 0;
-				int lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
-				if(lv > 0) {
-					exp = (int)((double)dstsd->status.base_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
-					if (exp < 1) exp = 1;
+			if(dstsd && dstsd->special_state.restart_full_recover) 
+				per = sper = 100;
+			if (status_revive(bl, per, sper))
+			{
+				clif_skill_nodamage(src,bl,ALL_RESURRECTION,skilllv,1); //Both Redemption and Res show this skill-animation.
+				if(sd && dstsd && battle_config.resurrection_exp > 0) 
+				{
+					int exp = 0,jexp = 0;
+					int lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
+					if(lv > 0) {
+						exp = (int)((double)dstsd->status.base_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
+						if (exp < 1) exp = 1;
+					}
+					if(jlv > 0) {
+						jexp = (int)((double)dstsd->status.job_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
+						if (jexp < 1) jexp = 1;
+					}
+					if(exp > 0 || jexp > 0)
+						pc_gainexp (sd, exp, jexp);
 				}
-				if(jlv > 0) {
-					jexp = (int)((double)dstsd->status.job_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
-					if (jexp < 1) jexp = 1;
-				}
-				if(exp > 0 || jexp > 0)
-					pc_gainexp (sd, exp, jexp);
 			}
 		}
 		break;

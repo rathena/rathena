@@ -1558,22 +1558,10 @@ int mob_deleteslave(struct mob_data *md)
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
 int mob_respawn(int tid, unsigned int tick, int id,int data )
 {
-	struct mob_data *md = (struct mob_data*)map_id2bl(id);
-	if (!md || md->bl.type != BL_MOB)
-		return 0;
-	//Mob must be dead and not in a map to respawn!
-	if (md->bl.prev != NULL || md->status.hp)
-		return 0;
+	struct block_list *bl = map_id2bl(id);
 
-	md->state.skillstate = MSS_IDLE;
-	md->last_thinktime = tick;
-	md->next_walktime = tick+rand()%50+5000;
-	md->last_linktime = tick;
-	map_addblock(&md->bl);
-	status_percent_heal(&md->bl, data, 0);
-	clif_spawn(&md->bl);
-	skill_unit_move(&md->bl,tick,1);
-	mobskill_use(md, tick, MSC_SPAWN);
+	if(!bl) return 0;
+	status_revive(bl, data, 0);
 	return 1;
 }
 
@@ -1699,9 +1687,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	status = &md->status;
 		
-	if(status->hp) //Requested instant death?
-		status->hp = 0;
-
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS)
 	{	// guardian hp update [Valaris] (updated by [Skotlex])
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
@@ -1709,7 +1694,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	md->state.skillstate = MSS_DEAD;	
+	md->status.hp = 1; //Otherwise skill will be blocked due to being dead! [Skotlex]
 	mobskill_use(md,tick,-1);	//On Dead skill.
+	md->status.hp = 0;
 
 	if (md->sc.data[SC_KAIZEL].timer != -1)
 	{	//Revive in a bit.
@@ -2149,6 +2136,22 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	return 1;
 }
 
+void mob_revive(struct mob_data *md, unsigned int hp)
+{
+	unsigned int tick = gettick();
+	md->state.skillstate = MSS_IDLE;
+	md->last_thinktime = tick;
+	md->next_walktime = tick+rand()%50+5000;
+	md->last_linktime = tick;
+	if (!md->bl.prev)
+		map_addblock(&md->bl);
+	clif_spawn(&md->bl);
+	skill_unit_move(&md->bl,tick,1);
+	mobskill_use(md, tick, MSC_SPAWN);
+	if (battle_config.show_mob_hp)
+		clif_charnameack (0, &md->bl);
+}
+
 int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md;
@@ -2573,9 +2576,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 
 		c2 = ms[i].cond2;
 		
-		if (ms[i].state != md->state.skillstate && md->state.skillstate != MSS_DEAD) {
-			if (ms[i].state == MSS_ANY || (ms[i].state == MSS_ANYTARGET && md->target_id))
-				; //ANYTARGET works with any state as long as there's a target. [Skotlex]
+		if (ms[i].state != md->state.skillstate) {
+			if (md->state.skillstate != MSS_DEAD && (
+				ms[i].state == MSS_ANY || (ms[i].state == MSS_ANYTARGET && md->target_id)
+			)) //ANYTARGET works with any state as long as there's a target. [Skotlex]
+				;
 			else
 				continue;
 		}

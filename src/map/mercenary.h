@@ -1,8 +1,8 @@
 // Homunculus and future Mercenary system code go here [Celest]
 
 int do_init_merc (void);
-void merc_load_exptables();
-char *merc_skill_get_name(id);
+void merc_load_exptables(void);
+char *merc_skill_get_name(int id);
 void merc_die(struct map_session_data *sd);
 int merc_damage(struct block_list *src,struct homun_data *hd,int damage,int type);
 void merc_calc_status(struct homun_data *hd);

@@ -893,7 +893,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		return 0;
 	}
 	
-	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range2)) {
+	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range2) && DIFF_TICK(tick, pd->ud.canmove_tick) > 0) {
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);

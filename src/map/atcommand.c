@@ -2428,20 +2428,11 @@ int atcommand_alive(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	if (pc_isdead(sd)) {
-	sd->status.hp = sd->status.max_hp;
-	sd->status.sp = sd->status.max_sp;
+	if (!status_revive(&sd->bl, 100, 100))
+		return -1;
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-	pc_setstand(sd);
-	if (battle_config.pc_invincible_time > 0)
-		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-	clif_updatestatus(sd, SP_HP);
-	clif_updatestatus(sd, SP_SP);
-	clif_resurrection(&sd->bl, 1);
 	clif_displaymessage(fd, msg_table[16]); // You've been revived! It's a miracle!
 	return 0;
-	}
-	return -1;
 }
 
 /*==========================================
@@ -4583,26 +4574,19 @@ int atcommand_revive(
 		clif_displaymessage(fd, "Please, enter a player name (usage: @revive <char name>).");
 		return -1;
 	}
-
-	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
-		if (pc_isdead(pl_sd)) {
-			pl_sd->status.hp = pl_sd->status.max_hp;
-			clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-			pc_setstand(pl_sd);
-			if (battle_config.pc_invincible_time > 0)
-				pc_setinvincibletimer(pl_sd, battle_config.pc_invincible_time);
-			clif_updatestatus(pl_sd, SP_HP);
-			clif_updatestatus(pl_sd, SP_SP);
-			clif_resurrection(&pl_sd->bl, 1);
-			clif_displaymessage(fd, msg_table[51]); // Character revived.
-			return 0;
-		}
-		return -1;
-	} else {
+	
+	pl_sd = map_nick2sd(atcmd_player_name);
+	
+	if (!pl_sd) {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
-
+	
+	if (!status_revive(&sd->bl, 100, 0))
+		return -1;
+	
+	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	clif_displaymessage(fd, msg_table[51]); // Character revived.
 	return 0;
 }
 
@@ -4890,18 +4874,13 @@ int atcommand_doommap(
  */
 static void atcommand_raise_sub(struct map_session_data* sd)
 {
-	if (sd && sd->state.auth && pc_isdead(sd)) {
-		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-		sd->status.hp = sd->status.max_hp;
-		sd->status.sp = sd->status.max_sp;
-		pc_setstand(sd);
-		clif_updatestatus(sd, SP_HP);
-		clif_updatestatus(sd, SP_SP);
-		clif_resurrection(&sd->bl, 1);
-		if (battle_config.pc_invincible_time > 0)
-			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		clif_displaymessage(sd->fd, msg_table[63]); // Mercy has been shown.
-	}
+	if (!sd->state.auth || !status_isdead(&sd->bl))
+		return;
+
+	if(!status_revive(&sd->bl, 100, 100))
+		return;
+	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	clif_displaymessage(sd->fd, msg_table[63]); // Mercy has been shown.
 }
 
 /*==========================================

@@ -516,6 +516,7 @@ int status_percent_change(struct block_list *src,struct block_list *target,char 
 //
 #define status_kill(bl) status_percent_damage(NULL, bl, 100, 0)
 int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag);
+int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
 
 //Define for copying a status_data structure from b to a, without overwriting current Hp and Sp, nor messing the lhw pointer.
 #define status_cpy(a, b) { memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)+sizeof((a)->lhw))); \

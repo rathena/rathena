@@ -150,6 +150,7 @@ int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_damage(struct mob_data *md, struct block_list *src, int damage);
 int mob_dead(struct mob_data *md, struct block_list *src, int type);
+void mob_revive(struct mob_data *md, unsigned int hp);
 void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) { if (md->ud.walktimer != -1) unit_stop_walking(&md->bl, type); }
