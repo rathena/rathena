@@ -31,6 +31,8 @@ Evera
 Date		Added
 ======
 05/27
+	* Implemented a small quest in Einbroch and fixed the name of the [MasterOfMuppets]
+	  spawning mobsters in Lighthalzen
 	* Implemented the second entrance to biolabs and added some crap NPCs [MasterOfMuppets]
 	- The sewer pipe does no longer REQUIRE a lab passport, but it requires completion of the cube quest
 	- The second entrance to biolabs does not REQUIRE completion of the cube quest, but it does require
