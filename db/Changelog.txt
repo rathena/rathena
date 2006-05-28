@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/28
+	* Readded some aDelay fixes which were accidentaly reverted [Playtester]
 05/26
 	* Added Red Chile drop to Kraben & small aMotion fix [Playtester]
 	* Added missing Odin drops (guessed) [Playtester]
