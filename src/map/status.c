@@ -1663,7 +1663,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def)
 	{
 		status->def2 += battle_config.over_def_bonus*(status->def -battle_config.max_def);
-		status->def = battle_config.max_def;
+		status->def = (unsigned char)battle_config.max_def;
 	}
 
 // ----- INT-MDEF CALCULATION -----
@@ -1680,7 +1680,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if (!battle_config.weapon_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
-		status->mdef = battle_config.max_def;
+		status->mdef = (unsigned char)battle_config.max_def;
 	}
 	
 // ----- WALKING SPEED CALCULATION -----
@@ -1962,7 +1962,7 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		if(battle_config.hp_rate != 100)
 			status->max_hp = status->max_hp * battle_config.hp_rate/100;
 		
-		if(status->max_hp > battle_config.max_hp)
+		if(status->max_hp > (unsigned int)battle_config.max_hp)
 			status->max_hp = battle_config.max_hp;
 		else if(!status->max_hp)
 			status->max_hp = 1;
@@ -2014,7 +2014,7 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		if(battle_config.sp_rate != 100)
 			status->max_sp = status->max_sp * battle_config.sp_rate/100;
 		
-		if(status->max_sp > battle_config.max_sp)
+		if(status->max_sp > (unsigned int)battle_config.max_sp)
 			status->max_sp = battle_config.max_sp;
 		else if(!status->max_sp)
 			status->max_sp = 1;

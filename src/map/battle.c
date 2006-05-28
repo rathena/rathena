@@ -2747,7 +2747,7 @@ void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, i
 		if (rhp || rsp)
 			status_zap(&tsd->bl, rhp, rsp);
 		if (rand()%1000 < sd->sp_vanish_rate)
-			status_percent_damage(&sd->bl, &tsd->bl, 0, sd->sp_vanish_per);
+			status_percent_damage(&sd->bl, &tsd->bl, 0, (unsigned char)sd->sp_vanish_per);
 	}
 }
 /*==========================================

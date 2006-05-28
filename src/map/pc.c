@@ -290,7 +290,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 			status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
 	} else { //Just for saving on the char-server
 		sd->status.hp = b_status->hp;
-		if (sd->status.sp < b_status->sp)
+		if ((unsigned int)sd->status.sp < b_status->sp)
 			sd->status.sp = b_status->sp;
 	}
 	/* removed exp penalty on spawn [Valaris] */
@@ -2888,6 +2888,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
+	md = (TBL_MOB *)bl;
 
 	if(md->state.steal_flag>=battle_config.skill_steal_max_tries || md_status->mode&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
@@ -4479,7 +4480,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if(md->target_id==sd->bl.id)
 			mob_unlocktarget(md,tick);
 		if(battle_config.mobs_level_up && md->status.hp &&
-			md->level < pc_maxbaselv(sd) &&
+			(unsigned int)md->level < pc_maxbaselv(sd) &&
 			!md->guardian_data && !md->special_state.ai// Guardians/summons should not level. [Skotlex]
 		) { 	// monster level up [Valaris]
 			clif_misceffect(&md->bl,0);
@@ -6515,7 +6516,7 @@ static void pc_natural_heal_hp(struct map_session_data *sd)
 			hp+= bonus;
 		} while(sd->hp_sub >= battle_config.natural_healhp_interval);
 		
-		if (status_heal(&sd->bl, hp, 0, 1) < hp)
+		if ((unsigned int)status_heal(&sd->bl, hp, 0, 1) < hp)
 		{	//At full.
 			sd->inchealhptick = 0;
 			return;

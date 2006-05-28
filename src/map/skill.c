@@ -1848,7 +1848,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case MO_TRIPLEATTACK:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if (damage < tstatus->hp &&
+				if (damage < (signed int)tstatus->hp &&
 					pc_checkskill(sd, MO_CHAINCOMBO) > 0)
 					delay += 300 * battle_config.combo_delay_rate / 100;
 				sc_start4(src,SC_COMBO,100,MO_TRIPLEATTACK,skilllv,0,0,delay);
@@ -1861,7 +1861,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case MO_CHAINCOMBO:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < tstatus->hp &&
+				if(damage < (signed int)tstatus->hp &&
 					(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0))
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,MO_CHAINCOMBO,skilllv,0,0,delay);
@@ -1871,7 +1871,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case MO_COMBOFINISH:
 			{
 				int delay = 700 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < tstatus->hp &&
+				if(damage < (signed int)tstatus->hp &&
 				(
 					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
 					(pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) ||
@@ -1885,7 +1885,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case CH_TIGERFIST:
 			{	//Tigerfist is now a combo-only skill. [Skotlex]
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < tstatus->hp &&
+				if(damage < (signed int)tstatus->hp &&
 				(
 					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 3 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
 					(pc_checkskill(sd, CH_CHAINCRUSH) > 0)
@@ -1898,14 +1898,14 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 			case CH_CHAINCRUSH:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < tstatus->hp)
+				if(damage < (signed int)tstatus->hp)
 					delay += 300 * battle_config.combo_delay_rate /100;
 				sc_start4(src,SC_COMBO,100,CH_CHAINCRUSH,skilllv,0,0,delay);
 				clif_combo_delay(src,delay);
 				break;
 			}
 			case AC_DOUBLE:
-				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && damage < tstatus->hp && pc_checkskill(sd, HT_POWER)) {
+				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && damage < (signed int)tstatus->hp && pc_checkskill(sd, HT_POWER)) {
 					//TODO: This code was taken from Triple Blows,is this even how it should be? [Skotlex]
 					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
 					clif_combo_delay(src,2000);
@@ -7967,11 +7967,11 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 	}
 
 	if(!(type&2)){
-		if( hp>0 && status->hp <= hp) {				/* HPチェック */
+		if( hp>0 && status->hp <= (unsigned int)hp) {				/* HPチェック */
 			clif_skill_fail(sd,skill,2,0);		/* HP不足?F失敗通知 */
 			return 0;
 		}
-		if( sp>0 && status->sp < sp) {				/* SPチェック */
+		if( sp>0 && status->sp < (unsigned int)sp) {				/* SPチェック */
 			clif_skill_fail(sd,skill,1,0);		/* SP不足?F失敗通知 */
 			return 0;
 		}

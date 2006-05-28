@@ -1761,7 +1761,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			continue;
 		temp++;
 
-		if(mvp_damage<md->dmglog[temp].dmg){
+		if(mvp_damage<(unsigned int)md->dmglog[temp].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
 			mvp_sd=tmpsd[temp];
