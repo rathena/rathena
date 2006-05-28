@@ -10070,14 +10070,20 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
  */
 void clif_parse_LGMmessage(int fd, struct map_session_data *sd) {
 	unsigned char buf[512];
+	int len = RFIFOREST(fd);
+	int plen = RFIFOW(fd,2);
 	RFIFOHEAD(fd);
+
+	if(plen <= 0 || plen > len) // Possible hack! [Lance]
+		plen = len;
 
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_LocalBroadcast))) {
 		WBUFW(buf,0) = 0x9a;
-		WBUFW(buf,2) = RFIFOW(fd,2);
-		memcpy(WBUFP(buf,4), RFIFOP(fd,4), RFIFOW(fd,2) - 4);
-		clif_send(buf, RFIFOW(fd,2), &sd->bl, ALL_SAMEMAP);
+		WBUFW(buf,2) = plen;
+		memcpy(WBUFP(buf,4), RFIFOP(fd,4), plen - 4);
+		WBUFB(buf,plen-1) = '\0'; // Must have NULL termination [Lance]
+		clif_send(buf, plen, &sd->bl, ALL_SAMEMAP);
 	}
 }
 
