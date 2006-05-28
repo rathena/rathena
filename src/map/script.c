@@ -9922,7 +9922,6 @@ void setd_sub(struct script_state *st, struct map_session_data *sd, char *varnam
 int buildin_setd(struct script_state *st)
 {
 	struct map_session_data *sd=NULL;
-	TBL_NPC *nd = st->oid? ((TBL_NPC *)map_id2bl(st->oid)): NULL;
 	char varname[100], *buffer;
 	char *value;
 	int elem;
@@ -9936,9 +9935,9 @@ int buildin_setd(struct script_state *st)
 		sd = script_rid2sd(st);
 
 	if(varname[strlen(varname)-1] != '$') {
-		setd_sub(st,sd, varname, elem, (void *)atoi(value),nd?&nd->u.scr.script->script_vars:NULL);
+		setd_sub(st,sd, varname, elem, (void *)atoi(value),NULL);
 	} else {
-		setd_sub(st,sd, varname, elem, (void *)value,nd?&nd->u.scr.script->script_vars:NULL);
+		setd_sub(st,sd, varname, elem, (void *)value,NULL);
 	}
 	
 	return 0;
