@@ -3687,8 +3687,8 @@ int buildin_getelementofarray(struct script_state *st)
 			push_val(st->stack,C_INT,0);
 			return 1;
 		}else{
-			push_val(st->stack,C_NAME,
-				(i<<24) | st->stack->stack_data[st->start+2].u.num );
+			push_val2(st->stack,C_NAME,
+				(i<<24) | st->stack->stack_data[st->start+2].u.num, st->stack->stack_data[st->start+2].ref );
 		}
 	}else{
 		ShowError("script: getelementofarray (operator[]): param1 not name !\n");
@@ -9302,7 +9302,7 @@ int buildin_getmapxy(struct script_state *st){
         else
             sd=NULL;
 
-        set_reg(st,sd,num,name,(void*)mapname,NULL);
+        set_reg(st,sd,num,name,(void*)mapname,st->stack->stack_data[st->start+2].ref);
 
      //Set MapX
         num=st->stack->stack_data[st->start+3].u.num;
@@ -9313,7 +9313,7 @@ int buildin_getmapxy(struct script_state *st){
             sd=script_rid2sd(st);
         else
             sd=NULL;
-        set_reg(st,sd,num,name,(void*)x,NULL);
+        set_reg(st,sd,num,name,(void*)x,st->stack->stack_data[st->start+3].ref);
 
 
      //Set MapY
@@ -9326,7 +9326,7 @@ int buildin_getmapxy(struct script_state *st){
         else
             sd=NULL;
 
-        set_reg(st,sd,num,name,(void*)y,NULL);
+        set_reg(st,sd,num,name,(void*)y,st->stack->stack_data[st->start+4].ref);
 
      //Return Success value
         push_val(st->stack,C_INT,0);
@@ -9922,6 +9922,7 @@ void setd_sub(struct script_state *st, struct map_session_data *sd, char *varnam
 int buildin_setd(struct script_state *st)
 {
 	struct map_session_data *sd=NULL;
+	TBL_NPC *nd = st->oid? ((TBL_NPC *)map_id2bl(st->oid)): NULL;
 	char varname[100], *buffer;
 	char *value;
 	int elem;
@@ -9935,9 +9936,9 @@ int buildin_setd(struct script_state *st)
 		sd = script_rid2sd(st);
 
 	if(varname[strlen(varname)-1] != '$') {
-		setd_sub(st,sd, varname, elem, (void *)atoi(value),NULL);
+		setd_sub(st,sd, varname, elem, (void *)atoi(value),nd?&nd->u.scr.script->script_vars:NULL);
 	} else {
-		setd_sub(st,sd, varname, elem, (void *)value,NULL);
+		setd_sub(st,sd, varname, elem, (void *)value,nd?&nd->u.scr.script->script_vars:NULL);
 	}
 	
 	return 0;
@@ -9966,12 +9967,12 @@ int buildin_query_sql(struct script_state *st) {
 			if((sql_res = mysql_store_result(&mmysql_handle))){
 				if(name[strlen(name)-1] != '$') {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]),NULL);
+						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]),st->stack->stack_data[st->start+3].ref);
 						i++;
 					}
 				} else {
 					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)sql_row[0],NULL);
+						setd_sub(st,sd, name, i, (void *)sql_row[0],st->stack->stack_data[st->start+3].ref);
 						i++;
 					}
 				}
@@ -10520,31 +10521,31 @@ int buildin_getmobdata(struct script_state *st) {
 	
 	num=st->stack->stack_data[st->start+2].u.num;
 	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-	setd_sub(st,sd,name,0,(void *)(int)md->class_,NULL);
-	setd_sub(st,sd,name,1,(void *)(int)md->level,NULL);
-	setd_sub(st,sd,name,2,(void *)(int)md->status.hp,NULL);
-	setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,NULL);
-	setd_sub(st,sd,name,4,(void *)(int)md->master_id,NULL);
-	setd_sub(st,sd,name,5,(void *)(int)md->bl.m,NULL);
-	setd_sub(st,sd,name,6,(void *)(int)md->bl.x,NULL);
-	setd_sub(st,sd,name,7,(void *)(int)md->bl.y,NULL);
-	setd_sub(st,sd,name,8,(void *)(int)md->status.speed,NULL);
-	setd_sub(st,sd,name,9,(void *)(int)md->status.mode,NULL);
-	setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,NULL);
-	setd_sub(st,sd,name,11,(void *)(int)md->sc.option,NULL);
-	setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,NULL);
-	setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,NULL);
-	setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,NULL);
-	setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,NULL);
-	setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,NULL);
-	setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,NULL);
-	setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,NULL);
-	setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,NULL);
-	setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,NULL);
-	setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,NULL);
-	setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,NULL);
-	setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,NULL);
-	setd_sub(st,sd,name,24,(void *)(int)md->state.killer,NULL);
+	setd_sub(st,sd,name,0,(void *)(int)md->class_,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,1,(void *)(int)md->level,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,2,(void *)(int)md->status.hp,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,4,(void *)(int)md->master_id,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,5,(void *)(int)md->bl.m,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,6,(void *)(int)md->bl.x,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,7,(void *)(int)md->bl.y,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,8,(void *)(int)md->status.speed,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,9,(void *)(int)md->status.mode,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,11,(void *)(int)md->sc.option,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,st->stack->stack_data[st->start+2].ref);
+	setd_sub(st,sd,name,24,(void *)(int)md->state.killer,st->stack->stack_data[st->start+2].ref);
 	return 0;
 }
 
