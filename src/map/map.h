@@ -1280,7 +1280,7 @@ extern char db_path[256];
 
 // gat?Ö§
 int map_getcell(int,int,int,cell_t);
-int map_getcellp(struct map_data*,int,int,int);
+int map_getcellp(struct map_data*,int,int,cell_t);
 void map_setcell(int,int,int,int);
 extern int map_read_flag; // 0: grf«Õ«¡«¤«E1: «­«ã«Ã«·«E2: «­«ã«Ã«·«E?õê)
 enum {
