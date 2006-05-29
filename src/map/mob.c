@@ -1791,7 +1791,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(sd) {
 			if (sd->expaddrace[status->race])
 				bonus += sd->expaddrace[status->race];	
-			bonus += sd->expaddrace[status->mode&MD_BOSS?10:11];
+			bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 		}
 		if (battle_config.pk_mode &&
 			(int)(md->db->lv - tmpsd[i]->status.base_level) >= 20) //Needed due to unsigned checks

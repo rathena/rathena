@@ -3843,10 +3843,8 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 	}
 	
 	//Overflow checks... think we'll ever really need'em? [Skotlex]
-	if (base_exp > 0 && sd->status.base_exp > UINT_MAX - base_exp)
+	if (base_exp && sd->status.base_exp > UINT_MAX - base_exp)
 		sd->status.base_exp = UINT_MAX;
-	else if (sd->status.base_exp > base_exp)
-		sd->status.base_exp = 0;
 	else
 		sd->status.base_exp += base_exp;
 	
@@ -3854,11 +3852,8 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 
 	clif_updatestatus(sd,SP_BASEEXP);
 
-	//Overflow checks... think we'll ever really need'em? [Skotlex]
 	if (job_exp > 0 && sd->status.job_exp > UINT_MAX - job_exp)
 		sd->status.job_exp = UINT_MAX;
-	else if (sd->status.job_exp > job_exp)
-		sd->status.job_exp = 0;
 	else
 		sd->status.job_exp += job_exp;
 
