@@ -629,7 +629,7 @@ int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag)
 //If rates are > 0, percent is of current HP/SP
 //If rates are < 0, percent is of max HP/SP
 //If flag, this is heal, otherwise it is damage.
-int status_percent_change(struct block_list *src,struct block_list *target,char hp_rate, char sp_rate, int flag)
+int status_percent_change(struct block_list *src,struct block_list *target,signed char hp_rate, signed char sp_rate, int flag)
 {
 	struct status_data *status;
 	unsigned int hp  =0, sp = 0;

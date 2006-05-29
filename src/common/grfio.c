@@ -68,7 +68,7 @@ typedef struct {
 	char	type;
 	char	fn[128-4*5];		// file name
 	char	*fnd;
-	char	gentry;				// read grf file select
+	signed char	gentry;				// read grf file select
 } FILELIST;
 //gentry ... 0    : It acquires from a local file.
 //             It acquires from the resource file of 1>=:gentry_table[gentry-1].

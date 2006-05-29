@@ -1614,7 +1614,7 @@ static struct Damage battle_calc_weapon_attack(
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
-			char def1 = (char)status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
+			signed char def1 = (signed char)status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
 			if(battle_config.vit_penalty_type)
 			{

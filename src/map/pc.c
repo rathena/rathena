@@ -3842,7 +3842,7 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 	//Overflow checks... think we'll ever really need'em? [Skotlex]
 	if (base_exp > 0 && sd->status.base_exp > UINT_MAX - base_exp)
 		sd->status.base_exp = UINT_MAX;
-	else if (base_exp < 0 && sd->status.base_exp > base_exp)
+	else if (sd->status.base_exp > base_exp)
 		sd->status.base_exp = 0;
 	else
 		sd->status.base_exp += base_exp;
@@ -3854,7 +3854,7 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 	//Overflow checks... think we'll ever really need'em? [Skotlex]
 	if (job_exp > 0 && sd->status.job_exp > UINT_MAX - job_exp)
 		sd->status.job_exp = UINT_MAX;
-	else if (job_exp < 0 && sd->status.job_exp > job_exp)
+	else if (sd->status.job_exp > job_exp)
 		sd->status.job_exp = 0;
 	else
 		sd->status.job_exp += job_exp;
@@ -4933,16 +4933,12 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_BASEEXP:
 		if(pc_nextbaseexp(sd) > 0) {
 			sd->status.base_exp = val;
-			if(sd->status.base_exp < 0)
-				sd->status.base_exp=0;
 			pc_checkbaselevelup(sd);
 		}
 		break;
 	case SP_JOBEXP:
 		if(pc_nextjobexp(sd) > 0) {
 			sd->status.job_exp = val;
-			if(sd->status.job_exp < 0)
-				sd->status.job_exp=0;
 			pc_checkjoblevelup(sd);
 		}
 		break;

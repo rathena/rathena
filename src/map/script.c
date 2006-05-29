@@ -8171,7 +8171,7 @@ int buildin_petskillbonus(struct script_state *st)
 	pd->bonus->duration=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	pd->bonus->delay=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
-	if (pd->state.skillbonus == -1)
+	if (pd->state.skillbonus == 1)
 		pd->state.skillbonus=0;	// waiting state
 
 	// wait for timer to start

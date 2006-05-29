@@ -2466,7 +2466,7 @@ int atcommand_kami(
 			return -1;
 		}
 	
-		if(color < 0 || color > 0xFFFFFF) {
+		if(color > 0xFFFFFF) {
 			clif_displaymessage(fd, "Invalid color.");
 			return -1;
 		}
@@ -6199,9 +6199,6 @@ char * txt_time(unsigned int duration) {
 	memset(temp, '\0', sizeof(temp));
 	memset(temp1, '\0', sizeof(temp1));
 
-	if (duration < 0)
-		duration = 0;
-
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
 	hours = duration / (60 * 60);
@@ -7770,7 +7767,7 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	rate = atoi(message) * 100;
 
 	// check for invalid value
-	if(rate < 0 || rate > 10000)
+	if(rate > 10000)
 	{
 		clif_displaymessage(fd, "Invalid value. Choose value between 0 and 100.");
 		return 0;

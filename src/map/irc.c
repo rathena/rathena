@@ -129,7 +129,7 @@ void irc_announce_mvp(struct map_session_data *sd, struct mob_data *md)
 
 	memset(send_string,'\0',256);
 	memset(mapname,'\0',16);
-	mapname[16]='\0';
+	mapname[15]='\0'; // 15 is the final index, not 16 [Lance]
 	strcpy(mapname, map[md->bl.m].name);
 	maplen = strcspn(mapname,".");
 	mapname[maplen] = '\0';

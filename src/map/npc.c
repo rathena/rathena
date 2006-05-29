@@ -15,6 +15,7 @@
 #include "../common/grfio.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/db.h"
 #include "map.h"
 #include "log.h"
 #include "npc.h"
@@ -2193,7 +2194,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	if (sscanf(w3, "%23[^,],%d", mobname, &level) > 1)
 		mob.level = level;
 
-	if( mob.delay1<0 || mob.delay2<0 || mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
+	if(mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
 		ShowError("wrong monsters spawn delays : %s %s (file %s)\n", w3, w4, current_file);
 		return 1;
 	}
