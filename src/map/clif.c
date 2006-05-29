@@ -8383,8 +8383,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	else
 		sd->areanpc_id = 0;
 
-	if (pc_isdead(sd)) //In case you warped dead.
+	if (pc_isdead(sd)){ //In case you warped dead.
 		clif_clearchar_area(&sd->bl, 1);
+	}
 }
 
 /*==========================================

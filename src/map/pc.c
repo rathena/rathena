@@ -794,6 +794,11 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
+
+	if(sd->status.hp <= 0){
+		sd->status.hp = 0;
+		sd->vd.dead_sit = sd->state.dead_sit = 1;
+	}
 	
 	//SG map and mob read [Komurka]
 	for(i=0;i<3;i++) //for now - someone need to make reading from txt/sql
