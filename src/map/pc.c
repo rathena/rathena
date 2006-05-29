@@ -797,7 +797,7 @@ int pc_reg_received(struct map_session_data *sd)
 
 	if(sd->status.hp <= 0){
 		sd->status.hp = 0;
-		sd->vd.dead_sit = sd->state.dead_sit = 1;
+		pc_setrestartvalue(sd, 1);
 	}
 	
 	//SG map and mob read [Komurka]
