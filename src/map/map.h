@@ -53,6 +53,8 @@
 #define MAX_SEARCH 5
 #define MAX_DUEL 1024
 
+#define map_id2index(id) map[(id)].index
+
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum {
 	JOB_NOVICE,
@@ -1278,7 +1280,7 @@ extern char db_path[256];
 
 // gat?Ö§
 int map_getcell(int,int,int,cell_t);
-int map_getcellp(struct map_data*,int,int,cell_t);
+int map_getcellp(struct map_data*,int,int,int);
 void map_setcell(int,int,int,int);
 extern int map_read_flag; // 0: grf«Õ«¡«¤«E1: «­«ã«Ã«·«E2: «­«ã«Ã«·«E?õê)
 enum {

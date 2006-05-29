@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/29
+	* [Fixed]:
+	  - pc_follow_timer possible triggering crash.
+	  - pc_reg_received to use battle_status.hp instead of status.hp
+	  [Added]:
+	  - macro map_id2index for non-cyptic mapid to mapindex conversion. [Lance]
 	* Added a division by zero check in mob_dead to prevent the (impossible)
 	  case where a mob dies with received damage of zero. [Skotlex]
 	* Modified skill_get_range2 to return range 9 for skills with range 0 for

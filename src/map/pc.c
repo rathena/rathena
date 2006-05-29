@@ -795,8 +795,7 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
 
-	if(sd->status.hp <= 0){
-		sd->status.hp = 0;
+	if(sd->battle_status.hp == 0){
 		pc_setrestartvalue(sd, 1);
 	}
 	
@@ -3644,7 +3643,8 @@ char * job_name(int class_) {
 
 int pc_follow_timer(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd, *tsd;
+	struct map_session_data *sd;
+	struct block_list *tbl;
 
 	sd = map_id2sd(id);
 	nullpo_retr(0, sd);
@@ -3660,19 +3660,22 @@ int pc_follow_timer(int tid,unsigned int tick,int id,int data)
 	if (pc_isdead(sd))
 		return 0;
 
-	if ((tsd = map_id2sd(sd->followtarget)) == NULL || pc_isdead(tsd))
+	if ((tbl = map_id2bl(sd->followtarget)) == NULL)
+		return 0;
+
+	if(tbl->type == BL_PC && pc_isdead((TBL_PC *)tbl))
 		return 0;
 
 	// either player or target is currently detached from map blocks (could be teleporting),
 	// but still connected to this map, so we'll just increment the timer and check back later
-	if (sd->bl.prev != NULL && tsd->bl.prev != NULL &&
+	if (sd->bl.prev != NULL && tbl->prev != NULL &&
 		sd->ud.skilltimer == -1 && sd->ud.attacktimer == -1 && sd->ud.walktimer == -1)
 	{
-		if((sd->bl.m == tsd->bl.m) && unit_can_reach_bl(&sd->bl,&tsd->bl, AREA_SIZE, 0, NULL, NULL)) {
-			if (!check_distance_bl(&sd->bl, &tsd->bl, 5))
-				unit_walktobl(&sd->bl, &tsd->bl, 5, 0);
+		if((sd->bl.m == tbl->m) && unit_can_reach_bl(&sd->bl,tbl, AREA_SIZE, 0, NULL, NULL)) {
+			if (!check_distance_bl(&sd->bl, tbl, 5))
+				unit_walktobl(&sd->bl, tbl, 5, 0);
 		} else
-			pc_setpos(sd, tsd->mapindex, tsd->bl.x, tsd->bl.y, 3);
+			pc_setpos(sd, map_id2index(tbl->m), tbl->x, tbl->y, 3);
 	}
 	sd->followtimer = add_timer(
 		tick + 1000,	// increase time a bit to loosen up map's load
