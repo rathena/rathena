@@ -25,8 +25,6 @@
 #include "guild.h"
 #include "party.h"
 
-#include "mercenary.h"
-
 #define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
 
 int attr_fix_table[4][10][10];
@@ -3154,7 +3152,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 				state |= BCT_ENEMY; //Default enemy. Normal mobs.
 			//Pass on to master.
-			s_bl=(struct block_list *)((struct homun_data*)src)->master;	//Whoever is the master's enemy is the homunculus' enemy.
+			s_bl=(struct block_list *)((struct homun_data*)src)->master;
 			break;
 		}
 		case BL_PET:
@@ -3176,8 +3174,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 0;
 	}
 	
-	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all players/mobs
-		if (target->type == BL_MOB || target->type == BL_PC)
+	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all attackable chars 
+		if (target->type&BL_CHAR)
 			return 1;
 		else
 			return -1;

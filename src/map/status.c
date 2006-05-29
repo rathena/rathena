@@ -1718,7 +1718,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(sd->mdef_rate != 100)
 		status->mdef = status->mdef * sd->mdef_rate/100;
 
-	if (!battle_config.weapon_defense_type && status->mdef > battle_config.max_def)
+	if (!battle_config.magic_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
 		status->mdef = (unsigned char)battle_config.max_def;
