@@ -317,7 +317,7 @@ void initChangeTables(void) {
 	add_sc(SL_STUN, SC_STUN);
 	set_sc(SL_SWOO, SC_SWOO, SI_BLANK, SCB_SPEED);
 	set_sc(SL_SKE, SC_SKE, SI_BLANK, SCB_BATK|SCB_WATK|SCB_DEF|SCB_DEF2);
-	set_sc(SL_SKA, SC_SKA, SI_BLANK, SCB_DEF|SCB_MDEF|SCB_SPEED|SCB_ASPD);
+	set_sc(SL_SKA, SC_SKA, SI_BLANK, SCB_DEF|SCB_MDEF|SCB_ASPD);
 	set_sc(SL_SMA, SC_SMA, SI_SMA, SCB_NONE);
 	set_sc(ST_PRESERVE, SC_PRESERVE, SI_PRESERVE, SCB_NONE);
 	set_sc(PF_DOUBLECASTING, SC_DOUBLECAST, SI_DOUBLECAST, SCB_NONE);
@@ -2986,8 +2986,6 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed += speed * 25/100;
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		speed += speed * 25/100;
-	if(sc->data[SC_SKA].timer!=-1)
-		speed += speed * 25/100;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		speed += speed * 50/100;
 	if(sc->data[SC_DONTFORGETME].timer!=-1)
@@ -3836,11 +3834,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check for inmunities / sc fails
 	switch (type) {
-		case SC_POISON:
-		case SC_DPOISON:
-			if (undead_flag && !(flag&1))
-				return 0; //Undead inmune to poison. Thanks to orn [Skotlex]
-			break;
 		case SC_FREEZE:
 		case SC_STONE:
 			//Undead are inmune to Freeze/Stone
@@ -5059,7 +5052,8 @@ int status_change_clear(struct block_list *bl,int type)
 			(type == 0 && (
 				i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT ||
 				i == SC_FUSION || i == SC_TKREST || i == SC_READYSTORM ||
-			  	i == SC_READYDOWN || i == SC_READYCOUNTER || i == SC_READYTURN
+			  	i == SC_READYDOWN || i == SC_READYCOUNTER || i == SC_READYTURN ||
+				i == SC_DODGE
 			)))
 			continue;
 
@@ -5148,7 +5142,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			if (sc->data[type].val1 >= 7 &&
 				DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
 				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0 &&
-				(sd->class_&MAPID_BASEMASK) != MAPID_SOUL_LINKER))
+				(sd->class_&MAPID_UPPERMASK) != MAPID_SOUL_LINKER))
 			)
 				sc_start(bl,SC_SPURT,100,sc->data[type].val1,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1));
 		}

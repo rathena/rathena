@@ -29,6 +29,8 @@
 05/29
 	* Fixed Green Ale's effect, thanks to NLZ. [MasterOfMuppets]
 05/28
+	* Updated ASC_BREAKER's range to 9. [Skotlex]
+05/28
 	* Readded some aDelay fixes which were accidentaly reverted [Playtester]
 05/26
 	* Added Red Chile drop to Kraben & small aMotion fix [Playtester]
