@@ -137,8 +137,8 @@ prontera.gat,153,193,6	script	Job Master	123,{
 							set @job_opt[1], Job_Alchem;
 							break;
 						case Job_Thief_High:
-						case Job_Baby_Theif:
-						case Job_Theif:
+						case Job_Baby_Thief:
+						case Job_Thief:
 							set @job_opt[0], Job_Assassin;
 							set @job_opt[1], Job_Rogue;
 							break;						
