@@ -369,17 +369,25 @@ void initChangeTables(void) {
 	SkillStatusChangeTable[SL_SOULLINKER] =  MAPID_SOUL_LINKER,
 
 	//Status that don't have a skill associated.
-	StatusIconChangeTable[SC_WEIGHT50 ] =   SI_WEIGHT50;
-	StatusIconChangeTable[SC_WEIGHT90] =    SI_WEIGHT90;
+	StatusIconChangeTable[SC_WEIGHT50] = SI_WEIGHT50;
+	StatusIconChangeTable[SC_WEIGHT90] = SI_WEIGHT90;
 	StatusIconChangeTable[SC_ASPDPOTION0] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP0] =    SI_SPEEDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP1] =    SI_SPEEDPOTION;
-	StatusIconChangeTable[SC_MIRACLE] =    SI_SPIRIT;
+	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION;
+	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION;
+	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 	
 	//Other SC which are not necessarily associated to skills.
+	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION2] = SCB_ASPD;
+	StatusChangeFlagTable[SC_ASPDPOTION3] = SCB_ASPD;
+	StatusChangeFlagTable[SC_SPEEDUP0] = SCB_SPEED;
+	StatusChangeFlagTable[SC_SPEEDUP1] = SCB_SPEED;
+	StatusChangeFlagTable[SC_ATKPOTION] = SCB_BATK;
+	StatusChangeFlagTable[SC_MATKPOTION] = SCB_MATK;
 	StatusChangeFlagTable[SC_INCALLSTATUS] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
 	StatusChangeFlagTable[SC_INCSTR] |= SCB_STR;
 	StatusChangeFlagTable[SC_INCAGI] |= SCB_AGI;
@@ -3830,6 +3838,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check for inmunities / sc fails
 	switch (type) {
+		case SC_POISON:
+		case SC_DPOISON:
+			if (undead_flag && !(flag&1))
+				return 0; //Undead inmune to poison. Thanks to orn [Skotlex]
+			break;
 		case SC_FREEZE:
 		case SC_STONE:
 			//Undead are inmune to Freeze/Stone

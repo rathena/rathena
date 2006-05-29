@@ -2162,7 +2162,7 @@ int map_getcell(int m,int x,int y,cell_t cellchk)
 	return (m < 0 || m >= MAX_MAP_PER_SERVER) ? 0 : map_getcellp(&map[m],x,y,cellchk);
 }
 
-int map_getcellp(struct map_data* m,int x,int y,int cellchk)
+int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 {
 	int type, type2;
 #ifdef CELL_NOSTACK

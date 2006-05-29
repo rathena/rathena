@@ -4811,16 +4811,16 @@ int pc_readparam(struct map_session_data *sd,int type)
 		val= pc_nextjobexp(sd);
 		break;
 	case SP_HP:
-		val= sd->status.hp;
+		val= sd->battle_status.hp;
 		break;
 	case SP_MAXHP:
-		val= sd->status.max_hp;
+		val= sd->battle_status.max_hp;
 		break;
 	case SP_SP:
-		val= sd->status.sp;
+		val= sd->battle_status.sp;
 		break;
 	case SP_MAXSP:
-		val= sd->status.max_sp;
+		val= sd->battle_status.max_sp;
 		break;
 	case SP_STR:
 		val= sd->status.str;
@@ -4952,16 +4952,16 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->max_weight = val;
 		break;
 	case SP_HP:
-		sd->status.hp = val;
+		sd->battle_status.hp = val;
 		break;
 	case SP_MAXHP:
-		sd->status.max_hp = val;
+		sd->battle_status.max_hp = val;
 		break;
 	case SP_SP:
-		sd->status.sp = val;
+		sd->battle_status.sp = val;
 		break;
 	case SP_MAXSP:
-		sd->status.max_sp = val;
+		sd->battle_status.max_sp = val;
 		break;
 	case SP_STR:
 		sd->status.str = val;
