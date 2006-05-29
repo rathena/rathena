@@ -1768,10 +1768,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double per; //Your share of the mob's exp
 		int bonus; //Bonus on top of your share.
 		
-		if (battle_config.exp_calc_type)	// eAthena's exp formula based on max hp.
-			per = (double)md->dmglog[i].dmg/(double)status->max_hp;
-		else //jAthena's exp formula based on total damage.
+		if (!battle_config.exp_calc_type && md->tdmg)
+			//jAthena's exp formula based on total damage.
 			per = (double)md->dmglog[i].dmg/(double)md->tdmg;
+		else
+			//eAthena's exp formula based on max hp.
+			per = (double)md->dmglog[i].dmg/(double)status->max_hp;
 	
 		if (count>1)	
 			per *= (9.+(double)((count > 6)? 6:count))/10.; //attackers count bonus.

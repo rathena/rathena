@@ -344,7 +344,7 @@ void initChangeTables(void) {
 	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
 	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
 	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
-	set_sc(GS_FLING, SC_FLING, SI_NONE, SCB_DEF|SCB_DEF2);
+	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
 
 	//Uncomment and update when you plan on implementing.
 //	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK);
@@ -2889,8 +2889,8 @@ static unsigned char status_calc_def(struct block_list *bl, struct status_change
 		def -= def * sc->data[SC_PROVOKE].val4/100;
 	if(sc->data[SC_STRIPSHIELD].timer!=-1)
 		def -= def * sc->data[SC_STRIPSHIELD].val2/100;
-	if (sd->data[SC_FLING].timer!=-1)
-		def -= def * (sd->data[SC_FLING].val2)/100;
+	if (sc->data[SC_FLING].timer!=-1)
+		def -= def * (sc->data[SC_FLING].val2)/100;
 	return cap_value(def,0,UCHAR_MAX);
 }
 
@@ -2921,8 +2921,8 @@ static unsigned short status_calc_def2(struct block_list *bl, struct status_chan
 		else if(sc->data[SC_JOINTBEAT].val2==4)
 			def2 -= def2 * 25/100;
 	}
-	if (sd->data[SC_FLING].timer!=-1)
-		def2 -= def2 * (sd->data[SC_FLING].val3)/100;
+	if(sc->data[SC_FLING].timer!=-1)
+		def2 -= def2 * (sc->data[SC_FLING].val3)/100;
 
 	return cap_value(def2,0,USHRT_MAX);
 }
