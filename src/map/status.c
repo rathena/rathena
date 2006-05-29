@@ -344,6 +344,8 @@ void initChangeTables(void) {
 	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
 	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
 	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
+	set_sc(GS_FLING, SC_FLING, SI_NONE, SCB_DEF|SCB_DEF2);
+
 	//Uncomment and update when you plan on implementing.
 //	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK);
 //	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_MAEMI);
@@ -2696,7 +2698,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_INCATKRATE].timer!=-1)
 		batk += batk * sc->data[SC_INCATKRATE].val1/100;
 	if(sc->data[SC_PROVOKE].timer!=-1)
-		batk += batk * (2+3*sc->data[SC_PROVOKE].val1)/100;
+		batk += batk * sc->data[SC_PROVOKE].val3/100;
 	if(sc->data[SC_CONCENTRATION].timer!=-1)
 		batk += batk * sc->data[SC_CONCENTRATION].val2/100;
 	if(sc->data[SC_SKE].timer!=-1)
@@ -2729,7 +2731,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_INCATKRATE].timer!=-1)
 		watk += watk * sc->data[SC_INCATKRATE].val1/100;
 	if(sc->data[SC_PROVOKE].timer!=-1)
-		watk += watk * (2+3*sc->data[SC_PROVOKE].val1)/100;
+		watk += watk * sc->data[SC_PROVOKE].val3/100;
 	if(sc->data[SC_CONCENTRATION].timer!=-1)
 		watk += watk * sc->data[SC_CONCENTRATION].val2/100;
 	if(sc->data[SC_SKE].timer!=-1)
@@ -2884,11 +2886,11 @@ static unsigned char status_calc_def(struct block_list *bl, struct status_change
 	if(sc->data[SC_SKE].timer!=-1)
 		def -= def * 50/100;
 	if(sc->data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC) // Provoke doesn't alter player defense.
-		def -= def * (5+5*sc->data[SC_PROVOKE].val1)/100;
+		def -= def * sc->data[SC_PROVOKE].val4/100;
 	if(sc->data[SC_STRIPSHIELD].timer!=-1)
 		def -= def * sc->data[SC_STRIPSHIELD].val2/100;
-	//if (sd->data[SC_FLING].timer!=-1 && bl->type != BL_PC)
-	//	def -= (def * sd->data[SC_FLING].val1) / 100;
+	if (sd->data[SC_FLING].timer!=-1)
+		def -= def * (sd->data[SC_FLING].val2)/100;
 	return cap_value(def,0,UCHAR_MAX);
 }
 
@@ -2912,15 +2914,15 @@ static unsigned short status_calc_def2(struct block_list *bl, struct status_chan
 	if(sc->data[SC_SKE].timer!=-1)
 		def2 -= def2 * 50/100;
 	if(sc->data[SC_PROVOKE].timer!=-1)
-		def2 -= def2 * (5+5*sc->data[SC_PROVOKE].val1)/100;
+		def2 -= def2 * sc->data[SC_PROVOKE].val4/100;
 	if(sc->data[SC_JOINTBEAT].timer!=-1){
 		if(sc->data[SC_JOINTBEAT].val2==3)
 			def2 -= def2 * 50/100;
 		else if(sc->data[SC_JOINTBEAT].val2==4)
 			def2 -= def2 * 25/100;
 	}
-	//if (sd->data[SC_FLING].timer!=-1)
-	//	def2 -= (def2 * sd->data[SC_FLING].val1) / 100;
+	if (sd->data[SC_FLING].timer!=-1)
+		def2 -= def2 * (sd->data[SC_FLING].val3)/100;
 
 	return cap_value(def2,0,USHRT_MAX);
 }
@@ -3307,19 +3309,19 @@ struct status_data *status_get_base_status(struct block_list *bl)
 	}
 }
 
-int status_get_lwatk(struct block_list *bl)
+unsigned short status_get_lwatk(struct block_list *bl)
 {
 	struct status_data *status = status_get_status_data(bl);
 	return status->lhw?status->lhw->atk:0;
 }
 
-int status_get_lwatk2(struct block_list *bl)
+unsigned short status_get_lwatk2(struct block_list *bl)
 {
 	struct status_data *status = status_get_status_data(bl);
 	return status->lhw?status->lhw->atk2:0;
 }
 
-int status_get_def(struct block_list *bl)
+unsigned char status_get_def(struct block_list *bl)
 {
 	struct unit_data *ud;
 	struct status_data *status = status_get_status_data(bl);
@@ -3331,18 +3333,14 @@ int status_get_def(struct block_list *bl)
 	return def;
 }
 
-int status_get_speed(struct block_list *bl)
+unsigned short status_get_speed(struct block_list *bl)
 {
-	struct status_data *status;
-
 	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex]
 		return ((struct npc_data *)bl)->speed;
-
-	status = status_get_status_data(bl);
-	return status?status->speed:2000;
+	return status_get_status_data(bl)->speed;
 }
 
-int status_get_attack_lelement(struct block_list *bl)
+unsigned char status_get_attack_lelement(struct block_list *bl)
 {
 	struct status_data *status = status_get_status_data(bl);
 	return status->lhw?status->lhw->ele:0;
@@ -4826,6 +4824,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = 5*val1; //Flee decrease
 			break;
 
+		case SC_FLING:
+			val2 = 3*val1; //Def reduction
+			val3 = 3*val1; //Def2 reduction
+			break;
+		case SC_PROVOKE:
+			//val2 signals autoprovoke.
+			val3 = 2+3*val1; //Atk increase
+			val4 = 5+5*val1; //Def reduction.
+			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?

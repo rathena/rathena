@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/29
+	* Optimized a bit the SC_PROVOKE code (to use val3/val4) [Skotlex]
+	* Fixed draining when the amount drained is negative (invoke zap rather
+	  than heal) [Skotlex]
+	* Implemented GS_FLING as per the current skill description. [Skotlex]
 	* Fixed pc_readparam/pc_setparam to use battle_status.hp/sp rather than
 	  status.hp/sp, fixes scripts reading the wrong Hp/Sp values [Skotlex]
 	* Added some missing SC_* entries on the initial listing (potion related

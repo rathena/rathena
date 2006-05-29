@@ -1318,19 +1318,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
-
-	//case GS_FLING:	// this needs to be looked at [Reddozen]
-	//	if (skill == GS_FLING) { // gunslinger [marquis007]
-	//		int spiritball = (sd->spiritball > 5 ? 5 : sd->spiritball);
-	//	} else {
-	//		int spiritball = 1;
-	//	}
-	//
-	//	if (spiritball <= sd->spiritball && sd->spiritball != 0){
-	//		pc_delspiritball(sd,spiritball,0);
-	//		status_change_start(bl,SC_FLING,10000,spiritball*5,0,0,0,skill_get_time(skillid,skilllv)));
-	//	}
-	//	break;
+	case GS_FLING:
+		sc_start(bl,SC_FLING,100, sd?sd->spiritball_old:5,skill_get_time(skillid,skilllv));
+		break;
 	}
 
 	if (md && battle_config.summons_inherit_effects && md->master_id && md->special_state.ai)
@@ -2946,15 +2936,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 
 	case NPC_DARKBREATH:
 		clif_emotion(src,7);
-		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
-		break;
-
-	case SN_FALCONASSAULT:			/* ファルコンアサルト */
-	case PA_PRESSURE:	/* プレッシャ? */
-	case CR_ACIDDEMONSTRATION:  // Acid Demonstration
-	case TF_THROWSTONE:			/* ?ﾎ投げ */
-	case NPC_SMOKING:			/* スモ?キング */
-	case NPC_SELFDESTRUCTION:	/* 自爆 */
+	case SN_FALCONASSAULT:
+	case PA_PRESSURE:
+	case CR_ACIDDEMONSTRATION:
+	case TF_THROWSTONE:
+	case NPC_SMOKING:
+	case NPC_SELFDESTRUCTION:
+	case GS_FLING:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -3002,7 +2990,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case GS_RAPIDSHOWER:
 	case GS_DUST:
 	case GS_FULLBUSTER:
-	case GS_FLING:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case NJ_HUUMA:
@@ -5482,6 +5469,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				pc_delspiritball(sd,1,0);
 		}
 		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();

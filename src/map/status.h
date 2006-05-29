@@ -248,6 +248,7 @@ enum {
 	SC_NEN,
 	SC_KNOWLEDGE,
 	SC_SMA,
+	SC_FLING,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
 extern int SkillStatusChangeTable[MAX_SKILL];
@@ -539,7 +540,7 @@ int status_get_lv(struct block_list *bl);
 #define status_get_luk(bl) status_get_status_data(bl)->luk
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
-int status_get_def(struct block_list *bl);
+unsigned char status_get_def(struct block_list *bl);
 #define status_get_mdef(bl) status_get_status_data(bl)->mdef
 #define status_get_flee2(bl) status_get_status_data(bl)->flee2
 #define status_get_def2(bl) status_get_status_data(bl)->def2
@@ -550,9 +551,9 @@ int status_get_def(struct block_list *bl);
 #define status_get_watk2(bl) status_get_status_data(bl)->rhw.atk2
 #define status_get_matk_max(bl) status_get_status_data(bl)->matk_max
 #define status_get_matk_min(bl) status_get_status_data(bl)->matk_min
-int status_get_lwatk(struct block_list *bl);
-int status_get_lwatk2(struct block_list *bl);
-int status_get_speed(struct block_list *bl);
+unsigned short status_get_lwatk(struct block_list *bl);
+unsigned short status_get_lwatk2(struct block_list *bl);
+unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
@@ -561,7 +562,7 @@ int status_get_speed(struct block_list *bl);
 unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);
 #define status_get_attack_sc_element(bl, sc) status_calc_attack_element(bl, sc, 0)
 #define status_get_attack_element(bl) status_get_status_data(bl)->rhw.ele
-int status_get_attack_lelement(struct block_list *bl);
+unsigned char status_get_attack_lelement(struct block_list *bl);
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode

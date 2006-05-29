@@ -2463,6 +2463,7 @@ struct Damage  battle_calc_misc_attack(
 	//Misc Settings
 	switch(skill_num){
 	case PA_PRESSURE:
+	case GS_FLING:
 		flag.elefix = flag.cardfix = 0;
 	case HT_BLITZBEAT:
 	case TF_THROWSTONE:
@@ -2550,6 +2551,9 @@ struct Damage  battle_calc_misc_attack(
 		if (sd) pc_payzeny(sd, md.damage);
 		if(map_flag_vs(target->m) || is_boss(target))
 			md.damage>>=1; //temp value
+		break;
+	case GS_FLING:
+		md.damage = sd?sd->status.job_level:status_get_lv(src);
 		break;
 	}
 	
@@ -2741,7 +2745,17 @@ void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, i
 	}
 	if (!thp && !tsp) return;
 
-	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
+	//Split'em up as Hp/Sp could be drained/leeched.
+	if(thp> 0)
+		status_heal(&sd->bl, thp, 0, battle_config.show_hp_sp_drain?3:1);
+	else if (thp < 0)
+		status_zap(&sd->bl, thp, 0);
+
+	if(tsp > 0)
+		status_heal(&sd->bl, 0, tsp, battle_config.show_hp_sp_drain?3:1);
+	else if (tsp < 0)
+		status_zap(&sd->bl, 0, tsp);
+	
 	
 	if (tsd) {
 		if (rhp || rsp)
