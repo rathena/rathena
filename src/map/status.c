@@ -917,7 +917,7 @@ void status_calc_misc(struct status_data *status, int level)
 int status_calc_mob(struct mob_data* md, int first)
 {
 	struct status_data *status;
-	struct block_list *mbl;
+	struct block_list *mbl = NULL;
 	int flag=0;
 
 	//Check if we need custom base-status

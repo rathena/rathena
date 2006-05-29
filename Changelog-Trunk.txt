@@ -4,7 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/29
-	* [Optimized ]:
+	* [Fixed]:
+	  - status.c:920: warning: 'mbl' might be used uninitialized in this function
+	  - skill.c:6648: warning: 'matk_min' might be used uninitialized in this function
+	  - skill.c:6648: warning: 'matk_max' might be used uninitialized in this function
+	  - skill.c:2826: warning: 'sid' might be used uninitialized in this function [Lance]
+	* [Optimized]:
 	  - Removed unused variable (account_id) in storage_guild_storagesaved.
 	* [Optimized]:
 	  - Removed unused checks for unsigned data type and possible logic error for

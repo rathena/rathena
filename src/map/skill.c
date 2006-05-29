@@ -2823,7 +2823,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 	case HVAN_CAPRICE: //[blackhole89]
 		{
 			int ran=rand()%4;
-			int sid;
+			int sid = 0;
 			switch(ran)
 			{
 			case 0: sid=MG_COLDBOLT; break;
@@ -6645,7 +6645,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 	struct status_data *tstatus, *sstatus;
 	struct status_change *tsc, *sc;
 	struct skill_unit_group_tickset *ts;
-	int matk_min, matk_max; //For Magic power...
+	int matk_min = 0, matk_max = 0; //For Magic power...
 	int type, skillid;
 	int diff=0;
 
