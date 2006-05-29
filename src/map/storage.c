@@ -664,7 +664,7 @@ int storage_guild_storagesave(int account_id, int guild_id)
 	return 0;
 }
 
-int storage_guild_storagesaved(int account_id, int guild_id)
+int storage_guild_storagesaved(int guild_id)
 {
 	struct guild_storage *stor;
 
