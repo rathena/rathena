@@ -354,8 +354,6 @@ int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p) {
 	for (i=0;i<MAX_FRIENDS;i++){
 		if (p->friends[i].account_id > 0 && p->friends[i].char_id > 0 && p->friends[i].name[0])
 			str_p += sprintf(str_p, ",%d,%d,%s", p->friends[i].account_id, p->friends[i].char_id, p->friends[i].name);
-		else
-			str_p += sprintf(str_p,",,,");
 	}
 
 	str_p += '\0';
@@ -786,7 +784,7 @@ int parse_friend_txt(struct mmo_charstatus *p)
 		next = pos;
 		for (count = 0; next < len && count < MAX_FRIENDS; count++)
 		{ //Read friends.
-			if (sscanf(line+next, ",%d,%d,%23[^,]%n",&p->friends[count].account_id,&p->friends[count].char_id, p->friends[count].name, &pos) < 3)
+			if (sscanf(line+next, ",%d,%d,%23[^,^\n]%n",&p->friends[count].account_id,&p->friends[count].char_id, p->friends[count].name, &pos) < 3)
 			{	//Invalid friend?
 				memset(&p->friends[count], 0, sizeof(p->friends[count]));
 				break;
@@ -797,60 +795,22 @@ int parse_friend_txt(struct mmo_charstatus *p)
 			//NOTE: Of course, this will fail if someone sets their name to something like
 			//Bob,2005 but... meh, it's the problem of parsing a text file (encasing it in "
 			//won't do as quotes are also valid name chars!)
-			while(next < len && sscanf(line+next, ",%23[^,]%n", temp, &len) > 0)
+			while(next < len && sscanf(line+next, ",%23[^,^\n]%n", temp, &pos) > 0)
 			{
-				if (atoi(temp)) 
-				{	//We read the next friend, just continue.
+				if (atoi(temp)) //We read the next friend, just continue.
 					break;
-				} else {	//Append the name.
-					next+=len;
-					if (strlen(p->friends[count].name) + strlen(temp) +1 < NAME_LENGTH)
-					{
-						strcat(p->friends[count].name, ",");
-						strcat(p->friends[count].name, temp);
-					}
+				//Append the name.
+				next+=pos;
+				i = strlen(p->friends[count].name);
+				if (i + strlen(temp) +1 < NAME_LENGTH)
+				{
+					p->friends[count].name[i] = ',';
+					strcpy(p->friends[count].name+i+1, temp);
 				}
 			} //End Guess Block
 		} //Friend's for.
-		break; //Finished reading.
+		break; //Found friends.
 	}
-	/*
-		//Character names must not exceed the 23+\0 limit. [Skotlex]
-		sscanf(line, "%d,%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23[^,],%d,%23s",&cid,
-		&temp[0],p->friend_name[0],
-		&temp[1],p->friend_name[1],
-		&temp[2],p->friend_name[2],
-		&temp[3],p->friend_name[3],
-		&temp[4],p->friend_name[4],
-		&temp[5],p->friend_name[5],
-		&temp[6],p->friend_name[6],
-		&temp[7],p->friend_name[7],
-		&temp[8],p->friend_name[8],
-		&temp[9],p->friend_name[9],
-		&temp[10],p->friend_name[10],
-		&temp[11],p->friend_name[11],
-		&temp[12],p->friend_name[12],
-		&temp[13],p->friend_name[13],
-		&temp[14],p->friend_name[14],
-		&temp[15],p->friend_name[15],
-		&temp[16],p->friend_name[16],
-		&temp[17],p->friend_name[17],
-		&temp[18],p->friend_name[18],
-		&temp[19],p->friend_name[19]);
-		if (cid == p->char_id)
-			break;
-	}
-	// No register of friends list
-	if (cid == 0) {
-		fclose(fp);
-		return 0;
-	}
-
-	// Fill in the list
-
-	for (i=0; i<MAX_FRIENDS; i++)
-		p->friend_id[i] = temp[i];
-*/
 	fclose(fp);
 	return count;
 }
