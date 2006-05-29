@@ -51,6 +51,9 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
+//Caps values to min/max
+#define cap_value(a, min, max) (a>max?max:a<min?min:a)
+
 //Initializes the StatusIconChangeTable variable. May seem somewhat slower than directly defining the array,
 //but it is much less prone to errors. [Skotlex]
 void initChangeTables(void) {
@@ -1737,14 +1740,16 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Basic ASPD value
 	if (sd->status.weapon < MAX_WEAPON_TYPE)
-		status->amotion = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
+		i = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 	else
-		status->amotion = (
+		i = (
 			(aspd_base[sd->status.class_][sd->weapontype1]
 			-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype1]/1000) +
 			(aspd_base[sd->status.class_][sd->weapontype2]
 			-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype2]/1000)
 			) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
+
+	status->amotion = cap_value(i,battle_config.max_aspd,2000);
 
 	// Relative modifiers from passive skills
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
@@ -2168,9 +2173,9 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		if (sd->status.weapon < MAX_WEAPON_TYPE)
-			status->amotion = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
+			skill = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 		else
-			status->amotion = (
+			skill = (
 				(aspd_base[sd->status.class_][sd->weapontype1]
 				-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype1]/1000) +
 				(aspd_base[sd->status.class_][sd->weapontype2]
@@ -2181,10 +2186,9 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		
 		// Apply all relative modifiers
 		if(status->aspd_rate != 100)
-			status->amotion = status->amotion*status->aspd_rate/100;
+			skill = skill *status->aspd_rate/100;
 
-		if(status->amotion < battle_config.max_aspd)
-			status->amotion = battle_config.max_aspd;
+		status->amotion = cap_value(skill,battle_config.max_aspd,2000);
 
 		status->adelay = 2*status->amotion;
 		if ((skill=pc_checkskill(sd,SA_FREECAST))>0) {
@@ -2464,20 +2468,16 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	
 	if(flag&SCB_ASPD) {
 		status->aspd_rate = status_calc_aspd_rate(bl, sc , b_status->aspd_rate);
-		status->amotion = status->aspd_rate*b_status->amotion/100;
-		status->adelay = status->aspd_rate*b_status->adelay/100;
-
-		if(status->adelay < battle_config.monster_max_aspd<<1)
-			status->adelay = battle_config.monster_max_aspd<<1;
-		if(status->amotion < battle_config.monster_max_aspd)
-			status->amotion = battle_config.monster_max_aspd;
+		temp = status->aspd_rate*b_status->amotion/100;
+		status->amotion = cap_value(temp, battle_config.monster_max_aspd, 2000);
+		
+		temp = status->aspd_rate*b_status->adelay/100;
+		status->adelay = cap_value(temp, battle_config.monster_max_aspd<<1, 4000);
 	}
 
 	if(flag&SCB_DSPD)
 		status->dmotion = status_calc_dmotion(bl, sc, b_status->dmotion);
 }
-//Caps values to min/max
-#define cap_value(a, min, max) (a>max?max:a<min?min:a)
 /*==========================================
  * Apply shared stat mods from status changes [DracoRPG]
  *------------------------------------------
