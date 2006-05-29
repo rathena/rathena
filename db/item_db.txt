@@ -2390,7 +2390,7 @@
 12132,Santa's_Bag,Santa's Bag,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
 12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
 12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); },{},{}
-12135,Green_Ale,Green Ale,2,,10,30,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12135,Green_Ale,Green Ale,2,,10,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; if(rand(100) >= 90)sc_start SC_Confusion,10000,0; },{},{}
 12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
 12137,First_Stage,First Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12138,Second_Stage,Second Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

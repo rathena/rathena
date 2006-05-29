@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/29
+	* Fixed Green Ale's effect, thanks to NLZ. [MasterOfMuppets]
 05/28
 	* Readded some aDelay fixes which were accidentaly reverted [Playtester]
 05/26
