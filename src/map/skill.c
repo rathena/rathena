@@ -788,6 +788,8 @@ int skill_get_range2(struct block_list *bl, int id, int lv) {
 		break;
 	}
 
+	if(!range && bl->type != BL_PC)
+		return 9; // Enable non players to use self skills on others. [Skotlex]
 	return range;
 }
 
