@@ -1512,6 +1512,7 @@ int mob_convertslave_sub(struct block_list *bl,va_list ap)
 		md->master_id = md2->master_id;
 		md->state.killer = md2->state.killer;
 		md->special_state.ai = md2->special_state.ai;
+		md->nd = md2->nd;
 	}
 
 	return 0;
