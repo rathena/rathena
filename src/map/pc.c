@@ -4439,12 +4439,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->vender_id)
 		vending_closevending(sd);
 
-	if(sd->status.pet_id > 0 && sd->pd && !map[sd->bl.m].flag.nopenalty)
+	if(sd->status.pet_id > 0 && sd->pd)
 	{
-		sd->pet.intimate -= sd->pd->petDB->die;
-		if(sd->pet.intimate < 0)
-			sd->pet.intimate = 0;
-		clif_send_petdata(sd,1,sd->pet.intimate);
+		if(!map[sd->bl.m].flag.nopenalty){
+			sd->pet.intimate -= sd->pd->petDB->die;
+			if(sd->pet.intimate < 0)
+				sd->pet.intimate = 0;
+			clif_send_petdata(sd,1,sd->pet.intimate);
+		}
 		if(sd->pd->target_id){ // Unlock all targets...
 			unit_stop_attack(&sd->pd->bl);
 			sd->pd->target_id = 0;
