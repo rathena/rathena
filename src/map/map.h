@@ -612,6 +612,7 @@ struct map_session_data {
 	unsigned int canlog_tick;
 	unsigned int canregen_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
+	unsigned int cantalk_tick;
 	int hp_sub,sp_sub;
 	int inchealhptick,inchealsptick,inchealspirithptick,inchealspiritsptick;
 

@@ -3862,17 +3862,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			i = 2 * dstmd->db->lv;
 			mob_target(dstmd,src,0);
 		}
-		if (sd){
-			if (i > 0x7FFF)
-				i = 0x7FFF;
-			if (sd->status.sp + i > sd->status.max_sp)
-				i = sd->status.max_sp - sd->status.sp;
-			if (i) {
-				sd->status.sp += i;
-				clif_heal(sd->fd,SP_SP,i);
-			}
-		}
+		if (i) {
+			status_heal(src, 0, i, 3);
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
+		}
 		break;
 
 	case AC_MAKINGARROW:			/* –î?ì?¬ */

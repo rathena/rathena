@@ -3562,6 +3562,7 @@ static const struct battle_data_short {
 	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
 	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 	{ "override_mob_names", 				&battle_config.override_mob_names },
+	{ "min_chat_delay",						&battle_config.min_chat_delay },
 };
 
 static const struct battle_data_int {
@@ -3980,6 +3981,7 @@ void battle_set_defaults() {
 	battle_config.sg_miracle_skill_duration=600000;
 	battle_config.autospell_stacking = 0;
 	battle_config.override_mob_names = 0;
+	battle_config.min_chat_delay = 0;
 }
 
 void battle_validate_conf() {

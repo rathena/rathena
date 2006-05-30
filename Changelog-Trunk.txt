@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* Fixed Absorb Spirit Spheres [Skotlex]
+	* Added battle_config min_chat_delay (default 0, battle/client.conf)
+	  specifies in ms what is the min delay between player sent chats
+	  (whisper/global/party/guild). Messages that exceed this threshold are
+	  silently ignored for now (perhaps need to add a "DON'T SPAM" reply to the
+	  player?) [Skotlex]
 	* [Fixed]:
 	  - signed/usigned problem in sprintf and fscanf @ mercenary.c [Lance]
 	* Rewrote/cleaned up @petfriendly. [Skotlex]

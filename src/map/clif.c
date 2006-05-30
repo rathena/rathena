@@ -8623,6 +8623,13 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		(sd->sc.data[SC_BERSERK].timer != -1 || sd->sc.data[SC_NOCHAT].timer != -1 ))
 		return;
 
+	if (battle_config.min_chat_delay)
+	{	//[Skotlex]
+		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
+			return;
+		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
+	}
+	
 	if (RFIFOW(fd,2)+4 < 128)
 		buf = buf2; //Use a static buffer.
 	else
@@ -8960,6 +8967,13 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	if (sd->sc.count &&
 		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
 		return;
+
+	if (battle_config.min_chat_delay)
+	{	//[Skotlex]
+		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
+			return;
+		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
+	}
 
 	memcpy(&target,RFIFOP(fd, 4),NAME_LENGTH);
 	target[NAME_LENGTH]='\0';
@@ -10229,6 +10243,13 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 		))
 		return;
 
+	if (battle_config.min_chat_delay)
+	{	//[Skotlex]
+		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
+			return;
+		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
+	}
+
 	party_send_message(sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2)-4);
 }
 
@@ -10441,6 +10462,13 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 		sd->sc.data[SC_NOCHAT].timer!=-1		//ƒ`ƒƒƒbƒg‹ÖŽ~
 	))
 		return;
+
+	if (battle_config.min_chat_delay)
+	{	//[Skotlex]
+		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
+			return;
+		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
+	}
 
 	guild_send_message(sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2)-4);
 }
