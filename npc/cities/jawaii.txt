@@ -4,7 +4,7 @@
 //= jAthena (1.0)
 //= DNett123 (1.1 - 1.5)
 //===== Current Version: =====================================
-//= 2.01
+//= 2.02
 //===== Compatible With: =====================================
 //= Latest eAthena SVN
 //===== Description: =========================================
@@ -22,6 +22,7 @@
 //= 1.8 - Removed monster spawns, added aegis ep 8.5 spawns to npc/mobs/fields/jawaii.txt [MasterOfMuppets]
 //= 2.0 - Updated the npcs according to iRO [MasterOfMuppets]
 //= 2.01 fixed missing @ at randomdrink, thanks to theultramage [Lupus]
+//= 2.02 - Fixed Classic Suite NPC warping directly above a warp [Evera]
 //============================================================
 
 //===== Shop: ================================================
@@ -106,7 +107,7 @@ jawaii.gat,108,199,5	script	Attendant#Classic_Suite	74,{
 				mes "Please enjoy your stay.";
 				close2;
 				set Zeny,Zeny - 1000;
-				warp "jawaii_in.gat",132,107;
+				warp "jawaii_in.gat",130,109;
 				end;
 }
 			else

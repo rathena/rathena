@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 05/30
+	* Fixed Jawaii Classic Suite NPC warping directly ontop of a warp [Evera]
 	* Fixed the Umbala Skeleton Gate thanks to LightFighter and Naf- [Playtester]
 	* Implemented the Lighthalzen guides, added some missing warps [MasterOfMuppets]
 	  and a tool dealer.
