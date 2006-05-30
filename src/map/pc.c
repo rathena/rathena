@@ -4447,10 +4447,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				sd->pet.intimate = 0;
 			clif_send_petdata(sd,1,sd->pet.intimate);
 		}
-		if(sd->pd->target_id){ // Unlock all targets...
-			unit_stop_attack(&sd->pd->bl);
-			sd->pd->target_id = 0;
-		}
+		if(sd->pd->target_id) // Unlock all targets...
+			pet_unlocktarget(&sd->pd);
 	}
 
 	// Leave duel if you die [LuzZza]
