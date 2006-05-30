@@ -389,7 +389,6 @@ IG_EggBoy	32
 IG_EggGirl	33
 IG_GiftBoxChina	34
 
-
 SC_STONE	0
 SC_FREEZE	1
 SC_STAN	2

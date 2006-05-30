@@ -4402,7 +4402,6 @@ int atcommand_petfriendly(
 	const char* command, const char* message)
 {
 	int friendly;
-	int t;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (friendly = atoi(message)) < 0) {
@@ -4410,35 +4409,24 @@ int atcommand_petfriendly(
 		return -1;
 	}
 
-	if (sd->status.pet_id > 0 && sd->pd) {
-		if (friendly >= 0 && friendly <= 1000) {
-			if (friendly != sd->pet.intimate) {
-				t = sd->pet.intimate;
-				sd->pet.intimate = friendly;
-				clif_send_petstatus(sd);
-				if (battle_config.pet_status_support) {
-					if ((sd->pet.intimate > 0 && t <= 0) ||
-					    (sd->pet.intimate <= 0 && t > 0)) {
-						if (sd->bl.prev != NULL)
-							status_calc_pc(sd, 0);
-						else
-							status_calc_pc(sd, 2);
-					}
-				}
-				clif_displaymessage(fd, msg_table[182]); // Pet friendly value changed!
-			} else {
-				clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
-			return -1;
-		}
-	} else {
+	if (!sd->pd) {
 		clif_displaymessage(fd, msg_table[184]); // Sorry, but you have no pet.
 		return -1;
 	}
-
+	
+	if (friendly < 0 || friendly > 1000)
+	{
+		clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
+		return -1;
+	}
+	
+	if (friendly == sd->pet.intimate) {
+		clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
+		return -1;
+	}
+	sd->pet.intimate = friendly;
+	clif_send_petstatus(sd);
+	clif_displaymessage(fd, msg_table[182]); // Pet friendly value changed!
 	return 0;
 }
 

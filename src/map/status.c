@@ -2051,22 +2051,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	status = &sd->battle_status; //Need to compare versus this.
 	
 // ----- CLIENT-SIDE REFRESH -----
-	if(first&4) {
-		calculating = 0;
-		return 0;
-	}
-	if(first&3) {
-		clif_updatestatus(sd,SP_SPEED);
-		clif_updatestatus(sd,SP_MAXHP);
-		clif_updatestatus(sd,SP_MAXSP);
-		if(first&1) {
-			clif_updatestatus(sd,SP_HP);
-			clif_updatestatus(sd,SP_SP);
-		}
-		calculating = 0;
-		return 0;
-	}
-
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
 	if(b_status.speed != status->speed)
