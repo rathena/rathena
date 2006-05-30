@@ -27,6 +27,11 @@
 
 =========================
 05/29
+	* "Massive" item update [Vicious]
+	- Updated the cards' effects. Old effects are commented at the end.
+	-- Slots are NOT checked, so someone needs to do it. shouldn't be hard.
+	- New items, by Landarma.
+	- New "slotted" items. I didn't check slot count, so someone can check & update.
 	* Fixed Green Ale's effect, thanks to NLZ. [MasterOfMuppets]
 05/28
 	* Updated ASC_BREAKER's range to 9. [Skotlex]
