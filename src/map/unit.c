@@ -810,6 +810,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		switch (skill_num) {
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
+			case AL_TELEPORT:
 				if (((TBL_MOB*)src)->master_id)
 					return 0;
 		}

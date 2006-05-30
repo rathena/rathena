@@ -4833,8 +4833,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
 		break;
 
-	case NPC_CALLSLAVE:		//Žæ‚èŠª‚«ŒÄ‚Ñ–ß‚µ
-		mob_warpslave(src,AREA_SIZE/2);
+	case NPC_CALLSLAVE:
+		mob_warpslave(src,2);
 		break;
 
 	case NPC_RANDOMMOVE:

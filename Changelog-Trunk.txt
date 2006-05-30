@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* slaves inherit speed setting will now work regardless of whether the
+	  slave or master has the MD_CANMOVE mode bit. [Skotlex]
+	* Call Slave now invokes slaves on a 5x5 area around master. [Skotlex]
+	* AL_TELEPORT will fail when used by slave mobs. [Skotlex]
+	* Added NPC_ENERGYDRAIN, NPC_MENTALBREAKER to the list of undodgeable
+	  attacks. [Skotlex]
 	* Fixed status_damage not setting your HP to 0 when you died [Skotlex]
 	* Fixed the pcbonus2 warnings using the wrong value before printing the
 	  invalid Element error. [Skotlex]

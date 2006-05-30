@@ -995,6 +995,8 @@ static struct Damage battle_calc_weapon_attack(
 				case SG_MOON_WARM:
 				case SG_STAR_WARM:
 				case NPC_BLOODDRAIN:
+				case NPC_ENERGYDRAIN:
+				case NPC_MENTALBREAKER:
 					flag.hit = 1;
 					break;
 				case CR_SHIELDBOOMERANG:

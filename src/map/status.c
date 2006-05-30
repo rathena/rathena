@@ -1052,7 +1052,7 @@ int status_calc_mob(struct mob_data* md, int first)
 
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
-		if (mstatus && mstatus->mode&MD_CANMOVE && status->mode&MD_CANMOVE)
+		if (mstatus)
 			status->speed = mstatus->speed;
 	}
 		
