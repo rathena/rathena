@@ -1620,8 +1620,8 @@
 5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
-5151,Note_Headphones,Note Headphones,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; },{},{}
-5152,Seal Crown,Seal Crown,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
+5151,Note_Headphones,Note Headphones,5,,,100,,1,,1,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; },{},{}
+5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
 5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
 5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{},{ bonus bAtk,20; }
@@ -2574,36 +2574,36 @@
 7573,Shining_Necklace,Shining Necklace,3,,,10,,,,,,,,,,,,,{},{},{}
 7574,Ice_Powder,Ice Powder,3,,,10,,,,,,,,,,,,,{},{},{}
 
-//"new" items. with slot? check please
-1816,Berserk_,Berserk,4,,10,500,120,,1,0,0x00008100,7,2,2,4,36,1,12,{ bonus bAspdRate,12; },{},{}
-1532,Stunner_,Stunner,4,60000,,2000,140,,1,0,0x00008110,7,2,2,3,27,1,8,{ bonus2 bAddEff,Eff_Stun,1000; },{},{}
-1418,Gungnir_,Gungnir,4,,10,500,120,,3,0,0x00004082,7,2,2,4,4,1,4,{ bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; },{},{}
-13016,Poison_Knife_,Poison Knife,4,,10,800,64,,1,0,0x028F5EEE,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,3000; },{},{}
-13017,Ice_Pick_,Ice Pick,4,,10,600,80,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; },{},{}
-13018,Sucsamad_,Sucsamad,4,,10,800,140,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Wind,10; bonus bUnbreakableWeapon,0; },{},{}
-13019,Ginnungagap_,Ginnungagap,4,,10,700,120,,1,0,0x008F5EEF,7,2,2,4,70,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; bonus2 bAddEff2,Eff_Blind,50; },{},{}
-1149,Flamberge_,Flamberge,4,60000,,1500,150,,1,0,0x00004080,7,2,2,3,27,1,2,{},{},{}
-13300,Cutlus_,Cutlus,4,,10,900,150,,1,0,0x000654E2,7,2,2,4,40,1,2,{ skill 5,5; bonus bStr,2; bonus bDef,1; },{},{}
-1476,Crescent_Scythe_,Crescent Scythe,4,,10,2500,180,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bCritical,30; bonus bHit,10; },{},{}
-1266,Infiltrator_,Infiltrator,4,57000,,1500,140,,1,0,0x00001000,7,2,34,4,75,1,16,{ bonus2 bAddRace,RC_DemiHuman,50; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; },{},{}
-1171,Zweihander_,Zweihander,4,,10,2200,200,,1,0,0x00004082,7,2,34,4,48,1,3,{ bonus bUnbreakableWeapon,0; },{},{}
-1172,Claymore_,Claymore,4,74000,,2500,180,,1,0,0x00004080,7,2,34,3,33,1,3,{},{},{}
-1726,Hunter_Bow_,Hunter Bow,4,64000,,1500,125,,5,0,0x00000800,7,2,34,3,33,1,11,{},{},{}
-1727,Ballista_,Ballista,4,,10,3500,145,,5,0,0x00080800,7,2,34,4,77,1,11,{},{},{}
-5166,Sphinx_Hat_,Sphinx Hat,5,,10,3000,,5,,0,0x00004082,7,2,257,,65,0,137,{ bonus bStr,2; },{},{}
-5157,Orc_Helm_,Orc Helm,5,,10,500,,5,,0,0x000654E2,7,2,256,,0,1,86,{},{},{}
-5158,Monk_Hat_,Monk Hat,5,30000,,100,,5,,0,0x00008110,7,2,256,,0,1,35,{ bonus bMdef,3; },{},{}
-5159,Golden_Gear_,Golden Gear,5,,10,900,,5,,0,0xFFFFFFFE,7,2,256,,40,1,30,{},{},{}
-5160,Majestic_Goat_,Majestic Goat,5,,10,800,,5,,0,0x006444A2,7,2,256,,0,1,41,{ bonus bStr,1; },{},{}
-5161,Spiky_Band_,Spiky Band,5,,10,1000,,6,,0,0x0066D5F2,7,2,256,,50,1,43,{},{},{}
-5162,Bone_Helm_,Bone Helm,5,,10,800,,7,,0,0x000444A2,7,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; },{},{}
-5163,Corsair_,Corsair,5,,10,500,,5,,0,0xFFFFFFFE,7,2,256,,0,1,105,{ bonus bVit,1; },{},{}
-5164,Tiara_,Tiara,5,,10,400,,4,,0,0xFFFFFFFE,7,0,256,,45,1,19,{ bonus bInt,2; },{},{}
-5165,Crown_,Crown,5,,10,400,,4,,0,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,2; },{},{}
-2671,Bow_Thimble_,Bow Thimble,5,10000,,100,,0,,0,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
-// old ruler's manteau? -> 2525
-2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,0,0x00021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; },{},{}
-2360,Robe_of_Cast_,Robe of Cast,5,,10,1100,,5,,0,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
-2121,Memory_Book_,Memory Book,5,,10,1000,,3,,0,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,3; },{},{}
-5167,Munak_Hat_,Munak Hat,5,,10,300,,5,,0,0xFFFFFFFF,7,2,769,,0,0,51,{ bonus2 bSubRace,RC_Undead,10; },{},{}
-5168,Bongun_Hat_,Bongun Hat,5,,10,300,,5,,0,0xFFFFFFFF,7,2,769,,0,0,139,{},{},{}
+//"new" itemswith slot
+1816,Berserk_,Berserk,4,,10,500,120,,1,1,0x00008100,7,2,2,4,36,1,12,{ bonus bAspdRate,12; },{},{}
+1532,Stunner__,Stunner,4,60000,,2000,140,,1,2,0x00008110,7,2,2,3,27,1,8,{ bonus2 bAddEff,Eff_Stun,1000; },{},{}
+1418,Gungnir__,Gungnir,4,,10,500,120,,3,2,0x00004082,7,2,2,4,4,1,4,{ bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; },{},{}
+13016,Poison_Knife__,Poison Knife,4,,10,800,64,,1,2,0x028F5EEE,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,3000; },{},{}
+13017,Ice_Pick_,Ice Pick,4,,10,600,80,,1,1,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; },{},{}
+13018,Sucsamad_,Sucsamad,4,,10,800,140,,1,1,0x028F5EEE,7,2,2,4,36,1,1,{ bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Wind,10; bonus bUnbreakableWeapon,0; },{},{}
+13019,Ginnungagap_,Ginnungagap,4,,10,700,120,,1,1,0x008F5EEF,7,2,2,4,70,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; bonus2 bAddEff2,Eff_Blind,50; },{},{}
+1149,Flamberge__,Flamberge,4,60000,,1500,150,,1,2,0x00004080,7,2,2,3,27,1,2,{},{},{}
+13300,Cutlus_,Cutlus,4,,10,900,150,,1,1,0x000654E2,7,2,2,4,40,1,2,{ skill 5,5; bonus bStr,2; bonus bDef,1; },{},{}
+1476,Crescent_Scythe_,Crescent Scythe,4,,10,2500,180,,3,1,0x00004082,7,2,34,4,48,1,5,{ bonus bCritical,30; bonus bHit,10; },{},{}
+1266,Infiltrator_,Infiltrator,4,57000,,1500,140,,1,1,0x00001000,7,2,34,4,75,1,16,{ bonus2 bAddRace,RC_DemiHuman,50; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; },{},{}
+1171,Zweihander__,Zweihander,4,,10,2200,200,,1,2,0x00004082,7,2,34,4,48,1,3,{ bonus bUnbreakableWeapon,0; },{},{}
+1172,Claymore__,Claymore,4,74000,,2500,180,,1,2,0x00004080,7,2,34,3,33,1,3,{},{},{}
+1726,Hunter_Bow_,Hunter Bow,4,64000,,1500,125,,5,1,0x00000800,7,2,34,3,33,1,11,{},{},{}
+1727,Ballista_,Ballista,4,,10,3500,145,,5,1,0x00080800,7,2,34,4,77,1,11,{},{},{}
+5166,Sphinx_Hat_,Sphinx Hat,5,,10,3000,,5,,1,0x00004082,7,2,257,,65,0,137,{ bonus bStr,2; },{},{}
+5157,Orc_Helm_,Orc Helm,5,,10,500,,5,,1,0x000654E2,7,2,256,,0,1,86,{},{},{}
+5158,Monk_Hat_,Monk Hat,5,30000,,100,,5,,1,0x00008110,7,2,256,,0,1,35,{ bonus bMdef,3; },{},{}
+5159,Golden_Gear_,Golden Gear,5,,10,900,,5,,1,0xFFFFFFFE,7,2,256,,40,1,30,{},{},{}
+5160,Majestic_Goat_,Majestic Goat,5,,10,800,,5,,1,0x006444A2,7,2,256,,0,1,41,{ bonus bStr,1; },{},{}
+5161,Spiky_Band_,Spiky Band,5,,10,1000,,6,,1,0x0066D5F2,7,2,256,,50,1,43,{},{},{}
+5162,Bone_Helm_,Bone Helm,5,,10,800,,7,,1,0x000444A2,7,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; },{},{}
+5163,Corsair_,Corsair,5,,10,500,,5,,1,0xFFFFFFFE,7,2,256,,0,1,105,{ bonus bVit,1; },{},{}
+5164,Tiara_,Tiara,5,,10,400,,4,,1,0xFFFFFFFE,7,0,256,,45,1,19,{ bonus bInt,2; },{},{}
+5165,Crown_,Crown,5,,10,400,,4,,1,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,2; },{},{}
+2671,Bow_Thimble_,Bow Thimble,5,10000,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
+2525,Ancient_Cape_,Ancient Cape,5,,10,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
+2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x00021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; },{},{}
+2360,Robe_of_Cast_,Robe of Cast,5,,10,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
+2121,Memory_Book_,Memory Book,5,,10,1000,,3,,1,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,3; },{},{}
+5167,Munak_Hat_,Munak Hat,5,,10,300,,5,,1,0xFFFFFFFF,7,2,769,,0,0,51,{ bonus2 bSubRace,RC_Undead,10; },{},{}
+5168,Bongun_Hat_,Bongun Hat,5,,10,300,,5,,1,0xFFFFFFFF,7,2,769,,0,0,139,{},{},{}
