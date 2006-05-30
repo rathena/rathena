@@ -4755,6 +4755,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if (sd->sc.count && sd->sc.data[SC_KAIZEL].timer != -1)
 	{
+		pc_setstand(sd);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		if(sd->special_state.restart_full_recover)
 			status_percent_heal(&sd->bl, 100, 100);
@@ -4768,6 +4769,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	if (sd->state.snovice_flag == 4)
 	{
+		pc_setstand(sd);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_resurrection(&sd->bl, 1);
