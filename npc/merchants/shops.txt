@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.4b
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.5 Removed Temp gunslinger shops and moved up the official ones. [erKURITA]
 //=	  Added Official Ninja shops in their correct location and commented a few
 //=	  shops. Thanks to RockmanEXE and Muad_Dib [erKURITA]
+//= 1.6 Implemented a missing Tool Shop in Lighthalzen [MasterOfMuppets]
 //============================================================ 
 
 
@@ -177,6 +178,7 @@ lhz_in02.gat,47,148,5	shop	Wedding Goods Merchant	71,744:-1,745:-1,2338:-1,2206:
 lhz_in02.gat,31,145,4	shop	Tool Dealer	90,611:-1,503:-1,504:-1,506:-1,656:-1,601:-1,602:-1,1065:-1,610:-1,1750:-1
 lhz_in02.gat,85,215,4	shop	Doll Merchant	91,740:-1,741:-1,742:-1
 lhz_in02.gat,87,208,2	shop	Eyewear Merchant	715,2243:-1,2212:-1,2242:-1,2241:-1
+lhz_in03.gat,239,106,4	shop	Tool Dealer	850,501:-1,502:-1,506:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,611:-1
 
 //=======================================================
 //LUTIE

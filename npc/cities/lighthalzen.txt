@@ -18,10 +18,6 @@
 //= 0.7 Implemented some more crap NPCs and the second entrance to biolabs [MasterOfMuppets]
 //=============================================================
 
-lighthalzen.gat,154,100,5	script	Lighthalzen Guard#1	852,{end;}
-lighthalzen.gat,207,310,5	script	Lighthalzen Guard#2	852,{end;}
-
-
 lighthalzen.gat,198,285,5	script	Jiwon	862,{
 
 	mes "[Jiwon]";

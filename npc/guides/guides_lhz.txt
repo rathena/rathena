@@ -1,0 +1,361 @@
+//===== eAthena Script ======================================= 
+//= Lighthalzen Guides
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//=
+//===== Description: ========================================= 
+//= Lighthalzen Guide NPCs
+//===== Additional Comments: ================================= 
+//= 1.0 First Version [MasterOfMuppets]
+//============================================================
+
+lighthalzen.gat,220,311,3	script	Guide::LhzSlum	852,{
+
+	mes "[Lighthalzen Guide]";
+	mes "welcome to Lighthalzen,";
+	mes "the Coropration City-State.";
+	mes "If you need any guidance";
+	mes "around the city, feel free.";
+	mes "to ask me and I'll do my";
+	mes "very best to help you.";
+	next;
+loopback:
+	menu "City Guide",s_Guide,"Remove Marks from Mini-Map",s_Remove,"Notice.",s_Notice,"Cancel",-;
+
+	mes "[Lighthalzen Guide]";
+	mes "Lighthalzen is divided";
+	mes "into the East and West";
+	mes "districts by a railroad that";
+	mes "runs right through the middle.";
+	mes "There are always guards on";
+	mes "watch to protect the peace.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "Please don't hesitate";
+	mes "to report and suspicious";
+	mes "activity or persons to us.";
+	mes "We hope that you enjoy";
+	mes "our fair city, adventurer.";
+	close;
+
+s_Guide:
+	mes "[Lighthalzen Guide]";
+	mes "Please be aware that I'm";
+	mes "in charge of providing info";
+	mes "regarding the East District,";
+	mes "more commonly known as the";
+	mes "Slums. Select the location that";
+	mes "you'd like know more about.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "But before that,";
+	mes "would you like me";
+	mes "to mark locations";
+	mes "on your Mini-Map?";
+	next;
+	Menu "Yes",s_Yes,"No",-;
+
+	goto s_Cont;
+s_Yes:
+	set @tempguide,1;
+s_Cont:
+	menu "Tool Shop",s_Tool,"Mill",s_Mill,"Pub",s_Pub,"Cancel",-;
+
+	mes "[Lighthalzen Guide]";
+	mes "Please ask me to \"Remove";
+	mes "Marks from Mini-Map\" if you";
+	mes "no longer wish to have the";
+	mes "location marks displayed";
+	mes "on your Mini-Map.";
+	next;
+	goto loopback;
+
+s_Tool:
+	mes "[Lighthalzen Guide]";
+	mes "The Tool Shop is";
+	mes "located in the 11 o'clock";
+	mes "direction from the center";
+	mes "of the East District.";
+	if(@tempguide)viewpoint 1,324,301,1,0xFF0000;
+	next;
+	goto s_Cont;
+
+s_Mill:
+	mes "[Lighthalzen Guide]";
+	mes "On your Mini-Map,";
+	mes "the Mill can be found in";
+	mes "the 1 o'clock direction";
+	mes "in the East District.";
+	if(@tempguide)viewpoint 1,365,301,2,0xFF00FF;
+	next;
+	goto s_Cont;
+
+s_Pub:
+	mes "[Lighthalzen Guide]";
+	mes "The Pub is located";
+	mes "in the southern part";
+	mes "of the East District.";
+	if(@tempguide)viewpoint 1,346,232,3,0xCCFFFF;
+	next;
+	goto s_Cont;
+
+s_Remove:
+	viewpoint 2,324,301,1,0xFF0000;
+	viewpoint 2,365,301,2,0xFF00FF;
+	viewpoint 2,346,232,3,0xCCFFFF;
+	mes "[Lighthalzen Guide]";
+	mes "Okay, the marks from your Mini-Map have been removed.";
+	mes "If you need any guidance around Lighthalzen, please let me or one of the other Lighthalzen Guides know.";
+	next;
+	goto loopback;
+
+s_Notice:
+	mes "[Lighthalzen Guide]";
+	mes "Advances in sorcery and";
+	mes "techonlogy have allowed";
+	mes "us to update our information";
+	mes "system, enabling up to mark";
+	mes "locations on your Mini-Map";
+	mes "for easier navigation.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "Your Mini-Map is located";
+	mes "in the upper right cornern";
+	mes "of the screen. If you can't";
+	mes "see it, press the Ctrl + Tab";
+	mes "keys or click the \"Map\" button";
+	mes "in your Basic Info Window.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "On your Mini-Map,";
+	mes "click on the \"+\" and \"-\"";
+	mes "symbols to zoom in and";
+	mes "out of your Mini-Map. We";
+	mes "hope you enjoy your travels";
+	mes "here in Lighthalzen.";
+	next;
+	goto loopback;
+
+}
+
+lighthalzen.gat,207,311,3	script	Guide::LhzWest	852,{
+
+	mes "[Lighthalzen Guide]";
+	mes "welcome to Lighthalzen,";
+	mes "the Coropration City-State.";
+	mes "If you need any guidance";
+	mes "around the city, feel free.";
+	mes "to ask me and I'll do my";
+	mes "very best to help you.";
+	next;
+loopback:
+	menu "City Guide",s_Guide,"Remove Marks from Mini-Map",s_Remove,"Notice.",s_Notice,"Cancel",-;
+
+	mes "[Lighthalzen Guide]";
+	mes "Lighthalzen is divided";
+	mes "into the East and West";
+	mes "districts by a railroad that";
+	mes "runs right through the middle.";
+	mes "There are always guards on";
+	mes "watch to protect the peace.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "Please don't hesitate";
+	mes "to report and suspicious";
+	mes "activity or persons to us.";
+	mes "We hope that you enjoy";
+	mes "our fair city, adventurer.";
+	close;
+
+s_Guide:
+	mes "[Lighthalzen Guide]";
+	mes "Please be aware that I'm";
+	mes "in charge of providing info";
+	mes "regarding the West District,";
+	mes "of Lighthalzen. Now, please";
+	mes "select the location that you'd";
+	mes "like to learn more about.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "But before that,";
+	mes "would you like me";
+	mes "to mark locations";
+	mes "on your Mini-Map?";
+	next;
+	Menu "Yes",s_Yes,"No",-;
+
+	goto s_Cont;
+s_Yes:
+	set @tempguide,1;
+s_Cont:
+	menu "^FF0000Rekenber Corporation",s_Rekenber,"^000000Train Station",s_Train,"Police Station",s_Police,"Bank",s_Bank,"Hotel",s_Hotel,"Airport",s_Airport,"Merchant Guild",s_Merchant,"Jewel Shop",s_Jewel,"Weapon Shop",s_Weap,"Department Store",s_Store,"Cancel",-;
+
+	mes "[Lighthalzen Guide]";
+	mes "Please ask me to \"Remove";
+	mes "Marks from Mini-Map\" if you";
+	mes "no longer wish to have the";
+	mes "location marks displayed";
+	mes "on your Mini-Map.";
+	next;
+	goto loopback;
+
+s_Rekenber:
+	mes "[Lighthalzen Guide]";
+	mes "Rekenber Corporation,";
+	mes "the largest company in";
+	mes "the Schwartzwald Republic,";
+	mes "is located in the northwestern";
+	mes "Lighthalzen. You can't miss";
+	mes "the headquarters building.";
+	if(@tempguide)viewpoint 1,103,244,1,0xFF0000;
+	next;
+	goto s_Cont;
+
+s_Train:
+	mes "[Lighthalzen Guide]";
+	mes "The Train Station is";
+	mes "located in the center of";
+	mes "the city, where we have";
+	mes "a direct railroad to Einbroch.";
+	if(@tempguide)viewpoint 1,240,163,2,0xFF00FF;
+	next;
+	goto s_Cont;
+
+s_Police:
+	mes "[Lighthalzen Guide]";
+	mes "Our Police Station is just";
+	mes "north of the city's center.";
+	mes "Please don't hesitate to report";
+	mes "any suspicious persons and";
+	mes "activity, or if you have any";
+	mes "problems whatsoever.";
+	if(@tempguide)viewpoint 1,236,276,3,0xCCFFFF;
+	next;
+	goto s_Cont;
+
+s_Bank:
+	mes "[Lighthalzen Guide]";
+	mes "The Bank is located";
+	mes "just opposite to the";
+	mes "Lighthalzen Police Station,";
+	mes "which is a pretety good idea";
+	mes "when I think about it, actually.";
+	if(@tempguide)viewpoint 1,199,257,4,0x0000FF;
+	next;
+	goto s_Cont;
+
+s_Hotel:
+	mes "[Lighthalzen Guide]";
+	mes "Our Hotel is located in";
+	mes "the middle of the South Plaza.";
+	mes "Due to its quality of services and";
+	mes "luxurious accomodations, this";
+	mes "hotel is extremely popular.";
+	if(@tempguide)viewpoint 1,159,133,5,0x0FFF00;
+	next;
+	goto s_Cont;
+
+s_Airport:
+	mes "[Lighthalzen Guide]";
+	mes "The Airport is to the far";
+	mes "west of the Central Promenade";
+	mes "You can travel anywhere within";
+	mes "the Schwartzwald Republic by";
+	mes "riding one of the Airships.";
+	if(@tempguide)viewpoint 1,266,76,6,0x00FF00;
+	next;
+	goto s_Cont;
+
+s_Merchant:
+	mes "[Lighthalzen Guide]";
+	mes "The Merchant Guild can be";
+	mes "found in the southwestern";
+	mes "part of Lighthalzen.";
+	if(@tempguide)viewpoint 1,74,52,7,0xEFAEBD;
+	next;
+	goto s_Cont;
+
+s_Jewel:
+	mes "[Lighthalzen Guide]";
+	mes "The Jewelry Shop is";
+	mes "located just west of";
+	mes "the South Plaza.";
+	if(@tempguide)viewpoint 1,92,110,8,0xFF9500;
+	next;
+	goto s_Cont;
+
+s_Weap:
+	mes "[Lighthalzen Guide]";
+	mes "The Weapon Shop is";
+	mes "located at the end of";
+	mes "the Central Promenade.";
+	mes "It's at least worth a look";
+	mes "if you're serious about";
+	mes "adventuring around here.";
+	if(@tempguide)viewpoint 1,196,46,9,0x330033;
+	next;
+	goto s_Cont;
+
+s_Store:
+	mes "[Lighthalzen Guide]";
+	mes "The Department Store is";
+	mes "located in the middle of";
+	mes "Lighthalzen and is the biggest";
+	mes "and most convenient place for";
+	mes "shopping for almost everything.";
+	if(@tempguide)viewpoint 1,199,163,10,0xFFFF00;
+	next;
+	goto s_Cont;
+
+s_Remove:
+	viewpoint 2,103,244,1,0xFF0000;
+	viewpoint 2,240,163,2,0xFF00FF;
+	viewpoint 2,236,276,3,0xCCFFFF;
+	viewpoint 2,199,257,4,0x0000FF;
+	viewpoint 2,159,133,5,0x0FFF00;
+	viewpoint 2,266,76,6,0x00FF00;
+	viewpoint 2,74,52,7,0xEFAEBD;
+	viewpoint 2,92,110,8,0xFF9500;
+	viewpoint 2,196,46,9,0x330033;
+	viewpoint 2,199,163,10,0xFFFF00;
+	mes "[Lighthalzen Guide]";
+	mes "Okay, the marks from your Mini-Map have been removed.";
+	mes "If you need any guidance around Lighthalzen, please let me or one of the other Lighthalzen Guides know.";
+	next;
+	goto loopback;
+
+s_Notice:
+	mes "[Lighthalzen Guide]";
+	mes "Advances in sorcery and";
+	mes "techonlogy have allowed";
+	mes "us to update our information";
+	mes "system, enabling up to mark";
+	mes "locations on your Mini-Map";
+	mes "for easier navigation.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "Your Mini-Map is located";
+	mes "in the upper right cornern";
+	mes "of the screen. If you can't";
+	mes "see it, press the Ctrl + Tab";
+	mes "keys or click the \"Map\" button";
+	mes "in your Basic Info Window.";
+	next;
+	mes "[Lighthalzen Guide]";
+	mes "On your Mini-Map,";
+	mes "click on the \"+\" and \"-\"";
+	mes "symbols to zoom in and";
+	mes "out of your Mini-Map. We";
+	mes "hope you enjoy your travels";
+	mes "here in Lighthalzen.";
+	next;
+	goto loopback;
+
+}
+
+lighthalzen.gat,154,100,5	duplicate(LhzWest)	Guide	852
+
+lighthalzen.gat,319,243,5	duplicate(LhzSlum)	Guide	852

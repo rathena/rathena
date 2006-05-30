@@ -32,6 +32,8 @@ Evera
 Date		Added
 ======
 05/30
+	* Implemented the Lighthalzen guides, added some missing warps [MasterOfMuppets]
+	  and a tool dealer.
 	* Re-made some quest to use 1 variable instead of 2 or 3... [Lupus]
 	- Juice Maker, Morgenstein+Alchemist Job Quest, Tempestra
 		Make a habbit to clean your global_reg_value table from event vars & old garbage
