@@ -16,7 +16,8 @@
 //============================================================
 
 //Witch House
-umbala.gat,220,190,0	warp	umba0027	1,1,um_in.gat,32,70
+//Entrance via the Skeleton Gate Quest
+//umbala.gat,220,190,0	warp	umba0027	1,1,um_in.gat,32,70
 um_in.gat,28,70,0	warp	umba0028	1,1,umbala.gat,217,187
 
 //Weapons

@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 05/30
+	* Fixed the Umbala Skeleton Gate thanks to LightFighter and Naf- [Playtester]
 	* Implemented the Lighthalzen guides, added some missing warps [MasterOfMuppets]
 	  and a tool dealer.
 	* Re-made some quest to use 1 variable instead of 2 or 3... [Lupus]
