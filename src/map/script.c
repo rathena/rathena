@@ -669,8 +669,8 @@ struct {
 	{buildin_petskillsupport,"petskillsupport","iiiii"}, // [Skotlex]
 	{buildin_skilleffect,"skilleffect","ii"}, // skill effect [Celest]
 	{buildin_npcskilleffect,"npcskilleffect","iiii"}, // npc skill effect [Valaris]
-	{buildin_specialeffect,"specialeffect","i"}, // npc skill effect [Valaris]
-	{buildin_specialeffect2,"specialeffect2","i"}, // skill effect on players[Valaris]
+	{buildin_specialeffect,"specialeffect","i*"}, // npc skill effect [Valaris]
+	{buildin_specialeffect2,"specialeffect2","i*"}, // skill effect on players[Valaris]
 	{buildin_nude,"nude",""}, // nude command [Valaris]
 	{buildin_mapwarp,"mapwarp","ssii"},		// Added by RoVeRT
 	{buildin_inittimer,"inittimer",""},
@@ -8646,7 +8646,7 @@ int buildin_specialeffect(struct script_state *st)
 	if(bl==NULL)
 		return 0;
 
-	clif_specialeffect(bl,conv_num(st,& (st->stack->stack_data[st->start+2])), 0);
+	clif_specialeffect(bl,conv_num(st,& (st->stack->stack_data[st->start+2])), ((st->end > st->start+3)?conv_num(st,& (st->stack->stack_data[st->start+3])):AREA));
 
 	return 0;
 }
@@ -8658,7 +8658,7 @@ int buildin_specialeffect2(struct script_state *st)
 	if(sd==NULL)
 		return 0;
 
-	clif_specialeffect(&sd->bl,conv_num(st,& (st->stack->stack_data[st->start+2])), 0);
+	clif_specialeffect(&sd->bl,conv_num(st,& (st->stack->stack_data[st->start+2])), ((st->end > st->start+3)?conv_num(st,& (st->stack->stack_data[st->start+3])):AREA));
 
 	return 0;
 }

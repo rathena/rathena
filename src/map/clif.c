@@ -120,33 +120,6 @@ static const int packet_len_table[MAX_PACKET_DB] = {
     3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4
 };
 
-// local define
-enum {
-	ALL_CLIENT,
-	ALL_SAMEMAP,
-	AREA,
-	AREA_WOS,
-	AREA_WOC,
-	AREA_WOSC,
-	AREA_CHAT_WOC,
-	CHAT,
-	CHAT_WOS,
-	CHAT_MAINCHAT,
-	PARTY,
-	PARTY_WOS,
-	PARTY_SAMEMAP,
-	PARTY_SAMEMAP_WOS,
-	PARTY_AREA,
-	PARTY_AREA_WOS,
-	GUILD,
-	GUILD_WOS,
-	GUILD_SAMEMAP,	// [Valaris]
-	GUILD_SAMEMAP_WOS,
-	GUILD_AREA,
-	GUILD_AREA_WOS,	// end additions [Valaris]
-	SELF
-};
-
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == 7)?4:a
 
@@ -1347,18 +1320,18 @@ int clif_spawn(struct block_list *bl)
 			if (sd->spiritball > 0)
 				clif_spiritball(sd);
 			if(sd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffect(bl,423,0);
+				clif_specialeffect(bl,423,AREA);
 			else if(sd->state.size==1)
-				clif_specialeffect(bl,421,0);
+				clif_specialeffect(bl,421,AREA);
 		}
 	break;
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
 			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,423,0);
+				clif_specialeffect(&md->bl,423,AREA);
 			else if(md->special_state.size==1)
-				clif_specialeffect(&md->bl,421,0);
+				clif_specialeffect(&md->bl,421,AREA);
 		}
 	break;
 	}
@@ -1599,18 +1572,18 @@ int clif_move(struct block_list *bl) {
 			TBL_PC *sd = ((TBL_PC*)bl);
 //			clif_movepc(sd);
 			if(sd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffect(&sd->bl,423,0);
+				clif_specialeffect(&sd->bl,423,AREA);
 			else if(sd->state.size==1)
-				clif_specialeffect(&sd->bl,421,0);
+				clif_specialeffect(&sd->bl,421,AREA);
 		}
 		break;
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
 			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,423,0);
+				clif_specialeffect(&md->bl,423,AREA);
 			else if(md->special_state.size==1)
-				clif_specialeffect(&md->bl,421,0);
+				clif_specialeffect(&md->bl,421,AREA);
 		}
 		break;
 	}
@@ -3864,9 +3837,9 @@ void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 			TBL_PC* tsd = (TBL_PC*)bl;
 			clif_getareachar_pc(sd, tsd);
 			if(tsd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffect(bl,423,0);
+				clif_specialeffect(bl,423,AREA);
 			else if(tsd->state.size==1)
-				clif_specialeffect(bl,421,0);
+				clif_specialeffect(bl,421,AREA);
 		}
 		break;
 	case BL_NPC:
@@ -3879,9 +3852,9 @@ void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffect(bl,423,0);
+				clif_specialeffect(bl,423,AREA);
 			else if(md->special_state.size==1)
-				clif_specialeffect(bl,421,0);
+				clif_specialeffect(bl,421,AREA);
 		}
 		break;
 	}
@@ -7753,22 +7726,8 @@ int clif_specialeffect(struct block_list *bl, int type, int flag)
 	WBUFL(buf,2) = bl->id;
 	WBUFL(buf,6) = type;
 
-	switch (flag) {
-	case 4:
-		clif_send(buf, packet_len_table[0x1f3], bl, AREA_WOS);
-		break;
-	case 3:
-		clif_send(buf, packet_len_table[0x1f3], bl, ALL_CLIENT);
-		break;
-	case 2:
-		clif_send(buf, packet_len_table[0x1f3], bl, ALL_SAMEMAP);
-		break;
-	case 1:
-		clif_send(buf, packet_len_table[0x1f3], bl, SELF);
-		break;
-	default:
-		clif_send(buf, packet_len_table[0x1f3], bl, AREA);
-	}
+	clif_send(buf, packet_len_table[0x1f3], bl, flag);
+
 	if (disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
 		clif_send(buf, packet_len_table[0x1f3], bl, SELF);

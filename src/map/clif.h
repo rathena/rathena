@@ -28,6 +28,33 @@ struct packet_db {
 	short pos[20];
 };
 
+// local define
+enum {
+	ALL_CLIENT,
+	ALL_SAMEMAP,
+	AREA,
+	AREA_WOS,
+	AREA_WOC,
+	AREA_WOSC,
+	AREA_CHAT_WOC,
+	CHAT,
+	CHAT_WOS,
+	CHAT_MAINCHAT,
+	PARTY,
+	PARTY_WOS,
+	PARTY_SAMEMAP,
+	PARTY_SAMEMAP_WOS,
+	PARTY_AREA,
+	PARTY_AREA_WOS,
+	GUILD,
+	GUILD_WOS,
+	GUILD_SAMEMAP,	// [Valaris]
+	GUILD_SAMEMAP_WOS,
+	GUILD_AREA,
+	GUILD_AREA_WOS,	// end additions [Valaris]
+	SELF
+};
+
 extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 
 void clif_setip(char*);

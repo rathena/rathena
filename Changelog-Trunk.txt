@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* [Optimized]:
+	  - clif_specialeffect to use the enums.
+	  [Improved]:
+	  - buildin_specialeffect and buildin_specialeffect2 to accept effect area 
+	    definition. [Lance]
 	* [Added]:
 	  - Visual Studio .NET 2003 includes for mercenary.c [Lance]
 	* Removed the on-die specific code from unit_remove_map and placed it on

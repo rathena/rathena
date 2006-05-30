@@ -890,7 +890,7 @@ charcommand_effect(const int fd, struct map_session_data* sd,
 	if((pl_sd=map_nick2sd((char *) target)) == NULL)
 		return -1;
 
-	clif_specialeffect(&pl_sd->bl, type, 0);
+	clif_specialeffect(&pl_sd->bl, type, AREA);
 	clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
 
 	return 0;

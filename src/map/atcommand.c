@@ -2378,7 +2378,7 @@ int atcommand_die(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,1);
+	clif_specialeffect(&sd->bl,450,SELF);
 	status_kill(&sd->bl);
 	clif_displaymessage(fd, msg_table[13]); // A pity! You've died.
 
@@ -4827,7 +4827,7 @@ int atcommand_doom(
 	struct map_session_data *pl_sd, **pl_allsd;
 	int i, users;
 	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,2);
+	clif_specialeffect(&sd->bl,450,ALL_SAMEMAP);
 	pl_allsd = map_getallusers(&users);
 	for(i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
@@ -4851,7 +4851,7 @@ int atcommand_doommap(
 	struct map_session_data *pl_sd, **pl_allsd;
 	int i, users;
 	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,3);
+	clif_specialeffect(&sd->bl,450,ALL_CLIENT);
 	pl_allsd = map_getallusers(&users);
 	for (i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && sd->bl.m == pl_sd->bl.m &&
@@ -6808,27 +6808,16 @@ int atcommand_effect(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int type = 0, flag = 0, i, users;
+	int type = 0, flag = 0;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %d", &type,&flag) < 2) {
 		clif_displaymessage(fd, "Please, enter at least a option (usage: @effect <type+>).");
 		return -1;
 	}
-	if(flag <=0){
-		clif_specialeffect(&sd->bl, type, flag);
-		clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
-	}
-	else{
-		pl_allsd = map_getallusers(&users);
-		for (i = 0; i < users; i++) {
-			if ((pl_sd = pl_allsd[i])) {
-				clif_specialeffect(&pl_sd->bl, type, flag);
-				clif_displaymessage(pl_sd->fd, msg_table[229]); // Your effect has changed.
-			}
-		}
-	}
+
+	clif_specialeffect(&sd->bl, type, flag);
+	clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
 
 	return 0;
 }
@@ -9796,10 +9785,10 @@ int atcommand_size(
 
 	if(size==1) {
 		sd->state.size=1;
-		clif_specialeffect(&sd->bl,420,0);
+		clif_specialeffect(&sd->bl,420,AREA);
 	} else if(size==2) {
 		sd->state.size=2;
-		clif_specialeffect(&sd->bl,422,0);
+		clif_specialeffect(&sd->bl,422,AREA);
 	}
 
 	return 0;

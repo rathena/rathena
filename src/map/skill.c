@@ -5206,7 +5206,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			do {
 				eff = rand() % 14;
-				clif_specialeffect(bl, 523 + eff, 0);
+				clif_specialeffect(bl, 523 + eff, AREA);
 				switch (eff)
 				{
 				case 0:	// heals SP to 0
@@ -10106,7 +10106,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 					break;
 				default: //Those that don't require a skill?
 					if (skill_produce_db[idx].itemlv==11) //Cooking items.
-						clif_specialeffect(&sd->bl, 608, 0);
+						clif_specialeffect(&sd->bl, 608, AREA);
 					break;
 			}
 		}
@@ -10146,7 +10146,7 @@ int skill_produce_mix( struct map_session_data *sd, int skill_id,
 				break;
 			default:
 				if (skill_produce_db[idx].itemlv==11)
-					clif_specialeffect(&sd->bl, 609, 0);
+					clif_specialeffect(&sd->bl, 609, AREA);
 		}
 	}
 	return 0;
