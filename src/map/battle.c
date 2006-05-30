@@ -1888,12 +1888,6 @@ static struct Damage battle_calc_weapon_attack(
 			}
 		}
 	}
-
-	if(!flag.rh || wd.damage<1)
-		wd.damage=0;
-	
-	if(!flag.lh || wd.damage2<1)
-		wd.damage2=0;
 	
 	if (sd)
 	{
@@ -1926,6 +1920,12 @@ static struct Damage battle_calc_weapon_attack(
 			flag.lh = 1;
 		}
 	}
+
+	if(!flag.rh && wd.damage)
+		wd.damage=0;
+	
+	if(!flag.lh && wd.damage2)
+		wd.damage2=0;
 	
 	if(wd.damage > 0 || wd.damage2 > 0)
 	{
