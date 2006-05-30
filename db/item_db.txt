@@ -2504,7 +2504,7 @@
 4355,Gremlin_Card,Gremlin Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12043,RC_Brute,1; },{},{}
 4356,Beholder_Card,Beholder Card,6,,10,10,,,,,,,,136,,,,,{ skill 275,1; },{},{}
 4357,Lord_Knight_Card,Lord Knight Card,6,,10,10,,,,,,,,769,,,,,{ skill 359,1; bonus bMaxHPrate,-50; },{},{} //skill 359,1; bonus2 bSkillAtk,59,50;
-4358,Seyren_Windsor_Card,Seyren Windsor Card,6,,10,10,,,,,,,,32,,,,,{ bonus bStr,getrefine()-6 },{},{} //bonus2 bSubRace,RC_DemiHuman,20; bonus2 bSubRace,RC_Brute,20;
+4358,Seyren_Windsor_Card,Seyren Windsor Card,6,,10,10,,,,,,,,32,,,,,{ bonus bStr,getrefine()-6; },{},{} //bonus2 bSubRace,RC_DemiHuman,20; bonus2 bSubRace,RC_Brute,20;
 4359,Assassin_Cross_Card,Assassin Cross Card,6,,10,10,,,,,,,,2,,,,,{ skill 135,3; },{},{} //bonus4 bAutoSpell,378,3,100,1;
 4360,Eremes_Guile_Card,Eremes Guile Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,6,10; },{},{} //bonus2 bAddRace2,6,25;
 4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBreakWeaponRate,1000; bonus bBreakArmorRate,700; },{},{}
