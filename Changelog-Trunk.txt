@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/29
+	* [Fixed]:
+	  - Typo in mob_dead causing crash. Thanks to reddozen and his gang for testing.
+	    [Lance]
 	* Cleaned up friend list saving and fixed loading of friends.txt file
 	  (char-txt) [Skotlex]
 	* Added the Arunafeltz maps, not tested yet [Playtester]
@@ -14,7 +17,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed battle_check_target check on BCT_ALL to check versus BL_CHAR
 	  instead of BL_PC and BL_MOB [Skotlex]
 	* [Fixed]:
-	  - Declaration of int map_getcellp(struct map_data*,int,int,cell_t);
+	  - Declaration of int map_getcellp(struct map_data*,int,int,cell_t); [Lance]
 	* Removed Undead being inmune to poison status. [Skotlex]
 	* Removed speed penalty from SC_SKA [Skotlex]
 	* Fixed SC_SPURT triggering on Soul Linkers. [Skotlex]

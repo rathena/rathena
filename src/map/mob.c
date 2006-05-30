@@ -1744,7 +1744,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		tmpsd[temp] = map_charid2sd(md->dmglog[i].id);
 		if(tmpsd[temp] == NULL)
 			continue;
-		if(tmpsd[temp]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
+		if(tmpsd[temp]->bl.m != md->bl.m || pc_isdead(tmpsd[temp]))
 			continue;
 		temp++;
 

@@ -549,18 +549,18 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				}
 				status_change_end(target, SC_DEVOTION, -1);
 			}
-			if(sc->data[SC_DANCING].timer != -1 && hp > status->max_hp>>2)
+			if(sc->data[SC_DANCING].timer != -1 && hp > (signed int)status->max_hp>>2)
 				skill_stop_dancing(target);
 		}
 		unit_skillcastcancel(target, 2);
 	}
 
-	if (hp >= status->hp) {
+	if (hp >= (signed int)status->hp) {
 		if (flag&2) return 0;
 		hp = status->hp;
 	}
 
-	if (sp > status->sp) {
+	if (sp > (signed int)status->sp) {
 		if (flag&2) return 0;
 		sp = status->sp;
 	}
@@ -621,7 +621,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 			hp = 0;
 
 		
-		if(hp > status->max_hp - status->hp)
+		if(hp > (signed int)(status->max_hp - status->hp))
 			hp = status->max_hp - status->hp;
 	}
 
@@ -631,7 +631,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(sp) {
-		if(sp > status->max_sp - status->sp)
+		if(sp > (signed int)(status->max_sp - status->sp))
 			sp = status->max_sp - status->sp;
 	}
 
