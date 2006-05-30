@@ -625,6 +625,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		return hp+sp;
   
 	//Normal death
+	status->hp = 0;
 	if (battle_config.clear_unit_ondeath &&
 		battle_config.clear_unit_ondeath&target->type)
 		skill_clear_unitgroup(target);

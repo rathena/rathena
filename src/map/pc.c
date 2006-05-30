@@ -1660,9 +1660,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 
 	switch(type){
 	case SP_ADDELE:
-		if(val >= ELE_MAX) {
+		if(type2 >= ELE_MAX) {
 			if(battle_config.error_log)
-				ShowError("pc_bonus2: SP_ADDELE: Invalid element %d\n", val);
+				ShowError("pc_bonus2: SP_ADDELE: Invalid element %d\n", type2);
 			break;
 		}
 		if(!sd->state.lr_flag)
@@ -1689,9 +1689,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->arrow_addsize[type2]+=val;
 		break;
 	case SP_SUBELE:
-		if(val >= ELE_MAX) {
+		if(type2 >= ELE_MAX) {
 			if(battle_config.error_log)
-				ShowError("pc_bonus2: SP_SUBELE: Invalid element %d\n", val);
+				ShowError("pc_bonus2: SP_SUBELE: Invalid element %d\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag != 2)
@@ -1730,9 +1730,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->reseff[type2-SC_COMMON_MIN]+=val;
 		break;
 	case SP_MAGIC_ADDELE:
-		if(val >= ELE_MAX) {
+		if(type2 >= ELE_MAX) {
 			if(battle_config.error_log)
-				ShowError("pc_bonus2: SP_MAGIC_ADDELE: Invalid element %d\n", val);
+				ShowError("pc_bonus2: SP_MAGIC_ADDELE: Invalid element %d\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag != 2)
@@ -1896,9 +1896,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_WEAPON_COMA_ELE:
-		if(val >= ELE_MAX) {
+		if(type2 >= ELE_MAX) {
 			if(battle_config.error_log)
-				ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", val);
+				ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", type2);
 			break;
 		}
 		if(sd->state.lr_flag != 2)
