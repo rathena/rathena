@@ -1970,6 +1970,7 @@ static struct Damage battle_calc_weapon_attack(
 				mob_class_change(tmd,class_);
 		}
 	}
+	
 	if (wd.damage > 0 || wd.damage2 > 0) {
 		if (sd && battle_config.equip_self_break_rate)
 		{	// Self weapon breaking
@@ -2392,8 +2393,6 @@ struct Damage battle_calc_magic_attack(
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	if (map_flag_gvg(target->m))
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
-	if (ad.damage == 0) //Magic attack blocked? Consider it a miss so it doesn't invokes additional effects. [Skotlex]
-		ad.dmg_lv = ATK_FLEE;
 	return ad;
 }
 
@@ -2632,7 +2631,7 @@ struct Damage  battle_calc_misc_attack(
 		md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	if (map_flag_gvg(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-	
+
 	return md;
 }
 /*==========================================
@@ -2658,6 +2657,11 @@ struct Damage battle_calc_attack(	int attack_type,
 			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
 		memset(&d,0,sizeof(d));
 		break;
+	}
+	if (d.damage + d.damage2 < 1 && d.dmg_lv != ATK_LUCKY)
+	{	//Miss/Absorbed
+		d.dmg_lv = ATK_FLEE;
+		d.dmotion = 0;
 	}
 	return d;
 }
@@ -2744,16 +2748,7 @@ void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, i
 	if (!thp && !tsp) return;
 
 	//Split'em up as Hp/Sp could be drained/leeched.
-	if(thp> 0)
-		status_heal(&sd->bl, thp, 0, battle_config.show_hp_sp_drain?3:1);
-	else if (thp < 0)
-		status_zap(&sd->bl, thp, 0);
-
-	if(tsp > 0)
-		status_heal(&sd->bl, 0, tsp, battle_config.show_hp_sp_drain?3:1);
-	else if (tsp < 0)
-		status_zap(&sd->bl, 0, tsp);
-	
+	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 	
 	if (tsd) {
 		if (rhp || rsp)

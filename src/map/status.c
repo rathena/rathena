@@ -467,7 +467,7 @@ int status_getrefinebonus(int lv,int type)
 //If flag&1, damage is passive and does not triggers cancelling status changes.
 //If flag&2, fail if target does not has enough to substract.
 //If flag&4, if killed, mob must not give exp/loot.
-int status_damage(struct block_list *src,struct block_list *target,unsigned int hp, unsigned sp, int walkdelay, int flag)
+int status_damage(struct block_list *src,struct block_list *target,int hp, int sp, int walkdelay, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
@@ -475,8 +475,19 @@ int status_damage(struct block_list *src,struct block_list *target,unsigned int 
 	if(sp && target->type != BL_PC)
 		sp = 0; //Only players get SP damage.
 	
+	if (hp < 0) { //Assume absorbed damage.
+		status_heal(target, -hp, 0, 1);
+		hp = 0;
+	}
+
+	if (sp < 0) {
+		status_heal(target, 0, -sp, 1);
+		sp = 0;
+	}
+	
 	if (!hp && !sp)
 		return 0;
+
 	
 	if (target->type == BL_SKILL)
 		return skill_unit_ondamaged((struct skill_unit *)target, src, hp, gettick());
@@ -586,7 +597,7 @@ int status_damage(struct block_list *src,struct block_list *target,unsigned int 
 
 //Heals a character. If flag&1, this is forced healing (otherwise stuff like Berserk can block it)
 //If flag&2, when the player is healed, show the HP/SP heal effect.
-int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag)
+int status_heal(struct block_list *bl,int hp,int sp, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
@@ -599,15 +610,26 @@ int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag)
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
 		sc = NULL;
+
+	if (hp < 0) {
+		status_damage(NULL, bl, -hp, 0, 0, 1);
+		hp = 0;
+	}
 	
 	if(hp) {
 		if (!(flag&1) && sc && sc->data[SC_BERSERK].timer!=-1)
 			hp = 0;
-	
+
+		
 		if(hp > status->max_hp - status->hp)
 			hp = status->max_hp - status->hp;
 	}
-	
+
+	if(sp < 0) {
+		status_damage(NULL, bl, 0, -sp, 0, 1);
+		sp = 0;
+	}
+
 	if(sp) {
 		if(sp > status->max_sp - status->sp)
 			sp = status->max_sp - status->sp;

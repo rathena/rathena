@@ -502,7 +502,7 @@ enum {
 #define SCB_PC		0x80000000
 #define SCB_ALL	0x7FFFFFFF
 
-int status_damage(struct block_list *src,struct block_list *target,unsigned int hp, unsigned sp, int walkdelay, int flag);
+int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
 //Define for standard HP/SP damage triggers.
@@ -516,7 +516,7 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 //Instant kill with no drops/exp/etc
 //
 #define status_kill(bl) status_percent_damage(NULL, bl, 100, 0)
-int status_heal(struct block_list *bl,unsigned int hp,unsigned int sp, int flag);
+int status_heal(struct block_list *bl,int hp,int sp, int flag);
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
 
 //Define for copying a status_data structure from b to a, without overwriting current Hp and Sp, nor messing the lhw pointer.
