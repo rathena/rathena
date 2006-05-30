@@ -24,12 +24,15 @@ Nexon
 	* Adding in the new Abyss/Thanatos/Lighthalzen NPC's and optimizing them.
 Evera
 	* Everything.
+	* Dungeon Teleport System
 	* Gathering iRO information and comparing them to eA scripts.
 
 == Changelog ==
 
 Date		Added
 ======
+05/29
+	* Changed DTS warper vote count to use 1 variable. [Evera]
 05/27
 	* Implemented a small quest in Einbroch and fixed the name of the [MasterOfMuppets]
 	  spawning mobsters in Lighthalzen
