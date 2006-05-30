@@ -1937,9 +1937,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	
 
 // ----- DMOTION -----
-// 
-	status->dmotion = 800-status->agi*4;
-	if(status->dmotion<400)	status->dmotion = 400;
+//
+	i =  800-status->agi*4;
+	status->dmotion = cap_value(i, 400, 800);
 
 // ----- HP MAX CALCULATION -----
 
@@ -2360,12 +2360,11 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 	
 	if(flag&(SCB_AGI|SCB_DSPD)) {
 		//Even though people insist this is too slow, packet data reports this is the actual real equation.
-		status->dmotion = 800-status->agi*4;
-		if(status->dmotion<400)	status->dmotion = 400;
+		skill = 800-status->agi*4;
+		status->dmotion = cap_value(skill, 400, 800);
 
 		if(battle_config.pc_damage_delay_rate != 100)
 			status->dmotion  = status->dmotion*battle_config.pc_damage_delay_rate/100;
-
 		status->dmotion = status_calc_dmotion(&sd->bl, &sd->sc, b_status->dmotion);
 	}
 
