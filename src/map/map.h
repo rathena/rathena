@@ -463,7 +463,7 @@ struct weapon_data {
 	int ignore_def_race;
 	int def_ratio_atk_ele;
 	int def_ratio_atk_race;
-	int addele[10];
+	int addele[ELE_MAX];
 	int addrace[RC_MAX];
 	int addrace2[RC_MAX];
 	int addsize[3];
@@ -622,23 +622,23 @@ struct map_session_data {
 	
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
-	int subele[10];
+	int subele[ELE_MAX];
 	int subrace[RC_MAX];
 	int subrace2[RC_MAX];
 	int subsize[3];
 	int addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	int weapon_coma_ele[10];
+	int weapon_coma_ele[ELE_MAX];
 	int weapon_coma_race[RC_MAX];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
-	int arrow_addele[10];
+	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
 	int arrow_addsize[3];
 	int arrow_addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int arrow_addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	int magic_addele[10];
+	int magic_addele[ELE_MAX];
 	int magic_addrace[RC_MAX];
 	int magic_addsize[3];
 	int critaddrace[RC_MAX];

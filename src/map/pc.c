@@ -1233,6 +1233,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->arrow_cri += val*10;
 		break;
 	case SP_ATKELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_ATKELE: Invalid element %d\n", val);
+			break;
+		}
 		if(!sd->state.lr_flag)
 			status->rhw.ele=val;
 		else if(sd->state.lr_flag == 1)
@@ -1241,6 +1246,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->arrow_ele=val;
 		break;
 	case SP_DEFELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_DEFELE: Invalid element %d\n", val);
+			break;
+		}
 		if(sd->state.lr_flag != 2)
 			status->def_ele=val;
 		break;
@@ -1342,6 +1352,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->matk_rate += val;
 		break;
 	case SP_IGNORE_DEF_ELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_IGNORE_DEF_ELE: Invalid element %d\n", val);
+			break;
+		}
 		if(!sd->state.lr_flag)
 			sd->right_weapon.ignore_def_ele |= 1<<val;
 		else if(sd->state.lr_flag == 1)
@@ -1366,6 +1381,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->misc_def_rate += val;
 		break;
 	case SP_IGNORE_MDEF_ELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_IGNORE_MDEF_ELE: Invalid element %d\n", val);
+			break;
+		}
 		if(sd->state.lr_flag != 2)
 			sd->ignore_mdef_ele |= 1<<val;
 		break;
@@ -1386,12 +1406,22 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->critical_rate+=val;
 		break;
 	case SP_DEF_RATIO_ATK_ELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_DEF_RATIO_ATK_ELE: Invalid element %d\n", val);
+			break;
+		}
 		if(!sd->state.lr_flag)
 			sd->right_weapon.def_ratio_atk_ele |= 1<<val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.def_ratio_atk_ele |= 1<<val;
 		break;
 	case SP_DEF_RATIO_ATK_RACE:
+		if(val >= RC_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus: SP_DEF_RATIO_ATK_RACE: Invalid race %d\n", val);
+			break;
+		}
 		if(!sd->state.lr_flag)
 			sd->right_weapon.def_ratio_atk_race |= 1<<val;
 		else if(sd->state.lr_flag == 1)
@@ -1629,6 +1659,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 
 	switch(type){
 	case SP_ADDELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus2: SP_ADDELE: Invalid element %d\n", val);
+			break;
+		}
 		if(!sd->state.lr_flag)
 			sd->right_weapon.addele[type2]+=val;
 		else if(sd->state.lr_flag == 1)
@@ -1653,6 +1688,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->arrow_addsize[type2]+=val;
 		break;
 	case SP_SUBELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus2: SP_SUBELE: Invalid element %d\n", val);
+			break;
+		}
 		if(sd->state.lr_flag != 2)
 			sd->subele[type2]+=val;
 		break;
@@ -1689,6 +1729,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->reseff[type2-SC_COMMON_MIN]+=val;
 		break;
 	case SP_MAGIC_ADDELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus2: SP_MAGIC_ADDELE: Invalid element %d\n", val);
+			break;
+		}
 		if(sd->state.lr_flag != 2)
 			sd->magic_addele[type2]+=val;
 		break;
@@ -1850,6 +1895,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_WEAPON_COMA_ELE:
+		if(val >= ELE_MAX) {
+			if(battle_config.error_log)
+				ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", val);
+			break;
+		}
 		if(sd->state.lr_flag != 2)
 			sd->weapon_coma_ele[type2] += val;
 		break;
@@ -1978,11 +2028,11 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADD_MONSTER_DROP_ITEM:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, type2, 0, (1<<10)|(1<<11), val);
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, type2, 0, (1<<RC_BOSS)|(1<<RC_NONBOSS), val);
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
-			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, 0, type2, (1<<10)|(1<<11), val);
+			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, 0, type2, (1<<RC_BOSS)|(1<<RC_NONBOSS), val);
 		break;
 	case SP_SP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -2125,7 +2175,7 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
 
 	if(level>MAX_SKILL_LEVEL){
 		if(battle_config.error_log)
-			ShowError("support card skill only!\n");
+			ShowError("pc_skill: Skill level %d too high. Max lv supported is MAX_SKILL_LEVEL (%d)\n", level, MAX_SKILL_LEVEL);
 		return 0;
 	}
 	if(!flag && (sd->status.skill[id].id == id || level == 0)){	// クエスト所得ならここで?件を確認して送信する
@@ -7118,8 +7168,8 @@ int pc_readdb(void)
 
 	// ?性修正テ?ブル
 	for(i=0;i<4;i++)
-		for(j=0;j<10;j++)
-			for(k=0;k<10;k++)
+		for(j=0;j<ELE_MAX;j++)
+			for(k=0;k<ELE_MAX;k++)
 				attr_fix_table[i][j][k]=100;
 
 	sprintf(line, "%s/attr_fix.txt", db_path);
@@ -7141,13 +7191,13 @@ int pc_readdb(void)
 		lv=atoi(split[0]);
 		n=atoi(split[1]);
 
-		for(i=0;i<n;){
+		for(i=0;i<n && i<ELE_MAX;){
 			if( !fgets(line, sizeof(line)-1, fp) )
 				break;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 
-			for(j=0,p=line;j<n && p;j++){
+			for(j=0,p=line;j<n && j<ELE_MAX && p;j++){
 				while(*p==32 && *p>0)
 					p++;
 				attr_fix_table[lv-1][i][j]=atoi(p);

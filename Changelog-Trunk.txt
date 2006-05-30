@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* Updated attr_fix_table reading code to account for ELE_MAX (will
+	  correctly read bigger elemental tables if ELE_MAX is changed) [Skotlex]
+	* Aggressive mobs will now use battle_check_range rather than mob_can_reach
+	  to decide whether to lock-on or not to a target within sight-range. [Skotlex]
+	* Added warnings in mob_readdb when the mob's element is invalid. [Skotlex]
+	* Added error messages in pc_bonus* functions when an invalid element is
+	  passed to the relevant bonuses. [Skotlex]
 	* [Optimized]:
 	  - clif_specialeffect to use the enums.
 	  [Improved]:

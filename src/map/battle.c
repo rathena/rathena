@@ -27,7 +27,7 @@
 
 #define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
 
-int attr_fix_table[4][10][10];
+int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -189,39 +189,6 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 		def_lv < 1 || def_lv > 4) {
 		if (battle_config.error_log)
 			ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
-		//TODO: Remove this debug case once the cause is resolved. [Skotlex]
-		if (src) switch (src->type) {
-			case BL_MOB:
-				ShowDebug("src: Mob %s-%d\n",  ((struct mob_data*)src)->name, ((struct mob_data*)src)->class_);
-				break;
-			case BL_PC:
-				ShowDebug("src: Player %s-%d\n",  ((struct map_session_data*)src)->status.name, ((struct map_session_data*)src)->bl.id);
-				break;
-			case BL_PET:
-				ShowDebug("src: Pet %s-%d\n", ((struct pet_data*)src)->name, ((struct pet_data*)src)->bl.id);
-				break;
-			case BL_SKILL:
-				ShowDebug("src: Ground Skill id: %d\n", ((struct skill_unit*)src)->group->skill_id);
-				break;
-			default:
-				ShowDebug("unknown source type %d.\n", src->type);
-		}
-		if (target) switch (target->type) {
-			case BL_MOB:
-				ShowDebug("target: Mob %s-%d\n",  ((struct mob_data*)target)->name, ((struct mob_data*)target)->class_);
-				break;
-			case BL_PC:
-				ShowDebug("target: Player %s-%d\n",  ((struct map_session_data*)target)->status.name, ((struct map_session_data*)target)->bl.id);
-				break;
-			case BL_PET:
-				ShowDebug("target: Pet %s-%d\n", ((struct pet_data*)target)->name, ((struct pet_data*)target)->bl.id);
-				break;
-			case BL_SKILL:
-				ShowDebug("target: Ground Skill id: %d\n", ((struct skill_unit*)target)->group->skill_id);
-				break;
-			default:
-				ShowDebug("unknown target type %d.\n", target->type);
-		}
 		return damage;
 	}
 

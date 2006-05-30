@@ -793,10 +793,10 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
 	case BL_MOB:
-		if((dist=distance_bl(&md->bl, bl)) < md->db->range2
-			&& (md->status.rhw.range > 6 || mob_can_reach(md,bl,dist+1, MSS_FOLLOW))
-			&& ((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
-		) {
+		if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
+			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+			battle_check_range(&md->bl,bl,md->db->range2)
+		) { //Pick closest target?
 			(*target) = bl;
 			md->target_id=bl->id;
 			md->min_chase= dist + md->db->range3;
@@ -3157,6 +3157,16 @@ static int mob_readdb(void)
 			i = atoi(str[24]); //Element
 			status->def_ele = i%10;
 			status->ele_lv = i/20;
+			if (status->def_ele >= ELE_MAX)
+			{
+				ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", class_, status->def_ele, ELE_MAX-1);
+				status->def_ele = ELE_NEUTRAL;
+			}
+			if (status->ele_lv < 1 || status->ele_lv > 4)
+			{
+				ShowWarning("Mob with ID: %d has invalid element level %d (max is 4)\n", class_, status->ele_lv);
+				status->ele_lv = 1;
+			}
 			status->mode=atoi(str[25]);
 			status->speed=atoi(str[26]);
 			status->aspd_rate = 100;
@@ -3826,6 +3836,16 @@ static int mob_read_sqldb(void)
 				i = TO_INT(24); //Element
 				status->def_ele = i%10;
 				status->ele_lv = i/20;
+				if (status->def_ele >= ELE_MAX)
+				{
+					ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", status->def_ele, ELE_MAX-1);
+					status->def_ele = ELE_NEUTRAL;
+				}
+				if (status->ele_lv < 1 || status->ele_lv > 4)
+				{
+					ShowWarning("Mob with ID: %d has invalid elemnt level %d (max is 4)\n", status->ele_lv);
+					status->ele_lv = 1;
+				}
 				status->mode = TO_INT(25);
 				status->speed = TO_INT(26);
 				status->aspd_rate = 100;
