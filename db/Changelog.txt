@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/30
+	* Updated the modes of Gremlin and Beholder according to iRO [MasterOfMuppets]
 05/29
 	* "Massive" item update [Vicious]
 	- Updated the cards' effects. Old effects are commented at the end.
