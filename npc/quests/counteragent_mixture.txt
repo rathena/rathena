@@ -4,7 +4,7 @@
 //= kobra_k88
 //= added some dialogs for Morgenstein by Komurka
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.5 Fixed Spelling mistakes. [Nexon]
 //= 1.6 Fixed some bugs, also related to Alch Job quest [Lupus]
 //= 1,7 Fixed exploit [Lupus]
+//= 1.8 Got rid of 'al_morgen' var [Lupus]
 //============================================================ 
 
 
@@ -163,7 +164,6 @@ M_Menu:
 		mes "I can make one for you right now,if you want?? Ahhh... Talking about my experiments and research makes me.... 'excited'.......";
 		mes "You too can feel my 'excitement' if you wish..... Ahhhhh.... I can make you feel...";
 		set MORGEN,3;
-		if(ALCH_Q == 4) set al_morgen,1;
 		close;
 
 L_1:

@@ -47,7 +47,7 @@ function	script	F_ClearJobVar	{
 	set WIZ_Q,0; set WIZ_Q2,0;
 	// 2-2 Jobs ------------------------------
 	set ROGUE_Q,0; set ROGUE_Q2,0;
-	set ALCH_Q,0; set ALCH_Q2,0; set al_morgen,0;
+	set ALCH_Q,0; set ALCH_Q2,0;
 	set CRUS_Q,0;
 	set MONK_Q,0; set JOB_MONK_C,0;
 	set SAGE_Q,0; set SAGE_Q2,0;

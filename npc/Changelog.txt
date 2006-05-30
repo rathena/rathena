@@ -31,6 +31,10 @@ Evera
 
 Date		Added
 ======
+05/30
+	* Re-made some quest to use 1 variable instead of 2 or 3... [Lupus]
+	- Juice Maker, Morgenstein+Alchemist Job Quest, Tempestra
+		Make a habbit to clean your global_reg_value table from event vars & old garbage
 05/29
 	* Changed DTS warper vote count to use 1 variable. [Evera]
 05/27

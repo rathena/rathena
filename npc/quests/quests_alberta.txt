@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.1 Fixed Spore Doll exploit [Lupus], 1.2 Gramp's Tiger skin label bug
 //= 1.3 Fixed item ID 7031 -> 7013
 //= 1.4 Fixed a bug, Fixed Exploits, Optimized [Lupus]
+//= 1.5 Turned TEMPESTRA -> @TEMPESTRA, fixed a typo [Lupus]
 //============================================================ 
 
 
@@ -26,8 +27,11 @@
 //=======================================================================================================//
 alberta.gat,117,134,8	script	Elin	96,{
 	mes "[Elin]";
-	if(Sex == 0) mes "Hello, miss. Since you're a girl, you must like dolls, don't you?";
-	if(Sex == 1) mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
+	if(Sex){
+		mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
+	}else{
+		mes "Hello, miss. Since you're a girl, you must like dolls, don't you?";
+	}
 	next;
 	mes "[Elin]";
 	mes "I LOVE dolls!!";
@@ -500,7 +504,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 	mes "[Tempestra]";
 	mes "Ah...... Such a cool breeze.  It's good to be next to the sea.  I think it was the right choice for me to take a break from my business and come here.";
 	emotion e_ho;
-	if(TEMPESTRA == 1) goto sM_Menu;
+	if(@TEMPESTRA) goto sM_Menu;
 	next;
 	mes "[Tempestra]";
 	mes "Oh the sun is so bright today.  I'm glad I brought my hat.  If my skin is exposed to the sun like this everyday, I'm sure to get a sunburn.";
@@ -512,7 +516,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 
 		if(countitem(503) < 1) goto L_NoPot;
 		delitem 503, 1;
-		set TEMPESTRA, 1;
+		set @TEMPESTRA, 1;
 		mes "[Tempestra]";
 		mes "Oooh! Thank you so much.  I'm so glad to meet such a friendly person here....";
 		emotion e_thx;
@@ -623,7 +627,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 			next;
 			mes "[Tempestra]";
 			mes "Hmm... If you have:";
-			mes "^5555FF1 Amblem of the Sun God";
+			mes "^5555FF1 Emblem of the Sun God";
 			mes "10 Gold";
 			mes "40 Steel";
 			mes "50 Coal";

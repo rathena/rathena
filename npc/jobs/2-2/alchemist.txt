@@ -4,7 +4,7 @@
 //= nestor_zulueta (Fusion)
 //= converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= to go. [Lupus]
 //= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Got rid of 'al_morgen' var [Lupus]
 //============================================================ 
 
 
@@ -774,7 +775,7 @@ L_Start:
 		mes "If you dont have business here just go away. Ok!!!";
 		close;
 L_Check:	
-	if(al_morgen != 1) goto L_NotRdy;
+	if(MORGEN != 3) goto L_NotRdy;
 	mes "Yes, cut the Tentacle..";
 	mes "and mix some Sticku Mucus,";
 	mes "Jellopy solution in the test tube Darn, where did the Medicine Bowl go...";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -17,14 +17,15 @@
 //= subfunc.  Changed fruit amount needed to 1.[kobra_k88]
 //= Fixed exploits [Lupus]
 //= 1.6 fixed typo (where did @ipnut came from?) [Lance]
+//= 1.7 got rid of 2 vars: 'MEAT',"MARIANNE" [Lupus]
 //============================================================
 
 
 // Morrison ------------------------------------------------
 prt_in.gat,47,173,2	script	Morrison	97,{
 	mes "[Little Morrison]";
-	if(MEAT > 10) goto L_Candy;
-	if(MARIANNE == 1) goto L_GoAway;
+	if(MORRISON > 10) goto L_GoAway;
+	if(MORRISON == 10) goto L_Candy;
 
 	mes "Wahhhhh!!! Wahh... NO more! NO more!";
 	mes "I won't... eat anymore stupid ^0000ffFruit^000000 things!!";
@@ -33,7 +34,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 	menu "Talk",M_Talk,"Cancel",M_End;
 
 	M_Talk:
-		if(countitem(517) > 0) goto L_Meat; //Meat
+		if(countitem(517)) goto L_Meat; //Meat
 
 		mes "[Little Morrison]";
 		mes "Arhhggg!! I'VE HAD ENOUGH!!! I can't eat anymore ^0000ffFruits^000000! They";
@@ -65,8 +66,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 		sM_Give:
 			if(countitem(517) == 0) goto L_GoAway; //Meat
 			delitem 517,1;	//Meat
-			set MORRISON,1;
-			set MEAT,MEAT + 1;
+			set MORRISON,MORRISON+1;
 			mes "[Little Morrison]";
 			mes "Whoah~!!! It's real Meat, Meat!";
 			mes "Mmmm! It makes my mouth water.";
@@ -75,7 +75,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 			close;
 
 		sM_Ignore:
-			set MORRISON,2;
+			set MORRISON,11;
 			mes "[Little Morrison]";
 			mes "Boo...";
 			mes "Boo... Fine... Alright, Alright~!!! Selfish meanie!";
@@ -103,7 +103,7 @@ L_Candy:
 	next;
 	getitem 529,3;
 	getitem 530,1;
-	set MEAT,0;
+	set MORRISON,0;
 	mes "[Little Morrison]";
 	mes "It is from my secret stash of Candy that I hide from my Mom.  Since";
 	mes "you gave me some Meat, I will give you some candy." ;
@@ -114,8 +114,8 @@ L_Candy:
 // Housewife Marianne ---------------------------------------------------
 prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 	mes "[Housewife Marianne]";
-	if(MORRISON == 1) goto L_GaveMeat;
-	if(MORRISON == 2) goto L_Juice;
+	if(MORRISON > 10) goto L_Juice;
+	if(MORRISON) goto L_GaveMeat;
 
 	mes "Morrison!! Please eat some fruit will ya? Fruit~!";
 	mes "*Sob*~!! Like father like son...";
@@ -159,8 +159,7 @@ L_GaveMeat:
 	close;
 
 L_Juice:
-	set MORRISON,0;
-	set MARIANNE,1;
+	set MORRISON,20;
 	mes "Thank you for not giving my son any meat.  I'm trying to feed him";
 	mes "^0000ffFruits^000000 and vegetables, but this child doesn't want to eat";
 	mes "anything except Meat...";
@@ -186,7 +185,7 @@ L_Juice:
 // Juicer Marx Hansen ---------------------------------------------------------
 payon_in03.gat,188,146,5	script	Juicer Marx Hansen	86,{
 	mes "[Juicer Marx Hansen]";
-	if(MARIANNE == 1) goto L_Juice;
+	if(MORRISON == 20) goto L_Juice;
 	mes "Welcome to my shop. What brings you here?";
 	next;
 	menu "Conversation",-,"I am just looking around",M_End;
