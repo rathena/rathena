@@ -1272,11 +1272,10 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)
 			pet_target_check(sd,target,0);
+
 		map_freeblock_unlock();
 
-
-ud->attackabletime = tick + sstatus->adelay;
-
+		ud->attackabletime = tick + sstatus->adelay;
 //		You can't move if you can't attack neither.
 		unit_set_walkdelay(src, tick, sstatus->amotion, 1);
 	}

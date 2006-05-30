@@ -1392,29 +1392,29 @@ int clif_homunack(struct map_session_data *sd)
 int clif_homuninfo(struct map_session_data *sd)
 {
 	struct homun_data *hd = sd->hd;
+	struct status_data *status;
 	unsigned char buf[128];
 	
-	nullpo_retr(0, sd);
-	nullpo_retr(0, sd->hd);
-
+	nullpo_retr(0, hd);
+	status = &hd->battle_status;
 	memset(buf,0,71); //packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),hd->name,NAME_LENGTH);
 	WBUFW(buf,27)=hd->level;
 	WBUFW(buf,29)=hd->hunger_rate;
 	WBUFL(buf,31)=0xFF;	//intimacy, leave it as is
-	WBUFW(buf,35)=hd->atk;
-	WBUFW(buf,37)=hd->matk;
-	WBUFW(buf,39)=hd->hit;
-	WBUFW(buf,41)=hd->crit/10;	//crit is a +1 decimal value!
-	WBUFW(buf,43)=hd->def;
-	WBUFW(buf,45)=hd->mdef;
-	WBUFW(buf,47)=hd->flee;
-	WBUFW(buf,49)=status_get_amotion(&hd->bl)+200;	//credits to jA for this field.
-	WBUFW(buf,51)=hd->hp;
-	WBUFW(buf,53)=hd->max_hp;
-	WBUFW(buf,55)=hd->sp;
-	WBUFW(buf,57)=hd->max_sp;
+	WBUFW(buf,35)=status->batk;
+	WBUFW(buf,37)=status->matk_max;
+	WBUFW(buf,39)=status->hit;
+	WBUFW(buf,41)=status->cri/10;	//crit is a +1 decimal value!
+	WBUFW(buf,43)=status->def;
+	WBUFW(buf,45)=status->mdef;
+	WBUFW(buf,47)=status->flee;
+	WBUFW(buf,49)=status->amotion;
+	WBUFW(buf,51)=status->hp;
+	WBUFW(buf,53)=status->max_hp;
+	WBUFW(buf,55)=status->sp;
+	WBUFW(buf,57)=status->max_sp;
 	WBUFL(buf,59)=hd->exp;
 	WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=hd->skillpts;
@@ -8294,7 +8294,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	//homunculus [blackhole89]
-	if(sd->hd && sd->hd->alive) {
+	if(sd->hd && sd->hd->battle_status.hp) {
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
 		clif_homunack(sd);

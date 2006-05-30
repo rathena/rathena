@@ -3043,9 +3043,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB *md = (TBL_MOB*)t_bl;
-			if(md->state.killer)
-				if(md->master_id != s_bl->id)
-					state |= BCT_ENEMY; // If he can attack you, you can attack him.
+			if(md->state.killer) //Enable retaliation
+				state |= BCT_ENEMY;
+			
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
 			if (md->special_state.ai == 2)
@@ -3062,8 +3062,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 0; //Pets cannot be targetted.
 		}
 		case BL_HOMUNCULUS:
-		{
-			t_bl=(struct block_list *)((struct homun_data*)target)->master;	//...and vice versa.
+		{	//Just fallback on master.
+			t_bl=(struct block_list *)((TBL_HOMUNCULUS*)target)->master;
 			break;
 		}
 		case BL_SKILL: //Skill with no owner? Kinda odd... but.. let it through.

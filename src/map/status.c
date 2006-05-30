@@ -23,6 +23,7 @@
 #include "status.h"
 #include "script.h"
 #include "unit.h"
+#include "mercenary.h"
 
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -355,6 +356,10 @@ void initChangeTables(void) {
 //	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI);
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
+ 	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
+	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
+	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
+	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
@@ -587,6 +592,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			if (!status->hp)
 				pc_dead((TBL_PC*)target,src);
 			break;
+		case BL_HOMUNCULUS:
+			merc_damage((TBL_HOMUNCULUS*)target,src,hp,sp);
+			if (!status->hp)
+				merc_dead((TBL_HOMUNCULUS*)target,src);
 	}
 	
 	if (walkdelay && status->hp)
@@ -654,6 +663,9 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 		break;
 	case BL_PC:
 		pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0);
+		break;
+	case BL_HOMUNCULUS:
+		merc_heal((TBL_HOMUNCULUS*)bl,hp,sp);
 		break;
 	}
 	return hp+sp;
@@ -1151,6 +1163,7 @@ int status_calc_pet(struct pet_data *pd, int first)
 			if(status->rhw.atk2 > battle_config.pet_max_atk2)
 				status->rhw.atk2 = battle_config.pet_max_atk2;
 
+			status->str = cap_value(status->str,1,battle_config.pet_max_stats);
 			if(status->str > battle_config.pet_max_stats)
 				status->str = battle_config.pet_max_stats;
 			else if (status->str < 1) status->str = 1;
@@ -1190,6 +1203,96 @@ int status_calc_pet(struct pet_data *pd, int first)
 		pd->rate_fix = pd->rate_fix*battle_config.pet_support_rate/100;
 	return 1;
 }	
+
+int status_calc_homunculus(struct homun_data *hd, int first)
+{
+	struct status_data *status = &hd->base_status;
+	int lv, i;
+	/* very proprietary */
+	lv=hd->level;
+	memset(status, 0, sizeof(struct status_data));
+	switch(hd->class_)
+	{
+	case 6001:	//LIF ~ int,dex,vit
+		status->str = 3+lv/7;
+		status->agi = 3+2*lv/5;
+		status->vit = 4+lv;
+		status->int_ = 4+3*lv/4;
+		status->dex = 4+2*lv/3;
+		status->luk = 3+lv/4;
+		for(i=8001;i<8005;++i)
+		{
+			hd->hskill[i-8001].id=i;
+			//hd->hskill[i-8001].level=1;
+		}
+		break;
+	case 6003:	//FILIR ~ str,agi,dex
+		status->str = 4+3*lv/4;
+		status->agi = 4+2*lv/3;
+		status->vit = 3+2*lv/5;
+		status->int_ = 3+lv/4;
+		status->dex = 4+lv;
+		status->luk = 3+lv/7;
+		for(i=8009;i<8013;++i)
+		{
+			hd->hskill[i-8009].id=i;
+			//hd->hskill[i-8009].level=1;
+		}
+		break;
+	case 6002:	//AMISTR ~ str,vit,luk
+		status->str = 4+lv;
+		status->agi = 3+lv/4;
+		status->vit = 3+3*lv/4;
+		status->int_ = 3+lv/10;
+		status->dex = 3+2*lv/5;
+		status->luk = 4+2*lv/3;
+		for(i=8005;i<8009;++i)
+		{
+			hd->hskill[i-8005].id=i;
+			//hd->hskill[i-8005].level=1;
+		}
+		break;
+	case 6004:	//VANILMIRTH ~ int,dex,luk
+		status->str = 3+lv/4;
+		status->agi = 3+lv/7;
+		status->vit = 3+2*lv/5;
+		status->int_ = 4+lv;
+		status->dex = 4+2*lv/3;
+		status->luk = 4+3*lv/4;
+		for(i=8013;i<8017;++i)
+		{
+			hd->hskill[i-8013].id=i;
+			//hd->hskill[i-8013].level=1;
+		}
+		break;
+	default:
+		if (battle_config.error_log)
+			ShowError("status_calc_homun: Unknown class %d\n", hd->class_);
+		memcpy(status, &dummy_status, sizeof(struct status_data));
+		break;
+	}
+	status->hp = 10; //Revive HP/SP?
+	status->sp = 0;
+	status->max_hp=500+lv*10+lv*lv;
+	status->max_sp=300+lv*11+lv*lv*90/100;
+	status->speed=0x96;
+	status->batk = status_base_atk(&hd->bl, status);
+	status_calc_misc(status, hd->level);
+
+	// hp recovery
+	hd->regenhp = 1 + (status->vit/5) + (status->max_hp/200);
+
+	// sp recovery
+	hd->regensp = 1 + (status->int_/6) + (status->max_sp/100);
+	if(status->int_ >= 120)
+		hd->regensp += ((status->int_-120)>>1) + 4;
+
+	status->amotion = 1800 - (1800 * status->agi / 250 + 1800 * status->dex / 1000);
+	status->amotion	-= 200;
+	status->dmotion=status->amotion;
+	status_calc_bl(&hd->bl, SCB_ALL);
+	return 1;
+}
 
 static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data *status)
 {
@@ -2632,6 +2735,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ -= int_ * sc->data[SC_STRIPHELM].val2/100;
 	if(sc->data[SC_NEN].timer!=-1)
 		int_ += sc->data[SC_NEN].val1;
+	if(sc->data[SC_CHANGE].timer!=-1)
+		int_ += 60;
 	if(sc->data[SC_MARIONETTE].timer!=-1)
 		int_ -= (sc->data[SC_MARIONETTE].val4>>16)&0xFF;
 	if(sc->data[SC_MARIONETTE2].timer!=-1)
@@ -2725,6 +2830,10 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += batk * sc->data[SC_CONCENTRATION].val2/100;
 	if(sc->data[SC_SKE].timer!=-1)
 		batk += batk * 3;
+	if(sc->data[SC_BLOODLUST].timer!=-1)
+		batk += batk * sc->data[SC_BLOODLUST].val2/100;
+	if(sc->data[SC_FLEET].timer!=-1)
+		batk += batk * sc->data[SC_FLEET].val3/100;
 	if(sc->data[SC_JOINTBEAT].timer!=-1 && sc->data[SC_JOINTBEAT].val2==4)
 		batk -= batk * 25/100;
 	if(sc->data[SC_CURSE].timer!=-1)
@@ -2768,6 +2877,10 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 				watk += sc->data[SC_NIBELUNGEN].val2;
 		}
 	}
+	if(sc->data[SC_BLOODLUST].timer!=-1)
+		watk += watk * sc->data[SC_BLOODLUST].val2/100;
+	if(sc->data[SC_FLEET].timer!=-1)
+		watk += watk * sc->data[SC_FLEET].val3/100;
 	if(sc->data[SC_CURSE].timer!=-1)
 		watk -= watk * 25/100;
 	if(sc->data[SC_STRIPWEAPON].timer!=-1)
@@ -3000,6 +3113,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed -= speed * 20/100;
 	else if(sc->data[SC_BERSERK].timer!=-1)
 		speed -= speed * 20/100;
+	else if(sc->data[SC_AVOID].timer!=-1)
+		speed -= speed * sc->data[SC_AVOID].val2/100;
 	else if(sc->data[SC_WINDWALK].timer!=-1)
 		speed -= speed * sc->data[SC_WINDWALK].val3/100;
 	if(sc->data[SC_SLOWDOWN].timer!=-1)
@@ -3081,6 +3196,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			max < sc->data[SC_GATLINGFEVER].val2)
 			max = sc->data[SC_GATLINGFEVER].val2;
 		
+		if(sc->data[SC_FLEET].timer!=-1 &&
+			max < sc->data[SC_FLEET].val2)
+			max = sc->data[SC_FLEET].val2;
+
 		if(sc->data[SC_ASSNCROS].timer!=-1 &&
 			max < sc->data[SC_ASSNCROS].val2)
 		{
@@ -3288,12 +3407,14 @@ int status_get_lv(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
 	if(bl->type==BL_MOB)
-		return ((struct mob_data *)bl)->level;
+		return ((TBL_MOB*)bl)->level;
 	if(bl->type==BL_PC)
-		return ((struct map_session_data *)bl)->status.base_level;
+		return ((TBL_PC*)bl)->status.base_level;
 	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->msd->pet.level;
-	return 0;
+		return ((TBL_PET*)bl)->msd->pet.level;
+	if(bl->type==BL_HOMUNCULUS)
+		return ((TBL_HOMUNCULUS*)bl)->level;
+	return 1;
 }
 
 struct status_data *status_get_status_data(struct block_list *bl)
@@ -3307,6 +3428,8 @@ struct status_data *status_get_status_data(struct block_list *bl)
 			return &((TBL_MOB*)bl)->status;
 		case BL_PET:
 			return &((TBL_PET*)bl)->status;
+		case BL_HOMUNCULUS:
+			return &((TBL_HOMUNCULUS*)bl)->battle_status;
 		default:
 			return &dummy_status;
 	}
@@ -3324,6 +3447,8 @@ struct status_data *status_get_base_status(struct block_list *bl)
 				&((TBL_MOB*)bl)->db->status;
 		case BL_PET:
 			return &((TBL_PET*)bl)->db->status;
+		case BL_HOMUNCULUS:
+			return &((TBL_HOMUNCULUS*)bl)->base_status;
 		default:
 			return NULL;
 	}
@@ -4847,6 +4972,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//val2 signals autoprovoke.
 			val3 = 2+3*val1; //Atk increase
 			val4 = 5+5*val1; //Def reduction.
+			break;
+		case SC_AVOID:
+			val2 = 10*val1; //Speed change rate.
+			break;
+		case SC_BLOODLUST:
+			val2 = 20+10*val1; //Atk rate change.
+			break;
+		case SC_FLEET:
+			val2 = 3*val1; //Aspd change
+			val3 = 5+5*val1; //Atk rate change
 			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)

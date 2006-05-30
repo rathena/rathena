@@ -335,8 +335,7 @@ void clif_mission_mob(struct map_session_data *sd, unsigned short mob_id, unsign
 int clif_spawnhomun(struct homun_data *hd);
 int clif_homunack(struct map_session_data *sd);
 int clif_homuninfo(struct map_session_data *sd);
-int clif_homuninsight(struct block_list *bl,va_list ap);
-int clif_homunoutsight(struct block_list *bl,va_list ap);
+int clif_homunskillinfoblock(struct map_session_data *sd);
 #endif
 
 

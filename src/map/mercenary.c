@@ -71,11 +71,6 @@ int do_init_merc (void)
 	return 0;
 }
 
-static int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static int diry[8]={1,1,0,-1,-1,-1,0,1};
-
-
-
 static unsigned long hexptbl[126];
 
 void merc_load_exptables(void)
@@ -100,100 +95,22 @@ char *merc_skill_get_name(int id)
 	return merc_skillname[id-8000];
 }
 
-void merc_die(struct map_session_data *sd)
+void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
-	if(sd->hd)
-	{
-		sd->hd->alive=0;
-		merc_save(sd);
-		clif_clearchar_area(&sd->hd->bl,0);
-		map_delblock(&sd->hd->bl);	
-	}
-}
-
-int merc_damage(struct block_list *src,struct homun_data *hd,int damage,int type)
-{
-	if(damage > hd->hp) damage = hd->hp;
-	hd->hp -= damage;
-
 	clif_homuninfo(hd->master);
-
-	if(hd->hp == 0)
-	{
-		//dead lol
-		clif_clearchar((struct block_list*)hd,1);
-		hd->bl.m = 0;
-		hd->bl.x = 0;
-		hd->bl.y = 0;	//send it somewhere where it doesn't bother us
-		merc_save(hd->master);
-		merc_die(hd->master);
-		return damage;
-	}
-
-	merc_save(hd->master);
-	return damage;
 }
 
-void merc_calc_status(struct homun_data *hd)
+int merc_dead(struct homun_data *hd, struct block_list *src)
 {
-	int dstr; 
-	int atk_rate=100,aspd_rate=100,speed_rate=100;
-
-	// attack
-	dstr = hd->str/10;
-	hd->atk = hd->str + dstr*dstr + hd->dex/5;
-
-	// matk
-	hd->matk = hd->int_+(hd->int_/6)*(hd->int_/6);
-	
-	// crit
-	hd->crit = (hd->luk*3)+10; //x.1
-
-	// hit
-	hd->hit = hd->dex + hd->level;
-
-	// flee
-	hd->flee = hd->agi + hd->level;
-
-	// lucky flee
-	hd->flee2 = hd->luk+10;	//x.1
-
-	// def
-	hd->def = hd->vit;
-
-	// mdef
-	hd->mdef = hd->int_;
-
-	// hp recovery
-	hd->regenhp = 1 + (hd->vit/5) + (hd->max_hp/200);
-
-	// sp recovery
-	hd->regensp = 1 + (hd->int_/6) + (hd->max_sp/100);
-	if(hd->int_ >= 120)
-		hd->regensp += ((hd->int_-120)>>1) + 4;
-
-	if(hd->sc_count && hd->sc.data)
-	{
-
-		if(hd->sc.data[SC_AVOID].timer!=-1)
-			speed_rate -= hd->sc.data[SC_AVOID].val1*10;
-	
-		if(hd->sc.data[SC_CHANGE].timer!=-1)
-			hd->int_ += 60;
-		
-		if(hd->sc.data[SC_BLOODLUST].timer!=-1)
-			atk_rate += hd->sc.data[SC_BLOODLUST].val1*10+20;
-
-		if(hd->sc.data[SC_FLEET].timer!=-1)
-		{
-			aspd_rate -= hd->sc.data[SC_FLEET].val1*3;
-			atk_rate+=5+hd->sc.data[SC_FLEET].val1*5;
-		}
-	}
-
-	hd->amotion	= 1800 - (1800 * hd->agi / 250 + 1800 * hd->dex / 1000);
-	hd->amotion	-= 200;
-	hd->dmotion=hd->amotion;
+	//dead lol
+	clif_clearchar((struct block_list*)hd,1);
+	hd->bl.m = 0;
+	hd->bl.x = 0;
+	hd->bl.y = 0;	//send it somewhere where it doesn't bother us
+	merc_save(hd->master);
+	clif_clearchar_area(&hd->bl,0);
+	map_delblock(&hd->bl);	
+	return 1;
 }
 
 void merc_skillup(struct map_session_data *sd,short skillnum)
@@ -213,113 +130,31 @@ void merc_skillup(struct map_session_data *sd,short skillnum)
 	merc_save(sd);
 }
 
-void merc_calc_stats(struct homun_data *hd)
-{
-	/* very proprietary */
-	int l,i;
-	l=hd->level;
-	hd->max_hp=500+l*10+l*l;
-	hd->max_sp=300+l*11+l*l*90/100;
-/*	hd->atk=10+l*5+l*l/125;
-	hd->matk=6+l*6+l*l/120;
-	hd->hit=3+l+l*l/200;
-	hd->crit=1+l*69/125;
-	hd->def=5+l+l*l/119;
-	hd->mdef=1+l+l*l/80;
-	hd->flee=7+l+l*l/150; */ // obsolete
-	switch(hd->class_)
-	{
-	case 6001:	//LIF ~ int,dex,vit
-		hd->str = 3+l/7;
-		hd->agi = 3+2*l/5;
-		hd->vit = 4+l;
-		hd->int_ = 4+3*l/4;
-		hd->dex = 4+2*l/3;
-		hd->luk = 3+l/4;
-		for(i=8001;i<8005;++i)
-		{
-			hd->hskill[i-8001].id=i;
-			//hd->hskill[i-8001].level=1;
-		}
-		break;
-	case 6003:	//FILIR ~ str,agi,dex
-		hd->str = 4+3*l/4;
-		hd->agi = 4+2*l/3;
-		hd->vit = 3+2*l/5;
-		hd->int_ = 3+l/4;
-		hd->dex = 4+l;
-		hd->luk = 3+l/7;
-		for(i=8009;i<8013;++i)
-		{
-			hd->hskill[i-8009].id=i;
-			//hd->hskill[i-8009].level=1;
-		}
-		break;
-	case 6002:	//AMISTR ~ str,vit,luk
-		hd->str = 4+l;
-		hd->agi = 3+l/4;
-		hd->vit = 3+3*l/4;
-		hd->int_ = 3+1/10;
-		hd->dex = 3+2*l/5;
-		hd->luk = 4+2*l/3;
-		for(i=8005;i<8009;++i)
-		{
-			hd->hskill[i-8005].id=i;
-			//hd->hskill[i-8005].level=1;
-		}
-		break;
-	case 6004:	//VANILMIRTH ~ int,dex,luk
-		hd->str = 3+l/4;
-		hd->agi = 3+l/7;
-		hd->vit = 3+2*l/5;
-		hd->int_ = 4+l;
-		hd->dex = 4+2*l/3;
-		hd->luk = 4+3*l/4;
-		for(i=8013;i<8017;++i)
-		{
-			hd->hskill[i-8013].id=i;
-			//hd->hskill[i-8013].level=1;
-		}
-		break;
-	}
-	merc_calc_status(hd);
-	hd->exp_next=hexptbl[l-1];
-}
-
 int merc_gainexp(struct homun_data *hd,int exp)
 {
 	hd->exp += exp;
 
-	if(hd->exp > hd->exp_next) //levelup
+	if(hd->exp < hd->exp_next)
+		return 0;
+	  	//levelup
+	do
 	{
-		while(hd->exp > hd->exp_next)
-		{
-			hd->exp-=hd->exp_next;
-			hd->level += 1;
-			
-			clif_misceffect(&hd->bl,0);
-			merc_calc_stats(hd);
-			hd->hp=hd->max_hp;
-			hd->sp=hd->max_sp;
-		}
+		hd->exp-=hd->exp_next;
+		hd->exp_next=hexptbl[hd->level];
+		hd->level++;
 	}
-
-	merc_save(hd->master);
+	while(hd->exp > hd->exp_next);
+		
+	clif_misceffect(&hd->bl,0);
+	status_calc_homunculus(hd,0);
+	status_percent_heal(&hd->bl, 100, 100);
 	clif_homuninfo(hd->master);
 	return 0;
 }
 
-int merc_heal(struct homun_data *hd,int hp,int sp)
+void merc_heal(struct homun_data *hd,int hp,int sp)
 {
-	hd->hp+=hp;
-	hd->sp+=sp;
-	if(hd->max_hp < hd->hp) hd->hp = hd->max_hp;
-	if(hd->max_sp < hd->sp) hd->sp = hd->max_sp;
-
-	merc_save(hd->master);
 	clif_homuninfo(hd->master);
-
-	return hp+sp;
 }
 
 void merc_save(struct map_session_data *sd)
@@ -337,96 +172,8 @@ void merc_save(struct map_session_data *sd)
 #endif
 }
 
-//not nice, but works
-void merc_res(struct map_session_data *sd,int skilllv)
+static void merc_load_sub(struct homun_data *hd, struct map_session_data *sd)
 {
-	sprintf(tmp_sql, "UPDATE `homunculus` SET `hp`='10' WHERE `char_id` = '%d' AND `hp`=0",sd->char_id);
-	if(mysql_query(&mmysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return;
-	}
-	if(sd->hd)
-	{
-		sd->hd->hp=skilllv*sd->hd->max_hp/10;
-		sd->hd->alive=1;
-	}
-}
-
-void merc_load(struct map_session_data *sd)
-{
-	struct homun_data *hd;
-	int alive=1;
-
-	sd->hd=NULL;
-
-#ifndef TXT_ONLY
-	sprintf(tmp_sql, "SELECT `id`,`class`,`name`,`level`,`exp`,`hunger`,`hp`,`sp`,`skill1lv`,`skill2lv`,`skill3lv`,`skill4lv`,`skillpts` FROM `homunculus` WHERE `char_id` = '%d'", sd->char_id);
-    if(mysql_query(&mmysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return;
-	}
-
-	sql_res = mysql_store_result(&mmysql_handle);
-	if(mysql_num_rows(sql_res) <= 0){
-		mysql_free_result(sql_res);
-		return;	//no homunculus for this char
-	}
-
-	sql_row = mysql_fetch_row(sql_res);
-	if(atoi(sql_row[6])==0) alive=0; //it is dead
-#else
-	int id,charid,class_,level,exp,hunger,hp,sp;
-	char name[24];
-	FILE *fl=fopen("save/homunculus.txt","r");
-	
-	ShowInfo("Looking up Homunculus for %d...\n",sd->char_id);
-	charid=1;
-	while(charid!=0)
-	{
-		fscanf(fl,"%d,%d,%d,%s ,%d,%d,%d,%d,%d\n",&id,&charid,&class_,name,&level,&exp,&hunger,&hp,&sp);
-		ShowInfo("%d",charid);
-		if(charid==sd->char_id) goto gotit;
-	}
-	return;	//none found
-gotit:
-	ShowInfo("found it!\n");
-#endif
-	
-	//dummy code
-	hd=(struct homun_data *) aCalloc(1, sizeof(struct homun_data));
-	sd->hd=hd;		//pointer from master to homunculus
-	memset(hd,0,sizeof(struct homun_data));
-	hd->master=sd;	//pointer from homunculus to master
-#ifndef TXT_ONLY
-	hd->id=atoi(sql_row[0]);
-	hd->class_=atoi(sql_row[1]);
-	hd->level=atoi(sql_row[3]);
-	hd->hp=atoi(sql_row[6]);
-	hd->sp=atoi(sql_row[7]);
-	hd->exp=atoi(sql_row[4]);
-	hd->hunger_rate=atoi(sql_row[5]);
-	hd->hskill[0].level=atoi(sql_row[8]);
-	hd->hskill[1].level=atoi(sql_row[9]);
-	hd->hskill[2].level=atoi(sql_row[10]);
-	hd->hskill[3].level=atoi(sql_row[11]);
-	hd->skillpts=atoi(sql_row[12]);
-	memcpy(hd->name,sql_row[2],strlen(sql_row[2])<24?strlen(sql_row[2]):24);
-#else
-	hd->id=id;
-	hd->class_=class_;
-	hd->level=level;
-	hd->exp=exp;
-	hd->hunger_rate=hunger;
-	hd->hp=hp;
-	hd->sp=sp;
-	memcpy(hd->name,name,strlen(name)<24?strlen(name):24);
-#endif
-	hd->alive=alive;
-	
-	hd->speed=0x96;
-	
 	hd->bl.m=sd->bl.m;
 	hd->bl.x=sd->bl.x;
 	hd->bl.y=sd->bl.y;
@@ -440,16 +187,90 @@ gotit:
 	unit_dataset(&hd->bl);
 
 	map_addiddb(&hd->bl);
-
-	merc_calc_stats(hd);	//this function will have more sense later on
-
-	mysql_free_result(sql_res);
-	
-//clif_spawnhomun(hd);
-//	clif_homunack(sd);
-//	clif_homuninfo(sd);
-//	clif_homuninfo(sd); // send this x2. dunno why, but kRO does that [blackhole89]
+	status_calc_homunculus(hd,1);	//this function will have more sense later on
 }
+#ifndef TXT_ONLY
+void merc_load(struct map_session_data *sd)
+{
+	struct homun_data *hd;
+	sd->hd=NULL;
+	
+	sprintf(tmp_sql, "SELECT `id`,`class`,`name`,`level`,`exp`,`hunger`,`hp`,`sp`,`skill1lv`,`skill2lv`,`skill3lv`,`skill4lv`,`skillpts` FROM `homunculus` WHERE `char_id` = '%d'", sd->char_id);
+    if(mysql_query(&mmysql_handle, tmp_sql)){
+			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return;
+	}
+
+	sql_res = mysql_store_result(&mmysql_handle);
+	if(!sql_res)
+		return;
+
+	if(mysql_num_rows(sql_res) <= 0){
+		mysql_free_result(sql_res);
+		return;	//no homunculus for this char
+
+	sql_row = mysql_fetch_row(sql_res);
+	
+	//dummy code
+	hd=(struct homun_data *) aCalloc(1, sizeof(struct homun_data));
+	sd->hd=hd;		//pointer from master to homunculus
+	memset(hd,0,sizeof(struct homun_data));
+	hd->master=sd;	//pointer from homunculus to master
+	hd->id=atoi(sql_row[0]);
+	hd->class_=atoi(sql_row[1]);
+	hd->level=atoi(sql_row[3]);
+	hd->battle_status.hp=atoi(sql_row[6]);
+	hd->battle_status.sp=atoi(sql_row[7]);
+	hd->exp=atoi(sql_row[4]);
+	hd->hunger_rate=atoi(sql_row[5]);
+	hd->hskill[0].level=atoi(sql_row[8]);
+	hd->hskill[1].level=atoi(sql_row[9]);
+	hd->hskill[2].level=atoi(sql_row[10]);
+	hd->hskill[3].level=atoi(sql_row[11]);
+	hd->skillpts=atoi(sql_row[12]);
+	hd->exp_next=hexptbl[hd->level-1];
+	strncpy(hd->name,sql_row[2],NAME_LENGTH);
+	mysql_free_result(sql_res);
+	merc_load_sub(hd, sd);
+}
+#else 
+void merc_load(struct map_session_data *sd)
+{
+	struct homun_data *hd;
+	int id,charid,class_,level,exp,hunger,hp,sp;
+	char name[24];
+	FILE *fl=fopen("save/homunculus.txt","r");
+	sd->hd=NULL;
+
+	if(!fl) return; //Unable to open file.	
+	ShowInfo("Looking up Homunculus for %d...\n",sd->char_id);
+	do {
+		fscanf(fl,"%d,%d,%d,%s ,%d,%d,%d,%d,%d\n",&id,&charid,&class_,name,&level,&exp,&hunger,&hp,&sp);
+		ShowInfo("%d",charid);
+		if(charid==sd->char_id) break;
+	} while(charid!=0);
+	if (!charid)
+		return;	//none found
+	ShowInfo("found it!\n");
+	
+	//dummy code
+	hd=(struct homun_data *) aCalloc(1, sizeof(struct homun_data));
+	sd->hd=hd;		//pointer from master to homunculus
+	memset(hd,0,sizeof(struct homun_data));
+	hd->master=sd;	//pointer from homunculus to master
+	hd->id=id;
+	hd->class_=class_;
+	hd->level=level;
+	hd->exp=exp;
+	hd->hunger_rate=hunger;
+	hd->battle_status.hp=hp;
+	hd->battle_status.sp=sp;
+	hd->exp_next=hexptbl[hd->level-1];
+	strncpy(hd->name,name,NAME_LENGTH);
+	merc_load_sub(hd, sd);
+}
+#endif	
 
 int merc_create_homunculus(struct map_session_data *sd,int id,int m,int x,int y)
 {
@@ -496,6 +317,7 @@ int merc_create_homunculus(struct map_session_data *sd,int id,int m,int x,int y)
 	clif_homunack(sd);
 	clif_homuninfo(sd);
 	clif_homuninfo(sd);*/ // send this x2. dunno why, but kRO does that [blackhole89]
+	return 0;
 }
 
 int do_final_merc (void);

@@ -944,11 +944,11 @@ struct homun_data {
 	struct block_list bl;
 	struct unit_data  ud;
 	struct view_data *vd;
+	struct status_data base_status, battle_status;
 	struct status_change sc;
 
 	char name[NAME_LENGTH];
 	int id;
-	short speed;
 	short class_;
 
 	struct map_session_data *master; //pointer back to its master
@@ -960,18 +960,10 @@ struct homun_data {
 		int level;
 	} hskill[4];	//skills (max. 4 for now)
 
-	int alive;	//does it live
-
 	int target_id,attacked_id;
 
-	int amotion,dmotion;
-
 	short level;
-	short atk,matk,hit,crit,def,mdef,flee,flee2;	//flee2 is not transmitted; lucky flee
 	short regenhp,regensp;
-	short str,agi,vit,int_,dex,luk;	//According to various sources, they do have these though they aren't transfered to client.
-	short hp,max_hp;
-	short sp,max_sp;
 	unsigned long exp,exp_next;
 	short skillpts;
 };
@@ -1476,6 +1468,7 @@ typedef struct flooritem_data   TBL_ITEM;
 typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
+typedef struct homun_data       TBL_HOMUNCULUS;
 
 #define BL_CAST(type_, bl , dest) \
 	(((bl) == NULL || (bl)->type != type_) ? ((dest) = NULL, 0) : ((dest) = (T ## type_ *)(bl), 1))

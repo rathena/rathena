@@ -893,13 +893,14 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		return 0;
 	}
 	
-	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range2) && DIFF_TICK(tick, pd->ud.canmove_tick) > 0) {
+	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range2)) {
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
 		if(pd->ud.walktimer != -1 && pd->ud.target == sd->bl.id)
 			return 0; //Already walking to him
-		
+		if (DIFF_TICK(tick, pd->ud.canmove_tick) < 0)
+			return 0; //Can't move yet.
 		pd->status.speed = (sd->battle_status.speed>>1);
 		if(pd->status.speed <= 0)
 			pd->status.speed = 1;
