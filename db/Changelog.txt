@@ -27,6 +27,7 @@
 
 =========================
 05/30
+	* Fixed the mode of Monemus to prevent it from getting knocked back. [MasterOfMuppets]
 	* Updated the modes of Gremlin and Beholder according to iRO [MasterOfMuppets]
 05/29
 	* "Massive" item update [Vicious]
