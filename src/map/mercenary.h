@@ -8,6 +8,6 @@ int merc_dead(struct homun_data *hd, struct block_list *src);
 void merc_skillup(struct map_session_data *sd,short skillnum);
 int merc_gainexp(struct homun_data *hd,int exp);
 void merc_heal(struct homun_data *hd,int hp,int sp);
-void merc_save(struct map_session_data *sd);
+void merc_save(struct homun_data *hd);
 void merc_load(struct map_session_data *sd);
 int merc_create_homunculus(struct map_session_data *sd,int id,int m,int x,int y);

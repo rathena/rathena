@@ -62,7 +62,6 @@ char32 merc_skillname[20] = {"NULL","HLIF_HEAL","HLIF_AVOID","HLIF_BRAIN","HLIF_
 							"HVAN_CAPRICE","HVAN_CHAOTIC","HVAN_INSTRUCT","HVAN_EXPLOSION"};
 
 void merc_load_exptables(void);
-void merc_save(struct map_session_data *sd);
 int mercskill_castend_id( int tid, unsigned int tick, int id,int data );
 
 int do_init_merc (void)
@@ -107,7 +106,7 @@ int merc_dead(struct homun_data *hd, struct block_list *src)
 	hd->bl.m = 0;
 	hd->bl.x = 0;
 	hd->bl.y = 0;	//send it somewhere where it doesn't bother us
-	merc_save(hd->master);
+	merc_save(hd);
 	clif_clearchar_area(&hd->bl,0);
 	map_delblock(&hd->bl);	
 	return 1;
@@ -127,7 +126,7 @@ void merc_skillup(struct map_session_data *sd,short skillnum)
 	clif_homunskillinfoblock(sd);
 	clif_skillup(sd, skillnum);
 
-	merc_save(sd);
+	merc_save(sd->hd);
 }
 
 int merc_gainexp(struct homun_data *hd,int exp)
@@ -157,20 +156,26 @@ void merc_heal(struct homun_data *hd,int hp,int sp)
 	clif_homuninfo(hd->master);
 }
 
-void merc_save(struct map_session_data *sd)
-{
 #ifndef TXT_ONLY
+void merc_save(struct homun_data *hd)
+{
 	sprintf(tmp_sql, "UPDATE `homunculus` SET `class`='%d',`name`='%s',`level`='%d',`exp`='%d',`hunger`='%d',`hp`='%d',`sp`='%d',`skill1lv`='%d',`skill2lv`='%d',`skill3lv`='%d',`skill4lv`='%d',`skillpts`='%d' WHERE `id` = '%d'", 
-		sd->hd->class_,sd->hd->name,sd->hd->level,sd->hd->exp,sd->hd->hunger_rate,sd->hd->hp,sd->hd->sp,
-		sd->hd->hskill[0].level,sd->hd->hskill[1].level,sd->hd->hskill[2].level,sd->hd->hskill[3].level,
-		sd->hd->skillpts,sd->hd->id);
-    if(mysql_query(&mmysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		hd->class_,hd->name,hd->level,hd->exp,hd->hunger_rate,
+		hd->battle_status.hp,hd->battle_status.sp,
+		hd->hskill[0].level,hd->hskill[1].level,hd->hskill[2].level,hd->hskill[3].level,
+		hd->skillpts,hd->id);
+ 	if(mysql_query(&mmysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		return;
 	}
-#endif
 }
+#else
+void merc_save(struct homun_data *hd)
+{
+	//Not implemented...
+}
+#endif
 
 static void merc_load_sub(struct homun_data *hd, struct map_session_data *sd)
 {
@@ -196,9 +201,9 @@ void merc_load(struct map_session_data *sd)
 	sd->hd=NULL;
 	
 	sprintf(tmp_sql, "SELECT `id`,`class`,`name`,`level`,`exp`,`hunger`,`hp`,`sp`,`skill1lv`,`skill2lv`,`skill3lv`,`skill4lv`,`skillpts` FROM `homunculus` WHERE `char_id` = '%d'", sd->char_id);
-    if(mysql_query(&mmysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if(mysql_query(&mmysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		return;
 	}
 
@@ -209,7 +214,7 @@ void merc_load(struct map_session_data *sd)
 	if(mysql_num_rows(sql_res) <= 0){
 		mysql_free_result(sql_res);
 		return;	//no homunculus for this char
-
+	}
 	sql_row = mysql_fetch_row(sql_res);
 	
 	//dummy code
@@ -311,7 +316,7 @@ int merc_create_homunculus(struct map_session_data *sd,int id,int m,int x,int y)
 	merc_calc_stats(hd);
 	hd->attackabletime=0;
 
-	merc_save(hd->master);
+	merc_save(hd);
 
 	clif_spawnhomun(hd);
 	clif_homunack(sd);
