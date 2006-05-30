@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/29
 	* [Fixed]:
+	  - Missing maps in map index database. [Lance]
+	* [Fixed]:
 	  - Battle mechanics in battle_check_target [Lance]
 	* [Fixed]:
 	  - Typo in mob_dead causing crash. Thanks to reddozen and his gang for testing.
