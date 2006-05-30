@@ -1079,7 +1079,7 @@ int unit_attack(struct block_list *src,int target_id,int type)
 		return 0;
 	}
 
-	if(!(src->type == BL_MOB && !((TBL_MOB *)src)->state.killer) && (battle_check_target(src,target,BCT_ENEMY)<=0 ||
+	if(!(src->type == BL_MOB && ((TBL_MOB *)src)->state.killer) && (battle_check_target(src,target,BCT_ENEMY)<=0 ||
 		!status_check_skilluse(src, target, 0, 0))
 	) {
 		unit_unattackable(src);

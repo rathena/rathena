@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* [Added]:
+	  - Visual Studio .NET 2003 includes for mercenary.c [Lance]
 	* Removed the on-die specific code from unit_remove_map and placed it on
 	  the corresponding *_dead functions. unit_remove_map should never assume the
 	  char died, it is just a "remove from map" function. [Skotlex]
