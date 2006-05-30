@@ -102,14 +102,8 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 int merc_dead(struct homun_data *hd, struct block_list *src)
 {
 	//dead lol
-	clif_clearchar((struct block_list*)hd,1);
-	hd->bl.m = 0;
-	hd->bl.x = 0;
-	hd->bl.y = 0;	//send it somewhere where it doesn't bother us
 	merc_save(hd);
-	clif_clearchar_area(&hd->bl,0);
-	map_delblock(&hd->bl);	
-	return 1;
+	return 3; //Remove it from map.
 }
 
 void merc_skillup(struct map_session_data *sd,short skillnum)

@@ -4432,9 +4432,8 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
-	int i=0,j=0,resurrect_flag=0,baby_flag=0;
+	int i=0,j=0;
 	unsigned int tick = gettick();
-	struct status_data *status = &sd->battle_status;
 		
 	if(sd->vender_id)
 		vending_closevending(sd);
@@ -4458,20 +4457,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if(sd->duel_invite > 0)
 			duel_reject(sd->duel_invite, sd);
 	}
-
-	//SC data that will be needed later on.
-	resurrect_flag = (sd->sc.data[SC_KAIZEL].timer != -1)?sd->sc.data[SC_KAIZEL].val1:0;
-	baby_flag = (sd->sc.data[SC_BABY].timer != -1)?1:0;
 	
-	pc_stop_attack(sd);
-	pc_stop_walking(sd,0);
-	unit_skillcastcancel(&sd->bl,0);
-	clif_clearchar_area(&sd->bl,1);
 	pc_setdead(sd);
-	skill_unit_move(&sd->bl,tick,4);
-	if (battle_config.clear_unit_ondeath)
-		skill_clear_unitgroup(&sd->bl); //orn
-	status_change_clear(&sd->bl,0);
 	sd->canregen_tick = tick;
 	
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
@@ -4599,7 +4586,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(battle_config.death_penalty_type && sd->state.snovice_flag != 4
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.nopenalty && !map_flag_gvg(sd->bl.m)
-		&& !baby_flag)
+		&& sd->sc.data[SC_BABY].timer == -1)
 	{
 		unsigned int base_penalty =0;
 		if (battle_config.death_penalty_base > 0) {
@@ -4715,27 +4702,28 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1;
 	}
 
-	if (sd->state.snovice_flag == 4 || resurrect_flag)
+	if (sd->sc.count && sd->sc.data[SC_KAIZEL].timer != -1)
 	{
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
-		pc_setstand(sd);
-		status->hp = 1;
-		if (sd->state.snovice_flag == 4 ||
-			sd->special_state.restart_full_recover) {
+		if(sd->special_state.restart_full_recover)
 			status_percent_heal(&sd->bl, 100, 100);
-		} else { //10% life per each level in Kaizel
-			status_percent_heal(&sd->bl, 10*resurrect_flag, 0);
-		}
-		clif_updatestatus(sd, SP_HP);
-		clif_updatestatus(sd, SP_SP);
+		else
+			status_percent_heal(&sd->bl, 10*sd->sc.data[SC_KAIZEL].val1, 0);
+		if(battle_config.pc_invincible_time)
+			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+		sc_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,10,skill_get_time2(SL_KAIZEL,sd->sc.data[SC_KAIZEL].val1));
+		status_change_end(&sd->bl,SC_KAIZEL,-1);
+		return 0;
+	}
+	if (sd->state.snovice_flag == 4)
+	{
+		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
+		status_percent_heal(&sd->bl, 100, 100);
 		clif_resurrection(&sd->bl, 1);
 		sd->state.snovice_flag = 0;
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		if (resurrect_flag)
-			sc_start(&sd->bl,SkillStatusChangeTable[PR_KYRIE],100,10,skill_get_time2(SL_KAIZEL, resurrect_flag));
-		else
-			sc_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,skill_get_time(MO_STEELBODY,1));
+		sc_start(&sd->bl,SkillStatusChangeTable[MO_STEELBODY],100,1,skill_get_time(MO_STEELBODY,1));
 		return 0;
 	}
 

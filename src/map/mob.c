@@ -883,10 +883,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 	bl=map_id2bl(md->master_id);
 
 	if (!bl || status_isdead(bl)) {	//Žå‚ªŽ€–S‚µ‚Ä‚¢‚é‚©Œ©‚Â‚©‚ç‚È‚¢
-		if(md->special_state.ai)
-			unit_remove_map(&md->bl, 1);
-		else
-			status_kill(&md->bl);
+		status_kill(&md->bl);
 		return 0;
 	}
 
@@ -921,10 +918,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		}	
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
-		if(md->special_state.ai)
-			unit_remove_map(&md->bl, 1);
-		else
-			status_kill(&md->bl);
+		status_kill(&md->bl);
 		return 0;
 	}
 	
@@ -1695,19 +1689,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	md->state.skillstate = MSS_DEAD;	
-	md->status.hp = 1; //Otherwise skill will be blocked due to being dead! [Skotlex]
 	mobskill_use(md,tick,-1);	//On Dead skill.
-	md->status.hp = 0;
 
 	if (md->sc.data[SC_KAIZEL].timer != -1)
 	{	//Revive in a bit.
-		mob_unlocktarget(md,tick);
-		mob_stop_walking(md, 0);
-		clif_clearchar_area(&md->bl,1);
 		add_timer(gettick()+3000, mob_respawn, md->bl.id, 10*md->sc.data[SC_KAIZEL].val1); //% of life to rebirth with
-		status_change_end(&md->bl, SC_KAIZEL, -1);
 		map_delblock(&md->bl);
-		return 0;
+		return 1; //Return 1 to only clear the object.
 	}
 
 	map_freeblock_lock();
@@ -2134,9 +2122,24 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}
 	if(md->level) md->level=0;
+
+	if(md->deletetimer!=-1) {
+		delete_timer(md->deletetimer,mob_timer_delete);
+		md->deletetimer=-1;
+	}
+	if(pcdb_checkid(md->vd->class_)) //Player mobs are not removed automatically by the client.
+		clif_clearchar_delay(tick+3000,&md->bl,0);
+
+	mob_deleteslave(md);
+	md->last_deadtime=tick;
+	
 	map_freeblock_unlock();
-	unit_remove_map(&md->bl,1);
-	return 1;
+
+	if(!md->spawn) //Tell status_damage to remove it from memory.
+		return 5;
+	
+	mob_setdelayspawn(md); //Set respawning.
+	return 3; //Remove from map.
 }
 
 void mob_revive(struct mob_data *md, unsigned int hp)

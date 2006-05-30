@@ -1433,6 +1433,7 @@ int unit_changeviewsize(struct block_list *bl,short size)
  * Returns 1 on success. 0 if it couldn't be removed or the bl was free'd
  * if clrtype is 1 (death), appropiate cleanup is performed. 
  * Otherwise it is assumed bl is being warped.
+ * On-Kill specific stuff is not performed here, look at status_damage for that.
  *------------------------------------------
  */
 int unit_remove_map(struct block_list *bl, int clrtype) {
@@ -1455,9 +1456,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 	ud->attackabletime = ud->canmove_tick = ud->canact_tick = gettick();
 	clif_clearchar_area(bl,clrtype);
 	
-	if (clrtype == 1) //Death. Remove all status changes.
-		status_change_clear(bl,0);
-	else if(sc && sc->count ) { //map-change/warp dispells.
+	if(sc && sc->count ) { //map-change/warp dispells.
 		if(sc->data[SC_BLADESTOP].timer!=-1)
 			status_change_end(bl,SC_BLADESTOP,-1);
 		if(sc->data[SC_BASILICA].timer!=-1)
@@ -1488,9 +1487,6 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			status_change_end(bl, SC_GOSPEL, -1);
 	}
 
-	if (clrtype == 1 && battle_config.clear_unit_ondeath && //Clrtype 1 = died.
-		battle_config.clear_unit_ondeath&bl->type)
-		skill_clear_unitgroup(bl);			// スキルユニットグループの削除
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,gettick(),4);
 		skill_cleartimerskill(bl);			// タイマースキルクリア
@@ -1537,25 +1533,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		struct mob_data *md = (struct mob_data*)bl;
 		md->target_id=0;
 		md->attacked_id=0;
-		md->state.skillstate= clrtype==1?MSS_DEAD:MSS_IDLE;
-		if (md->master_id) md->master_dist = 0;
-		if (clrtype == 1) { //Death.
-			md->last_deadtime=gettick();
-			if(md->deletetimer!=-1)
-				delete_timer(md->deletetimer,mob_timer_delete);
-			md->deletetimer=-1;
-			if(pcdb_checkid(md->vd->class_)) //Player mobs are not removed automatically by the client.
-				clif_clearchar_delay(gettick()+3000,bl,0);
-			mob_deleteslave(md);
-
-			if(!md->spawn) {
-				map_delblock(bl);
-				unit_free(bl); //Mob does not respawn.
-				map_freeblock_unlock();
-				return 0;
-			}
-			mob_setdelayspawn(md); //Set respawning.
-		}
+		md->state.skillstate= MSS_IDLE;
 	} else if (bl->type == BL_PET) {
 		struct pet_data *pd = (struct pet_data*)bl;
 		struct map_session_data *sd = pd->msd;

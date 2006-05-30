@@ -584,23 +584,69 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	{
 		case BL_MOB:
 			mob_damage((TBL_MOB*)target, src, hp);
-			if (!status->hp)
-				mob_dead((TBL_MOB*)target, src, flag&4?3:0);
 			break;
 		case BL_PC:
 			pc_damage((TBL_PC*)target,src,hp,sp);
-			if (!status->hp)
-				pc_dead((TBL_PC*)target,src);
 			break;
 		case BL_HOMUNCULUS:
 			merc_damage((TBL_HOMUNCULUS*)target,src,hp,sp);
-			if (!status->hp)
-				merc_dead((TBL_HOMUNCULUS*)target,src);
 	}
-	
-	if (walkdelay && status->hp)
-		unit_set_walkdelay(target, gettick(), walkdelay, 0);
-	
+
+	if (status->hp)
+  	{	//Still lives!
+		if (walkdelay)
+			unit_set_walkdelay(target, gettick(), walkdelay, 0);
+		return hp+sp;
+	}
+
+	status->hp = 1; //To let the dead function cast skills and all that.
+	//NOTE: These dead functions should return: [Skotlex]
+	//0: Death cancelled, auto-revived.
+	//Non-zero: Standard death. Clear status, cancel move/attack, etc
+	//&2: Also remove object from map.
+	//&4: Also delete object from memory.
+	switch (target->type)
+	{
+		case BL_MOB:
+			flag = mob_dead((TBL_MOB*)target, src, flag&4?3:0);
+			break;
+		case BL_PC:
+			flag = pc_dead((TBL_PC*)target,src);
+			break;
+		case BL_HOMUNCULUS:
+			flag = merc_dead((TBL_HOMUNCULUS*)target,src);
+			break;
+		default:	//Unhandled case, do nothing to object.
+			flag = 0;
+			break;
+	}
+
+	if(!flag) //Death cancelled.
+		return hp+sp;
+  
+	//Normal death
+	if (battle_config.clear_unit_ondeath &&
+		battle_config.clear_unit_ondeath&target->type)
+		skill_clear_unitgroup(target);
+	status_change_clear(target,0);
+
+	if(flag&2) //remove the unit from the map.
+		unit_remove_map(target,1);
+	else { //These are handled by unit_remove_map.
+		unit_stop_attack(target);
+		unit_stop_walking(target,0);
+		unit_skillcastcancel(target,0);
+		clif_clearchar_area(target,1);
+		skill_unit_move(target,gettick(),4);
+		skill_cleartimerskill(target);
+	}
+
+	if(flag&4) { //Delete from memory.
+		map_delblock(target);
+		unit_free(target);
+	}
+
+		
 	return hp+sp;
 }
 

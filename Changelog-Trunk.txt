@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* Removed the on-die specific code from unit_remove_map and placed it on
+	  the corresponding *_dead functions. unit_remove_map should never assume the
+	  char died, it is just a "remove from map" function. [Skotlex]
+	* Updated status_damage to handle the general death code (clearing status
+	  changes, clearing skill related data, sending death packet, etc). The
+	  return value from the *_dead functions will tell it what to do or not with
+	  the object (death aborted, clear it from map/memory, etc) [Skotlex]
+	* Cleaned up pc_dead to take advantage of the fact that status changes are
+	  not ended until after the function. [Skotlex]
 	* Disabled ontouch npcs triggering on hidden/chase-walk characters. 
 	  [Skotlex]
 	* Updated/adapted current Homun code to use the status_data update.

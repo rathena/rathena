@@ -5732,11 +5732,11 @@ int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 
 	if(!allflag){
 		if(strcmp(event,md->npc_event)==0)
-			unit_remove_map(bl,1);
+			status_kill(bl);
 		return 0;
 	}else{
 		if(!md->spawn)
-			unit_remove_map(bl,1);
+			status_kill(bl);
 		return 0;
 	}
 	return 0;
@@ -5760,7 +5760,7 @@ int buildin_killmonster(struct script_state *st)
 
 int buildin_killmonsterall_sub(struct block_list *bl,va_list ap)
 {
-	unit_remove_map(bl,1);
+	status_kill(bl);
 	return 0;
 }
 int buildin_killmonsterall(struct script_state *st)

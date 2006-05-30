@@ -3690,9 +3690,8 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 	
 	if (flag)
 		status_kill(bl);
-	else
-		unit_remove_map(&md->bl,1);
-	
+	else //FIXME: Eh.. what exactly is the difference here?
+		status_kill(bl);	
 	return 1;
 }
 void atcommand_killmonster_sub(
