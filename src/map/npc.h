@@ -83,5 +83,7 @@ extern int dummy_npc_id;
 
 extern char *current_file;
 
+struct npc_data *fake_nd;
+
 #endif
 
