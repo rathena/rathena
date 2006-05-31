@@ -2498,54 +2498,54 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	}
 
 	if(flag&SCB_HIT) {
-		status->hit = b_status->hit - b_status->dex + status->dex;
-		status->hit = status_calc_hit(bl, sc, status->hit);
+		if (status->dex == b_status->dex)
+			status->hit = status_calc_hit(bl, sc, b_status->hit);
+		else
+			status->hit = status_calc_hit(bl, sc, b_status->hit +(status->dex - b_status->dex));
 	}
 
 	if(flag&SCB_FLEE) {
-		status->flee = b_status->flee - b_status->agi + status->agi;
-		status->flee = status_calc_flee(bl, sc, status->flee);
+		if (status->agi == b_status->agi)
+			status->flee = status_calc_flee(bl, sc, b_status->flee);
+		else
+			status->flee = status_calc_flee(bl, sc, b_status->flee +(status->agi - b_status->agi));
 	}
 
 	if(flag&SCB_DEF)
 		status->def = status_calc_def(bl, sc, b_status->def);
 
 	if(flag&SCB_DEF2) {
-		status->def2 = status->vit;
-		temp = b_status->def2 - b_status->vit;
-		if (temp)
-			status->def2+=temp;
-		status->def2 = status_calc_def2(bl, sc, status->def2);
+		if (status->vit == b_status->vit)
+			status->def2 = status_calc_def2(bl, sc, b_status->def2);
+		else
+			status->def2 = status_calc_def2(bl, sc, b_status->def2 + (status->vit - b_status->vit));
 	}
 
 	if(flag&SCB_MDEF)
 		status->mdef = status_calc_mdef(bl, sc, b_status->mdef);
 		
 	if(flag&SCB_MDEF2) {
-		status->mdef2 = status->int_ + (status->vit>>1);
-		temp = b_status->mdef2 -(b_status->int_ + (b_status->vit>>1));
-		if (temp)
-			status->mdef2+=temp;
-		status->mdef2 = status_calc_mdef2(bl, sc, status->mdef2);
+		if (status->int_ == b_status->int_ && status->vit == b_status->vit)
+			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2);
+		else
+			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2 +(status->int_ - b_status->int_) +((status->vit - b_status->vit)>>1));
 	}
 
 	if(flag&SCB_SPEED)
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
 
 	if(flag&SCB_CRI && b_status->cri) {
-		status->cri = status->luk*3 + 10;
-		temp = b_status->cri - (b_status->luk*3 + 10);
-		if (temp)
-			status->cri += temp;
-		status->cri = status_calc_critical(bl, sc, status->cri);
+		if (status->luk == b_status->luk)
+			status->cri = status_calc_critical(bl, sc, b_status->cri);
+		else
+			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {
-		status->flee2 = status->luk + 10;
-		temp = b_status->flee2 - b_status->flee2 + 10;
-		if (temp)
-			status->flee2 += temp;
-		status->flee2 = status_calc_flee2(bl, sc, status->flee2);
+		if (status->luk == b_status->luk)
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2);
+		else
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk));
 	}
 
 	if(flag&SCB_ATK_ELE) {

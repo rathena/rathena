@@ -16,6 +16,7 @@
 #endif
 #include <time.h>
 #include "malloc.h"
+#include "cbasetypes.h"
 
 extern time_t last_tick;
 extern time_t stall_time;
@@ -121,40 +122,11 @@ extern struct socket_data *session[FD_SETSIZE];
 
 extern int fd_max;
 
-
-
-
-
-/////////////////////////////
-// for those still not building c++
-#ifndef __cplusplus
-//////////////////////////////
-
-// boolean types for C
-typedef int bool;
-#define false	(1==0)
-#define true	(1==1)
-
-//////////////////////////////
-#endif // not cplusplus
-//////////////////////////////
-
-
-
 //////////////////////////////////
 // some checking on sockets
 extern bool session_isValid(int fd);
 extern bool session_isActive(int fd);
 //////////////////////////////////
-
-
-
-
-
-
-
-
-
 
 // Function prototype declaration
 
