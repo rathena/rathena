@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/31
+	* Made the char_name_option char_athena.conf setting apply to parties and
+	  guilds as well. It cannot be applied to pets yet without adding a
+	  change-name-request interserver packet. [Skotlex]
 	* Moved the JOB_* defines from map.h to mmo.h, update char.c to use them.
 	  [Skotlex]
 	* Added function char_read_fame_list for famelist reading. Invoked it on
