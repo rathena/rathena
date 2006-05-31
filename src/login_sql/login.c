@@ -947,7 +947,7 @@ int parse_fromchar(int fd){
 		case 0x2709:
 			if (log_login)
 			{
-				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','%s', 'GM reload request')", loginlog_db, (ULONG)p,server[id].name, RETCODE);
+				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','%s', 'GM reload request')", loginlog_db, (ulong)p,server[id].name, RETCODE);
 				if (mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1485,7 +1485,7 @@ int parse_login(int fd) {
 				ShowWarning("packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, (ULONG)p);
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, (ulong)p);
 
 					// query
 					if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1575,7 +1575,7 @@ int parse_login(int fd) {
 				} else {
 
 					if (p[0] != 127 && log_login) {
-						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','100', 'login ok')", loginlog_db, (ULONG)p, t_uid);
+						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','100', 'login ok')", loginlog_db, (ulong)p, t_uid);
 						//query
 						if(mysql_query(&mysql_handle, tmpsql)) {
 							ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1633,7 +1633,7 @@ int parse_login(int fd) {
 				char error[64];
 				if (log_login)
 				{
-					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %%s')", loginlog_db, (ULONG)p, t_uid, result);
+					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %%s')", loginlog_db, (ulong)p, t_uid, result);
 					switch((result + 1)) {
 			case -2:	//-3 = Account Banned
 				sprintf(tmpsql,tmp_sql,"Account banned.");
@@ -1744,7 +1744,7 @@ int parse_login(int fd) {
 				} //End login log of error.
 				if ((result == 1) && (dynamic_pass_failure_ban != 0) && log_login){	// failed password
 					sprintf(tmpsql,"SELECT count(*) FROM `%s` WHERE `ip` = '%lu' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-						loginlog_db,(ULONG)p, dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
+						loginlog_db,(ulong)p, dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1822,7 +1822,7 @@ int parse_login(int fd) {
 				unsigned char* server_name;
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, (ULONG)p, RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, (ulong)p, RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {

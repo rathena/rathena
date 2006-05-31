@@ -2879,7 +2879,7 @@ int do_init_npc(void)
 {
 	struct npc_src_list *nsl;
 	time_t last_time = time(0);
-	int busy;
+	int busy, i;
 	char c = '-';
 
 	//Stock view data for normal npcs.
