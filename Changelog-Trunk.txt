@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* Fixed pets ignoring can-act delays for skill usage. [Skotlex]
 	* [Added]:
 	  - Mercenary.c in VS.NET 2005 project files
 	  [Improved]:

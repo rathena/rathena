@@ -108,7 +108,7 @@ S 0072 <account ID>.l <charactor ID>.l <login ID1>.l <login ID2>.l <sex>.b
 	ゲーム鯖接続要求
 R 0073 <server tick>.l <coordidate>.3B ?.2B
 	ゲーム鯖接続成功&サーバ側1ms時計&出現位置
-R 0078 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <weapon>.w <head option bottom>.w <sheild>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <sit>.B <Lv>.B
+R 0078 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <weapon>.w <head option bottom>.w <sheild>.w <head option top>.w <head option mid>.w <hair color>.w <cloth color>.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <sit>.B <Lv>.B
 	マップロード時&移動時用、向き付き用キャラ情報?
 R 0079 <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.w <weapon>.w <head option bottom>.w <sheild>.w <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_dir>.3B ?.B ?.B <Lv>.B
 	テレポ等の表示範囲内沸きキャラ用、向き付き無しキャラ情報?

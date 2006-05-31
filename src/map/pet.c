@@ -130,12 +130,16 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 		(battle_config.pet_equip_required && !pd->equip))
 		return 0;
 
+	if (DIFF_TICK(pd->ud.canact_tick, gettick()) > 0)
+		return 0;
+	
 	if (rand()%100 < (pd->a_skill->rate +pd->msd->pet.intimate*pd->a_skill->bonusrate/1000))
 	{	//Skotlex: Use pet's skill 
 		bl=map_id2bl(target_id);
 		if(bl == NULL || pd->bl.m != bl->m || bl->prev == NULL || status_isdead(bl) ||
 			!check_distance_bl(&pd->bl, bl, pd->db->range3))
 			return 0;
+
 		if (skill_get_inf(pd->a_skill->id) & INF_GROUND_SKILL)
 			unit_skilluse_pos(&pd->bl, bl->x, bl->y, pd->a_skill->id, pd->a_skill->lv);
 		else
@@ -1217,13 +1221,19 @@ int pet_skill_support_timer(int tid,unsigned int tick,int id,int data)
 	}
 	
 	status = status_get_status_data(&sd->bl);
+
+	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0)
+	{	//Wait until the pet can act again.
+		pd->s_skill->timer=add_timer(pd->ud.canact_tick,pet_skill_support_timer,sd->bl.id,0);
+		return 0;
+	}
 	
 	if(pc_isdead(sd) ||
 		(rate = status->sp*100/status->max_sp) > pd->s_skill->sp ||
 		(rate = status->hp*100/status->max_hp) > pd->s_skill->hp ||
 		(rate = (pd->ud.skilltimer != -1)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
-		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_skill_support_timer,sd->bl.id,0);
+		pd->s_skill->timer=add_timer(tick+(rate>10?rate:10)*100,pet_skill_support_timer,sd->bl.id,0);
 		return 0;
 	}
 	
