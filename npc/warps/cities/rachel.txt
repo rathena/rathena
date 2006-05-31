@@ -1,0 +1,37 @@
+//Rachel Sanctuary Sky Map
+ra_temsky.gat,99,117,0	warp	rasky001	1,1,ra_temsky.gat,99,140
+ra_temsky.gat,99,135,0	warp	rasky002	1,1,ra_temsky.gat,99,112
+ra_temsky.gat,112,143,0	warp	rasky003	1,1,ra_temsky.gat,141,139
+ra_temsky.gat,137,139,0	warp	rasky004	1,1,ra_temsky.gat,108,143
+ra_temsky.gat,87,143,0	warp	rasky005	1,1,ra_temsky.gat,58,139
+ra_temsky.gat,62,139,0	warp	rasky004	1,1,ra_temsky.gat,91,143
+
+//Rachel City
+rachel.gat,149,249,0	warp	rachel001	1,1,ra_temple.gat,119,28
+rachel.gat,273,125,0	warp	rachel009	1,1,ra_fild12.gat,41,225
+rachel.gat,25,125,0	warp	rachel010	1,1,ra_fild11.gat,357,225
+
+//Rachel Temple
+ra_temple.gat,119,21,0	warp	rachel002	1,1,rachel.gat,149,244
+ra_temple.gat,119,181,0	warp	rachel003	1,1,ra_temin.gat,169,22
+ra_temin.gat,169,17,0	warp	rachel004	1,1,ra_temple.gat,119,176
+ra_temin.gat,206,93,0	warp	rachel005	1,1,ra_temin.gat,312,257
+ra_temin.gat,312,252,0	warp	rachel006	1,1,ra_temin.gat,206,88
+ra_temin.gat,130,93,0	warp	rachel007	1,1,ra_temin.gat,238,257
+ra_temin.gat,238,252,0	warp	rachel008	1,1,ra_temin.gat,130,88
+
+
+ra_temin.gat,276,326,0	script	Statue#Rachel	111,{
+	mes "Welcome to the temporary Rachel";
+	mes "Sanctuary entrance npc!";
+	mes "Isn't it great?";
+	next;
+	mes "Do you want to enter Rachel Sanctuary?";
+	next;
+	if(select("Yes", "No") == 1){
+		close2;
+		warp "ra_san01",139,14;
+		end;
+	}
+	close;
+}

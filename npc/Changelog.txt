@@ -31,7 +31,9 @@ Evera
 
 Date		Added
 ======
-05/31	* Now re-using one variable MISC_QUEST for such quests: [Lupus]
+05/31
+	* Added Rachel and Ice Dungeon warps [Playtester]
+	* Now re-using one variable MISC_QUEST for such quests: [Lupus]
 	  Morgenstein, Nifl Witch, Edgar's Offer, Prontera Culvert,
 	  Juice Maker, Tempestra, 
 	- replaced BUNYBND with @BUNYBND
