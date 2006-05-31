@@ -495,6 +495,7 @@ int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
 int mapif_parse_CreateParty(int fd, int account_id, int char_id, char *name, char *nick, unsigned short map, int lv, int item, int item2)
 {
 	struct party *p;
+	int i;
 	if( (p=search_partyname(name))!=NULL){
 		mapif_party_created(fd,account_id,char_id,NULL);
 		return 0;
