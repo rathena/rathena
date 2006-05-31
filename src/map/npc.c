@@ -2952,6 +2952,8 @@ int do_init_npc(void)
 	fake_nd->speed = 200;
 	fake_nd->u.scr.script = NULL;
 	fake_nd->u.scr.src_id = 0;
+	for (i = 0; i < MAX_EVENTTIMER; i++)
+		fake_nd->eventtimer[i] = -1;
 	strcpy(fake_nd->name,"FAKE_NPC");
 	memcpy(fake_nd->exname, fake_nd->name, 9);
 
