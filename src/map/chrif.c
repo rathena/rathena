@@ -1127,7 +1127,7 @@ int chrif_updatefamelist(struct map_session_data *sd)
 			return 0;
 	}
 
-    WFIFOHEAD(char_fd, 12);
+	WFIFOHEAD(char_fd, 12);
 	WFIFOW(char_fd, 0) = 0x2b10;
 	WFIFOL(char_fd, 2) = sd->char_id;
 	WFIFOL(char_fd, 6) = sd->status.fame;

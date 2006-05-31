@@ -226,7 +226,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type) {
 
 // Increases a player's fame points and displays a notice to him
 void pc_addfame(struct map_session_data *sd,int count) {
-    nullpo_retv(sd);
+	nullpo_retv(sd);
 	sd->status.fame += count;
 	if(sd->status.fame > MAX_FAME)
 	    sd->status.fame = MAX_FAME;

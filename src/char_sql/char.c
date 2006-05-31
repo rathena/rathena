@@ -2746,7 +2746,7 @@ int parse_frommap(int fd) {
 
 		// Update and send fame ranking list [DracoRPG]
 		case 0x2b10:
-			if (RFIFOREST(fd) < 10)
+			if (RFIFOREST(fd) < 12)
 				return 0;
 			{
 				int i, j;
@@ -2756,7 +2756,8 @@ int parse_frommap(int fd) {
 				char pos = RFIFOB(fd, 11);
 				int size;
 				struct fame_list *list;
-
+				RFIFOSKIP(fd,12);
+				
 				switch(type) {
 					case 1:
 						size = fame_list_size_smith;
@@ -2771,31 +2772,42 @@ int parse_frommap(int fd) {
 						list = taekwon_fame_list;
 						break;
 					default:
-						return 0;
+						size = 0;
+						break;
 				}
-
-				if(pos){ // If the player's already in the list, remove the entry and shift the following ones 1 step up
-					memmove(list + pos - 1, list + pos, (size - pos) * sizeof(struct fame_list));
+				if(!size) break; //No list.
+				if(pos)
+				{
+				 	pos--; //Convert from pos to index.
+					if(
+						(pos == 0 || fame < list[pos-1].fame) &&
+						(pos == size-1 || fame > list[pos+1].fame)
+					) { //No change in order.
+						list[(int)pos].fame = fame;
+						char_send_fame_list(fd);
+						break;
+					}
+					// If the player's already in the list, remove the entry and shift the following ones 1 step up
+					memmove(list+pos, list+pos+1, (size-pos-1) * sizeof(struct fame_list));
 					list[size].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
 				}
 
-				for(i = 0; i < size; i++) // Find the position where the player has to be inserted
-					if(fame >= list[i].fame) { // When found someone with less or as much fame, insert just above
-						memmove(list + i + 1, list + i, (size - i - 1) * sizeof(struct fame_list));
-						list[i].id = id;
-						list[i].fame = fame;
-						for(j = 0; j < char_num; j++) // Look for the player's name
-							if(char_dat[j].char_id == id) {
-								strncpy(list[j].name, char_dat[j].name, NAME_LENGTH);
-								break;
-							}
-						break;
-					}
-
+				// Find the position where the player has to be inserted
+				for(i = 0; i < size && fame < list[i].fame; i++);
+				if(i>=size) break; //Out of ranking.
+				// When found someone with less or as much fame, insert just above
+				memmove(list+i+1, list+i, (size-i-1) * sizeof(struct fame_list));
+				list[i].id = id;
+				list[i].fame = fame;
+				// Look for the player's name
+				for(j = 0; j < char_num && char_dat[j].char_id != id; j++);
+				if(j < char_num)
+					strncpy(list[i].name, char_dat[j].name, NAME_LENGTH);
+				else //Not found??
+					strncpy(list[i].name, "Unknown", NAME_LENGTH);
 				char_send_fame_list(fd);
 			}
 
-			RFIFOSKIP(fd,12);
 			break;
 
 		// Recieve rates [Wizputer]
