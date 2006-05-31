@@ -1096,8 +1096,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		{
 			if (!can_move && (battle_config.mob_ai&2) &&
 				!battle_check_range(&md->bl, tbl, md->status.rhw.range))
-			{	//Rude-attacked.
-				if (md->attacked_count++ > 3)
+			{	//Rude-attacked (avoid triggering due to can-walk delay).
+				if (DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
+				  	md->attacked_count++ > 3)
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		} else
