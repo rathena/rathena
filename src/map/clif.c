@@ -1874,7 +1874,7 @@ int clif_scriptclose(struct map_session_data *sd, int npcid) {
  */
 void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	int fd = sd->fd;
-	sd->npc_id = npcid;
+	//sd->npc_id = npcid;
 	sd->state.using_fake_npc = 1;
 	memset(WFIFOP(fd,0), 0, packet_len_table[0x78]);
 	WFIFOW(fd,0)=0x78;
@@ -1899,7 +1899,7 @@ int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
@@ -1924,7 +1924,7 @@ int clif_scriptinput(struct map_session_data *sd, int npcid) {
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
@@ -1948,7 +1948,7 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 
 	nullpo_retr(0, sd);
 
-	if (!sd->state.using_fake_npc && (npcid == fake_npc_id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
+	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);

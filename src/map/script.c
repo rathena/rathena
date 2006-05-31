@@ -11438,7 +11438,7 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	//Variables for backing up the previous script and restore it if needed. [Skotlex]
 	struct script_code *bck_script = NULL;
 	struct script_code *bck_scriptroot = NULL;
-	int bck_scriptstate = 0;
+	int bck_scriptstate = 0,bck_npcid = 0;
 	struct script_stack *bck_stack = NULL;
 	
 	if (rootscript == NULL || pos < 0)
@@ -11473,6 +11473,8 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			bck_scriptstate = sd->npc_scriptstate;
 			bck_stack = sd->stack;
 			sd->stack = NULL;
+			bck_npcid = sd->npc_id;
+			sd->npc_id = st->oid;
 		}
 	}
 	st->pos = pos;
@@ -11513,6 +11515,7 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			sd->npc_scriptroot  = bck_scriptroot;
 			sd->npc_scriptstate = bck_scriptstate;
 			sd->stack = bck_stack;
+			sd->npc_id = bck_npcid;
 			//Since the script is done, save any changed account variables [Skotlex]
 			if (sd->state.reg_dirty&2)
 				intif_saveregistry(sd,2);

@@ -2785,8 +2785,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 
 	sd->canuseitem_tick= tick + battle_config.item_use_interval; //Update item use time.
-	sd->npc_id = fake_npc_id;
-	run_script(script,0,sd->bl.id,fake_npc_id);
+	//sd->npc_id = fake_nd->bl.id;
+	run_script(script,0,sd->bl.id,fake_nd->bl.id);
 	potion_flag = 0;
 	return 1;
 }
@@ -6077,7 +6077,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		int i;
 		struct item_data *data;
 		if (sd->inventory_data[n]->equip_script)
-			run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,0);
+			run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(sd->status.inventory[n].card[0]==0x00ff ||
 			sd->status.inventory[n].card[0]==0x00fe ||
 			sd->status.inventory[n].card[0]==(short)0xff00)
@@ -6089,7 +6089,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 				continue;
 			data = itemdb_exists(sd->status.inventory[n].card[i]);
 			if (data && data->equip_script)
-				run_script(data->equip_script,0,sd->bl.id,0);
+				run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		}
 	}
 	return 0;
@@ -6175,7 +6175,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if (sd->inventory_data[n]) {
 		struct item_data *data;
 		if (sd->inventory_data[n]->unequip_script)
-			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,0);
+			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(sd->status.inventory[n].card[0]==0x00ff ||
 			sd->status.inventory[n].card[0]==0x00fe ||
 			sd->status.inventory[n].card[0]==(short)0xff00)
@@ -6187,7 +6187,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 				continue;
 			data = itemdb_exists(sd->status.inventory[n].card[i]);
 			if (data && data->unequip_script)
-				run_script(data->unequip_script,0,sd->bl.id,0);
+				run_script(data->unequip_script,0,sd->bl.id,fake_nd->bl.id);
 		}
 	}
 

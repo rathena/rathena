@@ -816,7 +816,6 @@ int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsi
 		return 0;
 	}
 
-	sd->npc_id=ev->nd->bl.id;
 	sd->npc_pos=run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
 	return 0;
 }
@@ -1050,7 +1049,6 @@ int npc_click(struct map_session_data *sd,int id)
 	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
 		return 1;
 
-	sd->npc_id=id;
 	switch(nd->bl.subtype) {
 	case SHOP:
 		clif_npcbuysell(sd,id);
@@ -1079,7 +1077,7 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	if(sd->npc_id != fake_npc_id){ // Not item script
+	if(sd->npc_id != fake_nd->bl.id){ // Not item script
 		if (npc_checknear(sd,id)){
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 			return 1;
@@ -1112,7 +1110,7 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 	if (nd->bl.subtype!=SHOP) {
 		if (battle_config.error_log)
 			ShowError("no such shop npc : %d\n",id);
-		sd->npc_id=0;
+		//sd->npc_id=0;
 		return 1;
 	}
 	if (nd->sc.option&OPTION_INVISIBLE)	// –³Œø‰»‚³‚ê‚Ä‚¢‚é
@@ -2944,7 +2942,27 @@ int do_init_npc(void)
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 
 	// Init dummy NPC
-	fake_npc_id = npc_get_new_npc_id();
+	fake_nd = (struct npc_data *)aCalloc(sizeof(struct npc_data),1);
+	fake_nd->bl.prev = fake_nd->bl.next = NULL;
+	fake_nd->bl.m = -1;
+	fake_nd->bl.x = 0;
+	fake_nd->bl.y = 0;
+	fake_nd->bl.id = npc_get_new_npc_id();
+	fake_nd->class_ = -1;
+	fake_nd->speed = 200;
+	fake_nd->u.scr.script = NULL;
+	fake_nd->u.scr.src_id = 0;
+	strcpy(fake_nd->name,"FAKE_NPC");
+	memcpy(fake_nd->exname, fake_nd->name, 9);
+
+	npc_script++;
+	fake_nd->bl.type = BL_NPC;
+	fake_nd->bl.subtype = SCRIPT;
+
+	strdb_put(npcname_db, fake_nd->exname, fake_nd);
+	fake_nd->u.scr.timerid = -1;
+	map_addiddb(&fake_nd->bl);
+	// End of initialization
 
 	return 0;
 }

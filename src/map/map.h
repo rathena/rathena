@@ -1478,6 +1478,6 @@ typedef struct homun_data       TBL_HOMUNCULUS;
 extern int lowest_gm_level;
 extern char main_chat_nick[16];
 
-int fake_npc_id;
+struct npc_data *fake_nd;
 
 #endif
