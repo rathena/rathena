@@ -3112,6 +3112,7 @@ int parse_login(int fd) {
 				memcpy(account.passwd, RFIFOP(fd,30), NAME_LENGTH);
 				account.passwd[23] = '\0';
 				remove_control_chars((unsigned char *)account.passwd);
+				ShowInfo("Login packet %s and %s  with version %d\n", account.userid, account.passwd, account.version);
 			} else {
 				login_log("Request for connection (encryption mode) of %s (ip: %s)." RETCODE, account.userid, ip);
 				 // If remove control characters from received password encrypted by md5,
@@ -3120,18 +3121,18 @@ int parse_login(int fd) {
 				account.passwd[16] = '\0';
 			}
 #ifdef PASSWORDENC
-			account.passwdenc = (RFIFOW(fd,0) == 0x64) ? 0 : PASSWORDENC;
+			account.passwdenc = (RFIFOW(fd,0) != 0x01dd) ? 0 : PASSWORDENC;
 #else
 			account.passwdenc = 0;
 #endif
 
 			if (!check_ip(session[fd]->client_addr.sin_addr.s_addr)) {
 				login_log("Connection refused: IP isn't authorised (deny/allow, ip: %s)." RETCODE, ip);
-                                WFIFOHEAD(fd, 23);
+                WFIFOHEAD(fd, 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
-				RFIFOSKIP(fd,(RFIFOW(fd,0) == 0x64) ? 55 : 47);
+				RFIFOSKIP(fd,packet_len);
 				break;
 			}
 
@@ -3141,7 +3142,7 @@ int parse_login(int fd) {
 				if (min_level_to_connect > gm_level) {
 					login_log("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s)." RETCODE,
 					          min_level_to_connect, account.userid, gm_level, ip);
-                                        WFIFOHEAD(fd, 3);
+                    WFIFOHEAD(fd, 3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
