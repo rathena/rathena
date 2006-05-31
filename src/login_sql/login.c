@@ -397,7 +397,7 @@ int mmo_auth_sqldb_init(void) {
 
 		if (log_login)
 		{
-			sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', '100','login server started')", loginlog_db);
+			sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', 'lserver','100','login server started')", loginlog_db);
 
 			//query
 			if (mysql_query(&mysql_handle, tmpsql)) {
