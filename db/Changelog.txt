@@ -27,6 +27,7 @@
 
 =========================
 05/31
+	* Fixed Arrow Crafting, now using the official X.2 values [Playtester]
 	* Updated item_db according to info provided by Haplo [Playtester]
 	* Changed the range of Rotar Zairo to 7, as it should be. [MasterOfMuppets]
 05/30
