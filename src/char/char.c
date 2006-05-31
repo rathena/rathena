@@ -571,26 +571,26 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	//Temporal fix until all chars are reverted from peco-flying-class to 
 	//normal classes. [Skotlex]
 	switch (p->class_) {
-		case 13: //Job_Knight2
-			p->class_ = 7;
+		case JOB_KNIGHT2: //Job_Knight2
+			p->class_ = JOB_KNIGHT;
 			break;
-		case 21: //Job_Crusader2
-			p->class_ = 14;
+		case JOB_CRUSADER2: //Job_Crusader2
+			p->class_ = JOB_CRUSADER;
 			break;
-		case 4014: //Job_Lord_Knight2
-			p->class_	= 4008;
+		case JOB_LORD_KNIGHT2: //Job_Lord_Knight2
+			p->class_	= JOB_LORD_KNIGHT;
 			break;
-		case 4022: //Job_Paladin2
-			p->class_ = 4015;
+		case JOB_PALADIN2: //Job_Paladin2
+			p->class_ = JOB_PALADIN;
 			break;
-		case 4036: //Job_Baby_Knight2
-			p->class_ = 4030;
+		case JOB_BABY_KNIGHT2: //Job_Baby_Knight2
+			p->class_ = JOB_BABY_KNIGHT;
 			break;
-		case 4044: //Job_Baby_Crusader2
-			p->class_ = 4037;
+		case JOB_BABY_CRUSADER2: //Job_Baby_Crusader2
+			p->class_ = JOB_BABY_CRUSADER;
 			break;
-		case 4048: //Job_Star_Gladiator2
-			p->class_ = 4047;
+		case JOB_STAR_GLADIATOR2: //Job_Star_Gladiator2
+			p->class_ = JOB_STAR_GLADIATOR;
 			break;
 	}
 	p->base_level = tmp_int[4];
@@ -1182,75 +1182,82 @@ int make_new_char(int fd, unsigned char *dat) {
 //----------------------------------------------------
 char * job_name(int class_) {
 	switch (class_) {
-	case 0:    return "Novice";
-	case 1:    return "Swordsman";
-	case 2:    return "Mage";
-	case 3:    return "Archer";
-	case 4:    return "Acolyte";
-	case 5:    return "Merchant";
-	case 6:    return "Thief";
-	case 7:    return "Knight";
-	case 8:    return "Priest";
-	case 9:    return "Wizard";
-	case 10:   return "Blacksmith";
-	case 11:   return "Hunter";
-	case 12:   return "Assassin";
-	case 13:   return "Knight 2";
-	case 14:   return "Crusader";
-	case 15:   return "Monk";
-	case 16:   return "Sage";
-	case 17:   return "Rogue";
-	case 18:   return "Alchemist";
-	case 19:   return "Bard";
-	case 20:   return "Dancer";
-	case 21:   return "Crusader 2";
-	case 22:   return "Wedding";
-	case 23:   return "Super Novice";
-	case 4001: return "Novice High";
-	case 4002: return "Swordsman High";
-	case 4003: return "Mage High";
-	case 4004: return "Archer High";
-	case 4005: return "Acolyte High";
-	case 4006: return "Merchant High";
-	case 4007: return "Thief High";
-	case 4008: return "Lord Knight";
-	case 4009: return "High Priest";
-	case 4010: return "High Wizard";
-	case 4011: return "Whitesmith";
-	case 4012: return "Sniper";
-	case 4013: return "Assassin Cross";
-	case 4014: return "Peko Knight";
-	case 4015: return "Paladin";
-	case 4016: return "Champion";
-	case 4017: return "Professor";
-	case 4018: return "Stalker";
-	case 4019: return "Creator";
-	case 4020: return "Clown";
-	case 4021: return "Gypsy";
-	case 4022: return "Peko Paladin";
-	case 4023: return "Baby Novice";
-	case 4024: return "Baby Swordsman";
-	case 4025: return "Baby Mage";
-	case 4026: return "Baby Archer";
-	case 4027: return "Baby Acolyte";
-	case 4028: return "Baby Merchant";
-	case 4029: return "Baby Thief";
-	case 4030: return "Baby Knight";
-	case 4031: return "Baby Priest";
-	case 4032: return "Baby Wizard";
-	case 4033: return "Baby Blacksmith";
-	case 4034: return "Baby Hunter";
-	case 4035: return "Baby Assassin";
-	case 4036: return "Baby Peco Knight";
-	case 4037: return "Baby Crusader";
-	case 4038: return "Baby Monk";
-	case 4039: return "Baby Sage";
-	case 4040: return "Baby Rogue";
-	case 4041: return "Baby Alchemist";
-	case 4042: return "Baby Bard";
-	case 4043: return "Baby Dancer";
-	case 4044: return "Baby Peco Crusader";
-	case 4045: return "Super Baby";
+	case JOB_NOVICE:    return "Novice";
+	case JOB_SWORDMAN:    return "Swordsman";
+	case JOB_MAGE:    return "Mage";
+	case JOB_ARCHER:    return "Archer";
+	case JOB_ACOLYTE:    return "Acolyte";
+	case JOB_MERCHANT:    return "Merchant";
+	case JOB_THIEF:    return "Thief";
+	case JOB_KNIGHT:    return "Knight";
+	case JOB_PRIEST:    return "Priest";
+	case JOB_WIZARD:    return "Wizard";
+	case JOB_BLACKSMITH:   return "Blacksmith";
+	case JOB_HUNTER:   return "Hunter";
+	case JOB_ASSASSIN:   return "Assassin";
+	case JOB_KNIGHT2:   return "Peco-Knight";
+	case JOB_CRUSADER:   return "Crusader";
+	case JOB_MONK:   return "Monk";
+	case JOB_SAGE:   return "Sage";
+	case JOB_ROGUE:   return "Rogue";
+	case JOB_ALCHEMIST:   return "Alchemist";
+	case JOB_BARD:   return "Bard";
+	case JOB_DANCER:   return "Dancer";
+	case JOB_CRUSADER2:   return "Peco-Crusader";
+	case JOB_WEDDING:   return "Wedding";
+	case JOB_SUPER_NOVICE:   return "Super Novice";
+	case JOB_GUNSLINGER: return "Gunslinger";
+	case JOB_NINJA: return "Ninja";
+	case JOB_XMAS: return "Christmas";
+	case JOB_NOVICE_HIGH: return "Novice High";
+	case JOB_SWORDMAN_HIGH: return "Swordsman High";
+	case JOB_MAGE_HIGH: return "Mage High";
+	case JOB_ARCHER_HIGH: return "Archer High";
+	case JOB_ACOLYTE_HIGH: return "Acolyte High";
+	case JOB_MERCHANT_HIGH: return "Merchant High";
+	case JOB_THIEF_HIGH: return "Thief High";
+	case JOB_LORD_KNIGHT: return "Lord Knight";
+	case JOB_HIGH_PRIEST: return "High Priest";
+	case JOB_HIGH_WIZARD: return "High Wizard";
+	case JOB_WHITESMITH: return "Whitesmith";
+	case JOB_SNIPER: return "Sniper";
+	case JOB_ASSASSIN_CROSS: return "Assassin Cross";
+	case JOB_LORD_KNIGHT2: return "Peko Knight";
+	case JOB_PALADIN: return "Paladin";
+	case JOB_CHAMPION: return "Champion";
+	case JOB_PROFESSOR: return "Professor";
+	case JOB_STALKER: return "Stalker";
+	case JOB_CREATOR: return "Creator";
+	case JOB_CLOWN: return "Clown";
+	case JOB_GYPSY: return "Gypsy";
+	case JOB_PALADIN2: return "Peko Paladin";
+	case JOB_BABY: return "Baby Novice";
+	case JOB_BABY_SWORDMAN: return "Baby Swordsman";
+	case JOB_BABY_MAGE: return "Baby Mage";
+	case JOB_BABY_ARCHER: return "Baby Archer";
+	case JOB_BABY_ACOLYTE: return "Baby Acolyte";
+	case JOB_BABY_MERCHANT: return "Baby Merchant";
+	case JOB_BABY_THIEF: return "Baby Thief";
+	case JOB_BABY_KNIGHT: return "Baby Knight";
+	case JOB_BABY_PRIEST: return "Baby Priest";
+	case JOB_BABY_WIZARD: return "Baby Wizard";
+	case JOB_BABY_BLACKSMITH: return "Baby Blacksmith";
+	case JOB_BABY_HUNTER: return "Baby Hunter";
+	case JOB_BABY_ASSASSIN: return "Baby Assassin";
+	case JOB_BABY_KNIGHT2: return "Baby Peco Knight";
+	case JOB_BABY_CRUSADER: return "Baby Crusader";
+	case JOB_BABY_MONK: return "Baby Monk";
+	case JOB_BABY_SAGE: return "Baby Sage";
+	case JOB_BABY_ROGUE: return "Baby Rogue";
+	case JOB_BABY_ALCHEMIST: return "Baby Alchemist";
+	case JOB_BABY_BARD: return "Baby Bard";
+	case JOB_BABY_DANCER: return "Baby Dancer";
+	case JOB_BABY_CRUSADER2: return "Baby Peco Crusader";
+	case JOB_SUPER_BABY: return "Super Baby";
+	case JOB_TAEKWON: return "Taekwon";
+	case JOB_STAR_GLADIATOR: return "Star Gladiator";
+	case JOB_STAR_GLADIATOR2: return "Flying Star Gladiator";
+	case JOB_SOUL_LINKER: return "Soul Linker";
 	}
 	return "Unknown Job";
 }
@@ -1958,16 +1965,16 @@ int parse_tologin(int fd) {
 					if (char_dat[i].status.account_id == acc) {
 						int jobclass = char_dat[i].status.class_;
 						char_dat[i].status.sex = sex;
-						if (jobclass == 19 || jobclass == 20 ||
-						    jobclass == 4020 || jobclass == 4021 ||
-						    jobclass == 4042 || jobclass == 4043) {
+						if (jobclass == JOB_BARD || jobclass == JOB_DANCER ||
+						    jobclass == JOB_CLOWN || jobclass == JOB_GYPSY ||
+						    jobclass == JOB_BABY_BARD || jobclass == JOB_BABY_DANCER) {
 							// job modification
-							if (jobclass == 19 || jobclass == 20) {
-								char_dat[i].status.class_ = (sex) ? 19 : 20;
-							} else if (jobclass == 4020 || jobclass == 4021) {
-								char_dat[i].status.class_ = (sex) ? 4020 : 4021;
-							} else if (jobclass == 4042 || jobclass == 4043) {
-								char_dat[i].status.class_ = (sex) ? 4042 : 4043;
+							if (jobclass == JOB_BARD || jobclass == JOB_DANCER) {
+								char_dat[i].status.class_ = (sex) ? JOB_BARD : JOB_DANCER;
+							} else if (jobclass == JOB_CLOWN || jobclass == JOB_GYPSY) {
+								char_dat[i].status.class_ = (sex) ? JOB_CLOWN : JOB_GYPSY;
+							} else if (jobclass == JOB_BABY_BARD || jobclass == JOB_BABY_DANCER) {
+								char_dat[i].status.class_ = (sex) ? JOB_BABY_BARD : JOB_BABY_DANCER;
 							}
 							// remove specifical skills of classes 19, 4020 and 4042
 							for(j = 315; j <= 322; j++) {
@@ -2368,6 +2375,75 @@ int char_account_reg_reply(int fd,int account_id,int char_id) {
 	return 0;
 }
 
+void char_read_fame_list()
+{
+	int i, j, k;
+	struct fame_list fame_item;
+	CREATE_BUFFER(id, int, char_num);
+
+	for(i = 0; i < char_num; i++) {
+		id[i] = i;
+		for(j = 0; j < i; j++) {
+			if (char_dat[i].status.fame > char_dat[id[j]].status.fame) {
+				for(k = i; k > j; k--)
+					id[k] = id[k-1];
+				id[j] = i; // id[i]
+				break;
+			}
+		}
+	}
+
+	// Empty ranking lists
+	memset(smith_fame_list, 0, sizeof(smith_fame_list));
+	memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
+	memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+	// Build Blacksmith ranking list
+	for (i = 0, j = 0; i < char_num && j < fame_list_size_smith; i++) {
+		if (char_dat[id[i]].status.fame && (
+			char_dat[id[i]].status.class_ == JOB_BLACKSMITH ||
+			char_dat[id[i]].status.class_ == JOB_WHITESMITH ||
+			char_dat[id[i]].status.class_ == JOB_BABY_BLACKSMITH))
+		{
+			fame_item.id = char_dat[id[i]].status.char_id;
+			fame_item.fame = char_dat[id[i]].status.fame;
+			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+
+			memcpy(&smith_fame_list[j],&fame_item,sizeof(struct fame_list));
+			j++;
+		}
+	}
+	// Build Alchemist ranking list
+	for (i = 0, j = 0; i < char_num && j < fame_list_size_chemist; i++) {
+		if (char_dat[id[i]].status.fame && (
+			char_dat[id[i]].status.class_ == JOB_ALCHEMIST ||
+			char_dat[id[i]].status.class_ == JOB_CREATOR ||
+			char_dat[id[i]].status.class_ == JOB_BABY_ALCHEMIST))
+		{
+			fame_item.id = char_dat[id[i]].status.char_id;
+			fame_item.fame = char_dat[id[i]].status.fame;
+			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+
+			memcpy(&chemist_fame_list[j],&fame_item,sizeof(struct fame_list));
+
+			j++;
+		}
+	}
+	// Build Taekwon ranking list
+	for (i = 0, j = 0; i < char_num && j < fame_list_size_taekwon; i++) {
+		if (char_dat[id[i]].status.fame &&
+			char_dat[id[i]].status.class_ == JOB_TAEKWON)
+		{
+			fame_item.id = char_dat[id[i]].status.char_id;
+			fame_item.fame = char_dat[id[i]].status.fame;
+			strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
+
+			memcpy(&taekwon_fame_list[j],&fame_item,sizeof(struct fame_list));
+
+			j++;
+		}
+	}
+	DELETE_BUFFER(id);
+}
 // Send map-servers the fame ranking lists
 int char_send_fame_list(int fd) {
 	int i, len = 8;
@@ -2396,8 +2472,10 @@ int char_send_fame_list(int fd) {
 	// add total packet length
 	WBUFW(buf, 2) = len;
 
-	// send to all map-servers
-	mapif_sendall(buf, len);
+	if(fd!=-1)
+		mapif_send(fd, buf, len);
+	else
+		mapif_sendall(buf, len);
 
 	return 0;
 }
@@ -2489,6 +2567,7 @@ int parse_frommap(int fd) {
 			memcpy(WFIFOP(fd,3), wisp_server_name, NAME_LENGTH); // name for wisp to player
 			WFIFOSET(fd,3+NAME_LENGTH);
 			//WFIFOSET(fd,27);
+			char_send_fame_list(fd); //Send fame list.
 			{
 				unsigned char buf[16384];
 				int x;
@@ -2908,7 +2987,7 @@ int parse_frommap(int fd) {
 					strncpy(list[i].name, char_dat[j].status.name, NAME_LENGTH);
 				else //Not found??
 					strncpy(list[i].name, "Unknown", NAME_LENGTH);
-				char_send_fame_list(fd);
+				char_send_fame_list(-1);
 			}
 			break;
 
@@ -2947,78 +3026,10 @@ int parse_frommap(int fd) {
 		case 0x2b1a:
 			if (RFIFOREST(fd) < 2)
 				return 0;
-		{
-			int i, j, k;
-			struct fame_list fame_item;
-			CREATE_BUFFER(id, int, char_num);
-
-			for(i = 0; i < char_num; i++) {
-				id[i] = i;
-				for(j = 0; j < i; j++) {
-					if (char_dat[i].status.fame > char_dat[id[j]].status.fame) {
-						for(k = i; k > j; k--)
-							id[k] = id[k-1];
-						id[j] = i; // id[i]
-						break;
-					}
-				}
-			}
-
-			// Empty ranking lists
-			memset(smith_fame_list, 0, sizeof(smith_fame_list));
-			memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
-			memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
-			// Build Blacksmith ranking list
-			for (i = 0, j = 0; i < char_num && j < fame_list_size_smith; i++) {
-				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 10 ||
-					char_dat[id[i]].status.class_ == 4011 ||
-					char_dat[id[i]].status.class_ == 4033))
-				{
-					fame_item.id = char_dat[id[i]].status.char_id;
-					fame_item.fame = char_dat[id[i]].status.fame;
-					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-
-					smith_fame_list[j] = fame_item;
-
-					j++;
-				}
-			}
-			// Build Alchemist ranking list
-			for (i = 0, j = 0; i < char_num && j < fame_list_size_chemist; i++) {
-				if (char_dat[id[i]].status.fame && (char_dat[id[i]].status.class_ == 18 ||
-					char_dat[id[i]].status.class_ == 4019 ||
-					char_dat[id[i]].status.class_ == 4041))
-				{
-					fame_item.id = char_dat[id[i]].status.char_id;
-					fame_item.fame = char_dat[id[i]].status.fame;
-					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-
-					chemist_fame_list[j] = fame_item;
-
-					j++;
-				}
-			}
-			// Build Taekwon ranking list
-			for (i = 0, j = 0; i < char_num && j < fame_list_size_taekwon; i++) {
-				if (char_dat[id[i]].status.fame && char_dat[id[i]].status.class_ == 4046)
-				{
-					fame_item.id = char_dat[id[i]].status.char_id;
-					fame_item.fame = char_dat[id[i]].status.fame;
-					strncpy(fame_item.name, char_dat[id[i]].status.name, NAME_LENGTH);
-
-					taekwon_fame_list[j] = fame_item;
-
-					j++;
-				}
-			}
-
-			DELETE_BUFFER(id);
-
-			char_send_fame_list(fd);
-
+			char_read_fame_list();
+			char_send_fame_list(-1);
 			RFIFOSKIP(fd,2);
 			break;
-		}
 
 		//Request to save status change data. [Skotlex]
 		case 0x2b1c:
@@ -4236,6 +4247,8 @@ int do_init(int argc, char **argv) {
 	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600*1000); //Sync online accounts every hour
 	add_timer_interval(gettick() + autosave_interval, mmo_char_sync_timer, 0, 0, autosave_interval);
 
+	char_read_fame_list(); //Read fame lists.
+	
 	if(console) {
 	    set_defaultconsoleparse(parse_console);
 	   	start_console();

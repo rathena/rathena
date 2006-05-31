@@ -1963,16 +1963,16 @@ int parse_tologin(int fd) {
 						skill_point = atoi(sql_row[2]);
 						guild_id = atoi(sql_row[3]);
 						class_ = jobclass;
-						if (jobclass == 19 || jobclass == 20 ||
-						    jobclass == 4020 || jobclass == 4021 ||
-						    jobclass == 4042 || jobclass == 4043) {
+						if (jobclass == JOB_BARD || jobclass == JOB_DANCER ||
+						    jobclass == JOB_CLOWN || jobclass == JOB_GYPSY ||
+						    jobclass == JOB_BABY_BARD || jobclass == JOB_BABY_DANCER) {
 							// job modification
-							if (jobclass == 19 || jobclass == 20) {
-								class_ = (sex) ? 19 : 20;
-							} else if (jobclass == 4020 || jobclass == 4021) {
-								class_ = (sex) ? 4020 : 4021;
-							} else if (jobclass == 4042 || jobclass == 4043) {
-								class_ = (sex) ? 4042 : 4043;
+							if (jobclass == JOB_BARD || jobclass == JOB_DANCER) {
+								class_ = (sex) ? JOB_BARD : JOB_DANCER;
+							} else if (jobclass == JOB_CLOWN || jobclass == JOB_GYPSY) {
+								class_ = (sex) ? JOB_CLOWN : JOB_GYPSY;
+							} else if (jobclass == JOB_BABY_BARD || jobclass == JOB_BABY_DANCER) {
+								class_ = (sex) ? JOB_BABY_BARD : JOB_BABY_DANCER;
 							}
 							// remove specifical skills of classes 19,20 4020,4021 and 4042,4043
 							sprintf(tmp_sql, "SELECT `lv` FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'",skill_db, char_id);
@@ -2207,6 +2207,79 @@ int save_accreg2(unsigned char* buf, int len) {
 	return 0;
 }
 
+void char_read_fame_list()
+{
+	int i;
+	struct fame_list fame_item;
+
+	// Empty ranking lists
+	memset(smith_fame_list, 0, sizeof(smith_fame_list));
+	memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
+	memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+	// Build Blacksmith ranking list
+	sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", char_db, JOB_BLACKSMITH, JOB_WHITESMITH, JOB_BABY_BLACKSMITH, fame_list_size_smith);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sql_res = mysql_store_result(&mysql_handle);
+	if (sql_res) {
+		i = 0;
+		while((sql_row = mysql_fetch_row(sql_res))) {
+			fame_item.id = atoi(sql_row[0]);
+			fame_item.fame = atoi(sql_row[1]);
+			strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
+			memcpy(&smith_fame_list[i], &fame_item, sizeof(struct fame_list));
+
+			if (++i == fame_list_size_smith)
+				break;
+		}
+		mysql_free_result(sql_res);
+	}
+	// Build Alchemist ranking list
+	sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, fame_list_size_chemist);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sql_res = mysql_store_result(&mysql_handle);
+	if (sql_res) {
+		i = 0;
+		while((sql_row = mysql_fetch_row(sql_res))) {
+			fame_item.id = atoi(sql_row[0]);
+			fame_item.fame = atoi(sql_row[1]);
+			strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
+
+			memcpy(&chemist_fame_list[i], fame_item, sizeof(fame_list));
+
+			if (++i == fame_list_size_chemist)
+				break;
+		}
+		mysql_free_result(sql_res);
+	}
+	// Build Taekwon ranking list
+	sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", char_db, JOB_TAEKWON, fame_list_size_taekwon);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sql_res = mysql_store_result(&mysql_handle);
+	if (sql_res) {
+		i = 0;
+		while((sql_row = mysql_fetch_row(sql_res))) {
+			fame_item.id = atoi(sql_row[0]);
+			fame_item.fame = atoi(sql_row[1]);
+			strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
+
+			memcpy(&taekwon_fame_list[i], fame_item, sizeof(fame_list));
+			
+			if (++i == fame_list_size_taekwon)
+				break;
+		}
+		mysql_free_result(sql_res);
+	}
+}
+
 // Send map-servers the fame ranking lists
 int char_send_fame_list(int fd) {
 	int i, len = 8;
@@ -2235,9 +2308,10 @@ int char_send_fame_list(int fd) {
 	// add total packet length
 	WBUFW(buf, 2) = len;
 
-	// send to all map-servers
-	mapif_sendall(buf, len);
-
+	if (fd != -1)
+		mapif_send(fd, buf, len);
+	else
+		mapif_sendall(buf, len);
 	return 0;
 }
 
@@ -2336,6 +2410,7 @@ int parse_frommap(int fd) {
 			WFIFOB(fd,2) = 0;
 			memcpy(WFIFOP(fd,3), wisp_server_name, NAME_LENGTH); // name for wisp to player
 			WFIFOSET(fd,3+NAME_LENGTH);
+			char_send_fame_list(fd); //Send fame list.
 			//WFIFOSET(fd,27);
 			{
 				unsigned char buf[16384];
@@ -2805,7 +2880,7 @@ int parse_frommap(int fd) {
 					strncpy(list[i].name, char_dat[j].name, NAME_LENGTH);
 				else //Not found??
 					strncpy(list[i].name, "Unknown", NAME_LENGTH);
-				char_send_fame_list(fd);
+				char_send_fame_list(-1);
 			}
 
 			break;
@@ -2856,83 +2931,10 @@ int parse_frommap(int fd) {
 		case 0x2b1a:
 			if (RFIFOREST(fd) < 2)
 				return 0;
-		{
-			int i;
-			struct fame_list fame_item;
-
-			// Empty ranking lists
-			memset(smith_fame_list, 0, sizeof(smith_fame_list));
-			memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
-			memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
-			// Build Blacksmith ranking list
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='10' OR `class`='4011' OR `class`='4033') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_smith);
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-			if (sql_res) {
-				i = 0;
-				while((sql_row = mysql_fetch_row(sql_res))) {
-					fame_item.id = atoi(sql_row[0]);
-					fame_item.fame = atoi(sql_row[1]);
-					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
-
-					smith_fame_list[i] = fame_item;
-
-					if (++i == fame_list_size_smith)
-						break;
-				}
-   			mysql_free_result(sql_res);
-			}
-			// Build Alchemist ranking list
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='18' OR `class`='4019' OR `class`='4041') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_chemist);
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-			if (sql_res) {
-				i = 0;
-				while((sql_row = mysql_fetch_row(sql_res))) {
-					fame_item.id = atoi(sql_row[0]);
-					fame_item.fame = atoi(sql_row[1]);
-					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
-
-					chemist_fame_list[i] = fame_item;
-
-					if (++i == fame_list_size_chemist)
-						break;
-				}
-   			mysql_free_result(sql_res);
-			}
-			// Build Taekwon ranking list
-			sprintf(tmp_sql, "SELECT `char_id`,`fame`, `name` FROM `%s` WHERE `fame`>0 AND (`class`='4048') ORDER BY `fame` DESC LIMIT 0,%d", char_db, fame_list_size_taekwon);
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-			sql_res = mysql_store_result(&mysql_handle);
-			if (sql_res) {
-				i = 0;
-				while((sql_row = mysql_fetch_row(sql_res))) {
-					fame_item.id = atoi(sql_row[0]);
-					fame_item.fame = atoi(sql_row[1]);
-					strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
-
-					taekwon_fame_list[i] = fame_item;
-
-					if (++i == fame_list_size_taekwon)
-						break;
-				}
-   			mysql_free_result(sql_res);
-			}
-
-			char_send_fame_list(fd);
-
+			char_read_fame_list();
+			char_send_fame_list(-1);
 			RFIFOSKIP(fd,2);
 			break;
-		}
 
 		//Request saving sc_data of a player. [Skotlex]
 		case 0x2b1c:
@@ -4301,7 +4303,9 @@ int do_init(int argc, char **argv){
 	// send USER COUNT PING to login server.
 	add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
 	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour.
-	
+
+	char_read_fame_list(); //Read fame lists.
+
 	if(char_gm_read)
 		read_gm_account();
 
