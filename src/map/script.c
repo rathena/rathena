@@ -11467,14 +11467,17 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 		st->state  = RUN;
 		st->script = rootscript;
 	
-		if (sd && sd->stack) {	// if there's a sd and a stack - back it up and restore it if possible.
-			bck_script      = sd->npc_script;
-			bck_scriptroot  = sd->npc_scriptroot;
-			bck_scriptstate = sd->npc_scriptstate;
-			bck_stack = sd->stack;
-			sd->stack = NULL;
-			bck_npcid = sd->npc_id;
-			sd->npc_id = st->oid;
+		if (sd){
+			if(sd->stack) {
+				// if there's a sd and a stack - back it up and restore it if possible.
+				bck_script      = sd->npc_script;
+				bck_scriptroot  = sd->npc_scriptroot;
+				bck_scriptstate = sd->npc_scriptstate;
+				bck_stack = sd->stack;
+				sd->stack = NULL;
+				bck_npcid = sd->npc_id;
+			}
+			sd->npc_id = oid;
 		}
 	}
 	st->pos = pos;
