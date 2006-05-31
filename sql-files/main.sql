@@ -407,7 +407,7 @@ CREATE TABLE `sc_data` (
 DROP TABLE IF EXISTS `loginlog`;
 CREATE TABLE `loginlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `ip` char(15) NOT NULL default '',
+  `ip` int(10) unsigned NOT NULL default '0',
   `user` varchar(32) NOT NULL default '',
   `rcode` tinyint(4) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',

@@ -383,6 +383,10 @@
 				RelativePath="..\src\map\vending.c"
 				>
 			</File>
+			<File
+				RelativePath="..\src\map\mercenary.c"
+			>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
