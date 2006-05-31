@@ -715,7 +715,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	nullpo_retr(1, sd);
 	pd = sd->pd;
-	nullpo_retr(1, pd);
+	if (!pd)  return 1;	
 	
 	nameid = sd->status.inventory[index].nameid;
 	
