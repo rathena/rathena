@@ -2207,7 +2207,7 @@ int save_accreg2(unsigned char* buf, int len) {
 	return 0;
 }
 
-void char_read_fame_list()
+void char_read_fame_list(void)
 {
 	int i;
 	struct fame_list fame_item;
@@ -2250,7 +2250,7 @@ void char_read_fame_list()
 			fame_item.fame = atoi(sql_row[1]);
 			strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
 
-			memcpy(&chemist_fame_list[i], fame_item, sizeof(fame_list));
+			memcpy(&chemist_fame_list[i], &fame_item, sizeof(struct fame_list));
 
 			if (++i == fame_list_size_chemist)
 				break;
@@ -2271,7 +2271,7 @@ void char_read_fame_list()
 			fame_item.fame = atoi(sql_row[1]);
 			strncpy(fame_item.name, sql_row[2], NAME_LENGTH);
 
-			memcpy(&taekwon_fame_list[i], fame_item, sizeof(fame_list));
+			memcpy(&taekwon_fame_list[i], &fame_item, sizeof(struct fame_list));
 			
 			if (++i == fame_list_size_taekwon)
 				break;
