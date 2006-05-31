@@ -9263,8 +9263,10 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 			if(sd->inventory_data[index]->type == 10)
 				RFIFOW(fd,4)=0x8000;	// –î‚ğ–³—‚â‚è‘•”õ‚Å‚«‚é‚æ‚¤‚Éi||G
 			pc_equipitem(sd,index,RFIFOW(fd,4));
-		} else
-			pet_equipitem(sd,index);
+		} else{
+			if(sd->pd)
+				pet_equipitem(sd,index);
+		}
 	}
 }
 
