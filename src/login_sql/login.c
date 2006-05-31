@@ -53,6 +53,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/version.h"
+#include "../common/cbasetypes.h"
 #include "login.h"
 
 #ifdef PASSWORDENC
