@@ -27,6 +27,8 @@
 
 =========================
 05/31
+	* Gave Rafflesia Can_Move and Aggressive mode [Playtester]
+	- who removed it?
 	* Fixed Arrow Crafting, now using the official X.2 values [Playtester]
 	* Updated item_db according to info provided by Haplo [Playtester]
 	* Changed the range of Rotar Zairo to 7, as it should be. [MasterOfMuppets]

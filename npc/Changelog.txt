@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 05/31
+	* Now only one Chung E spawns in Louyang [Playtester]
 	* Added Rachel and Ice Dungeon warps [Playtester]
 	* Now re-using one variable MISC_QUEST for such quests: [Lupus]
 	  Morgenstein, Nifl Witch, Edgar's Offer, Prontera Culvert,
