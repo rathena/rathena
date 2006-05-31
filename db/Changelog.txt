@@ -26,6 +26,8 @@
 	-----
 
 =========================
+05/31
+	* Changed the range of Rotar Zairo to 7, as it should be. [MasterOfMuppets]
 05/30
 	* Fixed the mode of Monemus to prevent it from getting knocked back. [MasterOfMuppets]
 	* Updated the modes of Gremlin and Beholder according to iRO [MasterOfMuppets]
