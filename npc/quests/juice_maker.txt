@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
 //= 
 //===== Additional Comments: =================================
-//= Fully working
+//= Condition if done: (MISC_QUEST & 1)
+//= 
 //= 1.1 fixed input number check [Lupus]
 //= 1.2 fixed misplaced Grape<->Carrot juices [Lupus]
 //= 1.3 added a loopless menu 'as many as possible' [Lupus]
@@ -17,15 +18,17 @@
 //= subfunc.  Changed fruit amount needed to 1.[kobra_k88]
 //= Fixed exploits [Lupus]
 //= 1.6 fixed typo (where did @ipnut came from?) [Lance]
-//= 1.7 got rid of 2 vars: 'MEAT',"MARIANNE" [Lupus]
+//= 1.8 got rid of vars: 'MEAT',"MARIANNE","MORRISON"
+//= 	From now, all common quests start using bits of the
+//=	same variable MISC_QUEST [Lupus]
 //============================================================
 
 
 // Morrison ------------------------------------------------
 prt_in.gat,47,173,2	script	Morrison	97,{
 	mes "[Little Morrison]";
-	if(MORRISON > 10) goto L_GoAway;
-	if(MORRISON == 10) goto L_Candy;
+	if(MISC_QUEST&1 || @MORRISON > 10) goto L_GoAway;
+	if(@MORRISON == 10) goto L_Candy;
 
 	mes "Wahhhhh!!! Wahh... NO more! NO more!";
 	mes "I won't... eat anymore stupid ^0000ffFruit^000000 things!!";
@@ -66,7 +69,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 		sM_Give:
 			if(countitem(517) == 0) goto L_GoAway; //Meat
 			delitem 517,1;	//Meat
-			set MORRISON,MORRISON+1;
+			set @MORRISON,@MORRISON+1;
 			mes "[Little Morrison]";
 			mes "Whoah~!!! It's real Meat, Meat!";
 			mes "Mmmm! It makes my mouth water.";
@@ -75,7 +78,7 @@ prt_in.gat,47,173,2	script	Morrison	97,{
 			close;
 
 		sM_Ignore:
-			set MORRISON,11;
+			set @MORRISON,11;
 			mes "[Little Morrison]";
 			mes "Boo...";
 			mes "Boo... Fine... Alright, Alright~!!! Selfish meanie!";
@@ -103,7 +106,7 @@ L_Candy:
 	next;
 	getitem 529,3;
 	getitem 530,1;
-	set MORRISON,0;
+	set @MORRISON,0;
 	mes "[Little Morrison]";
 	mes "It is from my secret stash of Candy that I hide from my Mom.  Since";
 	mes "you gave me some Meat, I will give you some candy." ;
@@ -114,8 +117,8 @@ L_Candy:
 // Housewife Marianne ---------------------------------------------------
 prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 	mes "[Housewife Marianne]";
-	if(MORRISON > 10) goto L_Juice;
-	if(MORRISON) goto L_GaveMeat;
+	if(MISC_QUEST&1 || @MORRISON > 10) goto L_Juice;
+	if(@MORRISON) goto L_GaveMeat;
 
 	mes "Morrison!! Please eat some fruit will ya? Fruit~!";
 	mes "*Sob*~!! Like father like son...";
@@ -146,7 +149,7 @@ prt_in.gat,49,172,2	script	Housewife Marianne	53,{
 		close;
 	
 L_GaveMeat:
-	set MORRISON,0;
+	set @MORRISON,0;
 	mes "Oh MY GOD!!... Oh lord...";
 	emotion e_omg;
 	next;
@@ -159,7 +162,6 @@ L_GaveMeat:
 	close;
 
 L_Juice:
-	set MORRISON,20;
 	mes "Thank you for not giving my son any meat.  I'm trying to feed him";
 	mes "^0000ffFruits^000000 and vegetables, but this child doesn't want to eat";
 	mes "anything except Meat...";
@@ -177,15 +179,15 @@ L_Juice:
 	mes "[Housewife Marianne]";
 	mes "... Was is it...^ff0000Payon^000000...or ^ff0000Morroc^000000...?";
 	emotion e_hmm;
-	next;
+	set @MORRISON,0;
+	set MISC_QUEST,MISC_QUEST | 1;
 	close;
-
 }
 
 // Juicer Marx Hansen ---------------------------------------------------------
 payon_in03.gat,188,146,5	script	Juicer Marx Hansen	86,{
 	mes "[Juicer Marx Hansen]";
-	if(MORRISON == 20) goto L_Juice;
+	if(MISC_QUEST&1) goto L_Juice;
 	mes "Welcome to my shop. What brings you here?";
 	next;
 	menu "Conversation",-,"I am just looking around",M_End;

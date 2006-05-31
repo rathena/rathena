@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.7
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5 Added this NPC to more places [Lupus]
 //= 1.6 Rewrote a lot. Changed the sprite, some locations. [Poki#3]
 //= TODO Add an option for selecting the level of the dungeon. [Poki#3]
+//= 1.7 Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
 //============================================================
 //============================================================
 //= To allow selecting the Level of the Dungeon you want to
@@ -28,6 +29,9 @@
 
 -	script	Warp Agent::warpra	859,{
 //	set @lvlselect,0;
+
+	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
+
 	mes "[Warp Agent]";
 	mes "Hello,";
 	mes "I can teleport you to any Town or Dungeon!";

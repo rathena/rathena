@@ -4,7 +4,7 @@
 //= Fyrien, Dizzy, PKGINGO
 //= Official NPCs translated and re-edited by Celest
 //===== Current Version: ===================================== 
-//= 1.08
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.07 Fixed typos [Nexon]
 //= 1.08 Commented "Traveler" out as it is not official & we have correct Bungee quest in. 
 //=     Also removed TODO, as they are already done. [Vicious_Pucca]
+//= 1.1 Replaced nif_q_done with MISC_QUEST & 32. nif_t -> @nif_t [Lupus]
 //============================================================ 
 
 //prontera.gat,164,161,4	script	Traveler::NifTrav	68,{
@@ -247,7 +248,7 @@ L_book2:
 	close;
 
 L_book3:
-	set nif_t,0;
+	set @nif_t,0;
 	set @nif_random1,rand(1,10);
 	mes "[Aesop Bruce]";
 	mes "Ahahaha.... I see you are brave!!";
@@ -260,7 +261,7 @@ L_MENU1:
 	goto L_MENU2;
 
 	L_MENU1_2:
-	set nif_t,nif_t + 10;
+	set @nif_t,@nif_t + 10;
 	goto L_MENU2;
 
 	L_MENU1_3: 
@@ -276,7 +277,7 @@ L_MENU2:
 	goto L_MENU3;
 
 	L_MENU2_3:
-	set nif_t,nif_t + 10;
+	set @nif_t,@nif_t + 10;
 	goto L_MENU3;
 
 L_MENU3:
@@ -292,12 +293,12 @@ L_MENU3:
 	goto L_score;
 
 	L_MENU3_4:
-	set nif_t,nif_t + 10;
+	set @nif_t,@nif_t + 10;
 	goto L_score;
 
 
 L_score:
-	if (nif_t == 30) goto L_sucess1;
+	if (@nif_t == 30) goto L_sucess1;
 	mes "[Aesop Bruce]";
 	mes "Hahahaha!! Your prayers were wrong!!";
 	mes "Time to face deathohohohoho,";
@@ -341,7 +342,7 @@ niflheim.gat,224,243,3	script	Alager	795,{
 	mes "I'm going to eat you...";
 	next;
 	mes "-Chomp bite slurp-";
-	if (nif_quest1 == 1 || nif_q_done == 1) goto L_end;
+	if (nif_quest1 == 1 || (MISC_QUEST & 32)) goto L_end;
 	percentheal -60,0;
 	next;
 	mes "[Alager]";
@@ -375,7 +376,7 @@ nif_in.gat,105,81,3	script	Grey	794,{
 	mes "^FF0000The beautiful melody surrounding thy soul,^000000";
 	mes "^FF0000Is the key from Lord Death's wrath.^000000";
 	next;
-	if (nif_quest2 == 1 || nif_q_done == 1) goto L_end;
+	if (nif_quest2 == 1 || (MISC_QUEST & 32)) goto L_end;
 	set @nif_random,rand(1,4);
 	mes "[Grey]";
 	mes "Heh, let me give you a little exam!";
@@ -441,7 +442,7 @@ nif_in.gat,31,20,3	script	Kurtz	794,{
 	mes "Business nowadays is really bad...";
 	mes "Back when I used to be alive,";
 	mes "my business was this bad too~!";
-	if (nif_quest3 == 1 || nif_q_done == 1) close;
+	if (nif_quest3 == 1 || (MISC_QUEST & 32)) close;
 	next;
 	mes "[Kurtz]";
 	mes "Hey! You there! Dump this for me";
@@ -456,8 +457,7 @@ nif_in.gat,31,20,3	script	Kurtz	794,{
 }
 
 niflheim.gat,169,71,5	script	#1	111,2,2{
-	if (nif_q_done == 1) end;
-	if (nif_quest4 == 1) end;
+	if (MISC_QUEST & 32 || nif_quest4 == 1) end;
 
 	mes "- In the nearby tombs -";
 	mes "- you see something -";
@@ -474,7 +474,7 @@ L_end:
 }
 
 niflheim.gat,208,103,5	script	#2	111,2,2{
-	if (nif_q_done == 1) end;
+	if (MISC_QUEST & 32) end;
 	if (nif_quest5 == 1) goto L_key2;
 	if (nif_quest5 >= 2) end;
 
@@ -505,14 +505,14 @@ L_end:
 
 nif_in.gat,115,181,5	script	#4	111,3,3{
 	mes "- You see a huge old piano -";
-	if (nif_q_done==0) mes "- with a few keys missing  -";
-	if (nif_q_done==1) mes "- with one key missing -";
-	if (nif_q_done==0 && countitem(7184) > 5) goto L_event;//Items: Piano Key,
+	if ((MISC_QUEST & 32)==0) mes "- with a few keys missing  -";
+	if (MISC_QUEST & 32) mes "- with one key missing -";
+	if ((MISC_QUEST & 32)==0 && countitem(7184) > 5) goto L_event;//Items: Piano Key,
 	close;
 
 L_event:
 	delitem 7184,6;//Items: Piano Key,
-	set nif_q_done, 1;
+	set MISC_QUEST,MISC_QUEST | 32;
 	//clear auxiliary vars now
 	set nif_quest1, 0;
 	set nif_quest2, 0;
@@ -530,7 +530,7 @@ L_event:
 }
 
 nif_in.gat,118,151,5	script	#5	111,3,3{
-	if (nif_q_done != 1) end;
+	if((MISC_QUEST & 32)==0) end;
 
 	mes "- The very moment the long shadow -";
 	mes "- of your body falls on the piano -";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= Moved here useful function 'getJobName'
 //= 1.7 Added "F_ItemName" function, added a great sample for "F_ItemName"
 //= 1.8 Added Job Vars clear for Extended classes: TK,SL,SG [Lupus]
+//= 1.9 Added "F_ClearGarbage" func that clears outdated, wasted variables [Lupus]
 //============================================================ 
 
 
@@ -57,6 +58,17 @@ function	script	F_ClearJobVar	{
 	set TAEK_Q,0;
 	set STGL_Q,0;
 	set SOUL_Q,0;
+}
+
+function	script	F_ClearGarbage	{
+	// Clear outdated global VARS
+	if(MARIANNE) {set MISC_QUEST,MISC_QUEST | 1;}
+	set MEAT,0; set MORRISON,0; set MARIANNE,0;
+	set BUNYBND,0; set TEMPESTRA,0; 
+	set sewer_prt,0; set iz_move_alberta,0;
+	if(nif_q_done) {set nif_q_done,0; set MISC_QUEST,MISC_QUEST | 64;}
+	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4;}
+	set MORGEN,0; set nif_t,0;
 	return;
 }
 

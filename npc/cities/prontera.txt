@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5a
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= Spellchecked [massdriller]
 //= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
 //= 1.5a Added a Jawaii related npc [MasterOfMuppets]
+//= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
 //============================================================
 
 
@@ -126,14 +127,8 @@ prontera.gat,102,287,5	script	Shuger	98,{
 // ------------------------------------------------------------------------------------------- Culvert -------------------------------------------------------------------------------\\
 // Culvert Guardian ----------------------------------------------------
 prt_fild05.gat,270,212,5	script	Culvert Guardian	105,{
-	if(sewer_prt == 1) goto L_WARP;
 	mes "[Culvert Guardian]";
-	mes "Sorry, but only volunteers for the Culvert Campaign can go inside.";
-	mes "Speak with the ^000077Recruiter^000000 about volunteering.  He's located in the ^ff0000Prontera Chivalry^000000.";
-	close;
-
-	L_WARP:
-		mes "[Culvert Guardian]";
+	if(MISC_QUEST & 8) {
 		mes "Here you are. The entrance of the Culvert. Are you sure you want to Go inside?";
 		next;
 		menu "Sure.",-,"Quit.",M_END;
@@ -141,12 +136,16 @@ prt_fild05.gat,270,212,5	script	Culvert Guardian	105,{
 			warp "prt_sewb1.gat",131,247;
 		M_END:
 			close;
+	}
+	mes "Sorry, but only volunteers for the Culvert Campaign can go inside.";
+	mes "Speak with the ^000077Recruiter^000000 about volunteering.  He's located in the ^ff0000Prontera Chivalry^000000.";
+	close;
 }
 
 // Recruiter -----------------------------------------------------------
 prt_in.gat,88,105,2	script	Recruiter	105,{
-	if(sewer_prt == 1) goto L_WARP;
 	mes "[Recruiter]";
+	if(MISC_QUEST & 8) goto L_WARP;
 	mes "Let me inform about the official Notice from the Capital Defence Headquarter of Rune-Midgard Kingdom";
 	next;
 	mes "[Recruiter]";
@@ -188,14 +187,13 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 		next;
 		mes "[Recruiter]";
 		mes "3 Red Potions, 1 Milk, and 1 Orange Potion for an emergency.";
-		set sewer_prt,1;
+		set MISC_QUEST,MISC_QUEST | 8;
 		getitem 501,3;
 		getitem 519,1;
 		getitem 502,1;
 		next;
-		
-	L_WARP:
 		mes "[Recruiter]";
+	L_WARP:
 		mes "Are you ready? I will warp you to the Culvert.";
 		next;
 		warp "prt_fild05.gat",274,208;

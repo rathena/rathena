@@ -31,6 +31,16 @@ Evera
 
 Date		Added
 ======
+05/31	* Now re-using one variable MISC_QUEST for such quests: [Lupus]
+	  Morgenstein, Nifl Witch, Edgar's Offer, Prontera Culvert,
+	  Juice Maker, Tempestra, 
+	- replaced BUNYBND with @BUNYBND
+	- added a special global function "F_ClearGarbage" function [Lupus]
+	  that converts old quest variables into MISC_QUEST bits;
+	  clears outdated, wasted variables. Temporary added its calls into Warpra & Kafra
+	IMPORTANT! Update all your quests and Global_Functions.txt
+		If you continue using not updated Quests scripts, it could cause
+		some exploits or the passed quests reset
 05/30
 	* Fixed Jawaii Classic Suite NPC warping directly ontop of a warp [Evera]
 	* Fixed the Umbala Skeleton Gate thanks to LightFighter and Naf- [Playtester]

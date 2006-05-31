@@ -1,10 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Alchemist Job Quest
 //===== By: ==================================================
-//= nestor_zulueta (Fusion)
-//= converted by Darkchild
+//= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -23,7 +22,7 @@
 //= to go. [Lupus]
 //= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
-//= 2.1 Got rid of 'al_morgen' var [Lupus]
+//= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
 //============================================================ 
 
 
@@ -775,7 +774,7 @@ L_Start:
 		mes "If you dont have business here just go away. Ok!!!";
 		close;
 L_Check:	
-	if(MORGEN != 3) goto L_NotRdy;
+	if((MISC_QUEST & 4)==0) goto L_NotRdy;
 	mes "Yes, cut the Tentacle..";
 	mes "and mix some Sticku Mucus,";
 	mes "Jellopy solution in the test tube Darn, where did the Medicine Bowl go...";
@@ -833,7 +832,6 @@ L_Result:
 	mes "Go out and to the room next to here.  ^5533FFNicholas^000000 probably has more to teach you than me.";
 	set ALCH_Q,5;
 	set ALCH_Q2,0;
-	set al_morgen, 0;
 	close;
 
 	L_Failed:

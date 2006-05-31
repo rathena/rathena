@@ -448,9 +448,10 @@ moc_fild16.gat,199,212,4	script	Hashisid	48,{
 
 moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	mes "[Assassin Guardian]";
-	if(BaseJob == Job_Assassin) mes "Welcome.";
-	if(BaseJob == Job_Assassin) close;
-
+	if(BaseJob == Job_Assassin) {
+		mes "Welcome.";
+		close;
+	}
 	set @temp, rand(1,4);
 	if(@temp == 1) mes "........";
 	if(@temp == 2) mes "Hmmm..........";

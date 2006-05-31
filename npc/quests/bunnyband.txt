@@ -3,22 +3,23 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= v1.3
+//= v1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
-//= v1.1 using duplicate command
+//= 1.1 using duplicate command
 //= 1.2 Fixed NPC location, removed NPC dupes [Lupus]
 //= 1.3 RE-Fixed exploit V_V, also cleared used VAR [Lupus]
+//= 1.4 replaced BUNYBND with @BUNYBND [Lupus]
 //============================================================ 
 
 
 // Alberta ------------------------------------------------------------------------------------------------------------------------------------------
 alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 	mes "[Kafra Corp. Rep.]";
-	if (BUNYBND) goto L_Check;
+	if (@BUNYBND) goto L_Check;
 	mes "^529DFFSpecial Event, ^FF0000Bunny Band ^529DFFQuest!!^000000";
 	next;
 	menu "Information",-, "Join",M_Join, "Cancel",M_End;
@@ -50,7 +51,7 @@ alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 
 		mes "[Kafra Corp. Rep.]";
 		mes "Thank you for participating in the event. Please come back when you have gathered all of the items.";
-		set BUNYBND, 1;
+		set @BUNYBND, 1;
 		close;
 
 	M_End:
@@ -70,7 +71,7 @@ alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 		mes "[Kafra Corp. Rep.]";
 		mes "Tah dah!!! Here is your ^FF0000Bunny Band^000000... Please take it!";
 		getitem 2214,1;
-		set BUNYBND,0;
+		set @BUNYBND,0;
 		next;
 		mes "[Kafra Corp. Rep.]";
 		mes "We appreciate your participation in this special event. Thank you and enjoy your Bunny Band!";

@@ -33,6 +33,7 @@
 //= 5.0 Fixed the close2;....close; end; lines. Who let them slip away? =/ [erKURITA]
 //=	  Also, the kafra upon warp was giving back the zeny. Removed. [erKURITA]
 //= 5.1 Optimized a little, added no tele/save arg's [Evera]
+//= 5.1a Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
 //============================================================ 
 
 
@@ -43,6 +44,9 @@
 //==========================================================================
 function	script	F_Kafra	{
 	set @kafPass, 0;
+
+	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
+
 	mes "[Kafra]";
 	switch(getarg(0)){
 		default:
