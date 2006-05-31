@@ -3112,7 +3112,6 @@ int parse_login(int fd) {
 				memcpy(account.passwd, RFIFOP(fd,30), NAME_LENGTH);
 				account.passwd[23] = '\0';
 				remove_control_chars((unsigned char *)account.passwd);
-				ShowInfo("Login packet %s and %s  with version %d\n", account.userid, account.passwd, account.version);
 			} else {
 				login_log("Request for connection (encryption mode) of %s (ip: %s)." RETCODE, account.userid, ip);
 				 // If remove control characters from received password encrypted by md5,

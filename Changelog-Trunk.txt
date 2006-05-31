@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/31
 	* [Fixed]:
+	  - Latest client support completed! [Lance]
+	* [Fixed]:
 	  - Missing #include for cbasetypes.h in login server SQL.
 	  - Logic errors in run_script [Lance]
 	* [Added]:
