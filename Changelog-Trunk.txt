@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/31
+	* [Improved]:
+	  - SQL upgrade file for the new loginlog. Thanks to ultramage. [Lance]
 	* [Fixed]:
 	  - nullpo in pet.c caused by equipping without checking if the pet is available.
 	    [Lance]
