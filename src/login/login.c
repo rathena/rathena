@@ -3045,6 +3045,7 @@ int parse_login(int fd) {
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];
 	long subnet_char_ip;
+	int packet_len;
 	
 	RFIFOHEAD(fd);
 
@@ -3082,16 +3083,31 @@ int parse_login(int fd) {
 			RFIFOSKIP(fd,18);
 			break;
 
-		case 0x64:		// Ask connection of a client
-		case 0x01dd:	// Ask connection of a client (encryption mode)
-			if ((int)RFIFOREST(fd) < ((RFIFOW(fd,0) == 0x64) ? 55 : 47))
-				return 0;
+		case 0x277: // New login packet
+		case 0x64:		// request client login
+		case 0x01dd:	// request client login with encrypt
+			packet_len = RFIFOREST(fd);
+
+			switch(RFIFOW(fd, 0)){
+				case 0x64:
+					if(packet_len < 55)
+						return 0;
+					break;
+				case 0x01dd:
+					if(packet_len < 47)
+						return 0;
+					break;
+				case 0x277:
+					if(packet_len < 84)
+						return 0;
+					break;
+			}
 			
 			account.version = RFIFOL(fd, 2);	//for exe version check [Sirius]
 			memcpy(account.userid,RFIFOP(fd,6),NAME_LENGTH);
 			account.userid[23] = '\0';
 			remove_control_chars((unsigned char *)account.userid);
-			if (RFIFOW(fd,0) == 0x64) {
+			if (RFIFOW(fd,0) != 0x01dd) {
 				login_log("Request for connection (non encryption mode) of %s (ip: %s)." RETCODE, account.userid, ip);
 				memcpy(account.passwd, RFIFOP(fd,30), NAME_LENGTH);
 				account.passwd[23] = '\0';
@@ -3200,7 +3216,7 @@ int parse_login(int fd) {
 				}
 				WFIFOSET(fd,23);
 			}
-			RFIFOSKIP(fd,(RFIFOW(fd,0) == 0x64) ? 55 : 47);
+			RFIFOSKIP(fd,packet_len);
 			break;
 
 		case 0x01db:	// Sending request of the coding key
