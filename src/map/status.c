@@ -1211,24 +1211,11 @@ int status_calc_pet(struct pet_data *pd, int first)
 				status->rhw.atk2 = battle_config.pet_max_atk2;
 
 			status->str = cap_value(status->str,1,battle_config.pet_max_stats);
-			if(status->str > battle_config.pet_max_stats)
-				status->str = battle_config.pet_max_stats;
-			else if (status->str < 1) status->str = 1;
-			if(status->agi > battle_config.pet_max_stats)
-				status->agi = battle_config.pet_max_stats;
-			else if (status->agi < 1) status->agi = 1;
-			if(status->vit > battle_config.pet_max_stats)
-				status->vit = battle_config.pet_max_stats;
-			else if (status->vit < 1) status->vit = 1;
-			if(status->int_ > battle_config.pet_max_stats)
-				status->int_ = battle_config.pet_max_stats;
-			else if (status->int_ < 1) status->int_ = 1;
-			if(status->dex > battle_config.pet_max_stats)
-				status->dex = battle_config.pet_max_stats;
-			else if (status->dex < 1) status->dex = 1;
-			if(status->luk > battle_config.pet_max_stats)
-				status->luk = battle_config.pet_max_stats;
-			else if (status->luk < 1) status->luk = 1;
+			status->agi = cap_value(status->agi,1,battle_config.pet_max_stats);
+			status->vit = cap_value(status->vit,1,battle_config.pet_max_stats);
+			status->int_= cap_value(status->int_,1,battle_config.pet_max_stats);
+			status->dex = cap_value(status->dex,1,battle_config.pet_max_stats);
+			status->luk = cap_value(status->luk,1,battle_config.pet_max_stats);
 
 			status->batk = status_base_atk(&pd->bl, &pd->status);
 			status_calc_misc(&pd->status, lv);
@@ -2511,18 +2498,12 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	}
 
 	if(flag&SCB_HIT) {
-		status->hit = status_get_lv(bl) + status->dex;
-		temp = b_status->dex - status->dex;
-		if (temp)
-			status->hit += temp;
+		status->hit = b_status->hit - b_status->dex + status->dex;
 		status->hit = status_calc_hit(bl, sc, status->hit);
 	}
 
 	if(flag&SCB_FLEE) {
-		status->flee = status_get_lv(bl) + status->agi;
-		temp = b_status->agi - status->agi;
-		if (temp)
-			status->flee += temp;
+		status->flee = b_status->flee - b_status->agi + status->agi;
 		status->flee = status_calc_flee(bl, sc, status->flee);
 	}
 

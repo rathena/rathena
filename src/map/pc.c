@@ -923,6 +923,8 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		flag=0;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
 			int j,f=1;
+			if(sd->status.skill[id].id)
+				continue; //Skill already known.
 			if(!battle_config.skillfree) {
 				for(j=0;j<5;j++) {
 					if( skill_tree[c][i].need[j].id &&
@@ -937,20 +939,18 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				else if (pc_checkskill(sd, NV_BASIC) < 9 && id != NV_BASIC && !(skill_get_inf2(id)&INF2_QUEST_SKILL))
 					f=0; // Do not unlock normal skills when Basic Skills is not maxed out (can happen because of skill reset)
 			}
-			if(sd->status.skill[id].id==0 ){
-				if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
-				{	//Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
-					if (sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1)
-					{	//Enable Spirit Skills. [Skotlex]
-						sd->status.skill[id].id=id;
-						sd->status.skill[id].lv=1;
-						sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
-						flag=1;
-					}
-				} else if (f){
+			if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
+			{	//Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
+				if (sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1)
+				{	//Enable Spirit Skills. [Skotlex]
 					sd->status.skill[id].id=id;
+					sd->status.skill[id].lv=1;
+					sd->status.skill[id].flag=1; //So it is not saved, and tagged as a "bonus" skill.
 					flag=1;
 				}
+			} else if (f){
+				sd->status.skill[id].id=id;
+				flag=1;
 			}
 		}
 	} while(flag);
@@ -969,6 +969,54 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	return 0;
+}
+
+//Checks if you can learn a new skill after having leveled up a skill.
+static void pc_check_skilltree(struct map_session_data *sd, int skill) {
+	int i,id=0,flag;
+	int c=0;
+
+	if(battle_config.skillfree)
+		return; //Function serves no purpose if this is set
+	
+	i = pc_calc_skilltree_normalize_job(sd);
+	c = pc_mapid2jobid(i, sd->status.sex);
+	if (c == -1) { //Unable to normalize job??
+		if (battle_config.error_log)
+			ShowError("pc_check_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
+		return;
+	}
+	
+	do {
+		flag=0;
+		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
+			int j,f=1;
+
+			if(sd->status.skill[id].id) //Already learned
+				continue;
+			
+			for(j=0;j<5;j++) {
+				if( skill_tree[c][i].need[j].id &&
+					pc_checkskill(sd,skill_tree[c][i].need[j].id) <
+					skill_tree[c][i].need[j].lv) {
+					f=0;
+					break;
+				}
+			}
+			if (!f)
+				continue;
+			if (sd->status.job_level < skill_tree[c][i].joblv)
+				continue;
+			else if (pc_checkskill(sd, NV_BASIC) < 9 && id != NV_BASIC && !(skill_get_inf2(id)&INF2_QUEST_SKILL))
+				continue; // Do not unlock normal skills when Basic Skills is not maxed out (can happen because of skill reset)
+			
+			if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
+				//Spirit skills cannot be learned
+				continue;
+			sd->status.skill[id].id=id;
+			flag=1;
+		}
+	} while(flag);
 }
 
 // Make sure all the skills are in the correct condition
@@ -4158,6 +4206,8 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 		sd->status.skill_point--;
 		if (!skill_get_inf(skill_num)) //Only recalculate for passive skills.
 			status_calc_pc(sd,0);
+		else
+			pc_check_skilltree(sd, skill_num);
 		clif_skillup(sd,skill_num);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
