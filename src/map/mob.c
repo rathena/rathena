@@ -893,6 +893,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		if(bl->m != md->bl.m || md->master_dist > 30)
 		{	// Since it is not in the same map (or is way to far), just warp it
 			unit_warp(&md->bl,bl->m,bl->x,bl->y,3);
+			md->master_dist = 0;
 			return 0;
 		}
 
@@ -903,11 +904,12 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		// Since the master was in near immediately before, teleport is carried out and it pursues.
 		if(old_dist<10 && md->master_dist>18){
 			unit_warp(&md->bl,-1,bl->x,bl->y,3);
+			md->master_dist = 0;
 			return 0;
 		}
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
-		if(md->master_dist<md->db->range3 &&
+		if(md->master_dist<AREA_SIZE &&
 			(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
 			unit_can_move(&md->bl))
 		{
