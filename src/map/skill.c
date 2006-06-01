@@ -988,7 +988,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if(sd) {
 			// Automatic trigger of Blitz Beat
 			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
-				rand()%1000 <= tstatus->luk*10/3+1 ) {
+				rand()%1000 <= sstatus->luk*10/3+1 ) {
 				int lv=(sd->status.job_level+9)/10;
 				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,0xf00000);
 			}
