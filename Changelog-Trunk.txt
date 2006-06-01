@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/01
+	* Fixed NPC_SELFDESTRUCTION not showing nor dealing damage. [Skotlex]
 	* NPC_TRANSFORMATION/NPC_METAMORPHOSIS will now preserve the original mob
 	  without removing it when the skill level is greater than one. [Skotlex]
 	* Added SC_DANCING declaration in the Status Change tables to signal it

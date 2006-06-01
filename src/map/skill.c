@@ -1942,7 +1942,7 @@ int skill_attack( int attack_type, struct block_list* src, struct block_list *ds
 	case NPC_SELFDESTRUCTION:
 		if(src->type==BL_PC)
 			dmg.blewcount = 10;
-		break;
+		dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
 	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
