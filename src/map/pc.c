@@ -5399,7 +5399,17 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
-	
+	if(type&OPTION_CART && !(p_type&OPTION_CART))
+  	{ //Cart On
+		if(pc_checkskill(sd, MC_PUSHCART) < 10)
+			status_calc_pc(sd,0); //Apply speed penalty.
+	} else
+	if(!(type&OPTION_CART) && p_type&OPTION_CART)
+	{ //Cart Off
+		if(pc_checkskill(sd, MC_PUSHCART) < 10)
+			status_calc_pc(sd,0); //Remove speed penalty.
+	}
+			
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
 		clif_status_load(&sd->bl,SI_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
@@ -5437,7 +5447,7 @@ int pc_setcart(struct map_session_data *sd,int type)
 	if(pc_checkskill(sd,MC_PUSHCART)>0){ // プッシュカ?トスキル所持
 		option = sd->sc.option;
 		//This should preserve the current option, only modifying the cart bit.
-		option&=~(OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5);
+		option&=~OPTION_CART;
 		option|=cart[type];
 		if(!pc_iscarton(sd)){ // カ?トを付けていない
 			pc_setoption(sd,option);

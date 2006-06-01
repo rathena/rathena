@@ -2416,7 +2416,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 			md->status.hp = md->status.max_hp*hp_rate/100;
 
 		//Inherit the aggressive mode of the master.
-		if (battle_config.slaves_inherit_mode) {
+		if (battle_config.slaves_inherit_mode && md->master_id) {
 			if (md2->status.mode&MD_AGGRESSIVE)
 				sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			else
