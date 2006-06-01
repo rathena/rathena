@@ -25,7 +25,7 @@
 733,1764,50
 // Rough Oridecon --> 50 Oridecon Arrows
 756,1765,50
-// Rough Elunium --> 200 Steel Arrows, 5 Freeze Arrows
+// Rough Elunium --> 200 Steel Arrows, 5 Stun Arrows
 757,1753,200,1758,5
 // Tree Root --> 7 Arrows
 902,1750,7
@@ -55,7 +55,7 @@
 947,1770,35
 // Cactus Needle --> 50 Arrows
 952,1750,50
-// Gill --> 80 Steel Arrows, 150 Crystal Arrows
+// Gill --> 80 Iron Arrows, 150 Crystal Arrows
 956,1770,80,1754,150
 // Decayed Nail --> 1 Rusted Arrow, 1 Shadow Arrow
 957,1762,1,1767,1
@@ -177,7 +177,7 @@
 7020,1761,1000
 // Foolishness of the Blind --> 200 Flash Arrows
 7021,1760,200
-// Old Hilt --> 1000 Oridecon Arrows
+// Broken Sword Handle --> 1000 Oridecon Arrows
 7022,1765,1000
 // Blade lost in Darkness --> 600 Sharp Arrows, 200 Shadow Arrows
 7023,1764,600,1767,200
