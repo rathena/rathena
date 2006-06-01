@@ -27,6 +27,7 @@
 
 =========================
 05/31
+	* Fixed mode of G_Whisper_Boss [Playtester]
 	* Gave Rafflesia Can_Move and Aggressive mode [Playtester]
 	- who removed it?
 	* Fixed Arrow Crafting, now using the official X.2 values [Playtester]
