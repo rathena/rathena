@@ -317,7 +317,7 @@ int chrif_removemap(int fd){
  */
 int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, int ip, short port)
 {
-	int i, s_ip=0;
+	int /*i, */s_ip=0;
 
 	nullpo_retr(-1, sd);
 
