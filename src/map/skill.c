@@ -1465,12 +1465,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
 		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
 		sp = (status_get_lv(bl))*(95+15*rate)/100;
-		if(sp > sd->status.max_sp - sd->status.sp)
-			sp = sd->status.max_sp - sd->status.sp;
-		if (sp) {
-			sd->status.sp += sp;
-			clif_heal(sd->fd,SP_SP,sp);
-		}
+		status_heal(src, 0, sp, 3);
 	}
 
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
