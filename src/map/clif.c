@@ -6237,7 +6237,7 @@ int clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 	WFIFOW(fd, 8)=bl->y;
 	WFIFOW(fd,10)=sd->bl.x;
 	WFIFOW(fd,12)=sd->bl.y;
-	WFIFOW(fd,14)=sd->attackrange;
+	WFIFOW(fd,14)=sd->battle_status.rhw.range;
 	WFIFOSET(fd,packet_len_table[0x139]);
 	return 0;
 }
@@ -9247,7 +9247,9 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if(sd->npc_id) {
 		if (sd->npc_id != sd->npc_item_flag)
 			return;
-	} else if (clif_cant_act(sd))
+	} else if (sd->state.storage_flag)
+		; //You can equip/unequip stuff while storage is open.
+	else if (clif_cant_act(sd))
 		return;
 		
 	if(sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1 )
@@ -9283,6 +9285,11 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 		clif_clearchar_area(&sd->bl,1);
 		return;
 	}
+
+	if (sd->state.storage_flag)
+		; //You can equip/unequip stuff while storage is open.
+	else if (clif_cant_act(sd))
+		return;
 
 	if (clif_cant_act(sd))
 		return;

@@ -606,7 +606,6 @@ struct map_session_data {
 	int speed_add_rate, aspd_add_rate;
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 	
-	short attackrange,attackrange_;
 	short splash_range, splash_add_range;
 	short add_steal_rate;
 	short hp_loss_value;

@@ -1590,6 +1590,8 @@ int unit_free(struct block_list *bl) {
 			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
 				status_change_end(bl,SC_TRICKDEAD,-1);
 			if (battle_config.debuff_on_logout) {
+				if(sd->sc.data[SC_ORCISH].timer!=-1)
+					status_change_end(bl,SC_ORCISH,-1);
 				if(sd->sc.data[SC_STRIPWEAPON].timer!=-1)
 					status_change_end(bl,SC_STRIPWEAPON,-1);
 				if(sd->sc.data[SC_STRIPARMOR].timer!=-1)
