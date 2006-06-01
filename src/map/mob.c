@@ -638,7 +638,7 @@ int mob_spawn (struct mob_data *md)
 		{	//Monster can be spawned on an area.
 			short x, y, xs, ys;
 			if (md->spawn->x == 0 && md->spawn->y == 0)
-				xs = ys = -1;
+				x = y = xs = ys = -1;
 			else {
 				x = md->spawn->x;
 				y = md->spawn->y;

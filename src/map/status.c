@@ -1205,11 +1205,8 @@ int status_calc_pet(struct pet_data *pd, int first)
 			status->dex = (bstat->dex*lv)/pd->db->lv;
 			status->luk = (bstat->luk*lv)/pd->db->lv;
 		
-			if(status->rhw.atk > battle_config.pet_max_atk1)
-				status->rhw.atk = battle_config.pet_max_atk1;
-			if(status->rhw.atk2 > battle_config.pet_max_atk2)
-				status->rhw.atk2 = battle_config.pet_max_atk2;
-
+			status->rhw.atk = cap_value(status->rhw.atk, 1, battle_config.pet_max_atk1);
+			status->rhw.atk2 = cap_value(status->rhw.atk2, 2, battle_config.pet_max_atk2);
 			status->str = cap_value(status->str,1,battle_config.pet_max_stats);
 			status->agi = cap_value(status->agi,1,battle_config.pet_max_stats);
 			status->vit = cap_value(status->vit,1,battle_config.pet_max_stats);
@@ -1220,7 +1217,7 @@ int status_calc_pet(struct pet_data *pd, int first)
 			status->batk = status_base_atk(&pd->bl, &pd->status);
 			status_calc_misc(&pd->status, lv);
 			if (!battle_config.pet_str)
-				pd->status.batk = 0;
+				status->batk = 0;
 			if (!first)	//Not done the first time because the pet is not visible yet
 				clif_send_petstatus(sd);
 		}
@@ -3027,12 +3024,16 @@ static unsigned char status_calc_def(struct block_list *bl, struct status_change
 		def += sc->data[SC_DRUMBATTLE].val3;
 	if(sc->data[SC_INCDEFRATE].timer!=-1)
 		def += def * sc->data[SC_INCDEFRATE].val1/100;
+	if(sc->data[SC_FREEZE].timer!=-1)
+		def >>=1;
+	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
+		def >>=1;
 	if(sc->data[SC_SIGNUMCRUCIS].timer!=-1)
 		def -= def * sc->data[SC_SIGNUMCRUCIS].val2/100;
 	if(sc->data[SC_CONCENTRATION].timer!=-1)
 		def -= def * sc->data[SC_CONCENTRATION].val4/100;
 	if(sc->data[SC_SKE].timer!=-1)
-		def -= def * 50/100;
+		def >>=1;
 	if(sc->data[SC_PROVOKE].timer!=-1 && bl->type != BL_PC) // Provoke doesn't alter player defense.
 		def -= def * sc->data[SC_PROVOKE].val4/100;
 	if(sc->data[SC_STRIPSHIELD].timer!=-1)
@@ -3088,6 +3089,10 @@ static unsigned char status_calc_mdef(struct block_list *bl, struct status_chang
 		return 90;
 	if(sc->data[SC_SKA].timer != -1) // [marquis007]
 		return 90;
+	if(sc->data[SC_FREEZE].timer!=-1)
+		mdef += 25*mdef/100;
+	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
+		mdef += 25*mdef/100;
 	if(sc->data[SC_ENDURE].timer!=-1 && sc->data[SC_ENDURE].val4 == 0)
 		mdef += sc->data[SC_ENDURE].val1;
 
