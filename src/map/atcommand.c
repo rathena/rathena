@@ -9331,7 +9331,7 @@ int atcommand_mobinfo(
 {
 	unsigned char msize[3][7] = {"Small", "Medium", "Large"};
 	unsigned char mrace[12][11] = {"Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Boss", "Non-Boss"};
-	unsigned char melement[11][8] = {"None", "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
+	unsigned char melement[10][8] = {"Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead"};
 	char atcmd_output2[200];
 	struct item_data *item_data;
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
