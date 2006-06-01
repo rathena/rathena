@@ -324,11 +324,11 @@ int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, 
 	chrif_check(-1);
 
 	s_ip = 0;
-	for(i = 0; i < fd_max; i++)
-		if (session[i] && session[i]->session_data == sd) {
-			s_ip = session[i]->client_addr.sin_addr.s_addr;
-			break;
-		}
+	//for(i = 0; i < fd_max; i++)
+	//	if (session[i] && session[i]->session_data == sd) {
+	s_ip = session[sd->fd]->client_addr.sin_addr.s_addr; // For what you're looping it? [Lance]
+	//		break;
+	//	}
 
 	WFIFOHEAD(char_fd, 35);
 	WFIFOW(char_fd, 0) = 0x2b05;

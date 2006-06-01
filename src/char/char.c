@@ -2744,6 +2744,7 @@ int parse_frommap(int fd) {
 					char_data->last_point.map = RFIFOW(fd,18);
 					char_data->last_point.x = RFIFOW(fd,20);
 					char_data->last_point.y = RFIFOW(fd,22);
+					char_data->sex = RFIFOB(fd,30);  // Buuyo^
 
 					WFIFOW(map_fd,0) = 0x2afd;
 					WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);

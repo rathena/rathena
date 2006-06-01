@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/31
 	* [Fixed]:
+	  - Guys can't go across map-servers :( [Lance]
+	* [Fixed]:
 	  - Restoration and saving of sd->npc_id must be done every time. [Lance]
 	* Added back the Freeze/Petrify adjustments of -50%def and +25%mdef (when
 	  where these lost?). Thanks to Buuyo for pointing it out. [Skotlex]
