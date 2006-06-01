@@ -4875,16 +4875,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_TRANSFORMATION:
 	case NPC_METAMORPHOSIS:
 		if(md && md->skillidx >= 0) {
-			if (skilllv > 1)
-			{	//Multiply skilllv times, the original instance must be silently killed. [Skotlex] 
-				mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv,skillid);
-				unit_remove_map(src,1);
-			}
-			else
-			{	//Transform into another class.
-				int class_ = mob_random_class (md->db->skill[md->skillidx].val,0);
-				if (class_) mob_class_change(md, class_);
-			}
+			int class_ = mob_random_class (md->db->skill[md->skillidx].val,0);
+			if (skilllv > 1) //Multiply the rest of mobs. [Skotlex]
+				mob_summonslave(md,md->db->skill[md->skillidx].val,skilllv-1,skillid);
+			if (class_) mob_class_change(md, class_);
 		}
 		break;
 
