@@ -9291,9 +9291,6 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 	else if (clif_cant_act(sd))
 		return;
 
-	if (clif_cant_act(sd))
-		return;
-
 	index = RFIFOW(fd,2)-2;
 
 	pc_unequipitem(sd,index,1);
