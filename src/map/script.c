@@ -11475,8 +11475,8 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 				bck_scriptstate = sd->npc_scriptstate;
 				bck_stack = sd->stack;
 				sd->stack = NULL;
-				bck_npcid = sd->npc_id;
 			}
+			bck_npcid = sd->npc_id;
 			sd->npc_id = oid;
 		}
 	}
