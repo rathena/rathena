@@ -26,6 +26,10 @@
 	-----
 
 =========================
+06/01
+	* Readded Novice Job bonusses [Poki#3]
+	- Just why where they removed? http://guide.ragnarok.co.kr/JobNovicestatus.asp still lists them...
+
 05/31
 	* Fixed mode of G_Whisper_Boss [Playtester]
 	* Gave Rafflesia Can_Move and Aggressive mode [Playtester]
