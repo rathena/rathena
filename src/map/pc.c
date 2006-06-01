@@ -4510,9 +4510,6 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		skill_rest(sd,0);
 	}
 
-	if(sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support)
-		pet_target_check(sd,src,1);
-
 	clif_updatestatus(sd,SP_HP);
 
 	if (sd->battle_status.hp<sd->battle_status.max_hp>>2)
@@ -4525,6 +4522,12 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 			sd->devotion[i] = 0;
 		}
 	}
+
+	if(!src || src == &sd->bl)
+		return;
+	
+	if(sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support)
+		pet_target_check(sd,src,1);
 
 	sd->canlog_tick = gettick();
 	return;
