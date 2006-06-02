@@ -27,13 +27,14 @@
 
 =========================
 06/02
+	* Removed the job bonuses of High Novice and Baby Novice [Playtester]
 	* Updated Holy Cross, Investigate and Finger Offensive to be usable by all
 	  weapons. [Skotlex]
 	* Gave several MVPs their MVP skill versions [Playtester]
 	* Made Grandcross usable with all weapons. Thanks to Khersai for digging it
 	  up. [Skotlex]
 	* Added Can Attack to various G_mobs [Playtester]
-	* Removed the Novice Job bonusses again [Playtester]
+	* Removed the Novice Job bonuses again [Playtester]
 	- http://www.eathena.ws/board/index.php?showtopic=93893
 	* Small adjustments of the Orc Lord and Valkyrie Randgris drops [Playtester]
 06/01
