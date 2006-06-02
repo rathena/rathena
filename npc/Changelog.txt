@@ -31,6 +31,9 @@ Evera
 
 Date		Added
 ======
+06/02
+	* Removed Bio Lab from eamobs [Playtester]
+	- since the official entrance is in it's no longer needed
 05/31
 	* Now only one Chung E spawns in Louyang [Playtester]
 	* Added Rachel and Ice Dungeon warps [Playtester]
