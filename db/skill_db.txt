@@ -37,7 +37,7 @@
 15,9,6,1,1,0,0,10,1,yes,0,0,0,magic,0	//MG_FROSTDIVER#Frost Diver#
 16,2,6,1,2,1,0,10,1,yes,0,0,0,magic,0	//MG_STONECURSE#Stone Curse#
 17,9,6,1,3,2,2,10,1,yes,0,0,0,magic,0	//MG_FIREBALL#Fire Ball#
-18,9,6,2,3,0,0,10,1,yes,0,0,3,magic,2	//MG_FIREWALL#Fire Wall#
+18,9,6,2,3,0,0,10,1,yes,0,0,3,magic,1	//MG_FIREWALL#Fire Wall#
 19,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//MG_FIREBOLT#Fire Bolt#
 20,9,8,1,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//MG_LIGHTNINGBOLT#Lightning Bolt#
 21,9,8,2,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//MG_THUNDERSTORM#Thunderstorm#
