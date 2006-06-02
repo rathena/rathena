@@ -26,6 +26,10 @@
 	-----
 
 =========================
+06/02
+	* Removed the Novice Job bonusses again [Playtester]
+	- http://www.eathena.ws/board/index.php?showtopic=93893
+	* Small adjustments of the Orc Lord and Valkyrie Randgris drops [Playtester]
 06/01
 	* Readded Novice Job bonusses [Poki#3]
 	- Just why where they removed? http://guide.ragnarok.co.kr/JobNovicestatus.asp still lists them...
