@@ -27,6 +27,7 @@
 
 =========================
 06/02
+	* Gave several MVPs their MVP skill versions [Playtester]
 	* Made Grandcross usable with all weapons. Thanks to Khersai for digging it
 	  up. [Skotlex]
 	* Added Can Attack to various G_mobs [Playtester]
