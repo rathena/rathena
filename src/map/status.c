@@ -3185,14 +3185,18 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		int max = 0;
 		if(sc->data[SC_STAR_COMFORT].timer!=-1)
 			max = sc->data[SC_STAR_COMFORT].val2;
-		if((sc->data[SC_TWOHANDQUICKEN].timer!=-1 ||
-			sc->data[SC_ONEHAND].timer!=-1
-			) && max < 30)
-			max = 30;
-		
+
 		if(sc->data[SC_MADNESSCANCEL].timer!=-1 && max < 20)
 			max = 20;
-		
+	
+		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 &&
+			max < sc->data[SC_TWOHANDQUICKEN].val2)
+			max = sc->data[SC_TWOHANDQUICKEN].val2;
+
+		if(sc->data[SC_ONEHAND].timer!=-1 &&
+			max < sc->data[SC_ONEHAND].val2)
+			max = sc->data[SC_ONEHAND].val2;
+
 		if(sc->data[SC_ADRENALINE2].timer!=-1 &&
 			max < sc->data[SC_ADRENALINE2].val2)
 			max = sc->data[SC_ADRENALINE2].val2;
@@ -3951,7 +3955,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
 	struct status_data *status;
-	int opt_flag , calc_flag = 0, undead_flag;
+	int opt_flag , calc_flag, undead_flag;
 
 	nullpo_retr(0, bl);
 	sc=status_get_sc(bl);
@@ -4423,12 +4427,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				}
 			} else val2 = 0;
 			break;
-
-		case SC_SPEARQUICKEN:		/* スピアクイッケン */
-			calc_flag = 1;
+		case SC_ONEHAND:
+		case SC_TWOHANDQUICKEN:
+			val2 = 30;
+			if (val1 > 10) //For boss casted skills [Skotlex]
+				val2 += 2*(val1-10);
+			break;
+		case SC_SPEARQUICKEN:
 			val2 = 20+val1;
 			break;
-
 		case SC_MOONLIT:
 			val2 = bl->id;
 			skill_setmapcell(bl,CG_MOONLIT, val1, CELL_SETMOONLIT);
@@ -5265,7 +5272,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	struct map_session_data *sd;
 	struct status_change *sc;
 	struct status_data *status;
-	int opt_flag=0, calc_flag = 0;
+	int opt_flag=0, calc_flag;
 
 	nullpo_retr(0, bl);
 	

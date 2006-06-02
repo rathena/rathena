@@ -3912,15 +3912,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case KN_BRANDISHSPEAR:	/*ブランディッシュスピア*/
 		{
-			int c,n=4,ar;
+			int c,n=4;
 			int dir = map_calc_dir(src,bl->x,bl->y);
 			struct square tc;
 			int x=bl->x,y=bl->y;
-			ar=skilllv/3;
 			skill_brandishspear_first(&tc,dir,x,y);
 			skill_brandishspear_dir(&tc,dir,4);
 			/* 範?④ */
-			if(skilllv == 10){
+			if(skilllv > 9){
 				for(c=1;c<4;c++){
 					map_foreachincell(skill_area_sub,
 						bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
