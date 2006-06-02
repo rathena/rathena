@@ -1080,8 +1080,8 @@ int unit_attack(struct block_list *src,int target_id,int type)
 		return 0;
 	}
 
-	if(!(src->type == BL_MOB && ((TBL_MOB *)src)->state.killer) && (battle_check_target(src,target,BCT_ENEMY)<=0 ||
-		!status_check_skilluse(src, target, 0, 0))
+	if(battle_check_target(src,target,BCT_ENEMY)<=0 ||
+		!status_check_skilluse(src, target, 0, 0)
 	) {
 		unit_unattackable(src);
 		return 1;
@@ -1156,7 +1156,7 @@ int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, i
 	dx=(dx>0)?1:((dx<0)?-1:0);
 	dy=(dy>0)?1:((dy<0)?-1:0);
 	
-	if (map_getcell(tbl->m,tbl->x+dx,tbl->y+dy,CELL_CHKNOREACH))
+	if (map_getcell(tbl->m,tbl->x-dx,tbl->y-dy,CELL_CHKNOREACH))
 	{	//Look for a suitable cell to place in.
 		for(i=0;i<9 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOREACH);i++);
 		if (i==9) return 0; //No valid cells.
