@@ -561,12 +561,12 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		unit_skillcastcancel(target, 2);
 	}
 
-	if (hp >= (signed int)status->hp) {
+	if ((unsigned int)hp >= status->hp) {
 		if (flag&2) return 0;
 		hp = status->hp;
 	}
 
-	if (sp > (signed int)status->sp) {
+	if ((unsigned int)sp > status->sp) {
 		if (flag&2) return 0;
 		sp = status->sp;
 	}
@@ -678,7 +678,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 			hp = 0;
 
 		
-		if(hp > (signed int)(status->max_hp - status->hp))
+		if((unsigned int)hp > status->max_hp - status->hp)
 			hp = status->max_hp - status->hp;
 	}
 
@@ -688,7 +688,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	}
 
 	if(sp) {
-		if(sp > (signed int)(status->max_sp - status->sp))
+		if((unsigned int)sp > status->max_sp - status->sp)
 			sp = status->max_sp - status->sp;
 	}
 
