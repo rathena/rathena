@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/02
+	* Corrected clif_parse_takeitem to ALWAYS return a NAK packet when it
+	  fails. Fixes cases where the client gets "stuck" and refuses to let you
+	  pick any items. [Skotlex]
 	* Removed the walk delay from firewall and changed its knockback [MasterOfMuppets]
 	  to 1 tile to make it act more like in the official servers.
 	* Some cleaning of the mob slave ai. [Skotlex]

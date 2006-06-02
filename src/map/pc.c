@@ -2609,38 +2609,37 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 	
-	if(fitem->first_get_id > 0 && fitem->first_get_id != sd->bl.id) {
+	if(fitem->first_get_id > 0 && fitem->first_get_id != sd->bl.id)
+  	{
 		first_sd = map_id2sd(fitem->first_get_id);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
-			)) {
-				clif_additem(sd,0,0,6);
+			))
 				return 0;
-			}
 		}
-		else if(fitem->second_get_id > 0 && fitem->second_get_id != sd->bl.id) {
+		else
+		if(fitem->second_get_id > 0 && fitem->second_get_id != sd->bl.id)
+	  	{
 			second_sd = map_id2sd(fitem->second_get_id);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if(!(p && p->item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 					(second_sd && second_sd->status.party_id == sd->status.party_id))
-				)) {
-					clif_additem(sd,0,0,6);
+				))
 					return 0;
-				}
 			}
-			else if(fitem->third_get_id > 0 && fitem->third_get_id != sd->bl.id) {
+			else
+			if(fitem->third_get_id > 0 && fitem->third_get_id != sd->bl.id)
+		  	{
 				third_sd = map_id2sd(fitem->third_get_id);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 						(second_sd && second_sd->status.party_id == sd->status.party_id) ||
 						(third_sd && third_sd->status.party_id == sd->status.party_id))
-					)) {
-						clif_additem(sd,0,0,6);
+					))
 						return 0;
-					}
 				}
 			}
 		}
@@ -2660,7 +2659,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 		pc_equipitem(sd, fitem->item_data.nameid, fitem->item_data.equip);
 	}
 	map_clearflooritem(fitem->bl.id);
-	return 0;
+	return 1;
 }
 
 int pc_isUseitem(struct map_session_data *sd,int n)

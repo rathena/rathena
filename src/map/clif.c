@@ -9125,29 +9125,35 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd) {
 	
 	fitem = (struct flooritem_data*)map_id2bl(map_object_id);
 
-	if (pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl, 1);
-		return;
-	}
+	do {
+		if (pc_isdead(sd)) {
+			clif_clearchar_area(&sd->bl, 1);
+			break;
+		}
 
-	if (fitem == NULL || fitem->bl.type != BL_ITEM || fitem->bl.m != sd->bl.m)
-		return;
+		if (fitem == NULL || fitem->bl.type != BL_ITEM || fitem->bl.m != sd->bl.m)
+			break;
 	
-	if (clif_cant_act(sd))
-		return;
-	
-	if(pc_iscloaking(sd) || pc_ischasewalk(sd)) //Disable cloaking/chasewalking characters from looting [Skotlex]
-		return;
-	if(sd->sc.count && (
-		sd->sc.data[SC_TRICKDEAD].timer != -1 || //Ž€‚ñ‚¾‚Ó‚è
-		sd->sc.data[SC_BLADESTOP].timer != -1 || //”’nŽæ‚è
-		sd->sc.data[SC_NOCHAT].timer!=-1 )	//‰ï˜b‹ÖŽ~
-	) {
-		clif_additem(sd,0,0,6); // send fail packet! [Valaris]
-		return;
-	}
+		if (clif_cant_act(sd))
+			break;
 
-	pc_takeitem(sd, fitem);
+  		//Disable cloaking/chasewalking characters from looting [Skotlex]
+		if(pc_iscloaking(sd) || pc_ischasewalk(sd))
+			break;
+		
+		if(sd->sc.count && (
+			sd->sc.data[SC_TRICKDEAD].timer != -1 ||
+			sd->sc.data[SC_BLADESTOP].timer != -1 ||
+			sd->sc.data[SC_NOCHAT].timer!=-1 )
+		)
+			break;
+
+		if (!pc_takeitem(sd, fitem))
+			break;
+		return;
+	} while (0);
+	// Client REQUIRES a fail packet or you can no longer pick items.
+	clif_additem(sd,0,0,6);
 }
 
 /*==========================================
