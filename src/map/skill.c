@@ -4828,7 +4828,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_CALLSLAVE:
-		mob_warpslave(src,2);
+		mob_warpslave(src,MOB_SLAVEDISTANCE);
 		break;
 
 	case NPC_RANDOMMOVE:

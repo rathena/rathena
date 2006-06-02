@@ -18,6 +18,9 @@
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
 #define MIN_MOBLINKTIME 1000
 
+//Distance that slaves should keep from their master.
+#define MOB_SLAVEDISTANCE 2
+
 // These define the range of available IDs for clones. [Valaris]
 #define MOB_CLONE_START 9001
 #define MOB_CLONE_END 10000

@@ -41,8 +41,6 @@
 #define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
 
-#define MOB_SLAVEDISTANCE 2	//Distance that slaves should keep from their master.
-
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
@@ -879,7 +877,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 
 	bl=map_id2bl(md->master_id);
 
-	if (!bl || status_isdead(bl)) {	//Žå‚ªŽ€–S‚µ‚Ä‚¢‚é‚©Œ©‚Â‚©‚ç‚È‚¢
+	if (!bl || status_isdead(bl)) {
 		status_kill(&md->bl);
 		return 0;
 	}
@@ -887,27 +885,22 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 	if(status_get_mode(&md->bl)&MD_CANMOVE)
 	{	//If the mob can move, follow around. [Check by Skotlex]
 		
-		if(bl->m != md->bl.m || md->master_dist > 30)
-		{	// Since it is not in the same map (or is way to far), just warp it
-			unit_warp(&md->bl,bl->m,bl->x,bl->y,3);
-			md->master_dist = 0;
-			return 0;
-		}
-
 		// Distance with between slave and master is measured.
 		old_dist=md->master_dist;
 		md->master_dist=distance_bl(&md->bl, bl);
 
 		// Since the master was in near immediately before, teleport is carried out and it pursues.
-		if(old_dist<10 && md->master_dist>18){
-			unit_warp(&md->bl,-1,bl->x,bl->y,3);
+		if(bl->m != md->bl.m || 
+			(old_dist<10 && md->master_dist>18) ||
+			md->master_dist > MAX_MINCHASE
+		){
 			md->master_dist = 0;
+			unit_warp(&md->bl,bl->m,bl->x,bl->y,3);
 			return 0;
 		}
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
-		if(md->master_dist<AREA_SIZE &&
-			(md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
+		if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
 			unit_can_move(&md->bl))
 		{
 			short x = bl->x, y = bl->y;
@@ -922,7 +915,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 	}
 	
 	//Avoid attempting to lock the master's target too often to avoid unnecessary overload. [Skotlex]
-	if (DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME && !md->target_id) {
+	if (DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME && !md->target_id)
+  	{
 		struct unit_data *ud = unit_bl2ud(bl);
 		md->last_linktime = tick;
 		
