@@ -2838,7 +2838,7 @@ int do_final_npc(void)
 	return 0;
 }
 
-static void npc_debug_warps_sub(struct npc_data *nd)
+/*static void npc_debug_warps_sub(struct npc_data *nd)
 {
 	int m;
 	if (nd->bl.type != BL_NPC || nd->bl.subtype != WARP || nd->bl.m < 0)
@@ -2869,7 +2869,7 @@ static void npc_debug_warps(void)
 	for (m = 0; m < map_num; m++)
 		for (i = 0; i < map[m].npc_num; i++)
 			npc_debug_warps_sub(map[m].npc[i]);
-}
+}*/
 
 /*==========================================
  * npc‰Šú‰»

@@ -153,7 +153,7 @@ void merc_heal(struct homun_data *hd,int hp,int sp)
 #ifndef TXT_ONLY
 void merc_save(struct homun_data *hd)
 {
-	sprintf(tmp_sql, "UPDATE `homunculus` SET `class`='%d',`name`='%s',`level`='%d',`exp`='%d',`hunger`='%d',`hp`='%u',`sp`='%u',`skill1lv`='%d',`skill2lv`='%d',`skill3lv`='%d',`skill4lv`='%d',`skillpts`='%d' WHERE `id` = '%d'", 
+	sprintf(tmp_sql, "UPDATE `homunculus` SET `class`='%d',`name`='%s',`level`='%d',`exp`='%lu',`hunger`='%d',`hp`='%u',`sp`='%u',`skill1lv`='%d',`skill2lv`='%d',`skill3lv`='%d',`skill4lv`='%d',`skillpts`='%d' WHERE `id` = '%d'", 
 		hd->class_,hd->name,hd->level,hd->exp,hd->hunger_rate,
 		hd->battle_status.hp,hd->battle_status.sp,
 		hd->hskill[0].level,hd->hskill[1].level,hd->hskill[2].level,hd->hskill[3].level,

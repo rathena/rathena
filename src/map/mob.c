@@ -1331,7 +1331,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 
 	md->last_thinktime=tick;
 
-	if (md->bl.prev==NULL || md->status.hp <= 0)
+	if (md->bl.prev==NULL || md->base_status->hp == 0)
 		return 1;
 
 	// 取り巻きモンスターの処理（呼び戻しされた時）
