@@ -295,7 +295,7 @@ ACMD_FUNC(clone); // [Valaris]
 ACMD_FUNC(tonpc); // LuzZza
 ACMD_FUNC(commands); // [Skotlex]
 ACMD_FUNC(noask); //LuzZza
-ACMD_FUNC(request); //LuzZza
+ACMD_FUNC(request); //[Skotlex]
 
 /*==========================================
  *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
@@ -612,7 +612,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
 	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
 	{ AtCommand_NoAsk,				"@noask",			1, atcommand_noask }, // [LuzZza]
-	{ AtCommand_Request,				"@request",			20, atcommand_request }, // [LuzZza]
+	{ AtCommand_Request,				"@request",			20, atcommand_request }, // [Skotlex]
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }

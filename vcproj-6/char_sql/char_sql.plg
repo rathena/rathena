@@ -1,0 +1,136 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: char_sql - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA3.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I "..\..\src\common" /I "..\..\src\mysql" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"Release/char_sql.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\~eAthena\Trunk\src\common\core.c"
+"D:\~eAthena\Trunk\src\common\db.c"
+"D:\~eAthena\Trunk\src\common\ers.c"
+"D:\~eAthena\Trunk\src\common\graph.c"
+"D:\~eAthena\Trunk\src\common\grfio.c"
+"D:\~eAthena\Trunk\src\common\lock.c"
+"D:\~eAthena\Trunk\src\common\malloc.c"
+"D:\~eAthena\Trunk\src\common\mapindex.c"
+"D:\~eAthena\Trunk\src\common\nullpo.c"
+"D:\~eAthena\Trunk\src\common\plugins.c"
+"D:\~eAthena\Trunk\src\common\showmsg.c"
+"D:\~eAthena\Trunk\src\common\socket.c"
+"D:\~eAthena\Trunk\src\common\strlib.c"
+"D:\~eAthena\Trunk\src\common\timer.c"
+"D:\~eAthena\Trunk\src\common\utils.c"
+"D:\~eAthena\Trunk\src\char_sql\char.c"
+"D:\~eAthena\Trunk\src\char_sql\int_guild.c"
+"D:\~eAthena\Trunk\src\char_sql\int_party.c"
+"D:\~eAthena\Trunk\src\char_sql\int_pet.c"
+"D:\~eAthena\Trunk\src\char_sql\int_storage.c"
+"D:\~eAthena\Trunk\src\char_sql\inter.c"
+"D:\~eAthena\Trunk\src\char_sql\itemdb.c"
+"D:\~eAthena\Trunk\src\zlib\ioapi.c"
+"D:\~eAthena\Trunk\src\zlib\iowin32.c"
+"D:\~eAthena\Trunk\src\zlib\unzip.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA3.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA4.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib zdll.lib libmysql.lib /nologo /subsystem:console /incremental:no /pdb:"Release/char_sql.pdb" /machine:I386 /out:"../../char_sql.exe" /libpath:"../../lib" 
+".\Release\core.obj"
+".\Release\db.obj"
+".\Release\ers.obj"
+".\Release\graph.obj"
+".\Release\grfio.obj"
+".\Release\lock.obj"
+".\Release\malloc.obj"
+".\Release\mapindex.obj"
+".\Release\nullpo.obj"
+".\Release\plugins.obj"
+".\Release\showmsg.obj"
+".\Release\socket.obj"
+".\Release\strlib.obj"
+".\Release\timer.obj"
+".\Release\utils.obj"
+".\Release\char.obj"
+".\Release\int_guild.obj"
+".\Release\int_party.obj"
+".\Release\int_pet.obj"
+".\Release\int_storage.obj"
+".\Release\inter.obj"
+".\Release\itemdb.obj"
+".\Release\ioapi.obj"
+".\Release\iowin32.obj"
+".\Release\unzip.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA4.tmp"
+<h3>Output Window</h3>
+Compiling...
+core.c
+db.c
+D:\~eAthena\Trunk\src\common\db.c(1996) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1997) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1998) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1999) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2024) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2025) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2026) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2027) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2061) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2062) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2065) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2066) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2089) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2090) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2091) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2092) : warning C4550: expression evaluates to a function which is missing an argument list
+ers.c
+graph.c
+grfio.c
+D:\~eAthena\Trunk\src\common\grfio.c(625) : warning C4018: '!=' : signed/unsigned mismatch
+lock.c
+malloc.c
+mapindex.c
+nullpo.c
+plugins.c
+showmsg.c
+socket.c
+D:\~eAthena\Trunk\src\common\socket.c(153) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(215) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(665) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(780) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(819) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(837) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(842) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(844) : warning C4018: '==' : signed/unsigned mismatch
+strlib.c
+timer.c
+utils.c
+char.c
+D:\~eAthena\Trunk\src\char_sql\char.c(1835) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\char_sql\char.c(1871) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\char_sql\char.c(1895) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\char_sql\char.c(2062) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\char_sql\char.c(2104) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\char_sql\char.c(3126) : warning C4018: '==' : signed/unsigned mismatch
+int_guild.c
+int_party.c
+int_pet.c
+int_storage.c
+inter.c
+itemdb.c
+ioapi.c
+iowin32.c
+unzip.c
+Linking...
+LINK : warning LNK4089: all references to "zlib1.dll" discarded by /OPT:REF
+
+
+
+<h3>Results</h3>
+char_sql.exe - 0 error(s), 32 warning(s)
+</pre>
+</body>
+</html>

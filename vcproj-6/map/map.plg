@@ -1,0 +1,291 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: map - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I "..\..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"Release/map.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\~eAthena\Trunk\src\common\db.c"
+"D:\~eAthena\Trunk\src\common\grfio.c"
+"D:\~eAthena\Trunk\src\common\showmsg.c"
+"D:\~eAthena\Trunk\src\common\socket.c"
+"D:\~eAthena\Trunk\src\map\atcommand.c"
+"D:\~eAthena\Trunk\src\map\battle.c"
+"D:\~eAthena\Trunk\src\map\charcommand.c"
+"D:\~eAthena\Trunk\src\map\chat.c"
+"D:\~eAthena\Trunk\src\map\chrif.c"
+"D:\~eAthena\Trunk\src\map\clif.c"
+"D:\~eAthena\Trunk\src\map\guild.c"
+"D:\~eAthena\Trunk\src\map\intif.c"
+"D:\~eAthena\Trunk\src\map\irc.c"
+"D:\~eAthena\Trunk\src\map\itemdb.c"
+"D:\~eAthena\Trunk\src\map\log.c"
+"D:\~eAthena\Trunk\src\map\map.c"
+"D:\~eAthena\Trunk\src\map\mercenary.c"
+"D:\~eAthena\Trunk\src\map\mob.c"
+"D:\~eAthena\Trunk\src\map\npc.c"
+"D:\~eAthena\Trunk\src\map\party.c"
+"D:\~eAthena\Trunk\src\map\path.c"
+"D:\~eAthena\Trunk\src\map\pc.c"
+"D:\~eAthena\Trunk\src\map\pet.c"
+"D:\~eAthena\Trunk\src\map\script.c"
+"D:\~eAthena\Trunk\src\map\skill.c"
+"D:\~eAthena\Trunk\src\map\status.c"
+"D:\~eAthena\Trunk\src\map\storage.c"
+"D:\~eAthena\Trunk\src\map\trade.c"
+"D:\~eAthena\Trunk\src\map\unit.c"
+"D:\~eAthena\Trunk\src\map\vending.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAD.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib WSOCK32.lib zdll.lib pcre.lib /nologo /subsystem:console /incremental:no /pdb:"Release/map-server.pdb" /machine:I386 /out:"../../map-server.exe" /libpath:"../../lib" 
+".\Release\core.obj"
+".\Release\db.obj"
+".\Release\ers.obj"
+".\Release\graph.obj"
+".\Release\grfio.obj"
+".\Release\lock.obj"
+".\Release\malloc.obj"
+".\Release\mapindex.obj"
+".\Release\nullpo.obj"
+".\Release\plugins.obj"
+".\Release\showmsg.obj"
+".\Release\socket.obj"
+".\Release\strlib.obj"
+".\Release\timer.obj"
+".\Release\utils.obj"
+".\Release\atcommand.obj"
+".\Release\battle.obj"
+".\Release\charcommand.obj"
+".\Release\charsave.obj"
+".\Release\chat.obj"
+".\Release\chrif.obj"
+".\Release\clif.obj"
+".\Release\date.obj"
+".\Release\guild.obj"
+".\Release\intif.obj"
+".\Release\irc.obj"
+".\Release\itemdb.obj"
+".\Release\log.obj"
+".\Release\mail.obj"
+".\Release\map.obj"
+".\Release\mercenary.obj"
+".\Release\mob.obj"
+".\Release\npc.obj"
+".\Release\npc_chat.obj"
+".\Release\party.obj"
+".\Release\path.obj"
+".\Release\pc.obj"
+".\Release\pet.obj"
+".\Release\script.obj"
+".\Release\skill.obj"
+".\Release\status.obj"
+".\Release\storage.obj"
+".\Release\trade.obj"
+".\Release\unit.obj"
+".\Release\vending.obj"
+".\Release\ioapi.obj"
+".\Release\iowin32.obj"
+".\Release\unzip.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAD.tmp"
+<h3>Output Window</h3>
+Compiling...
+db.c
+D:\~eAthena\Trunk\src\common\db.c(1996) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1997) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1998) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(1999) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2024) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2025) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2026) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2027) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2061) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2062) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2065) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2066) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2089) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2090) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2091) : warning C4550: expression evaluates to a function which is missing an argument list
+D:\~eAthena\Trunk\src\common\db.c(2092) : warning C4550: expression evaluates to a function which is missing an argument list
+grfio.c
+D:\~eAthena\Trunk\src\common\grfio.c(625) : warning C4018: '!=' : signed/unsigned mismatch
+showmsg.c
+socket.c
+D:\~eAthena\Trunk\src\common\socket.c(153) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(215) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(665) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(780) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(819) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(837) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(842) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\common\socket.c(844) : warning C4018: '==' : signed/unsigned mismatch
+atcommand.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\atcommand.c(988) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\atcommand.c(1046) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\atcommand.c(1114) : warning C4018: '==' : signed/unsigned mismatch
+battle.c
+D:\~eAthena\Trunk\src\map\atcommand.c(3588) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\atcommand.c(3588) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\atcommand.c(3665) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\atcommand.c(3665) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\atcommand.c(8177) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+charcommand.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+chat.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+chrif.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\chrif.c(361) : warning C4018: '!=' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\chrif.c(496) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\chrif.c(497) : warning C4018: '==' : signed/unsigned mismatch
+clif.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\clif.c(1478) : warning C4018: '!=' : signed/unsigned mismatch
+guild.c
+D:\~eAthena\Trunk\src\map\clif.c(10565) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+intif.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\intif.c(859) : warning C4018: '!=' : signed/unsigned mismatch
+irc.c
+itemdb.c
+log.c
+map.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\map.c(131) : fatal error C1083: Cannot open compiler intermediate file: 'C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\a02836ex': Permission denied
+mercenary.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+mob.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\mob.c(2588) : warning C4018: '!=' : signed/unsigned mismatch
+npc.c
+D:\~eAthena\Trunk\src\map\mob.c(372) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\mob.c(372) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\mob.c(1562) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\mob.c(1727) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\mob.c(2948) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\mob.c(2948) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\npc.c(2938) : warning C4013: 'npc_debug_warps' undefined; assuming extern returning int
+party.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+path.c
+pc.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+pet.c
+D:\~eAthena\Trunk\src\map\pc.c(807) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(882) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2091) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2095) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2135) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2139) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2139) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2139) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2139) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2143) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2143) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2143) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2143) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2193) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2212) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2212) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2212) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2212) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2217) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2217) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2217) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(2217) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(982) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(4827) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(4891) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(4897) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5176) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5176) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5179) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5179) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5184) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5186) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5191) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5193) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5216) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\pc.c(5229) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\pet.c(484) : warning C4018: '==' : signed/unsigned mismatch
+script.c
+D:\~eAthena\Trunk\src\map\pet.c(603) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\script.c(4939) : warning C4018: '==' : signed/unsigned mismatch
+skill.c
+D:\~eAthena\Trunk\src\map\script.c(3074) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\script.c(5695) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\script.c(5695) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\script.c(10469) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\script.c(10469) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\skill.c(8486) : warning C4018: '==' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\skill.c(9599) : warning C4018: '!=' : signed/unsigned mismatch
+status.c
+D:\~eAthena\Trunk\src\map\skill.c(1118) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(1162) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(1205) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(2586) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(3268) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(3268) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(3738) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(5208) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6020) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6020) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6527) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6533) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6533) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\skill.c(6533) : warning C4761: integral size mismatch in argument; conversion supplied
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+D:\~eAthena\Trunk\src\map\status.c(2043) : warning C4018: '!=' : signed/unsigned mismatch
+D:\~eAthena\Trunk\src\map\status.c(2045) : warning C4018: '!=' : signed/unsigned mismatch
+storage.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+trade.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+unit.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+vending.c
+D:\~eAthena\Trunk\src\map\clif.h(19) : warning C4005: 'PACKETVER' : macro redefinition
+        unknown(0) : see previous definition of 'PACKETVER'
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+map-server.exe - 1 error(s), 131 warning(s)
+</pre>
+</body>
+</html>
