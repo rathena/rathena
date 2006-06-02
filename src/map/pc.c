@@ -1245,8 +1245,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_DEF1:
-		if(sd->state.lr_flag != 2)
-			status->def+=val;
+		if(sd->state.lr_flag != 2) {
+			if (val < 0 && status->def < -val)
+				status->def = 0;
+			else if (val > 0 && val > UCHAR_MAX - status->def)
+				status->def = UCHAR_MAX;
+			else
+				status->def+=val;
+		}
 		break;
 	case SP_DEF2:
 		if(sd->state.lr_flag != 2)
@@ -1257,8 +1263,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->mdef+=val;
 		break;
 	case SP_MDEF2:
-		if(sd->state.lr_flag != 2)
-			status->mdef+=val;
+		if(sd->state.lr_flag != 2) {
+			if (val < 0 && status->mdef < -val)
+				status->mdef = 0;
+			else if (val > 0 && val > UCHAR_MAX - status->mdef)
+				status->mdef = UCHAR_MAX;
+			else
+				status->mdef+=val;
+		}
 		break;
 	case SP_HIT:
 		if(sd->state.lr_flag != 2)

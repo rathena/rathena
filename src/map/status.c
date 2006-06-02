@@ -1367,7 +1367,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	struct skill b_skill[MAX_SKILL];
 		
 	int b_weight,b_max_weight;
-	int b_paramcard[6];
 	int i,index;
 	int skill,refinedef=0;
 
@@ -1551,73 +1550,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->add_mdmg_count)
 		);
 
-	for(i=0;i<10;i++) {
-		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
-		if(index < 0)
-			continue;
-		if(i == 9 && sd->equip_index[8] == index)
-			continue;
-		if(i == 5 && sd->equip_index[4] == index)
-			continue;
-		if(i == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index))
-			continue;
-
-		if(sd->inventory_data[index]) {
-			int j,c;
-			struct item_data *data;
-	
-			//Card script execution.
-			if(sd->status.inventory[index].card[0]==0x00ff ||
-				sd->status.inventory[index].card[0]==0x00fe ||
-				sd->status.inventory[index].card[0]==(short)0xff00)
-				continue;
-			for(j=0;j<sd->inventory_data[index]->slot;j++){	
-				current_equip_card_id= c= sd->status.inventory[index].card[j];
-				if(!c)
-					continue;
-				data = itemdb_exists(c);
-				if(!data)
-					continue;
-				if(first&1 && data->equip_script)
-			  	{	//Execute equip-script on login
-					run_script(data->equip_script,0,sd->bl.id,0);
-					if (!calculating)
-						return 1;
-				}
-				if(!data->script)
-					continue;
-				if(data->flag.no_equip) { //Card restriction checks.
-					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&map[sd->bl.m].zone)
-						continue;
-					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&1)
-						continue;
-					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&2) 
-						continue;
-				}
-				if(i == 8 && sd->status.inventory[index].equip == 0x20)
-				{	//Left hand status.
-					sd->state.lr_flag = 1;
-					run_script(data->script,0,sd->bl.id,0);
-					sd->state.lr_flag = 0;
-				} else
-					run_script(data->script,0,sd->bl.id,0);
-				if (!calculating) //Abort, run_script his function. [Skotlex]
-					return 1;
-			}
-		}
-	}
-	
-	if(sd->status.pet_id > 0 && battle_config.pet_status_support && sd->pet.intimate > 0)
-	{ // Pet
-		struct pet_data *pd=sd->pd;
-		if(pd && (!battle_config.pet_equip_required || pd->equip > 0) &&
-			pd->state.skillbonus == 1 && pd->bonus) //Skotlex: Readjusted for pets
-			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
-	}
-	memcpy(b_paramcard,sd->param_bonus,sizeof(b_paramcard));
-	memset(sd->param_bonus, 0, sizeof(sd->param_bonus));
-	
-	// ?備品によるステ?タス?化はここで?行
+	// Parse equipment.
 	for(i=0;i<10;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
@@ -1704,12 +1637,76 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	
 	//Store equipment script bonuses 
 	memcpy(sd->param_equip,sd->param_bonus,sizeof(sd->param_equip));
-	//We store card bonuses here because Improve Concentration is the only SC
-	//that will not take it into consideration when buffing you up.
-	memcpy(sd->param_bonus, b_paramcard, sizeof(sd->param_bonus));
+	memset(sd->param_bonus, 0, sizeof(sd->param_bonus));
 	
 	status->def += (refinedef+50)/100;
 
+	//Parse Cards
+	for(i=0;i<10;i++) {
+		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
+		if(index < 0)
+			continue;
+		if(i == 9 && sd->equip_index[8] == index)
+			continue;
+		if(i == 5 && sd->equip_index[4] == index)
+			continue;
+		if(i == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index))
+			continue;
+
+		if(sd->inventory_data[index]) {
+			int j,c;
+			struct item_data *data;
+	
+			//Card script execution.
+			if(sd->status.inventory[index].card[0]==0x00ff ||
+				sd->status.inventory[index].card[0]==0x00fe ||
+				sd->status.inventory[index].card[0]==(short)0xff00)
+				continue;
+			for(j=0;j<sd->inventory_data[index]->slot;j++){	
+				current_equip_card_id= c= sd->status.inventory[index].card[j];
+				if(!c)
+					continue;
+				data = itemdb_exists(c);
+				if(!data)
+					continue;
+				if(first&1 && data->equip_script)
+			  	{	//Execute equip-script on login
+					run_script(data->equip_script,0,sd->bl.id,0);
+					if (!calculating)
+						return 1;
+				}
+				if(!data->script)
+					continue;
+				if(data->flag.no_equip) { //Card restriction checks.
+					if(map[sd->bl.m].flag.restricted && data->flag.no_equip&map[sd->bl.m].zone)
+						continue;
+					if(map[sd->bl.m].flag.pvp && data->flag.no_equip&1)
+						continue;
+					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&2) 
+						continue;
+				}
+				if(i == 8 && sd->status.inventory[index].equip == 0x20)
+				{	//Left hand status.
+					sd->state.lr_flag = 1;
+					run_script(data->script,0,sd->bl.id,0);
+					sd->state.lr_flag = 0;
+				} else
+					run_script(data->script,0,sd->bl.id,0);
+				if (!calculating) //Abort, run_script his function. [Skotlex]
+					return 1;
+			}
+		}
+	}
+	
+	if(sd->status.pet_id > 0 && battle_config.pet_status_support && sd->pet.intimate > 0)
+	{ // Pet
+		struct pet_data *pd=sd->pd;
+		if(pd && (!battle_config.pet_equip_required || pd->equip > 0) &&
+			pd->state.skillbonus == 1 && pd->bonus) //Skotlex: Readjusted for pets
+			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
+	}
+	//param_bonus now holds card bonuses.
+	
 	if(status->rhw.range < 1) status->rhw.range = 1;
 	if(status->lhw->range < 1) status->lhw->range = 1;
 	if(status->rhw.range < status->lhw->range)
@@ -1778,17 +1775,17 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->dex += skill;
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
-	i = status->str + sd->status.str + b_paramcard[0] + sd->param_equip[0];
+	i = status->str + sd->status.str + sd->param_bonus[0] + sd->param_equip[0];
 	status->str = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
-	i = status->agi + sd->status.agi + b_paramcard[1] + sd->param_equip[1];
+	i = status->agi + sd->status.agi + sd->param_bonus[1] + sd->param_equip[1];
 	status->agi = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
-	i = status->vit + sd->status.vit + b_paramcard[2] + sd->param_equip[2];
+	i = status->vit + sd->status.vit + sd->param_bonus[2] + sd->param_equip[2];
 	status->vit = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
-	i = status->int_+ sd->status.int_+ b_paramcard[3] + sd->param_equip[3];
+	i = status->int_+ sd->status.int_+ sd->param_bonus[3] + sd->param_equip[3];
 	status->int_ = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
-	i = status->dex + sd->status.dex + b_paramcard[4] + sd->param_equip[4];
+	i = status->dex + sd->status.dex + sd->param_bonus[4] + sd->param_equip[4];
 	status->dex = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
-	i = status->luk + sd->status.luk + b_paramcard[5] + sd->param_equip[5];
+	i = status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
 	status->luk = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
 	
 // ------ BASE ATTACK CALCULATION ------

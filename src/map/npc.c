@@ -2934,8 +2934,8 @@ int do_init_npc(void)
 	memset(script_event, 0, sizeof(script_event));
 	npc_read_event_script();
 	//Debug function to locate all endless loop warps.
-//	Warps debugging removed by request of Playtester. [Skotlex]
-//	npc_debug_warps();
+	if (battle_config.warp_point_debug)
+		npc_debug_warps();
 	
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
