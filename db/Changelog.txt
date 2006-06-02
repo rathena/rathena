@@ -27,6 +27,7 @@
 
 =========================
 06/02
+	* Added Can Attack to various G_mobs [Playtester]
 	* Removed the Novice Job bonusses again [Playtester]
 	- http://www.eathena.ws/board/index.php?showtopic=93893
 	* Small adjustments of the Orc Lord and Valkyrie Randgris drops [Playtester]
