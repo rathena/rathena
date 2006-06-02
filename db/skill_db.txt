@@ -89,7 +89,7 @@
 67,9,6,16,0,1,0,3,1,yes,0,512,0,magic,0	//PR_SUFFRAGIUM#Suffragium#
 68,9,6,16,6,1,0,5,1,yes,0,0,0,magic,0	//PR_ASPERSIO#Aspersio#
 69,9,6,2,0,3,1,5,1,yes,0,64,0,magic,0	//PR_BENEDICTIO#B.S Sacramenti#
-70,9,6,2,6,1,0,10,1,yes,0,0,0,magic,2	//PR_SANCTUARY#Sanctuary#
+70,9,6,2,6,1,0,10,1,yes,0,0,0,magic,1	//PR_SANCTUARY#Sanctuary#
 71,9,6,16,0,1,0,4,1,yes,0,0,0,magic,0	//PR_SLOWPOISON#Slow Poison#
 72,9,6,16,0,1,0,1,1,yes,0,0,0,magic,0	//PR_STRECOVERY#Status Recovery#
 73,9,6,16,0,1,0,10,1,yes,0,0,0,magic,0	//PR_KYRIE#Kyrie Eleison#

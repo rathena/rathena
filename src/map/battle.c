@@ -2079,6 +2079,7 @@ struct Damage battle_calc_magic_attack(
 			break;
 		case PR_SANCTUARY:
 			ad.blewcount|=0x10000;
+            ad.dmotion = 0; //No flinch animation.
 		case AL_HEAL:
 		case PR_BENEDICTIO:
 		case WZ_FIREPILLAR:
