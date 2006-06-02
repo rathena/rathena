@@ -27,6 +27,8 @@
 
 =========================
 06/02
+	* Made Grandcross usable with all weapons. Thanks to Khersai for digging it
+	  up. [Skotlex]
 	* Added Can Attack to various G_mobs [Playtester]
 	* Removed the Novice Job bonusses again [Playtester]
 	- http://www.eathena.ws/board/index.php?showtopic=93893
