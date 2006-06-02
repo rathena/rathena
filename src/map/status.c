@@ -3329,9 +3329,15 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 {
 	if(!sc || !sc->count)
 		return lv;
+	if( sc->data[SC_FREEZE].timer!=-1 )	
+		return 1;
+	if( sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
+		return 1;
+	if( sc->data[SC_BENEDICTIO].timer!=-1 )
+		return 1;
 	if(sc->data[SC_ELEMENTALCHANGE].timer!=-1)
 		return sc->data[SC_ELEMENTALCHANGE].val4;
-	return cap_value(lv,0,UCHAR_MAX);
+	return cap_value(lv,1,4);
 }
 
 
