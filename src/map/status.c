@@ -1161,11 +1161,9 @@ int status_calc_mob(struct mob_data* md, int first)
 		status->flee2 = 0;
 
 	//Initial battle status
-	if (!first) {
-		status_cpy(&md->status, status);
-		if (md->sc.count)
-			status_calc_bl(&md->bl, SCB_ALL);
-	} else
+	if (!first)
+		status_calc_bl(&md->bl, SCB_ALL);
+	else
 		memcpy(&md->status, status, sizeof(struct status_data));
 	return 1;
 }
