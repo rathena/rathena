@@ -665,9 +665,6 @@ int mob_spawn (struct mob_data *md)
 	md->target_id = 0;
 	md->move_fail_count = 0;
 
-	if (!md->level) // [Valaris]
-		md->level=md->db->lv;
-
 //	md->master_id = 0;
 	md->master_dist = 0;
 
@@ -2124,7 +2121,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(mvp_sd->state.event_kill_mob)
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}
-	if(md->level) md->level=0;
 
 	if(md->deletetimer!=-1) {
 		delete_timer(md->deletetimer,mob_timer_delete);

@@ -760,7 +760,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 		return 0; //Invalid target.
 	
 	hp = status->max_hp * per_hp/100;
-	sp = status->max_sp * per_hp/100;
+	sp = status->max_sp * per_sp/100;
 
 	if(hp > status->max_hp - status->hp)
 		hp = status->max_hp - status->hp;
@@ -1014,6 +1014,14 @@ int status_calc_mob(struct mob_data* md, int first)
 	struct status_data *status;
 	struct block_list *mbl = NULL;
 	int flag=0;
+
+	if(first)
+	{	//Set basic level on respawn.
+		if (md->spawn)
+		  	md->level = md->spawn->level;
+		else
+			md->level = md->db->lv; // [Valaris]
+	}
 
 	//Check if we need custom base-status
 	if (battle_config.mobs_level_up && md->level != md->db->lv)

@@ -27,6 +27,8 @@
 
 =========================
 06/02
+	* Updated Holy Cross, Investigate and Finger Offensive to be usable by all
+	  weapons. [Skotlex]
 	* Gave several MVPs their MVP skill versions [Playtester]
 	* Made Grandcross usable with all weapons. Thanks to Khersai for digging it
 	  up. [Skotlex]
