@@ -2517,7 +2517,7 @@
 4368,Cecil_Damon_Card,Cecil Damon Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,5; bonus bHit,-30; },{},{}
 4369,Venatu_Card,Venatu Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,readparam(bAgi)/18; },{},{}
 4370,Dimik_Card,Dimik Card,6,,10,10,,,,,,,,32,,,,,{ bonus bVit,getrefine()-5; },{},{} //bonus2 bSubRace,RC_Demon,20; bonus2 bSubRace,RC_Ghost,20;
-4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,480,10; bonus2 bSkillAtk,255,10; bonus bCastrate,-10; if(BaseClass == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
+4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,480,10; bonus2 bSkillAtk,368,10; bonus bCastrate,-10; if(BaseClass == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
 4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,2,,,,,{},{},{}
 4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,32,,,,,{ bonus bLuk, getrefine()-5; },{},{} //bonus2 bSubRace,RC_Demon,20; bonus2 bSubRace,RC_Brute,20;
 4374,Vesper_Card,Vesper Card,6,,10,10,,,,,,,,2,,,,,{},{},{}

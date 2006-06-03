@@ -27,6 +27,7 @@
 
 =========================
 06/03
+	* Fixed Archdam Card [Playtester]
 	* Fixed Skeggiold's drops [Playtester]
 	* MVP Jupitel now does 30 Hits [Playtester]
 06/02
