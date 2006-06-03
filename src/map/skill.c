@@ -6689,7 +6689,7 @@ int skill_unit_onplace_timer(struct skill_unit *src,struct block_list *bl,unsign
 				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 				src->val2--;
 			}
-			if (src->val2<=0)
+			if (--src->val2<=0)
 				skill_delunit(src);
 		break;
 		}
