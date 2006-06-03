@@ -21,6 +21,7 @@ void chrif_setport(int);
 int chrif_isconnect(void);
 
 extern int chrif_connected;
+extern int other_mapserver_count;
 
 void chrif_authreq(struct map_session_data *);
 void chrif_authok(int fd);

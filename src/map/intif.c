@@ -134,6 +134,9 @@ int intif_GMmessage(char* mes,int len,int flag)
 	if (CheckForCharServer())
 		return 0;
 	
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+	
 	WFIFOHEAD(inter_fd,lp + len + 4);
 	WFIFOW(inter_fd,0) = 0x3000;
 	WFIFOW(inter_fd,2) = lp + len + 4;
@@ -154,6 +157,10 @@ int intif_announce(char* mes,int len, unsigned long color, int flag)
 	
 	if (CheckForCharServer())
 		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+	
 	WFIFOHEAD(inter_fd, 8 + len);
 	WFIFOW(inter_fd,0) = 0x3000;
 	WFIFOW(inter_fd,2) = 8 + len;
@@ -169,6 +176,12 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 	if (CheckForCharServer())
 		return 0;
 
+	if (other_mapserver_count < 1)
+	{	//Character not found.
+		clif_wis_end(sd->fd, 1);
+		return 0;
+	}	
+		
 	WFIFOHEAD(inter_fd,mes_len + 52);
 	WFIFOW(inter_fd,0) = 0x3001;
 	WFIFOW(inter_fd,2) = mes_len + 52;
@@ -467,8 +480,10 @@ int intif_party_message(int party_id,int account_id,char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;
-//	if(battle_config.etc_log)
-//		printf("intif_party_message: %s\n",mes);
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+
 	WFIFOHEAD(inter_fd,len + 12);
 	WFIFOW(inter_fd,0)=0x3027;
 	WFIFOW(inter_fd,2)=len+12;
@@ -608,6 +623,10 @@ int intif_guild_message(int guild_id,int account_id,char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+
 	WFIFOHEAD(inter_fd, len + 12);
 	WFIFOW(inter_fd,0)=0x3037;
 	WFIFOW(inter_fd,2)=len+12;

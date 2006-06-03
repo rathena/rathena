@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/06/03
+	* Added variable other_mapserver_count to chrif.c which holds total count
+	  of connected map-servers. By using this we prevent sending unnecessary
+	  packets to the char-server when there's no more map-servers connected.
+	  [Skotlex]
+	- Affected packets are whispers, announces, party messages, guild messages.
 2006/06/02
 	* Fixed Visual Studio 7.1 Solution File (Login TXT and Map TXT were removed)
 	* Fixed a bug in unit_can_reach_bl which breaks path seeking when the

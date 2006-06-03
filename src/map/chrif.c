@@ -101,6 +101,8 @@ static int char_port = 6121;
 static char userid[NAME_LENGTH], passwd[NAME_LENGTH];
 static int chrif_state = 0;
 static int char_init_done = 0;
+int other_mapserver_count=0; //Holds count of how many other map servers are online (apart of this instance) [Skotlex]
+
 //Interval at which map server updates online listing. [Valaris]
 #define CHECK_INTERVAL 3600000
 //Interval at which map server sends number of connected users. [Skotlex]
@@ -268,10 +270,6 @@ int chrif_recvmap(int fd)
 	int i, j, ip, port;
 	unsigned char *p = (unsigned char *)&ip;
 	RFIFOHEAD(fd);
-
-	if (chrif_state < 2)	// まだ準備中
-		return -1;
-
 	ip = RFIFOL(fd,4);
 	port = RFIFOW(fd,8);
 	for(i = 10, j = 0; i < RFIFOW(fd,2); i += 4, j++) {
@@ -282,6 +280,7 @@ int chrif_recvmap(int fd)
 	if (battle_config.etc_log)
 		ShowStatus("recv map on %d.%d.%d.%d:%d (%d maps)\n", p[0], p[1], p[2], p[3], port, j);
 
+	other_mapserver_count++;
 	return 0;
 }
 
@@ -294,10 +293,6 @@ int chrif_removemap(int fd){
 	unsigned char *p = (unsigned char *)&ip;
 	RFIFOHEAD(fd);
 
-	if(chrif_state < 2){
-		return -1; //i dunno, but i know if its 3 the link is ok^^
-	}
-
 	ip = RFIFOL(fd, 4);
 	port = RFIFOW(fd, 8);
 
@@ -305,9 +300,9 @@ int chrif_removemap(int fd){
 		map_eraseipport(RFIFOW(fd, i), ip, port);
 	}
 
-	if(battle_config.etc_log){
+	other_mapserver_count--;
+	if(battle_config.etc_log)
 		ShowStatus("remove map of server %d.%d.%d.%d:%d (%d maps)\n", p[0], p[1], p[2], p[3], port, j);
-	}
 	return 0;
 }
 
@@ -323,6 +318,12 @@ int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, 
 
 	chrif_check(-1);
 
+	if (other_mapserver_count < 1)
+	{	//No other map servers are online!
+		pc_authfail(sd);
+		return -1;
+	}
+		
 	s_ip = 0;
 	//for(i = 0; i < fd_max; i++)
 	//	if (session[i] && session[i]->session_data == sd) {
@@ -1396,7 +1397,8 @@ int chrif_disconnect(int fd) {
 		if (kick_on_disconnect)
 			clif_foreachclient(chrif_disconnect_sub);
 		chrif_connected = 0;
-		// 他のmap 鯖のデータを消す
+		
+	 	other_mapserver_count=0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
 		map_eraseallipport();
 
 		// 倉庫キャッシュを消す
