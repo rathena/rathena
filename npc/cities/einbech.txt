@@ -705,7 +705,7 @@ L_OKAY:
 	mes "about the creature in the";
 	mes "Mine Dungeon or what's";
 	mes "happened in town recently?";
-	mes "Wich would you like to";
+	mes "Which would you like to";
 	mes "know more about?";
 	next;
 	menu "Creature of Mine Dungeon",L_CREATURE,"Town Incident",-;
@@ -721,7 +721,7 @@ L_OKAY:
 	mes "It turns out that every family";
 	mes "that had been murdered had";
 	mes "bought one of these teddy bears.";
-	mes "There were even rumors tat these";
+	mes "There were even rumors that these";
 	mes "teddy bears were comming to life.";
 	next;
 	mes "[Franz]";
@@ -729,7 +729,7 @@ L_OKAY:
 	mes "authorities learned that all the";
 	mes "merchants who sold these bears";
 	mes "had purchased them from the";
-	mes "smae wholesaler, an outsider";
+	mes "same wholesaler, an outsider";
 	mes "noone knew anything about.";
 	next;
 	mes "[Franz]";
@@ -753,18 +753,18 @@ L_OKAY:
 	mes "bears are scattered all over";
 	mes "the place and the government";
 	mes "has classified them as monsters.";
-	mes "Kill with exstreme prejudice!";
+	mes "Kill with extreme prejudice!";
  	next;
 	mes "[Franz]";
 	mes "According to adventurers";
 	mes "who have caught these bears,";
 	mes "they're small, neutral monsters";
-	mes "wich drop Honey, Screw, Well-baked";
+	mes "which drop Honey, Screw, Well-baked";
 	mes "Cookie and Oridecon Hammer.";
 	next;
 	mes "[Franz]";
 	mes "That's all I know";
-	mes "about it. watch out";
+	mes "about it. Watch out";
 	mes "for those bears if you";
 	mes "go exploring, okay? They";
 	mes "may be cute, but they're";
@@ -773,7 +773,7 @@ L_OKAY:
 L_CREATURE:
 	mes "[Franz]";
 	mes "The creature I'm talking about is";
-	mes "Ungoliant, wich also called the";
+	mes "Ungoliant, which also called the";
 	mes "Master of the Caves around here.";
 	mes "It's said to live deep in the caves";
 	mes "where it giards peculiar ores and";
@@ -812,7 +812,7 @@ L_CREATURE:
 	mes "to anyone entering the mines.";
 	next;
 	mes "[Franz]";
-	mes "Now, and adventurer that";
+	mes "Now, an adventurer that";
 	mes "managed to kill an Ungoliant";
 	mes "has told me that it drops Ant's";
 	mes "Jaw, Colorful Shell, Very Hard";

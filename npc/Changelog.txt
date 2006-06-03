@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 06/03
+	* Fixed some typos and warps in Einbech [Playtester]
 	* Fixed a small typo in cities/aldebaran.txt thanks to LightFighter [Playtester]
 06/02
 	* Removed Bio Lab from eamobs [Playtester]

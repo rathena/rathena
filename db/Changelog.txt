@@ -26,6 +26,8 @@
 	-----
 
 =========================
+06/03
+	* MVP Jupitel now does 30 Hits [Playtester]
 06/02
 	* Removed the job bonuses of High Novice and Baby Novice [Playtester]
 	* Updated Holy Cross, Investigate and Finger Offensive to be usable by all
