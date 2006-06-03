@@ -772,7 +772,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 	mes "Our Kafra Service has a history and legacy that is 5 thousand, 8 hundred years old...";
 	mes "Blah-blah-blah.....";
 	next;
-	menu "FIVE THOUSNAD YEARS?!",-, "Ahh~ Shut Up!",M_1, "You got a boyfriend?",M_2;
+	menu "FIVE THOUSAND YEARS?!",-, "Ahh~ Shut Up!",M_1, "You got a boyfriend?",M_2;
 	
 		mes "[Kafra Jasmine]";
 		mes "HEY! Just SHUT-UP and LISTEN! It took me a whole week to memorize this!";
