@@ -27,6 +27,7 @@
 
 =========================
 06/03
+	* Fixed Skeggiold's drops [Playtester]
 	* MVP Jupitel now does 30 Hits [Playtester]
 06/02
 	* Removed the job bonuses of High Novice and Baby Novice [Playtester]
