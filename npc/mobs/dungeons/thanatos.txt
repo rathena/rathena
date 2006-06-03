@@ -64,8 +64,8 @@ tha_t05.gat,0,0,0,0	monster	Plasma	1694,5,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1697,5,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1695,5,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1696,5,0,0,0
-tha_t05.gat,0,0,0,0	monster	Owl Duke	1320,40,0,0,0
-tha_t05.gat,0,0,0,0	monster	Owl Baron	1295,40,0,0,0
+tha_t05.gat,0,0,0,0	monster	Owl Duke	1320,30,0,0,0
+tha_t05.gat,0,0,0,0	monster	Owl Baron	1295,30,0,0,0
 tha_t05.gat,0,0,0,0	monster	Elder	1377,20,0,0,0
 tha_t05.gat,0,0,0,0	monster	Thanatos Dolor	1707,10,0,0,0
 
