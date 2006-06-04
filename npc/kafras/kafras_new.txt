@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.7c
+//= 2.8
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -26,6 +26,7 @@
 //= 2.7 Added the Lighthalzen Kafras [MasterOfMuppets]
 //= 2.7b Chanced the Sprite of the Einbech Kafra. [Poki#3]
 //= 2.7c Added missing kafra in Lighthalzen, thanks to Muad_Dib [Vicious]
+//= 2.8 Removed warps from Umbala and Gonryun, thanks Drakee [Evera]
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
@@ -82,8 +83,7 @@ einbroch.gat,59,203,4	script	Kafra	117,{
 // Gonryun -----------------------------------------------------------------
 gonryun.gat,159,122,4	script	Kafra	116,{
 	cutin "kafra_02",2;
-	callfunc "F_KafSetYun";
-	callfunc "F_Kafra",0,0,1;
+	callfunc "F_Kafra",0,3,1;
 
 	M_Save:
 		savepoint "gonryun.gat",160,62;
@@ -135,8 +135,7 @@ louyang.gat,210,104,5	script	Kafra	117,{
 // Umbala Kafra ------------------------------------------------------------
 umbala.gat,128,133,4	script	Kafra	115,{
 	cutin "kafra_03",2;
-	callfunc "F_KafSetYun";
-	callfunc "F_Kafra",0,0,1;
+	callfunc "F_Kafra",0,3,1;
 
 	M_Save:
 		savepoint "umbala.gat",126,131;

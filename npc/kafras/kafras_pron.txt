@@ -21,6 +21,7 @@
 //= 2.3 New Teleport list, new prices, 2.3a fixed Alberta Teleport [Lupus]
 //= 2.3b One Kafra's been moved to Prontera, thx to Vicious_Pucca [Lupus]
 //= 2.4 Updated Kafras locations for the mini-map [Lupus]
+//= 2.41 New prices [Evera]
 //=====================================================================
 
 
@@ -100,7 +101,7 @@ M_Save:
 // Function: Sets variables for Prontera Kafras ----------------------------
 function	script	F_KafSetPront	{
 	setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Orc Dungeon", "Alberta";
-	setarray @wrpP[0], 600, 1200, 1200, 1200, 1700, 1800;
+	setarray @wrpP[0], 600, 1200, 1200, 1200, 1200, 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];

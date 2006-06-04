@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 06/03
+	* Updated Kafras [Evera]
 	* Small adjustment to Thanatos Tower spawns [Playtester]
 	* Fixed some typos and warps in Einbech [Playtester]
 	* Fixed a small typo in cities/aldebaran.txt thanks to LightFighter [Playtester]

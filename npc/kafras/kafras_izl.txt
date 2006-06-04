@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.2
+//= 2.21
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -18,12 +18,13 @@
 //= v2.1b Minor changes to function calls. Using arguments.
 //= This version uses arrays .[kobra_k88]
 //= 2.2 New teleport destinations, prices [Lupus]
+//= 2.21 Warps to Prontera rather than Payon now [Evera]
 //=====================================================================
 
 
 izlude.gat,134,87,3	script	Kafra	117,{
 	cutin "kafra_01",2;
-	setarray @wrpD$[0], "Geffen", "Payon", "Morroc", "Al De Baran";
+	setarray @wrpD$[0], "Geffen", "Prontera", "Morroc", "Al De Baran";
 	setarray @wrpP[0], 1200, 1200, 1200, 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];

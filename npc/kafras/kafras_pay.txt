@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.3
+//= 2.31
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -19,6 +19,7 @@
 //= This version uses arrays .[kobra_k88]
 //= v2.2 New Payon Locations. [Darkchild]
 //= 2.3 1 New Kafra, fixed save menus
+//= 2.31 New prices [Evera]
 //==========================================================================
 
 
@@ -59,7 +60,7 @@ pay_arche.gat,55,123,8	script	Kafra	115,{
 // Function: Sets variables for Payon Kafras ---------------------------------
 function	script	F_KafSetPay	{
 	setarray @wrpD$[0], "Alberta", "Prontera", "Morroc";
-	setarray @wrpP[0], 1200, 1800, 2000;
+	setarray @wrpP[0], 1200, 1200, 1200;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];

@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.2
+//= 2.21
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -19,6 +19,7 @@
 //= This version uses arrays .[kobra_k88]
 //= Corrected savepoint for in town kafra.[kobra_k88]
 //= 2.2 New teleport destinations, prices [Lupus]
+//= 2.21 from Pharos, both warps are now 1200z [Evera]
 //=====================================================================
 
 
@@ -45,7 +46,7 @@ comodo.gat,200,148,4	script	Kafra	721,{
 cmd_fild07.gat,135,134,4	script	Kafra	721,{
 	cutin "kafra_07",2;
 	setarray @wrpD$[0], "Comodo", "Morroc";
-	setarray @wrpP[0], 1200, 1800;
+	setarray @wrpP[0], 1200, 1200;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], "Cancel";

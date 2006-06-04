@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.4
+//= 2.41
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -22,6 +22,7 @@
 //= Fixed Kafras, not giving you Save menu [Lupus]
 //= 2.3 Removed SAVE menu from dungeons Kafras [Lupus]
 //= 2.4 Now Baby Merchant can pass Merch Job Quest w/o probs [Lupus]
+//= 2.41 Removed useless warp points, already nullified by func call [Evera]
 //===============================================================
 
 
@@ -105,21 +106,6 @@ gef_fild10.gat,73,340,4	script	Kafra	115,{
 		savepoint "gef_fild10.gat",54,326;
 		callfunc "F_KafEnd",0,1;
 }
-
-// Function: Sets variables for Kafras at the Orc Dungeon and the Coal Mines
-function	script	F_KafSetOrcCoal	{
-	setarray @wrpD$[0], "Prontera", "Geffen";
-	setarray @wrpP[0], 3000, 3000;
-	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
-	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
-	set @wrpC$[2], "Cancel";
-	set @wrpC$[3], "";
-	set @wrpC$[4], "";
-	set @wrpC$[5], "";
-	set @wrpC$[6], "";
-	return;
-}
-
 
 //<============================== Treasure Island ==========================>\\
 alb2trea.gat,59,69,1	script	Kafra	117,{
