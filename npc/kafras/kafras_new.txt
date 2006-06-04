@@ -135,8 +135,11 @@ louyang.gat,210,104,5	script	Kafra	117,{
 // Umbala Kafra ------------------------------------------------------------
 umbala.gat,128,133,4	script	Kafra	115,{
 	cutin "kafra_03",2;
-	callfunc "F_Kafra",0,3,1;
-
+	setarray @wrpD$[0], "Comodo";
+	setarray @wrpP[0], 1800;
+	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
+	set @wrpC$[1], "Cancel";
+	callfunc "F_Kafra",0,0,1;
 	M_Save:
 		savepoint "umbala.gat",126,131;
 		callfunc "F_KafEnd",0,1;
