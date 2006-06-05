@@ -255,8 +255,8 @@ void initChangeTables(void) {
 	add_sc(NPC_STOP, SC_STOP);
 	set_sc(NPC_BREAKWEAPON, SC_BROKENWEAPON, SI_BROKENWEAPON, SCB_NONE);
 	set_sc(NPC_BREAKARMOR, SC_BROKENARMOR, SI_BROKENARMOR, SCB_NONE);
-	set_sc(NPC_POWERUP, SC_INCHITRATE, SI_BLANK, SCB_HIT);
-	set_sc(NPC_AGIUP, SC_INCFLEERATE, SI_BLANK, SCB_FLEE);
+	set_sc(NPC_POWERUP, SC_INCDEXRATE, SI_BLANK, SCB_DEX);
+	set_sc(NPC_AGIUP, SC_INCAGIRATE, SI_BLANK, SCB_AGI);
 	add_sc(NPC_INVISIBLE, SC_CLOAKING);
 	set_sc(LK_AURABLADE, SC_AURABLADE, SI_AURABLADE, SCB_NONE);
 	set_sc(LK_PARRYING, SC_PARRYING, SI_PARRYING, SCB_NONE);
@@ -2664,6 +2664,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		agi += (agi-sc->data[SC_CONCENTRATE].val3)*sc->data[SC_CONCENTRATE].val2/100;
+	if(sc->data[SC_INCAGIRATE].timer!=-1)
+		agi += agi*sc->data[SC_INCAGIRATE].val1/100;
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		agi += sc->data[SC_INCALLSTATUS].val1;
 	if(sc->data[SC_INCAGI].timer!=-1)
@@ -2765,6 +2767,9 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		dex += (dex-sc->data[SC_CONCENTRATE].val4)*sc->data[SC_CONCENTRATE].val2/100;
+
+	if(sc->data[SC_INCDEXRATE].timer!=-1)
+		dex += dex*sc->data[SC_INCDEXRATE].val1/100;
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		dex += sc->data[SC_INCALLSTATUS].val1;
 	if(sc->data[SC_INCDEX].timer!=-1)

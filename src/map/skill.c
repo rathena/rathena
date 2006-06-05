@@ -4906,13 +4906,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_POWERUP:
 		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,20*skilllv,skill_get_time(skillid, skilllv)));
+			sc_start(bl,type,100,40*skilllv,skill_get_time(skillid, skilllv)));
 		break;
 		
 	case NPC_AGIUP:
 		sc_start(bl,SC_SPEEDUP1,100,skilllv,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,20*skilllv,skill_get_time(skillid, skilllv)));
+			sc_start(bl,type,100,40*skilllv,skill_get_time(skillid, skilllv)));
 		break;
 
 	case NPC_INVISIBLE:
@@ -6416,7 +6416,8 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 	val1=skilllv;
 	val2=0;
 	limit=group->limit;
-	for(i=0;i<layout->count;i++){
+	count=group->unit_count;
+	for(i=0;i<count;i++){
 		struct skill_unit *unit;
 		int ux,uy,alive=1;
 		ux = x + layout->dx[i];
