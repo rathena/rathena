@@ -5157,6 +5157,7 @@ int clif_send0199(int map,int type)
 	struct block_list bl;
 	unsigned char buf[16];
 
+	bl.id = 0;
 	bl.type = BL_NUL;
 	bl.m = map;
 	WBUFW(buf,0)=0x199;

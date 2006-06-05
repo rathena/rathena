@@ -2114,14 +2114,14 @@ static unsigned short status_calc_luk(struct block_list *,struct status_change *
 static unsigned short status_calc_batk(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_hit(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_critical(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_flee(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_flee2(struct block_list *,struct status_change *,int);
-static unsigned char status_calc_def(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_def2(struct block_list *,struct status_change *,int);
-static unsigned char status_calc_mdef(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_mdef2(struct block_list *,struct status_change *,int);
+static signed short status_calc_hit(struct block_list *,struct status_change *,int);
+static signed short status_calc_critical(struct block_list *,struct status_change *,int);
+static signed short status_calc_flee(struct block_list *,struct status_change *,int);
+static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
+static signed char status_calc_def(struct block_list *,struct status_change *,int);
+static signed short status_calc_def2(struct block_list *,struct status_change *,int);
+static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
+static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
@@ -2621,7 +2621,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 static unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
 {
 	if(!sc || !sc->count)
-		return str;
+		return cap_value(str,1,USHRT_MAX);
 	
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		str += sc->data[SC_INCALLSTATUS].val1;
@@ -2660,7 +2660,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 static unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, int agi)
 {
 	if(!sc || !sc->count)
-		return agi;
+		return cap_value(agi,1,USHRT_MAX);
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		agi += (agi-sc->data[SC_CONCENTRATE].val3)*sc->data[SC_CONCENTRATE].val2/100;
@@ -2699,7 +2699,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 static unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, int vit)
 {
 	if(!sc || !sc->count)
-		return vit;
+		return cap_value(vit,1,USHRT_MAX);
 
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		vit += sc->data[SC_INCALLSTATUS].val1;
@@ -2726,7 +2726,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 static unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_)
 {
 	if(!sc || !sc->count)
-		return int_;
+		return cap_value(int_,1,USHRT_MAX);
 
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		int_ += sc->data[SC_INCALLSTATUS].val1;
@@ -2763,7 +2763,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 static unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex)
 {
 	if(!sc || !sc->count)
-		return dex;
+		return cap_value(dex,1,USHRT_MAX);
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		dex += (dex-sc->data[SC_CONCENTRATE].val4)*sc->data[SC_CONCENTRATE].val2/100;
@@ -2805,7 +2805,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 static unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk)
 {
 	if(!sc || !sc->count)
-		return luk;
+		return cap_value(luk,1,USHRT_MAX);
 
 	if(sc->data[SC_CURSE].timer!=-1)
 		return 0;
@@ -2832,7 +2832,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 static unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk)
 {
 	if(!sc || !sc->count)
-		return batk;
+		return cap_value(batk,0,USHRT_MAX);
 
 	if(sc->data[SC_ATKPOTION].timer!=-1)
 		batk += sc->data[SC_ATKPOTION].val1;
@@ -2865,7 +2865,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 static unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk)
 {
 	if(!sc || !sc->count)
-		return watk;
+		return cap_value(watk,0,USHRT_MAX);
 
 	if(sc->data[SC_IMPOSITIO].timer!=-1)
 		watk += sc->data[SC_IMPOSITIO].val2;
@@ -2901,13 +2901,14 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk -= watk * 25/100;
 	if(sc->data[SC_STRIPWEAPON].timer!=-1)
 		watk -= watk * sc->data[SC_STRIPWEAPON].val2/100;
+
 	return cap_value(watk,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
 {
 	if(!sc || !sc->count)
-		return matk;
+		return cap_value(matk,0,USHRT_MAX);
 
 	if(sc->data[SC_MATKPOTION].timer!=-1)
 		matk += sc->data[SC_MATKPOTION].val1;
@@ -2916,17 +2917,17 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_MAGICPOWER].timer!=-1)
 		matk += matk * 5*sc->data[SC_MAGICPOWER].val1/100;
 	if(sc->data[SC_MINDBREAKER].timer!=-1)
-		matk += matk * 20*sc->data[SC_MINDBREAKER].val1/100;
+		matk += matk * sc->data[SC_MINDBREAKER].val2/100;
 	if(sc->data[SC_INCMATKRATE].timer!=-1)
 		matk += matk * sc->data[SC_INCMATKRATE].val1/100;
 
 	return cap_value(matk,0,USHRT_MAX);
 }
 
-static unsigned short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
+static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
 {
 	if(!sc || !sc->count)
-		return critical;
+		return cap_value(critical,0,SHRT_MAX);
 
 	if (sc->data[SC_EXPLOSIONSPIRITS].timer!=-1)
 		critical += sc->data[SC_EXPLOSIONSPIRITS].val2;
@@ -2937,14 +2938,14 @@ static unsigned short status_calc_critical(struct block_list *bl, struct status_
 	if(sc->data[SC_CLOAKING].timer!=-1)
 		critical += critical;
 
-	return cap_value(critical,0,USHRT_MAX);
+	return cap_value(critical,0,SHRT_MAX);
 }
 
-static unsigned short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit)
+static signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit)
 {
 	
 	if(!sc || !sc->count)
-		return hit;
+		return cap_value(hit,0,SHRT_MAX);
 
 	if(sc->data[SC_INCHIT].timer != -1)
 		hit += sc->data[SC_INCHIT].val1;
@@ -2965,16 +2966,17 @@ static unsigned short status_calc_hit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_INCREASING].timer!=-1)
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	
-	return cap_value(hit,0,USHRT_MAX);
+	return cap_value(hit,0,SHRT_MAX);
 }
 
-static unsigned short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
+static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
 {
 	if (bl->type == BL_PC && map_flag_gvg(bl->m)) //GVG grounds flee penalty, placed here because it's "like" a status change. [Skotlex]
 		flee -= flee * battle_config.gvg_flee_penalty/100;
 
 	if(!sc || !sc->count)
-		return flee;
+		return cap_value(flee,0,SHRT_MAX);
+
 	if(sc->data[SC_INCFLEE].timer!=-1)
 		flee += sc->data[SC_INCFLEE].val1;
 	if(sc->data[SC_FLEEFOOD].timer!=-1)
@@ -3002,22 +3004,25 @@ static unsigned short status_calc_flee(struct block_list *bl, struct status_chan
 	if(sc->data[SC_GATLINGFEVER].timer!=-1)
 		flee -= sc->data[SC_GATLINGFEVER].val1*5;
 
-	return cap_value(flee,0,USHRT_MAX);
+	return cap_value(flee,0,SHRT_MAX);
 }
 
-static unsigned short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2)
+static signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2)
 {
 	if(!sc || !sc->count)
-		return flee2;
+		return cap_value(flee2,0,SHRT_MAX);
+
 	if(sc->data[SC_WHISTLE].timer!=-1)
 		flee2 += sc->data[SC_WHISTLE].val3*10;
-	return cap_value(flee2,0,USHRT_MAX);
+
+	return cap_value(flee2,0,SHRT_MAX);
 }
 
-static unsigned char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 {
 	if(!sc || !sc->count)
-		return def;
+		return cap_value(def,0,CHAR_MAX);
+
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
 	if(sc->data[SC_KEEPING].timer!=-1)
@@ -3046,13 +3051,14 @@ static unsigned char status_calc_def(struct block_list *bl, struct status_change
 		def -= def * sc->data[SC_STRIPSHIELD].val2/100;
 	if (sc->data[SC_FLING].timer!=-1)
 		def -= def * (sc->data[SC_FLING].val2)/100;
-	return cap_value(def,0,UCHAR_MAX);
+
+	return cap_value(def,0,CHAR_MAX);
 }
 
-static unsigned short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
+static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
 {
 	if(!sc || !sc->count)
-		return def2;
+		return cap_value(def2,0,SHRT_MAX);
 	
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
@@ -3079,13 +3085,13 @@ static unsigned short status_calc_def2(struct block_list *bl, struct status_chan
 	if(sc->data[SC_FLING].timer!=-1)
 		def2 -= def2 * (sc->data[SC_FLING].val3)/100;
 
-	return cap_value(def2,0,USHRT_MAX);
+	return cap_value(def2,0,SHRT_MAX);
 }
 
-static unsigned char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
 {
 	if(!sc || !sc->count)
-		return mdef;
+		return cap_value(mdef,0,CHAR_MAX);
 
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
@@ -3102,25 +3108,27 @@ static unsigned char status_calc_mdef(struct block_list *bl, struct status_chang
 	if(sc->data[SC_ENDURE].timer!=-1 && sc->data[SC_ENDURE].val4 == 0)
 		mdef += sc->data[SC_ENDURE].val1;
 
-	return cap_value(mdef,0,UCHAR_MAX);
+	return cap_value(mdef,0,CHAR_MAX);
 }
 
-static unsigned short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
+static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
 {
 	if(!sc || !sc->count)
-		return mdef2;
+		return cap_value(mdef2,0,SHRT_MAX);
+
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
 	if(sc->data[SC_MINDBREAKER].timer!=-1)
-		mdef2 -= mdef2 * 12*sc->data[SC_MINDBREAKER].val1/100;
+		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER].val3/100;
 
-	return cap_value(mdef2,0,USHRT_MAX);
+	return cap_value(mdef2,0,SHRT_MAX);
 }
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
 {
 	if(!sc || !sc->count)
-		return speed;
+		return cap_value(speed,10,USHRT_MAX);
+
 	if(sc->data[SC_CURSE].timer!=-1)
 		speed += 450;
 	if(sc->data[SC_SWOO].timer != -1) // [marquis007]
@@ -3181,7 +3189,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if(sc->data[SC_GATLINGFEVER].timer!=-1)
 		speed += speed * 25/100;
 	
-	return cap_value(speed,0,USHRT_MAX);
+	return cap_value(speed,10,USHRT_MAX);
 }
 
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
@@ -3286,7 +3294,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
 {
 	if(!sc || !sc->count || map_flag_gvg(bl->m))
-		return dmotion;
+		return cap_value(dmotion,0,USHRT_MAX);
 		
 	if (sc->data[SC_ENDURE].timer!=-1 ||
 		sc->data[SC_CONCENTRATION].timer!=-1)
@@ -3298,7 +3306,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 static unsigned int status_calc_maxhp(struct block_list *bl, struct status_change *sc, unsigned int maxhp)
 {
 	if(!sc || !sc->count)
-		return maxhp;
+		return cap_value(maxhp,1,UINT_MAX);
 
 	if(sc->data[SC_INCMHPRATE].timer!=-1)
 		maxhp += maxhp * sc->data[SC_INCMHPRATE].val1/100;
@@ -3315,7 +3323,8 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 static unsigned int status_calc_maxsp(struct block_list *bl, struct status_change *sc, unsigned int maxsp)
 {
 	if(!sc || !sc->count)
-		return maxsp;
+		return cap_value(maxsp,1,UINT_MAX);
+
 	if(sc->data[SC_INCMSPRATE].timer!=-1)
 		maxsp += maxsp * sc->data[SC_INCMSPRATE].val1/100;
 	if(sc->data[SC_SERVICE4U].timer!=-1)
@@ -5022,6 +5031,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_FLEET:
 			val2 = 3*val1; //Aspd change
 			val3 = 5+5*val1; //Atk rate change
+			break;
+		case SC_MINDBREAKER:
+			val2 = 20*val1; //matk increase.
+			val3 = 12*val1; //mdef2 reduction.
 			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)

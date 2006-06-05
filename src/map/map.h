@@ -332,16 +332,18 @@ struct status_data {
 		str, agi, vit, int_, dex, luk,
 		batk,
 		matk_min, matk_max,
-		hit, flee, cri, flee2,
-		def2, mdef2,
 		speed,
 		amotion, adelay, dmotion,
 		mode;
-	short aspd_rate;
+	short 
+		hit, flee, cri, flee2,
+		def2, mdef2,
+		aspd_rate;
 	unsigned char
-		def, mdef,
 		def_ele, ele_lv,
 		size, race;
+	signed char
+		def, mdef;
 	struct weapon_atk rhw, *lhw; //Right Hand/Left Hand Weapon. Only players have a lhw (hence it's a pointer)
 };
 

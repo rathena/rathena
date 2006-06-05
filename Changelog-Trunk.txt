@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/05
+	* Changed hit, flee, cri, flee2, def2 and mdef2 to signed short, def, mdef
+	  to signed char to correctly account for cards with penalties in said stats.
+	  [Skotlex]
 	* Fog of Wall won't affect the caster now in any way. [Skotlex]
 	* Added clif_fixpos packets before attacking for the first time to clear
 	  any position sync issues with the client. [Skotlex]
