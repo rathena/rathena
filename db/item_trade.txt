@@ -26,3 +26,6 @@
 //7476,123,100
 //Leather Pouch (part of Cooking Quest)
 7432,123,100
+//The Sign Quest related items
+7177,127,100
+7178,127,100

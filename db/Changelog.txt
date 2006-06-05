@@ -27,6 +27,7 @@
 
 =========================
 06/05
+	* Added some sign quest related item restrictions. [MasterOfMuppets]
 	* Fixed the item bonus of baseball cap. [MasterOfMuppets]
 	* A typo fix, thanks to DracoRPG. [MasterOfMuppets]
 06/03
