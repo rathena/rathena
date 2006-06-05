@@ -2070,9 +2070,9 @@ struct Damage battle_calc_magic_attack(
 		case MG_FIREWALL:
 			if(mflag) //mflag has a value when it was checked against an undead in skill.c [Skotlex]
 				ad.blewcount = 0; //No knockback
-            else
+			else
 				ad.blewcount |= 0x10000;
-	          ad.dmotion = 0; //No flinch animation.
+			ad.dmotion = 0; //No flinch animation.
 			break;
 		case WZ_STORMGUST: //Should knockback randomly.
 			ad.blewcount|=0x40000;
@@ -2769,7 +2769,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 	}
 
-	if (sc && sc->data[SC_CLOAKING].timer != -1 && !sc->data[SC_CLOAKING].val4)
+	if (sc && sc->data[SC_CLOAKING].timer != -1 && !(sc->data[SC_CLOAKING].val4&1))
 		status_change_end(src,SC_CLOAKING,-1);
 
 	//Check for counter attacks that block your attack. [Skotlex]

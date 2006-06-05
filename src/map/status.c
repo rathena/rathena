@@ -52,9 +52,6 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
-//Caps values to min/max
-#define cap_value(a, min, max) (a>max?max:a<min?min:a)
-
 //Initializes the StatusIconChangeTable variable. May seem somewhat slower than directly defining the array,
 //but it is much less prone to errors. [Skotlex]
 void initChangeTables(void) {
@@ -4815,6 +4812,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_GRAVITATION:
+			//val2 = aspd reduction
 			if (val3 == BCT_SELF) {
 				struct unit_data *ud = unit_bl2ud(bl);
 				if (ud) {

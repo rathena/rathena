@@ -1200,6 +1200,7 @@ static int pc_bonus_item_drop(struct s_add_drop *drop, short *count, short id, s
 int pc_bonus(struct map_session_data *sd,int type,int val)
 {
 	struct status_data *status;
+	int bonus;
 	nullpo_retr(0, sd);
 
 	status = &sd->base_status;
@@ -1246,50 +1247,52 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->def < -val)
-				status->def = 0;
-			else if (val > 0 && val > UCHAR_MAX - status->def)
-				status->def = UCHAR_MAX;
-			else
-				status->def+=val;
+			bonus = status->def + val;
+			status->def = cap_value(bonus, 0, UCHAR_MAX);
 		}
 		break;
 	case SP_DEF2:
-		if(sd->state.lr_flag != 2)
-			status->def2+=val;
+		if(sd->state.lr_flag != 2) {
+			bonus = status->def2 + val;
+			status->def2 = cap_value(bonus, 0, USHRT_MAX);
+		}
 		break;
 	case SP_MDEF1:
-		if(sd->state.lr_flag != 2)
-			status->mdef+=val;
+		if(sd->state.lr_flag != 2) {
+			bonus = status->mdef + val;
+			status->mdef = cap_value(bonus, 0, UCHAR_MAX);
+		}
 		break;
 	case SP_MDEF2:
 		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->mdef < -val)
-				status->mdef = 0;
-			else if (val > 0 && val > UCHAR_MAX - status->mdef)
-				status->mdef = UCHAR_MAX;
-			else
-				status->mdef+=val;
+			bonus = status->mdef2 + val;
+			status->mdef2 = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_HIT:
-		if(sd->state.lr_flag != 2)
-			status->hit+=val;
-		else
+		if(sd->state.lr_flag != 2) {
+			bonus = status->hit + val;
+			status->hit = cap_value(bonus, 0, USHRT_MAX);
+		} else
 			sd->arrow_hit+=val;
 		break;
 	case SP_FLEE1:
-		if(sd->state.lr_flag != 2)
-			status->flee+=val;
+		if(sd->state.lr_flag != 2) {
+			bonus = status->flee + val;
+			status->flee = cap_value(bonus, 0, USHRT_MAX);
+		}
 		break;
 	case SP_FLEE2:
-		if(sd->state.lr_flag != 2)
-			status->flee2+=val*10;
+		if(sd->state.lr_flag != 2) {
+			bonus = status->flee2 + val*10;
+			status->flee2 = cap_value(bonus, 0, USHRT_MAX);
+		}
 		break;
 	case SP_CRITICAL:
-		if(sd->state.lr_flag != 2)
-			status->cri+=val*10;
-		else
+		if(sd->state.lr_flag != 2) {
+			bonus = status->cri + val*10;
+			status->cri = cap_value(bonus, 0, USHRT_MAX);
+		} else
 			sd->arrow_cri += val*10;
 		break;
 	case SP_ATKELE:
@@ -1298,12 +1301,18 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				ShowError("pc_bonus: SP_ATKELE: Invalid element %d\n", val);
 			break;
 		}
-		if(!sd->state.lr_flag)
-			status->rhw.ele=val;
-		else if(sd->state.lr_flag == 1)
-			status->lhw->ele=val;
-		else if(sd->state.lr_flag == 2)
+		switch (sd->state.lr_flag)
+		{
+		case 2:
 			sd->arrow_ele=val;
+			break;
+		case 1:
+			status->lhw->ele=val;
+			break;
+		default:
+			status->rhw.ele=val;
+			break;
+		}
 		break;
 	case SP_DEFELE:
 		if(val >= ELE_MAX) {
@@ -1315,12 +1324,20 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->def_ele=val;
 		break;
 	case SP_MAXHP:
-		if(sd->state.lr_flag != 2)
-			status->max_hp+=val;
+		if(sd->state.lr_flag != 2) {
+			if (val < 0 && status->max_hp <= -val)
+				status->max_hp = 1;
+			else
+				status->max_hp+=val;
+		}
 		break;
 	case SP_MAXSP:
-		if(sd->state.lr_flag != 2)
-			status->max_sp+=val;
+		if(sd->state.lr_flag != 2) {
+			if (val < 0 && status->max_sp <= -val)
+				status->max_sp = 1;
+			else
+				status->max_sp+=val;
+		}
 		break;
 	case SP_CASTRATE:
 		if(sd->state.lr_flag != 2)
@@ -1339,11 +1356,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->dsprate+=val;
 		break;
 	case SP_ATTACKRANGE:
-		if(!sd->state.lr_flag)
-			status->rhw.range += val;
-		else if(sd->state.lr_flag == 1)
-			status->lhw->range += val;
-		else if(sd->state.lr_flag == 2) {
+		switch (sd->state.lr_flag) {
+		case 2:
 			switch (sd->status.weapon) {
 				case W_BOW:
 				case W_REVOLVER:
@@ -1353,11 +1367,20 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				case W_GRENADE:
 					status->rhw.range += val;
 			}
+			break;
+		case 1:
+			status->lhw->range += val;
+			break;
+		default:
+			status->rhw.range += val;
+			break;
 		}
 		break;
 	case SP_ADD_SPEED:	//Raw increase
-		if(sd->state.lr_flag != 2)
-			status->speed -= val;
+		if(sd->state.lr_flag != 2) {
+			bonus = status->speed - val;
+			status->speed = cap_value(bonus, 0, USHRT_MAX);
+		}
 		break;
 	case SP_SPEED_RATE:	//Non stackable increase
 		if(sd->state.lr_flag != 2 && sd->speed_rate > 100-val)
