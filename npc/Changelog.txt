@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 06/05
+	* Implemented an inn NPC in Einbroch [MasterOfMuppets]
 	* Fixed some typos in Lighthalzen [Playtester]
 06/03
 	* Implemented some more airship NPCs, more are to come. [MasterOfMuppets]
