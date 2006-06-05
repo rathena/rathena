@@ -1006,6 +1006,7 @@ void status_calc_misc(struct status_data *status, int level)
 
 //Skotlex: Calculates the initial status for the given mob
 //first will only be false when the mob leveled up or got a GuardUp level.
+//first&2: Class-change invoked.
 int status_calc_mob(struct mob_data* md, int first)
 {
 	struct status_data *status;
@@ -1014,7 +1015,7 @@ int status_calc_mob(struct mob_data* md, int first)
 
 	if(first)
 	{	//Set basic level on respawn.
-		if (md->spawn)
+		if (md->spawn && !(flag&2))
 		  	md->level = md->spawn->level;
 		else
 			md->level = md->db->lv; // [Valaris]

@@ -7790,7 +7790,7 @@ int skill_check_condition(struct map_session_data *sd,int skill, int lv, int typ
 		break;
 	case SL_SMA:
 		if(type) break; //Only do the combo check when the target is selected (type == 0)
-		if(!sd || sc->data[SC_SMA].timer == -1)
+		if(!sc || sc->data[SC_SMA].timer == -1)
 			return 0;
 		break;	
 
