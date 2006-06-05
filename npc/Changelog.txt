@@ -32,6 +32,8 @@ Evera
 Date		Added
 ======
 06/03
+	* Implemented some more airship NPCs, more are to come. [MasterOfMuppets]
+	- Also put in a few warps from the sign quest which is to come.
 	* Updated Kafras [Evera]
 	* Small adjustment to Thanatos Tower spawns [Playtester]
 	* Fixed some typos and warps in Einbech [Playtester]

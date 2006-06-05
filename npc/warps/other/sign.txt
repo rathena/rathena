@@ -1,0 +1,20 @@
+//===== Athena Script ========================================
+//= Sign Quest Warps
+//===== By: ==================================================
+//= MasterOfMuppets
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points related to the Sign Quest will be put here
+//===== Additional Comments: =================================
+//= 1.0 A few warps.  [MasterOfMuppets]
+//============================================================
+
+cmd_in01.gat,17,34,0	warp	sign01	1,1,comodo.gat,187,164
+
+himinn.gat,49,6,0	warp	sign02	1,1,gef_fild07.gat,179,241
+
+himinn.gat,49,67,0	warp	sign03	1,1,himinn.gat,49,75
+himinn.gat,49,73,0	warp	sign03a	1,1,himinn.gat,49,65

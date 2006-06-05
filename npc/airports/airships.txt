@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.1
+//= 0.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 0.1 Added first version, it might be a little buggy [MasterOfMuppets]
 //= 0.1a Fixed the Airport Staff#Iz which was [MasterOfMuppets]
 //= 	 warping you to the same location as Airport Staff#Ein
+//= 0.2 Implemented some more airship NPCs, more are to come.
 //============================================================ 
 
 //============================================================ 
@@ -192,6 +193,168 @@ airplane.gat,100,69,2	script	Airship Crew	852,{
 
 }
 
+airplane.gat,250,59,3	script	Airship Staff::AirshipInfo	67,{
+
+	mes "[Airship Staff]";
+	mes "Welcome";
+	mes "to the Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Using the Airship",s_Use,"Captain's Cabin",s_Capt,"Facilities",s_Faci,"Cancel",-;
+
+	mes "[Airship Staff]";
+	mes "Well, I hope you like";
+	mes "your flight aboard";
+	mes "our Airships. Thank";
+	mes "you and have a good day.";
+	close;
+
+s_Use:
+	mes "[Airship Staff]";
+	mes "When you see a broadcast";
+	mes "announcing that we have";
+	mes "arrived at your destination,";
+	mes "please use one of the exits";
+	mes "located at the north and";
+	mes "south ends of the Airship";
+	next;
+	mes "[Airship Staff]";
+	mes "If you happen to miss";
+	mes "your stop, don't worry.";
+	mes "The airship is constantly";
+	mes "on route and you'll get";
+	mes "another chance to arrive";
+	mes "to your intended destination.";
+	close;
+
+s_Capt:
+	mes "[Airship Staff]";
+	mes "The Captain's Cabin";
+	mes "is located at the front";
+	mes "of the Airship. There, you";
+	mes "can meet the captain and";
+	mes "the pilot of the Airship.";
+	close;
+
+s_Faci:
+	mes "[Airship Staff]";
+	mes "The Airship provides";
+	mes "various Mini Games for";
+	mes "the entertainment of all";
+	mes "our passengers. We invite";
+	mes "you to try your luck and skills";
+	mes "in the Airship's Mini Games~";
+	close;
+
+}
+
+airplane.gat,50,66,4	script	Meltz::AirshipApples	86,{
+
+	mes "[Meltz]";
+	mes "Welcome to Meltz's";
+	mes "Shop where you can";
+	mes "purchase Apples or grind";
+	mes "them to make Apple Juice.";
+	next;
+	menu "Buy Apples",s_Buy,"Make Apple Juice",s_Juice,"Cancel.",-;
+
+s_Cancel:
+	mes "[Meltz]";
+	mes "Thanks for stopping";
+	mes "by my shop. Farewell!";
+	mes "Come back anytime when";
+	mes "you feel like having an";
+	mes "Apple to snack on~";
+	close;
+
+s_Buy:
+	mes "[Meltz]";
+	mes "Please enter the amount";
+	mes "of Apples that you wish to";
+	mes "buy. Each Apple is 15 zeny";
+	mes "and you can buy a maximum";
+	mes "of 500 at a time. Please enter";
+	mes "\"0\" to cancel your order.";
+	next;
+	input @tempapple;
+	if(!@tempapple)goto s_Cancel;
+	if(@tempapple > 0 && @tempapple < 501)goto s_AppleBuy;
+	if(@tempapple < 0)close;
+	mes "[Meltz]";
+	mes "The maximum amount of apples";
+	mes "you can buy at the same time";
+	mes "is 500. " + @tempapple + " is clearly";
+	mes "over 500.";
+	close;
+
+s_AppleBuy:
+	mes "[Meltz]";
+	mes "A total of ^FF0000" + @tempapple + "^000000 Apples.";
+	mes "will cost you ^FF0000" + @tempapple * 15 + "^000000 zeny.";
+	mes "Would you like to continue?";
+	next;
+	menu "Yes",-,"No",s_Cancel;
+
+	if(zeny < (@tempapple * 15))goto s_NEnoughZeny;
+	mes "[Meltz]";
+	mes "Thanks for stopping by";
+	mes "my shop. I hope you enjoy";
+	mes "the flavor of these Apples~!";
+	getitem 512,@tempapple;
+	set zeny,zeny - (@tempapple * 15);
+	close;
+
+s_NEnoughZeny:
+	mes "[Meltz]";
+	mes "I'm sorry buy you don't";
+	mes "seem to have enough zeny.";
+	mes "Come back anytime when";
+	mes "you feel like having an";
+	mes "Apple to snack on~";
+	close;
+
+s_Juice:
+	mes "[Meltz]";
+	mes "Okay, I'll need";
+	mes "^FF00003 Apples and 1 Empty Bottle^000000";
+	mes "to make 1 Apple Juice for you.";
+	mes "Would you like to proceed?";
+	next;
+	menu "Yes",-,"No",s_Cancel;
+
+	if(countitem(512) < 3 || !countitem(713))goto s_Material;
+	mes "[Meltz]";
+	mes "Thank you,";
+	mes "please wait";
+	mes "just a moment.";
+	next;
+	mes "*Grind grind*";
+	mes "*Grind grind*";
+	mes "*Clang...!*";
+	next;
+	mes "[Meltz]";
+	mes "There you go~";
+	mes "I hope you enjoy!";
+	mes "Please feel free to";
+	mes "stop by for your Apple";
+	mes "and Apple Juice needs";
+	mes "at anytime, adventurer~";
+	delitem 512,3;
+	delitem 713,1;
+	getitem 531,1;
+	close;
+
+s_Material:
+	mes "[Meltz]";
+	mes "I'm sorry, but you don't";
+	mes "have enough materials to";
+	mes "create a bottle of Apple Juice.";
+	mes "Remember, I need 3 Apples";
+	mes "and 1 Empty Bottle to do it.";
+	close;
+
+}
+
 //============================================================ 
 //= The Airship System (Yuno -> Izlude -> Repeat)
 //============================================================ 
@@ -296,6 +459,36 @@ airplane_01.gat,240,39,1	duplicate(Exit)	Exit	857
 airplane_01.gat,247,39,1	duplicate(Exit)	Exit	857
 
 airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew	852
+
+airplane_01.gat,250,59,3	duplicate(AirshipInfo)	Airship Staff	67
+
+airplane_01.gat,50,66,4	duplicate(AirshipApples)	Meltz	86
+
+airplane_01.gat,83,61,2	script	Girl	72,{
+
+	mes "[Dianne]";
+	mes "It's so weird!";
+	mes "I went to visit the";
+	mes "Airship Captain and";
+	mes "all I saw was this";
+	mes "weird reindeer. Oh!";
+	mes "Do you think that...";
+	close;
+
+}
+
+airplane_01.gat,69,63,2	script	Old Man	55,{
+
+	mes "[Mendel]";
+	mes "As I expected, the";
+	mes "in-flight meals are";
+	mes "three star quality at best.";
+	mes "^111111*Harrrumph*^000000 I really should";
+	mes "have brought my chef so that";
+	mes "I could enjoy a real meal.";
+	close;
+
+}
 
 //============================================================ 
 //= The Izlude Airship Staff
