@@ -2455,7 +2455,7 @@
 13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,0x01000000,7,2,32768,,1,,4,{ bonus2 bAddEff,Eff_Bleeding,50; },{},{}
 13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
 13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
-13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poision; bonus2 bAddEff,Eff_Poison,50; },{},{}
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,50; },{},{}
 13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,50; },{},{}
 13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,50; },{},{}
 // Shurikens & Kunais

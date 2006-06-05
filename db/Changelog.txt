@@ -26,6 +26,8 @@
 	-----
 
 =========================
+06/05
+	* A typo fix, thanks to DracoRPG. [MasterOfMuppets]
 06/03
 	* Fixed Archdam Card [Playtester]
 	* Fixed Skeggiold's drops [Playtester]
