@@ -229,8 +229,11 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		}
 		if (tbl->m == bl->m && check_distance_bl(bl, tbl, ud->chaserange))
 		{	//Reached destination.
-			if (ud->state.attack_continue)
+			if (ud->state.attack_continue) {
+				clif_fixpos(bl); //Aegis uses one before every attack, we should
+				  //only need this one for syncing purposes. [Skotlex]
 				unit_attack(bl, tbl->id, ud->state.attack_continue);
+			}
 		} else { //Update chase-path
 			unit_walktobl(bl, tbl, ud->chaserange, ud->state.walk_easy|(ud->state.attack_continue?2:0));
 			return 0;
@@ -238,8 +241,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	} else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
-//		if (bl->type == BL_NPC) //Original eA code had this one only for BL_NPCs
-//			clif_fixpos(bl);
 	}
 	return 0;
 }
@@ -1246,6 +1247,10 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		}
 		return 1;
 	}
+
+	//Sync packet only for players.
+	//Non-players use the sync packet on the walk timer. [Skotlex]
+	if (tid == -1 && sd) clif_fixpos(src);
 
 	if(DIFF_TICK(ud->attackabletime,tick) <= 0) {
 		if (battle_config.attack_direction_change &&

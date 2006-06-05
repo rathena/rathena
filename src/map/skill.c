@@ -6570,8 +6570,7 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 	case UNT_SERVICEFORYOU:
 		if (sg->src_id==bl->id && (!sc || sc->data[SC_SPIRIT].timer == -1 || sc->data[SC_SPIRIT].val2 != SL_BARDDANCER))
 			return 0;
-		if (!sc)
-			break;
+		if (!sc) return 0;
 		if (sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
 		else if (sc->data[type].val4 == 1) {
@@ -6582,6 +6581,8 @@ int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int
 		}
 		break;
 	case UNT_FOGWALL:
+		if (sg->src_id==bl->id)
+			return 0;
 		if (sc && sc->data[type].timer==-1)
 		{
 			sc_start4(bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);

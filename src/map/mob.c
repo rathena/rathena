@@ -421,6 +421,8 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 	md->guardian_data->emblem_id = g->emblem_id;
 	memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
 	md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
+	if(md->guardian_data->guardup_lv)
+		status_calc_mob(md, 0); //Give bonuses.
 	return 0;
 }
 
