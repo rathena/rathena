@@ -979,9 +979,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;	
-	if (!sstatus || !tstatus)
-		return 0; //Required for stat data.
-	
+
 	switch(skillid){
 	case 0: // Normal attacks (no skill used)
 	{
@@ -3645,9 +3643,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 
-
-		if(sd->spiritball >= 4 && sd->sc.data[SC_ADJUSTMENT].timer!=-1)
-			status_change_end(&sd->bl,SC_ADJUSTMENT,-1);
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
