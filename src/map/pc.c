@@ -1325,7 +1325,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_MAXHP:
 		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->max_hp <= -val)
+			if (val < 0 && status->max_hp <= (unsigned int)(-val))
 				status->max_hp = 1;
 			else
 				status->max_hp+=val;
@@ -1333,7 +1333,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_MAXSP:
 		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->max_sp <= -val)
+			if (val < 0 && status->max_sp <= (unsigned int)(-val))
 				status->max_sp = 1;
 			else
 				status->max_sp+=val;
