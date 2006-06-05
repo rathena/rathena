@@ -424,7 +424,7 @@ lighthalzen.gat,115,159,5	script	Collins	866,{
 
 lighthalzen.gat,77,157,5	script	Villagomez	866,{
 
-	mes "[Mauro]";
+	mes "[Villagomez]";
 	mes "I just step out to get";
 	mes "a haircut and now i'm";
 	mes "lost. Boy oh boy, I hope";

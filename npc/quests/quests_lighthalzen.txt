@@ -2426,7 +2426,7 @@ s_Cont2:
 	mes "Aw nuts, this is";
 	mes "taking much longer";
 	mes "than I had expected.";
-	mes "Now ehere did I put";
+	mes "Now where did I put";
 	mes "that thing? Hmmmm...";
 	if(friendship3 == 3)goto s_Cont3;
 	next;

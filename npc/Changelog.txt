@@ -31,6 +31,8 @@ Evera
 
 Date		Added
 ======
+06/05
+	* Fixed some typos in Lighthalzen [Playtester]
 06/03
 	* Implemented some more airship NPCs, more are to come. [MasterOfMuppets]
 	- Also put in a few warps from the sign quest which is to come.
