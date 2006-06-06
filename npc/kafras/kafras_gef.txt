@@ -86,7 +86,7 @@ geffen.gat,37,116,6	script	Kafra	117,{
 
 // Function: Sets variables for Geffen Kafras -------------------
 function	script	F_KafSetGef	{
-
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Prontera", "Al De Baran", "Orc Dungeon", "Coal Mine(Dead Pit)";
 	setarray @wrpP[0], 1200, 1200, 1200, 1700;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
@@ -94,8 +94,6 @@ function	script	F_KafSetGef	{
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];
 	set @wrpC$[3], @wrpD$[3]+" -> "+@wrpP[3];
 	set @wrpC$[4], "Cancel";
-	set @wrpC$[5], "";
-	set @wrpC$[6], "";
 	setarray @viewpX[0], 120, 203, 116, 37;
 	setarray @viewpY[0], 62, 123, 202, 116;
 	return;

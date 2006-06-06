@@ -135,6 +135,7 @@ louyang.gat,210,104,5	script	Kafra	117,{
 // Umbala Kafra ------------------------------------------------------------
 umbala.gat,128,133,4	script	Kafra	115,{
 	cutin "kafra_03",2;
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo";
 	setarray @wrpP[0], 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];

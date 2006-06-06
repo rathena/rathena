@@ -24,8 +24,9 @@ Nexon
 	* Adding in the new Abyss/Thanatos/Lighthalzen NPC's and optimizing them.
 Evera
 	* Everything.
-	* Dungeon Teleport System
-	* Gathering iRO information and comparing them to eA scripts.
+	* Dungeon Teleport System NPCs
+	* iRO information gathering.
+	* Kafra maintainment.
 
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
@@ -36,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/06
+	* Fixed missing function problems for Kafra, also now using cleararray instead of assigning blank variables to every other array [Evera]
 	* Implemented the Shinokas quest, thanks to Dj-Yhn for scripting it. [MasterOfMuppets]
 	* Added Rachel interior warps thanks to Celestria [Playtester]
 06/05

@@ -76,8 +76,7 @@ prt_fild05.gat,290,224,1	script	Kafra	114,{
 //<=========================== Coal Mine (Dead Pitt) =======================>\\
 mjolnir_02.gat,83,361,4	script	Kafra	114,{
 	cutin "kafra_04",2;
-	callfunc "F_KafSetOrcCoal";
-	callfunc "F_Kafra",0,0,1;
+	callfunc "F_Kafra",0,6,1;
 
 	M_Save:
 		savepoint "mjolnir_02.gat",98,352;
@@ -99,7 +98,6 @@ moc_ruins.gat,61,156,5	script	Kafra	114,{
 //<================================ Orc Dungeon ============================>\\
 gef_fild10.gat,73,340,4	script	Kafra	115,{
 	cutin "kafra_03",2;
-	callfunc "F_KafSetOrcCoal";
 	callfunc "F_Kafra",0,6,1;
 
 	M_Save:

@@ -59,14 +59,12 @@ pay_arche.gat,55,123,8	script	Kafra	115,{
 
 // Function: Sets variables for Payon Kafras ---------------------------------
 function	script	F_KafSetPay	{
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Alberta", "Prontera", "Morroc";
 	setarray @wrpP[0], 1200, 1200, 1200;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];
 	set @wrpC$[3], "Cancel";
-	set @wrpC$[4], "";
-	set @wrpC$[5], "";
-	set @wrpC$[6], "";
 	return;
 }

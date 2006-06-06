@@ -100,6 +100,7 @@ M_Save:
 
 // Function: Sets variables for Prontera Kafras ----------------------------
 function	script	F_KafSetPront	{
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Orc Dungeon", "Alberta";
 	setarray @wrpP[0], 600, 1200, 1200, 1200, 1200, 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];

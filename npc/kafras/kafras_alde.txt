@@ -35,6 +35,7 @@ aldeba_in.gat,96,181,4	script	Kafra Leilah	113,{
 // South --------------------------------------------------
 aldebaran.gat,143,119,4	script	Kafra	113,{
 	cutin "kafra_05",2;
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpP[0], 1200, 1200, 1800, 1700;
 	setarray @wrpD$[0], "Geffen", "Yuno" , "Izlude", "Coal Mine(Dead Pit)";
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
@@ -42,8 +43,6 @@ aldebaran.gat,143,119,4	script	Kafra	113,{
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];
 	set @wrpC$[3], @wrpD$[3]+" -> "+@wrpP[3];
 	set @wrpC$[4], "Cancel";
-	set @wrpC$[5], "";
-	set @wrpC$[6], "";
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:

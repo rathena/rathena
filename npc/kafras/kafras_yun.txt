@@ -57,6 +57,7 @@ yuno.gat,278,221,6	script	Kafra	117,{
 
 // Function: Sets variables for Yuno Kafras ------------
 function	script	F_KafSetYun	{
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Aldebaran";
 	setarray @wrpP[0], 1200;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
