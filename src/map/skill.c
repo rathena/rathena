@@ -2947,18 +2947,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl,int s
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if (skilllv == 5)
 				skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,0 );
-			if (tsd) {
-				tsd->status.sp = 0;
-				clif_updatestatus(tsd,SP_SP);
-			}
+			status_percent_damage(src, bl, 0, 100);
 		} else {
 			clif_skill_nodamage(src,src,skillid,skilllv,1);
 			if (skilllv == 5)
 				skill_attack(BF_MAGIC,src,src,src,skillid,skilllv,tick,0 );
-			if (sd) {
-				sd->status.sp = 0;
-				clif_updatestatus(sd,SP_SP);
-			}
+			status_percent_damage(src, src, 0, 100);
 		}		
 		if (sd) skill_blockpc_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		break;
