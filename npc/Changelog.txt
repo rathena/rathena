@@ -27,6 +27,10 @@ Evera
 	* Dungeon Teleport System
 	* Gathering iRO information and comparing them to eA scripts.
 
+Musashiden
+	*Scripting iRO latest towns (warps, NPCs, ect.)
+	*iRO information gathering.
+
 == Changelog ==
 
 Date		Added
