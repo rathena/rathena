@@ -3155,11 +3155,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 	}
 
-	//Self skill with target changed? We assume these are offensive auto-select-target skills. [Skotlex]
-	//But only do this on the first call (flag&~1)
-	if (!(flag&1) && skill_get_inf(skillid)&INF_SELF_SKILL && src != bl && !(skill_get_nk(skillid)&NK_NO_DAMAGE))
-		return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
-	
 	if (skillid > 0 && skillid < MAX_SKILL)
 		type = SkillStatusChangeTable[skillid];
 	

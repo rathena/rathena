@@ -1029,7 +1029,7 @@ int status_calc_mob(struct mob_data* md, int first)
 
 	if(first)
 	{	//Set basic level on respawn.
-		if (md->spawn && !(flag&2))
+		if (md->spawn && !(first&2))
 		  	md->level = md->spawn->level;
 		else
 			md->level = md->db->lv; // [Valaris]
@@ -6124,7 +6124,8 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		break;
 	case SC_SIGHTBLASTER:
 		{
-			if (sc && sc->count && sc->data[type].val2 > 0 && battle_check_target( src, bl, BCT_ENEMY ) > 0)
+			if (sc && sc->count && sc->data[type].val2 > 0 && battle_check_target( src, bl, BCT_ENEMY ) > 0 &&
+				status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 			{	//sc_ check prevents a single round of Sight Blaster hitting multiple opponents. [Skotlex]
 				skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,1,tick,0);
 				sc->data[type].val2 = 0; //This signals it to end.

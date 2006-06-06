@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/06
+	* Hopefully fixed for sure mobs getting extra stats when changing-class due
+	  to the mobs level up setting. [Skotlex]
+	* Removed a piece of code that should no longer be needed due to the
+	  combo-skill setting (inf = self, inf2 = no-target-self) which is blocking
+	  self-skills from being used on others (pets/mobs should be allowed to do
+	  that)  [Skotlex]
+	* Added a status_check_skilluse call in Sightblaster to prevent it from
+	  hitting hidden/cloaked/act-dead/etc players. [Skotlex]
 	* Fixed firewall counter going down by 2 each hit rather than 1. [Skotlex]
 	* Fixed Soul Burn not zapping away all SP. [Skotlex]
 	* The monsters can level up setting will not take effect when the mob's
