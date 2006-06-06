@@ -7,7 +7,7 @@
 //= Mass Zero (1.3)
 //= MasterOfMuppets (2.0)
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.4
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 2.2b A small fix to the shout quest npc in louyang field not warping you
 //=	 back up to the tower if you died or teleported out of there. [MasterOfMuppets]
 //= 2.3 A small fix, the code is so messy I can't believe I scripted it >.< [MasterOfMuppets]
+//= 2.4 Implemented a few more npcs, thanks to Prometheus for them. [MasterOfMuppets]
 //============================================================
 
 alberta.gat,245,45,4	script	Girl	815,{
@@ -1725,4 +1726,152 @@ L_NOTENOUGH:
 	mes "Unfortunately, you haven't collected everything that I need yet. Once again, please gather...";
 	next;
 	goto L_INGREDIENT;
+}
+
+lou_fild01.gat,224,348,7	script	Lady	817,{
+
+	emotion 30;
+	mes "[Lady]";
+	mes "You're at the entrance of Louyang.";
+	next;
+	mes "[Lady]";
+	mes "Louyang is well known";
+	mes "for its various firecrackers.";
+	mes "Would you like to see one?";
+	next;
+	menu "Sure!",s_Firework,"No thanks~",-;
+
+	mes "[Lady]";
+	mes "Hmpf...!";
+	emotion 9;
+	close;
+
+s_Firework:
+	mes "[Lady]";
+	mes "Alright, there you go!";
+	close2;
+	donpcevent "LouFireWrk::OnExplosion";
+	end;
+
+}
+
+lou_fild01.gat,225,349,1	script	LouFireWrk	139,{
+
+OnExplosion:
+	misceffect 183;
+	end;
+
+}
+
+lou_in01.gat,99,158,4	script	Lord	821,{
+	mes "[Lord Bai Long]";
+	mes "Hahahaha!";
+	mes "Welcome to Louyang!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Louyang is such a great city.";
+	mes "We're protected this land for forty";
+	mes "years from the invasions of evil";
+	mes "creatures!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "I hope you enjoy";
+	mes "your stay here,";
+	mes "Rune-Midgardian!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "How could I have lost my friend";
+	mes "from our glory days? Hmm...?";
+	mes "Oh, I didn't realize you were still";
+	mes "there...Listening to me.";
+	next;
+	mes "[Lord Bai Long]";
+	mes "I'm sorry, I was just talking to";
+	mes "myself. I hope you have a good time";
+	mes "while you stay here in Louyang.";
+	close;
+}
+
+lou_in01.gat,111,151,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "*Yawn* It's so boring here";
+	mes "nowadays. Although, I hear that";
+	mes "a long time ago, things were";
+	mes "much different.";
+	next;
+	mes "[Soldier]";
+	mes "Supposedly, monsters used to";
+	mes "intrude Louyang all the time! Heh,";
+	mes "but that's just rumor. Still,";
+	mes "there are a bunch of rumors going";
+	mes "around that I'm curious about...";
+	close;
+}
+
+lou_in01.gat,91,151,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "....z..Z..z...";
+	next;
+	menu "Hey, wake up!",-;
+	mes "[Soldier]";
+	mes "Yeeeesss...Sir!";
+	mes "I was not dozing off~";
+	mes "Seerious...ly...";
+	next;
+	mes "[Soldier]";
+	mes "...";
+	next;
+	mes "[Soldier]";
+	mes "...";
+	mes "......";
+	next;
+	mes "[Soldier]";
+	mes "...";
+	mes "......";
+	mes "....z..Z..z...";
+	close;
+}
+
+lou_in01.gat,82,139,6	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "There is nothing much, but if you";
+	mes "wish to look around this room,";
+	mes "please be my guest.";
+	close;
+}
+
+lou_in01.gat,45,138,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "It's strange to see outsiders in";
+	mes "this kind of place. We don't have";
+	mes "any business with you,";
+	mes "so move along.";
+	close;
+}
+
+lou_in01.gat,102,144,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "People have been";
+	mes "saying that there's";
+	mes "a scammer at the entrance of town...";
+	next;
+	menu "...?",-;
+	mes "[Soldier]";
+	mes "But I went there and I didn't";
+	mes "find anyone suspicious. I swear,";
+	mes "everything seemed completely";
+	mes "normal!";
+	close;
+}
+
+lou_in01.gat,99,144,4	script	Soldier	825,{
+	mes "[Soldier]";
+	mes "Ah, don't bother";
+	mes "to listen to this";
+	mes "guy beside of me.";
+	next;
+	mes "[Soldier]";
+	mes "I hope you have a good time while";
+	mes "you're staying in Louyang!";
+	close;
 }
