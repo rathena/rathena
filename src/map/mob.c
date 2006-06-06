@@ -1561,15 +1561,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	int id = 0;
 
-	if(src && md->nd)
-	{
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)1, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-	}
-
 	md->tdmg+=damage; //Store total damage...
 	
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
@@ -1585,10 +1576,19 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if (!md->attacked_players) //Counter overflow o.O
 		md->attacked_players++;
 		
+	if(md->nd)
+	{
+		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)1, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
+		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+	}
+
 	switch (src->type) {
 		case BL_PC: 
 		{
-			struct map_session_data *sd = (struct map_session_data *)src;
+			struct map_session_data *sd = (TBL_PC*)src;
 			id = sd->status.char_id;
 			if(rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = src->id;
@@ -1596,7 +1596,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_PET:
 		{
-			struct pet_data *pd = (struct pet_data*)src;
+			struct pet_data *pd = (TBL_PET*)src;
 			if (battle_config.pet_attack_exp_to_master) {
 				id = pd->msd->status.char_id;
 				damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
@@ -1608,7 +1608,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_MOB:
 		{
-			struct mob_data* md2 = (struct mob_data*)src;
+			struct mob_data* md2 = (TBL_MOB*)src;
 			if(md2->special_state.ai && md2->master_id) {
 				struct map_session_data* msd = map_id2sd(md2->master_id);
 				if (msd) id = msd->status.char_id;
@@ -1622,6 +1622,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			}
 			break;
 		}
+		default: //For all unhandled types.
+			if(rand()%1000 < 1000/md->attacked_players)
+				md->attacked_id = src->id;
 	}
 	//Log damage...
 	if (id && damage > 0) {
@@ -1706,7 +1709,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int sp = 0, hp = 0;
 		sp += sd->sp_gain_value;
 		sp += sd->sp_gain_race[status->race];
-		sp += sd->sp_gain_race[status->mode&MD_BOSS?10:11];
+		sp += sd->sp_gain_race[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 		hp += sd->hp_gain_value;
 		if (hp||sp)
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
