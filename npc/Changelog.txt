@@ -32,6 +32,7 @@ Evera
 Date		Added
 ======
 06/06
+	* Implemented the Shinokas quest, thanks to Dj-Yhn for scripting it. [MasterOfMuppets]
 	* Added Rachel interior warps thanks to Celestria [Playtester]
 06/05
 	* Implemented some more Louyang npcs, thanks to Prometheus for them. [MasterOfMuppets]

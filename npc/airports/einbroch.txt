@@ -95,3 +95,22 @@ airport.gat,143,51,4	duplicate(AirportE2)	Airport Staff#5	90,{
 
 airport.gat,156,51,4	duplicate(AirportE2)	Airport Staff#6	90,{
 }
+
+einbroch.gat,94,267,4	script	Airship Staff	91,{
+	mes "[Airship Staff]";
+	mes "Welcome to the";
+	mes "Einbroch Airport.";
+	mes "Please use this door to";
+	mes "board the Airship wich stops";
+	mes "over Lighthalzen and Juno in";
+	mes "the Schwaltzvalt Republic";
+	next;
+	mes "[Airship Staff]";
+	mes "Otherwise, if Einbroch is";
+	mes "your intended destination,";
+	mes "please head down the stairs";
+	mes "and ask the Arrival Staff to lead";
+	mes "you to the main terminal. Thank";
+	mes "you, and enjoy your travels.";
+	close;
+}

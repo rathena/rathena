@@ -17,6 +17,8 @@
 //= 0.3 Added some more npcs, thanks to Muad_Dib [MasterOfMuppets]
 //= 1.0 Added the last of the town npcs, [MasterOfMuppets]
 //=     all credits to muad_dib for scripting them.
+//= 1.1 Made some changes according to the Shinokas quest, [MasterOfMuppets]
+//=	thanks to Dj-Yhn for scripting them.
 //============================================================
 
 
@@ -973,11 +975,13 @@ L_FINE:
 }
 
 einbech.gat,165,105,7	script	Buender Hikeman	847,{
+	if(Shinokas_Quest == 5) goto L_P2;
 	if(einbech_buender == 2)goto L_BEST;
 	if(einbech_buender == 1)goto L_BASTARD;
 	mes "[Buender Hikeman]";
 	mes "...";
 	mes "......";
+	if(!ein_young_man)close;
 	next;
 	mes "[Buender Hikeman]";
 	mes "...";
@@ -1101,6 +1105,7 @@ L_WHAT:
 	mes "[Buender Hikeman]";
 	mes "Yes...";
 	mes "Nothing.";
+	next;
 	goto L_CONTINUE;
 L_UNGOLIANT:
 	mes "[Buender Hikeman]";
@@ -1144,6 +1149,7 @@ L_ORE:
 	mes "Don't you remember";
 	mes "what happened? What";
 	mes "you did to us at that time?!";
+	next;
 	goto L_CONTINUE;
 L_BASTARD:
 	mes "[Buender Hikeman]";
@@ -1158,7 +1164,7 @@ L_HOW:
 	mes "I was lying on my";
 	mes "stomach in the ruins";
 	mes "of that dark tunnel.";
-	next;	
+	next;
 	mes "[Buender Hikeman]";
 	mes "And I found...";
 	mes "You know what I found.";
@@ -1251,6 +1257,171 @@ L_IM:
 	mes "of the person who";
 	mes "shattered my life?!";
 	goto L_HOW;
+	
+L_P2:
+	mes "^0000FFHikeman is dozing^000000";
+	mes "^0000FFoff in his chair. Judging^000000";
+	mes "^0000FFfrom the look of discomfort^000000";
+	mes "^0000FFon his face, he seems to be^000000";
+	mes "^0000FFhaving a nightmare.^000000";
+	if (einbech_buender == 3) close;
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Excuse me...";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Huh...?";
+	mes ".........!!";
+	mes "Hahahahaha!";
+	mes "Come back for";
+	mes "your beating,";
+	mes "eh, Shinokas?!";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Look...!";
+	mes "I'm not Shinokas,";
+	mes "okay? How can you";
+	mes "forget what he looks";
+	mes "like or how old he is?";
+	mes "I'm way younger!";
+	next;
+	mes "[Buender Hikeman]";
+	mes "What...?";
+	next;
+	mes "[Buender Hikeman]";
+	mes "..................";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Uhhhh......";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Huh.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "It seems...";
+	mes "I've made a";
+	mes "huge mistake.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Ever since the accident, people";
+	mes "have said that I haven't been the";
+	mes "same. Maybe they're right.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "I keep making the same";
+	mes "mistakes, so maybe they're";
+	mes "right about me getting senile.";
+	mes "Did you come just to clear";
+	mes "up this misunderstanding?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Um...";
+	mes "Actually...";
+	next;
+	menu "Tell Hikeman about Shinakas's death.",-,"Don't notify Hikeman",L_NNotify;
+	mes "["+strcharinfo(0)+"]";
+	mes "Shinokas died";
+	mes "a while ago in";
+	mes "Einbroch.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Wh-what...?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Shinokas was killed by";
+	mes "some men. He thinks they";
+	mes "may have been the ones";
+	mes "who hired you guys. In the";
+	mes "end, he was betrayed too...";
+	next;
+	mes "[Buender Hikeman]";
+	mes "I...";
+	mes "I see...";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Shinokas may have";
+	mes "gotten some money,";
+	mes "but he spent the rest";
+	mes "of his life in hiding,";
+	mes "being hunted down.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Nothing's left.";
+	mes "I've got nothing";
+	mes "to look forward to.";
+	mes "I was living only to";
+	mes "avenge my friends...";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Please...";
+	mes "Just go back to";
+	mes "wherever you came";
+	mes "from. Leave me alone...";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "...";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Did Hikeman really want";
+	mes "revenge on Shinokas or did";
+	mes "he want to hear him out since";
+	mes "they used to be close friends?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "If I mention that";
+	mes "what they found was";
+	mes "the Ymir Heart Piece,";
+	mes "Hikeman might end up";
+	mes "getting hunter down, so";
+	mes "I better not say anything.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Why are those men";
+	mes "so obsessed with that";
+	mes "Ymir Heart Piece? Is it";
+	mes "really worth this kind of";
+	mes "cruelty? Whoever they are,";
+	mes "their intentions can't be good.";
+	close2;
+	set einbech_buender,3;
+	if(BaseLevel < 40)set BaseExp,BaseExp+34750;
+	if(BaseLevel < 60)set BaseExp,BaseExp+69500;
+	if(BaseLevel > 60 && BaseLevel < 70)set BaseExp,BaseExp+139000;
+	if(BaseLevel > 70 && BaseLevel < 80)set BaseExp,BaseExp+278000;
+	if(BaseLevel > 80 && BaseLevel < 90)set BaseExp,BaseExp+417000;
+	if(BaseLevel > 90)set BaseExp,BaseExp+556000;
+	end;
+	
+L_NNotify:
+	mes "["+strcharinfo(0)+"]";
+	mes "Yeah...";
+	mes "That's right.";
+	mes "I wanted to clear up";
+	mes "this misunderstanding";
+	mes "so you could calm down,";
+	mes "even if it's just a little bit.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Well, you don't have";
+	mes "to worry so much about";
+	mes ",u stress. I find that the";
+	mes "winds that pass through";
+	mes "this town to be very relaxing.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Each time the wind";
+	mes "blows by, my vision blurs,";
+	mes "my memories haze and all";
+	mes "of my hatred just drifts away.";
+	next;
+	mes "[Buender Hikeman]";
+	mes "Without the wind, I'd only";
+	mes "have my hatred towards ^FF0000him^000000.";
+	mes "Maybe it's my only reason for";
+	mes "living and maybe I'm lonely,";
+	mes "but it's too late to feel";
+	mes "sorry for myself now.";
+	close;
 }
 
 ein_in01.gat,281,85,2	script	Drunken Man	849,{

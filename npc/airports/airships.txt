@@ -14,6 +14,7 @@
 //= 0.1a Fixed the Airport Staff#Iz which was [MasterOfMuppets]
 //= 	 warping you to the same location as Airport Staff#Ein
 //= 0.2 Implemented some more airship NPCs, more are to come.
+//= 0.3 Implemented some more NPCs [MasterOfMuppets]
 //============================================================ 
 
 //============================================================ 
@@ -353,6 +354,39 @@ s_Material:
 	mes "and 1 Empty Bottle to do it.";
 	close;
 
+}
+
+
+airplane.gat,33,69,4 script Kaci 73,{
+	end;
+
+	OnLose:
+	emotion e_wah;
+	end;
+	
+	OnWin:
+	emotion e_no1;
+	end;
+}
+
+airplane.gat,80,71,4	script	Zerta	834,{
+	mes "[Zerta]";
+	mes "Oh, hello adventurer.";
+	mes "I am currently on a";
+	mes "sacred journey, offering";
+	mes "prayer for the sake of the";
+	mes "Rune-Midgard continent.";
+	close;
+}
+
+airplane.gat,65,63,4	script	Maelin	714,{
+	mes "[Maelin]";
+	mes "Um, this Airship is";
+	mes "to Lutie, isn't it? I've";
+	mes "been waiting so long,";
+	mes "but I haven't heard any";
+	mes "broadcast about Lutie.";
+	close;
 }
 
 //============================================================ 
