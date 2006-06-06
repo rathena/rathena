@@ -793,16 +793,17 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 int status_check_skilluse(struct block_list *src, struct block_list *target, int skill_num, int flag)
 {
-	int mode, race, hide_flag;
+	struct status_data *status;
 	struct status_change *sc=NULL, *tsc;
+	int hide_flag;
 
-	mode = src?status_get_mode(src):MD_CANATTACK;
+	status = src?status_get_status_data(src):&dummy_status;
 
 	if (src && status_isdead(src))
 		return 0;
 	
 	if (!skill_num) { //Normal attack checks.
-		if (!(mode&MD_CANATTACK))
+		if (!(status->mode&MD_CANATTACK))
 			return 0; //This mode is only needed for melee attacking.
 		//Dead state is not checked for skills as some skills can be used 
 		//on dead characters, said checks are left to skill.c [Skotlex]
@@ -824,24 +825,24 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	if (((src && map_getcell(src->m,src->x,src->y,CELL_CHKBASILICA)) ||
 		(target && target != src && map_getcell(target->m,target->x,target->y,CELL_CHKBASILICA)))
-		&& !(mode&MD_BOSS))
+		&& !(status->mode&MD_BOSS))
 	{	//Basilica Check
 		if (!skill_num) return 0;
-		race = skill_get_inf(skill_num);
-		if (race&INF_ATTACK_SKILL)
+		hide_flag = skill_get_inf(skill_num);
+		if (hide_flag&INF_ATTACK_SKILL)
 			return 0;
-		if (race&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
+		if (hide_flag&INF_GROUND_SKILL && skill_get_unit_target(skill_num)&BCT_ENEMY)
 			return 0;
 	}	
 
 	if (src) sc = status_get_sc(src);
 	
-	if(sc && sc->opt1 >0 && (battle_config.sc_castcancel || flag != 1))
-		//When sc do not cancel casting, the spell should come out.
-		return 0;
-	
 	if(sc && sc->count)
 	{
+		if(sc->opt1 >0 && (battle_config.sc_castcancel || flag != 1))
+			//When sc do not cancel casting, the spell should come out.
+			return 0;
+
 		if (
 			(sc->data[SC_TRICKDEAD].timer != -1 && skill_num != NV_TRICKDEAD)
 			|| (sc->data[SC_AUTOCOUNTER].timer != -1 && !flag)
@@ -850,8 +851,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		)
 			return 0;
 
-		if (sc->data[SC_WINKCHARM].timer != -1 && target && target->type == BL_PC && !flag)
-		{	//Prevents skill usage against players?
+		if (sc->data[SC_WINKCHARM].timer != -1 && target && !flag)
+		{	//Prevents skill usage
 			clif_emotion(src, 3);
 			return 0;
 		}
@@ -880,7 +881,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			//Skill blocking.
 			if (
 				(sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
-				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(mode&MD_BOSS)) ||
+				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(status->mode&MD_BOSS)) ||
 				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
 				sc->data[SC_NOCHAT].timer != -1
 			)
@@ -899,12 +900,18 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	if (sc && sc->option)
 	{
-		if (sc->option&OPTION_HIDE && skill_num != TF_HIDING && skill_num != AS_GRIMTOOTH
-			&& skill_num != RG_BACKSTAP && skill_num != RG_RAID && skill_num != NJ_SHADOWJUMP
-			&& skill_num != NJ_KIRIKAGE)
-			return 0;
-//		if (sc->option&OPTION_CLOAK && skill_num == TF_HIDING)
-//			return 0; //Latest reports indicate Hiding is usable while Cloaking. [Skotlex]
+		if (sc->option&OPTION_HIDE)
+		switch (skill_num) { //Usable skills while hiding.
+			case TF_HIDING:
+			case AS_GRIMTOOTH:
+			case RG_BACKSTAP:
+			case RG_RAID:
+			case NJ_SHADOWJUMP:
+			case NJ_KIRIKAGE:
+				break;
+			default:
+				return 0;
+		}
 		if (sc->option&OPTION_CHASEWALK && skill_num != ST_CHASEWALK)
 			return 0;
 	}
@@ -912,9 +919,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		return 1;
 
 	tsc = status_get_sc(target);
+	
 	if(tsc && tsc->count)
 	{	
-		if (!(mode & MD_BOSS) && tsc->data[SC_TRICKDEAD].timer != -1)
+		if (!(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD].timer != -1)
 			return 0;
 		if(skill_num == WZ_STORMGUST && tsc->data[SC_FREEZE].timer != -1)
 			return 0;
@@ -922,38 +930,44 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 0;
 	}
 
-	race = src?status_get_race(src):0; 
 	//If targetting, cloak+hide protect you, otherwise only hiding does.
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 		
  	//You cannot hide from ground skills.
-	if(skill_get_pl(skill_num) == 2)
+	if(skill_get_pl(skill_num) == ELE_EARTH)
 		hide_flag &= ~OPTION_HIDE;
 	
 	switch (target->type)
 	{
 	case BL_PC:
 		{
-			struct map_session_data *sd = (struct map_session_data*) target;
+			struct map_session_data *sd = (TBL_PC*) target;
 			if (pc_isinvisible(sd))
 				return 0;
-			if (tsc->option&hide_flag
-				&& (sd->state.perfect_hiding || !(race == RC_INSECT || race == RC_DEMON || mode&MD_DETECTOR))
-				&& !(mode&MD_BOSS))
+			if (tsc->option&hide_flag && !(status->mode&MD_BOSS)
+				&& (sd->state.perfect_hiding || !(
+					status->race == RC_INSECT ||
+				  	status->race == RC_DEMON ||
+				  	status->mode&MD_DETECTOR
+				)))
 				return 0;
 		}
 		break;
 	case BL_ITEM:	//Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
 		//TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
-		if (mode&MD_LOOTER)
+		if (status->mode&MD_LOOTER)
 			return 1;
 		else
 			return 0;
 	default:
 		//Check for chase-walk/hiding/cloaking opponents.
-		if (tsc && !(mode&MD_BOSS))
+		if (tsc && !(status->mode&MD_BOSS))
 		{
-			if (tsc->option&hide_flag && !(race == RC_INSECT || race == RC_DEMON || mode&MD_DETECTOR))
+			if (tsc->option&hide_flag && !(
+				status->race == RC_INSECT ||
+			  	status->race == RC_DEMON ||
+			  	status->mode&MD_DETECTOR
+			))
 				return 0;
 		}
 	}

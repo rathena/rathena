@@ -1723,9 +1723,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	for(temp=0,i=0,count=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
+	for(temp=0,i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
 	{
-		count++; //Count an attacker even if he is dead/logged-out.
 		tmpsd[temp] = map_charid2sd(md->dmglog[i].id);
 		if(tmpsd[temp] == NULL)
 			continue;
@@ -1733,13 +1732,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			continue;
 		temp++;
 
-		if(mvp_damage<(unsigned int)md->dmglog[temp].dmg){
+		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
 			mvp_sd=tmpsd[temp];
-			mvp_damage=md->dmglog[temp].dmg;
+			mvp_damage=md->dmglog[i].dmg;
 		}
 	}
+	count = i; //Total number of attackers.
 
 	if(!(type&2) && //No exp
 		(!map[md->bl.m].flag.pvp || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
@@ -1773,11 +1773,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (md->sc.data[SC_RICHMANKIM].timer != -1)
 			bonus += md->sc.data[SC_RICHMANKIM].val2;
 
-		if(sd) {
-			if (sd->expaddrace[status->race])
-				bonus += sd->expaddrace[status->race];	
-			bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-		}
+		if (tmpsd[i]->expaddrace[status->race])
+			bonus += tmpsd[i]->expaddrace[status->race];	
+		bonus += tmpsd[i]->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+	
 		if (battle_config.pk_mode &&
 			(int)(md->db->lv - tmpsd[i]->status.base_level) >= 20) //Needed due to unsigned checks
 			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
