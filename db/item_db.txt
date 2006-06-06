@@ -579,7 +579,7 @@
 1260,Sharpened_Legbone_of_Ghoul,Sharpened Legbone of Ghoul,4,52500,,1700,150,,1,0,0x00001000,7,2,34,3,65,1,16,{ bonus bAtkEle,Ele_Undead; },{},{}
 1261,Infiltrator,Infiltrator,4,57000,,1500,140,,1,0,0x00001000,7,2,34,4,75,1,16,{ bonus2 bAddRace,RC_DemiHuman,50; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; },{},{}
 1262,Loki's_Nail,Loki's Nail,4,,10,1200,115,,1,0,0x00001000,7,2,34,3,55,1,16,{ bonus2 bAddEff,Eff_Bleeding,500; },{},{}
-1263,Unholy_Touch,Unholy Touch,4,,10,1250,95,,1,0,0x00001000,7,2,34,4,70,1,16,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; bonus bCriticalRate,-1; },{},{}
+1263,Unholy_Touch,Unholy Touch,4,,10,1250,95,,1,0,0x00001000,7,2,34,4,70,1,16,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; bonus bCriticalRate,-1; bonus bUnbreakableWeapon,0; },{},{}
 1264,Specialty_Jur,Specialty Jur,4,,10,800,90,,1,4,0x00001000,7,2,34,1,0,1,16,{ bonus2 bAddEff2,Eff_Bleeding,50; },{},{}
 1265,Bloody_Roar,Bloody Roar,4,,10,1000,120,,1,0,0x00001000,7,2,34,4,75,1,16,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus bFlee,-160; bonus bFlee2,-160; bonus bNoRegen,1; bonus bNoRegen,2; },{},{}
 // 1-Handed Axes
@@ -687,7 +687,7 @@
 1527,Quadrille,Quadrille,4,,10,900,165,,1,0,0x00008110,7,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddEle,Ele_Earth,10; },{},{}
 1528,Grand_Cross,Grand Cross,4,,10,1500,140,,1,0,0x00008110,7,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,77,3,100; bonus bSPDrainValue,1; },{},{}
 1529,Iron_Driver,Iron Driver,4,,10,3000,155,,1,0,0x00008100,7,2,2,3,78,1,8,{ bonus bAtkRange,1; },{},{}
-1530,Mjolnir,Mjolnir,4,,10,6000,250,,1,0,0x000444A2,7,2,2,4,95,0,8,{ bonus bAtkEle,Ele_Wind; bonus bDex,40; bonus bStr,15; bonus bAspdRate,10; },{},{}
+1530,Mjolnir,Mjolnir,4,,10,6000,250,,1,0,0x000444A2,7,2,2,4,95,0,8,{ bonus bAtkEle,Ele_Wind; bonus bDex,40; bonus bStr,15; bonus bAspdRate,10; bonus bUnbreakableWeapon,0; },{},{}
 1531,Wrench,Wrench,4,,10,2500,115,,1,0,0x00008110,7,2,2,3,55,1,8,{ bonus2 bAddEff,Eff_Blind,100; bonus2 bAddEff,Eff_Stun,100; bonus2 bAddEff,Eff_Poison,100; bonus2 bAddEff,Eff_Freeze,100; },{},{}
 // Books
 1550,Book,Book,4,30000,,600,85,,1,3,0x00410100,7,2,2,2,14,1,15,{},{},{}
@@ -903,7 +903,7 @@
 2243,Geek_Glasses,Geek Glasses,5,20000,,100,,1,,0,0xFFFFFFFF,7,2,512,,0,0,27,{ bonus2 bResEff,Eff_Blind,1500; },{},{}
 2244,Big_Ribbon,Big Ribbon,5,15000,,200,,2,,0,0xFFFFFFFE,7,2,256,,0,1,28,{ bonus bMdef,3; },{},{}
 2245,Sweet_Gent,Sweet Gent,5,15000,,400,,3,,0,0xFFFFFFFE,7,2,256,,0,1,29,{},{},{}
-2246,Golden_Gear,Golden Gear,5,,10,900,,5,,0,0xFFFFFFFE,7,2,256,,40,1,30,{},{},{}
+2246,Golden_Gear,Golden Gear,5,,10,900,,5,,0,0xFFFFFFFE,7,2,256,,40,1,30,{ bonus bUnbreakableHelm,0; },{},{}
 2247,Romantic_Gent,Romantic Gent,5,15000,,400,,3,,0,0xFFFFFFFE,7,2,256,,0,1,31,{},{},{}
 2248,Western_Grace,Western Grace,5,15000,,400,,3,,0,0xFFFFFFFE,7,2,256,,0,1,32,{},{},{}
 2249,Coronet,Coronet,5,,10,300,,3,,0,0xFFFFFFFE,7,2,256,,0,1,33,{ bonus bInt,1; },{},{}
@@ -1039,7 +1039,7 @@
 2418,Vidar's_Boots,Vidar's Boots,5,,10,650,,4,,0,0xFFFFFFFE,7,2,64,,65,1,0,{ bonus bMaxHPrate,9; bonus bMaxSPrate,9; },{},{}
 2419,Goibne's_Greaves,Goibne's Greaves,5,,10,700,,4,,0,0xFFFFFFFE,7,2,64,,54,1,0,{ bonus bMdef,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; },{},{}
 2420,Angel's_Reincarnation,Angel's Reincarnation,5,,10,700,,0,,1,0x00000001,7,2,64,,54,1,0,{ bonus bMaxHP,100; },{},{}
-2421,Valkyrie's_Shoes,Valkyrie's Shoes,5,,10,500,,4,,1,0xFFFFFFFE,2,2,64,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bMaxHP,(BaseLevel*5); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bMaxSP,(JobLevel*2); },{},{}
+2421,Valkyrie's_Shoes,Valkyrie's Shoes,5,,10,500,,4,,1,0xFFFFFFFE,2,2,64,,0,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bMaxHP,(BaseLevel*5); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bMaxSP,(JobLevel*2); },{},{}
 // Garments
 //===================================================================
 2501,Hood,Hood,5,1000,,200,,1,,0,0xFFFFFFFF,7,2,4,,0,1,0,{},{},{}
@@ -1065,7 +1065,7 @@
 2521,Angelic_Cardigan,Angelic Cardigan,5,,10,400,,2,,0,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
 2522,Undershirt,Undershirt,5,,10,150,,2,,0,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
 2523,Undershirt_,Undershirt,5,,10,150,,2,,1,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
-2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,,10,500,,3,,1,0xFFFFFFFE,2,2,4,,0,1,0,{ bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2); },{},{}
+2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,,10,500,,3,,1,0xFFFFFFFE,2,2,4,,0,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2); },{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
@@ -2593,7 +2593,7 @@
 5166,Sphinx_Hat_,Sphinx Hat,5,,10,3000,,5,,1,0x00004082,7,2,257,,65,0,137,{ bonus bStr,2; },{},{}
 5157,Orc_Helm_,Orc Helm,5,,10,500,,5,,1,0x000654E2,7,2,256,,0,1,86,{},{},{}
 5158,Monk_Hat_,Monk Hat,5,30000,,100,,5,,1,0x00008110,7,2,256,,0,1,35,{ bonus bMdef,3; },{},{}
-5159,Golden_Gear_,Golden Gear,5,,10,900,,5,,1,0xFFFFFFFE,7,2,256,,40,1,30,{},{},{}
+5159,Golden_Gear_,Golden Gear,5,,10,900,,5,,1,0xFFFFFFFE,7,2,256,,40,1,30,{ bonus bUnbreakableHelm,0; },{},{}
 5160,Majestic_Goat_,Majestic Goat,5,,10,800,,5,,1,0x006444A2,7,2,256,,0,1,41,{ bonus bStr,1; },{},{}
 5161,Spiky_Band_,Spiky Band,5,,10,1000,,6,,1,0x0066D5F2,7,2,256,,50,1,43,{},{},{}
 5162,Bone_Helm_,Bone Helm,5,,10,800,,7,,1,0x000444A2,7,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; },{},{}

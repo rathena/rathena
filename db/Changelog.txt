@@ -27,6 +27,7 @@
 
 =========================
 06/06
+	* Hopefully fixed all the Unbreakable bonuses [Playtester]
 	* Fixed Valkyrie skills and Magnum Break of all mobs [Playtester]
 	* Sunflower Hairpin now can't be refined anymore [Playtester]
 06/05
