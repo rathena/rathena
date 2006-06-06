@@ -1036,7 +1036,7 @@ int status_calc_mob(struct mob_data* md, int first)
 	}
 
 	//Check if we need custom base-status
-	if (battle_config.mobs_level_up && md->level != md->db->lv)
+	if (battle_config.mobs_level_up && md->level > md->db->lv)
 		flag|=1;
 	
 	if (md->special_state.size)

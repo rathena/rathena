@@ -2240,7 +2240,6 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	hp_rate = md->status.hp*100/md->status.max_hp;
 	md->db = mob_db(class_);
-	md->level = md->db->lv; //Also reset their level.
 	
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name,NAME_LENGTH-1);
@@ -2377,7 +2376,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		amount+=k; //Increase final value by same amount to preserve total number to summon.
 	}
 	
-	if (!battle_config.monster_class_change_full_recover && (skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
+	if (!battle_config.monster_class_change_full_recover &&
+		(skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
 		hp_rate = 100*md2->status.hp/md2->status.max_hp;
 
 	for(;k<amount;k++) {
