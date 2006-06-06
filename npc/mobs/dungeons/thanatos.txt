@@ -24,7 +24,7 @@ tha_t01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
 // tha_t02 - Thanatos Tower F2
 //==================================================
 tha_t02.gat,0,0,0,0	monster	Rideword	1195,30,0,0,0
-tha_t02.gat,0,0,0,0	monster	Deathword	1698,10,0,0,0
+tha_t02.gat,0,0,0,0	monster	Deathword	1698,20,0,0,0
 tha_t02.gat,0,0,0,0	monster	Mimic	1191,30,0,0,0
 tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,20,0,0,0
 tha_t02.gat,0,0,0,0	monster	Plasma	1697,20,0,0,0
