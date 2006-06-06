@@ -1572,7 +1572,7 @@
 5100,Sales_Banner,Sales Banner,5,,10,800,,1,,0,0xFFFFFFFF,7,2,256,,75,1,183,{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; },{},{}
 5101,Takius's_Blindfold,Takius's Blindfold,5,,10,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,184,{},{},{}
 5102,Blank_Eyes,Blank Eyes,5,,10,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,185,{},{},{}
-5103,Sunflower_Hairpin,Sunflower Hairpin,5,,10,600,,1,,0,0xFFFFFFFE,7,2,256,,30,1,186,{ bonus bAgi,2; bonus bCriticalRate,5; },{},{}
+5103,Sunflower_Hairpin,Sunflower Hairpin,5,,10,600,,1,,0,0xFFFFFFFE,7,2,256,,30,0,186,{ bonus bAgi,2; bonus bCriticalRate,5; },{},{}
 5104,Dark_Blinder,Dark Blinder,5,,10,100,,0,,0,0xFFFFFFFE,7,2,512,,0,0,184,{ bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,200; },{},{}
 5105,2nd_Anniversary_Hat,2nd Anniversary Hat,5,,10,1000,,1,,0,0xFFFFFFFF,7,2,256,,24,1,109,{ bonus bDex,1; bonus bMaxSP,80; },{},{}
 5106,2nd_Anniversary_Hat_,2nd Anniversary Hat,5,,10,300,,3,,0,0xFFFFFFFF,7,2,256,,24,1,144,{ bonus bLuk,1; },{},{}

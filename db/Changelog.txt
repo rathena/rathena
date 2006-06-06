@@ -26,6 +26,8 @@
 	-----
 
 =========================
+06/06
+	* Sunflower Hairpin now can't be refined anymore [Playtester]
 06/05
 	* Added some sign quest related item restrictions. [MasterOfMuppets]
 	* Fixed the item bonus of baseball cap. [MasterOfMuppets]
