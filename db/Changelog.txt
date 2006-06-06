@@ -27,6 +27,7 @@
 
 =========================
 06/06
+	* Fixed Valkyrie skills and Magnum Break of all mobs [Playtester]
 	* Sunflower Hairpin now can't be refined anymore [Playtester]
 06/05
 	* Added some sign quest related item restrictions. [MasterOfMuppets]
