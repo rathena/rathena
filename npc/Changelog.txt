@@ -31,6 +31,8 @@ Evera
 
 Date		Added
 ======
+06/06
+	* Added Rachel interior warps thanks to Celestria [Playtester]
 06/05
 	* Implemented some more Louyang npcs, thanks to Prometheus for them. [MasterOfMuppets]
 	* Implemented an inn NPC in Einbroch [MasterOfMuppets]

@@ -35,3 +35,52 @@ ra_temin.gat,276,326,0	script	Statue#Rachel	111,{
 	}
 	close;
 }
+
+//=========================================
+//==        RACHEL INTERIOR WARPS        ==
+//=========================================
+//-- v 1.0                               --
+//-- by Celestria                        --
+//--                                     --
+//-- Note: All warps temporary until     --
+//-- Rachel is added to kRO.             --
+//-----------------------------------------
+
+
+//== WEAPON SHOP ==========================
+rachel.gat,42,108,0	warp	ra_in001	2,2,ra_in01.gat,171,389
+ra_in01.gat,171,393,0	warp	ra_in001a	2,2,rachel.gat,41,112
+rachel.gat,42,88,0	warp	ra_in002	2,2,ra_in01.gat,171,358
+ra_in01.gat,171,354,0	warp	ra_in002a	2,2,rachel.gat,42,84
+ra_in01.gat,179,370,0	warp	ra_in003	2,2,ra_in01.gat,112,385
+ra_in01.gat,108,385,0	warp	ra_in003a	2,2,ra_in01.gat,175,370
+ra_in01.gat,164,370,0	warp	ra_in004	2,2,ra_in01.gat,123,334
+ra_in01.gat,127,334,0	warp	ra_in004a	2,2,ra_in01.gat,168,370
+
+//== ITEM SHOP ============================
+rachel.gat,83,179,0	warp	ra_in005	2,2,ra_in01.gat,249,264
+ra_in01.gat,249,260,0	warp	ra_in005a	2,2,rachel.gat,83,74
+ra_in01.gat,240,300,0	warp	ra_in006	2,2,ra_in01.gat,193,312
+ra_in01.gat,195,312,0	warp	ra_in006a	2,2,ra_in01.gat,244,300
+
+//== INN ==================================
+rachel.gat,115,149,0	warp	ra_in007	2,2,ra_in01.gat,386,42
+ra_in01.gat,386,38,0	warp	ra_in007a	2,2,rachel.gat,115,145
+rachel.gat,116,158,0	warp	ra_in008	2,2,ra_in01.gat,375,111
+ra_in01.gat,375,108,0	warp	ra_in008a	2,2,rachel.gat,116,155
+rachel.gat,105,170,0	warp	ra_in009	2,2,ra_in01.gat,310,67
+ra_in01.gat,310,71,0	warp	ra_in009a	2,2,rachel.gat,105,175
+ra_in01.gat,356,61,0	warp	ra_in010	2,2,ra_in01.gat,311,62
+ra_in01.gat,315,62,0	warp	ra_in010a	2,2,ra_in01.gat,360,61
+ra_in01.gat,297,58,0	warp	ra_in011	2,2,ra_in01.gat,340,117
+ra_in01.gat,338,120,0	warp	ra_in011a	2,2,ra_in01.gat,297,62
+
+
+//== HOUSES ===============================
+rachel.gat,57,259,0	warp	ra_in012	2,2,ra_in01.gat,295,350
+ra_in01.gat,295,346,0	warp	ra_in012a	2,2,rachel.gat,57,254
+ra_in01.gat,293,372,0	warp	ra_in013	2,2,ra_in01.gat,225,379
+ra_in01.gat,220,379,0	warp	ra_in013a	2,2,ra_in01.gat,289,372
+ra_in01.gat,313,374,0	warp	ra_in014	2,2,ra_in01.gat,358,373
+ra_in01.gat,354,373,0	warp	ra_in014a	2,2,ra_in01.gat,308,374
+//-----------------------------------------
