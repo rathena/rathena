@@ -482,8 +482,8 @@ int guild_npc_request_info(int guild_id,const char *event)
 	if(event==NULL || *event==0)
 		return guild_request_info(guild_id);
 
-	ev=(struct eventlist *)aCalloc(sizeof(struct eventlist));
-	memcpy(ev->name,event,strlen(event) + 1);
+	ev=(struct eventlist *)aCalloc(sizeof(struct eventlist),1);
+	memcpy(ev->name,event,strlen(event));
 	//The one in the db becomes the next event from this.
 	ev->next=idb_put(guild_infoevent_db,guild_id,ev);
 	return guild_request_info(guild_id);
