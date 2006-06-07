@@ -3828,17 +3828,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 	status = status_get_status_data(bl);
 	switch (type)
 	{
-	//Note that stats that are *100/3 were simplified to *33
-	case SC_STONE:
-	case SC_FREEZE:
-	case SC_DECREASEAGI:
-	case SC_COMA:
-		sc_def = 300 +100*status->mdef +10*status->luk;
-		break;
-	case SC_SLEEP:
-	case SC_CONFUSION:
-		sc_def = 300 +100*status->int_ +10*status->luk;
-		break;
 	case SC_STUN:
 	case SC_POISON:
 	case SC_DPOISON:
@@ -3846,11 +3835,26 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_BLEEDING:
 		sc_def = 300 +100*status->vit +10*status->luk;
 		break;
-	case SC_BLIND:
-		sc_def = 300 +100*status->int_ +10*status->vit;
+	case SC_SLEEP:
+		sc_def = 300 +100*status->int_ +10*status->luk;
+		break;
+	case SC_STONE:
+	case SC_FREEZE:
+	case SC_DECREASEAGI:
+	case SC_COMA:
+		sc_def = 300 +100*status->mdef +10*status->luk;
 		break;
 	case SC_CURSE:
-		sc_def = 300 +100*status->luk +10*status->vit;
+		if (status->luk > status_get_lv(bl))
+			sc_def = 10000; //Special property: inmunity when luk is greater than level
+		else
+			sc_def = 300 +100*status->luk;
+		break;
+	case SC_BLIND: //TODO: These 50/50 factors are guessed. Need to find actual value.
+		sc_def = 300 +50*status->vit +50*status->int_ +10*status->luk;
+		break;
+	case SC_CONFUSION:
+		sc_def = 300 +50*status->str +50*status->int_ +10*status->luk;
 		break;
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
@@ -3903,25 +3907,28 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
 				tick += tick / 10;
 		break;
+		case SC_DPOISON:
+		case SC_POISON:
+		case SC_STUN:
+		case SC_BLEEDING:
+		case SC_SILENCE:
+		case SC_CURSE:
+			rate = 100*status->vit;
+		break;
+		case SC_SLEEP:
+			rate = 100*status->int_;
+		break;
 		case SC_STONE:
 			rate = -200*status->mdef;
 		break;
 		case SC_FREEZE:
 			rate = 100*status->mdef;
 		break;
-		case SC_STUN:
-		case SC_DPOISON:
-		case SC_POISON:
-			rate = 100*status->vit + 20*status->luk;
-		break;
-		case SC_BLEEDING:
-		case SC_SILENCE:
-		case SC_CONFUSION:
-		case SC_CURSE:
-			rate = 100*status->vit;
-		break;
 		case SC_BLIND:
-			rate = 10*status_get_lv(bl) + 7*status->int_;
+			rate = 50*status->vit +50*status->int_;
+		break;
+		case SC_CONFUSION:
+			rate = 50*status->str +50*status->int_;
 		break;
 		case SC_SWOO:
 			if (status->mode&MD_BOSS)
