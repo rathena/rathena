@@ -2837,8 +2837,8 @@ int parse_frommap(int fd) {
 				int fame = RFIFOL(fd, 6);
 				char type = RFIFOB(fd, 10);
 				char pos = RFIFOB(fd, 11);
-				int size;
-				struct fame_list *list;
+				int size = 0;
+				struct fame_list *list = NULL;
 				RFIFOSKIP(fd,12);
 				
 				switch(type) {
@@ -2853,9 +2853,6 @@ int parse_frommap(int fd) {
 					case 3:
 						size = fame_list_size_taekwon;
 						list = taekwon_fame_list;
-						break;
-					default:
-						size = 0;
 						break;
 				}
 				if(!size) break; //No list.
