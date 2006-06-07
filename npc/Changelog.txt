@@ -36,6 +36,10 @@ Musashiden
 
 Date		Added
 ======
+07/05
+	* Added Save/Load Quest Skills (1st/2nd Class quest skills!) global functions. To test and
+	  insert into Valhalla NPC. They use ONE variable for all skills [Lupus]
+
 06/06
 	* Fixed missing function problems for Kafra, also now using cleararray instead of assigning blank variables to every other array [Evera]
 	* Implemented the Shinokas quest, thanks to Dj-Yhn for scripting it. [MasterOfMuppets]
