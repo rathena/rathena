@@ -431,7 +431,7 @@ void mmo_db_close(void) {
 	//set log.
 	if (log_login)
 	{
-		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', '0','100', 'login server shutdown')", loginlog_db);
+		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '0', 'lserver','100', 'login server shutdown')", loginlog_db);
 
 		//query
 		if (mysql_query(&mysql_handle, tmpsql)) {
@@ -820,34 +820,34 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	if (atoi(sql_row[9])) {
 		switch(atoi(sql_row[9])) { // packet 0x006a value + 1
-case 1: // 0 = Unregistered ID
-case 2: // 1 = Incorrect Password
-case 3: // 2 = This ID is expired
-case 4: // 3 = Rejected from Server
-case 5: // 4 = You have been blocked by the GM Team
-case 6: // 5 = Your Game's EXE file is not the latest version
-case 7: // 6 = Your are Prohibited to log in until %s
-case 8: // 7 = Server is jammed due to over populated
-case 9: // 8 = No more accounts may be connected from this company
-case 10: // 9 = MSI_REFUSE_BAN_BY_DBA
-case 11: // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-case 12: // 11 = MSI_REFUSE_BAN_BY_GM
-case 13: // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-case 14: // 13 = MSI_REFUSE_SELF_LOCK
-case 15: // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-case 16: // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-case 100: // 99 = This ID has been totally erased
-case 101: // 100 = Login information remains at %s.
-case 102: // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-case 103: // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-case 104: // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-case 105: // 104 = Your spouse character is being deleted. Login is temporarily unavailable for the time being
-	ShowNotice("Auth Error #%d\n", atoi(sql_row[9]));
-	return atoi(sql_row[9]) - 1;
-	break;
-default:
-	return 99; // 99 = ID has been totally erased
-	break;
+			case 1: // 0 = Unregistered ID
+			case 2: // 1 = Incorrect Password
+			case 3: // 2 = This ID is expired
+			case 4: // 3 = Rejected from Server
+			case 5: // 4 = You have been blocked by the GM Team
+			case 6: // 5 = Your Game's EXE file is not the latest version
+			case 7: // 6 = Your are Prohibited to log in until %s
+			case 8: // 7 = Server is jammed due to over populated
+			case 9: // 8 = No more accounts may be connected from this company
+			case 10: // 9 = MSI_REFUSE_BAN_BY_DBA
+			case 11: // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
+			case 12: // 11 = MSI_REFUSE_BAN_BY_GM
+			case 13: // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
+			case 14: // 13 = MSI_REFUSE_SELF_LOCK
+			case 15: // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
+			case 16: // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
+			case 100: // 99 = This ID has been totally erased
+			case 101: // 100 = Login information remains at %s.
+			case 102: // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
+			case 103: // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
+			case 104: // 103 = This character is being deleted. Login is temporarily unavailable for the time being
+			case 105: // 104 = Your spouse character is being deleted. Login is temporarily unavailable for the time being
+				ShowNotice("Auth Error #%d\n", atoi(sql_row[9]));
+				return atoi(sql_row[9]) - 1;
+				break;
+			default:
+				return 99; // 99 = ID has been totally erased
+				break;
 		}
 	}
 
@@ -947,7 +947,7 @@ int parse_fromchar(int fd){
 		case 0x2709:
 			if (log_login)
 			{
-				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','%s', 'GM reload request')", loginlog_db, (ulong)p,server[id].name, RETCODE);
+				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','%s', 'GM reload request')", loginlog_db, *((ulong *)p),server[id].name, RETCODE);
 				if (mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1485,7 +1485,7 @@ int parse_login(int fd) {
 				ShowWarning("packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, (ulong)p);
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, *((ulong *)p));
 
 					// query
 					if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1633,7 +1633,7 @@ int parse_login(int fd) {
 				char error[64];
 				if (log_login)
 				{
-					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %%s')", loginlog_db, (ulong)p, t_uid, result);
+					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %%s')", loginlog_db, *((ulong *)p), t_uid, result);
 					switch((result + 1)) {
 			case -2:	//-3 = Account Banned
 				sprintf(tmpsql,tmp_sql,"Account banned.");
@@ -1744,7 +1744,7 @@ int parse_login(int fd) {
 				} //End login log of error.
 				if ((result == 1) && (dynamic_pass_failure_ban != 0) && log_login){	// failed password
 					sprintf(tmpsql,"SELECT count(*) FROM `%s` WHERE `ip` = '%lu' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-						loginlog_db,(ulong)p, dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
+						loginlog_db,*((ulong *)p), dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1822,7 +1822,7 @@ int parse_login(int fd) {
 				unsigned char* server_name;
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, (ulong)p, RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, *((ulong *)p), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
