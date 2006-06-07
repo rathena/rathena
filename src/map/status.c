@@ -3833,24 +3833,24 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
 	case SC_COMA:
-		sc_def = 300 +100*status->mdef +33*status->luk;
+		sc_def = 300 +100*status->mdef +10*status->luk;
 		break;
 	case SC_SLEEP:
 	case SC_CONFUSION:
-		sc_def = 300 +100*status->int_ +33*status->luk;
+		sc_def = 300 +100*status->int_ +10*status->luk;
 		break;
 	case SC_STUN:
 	case SC_POISON:
 	case SC_DPOISON:
 	case SC_SILENCE:
 	case SC_BLEEDING:
-		sc_def = 300 +100*status->vit +33*status->luk;
+		sc_def = 300 +100*status->vit +10*status->luk;
 		break;
 	case SC_BLIND:
-		sc_def = 300 +100*status->int_ +33*status->vit;
+		sc_def = 300 +100*status->int_ +10*status->vit;
 		break;
 	case SC_CURSE:
-		sc_def = 300 +100*status->luk +33*status->vit;
+		sc_def = 300 +100*status->luk +10*status->vit;
 		break;
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
@@ -3909,13 +3909,12 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		case SC_FREEZE:
 			rate = 100*status->mdef;
 		break;
-		case SC_STUN:	//Reduction in duration is the same as reduction in rate.
-			rate = 300 +100*status->vit;
-		break;
+		case SC_STUN:
 		case SC_DPOISON:
 		case SC_POISON:
 			rate = 100*status->vit + 20*status->luk;
 		break;
+		case SC_BLEEDING:
 		case SC_SILENCE:
 		case SC_CONFUSION:
 		case SC_CURSE:
@@ -3923,11 +3922,6 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		break;
 		case SC_BLIND:
 			rate = 10*status_get_lv(bl) + 7*status->int_;
-			min = 5000; //Minimum 5 secs?
-		break;
-		case SC_BLEEDING:
-			rate = 20*status_get_lv(bl) +100*status->vit;
-			min = 10000; //Need a min of 10 secs for it to hurt at least once.
 		break;
 		case SC_SWOO:
 			if (status->mode&MD_BOSS)
