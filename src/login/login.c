@@ -3127,7 +3127,7 @@ int parse_login(int fd) {
 
 			if (!check_ip(session[fd]->client_addr.sin_addr.s_addr)) {
 				login_log("Connection refused: IP isn't authorised (deny/allow, ip: %s)." RETCODE, ip);
-                WFIFOHEAD(fd, 23);
+				WFIFOHEAD(fd, 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
@@ -3141,7 +3141,7 @@ int parse_login(int fd) {
 				if (min_level_to_connect > gm_level) {
 					login_log("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s)." RETCODE,
 					          min_level_to_connect, account.userid, gm_level, ip);
-                    WFIFOHEAD(fd, 3);
+					WFIFOHEAD(fd, 3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);

@@ -3793,6 +3793,7 @@ void status_change_init(struct block_list *bl)
 int status_get_sc_def(struct block_list *bl, int type)
 {
 	int sc_def;
+	struct status_data* status;
 	struct status_change* sc;
 	nullpo_retr(0, bl);
 
@@ -3824,6 +3825,7 @@ int status_get_sc_def(struct block_list *bl, int type)
 		return 10000;
 	}
 	
+	status = status_get_status_data(bl);
 	switch (type)
 	{
 	//Note that stats that are *100/3 were simplified to *33
@@ -3831,29 +3833,24 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
 	case SC_COMA:
-		sc_def = 300 +100*status_get_mdef(bl) +33*status_get_luk(bl);
+		sc_def = 300 +100*status->mdef +33*status->luk;
 		break;
 	case SC_SLEEP:
 	case SC_CONFUSION:
-		sc_def = 300 +100*status_get_int(bl) +33*status_get_luk(bl);
+		sc_def = 300 +100*status->int_ +33*status->luk;
 		break;
-// Removed since it collides with normal sc.
-//	case SP_DEF1:	// def
-//		sc_def = 300 +100*status_get_def(bl) +33*status_get_luk(bl);
-//		break;
 	case SC_STUN:
 	case SC_POISON:
 	case SC_DPOISON:
 	case SC_SILENCE:
 	case SC_BLEEDING:
-	case SC_STOP:
-		sc_def = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
+		sc_def = 300 +100*status->vit +33*status->luk;
 		break;
 	case SC_BLIND:
-		sc_def = 300 +100*status_get_int(bl) +33*status_get_vit(bl);
+		sc_def = 300 +100*status->int_ +33*status->vit;
 		break;
 	case SC_CURSE:
-		sc_def = 300 +100*status_get_luk(bl) +33*status_get_vit(bl);
+		sc_def = 300 +100*status->luk +33*status->vit;
 		break;
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
@@ -3888,56 +3885,58 @@ int status_get_sc_def(struct block_list *bl, int type)
 int status_get_sc_tick(struct block_list *bl, int type, int tick)
 {
 	struct map_session_data *sd;
+	struct status_data* status;
 	int rate=0, min=0;
 	//If rate is positive, it is a % reduction (10000 -> 100%)
 	//if it is negative, it is an absolute reduction in ms.
-	sd = bl->type == BL_PC?(struct map_session_data *)bl:NULL;
+	BL_CAST(BL_PC,bl,sd);
+	status = status_get_status_data(bl);
 	switch (type) {
 		case SC_DECREASEAGI:		/* 速度減少 */
 			if (sd)	// Celest
 				tick>>=1;
 		break;
-		case SC_ADRENALINE:			/* アドレナリンラッシュ */
+		case SC_ADRENALINE:
 		case SC_ADRENALINE2:
-		case SC_WEAPONPERFECTION:	/* ウェポンパ?フェクション */
-		case SC_OVERTHRUST:			/* オ?バ?スラスト */
+		case SC_WEAPONPERFECTION:
+		case SC_OVERTHRUST:
 			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
 				tick += tick / 10;
 		break;
-		case SC_STONE:				/* 石化 */
-			rate = -200*status_get_mdef(bl);
+		case SC_STONE:
+			rate = -200*status->mdef;
 		break;
-		case SC_FREEZE:				/* 凍結 */
-			rate = 100*status_get_mdef(bl);
+		case SC_FREEZE:
+			rate = 100*status->mdef;
 		break;
 		case SC_STUN:	//Reduction in duration is the same as reduction in rate.
-			rate = 300 +100*status_get_vit(bl) +33*status_get_luk(bl);
+			rate = 300 +100*status->vit;
 		break;
-		case SC_DPOISON:			/* 猛毒 */
-		case SC_POISON:				/* 毒 */
-			rate = 100*status_get_vit(bl) + 20*status_get_luk(bl);
+		case SC_DPOISON:
+		case SC_POISON:
+			rate = 100*status->vit + 20*status->luk;
 		break;
-		case SC_SILENCE:			/* 沈?（レックスデビ?ナ） */
+		case SC_SILENCE:
 		case SC_CONFUSION:
 		case SC_CURSE:
-			rate = 100*status_get_vit(bl);
+			rate = 100*status->vit;
 		break;
-		case SC_BLIND:				/* 暗? */
-			rate = 10*status_get_lv(bl) + 7*status_get_int(bl);
+		case SC_BLIND:
+			rate = 10*status_get_lv(bl) + 7*status->int_;
 			min = 5000; //Minimum 5 secs?
 		break;
 		case SC_BLEEDING:
-			rate = 20*status_get_lv(bl) +100*status_get_vit(bl);
+			rate = 20*status_get_lv(bl) +100*status->vit;
 			min = 10000; //Need a min of 10 secs for it to hurt at least once.
 		break;
 		case SC_SWOO:
-			if (status_get_mode(bl)&MD_BOSS)
+			if (status->mode&MD_BOSS)
 				tick /= 5; //TODO: Reduce skill's duration. But for how long?
 		break;
 		case SC_ANKLE:
-			if(status_get_mode(bl)&MD_BOSS) // Lasts 5 times less on bosses
+			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
 				tick /= 5;
-			rate = -100*status_get_agi(bl);
+			rate = -100*status->agi;
 		// Minimum trap time of 3+0.03*skilllv seconds [celest]
 		// Changed to 3 secs and moved from skill.c [Skotlex]
 			min = 3000;
@@ -3945,11 +3944,6 @@ int status_get_sc_tick(struct block_list *bl, int type, int tick)
 		case SC_SPIDERWEB:
 			if (map[bl->m].flag.pvp)
 				tick /=2;
-		break;
-		case SC_STOP:
-		// Unsure of this... but I get a feeling that agi reduces this
-		// (it was on Tiger Fist Code, but at -1 ms per 10 agi....
-			rate = -100*status_get_agi(bl);
 		break;
 	}
 	if (rate) {

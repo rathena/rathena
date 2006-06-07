@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/07
+	* Cleaned status_get_sc_tick/status_get_sc_def to use the status_data
+	  function. [Skotlex]
+	* SC_STOP's chance and duration can't be reduced anymore. [Skotlex]
+	* Storm Gust no longer has a 100% chance to freeze by passing mdef, now it
+	  has a 300% base chance reduced by mdef and the like as explained out by
+	  Tharis. [Skotlex]
+	* Frost Diver/Frost Nova's base freezing chance is no longer affected by
+	  target's int. [Skotlex]
 	* [Improved]:
 	  - mob_dead not to remove script controlled monsters with player sprites.
 	  [Added]:
