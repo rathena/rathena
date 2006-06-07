@@ -2125,16 +2125,20 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		delete_timer(md->deletetimer,mob_timer_delete);
 		md->deletetimer=-1;
 	}
-	if(pcdb_checkid(md->vd->class_)) //Player mobs are not removed automatically by the client.
-		clif_clearchar_delay(tick+3000,&md->bl,0);
 
 	mob_deleteslave(md);
 	md->last_deadtime=tick;
 	
 	map_freeblock_unlock();
 
+	if(pcdb_checkid(md->vd->class_)) //Player mobs are not removed automatically by the client.
+		if(md->nd)
+			return 1; // Let the dead body stay there.. we have something to do with it :D
+		else
+			clif_clearchar_delay(tick+3000,&md->bl,0);
+
 	if(!md->spawn) //Tell status_damage to remove it from memory.
-		return 5;
+		return 5; // Note: Actually, it's 4. Oh well...
 	
 	mob_setdelayspawn(md); //Set respawning.
 	return 3; //Remove from map.

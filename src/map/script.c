@@ -430,6 +430,7 @@ int buildin_mobstop(struct script_state *st);
 int buildin_mobassist(struct script_state *st);
 int buildin_mobtalk(struct script_state *st);
 int buildin_mobemote(struct script_state *st);
+int buildin_mobdeadsit(struct script_state *st);
 int buildin_mobattach(struct script_state *st);
 // <--- [zBuffer] List of mob control commands
 int buildin_sleep(struct script_state *st);
@@ -770,6 +771,7 @@ struct {
 	{buildin_mobassist,"mobassist","i*"},
 	{buildin_mobtalk,"mobtalk","is"},
 	{buildin_mobemote,"mobemote","ii"},
+	{buildin_mobdeadsit,"mobdeadsit","ii"},
 	{buildin_mobattach,"mobattach","i*"},
 // <--- [zBuffer] List of mob control commands
 {buildin_sleep,"sleep","i"},
@@ -10759,6 +10761,25 @@ int buildin_mobemote(struct script_state *st) {
 	emo = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
 		clif_emotion(&md->bl,emo);
+	return 0;
+}
+
+int buildin_mobdeadsit(struct script_state *st){
+	int id, action;
+	struct mob_data *md = NULL;
+	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	action = conv_num(st, & (st->stack->stack_data[st->start+3]));
+	if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB){
+		if(action > -1 && action < 3){
+			md->vd->dead_sit = action;
+		} else {
+			ShowError("buildin_mobdeadsit: Unrecognized action.\n");
+			report_src(st);
+		}
+	} else {
+		ShowError("buildin_mobdeadsit: Target is not a monster.\n");
+		report_src(st);
+	}
 	return 0;
 }
 
