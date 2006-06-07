@@ -40,6 +40,7 @@ int npc_event(struct map_session_data *sd,const unsigned char *npcname,int);
 int npc_timer_event(const unsigned char *eventname);				// Added by RoVeRT
 int npc_command(struct map_session_data *sd,const unsigned char *npcname,char *command);
 int npc_touch_areanpc(struct map_session_data *,int,int,int);
+int npc_touch_areanpc2(struct block_list *bl); // [Skotlex]
 int npc_click(struct map_session_data *,int);
 int npc_scriptcont(struct map_session_data *,int);
 int npc_checknear(struct map_session_data *,int);

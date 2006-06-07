@@ -971,6 +971,35 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 	return 0;
 }
 
+int npc_touch_areanpc2(struct block_list *bl)
+{
+	int i,m=bl->m;
+	int xs,ys;
+
+	for(i=0;i<map[m].npc_num;i++) {
+		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE)
+			continue;
+
+		if (map[m].npc[i]->bl.subtype!=WARP)
+			continue;
+	
+		xs=map[m].npc[i]->u.warp.xs;
+		ys=map[m].npc[i]->u.warp.ys;
+
+		if (bl->x >= map[m].npc[i]->bl.x-xs/2 && bl->x < map[m].npc[i]->bl.x-xs/2+xs &&
+		   bl->y >= map[m].npc[i]->bl.y-ys/2 && bl->y < map[m].npc[i]->bl.y-ys/2+ys)
+			break;
+	}
+	if (i==map[m].npc_num)
+		return 0;
+	
+	xs = map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex);
+	if (xs < 0) // Can't warp object between map servers...
+		return 0;
+	unit_warp(bl, xs, map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0);
+	return 1;
+}
+
 /*==========================================
  * ‹ß‚­‚©‚Ç‚¤‚©‚Ì”»’è
  *------------------------------------------

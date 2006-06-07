@@ -3424,6 +3424,7 @@ static const struct battle_data_short {
 	{ "display_snatcher_skill_fail",       &battle_config.display_snatcher_skill_fail	},
 	{ "chat_warpportal",                   &battle_config.chat_warpportal			},
 	{ "mob_warpportal",                    &battle_config.mob_warpportal			},
+	{ "mob_npc_warp",                      &battle_config.mob_npc_warp },
 	{ "dead_branch_active",                &battle_config.dead_branch_active			},
 	{ "show_steal_in_same_party",          &battle_config.show_steal_in_same_party		},
 	{ "show_party_share_picker",           &battle_config.party_show_share_picker },
@@ -3826,6 +3827,7 @@ void battle_set_defaults() {
 	battle_config.display_snatcher_skill_fail = 1;
 	battle_config.chat_warpportal = 0;
 	battle_config.mob_warpportal = 0;
+	battle_config.mob_npc_warp = 0;
 	battle_config.dead_branch_active = 0;
 	battle_config.vending_max_value = 10000000;
 	battle_config.show_steal_in_same_party = 0;

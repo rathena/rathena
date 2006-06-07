@@ -866,6 +866,23 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	return 0;
 }
 
+static int mob_ai_sub_hard_warpsearch(struct block_list *bl,va_list ap)
+{
+	struct mob_data* md;
+	struct block_list **target;
+
+	md=va_arg(ap,struct mob_data *);
+	target= va_arg(ap,struct block_list**);
+
+	if (*target) return 0;
+
+	if(bl->subtype == WARP)	
+	{
+		*target = bl;
+		return 1;
+	}	
+	return 0;
+}
 /*==========================================
  * Processing of slave monsters
  *------------------------------------------
@@ -1077,7 +1094,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				tbl->type == BL_PC && !(mode&MD_BOSS) &&
 				((TBL_PC*)tbl)->state.gangsterparadise
 		)) {	//Unlock current target.
-			if (battle_config.mob_ai&8) //Inmediately stop chasing.
+			if (tbl && tbl->m != md->bl.m && battle_config.mob_ai&64)
+			{	//Chase to a nearby warp [Skotlex]
+				tbl = NULL;
+				map_foreachinrange (mob_ai_sub_hard_warpsearch, &md->bl,
+					view_range, BL_NPC, md, &tbl);
+				if (tbl) unit_walktobl(&md->bl, tbl, 0, 1);
+			} else if (battle_config.mob_ai&8) //Inmediately stop chasing.
 				mob_stop_walking(md,1);
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&8?3000:0)); //Imediately do random walk.
 			tbl = NULL;

@@ -265,6 +265,7 @@ extern struct Battle_Config {
 	unsigned short display_snatcher_skill_fail;
 	unsigned short chat_warpportal;
 	unsigned short mob_warpportal;
+	unsigned short mob_npc_warp;
 	unsigned short dead_branch_active;
 	unsigned int vending_max_value;
 	unsigned short show_steal_in_same_party;
