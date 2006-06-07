@@ -1662,9 +1662,6 @@ int map_quit(struct map_session_data *sd) {
 			npc_script_event(sd, NPCE_LOGOUT);
 		if (sd->pd) unit_free(&sd->pd->bl);
 		unit_free(&sd->bl);
-		pc_clean_skilltree(sd);
-		if(sd->pet.intimate > 0)
-			intif_save_petdata(sd->status.account_id,&sd->pet);
 		chrif_save(sd,1);
 	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]
 		if (sd->bl.prev != NULL)

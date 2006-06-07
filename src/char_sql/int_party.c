@@ -291,10 +291,9 @@ int party_check_exp_share(struct party *p)
 	if((dudes/1000 >= 2) && (dudes%1000 == 3) && maxlv-minlv>party_share_level)
 	{
 		int pl1=0,pl2=0,pl3=0;
-		pl1=char_nick2id(p->member[oi[0]].name);
-		pl2=char_nick2id(p->member[oi[1]].name);
-		pl3=char_nick2id(p->member[oi[2]].name);
-		ShowDebug("PARTY: group of 3 Id1 %d lv %d name %s Id2 %d lv %d name %s Id3 %d lv %d name %s\n",pl1,p->member[oi[0]].lv,p->member[oi[0]].name,pl2,p->member[oi[1]].lv,p->member[oi[1]].name,pl3,p->member[oi[2]].lv,p->member[oi[2]].name);
+		pl1=p->member[oi[0]].char_id;
+		pl2=p->member[oi[1]].char_id;
+		pl3=p->member[oi[2]].char_id;
 		if (char_married(pl1,pl2) && char_child(pl1,pl3))
 			return 1;
 		if (char_married(pl1,pl3) && char_child(pl1,pl2))

@@ -1618,9 +1618,9 @@ int unit_free(struct block_list *bl) {
 		pc_cleareventtimer(sd);		
 		pc_delspiritball(sd,sd->spiritball,1);
 		chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
-		storage_delete(sd->status.account_id);
 		pc_makesavestatus(sd);
 		sd->state.waitingdisconnect = 1;
+		pc_clean_skilltree(sd);
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;
 		struct map_session_data *sd = pd->msd;
@@ -1662,7 +1662,11 @@ int unit_free(struct block_list *bl) {
 			aFree (pd->loot);
 			pd->loot = NULL;
 		}
-		if (sd) sd->pd = NULL;
+		if (sd) {
+			if(sd->pet.intimate > 0)
+				intif_save_petdata(sd->status.account_id,&sd->pet);
+			sd->pd = NULL;
+		}
 	} else if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data*)bl;
 		if(md->deletetimer!=-1)

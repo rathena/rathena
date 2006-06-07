@@ -4398,20 +4398,3 @@ int char_married(int pl1,int pl2) {
 		else
 			return 0;
 }
-
-int char_nick2id (char *name) {
-		int char_id = 0;
-		sprintf (tmp_sql, "SELECT `char_id` FROM `%s` WHERE `name` = '%s'", char_db, name);
-		if (mysql_query (&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		sql_res = mysql_store_result (&mysql_handle);
-		sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-		if (sql_row)
-			char_id = atoi (sql_row[0]);
-		else
-			ShowError ("CHAR: nick2id Failed!\n");
-		if (sql_res) mysql_free_result (sql_res);
-		return char_id;
-}
