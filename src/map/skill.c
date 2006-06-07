@@ -1448,18 +1448,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 	}
 
-	if(sd && bl->type == BL_MOB && status_isdead(bl) &&
-		skillid && skill_get_type(skillid)==BF_MAGIC &&
-	 	skill_get_inf(skillid)!=INF_GROUND_SKILL &&
-	  	(rate=pc_checkskill(sd,HW_SOULDRAIN))>0)
-	{	//Soul Drain should only work on targetted spells [Skotlex]
-		int sp;
-		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
-		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
-		sp = (status_get_lv(bl))*(95+15*rate)/100;
-		status_heal(src, 0, sp, 3);
-	}
-
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
 	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{
@@ -5601,7 +5589,7 @@ int skill_castend_id( int tid, unsigned int tick, int id,int data )
 
 		if (ud->skilltimer == -1) {
 			if(md) md->skillidx = -1;
-			else ud->skillid = 0; //Non mobs can't clear this one as it is used for skill condition 'afterskill'
+			else ud->skillid = 0; //mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skilltarget = 0;
 		}
 		return 1;

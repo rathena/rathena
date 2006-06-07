@@ -1711,6 +1711,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		sp += sd->sp_gain_race[status->race];
 		sp += sd->sp_gain_race[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 		hp += sd->hp_gain_value;
+		if(sd->ud.skillid && skill_get_type(sd->ud.skillid)==BF_MAGIC &&
+			(temp=pc_checkskill(sd,HW_SOULDRAIN))>0 &&				
+		 	skill_get_inf(sd->ud.skillid)!=INF_GROUND_SKILL
+		){	//Soul Drain should only work on targetted spells [Skotlex]
+			if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
+			clif_skill_nodamage(src,&md->bl,HW_SOULDRAIN,temp,1);
+			sp += md->level*(95+15*temp)/100;
+		}
 		if (hp||sp)
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
 		if (sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
