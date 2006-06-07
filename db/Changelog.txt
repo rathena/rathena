@@ -26,6 +26,8 @@
 	-----
 
 =========================
+06/07
+	* Stormy Knight card now freezes when attack rather then when hit [Playtester]
 06/06
 	* Fixed Owl Duke not having boss mode [Playtester]
 	* Fixed Osiris's slaves [Playtester]
