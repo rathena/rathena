@@ -9445,7 +9445,7 @@ int atcommand_iteminfo(
 	//, "Lure/Scroll"}; No need, type 11 items are converted to type 2 upon loading [Skotlex]
 
 	struct item_data *item_data, *item_array[MAX_SEARCH];
-	int i, item_id=0, count = 1;
+	int i, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @iteminfo <item_name_or_ID>).");
@@ -9467,7 +9467,7 @@ int atcommand_iteminfo(
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
 		sprintf(atcmd_output, "Item: '%s'/'%s'[%d] (%d) Type: %s | Extra Effect: %s",
-			item_data->name,item_data->jname,item_data->slot,item_id,
+			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
 			item_data->type < 12 ? itype[item_data->type] : "BUG!", 
 			(item_data->script==NULL)? "None" : "With script"
 		);
