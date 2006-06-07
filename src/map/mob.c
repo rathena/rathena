@@ -1196,7 +1196,11 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		{	//Attempt to attack.
 			//At this point we know the target is attackable, we just gotta check if the range matches.
 			if (md->ud.target == tbl->id && md->ud.attacktimer != -1)
+			{
+				if (md->state.skillstate!=(md->state.aggressive?MSS_ANGRY:MSS_BERSERK))
+					md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;	//Correct the state.
 				return 0; //Already locked.
+			}
 			
 			if (!battle_check_range (&md->bl, tbl, md->status.rhw.range))
 			{	//Out of range...
