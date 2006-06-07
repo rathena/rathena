@@ -1785,22 +1785,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (md->sc.data[SC_RICHMANKIM].timer != -1)
 			bonus += md->sc.data[SC_RICHMANKIM].val2;
 
-		if (tmpsd[i]->expaddrace[status->race])
-			bonus += tmpsd[i]->expaddrace[status->race];	
-		bonus += tmpsd[i]->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-	
-		if (battle_config.pk_mode &&
-			(int)(md->db->lv - tmpsd[i]->status.base_level) >= 20) //Needed due to unsigned checks
-			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
-		
-		//SG additional exp from Blessings [Komurka] - probably can be optimalized ^^;;
-		if(md->class_ == tmpsd[i]->hate_mob[2] && (battle_config.allow_skill_without_day || is_day_of_star() || tmpsd[i]->sc.data[SC_MIRACLE].timer!=-1))
-			bonus += 20*pc_checkskill(tmpsd[i],SG_STAR_BLESS);
-		else if(md->class_ == tmpsd[i]->hate_mob[1] && (battle_config.allow_skill_without_day || is_day_of_moon()))
-			bonus += 10*pc_checkskill(tmpsd[i],SG_MOON_BLESS);
-		else if(md->class_ == tmpsd[i]->hate_mob[0] && (battle_config.allow_skill_without_day || is_day_of_sun()))
-			bonus += 10*pc_checkskill(tmpsd[i],SG_SUN_BLESS);
-
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 
@@ -1885,14 +1869,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 		if(flag) {
 			if(base_exp || job_exp)
-				pc_gainexp(tmpsd[i],base_exp,job_exp);
+				pc_gainexp(tmpsd[i], &md->bl, base_exp,job_exp);
 			if(zeny) // zeny from mobs [Valaris]
-				pc_getzeny(tmpsd[i],zeny);
+				pc_getzeny(tmpsd[i], zeny);
 		}
 	}
 	
 	for(i=0;i<pnum;i++) //Party share.
-		party_exp_share(pt[i].p,md->bl.m,pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 	} //End EXP giving.
 	
 	if (!(type&1) &&
@@ -2043,7 +2027,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		clif_mvp_effect(mvp_sd);
 		clif_mvp_exp(mvp_sd,mexp);
-		pc_gainexp(mvp_sd,mexp,0);
+		pc_gainexp(mvp_sd, &md->bl, mexp,0);
 		log_mvp[1] = mexp;
 		if(!map[md->bl.m].flag.nomvploot)
 		for(j=0;j<3;j++){

@@ -596,6 +596,7 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 
 	if(rand()%10000 < pet_catch_rate) {
 		unit_remove_map(&md->bl,0);
+		status_kill(&md->bl);
 		clif_pet_rulet(sd,1);
 //		if(battle_config.etc_log)
 //			printf("rulet success %d\n",target_id);

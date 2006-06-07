@@ -644,7 +644,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		map_delblock(target);
 		unit_free(target);
 	}
-
 		
 	return hp+sp;
 }

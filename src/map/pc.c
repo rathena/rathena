@@ -36,6 +36,7 @@
 #include "vending.h"
 #include "atcommand.h"
 #include "log.h"
+#include "date.h"
 
 #ifndef TXT_ONLY // mail system [Valaris]
 #include "mail.h"
@@ -3928,10 +3929,59 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 }
 
 /*==========================================
+ * Alters experienced based on self bonuses that do not get even shared to the party.
+ *------------------------------------------
+ */
+static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
+{
+	int bonus = 0;
+	struct status_data *status = status_get_status_data(src);
+	unsigned int temp;
+
+	if (sd->expaddrace[status->race])
+		bonus += sd->expaddrace[status->race];	
+	bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+	
+	//SG additional exp from Blessings [Komurka] - probably can be optimalized ^^;;
+	temp = status_get_class(src);
+	if(temp == sd->hate_mob[2] &&
+		(battle_config.allow_skill_without_day || is_day_of_star() || sd->sc.data[SC_MIRACLE].timer!=-1))
+		bonus += 20*pc_checkskill(sd,SG_STAR_BLESS);
+	else
+	if(temp == sd->hate_mob[1] &&
+		(battle_config.allow_skill_without_day || is_day_of_moon()))
+		bonus += 10*pc_checkskill(sd,SG_MOON_BLESS);
+	else
+	if(temp == sd->hate_mob[0] &&
+		(battle_config.allow_skill_without_day || is_day_of_sun()))
+		bonus += 10*pc_checkskill(sd,SG_SUN_BLESS);
+
+	if (battle_config.pk_mode && 
+		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
+		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
+
+	if (!bonus)
+	  	return;
+	
+	temp = *base_exp*bonus/100;
+	if (*base_exp > UINT_MAX - temp)
+		*base_exp = UINT_MAX;
+	else
+		*base_exp += temp;
+
+	temp = *job_exp*bonus/100;
+	if (*job_exp > UINT_MAX - temp)
+		*job_exp = UINT_MAX;
+	else
+		*job_exp += temp;
+
+	return;
+}
+/*==========================================
  * ??’lŽæ“¾
  *------------------------------------------
  */
-int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int job_exp)
+int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp,unsigned int job_exp)
 {
 	char output[256];
 	float nextbp=0, nextjp=0;
@@ -3944,13 +3994,13 @@ int pc_gainexp(struct map_session_data *sd,unsigned int base_exp,unsigned int jo
 	if(!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
 		return 0; // no exp on pvp maps
 
-	if(sd->status.guild_id>0){	// ƒMƒ‹ƒh‚Éã”[
+	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);
-	}
+
+	if(src) pc_calcexp(sd, &base_exp, &job_exp, src);
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
-	
 		
 	if(sd->state.showexp || battle_config.max_exp_gain_rate){
 		if (nextb > 0)
