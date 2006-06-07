@@ -1733,7 +1733,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			continue;
 		if(tmpsd[temp]->bl.m != md->bl.m || pc_isdead(tmpsd[temp]))
 			continue;
-		temp++;
 
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
@@ -1741,6 +1740,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			mvp_sd=tmpsd[temp];
 			mvp_damage=md->dmglog[i].dmg;
 		}
+
+		temp++; // [Lance]
 	}
 	count = i; //Total number of attackers.
 
