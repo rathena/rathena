@@ -6031,7 +6031,8 @@ int skill_castend_map( struct map_session_data *sd,int skill_num, const char *ma
 		skill_failed(sd);
 		return 0;
 	}
-	//スキルが使えない?態異?峵・	if(sd->sc.count && (
+	//スキルが使えない?態異?峵・	
+	if(sd->sc.count && (
 		sd->sc.data[SC_SILENCE].timer!=-1 ||
 		sd->sc.data[SC_ROKISWEIL].timer!=-1 ||
 		sd->sc.data[SC_AUTOCOUNTER].timer != -1 ||
