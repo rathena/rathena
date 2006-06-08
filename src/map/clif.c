@@ -5121,25 +5121,21 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		WFIFOHEAD(sd->fd,packet_len_table[0x19a]);
 		WFIFOW(sd->fd,0) = 0x19a;
 		WFIFOL(sd->fd,2) = sd->bl.id;
-		if(pvprank<=0)
-			pc_calc_pvprank(sd);
 		WFIFOL(sd->fd,6) = pvprank;
 		WFIFOL(sd->fd,10) = pvpnum;
 		WFIFOSET(sd->fd,packet_len_table[0x19a]);
 	} else {
 		unsigned char buf[32];
-
 		WBUFW(buf,0) = 0x19a;
 		WBUFL(buf,2) = sd->bl.id;
-		if(sd->sc.option&0x46)
-		// WTF? a -1 to an unsigned value...
-			WBUFL(buf,6) = 0xFFFFFFFF;
+		if(sd->sc.option&(OPTION_HIDE|OPTION_CLOAK))
+			WBUFL(buf,6) = ULONG_MAX; //On client displays as --
 		else
-			if(pvprank<=0)
-				pc_calc_pvprank(sd);
 			WBUFL(buf,6) = pvprank;
 		WBUFL(buf,10) = pvpnum;
-		if(!type)
+		if(sd->sc.option&OPTION_INVISIBLE)
+			clif_send(buf,packet_len_table[0x19a],&sd->bl,SELF);
+		else if(!type)
 			clif_send(buf,packet_len_table[0x19a],&sd->bl,AREA);
 		else
 			clif_send(buf,packet_len_table[0x19a],&sd->bl,ALL_SAMEMAP);
