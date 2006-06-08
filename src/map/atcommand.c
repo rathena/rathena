@@ -7319,6 +7319,7 @@ atcommand_skilltree(const int fd, struct map_session_data* sd,
 		return -1;
 
 	c = pc_calc_skilltree_normalize_job(pl_sd);
+	c = pc_mapid2jobid(c, pl_sd->status.sex);
 
 	tbl = job_name(c);
 
