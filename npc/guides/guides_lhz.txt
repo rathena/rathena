@@ -76,7 +76,7 @@ s_Cont:
 s_Tool:
 	mes "[Lighthalzen Guide]";
 	mes "The Tool Shop is";
-	mes "located in the 11 o'clock";
+	mes "located in the 11 o' clock";
 	mes "direction from the center";
 	mes "of the East District.";
 	if(@tempguide)viewpoint 1,324,301,1,0xFF0000;
