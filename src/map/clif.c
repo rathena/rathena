@@ -4833,7 +4833,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 		+(battle_config.estimation_type&2?status->def2:0);
 	WBUFW(buf,14)=status->race;
 	WBUFW(buf,16)= (battle_config.estimation_type&1?status->mdef:0)
-  		+(battle_config.estimation_type&2?status->mdef - (status->vit>>1):0);
+  		+(battle_config.estimation_type&2?status->mdef2 - (status->vit>>1):0);
 	WBUFW(buf,18)= status->def_ele;
 	for(i=0;i<9;i++)
 		WBUFB(buf,20+i)= (unsigned char)battle_attr_fix(NULL,dst,100,i+1,status->def_ele, status->ele_lv);
@@ -5617,7 +5617,7 @@ int clif_cart_equiplist(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, MAX_INVENTORY * 20 + 4);
+	WFIFOHEAD(fd, MAX_INVENTORY * 20 + 4);
 	buf = WFIFOP(fd,0);
 
 	for(i=0,n=0;i<MAX_INVENTORY;i++){
@@ -8176,26 +8176,39 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		return;
 
 	if(sd->npc_id) npc_event_dequeue(sd);
-	clif_skillinfoblock(sd);
-	pc_checkitem(sd);
 
-	// loadendackŽž
-	// next exp
-	clif_updatestatus(sd,SP_NEXTBASEEXP);
-	clif_updatestatus(sd,SP_NEXTJOBEXP);
-	// skill point
-	clif_updatestatus(sd,SP_SKILLPOINT);
+	if(sd->state.connect_new) {
+		clif_skillinfoblock(sd);
+		clif_updatestatus(sd,SP_NEXTBASEEXP);
+		clif_updatestatus(sd,SP_NEXTJOBEXP);
+		clif_updatestatus(sd,SP_SKILLPOINT);
+		clif_initialstatus(sd);
+	} else {
+		//For some reason the client "loses" these on map-change.
+		clif_updatestatus(sd,SP_STR);
+		clif_updatestatus(sd,SP_AGI);
+		clif_updatestatus(sd,SP_VIT);
+		clif_updatestatus(sd,SP_INT);
+		clif_updatestatus(sd,SP_DEX);
+		clif_updatestatus(sd,SP_LUK);
+	}
+
 	// item
+	pc_checkitem(sd);
 	clif_itemlist(sd);
 	clif_equiplist(sd);
+	
 	// cart
 	if(pc_iscarton(sd)){
 		clif_cart_itemlist(sd);
 		clif_cart_equiplist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
 	}
-	// param all
-	clif_initialstatus(sd);
+
+	// weight max , now
+	clif_updatestatus(sd,SP_MAXWEIGHT);
+	clif_updatestatus(sd,SP_WEIGHT);
+
 	if(battle_config.pc_invincible_time > 0) {
 		if(map_flag_gvg(sd->bl.m))
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
@@ -8210,10 +8223,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	party_send_movemap(sd);
 	// guild
 	guild_send_memberinfoshort(sd,1);
-
-	// weight max , now
-	clif_updatestatus(sd,SP_MAXWEIGHT);
-	clif_updatestatus(sd,SP_WEIGHT);
 
 	// Show hp after displacement [LuzZza]
 	if(sd->status.party_id)
