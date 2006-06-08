@@ -37,6 +37,8 @@ Musashiden
 Date		Added
 ======
 07/05
+	* Readded the 'al_morgen' variable to counteragent_mixture.txt, it's needed [MasterOfMuppets]
+	  for the alchemist quest. Thanks to Belle for the fix.
 	* Added Save/Load Quest Skills (1st/2nd Class quest skills!) global functions. To test and
 	  insert into Valhalla NPC. They use ONE variable for all skills [Lupus]
 

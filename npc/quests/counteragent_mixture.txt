@@ -20,6 +20,8 @@
 //= 1,7 Fixed exploit [Lupus]
 //= 1.8 Got rid of 'al_morgen' var [Lupus]
 //= 1.9 now uses (MISC_QUEST & 4) bit
+//= 2.0 Readded the 'al_morgen' var since it's required for the [MasterOfMuppets]
+//=	alchemist quest. What's up with the mass removing of variables Lupus?
 //============================================================ 
 
 
@@ -166,6 +168,7 @@ M_Menu:
 		mes "You too can feel my 'excitement' if you wish..... Ahhhhh.... I can make you feel...";
 		set MISC_QUEST,MISC_QUEST | 4;
 		set MORGEN,0;
+		if(ALCH_Q == 4) set al_morgen,1;
 		close;
 
 L_1:
