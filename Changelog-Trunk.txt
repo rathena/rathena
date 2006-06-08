@@ -3,13 +3,17 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2006/06/07
-	- Adjusted Don't Forget Me, Defender, Longing to use all val entries, and
+2006/06/08
+	* Updated mob_npc_warp to a three-state config switch. 0 disables. 1 enable
+	  only on warps that don't lead to nobranch maps. 2 - enable on all warps.
+	  [Skotlex]
+	* Adjusted Don't Forget Me, Defender, Longing to use all val entries, and
 	  to hold the speed adjustment value rather than speed penalty (eg: 125
 	  instead of 25). [Skotlex]
-	- Cleaned up status_calc_speed so that speed penalties are correctly
+	* Cleaned up status_calc_speed so that speed penalties are correctly
 	  handled (eg: 25% penalty is speed*100/75, not +speed*25/100). Thanks to
 	  Euph for pointing it out and Belle for the speed mechanics. [Skotlex]
+2006/06/07
 	* Fixed Sense using mdef instead of mdef2 [Skotlex]
 	* Fixed item-skills not showing up on login. [Skotlex]
 	* Cleaned up clif_parseLoadEndAck, by testing which packets are required
