@@ -16,16 +16,16 @@
 	1475 Equestrian's Spear:	NO INFO. Item not implemented...
 	13005 Angelic Wing Dagger:	NO INFO. Item not implemented...
 	1308 Golden Axe:		NO INFO. Item not implemented...
-	1971 Electric Wire:		NO INFO. Item not implemented...
 	13160, 13161 Destroyer:	Can break target's armor when fired at close range.
 	-----
 	4296 Cramp Card:	Temp Plug: 10z per mob-level on a 3% chance.
 	7458 Fortune Horn:	It's a custom name ^^;
-	12016 Speed Increasing Potion: A potion which increases the moving speed of a character for a duration.
 	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
 
 =========================
+06/08
+	* Implemented Electric Wire [Playtester]
 06/07
 	* Stormy Knight card now freezes when attack rather then when hit [Playtester]
 06/06
