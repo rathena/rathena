@@ -2174,7 +2174,10 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->last_linktime = tick;
 	if (!md->bl.prev)
 		map_addblock(&md->bl);
-	clif_spawn(&md->bl);
+	if(pcdb_checkid(md->vd->class_) && md->nd)
+		md->vd->dead_sit = 0;
+	else
+		clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_hp)

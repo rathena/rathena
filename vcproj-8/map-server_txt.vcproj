@@ -51,7 +51,7 @@
 				DefaultCharIsUnsigned="true"
 				ForceConformanceInForLoopScope="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="4"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -298,6 +298,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\mercenary.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\mob.c"
 				>
 			</File>
@@ -384,10 +388,6 @@
 			<File
 				RelativePath="..\src\map\vending.c"
 				>
-			</File>
-			<File
-				RelativePath="..\src\map\mercenary.c"
-			>
 			</File>
 		</Filter>
 	</Files>

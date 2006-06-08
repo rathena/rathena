@@ -49,7 +49,7 @@
 				RuntimeLibrary="1"
 				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="4"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				CompileAs="1"
