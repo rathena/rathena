@@ -393,7 +393,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func ) {
 			memmgr_usage_bytes -= head->size;
 			FREE (head_large);			
 		} else {
-			ShowError("Memory manager: args of aFree is freed pointer %s line %d\n", file, line);
+			ShowError("Memory manager: args of aFree is freed pointer %s:%d@%s\n", file, line, func);
 		}
 		ptr = NULL;
 		return;

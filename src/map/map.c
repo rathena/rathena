@@ -291,13 +291,15 @@ int map_freeblock_lock (void)
  * バッファにたまっていたblockを全部削除
  *------------------------------------------
  */
-int map_freeblock_unlock (void)
+//Temporal debug function to figure out which unlock is causing already free'd pointer errors.
+int map_freeblock_unlock_sub(const char * file, int line)
 {
 	if ((--block_free_lock) == 0) {
 		int i;
 		for (i = 0; i < block_free_count; i++)
 		{	//Directly calling aFree shouldn't be a leak, as Free remembers the size the original pointed to memory was allocated with? [Skotlex]
-			aFree(block_free[i]);
+//			aFree(block_free[i]);
+			_mfree(block_free[i], file, line, __func__);
 			block_free[i] = NULL;
 		}
 		block_free_count = 0;
