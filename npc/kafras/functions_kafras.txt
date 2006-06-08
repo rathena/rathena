@@ -272,6 +272,7 @@ function	script	F_KafTele	{
 
 		if (@wrpD$[@num] == "Alberta") warp "alberta.gat", 117, 56;
 		if (@wrpD$[@num] == "Al De Baran") warp "aldebaran.gat",143,110;
+		if (@wrpD$[@num] == "Aldebaran") warp "aldebaran.gat",143,110;
 		if (@wrpD$[@num] == "Comodo") warp "comodo.gat", 207, 144;
 		if (@wrpD$[@num] == "Izlude") warp "izlude.gat", 91, 105;
 		if (@wrpD$[@num] == "Geffen") warp "geffen.gat", 120, 39;
