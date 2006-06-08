@@ -6285,7 +6285,7 @@ struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,
 		break;
 	case DC_DONTFORGETME:
 		val1 = 3*skilllv+status->dex/10; // ASPD decrease
-		val2 = 2*skilllv+status->agi/10; // Movement speed decrease
+		val2 = 100+2*skilllv+status->agi/10; // Movement speed adjustment. 
 		if(sd){
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
 			val2 += pc_checkskill(sd,DC_DANCINGLESSON);

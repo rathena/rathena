@@ -3143,17 +3143,24 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if(!sc || !sc->count)
 		return cap_value(speed,10,USHRT_MAX);
 
+	// Fixed reductions
 	if(sc->data[SC_CURSE].timer!=-1)
 		speed += 450;
 	if(sc->data[SC_SWOO].timer != -1) // [marquis007]
 		speed += 450; //Let's use Curse's slow down momentarily (exact value unknown)
 	if(sc->data[SC_WEDDING].timer!=-1)
 		speed += 300;
+
+	//% increases (they don't stack)
 	if(sc->data[SC_SPEEDUP1].timer!=-1)
-		speed -= speed*50/100;
+		speed -= speed * 50/100;
 	else if(sc->data[SC_SPEEDUP0].timer!=-1)
-		speed -= speed*25/100;
+		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
+		speed -= speed * 25/100;
+	else if(sc->data[SC_RUN].timer!=-1)
+		speed -= speed * 25/100;
+	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_CARTBOOST].timer!=-1)
 		speed -= speed * 20/100;
@@ -3163,45 +3170,44 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed -= speed * sc->data[SC_AVOID].val2/100;
 	else if(sc->data[SC_WINDWALK].timer!=-1)
 		speed -= speed * sc->data[SC_WINDWALK].val3/100;
-	if(sc->data[SC_SLOWDOWN].timer!=-1)
-		speed += speed * 50/100;
-	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		speed += speed * 25/100;
-	if(sc->data[SC_STEELBODY].timer!=-1)
-		speed += speed * 25/100;
-	if(sc->data[SC_QUAGMIRE].timer!=-1)
-		speed += speed * 50/100;
-	if(sc->data[SC_DONTFORGETME].timer!=-1)
-		speed += speed * sc->data[SC_DONTFORGETME].val3/100;
-	if(sc->data[SC_DEFENDER].timer!=-1)
-		speed += speed * (35-5*sc->data[SC_DEFENDER].val1)/100;
-	if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
-		speed += speed * 25/100;
-	if(sc->data[SC_JOINTBEAT].timer!=-1) {
-		if (sc->data[SC_JOINTBEAT].val2 == 0)
-			speed += speed * 50/100;
-		else if (sc->data[SC_JOINTBEAT].val2 == 2)
-			speed += speed * 30/100;
-	}
-	if(sc->data[SC_CLOAKING].timer!=-1)
-		speed = speed*(
-			(sc->data[SC_CLOAKING].val4&2?25:0) //Wall speed bonus
-			+sc->data[SC_CLOAKING].val3) /100; //Normal adjustment bonus.
-	
+
+	//% reductions	 (they stack)
 	if(sc->data[SC_DANCING].timer!=-1 && sc->data[SC_DANCING].val3&0xFFFF)
 		speed += speed*(sc->data[SC_DANCING].val3&0xFFFF)/100;
+	if(sc->data[SC_DECREASEAGI].timer!=-1)
+		speed = speed * 100/75;
+	if(sc->data[SC_STEELBODY].timer!=-1)
+		speed = speed * 100/75;
+	if(sc->data[SC_QUAGMIRE].timer!=-1)
+		speed = speed * 100/50;
+	if(sc->data[SC_DONTFORGETME].timer!=-1)
+		speed = speed * 100/sc->data[SC_DONTFORGETME].val3;
+	if(sc->data[SC_DEFENDER].timer!=-1)
+		speed = speed * 100/sc->data[SC_DEFENDER].val4;
+	if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
+		speed = speed * 100/75;
+	if(sc->data[SC_JOINTBEAT].timer!=-1) {
+		if (sc->data[SC_JOINTBEAT].val2 == 0)
+			speed = speed * 100/50;
+		else
+		if (sc->data[SC_JOINTBEAT].val2 == 2)
+			speed = speed * 100/70;
+	}
+	if(sc->data[SC_CLOAKING].timer!=-1)
+		speed = speed * 100 /(
+			(sc->data[SC_CLOAKING].val4&2?25:0) //Wall speed bonus
+			+sc->data[SC_CLOAKING].val3); //Normal adjustment bonus.
+	
 	if(sc->data[SC_LONGING].timer!=-1)
-		speed += speed*sc->data[SC_LONGING].val2/100;
+		speed = speed * 100/sc->data[SC_LONGING].val3;
 	if(sc->data[SC_HIDING].timer!=-1 && sc->data[SC_HIDING].val3)
-		speed += speed*sc->data[SC_HIDING].val3/100;
+		speed = speed * 100/sc->data[SC_HIDING].val3;
 	if(sc->data[SC_CHASEWALK].timer!=-1)
-		speed = speed * sc->data[SC_CHASEWALK].val3/100;
-	if(sc->data[SC_RUN].timer!=-1)
-		speed -= speed * 25/100;
-	if(sc->data[SC_FUSION].timer != -1)
-		speed -= speed * 25/100;
+		speed = speed * 100/sc->data[SC_CHASEWALK].val3;
 	if(sc->data[SC_GATLINGFEVER].timer!=-1)
-		speed += speed * 25/100;
+		speed = speed * 100/75;
+	if(sc->data[SC_SLOWDOWN].timer!=-1)
+		speed = speed * 100/75;
 	
 	return cap_value(speed,10,USHRT_MAX);
 }
@@ -3287,7 +3293,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if(sc->data[SC_SKA].timer!=-1)
 		aspd_rate += 25;
 	if(sc->data[SC_DEFENDER].timer != -1)
-		aspd_rate += 25 -sc->data[SC_DEFENDER].val1*5;
+		aspd_rate += sc->data[SC_DEFENDER].val3;
 	if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
 		aspd_rate += 25;
 	if(sc->data[SC_GRAVITATION].timer!=-1)
@@ -4482,7 +4488,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			tick = 1000;
 			break;
 		case SC_LONGING:
-			val2 = 50-10*val1; //Aspd/Speed penalty.
+			val2 = 50-10*val1; //Aspd penalty.
+			val3 = 50+10*val1; //Walk speed adjustment.
 			break;
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
@@ -4562,7 +4569,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			tick = 1000;
  			//Store speed penalty on val3.
 			if(sd && (val3 = pc_checkskill(sd,RG_TUNNELDRIVE))>0)
-				val3 = 100 - 16*val3;
+				val3 = 20 + 6*val3;
 			val4 = val1+3; //Seconds before SP substraction happen.
 			break;
 		case SC_CHASEWALK:
@@ -4632,12 +4639,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			{	
 				struct map_session_data *tsd;
 				int i;
-				val2 = 5 + val1*15;
+				val2 = 5 + 15*val1; //Damage reduction
+				val3 = 25 - 5*val1; //Aspd adjustment 
+				val4 = 135 - 5*val1; //Speed adjustment
+
 				if (sd)
 				for (i = 0; i < 5; i++)
 				{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,5+val1*5,0,0,tick,1);
+						status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,5+val1*5,val3,val4,tick,1);
 				}
 			}
 			break;
