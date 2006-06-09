@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/09
+	* Reverted back fully working counteragent_mixture.txt. Don't touch 8) PM me [Lupus]
 06/07
 	* Fixed Yuno Kafra warp, sorry guys, I made a typo [Evera]
 	* Readded the 'al_morgen' variable to counteragent_mixture.txt, it's needed [MasterOfMuppets]
