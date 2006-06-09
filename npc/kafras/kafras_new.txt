@@ -98,7 +98,7 @@ lighthalzen.gat,164,100,3	script	Kafra	860,{
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",162,82;
+		savepoint "lighthalzen.gat",158,94;
 		callfunc "F_KafEnd",0,1;
 }
 
@@ -108,7 +108,7 @@ lighthalzen.gat,191,320,4	script	Kafra	861,{
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",162,82;
+		savepoint "lighthalzen.gat",194,313;
 		callfunc "F_KafEnd",0,1;
 }
 
@@ -118,7 +118,7 @@ lhz_in02.gat,237,284,4	script	Kafra	861,{
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",162,82;
+		savepoint "lighthalzen.gat",278,215;
 		callfunc "F_KafEnd",0,1;
 }
 
