@@ -5696,7 +5696,9 @@ int atcommand_mapinfo(
 	clif_displaymessage(fd, atcmd_output);
 
 	if (map[m_id].flag.nosave) {
-		if (map[m_id].save.x == -1 || map[m_id].save.y == -1 )
+		if (!map[m_id].save.map)
+			sprintf(atcmd_output, "No Save (Return to last Save Point)");
+		else if (map[m_id].save.x == -1 || map[m_id].save.y == -1 )
 			sprintf(atcmd_output, "No Save, Save Point: %s,Random",mapindex_id2name(map[m_id].save.map));
 		else
 			sprintf(atcmd_output, "No Save, Save Point: %s,%d,%d",

@@ -44,5 +44,5 @@ extern int char_name_option;
 extern char char_name_letters[];
 extern int autosave_interval;
 extern char db_path[];
-
+extern int guild_exp_rate;
 #endif

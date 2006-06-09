@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/09
+	* Fixed @mapinfo displaying incorrectly maps with nosave which send you
+	  back to your last savepoint. [Skotlex]
+	* Moved guild_exp_rate from a mapserver battle config setting to a char
+	  server config. It no longer modifies the total taxed exp as seen on the
+	  guild information window, but directly modifies the exp that the guild
+	  earns. [Skotlex]
 	* Added an error report and correction when the map server receives a guild
 	  from the char-server with more guild members than MAX_GUILD. [Skotlex]
 	* Changed the interval between waterballs back to 125 [MasterOfMuppets]

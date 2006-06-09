@@ -96,6 +96,8 @@ extern int lowest_gm_level;
 extern int GM_num;
 extern struct gm_account *gm_account;
 
+extern int guild_exp_rate;
+
 extern int debug_mysql_query(char *file, int line, void *mysql, const char *q);
 
 #endif

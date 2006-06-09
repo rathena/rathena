@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "char.h"
 #include "../common/strlib.h"
@@ -1523,16 +1524,26 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	    break;
 	  }
 	case GMI_EXP:
-	  {	// EXP
-	    unsigned int exp,oldexp=g->member[i].exp;
-	    exp=g->member[i].exp=*((unsigned int *)data);
-	    g->exp+=(exp-oldexp);
-	    guild_calcinfo(g);	// LvƒAƒbƒv”»’f
-	    mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
-	    mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
-	    g->save_flag |= (GS_BASIC|GS_MEMBER);
-	    break;
-	  }
+	{	// EXP
+		unsigned int exp, old_exp=g->member[i].exp;
+		g->member[i].exp=*((unsigned int *)data);
+		if (g->member[i].exp > old_exp)
+		{
+			exp = g->member[i].exp - old_exp;
+			if (guild_exp_rate != 100)
+				exp = exp*guild_exp_rate/100;
+			if (exp > UINT_MAX - g->exp)
+				g->exp = UINT_MAX;
+			else
+				g->exp+=exp;
+			guild_calcinfo(g);
+			mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,4);
+			g->save_flag |= GS_BASIC;
+		}
+		mapif_guild_memberinfochanged(guild_id,account_id,char_id,type,data,len);
+		g->save_flag |= GS_MEMBER;
+		break;
+	}
 	case GMI_HAIR:
 	{
 		g->member[i].hair=*((int *)data);

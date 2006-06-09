@@ -165,7 +165,6 @@ extern struct Battle_Config {
 	unsigned short quest_skill_reset;
 	unsigned short basic_skill_check;
 	unsigned short guild_emperium_check;
-	unsigned short guild_exp_rate;	//[Skotlex]
 	unsigned short guild_exp_limit;
 	unsigned short guild_max_castles;
 	unsigned short pc_invincible_time;

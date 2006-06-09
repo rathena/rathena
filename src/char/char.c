@@ -127,6 +127,7 @@ int save_log = 1;
 int start_zeny = 500;
 int start_weapon = 1201;
 int start_armor = 2301;
+int guild_exp_rate = 100;
 
 //Custom limits for the fame lists. [Skotlex]
 int fame_list_size_chemist = MAX_FAME_LIST;
@@ -4107,6 +4108,8 @@ int char_config_read(const char *cfgName) {
 				ShowWarning("Max fame list size is %d (fame_list_taekwon)\n", MAX_FAME_LIST);
 				fame_list_size_taekwon = MAX_FAME_LIST;
 			}
+		} else if (strcmpi(w1, "guild_exp_rate") == 0) {
+			guild_exp_rate = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		}
