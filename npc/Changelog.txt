@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/09
+	* Implemented two airship mini games scripted by Dj-Yhn [MasterOfMuppets]
 	* A small fix to Shinokas quest [MasterOfMuppets]
 	* Reverted back fully working counteragent_mixture.txt. Don't touch 8) PM me [Lupus]
 06/07
