@@ -405,6 +405,7 @@ einbech.gat,57,210,4	script	Young Man	854,{
 	mes "that old act that way, but";
 	mes "it makes me wonder what";
 	mes "could have happened to him.";
+	set ein_young_man,1;
 	close;
 }
 	
