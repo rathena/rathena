@@ -1166,7 +1166,8 @@ int intif_parse_GuildBroken(int fd)
 // ギルド基本情報変更通知
 int intif_parse_GuildBasicInfoChanged(int fd)
 {
-	int type, guild_id, dd;
+	int type, guild_id;
+	unsigned int dd;
 	void *data;
 	struct guild *g;
 	short dw;
@@ -1176,7 +1177,7 @@ int intif_parse_GuildBasicInfoChanged(int fd)
 	data=RFIFOP(fd,10);
 	g=guild_search(guild_id);
 	dw=*((short *)data);
-	dd=*((int *)data);
+	dd=*((unsigned int *)data);
 	if( g==NULL )
 		return 0;
 	switch(type){

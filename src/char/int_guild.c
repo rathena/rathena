@@ -23,7 +23,7 @@ static struct dbt *castle_db;
 
 static int guild_newid = 10000;
 
-static int guild_exp[100];
+static unsigned int guild_exp[100];
 
 int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, int flag, const char *mes);
 int mapif_guild_broken(int guild_id, int flag);
@@ -38,14 +38,14 @@ int inter_guild_tostr(char *str, struct guild *g) {
 	int i, c, len;
 
 	// 基本データ
-	len = sprintf(str, "%d\t%s\t%s\t%d,%d,%d,%d,%d\t%s#\t%s#\t",
+	len = sprintf(str, "%d\t%s\t%s\t%d,%d,%u,%d,%d\t%s#\t%s#\t",
 	              g->guild_id, g->name, g->master,
 	              g->guild_lv, g->max_member, g->exp, g->skill_point, g->castle_id,
 	              g->mes1, g->mes2);
 	// メンバー
 	for(i = 0; i < g->max_member; i++) {
 		struct guild_member *m = &g->member[i];
-		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\t%s\t",
+		len += sprintf(str + len, "%d,%d,%d,%d,%d,%d,%d,%u,%d,%d\t%s\t",
 		               m->account_id, m->char_id,
 		               m->hair, m->hair_color, m->gender,
 		               m->class_, m->lv, m->exp, m->exp_payper, m->position,
@@ -98,6 +98,7 @@ int inter_guild_tostr(char *str, struct guild *g) {
 // ギルドデータの文字列からの変換
 int inter_guild_fromstr(char *str, struct guild *g) {
 	int i, j, c;
+	unsigned int exp;
 	int tmp_int[16];
 	char tmp_str[4][256];
 	char tmp_str2[4096];
@@ -105,16 +106,16 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 
 	// 基本データ
 	memset(g, 0, sizeof(struct guild));
-	if (sscanf(str, "%d\t%[^\t]\t%[^\t]\t%d,%d,%d,%d,%d\t%[^\t]\t%[^\t]\t", &tmp_int[0],
+	if (sscanf(str, "%d\t%[^\t]\t%[^\t]\t%d,%d,%u,%d,%d\t%[^\t]\t%[^\t]\t", &tmp_int[0],
 	           tmp_str[0], tmp_str[1],
-	           &tmp_int[1], &tmp_int[2], &tmp_int[3], &tmp_int[4], &tmp_int[5],
+	           &tmp_int[1], &tmp_int[2], &exp, &tmp_int[4], &tmp_int[5],
 	           tmp_str[2], tmp_str[3]) < 8)
 		return 1;
 
 	g->guild_id = tmp_int[0];
 	g->guild_lv = tmp_int[1];
 	g->max_member = tmp_int[2];
-	g->exp = tmp_int[3];
+	g->exp = exp;
 	g->skill_point = tmp_int[4];
 	g->castle_id = tmp_int[5];
 	memcpy(g->name, tmp_str[0], NAME_LENGTH-1);
@@ -131,9 +132,9 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 	// メンバー
 	for(i = 0; i < g->max_member; i++) {
 		struct guild_member *m = &g->member[i];
-		if (sscanf(str + 1, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\t%[^\t]\t",
+		if (sscanf(str + 1, "%d,%d,%d,%d,%d,%d,%d,%u,%d,%d\t%[^\t]\t",
 		           &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3], &tmp_int[4],
-		           &tmp_int[5], &tmp_int[6], &tmp_int[7], &tmp_int[8], &tmp_int[9],
+		           &tmp_int[5], &tmp_int[6], &exp, &tmp_int[8], &tmp_int[9],
 		           tmp_str[0]) < 11)
 			return 1;
 		m->account_id = tmp_int[0];
@@ -143,7 +144,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		m->gender = tmp_int[4];
 		m->class_ = tmp_int[5];
 		m->lv = tmp_int[6];
-		m->exp = tmp_int[7];
+		m->exp = exp;
 		m->exp_payper = tmp_int[8];
 		m->position = tmp_int[9];
 		memcpy(m->name, tmp_str[0], NAME_LENGTH-1);
@@ -350,7 +351,7 @@ int inter_guild_readdb(void) {
 	while(fgets(line, sizeof(line)-1, fp) && i < 100){
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		guild_exp[i] = atoi(line);
+		guild_exp[i] = (unsigned int)atof(line);
 		i++;
 	}
 	fclose(fp);
@@ -567,7 +568,7 @@ int guild_check_conflict(int guild_id, int account_id, int char_id) {
 	return 0;
 }
 
-int guild_nextexp (int level)
+unsigned int guild_nextexp (int level)
 {
 	if (level == 0)
 		return 1;
@@ -591,7 +592,8 @@ int guild_checkskill(struct guild *g, int id) {
 
 // ギルドの情報の再計算
 int guild_calcinfo(struct guild *g) {
-	int i, c, nextexp;
+	int i, c;
+	unsigned int nextexp;
 	struct guild before = *g;
 
 	// スキルIDの設定
@@ -1204,7 +1206,7 @@ int mapif_parse_GuildMemberInfoChange(int fd, int guild_id, int account_id, int 
 		break;
 	case GMI_EXP:	// EXP
 	  {
-		int exp, oldexp = g->member[i].exp;
+		unsigned int exp, oldexp = g->member[i].exp;
 		exp = g->member[i].exp = *((unsigned int *)data);
 		g->exp += (exp - oldexp);
 		guild_calcinfo(g);	// Lvアップ判断

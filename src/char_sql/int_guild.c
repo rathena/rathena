@@ -24,7 +24,7 @@ static struct dbt *guild_db_;
 
 struct guild_castle castles[MAX_GUILDCASTLE];
 
-static int guild_exp[100];
+static unsigned int guild_exp[100];
 
 #define GS_BASIC 0x01
 #define GS_MEMBER 0x02
@@ -134,7 +134,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 		if (g->guild_id == -1) //Insert
 			sprintf(tmp_sql,"INSERT INTO `%s` "
 				"(`name`,`master`,`guild_lv`,`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,`emblem_len`,`emblem_id`,`emblem_data`,`char_id`) "
-				"VALUES ('%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%d')",
+				"VALUES ('%s', '%s', '%d', '%d', '%d', '%d', '%u', '%u', '%d', '%s', '%s', '%d', '%d', '%s', '%d')",
 				guild_db,t_name,jstrescapecpy(t_master,g->master),
 				g->guild_lv,g->connect_member,g->max_member,g->average_lv,g->exp,g->next_exp,g->skill_point,
 				jstrescapecpy(t_mes1,g->mes1),jstrescapecpy(t_mes2,g->mes2),g->emblem_len,g->emblem_id,emblem_data,
@@ -142,7 +142,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 		else //Update
 			sprintf(tmp_sql,"UPDATE `%s` SET"
 				" `guild_id`=%d, `name`='%s', `master`='%s',`guild_lv`=%d, `connect_member`=%d,`max_member`=%d, "
-				"`average_lv`=%d,`exp`=%d,`next_exp`=%d,`skill_point`=%d,`mes1`='%s',`mes2`='%s',"
+				"`average_lv`=%d,`exp`=%u,`next_exp`=%u,`skill_point`=%d,`mes1`='%s',`mes2`='%s',"
 				"`emblem_len`=%d,`emblem_id`=%d,`emblem_data`='%s',`char_id`=%d WHERE `guild_id`=%d",
 				guild_db, g->guild_id,t_name,jstrescapecpy(t_master,g->master),
 				g->guild_lv,g->connect_member,g->max_member,g->average_lv,g->exp,g->next_exp,g->skill_point,
@@ -349,8 +349,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 	else
 		g->max_member = atoi(sql_row[4]);
 	g->average_lv=atoi(sql_row[5]);
-	g->exp=atoi(sql_row[6]);
-	g->next_exp=atoi(sql_row[7]);
+	g->exp=(unsigned int)atof(sql_row[6]);
+	g->next_exp=(unsigned int)atof(sql_row[7]);
 	g->skill_point=atoi(sql_row[8]);
 	//There shouldn't be a need to copy the very last char, as it's the \0 [Skotlex]
 	strncpy(g->mes1,sql_row[9],59);
@@ -391,7 +391,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 			m->gender=atoi(sql_row[5]);
 			m->class_=atoi(sql_row[6]);
 			m->lv=atoi(sql_row[7]);
-			m->exp=atoi(sql_row[8]);
+			m->exp=(unsigned int)atof(sql_row[8]);
 			m->exp_payper=atoi(sql_row[9]);
 			m->online=atoi(sql_row[10]);
 			if (atoi(sql_row[11]) >= MAX_GUILDPOSITION) // Fix reduction of MAX_GUILDPOSITION [PoW]
@@ -631,7 +631,7 @@ int inter_guild_ReadEXP(void)
 	while(fgets(line,256,fp) && i<100){
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		guild_exp[i]=atoi(line);
+		guild_exp[i]=(unsigned int)atof(line);
 		i++;
 	}
 	fclose(fp);
@@ -793,7 +793,7 @@ int guild_check_empty(struct guild *g)
 	return 1;
 }
 
-int guild_nextexp(int level)
+unsigned int guild_nextexp(int level)
 {
 	if (level == 0)
 		return 1;
@@ -820,7 +820,8 @@ int guild_checkskill(struct guild *g,int id) {
 // ギルドの情報の再計算
 int guild_calcinfo(struct guild *g)
 {
-	int i,c,nextexp;
+	int i,c;
+	unsigned int nextexp;
 	struct guild before=*g;
 
 	// スキルIDの設定
@@ -1523,7 +1524,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	  }
 	case GMI_EXP:
 	  {	// EXP
-	    int exp,oldexp=g->member[i].exp;
+	    unsigned int exp,oldexp=g->member[i].exp;
 	    exp=g->member[i].exp=*((unsigned int *)data);
 	    g->exp+=(exp-oldexp);
 	    guild_calcinfo(g);	// Lvアップ判断

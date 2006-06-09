@@ -367,8 +367,8 @@ int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
 		return 0;
 	}
 
-	if ((unsigned int)g->member[i].exp > INT_MAX - c->exp)
-		g->member[i].exp = INT_MAX;
+	if (g->member[i].exp > UINT_MAX - c->exp)
+		g->member[i].exp = UINT_MAX;
 	else
 		g->member[i].exp+= c->exp;
 
@@ -1139,6 +1139,8 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 	
 	nullpo_retr(0, sd);
 
+	if (!exp) return 0;
+	
 	if (sd->status.guild_id == 0 ||
 		(g = guild_search(sd->status.guild_id)) == NULL ||
 		(per = g->position[guild_getposition(sd,g)].exp_mode) <= 0)
@@ -1149,7 +1151,9 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 	else
 	if (per < 1) return 0;
 
-	if ((tmp = exp * per / 100) <= 0)
+
+	tmp = exp * per / 100;
+	if (tmp <= 0)
 		return 0;
 	
 	exp2 = (unsigned int)tmp;
