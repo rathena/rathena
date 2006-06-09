@@ -64,13 +64,13 @@ function	script	F_ClearJobVar	{
 
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
-	if(MARIANNE) {set MISC_QUEST,MISC_QUEST | 1;}
-	set MEAT,0; set MORRISON,0; set MARIANNE,0;
+	if(MARIANNE) {set MISC_QUEST,MISC_QUEST | 1; set MARIANNE,0;}
+	set MEAT,0; set MORRISON,0;
 	set BUNYBND,0; set TEMPESTRA,0; 
 	set sewer_prt,0; set iz_move_alberta,0;
 	if(nif_q_done) {set nif_q_done,0; set MISC_QUEST,MISC_QUEST | 64;}
-	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4;}
-	set MORGEN,0; set nif_t,0;
+	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4; set MORGEN,0;}
+	set nif_t,0;
 	//set QSK1,0; set QSK2,0; set QSK3,0; set QSK4,0; 
 	return;
 }
