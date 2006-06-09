@@ -679,7 +679,7 @@ struct {
 	{buildin_cmdothernpc,"cmdothernpc","ss"},
 	{buildin_atcommand,"atcommand","*"}, // [MouseJstr]
 	{buildin_charcommand,"charcommand","*"}, // [MouseJstr]
-//	{buildin_movenpc,"movenpc","siis"}, // [MouseJstr]
+	{buildin_movenpc,"movenpc","sii"}, // [MouseJstr]
 	{buildin_message,"message","s*"}, // [MouseJstr]
 	{buildin_npctalk,"npctalk","*"}, // [Valaris]
 	{buildin_hasitems,"hasitems","*"}, // [Valaris]
@@ -8975,16 +8975,28 @@ int buildin_getmapmobs(struct script_state *st)
 
 int buildin_movenpc(struct script_state *st)
 {
-	struct map_session_data *sd;
-	char *map,*npc;
+	TBL_NPC *nd = NULL;
+	char *npc;
 	int x,y;
+	short m;
 
-	sd = script_rid2sd(st);
-
-	map = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	npc = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x = conv_num(st,& (st->stack->stack_data[st->start+3]));
 	y = conv_num(st,& (st->stack->stack_data[st->start+4]));
-	npc = conv_str(st,& (st->stack->stack_data[st->start+5]));
+
+	if ((nd = npc_name2id(npc)) == NULL)
+		return -1;
+
+	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
+		return -1;	//Not on a map.
+	
+	if (x < 0) x = 0;
+	else if (x >= map[m].xs) x = map[m].xs-1;
+	if (y < 0) y = 0;
+	else if (y >= map[m].ys) y = map[m].ys-1;
+	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_moveblock(&nd->bl, x, y, gettick());
+	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 
 	return 0;
 }
