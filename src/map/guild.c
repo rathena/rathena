@@ -566,6 +566,13 @@ int guild_recv_info(struct guild *sg)
 		before=*g;
 	memcpy(g,sg,sizeof(struct guild));
 
+	if(g->max_member > MAX_GUILD)
+	{
+		if (battle_config.error_log)
+			ShowError("guild_recv_info: Received guild with %d members, but MAX_GUILD is only %d. Extra guild-members have been lost!\n", g->max_member, MAX_GUILD);
+		g->max_member = MAX_GUILD;
+	}
+	
 	for(i=bm=m=0;i<g->max_member;i++){	// sd‚ÌÝ’è‚Æl”‚ÌŠm”F
 		if(g->member[i].account_id>0){
 			struct map_session_data *sd = map_id2sd(g->member[i].account_id);
@@ -962,7 +969,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 
 	//Send XY dot updates. [Skotlex]
 	//Moved from guild_send_memberinfoshort [LuzZza]
-	for(i=0; i < MAX_GUILD; i++) {
+	for(i=0; i < g->max_member; i++) {
 		
 		if(!g->member[i].sd || i == idx ||
 			g->member[i].sd->bl.m != g->member[idx].sd->bl.m)
