@@ -11442,6 +11442,15 @@ int run_script_main(struct script_state *st)
 		aFree(st);
 		st = NULL;
 		return 0;
+	}else{ 
+		if(st->sleep.tick > 0)
+	  	{	//Delay execution
+			TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
+			st->sleep.charid = sd?sd->char_id:0;
+			st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
+				run_script_timer, st->sleep.charid, (int)st);
+			linkdb_insert(&sleep_db, (void*)st->oid, st);
+		} 
 	}
 
 	return 1;
@@ -11507,15 +11516,9 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	st->sleep.timer = -1;
 
 	if(run_script_main(st)){
-		if(st->state != END){ 
+		if (st->state != END){
 			pos = st->pos;
-			if(st->sleep.tick > 0)
-	  		{	//Delay execution
-				st->sleep.charid = sd?sd->char_id:0;
-				st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-					run_script_timer, st->sleep.charid, (int)st);
-				linkdb_insert(&sleep_db, (void*)st->oid, st);
-			} else if (sd) {
+			if(!st->sleep.tick && sd) {
 				// script is not finished, store data in sd.
 				sd->npc_script      = st->script;
 				sd->npc_scriptroot  = rootscript;
