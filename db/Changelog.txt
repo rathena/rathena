@@ -25,6 +25,7 @@
 
 =========================
 06/10
+	* Slotted Crown and Tiara only have +1 int [Playtester]
 	* Added the new cards to the drops [Playtester]
 06/08
 	* Implemented Electric Wire [Playtester]

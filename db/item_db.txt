@@ -2598,8 +2598,8 @@
 5161,Spiky_Band_,Spiky Band,5,,10,1000,,6,,1,0x0066D5F2,7,2,256,,50,1,43,{},{},{}
 5162,Bone_Helm_,Bone Helm,5,,10,800,,7,,1,0x000444A2,7,2,256,,70,1,103,{ bonus2 bSubEle,Ele_Dark,-15; },{},{}
 5163,Corsair_,Corsair,5,,10,500,,5,,1,0xFFFFFFFE,7,2,256,,0,1,105,{ bonus bVit,1; },{},{}
-5164,Tiara_,Tiara,5,,10,400,,4,,1,0xFFFFFFFE,7,0,256,,45,1,19,{ bonus bInt,2; },{},{}
-5165,Crown_,Crown,5,,10,400,,4,,1,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,2; },{},{}
+5164,Tiara_,Tiara,5,,10,400,,4,,1,0xFFFFFFFE,7,0,256,,45,1,19,{ bonus bInt,1; },{},{}
+5165,Crown_,Crown,5,,10,400,,4,,1,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,1; },{},{}
 2671,Bow_Thimble_,Bow Thimble,5,10000,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
 2525,Ancient_Cape_,Ancient Cape,5,,10,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x00021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; },{},{}
