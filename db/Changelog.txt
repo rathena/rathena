@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/10
+	* Added the new cards to the drops [Playtester]
 06/08
 	* Implemented Electric Wire [Playtester]
 06/07
