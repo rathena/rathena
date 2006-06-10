@@ -100,6 +100,7 @@ function	script	F_Kafra	{
 		//Only storage and other info check
 		case 6:
 			setarray @K_Menu0$[0],"-Use Storage","-Other Information Check","-Cancel";
+			break;
 		//Common Kafra
 		default:
 			setarray @K_Menu0$[0],"-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";

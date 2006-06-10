@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/09
+	* Fixed a problem with Kafra's getarg(1),6 of showing the default menu [Evera]
 	* Fixed Lighthalzen and Yuno Kafra respawn locations [Playtester]
 	* Implemented two airship mini games scripted by Dj-Yhn [MasterOfMuppets]
 	* A small fix to Shinokas quest [MasterOfMuppets]
