@@ -2838,6 +2838,8 @@ int map_readafm (struct map_data *m)
 		// check if it's necessary to replace the extension - speeds up loading a bit
 		strncpy(afm_name, m->name, strlen(m->name) - 4);
 		strcat(afm_name, ".afm");
+	} else {
+		strcpy(afm_name, m->name);
 	}
 	
 	sprintf(fn, "%s\\%s", afm_dir, afm_name);
