@@ -14,8 +14,8 @@ struct block_list;
 
 void do_init_party(void);
 void do_final_party(void);
-struct party *party_search(int party_id);
-struct party* party_searchname(char *str);
+struct party_data *party_search(int party_id);
+struct party_data *party_searchname(char *str);
 
 int party_create(struct map_session_data *sd,char *name, int item, int item2);
 int party_created(int account_id,int char_id,int fail,int party_id,char *name);
@@ -38,9 +38,9 @@ int party_send_message(struct map_session_data *sd,char *mes,int len);
 int party_recv_message(int party_id,int account_id,char *mes,int len);
 int party_check_conflict(struct map_session_data *sd);
 int party_skill_check(struct map_session_data *sd, int party_id, int skillid, int skilllv);
-int party_send_xy_clear(struct party *p);
-int party_exp_share(struct party *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
-int party_share_loot(struct party *p, TBL_PC *sd, struct item *item_data);
+int party_send_xy_clear(struct party_data *p);
+int party_exp_share(struct party_data *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
+int party_share_loot(struct party_data *p, TBL_PC *sd, struct item *item_data);
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int type,...);

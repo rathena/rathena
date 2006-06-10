@@ -3159,7 +3159,7 @@ int buildin_warpparty(struct script_state *st)
 	int i;
 	unsigned short mapindex;
 	struct map_session_data *pl_sd;
-	struct party *p=NULL;
+	struct party_data *p=NULL;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	y=conv_num(st,& (st->stack->stack_data[st->start+4]));
@@ -3173,7 +3173,7 @@ int buildin_warpparty(struct script_state *st)
 	{
 		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = p->member[i].sd))
+			if ((pl_sd = p->data[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.nowarp)
 					continue;
@@ -3185,7 +3185,7 @@ int buildin_warpparty(struct script_state *st)
 	{
 		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = p->member[i].sd))
+			if ((pl_sd = p->data[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn)
 					continue;
@@ -3204,7 +3204,7 @@ int buildin_warpparty(struct script_state *st)
 		
 		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = p->member[i].sd))
+			if ((pl_sd = p->data[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn)
 					continue;			
@@ -3219,7 +3219,7 @@ int buildin_warpparty(struct script_state *st)
 			return 1;
 		for (i = 0; i < MAX_PARTY; i++)
 		{
-			if ((pl_sd = p->member[i].sd))
+			if ((pl_sd = p->data[i].sd))
 			{
 				if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
 					continue;
@@ -4469,15 +4469,14 @@ int buildin_getcharid(struct script_state *st)
  */
 char *buildin_getpartyname_sub(int party_id)
 {
-	struct party *p;
+	struct party_data *p;
 
-	p=NULL;
 	p=party_search(party_id);
 
 	if(p!=NULL){
 		char *buf;
 		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, p->name, NAME_LENGTH-1);
+		memcpy(buf, p->party.name, NAME_LENGTH-1);
 		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
@@ -4504,10 +4503,9 @@ int buildin_getpartyname(struct script_state *st)
  */
 int buildin_getpartymember(struct script_state *st)
 {
-	struct party *p;
+	struct party_data *p;
 	int i,j=0,type=0;
 
-	p=NULL;
 	p=party_search(conv_num(st,& (st->stack->stack_data[st->start+2])));
 
 	if( st->end>st->start+3 )
@@ -4515,16 +4513,16 @@ int buildin_getpartymember(struct script_state *st)
 	
 	if(p!=NULL){
 		for(i=0;i<MAX_PARTY;i++){
-			if(p->member[i].account_id){
+			if(p->party.member[i].account_id){
 				switch (type) {
 				case 2:
-					mapreg_setreg(add_str((unsigned char *) "$@partymemberaid")+(j<<24),p->member[i].account_id);
+					mapreg_setreg(add_str((unsigned char *) "$@partymemberaid")+(j<<24),p->party.member[i].account_id);
 					break;
 				case 1:
-					mapreg_setreg(add_str((unsigned char *) "$@partymembercid")+(j<<24),p->member[i].char_id);
+					mapreg_setreg(add_str((unsigned char *) "$@partymembercid")+(j<<24),p->party.member[i].char_id);
 					break;
 				default:
-					mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(j<<24),p->member[i].name);
+					mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(j<<24),p->party.member[i].name);
 				}
 				j++;
 			}

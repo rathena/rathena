@@ -574,7 +574,6 @@ int pc_isequip(struct map_session_data *sd,int n)
  */
 int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_time, struct mmo_charstatus *st)
 {
-	struct party *p;
 	struct guild *g;
 	int i;
 	unsigned long tick = gettick();
@@ -648,9 +647,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		sd->status.option &= OPTION_MASK;
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
-	// パ?ティ??係の初期化
-	sd->party_x = -1;
-	sd->party_y = -1;
 	sd->guild_x = -1;
 	sd->guild_y = -1;
 
@@ -681,7 +677,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
 
 	// パ?ティ、ギルドデ?タの要求
-	if (sd->status.party_id > 0 && (p = party_search(sd->status.party_id)) == NULL)
+	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
 		party_request_info(sd->status.party_id);
 	if (sd->status.guild_id > 0)
 	{
@@ -2621,7 +2617,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	int flag=0;
 	unsigned int tick = gettick();
 	struct map_session_data *first_sd = NULL,*second_sd = NULL,*third_sd = NULL;
-	struct party *p=NULL;
+	struct party_data *p=NULL;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, fitem);
@@ -2636,7 +2632,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
   	{
 		first_sd = map_id2sd(fitem->first_get_id);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
-			if (!(p && p->item&1 &&
+			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
 			))
 				return 0;
@@ -2646,7 +2642,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	  	{
 			second_sd = map_id2sd(fitem->second_get_id);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
-				if(!(p && p->item&1 &&
+				if(!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 					(second_sd && second_sd->status.party_id == sd->status.party_id))
 				))
@@ -2657,7 +2653,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 		  	{
 				third_sd = map_id2sd(fitem->third_get_id);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
-					if(!(p && p->item&1 &&
+					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
 						(second_sd && second_sd->status.party_id == sd->status.party_id) ||
 						(third_sd && third_sd->status.party_id == sd->status.party_id))

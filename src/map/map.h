@@ -417,6 +417,27 @@ struct view_data {
 	char sex;
 	unsigned dead_sit : 2;
 };
+
+struct party_member_data {
+	struct map_session_data *sd;
+	unsigned int hp; //For HP,x,y refreshing.
+	unsigned short x, y;
+};
+
+struct party_data {
+	struct party party;
+	struct party_member_data data[MAX_PARTY];
+	unsigned char count; //Online count of members.
+	unsigned char itemc; //For item distribution.
+	struct {
+		unsigned family : 1; //Is this party a family?
+		unsigned monk : 1; //There's at least one monk in party?
+		unsigned sg : 1;	//There's at least one Star Gladiator in party?
+		unsigned snovice :1; //There's a Super Novice
+		unsigned tk : 1; //There's a taekwon
+	} state;
+};
+
 struct npc_data;
 struct pet_db;
 struct item_data;
@@ -668,7 +689,6 @@ struct map_session_data {
 	} deal;
 
 	int party_invite,party_invite_account;
-	short party_x,party_y; // should be short [zzo]
 
 	int guild_invite,guild_invite_account;
 	int guild_emblem_id,guild_alliance,guild_alliance_account;

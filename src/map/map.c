@@ -2801,9 +2801,11 @@ static int map_loadafm (struct map_data *m, char *fn)
 		int afm_size[2];
 		char *str;
 
+		//Gotta skip the first two lines which are just a header of sorts.
 		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
 		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
+		if (!str) return 0;
 		sscanf(str , "%d%d", &afm_size[0], &afm_size[1]);
 
 		xs = m->xs = afm_size[0];

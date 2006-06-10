@@ -519,7 +519,6 @@ int mapif_parse_CreateParty(int fd, int account_id, int char_id, char *name, cha
 	memcpy(p->name,name,NAME_LENGTH);
 	p->exp=0;
 	p->item=(item?1:0)|(item2?2:0);
-	p->itemc = 0;
 
 	p->member[0].account_id=account_id;
 	p->member[0].char_id =char_id;

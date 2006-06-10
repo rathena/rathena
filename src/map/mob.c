@@ -1694,7 +1694,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		*mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
 	
 	struct {
-		struct party *p;
+		struct party_data *p;
 		int id,zeny;
 		unsigned int base_exp,job_exp;
 	} pt[DAMAGELOG_SIZE];
@@ -1870,7 +1870,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if(j==pnum){ //Possibly add party.
 				pt[pnum].p = party_search(temp);
-				if(pt[pnum].p && pt[pnum].p->exp)
+				if(pt[pnum].p && pt[pnum].p->party.exp)
 				{
 					pt[pnum].id=temp;
 					pt[pnum].base_exp=base_exp;

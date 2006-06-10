@@ -1600,7 +1600,7 @@ int atcommand_who(
 	char match_text[100];
 	char player_name[NAME_LENGTH];
 	struct guild *g;
-	struct party *p;
+	struct party_data *p;
 
 	nullpo_retr(-1, sd);
 
@@ -1639,7 +1639,7 @@ int atcommand_who(
 					//Players Party if exists
 					if (p != NULL) {
 						//sprintf(temp0," | Party: '%s'", p->name);
-						sprintf(temp0, msg_txt(335), p->name);
+						sprintf(temp0, msg_txt(335), p->party.name);
 						strcat(atcmd_output,temp0);
 					}
 					//Players Guild if exists
@@ -1801,7 +1801,7 @@ int atcommand_whomap(
 	int map_id = 0;
 	char map_name[MAP_NAME_LENGTH];
 	struct guild *g;
-	struct party *p;
+	struct party_data *p;
 
 	nullpo_retr(-1, sd);
 
@@ -1838,7 +1838,7 @@ int atcommand_whomap(
 					if (p == NULL)
 						sprintf(temp0, "None");
 					else
-						sprintf(temp0, "%s", p->name);
+						sprintf(temp0, "%s", p->party.name);
 					if (pl_GM_level > 0)
 						sprintf(atcmd_output, "Name: %s (GM:%d) | Party: '%s' | Guild: '%s'", pl_sd->status.name, pl_GM_level, temp0, temp1);
 					else
@@ -1878,7 +1878,7 @@ int atcommand_whogm(
 	char match_text[100];
 	char player_name[NAME_LENGTH];
 	struct guild *g;
-	struct party *p;
+	struct party_data *p;
 
 	nullpo_retr(-1, sd);
 
@@ -1918,7 +1918,7 @@ int atcommand_whogm(
 						if (p == NULL)
 							sprintf(temp0, "None");
 						else
-							sprintf(temp0, "%s", p->name);
+							sprintf(temp0, "%s", p->party.name);
 						sprintf(atcmd_output, "       Party: '%s' | Guild: '%s'", temp0, temp1);
 						clif_displaymessage(fd, atcmd_output);
 						count++;
@@ -5380,7 +5380,7 @@ int atcommand_partyrecall(
 	int i;
 	struct map_session_data *pl_sd, **pl_allsd;
 	char party_name[NAME_LENGTH];
-	struct party *p;
+	struct party_data *p;
 	int count, users;
 	nullpo_retr(-1, sd);
 
@@ -5404,7 +5404,7 @@ int atcommand_partyrecall(
 		pl_allsd = map_getallusers(&users);
 		for (i = 0; i < users; i++) {
 			if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
-			    pl_sd->status.party_id == p->party_id) {
+			    pl_sd->status.party_id == p->party.party_id) {
 				if (pc_isGM(pl_sd) > pc_isGM(sd))
 					continue; //Skip GMs greater than you.
 				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
@@ -5413,7 +5413,7 @@ int atcommand_partyrecall(
 					pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
 			}
 		}
-		sprintf(atcmd_output, msg_table[95], p->name); // All online characters of the %s party are near you.
+		sprintf(atcmd_output, msg_table[95], p->party.name); // All online characters of the %s party are near you.
 		clif_displaymessage(fd, atcmd_output);
 		if (count) {
 			sprintf(atcmd_output, "Because you are not authorised to warp from some maps, %d player(s) have not been recalled.", count);
@@ -5937,7 +5937,7 @@ int atcommand_partyspy(
 	const char* command, const char* message)
 {
 	char party_name[NAME_LENGTH];
-	struct party *p;
+	struct party_data *p;
 	nullpo_retr(-1, sd);
 
 	memset(party_name, '\0', sizeof(party_name));
@@ -5956,13 +5956,13 @@ int atcommand_partyspy(
 
 	if ((p = party_searchname(party_name)) != NULL || // name first to avoid error when name begin with a number
 	    (p = party_search(atoi(message))) != NULL) {
-		if (sd->partyspy == p->party_id) {
+		if (sd->partyspy == p->party.party_id) {
 			sd->partyspy = 0;
-			sprintf(atcmd_output, msg_table[105], p->name); // No longer spying on the %s party.
+			sprintf(atcmd_output, msg_table[105], p->party.name); // No longer spying on the %s party.
 			clif_displaymessage(fd, atcmd_output);
 		} else {
-			sd->partyspy = p->party_id;
-			sprintf(atcmd_output, msg_table[106], p->name); // Spying on the %s party.
+			sd->partyspy = p->party.party_id;
+			sprintf(atcmd_output, msg_table[106], p->party.name); // Spying on the %s party.
 			clif_displaymessage(fd, atcmd_output);
 		}
 	} else {
@@ -7656,7 +7656,7 @@ atcommand_changeleader(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	struct party *p;
+	struct party_data *p;
 	struct map_session_data *pl_sd;
 	int mi, pl_mi;
 	nullpo_retr(-1, sd);
@@ -7667,12 +7667,12 @@ atcommand_changeleader(
 		return -1;
 	}
 	
-	for (mi = 0; mi < MAX_PARTY && p->member[mi].sd != sd; mi++);
+	for (mi = 0; mi < MAX_PARTY && p->data[mi].sd != sd; mi++);
 	
 	if (mi == MAX_PARTY)
 		return -1; //Shouldn't happen
 
-	if (!p->member[mi].leader)
+	if (!p->party.member[mi].leader)
 	{
 		clif_displaymessage(fd, "You need to be the party's leader to use this command.");
 		return -1;
@@ -7689,20 +7689,20 @@ atcommand_changeleader(
 		return -1;
 	}
 
-	for (pl_mi = 0; pl_mi < MAX_PARTY && p->member[pl_mi].sd != pl_sd; pl_mi++);
+	for (pl_mi = 0; pl_mi < MAX_PARTY && p->data[pl_mi].sd != pl_sd; pl_mi++);
 	
 	if (pl_mi == MAX_PARTY)
 		return -1; //Shouldn't happen
 
 	//Change leadership.
-	p->member[mi].leader = 0;
-	if (p->member[mi].sd->fd)
-		clif_displaymessage(p->member[mi].sd->fd, "Leadership transferred.");
-	p->member[pl_mi].leader = 1;
-	if (p->member[pl_mi].sd->fd)
-		clif_displaymessage(p->member[pl_mi].sd->fd, "You've become the party leader.");
+	p->party.member[mi].leader = 0;
+	if (p->data[mi].sd->fd)
+		clif_displaymessage(p->data[mi].sd->fd, "Leadership transferred.");
+	p->party.member[pl_mi].leader = 1;
+	if (p->data[pl_mi].sd->fd)
+		clif_displaymessage(p->data[pl_mi].sd->fd, "You've become the party leader.");
 
-	intif_party_leaderchange(p->party_id,p->member[pl_mi].account_id,p->member[pl_mi].char_id);
+	intif_party_leaderchange(p->party.party_id,p->party.member[pl_mi].account_id,p->party.member[pl_mi].char_id);
 	//Update info.
 	clif_party_main_info(p,-1);
 	clif_party_info(p,-1);
