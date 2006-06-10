@@ -1062,7 +1062,9 @@ int npc_globalmessage(const char *name,char *mes)
  */
 int npc_click(struct map_session_data *sd,int id)
 {
-	struct npc_data *nd;
+	struct npc_data *nd = NULL;
+	TBL_MOB *md = NULL;
+	int tick = 0;
 
 	nullpo_retr(1, sd);
 
@@ -1072,11 +1074,41 @@ int npc_click(struct map_session_data *sd,int id)
 		return 1;
 	}
 
+	if(id < 0){
+		id = -id;
+	}
+
+	nd=(struct npc_data *)map_id2bl(id);
+
+	switch(nd->bl.type){
+		case BL_MOB:
+			md = ((TBL_MOB *)nd);
+			if(md->nd){
+				if(sd->bl.m == md->bl.m && distance_bl(&sd->bl, &md->bl) <= AREA_SIZE)
+					sd->npc_pos = run_script(md->nd->u.scr.script,0,sd->bl.id,id);
+				return 0;
+			}
+		case BL_PC:
+			tick = gettick();
+			if (sd->sc.option&OPTION_HIDE || sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+				return 0;
+
+			if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
+				if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
+					clif_skill_fail(sd, 1, 4, 0);
+					return 0;
+				}
+			}
+			if (sd->invincible_timer != -1)
+				pc_delinvincibletimer(sd);
+
+			sd->idletime = tick;
+			unit_attack(&sd->bl, id, 1);
+			return 0;
+	}
 
 	if (npc_checknear(sd,id))
 		return 1;
-
-	nd=(struct npc_data *)map_id2bl(id);
 
 	//Hidden/Disabled npc.
 	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
