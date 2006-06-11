@@ -1527,7 +1527,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	{	// EXP
 		unsigned int exp, old_exp=g->member[i].exp;
 		g->member[i].exp=*((unsigned int *)data);
-		if (g->member[i].exp > old_exp)
+		if (g->member[i].exp > (signed int)old_exp && old_exp < INT_MAX)
 		{
 			exp = g->member[i].exp - old_exp;
 			if (guild_exp_rate != 100)
