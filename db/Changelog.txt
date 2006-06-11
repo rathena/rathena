@@ -24,6 +24,9 @@
 	-----
 
 =========================
+06/11
+	* Commented some unused mobs in the mob_db [Playtester]
+	* Goggles are worth 10k now [Playtester]
 06/10
 	* Slotted Crown and Tiara only have +1 int [Playtester]
 	* Added the new cards to the drops [Playtester]

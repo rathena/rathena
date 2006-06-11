@@ -1789,8 +1789,8 @@
 1391,Galapago@WZ_WATERBALL,chase,86,3,500,1500,5000,yes,target,always,0,,,,,,2
 1392,Rotar Zairo@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6
 1392,Rotar Zairo@NPC_SELFDESTRUCTION,attack,173,1,500,2000,5000,no,self,myhpltmaxrate,50,,,,,,23
-1393,G Mummy@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,
-1393,G Mummy@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
+//1393,G Mummy@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,
+//1393,G Mummy@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1399,Event Baphomet@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1399,Event Baphomet@AL_TELEPORT,idle,26,1,2000,0,0,yes,self,always,0,,,,,,20
 1399,Event Baphomet@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
