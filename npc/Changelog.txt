@@ -37,6 +37,9 @@ Musashiden
 Date		Added
 ======
 06/11
+	* eAAC update:
+		- Added Vending Machine, made by Celestria. [erKURITA]
+		- Updated and fixed Coin Banker, by me :P. [erKURITA]
 	* Updated all job quests, Valhallana, to completely save/restore ALL Quest Skills [Lupus]
 	  IMPORTANT! Don't forget to update all files, includin new Global_Functions.txt
 06/09
