@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.91
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.8 Added Job Vars clear for Extended classes: TK,SL,SG [Lupus]
 //= 1.9 Added "F_ClearGarbage" func that clears outdated, wasted variables [Lupus]
 //= 1.91 Added "F_SaveQuestSkills","F_Load?Skills" functions [Lupus]
+//= 2.0 Fixed F_Save/LoadQuestSkills functions. Had to split in into 2 vars [Lupus]
 //============================================================ 
 
 
@@ -71,7 +72,7 @@ function	script	F_ClearGarbage	{
 	if(nif_q_done) {set nif_q_done,0; set MISC_QUEST,MISC_QUEST | 64;}
 	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4; set MORGEN,0;}
 	set nif_t,0;
-	//set QSK1,0; set QSK2,0; set QSK3,0; set QSK4,0; 
+	set QSK1,0; set QSK2,0; set QSK3,0; set QSK4,0;
 	return;
 }
 
@@ -417,14 +418,14 @@ function	script	getJobName	{
 // *** Function "F_SaveQuestSkills": Store learnt quest skills 
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_SaveQuestSkills	{
-	set ADV_QSK,0;
+	set ADV_QSK,0; set ADV_QSK2,0;
 	//1st classes quest skills
 	for(set @i, 0; @i < 14; set @i, @i + 1){
 		if(getskilllv(144+@i)) set ADV_QSK,ADV_QSK|pow(2,@i);
 	}
 	//2nd classes quest skills
 	for(set @i, 0; @i < 19; set @i, @i + 1){
-		if(getskilllv(1001+@i)) set ADV_QSK,ADV_QSK|pow(2,14+@i);
+		if(getskilllv(1001+@i)) set ADV_QSK2,ADV_QSK2|pow(2,@i);
 	}
 	return;
 }
@@ -437,6 +438,7 @@ function	script	F_Load1Skills	{
 	for(set @i, 0; @i < 14; set @i, @i + 1){
 		if(ADV_QSK|pow(2,@i) == ADV_QSK) skill 144+@i,1,0;
 	}
+	set ADV_QSK,0; //Clear var
 	return;
 }
 
@@ -446,8 +448,8 @@ function	script	F_Load1Skills	{
 function	script	F_Load2Skills	{
 	//2nd classes quest skills
 	for(set @i, 0; @i < 19; set @i, @i + 1){
-		if(ADV_QSK|pow(2,14+@i) == ADV_QSK) skill 1001+@i,1,0;
+		if(ADV_QSK2|pow(2,@i) == ADV_QSK2) skill 1001+@i,1,0;
 	}
-	set ADV_QSK,0; //Clear var
+	set ADV_QSK2,0; //Clear var
 	return;
 }

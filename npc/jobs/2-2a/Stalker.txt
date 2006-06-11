@@ -4,7 +4,7 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -12,9 +12,10 @@
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
 //= v1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
 //============================================================ 
 
 // -== Stalker ==-
 valkyrie.gat,53,58,4	script	Stalker	747,{
-	callfunc "F_Rebirth",Job_Thief_High,"Thief High",Job_Stalker,"Stalker",149,150,151,152;
+	callfunc "F_Rebirth",Job_Thief_High,"Thief High",Job_Stalker,"Stalker";
 }

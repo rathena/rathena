@@ -36,6 +36,9 @@ Musashiden
 
 Date		Added
 ======
+06/11
+	* Updated all job quests, Valhallana, to completely save/restore ALL Quest Skills [Lupus]
+	  IMPORTANT! Don't forget to update all files, includin new Global_Functions.txt
 06/09
 	* Added some missing iRO - Lighthalzen NPCs [Musashiden]
 	* Fixed a problem with Kafra's getarg(1),6 of showing the default menu [Evera]

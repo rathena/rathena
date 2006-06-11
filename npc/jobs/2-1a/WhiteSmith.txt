@@ -4,7 +4,7 @@
 //= Nana
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -12,9 +12,10 @@
 //===== Additional Comments: ================================= 
 //= v1.1 Made all into functions, additional checks, etc. [Lupus]
 //= v1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
 //============================================================ 
 
 // -== White Smith ==-
 valkyrie.gat,44,51,6	script	White Smith	726,{
-	callfunc "F_Rebirth",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith",153,154,155,0;
+	callfunc "F_Rebirth",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith";
 }

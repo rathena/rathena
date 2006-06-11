@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -14,12 +14,13 @@
 //= v1.2 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5 Now saves/restores all quest skills [Lupus]
 //============================================================ 
 
 
 // -- Expert Mage -- 
 geffen_in.gat,164,124,4	script	Expert Mage	123,{
-	callfunc "F_ToHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"High Wizard",157,0,0,0,"Expert Mage";
+	callfunc "F_ToHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"Expert Mage";
 	if(BaseJob==Job_Novice && job_magician_q >= 1) goto L_BeMage;
 
 	mes "[Expert Mage]";

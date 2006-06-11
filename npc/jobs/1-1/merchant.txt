@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -14,13 +14,14 @@
 //= v1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Changed Prontera->Izlude teleport price to 600 [Lupus]
+//= 1.6 Now saves/restores all quest skills [Lupus]
 //============================================================ 
 
 
 // == Guild NPCs == 
 // -- Mahnsoo --
 alberta_in.gat,53,43,6	script	Chief Mahnsoo	86,{
-	callfunc "F_ToHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith",153,154,155,0,"Chief Mahnsoo";
+	callfunc "F_ToHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"Chief Mahnsoo";
 	mes "[Chief Mahnsoo]";
 	if(BaseJob==Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
 	if(BaseJob==Job_Novice && job_merchant_q3 == 3) goto L_GiveRecpt;

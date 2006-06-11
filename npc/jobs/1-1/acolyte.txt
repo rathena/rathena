@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -15,12 +15,13 @@
 //= v1.2a Added instant job change for High Novice [Lupus]
 //= v1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5 Now saves/restores all quest skills [Lupus]
 //============================================================ 
 
 
 // -- Father Mareusis --
 prt_church.gat,184,41,4	script	Father Mareusis	60,{
-	callfunc "F_ToHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest",156,0,0,0,"Father Mareusis";
+	callfunc "F_ToHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"Father Mareusis";
 	mes "[Father Mareusis]";
 	if(BaseJob==Job_Novice && job_acolyte_q > 0) goto L_Check;
 	mes "What is it you are looking for?";
