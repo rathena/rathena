@@ -28,6 +28,7 @@
 //=	 back up to the tower if you died or teleported out of there. [MasterOfMuppets]
 //= 2.3 A small fix, the code is so messy I can't believe I scripted it >.< [MasterOfMuppets]
 //= 2.4 Implemented a few more npcs, thanks to Prometheus for them. [MasterOfMuppets]
+//= 2.5 Implemented the Poison King quest, beware of potential bugs. [MasterOfMuppets]
 //============================================================
 
 alberta.gat,245,45,4	script	Girl	815,{
@@ -1663,6 +1664,7 @@ L_DONE:
 	mes "[Hua Tuo]";
 	mes "It's not much, but this medicine is an old family secret. I hope that it will be of use to you in dangerous situations.";
 	getitem 679,2; //Pilule
+	set BaseExp,BaseExp + 10000;
 	next;
 	mes "[Hua Tuo]";
 	mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
@@ -1715,6 +1717,7 @@ L_CHECKITM:
 	mes "Of course!";
 	mes "Here's your reward. Use this medicine when you feel weary.";
 	getitem 679,5; //Pilule
+	set BaseExp,BaseExp + 30000;
 	set QL_GOTHERB,0;
 	set QL_DOC1STTIME,0;
 	set QL_DOCQUEST,2;
@@ -1733,6 +1736,11 @@ lou_fild01.gat,224,348,7	script	Lady	817,{
 	emotion 30;
 	mes "[Lady]";
 	mes "You're at the entrance of Louyang.";
+	if(QL_POISONKING > 8)
+	{
+	mes "I hope you have a good time~";
+	close;
+	}
 	next;
 	mes "[Lady]";
 	mes "Louyang is well known";
@@ -1741,9 +1749,73 @@ lou_fild01.gat,224,348,7	script	Lady	817,{
 	next;
 	menu "Sure!",s_Firework,"No thanks~",-;
 
+	if(QL_POISONKING == 8)goto s_PKQuest;
 	mes "[Lady]";
 	mes "Hmpf...!";
 	emotion 9;
+	close;
+
+s_PKQuest:
+	mes "[Lady]";
+	mes "Hmm, if not firecrackers,";
+	mes "then you must want something";
+	mes "else. Did someone send you?";
+	next;
+	menu "Yes.",s_Sent,"No.",-;
+
+	mes "[Lady]";
+	mes "No...?";
+	if(!Sex)close;
+	next;
+	mes "[Lady]";
+	mes "Are you...";
+	mes "Coming on to me?";
+	close;
+
+s_Sent:
+	mes "[Lady]";
+	mes "Who was it?";
+	mes "Please tell me";
+	mes "his name.";
+	next;
+	input @PKstr$;
+	if(@PKstr$ != "Song Zhi Du")goto s_Dunno;
+
+	mes "[Lady]";
+	mes "Oh, I see.";
+	mes "Let me give";
+	mes "you the package.";
+	next;
+	mes "[Lady]";
+	mes "Ah, wait! I forgot!";
+	mes "You must first pay the";
+	mes "delivery fee of 1,000 zeny.";
+	next;
+	mes "[Lady]";
+	if(Zeny < 1000)goto s_NEnoughZeny;
+	mes "Thank you~";
+	mes "Now that the fee is paid,";
+	mes "please bring this to";
+	mes "Song Zhi Du.";
+	mes "Take care!";
+	set Zeny,Zeny-1000;
+	getitem 7126,1;
+	set QL_POISONKING,9;
+	close;
+
+s_NEnoughZeny:
+	mes "Sorry, you don't have";
+	mes "enough zeny to pay the";
+	mes "delivery fee.";
+	close;
+
+s_Dunno:
+	mes "[Lady]";
+	mes "Hmmm?";
+	mes "I don't know who that is.";
+	mes "So I definitely don't have";
+	mes "a package for whoever you're";
+	mes "talking about.";
 	close;
 
 s_Firework:
@@ -1779,6 +1851,7 @@ lou_in01.gat,99,158,4	script	Lord	821,{
 	mes "your stay here,";
 	mes "Rune-Midgardian!";
 	next;
+	if(QL_POISONKING == 15)goto s_Journal;
 	mes "[Lord Bai Long]";
 	mes "How could I have lost my friend";
 	mes "from our glory days? Hmm...?";
@@ -1790,6 +1863,65 @@ lou_in01.gat,99,158,4	script	Lord	821,{
 	mes "myself. I hope you have a good time";
 	mes "while you stay here in Louyang.";
 	close;
+
+s_Journal:
+	mes "^3131FFYou give Nagash Arses' Journal";
+	mes "to Bai Long. He reads it intently,";
+	mes "slowly turnin each page.";
+	next;
+	mes "^3131FFHe's completely silent for about";
+	mes "fifteen minutes, and focuses all";
+	mes "of his attention on the journal.";
+	next;
+	mes "^3131FFA single tear trickles";
+	mes "from his eye as he reads";
+	mes "the words of Nagash Arses...^000000";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Thank you..";
+	mes "Adventurer...";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Thank you so much.";
+	mes "You've helped me make";
+	mes "up with an old friend!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "I, Bai Long, will work on giving";
+	mes "fair treatment to all of martial";
+	mes "arts organizations, regardless of";
+	mes "their methods or philosophies!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "I will also forgive Song Zhi Du,";
+	mes "even if he tried to poison me.";
+	mes "He is innocent...";
+	next;
+	mes "[Lord Bai Long]";
+	mes "As a matter of fact, it was";
+	mes "reported to me that Nagash was";
+	mes "deported to his homeland after";
+	mes "that incident. I had no idea";
+	mes "he was in jail!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Thank you so";
+	mes "much for your help!";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Please take this as a token of";
+	mes "gratitude. And please deliver this";
+	mes "letter to Nagash and Song Zhi Du";
+	mes "for me.";
+	getitem 603,1;
+	set QL_POISONKING,16;
+	next;
+	mes "^3131FFYou obtained ^0000FFBai Long's letter.^000000";
+	next;
+	mes "[Lord Bai Long]";
+	mes "Thank you in advance.";
+	close;
+
 }
 
 lou_in01.gat,111,151,4	script	Soldier	825,{
@@ -1874,4 +2006,1902 @@ lou_in01.gat,99,144,4	script	Soldier	825,{
 	mes "I hope you have a good time while";
 	mes "you're staying in Louyang!";
 	close;
+}
+
+lou_in01.gat,25,23,4	script	Friendly Looking Lady	817,{
+	mes "[Hong Miao]";
+	mes "Welcome.";
+	next;
+	mes "[Hong Miao]";
+	mes "This is an elevator which leads";
+	mes "to the Observation Tower. We are";
+	mes "providing you a safe and fast";
+	mes "transfer service for an affordable";
+	mes "fee. Would you like to use this ";
+	mes "service?";
+	next;
+	menu "Information",-,"Yes",s_Yes,"Maybe next time.",s_Next_Time;
+	mes "[Hong Miao]";
+	mes "After many suggestions and";
+	mes "proposals were sent to the Louyang";
+	mes "tourism office, the Observation";
+	mes "Tower was built do tourists";
+	mes "can enjoy the sights.";
+	next;
+	mes "[Hong Miao]";
+	mes "Due to the geographical";
+	mes "features of Louyang, it's difficult";
+	mes "to enjoy the breath taking view";
+	mes "that our land has to offer.";
+	next;
+	mes "[Hong Miao]";
+	mes "You can come up to the tower by";
+	mes "taking the elevator right here. We";
+	mes "are providing this quick and safe";
+	mes "transfer service for 500 zeny per";
+	mes "person.";
+	close;
+s_Yes:
+	if(zeny < 500)goto L_Zeny;
+	mes "[Hong Miao]";
+	mes "Thank for your patronage.";
+	mes "We are trying to provide you with";
+	mes "the best service, Please";
+	mes "come again.";
+	close2;
+	set Zeny,Zeny - 500;
+	warp "lou_in01.gat",16,19;
+	end;
+L_Zeny:
+	mes "[Hong Miao]";
+	mes "I am sorry, but you don't have enough money.";
+	close;
+s_Next_Time:
+	mes "[Hong Miao]";
+	mes "Please come";
+	mes "back later.";
+	mes "Have a good day.";
+	close;
+}
+
+louyang.gat,84,253,0	script	Exit	111,{
+
+	mes "^3131FFThere is some sort";
+	mes "of descent apparatus.";
+	mes "Would you like to use it?^000000";
+	next;	
+	menu "Yes",-,"No",s_No;
+	warp "lou_in01.gat",10,18;
+	end;
+s_No:
+	close;
+}
+
+lou_in02.gat,272,55,1	script	Familiar-Looking Patient	86,{
+
+	mes "[??????]";
+	mes "*Cough cough...*";
+	mes "Awww......www...";
+	mes "Aww...wwww..";
+	emotion 9;
+	close;
+}
+
+lou_in02.gat,253,45,4	script	Employee	822,{
+
+	if(QL_POISONKING == 30)goto s_NoGoodIdea;
+	if(QL_POISONKING == 18)goto s_Busy;
+	if(QL_POISONKING == 17)goto s_Told;
+	if(QL_POISONKING == 14 && QL_POISONPATH < 2)goto s_CameBack;
+	if(QL_POISONKING > 13)goto s_Proud;
+	if(QL_POISONKING > 12)goto s_Security;
+	if(QL_POISONKING == 12)goto s_LordDie;
+	if(QL_POISONKING == 11)goto s_MaterialCheck;
+	if(QL_POISONKING == 10)goto s_NotSure;
+	if(QL_POISONKING == 9)goto s_Thanked;
+	if(QL_POISONKING == 7 && QL_POISONDISLIKED)goto s_Materials2;
+	if(QL_POISONKING > 6)goto s_DeliveryMes;
+	if(QL_POISONKING == 6 && QL_POISONDISLIKED)goto s_Pity;
+	if(QL_POISONKING == 6)goto s_Talked;
+	if(QL_DOCQUEST != 2)goto s_NotPoison;
+	mes "[Song Zhi Du]";
+	mes "Well, well. Thank you for you're";
+	mes "trouble. I didn't expect you to";
+	mes "gather all these herbs for us...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I suppose I underestimated you. By";
+	mes "the way, do you know anything about";
+	mes "poison?";
+	next;
+	menu "Yes, I am kind of interested in it",-,"No, not at all",s_No;
+	mes "[Song Zhi Du]";
+	mes "Oh, I see. Well, if you have some";
+	mes "time, why don't you go visit my old";
+	mes "master in the slums?";
+	next;
+	mes "[Song Zhi Du]";
+	mes "If you two get along, I will tell";
+	mes "you something important.";
+	set QL_POISONKING,1;
+	close;
+s_No:
+	mes "[Song Zhi Du]";
+	mes "Huh? I see. Well, thank you for";
+	mes "your troubles once again. I hope you";
+	mes "have a good time in Louyang.";
+	close;
+
+s_NotPoison:
+	mes "[Song Zhi Du]";
+	mes "^111111*Sigh*^000000.....";
+	mes "I wish there was someone who";
+	mes "could help me carry my revenge out.";
+	close;
+
+s_Talked:
+	mes "[Song Zhi Du]";
+	mes "...";
+	mes "So, did you talk";
+	mes "to my old master?";
+	mes "It seems he really";
+	mes "likes you.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "As you know, my master has been";
+	mes "accused of something he didn't do!";
+	mes "And they crippled his use of the";
+	mes "martial arts!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I can't forgive what";
+	mes "they've done to my master!";
+	mes "I want to grind their bones";
+	mes "to powder! And that's before";
+	mes "I kill them!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "He's innocent and all he did";
+	mes "was research poison with all";
+	mes "of his effort! And for that,";
+	mes "they destroyed him!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I was yound";
+	mes "when it happened...";
+	mes "Too young to know";
+	mes "any martial arts.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I could protect him.";
+	mes "All I could do was hide and";
+	mes "watch other people get killed.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I hate myself";
+	mes "for not being strong!";
+	mes "But, my body isn't suited";
+	mes "for martial arts.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "All I can do is maintain my weak";
+	mes "body and make sure it's reasonably";
+	mes "healthy. Even so, if it weren't for";
+	mes "my master, I'd be dead";
+	mes "in the streets...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "It was my master who picked me up";
+	mes "from the streets and cured me. So,";
+	mes "I've decided to become a doctor and";
+	mes "save as many lives as I can.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "But before";
+	mes "I do that,";
+	mes "I want ^FF0000revenge^000000!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "As I told you, I am weak.";
+	mes "Too weak... I know that from";
+	mes "the bottom of my heart.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "But...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I am knowledged about medicine,";
+	mes "especially the use of poison. I can";
+	mes "tell you that I'm one of the best.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Poison can kill people but it can";
+	mes "also be used to save lives. The";
+	mes "people who destroyed my master";
+	mes "will pay the price.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Do you understand";
+	mes "why I'm furious!?";
+	next;
+	menu "But Revenge isn't good.",-,"Yes, I fully understand",s_Understand;
+
+	mes "[Song Zhi Du]";
+	mes "Hmm...";
+	mes "I see.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I supposed you couldn't";
+	mes "understand the way I feel.";
+	mes "After all, you didn't have";
+	mes "to go through the same";
+	mes "things I did.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I suppose I expected too much";
+	mes "since my master likes you. How";
+	mes "could you know the rage and";
+	mes "sadness that I feel!?";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Fine.";
+	mes "Go do whatever";
+	mes "you were going to do.";
+	mes "I'm just disappointed...";
+	set QL_POISONDISLIKED,1;
+	close;
+
+s_Understand:
+	mes "[Song Zhi Du]";
+	mes "Yes! Yes!";
+	mes "You do understand!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I volunteered for this medicine";
+	mes "storage position so that I can";
+	mes "secretly study poison! Now, the";
+	mes "time for action has come!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Still, I'll need some materials to";
+	mes "complete my research. Then, when";
+	mes "I succeeed and create a poison pill,";
+	mes "I'll need someone to carry my";
+	mes "revenge out for me.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Since my body is so frail, I can't";
+	mes "bear the tension and rage of seeing";
+	mes "my lifelong enemy face to face.";
+	set QL_POISONKING,7;
+	close;
+
+s_Pity:
+	mes "[Song Zhi Du]";
+	mes "I'm so disappointed.";
+	mes "You've even seen the";
+	mes "pitiable state of my";
+	mes "master for yourself!";
+	mes "How could you not";
+	mes "understand me?!";
+	next;
+	menu "I'm sorry for the last time",s_Sorry,"No matter what, revenge isn't good.",-;
+
+	specialeffect 11;
+	mes "[Song Zhi Du]";
+	mes "Oh, forget about it";
+	mes "I don't think I can ever";
+	mes "make you understand how I feel.";
+	close;
+
+s_Sorry:
+	mes "[Song Zhi Du]";
+	mes "If you really";
+	mes "feel sorry for me,";
+	mes "then you must help me";
+	mes "carry out my revenge!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I still need to complete the";
+	mes "poison potion I'm creating. I hope";
+	mes "you can bring what I need to finish";
+	mes "it. Go and get me...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "^0000FF4 Bee Sting^000000,";
+	mes "^0000FF10 Venom Canine^000000,";
+	mes "^0000FF10 Empty Potion Bottle^000000,";
+	mes "^0000FF30 Green Potion^000000.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "An apology is fine, but you must";
+	mes "also show me that you are sorry and";
+	mes "help me carry out my plan. Do you";
+	mes "have any problem with this?";
+	set QL_POISONKING,7;
+	close;
+
+s_Materials2:
+	mes "[Song Zhi Du]";
+	mes "So, did you";
+	mes "gather everything";
+	mes "I asked of you?";
+	next;
+	menu "Yes.",s_Items,"What do you need again?",-;
+
+	mes "[Song Zhi Du]";
+	mes "^111111*Sigh...*^000000";
+	mes "Go and get me...";
+	next;
+	specialeffect 11;
+	mes "[Song Zhi Du]";
+	mes "^0000FF4 Bee Sting^000000,";
+	mes "^0000FF10 Venom Canine^000000,";
+	mes "^0000FF10 Empty Potion Bottle^000000,";
+	mes "^0000FF30 Green Potion^000000.";
+	close;
+
+s_Items:
+	if(countitem(939) < 4 || countitem(937) < 10 || countitem(1093) < 10 || countitem(506) < 30)goto s_NEnoughItems;
+	delitem 939,4; //Bee Sting
+	delitem 937,4; //Venom Canine
+	delitem 1093,10; //Empty Potion Bottle
+	delitem 506,30; //Green Potion
+	set QL_POISONDISLIKED,0;
+	mes "[Song Zhi Du]";
+	mes "Ah...";
+	mes "With these, I accept your apology";
+	mes "Thank you for all the trouble you";
+	mes "went through to get this stuff";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Now that you're this involved,";
+	mes "you're in this with me all the way!";
+	mes "I've been waiting for this";
+	mes "day for years...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "All that's left is to create this";
+	mes "poison, and then to get the";
+	mes "lord of Louyang to drink it..";
+	close;
+
+
+s_NEnoughItems:
+	mes "[Song Zhi Du]";
+	mes "Where are the things";
+	mes "I asked you to bring?";
+	mes "Are you testing my";
+	mes "patience or what?";
+	next;
+	specialeffect 11;
+	mes "[Song Zhi Du]";
+	mes "You're still missing some of the";
+	mes "items I need. I must have them all";
+	mes "in order to finish making this";
+	mes "poison!";
+	close;
+
+s_DeliveryMes:
+	emotion 0;
+	mes "[Song Zhi Du]";
+	mes "Ah, hello.";
+	mes "Please give me a minute,";
+	mes "I've just received a message.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Ah!";
+	mes "It says here";
+	mes "that my delivery";
+	mes "has finally arrived!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Would you bring me the";
+	mes "box from the firecracker";
+	mes "lady at the entrance";
+	mes "to Louyang? Thanks";
+	mes "in advance.";
+	set QL_POISONKING,8;
+	close;
+
+s_Thanked:
+	if(countitem(7126) == 0)goto s_WheresJellopy;
+	delitem 7126,1;
+	mes "[Song Zhi Du]";
+	mes "Ah. Thank you,";
+	mes "I needed this. Now,";
+	mes "shall we begin?";
+	next;
+	mes "[Song Zhi Du]";
+	mes "First, I shall mix a poison";
+	mes "extraced from Venom Canine";
+	mes "with a foreign liquid named";
+	mes "Karvodailnirol.";
+	next;
+	specialeffect 12;
+	mes "[Song Zhi Du]";
+	mes "Then, I add Green Herb extract,";
+	mes "poison extracted from Bee Sting and";
+	mes "a Large Jellopy into the liquid!";
+	mes "Finally, I must heat them all!";
+	next;
+	specialeffect 124;
+	specialeffect 20;
+	mes "[Song Zhi Du]";
+	mes "Finally, I have to carefully heat";
+	mes "the mixture and collect it all into";
+	mes "a Potion Bottle.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Now I've got to do this just";
+	mes "right. This is a very delicate";
+	mes "procedure...";
+	next;
+	specialeffect 17;
+	emotion 23;			
+	mes "[Song Zhi Du]";
+	mes "No!! I failed again! ^656565*Sigh...*^000000 And";
+	mes "I spent a long time preparing all";
+	mes "of those materials...";
+	set QL_POISONKING,10;
+	close;
+
+s_WheresJellopy:
+	//Made up Dialog
+	emotion 0;
+	mes "[Song Zhi Du]";
+	mes "I was told by the lady at";
+	mes "the gate that she gave you";
+	mes "the ^0000FFLarge Jellopy^000000...";
+	mes "Yet you don't have it?";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I can't make the poison without";
+	mes "it. You'll have to find a new one";
+	mes "somehow.";
+	close;
+
+s_NotSure:
+	mes "[Song Zhi Du]";
+	mes "I'm not sure what went wrong.";
+	mes "Hmm, would you please help me";
+	mes "again? I've used all the materials";
+	mes "from last time.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "^0000FF4 Bee Sting^000000,";
+	mes "^0000FF10 Venom Canine^000000,";
+	mes "^0000FF10 Empty Potion Bottle^000000,";
+	mes "^0000FF30 Green Potion^000000 and";
+	mes "^0000FF1 Large Jellopy^000000.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "That's everything I'll need.";
+	mes "I would apologize, but since you've";
+	mes "shown that you'll help carry out my";
+	mes "revenge, I know you'll understand.";
+	set QL_POISONKING,11;
+	close;
+
+s_MaterialCheck:
+	if(countitem(939) < 4 || countitem(937) < 10 || countitem(1093) < 10 || countitem(506) < 30 || countitem(7126) < 1 )goto s_NEnoughItems2;
+	delitem 939,countitem(939); //Bee Sting
+	delitem 937,countitem(937); //Venom Canine
+	delitem 1093,countitem(1093); //Empty Potion Bottle
+	delitem 506,countitem(506); //Green Potion
+	delitem 7126,countitem(7126); //Large Jellopy
+	mes "[Song Zhi Du]";
+	mes "Oh! You brought";
+	mes "me everything I need!";
+	mes "I'm very impressed!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "You're the only one";
+	mes "who actually understands how";
+	mes "I feel. Thank you for gathering all";
+	mes "of these ^0000FFmaterials^000000.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Alright, now";
+	mes "to create the poison.";
+	mes "This is going to be tough.";
+	mes "Here we go...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "First, I shall mix a poison";
+	mes "extraced from Venom Canine";
+	mes "with a foreign liquid named";
+	mes "Karvodailnirol.";
+	next;
+	specialeffect 12;
+	mes "[Song Zhi Du]";
+	mes "Then, I add Green Herb extract,";
+	mes "poison extracted from Bee Sting and";
+	mes "a Large Jellopy into the liquid!";
+	mes "Finally, I must heat them all!";
+	next;
+	specialeffect 124;
+	specialeffect 20;
+	mes "[Song Zhi Du]";
+	mes "Finally, I have to carefully heat";
+	mes "the mixture and collect it all into";
+	mes "a Potion Bottle.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "^111111*Phew...*";
+	mes "Did...";
+	mes "Did I make it?";
+	next;
+
+	set @PKSuccessRate,rand(1,1000);
+	if(@PKSuccessRate > 700)
+	{
+	emotion 23;
+	specialeffect 20;
+	mes "[Song Zhi Du]";
+	mes "Hahaha~!";
+	mes "Success!";
+	mes "It works!";
+	mes "I finally created it!";
+	mes "Mwahahahahahaha!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Muhahahahaha!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Muhahahahaha!";
+	mes "Hahahahahahahahahahahaha!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I made it!";
+	mes "I made it!";
+	mes "Now, revenge will be mine!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Hahaha! Now, please";
+	mes "take this bottle. But be careful.";
+	mes "Even if you smell it just a little,";
+	mes "it can cause your body to";
+	mes "decompose, leading to death.";
+	getitem 678,2; //Poison Bottle
+	set QL_POISONKING,12;
+	close;
+	}
+	else
+	{
+	emotion 23;
+	specialeffect 17;
+	mes "[Song Zhi Du]";
+	mes "NO! I... I've failed again! And I";
+	mes "spent a long time getting";
+	mes "everything ready...";
+	close;
+	}
+
+s_NEnoughItems2:
+	//Made up dialog
+	mes "[Song Zhi Du]";
+	mes "You seem to be missing some";
+	mes "of the materials that I need,";
+	mes "don't come back until you get";
+	mes "them!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I will need the following:";
+	mes "^0000FF4 Bee Sting^000000,";
+	mes "^0000FF10 Venom Canine^000000,";
+	mes "^0000FF10 Empty Potion Bottle^000000,";
+	mes "^0000FF30 Green Potion^000000 and";
+	mes "^0000FF1 Large Jellopy^000000.";
+	close;
+
+s_LordDie:
+	mes "[Song Zhi Du]";
+	mes "Hahahaha...!";
+	mes "Now, time has come.";
+	mes "With this poison, Louyang's";
+	mes "lord will be cast into hell!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "If they lied about my master,";
+	mes "then I'll simply make their lies";
+	mes "into truth. Then, my master";
+	mes "won't feel victimized!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Lord Bai Long!";
+	mes "You will die!";
+	mes "Ha HA HA HA HA!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Muhahahahaha!";
+	mes "Hahaha...Haha..hahaha..haha..hahah";
+	mes "ahaha...mmmmuhahahahahahahahahaha!!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Muhahahahahaha!";
+	mes "............";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Ah, forgive me.";
+	mes "I was overly excited.";
+	mes "Yes, I must calm down...";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Now, I have one last favor to ask";
+	mes "of you. Please sneak into the";
+	mes "Castle of the Dragon.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "I want you to put this poison some";
+	mes "place where Lord Bai Long might";
+	mes "stay. But be careful, the castle";
+	mes "has a lot of security.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Still, you're an adventurer from";
+	mes "Rune-Midgard. You've probably had";
+	mes "challenges like this before, so I'm";
+	mes "sure you'll find a way.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Anyway, I'm sure my master";
+	mes "will be happy to know that";
+	mes "I finally created the ^0000FFpoison";
+	mes "he wished to create^000000!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Hahaha...!";
+	mes "Master, I did it!";
+	mes "Your disciple Song Zhi Du made the";
+	mes "world's deadliest poison for you!";
+	set QL_POISONKING,13;
+	close;
+
+s_Security:
+	mes "[Song Zhi Du]";
+	mes "Remember...";
+	mes "The Castle of the Dragon";
+	mes "is under heavy surveillance.";
+	mes "I guess Lord Bai Long is";
+	mes "insecure. Heh heh.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Anyways, I hope you'll be";
+	mes "really careful. When you go in,";
+	mes "don't forget to use this poison";
+	mes "somewhere the Lord Bai Long";
+	mes "can ingest it.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Anyway, I'm sure my master";
+	mes "will be happy to know that";
+	mes "I finally created the ^0000FFpoison";
+	mes "he wished to create^000000!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Hahaha...!";
+	mes "Master, I did it!";
+	mes "Your disciple Song Zhi Du made the";
+	mes "world's deadliest poison for you!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Leave now,";
+	mes "my friend!";
+	mes "For my revenge!";
+	mes "Go and kill Lord Bai Long!";
+	close;
+
+s_CameBack:
+	mes "[Song Zhi Du]";
+	mes "Ah!";
+	mes "You came back!";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Ah yes.";
+	mes "All I have to do now";
+	mes "is wait and hear news";
+	mes "of Lord Bai Long's death.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Thank you so much, my friend.";
+	mes "You've satisfied my old grudge.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Now, I am getting tired.";
+	mes "Let me rest... Take care, my";
+	mes "friend, and travel in safety.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "But before you go, let me give you";
+	mes "some poison and a medicinal pill.";
+	mes "I made these with the leftover";
+	mes "materials and medicine in the";
+	mes "storage.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Please take the";
+	mes "medicine pill";
+	mes "right away.";
+	next;
+	mes "^3131FFYou swallowed a strange pill";
+	mes "that shines with a gold color.";
+	mes "it tastes bitter...";
+	next;
+	mes "^3131FFThe nasty taste lingers in your";
+	mes "mouth but then you feel a great";
+	mes "warmth flowing throughout your";
+	mes "body. Eventually, you pass out.";
+	close2;
+	getitem 678,3;
+	if(BaseLevel < 56)set BaseExp,BaseExp+8909;
+	if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10213;
+	if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+17684;
+	if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+25411;
+	if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+68757;
+	if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+128246;
+	if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+142340;
+	if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
+	if(BaseLevel > 90)set BaseExp,BaseExp+366786;
+	warp "louyang.gat",270,136;
+	set QL_POISONKING,30;
+	set QL_POISONPATH,0;
+	end;
+
+s_Proud:
+	mes "[Song Zhi Du]";
+	mes "Nagash Arses is also the name of";
+	mes "the Poison King in a legend of";
+	mes "Arcturus. There's good reasons for";
+	mes "my master to be proud of hise name!";
+	close;
+
+s_Told:
+	mes "[Song Zhi Du]";
+	mes "Ah...";
+	mes "Welcome.";
+	mes "My master told";
+	mes "me everything.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Somehow, I feel relieved, but sorry";
+	mes "at the same time. Still, now I can";
+	mes "forget everything that's happened";
+	mes "in the past.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Now, I've decided to focus more on";
+	mes "my medical studies so that I can";
+	mes "really save as many lives as I can.";
+	mes "I'm sorry I've been so rude to you";
+	mes "before.";
+	next;
+	mes "[Song Zhi Du]";
+	mes "Also, I hope you will";
+	mes "take these, since I don't";
+	mes "need them any longer.";
+	getitem 678,5; //Poison Bottle
+	set QL_POISONKING,18;
+	set QL_POISONPATH,0;
+	next;
+	mes "[Song Zhi Du]";
+	mes "Thank you";
+	mes "once again, friend.";
+	mes "Now if you'll excuse me,";
+	mes "i have many things to do...";
+	close;
+
+s_Busy:
+	mes "^3131FFSong Zhi Du is busily engaged with";
+	mes "organizing medicinal herbs. The";
+	mes "faint look of sadness that used to";
+	mes "be on his face now seems drained.";
+	next;
+	mes "^3131FFStill, from his movements and the";
+	mes "pace at which he is working, you";
+	mes "can tell that he loves what he is";
+	mes "doing. It seems that Song Zhi Du";
+	mes "has finally found his life's path.";
+	close;
+
+s_NoGoodIdea:
+	mes "[Song Zhi Du]";
+	mes "...................";
+	next;
+	mes "^3131FFSong Zhi Du looks blankly at the";
+	mes "ceiling. With his revenge, it seems";
+	mes "he's lost his motivation in life.";
+	mes "Was it a good idea to help him,";
+	mes "after all?";
+	next;
+	mes "^3131FFBy hearsay, the poisoned drink";
+	mes "didn't work so well, as a Thief";
+	mes "from a foreign land actually stole";
+	mes "the bottle.";
+	close;
+
+}
+
+lou_in02.gat,122,38,4	script	Poison King	824,{
+
+	if(QL_POISONKING > 16 && QL_POISONKING != 30)goto s_Proud;
+	if(QL_POISONKING == 16)goto s_Letter;
+	if(QL_POISONKING == 15)goto s_Hope;
+	if(QL_POISONKING == 14 && QL_POISONPATH > 1)goto s_Happened;
+	if(QL_POISONKING == 30)goto s_Emo;
+	if(QL_POISONPATH == 2)goto s_StopHim;
+	if(QL_POISONKING == 13 || QL_POISONKING == 14)goto s_MetDisciple;
+	mes "[Nagash Arses]";
+	mes "It's been 40 years since I came";
+	mes "here. Hahaha, but it doesn't feel";
+	mes "like it's been that long.";
+	next;
+	mes "[Nagash Arses]";
+	mes "In the past, I was one of the";
+	mes "most renowned experts in the use";
+	mes "of poison. I even created a martial";
+	mes "art based on it's use, and formed my";
+	mes "own martial arts organization.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Now, those memories";
+	mes "don't even seem real";
+	mes "anymore. This poem is";
+	mes "all I can remember...";
+	next;
+	mes "[Nagash Arses]";
+	mes "As I lay in bed looking";
+	mes "up at the moonlight,";
+	mes " ";
+	mes "It looks like the ";
+	mes "frost on the ground.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I lift head up to look";
+	mes "at the bright moon,";
+	mes " ";
+	mes "I lower my head";
+	mes "feeling homesick.";
+	if(!QL_POISONKING)close;
+	next;
+	if(QL_POISONKING > 1)goto s_Menu2;
+	menu "Grin at him.",-,"Lament on his grief.",s_Grief,"Reprove him.",s_Reprove,"Listen to the poem again.",s_Again,"Show him a sad look.",s_Sad;
+
+	mes "[Nagash Arses]";
+	mes "Yeah, I don't blame you.";
+	mes "I know I look stupid. Legally,";
+	mes "I'm a criminal after all.";
+	mes "I don't have any friends and";
+	mes "there's no one I can trust.";
+	close;
+
+s_Grief:
+	mes "[Nagash Arses]";
+	mes "How can you sympathize?";
+	mes "I doubt anyone has had";
+	mes "experiences that are";
+	mes "much worse than mine...";
+	close;
+
+s_Reprove:
+	mes "What--? I haven't wrongers you in any";
+	mes "way! Why must you be so mean to an";
+	mes "old man? You don't even know half";
+	mes "of what I've gone though.";
+	close;
+
+s_Again:
+	mes "[Nagash Arses]";
+	mes "As I lay in bed looking";
+	mes "up at the moonlight,";
+	mes " ";
+	mes "It looks like the ";
+	mes "frost on the ground.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I lift head up to look";
+	mes "at the bright moon,";
+	mes " ";
+	mes "I lower my head";
+	mes "feeling homesick.";
+	close;
+
+s_Sad:
+	mes "[Nagash Arses]";
+	mes "Do you miss your hometown";
+	mes "as much as I do? I'm envious";
+	mes "of you, youngster. You have";
+	mes "the freedom to go";
+	mes "wherever you want.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I'm a wanted criminal.";
+	mes "Even if I were free to";
+	mes "travel, I may not have";
+	mes "the strength to try.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Let's not talk about this any";
+	mes "longer. It's reminded me of";
+	mes "my worst memories.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I'm too old to remember anything.";
+	mes "Ha ha ha. Maybe if I saw something";
+	mes "related to poison, I might remember";
+	mes "something.";
+	next;
+	mes "[Nagash Arses]";
+	mes "...";
+	next;
+	mes "[Nagash Arses]";
+	mes "No, no...";
+	mes "I think I'm too old";
+	mes "to remember anything.";
+	mes "Anything at all.";
+	set QL_POISONKING,2;
+	close;
+
+s_Menu2:
+	menu "Ask about the poem.",-,"Ask about his hometown.",s_Hometown,"Ask him about use of poison.",s_Poison,"Ask about his situation.",s_Situation;
+
+	mes "[Nagash Arses]";
+	mes "Ah, have you";
+	mes "heard of this poem?";
+	mes "As I grow older, my";
+	mes "memory also drows worse,";
+	mes "but I really like this poem";
+	mes "and don't want to forget it.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I hope you don't";
+	mes "mind helping me";
+	mes "memorize this poem...";
+	next;
+	set @PKrand,rand(0,2);
+	if(@PKrand == 0)
+{
+	mes "[Nagash Arses]";
+	mes "^3131FF'As I lay ^000000[ ]^3131FF looking up at the";
+	mes "moonlight.'^000000 In this first line,";
+	mes "what word should be in [ ]?";
+	next;
+	menu "on the ground",s_1,"with you",s_1,"in bed",-,"in the stars",s_1;
+	set @PKtest,@PKtest+1;
+
+s_1:
+	mes "[Nagash Arses]";
+	mes "^3131FF'It looks like the ^000000[ ]^3131FF on the";
+	mes "ground.'^000000 In the second line, which";
+	mes "word should be in [ ]?";
+	next;
+	menu "Frost",-,"Dew",s_2,"Pebbles",s_2,"Snow",s_2;
+	set @PKtest,@PKtest+1;
+
+s_2:
+	mes "[Nagash Arses]";
+	mes "Now to see if you really";
+	mes "understand the poem. It's no";
+	mes "use to just know the words. They";
+	mes "must be a part of you as well.";
+	next;
+	mes "[Nagash Arses]";
+	mes "How would you describe the overall";
+	mes "mood and tone of the speaker of";
+	mes "this poem?";
+	next;
+	menu "Romantic",s_3,"Wistful",s_3,"Regretful",-,"Passionate",s_3;
+	set @PKtest,@PKtest+1;
+
+s_3:
+	set @PKrand2,rand(0,1);
+	if(!@PKrand2)
+	{
+	mes "[Nagash Arses]";
+	mes "What do you think is the major";
+	mes "theme of this poem?";
+	next;
+	menu "Tragedy",s_4,"Seperation",-,"Love",s_4,"Revenge",s_4,"Buddy Cop Film",s_4;
+	}
+	if(@PKrand2)
+	{
+	mes "[Nagash Arses]";
+	mes "According to the poem,";
+	mes "where is the location";
+	mes "of the speaker as he is";
+	mes "gazing at the moon?";
+	next;
+	menu "In his hometown",s_4,"In jail",s_4,"In the depths of the cosmos.",s_4,"In bed",-;
+	}
+	set @PKtest,@PKtest+1;
+
+s_4:
+	mes "[Nagash Arses]";
+	mes "Ha ha ha! You undestand this poem";
+	mes "well! Now, would you repeat the";
+	mes "first line for me again?";
+	next;
+	menu "When I lay in bed looking up at the moonlight",s_5,"When I lay in bed thinking of the moonlight",s_5,"As I lay in bed looking up at the moonlight",-,"As I lay in bed thinking of the moonlight",s_5;
+	set @PKtest,@PKtest+1;
+
+s_5:
+}
+	if(@PKrand == 1)
+{
+	mes "[Nagash Arses]";
+	mes "^3131FF'It looks like the ^000000[ ]^3131FF on the";
+	mes "ground.'^000000 In the second line, which";
+	mes "word should be in [ ]?";
+	next;
+	menu "Frost",-,"Dew",s_6,"Pebbles",s_6,"Snow",s_6;
+	set @PKtest,@PKtest+1;
+
+s_6:
+	mes "[Nagash Arses]";
+	mes "^3131FFI lower my head feeling ^000000[ ]^3131FF.^000000'";
+	mes "Which word should be in [ ]?";
+	next;
+	menu "Homesick",-,"Drowsy",s_7,"Loneliness",s_7,"Heartbroken",s_7;
+	set @PKtest,@PKtest+1;
+
+s_7:
+	mes "[Nagash Arses]";
+	mes "Now to see if you really";
+	mes "understand the poem. It's no";
+	mes "use to just know the words. They";
+	mes "must be a part of you as well.";
+	next;
+	mes "[Nagash Arses]";
+	mes "in the first two lines, what";
+	mes "is being linked by the poet?";
+	next;
+	menu "Bed and ground.",s_8,"Frost and hometown.",-,"Gloomy.",s_8,"Smokey.",s_8,"Moonlight and Frost.",s_8;
+	set @PKtest,@PKtest+1;
+
+s_8:
+	mes "[Nagash Arses]";
+	mes "In this land, the image of the moon";
+	mes "often appears in poems expressing";
+	mes "seperation, longing and";
+	mes "homesickness. Why would gazing at";
+	mes "the moon offer comfort?";
+	next;
+	menu "The rabbit on the moon grants wishes.",s_9,"It's sheer beauty eases anxiety",s_9,"Because it wanes and waxes",s_9,"All people and places share the same moon",-;
+	set @PKtest,@PKtest+1;
+
+s_9:
+	mes "[Nagash Arses]";
+	mes "Ha ha ha! You understand this poem";
+	mes "well! Now, would you repeat the";
+	mes "third line for me again?";
+	next;
+	menu "I look upon the bright moon",s_10,"I lift my head to look at the bright moon.",-,"I turn my head to look at the bright moon.",s_10,"I face the bright moon.",s_10;
+	set @PKtest,@PKtest+1;
+
+s_10:
+}
+	if(@PKrand == 2)
+{
+	mes "[Nagash Arses]";
+	mes "^3131FF'It looks like the ^000000[ ]^3131FF on the";
+	mes "ground.'^000000 In the second line, which";
+	mes "word should be in [ ]?";
+	next;
+	menu "Frost",-,"Dew",s_11,"Pebbles",s_11,"Snow",s_11;
+	set @PKtest,@PKtest+1;
+
+s_11:
+	mes "[Nagash Arses]";
+	mes "^3131FF'I lift my ^000000[ ]^3131FF to look at the";
+	mes "bright moon.'^000000 In the third line,";
+	mes "which word should be in [ ]?";
+	next;
+	menu "eyes",s_12,"head",-,"gaze",s_12,"sights",s_12;
+	set @PKtest,@PKtest+1;
+
+s_12:
+	mes "[Nagash Arses]";
+	mes "Now to see if you really";
+	mes "understand this poem. It's no";
+	mes "use to just know the words. They";
+	mes "must be a part of you as well.";
+	next;
+	mes "[Nagash Arses]";
+	mes "What do you think is the major";
+	mes "theme of this poem?";
+	next;
+	menu "Tragedy",s_13,"Seperation",-,"Love",s_13,"Revenge",s_13,"Buddy Cop Film",s_13;
+	set @PKtest,@PKtest+1;
+
+s_13:
+	set @PKrand2,rand(0,1);
+	if(!@PKrand2)
+	{
+	mes "[Nagash Arses]";
+	mes "What might be one reason why the";
+	mes "bright moonlight looks like frost";
+	mes "on the ground to the poet?";
+	next;
+	menu "He's looking though a frosty window",s_14,"A bright moon glimmers like icicles",-,"He's homesick, so the moonlight looks cold.",s_14,"It's called 'Poetic Lisense.'",s_14;
+	}
+	if(@PKrand2)
+	{
+	mes "[Nagash Arses]";
+	mes "Although this poem is only four";
+	mes "lines long, it's structure can be";
+	mes "easily classified. How would you";
+	mes "describe this poem's structure?";
+	next;
+	menu "Why it's a sonnet",s_14,"It's a prose with erratic caesuras",s_14,"It's a quatrain of course",-,"Lambic Pentameter?",s_14;
+	}
+	set @PKtest,@PKtest+1;
+
+s_14:
+	mes "[Nagash Arses]";
+	mes "Ha ha ha! You understand this poem";
+	mes "well! Now, would you repeat the";
+	mes "last line for me again?";
+	next;
+	menu "I cry for my home town.",s_15,"I lower my head feeling homesick.",-,"I miss my home town",s_15,"I sob feeling homesick.",s_15;
+	set @PKtest,@PKtest+1;
+
+s_15:
+}
+	if(@PKtest == 5 && QL_POISONKING == 2)set QL_POISONKING,3;
+	mes "[Nagash Arses]";
+	mes "Thank you for yout time,";
+	mes "youngster. Oh, and this is";
+	mes "an old, famous poem written";
+	mes "by Li Tai Bai. You know that,";
+	mes "don't you?";
+	close;
+
+s_Hometown:
+	mes "[Nagash Arses]";
+	mes "Are you asking me";
+	mes "about my hometown...?";
+	mes "As a Rune-Midgardian,";
+	mes "I'm sure you've at least";
+	mes "heard of Morroc...";
+	next;
+	mes "[Nagash Arses]";
+	mes "A city built in the middle of the";
+	mes "desert, its founders had to combat";
+	mes "the harsh and unforgiving forces of";
+	mes "nature everyday.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Yeah, the blazing sun never";
+	mes "seems to leave, and it's a dry,";
+	mes "desert area, but people still";
+	mes "manage to live there.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Ah~ I miss Morroc, my hometown.";
+	mes "I used to be a member of the";
+	mes "Assassin organization known as the";
+	mes "'Canine of Desert.' Long ago, I was";
+	mes "their poison expert.";
+	next;
+	if(QL_POISONKING == 3)goto s_AltMenu;
+	menu "Tell him news of Morroc",s_News,"Info about 'Canine of Desert'",s_Canine;
+
+s_AltMenu:
+	menu "Tell him news of Morroc",s_News,"Info about 'Canine of Desert'",s_Canine,"Just listen",s_Listen;
+
+s_News:
+	mes "[Nagash Arses]";
+	mes "Hm...?";
+	mes "Is there anything";
+	mes "you want to say?";
+	next;
+	mes "[" + strcharinfo(0) +"]";
+	mes "I have news";
+	mes "of Morroc...";
+	input @PKstr$;
+	mes "[" + strcharinfo(0) +"]";
+	mes @PKstr$;
+	next;
+	mes "[Nagash Arses]";
+	mes "I see...";
+	mes "Thank you for";
+	mes "telling me that.";
+	close;
+
+s_Canine:
+	mes "[Nagash Arses]";
+	mes "I just told you what the 'Canine";
+	mes "of Desert' is. If you can't remember what";
+	mes "I just told you, it's no use for me";
+	mes "to explain further. You go ahead";
+	mes "and tell me what it is.";
+	next;
+	input @PKstr$;
+	mes "[Nagash Arses]";
+	mes "Well, I suppose I can't blame you";
+	mes "for not knowing or remembering.";
+	mes "When you get the chance, find";
+	mes "someone wearing a purple suit...";
+	next;
+	mes "[Nagash Arses]";
+	mes "Any Assassin worth his salt should";
+	mes "know what the 'Canine of Desert'";
+	mes "is.";
+	close;
+
+s_Listen:
+	mes "[Nagash Arses]";
+	mes "I tried Many things to develop my";
+	mes "poison skills when I was young.";
+	mes "I tried to extract poison from";
+	mes "Muka's needles and from purple";
+	mes "mushrooms. Eventually, I became";
+	mes "an expert of toxins from my";
+	mes "efforts. ";
+	next;
+	mes "[Nagash Arses]";
+	mes "One time I even injected";
+	mes "a poison into my own body";
+	mes "to fully test it. Yeah...";
+	mes "It almost killed me.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I was recognized as the man who";
+	mes "was most highly skilled in the use";
+	mes "of poison in the 'Canine of";
+	mes "Desert,' and I was sent on the most";
+	mes "crucial and dangerous missions.";
+	next;
+	mes "[Nagash Arses]";
+	mes "One day, I was hired by the Alberta";
+	mes "Merchant Guild to assassinate an";
+	mes "enemy that had been threatening";
+	mes "them. However, I never got to";
+	mes "complete that missions.";
+	next;
+	mes "[Nagash Arses]";
+	mes "While I was on the ship to proceed";
+	mes "with my mission, we encountered";
+	mes "heavy wind and waves, and the ship";
+	mes "sank. I believe I was the only";
+	mes "survivor of that accident.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I was floated helplessly on the";
+	mes "ocean and somehow managed";
+	mes "to arrive here, in Louyang. That";
+	mes "was forty years ago.";
+	next;
+	mes "[Nagash Arses]";
+	mes "It seemed that my arrival was";
+	mes "rather timely. Louyang was intruded";
+	mes "by huge mobs of dangerous monsters";
+	mes "that were able to infiltrate";
+	mes "the Castle of the Dragon.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Since I was one of the best";
+	mes "assassins of the 'Canine of";
+	mes "Desert.’ I did far more than my";
+	mes "share fair of monster killing.";
+	next;
+	mes "[Nagash Arses]";
+	mes "It was on the battlefield that";
+	mes "I met Bai Long who is now the Lord of";
+	mes "this town. But back then, he was";
+	mes "known as the 'Street Knight.'";
+	next;
+	mes "[Nagash Arses]";
+	mes "I remember seeing him surrounded";
+	mes "by enemies, and I dove into thick";
+	mes "of battle to keep him from getting";
+	mes "killed. We fought back to back and";
+	mes "managed to stay alive back then.";
+	next;
+	mes "[Nagash Arses]";
+	mes "You have to understand that it's";
+	mes "not easy to let someone back you";
+	mes "up in battle unless there's a solid";
+	mes "trust. Those sights... where the";
+	mes "greatest moments in my life.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Sadly, Many of our comrades,";
+	mes "all of them respectable and highly";
+	mes "skilled in martial artists, fell in";
+	mes "battle. The number of monsters we";
+	mes "had to contend with was just";
+	mes "overwhelming.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Still, I manage to continue my";
+	mes "poison research, even during those";
+	mes "tough times. I studied medicine in";
+	mes "this town and was able to use that";
+	mes "knowledge to enhance my";
+	mes "understanding of poisons.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I created a new skill based on all";
+	mes "of my knowledge, and learned how";
+	mes "to put poison on weapons.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I even learned martial arts in";
+	mes "Louyang, and combined that";
+	mes "knowledge with my poison expertise";
+	mes "to create my own unique fighting";
+	mes "style.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Well, that's my story.";
+	mes "But now, I just miss my";
+	mes "home town. I miss the heat";
+	mes "of the desert, and the glare";
+	mes "of the blazing sun.";
+	set QL_POISONKING,4;
+	close;
+
+s_Poison:
+	mes "[Nagash Arses]";
+	mes "Did you just say you";
+	mes "want to learn about the";
+	mes "use of poison?";
+	next;
+	mes "[Nagash Arses]";
+	mes "Why would you want";
+	mes "to learn about it?";
+	mes "Even if I wanted to";
+	mes "teach, I'm too old to";
+	mes "remember everything";
+	mes "clearly...";
+	if(QL_POISONKING > 4)goto s_Disciple;
+	close;
+
+s_Disciple:
+	next;
+	mes "[Nagash Arses]";
+	mes "Go find my last disciple,";
+	mes "^0000FFSong Zhi Du^000000, as he may tell you";
+	mes "something useful. He's working at";
+	mes "the doctor's office. If it weren't";
+	mes "for him, I'd be starving now.";
+	if(QL_POISONKING == 5)set QL_POISONKING,6;
+	close;
+
+s_Situation:
+	if(QL_POISONKING == 4)goto s_Situation2;
+	mes "[Nagash Arses]";
+	mes "I...";
+	mes "I don't want";
+	mes "to talk about that.";
+	mes "Let's not talk about it.";
+	close;
+
+s_Situation2:
+	mes "[Nagash Arses]";
+	mes "You're asking me how";
+	mes "things came to be like";
+	mes "this? Life used to be good.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Ah I told you, I distinguished";
+	mes "myself in the battles with";
+	mes "monsters. I was rewarded with";
+	mes "Louyang citizenship and given";
+	mes "gifts of money.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I was invited to join a martial";
+	mes "arts organization that specialized";
+	mes "in the use of poison. I joined";
+	mes "them, excited about further";
+	mes "broadening my knowldege.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I was stunned by the enormous body";
+	mes "of knowledge about toxins that they";
+	mes "provided. I tried to learn as much";
+	mes "as I could so I could develop my";
+	mes "own, unique poisoning skills.";
+	next;
+	mes "[Nagash Arses]";
+	mes "As I studied with them, together we";
+	mes "started to clear the town of the";
+	mes "remaining monsters. Can you guess";
+	mes "the results of our effors to clean";
+	mes "up the city?";
+	next;
+	menu "..??",-,"It must have been good.",s_Good,"I guess it was okay.",s_Okay,"I don't know, but how did it go?",s_Dunno;
+
+	mes "[Nagash Arses]";
+	mes "Did you even listen to me? It's no";
+	mes "use talking to you if you don't";
+	mes "even care about what I have to";
+	mes "say.";
+	next;
+	goto s_False;
+
+s_Good:
+	mes "[Nagash Arses]";
+	mes "You're right!";
+	mes "We got rid of every";
+	mes "single monster in the city!";
+	next;
+	goto s_Right;
+
+s_Okay:
+	mes "[Nagash Arses]";
+	mes "Just okay...?";
+	mes "I don't think you realized how";
+	mes "powerful we were back then! Eh...";
+	next;
+	goto s_False;
+
+s_Dunno:
+	mes "[Nagash Arses]";
+	mes "We got rid of every single monster";
+	mes "in the city!";
+	next;
+
+s_Right:
+	mes "[Nagash Arses]";
+	mes "We managed to eliminate every";
+	mes "monster that was wandering around";
+	mes "Louyang. At the time, we were the";
+	mes "only people brave enough to take on";
+	mes "this sort of task.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Unfortunately, other martial arts";
+	mes "organizations grew envious of our";
+	mes "success, insisting that we were";
+	mes "dishonorable for using poison to";
+	mes "attack our enemies.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Although we can accept criticism";
+	mes "for our use of poison, we were";
+	mes "finally blamed for something we";
+	mes "never would have done.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Someone put poison into a meal";
+	mes "which was eaten by a son of the";
+	mes "lord and then falsely accused us!";
+	next;
+	mes "[Nagash Arses]";
+	mes "in the end, our organization was";
+	mes "disbanded and I was put in jail.";
+	mes "I suffered through much to escape";
+	mes "from prison...";
+	next;
+	mes "[Nagash Arses]";
+	mes "However, because of all the";
+	mes "injuries I've had to endure in jail";
+	mes "and in my escape attempts,";
+	mes "I can no longer use my";
+	mes "martial arts.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Even to this day, the police are";
+	mes "hounding after me. I really want to";
+	mes "tell the lord of Louyang that I'm";
+	mes "innocent, but it may be";
+	mes "too late now...";
+	set QL_POISONKING,5;
+	close;
+
+s_False:
+	mes "[Nagash Arses]";
+	mes "Sorry for keeping you from what you";
+	mes "wanted to do. Take care of";
+	mes "yourself, youngster.";
+	close;
+
+s_MetDisciple:
+	mes "[Nagash Arses]";
+	mes "Aren't you the youngster";
+	mes "I talked to a while ago?";
+	mes "Did you get a chance";
+	mes "to meet my disciple?";
+	mes "How was he?";
+	next;
+	mes "[Nagash Arses]";
+	mes "He was sick all the time when he";
+	mes "was young, so he worried me a lot.";
+	mes "But now I'm proud of him and he's";
+	mes "doing as well as just any other fine";
+	mes "young man.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I am living only for him,";
+	mes "and hope that he becomes a great";
+	mes "healer someday. Recently, I've";
+	mes "found that my sole comfort is in";
+	mes "treating diseases for other";
+	mes "people...";
+	next;
+	mes "[Nagash Arses]";
+	mes "By the way...";
+	mes "You look pale...";
+	mes "Did something happen?";
+	next;
+	menu "Nothing",-,"I want to talk about your disciple",s_TalkDisciple,"I don't feel good.",s_DontFeelG;
+
+	mes "[Nagash Arses]";
+	mes "Oh...";
+	mes "I see...";
+	mes "But take care";
+	mes "of yourself.";
+	next;
+	mes "[Nagash Arses]";
+	mes "You better enjoy your physical";
+	mes "strength when you're young. When";
+	mes "you're my age, it's tough to regain";
+	mes "your health once you lose it.";
+	close;
+
+s_TalkDisciple:
+	mes "[Nagash Arses]";
+	mes "Did something happen to him?";
+	mes "I've been worried since he hasn't";
+	mes "come to visit me since you last";
+	mes "came to speak with me.";
+	next;
+	if(QL_POISONPATH == 1)goto s_BeFine;
+	if(countitem(678))menu "Give him Poison Bottle.",s_Bottle,"Cancel and go to 'Song Zhi Du'.",-;
+	else
+	{
+	mes "[" + strcharinfo(0) + "]";
+	mes "...Nothing much.";
+	close;
+	} 
+
+	mes "[" + strcharinfo(0) + "]";
+	mes "...Nothing much.";
+	next;
+s_BeFine:
+	mes "[Nagash Arses]";
+	mes "Hmm...?";
+	mes "I guess you don't know what is";
+	mes "going on. I've heard some bad";
+	mes "rumors about him, which is why I'm";
+	mes "asking.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I hope he'll be fine.";
+	mes "After all, he's truly";
+	mes "kind at heart.";
+	close;
+
+s_Bottle:
+	delitem 678,1;
+	mes "[Nagash Arses]";
+	mes "Huh!?";
+	mes "Isn't this...!?";
+	next;
+	mes "[Nagash Arses]";
+	mes "I've dreamed of creating";
+	mes "a poison of such potency!";
+	mes "W-where did you find this?";
+	next;
+	menu "It's common nowadays.",-,"Explain to him what happened.",s_Explain;
+
+	mes "[Nagash Arses]";
+	mes "Really...?";
+	mes "Then someone finally figured it out.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I shared all of my knowledge with";
+	mes "others, so I guess a doctor might";
+	mes "have figured out how to creat this.";
+	next;
+	mes "[Nagash Arses]";
+	mes "^666666*Sigh...*^000000";
+	mes "Now I feel depressed";
+	mes "for some reason..";
+	set QL_POISONPATH,1;
+	close;
+
+s_Explain:
+	mes "^3131FFYou tell Nagash Arses how";
+	mes "Song Zhi Du created this Deadly";
+	mes "Poison Bottle and his plan to get";
+	mes "his revenge on the lord of";
+	mes "Louyang.^000000";
+	next;
+	mes "[Nagash Arses]";
+	mes "^666666*Sigh...*^000000";
+	next;
+	mes "[Nagash Arses]";
+	mes "Will you...";
+	mes "Will you excuse";
+	mes "me for a second...?";
+	set QL_POISONPATH,2;
+	close;
+
+s_DontFeelG:
+	mes "[Nagash Arses]";
+	mes "Oh, you don't?";
+	mes "Well, that can happen";
+	mes "sometimes when you're";
+	mes "in a foreign land for";
+	mes "too long. I hope you";
+	mes "feel better soon.";
+	close;
+
+s_StopHim:
+	mes "[Nagash Arses]";
+	mes "Youngster...";
+	mes "I beg of you.";
+	mes "Please don not let him";
+	mes "bring any harm to the lord.";
+	next;
+	mes "[Nagash Arses]";
+	mes "If you cannot stop him,";
+	mes "then please interrupt him";
+	mes "from carrying out his plan.";
+	next;
+	mes "[Nagash Arses]";
+	mes "I tried...";
+	mes "To convince myself";
+	mes "that what I had heard";
+	mes "were just ugly rumors.";
+	mes "I was wrong...";
+	next;
+	mes "[Nagash Arses]";
+	mes "I am pretty sure he's been asking";
+	mes "you, as well as others, for aid.";
+	mes "Even if you do not agree to carry";
+	mes "out his plan, I'm sure he will find";
+	mes "someone to poison Lord Bai Long.";
+	next;
+	mes "[Nagash Arses]";
+	mes "There is only one way he can";
+	mes "poison the lord. He likes";
+	mes "drinking, and has a favorite";
+	mes "drink bottle he keeps with him";
+	mes "all the time. You must get rid";
+	mes "of his drink.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Please, I beg you.";
+	mes "for my sake, as well";
+	mes "as that of my disciple,";
+	mes "Louyang's leader must live...";
+	close;
+
+s_Emo:
+	mes "^3131FFNagash Arses. He is no longer a";
+	mes "well-known Assassin of the martial";
+	mes "arts organization of which he was";
+	mes "once master has lon since";
+	mes "disbanded.";
+	next;
+	mes "^3131FFNow he is but a poor old man";
+	mes "who is in anguish over his";
+	mes "disciple. No matter what you say,";
+	mes "he continues to talk about";
+	mes "something totally unrelated, as if";
+	mes "in a dream.";
+	close;
+
+s_Happened:
+	mes "[Nagash Arses]";
+	mes "So...";
+	mes "What..";
+	mes "What happened?";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "i made it.";
+	next;
+	emotion 6;
+	mes "[Nagash Arses]";
+	mes "You did?!";
+	mes "Oh~ thank you,";
+	mes "thank you so much!";
+	next;
+	mes "[Nagash Arses]";
+	mes "Thank God I've";
+	mes "lived this long.";
+	mes "And... I just realized";
+	mes "something while you were away.";
+	next;
+	mes "[Nagash Arses]";
+	mes "This is a journal that I have been";
+	mes "writing for 15 years about my";
+	mes "feelings of guild, and what really";
+	mes "happened in the past. I hope you";
+	mes "can deliver this to the lord for";
+	mes "me.";
+	next;
+	mes "^3131FFYou obtained";
+	mes "^0000FFPoison King,";
+	mes "Nagash Arses' Journal.";
+	set QL_POISONKING,15;
+	close;
+
+s_Hope:
+	mes "[Nagash Arses]";
+	mes "I hope you";
+	mes "can deliver this";
+	mes "to Lord Bai Long...";
+	close;
+
+s_Letter:
+	mes "^3131FFYou gave him the";
+	mes "^0000FFLetter from Bai Long.^000000";
+	next;
+	mes "[Nagash Arses]";
+	mes "What's this...?";
+	next;
+	mes "[Nagash Arses]";
+	mes "Why, he's invited me";
+	mes "to take the position of";
+	mes "a government official!";
+	mes "I'm truly grateful!";
+	next;
+	mes "[Nagash Arses]";
+	mes "However, please let him";
+	mes "know that I must respectfully";
+	mes "decline his offer. I'm afraid that";
+	mes "I may be a burden to him once";
+	mes "again.";
+	next;
+	mes "[Nagash Arses]";
+	mes "Please tell him that I wish to";
+	mes "enjoy the rest of my life here.";
+	mes "Also, there are people here";
+	mes "who still need me...";
+	next;
+	mes "[Nagash Arses]";
+	mes "Thank you, youngster.";
+	mes "You've stopped my disciple";
+	mes "and helped me make up";
+	mes "with an old friend...";
+	next;
+	mes "^3131FFNagash Arses put his palm on your";
+	mes "back, and you can feel his strength";
+	mes "flowing into you.";
+	percentheal 100,100;
+	next;
+	mes "^3131FFYou grow dizzy, but you can also feel";
+	mes "like you're becoming more powerful";
+	mes "and gaining experience.";
+	if(BaseLevel < 56)set BaseExp,BaseExp+9000;
+	if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10500;
+	if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+18684;
+	if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+27411;
+	if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+70757;
+	if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+130246;
+	if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+150340;
+	if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+182052;
+	if(BaseLevel > 90)set BaseExp,BaseExp+406786;
+	set QL_POISONKING,17;
+	close2;
+	warp "louyang.gat",270,136;
+	end;
+
+s_Proud:
+	mes "[Nagash Arses]";
+	mes "My name, Nagash Arses,";
+	mes "is also the name of the poison king";
+	mes "in the legend of Arcturus. I have";
+	mes "a good reason to be proud of my";
+	mes "name!";
+	close;
+
+}
+
+lou_in01.gat,101,124,0	script	#LouSoldChk	139,100,0,{
+	if(QL_POISONKING == 13)goto s_SoldChk;
+	end;
+
+s_SoldChk:
+	mes "[Soldier]";
+	mes "Who goes there!";
+	next;
+	mes "^3131FFYou ran away as quickly as you";
+	mes "could!";
+	close2;
+	warp "louyang.gat",218,249;
+	end;
+
+}
+
+lou_in01.gat,115,163,0	script	#LouSoldChk2	139,0,2,{
+	if(QL_POISONKING == 13)goto s_SoldChk;
+	end;
+
+s_SoldChk:
+	mes "[Soldier]";
+	mes "Who goes there!";
+	next;
+	mes "^3131FFYou escape before the soldier can";
+	mes "find you.";
+	close2;
+	warp "louyang.gat",217,278;
+	end;
+
+}
+
+lou_in01.gat,115,163,0	script	#LouSoldChk3	139,25,0,{
+	if(QL_POISONKING == 13)goto s_SoldChk;
+	end;
+
+s_SoldChk:
+	mes "[Soldier]";
+	mes "Who goes there!";
+	next;
+	mes "^3131FFYou escape before the soldier can";
+	mes "find you.";
+	close2;
+	warp "louyang.gat",217,278;
+	end;
+
+}
+
+louyang.gat,218,278,0	script	#LouSecEntrnc	111,{
+
+	mes "[" + strcharinfo(0) + "]";
+	mes "What's this?";
+	mes "A crack in the wall?";
+	next;
+	mes "^3131FFYou jump to the stone wall and peek into the crack. It looks big enough for someone to squeeze through.";
+	next;
+	mes "You move through the crack as";
+	mes "quickly as you can.";
+	close2;
+	warp "lou_in01.gat",119,167;
+	end;
+
+}
+
+lou_in01.gat,117,167,0	script	#LouSecExit	111,{
+
+	mes "[" + strcharinfo(0) + "]";
+	mes "What's this?";
+	mes "A crack in the wall?";
+	next;
+	mes "^3131FFYou jump to the stone wall and peek into the crack. It looks big enough for someone to squeeze through.";
+	next;
+	mes "You move through the crack as";
+	mes "quickly as you can.";
+	close2;
+	warp "louyang.gat",217,278;
+	end;
+
+}
+
+lou_in01.gat,106,162,0	script	#BaiLongBottle	111,{
+
+	if(QL_POISONPATH > 1 && countitem(713) && countitem(938))goto s_Save;
+	if(QL_POISONKING != 13)goto s_Fancy;
+	mes "^3131FFYou found a drink bottle that's";
+	mes "possibly owned by Bai Long, lord of";
+	mes "Louyang.^000000";
+	if(QL_POISONPATH < 2 && countitem(678))goto s_Assassinate;
+	close;
+
+s_Assassinate:
+	next;
+	delitem 678,1; //Poison Bottle
+	mes "^3131FFYou put the deadly poison into the bottle.";
+	set QL_POISONKING,14;
+	next;
+	mes "^3131FFIt would be smart to get out of this place as soon as you can.";
+	close;
+
+s_Fancy:
+	mes "^3131FFYou found a drink bottle. It's fancy enough that the only possible owner could be Bai Long, lord of Louyang.";
+	close;
+
+s_Save:
+	mes "^3131FFYou take the drink bottle and replace it with a bottle filled with sticky mucus. Hopefully Bai Long won't notice!";
+	delitem 713,1; //Empty Bottle
+	delitem 938,1; //Stick Mucus
+	set QL_POISONKING,14;
+	close;
+
 }

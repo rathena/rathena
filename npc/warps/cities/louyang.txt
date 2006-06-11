@@ -28,12 +28,14 @@ louyang.gat,135,96,0	warp	louwarp011	3,3,lou_in02.gat,248,172
 louyang.gat,317,177,0	warp	louwarp014	3,3,lou_in02.gat,118,34
 louyang.gat,130,63,0	warp	louwarp015	3,3,lou_in02.gat,71,32
 louyang.gat,263,93,0	warp	louwarp018	3,3,lou_in02.gat,246,58
-louyang.gat,90,253,0	warp	louwarp019	3,3,louyang.gat,94,268
+louyang.gat,133,245,0	warp	louwarp020	1,1,lou_in01.gat,25,19
+lou_in01.gat,27,19,0	warp	louwarp020a	1,1,louyang.gat,135,245
 lou_in01.gat,125,141,0	warp	louwarp016	3,3,lou_in01.gat,156,141
 lou_in01.gat,152,141,0	warp	louwarp016a	3,3,lou_in01.gat,120,141
 lou_in01.gat,78,141,0	warp	louwarp017	3,3,lou_in01.gat,47,141
 lou_in01.gat,51,141,0	warp	louwarp017a	3,3,lou_in01.gat,82,141
 lou_in01.gat,101,118,0	warp	louwarp005a	3,3,louyang.gat,218,249
+lou_in01.gat,14,18,0	warp	louwarp021	1,1,louyang.gat,90,253
 lou_in02.gat,57,170,0	warp	louwarp006a	3,3,louyang.gat,279,164
 lou_in02.gat,200,93,0	warp	louwarp008	3,3,lou_in02.gat,170,46
 lou_in02.gat,174,46,0	warp	louwarp008a	3,3,lou_in02.gat,206,94

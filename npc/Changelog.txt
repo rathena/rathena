@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/11
+	* Implemented the Poison King quest, beware of potential bugs. [MasterOfMuppets]
 	* eAAC update:
 		- Added Vending Machine, made by Celestria. [erKURITA]
 		- Updated and fixed Coin Banker, by me :P. [erKURITA]
