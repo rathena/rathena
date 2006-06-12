@@ -870,7 +870,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
 		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
-				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
+//				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
 				sc->data[SC_SILENCE].timer != -1 || 
 				sc->data[SC_STEELBODY].timer != -1 ||
@@ -888,6 +888,13 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 			if (flag!=2 && sc->data[SC_DANCING].timer != -1)
 			{
+				if(sc->data[SC_LONGING].timer != -1)
+			  	{	//Allow everything except dancing/re-dancing. [Skotlex]
+					if (skill_num == BD_ENCORE ||
+						skill_get_inf2(skill_num)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
+					)
+						return 0;
+				} else
 				if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
 					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
 					return 0;

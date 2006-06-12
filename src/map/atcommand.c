@@ -2488,7 +2488,7 @@ int atcommand_heal(
 	sscanf(message, "%d %d", &hp, &sp);
 
 	if (hp == 0 && sp == 0) {
-		if (!status_heal(&sd->bl, sd->battle_status.max_hp, sd->battle_status.max_sp, 2))
+		if (!status_percent_heal(&sd->bl, 100, 100))
 			clif_displaymessage(fd, msg_table[157]); // HP and SP are already with the good value.
 		else
 			clif_displaymessage(fd, msg_table[17]); // HP, SP recovered.
@@ -2496,7 +2496,7 @@ int atcommand_heal(
 	}
 	
 	if(hp > 0 && sp >= 0) {
-		if(!status_heal(&sd->bl, hp, sp, 2))
+		if(!status_heal(&sd->bl, hp, sp, 0))
 			clif_displaymessage(fd, msg_table[157]); // HP and SP are already with the good value.
 		else
 			clif_displaymessage(fd, msg_table[17]); // HP, SP recovered.
@@ -2513,7 +2513,7 @@ int atcommand_heal(
 	//Opposing signs.
 	if (hp) {
 		if (hp > 0)
-			status_heal(&sd->bl, hp, 0, 2);
+			status_heal(&sd->bl, hp, 0, 0);
 		else {
 			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
 			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
@@ -2522,7 +2522,7 @@ int atcommand_heal(
 
 	if (sp) {
 		if (sp > 0)
-			status_heal(&sd->bl, 0, sp, 2);
+			status_heal(&sd->bl, 0, sp, 0);
 		else
 			status_damage(NULL, &sd->bl, 0, -sp, 0, 0);
 	}
