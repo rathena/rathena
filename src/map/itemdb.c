@@ -262,16 +262,31 @@ int itemdb_isequip(int nameid)
  *------------------------------------------
  */
 int itemdb_isequip2(struct item_data *data)
-{
-	if(data) {
-		int type=data->type;
-		if(type==0 || type==2 || type==3 || type==6 || type==10)
+{ 
+	nullpo_retr(0, data);
+	switch(data->type) {
+		case 0:
+		case 2:
+		case 3:
+		case 6:
+		case 10:
 			return 0;
-		else
+		default:
 			return 1;
 	}
-	return 0;
 }
+//Checks if the item is pet-equipment (7/8)
+static int itemdb_ispetequip(struct item_data *data)
+{ 
+	switch(data->type) {
+		case 7:
+		case 8:
+			return 1;
+		default:
+			return 0;
+	}
+}
+
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -584,7 +599,7 @@ static int itemdb_read_itemslottable(void)
 		struct item_data* item;
 		sscanf(p, "%d#%d#", &nameid, &equip);
 		item = itemdb_search(nameid);
-		if (item && itemdb_isequip2(item))			
+		if (equip && item && itemdb_isequip2(item))			
 			item->equip = equip;
 		p = strchr(p, 10);
 		if(!p) break;
@@ -852,6 +867,11 @@ static int itemdb_read_sqldb(void)
 					id->class_upper= (sql_row[12] != NULL) ? atoi(sql_row[12]) : 0;
 					id->sex		= (sql_row[13] != NULL) ? atoi(sql_row[13]) : 0;
 					id->equip	= (sql_row[14] != NULL) ? atoi(sql_row[14]) : 0;
+					if (!id->equip && itemdb_isequip2(id) && !itemdb_ispetequip(id))
+					{
+						ShowWarning("Item %d (%s) is an equipment with no equip-field! Making it an etc item.\n", nameid, id->jname);
+						id->type = 3;
+					}
 					id->wlv		= (sql_row[15] != NULL) ? atoi(sql_row[15]) : 0;
 					id->elv		= (sql_row[16] != NULL)	? atoi(sql_row[16]) : 0;
 					id->flag.no_refine = (sql_row[17] == NULL || atoi(sql_row[17]) == 1)?0:1;
@@ -1018,6 +1038,11 @@ static int itemdb_readdb(void)
 			id->sex	= atoi(str[13]);
 			if(id->equip != atoi(str[14])){
 				id->equip=atoi(str[14]);
+			}
+			if (!id->equip && itemdb_isequip2(id) && !itemdb_ispetequip(id))
+			{
+				ShowWarning("Item %d (%s) is an equipment with no equip-field! Making it an etc item.\n", nameid, id->jname);
+				id->type = 3;
 			}
 			id->wlv=atoi(str[15]);
 			id->elv=atoi(str[16]);

@@ -155,14 +155,12 @@ int clif_tradecompleted(struct map_session_data *sd,int fail);
 
 // storage
 #include "storage.h"
-int clif_storageitemlist(struct map_session_data *sd,struct storage *stor);
-int clif_storageequiplist(struct map_session_data *sd,struct storage *stor);
+void clif_storagelist(struct map_session_data *sd,struct storage *stor);
 int clif_updatestorageamount(struct map_session_data *sd,struct storage *stor);
 int clif_storageitemadded(struct map_session_data *sd,struct storage *stor,int index,int amount);
 int clif_storageitemremoved(struct map_session_data *sd,int index,int amount);
 int clif_storageclose(struct map_session_data *sd);
-int clif_guildstorageitemlist(struct map_session_data *sd,struct guild_storage *stor);
-int clif_guildstorageequiplist(struct map_session_data *sd,struct guild_storage *stor);
+void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *stor);
 int clif_updateguildstorageamount(struct map_session_data *sd,struct guild_storage *stor);
 int clif_guildstorageitemadded(struct map_session_data *sd,struct guild_storage *stor,int index,int amount);
 
@@ -226,13 +224,12 @@ int clif_charnameupdate(struct map_session_data *ssd);
 int clif_use_card(struct map_session_data *sd,int idx);
 int clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag);
 
-int clif_itemlist(struct map_session_data *sd);
-int clif_equiplist(struct map_session_data *sd);
+void clif_inventorylist(struct map_session_data *sd);
+void clif_equiplist(struct map_session_data *sd);
 
 int clif_cart_additem(struct map_session_data*,int,int,int);
 int clif_cart_delitem(struct map_session_data*,int,int);
-int clif_cart_itemlist(struct map_session_data *sd);
-int clif_cart_equiplist(struct map_session_data *sd);
+void clif_cartlist(struct map_session_data *sd);
 
 int clif_item_identify_list(struct map_session_data *sd);
 int clif_item_identified(struct map_session_data *sd,int idx,int flag);

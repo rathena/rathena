@@ -1410,9 +1410,14 @@ int guild_opposition(struct map_session_data *sd,int char_id)
 			if(g->alliance[i].opposition==1){	// ‚·‚Å‚É“G‘Î
 				clif_guild_oppositionack(sd,2);
 				return 0;
-			}else	// “¯–¿”jŠü
+			} else { //Change alliance to opposition.
+				if(agit_flag)	{
+					clif_displaymessage(sd->fd,"You cannot break an alliance during Guild Wars!");
+					return 0;
+				}
 				intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
 					sd->status.account_id,tsd->status.account_id,8 );
+			}
 		}
 	}
 

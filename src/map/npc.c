@@ -1048,9 +1048,9 @@ TBL_NPC *npc_checknear(struct map_session_data *sd,struct block_list *bl)
 	if (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
-		return nd;
+		return NULL;
 
-	return NULL;
+	return nd;
 }
 
 /*==========================================

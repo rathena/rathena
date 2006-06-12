@@ -2134,341 +2134,263 @@ int clif_delitem(struct map_session_data *sd,int n,int amount)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_itemlist(struct map_session_data *sd)
+// Simplifies inventory/cart/storage packets by handling the packet section relevant to items. [Skotlex]
+// Equip is > 0 for equippable items (holds the equip-point)
+// 0 for stackable items, -1 for stackable items where arrows must send in the equip-point.
+void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *id, int equip)
 {
-	int i,n,fd,arrow=-1;
+	if (id->view_id > 0)
+		WBUFW(buf,n)=id->view_id;
+	else
+		WBUFW(buf,n)=i->nameid;
+	WBUFB(buf,n+2)=itemtype(id->type);
+	WBUFB(buf,n+3)=i->identify;
+	if (equip > 0) { //Equippable item.
+		WBUFW(buf,n+4)=equip;
+		WBUFW(buf,n+6)=i->equip;
+		WBUFB(buf,n+8)=i->attribute;
+		WBUFB(buf,n+9)=i->refine;
+	} else { //Stackable item.
+		WBUFW(buf,n+4)=i->amount;
+		if (equip == -1 && id->equip == 0x8000)
+			WBUFW(buf,n+6)=0x8000;
+		else
+			WBUFW(buf,n+6)=0;
+	}
+
+}
+
+//Unified inventory function which sends all of the inventory (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
+void clif_inventorylist(struct map_session_data *sd)
+{
+	int i,n,ne,fd = sd->fd,arrow=-1;
 	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd, MAX_INVENTORY * 10 + 4);
-	buf = WFIFOP(fd,0);
+	unsigned char bufe[MAX_INVENTORY*20+4];
 #if PACKETVER < 5
-	WBUFW(buf,0)=0xa3;
-	for(i=0,n=0;i<MAX_INVENTORY;i++){
-		if (sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL || itemdb_isequip2(sd->inventory_data[i]))
-			continue;
-		WBUFW(buf,n*10+4)=i+2;
-		if (sd->inventory_data[i]->view_id > 0)
-			WBUFW(buf,n*10+6)=sd->inventory_data[i]->view_id;
-		else
-			WBUFW(buf,n*10+6)=sd->status.inventory[i].nameid;
-		WBUFB(buf,n*10+8)=itemtype(sd->inventory_data[i]->type);
-		WBUFB(buf,n*10+9)=sd->status.inventory[i].identify;
-		WBUFW(buf,n*10+10)=sd->status.inventory[i].amount;
-		if (sd->inventory_data[i]->equip == 0x8000) {
-			WBUFW(buf,n*10+12)=0x8000;
-			if (sd->status.inventory[i].equip)
-				arrow=i;	// ついでに矢装備チェック
-		} else
-			WBUFW(buf,n*10+12)=0;
-		n++;
-	}
-	if (n) {
-		WBUFW(buf,2)=4+n*10;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
+	const int s = 10; //Entry size.
 #else
-	WBUFW(buf,0)=0x1ee;
-	for(i=0,n=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL || itemdb_isequip2(sd->inventory_data[i]))
-			continue;
-		WBUFW(buf,n*18+4)=i+2;
-		if(sd->inventory_data[i]->view_id > 0)
-			WBUFW(buf,n*18+6)=sd->inventory_data[i]->view_id;
-		else
-			WBUFW(buf,n*18+6)=sd->status.inventory[i].nameid;
-		WBUFB(buf,n*18+8)=itemtype(sd->inventory_data[i]->type);
-		WBUFB(buf,n*18+9)=sd->status.inventory[i].identify;
-		WBUFW(buf,n*18+10)=sd->status.inventory[i].amount;
-		if (sd->inventory_data[i]->equip == 0x8000) {
-			WBUFW(buf,n*18+12)=0x8000;
-			if(sd->status.inventory[i].equip)
-				arrow=i;	// ついでに矢装備チェック
-		} else
-			WBUFW(buf,n*18+12)=0;
-		clif_addcards(WBUFP(buf, n*18+14), &sd->status.inventory[i]);
-		n++;
+	const int s = 18;
+#endif
+	WFIFOHEAD(fd, MAX_INVENTORY * s + 4);
+	buf = WFIFOP(fd,0);
+	
+	for(i=0,n=0,ne=0;i<MAX_INVENTORY;i++){
+		if (sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL)
+			continue;  
+	
+		if(itemdb_isequip2(sd->inventory_data[i])) 
+		{	//Equippable
+			WBUFW(bufe,ne*20+4)=i+2;
+			clif_item_sub(bufe, ne*20+6, &sd->status.inventory[i], sd->inventory_data[i], pc_equippoint(sd,i));
+			clif_addcards(WBUFP(bufe, ne*20+16), &sd->status.inventory[i]);
+			ne++;
+		} else { //Stackable.
+			WBUFW(buf,n*s+4)=i+2;
+			clif_item_sub(buf, n*s+6, &sd->status.inventory[i], sd->inventory_data[i], -1);
+			if (sd->inventory_data[i]->equip == 0x8000 &&
+				sd->status.inventory[i].equip)
+				arrow=i;
+#if PACKETVER >= 5
+			clif_addcards(WBUFP(buf, n*s+14), &sd->status.inventory[i]);
+#endif
+			n++;
+		}
 	}
 	if (n) {
-		WBUFW(buf,2)=4+n*18;
+#if PACKETVER < 5
+		WBUFW(buf,0)=0xa3;
+#else
+		WBUFW(buf,0)=0x1ee;
+#endif
+		WBUFW(buf,2)=4+n*s;
 		WFIFOSET(fd,WFIFOW(fd,2));
 	}
-#endif
 	if(arrow >= 0)
 		clif_arrowequip(sd,arrow);
-	return 0;
+
+	if(ne){
+		WBUFW(bufe,0)=0xa4;
+		WBUFW(bufe,2)=4+ne*20;
+		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
+	}
+
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_equiplist(struct map_session_data *sd)
+//Required when items break/get-repaired. Only sends equippable item list.
+void clif_equiplist(struct map_session_data *sd)
 {
-	int i,n,fd;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-	if (!session_isActive(fd))
-		return 0;
-        WFIFOHEAD(fd, 4 + MAX_INVENTORY * 20);
-	WFIFOW(fd,0)=0xa4;
+	int i,n,fd = sd->fd;
+	unsigned char *buf;
+	WFIFOHEAD(fd, MAX_INVENTORY * 20 + 4);
+	buf = WFIFOP(fd,0);
+	
 	for(i=0,n=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL || !itemdb_isequip2(sd->inventory_data[i]))
+		if (sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL)
+			continue;  
+	
+		if(!itemdb_isequip2(sd->inventory_data[i])) 
 			continue;
-		WFIFOW(fd,n*20+4)=i+2;
-		if(sd->inventory_data[i]->view_id > 0)
-			WFIFOW(fd,n*20+6)=sd->inventory_data[i]->view_id;
-		else
-			WFIFOW(fd,n*20+6)=sd->status.inventory[i].nameid;
-		WFIFOB(fd,n*20+8)=itemtype(sd->inventory_data[i]->type);
-		WFIFOB(fd,n*20+9)=sd->status.inventory[i].identify;
-		WFIFOW(fd,n*20+10)=pc_equippoint(sd,i);
-		WFIFOW(fd,n*20+12)=sd->status.inventory[i].equip;
-		WFIFOB(fd,n*20+14)=sd->status.inventory[i].attribute;
-		WFIFOB(fd,n*20+15)=sd->status.inventory[i].refine;
-		clif_addcards(WFIFOP(fd, n*20+16), &sd->status.inventory[i]);
+		//Equippable
+		WBUFW(buf,n*20+4)=i+2;
+		clif_item_sub(buf, n*20+6, &sd->status.inventory[i], sd->inventory_data[i], pc_equippoint(sd,i));
+		clif_addcards(WBUFP(buf, n*20+16), &sd->status.inventory[i]);
 		n++;
 	}
-	if(n){
-		WFIFOW(fd,2)=4+n*20;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-	return 0;
-}
-
-/*==========================================
- * カプラさんに預けてある消耗品&収集品リスト
- *------------------------------------------
- */
-int clif_storageitemlist(struct map_session_data *sd,struct storage *stor)
-{
-	struct item_data *id;
-	int i,n,fd;
-	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,MAX_STORAGE * 18 + 4);
-	buf = WFIFOP(fd,0);
-#if PACKETVER < 5
-	WBUFW(buf,0)=0xa5;
-	for(i=0,n=0;i<MAX_STORAGE;i++){
-		if(stor->storage_[i].nameid<=0)
-			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
-		if(itemdb_isequip2(id))
-			continue;
-
-		WBUFW(buf,n*10+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*10+6)=id->view_id;
-		else
-			WBUFW(buf,n*10+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*10+8)=itemtype(id->type);
-		WBUFB(buf,n*10+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*10+10)=stor->storage_[i].amount;
-		WBUFW(buf,n*10+12)=0;
-		n++;
-	}
-	if(n){
-		WBUFW(buf,2)=4+n*10;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-#else
-	WBUFW(buf,0)=0x1f0;
-	for(i=0,n=0;i<MAX_STORAGE;i++){
-		if(stor->storage_[i].nameid<=0)
-			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
-		if(itemdb_isequip2(id))
-			continue;
-
-		WBUFW(buf,n*18+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*18+6)=id->view_id;
-		else
-			WBUFW(buf,n*18+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*18+8)=itemtype(id->type);
-		WBUFB(buf,n*18+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*18+10)=stor->storage_[i].amount;
-		WBUFW(buf,n*18+12)=0;
-		clif_addcards(WBUFP(buf,n*18+14), &stor->storage_[i]);
-		n++;
-	}
-	if(n){
-		WBUFW(buf,2)=4+n*18;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-#endif
-	return 0;
-}
-
-/*==========================================
- * カプラさんに預けてある装備リスト
- *------------------------------------------
- */
-int clif_storageequiplist(struct map_session_data *sd,struct storage *stor)
-{
-	struct item_data *id;
-	int i,n,fd;
-	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,MAX_STORAGE * 20 + 4);
-	buf = WFIFOP(fd,0);
-	WBUFW(buf,0)=0xa6;
-	for(i=0,n=0;i<MAX_STORAGE;i++){
-		if(stor->storage_[i].nameid<=0)
-			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
-		if(!itemdb_isequip2(id))
-			continue;
-		WBUFW(buf,n*20+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*20+6)=id->view_id;
-		else
-			WBUFW(buf,n*20+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*20+8)=itemtype(id->type);
-		WBUFB(buf,n*20+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*20+10)=id->equip;
-		WBUFW(buf,n*20+12)=stor->storage_[i].equip;
-		WBUFB(buf,n*20+14)=stor->storage_[i].attribute;
-		WBUFB(buf,n*20+15)=stor->storage_[i].refine;
-		clif_addcards(WBUFP(buf, n*20+16), &stor->storage_[i]);
-		n++;
-	}
-	if(n){
+	if (n) {
+		WBUFW(buf,0)=0xa4;
 		WBUFW(buf,2)=4+n*20;
 		WFIFOSET(fd,WFIFOW(fd,2));
 	}
-	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_guildstorageitemlist(struct map_session_data *sd,struct guild_storage *stor)
+//Unified storage function which sends all of the storage (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
+void clif_storagelist(struct map_session_data *sd,struct storage *stor)
 {
 	struct item_data *id;
-	int i,n,fd;
+	int i,n,ne,fd=sd->fd;
 	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-	nullpo_retr(0, stor);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd, MAX_GUILD_STORAGE * 18 + 4);
-	buf=WFIFOP(fd,0);
-
+	unsigned char bufe[MAX_STORAGE*20+4];
 #if PACKETVER < 5
-	WBUFW(buf,0)=0xa5;
-	for(i=0,n=0;i<MAX_GUILD_STORAGE;i++){
-		if(stor->storage_[i].nameid<=0)
-			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
-		if(itemdb_isequip2(id))
-			continue;
-
-		WBUFW(buf,n*10+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*10+6)=id->view_id;
-		else
-			WBUFW(buf,n*10+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*10+8)=itemtype(id->type);
-		WBUFB(buf,n*10+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*10+10)=stor->storage_[i].amount;
-		WBUFW(buf,n*10+12)=0;
-		n++;
-	}
-	if(n){
-		WBUFW(buf,2)=4+n*10;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
+	const int s = 10; //Entry size.
 #else
-	WBUFW(buf,0)=0x1f0;
-	for(i=0,n=0;i<MAX_GUILD_STORAGE;i++){
+	const int s = 18;
+#endif
+	WFIFOHEAD(fd,MAX_STORAGE * s + 4);
+	buf = WFIFOP(fd,0);
+	
+	for(i=0,n=0;i<MAX_STORAGE;i++){
 		if(stor->storage_[i].nameid<=0)
 			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
+		id = itemdb_search(stor->storage_[i].nameid);
 		if(itemdb_isequip2(id))
-			continue;
-
-		WBUFW(buf,n*18+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*18+6)=id->view_id;
-		else
-			WBUFW(buf,n*18+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*18+8)=itemtype(id->type);
-		WBUFB(buf,n*18+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*18+10)=stor->storage_[i].amount;
-		WBUFW(buf,n*18+12)=0;
-		clif_addcards(WBUFP(buf,n*18+14), &stor->storage_[i]);
-		n++;
+		{ //Equippable
+			WBUFW(bufe,ne*20+4)=i+1;
+			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*20+16), &stor->storage_[i]);
+			ne++;
+		} else { //Stackable
+			WBUFW(buf,n*s+4)=i+1;
+			clif_item_sub(buf, n*s+6, &stor->storage_[i], id, 0);
+#if PACKETVER >= 5
+			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
+#endif
+			n++;
+		}
 	}
 	if(n){
-		WBUFW(buf,2)=4+n*18;
+#if PACKETVER < 5
+		WBUFW(buf,0)=0xa5;
+#else
+		WBUFW(buf,0)=0x1f0;
+#endif
+		WBUFW(buf,2)=4+n*s;
 		WFIFOSET(fd,WFIFOW(fd,2));
 	}
-#endif
-	return 0;
+	if(ne){
+		WBUFW(bufe,0)=0xa6;
+		WBUFW(bufe,2)=4+ne*20;
+		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
+	}
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_guildstorageequiplist(struct map_session_data *sd,struct guild_storage *stor)
+//Unified storage function which sends all of the storage (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
+void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *stor)
 {
 	struct item_data *id;
-	int i,n,fd;
+	int i,n,ne,fd=sd->fd;
 	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd, MAX_GUILD_STORAGE * 20 + 4);
-	buf=WFIFOP(fd,0);
-
-	WBUFW(buf,0)=0xa6;
+	unsigned char bufe[MAX_GUILD_STORAGE*20+4];
+#if PACKETVER < 5
+	const int s = 10; //Entry size.
+#else
+	const int s = 18;
+#endif
+	WFIFOHEAD(fd,MAX_GUILD_STORAGE * s + 4);
+	buf = WFIFOP(fd,0);
+	
 	for(i=0,n=0;i<MAX_GUILD_STORAGE;i++){
 		if(stor->storage_[i].nameid<=0)
 			continue;
-		nullpo_retr(0, id = itemdb_search(stor->storage_[i].nameid));
-		if(!itemdb_isequip2(id))
-			continue;
-		WBUFW(buf,n*20+4)=i+1;
-		if(id->view_id > 0)
-			WBUFW(buf,n*20+6)=id->view_id;
-		else
-			WBUFW(buf,n*20+6)=stor->storage_[i].nameid;
-		WBUFB(buf,n*20+8)=itemtype(id->type);
-		WBUFB(buf,n*20+9)=stor->storage_[i].identify;
-		WBUFW(buf,n*20+10)=id->equip;
-		WBUFW(buf,n*20+12)=stor->storage_[i].equip;
-		WBUFB(buf,n*20+14)=stor->storage_[i].attribute;
-		WBUFB(buf,n*20+15)=stor->storage_[i].refine;
-		clif_addcards(WBUFP(buf, n*20+16), &stor->storage_[i]);
-		n++;
+		id = itemdb_search(stor->storage_[i].nameid);
+		if(itemdb_isequip2(id))
+		{ //Equippable
+			WBUFW(bufe,ne*20+4)=i+1;
+			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*20+16), &stor->storage_[i]);
+			ne++;
+		} else { //Stackable
+			WBUFW(buf,n*s+4)=i+1;
+			clif_item_sub(buf, n*s+6, &stor->storage_[i], id, 0);
+#if PACKETVER >= 5
+			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
+#endif
+			n++;
+		}
 	}
 	if(n){
-		WBUFW(buf,2)=4+n*20;
+#if PACKETVER < 5
+		WBUFW(buf,0)=0xa5;
+#else
+		WBUFW(buf,0)=0x1f0;
+#endif
+		WBUFW(buf,2)=4+n*s;
 		WFIFOSET(fd,WFIFOW(fd,2));
 	}
-	return 0;
+	if(ne){
+		WBUFW(bufe,0)=0xa6;
+		WBUFW(bufe,2)=4+ne*20;
+		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
+	}
+}
+
+void clif_cartlist(struct map_session_data *sd)
+{
+	struct item_data *id;
+	int i,n,ne,fd=sd->fd;
+	unsigned char *buf;
+	unsigned char bufe[MAX_CART*20+4];
+#if PACKETVER < 5
+	const int s = 10; //Entry size.
+#else
+	const int s = 18;
+#endif
+	WFIFOHEAD(fd, MAX_CART * s + 4);
+	buf = WFIFOP(fd,0);
+	
+	for(i=0,n=0,ne=0;i<MAX_CART;i++){
+		if(sd->status.cart[i].nameid<=0)
+			continue;
+		id = itemdb_search(sd->status.cart[i].nameid);
+		if(itemdb_isequip2(id))
+		{ //Equippable
+			WBUFW(bufe,ne*20+4)=i+2;
+			clif_item_sub(bufe, ne*20+6, &sd->status.cart[i], id, id->equip);
+			clif_addcards(WBUFP(bufe, ne*20+16), &sd->status.cart[i]);
+			ne++;
+		} else { //Stackable
+			WBUFW(buf,n*s+4)=i+2;
+			clif_item_sub(buf, n*s+6, &sd->status.cart[i], id, 0);
+#if PACKETVER >= 5
+			clif_addcards(WBUFP(buf,n*s+14), &sd->status.cart[i]);
+#endif
+			n++;
+		}
+	}
+	if(n){
+#if PACKETVER < 5
+		WBUFW(buf,0)=0x123;
+#else
+		WBUFW(buf,0)=0x1ef;
+#endif
+		WBUFW(buf,2)=4+n*s;
+		WFIFOSET(fd,WFIFOW(fd,2));
+	}
+	if(ne){
+		WBUFW(bufe,0)=0x122;
+		WBUFW(bufe,2)=4+ne*20;
+		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
+	}
+	return;
 }
 
 // Guild XY locators [Valaris]
@@ -5533,116 +5455,6 @@ int clif_cart_delitem(struct map_session_data *sd,int n,int amount)
 }
 
 /*==========================================
- * カートのアイテムリスト
- *------------------------------------------
- */
-int clif_cart_itemlist(struct map_session_data *sd)
-{
-	struct item_data *id;
-	int i,n,fd;
-	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-        WFIFOHEAD(fd, MAX_CART * 18 + 4);
-	buf = WFIFOP(fd,0);
-#if PACKETVER < 5
-	for(i=0,n=0;i<MAX_CART;i++){
-		if(sd->status.cart[i].nameid<=0)
-			continue;
-		id = itemdb_search(sd->status.cart[i].nameid);
-		if(itemdb_isequip2(id))
-			continue;
-		WBUFW(buf,n*10+4)=i+2;
-		if(id->view_id > 0)
-			WBUFW(buf,n*10+6)=id->view_id;
-		else
-			WBUFW(buf,n*10+6)=sd->status.cart[i].nameid;
-		WBUFB(buf,n*10+8)=itemtype(id->type);
-		WBUFB(buf,n*10+9)=sd->status.cart[i].identify;
-		WBUFW(buf,n*10+10)=sd->status.cart[i].amount;
-		WBUFW(buf,n*10+12)=0;
-		n++;
-	}
-	if(n){
-		WBUFW(buf,0)=0x123;
-		WBUFW(buf,2)=4+n*10;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-#else
-	for(i=0,n=0;i<MAX_CART;i++){
-		if(sd->status.cart[i].nameid<=0)
-			continue;
-		id = itemdb_search(sd->status.cart[i].nameid);
-		if(itemdb_isequip2(id))
-			continue;
-		WBUFW(buf,n*18+4)=i+2;
-		if(id->view_id > 0)
-			WBUFW(buf,n*18+6)=id->view_id;
-		else
-			WBUFW(buf,n*18+6)=sd->status.cart[i].nameid;
-		WBUFB(buf,n*18+8)=itemtype(id->type);
-		WBUFB(buf,n*18+9)=sd->status.cart[i].identify;
-		WBUFW(buf,n*18+10)=sd->status.cart[i].amount;
-		WBUFW(buf,n*18+12)=0; //Here goes the equip location, which seems unnecessary to fill for the cart data.
-		clif_addcards(WBUFP(buf,n*18+14), &sd->status.cart[i]);
-		n++;
-	}
-	if(n){
-		WBUFW(buf,0)=0x1ef;
-		WBUFW(buf,2)=4+n*18;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-#endif
-	return 0;
-}
-
-/*==========================================
- * カートの装備品リスト
- *------------------------------------------
- */
-int clif_cart_equiplist(struct map_session_data *sd)
-{
-	struct item_data *id;
-	int i,n,fd;
-	unsigned char *buf;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd, MAX_INVENTORY * 20 + 4);
-	buf = WFIFOP(fd,0);
-
-	for(i=0,n=0;i<MAX_INVENTORY;i++){
-		if(sd->status.cart[i].nameid<=0)
-			continue;
-		id = itemdb_search(sd->status.cart[i].nameid);
-		if(!itemdb_isequip2(id))
-			continue;
-		WBUFW(buf,n*20+4)=i+2;
-		if(id->view_id > 0)
-			WBUFW(buf,n*20+6)=id->view_id;
-		else
-			WBUFW(buf,n*20+6)=sd->status.cart[i].nameid;
-		WBUFB(buf,n*20+8)=itemtype(id->type);
-		WBUFB(buf,n*20+9)=sd->status.cart[i].identify;
-		WBUFW(buf,n*20+10)=id->equip;
-		WBUFW(buf,n*20+12)=sd->status.cart[i].equip;
-		WBUFB(buf,n*20+14)=sd->status.cart[i].attribute;
-		WBUFB(buf,n*20+15)=sd->status.cart[i].refine;
-		clif_addcards(WBUFP(buf, n*20+16), &sd->status.cart[i]);
-		n++;
-	}
-	if(n){
-		WBUFW(buf,0)=0x122;
-		WBUFW(buf,2)=4+n*20;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-	return 0;
-}
-
-/*==========================================
  * 露店開設
  *------------------------------------------
  */
@@ -8188,13 +8000,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// item
 	pc_checkitem(sd);
-	clif_itemlist(sd);
-	clif_equiplist(sd);
+	clif_inventorylist(sd);
 	
 	// cart
 	if(pc_iscarton(sd)){
-		clif_cart_itemlist(sd);
-		clif_cart_equiplist(sd);
+		clif_cartlist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
 	}
 

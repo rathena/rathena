@@ -385,7 +385,6 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 int pc_equippoint(struct map_session_data *sd,int n)
 {
 	int ep = 0;
-	//?¶‚â—{Žq‚Ìê‡‚ÌŒ³‚ÌE‹Æ‚ðŽZo‚·‚é
 
 	nullpo_retr(0, sd);
 
@@ -4029,7 +4028,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 	clif_updatestatus(sd,SP_BASEEXP);
 
-	if (job_exp > 0 && sd->status.job_exp > UINT_MAX - job_exp)
+	if (job_exp && sd->status.job_exp > UINT_MAX - job_exp)
 		sd->status.job_exp = UINT_MAX;
 	else
 		sd->status.job_exp += job_exp;
@@ -5340,7 +5339,6 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	status_calc_pc(sd,0);
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
-	clif_equiplist(sd);
 
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
@@ -5532,8 +5530,7 @@ int pc_setcart(struct map_session_data *sd,int type)
 		option|=cart[type];
 		if(!pc_iscarton(sd)){ // ƒJ?ƒg‚ð•t‚¯‚Ä‚¢‚È‚¢
 			pc_setoption(sd,option);
-			clif_cart_itemlist(sd);
-			clif_cart_equiplist(sd);
+			clif_cartlist(sd);
 			clif_updatestatus(sd,SP_CARTINFO);
 			clif_status_change(&sd->bl,SI_INCREASEAGI,0); //0x0c is 12, Increase Agi??
 		}

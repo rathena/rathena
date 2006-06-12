@@ -952,8 +952,7 @@ int intif_parse_LoadStorage(int fd) {
 	stor->dirty=0;
 	stor->storage_status=1;
 	sd->state.storage_flag = 1;
-	clif_storageitemlist(sd,stor);
-	clif_storageequiplist(sd,stor);
+	clif_storagelist(sd,stor);
 	clif_updatestorageamount(sd,stor);
 
 	return 0;
@@ -1011,8 +1010,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	memcpy(gstor,RFIFOP(fd,12),sizeof(struct guild_storage));
 	gstor->storage_status = 1;
 	sd->state.storage_flag = 2;
-	clif_guildstorageitemlist(sd,gstor);
-	clif_guildstorageequiplist(sd,gstor);
+	clif_guildstoragelist(sd,gstor);
 	clif_updateguildstorageamount(sd,gstor);
 	return 0;
 }

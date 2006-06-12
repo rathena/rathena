@@ -149,8 +149,7 @@ int storage_storageopen(struct map_session_data *sd)
 
 	stor->storage_status = 1;
 	sd->state.storage_flag = 1;
-	clif_storageitemlist(sd,stor);
-	clif_storageequiplist(sd,stor);
+	clif_storagelist(sd,stor);
 	clif_updatestorageamount(sd,stor);
 	return 0;
 }
@@ -476,8 +475,7 @@ int storage_guild_storageopen(struct map_session_data *sd)
 	
 	gstor->storage_status = 1;
 	sd->state.storage_flag = 2;
-	clif_guildstorageitemlist(sd,gstor);
-	clif_guildstorageequiplist(sd,gstor);
+	clif_guildstoragelist(sd,gstor);
 	clif_updateguildstorageamount(sd,gstor);
 	return 0;
 }

@@ -815,7 +815,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			case NPC_SUMMONSLAVE:
 			case NPC_SUMMONMONSTER:
 			case AL_TELEPORT:
-				if (((TBL_MOB*)src)->master_id)
+				if (((TBL_MOB*)src)->master_id && ((TBL_MOB*)src)->special_state.ai)
 					return 0;
 		}
 	}

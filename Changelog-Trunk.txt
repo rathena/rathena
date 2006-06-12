@@ -4,6 +4,19 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/12
+	* Fixed npc_checknear's distance check returning the opposite of what it
+	  should (false when the range is correct and viceversa) [Skotlex]
+	* Added a warning on item loading when an item is of equippable type but
+	  has no equippable position. [Skotlex]
+	* Turning an alliance to an opposition won't work now during WoE [Skotlex]
+	* Slaves can summon other mobs now. The only ones who can't do this are
+	  player summoned mobs. [Skotlex]
+	* Merged the following functions for faster processing of items: [Skotlex]
+	  clif_storageitemlist + clif_storageequiplist = clif_storagelist
+	  clif_guildstorageitemlist + clif_guildstorageequiplist = clif_guildstoragelist
+	  clif_itemlist + clif_equiplist = clif_inventorylist
+	  Note that the changes are a bit substantial and need proper testing!
+	* Increased max knockback value support to 25. [Skotlex]
 	* [Optimized]:
 	  - buildin_npcshopitem memory allocation to calculate before reallocating.
 	    [Lance]

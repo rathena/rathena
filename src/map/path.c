@@ -203,10 +203,10 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 		return -1;
 	md=&map[m];
 
-	if(count>15){	// Å‘å10ƒ}ƒX‚É§ŒÀ
+	if(count>25){ //Cap to prevent too much processing...?
 		if(battle_config.error_log)
 			ShowWarning("path_blownpos: count too many %d !\n",count);
-		count=15;
+		count=25;
 	}
 	if(dx>1 || dx<-1 || dy>1 || dy<-1){
 		if(battle_config.error_log)
@@ -215,7 +215,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 		dy=(dy>=0)?1:((dy<0)?-1:0);
 	}
 	
-	while( (count--)>0 && (dx!=0 || dy!=0) ){
+	while( (count--)>0 && (dx || dy) ){
 		if( !can_move(md,x0,y0,x0+dx,y0+dy,0) ){
 			int fx=(dx!=0 && can_move(md,x0,y0,x0+dx,y0,0));
 			int fy=(dy!=0 && can_move(md,x0,y0,x0,y0+dy,0));

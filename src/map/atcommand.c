@@ -2200,9 +2200,7 @@ int atcommand_option(
 	sd->sc.opt1 = param1;
 	sd->sc.opt2 = param2;
 	if (!(sd->sc.option & CART_MASK) && param3 & CART_MASK) {
-		if (sd->status.class_ == JOB_BABY_MERCHANT)
-			clif_cart_itemlist(sd);
-		clif_cart_equiplist(sd);
+		clif_cartlist(sd);
 		clif_updatestatus(sd, SP_CARTINFO);
 	}
 	pc_setoption(sd, param3);
