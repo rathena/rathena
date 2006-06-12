@@ -2258,7 +2258,7 @@ void clif_storagelist(struct map_session_data *sd,struct storage *stor)
 	WFIFOHEAD(fd,MAX_STORAGE * s + 4);
 	buf = WFIFOP(fd,0);
 	
-	for(i=0,n=0;i<MAX_STORAGE;i++){
+	for(i=0,n=0,ne=0;i<MAX_STORAGE;i++){
 		if(stor->storage_[i].nameid<=0)
 			continue;
 		id = itemdb_search(stor->storage_[i].nameid);
@@ -2308,7 +2308,7 @@ void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *sto
 	WFIFOHEAD(fd,MAX_GUILD_STORAGE * s + 4);
 	buf = WFIFOP(fd,0);
 	
-	for(i=0,n=0;i<MAX_GUILD_STORAGE;i++){
+	for(i=0,n=0,ne=0;i<MAX_GUILD_STORAGE;i++){
 		if(stor->storage_[i].nameid<=0)
 			continue;
 		id = itemdb_search(stor->storage_[i].nameid);
