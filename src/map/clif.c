@@ -8804,16 +8804,9 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd) {
 	WFIFOSET(fd,packet_len_table[0xc2]);
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
-	unsigned int tick;
+static void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
+{
 	unsigned char buf[64];
-	int action_type, target_id;
-	RFIFOHEAD(fd);
-
 	if (pc_isdead(sd)) {
 		clif_clearchar_area(&sd->bl, 1);
 		return;
@@ -8825,13 +8818,8 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		sd->sc.data[SC_BLADESTOP].timer != -1))
 		return;
 
-	tick = gettick();
-
 	pc_stop_walking(sd, 1);
 	pc_stop_attack(sd);
-
-	target_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	action_type = RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
@@ -8895,7 +8883,7 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 			return;
 		}
 		pc_setstand(sd);
-		skill_gangsterparadise(sd, 0); // ギャングスターパラダイス解除 fixed Valaris
+		skill_gangsterparadise(sd, 0); 
 		skill_rest(sd, 0); // TK_HPTIME standing up mode [Dralnu]
 		WBUFW(buf, 0) = 0x8a;
 		WBUFL(buf, 2) = sd->bl.id;
@@ -8903,6 +8891,18 @@ void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
 		clif_send(buf, packet_len_table[0x8a], &sd->bl, AREA);
 		break;
 	}
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
+	clif_parse_ActionRequest_sub(sd,
+		RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]),
+		RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]),
+		gettick()
+	);
 }
 
 /*==========================================
@@ -9310,6 +9310,7 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
  */
 void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 {
+	struct block_list *bl;
 	RFIFOHEAD(fd);
 
 	if(pc_isdead(sd)) {
@@ -9320,7 +9321,23 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	if (clif_cant_act(sd))
 		return;
 
-	npc_click(sd,RFIFOL(fd,2));
+	bl = map_id2bl(RFIFOL(fd,2));
+	if (!bl) return;
+	switch (bl->type) {
+		case BL_MOB:
+			if (((TBL_MOB *)bl)->nd)
+				npc_click(sd, bl);
+			else
+				clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
+			break;
+		case BL_PC:
+			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
+			break;
+		case BL_NPC:
+			npc_click(sd,bl);
+			break;
+	}
+	return;
 }
 
 /*==========================================

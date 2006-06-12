@@ -1080,7 +1080,7 @@ int unit_attack(struct block_list *src,int target_id,int type)
 	}
 
 	if(src->type == BL_PC && target->type==BL_NPC) { // monster npcs [Valaris]
-		npc_click((TBL_PC*)src,target_id); // submitted by leinsirk10 [Celest]
+		npc_click((TBL_PC*)src,target); // submitted by leinsirk10 [Celest]
 		return 0;
 	}
 

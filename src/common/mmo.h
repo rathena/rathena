@@ -261,7 +261,8 @@ struct party {
 struct guild_member {
 	int account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
-	int exp,exp_payper;
+	unsigned int exp;
+	int exp_payper;
 	short online,position;
 	int rsv1,rsv2;
 	char name[NAME_LENGTH];

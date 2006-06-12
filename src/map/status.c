@@ -1874,8 +1874,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // ----- EQUIPMENT-DEF CALCULATION -----
 
 	// Apply relative modifiers from equipment
-	if(sd->def_rate != 100)
-		status->def = status->def * sd->def_rate/100;
+	if(sd->def_rate != 100) {
+		i =  status->def * sd->def_rate/100;
+		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
+	}
 
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def)
 	{
@@ -1891,13 +1893,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // ----- EQUIPMENT-MDEF CALCULATION -----
 
 	// Apply relative modifiers from equipment
-	if(sd->mdef_rate != 100)
-		status->mdef = status->mdef * sd->mdef_rate/100;
+	if(sd->mdef_rate != 100) {
+		i =  status->mdef * sd->mdef_rate/100;
+		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
+	}
 
 	if (!battle_config.magic_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
-		status->mdef = (unsigned char)battle_config.max_def;
+		status->mdef = (signed char)battle_config.max_def;
 	}
 	
 // ----- WALKING SPEED CALCULATION -----
@@ -2396,6 +2400,8 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		clif_updatestatus(sd,SP_AGI);
 	if(flag&SCB_VIT)
 		clif_updatestatus(sd,SP_VIT);
+	if(flag&SCB_INT)
+		clif_updatestatus(sd,SP_INT);
 	if(flag&SCB_DEX)
 		clif_updatestatus(sd,SP_DEX);
 	if(flag&SCB_LUK)
@@ -4560,7 +4566,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			clif_emotion(bl,1);
 			break;
 		case SC_BLEEDING:
-			val4 = tick;
+			val4 = tick/10000;
+			if (!val4) val4 = 1;
 			tick = 10000;
 			break;
 
@@ -5883,7 +5890,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		// - 10õ©ª´ªÈªËHPª¬Êõá´
 		// - õóúìªÎªŞªŞ«µ?«Ğì¹ÔÑªä«ê«í«°ª·ªÆªâ?ÍıªÏá¼ª¨ªÊª¤
 		// To-do: bleeding effect increases damage taken?
-		if ((sc->data[type].val4 -= 10000) >= 0) {
+		if ((--sc->data[type].val4) >= 0) {
 			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
 			if (status_isdead(bl))
 				break;

@@ -3,6 +3,18 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/06/12
+	* Made guild member exp an unsigned int. [Skotlex]
+	* Various cleanups to the npc clicking related functions. Should fix quite
+	  some possible crashes from crafted packets. [Skotlex]
+	* Added overflow checks for bonus settings mdef_rate/def_rate. [Skotlex]
+	* Added missing update of INT after a buf.  [Skotlex]
+	* Small cleanup of how SC_BLEEDING works. [Skotlex]
+	* Fixed party_foreach_samemap invoking the function on the CASTER instead
+	  of on the party members. [Skotlex]
+	* Modified clif_parse_NpcClicked to handle the different situations with
+	  different bl-objects (attack on players/mobs, click on npcs or mobs with
+	  npc attached) [Skotlex]
 2006/06/09
 	* [Fixed]
 	  - Compilation warnings on guild.c and int_guild.c [Lance]

@@ -187,7 +187,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
 				sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
-					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%s')",
+					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%u','%d','%d','%d','%s')",
 				       guild_member_db, g->guild_id, m->account_id,m->char_id,
 				       m->hair,m->hair_color,m->gender,
 				       m->class_,m->lv,m->exp,m->exp_payper,m->online,m->position,
@@ -1527,7 +1527,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,int account_id,int cha
 	{	// EXP
 		unsigned int exp, old_exp=g->member[i].exp;
 		g->member[i].exp=*((unsigned int *)data);
-		if (g->member[i].exp > (signed int)old_exp && old_exp < INT_MAX)
+		if (g->member[i].exp > old_exp)
 		{
 			exp = g->member[i].exp - old_exp;
 			if (guild_exp_rate != 100)

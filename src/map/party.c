@@ -823,7 +823,7 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 			(psd->bl.x<x0 || psd->bl.y<y0 ||
 			 psd->bl.x>x1 || psd->bl.y>y1 ) )
 			continue;
-		list[blockcount++]=&sd->bl; 
+		list[blockcount++]=&psd->bl; 
 	}
 
 	map_freeblock_lock();

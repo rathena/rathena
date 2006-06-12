@@ -962,7 +962,7 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 
 			if( npc_event(sd,name,0)>0 ) {
 				pc_stop_walking(sd,1); //Make it stop walking!
-				npc_click(sd,map[m].npc[i]->bl.id);
+				npc_click(sd,&(map[m].npc[i]->bl));
 			}
 			//aFree(name);
 			break;
@@ -1008,34 +1008,49 @@ int npc_touch_areanpc2(struct block_list *bl)
  * 近くかどうかの判定
  *------------------------------------------
  */
-int npc_checknear(struct map_session_data *sd,int id)
+int npc_checknear2(struct map_session_data *sd,struct block_list *bl)
 {
-	struct npc_data *nd;
-
-	nullpo_retr(0, sd);
-
-	if(sd->state.using_fake_npc)
+	nullpo_retr(1, sd);
+	if(bl == NULL) return 1;
+	
+	if(sd->state.using_fake_npc && sd->npc_id == bl->id)
 		return 0;
 
-	nd=(struct npc_data *)map_id2bl(id);
-	if (nd==NULL) {
-		if (battle_config.error_log)
-			ShowWarning("no such npc : %d\n",id);
-		return 1;
-	}
-	if (nd->bl.type!=BL_NPC) //Disguised character or something else...
-		return 1;
+//	if (bl->type!=BL_NPC) //Disguised character or something else...
+//		return 1;
 
-	if (nd->class_<0)	// イベント系は常にOK
+	if (status_get_class(bl)<0) //Class-less npc, enable click from anywhere.
 		return 0;
 
-	// エリア判定
-	if (nd->bl.m!=sd->bl.m ||
-	   nd->bl.x<sd->bl.x-AREA_SIZE-1 || nd->bl.x>sd->bl.x+AREA_SIZE+1 ||
-	   nd->bl.y<sd->bl.y-AREA_SIZE-1 || nd->bl.y>sd->bl.y+AREA_SIZE+1)
+	if (bl->m!=sd->bl.m ||
+	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
 		return 1;
 
 	return 0;
+}
+
+TBL_NPC *npc_checknear(struct map_session_data *sd,struct block_list *bl)
+{
+	struct npc_data *nd;
+
+	nullpo_retr(NULL, sd);
+	if(bl == NULL) return NULL;
+	if(bl->type != BL_NPC) return NULL;
+	nd = (TBL_NPC*)bl;
+
+	if(sd->state.using_fake_npc && sd->npc_id == bl->id)
+		return nd;
+
+	if (nd->class_<0) //Class-less npc, enable click from anywhere.
+		return nd;
+
+	if (bl->m!=sd->bl.m ||
+	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
+	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
+		return nd;
+
+	return NULL;
 }
 
 /*==========================================
@@ -1060,11 +1075,9 @@ int npc_globalmessage(const char *name,char *mes)
  * クリック時のNPC処理
  *------------------------------------------
  */
-int npc_click(struct map_session_data *sd,int id)
+int npc_click(struct map_session_data *sd,struct block_list *bl)
 {
 	struct npc_data *nd = NULL;
-	TBL_MOB *md = NULL;
-	int tick = 0;
 
 	nullpo_retr(1, sd);
 
@@ -1074,53 +1087,32 @@ int npc_click(struct map_session_data *sd,int id)
 		return 1;
 	}
 
-	if(id < 0){
-		id = -id;
-	}
-
-	nd=(struct npc_data *)map_id2bl(id);
-
-	switch(nd->bl.type){
+	if(!bl) return 1;
+	switch(bl->type){
 		case BL_MOB:
-			md = ((TBL_MOB *)nd);
-			if(md->nd){
-				if(sd->bl.m == md->bl.m && distance_bl(&sd->bl, &md->bl) <= AREA_SIZE)
-					sd->npc_pos = run_script(md->nd->u.scr.script,0,sd->bl.id,id);
-				return 0;
-			}
-		case BL_PC:
-			tick = gettick();
-			if (sd->sc.option&OPTION_HIDE || sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
-				return 0;
-
-			if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
-				if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
-					clif_skill_fail(sd, 1, 4, 0);
-					return 0;
-				}
-			}
-			if (sd->invincible_timer != -1)
-				pc_delinvincibletimer(sd);
-
-			sd->idletime = tick;
-			unit_attack(&sd->bl, id, 1);
-			return 0;
+			if (npc_checknear2(sd,bl))
+				return 1;
+			if((nd = ((TBL_MOB *)bl)->nd) == NULL)
+				return 1;
+			break;
+		case BL_NPC:
+			if ((nd = npc_checknear(sd,bl)) == NULL)
+				return 1;
+			//Hidden/Disabled npc.
+			if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
+				return 1;
+			break;
+		default:
+			return 1;
 	}
-
-	if (npc_checknear(sd,id))
-		return 1;
-
-	//Hidden/Disabled npc.
-	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
-		return 1;
 
 	switch(nd->bl.subtype) {
 	case SHOP:
-		clif_npcbuysell(sd,id);
+		clif_npcbuysell(sd,nd->bl.id);
 		npc_event_dequeue(sd);
 		break;
 	case SCRIPT:
-		sd->npc_pos=run_script(nd->u.scr.script,0,sd->bl.id,id);
+		sd->npc_pos=run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
 		break;
 	}
 
@@ -1133,27 +1125,22 @@ int npc_click(struct map_session_data *sd,int id)
  */
 int npc_scriptcont(struct map_session_data *sd,int id)
 {
-	struct npc_data *nd;
-
 	nullpo_retr(1, sd);
 
 	if (id!=sd->npc_id){
 		ShowWarning("npc_scriptcont: sd->npc_id (%d) is not id (%d).\n", sd->npc_id, id);
 		return 1;
 	}
-
-	if(sd->npc_id != fake_nd->bl.id){ // Not item script
-		if (npc_checknear(sd,id)){
+	
+	if(id != fake_nd->bl.id) { // Not item script
+		struct npc_data *nd;
+		if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL){
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 			return 1;
 		}
-
-		nd=(struct npc_data *)map_id2bl(id);
-
 		sd->npc_pos=run_script(nd->u.scr.script,sd->npc_pos,sd->bl.id,id);
-	} else { // Item script, continue execution...
+	} else // Item script, continue execution...
 		sd->npc_pos=run_script(sd->npc_scriptroot,sd->npc_pos,sd->bl.id,id);
-	}
 
 	return 0;
 }
@@ -1168,14 +1155,14 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 
 	nullpo_retr(1, sd);
 
-	if (npc_checknear(sd,id))
+	if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL)
 		return 1;
-
-	nd=(struct npc_data *)map_id2bl(id);
+	
 	if (nd->bl.subtype!=SHOP) {
 		if (battle_config.error_log)
 			ShowError("no such shop npc : %d\n",id);
-		//sd->npc_id=0;
+		if (sd->npc_id == id)
+			sd->npc_id=0;
 		return 1;
 	}
 	if (nd->sc.option&OPTION_INVISIBLE)	// 無効化されている
@@ -1203,10 +1190,9 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 	nullpo_retr(3, sd);
 	nullpo_retr(3, item_list);
 
-	//if (npc_checknear(sd,sd->npc_shopid))
-	//	return 3;
+	if ((nd = npc_checknear(sd,map_id2bl(sd->npc_shopid))) == NULL)
+		return 3;
 
-	nd=(struct npc_data*)map_id2bl(sd->npc_shopid);
 	if (nd->bl.subtype!=SHOP)
 		return 3;
 
@@ -1298,12 +1284,10 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
-	if (!nd) return 1;
+	if ((nd = npc_checknear(sd,map_id2bl(sd->npc_shopid))) == NULL)
+		return 1;
 	nd = nd->master_nd; //For OnSell triggers.
-	
-	//if (npc_checknear(sd,sd->npc_shopid))
-	//	return 1;
+
 	for(i=0,z=0;i<n;i++) {
 		int nameid, idx, qty;
 		idx = item_list[i*2]-2;
