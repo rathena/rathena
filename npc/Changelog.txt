@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/12
+	* Changed Biolab quest so that case for the first letter of each input doesn't matter. [Evera]
 	* Fixed some typos in the new spawns [Playtester]
 	* Implemented Amatsu guides and changed/removed some Amatsu warps [MasterOfMuppets]
 06/11

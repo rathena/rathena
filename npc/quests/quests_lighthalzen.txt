@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -30,6 +30,8 @@
 //= 1.6 Added Gywall's Pickpocket Quest
 //= 1.7 Implemented the Friendship quest [MasterOfMuppets]
 //= 1.8 Changed the name of the mobsters to Gangster, as it should be. [MasterOfMuppets]
+//= 1.9 Added extra input check on Biolab so that the first letter of the word could be
+//= capitalized or undercase. [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -627,7 +629,7 @@ lhz_cube.gat,237,183,0	script	Barrel	111,{
 	next;
 	input @axe$;
 
-	if (@axe$ == "axe") goto L_1;
+	if (@axe$ == "axe" || @axe$ == "Axe") goto L_1;
 	mes "There is no change.";
 	close;
 
@@ -689,7 +691,7 @@ lhz_cube.gat,242,201,0	script	Drawer	111,{
 
 L_1:
 	input @key$;
-	if (@key$ == "red key") goto L_2;
+	if (@key$ == "red key" || @key$ == "Red Key") goto L_2;
 	mes "The drawer is locked, you need some kind of key.";
 	close;
 
@@ -717,7 +719,7 @@ lhz_cube.gat,237,198,0	script	Documents	111,{
 	close;
 
 L_1:
-	mes "As you look through the documents, a 'redkey' falls out.";
+	mes "As you look through the documents, a 'red key' falls out.";
 	next;
 	mes "You acquired ^FF0000red key^000000.";
 	set redkey,1;
@@ -773,7 +775,7 @@ L_2:
 	next;
 	input @bed$;
 
-	if (@bed$ == "long stick" && rod == 1) goto L2_1;
+	if (@bed$ == "long stick" && rod == 1 || @bed$ == "Long Stick" && rod == 1) goto L2_1;
 	mes "It looks like you need some kind of long item to";
 	mes "Get the item out, you can't reach it!";
 	close;
@@ -822,7 +824,7 @@ lhz_cube.gat,233,206,0	script	Shelf	111,{
 	next;
 	input @lathe$;
 
-	if (@lathe$ == "rusty key" && fkey == 1) goto L_1;
+	if (fkey == 1 && @lathe$ == "rusty key" || fkey == 1 && @lathe$ == "Rusty Key") goto L_1;
 	mes "Nothing happened.";
 	close;
 
@@ -861,7 +863,7 @@ L_2:
 	next;
 	input @gkey$;
 
-	if (@gkey$ == "green key") goto L_3;
+	if (@gkey$ == "green key" || @gkey$ == "Green Key") goto L_3;
 	mes "There's nothing of any interest in this drawer.";
 	close;
 
@@ -942,7 +944,7 @@ L_1:
 	next;
 	input @knife$;
 
-	if (@knife$ == "small knife" && knife == 1) goto L1_1;
+	if (knife == 1 && @knife$ == "small knife" ||knife == 1 &&  @knife$ == "Small Knife") goto L1_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1024,7 +1026,7 @@ lhz_cube.gat,224,192,0	script	Generator	111,{
 	next;
 	input @key$;
 
-	if (@key$ == "yellow key" && ykey == 1) goto L_1;
+	if (ykey == 1 && @key$ == "yellow key" || ykey == 1 && @key$ == "Yellow Key") goto L_1;
 	mes "There's nothing to do here.";
 	close;
 
@@ -1086,7 +1088,7 @@ L_1:
 	if (ellipse == 2) goto L1_2;
 	input @ellipse$;
 
-	if (@ellipse$ == "ellipse model" && ellipse == 1) goto L1_1;
+	if (ellipse == 1 && @ellipse$ == "ellipse model" ||ellipse == 1 && @ellipse$ == "Ellipse Model") goto L1_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1104,7 +1106,7 @@ L_2:
 	if (quadrangle == 2) goto L2_2;
 	input @quadrangle$;
 
-	if (@quadrangle$ == "cube model" && quadrangle == 1) goto L2_1;
+	if (quadrangle == 1 && @quadrangle$ == "cube model" || quadrangle == 1 && @quadrangle$ == "Cube Model") goto L2_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1122,7 +1124,7 @@ L_3:
 	if (polygon == 2) goto L3_2;
 	input @polygon$;
 
-	if (@polygon$ == "polygon model" && polygon == 1) goto L3_1;
+	if (polygon == 1 && @polygon$ == "polygon model" || polygon == 1 && @polygon$ == "Polygon Model") goto L3_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1167,7 +1169,7 @@ lhz_cube.gat,224,197,0	script	Test Tube	111,{
 	next;
 	input @key$;
 
-	if (@key$ == "black key" && bkey == 1) goto L_1;
+	if (bkey == 1 && @key$ == "black key" || bkey == 1 && @key$ == "Black Key") goto L_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1191,7 +1193,7 @@ L_3:
 	next;
 	input @answer$;
 
-	if (@answer$ == "Laboratory Permit" || @answer$ == "permit") goto L_4;
+	if (@answer$ == "Laboratory Permit" || @answer$ == "permit" || @answer$ == "laboratory permit" || @answer == "Permit") goto L_4;
 	mes "Nothing happened.";
 	close;
 
