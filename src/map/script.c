@@ -10119,7 +10119,7 @@ int buildin_npcshopitem(struct script_state *st)
 	struct npc_data *nd= NULL;
 	int n = 0;
 	int i = 3;
-	int itemid, value;
+	int itemid, value, amount;
 
 	char* npcname = conv_str(st, & (st->stack->stack_data[st->start + 2]));
 	nd = npc_name2id(npcname);
@@ -10129,11 +10129,13 @@ int buildin_npcshopitem(struct script_state *st)
 #endif
 
 	if(nd && nd->bl.subtype==SHOP){
+		amount = (st->end-2)/2;
+		// st->end - 2 = nameid + value # ... / 2 = number of items ... + 1 just in case
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
-			sizeof(nd->u.shop_item[0]) * (MAX_SHOPITEM + 1));
+			sizeof(nd->u.shop_item[0]) * amount);
 
 		// Reset sell list.
-		for(;nd->u.shop_item[n].nameid && n < MAX_SHOPITEM; n++){
+		for(;nd->u.shop_item[n].nameid && n < amount; n++){
 			nd->u.shop_item[n].nameid = 0;
 			nd->u.shop_item[n].value = 0;
 		}
@@ -10150,8 +10152,8 @@ int buildin_npcshopitem(struct script_state *st)
 			n++;
 		}
 
-		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
-			sizeof(nd->u.shop_item[0]) * n);
+		//nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
+		//	sizeof(nd->u.shop_item[0]) * n);
 
 		map_addiddb(&nd->bl);
 
