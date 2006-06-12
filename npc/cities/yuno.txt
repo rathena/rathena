@@ -23,27 +23,37 @@
 //=================================================================================================//
 
 //======================================================================================
-yuno.gat,156,87,4	script	Citizen of Yuno	47,{
-	mes "[Hans]";
-	mes "If you go north from Al De Baran you will arrive at 'Elmeth Plateau'.";
-	mes "It is a place that was once covered with molten rocks and lava.";
+yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
+	mes "[Shalima]";
+	mes "When you go north from Al De Baran,";
+	mes "you will arrive at 'Elmeth";
+	mes "Plateau', a place covered with";
+	mes "molten rock.";
 	next;
-	mes "[Hans]";
-	mes "At the top of a mountain connected to the plateau, you can find a bridge that will lead you here to Yuno.";
+	mes "[Shalima]";
+	mes "On the top of a mountain connected";
+	mes "to the plateau, you can find a";
+	mes "bridge which leads you this";
+	mes "place!, ^5533FFJuno^000000, the city of Sages.";
 	next;
-	mes "[Hans]";
-	mes "Here in Yuno, you can visit world famous places such as the:";
-	mes "^5533FF'Yuphero Plaza'";
-	mes "'Yuno Conference Hall'";
-	mes "'Schweicherbil Magic Academy'^000000";
-	mes "and the ^5533FF'Museum of Monsters'^000000";
+	mes "[Shalima]";
+	mes "In Juno, you can visit places such";
+	mes " as the 'Juphero Plaza', 'Juno";
+	mes "Conference Hall', 'Schweicherbil";
+	mes "Magic Academy', or the 'Monster";
+	mes "'Museum'. These places are famous";
+	mes "around the world!";
 	next;
-	mes "[Hans]";
-	mes "There is also the ^5533FF'Sage Castle'^000000 which is the greatest attraction in this city.";
-	mes "The castle is where people go to become Sages.";
+	mes "[Shalima]";
+	mes "You may also wish to drop by the";
+	mes "'Sage Castle', where people can";
+	mes "change their jobs into 'Sage', one";
+	mes "of the more unique classes.";
 	next;
-	mes "[Hans]";
-	mes "If you have any interest in becoming a Sage, why not have a look around the castle?";
+	mes "[Shalima]";
+	mes "If you're interested in the Sage";
+	mes "class, why don't you go look around";
+	mes "the castle?";
 	close;
 }
 
