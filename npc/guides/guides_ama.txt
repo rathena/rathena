@@ -1,0 +1,127 @@
+//===== eAthena Script ======================================= 
+//= Amatsu Guides
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//=
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= 1.0 First version [MasterOfMuppets]
+//============================================================
+
+amatsu.gat,207,89,3	script	Amatsu Guide	758,{
+
+	mes "[Amachang]";
+	mes "Welcome to Amatsu,";
+	mes "the town of kind towners";
+	mes "and beatiful cherry blossoms.";
+	next;
+	mes "[Amachang]";
+	mes "I'm Amachang,";
+	mes "the 13th Miss Amatsu.";
+	mes "I will guide you about town";
+	mes "as Miss Amatsu.";
+	mes "Please tell me";
+	mes "if you want to know something.";
+	next;
+	menu "Palace",-,"Tool Shop",s_Tool,"Weapon Shop",s_Weap,"Bar",s_Bar;
+
+	viewpoint 1,85,235,1,0xFF0044;
+	mes "[Amachang]";
+	mes "On the mini-map,";
+	mes "go to ^FF0044+^000000";
+	mes "to find the Palace.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+s_Tool:
+	viewpoint 1,96,117,2,0xFF9200;
+	mes "[Amachang]";
+	mes "On the mini-map,";
+	mes "go to ^FF9200+^000000";
+	mes "to find the Tool Shop.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+s_Weap:
+	viewpoint 1,132,117,3,0x85FF00;
+	mes "[Amachang]";
+	mes "On the mini-map,";
+	mes "go to ^85FF00+^000000";
+	mes "to find the Weapon Shop.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+
+s_Bar:
+	viewpoint 1,216,116,4,0x3366FF;
+	mes "[Amachang]";
+	mes "On the mini-map,";
+	mes "go to ^3366FF+^000000";
+	mes "to find the Bar.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+}
+
+amatsu.gat,251,283,4	script	Amatsu Guide	767,{
+
+	mes "[Guide Man]";
+	mes "Welcome, tourist from";
+	mes "Rune-Midgard.";
+	mes "I'm the guide of";
+	mes "out beautiful town, Amatsu.";
+	next;
+	mes "[Guide Man]";
+	mes "What are you looking for?";
+	next;
+	menu "Palace",-,"Tool Shop",s_Tool,"Weapon Shop",s_Weap,"Bar",s_Bar;
+
+	viewpoint 1,85,235,1,0xFF0044;
+	mes "[Guide Man]";
+	mes "On the mini-map,";
+	mes "go to ^FF0044+^000000";
+	mes "to find the Palace.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+s_Tool:
+	viewpoint 1,96,117,2,0xFF9200;
+	mes "[Guide Man]";
+	mes "On the mini-map,";
+	mes "go to ^FF9200+^000000";
+	mes "to find the Tool Shop.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+s_Weap:
+	viewpoint 1,132,117,3,0x85FF00;
+	mes "[Guide Man]";
+	mes "On the mini-map,";
+	mes "go to ^85FF00+^000000";
+	mes "to find the Weapon Shop.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+
+s_Bar:
+	viewpoint 1,216,116,4,0x3366FF;
+	mes "[Guide Man]";
+	mes "On the mini-map,";
+	mes "go to ^3366FF+^000000";
+	mes "to find the Bar.";
+	mes "Have a good time";
+	mes "in Amatsu.";
+	close;
+
+}
