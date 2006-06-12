@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/12
+	* Fixed some typos in the new spawns [Playtester]
 	* Implemented Amatsu guides and changed/removed some Amatsu warps [MasterOfMuppets]
 06/11
 	* Updated spawns by Tharis, thanks to Saycyber21 [Vicious]

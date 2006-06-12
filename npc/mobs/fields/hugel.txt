@@ -88,7 +88,7 @@ hu_fild06.gat,0,0,0,0	monster	Holden	1628,50,0,0,0
 hu_fild06.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
 hu_fild06.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 // 1053 according to Tharis
-hu_fild03.gat,0,0,0,0	monster	Female Thief Bug	1053,3,0,0,0
+hu_fild06.gat,0,0,0,0	monster	Female Thief Bug	1053,3,0,0,0
 
 //==================================================
 // hu_fild07 - Hugel Field
