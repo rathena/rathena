@@ -25,6 +25,8 @@
 
 =========================
 06/12
+	* Temp sprite names for Rachel/Ice Dungeon monsters, thanks to Saycyber21. [Vicious]
+	- Chung E = temp sprites.
 	* Fixed the mode of Monemus [MasterOfMuppets]
 06/11
 	* Commented some unused mobs in the mob_db [Playtester]
