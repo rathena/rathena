@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.3b
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -17,6 +17,7 @@
 //=	Mob quantity is custom.
 //= 1.3b Changed the spawn numbers a bit. [Poki#3]
 //=	Thanks to Playtester and Emperium.org
+//= 1.4 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //============================================================
 
 //==================================================
@@ -27,14 +28,14 @@ einbech.gat,0,0,0,0	monster	Tarou	1175,5,3600000,1800000,0
 //==================================================
 // ein_fild01 - Einbroch Field
 //==================================================
-ein_fild01.gat,0,0,0,0	monster	Punk	1199,40,0,0,0
-ein_fild01.gat,0,0,0,0	monster	Demon Fungus	1378,40,0,0,0
+ein_fild01.gat,0,0,0,0	monster	Punk	1199,50,0,0,0
+ein_fild01.gat,0,0,0,0	monster	Demon Fungus	1378,50,0,0,0
 
 //==================================================
 // ein_fild02 - Einbroch Field
 //==================================================
 ein_fild02.gat,0,0,0,0	monster	Driller	1380,40,0,0,0
-ein_fild02.gat,0,0,0,0	monster	Demon Fungus	1378,40,0,0,0
+ein_fild02.gat,0,0,0,0	monster	Demon Fungus	1378,25,0,0,0
 ein_fild02.gat,0,0,0,0	monster	Ungoliant	1618,1,3600000,1800000,0
 
 //==================================================

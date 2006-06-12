@@ -3,33 +3,34 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.0 Real spawns by Poki#3 [Nexon]
 //= 1.1 More official spawns [Playtester]
+//= 1.2 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //============================================================
 
 //==================================================
 // tha_t01 - Thanatos Tower F1
 //==================================================
-tha_t01.gat,0,0,0,0	monster	Rideword	1195,40,0,0,0
-tha_t01.gat,0,0,0,0	monster	Mimic	1191,40,0,0,0
+tha_t01.gat,0,0,0,0	monster	Rideword	1195,15,0,0,0
+tha_t01.gat,0,0,0,0	monster	Mimic	1191,15,0,0,0
 tha_t01.gat,0,0,0,0	monster	Plasma	1695,20,0,0,0
-tha_t01.gat,0,0,0,0	monster	Solace	1703,10,0,0,0
-tha_t01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+tha_t01.gat,0,0,0,0	monster	Solace	1703,2,0,0,0
+tha_t01.gat,0,0,0,0	monster	Alice	1275,5,0,0,0
 
 //==================================================
 // tha_t02 - Thanatos Tower F2
 //==================================================
-tha_t02.gat,0,0,0,0	monster	Rideword	1195,30,0,0,0
-tha_t02.gat,0,0,0,0	monster	Deathword	1698,20,0,0,0
-tha_t02.gat,0,0,0,0	monster	Mimic	1191,30,0,0,0
-tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,20,0,0,0
-tha_t02.gat,0,0,0,0	monster	Plasma	1697,20,0,0,0
-tha_t02.gat,0,0,0,0	monster	Retribution	1702,10,0,0,0
-tha_t02.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+tha_t02.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
+tha_t02.gat,0,0,0,0	monster	Deathword	1698,5,0,0,0
+tha_t02.gat,0,0,0,0	monster	Mimic	1191,25,0,0,0
+tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,55,0,0,0
+tha_t02.gat,0,0,0,0	monster	Plasma	1697,15,0,0,0
+tha_t02.gat,0,0,0,0	monster	Retribution	1702,2,0,0,0
+tha_t02.gat,0,0,0,0	monster	Alice	1275,10,0,0,0
 
 //==================================================
 // tha_t03 - Thanatos Tower F3
