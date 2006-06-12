@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/12
+	* Fixed the mode of Monemus [MasterOfMuppets]
 06/11
 	* Commented some unused mobs in the mob_db [Playtester]
 	* Goggles are worth 10k now [Playtester]
