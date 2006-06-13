@@ -201,7 +201,7 @@ yuno.gat,328,239,4	script	Juno Fighter	732,{
 	next;
 	mes "[Sergiof]";
 	mes "It attacks using its strong bill";
-	mes "and many Peco Pecos follow it.
+	mes "and many Peco Pecos follow it.";
 	mes "There's quite a difference in power";
 	mes "between Peco Peco and the Grand";
 	mes "Peco.";
@@ -245,7 +245,7 @@ yuno.gat,261,99,4	script	Sage Yklah	735,{
 	mes "[Yklah]";
 	mes "Unfortunately, they happened to";
 	mes "abuse that great power and somehow";
-	mes "destroyed themselves."
+	mes "destroyed themselves.";
 	next;
 	mes "[Yklah]";
 	mes "If you long to acquire God's";
