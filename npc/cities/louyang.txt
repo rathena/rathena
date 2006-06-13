@@ -1663,14 +1663,14 @@ L_DONE:
 	next;
 	mes "[Hua Tuo]";
 	mes "It's not much, but this medicine is an old family secret. I hope that it will be of use to you in dangerous situations.";
+	set QL_GOTHERB,0;
+	set QL_DOC1STTIME,0;
+	set QL_DOCQUEST,2;
 	getitem 679,2; //Pilule
 	set BaseExp,BaseExp + 10000;
 	next;
 	mes "[Hua Tuo]";
 	mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
-	set QL_GOTHERB,0;
-	set QL_DOC1STTIME,0;
-	set QL_DOCQUEST,2;
 	close;
 
 L_NOMED:
@@ -2733,6 +2733,8 @@ s_CameBack:
 	mes "warmth flowing throughout your";
 	mes "body. Eventually, you pass out.";
 	close2;
+	set QL_POISONKING,30;
+	set QL_POISONPATH,0;
 	getitem 678,3;
 	if(BaseLevel < 56)set BaseExp,BaseExp+8909;
 	if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10213;
@@ -2744,8 +2746,6 @@ s_CameBack:
 	if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
 	if(BaseLevel > 90)set BaseExp,BaseExp+366786;
 	warp "louyang.gat",270,136;
-	set QL_POISONKING,30;
-	set QL_POISONPATH,0;
 	end;
 
 s_Proud:

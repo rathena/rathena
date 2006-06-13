@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/13
+	* Fixed exploit in Louyang NPC [Playtester]
 	* More Abyss/Thanatos spawn updates according to info from Tharis [Playtester]
 	* Added Dr.Evil's fixes to the Umbala NPCs [Playtester]
 	- probably needs some testing
