@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/13
+	* Fixed the Job Level requirement for Arrow Crafting [Playtester]
 06/12
 	* Implemented the comodo gambling NPCs. Thanks to reddozen and Zefris. [MasterOfMuppets]
 	* Looks like somebody needs sleep. (Typos in Yuno.txt) [Lance]
