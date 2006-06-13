@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/13
+	* Garm Claw now has 152 Attack Power rather than 115 [Playtester]
 06/12
 	* SL_STIN/SL_STUN have dex-reducable casting times now. [Skotlex]
 	* Temp sprite names for Rachel/Ice Dungeon monsters, thanks to Saycyber21. [Vicious]
