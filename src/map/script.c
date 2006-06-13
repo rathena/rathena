@@ -10222,12 +10222,10 @@ int buildin_npcshopdelitem(struct script_state *st)
 			i++;
 		}
 
-		size = n = 0;
+		size = 0;
 
-		while (nd->u.shop_item[n].nameid){
+		while (nd->u.shop_item[size].nameid)
 			size++;
-			n++;
-		}
 
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
 			sizeof(nd->u.shop_item[0]) * (size+1));
