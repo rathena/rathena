@@ -8367,8 +8367,9 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	if (!bl) return;
 
 	sc = status_get_sc(bl);
-	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl))
+	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) && pc_isGM(sd) >= battle_config.hack_info_GM_level)
 	{
+		//GM characters (with client side GM enabled are able to see invisible stuff) [Lance]
 		//Asked name of invisible player, this shouldn't be possible!
 		//Possible bot? Thanks to veider and qspirit
 		//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
@@ -8483,7 +8484,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 				if (skillnotok(MO_EXPLOSIONSPIRITS,sd))
 					break; //Do not override the noskill mapflag. [Skotlex]
 				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
-					sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
+					sc_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
 						17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
 				sd->state.snovice_flag = 0;
 				break;
@@ -10781,7 +10782,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 	
 	if ((sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON
 		&& sd->state.rest && (level = pc_checkskill(sd,TK_SPTIME)))
-		sc_start(&sd->bl,SkillStatusChangeTable(TK_SPTIME),100,level,skill_get_time(TK_SPTIME, level));
+		sc_start(&sd->bl,SkillStatusChangeTable[TK_SPTIME],100,level,skill_get_time(TK_SPTIME, level));
 	return;
 }
 /*==========================================
@@ -10800,7 +10801,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 		}
 		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_exp > 0 && nextbaseexp > 0 && (int)((double)1000*sd->status.base_exp/nextbaseexp)%100==0){
 			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,
-				sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
+				sc_start(&sd->bl,SkillStatusChangeTable[MO_EXPLOSIONSPIRITS],100,
 					5,skill_get_time(MO_EXPLOSIONSPIRITS,5)));
 		}
 	}
