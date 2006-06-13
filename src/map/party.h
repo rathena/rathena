@@ -20,7 +20,7 @@ struct party_data *party_searchname(char *str);
 int party_create(struct map_session_data *sd,char *name, int item, int item2);
 int party_created(int account_id,int char_id,int fail,int party_id,char *name);
 int party_request_info(int party_id);
-int party_invite(struct map_session_data *sd,int account_id);
+int party_invite(struct map_session_data *sd,struct map_session_data *tsd);
 int party_member_added(int party_id,int account_id,int char_id,int flag);
 int party_leave(struct map_session_data *sd);
 int party_removemember(struct map_session_data *sd,int account_id,char *name);

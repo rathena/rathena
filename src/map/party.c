@@ -230,9 +230,8 @@ int party_recv_info(struct party *sp)
 	return 0;
 }
 
-int party_invite(struct map_session_data *sd,int account_id)
+int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
-	struct map_session_data *tsd= map_id2sd(account_id);
 	struct party_data *p=party_search(sd->status.party_id);
 	int i,flag=0;
 	
@@ -253,7 +252,7 @@ int party_invite(struct map_session_data *sd,int account_id)
 	for(i=0;i<MAX_PARTY;i++){
 		if(p->party.member[i].account_id == 0) //Room for a new member.
 			flag = 1;
-		if(p->party.member[i].account_id==account_id &&
+		if(p->party.member[i].account_id==tsd->status.account_id &&
 			p->party.member[i].char_id==tsd->status.char_id){
 			clif_party_inviteack(sd,tsd->status.name,0);
 			return 0;

@@ -39,7 +39,7 @@ int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);
 int guild_recv_info(struct guild *sg);
 int guild_npc_request_info(int guild_id,const char *ev);
-int guild_invite(struct map_session_data *sd,int account_id);
+int guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
 int guild_member_added(int guild_id,int account_id,int char_id,int flag);
 int guild_leave(struct map_session_data *sd,int guild_id,
@@ -50,13 +50,13 @@ int guild_explusion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
 int guild_skillup(struct map_session_data *sd,int skill_num,int flag);
 void guild_block_skill(struct map_session_data *sd, int time);
-int guild_reqalliance(struct map_session_data *sd,int account_id);
+int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag);
 int guild_alliance(int guild_id1,int guild_id2,int account_id1,int account_id2);
 int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id2,
 	int flag,const char *name1,const char *name2);
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
-int guild_opposition(struct map_session_data *sd,int char_id);
+int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_check_alliance(int guild_id1, int guild_id2, int flag);
 
 int guild_send_memberinfoshort(struct map_session_data *sd,int online);

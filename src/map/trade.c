@@ -23,8 +23,7 @@
  * Initiates a trade request.
  *------------------------------------------
  */
-void trade_traderequest(struct map_session_data *sd, int target_id) {
-	struct map_session_data *target_sd;
+void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd) {
 	int level;
 
 	nullpo_retv(sd);
@@ -34,7 +33,7 @@ void trade_traderequest(struct map_session_data *sd, int target_id) {
 		return; //Can't trade in notrade mapflag maps.
 	}
 
-	if ((target_sd = map_id2sd(target_id)) == NULL || sd == target_sd) {
+	if (target_sd  == NULL || sd == target_sd) {
 		clif_tradestart(sd, 1); // character does not exist
 		return;
 	}

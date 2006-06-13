@@ -630,15 +630,13 @@ int guild_recv_info(struct guild *sg)
 
 
 // ƒMƒ‹ƒh‚Ö‚ÌŠ©—U
-int guild_invite(struct map_session_data *sd,int account_id)
+int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
-	struct map_session_data *tsd;
 	struct guild *g;
 	int i;
 
 	nullpo_retr(0, sd);
 
-	tsd= map_id2sd(account_id);
 	g=guild_search(sd->status.guild_id);
 
 	if(tsd==NULL || g==NULL)
@@ -1266,9 +1264,8 @@ int guild_check_alliance(int guild_id1, int guild_id2, int flag)
 	return 0;
 }
 // ƒMƒ‹ƒh“¯–¿—v‹
-int guild_reqalliance(struct map_session_data *sd,int account_id)
+int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 {
-	struct map_session_data *tsd= map_id2sd(account_id);
 	struct guild *g[2];
 	int i;
 
@@ -1386,9 +1383,8 @@ int guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 	return 0;
 }
 // ƒMƒ‹ƒh“G‘Î
-int guild_opposition(struct map_session_data *sd,int char_id)
+int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 {
-	struct map_session_data *tsd=map_id2sd(char_id);
 	struct guild *g;
 	int i;
 

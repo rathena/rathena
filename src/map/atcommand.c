@@ -8332,7 +8332,7 @@ atcommand_trade(
     if (!message || !*message)
         return -1;
     if((pl_sd=map_nick2sd((char *) message)) != NULL) {
-        trade_traderequest(sd, pl_sd->bl.id);
+        trade_traderequest(sd, pl_sd);
         return 0;
     }
     return -1;
