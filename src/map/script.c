@@ -10177,8 +10177,6 @@ int buildin_npcshopadditem(struct script_state *st) {
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
 			sizeof(nd->u.shop_item[0]) * (amount+n));
 
-		n = 0;
-
 		while(st->end > st->start + i){
 			nd->u.shop_item[n].nameid = conv_num(st, & (st->stack->stack_data[st->start+i]));
 			i++;
