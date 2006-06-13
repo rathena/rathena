@@ -15,6 +15,7 @@ alberta_in.gat	mapflag	nobranch
 aldeba_in.gat	mapflag	nobranch
 ama_in01.gat	mapflag	nobranch
 ama_in02.gat	mapflag	nobranch
+ama_test.gat	mapflag	nobranch
 cmd_in01.gat	mapflag	nobranch
 cmd_in02.gat	mapflag	nobranch
 gef_tower.gat	mapflag	nobranch

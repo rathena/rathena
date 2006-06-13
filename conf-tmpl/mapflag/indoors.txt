@@ -11,6 +11,7 @@
 //============================================================
 
 alberta_in.gat	mapflag	indoors
+ama_test.gat	mapflag	indoors
 izlude_in.gat	mapflag	indoors
 gef_tower.gat	mapflag	indoors
 geffen_in.gat	mapflag	indoors

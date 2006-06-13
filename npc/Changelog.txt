@@ -37,6 +37,8 @@ Musashiden
 Date		Added
 ======
 06/12
+	* Implemented a missing NPC in Amatsu and fixed up the old [MasterOfMuppets]
+	  version of the Momotaro event, it is now a permanent quest.
 	* Started the Juno Update process. 5% complete. [Musashiden]
 	* Added custom quest for 5 mobile RO bonus items [Lupus]
 		Bird Nest,Lion Mask,Skeleton Manteau,Fashion Hip Sack,Sales Banner

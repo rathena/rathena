@@ -17,6 +17,7 @@ alberta_in.gat	mapflag	noreturn
 aldeba_in.gat	mapflag	noreturn
 ama_in01.gat	mapflag	noreturn
 ama_in02.gat	mapflag	noreturn
+ama_test.gat	mapflag	noreturn
 cmd_in01.gat	mapflag	noreturn
 cmd_in02.gat	mapflag	noreturn
 gef_tower.gat	mapflag	noreturn

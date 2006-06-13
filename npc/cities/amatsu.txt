@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Some people & eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.05
+//= 1.07
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 // 1.04 Fixed a few typo's [Nexon]
 // 1.05 Changed all breaks to ends. [Skotlex]
 // 1.06 The Captain now uses iRO dialog [MasterOfMuppets]
+// 1.07 Implemented a missing NPC [MasterOfMuppets]
 //=====================================================================
 alberta.gat,245,93,4	script	Sea Captain	709,{
 	mes "[Walter Moers]";
@@ -1487,6 +1488,211 @@ amatsu.gat,261,197,4	script	Legendary Sakura Tree	111,{
 	mes "no matter what they are discussing";
 	mes "they always reach an agreement^000000";
 	close;
+}
+
+ama_in02.gat,61,27,6	script	Alchemist#amatsu	749,{
+
+	mes "[Laspuchin Gregory]";
+	mes "KeekeekeeKeheheh.";
+	mes "This is amazing!";
+	mes "The results are extraordinary!!";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Using my skills in this distant";
+	mes "land was unexpected...";
+	mes "Keheheh... The lord of this";
+	mes "palace was quite accomodating.";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Ooops, I better be careful...";
+	mes "If the guild finds out my";
+	mes "location, stupid Myster will";
+	mes "get mad at me. Kehehehkeh...";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "What? Wanna say something?";
+	mes "If you are here for tourism,";
+	mes "enjoy your day off, then go back to";
+	mes "your hometown. Keekeekee...";
+	mes "Or else, I will let you taste my";
+	mes "bottle...!";
+	next;
+	menu "Please, excuse me",-,"Do you need help?",s_Help;
+
+	mes "[Laspuchin Gregory]";
+	mes "Keheheh... Did you hear";
+	mes "what I said? It would be";
+	mes "better to forget...";
+	mes "Keekeekeekeekee...";
+	close;
+
+s_Help:
+	mes "[Laspuchin Gregory]";
+	mes "Help, eh?...";
+	mes "Now that I think about it..";
+	mes "I need some items right now...";
+	mes "Keeheeheekeehee...";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Sir Laspuchin needs some";
+	mes "enchant stones for an experiment.";
+	mes "I will use it efficiently...";
+	mes "Do you have them now?";
+	next;
+	menu "Nope",-,"I got some",s_Got;
+
+	mes "[Laspuchin Gregory]";
+	mes "Then, find 8 stones of one kind.";
+	mes "If you bring 8 of one kind of";
+	mes "enchant stones, I will change it";
+	mes "to a better one...";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Then, find 8 stones of one kind.";
+	mes "not the round gemstones but";
+	mes "the enchant stones. If you bring";
+	mes "the wrong stones, I will throw";
+	mes "a flame bottle at you!";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Bring me stones, slave~!!";
+	mes "And keep your promise!";
+	mes "Kehehehkehkeh...";
+	close;
+
+s_Got:
+	mes "[Laspuchin Gregory]";
+	mes "Uh-uh, what did you bring?";
+	next;
+	switch( select( "Mystic Frozen", "Great Nature", "Flame Heart", "Rough Wind" ) )
+		{
+
+		case 1:
+			set @stoneID,995;
+			set @stoneStr$,"Mystic Frozen";
+		break;
+
+		case 2:
+			set @stoneID,997;
+			set @stoneStr$,"Great Nature";
+		break;
+
+		case 3:
+			set @stoneID,994;
+			set @stoneStr$,"Flame Heart";
+		break;
+
+		case 4:
+			set @stoneID,996;
+			set @stoneStr$,"Rough Wind";
+		break;
+
+		}
+	if(countitem(@stoneID) < 8)goto s_NEnough;
+	mes "[Laspuchin Gregory]";
+	mes "Kehekeh. I see you brought";
+	mes "enough stones! What kind of";
+	mes "stone do you want me to change";
+	mes "them into? Kehehehe.";
+	next;
+	if(@stoneID == 995)menu "Great Nature",s_Great,"Flame Heart",s_Flame,"Rough Wind",s_Rough;
+	if(@stoneID == 996)menu "Great Nature",s_Great,"Flame Heart",s_Flame,"Mystic Frozen",s_Frozen;
+	if(@stoneID == 997)menu "Mystic Frozen",s_Frozen,"Flame Heart",s_Flame,"Rough Wind",s_Rough;
+	if(@stoneID == 994)menu "Great Nature",s_Great,"Mystic Frozen",s_Frozen,"Rough Wind",s_Rough;
+
+s_Great:
+	mes "[Laspuchin Gregory]";
+	mes "Then I will now change";
+	mes "your " + @stoneStr$ + "s into";
+	mes "a Great Nature... Kehehe~";
+	mes "Any objections?";
+	next;
+	menu "No",-,"Yes",s_No;
+	delitem @stoneID,8;
+	getitem 997,1;
+	mes "[Laspuchin Gregory]";
+	mes "Kehehe... It was a success!";
+	mes "Come back anytime if you";
+	mes "want me to change your";
+	mes "enchanted stones into";
+	mes "another kind.. Keheh~";
+	close;
+
+s_Flame:
+	mes "[Laspuchin Gregory]";
+	mes "Then I will now change";
+	mes "your " + @stoneStr$ + "s into";
+	mes "a Flame Heart... Kehehe~";
+	mes "Any objections?";
+	next;
+	menu "No",-,"Yes",s_No;
+	delitem @stoneID,8;
+	getitem 994,1;
+	mes "[Laspuchin Gregory]";
+	mes "Kehehe... It was a success!";
+	mes "Come back anytime if you";
+	mes "want me to change your";
+	mes "enchanted stones into";
+	mes "another kind.. Keheh~";
+	close;
+
+s_Rough:
+	mes "[Laspuchin Gregory]";
+	mes "Then I will now change";
+	mes "your " + @stoneStr$ + "s into";
+	mes "a Rough Wind... Kehehe~";
+	mes "Any objections?";
+	next;
+	menu "No",-,"Yes",s_No;
+	delitem @stoneID,8;
+	getitem 996,1;
+	mes "[Laspuchin Gregory]";
+	mes "Kehehe... It was a success!";
+	mes "Come back anytime if you";
+	mes "want me to change your";
+	mes "enchanted stones into";
+	mes "another kind.. Keheh~";
+	close;
+
+s_Frozen:
+	mes "[Laspuchin Gregory]";
+	mes "Then I will now change";
+	mes "your " + @stoneStr$ + "s into";
+	mes "a Mystic Frozen... Kehehe~";
+	mes "Any objections?";
+	next;
+	menu "No",-,"Yes",s_No;
+	delitem @stoneID,8;
+	getitem 995,1;
+	mes "[Laspuchin Gregory]";
+	mes "Kehehe... It was a success!";
+	mes "Come back anytime if you";
+	mes "want me to change your";
+	mes "enchanted stones into";
+	mes "another kind.. Keheh~";
+	close;
+
+s_No:
+	mes "[Laspuchin Gregory]";
+	mes "Keheh~ You make me want";
+	mes "to throw flame bottles";
+	mes "at you. Kehehehehe...";
+	mes "KEHEHEHEHEHEHE!";
+	close;
+
+s_NEnough:
+	mes "[Laspuchin Gregory]";
+	mes "Keheheh~ Check your pockets";
+	mes "before you tell me";
+	mes "how foolish you are.....";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Bring me stones! You said you";
+	mes "were going to help me!";
+	mes "Keep your promises!";
+	mes "Kehehehkehkeh...";
+	close;
+
 }
 
 //| Ninja map portion dummy npcs, commented by default.

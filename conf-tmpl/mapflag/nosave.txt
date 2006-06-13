@@ -31,6 +31,7 @@ job_star.gat	mapflag	nosave	SavePoint
 job_soul.gat	mapflag	nosave	SavePoint
 
 // Special Quests Places =====
+ama_test.gat	mapflag	nosave	SavePoint
 que_god01.gat	mapflag	nosave	SavePoint
 que_god02.gat	mapflag	nosave	SavePoint
 que_sign01.gat	mapflag	nosave	SavePoint

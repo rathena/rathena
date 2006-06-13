@@ -16,6 +16,7 @@ alberta_in.gat	mapflag	nomemo
 aldeba_in.gat	mapflag	nomemo
 ama_in01.gat	mapflag	nomemo
 ama_in02.gat	mapflag	nomemo
+ama_test.gat	mapflag	nomemo
 cmd_in01.gat	mapflag	nomemo
 cmd_in02.gat	mapflag	nomemo
 gef_fild06.gat	mapflag	nomemo

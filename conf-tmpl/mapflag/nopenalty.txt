@@ -17,6 +17,7 @@ aldeba_in.gat	mapflag	nopenalty
 amatsu.gat	mapflag	nopenalty
 ama_in01.gat	mapflag	nopenalty
 ama_in02.gat	mapflag	nopenalty
+ama_test.gat	mapflag	nopenalty
 arena_room.gat	mapflag	nopenalty
 comodo.gat	mapflag	nopenalty
 cmd_in01.gat	mapflag	nopenalty

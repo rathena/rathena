@@ -5,6 +5,7 @@
 //= v 1.1a
 //===== Current Version: =====================================
 
+ama_test.gat	mapflag	nowarp
 aldeg_cas01.gat	mapflag	nowarp
 aldeg_cas02.gat	mapflag	nowarp
 aldeg_cas03.gat	mapflag	nowarp

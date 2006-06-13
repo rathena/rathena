@@ -37,3 +37,5 @@ nguild_pay.gat	mapflag	nowarpto
 nguild_prt.gat	mapflag	nowarpto
 //Lighthalzen Bio-Lab 3F
 lhz_dun03.gat	mapflag	nowarpto
+//Momotaro Event
+ama_test.gat	mapflag	nowarpto
