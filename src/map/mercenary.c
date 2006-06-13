@@ -91,7 +91,7 @@ void merc_load_exptables(void)
 
 char *merc_skill_get_name(int id)
 {
-	return merc_skillname[id-8000];
+	return merc_skillname[id-HM_SKILLBASE];
 }
 
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
@@ -112,8 +112,8 @@ void merc_skillup(struct map_session_data *sd,short skillnum)
 	nullpo_retv(sd->hd);
 	if(!sd->hd->skillpts) return;	//no skill points left
 
-	sd->hd->hskill[(skillnum-8001)%4].id=skillnum;
-	sd->hd->hskill[(skillnum-8001)%4].level+=1;
+	sd->hd->hskill[(skillnum-HM_SKILLBASE)%4].id=skillnum;
+	sd->hd->hskill[(skillnum-HM_SKILLBASE)%4].level+=1;
 	sd->hd->skillpts-=1;
 
 	clif_homuninfo(sd);

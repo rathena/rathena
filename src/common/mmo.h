@@ -383,6 +383,10 @@ enum {
 	GD_DEVELOPMENT=10014,
 };
 
+//Base Homun skill.
+#define HM_SKILLBASE 8001
+#define MAX_HOMUNSKILL 16
+
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum {
 	JOB_NOVICE,

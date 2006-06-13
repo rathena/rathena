@@ -36,6 +36,8 @@
 //Guild Skills are shifted to these to make them stick into the skill array.
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
+#define HM_SKILLRANGEMIN 800
+#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
 
 int skill_names_id[MAX_SKILL_DB];
 const struct skill_name_db skill_names[] = {
@@ -648,7 +650,9 @@ struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 // for values that might need to use a different function just skill_chk would suffice.
 #define skill_chk(i, l) \
 	if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) { return 0; } \
+	if (i >= HM_SKILLRANGEMIN && i <= HM_SKILLRANGEMAX) { return 0; } \
 	if (i >= GD_SKILLBASE) {i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;} \
+	if (i >= HM_SKILLBASE) {i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;} \
 	if (i < 1 || i >= MAX_SKILL_DB) {return 0;} \
 	if (l <= 0 || l > MAX_SKILL_LEVEL) {return 0;}
 #define skill_get(var, i, l) \
@@ -1192,7 +1196,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-		sc_start(bl,SkillStatusChangeTable[skillid],50+10*skilllv,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
+		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
 		break;
 
 	case NPC_MENTALBREAKER:
@@ -1236,7 +1240,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case LK_JOINTBEAT:				/* ジョイントビート */
 		//条件が良く分からないので適当に
-		sc_start(bl,SkillStatusChangeTable[skillid],(5*skilllv+5),skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
 	case ASC_METEORASSAULT:			/* メテオアサルト */
@@ -1429,7 +1433,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case MO_EXTREMITYFIST:			/* 阿修羅覇凰拳 */
 		//阿修羅を使うと5分間自然回復しないようになる
-		sc_start(src,SkillStatusChangeTable[skillid],100,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	}
 	
@@ -3138,8 +3142,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
 	}
 
-	if (skillid > 0 && skillid < MAX_SKILL)
-		type = SkillStatusChangeTable[skillid];
+	if (skillid > 0)
+		type = SkillStatusChangeTable(skillid);
 	
 	tsc = status_get_sc(bl);
 
@@ -5286,7 +5290,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GD_BATTLEORDER:
 		if(flag&1) {
 			if (status_get_guild_id(src) == status_get_guild_id(bl))
-				sc_start(bl,SC_BATTLEORDERS,100,skilllv,skill_get_time(skillid, skilllv));
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid, skilllv));
 		} else if (status_get_guild_id(src)) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, src,
@@ -5963,7 +5967,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			struct skill_unit_group *sg;
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			sg = skill_unitsetting(src,skillid,skilllv,x,y,0);	
-			sc_start4(src,SkillStatusChangeTable[skillid],100,
+			sc_start4(src,SkillStatusChangeTable(skillid),100,
 				skilllv,0,BCT_SELF,(int)sg,skill_get_time(skillid,skilllv));
 			flag|=1;
 		}
@@ -6477,7 +6481,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE)
 		return 0; //Hidden characters are inmune to AoE skills except Heaven's Drive. [Skotlex]
 	
-	type = SkillStatusChangeTable[sg->skill_id];
+	type = SkillStatusChangeTable(sg->skill_id);
 	skillid = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
 	switch (sg->unit_id) {
 	case UNT_SAFETYWALL:
@@ -6608,7 +6612,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		sc = NULL;
 		sstatus = NULL;
 	}
-	type = SkillStatusChangeTable[sg->skill_id];
+	type = SkillStatusChangeTable(sg->skill_id);
 	skillid = sg->skill_id;
 
 	if (sg->interval == -1) {
@@ -6951,7 +6955,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	if (sc && !sc->count)
 		sc = NULL;
 	
-	type = SkillStatusChangeTable[sg->skill_id];
+	type = SkillStatusChangeTable(sg->skill_id);
 
 	if (bl->prev==NULL || !src->alive || //Need to delete the trap if the source died.
 		(status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB))
@@ -7007,7 +7011,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 	if (sc && !sc->count)
 		sc = NULL;
 	
-	type = SkillStatusChangeTable[skill_id];
+	type = SkillStatusChangeTable(skill_id);
 
 	switch (skill_id)
 	{
@@ -7223,11 +7227,11 @@ static void skill_moonlit (struct block_list* src, struct block_list* partner, i
 			BL_CHAR,src,partner,blowcount);
 		
 	sc_start4(src,SC_DANCING,100,CG_MOONLIT,0,0,partner?partner->id:BCT_SELF,time+1000);
-	sc_start4(src,SkillStatusChangeTable[CG_MOONLIT],100,skilllv,0,0,0,time);
+	sc_start4(src,SkillStatusChangeTable(CG_MOONLIT),100,skilllv,0,0,0,time);
 	
 	if (partner) {
 		sc_start4(partner,SC_DANCING,100,CG_MOONLIT,0,0,src->id,time+1000);
-		sc_start4(partner,SkillStatusChangeTable[CG_MOONLIT],100,skilllv,0,0,0,time);
+		sc_start4(partner,SkillStatusChangeTable(CG_MOONLIT),100,skilllv,0,0,0,time);
 	}
 	
 }
@@ -7579,7 +7583,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case PA_GOSPEL:
 	case CR_SHRINK:
 	case TK_RUN:
-		if(sc && sc->data[SkillStatusChangeTable[skill]].timer!=-1)
+		if(sc && sc->data[SkillStatusChangeTable(skill)].timer!=-1)
 			return 1; //Allow turning off.
 		break;
 

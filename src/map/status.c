@@ -30,7 +30,10 @@
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 
-int SkillStatusChangeTable[MAX_SKILL]; //Stores the status that should be associated to this skill.
+//For specifying where in the SkillStatusChangeTableArray the "out of bounds" skills get stored. [Skotlex]
+#define SC_HM_BASE 800
+#define SC_GD_BASE 900
+int SkillStatusChangeTableArray[MAX_SKILL]; //Stores the status that should be associated to this skill.
 int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
 int StatusSkillChangeTable[SC_MAX]; //Stores the skill that should be considered associated to this status change. 
 unsigned long StatusChangeFlagTable[SC_MAX]; //Stores the flag specifying what this SC changes.
@@ -52,6 +55,31 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
+static void add_sc(int skill, int sc)
+{
+	int sk = skill;
+	if (sk > GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
+	else
+	if (sk > HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
+	if (sk < 0 || sk >= MAX_SKILL) {
+		if (battle_config.error_log)
+			ShowError("add_sc: Unsupported skill id %d\n", skill);
+		return;
+	}
+	if (SkillStatusChangeTableArray[skill]==-1)
+	  	SkillStatusChangeTableArray[skill] = sc;
+	if (StatusSkillChangeTable[sc]==0)
+	  	StatusSkillChangeTable[sc] = skill;
+}
+
+static void set_sc(int skill, int sc, int icon, unsigned int flag)
+{
+	if (StatusIconChangeTable[sc]==SI_BLANK)
+	  	StatusIconChangeTable[sc] = icon;
+	StatusChangeFlagTable[sc] |= flag;
+	add_sc(skill, sc);
+}
+
 //Initializes the StatusIconChangeTable variable. May seem somewhat slower than directly defining the array,
 //but it is much less prone to errors. [Skotlex]
 void initChangeTables(void) {
@@ -59,7 +87,7 @@ void initChangeTables(void) {
 	for (i = 0; i < SC_MAX; i++)
 		StatusIconChangeTable[i] = SI_BLANK;
 	for (i = 0; i < MAX_SKILL; i++)
-		SkillStatusChangeTable[i] = -1;
+		SkillStatusChangeTableArray[i] = -1;
 	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 
@@ -104,18 +132,6 @@ void initChangeTables(void) {
 //	StatusIconChangeTable[SC_DPOISON] =   SI_BLANK;
 
 	
-#define set_sc(skill, sc, icon, flag) \
-	if (SkillStatusChangeTable[skill]==-1) SkillStatusChangeTable[skill] = sc; \
-	if (StatusSkillChangeTable[sc]==0) StatusSkillChangeTable[sc] = skill; \
-	if (StatusIconChangeTable[sc]==SI_BLANK) StatusIconChangeTable[sc] = icon; \
-	StatusChangeFlagTable[sc] |= flag;
-
-//This one is for sc's that already were defined.
-#define add_sc(skill, sc) \
-	if (SkillStatusChangeTable[skill]==-1) SkillStatusChangeTable[skill] = sc; \
-	if (StatusSkillChangeTable[sc]==0) StatusSkillChangeTable[sc] = skill;
-		
-
 	add_sc(SM_BASH, SC_STUN);
 	set_sc(SM_PROVOKE, SC_PROVOKE, SI_PROVOKE, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK);
 	add_sc(SM_MAGNUM, SC_WATK_ELEMENT);
@@ -354,28 +370,30 @@ void initChangeTables(void) {
 //	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI);
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
-// FIXME: These skills have IDs of 8k and above, how do I fix these issues??
-//	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
-//	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
-//	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
-//	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
+	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
+	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
+	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
+	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
+
+	set_sc(GD_LEADERSHIP, SC_GUILDAURA, SI_GUILDAURA, SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX);
+	set_sc(GD_BATTLEORDER, SC_BATTLEORDERS, SI_BATTLEORDERS, SCB_STR|SCB_INT|SCB_DEX);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
-	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
-	SkillStatusChangeTable[SL_MONK] =        MAPID_MONK,
-	SkillStatusChangeTable[SL_STAR] =        MAPID_STAR_GLADIATOR,
-	SkillStatusChangeTable[SL_SAGE] =        MAPID_SAGE,
-	SkillStatusChangeTable[SL_CRUSADER] =    MAPID_CRUSADER,
-	SkillStatusChangeTable[SL_SUPERNOVICE] = MAPID_SUPER_NOVICE,
-	SkillStatusChangeTable[SL_KNIGHT] =      MAPID_KNIGHT,
-	SkillStatusChangeTable[SL_WIZARD] =      MAPID_WIZARD,
-	SkillStatusChangeTable[SL_PRIEST] =      MAPID_PRIEST,
-	SkillStatusChangeTable[SL_BARDDANCER] =  MAPID_BARDDANCER,
-	SkillStatusChangeTable[SL_ROGUE] =       MAPID_ROGUE,
-	SkillStatusChangeTable[SL_ASSASIN] =     MAPID_ASSASSIN,
-	SkillStatusChangeTable[SL_BLACKSMITH] =  MAPID_BLACKSMITH,
-	SkillStatusChangeTable[SL_HUNTER] =      MAPID_HUNTER,
-	SkillStatusChangeTable[SL_SOULLINKER] =  MAPID_SOUL_LINKER,
+	SkillStatusChangeTableArray[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
+	SkillStatusChangeTableArray[SL_MONK] =        MAPID_MONK,
+	SkillStatusChangeTableArray[SL_STAR] =        MAPID_STAR_GLADIATOR,
+	SkillStatusChangeTableArray[SL_SAGE] =        MAPID_SAGE,
+	SkillStatusChangeTableArray[SL_CRUSADER] =    MAPID_CRUSADER,
+	SkillStatusChangeTableArray[SL_SUPERNOVICE] = MAPID_SUPER_NOVICE,
+	SkillStatusChangeTableArray[SL_KNIGHT] =      MAPID_KNIGHT,
+	SkillStatusChangeTableArray[SL_WIZARD] =      MAPID_WIZARD,
+	SkillStatusChangeTableArray[SL_PRIEST] =      MAPID_PRIEST,
+	SkillStatusChangeTableArray[SL_BARDDANCER] =  MAPID_BARDDANCER,
+	SkillStatusChangeTableArray[SL_ROGUE] =       MAPID_ROGUE,
+	SkillStatusChangeTableArray[SL_ASSASIN] =     MAPID_ASSASSIN,
+	SkillStatusChangeTableArray[SL_BLACKSMITH] =  MAPID_BLACKSMITH,
+	SkillStatusChangeTableArray[SL_HUNTER] =      MAPID_HUNTER,
+	SkillStatusChangeTableArray[SL_SOULLINKER] =  MAPID_SOUL_LINKER,
 
 	//Status that don't have a skill associated.
 	StatusIconChangeTable[SC_WEIGHT50] = SI_WEIGHT50;
@@ -425,17 +443,24 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
 
-	//Guild skills don't fit due to their range being beyond MAX_SKILL
-	StatusIconChangeTable[SC_GUILDAURA] =    SI_GUILDAURA;
-	StatusChangeFlagTable[SC_GUILDAURA] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX;
-	StatusIconChangeTable[SC_BATTLEORDERS] = SI_BATTLEORDERS;
-	StatusChangeFlagTable[SC_BATTLEORDERS] |= SCB_STR|SCB_INT|SCB_DEX;
-#undef set_sc
-#undef add_sc
 	if (!battle_config.display_hallucination) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
 }
 
+int SkillStatusChangeTable(int skill)
+{
+	int sk = skill;
+	if (sk > GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
+	else
+	if (sk > HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
+	if (sk < 0 || sk >= MAX_SKILL) {
+		if (battle_config.error_log)
+			ShowError("add_sc: Unsupported skill id %d\n", skill);
+		return -1;
+	}
+	return SkillStatusChangeTableArray[skill];
+}
+int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
 static void initDummyData(void) {
 	memset(&dummy_status, 0, sizeof(dummy_status));
 	dummy_status.hp = 

@@ -257,7 +257,7 @@ enum {
 	SC_INCDEXRATE,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
-extern int SkillStatusChangeTable[MAX_SKILL];
+int SkillStatusChangeTable(int skill);
 extern int StatusSkillChangeTable[SC_MAX];
 
 //Numerates the Number for the status changes (client-dependent), imported from jA
