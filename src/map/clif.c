@@ -1268,24 +1268,21 @@ int clif_spawn(struct block_list *bl)
 	if (pcdb_checkid(vd->class_))
 	{	//Player spawn packet.
 		clif_set0078(bl, vd, buf);
-#if PACKETVER > 3
 		if (WBUFW(buf,0)==0x78) {
 			WBUFW(buf, 0) = 0x79;
 			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
 			clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
 			if (disguised(bl))
 				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
+#if PACKETVER > 3
 		} else {
-#endif
 			WBUFW(buf, 0) = 0x1d9;
 			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
 			clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
 			if (disguised(bl))
 				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
-#if PACKETVER > 3
-		}
 #endif
-
+		}
 	} else {	//Mob spawn packet.
 		struct status_change *sc = status_get_sc(bl);
 		memset(buf,0,sizeof(buf));
