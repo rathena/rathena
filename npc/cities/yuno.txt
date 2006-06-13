@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= KitsuneStarwind, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= Moved item quest to quest folder. Re-edited a majority of the npcs. [kobra_k88]
 //= Removed duplicate npcs already found in the sage quest.
 //= Fixed & Spellchecked [massdriller]
+//= 1.3 Started updating Juno NPCs based on iRO. 10% complete.
 //============================================================ 
 
 
@@ -21,6 +22,28 @@
 //=================================================================================================//
 //					NPCs Found outside
 //=================================================================================================//
+
+
+//======================================================================================
+yuno.gat,184,173,4	script	Freidrich	729,{
+	mes "[Freidrich]";
+	mes "The city of Sages,";
+	mes "^5533FFJuno^000000, is made of";
+	mes "three isnlands.";
+	next;
+	mes "[Freidrich]";
+	mes "These are Solomon, the islands of";
+	mes "honor, Mineta, the islands of";
+	mes "prosperity, and Snotora, the island";
+	mes "of knowledge.";
+	next;
+	mes "[Freidrich]";
+	mes "The location of each island is";
+	mes "North-west : Solomon";
+	mes "North-east : Snotora";
+	mes "South : Mineta.";
+	close;
+}
 
 //======================================================================================
 yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
@@ -34,7 +57,7 @@ yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
 	mes "On the top of a mountain connected";
 	mes "to the plateau, you can find a";
 	mes "bridge which leads you this";
-	mes "place!, ^5533FFJuno^000000, the city of Sages.";
+	mes "place!,^5533FFJuno^000000, the city of Sages.";
 	next;
 	mes "[Shalima]";
 	mes "In Juno, you can visit places such";
@@ -58,126 +81,177 @@ yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
 }
 
 //=======================================================================================
-yuno.gat,158,205,4	script	Artisan	54,{
+yuno.gat,157,205,4	script	Juno Artisan	54,{
 	mes "[Artisan]";
-	mes "~(mumbling to himself.......)~";
+	mes "*Mumble mumble...*";
 	next;
 	mes "[Artisan]";
-	mes "Oh hello there.  Let me introduce myself.  I am an artisan who is trying to carry on the traditions and duties of the master craftsmen here in Yuno.";
-	M_Menu:
+	mes "Oh, hello there. Let me introduce";
+	mes "myself. I am an artisan who tries";
+	mes "to succeed the rights and duties of";
+	mes "item makers in Juno.";
 	next;
-	menu "About powerful equipment.",M_1,"About special items",M_2,"About authentic foods",M_3,"End conversation",M_End;
+	menu "About Powerful Equipment.",M_1,"About Unique Items",M_2,"About Authentic Food",M_3,"End Conversation",M_End;
 	
 	M_1: 
 		mes "[Artisan]";
-		mes "For Crusaders, I suggest looking into the ^5533FF'Holy Guard' and 'Holy Avenger'^000000.";
-		mes "They are both light weight pieces of equipment and they perform remarkably well.";
+		mes "Let me suggest the ^5533FFHoly Guard^000000 and";
+		mes " ^5533FFHoly Avenger'^000000 which are";
+		mes "special items for Crusaders.";
 		next;
 		mes "[Artisan]";
-		mes "They also posses the holy property so they are even more powerful against undead and ghost creatures,";
+		mes "These pieces of equipment are very";
+		mes "light and have sufficient";
+		mes "abilities. They also happen to";
+		mes "possess holy power.";
 		next;
 		mes "[Artisan]";
-		mes "I've heard that these pieces of equipment are quite rare, and that only a chosen few are able to obtain them.";
-		goto M_Menu;
+		mes "Therefore, this equipment is more";
+		mes "powerful over some kinds of";
+		mes "monsters such as Ghosts or the";
+		mes "Undead.";
+		next;
+		mes "[Artisan]";
+		mes "However it is rumored that only a";
+		mes "few chosen Crusaders are able to";
+		mes "obtain those items due of their";
+		mes "rarity.";
+		close;
 		
 	M_2:
 		mes "[Artisan]";
-		mes "One item that I know about is a magic scroll called the ^5533FF'Worn-Out Magic Scroll'^000000.";
-		mes "It is described to have a circle inside of another circle.... and a star...... ";
+		mes "It looks like a simple scroll";
+		mes "marked with concentric circles and";
+		mes "a star. Although the ^5533FFWorn-Out Magic^000000";
+		mes "^5533FFScroll^000000 is very old, it's wanted by";
+		mes "many Sages for research purposes.";
 		next; 
 		mes "[Artisan]";
-		mes "Although the scroll is very old and tattered, it very special to many Sages who use it for their research.";
-		mes "Apparently it can be used with very high level magic spells.";
-		goto M_Menu;
+		mes "It seems you can use that item when";
+		mes "you chant a high-level magic";
+		mes "spell.";
+		close;
 	
 	M_3:
 		mes "[Artisan]";
-		mes "^5533FF'Rice Cake'^000000!! A traditional food that has been a favorite of many people over the years.";
-		mes "It has a way of reminding people of those old traditional markets and fairs.";
+		mes "^5533FFRice Cake^000000! Yes, it's a traditional";
+		mes "food that's favored by a lot of";
+		mes "people. There's a lot of nostalgic";
+		mes "memories of old fashioned markets";
+		mes "that are connected to the Rice";
+		mes "Cake.";
 		next;
 		mes "[Artisan]";
-		mes "Ah.... Rice Cake..... I sure wish I could eat some now..............";
-		//possible quest here .. not sure though
-		goto M_Menu;
-		
+		mes "Ahhh~";
+		mes "I wish i could eat a bit of Rice";
+		mes "Cake right now.";
+		close;		
+
 	M_End:
 		mes "[Artisan]";
-		mes "Although Yuno is known as the city of Sages,..............";
-		mes "I hope you will understand that Yuno is also home to many kind and gentle people who live ordinary lives.";
-		next;
-		mes "[Artisan]";
-		mes "Please enjoy everything this unique city has to offer.";
+		mes "Although Yuno is known as the city of";
+		mes "Sages, I hope you understand that";
+		mes "ordinary people live and prosper";
+		mes "here as well. Please enjoy the";
+		mes "unique atmosphere that Juno has to";
+		mes "offer.";
 		close;
 }
 
 //======================================================================================
-yuno.gat,336,227,4	script	Yuno Granny	103,{
+yuno.gat,336,227,4	script	Juno Granny	103,{
 	mes "[Granny]";
-	mes "Here you are......... I am an elderly Sage who can foresee everything before it happens.";
+	mes "I am an old Sage granny who";
+	mes "foresees everything...";
 	next;
 	mes "[Granny]";
-	mes "Have you heard about the boss monster, who's name has been buzzing around Yuno for the longest time?";
-	mes "It's called ^FF3355'Lord of the Dead'^000000.  Rumor has it that it comes form the realm of the dead.";
+	mes "Have you heard of a boss monster";
+	mes "that has been around Juno for a";
+	mes "long time? it's known only as the";
+	mes "^FF3355Lord of the Dead^000000.";
 	next;
 	mes "[Granny]";
-	mes "It brings with it many undead monsters that are intent on leading the living to the cold and icy land of the dead.";
+	mes "It is rumored to be from the realm";
+	mes "of the dead. It brings many undead";
+	mes "monsters with it, intending to lead";
+	mes "living creatures to its cold and";
+	mes "icy realm.";
 	next;
 	mes "[Granny]";
-	mes "I know that you have already chosen whether or not you will fight the Lord of the Dead.";
-	mes "The only thing left for you to do is find out why you made that choice......";
+	mes "You have already chosen whether or";
+	mes "not you will challenge the Lord of";
+	mes "the Dead. All you need to do right";
+	mes "now is understand why you made the";
+	mes "decision.";
 	close;
 }
 
 //========================================================================================
-yuno.gat,329,239,4	script	Yuno Fighter	732,{
+yuno.gat,328,239,4	script	Juno Fighter	732,{
 	mes "[Sergiof]";
-	mes "My name is Sergiof and I am Granny's protector.";
+	mes "My name is Sergiof,";
+	mes "the fighter who";
+	mes "serves Granny.";
 	next;
 	mes "[Sergiof]";
-	mes "Let me tell you about the ^5533FF'Grand Peco'^000000, which is a high level Peco Peco.";
-	mes "The Grand Peco is faster than regular Peco Pecos and has aggressive tendencies.";
+	mes "I will tell you about ^5533FF'Grand Peco'^000000";
+	mes "which is a high level Peco Peco.";
+	mes "Grand Peco is faster than Peco Peco";
+	mes "and is quite aggressive";
 	next;
 	mes "[Sergiof]";
-	mes "It attacks its targets using its strong bill.  It is always surrounded by a large group of Peco Pecos.";
-	next;
-	mes "[Sergiof]";
-	mes ".... Unfortunately it is time for us to part...... farewell...........";
+	mes "It attacks using its strong bill";
+	mes "and many Peco Pecos follow it.
+	mes "There's quite a difference in power";
+	mes "between Peco Peco and the Grand";
+	mes "Peco.";
 	close;
 }
 
 //========================================================================================
-yuno.gat,344,68,4	script	Yuno Tyrant	730,{
+yuno.gat,343,68,4	script	Juno Despot	730,{
 	mes "[Ninno]";
-	mes "Have you ever heard of an Egyptian king who was once believed to be the son of a god?";
-	mes "His name was ^5533FF'Pharaoh'^000000";
+	mes "Have you ever heard of an Egyptian";
+	mes "king who was once believed to be a";
+	mes "son of a god? his name is ^5533FFPharaoh^000000.";
 	next;
 	mes "[Ninno]";
-	mes "Rumor has it that he was a high sorcerer and that he used his abilities to curse innocent people.";
-	mes "There are people that say he is still around, and continues to place curses on people.";
+	mes "He was rumored to be a high";
+	mes "sorcerer that used his power to";
+	mes "curse innocents. It is said that he";
+	mes "is still around, placing his curses";
+	mes "on people.";
 	next;
 	mes "[Ninno]";
-	mes "Have you ever seen him before?";
+	mes "As an adventurer, it's possible";
+	mes "that you may see him in your";
+	mes "travels. Be careful...";
 	close;
 }
-
+	
 //=======================================================================================
-yuno.gat,261,98,4	script	Ykla	735,{
-		mes "[Ykla]";
-		mes "^5533FFYuphero^000000......,";
-		mes "That was the name of the ancient city where the most intelligent and talented people used to live.";
-		next;
-		mes "[Ykla]";
-		mes "By finding a way to harness the power from the pieces of Ymir's heart, they became the most advanced city know to man.";
-		next;
-		mes "[Ykla]";
-		mes "However, over time they came to abuse that power and ended up destroying themselves.";
-		next;
-		mes "[Ykla]";
-		mes "If you ever find yourself in the position of acquiring this kind of power, make sure you remain humble to it.";
-		next;
-		mes "[Ykla]";
-		mes "Power without humility is nothing more than a fools path to destruction.";
-		close;
+yuno.gat,261,99,4	script	Sage Yklah	735,{
+	mes "[Yklah]";
+	mes "^5533FFJuphero^000000...,";
+	mes "That was the name of the city that";
+	mes "once existed in ancient times.";
+	next;
+	mes "[Yklah]";
+	mes "The most intelligent and talented";
+	mes "people of that time lived there,";
+	mes "harnessing the pieces of Ymir's";
+	mes "heart to power their civilization.";
+	next;
+	mes "[Yklah]";
+	mes "Unfortunately, they happened to";
+	mes "abuse that great power and somehow";
+	mes "destroyed themselves."
+	next;
+	mes "[Yklah]";
+	mes "If you long to acquire God's";
+	mes "knowledge, you must first be";
+	mes "humble. Otherwise...";
+	close;
 }
 
 //=========================================================================================
