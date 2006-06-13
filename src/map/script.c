@@ -405,6 +405,8 @@ int buildin_setd(struct script_state *st);
 int buildin_petstat(struct script_state *st); // [Lance] Pet Stat Rq: Dubby
 int buildin_callshop(struct script_state *st); // [Skotlex]
 int buildin_npcshopitem(struct script_state *st); // [Lance]
+int buildin_npcshopadditem(struct script_state *st);
+int buildin_npcshopdelitem(struct script_state *st);
 int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
@@ -741,7 +743,9 @@ struct {
 	// <--- [zBuffer] List of dynamic var commands
 	{buildin_petstat,"petstat","i"},
 	{buildin_callshop,"callshop","si"}, // [Skotlex]
-	{buildin_npcshopitem,"npcshopitem","*"}, // [Lance]
+	{buildin_npcshopitem,"npcshopitem","sii*"}, // [Lance]
+	{buildin_npcshopadditem,"npcshopadditem","sii*"},
+	{buildin_npcshopdelitem,"npcshopdelitem","si*"},
 	{buildin_equip,"equip","i"},
 	{buildin_autoequip,"autoequip","ii"},
 	{buildin_setbattleflag,"setbattleflag","ss"},
@@ -10114,52 +10118,124 @@ int buildin_callshop(struct script_state *st)
 	return 0;
 }
 
+#ifndef MAX_SHOPITEM
+	#define MAX_SHOPITEM 100
+#endif
 int buildin_npcshopitem(struct script_state *st)
 {
 	struct npc_data *nd= NULL;
 	int n = 0;
 	int i = 3;
-	int itemid, value, amount;
+	int amount;
 
 	char* npcname = conv_str(st, & (st->stack->stack_data[st->start + 2]));
 	nd = npc_name2id(npcname);
 
-#ifndef MAX_SHOPITEM
-	#define MAX_SHOPITEM 100
-#endif
-
 	if(nd && nd->bl.subtype==SHOP){
-		amount = (st->end-2)/2;
-		// st->end - 2 = nameid + value # ... / 2 = number of items ... + 1 just in case
+		amount = ((st->end-2)/2)+1;
+		// st->end - 2 = nameid + value # ... / 2 = number of items ... + 1 to end it
 		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
 			sizeof(nd->u.shop_item[0]) * amount);
 
 		// Reset sell list.
-		for(;nd->u.shop_item[n].nameid && n < amount; n++){
-			nd->u.shop_item[n].nameid = 0;
-			nd->u.shop_item[n].value = 0;
-		}
+		memset(nd->u.shop_item, 0, sizeof(nd->u.shop_item[0]) * amount);
 
 		n = 0;
 
 		while (st->end > st->start + i) {
-			itemid = conv_num(st, & (st->stack->stack_data[st->start+i]));
-			nd->u.shop_item[n].nameid = itemid;
+			nd->u.shop_item[n].nameid = conv_num(st, & (st->stack->stack_data[st->start+i]));
 			i++;
-			value = conv_num(st, & (st->stack->stack_data[st->start+i]));
-			nd->u.shop_item[n].value = value;
+			nd->u.shop_item[n].value = conv_num(st, & (st->stack->stack_data[st->start+i]));
 			i++;
 			n++;
 		}
-
-		//nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
-		//	sizeof(nd->u.shop_item[0]) * n);
 
 		map_addiddb(&nd->bl);
 
 		nd->master_nd = ((struct npc_data *)map_id2bl(st->oid));
 	} else {
 		ShowError("buildin_npcshopitem: shop not found.\n");
+	}
+
+	return 0;
+}
+
+int buildin_npcshopadditem(struct script_state *st) {
+	struct npc_data *nd=NULL;
+	int n = 0;
+	int i = 3;
+	int amount;
+
+	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
+	nd = npc_name2id(npcname);
+
+	if (nd && nd->bl.subtype==SHOP){
+		amount = ((st->end-2)/2)+1;
+		while (nd->u.shop_item[n].nameid && n < MAX_SHOPITEM)
+			n++;
+
+		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
+			sizeof(nd->u.shop_item[0]) * (amount+n));
+
+		n = 0;
+
+		while(st->end > st->start + i){
+			nd->u.shop_item[n].nameid = conv_num(st, & (st->stack->stack_data[st->start+i]));
+			i++;
+			nd->u.shop_item[n].value = conv_num(st, & (st->stack->stack_data[st->start+i]));
+			i++;
+			n++;
+		}
+
+		// Marks the last of our stuff..
+		nd->u.shop_item[n].value = 0;
+		nd->u.shop_item[n].nameid = 0;
+
+		map_addiddb(&nd->bl);
+		nd->master_nd = ((struct npc_data *)map_id2bl(st->oid));
+	} else {
+		ShowError("buildin_npcshopadditem: shop not found.\n");
+	}
+
+	return 0;
+}
+
+int buildin_npcshopdelitem(struct script_state *st)
+{
+	struct npc_data *nd=NULL;
+	int n=0;
+	int i=3;
+	int size = 0;
+
+	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
+	nd = npc_name2id(npcname);
+
+	if (nd && nd->bl.subtype==SHOP) {
+		while (nd->u.shop_item[n].nameid)
+			size++;
+
+		while (st->end > st->start+i) {
+			for(n=0;nd->u.shop_item[n].nameid && n < MAX_SHOPITEM;n++) {
+				if (nd->u.shop_item[n].nameid == conv_num(st, & (st->stack->stack_data[st->start+i]))) {
+					// We're moving 1 extra empty block. Junk data is eliminated later.
+					memmove(&nd->u.shop_item[n], &nd->u.shop_item[n+1], sizeof(nd->u.shop_item[0])*(size-n));
+				}
+			}
+			i++;
+		}
+
+		size = 0;
+
+		while (nd->u.shop_item[n].nameid)
+			size++;
+
+		nd = (struct npc_data *)aRealloc(nd,sizeof(struct npc_data) +
+			sizeof(nd->u.shop_item[0]) * (size+1));
+
+		map_addiddb(&nd->bl);
+		nd->master_nd = ((struct npc_data *)map_id2bl(st->oid));
+	} else {
+		ShowError("buildin_npcshopdelitem: shop not found.\n");
 	}
 
 	return 0;
