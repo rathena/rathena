@@ -15,11 +15,11 @@
 //==================================================
 // tha_t01 - Thanatos Tower F1
 //==================================================
-tha_t01.gat,0,0,0,0	monster	Rideword	1195,15,0,0,0
-tha_t01.gat,0,0,0,0	monster	Mimic	1191,15,0,0,0
+tha_t01.gat,0,0,0,0	monster	Rideword	1195,20,0,0,0
+tha_t01.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
 tha_t01.gat,0,0,0,0	monster	Plasma	1695,20,0,0,0
-tha_t01.gat,0,0,0,0	monster	Solace	1703,2,0,0,0
 tha_t01.gat,0,0,0,0	monster	Alice	1275,5,0,0,0
+tha_t01.gat,0,0,0,0	monster	Solace	1703,3,0,0,0
 
 //==================================================
 // tha_t02 - Thanatos Tower F2
@@ -27,21 +27,22 @@ tha_t01.gat,0,0,0,0	monster	Alice	1275,5,0,0,0
 tha_t02.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
 tha_t02.gat,0,0,0,0	monster	Deathword	1698,5,0,0,0
 tha_t02.gat,0,0,0,0	monster	Mimic	1191,25,0,0,0
-tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,55,0,0,0
+tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,70,0,0,0
 tha_t02.gat,0,0,0,0	monster	Plasma	1697,15,0,0,0
-tha_t02.gat,0,0,0,0	monster	Retribution	1702,2,0,0,0
 tha_t02.gat,0,0,0,0	monster	Alice	1275,10,0,0,0
+tha_t02.gat,0,0,0,0	monster	Elder	1377,10,0,0,0
+tha_t02.gat,0,0,0,0	monster	Retribution	1702,3,0,0,0
 
 //==================================================
 // tha_t03 - Thanatos Tower F3
 //==================================================
 tha_t03.gat,0,0,0,0	monster	Rideword	1195,20,0,0,0
-tha_t03.gat,0,0,0,0	monster	Deathword	1698,40,0,0,0
+tha_t03.gat,0,0,0,0	monster	Deathword	1698,60,0,0,0
 tha_t03.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
 tha_t03.gat,0,0,0,0	monster	Ancient Mimic	1699,20,0,0,0
 tha_t03.gat,0,0,0,0	monster	Plasma	1696,20,0,0,0
-tha_t03.gat,0,0,0,0	monster	Shelter	1701,2,0,0,0
 tha_t03.gat,0,0,0,0	monster	Elder	1377,10,0,0,0
+tha_t03.gat,0,0,0,0	monster	Shelter	1701,3,0,0,0
 
 //==================================================
 // tha_t04 - Thanatos Tower F4
@@ -54,7 +55,7 @@ tha_t04.gat,0,0,0,0	monster	Plasma	1694,20,0,0,0
 tha_t04.gat,0,0,0,0	monster	Owl Duke	1320,10,0,0,0
 tha_t04.gat,0,0,0,0	monster	Owl Baron	1295,10,0,0,0
 tha_t04.gat,0,0,0,0	monster	Elder	1377,40,0,0,0
-tha_t04.gat,0,0,0,0	monster	Observation	1700,2,0,0,0
+tha_t04.gat,0,0,0,0	monster	Observation	1700,3,0,0,0
 
 //==================================================
 // tha_t05 - Thanatos Tower F5
@@ -78,7 +79,7 @@ tha_t06.gat,0,0,0,0	monster	Ancient Mimic	1699,30,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1694,5,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1697,5,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1695,5,0,0,0
-tha_t06.gat,0,0,0,0	monster	Plasma	1696,10,0,0,0
+tha_t06.gat,0,0,0,0	monster	Plasma	1696,5,0,0,0
 tha_t06.gat,0,0,0,0	monster	Owl Duke	1320,20,0,0,0
 tha_t06.gat,0,0,0,0	monster	Owl Baron	1295,20,0,0,0
 tha_t06.gat,0,0,0,0	monster	Elder	1377,20,0,0,0

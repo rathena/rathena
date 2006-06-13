@@ -25,6 +25,7 @@
 
 =========================
 06/13
+	* Detale only summons one Hydro [Playtester]
 	* Fixed the names of the Lotto items [Playtester]
 	* Garm Claw now has 152 Attack Power rather than 115 [Playtester]
 06/12
