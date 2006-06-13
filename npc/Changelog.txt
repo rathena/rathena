@@ -37,6 +37,8 @@ Musashiden
 Date		Added
 ======
 06/13
+	* Added Dr.Evil's fixes to the Umbala NPCs [Playtester]
+	- probably needs some testing
 	* Fixed the Job Level requirement for Arrow Crafting [Playtester]
 06/12
 	* Implemented the comodo gambling NPCs. Thanks to reddozen and Zefris. [MasterOfMuppets]

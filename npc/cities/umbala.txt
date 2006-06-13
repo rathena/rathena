@@ -886,132 +886,192 @@ Lsmileok:
 
 //=====================================================================
 um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
-	if(event_umbala < 3) goto LumWord;
-	if(event_umbala == 4) goto LStart2;
-	if(event_umbala == 5) goto LStart2;
-	if(event_umbala == 6) goto LStart3;
-	if(event_umbala == 7) goto LStart4;
-	mes "[Putsuchiritan]";
-	mes "I will not see outsiders that are";
-	mes "not from the Utan tribe.";
-	mes "...There are many things about the";
-	mes "nature of our society that you do";
-	mes "not yet understand.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "Others of your type will do anything";
-	mes "to set foot on land which is sacred";
-	mes "to the Utan tribe.  We fear that";
-	mes "revealing our secrets will expose";
-	mes "use to danger.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "What's worse, I don't think that";
-	mes "outsiders understand our desire";
-	mes "to preserve our tribal culture.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "As my talents are foremost for";
-	mes "the use of the Utan tribe, you";
-	mes "must get permission from the elder";
-	mes "if you want my assistance.";
-	mes "Also, don't be stirring up trouble";
-	mes "among the tribesmen.";
-	set event_umbala,4;
-	close;
-LStart2:
-	mes "[Putsuchiritan]";
-	mes "Didn't you hear me?  You need";
-	mes "to get the elder's permission before";
-	mes "I can help you.";
-	close;
-LStart3:
-	mes "[Putsuchiritan]";
-	mes "You seem to have gotten permission from";
-	mes "the elder.  Fine, I'll help you, though";
-	mes "I don't really want to.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "I can call forth hidden talents";
-	mes "buried deep within your psyche";
-	mes "and tap the power hidden in";
-	mes "elemental stones.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "I need to prepare my rituals.";
-	mes "When you're ready to proceed, please";
-	mes "talk to me again.";
-	set event_umbala,7;
-	close;
-LStart4:
-	set @umchange[1],0;
-	set @umchange[2],0;
-	set @umchange[3],0;
-	set @umchange[4],0;
-	mes "[Putsuchiritan]";
-	mes "I don't know whether my talents";
-	mes "will be useful to you, but I'll";
-	mes "help you anyway.";
-	next;
-	mes "[Putsuchiritan]";
-	mes "I can create elemental essence from natural objects,";
-	mes "or, dismantle elemental stones into their component essences.";
-	mes "Which would you like to do?";
-	next;
-	menu "Create Essence",L1,"Dismantle Elemental Stone",L2,"Nothing",-;
-		mes "[Putsuchiritan]";
-		mes "If you don't wish my help at the moment,";
-		mes "that's fine.  When you do, please come";
-		mes "by again.";
+
+	switch(event_umbala) {
+	default:	
+		mes "[?????]";
+		mes "Umbaumbaumbaba Utan Umbaba";
+		mes "Umbaumbaumbafumbabauma...";
+		mes "Umbabaumbaumbabaumbabaumba";
+		mes "Umbabaumbabaumbaumbabaumba";
+		mes "Fumbaumba.";
+		next;
+		warp "umbala.gat",217,186;
 		close;
-L1:
-	mes "[Putsuchiritan]";
-	mes "Which elemental essence would you";
-	mes "like to create?  I can create earth, water,";
-	mes "fire, and wind essence.";
+	case 3:	
+		mes "[Putsuchiritan]";
+		mes "I will not see outsiders that are";
+		mes "not from the Utan tribe.";
+		mes "...There are many things about the";
+		mes "nature of our society that you do";
+		mes "not yet understand.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Others of your type will do anything";
+		mes "to set foot on land which is sacred";
+		mes "to the Utan tribe.  We fear that";
+		mes "revealing our secrets will expose";
+		mes "use to danger.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "What's worse, I don't think that";
+		mes "outsiders understand our desire";
+		mes "to preserve our tribal culture.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "As my talents are foremost for";
+		mes "the use of the Utan tribe, you";
+		mes "must get permission from the elder";
+		mes "if you want my assistance.";
+		mes "Also, don't be stirring up trouble";
+		mes "among the tribesmen.";
+		set event_umbala,4;
+		close;
+	case 4:
+	case 5:
+		mes "[Putsuchiritan]";
+		mes "Didn't you hear me?  You need";
+		mes "to get the elder's permission before";
+		mes "I can help you.";
+		close;
+	case 6:
+		mes "[Putsuchiritan]";
+		mes "You seem to have gotten permission from";
+		mes "the elder.  Fine, I'll help you, though";
+		mes "I don't really want to.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I can call forth hidden talents";
+		mes "buried deep within your psyche";
+		mes "and tap the power hidden in";
+		mes "elemental stones.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I need to prepare my rituals.";
+		mes "When you're ready to proceed, please";
+		mes "talk to me again.";
+		set event_umbala,7;
+		close;
+	case 7:
+		mes "[Putsuchiritan]";
+		mes "I don't know whether my talents";
+		mes "will be useful to you, but I'll";
+		mes "help you anyway.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I can create elemental essence from natural objects,";
+		mes "or, dismantle elemental stones into their component essences.";
+		mes "Which would you like to do?";
+	}
+	
 	next;
-	menu "Earth",L1_1,"Water",L1_2,"Fire",L1_3,"Wind",L1_4;
-	L1_1:
-		if (countitem(947)<15) goto L1_1e;//Items: Horn,
-		set @umchange[1],947;
-		set @umchange[2],15;
-		set @umchange[3],993;
-		goto L1_ketugou;
-	L1_2:
-		if (countitem(946)<20) goto L1_2e;//Items: Snails Shell,
-		set @umchange[1],946;
-		set @umchange[2],20;
-		set @umchange[3],991;
-		goto L1_ketugou;
-	L1_3:
-		if (countitem(904)<20) goto L1_3e;//Items: Scorpion Tail,
-		set @umchange[1],904;
-		set @umchange[2],20;
-		set @umchange[3],990;
-		goto L1_ketugou;
-	L1_4:
-		if (countitem(1013)<25) goto L1_4e;//Items: Rainbow Shell,
-		set @umchange[1],1013;
-		set @umchange[2],25;
-		set @umchange[3],992;
-		goto L1_ketugou;
-	L1_ketugou:
+	switch (select("Create Essence","Dismantle Elemental Stone","Nothing")) {
+	case 1:
+		mes "[Putsuchiritan]";
+		mes "Which elemental essence would you";
+		mes "like to create?  I can create earth, water,";
+		mes "fire, and wind essence.";
+		next;
+		switch (select("Earth","Water","Fire","Wind")) {
+			case 1:
+				if(countitem(947)<15) {
+					mes "[Putsuchiritan]";
+					mes "Earth...You need that which is";
+					mes "a friend of the earth.  Explore";
+					mes "the verdant forest and find";
+					mes "^3377FF15x Horn^000000 for the ritual.";
+				}
+				else {
+					set @need,947;
+					set @amount,15;
+					set @gain,993;
+				}
+				break;
+			case 2:
+				if(countitem(946)<20) {
+					mes "[Putsuchiritan]";
+					mes "Water...You need that which is";
+					mes "saturated with water.  Explore";
+					mes "the area around here and find";
+					mes "^3377FF20x Snails Shell^000000 for the ritual.";
+				}
+				else {
+					set @need,946;
+					set @amount,20;
+					set @gain,991;
+				}
+				break;
+			case 3:
+				if(countitem(904)<20) {
+					mes "[Putsuchiritan]";
+					mes "Fire...You need that which";
+					mes "can withstand the roiling heat";
+					mes "of perpetual flame.  Explore the";
+					mes "desert and find ^3377FF20x Scorpion Tail^000000";
+					mes "for the ritual.";
+				}
+				else {
+					set @need,904;
+					set @amount,20;
+					set @gain,990;
+				}
+				break;
+			case 4:
+				if(countitem(1013)<25) {
+					mes "[Putsuchiritan]";
+					mes "Wind...You need that which";
+					mes "has an easy camaraderie with";
+					mes "the sky itself.";
+					mes "You need ^3377FF25x Rainbow Shell^000000";
+					mes "to complete the ritual.";
+				}
+				else {
+					set @need,1013;
+					set @amount,25;
+					set @gain,992;
+				}
+				break;
+		}
+		if(@need == 0) {
+			next;
+			mes "[Putsuchiritan]";
+			mes "Once you've prepared these";
+			mes "objects from nature, please return here";
+			mes "so we can complete the ritual.";
+			close;
+		}
 		mes "[Putsuchiritan]";
 		mes "Now, I will try to tap the";
 		mes "source of power hidden deep within";
 		mes "you.  Choose a number between 1 and 9.";
 		mes "If you don't want to create essence";
 		mes "after all, choose 0.";
-		next;
-	L1_input:
-		input @umchange[4];
-		if (@umchange[4]==0) goto L1_cancel;
-		if (@umchange[4]>9) goto L1_numError;
+		while(1) {
+			next;
+			input @num;
+			if(@num<=0) {
+				mes "[Putsuchiritan]";
+				mes "If you don't wish my help at the moment,";
+				mes "that's fine.  When you do, please come";
+				mes "by again.";
+				close;
+			}
+			if(@num>9) {
+				mes "[Putsuchiritan]";
+				mes "You must choose a number between";
+				mes "1 and 9.  It is very important that";
+				mes "you choose the number most dear to";
+				mes "your heart.";
+				continue;
+			}
+			break;
+		}
 		mes "[Putsuchiritan]";
-		if (@umchange[1]==947) mes "The horn begins to vibrate.";
-		if (@umchange[1]==904) mes "The tail begins to vibrate.";
-		if ((@umchange[1]==1013) && (@umchange[1]==946)) mes "The shell begins to vibrate.";
-//End Possible Conversion
+		switch(@need) {
+			case 947: mes "The horn begins to vibrate."; break;
+			case 904: mes "The tail begins to vibrate."; break;
+			default: mes "The shell begins to vibrate."; break;
+		}
 		mes "I will now chant a holy mantra.";
 		mes "Imagine the number in your mind";
 		mes "and imagine power radiating forth from";
@@ -1024,117 +1084,118 @@ L1:
 		mes "Damtsuha Ombabaraka! Unba! Shi!";
 		mes "Sukatamba Aburumba! Umba! Shi!";
 		next;
-		if (countitem(@umchange[1])<@umchange[2]) goto L1_cancel;
-		delitem @umchange[1],@umchange[2];
-		getitem @umchange[3],@umchange[4];
+		delitem @need,@amount;
+		getitem @gain,1;
 		mes "[Putsuchiritan]";
 		mes "There.  Your inner power has converted";
 		mes "these objects from nature into";
 		mes "elemental essence.  Put";
 		mes "it to good use.";
 		close;
-L1_cancel:
-	mes "[Putsuchiritan]";
-	mes "If you don't wish my help at the moment,";
-	mes "that's fine.  When you do, please come";
-	mes "by again.";
-	close;
-L1_numError:
-	mes "[Putsuchiritan]";
-	mes "You must choose a number between";
-	mes "1 and 9.  It is very important that";
-	mes "you choose the number most dear to";
-	mes "your heart.";
-	next;
-	goto L1_input;
-L1_1e:
-	mes "[Putsuchiritan]";
-	mes "Earth...You need that which is";
-	mes "a friend of the earth.  Explore";
-	mes "the verdant forest and find";
-	mes "^3377FF15x Horn^000000 for the ritual.";
-	goto L1_empty;
-L1_2e:
-	mes "[Putsuchiritan]";
-	mes "Water...You need that which is";
-	mes "saturated with water.  Explore";
-	mes "the area around here and find";
-	mes "^3377FF20x Snails Shell^000000 for the ritual.";
-	goto L1_empty;
-L1_3e:
-	mes "[Putsuchiritan]";
-	mes "Fire...You need that which";
-	mes "can withstand the roiling heat";
-	mes "of perpetual flame.  Explore the";
-	mes "desert and find ^3377FF20x Scorpion Tail^000000";
-	mes "for the ritual.";
-	goto L1_empty;
-L1_4e:
-	mes "[Putsuchiritan]";
-	mes "Wind...You need that which";
-	mes "has an easy camaraderie with";
-	mes "the sky itself.";
-	mes "You need ^3377FF25x Rainbow Shell^000000";
-	mes "to complete the ritual.";
-L1_empty:
-	next;
-	mes "[Putsuchiritan]";
-	mes "Once you've prepared these";
-	mes "objects from nature, please return here";
-	mes "so we can complete the ritual.";
-	close;
-//----------------------------------------------------------
-L2:
-	mes "[Putsuchiritan]";
-	mes "What type of stone would you like to";
-	mes "dismantle?  Please choose earth, water,";
-	mes "fire, or wind.";
-	next;
-	menu "Earth",L2_1,"Water",L2_2,"Fire",L2_3,"Wind",L2_4;
-	L2_1:
-	if (countitem(997)<1) goto L2_1e;//Items: Great Nature,
-		set @umchange[1],997;
-		set @umchange[2],1;
-		set @umchange[3],993;
-		goto L2_bunkai;
-	L2_2:
-	if (countitem(995)<1) goto L2_2e;//Items: Mystic Frozen,
-		set @umchange[1],995;
-		set @umchange[2],1;
-		set @umchange[3],991;
-		goto L2_bunkai;
-	L2_3:
-	if (countitem(994)<1) goto L2_3e;//Items: Flame Heart,
-		set @umchange[1],994;
-		set @umchange[2],1;
-		set @umchange[3],990;
-		goto L2_bunkai;
-	L2_4:
-	if (countitem(996)<1) goto L2_4e;//Items: Rough Wind,
-		set @umchange[1],996;
-		set @umchange[2],1;
-		set @umchange[3],992;
-		goto L2_bunkai;
-	L2_bunkai:
+	case 2:
 		mes "[Putsuchiritan]";
-		if (@umchange[1]==997) mes "I will dismantle your earth crystal";
-		if (@umchange[1]==995) mes "I will dismantle your frozen crystal";
-		if (@umchange[1]==994) mes "I will dismantle your heart of flame";
-		if (@umchange[1]==996) mes "I will dismantle your rough wind stone";
+		mes "What type of stone would you like to";
+		mes "dismantle?  Please choose earth, water,";
+		mes "fire, or wind.";
+		next;
+		switch (select("Earth","Water","Fire","Wind")) {
+			case 1:
+				if(countitem(997)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Great Nature^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set @need,997;
+					set @gain,993;
+				}
+				break;
+			case 2:
+				if(countitem(995)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Mystic Frozen^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set @need,995;
+					set @gain,991;
+				}
+				break;
+			case 3:
+				if(countitem(994)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Flaming Heart^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set @need,994;
+					set @gain,990;
+				}
+				break;
+			case 4:
+				if(countitem(996)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Rough Wind^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set @need,996;
+					set @gain,992;
+				}
+				break;
+		}
+		next;
+		if(@need == 0) {
+			mes "[Putsuchiritan]";
+			mes "Once you have the necessary stone,";
+			mes "please come back and visit me";
+			mes "so that the ritual can be completed.";
+			close;
+		}
+		mes "[Putsuchiritan]";
+		switch(@need) {
+			case 997: mes "I will dismantle your earth crystal"; 	break;
+			case 995: mes "I will dismantle your frozen crystal"; 	break;
+			case 994: mes "I will dismantle your heart of flame"; 		break;
+			case 996: mes "I will dismantle your rough wind stone"; 	break;
+		}
 		mes "into its component essence.";
 		mes "Choose a number between 1 and 9.";
 		mes "If you don't want me to dismantle the";
 		mes "stone, choose 0.";
-		next;
-	L2_input:
-		input @umchange[4];
-		if (@umchange[4]==0) goto L2_cancel;
-		if (@umchange[4]>9) goto L2_numError;
-//Calculating number of essences
-		set @umchange[4],rand(5)+@umchange[4];
-		set @umchange,@umchange + @rand;
-		if (@umchange[4]>10) set @umchange[4],@umchange[4]-10;
-		if (@umchange[4]<5) set @umchange[4],@umchange[4]+5;
+		while(1) {
+			next;
+			input @num;
+			if(@num<=0) {
+				mes "[Putsuchiritan]";
+				mes "If you don't wish my help at the moment,";
+				mes "that's fine.  When you do, please come";
+				mes "by again.";
+				close;
+			}
+			if(@num>9) {
+				mes "[Putsuchiritan]";
+				mes "You must choose a number between";
+				mes "1 and 9.  It is very important that";
+				mes "you choose the number most dear to";
+				mes "your heart.";
+				continue;
+			}
+			break;
+		}
+		set @num,@num+rand(5);
+		if(@num>10)
+			set @num,@num-10;
+		if(@num<5)
+			set @num,@num+5;
 		mes "[Putsuchiritan]";
 		mes "Please place the elemental stone";
 		mes "inside this holy circle.  I will chant a";
@@ -1147,74 +1208,22 @@ L2:
 		mes "Rukara!  Ukarere!  Un!  Unba!  Ka!";
 		mes "Anburaka Taburaka Taburakan!  Unba Ra!";
 		mes "Onbaruzu Zan Kata!  Unba Ka!";
-		mes "Kan Tsun Rakarakan!  Unba!  Ha!";
 		next;
-		if (countitem(@umchange[1])<@umchange[2]) goto L1_cancel;
-		delitem @umchange[1],@umchange[2];
-		getitem @umchange[3],@umchange[4];
+		delitem @need,1;
+		getitem @gain,@num;
 		mes "[Putsuchiritan]";
 		mes "The elemental stone has been";
 		mes "dismantled into its natural";
 		mes "essence.  Please put it to";
 		mes "good use.";
 		close;
-L2_cancel:
-	mes "[Putsuchiritan]";
-	mes "If you don't wish my help at the moment,";
-	mes "that's fine.  When you do, please come";
-	mes "by again.";
-	close;
-L2_numError:
-	mes "[Putsuchiritan]";
-	mes "You must choose a number between";
-	mes "1 and 9.  It is very important that";
-	mes "you choose the number most dear to";
-	mes "your heart.";
-	next;
-	goto L2_input;
-L2_1e:	mes "[Putsuchiritan]";
-	mes "You need to have";
-	mes "^3377FF1x Great Nature^000000";
-	mes "to disassemble into its";
-	mes "component essence.";
-	goto L2_empty;
-L2_2e:
-	mes "[Putsuchiritan]";
-	mes "You need to have";
-	mes "^3377FF1x Mystic Frozen^000000";
-	mes "to disassemble into its";
-	mes "component essence.";
-	goto L2_empty;
-L2_3e:
-	mes "[Putsuchiritan]";
-	mes "You need to have";
-	mes "^3377FF1x Flaming Heart^000000";
-	mes "to disassemble into its";
-	mes "component essence.";
-	goto L2_empty;
-L2_4e:
-	mes "[Putsuchiritan]";
-	mes "You need to have";
-	mes "^3377FF1x Rough Wind^000000";
-	mes "to disassemble into its";
-	mes "component essence.";
-L2_empty:
-	next;
-	mes "[Putsuchiritan]";
-	mes "Once you have the necessary stone,";
-	mes "please come back and visit me";
-	mes "so that the ritual can be completed.";
-	close;
-LumWord:
-	mes "[?????]";
-	mes "Umbaumbaumbaba Utan Umbaba";
-	mes "Umbaumbaumbafumbabauma...";
-	mes "Umbabaumbaumbabaumbabaumba";
-	mes "Umbabaumbabaumbaumbabaumba";
-	mes "Fumbaumba.";
-	next;
-	warp "umbala.gat",217,186;
-	close;
+	case 3:
+		mes "[Putsuchiritan]";
+		mes "If you don't wish my help at the moment,";
+		mes "that's fine.  When you do, please come";
+		mes "by again.";
+		close;
+	}
 }
 
 //=====================================================================
@@ -1306,7 +1315,7 @@ LumWord:
 
 //=====================================================================
 um_in.gat,94,123,5	script	Bartsutan	783,{
-	if(event_umbala < 30) goto LumWord;
+	if(event_umbala < 3) goto LumWord;
 	mes "[Bartsutan]";
 	mes "I want to see Wambokoriotan";
 	mes "morph into an insect so I can";
