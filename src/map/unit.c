@@ -1482,6 +1482,10 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			skill_stop_dancing(bl);
 		if (sc->data[SC_DEVOTION].timer!=-1)
 			status_change_end(bl,SC_DEVOTION,-1);
+		if (sc->data[SC_MARIONETTE].timer!=-1)
+			status_change_end(bl,SC_MARIONETTE,-1);
+		if (sc->data[SC_MARIONETTE2].timer!=-1)
+			status_change_end(bl,SC_MARIONETTE2,-1);
 		if (sc->data[SC_CLOSECONFINE].timer!=-1)
 			status_change_end(bl,SC_CLOSECONFINE,-1);
 		if (sc->data[SC_CLOSECONFINE2].timer!=-1)

@@ -6023,7 +6023,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		{	//Check range and timeleft to preserve status [Skotlex]
 			//This implementation won't work for mobs because of map_id2sd, but it's a small cost in exchange of the speed of map_id2sd over map_id2sd
 			struct map_session_data *md = map_id2sd(sc->data[type].val1);
-			if (md && battle_check_range(bl, &md->bl, sc->data[type].val3) && (sc->data[type].val4-=1000)>0)
+			if (md && check_distance_bl(bl, &md->bl, sc->data[type].val3) && (sc->data[type].val4-=1000)>0)
 			{
 				sc->data[type].timer = add_timer(1000+tick, status_change_timer, bl->id, data);
 				return 0;
@@ -6073,7 +6073,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_MARIONETTE2:
 		{
 			struct block_list *pbl = map_id2bl(sc->data[type].val1);
-			if (pbl && battle_check_range(bl, pbl, 7) && (sc->data[type].val2--)>0)
+			if (pbl && check_distance_bl(bl, pbl, 7) && (sc->data[type].val2--)>0)
 			{
 				sc->data[type].timer = add_timer(
 					1000 + tick, status_change_timer,
