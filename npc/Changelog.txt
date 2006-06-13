@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/12
+	* Implemented the comodo gambling NPCs. Thanks to reddozen and Zefris. [MasterOfMuppets]
 	* Looks like somebody needs sleep. (Typos in Yuno.txt) [Lance]
 	* Juno Update Process. 10% complete. [Musashiden]
 	* Implemented a missing NPC in Amatsu and fixed up the old [MasterOfMuppets]
