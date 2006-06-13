@@ -10222,7 +10222,7 @@ int buildin_npcshopdelitem(struct script_state *st)
 			i++;
 		}
 
-		size = 0;
+		size = n = 0;
 
 		while (nd->u.shop_item[n].nameid)
 			size++;
