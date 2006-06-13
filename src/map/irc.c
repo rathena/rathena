@@ -54,6 +54,7 @@ char irc_nick[30]="";
 char irc_password[32]="";
 
 char irc_channel[32]="";
+char irc_channel_pass[32]="";
 char irc_trade_channel[32]="";
 
 unsigned char irc_ip_str[128]="";
@@ -251,7 +252,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 			ShowStatus("IRC: Connected to IRC.\n");
 			sprintf(send_string, "PRIVMSG nickserv :identify %s", irc_password);
 			irc_send(send_string);
-			sprintf(send_string, "JOIN %s", irc_channel);
+			sprintf(send_string, "JOIN %s %s", irc_channel, irc_channel_pass);
 			irc_send(send_string);
 			sprintf(send_string,"NAMES %s",irc_channel);
 			irc_send(send_string);
@@ -319,7 +320,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 
 			// Autojoin on kick [Zido]
 			else if((strcmpi(command,"kick")==0)&&(irc_autojoin==1)) {
-				sprintf(send_string,"JOIN %s",target);
+				sprintf(send_string, "JOIN %s %s", target, irc_channel_pass);
 				irc_send(send_string);
 			}
 		}
@@ -363,6 +364,12 @@ void do_init_irc(void)
 	if (irc_ip_str[strlen(irc_ip_str)-1] == '\n') 
 		irc_ip_str[strlen(irc_ip_str)-1] = '\0'; 
 	irc_hostname=gethostbyname(irc_ip_str);
+	if (!irc_hostname)
+	{
+		ShowError("Unable to resolve %s! Cannot connect to IRC server, disabling irc_bot.\n", irc_ip_str);
+		use_irc = 0;
+		return;
+	}
 	irc_ip_str[0]='\0';
 	sprintf(irc_ip_str, "%d.%d.%d.%d", (unsigned char)irc_hostname->h_addr[0], (unsigned char)irc_hostname->h_addr[1],
 					   (unsigned char)irc_hostname->h_addr[2], (unsigned char)irc_hostname->h_addr[3]);
@@ -539,6 +546,8 @@ int irc_read_conf(char *file) {
 			irc_autojoin=atoi(w2);
 		else if(strcmpi(w1,"irc_channel")==0)
 			strcpy(irc_channel,w2);
+		else if(strcmpi(w1,"irc_channel_pass")==0)
+			strcpy(irc_channel_pass,w2);
 		else if(strcmpi(w1,"irc_trade_channel")==0)
 			strcpy(irc_trade_channel,w2);
 		else if(strcmpi(w1,"irc_nick")==0)
