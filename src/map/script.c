@@ -10209,7 +10209,7 @@ int buildin_npcshopdelitem(struct script_state *st)
 	nd = npc_name2id(npcname);
 
 	if (nd && nd->bl.subtype==SHOP) {
-		while (nd->u.shop_item[n].nameid)
+		while (nd->u.shop_item[size].nameid)
 			size++;
 
 		while (st->end > st->start+i) {
