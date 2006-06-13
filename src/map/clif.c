@@ -8367,7 +8367,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	if (!bl) return;
 
 	sc = status_get_sc(bl);
-	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) && pc_isGM(sd) >= battle_config.hack_info_GM_level)
+	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) && pc_isGM(sd) < battle_config.hack_info_GM_level)
 	{
 		//GM characters (with client side GM enabled are able to see invisible stuff) [Lance]
 		//Asked name of invisible player, this shouldn't be possible!
