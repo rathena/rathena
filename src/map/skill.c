@@ -9838,21 +9838,21 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			case BS_IRON:
 			case BS_STEEL:
 			case BS_ENCHANTEDSTONE:
-				{ // Ores & Metals Refining - skill bonuses are straight from kRO website [DracoRPG]
-				int skill = pc_checkskill(sd,skill_id);
+				// Ores & Metals Refining - skill bonuses are straight from kRO website [DracoRPG]
+				i = pc_checkskill(sd,skill_id);
 				make_per = sd->status.job_level*20 + status->dex*10 + status->luk*10; //Base chance
 				switch(nameid){
 					case 998: // Iron
-						make_per += 4000+skill*500; // Temper Iron bonus: +26/+32/+38/+44/+50
+						make_per += 4000+i*500; // Temper Iron bonus: +26/+32/+38/+44/+50
 						break;
 					case 999: // Steel
-						make_per += 3000+skill*500; // Temper Steel bonus: +35/+40/+45/+50/+55
+						make_per += 3000+i*500; // Temper Steel bonus: +35/+40/+45/+50/+55
 						break;
 					case 1000: //Star Crumb
 						make_per = 100000; // Star Crumbs are 100% success crafting rate? (made 1000% so it succeeds even after penalties) [Skotlex]
 						break;
 					default: // Enchanted Stones
-						make_per += 1000+skill*500; // Enchantedstone Craft bonus: +15/+20/+25/+30/+35
+						make_per += 1000+i*500; // Enchantedstone Craft bonus: +15/+20/+25/+30/+35
 					break;
 				}
 				break;
@@ -9930,7 +9930,6 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			default:
 				make_per = 5000;
 				break;
-			}
 		}
 	} else { // Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
 		make_per = 5000 + sd->status.job_level*20 + status->dex*10 + status->luk*10; // Base

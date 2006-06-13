@@ -354,10 +354,11 @@ void initChangeTables(void) {
 //	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI);
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
- 	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
-	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
-	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
-	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
+// FIXME: These skills have IDs of 8k and above, how do I fix these issues??
+//	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
+//	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
+//	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
+//	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
@@ -1994,7 +1995,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			status->hp=status->max_hp>>1;
 		else 
 			status->hp=status->max_hp * battle_config.restart_hp_rate/100;
-		if(status->hp < 0)
+		if(!status->hp)
 			status->hp = 1;
 
 		status->sp = status->max_sp * battle_config.restart_sp_rate /100;

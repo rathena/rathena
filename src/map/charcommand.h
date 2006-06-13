@@ -34,8 +34,6 @@ enum CharCommandType {
 	CharCommandChangeSex,
 	CharCommandFeelReset, // Komurka
 	CharCommandHelp,
-	
-
 
 #ifdef TXT_ONLY
 /* TXT_ONLY */
@@ -53,7 +51,13 @@ enum CharCommandType {
 };
 
 typedef enum CharCommandType CharCommandType;
-typedef struct AtCommandInfo CharCommandInfo;
+typedef struct CharCommandInfo {
+	CharCommandType type;
+	const char* command;
+	int level;
+	int (*proc)(const int, struct map_session_data*,
+		const char* command, const char* message);
+} CharCommandInfo;
 
 CharCommandType
 is_charcommand(const int fd, struct map_session_data* sd, const char* message, int gmlvl);

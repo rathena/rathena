@@ -2671,9 +2671,8 @@ static int map_cache_write(struct map_data *m)
 			map_cache.map[i].water_height = m->water_height;
 			map_cache.head.filesize += len_new;
 			map_cache.dirty = 1;
-			if(map_read_flag == 2) {
+			if(map_read_flag == 2)
 				aFree(write_buf);
-			}
 			return 0;
 		}
 	}

@@ -1401,19 +1401,20 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 	if( guild_get_alliance_count(g,1)>=3 )	// “G‘Î”Šm”F
 		clif_guild_oppositionack(sd,1);
 
+	if(agit_flag)	{
+		clif_displaymessage(sd->fd,"You cannot make oppositions during Guild Wars!");
+		return 0;
+	}
+
 	for(i=0;i<MAX_GUILDALLIANCE;i++){	// ‚·‚Å‚ÉŠÖŒW‚ðŽ‚Á‚Ä‚¢‚é‚©Šm”F
 		if(g->alliance[i].guild_id==tsd->status.guild_id){
 			if(g->alliance[i].opposition==1){	// ‚·‚Å‚É“G‘Î
 				clif_guild_oppositionack(sd,2);
 				return 0;
-			} else { //Change alliance to opposition.
-				if(agit_flag)	{
-					clif_displaymessage(sd->fd,"You cannot break an alliance during Guild Wars!");
-					return 0;
-				}
-				intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
-					sd->status.account_id,tsd->status.account_id,8 );
 			}
+			//Change alliance to opposition.
+			intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
+				sd->status.account_id,tsd->status.account_id,8 );
 		}
 	}
 
