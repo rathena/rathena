@@ -1835,7 +1835,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	int startline = 0;
 	unsigned char line[1024];
 	int i;
-	struct npc_data *nd;
+	struct npc_data *nd, *dnd;
 	struct dbt *label_db;
 	char *p;
 	struct npc_label_list *label_dup = NULL;
@@ -1966,6 +1966,11 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	npc_script++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SCRIPT;
+
+	if((dnd = npc_name2id(nd->exname))){
+		ShowInfo("npc_parse_script: Removing duplicated NPC '%s::%s'...\n", dnd->name, dnd->exname);
+		npc_unload(dnd);
+	}
 
 	for (i = 0; i < MAX_EVENTTIMER; i++)
 		nd->eventtimer[i] = -1;
