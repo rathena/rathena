@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/14
+	* Fixed main.sql adding a key on char_id rather than account_id for the
+	  char table. [Skotlex]
+	* Cleaned up character saving in char-sql, it no longer needs to query the
+	  database to see if the player exists on each char-save, instead it checks
+	  the received data against the online-players db.  No such fix is required
+	  for char-txt. [Skotlex]
+	* Added an error message on the char-server when the received player data
+	  size does not matches with the expected size (should avoid the crash that
+	  happens on such a memcpy). [Skotlex]
 	* [Improved]:
 	  - script_save_mapreg for MapregSQL Saving to display perfomance only in slow
 	    queries. [Lance]

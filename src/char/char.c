@@ -2690,9 +2690,8 @@ int parse_frommap(int fd) {
 			}
 			if (i != char_num)
 				memcpy(&char_dat[i].status, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
-			if (RFIFOB(fd,12)) { //Flag, set character offline. [Skotlex]
+			if (RFIFOB(fd,12)) //Flag, set character offline. [Skotlex]
 				set_char_offline(RFIFOL(fd,8),RFIFOL(fd,4));
-			}
 			RFIFOSKIP(fd,RFIFOW(fd,2));
 			break;
 

@@ -2548,29 +2548,27 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 		{
-			int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8);
-			i = 0;
-			//check account
-			sprintf(tmp_sql, "SELECT count(*) FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",char_db, aid, cid); // TBR
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
+			struct online_char_data* character;
+			if (size - 13 != sizeof(struct mmo_charstatus))
+			{
+				ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
+				RFIFOSKIP(fd,size);
+				break;
 			}
-			sql_res = mysql_store_result(&mysql_handle);
-			sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-			if (sql_row) i = atoi(sql_row[0]);
-			if (sql_res) mysql_free_result(sql_res);
-
-			if (i == 1) {
+			//Check account
+			if (
+				(character = idb_get(online_char_db, aid)) != NULL &&
+				character->char_id == cid)
+			{
 				memcpy(&char_dat[0], RFIFOP(fd,13), sizeof(struct mmo_charstatus));
 				mmo_char_tosql(cid, char_dat);
-				//save to DB
 			} else 
-				ShowError("parse_from_map (save-char): Received data for non-existant character (%d:%d)!\n", aid, cid);
-			if (RFIFOB(fd,12)) { //Flag? Set character offline after saving [Skotlex]
+				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d)!\n", aid, cid);
+
+			if (RFIFOB(fd,12)) //Flag? Set character offline after saving [Skotlex]
 				set_char_offline(cid, aid);
-			}
-			RFIFOSKIP(fd,RFIFOW(fd,2));
+			RFIFOSKIP(fd,size);
 			break;
 		}
 		// req char selection
