@@ -22,7 +22,7 @@
 
 
 // South =====================================
-geffen.gat,120,62,8	script	Kafra	115,{
+geffen.gat,120,62,8	script	Kafra::kaf_geffen	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
@@ -33,7 +33,7 @@ geffen.gat,120,62,8	script	Kafra	115,{
 }
 
 // East ==============================================
-geffen.gat,203,123,3	script	Kafra	114,{
+geffen.gat,203,123,3	script	Kafra::geffen2	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
@@ -50,7 +50,7 @@ geffen.gat,203,123,3	script	Kafra	114,{
 }
 
 // North ==============================================
-geffen.gat,116,202,3	script	Kafra	116,{
+geffen.gat,116,202,3	script	Kafra::geffen3	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
@@ -67,7 +67,7 @@ geffen.gat,116,202,3	script	Kafra	116,{
 }
 
 // West =========================================
-geffen.gat,37,116,6	script	Kafra	117,{
+geffen.gat,37,116,6	script	Kafra::geffen4	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;

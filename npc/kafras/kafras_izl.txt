@@ -22,7 +22,7 @@
 //=====================================================================
 
 
-izlude.gat,134,87,3	script	Kafra	117,{
+izlude.gat,134,87,3	script	Kafra::kaf_izlude	117,{
 	cutin "kafra_01",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Geffen", "Prontera", "Morroc", "Al De Baran";

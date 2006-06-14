@@ -33,7 +33,7 @@ aldeba_in.gat,96,181,4	script	Kafra Leilah	113,{
 }
 
 // South --------------------------------------------------
-aldebaran.gat,143,119,4	script	Kafra	113,{
+aldebaran.gat,143,119,4	script	Kafra::kaf_aldebaran	113,{
 	cutin "kafra_05",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpP[0], 1200, 1200, 1800, 1700;
