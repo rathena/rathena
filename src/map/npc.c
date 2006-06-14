@@ -1898,19 +1898,19 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	} else {
 		// duplicateする
 		char srcname[128];
-		struct npc_data *nd2;
+		struct npc_data *dnd;
 		if (sscanf(w2, "duplicate(%[^)])", srcname) != 1) {
 			ShowError("bad duplicate name (in %s)! : %s", current_file, w2);
 			return 0;
 		}
-		if ((nd2 = npc_name2id(srcname)) == NULL) {
+		if ((dnd = npc_name2id(srcname)) == NULL) {
 			ShowError("bad duplicate name (in %s)! (not exist) : %s\n", current_file, srcname);
 			return 0;
 		}
-		script = nd2->u.scr.script;
-		label_dup = nd2->u.scr.label_list;
-		label_dupnum = nd2->u.scr.label_list_num;
-		src_id = nd2->bl.id;
+		script = dnd->u.scr.script;
+		label_dup = dnd->u.scr.label_list;
+		label_dupnum = dnd->u.scr.label_list_num;
+		src_id = dnd->bl.id;
 
 	}// end of スクリプト解析
 
@@ -1953,6 +1953,11 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		memcpy(nd->exname, w3, NAME_LENGTH-1);
 	}
 
+	if((dnd = npc_name2id(nd->exname))){
+		ShowInfo("npc_parse_script: Overriding NPC '%s::%s' to '%s::%d'.. (Duplicated System Name - Lazy scripters >_>) \n",nd->name,nd->exname,nd->name,npc_script);
+		sprintf(nd->exname, "%d", npc_script);
+	}
+
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
@@ -1966,11 +1971,6 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	npc_script++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = SCRIPT;
-
-	if((dnd = npc_name2id(nd->exname))){
-		ShowInfo("npc_parse_script: Removing duplicated NPC '%s::%s'...\n", dnd->name, dnd->exname);
-		npc_unload(dnd);
-	}
 
 	for (i = 0; i < MAX_EVENTTIMER; i++)
 		nd->eventtimer[i] = -1;
