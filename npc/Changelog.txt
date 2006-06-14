@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/14
+	* Fixed an exploit in the comodo gambling script, thanks to reddozen [MasterOfMuppets]
 06/13
 	* Fixed exploit in Louyang NPC [Playtester]
 	* More Abyss/Thanatos spawn updates according to info from Tharis [Playtester]
