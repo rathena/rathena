@@ -96,7 +96,7 @@ yuno.gat,157,205,4	script	Juno Artisan	54,{
 	M_1: 
 		mes "[Artisan]";
 		mes "Let me suggest the ^5533FFHoly Guard^000000 and";
-		mes " ^5533FFHoly Avenger'^000000 which are";
+		mes "^5533FFHoly Avenger^000000 which are";
 		mes "special items for Crusaders.";
 		next;
 		mes "[Artisan]";
@@ -232,7 +232,7 @@ yuno.gat,343,68,4	script	Juno Despot	730,{
 //=======================================================================================
 yuno.gat,261,99,4	script	Sage Yklah	735,{
 	mes "[Yklah]";
-	mes "^5533FFJuphero^000000...,";
+	mes "^5533FFJuphero^000000...";
 	mes "That was the name of the city that";
 	mes "once existed in ancient times.";
 	next;
@@ -324,25 +324,6 @@ yuno.gat,166,111,4	script	Remorpheous	120,{
 	close;
 	mes "[Remorpheus]";
 	mes ".... it became a monster that attacks anyone regardless";
-	close;
-}
-
-//=====================================================================================
-yuno.gat,185,173,3	script	Impressor	729,{
-	mes "[Impressor]";
-	mes "Scholar's city, 'Yuno' is made of 3 big islands.";
-	next;
-	mes "[Impressor]";
-	mes "those are,";
-	mes "The island of Glory - Solomon";
-	mes "The island of Prosperity - Minetta";
-	mes "The island of Wisdom - Snottra";
-	next;
-	mes "[Impressor]";
-	mes "Each island's location are:";
-	mes "Northwest: Solomon";
-	mes "Northeast: Snottra";
-	mes "South: Minetta";
 	close;
 }
 
