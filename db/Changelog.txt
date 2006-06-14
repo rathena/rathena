@@ -24,6 +24,11 @@
 	-----
 
 =========================
+06/14
+	* Fixed the awfully coded Baseball Cap script [Playtester]
+	- please use CONSTANTS!
+	- please use RC_Nonboss and RC_Boss for "all mobs" instead of listing all the races!
+	- please don't stack RC_Nonboss with RC_(some race)!
 06/13
 	* Detale only summons one Hydro [Playtester]
 	* Fixed the names of the Lotto items [Playtester]

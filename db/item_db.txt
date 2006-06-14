@@ -1616,7 +1616,7 @@
 5144,Gamble_Hat,Gambler Hat,5,,10,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,16,{ bonus bLuk,5; },{},{}
 5145,Carnival_Jester,Carnival Jester,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,89,{},{},{}
 5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,215,{ bonus bVit,1; bonus2 bSubRace,RC_Brute,7; skill 86,1; },{},{}
-5147,Baseball_Cap,Baseball Cap,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,216,{ bonus2 bExpAddRace,0,50; bonus2 bExpAddRace,1,50; bonus2 bExpAddRace,2,50; bonus2 bExpAddRace,3,50; bonus2 bExpAddRace,4,50; bonus2 bExpAddRace,5,50; bonus2 bExpAddRace,6,50; bonus2 bExpAddRace,7,50; bonus2 bExpAddRace,8,50; bonus2 bExpAddRace,9,50; bonus2 bExpAddRace,10,50; bonus2 bExpAddRace,11,50; },{},{}
+5147,Baseball_Cap,Baseball Cap,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,216,{ bonus2 bExpAddRace,RC_NonBoss,50; bonus2 bExpAddRace,RC_Boss,50; },{},{}
 5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
