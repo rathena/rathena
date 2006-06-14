@@ -529,10 +529,6 @@ int unit_warp(struct block_list *bl,int m,short x,short y,int type)
 
 	map_addblock(bl);
 	clif_spawn(bl);
-//This is broken because the mob already was changed from map.
-//Fortunately, the slave ai will make them chase their master automatically
-//	if (bl->type == BL_MOB)
-//		mob_warpslave(bl,AREA_SIZE);
 	skill_unit_move(bl,gettick(),1);
 	return 0;
 }
@@ -838,7 +834,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	switch(skill_num){
 	case ALL_RESURRECTION:
 		if(battle_check_undead(tstatus->race,tstatus->def_ele)){	
-			temp=1;	
+			temp=1;
 			casttime = skill_castfix(src, PR_TURNUNDEAD, skill_lv);
 		}
 		break;
@@ -1281,7 +1277,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)
 			pet_target_check(sd,target,0);
-
 		map_freeblock_unlock();
 
 		ud->attackabletime = tick + sstatus->adelay;

@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/14
+	* Blocked again skill usage during marionette. [Skotlex]
 	* Fixed main.sql adding a key on char_id rather than account_id for the
 	  char table. [Skotlex]
 	* Cleaned up character saving in char-sql, it no longer needs to query the

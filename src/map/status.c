@@ -896,7 +896,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
 		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
-//				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
+				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
 				sc->data[SC_SILENCE].timer != -1 || 
 				sc->data[SC_STEELBODY].timer != -1 ||
@@ -3817,7 +3817,7 @@ struct status_change *status_get_sc(struct block_list *bl)
 	case BL_NPC:
 		return &((TBL_NPC*)bl)->sc;
 	case BL_HOMUNCULUS: //[blackhole89]
-		return &((struct homun_data*)bl)->sc;
+		return &((TBL_HOMUNCULUS*)bl)->sc;
 	}
 	return NULL;
 }
@@ -3890,7 +3890,7 @@ int status_get_sc_def(struct block_list *bl, int type)
 		break;
 	case SC_CURSE:
 		if (status->luk > status_get_lv(bl))
-			sc_def = 10000; //Special property: inmunity when luk is greater than level
+			return 10000; //Special property: inmunity when luk is greater than level
 		else
 			sc_def = 300 +100*status->luk;
 		break;
