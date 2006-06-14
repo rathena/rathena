@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/14
 	* [Improved]:
+	  - script_save_mapreg for MapregSQL Saving to display perfomance only in slow
+	    queries. [Lance]
+	* [Improved]:
 	  - npc_parse_script to show information and remove duplicated NPCs [Lance]
 2006/06/13
 	* Updated mob_db.sql and item_db.sql to latest. [Skotlex]

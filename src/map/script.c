@@ -11930,11 +11930,12 @@ static int script_save_mapreg(void)
 	mapregstr_db->foreach(mapregstr_db,script_save_mapreg_strsub,fp);
 	lock_fclose(fp,mapreg_txt,&lock);
 #else
-	int perfomance = gettick_nocache();
+	int perfomance = (int)time(NULL);
 	mapreg_db->foreach(mapreg_db,script_save_mapreg_intsub);  // [zBuffer]
 	mapregstr_db->foreach(mapregstr_db,script_save_mapreg_strsub);
-	perfomance = (gettick_nocache() - perfomance) / 1000;
-	ShowInfo("Mapreg saved in %d seconds.\n", perfomance);
+	perfomance = ((int)time(NULL) - perfomance) / 1000;
+	if(perfomance > 2)
+		ShowWarning("Slow Query: MapregSQL Saving @ %d second(s).\n", perfomance);
 #endif
 	mapreg_dirty=0;
 	return 0;
