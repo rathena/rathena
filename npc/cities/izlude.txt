@@ -21,7 +21,7 @@
 
 
 // Welcome Sign ----------------------------------------------------------
-izlude.gat,125,116,1	script	Welcome Sign	111,{
+izlude.gat,125,116,1	script	Welcome Sign::ws_izlude	111,{
   mes "~sign reads...~";
   mes "Salutations and welcome to Izlude! Izlude is the satellite of Prontera and is home to Swordsmen and the Cool Event Corp.'s Monster Arena!";
   close;
