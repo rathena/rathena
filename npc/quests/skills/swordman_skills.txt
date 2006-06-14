@@ -278,7 +278,7 @@ L_Other:
 	close;
 
 L_Start:
-	if (baseClass == Job_Swordman && JobLevel<34) goto L_LowLvl;
+	if (baseClass == Job_Swordman && JobLevel<30) goto L_LowLvl;
 	if (BERSERK == 1) goto L_Check;
 	if (getskilllv(146)>0) goto L_GotSkill;
 
