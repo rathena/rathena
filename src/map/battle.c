@@ -3560,6 +3560,8 @@ static const struct battle_data_short {
 	{ "status_cast_cancel",					&battle_config.sc_castcancel },
 	{ "pc_status_def_rate",					&battle_config.pc_sc_def_rate },
 	{ "mob_status_def_rate",				&battle_config.mob_sc_def_rate },
+	{ "pc_luk_status_def",					&battle_config.pc_luk_sc_def },
+	{ "mob_luk_status_def",					&battle_config.mob_luk_sc_def },
 	{ "pc_max_status_def",					&battle_config.pc_max_sc_def },
 	{ "mob_max_status_def",					&battle_config.mob_max_sc_def },
 	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
@@ -3978,6 +3980,8 @@ void battle_set_defaults() {
 	battle_config.sc_castcancel = 0;
 	battle_config.pc_sc_def_rate = 100;
 	battle_config.mob_sc_def_rate = 100;
+	battle_config.pc_luk_sc_def = 300;
+	battle_config.mob_luk_sc_def = 300;
 	battle_config.pc_max_sc_def = 10000;
 	battle_config.mob_max_sc_def = 5000;
 	battle_config.sg_miracle_skill_ratio=1;
@@ -4176,10 +4180,11 @@ void battle_validate_conf() {
 	if (battle_config.mobs_level_up_exp_rate < 1) // [Valaris]
 		battle_config.mobs_level_up_exp_rate = 1;
 
-	if (battle_config.pc_max_sc_def > 10000)
-		battle_config.pc_max_sc_def = 10000;
-	if (battle_config.mob_max_sc_def > 10000)
-		battle_config.mob_max_sc_def = 10000;
+	if (battle_config.pc_luk_sc_def < 1)
+		battle_config.pc_luk_sc_def = 1;
+	if (battle_config.mob_luk_sc_def < 1)
+		battle_config.mob_luk_sc_def = 1;
+
 	if (battle_config.sg_miracle_skill_ratio > 10000)
 		battle_config.sg_miracle_skill_ratio = 10000;
 

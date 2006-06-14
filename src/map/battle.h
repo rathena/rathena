@@ -422,6 +422,8 @@ extern struct Battle_Config {
 	unsigned short sc_castcancel; // [Skotlex]
 	unsigned short pc_sc_def_rate; // [Skotlex]
 	unsigned short mob_sc_def_rate;
+	unsigned short pc_luk_sc_def;
+	unsigned short mob_luk_sc_def;
 	unsigned short pc_max_sc_def;
 	unsigned short mob_max_sc_def;
 
