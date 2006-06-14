@@ -1385,11 +1385,11 @@ L_P2:
 	mes "their intentions can't be good.";
 	close2;
 	set einbech_buender,3;
-	if(BaseLevel < 40)set BaseExp,BaseExp+34750;
-	if(BaseLevel < 60)set BaseExp,BaseExp+69500;
-	if(BaseLevel > 60 && BaseLevel < 70)set BaseExp,BaseExp+139000;
-	if(BaseLevel > 70 && BaseLevel < 80)set BaseExp,BaseExp+278000;
-	if(BaseLevel > 80 && BaseLevel < 90)set BaseExp,BaseExp+417000;
+	if(BaseLevel < 41)set BaseExp,BaseExp+34750;
+	if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
+	if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
+	if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+278000;
+	if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+417000;
 	if(BaseLevel > 90)set BaseExp,BaseExp+556000;
 	end;
 	

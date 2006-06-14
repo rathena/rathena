@@ -2512,11 +2512,11 @@ s_Ask:
 	mes "adventurer. When the three";
 	mes "of us get together, I'll be";
 	mes "sure to let you know~";
-	if(BaseLevel < 40)set BaseExp,BaseExp+49500;
-	if(BaseLevel < 60)set BaseExp,BaseExp+99000;
-	if(BaseLevel > 60 && BaseLevel < 70)set BaseExp,BaseExp+198000;
-	if(BaseLevel > 70 && BaseLevel < 80)set BaseExp,BaseExp+396000;
-	if(BaseLevel > 80 && BaseLevel < 90)set BaseExp,BaseExp+594000;
+	if(BaseLevel < 41)set BaseExp,BaseExp+49500;
+	if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+99000;
+	if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+198000;
+	if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+396000;
+	if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+594000;
 	if(BaseLevel > 90)set BaseExp,BaseExp+792000;
 	getitem 7350,1;
 	set friendship,11;

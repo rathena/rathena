@@ -1293,7 +1293,7 @@ LV4_15:
 	if (countitem($@LV4_Phlogopite) >= 30 && countitem($@LV4_Olivine) >= 30 && countitem($@LV4_Rose_Quartz) >= 30) goto LV4_15_POR;
 	if (countitem($@LV4_Phlogopite) >= 30 && countitem($@LV4_Olivine) >= 30) goto LV4_15_PO;
 	if (countitem($@LV4_Phlogopite) >= 30 && countitem($@LV4_Rose_Quartz) >= 30) goto LV4_15_PR;
-	if (countitem($@LV4_Olivine) >= 30 && countitem($@LV4_Rose_Quartz) >= 30) goto LV4_15_PR;
+	if (countitem($@LV4_Olivine) >= 30 && countitem($@LV4_Rose_Quartz) >= 30) goto LV4_15_OR;
 	if (countitem($@LV4_Phlogopite) >= 30) goto LV4_15_P;
 	if (countitem($@LV4_Olivine) >= 30) goto LV4_15_O;
 	if (countitem($@LV4_Rose_Quartz) >= 30) goto LV4_15_R;
