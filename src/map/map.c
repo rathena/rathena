@@ -1744,33 +1744,21 @@ struct map_session_data * map_charid2sd(int id) {
  *------------------------------------------
  */
 struct map_session_data * map_nick2sd(char *nick) {
-	int i, quantity=0, nicklen, users;
+	int i, quantity=0, users;
 	struct map_session_data *sd = NULL;
 	struct map_session_data *pl_sd = NULL, **pl_allsd;
 
 	if (nick == NULL)
 		return NULL;
 
-    nicklen = strlen(nick);
-
 	 pl_allsd = map_getallusers(&users);
 	 
 	for (i = 0; i < users; i++) {
 		pl_sd = pl_allsd[i];
 		// Without case sensitive check (increase the number of similar character names found)
-		if (strnicmp(pl_sd->status.name, nick, nicklen) == 0) {
-			// Strict comparison (if found, we finish the function immediatly with correct value)
-			if (strcmp(pl_sd->status.name, nick) == 0)
-				return pl_sd;
-			quantity++;
-			sd = pl_sd;
-		}
+		if (strcasecmp(pl_sd->status.name, nick) == 0)
+			return pl_sd;
 	}
-	// Here, the exact character name is not found
-	// We return the found index of a similar account ONLY if there is 1 similar character
-	if (quantity == 1)
-		return sd;
-
 	// Exact character name is not found and 0 or more than 1 similar characters have been found ==> we say not found
 	return NULL;
 }
