@@ -634,11 +634,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	pc_setinventorydata(sd);
 	pc_checkitem(sd);
 	
-	//Set here because we need the inventory data for weapon sprite parsing.
-	status_set_viewdata(&sd->bl, sd->status.class_);
-	status_change_init(&sd->bl);
-	unit_dataset(&sd->bl);
-	
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Hide)))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
@@ -646,6 +641,11 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		sd->status.option &= OPTION_MASK;
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
+	//Set here because we need the inventory data for weapon sprite parsing.
+	status_set_viewdata(&sd->bl, sd->status.class_);
+	status_change_init(&sd->bl);
+	unit_dataset(&sd->bl);
+	
 	sd->guild_x = -1;
 	sd->guild_y = -1;
 
