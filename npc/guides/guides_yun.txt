@@ -165,7 +165,7 @@ sM_Menu:
 			mes "^FF3355+^000000 -> Tool Shop";
 			mes "Thank you,";
 			mes "Have a good day.";
-			viewpoint 1,163,189,2,0xFFFF00;
+			viewpoint 1,163,189,2,0x0000FF;
 			close;
 		sM_3: 
 			mes @name$;
@@ -174,7 +174,7 @@ sM_Menu:
 			mes "^FF3355+^000000 -> Sage Castle";
 			mes "(Sage Job Change Place)";
 			mes "Thank you, Have a good day.";
-			viewpoint 1,89,320,3,0xff00FF;
+			viewpoint 1,89,320,3,0x00FF00;
 			close;
 		sM_4: 
 			mes @name$;
@@ -182,7 +182,7 @@ sM_Menu:
 			mes "at the mini map.";
 			mes "^FF3355+^000000 -> Street of Book Stores";
 			mes "Thank you, Have a good day.";
-			viewpoint 1,196,138,4,0x00ff00;
+			viewpoint 1,196,138,4,0x0000ff;
 			close;
 		sM_5: 
 			mes @name$;
@@ -191,7 +191,7 @@ sM_Menu:
 			mes "^FF3355+^000000 -> Juphero Plaza";
 			mes "Thank you,"; 
 			mes "Have a good day.";
-			viewpoint 1,157,327,5,0x00ffff;
+			viewpoint 1,157,327,5,0x0000ff;
 			close;
 		sM_6: 
 			mes @name$;
@@ -199,21 +199,21 @@ sM_Menu:
 			mes "at the mini map.";
 			mes "^FF3355+^000000 -> Library of the Republic";
 			mes "Thank you, Have a good day.";
-			viewpoint 1,335,204,6,0x0000ff;
+			viewpoint 1,335,204,6,0x00FF00;
 			close;
 		sM_7:
 			mes @name$;
 			mes "Please look at the mini map.";
 			mes "^FF3355+^000000 -> Schweicherbil Magic Academy";
 			mes "Thank you, Have a good day.";
-			viewpoint 1,323,280,7,0xFFCCFF;
+			viewpoint 1,323,280,7,0xFF0000;
 			close;
 		sM_8:
 			mes @name$;
 			mes "Please look at the mini map.";
 			mes "^FF3355+^000000 -> Monster Museum";
 			mes "Thank you, Have a good day.";
-			viewpoint 1,278,291,8,0xFFFFFF;
+			viewpoint 1,278,291,8,0x0000FF;
 			close;
 		sM_9:
 			mes @name$;

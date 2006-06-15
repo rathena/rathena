@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/15
+	* Updated the color codes on the Juno Guides mini map illustrations. [Musashiden]
 	* Juno Update Process. 50% complete. [Musashiden]
 	* Fixed an exploit in the Comodo gambling script. [Lupus]
 06/14
