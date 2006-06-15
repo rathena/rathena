@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/15
+	* Fixed an exploit in the Comodo gambling script. [Lupus]
 06/14
 	* Separated the Metto quest from the juno town npcs file. [musashiden]
 	* Juno Update Process. 30% complete. [Musashiden]

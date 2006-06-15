@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Reddozen, Cypress, Zefris
 //===== Current Version: =====================================
-//= 0.3
+//= 0.5
 //===== Compatible With: =====================================
 //= Any eAthena Version
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 0.3- Revised the gambling NPC using the official Aegis script [MasterOfMuppets]
 //=	 for information. Thanks to Zefris for doing it for me.
 //= 0.4- Fixed an exploit. thanks to reddozen [MasterOfMuppets]
+//= 0.5- Moved item check to the proper place [Lupus]
 //============================================================ 
 
 mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
@@ -60,38 +61,31 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 
 		set @amount, 0;
 		input @amount;
-		if(@amount<1) goto L_Cancel;
-		if((@amount*55000>zeny) || (@amount>500)) goto L_BadAmnt;
-		goto L_Buy;
-
-		L_Cancel:
+		if(@amount<1){
 			mes "[Dwayne]";
 			mes "Alright, you've";
 			mes "canceled the trade.";
 			mes "Take care!";
 			close;
-
-		L_BadAmnt:
+		}
+		if((@amount*55000>zeny) || (@amount>500)){
 			mes "[Dwayne]";
 			mes "Hahahaha~";
 			mes "You can't fool me!";
 			mes "You dont have enough";
 			mes "Zeny for that many!";
 			close;
-
-		L_Buy:
-			set zeny,zeny - (@amount * 55000);
-			getitem 732, @amount;
-			mes "[Dwayne]";
-			mes "Thank you for";
-			mes "buying my diamonds!";
-			mes "You're welcome to";
-			mes "come back anytime.";
-			close;
+		}
+		set zeny,zeny - (@amount * 55000);
+		getitem 732, @amount;
+		mes "[Dwayne]";
+		mes "Thank you for";
+		mes "buying my diamonds!";
+		mes "You're welcome to";
+		mes "come back anytime.";
+		close;
 
 }
-
-
 
 
 comodo.gat,219,160,3	script	Kachua	91,{
@@ -113,15 +107,6 @@ comodo.gat,219,160,3	script	Kachua	91,{
 	close;
 
 	L_1:
-		if(countitem(732) < 1){
-			mes "[Kachua]";
-			mes "*piff*";
-			mes "You don't have any";
-			mes "diamonds! Don't even";
-			mes "try to fool me!";
-			close;
-		}
-
 		mes "[Kachua]";
 		mes "Are you sure you don't mind";
 		mes "giving this to me? Thank you";
@@ -136,6 +121,7 @@ comodo.gat,219,160,3	script	Kachua	91,{
 		mes "you like to have?";
 		next;
 	
+		set @item,512;
 		switch( select( "Weapon", "Armor", "Garment", "Helmet", "Shoes", "Shield" ) )
 		{
 										case 1: // Weapons
@@ -144,140 +130,140 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,51);
 												if (@gamble2 == 1)
-													getitem 1128,1;
+													set @item,1128;
 												else if (@gamble2 == 2)
-													getitem 1120,1;
+													set @item,1120;
 												else if (@gamble2 == 3)
-													getitem 1127,1;
+													set @item,1127;
 												else if (@gamble2 == 4)
-													getitem 1158,1;
+													set @item,1158;
 												else if (@gamble2 == 5)
-													getitem 1155,1;
+													set @item,1155;
 												else if (@gamble2 == 6)
-													getitem 1220,1;
+													set @item,1220;
 												else if (@gamble2 == 7)
-													getitem 1222,1;
+													set @item,1222;
 												else if (@gamble2 == 8)
-													getitem 1253,1;
+													set @item,1253;
 												else if (@gamble2 == 9)
-													getitem 1529,1;
+													set @item,1529;
 												else if (@gamble2 == 10)
-													getitem 1251,1;
+													set @item,1251;
 												else if (@gamble2 == 11)
-													getitem 1361,1;
+													set @item,1361;
 												else if (@gamble2 == 12)
-													getitem 1258,1;
+													set @item,1258;
 												else if (@gamble2 == 13)
-													getitem 1257,1;
+													set @item,1257;
 												else if (@gamble2 == 14)
-													getitem 1256,1;
+													set @item,1256;
 												else if (@gamble2 == 15)
-													getitem 1259,1;
+													set @item,1259;
 												else if (@gamble2 == 16)
-													getitem 1260,1;
+													set @item,1260;
 												else if (@gamble2 == 17)
-													getitem 1716,1;
+													set @item,1716;
 												else if (@gamble2 == 18)
-													getitem 1715,1;
+													set @item,1715;
 												else if (@gamble2 == 19)
-													getitem 1711,1;
+													set @item,1711;
 												else if (@gamble2 == 20)
-													getitem 1702,1;
+													set @item,1702;
 												else if (@gamble2 == 21)
-													getitem 1520,1;
+													set @item,1520;
 												else if (@gamble2 == 22)
-													getitem 1610,1;
+													set @item,1610;
 												else if (@gamble2 == 23)
-													getitem 1615,1;
+													set @item,1615;
 												else if (@gamble2 == 24)
-													getitem 1602,1;
+													set @item,1602;
 												else if (@gamble2 == 25)
-													getitem 1461,1;
+													set @item,1461;
 												else if (@gamble2 == 26)
-													getitem 1402,1;
+													set @item,1402;
 												else if (@gamble2 == 27)
-													getitem 1953,1;
+													set @item,1953;
 												else if (@gamble2 == 28)
-													getitem 1957,1;
+													set @item,1957;
 												else if (@gamble2 == 29)
-													getitem 1552,1;
+													set @item,1552;
 												else if (@gamble2 == 30)
-													getitem 1551,1;
+													set @item,1551;
 												else if (@gamble2 == 31)
-													getitem 1553,1;
+													set @item,1553;
 												else if (@gamble2 == 32)
-													getitem 1554,1;
+													set @item,1554;
 												else if (@gamble2 == 33)
-													getitem 1555,1;
+													set @item,1555;
 												else if (@gamble2 == 34)
-													getitem 1556,1;
+													set @item,1556;
 												else if (@gamble2 == 35)
-													getitem 1951,1;
+													set @item,1951;
 												else if (@gamble2 == 36)
-													getitem 1959,1;
+													set @item,1959;
 												else if (@gamble2 == 37)
-													getitem 1961,1;
+													set @item,1961;
 												else if (@gamble2 == 38)
-													getitem 1955,1;
+													set @item,1955;
 												else if (@gamble2 == 39)
-													getitem 1810,1;
+													set @item,1810;
 												else if (@gamble2 == 40)
-													getitem 1910,1;
+													set @item,1910;
 												else if (@gamble2 == 41)
-													getitem 1906,1;
+													set @item,1906;
 												else if (@gamble2 == 42)
-													getitem 1902,1;
+													set @item,1902;
 												else if (@gamble2 == 43)
-													getitem 1904,1;
+													set @item,1904;
 												else if (@gamble2 == 44)
-													getitem 1912,1;
+													set @item,1912;
 												else if (@gamble2 == 45)
-													getitem 1908,1;
+													set @item,1908;
 												else if (@gamble2 == 46)
-													getitem 1808,1;
+													set @item,1808;
 												else if (@gamble2 == 47)
-													getitem 1802,1;
+													set @item,1802;
 												else if (@gamble2 == 48)
-													getitem 1812,1;
+													set @item,1812;
 												else if (@gamble2 == 49)
-													getitem 1806,1;
+													set @item,1806;
 												else if (@gamble2 == 50)
-													getitem 1804,1;
+													set @item,1804;
 												else if (@gamble2 == 51)
-													getitem 1550,1;
+													set @item,1550;
 												}
 											else if ((@gamble > 0) && (@gamble < 201))
-												getitem 1201,1;
+												set @item,1201;
 											else if ((@gamble > 200) && (@gamble < 301))
-												getitem 1101,1;
+												set @item,1101;
 											else if ((@gamble > 300) && (@gamble < 401))
-												getitem 1601,1;
+												set @item,1601;
 											else if ((@gamble > 400) && (@gamble < 501))
-												getitem 1116,1;
+												set @item,1116;
 											else if ((@gamble > 500) && (@gamble < 601))
-												getitem 1250,1;
+												set @item,1250;
 											else if ((@gamble > 600) && (@gamble < 701))
-												getitem 1301,1;
+												set @item,1301;
 											else if ((@gamble > 700) && (@gamble < 801))
-												getitem 1701,1;
+												set @item,1701;
 											else if ((@gamble > 800) && (@gamble < 851))
-												getitem 1504,1;
+												set @item,1504;
 											else if ((@gamble > 850) && (@gamble < 901))
-												getitem 1604,1;
+												set @item,1604;
 											else if ((@gamble > 900) && (@gamble < 911))
-												getitem 1108,1;
+												set @item,1108;
 											else if ((@gamble > 910) && (@gamble < 921))
-												getitem 1163,1;
+												set @item,1163;
 											else if ((@gamble > 930) && (@gamble < 961))
-												getitem 1522,1;
+												set @item,1522;
 											else if ((@gamble > 960) && (@gamble < 971))
-												getitem 1608,1;
+												set @item,1608;
 											else if ((@gamble > 970) && (@gamble < 981))
-												getitem 1408,1;
+												set @item,1408;
 											else if ((@gamble > 980) && (@gamble < 991))
-												getitem 1452,1;
+												set @item,1452;
 											else if ((@gamble > 990) && (@gamble < 1001))
-												getitem 1208,1;
+												set @item,1208;
 									break;
 
 									case 2: // Armors
@@ -286,92 +272,92 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,30);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
-													getitem 2315,1;
+													set @item,2315;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													getitem 2336,1;
+													set @item,2336;
 												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													getitem 2318,1;
+													set @item,2318;
 												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													getitem 2326,1;
+													set @item,2326;
 												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													getitem 2327,1;
+													set @item,2327;
 												else if ((@gamble2 > 10) && (@gamble2 < 13))
-													getitem 2317,1;
+													set @item,2317;
 												else if ((@gamble2 > 12) && (@gamble2 < 15))
-													getitem 2331,1;
+													set @item,2331;
 												else if ((@gamble2 > 14) && (@gamble2 < 17))
-													getitem 2342,1;
+													set @item,2342;
 												else if ((@gamble2 > 16) && (@gamble2 < 19))
-													getitem 2311,1;
+													set @item,2311;
 												else if ((@gamble2 > 18) && (@gamble2 < 21))
-													getitem 2320,1;
+													set @item,2320;
 												else if ((@gamble2 > 20) && (@gamble2 < 23))
-													getitem 2319,1;
+													set @item,2319;
 												else if ((@gamble2 > 22) && (@gamble2 < 25))
-													getitem 2344,1;
+													set @item,2344;
 												else if ((@gamble2 > 24) && (@gamble2 < 27))
-													getitem 2346,1;
+													set @item,2346;
 												else if ((@gamble2 > 26) && (@gamble2 < 29))
-													getitem 2348,1;
+													set @item,2348;
 												else if ((@gamble2 > 28) && (@gamble2 < 31))
-													getitem 2350,1;
+													set @item,2350;
 												}
 											else if ((@gamble > 0) && (@gamble < 51))
-												getitem 2301,1;
+												set @item,2301;
 											else if ((@gamble > 50) && (@gamble < 101))
-												getitem 2302,1;
+												set @item,2302;
 											else if ((@gamble > 100) && (@gamble < 151))
-												getitem 2303,1;
+												set @item,2303;
 											else if ((@gamble > 150) && (@gamble < 201))
-												getitem 2304,1;
+												set @item,2304;
 											else if ((@gamble > 200) && (@gamble < 251))
-												getitem 2305,1;
+												set @item,2305;
 											else if ((@gamble > 250) && (@gamble < 300))
-												getitem 2301,1;
+												set @item,2301;
 											else if ((@gamble > 301) && (@gamble < 351))
-												getitem 2307,1;
+												set @item,2307;
 											else if ((@gamble > 350) && (@gamble < 401))
-												getitem 2309,1;
+												set @item,2309;
 											else if ((@gamble > 400) && (@gamble < 402))
-												getitem 2322,1;
+												set @item,2322;
 											else if ((@gamble > 401) && (@gamble < 403))
-												getitem 2310,1;
+												set @item,2310;
 											else if ((@gamble > 402) && (@gamble < 411))
-												getitem 2306,1;
+												set @item,2306;
 											else if ((@gamble > 410) && (@gamble < 416))
-												getitem 2308,1;
+												set @item,2308;
 											else if ((@gamble > 415) && (@gamble < 421))
-												getitem 2313,1;
+												set @item,2313;
 											else if ((@gamble > 420) && (@gamble < 426))
-												getitem 2337,1;
+												set @item,2337;
 											else if ((@gamble > 425) && (@gamble < 431))
-												getitem 2316,1;
+												set @item,2316;
 											else if ((@gamble > 430) && (@gamble < 436))
-												getitem 2325,1;
+												set @item,2325;
 											else if ((@gamble > 435) && (@gamble < 441))
-												getitem 2341,1;
+												set @item,2341;
 											else if ((@gamble > 440) && (@gamble < 446))
-												getitem 2330,1;
+												set @item,2330;
 											else if ((@gamble > 445) && (@gamble < 451))
-												getitem 2314,1;
+												set @item,2314;
 											else if ((@gamble > 450) && (@gamble < 456))
-												getitem 2335,1;
+												set @item,2335;
 											else if ((@gamble > 455) && (@gamble < 461))
-												getitem 2324,1;
+												set @item,2324;
 											else if ((@gamble > 460) && (@gamble < 466))
-												getitem 2329,1;
+												set @item,2329;
 											else if ((@gamble > 465) && (@gamble < 471))
-												getitem 2340,1;
+												set @item,2340;
 											else if ((@gamble > 470) && (@gamble < 476))
-												getitem 2312,1;
+												set @item,2312;
 											else if ((@gamble > 475) && (@gamble < 481))
-												getitem 2339,1;
+												set @item,2339;
 											else if ((@gamble > 480) && (@gamble < 486))
-												getitem 2328,1;
+												set @item,2328;
 											else if ((@gamble > 485) && (@gamble < 491))
-												getitem 2321,1;
+												set @item,2321;
 											else if ((@gamble > 490) && (@gamble < 501))
-												getitem 2323,1;
+												set @item,2323;
 									break;
 
 									case 3:  // Garments
@@ -380,22 +366,22 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,10);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
-													getitem 2506,1;
+													set @item,2506;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													getitem 2504,1;
+													set @item,2504;
 												else if ((@gamble2 > 4) && (@gamble2 < 8))
-													getitem 2508,1;
+													set @item,2508;
 												else if ((@gamble2 > 7) && (@gamble2 < 11))
-													getitem 2507,1;
+													set @item,2507;
 												}
 											else if ((@gamble > 0) && (@gamble < 101))
-												getitem 2503,1;
+												set @item,2503;
 											else if ((@gamble > 100) && (@gamble < 201))
-												getitem 2505,1;
+												set @item,2505;
 											else if ((@gamble > 203) && (@gamble < 451))
-												getitem 2501,1;
+												set @item,2501;
 											else if ((@gamble > 450) && (@gamble < 501))
-												getitem 2502,1;
+												set @item,2502;
 									break;
 
 									case 4: //headgears
@@ -404,134 +390,134 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,76);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
-													getitem 5109,1;
+													set @item,5109;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													getitem 2285,1;
+													set @item,2285;
 												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													getitem 2255,1;
+													set @item,2255;
 												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													getitem 5045,1;
+													set @item,5045;
 												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													getitem 2233,1;
+													set @item,2233;
 												else if ((@gamble2 > 10) && (@gamble2 < 13))
-													getitem 2231,1;
+													set @item,2231;
 												else if ((@gamble2 > 12) && (@gamble2 < 15))
-													getitem 2217,1;
+													set @item,2217;
 												else if ((@gamble2 > 14) && (@gamble2 < 17))
-													getitem 2206,1;
+													set @item,2206;
 												else if ((@gamble2 > 16) && (@gamble2 < 19))
-													getitem 2246,1;
+													set @item,2246;
 												else if ((@gamble2 > 18) && (@gamble2 < 21))
-													getitem 2261,1;
+													set @item,2261;
 												else if ((@gamble2 > 20) && (@gamble2 < 23))
-													getitem 2287,1;
+													set @item,2287;
 												else if ((@gamble2 > 22) && (@gamble2 < 25))
-													getitem 5012,1;
+													set @item,5012;
 												else if ((@gamble2 > 24) && (@gamble2 < 27))
-													getitem 2244,1;
+													set @item,2244;
 												else if ((@gamble2 > 26) && (@gamble2 < 29))
-													getitem 5057,1;
+													set @item,5057;
 												else if ((@gamble2 > 28) && (@gamble2 < 31))
-													getitem 2248,1;
+													set @item,2248;
 												else if ((@gamble2 > 30) && (@gamble2 < 33))
-													getitem 2223,1;
+													set @item,2223;
 												else if ((@gamble2 > 32) && (@gamble2 < 35))
-													getitem 2247,1;
+													set @item,2247;
 												else if ((@gamble2 > 34) && (@gamble2 < 37))
-													getitem 2245,1;
+													set @item,2245;
 												else if ((@gamble2 > 36) && (@gamble2 < 39))
-													getitem 5003,1;
+													set @item,5003;
 												else if ((@gamble2 > 38) && (@gamble2 < 41))
-													getitem 2225,1;
+													set @item,2225;
 												else if ((@gamble2 > 40) && (@gamble2 < 43))
-													getitem 5017,1;
+													set @item,5017;
 												else if ((@gamble2 > 42) && (@gamble2 < 45))
-													getitem 5030,1;
+													set @item,5030;
 												else if ((@gamble2 > 44) && (@gamble2 < 47))
-													getitem 5035,1;
+													set @item,5035;
 												else if ((@gamble2 > 46) && (@gamble2 < 49))
-													getitem 2250,1;
+													set @item,2250;
 												else if ((@gamble2 > 48) && (@gamble2 < 51))
-													getitem 2277,1;
+													set @item,2277;
 												else if ((@gamble2 > 50) && (@gamble2 < 53))
-													getitem 5011,1;
+													set @item,5011;
 												else if ((@gamble2 > 52) && (@gamble2 < 55))
-													getitem 2290,1;
+													set @item,2290;
 												else if ((@gamble2 > 54) && (@gamble2 < 57))
-													getitem 5010,1;
+													set @item,5010;
 												else if ((@gamble2 > 56) && (@gamble2 < 60))
-													getitem 2259,1;
+													set @item,2259;
 												else if ((@gamble2 > 59) && (@gamble2 < 62))
-													getitem 5008,1;
+													set @item,5008;
 												else if ((@gamble2 > 61) && (@gamble2 < 63))
-													getitem 2249,1;
+													set @item,2249;
 												else if ((@gamble2 > 62) && (@gamble2 < 65))
-													getitem 2229,1;
+													set @item,2229;
 												else if (@gamble2 == 65)
-													getitem 2258,1;
+													set @item,2258;
 												else if (@gamble2 == 66)
-													getitem 2274,1;
+													set @item,2274;
 												else if (@gamble2 == 67)
-													getitem 5019,1;
+													set @item,5019;
 												else if (@gamble2 == 68)
-													getitem 2254,1;
+													set @item,2254;
 												else if (@gamble2 == 69)
-													getitem 5007,1;
+													set @item,5007;
 												else if (@gamble2 == 70)
-													getitem 5066,1;
+													set @item,5066;
 												else if (@gamble2 == 71)
-													getitem 2235,1;
+													set @item,2235;
 												else if (@gamble2 == 72)
-													getitem 2234,1;
+													set @item,2234;
 												else if (@gamble2 == 73)
-													getitem 2256,1;
+													set @item,2256;
 												else if (@gamble2 == 74)
-													getitem 5093,1;
+													set @item,5093;
 												else if (@gamble2 == 75)
-													getitem 5072,1;
+													set @item,5072;
 												else if (@gamble2 == 76)
-													getitem 2231,1;
+													set @item,2231;
 												}
 											else if ((@gamble > 0) && (@gamble < 101))
-												getitem 2226,1;
+												set @item,2226;
 											else if ((@gamble > 100) && (@gamble < 201))
-												getitem 2211,1;
+												set @item,2211;
 											else if ((@gamble > 200) && (@gamble < 300))
-												getitem 2209,1;
+												set @item,2209;
 											else if ((@gamble > 303) && (@gamble < 401))
-												getitem 2220,1;
+												set @item,2220;
 											else if ((@gamble > 400) && (@gamble < 501))
-												getitem 2232,1;
+												set @item,2232;
 											else if ((@gamble > 500) && (@gamble < 601))
-												getitem 2216,1;
+												set @item,2216;
 											else if ((@gamble > 600) && (@gamble < 701))
-												getitem 2230,1;
+												set @item,2230;
 											else if ((@gamble > 700) && (@gamble < 801))
-												getitem 2224,1;
+												set @item,2224;
 											else if ((@gamble > 800) && (@gamble < 901))
-												getitem 2222,1;
+												set @item,2222;
 											else if ((@gamble > 900) && (@gamble < 906))
-												getitem 2228,1;
+												set @item,2228;
 											else if ((@gamble > 905) && (@gamble < 911))
-												getitem 2294,1;
+												set @item,2294;
 											else if ((@gamble > 910) && (@gamble < 916))
-												getitem 2227,1;
+												set @item,2227;
 											else if ((@gamble > 915) && (@gamble < 921))
-												getitem 2221,1;
+												set @item,2221;
 											else if ((@gamble > 920) && (@gamble < 926))
-												getitem 5157,1;
+												set @item,5157;
 											else if ((@gamble > 925) && (@gamble < 931))
-												getitem 2236,1;
+												set @item,2236;
 											else if ((@gamble > 930) && (@gamble < 936))
-												getitem 2275,1;
+												set @item,2275;
 											else if ((@gamble > 935) && (@gamble < 941))
-												getitem 5015,1;
+												set @item,5015;
 											else if ((@gamble > 940) && (@gamble < 946))
-												getitem 5061,1;
+												set @item,5061;
 											else if ((@gamble > 945) && (@gamble < 951))
-												getitem 5092,1;
+												set @item,5092;
 											else if ((@gamble > 950) && (@gamble < 1001))
-												getitem 2226,1;
+												set @item,2226;
 									break;
 
 									case 5: //footgear
@@ -540,28 +526,28 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,10);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
-													getitem 2406,1;
+													set @item,2406;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													getitem 2412,1;
+													set @item,2412;
 												else if ((@gamble2 > 4) && (@gamble2 < 8))
-													getitem 2404,1;
+													set @item,2404;
 												else if ((@gamble2 > 7) && (@gamble2 < 11))
-													getitem 2407,1;
+													set @item,2407;
 												}
 											else if ((@gamble > 0) && (@gamble < 201))
-												getitem 2401,1;
+												set @item,2401;
 											else if ((@gamble > 200) && (@gamble < 300))
-												getitem 2408,1;
+												set @item,2408;
 											else if ((@gamble > 302) && (@gamble < 351))
-												getitem 2411,1;
+												set @item,2411;
 											else if ((@gamble > 350) && (@gamble < 401))
-												getitem 2403,1;
+												set @item,2403;
 											else if ((@gamble > 400) && (@gamble < 451))
-												getitem 2405,1;
+												set @item,2405;
 											else if ((@gamble > 450) && (@gamble < 476))
-												getitem 2409,1;
+												set @item,2409;
 											else if ((@gamble > 475) && (@gamble < 501))
-												getitem 2402,1;
+												set @item,2402;
 									break;
 
 									case 6: //Shields
@@ -570,31 +556,39 @@ comodo.gat,219,160,3	script	Kachua	91,{
 												{
 												set @gamble2,rand(1,10);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
-													getitem 2104,1;
+													set @item,2104;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													getitem 2106,1;
+													set @item,2106;
 												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													getitem 2102,1;
+													set @item,2102;
 												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													getitem 2111,1;
+													set @item,2111;
 												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													getitem 2109,1;
+													set @item,2109;
 												}
 											else if ((@gamble > 0) && (@gamble < 201))
-												getitem 2101,1;
+												set @item,2101;
 											else if ((@gamble > 204) && (@gamble < 301))
-												getitem 2103,1;
+												set @item,2103;
 											else if ((@gamble > 300) && (@gamble < 401))
-												getitem 2107,1;
+												set @item,2107;
 											else if ((@gamble > 401) && (@gamble < 481))
-												getitem 2105,1;
+												set @item,2105;
 											else if ((@gamble > 480) && (@gamble < 501))
-												getitem 2108,1;
+												set @item,2108;
 									break;
 		}
+	if(countitem(732) < 1){
+		mes "[Kachua]";
+		mes "*piff*";
+		mes "You don't have any";
+		mes "diamonds! Don't even";
+		mes "try to fool me!";
+		close;
+	}
 	delitem 732,1;
+	getitem @item,1;
 	close;
-
 }
 
 comodo.gat,204,148,7	script	Devellin	90,{
