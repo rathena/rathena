@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/14
+	* Juno Update Process. 30% complete. [Musashiden]
 	* Some more sign quest warps [MasterOfMuppets]
 	* Fixed Job Level requirement for Auto-Berserk [Playtester]
 	* Fixed some experience gained bugs in two scripts. [MasterOfMuppets]

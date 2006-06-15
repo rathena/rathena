@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= KitsuneStarwind, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= Removed duplicate npcs already found in the sage quest.
 //= Fixed & Spellchecked [massdriller]
 //= 1.3 Started updating Juno NPCs based on iRO. 10% complete.
+//= 1.3.2 Started updating Juno NPCs based on iRO. 30% complete.
 //============================================================ 
 
 
@@ -23,6 +24,45 @@
 //					NPCs Found outside
 //=================================================================================================//
 
+//======================================================================================
+yuno.gat,208,164,4	script	Active little girl	101,{
+	mes "[Hisa]";
+	mes ".....";
+	mes "This town is so boring.";
+	mes "No events, no festivals...";
+	mes "All people do all day is stay";
+	mes "at home and study. How dull!";
+	close;
+}
+
+
+//======================================================================================
+yuno.gat,164,200,4	script	Noyee	101,{
+	mes "[Noyee]";
+	mes "Did you know that there's a";
+	mes "difference between the armor you";
+	mes "can buy from NPC shops and the";
+	mes "kinds you obtain from hunting";
+	mes "monsters?";
+	next;
+	mes "[Noyee]";
+	mes "The difference, my friend, is in";
+	mes "the number of ^5533FFslots^000000 in your armor.";
+	next;
+	mes "[Noyee]";
+	mes "The same kind of Armor will have";
+	mes "the same Defense. However, if an";
+	mes "Armor has a slot, you can insert a";
+	mes "Monster Card which will add an";
+	mes "enhancement to that armor.";
+	next;
+	mes "[Noyee]";
+	mes "Both Monster Cards and Slotted";
+	mes "Armors are rarely dropped by";
+	mes "monsters, and are thus valuable";
+	mes "commodies.";
+	close;
+}
 
 //======================================================================================
 yuno.gat,184,173,4	script	Freidrich	729,{
@@ -255,91 +295,86 @@ yuno.gat,261,99,4	script	Sage Yklah	735,{
 }
 
 //=========================================================================================
-yuno.gat,306,207,6	script	Sage Sykla	735,{
-		mes "[Sykla]";
-		mes "There is talk about a suspicious man living somewhere here in Yuno.";
-		mes "Apparently he is a dangerous person who is immersed in some kind of wicked research.";
+yuno.gat,305,207,6	script	Sage Syklah	735,{
+		mes "[Syklah]";
+		mes "The people here keep talking of";
+		mes "some suspicious man living in";
+		mes "Juno.";
 		next;
-		mes "[Sykla]";
-		mes "This so called 'Mad Scientist' spends his time working on complex ideas that cannot be understood by normal people.";
+		mes "[Syklah]";
+		mes "Supposedly, he's pretty dangerous,";
+		mes "and is always immersing himself in";
+		mes "some kind of research.";
 		next;
-		mes "[Sykla]";
-		mes "Just outside of town you will find a monster called ^FF3355'Blazer'^000000.";
-		mes "This ball of magic flame attacks any living creature it finds with horrible spells such as fire bolt and fire ball.";
+		mes "[Syklah]";
+		mes "People already consider him a 'Mad";
+		mes "Scientist', wasting his time";
+		mes "studying impractical things beyond";
+		mes "the understanding of normal";
+		mes "people.";
 		next;
-		mes "[Sykla]";
-		mes "This hideous creature is feared my most, if not all, of the people here in Yuno.";
-		mes "But what's even more frightening than the monster itself, is the rumor that the mad scientist was the one who created it....";
+		mes "[Syklah]";
+		mes "It's rumored that this scientist is";
+		mes "responsible for creating 'Blazer',";
+		mes "a monster made of magic flame.";
 		next;
-		mes "[Sykla]";
-		mes "Imagine if this mad man were to create more of these creatures..... possibly create monsters even more powerful than Blazer....";
+		mes "[Syklah]";
+		mes "It's a dangerous and fearsome";
+		mes "monster that casts spells like Fire";
+		mes "Bolt and Fire Ball that lives";
+		mes "outside of Juno.";	
 		close;
 }
 
 //==========================================================================================
-yuno.gat,162,328,4	script	Sage Eskla	735,{
-	mes "[Eskla]";
-	mes "I remember seeing it once........ Yeah... I remember now....... ";
-	mes "There was this piece of paper floating in the air.  I asked myself, 'Hmm... who lost a piece of paper out here?'.";
+yuno.gat,213,298,4	script	Sage Esklah	735,{
+	mes "[Esklah]";
+	mes "I remember watching a harmless";
+	mes "piece of paper floating";
+	mes "trough the air...";
 	next;
-	mes "[Eskla]";
-	mes "Then... without warning.... the piece of paper attacked me!! ME! One of the GREATEST Sages in Yuno!!";
-	emotion e_omg;
+	mes "[Esklah]";
+	mes "As i was thinking of how";
+	mes "wonderfully poetic that image was,";
+	mes "that paper suddenly attacked me!";
+	mes "Me, one of Juno's greatest Sages!";
 	next;
-	mes "[Eskla]";
-	mes "I said to the piece of paper, 'How dare you attack me you little piece of paper!!' and struck it with my trusty sword.";
-	mes "But that piece of paper was persistent and annoying at that.";
-	emotion e_gasp;
+	mes "[Esklah]";
+	mes "I tried defending myself with my";
+	mes "trusty sword, but being paper-thin,";
+	mes "that monster managed to dodge all";
+	mes "of my blows. I had to cast magic in";
+	mes "order to destroy it.";
 	next;
-	mes "[Eskla]";
-	mes "Using its paper thin body it dodged my sword simply by turning itself.  The way it was turned I couldn't even tell if it was still there.";
-	mes "Dammit it was thin!!!";
+	mes "[Esklah]";
+	mes "Later, I learned that monster is";
+	mes "known as ^FF3355The Paper^000000.";
 	next;
-	mes "[Eskla]";
-	mes "I decided to finally put an end to things and used a powerful magic spell to destroy that little piece of paper.";
-	mes "Because I had so much difficulty in defeating it, I decided to ask my colleagues if they knew anything about it.";
-	next;
-	mes "[Eskla]";
-	mes "I found out what I had fought was called ^FF3355'The Paper'^000000.";
-	mes "People say that it used to be part of an old book that contained a great deal of ancient knowledge about Yuno.";
-	next;
-	mes "[Eskla]";
-	mes "Somehow it became a monster....... isn't that weird?";
+	mes "[Esklah]";
+	mes "It used to be a part of an old book";
+	mes "that contained a lot of ancient";
+	mes "knowledge about Juno, but somehow,";
+	mes "became a monster. Isn't that";
+	mes "peculiar?";
 	close;
 }
 
 
 
 //======================================================================================
-yuno.gat,166,111,4	script	Remorpheous	120,{
-	mes "[Remorpheous]";
-	mes "'Apocalypse'. he, an artificial human being,";
-	mes "was the chief of gatekeepers and in charge of public order of the city";
-	mes "of [Yuno] during the Ancient times civilization...";
-	close;
-	mes "[Remorpheus]";
-	mes "....similar to Robot. After living for a long time,";
-	mes "its A.I. totally screwed up,it couldn't recognize friend or foe anymore,";
-	mes "so without consideration of friends or foe......";
-	close;
-	mes "[Remorpheus]";
-	mes ".... it became a monster that attacks anyone regardless";
-	close;
-}
-
-//=====================================================================================
-yuno.gat,80,150,4	script	Young Woman	746,{
-	mes "[Young Woman]";
-	mes "Have you ever seen such a beautiful city?";
-	mes "And Yuno at night time is so wonderful with its lights shiny through the clouds";
+yuno.gat,165,111,4	script	Juno Sage	123,{
+	mes "[Le Morpheous]";
+	mes "^FF5533Apocalypse...^000000";
+	mes "It is the name of an android that";
+	mes "used to guard Juno long ago.";
 	next;
-	mes "[Young Woman]";
-	mes "I'm sorry i got carried away , its my first time being here in the City of Sages";
-	mes "i suggest you go look around and enjoy your self";
-	next;
-	mes "[Young Woman]";
-	mes "I believe i shall wait around here till nightfall just so i can see the lights clearly";
-	mes "maybe i will see you here later";
+	mes "[Le Morpheus]";
+	mes "Because its artificial intelligence";
+	mes "has corrupted over the years, it";
+	mes "can no longer distinguish comrades";
+	mes "from enemies. Sadly, that android";
+	mes "is nothing but a mindless monster";
+	mes "now.";
 	close;
 }
 
