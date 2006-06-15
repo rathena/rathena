@@ -7678,6 +7678,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case TK_READYDOWN:
 	case TK_READYSTORM:
 	case TK_READYTURN:
+		if(sc && sc->data[SkillStatusChangeTable(skill)].timer!=-1)
+			return 1; //Enable disabling them regardless of who you are.
 	case TK_JUMPKICK:
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) {
 			//They do not work on Soul Linkers.
@@ -7690,6 +7692,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case TK_STORMKICK:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
+			return 0; //Anti-Soul Linker check in case you job-changed with Stances active.
 		if(!sc || sc->data[SC_COMBO].timer == -1)
 			return 0; //Combo needs to be ready
 		if (pc_famerank(sd->char_id,MAPID_TAEKWON))
