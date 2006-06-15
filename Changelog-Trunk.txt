@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/15
+	* Altered a bit how status_set_viewdata behaves in regards to Wedding/Xmas
+	  options. [Skotlex]
+	* Added back OPTION_XMAS, but the actual value is missing! [Skotlex]
+	* Corrected chrif_save so that the player is not set offline on map-change.
+	  [Skotlex]
+	* Added change-look support in pc_setoption when specifying OPTION_XMAS
+	  [Skotlex]
+	* Fixed clif_parse_RemoveOption removing all options instead of just
+	  Falcon/Cart/Peco [Skotlex]
 	* Fixed clif_send not sending packets to SELF when specifying AREA if the
 	  source is not on the map yet. [Skotlex]
 	* Fixed and cleaned up script command 'equip' [Skotlex]

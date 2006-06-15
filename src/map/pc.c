@@ -3175,7 +3175,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 					unit_remove_map(&sd->pd->bl, clrtype);
 					intif_save_petdata(sd->status.account_id,&sd->pet);
 				}
-				chrif_save(sd,1);
+				chrif_save(sd,2);
 				chrif_changemapserver(sd, mapindex, x, y, ip, (short)port);
 				return 0;
 			}
@@ -5498,15 +5498,21 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_changelook(&sd->bl,LOOK_BASE,JOB_WEDDING);
 	else if (!(type&OPTION_WEDDING) && p_type&OPTION_WEDDING)
 	{	
-		if (sd->vd.class_ != sd->status.class_) {
-			status_set_viewdata(&sd->bl, sd->status.class_);
-			clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-			if(sd->status.clothes_color)
-				clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
-		}
+		status_set_viewdata(&sd->bl, sd->status.class_);
+		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		if(sd->status.clothes_color)
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
 	}
 
-	clif_changeoption(&sd->bl);
+	if (type&OPTION_XMAS && !(p_type&OPTION_XMAS))
+		clif_changelook(&sd->bl,LOOK_BASE,JOB_XMAS);
+	else if (!(type&OPTION_XMAS) && p_type&OPTION_XMAS)
+	{	
+		status_set_viewdata(&sd->bl, sd->status.class_);
+		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		if(sd->status.clothes_color)
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+	}
 	return 0;
 }
 

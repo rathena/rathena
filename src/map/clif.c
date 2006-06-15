@@ -2725,10 +2725,10 @@ int clif_changelook(struct block_list *bl,int type,int val)
 			vd->hair_color = val;
 		break;
 		case LOOK_CLOTHES_COLOR:
-			if (
+			if (val && (
 				(vd->class_ == JOB_WEDDING && battle_config.wedding_ignorepalette) ||
 				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette)
-			)
+			))
 				val = 0;
 			vd->cloth_color = val;
 		break;
@@ -9404,7 +9404,8 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
  */
 void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 {
-	pc_setoption(sd,0);
+	//Can only remove Cart/Riding/Falcon.
+	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON));
 }
 
 /*==========================================

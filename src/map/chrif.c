@@ -175,7 +175,9 @@ int chrif_isconnect(void)
 }
 
 /*==========================================
- *
+ * Saves char.
+ * Flag = 1: Character is quitting.
+ * Flag = 2: Character is changing map-servers
  *------------------------------------------
  */
 int chrif_save(struct map_session_data *sd, int flag)
@@ -203,7 +205,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 #ifndef TXT_ONLY
 	if(charsave_method){ //New 'Local' save
 		charsave_savechar(sd->char_id, &sd->status);
-		if (flag) chrif_char_offline(sd); //Tell char server that character went offline.
+		if (flag == 1) chrif_char_offline(sd); //Tell char server that character went offline.
 	}else{
 #endif
 		WFIFOHEAD(char_fd, sizeof(sd->status) + 13);
@@ -211,7 +213,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 		WFIFOW(char_fd,2) = sizeof(sd->status) + 13;
 		WFIFOL(char_fd,4) = sd->bl.id;
 		WFIFOL(char_fd,8) = sd->char_id;
-		WFIFOB(char_fd,12) = flag?1:0; //Flag to tell char-server this character is quitting.
+		WFIFOB(char_fd,12) = (flag==1)?1:0; //Flag to tell char-server this character is quitting.
 		memcpy(WFIFOP(char_fd,13), &sd->status, sizeof(sd->status));
 		WFIFOSET(char_fd, WFIFOW(char_fd,2));
 #ifndef TXT_ONLY
