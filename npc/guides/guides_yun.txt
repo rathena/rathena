@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= KitsuneStarwind, usul, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -13,17 +13,20 @@
 //= and added map location option for them. [kobra_k88]
 //= 1.1 Changed sprites and cutins to Schwartzald Republic ones
 //= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the mini map localization function. [Musashiden]
 //============================================================ 
 
 
 //=====================================================================================
-yuno.gat,153,47,4	script	Yuno Guide	700,{ 
-	mes "[Miss Yoon]"; 
-	mes "A place that understands the present and envisions the future............"; 
-	mes "This is Yuno, the city of Sages.  Welcome to Yuno.";
-	set @name$,"[Miss Yoon]";
+yuno.gat,153,47,4	script	Juno Guide	700,{ 
+	mes "[Ms. Yoon]"; 
+	mes "A place that takes the vision of"; 
+	mes "the future, and gives it form in";
+	mes "the present. welcome to";
+	mes "the city of Juno!";
+	set @name$, "[Ms. Yoon]";
 	next;
-	callfunc "F_YunoLoc",2;
+	callfunc "F_YunoLoc";
 }
 
 //=====================================================================
@@ -57,18 +60,24 @@ yuno.gat,264,320,2	script	Yuno Soldier	852,{
 }
 
 //=====================================================================
-yuno.gat,228,292,2	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "^FF3355'False Angel'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "Near Yuno, there lives a fallen angel known as ^FF3355''False Angel'^000000.";
-	mes "It pretends to be a real angel by blessing adventurers, but then it stabs them in the back afterwards.";
+yuno.gat,227,292,4	script	Juno Soldier	105,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "Do not be fooled by its beautifull appereance, otherwise you will find yourself in great peril.";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "Near Juno, there exists a fallen";
+	mes "angel named 'False Angel'. It";
+	mes "feigns innocence, pretending to";
+	mes "bless adventurers and then stabbing";
+	mes "them in the back without any";
+	mes "warning.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Don't be fooled by its appearance,";
+	mes "or you'll find yourself in";
+	mes "trouble.";
+	close;
 }
 
 //=====================================================================
@@ -137,80 +146,97 @@ yuno.gat,151,228,4	script	Yuno Soldier	852,{
 //======================================================================
 function	script	F_YunoLoc	{
 
-	if(getarg(0) == 1) goto M_Menu;
-	if(getarg(0) == 2) menu "View city locations.",M_0, "End conversation.",M_End;
-	mes @name$;
-	mes "Welcome to Yuno, the city of noble-mindedness.";
-	M_Menu:
-	next;
-	menu "View city locations.",-, @menu1$,M_1, "End conversation.",M_End;
 
-	M_0:
-		mes @name$;
-		mes "Please choose a building to view...";
-		sM_Menu:
-		next;
-		menu "Armory",-, "Tool Dealer",sM_2, "Sage Castle",sM_3, "Street of Book Stores",sM_4, "Yuphero Plaza",sM_5,
-			"Library of the Republic",sM_6, "Schwheicherbil Magic Academy",sM_7, "Museum of Monsters",sM_8,
-			"Wipe all indications from mini-map",sM_Wipe, "Cancel",M_End;
+sM_Menu:
+		menu "Armory",-, "Tool Shop",sM_2, "Sage Castle (Sage Job Change Place)",sM_3, "Street of Book Stores",sM_4, "Juphero Plaza",sM_5,"Library of the Republic",sM_6, "Schwheicherbil Magic Academy",sM_7, "Monsters Museum",sM_8, "Forge",sM_9, "Airport", sM_10, "End Conversation",M_End;
 
 			mes @name$;
-			mes "This is the Weapon and Armor Shop.";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Armory";
+			mes "Thank you,";
+			mes "Have a good day.";
 			viewpoint 1,117,135,1,0xFF0000;
-			goto sM_Menu; 
+			close;
 		sM_2: 
 			mes @name$;
-			mes "This is the Tool Dealer.";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Tool Shop";
+			mes "Thank you,";
+			mes "Have a good day.";
 			viewpoint 1,163,189,2,0xFFFF00;
-			goto sM_Menu;
+			close;
 		sM_3: 
 			mes @name$;
-			mes "Sage Castle is where Mages can go to become Sages.";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Sage Castle";
+			mes "(Sage Job Change Place)";
+			mes "Thank you, Have a good day.";
 			viewpoint 1,89,320,3,0xff00FF;
-			goto sM_Menu; 
+			close;
 		sM_4: 
 			mes @name$;
-			mes "The Street of Books.  This is where you will find the largest selection of books for sale";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Street of Book Stores";
+			mes "Thank you, Have a good day.";
 			viewpoint 1,196,138,4,0x00ff00;
-			goto sM_Menu;
+			close;
 		sM_5: 
 			mes @name$;
-			mes "Yuphero Plaza is the main gathering place in Yuno.";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Juphero Plaza";
+			mes "Thank you,"; 
+			mes "Have a good day.";
 			viewpoint 1,157,327,5,0x00ffff;
-			goto sM_Menu;
+			close;
 		sM_6: 
 			mes @name$;
-			mes "The Library of Republic houses an extensive collection of important historical books.";
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Library of the Republic";
+			mes "Thank you, Have a good day.";
 			viewpoint 1,335,204,6,0x0000ff;
-			goto sM_Menu;
+			close;
 		sM_7:
 			mes @name$;
-			mes "The Shchweicherbil Magic Academy is a prestigous school where Mages study to become Sages.";
+			mes "Please look at the mini map.";
+			mes "^FF3355+^000000 -> Schweicherbil Magic Academy";
+			mes "Thank you, Have a good day.";
 			viewpoint 1,323,280,7,0xFFCCFF;
-			goto sM_Menu;
+			close;
 		sM_8:
 			mes @name$;
-			mes "The Museum of Monsters contains many exhibits of the monsters found throughout Rune Midgard.";
+			mes "Please look at the mini map.";
+			mes "^FF3355+^000000 -> Monster Museum";
+			mes "Thank you, Have a good day.";
 			viewpoint 1,278,291,8,0xFFFFFF;
-			goto sM_Menu;
-		sM_Wipe:
-			viewpoint 2,117,135,1,0xFF0000;
-			viewpoint 2,163,189,2,0xFFFF00;
-			viewpoint 2,89,320,3,0xff00FF;
-			viewpoint 2,196,138,4,0x00ff00;
-			viewpoint 2,157,327,5,0x00ffff;
-			viewpoint 2,335,204,6,0x0000ff;
-			viewpoint 2,323,280,7,0xFFCCFF;
-			viewpoint 2,278,291,8,0xFFFFFF;
-			mes @name$; 
-			mes "All indications have been wiped.";
-			cutin "ein_soldier",255;
 			close;
-	M_1:
-		return;
+		sM_9:
+			mes @name$;
+			mes "Please look at the mini map.";
+			mes "^FF3355+^000000 -> Forge";
+			mes "The forge is located underneath";
+			mes "Armory";
+			mes "Thank you, Have a good day.";
+			viewpoint 1,117,135,9,0xFF0000;
+			close;
+		sM_10:
+			mes @name$;
+			mes "Please look";
+			mes "at the mini map.";
+			mes "^FF3355+^000000 -> Airport";
+			mes "Thank you, Have a good day.";
+			viewpoint 1,53,214,10,0xFF0000;
+			close;
+
 	M_End:
 		mes @name$;
-		mes "Have a nice day.";
-		cutin "ein_soldier",255;
+		mes "A great city of wise men.";
+		mes "A city of Knowledge!";
+		mes "Welcome to Juno.";
 		close;
 }

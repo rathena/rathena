@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.1b
+//= 2.3
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -17,13 +17,14 @@
 //= v1.1 Now using functions :)
 //= v2.1b Minor changes to function calls. Using arguments.
 //= This version uses arrays .[kobra_k88]
-//= 2,2 Now only warps to Aldebaran [Evera]
+//= 2.2 Now only warps to Aldebaran [Evera]
+//= 2.3 Updated a kafra location. [Musashiden]
 //=====================================================================
 
 
 // Center ------------------------------------------------------------------
-yuno.gat,153,187,6	script	Kafra::kaf_yuno	114,{
-	cutin "kafra_04",2;
+yuno.gat,152,187,6	script	Kafra::kaf_yuno	113,{
+	cutin "kafra_05",2;
 	callfunc "F_KafSetYun";
 	callfunc "F_Kafra",0,0,0;
 
@@ -33,7 +34,7 @@ yuno.gat,153,187,6	script	Kafra::kaf_yuno	114,{
 }
 
 // South East --------------------------------------------------------------
-yuno.gat,328,108,6	script	Kafra::kaf_yuno2	113,{
+yuno.gat,327,108,4	script	Kafra::kaf_yuno2	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSetYun";
 	callfunc "F_Kafra",0,0,0;

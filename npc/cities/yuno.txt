@@ -18,11 +18,24 @@
 //============================================================ 
 
 
-
-
-//=================================================================================================//
-//					NPCs Found outside
-//=================================================================================================//
+yuno.gat,330,100,4	script	Knight	734,{
+	mes "[Leibech]";
+	mes "I have a great";
+	mes "interest in collecting";
+	mes "unique and uncommon";
+	mes "goods. You know, things";
+	mes "that most people see just";
+	mes "once in their lifetimes.";
+	next;
+	mes "[Leibech]";
+	mes "I usually use the";
+	mes "Alchesh Trading Company.";
+	mes "to help add to my collection.";
+	mes "Their prices aren't the cheapest,";
+	mes "but their service is very";
+	mes "reliable.";
+	close;
+}
 
 //======================================================================================
 yuno.gat,208,164,4	script	Active little girl	101,{
@@ -348,7 +361,7 @@ yuno.gat,213,298,4	script	Sage Esklah	735,{
 	next;
 	mes "[Esklah]";
 	mes "Later, I learned that monster is";
-	mes "known as ^FF3355The Paper^000000.";
+	mes "known as ^FF5533The Paper^000000.";
 	next;
 	mes "[Esklah]";
 	mes "It used to be a part of an old book";
