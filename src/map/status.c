@@ -2364,8 +2364,8 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 			}
 		}
 	}
-
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
+		flag|=SCB_ASPD;
 		if (sd->status.weapon < MAX_WEAPON_TYPE)
 			skill = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 		else

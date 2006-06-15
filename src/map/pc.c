@@ -2533,8 +2533,11 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 		sd->inventory_data[i] = data;
 		clif_additem(sd,i,amount,0);
 	}
+
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
+	//Auto-equip
+	if(data->flag.autoequip) pc_equipitem(sd, i, data->equip);
 	return 0;
 }
 
@@ -2673,9 +2676,6 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	pc_stop_attack(sd);
 
 	clif_takeitem(&sd->bl,&fitem->bl);
-	if(itemdb_autoequip(fitem->item_data.nameid) != 0){
-		pc_equipitem(sd, fitem->item_data.nameid, fitem->item_data.equip);
-	}
 	map_clearflooritem(fitem->bl.id);
 	return 1;
 }

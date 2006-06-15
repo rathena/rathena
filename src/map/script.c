@@ -9771,28 +9771,23 @@ int buildin_unequip(struct script_state *st)
 
 int buildin_equip(struct script_state *st)
 {
-	int nameid=0,count=0,i;
+	int nameid=0,i;
 	struct map_session_data *sd;
 	struct item_data *item_data;
 
 	sd = script_rid2sd(st);
 
 	nameid=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if(nameid>=500 && (item_data = itemdb_search(nameid)) != NULL)
-		for(i=0;i<MAX_INVENTORY;i++){
-			if(sd->status.inventory[i].nameid==nameid)
-				count+=sd->status.inventory[i].amount;
-		}
-	else{
+	if((item_data = itemdb_exists(nameid)) == NULL)
+	{
 		if(battle_config.error_log)
 			ShowError("wrong item ID : equipitem(%i)\n",nameid);
 		return 1;
 	}
-	
-	if(count){
-		pc_equipitem(sd,nameid,item_data->equip);
-	}
+	for(i=0;i<MAX_INVENTORY && sd->status.inventory[i].nameid!=nameid;i++);
+	if(i==MAX_INVENTORY) return 0;
 
+	pc_equipitem(sd,i,item_data->equip);
 	return 0;
 }
 
