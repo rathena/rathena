@@ -276,7 +276,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	case AREA_WOSC:
 		{
 			struct map_session_data *ssd = (struct map_session_data *)src_bl;
-			if ((ssd != 0) && (src_bl->type == BL_PC) && (sd->chatID != 0) && (sd->chatID == ssd->chatID))
+			if (ssd && (src_bl->type == BL_PC) && sd->chatID && (sd->chatID == ssd->chatID))
 				return 0;
 		}
 		break;
@@ -385,9 +385,11 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 		}
 		break;
 	case AREA:
-	case AREA_WOS:
-	case AREA_WOC:
 	case AREA_WOSC:
+		if (sd && bl->prev == NULL) //Otherwise source misses the packet.[Skotlex]
+			clif_send (buf, len, bl, SELF);
+	case AREA_WOC:
+	case AREA_WOS:
 		map_foreachinarea(clif_send_sub, bl->m, bl->x-AREA_SIZE, bl->y-AREA_SIZE, bl->x+AREA_SIZE, bl->y+AREA_SIZE,
 			BL_PC, buf, len, bl, type);
 		break;

@@ -5162,13 +5162,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 	}
 
-	if (sd)
-	{ //Why must it be ONLY for players? [Skotlex]
-	if (bl->prev)
+	if (sd) //Only for players, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1);
-	else
-		clif_status_load(bl,StatusIconChangeTable[type],1);
-	}
 
 	// Set option as needed.
 	opt_flag = 1;
@@ -5627,12 +5622,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		}
 
 	if (sd) 
-	{	//Why must it be ONLY for players? [Skotlex]
-	if (bl->prev)
 		clif_status_change(bl,StatusIconChangeTable[type],0);
-	else
-		clif_status_load(bl,StatusIconChangeTable[type],0);
-	}
 
 	opt_flag = 1;
 	switch(type){

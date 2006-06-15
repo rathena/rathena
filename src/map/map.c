@@ -1744,8 +1744,7 @@ struct map_session_data * map_charid2sd(int id) {
  *------------------------------------------
  */
 struct map_session_data * map_nick2sd(char *nick) {
-	int i, quantity=0, users;
-	struct map_session_data *sd = NULL;
+	int i, users;
 	struct map_session_data *pl_sd = NULL, **pl_allsd;
 
 	if (nick == NULL)

@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/15
+	* Fixed clif_send not sending packets to SELF when specifying AREA if the
+	  source is not on the map yet. [Skotlex]
 	* Fixed and cleaned up script command 'equip' [Skotlex]
 	* Fixed 'autoequip' items. [Skotlex]
 	* Fixed Aspd not being updated in your status window after Agi/Dex
