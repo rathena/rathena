@@ -16,6 +16,7 @@
 //= 1.4 optimized [Lupus]
 //= 1.5 Added Missing Juno warps [musashiden]
 //= 1.6 Corrected duplicate warps [Musashiden]
+//= 1.7 Yet another missing warp [Musashiden]
 //============================================================
 
 //= Yuno City ================================================
@@ -84,6 +85,8 @@ yuno_in02.gat,82,14,0	warp	yun61	1,1,yuno_in05.gat,192,194
 yuno_in05.gat,196,194,0	warp	yun62	1,1,yuno_in02.gat,85,14
 yuno.gat,157,320,0	warp	yun63	1,1,yuno_pre.gat,69,13
 yuno_pre.gat,69,10,0	warp	yun64	1,1,yuno.gat,157,317
+yuno.gat,245,147,0	warp	yun65	1,1,yuno_in01.gat,101,88
+yuno_in01.gat,101,85,0	warp	yun66	1,1,yuno.gat,245,144
 
 // Yuno In05 (Entering Random Warps) -------------------------------------------
 yuno_in05.gat,153,141,0	script	#yun63	45,1,1,{

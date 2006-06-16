@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/16
+	* Yet another missing Juno warp. [musashiden]
 	* Corrected a duplicate juno warp + a juno guide sprite. [Musashiden]
 	* Updated sample script mob_controller.cpp to the latest standards. [Lance]
 	* Commited Silent's Fix to the duplicate NPCs [Playtester]
