@@ -10717,6 +10717,9 @@ int buildin_setmobdata(struct script_state *st){
 		case 24:
 			md->state.killer = value2>0?1:0;
 			break;
+		case 25:
+			md->callback_flag = (unsigned char)value2;
+			break;
 		default:
 			ShowError("buildin_setmobdata: argument id is not identified.");
 			return -1;

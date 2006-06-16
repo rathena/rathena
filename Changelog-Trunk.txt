@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/16
+	* [Added]:
+	  - Added option #25 to buildin_setmobdata to set the callback_flag. [Lance]
 	* [Improved]:
 	  - Cleaned up Custom Mob Script Callback codes. Looks much better now :B. [Lance]
 
