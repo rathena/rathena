@@ -1265,7 +1265,7 @@
 4125,Deviace_Card,Deviace Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_DemiHuman,7; bonus2 bAddRace,RC_Brute,7; bonus2 bAddRace,RC_Plant,7; bonus2 bAddRace,RC_Insect,7; },{},{}
 4126,Minorous_Card,Minorous Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddSize,2,15; bonus bBaseAtk,5; },{},{}
 4127,Nightmare_Card,Nightmare Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bResEff,Eff_Sleep,10000; bonus bAgi,1; },{},{}
-4128,Golden_Thief_Bug_Card,Golden Thief Bug Card,6,,10,10,,,,,,,,32,,,,,{ bonus bNoMagicDamage,0; bonus bUseSPrate,100; },{},{}
+4128,Golden_Thief_Bug_Card,Golden Thief Bug Card,6,,10,10,,,,,,,,32,,,,,{ bonus bNoMagicDamage,100; bonus bUseSPrate,100; },{},{}
 4129,Bapho_Jr._Card,Bapho Jr. Card,6,,10,10,,,,,,,,4,,,,,{ bonus bAgi,3; bonus bCritical,1; },{},{}
 4130,Scorpion_King_Card,Scorpion King Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEle,Ele_Undead,20; },{},{}
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,,10,10,,,,,,,,64,,,,,{ bonus bSpeedRate,25; },{},{}

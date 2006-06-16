@@ -494,14 +494,13 @@ struct map_session_data {
 		struct guild *gmaster_flag;
 	} state;
 	struct {
+		unsigned char no_weapon_damage, no_magic_damage;
 		unsigned killer : 1;
 		unsigned killable : 1;
 		unsigned restart_full_recover : 1;
 		unsigned no_castcancel : 1;
 		unsigned no_castcancel2 : 1;
 		unsigned no_sizefix : 1;
-		unsigned no_magic_damage : 1;
-		unsigned no_weapon_damage : 1;
 		unsigned no_gemstone : 1;
 		unsigned intravision : 1; // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
 	} special_state;

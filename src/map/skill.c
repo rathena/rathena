@@ -2427,8 +2427,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	if (status_isdead(src) || (src != bl && status_isdead(bl)))
 		return 1;
 
-	if (skillid && skill_get_type(skillid) == BF_MAGIC && 
-		!battle_config.gtb_pvp_only && status_isimmune(bl)) {
+	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl))
+	{
 		if (sd) clif_skill_fail(sd,skillid,0,0);
 		//GTB makes all targetted skills silently fail.
 		return 1;
@@ -3855,11 +3855,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case BS_HAMMERFALL:		/* ハンマーフォール */
-		if(dstsd && dstsd->special_state.no_weapon_damage) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,0);
-			break;
-		}
+	case BS_HAMMERFALL:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,SC_STUN,(20 + 10 * skilllv),skilllv,skill_get_time2(skillid,skilllv)));
 		break;
@@ -4778,10 +4774,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_LICK:
-		if (dstsd && dstsd->special_state.no_weapon_damage ) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,0);
-			break;
-		}
 		status_zap(bl, 0, 100);
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,(skilllv*5),skilllv,skill_get_time2(skillid,skilllv)));

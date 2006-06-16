@@ -24,6 +24,9 @@
 	-----
 
 =========================
+
+06/16
+	- Updated GTB's card script to be "bonus bNoMagicDamage,100;" [Skotlex]
 06/14
 	* Fixed the awfully coded Baseball Cap script [Playtester]
 	- please use CONSTANTS!

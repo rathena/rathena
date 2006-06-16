@@ -3670,8 +3670,8 @@ int status_isimmune(struct block_list *bl)
 {
 	struct status_change *sc =status_get_sc(bl);
 	if (bl->type == BL_PC &&
-		((struct map_session_data *)bl)->special_state.no_magic_damage)
-		return 1;
+		((TBL_PC*)bl)->special_state.no_magic_damage)
+		return ((TBL_PC*)bl)->special_state.no_magic_damage > battle_config.gtb_sc_immunity;
 	if (sc && sc->count && sc->data[SC_HERMODE].timer != -1)
 		return 1;
 	return 0;

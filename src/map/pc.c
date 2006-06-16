@@ -1550,12 +1550,16 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->special_state.no_sizefix = 1;
 		break;
 	case SP_NO_MAGIC_DAMAGE:
-		if(sd->state.lr_flag != 2)
-			sd->special_state.no_magic_damage = 1;
+		if(sd->state.lr_flag == 2)
+			break;
+			val+= sd->special_state.no_magic_damage;
+			sd->special_state.no_magic_damage = cap_value(val,0,100);
 		break;
 	case SP_NO_WEAPON_DAMAGE:
-		if(sd->state.lr_flag != 2)
-			sd->special_state.no_weapon_damage = 1;
+		if(sd->state.lr_flag == 2)
+			break;
+			val+= sd->special_state.no_weapon_damage;
+			sd->special_state.no_weapon_damage = cap_value(val,0,100);
 		break;
 	case SP_NO_GEMSTONE:
 		if(sd->state.lr_flag != 2)

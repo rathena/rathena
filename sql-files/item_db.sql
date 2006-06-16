@@ -1293,7 +1293,7 @@ REPLACE INTO `item_db` VALUES (4124,'Medusa_Card','Medusa Card',6,NULL,10,10,NUL
 REPLACE INTO `item_db` VALUES (4125,'Deviace_Card','Deviace Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,' bonus2 bAddRace,RC_DemiHuman,7; bonus2 bAddRace,RC_Brute,7; bonus2 bAddRace,RC_Plant,7; bonus2 bAddRace,RC_Insect,7; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4126,'Minorous_Card','Minorous Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,' bonus2 bAddSize,2,15; bonus bBaseAtk,5; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4127,'Nightmare_Card','Nightmare Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,' bonus2 bResEff,Eff_Sleep,10000; bonus bAgi,1; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4128,'Golden_Thief_Bug_Card','Golden Thief Bug Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,' bonus bNoMagicDamage,0; bonus bUseSPrate,100; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4128,'Golden_Thief_Bug_Card','Golden Thief Bug Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,' bonus bNoMagicDamage,100; bonus bUseSPrate,100; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4129,'Bapho_Jr._Card','Bapho Jr. Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,' bonus bAgi,3; bonus bCritical,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4130,'Scorpion_King_Card','Scorpion King Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,' bonus2 bAddEle,Ele_Undead,20; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4131,'Moonlight_Flower_Card','Moonlight Flower Card',6,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,' bonus bSpeedRate,25; ',NULL,NULL);

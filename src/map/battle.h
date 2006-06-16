@@ -124,7 +124,7 @@ extern struct Battle_Config {
 	unsigned short death_penalty_type;
 	unsigned short death_penalty_base,death_penalty_job;
 	unsigned short pvp_exp;  // [MouseJstr]
-	unsigned short gtb_pvp_only;  // [MouseJstr]
+	unsigned short gtb_sc_immunity;
 	int zeny_penalty;
 	unsigned short restart_hp_rate;
 	unsigned short restart_sp_rate;
