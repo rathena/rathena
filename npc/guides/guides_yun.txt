@@ -15,7 +15,8 @@
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Updated the mini map localization function. [Musashiden]
 //= 1.4 Juno Guides are now up to date according to iRO. [Musashiden]
-//= 1.5 Removed Duplicates [Silent]
+//= 1.5 Removed Duplicates [Silent].
+//= 1.6 Changed one of the Juno soldier's sprite. [Musashiden]
 //============================================================ 
 
 
@@ -32,7 +33,7 @@ yuno.gat,153,47,4	script	Juno Guide#yun1	700,{
 }
 
 //=====================================================================
-yuno.gat,334,182,4	script	Juno Soldier#yun1	852,{
+yuno.gat,334,182,4	script	Juno Soldier#yun1	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -93,7 +94,7 @@ yuno.gat,227,292,4	script	Juno Soldier#yun3	105,{
 }
 
 //=====================================================================
-yuno.gat,165,283,4	script	Yuno Soldier#yun3	105,{
+yuno.gat,165,283,4	script	Yuno Soldier#yun4	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -119,7 +120,7 @@ yuno.gat,165,283,4	script	Yuno Soldier#yun3	105,{
 }
 
 //=====================================================================
-yuno.gat,150,283,4	script	Yuno Soldier#yun4	105,{
+yuno.gat,150,283,4	script	Yuno Soldier#yun5	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -147,7 +148,7 @@ yuno.gat,150,283,4	script	Yuno Soldier#yun4	105,{
 }
 
 //=====================================================================
-yuno.gat,165,228,4	script	Yuno Soldier#yun5	105,{
+yuno.gat,165,228,4	script	Yuno Soldier#yun6	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -172,7 +173,7 @@ yuno.gat,165,228,4	script	Yuno Soldier#yun5	105,{
 }
 
 //=====================================================================
-yuno.gat,150,228,4	script	Yuno Soldier#yun6	105,{
+yuno.gat,150,228,4	script	Yuno Soldier#yun7	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
