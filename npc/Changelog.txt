@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/16
+	* Updated sample script mob_controller.cpp to the latest standards. [Lance]
 	* Commited Silent's Fix to the duplicate NPCs [Playtester]
 	- needs testing
 	- can't be fully fixed because of length limitation of names

@@ -33,6 +33,15 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 		set .@mob_size, getarraysize(.mc_moblist);
 		set .mc_moblist[.@mob_size], spawnmob("Slave - " + .@mob_size, getarg(0), "prontera.gat", 180, 200);
 		mobattach .mc_moblist[.@mob_size];
+		setmobdata .mc_moblist[.@mob_size], 25, 
+			AI_ACTION_TYPE_ATTACK|
+			AI_ACTION_TYPE_DETECT|
+            AI_ACTION_TYPE_DEAD|
+			AI_ACTION_TYPE_ASSIST|
+			AI_ACTION_TYPE_KILL|
+            AI_ACTION_TYPE_UNLOCK|
+            AI_ACTION_TYPE_WALKACK|
+            AI_ACTION_TYPE_WARPACK);
 		return;
 	}
 
@@ -45,7 +54,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 	}
 
 	if(getarraysize(.ai_action) == 4){
-		announce "[Mob Control] AI Action Received from " + .ai_action[AI_ACTION_SRC] + "!",bc_all;
+		mapannounce "prontera.gat", "[Mob Control] AI Action Received from " + .ai_action[AI_ACTION_SRC] + "!",16;
 		switch(.ai_action[AI_ACTION_TAR_TYPE]){
 			case AI_ACTION_TAR_TYPE_PC:
 				set .@action_from$, "Player";
@@ -88,9 +97,15 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 			case AI_ACTION_TYPE_KILL:
 				set .@action_type$, "Killed";
 				break;
+			case AI_ACTION_TYPE_WALKACK:
+				set .@action_type$, "Completed Walking";
+				break;
+			case AI_ACTION_TYPE_WARPACK:
+				set .@action_type$, "Warped";
+				break;
 		}
 
-		announce "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", bc_all;
+		mapannounce "prontera.gat", "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", 16;
 		deletearray .ai_action, 4;
 		end;
 	}
@@ -128,7 +143,7 @@ L_MainMenu:
 	}
 
 L_AttackMenu:
-	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Back")){
+	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Callback","Back")){
 		case 1: // Walk
 			set .@src, make_menu();
 			input .@x;
@@ -168,6 +183,11 @@ L_AttackMenu:
 			set .@src, make_menu();
 			input .@flag;
 			mobrandomwalk .@src, .@flag;
+			break;
+		case 9:
+			set .@src, make_menu();
+			input .@flag;
+			setmobdata .@src, 25, .@flag;
 			break;
 		case 9:
 			next;
