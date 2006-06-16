@@ -946,10 +946,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 					tbl = NULL;
 			}
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
-				if(md->nd){
+				if(md->nd)
 					mob_script_callback(md, bl, CALLBACK_ASSIST);
-					return 0;
-				}
 				md->target_id=tbl->id;
 				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
 				if(md->min_chase>MAX_MINCHASE)
