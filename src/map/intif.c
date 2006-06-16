@@ -1366,8 +1366,8 @@ int intif_parse_DeletePetOk(int fd)
 
 int intif_parse_RenamePetOk(int fd)
 {
+	struct map_session_data *sd = NULL;
 	RFIFOHEAD(fd);
-	struct map_session_data *sd;
 	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL  ||
 		sd->status.char_id != RFIFOL(fd,6))
 		return 0;

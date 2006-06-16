@@ -1954,7 +1954,8 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 	}
 
 	if((dnd = npc_name2id(nd->exname))){
-		ShowInfo("npc_parse_script: Overriding NPC '%s::%s' to '%s::%d'.. (Duplicated System Name - Lazy scripters >_>) \n",nd->name,nd->exname,nd->name,npc_script);
+		if(battle_config.etc_log)
+			ShowInfo("npc_parse_script: Overriding NPC '%s::%s' to '%s::%d'.. (Duplicated System Name - Lazy scripters >_>) \n",nd->name,nd->exname,nd->name,npc_script);
 		sprintf(nd->exname, "%d", npc_script);
 	}
 
