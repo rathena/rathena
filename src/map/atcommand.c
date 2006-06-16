@@ -2113,8 +2113,8 @@ int atcommand_speed(
 
 	speed = atoi(message);
 	if (speed >= MIN_WALK_SPEED && speed <= MAX_WALK_SPEED) {
-		sd->battle_status.speed = speed;
-		clif_updatestatus(sd, SP_SPEED);
+		sd->base_status.speed = speed;
+		status_calc_bl(&sd->bl, SCB_SPEED);
 		clif_displaymessage(fd, msg_table[8]); // Speed changed.
 	} else {
 		sprintf(atcmd_output, "Please, enter a valid speed value (usage: @speed <%d-%d>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
