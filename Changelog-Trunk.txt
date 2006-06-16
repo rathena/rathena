@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/16
+	* Removed db_tables.sql as it's no longer used. [Skotlex]
+	* the mvp_sd is removed when the mob is the emperium and there's no
+	  killer/exp-awarded (assumed killed by script), this prevents the on-kill
+	  event from triggering and giving the castle to whoever damaged the most the
+	  emperium without destroying it. [Skotlex]
 	* [Added]:
 	  - Custom slave mobs to inherit the callback_flag.
 	  - Added option #25 to buildin_setmobdata to set the callback_flag. [Lance]

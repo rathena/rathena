@@ -2083,6 +2083,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			log_mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
+	if (flag&2 && !sd && md->class_ == MOBID_EMPERIUM)
+	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
+		mvp_sd = NULL;
+
+
 	// <Agit> NPC Event [OnAgitBreak]
 	if(md->npc_event[0] && strcmp(((md->npc_event)+strlen(md->npc_event)-13),"::OnAgitBreak") == 0) {
 		ShowNotice("MOB.C: Run NPC_Event[OnAgitBreak].\n");
