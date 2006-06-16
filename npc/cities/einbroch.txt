@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Nexon
 //===== Current Version: ===================================== 
-//= 0.9
+//= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 0.8 Implemented the Shinokas quest, thanks to [MasterOfMuppets]
 //= 	Dj-Yhn for scripting it.
 //= 0.9 Removed Duplicates [Silent]
+//= 1.0 Implemented the Lover's quest. [MasterOfMuppets]
 //============================================================
 
 
@@ -2500,6 +2501,12 @@ OnTouch:
 }
 
 ein_in01.gat,31,151,4	script	Satra	850,{
+	if(EIN_LOVERQ > 11)goto s_Intimi;
+	if(EIN_LOVERQ == 11)goto s_Coal4;
+	if(EIN_LOVERQ == 10)goto s_Coal3;
+	if(EIN_LOVERQ == 9)goto s_Coal2;
+	if(EIN_LOVERQ == 8)goto s_Coal1;
+	if(EIN_LOVERQ == 7)goto s_Advent;
 	mes "[Satra]";
 	mes "A wandering";
 	mes "adventurer...?";
@@ -2521,9 +2528,411 @@ ein_in01.gat,31,151,4	script	Satra	850,{
 	mes "than welcome to enjoy the";
 	mes "furnishings. Ho ho ho ho~";
 	close;
+
+s_Advent:
+	mes "[Satra]";
+	mes "A wandering adventurer...?";
+	mes "How ravishingly delightful!";
+	mes "You must have risked life and";
+	mes "limb to sneak past my husband";
+	mes "to enjoy the captivating sights";
+	mes "of my home. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Since you're a very";
+	mes "unique quest, I shall";
+	mes "give you a unique honor";
+	mes "and deign to converse";
+	mes "with you, adventurer.";
+	next;
+	mes "[Satra]";
+	mes "Einbech exists to provide";
+	mes "my family with coal and";
+	mes "materials from their mines.";
+	mes "It's a natural law: workers";
+	mes "must be led by a chosen few.";
+	next;
+	mes "[Satra]";
+	mes "It's delightfully";
+	mes "ludicrous to see those";
+	mes "workers aspire to reach";
+	mes "our heights of social";
+	mes "prestige. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Oh, I haven't spoken to";
+	mes "someone from a lower";
+	mes "class in ages! It feels";
+	mes "so forbiddenly exciting!";
+	next;
+	mes "[Satra]";
+	mes "Well adventurer, that's";
+	mes "the end of our informal";
+	mes "chat. I'll even grant you";
+	mes "full permission to boast";
+	mes "of the fact that you've";
+	mes "spoken to Lady Satra.";
+	next;
+	mes "[Satra]";
+	mes "If you wish for";
+	mes "me to share words with";
+	mes "you once more, prove to";
+	mes "me that you're worthier";
+	mes "than the other peons of";
+	mes "my graceful presence.";
+	next;
+s_Coal1:
+	mes "[Satra]";
+	mes "Oh, I have a marvelous";
+	mes "idea! Why don't you bring";
+	mes "me ^9C0000Coals^000000? It's not impossible";
+	mes "for someone like yourself, but";
+	mes "this kind of task will require";
+	mes "some effort on your part.";
+	next;
+	if(EIN_LOVERQ == 8 && countitem(1003) > 9)goto s_GotCoal1;
+	mes "[Satra]";
+	mes "Tah tah,";
+	mes "adventurer~";
+	if(EIN_LOVERQ == 7)set EIN_LOVERQ,8;
+	close;
+
+s_GotCoal1:
+	mes "[Satra]";
+	mes "My, you've already";
+	mes "brought the Coal?";
+	mes "How charmingly";
+	mes "prompt you are~";
+	next;
+	mes "[Satra]";
+	mes "On behalf of the";
+	mes "Kappellthaine family,";
+	mes "I shall ignore your lowly";
+	mes "status and graciously";
+	mes "accept your small gift.";
+	mes "Ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Do you hail from";
+	mes "Einbech, adventurer?";
+	mes "Ah, the Rune-Midgarts";
+	mes "kingdom! I've visited your";
+	mes "country. It's quite quaint";
+	mes "and Jawaii is very lovely.";
+	next;
+	mes "[Satra]";
+	mes "Well, I shall try to";
+	mes "find some use for these.";
+	mes "I'm afraid the gift I've asked";
+	mes "from you isn't very practical.";
+	mes "How is coal usually used?";
+	mes "Ah, I have a novel idea!";
+	next;
+	mes "[Satra]";
+	mes "Wouldn't it be";
+	mes "intoxicatingly wild if";
+	mes "Megass were to hold one";
+	mes "of those social functions that";
+	mes "the lower classes are so fond";
+	mes "of? A 'barbeque', yes?";
+	next;
+	mes "[Satra]";
+	mes "In any case, If you";
+	mes "bring me more of that";
+	mes "Coal, you would be even";
+	mes "more favored by me and";
+	mes "you'll become a recipient";
+	mes "of my good graces. Ho ho~";
+	set EIN_LOVERQ,9;
+	delitem 1003,10;
+	close;
+
+s_Coal2:
+	mes "[Satra]";
+	mes "^111111*Titter~*^000000";
+	mes "Why, if it isn't my";
+	mes "intrepid adventurer.";
+	mes "Ho ho ho ho~";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal2;
+	mes "[Satra]";
+	mes "My apologies, but you";
+	mes "must first prove to me";
+	mes "that you are worthy of";
+	mes "conversation. Why don't";
+	mes "you deliver more of those";
+	mes "^9C0000Coals^000000, mmm?";
+	next;
+	mes "[Satra]";
+	mes "After all, I have no other";
+	mes "means of knowing whether";
+	mes "or not you appreciate the time";
+	mes "I sacrifice by socializing with";
+	mes "someone of your status.";
+	mes "Ho ho ho ho~";
+	close;
+
+s_GotCoal2:
+	mes "[Satra]";
+	mes "My word!";
+	mes "Why are you carrying";
+	mes "all of that dirty Coal";
+	mes "with you? You poor,";
+	mes "impoverished thing.";
+	next;
+	mes "[Satra]";
+	mes "Oh! Dear me,";
+	mes "I've nearly forgotten~";
+	mes "How divinely silly of me!";
+	mes "Once again, I graciously";
+	mes "accept your small gift on";
+	mes "behalf of the Kappelthaines.";
+	next;
+	mes "[Satra]";
+	mes "Let me share a little";
+	mes "bit of history concerning";
+	mes "our lovely Einbroch. At one";
+	mes "time, there was only Einbech,";
+	mes "the mining village. You can";
+	mes "imagine how long ago that was.";
+	next;
+	mes "[Satra]";
+	mes "However, the minerals";
+	mes "and ores mined in Einbech";
+	mes "need to be processed and";
+	mes "refined in factories that were";
+	mes "all built in a nearby industrial";
+	mes "comple which became Einbroch.";
+	next;
+	mes "[Satra]";
+	mes "Now every citizen in";
+	mes "Einbroch is wealthy and";
+	mes "it's well known that there";
+	mes "is a higher standard of";
+	mes "living here than in Einbech.";
+	next;
+	mes "[Satra]";
+	mes "Goodness, I believe";
+	mes "it's time for a spot of tea~";
+	mes "The next time you wish to have";
+	mes "an audience with me, it would";
+	mes "behoove you to bring another";
+	mes "gift of Coal. Toodles~";
+	set EIN_LOVERQ,10;
+	delitem 1003,10;
+	close;
+
+s_Coal3:
+	mes "[Satra]";
+	mes "Why hello~";
+	mes "Your visits have";
+	mes "recently been quite";
+	mes "delightful, fair adventurer.";
+	next;
+	mes "[Satra]";
+	mes "Oh, my apologies!";
+	mes "I supposed you're just";
+	mes "here for sight seeing,";
+	mes "or perhaps you're running";
+	mes "some sort of adventurer's";
+	mes "errand. Am I right?";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal3;
+	mes "[Satra]";
+	mes "I know you well enough";
+	mes "to know that you wouldn't";
+	mes "be so rude as to stop by";
+	mes "and chat without bringing";
+	mes "any ^9C0000Coal^000000. Ho ho ho ho~";
+	close;
+
+s_GotCoal3:
+	mes "[Satra]";
+	mes "Continue to show";
+	mes "your appreciation";
+	mes "and dedication to me";
+	mes "and you'll soon be known";
+	mes "to be my most favored";
+	mes "commoner. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "I'm sure you've noticed";
+	mes "the strained relationship";
+	mes "between Einbroch and Einbech";
+	mes "by now. It's a shame, really.";
+	next;
+	mes "[Satra]";
+	mes "As Einbroch grew wealthier";
+	mes "and Einbech became more";
+	mes "destitude, the affluent began";
+	mes "despising the impoverished.";
+	mes "I supposed it follows that the";
+	mes "poor started to resent the rich.";
+	next;
+	mes "[Satra]";
+	mes "It might be said that";
+	mes "both towns have been";
+	mes "trying to take advantage";
+	mes "of each other, but it's";
+	mes "clear that Einbroch has";
+	mes "always had the upper hand.";
+	next;
+	mes "[Satra]";
+	mes "In fact, because of";
+	mes "this rift between our";
+	mes "cities, our families are";
+	mes "taught not to associate";
+	mes "with the people of Einbech.";
+	next;
+	mes "[Satra]";
+	mes "Now, I believe that most";
+	mes "people who live in Einbech";
+	mes "are peons, but that does not";
+	mes "mean I will not give them a";
+	mes "chance to prove their worth.";
+	next;
+	mes "[Satra]";
+	mes "Why should I deprive";
+	mes "the lowly of my gracious";
+	mes "presence if they prove";
+	mes "themselves meritable?";
+	mes "Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Oh, that was scrumptious!";
+	mes "If you wish to pay me another";
+	mes "visit, don't forget to bring some";
+	mes "Coal with you. Tah tah~";
+	set EIN_LOVERQ,11;
+	delitem 1003,10;
+	close;
+
+s_Coal4:
+	mes "[Satra]";
+	mes "Ho ho ho ho~";
+	mes "Welcome adventurer,";
+	mes "I so enjoy our little chats.";
+	mes "Hors d'oeuvre?";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal4;
+	mes "[Satra]";
+	mes "Ah...";
+	mes "It seems you've";
+	mes "forgotten your ^9C0000Coals^000000.";
+	mes "A silly mistake, but one";
+	mes "I'm willing to overlook.";
+	close;
+
+s_GotCoal4:
+	mes "[Satra]";
+	mes "Oh! You can't enjoy";
+	mes "any food in that state!";
+	mes "Your hands are atrociously";
+	mes "grimy! May I ask why?";
+	next;
+	mes "[Satra]";
+	mes "Ah~";
+	mes "In my excitement,";
+	mes "I nearly forgot that";
+	mes "I asked you to bring";
+	mes "Coals to me again!";
+	mes "My apologies~";
+	next;
+	mes "[Satra]";
+	mes "You've brought so much Coal";
+	mes "to me, I'm convinced that you're";
+	mes "much more diligent than those";
+	mes "languid peasants in Einbech.";
+	mes "I appreciate that you've labored";
+	mes "so much to win my favor.";
+	next;
+	mes "[Satra]";
+	mes "Hm, what was that?";
+	mes "someone else provided";
+	mes "these Coals and you were";
+	mes "only delivering them? Then";
+	mes "who actually gathered these?";
+	next;
+	input @str$;
+	if(@str$ != "Clitzer")goto s_WrongName;
+	mes "[Satra]";
+	mes "Ah, Clitzer?";
+	mes "I must say, that's";
+	mes "a very humble name.";
+	mes "Yet it's so familiar...";
+	next;
+	mes "[Satra]";
+	mes "Ah, I recall there";
+	mes "was a hooligan that";
+	mes "has been pestering my";
+	mes "daughter named Clitzer.";
+	mes "Perhaps they are one";
+	mes "and the same. Hmm...";
+	next;
+	mes "[Satra]";
+	mes "I remember that he was";
+	mes "rather shabby looking and";
+	mes "lacked any semblance of";
+	mes "etiquette whatsoever. Clearly,";
+	mes "he is a fool and a coward, but";
+	mes "now I see that he is sincere.";
+	next;
+	mes "[Satra]";
+	mes "It might not be possible";
+	mes "to let him go otu with my";
+	mes "daughter straight away, but";
+	mes "I will invite him for a spot of";
+	mes "tea. And if Calla likes him,";
+	mes "well, he must be special.";
+	next;
+	mes "[Satra]";
+	mes "For a humble peasant,";
+	mes "this must be like a dream";
+	mes "come true! And to have tea";
+	mes "with Clitzer. Oh, what would";
+	mes "the girls say? Ah, but I did";
+	mes "marry that oafish Megass~";
+	next;
+	mes "[Satra]";
+	mes "Anyway, when you next";
+	mes "meet Clitzer, please tell";
+	mes "him to pay me a visit soon.";
+	mes "Oh, and remind him to dress";
+	mes "appropriately for this special";
+	mes "occasion. Ho ho ho ho ho~";
+	set EIN_LOVERQ,12;
+	close;
+
+s_WrongName:
+	mes "[Satra]";
+	mes "I beg your pardon?";
+	mes "" + @str$ + "? Oh my...";
+	mes "I believe I may have";
+	mes "misheard you. Ho ho ho ho~";
+	close;
+
+s_Intimi:
+	mes "[Satra]";
+	mes "I understand that my";
+	mes "home is extravagantly";
+	mes "splendid and to approach";
+	mes "any Kappelthaine is an";
+	mes "honor t most commoners.";
+	next;
+	mes "[Satra]";
+	mes "However, Clitzer";
+	mes "has no reason to feel so";
+	mes "intimidated. Tell the poor";
+	mes "boy that he's earned the";
+	mes "honor of speaking with me.";
+	close;
+
 }
 
 ein_in01.gat,31,138,4	script	Calla	90,{
+	if(EIN_LOVERQ > 4 && EIN_LOVERQ < 14)goto s_NoSwitch;
+	if(EIN_LOVERQ > 1)goto s_Switches;
+s_NoSwitch:
 	mes "[Calla]";
 	mes "Hello adventurer.";
 	mes "Our city must just be";
@@ -2546,7 +2955,217 @@ ein_in01.gat,31,138,4	script	Calla	90,{
 	mes "heart's true desire?";
 	mes "What I would give to";
 	mes "be able to do that...";
+	if(!EIN_LOVERQ)set EIN_LOVERQ,1;
 	close;
+
+s_Switches:
+	switch(EIN_LOVERQ)
+	{
+
+	case 2:
+		mes "[Calla]";
+		mes "You're the adventurer";
+		mes "from before, aren't you?";
+		mes "Sadly, there isn't much";
+		mes "to do around here. This";
+		mes "place is basically like";
+		mes "a prison to me...";
+		next;
+		mes "[Calla]";
+		mes "Oh, you've met Clitzer?";
+		mes "Isn't he so kind, such";
+		mes "a perfect gentleman?";
+		next;
+		mes "[Calla]";
+		mes "I really wish I could";
+		mes "see him, but it's almost";
+		mes "impossible. My parents think";
+		mes "he's not good enough for me,";
+		mes "but they're wrong! What am";
+		mes "I going to do? Oh, Clitzer...";
+		next;
+		mes "[Calla]";
+		mes "Well, maybe I can't see";
+		mes "him, but would you give";
+		mes "my violin to Clitzer for me?";
+		mes "I used to play this for him";
+		mes "all the time...";
+		next;
+		mes "[Calla]";
+		mes "I'm sorry to trouble you,";
+		mes "but please understand";
+		mes "that I want to comfort my";
+		mes "Clitzer in any way that";
+		mes "I possibly can. Thank";
+		mes "you so much, adventurer...";
+		set EIN_LOVERQ,3;
+		getitem 1901,1;
+		close;
+	break;
+
+	case 3:
+	s_Regards:
+		mes "[Calla]";
+		mes "Oh, please send my";
+		mes "regards to Clitzer for me.";
+		mes "I wish I could comnfort";
+		mes "him in person, but this";
+		mes "is the best I can do for now.";
+		close;
+	break;
+
+	case 4:
+		if(!countitem(712))goto s_Regards;
+		mes "[Calla]";
+		mes "You've spoken";
+		mes "with Clitzer? How";
+		mes "is he? What did he say?";
+		next;
+		mes "[Calla]";
+		mes "Oh...?";
+		mes "He asked you to";
+		mes "deliver this flower";
+		mes "to me? How sweet~";
+		mes "Thank you very much,";
+		mes "kind adventurer~";
+		next;
+		mes "[Calla]";
+		mes "Ah, I'm so rude!";
+		mes "I've been calling you";
+		mes "^111111*adventurer*^000000 this whole";
+		mes "time you've been helping";
+		mes "me! Would you please";
+		mes "tell me your name?";
+		next;
+		input @str$;
+		if(@str$ != strcharinfo(0))goto s_WrongName;
+		mes "[Calla]";
+		mes "Ah, " + strcharinfo(0) + "!";
+		mes "Such a lovely name~";
+		mes "I promise that I won't ever";
+		mes "forget it. Oh, and if you pass by";
+		mes "Einbech, would you thank Clitzer";
+		mes "for the flower for me please?";
+		next;
+		mes "[Calla]";
+		mes "A-and... And...";
+		mes "Please tell him that";
+		mes "I really miss him a lot.";
+		mes "^565656*Sob Sob...*";
+		delitem 712,1;
+		set EIN_LOVERQ,5;
+		close;
+	break;
+
+	case 14:
+		mes "[Calla]";
+		mes "I just heard from my mother";
+		mes "that she's planning to have";
+		mes "tea with Clitzer! I'm sure that";
+		mes "I have you to thank for this~";
+		next;
+		mes "[Calla]";
+		mes "I never dreamed that";
+		mes "something as wonderful";
+		mes "as this could happen.";
+		mes "I'm so happy, I could cry...";
+		mes "I'll always be grateful";
+		mes "for what you've done.";
+		next;
+		mes "[Calla]";
+		mes "I feel like such a fool,";
+		mes "thinking it was all hopeless.";
+		mes "I'll be doing my best to have";
+		mes "my parents accept Clitzer and";
+		mes "someday we'll be married~";
+		next;
+		mes "[Calla]";
+		mes "There isn't much that I can";
+		mes "give you, but I can show you";
+		mes "one of my family's secrets.";
+		mes "It's an invigorating massage";
+		mes "technique that makes you alot";
+		mes "healthier in only ten seconds.";
+		next;
+		mes "[Calla]";
+		mes "Well, please take";
+		mes "off your equipment";
+		mes "and stand still while";
+		mes "I give the massage. It";
+		mes "might hurt a bit at first...";
+		nude;
+		next;
+		mes "^3151FF*Rub Rub Rub*";
+		mes "*Knead Knead Knead*";
+		mes "*Crrack C-c-c--c-crack*";
+		mes "*Crack Crack Crrrrrack*";
+		mes "*Rub Crrraaaaaaaaaackk*^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ooooooooh...";
+		mes "I feel sooo";
+		mes "sore and yet";
+		mes "soooooo good.";
+		mes "Wait. Now I just";
+		mes "feel goooood~";
+		if(BaseLevel < 41)set BaseExp,BaseExp+3712;
+		else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+7425;
+		else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+14850;
+		else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+29700;
+		else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+59400;
+		else if(BaseLevel > 90)set BaseExp,BaseExp+118800;
+		set EIN_LOVERQ,15;
+		next;
+		mes "[Calla]";
+		mes "So how was it?";
+		mes "I hope it was refreshing.";
+		mes "Please understand that";
+		mes "it's the best thing I can";
+		mes "give you to show my gratitude.";
+		next;
+		mes "[Calla]";
+		mes "Once again,";
+		mes "thank you so";
+		mes "much, " + strcharinfo(0) + ".";
+		mes "I'll always pray for";
+		mes "your safety on your";
+		mes "your adventures~";
+		close;
+	break;
+
+	case 15:
+		mes "[Calla]";
+		mes "Thank you so much!";
+		mes "I'll try my best to convince";
+		mes "my parents to accept our";
+		mes "relationship. It'll be hard,";
+		mes "but it's a good first step~";
+		next;
+		mes "[Calla]";
+		mes "I hope that we can all";
+		mes "work together ti improve";
+		mes "relations between Einbech";
+		mes "and Einbroch. The hatred";
+		mes "between our towns must end...";
+		next;
+		mes "[Calla]";
+		mes "I really appreciate";
+		mes "what you've done for";
+		mes "all of use. I'll be praying";
+		mes "for your safety, adventurer.";
+		close;
+	break;
+
+	}
+
+s_WrongName:
+	mes "[Calla]";
+	mes "I'm sorry...";
+	mes "I didn't catch that.";
+	mes "would you please tell";
+	mes "me your name again?";
+	close;
+
 }
 
 ein_in01.gat,32,133,6	script	Maid	850,{

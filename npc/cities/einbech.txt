@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_dib
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.1 Made some changes according to the Shinokas quest, [MasterOfMuppets]
 //=	thanks to Dj-Yhn for scripting them.
 //= 1.2 Removed Duplicates [Silent]
+//= 1.3 Implemented the Lover's quest. [MasterOfMuppets]
 //============================================================
 
 
@@ -1553,7 +1554,11 @@ einbech.gat,197,139,4	script	Young Man#05	855,{
 	close;
 }
 
-ein_in01.gat,191,102,4	script	Kaijeta	846,{	
+ein_in01.gat,191,102,4	script	Kaijeta	846,{
+	if(EIN_LOVERQ > 13)goto s_Learned;
+	if(EIN_LOVERQ == 13)goto s_Clothes;
+	if(EIN_LOVERQ > 6 && EIN_LOVERQ < 13)goto s_Hatred;
+	if(EIN_LOVERQ == 6)goto s_Helping;
 	mes "[Kaijeta]";
 	mes "Welcome to my humble";
 	mes "abode, adventurer. I'm";
@@ -1574,9 +1579,96 @@ ein_in01.gat,191,102,4	script	Kaijeta	846,{
 	mes "land, so we have no choice";
 	mes "but to endure through this...";
 	close;
+
+s_Helping:
+	mes "[Kaijeta]";
+	mes "Thank you for helping my";
+	mes "son. He may look like a fool";
+	mes "for falling in love with someone";
+	mes "from Einbroch, but he's an honest";
+	mes "hard working man.";
+	next;
+	mes "[Kaijeta]";
+	mes "Then again, it was bound to";
+	mes "happen sometime. Einbech is";
+	mes "a very poor town while Einbroch";
+	mes "is a very rich town. I'd understand";
+	mes "if you don't agree, but opposites";
+	mes "attract sooner of later.";
+	next;
+	mes "[Kaijeta]";
+	mes "^565656*Sigh...*^000000";
+	mes "If my son and Calla can";
+	mes "work things out, maybe it";
+	mes "would improve relations";
+	mes "between our two towns.";
+	mes "I certainly hope so...";
+	next;
+	mes "[Kaijeta]";
+	mes "Still, I'm quite baffled!";
+	mes "I raised my son to have more";
+	mes "guts than to wallow in misery";
+	mes "when his heart's broken. And";
+	mes "I still have no idea how he got";
+	mes "together with such a rich woman.";
+	next;
+	mes "[Kaijeta]";
+	mes "Do you have any idea";
+	mes "how we can put an end";
+	mes "to the hate between our";
+	mes "two towns? I don't want to";
+	mes "see this couple separated";
+	mes "because of such pettiness.";
+	set EIN_LOVERQ,7;
+	close;
+
+s_Hatred:
+	mes "[Kaijeta]";
+	mes "I can't bear to see the";
+	mes "petty hatred between our";
+	mes "two towns stop my son from";
+	mes "seeing the woman he loves...";
+	close;
+
+s_Clothes:
+	mes "[Kaijeta]";
+	mes "Thank you for helping";
+	mes "my son Clitzer. Sadly, the";
+	mes "little fool doesn't have any";
+	mes "clue when it comes to certain";
+	mes "things like choosing clothing.";
+	mes "he gets so nervous about it!";
+	next;
+	mes "[Kaijeta]";
+	mes "A man should wear nice";
+	mes "clothes, like a Formal Suit";
+	mes "or a Tuxedo, for important";
+	mes "meetings and special occassions.";
+	mes "hopefully, he'll learn that soon.";
+	close;
+
+s_Learned:
+	mes "[Kaijeta]";
+	mes "My son learned";
+	mes "an awful lot from";
+	mes "your good example.";
+	mes "As a mother, I really";
+	mes "appreciate everything";
+	mes "you've done for him.";
+	next;
+	mes "[Kaijeta]";
+	mes "Well, adventurer,";
+	mes "I will be praying for";
+	mes "your safety wherever";
+	mes "your journeys may";
+	mes "take you.";
+	close;
+
 }
 
-ein_in01.gat,200,101,4	script	Clitzer	854,{	
+ein_in01.gat,200,101,4	script	Clitzer	854,{
+	if(EIN_LOVERQ)goto s_Switches;
+s_Back:
 	mes "[Clitzer]";
 	mes "Is there something";
 	mes "that you really want";
@@ -1598,6 +1690,399 @@ ein_in01.gat,200,101,4	script	Clitzer	854,{
 	mes "different that it's not";
 	mes "even possible anymore...";
 	close;
+
+s_Switches:
+	switch(EIN_LOVERQ)
+	{
+
+	case 1:
+		mes "[Clitzer]";
+		mes "That faintly sweet";
+		mes "and pleasant scent...";
+		mes "It's just like the fragrance";
+		mes "they use in Calla's house.";
+		next;
+		mes "[Clitzer]";
+		mes "Ah, so you visited";
+		mes "Calla in Einbroch?";
+		mes "I miss her sooo much!";
+		mes "Is she doing alright?";
+		next;
+		mes "[Clitzer]";
+		mes "Calla's so beautiful.";
+		mes "And she's so lovely.";
+		mes "Every time I close my";
+		mes "eyes, I can still see";
+		mes "her lovely smile.";
+		next;
+		mes "[Clitzer]";
+		mes "I'm sorry if I sound";
+		mes "silly, but I can't help";
+		mes "it. I know I'm acting like";
+		mes "a complete idiot. But I'd";
+		mes "give anything to see her...";
+		next;
+		mes "[Clitzer]";
+		mes "Just...";
+		mes "Just don't listen";
+		mes "to anything I say.";
+		mes "I'm just a poor fool";
+		mes "in love with the wrong";
+		mes "person. That has to be it...";
+		set EIN_LOVERQ,2;
+		close;
+	break;
+
+	case 2:
+		mes "[Clitzer]";
+		mes "^565656*Sigh*^000000";
+		mes "I really appreciate your";
+		mes "sympathy, but I'm merely";
+		mes "a coward and a fool.";
+		next;
+		mes "[Clitzer]";
+		mes "Yeah...";
+		mes "I'm a coward for doing";
+		mes "nothing about my feelings";
+		mes "and an idiot for falling in love";
+		mes "with such a high class girl in";
+		mes "the first place... Oh, Calla...";
+		close;
+	break;
+
+	case 3:
+		if(!countitem(1901))goto s_Back;
+		mes "[Clitzer]";
+		mes "What brings you here?";
+		mes "aren't you tired of hearing";
+		mes "me moan and whine about";
+		mes "lost love? ^111111*Siiiiigh...*^000000";
+		next;
+		mes "[Clitzer]";
+		mes "Hey, this violin...";
+		mes "Calla used to play";
+		mes "such beautiful music";
+		mes "on this for me. Did";
+		mes "she give this to you?";
+		next;
+		mes "[Clitzer]";
+		mes "I see. Calla must have";
+		mes "known that I'm all broken up";
+		mes "right now. She's too good to";
+		mes "me. How can se consider";
+		mes "my feelings before thinking";
+		mes "about herself?";
+		next;
+		mes "[Clitzer]";
+		mes "I know I'm being";
+		mes "shameless, but I have";
+		mes "a favor to ask. Adventurer,";
+		mes "would you please send";
+		mes "Calla a present for me?";
+		next;
+		mes "[Clitzer]";
+		mes "All you need to do is";
+		mes "just give her ^FF00001 Flower^000000.";
+		mes "I don't have the zeny and";
+		mes "I don't think I'm welcome";
+		mes "at Kapellthaine Manor.";
+		next;
+		mes "[Clitzer]";
+		mes "Here, in return, I'll";
+		mes "give you this health";
+		mes "massage. It's not a";
+		mes "big deal, but when I'm";
+		mes "done, your mind and body";
+		mes "will be refreshed. Here goes!";
+		next;
+		mes "^3151FF*Knead Knead*";
+		mes "*Rub Rub Rub Rub*";
+		mes "*Press Press Press*";
+		mes "*C-c-c-c-c-c-crakck!*^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh--";
+		mes "Hell yeah!";
+		mes "That's the stuff!";
+		delitem 1901,1;
+		if(BaseLevel < 41)set BaseExp,BaseExp+3712;
+		else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+7425;
+		else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+14850;
+		else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+29700;
+		else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+59400;
+		else if(BaseLevel > 90)set BaseExp,BaseExp+118800;
+		set EIN_LOVERQ,4;
+		next;
+		mes "[Clitzer]";
+		mes "Would you please bring";
+		mes "1 Flower to Calla for me?";
+		mes "I'm sorry for troubling you...";
+		close;
+	break;
+
+	case 4:
+		mes "[Clitzer]";
+		mes "Would you please bring";
+		mes "1 Flower to Calla for me?";
+		mes "I'm sorry for troubling you...";
+		close;
+	break;
+
+	case 5:
+		mes "[Clitzer]";
+		mes "You've given her";
+		mes "the flower? That's";
+		mes "great! Thank you,";
+		mes "thank you so mu--";
+		next;
+		mes "[Clitzer]";
+		mes "...Oh!";
+		mes "Gosh! I was thinking so";
+		mes "much about myself that";
+		mes "I forgot to ask you for your";
+		mes "name! I'm sorry for being";
+		mes "so knuckle-headed...";
+		next;
+		mes "[Clitzer]";
+		mes "So...";
+		mes "What's your name?";
+		next;
+		input @str$;
+		if(@str$ != strcharinfo(0))goto s_WrongName;
+		mes "[Clitzer]";
+		mes "" + strcharinfo(0) + "...";
+		mes "That's very nice. Thank you,";
+		mes "I'm really grateful for your help.";
+		mes "Although I can't see Calla in";
+		mes "person, I can at least send";
+		mes "my regards if you help me.";
+		next;
+		mes "[Clitzer]";
+		mes "I feel so much";
+		mes "better now. Oh!";
+		mes "When you have the";
+		mes "time, why don't you talk";
+		mes "to my mother? She always";
+		mes "likes meeting my friends.";
+		set EIN_LOVERQ,6;
+		close;
+
+	s_WrongName:
+		mes "[Clitzer]";
+		mes "Hm...?";
+		mes "Oh, don't be";
+		mes "so nervous~";
+		mes "But would you please";
+		mes "tell me your name again?";
+		mes "I couldn't hear you...";
+		close;
+	break;
+
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+	case 10:
+	case 11:
+		mes "[Clitzer]";
+		mes "^111111*Sigh...*^000000";
+		mes "What can I do to";
+		mes "get Calla's parents";
+		mes "to accept me as her";
+		mes "boyfriend? I can't";
+		mes "think of anything...";
+		close;
+	break;
+
+	case 12:
+		mes "[Clitzer]";
+		mes "Eh...?";
+		mes "What did you just say?";
+		mes "You did something for";
+		mes "the Kapellthaines?";
+		next;
+		mes "[Clitzer]";
+		mes "What...?";
+		mes "Did you just say";
+		mes "that Calla's mother";
+		mes "wants me to have tea";
+		mes "with her? Holy moley...!";
+		next;
+		mes "[Clitzer]";
+		mes "Okay, okay.";
+		mes "I-I I'll need something";
+		mes "nice to wear, right? Oh.";
+		mes "Wow. This is so sudden!";
+		mes "W-what should I do?";
+		next;
+		mes "[Clitzer]";
+		mes "This monkey suit";
+		mes "that I've got on just";
+		mes "won't do! Arrrgh! But I've";
+		mes "already outgrown all of my";
+		mes "nice clothes already. Boy,";
+		mes "am I in a pickle...";
+		set EIN_LOVERQ,13;
+		close;
+	break;
+
+	case 13:
+		if((countitem(2320) || countitem(7170)) || (countitem(2320) && countitem(7170)))goto s_Clothes;
+		mes "[Clitzer]";
+		mes "Noooooo!";
+		mes "I've got to find";
+		mes "the perfect thing";
+		mes "to wear or Calla's";
+		mes "mother might ^FF0000hate^000000 me!";
+		next;
+		mes "[Clitzer]";
+		mes "Think, Clitzer, think!";
+		mes "Okay, no fun colors.";
+		mes "I don't want her to";
+		mes "think I'm not serious";
+		mes "about Calla. Stripes";
+		mes "might be bad too...";
+		close;
+	break;
+
+	case 14:
+	case 15:
+		mes "[Clitzer]";
+		mes "Look out, world!";
+		mes "I'm gonna become";
+		mes "worth of Calla's love!";
+		mes "Someday, maybe even her";
+		mes "parents will approve me!";
+		close;
+	break;
+
+	}
+
+s_Clothes:
+	mes "[Clitzer]";
+	mes "Waaah!";
+	mes "What should I wear?!";
+	mes "I can't for the life of me";
+	mes "figure this out! Something,";
+	mes "um, formal? I've never worn";
+	mes "anything like that before!";
+	next;
+	if(countitem(7170)){ set @clothes,7170; goto s_Tux; }
+	if(countitem(2320)){ set @clothes,2320; goto s_Formal; }
+	close;
+
+s_Tux:
+	mes "[Clitzer]";
+	mes "Wait, " + strcharinfo(0) + ".";
+	mes "What's that you've got";
+	mes "there? I've seen something";
+	mes "like that before. It's called";
+	mes "a Tuxedo, right? Something";
+	mes "like that would be perfect!";
+	next;
+	menu "Give it to him.",s_Giveclothes,"Ignore him.",-;
+
+	mes "[Clitzer]";
+	mes "But how can I get";
+	mes "a Tuxedo? Ooh, I hope";
+	mes "it doesn't cost too much";
+	mes "zeny or I won't be able to";
+	mes "get one of those soon...";
+	close;
+
+s_Formal:
+	mes "[Clitzer]";
+	mes "Wait, " + strcharinfo(0) + ".";
+	mes "What's that you've got";
+	mes "there? I've seen something";
+	mes "like that before. It's called";
+	mes "a Formal Suit, right?";
+	mes "Something like that would";
+	mes "be perfect!";
+	next;
+	menu "Give it to him.",s_Giveclothes,"Ignore him.",-;
+
+	mes "[Clitzer]";
+	mes "But how can I get";
+	mes "a Formal Suit? I hope";
+	mes "it doesn't cost too much";
+	mes "zeny or I won't be able to";
+	mes "get one of those soon...";
+	close;
+
+s_Giveclothes:
+	mes "[Clitzer]";
+	mes "I can have this?";
+	mes "Oh, thank you so much!";
+	mes "Finally, I have something";
+	mes "nice enough to wear to meet";
+	mes "Calla's mom! What a relief!";
+	next;
+	mes "[Clitzer]";
+	mes "You've been helping me all";
+	mes "this time and I haven't properly";
+	mes "expressed my gratitude. I'm sorry";
+	mes "if I've been to absorbed in my own";
+	mes "problems. I may be poor, but I need";
+	mes "to repay you somehow...";
+	next;
+	mes "[Clitzer]";
+	mes "Wait...";
+	mes "Why don't you have this";
+	mes "ore? I don't how";
+	mes "valuable it is, but I know";
+	mes "that it's pretty rare. It may";
+	mes "even be useful to you later~";
+	delitem @clothes,1;
+	set EIN_LOVERQ,14;
+	switch(rand(1,9))
+	{
+	case 1:
+		getitem 7289,1;
+	break;
+
+	case 2:
+		getitem 7290,1;
+	break;
+
+	case 3:
+		getitem 7291,1;
+	break;
+
+	case 4:
+		getitem 7292,1;
+	break;
+
+	case 5:
+		getitem 7293,1;
+	break;
+
+	case 6:
+		getitem 7294,1;
+	break;
+
+	case 7:
+		getitem 7295,1;
+	break;
+
+	case 8:
+		getitem 7296,1;
+	break;
+
+	case 9:
+		getitem 7297,1;
+	break;
+	}
+	next;
+	mes "[Clitzer]";
+	mes "" + strcharinfo(0) + ",";
+	mes "you've really opened";
+	mes "my eyes. From now on,";
+	mes "I'll do my best to earn the";
+	mes "approval of Calla's parents and";
+	mes "become worthy of Calla's love.";
+	close;
+
 }
 
 
