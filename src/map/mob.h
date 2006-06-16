@@ -25,6 +25,18 @@
 #define MOB_CLONE_START 9001
 #define MOB_CLONE_END 10000
 
+// Scripted Mob AI Constants
+#define CALLBACK_ATTACK		0x80
+#define CALLBACK_DETECT		0x40
+#define CALLBACK_DEAD		0x20
+#define	CALLBACK_ASSIST		0x10
+#define CALLBACK_KILL		0x08
+#define CALLBACK_UNLOCK		0x04
+#define CALLBACK_WALKACK	0x02
+#define CALLBACK_WARPACK	0x01
+
+void mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type);
+
 struct mob_skill {
 	short state;
 	short skill_id,skill_lv;

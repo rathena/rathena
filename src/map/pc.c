@@ -4663,13 +4663,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			status_calc_mob(md, 0);
 			status_percent_heal(src,10,0);
 		}
-		if(md->nd){
-			setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)5, &md->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)sd->bl.type, &md->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 2, (void *)sd->bl.id, &md->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-			run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-		}
+		if(md->nd)
+			mob_script_callback(md, &sd->bl, CALLBACK_KILL);
 	}
 	break;
 	case BL_PC:

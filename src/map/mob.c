@@ -772,11 +772,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 		return 0;
 
 	if(md->nd){
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)2, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)bl->type, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)bl->id, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+		mob_script_callback(md, bl, CALLBACK_DETECT);
 		return 1; // We have script handling the work.
 	}
 
@@ -951,11 +947,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			}
 			if (tbl && status_check_skilluse(&md->bl, tbl, 0, 0)) {
 				if(md->nd){
-					setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)4, &md->nd->u.scr.script->script_vars);
-					setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)tbl->type, &md->nd->u.scr.script->script_vars);
-					setd_sub(NULL, NULL, ".ai_action", 2, (void *)tbl->id, &md->nd->u.scr.script->script_vars);
-					setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-					run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+					mob_script_callback(md, bl, CALLBACK_ASSIST);
+					return 0;
 				}
 				md->target_id=tbl->id;
 				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
@@ -975,14 +968,8 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 {
 	nullpo_retr(0, md);
 
-	if(md->nd){
-		struct block_list *tbl = map_id2bl(md->target_id);
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)6, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)(tbl?tbl->type:0), &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)(tbl?tbl->id:0), &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-	}
+	if(md->nd)
+		mob_script_callback(md, map_id2bl(md->target_id), CALLBACK_UNLOCK);
 
 	md->target_id=0;
 	md->state.skillstate=MSS_IDLE;
@@ -1604,13 +1591,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		md->attacked_players++;
 		
 	if(md->nd)
-	{
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)1, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)src->type, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)src->id, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-	}
+		mob_script_callback(md, src, CALLBACK_ATTACK);
 
 	switch (src->type) {
 		case BL_PC: 
@@ -2112,22 +2093,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(src && src->type == BL_MOB){
 		struct mob_data *smd = (struct mob_data *)src;
-		if(smd->nd){
-			setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)5, &smd->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)md->bl.type, &smd->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 2, (void *)md->bl.id, &smd->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 3, (void *)smd->bl.id, &smd->nd->u.scr.script->script_vars);
-			run_script(smd->nd->u.scr.script, 0, 0, smd->nd->bl.id);
-		}
+		if(smd->nd)
+			mob_script_callback(smd, &md->bl, CALLBACK_KILL);
 	}
 
-	if(md->nd){
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)3, &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)(src?src->type:0), &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 2, (void *)(src?src->id:0), &md->nd->u.scr.script->script_vars);
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
-		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
-	} else if(md->npc_event[0]){
+	if(md->nd)
+		mob_script_callback(md, src, CALLBACK_DEAD);
+	else if(md->npc_event[0]){
 		if(src && src->type == BL_PET)
 			sd = ((struct pet_data *)src)->msd;
 		if(sd && battle_config.mob_npc_event_type)
@@ -2449,6 +2421,10 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 
 		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
 	}
+
+	if(md2->nd)
+		mob_convertslave(md2);
+
 	return 0;
 }
 
@@ -3010,6 +2986,20 @@ int mob_clone_delete(int class_)
 		return 1;
 	}
 	return 0;
+}
+
+void mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type)
+{
+	// I will not add any protection here since I assume everything is checked before coming here.
+	if(md->callback_flag&action_type){
+		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)action_type, &md->nd->u.scr.script->script_vars);
+		if(target){
+			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)target->type, &md->nd->u.scr.script->script_vars);
+			setd_sub(NULL, NULL, ".ai_action", 2, (void *)target->id, &md->nd->u.scr.script->script_vars);
+		}
+		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+	}
 }
 
 //

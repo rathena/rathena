@@ -875,6 +875,7 @@ struct mob_data {
 	int master_id,master_dist;
 
 	struct npc_data *nd;
+	unsigned char callback_flag;
 	
 	short skillidx;
 	unsigned int skilldelay[MAX_MOBSKILL];
