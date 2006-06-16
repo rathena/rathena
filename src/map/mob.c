@@ -1517,6 +1517,7 @@ int mob_convertslave_sub(struct block_list *bl,va_list ap)
 		md->state.killer = md2->state.killer;
 		md->special_state.ai = md2->special_state.ai;
 		md->nd = md2->nd;
+		md->callback_flag = md2->callback_flag;
 	}
 
 	return 0;

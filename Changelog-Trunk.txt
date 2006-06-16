@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/16
 	* [Added]:
+	  - Custom slave mobs to inherit the callback_flag.
 	  - Added option #25 to buildin_setmobdata to set the callback_flag. [Lance]
 	* [Improved]:
 	  - Cleaned up Custom Mob Script Callback codes. Looks much better now :B. [Lance]
