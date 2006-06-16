@@ -2083,7 +2083,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			log_mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
-	if (flag&2 && !sd && md->class_ == MOBID_EMPERIUM)
+	if (type&2 && !sd && md->class_ == MOBID_EMPERIUM)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
