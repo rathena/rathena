@@ -3190,7 +3190,7 @@ static int mob_readdb(void)
 			}
 			status->mode=atoi(str[25]);
 			status->speed=atoi(str[26]);
-			status->aspd_rate = 100;
+			status->aspd_rate = 1000;
 			status->adelay=atoi(str[27]);
 			status->amotion=atoi(str[28]);
 			status->dmotion=atoi(str[29]);
@@ -3869,7 +3869,7 @@ static int mob_read_sqldb(void)
 				}
 				status->mode = TO_INT(25);
 				status->speed = TO_INT(26);
-				status->aspd_rate = 100;
+				status->aspd_rate = 1000;
 				status->adelay = TO_INT(27);
 				status->amotion = TO_INT(28);
 				status->dmotion = TO_INT(29);

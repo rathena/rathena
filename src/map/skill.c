@@ -6285,7 +6285,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		}
 		break;
 	case DC_DONTFORGETME:
-		val1 = 3*skilllv+status->dex/10; // ASPD decrease
+		val1 = 30*skilllv+status->dex; // ASPD decrease
 		val2 = 100+2*skilllv+status->agi/10; // Movement speed adjustment.
 		if(sd){
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
@@ -6309,7 +6309,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		}
 		break;
 	case BA_ASSASSINCROSS:
-		val1 = 10+skilllv+(status->agi/10); // ASPD increase
+		val1 = 100+10*skilllv+status->agi; // ASPD increase
 		if(sd)
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
@@ -6556,7 +6556,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 
 	case UNT_GRAVITATION:
 		if (sc && sc->data[type].timer==-1)
-			sc_start4(bl,type,100,sg->skill_lv,5*sg->skill_lv,BCT_ENEMY,sg->group_id,sg->limit);
+			sc_start4(bl,type,100,sg->skill_lv,0,BCT_ENEMY,sg->group_id,sg->limit);
 		break;
 	
 	case UNT_ICEWALL: //Destroy the cell. [Skotlex]

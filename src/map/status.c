@@ -1198,7 +1198,7 @@ int status_calc_mob(struct mob_data* md, int first)
 		status->batk += status->batk * 10*md->guardian_data->guardup_lv/100;
 		status->rhw.atk += status->rhw.atk * 10*md->guardian_data->guardup_lv/100;
 		status->rhw.atk2 += status->rhw.atk2 * 10*md->guardian_data->guardup_lv/100;
-		status->aspd_rate -= 10*md->guardian_data->guardup_lv;
+		status->aspd_rate -= 100*md->guardian_data->guardup_lv;
 	}
 
 	if(!battle_config.enemy_str)
@@ -1357,6 +1357,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->sp = 0;
 	status->max_hp=500+lv*10+lv*lv;
 	status->max_sp=300+lv*11+lv*lv*90/100;
+	status->aspd_rate = 1000;
 	status->speed=0x96;
 	status->batk = status_base_atk(&hd->bl, status);
 	status_calc_misc(status, hd->level);
@@ -1514,7 +1515,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	status->speed = DEFAULT_WALK_SPEED;
-	status->aspd_rate = 100;
 	status->mode = MD_CANMOVE|MD_CANATTACK|MD_LOOTER|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
 	status->size = (sd->class_&JOBL_BABY)?0:1;
 	if (battle_config.character_size && pc_isriding(sd)) { //[Lupus]
@@ -1524,7 +1524,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		} if(battle_config.character_size&1)
 			status->size++;
 	}
-	status->aspd_rate = 100;
+	status->aspd_rate = 1000;
 	status->ele_lv = 1;
 	status->race = RC_DEMIHUMAN;
 
@@ -1766,7 +1766,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->perfect_hit += sd->perfect_hit_add;
 	sd->splash_range += sd->splash_add_range;
 	if(sd->aspd_add_rate)	
-		sd->aspd_rate += sd->aspd_add_rate;
+		status->aspd_rate += 10*sd->aspd_add_rate;
 	if(sd->speed_add_rate)	
 		sd->speed_rate += sd->speed_add_rate;
 
@@ -1963,14 +1963,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Relative modifiers from passive skills
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
-		status->aspd_rate -= (skill/2);
+		status->aspd_rate -= 5*skill;
 	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
-		status->aspd_rate -= (skill*3);
+		status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-		status->aspd_rate -= (skill/2);
+		status->aspd_rate -= 5*skill;
 	if(pc_isriding(sd))
-		status->aspd_rate += 50-10*pc_checkskill(sd,KN_CAVALIERMASTERY);
+		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	
 	status->adelay = 2*status->amotion;
 	
@@ -2379,8 +2379,8 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		status->aspd_rate = status_calc_aspd_rate(&sd->bl, &sd->sc , b_status->aspd_rate);
 		
 		// Apply all relative modifiers
-		if(status->aspd_rate != 100)
-			skill = skill *status->aspd_rate/100;
+		if(status->aspd_rate != 1000)
+			skill = skill *status->aspd_rate/1000;
 
 		status->amotion = cap_value(skill,battle_config.max_aspd,2000);
 
@@ -2657,10 +2657,10 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	
 	if(flag&SCB_ASPD) {
 		status->aspd_rate = status_calc_aspd_rate(bl, sc , b_status->aspd_rate);
-		temp = status->aspd_rate*b_status->amotion/100;
+		temp = status->aspd_rate*b_status->amotion/1000;
 		status->amotion = cap_value(temp, battle_config.monster_max_aspd, 2000);
 		
-		temp = status->aspd_rate*b_status->adelay/100;
+		temp = status->aspd_rate*b_status->adelay/1000;
 		status->adelay = cap_value(temp, battle_config.monster_max_aspd<<1, 4000);
 	}
 
@@ -3255,7 +3255,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 {
 	int i;
 	if(!sc || !sc->count)
-		return aspd_rate;
+		return cap_value(aspd_rate,0,SHRT_MAX);
 
 	if(sc->data[SC_QUAGMIRE].timer==-1 && sc->data[SC_DONTFORGETME].timer==-1)
 	{
@@ -3263,8 +3263,8 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		if(sc->data[SC_STAR_COMFORT].timer!=-1)
 			max = sc->data[SC_STAR_COMFORT].val2;
 
-		if(sc->data[SC_MADNESSCANCEL].timer!=-1 && max < 20)
-			max = 20;
+		if(sc->data[SC_MADNESSCANCEL].timer!=-1 && max < 200)
+			max = 200;
 	
 		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 &&
 			max < sc->data[SC_TWOHANDQUICKEN].val2)
@@ -3316,7 +3316,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate -= max;
 
 		if(sc->data[SC_BERSERK].timer!=-1)
-			aspd_rate -= 30; //Stacks with the rest of bonuses.
+			aspd_rate -= 300; //Stacks with the rest of bonuses.
 	}
 	if(sc->data[i=SC_ASPDPOTION3].timer!=-1 ||
 		sc->data[i=SC_ASPDPOTION2].timer!=-1 ||
@@ -3328,23 +3328,23 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if(sc->data[SC_LONGING].timer!=-1)
 		aspd_rate += sc->data[SC_LONGING].val2;
 	if(sc->data[SC_STEELBODY].timer!=-1)
-		aspd_rate += 25;
+		aspd_rate += 250;
 	if(sc->data[SC_SKA].timer!=-1)
-		aspd_rate += 25;
+		aspd_rate += 250;
 	if(sc->data[SC_DEFENDER].timer != -1)
 		aspd_rate += sc->data[SC_DEFENDER].val3;
 	if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
-		aspd_rate += 25;
+		aspd_rate += 250;
 	if(sc->data[SC_GRAVITATION].timer!=-1)
 		aspd_rate += sc->data[SC_GRAVITATION].val2;
 //Curse shouldn't effect on this?
 //		if(sc->data[SC_BLEEDING].timer != -1)
-//			aspd_rate += 25;
+//			aspd_rate += 250;
 	if(sc->data[SC_JOINTBEAT].timer!=-1) {
 		if (sc->data[SC_JOINTBEAT].val2 == 1)
-			aspd_rate += 25;
+			aspd_rate += 250;
 		else if (sc->data[SC_JOINTBEAT].val2 == 2)
-			aspd_rate += 10;
+			aspd_rate += 100;
 	}
 
 	return cap_value(aspd_rate,0,SHRT_MAX);
@@ -4520,12 +4520,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_ONEHAND:
 		case SC_TWOHANDQUICKEN:
-			val2 = 30;
+			val2 = 300;
 			if (val1 > 10) //For boss casted skills [Skotlex]
-				val2 += 2*(val1-10);
+				val2 += 20*(val1-10);
 			break;
 		case SC_SPEARQUICKEN:
-			val2 = 20+val1;
+			val2 = 200+10*val1;
 			break;
 		case SC_MOONLIT:
 			val2 = bl->id;
@@ -4545,7 +4545,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			tick = 1000;
 			break;
 		case SC_LONGING:
-			val2 = 50-10*val1; //Aspd penalty.
+			val2 = 500-100*val1; //Aspd penalty.
 			val3 = 50+10*val1; //Walk speed adjustment.
 			break;
 		case SC_EXPLOSIONSPIRITS:
@@ -4555,7 +4555,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ASPDPOTION1:
 		case SC_ASPDPOTION2:
 		case SC_ASPDPOTION3:
-			val2 = 5*(2+type-SC_ASPDPOTION0);
+			val2 = 50*(2+type-SC_ASPDPOTION0);
 			break;
 
 		case SC_WEDDING:
@@ -4698,7 +4698,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				struct map_session_data *tsd;
 				int i;
 				val2 = 5 + 15*val1; //Damage reduction
-				val3 = 25 - 5*val1; //Aspd adjustment 
+				val3 = 250 - 50*val1; //Aspd adjustment 
 				val4 = 135 - 5*val1; //Speed adjustment
 
 				if (sd)
@@ -4903,7 +4903,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_GRAVITATION:
-			//val2 = aspd reduction
+			val2 = 50*val1; //aspd reduction
 			if (val3 == BCT_SELF) {
 				struct unit_data *ud = unit_bl2ud(bl);
 				if (ud) {
@@ -5048,9 +5048,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ADRENALINE2:
 		case SC_ADRENALINE:
 			if (val2 || !battle_config.party_skill_penalty)
-				val2 = 30;
+				val2 = 300;
 			else
-				val2 = 20;
+				val2 = 200;
 			break;
 		case SC_CONCENTRATION:
 			val2 = 5*val1; //Batk/Watk Increase
@@ -5078,7 +5078,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = (status_get_lv(bl) + status->dex + status->luk)/10; //luk increase
 			break;
 		case SC_STAR_COMFORT:
-			val2 = (status_get_lv(bl) + status->dex + status->luk)/10; //Aspd increase
+			val2 = (status_get_lv(bl) + status->dex + status->luk); //Aspd increase
 			break;
 		case SC_QUAGMIRE:
 			val2 = (sd?5:10)*val1; //Agi/Dex decrease.
@@ -5086,7 +5086,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		// gs_something1 [Vicious]
 		case SC_GATLINGFEVER:
-			val2 = 2*val1; //Aspd increase
+			val2 = 20*val1; //Aspd increase
 			val3 = 5*val1; //Flee decrease
 			break;
 
@@ -5106,7 +5106,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 20+10*val1; //Atk rate change.
 			break;
 		case SC_FLEET:
-			val2 = 3*val1; //Aspd change
+			val2 = 30*val1; //Aspd change
 			val3 = 5+5*val1; //Atk rate change
 			break;
 		case SC_MINDBREAKER:

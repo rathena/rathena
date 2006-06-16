@@ -1390,8 +1390,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->adelay -= val*10;
 		break;
 	case SP_ASPD_RATE:	//Non stackable increase
-		if(sd->state.lr_flag != 2 && status->aspd_rate > 100-val)
-			status->aspd_rate = 100-val;
+		if(sd->state.lr_flag != 2 && status->aspd_rate > 1000-val*10)
+			status->aspd_rate = 1000-val*10;
 		break;
 	case SP_ASPD_ADDRATE:	//Stackable increase - Made it linear as per rodatazone
 		if(sd->state.lr_flag != 2)
