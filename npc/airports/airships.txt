@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.2
+//= 0.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 0.2 Implemented some more airship NPCs, more are to come.
 //= 0.3 Implemented some more NPCs [MasterOfMuppets]
 //= 0.4 Implemented two mini games scripted by Dj-Yhn [MasterOfMuppets]
+//= 0.5 Removed Duplicates [Silent]
 //============================================================ 
 
 //============================================================ 
@@ -170,19 +171,19 @@ OnTimer260000:
 //= Some normal NPCS (airplane.gat)
 //============================================================ 
 
-airplane.gat,240,64,5	script	Exit	857,{
+airplane.gat,240,64,5	script	Exit#01::Exit2	857,{
 
 end;
 
 }
 
-airplane.gat,247,64,5	duplicate(Exit)	Exit	857
+airplane.gat,247,64,5	duplicate(Exit2)	Exit#02	857
 
-airplane.gat,240,39,1	duplicate(Exit)	Exit	857
+airplane.gat,240,39,1	duplicate(Exit2)	Exit#03	857
 
-airplane.gat,247,39,1	duplicate(Exit)	Exit	857
+airplane.gat,247,39,1	duplicate(Exit2)	Exit#04	857
 
-airplane.gat,100,69,2	script	Airship Crew	852,{
+airplane.gat,100,69,2	script	Airship Crew#01::Airship Crew	852,{
 
 	mes "[Airship Crew]";
 	mes "If we've landed at";
@@ -654,23 +655,23 @@ OnTimer130000:
 //= Some normal NPCS (airplane_01.gat)
 //============================================================ 
 
-airplane_01.gat,240,64,5	duplicate(Exit)	Exit	857
+airplane_01.gat,240,64,5	duplicate(Exit2)	Exit#05	857
 
-airplane_01.gat,247,64,5	duplicate(Exit)	Exit	857
+airplane_01.gat,247,64,5	duplicate(Exit2)	Exit#06	857
 
-airplane_01.gat,240,39,1	duplicate(Exit)	Exit	857
+airplane_01.gat,240,39,1	duplicate(Exit2)	Exit#07	857
 
-airplane_01.gat,247,39,1	duplicate(Exit)	Exit	857
+airplane_01.gat,247,39,1	duplicate(Exit2)	Exit#08	857
 
-airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew	852
+airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew#02	852
 
-airplane_01.gat,250,59,3	duplicate(AirshipInfo)	Airship Staff	67
+airplane_01.gat,250,59,3	duplicate(AirshipInfo)	Airship Staff#info	67
 
 airplane_01.gat,50,66,4	duplicate(AirshipApples)	Meltz	86
 
 airplane_01.gat,32,61,4	duplicate(TypingContest)	Nils	49	
 
-airplane_01.gat,83,61,2	script	Girl	72,{
+airplane_01.gat,83,61,2	script	Girl#10	72,{
 
 	mes "[Dianne]";
 	mes "It's so weird!";
@@ -683,7 +684,7 @@ airplane_01.gat,83,61,2	script	Girl	72,{
 
 }
 
-airplane_01.gat,69,63,2	script	Old Man	55,{
+airplane_01.gat,69,63,2	script	Old Man#06	55,{
 
 	mes "[Mendel]";
 	mes "As I expected, the";

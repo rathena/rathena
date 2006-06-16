@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any Freya Version
 //===== Description: =========================================
@@ -37,6 +37,7 @@
 //= 2.0 - Fixed missed equppment presence check. Thx2 Coltaro [Lupus]
 //= 2.0a - Added weight checks thanks to Neouni [Playtester]
 //= 2.0b - Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
+//= 2.1 - Removed Duplicates [Silent]
 //============================================================
 
 
@@ -763,17 +764,17 @@ prt_in.gat,62,54,2	script	Grendal	84,{
 	end;
 }
 //Temp Spot, Not Sure Where To place
-payon.gat,149,182,2	script	Repairman	88,{
+payon.gat,149,182,2	script	Repairman#01	88,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;
 }
-morocc_in.gat,71,40,2	script	Repairman	99,{
+morocc_in.gat,71,40,2	script	Repairman#02	99,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;
 }
-lhz_in02.gat,284,14,3	script	Repairman	86,{
+lhz_in02.gat,284,14,3	script	Repairman#03	86,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;

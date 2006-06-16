@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Fredzilla
 //===== Version ===========================================
-//= 1.4
+//= 1.5
 //===== Compatible With ===================================
 //= eAthena 1.0
 //===== Description =======================================
@@ -24,6 +24,7 @@
 //= 1.3 - Fixed exploit [Lupus]
 //= 1.4 Updated, more close to the official. Thanks to birkiczd
 //=	Also optimized it again, remove unused global variable [Lupus]
+//= 1.5 Removed Duplicates [Silent]
 //=========================================================
 
 ayo_dun02.gat,277,178,1	script	OBB	139,4,4,{
@@ -39,31 +40,31 @@ ayo_dun02.gat,277,178,1	script	OBB	139,4,4,{
 	close;
 }
 //Dungeon 1 foot prints x 5
-ayo_dun01.gat,30,149,1	script	Clue	139,5,5,{
+ayo_dun01.gat,30,149,1	script	Clue#01	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some foot prints here, they head off to the East.";
 	set @footprints1,1;
 	close;
 }
-ayo_dun01.gat,70,149,1	script	Clue	139,5,5,{
+ayo_dun01.gat,70,149,1	script	Clue#02	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some more foot prints, they are heading off to the East too!";
 	set @footprints2,1;
 	close;
 }
-ayo_dun01.gat,100,149,1	script	Clue	139,5,5,{
+ayo_dun01.gat,100,149,1	script	Clue#03	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "More foot prints heading to the East, who do they belong too?";
 	set @footprints3,1;
 	close;
 }
-ayo_dun01.gat,190,149,1	script	Clue	139,5,5,{
+ayo_dun01.gat,190,149,1	script	Clue#04	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "More foot prints, but these are going North.";
 	set @footprints4,1;
 	close;
 }
-ayo_dun01.gat,261,263,1	script	Clue	139,5,5,{
+ayo_dun01.gat,261,263,1	script	Clue#05	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some foot prints, they seem to head into that hole there.";
 	set @footprints5,1;
@@ -71,32 +72,32 @@ ayo_dun01.gat,261,263,1	script	Clue	139,5,5,{
 }
 
 //Dungeon 2 foot prints x 4 + 1 fake
-ayo_dun02.gat,222,204,1	script	Clue	139,5,5,{
+ayo_dun02.gat,222,204,1	script	Clue#06	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Yet more foot prints, they are either going South or West.";
 	set @footprints6,1;
 	close;
 }
-ayo_dun02.gat,169,212,1	script	Clue	139,5,5,{
+ayo_dun02.gat,169,212,1	script	Clue#07	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Looks like there are foot print going to the West.";
 	set @footprints7,1;
 	close;
 }
-ayo_dun02.gat,129,212,1	script	Clue	139,5,5,{
+ayo_dun02.gat,129,212,1	script	Clue#08	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Ok these foot prints are either going to the North or West.";
 	set @footprints8,1;
 	close;
 }
-ayo_dun02.gat,79,212,1	script	Clue	139,7,7,{
+ayo_dun02.gat,79,212,1	script	Clue#09	139,7,7,{
 	if(weddingring!=3) end;
 	npctalk "These are very new, they are going North.";
 	set @footprints9,1;
 	close;
 }
 //FAKE
-ayo_dun02.gat,245,166,1	script	Clue	139,7,7,{
+ayo_dun02.gat,245,166,1	script	Clue#10	139,7,7,{
 	if(weddingring!=3) end;
 	npctalk "Seems something came by this way, to the East.";
 	close;
@@ -182,7 +183,7 @@ L_QuestOver:
 	close;
 }
 
-ayothaya.gat,253,99,3	script	Fisherman	843,{
+ayothaya.gat,253,99,3	script	Fisherman#01	843,{
 	mes "[Dannai]";
 	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
 	next;
@@ -235,7 +236,7 @@ L_RingCheck:
 	close;
 }
 
-ayothaya.gat,192,171,4	script	Old Man	824,{
+ayothaya.gat,192,171,4	script	Old Man#10	824,{
 	mes "[Tham]";
 	if(weddingring==3) goto L_OnQ2;
 	mes "What a nice day it is today, don't you agree?";

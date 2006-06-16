@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -21,13 +21,14 @@
 //= 1.6 Rewrote a lot. Changed the sprite, some locations. [Poki#3]
 //= TODO Add an option for selecting the level of the dungeon. [Poki#3]
 //= 1.7 Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
+//= 1.8 Removed Duplicates [Silent]
 //============================================================
 //============================================================
 //= To allow selecting the Level of the Dungeon you want to
 //= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
 //============================================================
 
--	script	Warp Agent::warpra	859,{
+-	script	Warp Agent#01::warpra	859,{
 //	set @lvlselect,0;
 
 	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
@@ -97,46 +98,46 @@ dturtle:	warp "tur_dun01.gat",	149,	238;	end;
 }
 
 //----------------Towns----------------\\
-alberta.gat,31,240,4	duplicate(warpra)	Warp Agent	859
-aldebaran.gat,145,118,4	duplicate(warpra)	Warp Agent	859
-amatsu.gat,192,81,1	duplicate(warpra)	Warp Agent	859
-ayothaya.gat,144,117,6	duplicate(warpra)	Warp Agent	859
-comodo.gat,194,158,4	duplicate(warpra)	Warp Agent	859
-einbroch.gat,59,205,4	duplicate(warpra)	Warp Agent	859
-einbroch.gat,243,189,2	duplicate(warpra)	Warp Agent	859
-einbech.gat,135,249,4	duplicate(warpra)	Warp Agent	859
-geffen.gat,115,66,4	duplicate(warpra)	Warp Agent	859
-gonryun.gat,151,130,4	duplicate(warpra)	Warp Agent	859
-izlude.gat,133,117,4	duplicate(warpra)	Warp Agent	859
-hugel.gat,88,151,5	duplicate(warpra)	Warp Agent	859
-lighthalzen.gat,155,79,6	duplicate(warpra)	Warp Agent	859
-louyang.gat,210,106,4	duplicate(warpra)	Warp Agent	859
-morocc.gat,156,95,4	duplicate(warpra)	Warp Agent	859
-prontera.gat,161,192,4	duplicate(warpra)	Warp Agent	859
-payon.gat,182,110,4	duplicate(warpra)	Warp Agent	859
-umbala.gat,132,130,4	duplicate(warpra)	Warp Agent	859
-xmas.gat,150,136,4	duplicate(warpra)	Warp Agent	859
-yuno.gat,137,162,4	duplicate(warpra)	Warp Agent	859
+alberta.gat,31,240,4	duplicate(warpra)	Warp Agent#02	859
+aldebaran.gat,145,118,4	duplicate(warpra)	Warp Agent#03	859
+amatsu.gat,192,81,1	duplicate(warpra)	Warp Agent#04	859
+ayothaya.gat,144,117,6	duplicate(warpra)	Warp Agent#05	859
+comodo.gat,194,158,4	duplicate(warpra)	Warp Agent#06	859
+einbroch.gat,59,205,4	duplicate(warpra)	Warp Agent#07	859
+einbroch.gat,243,189,2	duplicate(warpra)	Warp Agent#08	859
+einbech.gat,135,249,4	duplicate(warpra)	Warp Agent#09	859
+geffen.gat,115,66,4	duplicate(warpra)	Warp Agent#10	859
+gonryun.gat,151,130,4	duplicate(warpra)	Warp Agent#11	859
+izlude.gat,133,117,4	duplicate(warpra)	Warp Agent#12	859
+hugel.gat,88,151,5	duplicate(warpra)	Warp Agent#13	859
+lighthalzen.gat,155,79,6	duplicate(warpra)	Warp Agent#14	859
+louyang.gat,210,106,4	duplicate(warpra)	Warp Agent#15	859
+morocc.gat,156,95,4	duplicate(warpra)	Warp Agent#16	859
+prontera.gat,161,192,4	duplicate(warpra)	Warp Agent#17	859
+payon.gat,182,110,4	duplicate(warpra)	Warp Agent#18	859
+umbala.gat,132,130,4	duplicate(warpra)	Warp Agent#19	859
+xmas.gat,150,136,4	duplicate(warpra)	Warp Agent#20	859
+yuno.gat,137,162,4	duplicate(warpra)	Warp Agent#21	859
 
 //----------------Dungeons----------------\\
-ama_dun01.gat,233,9,1	duplicate(warpra)	Warp Agent	859
-moc_fild04.gat,207,331,4	duplicate(warpra)	Warp Agent	859
-ayo_fild02.gat,279,154,4	duplicate(warpra)	Warp Agent	859
-izlu2dun.gat,104,82,4	duplicate(warpra)	Warp Agent	859
-prt_sewb1.gat,125,253,4	duplicate(warpra)	Warp Agent	859
-mjolnir_02.gat,85,363,4	duplicate(warpra)	Warp Agent	859
-einbech.gat,81,101,1	duplicate(warpra)	Warp Agent	859
-glast_01.gat,370,308,4	duplicate(warpra)	Warp Agent	859
-yuno_fild03.gat,37,135,4	duplicate(warpra)	Warp Agent	859
-niflheim.gat,32,161,4	duplicate(warpra)	Warp Agent	859
-gef_fild10.gat,71,339,4	duplicate(warpra)	Warp Agent	859
-pay_arche.gat,39,135,4	duplicate(warpra)	Warp Agent	859
-moc_ruins.gat,64,166,4	duplicate(warpra)	Warp Agent	859
-moc_fild19.gat,106,97,4	duplicate(warpra)	Warp Agent	859
-alb2trea.gat,73,101,4	duplicate(warpra)	Warp Agent	859
-tur_dun01.gat,148,239,4	duplicate(warpra)	Warp Agent	859
-lhz_dun01.gat,157,285,4	duplicate(warpra)	Warp Agent	859
-hu_fild05.gat,186,210,4	duplicate(warpra)	Warp Agent	859
-yuno_fild07.gat,221,179,4	duplicate(warpra)	Warp Agent	859
-tha_scene01.gat,139,194,1	duplicate(warpra)	Warp Agent	859
-odin_tem01.gat,96,149,4	duplicate(warpra)	Warp Agent	859
+ama_dun01.gat,233,9,1	duplicate(warpra)	Warp Agent#22	859
+moc_fild04.gat,207,331,4	duplicate(warpra)	Warp Agent#23	859
+ayo_fild02.gat,279,154,4	duplicate(warpra)	Warp Agent#24	859
+izlu2dun.gat,104,82,4	duplicate(warpra)	Warp Agent#25	859
+prt_sewb1.gat,125,253,4	duplicate(warpra)	Warp Agent#26	859
+mjolnir_02.gat,85,363,4	duplicate(warpra)	Warp Agent#27	859
+einbech.gat,81,101,1	duplicate(warpra)	Warp Agent#28	859
+glast_01.gat,370,308,4	duplicate(warpra)	Warp Agent#29	859
+yuno_fild03.gat,37,135,4	duplicate(warpra)	Warp Agent#30	859
+niflheim.gat,32,161,4	duplicate(warpra)	Warp Agent#31	859
+gef_fild10.gat,71,339,4	duplicate(warpra)	Warp Agent#32	859
+pay_arche.gat,39,135,4	duplicate(warpra)	Warp Agent#33	859
+moc_ruins.gat,64,166,4	duplicate(warpra)	Warp Agent#34	859
+moc_fild19.gat,106,97,4	duplicate(warpra)	Warp Agent#35	859
+alb2trea.gat,73,101,4	duplicate(warpra)	Warp Agent#36	859
+tur_dun01.gat,148,239,4	duplicate(warpra)	Warp Agent#37	859
+lhz_dun01.gat,157,285,4	duplicate(warpra)	Warp Agent#38	859
+hu_fild05.gat,186,210,4	duplicate(warpra)	Warp Agent#39	859
+yuno_fild07.gat,221,179,4	duplicate(warpra)	Warp Agent#40	859
+tha_scene01.gat,139,194,1	duplicate(warpra)	Warp Agent#41	859
+odin_tem01.gat,96,149,4	duplicate(warpra)	Warp Agent#42	859

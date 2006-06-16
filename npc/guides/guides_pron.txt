@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
 //=     to Muad_Dib
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -172,13 +173,13 @@ L_END:
 }
 
 // East ----------------------------------------------------
-prontera.gat,282,208,2	duplicate(Prt_Guide)	Guide#2	105
+prontera.gat,282,208,2	duplicate(Prt_Guide)	Guide#prt2	105
 //West --------------------------------------------------
-prontera.gat,29,200,6	duplicate(Prt_Guide)	Guide#3	105
+prontera.gat,29,200,6	duplicate(Prt_Guide)	Guide#prt3	105
 // South -----------------------------------------------------
-prontera.gat,160,29,0	duplicate(Prt_Guide)	Guide#4	105
+prontera.gat,160,29,0	duplicate(Prt_Guide)	Guide#prt4	105
 // North -----------------------------------------------
-prontera.gat,151,330,4	duplicate(Prt_Guide)	Guide#5	105
+prontera.gat,151,330,4	duplicate(Prt_Guide)	Guide#prt5	105
 
 
 // Guard -----------------------------------------------------
@@ -188,20 +189,20 @@ prontera.gat,160,330,4	script	Guard#1::Prt_Guard	105,{
 	close;
 }
 
-prontera.gat,229,104,5	duplicate(Prt_Guard)	Guard#2	105
-prontera.gat,223,98,8	duplicate(Prt_Guard)	Guard#3	105
-prontera.gat,52,344,5	duplicate(Prt_Guard)	Guard#4	105
-prontera.gat,47,339,5	duplicate(Prt_Guard)	Guard#5	105
+prontera.gat,229,104,5	duplicate(Prt_Guard)	Guard#prt2	105
+prontera.gat,223,98,8	duplicate(Prt_Guard)	Guard#prt3	105
+prontera.gat,52,344,5	duplicate(Prt_Guard)	Guard#prt4	105
+prontera.gat,47,339,5	duplicate(Prt_Guard)	Guard#prt5	105
 
 
 //---------------------------------------------------------------------------------------- Prontera Maze ----------------------------------------------------------------------------------\\
-prt_maze02.gat,100,69,4	script	Guard	105,{
+prt_maze02.gat,100,69,4	script	Guard#maz01	105,{
 	mes "[Guard]";
 	mes "Hey, I don't get your point but I say you should go home and rest rather than go inside the forest.  Don't you know the 'Demon' lurks there?";
 	mes "Naturally, Nobody came back on the hoof so I am not sure whether it really exists or not... well, Do as you want, dude.  I'm not your mother.";
 	close;
 }
-prt_maze02.gat,110,69,4	script	Guard	105,{
+prt_maze02.gat,110,69,4	script	Guard#maz02	105,{
 	mes "[Guard]";
 	mes "Phew...That geek who went inside last time never returned either.";
 	mes "I tried to stop him so many times but he never took me seriously.  He told me he needed herbs.";

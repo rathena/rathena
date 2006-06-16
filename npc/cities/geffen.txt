@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,11 +13,12 @@
 //= 1.1 - Spell Checked [massdriller]
 //= 1.2 Fixed more typo’s [Nexon]
 //= 1.3 added a Level 4 weapon quest related NPC [MasterOfMuppets]
+//= 1.4 Removed Duplicates [Silent]
 //============================================================
 
 
 // Lady -------------------------------------------------------
-geffen.gat,59,143,8	script	Lady	91,{
+geffen.gat,59,143,8	script	Lady#01	91,{
 	mes "[Lady]";
 	mes "Oh, you must be a Stranger here.";
 	next;
@@ -82,7 +83,7 @@ geffen.gat,156,190,8	script	Researcher	57,{
 }
 
 // Young Man --------------------------------------------------------------------------
-geffen.gat,147,26,0	script	"Young man"	97,{
+geffen.gat,147,26,0	script	Young man#06	97,{
 	mes "[Young Man]";
 	mes "I heard that somewhere in this world, there is a rare staff which transforms its owner's psychic power into physical powers, and endows with destructive force also...";
 	mes "With this, everybody could be as strong as Hercules, despite their lack of muscles. Haw haw...I will take it.";
@@ -95,7 +96,7 @@ geffen.gat,147,26,0	script	"Young man"	97,{
 }
 
 // Young Man -----------------------------------------------------------------------
-geffen_in.gat,34,170,0	script	"Young man"	47,{
+geffen_in.gat,34,170,0	script	Young man#07	47,{
 	mes "[Young Man]";
 	mes "Hello? Isn't it wonderful, today? I am a promising young Mage. Ahem.";
 	mes "Nowadays, my mental anguish about magic things keeps me awake every night..sigh...Especially, about the weak point of magic, you know.";
@@ -112,7 +113,7 @@ geffen_in.gat,34,170,0	script	"Young man"	47,{
 
 //<============================================ Inn =====================================================>\\
 // Waitress ---------------------------------------------------------------------------
-geffen_in.gat,70,67,5	script	Waitress	80,{
+geffen_in.gat,70,67,5	script	Waitress#01	80,{
 	mes "[Waitress]";
 	mes "Ugh!! SO annoying! Why would you drink here when you could drink at the pub!? This is an Inn, not a pub!!";
 	mes "That man!... every time he drinks... he gets like that! Ugh!!";
@@ -224,7 +225,7 @@ M_Menu:
 }
 
 // Drunkard -------------------------------------------------------------------
-geffen_in.gat,59,62,2	script	Drunkard	120,{
+geffen_in.gat,59,62,2	script	Drunkard#01	120,{
 	mes "[Drunkard]";
 	mes "Hmm... You're Joshua's friend too??";
 	next;
@@ -285,7 +286,7 @@ geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,{
 
 //<============================================== Pub ==================================================>\\
 // Waitress -----------------------------------------------------------------
-geffen_in.gat,28,134,4	script	Waitress	69,{
+geffen_in.gat,28,134,4	script	Waitress#03	69,{
 	mes "[Waitress]";
 	mes "Meh! ALWAYS drinking and ALWAYS fighting..... HEY Mister! This is a place of BUSINESS!!";
 	emotion e_an;
@@ -325,7 +326,7 @@ M_Menu:
 }
 
 // Drunkard ----------------------------------------------------------------------------
-geffen_in.gat,21,125,5	script	Drunkard	52,{
+geffen_in.gat,21,125,5	script	Drunkard#02	52,{
 	mes "[Drunkard]";
 	mes "You want to be an idiotic magician? Is that why you came here??";
 	emotion e_what;

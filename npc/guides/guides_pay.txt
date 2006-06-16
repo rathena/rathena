@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4a
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -17,10 +17,11 @@
 //= 1.3a Fixed some problems with duplicated text, thanks to muad_dib [MasterOfMuppets]
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.4a Tixed Archer Village Guide [Lupus] 
+//= 1.5 Removed Duplicates [Silent]
 //============================================================
 
 
-payon.gat,162,67,4	script	Guide	708,{
+payon.gat,162,67,4	script	Guide#pay1	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
 	mes "Welcome to the mountain city of Payon.";
@@ -144,7 +145,7 @@ L_END:
  	close;
 }
 
-pay_arche.gat,85,30,2	script	Guide	708,{
+pay_arche.gat,85,30,2	script	Guide#pay2	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
 	mes "Welcome to the Archer Village.";

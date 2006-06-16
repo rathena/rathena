@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.5
+//= 0.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 0.5 Added a BIG load of Lighthalzen NPCs. [musashiden]
 //= 0.6 Fixed some typos+Coordinates. [Musashiden]
 //= 0.7 Implemented some more crap NPCs and the second entrance to biolabs [MasterOfMuppets]
+//= 0.8 Removed Duplicates [Silent]
 //=============================================================
 
 lighthalzen.gat,198,285,5	script	Jiwon	862,{
@@ -665,7 +666,7 @@ lighthalzen.gat,147,105,3	script	Laqumet	869,{
 
 }
 
-lhz_in02.gat,230,284,4	script	Hotel Employee	86,{
+lhz_in02.gat,230,284,4	script	Hotel Employee#01	86,{
 
 	mes "[Hotel Employee]";
 	mes "Welcome to";
@@ -713,7 +714,7 @@ s_NEnoughZ:
 	close;
 }
 
-lhz_in02.gat,241,172,8	script	Hotel Employee	868,{
+lhz_in02.gat,241,172,8	script	Hotel Employee#02	868,{
 
 	mes "[Hotel Employee]";
 	mes "Please use the stairs";
@@ -766,7 +767,7 @@ lhz_in02.gat,201,181,6	script	Safwat Fahmy	853,{
 
 }
 
-lhz_in02.gat,251,212,2	script	Hotel Employee	868,{
+lhz_in02.gat,251,212,2	script	Hotel Employee#03	868,{
 
 	mes "[Hotel Employee]";
 	mes "This is the Couple Suite.";
@@ -834,7 +835,7 @@ lhz_in02.gat,221,276,4	script	Harp	869,{
 
 }
 
-lhz_in02.gat,238,275,4	script	Hotel Employee	869,{
+lhz_in02.gat,238,275,4	script	Hotel Employee#04	869,{
 
 	mes "[Hotel Employee]";
 	mes "\"Hospitality with a smile";
@@ -847,7 +848,7 @@ lhz_in02.gat,238,275,4	script	Hotel Employee	869,{
 
 }
 
-lhz_in02.gat,247,275,4	script	Hotel Employee	868,{
+lhz_in02.gat,247,275,4	script	Hotel Employee#05	868,{
 
 	mes "[Hotel Employee]";
 	mes "Welcome to the";
@@ -866,7 +867,7 @@ lhz_in02.gat,247,275,4	script	Hotel Employee	868,{
 
 }
 
-lhz_in02.gat,271,281,2	script	Citizen	47,{
+lhz_in02.gat,271,281,2	script	Citizen#01	47,{
 
 	mes "[Hachi]";
 	mes "Oh yeah. I love-love-love";
@@ -898,7 +899,7 @@ lhz_in02.gat,277,285,4	script	Bartender	61,{
 
 }
 
-lhz_in02.gat,281,280,6	script	Customer	816,{
+lhz_in02.gat,281,280,6	script	Customer#01	816,{
 
 	mes "[Rona]";
 	mes "I hate it when guys";
@@ -917,7 +918,7 @@ lhz_in02.gat,281,280,6	script	Customer	816,{
 
 }
 
-lhz_in02.gat,287,282,4	script	Customer	853,{
+lhz_in02.gat,287,282,4	script	Customer#02	853,{
 
 	mes "[Greenfield]";
 	mes "I don't believe it...";
@@ -1449,7 +1450,7 @@ lhz_in01.gat,116,45,6	script	Joshua	704,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in01.gat,93,45,4	script	Researcher	865,{
+lhz_in01.gat,93,45,4	script	Researcher#02	865,{
 
 	mes "[Researcher]";
 	mes "You know what's weird?";
@@ -1614,7 +1615,7 @@ lhz_in03.gat,192,19,2	script	Haggar	855,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in03.gat,193,25,2	script	Bartender	61,{
+lhz_in03.gat,193,25,2	script	Bartender#01	61,{
 
 	mes "[Tony]";
 	mes "Hey man, I know this";
@@ -1709,7 +1710,7 @@ lhz_in03.gat,192,93,2	script	City Girl#City_Girl	862,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in03.gat,189,87,4	script	Drunken Man#Drunken_Man	869,{
+lhz_in03.gat,189,87,4	script	Drunken Man#04	869,{
 
 	mes "[Enku]";
 	mes "*Sob* I just got";
@@ -1731,7 +1732,7 @@ lhz_in03.gat,189,87,4	script	Drunken Man#Drunken_Man	869,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in03.gat,183,82,6	script	Drunken Man#Drunken_Man2	870,{
+lhz_in03.gat,183,82,6	script	Drunken Man#05	870,{
 
 	mes "[Linus]";
 	mes "After ten years";
@@ -1751,7 +1752,7 @@ lhz_in03.gat,183,82,6	script	Drunken Man#Drunken_Man2	870,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in03.gat,180,83,6	script	Citizen	86,{
+lhz_in03.gat,180,83,6	script	Citizen#02	86,{
 
 	mes "[Mitchell]";
 	mes "You know, everyone";
@@ -1894,7 +1895,7 @@ s_B:
 
 lhz_in01.gat,26,247,2	duplicate(LhzRep)	Representative	71
 
-lhz_in01.gat,173,28,4	script	Guard::LhzRekGuard	868,{
+lhz_in01.gat,173,28,4	script	Guard#01::LhzRekGuard	868,{
 
 	mes "[Guard]";
 	mes "This is a";
@@ -1907,9 +1908,9 @@ lhz_in01.gat,173,28,4	script	Guard::LhzRekGuard	868,{
 
 }
 
-lhz_in01.gat,180,28,4	duplicate(LhzRekGuard)	Guard	868
+lhz_in01.gat,180,28,4	duplicate(LhzRekGuard)	Guard#02	868
 
-lhz_in01.gat,72,209,4	script	Guide	862,{
+lhz_in01.gat,72,209,4	script	Guide#01	862,{
 
 	mes "[Lasoei]";
 	mes "Oh phooey.";
@@ -1927,7 +1928,7 @@ lhz_in01.gat,72,209,4	script	Guide	862,{
 
 }
 
-lhz_in01.gat,72,195,8	script	Guide	90,{
+lhz_in01.gat,72,195,8	script	Guide#02	90,{
 
 	mes "[Geonuii]";
 	mes "Greetings. This path";
@@ -1940,7 +1941,7 @@ lhz_in01.gat,72,195,8	script	Guide	90,{
 
 }
 
-lhz_in01.gat,73,188,4	script	Guide	862,{
+lhz_in01.gat,73,188,4	script	Guide#03	862,{
 
 	mes "[Bonnie]";
 	mes "Oh no...";
@@ -1949,7 +1950,7 @@ lhz_in01.gat,73,188,4	script	Guide	862,{
 
 }
 
-lhz_in01.gat,34,226,4	script	Rekenber Guard	867,{
+lhz_in01.gat,34,226,4	script	Rekenber Guard#01	867,{
 
 	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
 	mes "[Rekenber Guard]";
@@ -2010,7 +2011,7 @@ s_Staff:
 
 lhz_in01.gat,23,137,0	duplicate(LhzTrig)	LhzHiddenTrg2	-1,1,1
 
-lhz_in01.gat,24,131,2	duplicate(LhzTrig)	Rekenber Guard	867
+lhz_in01.gat,24,131,2	duplicate(LhzTrig)	Rekenber Guard#02	867
 
 lhz_in01.gat,25,141,4	script	Regenschirm Guard	868,{
 

@@ -4,7 +4,7 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -18,9 +18,10 @@
 //= 1.5b2 added adv.classes/baby classes support [Lupus]
 //= 1.6 Fixed typo’s [Nexon]
 //= 1.7 Fixed bugs and exploits V__V [Lupus]
+//= 1.8 Removed Duplicates [Silent]
 //============================================================ 
 
-payon.gat,190,115,0	script	Lady	90,{
+payon.gat,190,115,0	script	Lady#05	90,{
 	mes "[Lady]";
 	mes "Did you know that in the past Payon was not as prosperous as it is now? Back then we had difficulty making a living for ourselves.";
 	   emotion e_gasp;
@@ -45,7 +46,7 @@ payon.gat,190,115,0	script	Lady	90,{
 	mes "It is a very tragic situation, for those zombies were at one time beloved members of the Payon community.";
 	close;
 }
-payon_in01.gat,177,91,5	script	Young Man	88,{
+payon_in01.gat,177,91,5	script	Young Man#06	88,{
 	mes "[Young Man]";
 	mes "I can see you are a stranger from the appearance of your traveling outfit. You must be a well-experienced fighter otherwise you couldn't successfully arrive at this steep place with all tough those creatures outside.";
 	mes "However you miss something important for fights. You can't defeat those monsters only with might.";
@@ -56,7 +57,7 @@ payon_in01.gat,177,91,5	script	Young Man	88,{
 	close;
 }
 
-payon.gat,104,62,5	script	Young Man	88,{
+payon.gat,104,62,5	script	Young Man#07	88,{
 	mes "[Young Man]";
 	mes "I still remember the story my grandfather told me long ago about the Amulet that possessed an Evil Power within it.";
 	next;
@@ -154,7 +155,7 @@ L_Menu4:
  	close;
 }
 
-payon.gat,193,116,1	script	Woman	66,{
+payon.gat,193,116,1	script	Woman#05	66,{
 	mes "[Woman]";
 	mes "Welcome to Payon.  You must have had a hard time getting through the thick forest?  I hope you didn't run into too much trouble?";
 	next;
@@ -211,7 +212,7 @@ L_Menu3:
 	close;
 }
 
-payon.gat,190,119,5	script	Woman	66,{
+payon.gat,190,119,5	script	Woman#06	66,{
 	mes "[Jim's Mother]";
 	mes "Oh boy there she goes again.  She is a confirmed gossip.  Please don't mistake her for being a typical Payon citizen.";
 	   emotion e_dots;
@@ -646,7 +647,7 @@ payon_in03.gat,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
 	close;
 }
 
-payon_in03.gat,102,185,4	script	Guard	708,{
+payon_in03.gat,102,185,4	script	Guard#06	708,{
 	mes "[Guard]";
 	mes "Hey...!";
 	mes "You're not";
@@ -737,7 +738,7 @@ payon.gat,160,185,0	script	Billboard	111,{
       close;
 }
 
-payon.gat,173,238,5 script Jade 754,{
+payon.gat,173,238,5 script Jade#01 754,{
 mes "[Jade]";
 mes "Bring me two";
 mes "Gemstones of the";

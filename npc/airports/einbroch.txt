@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -11,10 +11,11 @@
 //===== Additional Comments: ================================= 
 //= Converted by Dr.Evil, 1.0b more typos and credits [Lupus]
 //= 1.1 Fixed wrong check, added extra condition [Justin84]
+//= 1.2 Removed Duplicates [Silent]
 //============================================================
 
 
-airport.gat,126,43,4	script	Airport Staff#1::AirportE	90,{
+airport.gat,126,43,4	script	Airport Staff#01::AirportE	90,{
 	mes "[Airport Staff]";
 	mes "Welcome to the Airport.";
 	mes "How may I help you?";
@@ -53,14 +54,14 @@ airport.gat,126,43,4	script	Airport Staff#1::AirportE	90,{
 		close;
 }
 
-airport.gat,143,43,4	duplicate(AirportE)	Airport Staff#2	90,{
+airport.gat,143,43,4	duplicate(AirportE)	Airport Staff#02	90,{
 //	script Airport_Staff_In;
 }
-airport.gat,156,43,4	duplicate(AirportE)	Airport Staff#3	90,{
+airport.gat,156,43,4	duplicate(AirportE)	Airport Staff#03	90,{
 //	script Airport_Staff_In;
 }
 
-airport.gat,126,51,4	script	Airport Staff#4::AirportE2	90,{
+airport.gat,126,51,4	script	Airport Staff#04::AirportE2	90,{
 	mes "[Airport Staff]";
 	mes "Welcome~";
 	mes "Please head this";
@@ -90,10 +91,10 @@ airport.gat,126,51,4	script	Airport Staff#4::AirportE2	90,{
 		close;
 }
 
-airport.gat,143,51,4	duplicate(AirportE2)	Airport Staff#5	90,{
+airport.gat,143,51,4	duplicate(AirportE2)	Airport Staff#05	90,{
 }
 
-airport.gat,156,51,4	duplicate(AirportE2)	Airport Staff#6	90,{
+airport.gat,156,51,4	duplicate(AirportE2)	Airport Staff#06	90,{
 }
 
 einbroch.gat,94,267,4	script	Airship Staff	91,{

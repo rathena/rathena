@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Yor & abunch of other people
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -15,9 +15,10 @@
 //= calculation is done at start of the script
 //= Added Duplicates And Correct payon Loc [Darkchild]
 //= Some modifications. Added NPC locations. [massdriller]
+//= Removed Duplicates [Silent]
 //============================================================
 
-prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
+prontera.gat,150,184,5	script	Healer#h2-1::Healer2	742,{
 	set @tempHp, MaxHp-Hp;
 	set @tempSpReal, MaxSp-Sp;
 	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
@@ -89,18 +90,18 @@ prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
 }
 
 
-morocc.gat,159,96,5	duplicate(Healer)	Healer#h2-2	742
-ayothaya.gat,155,111,5	duplicate(Healer)	Healer#h2-3	742
-geffen.gat,121,61,5	duplicate(Healer)	Healer#h2-4	742
-umbala.gat,94,162,5	duplicate(Healer)	Healer#h2-5	742
-payon.gat,180,105,5	duplicate(Healer)	Healer#h2-6	742
-alberta.gat,185,144,5	duplicate(Healer)	Healer#h2-7	742
-aldebaran.gat,134,123,5	duplicate(Healer)	Healer#h2-8	742
-izlude.gat,125,118,5	duplicate(Healer)	Healer#h2-9	742
-xmas.gat,149,136,5	duplicate(Healer)	Healer#h2-10	742
-comodo.gat,188,162,5	duplicate(Healer)	Healer#h2-11	742
-amatsu.gat,200,80,5	duplicate(Healer)	Healer#h2-12	742
-gonryun.gat,164,130,5	duplicate(Healer)	Healer#h2-13	742
-yuno.gat,152,186,5	duplicate(Healer)	Healer#h2-14	742
-niflheim.gat,188,180,5	duplicate(Healer)	Healer#h2-15	742
-louyang.gat,225,103,5	duplicate(Healer)	Healer#h2-16	742
+morocc.gat,159,96,5	duplicate(Healer2)	Healer#h2-2	742
+ayothaya.gat,155,111,5	duplicate(Healer2)	Healer#h2-3	742
+geffen.gat,121,61,5	duplicate(Healer2)	Healer#h2-4	742
+umbala.gat,94,162,5	duplicate(Healer2)	Healer#h2-5	742
+payon.gat,180,105,5	duplicate(Healer2)	Healer#h2-6	742
+alberta.gat,185,144,5	duplicate(Healer2)	Healer#h2-7	742
+aldebaran.gat,134,123,5	duplicate(Healer2)	Healer#h2-8	742
+izlude.gat,125,118,5	duplicate(Healer2)	Healer#h2-9	742
+xmas.gat,149,136,5	duplicate(Healer2)	Healer#h2-10	742
+comodo.gat,188,162,5	duplicate(Healer2)	Healer#h2-11	742
+amatsu.gat,200,80,5	duplicate(Healer2)	Healer#h2-12	742
+gonryun.gat,164,130,5	duplicate(Healer2)	Healer#h2-13	742
+yuno.gat,152,186,5	duplicate(Healer2)	Healer#h2-14	742
+niflheim.gat,188,180,5	duplicate(Healer2)	Healer#h2-15	742
+louyang.gat,225,103,5	duplicate(Healer2)	Healer#h2-16	742

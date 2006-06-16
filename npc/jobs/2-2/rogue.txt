@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -438,17 +439,17 @@ in_rogue.gat,272,136,3	script	Hermanthorn Jr.	85,{
 }
 
 // --------------------------------------------------------------------------
-cmd_fild09.gat,106,195,0	script	Aragham Junior	45,1,1,{
+cmd_fild09.gat,106,195,0	script	Aragham Junior#01	45,1,1,{
 	callfunc "F_RogueTest3", 1, "Aragham", "never", "hoarded", "upgrade items.", 244, 24;
 }
 
 // -----------------------------------------------------------------------------
-cmd_fild09.gat,335,143,0	script	Hollgrehen Junior	45,1,1,{
+cmd_fild09.gat,335,143,0	script	Hollgrehen Junior#01	45,1,1,{
 	callfunc "F_RogueTest3", 2, "My father", "never", "hoarded", "upgrade items.", 168, 34;
 }
 
 // ------------------------------------------------------------------------------
-cmd_fild04.gat,304,179,0	script	Antonio Junior	45,1,1,{
+cmd_fild04.gat,304,179,0	script	Antonio Junior#01	45,1,1,{
 	callfunc "F_RogueTest3", 3, "Antonio", "doesn't like", "breaking", "refining materials.", 165, 104;
 }
 
@@ -564,15 +565,15 @@ sF_Password:
 // Guildsman
 //===============================================
 //---------------------------------------------------------------------------
-in_rogue.gat,244,39,4	script	Aragham Junior	99,{
+in_rogue.gat,244,39,4	script	Aragham Junior#02	99,{
 	callfunc "F_RogueTest4", "Aragham Junior", 245, 27;
 }
 //---------------------------------------------------------------------------
-in_rogue.gat,152,27,6	script	Hollgrehen Junior	85,{
+in_rogue.gat,152,27,6	script	Hollgrehen Junior#02	85,{
 	callfunc "F_RogueTest4", "Hollgrehen Junior", 160, 32;
 }
 //---------------------------------------------------------------------------
-in_rogue.gat,183,105,4	script	Antonio Junior	88,{
+in_rogue.gat,183,105,4	script	Antonio Junior#02	88,{
 	callfunc "F_RogueTest4", "Antonio Junior", 175, 107;
 }
 

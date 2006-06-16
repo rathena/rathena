@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= acky (god@acky.com)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any eAthena Version
 //===== Description: =========================================
@@ -16,10 +16,11 @@
 //= must finish before a new race can be started.
 //=
 //= Removed permanent global variables
+//= 1.2 Removed Duplicates [Silent]
 //============================================================
 
 //Warps you into race way
-morocc.gat,166,105,6	script	Race Girl	116,{
+morocc.gat,166,105,6	script	Race Girl#01	116,{
 mes "[Race Girl]";
 mes "Would you like to visit ^0000FFMorroc Raceway^000000?";
 next;
@@ -34,7 +35,7 @@ close;
 }
 
 //Warps you out of raceway
-pvp_y_1-5.gat,169,265,5	script	Race Girl	116,{
+pvp_y_1-5.gat,169,265,5	script	Race Girl#02	116,{
 mes "[Race Girl]";
 mes "Welcome to Morroc Raceway!";
 next;
@@ -207,39 +208,39 @@ close;
 }
 
 //Check Point Marker Flags
-pvp_y_1-5.gat,144,267,4	script	Check Point 1	722,{
+pvp_y_1-5.gat,144,267,4	script	Check Point 1#01	722,{
 end;
 }
-pvp_y_1-5.gat,144,257,4	script	Check Point 1	722,{
+pvp_y_1-5.gat,144,257,4	script	Check Point 1#02	722,{
 end;
 }
-pvp_y_1-5.gat,70,252,3	script	Check Point 2	722,{
+pvp_y_1-5.gat,70,252,3	script	Check Point 2#01	722,{
 end;
 }
-pvp_y_1-5.gat,77,243,3	script	Check Point 2	722,{
+pvp_y_1-5.gat,77,243,3	script	Check Point 2#02	722,{
 end;
 }
-pvp_y_1-5.gat,81,48,1	script	Check Point 3	722,{
+pvp_y_1-5.gat,81,48,1	script	Check Point 3#01	722,{
 end;
 }
-pvp_y_1-5.gat,72,40,1	script	Check Point 3	722,{
+pvp_y_1-5.gat,72,40,1	script	Check Point 3#02	722,{
 end;
 }
-pvp_y_1-5.gat,244,65,7	script	Check Point 4	722,{
+pvp_y_1-5.gat,244,65,7	script	Check Point 4#01	722,{
 end;
 }
-pvp_y_1-5.gat,252,57,7	script	Check Point 4	722,{
+pvp_y_1-5.gat,252,57,7	script	Check Point 4#02	722,{
 end;
 }
-pvp_y_1-5.gat,259,260,5	script	Check Point 5	722,{
+pvp_y_1-5.gat,259,260,5	script	Check Point 5#01	722,{
 end;
 }
-pvp_y_1-5.gat,251,252,5	script	Check Point 5	722,{
+pvp_y_1-5.gat,251,252,5	script	Check Point 5#02	722,{
 end;
 }
-pvp_y_1-5.gat,174,249,4	script	Finish Line	722,{
+pvp_y_1-5.gat,174,249,4	script	Finish Line#01	722,{
 end;
 }
-pvp_y_1-5.gat,174,238,4	script	Finish Line	722,{
+pvp_y_1-5.gat,174,238,4	script	Finish Line#02	722,{
 end;
 }

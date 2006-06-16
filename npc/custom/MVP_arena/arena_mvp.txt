@@ -1,6 +1,7 @@
 // ---- MVP ARENA!!!!!! By Darkchild with 16 diff MVP's inside
 // -- Optimised The MVP arena!!!! By massdriller
 // - NPC in prontera
+// - Removed Duplicates [Silent]
 
 prontera.gat,154,197,3	script	MVP Warper	768,{
 mes "[ ^0065DFMVP Warper^000000 ]";
@@ -333,7 +334,7 @@ close;
 
 // ---- Inside MVP-Arena NPC's
 // --- Alpha-MVP #1
-pvp_n_1-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_1-2.gat,100,100,4	script	MVP-Protector#01	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -344,7 +345,7 @@ pvp_n_1-2.gat,100,100,4	script	MVP-Protector	727,{
 }
 
 // --- Alpha-MVP #2
-pvp_n_2-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_2-2.gat,100,100,4	script	MVP-Protector#02	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -354,7 +355,7 @@ pvp_n_2-2.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Alpha-MVP #3
-pvp_n_3-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_3-2.gat,100,100,4	script	MVP-Protector#03	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -364,7 +365,7 @@ pvp_n_3-2.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Alpha-MVP #4
-pvp_n_4-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_4-2.gat,100,100,4	script	MVP-Protector#04	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -374,7 +375,7 @@ pvp_n_4-2.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Alpha-MVP #5
-pvp_n_5-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_5-2.gat,100,100,4	script	MVP-Protector#05	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -384,7 +385,7 @@ pvp_n_5-2.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Alpha-MVP #6
-pvp_n_6-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_6-2.gat,100,100,4	script	MVP-Protector#06	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -394,7 +395,7 @@ pvp_n_6-2.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Alpha-MVP #7
-pvp_n_7-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_7-2.gat,100,100,4	script	MVP-Protector#07	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -403,12 +404,12 @@ pvp_n_7-2.gat,100,100,4	script	MVP-Protector	727,{
 		close;
 }
 // --- Alpha-MVP #8
-pvp_n_8-2.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_8-2.gat,100,100,4	script	MVP-Protector#08	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M2";
 }
 // --- Beta-MVP #1
-pvp_n_1-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_1-3.gat,100,100,4	script	MVP-Protector#09	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -419,7 +420,7 @@ pvp_n_1-3.gat,100,100,4	script	MVP-Protector	727,{
 }
 
 // --- Beta-MVP #2
-pvp_n_2-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_2-3.gat,100,100,4	script	MVP-Protector#10	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -429,7 +430,7 @@ pvp_n_2-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #3
-pvp_n_3-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_3-3.gat,100,100,4	script	MVP-Protector#11	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -439,7 +440,7 @@ pvp_n_3-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #4
-pvp_n_4-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_4-3.gat,100,100,4	script	MVP-Protector#12	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -449,7 +450,7 @@ pvp_n_4-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #5
-pvp_n_5-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_5-3.gat,100,100,4	script	MVP-Protector#13	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -459,7 +460,7 @@ pvp_n_5-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #6
-pvp_n_6-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_6-3.gat,100,100,4	script	MVP-Protector#14	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -469,7 +470,7 @@ pvp_n_6-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #7
-pvp_n_7-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_7-3.gat,100,100,4	script	MVP-Protector#15	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -479,12 +480,12 @@ pvp_n_7-3.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Beta-MVP #8
-pvp_n_8-3.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_8-3.gat,100,100,4	script	MVP-Protector#16	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M2";
 }
 // --- Theta-MVP #1
-pvp_n_1-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_1-4.gat,100,100,4	script	MVP-Protector#17	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -495,7 +496,7 @@ pvp_n_1-4.gat,100,100,4	script	MVP-Protector	727,{
 }
 
 // --- Theta-MVP #2
-pvp_n_2-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_2-4.gat,100,100,4	script	MVP-Protector#18	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -505,7 +506,7 @@ pvp_n_2-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #3
-pvp_n_3-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_3-4.gat,100,100,4	script	MVP-Protector#19	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -515,7 +516,7 @@ pvp_n_3-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #4
-pvp_n_4-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_4-4.gat,100,100,4	script	MVP-Protector#20	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -525,7 +526,7 @@ pvp_n_4-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #5
-pvp_n_5-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_5-4.gat,100,100,4	script	MVP-Protector#21	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -535,7 +536,7 @@ pvp_n_5-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #6
-pvp_n_6-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_6-4.gat,100,100,4	script	MVP-Protector#22	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -545,7 +546,7 @@ pvp_n_6-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #7
-pvp_n_7-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_7-4.gat,100,100,4	script	MVP-Protector#23	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -555,12 +556,12 @@ pvp_n_7-4.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Theta-MVP #8
-pvp_n_8-4.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_8-4.gat,100,100,4	script	MVP-Protector#24	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M2";
 }
 // --- Epsilon-MVP #1
-pvp_n_1-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_1-5.gat,100,100,4	script	MVP-Protector#25	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -571,7 +572,7 @@ pvp_n_1-5.gat,100,100,4	script	MVP-Protector	727,{
 }
 
 // --- Epsilon-MVP #2
-pvp_n_2-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_2-5.gat,100,100,4	script	MVP-Protector#26	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -581,7 +582,7 @@ pvp_n_2-5.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Epsilon-MVP #3
-pvp_n_3-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_3-5.gat,100,100,4	script	MVP-Protector#27	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -591,7 +592,7 @@ pvp_n_3-5.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Epsilon-MVP #4
-pvp_n_4-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_4-5.gat,100,100,4	script	MVP-Protector#28	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -601,7 +602,7 @@ pvp_n_4-5.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Epsilon-MVP #5
-pvp_n_5-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_5-5.gat,100,100,4	script	MVP-Protector#29	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -611,7 +612,7 @@ pvp_n_5-5.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Epsilon-MVP #6
-pvp_n_6-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_6-5.gat,100,100,4	script	MVP-Protector#30	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -621,7 +622,7 @@ pvp_n_6-5.gat,100,100,4	script	MVP-Protector	727,{
 
 }
 // --- Epsilon-MVP #7
-pvp_n_7-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_7-5.gat,100,100,4	script	MVP-Protector#31	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
 
@@ -630,7 +631,7 @@ pvp_n_7-5.gat,100,100,4	script	MVP-Protector	727,{
 		close;
 }
 // --- Epsilon-MVP #8
-pvp_n_8-5.gat,100,100,4	script	MVP-Protector	727,{
+pvp_n_8-5.gat,100,100,4	script	MVP-Protector#32	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M2";
 }

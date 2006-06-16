@@ -22,14 +22,14 @@
 
 
 //--------------------------------------- Necko: Crazy Uproar--------------------------------\\
-alberta.gat,89,96,5	script	Necko	139,0,4,{
+alberta.gat,89,96,5	script	Necko#01	139,0,4,{
 	mes "[!?]";
 	mes "Muahahahahhhahahahahhahah!!";
 	mes "Pukakakakakkakakakakakakaka!!";
 	close;
 }
 
-alberta.gat,83,96,5	script	Necko	98,{
+alberta.gat,83,96,5	script	Necko#02	98,{
 	mes "[Necko]";
 	if (baseClass == Job_Merchant) goto L_Start;
 

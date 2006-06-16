@@ -4,7 +4,7 @@
 //= Fyrien, Dizzy, PKGINGO
 //= Official NPCs translated and re-edited by Celest
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.08 Commented "Traveler" out as it is not official & we have correct Bungee quest in. 
 //=     Also removed TODO, as they are already done. [Vicious_Pucca]
 //= 1.1 Replaced nif_q_done with MISC_QUEST & 32. nif_t -> @nif_t [Lupus]
+//= 1.2 Removed Duplicates [Silent]
 //============================================================ 
 
 //prontera.gat,164,161,4	script	Traveler::NifTrav	68,{
@@ -71,7 +72,7 @@ niflheim.gat,130,176,0	duplicate(spirits)	Spirit#7	802
 niflheim.gat,173,110,0	duplicate(spirits)	Spirit#8	802
 niflheim.gat,182,167,0	duplicate(spirits)	Spirit#9	802
 
-niflheim.gat,184,199,5	script	Little Girl	793,{
+niflheim.gat,184,199,5	script	Little Girl#02	793,{
 	mes "[Sairin]";
 	if(niflheimlost2 == 1) goto L_thanks;
 	if(niflheimlost == 1) goto L_foundhim;

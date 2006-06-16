@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.8 Changed the name of the mobsters to Gangster, as it should be. [MasterOfMuppets]
 //= 1.9 Added extra input check on Biolab so that the first letter of the word could be
 //= capitalized or undercase. [Evera]
+//= 2.0 Removed Duplicates [Silent]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -113,7 +114,7 @@ ChkEnd:
 	end;	
 }
 
-lighthalzen.gat,267,200,3	script	Security Guard	868,{
+lighthalzen.gat,267,200,3	script	Security Guard#01	868,{
 
 	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
@@ -170,7 +171,7 @@ Lhzstop:
 	close;
 }
 
-lighthalzen.gat,294,223,7	script	Security Guard	868,{
+lighthalzen.gat,294,223,7	script	Security Guard#02	868,{
 
 	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
@@ -602,7 +603,7 @@ L_11:
 
 //--------------------------Box--------------------------
 
-lhz_cube.gat,248,179,0	script	Box	111,{
+lhz_cube.gat,248,179,0	script	Box#01	111,{
 	if (axe == 1) goto L_2;
 	mes "There is an axe in the box.";
 	next;
@@ -1077,7 +1078,7 @@ L_3:
 
 //--------------------------Box--------------------------
 
-lhz_cube.gat,248,193,0	script	Box	111,{
+lhz_cube.gat,248,193,0	script	Box#02	111,{
 	if (countitem(2657) > 0 || @gotkey || hzdun) goto L_5;
 	mes "There is a box with three holes.";
 	next;

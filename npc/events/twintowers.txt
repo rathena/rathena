@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= sEiKaN (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version; 0315+
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.2 by Akaru 1.3 by massdriller(Fixed typos)
 //= 1.4 fixed coords, according to off. src [Lupus]
+//= 1.5 Removed Duplicates [Silent]
 //============================================================
 
 prontera.gat,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
@@ -90,4 +91,4 @@ izlude.gat,134,92,4	duplicate(Twin-Towers)	Twin Towers#tt4	812
 alberta.gat,25,238,4	duplicate(Twin-Towers)	Twin Towers#tt5	812
 geffen.gat,120,60,4	duplicate(Twin-Towers)	Twin Towers#tt6	812
 aldebaran.gat,143,116,4	duplicate(Twin-Towers)	Twin Towers#tt7	812
-comodo.gat,194,158,4	duplicate(Twin-Towers)	Twin Towers#tt7	812
+comodo.gat,194,158,4	duplicate(Twin-Towers)	Twin Towers#tt8	812

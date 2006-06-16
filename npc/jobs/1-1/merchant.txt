@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Changed Prontera->Izlude teleport price to 600 [Lupus]
 //= 1.6 Now saves/restores all quest skills [Lupus]
+//= 1.7 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -687,7 +688,7 @@ L_WrongDest:
 }
 
 // -- Kafra(Prontera) --
-prontera.gat,248,42,8	script	Kafra	115,{
+prontera.gat,248,42,8	script	Kafra#01	115,{
 	cutin "kafra_03",2;
 	if(BaseJob==Job_Novice && job_merchant_q3>0) goto L_Start;
 L_Other:

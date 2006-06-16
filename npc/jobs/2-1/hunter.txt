@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= reported the bug) [Lupus]
 //= 1.7 Moved the Job QUest to Hugel [Poki#3]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -488,7 +489,7 @@ L_Done:
 
 
 //<=============================== Guild Master: Last Test =================================>\\
-payon_in02.gat,21,31,1	script	Guild Master	59,{
+payon_in02.gat,21,31,1	script	Guild Master#03	59,{
 	if(BaseJob == Job_Archer) goto L_Archer;
 	if(BaseJob == Job_Hunter) goto L_Hnt;
 

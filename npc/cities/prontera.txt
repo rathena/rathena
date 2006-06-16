@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
 //= 1.5a Added a Jawaii related npc [MasterOfMuppets]
 //= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
+//= 1.7 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -460,7 +461,7 @@ prt_in.gat,173,24,2	script	Shevild	85,{
 }
 
 // Bartender ---------------------------------------------------------
-prt_in.gat,181,21,2	script	Bartender	61,{
+prt_in.gat,181,21,2	script	Bartender#03	61,{
 	mes "[Bartender]";
 	mes "Phew~ more and more people a crawling in these days.";
 	mes "I am getting more and more tired everyday, though business has never been better...";

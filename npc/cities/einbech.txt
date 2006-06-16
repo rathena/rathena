@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //=     all credits to muad_dib for scripting them.
 //= 1.1 Made some changes according to the Shinokas quest, [MasterOfMuppets]
 //=	thanks to Dj-Yhn for scripting them.
+//= 1.2 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -383,7 +384,7 @@ einbech.gat,105,218,6	script	Gushenmu	848,{
 	close;
 }
 	
-einbech.gat,57,210,4	script	Young Man	854,{
+einbech.gat,57,210,4	script	Young Man#04	854,{
 	mes "[Young Man]"; 
 	mes "Behind the pub,";
 	mes "you'll see this old man";
@@ -1425,7 +1426,7 @@ L_NNotify:
 	close;
 }
 
-ein_in01.gat,281,85,2	script	Drunken Man	849,{
+ein_in01.gat,281,85,2	script	Drunken Man#01	849,{
 	mes "[Drunken Man]";
 	mes "...*Hiccup*...";
 	mes "*Hiccup*...";
@@ -1512,7 +1513,7 @@ ein_in01.gat,279,92,2	script	Tavern Lady	854,{
 	close;
 }
 
-einbech.gat,197,139,4	script	Young Man	855,{	
+einbech.gat,197,139,4	script	Young Man#05	855,{	
 	mes "[Heinz]";
 	mes "Wow...";
 	mes "And adventurer from";

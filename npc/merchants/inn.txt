@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.1a Minor bug fixes and optimizations. Switched from @variables 
 //= to arguments.[kobra_k88]
 //= 1.2 Rewrote inn script [Playtester]
+//= 1.3 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -33,7 +34,7 @@ prt_in.gat,244,135,2	script	Inn Maid::Sammy	53,{
 	warp "prt_in.gat",237,102;
 }
 // East Side Inn ------------------
-prt_in.gat,61,141,2	script	Inn Maid::Ahlma	53,{
+prt_in.gat,61,141,2	script	Inn Maid::Ahlma#01	53,{
 
 	callfunc "F_InnMaid","[Ahlma]","East Inn","prt_in.gat",64,136;
 	warp "prt_in.gat",49,173;

@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //=
 //===== Description: ========================================= 
 //= Lighthalzen Guide NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 First Version [MasterOfMuppets]
+//= 1.1 Removed Duplicates [Silent]
 //============================================================
 
 lighthalzen.gat,220,311,3	script	Guide::LhzSlum	852,{
@@ -356,6 +357,6 @@ s_Notice:
 
 }
 
-lighthalzen.gat,154,100,5	duplicate(LhzWest)	Guide	852
+lighthalzen.gat,154,100,5	duplicate(LhzWest)	Guide#lhz1	852
 
-lighthalzen.gat,319,243,5	duplicate(LhzSlum)	Guide	852
+lighthalzen.gat,319,243,5	duplicate(LhzSlum)	Guide#lhz2	852

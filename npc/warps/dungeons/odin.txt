@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= birkiczd  (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.1 Move the Saylor from Hugel.txt here. [Poki#3]
 //=	Hako's Sprite, cords and price is official. The text is not.
+//= 1.2 Removed Duplicates [Silent]
 //============================================================
 
 odin_tem01.gat,378,181,0	warp	odin01	1,1,odin_tem02.gat,22,181
@@ -22,7 +23,7 @@ odin_tem03.gat,122,48,0	warp	odin06	1,1,odin_tem02.gat,153,347
 odin_tem02.gat,259,374,0	warp	odin07	1,1,odin_tem03.gat,249,35
 odin_tem03.gat,249,33,0	warp	odin08	1,1,odin_tem02.gat,262,371
 
-hugel.gat,209,109,1	script	Sailor Hako	709,{
+hugel.gat,209,109,1	script	Sailor Hako#01	709,{
 	mes "[Sailor Hako]";
 	mes "Hello stranger. I'm the only person that offers a unique trip to the cursed Odin Islands.";
 	mes "One of the strongest monsters known to man live there, so no wonder. Ha, ha, ha~!";
@@ -50,7 +51,7 @@ L_No:
 	close;
 }
 
-odin_tem01.gat,93,146,3	script	Sailor Hako	709,{
+odin_tem01.gat,93,146,3	script	Sailor Hako#02	709,{
 	mes "[Sailor Hako]";
 	mes "So how is it? Not to hard for ya? Wanna to go back to Hugel?";
 	next;

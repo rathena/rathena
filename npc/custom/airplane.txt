@@ -4,7 +4,7 @@
 //= Edited And removed irrelevent comments by eAthena Dev Team
 //= Draike\Bluto\Hephaestus
 //===== Current Version: =====================================
-//= 2.0 eAthena Release
+//= 2.1 eAthena Release
 //===== Compatible With: =====================================
 //= eAthena SVN 02/05/2005 +
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= ALWAYS HAVE AT LEAST TWELVE (12) LOCATIONS AS THE MINIMUM.  This is unless you modify to OnMinutes and change the schedule around.
 //= If you have "airplane.gat,103,72,0	warp	airs02a	1,1,airplane.gat,102,200" as a warp, remove it.  Where it's supposed to go, I have no clue.
+//= 2.1 Removed Duplicates [Silent]
 //============================================================ 
 payon.gat,153,43,5	script	itinsetter	-1,{
 
@@ -265,73 +266,73 @@ callfunc "F_Itin";
 airport.gat,153,43,5	script	Airport Porter	774,{
 callfunc "F_Porter",0;
 }
-prt_fild08.gat,206,279,5	script	Porter	774,{
+prt_fild08.gat,206,279,5	script	Porter#01	774,{
 callfunc "F_Porter",1;
 }
-gef_fild00.gat,50,364,5	script	Porter	774,{
+gef_fild00.gat,50,364,5	script	Porter#02	774,{
 callfunc "F_Porter",5;
 }
-moc_fild10.gat,163,173,5	script	Porter	774,{
+moc_fild10.gat,163,173,5	script	Porter#03	774,{
 callfunc "F_Porter",6;
 }
-mjolnir_12.gat,61,380,5	script	Porter	774,{
+mjolnir_12.gat,61,380,5	script	Porter#04	774,{
 callfunc "F_Porter",3;
 }
-pay_fild08.gat,159,91,5	script	Porter	774,{
+pay_fild08.gat,159,91,5	script	Porter#05	774,{
 callfunc "F_Porter",2;
 }
-pay_fild03.gat,194,181,5	script	Porter	774,{
+pay_fild03.gat,194,181,5	script	Porter#06	774,{
 callfunc "F_Porter",4;
 }
-glast_01.gat,196,326,1	script	Porter	774,{
+glast_01.gat,196,326,1	script	Porter#07	774,{
 callfunc "F_Porter",7;
 }
-umbala.gat,188,98,3	script	Porter	774,{
+umbala.gat,188,98,3	script	Porter#08	774,{
 callfunc "F_Porter",8;
 }
-comodo.gat,203,75,8	script	Porter	774,{
+comodo.gat,203,75,8	script	Porter#09	774,{
 callfunc "F_Porter",9;
 }
-amatsu.gat,115,78,8	script	Porter	774,{
+amatsu.gat,115,78,8	script	Porter#10	774,{
 callfunc "F_Porter",10;
 }
-niflheim.gat,132,242,5	script	Porter	774,{
+niflheim.gat,132,242,5	script	Porter#11	774,{
 callfunc "F_Porter",11;
 }
-xmas.gat,232,309,5	script	Porter	774,{
+xmas.gat,232,309,5	script	Porter#12	774,{
 callfunc "F_Porter",12;
 }
-louyang.gat,35,279,8	script	Porter	774,{
+louyang.gat,35,279,8	script	Porter#13	774,{
 callfunc "F_Porter",13;
 }
-gonryun.gat,82,95,7	script	Porter	774,{
+gonryun.gat,82,95,7	script	Porter#14	774,{
 callfunc "F_Porter",14;
 }
-yuno.gat,58,195,4	script	Porter	774,{
+yuno.gat,58,195,4	script	Porter#15	774,{
 callfunc "F_Porter",15;
 }
-moc_fild04.gat,210,326,2	script	Porter	774,{
+moc_fild04.gat,210,326,2	script	Porter#16	774,{
 callfunc "F_Porter",16;
 }
-jawaii.gat,247,174,7	script	Porter	774,{
+jawaii.gat,247,174,7	script	Porter#17	774,{
 callfunc "F_Porter",17;
 }
-gef_fild10.gat,159,95,2	script	Porter	774,{
+gef_fild10.gat,159,95,2	script	Porter#18	774,{
 callfunc "F_Porter",18;
 }
-mjolnir_02.gat,76,364,5	script	Porter	774,{
+mjolnir_02.gat,76,364,5	script	Porter#19	774,{
 callfunc "F_Porter",19;
 }
-gefenia01.gat,97,22,6	script	Porter	774,{
+gefenia01.gat,97,22,6	script	Porter#20	774,{
 callfunc "F_Porter",20;
 }
-ayothaya.gat,182,105,5	script	Porter	774,{
+ayothaya.gat,182,105,5	script	Porter#21	774,{
 callfunc "F_Porter",21;
 }
-lighthalzen.gat,99,241,4	script	Porter	774,{
+lighthalzen.gat,99,241,4	script	Porter#22	774,{
 callfunc "F_Porter",22;
 }
-jupe_gate.gat,46,18,7	script	Porter	774,{
+jupe_gate.gat,46,18,7	script	Porter#23	774,{
 callfunc "F_Porter",23;
 }
 airport.gat,141,43,5	script	Itinerary Schedule	837,{

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2b Added Baby Class support [Lupus]
 //= 1.3 Spell Checked and Fixed [massdriller]
 //= 1.4 Fixed typo’s [Nexon]
+//= 1.5 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -193,7 +194,7 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 }
 
 //=============================================================
-cmd_in02.gat,64,43,4	script	Roberto	709,{
+cmd_in02.gat,64,43,4	script	Roberto#01	709,{
 	mes "[Roberto]";
 	mes "Muhahaha... What a stupid man! Now that's easy money! (~counts his money~)";
 	emotion e_gg;
@@ -1226,7 +1227,7 @@ L_4:
 //============================================================================//
 
 //==================================================
-cmd_fild07.gat,192,58,4	script	Light House Guard	100,{
+cmd_fild07.gat,192,58,4	script	Light House Guard#01	100,{
 	mes "[Rahasu]";
 	mes "Good morning, I am Rahasu, your guide to the";
 	mes "^3355FF`lighthouses'^000000";
@@ -1250,7 +1251,7 @@ cmd_fild07.gat,192,58,4	script	Light House Guard	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,52,280,4	script	Light House Guard	100,{
+cmd_fild07.gat,52,280,4	script	Light House Guard#02	100,{
 	mes "[Hallosu]";
 	mes "That's correct, this is one of the two lighthouses in this area.";
 	mes "However, I can not let anyone go in yet because the lighthouse's interior is still under reconstruction.";
@@ -1262,7 +1263,7 @@ cmd_fild07.gat,52,280,4	script	Light House Guard	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,299,83,4	script	Sailor	100,{
+cmd_fild07.gat,299,83,4	script	Sailor#01	100,{
 	mes "[Zain]";
 	mes "Hello my friend, where do you wish to go?";
 	next;
@@ -1290,7 +1291,7 @@ cmd_fild07.gat,299,83,4	script	Sailor	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,94,134,4,	script	Sailor	100,{
+cmd_fild07.gat,94,134,4,	script	Sailor#02	100,{
 	mes "[Sarumane]";
 	mes "Hello my friend, where do you wish to go?";
 	next;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus (based on Muad_Dib's work)
 //===== Current Version: =====================================
-//= 1.02
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version 45xx+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //===== Additional Comments: =================================
 //= WARNING!! To use this event, dicable original valentinesday.txt
 //= You can use this event from 12 till 16 February 8) [Lupus]
+//= 1.1 Removed Duplicates [Silent]
 //============================================================
 
 // Tine - Valentine Event Chocolate Even Guide ------------------
@@ -74,7 +75,7 @@ OnInit:
 }
 
 // Stephen - Valentine Event Chocolate seller ------------------
-alberta.gat,26,243,4	script	Stephen	58,{
+alberta.gat,26,243,4	script	Stephen#val1	58,{
 	mes "[Stephen]";
 	mes "Guess what I've got?";
 	mes "A tasty treat not easily found in Rune-Midgard....";
@@ -129,7 +130,7 @@ L_NOTENO:
 }
 
 // Jainie -- Gives information about Valentine Event ------------------------
-alberta.gat,29,243,4	script	Jainie	53,{
+alberta.gat,29,243,4	script	Jainie#val1	53,{
 	mes "[Jainie]";
 	mes "You know what? The chocolate that my boyfriend sells are from me!";
 	mes "I made them by myself. Now I need some Milk for my special White Chocolate.";
@@ -197,7 +198,7 @@ L_NOMILK:
 }
 
 // Carl Orleans -- Valentine Event Chocolate maker ------------------
-prt_castle.gat,54,34,4	script	Carl Orleans	47,{
+prt_castle.gat,54,34,4	script	Carl Orleans#val1	47,{
 	mes "[Carl Orleans]";
 	mes "Yes? What can I cook for you?";
 	next;

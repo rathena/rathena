@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
 //= 1.9b Fixed another bug in Fuhai. [Zephiris]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -1458,10 +1459,10 @@ monk_test.gat,386,42,0	script	monk2-1	139,0,0,{callfunc "MnkTraps";}
 monk_test.gat,386,43,0	script	monk2-2	139,0,0,{callfunc "MnkTraps";}
 monk_test.gat,387,42,0	script	monk2-3	139,0,0,{callfunc "MnkTraps";}
 monk_test.gat,387,43,0	script	monk2-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,42,0	script	monk2-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,43,0	script	monk2-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,42,0	script	monk2-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,43,0	script	monk2-4	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,388,42,0	script	monk2-5	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,388,43,0	script	monk2-6	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,389,42,0	script	monk2-7	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,389,43,0	script	monk2-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
 monk_test.gat,184,11,0	script	monk3-1	139,0,3,{callfunc "MnkTraps";}
 monk_test.gat,185,11,0	script	monk3-2	139,0,3,{callfunc "MnkTraps";}
@@ -1517,13 +1518,13 @@ monk_test.gat,82,391,0	script	monk8-2	139,0,0,{callfunc "MnkTraps";}
 monk_test.gat,83,390,0	script	monk8-3	139,0,0,{callfunc "MnkTraps";}
 monk_test.gat,83,391,0	script	monk8-4	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,82,384,0	script	monk8-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,82,385,0	script	monk8-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,384,0	script	monk8-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,385,0	script	monk8-4	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,82,384,0	script	monk9-1	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,82,385,0	script	monk9-2	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,83,384,0	script	monk9-3	139,0,0,{callfunc "MnkTraps";}
+monk_test.gat,83,385,0	script	monk9-4	139,0,0,{callfunc "MnkTraps";}
 //---------------------
 
-prt_monk.gat,225,179,4	script	XuanWu 	89,{
+prt_monk.gat,225,179,4	script	XuanWu#01 	89,{
 	mes "[XuanWu]";
 	mes "To see the growing of crops, I deeply appreciate the grace of God.";
 	next;
@@ -1545,7 +1546,7 @@ prt_monk.gat,225,179,4	script	XuanWu 	89,{
 	mes "The farmer is the root of world. That is quite true.";
 	close;
 }
-job_monk.gat,225,179,4	script	XuanWu	89,{
+job_monk.gat,225,179,4	script	XuanWu#02	89,{
 
 	if(MONK_Q == 8 ) goto Part2;
 	if(@mission_start == 1 ) goto Part1;
@@ -1709,7 +1710,7 @@ Part2:
 	close;
 }
 
-monk_test.gat,88,91,4	script	Test Assistant	52,{
+monk_test.gat,88,91,4	script	Test Assistant#01	52,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1757,7 +1758,7 @@ monk_test.gat,155,180,4	script	monk_mob1_4	139,0,19,{
 //~	disablenpc "monk_mob1_4";
 	end;
 }
-monk_test.gat,165,179,4	script	monk_mob3_warp	45,1,1,{
+monk_test.gat,165,179,4	script	monk_mob3_warp#01	45,1,1,{
 	set MONK_Q, 9;
 	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
 	killmonster "monk_test.gat","monk_mob1";
@@ -1769,7 +1770,7 @@ monk_test.gat,1,1,1	script	monk_mob1	-1,{
 		end;
 }
 
-monk_test.gat,95,85,4	script	Test Assistant	79,{
+monk_test.gat,95,85,4	script	Test Assistant#02	79,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1831,7 +1832,7 @@ monk_test.gat,1,1,1	script	monk_mob2	-1,{
 		end;
 }
 
-monk_test.gat,82,85,4	script	Test Assistant	95,{
+monk_test.gat,82,85,4	script	Test Assistant#03	95,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1881,7 +1882,7 @@ monk_test.gat,260,281,4	script	monk_mob3_4	139,0,19,{
 //~	disablenpc "monk_mob3_4";
 	end;
 }
-monk_test.gat,269,279,4	script	monk_mob3_warp	45,1,1,{
+monk_test.gat,269,279,4	script	monk_mob3_warp#02	45,1,1,{
 	set MONK_Q, 9;
 	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
 	killmonster "monk_test.gat","monk_mob3";

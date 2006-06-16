@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Fully working.  Added a guide at every exit.
 //= v1.1 Now using duplicate command.
 //= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -109,8 +110,8 @@ M_Menu:
 }
 
 // South --------------------------------------------
-morocc.gat,162,97,6	duplicate(Mor_Guide)	Guide#2	707
+morocc.gat,162,97,6	duplicate(Mor_Guide)	Guide#Mor2	707
 // West --------------------------------------------
-morocc.gat,28,161,6	duplicate(Mor_Guide)	Guide#3	707
+morocc.gat,28,161,6	duplicate(Mor_Guide)	Guide#Mor3	707
 // East  --------------------------------------------
-morocc.gat,294,203,9	duplicate(Mor_Guide)	Guide#4	707
+morocc.gat,294,203,9	duplicate(Mor_Guide)	Guide#Mor4	707

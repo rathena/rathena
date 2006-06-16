@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //=  also changed typo Orange Potions -> Red Potions [Lupus]
 //= 1.6 Fixed bug (missing label), optimized all menus [Lupus]
 //= 1.7 Fixed exploits [Lupus]
+//= 1.8 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -568,7 +569,7 @@ aldeba_in.gat,152,47,4	script	Giddy Fellow	97,{
 }
 
 // Master ----------------------------------------------------------
-aldeba_in.gat,156,179,4	script	Master	61,{
+aldeba_in.gat,156,179,4	script	Master#02	61,{
 	mes "[Master]";
 	if(sex==0) mes "Oh hello.  Don't mind me, I'm just a perverted old man.... la di da.......";
 	if(sex==0) close;
@@ -817,7 +818,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 }
 
 // Special Reserve ----------------------------------------------
-aldeba_in.gat,79,161,6	script	Kafra	115,{
+aldeba_in.gat,79,161,6	script	Kafra#04	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Welcome, ^6666FF" + strcharinfo(0) + "^000000.  This is where you can trade in your special reserve points for useful items and cool prizes.";
@@ -1004,7 +1005,7 @@ M_Menu:
 }
 
 // Special Reserve 2 ----------------------------------------------
-aldeba_in.gat,88,161,3	script	Kafra	115,{
+aldeba_in.gat,88,161,3	script	Kafra#05	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Welcome ^5577FF"+strcharinfo(0)+"^000000.  We are currently having a special event for our customers.";
@@ -1356,7 +1357,7 @@ aldebaran.gat,143,136,4	script	Clock Keeper	89,{
 }
 
 // Gatekeeper Riku -------------------------------------------------------------------
-c_tower3.gat,10,249,4	script	Gatekeeper	84,{
+c_tower3.gat,10,249,4	script	Gatekeeper#01	84,{
 	mes "[Gatekeeper Riku]";
 	mes "Welcome to ";
 	mes "Kinase - Blue Gallino";
@@ -1450,7 +1451,7 @@ c_tower3.gat,10,249,4	script	Gatekeeper	84,{
 }
 
 //<======================================== Al De Baran Dungeon ==========================================>\\
-alde_dun03.gat,264,16,4	script	Gatekeeper	101,{
+alde_dun03.gat,264,16,4	script	Gatekeeper#02	101,{
 	mes "[Gatekeeper Boy]";
 	mes "Welcome to";
 	mes "Kinase - Blue Gallino";

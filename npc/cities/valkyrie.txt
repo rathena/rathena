@@ -4,7 +4,7 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 2.0b Fixed. TODO: add new Quest Skills [Lupus]
 //= 2.1 Changed all numbers into constants. [Vicious]
 //= 2.2 Now ALL quests skills are saved/restored [Lupus]
+//= 2.3 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -141,7 +142,7 @@ yuno_in05.gat,50,44,0	script	Heart of Ymir	111,{
 }
 
 // -== Researcher of the Book of Ymir ==-
-yuno_in02.gat,90,77,4	script	Researcher	744,{
+yuno_in02.gat,90,77,4	script	Researcher#06	744,{
 	mes "[Researcher]";
 	mes "Argh, where is it!?";
 	mes "They said that it would be around here somewhere...";

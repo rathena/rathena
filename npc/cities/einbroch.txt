@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Nexon
 //===== Current Version: ===================================== 
-//= 0.8
+//= 0.9
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -20,16 +20,17 @@
 //= 0.7 Implemented an inn NPC [MasterOfMuppets]
 //= 0.8 Implemented the Shinokas quest, thanks to [MasterOfMuppets]
 //= 	Dj-Yhn for scripting it.
+//= 0.9 Removed Duplicates [Silent]
 //============================================================
 
 
 //== some boards, signs ======================
-einbroch.gat,220,208,5	script	Notice Board	858,{
+einbroch.gat,220,208,5	script	Notice Board#01	858,{
 	mes "[Weapon Shop Entrance]";
 	close;
 }
 
-einbroch.gat,183,174,5	script	Bulletin Board	858,{
+einbroch.gat,183,174,5	script	Bulletin Board#01	858,{
 	mes "East - Weapon Shop, Hotel";
 	mes "South - Factory";
 	mes "Southwest - Airship Repair Shop,";
@@ -38,19 +39,19 @@ einbroch.gat,183,174,5	script	Bulletin Board	858,{
 	close;
 }
 
-einbroch.gat,244,255,5	script	Bulletin Board	858,{
+einbroch.gat,244,255,5	script	Bulletin Board#02	858,{
 	mes " ";
 	mes " Train Station";
 	close;
 }
 	
-einbroch.gat,68,206,5	script	Bulletin Board	858,{
+einbroch.gat,68,206,5	script	Bulletin Board#03	858,{
 	mes " ";
 	mes " Airship Airport";
 	close;
 }
 	
-einbroch.gat,162,256,5	script	Bulletin Board	858,{
+einbroch.gat,162,256,5	script	Bulletin Board#04	858,{
 	mes "East - Train Station";
 	mes "Southeast - Hotel";
 	mes "South - Weapon Shop, Factory";
@@ -59,7 +60,7 @@ einbroch.gat,162,256,5	script	Bulletin Board	858,{
 	close;
 }
 
-einbroch.gat,235,141,5	script	Bulletin Board	858,{
+einbroch.gat,235,141,5	script	Bulletin Board#05	858,{
 	mes "Southwest- Airship Repair Shop,";
 	mes "Laboratory";
 	mes "Northwest- Airport";
@@ -273,7 +274,7 @@ einbroch.gat,259,327,5	script	Leslie	846,{
 	close;
 }
 
-einbroch.gat,232,272,3	script	Train Station Staff::EinbrochTrain	852,{
+einbroch.gat,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
 	mes "[Staff]";
 	mes "Welcome to";
 	mes "the Train Station.";
@@ -329,7 +330,7 @@ s_Enviroment:
 	close;
 }
 	
-einbroch.gat,252,301,3	duplicate(EinbrochTrain)	Train Station Staff	852
+einbroch.gat,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#02	852
 
 einbroch.gat,228,121,5	script	Little Toby	855,{
 	mes "[Little Toby]";
@@ -1444,7 +1445,7 @@ if(EinFactory == 5)
 }
 end;
 }
-ein_in01.gat,47,197,4	script	Conveyor	111,{
+ein_in01.gat,47,197,4	script	Conveyor#01	111,{
 
 if(EinFactory == 7)
 {
@@ -1478,7 +1479,7 @@ if(EinFactory == 9)
 end;
 }
 
-ein_in01.gat,95,238,4	script	Conveyor	111,{
+ein_in01.gat,95,238,4	script	Conveyor#02	111,{
 
 if(EinFactory == 11)
 {
@@ -2737,14 +2738,14 @@ L_SCFail:
 	mes "check. Access denied.";
 	close;
 }
-einbroch.gat,51,56,6	script	Laboratory Soldier	852,{
+einbroch.gat,51,56,6	script	Laboratory Soldier#01	852,{
 	mes "[Laboratory Soldier]";
 	mes "This area is off limits.";
 	mes "Please leave";
 	mes "immediately";
 	close;
 }
-einbroch.gat,51,47,6	script	Laboratory Soldier	852,{
+einbroch.gat,51,47,6	script	Laboratory Soldier#02	852,{
 	mes "[Laboratory Soldier]";
 	mes "This area is off limits.";
 	mes "Please leave";
@@ -2823,7 +2824,7 @@ ein_in01.gat,266,26,1	script	Unknown Stuff	111,{
 	close;
 }
 
-airplane.gat,31,77,4	script	Drunken Man	853,{
+airplane.gat,31,77,4	script	Drunken Man#03	853,{
 	if (ein_lab == 2) goto L_Done;
 	mes "[Drunken Man]";
 	mes "Okay okay...";

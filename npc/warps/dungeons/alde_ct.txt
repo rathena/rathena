@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 2+
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= Split off Aldebaran.txt 1.1 fixed clt007 warp
 //= 1.3 Optimized [Lupus]
+//= 1.4 Removed Duplicates [Silent]
 //============================================================
 
 //= Al De Baran Clock Tower
@@ -163,7 +164,7 @@ alde_dun02.gat,122,169,0	warp	ald006	2,2,c_tower3.gat,47,41
 alde_dun02.gat,187,234,0	warp	ald007	2,2,c_tower3.gat,65,147
 //============================================================
 //= Random B2 ================================================
-alde_dun02.gat,267,41,4	script	clt008r	45,1,1,{
+alde_dun02.gat,267,41,4	script	ald008r	45,1,1,{
 	if(rand(2)) {
 		warp "c_tower3.gat",168,252;
 	} else {
@@ -178,7 +179,7 @@ alde_dun03.gat,276,48,0	warp	ald012	2,2,c_tower1.gat,235,223
 //============================================================
 //7(npc)
 //= Random B3-1 ================================================
-alde_dun03.gat,130,125,4	script	clt014r	45,1,1,{
+alde_dun03.gat,130,125,4	script	ald014r	45,1,1,{
 	set @r,rand(3);
 	if(@r==1) goto w2;
 	if(@r==2) goto w3;
@@ -188,7 +189,7 @@ alde_dun03.gat,130,125,4	script	clt014r	45,1,1,{
 }
 //============================================================
 //= Random 3-2 ===============================================
-alde_dun03.gat,171,127,4	script	clt015r	45,1,1,{
+alde_dun03.gat,171,127,4	script	ald015r	45,1,1,{
 	set @r,rand(4);
 	if(@r==1) goto w2;
 	if(@r==2) goto w3;
@@ -202,7 +203,7 @@ alde_dun04.gat,215,192,0	warp	ald018	1,1,c_tower2.gat,148,283
 alde_dun04.gat,32,74,0	warp	aldd19	1,1,alde_dun02.gat,187,239
 alde_dun04.gat,208,58,0	warp	aldd20	2,2,alde_dun04.gat,268,74
 alde_dun04.gat,272,74,0	warp	aldd021	2,2,alde_dun04.gat,204,62
-alde_dun04.gat,80,34,4	script	clt022r	45,1,1,{
+alde_dun04.gat,80,34,4	script	ald022r	45,1,1,{
 	set @r,rand(4);
 	if(@r==1) goto w2;
 	if(@r==2) goto w3;

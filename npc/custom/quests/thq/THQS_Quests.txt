@@ -10,7 +10,7 @@
 //                   revised By Warlock                  //
 ///////////////////////////////////////////////////////////
 //===== Version ===========================================
-//= 1.2
+//= 1.3
 //===== Compatible With ===================================
 //= eAthena 1.0
 //===== Description =======================================
@@ -20,6 +20,7 @@
 //= #Treasure_Token - used to keep track of tokens
 //= 1.0 - Straight conversionof Aegis NPC file
 //= 1.2 some bugfixes, typos [Lupus]
+//= 1.3 Removed Duplicates [Silent]
 //////////////////////////////////////////////////////////
 
 
@@ -311,7 +312,7 @@ N_QuestStart2:
 	close;
 }
 //3-4
-mjolnir_02.gat,87,357,6	script	Man	51,{
+mjolnir_02.gat,87,357,6	script	Man#01	51,{
 	if (three_qset == 4 && countitem(1041) > 49) goto N_QuestComp;
 	if (three_qset == 4) goto N_QuestStart;
 	mes "[Rudolfo]";
@@ -455,7 +456,7 @@ N_QuestStart:
 }
 ///////Job list 5///////
 //5-1;
-prt_maze01.gat,18,184,6	script	Lithin	752,{
+prt_maze01.gat,18,184,6	script	Lithin#01	752,{
 	if (five_qset == 1 && countitem(1028) > 14) goto N_QuestComp;
 	if (five_qset == 1) goto N_QuestStart;
 	mes "[Lithin]";
@@ -482,7 +483,7 @@ N_QuestStart:
 	close;
 }
 //5-2 goes to 6-2 using callfunc;
-moc_ruins.gat,75,167,6	script	Lithin	87,{
+moc_ruins.gat,75,167,6	script	Lithin#02	87,{
 	if (five_qset == 2 && countitem(932) > 29) goto N_QuestComp;
 	if (five_qset == 2) goto N_QuestStart;
 	if (six_qset == 2) goto N_QuestStart2;
@@ -534,7 +535,7 @@ N_QuestStart:
 	close;
 }
 //5-4;
-gef_tower.gat,49,27,6	script	Wizard	735,{
+gef_tower.gat,49,27,6	script	Wizard#01	735,{
 	if (five_qset == 4 && countitem(1059) > 49) goto N_QuestComp;
 	if (five_qset == 4) goto N_QuestStart;
 	mes "[Wizard]";
@@ -631,7 +632,7 @@ N_QuestStart:
 	close;
 }
 //6-4;
-gef_tower.gat,52,87,6	script	Wizard	735,{
+gef_tower.gat,52,87,6	script	Wizard#02	735,{
 	if (six_qset == 4 && countitem(944) > 19) goto N_QuestComp;
 	if (six_qset == 4) goto N_QuestStart;
 	mes "[Zuuzuu]";
@@ -974,7 +975,7 @@ N_QuestStart:
 	close;
 }
 //10-2;
-pay_fild10.gat,145,252,6	script	Man	122,{
+pay_fild10.gat,145,252,6	script	Man#02	122,{
 	if (ten_qset == 2 && countitem(1029) > 0) goto N_QuestComp;
 	if (ten_qset == 2) goto N_QuestStart;
 	mes "[Man]";

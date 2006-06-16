@@ -7,7 +7,7 @@
 //= Mass Zero (1.3)
 //= MasterOfMuppets (2.0)
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.6
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -29,9 +29,10 @@
 //= 2.3 A small fix, the code is so messy I can't believe I scripted it >.< [MasterOfMuppets]
 //= 2.4 Implemented a few more npcs, thanks to Prometheus for them. [MasterOfMuppets]
 //= 2.5 Implemented the Poison King quest, beware of potential bugs. [MasterOfMuppets]
+//= 2.6 Removed Duplicates [Silent]
 //============================================================
 
-alberta.gat,245,45,4	script	Girl	815,{
+alberta.gat,245,45,4	script	Girl#02	815,{
 	mes "[Girl]";
 	mes "La la la la~";
 	mes "I feel so good today~";
@@ -108,7 +109,7 @@ M_CANCEL2:
 	close;
 }
 
-lou_fild01.gat,190,100,1	script	Girl	815,{
+lou_fild01.gat,190,100,1	script	Girl#03	815,{
 	mes "[Girl]";
 	mes "You'd like to go back to Alberta?";
 	next;
@@ -133,7 +134,7 @@ M_CANCEL:
 	close;
 }
 
-louyang.gat,224,104,4	script	Representative	818,{
+louyang.gat,224,104,4	script	Representative#01	818,{
 	mes "[Representative]";
 	mes "Welcome to Louyang,";
 	mes "an ancient land with";
@@ -228,7 +229,7 @@ M_CANCEL:
 	close;
 }
 
-louyang.gat,213,214,4	script	Soldier	825,{
+louyang.gat,213,214,4	script	Soldier#10	825,{
 	mes "[Soldier]";
 	mes "Welcome to louyang, a city with a long and colorful history.";
 	next;
@@ -322,7 +323,7 @@ M_CANCEL:
 	close;
 }
 
-lou_fild01.gat,195,177,4	script	Jiu Lian Bu	819,{
+lou_fild01.gat,195,177,4	script	Jiu Lian Bu#01	819,{
 	if(QL_SOUP2) goto L_DONE;
 	if(QL_SOUPQUEST)goto L_WHERE;
 	if(QL_GOTFAKESOUP) goto L_FAKE;
@@ -501,7 +502,7 @@ L_WHERE:
 	end;
 }
 
-lou_fild01.gat,175,174,4	script	Jiu Lian Bu	819,{
+lou_fild01.gat,175,174,4	script	Jiu Lian Bu#02	819,{
 	if(QL_SOUPQUEST < 1) goto L_DOQUEST;
 	if(QL_SOUP2 < 1) goto L_1STTIME;
 	mes "[Jiu Lian Bu]";
@@ -602,7 +603,7 @@ L_1STTIME:
 	close;	
 }
 
-lou_in02.gat,61,175,2	script	Employee	818,2,2{
+lou_in02.gat,61,175,2	script	Employee#01	818,2,2{
 	mes "[Ya Hua]";
 	mes "^6A6A6A*Yawn...*";
 	close;
@@ -630,13 +631,13 @@ S_CAUGHT:
 	close;
 }
 
-lou_in02.gat,54,174,6	script	Employee	822,{
+lou_in02.gat,54,174,6	script	Employee#02	822,{
 	mes "[Chang Pai]";
 	mes "^6A6A6A*Yawn...*";
 	close;
 }
 
-lou_in02.gat,50,185,4	script	Pot	111,{
+lou_in02.gat,50,185,4	script	Pot#01	111,{
 	if(QL_SOUPQUEST == 1) goto L_EMPTY;
 	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
 	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
@@ -674,7 +675,7 @@ L_EMPTY:
 	close;
 }
 
-lou_in02.gat,49,185,4	script	Pot	111,{
+lou_in02.gat,49,185,4	script	Pot#02	111,{
 	if(QL_SOUPQUEST == 1) goto L_EMPTY;
 	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
 	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
@@ -844,7 +845,7 @@ lou_in02.gat,43,169,8	script	Jiang Rong	827,{
 	close;
 }
 
-lou_in02.gat,76,181,2	script	Employee	822,{
+lou_in02.gat,76,181,2	script	Employee#03	822,{
 	mes "[Huang Jia Xian]";
 	mes "Ehhhh...";
 	mes "Forgive me...";
@@ -1731,7 +1732,7 @@ L_NOTENOUGH:
 	goto L_INGREDIENT;
 }
 
-lou_fild01.gat,224,348,7	script	Lady	817,{
+lou_fild01.gat,224,348,7	script	Lady#04	817,{
 
 	emotion 30;
 	mes "[Lady]";
@@ -1924,7 +1925,7 @@ s_Journal:
 
 }
 
-lou_in01.gat,111,151,4	script	Soldier	825,{
+lou_in01.gat,111,151,4	script	Soldier#11	825,{
 	mes "[Soldier]";
 	mes "*Yawn* It's so boring here";
 	mes "nowadays. Although, I hear that";
@@ -1940,7 +1941,7 @@ lou_in01.gat,111,151,4	script	Soldier	825,{
 	close;
 }
 
-lou_in01.gat,91,151,4	script	Soldier	825,{
+lou_in01.gat,91,151,4	script	Soldier#12	825,{
 	mes "[Soldier]";
 	mes "....z..Z..z...";
 	next;
@@ -1964,7 +1965,7 @@ lou_in01.gat,91,151,4	script	Soldier	825,{
 	close;
 }
 
-lou_in01.gat,82,139,6	script	Soldier	825,{
+lou_in01.gat,82,139,6	script	Soldier#13	825,{
 	mes "[Soldier]";
 	mes "There is nothing much, but if you";
 	mes "wish to look around this room,";
@@ -1972,7 +1973,7 @@ lou_in01.gat,82,139,6	script	Soldier	825,{
 	close;
 }
 
-lou_in01.gat,45,138,4	script	Soldier	825,{
+lou_in01.gat,45,138,4	script	Soldier#14	825,{
 	mes "[Soldier]";
 	mes "It's strange to see outsiders in";
 	mes "this kind of place. We don't have";
@@ -1981,7 +1982,7 @@ lou_in01.gat,45,138,4	script	Soldier	825,{
 	close;
 }
 
-lou_in01.gat,102,144,4	script	Soldier	825,{
+lou_in01.gat,102,144,4	script	Soldier#15	825,{
 	mes "[Soldier]";
 	mes "People have been";
 	mes "saying that there's";
@@ -1996,7 +1997,7 @@ lou_in01.gat,102,144,4	script	Soldier	825,{
 	close;
 }
 
-lou_in01.gat,99,144,4	script	Soldier	825,{
+lou_in01.gat,99,144,4	script	Soldier#16	825,{
 	mes "[Soldier]";
 	mes "Ah, don't bother";
 	mes "to listen to this";
@@ -2087,7 +2088,7 @@ lou_in02.gat,272,55,1	script	Familiar-Looking Patient	86,{
 	close;
 }
 
-lou_in02.gat,253,45,4	script	Employee	822,{
+lou_in02.gat,253,45,4	script	Employee#04	822,{
 
 	if(QL_POISONKING == 30)goto s_NoGoodIdea;
 	if(QL_POISONKING == 18)goto s_Busy;

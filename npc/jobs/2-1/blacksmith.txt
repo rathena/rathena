@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= eAthena  1.0+
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 1.7 item quantity/ids typos fix
 //= 1.8 Moved the Quest to Einbroch [Poki#3]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
 ==============================================================
 
 
@@ -1415,7 +1416,7 @@ L_Result:
 
 //=========================== NPC that tells you, that the Guild moved
 //=========================== She's there on kRO, but the current text is custom ^^
-geffen_in.gat,110,169,4	script	Guildsman	726,{
+geffen_in.gat,110,169,4	script	Guildsman#01	726,{
 	mes "[Blacksmith Guildsman]";
 	mes "Welcome! We're the masters of the metal, blacksmiths!";
 	mes "Our skills in creating weapons, in a way, is almost an art form!.";

@@ -3,17 +3,18 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= Guard/Guide NPC of City of Hugel.
 //===== Additional Comments: =================================
 //= 1.0 Started the script. [erKURITA]
+//= 1.1 Removed Duplicates [Silent]
 //============================================================
 
 
-hugel.gat,98,57,3	script	Old Lady	863,{
+hugel.gat,98,57,3	script	Old Lady#hu1	863,{
 	mes "[Old Lady]";
 	mes "Welcome to Hugel, the Power Source City.";
 	next;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Some people & eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.07
+//= 1.08
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -18,8 +18,9 @@
 // 1.05 Changed all breaks to ends. [Skotlex]
 // 1.06 The Captain now uses iRO dialog [MasterOfMuppets]
 // 1.07 Implemented a missing NPC [MasterOfMuppets]
+// 1.08 Removed Duplicates [Silent]
 //=====================================================================
-alberta.gat,245,93,4	script	Sea Captain	709,{
+alberta.gat,245,93,4	script	Sea Captain#01	709,{
 	mes "[Walter Moers]";
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
@@ -138,7 +139,7 @@ alberta.gat,245,93,4	script	Sea Captain	709,{
 			close;
 }
 //=====================================================================
-amatsu.gat,194,79,4	script	Sea Captain	709,{
+amatsu.gat,194,79,4	script	Sea Captain#02	709,{
 	mes "[Walter Moers]";
 	mes "You came... Did you enjoy";
 	mes "your trip to Amatsu...?";
@@ -472,7 +473,7 @@ amatsu.gat,230,160,4	script	Lady	757,{
 	close;
 }
 //=====================================================================
-amatsu.gat,171,174,4	script	Guard Soldier	767,{
+amatsu.gat,171,174,4	script	Guard Soldier#01	767,{
 	if ((event_amatsu == 0) || (event_amatsu == 1)) goto L0;
 	if (event_amatsu == 6) goto L1;
 	if (event_amatsu == 7) goto L2;
@@ -511,7 +512,7 @@ L2:
 	close;
 }
 //=====================================================================
-amatsu.gat,164,174,4	script	Guard Soldier	767,{
+amatsu.gat,164,174,4	script	Guard Soldier#02	767,{
 	if (event_amatsu == 0) goto LOnce;
 	if ((event_amatsu >= 2) && (event_amatsu <= 5)) goto L2;
 	if (event_amatsu == 6) goto L3;
@@ -555,7 +556,7 @@ L4:
 	close;
 }
 //=====================================================================
-amatsu.gat,119,164,4	script	Guard Soldier	767,{
+amatsu.gat,119,164,4	script	Guard Soldier#03	767,{
 	mes "[Guard Soldier]";
 	mes "Are you from Rune-Midgard?";
 	mes "Welcome to the town of Amatsu.";
@@ -571,7 +572,7 @@ amatsu.gat,119,164,4	script	Guard Soldier	767,{
 	close;
 }
 //=====================================================================
-amatsu.gat,112,164,4	script	Guard Soldier	767,{
+amatsu.gat,112,164,4	script	Guard Soldier#04	767,{
 	mes "[Guard Soldier]";
 	mes "This is the best castle in Amatsu,";
 	mes "called the East Lake Castle.";
@@ -587,7 +588,7 @@ amatsu.gat,112,164,4	script	Guard Soldier	767,{
 }
 
 //=====================================================================
-ama_in01.gat,22,111,0	script	Old Lady	761,{
+ama_in01.gat,22,111,0	script	Old Lady#01	761,{
 	if (event_amatsu == 5) goto LStart2;
 	if (event_amatsu == 6) goto LStart3;
 	if (event_amatsu == 7) goto LStart4;
@@ -725,7 +726,7 @@ LStart4:
 }
 
 //=====================================================================
-ama_in02.gat,207,40,6	script	Guard Soldier	767,{
+ama_in02.gat,207,40,6	script	Guard Soldier#05	767,{
 	mes "[Guard Soldier]";
 	mes "Welcome,";
 	mes "The Master specifically allowed";
@@ -737,7 +738,7 @@ ama_in02.gat,207,40,6	script	Guard Soldier	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,207,49,6	script	Guard Soldier	767,{
+ama_in02.gat,207,49,6	script	Guard Soldier#06	767,{
 	mes "[Guard Soldier]";
 	mes "The master is really a great guy.";
 	mes "Who would have thought that anyone could";
@@ -752,7 +753,7 @@ ama_in02.gat,207,49,6	script	Guard Soldier	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,187,57,2	script	Soldier	767,{
+ama_in02.gat,187,57,2	script	Soldier#01	767,{
 	mes "[Ichiro]";
 	mes "Welcome, our master";
 	mes "has already prepared a place";
@@ -767,7 +768,7 @@ ama_in02.gat,187,57,2	script	Soldier	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,170,62,4	script	Soldier	767,{
+ama_in02.gat,170,62,4	script	Soldier#02	767,{
 	mes "[Kyro]";
 	mes "My name is Kyro. In this town";
 	mes "I handle all the administrative work.";
@@ -824,7 +825,7 @@ L3:
 
 }
 //=====================================================================
-ama_in02.gat,37,157,4	script	Soldier	767,{
+ama_in02.gat,37,157,4	script	Soldier#03	767,{
 	mes "[Sbarro]";
 	mes "This is our soldier's";
 	mes "training ground.";
@@ -872,7 +873,7 @@ ama_in02.gat,32,51,6	script	Shiro	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,40,167,3	script	Soldier	767,{
+ama_in02.gat,40,167,3	script	Soldier#04	767,{
 	mes "[Kuro]";
 	mes "Shh... customer, please be quiet.";
 	mes "I will tell you a story";
@@ -925,7 +926,7 @@ ama_in02.gat,32,167,5	script	Kukuro	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,42,34,2	script	Soldier	767,{
+ama_in02.gat,42,34,2	script	Soldier#05	767,{
 	mes "[Hakiro]";
 	mes "Rest for a while before leaving,";
 	mes "master has already prepared";
@@ -943,7 +944,7 @@ ama_in02.gat,42,34,2	script	Soldier	767,{
 }
 
 //=====================================================================
-ama_in02.gat,203,156,4	script	Soldier	767,{
+ama_in02.gat,203,156,4	script	Soldier#06	767,{
 	mes "[Hakiro]";
 	mes "Master is in there.";
 	mes "If you want to go greet him,";
@@ -958,7 +959,7 @@ ama_in02.gat,203,156,4	script	Soldier	767,{
 }
 
 //=====================================================================
-ama_in02.gat,195,156,4	script	Soldier	767,{
+ama_in02.gat,195,156,4	script	Soldier#07	767,{
 	mes "[Kuro]";
 	mes "Damn, maybe the master";
 	mes "is having a hard time right now.";
@@ -1053,7 +1054,7 @@ Lnoflag:
 		mes "I hope you have a good time...";
 		close;
 }
-ama_dun01.gat,229,7,0	script	Soldier	767,{
+ama_dun01.gat,229,7,0	script	Soldier#08	767,{
 	mes "[Juro]";
 	mes "Ready to leave?";
 	next;

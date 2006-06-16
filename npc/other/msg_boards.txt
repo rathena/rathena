@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= Rearranged [Lupus]
 //= Fixed spelling mistakes. [Nexon]
+//= 1.3 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -84,7 +85,7 @@ geffen.gat,184,61,1	script	Blacksmith Guild	111,{
 }
 
 // Sign Post -----------------------------------------------------------
-geffen.gat,119,190,0	script	Sign Post	111,{
+geffen.gat,119,190,0	script	Sign Post#01	111,{
   mes "~sign reads...~";
   mes "North to Geffen Fields";
   mes "Northeast to Al De Baran";
@@ -128,7 +129,7 @@ prontera.gat,156,197,1	script	Welcome Sign::ws_prontera	111,{
 }
 
 // Sign Post ----------------------------------------------------------------
-prontera.gat,158,213,1	script	Sign Post	111,{
+prontera.gat,158,213,1	script	Sign Post#02	111,{
 	mes "~ the sign post reads ~";
 	mes "North to Prontera Castle";
 	mes "Farther North to Al De Baran";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= v1.1 Now using duplicate command.
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.2a Small note that the BS guild moved to Einbroch [Poki#3]
+//= 1.3 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -122,8 +123,8 @@ M_Menu:
 }
 
 // South ------------------------------------------
-geffen.gat,118,62,0	duplicate(Gef_Guide)	Guide#2	705
+geffen.gat,118,62,0	duplicate(Gef_Guide)	Guide#Gef2	705
 // East -----------------------------------------------------
-geffen.gat,203,116,2	duplicate(Gef_Guide)	Guide#3	705
+geffen.gat,203,116,2	duplicate(Gef_Guide)	Guide#Gef3	705
 // West ----------------------------------------------
-geffen.gat,37,123,5	duplicate(Gef_Guide)	Guide#4	705
+geffen.gat,37,123,5	duplicate(Gef_Guide)	Guide#Gef4	705

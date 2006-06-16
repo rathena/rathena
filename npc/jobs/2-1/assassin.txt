@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena RC4
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
 //============================================================ 
 
 
@@ -1432,7 +1433,7 @@ in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,{
 }
 
 // Guild Master -----------------------------------------------------------------------------
-in_moc_16.gat,149,80,4	script	Guild Master	106,1,1,{
+in_moc_16.gat,149,80,4	script	Guild Master#01	106,1,1,{
 	end;
 
 OnTouch:
@@ -1842,7 +1843,7 @@ in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,{
 //================================================//
 // Decoy Chief
 //================================================//
-in_moc_16.gat,186,81,0	script	Guild Master#2	55,{
+in_moc_16.gat,186,81,0	script	Guild Master#02	55,{
 	mes "[Guild Master Botogun]";
 	mes "I'm sorry but I am not the person in charge here.";
 	mes "The real Guild Chief is on the other side.";

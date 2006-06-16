@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
 //= Lighthalzen Airport Staff
 //===== Additional Comments: ================================= 
 //= 1.0 Cloned from einbroch.txt [Justin84]
+//= 1.1 Removed Duplicates [Silent]
 //============================================================
 
 

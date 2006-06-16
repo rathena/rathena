@@ -3,16 +3,16 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 0.0000000000000001
+//= 0.0000000000000002
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= NPCs that has nothing to do with the race itself, but
 //= has important functions on the race itself.
 //===== Additional Comments: =================================
-//=
+//= 0.0000000000000002 Removed Duplicates [Silent]
 //============================================================
-p_track01.gat,41,57,5	script	Lady::P_track	845,{
+p_track01.gat,41,57,5	script	Lady#track1::P_track	845,{
 end;
 }
 
@@ -36,8 +36,8 @@ p_track02.gat,42,49,3	script	Asgahrd	733,{
 end;
 }
 
-p_track02.gat,67,33,1	script	Blacksmith	726,{
+p_track02.gat,67,33,1	script	Blacksmith#track1	726,{
 end;
 }
 
-p_track02.gat,41,57,5	duplicate(P_track)	Lady	845
+p_track02.gat,41,57,5	duplicate(P_track)	Lady#track2	845

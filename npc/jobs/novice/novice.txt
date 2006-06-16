@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.1b 
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 Added the New Novice Training Grounds, a big thanks [MasterOfMuppets]
 //=	to Dr.Evil who did 90% of the work =)
 //= 1.0b Temp measure to stop exploits. [Vicious]
+//= 1.2 Removed Duplicates [Silent]
 //============================================================ 
 
 //====================================================================
@@ -207,14 +208,14 @@ L_Fail:
 	end;
 }
 
-new_1-1.gat,144,116,2	script	Guard	105,{
+new_1-1.gat,144,116,2	script	Guard#01	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
 
-new_1-1.gat,144,107,2	script	Guard	105,{
+new_1-1.gat,144,107,2	script	Guard#02	105,{
 	mes "[Training Grounds Guard]";
 	switch ( rand(2) ) {
 	case 0:	mes "Come in!";
@@ -2417,7 +2418,7 @@ function	script	training_personnel3	{
 	return;
 }
 
-new_1-3.gat,95,30,4	script	Training Center Employee	84,{
+new_1-3.gat,95,30,4	script	Training Center Employee#01	84,{
 	callfunc "training_personnel";
 	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
 	case 1:	callfunc "training_personnel2"; break;
@@ -2425,7 +2426,7 @@ new_1-3.gat,95,30,4	script	Training Center Employee	84,{
 	case 3:	callfunc "training_personnel0";
 	}
 }
-new_2-3.gat,95,30,4	script	Training Center Employee	84,{
+new_2-3.gat,95,30,4	script	Training Center Employee#02	84,{
 	callfunc "training_personnel";
 	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
 	case 1:	callfunc "training_personnel1"; break;
@@ -2433,7 +2434,7 @@ new_2-3.gat,95,30,4	script	Training Center Employee	84,{
 	case 3:	callfunc "training_personnel0";
 	}
 }
-new_3-3.gat,95,30,4	script	Training Center Employee	84,{
+new_3-3.gat,95,30,4	script	Training Center Employee#03	84,{
 	callfunc "training_personnel";
 	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
 	case 1:	callfunc "training_personnel1"; break;
@@ -2441,7 +2442,7 @@ new_3-3.gat,95,30,4	script	Training Center Employee	84,{
 	case 3:	callfunc "training_personnel0";
 	}
 }
-new_4-3.gat,95,30,4	script	Training Center Employee	84,{
+new_4-3.gat,95,30,4	script	Training Center Employee#04	84,{
 	callfunc "training_personnel";
 	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
 	case 1:	callfunc "training_personnel1"; break;
@@ -2449,7 +2450,7 @@ new_4-3.gat,95,30,4	script	Training Center Employee	84,{
 	case 3:	callfunc "training_personnel0";
 	}
 }
-new_5-3.gat,95,30,4	script	Training Center Employee	84,{
+new_5-3.gat,95,30,4	script	Training Center Employee#05	84,{
 	callfunc "training_personnel";
 	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
 	case 1:	callfunc "training_personnel1"; break;
@@ -2475,11 +2476,11 @@ L2:		mes "[Keyman]";
 		mes "So you want to stay here longer? Continue training, and train hard!";
 		close;
 }
-new_1-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa	85
-new_2-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa	85
-new_3-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa	85
-new_4-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa	85
-new_5-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa	85
+new_1-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#01	85
+new_2-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#02	85
+new_3-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#03	85
+new_4-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#04	85
+new_5-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#05	85
 
 //Novice Instructor
 new_1-4.gat,91,22,4	script	Novice Instructor	57,{

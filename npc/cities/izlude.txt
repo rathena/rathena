@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.4 Added a Jawaii related npc. 1.4a Fixed a small bug to
 //=	the Jawaii warper, thanks to reddozen and Silent [MasterOfMuppets]
 //= 1.5 Replaced iz_move_alberta with MISC_QUEST & 16 [Lupus]
+//= 1.6 Removed Duplicates [Silent]
 //============================================================
 
 
@@ -898,7 +899,7 @@ M_Menu:
 }
 
 //Sailor-------------------------------------------------------------------------------------
-izlude.gat,201,181,2	script	Sailor	100,{
+izlude.gat,201,181,2	script	Sailor#06	100,{
 	mes "[Sailor]";
 	mes "Hey Everybody!";
 	mes "Attention, attention!";
@@ -931,7 +932,7 @@ izlude.gat,201,181,2	script	Sailor	100,{
 }
 
 //Sailor-------------------------------------------------------------------------------------
-izlu2dun.gat,108,27,4	script	Sailor	100,{
+izlu2dun.gat,108,27,4	script	Sailor#07	100,{
 	mes "[Sailor]";
 	mes "Wanna";
 	mes "head back?";

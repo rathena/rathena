@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Muad_Dib] 1.0 (The Prometheus Project)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
@@ -15,9 +15,10 @@
 //= http://www.nattsumi.com/roquest/miscellaneousquest.html
 //= Fixed typos [Nexon]
 //= TODO: Fix exploits V_V [Lupus]
+//= 1.1 Removed Duplicates [Silent]
 //============================================================
 
-alberta.gat,137,37,6	script	Stylist	91,{
+alberta.gat,137,37,6	script	Stylist#01	91,{
 	mes "[Veronica]";
 	mes "Welcome~~Welcome~~";
 	mes "Welcome to the one of the best Hair shop, Veronicas Beauty Saloon!!";

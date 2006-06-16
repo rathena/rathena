@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_dib
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 missing tabs [Lupus]
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.4 Removed Duplicates [Silent]
 //============================================================
 einbech.gat,67,37,4 script Guide#1::Einbech_Guide 852,{
 	cutin "ein_soldier",2;
@@ -115,4 +116,4 @@ L_END:
 	close;
 }
 
-einbech.gat,48,214,4	duplicate(Einbech_Guide)	Guide#2	852
+einbech.gat,48,214,4	duplicate(Einbech_Guide)	Guide#Ein2	852

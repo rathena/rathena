@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,12 +19,13 @@
 //= 1.7 Fixed Phelix bugs [Lupus]
 //= 1.8 Got rid of 2 useless variables, fixed Turtle Island Quest exploit [Lupus]
 //= 1.9 Added two NPCs shown at RO Magazine [Playtester]
+//= 2.0 Removed Duplicates [Silent]
 //============================================================ 
 
 //NewsPaper(?)
 alberta.gat,148,53,1	script	Newspaper Girl	831,{end;}
 //???
-alberta.gat,148,60,3	script	Man	833,{end;}
+alberta.gat,148,60,3	script	Man#03	833,{end;}
 
 // Young Man -----------------------------------------------------------
 alberta_in.gat,20,183,6	script	Young Man	49,{
@@ -34,7 +35,7 @@ alberta_in.gat,20,183,6	script	Young Man	49,{
 }
 
 // Merchant -------------------------------------------------
-alberta.gat,97,51,7	script	Merchant	84,{
+alberta.gat,97,51,7	script	Merchant#01	84,{
 	mes "[Merchant]";
 	mes "When you travel to many places like I do, you often here a lot of rumors.  There is one rumor I heard that is really interesting.";
 	next;
@@ -48,7 +49,7 @@ alberta.gat,97,51,7	script	Merchant	84,{
 }
 
 // Merchant ---------------------------------------------------------
-alberta.gat,53,39,8	script	Merchant	74,{
+alberta.gat,53,39,8	script	Merchant#02	74,{
 	mes "[Merchant]";
 	mes "Oh, you look like a stranger.  Welcome to Alberta.";
 	emotion e_gasp;
@@ -67,7 +68,7 @@ alberta.gat,53,39,8	script	Merchant	74,{
 }
 
 // Merchant -------------------------------------------------
-alberta.gat,58,80,8	script	Merchant	99,{
+alberta.gat,58,80,8	script	Merchant#03	99,{
 	mes "[Merchant]";
 	if(rand(2)) goto R_1;
 		mes "We merchants can open a roadside stand and do business.  With the ^0000ffDiscount skill^000000 we can buy goods from stores for low prices.";
