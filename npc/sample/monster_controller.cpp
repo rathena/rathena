@@ -41,7 +41,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 			AI_ACTION_TYPE_KILL|
             AI_ACTION_TYPE_UNLOCK|
             AI_ACTION_TYPE_WALKACK|
-            AI_ACTION_TYPE_WARPACK);
+            AI_ACTION_TYPE_WARPACK;
 		return;
 	}
 
