@@ -349,7 +349,8 @@ CREATE TABLE `ipbanlist` (
   `list` varchar(255) NOT NULL default '',
   `btime` datetime NOT NULL default '0000-00-00 00:00:00',
   `rtime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `reason` varchar(255) NOT NULL default ''
+  `reason` varchar(255) NOT NULL default '',
+  KEY (`list`)
 ) TYPE=MyISAM;
 
 --
