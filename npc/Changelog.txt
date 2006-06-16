@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/15
+	* Juno Update Process. 75% complete. [Musashiden]
 	* Fixed the gambling npc giving Orc Helm [1] instead of the non-slotted version. [MasterOfMuppets]
 	* Dr.Evil fixed some parts of his Umbala script [Playtester]
 	* Updated the color codes on the Juno Guides mini map illustrations. [Musashiden]

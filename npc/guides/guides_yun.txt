@@ -81,7 +81,7 @@ yuno.gat,227,292,4	script	Juno Soldier	105,{
 }
 
 //=====================================================================
-yuno.gat,164,283,4	script	Yuno Soldier	852,{
+yuno.gat,165,283,4	script	Yuno Soldier	105,{
 	cutin "ein_soldier",2;
 	set @name$, "[Yuno Soldier]";
 	set @menu1$, "^FF3355'Geographer'^000000.....";
@@ -97,49 +97,74 @@ yuno.gat,164,283,4	script	Yuno Soldier	852,{
 }
 
 //=====================================================================
-yuno.gat,151,283,4	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "^FF3355'Lava Golem'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "There is a monster called the ^FF3355'Lava Golem'^000000.";
-	mes "It is made out of stone heart that gained magical powers while being swept away by molten lava.";
+yuno.gat,150,283,4	script	Yuno Soldier	105,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "The lava that dripps down its body is so hot that it can melt weapons and armor made out of even the highest quality steel.";
+	mes "[Juno Soldier]";
+	mes "there is a monster near here known";
+	mes "as Lava Golem. This golem is made";
+	mes "from a stone heart whose power";
+	mes "happened to be amplified with magic";
+	mes "power when it was swept away by";
+	mes "molten rock.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "Be very careful if you ever encounter this monster.  Before you know it your equipment will become nothing more than metled pieces of junk.";
-	mes "More importantly, the damage it will inflict on you will turn you into a...... well I think you get the point......";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "The lava dripping from its body is";
+	mes "so hot that it can melt down armor";
+	mes "and weapons made out of high";
+	mes "quality steel.";
+	next;
+	mes "[Juno Soldier]";
+	mes "You'd better be careful when you";
+	mes "encounter this monster. It will";
+	mes "damage armor and weapons in the";
+	mes "twinkling of an eye.";
+	close;
 }
 
 //=====================================================================
-yuno.gat,164,228,4	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "Killer ^FF3355'Goats'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "^FF3355'Goats'^000000 are monsters that used to be antelopes that lived high up the montains of Yuno.";
-	mes "No one has ever survived a direct hit from a Goat's mighty horns.";
+yuno.gat,165,228,4	script	Yuno Soldier	105,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "As fierce as those horns are, the legs of a Goat are also to be feared.  They are tough and strong because of all of the climbing Goats do.";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "'Goat' is a monster that was an";
+	mes "antelope living in the high";
+	mes "mountains that was somehow turned";
+	mes "into a monster.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Even if you manage to dodge to its";
+	mes "horns, you still need to be wary of";
+	mes "its powerful legs.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Goat's legs are so strong because";
+	mes "it's always climbing cliffs when";
+	mes "it's not busy slaughtering the";
+	mes "innocent.";
+	close;
 }
 
 //=====================================================================
-yuno.gat,151,228,4	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "Large Jellopy.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "Have you ever seen that extraordinarily large jellopy?? It's huuuuge!!! It's a very, very, large and shiny jellopy!!";
-	emotion 1;
-	callfunc "F_YunoLoc",1;
+yuno.gat,150,228,4	script	Yuno Soldier	105,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Have you ever";
+	mes "seen a Large Jellopy?";
+	mes "Those things are huuuge!";
+	next;
+	mes "[Juno Soldier]";
+	mes "It's hard to believe";
+	mes "that such a large and";
+	mes "shining jellopy even exists!";
+	close;
 }
 
 
