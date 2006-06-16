@@ -10416,7 +10416,7 @@ void clif_parse_SendEmotion(int fd, struct map_session_data *sd) {
 
 void clif_parse_ChangePetName(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	pet_change_name(sd,(char*)RFIFOP(fd,2));
+	pet_change_name(sd,(char*)RFIFOP(fd,2), 0);
 }
 
 // Kick (right click menu for GM "(name) force to quit")

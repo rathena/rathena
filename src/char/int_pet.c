@@ -217,116 +217,149 @@ int mapif_delete_pet_ack(int fd,int flag)
 	WFIFOB(fd,2)=flag;
 	WFIFOSET(fd,3);
 
-	return 0;
-}
-
-int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
-	short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
-{
-	struct s_pet *p;
-	p= (struct s_pet *) aCalloc(sizeof(struct s_pet), 1);
-	if(p==NULL){
-		ShowFatalError("int_pet: out of memory !\n");
-		mapif_pet_created(fd,account_id,NULL);
 		return 0;
 	}
-//	memset(p,0,sizeof(struct s_pet)); unnecessary after aCalloc [Skotlex]
-	p->pet_id = pet_newid++;
-	memcpy(p->name,pet_name,NAME_LENGTH-1);
-	if(incuvate == 1)
-		p->account_id = p->char_id = 0;
-	else {
-		p->account_id = account_id;
-		p->char_id = char_id;
-	}
-	p->class_ = pet_class;
-	p->level = pet_lv;
-	p->egg_id = pet_egg_id;
-	p->equip = pet_equip;
-	p->intimate = intimate;
-	p->hungry = hungry;
-	p->rename_flag = rename_flag;
-	p->incuvate = incuvate;
 
-	if(p->hungry < 0)
-		p->hungry = 0;
-	else if(p->hungry > 100)
-		p->hungry = 100;
-	if(p->intimate < 0)
-		p->intimate = 0;
-	else if(p->intimate > 1000)
-		p->intimate = 1000;
-
-	idb_put(pet_db,p->pet_id,p);
-
-	mapif_pet_created(fd,account_id,p);
+int mapif_rename_pet_ack(int fd, int account_id, int char_id, int flag, char *name){
+	WFIFOW(fd, 0) =0x3884;
+	WFIFOL(fd, 2) =account_id;
+	WFIFOL(fd, 6) =char_id;
+	WFIFOB(fd, 10) =flag;
+	memcpy(WFIFOP(fd, 11), name, NAME_LENGTH);
+	WFIFOSET(fd, NAME_LENGTH+12);
 
 	return 0;
 }
 
-int mapif_load_pet(int fd,int account_id,int char_id,int pet_id)
-{
-	struct s_pet *p;
-	p= idb_get(pet_db,pet_id);
-	if(p!=NULL) {
-		if(p->incuvate == 1) {
-			p->account_id = p->char_id = 0;
-			mapif_pet_info(fd,account_id,p);
+	int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet_lv,short pet_egg_id,
+		short pet_equip,short intimate,short hungry,char rename_flag,char incuvate,char *pet_name)
+	{
+		struct s_pet *p;
+		p= (struct s_pet *) aCalloc(sizeof(struct s_pet), 1);
+		if(p==NULL){
+			ShowFatalError("int_pet: out of memory !\n");
+			mapif_pet_created(fd,account_id,NULL);
+			return 0;
 		}
-		else if(account_id == p->account_id && char_id == p->char_id)
-			mapif_pet_info(fd,account_id,p);
+	//	memset(p,0,sizeof(struct s_pet)); unnecessary after aCalloc [Skotlex]
+		p->pet_id = pet_newid++;
+		memcpy(p->name,pet_name,NAME_LENGTH-1);
+		if(incuvate == 1)
+			p->account_id = p->char_id = 0;
+		else {
+			p->account_id = account_id;
+			p->char_id = char_id;
+		}
+		p->class_ = pet_class;
+		p->level = pet_lv;
+		p->egg_id = pet_egg_id;
+		p->equip = pet_equip;
+		p->intimate = intimate;
+		p->hungry = hungry;
+		p->rename_flag = rename_flag;
+		p->incuvate = incuvate;
+
+		if(p->hungry < 0)
+			p->hungry = 0;
+		else if(p->hungry > 100)
+			p->hungry = 100;
+		if(p->intimate < 0)
+			p->intimate = 0;
+		else if(p->intimate > 1000)
+			p->intimate = 1000;
+
+		idb_put(pet_db,p->pet_id,p);
+
+		mapif_pet_created(fd,account_id,p);
+
+		return 0;
+	}
+
+	int mapif_load_pet(int fd,int account_id,int char_id,int pet_id)
+	{
+		struct s_pet *p;
+		p= idb_get(pet_db,pet_id);
+		if(p!=NULL) {
+			if(p->incuvate == 1) {
+				p->account_id = p->char_id = 0;
+				mapif_pet_info(fd,account_id,p);
+			}
+			else if(account_id == p->account_id && char_id == p->char_id)
+				mapif_pet_info(fd,account_id,p);
+			else
+				mapif_pet_noinfo(fd,account_id);
+		}
 		else
 			mapif_pet_noinfo(fd,account_id);
+
+		return 0;
 	}
-	else
-		mapif_pet_noinfo(fd,account_id);
+
+	static void* create_pet(DBKey key, va_list args) {
+		struct s_pet *p;
+		p=(struct s_pet *)aCalloc(sizeof(struct s_pet),1);
+		p->pet_id = key.i;
+		return p;
+	}
+	int mapif_save_pet(int fd,int account_id,struct s_pet *data)
+	{
+		struct s_pet *p;
+		int pet_id, len;
+		RFIFOHEAD(fd);
+		len=RFIFOW(fd,2);
+		
+		if(sizeof(struct s_pet)!=len-8) {
+			ShowError("inter pet: data size error %d %d\n",sizeof(struct s_pet),len-8);
+		}
+		else{
+			pet_id = data->pet_id;
+			if (pet_id == 0)
+				pet_id = data->pet_id = pet_newid++;
+			p= idb_ensure(pet_db,pet_id,create_pet);
+			if(data->hungry < 0)
+				data->hungry = 0;
+			else if(data->hungry > 100)
+				data->hungry = 100;
+			if(data->intimate < 0)
+				data->intimate = 0;
+			else if(data->intimate > 1000)
+				data->intimate = 1000;
+			memcpy(p,data,sizeof(struct s_pet));
+			if(p->incuvate == 1)
+				p->account_id = p->char_id = 0;
+
+			mapif_save_pet_ack(fd,account_id,0);
+		}
+
+		return 0;
+	}
+
+	int mapif_delete_pet(int fd,int pet_id)
+	{
+		mapif_delete_pet_ack(fd,inter_pet_delete(pet_id));
 
 	return 0;
 }
 
-static void* create_pet(DBKey key, va_list args) {
-	struct s_pet *p;
-	p=(struct s_pet *)aCalloc(sizeof(struct s_pet),1);
-	p->pet_id = key.i;
-	return p;
-}
-int mapif_save_pet(int fd,int account_id,struct s_pet *data)
-{
-	struct s_pet *p;
-	int pet_id, len;
-	RFIFOHEAD(fd);
-	len=RFIFOW(fd,2);
-	
-	if(sizeof(struct s_pet)!=len-8) {
-		ShowError("inter pet: data size error %d %d\n",sizeof(struct s_pet),len-8);
-	}
-	else{
-		pet_id = data->pet_id;
-		if (pet_id == 0)
-			pet_id = data->pet_id = pet_newid++;
-		p= idb_ensure(pet_db,pet_id,create_pet);
-		if(data->hungry < 0)
-			data->hungry = 0;
-		else if(data->hungry > 100)
-			data->hungry = 100;
-		if(data->intimate < 0)
-			data->intimate = 0;
-		else if(data->intimate > 1000)
-			data->intimate = 1000;
-		memcpy(p,data,sizeof(struct s_pet));
-		if(p->incuvate == 1)
-			p->account_id = p->char_id = 0;
+int mapif_rename_pet(int fd, int account_id, int char_id, char *name){
+	int i;
 
-		mapif_save_pet_ack(fd,account_id,0);
+	// Check Authorised letters/symbols in the name of the pet
+	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) == NULL) {
+			mapif_rename_pet_ack(fd, account_id, char_id, 0, name);
+			return 0;
+		}
+	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) != NULL) {
+			mapif_rename_pet_ack(fd, account_id, char_id, 0, name);
+			return 0;
+		}
 	}
 
-	return 0;
-}
-
-int mapif_delete_pet(int fd,int pet_id)
-{
-	mapif_delete_pet_ack(fd,inter_pet_delete(pet_id));
-
+	mapif_rename_pet_ack(fd, account_id, char_id, 1, name);
 	return 0;
 }
 
@@ -359,6 +392,11 @@ int mapif_parse_DeletePet(int fd)
 	return 0;
 }
 
+int mapif_parse_RenamePet(int fd){
+	mapif_rename_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10));
+	return 0;
+}
+
 // map server からの通信
 // ・１パケットのみ解析すること
 // ・パケット長データはinter.cにセットしておくこと
@@ -372,6 +410,7 @@ int inter_pet_parse_frommap(int fd)
 	case 0x3081: mapif_parse_LoadPet(fd); break;
 	case 0x3082: mapif_parse_SavePet(fd); break;
 	case 0x3083: mapif_parse_DeletePet(fd); break;
+	case 0x3084: mapif_parse_RenamePet(fd); break;
 	default:
 		return 0;
 	}

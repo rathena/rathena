@@ -682,7 +682,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	return 0;
 }
 
-int pet_change_name(struct map_session_data *sd,char *name)
+int pet_change_name(struct map_session_data *sd,char *name, int flag) //flag 0 = check name, 1 = good name
 {
 	int i;
 	
@@ -696,6 +696,9 @@ int pet_change_name(struct map_session_data *sd,char *name)
 			return 1;
 	}
 
+	if (!flag)
+		return intif_rename_pet(sd, name);
+	
 	pet_stop_walking(sd->pd,1);
 	
 	memcpy(sd->pet.name, name, NAME_LENGTH-1);

@@ -2376,7 +2376,7 @@ int char_account_reg_reply(int fd,int account_id,int char_id) {
 	return 0;
 }
 
-void char_read_fame_list()
+void char_read_fame_list(void)
 {
 	int i, j, k;
 	struct fame_list fame_item;
