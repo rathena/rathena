@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= KitsuneStarwind, usul, kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Changed sprites and cutins to Schwartzald Republic ones
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Updated the mini map localization function. [Musashiden]
+//= 1.4 Juno Guides are now up to date according to iRO. [Musashiden]
 //============================================================ 
 
 
@@ -30,33 +31,43 @@ yuno.gat,153,47,4	script	Juno Guide	700,{
 }
 
 //=====================================================================
-yuno.gat,333,182,2	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "^5533FF'Dagger of Counter'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "Among the Sage class weapons, there is a dagger called ^5533FF'The Dagger of Counter'^000000.";
-	mes "It increases the chances for landing a critical attack and can only be used by Sages.";
+yuno.gat,334,182,4	script	Juno Soldier	852,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "Not only is this dagger very useful but it is very stylish as well.";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "Among the Sage's weapons, there is";
+	mes "a 'Dagger of Counter'.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Its use is limited to the Sage";
+	mes "class, and it increases the chance";
+	mes "of inflicting critical attacks. So,";
+	mes "for Sages, that dagger can be very";
+	mes "useful, as well as make them look";
+	mes "stylish in battle.";
+	close;
 }
 
 //=====================================================================
-yuno.gat,264,320,2	script	Yuno Soldier	852,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "Holy shield, ^5533FF'Sacred Mission'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "There is a holy shield named ^5533FF'Sacred Mission'^000000, that can only be used by Cusaders.";
-	mes "The shield itself is long and narrow and has the wings of an angel engraved on its front.";
+yuno.gat,263,320,4	script	Juno Soldier	105,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "This shield is especially effective against the undead and other demonic monsters.";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "There is a holy shield named";
+	mes "'Sacred Mission' which can only be";
+	mes "used by Crusaders.";
+	next;
+	mes "[Juno Soldier]";
+	mes "It's a long and narrow shield with";
+	mes "an angel wing engraved in the";
+	mes "center of the front side. Against";
+	mes "Devil and Undead monsters, it is";
+	mes "especially powerful.";
+	close;
 }
 
 //=====================================================================
@@ -82,18 +93,28 @@ yuno.gat,227,292,4	script	Juno Soldier	105,{
 
 //=====================================================================
 yuno.gat,165,283,4	script	Yuno Soldier	105,{
-	cutin "ein_soldier",2;
-	set @name$, "[Yuno Soldier]";
-	set @menu1$, "^FF3355'Geographer'^000000.....";
-	callfunc "F_YunoLoc",0;
-	mes "[Yuno Soldier]";
-	mes "There is a monster called the ^FF3355'Geographer'^000000 that looks like a flower in bloom.";
-	mes "Although it is planted firmly into the ground, this creature has the ability to extend itself a great distance.";
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of";
+	mes "noble-mindedness.";
 	next;
-	mes "[Yuno Soldier]";
-	mes "Its name comes from a story about a poor geographer who was eaten by one of these monsters while studying.";
-	mes "Unless you want to end up like that poor geographer, I suggest you stay away from these creatures.";
-	callfunc "F_YunoLoc",1;
+	mes "[Juno Soldier]";
+	mes "Geographer...";
+	mes "That monster looks like a flower";
+	mes "blooming from the ground.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Strangely, it can extend its body a";
+	mes "long distance. Even if you're far";
+	mes "away from it, it can still pose a";
+	mes "threat.";
+	next;
+	mes "[Juno Soldier]";
+	mes "The name of this monster originated";
+	mes "from a story about a poor";
+	mes "geographer who, unfortunately, was";
+	mes "eaten by this monster while he was";
+	mes "immersed in his studies.";
+	close;
 }
 
 //=====================================================================
