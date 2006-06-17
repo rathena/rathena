@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/17
+	* Fixed a Rachel warp thanks to Dr.Evil [Playtester]
 	* Fixed some typos in quests_lighthalzen.txt thanks to Karore [Playtester]
 06/16
 	* Implemented the Lover's quest. [MasterOfMuppets]
