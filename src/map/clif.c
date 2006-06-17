@@ -7554,7 +7554,14 @@ int clif_specialeffect(struct block_list *bl, int type, int flag)
 int clif_refresh(struct map_session_data *sd) {
 	nullpo_retr(-1, sd);
 	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
-	map_foreachinarea(clif_getareachar,sd->bl.m,sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,BL_ALL,sd);
+	clif_inventorylist(sd);
+	if(pc_iscarton(sd)){
+		clif_cartlist(sd);
+		clif_updatestatus(sd,SP_CARTINFO);
+	}
+	clif_updatestatus(sd,SP_MAXWEIGHT);
+	clif_updatestatus(sd,SP_WEIGHT);
+	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	return 0;
 }
 

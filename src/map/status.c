@@ -572,7 +572,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
 				if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
 				{
-					clif_damage(src, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
+					clif_damage(&sd2->bl, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
 					status_fix_damage(NULL, &sd2->bl, hp, 0);
 					return 0;
 				}

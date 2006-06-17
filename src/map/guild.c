@@ -490,9 +490,9 @@ int guild_npc_request_info(int guild_id,const char *event)
 }
 
 // 所属キャラの確認
-int guild_check_member(const struct guild *g)
+int guild_check_member(struct guild *g)
 {
-	int i, users;
+	int i, j, users;
 	struct map_session_data *sd, **all_sd;
 
 	nullpo_retr(0, g);
@@ -500,21 +500,15 @@ int guild_check_member(const struct guild *g)
 	all_sd = map_getallusers(&users);
 	
 	for(i=0;i<users;i++){
-		if((sd=all_sd[i])){
-			if(sd->status.guild_id==g->guild_id){
-				int j,f=1;
-				for(j=0;j<MAX_GUILD;j++){	// データがあるか
-					if(	g->member[j].account_id==sd->status.account_id &&
-						g->member[j].char_id==sd->status.char_id)
-						f=0;
-				}
-				if(f){
-					sd->status.guild_id=0;
-					sd->state.guild_sent=0;
-					sd->guild_emblem_id=0;
-					if(battle_config.error_log)
-						ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
-				}
+		sd=all_sd[i];
+		if(sd->status.guild_id==g->guild_id){
+			j=guild_getindex(g,sd->status.account_id,sd->status.char_id);
+			if (j < 0) {
+				sd->status.guild_id=0;
+				sd->state.guild_sent=0;
+				sd->guild_emblem_id=0;
+				if(battle_config.error_log)
+					ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
 			}
 		}
 	}
@@ -893,19 +887,23 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 	intif_guild_memberinfoshort(g->guild_id,
 		sd->status.account_id,sd->status.char_id,online,sd->status.base_level,sd->status.class_);
 
+	if(!online) //REMOVE sd pointer or you get a dangling pointer! [Skotlex]
+	{
+		int i = guild_getindex(g,sd->status.account_id,sd->status.char_id);
+		if (i >= 0)
+			g->member[i].sd = NULL;
+	}
+	
 	if(sd->state.guild_sent)
 		return 0;
 
-	guild_check_conflict(sd); // mystery check
+//	guild_check_conflict(sd); // Check if char belongs to more than one guild? Should be unneeded.
 		
-	if(sd->status.guild_id == g->guild_id){
+	clif_guild_belonginfo(sd,g);
+	clif_guild_notice(sd,g);
 	
-		clif_guild_belonginfo(sd,g);
-		clif_guild_notice(sd,g);
-		
-		sd->state.guild_sent = 1;
-		sd->guild_emblem_id = g->emblem_id;
-	}
+	sd->state.guild_sent = 1;
+	sd->guild_emblem_id = g->emblem_id;
 	
 	return 0;
 }
