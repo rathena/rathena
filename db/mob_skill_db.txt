@@ -2617,8 +2617,8 @@
 1625,Porcellio@AL_PNEUMA,attack,25,1,500,0,5000,yes,self,longrangeattacked,,,,,,,18
 1625,Porcellio@NPC_GROUNDATTACK,attack,185,2,1000,0,5000,yes,target,always,0,,,,,,
 1625,Porcellio@NPC_KEEPING,attack,201,1,2000,1000,5000,no,self,myhpltmaxrate,25,,,,,,9
-1626,Dark Priest@AL_HEAL,attack,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,9
-1626,Dark Priest@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,9
+1626,Dark Priest@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,9
+1626,Dark Priest@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,9
 1626,Dark Priest@MO_BODYRELOCATION,chase,264,1,10000,0,5000,yes,target,skillused,18,,,,,,
 1626,Dark Priest@NPC_CHANGEUNDEAD,attack,348,5,1000,1000,30000,no,self,always,0,,,,,,9
 1626,Dark Priest@NPC_DARKBREATH,chase,202,5,500,800,30000,no,target,always,0,,,,,,9

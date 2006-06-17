@@ -25,6 +25,9 @@
 
 =========================
 
+06/17
+	* Changed Hellion Revenant to heal for 9999. [MasterOfMuppets]
+	- Also put in some item restrictions related to the eye of hellion quest.
 06/16
 	- Updated GTB's card script to be "bonus bNoMagicDamage,100;" [Skotlex]
 06/14

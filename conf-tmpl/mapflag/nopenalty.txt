@@ -23,6 +23,7 @@ comodo.gat	mapflag	nopenalty
 cmd_in01.gat	mapflag	nopenalty
 cmd_in02.gat	mapflag	nopenalty
 geffen.gat	mapflag	nopenalty
+gef_dun03.gat	mapflag	nopenalty
 gef_tower.gat	mapflag	nopenalty
 geffen_in.gat	mapflag	nopenalty
 gonryun.gat	mapflag	nopenalty

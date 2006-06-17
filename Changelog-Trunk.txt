@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/17
+	* Changed some mapflags related to the eye of hellion quest. [MasterOfMuppets]
 	* [Added]:
 	  - buildin_checkcell, buildin_mobwarp, buildin_pcattack.
 	  [Improved]:

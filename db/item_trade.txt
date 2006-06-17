@@ -29,3 +29,9 @@
 //The Sign Quest related items
 7177,127,100
 7178,127,100
+//Eye of Hellion quest related items
+7332,127,100
+7333,127,100
+7334,127,100
+7335,127,100
+7336,127,100

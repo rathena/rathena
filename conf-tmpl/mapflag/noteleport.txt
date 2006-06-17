@@ -19,6 +19,7 @@ ama_in02.gat	mapflag	noteleport
 ama_test.gat	mapflag	noteleport
 cmd_in01.gat	mapflag	noteleport
 cmd_in02.gat	mapflag	noteleport
+gef_dun03.gat	mapflag	noteleport
 gef_tower.gat	mapflag	noteleport
 geffen_in.gat	mapflag	noteleport
 gon_test.gat	mapflag	noteleport
