@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/06/17
+	* Fixed the party HP packets to send max HP 10000 and scale HP accordingly
+	  when the player's HP doesn't fits in the packet's field. Fixes HP bars not
+	  correctly displaying the % of life when max HP is above 32k. [Skotlex]
+
 2006/06/16
 	* Fixed option value being reset'ed on login (fixes cart/peco/falcon being
 	  lost) [Skotlex]

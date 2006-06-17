@@ -766,7 +766,7 @@ static struct Damage battle_calc_weapon_attack(
 		unsigned idef : 1;	//Ignore defense
 		unsigned idef2 : 1;	//Ignore defense (left weapon)
 		unsigned pdef : 2;	//Pierces defense (Investigate/Ice Pick)
-		unsigned pdef2 : 2;	//1: Use def+def2/50, 2: Use def+def2/100	
+		unsigned pdef2 : 2;	//1: Use def+def2/100, 2: Use def+def2/50	
 		unsigned infdef : 1;	//Infinite defense (plants)
 		unsigned arrow : 1;	//Attack is arrow-based
 		unsigned rh : 1;		//Attack considers right hand (wd.damage)

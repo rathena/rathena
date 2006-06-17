@@ -5941,8 +5941,13 @@ int clif_party_hp(struct map_session_data *sd)
 
 	WBUFW(buf,0)=0x106;
 	WBUFL(buf,2)=sd->status.account_id;
-	WBUFW(buf,6)=(sd->battle_status.hp > SHRT_MAX)?SHRT_MAX:sd->battle_status.hp;
-	WBUFW(buf,8)=(sd->battle_status.max_hp > SHRT_MAX)?SHRT_MAX:sd->battle_status.max_hp;
+	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
+		WBUFW(buf,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
+		WBUFW(buf,8) = 10000;
+	} else {
+		WBUFW(buf,6) = sd->battle_status.hp;
+		WBUFW(buf,8) = sd->battle_status.max_hp;
+	}
 	clif_send(buf,packet_len_table[0x106],&sd->bl,PARTY_AREA_WOS);
 	return 0;
 }
@@ -5956,8 +5961,13 @@ static void clif_hpmeter_single(int fd, struct map_session_data *sd)
 	WFIFOHEAD(fd,packet_len_table[0x106]);
 	WFIFOW(fd,0) = 0x106;
 	WFIFOL(fd,2) = sd->status.account_id;
-	WFIFOW(fd,6) = (sd->battle_status.hp > SHRT_MAX) ? SHRT_MAX : sd->battle_status.hp;
-	WFIFOW(fd,8) = (sd->battle_status.max_hp > SHRT_MAX) ? SHRT_MAX : sd->battle_status.max_hp;
+	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
+		WFIFOW(fd,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
+		WFIFOW(fd,8) = 10000;
+	} else {
+		WFIFOW(fd,6) = sd->battle_status.hp;
+		WFIFOW(fd,8) = sd->battle_status.max_hp;
+	}
 	WFIFOSET (fd, packet_len_table[0x106]);
 }
 
@@ -5981,8 +5991,13 @@ int clif_hpmeter(struct map_session_data *sd)
 
 	WBUFW(buf,0) = 0x106;
 	WBUFL(buf,2) = sd->status.account_id;
-	WBUFW(buf,6) = (sd->battle_status.hp > SHRT_MAX) ? SHRT_MAX : sd->battle_status.hp;
-	WBUFW(buf,8) = (sd->battle_status.max_hp > SHRT_MAX) ? SHRT_MAX : sd->battle_status.max_hp;
+	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
+		WBUFW(buf,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
+		WBUFW(buf,8) = 10000;
+	} else {
+		WBUFW(buf,6) = sd->battle_status.hp;
+		WBUFW(buf,8) = sd->battle_status.max_hp;
+	}
 	for (i = 0; i < fd_max; i++) {
 		if (session[i] && (sd2 = (struct map_session_data*)session[i]->session_data) &&  sd != sd2 && sd2->state.auth) {
 			if (sd2->bl.m != sd->bl.m || 
