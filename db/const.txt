@@ -388,6 +388,7 @@ IG_GiftBox_4	31
 IG_EggBoy	32
 IG_EggGirl	33
 IG_GiftBoxChina	34
+IG_LottoBox 35
 
 SC_STONE	0
 SC_FREEZE	1

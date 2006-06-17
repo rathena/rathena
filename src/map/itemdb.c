@@ -484,13 +484,14 @@ static void itemdb_read_itemgroup(void)
 		"Masks",
 		"Accesory",
 		"Jewels",
-		"Gift Box",
-		"Gift Box",
-		"Gift Box",
-		"Gift Box",
+		"Gift Box 1",
+		"Gift Box 2",
+		"Gift Box 3",
+		"Gift Box 4",
 		"Egg Boy",
 		"Egg Girl",
-		"Gift Box"
+		"Gift Box China",
+		"Lotto Box",
 	};
 	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	snprintf(path, 255, "%s/item_group_db.txt", db_path);

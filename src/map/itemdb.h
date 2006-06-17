@@ -94,6 +94,7 @@ enum {
 	IG_EGGBOY,	//32
 	IG_EGGGIRL,	//33
 	IG_GIFTBOXCHINA,	//34
+	IG_LOTTOBOX,	//35
 	MAX_ITEMGROUP,
 } item_group_list;
 
