@@ -771,10 +771,8 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
 		return 0;
 
-	if(md->nd){
-		mob_script_callback(md, bl, CALLBACK_DETECT);
+	if(md->nd && mob_script_callback(md, bl, CALLBACK_DETECT))
 		return 1; // We have script handling the work.
-	}
 
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
@@ -2992,7 +2990,7 @@ int mob_clone_delete(int class_)
 	return 0;
 }
 
-void mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type)
+int mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type)
 {
 	// I will not add any protection here since I assume everything is checked before coming here.
 	if(md->callback_flag&action_type){
@@ -3003,7 +3001,9 @@ void mob_script_callback(struct mob_data *md, struct block_list *target, unsigne
 		}
 		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
 		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
+		return 1;
 	}
+	return 0;
 }
 
 //

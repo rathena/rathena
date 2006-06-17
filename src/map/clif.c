@@ -8624,7 +8624,7 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd) {
 	WFIFOSET(fd,packet_len_table[0xc2]);
 }
 
-static void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
+void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
 {
 	unsigned char buf[64];
 	if (pc_isdead(sd)) {

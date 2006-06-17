@@ -1094,6 +1094,7 @@ int npc_click(struct map_session_data *sd,struct block_list *bl)
 				return 1;
 			if((nd = ((TBL_MOB *)bl)->nd) == NULL)
 				return 1;
+			setd_sub(NULL,sd,"@smc_target",0,(void *)bl->id, NULL);
 			break;
 		case BL_NPC:
 			if ((nd = npc_checknear(sd,bl)) == NULL)

@@ -87,6 +87,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 				break;
 			case AI_ACTION_TYPE_DEAD:
 				set .@action_type$, "Killed by";
+				remove_mob .ai_action[AI_ACTION_SRC];
 				break;
 			case AI_ACTION_TYPE_ASSIST:
 				set .@action_type$, "Assisting";

@@ -35,7 +35,7 @@
 #define CALLBACK_WALKACK	0x02
 #define CALLBACK_WARPACK	0x01
 
-void mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type);
+int mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type);
 
 struct mob_skill {
 	short state;
