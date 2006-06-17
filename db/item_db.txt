@@ -2286,7 +2286,7 @@
 12035,Lotto_Box_01,Lotto Box 01,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7368),1; },{},{}
 12036,Lotto_Box_02,Lotto Box 02,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7369,7376),1; },{},{}
 12037,Lotto_Box_03,Lotto Box 03,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7377,7384),1; },{},{}
-12038,Lotto_Box_04,Lotto Box 04,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7385,7392),1; },{},{}
+12038,Lotto_Box_04,Lotto Box 04,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_LottoBox),1; },{},{}
 12039,Lotto_Box_05,Lotto Box 05,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7393,7398),1; },{},{}
 12040,Philosopher's_Stone,Philosopher's Stone,2,,50000,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Mixed Foods (+1 to +5)
