@@ -24,8 +24,8 @@
 	-----
 
 =========================
-
 06/17
+	* Fixed the scripts for the Lotto Boxes [Playtester]
 	* Changed Hellion Revenant to heal for 9999. [MasterOfMuppets]
 	- Also put in some item restrictions related to the eye of hellion quest.
 06/16
