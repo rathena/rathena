@@ -128,7 +128,7 @@ LhzTalk:
 	mes "Hey! Where do you think you are going?";
 	mes "I can not send nobody to the slum district!";
 	mes "If we let suspecious people like you pass,";
-	mes "there is no point in piece keeping!";
+	mes "there is no point in peace keeping!";
 	close;
 
 LhzTalk1:
@@ -185,7 +185,7 @@ LhzTalk:
 	mes "Hey! Where do you think you are going?";
 	mes "I can not send nobody to the slum district!";
 	mes "If we let suspecious people like you pass,";
-	mes "there is no point in piece keeping!";
+	mes "there is no point in peace keeping!";
 	close;
 
 LhzTalk1:
@@ -589,7 +589,7 @@ L_11:
 	mes "You can get there by a sewer passage a bit south of the town.";
 	next;
 	mes "[" +strcharinfo(0) + "]";
-	mes "No waiiiii!!";
+	mes "No wayyyyy!!";
 	next;
 	mes "[Piciburn]";
 	mes "I know. I know...";
