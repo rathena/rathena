@@ -10706,28 +10706,30 @@ int buildin_unitwarp(struct script_state *st){
 }
 
 int buildin_unitattack(struct script_state *st) {
-	int id = 0;
+	int id = 0, actiontype = 0;
 	char *target = NULL;
-	struct mob_data *md = NULL;
 	struct map_session_data *sd = NULL;
 	struct block_list *bl = NULL, *tbl = NULL;
 	
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	if(st->end > st->start + 3)
-		target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+	if(st->end > st->start + 4)
+		actiontype = conv_num(st, & (st->stack->stack_data[st->start+4]));
 
-	if(target){
-		sd = map_nick2sd(target);
-		if(!sd)
-			tbl = map_id2bl(atoi(target));
-		else
-			tbl = &sd->bl;
-	}
+	sd = map_nick2sd(target);
+	if(!sd)
+		tbl = map_id2bl(atoi(target));
+	else
+		tbl = &sd->bl;
 
-	if(tbl && (bl = map_id2bl(id))){
+	if((bl = map_id2bl(id))){
 		if (bl->type == BL_MOB) {
-			md->state.killer = 1;
-			md->target_id = bl->id;
+			((TBL_MOB *)bl)->state.killer = 1;
+			((TBL_MOB *)bl)->target_id = tbl->id;
+		} else if(bl->type == BL_PC){
+			clif_parse_ActionRequest_sub(((TBL_PC *)bl), actiontype > 0?0x07:0x00, tbl->id, gettick());
+			push_val(st->stack,C_INT,1);
+			return 0;
 		}
 		push_val(st->stack,C_INT,unit_walktobl(bl, tbl, 65025, 2));
 	} else {
