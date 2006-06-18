@@ -2989,7 +2989,7 @@ int mob_clone_delete(int class_)
 	return 0;
 }
 
-int mob_script_callback(struct mob_data *md, struct block_list *target, unsigned char action_type)
+int mob_script_callback(struct mob_data *md, struct block_list *target, short action_type)
 {
 	// I will not add any protection here since I assume everything is checked before coming here.
 	if(md->callback_flag&action_type){
