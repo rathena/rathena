@@ -25,6 +25,9 @@
 #include "guild.h"
 #include "party.h"
 
+// Recursive master check to prevent custom AIs from messing with each other.
+// #define RECURSIVE_MASTER_CHECK
+
 #define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
@@ -3094,8 +3097,24 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB*md = (TBL_MOB*)s_bl;
+#ifdef RECURSIVE_MASTER_CHECK
+			struct block_list *tmp_bl = NULL;
+			TBL_MOB *tmp_md = NULL;
+#endif
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
+#ifdef RECURSIVE_MASTER_CHECK
+			tmp_md = md;
+			while(tmp_md->master_id && (tmp_bl = map_id2bl(tmp_md->master_id))){
+				if(t_bl->id == tmp_bl->id){
+					state |= BCT_PARTY;
+					break;
+				}
+				if(tmp_bl->type != BL_MOB)
+					break;
+				tmp_md = (TBL_MOB *)tmp_bl;
+			}
+#endif
 			if(md->state.killer) // Is on a rampage too :D
 				state |= BCT_ENEMY;
 			else if (!md->special_state.ai) { //Normal mobs.

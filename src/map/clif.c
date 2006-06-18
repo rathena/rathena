@@ -2463,8 +2463,9 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		// 00b0
 	case SP_WEIGHT:
 		pc_checkweighticon(sd);
-		WFIFOW(fd,0)=0xb0;
-		WFIFOW(fd,2)=type;	//Added this packet back, Temp fix to the slow motion [Lupus]
+		// Redundancy? Look above.. - [Lance]
+		//WFIFOW(fd,0)=0xb0;
+		//WFIFOW(fd,2)=type;	//Added this packet back, Temp fix to the slow motion [Lupus]
 		WFIFOL(fd,4)=sd->weight;
 		break;
 	case SP_MAXWEIGHT:
@@ -2478,6 +2479,9 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_JOBLEVEL:
 		WFIFOL(fd,4)=sd->status.job_level;
+		break;
+	case SP_KARMA: // Adding this back, I wonder if the client intercepts this - [Lance]
+		WFIFOL(fd,4)=sd->status.karma;
 		break;
 	case SP_MANNER:
 		WFIFOL(fd,4)=sd->status.manner;
@@ -9152,9 +9156,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	if (!bl) return;
 	switch (bl->type) {
 		case BL_MOB:
-			if (((TBL_MOB *)bl)->nd)
-				npc_click(sd, bl);
-			else
+			if (!((TBL_MOB *)bl)->nd || !mob_script_callback((TBL_MOB *)bl, &sd->bl, CALLBACK_NPCCLICK))
 				clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
 		case BL_PC:

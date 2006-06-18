@@ -26,6 +26,7 @@
 #define MOB_CLONE_END 10000
 
 // Scripted Mob AI Constants
+#define CALLBACK_NPCCLICK	0x100
 #define CALLBACK_ATTACK		0x80
 #define CALLBACK_DETECT		0x40
 #define CALLBACK_DEAD		0x20
