@@ -2550,6 +2550,7 @@ int parse_frommap(int fd) {
 		{
 			int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 			struct online_char_data* character;
+			struct mmo_charstatus char_data;
 			if (size - 13 != sizeof(struct mmo_charstatus))
 			{
 				ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
@@ -2561,8 +2562,8 @@ int parse_frommap(int fd) {
 				(character = idb_get(online_char_db, aid)) != NULL &&
 				character->char_id == cid)
 			{
-				memcpy(&char_dat[0], RFIFOP(fd,13), sizeof(struct mmo_charstatus));
-				mmo_char_tosql(cid, char_dat);
+				memcpy(&char_data, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
+				mmo_char_tosql(cid, &char_dat);
 			} else 
 				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d)!\n", aid, cid);
 
