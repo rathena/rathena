@@ -37,6 +37,8 @@ Musashiden
 Date		Added
 ======
 06/19
+	* Fixed umbala.txt's Elemental Stones Quest bug. Thanks to Vhan Morthis.
+	  [Skotlex]
 	* Removed Jfunc1-1.txt, merged parts of scripts back. Changed job numbers to constants [Lupus]
 	- Jfunc2-1.txt & Jfunc2-2.txt todo
 06/17

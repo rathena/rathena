@@ -232,8 +232,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	nullpo_retr(0, bl);
 
-	if (damage <= 0)
-		return 0;
+	if (damage <= 0) //No reductions to make.
+		return damage;
 	
 	if (bl->type == BL_MOB) {
 		md=(struct mob_data *)bl;
@@ -457,8 +457,8 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	struct mob_data *md = NULL;
 	int class_;
 
-	if (damage <= 0)
-		return 0;
+	if (damage <= 0) //No reductions to make.
+		return damage;
 	
 	class_ = status_get_class(bl);
 
@@ -1720,7 +1720,7 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
-	if ((!flag.rh || wd.damage == 0) && (!flag.lh || wd.damage2 == 0))
+	if ((!flag.rh || !wd.damage) && (!flag.lh || !wd.damage2))
 		flag.cardfix = 0;	//When the attack does no damage, avoid doing %bonuses
 
 	if (sd)
@@ -1877,13 +1877,13 @@ static struct Damage battle_calc_weapon_attack(
 			flag.lh=0;
 		} else if(sd->status.weapon > MAX_WEAPON_TYPE)
 		{	//Dual-wield
-			if (wd.damage > 0)
+			if (wd.damage)
 			{
 				skill = pc_checkskill(sd,AS_RIGHT);
 				wd.damage = wd.damage * (50 + (skill * 10))/100;
 				if(wd.damage < 1) wd.damage = 1;
 			}
-			if (wd.damage2 > 0)
+			if (wd.damage2)
 			{
 				skill = pc_checkskill(sd,AS_LEFT);
 				wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
@@ -1894,7 +1894,7 @@ static struct Damage battle_calc_weapon_attack(
 			skill = pc_checkskill(sd,TF_DOUBLE);
 			wd.damage2 = wd.damage * (1 + (skill * 2))/100;
 
-			if(wd.damage > 0 && wd.damage2 < 1) wd.damage2 = 1;
+			if(wd.damage && !wd.damage2) wd.damage2 = 1;
 			flag.lh = 1;
 		}
 	}
@@ -1907,11 +1907,12 @@ static struct Damage battle_calc_weapon_attack(
 	
 	if(wd.damage > 0 || wd.damage2 > 0)
 	{
-		if(wd.damage2<1) {
+		if(!wd.damage2) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			if (map_flag_gvg(target->m))
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-		} else if(wd.damage<1) {
+		} else
+		if(!wd.damage) {
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			if (map_flag_gvg(target->m))
 				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
@@ -1949,7 +1950,7 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 	
-	if (wd.damage > 0 || wd.damage2 > 0) {
+	if (wd.damage || wd.damage2) {
 		if (sd && battle_config.equip_self_break_rate)
 		{	// Self weapon breaking
 			int breakrate = battle_config.equip_natural_break_rate;
@@ -2360,8 +2361,8 @@ struct Damage battle_calc_magic_attack(
 
 	damage_div_fix(ad.damage, ad.div_);
 	
-	if (flag.infdef && ad.damage > 0)
-		ad.damage = 1;
+	if (flag.infdef && ad.damage)
+		ad.damage/= ad.damage; //Why this? Because, well, if damage is absorbed, it should heal 1, not do 1 dmg.
 		
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	if (map_flag_gvg(target->m))

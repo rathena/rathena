@@ -5157,7 +5157,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CLOSECONFINE2:
 		case SC_ANKLE:
 		case SC_SPIDERWEB:
-		case SC_MADNESSCANCEL:
 			unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:

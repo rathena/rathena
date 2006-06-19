@@ -580,7 +580,7 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 				if(event_umbala < 6) goto LSecondCheck;
 					if(@ryumon == 33) goto Lwarp;
 				LSecondCheck:
-				if(event_umbala >= 6) goto LLNewEnd;
+				if(event_umbala >= 6) goto LNewEnd;
 					if(@ryumon == 13) goto Lwarp;
 					LNewEnd:
 						mes "^3355FFNothing happened.";
