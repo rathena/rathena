@@ -24,6 +24,9 @@
 	-----
 
 =========================
+06/19
+	* Some updates to the item_db [Playtester]
+	- updated Survivor's Manteau, Valkyrie Shield, Stone Buckler, etc.
 06/18
 	* Added Exp to some Thief Bug versions [Playtester]
 06/17
