@@ -2463,9 +2463,8 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		// 00b0
 	case SP_WEIGHT:
 		pc_checkweighticon(sd);
-		// Redundancy? Look above.. - [Lance]
-		//WFIFOW(fd,0)=0xb0;
-		//WFIFOW(fd,2)=type;	//Added this packet back, Temp fix to the slow motion [Lupus]
+		WFIFOW(fd,0)=0xb0;	//Need to re-set as pc_checkweighticon can alter the buffer. [Skotlex]
+		WFIFOW(fd,2)=type;
 		WFIFOL(fd,4)=sd->weight;
 		break;
 	case SP_MAXWEIGHT:
@@ -5145,7 +5144,7 @@ int clif_solved_charname(struct map_session_data *sd,int char_id)
 
 	fd=sd->fd;
 	if(p!=NULL){
-                WFIFOHEAD(fd,packet_len_table[0x194]);
+		WFIFOHEAD(fd,packet_len_table[0x194]);
 		WFIFOW(fd,0)=0x194;
 		WFIFOL(fd,2)=char_id;
 		memcpy(WFIFOP(fd,6), p, NAME_LENGTH);

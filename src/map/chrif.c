@@ -585,7 +585,7 @@ int chrif_searchcharid(int char_id)
 		return -1;
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 6);
+	WFIFOHEAD(char_fd, 6);
 	WFIFOW(char_fd,0) = 0x2b08;
 	WFIFOL(char_fd,2) = char_id;
 	WFIFOSET(char_fd,6);

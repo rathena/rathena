@@ -137,7 +137,7 @@ int auth_fifo_pos = 0;
 
 int check_ip_flag = 1; // It's to check IP of a player between char-server and other servers (part of anti-hacking system)
 
-struct mmo_charstatus *char_dat;
+struct mmo_charstatus char_dat;
 int char_num,char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
@@ -409,7 +409,6 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	cp = idb_ensure(char_db_, char_id, create_charstatus);
 
-//	ShowInfo("Saving char "CL_WHITE"%d"CL_RESET" (%s)...\n",char_id,char_dat[0].name);
 	memset(save_status, 0, sizeof(save_status));
 	diff = 0;
 	//map inventory data
@@ -733,7 +732,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	}
 
 	if (save_status[0]!='\0' && save_log)
-		ShowInfo("Saved char %d - %s:%s.\n", char_id, char_dat[0].name, save_status);
+		ShowInfo("Saved char %d - %s:%s.\n", char_id, p->name, save_status);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
 
 	return 0;
@@ -1227,12 +1226,7 @@ int mmo_char_sql_init(void) {
 	ShowInfo("Begin Initializing.......\n");
 	char_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA, sizeof(int));
 	// memory initialize
-	// no need to set twice size in this routine. but some cause segmentation error. :P
-	// The hell? Why segmentation faults? Sounds like a bug that needs addressing... [Skotlex]
-	ShowDebug("initializing char memory...(%d byte)\n",sizeof(struct mmo_charstatus)*2);
-	CREATE(char_dat, struct mmo_charstatus, 2);
-
-	memset(char_dat, 0, sizeof(struct mmo_charstatus)*2);
+	memset(char_dat, 0, sizeof(struct mmo_charstatus));
 	if(char_per_account == 0){
 	  ShowStatus("Chars per Account: 'Unlimited'.......\n");
 	}else{
@@ -1734,7 +1728,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = 0; i < found_num; i++) {
 		mmo_char_fromsql_short(sd->found_char[i], char_dat);
 
-		p = &char_dat[0];
+		p = &char_dat;
 
 		j = offset + (i * 106); // increase speed of code
 
@@ -1922,7 +1916,11 @@ int parse_tologin(int fd) {
 			RFIFOSKIP(fd,18);
 			break;
 
-/*		case 0x2721:	// gm reply. I don't want to support this function.
+		case 0x2721:	// gm reply. I don't want to support this function.
+			if (RFIFOREST(fd) < 10)
+				return 0;
+			RFIFOSKIP(fd, 10);
+/*		Note that this is the code from char-txt! Even uncommenting it will not work.
 			printf("0x2721:GM reply\n");
 		  {
 			int oldacc, newacc;
@@ -1944,8 +1942,8 @@ int parse_tologin(int fd) {
 			mapif_sendall(buf,10);
 //			printf("char -> map\n");
 		  }
-			break;
 */
+			break;
 		case 0x2723:	// changesex reply (modified by [Yor])
 			if (RFIFOREST(fd) < 7)
 				return 0;
@@ -2324,6 +2322,27 @@ int char_send_fame_list(int fd) {
 }
 
 int search_mapserver(unsigned short map, long ip, short port);
+				
+//Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
+//Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
+int char_loadName(int char_id, char* name)
+{
+	sprintf(tmp_sql, "SELECT `name` FROM `%s` WHERE `char_id`='%d'", char_db, char_id);
+	if (mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	
+	sql_res = mysql_store_result(&mysql_handle);
+	sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
+
+	if (sql_row)
+		memcpy(name, sql_row[0], NAME_LENGTH);
+	else
+		memcpy(name, unknown_char_name, NAME_LENGTH);
+	if (sql_res) mysql_free_result(sql_res);
+	return sql_row?1:0;
+}
 
 
 int parse_frommap(int fd) {
@@ -2550,7 +2569,6 @@ int parse_frommap(int fd) {
 		{
 			int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 			struct online_char_data* character;
-			struct mmo_charstatus char_data;
 			if (size - 13 != sizeof(struct mmo_charstatus))
 			{
 				ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
@@ -2562,8 +2580,8 @@ int parse_frommap(int fd) {
 				(character = idb_get(online_char_db, aid)) != NULL &&
 				character->char_id == cid)
 			{
-				memcpy(&char_data, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
-				mmo_char_tosql(cid, char_dat);
+				memcpy(&char_dat, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
+				mmo_char_tosql(cid, &char_dat);
 			} else 
 				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d)!\n", aid, cid);
 
@@ -2617,8 +2635,8 @@ int parse_frommap(int fd) {
 				char_data = uidb_get(char_db_,RFIFOL(fd,14));
 				if (char_data == NULL) 
 				{	//Really shouldn't happen.
-					mmo_char_fromsql(RFIFOL(fd,14), char_dat);
-					char_data = char_dat;
+					mmo_char_fromsql(RFIFOL(fd,14), &char_dat);
+					char_data = &char_dat;
 				}
 				//Tell the new map server about this player using Kevin's new auth packet. [Skotlex]
 				if (map_fd>=0 && session[map_fd] && char_data) 
@@ -2659,28 +2677,15 @@ int parse_frommap(int fd) {
 		case 0x2b08:
 			if (RFIFOREST(fd) < 6)
 				return 0;
-		
-			sprintf(tmp_sql, "SELECT `name` FROM `%s` WHERE `char_id`='%d'", char_db, (int)RFIFOL(fd,2));
-			if (mysql_query(&mysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			{
+				char name[NAME_LENGTH];
+				char_loadName((int)RFIFOL(fd,2), name);
+				WFIFOW(fd,0) = 0x2b09;
+				WFIFOL(fd,2) = RFIFOL(fd,2);
+				memcpy(WFIFOP(fd,6), name, NAME_LENGTH);
+				WFIFOSET(fd,30);
+				RFIFOSKIP(fd,6);
 			}
-			
-			sql_res = mysql_store_result(&mysql_handle);
-			sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-
-			WFIFOW(fd,0) = 0x2b09;
-			WFIFOL(fd,2) = RFIFOL(fd,2);
-
-			if (sql_row)
-				memcpy(WFIFOP(fd,6), sql_row[0], NAME_LENGTH);
-			else
-				memcpy(WFIFOP(fd,6), unknown_char_name, NAME_LENGTH);
-			if (sql_res) mysql_free_result(sql_res);
-
-			WFIFOSET(fd,30);
-
-			RFIFOSKIP(fd,6);
 			break;
 
 		// I want become GM - fuck!
@@ -2747,7 +2752,6 @@ int parse_frommap(int fd) {
 								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
 								WFIFOL(login_fd,6) = 5; // status of the account
 								WFIFOSET(login_fd, 10);
-//								printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 5);
 							} else
 								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
@@ -2765,8 +2769,6 @@ int parse_frommap(int fd) {
 								WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
 								WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
 								WFIFOSET(login_fd,18);
-//								printf("char : status -> login: account %d, ban: %dy %dm %dd %dh %dmn %ds\n",
-//								       char_dat[i].account_id, (short)RFIFOW(fd,32), (short)RFIFOW(fd,34), (short)RFIFOW(fd,36), (short)RFIFOW(fd,38), (short)RFIFOW(fd,40), (short)RFIFOW(fd,42));
 							} else
 								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
@@ -2779,7 +2781,6 @@ int parse_frommap(int fd) {
 								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
 								WFIFOL(login_fd,6) = 0; // status of the account
 								WFIFOSET(login_fd, 10);
-//								printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 0);
 							} else
 								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
@@ -2791,7 +2792,6 @@ int parse_frommap(int fd) {
 								WFIFOW(login_fd, 0) = 0x272a;
 								WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
 								WFIFOSET(login_fd, 6);
-//								printf("char : status -> login: account %d, unban request\n", char_dat[i].account_id);
 							} else
 								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
@@ -2803,7 +2803,6 @@ int parse_frommap(int fd) {
 								WFIFOW(login_fd, 0) = 0x2727;
 								WFIFOL(login_fd, 2) = atoi(sql_row[0]); // account value
 								WFIFOSET(login_fd, 6);
-//								printf("char : status -> login: account %d, change sex request\n", char_dat[i].account_id);
 							} else
 								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
@@ -2880,17 +2879,13 @@ int parse_frommap(int fd) {
 				list[i].id = id;
 				list[i].fame = fame;
 				// Look for the player's name
-				for(j = 0; j < char_num && char_dat[j].char_id != id; j++);
-				if(j < char_num)
-					strncpy(list[i].name, char_dat[j].name, NAME_LENGTH);
-				else //Not found??
-					strncpy(list[i].name, "Unknown", NAME_LENGTH);
+				char_loadName(list[i].id, list[i].name);
 				char_send_fame_list(-1);
 			}
 
 			break;
 
-		// Recieve rates [Wizputer]
+		// Receive rates [Wizputer]
 		case 0x2b16:
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
 				return 0;
@@ -3223,8 +3218,8 @@ int parse_char(int fd) {
 			{
 				int char_id = atoi(sql_row[0]);
 				mysql_free_result(sql_res); //Free'd as soon as possible
-				mmo_char_fromsql(char_id, char_dat);
-				char_dat[0].sex = sd->sex;
+				mmo_char_fromsql(char_id, &char_dat);
+				char_dat.sex = sd->sex;
 			} else {
 				mysql_free_result(sql_res);
 				break;
@@ -3233,14 +3228,14 @@ int parse_char(int fd) {
 			if (log_char) {
 				char escaped_name[NAME_LENGTH*2];
 				sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `account_id`,`char_num`,`name`) VALUES (NOW(), '%d', '%d', '%s')",
-					charlog_db, sd->account_id, RFIFOB(fd, 2), jstrescapecpy(escaped_name, char_dat[0].name));
+					charlog_db, sd->account_id, RFIFOB(fd, 2), jstrescapecpy(escaped_name, char_dat.name));
 				//query
 				if(mysql_query(&mysql_handle, tmp_sql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 				}
 			}
-			ShowInfo("Selected char: (Account %d: %d - %s)" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat[0].name);
+			ShowInfo("Selected char: (Account %d: %d - %s)" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat.name);
 			
 			i = search_mapserver(char_dat[0].last_point.map, -1, -1);
 
@@ -3249,29 +3244,29 @@ int parse_char(int fd) {
 				unsigned short j;
 				ShowWarning("Unable to find map-server for '%s', resorting to sending to a major city.\n", mapindex_id2name(char_dat[0].last_point.map));
 				if ((i = search_mapserver((j=mapindex_name2id(MAP_PRONTERA)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 273; // savepoint coordinates
-					char_dat[0].last_point.y = 354;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 273; // savepoint coordinates
+					char_dat.last_point.y = 354;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_GEFFEN)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 120; // savepoint coordinates
-					char_dat[0].last_point.y = 100;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 120; // savepoint coordinates
+					char_dat.last_point.y = 100;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_MORROC)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 160; // savepoint coordinates
-					char_dat[0].last_point.y = 94;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 160; // savepoint coordinates
+					char_dat.last_point.y = 94;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_ALBERTA)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 116; // savepoint coordinates
-					char_dat[0].last_point.y = 57;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 116; // savepoint coordinates
+					char_dat.last_point.y = 57;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_PAYON)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 87; // savepoint coordinates
-					char_dat[0].last_point.y = 117;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 87; // savepoint coordinates
+					char_dat.last_point.y = 117;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_IZLUDE)),-1,-1)) >= 0) {
-					char_dat[0].last_point.map = j;
-					char_dat[0].last_point.x = 94; // savepoint coordinates
-					char_dat[0].last_point.y = 103;
+					char_dat.last_point.map = j;
+					char_dat.last_point.x = 94; // savepoint coordinates
+					char_dat.last_point.y = 103;
 				} else {
 					// get first online server
 					i = 0;
@@ -3291,8 +3286,8 @@ int parse_char(int fd) {
 				}
 			}
 			WFIFOW(fd, 0) =0x71;
-			WFIFOL(fd, 2) =char_dat[0].char_id;
-			memcpy(WFIFOP(fd,6), mapindex_id2name(char_dat[0].last_point.map), MAP_NAME_LENGTH);
+			WFIFOL(fd, 2) =char_dat.char_id;
+			memcpy(WFIFOP(fd,6), mapindex_id2name(char_dat.last_point.map), MAP_NAME_LENGTH);
 
 			// Andvanced subnet check [LuzZza]
 			if((subnet_map_ip = lan_subnetcheck((long *)p)))
@@ -3306,7 +3301,7 @@ int parse_char(int fd) {
 				auth_fifo_pos = 0;
 			}
 			auth_fifo[auth_fifo_pos].account_id = sd->account_id;
-			auth_fifo[auth_fifo_pos].char_id = char_dat[0].char_id;
+			auth_fifo[auth_fifo_pos].char_id = char_dat.char_id;
 			auth_fifo[auth_fifo_pos].login_id1 = sd->login_id1;
 			auth_fifo[auth_fifo_pos].login_id2 = sd->login_id2;
 			auth_fifo[auth_fifo_pos].delflag = 0;
@@ -3330,12 +3325,12 @@ int parse_char(int fd) {
 			WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
 			WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
 			WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
-			memcpy(WFIFOP(map_fd,20), &char_dat[0], sizeof(struct mmo_charstatus));
+			memcpy(WFIFOP(map_fd,20), &char_dat, sizeof(struct mmo_charstatus));
 			WFIFOSET(map_fd, WFIFOW(map_fd,2));
 
 			set_char_online(i, auth_fifo[auth_fifo_pos].char_id, auth_fifo[auth_fifo_pos].account_id);
 			//Checks to see if the even share setting of the party must be broken.
-			inter_party_logged(char_dat[0].party_id, char_dat[0].account_id, char_dat[0].char_id);
+			inter_party_logged(char_dat.party_id, char_dat.account_id, char_dat.char_id);
 			auth_fifo_pos++;
 			break;
 
@@ -3382,44 +3377,42 @@ int parse_char(int fd) {
 			WFIFOW(fd, 0) = 0x6d;
 			memset(WFIFOP(fd, 2), 0x00, 106);
 
-			mmo_char_fromsql_short(i, char_dat); //Only the short data is needed.
-			//mmo_char_fromsql(i, char_dat);
-			i = 0;
-			WFIFOL(fd, 2) = char_dat[i].char_id;
-			WFIFOL(fd,2+4) = char_dat[i].base_exp>LONG_MAX?LONG_MAX:char_dat[i].base_exp;
-			WFIFOL(fd,2+8) = char_dat[i].zeny;
-			WFIFOL(fd,2+12) = char_dat[i].job_exp>LONG_MAX?LONG_MAX:char_dat[i].job_exp;
-			WFIFOL(fd,2+16) = char_dat[i].job_level;
+			mmo_char_fromsql_short(i, &char_dat); //Only the short data is needed.
+			WFIFOL(fd, 2) = char_dat.char_id;
+			WFIFOL(fd,2+4) = char_dat.base_exp>LONG_MAX?LONG_MAX:char_dat[i].base_exp;
+			WFIFOL(fd,2+8) = char_dat.zeny;
+			WFIFOL(fd,2+12) = char_dat.job_exp>LONG_MAX?LONG_MAX:char_dat[i].job_exp;
+			WFIFOL(fd,2+16) = char_dat.job_level;
 
-			WFIFOL(fd,2+28) = char_dat[i].karma;
-			WFIFOL(fd,2+32) = char_dat[i].manner;
+			WFIFOL(fd,2+28) = char_dat.karma;
+			WFIFOL(fd,2+32) = char_dat.manner;
 
 			WFIFOW(fd,2+40) = 0x30;
-			WFIFOW(fd,2+42) = (char_dat[i].hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].hp;
-			WFIFOW(fd,2+44) = (char_dat[i].max_hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].max_hp;
-			WFIFOW(fd,2+46) = (char_dat[i].sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].sp;
-			WFIFOW(fd,2+48) = (char_dat[i].max_sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].max_sp;
+			WFIFOW(fd,2+42) = (char_dat.hp > SHRT_MAX) ? SHRT_MAX : char_dat.hp;
+			WFIFOW(fd,2+44) = (char_dat.max_hp > SHRT_MAX) ? SHRT_MAX : char_dat.max_hp;
+			WFIFOW(fd,2+46) = (char_dat.sp > SHRT_MAX) ? SHRT_MAX : char_dat.sp;
+			WFIFOW(fd,2+48) = (char_dat.max_sp > SHRT_MAX) ? SHRT_MAX : char_dat.max_sp;
 			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].speed;
-			WFIFOW(fd,2+52) = char_dat[i].class_;
-			WFIFOW(fd,2+54) = char_dat[i].hair;
+			WFIFOW(fd,2+52) = char_dat.class_;
+			WFIFOW(fd,2+54) = char_dat.hair;
 
-			WFIFOW(fd,2+58) = char_dat[i].base_level;
-			WFIFOW(fd,2+60) = (char_dat[i].skill_point > SHRT_MAX) ? SHRT_MAX : char_dat[i].skill_point;
+			WFIFOW(fd,2+58) = char_dat.base_level;
+			WFIFOW(fd,2+60) = (char_dat.skill_point > SHRT_MAX) ? SHRT_MAX : char_dat[i].skill_point;
 
-			WFIFOW(fd,2+64) = char_dat[i].shield;
-			WFIFOW(fd,2+66) = char_dat[i].head_top;
-			WFIFOW(fd,2+68) = char_dat[i].head_mid;
-			WFIFOW(fd,2+70) = char_dat[i].hair_color;
+			WFIFOW(fd,2+64) = char_dat.shield;
+			WFIFOW(fd,2+66) = char_dat.head_top;
+			WFIFOW(fd,2+68) = char_dat.head_mid;
+			WFIFOW(fd,2+70) = char_dat.hair_color;
 
-			memcpy(WFIFOP(fd,2+74), char_dat[i].name, NAME_LENGTH);
+			memcpy(WFIFOP(fd,2+74), char_dat.name, NAME_LENGTH);
 
-			WFIFOB(fd,2+98) = char_dat[i].str>UCHAR_MAX?UCHAR_MAX:char_dat[i].str;
-			WFIFOB(fd,2+99) = char_dat[i].agi>UCHAR_MAX?UCHAR_MAX:char_dat[i].agi;
-			WFIFOB(fd,2+100) = char_dat[i].vit>UCHAR_MAX?UCHAR_MAX:char_dat[i].vit;
-			WFIFOB(fd,2+101) = char_dat[i].int_>UCHAR_MAX?UCHAR_MAX:char_dat[i].int_;
-			WFIFOB(fd,2+102) = char_dat[i].dex>UCHAR_MAX?UCHAR_MAX:char_dat[i].dex;
-			WFIFOB(fd,2+103) = char_dat[i].luk>UCHAR_MAX?UCHAR_MAX:char_dat[i].luk;
-			WFIFOB(fd,2+104) = char_dat[i].char_num;
+			WFIFOB(fd,2+98) = char_dat.str>UCHAR_MAX?UCHAR_MAX:char_dat.str;
+			WFIFOB(fd,2+99) = char_dat.agi>UCHAR_MAX?UCHAR_MAX:char_dat.agi;
+			WFIFOB(fd,2+100) = char_dat.vit>UCHAR_MAX?UCHAR_MAX:char_dat.vit;
+			WFIFOB(fd,2+101) = char_dat.int_>UCHAR_MAX?UCHAR_MAX:char_dat.int_;
+			WFIFOB(fd,2+102) = char_dat.dex>UCHAR_MAX?UCHAR_MAX:char_dat.dex;
+			WFIFOB(fd,2+103) = char_dat.luk>UCHAR_MAX?UCHAR_MAX:char_dat.luk;
+			WFIFOB(fd,2+104) = char_dat.char_num;
 
 			WFIFOSET(fd, 108);
 			RFIFOSKIP(fd, 37);
@@ -3427,7 +3420,7 @@ int parse_char(int fd) {
 			//to do
 			for(ch = 0; ch < 9; ch++) {
 				if (sd->found_char[ch] == -1) {
-					sd->found_char[ch] = char_dat[i].char_id;
+					sd->found_char[ch] = char_dat.char_id;
 					break;
 				}
 			}
@@ -3928,11 +3921,6 @@ void do_final(void) {
 	if(gm_account)  {
 		aFree(gm_account);
 		gm_account = 0;
-	}
-
-	if(char_dat)  {
-		aFree(char_dat);
-		char_dat = 0;
 	}
 
 	delete_session(login_fd);
