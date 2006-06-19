@@ -8020,8 +8020,13 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case ST_MOVE_ENABLE:
-		//Check only on begin casting. [Skotlex]
-		if(!type && !unit_can_move(&sd->bl)) {
+		if(type)//Check only on begin casting. [Skotlex]
+			break;
+		
+		if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill)
+			sd->ud.canmove_tick = gettick(); //When using a combo, cancel the can't move delay to enable the skill. [Skotlex]
+			
+		if (!unit_can_move(&sd->bl)) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}

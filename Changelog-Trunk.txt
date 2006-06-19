@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/19
+	* Combo-used Skills with State "move_enable" will now override the "can't
+	  move delay". Fixes Break-Fall -> Jump-Kick. [Skotlex]
 	* Some more cleanups of battle_calc_damage to account for absorbed damage
 	  reductions. [Skotlex]
 	* Moved back Soul Drain code from mob_dead to skill_counter_additional_effect.
