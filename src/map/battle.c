@@ -232,8 +232,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	nullpo_retr(0, bl);
 
-	if (damage <= 0) //No reductions to make.
-		return damage;
+	if (!damage)
+		return 0;
 	
 	if (bl->type == BL_MOB) {
 		md=(struct mob_data *)bl;
@@ -254,15 +254,13 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		//First, sc_*'s that reduce damage to 0.
 		if (sc->data[SC_SAFETYWALL].timer!=-1 && flag&BF_SHORT && (skill_num != NPC_GUIDEDATTACK && skill_num != AM_DEMONSTRATION)
 		) {
-			// セ?[フティウォ?[ル
 			struct skill_unit_group *group = (struct skill_unit_group *)sc->data[SC_SAFETYWALL].val3;
 			if (group) {
 				if (--group->val2<=0)
 					skill_delunitgroup(NULL,group);
 				return 0;
-			} else {
-				status_change_end(bl,SC_SAFETYWALL,-1);
 			}
+			status_change_end(bl,SC_SAFETYWALL,-1);
 		}
 	
 		if(sc->data[SC_LANDPROTECTOR].timer!=-1 && flag&BF_MAGIC)
@@ -376,7 +374,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 
 		//Finally Kyrie because it may, or not, reduce damage to 0.
-		if(sc->data[SC_KYRIE].timer!=-1){
+		if(sc->data[SC_KYRIE].timer!=-1 && damage > 0){
 			sci=&sc->data[SC_KYRIE];
 			sci->val2-=damage;
 			if(flag&BF_WEAPON || skill_num == TF_THROWSTONE){
@@ -396,7 +394,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(flag&BF_MAGIC && sd && sd->special_state.no_magic_damage)
 			damage -= damage*sd->special_state.no_magic_damage/100;
 
-		if (damage <= 0) return 0;
+		if (!damage) return 0;
 	}
 	
 	//SC effects from caster side.
@@ -411,7 +409,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 	}
 	
-	if (battle_config.pk_mode && sd && damage > 0)
+	if (battle_config.pk_mode && sd && damage)
   	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 			if (flag&BF_WEAPON)
@@ -426,7 +424,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (flag & BF_LONG)
 				damage = damage * battle_config.pk_long_damage_rate/100;
 		}
-		if(damage < 1) damage  = 1;
+		if(!damage) damage  = 1;
 	}
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_)
@@ -457,8 +455,8 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	struct mob_data *md = NULL;
 	int class_;
 
-	if (damage <= 0) //No reductions to make.
-		return damage;
+	if (!damage) //No reductions to make.
+		return 0;
 	
 	class_ = status_get_class(bl);
 
@@ -511,7 +509,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 			if (flag & BF_LONG)
 				damage = damage * battle_config.gvg_long_damage_rate/100;
 		}
-		if(damage < 1) damage  = 1;
+		if(!damage) damage  = 1;
 	}
 	return damage;
 }
