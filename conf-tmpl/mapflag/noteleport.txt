@@ -90,8 +90,6 @@ gefenia04.gat	mapflag	noteleport
 hu_in01.gat	mapflag	noteleport
 auction_01.gat	mapflag	noteleport
 auction_02.gat	mapflag	noteleport
-juperos_01.gat	mapflag	noteleport
-juperos_02.gat	mapflag	noteleport
 ra_in01.gat	mapflag	noteleport
 ra_temin.gat	mapflag	noteleport
 ra_temsky.gat	mapflag	noteleport
