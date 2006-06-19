@@ -2863,7 +2863,7 @@ int clif_initialstatus(struct map_session_data *sd)
 	buf=WFIFOP(fd,0);
 
 	WBUFW(buf,0)=0xbd;
-	WBUFW(buf,2)=(sd->status.status_point > USHRT_MAX)? USHRT_MAX:sd->status.status_point;
+	WBUFW(buf,2)=(sd->status.status_point > SHRT_MAX)? SHRT_MAX:sd->status.status_point;
 	WBUFB(buf,4)=(sd->status.str > UCHAR_MAX)? UCHAR_MAX:sd->status.str;
 	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR);
 	WBUFB(buf,6)=(sd->status.agi > UCHAR_MAX)? UCHAR_MAX:sd->status.agi;
