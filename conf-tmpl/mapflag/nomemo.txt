@@ -84,6 +84,10 @@ auction_01.gat	mapflag	nomemo
 auction_02.gat	mapflag	nomemo
 p_track01.gat	mapflag	nomemo
 p_track02.gat	mapflag	nomemo
+ra_in01.gat	mapflag	nomemo
+ra_temin.gat	mapflag	nomemo
+ra_temsky.gat	mapflag	nomemo
+que_rachel.gat	mapflag	nomemo
 
 // Job Quests ================
 // First Job Class
@@ -351,7 +355,6 @@ ordeal_2-3.gat	mapflag	nomemo
 ordeal_3-1.gat	mapflag	nomemo
 ordeal_3-2.gat	mapflag	nomemo
 ordeal_3-3.gat	mapflag	nomemo
-pvp_2vs2.gat	mapflag	nomemo
 pvp_c_room.gat	mapflag	nomemo
 quiz_00.gat	mapflag	nomemo
 quiz_01.gat	mapflag	nomemo

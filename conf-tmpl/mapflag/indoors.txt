@@ -59,9 +59,6 @@ airport.gat	mapflag	indoors
 airplane.gat	mapflag	indoors
 airplane_01.gat	mapflag	indoors
 hu_in01.gat	mapflag	indoors
-auction_01.gat	mapflag	indoors
-auction_02.gat	mapflag	indoors
-yuno_pre.gat	mapflag	indoors
 y_airport.gat	mapflag	indoors
 lhz_airport.gat	mapflag	indoors
 lhz_in01.gat	mapflag	indoors
@@ -71,3 +68,16 @@ lhz_cube.gat	mapflag	indoors
 hu_in01.gat	mapflag	indoors
 auction_01.gat	mapflag	indoors
 auction_02.gat	mapflag	indoors
+ra_in01.gat	mapflag	indoors
+ra_temin.gat	mapflag	indoors
+que_rachel.gat	mapflag indoors
+yuno_pre.gat	mapflag indoors
+lhz_que01.gat	mapflag indoors
+que_job01.gat	mapflag indoors
+thana_step.gat	mapflag indoors
+kh_mansion.gat	mapflag indoors
+kh_rossi.gat	mapflag indoors
+kh_school.gat	mapflag indoors
+kh_vila.gat	mapflag indoors
+que_bingo.gat	mapflag indoors
+que_ng.gat	mapflag indoors

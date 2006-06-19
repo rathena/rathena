@@ -80,6 +80,19 @@ lhz_airport.gat	mapflag	noicewall
 lhz_in01.gat	mapflag	noicewall
 lhz_in02.gat	mapflag	noicewall
 lhz_in03.gat	mapflag	noicewall
+rachel.gat	mapflag	noicewall
+ra_in01.gat	mapflag	noicewall
+ra_temin.gat	mapflag	noicewall
+ra_temple.gat	mapflag	noicewall
+ra_temsky.gat	mapflag	noicewall
+que_rachel.gat	mapflag	noicewall
+auction_01.gat	mapflag	noicewall
+auction_02.gat	mapflag	noicewall
+hu_in01.gat	mapflag	noicewall
+kh_mansion.gat	mapflag	noicewall
+kh_rossi.gat	mapflag	noicewall
+kh_school.gat	mapflag	noicewall
+kh_vila.gat	mapflag	noicewall
 
 // Guild Castles ==========
 aldeg_cas01.gat	mapflag	noicewall

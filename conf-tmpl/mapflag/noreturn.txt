@@ -56,6 +56,9 @@ ein_in01.gat	mapflag	noreturn
 airport.gat	mapflag	noreturn
 airplane.gat	mapflag	noreturn
 airplane_01.gat	mapflag	noreturn
+ra_in01.gat	mapflag	noreturn
+ra_temin.gat	mapflag	noreturn
+que_rachel.gat	mapflag	noreturn
 
 // New areas
 yuno_pre.gat	mapflag	noreturn
@@ -65,6 +68,10 @@ lhz_in01.gat	mapflag	noreturn
 lhz_in02.gat	mapflag	noreturn
 lhz_in03.gat	mapflag	noreturn
 lhz_que01.gat	mapflag	noreturn
+kh_mansion.gat	mapflag	noreturn
+kh_rossi.gat	mapflag	noreturn
+kh_school.gat	mapflag	noreturn
+kh_vila.gat	mapflag	noreturn
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	noreturn

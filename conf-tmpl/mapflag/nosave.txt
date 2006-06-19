@@ -36,6 +36,8 @@ gef_dun03.gat	mapflag	nosave	SavePoint
 que_god01.gat	mapflag	nosave	SavePoint
 que_god02.gat	mapflag	nosave	SavePoint
 que_sign01.gat	mapflag	nosave	SavePoint
+que_rachel.gat	mapflag	nosave	SavePoint
+que_ng.gat	mapflag	nosave	SavePoint
 
 // GvG Arenas ==========================
 guild_vs1.gat	mapflag	nosave	SavePoint

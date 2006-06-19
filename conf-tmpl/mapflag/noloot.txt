@@ -21,6 +21,9 @@ job_cru.gat	mapflag	noloot
 monk_test.gat	mapflag	noloot
 in_rogue.gat	mapflag	noloot
 job_sage.gat	mapflag	noloot
+job_soul.gat	mapflag	noloot
+job_star.gat	mapflag	noloot
+que_ng.gat	mapflag	noloot
 
 //Thievs have to gather some mushrooms. So they need loot
 //job_thief1.gat	mapflag	noloot

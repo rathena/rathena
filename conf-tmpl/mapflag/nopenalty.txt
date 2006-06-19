@@ -73,6 +73,27 @@ lhz_airport.gat	mapflag	nopenalty
 lhz_in01.gat	mapflag	nopenalty
 lhz_in02.gat	mapflag	nopenalty
 lhz_in03.gat	mapflag	nopenalty
+rachel.gat	mapflag	nopenalty
+ra_in01.gat	mapflag	nopenalty
+ra_temin.gat	mapflag	nopenalty
+ra_temple.gat	mapflag	nopenalty
+ra_temsky.gat	mapflag	nopenalty
+que_rachel.gat	mapflag	nopenalty
+airplane.gat	mapflag	nopenalty
+airport.gat	mapflag	nopenalty
+einbech.gat	mapflag	nopenalty
+einbroch.gat	mapflag	nopenalty
+ein_in01.gat	mapflag	nopenalty
+job_soul.gat	mapflag	nopenalty
+job_star.gat	mapflag	nopenalty
+auction_01.gat	mapflag	nopenalty
+auction_02.gat	mapflag	nopenalty
+hu_in01.gat	mapflag	nopenalty
+que_ng.gat	mapflag	nopenalty
+kh_mansion.gat	mapflag	nopenalty
+kh_rossi.gat	mapflag	nopenalty
+kh_school.gat	mapflag	nopenalty
+kh_vila.gat	mapflag	nopenalty
 
 // Job Quests ========================
 sword_1-1.gat	mapflag	nopenalty
