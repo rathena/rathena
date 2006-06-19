@@ -1226,7 +1226,7 @@ int mmo_char_sql_init(void) {
 	ShowInfo("Begin Initializing.......\n");
 	char_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA, sizeof(int));
 	// memory initialize
-	memset(char_dat, 0, sizeof(struct mmo_charstatus));
+	memset(&char_dat, 0, sizeof(struct mmo_charstatus));
 	if(char_per_account == 0){
 	  ShowStatus("Chars per Account: 'Unlimited'.......\n");
 	}else{
@@ -1726,7 +1726,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	for(i = 0; i < found_num; i++) {
-		mmo_char_fromsql_short(sd->found_char[i], char_dat);
+		mmo_char_fromsql_short(sd->found_char[i], &char_dat);
 
 		p = &char_dat;
 
@@ -2831,7 +2831,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 12)
 				return 0;
 			{
-				int i, j;
+				int i;
 				int id = RFIFOL(fd, 2);
 				int fame = RFIFOL(fd, 6);
 				char type = RFIFOB(fd, 10);
@@ -3237,12 +3237,12 @@ int parse_char(int fd) {
 			}
 			ShowInfo("Selected char: (Account %d: %d - %s)" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat.name);
 			
-			i = search_mapserver(char_dat[0].last_point.map, -1, -1);
+			i = search_mapserver(char_dat.last_point.map, -1, -1);
 
 			// if map is not found, we check major cities
 			if (i < 0) {
 				unsigned short j;
-				ShowWarning("Unable to find map-server for '%s', resorting to sending to a major city.\n", mapindex_id2name(char_dat[0].last_point.map));
+				ShowWarning("Unable to find map-server for '%s', resorting to sending to a major city.\n", mapindex_id2name(char_dat.last_point.map));
 				if ((i = search_mapserver((j=mapindex_name2id(MAP_PRONTERA)),-1,-1)) >= 0) {
 					char_dat.last_point.map = j;
 					char_dat.last_point.x = 273; // savepoint coordinates
@@ -3379,9 +3379,9 @@ int parse_char(int fd) {
 
 			mmo_char_fromsql_short(i, &char_dat); //Only the short data is needed.
 			WFIFOL(fd, 2) = char_dat.char_id;
-			WFIFOL(fd,2+4) = char_dat.base_exp>LONG_MAX?LONG_MAX:char_dat[i].base_exp;
+			WFIFOL(fd,2+4) = char_dat.base_exp>LONG_MAX?LONG_MAX:char_dat.base_exp;
 			WFIFOL(fd,2+8) = char_dat.zeny;
-			WFIFOL(fd,2+12) = char_dat.job_exp>LONG_MAX?LONG_MAX:char_dat[i].job_exp;
+			WFIFOL(fd,2+12) = char_dat.job_exp>LONG_MAX?LONG_MAX:char_dat.job_exp;
 			WFIFOL(fd,2+16) = char_dat.job_level;
 
 			WFIFOL(fd,2+28) = char_dat.karma;
@@ -3397,7 +3397,7 @@ int parse_char(int fd) {
 			WFIFOW(fd,2+54) = char_dat.hair;
 
 			WFIFOW(fd,2+58) = char_dat.base_level;
-			WFIFOW(fd,2+60) = (char_dat.skill_point > SHRT_MAX) ? SHRT_MAX : char_dat[i].skill_point;
+			WFIFOW(fd,2+60) = (char_dat.skill_point > SHRT_MAX) ? SHRT_MAX : char_dat.skill_point;
 
 			WFIFOW(fd,2+64) = char_dat.shield;
 			WFIFOW(fd,2+66) = char_dat.head_top;
