@@ -4107,9 +4107,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_STUN:
 			if (sc->opt1)
 				return 0; //Cannot override other opt1 status changes. [Skotlex]
-			// Cancel all casting upon sleep/stun/freeze/stone [Lance]
-			// http://www.eathena.ws/board/index.php?showtopic=102679
-			unit_skillcastcancel(bl, 0);
 		break;
 		case SC_CURSE:
 			//Dark Elementals are inmune to curse.
