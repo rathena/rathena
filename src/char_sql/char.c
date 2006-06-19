@@ -2563,7 +2563,7 @@ int parse_frommap(int fd) {
 				character->char_id == cid)
 			{
 				memcpy(&char_data, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
-				mmo_char_tosql(cid, &char_dat);
+				mmo_char_tosql(cid, char_dat);
 			} else 
 				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d)!\n", aid, cid);
 

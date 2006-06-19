@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/18
 	* [Fixed]:
+	  - Typo in parse_frommap. [Lance]
+	* [Fixed]:
 	  - clif_initialstatus using SHRT_MAX instead of USHRT_MAX for status_point.
 	* [Temperory Fixed]:
 	  - Crashing of SQL char-server in parse_frommap case 0x2b01. [Lance]
