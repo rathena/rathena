@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/18
 	* [Fixed]:
+	  - Typo in status.c add_sc() using 'skill' instead of 'sk' as index, resulting in
+	    filling the SkillStatusChangeTableArray with junk data.
+	  - > NEEDS CONFIRMATION < Ends casting if player is knocked with freezing/stun/whatever
 	  - Typo in parse_frommap. [Lance]
 	* [Fixed]:
 	  - clif_initialstatus using SHRT_MAX instead of USHRT_MAX for status_point.
