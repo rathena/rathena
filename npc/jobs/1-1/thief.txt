@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena 1.0 +
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= Fixed possible EXP abuse [Lupus]
 //= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus]
 //============================================================
 
 
@@ -29,7 +30,44 @@ job_thief1.gat,0,0,0,0	monster	Spore	1014,30,0,0,0
 // == NPCs ==
 // -- Interviewer --
 moc_prydb1.gat,39,129,5	script	Thief Guide	69,{
-	callfunc "Thi_check";
+
+	mes "[Thief Guide]";
+	if(BaseJob == Job_Thief) {
+		mes "You're already a thief.....  What do you want from me... go away!";
+		emotion e_swt;
+		close;
+	}
+	if(BaseClass == Job_Swordman) {
+		mes "What the heck...? Meh!~Here's another 'Bash' head.  Do me a favor... why don't you go 'BASH', yourself in the head.  Ha!";
+		emotion e_gg;
+		close;
+	}
+	if(BaseClass == Job_Mage) {
+		mes "What the heck...? Ehhh??? A Circus Sideshow? Make a fire without a Matchstick, will ya?";
+		emotion e_swt2;
+		close;
+	}
+	if(BaseClass == Job_Archer) {
+		mes "What the heck...? Hahahaha~are you a 'Kill Stealing' Archer...?";
+		emotion e_heh;
+		close;
+	}
+	if(BaseClass == Job_Acolyte) {
+		mes "What the heck...? Ohhhhhh~GOD... PORING's worshipper, Acolyte...";
+		mes "So why aren't you in church praying, instead of wandering about here, huh?";
+		close;
+	}
+	if(BaseClass == Job_Merchant) {
+		mes "What the heck...? Eeeeeek~Merchant Scammer here...!!!! I am gonna report you to the GM!!!";
+		emotion e_gasp;
+		close;
+	}
+	if(BaseClass != Job_Novice) {
+		mes "You already have a job.  Stop bothering me and go help out some newbies or something.";
+		emotion e_no1;
+		close;
+	}
+
 	if(job_thief_q==2) goto L_1;
 	if(job_thief_q==1) goto L_Back;
 
@@ -144,8 +182,6 @@ M_Menu:
 	L_Back:
 		if(countitem(1069)>0 || countitem(1070)>0) goto sL_1;//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
 
-		sL_0:
-			mes "[Thief Guide]";
 			mes "..... What are you doing here? You're supposed to be gathering mushrooms remember??";
 			mes "Don't tell me you forget what to do??? Jeeze... do you want me to explain it to you one more time?......";
 			emotion e_hmm;
@@ -166,7 +202,6 @@ M_Menu:
 				close;
 
 		sL_1:
-			mes "[Thief Guide]";
 			mes "What? You actually went and stole some mushrooms?? Are you some kinda idiot?";
 			mes "Haha... I can't believe you listened to me..... ";
 			emotion e_what;
@@ -177,7 +212,6 @@ M_Menu:
 			close;
 
 	L_1:
-		mes "[Thief Guide]";
 		mes "So how was the Mushroom Farm?  Did yah have much fun?";
 		next;
 		menu "Yeah, kinda Cool.",M_Cool,"It was horrible.",M_Not;

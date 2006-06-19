@@ -37,7 +37,7 @@ function	script	F_ClearJobVar	{
 	set job_archer_q,0;
 	set job_magician_q,0;
 	set job_merchant_q,0; set job_merchant_q2,0; set job_merchant_q3,0;
-	set job_sword_q,0; set job_sword_q2,0; set SWTEST, 0;
+	set job_sword_q,0; set SWTEST, 0;
 	set job_thief_q,0;
 	// Super Novice
 	set SUPNOV_Q,0;

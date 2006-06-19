@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= v1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus]
 //============================================================ 
 
 
@@ -28,7 +29,26 @@ payon_in02.gat,64,71,4	script	Archer Guildsman	59,{
 
 	M_0:
 		mes "[Archer Guildsman]";
-		callfunc "Arc_check";
+		if(BaseJob == Job_Archer) {
+			mes "Your free spirited nature tells me that you're already an archer....that and the bow and arrow in your hands...Haha";
+			emotion e_heh;
+			close;
+		}
+		if(BaseJob != Job_Novice) {
+			mes "I'm sorry but you cannot leave your current job to become an Archer...though I can understand why you would want to do so."; 
+			close;
+		}
+		mes "You have made an excellent job choice.";
+		mes "Please submit your resume so that I can check your qualifications.";
+		next;
+		mes "(You hand over your resume)";
+		next;
+		mes "[Archer Guildsman]";
+		if(JobLevel < 10) {
+			mes "It seems that you are not qualified to become an Archer yet.  Please take a look at the job requirments once more.";
+			close;
+		}
+		set job_archer_q,1;
 		mes "Looks good.  You have the necesssary skills to become an archer....";
 		next;
 		mes "[Archer Guildsman]";

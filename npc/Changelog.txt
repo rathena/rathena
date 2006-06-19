@@ -36,6 +36,9 @@ Musashiden
 
 Date		Added
 ======
+06/19
+	* Removed Jfunc1-1.txt, merged parts of scripts back. Changed job numbers to constants [Lupus]
+	- Jfunc2-1.txt & Jfunc2-2.txt todo
 06/17
 	* Fixed a Rachel warp thanks to Dr.Evil [Playtester]
 	* Fixed some typos in quests_lighthalzen.txt thanks to Karore [Playtester]

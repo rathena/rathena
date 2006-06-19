@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -14,8 +14,9 @@
 //= v1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Changed Prontera->Izlude teleport price to 600 [Lupus]
-//= 1.6 Now saves/restores all quest skills [Lupus]
-//= 1.7 Removed Duplicates [Silent]
+//= 1.5.1 Removed Duplicates [Silent]
+//= 1.5.2 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //============================================================ 
 
 
@@ -35,7 +36,37 @@ M_Menu:
 	menu "I want to be a Merchant.",M_0,"What exactly is a Merchant?",M_1,"Give me the Requirements.",M_2,"End.",M_End;
 
      	M_0:
-		callfunc "Mer_check";
+
+     		if(BaseJob==Job_Merchant) {
+			mes "[Chief Mahnsoo]";
+			mes "Huh? What did you say? You noodle head! Take a good look at yourself.  Your ALREADY A MERCHANT!  Good lord!";
+			emotion e_what;
+			emotion e_gasp;
+			close;
+		}
+		if(BaseJob != Job_Novice) {
+			mes "[Chief Mahnsoo]";
+			mes "We Merchants really don't like people who work during the day, and then go out to crazy bars at night.  When it comes to money, for them it's 'easy come easy go.";
+			next;
+			mes "[Chief Mahnsoo]";
+			mes "Well.. I talked a little too long, I guess... but since you already have an occupation, we don't need you.";
+			close;
+		}
+		if(JobLevel < 10) {
+			mes "[Chief Mahnsoo]";
+			mes "I'm sorry but you have to have a Novice Job level of 9 with all 9 of the basic Skills.";
+			close;
+		}
+		mes "[Chief Mahnsoo]";
+		mes "A Merchant you say? Well...";
+		next;
+		mes "[Chief Mahnsoo]";
+		mes "Alright.  First fill out an application form and submit 1000 Zeny for the Memebership Fee.";
+		mes "If you don't have enough money right now, you can pay 500 Zeny first and then pay the rest later after you've passed the Merchant License Test.";
+		next;
+		mes "[Chief Mahnsoo]";
+		mes "How does that sound? Are you still interested?";
+
 		next;
 		menu "Sure why not.  Who needs college anyways.",sM_0a,"Maybe, later...",sM_0b;
 

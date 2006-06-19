@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //============================================================ 
 
 
@@ -34,7 +35,32 @@ M_Menu:
 		mes "You wanna be a Mage? Hmmm.....";
 		next;
 		mes "[Expert Mage]";
-		callfunc "Mag_check";
+		if(BaseJob == Job_Mage) {
+			mes "You should really get yourself a mirror.  Then you could see that you are ^ff0000already a Mage^000000.";
+			mes "It may even help you fix up your hair do.";
+			emotion e_swt;
+			close;
+		}
+		if(BaseJob != Job_Novice) {
+			mes "Oh...I'm sorry.  I know they say 2 is always better than 1, but when it comes to Jobs, it's a No No.";
+			mes "Try to stay positive.  Your current job can't be that bad.";
+			emotion e_no;
+			close;
+		}
+		mes "Okays, just fill out this application form pleeassse.";
+		next;
+		mes "(you fill out the form and hand it back to her)";
+		next;
+		mes "[Expert Mage]";
+		if(JobLevel < 10) {
+			mes "Oh...I'm sorry.  You need ^ff0000Job level 9^000000 and all of the ^0000ffBasic Skills^000000 before you can become a Mage.";
+			mes "Go out and kill some more Fabres okays.";
+			emotion e_no;
+			close;
+		}
+		mes "Oooh~ You have very nice hand writing ^0000dd"+ strcharinfo(0) +"^000000, and more importantly you have met the necessary prerequisites to become a mage.";
+		next;
+		mes "[Expert Mage]";
 		mes "The only thing left to do is to pass the official Geffen Mage Test.  Let me give you the details of the test.";
 		next;
 		set job_magician_q, rand(1,4);

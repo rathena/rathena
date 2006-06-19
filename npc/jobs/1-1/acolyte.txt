@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= v1.3 Added Baby Class support [Lupus]
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus]
 //============================================================ 
 
 
@@ -31,7 +32,33 @@ prt_church.gat,184,41,4	script	Father Mareusis	60,{
 
 	M_0:
 		mes "[Father Mareusis]";
-		callfunc "Aco_check";
+		if(BaseJob == Job_Acolyte) {
+			mes "Are you feeling okay?....";
+			emotion e_hmm;
+			next;
+			mes "[Father Mareusis]";
+			mes "...your attire...";
+			next;
+			mes "[Father Mareusis]";
+			mes "You're already are an Acolyte.....";
+			next;
+			mes "[Father Mareusis]";
+			mes "You are not joking with me, are you? Hoho!!..kids these days.";
+			emotion e_heh;
+			close;
+		}
+		if(BaseJob != Job_Novice) {
+			mes "I am sorry child.  You have already devoted your life to another profession.  I am afraid that you will no longer be able to devote it to God.";
+			close;
+		}
+		if(JobLevel < 10) {
+			mes "My child you do not yet possess the necessary skills to serve the lord.";
+			mes "Please come back when your faith in God has become stronger";
+			next;
+			mes "[Father Mareusis]";
+			mes "May God bless you.";
+			close;
+		}
 		mes "Do you truly wish to become a servant of God?";
 		next;
 		menu "Yes, Father, I do.",sM_0,"Nope, I lied.",sM_1;

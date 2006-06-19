@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -11,47 +11,16 @@
 //===== Additional Comments: ================================= 
 //= Fully working.  I have created a custom warp to get into the test room so disable
 //= the one in your warp script or scripts.  It is this warp: "izlude_in.gat",40,170.
-//= v1.1 Added instant job change for High Novice [Lupus]
+//= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
 //= 1.4 Changed the timing system to initnpctimer, now you do get warnings about time
 //=     and are limited to 7min to complete the quest [Fredzilla]
-//= v1.5 Optimised and moved first checker to Jfunc1-1 [massdriller]
-//= 1.6 Fixed possible EXP abuse [Lupus]
-//= 1.7 Now saves/restores all quest skills [Lupus]
-//= 1.8 Removed Duplicates [Silent]
+//= 1.5 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5.1 Fixed possible EXP abuse [Lupus]
+//= 1.5.2 Now saves/restores all quest skills [Lupus]
+//= 1.5.3 Removed Duplicates [Silent]
+//= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //============================================================ 
-
-
-// == Monsters ==
-//Spawn is included in this file so make shure its not elsewhere to!
-sword_1-1.gat,35,78,0,0	monster	Fabre	1184,4,0,0,0
-sword_1-1.gat,50,108,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,61,28,0,0	monster	Fabre	1184,4,0,0,0
-sword_1-1.gat,61,92,0,0	monster	Fabre	1184,2,0,0,0
-//
-sword_1-1.gat,110,112,0,0	monster	Fabre	1184,3,0,0,0
-sword_1-1.gat,161,94,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,130,76,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,103,58,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,130,24,0,0	monster	Fabre	1184,3,0,0,0
-//
-sword_1-1.gat,201,36,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,201,16,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,239,44,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,239,76,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,231,101,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,234,117,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,198,91,0,0	monster	Fabre	1184,2,0,0,0
-sword_1-1.gat,200,63,0,0	monster	Fabre	1184,2,0,0,0
-
-
-// == Warp ==
-// -- Warp to test room --
-izlude_in.gat,62,170,0	script	w1039	45,1,1,{
-	if(BaseJob==Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
-	if(job_sword_q == 0) doevent "Swordsman::OnStart";
-	end;
-}
 
 
 // == Npcs ==
@@ -68,37 +37,57 @@ L_Menu:
 
 	M_0:
 		mes "[Master Swordsman]";
-		callfunc "Swo_check";
-
-		O_1a:
-			set job_sword_q,1;
-			savepoint "izlude_in.gat",65,165;
-			mes "Okay.  Let me just review your information......";
+		if(BaseJob == Job_Swordman) {
+			mes "Muhahaha! You must be kidding me! You're already a swordsman.";
+			emotion e_heh;
+			close;
+		}
+		if(BaseJob != Job_Novice) {
+			mes "Im sorry but you can not hold more than one job at a time and therefore I must refuse your request.";
 			next;
 			mes "[Master Swordsman]";
-			mes "Ah!! I see that you have met the necessary requirements.....";
+			mes "Try picking up a hobby to make use of your spare time. Muhahahahah!!";
+			emotion e_heh;
+			close;
+		}
+		mes "So you wish to become a Swordsman aye? A very good choice!!  Fill out this application form first.";
+		next;
+		mes "..(you fill out the form and hand it to him)..";
+		next;
+		mes "[Master Swordsman]";
+		if(JobLevel < 10) {
+			mes "A hem...., you have yet to learn all of the 'Basic Skills' needed to become a Swordsman.  Please check the requirements again.";
+			close;
+		}
+
+		set job_sword_q,1;
+		savepoint "izlude_in.gat",65,165;
+		mes "Okay.  Let me just review your information......";
+		next;
+		mes "[Master Swordsman]";
+		mes "Ah!! I see that you have met the necessary requirements.....";
+		next;
+		mes "[Master Swordsman]";
+		mes "But there is one last thing you need to do to before I can make you an offical Swordsman.";
+		mes "You must prove your valour by taking the Izlude Swordsman Test!!!";
+		next;
+		mes "[Master Swordsman]";
+		mes "Are you willing to do so?";
+		next;
+		menu "Yes.",sM_0,"No.",sM_1;
+
+		sM_0:
+			mes "[Master Swordsman]";
+			mes "Very good!!!  The testing room is too my right.";
 			next;
 			mes "[Master Swordsman]";
-			mes "But there is one last thing you need to do to before I can make you an offical Swordsman.";
-			mes "You must prove your valour by taking the Izlude Swordsman Test!!!";
-			next;
+			mes "Good luck young warrior!!!";
+			close;
+
+		sM_1:
 			mes "[Master Swordsman]";
-			mes "Are you willing to do so?";
-			next;
-			menu "Yes.",sM_0,"No.",sM_1;
-
-			sM_0:
-				mes "[Master Swordsman]";
-				mes "Very good!!!  The testing room is too my right.";
-				next;
-				mes "[Master Swordsman]";
-				mes "Good luck young warrior!!!";
-				close;
-
-			sM_1:
-				mes "[Master Swordsman]";
-				mes "Very well then. Your registration is complete.  When you are ready to take the test, just enter the testing room to my right.";
-				close;
+			mes "Very well then. Your registration is complete.  When you are ready to take the test, just enter the testing room to my right.";
+			close;
 
 	M_1:
 		mes "[Master Swordsman]";
@@ -129,7 +118,12 @@ L_Menu:
 		mes "So you wish to become a swordsman....";
 		next;
 		if(BaseJob == Job_Novice) goto O_2a;
-		if(BaseJob == Job_Swordman) goto O_2b;
+		if(BaseJob == Job_Swordman) {
+			mes "[Master Swordsman]";
+			mes "....but you're already a Swordsman...????";
+			emotion e_hmm;
+			close;
+		}
 		mes "[Master Swordsman]";
 		mes "But you already have another job.... it's too late for you to become a Swordsman.";
 		next;
@@ -147,13 +141,7 @@ L_Menu:
 			mes "[Master Swordsman]";
 			mes "When you fullfill these 2 conditions, you can become an offical Swordsman.";
 			goto L_Menu;
-		
-		O_2b:
-			mes "[Master Swordsman]";
-			mes "....but you're already a Swordsman...????";
-			emotion e_hmm;
-			close;
-					
+
 	M_End:
 		mes "[Master Swordsman]";
 		mes "Enjoy your youth before you lose it~~ Muhahahaha!!!!";
@@ -181,6 +169,14 @@ L_Done:
 		mes "Hmm... just a momement... it seems you still have skill points left over.";
 		mes "Please use them up so that I can make you a Swordsman.";
 		close;
+}
+
+// == Warp ==
+// -- Warp to test room --
+izlude_in.gat,62,170,0	script	w1039	45,1,1,{
+	if(BaseJob==Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
+	if(job_sword_q == 0) doevent "Swordsman::OnStart";
+	end;
 }
 
 // -- Swordsman --
@@ -768,6 +764,28 @@ sword_1-1.gat,183,167,4	duplicate(3_blank)	3_blank_29_g	139,0,1
 sword_1-1.gat,176,163,4	duplicate(3_blank)	3_blank_30_a	139,0,2
 sword_1-1.gat,177,163,4	duplicate(3_blank)	3_blank_30_b	139,0,2
 sword_1-1.gat,181,163,4	duplicate(3_blank)	3_blank_30_c	139,2,0
+
+// == Monsters ==
+//Spawn is included in this file so make shure its not elsewhere to!
+sword_1-1.gat,35,78,0,0	monster	Fabre	1184,4,0,0,0
+sword_1-1.gat,50,108,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,61,28,0,0	monster	Fabre	1184,4,0,0,0
+sword_1-1.gat,61,92,0,0	monster	Fabre	1184,2,0,0,0
+//
+sword_1-1.gat,110,112,0,0	monster	Fabre	1184,3,0,0,0
+sword_1-1.gat,161,94,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,130,76,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,103,58,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,130,24,0,0	monster	Fabre	1184,3,0,0,0
+//
+sword_1-1.gat,201,36,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,201,16,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,239,44,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,239,76,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,231,101,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,234,117,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,198,91,0,0	monster	Fabre	1184,2,0,0,0
+sword_1-1.gat,200,63,0,0	monster	Fabre	1184,2,0,0,0
 
 //==============================================================================
 // mapflag

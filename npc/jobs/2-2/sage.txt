@@ -411,7 +411,7 @@ L_Menu2_1:
 		mes "......";
 		next;
 		mes "Elemental magic is divided into four types...";
-			menu "...called Fire, Wind, Water, and Earth",L_ThesisMenu1_1,"...named Fire, Wind, Water, and Earth",L_ThesisMenu1_2,"...that oppose each other: Fire, Wind, Water, and Earth",L_ThesisMenu1_3;
+			menu "...called Fire, Wind, Water, and Earth",L_ThesisMenu1_1,"...named Fire, Wind, Water, and Earth",L_ThesisMenu1_2,"...that oppose each other Fire, Wind, Water, and Earth",L_ThesisMenu1_3;
 		L_ThesisMenu1_1:
 			mes "...called Fire, Wind, Water, and Earth";
 			goto L_Thesis2;
