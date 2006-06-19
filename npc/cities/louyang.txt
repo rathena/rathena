@@ -2345,7 +2345,7 @@ s_Materials2:
 s_Items:
 	if(countitem(939) < 4 || countitem(937) < 10 || countitem(1093) < 10 || countitem(506) < 30)goto s_NEnoughItems;
 	delitem 939,4; //Bee Sting
-	delitem 937,4; //Venom Canine
+	delitem 937,10; //Venom Canine
 	delitem 1093,10; //Empty Potion Bottle
 	delitem 506,30; //Green Potion
 	set QL_POISONDISLIKED,0;

@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/19
+	* Fixed Quest requirements in cities/louyang.txt [Playtester]
 	* Fixed umbala.txt's Elemental Stones Quest bug. Thanks to Vhan Morthis.
 	  [Skotlex]
 	* Removed Jfunc1-1.txt, merged parts of scripts back. Changed job numbers to constants [Lupus]
