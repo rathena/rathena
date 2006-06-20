@@ -25,6 +25,9 @@
 
 =========================
 06/19
+	* Some more item updates [Playtester]
+	- Valkyrie Shield and Survivor's Manteau have their complete bonus script now, please test it
+	- Slotted Ice Pick and Iron Shackle Combo are weaker now
 	* Some updates to the item_db [Playtester]
 	- updated Survivor's Manteau, Valkyrie Shield, Stone Buckler, etc.
 06/18
