@@ -94,6 +94,7 @@ kh_mansion.gat	mapflag	nopenalty
 kh_rossi.gat	mapflag	nopenalty
 kh_school.gat	mapflag	nopenalty
 kh_vila.gat	mapflag	nopenalty
+ayothaya.gat	mapflag	nopenalty
 
 // Job Quests ========================
 sword_1-1.gat	mapflag	nopenalty

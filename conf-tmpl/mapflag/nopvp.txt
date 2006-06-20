@@ -77,3 +77,4 @@ airport.gat	mapflag	pvp	off
 einbech.gat	mapflag	pvp	off
 einbroch.gat	mapflag	pvp	off
 ein_in01.gat	mapflag	pvp	off
+ayothaya.gat	mapflag	pvp	off
