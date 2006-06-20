@@ -7,7 +7,7 @@
 //= Mass Zero (1.3)
 //= MasterOfMuppets (2.0)
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.6a
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 2.4 Implemented a few more npcs, thanks to Prometheus for them. [MasterOfMuppets]
 //= 2.5 Implemented the Poison King quest, beware of potential bugs. [MasterOfMuppets]
 //= 2.6 Removed Duplicates [Silent]
+//= 2.6a Updated a few names with new item_db.txt names [Evera]
 //============================================================
 
 alberta.gat,245,45,4	script	Girl#02	815,{
@@ -1636,10 +1637,10 @@ L_MED:
 	mes "I've just run out of other medicines that my patients will be needing. I don't need too much, but you would be doing me a great favor.";
 	next;		
 	mes "[Hua Tuo]";
-	mes "The medicines I need are ^0000FF2 Claw of Panther^000000 which supports the bones, ^0000FF10 Very Hard Peach^000000 which strengthens the muscle, ^0000FF5 Poisonous Toad Skin which replenishes the skin...";
+	mes "The medicines I need are ^0000FF2 Leopard Claw^000000 which supports the bones, ^0000FF10 Solid Peach^000000 which strengthens the muscle, ^0000FF5 Poisonous Toad Skin which replenishes the skin...";
 	next;
 	mes "[Hua Tuo]";
-	mes "^0000FF20 Brown Root^000000 which regulates the heart, ^0000FF10 Sprout^000000 which eases the abdomen and ^0000FF5 Honey Jar^000000 which provides nutrition.";
+	mes "^0000FF20 Brown Root^000000 which regulates the heart, ^0000FF10 Sprout^000000 which eases the abdomen and ^0000FF5 Honey Pot^000000 which provides nutrition.";
 	next;		
 	mes "[Hua Tuo]";
 	mes "I hope you've memorized it all.";
@@ -1648,12 +1649,12 @@ L_MED:
 	next;
 L_INGREDIENT:
 	mes "[Hua Tuo]";
-	mes "^3131FF2 Claw of Panther^000000,";
-	mes "^3131FF10 Very Hard Peach^000000,";
+	mes "^3131FF2 Leopard Claw^000000,";
+	mes "^3131FF10 Solid Peach^000000,";
 	mes "^3131FF5 Poisonous Toad Skin^000000,";
 	mes "^3131FF20 Brown Root^000000,";
 	mes "^3131FF10 Sprout^000000 and";
-	mes "^3131FF5 Honey Jar^000000.";
+	mes "^3131FF5 Honey Pot^000000.";
 	close;	
 
 L_DONE:
@@ -1697,18 +1698,18 @@ L_RANT:
 	close;
 
 L_CHECKITM:
-	if(countitem(7172) < 2)goto L_NOTENOUGH; //Claw of Panther
-	if(countitem(7164) < 10)goto L_NOTENOUGH; //Very Hard Peach
+	if(countitem(7172) < 2)goto L_NOTENOUGH; //Leopard Claw
+	if(countitem(7164) < 10)goto L_NOTENOUGH; //Solid Peach
 	if(countitem(7155) < 5)goto L_NOTENOUGH; //Poisonous Toad Skin
 	if(countitem(7188) < 20)goto L_NOTENOUGH; //Brown Root
 	if(countitem(7193) < 10)goto L_NOTENOUGH; //Sprout
-	if(countitem(7121) < 5)goto L_NOTENOUGH; //Honey Jar
-	delitem 7172,2; //Claw of Panther
-	delitem 7164,10; //Very Hard Peach
+	if(countitem(7121) < 5)goto L_NOTENOUGH; //Honey Pot
+	delitem 7172,2; //Leopard Claw
+	delitem 7164,10; //Solid Peach
 	delitem 7155,5; //Poisonous Toad Skin
 	delitem 7188,20; //Brown Root
 	delitem 7193,10; //Sprout
-	delitem 7121,5; //Honey Jar
+	delitem 7121,5; //Honey Pot
 	//These following dialogs are made up, I didn't finish the quest =/
 	mes "[Hua Tuo]";
 	mes "Thank you so much, now I can treat my patients.";

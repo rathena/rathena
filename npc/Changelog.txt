@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/19
+	* Changed Doctor Quest item names to updated item_db names (cities/louyang.txt) [Evera]
 	* Fixed Quest requirements in cities/louyang.txt [Playtester]
 	* Fixed umbala.txt's Elemental Stones Quest bug. Thanks to Vhan Morthis.
 	  [Skotlex]
