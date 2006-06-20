@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/20
+	* Started fixing some of the cards [Playtester]
 06/19
 	* Some more item updates [Playtester]
 	- Valkyrie Shield and Survivor's Manteau have their complete bonus script now, please test it
