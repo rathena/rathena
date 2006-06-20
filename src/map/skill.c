@@ -1454,7 +1454,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			
 			
 			rate = sd?(sd->addeff2[type]+(sd->state.arrow_atk?sd->arrow_addeff2[type]:0)):0;
-			if (rate) //Self infliced status from attacking.
+			if (rate) //Self inflicted status from attacking.
 				status_change_start(src,i,rate,7,0,0,0,skill_get_time2(StatusSkillChangeTable[type],7),0);
 
 			rate = dstsd?dstsd->addeff3[type]:0;
@@ -2934,6 +2934,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_SMOKING:
 	case NPC_SELFDESTRUCTION:
 	case GS_FLING:
+	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -2999,12 +3000,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_castend_damage_id);
 		}
 		break;
-	case NJ_ZENYNAGE:
-		if(sd->status.zeny < skilllv*1000)
-			clif_skill_fail(sd,skillid,5,0);
-		else
-			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
-		break;
 	case NJ_KASUMIKIRI:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
@@ -3032,7 +3027,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	//case NJ_SYURIKEN:
 	//case NJ_KUNAI:
 	//case NJ_HUUMA:
-	//case NJ_ZENYNAGE:
 	case NJ_TATAMIGAESHI:
 	//case NJ_KASUMIKIRI:
 	//case NJ_KIRIKAGE:
@@ -7904,12 +7898,19 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
-		zeny = 1;
 		break;
 	
 	case NJ_ISSEN:
 		if (sc && sc->data[SC_NEN].timer!=-1)
 			return 0;
+		break;
+	
+	case NJ_ZENYNAGE:
+		if(sd->status.zeny < zeny) {
+			clif_skill_fail(sd,skill,5,0);
+			return 0;
+		}
+		zeny = 0; //Zeny is reduced on skill_attack.
 		break;
 	}
 

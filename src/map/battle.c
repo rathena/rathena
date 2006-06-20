@@ -2516,7 +2516,9 @@ struct Damage  battle_calc_misc_attack(
 		if (tsd) md.damage>>=1;
 		break;
 	case NJ_ZENYNAGE:
-		md.damage = 500*skill_lv +rand()%(500*skill_lv);
+		md.damage = skill_get_zeny(skill_num ,skill_lv);
+		if (!md.damage) md.damage = 2;
+		md.damage = md.damage/2 + rand()%md.damage;
 		if (sd) pc_payzeny(sd, md.damage);
 		if(map_flag_vs(target->m) || is_boss(target))
 			md.damage>>=1; //temp value

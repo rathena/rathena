@@ -165,7 +165,7 @@ void initChangeTables(void) {
 	add_sc(WZ_VERMILION, SC_BLIND);
 	add_sc(WZ_FROSTNOVA, SC_FREEZE);
 	add_sc(WZ_STORMGUST, SC_FREEZE);
-	set_sc(WZ_QUAGMIRE, SC_QUAGMIRE, SI_QUAGMIRE, SCB_AGI|SCB_DEX|SCB_ASPD);
+	set_sc(WZ_QUAGMIRE, SC_QUAGMIRE, SI_QUAGMIRE, SCB_AGI|SCB_DEX|SCB_ASPD|SCB_SPEED);
 	set_sc(BS_ADRENALINE, SC_ADRENALINE, SI_ADRENALINE, SCB_ASPD);
 	set_sc(BS_WEAPONPERFECT, SC_WEAPONPERFECTION, SI_WEAPONPERFECTION, SCB_NONE);
 	set_sc(BS_OVERTHRUST, SC_OVERTHRUST, SI_OVERTHRUST, SCB_NONE);
@@ -898,11 +898,16 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
 				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
-				sc->data[SC_SILENCE].timer != -1 || 
 				sc->data[SC_STEELBODY].timer != -1 ||
 				sc->data[SC_BERSERK].timer != -1
 			))
 				return 0;
+
+			if (flag != 2 && ( //Those that block begin/end casting.
+				sc->data[SC_SILENCE].timer != -1
+			))
+				return 0;
+
 			//Skill blocking.
 			if (
 				(sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
@@ -2425,8 +2430,11 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 	if (flag == SCB_ALL)
 		return; //Refresh is done on invoking function (status_calc_pc)
 
-	if(flag&SCB_SPEED)
+	if(flag&SCB_SPEED) {
 		clif_updatestatus(sd,SP_SPEED);
+		if (sd->ud.walktimer != -1) //Re-walk to adjust speed. [Skotlex]
+			unit_walktoxy(&sd->bl, sd->ud.to_x, sd->ud.to_y, sd->ud.state.walk_easy);
+	}
 	if(flag&SCB_STR)
 		clif_updatestatus(sd,SP_STR);
 	if(flag&SCB_AGI)
@@ -2582,9 +2590,12 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2 +(status->int_ - b_status->int_) +((status->vit - b_status->vit)>>1));
 	}
 
-	if(flag&SCB_SPEED)
+	if(flag&SCB_SPEED) {
+		struct unit_data *ud = unit_bl2ud(bl);
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
-
+		if (ud && ud->walktimer != -1) //Re-walk to adjust speed. [Skotlex]
+			unit_walktoxy(bl, ud->to_x, ud->to_y, ud->state.walk_easy);
+	}
 	if(flag&SCB_CRI && b_status->cri) {
 		if (status->luk == b_status->luk)
 			status->cri = status_calc_critical(bl, sc, b_status->cri);

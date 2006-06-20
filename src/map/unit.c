@@ -1466,7 +1466,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		unit_stop_attack(bl);
 	if (ud->skilltimer != -1)
 		unit_skillcastcancel(bl,0);
-	ud->attackabletime = ud->canmove_tick = ud->canact_tick = gettick();
+// Do not reset can-act delay. [Skotlex]
+	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 	clif_clearchar_area(bl,clrtype);
 	
 	if(sc && sc->count ) { //map-change/warp dispells.
