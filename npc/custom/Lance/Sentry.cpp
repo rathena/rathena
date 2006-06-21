@@ -13,7 +13,7 @@
 //(  \_/ \_/ \_/ \_/ \_/ \_/ \_/   \_/ \_/ \_/ \_/ \_/ \_/  )
 //(                                                         )
 //(=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)
-// Programmed by [Lance] ver. 1.0
+// Programmed by [Lance] ver. 1.1
 // ---------------------------------------------------------
 // [ Sentry System ]
 // - Guards main towns against aggresive monsters and bad
@@ -24,10 +24,17 @@
 
 -	script	sentry_system	-1,{
 	function spawn_guardian {
-		set .mob_id[getarg(0)], spawnmob("Guardian Sentry",1904,.mob_map$[getarg(0)],.mob_x[getarg(0)],.mob_y[getarg(0)]);
+		set .mob_id[getarg(0)], mobspawn("Guardian Sentry",1904,.mob_map$[getarg(0)],.mob_x[getarg(0)],.mob_y[getarg(0)]);
 		mobattach .mob_id[getarg(0)]; // Attach events to this script.
-		mobrandomwalk .mob_id[getarg(0)], 0; // Prevents random walking.
-		mobattack .mob_id[getarg(0)]; // Enable all viewing.
+		setmobdata .mob_id[getarg(0)], 24, 1; // Enable killer mode.
+		setmobdata .mob_id[getarg(0)], 25, 
+			AI_ACTION_TYPE_DETECT|
+			AI_ACTION_TYPE_KILL|
+			AI_ACTION_TYPE_UNLOCK|
+			AI_ACTION_TYPE_DEAD|
+			AI_ACTION_TYPE_ATTACK; // Define engine callback routines.
+		setmobdata .mob_id[getarg(0)], 26, 1; // Prevents random walking.
+		setmobdata .mob_id[getarg(0)], 10, 1; // Enable AI mode 1.
 		return;
 	}
 
@@ -52,9 +59,9 @@
 					switch(.ai_action[AI_ACTION_TAR_TYPE]){ // Check what have we here.
 							case AI_ACTION_TAR_TYPE_PC: // It's a player
 								if(getd("$pkarma_"+.ai_action[AI_ACTION_TAR]) > .karma){ // pkarma is higher?
-									mobtalk .ai_action[AI_ACTION_SRC], "Who goes there!";
-									mobemote .ai_action[AI_ACTION_SRC], e_gasp; // !
-									mobattack .ai_action[AI_ACTION_SRC],.ai_action[AI_ACTION_TAR];
+									unittalk .ai_action[AI_ACTION_SRC], "Who goes there!";
+									unitemote .ai_action[AI_ACTION_SRC], e_gasp; // !
+									unitattack .ai_action[AI_ACTION_SRC],.ai_action[AI_ACTION_TAR];
 									// We're currently busy.
 									set .ai_busy[.@tmp], .ai_action[AI_ACTION_TAR];
 								}
@@ -63,9 +70,9 @@
 								if(.ai_action[AI_ACTION_TAR] != .ai_action[AI_ACTION_SRC]){
 									getmobdata .ai_action[AI_ACTION_TAR], .@temp;
 									if(.@temp[9]&0x804){ // In Aggressive mode?
-										mobtalk .ai_action[AI_ACTION_SRC], "Protect the villagers we must!";
-										mobemote .ai_action[AI_ACTION_SRC], e_gasp; // !
-										mobattack .ai_action[AI_ACTION_SRC],.ai_action[AI_ACTION_TAR];
+										unittalk .ai_action[AI_ACTION_SRC], "Protect the villagers we must!";
+										unitemote .ai_action[AI_ACTION_SRC], e_gasp; // !
+										unitattack .ai_action[AI_ACTION_SRC],.ai_action[AI_ACTION_TAR];
 										// We're currently busy.
 										set .ai_busy[.@tmp], .ai_action[AI_ACTION_TAR];
 									}
@@ -82,7 +89,7 @@
 					set .ai_busy[.@tmp], 0; // Remove him, we're free.
 				}
 				// Walk back to where we came from.
-				mobwalk .ai_action[AI_ACTION_SRC],.mob_x[.@tmp],.mob_y[.@tmp];
+				unitwalk .ai_action[AI_ACTION_SRC],.mob_x[.@tmp],.mob_y[.@tmp];
 				break;
 			case AI_ACTION_TYPE_DEAD: // We got killed :(
 				if(.ai_action[AI_ACTION_TAR_TYPE] == AI_ACTION_TAR_TYPE_PC){ // Attacker is a player?
