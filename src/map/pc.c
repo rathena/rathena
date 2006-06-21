@@ -5492,6 +5492,16 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,SI_FALCON,0);
+
+	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
+		clif_changelook(&sd->bl,LOOK_BASE,JOB_STAR_GLADIATOR2);
+	else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING)
+	{	
+		status_set_viewdata(&sd->bl, sd->status.class_);
+		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		if(sd->status.clothes_color)
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+	}
 	
 	if (type&OPTION_WEDDING && !(p_type&OPTION_WEDDING))
 		clif_changelook(&sd->bl,LOOK_BASE,JOB_WEDDING);

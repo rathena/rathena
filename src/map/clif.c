@@ -756,7 +756,7 @@ void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lha
 	struct item_data *id;
 #endif
 
-	if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 	{
 		*rhand = *lhand = 0;
 		return;
@@ -8661,7 +8661,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (clif_cant_act(sd) || sd->sc.option&OPTION_HIDE)
 			return;
 
-		if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+		if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 			return;
 
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
@@ -9507,7 +9507,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
 	if (sd->invincible_timer != -1)
@@ -9597,7 +9597,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 		return;
 	}
 
-	if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
 	if (sd->invincible_timer != -1)
@@ -9661,7 +9661,7 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 	if (clif_cant_act(sd))
 		return;
 
-	if(sd->sc.option&OPTION_WEDDING || sd->vd.class_ == JOB_XMAS)
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
 	if(sd->invincible_timer != -1)
