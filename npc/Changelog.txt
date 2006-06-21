@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/21
+	* Updated Einbroch to official X.4 spawns thanks to Tharis [Playtester]
 06/19
 	* Changed Doctor Quest item names to updated item_db names (cities/louyang.txt) [Evera]
 	* Fixed Quest requirements in cities/louyang.txt [Playtester]
