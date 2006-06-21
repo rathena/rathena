@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/21
+	* Fixed the equipment fields of the new cards [Playtester]
 06/20
 	* Reduced Stone Buckler's natural Def to 3 [Playtester]
 	* Started fixing some of the cards [Playtester]
