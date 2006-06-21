@@ -2504,7 +2504,6 @@ int char_send_fame_list(int fd) {
 
 int search_mapserver(unsigned short map, long ip, short port);
 
-
 int parse_frommap(int fd) {
 	int i, j;
 	int id;

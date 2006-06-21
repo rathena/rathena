@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/21
+	* Applied use of parse_hostbyname() in chrif.c to fix compilation errors.
+	  [Skotlex]
+	* status_percent_change will now account for when the target's max hp/sp is
+	  above INT_MAX. [Skotlex]
 	* [Added]:
 	  - DNS (WAN) sync for those pesky disconnections (dynamic ip renewal). [Lance]
 2006/06/20

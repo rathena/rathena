@@ -1415,14 +1415,14 @@ int chrif_disconnect(int fd) {
 }
 
 void chrif_update_ip(int fd){
-	struct hostent *h = map_server_dns?gethostbyname(map_server_dns):NULL;
+	char ip[4];
 	ShowInfo("IP Sync in progress...\n");
-	if(h){
+	if (map_server_dns && resolve_hostbyname(map_server_dns, ip)) {
 		WFIFOW(fd, 0) = 0x2736;
-		WFIFOB(fd, 2) = h->h_addr[0];
-		WFIFOB(fd, 3) = h->h_addr[1];
-		WFIFOB(fd, 4) = h->h_addr[2];
-		WFIFOB(fd, 5) = h->h_addr[3];
+		WFIFOB(fd, 2) = ip[0];
+		WFIFOB(fd, 3) = ip[1];
+		WFIFOB(fd, 4) = ip[2];
+		WFIFOB(fd, 5) = ip[3];
 		WFIFOSET(fd, 6);
 	}
 }

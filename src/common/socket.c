@@ -9,6 +9,7 @@
 #ifdef __WIN32
 #define __USE_W32_SOCKETS
 #include <windows.h>
+#include <winsock.h>
 #include <io.h>
 typedef int socklen_t;
 #else
@@ -16,9 +17,11 @@ typedef int socklen_t;
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <net/if.h>
-#include <sys/time.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include <sys/ioctl.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 
 #ifndef SIOCGIFCONF
 #include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
@@ -1387,4 +1390,16 @@ bool session_isValid(int fd)
 bool session_isActive(int fd)
 {
 	return ( session_isValid(fd) && !session[fd]->eof );
+}
+
+in_addr_t resolve_hostbyname(char* hostname, char *ip) {
+	struct hostent *h = gethostbyname(hostname);
+	char ip_str[16];
+	if (!h) return 0;
+	ip[0] = (unsigned char) h->h_addr[0];
+	ip[1]	= (unsigned char) h->h_addr[1];
+	ip[2] = (unsigned char) h->h_addr[2];
+	ip[3] = (unsigned char) h->h_addr[3];
+	sprintf(ip_str, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+	return inet_addr(ip_str);
 }

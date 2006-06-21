@@ -767,6 +767,22 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	if (sp_rate && !sp)
 		sp = 1;
 
+	//Ugly check in case damage dealt is too much for the received args of
+	//status_heal / status_damage. [Skotlex]
+	if (hp > INT_MAX) {
+	  	hp -= INT_MAX;
+		if (flag)
+		  	status_heal(target, INT_MAX, 0, 0);
+		else
+			status_damage(src, target, INT_MAX, 0, 0, (!src||src==target?5:1));
+	}
+  	if (sp > INT_MAX) {
+		sp -= INT_MAX;
+		if (flag)
+		  	status_heal(target, 0, INT_MAX, 0);
+		else
+			status_damage(src, target, 0, INT_MAX, 0, (!src||src==target?5:1));
+	}	
 	if (flag) return status_heal(target, hp, sp, 0);
 	return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
 }
