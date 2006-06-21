@@ -595,7 +595,7 @@ comodo.gat,204,148,7	script	Devellin	90,{
 
 	mes "[Devellin]";
 	mes "It seems some traveller showed";
-	mes "a huge diamong to Kachua a while";
+	mes "a huge diamond to Kachua a while";
 	mes "ago. Ever since then, all she's";
 	mes "been talking about is diamonds and";
 	mes "how much she wants them.";
