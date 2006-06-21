@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/21
+	* Yuno/Lhz/Thanatos spawn updates thanks to Tharis [Playtester]
 	* Fixed some spawns in Odin Temple [Playtester]
 	* Updated Hugel to official X.4 spawns thanks to Tharis [Playtester]
 	* Updated Einbroch to official X.4 spawns thanks to Tharis [Playtester]

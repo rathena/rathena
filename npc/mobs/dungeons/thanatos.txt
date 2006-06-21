@@ -30,7 +30,7 @@ tha_t02.gat,0,0,0,0	monster	Mimic	1191,25,0,0,0
 tha_t02.gat,0,0,0,0	monster	Ancient Mimic	1699,70,0,0,0
 tha_t02.gat,0,0,0,0	monster	Plasma	1697,15,0,0,0
 tha_t02.gat,0,0,0,0	monster	Alice	1275,10,0,0,0
-tha_t02.gat,0,0,0,0	monster	Elder	1377,10,0,0,0
+tha_t02.gat,0,0,0,0	monster	Elder	1377,5,0,0,0
 tha_t02.gat,0,0,0,0	monster	Retribution	1702,3,0,0,0
 
 //==================================================
