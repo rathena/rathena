@@ -157,7 +157,7 @@ void set_defaultconsoleparse(int (*defaultparse)(char*));
 //Resolves the hostname and stores the string representation of the string in ip.
 //Meant to simplify calls to gethostbyname without the need of all the
 //required network includes.
-int resolve_hostbyname(char* hostname, char *ip);
+in_addr_t resolve_hostbyname(char* hostname, char *ip);
 
 extern unsigned int addr_[16];   // ip addresses of local host (host byte order)
 extern unsigned int naddr_;   // # of ip addresses
