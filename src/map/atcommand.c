@@ -15,6 +15,7 @@
 #include "../common/core.h"
 #include "../common/showmsg.h"
 
+#include "atcommand.h"
 #include "log.h"
 #include "clif.h"
 #include "chrif.h"
@@ -29,7 +30,6 @@
 #include "battle.h"
 #include "party.h"
 #include "guild.h"
-#include "atcommand.h"
 #include "script.h"
 #include "npc.h"
 #include "trade.h"

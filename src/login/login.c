@@ -262,6 +262,18 @@ int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+static int sync_ip_addresses(int tid, unsigned int tick, int id, int data){
+	int i;
+	ShowInfo("IP Sync in progress...\n");
+	for(i = 0; i < MAX_SERVERS; i++) {
+		if (server_fd[i] >= 0) {
+			WFIFOW(server_fd[i], 0) = 0x2735;
+			WFIFOSET(server_fd[i],2);
+		}
+	}
+	return 0;
+}
+
 //----------------------------------------------------------------------
 // Determine if an account (id) is a GM account
 // and returns its level (or 0 if it isn't a GM account or if not found)
@@ -1956,6 +1968,16 @@ int parse_fromchar(int fd) {
 				WFIFOW(fd,2) = p;
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
+			break;
+
+		case 0x2736: // WAN IP update from char-server
+			for(i = 0; i < MAX_SERVERS; i++) {
+				if (server_fd[i] == fd) {
+					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					server[i].ip = RFIFOL(fd,2);
+				}
+			}
+			RFIFOSKIP(fd,6);
 			break;
 
 		case 0x3000: //change sex for chrif_changesex()
@@ -4166,6 +4188,10 @@ int do_init(int argc, char **argv) {
 	
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000); // every 10 minutes cleanup online account db.
+
+	add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");
+	add_timer_interval(gettick() + 600*1000, sync_ip_addresses, 0, 0, 600*1000); // Every 10 minutes to sync IPs.
+
 	if(console) {
 		set_defaultconsoleparse(parse_console);
 	   	start_console();

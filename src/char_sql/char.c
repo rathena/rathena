@@ -104,6 +104,8 @@ int char_per_account = 0; //Maximum charas per account (default unlimited) [Siri
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
 
+char *char_server_dns = NULL;
+
 // Advanced subnet check [LuzZza]
 struct _subnet {
 	long subnet;
@@ -1782,6 +1784,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 int parse_tologin(int fd) {
 	int i;
 	struct char_session_data *sd;
+	struct hostent *h;
 
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
@@ -2176,6 +2179,26 @@ int parse_tologin(int fd) {
 				}
 				RFIFOSKIP(fd,6);
 			}
+			break;
+
+		case 0x2735:
+			ShowInfo("IP Sync in progress...\n");
+			h = char_server_dns?gethostbyname(char_server_dns):NULL;
+			if(h){
+				WFIFOW(fd,0) = 0x2736;
+				WFIFOB(fd,2) = h->h_addr[0];
+				WFIFOB(fd,3) = h->h_addr[1];
+				WFIFOB(fd,4) = h->h_addr[2];
+				WFIFOB(fd,5) = h->h_addr[3];
+				WFIFOSET(fd, 6);
+			}
+			for(i = 0; i < MAX_MAP_SERVERS; i++){
+				if(server_fd[i] >= 0){
+					WFIFOW(server_fd[i], 0) = 0x2b1e;
+					WFIFOSET(server_fd[i], 2);
+				}
+			}
+			RFIFOSKIP(fd,2);
 			break;
 
 		default:
@@ -2970,6 +2993,16 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 			break;
 		}
+
+		case 0x2736:
+			for(i = 0; i < MAX_MAP_SERVERS; i++){
+				if(server_fd[i] == fd){
+					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					server[i].ip = RFIFOL(fd, 2);
+				}
+			}
+			RFIFOSKIP(fd,6);
+			break;
 
 		default:
 			// inter server - packet
@@ -3928,6 +3961,8 @@ void do_final(void) {
 	char_db_->destroy(char_db_, NULL);
 	online_char_db->destroy(online_char_db, NULL);
 
+	if(char_server_dns) aFree(char_server_dns);
+
 	mysql_close(&mysql_handle);
 	if(char_gm_read)
 		mysql_close(&lmysql_handle);
@@ -4071,6 +4106,9 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "login_ip") == 0) {
 			login_ip_set_ = 1;
 			h = gethostbyname (w2);
+			if(char_server_dns)
+				aFree(char_server_dns);
+			char_server_dns = (char *)aCalloc(strlen(w2)+1, 1);
 			if (h != NULL) {
 				ShowStatus("Login server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				sprintf(login_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);

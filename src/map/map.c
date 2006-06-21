@@ -3297,6 +3297,10 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "map_ip") == 0) {
 				map_ip_set_ = 1;
 				h = gethostbyname (w2);
+				if(map_server_dns)
+					aFree(map_server_dns);
+				map_server_dns = aCalloc(strlen(w2)+1,1);
+				strcpy(map_server_dns, w2);
 				if (h != NULL) {
 					ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
@@ -3708,6 +3712,8 @@ void do_final(void) {
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);
 	charid_db->destroy(charid_db, NULL);
+
+	if(map_server_dns) aFree(map_server_dns);
 
 //#endif
 

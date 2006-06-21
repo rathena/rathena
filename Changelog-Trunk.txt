@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/06/21
+	* [Added]:
+	  - DNS (WAN) sync for those pesky disconnections (dynamic ip renewal). [Lance]
 2006/06/20
 	* Some cleaning up of OPTION related code. OPTION_XMAS and OPTION_FLYING
 	  really ARE the same value clientside! (totally stupid), therefore I've

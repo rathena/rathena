@@ -75,6 +75,7 @@ char backup_txt_flag = 0; // The backup_txt file was created because char deleti
 char unknown_char_name[1024] = "Unknown";
 char char_log_filename[1024] = "log/char.log";
 char db_path[1024]="db";
+char *char_server_dns = NULL;
 
 // Advanced subnet check [LuzZza]
 struct _subnet {
@@ -1797,6 +1798,7 @@ static int char_delete(struct mmo_charstatus *cs) {
 int parse_tologin(int fd) {
 	int i;
 	struct char_session_data *sd;
+	struct hostent *h;
 	RFIFOHEAD(fd);
 
 	// only login-server can have an access to here.
@@ -2292,6 +2294,25 @@ int parse_tologin(int fd) {
 				}
 				RFIFOSKIP(fd,6);
 			}
+			break;
+		case 0x2735:
+			ShowInfo("IP Sync in progress...\n");
+			h = char_server_dns?gethostbyname(char_server_dns):NULL;
+			if(h){
+				WFIFOW(fd,0) = 0x2736;
+				WFIFOB(fd,2) = h->h_addr[0];
+				WFIFOB(fd,3) = h->h_addr[1];
+				WFIFOB(fd,4) = h->h_addr[2];
+				WFIFOB(fd,5) = h->h_addr[3];
+				WFIFOSET(fd, 6);
+			}
+			for(i = 0; i < MAX_MAP_SERVERS; i++){
+				if(server_fd[i] >= 0){
+					WFIFOW(server_fd[i], 0) = 0x2b1e;
+					WFIFOSET(server_fd[i], 2);
+				}
+			}
+			RFIFOSKIP(fd,2);
 			break;
 		default:
 			ShowWarning("Unknown packet 0x%04x received from login-server, disconnecting.\n", RFIFOW(fd,0));
@@ -3055,6 +3076,15 @@ int parse_frommap(int fd) {
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 			break;
 		}
+		case 0x2736:
+			for(i = 0; i < MAX_MAP_SERVERS; i++){
+				if(server_fd[i] == fd){
+					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					server[i].ip = RFIFOL(fd, 2);
+				}
+			}
+			RFIFOSKIP(fd,6);
+			break;
 		default:
 			// inter serverˆ—‚É“n‚·
 			{
@@ -3967,6 +3997,10 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "login_ip") == 0) {
 			login_ip_set_ = 1;
 			h = gethostbyname(w2);
+			if(char_server_dns)
+				aFree(char_server_dns);
+			char_server_dns = (char *)aCalloc(strlen(w2)+1, 1);
+			strcpy(char_server_dns, w2);
 			if (h != NULL) {
 				ShowStatus("Login server IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
 				sprintf(login_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
@@ -4137,6 +4171,7 @@ void do_final(void) {
 	
 	if(gm_account) aFree(gm_account);
 	if(char_dat) aFree(char_dat);
+	if(char_server_dns) aFree(char_server_dns);
 
 	delete_session(login_fd);
 	delete_session(char_fd);

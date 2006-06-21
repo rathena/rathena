@@ -38,13 +38,14 @@
 //Free Packets: F->2af8
 
 struct dbt *auth_db;
+char *map_server_dns = NULL;
 
 static const int packet_len_table[0x3d] = {
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,49,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30,-1,10,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	 0,-1,10, 6,11,-1, 0, 0,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
-	-1,-1,-1,-1,-1,-1,-1, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, F->2b1e, U->2b1f
+	-1,-1,-1,-1,-1,-1,2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, F->2b1e, U->2b1f
 	-1,-1,-1,-1,-1,-1,-1,-1,	// 2b20-2b27: U->2b20, F->2b21, F->2b22, F->2b23, F->2b24, F->2b25, F->2b26, F->2b27
 };
 
@@ -1413,6 +1414,19 @@ int chrif_disconnect(int fd) {
 	return 0;
 }
 
+void chrif_update_ip(int fd){
+	struct hostent *h = map_server_dns?gethostbyname(map_server_dns):NULL;
+	ShowInfo("IP Sync in progress...\n");
+	if(h){
+		WFIFOW(fd, 0) = 0x2736;
+		WFIFOB(fd, 2) = h->h_addr[0];
+		WFIFOB(fd, 3) = h->h_addr[1];
+		WFIFOB(fd, 4) = h->h_addr[2];
+		WFIFOB(fd, 5) = h->h_addr[3];
+		WFIFOSET(fd, 6);
+	}
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -1476,6 +1490,7 @@ int chrif_parse(int fd)
 		case 0x2b15: chrif_recvgmaccounts(fd); break;
 		case 0x2b1b: chrif_recvfamelist(fd); break;
 		case 0x2b1d: chrif_load_scdata(fd); break;
+		case 0x2b1e: chrif_update_ip(fd); break;
 		case 0x2b1f: chrif_disconnectplayer(fd); break;
 		case 0x2b20: chrif_removemap(fd); break; //Remove maps of a server [Sirius]
 

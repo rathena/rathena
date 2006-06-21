@@ -1354,6 +1354,7 @@ extern char *GRF_PATH_FILENAME;
 
 
 extern int charsave_method; //needed ..
+extern char *map_server_dns;
 
 #ifndef TXT_ONLY
 
