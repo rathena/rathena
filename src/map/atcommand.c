@@ -7716,7 +7716,7 @@ atcommand_changeleader(
 int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	// autoloot command with value
-	unsigned int rate;
+	int rate;
 
 	nullpo_retr(-1, sd);
 
@@ -7737,11 +7737,8 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 		}
 	}
 
-	// autoloot command with value
-	//unsigned int rate; // Moved to top due to decleration error after executional block. [Zido]
-
 	// get maximum droprate limit
-	rate = atoi(message) * 100;
+	rate = (int)(atof(message) * 100);
 
 	// check for invalid value
 	if(rate > 10000)
@@ -7754,32 +7751,28 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	if(rate == 0)
 	{
 		if(sd->state.autoloot == 0)
-		{
 			clif_displaymessage(fd, "Autoloot is already off.");
-			return 0;
-		} else {
+		else {
 			clif_displaymessage(fd, "Autoloot is now off.");
 			sd->state.autoloot = 0;
-			return 0;
 		}
+		return 0;
 	}
 
 	// autoloot value is 100, turn autoloot on
 	if(rate == 10000)
 	{
 		if(sd->state.autoloot == 10000)
-		{
 			clif_displaymessage(fd, "Autoloot is already on.");
-			return 0;
-		} else {
+		else {
 			clif_displaymessage(fd, "Autoloot is now on.");
 			sd->state.autoloot = 10000;
-			return 0;
 		}
+		return 0;
 	}
 
 	// autoloot value is between 0 and 100
-	snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %d percent and below.", (rate / 100));
+	snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %0.02f%% and below.", rate/100.);
 	clif_displaymessage(fd, atcmd_output);
 	sd->state.autoloot = rate;
 
