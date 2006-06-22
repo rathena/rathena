@@ -2395,7 +2395,6 @@ struct Damage  battle_calc_misc_attack(
 
 	if( src == NULL || target == NULL ){
 		nullpo_info(NLP_MARK);
-		memset(&md,0,sizeof(md));
 		return md;
 	}
 
