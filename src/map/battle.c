@@ -1873,7 +1873,7 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage2 = 0;
 			flag.rh=1;
 			flag.lh=0;
-		} else if(sd->status.weapon > MAX_WEAPON_TYPE)
+		} else if(sd->status.weapon > MAX_WEAPON_TYPE && skill_num != ASC_BREAKER)
 		{	//Dual-wield
 			if (wd.damage)
 			{
