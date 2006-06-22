@@ -1172,7 +1172,7 @@ int mmo_auth(struct mmo_account* account, int fd) {
 
 		while((dnsbl_serv=strtok(dnsbl_servs,","))) {
 			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=NULL) {
+			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=0) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 				return 3;
 			}
@@ -1958,7 +1958,7 @@ int parse_fromchar(int fd) {
 		case 0x2736: // WAN IP update from char-server
 			for(i = 0; i < MAX_SERVERS; i++) {
 				if (server_fd[i] == fd) {
-					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					ShowInfo("IP Sync (Server #%d %d.%d.%d.%d) successful.\n",i,(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 					server[i].ip = RFIFOL(fd,2);
 				}
 			}

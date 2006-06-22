@@ -1414,8 +1414,8 @@ int chrif_disconnect(int fd) {
 
 void chrif_update_ip(int fd){
 	char ip[4];
-	ShowInfo("IP Sync in progress...\n");
 	if (map_server_dns && resolve_hostbyname(map_server_dns, ip, NULL)) {
+		ShowInfo("IP Sync [%s] in progress...\n",map_server_dns);
 		WFIFOW(fd, 0) = 0x2736;
 		WFIFOB(fd, 2) = ip[0];
 		WFIFOB(fd, 3) = ip[1];

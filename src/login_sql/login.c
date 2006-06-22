@@ -1398,7 +1398,7 @@ int parse_fromchar(int fd){
 		case 0x2736: // WAN IP update from char-server
 			for(i = 0; i < MAX_SERVERS; i++) {
 				if (server_fd[i] == fd) {
-					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					ShowInfo("IP Sync (Server #%d %d.%d.%d.%d) successful.\n",i,(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 					server[i].ip = RFIFOL(fd,2);
 				}
 			}

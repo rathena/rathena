@@ -6,7 +6,10 @@
 #include <string.h>
 #include <stdarg.h>
 #include <math.h>
+
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 #include "../common/core.h"
 #include "../common/timer.h"

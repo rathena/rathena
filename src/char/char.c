@@ -2290,9 +2290,9 @@ int parse_tologin(int fd) {
 		case 0x2735:
 		{
 			unsigned char ip[4];
-			ShowInfo("IP Sync in progress...\n");
 			if (char_server_dns && resolve_hostbyname(char_server_dns, ip, NULL))
 			{
+				ShowInfo("IP Sync [%s] in progress...\n",char_server_dns);
 				WFIFOW(fd,0) = 0x2736;
 				WFIFOB(fd,2) = ip[0];
 				WFIFOB(fd,3) = ip[1];
@@ -3073,7 +3073,7 @@ int parse_frommap(int fd) {
 		case 0x2736:
 			for(i = 0; i < MAX_MAP_SERVERS; i++){
 				if(server_fd[i] == fd){
-					ShowInfo("IP Sync (Server #%d) successful.\n",i);
+					ShowInfo("IP Sync (Server #%d %d.%d.%d.%d) successful.\n",i,(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 					server[i].ip = RFIFOL(fd, 2);
 				}
 			}
