@@ -36,6 +36,9 @@ Musashiden
 
 Date		Added
 ======
+06/22
+	* Fixed treasure chests round number exploit [Lupus]
+	  Now u get an extra chest one exact 4 Eco.pts adding
 06/21
 	* Yuno/Lhz/Thanatos spawn updates thanks to Tharis [Playtester]
 	* Fixed some spawns in Odin Temple [Playtester]
