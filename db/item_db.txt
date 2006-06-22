@@ -590,7 +590,7 @@
 1305,Cleaver,Cleaver,4,,10,1200,140,,1,0,0x000444A2,7,2,2,4,44,1,6,{ bonus2 bAddRace,RC_DemiHuman,5; bonus3 bAddMonsterDropItem,517,2,3000; },{},{}
 1306,War_Axe,War Axe,4,,10,4200,145,,1,1,0x00040400,7,2,2,3,76,1,6,{ bonus bDex,2; bonus bLuk,2; },{},{}
 1307,Windhawk,Windhawk,4,,10,1500,115,,1,0,0x000444A2,7,2,2,2,14,1,6,{ bonus bAspdRate,5; },{},{}
-1308,Golden_Axe,Golden Axe,4,,10,10,0,,0,0,0x00000000,,0,0,0,0,0,0,{},{},{}
+1308,Golden_Axe,Golden Axe,4,,10,10,0,,0,0,0xFFFFFFFE,7,2,0,0,0,0,0,{},{},{}
 // 2-Handed Axes
 1351,Battle_Axe,Battle Axe,4,5400,,1500,80,,1,3,0x000444A2,7,2,34,1,3,1,7,{},{},{}
 1352,Battle_Axe_,Battle Axe,4,5400,,1500,80,,1,4,0x000444A2,7,2,34,1,3,1,7,{},{},{}
@@ -656,7 +656,7 @@
 1473,Wizardry_Staff,Wizardry Staff,4,,10,2400,120,,1,0,0x00810204,7,2,34,4,90,1,10,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
 // 2-Handed Spears
 1474,Gae_Bolg,Gae Bolg,4,,10,2000,160,,3,0,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Boss,10; },{},{}
-1475,Equestrian's_Spear,Equestrian's Spear,4,,10,10,0,,0,0,0x00000000,,0,0,0,0,0,0,{},{},{}
+1475,Equestrian's_Spear,Equestrian's Spear,4,,10,10,0,,0,0,0x00004082,7,2,0,0,0,0,0,{},{},{}
 // Maces
 1501,Club,Club,4,120,,700,23,,1,3,0x0004C5B3,7,2,2,1,2,1,8,{},{},{}
 1502,Club_,Club,4,120,,700,23,,1,4,0x0004C5B3,7,2,2,1,2,1,8,{},{},{}
@@ -1117,7 +1117,7 @@
 2650,Morrigane's_Belt,Morrigane's Belt,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bAtk,5; bonus bCritical,3; },{},{}
 2651,Morrigane's_Pendant,Morrigane's Pendant,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bStr,2; bonus bCritical,3; },{},{}
 2652,Goddess_of_Fortune's_Cursed_Brooch,Goddess of Fortune's Cursed Brooch,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bCritical,6; bonus2 bAddEff2,Eff_Curse,50; },{},{}
-2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,90,0,0,{},{},{}
+2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,90,0,0,{},{},{}
 2654,Shinobi_Sash,Shinobi Sash,5,,10,300,,0,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; if(isequipped(2337)) { bonus bUseSPrate,-20; bonus bMaxHP,300; } },{},{}
 2655,Bloodied_Shackle_Ball,Bloodied Shackle Ball,5,,10,4000,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{ if (isequipped(2408)) { bonus bAtk,50; bonus2 bAddDefClass,1196,20; bonus2 bAddDefClass,1197,20; } },{},{}
 2656,Armor_Charm,Armor Charm,5,,10,1000,,0,,0,0x000654E2,7,2,136,,0,0,0,{ if(isequipped(2312) || isequipped(2313)) { bonus bDef,6; bonus bMaxHP,200; } },{},{}
@@ -2416,7 +2416,7 @@
 13002,Ginnungagap,Ginnungagap,4,,10,700,120,,1,0,0x008F5EEF,7,2,2,4,70,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; bonus2 bAddEff2,Eff_Blind,50; },{},{}
 13003,Cowardice_Blade,Cowardice Blade,4,52000,,700,80,,1,1,0x02021040,7,2,2,3,55,1,1,{ bonus bDef,5; },{},{}
 13004,Cowardice_Blade_,Cowardice Blade,4,52000,,700,80,,1,2,0x02021040,7,2,2,3,55,1,1,{ bonus bDef,5; },{},{}
-13005,Angelic_Wing_Dagger,Angelic Wing Dagger,4,,10,10,0,,1,1,0x00000000,0,2,0,0,0,0,0,{},{},{}
+13005,Angelic_Wing_Dagger,Angelic Wing Dagger,4,,10,10,0,,1,1,0xFFFFFFFE,7,2,0,0,0,0,0,{},{},{}
 // Ninja Weapons
 13006,Gokurin,Gokurin,4,240000,,600,150,,1,0,0x02000000,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; },{},{}
 13007,Jitte,Jitte,4,20000,,400,70,,1,0,0x02000000,7,2,2,2,35,1,1,{ bonus bBreakWeaponRate,500; },{},{}
@@ -2521,7 +2521,7 @@
 4372,Bacsojin_Card,Bacsojin Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk, getrefine()-5; },{},{} //bonus2 bSubRace,RC_Demon,20; bonus2 bSubRace,RC_Brute,20;
 4374,Vesper_Card,Vesper Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()<9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{} //if(getrefine()<9) { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } else { bonus2 bSubEle,Ele_Neutral,5; bonus bFlee,5;
+4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()>=9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{}
 4376,Lady_Tany_Card,Lady Tany Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-50; bonus bMaxSPrate,50; bonus2 bAddMonsterDropItem,513,20; bonus2 bAddItemHealRate,3,100; },{},{} //bonus bMaxHPrate,-50; bonus bMaxSPrate,50; bonus2 bAddMonsterDropItem,513,20; bonus2 bAddItemHealRate,3,50;
 4377,Grove_Card,Grove Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12063,RC_Formless,1; },{},{}
 4378,Gold_Acidus_Card,Gold Acidus Card,6,,10,10,,,,,,,,64,,,,,{ if(getrefine()<=4) { bonus bMaxHPrate,8; bonus bMaxSPrate,8; bonus bHPrecovRate,5; bonus bSPrecovRate,5; } else { bonus bMaxHPrate,4; bonus bMaxSPrate,4; } },{},{}

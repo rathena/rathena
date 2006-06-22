@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/22
+	* Fixed some equipment fields that caused warnings [Playtester]
 06/21
 	* Fixed the equipment fields of the new cards [Playtester]
 06/20
