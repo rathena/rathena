@@ -10433,7 +10433,7 @@ int buildin_pcstopfollow(struct script_state *st) {
 // [zBuffer] List of mob control commands --->
 int buildin_mobspawn(struct script_state *st){
 	int class_,x,y,id;
-	char *str,*map,*event="";
+	char *str,*map;
 
 	// Who?
 	str		=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -10443,13 +10443,8 @@ int buildin_mobspawn(struct script_state *st){
 	map		=conv_str(st,& (st->stack->stack_data[st->start+4]));
 	x		=conv_num(st,& (st->stack->stack_data[st->start+5]));
 	y		=conv_num(st,& (st->stack->stack_data[st->start+6]));
-	// When?
-	if( st->end > st->start+8 ){
-		event=conv_str(st,& (st->stack->stack_data[st->start+7]));
-		check_event(st, event);
-	}
 		
-	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,event);
+	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,NULL);
 	push_val(st->stack,C_INT,id);
 
 	return 0;
