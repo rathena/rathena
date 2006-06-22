@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/22
+	* Updated the tools/stackdump script to also handle sig-plugin generated
+	  backtraces. Now it will also auto-determine whether the exe needs a .exe at
+	  the end or not. Help me test it as I want this script on stable NOW :X
+	  [Skotlex]
+	* Usage is "stackdump <login/char/map> <txt/sql> [number]". When a number
+	  is given, sig-plugin stackdumps are assumed, otherwise it parses the normal
+	  stackdump as before. [Skotlex]
 	* Corrected autoloot so that you can specify rate with decimal precision
 	  ("@autoloot 0.01" should work) [Skotlex]
 2006/06/21
