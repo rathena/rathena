@@ -3989,19 +3989,19 @@ int char_config_read(const char *cfgName) {
 			}
 		} else if (strcmpi(w1, "login_ip") == 0) {
 			login_ip = resolve_hostbyname(w2, NULL, login_ip_str);
-			if (login_ip) {
-				if(char_server_dns)
-					aFree(char_server_dns);
-				char_server_dns = (char *)aCalloc(strlen(w2)+1, 1);
-				strcpy(char_server_dns, w2);
+			if (login_ip)
 				ShowStatus("Login server IP address : %s -> %s\n", w2, login_ip_str);
-			}
 		} else if (strcmpi(w1, "login_port") == 0) {
 			login_port = atoi(w2);
 		} else if (strcmpi(w1, "char_ip") == 0) {
 			char_ip = resolve_hostbyname(w2, NULL, char_ip_str);
-			if (char_ip)
+			if (char_ip){
+				if(char_server_dns)
+					aFree(char_server_dns);
+				char_server_dns = (char *)aCalloc(strlen(w2)+1, 1);
+				strcpy(char_server_dns, w2);
 				ShowStatus("Character server IP address : %s -> %s\n", w2, char_ip_str);
+			}
 		} else if (strcmpi(w1, "bind_ip") == 0) {
 			bind_ip = resolve_hostbyname(w2, NULL, bind_ip_str);
 			if (bind_ip)	
