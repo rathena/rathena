@@ -1392,14 +1392,17 @@ bool session_isActive(int fd)
 	return ( session_isValid(fd) && !session[fd]->eof );
 }
 
-in_addr_t resolve_hostbyname(char* hostname, char *ip) {
+in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str) {
 	struct hostent *h = gethostbyname(hostname);
-	char ip_str[16];
+	unsigned char ip_buf[16];
+	char ip2[4];
 	if (!h) return 0;
+	if (ip == NULL) ip = ip2;
 	ip[0] = (unsigned char) h->h_addr[0];
 	ip[1]	= (unsigned char) h->h_addr[1];
 	ip[2] = (unsigned char) h->h_addr[2];
 	ip[3] = (unsigned char) h->h_addr[3];
+	if (ip_str == NULL) ip_str = ip_buf;
 	sprintf(ip_str, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 	return inet_addr(ip_str);
 }

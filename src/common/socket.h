@@ -9,6 +9,7 @@
 #ifdef __WIN32
 #define __USE_W32_SOCKETS
 #include <windows.h>
+typedef long in_addr_t;
 #else
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -157,7 +158,10 @@ void set_defaultconsoleparse(int (*defaultparse)(char*));
 //Resolves the hostname and stores the string representation of the string in ip.
 //Meant to simplify calls to gethostbyname without the need of all the
 //required network includes.
-in_addr_t resolve_hostbyname(char* hostname, char *ip);
+//hostname is the name to resolve.
+//ip is an array of char[4] where the individual parts of the ip are stored (optional)
+//ip_str is a char[16] where the whole ip is stored in string notation (optional)
+in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str);
 
 extern unsigned int addr_[16];   // ip addresses of local host (host byte order)
 extern unsigned int naddr_;   // # of ip addresses

@@ -9,7 +9,6 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
-#include "../common/core.h"
 #include "../common/showmsg.h"
 
 #include "log.h"

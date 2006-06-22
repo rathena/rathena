@@ -10,16 +10,6 @@
 #include <string.h>
 #include <stdarg.h>
 #include <limits.h>
-#ifdef __WIN32
-#define __USE_W32_SOCKETS
-#include <windows.h>
-#else
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
 #include <time.h>
 
 #include "../common/socket.h"
@@ -160,15 +150,30 @@ static void clif_hpmeter_single(int fd, struct map_session_data *sd);
  * mapŽI‚ÌipÝ’è
  *------------------------------------------
  */
-void clif_setip(char *ip)
+int clif_setip(char *ip)
 {
-	memcpy(map_ip_str, ip, 16);
-	map_ip = inet_addr(map_ip_str);
+	map_ip = resolve_hostbyname(ip,NULL,map_ip_str);
+	if (!map_ip) {
+		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
+		return 0;
+	}
+	if(map_server_dns)
+		aFree(map_server_dns);
+	map_server_dns = aCalloc(strlen(ip)+1,1);
+	strcpy(map_server_dns, ip);
+	ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, map_ip_str);
+	return 1;
 }
 
 void clif_setbindip(char *ip)
 {
-	bind_ip = inet_addr(ip);
+	unsigned char ip_str[4];
+	bind_ip = resolve_hostbyname(ip,ip_str,NULL);
+	if (bind_ip) {
+		ShowInfo("Map Server Bind IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", ip, ip_str[0], ip_str[1], ip_str[2], ip_str[3]);
+	} else {
+		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
+	}
 }
 
 /*==========================================
@@ -187,6 +192,12 @@ void clif_setport(int port)
 in_addr_t clif_getip(void)
 {
 	return map_ip;
+}
+
+//Returns the ip casted as a basic type, to avoid needing to include the socket/net related libs by calling modules.
+unsigned long clif_getip_long(void)
+{
+	return (unsigned long)map_ip;
 }
 
 /*==========================================
@@ -10601,16 +10612,13 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 		((level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(AtCommand_Mute))
 		|| (type == 2 && !level)) {
 		clif_GM_silence(sd, dstsd, ((type == 2) ? 1 : type));
-		if (battle_config.manner_system)
+		dstsd->status.manner -= limit;
+		if(dstsd->status.manner < 0)
+			sc_start(bl,SC_NOCHAT,100,0,0);
+		else
 		{
-			dstsd->status.manner -= limit;
-			if(dstsd->status.manner < 0)
-				sc_start(bl,SC_NOCHAT,100,0,0);
-			else
-			{
-				dstsd->status.manner = 0;
-				status_change_end(bl,SC_NOCHAT,-1);
-			}
+			dstsd->status.manner = 0;
+			status_change_end(bl,SC_NOCHAT,-1);
 		}
 		ShowDebug("GMReqNoChat: name:%s type:%d limit:%d manner:%d\n", dstsd->status.name, type, limit, dstsd->status.manner);
 	}
@@ -11775,9 +11783,6 @@ static int packetdb_readdb(void)
  *------------------------------------------
  */
 int do_init_clif(void) {
-#ifndef __WIN32
-	int i;
-#endif
 	
 	clif_config.packet_db_ver = -1; // the main packet version of the DB
 	memset(clif_config.connect_cmd, 0, sizeof(clif_config.connect_cmd)); //The default connect command will be determined after reading the packet_db [Skotlex]
@@ -11787,24 +11792,10 @@ int do_init_clif(void) {
 	packetdb_readdb();
 
 	set_defaultparse(clif_parse);
-#ifdef __WIN32
-	//if (!make_listen_port(map_port)) {
 	if (!make_listen_bind(bind_ip,map_port)) {
 		ShowFatalError("cant bind game port\n");
 		exit(1);
 	}
-#else
-	for(i = 0; i < 10; i++) {
-		//if (make_listen_port(map_port))
-		if (make_listen_bind(bind_ip,map_port))
-			break;
-		sleep(20);
-	}
-	if (i == 10) {
-		ShowFatalError("cant bind game port\n");
-		exit(1);
-	}
-#endif
 
 	add_timer_func_list(clif_waitclose, "clif_waitclose");
 	add_timer_func_list(clif_clearchar_delay_sub, "clif_clearchar_delay_sub");

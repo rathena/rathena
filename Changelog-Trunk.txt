@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/21
+	* Tested and fixed resolve_hostbyname. Applied said function around most of
+	  the code where needed. Removed includes for the OS/network system pretty
+	  much from every file (our socket.c file should handle this) [Skotlex]
+	* Made the GM mute request bypass the manner_system setting. [Skotlex]
 	* Applied use of parse_hostbyname() in chrif.c to fix compilation errors.
 	  [Skotlex]
 	* status_percent_change will now account for when the target's max hp/sp is

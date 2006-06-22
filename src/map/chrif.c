@@ -4,14 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef _WIN32
-#include <winsock.h>
-#else
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#endif
 #include <sys/types.h>
 #include <time.h>
 #include <limits.h>
@@ -151,10 +143,16 @@ void chrif_checkdefaultlogin(void)
  *
  *------------------------------------------
  */
-void chrif_setip(char *ip)
+int chrif_setip(char *ip)
 {
-	memcpy(&char_ip_str, ip, 16);
-	char_ip = inet_addr(char_ip_str);
+	char_ip = resolve_hostbyname(ip,NULL,char_ip_str);
+
+	if (!char_ip) {
+		ShowWarning("Failed to Resolve Char Server Address! (%s)\n", ip);
+		return 0;
+	}
+	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, char_ip_str);
+	return 1;
 }
 
 /*==========================================
@@ -239,7 +237,7 @@ int chrif_connect(int fd)
 	memcpy(WFIFOP(fd,2), userid, NAME_LENGTH);
 	memcpy(WFIFOP(fd,26), passwd, NAME_LENGTH);
 	WFIFOL(fd,50) = 0;
-	WFIFOL(fd,54) = clif_getip();
+	WFIFOL(fd,54) = clif_getip_long();
 	WFIFOW(fd,58) = clif_getport();	// [Valaris] thanks to fov
 	WFIFOSET(fd,60);
 
@@ -1417,7 +1415,7 @@ int chrif_disconnect(int fd) {
 void chrif_update_ip(int fd){
 	char ip[4];
 	ShowInfo("IP Sync in progress...\n");
-	if (map_server_dns && resolve_hostbyname(map_server_dns, ip)) {
+	if (map_server_dns && resolve_hostbyname(map_server_dns, ip, NULL)) {
 		WFIFOW(fd, 0) = 0x2736;
 		WFIFOB(fd, 2) = ip[0];
 		WFIFOB(fd, 3) = ip[1];

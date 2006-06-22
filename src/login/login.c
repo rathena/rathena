@@ -7,25 +7,10 @@
 #ifdef __WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
-#include <time.h>
-void Gettimeofday(struct timeval *timenow)
-{
-	time_t t;
-	t = clock();
-	timenow->tv_usec = (long)t;
-	timenow->tv_sec = (long)(t / CLK_TCK);
-	return;
-}
-#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
-#define in_addr_t unsigned long
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include <arpa/inet.h>
-#include <netdb.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +40,7 @@ void Gettimeofday(struct timeval *timenow)
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0;
-int bind_ip_set_ = 0;
+in_addr_t bind_ip= 0;
 char bind_ip_str[128];
 int login_port = 6900;
 
@@ -1180,14 +1165,14 @@ int mmo_auth(struct mmo_account* account, int fd) {
 
 		dnsbl_serv=strtok(dnsbl_servs,",");
 		sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-		if(gethostbyname(ip_dnsbl)!=NULL) {
+		if(resolve_hostbyname(ip_dnsbl,NULL,NULL)) {
 			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 			return 3;
 		}
 
-		while((dnsbl_serv=strtok(dnsbl_servs,","))!=NULL) {
+		while((dnsbl_serv=strtok(dnsbl_servs,","))) {
 			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-			if(gethostbyname(ip_dnsbl)!=NULL) {
+			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=NULL) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 				return 3;
 			}
@@ -3651,13 +3636,9 @@ int login_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "new_account") == 0) {
 				new_account_flag = config_switch(w2);
 			} else if (strcmpi(w1, "bind_ip") == 0) {
-				bind_ip_set_ = 1;
-				h = gethostbyname (w2);
-				if (h != NULL) {
-					ShowStatus("Login server binding IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-					sprintf(bind_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				} else
-					memcpy(bind_ip_str,w2,16);
+				bind_ip = resolve_hostbyname(w2, NULL, bind_ip_str);
+				if (bind_ip) 
+					ShowStatus("Login server binding IP address : %s -> %s\n", w2, bind_ip_str);
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {
@@ -4169,10 +4150,7 @@ int do_init(int argc, char **argv) {
 	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));	// reinitialise
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
-	if (bind_ip_set_)
-		login_fd = make_listen_bind(inet_addr(bind_ip_str),login_port);
-	else
-		login_fd = make_listen_bind(INADDR_ANY,login_port);
+	login_fd = make_listen_bind(bind_ip?bind_ip:INADDR_ANY,login_port);
 
 	add_timer_func_list(check_auth_sync, "check_auth_sync");
 	add_timer_interval(gettick() + 60000, check_auth_sync, 0, 0, 60000); // every 60 sec we check if we must save accounts file (only if necessary to save)

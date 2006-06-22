@@ -2,20 +2,8 @@
 // For more information, see LICENCE in the main folder
 
 #include <sys/types.h>
-#ifdef _WIN32
-#include <winsock.h>
-#else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#endif
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef _WIN32
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#endif
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>

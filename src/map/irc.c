@@ -1,27 +1,6 @@
 #include <ctype.h>
 #include <string.h>
-
-#ifdef __WIN32
-#define __USE_W32_SOCKETS
-#include <windows.h>
-#include <io.h>
-typedef int socklen_t;
-#else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <ctype.h>
 #include <stdlib.h>
-
-#ifndef SIOCGIFCONF
-#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
-#endif
-
-#endif
 
 #include "../common/core.h"
 #include "../common/socket.h"
@@ -357,24 +336,17 @@ void do_final_irc(void)
 
 void do_init_irc(void)
 {
-	struct hostent *irc_hostname;
-	
 	if(!use_irc)
 		return;
 	if (irc_ip_str[strlen(irc_ip_str)-1] == '\n') 
 		irc_ip_str[strlen(irc_ip_str)-1] = '\0'; 
-	irc_hostname=gethostbyname(irc_ip_str);
-	if (!irc_hostname)
+	irc_ip = resolve_hostbyname(irc_ip_str, NULL, irc_ip_str);
+	if (!irc_ip)
 	{
 		ShowError("Unable to resolve %s! Cannot connect to IRC server, disabling irc_bot.\n", irc_ip_str);
 		use_irc = 0;
 		return;
 	}
-	irc_ip_str[0]='\0';
-	sprintf(irc_ip_str, "%d.%d.%d.%d", (unsigned char)irc_hostname->h_addr[0], (unsigned char)irc_hostname->h_addr[1],
-					   (unsigned char)irc_hostname->h_addr[2], (unsigned char)irc_hostname->h_addr[3]);
-
-	irc_ip=inet_addr(irc_ip_str);
 
 	irc_connect_timer(0, 0, 0, 0);
 

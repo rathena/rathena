@@ -5,13 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#ifdef _WIN32
-#include <winsock.h>
-#else
-#include <netdb.h>
-#include <unistd.h>
-#endif
 #include <math.h>
+#include <unistd.h>
 
 #include "../common/core.h"
 #include "../common/timer.h"
@@ -2300,7 +2295,7 @@ int map_setipport(unsigned short mapindex,unsigned long ip,int port) {
 	
 	if(mdos->gat) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
-	if(ip == clif_getip() && port == clif_getport()) {
+	if(ip == clif_getip_long() && port == clif_getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
 		ShowFatalError("map_setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
 		exit(1);
@@ -3171,10 +3166,8 @@ int map_readallmaps (void)
 }
 
 ////////////////////////////////////////////////////////////////////////
-
-static int map_ip_set_ = 0;
-static int char_ip_set_ = 0;
-//static int bind_ip_set_ = 0;
+static int map_ip_set = 0;
+static int char_ip_set = 0;
 
 /*==========================================
  * Console Command Parser [Wizputer]
@@ -3263,7 +3256,6 @@ int parse_console(char *buf) {
 int map_config_read(char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
-	struct hostent *h = NULL;
 
 	fp = fopen(cfgName,"r");
 	if (fp == NULL) {
@@ -3285,34 +3277,12 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "passwd") == 0) {
 				chrif_setpasswd(w2);
 			} else if (strcmpi(w1, "char_ip") == 0) {
-				char_ip_set_ = 1;
-				h = gethostbyname (w2);
-				if(h != NULL) {
-					ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-					sprintf(w2,"%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				}
-				chrif_setip(w2);
+				char_ip_set = chrif_setip(w2);
 			} else if (strcmpi(w1, "char_port") == 0) {
 				chrif_setport(atoi(w2));
 			} else if (strcmpi(w1, "map_ip") == 0) {
-				map_ip_set_ = 1;
-				h = gethostbyname (w2);
-				if(map_server_dns)
-					aFree(map_server_dns);
-				map_server_dns = aCalloc(strlen(w2)+1,1);
-				strcpy(map_server_dns, w2);
-				if (h != NULL) {
-					ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				}
-				clif_setip(w2);
+				map_ip_set = clif_setip(w2);
 			} else if (strcmpi(w1, "bind_ip") == 0) {
-				//bind_ip_set_ = 1;
-				h = gethostbyname (w2);
-				if (h != NULL) {
-					ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-					sprintf(w2, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				}
 				clif_setbindip(w2);
 			} else if (strcmpi(w1, "map_port") == 0) {
 				clif_setport(atoi(w2));
@@ -3847,26 +3817,25 @@ int do_init(int argc, char *argv[]) {
 	irc_read_conf(IRC_CONF); // [Zido]
 	chrif_checkdefaultlogin();
 
-	if ((naddr_ == 0) && (map_ip_set_ == 0 || char_ip_set_ == 0)) {
-		ShowError("\nUnable to determine your IP address... please edit the map_athena.conf file and set it.\n");
-		ShowError("(127.0.0.1 is valid if you have no network interface)\n");
-	}
-
-	if (map_ip_set_ == 0 || char_ip_set_ == 0) {
+	if (!map_ip_set || !char_ip_set) {
 		// The map server should know what IP address it is running on
 		//   - MouseJstr
 		int localaddr = ntohl(addr_[0]);
 		unsigned char *ptr = (unsigned char *) &localaddr;
 		char buf[16];
+		if (naddr_ == 0) {
+			ShowError("\nUnable to determine your IP address... please edit the map_athena.conf file and set it.\n");
+			ShowError("(127.0.0.1 is valid if you have no network interface)\n");
+		}
 		sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);;
 		if (naddr_ != 1)
 			ShowNotice("Multiple interfaces detected..  using %s as our IP address\n", buf);
 		else
 			ShowInfo("Defaulting to %s as our IP address\n", buf);
-		if (map_ip_set_ == 0)
+		if (!map_ip_set)
 			clif_setip(buf);
-		if (char_ip_set_ == 0)
-				chrif_setip(buf);
+		if (!char_ip_set)
+			chrif_setip(buf);
 		if (ptr[0] == 192 && ptr[1] == 168)
 			ShowNotice("\nFirewall detected.. \n    edit subnet_athena.conf and map_athena.conf\n\n");
 	}

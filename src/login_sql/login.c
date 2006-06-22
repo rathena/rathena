@@ -5,32 +5,15 @@
 
 #ifdef LCCWIN32
 #include <winsock.h>
-#pragma lib <libmysql.lib>
 #else
 #ifdef __WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
-#include <time.h>
-void Gettimeofday(struct timeval *timenow)
-{
-	time_t t;
-	t = clock();
-	timenow->tv_usec = (long)t;
-	timenow->tv_sec = (long)(t / CLK_TCK);
-	return;
-}
-#define gettimeofday(timenow, dummy) Gettimeofday(timenow)
-#define in_addr_t unsigned long
-#pragma comment(lib,"libmysql.lib")
 #else
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
+#include <netinet/in.h> 
 #include <arpa/inet.h>
-#include <netdb.h>
-#include <unistd.h>
 #endif
 #endif
 
@@ -69,7 +52,7 @@ int use_dnsbl=0; // [Zido]
 char dnsbl_servs[1024];
 int server_num;
 int new_account_flag = 0; //Set from config too XD [Sirius]
-int bind_ip_set_ = 0;
+in_addr_t bind_ip= 0;
 char bind_ip_str[128];
 int login_port = 6900;
 
@@ -559,10 +542,6 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	return 0;
 }
 
-#ifdef LCCWIN32
-extern void gettimeofday(struct timeval *t, struct timezone *dummy);
-#endif
-
 // Send to char
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	int i, c;
@@ -613,14 +592,14 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 		dnsbl_serv=strtok(dnsbl_servs,",");
 		sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-		if(gethostbyname(ip_dnsbl)!=NULL) {
+		if(resolve_hostbyname(ip_dnsbl, NULL, NULL)) {
 			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 			return 3;
 		}
 
 		while((dnsbl_serv=strtok(dnsbl_servs,","))!=NULL) {
 			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-			if(gethostbyname(ip_dnsbl)!=NULL) {
+			if(resolve_hostbyname(ip_dnsbl, NULL, NULL)) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 				return 3;
 			}
@@ -2064,7 +2043,6 @@ int ip_ban_check(int tid, unsigned int tick, int id, int data){
 //-----------------------------------------------------
 int login_config_read(const char *cfgName){
 	int i;
-	struct hostent *h = NULL;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
@@ -2092,13 +2070,9 @@ int login_config_read(const char *cfgName){
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		} else if (strcmpi(w1, "bind_ip") == 0) {
-			bind_ip_set_ = 1;
-			h = gethostbyname (w2);
-			if (h != NULL) {
-				ShowStatus("Login server binding IP address : %s -> %d.%d.%d.%d\n", w2, (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-				sprintf(bind_ip_str, "%d.%d.%d.%d", (unsigned char)h->h_addr[0], (unsigned char)h->h_addr[1], (unsigned char)h->h_addr[2], (unsigned char)h->h_addr[3]);
-			} else
-				memcpy(bind_ip_str,w2,16);
+			bind_ip = resolve_hostbyname(w2, NULL, bind_ip_str);
+			if (bind_ip)
+				ShowStatus("Login server binding IP address : %s -> %s\n", w2, bind_ip_str);
 		} else if(strcmpi(w1,"login_port")==0){
 			login_port=atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
@@ -2344,11 +2318,7 @@ int do_init(int argc,char **argv){
 	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));	// reinitialise
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
-	//login_fd=make_listen_port(login_port);
-	if (bind_ip_set_)
-		login_fd = make_listen_bind(inet_addr(bind_ip_str),login_port);
-	else
-		login_fd = make_listen_bind(INADDR_ANY,login_port);
+	login_fd = make_listen_bind(bind_ip?bind_ip:INADDR_ANY,login_port);
 
 	//Auth start
 	ShowInfo("Running mmo_auth_sqldb_init()\n");
