@@ -27,17 +27,15 @@ case "$1" in
 esac
 
 # Check if server file needs .exe (Windows/Cygwin)
-if [ ! -e $SERVER ]; then
-	if [ -e $SERVER.exe ]; then
-		SERVER=$SERVER.exe
-	else
-		echo Error: $SERVER not found!
-		exit
-	fi
+if [ -e $SERVER.exe ]; then
+	SERVER="$SERVER.exe"
+elif [ ! -e $SERVER ]; then
+	echo Error: $SERVER not found!
+	exit
 fi
 
 # Assemble stackdump filename
-if [ $# > 2 ]; then
+if [ $# -gt 2 ]; then
 	STACK="$SERVER$3.stackdump"
 else
 	STACK="$SERVER.stackdump"
@@ -57,7 +55,7 @@ fi
 
 # Finally dump the backtrace
 # If number is given, Sig-plugin format. otherwise, standard stackdump format
-if [ $# > 2 ]; then
+if [ $# -gt 2 ]; then
 	awk '$2 ~ /[0-9a-eA-E]\]$/{print $2}' $STACK | tr -d \[\] | addr2line -f -e $SERVER 
 else
 	awk '/^[0-9]/{print $2}' $STACK | addr2line -f -e $SERVER
