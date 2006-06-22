@@ -61,7 +61,7 @@ menu "Listen to her story",Lok,"Leave",Lno;
 
 	Lfinished:
 	mes "[^FF0000Munak^000000]";
-	mes "I'm sorry, you've already completed my task 5 times.";
+	mes "I'm sorry, you've already completed my task 3 times.";
 	close;
 
 	Lno:
