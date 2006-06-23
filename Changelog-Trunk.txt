@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/22
+	* Guessed and added support for the packets 0x22a (idle) and 0x22b (spawn).
+	  This should complete the required packets for PACKETVER 7. [Skotlex]
+	* Added support for the PACKETVER 7 packets in the "dummy" current
+	  intravision implementation. [Skotlex]
 	* Fixed @autoloot being off by 0.01% when entering a manual value.
 	  [Skotlex]
 	* Restored the "Secret" behaviour of Blast Mine and Claymore Trap where

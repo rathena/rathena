@@ -331,14 +331,23 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 							case 0x119:
 								WFIFOW(sd->fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
 								break;
-#if PACKETVER < 4
-							case 0x78:
-#else
+#if PACKETVER > 6
+							case 0x22c:
+							case 0x22b:
+							case 0x22a:
+								WFIFOL(sd->fd,12) &=~(OPTION_HIDE|OPTION_CLOAK);
+								break;
+#endif
+#if PACKETVER > 3
+							case 0x1d8:
+							case 0x1d9:
 							case 0x1da:
 #endif
+							case 0x78:
+							case 0x79:
+							case 0x7a:
 							case 0x7b:
 							case 0x7c:
-							case 0x1d8:
 								WFIFOW(sd->fd,12) &=~(OPTION_HIDE|OPTION_CLOAK);
 								break;
 						}
@@ -847,7 +856,43 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 	dir = unit_getdir(bl);
 	lv = status_get_lv(bl);
 	if(pcdb_checkid(vd->class_)) { 
-#if PACKETVER > 3
+#if PACKETVER > 6
+		memset(buf,0,packet_len_table[0x22a]);
+
+		WBUFW(buf,0)=0x22a;
+		WBUFL(buf,2)=bl->id;
+		WBUFW(buf,6)=status_get_speed(bl);
+		if (sc) {
+			WBUFW(buf,8)=sc->opt1;
+			WBUFW(buf,10)=sc->opt2;
+			WBUFL(buf,12)=sc->option;
+			WBUFL(buf,42)=sc->opt3;
+		}
+		WBUFW(buf,16)=vd->class_;
+		WBUFW(buf,18)=vd->hair_style;
+		WBUFW(buf,20)=vd->weapon;
+		WBUFW(buf,22)=vd->shield;
+		WBUFW(buf,24)=vd->head_bottom;
+		WBUFW(buf,26)=vd->head_top;
+		WBUFW(buf,28)=vd->head_mid;
+		WBUFW(buf,30)=vd->hair_color;
+		WBUFW(buf,32)=vd->cloth_color;
+		WBUFW(buf,34)=sd?sd->head_dir:dir;
+		WBUFL(buf,36)=guild_id;
+		WBUFW(buf,40)=emblem_id;
+		if (sd) {
+			WBUFW(buf,46)=sd->status.manner;
+			WBUFB(buf,48)=sd->status.karma;
+		}
+		WBUFB(buf,49)=vd->sex;
+		WBUFPOS(buf,50,bl->x,bl->y);
+		WBUFB(buf,52)|=dir & 0x0f;
+		WBUFB(buf,53)=5;
+		WBUFB(buf,54)=5;
+		WBUFB(buf,55)=vd->dead_sit;
+		WBUFW(buf,56)=clif_setlevel(lv);
+		return packet_len_table[0x22a];
+#elif PACKETVER > 3
 		memset(buf,0,packet_len_table[0x1d8]);
 
 		WBUFW(buf,0)=0x1d8;
@@ -1137,20 +1182,25 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 //Flag = 0: change id to negative, buf will have disguise data.
 //Flag = 1: change id to positive, class and option to make your own char invisible.
 //Luckily, the offsets that need to be changed are the same in packets 0x78, 0x7b, 0x1d8 and 0x1da
-//But no longer holds true for packet 0x22c
+//But no longer holds true for those packet of PACKETVER 7.
 static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag) {
 
 	if (flag) {
 #if PACKETVER > 6
-		if (WBUFW(buf,0)==0x22c) {
+		switch (WBUFW(buf,0)) {
+		case 0x22c:
+		case 0x22b:
+		case 0x22a:
 			WBUFL(buf,12)=OPTION_INVISIBLE;
 			WBUFW(buf,16)=sd->status.class_;
-		} else {
+			break;
+		default:
 #endif
 			WBUFL(buf,2)=sd->bl.id;
 			WBUFW(buf,12)=OPTION_INVISIBLE;
 			WBUFW(buf,14)=sd->status.class_;
 #if PACKETVER > 6
+			break;
 		}
 #endif
 	} else {
@@ -1281,19 +1331,31 @@ int clif_spawn(struct block_list *bl)
 	if (pcdb_checkid(vd->class_))
 	{	//Player spawn packet.
 		clif_set0078(bl, vd, buf);
-		if (WBUFW(buf,0)==0x78) {
-			WBUFW(buf, 0) = 0x79;
-			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
-			clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
-			if (disguised(bl))
-				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
+		switch(WBUFW(buf,0)) {
+			case 0x78: //Convert to 0x79
+				WBUFW(buf, 0) = 0x79;
+				WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+				clif_send(buf, packet_len_table[0x79], bl, AREA_WOS);
+				if (disguised(bl))
+					clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x79], 0);
+				break;
 #if PACKETVER > 3
-		} else {
-			WBUFW(buf, 0) = 0x1d9;
-			WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
-			clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
-			if (disguised(bl))
-				clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
+			case 0x1d8: //Convert to 0x1d9
+				WBUFW(buf, 0) = 0x1d9;
+				WBUFW(buf,51) = WBUFW(buf,52); //Lv is placed on offset 52
+				clif_send(buf, packet_len_table[0x1d9], bl, AREA_WOS);
+				if (disguised(bl))
+					clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x1d9], 0);
+				break;
+#endif
+#if PACKETVER > 6
+			case 0x22a: //Convert to 0x22b
+				WBUFW(buf, 0) = 0x22b;
+				WBUFW(buf,55) = WBUFW(buf,56); //Lv is placed on offset 56
+				clif_send(buf, packet_len_table[0x22b], bl, AREA_WOS);
+				if (disguised(bl))
+					clif_setdisguise((TBL_PC*)bl, buf, packet_len_table[0x22b], 0);
+				break;
 #endif
 		}
 	} else {	//Mob spawn packet.
