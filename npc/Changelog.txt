@@ -37,10 +37,10 @@ Musashiden
 Date		Added
 ======
 06/23
+	* Merged JFunc 2-1, 2-2 functions, fixed bugs with missing dialogues [Lupus]
+		and changed job numbers to constants
 	* Updated Valhalla [Lupus]
 	- Also fixed some typos. Thx2 Mitternacht
-	* Merged all JFunc 2-1 functions, fixed bugs with missing dialogues [Lupus]
-		and changed job numbers to constants
 06/22
 	* Fixed treasure chests round number exploit [Lupus]
 	  Now u get an extra chest one exact 4 Eco.pts adding

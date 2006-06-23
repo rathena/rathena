@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
+//= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
 //============================================================ 
 
 
@@ -33,13 +34,12 @@ alde_alche.gat,27,185,4	script	Parmry Gianino	744,{
 	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Creator,"Creator","Parmry Gianino";
 
 	mes "[Parmry Gianino]";
-	if(BaseJob == 5) goto L_Merc;
-	if(BaseJob == Job_Alchem) goto L_Alch;
-L_Other:	
+	if(baseJob == Job_Merchant) goto L_Merc;
+	if(baseJob == Job_Alchem){
+		mes "Hey there fellow Alchemist.  How's the business going?  Good I hope, well good luck to you.";
+		close;
+	}
 	mes "Welcome to the Alchemist Union.  Ah, I apologize but I'm busy right now.";
-	close;
-L_Alch:
-	mes "Hey there fellow Alchemist.  How's the business going?  Good I hope, well good luck to you.";
 	close;
 L_Merc:	
 	if(ALCH_Q == 1) goto L_Check;
@@ -52,9 +52,8 @@ L_Merc:
 	mes "Welcome to the Alchemist Union.";
 	mes "How may i help you?";
 	next;
-	menu "I would like to learn about Alchemey",M_Learn, "I want to become an Alchemist.",L_Start, "Nothing.",M_End;
+	menu "I would like to learn about Alchemy",-, "I want to become an Alchemist.",L_Start, "Nothing.",M_End;
 
-	M_Learn:
 		mes "[Parmry Gianino]";
 		mes "Alchemists study and create new materials using a variety of existing substances.";
 		mes "They research the atoms of chemicals, and experiment to change the properties of the chemicals.";
@@ -206,8 +205,7 @@ L_GoChange:
 //==================================================================================================//
 alde_alche.gat,175,107,4	script	Rasputin Gregory	749,{
 	mes "[Rasputin Gregory]";
-	if(BaseJob == 5) goto L_Merc;
-L_Other:
+	if(baseJob == Job_Merchant) goto L_Merc;
 	mes "What is it, kikikiki.  Are you curious about what I do...?";
 	mes "I'll just especially let you know.  You see I... Kekeke..";
 	next;
@@ -470,7 +468,7 @@ L_Skip:
 //==================================================================================================//
 alde_alche.gat,13,15,8	script	Darwin	750,{
 	mes "[Darwin]";
-	if(BaseJob == 5) goto L_Merc;
+	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
 	mes "more to lose or gain...";
 	mes "It's always like that...";
@@ -640,7 +638,7 @@ L_Check:
 		set @score,@score+10;
 	M_4:
 
-	menu "Put in the noodles and fried it",M_5, "Put into the Empty Bottle",-, "Raise the medicine bowl and drink it",M_5;
+	menu "Put in the noodles and fry it",M_5, "Put into the Empty Bottle",-, "Raise the medicine bowl and drink it",M_5;
 
 		set @score,@score+10;
 	M_5:
@@ -694,7 +692,7 @@ L_NotEnuf:
 //==================================================================================================//
 alde_alche.gat,79,19,4	script	Van Helmont	748,{
 	mes "[Van Helmont]";
-	if(BaseJob == 5) goto L_Merc;
+	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
 	mes "Just a little ... yes, a little bit more ....";
 	mes "agh, just a little bit more and it would've been done!";
@@ -774,9 +772,9 @@ L_Start:
 		mes "If you dont have business here just go away. Ok!!!";
 		close;
 L_Check:	
-	if((MISC_QUEST & 4)==0) goto L_NotRdy;
+	if((MISC_QUEST & 4)==0) goto L_NotRdy; //this's a Morgenstein Quest check
 	mes "Yes, cut the Tentacle..";
-	mes "and mix some Sticku Mucus,";
+	mes "and mix some Sticky Mucus,";
 	mes "Jellopy solution in the test tube Darn, where did the Medicine Bowl go...";
 	next;
 	mes "[Van Helmont]";
@@ -859,7 +857,7 @@ L_Done:
 //==================================================================================================//
 alde_alche.gat,145,19,4	script	Nicholas Flamel	57,{
 	mes "[Nicholas Flamel]";
-	if(BaseJob == 5) goto L_Merc;
+	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
 	mes "Lorem ipsum dolor sit amet,";
 	mes "consectetuer adipiscing elit.";
@@ -1020,17 +1018,16 @@ L_Done:
 //==================================================================================================//
 alde_alche.gat,101,184,4	script	Vincent Carsciallo	122,{
 	mes "[Vincent Carsciallo]";
-	if(BaseJob == 5) goto L_Merc;
-	if(BaseJob == Job_Alchem) goto L_Alch;
-L_Other:
+	if(baseJob == Job_Merchant) goto L_Merc;
+	if(baseJob == Job_Alchem){
+		mes "How Alchemy going? Make sure to be carefull and think about safety at all times.";
+		mes "I wouldn't want you blowing yourself up or anything.....";
+		close;
+	}
 	mes "Hmmm? What may a civilian have to do here?";
 	next;
 	mes "[Vincent Carsciallo]";
 	mes "There's nothing amusing. Dont wander and leave.";
-	close;
-L_Alch:
-	mes "How Alchemy going? Make sure to be carefull and think about safety at all times.";
-	mes "I wouldn't want you blowing yourself up or anything.....";
 	close;
 L_Merc:
 	if(ALCH_Q == 7) goto L_Change;
@@ -1054,10 +1051,14 @@ L_Merc:
 	mes "try joining our Union.";
 	close;
 L_Change:
-	if(skillpoint != 0) goto L_Skpoint;
-	mes "Ooh, Ok. You joined and learned the basics, too. Well done.";
+	if(skillpoint){
+		mes "Please use all your skill point before talking to me.";
+		close;
+	}
+	mes "Oh, Ok. You joined and learned the basics, too. Well done.";
 	next;
 	callfunc "Job_Change",Job_Alchem;
+	callfunc "F_ClearJobVar";
 	emotion e_grat;
 	mes "[Vincent Carsciallo]";
 	mes "From now on, you are also a member of the Union as an Alchemist.";
@@ -1071,10 +1072,5 @@ L_Change:
 	mes "[Vincent Carsciallo]";
 	mes "I'll see you later then...";
 	mes "Be proud of being an Alchemist!";
-	callfunc "F_ClearJobVar";
 	close;
-
-	L_Skpoint:
-		mes "Please use all your skill point before talking to me.";
-		close;
 }
