@@ -61,7 +61,7 @@
 309,0xa1,    ,  4, 0,  -1,party, 0x300	//BD_DRUMBATTLEFIELD#戦太鼓の響き
 310,0xa2,    ,  4, 0,  -1,party, 0x300	//BD_RINGNIBELUNGEN#ニーベルングの指輪
 311,0xa3,    ,  4, 0,  -1,all,   0x300	//BD_ROKISWEIL#ロキの叫び
-312,0xa4,    ,  4, 0,  -1,party, 0x300	//BD_INTOABYSS#深淵の中に
+312,0xa4,    ,  4, 0,  -1,party, 0x320	//BD_INTOABYSS#深淵の中に
 313,0xa5,    ,  4, 0,  -1,party, 0x300	//BD_SIEGFRIED#不死身のジークフリード
 317,0xa6,    ,  3, 0,3000,enemy, 0x100	//BA_DISSONANCE#不協和音
 319,0xa7,    ,  3, 0,  -1,all,   0x120	//BA_WHISTLE#口笛

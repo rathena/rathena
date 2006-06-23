@@ -160,6 +160,7 @@ int	skill_get_castdef( int id );
 int	skill_get_weapontype( int id );
 int	skill_get_ammotype( int id );
 int	skill_get_ammo_qty( int id, int lv );
+int	skill_get_nocast( int id );
 int	skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
 int	skill_get_castcancel( int id );

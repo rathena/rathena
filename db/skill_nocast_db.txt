@@ -5,10 +5,10 @@
 //
 // Legend for 'Flag' field (bitmask):
 //  1 = Cannot be used in normal maps
-//  2 = Cannot be used in PvP maps
+//  2 = Cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
 //  4 = Cannot be used in GvG maps
 //  8 = Cannot be used when WoE is on
-//  16 = Cannot be used in PK Mode maps
+//  16 = Cannot be cloned (clones will not copy this skill)
 //  Restricted zones - they're configured by 'restricted <number>' mapflag
 //  32 = Cannot be used in zone 1 maps
 //  64 = Cannot be used in zone 2 maps
@@ -32,7 +32,11 @@
 491,4	//CR_CULTIVATION
 
 //mixed
-488,19	//CG_HERMODE
+488,3	//CG_HERMODE
+
+//Clone Forbidden/pointless skills
+77,16	//PR_TURNUNDEAD
+79,16 //PR_MAGNUS
 
 //Zone 1 - Aldebaran Turbo Track
 219,32 //Snatch

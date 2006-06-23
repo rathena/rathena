@@ -4082,7 +4082,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	sc=status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if (!sc || !status || status_isdead(bl))
+	if (!sc || status_isdead(bl))
 		return 0;
 	
 	switch (bl->type)
@@ -4194,7 +4194,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		//Avoid cloaking with no wall and low skill level. [Skotlex]
 		//Due to the cloaking card, we have to check the wall versus to known skill level rather than the used one. [Skotlex]
 //			if (sd && skilllv < 3 && skill_check_cloaking(bl,&sd->sc))
-			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl, &sd->sc))
+			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl, sc))
 				return 0;
 		break;
 		case SC_MODECHANGE:

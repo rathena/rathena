@@ -2842,8 +2842,19 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
 		skill_id = skill_tree[sd->status.class_][j].id;
-		if (!skill_id || sd->status.skill[skill_id].lv < 1 || (skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)))
+		if (!skill_id || sd->status.skill[skill_id].lv < 1 ||
+			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
+			skill_get_nocast(skill_id)&16
+		)
 			continue;
+		//Normal aggressive mob, disable skills that cannot help them fight
+		//against players (those with flags UF_NOMOB and UF_NOPC are specific 
+		//to always aid players!) [Skotlex]
+		if (!(flag&1) &&
+			skill_get_unit_id(skill_id, 0) &&
+			skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
+			continue;
+
 		memset (&ms[i], 0, sizeof(struct mob_skill));
 		ms[i].skill_id = skill_id;
 		ms[i].skill_lv = sd->status.skill[skill_id].lv;
@@ -2863,11 +2874,6 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 			else
 				ms[i].state = MSS_BERSERK;
 		} else if(inf&INF_GROUND_SKILL) {
-			//Normal aggressive mob, disable skills that cannot help them fight
-			//against players (those with flags UF_NOMOB and UF_NOPC are specific 
-			//to always aid players!) [Skotlex]
-			if (!(flag&1) && skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
-				continue;
 			if (skill_get_inf2(skill_id)&INF2_TRAP) { //Traps!
 				ms[i].state = MSS_IDLE;
 				ms[i].target = MST_AROUND2;

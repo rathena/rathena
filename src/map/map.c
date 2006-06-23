@@ -1484,8 +1484,10 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 	if (rx >= 0 && ry >= 0) {
 		tries = rx2*ry2;
 		if (tries > 100) tries = 100;
-	} else
-		tries = 1000; //Must retry a lot for maps with many non-walkable tiles.
+	} else {
+		tries = map[m].xs*map[m].ys;
+		if (tries > 500) tries = 500;
+	}
 	
 	while(tries--) {
 		*x = (rx >= 0)?(rand()%rx2-rx+bx):(rand()%(map[m].xs-2)+1);
@@ -1498,12 +1500,15 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
 		{
 			if(flag&2 && !unit_can_reach_pos(src, *x, *y, 1))
 				continue;
-			if(flag&4 && spawn++ < battle_config.no_spawn_on_player &&
-				map_foreachinarea(map_count_sub, m,
-					*x-AREA_SIZE, *y-AREA_SIZE, *x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
-			)
+			if(flag&4) {
+				if (spawn >= 100) return 0; //Limit of retries reached.
+				if (spawn++ < battle_config.no_spawn_on_player &&
+					map_foreachinarea(map_count_sub, m,
+						*x-AREA_SIZE, *y-AREA_SIZE,
+					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
+				)
 				continue;
-
+			}
 			return 1;
 		}
 	}

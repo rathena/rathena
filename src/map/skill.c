@@ -854,12 +854,8 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	// Check skill restrictions [Celest]
 	if(!map_flag_vs(sd->bl.m) && skill_get_nocast (skillid) & 1)
 		return 1;
-	if(map[sd->bl.m].flag.pvp) {
-		if(!battle_config.pk_mode && skill_get_nocast (skillid) & 2)
-			return 1;
-		if(battle_config.pk_mode && skill_get_nocast (skillid) & 16)
-			return 1;
-	}
+	if(map[sd->bl.m].flag.pvp && skill_get_nocast (skillid) & 2)
+		return 1;
 	if(map_flag_gvg(sd->bl.m) && skill_get_nocast (skillid) & 4)
 		return 1;
 	if(agit_flag && skill_get_nocast (skillid) & 8)
