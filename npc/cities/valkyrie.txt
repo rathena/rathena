@@ -4,30 +4,25 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= The Jobquest from kRO on how to advance to a Reborn class.
 //===== Additional Comments: ================================= 
-//= v1.1 Made all into functions,additional checks,quest skills,
-//= now Valhallana can return you back. She also makes reborn
-//= process only when you got no Zeny/items (as in kRO) [Lupus]
-//= 1.2 now alternative classes can use their 1-1 job NPC
-//= to become Advanced 1st Class [Lupus]
+//= 1.1 Made all into functions,additional checks,quest skills,now Valhallana can return you back. She also makes reborn process only when you got no Zeny/items (as in kRO) [Lupus]
+//= 1.2 now alternative classes can use their 1-1 job NPC to become Advanced 1st Class [Lupus]
 //= 1.4 added Baby Class support [Lupus]
 //= 1.5 Fixed loads of gramatical errors. [Mass Zero]
-//= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
 //= 1.7 On reborn reset some Job Quest Vars and Reset Girls Counter [Lupus]
 //= 1.8 Added Taekwondo classes check [Lupus]
 //= 1.9 Added support for Job NPC Fase pics, sorrected one dialogue stuff [Lupus]
 //= 2.0 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
-//= 2.0b Fixed. TODO: add new Quest Skills [Lupus]
 //= 2.1 Changed all numbers into constants. [Vicious]
 //= 2.2 Now ALL quests skills are saved/restored [Lupus]
 //= 2.3 Removed Duplicates [Silent]
+//= 2.4 Fixed typos, optimized [Lupus]
 //============================================================ 
 
 
@@ -38,49 +33,46 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
-	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_BABY; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
-	if(valkyrie_Q == 1) goto L_FADED;
-	if(valkyrie_Q == 2) goto L_START;
-L_BABY:
+	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
+	if(valkyrie_Q == 1) goto L_CONT;
+L_IGNORE:
 	mes ". . . . .";
 	close;
 
-L_FADED:
-	mes "*The book opens as you aproach it.*";
+L_CONT:
+	mes "*The book opens as you approach it.*";
 	next;
 	mes "[Book of Ymir]";
-	mes "Those seeking the final foretress in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finaly after alot of work and commitment see the true view of the world and then... go beyond it.";
+	mes "Those seeking the final fortress in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finally after a lot of work and commitment see the true view of the world and then... go beyond it.";
 	next;
 	mes "[Book of Ymir]";
-	mes "*After reading the two first pages you turn the other page and watch the words fade away as you try to read them...";
-	close;
-
-L_START:
-	mes "*The book opens as you aproach it.*";
-	next;
-	mes "[Book of Ymir]";
-	mes "Those seeking the final foretress in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finaly after alot of work and commitment see the true view of the world and then... go beyond it.";
-	next;
-	mes "[Book of Ymir]";
-	mes "*After reading the first two pages you flip the last one and continue to read...*";
-	next;
-	mes "[Book of Ymir]";
-	mes "That is when the God's and Goddess's of this world comes forth towards you in all disguise, checking you through. Reading your mind, thoughts and true feeling of the heart.";
-	mes "If the God's, descended from the world along time ago, accept you into the halls of Valkyrie, high up above the clouds in the sacred realm of Valkyrie, into God's light you will be reborn, and sent out to face the world once again.";
-	next;
-	mes "[Book of Ymir]";
-	mes "And only after then, the descended ones will aprove you to the highest obedience... Into the warmth of Valkyrie, you will be welcomed by the Gods themselves.";
-	next;
-	mes "[Book of Ymir]";
-	mes "*As you close the book a strange ray of light surrounds you and you suddenly feel light. Everything around you fades away and all you can see left is white before you pass out.*";
-	warp "valkyrie",48,9;
+	if(valkyrie_Q == 1){
+		mes "*After reading the two first pages you turn the other page and watch the words fade away as you try to read them...";
+	}else{
+		mes "*After reading the first two pages you flip the last one and continue to read...*";
+		next;
+		mes "[Book of Ymir]";
+		mes "That is when the Gods and Goddesses of this world comes forth towards you in all disguise, checking you through. Reading your mind, thoughts and true feeling of the heart.";
+		mes "If the Gods, descended from the world along time ago, accept you into the halls of Valkyrie, high up above the clouds in the sacred realm of Valkyrie, into Gods light you will be reborn, and sent out to face the world once again.";
+		next;
+		mes "[Book of Ymir]";
+		mes "And only after then, the descended ones will approve you to the highest obedience... Into the warmth of Valkyrie, you will be welcomed by the Gods themselves.";
+		next;
+		mes "[Book of Ymir]";
+		mes "*As you close the book a strange ray of light surrounds you and you suddenly feel light. Everything around you fades away and all you can see left is white before you pass out.*";
+		warp "valkyrie",48,9;
+	}
 	close;
 }
 
 // -== The Librarian that watches the "Book of Ymir" ==-
 yuno_in02.gat,91,176,5	script	Librarian	754,{
 	mes "[Librarian]";
-	if(valkyrie_Q > 0) goto L_DONE;
+	if(valkyrie_Q){
+		mes "Why? You have already paid me.";
+		mes "Now go and look for the Book of Ymir.";
+		close;
+	}
 	if(BaseJob >= Job_Knight && Upper==0) goto L_PAY;
 	mes "Have a look around, but don't touch the book. Only a few chosen ones can read its wise words.";
 	close;
@@ -97,23 +89,16 @@ L_PAY:
 	mes "Now go, brave one.";
 	menu "Pay now",-,"Close",M_EXIT;
 
-	if(Zeny != 1285000) goto L_WRONGZ;
+	mes "[Librarian]";
+	if(Zeny != 1285000){
+		mes "You didn't bring me the accurate number of zeny I wanted. Bring me back only 1,285,000 zeny!";
+		mes "Not more, nor less.";
+		close;
+	}
 	set Zeny,0;
 	set valkyrie_Q,1;
-	mes "[Librarian]";
 	mes "Go now, into Heart of Ymir";
 	mes "There, you'll find the last piece of information before you can open the book.";
-	close;
-
-L_WRONGZ:
-	mes "[Librarian]";
-	mes "You didn't bring me the accurate number of zeny I wanted. Bring me back only 1,285,000 zeny!";
-	mes "Not more, nor less.";
-	close;
-
-L_DONE:
-	mes "Why? You have already paid me.";
-	mes "Now go and look for the Book of Ymir.";
 M_EXIT:
 	close;
 }
@@ -128,7 +113,7 @@ yuno_in05.gat,50,44,0	script	Heart of Ymir	111,{
 		next;
 		mes "[Heart of Ymir]";
 		mes "Aeons passed and the Sages grew stronger in both mind and forces, until they all were feared throughout the monsters' world.";
-		mes "Now, after listening to my words of wisdom, please advance to the Book of Ymir and give yourself into God's light.";
+		mes "Now, after listening to my words of wisdom, please advance to the Book of Ymir and give yourself into Gods light.";
 		mes "If you are pure of heart and have no evil intentions, the gates of dawn will open for you and take you in...";
 		set valkyrie_Q,2;
 		close;
