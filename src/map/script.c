@@ -11916,7 +11916,7 @@ static int script_save_mapreg(void)
 	unsigned int perfomance = (unsigned int)time(NULL);
 	mapreg_db->foreach(mapreg_db,script_save_mapreg_intsub);  // [zBuffer]
 	mapregstr_db->foreach(mapregstr_db,script_save_mapreg_strsub);
-	perfomance = ((int)time(NULL) - perfomance);
+	perfomance = ((unsigned int)time(NULL) - perfomance);
 	if(perfomance > 2)
 		ShowWarning("Slow Query: MapregSQL Saving @ %d second(s).\n", perfomance);
 #endif
