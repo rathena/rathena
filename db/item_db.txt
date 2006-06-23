@@ -486,7 +486,7 @@
 1138,Mysteltainn,Mysteltainn,4,,10,1000,170,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEle,Ele_Ghost,15; bonus3 bAutoSpell,16,3,100; bonus2 bAddEff,Eff_Stone,100; bonus bDex,3; },{},{}
 1139,Tirfing,Tirfing,4,,10,1000,200,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Dark; bonus2 bHPLossRate,35,10000; },{},{}
 1140,Byeollungum,Byeollungum,4,,10,900,150,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus2 bSubRace,RC_NonBoss,-10; bonus2 bAddRace,RC_Boss,5; bonus bAllStats,2; },{},{}
-1141,Immaterial_Sword,Immaterial Sword,4,,10,900,140,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Ghost; bonus2 bSPDrainRate,1,30; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon,0; },{},{}
+1141,Immaterial_Sword,Immaterial Sword,4,,10,900,140,,1,0,0x000654E2,7,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Ghost; bonus2 bSPDrainRate,10,30; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon,0; },{},{}
 1142,Jeweled_Sword,Jeweled Sword,4,,10,2200,104,,1,0,0x000654E2,7,2,2,3,68,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Jewel,5; },{},{}
 1143,Gaia_Sword,Gaia Sword,4,,10,2500,115,,1,0,0x000654E2,7,2,2,3,74,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Ore,5; },{},{}
 1144,Sashimi,Sashimi,4,,10,1400,75,,1,0,0x000654E2,7,2,2,3,48,1,2,{ bonus bAtkEle,Ele_Wind; bonus3 bAddMonsterDropItem,544,5,4000; },{},{}
@@ -1271,7 +1271,7 @@
 4131,Moonlight_Flower_Card,Moonlight Flower Card,6,,10,10,,,,,,,,64,,,,,{ bonus bSpeedRate,25; },{},{}
 4132,Mistress_Card,Mistress Card,6,,10,10,,,,,,,,769,,,,,{ bonus bNoGemStone,0; bonus bUseSPrate,25; },{},{}
 4133,Raydric_Card,Raydric Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
-4134,Dracula_Card,Dracula Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSpDrainRate,10,5; },{},{}
+4134,Dracula_Card,Dracula Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSpDrainRate,100,5; },{},{}
 4135,Orc_Lord_Card,Orc Lord Card,6,,10,10,,,,,,,,16,,,,,{ bonus bShortWeaponDamageReturn,30; },{},{}
 4136,Khalitzburg_Card,Khalitzburg Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Demon,30; },{},{}
 4137,Drake_Card,Drake Card,6,,10,10,,,,,,,,2,,,,,{ bonus bNoSizeFix,0; },{},{}

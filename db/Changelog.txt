@@ -25,6 +25,7 @@
 
 =========================
 06/23
+	* Fixed SP Drain rates of items [Playtester]
 	* Updated BD_INTOABYSS's unit flag to not affect mobs. [Skotlex]
 	* Rogue Card Combo now removes Intimidate autospell [Playtester]
 	* Sorted in the new cards and fixed some equips [Playtester]
