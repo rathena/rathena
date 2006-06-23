@@ -25,6 +25,7 @@
 
 =========================
 06/23
+	* Rogue Card Combo now removes Intimidate autospell [Playtester]
 	* Sorted in the new cards and fixed some equips [Playtester]
 06/22
 	* Fixed the remaining 2006 Cards [Playtester]
