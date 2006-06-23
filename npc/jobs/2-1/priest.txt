@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena  1.0
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 2nd Job Quests again. It also guides adv classes where
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Merged JFunc [Lupus]
 ==========================================================
 
 
@@ -29,10 +30,111 @@ prt_church.gat,16,41,4	script	Father Thomas	60,{
 	callfunc "F_BlockHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest","Father Thomas";
 
 	mes "[Father Thomas]";
-	if (BaseJob == Job_Acolyte) goto L_Start;
-	callfunc "Pri_check";
-	close;
+	if(BaseJob == Job_Acolyte) goto L_Start;
+	if(BaseJob == Job_Novice){
+		mes "May God bless you, child.  This is the Prontera Church.  What are you here for?";
+		next;
+		menu "I want to become an Acolyte.",-, "I want to become a ^5533FFPriest^000000.",M_0b, "I'm just walking around.",M_0End;
 
+			mes "[Father Thomas]";
+			mes "Haha.. so you want to become an Acolyte eh? To apply to become an Acolyte, please go to the room opposite of here.";
+			close;
+		M_0b:
+			mes "[Father Thomas]";
+			mes "Haha...in order to become a priest you must first become an Acolyte.  To become an Acolyte, go to the room opposite of here.";
+			close;
+		M_0End:
+			mes "[Father Thomas]";
+			mes "Please feel free to rest here.  The church is a sanctuary for all those, who seek to escape the outside world.";
+			next;
+			mes "[Father Thomas]";
+			mes "May God be with you in your thoughts and prayers.";
+			close;
+	}
+	if(BaseJob == Job_Priest){
+		mes "God bless you, child.  You are here again because you listened to God's orders.";
+		next;
+		mes "[Father Thomas]";
+		mes "I don't know if God's sons and daughters are going on the path of light or the path of darkness... I can only pray for the best.";
+		next;
+		mes "[Father Thomas]";
+		mes "So why are you here today?";
+		next;
+		menu "I just wanted to see how you were.",-, "I'm here to help the Acolytes.",M_1b, "Life is really hard... I was wondering if you could help.",M_1End;
+
+			mes "[Father Thomas]";
+			mes "Oh, well I'm fine thank you.  Please send my regards to all of the other Priests, and Priestess.";
+			next;
+			mes "[Father Thomas]";
+			mes "We, the ones who follow the devine path, are here for one reason.... to obey Gods orders.";
+			mes "If you come across anyone who needs help, please remember to assist them in any way you can...";
+			close;
+		M_1b:
+			mes "[Father Thomas]";
+			mes "Oh...thats a great idea! Since you're a priest, you can't forget that you have to help the Acolytes when they need it.";
+			emotion e_ic;
+			next;
+			mes "[Father Thomas]";
+			mes "Even so, you must be carefull not to do everyting for them.  It is important that they gain their own experiences through training ";
+			next;
+			mes "[Father Thomas]";
+			mes "In order to go in and help you'll need a ^5533FFROSARY^000000.";
+			mes "There will be 3 trials for the Acolyte to face, but in only 2 of them will your assistance be needed.";
+			next;
+			mes "[Father Thomas]";
+			mes "Are you prepared to help?";
+			next;
+			menu "Yes, i will help them with all my might.",-, "I will come back later.",sM_1End;
+
+				mes "[Father Thomas]";
+				if (countitem(2608) < 1){
+					mes "Hmm... it doesn't look like you have a ^5533FFROSARY^000000 with you.";
+					next;
+					mes "[Father Thomas]";
+					mes "If you want to help the Acolytes, you must first get a ^5533FFROSARY^000000.";
+					mes "Please come back when you have one.";
+					close;
+				}
+				mes "Very well then.  I will send you to an Acolyte in just a moment.";
+				next;
+				mes "[Father Thomas]";
+				mes "I hope you will also take this opportunity to teach them what it means to be a good Priest.";
+				next;
+				if((getareausers("job_prist.gat", 8, 34, 39,109)) == 1) warp "job_prist.gat", 24, 44;
+				if((getareausers("job_prist.gat", 160, 14, 175, 178)) == 1) warp "job_prist.gat", 98, 40;
+				if((getareausers("job_prist.gat", 90, 34, 105,105)) == 1) warp "job_prist.gat", 168, 17;
+				mes "[Father Thomas]";
+				mes "Hmm........ wait a minute..... let me check my list.... Either no one is taking the test right now, or another Priest is already helping out.";
+				mes "In any case please check with me again later.";
+				close;
+			sM_1End:
+				mes "[Father Thomas]";
+				mes "Oh, alright.  Just remember to bring a ^5533FFFROSARY^000000 when you come back.";
+				close;
+
+		M_1End:
+			mes "[Father Thomas]";
+			mes "Keep up the good work.  I will ask God to ease your pain.";
+			next;
+			mes "[Father Thomas]";
+			mes "God, one of your children is suffering.  Please use your powers, to heal the wounds on this battered body.....";
+			next;
+			mes "[Father Thomas]";
+			mes "Please look after us, so that under any condition we will be able to think clearly and maintain our faith";
+			percentheal 100,100;
+			next;
+			mes "[Father Thomas]";
+			mes "You should be feeling better now.  Please stay on the path to rightousness and may God bless you.";
+			close;
+	}
+	mes "May God bless you my child.";
+	next;
+	mes "[Father Thomas]";
+	mes "Please feel free to rest, the church is the safest place in this world.";
+	next;
+	mes "[Father Thomas]";
+	mes "I hope God will bless you.";
+	close;
 
 L_Start:
 	if (PRIEST_Q == 1) goto L_Test1;

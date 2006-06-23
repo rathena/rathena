@@ -5,7 +5,7 @@
 //= converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -26,15 +26,36 @@
 //= to go. [Lupus]
 //= 1.7 Replaced 2 Hodes with 2 Horong's (according to the official guide) [Lupus]
 //= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
-//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Changed numbers to constants. [Vicious]
+//= 2.2 Merged back JFunc [Lupus]
 //============================================================ 
 
 
 //<=================== Some dog =========================>
 gef_tower.gat,107,35,5	script	Some Dog	81,{
 	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"High Wizard","Dog";
-	if(BaseJob == Job_Mage) goto L_JobMage;
-	callfunc "Wiz1_check";
+	mes "[Dog]";
+	if(baseJob == Job_Mage) goto L_JobMage;
+	if(baseClass == Job_Mage){
+		mes "Ah! High level magic users, welcome.  It's always nice to see experienced magic users around here.";
+		mes "Actually it's nice to see them anywhere! ~Woof!~";
+		close;
+	}
+	if(baseClass == Job_Acolyte){
+		mes "Eeek! What's a holy type person doing up here?  I thought you people didn't like magic....";
+		mes "You religious types are always calling it the 'dark arts'......... ooooh scary!!!...... ~grrr!~WOOF!~";
+		close;
+	}
+	mes "Sheesh....... Why would someone who can't even cast a single spell come all the way up here???";
+	next;
+	mes "[Dog]";
+	mes "If you're that bored, do the world a favor and climb to the top of this building from the outside, then do some acrobatics....";
+	emotion e_pif;
+	next;
+	mes "[Dog]";
+	mes "~WOOF~ Get lost! I don't have time for people like you!!";
+	emotion e_go;
+	close;
 
 L_JobMage:
 	mes "[Dog]";
@@ -143,9 +164,33 @@ gef_tower.gat,111,37,4	script	Catherine Medichi	68,{
 
 	mes "[Catherine Medichi]";
 	if(BaseJob == Job_Mage) goto L_Mage;
-	callfunc "Wiz2_check";
 
-
+	if(BaseJob == Job_Wizard){
+		mes "What do you need fellow Wizard? If it's nothing, please leave...";
+		next;
+		mes "[Catherine Medichi]";
+		if(sex){
+			mes "... Of course, if your here to ask me out... (*giggles*)....";
+		} else {
+			mes "If you get yourself a boyfriend, feel free to drop by and show him off. XD";
+		}
+		emotion e_lv;
+		close;
+	}
+	if(BaseJob == Job_Novice){
+		mes "Awwww, a little novice!  How cute! This place is for Wizards only though.";
+		emotion e_lv2;
+		next;
+		mes "[Catherine Medichi]";
+		mes "If you're interested in magic, the ^0000FFMagician's Guild^000000 is the place for you.";
+		close;
+	}
+	mes "Hmm? What brings you all the way up here? If you have nothing to do here, please leave.";
+	mes "This place is for wizards only. =P";
+	next;
+	mes "[Catherine Medichi]";
+	mes "Try not to fall as you go back down....";
+	close;
 
 L_Mage:
 	if(WIZ_Q == 2) goto L_Test2;

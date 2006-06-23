@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena  1.0+
 //===== Description: =========================================
@@ -26,6 +26,7 @@
 //= 1.8 Moved the Quest to Einbroch [Poki#3]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
+//= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
 ==============================================================
 
 
@@ -34,7 +35,7 @@
 ein_in01.gat,18,28,4	script	Guildsman Altiregen	731,{
 	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith","Blacksmith Altiregen";
 
-	if (BaseJob == 5) goto L_Merc;
+	if (BaseJob == Job_Merchant) goto L_Merc;
 	mes "[Blacksmith Altiregen]";
 	mes "Welcome! We're the masters of the metal, blacksmiths!";
 	mes "Our skills in creating weapons, in a way, is almost an art form!.";
@@ -43,8 +44,41 @@ ein_in01.gat,18,28,4	script	Guildsman Altiregen	731,{
 	mes "Those weapons, heh, can be sold for quite a profit as well.";
 	next;
 	mes "[Blacksmith Altiregen]";
-	callfunc "Bla_check";
 
+	if (BaseJob == Job_Novice){
+		if(sex){
+			mes "Hmmm, you look like you wish to be a blacksmith! Sorry, but only merchants can be blacksmiths!.";
+		} else {
+			mes "...Hello little lady! If you wish to be a blacksmith, you have to be a merchant first!";
+		}
+		close;
+	}
+	if (baseClass == Job_Swordman){
+		mes "Hello! Come here to order a sword? Sorry, but I have some paperwork to do, so I can't forge anything now.";
+		close;
+	}
+	if (baseClass == Job_Acolyte){
+		mes "Oh! A Holy one...! Do me a favor and bless the sword I'm crafting!";
+		close;
+	}
+	if (baseClass == Job_Thief){
+		mes "Sorry, but this is more of a office, so there's nothing worth money.  We CAN do knife forges though.";
+		close;
+	}
+	if (baseClass == Job_Mage){
+		mes "Interested in training? Our guild cannot assist magic users is such matters.";
+		close;
+	}
+	if (baseClass == Job_Archer){
+		mes "Hmmm, sorry, but we're not hiring anyone that isn't a merchent.";
+		close;	
+	}
+	if (BaseJob == Job_Blacksmith){
+		mes "Hey! Been a while, running a errand for Christopher? I feel like my hammer is getting rusty after all this office work.";
+		close;
+	}
+	mes "Only Merchants can become Blacksmiths.";
+	close;
 
 L_Merc:
 	mes "[Blacksmith Altiregen]";

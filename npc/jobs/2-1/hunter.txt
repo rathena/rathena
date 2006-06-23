@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -28,18 +28,54 @@
 //= 1.7 Moved the Job QUest to Hugel [Poki#3]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
+//= 2.2 Merged JFunc, fixed missing dialoges [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
 hu_in01.gat,386,374,4	script	Hunter Sharon	727,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Sniper,"Sniper","Hunter Sharon";
 
+	mes "[Hunter Sharon]";
 	if(BaseJob==Job_Archer) goto L_Start;
-	callfunc "Hun_check";
-
+	if(BaseJob==Job_Novice){
+		mes "What's a novice like you doing here? Leave, we have nothing for you.";
+		emotion e_what;
+		close;
+	}
+	if(BaseJob==Job_Hunter){
+		mes "What up! "+strcharinfo(0)+" Why did you come back? Falcon run away or something? Te hehe.";
+		emotion e_heh;
+		next;
+		mes "[Hunter Sharon]";
+		mes "I hope you didn't think you could get free stuff from us just because your part of our guild now......";
+		close;
+	}
+	if(baseClass == Job_Swordman){
+		mes "A follower of the way of the blade! We have nothing for you here so please leave.";
+		close;
+	}
+	if(baseClass == Job_Mage){
+		mes "Hello mage type person.  If you have no business here, please leave,";
+		close;
+	}
+	if(baseClass == Job_Thief){
+		mes "Eeep! There's nothing to steal here!! Leave us alone..... go rob an old lady or something......";
+		emotion e_omg;
+		close;
+	}
+	if(baseClass == Job_Acolyte){
+		mes "Good day, religious zealot! It's nice to meet you and all, but you have no buisiness here.";
+		close;
+	}
+	if(baseClass == Job_Merchant){
+		mes "Hey, how's buisiness? Perhaps if you want to sell something, go back to town.";
+		close;
+	}
+	mes "What are YOU doing here? Did you come to do a little song and dance... ke.. keke....kekekeHahahahhaha!!!";
+	emotion e_heh;
+	close;
 
 L_Start:
-	mes "[Hunter Sharon]";
 	if(HNTR_Q == 1) goto L_Test2;
 	if(HNTR_Q == 2) goto L_Test3;
 	if(HNTR_Q == 3) goto L_Change;
