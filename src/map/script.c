@@ -11682,9 +11682,10 @@ int mapreg_setreg(int num,int val)
 #endif
 
 	if(val!=0) {
-
+		if(idb_put(mapreg_db,num,(void*)val))
+			;
 #if !defined(TXT_ONLY) && defined(MAPREGSQL)
-		if(name[1] != '@' && idb_get(mapreg_db,num) == NULL) {
+		else if(name[1] != '@') {
 			sprintf(tmp_sql,"INSERT INTO `%s`(`%s`,`%s`,`%s`) VALUES ('%s','%d','%d')",mapregsql_db,mapregsql_db_varname,mapregsql_db_index,mapregsql_db_value,jstrescapecpy(tmp_str,name),i,val);
 			if(mysql_query(&mmysql_handle,tmp_sql)){
 				ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
@@ -11692,7 +11693,6 @@ int mapreg_setreg(int num,int val)
 			}
 		}
 #endif
-		idb_put(mapreg_db,num,(void*)val);
 	// else
 	} else { // [zBuffer]
 #if !defined(TXT_ONLY) && defined(MAPREGSQL)
@@ -11744,7 +11744,8 @@ int mapreg_setregstr(int num,const char *str)
 	if (idb_put(mapregstr_db,num,p))
 		;
 #if !defined(TXT_ONLY) && defined(MAPREGSQL)
-	else { //put returned null, so we must insert.
+	else if(name[1] != '@'){ //put returned null, so we must insert.
+		// Someone is causing a database size infinite increase here without name[1] != '@' [Lance]
 		sprintf(tmp_sql,"INSERT INTO `%s`(`%s`,`%s`,`%s`) VALUES ('%s','%d','%s')",mapregsql_db,mapregsql_db_varname,mapregsql_db_index,mapregsql_db_value,jstrescapecpy(tmp_str,name),i,jstrescapecpy(tmp_str2,p));
 		if(mysql_query(&mmysql_handle,tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
@@ -11804,7 +11805,7 @@ static int script_load_mapreg(void)
 	| varname | index | value |
 	+-------------------------+
 	*/
-	int perfomance = gettick_nocache();
+	unsigned int perfomance = (unsigned int)time(NULL);
 	sprintf(tmp_sql,"SELECT * FROM `%s`",mapregsql_db);
 	ShowInfo("Querying script_load_mapreg ...\n");
 	if(mysql_query(&mmysql_handle, tmp_sql) ) {
@@ -11836,7 +11837,7 @@ static int script_load_mapreg(void)
 	ShowInfo("Freeing results...\n");
 	mysql_free_result(sql_res);
 	mapreg_dirty=0;
-	perfomance = (gettick_nocache() - perfomance) / 1000;
+	perfomance = ((unsigned int)time(NULL) - perfomance);
 	ShowInfo("SQL Mapreg Loading Completed Under %d Seconds.\n",perfomance);
 	return 0;
 #endif /* TXT_ONLY */
@@ -11912,10 +11913,10 @@ static int script_save_mapreg(void)
 	mapregstr_db->foreach(mapregstr_db,script_save_mapreg_strsub,fp);
 	lock_fclose(fp,mapreg_txt,&lock);
 #else
-	int perfomance = (int)time(NULL);
+	unsigned int perfomance = (unsigned int)time(NULL);
 	mapreg_db->foreach(mapreg_db,script_save_mapreg_intsub);  // [zBuffer]
 	mapregstr_db->foreach(mapregstr_db,script_save_mapreg_strsub);
-	perfomance = ((int)time(NULL) - perfomance) / 1000;
+	perfomance = ((int)time(NULL) - perfomance);
 	if(perfomance > 2)
 		ShowWarning("Slow Query: MapregSQL Saving @ %d second(s).\n", perfomance);
 #endif

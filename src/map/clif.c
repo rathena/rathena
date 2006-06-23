@@ -7638,6 +7638,7 @@ int clif_refresh(struct map_session_data *sd) {
 	clif_updatestatus(sd,SP_MAXWEIGHT);
 	clif_updatestatus(sd,SP_WEIGHT);
 	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
+	clif_weather_check(sd);
 	return 0;
 }
 
