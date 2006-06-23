@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/23
+	* Sorted in the new cards and fixed some equips [Playtester]
 06/22
 	* Fixed the remaining 2006 Cards [Playtester]
 	* Fixed some equipment fields that caused warnings [Playtester]
