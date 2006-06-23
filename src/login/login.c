@@ -3571,7 +3571,6 @@ int login_lan_config_read(const char *lancfgName) {
 // Reading general configuration file
 //-----------------------------------
 int login_config_read(const char *cfgName) {
-	struct hostent *h = NULL;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 

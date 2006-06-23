@@ -4155,7 +4155,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case TF_STEAL:			// スティール
-		if(sd && dstmd) {
+		if(sd) {
 			if(pc_steal_item(sd,bl))
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			else
@@ -4165,10 +4165,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case RG_STEALCOIN:		// スティールコイン
 		if(sd) {
-			if(pc_steal_coin(sd,bl)) {
+			if(pc_steal_coin(sd,bl))
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				mob_target(dstmd,src,skill_get_range2(src,skillid,skilllv));
-			}
 			else
 				clif_skill_fail(sd,skillid,0,0);
 		}

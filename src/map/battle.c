@@ -929,7 +929,12 @@ static struct Damage battle_calc_weapon_attack(
 	}
 	if (sstatus->lhw && sstatus->lhw->atk)
 		flag.lh=1;
-	
+
+	if (skill_num == ASC_BREAKER)
+	{	//Soul Breaker disregards dual-wielding.
+		flag.rh = 1; flag.lh = 0;
+	}
+
 	//Check for critical
 	if(!flag.cri && sstatus->cri &&
 		(!skill_num || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING || skill_num == NJ_KIRIKAGE))
@@ -1693,9 +1698,6 @@ static struct Damage battle_calc_weapon_attack(
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if(skill_num==ASC_BREAKER) //Breaker's int-based damage.
-		ATK_ADD(rand()%500 + 500 + skill_lv * sstatus->int_ * 5);
-
 	if (skill_num || !(battle_config.attack_attr_none&src->type))
 	{	//Elemental attribute fix
 		if	(!(!sd && tsd && battle_config.mob_ghostring_fix && tstatus->def_ele==ELE_GHOST))
@@ -1717,6 +1719,10 @@ static struct Damage battle_calc_weapon_attack(
 			ATK_ADD(damage);
 		}
 	}
+
+	//Breaker's int-based damage (applies after attribute modifiers)
+	if(skill_num==ASC_BREAKER)
+		ATK_ADD(rand()%500 + 500 + skill_lv * sstatus->int_ * 5);
 
 	if ((!flag.rh || !wd.damage) && (!flag.lh || !wd.damage2))
 		flag.cardfix = 0;	//When the attack does no damage, avoid doing %bonuses
@@ -1873,7 +1879,7 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage2 = 0;
 			flag.rh=1;
 			flag.lh=0;
-		} else if(sd->status.weapon > MAX_WEAPON_TYPE && skill_num != ASC_BREAKER)
+		} else if(flag.rh && flag.lh)
 		{	//Dual-wield
 			if (wd.damage)
 			{
@@ -2087,7 +2093,7 @@ struct Damage battle_calc_magic_attack(
 			break;
 		case PR_SANCTUARY:
 			ad.blewcount|=0x10000;
-            ad.dmotion = 0; //No flinch animation.
+			ad.dmotion = 0; //No flinch animation.
 		case AL_HEAL:
 		case PR_BENEDICTIO:
 		case WZ_FIREPILLAR:
@@ -2720,7 +2726,6 @@ void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, i
 	}
 	if (!thp && !tsp) return;
 
-	//Split'em up as Hp/Sp could be drained/leeched.
 	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 	
 	if (tsd) {
