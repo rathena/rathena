@@ -24,7 +24,7 @@ static struct dbt* item_db;
 
 static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
-struct item_data *dummy_item=NULL; //This is the default dummy item used for non-existant items. [Skotlex]
+struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
 /*==========================================
  * –¼‘O‚ÅŒŸõ—p
@@ -37,7 +37,7 @@ int itemdb_searchname_sub(DBKey key,void *data,va_list ap)
 	char *str;
 	str=va_arg(ap,char *);
 	dst=va_arg(ap,struct item_data **);
-	if(item == dummy_item) return 0;
+	if(item == &dummy_item) return 0;
 	if( strcmpi(item->name,str)==0 ) //by lupus
 		*dst=item;
 	return 0;
@@ -74,7 +74,7 @@ static int itemdb_searchname_array_sub(DBKey key,void * data,va_list ap)
 	struct item_data *item=(struct item_data *)data;
 	char *str;
 	str=va_arg(ap,char *);
-	if (item == dummy_item)
+	if (item == &dummy_item)
 		return 1; //Invalid item.
 	if(stristr(item->jname,str))
 		return 0;
@@ -135,7 +135,7 @@ int itemdb_group (int nameid)
 struct item_data* itemdb_exists(int nameid)
 {
 	struct item_data* id = idb_get(item_db,nameid);
-	if (id == dummy_item) return NULL;
+	if (id == &dummy_item) return NULL;
 	return id;
 }
 
@@ -201,16 +201,14 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 }
 
 static void create_dummy_data(void) {
-	if (dummy_item)
-		aFree(dummy_item);
-	
-	dummy_item=(struct item_data *)aCalloc(1,sizeof(struct item_data));
-	dummy_item->nameid=500;
-	dummy_item->weight=1;
-	dummy_item->type=3; //Etc item
-	strncpy(dummy_item->name,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
-	strncpy(dummy_item->jname,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
-	dummy_item->view_id = 512; //Use apple sprite.
+	memset(&dummy_item, 0, sizeof(struct item_data));
+	dummy_item.nameid=500;
+	dummy_item.weight=1;
+	dummy_item.value_sell = 1;
+	dummy_item.type=3; //Etc item
+	strncpy(dummy_item.name,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
+	strncpy(dummy_item.jname,"UNKNOWN_ITEM",ITEM_NAME_LENGTH-1);
+	dummy_item.view_id = 512; //Use apple sprite.
 }
 
 static void* create_item_data(DBKey key, va_list args) {
@@ -234,7 +232,7 @@ struct item_data* itemdb_load(int nameid)
 static void* return_dummy_data(DBKey key, va_list args) {
 	if (battle_config.error_log)
 		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", key.i);
-	return dummy_item;
+	return &dummy_item;
 }
 
 /*==========================================
@@ -1170,7 +1168,7 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 		id->unequip_script = NULL;
 	}
 	// Whether to clear the item data (exception: do not clear the dummy item data
-	if (flag && id != dummy_item) 
+	if (flag && id != &dummy_item) 
 		aFree(id);
 
 	return 0;
@@ -1186,16 +1184,12 @@ void itemdb_reload(void)
 void do_final_itemdb(void)
 {
 	item_db->destroy(item_db, itemdb_final_sub, 1);
-	if (dummy_item) {
-		if (dummy_item->script)
-			script_free_code(dummy_item->script);
-		if (dummy_item->equip_script)
-			script_free_code(dummy_item->equip_script);
-		if (dummy_item->unequip_script)
-			script_free_code(dummy_item->unequip_script);
-		aFree(dummy_item);
-		dummy_item = NULL;
-	}
+	if (dummy_item.script)
+		script_free_code(dummy_item.script);
+	if (dummy_item.equip_script)
+		script_free_code(dummy_item.equip_script);
+	if (dummy_item.unequip_script)
+		script_free_code(dummy_item.unequip_script);
 }
 
 int do_init_itemdb(void)

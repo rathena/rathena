@@ -8152,6 +8152,11 @@ int skill_castfix_sc (struct block_list *bl, int time)
 			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);
 		}
+		if (sc->data[SC_MEMORIZE].timer != -1) {
+			time>>=1;
+			if ((--sc->data[SC_MEMORIZE].val2) <= 0)
+				status_change_end(bl, SC_MEMORIZE, -1);
+		}
 		if (sc->data[SC_POEMBRAGI].timer != -1)
 			time -= time * sc->data[SC_POEMBRAGI].val2 / 100;
 	}

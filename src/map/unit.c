@@ -873,12 +873,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		break;
 	}
 
-	if (sc && sc->data[SC_MEMORIZE].timer != -1 && casttime > 0) {
-		casttime = casttime/2;
-		if ((--sc->data[SC_MEMORIZE].val2) <= 0)
-			status_change_end(src, SC_MEMORIZE, -1);
-	}
-
 	if( casttime>0 || temp){ 
 
 		clif_skillcasting(src, src->id, target_id, 0,0, skill_num,casttime);
@@ -994,12 +988,6 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 
 	unit_stop_attack(src);
 	ud->state.skillcastcancel = castcancel;
-
-	if (sc && sc->data[SC_MEMORIZE].timer != -1 && casttime > 0){
-		casttime = casttime/3;
-		if ((--sc->data[SC_MEMORIZE].val2)<=0)
-			status_change_end(src, SC_MEMORIZE, -1);
-	}
 
 	if( casttime>0 ) {
 		unit_stop_walking( src, 1);
