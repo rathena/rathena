@@ -7738,7 +7738,7 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	}
 
 	// get maximum droprate limit
-	rate = (int)(atof(message) * 100);
+	rate = (int)(atof(message) * 100.);
 
 	// check for invalid value
 	if(rate > 10000)
