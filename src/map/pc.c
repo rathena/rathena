@@ -5476,7 +5476,7 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
  */
 int pc_setoption(struct map_session_data *sd,int type)
 {
-	int p_type;
+	int p_type, new_look=0;
 	nullpo_retr(0, sd);
 	p_type = sd->sc.option;
 
@@ -5486,20 +5486,13 @@ int pc_setoption(struct map_session_data *sd,int type)
 
 	if (type&OPTION_RIDING && !(p_type&OPTION_RIDING) && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to mount. [Skotlex]
-		status_set_viewdata(&sd->bl, sd->status.class_); //Adjust view class.
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		if (sd->vd.cloth_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+		new_look = -1;
 		clif_status_load(&sd->bl,SI_RIDING,1);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
 	else if (!(type&OPTION_RIDING) && p_type&OPTION_RIDING && (sd->class_&MAPID_BASEMASK) == MAPID_SWORDMAN)
 	{	//We are going to dismount.
-		if (sd->vd.class_ != sd->status.class_) {
-			status_set_viewdata(&sd->bl, sd->status.class_);
-			clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-		}
+		new_look = -1;
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0); //Mounting/Umounting affects walk and attack speeds.
 	}
@@ -5520,33 +5513,28 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_FALCON,0);
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
-		clif_changelook(&sd->bl,LOOK_BASE,JOB_STAR_GLADIATOR2);
+		new_look = JOB_STAR_GLADIATOR2;
 	else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING)
-	{	
-		status_set_viewdata(&sd->bl, sd->status.class_);
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		if(sd->status.clothes_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
-	}
+		new_look = -1;
 	
 	if (type&OPTION_WEDDING && !(p_type&OPTION_WEDDING))
-		clif_changelook(&sd->bl,LOOK_BASE,JOB_WEDDING);
+		new_look = JOB_WEDDING;
 	else if (!(type&OPTION_WEDDING) && p_type&OPTION_WEDDING)
-	{	
-		status_set_viewdata(&sd->bl, sd->status.class_);
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		if(sd->status.clothes_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
-	}
+		new_look = -1;
 
 	if (type&OPTION_XMAS && !(p_type&OPTION_XMAS))
-		clif_changelook(&sd->bl,LOOK_BASE,JOB_XMAS);
+		new_look = JOB_XMAS;
 	else if (!(type&OPTION_XMAS) && p_type&OPTION_XMAS)
-	{	
+		new_look = -1;
+
+	if (new_look < 0) { //Restore normal look.
 		status_set_viewdata(&sd->bl, sd->status.class_);
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		if(sd->status.clothes_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->status.clothes_color);
+		new_look = sd->vd.class_;
+	}
+	if (new_look) {
+		clif_changelook(&sd->bl,LOOK_BASE,new_look);
+		if (sd->vd.cloth_color)
+			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	}
 	return 0;
 }
