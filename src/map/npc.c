@@ -634,10 +634,12 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
 		ers_free(timer_event_ers, ted);
 	}
 	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
-	//Restore previous data.
-	nd->u.scr.rid = old_rid;
-	nd->u.scr.timer = old_timer;
-	nd->u.scr.timertick = old_tick;
+	//Restore previous data, only if this timer is a player-attached one.
+	if (sd) {
+		nd->u.scr.rid = old_rid;
+		nd->u.scr.timer = old_timer;
+		nd->u.scr.timertick = old_tick;
+	}
 	return 0;
 }
 /*==========================================

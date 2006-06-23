@@ -1115,8 +1115,34 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	return 1;
 }
 
+static int pc_bonus_autospell_del(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id) {
+	int i, j;
+	for(i=max-1; i>=0 && !spell[i].id; i--);
+	if (i<0) return 0; //Nothing to substract from.
+
+	j = i;
+	for(; i>=0 && rate > 0; i--)
+	{
+		if (spell[i].id != id || spell[i].lv != lv) continue;
+		if (rate >= spell[i].rate) {
+			rate-= spell[i].rate;
+			spell[i].rate = 0;
+			memmove(&spell[i], &spell[j], sizeof(struct s_autospell));
+			memset(&spell[j], 0, sizeof(struct s_autospell));
+			j--;
+		} else {
+			spell[i].rate -= rate;
+			rate = 0;
+		}
+	}
+	return rate;
+}
+
 static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id) {
 	int i;
+	if (rate < 0) return //Remove the autobonus.
+		pc_bonus_autospell_del(spell, max, id, lv, -rate, card_id);
+
 	for (i = 0; i < max && spell[i].id; i++) {
 		if (spell[i].card_id == card_id &&
 			spell[i].id == id && spell[i].lv == lv)
