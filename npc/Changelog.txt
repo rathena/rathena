@@ -36,6 +36,9 @@ Musashiden
 
 Date		Added
 ======
+06/24
+	*Fixed some typos and coordinates [Musashiden]
+
 06/23
 	* Merged JFunc 2-1, 2-2 functions, fixed bugs with missing dialogues [Lupus]
 		and changed job numbers to constants
