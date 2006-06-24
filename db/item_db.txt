@@ -1701,7 +1701,7 @@
 5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
 5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
-5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{},{ bonus bAtk,20; }
+5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{ bonus bAtk,20; },{},{}
 5156,Father's_Mask,Father's Mask,5,,,100,,1,,,0xFFFFFFFF,7,2,1,,,,8,{ bonus bMatkRate,1; },{},{}
 
 // More Etc Items
