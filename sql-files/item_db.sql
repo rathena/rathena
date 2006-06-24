@@ -2580,7 +2580,7 @@ REPLACE INTO `item_db` VALUES (13301,'Fuuma_Shuriken_Daisharin','Fuuma Shuriken 
 REPLACE INTO `item_db` VALUES (13302,'Fuuma_Shuriken_Daisharin_','Fuuma Shuriken Daisharin',4,40000,NULL,2500,50,NULL,1,4,0x02000000,7,2,2,4,42,1,22,' bonus2 bAddEff,Eff_Bleeding,500; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13303,'Fuuma_Shuriken_Rekka','Fuuma Shuriken Rekka',4,78000,NULL,1500,185,NULL,1,0,0x02000000,7,2,2,4,55,1,22,' bonus bDex,-2; bonus bAtkEle,3; bonus4 bAutoSpell,19,5,20,1; ',NULL,NULL);
 # 
-REPLACE INTO `item_db` VALUES (587,'Red_Thorn_Fruit','Red Thorn Fruit',0,NULL,NULL,40,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,' //Restores a bit of HP','SP');
+REPLACE INTO `item_db` VALUES (587,'Red_Thorn_Fruit','Red Thorn Fruit',0,NULL,NULL,40,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # 
 REPLACE INTO `item_db` VALUES (2422,'High_Quality_Sandal','High Quality Sandal',5,NULL,NULL,200,NULL,2,NULL,0,0x00818314,7,2,64,NULL,0,0,1,' bonus bMdef,10; ',NULL,NULL);
 # 
