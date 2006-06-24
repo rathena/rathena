@@ -470,6 +470,9 @@ struct map_session_data {
 		unsigned event_kill_pc : 1;
 		unsigned event_disconnect : 1;
 		unsigned event_kill_mob : 1;
+		unsigned event_baselvup : 1;
+		unsigned event_joblvup : 1;
+		unsigned event_loadmap : 1;
 		// Abracadabra bugfix by Aru
 		unsigned abra_flag : 1;
 		unsigned autotrade : 1;	//By Fantik

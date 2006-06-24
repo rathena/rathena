@@ -2992,14 +2992,18 @@ int mob_clone_delete(int class_)
 
 int mob_script_callback(struct mob_data *md, struct block_list *target, short action_type)
 {
-	// I will not add any protection here since I assume everything is checked before coming here.
+	// DEBUG: Uncomment these if errors occur. ---
+	// nullpo_retr(md, 0);
+	// nullpo_retr(md->nd, 0);
+	// -------------------------------------------
 	if(md->callback_flag&action_type){
-		setd_sub(NULL, NULL, ".ai_action", 0, (void *)(int)action_type, &md->nd->u.scr.script->script_vars);
+		int regkey = add_str(".ai_action");
+		linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)regkey, (void *)(int)action_type);
 		if(target){
-			setd_sub(NULL, NULL, ".ai_action", 1, (void *)(int)target->type, &md->nd->u.scr.script->script_vars);
-			setd_sub(NULL, NULL, ".ai_action", 2, (void *)target->id, &md->nd->u.scr.script->script_vars);
+			linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(1<<24)), (void *)(int)target->type);
+			linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(2<<24)), (void *)target->id);
 		}
-		setd_sub(NULL, NULL, ".ai_action", 3, (void *)md->bl.id, &md->nd->u.scr.script->script_vars);
+		linkdb_replace(&md->nd->u.scr.script->script_vars,(void *)(regkey+(3<<24)), (void *)md->bl.id);
 		run_script(md->nd->u.scr.script, 0, 0, md->nd->bl.id);
 		return 1;
 	}

@@ -8231,7 +8231,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
 // Lance
-	npc_script_event(sd, NPCE_LOADMAP);
+	if(sd->state.event_loadmap){
+		pc_setregstr(sd, add_str("@maploaded$"), map[sd->bl.m].name);
+		npc_script_event(sd, NPCE_LOADMAP);
+	}
 
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
@@ -9273,10 +9276,12 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 		fail = 1;
 	else{
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
+			int regkey = add_str("@bought_nameid");
+			int regkey2 = add_str("@bought_quantity");
 			sprintf(npc_ev, "%s::OnBuyItem", nd->exname);
 			for(i=0;i<n;i++){
-				setd_sub(NULL,sd, "@bought_nameid", i, (void *)((int)item_list[i*2+1]),NULL);
-				setd_sub(NULL,sd, "@bought_quantity", i, (void *)((int)item_list[i*2]),NULL);
+				pc_setreg(sd,regkey+(i<<24),(int)item_list[i*2+1]);
+				pc_setreg(sd,regkey2+(i<<24),(int)item_list[i*2]);
 			}
 			npc_event(sd, npc_ev, 0);
 			fail = 0;

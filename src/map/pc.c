@@ -826,12 +826,18 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.event_kill_pc = pc_readglobalreg(sd, script_config.kill_pc_event_name);
 		sd->state.event_kill_mob = pc_readglobalreg(sd, script_config.kill_mob_event_name);
 		sd->state.event_disconnect = pc_readglobalreg(sd, script_config.logout_event_name);
+		sd->state.event_baselvup = pc_readglobalreg(sd, script_config.baselvup_event_name);
+		sd->state.event_joblvup = pc_readglobalreg(sd, script_config.joblvup_event_name);
+		sd->state.event_loadmap = pc_readglobalreg(sd, script_config.loadmap_event_name);
 	// if script triggers are not required
 	} else {
 		sd->state.event_death = 1;
 		sd->state.event_kill_pc = 1;
 		sd->state.event_disconnect = 1;
 		sd->state.event_kill_mob = 1;
+		sd->state.event_baselvup = 1;
+		sd->state.event_joblvup = 1;
+		sd->state.event_loadmap = 1;
 	}
 
 	npc_script_event(sd, NPCE_LOGIN);
@@ -3917,7 +3923,8 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 	}
 	clif_misceffect(&sd->bl,0);
 	//LORDALFA - LVLUPEVENT
-	npc_script_event(sd, NPCE_BASELVUP);
+	if(sd->state.event_baselvup)
+		npc_script_event(sd, NPCE_BASELVUP);
 	return 1;
 }
 
@@ -3948,7 +3955,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_change(&sd->bl,SI_DEVIL, 1); //Permanent blind effect from SG_DEVIL.
 
-	npc_script_event(sd, NPCE_JOBLVUP);
+	if(sd->state.event_joblvup)
+		npc_script_event(sd, NPCE_JOBLVUP);
 	return 1;
 }
 
@@ -4700,8 +4708,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	case BL_PC:
 	{
 		struct map_session_data *ssd = (struct map_session_data *)src;
-		if (sd->state.event_death)
+		if (sd->state.event_death){
 			pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
+			npc_script_event(sd,NPCE_DIE);
+		}
 		if (ssd->state.event_kill_pc) {
 			pc_setglobalreg(ssd, "killedrid", sd->bl.id);
 			npc_script_event(ssd, NPCE_KILLPC);
@@ -4736,9 +4746,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	break;
 	}
-
-	if (sd->state.event_death)
-		npc_script_event(sd,NPCE_DIE);
+		
 
 	// PK/Karma system code (not enabled yet) [celest]
 	/*

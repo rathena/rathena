@@ -856,7 +856,7 @@ static int search_str(const unsigned char *p)
  *------------------------------------------
  */
 // Šù‘¶‚Ì‚Å‚ ‚ê‚Î”Ô†A–³‚¯‚ê‚Î“o˜^‚µ‚ÄV‹K”Ô†
-static int add_str(const unsigned char *p)
+int add_str(const unsigned char *p)
 {
 	int i;
 	char *lowcase;

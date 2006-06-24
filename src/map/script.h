@@ -83,6 +83,7 @@ int script_config_read(char *cfgName);
 void script_free_stack(struct script_stack*); 
 int do_init_script(void);
 int do_final_script(void);
+int add_str(const unsigned char *p);
 int script_reload(void);
 
 extern char mapreg_txt[];
