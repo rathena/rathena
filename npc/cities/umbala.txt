@@ -965,6 +965,9 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 	}
 	
 	next;
+
+	set .@need,0;
+
 	switch (select("Create Essence","Dismantle Elemental Stone","Nothing")) {
 	case 1:
 		mes "[Putsuchiritan]";

@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/25
+	* Fixed possible exploit in umbala elemental stone quest [Playtester]
 	* Added a shop NPC to Prontera, it's required for the Hellion Quest. [MasterOfMuppets]
 06/24
 	* Fixed some typos and coordinates [Musashiden]
