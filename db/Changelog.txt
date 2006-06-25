@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/25
+	* Added two new gunslinger weapon drops, thanks to RockmanEXE. [MasterOfMuppets]
 06/23
 	* Fixed SP Drain rates of items [Playtester]
 	* Updated BD_INTOABYSS's unit flag to not affect mobs. [Skotlex]
