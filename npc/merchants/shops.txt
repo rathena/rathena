@@ -256,6 +256,7 @@ prontera.gat,105,87,1	shop	Gift Merchant	91,734:-1,735:-1,736:-1,737:-1,746:-1
 prontera.gat,218,211,4	shop	Pet Merchant	125,537:-1,643:-1,10013:-1,10014:-1
 prontera.gat,248,153,1	shop	Doll Merchant	85,740:-1,741:-1,742:-1
 prontera.gat,156,212,2	shop	Food Seller	700,7454:-1,7452:-1,7482:-1,580:-1
+prontera.gat,48,58,7	shop	Vegetable Gardener	91,515:-1,516:-1,535:-1
 prt_church.gat,108,124,1 	shop	Nun	79,2608:-1,2216:-1,2323:-1,2325:-1,1501:-1,1504:-1,1507:-1,1510:-1,1513:-1,1519:-1,5092:-1
 prt_fild05.gat,290,221,1	shop	Tool Dealer	83,1750:-1,611:-1,501:-1,502:-1,506:-1,601:-1,602:-1,645:-1,656:-1
 prt_in.gat,211,169,1	shop	Wedding Goods Merchant	71,744:-1,745:-1,2338:-1,2206:-1,7170:-1
