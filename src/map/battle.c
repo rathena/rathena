@@ -308,6 +308,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			&& rand()%100 < 75 && !(skill_get_inf(skill_num)&INF_GROUND_SKILL))
 			return 0;
    	
+	
+		if(sc->data[SC_TATAMIGAESHI].timer != -1 && !flag&BF_MAGIC && flag&BF_LONG)
+			return 0;
+
 		if(sc->data[SC_KAUPE].timer != -1 &&
 			rand()%100 < sc->data[SC_KAUPE].val2 &&
 			(src->type == BL_PC || !skill_num))

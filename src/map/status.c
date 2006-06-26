@@ -363,9 +363,9 @@ void initChangeTables(void) {
 	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
 	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
 	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
+	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK, SCB_NONE);
 
 	//Uncomment and update when you plan on implementing.
-//	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK);
 //	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_MAEMI);
 //	set_sc(NJ_KAENSIN,              SC_KAENSIN,             SI_BLANK);
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI);
