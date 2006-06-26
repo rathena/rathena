@@ -3021,12 +3021,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);	// varargs
 		break;
 	//Not implemented yet [Vicious]
-	case GS_GROUNDDRIFT:
 	
 	//case NJ_SYURIKEN:
 	//case NJ_KUNAI:
 	//case NJ_HUUMA:
-	case NJ_TATAMIGAESHI:
 	//case NJ_KASUMIKIRI:
 	//case NJ_KIRIKAGE:
 	//case NJ_KOUENKA:
@@ -3609,14 +3607,31 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_ADJUSTMENT:
 	case GS_INCREASING:
 	case GS_CRACKER:
-	case GS_GROUNDDRIFT:
-	case NJ_TATAMIGAESHI:
 	case NJ_KASUMIKIRI:
 	case NJ_UTSUSEMI:
 	case NJ_BUNSINJYUTSU:
 	case NJ_NEN:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		break;
+	case NJ_TATAMIGAESHI:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+
+		i = skill_get_range(skillid, skilllv); //use i for range.
+		type = skill_get_splash(skillid, skilllv); //reuse type for splash
+		map_foreachinpath(skill_attack_area,src->m,
+			src->x,src->y,src->x-i,src->y,type,BL_CHAR,
+			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+		map_foreachinpath(skill_attack_area,src->m,
+			src->x,src->y,src->x+i,src->y,type,BL_CHAR,
+			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+		map_foreachinpath(skill_attack_area,src->m,
+			src->x,src->y,src->x,src->y-i,type,BL_CHAR,
+			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+		map_foreachinpath(skill_attack_area,src->m,
+			src->x,src->y,src->x,src->y+i,type,BL_CHAR,
+			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
 	case SG_SUN_WARM:
@@ -5804,10 +5819,10 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case WE_CALLBABY:
 	case AC_SHOWER:	//Ground-placed skill implementation.
 	case GS_DESPERADO:
-		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
+	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
+		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
-
 	case RG_GRAFFITI:			/* Graffiti [Valaris] */
 		skill_clear_unitgroup(src);
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -5985,9 +6000,8 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 	
 	//Until they're at right position - gs_unit- [Vicious]
-	case GS_GROUNDDRIFT:		/* グラウンドドリフト*/
-	case NJ_KAENSIN:			/* 火炎陣*/
-	case NJ_BAKUENRYU:			/* 爆炎龍*/
+	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
 	case NJ_HYOUSYOURAKU:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		flag|=1;
@@ -6349,6 +6363,14 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	case WE_CALLBABY:
 		if (sd) val1 = sd->status.child;
 		break;
+	case GS_GROUNDDRIFT:
+		{	//Take on the base element, not the elemental one.
+			struct status_data *bstatus = status_get_base_status(src);
+			val1 = bstatus?bstatus->rhw.ele:status->rhw.ele;
+			if (sd) sd->state.arrow_atk = 0; //Disable consumption rigth away.
+			else if (!val1) val1 = ELE_WATER+rand()%(ELE_WIND-ELE_WATER);
+			break;
+		}
 	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
@@ -6703,6 +6725,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	case UNT_DESPERADO:
 		if (!(rand()%10)) //Has a low chance of connecting. [Skotlex]
 			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+		break;
+	case UNT_GROUNDDRIFT:
+		skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,sg->val1);
 		break;
 
 	case UNT_FIREPILLAR_WAITING:

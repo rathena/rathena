@@ -1971,14 +1971,16 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Basic ASPD value
 	if (sd->status.weapon < MAX_WEAPON_TYPE)
-		i = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
+		i = (1000 -4*status->agi -status->dex)
+			*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 	else
-		i = (
-			(aspd_base[sd->status.class_][sd->weapontype1]
-			-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype1]/1000) +
-			(aspd_base[sd->status.class_][sd->weapontype2]
-			-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype2]/1000)
-			) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
+		i = ((
+			(1000 -4*status->agi -status->dex)
+			*aspd_base[sd->status.class_][sd->weapontype1]/1000
+		)+(
+			(1000 -4*status->agi -status->dex)
+			*aspd_base[sd->status.class_][sd->weapontype2]/1000
+		)) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
 
 	status->amotion = cap_value(i,battle_config.max_aspd,2000);
 
@@ -2388,14 +2390,16 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
 		if (sd->status.weapon < MAX_WEAPON_TYPE)
-			skill = aspd_base[sd->status.class_][sd->status.weapon]-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000;
+			skill = (1000 -4*status->agi -status->dex)
+				*aspd_base[sd->status.class_][sd->status.weapon]/1000;
 		else
-			skill = (
-				(aspd_base[sd->status.class_][sd->weapontype1]
-				-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype1]/1000) +
-				(aspd_base[sd->status.class_][sd->weapontype2]
-				-(status->agi*4+status->dex)*aspd_base[sd->status.class_][sd->weapontype2]/1000)
-				) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
+			skill = ((
+				(1000 -4*status->agi -status->dex)
+				*aspd_base[sd->status.class_][sd->weapontype1]/1000
+			)+(
+				(1000 -4*status->agi -status->dex)
+				*aspd_base[sd->status.class_][sd->weapontype2]/1000
+			)) *2/3;
 
 		status->aspd_rate = status_calc_aspd_rate(&sd->bl, &sd->sc , b_status->aspd_rate);
 		

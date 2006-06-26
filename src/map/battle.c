@@ -852,6 +852,7 @@ static struct Damage battle_calc_weapon_attack(
 			case ITM_TOMAHAWK:	//Tomahawk is a ranged attack! [Skotlex]
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS:
+			case NJ_TATAMIGAESHI:
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 
@@ -921,6 +922,8 @@ static struct Damage battle_calc_weapon_attack(
 	} else if (s_ele == -2) { //Use enchantment's element
 		s_ele = s_ele_ = status_get_attack_sc_element(src,sc);
 	}
+	if (skill_num == GS_GROUNDDRIFT)
+		s_ele = s_ele_ = wflag; //element comes in flag.
 
 	if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
 	{
@@ -1014,6 +1017,8 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_BLOODDRAIN:
 				case NPC_ENERGYDRAIN:
 				case NPC_MENTALBREAKER:
+				case GS_GROUNDDRIFT:
+				case NJ_TATAMIGAESHI:
 					flag.hit = 1;
 					break;
 				case CR_SHIELDBOOMERANG:
@@ -1489,6 +1494,9 @@ static struct Damage battle_calc_weapon_attack(
 			switch (skill_num) {
 				case MO_EXTREMITYFIST:
 					ATK_ADD(250 + 150*skill_lv);
+					break;
+				case GS_GROUNDDRIFT:
+					ATK_ADD(50*skill_lv);
 					break;
 				case TK_DOWNKICK:
 				case TK_STORMKICK:

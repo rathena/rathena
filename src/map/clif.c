@@ -2885,21 +2885,12 @@ void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area)
 	WBUFB(buf,7)=val;
 	clif_send(buf,packet_len_table[0xc3],bl,area);
 #else
-	if(type == LOOK_BASE && val > 255)
-	{
-		WBUFW(buf,0)=0x1d7;
-		WBUFL(buf,2)=id;
-		WBUFB(buf,6)=type;
-		WBUFW(buf,7)=val;
-		WBUFW(buf,9)=0;
-		clif_send(buf,packet_len_table[0x1d7],bl,area);
-	} else {
-		WBUFW(buf,0)=0xc3;
-		WBUFL(buf,2)=id;
-		WBUFB(buf,6)=type;
-		WBUFB(buf,7)=val;
-		clif_send(buf,packet_len_table[0xc3],bl,area);
-	}
+	WBUFW(buf,0)=0x1d7;
+	WBUFL(buf,2)=id;
+	WBUFB(buf,6)=type;
+	WBUFW(buf,7)=val;
+	WBUFW(buf,9)=0;
+	clif_send(buf,packet_len_table[0x1d7],bl,area);
 #endif
 	return;
 }

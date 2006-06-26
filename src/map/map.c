@@ -1134,13 +1134,13 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 				bl = map[m].block[bx+by*map[m].bxs];
 				c = map[m].block_count[bx+by*map[m].bxs];
 				for(i=0;i<c && bl;i++,bl=bl->next){
-					if(bl && bl->type&type && bl_list_count<BL_LIST_MAX)
+					if(bl && bl->prev && bl->type&type && bl_list_count<BL_LIST_MAX)
 					{
 						xi = bl->x;
 						yi = bl->y;
 					
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
-						if (k < 0)// || k > magnitude2) //No check to see if it lies after the target's point.
+						if (k < 0 || k > magnitude2) //Since more skills use this, check for ending point as well.
 							continue;
 					
 						//All these shifts are to increase the precision of the intersection point and distance considering how it's
@@ -1167,12 +1167,12 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 				bl = map[m].block_mob[bx+by*map[m].bxs];
 				c = map[m].block_mob_count[bx+by*map[m].bxs];
 				for(i=0;i<c && bl;i++,bl=bl->next){
-					if(bl && bl_list_count<BL_LIST_MAX)
+					if(bl && bl->prev && bl_list_count<BL_LIST_MAX)
 					{
 						xi = bl->x;
 						yi = bl->y;
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
-						if (k < 0)// || k > magnitude2) //No check to see if it lies after the target's point.
+						if (k < 0 || k > magnitude2)
 							continue;
 					
 						k = (k<<4)/magnitude2; //k will be between 1~16 instead of 0~1
@@ -1197,13 +1197,12 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 			ShowWarning("map_foreachinpath: block count too many!\n");
 	}
 
-	map_freeblock_lock();	// メモリからの解放を禁止する
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// 有?かどうかチェック
-			returnCount += func(bl_list[i],ap);
+		returnCount += func(bl_list[i],ap);
 
-	map_freeblock_unlock();	// 解放を許可する
+	map_freeblock_unlock();
 
 	va_end(ap);
 	bl_list_count = blockcount;
