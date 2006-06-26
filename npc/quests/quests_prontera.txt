@@ -3,15 +3,16 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//= Ph.D Hat Quest
+//= Ph.D Hat Quest + Culvert
 //===== Additional Comments: ================================= 
 //= Fixed flower name Dreamy -> Illusion
 //= 1.2 Fixed exploit [Lupus]
 //= 1.3 Removed Duplicates [Silent]
+//= 1.4 Moved Culvert from cities/prontera.txt [Evera]
 //============================================================ 
 
 
@@ -95,4 +96,82 @@ L_Start:
 		mes "Now go away!";
 		emotion e_bzz;
 		close;
+}
+
+// ------------------------------------------------------------------------------------------- Culvert -------------------------------------------------------------------------------\\
+// Culvert Guardian ----------------------------------------------------
+prt_fild05.gat,270,212,5	script	Culvert Guardian	105,{
+	mes "[Culvert Guardian]";
+	if(MISC_QUEST & 8) {
+		mes "Here you are. The entrance of the Culvert. Are you sure you want to Go inside?";
+		next;
+		menu "Sure.",-,"Quit.",M_END;
+
+			warp "prt_sewb1.gat",131,247;
+		M_END:
+			close;
+	}
+	mes "Sorry, but only volunteers for the Culvert Campaign can go inside.";
+	mes "Speak with the ^000077Recruiter^000000 about volunteering.  He's located in the ^ff0000Prontera Chivalry^000000.";
+	close;
+}
+
+// Recruiter -----------------------------------------------------------
+prt_in.gat,88,105,2	script	Recruiter	105,{
+	mes "[Recruiter]";
+	if(MISC_QUEST & 8) goto L_WARP;
+	mes "Let me inform about the official Notice from the Capital Defence Headquarter of Rune-Midgard Kingdom";
+	next;
+	mes "[Recruiter]";
+	mes "We decided to recruit volunteers to deal with the 'issues' that have been plauging our cities' sewers.";
+	next;
+	menu "Volunteer.",M_VOL,"Issues...?",-,"Quit",L_END;
+	
+		mes "[Recruiter]";
+		mes "Didn't you hear yet? The Culvert is infested with noxious insects. We found bugs, maggots, and other creatures there.";
+		mes "They've become a huge problem... You've Never heard of this?";
+		emotion e_what;
+		next;
+		mes "[Recruiter]";
+		mes "Because of the severity of these 'issues',it is forbidden for the people to use the water supply for the time being.";
+		next;
+		mes "[Recruiter]";
+		mes "Needless to say, the people have been greatly inconvenienced by this. If this were to linger on it would cause great ill will among the people of the Prontera.";
+		next;
+		mes "[Recruiter]";
+		mes "The situation is becoming critical! There is restlessness among the people!!";
+		next;
+		mes "[Recruiter]";
+		mes "Mighty Warrior!! The People NEED YOU!! Let's EXPEL these VILE creatures from our land!!!";
+		emotion e_go;
+		next;
+		mes "[Recruiter]";
+		mes "WILL YOU volunteer????";
+		next;
+		menu "Volunteer.",M_VOL,"Quit.",-;
+		
+			mes "[Recruiter]";
+			mes "..............";
+			emotion e_swt;
+			close;
+	M_VOL:
+		mes "[Recruiter]";
+		mes "Very good!!! Your Registration is confirmed. We will try to maintain peace and order in Rune-Midgard Kingdom.";
+		mes "I appreciate your support of the Capital Defence Headquarter.  Here are some subsidies....";
+		next;
+		mes "[Recruiter]";
+		mes "3 Red Potions, 1 Milk, and 1 Orange Potion for an emergency.";
+		set MISC_QUEST,MISC_QUEST | 8;
+		getitem 501,3;
+		getitem 519,1;
+		getitem 502,1;
+		next;
+		mes "[Recruiter]";
+	L_WARP:
+		mes "Are you ready? I will warp you to the Culvert.";
+		next;
+		warp "prt_fild05.gat",274,208;
+	L_END:
+		close;
+
 }
