@@ -3373,6 +3373,7 @@ static const struct battle_data_short {
 	{ "skill_min_damage",                  &battle_config.skill_min_damage			},
 	{ "finger_offensive_type",             &battle_config.finger_offensive_type	},
 	{ "heal_exp",                          &battle_config.heal_exp					},
+	{ "max_heal_lv",                       &battle_config.max_heal_lv	},
 	{ "resurrection_exp",                  &battle_config.resurrection_exp			},
 	{ "shop_exp",                          &battle_config.shop_exp					},
 	{ "combo_delay_rate",                  &battle_config.combo_delay_rate			},
@@ -3632,6 +3633,7 @@ static const struct battle_data_int {
 	{ "item_rate_treasure",                &battle_config.item_rate_treasure }, // End
 	{ "day_duration",                      &battle_config.day_duration	}, // added by [Yor]
 	{ "night_duration",                    &battle_config.night_duration	}, // added by [Yor]
+	{ "max_heal",                          &battle_config.max_heal },
 	{ "mob_remove_delay",                  &battle_config.mob_remove_delay	},
 	{ "sg_miracle_skill_duration",				&battle_config.sg_miracle_skill_duration },
 
@@ -3768,6 +3770,8 @@ void battle_set_defaults() {
 	battle_config.skill_min_damage=6; //Ishizu claims that magic and misc attacks always do at least div_ damage. [Skotlex]
 	battle_config.finger_offensive_type=0;
 	battle_config.heal_exp=0;
+	battle_config.max_heal=9999;
+	battle_config.max_heal_lv=11;
 	battle_config.resurrection_exp=0;
 	battle_config.shop_exp=0;
 	battle_config.combo_delay_rate=100;

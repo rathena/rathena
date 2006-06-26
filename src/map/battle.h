@@ -189,6 +189,8 @@ extern struct Battle_Config {
 	unsigned short skill_min_damage;
 	unsigned short finger_offensive_type;
 	unsigned short heal_exp;
+	unsigned short max_heal_lv;
+	int max_heal; //Mitternacht
 	unsigned short resurrection_exp;
 	unsigned short shop_exp;
 	unsigned short combo_delay_rate;

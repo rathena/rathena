@@ -801,9 +801,14 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 int skill_calc_heal (struct block_list *bl, int skill_lv)
 {
 	int skill, heal;
+
+	if (skill_lv >= battle_config.max_heal_lv)
+		return battle_config.max_heal;
+
 	heal = ( status_get_lv(bl)+status_get_int(bl) )/8 *(4+ skill_lv*8);
 	if(bl->type == BL_PC && (skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
 		heal += heal * skill * 2 / 100;
+
 	return heal;
 }
 
@@ -3152,8 +3157,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int heal = skill_calc_heal(src, skilllv);
 			int heal_get_jobexp;
 	
-			if (skilllv > 10)
-				heal = 9999; //9999ヒール
 			if (status_isimmune(bl) || (dstmd && dstmd->class_ == MOBID_EMPERIUM))
 				heal=0;	/* 黄金蟲カード（ヒール量０） */
 			if (sd) {

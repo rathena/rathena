@@ -2839,7 +2839,7 @@ int clif_changelook(struct block_list *bl,int type,int val)
 		WBUFW(buf,9)=vd->shield;
 		clif_send(buf,packet_len_table[0x1d7],bl,AREA);
 	}
-	else if(type == LOOK_BASE && val > 255)
+	else
 	{
 		WBUFW(buf,0)=0x1d7;
 		WBUFL(buf,2)=bl->id;
@@ -2847,12 +2847,6 @@ int clif_changelook(struct block_list *bl,int type,int val)
 		WBUFW(buf,7)=val;
 		WBUFW(buf,9)=0;
 		clif_send(buf,packet_len_table[0x1d7],bl,AREA);
-	} else {
-		WBUFW(buf,0)=0xc3;
-		WBUFL(buf,2)=bl->id;
-		WBUFB(buf,6)=type;
-		WBUFB(buf,7)=val;
-		clif_send(buf,packet_len_table[0xc3],bl,AREA);
 	}
 #endif
 	return 0;
@@ -2869,21 +2863,12 @@ void clif_changetraplook(struct block_list *bl,int val)
 	WBUFB(buf,7)=val;
 	clif_send(buf,packet_len_table[0xc3],bl,AREA);
 #else
-	if (val > 255)
-	{
-		WBUFW(buf,0)=0x1d7;
-		WBUFL(buf,2)=bl->id;
-		WBUFB(buf,6)=LOOK_BASE;
-		WBUFW(buf,7)=val;
-		WBUFW(buf,9)=0;
-		clif_send(buf,packet_len_table[0x1d7],bl,AREA);
-	} else {
-		WBUFW(buf,0)=0xc3;
-		WBUFL(buf,2)=bl->id;
-		WBUFB(buf,6)=LOOK_BASE;
-		WBUFB(buf,7)=val;
-		clif_send(buf,packet_len_table[0xc3],bl,AREA);
-	}
+	WBUFW(buf,0)=0x1d7;
+	WBUFL(buf,2)=bl->id;
+	WBUFB(buf,6)=LOOK_BASE;
+	WBUFW(buf,7)=val;
+	WBUFW(buf,9)=0;
+	clif_send(buf,packet_len_table[0x1d7],bl,AREA);
 #endif
 
 	
