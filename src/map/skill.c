@@ -1336,10 +1336,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]
-	//No need to check the NK value as this function is only called on attacks
-	//(or stuff that should invoke these things.
-	if(sd && !status_isdead(bl) && src != bl/* &&
-		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)*/) {
+	if(sd && !status_isdead(bl) && src != bl &&
+		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) {
 		struct block_list *tbl;
 		struct unit_data *ud;
 		int i, skilllv;

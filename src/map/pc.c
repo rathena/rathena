@@ -390,7 +390,9 @@ int pc_equippoint(struct map_session_data *sd,int n)
 
 	if(sd->inventory_data[n]) {
 		ep = sd->inventory_data[n]->equip;
-		if(sd->inventory_data[n]->look == 1 || sd->inventory_data[n]->look == 2 || sd->inventory_data[n]->look == 6) {
+		if(sd->inventory_data[n]->look == W_DAGGER	||
+			sd->inventory_data[n]->look == W_1HSWORD ||
+			sd->inventory_data[n]->look == W_1HAXE) {
 			if(ep == 2 && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN))
 				return 34;
 		}
