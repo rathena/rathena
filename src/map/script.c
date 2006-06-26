@@ -424,6 +424,7 @@ int buildin_setmobdata(struct script_state *st);
 int buildin_mobassist(struct script_state *st);
 int buildin_mobattach(struct script_state *st);
 int buildin_unitwalk(struct script_state *st);
+int buildin_unitkill(struct script_state *st);
 int buildin_unitwarp(struct script_state *st);
 int buildin_unitattack(struct script_state *st);
 int buildin_unitstop(struct script_state *st);
@@ -764,6 +765,7 @@ struct {
 	{buildin_mobassist,"mobassist","i*"},
 	{buildin_mobattach,"mobattach","i*"},
 	{buildin_unitwalk,"unitwalk","i*"},
+	{buildin_unitkill,"unitkill","i"},
 	{buildin_unitwarp,"unitwarp","isii"},
 	{buildin_unitattack,"unitattack","i*"},
 	{buildin_unitstop,"unitstop","i"},
@@ -10675,6 +10677,14 @@ int buildin_unitwalk(struct script_state *st){
 	} else {
 		push_val(st->stack,C_INT,0);
 	}
+
+	return 0;
+}
+
+int buildin_unitkill(struct script_state *st){
+	struct block_list *bl = map_id2bl(conv_num(st, & (st->stack->stack_data[st->start+2])));
+	if(bl)
+		status_kill(bl);
 
 	return 0;
 }
