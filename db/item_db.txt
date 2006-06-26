@@ -1694,15 +1694,17 @@
 5145,Carnival_Jester,Carnival Jester,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,89,{},{},{}
 5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,215,{ bonus bVit,1; bonus2 bSubRace,RC_Brute,7; skill 86,1; },{},{}
 5147,Baseball_Cap,Baseball Cap,5,,10,1,,0,,0,0xFFFFFFFF,7,2,256,,0,1,216,{ bonus2 bExpAddRace,RC_NonBoss,50; bonus2 bExpAddRace,RC_Boss,50; },{},{}
-5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; }
-5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; }
-5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; }
+5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; },{},{}
+5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bDex,2; },{},{}
+5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; },{},{}
 5151,Note_Headphones,Note Headphones,5,,,100,,1,,1,0xFFFFFFFF,7,2,256,,,1,,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
 5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,,0xFFFFFFFF,7,2,768,,,1,,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
 5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,,0xFFFFFFFF,7,2,256,,,1,,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
 5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{ bonus bAtk,20; },{},{}
 5156,Father's_Mask,Father's Mask,5,,,100,,1,,,0xFFFFFFFF,7,2,1,,,,8,{ bonus bMatkRate,1; },{},{}
+5179,Golden_Tiara,Golden Tiara,5,,10,100,,0,,,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; },{},{}
+5180,France_Holiday_Hat,France Holiday Hat,5,,10,100,,1,,,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bVit,1; },{},{}
 
 // More Etc Items
 //===================================================================

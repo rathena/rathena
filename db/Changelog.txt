@@ -25,6 +25,7 @@
 
 =========================
 06/26
+	* Updated/Added some items [Playtester]
 	* Corrected unit id of desperado and Ground Drift using jA's info. [Skotlex]
 06/25
 	* Added two new gunslinger weapon drops, thanks to RockmanEXE. [MasterOfMuppets]
