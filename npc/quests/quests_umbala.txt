@@ -3,11 +3,23 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//= Umbalian Language Quest, +
+//= Umbalian Language Quest, Umbala Skeletal Gate Quest, Umbala Event,
+//= Create Essence/Dismantle Stone
+//
+//Phase1.Learning the Language
+//1	(Elder)First discussion
+//2	(Elder)Asking about learning the language
+//3	(Elder)Final step (understanding NPC speech)
+//------------------------------------------
+//Phase2.Create Essence/Dismantle Stone
+//4	(Shaman)Get permission to speak with her from the chief
+//5	(Elder)Ask about conditions needed to be fulfilled to get permission
+//6	(Elder)Get permission
+//7	(Shaman)Use the shaman to create essences and dismantle elemental stones.
 //===== Additional Comments: ================================= 
 //= fixed by x[tsk], Lupus, PoW
 //= Quest completion is now registered
@@ -18,6 +30,7 @@
 //=	- with Wise Man Fabius you can learn Umbalian Language
 //=	  in alternative way.
 //= 1.6 Fixed bugs [Lupus]
+//= 1.7 Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate from npc/cities/umbala.txt [Evera]
 //= TODO: should I add a jRO Werewolf Quest? 8)
 //============================================================ 
 
@@ -351,4 +364,804 @@ M_DUN:
 	warp "um_dun01.gat",42,30; 
 M_Leave:  
 	close; 
+}
+
+//==============================================================================
+//Skeletal Gate
+//==============================================================================
+umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
+	if(event_umbala==7) goto LwarpNoText;
+	set @ryumon,0;
+	mes "^3355FFThe gate is shaped like a skeleton";
+	mes "You cannot pass this point as the gate is";
+	mes "locked.  You hear sounds coming from the";
+	mes "inside.^000000";
+	next;
+	menu "Examine the skeleton",-,"Nothing",Lend;
+		mes "^3355FFWhen you examine the gate";
+		mes "carefully, you notice that there";
+		mes "is a hole about the size of a gemstone";
+		mes "on the left side of the gate about where";
+		mes "the skeleton's left eye should be.  There is";
+		mes "a matching hole on the other side.^000000";
+		next;
+		mes "^3355FFWhat you would like to";
+		mes "to do with the left socket?^000000";
+		next;
+		menu "Nothing",-,"Insert a Blue Gemstone",L1_2,"Insert a Yellow Gemstone",L1_3,"Insert a Red Gemstone",L1_4;
+			mes "^3355FFNothing was inserted into the left socket.^000000";
+			next;
+			goto LRight;
+		L1_2:
+			//Blue
+			if(countitem(717) < 1) goto L1_2_e;//Items: Blue Gemstone,
+				mes "^3355FFYou inserted a Blue Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
+				set @ryumon,1;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+		L1_3:
+			//Yellow
+			if(countitem(715) < 1) goto L1_3_e;//Items: Yellow Gemstone,
+				mes "^3355FFYou inserted a Yellow Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
+				set @ryumon,2;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+		L1_4:
+			//Red
+			if(countitem(716) < 1) goto L1_4_e;//Items: Red Gemstone,
+				mes "^3355FFYou inserted a Red Gemstone into the";
+				mes "left socket.^000000";
+				next;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
+				set @ryumon,3;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto LRight;
+			L1_2_e:
+				mes "^3355FFYou don't have a Blue Gemstone.";
+				goto L1_e;
+			L1_3_e:
+				mes "^3355FFYou don't have a Yellow Gemstone.";
+				goto L1_e;
+			L1_4_e:
+				mes "^3355FFYou don't have a Red Gemstone.";
+			L1_e:
+				mes "Therefore, nothing was inserted into";
+				mes "the left socket.^000000";
+				next;
+	LRight:
+		mes "^3355FFWhat about the right";
+		mes "socket?^000000";
+		next;
+		menu "Nothing",-,"Insert a Blue Gemstone",L2_2,"Insert a Yellow Gemstone",L2_3,"Insert a Red Gemstone",L2_4;
+			mes "^3355FFNothing was inserted into the right socket.^000000";
+			next;
+			goto Lfin;
+		L2_2:
+			//Blue
+			if(countitem(717) < 1) goto L2_2_e;//Items: Blue Gemstone,
+				mes "^3355FFYou inserted a Blue Gemstone into the";
+				mes "right socket.^000000";
+				next;
+				delitem 717,1;//Items: Blue Gemstone,
+				getitem 717,1;//Items: Blue Gemstone,
+				set @ryumon,@ryumon+10;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+		L2_3:
+			//Yellow
+			if(countitem(715) < 1) goto L2_3_e;//Items: Yellow Gemstone,
+				mes "^3355FFYou inserted a Yellow Gemstone into the";
+				mes "right socket.^000000";
+				next;
+				delitem 715,1;//Items: Yellow Gemstone,
+				getitem 715,1;//Items: Yellow Gemstone,
+				set @ryumon,@ryumon+20;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+		L2_4:
+			//Red
+			if(countitem(716) < 1) goto L2_4_e;//Items: Red Gemstone,
+				mes "^3355FFYou inserted a Red Gemstone into the";
+				mes "right socket.^000000";
+				next;
+				delitem 716,1;//Items: Red Gemstone,
+				getitem 716,1;//Items: Red Gemstone,
+				set @ryumon,@ryumon+30;
+				mes "^3355FFA rolling sound can be heard, and";
+				mes "the gemstone comes out of the skeleton's                                 mouth.^000000";
+				next;
+				goto Lfin;
+			L2_2_e:
+				mes "^3355FFYou don't have a Blue Gemstone.";
+				goto L2_e;
+			L2_3_e:
+				mes "^3355FFYou don't have a Yellow Gemstone.";
+				goto L2_e;
+			L2_4_e:
+				mes "^3355FFYou don't have a Red Gemstone.";
+			L2_e:
+				mes "Therefore, nothing was inserted into";
+				mes "the right socket.^000000";
+				next;
+			Lfin:
+				mes "^3355FF..........^000000";
+				next;
+				mes "^3355FF...................";
+				mes ".....................^000000";
+				next;
+				mes "^3355FF.......................";
+				mes ".........................";
+				mes ".........................^000000";
+				next;
+				if(event_umbala < 6) goto LSecondCheck;
+					if(@ryumon == 33) goto Lwarp;
+				LSecondCheck:
+				if(event_umbala >= 6) goto LNewEnd;
+					if(@ryumon == 13) goto Lwarp;
+					LNewEnd:
+						mes "^3355FFNothing happened.";
+						mes "You hear a faint laugh, but";
+						mes "decide that it's all in";
+						mes "your head.^000000";
+						close;
+				Lwarp:
+					mes "^3355FFA rumbling sound can be";
+					mes "heard as the gate opens.";
+					mes "As you step across the threshold.";
+					mes "you feel as if you're walking in";
+					mes "into the arms of death itself.^000000";
+					next;
+				LwarpNoText:
+					warp "um_in.gat",32,71;
+					close;
+Lend:
+	mes "^3355FFAfter hitting the gate a few";
+	mes "times with no result, you decide to give";
+	mes "up.^000000";
+	close;
+}
+
+//==============================================================================
+//Umbala Event
+//==============================================================================
+um_in.gat,39,122,5	script	Utan Tribal Elder	784,{
+	if(event_umbala == 1) goto LStart2;	
+	if(event_umbala == 2) goto LStart3;
+	if(event_umbala == 3) goto LStart4;
+	if(event_umbala == 4) goto LStart5;
+	if(event_umbala == 5) goto LStart6;
+	if(event_umbala == 6) goto LStart4;
+	if(event_umbala == 7) goto LStart4;
+	mes "[Karukatan]";
+	mes "Aha, You're new to the Utan";
+	mes "family's little village, aren't";
+	mes "you?  I would remember such a face";
+	mes "had I met you before.";
+	next;
+	mes "[Karukatan]";
+	mes "We know there is a wide world around";
+	mes "us, but the there is something to";
+	mes "be appreciated in the simple life";
+	mes "we lead here.";
+	next;
+	mes "[Karukatan]";
+	mes "All decisions in the village are made";
+	mes "by me or with my input";
+	next;
+	mes "[Karukatan]";
+	mes "You want to know how I speak your";
+	mes "language when it seems no one else in";
+	mes "the village does?  A fair question.";
+	mes "I picked up your tongue from the";
+	mes "adventurers who sometimes pass";
+	mes "through this village.";
+	next;
+	mes "[Karukatan]";
+	mes "Some outsiders have also settled near here";
+	mes "over time.  In exchange for information";
+	mes "about their customs and culture, I";
+	mes "teach them the language and customs";
+	mes "of the Utan tribe.";
+	next;
+	mes "[Karukatan]";
+	mes "If you want to learn our language,";
+	mes "you must immerse yourselves in";
+	mes "our customs and cultural traditions.";
+	mes "You should even try and look as much";
+	mes "like us as you can.";
+	next;
+	mes "[Karukatan]";
+	mes "I hope you're worthy of my confidence.";
+	mes "Some members of the tribe have expressed";
+	mes "the sentiment that welcoming outsiders";
+	mes "is dangerous to the village.";
+	next;
+	mes "[Karukatan]";
+	mes "When you want to begin learning the";
+	mes "language, come and visit me.  Don't";
+	mes "forget to make yourself appear as";
+	mes "much like us as you can.";
+	set event_umbala,1;
+	close;
+LStart2:
+	mes "[Karukatan]";
+	mes "Ahh, have you looked around the";
+	mes "village a bit?  Did other people";
+	mes "from the tribe hide from you when";
+	mes "they saw you?  Don't worry.  They";
+	mes "were just surprised to see a new face.";
+	next;
+	mes "[Karukatan]";
+	mes "Hmm?  You need something from me?";
+	mes "How can I make your stay in the village";
+	mes "more pleasant?";
+	next;
+	menu "I want to learn the tribal language",-,"Umbaumbaba?",L2,"Forget it",L3;
+		if ((getequipisequiped(9)>0) && (getequipisequiped(10)>0)) goto L1_mask;
+		mes "[Karukatan]";
+		mes "Well, in order to understand our";
+		mes "language, you need to assimilate";
+		mes "our cultural values, too.  Trying to";
+		mes "understand a language in the context of an";
+		mes "alien culture is foolish, right?";
+		next;
+		mes "[Karukatan]";
+		mes "Besides, if the tribesmen in the";
+		mes "village fear you, how will you";
+		mes "ever get them to speak with you?";
+		mes "You should try making yourself";
+		mes "look like us in order to be more";
+		mes "accepted.";
+		close;
+	L1_mask:
+		mes "[Karukatan]";
+		mes "What a cute mask.  The Utan tribe";
+		mes "appreciates its traditional masks";
+		mes "because sometimes by hiding your";
+		mes "face, you can express more genuine";
+		mes "feelings.";
+	//Activate Sphinx Mask Quest (optional)
+		set mask_q,1;
+		next;
+		mes "[Karukatan]";
+		mes "Over time, the mask itself";
+		mes "has come to symbolize trust among";
+		mes "the members of the Utan tribe.";
+		next;
+		mes "[Karukatan]";
+		mes "Now that you're prepared, I will";
+		mes "begin teaching you the Utan";
+		mes "language as promised.  First,";
+		mes "you need to make some preparations,";
+		mes "however...";
+		next;
+		mes "[Karukatan]";
+		mes "First, I need some paper.  With";
+		mes "paper, I can write down the words";
+		mes "I intend to teach.";
+		next;
+		mes "[Karukatan]";
+		mes "I need ^3377FF10x Oil Paper^000000, and ^3377FF5x Slick Paper^000000.";
+		mes "I also need something to write with.";
+		mes "of course.";
+		mes "For that, ^3377FF1x Squid Ink^000000 and ^3377FF1x Feather of Birds^000000";
+		mes "will do nicely.";
+		next;
+		mes "[Karukatan]";
+		mes "Once you get these, I can start";
+		mes "teaching you the language.";
+		set event_umbala,2;
+		close;
+	L2:
+		mes "[Karukatan]";
+		mes "Haha.  Only imitating the sound";
+		mes "of the words is useless.  Even";
+		mes "though it sounds random, there is";
+		mes "a specific way of combining the";
+		mes "words.";
+		next;
+		mes "[Karukatan]";
+		mes "Also, our language has depends a";
+		mes "a lot on emotion to convey its";
+		mes "meaning.  Outsiders can't pick up";
+		mes "the subtlety right away, even though";
+		mes "we're the same race, ";
+		next;
+		mes "[Karukatan]";
+		mes "It seems you have an interest";
+		mes "in learning the language of the";
+		mes "Utan tribe.  If that's the case,";
+		mes "come visit me and I'll teach you.";
+		next;
+		mes "[Karukatan]";
+		mes "Then, you won't sound so silly.";
+		close;
+	L3:
+		mes "[Karukatan]";
+		mes "Ah.  If you want to continue your";
+		mes "trip, please keep this village in";
+		mes "your memories.";
+		close;
+LStart3:
+	if ((countitem(7151)>=10) && (countitem(7111)>=5) && (countitem(1024)>=1) && (countitem(916)>=1)) goto Lchkok;//Items: Oiled Paper, String Paper, Squid Ink, Feather of Birds,
+	mes "[Karukatan]";
+	mes "It seems you've not yet prepared the";
+	mes "proper items.  Did you forget what";
+	mes "you need to gather before I can";
+	mes "teach you the language?  You need to gather";
+	next;
+	mes "[Karukatan]";
+	mes "^3377FF10x Oil Paper^000000,";
+	mes "^3377FF5x Slick Paper^000000,";
+	mes "^3377FF1x Squid Ink^000000, and";
+	mes "^3377FF1x Feather of Bird^000000.";
+	mes "Once you have gathered those, I can teach";
+	mes "you Utan tribal language.";
+	close;
+Lchkok:
+	delitem 7151,10;//Items: Oiled Paper,
+	delitem 7111,5;//Items: String Paper,
+	delitem 1024,1;//Items: Squid Ink,
+	delitem 916,1;//Items: Feather of Birds,
+	mes "[Karukatan]";
+	mes "Good.  You've prepared all the";
+	mes "necessary materials.  Now, I can";
+	mes "begin to teach you the Utan tribal";
+	mes "language.";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "............";
+	mes "............";
+	mes "............";
+	next;
+	mes "[Karukatan]";
+	mes "Do you feel more enlightened now?";
+	mes "Try talking to others in the Utan";
+	mes "tribe.  They'll warm up to your quickly";
+	mes "now that you speak the language.";
+	set event_umbala,3;
+	next;
+	mes "[Karukatan]";
+	mes "If you need something while you're";
+	mes "here, don't hesitate to visit me.";
+	close;
+LStart4:
+//fin
+	mes "[Karukatan]";
+	mes "Do you need something?";
+	mes "If you need someone to guide you around";
+	mes "the village, you should ask someone else.";
+	mes "I can't leave here right now.";
+	next;
+	mes "[Karukatan]";
+	mes "The best way to get a feel for";
+	mes "the village is to just walk";
+	mes "around and see the sights.  By doing";
+	mes "that, you can form a personal";
+	mes "bond with the village.";
+	close;
+LStart5:
+	mes "[Karukatan]";
+	mes "Oh, it seems you're enjoying yourself here.";
+	mes "You need something else?";
+	next;
+	mes "[Karukatan]";
+	mes "It seems you want to ask the";
+	mes "shaman Putsuchiratan something";
+	mes "and you're seeking my permission";
+	mes "to do so.";
+	next;
+	mes "[Karukatan]";
+	mes "Well...There's a mask from";
+	mes "abroad that Putsuchiratan and I";
+	mes "have both always desired.  Putsuchiratan";
+	mes "heard about it some time ago.";
+	next;
+	mes "[Karukatan]";
+	mes "If I could have the ^3377FFSmile Mask^000000,";
+	mes "it would be a great honour, but";
+	mes "I promised I would give it to";
+	mes "to Putsuchiratan as a gift if I ever";
+	mes "came across one.  If you can find a Smile Mask for me,";
+	mes "I'll give you permission to speak with her.";
+	set event_umbala,5;
+	close;
+LStart6:
+	if(countitem(2278) > 0) goto Lsmileok;//Items: Mr. Smile,
+	mes "[Karukatan]";
+	mes "Did you find the ^3377FFSmile Mask^000000 yet?";
+	mes "In order to let you see the shaman,";
+	mes "you need to collect one.";
+	mes "A gift will put Putsuchiritan in";
+	mes "a good mood, also.";
+	close;
+Lsmileok:
+	delitem 2278,1;//Items: Mr. Smile,
+	mes "[Karukatan]";
+	mes "Ahh!  It's a Smile Mask!";
+	mes "I would really like to put this";
+	mes "on just once, but I promised to";
+	mes "give this to Putsuchiritan as";
+	mes "a gift.";
+	set event_umbala,6;
+	next;
+	mes "[Karukatan]";
+	mes "I'll tell Putsuchiritan to allow you";
+	mes "to meet with her.  I'm certain that you";
+	mes "will find her talents to be a tremendous";
+	mes "help on your journey.";
+	close;
+}
+
+//=====================================================================
+//                    Create Essence/Dismantle Stone
+//=====================================================================
+um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
+
+	switch(event_umbala) {
+	default:	
+		mes "[?????]";
+		mes "Umbaumbaumbaba Utan Umbaba";
+		mes "Umbaumbaumbafumbabauma...";
+		mes "Umbabaumbaumbabaumbabaumba";
+		mes "Umbabaumbabaumbaumbabaumba";
+		mes "Fumbaumba.";
+		next;
+		warp "umbala.gat",217,186;
+		close;
+	case 3:	
+		mes "[Putsuchiritan]";
+		mes "I will not see outsiders that are";
+		mes "not from the Utan tribe.";
+		mes "...There are many things about the";
+		mes "nature of our society that you do";
+		mes "not yet understand.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Others of your type will do anything";
+		mes "to set foot on land which is sacred";
+		mes "to the Utan tribe.  We fear that";
+		mes "revealing our secrets will expose";
+		mes "use to danger.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "What's worse, I don't think that";
+		mes "outsiders understand our desire";
+		mes "to preserve our tribal culture.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "As my talents are foremost for";
+		mes "the use of the Utan tribe, you";
+		mes "must get permission from the elder";
+		mes "if you want my assistance.";
+		mes "Also, don't be stirring up trouble";
+		mes "among the tribesmen.";
+		set event_umbala,4;
+		close;
+	case 4:
+	case 5:
+		mes "[Putsuchiritan]";
+		mes "Didn't you hear me?  You need";
+		mes "to get the elder's permission before";
+		mes "I can help you.";
+		close;
+	case 6:
+		mes "[Putsuchiritan]";
+		mes "You seem to have gotten permission from";
+		mes "the elder.  Fine, I'll help you, though";
+		mes "I don't really want to.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I can call forth hidden talents";
+		mes "buried deep within your psyche";
+		mes "and tap the power hidden in";
+		mes "elemental stones.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I need to prepare my rituals.";
+		mes "When you're ready to proceed, please";
+		mes "talk to me again.";
+		set event_umbala,7;
+		close;
+	case 7:
+		mes "[Putsuchiritan]";
+		mes "I don't know whether my talents";
+		mes "will be useful to you, but I'll";
+		mes "help you anyway.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "I can create elemental essence from natural objects,";
+		mes "or, dismantle elemental stones into their component essences.";
+		mes "Which would you like to do?";
+	}
+	
+	next;
+
+	set .@need,0;
+
+	switch (select("Create Essence","Dismantle Elemental Stone","Nothing")) {
+	case 1:
+		mes "[Putsuchiritan]";
+		mes "Which elemental essence would you";
+		mes "like to create?  I can create earth, water,";
+		mes "fire, and wind essence.";
+		next;
+		switch (select("Earth","Water","Fire","Wind")) {
+			case 1:
+				if(countitem(947)<15) {
+					mes "[Putsuchiritan]";
+					mes "Earth...You need that which is";
+					mes "a friend of the earth.  Explore";
+					mes "the verdant forest and find";
+					mes "^3377FF15x Horn^000000 for the ritual.";
+				}
+				else {
+					set .@need,947;
+					set .@amount,15;
+					set .@gain,993;
+				}
+				break;
+			case 2:
+				if(countitem(946)<20) {
+					mes "[Putsuchiritan]";
+					mes "Water...You need that which is";
+					mes "saturated with water.  Explore";
+					mes "the area around here and find";
+					mes "^3377FF20x Snails Shell^000000 for the ritual.";
+				}
+				else {
+					set .@need,946;
+					set .@amount,20;
+					set .@gain,991;
+				}
+				break;
+			case 3:
+				if(countitem(904)<20) {
+					mes "[Putsuchiritan]";
+					mes "Fire...You need that which";
+					mes "can withstand the roiling heat";
+					mes "of perpetual flame.  Explore the";
+					mes "desert and find ^3377FF20x Scorpion Tail^000000";
+					mes "for the ritual.";
+				}
+				else {
+					set .@need,904;
+					set .@amount,20;
+					set .@gain,990;
+				}
+				break;
+			case 4:
+				if(countitem(1013)<25) {
+					mes "[Putsuchiritan]";
+					mes "Wind...You need that which";
+					mes "has an easy camaraderie with";
+					mes "the sky itself.";
+					mes "You need ^3377FF25x Rainbow Shell^000000";
+					mes "to complete the ritual.";
+				}
+				else {
+					set .@need,1013;
+					set .@amount,25;
+					set .@gain,992;
+				}
+				break;
+		}
+		if(.@need == 0) {
+			next;
+			mes "[Putsuchiritan]";
+			mes "Once you've prepared these";
+			mes "objects from nature, please return here";
+			mes "so we can complete the ritual.";
+			close;
+		}
+		mes "[Putsuchiritan]";
+		mes "Now, I will try to tap the";
+		mes "source of power hidden deep within";
+		mes "you.  Choose a number between 1 and 9.";
+		mes "If you don't want to create essence";
+		mes "after all, choose 0.";
+		while(1) {
+			next;
+			input .@num;
+			if(.@num<=0) {
+				mes "[Putsuchiritan]";
+				mes "If you don't wish my help at the moment,";
+				mes "that's fine.  When you do, please come";
+				mes "by again.";
+				close;
+			}
+			if(.@num>9) {
+				mes "[Putsuchiritan]";
+				mes "You must choose a number between";
+				mes "1 and 9.  It is very important that";
+				mes "you choose the number most dear to";
+				mes "your heart.";
+				continue;
+			}
+			break;
+		}
+		mes "[Putsuchiritan]";
+		switch(.@need) {
+			case 947: mes "The horn begins to vibrate."; break;
+			case 904: mes "The tail begins to vibrate."; break;
+			default: mes "The shell begins to vibrate."; break;
+		}
+		mes "I will now chant a holy mantra.";
+		mes "Imagine the number in your mind";
+		mes "and imagine power radiating forth from";
+		mes "your body.";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Amba Omba Sanba!  Unba Chi!";
+		mes "Wanbatauma Eurukaba!  Unba!  Ba!";
+		mes "Jyur!  Fumuba  Rurara!  Wamba!  Ra!";
+		mes "Damtsuha Ombabaraka! Unba! Shi!";
+		mes "Sukatamba Aburumba! Umba! Shi!";
+		next;
+		delitem .@need,.@amount;
+		getitem .@gain,1;
+		mes "[Putsuchiritan]";
+		mes "There.  Your inner power has converted";
+		mes "these objects from nature into";
+		mes "elemental essence.  Put";
+		mes "it to good use.";
+		close;
+	case 2:
+		mes "[Putsuchiritan]";
+		mes "What type of stone would you like to";
+		mes "dismantle?  Please choose earth, water,";
+		mes "fire, or wind.";
+		next;
+		switch (select("Earth","Water","Fire","Wind")) {
+			case 1:
+				if(countitem(997)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Great Nature^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set .@need,997;
+					set .@gain,993;
+				}
+				break;
+			case 2:
+				if(countitem(995)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Mystic Frozen^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set .@need,995;
+					set .@gain,991;
+				}
+				break;
+			case 3:
+				if(countitem(994)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Flaming Heart^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set .@need,994;
+					set .@gain,990;
+				}
+				break;
+			case 4:
+				if(countitem(996)==0) {
+					mes "[Putsuchiritan]";
+					mes "You need to have";
+					mes "^3377FF1x Rough Wind^000000";
+					mes "to disassemble into its";
+					mes "component essence.";
+				}
+				else {
+					set .@need,996;
+					set .@gain,992;
+				}
+				break;
+		}
+		next;
+		if(.@need == 0) {
+			mes "[Putsuchiritan]";
+			mes "Once you have the necessary stone,";
+			mes "please come back and visit me";
+			mes "so that the ritual can be completed.";
+			close;
+		}
+		mes "[Putsuchiritan]";
+		switch(.@need) {
+			case 997: mes "I will dismantle your earth crystal"; 	break;
+			case 995: mes "I will dismantle your frozen crystal"; 	break;
+			case 994: mes "I will dismantle your heart of flame"; 		break;
+			case 996: mes "I will dismantle your rough wind stone"; 	break;
+		}
+		mes "into its component essence.";
+		mes "Choose a number between 1 and 9.";
+		mes "If you don't want me to dismantle the";
+		mes "stone, choose 0.";
+		while(1) {
+			next;
+			input .@num;
+			if(.@num<=0) {
+				mes "[Putsuchiritan]";
+				mes "If you don't wish my help at the moment,";
+				mes "that's fine.  When you do, please come";
+				mes "by again.";
+				close;
+			}
+			if(.@num>9) {
+				mes "[Putsuchiritan]";
+				mes "You must choose a number between";
+				mes "1 and 9.  It is very important that";
+				mes "you choose the number most dear to";
+				mes "your heart.";
+				continue;
+			}
+			break;
+		}
+		set .@num,.@num+rand(5);
+		if(.@num>10)
+			set .@num,.@num-10;
+		if(.@num<5)
+			set .@num,.@num+5;
+		mes "[Putsuchiritan]";
+		mes "Please place the elemental stone";
+		mes "inside this holy circle.  I will chant a";
+		mes "a mantra.  I don't know if I can";
+		mes "completely dismantle the stone,";
+		mes "but here goes...";
+		next;
+		mes "[Putsuchiritan]";
+		mes "Unba Unba Karama!  Unba!  Ta!";
+		mes "Rukara!  Ukarere!  Un!  Unba!  Ka!";
+		mes "Anburaka Taburaka Taburakan!  Unba Ra!";
+		mes "Onbaruzu Zan Kata!  Unba Ka!";
+		next;
+		delitem .@need,1;
+		getitem .@gain,.@num;
+		mes "[Putsuchiritan]";
+		mes "The elemental stone has been";
+		mes "dismantled into its natural";
+		mes "essence.  Please put it to";
+		mes "good use.";
+		close;
+	case 3:
+		mes "[Putsuchiritan]";
+		mes "If you don't wish my help at the moment,";
+		mes "that's fine.  When you do, please come";
+		mes "by again.";
+		close;
+	}
 }

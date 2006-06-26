@@ -37,6 +37,7 @@ Musashiden
 Date		Added
 ======
 06/25
+	* Moved Umbala quests from cities/ to quests/, namely Skeletal Gate, Umbala Event, and Create/Dismantle Stone [Evera]
 	* Fixed possible exploit in umbala elemental stone quest [Playtester]
 	* Added a shop NPC to Prontera, it's required for the Hellion Quest. [MasterOfMuppets]
 06/24
