@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/26
+	* Added BIT-WISE perm variables info quest_variables.txt [Lupus]
 06/25
 	* Moved Umbala quests from cities/ to quests/, namely Skeletal Gate, Umbala Event, and Create/Dismantle Stone
 	  - Moved Piano and Book of Devil quest from cities/niflheim.txt to quests/quests_niflheim.txt
