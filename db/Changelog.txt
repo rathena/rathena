@@ -24,6 +24,9 @@
 	-----
 
 =========================
+06/27
+	* Raised autocast chance of Owl Duke card to Aegis x.2 [Playtester]
+	* Some small item_db fixes [Playtester]
 06/26
 	* Mob name/sprite name update, thanks to Saycyber21 [Vicious]
 	* Updated/Added some items [Playtester]
