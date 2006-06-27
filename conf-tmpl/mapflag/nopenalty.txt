@@ -47,6 +47,7 @@ new_1-2.gat	mapflag	nopenalty
 new_1-3.gat	mapflag	nopenalty
 new_1-4.gat	mapflag	nopenalty
 nif_in.gat	mapflag	nopenalty
+pay_arche.gat	mapflag	nopenalty
 payon.gat	mapflag	nopenalty
 payon_in01.gat	mapflag	nopenalty
 payon_in02.gat	mapflag	nopenalty
