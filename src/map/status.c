@@ -116,7 +116,7 @@ void initChangeTables(void) {
 //	StatusChangeFlagTable[SC_CONFUSION] = SCB_NONE;
 	StatusChangeFlagTable[SC_BLIND] =     SCB_HIT|SCB_FLEE;
 //	StatusChangeFlagTable[SC_BLEEDING] =  SCB_NONE;
-//	StatusChangeFlagTable[SC_DPOISON] =   SCB_NONE;
+	StatusChangeFlagTable[SC_DPOISON] =   SCB_DEF2;
 
 	//The icons for the common ailments
 //	StatusIconChangeTable[SC_STONE] =     SI_BLANK;
@@ -3155,6 +3155,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	if(sc->data[SC_CONCENTRATION].timer!=-1)
 		def2 -= def2 * sc->data[SC_CONCENTRATION].val4/100;
 	if(sc->data[SC_POISON].timer!=-1)
+		def2 -= def2 * 25/100;
+	if(sc->data[SC_DPOISON].timer!=-1)
 		def2 -= def2 * 25/100;
 	if(sc->data[SC_SKE].timer!=-1)
 		def2 -= def2 * 50/100;

@@ -7233,16 +7233,14 @@ static int skill_moonlit_sub(struct block_list *bl, va_list ap) {
  */
 static void skill_moonlit (struct block_list* src, struct block_list* partner, int skilllv)
 {
-	int range = skill_get_range2(src, CG_MOONLIT, skilllv);
+	int range = skill_get_splash(CG_MOONLIT, skilllv);
 	int blowcount = range+1, time = skill_get_time(CG_MOONLIT,skilllv);
 	
 	map_foreachinrange(skill_moonlit_sub,src,
-		skill_get_splash(CG_MOONLIT, skilllv),
-		BL_CHAR,src,partner,blowcount);
+		range, BL_CHAR,src,partner,blowcount);
 	if(partner)
 		map_foreachinrange(skill_moonlit_sub,partner,
-			skill_get_splash(CG_MOONLIT, skilllv),
-			BL_CHAR,src,partner,blowcount);
+			range, BL_CHAR,src,partner,blowcount);
 		
 	sc_start4(src,SC_DANCING,100,CG_MOONLIT,0,0,partner?partner->id:BCT_SELF,time+1000);
 	sc_start4(src,SkillStatusChangeTable(CG_MOONLIT),100,skilllv,0,0,0,time);
@@ -8744,12 +8742,12 @@ void skill_unitsetmapcell (struct skill_unit *src, int skill_num, int skill_lv, 
 }
 
 /*==========================================
- * Sets a map cell around the caster, according to the skill's range.
+ * Sets a map cell around the caster, according to the skill's splash range.
  *------------------------------------------
  */
 void skill_setmapcell (struct block_list *src, int skill_num, int skill_lv, int flag)
 {
-	int i,x,y,range = skill_get_range2(src, skill_num, skill_lv);
+	int i,x,y,range = skill_get_splash(skill_num, skill_lv);
 	int size = range*2+1;
 
 	for (i=0;i<size*size;i++) {

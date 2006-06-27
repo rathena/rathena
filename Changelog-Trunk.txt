@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/06/26
+	* Corrected the element of hunter traps. [Skotlex]
+	* Deadly Poison now also reduces def2 by 25% [Skotlex]
+	* Cleaned up a bit skill_moonlit, Moonlit Petals should work correctly now.
+	  [Skotlex]
+	* Fixed @mi displaying always 0 instead of the mob's class. [Skotlex]
 	* Rough implementation of Ground Drift according to description and jA
 	  info. [Skotlex]
 	* Implemented Tatami Gaeshi using skill description and jA implementation

@@ -9329,7 +9329,7 @@ int atcommand_mobinfo(
 	char atcmd_output2[200];
 	struct item_data *item_data;
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
-	int mob_id, count;
+	int count;
 	int i, j, k;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -9341,9 +9341,9 @@ int atcommand_mobinfo(
 	}
 
 	// If monster identifier/name argument is a name
-	if ((mob_id = mobdb_checkid(atoi(message))))
+	if ((i = mobdb_checkid(atoi(message))))
 	{
-		mob_array[0] = mob_db(mob_id);
+		mob_array[0] = mob_db(i);
 		count = 1;
 	} else
 		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
@@ -9363,9 +9363,9 @@ int atcommand_mobinfo(
 
 		// stats
 		if (mob->mexp)
-			sprintf(atcmd_output, "MVP Monster: '%s'/'%s'/'%s' (%d)", mob->name, mob->jname, mob->sprite, mob_id);
+			sprintf(atcmd_output, "MVP Monster: '%s'/'%s'/'%s' (%d)", mob->name, mob->jname, mob->sprite, mob->vd.class_);
 		else
-			sprintf(atcmd_output, "Monster: '%s'/'%s'/'%s' (%d)", mob->name, mob->jname, mob->sprite, mob_id);
+			sprintf(atcmd_output, "Monster: '%s'/'%s'/'%s' (%d)", mob->name, mob->jname, mob->sprite, mob->vd.class_);
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, " Level:%d  HP:%d  SP:%d  Base EXP:%d  Job EXP:%d", mob->lv, mob->status.max_hp, mob->status.max_sp, mob->base_exp, mob->job_exp);
 		clif_displaymessage(fd, atcmd_output);

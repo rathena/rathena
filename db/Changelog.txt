@@ -1,7 +1,7 @@
 ========================= Items that need fixing/implementing
 
 	2116 Angelic Guard:	Reduce 5% damage from Demon Monsters. (Not Fish :/ )
-	2417 Freyr's Shoes:	Increase value of Red, Orange, Yellow and White Potion by 20%.
+	2417 Freyr's Shoes:	Increase heal value of Red, Orange, Yellow and White Potion by 20%.
 				If the owner is equipped with the armor set, it adds Agi+ 3, MHP/MSP + 5%.
 	2418 Vidar's Boots:	Adds VIT +5, Increase HP/SP Recovery speed by 10% if the owner is equipped with the armor set.
 	2515 Eagle Wing:	Increase Movement Speed if the owner is equipped with Wing Staff at the same time.
