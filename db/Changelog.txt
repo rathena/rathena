@@ -25,6 +25,7 @@
 
 =========================
 06/27
+	* Added the remaining Ninja/Gunslinger drops [Playtester]
 	* Raised autocast chance of Owl Duke card to Aegis x.2 [Playtester]
 	* Some small item_db fixes [Playtester]
 06/26
