@@ -131,7 +131,7 @@ static const int packet_len_table[MAX_PACKET_DB] = {
 
 //To idenfity disguised characters.
 #define disguised(bl) (bl->type==BL_PC && ((TBL_PC*)bl)->disguise)
-static char map_ip_str[16];
+static char map_ip_str[128];
 static in_addr_t map_ip;
 static in_addr_t bind_ip = INADDR_ANY;
 static int map_port = 5121;
@@ -152,16 +152,15 @@ static void clif_hpmeter_single(int fd, struct map_session_data *sd);
  */
 int clif_setip(char *ip)
 {
-	map_ip = resolve_hostbyname(ip,NULL,map_ip_str);
+	char ip_str[16];
+	map_ip = resolve_hostbyname(ip,NULL,ip_str);
 	if (!map_ip) {
 		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
 		return 0;
 	}
-	if(map_server_dns)
-		aFree(map_server_dns);
-	map_server_dns = aCalloc(strlen(ip)+1,1);
-	strcpy(map_server_dns, ip);
-	ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, map_ip_str);
+
+	strncpy(map_ip_str, ip, sizeof(map_ip_str));
+	ShowInfo("Map Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip_str);
 	return 1;
 }
 
@@ -198,6 +197,20 @@ in_addr_t clif_getip(void)
 unsigned long clif_getip_long(void)
 {
 	return (unsigned long)map_ip;
+}
+
+//Refreshes map_server ip, returns the new ip if the ip changed, otherwise it 
+//returns 0.
+unsigned long clif_refresh_ip(void) {
+	in_addr_t new_ip;
+
+	new_ip = resolve_hostbyname(map_ip_str, NULL, NULL);
+	if (new_ip && new_ip != map_ip) {
+		map_ip = new_ip;
+		ShowInfo("Updating IP resolution of [%s].\n",map_ip_str);
+		return (unsigned long)map_ip;
+	}
+	return 0;
 }
 
 /*==========================================

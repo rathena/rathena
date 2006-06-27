@@ -108,7 +108,7 @@ int check_ip_flag = 1; // It's to check IP of a player between login-server and 
 
 int check_client_version = 0; //Client version check ON/OFF .. (sirius)
 int client_version_to_connect = 20; //Client version needed to connect ..(sirius)
-
+static int ip_sync_interval = 0;
 
 
 struct login_session_data {
@@ -248,14 +248,10 @@ int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 }
 
 static int sync_ip_addresses(int tid, unsigned int tick, int id, int data){
-	int i;
+	unsigned char buf[2];
 	ShowInfo("IP Sync in progress...\n");
-	for(i = 0; i < MAX_SERVERS; i++) {
-		if (server_fd[i] >= 0) {
-			WFIFOW(server_fd[i], 0) = 0x2735;
-			WFIFOSET(server_fd[i],2);
-		}
-	}
+	WBUFW(buf,0) = 0x2735;
+	charif_sendallwos(-1, buf, 2);
 	return 0;
 }
 
@@ -1956,12 +1952,12 @@ int parse_fromchar(int fd) {
 			break;
 
 		case 0x2736: // WAN IP update from char-server
-			for(i = 0; i < MAX_SERVERS; i++) {
-				if (server_fd[i] == fd) {
-					ShowInfo("IP Sync (Server #%d %d.%d.%d.%d) successful.\n",i,(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
-					server[i].ip = RFIFOL(fd,2);
-				}
-			}
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",i,
+			(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),
+			(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
+			server[id].ip = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 			break;
 
@@ -3788,7 +3784,10 @@ int login_config_read(const char *cfgName) {
 				use_dnsbl=atoi(w2);
 			} else if(strcmpi(w1,"dnsbl_servers")==0) { // [Zido]
 				strcpy(dnsbl_servs,w2);
+			} else if(strcmpi(w1,"ip_sync_interval")==0) {
+				ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
 			}
+
 		}
 	}
 	fclose(fp);
@@ -4165,10 +4164,12 @@ int do_init(int argc, char **argv) {
 	
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000); // every 10 minutes cleanup online account db.
-
-	add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");
-	add_timer_interval(gettick() + 600*1000, sync_ip_addresses, 0, 0, 600*1000); // Every 10 minutes to sync IPs.
-
+				
+	
+	if (ip_sync_interval) {
+		add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");
+		add_timer_interval(gettick() + ip_sync_interval, sync_ip_addresses, 0, 0, ip_sync_interval);
+	}
 	if(console) {
 		set_defaultconsoleparse(parse_console);
 	   	start_console();

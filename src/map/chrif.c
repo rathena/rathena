@@ -30,7 +30,6 @@
 //Free Packets: F->2af8
 
 struct dbt *auth_db;
-char *map_server_dns = NULL;
 
 static const int packet_len_table[0x3d] = {
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
@@ -88,8 +87,8 @@ static const int packet_len_table[0x3d] = {
 int chrif_connected;
 int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
 int srvinfo;
-static char char_ip_str[16];
-static int char_ip;
+static char char_ip_str[128];
+static in_addr_t char_ip= 0;
 static int char_port = 6121;
 static char userid[NAME_LENGTH], passwd[NAME_LENGTH];
 static int chrif_state = 0;
@@ -145,13 +144,15 @@ void chrif_checkdefaultlogin(void)
  */
 int chrif_setip(char *ip)
 {
-	char_ip = resolve_hostbyname(ip,NULL,char_ip_str);
+	char ip_str[16];
+	char_ip = resolve_hostbyname(ip,NULL,ip_str);
 
 	if (!char_ip) {
 		ShowWarning("Failed to Resolve Char Server Address! (%s)\n", ip);
 		return 0;
 	}
-	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, char_ip_str);
+	strncpy(char_ip_str, ip, sizeof(char_ip_str));
+	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip_str);
 	return 1;
 }
 
@@ -1411,16 +1412,17 @@ int chrif_disconnect(int fd) {
 }
 
 void chrif_update_ip(int fd){
-	char ip[4];
-	if (map_server_dns && resolve_hostbyname(map_server_dns, ip, NULL)) {
-		ShowInfo("IP Sync [%s] in progress...\n",map_server_dns);
-		WFIFOW(fd, 0) = 0x2736;
-		WFIFOB(fd, 2) = ip[0];
-		WFIFOB(fd, 3) = ip[1];
-		WFIFOB(fd, 4) = ip[2];
-		WFIFOB(fd, 5) = ip[3];
-		WFIFOSET(fd, 6);
-	}
+	unsigned long new_ip;
+
+	new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
+	if (new_ip && new_ip != char_ip)
+		char_ip = new_ip; //Update char_ip
+
+	new_ip = clif_refresh_ip();
+	if (!new_ip) return; //No change
+	WFIFOW(fd, 0) = 0x2736;
+	WFIFOL(fd, 2) = new_ip;
+	WFIFOSET(fd, 6);
 }
 
 /*==========================================

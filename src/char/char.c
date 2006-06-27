@@ -49,12 +49,12 @@ char userid[24];
 char passwd[24];
 char server_name[20];
 char wisp_server_name[NAME_LENGTH] = "Server";
-char login_ip_str[16];
+char login_ip_str[128];
 in_addr_t login_ip;
 int login_port = 6900;
-char char_ip_str[16];
+char char_ip_str[128];
 in_addr_t char_ip;
-char bind_ip_str[16];
+char bind_ip_str[128];
 in_addr_t bind_ip;
 int char_port = 6121;
 int char_maintenance;
@@ -68,7 +68,6 @@ char backup_txt_flag = 0; // The backup_txt file was created because char deleti
 char unknown_char_name[1024] = "Unknown";
 char char_log_filename[1024] = "log/char.log";
 char db_path[1024]="db";
-char *char_server_dns = NULL;
 
 // Advanced subnet check [LuzZza]
 struct _subnet {
@@ -2289,24 +2288,26 @@ int parse_tologin(int fd) {
 			break;
 		case 0x2735:
 		{
-			unsigned char ip[4];
-			if (char_server_dns && resolve_hostbyname(char_server_dns, ip, NULL))
-			{
-				ShowInfo("IP Sync [%s] in progress...\n",char_server_dns);
-				WFIFOW(fd,0) = 0x2736;
-				WFIFOB(fd,2) = ip[0];
-				WFIFOB(fd,3) = ip[1];
-				WFIFOB(fd,4) = ip[2];
-				WFIFOB(fd,5) = ip[3];
-				WFIFOSET(fd, 6);
-			}
-			for(i = 0; i < MAX_MAP_SERVERS; i++){
-				if(server_fd[i] >= 0){
-					WFIFOW(server_fd[i], 0) = 0x2b1e;
-					WFIFOSET(server_fd[i], 2);
-				}
-			}
+			unsigned char buf[2];
+			in_addr_t new_ip = 0;
 			RFIFOSKIP(fd,2);
+
+			WBUFW(buf,0) = 0x2b1e;
+			mapif_sendall(buf, 2);
+
+			new_ip = resolve_hostbyname(login_ip_str, NULL, NULL);
+			if (new_ip && new_ip != login_ip)
+				login_ip = new_ip; //Update login up.
+
+			new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
+			if (new_ip && new_ip != char_ip)
+			{	//Update ip.
+				char_ip = new_ip;
+				ShowInfo("Updating IP for [%s].\n",char_ip_str);
+				WFIFOW(fd,0) = 0x2736;
+				WFIFOL(fd,2) = char_ip;
+				WFIFOSET(fd,6);
+			}
 			break;
 		}
 		default:
@@ -3071,12 +3072,11 @@ int parse_frommap(int fd) {
 			break;
 		}
 		case 0x2736:
-			for(i = 0; i < MAX_MAP_SERVERS; i++){
-				if(server_fd[i] == fd){
-					ShowInfo("IP Sync (Server #%d %d.%d.%d.%d) successful.\n",i,(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
-					server[i].ip = RFIFOL(fd, 2);
-				}
-			}
+			if (RFIFOREST(fd) < 6) return 0;
+			ShowInfo("Updated IP address of Server #%d to %d.%d.%d.%d.\n",i,
+				(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),
+				(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
+			server[id].ip = RFIFOL(fd, 2);
 			RFIFOSKIP(fd,6);
 			break;
 		default:
@@ -3988,24 +3988,28 @@ int char_config_read(const char *cfgName) {
 				wisp_server_name[sizeof(wisp_server_name) - 1] = '\0';
 			}
 		} else if (strcmpi(w1, "login_ip") == 0) {
-			login_ip = resolve_hostbyname(w2, NULL, login_ip_str);
-			if (login_ip)
-				ShowStatus("Login server IP address : %s -> %s\n", w2, login_ip_str);
+			char ip_str[16];
+			login_ip = resolve_hostbyname(w2, NULL, ip_str);
+			if (login_ip) {
+				strncpy(login_ip_str, w2, sizeof(login_ip_str));
+				ShowStatus("Login server IP address : %s -> %s\n", w2, ip_str);
+			}
 		} else if (strcmpi(w1, "login_port") == 0) {
 			login_port = atoi(w2);
 		} else if (strcmpi(w1, "char_ip") == 0) {
-			char_ip = resolve_hostbyname(w2, NULL, char_ip_str);
+			char ip_str[16];
+			char_ip = resolve_hostbyname(w2, NULL, ip_str);
 			if (char_ip){
-				if(char_server_dns)
-					aFree(char_server_dns);
-				char_server_dns = (char *)aCalloc(strlen(w2)+1, 1);
-				strcpy(char_server_dns, w2);
-				ShowStatus("Character server IP address : %s -> %s\n", w2, char_ip_str);
+				strncpy(char_ip_str, w2, sizeof(char_ip_str));
+				ShowStatus("Character server IP address : %s -> %s\n", w2, ip_str);
 			}
 		} else if (strcmpi(w1, "bind_ip") == 0) {
-			bind_ip = resolve_hostbyname(w2, NULL, bind_ip_str);
-			if (bind_ip)	
-				ShowStatus("Character server binding IP address : %s -> %s\n", w2, bind_ip_str);
+			char ip_str[16];
+			bind_ip = resolve_hostbyname(w2, NULL, ip_str);
+			if (bind_ip) {
+				strncpy(bind_ip_str, w2, sizeof(bind_ip_str));
+				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip_str);
+			}
 		} else if (strcmpi(w1, "char_port") == 0) {
 			char_port = atoi(w2);
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
@@ -4153,7 +4157,6 @@ void do_final(void) {
 	
 	if(gm_account) aFree(gm_account);
 	if(char_dat) aFree(char_dat);
-	if(char_server_dns) aFree(char_server_dns);
 
 	delete_session(login_fd);
 	delete_session(char_fd);

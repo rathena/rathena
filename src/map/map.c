@@ -3690,8 +3690,6 @@ void do_final(void) {
 	pc_db->destroy(pc_db, NULL);
 	charid_db->destroy(charid_db, NULL);
 
-	if(map_server_dns) aFree(map_server_dns);
-
 //#endif
 
 #ifndef TXT_ONLY

@@ -53,6 +53,7 @@ void clif_setbindip(char*);
 void clif_setport(int);
 
 unsigned long clif_getip_long(void);
+unsigned long clif_refresh_ip(void);
 int clif_getport(void);
 int clif_countusers(void);
 void clif_setwaitclose(int);
