@@ -5278,7 +5278,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			sc->opt3 |= 4096;
 			opt_flag = 0;
 			break;
-			
+		case SC_KAITE:
+			sc->opt3 |= 8192;
+			opt_flag = 0;
+			break;
 		//OPTION
 		case SC_HIDING:
 			sc->option |= OPTION_HIDE;
@@ -5762,6 +5765,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		break;
 	case SC_WARM: //SG skills [Komurka]
 		sc->opt3 &= ~4096;
+		opt_flag = 0;
+		break;
+	case SC_KAITE:
+		sc->opt3 &= ~8192;
 		opt_flag = 0;
 		break;
 	default:

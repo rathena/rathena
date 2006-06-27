@@ -2514,6 +2514,10 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 		if( map[m].bexp < 0 ) map[m].bexp = 100;
 		 map[m].flag.nobaseexp = (map[m].bexp==0)?1:0;
 	}
+	else if (strcmpi(w3,"loadevent")==0) { // Skotlex
+		map[m].flag.loadevent=state;
+	}
+ 
 	return 0;
 }
 

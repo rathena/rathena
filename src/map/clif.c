@@ -8207,7 +8207,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
 // Lance
-	if(sd->state.event_loadmap){
+	if(sd->state.event_loadmap && map[sd->bl.m].flag.loadevent){
 		pc_setregstr(sd, add_str("@maploaded$"), map[sd->bl.m].name);
 		npc_script_event(sd, NPCE_LOADMAP);
 	}
@@ -9848,8 +9848,6 @@ void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 	if(message_len >= sizeof(sd->npc_str)){
 		ShowWarning("clif: input string too long !\n");
 		message_len = sizeof(sd->npc_str);
-	} else {
-		message_len += 1; // Null character
 	}
 
 	// Exploit prevention if crafted packets (without null) is being sent. [Lance]
@@ -9972,12 +9970,18 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
  */
 void clif_parse_LGMmessage(int fd, struct map_session_data *sd) {
 	unsigned char buf[512];
-	int len = RFIFOREST(fd);
+//	int len = RFIFOREST(fd);
 	int plen = RFIFOW(fd,2);
 	RFIFOHEAD(fd);
 
-	if(plen <= 0 || plen > len) // Possible hack! [Lance]
-		plen = len;
+	//This shouldn't be needed.... because the parsing code makes sure
+	//this function is not invoked until enough bytes have been received.
+	//So if the client "hacks" the packet, all that will happen is that
+	//it will not be parsed until enough data is received, on which point
+	//the following packets will be offset, causing them to fail to parse,
+	//which leads to disconnecting them :3 [Skotlex]
+//	if(plen <= 0 || plen > len) // Possible hack! [Lance]
+//		plen = len;
 
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_LocalBroadcast))) {

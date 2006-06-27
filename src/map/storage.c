@@ -82,7 +82,7 @@ static int storage_reconnect_sub(DBKey key,void *data,va_list ap)
 	{	//Account Storage
 		struct storage* stor = (struct storage*) data;
 		if (stor->dirty && stor->storage_status == 0) //Save closed storages.
-			storage_storage_save(stor->account_id);
+			storage_storage_save(stor->account_id, stor->dirty==2?1:0);
 	}
 	return 0;
 }
@@ -390,14 +390,25 @@ void storage_storage_dirty(struct map_session_data *sd)
 		stor->dirty = 1;
 }
 
-int storage_storage_save(int account_id)
+int storage_storage_save(int account_id, int final)
 {
 	struct storage *stor;
 
 	stor=account2storage2(account_id);
-	if(stor && stor->dirty)
+	if(!stor) return 0;
+
+	if(stor->dirty)
 	{
+		if (final) {
+			stor->dirty = 2;
+			stor->storage_status = 0; //To prevent further manipulation of it.
+		}
 		intif_send_storage(stor);
+		return 1;
+	}
+	if (final) 
+	{	//Clear storage from memory. Nothing to save.
+		storage_delete(account_id);
 		return 1;
 	}
 
@@ -409,13 +420,19 @@ int storage_storage_saved(int account_id)
 {
 	struct storage *stor;
 	
-	if((stor=account2storage2(account_id)) != NULL)
+	if((stor=account2storage2(account_id)) == NULL)
+		return 0;
+
+	if (stor->dirty == 2)
+	{	//Final save of storage. Remove from memory.
+	  	storage_delete(account_id);
+		return 1;
+	}
+
+	if (stor->dirty && stor->storage_status == 0)
 	{	//Only mark it clean if it's not in use. [Skotlex]
-		if (stor->dirty && stor->storage_status == 0)
-		{
-			stor->dirty = 0;
-			sortage_sortitem(stor);
-		}
+		stor->dirty = 0;
+		sortage_sortitem(stor);
 		return 1;
 	}
 	return 0;

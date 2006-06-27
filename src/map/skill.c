@@ -883,8 +883,8 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			}
 			return 0;
 		case TK_HIGHJUMP:
-			if(map[sd->bl.m].flag.noteleport && !map_flag_gvg(sd->bl.m))
-		  	{	//Can't be used on noteleport maps, except for gvg maps [Skotlex]
+			if(map[sd->bl.m].flag.noteleport && !map_flag_vs(sd->bl.m))
+		  	{	//Can't be used on noteleport maps, except for vs maps [Skotlex]
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}

@@ -189,7 +189,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 		return -1; //Refuse to save a char already tagged for final saving. [Skotlex]
 	//For data sync
 	if (sd->state.storage_flag == 1)
-		storage_storage_save(sd->status.account_id);
+		storage_storage_save(sd->status.account_id, flag);
 	else if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id);
 
@@ -218,10 +218,8 @@ int chrif_save(struct map_session_data *sd, int flag)
 #ifndef TXT_ONLY
 	}
 #endif
-	if (flag) {//Remove the storage from memory.
-		storage_delete(sd->status.account_id);
+	if (flag)
 		sd->state.finalsave = 1; //Mark the last save as done.
-	}
 	return 0;
 }
 
