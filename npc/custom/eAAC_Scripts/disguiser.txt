@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= PalasX (http://cashaan.dontexist.org)
 //===== Current Version: ===================================== 
-//= v1.21 Unified
+//= v1.20 Unified
 //===== Compatible With: ===================================== 
 //= SVN 5690+ (getmonsterinfo)
 //===== Description: ========================================= 
@@ -16,38 +16,37 @@
 //= Uses GetMonsterInfo to pull monster names from server, but
 //=     without sql_query, the mob IDs are set statically
 //= Went crazy with the functions, the script is TINY now :)
-//= 1.21 Removed Duplicates [Silent]
 //============================================================ 
 
 //////////////////////////
 //Places all of our NPCs//
 //////////////////////////
-prt_fild05.gat,277,226,5	script	Dullahan Master#01	736,{
+prt_fild05.gat,277,226,5	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",0,quest_disguise;
 Close;
 }
 
-moc_fild10.gat,34,283,4	script	Dullahan Master#02	736,{
+moc_fild10.gat,34,283,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",1,quest_disguise;
 close;
 }
 
-gef_fild00.gat,97,123,4	script	Dullahan Master#03	736,{
+gef_fild00.gat,97,123,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",2,quest_disguise;
 close;
 }
 
-pay_fild01.gat,369,305,4	script	Dullahan Master#04	736,{
+pay_fild01.gat,369,305,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",3,quest_disguise;
 close;
 }
 
-pay_fild03.gat,313,40,4	script	Dullahan Master#05	736,{
+pay_fild03.gat,313,40,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",4,quest_disguise;
 close;
 }
 
-prt_fild08.gat,362,185,4	script	Dullahan Master#06	736,{
+prt_fild08.gat,362,185,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",5,quest_disguise;
 	close;
 

@@ -1,0 +1,23 @@
+//===== eAthena script =======================================
+//= Rachel Town script
+//===== By: ==================================================
+//= erKURITA & RockmanEXE
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any eAthena Version; RO Episode XX
+//===== Description: =========================================
+//= Rachel Town Npcs
+//============================================================
+//===== Additional Comments: =================================
+//=	1.0 Temporal NPC Locations. Will add 2 of these npc's
+//=	    true script. Special thanks to RockmanEXE. [erKURITA]
+//============================================================
+
+rachel.gat,109,138,4	script	Zondaman#Rachel	874,{end;}
+
+rachel.gat,138,146,5	script	Guide#Rachel	934,{end;}
+ra_fild12.gat,45,231,2	script	Guard#Field1	934,{end;}
+rachel.gat,268,120,2	script	Guard#Field3	934,{end;}
+rachel.gat,31,130,2	script	Guard#Field4	934,{end;}
+rachel.gat,125,33,5	script	Guard#Field5	934,{end;}

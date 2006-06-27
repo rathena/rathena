@@ -1,12 +1,10 @@
 //=====================================
 // Vending Machine Script
-// v2.4
+// v2.3
 //=====================================
 // by Celestria
 //=====================================
 // Changelog:
-// 2.4 - Removed Duplicates [Silent]
-//
 // 2.3 - Added in "Slam" feature, as well as admin ability to turn machine on and off.
 // - Added admin menu. Allows GMs to put machines in/out of service, and to clear
 // all jammed items.

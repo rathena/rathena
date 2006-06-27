@@ -36,6 +36,14 @@ Musashiden
 
 Date		Added
 ======
+06/27
+	* Added Rachel NPCs:
+		~ Added Official warps of Rachel. About 50% of them. Will get the rest soon. [erKURITA]
+		~ Added the Tool/Armor/Weapon dealer, aswell as a Vegetable Gardener. [erKURITA]
+		~ Added the guards + guide locations. Also added the Zondaman location. [erKURITA]
+		~ Added Rachel Inn npc. [erKURITA]
+	\- Special thanks to RockmanEXE for all the info above.
+	* eAAC update to the vending machine, disguiser and quest warper. [erKURITA]
 06/26
 	* Added BIT-WISE perm variables info quest_variables.txt [Lupus]
 06/25
