@@ -25,6 +25,7 @@
 
 =========================
 06/26
+	* Mob name/sprite name update, thanks to Saycyber21 [Vicious]
 	* Updated/Added some items [Playtester]
 	* Corrected unit id of desperado and Ground Drift using jA's info. [Skotlex]
 06/25
