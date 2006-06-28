@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/28
+	* changed:
+	  dynamic_pass_failure_ban_how_many:from 3 to 7
+	  dynamic_pass_failure_ban_how_long:from 60 to 5
+	  as in official servers. [Musashiden]
 	* Added a check in script command "set_option" so that invoking
 	  "set_option(0)" removes Cart/Peco/Falcon, as expected by scripts. [Skotlex]
 	* Added trade-range check on trade start. [Skotlex]
