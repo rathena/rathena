@@ -5285,7 +5285,10 @@ int buildin_setoption(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	if(st->end>st->start+3 )
 		flag=conv_num(st,&(st->stack->stack_data[st->start+3]) );
-	
+	else if (!type) { //Request to remove everything.
+		flag = 0;
+		type = OPTION_CART|OPTION_FALCON|OPTION_RIDING;
+	}
 	sd=script_rid2sd(st);
 	if (!sd) return 0;
 
