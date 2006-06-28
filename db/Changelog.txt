@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/28
+	* Fixed the SP usage of AS_SPLASHER. Thanks to Belle. [MasterOfMuppets]
 06/27
 	* Added the remaining Ninja/Gunslinger drops [Playtester]
 	* Raised autocast chance of Owl Duke card to Aegis x.2 [Playtester]
