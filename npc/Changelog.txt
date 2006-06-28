@@ -36,6 +36,8 @@ Musashiden
 
 Date		Added
 ======
+06/28
+	* Updated yuno_fild03 spawns [Playtester]
 06/27
 	* Added Rachel NPCs:
 		~ Added Official warps of Rachel. About 50% of them. Will get the rest soon. [erKURITA]
