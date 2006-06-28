@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/28
+	* Corrected Musical Strike having a different damage equation from Throw
+	  Arrow. [Skotlex]
+	* Added state rewarp to players. It gets set when a pc_setpos call is
+	  triggered while the player is changing maps so that when the player finish
+	  loading the map, it is inmediately rewarped to where it has been
+	  rewarped/recalled to. [Skotlex]
 2006/05/27
 	* Map server will now resent the whole list of online characters to
 	  char-server on reconnect when the kick_on_disconnect setting is active.

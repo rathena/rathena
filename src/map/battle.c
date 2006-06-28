@@ -1367,8 +1367,6 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 140+60*skill_lv;
 					break;
 				case BA_MUSICALSTRIKE:
-					skillratio += 40*skill_lv-40;
-					break;
 				case DC_THROWARROW:
 					skillratio += 50*skill_lv;
 					break;

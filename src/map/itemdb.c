@@ -285,7 +285,6 @@ static int itemdb_ispetequip(struct item_data *data)
 	}
 }
 
-
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------
@@ -598,7 +597,7 @@ static int itemdb_read_itemslottable(void)
 		struct item_data* item;
 		sscanf(p, "%d#%d#", &nameid, &equip);
 		item = itemdb_search(nameid);
-		if (equip && item && itemdb_isequip2(item))			
+		if (equip && item && itemdb_isequip2(item))
 			item->equip = equip;
 		p = strchr(p, 10);
 		if(!p) break;
@@ -1184,12 +1183,18 @@ void itemdb_reload(void)
 void do_final_itemdb(void)
 {
 	item_db->destroy(item_db, itemdb_final_sub, 1);
-	if (dummy_item.script)
+	if (dummy_item.script) {
 		script_free_code(dummy_item.script);
-	if (dummy_item.equip_script)
+		dummy_item.script = NULL;
+	}
+	if (dummy_item.equip_script) {
 		script_free_code(dummy_item.equip_script);
-	if (dummy_item.unequip_script)
+		dummy_item.equip_script = NULL;
+	}
+	if (dummy_item.unequip_script) {
 		script_free_code(dummy_item.unequip_script);
+		dummy_item.unequip_script = NULL;
+	}
 }
 
 int do_init_itemdb(void)

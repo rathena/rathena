@@ -1754,9 +1754,6 @@ int clif_changemap(struct map_session_data *sd, short map, int x, int y) {
 	WFIFOW(fd,20) = y;
 	WFIFOSET(fd, packet_len_table[0x91]);
 
-	if(pc_isdead(sd)) // If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
-		clif_clearchar_area(&sd->bl,1);
-
 	return 0;
 }
 
@@ -8061,6 +8058,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	
 	if(sd->bl.prev != NULL)
 		return;
+		
+	if (sd->state.rewarp)
+  	{	//Rewarp player.
+		sd->state.rewarp = 0;
+		clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
+		return;
+	}
 
 	if(sd->npc_id) npc_event_dequeue(sd);
 
@@ -8240,8 +8244,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	else
 		sd->areanpc_id = 0;
 
-	if (pc_isdead(sd)) //In case you warped dead.
-		clif_clearchar_area(&sd->bl, 1);
+  	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
+	if(pc_isdead(sd))
+		clif_clearchar_area(&sd->bl,1);
 }
 
 /*==========================================

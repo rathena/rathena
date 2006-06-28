@@ -5085,10 +5085,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			sp1 = sstatus->sp;
 			sp2 = tstatus->sp;
-			status_zap(src, 0, sp1);
-			status_zap(bl, 0, sp2);
-			status_heal(src, 0, sp2, 3);
-			status_heal(bl, 0, sp1, 3);
+			//TODO: Will this work correctly once sp1/sp2 go above INT_MAX?
+			status_heal(src, 0, (signed int)(sp2-sp1), 3);
+			status_heal(bl, 0, (signed int)(sp1-sp2), 3);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
 		break;

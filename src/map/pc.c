@@ -3167,13 +3167,6 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		ShowDebug("pc_setpos: Passed mapindex(%d) is invalid!\n", mapindex);
 		return 1;
 	}
-	if(sd->state.auth && sd->bl.prev == NULL)
-	{	//Should NOT move a character while it is not in a map (changing between maps, for example)
-		//state.auth helps identifies if this is the initial setpos rather than a normal map-change set pos.
-		if (battle_config.etc_log)
-			ShowInfo("pc_setpos failed: Attempted to relocate player %s (%d:%d) while it is still between maps.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
-		return 3;
-	}
 
 	m=map_mapindex2mapid(mapindex);
 
@@ -3246,7 +3239,9 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		if(sd->status.pet_id > 0 && sd->pd)
 			unit_remove_map(&sd->pd->bl, clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
-	}
+	} else if(sd->state.auth)
+		//Tag player for rewarping after map-loading is done. [Skotlex]
+		sd->state.rewarp = 1;
 	
 	sd->mapindex =  mapindex;
 	sd->bl.m = m;
