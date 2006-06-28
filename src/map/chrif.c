@@ -412,6 +412,10 @@ int chrif_sendmapack(int fd)
 	ShowStatus("Map sending complete. Map Server is now online.\n");
 	chrif_state = 2;
 
+	//If there are players online, send them to the char-server. [Skotlex]
+	if (!kick_on_disconnect)
+		send_users_tochar(-1, gettick(), 0, 0);
+	
 	//Re-save any storages that were modified in the disconnection time. [Skotlex]
 	do_reconnect_storage();
 
