@@ -6358,7 +6358,7 @@ int pc_checkitem(struct map_session_data *sd)
 			continue;
 		if( battle_config.item_check &&  !itemdb_available(id) ){
 			if(battle_config.error_log)
-				ShowWarning("illeagal item id %d in %d[%s] cart.\n",id,sd->bl.id,sd->status.name);
+				ShowWarning("illegal item id %d in %d[%s] cart.\n",id,sd->bl.id,sd->status.name);
 			pc_cart_delitem(sd,i,sd->status.cart[i].amount,1);
 			continue;
 		}

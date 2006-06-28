@@ -40,6 +40,8 @@
 #define INF2_NO_TARGET_SELF 512
 #define INF2_PARTY_ONLY 1024
 #define INF2_GUILD_ONLY 2048
+//For Party/Guild only skills that can ALSO be used on enemies.
+#define INF2_ALLOW_ENEMY 4096
 
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5

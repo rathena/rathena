@@ -15,7 +15,8 @@
 //    8- spirit skill, 16- guild skill, 32- song/dance, 64- ensemble skill
 //    128- trap (can be targetted), 256- skill that damages/targets yourself
 //    512- cannot be casted on self (if inf = 4, auto-select target skill)
-//    1024- usable only on party-members, 2048- usable only on guild-mates)
+//    1024- usable only on party-members, 2048- usable only on guild-mates
+//    4096- allow usage on enemies too (use with 1024/2048))
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled.
 // 14 attack type (none, weapon, magic, misc)
@@ -393,7 +394,7 @@
 371,-2,8,4,-1,0,0,5,1,no,0,512,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
 372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,512,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
 373,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#Health Conversion#
-374,9,6,16,0,1,0,1,1,yes,0,3072,0,none,0	//PF_SOULCHANGE#Soul Exhale#
+374,9,6,16,0,1,0,1,1,yes,0,7168,0,none,0	//PF_SOULCHANGE#Soul Exhale#
 375,9,6,1,0,0,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
 376,0,0,0,0,1,0,5,1,no,0,0,0,weapon,0	//ASC_KATAR#Advanced Katar Mastery#
 //377,0,0,4,0,1,0,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#Hallucination Walk#

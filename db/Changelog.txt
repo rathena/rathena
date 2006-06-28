@@ -25,6 +25,7 @@
 
 =========================
 06/28
+	* Updated Soul Change to use inf2 4096 (INF2_ALLOW_ENEMY). [Skotlex]
 	* Updated Morpheus's Hood and Freyr's Shoes [Playtester]
 	* Fixed the SP usage of AS_SPLASHER. Thanks to Belle. [MasterOfMuppets]
 06/27

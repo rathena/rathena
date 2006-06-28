@@ -5545,17 +5545,12 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 
 		inf2 = skill_get_inf2(ud->skillid);
 		if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target) {
-			int fail_flag = 1;
-			if(inf2 & INF2_PARTY_ONLY && battle_check_target(src, target, BCT_PARTY) > 0)
-				fail_flag = 0;
-			else if(inf2 & INF2_GUILD_ONLY && battle_check_target(src, target, BCT_GUILD) > 0)
-				fail_flag = 0;
-			
-			if (ud->skillid == PF_SOULCHANGE && map_flag_vs(target->m))
-				//Soul Change overrides this restriction during pvp/gvg [Skotlex]
-				fail_flag = 0;
-			
-			if(fail_flag)
+			inf2 = 	
+				(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
+				(inf2&INF2_GUILD_ONLY?BCT_GUILD:0)|
+				(inf2&INF2_ALLOW_ENEMY?BCT_ENEMY:0);
+
+			if(battle_check_target(src, target, inf2) <= 0)
 				break;
 		}
 

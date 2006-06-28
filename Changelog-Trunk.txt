@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/28
+	* Added inf2 4096 (INF2_ALLOW_ENEMY) which is to be used in conjunction
+	  with INF2_PARTY_ONLY/INF2_GUILD_ONLY when said skill should ALSO be allowed
+	  to be used on enemies. [Skotlex]
 	* Cleaned up a bit the code for @item [Skotlex]
 	* Fixed character/storage being sent to be saved TWICE when you logged out
 	  while the storage is opened. [Skotlex]
