@@ -175,6 +175,8 @@ int use_md5_passwds = 0;
 
 int console = 0;
 
+int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
+
 //------------------------------
 // Writing function of logs file
 //------------------------------

@@ -159,6 +159,8 @@ static void* create_online_user(DBKey key, va_list args) {
 	return p;	
 }
 
+int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
+
 //-----------------------------------------------------
 // Online User Database [Wizputer]
 //-----------------------------------------------------
@@ -236,8 +238,6 @@ void read_gm_account(void) {
 		mysql_free_result(sql_res);
 	}
 }
-
-int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
 
 //-----------------------------------------------------
 // Send GM accounts to all char-server

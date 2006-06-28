@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/28
+	* Changed the mob drop rate adjust function to receive a signed int
+	  argument. Probably will fix those drops with 0% becoming 100% [Skotlex]
 	* Corrected Musical Strike having a different damage equation from Throw
 	  Arrow. [Skotlex]
 	* Added state rewarp to players. It gets set when a pc_setpos call is
