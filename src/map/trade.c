@@ -86,7 +86,18 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 		sd->trade_partner=0;
 		return;
 	}
-		
+	
+	//Copied here as well since the original character could had warped.
+	if (type == 3 && pc_isGM(target_sd) < lowest_gm_level && (sd->bl.m != target_sd->bl.m ||
+		 (sd->bl.x - target_sd->bl.x <= -5 || sd->bl.x - target_sd->bl.x >= 5) ||
+		 (sd->bl.y - target_sd->bl.y <= -5 || sd->bl.y - target_sd->bl.y >= 5)))
+  	{
+		sd->trade_partner=0;
+		target_sd->trade_partner = 0;
+		clif_tradestart(sd, 0); // too far
+		return;
+	}
+	
 	clif_tradestart(target_sd, type);
 	clif_tradestart(sd, type);
 	if (type == 4) { // Cancel
