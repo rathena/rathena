@@ -1508,11 +1508,13 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			trade_tradecancel(sd);
 		if(sd->vender_id)
 			vending_closevending(sd);
-		if(sd->state.storage_flag == 1)
-			storage_storage_quit(sd,0);
-		else if (sd->state.storage_flag == 2)
-			storage_guild_storage_quit(sd,0);
-
+		if(!sd->state.waitingdisconnect)
+	  	{	//when quitting, let the final chrif_save handle storage saving.
+			if(sd->state.storage_flag == 1)
+				storage_storage_quit(sd,0);
+			else if (sd->state.storage_flag == 2)
+				storage_guild_storage_quit(sd,0);
+		}
 		if(sd->party_invite>0)
 			party_reply_invite(sd,sd->party_invite_account,0);
 		if(sd->guild_invite>0)
@@ -1619,7 +1621,6 @@ int unit_free(struct block_list *bl) {
 		pc_delspiritball(sd,sd->spiritball,1);
 		chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
 		pc_makesavestatus(sd);
-		sd->state.waitingdisconnect = 1;
 		pc_clean_skilltree(sd);
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;

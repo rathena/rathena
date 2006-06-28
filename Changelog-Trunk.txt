@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/28
+	* Cleaned up a bit the code for @item [Skotlex]
+	* Fixed character/storage being sent to be saved TWICE when you logged out
+	  while the storage is opened. [Skotlex]
+	* Added save_settings map config. Specifies after which events do
+	  characters get saved (defaults to all): 1 - Trade successful, 2 - Vending
+	  transaction, 4 - Closing storage/guild storage, 8 - hatching a pet.
+	  [Skotlex]
 	* Changed the mob drop rate adjust function to receive a signed int
 	  argument. Probably will fix those drops with 0% becoming 100% [Skotlex]
 	* Corrected Musical Strike having a different damage equation from Throw

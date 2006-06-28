@@ -353,8 +353,12 @@ int storage_storageclose(struct map_session_data *sd)
 
 	clif_storageclose(sd);
 	if (stor->storage_status)
-		chrif_save(sd,0); //This will invoke the storage save function as well. [Skotlex]
-	
+  	{
+		if (save_settings&4)
+			chrif_save(sd,0); //Invokes the storage saving as well.
+		else
+			storage_storage_save(sd->status.account_id, 0);
+	}
 	stor->storage_status=0;
 	sd->state.storage_flag=0;
 	return 0;
@@ -369,14 +373,17 @@ int storage_storage_quit(struct map_session_data *sd, int flag)
 	struct storage *stor;
 
 	nullpo_retr(0, sd);
-
-	stor = account2storage2(sd->status.account_id);
-	if(stor)  {
-		chrif_save(sd, flag); //Invokes the storage saving as well.
-		stor->storage_status = 0;
-		sd->state.storage_flag = 0;
+	nullpo_retr(0, stor=account2storage2(sd->status.account_id));
+	
+	if (stor->storage_status)
+	{
+		if (save_settings&4)
+			chrif_save(sd, flag); //Invokes the storage saving as well.
+		else
+			storage_storage_save(sd->status.account_id, flag);
 	}
-
+	stor->storage_status = 0;
+	sd->state.storage_flag = 0;
 	return 0;
 }
 
@@ -702,8 +709,13 @@ int storage_guild_storageclose(struct map_session_data *sd)
 	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
 
 	clif_storageclose(sd);
-	chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
-
+	if (stor->storage_status)
+	{
+		if (save_settings&4)
+			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
+		else
+			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id);
+	}
 	stor->storage_status=0;
 	sd->state.storage_flag = 0;
 
@@ -716,15 +728,25 @@ int storage_guild_storage_quit(struct map_session_data *sd,int flag)
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, stor=guild2storage2(sd->status.guild_id));
+	
+	if(flag)
+	{	//Only during a guild break flag is 1 (don't save storage)
+		sd->state.storage_flag = 0;
+		stor->storage_status = 0;
+		clif_storageclose(sd);
+		if (save_settings&4)
+			chrif_save(sd,0);
+		return 0;
+	}
 
+	if(stor->storage_status) {
+		if (save_settings&4)
+			chrif_save(sd,0);
+		else
+			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id);
+	}
 	sd->state.storage_flag = 0;
 	stor->storage_status = 0;
 
-	chrif_save(sd,flag);
-	if(!flag) //Only during a guild break flag is 1.
-		storage_guild_storagesave(sd->status.account_id,sd->status.guild_id);
-	else	//When the guild was broken, close the storage of he who has it open.
-		clif_storageclose(sd);
-	
 	return 0;
 }

@@ -168,6 +168,7 @@ int map_num = 0;
 int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+int save_settings = 0xFFFF;
 int charsave_method = 0; //Default 'OLD' Save method (SQL ONLY!) [Sirius]
 int agit_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
@@ -1664,6 +1665,8 @@ int map_quit(struct map_session_data *sd) {
 			npc_timerevent_quit(sd);
 		if (sd->state.event_disconnect)
 			npc_script_event(sd, NPCE_LOGOUT);
+
+		sd->state.waitingdisconnect = 1;
 		if (sd->pd) unit_free(&sd->pd->bl);
 		unit_free(&sd->bl);
 		chrif_save(sd,1);
@@ -3306,6 +3309,8 @@ int map_config_read(char *cfgName) {
 				autosave_interval = atoi(w2) * 1000;
 				if (autosave_interval <= 0)
 					autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+			} else if (strcmpi(w1, "save_settings") == 0) {
+				save_settings = atoi(w2);
 			} else if (strcmpi(w1, "motd_txt") == 0) {
 				strcpy(motd_txt, w2);
 			} else if (strcmpi(w1, "help_txt") == 0) {

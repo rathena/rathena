@@ -2556,50 +2556,48 @@ int atcommand_item(
 	if (number <= 0)
 		number = 1;
 
-	item_id = 0;
-	if ((item_data = itemdb_searchname(item_name)) != NULL ||
-	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
-		item_id = item_data->nameid;
-
-	if (item_id >= 500) {
-		get_count = number;
-		// check pet egg
-		pet_id = search_petDB_index(item_id, PET_EGG);
-		if (item_data->type == 4 || item_data->type == 5 ||
-			item_data->type == 7 || item_data->type == 8) {
-			get_count = 1;
-		}
-		for (i = 0; i < number; i += get_count) {
-			// if pet egg
-			if (pet_id >= 0) {
-				sd->catch_target_class = pet_db[pet_id].class_;
-				intif_create_pet(sd->status.account_id, sd->status.char_id,
-				                 (short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
-				                 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
-				                 100, 0, 1, pet_db[pet_id].jname);
-			// if not pet egg
-			} else {
-				memset(&item_tmp, 0, sizeof(item_tmp));
-				item_tmp.nameid = item_id;
-				item_tmp.identify = 1;
-
-				if ((flag = pc_additem((struct map_session_data*)sd, &item_tmp, get_count)))
-					clif_additem((struct map_session_data*)sd, 0, 0, flag);
-			}
-		}
-
-		//Logs (A)dmins items [Lupus]
-		if(log_config.pick > 0 ) {
-			log_pick(sd, "A", 0, item_id, number, NULL);
-		}
-		//Logs
-
-		clif_displaymessage(fd, msg_table[18]); // Item created.
-	} else {
+	if ((item_data = itemdb_searchname(item_name)) == NULL &&
+	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
+	{
 		clif_displaymessage(fd, msg_table[19]); // Invalid item ID or name.
 		return -1;
 	}
 
+	item_id = item_data->nameid;
+	get_count = number;
+	// check pet egg
+	pet_id = search_petDB_index(item_id, PET_EGG);
+	if (item_data->type == 4 || item_data->type == 5 ||
+		item_data->type == 7 || item_data->type == 8) {
+		get_count = 1;
+	}
+	for (i = 0; i < number; i += get_count) {
+		// if pet egg
+		if (pet_id >= 0) {
+			sd->catch_target_class = pet_db[pet_id].class_;
+			intif_create_pet(sd->status.account_id, sd->status.char_id,
+				(short)pet_db[pet_id].class_,
+				(short)mob_db(pet_db[pet_id].class_)->lv,
+				(short)pet_db[pet_id].EggID, 0,
+			  	(short)pet_db[pet_id].intimate,
+				100, 0, 1, pet_db[pet_id].jname);
+		// if not pet egg
+		} else {
+			memset(&item_tmp, 0, sizeof(item_tmp));
+			item_tmp.nameid = item_id;
+			item_tmp.identify = 1;
+
+			if ((flag = pc_additem(sd, &item_tmp, get_count)))
+				clif_additem(sd, 0, 0, flag);
+		}
+	}
+
+	//Logs (A)dmins items [Lupus]
+	if(log_config.pick > 0 )
+		log_pick(sd, "A", 0, item_id, number, NULL);
+	//Logs
+
+	clif_displaymessage(fd, msg_table[18]); // Item created.
 	return 0;
 }
 

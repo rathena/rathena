@@ -531,6 +531,9 @@ void trade_tradecommit(struct map_session_data *sd) {
 	clif_tradecompleted(sd, 0);
 	clif_tradecompleted(tsd, 0);
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
-	chrif_save(sd,0); // do pc_makesavestatus and save storage too
-	chrif_save(tsd,0); // do pc_makesavestatus and save storage too
+	if (save_settings&1)
+  	{
+		chrif_save(sd,0); 
+		chrif_save(tsd,0);
+	}
 }

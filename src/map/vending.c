@@ -180,8 +180,10 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 	}
 
 	//Always save BOTH: buyer and customer
-	chrif_save(sd,0);
-	chrif_save(vsd,0);
+	if (save_settings&2) {
+		chrif_save(sd,0);
+		chrif_save(vsd,0);
+	}
 	//check for @AUTOTRADE users [durf]
 	if (vsd->state.autotrade)
 	{
