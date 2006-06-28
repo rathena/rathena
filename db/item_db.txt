@@ -1035,7 +1035,7 @@
 2414,Novice_Slippers,Novice Slippers,5,,10,1,,2,,0,0x00000001,7,2,64,,0,0,0,{},{},{}
 2415,Bunny_Slipper,Bunny Slipper,5,34000,,300,,3,,1,0xFFFFFFFE,7,0,64,,30,1,0,{ bonus bLuk,3; bonus bMdef,3; },{},{}
 2416,Novice_Shoes,Novice Shoes,5,35000,,500,,2,,1,0x00000001,7,2,64,,40,1,0,{ bonus bMaxHPrate,5; },{},{}
-2417,Freyr's_Shoes,Freyr's Shoes,5,,10,500,,3,,0,0xFFFFFFFE,7,2,64,,65,1,0,{ bonus bAgi,2; },{},{}
+2417,Freyr's_Shoes,Freyr's Shoes,5,,10,500,,3,,0,0xFFFFFFFE,7,2,64,,65,1,0,{ if(isequipped(2353,2516){ bAgi,3; bMaxHPrate,5; bMaxSPrate,5; } },{},{}
 2418,Vidar's_Boots,Vidar's Boots,5,,10,650,,4,,0,0xFFFFFFFE,7,2,64,,65,1,0,{ bonus bMaxHPrate,9; bonus bMaxSPrate,9; },{},{}
 2419,Goibne's_Greaves,Goibne's Greaves,5,,10,700,,4,,0,0xFFFFFFFE,7,2,64,,54,1,0,{ bonus bMdef,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; },{},{}
 2420,Angel's_Reincarnation,Angel's Reincarnation,5,,10,700,,0,,1,0x00000001,7,2,64,,54,1,0,{ bonus bMaxHP,100; },{},{}
@@ -1672,7 +1672,7 @@
 5123,Ulle's_Cap,Ulle's Cap,5,,10,500,,3,,1,0xFFFFFFFE,7,2,256,,65,1,202,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && bDex>=70) bonus bUseSPrate,-10; },{},{}
 5124,Frigg's_Circlet,Frigg's Circlet,5,,10,300,,3,,0,0xFFFFFFFE,7,2,256,,65,1,203,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; },{},{}
 5125,Angel's_Kiss,Angel's Kiss,5,,10,300,,2,,1,0x00000001,7,2,256,,50,1,204,{ bonus bSPrecovRate,3; },{},{}
-5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,3,,0,0xFFFFFFFE,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; if(Upper == 1) bonus bCastrate,25; } },{},{}
+5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,3,,0,0xFFFFFFFE,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bCastrate,25; } },{},{}
 5127,Morrigane's_Helm,Morrigane's Helm,5,,10,500,,4,,0,0xFFFFFFFE,7,2,256,,61,1,206,{ bonus bLuk,2; bonus bAtk,3; if(isequipped(2519,2650,2651)) { bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bAtk,18; bonus bFlee2,13; } },{},{}
 5128,Goibne's_Helm,Goibne's Helm,5,,10,500,,5,,0,0xFFFFFFFE,7,2,256,,54,1,207,{ bonus bVit,3; bonus bMdef,3; if(isequipped(2354,2419,2520)) { bonus bVit,5; bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bDef,5; bonus bMdef,15; bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Wind,10; } },{},{}
 5129,Bird_Nest,Bird Nest,5,,10,400,,1,,0,0xFFFFFFFF,7,2,256,,55,1,201,{ bonus bAgi,2; bonus2 bSubRace,RC_Brute,10; },{},{}

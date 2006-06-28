@@ -25,6 +25,7 @@
 
 =========================
 06/28
+	* Updated Morpheus's Hood and Freyr's Shoes [Playtester]
 	* Fixed the SP usage of AS_SPLASHER. Thanks to Belle. [MasterOfMuppets]
 06/27
 	* Added the remaining Ninja/Gunslinger drops [Playtester]
