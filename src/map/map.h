@@ -529,7 +529,6 @@ struct map_session_data {
 	int npc_menu;
 	int npc_amount;
 	struct script_state *st;
-	int  npc_scriptstate;
 	char npc_str[256];
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
 	unsigned int chatID;
