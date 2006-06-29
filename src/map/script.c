@@ -10832,7 +10832,7 @@ int buildin_unitdeadsit(struct script_state *st){
 	action = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	if((bl = map_id2bl(id))){
 		if(action > -1 && action < 4){
-			unsigned char *buf = NULL;
+			unsigned char buf[61] = "";
 			switch(bl->type){
 				case BL_MOB:
 					((TBL_MOB *)bl)->vd->dead_sit = action;
