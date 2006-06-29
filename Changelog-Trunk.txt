@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/05/29
+	* [Fixed]
+	  - Scripting system screwing up script position after mixing timers with menus.
+	  - NPC attached AI mobs display as alive when dead.
+	  - View data not updating after buildin_unitdeadsit.
+	  [Improved]
+	  - NPCE_LOADMAP to execute after all (area) objects are sent to the player.
+	  - Simplified scripting system. sd will now use pointer to the script state itself.
+	    [Lance]
+
 2006/05/28
 	* changed:
 	  dynamic_pass_failure_ban_how_many:from 3 to 7

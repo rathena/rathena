@@ -818,7 +818,7 @@ int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsi
 		return 0;
 	}
 
-	sd->npc_pos=run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
+	run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
 	return 0;
 }
 
@@ -1108,7 +1108,7 @@ int npc_click(struct map_session_data *sd,struct block_list *bl)
 		npc_event_dequeue(sd);
 		break;
 	case SCRIPT:
-		sd->npc_pos=run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
+		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
 		break;
 	}
 
@@ -1129,14 +1129,12 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 	}
 	
 	if(id != fake_nd->bl.id) { // Not item script
-		struct npc_data *nd;
-		if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL){
+		if ((npc_checknear(sd,map_id2bl(id))) == NULL){
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 			return 1;
 		}
-		sd->npc_pos=run_script(nd->u.scr.script,sd->npc_pos,sd->bl.id,id);
-	} else // Item script, continue execution...
-		sd->npc_pos=run_script(sd->npc_scriptroot,sd->npc_pos,sd->bl.id,id);
+	}
+	run_script_main(sd->st);
 
 	return 0;
 }

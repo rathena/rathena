@@ -10709,7 +10709,7 @@ int buildin_unitwarp(struct script_state *st){
 	y = conv_num(st, & (st->stack->stack_data[st->start+5]));
 
 	bl = map_id2bl(id);
-	m = mapindex_name2id(map);
+	m = map_mapname2mapid(map);
 	if(m && bl){
 		push_val(st->stack,C_INT,unit_warp(bl, m, (short)x, (short)y, 0));
 	} else {
@@ -10831,7 +10831,8 @@ int buildin_unitdeadsit(struct script_state *st){
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	action = conv_num(st, & (st->stack->stack_data[st->start+3]));
 	if((bl = map_id2bl(id))){
-		if(action > -1 && action < 3){
+		if(action > -1 && action < 4){
+			unsigned char *buf = NULL;
 			switch(bl->type){
 				case BL_MOB:
 					((TBL_MOB *)bl)->vd->dead_sit = action;
@@ -10848,6 +10849,10 @@ int buildin_unitdeadsit(struct script_state *st){
 				case BL_PET:
 					((TBL_PET *)bl)->vd.dead_sit = action;
 					break;
+				WBUFW(buf, 0) = 0x8a;
+				WBUFL(buf, 2) = bl->id;
+				WBUFB(buf,26) = (unsigned char)action;
+				clif_send(buf, 61, bl, AREA);
 			}
 		}else {
 			ShowError("buildin_unitdeadsit: Invalid action.\n");
@@ -11391,12 +11396,24 @@ int run_func(struct script_state *st)
  * スクリプトの実行メイン部分
  *------------------------------------------
  */
-int run_script_main(struct script_state *st)
+void run_script_main(struct script_state *st)
 {
 	int c/*,rerun_pos*/;
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	struct script_stack *stack=st->stack;
+	TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
+	struct script_state *bk_st = NULL;
+	int bk_npcid = 0;
+
+	if(sd){
+		if(sd->st != st){
+			bk_st = sd->st;
+			bk_npcid = sd->npc_id;
+		}
+		sd->st = st;
+		sd->npc_id = st->oid;
+	}
 
 	if(st->state == RERUNLINE) {
 		st->state = RUN;
@@ -11404,7 +11421,7 @@ int run_script_main(struct script_state *st)
 		if(st->state == GOTO){
 			st->state = RUN;
 		}
-	} else {
+	} else if(st->state != END){
 		st->state = RUN;
 	}
 	while( st->state == RUN) {
@@ -11501,9 +11518,8 @@ int run_script_main(struct script_state *st)
 			break;
 		case END:
 			{
-				struct map_session_data *sd=st->rid?map_id2sd(st->rid):NULL;
 				st->pos=-1;
-				if(sd && (sd->npc_id==st->oid || sd->state.using_fake_npc)){
+				if(sd){
 					if(sd->state.using_fake_npc){
 						clif_clearchar_id(sd->npc_id, 0, sd->fd);
 						sd->state.using_fake_npc = 0;
@@ -11513,6 +11529,21 @@ int run_script_main(struct script_state *st)
 			}
 			break;
 		case RERUNLINE:
+			if(bk_st && sd->st != bk_st && st->sleep.tick <= 0){
+				ShowWarning("Unable to restore stack! Double continuation!\n");
+				script_free_stack(bk_st->stack);
+				aFree(bk_st);
+			}
+			if(st->sleep.tick > 0)
+	  		{	//Delay execution
+				if(sd)
+					st->sleep.charid = sd->char_id;
+				else
+					st->sleep.charid = 0;
+				st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
+					run_script_timer, st->sleep.charid, (int)st);
+				linkdb_insert(&sleep_db, (void*)st->oid, st);
+			}
 			// Do not call function of commands two time! [ Eoe / jA 1094 ]
 			// For example: select "1", "2", callsub(...);
 			// If current script position is changed, callsub will be called two time.
@@ -11524,12 +11555,20 @@ int run_script_main(struct script_state *st)
 	}
 
 	if(st->state == END) {
-		script_free_stack (st->stack);
-		st->stack = NULL;
-		aFree(st);
-		st = NULL;
-		return 0;
-	}else{ 
+		if(sd){
+			script_free_stack(sd->st->stack);
+			aFree(sd->st);
+			sd->st = bk_st;
+			sd->npc_id = bk_npcid;
+			if (sd->state.reg_dirty&2)
+				intif_saveregistry(sd,2);
+			if (sd->state.reg_dirty&1)
+				intif_saveregistry(sd,1);
+		} else {
+			script_free_stack (st->stack);
+			aFree(st);
+		}
+	}/*else{ 
 		if(st->sleep.tick > 0)
 	  	{	//Delay execution
 			TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
@@ -11538,41 +11577,33 @@ int run_script_main(struct script_state *st)
 				run_script_timer, st->sleep.charid, (int)st);
 			linkdb_insert(&sleep_db, (void*)st->oid, st);
 		} 
-	}
+	}*/
 
-	return 1;
+	return;
 }
 
 /*==========================================
  * スクリプトの実行
  *------------------------------------------
  */
-int run_script(struct script_code *rootscript,int pos,int rid,int oid)
+void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
 	struct script_state *st;
 	struct map_session_data *sd=NULL;
 
 	//Variables for backing up the previous script and restore it if needed. [Skotlex]
-	struct script_code *bck_script = NULL;
-	struct script_code *bck_scriptroot = NULL;
-	int bck_scriptstate = 0,bck_npcid = 0;
+	//struct script_code *bck_script = NULL;
+	//struct script_code *bck_scriptroot = NULL;
+	//int bck_scriptstate = 0,bck_npcid = 0;
 	struct script_stack *bck_stack = NULL;
 	
 	if (rootscript == NULL || pos < 0)
-		return -1;
+		return;
 
 	st = aCalloc(sizeof(struct script_state), 1);
 
-	if ((sd = map_id2sd(rid)) && sd->stack && sd->npc_scriptroot == rootscript){
-		// we have a stack for the same script, should continue exec.
-		st->script = sd->npc_script;
-		st->stack = sd->stack;
-		st->state  = sd->npc_scriptstate;
-		// and clear vars
-		sd->stack           = NULL;
-		sd->npc_script      = NULL;
-		sd->npc_scriptroot  = NULL;
-		sd->npc_scriptstate = 0;
+	if ((sd = map_id2sd(rid)) && sd->st && sd->st->scriptroot == rootscript && sd->st->pos == pos){
+		st = sd->st;
 	} else {
 		// the script is different, make new script_state and stack
 		st->stack = aMalloc (sizeof(struct script_stack));
@@ -11584,7 +11615,7 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 		st->state  = RUN;
 		st->script = rootscript;
 	
-		if (sd){
+		/*if (sd){
 			if(sd->stack) {
 				// if there's a sd and a stack - back it up and restore it if possible.
 				bck_script      = sd->npc_script;
@@ -11595,15 +11626,15 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			}
 			bck_npcid = sd->npc_id;
 			sd->npc_id = oid;
-		}
+		}*/
 	}
 	st->pos = pos;
 	st->rid = rid;
 	st->oid = oid;
 	st->sleep.timer = -1;
 
-	if(run_script_main(st)){
-		if (st->state != END){
+	run_script_main(st);
+	/*	if (st->state != END){
 			pos = st->pos;
 			if(!st->sleep.tick && sd) {
 				// script is not finished, store data in sd.
@@ -11636,8 +11667,8 @@ int run_script(struct script_code *rootscript,int pos,int rid,int oid)
 			if (sd->state.reg_dirty&1)
 				intif_saveregistry(sd,1);
 		}
-	}
-	return 0;
+	}*/
+	return;
 }
 
 /*==========================================
@@ -11683,6 +11714,9 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 		}
 		node = node->next;
 	}
+	if(st->rid && !sd)
+		st->state = END;
+
 	run_script_main(st);
 	return 0;
 }

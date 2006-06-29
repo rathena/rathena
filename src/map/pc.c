@@ -4679,8 +4679,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
 	
-	if (sd->state.event_death && (!src || src->type != BL_PC))
-		pc_setglobalreg(sd, "killerrid", 0);
+	if (sd->state.event_death){
+		if(!src)
+			pc_setglobalreg(sd, "killerrid", 0);
+		else
+			pc_setglobalreg(sd,"killerrid",src->id);
+		npc_script_event(sd,NPCE_DIE);
+	}
 	
 	if (src)
 	switch (src->type) {
@@ -4705,10 +4710,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	case BL_PC:
 	{
 		struct map_session_data *ssd = (struct map_session_data *)src;
-		if (sd->state.event_death){
-			pc_setglobalreg(sd,"killerrid",(ssd->status.account_id));
-			npc_script_event(sd,NPCE_DIE);
-		}
 		if (ssd->state.event_kill_pc) {
 			pc_setglobalreg(ssd, "killedrid", sd->bl.id);
 			npc_script_event(ssd, NPCE_KILLPC);

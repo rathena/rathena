@@ -774,11 +774,11 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
 		return 0;
 
-	if(md->nd && mob_script_callback(md, bl, CALLBACK_DETECT))
-		return 1; // We have script handling the work.
-
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
+
+	if(md->nd && mob_script_callback(md, bl, CALLBACK_DETECT))
+		return 1; // We have script handling the work.
 
 	switch (bl->type)
 	{
@@ -2120,9 +2120,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(pcdb_checkid(md->vd->class_))
 	{	//Player mobs are not removed automatically by the client.
-		if(md->nd)
+		if(md->nd){
+			md->vd->dead_sit = 1;
 			return 1; // Let the dead body stay there.. we have something to do with it :D
-		else
+		} else
 			clif_clearchar_delay(tick+3000,&md->bl,0);
 	}
 
@@ -2400,8 +2401,13 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		
 		md= mob_spawn_dataset(&data);
 		md->special_state.cached= battle_config.dynamic_mobs;	//[Skotlex]
-		if(skill_id == NPC_SUMMONSLAVE)
+		if(skill_id == NPC_SUMMONSLAVE){
 			md->master_id=md2->bl.id;
+			md->state.killer = md2->state.killer;
+			md->special_state.ai = md2->special_state.ai;
+			md->nd = md2->nd;
+			md->callback_flag = md2->callback_flag;
+		}
 		mob_spawn(md);
 		
 		if (hp_rate) //Scale HP
@@ -2417,9 +2423,6 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 
 		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
 	}
-
-	if(md2->nd)
-		mob_convertslave(md2);
 
 	return 0;
 }

@@ -526,11 +526,9 @@ struct map_session_data {
 	unsigned int client_tick;
 	int npc_id,areanpc_id,npc_shopid;
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
-	int npc_pos;
 	int npc_menu;
 	int npc_amount;
-	struct script_stack *stack;
-	struct script_code *npc_script,*npc_scriptroot;
+	struct script_state *st;
 	int  npc_scriptstate;
 	char npc_str[256];
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
