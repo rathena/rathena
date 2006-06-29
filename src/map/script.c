@@ -11564,11 +11564,11 @@ void run_script_main(struct script_state *st)
 				intif_saveregistry(sd,2);
 			if (sd->state.reg_dirty&1)
 				intif_saveregistry(sd,1);
-		} else {
+		}/* else {
 			script_free_stack (st->stack);
 			aFree(st);
 		}
-	}/*else{ 
+	}else{ 
 		if(st->sleep.tick > 0)
 	  	{	//Delay execution
 			TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
@@ -11576,8 +11576,8 @@ void run_script_main(struct script_state *st)
 			st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 				run_script_timer, st->sleep.charid, (int)st);
 			linkdb_insert(&sleep_db, (void*)st->oid, st);
-		} 
-	}*/
+		}*/ 
+	}
 
 	return;
 }
