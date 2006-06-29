@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.8 Got rid of 2 useless variables, fixed Turtle Island Quest exploit [Lupus]
 //= 1.9 Added two NPCs shown at RO Magazine [Playtester]
 //= 2.0 Removed Duplicates [Silent]
+//= 2.1 Fixed many typos, using information from Crono/Hollengrhen [Evera]
 //============================================================ 
 
 //NewsPaper(?)
@@ -30,14 +31,14 @@ alberta.gat,148,60,3	script	Man#03	833,{end;}
 // Young Man -----------------------------------------------------------
 alberta_in.gat,20,183,6	script	Young Man	49,{
 	mes "[Merchant]";
-	mes "People say that ^0000ffGungnir^000000, the legendary spear, never misses its' target.  If that's true, then it's simply amazing.";
+	mes "People say that ^0000ffGungnir^000000 is the legendary spear that never misses its target.  If that's true, then it's simply amazing.";
 	close;
 }
 
 // Merchant -------------------------------------------------
 alberta.gat,97,51,7	script	Merchant#01	84,{
 	mes "[Merchant]";
-	mes "When you travel to many places like I do, you often here a lot of rumors.  There is one rumor I heard that is really interesting.";
+	mes "When you travel to many places like I do, you often hear a lot of rumors.  There is one rumor I heard that is really interesting.";
 	next;
 	mes "[Merchant]";
 	mes "Apparently there are cards which seal the power of certain monsters within them.";
@@ -108,14 +109,14 @@ alberta.gat,62,156,2	script	Phina	102,{
 		mes "You know... the ones that play around with the flies that make that buzzing noise.";
 		next;
 		mes "[Phina]";
-		mes "Well one time I threw a twig at one just for fun.  All of the sudden, IT RUSHED TOWARDS ME!";
+		mes "Well, one time I threw a twig at one just for fun.  All of the sudden, IT RUSHED TOWARDS ME!";
 		next;
 		mes "[Phina]";
-		mes "I was SOOOO scared!! I quickly jumped to the side to avoid it.  Then BAMB!!! It hit a huge tree and crushed it into pieces.";
+		mes "I was SOOOO scared!! I quickly jumped to the side to avoid it.  Then BAM!!! It hit a huge tree and crushed it into pieces.";
 		emotion e_wah;
 		next;
 		mes "[Phina]";
-		mes "I sure learned my lesson that day.  NEVER taught any creature cause if they get angry, you'll be in a world of hurt.";
+		mes "I sure learned my lesson that day.  NEVER taunt any creature, 'cause if they get angry, you'll be in a world of hurt.";
 		close;
 	R_0:
    		mes "Did you know? Wolves are much more cooperative than they might seem.  If one of them is attacked, then others will come to help him.";
@@ -134,13 +135,13 @@ alberta.gat,93,174,2	script	Grandma	103,{
 	mes "But after a few moments they all ran out terrified.  They said that they saw CORPSES walking around the ship!.";
 	next;
 	mes "[Grandma]";
-	mes "The ship was also over run by never before seen sea monsters which made it impossible for the towns people to get around.";
+	mes "The ship was also over run by never before seen sea monsters, which made it impossible for the townspeople to get around.";
 	next;
 	mes "[Grandma]";
-	mes "We've never been able to doing anything about that ominous-looking ship so we just left it there, hoping that it would sink or drift away.";
+	mes "We've never been able to do anything about that ominous-looking ship so we just left it there, hoping that it would sink or drift away.";
 	next;
 	mes "[Grandma]";
-	mes "Then out of nowhere the Cool Event Corp. people came by and paid the city a huge amount zeny to buy the ship.";
+	mes "Then, out of nowhere, the Cool Event Corp. people came by and paid the city a huge amount zeny to buy the ship.";
 	next;
 	mes "[Grandma]";
 	mes "They then created an event called the ^0000ddSunken Ship^000000.";
@@ -152,7 +153,7 @@ alberta.gat,93,174,2	script	Grandma	103,{
 	mes "Now the ghost ship, that was once a problem for Alberta, has become quite a popular attraction.";
 	next;
 	mes "[Grandma]";
-	mes "I have to say though, that I don't think it's worth risking your life for......";
+	mes "I have to say, though, I don't think it's worth risking your life for......";
 	close;
 }
 
@@ -240,7 +241,7 @@ alberta.gat,189,151,5	script	Sailor Fisk	100,{
 
 		L_NoZeny:
 			mes "[Sailor Fisk]";
-			mes "I'm sorry but i told you i would need 500 Zeny, and it looks like you don't have it.";
+			mes "I'm sorry, but I told you I would need 500 Zeny, and it looks like you don't have it.";
 			close;
 	M_End:
 		close;
@@ -253,7 +254,7 @@ alberta.gat,190,173,4	script	Phelix	85,{
 	mes "What the hell are you doing here?";
 	next;
 	mes "[Phelix]";
-	mes "There is nothing you can get for free on this ship, if you want to get rewarded, do some work!!";
+	mes "There is nothing you can get for free on this ship. If you want to get rewarded, do some work!!";
 	next;
 	mes "[Phelix]";
 	mes "Hmm, however I'd be willing to trade you some items for your jellopies.";
@@ -337,7 +338,7 @@ alberta.gat,195,151,3	script	Paul	86,{
 
 	L_NoZeny:
 		mes "[Paul]";
-		mes "I'm sorry but i told you I would need 200 Zeny, and it looks like you don't have it.";
+		mes "I'm sorry, but I told you I would need 200 Zeny, and it looks like you don't have it.";
 		mes "Please come back later when you have enough.";
 		close;
 }
@@ -359,7 +360,7 @@ MEnd:
 alberta.gat,247,123,5	script	Gotanblue	709,{
 	if(TURTLE) goto L_Turtle;
 	mes "[Gotanblue]";
-	mes "Ha ha! The sea seems endless!! We cannot begin to grasp it's size merely by gazing at it from land....";
+	mes "Ha ha! The sea seems endless!! We cannot begin to grasp its size merely by gazing at it from land....";
 	next;
 	mes "[Gotanblue]";
 	mes "Do you know what I mean?.....";
@@ -367,7 +368,7 @@ alberta.gat,247,123,5	script	Gotanblue	709,{
 
 L_Turtle:
 	mes "[Gotanblue]";
-	mes "Oh! Your eyes.... they tell me everything!! You must have been sent from that drunken old man!";
+	mes "Oh! Your eyes.... they tell me everything!! You must have been sent by that drunken old man!";
 M_Menu:
 	next;
 	menu "-Tell me about Turtle Island.",-, "-How Can I get there?",M_2, "-End Conversation",M_End;
@@ -418,7 +419,7 @@ M_Menu:
 		emotion e_gasp;
 		next;
 		mes "[Gotanblue]";
-		mes "Amazingly the ship held together and we were able to continue on.";
+		mes "Amazingly, the ship held together and we were able to continue on.";
 		next;
 		mes "[Gotanblue]";
 		mes "Then like a beam of energy descending down from the heavens, the first ray of sunlight we had seen in weeks pierced through the fog onto our battered ship.";
@@ -431,7 +432,7 @@ M_Menu:
 		mes "What we found was shocking! Apparently someone had found the island before us.  He left a very well kept journal of his expedition.";
 		next;
 		mes "[Gotanblue]";
-		mes "According to his journal, the man had come by himself to find the island.  Unfortunately we could not find him anywhere.";
+		mes "According to his journal, the man had come by himself to find the island.  Unfortunately, we couldn't find him.";
 		next;
 		mes "[Gotanblue]";
 		mes "Even though someone had beaten us to Turtle Island, we still felt that it was an accomplishment to have made it to the island.";
@@ -442,7 +443,7 @@ M_Menu:
 		mes "Oh, now I remember his name... ^5555FF'Won'^000000... apparently a great sword master....";
 		next;
 		mes "[Gotanblue]";
-		mes "Anyway, he wrote about a '^FF5555Jewel Fragment'^000000 of some kind.  He described it as, 'the most beautiful thing in the world'.";
+		mes "Anyway, he wrote about a '^FF5555Jewel Fragment'^000000 of some kind.  He described it as 'the most beautiful thing in the world'.";
 		next;
 		mes "[Gotanblue]";
 		mes "We became intent on finding that jewel no matter what.  Day after day we searched for it.  Months passed.";
@@ -472,15 +473,15 @@ M_Menu:
 		emotion e_omg;
 		next;
 		mes "[Gotanblue]";
-		mes "As you can see only I and Jornadan were able to make it out alive.  By pure luck we made back to Alberta....";
+		mes "As you can see only I and Jornadan were able to make it out alive.  By pure luck, we made back to Alberta....";
 		next;
 		mes "[Gotanblue]";
-		mes "(~sob~sob~sob)... I apologize. I'm am still very emotional about it after all these years... well that is all I have to say about Turtle Island.";
+		mes "(~sob~sob~sob)... I apologize. I'm still very emotional about it after all these years... Well, that's all I have to say about Turtle Island.";
 		emotion e_sob;
 		goto M_Menu;
 	M_2:
 		mes "[Gotanblue]";
-		mes "What's this? After my terrifying story about Turtle Island you still want to got there? You're not at all scared??";
+		mes "What's this? After my terrifying story about Turtle Island, you still want to go there? You're not at all scared??";
 		emotion e_what;
 		next;
 		mes "[Gotanblue]";
@@ -506,7 +507,7 @@ M_Menu:
 			close;
 		sL_Zeny:
 			mes "[Gotanblue]";
-			mes "What's this? I said 10000 zeny.  I will not guide you for less.  Good day!";
+			mes "What's this? I said 10,000 zeny.  I will not guide you for less.  Good day!";
 			emotion e_what;
 			close;
 		sM_End:
@@ -564,7 +565,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 		mes "There are so many myths and legends about the island, that no one even knows for sure if Turtle Island exist.";
 		next;
 		mes "[Turtle Grandpa]";
-		mes "I for one believe it does.... it HAS TOO!!......";
+		mes "I for one believe it does.... It HAS TO!!......";
 		emotion e_gasp;
 		next;
 		mes "[Turtle Grandpa]";
@@ -589,7 +590,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 			mes "Heh heh.  Well, it's just a rumor so take it for what it's worth.  As I was saying....";
 			next;
 			mes "[Turtle Grandpa]";
-			mes "After searching tirelessly Jornadan and his crew eventually found the famed, Turtle Island.";
+			mes "After searching tirelessly Jornadan and his crew eventually found the famed Turtle Island.";
 			next;
 			mes "[Turtle Grandpa]";
 			mes "But for reasons unknown, the crew became stranded on the island forever!!";
@@ -633,16 +634,16 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 		next;
 		mes "[Turtle Grandpa]";
 		mes "Any who, if you go the docks you'll find a fat, old, sailor.  His name is ^5555FFGotanblue^000000.";
-		mes "Tell him I sent you and maybe he'll tell you how to get to Turtle Island.  Well good luck.";
+		mes "Tell him I sent you and maybe he'll tell you how to get to Turtle Island.  Well, good luck.";
 		close;
 	M_End:
 		mes "[Turtle Grandpa]";
-		mes "whooops......";
+		mes "Whooops......";
 		next;
 		mes "!!KA-PLOP!!(collapses on the floor)";
 		next;
 		mes "[Turtle Grandpa]";
-		mes "he he he.... look at me.... I'm a fish... I'm drunk like a fish..... enough for today..... ~ZZZZZzzzz~";
+		mes "He he he.... look at me.... I'm a fish... I'm drunk like a fish..... enough for today..... ~ZZZZZzzzz~";
 		close;
 }
 
@@ -691,7 +692,7 @@ alberta.gat,248,90,1	script	Jornadan Niliria	121,{
 		next;
 		mes "[Jornadan Niliria]";
 		mes "There is an unusually dense area of fog that surrounds the island.";
-		mes "At first we tried to figure what causes it but with no luck.  We figured that it was just one of nature's natural phenomenons.";
+		mes "At first we tried to figure what causes it but with no luck.  We figured that it was just a natural phenomenon.";
 		next;
 		mes "[Jornadan Niliria]";
 		mes "Then we found a cave along the coastline of the island.  Inside we were amazed to see a HUGE waterfall.";
@@ -732,7 +733,7 @@ alberta.gat,247,93,1	script	A Voyage Log	111,{
 	mes "The moon was dark and I couldn't even see 100m in front of me.  I had a bad feeling about the situation..... I was not the only one...";
 	next;
 	mes "[A Voyage Log]";
-	mes "I could tell by the looks on my comrade's faces, that they too were worried.  No could sleep that night.  I hope we will see the sunrise soon....";
+	mes "I could tell by the looks on my comrade's faces, that they too were worried.  No one could sleep that night.  I hope we will see the sunrise soon....";
 	next;
 	mes "[A Voyage Log]";
 	mes "= 04:10 =";

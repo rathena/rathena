@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.5
+//= 0.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 0.3 Implemented some more NPCs [MasterOfMuppets]
 //= 0.4 Implemented two mini games scripted by Dj-Yhn [MasterOfMuppets]
 //= 0.5 Removed Duplicates [Silent]
+//= 0.5aFixed a typo [Evera]
 //============================================================ 
 
 //============================================================ 
@@ -83,7 +84,7 @@ OnTimer45000:
 	mapannounce "airplane.gat","Welcome to Hugel. Have a safe trip.",1,0xBA55D3;
 	end;
 OnTimer55000:
-	mapannounce "airplane.gat","Currently we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
+	mapannounce "airplane.gat","Currently, we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
 	end;
 OnTimer65000:
 	set $airplanelocation,0;
@@ -108,7 +109,7 @@ OnTimer110000:
 	mapannounce "airplane.gat","Welcome to Einbroch. Have a safe trip.",1,0x00FF00;
 	end;
 OnTimer120000:
-	mapannounce "airplane.gat","Currently we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
+	mapannounce "airplane.gat","Currently, we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
 	end;
 OnTimer130000:
 	set $airplanelocation,0;
@@ -133,7 +134,7 @@ OnTimer175000:
 	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF8600;
 	end;
 OnTimer185000:
-	mapannounce "airplane.gat","Currently we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
+	mapannounce "airplane.gat","Currently, we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
 	set $airplanelocation,0;
@@ -158,7 +159,7 @@ OnTimer240000:
 	mapannounce "airplane.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer250000:
-	mapannounce "airplane.gat","Currently we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
+	mapannounce "airplane.gat","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
 	end;
 OnTimer260000:
 	stoptimer;
@@ -619,7 +620,7 @@ OnTimer45000:
 	mapannounce "airplane_01.gat","Welcome to Izlude. Have a safe trip.",1,0x00FF00;
 	end;
 OnTimer55000:
-	mapannounce "airplane_01.gat","Currently we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
+	mapannounce "airplane_01.gat","Currently, we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
 	end;
 OnTimer65000:
 	set $airplanelocation2,0;
@@ -644,7 +645,7 @@ OnTimer110000:
 	mapannounce "airplane_01.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer120000:
-	mapannounce "airplane_01.gat","Currently we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
+	mapannounce "airplane_01.gat","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
 	end;
 OnTimer130000:
 	stoptimer;
