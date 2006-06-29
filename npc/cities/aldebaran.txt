@@ -21,6 +21,7 @@
 //= 1.6 Fixed bug (missing label), optimized all menus [Lupus]
 //= 1.7 Fixed exploits [Lupus]
 //= 1.8 Removed Duplicates [Silent]
+//= 1.9 Fixed a bunch of typos with information from Crono/Hollengrhen [Evera]
 //============================================================
 
 
@@ -101,7 +102,7 @@ M_Menu:
 
 		mes "[Quatro]";
 		mes "People say his wife is ill.  She constantly needs medicinal herbs that grow near town.";
-		mes "Also he has a devoted son, who helps him out with his work.";
+		mes "Also, he has a devoted son who helps him out with his work.";
 		next;
 		mes "[Quatro]";
 		mes "I hope his son will be a good blacksmith in the future.";
@@ -148,13 +149,13 @@ M_Menu:
 		mes "You must travel through the Payon Forest if you wish to visit Alberta or Payon.";
 		next;
 		mes "[Isenberg]";
-		mes "The Payon Forest is large and it's pathways are very intricate.  It is easy to get lost and confused in it.";
+		mes "The Payon Forest is large and its pathways are very intricate.  It is easy to get lost and confused in it.";
 		next;
 		mes "[Isenberg]";
 		mes "Unless you have good concentration and a strong will, you will find yourself giving up trying to pass through it.";
 		next;
 		mes "[Isenberg]";
-		mes "The forest was named after Payon, the village of independence instead of Alberta, the harbor town.";
+		mes "The forest was named after Payon, the village of independence, instead of Alberta, the harbor town.";
 		next;
 		mes "[Isenberg]";
 		mes "Payon was built deep within the rugged forest with the intention of providing protection from outside influence.";
@@ -290,7 +291,7 @@ aldebaran.gat,93,80,4	script	Daniel	48,{
 	menu "Gosh, that's too bad.",-,".....",M_1;
 
 		mes "[Daniel]";
-		mes "*~Sigh~* Yeah it really is.  You see my girl friend is the Armor Merchants youngest daughter.";
+		mes "*~Sigh~* Yeah it really is.  You see my girl friend is the Armor Merchant's youngest daughter.";
 		mes "She told me once that the armor that's dropped by monsters is often times much better than the kind sold in shops.";
 		next;
 		mes "[Daniel]";
@@ -306,7 +307,7 @@ aldebaran.gat,93,80,4	script	Daniel	48,{
 // Munster -----------------------------------------------------------------
 aldebaran.gat,113,70,2	script	Munster	48,{
 	mes "[Munster]";
-	mes "My family used to live in Geffen, the homeland of blacksmith.  We moved to Al De Baran last winter.";
+	mes "My family used to live in Geffen, the homeland of blacksmiths.  We moved to Al De Baran last winter.";
 	next;
 	mes "[Munster]";
 	mes "Back in Geffen my father was a famous blacksmith.  Sometimes I helped my father with his work";
@@ -327,40 +328,40 @@ aldebaran.gat,113,70,2	script	Munster	48,{
 	mes "Maybe it's because we just moved here, but for some reason people don't seem to know that my fathers workshop is now located in Al De Baran,";
 	next;
 	mes "[Munster]";
-	mes "Any who, I hope people will come to re-acquaint themselves with my fathers superior craftsmanship.";
+	mes "Any who, I hope people will come to re-acquaint themselves with my father's superior craftsmanship.";
 	close;
 }
 
 // Phracon Guy --------------------------------------------------------------
-aldebaran.gat,117,181,4	script	Pharacon Guy	48,{
+aldebaran.gat,117,181,4	script	Phracon Guy	48,{
 	mes "[Phracon Guy]";
-	mes "Lv 1 weapons require a metal called 'Pharacon' to be upgraded.";
+	mes "Lv 1 weapons require a metal called 'Phracon' to be upgraded.";
 	next;
-	menu "About Pharacon",-,"Advice about Phracon",M_1,"End Conversation",M_End;
+	menu "About Phracon",-,"Advice about Phracon",M_1,"End Conversation",M_End;
 
-		mes "[Pharacon Guy]";
+		mes "[Phracon Guy]";
 		mes "It's a very common metal found throughout Rune-Midgard and is used almost exclusively for weapon upgrading.";
 		next;
-		mes "[Pharacon Guy]";
+		mes "[Phracon Guy]";
 		mes "Although it's not as strong as other metals, it remains popular among most people because of its abundance.";
 		next;
-		mes "[Pharacon Guy]";
-		mes "You can obtain Pharacon from monsters or you can purchase it from Forging Workshops located in towns.";
+		mes "[Phracon Guy]";
+		mes "You can obtain Phracon from monsters or you can purchase it from Forging Workshops located in towns.";
 		next;
-		mes "[Pharacon Guy]";
-		mes "If you don't need Pharacon for upgrading purposes then you can sell it for 100 zeny a piece to NPC's!";
+		mes "[Phracon Guy]";
+		mes "If you don't need Phracon for upgrading purposes then you can sell it for 100 zeny a piece to NPC's!";
 		close;
 	M_1:
-		mes "[Pharacon Guy]";
-		mes "I hear that a lot of monsters carry Pharacon.  Why don't you go hunt them?";
-		mes "You should be able to find a lot of Pharacon without much trouble.";
+		mes "[Phracon Guy]";
+		mes "I hear that a lot of monsters carry Phracon.  Why don't you go hunt them?";
+		mes "You should be able to find a lot of Phracon without much trouble.";
 		next;
-		mes "[Pharacon Guy]";
-		mes "A couple of days ago, I went hunting with the Pub Master and got a Pharacon dropped from Bebe Savage.";
+		mes "[Phracon Guy]";
+		mes "A couple of days ago, I went hunting with the Pub Master and got a Phracon dropped from Bebe Savage.";
 		close;
 	M_End:
-		mes "[Pharacon Guy]";
-		mes "Good luck on finding some Pharacon -";
+		mes "[Phracon Guy]";
+		mes "Good luck on finding some Phracon -";
 		close;
 }
 
@@ -408,11 +409,11 @@ M_Menu:
 		mes "Armor dropped by monsters however, will usually have a high number of slots on them.  They aren't dropped too often though.";
 		next;
 		mes "[Alchemy Guy Chemirre]";
-		mes "In order to use a card you must first unequipped the piece of equipment you want to insert the card into.";
+		mes "In order to use a card you must first unequip the piece of equipment you want to insert the card into.";
 		mes "Next find your card in your inventory window and double click it.";
 		next;
 		mes "[Alchemy Guy Chemirre]";
-		mes "A window will pop up showing you what equipment the card can be inserted in.  Choose the one you want, and your done.";
+		mes "A window will pop up showing you what equipment the card can be inserted in.  Choose the one you want, and you're done.";
 		close;
 	M_End:
 		mes "[Alchemy Guy Chemirre]";
@@ -424,7 +425,7 @@ M_Menu:
 // Anastasia --------------------------------------------------------------
 aldebaran.gat,146,124,4	script	Anastasia	101,{
 	mes "[Anastasia]";
-	mes "Somewhere in Rune-Edgardo's there exists the ^3355FF' Assassin Guild '^000000.";
+	mes "Somewhere in Rune-Midgard exists the^3355FF' Assassin Guild '^000000.";
 	next;
 	mes "[Anastasia]";
 	mes "It's a place that trains people in the art of assassinating someone without leaving behind the slightest trace.";
@@ -500,7 +501,7 @@ aldebaran.gat,180,46,4	script	Joo Jahk	88,{
 	menu "Continue.",-,"End conversation.",M_End;
 
 		mes "[Joo Jahk]";
-		mes "I been traveling around Rune-Midgard.";
+		mes "I've been traveling around Rune-Midgard.";
 		next;
 		mes "[Joo Jahk]";
 		mes "On the way here, I heard about ^3355FFSpiritual Property Monsters^000000 from a really high level Magician";
@@ -587,15 +588,15 @@ aldeba_in.gat,156,179,4	script	Master#02	61,{
 	menu "Oh~it turns me on!!!!",-,"No way..I am not a pervert.",M_1;
 
 		mes "[Master]";
-		mes "Alright, here you go, your Favorite Ladies!!! Take a carefull look!";
+		mes "Alright, here you go, your Favorite Ladies!!! Take a careful look!";
 		next;
 		mes "[Master]";
 		mes " - Kafra Number (1) ^3355FF'Pavianne'^000000 !!";
 		mes "The Original Kafra, the classic blue haired beauty!...";
 		mes " - Kafra Number (2) ^9A01BA'Blossom'^000000 !!";
-		mes "Her graceful ponytail takes men's breaths away! She's a favorite among young Boys!!";
+		mes "Her graceful ponytail takes men's breaths away! She's a favorite among young boys!!";
 		mes " - Kafra Number (3) ^0000FF'Jasmine'^000000 !!";
-		mes "Long, straight, silky hair is what gives her her charm.  She is the Silk from the East ~! From payon,....";
+		mes "Long, straight, silky hair is what gives her her charm.  She is the Silk from the East ~! From Payon,....";
 		next;
 		mes "[Master]";
 		mes " - Kafra Number (4) ^FF8040'Roxie'^000000 !!";
@@ -611,7 +612,7 @@ aldeba_in.gat,156,179,4	script	Master#02	61,{
 		menu "(1) Pavianne",-,"(2) Blossom",M_01,"(3) Jasmine",M_02,"(4) Roxie",M_03,"(5) Leilah",M_04,"(6) Curly Sue.",M_05;
 
 			mes "[Master]";
-			mes "Oh~ So your reserved in nature, and therefore you are into a more traditional type of girl...";
+			mes "Oh~ So you're reserved in nature, and therefore you are into a more traditional type of girl...";
 			next;
 			mes "[Master]";
 			mes "Well, I have to tell you.....";
@@ -706,11 +707,11 @@ aldeba_in.gat,219,61,4	script	Nice Looking Guy	109,{
 	mes "Forget about the doofus living next door.";
 	next;
 	mes "[Nice Looking Guy]";
-	mes "To tell you the truth, 2 years earlier, he fell down from a tree in the Drill Field and since then his mind has been out of control.";
+	mes "To tell you the truth, 2 years ago, he fell down from a tree in the Drill Field and since then his mind has been out of control.";
 	mes "I heard he was trying to pick some fruits from that tree.";
 	next;
 	mes "[Nice Looking Guy]";
-	mes "Anyways, he's constantly bugging me and I think I'm gonna be crazy because of him... Oh my goodness!";
+	mes "Anyway, he's constantly bugging me and I think I'm gonna be crazy because of him... Oh my goodness!";
 	close;
 }
 
@@ -750,7 +751,7 @@ aldeba_in.gat,223,121,2	script	Evil looking Guy	63,{
 		mes "Finally, a Mercenary is obligated to provide 100% customer assistance and support!!!";
 		next;
 		mes "[Evil Looking Guy]";
-		mes "Oh and don't forget to change a Mercenary's' wet tissues as well!!";
+		mes "Oh and don't forget to change a Mercenary's wet tissues as well!!";
 		close;
 	M_1:
 		mes "[Evil Looking Guy]";
@@ -824,7 +825,7 @@ aldeba_in.gat,79,161,6	script	Kafra#04	115,{
 	mes "Welcome, ^6666FF" + strcharinfo(0) + "^000000.  This is where you can trade in your special reserve points for useful items and cool prizes.";
 	next;
 	mes "[Kafra]";
-	mes "Each Kafra will allow to trade in reserve points of varying amounts.  I can trade in reserve points starting from ^2222FF100 pts up to 3000 pts^000000.";
+	mes "Each Kafra will allow you to trade in reserve points of varying amounts.  I can trade in reserve points starting from ^2222FF100 pts up to 3000 pts^000000.";
 	next;
 	mes "[Kafra]";
 	mes "The amount of special reserve points that you have is: ^FF0000"+RESRVPTS+"^000000 pts.  Please make a choice based on your point total.";
@@ -1197,7 +1198,7 @@ aldeba_in.gat,81,166,4	script	Kafra Pavianee	117,{
 		mes "No, but why is the sun not shining?";
 		next;
 		mes "[Kafra Pavianne]";
-		mes "You will only know, when enjoyment cease the guide to illumination.";
+		mes "You will only know when your enjoyment obtains the path to illumination.";
 		cutin "kafra_01",255;
 		close;
 

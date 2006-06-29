@@ -40,6 +40,7 @@ Date		Added
 ======
 06/29
 	* Fixed many typos on cities/alberta.txt and airports/airships.txt, with information from Crono/Hollengrhen [Evera]
+	- Fixed many typos on cities/aldebaran.txt [Evera]
 	* Stricted up penal servitude conditions [Lupus]
 	- Restricted Novices Castles entrance of TK/Highs to 80 BaseLevel
 06/28
