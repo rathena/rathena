@@ -76,7 +76,7 @@ static int storage_reconnect_sub(DBKey key,void *data,va_list ap)
 	{	//Guild Storage
 		struct guild_storage* stor = (struct guild_storage*) data;
 		if (stor->dirty && stor->storage_status == 0) //Save closed storages.
-			storage_guild_storagesave(0, stor->guild_id);
+			storage_guild_storagesave(0, stor->guild_id,0);
 	}
 	else
 	{	//Account Storage
@@ -674,13 +674,16 @@ int storage_guild_storagegettocart(struct map_session_data *sd,int index,int amo
 	return 1;
 }
 
-int storage_guild_storagesave(int account_id, int guild_id)
+int storage_guild_storagesave(int account_id, int guild_id, int flag)
 {
 	struct guild_storage *stor = guild2storage2(guild_id);
 
-	if(stor && stor->dirty)
+	if(stor)
 	{
-		intif_send_guild_storage(account_id,stor);
+		if (flag) //Char quitting, close it.
+			stor->storage_status = 0;
+	 	if (stor->dirty)
+			intif_send_guild_storage(account_id,stor);
 		return 1;
 	}
 	return 0;
@@ -714,7 +717,7 @@ int storage_guild_storageclose(struct map_session_data *sd)
 		if (save_settings&4)
 			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
 		else
-			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id);
+			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
 	}
 	stor->storage_status=0;
 	sd->state.storage_flag = 0;
@@ -743,7 +746,7 @@ int storage_guild_storage_quit(struct map_session_data *sd,int flag)
 		if (save_settings&4)
 			chrif_save(sd,0);
 		else
-			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id);
+			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id,1);
 	}
 	sd->state.storage_flag = 0;
 	stor->storage_status = 0;

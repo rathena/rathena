@@ -192,7 +192,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 	if (sd->state.storage_flag == 1)
 		storage_storage_save(sd->status.account_id, flag);
 	else if (sd->state.storage_flag == 2)
-		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id);
+		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
 
 	//Saving of registry values. 
 	if (sd->state.reg_dirty&4)
