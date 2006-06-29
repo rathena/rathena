@@ -4,7 +4,6 @@ Lupus
 	* Looking for exploits, optimization, bugs hunt
 	* Adding new cards, checking/adding mobs/items
 	* EXP quests for Blacksmith, Merchant, Alchemist
-	* Vassakh Ghoul global quest (custom) ^_-
 Mass Zero
 	* Fixing grammatical errors.
 	* Fixing small bugs.
@@ -22,20 +21,26 @@ MasterOfMuppets
 	* Updating Items / Scripts
 Nexon
 	* Adding in the new Abyss/Thanatos/Lighthalzen NPC's and optimizing them.
+erKURITA
+	* Warps maintainment
 Evera
 	* Everything.
 	* Dungeon Teleport System NPCs
 	* iRO information gathering.
 	* Kafra maintainment.
-
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
 	*iRO information gathering.
+Playtester
+	* Monsters spawn, warps maintainment
 
 == Changelog ==
 
 Date		Added
 ======
+06/29
+	* Stricted up penal servitude conditions [Lupus]
+	- Restricted Novices Castles entrance of TK/Highs to 80 BaseLevel
 06/28
 	* Updated yuno_fild03 spawns [Playtester]
 06/27

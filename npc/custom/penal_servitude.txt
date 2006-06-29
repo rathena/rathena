@@ -3,7 +3,7 @@
 //===== By ================================================
 //= Lupus
 //===== Version ===========================================
-//= 1.1 
+//= 1.2
 //===== Compatible With ===================================
 //= eAthena Final (SVN)
 //===== Description =======================================
@@ -13,13 +13,17 @@
 // This script uses CHEQUES of the 2nd KAFRA_BANK.TXT
 // var PRISON - it counts number of your imprisonments.
 // 1.1 English translation
+// 1.2 Stricted the conditions a bit
 //=========================================================
 
 sec_pri.gat,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
 	emotion 1;
-	if (sex) mes "Mr. Prisoner #"+BaseLevel+JobLevel+",";
-	if (!sex) mes "Ms. Prisoner #"+BaseLevel+JobLevel+",";
+	if(sex) {
+		mes "Mr. Prisoner #"+BaseLevel+JobLevel+",";
+	} else {
+		mes "Ms. Prisoner #"+BaseLevel+JobLevel+",";
+	}
 	mes "what's the noise over there?";
 	next;
 	menu "Let me free, I'll pay!",-, "Let me to work off my freedom!",M_Q1, "Nothing",M_NO_THANKS;
@@ -66,7 +70,7 @@ L_NOBANK:
 	close;
 
 L_RELEASE:
-	set PRISON,PRISON+1; //・磊籵・・・・...
+	set PRISON,PRISON+1;
 	next;
 	mes "[Saddeus]";
 	mes "You are free now!";
@@ -83,6 +87,11 @@ M_Q1:
 	menu "OK, I'll work off!",-, "I love this prison!",M_NO_THANKS;
 
 	mes "[Saddeus]";
+	if(checkcart(0) || checkfalcon(0) || checkriding(0)){
+		emotion e_hmm;
+		mes "I'm sorry, you should release your Cart, PecoPeco or Falcon!";
+		close;
+	}
 	mes "Talk to our overseer, Oliver.";
 	next;
 
@@ -148,7 +157,7 @@ sec_in02.gat,137,57,1	script	Overseer	708,{
 	close;
 
 L_GET_Q:
-	set PRISON,PRISON+1; //・磊籵・・・・...
+	set PRISON,PRISON+1;
 	if (PRISON > 1) mes "Hmm... You've been here already... Well-well...";
 
 	if ( countitem(1069) || countitem(1070) ) mes "Drop these mushrooms!! They are poisonous!";//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
@@ -170,8 +179,11 @@ sec_in02.gat	mapflag	nosave	SavePoint
 sec_in02.gat	mapflag	noteleport
 sec_in02.gat	mapflag	nobranch
 sec_in02.gat	mapflag	nowarp
+sec_in02.gat	mapflag	nowarpto
+sec_in02.gat	mapflag	noexp
+sec_in02.gat	mapflag	noskill
 //sec_in02.gat	mapflag	pvp
-sec_in02.gat	mapflag	pvp_noparty
+//sec_in02.gat	mapflag	pvp_noparty
 //sec_in02.gat	mapflag	gvg
 sec_in02.gat	mapflag	pvp_nightmaredrop	random,all,300
 
