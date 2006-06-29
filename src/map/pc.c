@@ -233,13 +233,13 @@ void pc_addfame(struct map_session_data *sd,int count) {
 	    sd->status.fame = MAX_FAME;
 	switch(sd->class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH: // Blacksmith
-            clif_fame_blacksmith(sd,count);
+			clif_fame_blacksmith(sd,count);
 			break;
 		case MAPID_ALCHEMIST: // Alchemist
-            clif_fame_alchemist(sd,count);
+			clif_fame_alchemist(sd,count);
 			break;
 		case MAPID_TAEKWON: // Taekwon
-            clif_fame_taekwon(sd,count);
+			clif_fame_taekwon(sd,count);
 			break;	
 	}
 	chrif_updatefamelist(sd);

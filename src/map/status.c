@@ -5688,12 +5688,15 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 	case SC_HIDING:
 		sc->option &= ~OPTION_HIDE;
+		opt_flag = 2; //Check for warp trigger.
 		break;
 	case SC_CLOAKING:
 		sc->option &= ~OPTION_CLOAK;
+		opt_flag = 2;
 		break;
 	case SC_CHASEWALK:
 		sc->option &= ~(OPTION_CHASEWALK|OPTION_CLOAK);
+		opt_flag = 2;
 		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
@@ -5780,6 +5783,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
+
+	if(opt_flag == 2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); //Trigger on-touch event.
 
 	return 1;
 }
