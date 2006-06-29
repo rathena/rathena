@@ -25,6 +25,7 @@
 
 =========================
 06/29
+	* Updated Freyr's Shoes and Vidar's Boots [Playtester]
 	* [Again] Added back walkdelay to Sonic Blow(thx@rkit), Arrow Vulcan [Lupus]
 	  Walk delay lasts as attack does. In ARROW VULCAN fixed CONSTANT delay to the list
 06/28
