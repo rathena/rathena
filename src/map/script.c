@@ -11595,16 +11595,15 @@ void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	//struct script_code *bck_script = NULL;
 	//struct script_code *bck_scriptroot = NULL;
 	//int bck_scriptstate = 0,bck_npcid = 0;
-	struct script_stack *bck_stack = NULL;
+	//struct script_stack *bck_stack = NULL;
 	
 	if (rootscript == NULL || pos < 0)
 		return;
 
-	st = aCalloc(sizeof(struct script_state), 1);
-
 	if ((sd = map_id2sd(rid)) && sd->st && sd->st->scriptroot == rootscript && sd->st->pos == pos){
 		st = sd->st;
 	} else {
+		st = aCalloc(sizeof(struct script_state), 1);
 		// the script is different, make new script_state and stack
 		st->stack = aMalloc (sizeof(struct script_stack));
 		st->stack->sp = 0;
