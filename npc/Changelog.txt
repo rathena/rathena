@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 06/30
+	* Fixed some warps thanks to akihito [Playtester]
 	* Updated Byalan F5 spawns to X.4 [Playtester]
 	* Added custom/floating_rates.txt [Lupus]
 	  Random change of Drop/Exp rates from 1x to 1.5x every 6 hours

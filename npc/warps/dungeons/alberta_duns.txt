@@ -21,7 +21,7 @@ treasure01.gat,164,91,0	warp	tre03-1	5,1,treasure01.gat,164,116
 treasure01.gat,99,164,0	warp	tre01-1	1,4,treasure01.gat,114,164
 treasure01.gat,76,111,0	warp	tre10	1,3,treasure01.gat,100,111
 treasure01.gat,38,164,0	warp	tre04-1	1,4,treasure01.gat,25,164
-treasure01.gat,41,111,0	warp	tre05	1,3,treasure01.gat,64,113
+treasure01.gat,40,111,0	warp	tre05	1,3,treasure01.gat,67,112
 treasure01.gat,62,111,0	warp	tre05-1	1,3,treasure01.gat,39,111
 treasure01.gat,27,164,0	warp	tre04	1,4,treasure01.gat,40,164
 treasure01.gat,69,75,0	warp	tre07	2,1,treasure01.gat,69,106
