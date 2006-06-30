@@ -2311,12 +2311,12 @@
 7566,Unknown,Unknown,3,,10,10,,,,,,,,,,,,,{},{},{}
 7567,Suspicious_Hat,Suspicious Hat,3,,10,10,,,,,,,,,,,,,{},{},{}
 7568,White_Mask,White Mask,3,,10,10,,,,,,,,,,,,,{},{},{}
-7569,Hammer_of_Wind,Hammer of Wind,3,,10,10,,,,,,,,,,,,,{},{},{}
+7569,Hammer_of_Wind,Hammer of Wind,3,,10,0,,,,,,,,,,,,,{},{},{}
 7570,Temple_Lottery_Ticket,Temple Lottery Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7571,Blue's_Diary,Blue's Diary,3,,10,10,,,,,,,,,,,,,{},{},{}
-7572,Gray_Necklace,Gray Necklace,3,,10,10,,,,,,,,,,,,,{},{},{}
-7573,Shining_Necklace,Shining Necklace,3,,10,10,,,,,,,,,,,,,{},{},{}
-7574,Ice_Powder,Ice Powder,3,,10,10,,,,,,,,,,,,,{},{},{}
+7571,Blue's_Diary,Blue's Diary,3,,10,0,,,,,,,,,,,,,{},{},{}
+7572,Gray_Necklace,Gray Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
+7573,Shining_Necklace,Shining Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
+7574,Ice_Powder,Ice Powder,3,,10,0,,,,,,,,,,,,,{},{},{}
 7575,Red-colored_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7576,Blue-colored_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7577,Yellow-colored_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
