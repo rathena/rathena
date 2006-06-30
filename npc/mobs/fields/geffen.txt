@@ -170,8 +170,8 @@ gef_fild09.gat,277,201,5,5	monster	Blue Plant	1079,3,900000,450000,1
 //==================================================
 // gef_fild10 - Geffen Field
 //==================================================
-gef_fild10.gat,0,0,0,0	monster	Orc Warrior	1023,50,0,0,0
-gef_fild10.gat,0,0,0,0	monster	Orc Lady	1273,40,0,0,0
+gef_fild10.gat,0,0,0,0	monster	Orc Warrior	1023,15,0,0,0
+gef_fild10.gat,0,0,0,0	monster	Orc Lady	1273,75,0,0,0
 gef_fild10.gat,0,0,0,0	monster	Orc Baby	1686,15,0,0,0
 gef_fild10.gat,0,0,0,0	monster	Poporing	1031,15,0,0,0
 gef_fild10.gat,300,253,5,5	monster	Green Plant	1080,3,360000,180000,1
