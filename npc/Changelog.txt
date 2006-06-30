@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 06/30
+	* Implemented the eye of hellion quest. [MasterOfMuppets]
 	* Added official Thanatos Tower quest thanks to Ishizu-chan [Playtester]
 	* Completely updated Lighthalzen Field spawns to X.4 [Playtester]
 	* Completely updated Einbroch Field spawns to X.4 [Playtester]
