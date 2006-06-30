@@ -38,6 +38,10 @@ Playtester
 
 Date		Added
 ======
+06/30
+	* Added custom/floating_rates.txt [Lupus]
+	  Random change of Drop/Exp rates from 1x to 1.5x every 6 hours
+	NOTE! Take a look at an incredible script function 'setbattleflag'
 06/29
 	* Fixed many typos on cities/alberta.txt and airports/airships.txt, with information from Crono/Hollengrhen [Evera]
 	- Fixed many typos on cities/aldebaran.txt [Evera]
