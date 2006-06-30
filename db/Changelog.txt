@@ -25,6 +25,7 @@
 
 =========================
 06/30
+	* Applied some mob_db changes according to the 27/06/2006 patch [Playtester]
 	* Updated skill_unit_db to use the correct values of
 	  UF_ENSEMBLE/UF_DANCE/UF_SONG as applicable. [Skotlex]
 	* Added the new X.4 headgears [Playtester]
