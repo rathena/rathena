@@ -216,6 +216,46 @@ enum {
 	ELE_MAX
 };
 
+enum {
+	IG_BLUEBOX=1,
+	IG_VIOLETBOX,	//2
+	IG_CARDALBUM,	//3
+	IG_GIFTBOX,	//4
+	IG_SCROLLBOX,	//5
+	IG_FINDINGORE,	//6
+	IG_COOKIEBAG,	//7
+	IG_POTION,	//8
+	IG_HERBS,	//9
+	IG_FRUITS,	//10
+	IG_MEAT,	//11
+	IG_CANDY,	//12
+	IG_JUICE,	//13
+	IG_FISH,	//14
+	IG_BOXES,	//15
+	IG_GEMSTONE,	//16
+	IG_JELLOPY,	//17
+	IG_ORE,	//18
+	IG_FOOD,	//19
+	IG_RECOVERY,	//20
+	IG_MINERALS,	//21
+	IG_TAMING,	//22
+	IG_SCROLLS,	//23
+	IG_QUIVERS,	//24
+	IG_MASKS,	//25
+	IG_ACCESORY,	//26
+	IG_JEWELS,	//27
+	IG_GIFTBOX_1,	//28
+	IG_GIFTBOX_2,	//29
+	IG_GIFTBOX_3,	//30
+	IG_GIFTBOX_4,	//31
+	IG_EGGBOY,	//32
+	IG_EGGGIRL,	//33
+	IG_GIFTBOXCHINA,	//34
+	IG_LOTTOBOX,	//35
+	MAX_ITEMGROUP,
+} item_group_list;
+
+
 struct block_list {
 	struct block_list *next,*prev;
 	int id;
@@ -587,7 +627,7 @@ struct map_session_data {
 	int magic_addsize[3];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
-	int itemhealrate[7];
+	int itemhealrate[MAX_ITEMGROUP];
 	int addeff3[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	short addeff3_type[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	short sp_gain_race[RC_MAX];

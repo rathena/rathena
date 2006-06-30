@@ -1658,6 +1658,7 @@ int unit_free(struct block_list *bl) {
 		}
 		if (pd->loot)
 		{
+			pet_lootitem_drop(pd,sd);
 			if (pd->loot->item)
 				aFree(pd->loot->item);
 			aFree (pd->loot);

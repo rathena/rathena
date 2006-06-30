@@ -2131,8 +2131,12 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->subrace2[type2]+=val;
 		break;
 	case SP_ADD_ITEM_HEAL_RATE:
-		if(sd->state.lr_flag != 2)
-			sd->itemhealrate[type2 - 1] += val;
+		if(sd->state.lr_flag == 2)
+			break;
+		if (type2 < MAX_ITEMGROUP)
+			sd->itemhealrate[type2] += val;
+		else
+			ShowWarning("pc_bonus2: AddItemHealRate: Group %d is beyond limit (%d).\n", type2, MAX_ITEMGROUP);
 		break;
 	case SP_EXP_ADDRACE:
 		if(sd->state.lr_flag != 2)
@@ -5225,11 +5229,9 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
  * HP/SP‰ñ•œ
  *------------------------------------------
  */
-int pc_itemheal(struct map_session_data *sd,int hp,int sp)
+int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 {
 	int bonus, type;
-
-	nullpo_retr(0, sd);
 
 	if(hp) {
 		bonus = 100 + (sd->battle_status.vit<<1)
@@ -5237,8 +5239,8 @@ int pc_itemheal(struct map_session_data *sd,int hp,int sp)
 			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		bonus += (potion_flag==2)?50:(potion_flag==3?100:0);
-		if ((type = itemdb_group(sd->itemid)) > 0 && type <= 7)
-			bonus = bonus * (100+sd->itemhealrate[type - 1]) / 100;
+		if ((type = itemdb_group(itemid)) > 0 && type < MAX_ITEMGROUP && sd->itemhealrate[type])
+			bonus += bonus * sd->itemhealrate[type] / 100;
 		if(bonus!=100)
 			hp = hp * bonus / 100;
 	}

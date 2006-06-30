@@ -3343,6 +3343,7 @@ int buildin_heal(struct script_state *st)
  */
 int buildin_itemheal(struct script_state *st)
 {
+	struct map_session_data *sd;
 	int hp,sp;
 
 	hp=conv_num(st,& (st->stack->stack_data[st->start+2]));
@@ -3353,8 +3354,10 @@ int buildin_itemheal(struct script_state *st)
 		potion_sp = sp;
 		return 0;
 	}
-
-	pc_itemheal(script_rid2sd(st),hp,sp);
+	
+	sd = script_rid2sd(st);
+	if (!sd) return 0;
+	pc_itemheal(sd,sd->itemid,hp,sp);
 	return 0;
 }
 /*==========================================

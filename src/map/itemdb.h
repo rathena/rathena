@@ -59,45 +59,6 @@ struct item_group {
 	int id[30];	// 120 bytes
 };
 
-enum {
-	IG_BLUEBOX=1,
-	IG_VIOLETBOX,	//2
-	IG_CARDALBUM,	//3
-	IG_GIFTBOX,	//4
-	IG_SCROLLBOX,	//5
-	IG_FINDINGORE,	//6
-	IG_COOKIEBAG,	//7
-	IG_POTION,	//8
-	IG_HERBS,	//9
-	IG_FRUITS,	//10
-	IG_MEAT,	//11
-	IG_CANDY,	//12
-	IG_JUICE,	//13
-	IG_FISH,	//14
-	IG_BOXES,	//15
-	IG_GEMSTONE,	//16
-	IG_JELLOPY,	//17
-	IG_ORE,	//18
-	IG_FOOD,	//19
-	IG_RECOVERY,	//20
-	IG_MINERALS,	//21
-	IG_TAMING,	//22
-	IG_SCROLLS,	//23
-	IG_QUIVERS,	//24
-	IG_MASKS,	//25
-	IG_ACCESORY,	//26
-	IG_JEWELS,	//27
-	IG_GIFTBOX_1,	//28
-	IG_GIFTBOX_2,	//29
-	IG_GIFTBOX_3,	//30
-	IG_GIFTBOX_4,	//31
-	IG_EGGBOY,	//32
-	IG_EGGGIRL,	//33
-	IG_GIFTBOXCHINA,	//34
-	IG_LOTTOBOX,	//35
-	MAX_ITEMGROUP,
-} item_group_list;
-
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_load(int nameid);
