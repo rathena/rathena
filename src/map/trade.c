@@ -324,9 +324,6 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 	if (amount < 0 || amount > sd->status.inventory[index].amount)
 		return;
 
-	if (sd->status.inventory[index].equip)
-		return; //must not be able to trade equipped items.
-
 	nameid = sd->inventory_data[index]->nameid;
 
 	if (!itemdb_cantrade(nameid, pc_isGM(sd), pc_isGM(target_sd)) &&	//Can't trade
