@@ -1,0 +1,1629 @@
+//===== eAthena Script =======================================
+//= Thanatos Tower Quest
+//===== By: ==================================================
+//= [Ishizu-chan]
+//===== Current Version: =====================================
+//= 1.0 Beta
+//===== Compatible With: =====================================
+//= Any eAthena Version i guess?
+//===== Description: =========================================
+//= It's the Thanatos Tower Quest...
+//===== Additional Comments: =================================
+//= 1.0 - First Release [Ishizu-chan]
+//============================================================
+
+
+// Tour Guide - 1st Floor
+tha_t01.gat,149,78,3	script	Tour Guide#1	90,{
+
+  if (ThanaQuest & 1) {
+
+    mes "[Tour Guide]";
+    mes "Hello my friend.";
+    mes "How are you? Do you enjoy working for the Rekkenber Corporation?";
+    close;
+
+  }
+
+  mes "[Tour Guide]";
+  mes "Hello there.";
+  mes "So you came all the way to investigate the ^777777Thanatos Tower^000000, huh?";
+  next;
+
+  mes "[Tour Guide]";
+  mes "I'm with the Rekkenber Corporation.";
+  mes "We are still searching brave people, who would like to work for us and discover the deeper levels of the ^777777Thanatos Tower^000000.";
+  next;
+
+  mes "[Tour Guide]";
+  mes "Are you by chance interested to volunteer to the ^777777Thanatos Tower Task Force^000000?";
+  next;
+  menu "No thanks.",L_End,
+       "Yes, sign me up!",-;
+
+  mes "[Tour Guide]";
+  mes "Please sign your name here...";
+  next;
+
+  set ThanaQuest, ThanaQuest | 1;
+
+  mes "[Tour Guide]";
+  mes "Ok, ^000077"+strcharinfo(0)+"^000000, isn't it?";
+  mes "Welcome to the ^777777Thanatos Tower Task Force^000000!";
+  next;
+
+  mes "[Tour Guide]";
+  mes "Please be carefull when investigating the deeper levels of the ^777777Thanatos Tower^000000.";
+  mes "The deeper you get, the less is known about it's dangers...";
+  close;
+
+  L_End:
+  mes "[Tour Guide]";
+  mes "Ok, but it was worth a try, wasn't it.";
+  mes "Come back when you're interested.";
+  close;
+
+}
+
+
+// Tour Guide - 2nd Floor
+tha_t02.gat,231,161,5	script	Tour Guide#2	874,{
+
+  if (ThanaQuest < 1) {
+
+    mes "[Tour Guide]";
+    mes "Hello there.";
+    mes "Nice day, isn't it?";
+    next;
+
+    mes "[Tour Guide]";
+    mes "If you want to visit the higher levels, you'll need to volunteer to the ^777777Thanatos Tower Task Force^000000.";
+    next;
+
+    mes "[Tour Guide]";
+    mes "You can do so by speaking with the nice woman at the counter, near the entrance.";
+    mes "See you later~";
+    close;
+
+  }
+
+  mes "[Tour Guide]";
+  mes "Hello my friend.";
+  mes "Oh, you're one of the new volunteers from the ^777777Thanatos Tower Task Force^000000.";
+  next;
+
+  mes "[Tour Guide]";
+  mes "If you wish to enter the next level, you'll need to form a party.";
+  mes "Please gather at least 5 of your Friends around me, so that I can warp you towards the next level.";
+  next;
+
+  mes "[Tour Guide]";
+  mes "I will warp your whole party, so tell your comrades to stand by.";
+  mes "Shall I warp you now?";
+  next;
+  menu "No, I need some time...",L_End,
+       "Yes, please warp us!",-;
+  
+  set @partyid, getcharid(1);
+
+  if (@partyid == 0) goto L_NoParty;
+
+  getpartymember(@partyid);
+  set @partymembercount,$@partymembercount;
+  copyarray @partymembername$[0],$@partymembername$[0],@partymembercount;
+
+  if (@partymembercount < 6) goto L_NotEnough;
+
+  for(set @i, 0; @i < @partymembercount; set @i, @i + 1) {
+    if (getmapxy(@mapname$,@mapx,@mapy,0,@partymembername$[@i]) != 0) goto L_Offline;
+    if (@mapname$ != "tha_t02.gat" || @mapx < 223 || @mapx > 239 || @mapy < 153 || @mapy > 169) goto L_Away;
+  }
+
+  warpparty "tha_t03.gat",220,165,@partyid;
+  end;
+
+  L_NoParty:
+  mes "[Tour Guide]";
+  mes "Erm, you need to form a party first.";
+  close;
+
+  L_NotEnough:
+  mes "[Tour Guide]";
+  mes "You'll need to bring at least 5 friends, if you want to enter the next level.";
+  close;
+
+  L_Offline:
+  mes "[Tour Guide]";
+  mes "Hmm, it seems some of your friends aren't online.";
+  close;
+
+  L_Away:
+  mes "[Tour Guide]";
+  mes "I can't find some of your friends.";
+  mes "Please tell them to come close to me, so I can see them.";
+  close;
+
+  L_End:
+  mes "[Tour Guide]";
+  mes "Ok, come back whenever you're ready to go.";
+  close;
+
+}
+
+
+// Mechanical Device - Red Key
+tha_t03.gat,67,70,0	script	Mechanical Device#1	111,{
+
+  if (ThanaQuest & 2) {
+
+    mes "[Mechanical Device]";
+    mes "This is where you found the";
+    mes "^EF797BRed Key^000000.";
+    close;
+
+  }
+
+  mes "[Mechanical Device]";
+  mes "There's a strange mechanical device here.";
+  next;
+  menu "Investigate the device.",-,
+       "Leave it alone.",L_End;
+
+  mes "[Mechanical Device]";
+  mes "...";
+  next;
+
+  mes "[Mechanical Device]";
+  mes "It seems there is something inside, but the device is protected by a mysterious strong power.";
+  next;
+  menu "Try to get whats inside.",L_Denied,
+       "Get rid of the strong power",-,
+       "Leave it alone.",L_End;
+
+  if (getequipweaponlv(4) < 4) goto L_NoWeapon;
+
+  mes "[Mechanical Device]";
+  mes "As you point your weapon towards the device, the magic power seems to fade.";
+  mes "You now can get inside the device.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 2;
+  getitem 7421,1;  // Red Key
+
+  mes "[Mechanical Device]";
+  mes "You found the ^EF797BRed Key^000000.";
+  close;
+
+  L_Denied:
+  mes "[Mechanical Device]";
+  mes "You were pushed away as you tried to get inside.";
+  mes "It seems the device is protected by a strong magical force.";
+  close;
+
+  L_NoWeapon:
+  mes "[Mechanical Device]";
+  mes "You tried to get rid of the mysterious power, but your weapon doesn't seem to be strong enough...";
+  close;
+
+  L_End:
+  mes "[Mechanical Device]";
+  mes "You left the mechanical device alone.";
+  close;
+
+}
+
+
+// Mechanical Device - Yellow Key
+tha_t04.gat,195,195,0	script	Mechanical Device#2	111,{
+
+  if (ThanaQuest & 4) {
+
+    mes "[Mechanical Device]";
+    mes "This is where you found the";
+    mes "^DE9673Yellow Key^000000.";
+    close;
+
+  }
+
+  mes "[Mechanical Device]";
+  mes "There's a strange mechanical device here.";
+  next;
+  menu "Investigate the device.",-,
+       "Leave it alone.",L_End;
+
+  mes "[Mechanical Device]";
+  mes "The device started to make a certain noise since you approached to it.";
+  mes "Theres a terminal in front of it, where you could enter a number with 3 digits.";
+  next;
+
+  mes "[Mechanical Device]";
+  mes "The noise sounds very strange, and it seems as if the device doesn't work the way it should.";
+  next;
+  menu "Use the terminal",-,
+       "Leave it alone.",L_End;
+
+  set @number, rand(100,999);
+  set @count, 0;
+
+  L_Input:
+  set @count, @count + 1;
+  if (@count > 10) goto L_Broken;
+
+  input @input;
+
+  if (@input < 100 || @input > 999) goto L_Wrong;
+
+  if (@input > @number) goto L_TooBig;
+  if (@input < @number) goto L_TooSmall;
+
+  mes "[Mechanical Device]";
+  mes "As you use the terminal to adjust the number on it, the strange noise changed into a pleasant working sound, and a small box near the terminal opened.";
+  mes "There's something in that box.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 4;
+  getitem 7422,1;  // Yellow Key
+
+  mes "[Mechanical Device]";
+  mes "You found the ^DE9673Yellow Key^000000.";
+  close;
+
+  L_TooBig:
+  mes "[Mechanical Device]";
+  mes "As you use the terminal to adjust the number on it, the strange noise changed.";
+  mes "However, it still sounds wrong. It's a very high sound now.";
+  next;
+
+  mes "[Mechanical Device]";
+  mes "It seems the number you entered was too big.";
+  next;
+
+  goto L_Input;
+
+  L_TooSmall:
+  mes "[Mechanical Device]";
+  mes "As you use the terminal to adjust the number on it, the strange noise changed.";
+  mes "However, it still sounds wrong. It's a very deep sound now.";
+  next;
+
+  mes "[Mechanical Device]";
+  mes "It seems the number you entered was too small.";
+  next;
+
+  goto L_Input;
+
+  L_Broken:
+  mes "[Mechanical Device]";
+  mes "The Device stoped with an akward sound.";
+  mes "It seems the device doesn't work anymore...";
+  close;
+
+  L_Wrong:
+  mes "[Mechanical Device]";
+  mes "You tried to enter the number, but the terminal wasn't able to handle it.";
+  mes "It seems the device doesn't work anymore...";
+  close;
+
+  L_End:
+  mes "[Mechanical Device]";
+  mes "You left the mechanical device alone.";
+  close;
+
+}
+
+
+// Mechanical Device - Blue Key
+tha_t05.gat,101,37,0	script	Mechanical Device#3	111,{
+
+  if (ThanaQuest & 8) {
+
+    mes "[Mechanical Device]";
+    mes "This is where you found the";
+    mes "^8CA6EFBlue Key^000000.";
+    close;
+
+  }
+
+  mes "[Mechanical Device]";
+  mes "There's a strange mechanical device here.";
+  next;
+  menu "Investigate the device.",-,
+       "Leave it alone.",L_End;
+
+  mes "[Mechanical Device]";
+  mes "It seems there's something hidden under the device. However, the device is too heavy to lift it up alone.";
+  next;
+  menu "Try it anyways.",L_Alone,
+       "Try it together.",-,
+       "Leave it alone.",L_End;
+
+  getmapxy @mapname$,@mapx,@mapy,0,strcharinfo(0);
+  if (@mapx < 101 || @mapx > 104 || @mapy < 37 || @mapy > 40) goto L_Away;
+
+  set @help, getareausers("tha_t05.gat",101,40,104,37);
+  if (@help == 1) goto L_Alone;
+  if (@help < 3) goto L_NotEnough;
+
+  mes "[Mechanical Device]";
+  mes "As you manage to lift the device with the help of your friends, you find something underneath, covered in dirt.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 8;
+  getitem 7423,1;  // Blue Key
+
+  mes "[Mechanical Device]";
+  mes "You found a ^8CA6EFBlue Key^000000.";
+  close;
+
+  L_Alone:
+  getmapxy @mapname$,@mapx,@mapy,0;
+  if (@mapx < 101 || @mapx > 104 || @mapy < 37 || @mapy > 40) goto L_Away;
+
+  mes "[Mechanical Device]";
+  mes "You coudn't move the device at all...";
+  close;
+
+  L_Away:
+  mes "[Mechanical Device]";
+  mes "You are too far away to move the device...";
+  close;
+
+  L_NotEnough:
+  mes "[Mechanical Device]";
+  mes "Even with some help you coudn't move the device.";
+  mes "It seem you'll need more help...";
+  close;
+
+  L_End:
+  mes "[Mechanical Device]";
+  mes "You left the mechanical device alone.";
+  close;
+
+}
+
+
+// Mechanical Device - Green Key
+tha_t06.gat,43,152,0	script	Mechanical Device#4	111,{
+
+  setarray @directions$[0],"up","right","down","left";
+
+  if (ThanaQuest & 16) {
+
+    mes "[Mechanical Device]";
+    mes "This is where you found the";
+    mes "^84A684Green Key^000000.";
+    close;
+
+  }
+
+  mes "[Mechanical Device]";
+  mes "There's a strange mechanical device here.";
+  next;
+  menu "Investigate the device.",-,
+       "Leave it alone.",L_End;
+
+  mes "[Mechanical Device]";
+  mes "There are several switches, cogwheels, tubes and wires.";
+  next;
+  menu "Investigate the switches.",L_Switches,
+       "Investigate the cogwheels.",-,
+       "Investigate the tubes and wires.",L_Tubes,
+       "Leave it alone.",L_End;
+
+  set @wheel1, rand(1,3);
+  if (@wheel1 == 1) set @wheel2,1;
+  if (@wheel1 == 2) set @wheel2,0;
+  if (@wheel1 == 3) set @wheel2,3;
+
+  set @wheel3, rand(0,3);
+  set @wheel4, rand(1,3);
+  if (@wheel4 == 1) set @wheel5,3;
+  if (@wheel4 == 2) set @wheel5,2;
+  if (@wheel4 == 3) set @wheel5,1;
+
+  L_Cogwheels:
+  if (@wheel1 == 0 && @wheel2 == 2 && @wheel4 == 0 && @wheel5 == 0) goto L_Work;
+  mes "[Mechanical Device]";
+  mes "There are five cogwheels here, two small ones and three big ones.";
+  mes "They seem to activate the device if they are adjusted the right way.";
+  next;
+  menu "Adjust the small ones.",L_Small,
+       "Adjust the big ones.",L_Big,
+       "Leave it alone.",L_End;
+
+  L_Small:
+  mes "[Mechanical Device]";
+  mes "The first wheel points ^0000AA"+@directions$[@wheel1]+"^000000,";
+  mes "the second one points ^0000AA"+@directions$[@wheel2]+"^000000.";
+  next;
+  menu "Spin them clockwise.",L_Small_Clock,
+       "Spin them counterclockwise.",L_Small_Counter,
+       "Adjust the other ones.",L_Big,
+       "Go back.",L_Cogwheels;
+
+  L_Small_Clock:
+  set @wheel1, @wheel1 + 1;
+  if (@wheel1 > 3) set @wheel1, @wheel1 - 4;
+  set @wheel2, @wheel2 - 1;
+  if (@wheel2 < 0) set @wheel2, @wheel2 + 4;
+  goto L_Small;
+
+  L_Small_Counter:
+  set @wheel1, @wheel1 - 1;
+  if (@wheel1 < 0) set @wheel1, @wheel1 + 4;
+  set @wheel2, @wheel2 + 1;
+  if (@wheel2 > 3) set @wheel2, @wheel2 - 4;
+  goto L_Small;
+
+  L_Big:
+  mes "[Mechanical Device]";
+  mes "The first wheel points ^0000AA"+@directions$[@wheel3]+"^000000,";
+  mes "the second one points ^0000AA"+@directions$[@wheel4]+"^000000 and";
+  mes "the third one points ^0000AA"+@directions$[@wheel5]+"^000000.";
+  next;
+  menu "Spin them clockwise.",L_Big_Clock,
+       "Spin them counterclockwise.",L_Big_Counter,
+       "Adjust the other ones.",L_Small,
+       "Go back.",L_Cogwheels;
+
+  L_Big_Clock:
+  set @wheel3, @wheel3 + 1;
+  if (@wheel3 > 3) set @wheel3, @wheel3 - 4;
+  set @wheel4, @wheel4 - 1;
+  if (@wheel4 < 0) set @wheel4, @wheel4 + 4;
+  set @wheel5, @wheel5 + 1;
+  if (@wheel5 > 3) set @wheel5, @wheel5 - 4;
+  goto L_Big;
+
+  L_Big_Counter:
+  set @wheel3, @wheel3 - 1;
+  if (@wheel3 < 0) set @wheel3, @wheel3 + 4;
+  set @wheel4, @wheel4 + 1;
+  if (@wheel4 > 3) set @wheel4, @wheel4 - 4;
+  set @wheel5, @wheel5 - 1;
+  if (@wheel5 < 0) set @wheel5, @wheel5 + 4;
+  goto L_Big;
+
+  L_Work:
+  mes "[Mechanical Device]";
+  mes "After you've adjusted the cogwheels this way, the device started to work.";
+  mes "It produced a small metal object.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 16;
+  getitem 7424,1;  // Green Key
+
+  mes "[Mechanical Device]";
+  mes "You found the ^84A684Green Key^000000.";
+  close;
+
+  L_Switches:
+  mes "[Mechanical Device]";
+  mes "There are many switches, but most of them are stuck or seem to have no effect on the device.";
+  close;
+
+  L_Tubes:
+  mes "[Mechanical Device]";
+  mes "There are some tubes and wires which are connected to the other parts of the device.";
+  mes "It seems all tubes and wires are as they are supposed to be.";
+  close;
+
+  L_End:
+  mes "[Mechanical Device]";
+  mes "You left the mechanical device alone.";
+  close;
+
+}
+
+
+// Mechanical Device - Black Key
+tha_t09.gat,19,158,0	script	Mechanical Device#5	111,{
+
+  if (ThanaQuest & 32) {
+
+    mes "[Mechanical Device]";
+    mes "This is where you found the";
+    mes "^9C716BBlack Key^000000.";
+    close;
+
+  }
+
+  mes "[Mechanical Device]";
+  mes "There's a small mechanical device here.";
+  next;
+  menu "Investigate the device.",-,
+       "Leave it alone.",L_End;
+
+  mes "[Mechanical Device]";
+  mes "After investigating it closely, you find a small drawer with something in it.";
+  mes "You take it out of the drawer.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 32;
+  getitem 7425,1;  // Black Key
+
+  mes "[Mechanical Device]";
+  mes "You found the ^84A684Black Key^000000.";
+  close;
+
+  L_End:
+  mes "[Mechanical Device]";
+  mes "You left the mechanical device alone.";
+  close;
+
+}
+
+
+// Seal - Blue Magical Stone
+tha_t04.gat,150,44,0	script	Seal#1	111,{
+
+  if (ThanaQuest < 63) {
+
+    mes "[Seal]";
+    mes "There is a seal here, but it seems it cannot be revealed.";
+    close;
+
+  }
+
+  if (ThanaQuest & 64) {
+
+    mes "[Seal]";
+    mes "This is where you found the";
+    mes "^738EE7Blue Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Seal]";
+  mes "There's a seal here.";
+  next;
+
+  mes "[Seal]";
+  mes "It seems it can be revealed with a certain ^8CA6EFKey^000000...";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Blue Key" || countitem(7423) < 1) goto L_Wrong;
+
+  mes "[Seal]";
+  mes "After you've inserted the ^8CA6EFBlue Key^000000, the seal opened and revealed a beautiful Crystal.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 64;
+  delitem 7423,1; // Blue Key
+  getitem 7428,1; // Blue Magical Stone
+
+  mes "[Seal]";
+  mes "You found the ^738EE7Blue Magical Stone^000000.";
+  close;
+
+  L_Wrong:
+  mes "[Seal]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Seal - Red Magical Stone
+tha_t05.gat,218,116,0	script	Seal#2	111,{
+
+  if (ThanaQuest < 63) {
+
+    mes "[Seal]";
+    mes "There is a seal here, but it seems it cannot be revealed.";
+    close;
+
+  }
+
+  if (ThanaQuest & 128) {
+
+    mes "[Seal]";
+    mes "This is where you found the";
+    mes "^CE6163Red Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Seal]";
+  mes "There's a seal here.";
+  next;
+
+  mes "[Seal]";
+  mes "It seems it can be revealed with a certain ^EF797BKey^000000...";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Red Key" || countitem(7421) < 1) goto L_Wrong;
+
+  mes "[Seal]";
+  mes "After you've inserted the ^EF797BRed Key^000000, the seal opened and revealed a beautiful Crystal.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 128;
+  delitem 7421,1; // Red Key
+  getitem 7426,1; // Red Magical Stone
+
+  mes "[Seal]";
+  mes "You found the ^CE6163Red Magical Stone^000000.";
+  close;
+
+  L_Wrong:
+  mes "[Seal]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Seal - Black Magical Stone
+tha_t06.gat,226,230,0	script	Seal#3	111,{
+
+  if (ThanaQuest < 63) {
+
+    mes "[Seal]";
+    mes "There is a seal here, but it seems it cannot be revealed.";
+    close;
+
+  }
+
+  if (ThanaQuest & 256) {
+
+    mes "[Seal]";
+    mes "This is where you found the";
+    mes "^7B698CBlack Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Seal]";
+  mes "There's a seal here.";
+  next;
+
+  mes "[Seal]";
+  mes "It seems it can be revealed with a certain ^84A684Key^000000...";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Black Key" || countitem(7425) < 1) goto L_Wrong;
+
+  mes "[Seal]";
+  mes "After you've inserted the ^84A684Black Key^000000, the seal opened and revealed a beautiful Crystal.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 256;
+  delitem 7425,1; // Black Key
+  getitem 7430,1; // Black Magical Stone
+
+  mes "[Seal]";
+  mes "You found the ^7B698CBlack Magical Stone^000000.";
+  close;
+
+  L_Wrong:
+  mes "[Seal]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Seal - Yellow Magical Stone
+tha_t07.gat,113,129,0	script	Seal#4	111,{
+
+  if (ThanaQuest < 63) {
+
+    mes "[Seal]";
+    mes "There is a seal here, but it seems it cannot be revealed.";
+    close;
+
+  }
+
+  if (ThanaQuest & 512) {
+
+    mes "[Seal]";
+    mes "This is where you found the";
+    mes "^EFA673Yellow Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Seal]";
+  mes "There's a seal here.";
+  next;
+
+  mes "[Seal]";
+  mes "It seems it can be revealed with a certain ^DE9673Key^000000...";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Yellow Key" || countitem(7422) < 1) goto L_Wrong;
+
+  mes "[Seal]";
+  mes "After you've inserted the ^DE9673Yellow Key^000000, the seal opened and revealed a beautiful Crystal.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 512;
+  delitem 7422,1; // Yellow Key
+  getitem 7427,1; // Yellow Magical Stone
+
+  mes "[Seal]";
+  mes "You found the ^EFA673Yellow Magical Stone^000000.";
+  close;
+
+  L_Wrong:
+  mes "[Seal]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+// Seal - Green Magical Stone
+tha_t10.gat,129,159,0	script	Seal#5	111,{
+
+  if (ThanaQuest < 63) {
+
+    mes "[Seal]";
+    mes "There is a seal here, but it seems it cannot be revealed.";
+    close;
+
+  }
+
+  if (ThanaQuest & 1024) {
+
+    mes "[Seal]";
+    mes "This is where you found the";
+    mes "^738652Green Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Seal]";
+  mes "There's a seal here.";
+  next;
+
+  mes "[Seal]";
+  mes "It seems it can be revealed with a certain ^84A684Key^000000...";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Green Key" || countitem(7424) < 1) goto L_Wrong;
+
+  mes "[Seal]";
+  mes "After you've inserted the ^84A684Green Key^000000, the seal opened and revealed a beautiful Crystal.";
+  next;
+
+  set ThanaQuest, ThanaQuest | 1024;
+  delitem 7424,1; // Green Key
+  getitem 7429,1; // Green Magical Stone
+
+  mes "[Seal]";
+  mes "You found the ^738652Green Magical Stone^000000.";
+  close;
+
+  L_Wrong:
+  mes "[Seal]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 9
+tha_t09.gat,82,99,0	script	Stone Statue#09a	111,{
+
+  mes "[Stone Statue]";
+  mes "There is a lever here.";
+  if (ThanaSteps & 1) mes "It is pointing up.";
+  else mes "It is pointing down.";
+  next;
+  menu "Pull the lever.",-,
+       "Leave it as it is.",L_End;
+
+  set ThanaSteps, ThanaSteps ^ 1;
+
+  mes "[Stone Statue]";
+  mes "You decided to pull the lever.";
+  mes "It sounded as if it started some mechanical process.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 10 (A)
+tha_t10.gat,159,97,0	script	Stone Statue#10a	111,{
+
+  mes "[Stone Statue]";
+  mes "There is a lever here.";
+  if (ThanaSteps & 2) mes "It is pointing up.";
+  else mes "It is pointing down.";
+  next;
+  menu "Pull the lever.",-,
+       "Leave it as it is.",L_End;
+
+  set ThanaSteps, ThanaSteps ^ 2;
+  if (ThanaSteps & 4) set ThanaSteps, ThanaSteps ^ 4;
+
+  mes "[Stone Statue]";
+  mes "You decided to pull the lever.";
+  mes "It sounded as if it started some mechanical process.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 10 (B)
+tha_t10.gat,97,97,0	script	Stone Statue#10b	111,{
+
+  if (ThanaSteps & 2) {
+
+    mes "[Stone Statue]";
+    mes "There is a lever here.";
+    if (ThanaSteps & 4) mes "It is pointing up.";
+    else mes "It is pointing down.";
+    next;
+    menu "Pull the lever.",-,
+         "Leave it as it is.",L_End;
+
+    if (ThanaSteps & 4) set ThanaSteps, ThanaSteps ^ 2;
+    set ThanaSteps, ThanaSteps ^ 4;
+
+    mes "[Stone Statue]";
+    mes "You decided to pull the lever.";
+    mes "It sounded as if it started some mechanical process.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There is a lever here, but it cannot be moved.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 11 (A)
+tha_t11.gat,85,85,0	script	Stone Statue#11a	111,{
+
+  mes "[Stone Statue]";
+  mes "There is a lever here.";
+  if (ThanaSteps & 8) mes "It is pointing up.";
+  else mes "It is pointing down.";
+  next;
+  menu "Pull the lever.",-,
+       "Leave it as it is.",L_End;
+
+  if (ThanaSteps & 8) {
+    if (ThanaSteps & 64) set ThanaSteps, ThanaSteps ^ 64;
+    if (ThanaSteps & 32) set ThanaSteps, ThanaSteps ^ 32;
+    if (ThanaSteps & 16) set ThanaSteps, ThanaSteps ^ 16;
+  }
+  set ThanaSteps, ThanaSteps ^ 8;
+
+  mes "[Stone Statue]";
+  mes "You decided to pull the lever.";
+  mes "It sounded as if it started some mechanical process.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 11 (B)
+tha_t11.gat,16,16,0	script	Stone Statue#11b	111,{
+
+  if (ThanaSteps & 8) {
+
+    mes "[Stone Statue]";
+    mes "There is a lever here.";
+    if (ThanaSteps & 16) mes "It is pointing up.";
+    else mes "It is pointing down.";
+    next;
+    menu "Pull the lever.",-,
+         "Leave it as it is.",L_End;
+
+    if (ThanaSteps & 16) {
+      if (ThanaSteps & 64) set ThanaSteps, ThanaSteps ^ 64;
+      if (ThanaSteps & 32) set ThanaSteps, ThanaSteps ^ 32;
+      set ThanaSteps, ThanaSteps ^ 8;
+    }
+    set ThanaSteps, ThanaSteps ^ 16;
+
+    mes "[Stone Statue]";
+    mes "You decided to pull the lever.";
+    mes "It sounded as if it started some mechanical process.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There is a lever here, but it cannot be moved.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 11 (C)
+tha_t11.gat,85,16,0	script	Stone Statue#11c	111,{
+
+  if (ThanaSteps & 16) {
+
+    mes "[Stone Statue]";
+    mes "There is a lever here.";
+    if (ThanaSteps & 32) mes "It is pointing up.";
+    else mes "It is pointing down.";
+    next;
+    menu "Pull the lever.",-,
+         "Leave it as it is.",L_End;
+
+    if (ThanaSteps & 32) {
+      if (ThanaSteps & 64) set ThanaSteps, ThanaSteps ^ 64;
+      set ThanaSteps, ThanaSteps ^ 16;
+      set ThanaSteps, ThanaSteps ^ 8;
+    }
+    set ThanaSteps, ThanaSteps ^ 32;
+
+    mes "[Stone Statue]";
+    mes "You decided to pull the lever.";
+    mes "It sounded as if it started some mechanical process.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There is a lever here, but it cannot be moved.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Floor 11 (D)
+tha_t11.gat,16,85,0	script	Stone Statue#11d	111,{
+
+  if (ThanaSteps & 32) {
+
+    mes "[Stone Statue]";
+    mes "There is a lever here.";
+    if (ThanaSteps & 64) mes "It is pointing up.";
+    else mes "It is pointing down.";
+    next;
+    menu "Pull the lever.",-,
+         "Leave it as it is.",L_End;
+
+    if (ThanaSteps & 64) {
+      set ThanaSteps, ThanaSteps ^ 32;
+      set ThanaSteps, ThanaSteps ^ 16;
+      set ThanaSteps, ThanaSteps ^ 8;
+    }
+    set ThanaSteps, ThanaSteps ^ 64;
+
+    mes "[Stone Statue]";
+    mes "You decided to pull the lever.";
+    mes "It sounded as if it started some mechanical process.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There is a lever here, but it cannot be moved.";
+  close;
+
+  L_End:
+  mes "[Stone Statue]";
+  mes "You decided to leave the lever as it is.";
+  close;
+
+}
+
+
+// Stone Statue - Red Magical Stone
+tha_t12.gat,96,58,0	script	Stone Statue#12a	111,{
+
+  if (ThanaQuest < 2047) {
+
+    mes "[Stone Statue]";
+    mes "There is a socket here, but you don't know what to do.";
+    close;
+
+  }
+
+  if (ThanaQuest & 2048) {
+
+    mes "[Stone Statue]";
+    mes "This is where you inserted the ^CE6163Red Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There's a socket here.";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Red Magical Stone" || countitem(7426) < 1) goto L_Wrong;
+
+  set ThanaQuest, ThanaQuest | 2048;
+  delitem 7426,1; // Red Magical Stone
+
+  mes "[Stone Statue]";
+  mes "You've inserted the ^CE6163Red Magical Stone^000000 into the socket and it fits perfectly.";
+  close;
+
+  L_Wrong:
+  mes "[Stone Statue]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Stone Statue - Yellow Magical Stone
+tha_t12.gat,161,58,0	script	Stone Statue#12b	111,{
+
+  if (ThanaQuest < 2047) {
+
+    mes "[Stone Statue]";
+    mes "There is a socket here, but you don't know what to do.";
+    close;
+
+  }
+
+  if (ThanaQuest & 4096) {
+
+    mes "[Stone Statue]";
+    mes "This is where you inserted the ^EFA673Yellow Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There's a socket here.";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Yellow Magical Stone" || countitem(7427) < 1) goto L_Wrong;
+
+  set ThanaQuest, ThanaQuest | 4096;
+  delitem 7427,1; // Yellow Magical Stone
+
+  mes "[Stone Statue]";
+  mes "You've inserted the ^EFA673Yellow Magical Stone^000000 into the socket and it fits perfectly.";
+  close;
+
+  L_Wrong:
+  mes "[Stone Statue]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Stone Statue - Blue Magical Stone
+tha_t12.gat,104,18,0	script	Stone Statue#12c	111,{
+
+  if (ThanaQuest < 2047) {
+
+    mes "[Stone Statue]";
+    mes "There is a socket here, but you don't know what to do.";
+    close;
+
+  }
+
+  if (ThanaQuest & 8192) {
+
+    mes "[Stone Statue]";
+    mes "This is where you inserted the ^738EE7Blue Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There's a socket here.";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Blue Magical Stone" || countitem(7428) < 1) goto L_Wrong;
+
+  set ThanaQuest, ThanaQuest | 8192;
+  delitem 7428,1; // Blue Magical Stone
+
+  mes "[Stone Statue]";
+  mes "You've inserted the ^738EE7Blue Magical Stone^000000 into the socket and it fits perfectly.";
+  close;
+
+  L_Wrong:
+  mes "[Stone Statue]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Stone Statue - Green Magical Stone
+tha_t12.gat,154,18,0	script	Stone Statue#12d	111,{
+
+  if (ThanaQuest < 2047) {
+
+    mes "[Stone Statue]";
+    mes "There is a socket here, but you don't know what to do.";
+    close;
+
+  }
+
+  if (ThanaQuest & 16384) {
+
+    mes "[Stone Statue]";
+    mes "This is where you inserted the ^738652Green Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There's a socket here.";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Green Magical Stone" || countitem(7429) < 1) goto L_Wrong;
+
+  set ThanaQuest, ThanaQuest | 16384;
+  delitem 7429,1; // Green Magical Stone
+
+  mes "[Stone Statue]";
+  mes "You've inserted the ^738652Green Magical Stone^000000 into the socket and it fits perfectly.";
+  close;
+
+  L_Wrong:
+  mes "[Stone Statue]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Stone Statue - Black Magical Stone
+tha_t12.gat,128,86,0	script	Stone Statue#12e	111,{
+
+  if (ThanaQuest < 2047) {
+
+    mes "[Stone Statue]";
+    mes "There is a socket here, but you don't know what to do.";
+    close;
+
+  }
+
+  if (ThanaQuest & 32768) {
+
+    mes "[Stone Statue]";
+    mes "This is where you inserted the ^7B698CBlack Magical Stone^000000.";
+    close;
+
+  }
+
+  mes "[Stone Statue]";
+  mes "There's a socket here.";
+  next;
+
+  input @input$;
+
+  if (@input$ != "Black Magical Stone" || countitem(7430) < 1) goto L_Wrong;
+
+  set ThanaQuest, ThanaQuest | 32768;
+  delitem 7430,1; // Black Magical Stone
+
+  mes "[Stone Statue]";
+  mes "You've inserted the ^7B698CBlack Magical Stone^000000 into the socket and it fits perfectly.";
+  close;
+
+  L_Wrong:
+  mes "[Stone Statue]";
+  mes "Nothing happened.";
+  close;
+
+}
+
+
+// Carvings
+tha_t12.gat,130,52,0	script	Carvings#1	111,{
+
+  mes "[Carvings]";
+  mes "There are some beautifull carvings here.";
+  next;
+
+  mes "[Carvings]";
+  mes "As you look closer at the carvings, a portal opens and takes you away...";
+  next;
+
+  if (ThanaQuest < 65535) {
+
+    warp "thana_step.gat",185,15;
+    end;
+
+  }
+
+  warp "thana_step.gat",73,288;
+  end;
+
+}
+
+
+// Seal of Sorrow
+thana_boss.gat,217,167,0	script	Carvings#2	111,{
+
+  if ($Thana & 1) {
+
+    mes "[Carvings]";
+    mes "This is where you inserted the ^CE86C6Fragment of Sorrow^000000.";
+    close;
+
+  }
+
+  mes "[Carvings]";
+  mes "There's a hole in the floor, which seems to be made for something to fit in.";
+  mes "It twinkles in ^CE86C6violet color^000000.";
+  next;
+
+  menu "Insert ^CE86C6Fragment of Sorrow^000000",L_Sorrow,
+       "Insert ^7B9663Fragment of Agony^000000",L_Agony,
+       "Insert ^8C79ADFragment of Hatred^000000",L_Hatred,
+       "Insert ^F7865AFragment of Despair^000000",L_Despair,
+       "Don't insert something.",L_End;
+
+  L_Sorrow:
+  if (countitem(7437) == 0) goto L_NoFragment;
+
+  delitem 7437,1;
+  stopnpctimer "TimerThana";
+  set $Thana, $Thana | 1;
+  initnpctimer "TimerThana";
+  mapannounce "thana_boss.gat", "The Seal of Sorrow has been broken.",bc_npc;
+
+  mes "[Carvings]";
+  mes "You've inserted the ^CE86C6Fragment of Sorrow^000000 into the hole and it fits perfectly.";
+  mes "It now glows in bright ^CE86C6violet color^000000.";
+  if ($Thana >= 15) close;
+  next;
+
+  mes "[Carvings]";
+  mes "Hurry now, tell your comrades to insert the other fragments.";
+  close;
+
+  L_Agony:
+  if (countitem(7436) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^7B9663Fragment of Agony^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Hatred:
+  if (countitem(7438) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^8C79ADFragment of Hatred^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Despair:
+  if (countitem(7439) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^F7865AFragment of Despair^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_NoFragment:
+  mes "[Carvings]";
+  mes "You don't have this fragment.";
+  close;
+
+  L_End:
+  mes "[Carvings]";
+  mes "You left the cravings alone.";
+  close;
+
+  OnInit:
+  set $Thana, 0;
+  end;
+
+}
+
+
+// Seal of Agony
+thana_boss.gat,202,75,0	script	Carvings#3	111,{
+
+  if ($Thana & 2) {
+
+    mes "[Carvings]";
+    mes "This is where you inserted the ^7B9663Fragment of Agony^000000.";
+    close;
+
+  }
+
+  mes "[Carvings]";
+  mes "There's a hole in the floor, which seems to be made for something to fit in.";
+  mes "It twinkles in ^7B9663green color^000000.";
+  next;
+
+  menu "Insert ^CE86C6Fragment of Sorrow^000000",L_Sorrow,
+       "Insert ^7B9663Fragment of Agony^000000",L_Agony,
+       "Insert ^8C79ADFragment of Hatred^000000",L_Hatred,
+       "Insert ^F7865AFragment of Despair^000000",L_Despair,
+       "Don't insert something.",L_End;
+
+  L_Sorrow:
+  if (countitem(7437) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^CE86C6Fragment of Sorrow^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Agony:
+  if (countitem(7436) == 0) goto L_NoFragment;
+
+  delitem 7436,1;
+  stopnpctimer "TimerThana";
+  set $Thana, $Thana | 2;
+  initnpctimer "TimerThana";
+  mapannounce "thana_boss.gat", "The Seal of Agony has been broken.",bc_npc;
+
+  mes "[Carvings]";
+  mes "You've inserted the ^7B9663Fragment of Agony^000000 into the hole and it fits perfectly.";
+  mes "It now glows in bright ^7B9663green color^000000.";
+  if ($Thana >= 15) close;
+  next;
+
+  mes "[Carvings]";
+  mes "Hurry now, tell your comrades to insert the other fragments.";
+  close;
+
+  L_Hatred:
+  if (countitem(7438) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^8C79ADFragment of Hatred^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Despair:
+  if (countitem(7439) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^F7865AFragment of Despair^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_NoFragment:
+  mes "[Carvings]";
+  mes "You don't have this fragment.";
+  close;
+
+  L_End:
+  mes "[Carvings]";
+  mes "You left the cravings alone.";
+  close;
+
+}
+
+
+// Seal of Hatred
+thana_boss.gat,80,76,0	script	Carvings#4	111,{
+
+  if ($Thana & 4) {
+
+    mes "[Carvings]";
+    mes "This is where you inserted the ^8C79ADFragment of Hatred^000000.";
+    close;
+
+  }
+
+  mes "[Carvings]";
+  mes "There's a hole in the floor, which seems to be made for something to fit in.";
+  mes "It twinkles in ^8C79ADblue color^000000.";
+  next;
+
+  menu "Insert ^CE86C6Fragment of Sorrow^000000",L_Sorrow,
+       "Insert ^7B9663Fragment of Agony^000000",L_Agony,
+       "Insert ^8C79ADFragment of Hatred^000000",L_Hatred,
+       "Insert ^F7865AFragment of Despair^000000",L_Despair,
+       "Don't insert something.",L_End;
+
+  L_Sorrow:
+  if (countitem(7437) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^CE86C6Fragment of Sorrow^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Agony:
+  if (countitem(7436) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^7B9663Fragment of Agony^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Hatred:
+  if (countitem(7438) == 0) goto L_NoFragment;
+
+  delitem 7438,1;
+  stopnpctimer "TimerThana";
+  set $Thana, $Thana | 4;
+  initnpctimer "TimerThana";
+  mapannounce "thana_boss.gat", "The Seal of Hatred has been broken.",bc_npc;
+
+  mes "[Carvings]";
+  mes "You've inserted the ^8C79ADFragment of Hatred^000000 into the hole and it fits perfectly.";
+  mes "It now glows in bright ^8C79ADblue color^000000.";
+  if ($Thana >= 15) close;
+  next;
+
+  mes "[Carvings]";
+  mes "Hurry now, tell your comrades to insert the other fragments.";
+  close;
+
+  L_Despair:
+  if (countitem(7439) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^F7865AFragment of Despair^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_NoFragment:
+  mes "[Carvings]";
+  mes "You don't have this fragment.";
+  close;
+
+  L_End:
+  mes "[Carvings]";
+  mes "You left the cravings alone.";
+  close;
+
+}
+
+
+// Seal of Despair
+thana_boss.gat,62,171,0	script	Carvings#5	111,{
+
+  if ($Thana & 8) {
+
+    mes "[Carvings]";
+    mes "This is where you inserted the ^F7865AFragment of Despair^000000.";
+    close;
+
+  }
+
+  mes "[Carvings]";
+  mes "There's a hole in the floor, which seems to be made for something to fit in.";
+  mes "It twinkles in ^F7865Ared color^000000.";
+  next;
+
+  menu "Insert ^CE86C6Fragment of Sorrow^000000",L_Sorrow,
+       "Insert ^7B9663Fragment of Agony^000000",L_Agony,
+       "Insert ^8C79ADFragment of Hatred^000000",L_Hatred,
+       "Insert ^F7865AFragment of Despair^000000",L_Despair,
+       "Don't insert something.",L_End;
+
+  L_Sorrow:
+  if (countitem(7437) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^CE86C6Fragment of Sorrow^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Agony:
+  if (countitem(7436) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^7B9663Fragment of Agony^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Hatred:
+  if (countitem(7438) == 0) goto L_NoFragment;
+  mes "[Carvings]";
+  mes "You've tried to insert the ^8C79ADFragment of Hatred^000000 into the hole, but it didn't fit.";
+  close;
+
+  L_Despair:
+  if (countitem(7439) == 0) goto L_NoFragment;
+
+  delitem 7439,1;
+  stopnpctimer "TimerThana";
+  set $Thana, $Thana | 8;
+  initnpctimer "TimerThana";
+  mapannounce "thana_boss.gat", "The Seal of Despair has been broken.",bc_npc;
+
+  mes "[Carvings]";
+  mes "You've inserted the ^F7865AFragment of Despair^000000 into the hole and it fits perfectly.";
+  mes "It now glows in bright ^F7865Ared color^000000.";
+  if ($Thana >= 15) close;
+  next;
+
+  mes "[Carvings]";
+  mes "Hurry now, tell your comrades to insert the other fragments.";
+  close;
+
+  L_NoFragment:
+  mes "[Carvings]";
+  mes "You don't have this fragment.";
+  close;
+
+  L_End:
+  mes "[Carvings]";
+  mes "You left the cravings alone.";
+  close;
+
+}
+
+
+// Seal of Thanatos
+thana_boss.gat,141,217,0	script	Carvings#6	111,{
+
+  if ($Thana == 15) {
+
+    mes "[Carvings]";
+    mes "You stepped on the plate, and it seems it activated some sort of mechanism.";
+    next;
+
+    stopnpctimer "TimerThana";
+    set $Thana, $Thana | 16;
+    monster "thana_boss.gat",135,119,"Thanatos",1708,1,"TimerThana::OnThanaDead";
+    mapannounce "thana_boss.gat", "The Seal of Thanatos has been broken.",bc_npc;
+
+    mes "[Carvings]";
+    mes "You hear the screams of the undead coming from below...";
+    close;
+
+  }
+
+  mes "[Carvings]";
+  mes "There is a plate here, which seems to be some sort of switch, but it doesn't move.";
+  close;
+
+}
+
+
+// NPC Timer
+thana_boss.gat,1,1,1	script	TimerThana	-1,{
+
+  // 10 secs
+  OnTimer10000:
+
+    if ($Thana >= 15) end;
+    stopnpctimer;
+    mapannounce "thana_boss.gat", "You didn't manage to break all four Seals in time...",bc_npc;
+    set $Thana, 0;
+    end;
+
+  OnThanaDead:
+
+    initnpctimer;
+    end;
+
+  // 600 secs = 10 mins
+  OnTimer600000:
+
+    stopnpctimer;
+    set $Thana, 0;
+    end;
+
+}
