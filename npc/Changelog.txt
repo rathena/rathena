@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 06/30
+	* Fixed a Rachel Field warp [Playtester]
 	* Fixed some warps thanks to akihito [Playtester]
 	* Updated Byalan F5 spawns to X.4 [Playtester]
 	* Added custom/floating_rates.txt [Lupus]
