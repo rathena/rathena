@@ -1,0 +1,123 @@
+//===== eAthena Script =======================================
+//= Thanatos Tower Warps
+//===== By: ==================================================
+//= [Ishizu-chan]
+//===== Current Version: =====================================
+//= 1.0 Beta
+//===== Compatible With: =====================================
+//= Any eAthena Version i guess?
+//===== Description: =========================================
+//= It's the Thanatos Tower Warps...
+//===== Additional Comments: =================================
+//= 1.0 - First Release [Ishizu-chan]
+//============================================================
+
+//Hugel Field 01 -> Thanatos Scene 01
+hu_fild01.gat,139,164,0	script	Thanatos Tower Warper	111,{
+	mes "[Thanatos Tower Warper]";
+	mes "There is no turning back.";
+	mes "Are you sure want to go Thanatos Tower?";
+	next;
+	menu "Yes",-,"No",T_CLOSE;
+
+	warp "tha_scene01.gat",131,224;
+	end;
+
+T_CLOSE:
+	close;
+}
+
+//Thanatos Scene 01 -> Thantos Tower F1
+tha_scene01.gat,144,200,0	warp	tha_scene01	1,1,tha_t01.gat,150,39
+tha_t01.gat,150,32,0	warp	tha_scene02	1,1,tha_scene01.gat,142,200
+
+// Thanatos Tower Level 1 (tha_t01.gat)
+tha_t01.gat,150,149,0	warp	WarpThana1a	1,1,tha_t02.gat,150,129
+tha_t02.gat,150,126,0	warp	WarpThana1b	1,1,tha_t01.gat,150,146
+
+// Thanatos Tower Level 2 (tha_t02.gat)
+tha_t03.gat,218,167,0	warp	WarpThana2a	1,1,tha_t02.gat,227,159
+
+// Thanatos Tower Level 3 (tha_t03.gat)
+tha_t03.gat,60,141,0	warp	WarpThana3a	1,1,tha_t04.gat,60,141
+tha_t04.gat,60,138,0	warp	WarpThana3b	1,1,tha_t03.gat,60,138
+
+// Thanatos Tower Level 4 (tha_t04.gat)
+tha_t04.gat,82,36,0	warp	WarpThana4a	1,1,tha_t05.gat,62,6
+tha_t05.gat,208,97,0	warp	WarpThana4b	1,1,tha_t04.gat,140,117
+
+// Thanatos Tower Level 5 (tha_t05.gat)
+tha_t05.gat,186,236,0	warp	WarpThana5a	1,1,tha_t06.gat,120,6
+tha_t06.gat,120,3,0	warp	WarpThana5b	1,1,tha_t05.gat,186,233
+tha_t05.gat,61,157,0	script	WarpThana5c	45,1,1,{
+
+  if (rand(2)) warp "tha_t03.gat",139,177;
+  else warp "tha_t06.gat",88,181;
+  end;
+
+}
+
+// Thanatos Tower Level 6 (tha_t06.gat)
+tha_t06.gat,119,120,4	script	WarpThana6a	45,2,2,{
+
+  if (ThanaQuest < 31) {
+
+    mes "[Seal]";
+    mes "It seems this portal will only open when 4 Keys are placed in the Keyholes around it.";
+    close;
+
+  }
+
+  warp "thana_step.gat",73,372;
+  end;
+
+}
+thana_step.gat,70,372,0	warp	WarpThana6b	1,1,tha_t06.gat,236,120
+thana_step.gat,173,372,0	warp	WarpThana6c	1,1,tha_t07.gat,28,166
+tha_t07.gat,25,166,0	warp	WarpThana6d	1,1,thana_step.gat,170,372
+
+// Thanatos Tower Level 7 (tha_t07.gat)
+tha_t07.gat,114,166,0	warp	WarpThana7a	1,1,tha_t08.gat,28,44
+tha_t08.gat,25,44,0	warp	WarpThana7b	1,1,tha_t07.gat,111,166
+
+// Thanatos Tower Level 8 (tha_t08.gat)
+tha_t08.gat,114,44,0	warp	WarpThana8a	1,1,thana_step.gat,33,223
+thana_step.gat,30,223,0	warp	WarpThana8b	1,1,tha_t08.gat,111,44
+
+// Thanatos Tower Level 9 (tha_t09.gat)
+thana_step.gat,32,165,0	warp	WarpThana9a	1,1,tha_t09.gat,89,146
+tha_t09.gat,92,146,0	script	WarpThana9b	45,1,1,{
+
+  if (ThanaSteps & 1) warp "thana_step.gat",183,223;
+  else warp "thana_step.gat",35,165;
+  end;
+
+}
+thana_step.gat,180,223	warp	WarpThana9c	1,1,tha_t09.gat,89,146
+
+// Thanatos Tower Level 10 (tha_t10.gat)
+thana_step.gat,182,165	warp	WarpThana10a	1,1,tha_t10.gat,167,138
+tha_t10.gat,170,138,0	script	WarpThana10b	45,1,1,{
+
+  if (ThanaSteps & 4) warp "thana_step.gat",17,73;
+  else warp "thana_step.gat",185,165;
+  end;
+
+}
+thana_step.gat,14,73	warp	WarpThana10c	1,1,tha_t10.gat,167,138
+
+// Thanatos Tower Level 11 (tha_t11.gat)
+thana_step.gat,16,15	warp	WarpThana11a	1,1,tha_t11.gat,89,36
+tha_t11.gat,92,36,0	script	WarpThana11b	45,1,1,{
+
+  if (ThanaSteps & 64) warp "thana_step.gat",183,73;
+  else warp "thana_step.gat",19,15;
+  end;
+
+}
+thana_step.gat,180,73	warp	WarpThana11c	1,1,tha_t11.gat,89,36
+
+// Thanatos Tower Level 12 (tha_t12.gat)
+thana_step.gat,182,15	warp	WarpThana12a	1,1,tha_t12.gat,129,51
+thana_step.gat,70,288	warp	WarpThana12b	1,1,tha_t12.gat,129,51
+thana_step.gat,173,288	warp	WarpThana12c	1,1,thana_boss.gat,135,128
