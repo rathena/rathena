@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib (1.0)
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -12,7 +12,7 @@
 //= 1.2 Corrected monsters. Many thanks to vicious_pucca for
 //=	the information [MasterOfMuppets]
 //= 1.3 Updated acordingly to Episode 10.4 [Poki#3]
-//=	Mob quantity is custom.
+//= 1.4 Fully updated X.4 spawns [Playtester]
 //============================================================
 
 //==================================================
