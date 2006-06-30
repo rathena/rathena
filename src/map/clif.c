@@ -4653,7 +4653,11 @@ int clif_skill_setunit(struct skill_unit *unit)
 		WBUFL(buf, 6)=unit->group->src_id;
 		WBUFW(buf,10)=unit->bl.x;
 		WBUFW(buf,12)=unit->bl.y;
-		WBUFB(buf,14)=unit->group->unit_id;
+		if (unit->group->state.song_dance && unit->val1 == BA_DISSONANCE) {
+			WBUFB(buf,14)=UNT_DISSONANCE;
+		} else {
+			WBUFB(buf,14)=unit->group->unit_id;
+		}
 		WBUFB(buf,15)=1;
 		WBUFB(buf,16)=1;
 		memcpy(WBUFP(buf,17),unit->group->valstr,MESSAGE_SIZE);
@@ -4667,7 +4671,11 @@ int clif_skill_setunit(struct skill_unit *unit)
 	WBUFL(buf, 6)=unit->group->src_id;
 	WBUFW(buf,10)=unit->bl.x;
 	WBUFW(buf,12)=unit->bl.y;
-	WBUFB(buf,14)=unit->group->unit_id;
+	if (unit->group->state.song_dance && unit->val1 == BA_DISSONANCE) {
+		WBUFB(buf,14)=UNT_DISSONANCE;
+	} else {
+		WBUFB(buf,14)=unit->group->unit_id;
+	}
 	WBUFB(buf,15)=0;
 	clif_send(buf,packet_len_table[0x11f],&unit->bl,AREA);
 	return 0;

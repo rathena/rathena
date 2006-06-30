@@ -12,6 +12,7 @@
 //      0x080(UF_SKILL)		Spell CAN affect skills.
 //      0x100(UF_DANCE)		Dance skill
 //      0x200(UF_ENSEMBLE)	Ensemble skill
+//      0x400(UF_SONG)		Song skill
 //      0x800(UF_DUALMODE) Spell has effects both at an interval and when you step in/out
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
@@ -56,24 +57,24 @@
 286,0x9b,    ,  3, 0,  -1,all,   0x000	//SA_DELUGE#デリュージ
 287,0x9c,    ,  3, 0,  -1,all,   0x000	//SA_VIOLENTGALE#バイオレントゲイル
 288,0x9d,,3:3:4:4:5,0, -1,all,   0x000	//SA_LANDPROTECTOR#ランドプロテクター
-306,0x9e,    ,  4, 0,6000,all,   0x300	//BD_LULLABY#子守歌
-307,0x9f,    ,  4, 0,  -1,enemy, 0x310	//BD_RICHMANKIM#ニヨルドの宴
-308,0xa0,    ,  4, 0,  -1,enemy, 0x300	//BD_ETERNALCHAOS#永遠の混沌
-309,0xa1,    ,  4, 0,  -1,party, 0x300	//BD_DRUMBATTLEFIELD#戦太鼓の響き
-310,0xa2,    ,  4, 0,  -1,party, 0x300	//BD_RINGNIBELUNGEN#ニーベルングの指輪
-311,0xa3,    ,  4, 0,  -1,all,   0x300	//BD_ROKISWEIL#ロキの叫び
-312,0xa4,    ,  4, 0,  -1,party, 0x320	//BD_INTOABYSS#深淵の中に
-313,0xa5,    ,  4, 0,  -1,party, 0x300	//BD_SIEGFRIED#不死身のジークフリード
+306,0x9e,    ,  4, 0,6000,all,   0x200	//BD_LULLABY#子守歌
+307,0x9f,    ,  4, 0,  -1,enemy, 0x210	//BD_RICHMANKIM#ニヨルドの宴
+308,0xa0,    ,  4, 0,  -1,enemy, 0x200	//BD_ETERNALCHAOS#永遠の混沌
+309,0xa1,    ,  4, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD#戦太鼓の響き
+310,0xa2,    ,  4, 0,  -1,party, 0x200	//BD_RINGNIBELUNGEN#ニーベルングの指輪
+311,0xa3,    ,  4, 0,  -1,all,   0x200	//BD_ROKISWEIL#ロキの叫び
+312,0xa4,    ,  4, 0,  -1,party, 0x220	//BD_INTOABYSS#深淵の中に
+313,0xa5,    ,  4, 0,  -1,party, 0x200	//BD_SIEGFRIED#不死身のジークフリード
 317,0xa6,    ,  3, 0,3000,enemy, 0x100	//BA_DISSONANCE#不協和音
 319,0xa7,    ,  3, 0,  -1,all,   0x120	//BA_WHISTLE#口笛
 320,0xa8,    ,  3, 0,  -1,all,   0x120	//BA_ASSASSINCROSS#夕陽のアサシンクロス
 321,0xa9,    ,  3, 0,  -1,all,   0x120	//BA_POEMBRAGI#ブラギの詩
 322,0xaa,    ,  3, 0,6000,all,   0x920	//BA_APPLEIDUN#イドゥンの林檎
-325,0xab,    ,  3, 0,3000,enemy, 0x100	//DC_UGLYDANCE#自分勝手なダンス
-327,0xac,    ,  3, 0,  -1,all,   0x120	//DC_HUMMING#ハミング
-328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME#私を忘れないで…
-329,0xae,    ,  3, 0,  -1,all,   0x120	//DC_FORTUNEKISS#幸運のキス
-330,0xaf,    ,  3, 0,  -1,party, 0x100	//DC_SERVICEFORYOU#サービスフォーユー
+325,0xab,    ,  3, 0,3000,enemy, 0x400	//DC_UGLYDANCE#自分勝手なダンス
+327,0xac,    ,  3, 0,  -1,all,   0x420	//DC_HUMMING#ハミング
+328,0xad,    ,  3, 0,  -1,enemy, 0x400	//DC_DONTFORGETME#私を忘れないで…
+329,0xae,    ,  3, 0,  -1,all,   0x420	//DC_FORTUNEKISS#幸運のキス
+330,0xaf,    ,  3, 0,  -1,party, 0x400	//DC_SERVICEFORYOU#サービスフォーユー
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER#あなたに逢いたい
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS#闇グランドクロス
 362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA#バジリカ
@@ -87,7 +88,7 @@
 429,0x86,    ,  0, 1, 500,enemy, 0x000	//SG_MOON_WARM
 430,0x86,    ,  0, 1, 500,enemy, 0x000	//SG_STAR_WARM
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
-488,0xb9,    ,  3, 0,  -1,all,   0x100	//CG_HERMODE
+488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 535,0x86,    ,  0, 2,2000,enemy,0x008,NJ_KAENSIN#火炎陣#
 536,0x86,    ,  0, 2, 300,enemy,0x008,NJ_BAKUENRYU#爆炎龍#
 538,0xbb,,1:1:1:2:2:2:3:3:3:4,0, -1,all,0x010,NJ_SUITON#水遁#

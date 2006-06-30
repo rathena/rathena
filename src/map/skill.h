@@ -95,8 +95,9 @@ enum {
 	UF_NOPC		= 0x0010,	//May not target players
 	UF_NOMOB		= 0x0020,	//May not target mobs
 	UF_SKILL		= 0x0080,	//May target skills
-	UF_DANCE			= 0x0100,	// ダンススキル
-	UF_ENSEMBLE			= 0x0200,	// 合奏スキル
+	UF_DANCE			= 0x0100,	//Dance
+	UF_ENSEMBLE			= 0x0200,	//Duet
+	UF_SONG		= 0x0400,	//Song
 	UF_DUALMODE	= 0x0800,	//Spells should trigger both ontimer and onplace/onout/onleft effects.
 };
 
@@ -188,7 +189,7 @@ int skill_blown( struct block_list *src, struct block_list *target,int count);
 int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag);
 // ユニットスキル
 struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
-struct skill_unit *skill_initunit(struct skill_unit_group *group,int idx,int x,int y);
+struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id, int limit, int interval);

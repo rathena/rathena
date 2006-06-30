@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/05/30
+	* Added UF_SONG (0x400) to differentiate songs from dances. [Skotlex]
+	* Added preliminar support for making a Song+Dance turn into BA_DISSONANCE
+	  cells. Beware of potential bugs as it's untested. [Skotlex]
 	* Added mapflag "nochat" to prevent chatting rooms from being created.
 	  [Skotlex]
 	* Corrected some of the sleep checks when the char id does not matches with

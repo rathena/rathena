@@ -3306,10 +3306,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			do {
 				abra_skillid = rand() % MAX_SKILL_ABRA_DB;
 				if (skill_abra_db[abra_skillid].req_lv > skilllv ||
-					rand()%10000 >= skill_abra_db[abra_skillid].per ||		//dbに基づくレベル・確率判定
-					(abra_skillid >= NPC_PIERCINGATT && abra_skillid <= NPC_SUMMONMONSTER) ||	//NPC・結婚・養子・アイテムスキルはダメ
-					skill_get_unit_flag(abra_skillid) & UF_DANCE)	//演奏スキルはダメ
-						abra_skillid = 0;	// reset to get a new id
+					rand()%10000 >= skill_abra_db[abra_skillid].per ||
+					skill_get_inf2(abra_skillid)&INF2_NPC_SKILL ||
+					skill_get_unit_flag(abra_skillid) &(UF_DANCE|UF_ENSEMBLE|UF_SONG)
+				)
+					abra_skillid = 0;	// reset to get a new id
 			} while (abra_skillid == 0);
 			abra_skilllv = skill_get_max(abra_skillid) >  skilllv ? skilllv : skill_get_max(abra_skillid);
 			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
@@ -6155,6 +6156,44 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 #undef skill_failed
 }
 
+static int skill_dance_overlap_sub(struct block_list *bl, va_list ap)
+{
+	struct skill_unit *target = (struct skill_unit*)bl,
+		*src = va_arg(ap, struct skill_unit*);
+	int flag = va_arg(ap, int);
+	if (!target || !target->group || !target->group->state.song_dance)
+		return 0;
+	if (!(target->val2 & src->val2 & ~UF_ENSEMBLE)) //They don't match (song + dance) is valid.
+		return 0;
+	if (flag) { //Set dissonance
+		target->val1 = src->val1 = BA_DISSONANCE;
+		target->val2 |= UF_ENSEMBLE; //Add ensemble to signal this unit is overlapping.
+	} else { //Remove dissonance
+		target->val1 = target->group->skill_id; //Restore skill id
+		target->val2 &= ~UF_ENSEMBLE;
+	}
+	clif_skill_setunit(target); //Update look of affected cell.
+	return 1;
+}
+
+//Does the song/dance overlapping -> dissonance check. [Skotlex]
+//When flag is 0, this unit is about to be removed, cancel the dissonance effect
+//When 1, this unit has been positioned, so start the cancel effect.
+int skill_dance_overlap(struct skill_unit *unit, int flag)
+{
+	if (!unit || !unit->group || !unit->group->state.song_dance)
+		return 0;
+	if (!flag && !(unit->val2&UF_ENSEMBLE))
+		return 0; //Nothing to remove, this unit is not overlapped.
+	if (unit->val1 != unit->group->skill_id) 
+	{	//Reset state
+		unit->val1 = unit->group->skill_id;
+		unit->val2 &= ~UF_ENSEMBLE;
+	}
+	return map_foreachincell(skill_dance_overlap_sub,
+		unit->bl.m,unit->bl.x,unit->bl.y,BL_SKILL,unit,flag);
+}
+
 /*==========================================
  * Initializes and sets a ground skill.
  * flag&1 is used to determine when the skill 'morphs' (Warp portal becomes active, or Fire Pillar becomes active)
@@ -6377,6 +6416,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	group->state.into_abyss = (sc && sc->data[SC_INTOABYSS].timer != -1); //Store into abyss state, to know it shouldn't give traps back. [Skotlex]
 	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)); //Store the magic power flag. [Skotlex]
 	group->state.ammo_consume = (sd && sd->state.arrow_atk); //Store if this skill needs to consume ammo.
+	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)); //Signals if this is a song/dance (does not counts duets)
 	
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
@@ -6413,6 +6453,12 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			ux+=(i%5-2);
 			uy+=(i/5-2);
 			break;
+		default:
+			if (group->state.song_dance) {
+				val1 = skillid; //Holds SKILL id to use.
+				val2 = unit_flag&(UF_DANCE|UF_SONG); //Store whether this is a song/dance
+			}
+			break;
 		}
 		//直上スキルの場合設置座標上にランドプロテクターがないかチェック
 		if(range<=0)
@@ -6440,12 +6486,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		}
 
 		if(alive){
-			nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy));
-			unit->val1=val1;
-			unit->val2=val2;
+			nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy,val1,val2));
 			unit->limit=limit;
 			unit->range=range;
-				
+		
 			if (range==0 && active_flag)
 				map_foreachincell(skill_unit_effect,unit->bl.m,
 					unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
@@ -6620,6 +6664,13 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	}
 	type = SkillStatusChangeTable(sg->skill_id);
 	skillid = sg->skill_id;
+	if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
+  	{	//Treat this group as if it were BA_DISSONANCE.
+		//Values will be restored on proper switch case.
+		src->val1 = sg->unit_id;
+		sg->unit_id = UNT_DISSONANCE;
+		sg->skill_id = BA_DISSONANCE;
+	}
 
 	if (sg->interval == -1) {
 		switch (sg->unit_id) {
@@ -6654,7 +6705,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		sstatus->matk_min = sc->data[SC_MAGICPOWER].val3;
 		sstatus->matk_min = sc->data[SC_MAGICPOWER].val4;
 	}
-	
+
 	switch (sg->unit_id) {
 	case UNT_FIREWALL:
 		{
@@ -6829,6 +6880,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 	case UNT_DISSONANCE:
 		skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+		if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
+		{	//Restore values.
+			sg->skill_id = skillid;
+			sg->unit_id = src->val1;
+			src->val1 = BA_DISSONANCE;
+		}
 		break;
 
 	case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
@@ -9115,7 +9172,7 @@ void skill_stop_dancing (struct block_list *src)
  * スキルユニット初期化
  *------------------------------------------
  */
-struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y)
+struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2)
 {
 	struct skill_unit *unit;
 
@@ -9131,11 +9188,11 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	unit->bl.x=x;
 	unit->bl.y=y;
 	unit->group=group;
-	unit->val1=unit->val2=0;
 	unit->alive=1;
+	unit->val1=val1;
+	unit->val2=val2;
 
 	map_addblock(&unit->bl);
-	clif_skill_setunit(unit);
 
 	switch (group->skill_id) {
 	case AL_PNEUMA:
@@ -9153,7 +9210,12 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	case WZ_ICEWALL:
 		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_SETICEWALL);
 		break;
+	default:
+		if (group->state.song_dance) //Check for dissonance.
+			skill_dance_overlap(unit, 1);
+		break;
 	}
+	clif_skill_setunit(unit);
 	return unit;
 }
 
@@ -9172,6 +9234,9 @@ int skill_delunit (struct skill_unit *unit)
 
 	/* onlimitイベント呼び出し */
 	skill_unit_onlimit( unit,gettick() );
+
+	if (group->state.song_dance) //Restore dissonance effect.
+		skill_dance_overlap(unit, 0);
 
 	/* ondeleteイベント呼び出し */
 	if (!unit->range) {
@@ -9265,7 +9330,7 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 	group->valstr=NULL;
 
 	i = skill_get_unit_flag(skillid); //Reuse for faster access from here on. [Skotlex]
-	if (i&UF_DANCE) {
+	if (i&(UF_DANCE|UF_SONG|UF_ENSEMBLE)) {
 		struct map_session_data *sd = NULL;
 		if(src->type==BL_PC && (sd=(struct map_session_data *)src) ){
 			sd->skillid_dance=skillid;
@@ -9300,7 +9365,7 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 		ShowError("skill_delunitgroup: Group's source not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
 		return 0;	
 	}
-	if (skill_get_unit_flag(group->skill_id)&UF_DANCE)
+	if (skill_get_unit_flag(group->skill_id)&(UF_DANCE|UF_SONG|UF_ENSEMBLE))
 	{
 		struct status_change* sc = status_get_sc(src);
 		if (sc && sc->data[SC_DANCING].timer != -1)
@@ -9666,7 +9731,7 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 		return 0;
 
 	m_flag = (int *) aMalloc(sizeof(int)*group->unit_count);
-	memset(m_flag,0,sizeof(int)*group->unit_count);// 移動フラグ
+	memset(m_flag,0,sizeof(int)*group->unit_count);
 	//    m_flag
 	//		0: Neither of the following (skill_unit_onplace & skill_unit_onout are needed)
 	//		1: Unit will move to a slot that had another unit of the same group (skill_unit_onplace not needed)
@@ -9694,6 +9759,8 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 		if (!unit1->alive)
 			continue;
 		if (!(m_flag[i]&0x2)) {
+			if (group->state.song_dance) //Restore dissonance effect.
+				skill_dance_overlap(unit1, 0);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,
 				unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,4);
 		}
@@ -9703,7 +9770,6 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 			case 0:
 			//Cell moves independently, safely move it.
 				map_moveblock(&unit1->bl, unit1->bl.x+dx, unit1->bl.y+dy, tick);
-				clif_skill_setunit(unit1);
 				break;
 			case 1:
 			//Cell moves unto another cell, look for a replacement cell that won't collide
@@ -9715,7 +9781,6 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 					//Move to where this cell would had moved.
 					unit2 = &group->unit[j];
 					map_moveblock(&unit1->bl, unit2->bl.x+dx, unit2->bl.y+dy, tick);
-					clif_skill_setunit(unit1);
 					j++; //Skip this cell as we have used it.
 					break;
 				}
@@ -9724,7 +9789,10 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 			case 3:
 				break; //Don't move the cell as a cell will end on this tile anyway.
 		}
-		if (!(m_flag[i]&2)) { //We only moved the cell in 0-1
+		if (!(m_flag[i]&0x2)) { //We only moved the cell in 0-1
+			if (group->state.song_dance) //Check for dissonance effect.
+				skill_dance_overlap(unit1, 1);
+			clif_skill_setunit(unit1);
 			map_foreachincell(skill_unit_effect,unit1->bl.m,
 				unit1->bl.x,unit1->bl.y,group->bl_flag,&unit1->bl,tick,1);
 		}

@@ -25,6 +25,8 @@
 
 =========================
 06/30
+	* Updated skill_unit_db to use the correct values of
+	  UF_ENSEMBLE/UF_DANCE/UF_SONG as applicable. [Skotlex]
 	* Added the new X.4 headgears [Playtester]
 	* Fixed various items and sorted the item_db [Playtester]
 	* Reverted back Vulcan Arrow. It's fine now. Player can move after the attack animation end [Lupus]
