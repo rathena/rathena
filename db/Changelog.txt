@@ -25,6 +25,7 @@
 
 =========================
 06/30
+	* Fixed various items and sorted the item_db [Playtester]
 	* Reverted back Vulcan Arrow. It's fine now. Player can move after the attack animation end [Lupus]
 	* Raised attack power of Strouf according to X.4 updates [Playtester]
 06/29
