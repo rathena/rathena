@@ -39,7 +39,8 @@ Playtester
 Date		Added
 ======
 06/30
-	* Completely updated Yuno Field spawn to X.4 [Playtester]
+	* Completely updated Einbroch Field spawns to X.4 [Playtester]
+	* Completely updated Yuno Field spawns to X.4 [Playtester]
 	* Updated Orc Village spawns to X.4 [Playtester]
 	* Fixed a Rachel Field warp [Playtester]
 	* Fixed some warps thanks to akihito [Playtester]
