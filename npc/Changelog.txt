@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 06/30
+	* Completely updated Lighthalzen Field spawns to X.4 [Playtester]
 	* Completely updated Einbroch Field spawns to X.4 [Playtester]
 	* Completely updated Yuno Field spawns to X.4 [Playtester]
 	* Updated Orc Village spawns to X.4 [Playtester]
