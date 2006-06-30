@@ -24,6 +24,8 @@
 	-----
 
 =========================
+06/30
+	* Raised attack power of Strouf according to X.4 updates [Playtester]
 06/29
 	* Updated Freyr's Shoes and Vidar's Boots [Playtester]
 	* [Again] Added back walkdelay to Sonic Blow(thx@rkit), Arrow Vulcan [Lupus]

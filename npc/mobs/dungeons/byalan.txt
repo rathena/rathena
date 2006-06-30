@@ -110,5 +110,5 @@ iz_dun04.gat,69,243,0,0	monster	Hydra	1068,1,321000,150000,0
 iz_dun04.gat,124,233,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04.gat,134,233,0,0	monster	Hydra	1068,1,305000,150000,0
 iz_dun04.gat,0,0,0,0	monster	Penomena	1216,10,0,0,0
-iz_dun04.gat,0,0,0,0	monster	Strouf	1065,3,0,0,0
+iz_dun04.gat,0,0,0,0	monster	Strouf	1065,30,0,0,0
 iz_dun04.gat,95,147,0,0	monster	Deviace	1108,3,600000,300000,0
