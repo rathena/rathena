@@ -6875,7 +6875,7 @@ enum {  MF_NOMEMO,MF_NOTELEPORT,MF_NOSAVE,MF_NOBRANCH,MF_NOPENALTY,MF_NOZENYPENA
 	MF_NOWARP,MF_FREE,MF_NOICEWALL,MF_SNOW,MF_FOG,MF_SAKURA,MF_LEAVES,MF_RAIN,
 	MF_INDOORS,MF_NOGO,MF_CLOUDS,MF_CLOUDS2,MF_FIREWORKS,MF_GVG_CASTLE,MF_GVG_DUNGEON,MF_NIGHTENABLED,
 	MF_NOBASEEXP, MF_NOJOBEXP, MF_NOMOBLOOT, MF_NOMVPLOOT, MF_NORETURN, MF_NOWARPTO, MF_NIGHTMAREDROP,
-	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP, MF_JEXP, MF_BEXP, MF_NOVENDING, MF_LOADEVENT };
+	MF_RESTRICTED, MF_NOCOMMAND, MF_NODROP, MF_JEXP, MF_BEXP, MF_NOVENDING, MF_LOADEVENT, MF_NOCHAT };
 
 int buildin_setmapflagnosave(struct script_state *st)
 {
@@ -7037,6 +7037,8 @@ int buildin_setmapflag(struct script_state *st)
 			case MF_LOADEVENT:
 				map[m].flag.loadevent=1;
 				break;
+			case MF_NOCHAT:
+				map[m].flag.nochat=1;
 		}
 	}
 
@@ -7179,6 +7181,8 @@ int buildin_removemapflag(struct script_state *st)
 			case MF_LOADEVENT:
 				map[m].flag.loadevent=0;
 				break;
+			case MF_NOCHAT:
+				map[m].flag.nochat=0;
 		}
 	}
 
@@ -10962,8 +10966,11 @@ int buildin_awake(struct script_state *st)
 				node = node->next;
 				continue;
 			}
-			if( sd && sd->char_id != tst->sleep.charid )
+			if((sd && sd->char_id != tst->sleep.charid) || (tst->rid && !sd))
+			{	//Cancel Execution
+				tst->state=END;
 				tst->rid = 0;
+			}
 
 			delete_timer(tst->sleep.timer, run_script_timer);
 			node = script_erase_sleepdb(node);
@@ -11705,9 +11712,12 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
 	struct map_session_data *sd = map_id2sd(st->rid);
 
-	if( sd && sd->char_id != id ) {
+	if((sd && sd->char_id != id) || (st->rid && !sd))
+	{	//Character mismatch. Cancel execution.
 		st->rid = 0;
+		st->state = END;
 	}
+
 	while( node && st->sleep.timer != -1 ) {
 		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
 			script_erase_sleepdb(node);
@@ -11716,8 +11726,6 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 		}
 		node = node->next;
 	}
-	if(st->rid && !sd)
-		st->state = END;
 
 	run_script_main(st);
 	return 0;

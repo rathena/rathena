@@ -1084,6 +1084,7 @@ struct map_data {
 		unsigned nodrop : 1;
 		unsigned novending : 1;
 		unsigned loadevent : 1;
+		unsigned nochat :1;
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];

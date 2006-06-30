@@ -2515,6 +2515,9 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"loadevent")==0) { // Skotlex
 		map[m].flag.loadevent=state;
 	}
+	else if (strcmpi(w3,"nochat")==0) { // Skotlex
+		map[m].flag.nochat=state;
+	}
  
 	return 0;
 }

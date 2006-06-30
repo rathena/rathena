@@ -12,6 +12,7 @@
 #include "clif.h"
 #include "pc.h"
 #include "npc.h"
+#include "atcommand.h"
 
 int chat_triggerevent(struct chat_data *cd);
 
@@ -27,6 +28,11 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 
 	if (sd->chatID)
 		return 0;	//Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
+
+	if (map[sd->bl.m].flag.nochat) {
+		clif_displaymessage (sd->fd, msg_txt(281));
+		return 0; //Can't drop items in nodrop mapflag maps.
+	}
 	pc_stop_walking(sd,1);
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
 
