@@ -3,33 +3,47 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.0 Beta
+//= 1.1 Beta
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
 //= It's the Thanatos Tower Warps...
 //===== Additional Comments: =================================
 //= 1.0 - First Release [Ishizu-chan]
+//= 1.1 - Added Entrance Warp Guard
 //============================================================
 
-//Hugel Field 01 -> Thanatos Scene 01
-hu_fild01.gat,139,164,0	script	Thanatos Tower Warper	111,{
-	mes "[Thanatos Tower Warper]";
-	mes "There is no turning back.";
-	mes "Are you sure want to go Thanatos Tower?";
-	next;
-	menu "Yes",-,"No",T_CLOSE;
 
-	warp "tha_scene01.gat",131,224;
-	end;
+// Tour Guide - Thanatos Tower
+hu_fild01.gat,140,163,5	script	Thanatos Tower Guard	852,{
 
-T_CLOSE:
-	close;
+  mes "[Thanatos Tower Guard]";
+  mes "Are you sure you want to go to the Thanatos Tower?";
+  mes "You can't go back, and I'll have to charge 5000 Zeny.";
+  next;
+  menu "Yes.",-,
+       "No.",L_End;
+
+  if (Zeny < 5000) goto L_Zeny;
+  set Zeny, Zeny - 5000;
+  warp "tha_scene01.gat",131,224;
+  end;
+
+  L_Zeny:
+  mes "[Thanatos Tower Guard]";
+  mes "You don't have enough Zeny.";
+  close;
+
+  L_End:
+  mes "[Thanatos Tower Guard]";
+  mes "Goodbye.";
+  close;
+
 }
 
-//Thanatos Scene 01 -> Thantos Tower F1
-tha_scene01.gat,144,200,0	warp	tha_scene01	1,1,tha_t01.gat,150,39
-tha_t01.gat,150,32,0	warp	tha_scene02	1,1,tha_scene01.gat,142,200
+// Thanatos Scene (tha_scene01.gat)
+tha_scene01.gat,144,200,0	warp	WarpThana0a	1,1,tha_t01.gat,150,39
+tha_t01.gat,150,32,0	warp	WarpThana0b	1,1,tha_scene01.gat,142,200
 
 // Thanatos Tower Level 1 (tha_t01.gat)
 tha_t01.gat,150,149,0	warp	WarpThana1a	1,1,tha_t02.gat,150,129
