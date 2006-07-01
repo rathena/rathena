@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/01
+	* Fixed a warp in the Ice Dungeon [Playtester]
 06/30
 	* Implemented the eye of hellion quest. [MasterOfMuppets]
 	* Added official Thanatos Tower quest thanks to Ishizu-chan [Playtester]
