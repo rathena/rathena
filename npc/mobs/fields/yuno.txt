@@ -37,10 +37,11 @@ yuno_fild01.gat,0,0,0,0	monster	Blue Plant	1079,2,1800000,900000,1
 // yuno_fild02 - Kiel Khayr's Cottage
 //==================================================
 yuno_fild02.gat,0,0,0,0	monster	Horn 	1128,40,0,0,0
-yuno_fild02.gat,0,0,0,0	monster	Beetle King	1494,40,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Beetle King	1494,35,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Dustiness	1114,20,0,0,0
-yuno_fild02.gat,0,0,0,0	monster	Stainer	1174,20,0,0,0
-yuno_fild02.gat,0,0,0,0	monster	Sageworm	1281,10,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
+yuno_fild02.gat,0,0,0,0	monster	Petite	1155,10,0,0,0
+yuno_fild02.gat,200,350,200,50	monster	Deleter	1384,10,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Wild Rose	1261,5,0,0,0
 yuno_fild02.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 yuno_fild02.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
