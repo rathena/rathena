@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/01
+	* Added Silence Effect to the Lord of the Dead Card [Playtester]
 06/30
 	* Applied some mob_db changes according to the 27/06/2006 patch [Playtester]
 	* Updated skill_unit_db to use the correct values of
