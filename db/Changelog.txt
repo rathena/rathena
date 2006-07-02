@@ -25,6 +25,7 @@
 
 =========================
 07/02
+	* Added the Mercenary Summon Scrolls [Playtester]
 	* Fixed two books in the item_db [Playtester]
 07/01
 	* Added Silence Effect to the Lord of the Dead Card [Playtester]

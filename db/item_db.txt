@@ -2539,7 +2539,37 @@
 12149,Bullet_Casing,Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; },{},{}
 12150,Shell_of_Blood_Casing,Shell of Blood Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; },{},{}
 12151,Silver_Bullet_Casing,Silver Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; },{},{}
-12152,Special_Gift,Special Gift,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12152,Special_Gift,Special Gift,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12153,Archer_Mercenary_Summon_Scroll_Level_1,Archer Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12154,Archer_Mercenary_Summon_Scroll_Level_2,Archer Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12155,Archer_Mercenary_Summon_Scroll_Level_3,Archer Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12156,Archer_Mercenary_Summon_Scroll_Level_4,Archer Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12157,Archer_Mercenary_Summon_Scroll_Level_5,Archer Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12158,Archer_Mercenary_Summon_Scroll_Level_6,Archer Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12159,Archer_Mercenary_Summon_Scroll_Level_7,Archer Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12160,Archer_Mercenary_Summon_Scroll_Level_8,Archer Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12161,Archer_Mercenary_Summon_Scroll_Level_9,Archer Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12162,Archer_Mercenary_Summon_Scroll_Level_10,Archer Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12163,Swordsman_Mercenary_Summon_Scroll_Level_1,Swordsman Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12164,Swordsman_Mercenary_Summon_Scroll_Level_2,Swordsman Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12165,Swordsman_Mercenary_Summon_Scroll_Level_3,Swordsman Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12166,Swordsman_Mercenary_Summon_Scroll_Level_4,Swordsman Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12167,Swordsman_Mercenary_Summon_Scroll_Level_5,Swordsman Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12168,Swordsman_Mercenary_Summon_Scroll_Level_6,Swordsman Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12169,Swordsman_Mercenary_Summon_Scroll_Level_7,Swordsman Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12170,Swordsman_Mercenary_Summon_Scroll_Level_8,Swordsman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12171,Swordsman_Mercenary_Summon_Scroll_Level_9,Swordsman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12172,Swordsman_Mercenary_Summon_Scroll_Level_10,Swordsman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12173,Spearman_Mercenary_Summon_Scroll_Level_1,Spearman Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12174,Spearman_Mercenary_Summon_Scroll_Level_2,Spearman Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12175,Spearman_Mercenary_Summon_Scroll_Level_3,Spearman Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12176,Spearman_Mercenary_Summon_Scroll_Level_4,Spearman Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12177,Spearman_Mercenary_Summon_Scroll_Level_5,Spearman Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12178,Spearman_Mercenary_Summon_Scroll_Level_6,Spearman Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12179,Spearman_Mercenary_Summon_Scroll_Level_7,Spearman Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12180,Spearman_Mercenary_Summon_Scroll_Level_8,Spearman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12181,Spearman_Mercenary_Summon_Scroll_Level_9,Spearman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12182,Spearman_Mercenary_Summon_Scroll_Level_10,Spearman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers
