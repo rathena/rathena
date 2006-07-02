@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/02
+	* Moved Earth Petits away from the Coal Mine Entrance Map in eamobs [Playtester]
 07/01
 	* Fixed a warp in the Ice Dungeon [Playtester]
 06/30
