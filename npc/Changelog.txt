@@ -38,6 +38,9 @@ Playtester
 
 Date		Added
 ======
+07/03
+	* Fixed many many bugs in Crusader Job Quest [Lupus]
+	  Changed all numbers to job_constants
 07/02
 	* Split quests from cities/louyang.txt to quests/quests_louyang.txt [Evera]
 	* Added some fixed positions and fixed mob id in Einbroch spawns [Playtester]

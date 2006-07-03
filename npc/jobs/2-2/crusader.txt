@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -27,6 +27,8 @@
 //= 1.7 Updated names and required items, Chivalry Emblem +
 //=     Hand of God allow to skip item gathering [DracoRPG]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Fixed endless loop, wrong condition check [Lupus]
+//=	also changed all job numbers to constants, fixed logic
 //============================================================
 
 
@@ -34,28 +36,25 @@ prt_castle.gat,45,169,4	script	Senior Crusader	752,{
 	callfunc "F_BlockHigh",Job_Swordman_High,"Swordman High",Job_Paladin,"Paladin","^000080Michael Halig^000000";
 
 	mes "[^000080Michael Halig^000000]";
-	if (BaseJob > 0) goto NEXT_0;
-	if (BaseJob == 0) goto NOV;
+	if (BaseJob > Job_Swordman) goto NEXT0;
+	if (BaseJob == Job_Novice){
+		mes "Hello there.";
+		next;
+		mes "[^000080Michael Halig^000000]";
+		mes "If you become a ^800000Swordsman^000000, you will gain the privelege of becoming a ^800000Knight^000000 or ^800000Crusader^000000.";
+		next;
+		mes "[^000080Michael Halig^000000]";
+		mes "If you decide to go along the path of the ^800000Crusader^000000, come back here.";
+		mes "Just take note that you must obtain a job level of at least 40 first before you can move up to the 2nd job.";
+		close;
+	}
+
 	mes "Hello "+ strcharinfo(0);
 	mes "I see that you've registered to the ^008000Swordsman's Association^000000.";
-	TALK:
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "If you become a ^800000Swordsman^000000, you will gain the privelege of becoming a ^800000Knight^000000 or ^800000Crusader^000000.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "If you decide to go along the path of the ^800000Crusader^000000, come back here.";
-	mes "Just take note that you must obtain a job level of at least 40 first before you can move up to the 2nd job.";
-	close;
-	NOV:
-	mes "Hello there.";
-	goto TALK;
-NEXT_0:
-	if (BaseJob > 1) goto NEXT0;
 	if (CRUS_Q == 1) goto CONT;
 	if (CRUS_Q == 2) goto CONT0;
-	if (CRUS_Q == 3) goto CONT1;
-	if (CRUS_Q == 4) goto CONT2;
+	if (CRUS_Q == 3) goto L_GETITM1;
+	if (CRUS_Q == 4) goto L_GETITM2;
 	if (CRUS_Q > 4) goto CONT3;
 	mes "Welcome, can I help you with something?";
 	next;
@@ -66,7 +65,7 @@ NEXT_0:
 	mes "[^000080Michael Halig^000000]";
 	mes "If you decide to take the path of the ^800000Crusader^000000, feel free to come back.";
 	close;
-	JOB:
+JOB:
 	mes "[^000080Michael Halig^000000]";
 	mes "All right, let me take a look at you first.";
 	next;	
@@ -74,7 +73,7 @@ NEXT_0:
 	set JBLVL,50;
 	set CRUS_Q,5;
 	goto TEST1;
-	SKIP:
+SKIP:
 	if (JobLevel > 39) goto OKAY;
 	mes "[^000080Michael Halig^000000]";
 	mes "I'm sorry, but you need to be at least at a job level of 40.";
@@ -82,13 +81,13 @@ NEXT_0:
 	mes "[^000080Michael Halig^000000]";
 	mes "All 2nd jobs require that.";
 	close;
-	OKAY:
+OKAY:
 	if (SkillPoint == 0) goto OKAY0;
-	JOB0:
+JOB0:
 	mes "[^000080Michael Halig^000000]";
 	mes "In order to become a ^800000Crusader^000000, you have to have used all your available skill points first.";
 	close;
-	OKAY0:
+OKAY0:
 	mes "[^000080Michael Halig^000000]";
 	mes "Everything looks all right.";
 	set CRUS_Q,1;
@@ -100,23 +99,21 @@ NEXT_0:
 	mes "[^000080Michael Halig^000000]";
 	mes "Oh, all right.  Come back when you're ready.";
 	close;
-	OKAY1:
+OKAY1:
 	if (SkillPoint != 0) goto JOB0;
-	set CRUS_Q,2;
+	set CRUS_Q,rand (3,4);
 	mes "[^000080Michael Halig^000000]";
 	mes "All right, the first test requires you to collect items.";
 	next;
-	set CRUS_Q, rand (2);
-	set CRUS_Q,CRUS_Q + 3;
 	mes "[^000080Michael Halig^000000]";
 	mes "Bring back the following items:";
-	if (CRUS_Q != 3) goto IT;
-	mes "- 10 ^FF0000Decayed Nails^000000";
-	mes "- 10 ^FF0000Daenggies^000000";
-	mes "- 10 ^FF0000Worn-out Prison Uniforms^000000";
-	mes "- 10 ^FF0000Stinky Scales^000000";
-	close;
-	IT:
+	if (CRUS_Q == 3){
+		mes "- 10 ^FF0000Decayed Nails^000000";
+		mes "- 10 ^FF0000Daenggies^000000";
+		mes "- 10 ^FF0000Worn-out Prison Uniforms^000000";
+		mes "- 10 ^FF0000Stinky Scales^000000";
+		close;
+	}
 	mes "- 10 ^FF0000Lanterns^000000";
 	mes "- 10 ^FF0000Horrendous Mouths^000000";
 	mes "- 10 ^FF0000Rotten Bandages^000000";
@@ -132,12 +129,12 @@ NEXT_0:
 	mes "I hope that you consider to become one.";
 	mes "To fight for good is a job that should be done by everyone to some extent.";
 	close;
-	ASK0:
+ASK0:
 	mes "[^000080Michael Halig^000000]";
 	mes "The purpose of a ^800000Crusader^000000 is to work for the good in the world.";
 	mes "A ^800000Crusader^000000 is a person of righteousness at work.";
 	close;
-	CONT:
+CONT:
 	mes "Have you changed your mind?";
 	next;
 	menu "Yes, I want to become a ^800000Crusader^000000.",JOB,"Sorry, but I don't want to.",-;
@@ -147,7 +144,7 @@ NEXT_0:
 	mes "[^000080Michael Halig^000000]";
 	mes "Come back if you do want to.";
 	close;
-	CONT0:
+CONT0:
 	mes "Well, hm...";
 	next;
 	mes "[^000080Michael Halig^000000]";
@@ -160,30 +157,29 @@ NEXT_0:
 	mes "[^000080Michael Halig^000000]";
 	mes "Oh, all right.";
 	close;
-	CONT1:
+L_GETITM1:
 	set @item,0;
 	if(countitem(957)>=10) goto ITEM7;//Items: Decayed_Nail,
 	mes "- 10 ^FF0000Decayed Nails^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM7:
 	if(countitem(901)>=10) goto ITEM8;//Items: Daenggie,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Danggies^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM8:
-	if(countitem(1099)>=10) goto ITEM10;//Items: Worn-out_Prison_Uniform,
+	if(countitem(1099)>=10) goto ITEM9;//Items: Worn-out_Prison_Uniform,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Worn-out Prison Uniforms^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM9:
-	if(countitem(959)>=10) goto ITEM9;//Items: Stinky_Scale,
+	if(countitem(959)>=10) goto ITEM10;//Items: Stinky_Scale,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Stinky Scales^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM10:
-	if (@item == 0) goto DONE;
-	close;
-	DONE:
+	if(@item) close;
+
 	mes "Good job!";
 	mes "You collected everything!";
 	delitem 957,10;//Items: Decayed_Nail,
@@ -191,7 +187,7 @@ NEXT_0:
 	delitem 1099,10;//Items: Worn-out_Prison_Uniform,
 	delitem 959,10;//Items: Stinky_Scale,
 	set CRUS_Q,5;
-	TEST1:
+TEST1:
 	next;
 	mes "[^000080Michael Halig^000000]";
 	mes "All right, let's move on to the 2nd test.";
@@ -200,31 +196,31 @@ NEXT_0:
 	mes "Go to the prison, it's in the basement";
 	mes "Before you do, make sure that you bring a ^FF0000Rosary^000000 with you.";
 	close;
-	CONT2:
+
+L_GETITM2:
 	set @item, 0;
 	if(countitem(1041)>=10) goto ITEM11;//Items: Lantern,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Lanterns^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM11:
 	if(countitem(958)>=10) goto ITEM12;//Items: Horrendous_Mouth,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Horrendous Mouths^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM12:
 	if(countitem(930)>=10) goto ITEM13;//Items: Rotten_Bandage,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Rotten Bandages^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM13:
 	if(countitem(1062)>=10) goto ITEM14;//Items: Jack_'o_Pumpkin,
 	mes "You still miss the this item";
 	mes "- 10 ^FF0000Jack 'o Pumpkins^000000";
-	set @item, item +1;
+	set @item, @item +1;
 	ITEM14:
-	if (@item== 0) GOTO DONE0;
-	close;
-	DONE0:
+	if(@item) close;
+
 	mes "Good job!";
 	mes "You collected everything!";
 	delitem 1041,10;//Items: Lantern,
@@ -233,13 +229,13 @@ NEXT_0:
 	delitem 1062,10;//Items: Jack_'o_Pumpkin,
 	set CRUS_Q,5;
 	goto TEST1;
-	CONT3:
+CONT3:
 	if (CRUS_Q == 8) goto CONT4;
 	if (CRUS_Q > 8) goto CONT5;
 	mes "Please talk to the man in the prison to continue.";
 	mes "Make sure you bring a ^FF0000Rosary^000000 with you.";
 	close;
-	CONT4:
+CONT4:
 	mes "Great job in accomplishing the ^FF8000Patience Test^000000!";
 	next;
 	mes "[^000080Michael Halig^000000]";
@@ -247,22 +243,22 @@ NEXT_0:
 	mes "Please talk to Gabriel Valentine at the Cathedral, she will test your knowledge.";
 	set CRUS_Q,9;
 	close;
-	CONT5:
+CONT5:
 	if (CRUS_Q == 13) goto CONT6;
 	if (CRUS_Q == 14) goto CONT7;
 	mes "Please go talk to Gabriel Valentine at the Cathedral to continue.";
 	close;
-	CONT6:
+CONT6:
 	mes "Excellent work in completing all the necessary tests!";
 	mes "Now let me examine you before you become a ^800000Crusader^000000.";
 	next;
 	set CRUS_Q,14;
 	mes "[^000080Michael Halig^000000]";
-	CONT7:
+CONT7:
 	if (SkillPoint == 0) goto GOOD;
 	mes "I'm sorry, but you'll need to use up all your skill points first.";
 	close;
-	GOOD:
+GOOD:
 	mes "This is to compliment your job change.";
 	if (JBLVL != 50) getitem 1409,1;//Items: Pike__,
 	if (JBLVL == 50) getitem 1408,1;//Items: Pike_,
@@ -271,88 +267,88 @@ NEXT_0:
 	callfunc "F_ClearJobVar";	// clears all job variables for the current player
 	close;
 NEXT0:
-	if (BaseJob != 2) goto NEXT1;
+	if (BaseJob != Job_Mage) goto NEXT1;
 	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
 	mes "Hope you have a good day!";
 	close;
 NEXT1:
-	if (BaseJob != 3) goto NEXT2;
+	if (BaseJob != Job_Archer) goto NEXT2;
 	mes "Good luck in your hunting.";
 	close;
 NEXT2:
-	if (BaseJob != 4) goto NEXT3;
+	if (BaseJob != Job_Acolyte) goto NEXT3;
 	mes "Good day to you!";
 	mes "Hope you do well to find your path.";
 	close;
 NEXT3:
-	if (BaseJob != 5) goto NEXT4;
+	if (BaseJob != Job_Merchant) goto NEXT4;
 	mes "Hello, we don't currently need anything, sorry about that.";
 	close;
 NEXT4:
-	if (BaseJob != 6) goto NEXT5;
+	if (BaseJob != Job_Thief) goto NEXT5;
 	mes "Better watch yourself.";
 	close;
 NEXT5:
-	if (BaseJob != 7) goto NEXT6;
+	if (BaseJob != Job_Knight) goto NEXT6;
 	mes "Good day to you, " + strcharinfo(0);
 	close;
 NEXT6:
-	if (BaseJob != 8) goto NEXT7;
+	if (BaseJob != Job_Priest) goto NEXT7;
 	mes "Good day, "+ strcharinfo(0);
 	mes "I would hope to believe that all is going well.";
 	close;
 NEXT7:
-	if (BaseJob != 9) goto NEXT8;
+	if (BaseJob != Job_Wizard) goto NEXT8;
 	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
 	mes "Nice to have you wish us.";
 	close;
 NEXT8:
-	if (BaseJob != 10) goto NEXT9;
+	if (BaseJob != Job_Blacksmith) goto NEXT9;
 	mes "Hello, we're not in need of any weapons or armour at the moment, thank you.";
 	close;
 NEXT9:
-	if (BaseJob != 11) goto NEXT10;
+	if (BaseJob != Job_Hunter) goto NEXT10;
 	mes "Hello, wish you luck for your success.";
 	close;
 NEXT10:
-	if (BaseJob != 12) goto NEXT11;
+	if (BaseJob != Job_Assassin) goto NEXT11;
 	mes "Stay out of trouble, you don't want the guards to come after you, now do you?";
 	close;
 NEXT11:
-	if (BaseJob != 14) goto NEXT12;
+	if (BaseJob != Job_Crusader) goto NEXT12;
 	mes "Good day, "+ strcharinfo(0);
 	close;
 NEXT12:
-	if (BaseJob != 15) goto NEXT13;
+	if (BaseJob != Job_Monk) goto NEXT13;
 	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
 	close;
 NEXT13:
-	if (BaseJob != 16) goto NEXT14;
+	if (BaseJob != Job_Sage) goto NEXT14;
 	mes "Welcome to the ^008000Castle of Prontera^000000, I hope you enjoy your stay.";
 	close;
 NEXT14:
-	if (BaseJob != 17) goto NEXT15;
+	if (BaseJob != Job_Rogue) goto NEXT15;
 	mes "Stay out of trouble if you know what's good for you.";
 	close;
 NEXT15:
-	if (BaseJob != 18) goto NEXT16;
+	if (BaseJob != Job_Alchem) goto NEXT16;
 	mes "So, how are the experiments going down in ^00FF00Al de Baran^000000?";
 	close;
 NEXT16:
-	if (BaseJob != 19) goto NEXT17;
+	if (BaseJob != Job_Bard) goto NEXT17;
 	mes "Welcome to the castle, good sir.";
 	close;
 NEXT17:
-	if (BaseJob != 20) goto NEXT18;
+	if (BaseJob != Job_Dancer) goto NEXT18;
 	mes "Good day, miss.";
 	close;
 NEXT18:
-	if (BaseJob != 22) goto NEXT19;
-	if (Sex != 0) goto MALE;
-	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
-	close;
-	MALE:
-	mes "Well done, sir!";
+	if (BaseJob != Job_Wedding) goto NEXT19;
+	if (Sex){
+		mes "Well done, sir!";
+	} else {
+		mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
+	}
 	close;
 NEXT19:
 	mes "Hello and good day!";
@@ -443,21 +439,21 @@ prt_castle.gat,164,32,0	script	Man in Anguish	733,{
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 prt_church.gat,94,116,0	script	Gabriel Valentine	745,{
 	mes "[^000080Gabriel Valentine^000000]";
-	if (BaseJob != 0) goto NEXT_o;
-	mes "Hello young traveler.";
-	close;
-NEXT_o:
-	if (BaseJob != 1) goto NEXT0;
+	if (BaseJob == Job_Novice){
+		mes "Hello young traveler.";
+		close;
+	}
+	if (BaseJob != Job_Swordman) goto NEXT0;
 	mes "Hello, " + strcharinfo(0);
 	next;
 	if (CRUS_Q != 9) goto EXIT;
-	BEGIN:
+BEGIN:
 	menu "Take the Knowledge test.",-,"Nothing.",EXIT;
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "Oh, on your way to become a ^800000Crusader^000000 huh?";
 	mes "Okay...";
 	next;
-	START:
+START:
 	set @Q , 0;
 	set @Q1 , 0;
 	set @Q2 , 0;
@@ -480,8 +476,8 @@ NEXT_o:
 	set @Q19 , 0;
 	set @Q20 , 0;
 	set @ANS , 0;
-	RND:
-	if (@Q > 10) goto DONE;
+RND:
+	if (@Q > 10) goto L_DONE;
 	set @RND, rand(20);
 	if (@RND > 9) goto G1;
 	if (@RND > 4) goto G1A;
@@ -715,19 +711,19 @@ NEXT_o:
 	menu "Yes",-,"No",RND;
 	set @ANS,@ANS + 1;
 	goto RND;
-	DONE:
+	L_DONE:
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "You got "+ @ANS +" / 10 questions correct.";
 	next;
 	if (CRUS_Q != 10) goto secND;
 	if (@ANS < 8) goto NO;
-	PASS:
+PASS:
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "Excellent work!  You qualify to pass the ^FF8000Knowledge Test^000000!";
 	mes "You're almost done, you are now at the ^FF8000Purification Test^000000, find Bliant Piyord at ^008000Prontera Chivalry^000000.";
 	set CRUS_Q, 11;
 	close;
-	NO:
+NO:
 	set CRUS_Q, 10;
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "I'm sorry, you didn't get enough to qualify.";
@@ -736,101 +732,101 @@ NEXT_o:
 	mes "Try giving it another go when you feel you're ready.";
 	mes "I'll only expect you to get at least 8 correct from now on.";
 	close;
-	secND:
+secND:
 	if (@ANS > 7) goto PASS;
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "I'm sorry, you didn't get enough correct.";
 	close;
-	EXIT:
+EXIT:
 	if (CRUS_Q == 10) goto BEGIN;
 	if (CRUS_Q > 10) goto FINISH;
 	close;
-	FINISH:
+FINISH:
 	mes "[^000080Gabriel Valentine^000000]";
 	mes "Please go to the Guardian Knight at ^008000Prontera Castle^000000 to continue on to the ^FF8000Purification Test^000000.";
 	close;
 NEXT0:
-	if (BaseJob != 2) goto NEXT1;
+	if (BaseJob != Job_Mage) goto NEXT1;
 	mes "Hello, welcome to the ^008000Prontera Chivalry^000000.";
 	mes "Hope you have a good day!";
 	close;
 NEXT1:
-	if (BaseJob != 3) goto NEXT2;
+	if (BaseJob != Job_Archer) goto NEXT2;
 	mes "Good luck in your hunting.";
 	close;
 NEXT2:
-	if (BaseJob != 4) goto NEXT3;
+	if (BaseJob != Job_Acolyte) goto NEXT3;
 	mes "Good day to you!";
 	mes "Hope you do well to find your path.";
 	close;
 NEXT3:
-	if (BaseJob != 5) goto NEXT4;
+	if (BaseJob != Job_Merchant) goto NEXT4;
 	mes "Hello, we don't currently need anything, sorry about that.";
 	close;
 NEXT4:
-	if (BaseJob != 6) goto NEXT5;
+	if (BaseJob != Job_Thief) goto NEXT5;
 	mes "Better watch yourself.";
 	close;
 NEXT5:
-	if (BaseJob != 7) goto NEXT6;
+	if (BaseJob != Job_Knight) goto NEXT6;
 	mes "Good day to you, "+ strcharinfo(0);
 	close;
 NEXT6:
-	if (BaseJob != 8) goto NEXT7;
+	if (BaseJob != Job_Priest) goto NEXT7;
 	mes "Good day, " + strcharinfo(0);
 	mes "I would hope to believe that all is going well.";
 	close;
 NEXT7:
-	if (BaseJob != 9) goto NEXT8;
+	if (BaseJob != Job_Wizard) goto NEXT8;
 	mes "Hello!  Nice to have you wish us.";
 	close;
 NEXT8:
-	if (BaseJob != 10) goto NEXT9;
+	if (BaseJob != Job_Blacksmith) goto NEXT9;
 	mes "Hello, we're not in need of any weapons or armour at the moment, thank you.";
 	close;
 NEXT9:
-	if (BaseJob != 11) goto NEXT10;
+	if (BaseJob != Job_Hunter) goto NEXT10;
 	mes "Hello, wish you luck for your success.";
 	close;
 NEXT10:
-	if (BaseJob != 12) goto NEXT11;
+	if (BaseJob != Job_Assassin) goto NEXT11;
 	mes "Stay out of trouble, you don't want the guards to come after you, now do you?";
 	close;
 NEXT11:
-	if (BaseJob != 14) goto NEXT12;
+	if (BaseJob != Job_Crusader) goto NEXT12;
 	mes "Good day, " + strcharinfo(0);
 	close;
 NEXT12:
-	if (BaseJob != 15) goto NEXT13;
+	if (BaseJob != Job_Monk) goto NEXT13;
 	mes "Hello, welcome to the ^008000Knight's Headquarters^000000.";
 	close;
 NEXT13:
-	if (BaseJob != 16) goto NEXT14;
+	if (BaseJob != Job_Sage) goto NEXT14;
 	mes "Welcome to the ^008000Knight's Headquarters^000000, I hope you enjoy your stay.";
 	close;
 NEXT14:
-	if (BaseJob != 17) goto NEXT15;
+	if (BaseJob != Job_Rogue) goto NEXT15;
 	mes "Stay out of trouble if you know what's good for you.";
 	close;
 NEXT15:
-	if (BaseJob != 18) goto NEXT16;
+	if (BaseJob != Job_Alchem) goto NEXT16;
 	mes "So, how are the experiments going down in ^00FF00Al de Baran^000000?";
 	close;
 NEXT16:
-	if (BaseJob != 19) goto NEXT17;
+	if (BaseJob != Job_Bard) goto NEXT17;
 	mes "Welcome to the castle, good sir.";
 	close;
 NEXT17:
-	if (BaseJob != 20) goto NEXT18;
+	if (BaseJob != Job_Dancer) goto NEXT18;
 	mes "Good day, miss.";
 	close;
 NEXT18:
-	if (BaseJob != 22) goto NEXT19;
-	if (Sex != 0) goto MALE;
-	mes "Hello, welcome to the ^008000Knight's Headquarters^000000.";
-	close;
-	MALE:
-	mes "Well done, sir!";
+	if (BaseJob != Job_Wedding) goto NEXT19;
+	if (Sex != 0){
+		mes "Well done, sir!";
+	} else {
+		mes "Hello, welcome to the ^008000Knight's Headquarters^000000.";
+	}
 	close;
 NEXT19:
 	mes "Hello and good day!";
@@ -845,12 +841,13 @@ NEXT19:
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 prt_in.gat,83,97,0	script	Patron Knight	734,{
 	mes "[^000080Bliant Piyord^000000]";
-	if (BaseJob != 0) goto NEXT_o;
-	mes "Hello, young traveler.";
-	mes "Welcome.";
-	close;
-NEXT_o:
-	if (BaseJob != 1) goto NEXT0;
+	if (BaseJob == Job_Novice){
+		mes "Hello, young traveler.";
+		mes "Welcome.";
+		close;
+	}
+
+	if (BaseJob != Job_Swordman) goto NEXT0;
 	if (CRUS_Q == 11) goto PART1;
 	if (CRUS_Q == 12) goto PART2;
 	if (CRUS_Q != 13) goto EXIT;
@@ -908,90 +905,90 @@ EXIT2:
 	mes "Return to ^000080Michael Halig^000000 and he will make you a ^800000Crusader^000000.";
 	close;
 NEXT0:
-	if (BaseJob != 2) goto NEXT1;
+	if (BaseJob != Job_Mage) goto NEXT1;
 	mes "It's nice to see you.";
 	mes "Hope we'll be able to work together to keep ^00FF00Prontera^000000 safe.";
 	close;
 NEXT1:
-	if (BaseJob != 3) goto NEXT2;
+	if (BaseJob != Job_Archer) goto NEXT2;
 	mes "Welcome, I hope you have a great day!";
 	close;
 NEXT2:
-	if (BaseJob != 4) goto NEXT3;
+	if (BaseJob != Job_Acolyte) goto NEXT3;
 	mes "Good day to you!";
 	close;
 NEXT3:
-	if (BaseJob != 5) goto NEXT4;
+	if (BaseJob != Job_Merchant) goto NEXT4;
 	mes "Hello, sorry but I'm not in need of anything.";
 	close;
 NEXT4:
-	if (BaseJob != 6) goto NEXT5;
+	if (BaseJob != Job_Thief) goto NEXT5;
 	mes "Don't think you can get away with theft in ^00FF00Prontera^000000, we have soldiers watching everywhere.";
 	close;
 NEXT5:
-	if (BaseJob != 7) goto NEXT6;
+	if (BaseJob != Job_Knight) goto NEXT6;
 	mes "Welcome!";
 	mes "I hope you have a great day!";
 	close;
 NEXT6:
-	if (BaseJob != 8) goto NEXT7;
+	if (BaseJob != Job_Priest) goto NEXT7;
 	mes "Welcome to ^00FF00Prontera^000000!";
 	mes "Hope you have a good day!";
 	close;
 NEXT7:
-	if (BaseJob != 9) goto NEXT8;
+	if (BaseJob != Job_Wizard) goto NEXT8;
 	mes "Hello!  Glad to see people of your stature here!";
 	close;
 NEXT8:
-	if (BaseJob != 10) goto NEXT9;
+	if (BaseJob != Job_Blacksmith) goto NEXT9;
 	mes "I appreciate your presence, but I don't need anything at the moment.";
 	mes "Sorry about that.";
 	close;
 NEXT9:
-	if (BaseJob != 11) goto NEXT10;
+	if (BaseJob != Job_Hunter) goto NEXT10;
 	mes "How goes the hunting campaign?";
 	mes "Hope everything is going all right.";
 	close;
 NEXT10:
-	if (BaseJob != 12) goto NEXT11;
+	if (BaseJob != Job_Assassin) goto NEXT11;
 	mes "Stay out of trouble, you hear me?";
 	close;
 NEXT11:
-	if (BaseJob != 14) goto NEXT12;
+	if (BaseJob != Job_Crusader) goto NEXT12;
 	mes "Welcome!  Good day to you!";
 	close;
 NEXT12:
-	if (BaseJob != 15) goto NEXT13;
+	if (BaseJob != Job_Monk) goto NEXT13;
 	mes "Good day, I hope your stay in ^00FF00Prontera^000000 will be a peaceful one.";
 	close;
 NEXT13:
-	if (BaseJob != 16) goto NEXT14;
+	if (BaseJob != Job_Sage) goto NEXT14;
 	mes "It's good to see people of your stature here in ^00FF00Prontera^000000!";
 	close;
 NEXT14:
-	if (BaseJob != 17) goto NEXT15;
+	if (BaseJob != Job_Rogue) goto NEXT15;
 	mes "Be careful if you don't want to get caught.";
 	mes "I don't want to have to hang you or something.";
 	close;
 NEXT15:
-	if (BaseJob != 18) goto NEXT16;
+	if (BaseJob != Job_Alchem) goto NEXT16;
 	mes "I hope the experiments in ^00FF00Al de Baran^000000 are legal, or we'll have to send someone to clear it up.";
 	close;
 NEXT16:
-	if (BaseJob != 19) goto NEXT17;
+	if (BaseJob != Job_Bard) goto NEXT17;
 	mes "Ah, what a fine day it is to have such a person as yourself to come and visit.";
 	close;
 NEXT17:
-	if (BaseJob != 20) goto NEXT18;
+	if (BaseJob != Job_Dancer) goto NEXT18;
 	mes "Welcome, good day to you!";
 	close;
 NEXT18:
-	if (BaseJob != 22) goto NEXT19;
-	if (Sex != 0) goto MALE;
-	mes "Wow!  Congratulations on your marriage!";
-	close;
-	MALE:
-	mes "Well done!  I congratulate you upon your marriage!";
+	if (BaseJob != Job_Wedding) goto NEXT19;
+	if (Sex){
+		mes "Well done!  I congratulate you upon your marriage!";
+	} else {
+		mes "Wow!  Congratulations on your marriage!";
+	}
 	close;
 NEXT19:
 	mes "Good day to you!";

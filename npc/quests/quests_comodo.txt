@@ -30,7 +30,7 @@ comodo.gat,227,158,4	script	Hair Ornament Girl	700,{
 	mes "Just by bringing me a few simple items, I can make you a gorgeous Hair Band!  Here, take a look at these....";
 M_Menu:
 	next;
-	menu "-Crosss Hat Hairband",-, "-Bulb Hairband",M_Bulb, "-Striped Hairband",M_Striped, "-Blue Hairband",M_Blue, "-End Conversation",M_End;
+	menu "-Cross Hat Hairband",-, "-Bulb Hairband",M_Bulb, "-Striped Hairband",M_Striped, "-Blue Hairband",M_Blue, "-End Conversation",M_End;
 
 		set @BAND$, "Cross Hat Hairband";
 		set @ITEMS$, " ^5555FF1 Rosary^000000 and ^5555FF500 Destroyed Armors^000000.";
