@@ -3,11 +3,11 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.01
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
-//= <Description> 
+//= <Description>
 //===== Additional Comments: ================================= 
 //= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
 //= Removed individual job check functions as they were redundant [kobra_k88]
@@ -22,6 +22,7 @@
 //= 1.9 Added "F_ClearGarbage" func that clears outdated, wasted variables [Lupus]
 //= 1.91 Added "F_SaveQuestSkills","F_Load?Skills" functions [Lupus]
 //= 2.0 Fixed F_Save/LoadQuestSkills functions. Had to split in into 2 vars [Lupus]
+//= 2.01 Added $talk to F_ClearGarbage [Evera]
 //============================================================ 
 
 
