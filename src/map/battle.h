@@ -157,7 +157,7 @@ extern struct Battle_Config {
 	unsigned short mob_spawn_delay, plant_spawn_delay, boss_spawn_delay;	// [Skotlex]
 	unsigned short slaves_inherit_mode;
 	unsigned short slaves_inherit_speed;
-	unsigned short summons_inherit_effects;
+	unsigned short summons_trigger_autospells;
 	unsigned short pc_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
 	unsigned short walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
 	unsigned short multihit_delay;  //Adjusts can't walk delay per hit on multi-hitting skills. [Skotlex]

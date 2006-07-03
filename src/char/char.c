@@ -7,7 +7,7 @@
 #include <winsock.h>
 #else
 #include <sys/socket.h>
-#include <netinet/in.h> 
+#include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
 
@@ -3846,7 +3846,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
 		}
 		session[login_fd]->func_parse = parse_tologin;
 		realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-                WFIFOHEAD(login_fd, 86);
+		WFIFOHEAD(login_fd, 86);
 		WFIFOW(login_fd,0) = 0x2710;
 		memcpy(WFIFOP(login_fd,2), userid, 24);
 		memcpy(WFIFOP(login_fd,26), passwd, 24);

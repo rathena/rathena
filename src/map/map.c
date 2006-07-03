@@ -3124,12 +3124,7 @@ int map_readallmaps (void)
 
 				size = map[i].bxs * map[i].bys * sizeof(int);
 				map[i].block_count = (int*)aCallocA(size, 1);
-				// Already initialized in aCallocA
-				//memset(map[i].block_count, 0, size);
-
 				map[i].block_mob_count = (int*)aCallocA(size, 1);
-				// Already initialized in aCallocA
-				//memset(map[i].block_mob_count, 0, size);
 
 				uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 

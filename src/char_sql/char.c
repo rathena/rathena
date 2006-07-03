@@ -3767,6 +3767,9 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
 
 		WFIFOSET(login_fd,86);
 
+		if (!kick_on_disconnect)
+			return 0; //Do not perform on-connect cleanup duties.
+
 		//(re)connected to login-server,
 		//now wi'll look in sql which player's are ON and set them OFF
 		//AND send to all mapservers (if we have one / ..) to kick the players

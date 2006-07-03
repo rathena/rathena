@@ -1324,11 +1324,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	}
 
-	if (md && battle_config.summons_inherit_effects && md->master_id && md->special_state.ai)
-	{	//Pass heritage to Master for status causing effects. [Skotlex]
-		sd = map_id2sd(md->master_id);
-	}
-
 	if(sd && skillid != MC_CARTREVOLUTION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && attack_type&BF_WEAPON){	/* カードによる追加効果 */
 		int i, type;
 		for(i=SC_COMMON_MIN;i<=SC_COMMON_MAX;i++){
@@ -1338,6 +1333,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				continue; //Code Speedup.
 			status_change_start(bl,i,rate,7,0,0,0,skill_get_time2(StatusSkillChangeTable[type],7),0);
 		}
+	}
+
+	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai)
+	{	//Pass heritage to Master for status causing effects. [Skotlex]
+		sd = map_id2sd(md->master_id);
+		src = sd?&sd->bl:src;
 	}
 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]

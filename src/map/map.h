@@ -255,7 +255,6 @@ enum {
 	MAX_ITEMGROUP,
 } item_group_list;
 
-
 struct block_list {
 	struct block_list *next,*prev;
 	int id;

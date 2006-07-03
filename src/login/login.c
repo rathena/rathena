@@ -3789,7 +3789,6 @@ int login_config_read(const char *cfgName) {
 			} else if(strcmpi(w1,"ip_sync_interval")==0) {
 				ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
 			}
-
 		}
 	}
 	fclose(fp);
@@ -4166,7 +4165,6 @@ int do_init(int argc, char **argv) {
 	
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000); // every 10 minutes cleanup online account db.
-				
 	
 	if (ip_sync_interval) {
 		add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");

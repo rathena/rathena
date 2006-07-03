@@ -3352,7 +3352,7 @@ static const struct battle_data_short {
 	{ "boss_spawn_delay",                  &battle_config.boss_spawn_delay			},
 	{ "slaves_inherit_mode",               &battle_config.slaves_inherit_mode	},
 	{ "slaves_inherit_speed",              &battle_config.slaves_inherit_speed		},
-	{ "summons_inherit_effects",           &battle_config.summons_inherit_effects	},
+	{ "summons_trigger_autospells",           &battle_config.summons_trigger_autospells	},
 	{ "pc_damage_walk_delay_rate",         &battle_config.pc_walk_delay_rate		},
 	{ "damage_walk_delay_rate",            &battle_config.walk_delay_rate		},
 	{ "multihit_delay",                    &battle_config.multihit_delay			},
@@ -3749,7 +3749,7 @@ void battle_set_defaults() {
 	battle_config.boss_spawn_delay=100;
 	battle_config.slaves_inherit_mode=1;
 	battle_config.slaves_inherit_speed=1;
- 	battle_config.summons_inherit_effects=1; 
+ 	battle_config.summons_trigger_autospells=1; 
 	battle_config.pc_walk_delay_rate=20;
 	battle_config.walk_delay_rate=100;
 	battle_config.multihit_delay=80;
@@ -4198,8 +4198,8 @@ void battle_validate_conf() {
 	if (battle_config.plant_spawn_delay < 0)
 		battle_config.plant_spawn_delay = 0;
 */	
-	if (battle_config.no_spawn_on_player > 50)
-		battle_config.no_spawn_on_player = 50;
+	if (battle_config.no_spawn_on_player > 100)
+		battle_config.no_spawn_on_player = 100;
 	if (battle_config.mob_remove_delay < 15000)	//Min 15 sec
 		battle_config.mob_remove_delay = 15000;
 	if (battle_config.dynamic_mobs > 1)
