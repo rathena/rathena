@@ -9,6 +9,4 @@ forums as http://eathena.ws/ . If you have made yourself a fix for
 that piece of faulty/buggy code, why not post it up and we'll add it to the svn.
 who knows, you might be an aspiring dev.
 
-
-
 eA Dev Team
