@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/02
+	* Split quests from cities/louyang.txt to quests/quests_louyang.txt [Evera]
 	* Added some fixed positions and fixed mob id in Einbroch spawns [Playtester]
 	* Moved Earth Petits away from the Coal Mine Entrance Map in eamobs [Playtester]
 07/01
