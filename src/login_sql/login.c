@@ -1347,7 +1347,7 @@ int parse_fromchar(int fd){
 			}
 			{
 				struct online_login_data *p;
-				int aid, i, users;
+				int aid, users;
 				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
@@ -1395,7 +1395,7 @@ int parse_fromchar(int fd){
 		case 0x2736: // WAN IP update from char-server
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",i,
+			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",id,
 			(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),
 			(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 			server[id].ip = RFIFOL(fd,2);

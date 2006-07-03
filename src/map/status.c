@@ -458,7 +458,7 @@ int SkillStatusChangeTable(int skill)
 			ShowError("add_sc: Unsupported skill id %d\n", skill);
 		return -1;
 	}
-	return SkillStatusChangeTableArray[skill];
+	return SkillStatusChangeTableArray[sk];
 }
 int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
 static void initDummyData(void) {

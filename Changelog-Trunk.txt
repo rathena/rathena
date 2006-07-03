@@ -3,7 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2006/05/30
+2006/07/03
+	* Fixed a compile warning in login sql/txt [Skotlex]
+	* Fixed pc_makesavestatus not setting your logout position. [Skotlex]
+	* Fixed two dances becoming BA_DISSONANCE instead of DC_UGLYDANCE.
+	  [Skotlex]
+	* Added the missing +100% damage modifier of Enchant Deadly Poison.
+	  [Skotlex]
+	* Fixed SkillStatusChangeTable not working correctly for Homun/Guild
+	  skills. [Skotlex]
+2006/06/30
 	* Fixed a typo in msg_athena.conf, "This item cannot be drop" -> "This item cannot be dropped" [MasterOfMuppets]
 	* Added a check to prevent equipped items from being traded. [Skotlex]
 	* Added UF_SONG (0x400) to differentiate songs from dances. [Skotlex]
@@ -16,7 +25,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Cleanup in itemheal related code, fixed the item heal group bonus not
 	  working on Groups beyond 7. [Skotlex]
 	* Fixed pet's loot not being moved to your inventory on logout. [Skotlex]
-2006/05/29
+2006/06/29
 	* Made the map server send list of characters online to the char-server on
 	  reconnection regardless of "kick_on_disconnect" setting, as otherwise, a
 	  temporary disconnection would make the char-server tag all characters
@@ -34,7 +43,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  - Simplified scripting system. sd will now use pointer to the script state itself.
 	    [Lance]
 
-2006/05/28
+2006/06/28
 	* changed:
 	  dynamic_pass_failure_ban_how_many:from 3 to 7
 	  dynamic_pass_failure_ban_how_long:from 60 to 5
@@ -60,7 +69,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  triggered while the player is changing maps so that when the player finish
 	  loading the map, it is inmediately rewarped to where it has been
 	  rewarped/recalled to. [Skotlex]
-2006/05/27
+2006/06/27
 	* Map server will now resent the whole list of online characters to
 	  char-server on reconnect when the kick_on_disconnect setting is active.
 	  [Skotlex]

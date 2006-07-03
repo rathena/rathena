@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/03
+	* Fixed the UF * flags of Songs/Dances in skill_unit_db. [Skotlex]
 07/02
 	* Added the Mercenary Summon Scrolls [Playtester]
 	* Fixed two books in the item_db [Playtester]

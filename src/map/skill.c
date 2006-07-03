@@ -6166,7 +6166,7 @@ static int skill_dance_overlap_sub(struct block_list *bl, va_list ap)
 	if (!(target->val2 & src->val2 & ~UF_ENSEMBLE)) //They don't match (song + dance) is valid.
 		return 0;
 	if (flag) { //Set dissonance
-		target->val1 = src->val1 = BA_DISSONANCE;
+		target->val1 = src->val1 = target->val2&UF_SONG?BA_DISSONANCE:DC_UGLYDANCE;
 		target->val2 |= UF_ENSEMBLE; //Add ensemble to signal this unit is overlapping.
 	} else { //Remove dissonance
 		target->val1 = target->group->skill_id; //Restore skill id
@@ -6665,11 +6665,16 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	type = SkillStatusChangeTable(sg->skill_id);
 	skillid = sg->skill_id;
 	if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
-  	{	//Treat this group as if it were BA_DISSONANCE.
+  	{	//Treat this group as if it were BA_DISSONANCE/DC_UGLYDANCE.
 		//Values will be restored on proper switch case.
 		src->val1 = sg->unit_id;
-		sg->unit_id = UNT_DISSONANCE;
-		sg->skill_id = BA_DISSONANCE;
+		if (src->val2&UF_SONG) {
+			sg->unit_id = UNT_DISSONANCE;
+			sg->skill_id = BA_DISSONANCE;
+		} else {
+			sg->unit_id = UNT_UGLYDANCE;
+			sg->skill_id = DC_UGLYDANCE;
+		}
 	}
 
 	if (sg->interval == -1) {
@@ -6872,10 +6877,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		break;
 
 	case UNT_UGLYDANCE:	//Ugly Dance [Skotlex]
-		if (ss->id == bl->id)
-			break;
-		if (bl->type == BL_PC)
+		if (ss->id != bl->id && bl->type == BL_PC)
 			skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
+		if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
+		{	//Restore values.
+			sg->skill_id = skillid;
+			sg->unit_id = src->val1;
+			src->val1 = DC_UGLYDANCE;
+		}
 		break;
 
 	case UNT_DISSONANCE:

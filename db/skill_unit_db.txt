@@ -65,16 +65,16 @@
 311,0xa3,    ,  4, 0,  -1,all,   0x200	//BD_ROKISWEIL#ロキの叫び
 312,0xa4,    ,  4, 0,  -1,party, 0x220	//BD_INTOABYSS#深淵の中に
 313,0xa5,    ,  4, 0,  -1,party, 0x200	//BD_SIEGFRIED#不死身のジークフリード
-317,0xa6,    ,  3, 0,3000,enemy, 0x100	//BA_DISSONANCE#不協和音
-319,0xa7,    ,  3, 0,  -1,all,   0x120	//BA_WHISTLE#口笛
-320,0xa8,    ,  3, 0,  -1,all,   0x120	//BA_ASSASSINCROSS#夕陽のアサシンクロス
-321,0xa9,    ,  3, 0,  -1,all,   0x120	//BA_POEMBRAGI#ブラギの詩
-322,0xaa,    ,  3, 0,6000,all,   0x920	//BA_APPLEIDUN#イドゥンの林檎
-325,0xab,    ,  3, 0,3000,enemy, 0x400	//DC_UGLYDANCE#自分勝手なダンス
-327,0xac,    ,  3, 0,  -1,all,   0x420	//DC_HUMMING#ハミング
-328,0xad,    ,  3, 0,  -1,enemy, 0x400	//DC_DONTFORGETME#私を忘れないで…
-329,0xae,    ,  3, 0,  -1,all,   0x420	//DC_FORTUNEKISS#幸運のキス
-330,0xaf,    ,  3, 0,  -1,party, 0x400	//DC_SERVICEFORYOU#サービスフォーユー
+317,0xa6,    ,  3, 0,3000,enemy, 0x400	//BA_DISSONANCE#不協和音
+319,0xa7,    ,  3, 0,  -1,all,   0x420	//BA_WHISTLE#口笛
+320,0xa8,    ,  3, 0,  -1,all,   0x420	//BA_ASSASSINCROSS#夕陽のアサシンクロス
+321,0xa9,    ,  3, 0,  -1,all,   0x420	//BA_POEMBRAGI#ブラギの詩
+322,0xaa,    ,  3, 0,6000,all,   0xC20	//BA_APPLEIDUN#イドゥンの林檎
+325,0xab,    ,  3, 0,3000,enemy, 0x100	//DC_UGLYDANCE#自分勝手なダンス
+327,0xac,    ,  3, 0,  -1,all,   0x120	//DC_HUMMING#ハミング
+328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME#私を忘れないで…
+329,0xae,    ,  3, 0,  -1,all,   0x120	//DC_FORTUNEKISS#幸運のキス
+330,0xaf,    ,  3, 0,  -1,party, 0x100	//DC_SERVICEFORYOU#サービスフォーユー
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER#あなたに逢いたい
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS#闇グランドクロス
 362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA#バジリカ

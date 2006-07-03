@@ -336,26 +336,24 @@ int pc_makesavestatus(struct map_session_data *sd)
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color=0;
 
-	if(!sd->state.waitingdisconnect) {
-		sd->status.option = sd->sc.option; //Since the option saved is in 
-		if(pc_isdead(sd)){
-			pc_setrestartvalue(sd,0);
-			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
-		} else {
-			sd->status.hp = sd->battle_status.hp;
-			sd->status.sp = sd->battle_status.sp;
-			sd->status.last_point.map = sd->mapindex;
-			sd->status.last_point.x = sd->bl.x;
-			sd->status.last_point.y = sd->bl.y;
-		}
+	sd->status.option = sd->sc.option; //Since the option saved is in 
+	if(pc_isdead(sd)){
+		pc_setrestartvalue(sd,0);
+		memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
+	} else {
+		sd->status.hp = sd->battle_status.hp;
+		sd->status.sp = sd->battle_status.sp;
+		sd->status.last_point.map = sd->mapindex;
+		sd->status.last_point.x = sd->bl.x;
+		sd->status.last_point.y = sd->bl.y;
+	}
 
-		if(map[sd->bl.m].flag.nosave){
-			struct map_data *m=&map[sd->bl.m];
-			if(m->save.map)
-				memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
-			else
-				memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
-		}
+	if(map[sd->bl.m].flag.nosave){
+		struct map_data *m=&map[sd->bl.m];
+		if(m->save.map)
+			memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
+		else
+			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	}
 
 	return 0;

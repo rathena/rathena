@@ -31,7 +31,7 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 
 	if (map[sd->bl.m].flag.nochat) {
 		clif_displaymessage (sd->fd, msg_txt(281));
-		return 0; //Can't drop items in nodrop mapflag maps.
+		return 0; //Can't create chatrooms on this map.
 	}
 	pc_stop_walking(sd,1);
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
