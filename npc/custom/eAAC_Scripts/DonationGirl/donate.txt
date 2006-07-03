@@ -21,6 +21,8 @@
 //=	  with decimals.
 //= 3.1 - Added quotes to some queries, fixed a variable and
 //=	  removed a comment.
+//= 3.2 - Fixed a problem where eAthena would crash if a
+//=	  query returned NULL.
 //===== Compatible With =====================================
 //= eAthena - any version that contains the escape_sql
 //=	      function (Stable 6299 OR Trunk 6262)
@@ -143,7 +145,7 @@ close;
 
 L_STATS:
 mes "[Donation Girl]";
-query_sql "SELECT SUM(amount) FROM `donate`", @total$; 
+query_sql "SELECT IFNULL((SELECT SUM(amount) FROM `donate`),0)", @total$; 
 mes "Our fund is at a total of $"+@total$+"";
 next;
 menu "More info",L_INFO,"Make a claim",L_CHECK,"Statistics",L_STATS;
