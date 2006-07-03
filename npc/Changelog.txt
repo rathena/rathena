@@ -39,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/03
+	* Split cities/einbroch.txt to cities/einbroch.txt and quests/quests_einbroch.txt [Evera]
+	- Fixed some small typos [Evera]
 	* Fixed many many bugs in Crusader Job Quest [Lupus]
 	  Changed all numbers to job_constants
 07/02

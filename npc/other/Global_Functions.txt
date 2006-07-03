@@ -65,6 +65,7 @@ function	script	F_ClearJobVar	{
 
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
+	if($talk) set $talk,0;
 	if(MARIANNE) {set MISC_QUEST,MISC_QUEST | 1; set MARIANNE,0;}
 	set MEAT,0; set MORRISON,0;
 	set BUNYBND,0; set TEMPESTRA,0; 

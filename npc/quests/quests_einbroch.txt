@@ -1,0 +1,1702 @@
+//===== eAthena Script ======================================= 
+//= Quests NPCs located in Einbrochjhgfdsa
+//===== By: ================================================== 
+//= eAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 7.15 +
+//===== Description: ========================================= 
+//= Shinokas Quest, Einbroch Lover Quest
+//===== Additional Comments: ================================= 
+//= v1.0 Initial Release [Evera]
+//============================================================ 
+
+//============================================================
+//=================================================== Shinokas
+//====================================================== Quest
+ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
+	if(Shinokas_Quest == 5) goto L_Dead;
+	if(ein_lab == 2) goto L_Lab2;
+	if(Shinokas_Quest == 4) goto L_Lab1;
+	if(EinFactory == 16 && Shinokas_Quest == 3) goto L_Factory2;
+	if(Shinokas_Quest == 3) goto L_Factory3;
+	if(ein_maid) goto L_Factory;
+	if(Shinokas_Quest == 2) goto L_Find;
+	if(!Shinokas_Quest)set Shinokas_Quest,1;
+	mes "[Sick Old Man]";
+	mes "...!";
+	next;
+	mes "[Sick Old Man]";
+	mes "Awwwk~";
+	mes "It's killing me!";
+	mes "Arrrgh! Awwwrgh!";
+	mes "W-when will my son";
+	mes "come back from";
+	mes "the factory...?!";
+	next;
+	if (einbech_buender == 2) goto L_Ask;
+	mes "^3131FFYou feel really awkward";
+	mes "just staring at this old";
+	mes "man violently rolling";
+	mes "around in his bed.";
+	close;
+	
+L_Ask:
+	mes "["+strcharinfo(0)+"]";
+	mes "Shi...";
+	mes "Shinokas?";
+	next;
+	mes "[Sick Old Man]";
+	mes "Huh...?";
+	mes "Noooo! My name is";
+	mes "Shinotarous. Y-you've";
+	mes "got the wrong person!";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "This has to be the";
+	mes "Shinokas that Hikeman";
+	mes "was talking about in Einbech";
+	mes "Hmmm, but how can I get";
+	mes "him to admit it?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "*Ahem!*";
+	mes "Excuse me...";
+	next;
+while(1)
+{
+	switch(select("Remember the mine tunnel collapse?:Didn't you used to be a miner?:Have you lived in Einbroch all your life?")) {
+	 case 1: //remember
+		  if(@quest2 > 4 || @quest3 > 4)goto L_Cont;
+		  mes "[Sick Old Man]";
+		  mes "Noooo!";
+		  mes "I don't know";
+		  mes "what the hell";
+		  mes "you're talking";
+		  mes "about!";
+		  next;	
+	 break;
+
+	 case 2: //miner
+		  if(@quest2 > 1)goto s_Quest2;
+		  mes "[Sick Old Man]";
+		  mes "Noooo...!";
+	 	  mes "W-why would you";
+		  mes "even ask me that";
+		  mes "kind of question?!";
+	  s_Quest2:
+		  set @quest2,@quest2 + 1;
+		  if(@quest3)set @quest3,0;
+		  next;
+	 break;
+
+	 case 3: //einbroch
+		  if(@quest3 > 1)goto s_Quest3;
+		  mes "[Sick Old Man]";
+		  mes "Y-yes!";
+		  mes "Born and raised";
+		  mes "raised here in";
+		  mes "Einbe--Einbroch!";
+		  next;
+		  mes "^3131FFIt doesn't seem";
+		  mes "like this old man";
+		  mes "is telling the truth...";
+	s_Quest3:
+		  set @quest3,@quest3 + 1;
+		  if(@quest2)set @quest2,0;
+		  next;
+	 break;
+	}
+}
+	
+L_Cont:
+	mes "[Shinokas]";
+	mes "Hmm...";
+	mes "^0000FFBuender Hikeman^000000...";
+	next;
+	mes "[Shinokas]";
+	mes "No!";
+	mes "I've never met";
+	mes "Buender Hikeman";
+	mes "in my entire li--";
+	next;
+	mes "[Shinokas]";
+	mes "...";
+	mes "......";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "I was right!";
+	mes "You're Shinokas!";
+	next;
+	mes "[Shinokas]";
+	mes "Curses!";
+	mes "I've blown";
+	mes "my cover!";
+	mes "W-wait! How much";
+	mes "do you know?!";
+	next;
+	mes "[Shinokas]";
+	mes "Did ^0000FFthey^000000 send you?";
+	mes "*Sigh* I think that this";
+	mes "is it. I'll never be";
+	mes "able to solve the";
+	mes "secret before I die.";
+	next;
+	mes "[Shinokas]";
+	mes "Okay.";
+	mes "Get on with it.";
+	mes "I'm ready now...";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Tell me everything";
+	mes "you know related to";
+	mes "that incident where";
+	mes "the mine tunnel";
+	mes "collapsed around";
+	mes "you and Hikeman.";
+	next;
+	mes "[Shinokas]";
+	mes "...?";
+	mes "Errr....";
+	mes "You're not";
+	mes "here to kill me?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "No...!";
+	mes "I'm here to find";
+	mes "out the truth";
+	next;
+	mes "[Shinokas]";
+	mes "That means...";
+	mes "I still have some time.";
+	mes "This must be destiny!";
+	mes "Allright, I'll tell you what";
+	mes "happened. But it's a";
+	mes "long story...";
+	next;
+	mes "[Shinokas]";
+	mes "How much do you know";
+	mes "about the accident? No,";
+	mes "wait. Don't answer that.";
+	mes "I don't want to hear it";
+	next;
+	mes "[Shinokas]";
+	mes "I admit it. Yes.";
+	mes "I stabbed my friends";
+	mes "in the back. It was an";
+	mes "unforgivable sin that will";
+	mes "haunt me untill the day that I die";
+	next;
+	mes "[Shinokas]";
+	mes "I sold out my friends for";
+	mes "money. I destroyed that";
+	mes "tunnel and killed them. But";
+	mes "I suppose I was tricked as well.";
+	mes "^0000FFThey^000000 never intended to keep";
+	mes "their end of our agreement.";
+	next;
+	mes "[Shinokas]";
+	mes "After I destroyed the tunnel,";
+	mes "they targeted me and I ended";
+	mes "spending the rest of my life being";
+	mes "pursued and running for place to";
+	mes "place. What the hell was that ^0000FFore^000000";
+	mes "and why was it so important?";
+	next;
+	mes "[Shinokas]";
+	mes "I need to know more about";
+	mes "that ore if it's worth killing for.";
+	mes "That's why I've risked sneaking";
+	mes "into Einbroch. Sopposedly, an ore";
+	mes "similar to the ore we found has";
+	mes "been transported here recently";
+	next;
+	menu "Did you find it?",-;
+	mes "[Shinokas]";
+	mes "No, not yet.";
+	mes "I've been searching";
+	mes "for that ore every night.";
+	mes "During the day, this kind";
+	mes "blacksmith has managed";
+	mes "to hide me from those men";
+	next;
+	mes "[Shinokas]";
+	mes "But I won't be safe";
+	mes "for very long. Look, I'm";
+	mes "no saint, but before I die,";
+	mes "I wanna do this one last";
+	mes "thing and see what's so";
+	mes "great about this ore...";
+	next;
+	menu "Wait, who's trying to get you?",-;
+	mes "[Shinokas]";
+	mes "Who's trying to kill me?";
+	mes "The people who hired me and";
+	mes "my friends to dig up that ore in";
+	mes "the first place. We thought they";
+	mes "were ordinary businessmen,";
+	mes "but... They're dangerous.";
+	next;
+	mes "[Shinokas]";
+	mes "So I told you everything";
+	mes "and now you know that my";
+	mes "day might be numbered.";
+	mes "Please do an old man a favor";
+	mes "and search Einbroch for that";
+	mes "strange, mysterious ore.";
+	next;
+	mes "[Shinokas]";
+	mes "Now, the first thing I learned";
+	mes "in this tows is that the richest";
+	mes "family is the Kapelltheines. Only";
+	mes "the rich and powerful can possibly";
+	mes "be involved in something so big.";
+	next;
+	mes "[Shinokas]";
+	mes "Would you search";
+	mes "Kappelltheine Manor";
+	mes "for that ore? It's on the way";
+	mes "to the Airport and it shouldn't be";
+	mes "hard to miss. They're the richest";
+	mes "people in Einbroch, after all.";
+	next;
+	mes "[Shinokas]";
+	mes "I'm too old and weak to leave";
+	mes "this house, and there's the change";
+	mes "that those men will find me. If you";
+	mes "can sympathize with my situation,";
+	mes "please find out if the Kapelltheine";
+	mes "family has any unique ores...";
+	set Shinokas_Quest,2;
+	close;
+	
+L_Find:
+	mes "[Shinokas]";
+	mes "Please...";
+	mes "Find out if the Kapelltheines";
+	mes "are keeping some kind of unique";
+	mes "ore. Their manor is on the road";
+	mes "that leads to the Airport.";
+	close;
+	
+L_Factory:
+	mes "[Shinokas]";
+	mes "So, did you find";
+	mes "anything from the";
+	mes "Kapellthaines?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Well, Mr. Kapelltheine";
+	mes "is kind of violent, but";
+	mes "I didn't find anything";
+	mes "really suspicious.";
+	next;
+	mes "[Shinokas]";
+	mes "Huh...";
+	mes "I must have";
+	mes "been wrong, then...";
+	mes "Where else could it be?";
+	next;
+	mes "[Shinokas]";
+	mes "Oh, right! The huge";
+	mes "factory in Einbroch!";
+	mes "What could be more";
+	mes "suspicious? There's a ton";
+	mes "of workers, but no one really";
+	mes "knows what they do there...";
+	next;
+	mes "[Shinokas]";
+	mes "If they're so secretive";
+	mes "it's possible that they're";
+	mes "keeping the ore over there.";
+	mes "Please go and search the";
+	mes "Factory for that ore as";
+	mes "soon as you can.";
+	set Shinokas_Quest,3;
+	close;
+
+L_Factory3:
+	mes "[Shinokas]";
+	mes "So...";
+	mes "Did you learn";
+	mes "anything new";
+	mes "in the Factory?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "I haven't went there";
+	mes "yet.";
+	next;
+	mes "[Shinokas]";
+	mes "Then why did you come";
+	mes "back? Go and investigate";
+	mes "the factory now.";
+	close;
+	
+L_Factory2:
+	mes "[Shinokas]";
+	mes "So...?";
+	mes "Did you learn";
+	mes "anything new";
+	mes "in the Factory?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Well...";
+	mes "There's a lot of";
+	mes "suspicious business";
+	mes "in the factory, but I don't";
+	mes "think any of it is related";
+	mes "to that ore you mentioned.";
+	next;
+	mes "[Shinokas]";
+	mes "Damn it...";
+	mes "Then where did";
+	mes "they hide it? Where";
+	mes "do you think that";
+	mes "ore might be?";
+	next;
+while(1)
+{
+	switch(select("Airport:Factory:Train Station:Airship Repairshop:Laboratory")) {
+	 case 1: //airport
+	  mes "[Shinokas]";
+	  mes "No...";
+	  mes "The Airport is always";
+	  mes "crowded with people.";
+	  mes "It'd be a bad idea to hide";
+	  mes "something so important";
+	  mes "in that kind of place.";
+	  next;
+		 break;
+	 case 2: //factory
+	  mes "[Shinokas]";
+	  mes "Didn't you just";
+	  mes "check the factory?";
+	  mes "You couldn't find";
+	  mes "any clues to the";
+	  mes "ore over there...";
+			next;
+	 	break;
+	 case 3: //train
+	  mes "[Shinokas]";
+	  mes "Hmm...";
+	  mes "People are always going";
+	  mes "in and out of the Train Station.";
+	  mes "It's not the best place to hide";
+	  mes "something as important as the ore.";
+	  next;
+		 break;
+	 case 4: //repairshop
+	  mes "The Airship? Hm, it does";
+	  mes "fly through some mysterious";
+	  mes "power... But I already checked";
+	  mes "the Airship Replairshop myself.";
+	  mes "I haven't found any trace of";
+	  mes "the ore over there.";
+			next;
+		 break;
+		case 5: //Laboratory
+		 mes "[Shinokas]";
+		 mes "...!";
+		 mes "Yes. Yes...!";
+		 mes "That could be it!";
+		 mes "Why didn't I think";
+		 mes "about the Laboratory?";
+		 mes "It makes so much sense!";
+			next;
+			mes "[Shinokas]";
+			mes "I have a good feeling";
+			mes "about this. Please sneak";
+			mes "into that Laboratory and";
+			mes "see if you can find the ore!";
+			next;
+			mes "[Shinokas]";
+			mes "Remember...";
+			mes "Not just anybody";
+			mes "can enter that kind";
+			mes "of place. But I'm sure";
+			mes "you'll figure something out.";
+			set Shinokas_Quest,4;
+			close;
+	}
+}
+
+L_Lab1:
+	mes "[Shinokas]";
+	mes "...";
+	mes "......";
+	close;
+
+OnTouch:
+	if (ein_lab < 2) end;
+	mes "^3131FFThe open window rattles";
+	mes "as you enter the room and";
+	mes "are welcomed by a sudden";
+	mes "chill. A trail of red footprints";
+	mes "lies near your feet.";
+	next;
+	mes "^3131FFA grey sheet lies";
+	mes "rumpled on the bed,";
+	mes "but you can see dark red";
+	mes "stains in between the folds.";
+	set ein_lab,3;
+	close;
+	
+L_Lab2:
+	mes "["+strcharinfo(0)+"]";
+	mes "Shinokas,";
+	mes "I found something!";
+	next;
+	mes "[Shinokas]";
+	mes "You...";
+	mes "Came... back...";
+	mes "Even... if... it's";
+	mes "already... Too late.";
+	mes "*Couhg Cough*";
+	next;
+ 	mes "^3131FFYou help Shinokas";
+ 	mes "sit up, but find that";
+	mes "your hands have been";
+	mes "stained with his blood.^000000";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Blood...?!";
+	mes "Shinokas!";
+	mes "Who did this to you?";
+	mes "W-we need to call for help!";
+	next;
+	mes "[Shinokas]";
+	mes "No...";
+	mes "It's already";
+	mes "too late for me.";
+	mes "I should have died";
+	mes "a long time ago...";
+	next;
+	mes "[Shinokas]";
+	mes "*Cough*";
+	mes "I only regret that";
+	mes "I've never been able";
+	mes "to apologize to my";
+	mes "friends... *Cough!*";
+	next;
+	mes "[Shinokas]";
+	mes "But did you";
+	mes "find out? D-did";
+	mes "you find out what's";
+	mes "so special about";
+	mes "that ore? W-what";
+	mes "is it... Really?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "It was...";
+	next;
+	input @text$;
+	mes "^0000FF"+@text$+"^000000!";
+	next;
+	mes "[Shinokas]";
+	mes "W-wait...!";
+	mes "What did...";
+	mes "I can't underst--";
+	mes "*Couhgh cough!*";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "No...!";
+	mes "Tell me who";
+	mes "did this to you!";
+	mes "Where are they?";
+	mes "Speak to me, please!";
+	next;
+	mes "[Shinokas]";
+	mes "W-wha...?";
+	mes "I told you.";
+	mes "Th-they we--";
+	next;
+	mes "[Shinokas]";
+	mes "...";
+	mes "......";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "No!";
+	mes "Shinokas!";
+	mes "Why, God?";
+	mes "Why...";
+	set Shinokas_Quest,5;
+	close;
+	
+L_Dead:
+ mes "^3131FFShinokas's";
+ mes "body has grown";
+ mes "cold to the tough.";
+ close;
+
+}
+
+ein_in01.gat,32,133,6	script	Maid	850,{
+	if (Shinokas_Quest == 2 && ein_maid == 0) goto L_Ore;
+	mes "[Maid]";
+	mes "There's no end";
+	mes "to all these plates";
+	mes "I have to clean...!";
+	close;
+	
+L_Ore:
+	mes "[Maid]";
+	mes "Did you ask me";
+	mes "if I saw some kind";
+	mes "of ore around here?";
+	mes "That's strange...";
+	next;
+	mes "[Maid]";
+	mes "Will, I've been with";
+	mes "this family for a long";
+	mes "time. Let me assure you";
+	mes "that there's no secrets";
+	mes "from me in this household!";
+	next;
+	mes "[Maid]";
+	mes "I'm sorry, but I don't";
+	mes "think we have any ores,";
+	mes "special or otherwise, here";
+	mes "in the manor. What exactly";
+	mes "do you need them for?";
+	set ein_maid,1;
+	close;
+}
+
+einbroch.gat,51,52,1	script	lab_warp	45,2,2{
+	if(Shinokas_Quest >= 4 && ein_scientist != 1) goto L_Sec;
+	mes "^3131FFThe door is locked.";
+	mes "You cannot enter.";
+	close;
+	
+L_Sec:
+	mes "[Security System]";
+	mes "^FF0000*Beep Boop*^000000";
+	mes "Restricted Access Area.";
+	mes "Please identify yourself";
+	mes "through the system.";
+	next;
+	switch(select("Identify.:Information:Cancel")) {
+	 case 1: //Identify
+	  break; //continue after switch =\
+		case 2: //information
+		 mes "[Security System]";
+		 mes "You must use the";
+		 mes "security system in order";
+		 mes "to gain access into the";
+		 mes "Einbroch Laboratory.";
+		 next;
+		 mes "[Security System]";
+		 mes "You will be given";
+		 mes "a password that you";
+		 mes "must input correctly";
+		 mes "withing 60 seconds.";
+		 mes "Otherwise, you will";
+		 mes "fail the security check.";
+		 //hell of a security system ye got there mate
+		 //wonder if gravity co has the same sort? xD
+		 next;
+		 mes "[Security System]";
+		 mes "If you take longer";
+		 mes "then 3 minutes to";
+		 mes "enter the password,";
+		 mes "the security system";
+		 mes "will initiate lockout.";
+			close;
+		case 3: //cancel
+		 mes "[Security System]";
+		 mes "You have canceled";
+		 mes "the ID security check.";
+		 close;
+	}
+	//ID check:
+	mes "[Security System]";
+	mes "Enter the following";
+	mes "password in 60 seconds.";
+	mes "Failure to do so will result";
+	mes "in lockout. Please wait.";
+	next;
+	mes "[Security System]";
+	set @startseconds,gettime(3)*60*60+gettime(2)*60+gettime(1);
+	switch(rand(1,11)) {
+	case 1:
+		mes "^00CCFFburrdingdingdilidingdingphoohudaamb";
+		mes "^00CCFFandoora^0000FFbambarambambamburanbamding";
+		input @str$;
+		if (@str$ != "burrdindingdilidingdingphoohudaambandoorabambarambambamburanbamding") goto L_SCFail;
+		goto L_Suc;
+	case 2:
+		mes "^FF33CCbarapaphurarlandreamduranbatuhi^990066wooi";
+		mes "^990066kabamturubamdingding";
+		next;
+		input @str$;
+		if (@str$ != "barapaphurarlandreamduranbatuhiwooikabamturubamdingding") goto L_SCFail;
+		goto L_Suc;
+	case 3:
+	 mes "^00CCFFbelief love luck grimace sweat rush";
+	 mes "^00CCFFfolktale rodimus optimus burnblebe";
+	 input @str$;
+	 if (@str$ != "belief love luck grimace sweat rush folktale rodimus optimus burnblebe") goto L_SCFail;
+	 goto L_Suc;
+	case 4:
+	 mes "^FF33CCLiGhTsPeEd RiGhT SPEed leFT TURn";
+	 mes "^FF33CCRiGhT BuRn OrIGInAL GaNgSteR SmACk";
+		input @str$;
+		if (@str$ != "LiGhTsPeEd RiGhT SPEed leFT TURn RiGhT BuRn OrIGInAL GaNgSteR SmACk") goto L_SCFail;
+		goto L_Suc;
+	case 5:
+	 mes "^00CCFFCoboman no chikara-yumei na";
+	 mes "^00CCFFchikara-daiookii na chikara da ze!";
+	 mes "^00CCFFCOBO ON";
+	 input @str$;
+	 if (@str$ != "Coboman no chikara-yumei na chikara-daiookii na chikara da ze! COBO ON") goto L_SCFail;
+	 goto L_Suc;
+	case 6:
+		mes "^FF33CChfjdkeldjs^990066hfjdjeiskdlefvbd";
+		input @str$;
+		if (@str$ != "hfjdkeldjshfjdjeiskdlefvbd") goto L_SCFail;
+		goto L_Suc;
+	case 7:
+	 mes "^00CCFFI'm the King of all Weirdos! Now";
+	 mes "^00CCFFyou know of my true power. Obey~!";
+	 input @str$;
+	 if (@str$ != "I'm the King of all Weirdos! Now you know of my true power. Obey~!") goto L_SCFail;
+	 goto L_Suc;
+	case 8:
+	 mes "^990066uNflAPPaBLe LoVaBLe SeCreTs AnD";
+	 mes "^990066BoWLiNg aGaINST tHe KarMA of YoUtH";
+	 input @str$;
+	 if (@str$ != "uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA if YoUtH") goto L_SCFail;
+	 goto L_Suc;
+	case 9:
+		mes "^00CCFFBy the power of^000000";
+		mes "^00CCFFp-po-poi-po-poi-poin-poing";
+		mes "^00CCFFGOD-POING. I NEVER LOSE!";
+		input @str$;
+		if (@str$ != "By the power of p-po-poi-po-poi-poin-poing GOD-POING. I NEVER LOSE!") goto L_SCFail;
+		goto L_Suc;
+	case 10:
+	 mes "^00CCFF...silence. quiet benevolence...";
+	 mes "^00CCFFsoul mate... wonder. enigma...";
+	 mes "^00CCFFcloud.^000000";
+	 input @str$;
+	 if (@str$ != "...silence. quiet benevolence... soul mate... wonder. enigma... cloud") goto L_SCFail;
+	 goto L_Suc;
+	case 11:
+	 mes "^FF33CCopeN,Open!op3n.openOpen0p3nOpEn0pen";
+	 mes "^FF33CC`open'0Pen open?open!111OPENSESAME";
+	 input @str$;
+	 if (@str$ != "opeN,Open!op3n.openOpenOp3nIoEnOpen`open'0Pen open?open!111OPENSESAME") goto L_SCFail;
+	 goto L_Suc;
+	}
+L_Suc:
+	next;
+	set @endtime,gettime(3)*60*60+gettime(2)*60+gettime(1);
+	set @time,@endtime-@startseconds;
+	if (@time > 60) goto L_SC60;
+	mes "[Security System]";
+	mes "It took ^FF0000"+@time+" seconds^000000";
+	mes "for you to enter the";
+	mes "password. Initiating";
+	mes "override. Access granted.";
+	close2;
+	warp "ein_in01.gat",283,25;
+	end;
+	
+L_SC60:
+	mes "[Security System]";
+	mes "Time over.";
+	mes "It took ^FF0000"+@time+" seconds^000000";
+	mes "for you to enter the";
+	mes "password. Initiating";
+	mes "lockout. Access denied.";
+	close;
+	
+L_SCFail:
+	next;
+	mes "[Security System]";
+	mes "You have failed"; //you haved? =\
+	mes "the identification";
+	mes "check. Access denied.";
+	close;
+}
+einbroch.gat,51,56,6	script	Laboratory Soldier#01	852,{
+	mes "[Laboratory Soldier]";
+	mes "This area is off limits.";
+	mes "Please leave";
+	mes "immediately";
+	close;
+}
+einbroch.gat,51,47,6	script	Laboratory Soldier#02	852,{
+	mes "[Laboratory Soldier]";
+	mes "This area is off limits.";
+	mes "Please leave";
+	mes "immediately";
+	close;
+}
+ein_in01.gat,254,35,1	script	Scientist	749,{
+	mes "[Scientist]";
+	mes "*Grumble grumble*";
+	next;
+	if (ein_scientist == 1) goto L_P2;
+	mes "[Scientist]";
+	mes "Huh...?";
+	mes "How did you";
+	mes "get in here?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Oh! Ah...";
+	mes "I'm the new...";
+	mes "Guard. Nice";
+	mes "to meet you.";
+	next;
+	mes "[Scientist]";
+	mes "Oh. Yeah.";
+	mes "Nice-meet-you";
+	mes "..............";
+	mes "*Grumble grumble*";
+	next;
+	switch(select("What's wrong?:Catch you later.")) {
+		case 2: //catch
+		 mes "[Scientist]";
+		 mes "Right.";
+		 mes "Yeah.";
+		 mes "Later, man.";
+		 close;
+		case 1:
+	}
+	mes "[Scientist]";
+	mes "What's wrong...?!";
+	mes "Oh, don't get me started!";
+	mes "I'm stuck here doing all the";
+	mes "work while the Lab Departement";
+	mes "Head goes out every freakin' day!";
+	next;
+	mes "[Scientist]";
+	mes "While I'm slaving";
+	mes "away here, he's in";
+	mes "that Airship, busy";
+	mes "flirting with that";
+	mes "woman. God...!";
+	mes "I'm like, so teed off!";
+	set ein_scientist,1;
+	close;
+	
+L_P2:
+	mes "[Scientist]";
+	mes "Man alive!";
+	mes "Would it kill the";
+	mes "Department Head";
+	mes "to come in here and do";
+	mes "some work for a change?!";
+	next;
+	mes "[Scientist]";
+	mes "I mean, come on!";
+	mes "I shouldn't have to";
+	mes "carry his workload!";
+	close;
+}
+
+ein_in01.gat,266,26,1	script	Unknown Stuff	111,{
+	mes "^3131FFThere's something";
+	mes "attached to a huge";
+	mes "machine with many cords";
+	mes "and folds of barbed wire";
+	set ein_lab,1;
+	close;
+}
+
+airplane.gat,31,77,4	script	Drunken Man#03	853,{
+	if (ein_lab == 2) goto L_Done;
+	mes "[Drunken Man]";
+	mes "Okay okay...";
+	mes "Daddy's gonna";
+	mes "win some Apples";
+	mes "this time for sure!";
+	next;
+	if(ein_lab == 1)
+	{
+	mes "[Drunken Man]";
+	mes "Let's do it!";
+	mes "^3131FFYmir's Heart^000000 is";
+	mes "on my side! GO!";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Huh...?";
+	mes "What did he just say?";
+	mes "It seemed important!";
+	next;
+	}
+	mes "^0000FF*Rolling and rumbling*^000000";
+	next;
+	mes "[Kaci]";
+	mes "I have a total of ^FF000011^000000";
+	mes "and you have total ^FF00005^000000.";
+	mes "You lose this game. I'm";
+	mes "sorry, but I hope we play";
+	mes "again sometime.";
+	donpcevent "Kaci::OnLose";
+	next;
+	mes "[Drunken Man]";
+	mes "Waaaaaahhhhhhhhh!";
+	mes "Apples! My apples!";
+	mes "Apples, I need more...!";
+	if (countitem(512) && ein_lab==1) goto L_Apples;
+	close;
+	
+L_Apples:
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Do you want";
+	mes "some of mine?";
+	next;
+	if (countitem(512) <100) {
+		mes "[Drunken Man]";
+		mes "What...?";
+		mes "I can't do anything";
+		mes "with so few Apples!";
+		mes "I'm a high roller and";
+		mes "this is a high stakes game!";
+		close;
+	}
+	mes "[Drunken Man]";
+	mes "Wha--? Yes...";
+	mes "Hell yes! Gimme";
+	mes "some of your Apples!";
+	mes "Yeeeeeeeeeeehaw!";
+	mes "I'm back, baby!";
+	next;
+	mes "[Drunken Man]";
+	mes "Now, to win!";
+	mes "Daddy needs love...";
+	mes "Time to go from";
+	mes "crappy to classy!";
+	next;
+	mes "^0000FF*Rolling and rumbling*^000000";
+	next;
+	delitem 512,countitem(512);
+	set @kaci,rand(2,12);
+	set @man,rand(2,12);
+	if(@man == @kaci){
+	switch(rand(1,2))
+		{
+		case 1:
+			if(@man != 12)set @man,@man+1;
+			else set @man,@man-1;
+		break;
+
+		case 2:
+			if(@man != 2)set @man,@man-1;
+			else set @man,@man+1;
+		break;
+
+		}
+	}
+	mes "[Kaci]";
+	mes "Oooh...";
+	mes "I got a total of ^FF0000"+@kaci+"^000000,";
+	mes "and you have a total of ^FF0000"+@man+"^000000.";
+	if (@man < @kaci) {
+	mes "I'm sorry, but you lose";
+	mes "again. Better luck next time...";
+	donpcevent "Kaci::OnLose";
+	next;
+	mes "[Drunken Man]";
+	mes "Waaaaaahhhhhhhhhhhh!";
+	mes "Waaaaaaaahhhhhhh!";
+	close;
+	}
+	mes "Congratulations, you won!";
+	mes "Let me give you your winning";
+	mes "and we'll play again some time~";
+	donpcevent "Kaci::OnWin";
+	next;
+	mes "[Drunken Man]";
+	mes "Mwahhhahahahaha!";
+	mes "Whahahahahahahahaha!";
+	mes "That's why they call me";
+	mes "the 'Resurrection Kid!'";
+	mes "I always come back!";
+	next;
+	mes "[Drunken Man]";
+	mes "Oh yes, right!";
+	mes "You...! You lent";
+	mes "me those lucky";
+	mes "Apples. ^111111*Hiccup*^000000";
+	next;
+	mes "[Drunken Man]";
+	mes "I'm Kurschenburg!";
+	mes "Thanks to you, I'm";
+	mes "on a winning streak!";
+	mes "Hahaha! Th-thank you~";
+	mes "^111111*Hic-hic-hiccup!*^000000";
+	next;
+	switch(select("So what was that about Ymir's Heart?:Hehe, you're welcome.")) {
+		case 1: //heart
+		 break;
+		case 2: //welcome
+		 mes "[Drunken Man]";
+		 mes "Hahahaha!";
+		 mes "You're great!";
+		 mes "And I feel great!";
+		 mes "Bwahahahaahahah!";
+		 mes "^111111*Hiccup*^000000";
+		 close;
+	}
+	mes "[Drunken Man]";
+	mes "What...?";
+	mes "Ymir's Heart?";
+	mes "How do you know";
+	mes "about that? ^111111*Hiccup*^000000";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Y-you...!";
+	mes "You were just yelling,";
+	mes "'Ymir's Heart is on my";
+	mes "side,' while you were";
+	mes "gambling with those Apples!";
+	next;
+	mes "[Drunken Man]";
+	mes "What...?!";
+	mes "No way~";
+	mes "Err...? Did I...?";
+	next;
+	mes "[Drunken Man]";
+	mes "Heh heh...";
+	mes "I'm not really";
+	mes "supposed to be talking";
+	mes "about this. As head of";
+	mes "the Laboratory, I'm sworn";
+	mes "to secrecy about Ymir's Heart.";
+	next;
+	mes "[Drunken Man]";
+	mes "But what do I care?!";
+	mes "All they want are the";
+	mes "results of my research!";
+	mes "They don't appreciate";
+	mes "my work at all! My title";
+	mes "is completely worthless!";
+	next;
+	mes "[Drunken Man]";
+	mes "You don't know how long I've";
+	mes "been imprisoned in the lab and";
+	mes "that the work conditions just get";
+	mes "worse and worse. Screw them! I'll";
+	mes "keep getting paid as long as I show";
+	mes "them some progress in our project!";
+	next;
+	menu "Project?",-;
+	mes "[Drunken Man]";
+	mes "Yeah, we're researching";
+	mes "Ymir's Heart. It was found";
+	mes "a long time ago in ^3131FFEinbech^000000";
+	mes "and it's in our lab now.";
+	next;
+	mes "[Drunken Man]";
+	mes "Everyone knows it's supposed";
+	mes "to hold some legendary power,";
+	mes "but even I was surprised to see";
+	mes "what it was capable of. It's both";
+	mes "terrible and miraculous, scary";
+	mes "and wondrous...";
+	next;
+	mes "[Drunken Man]";
+	mes "So...";
+	mes "I figure...";
+	mes "It may even";
+	mes "have the power to";
+	mes "win me Dice games!";
+	mes "Bwahaha--*Hiccup!*";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "(That thing I saw";
+	mes "hooked up to all those";
+	mes "wires in the Laboratory";
+	mes "must have been a piece";
+	mes "of ^3131FFYmir's Heart^000000. I better";
+	mes "tell Shinokas about this.)";
+	set ein_lab,2;
+	close;
+	
+L_Done:
+	mes "[Drunken Man]";
+	mes "Hahahahaha!";
+	mes "You're great!";
+	mes "I feel great!";
+	mes "Everything's great!";
+	mes "Bwahahahaahahah!";
+	mes "*Hiccup*";
+	close;
+}
+
+
+//============================================================
+//============================================= Einbroch Lover
+//====================================================== Quest
+ein_in01.gat,31,151,4	script	Satra	850,{
+	if(EIN_LOVERQ > 11)goto s_Intimi;
+	if(EIN_LOVERQ == 11)goto s_Coal4;
+	if(EIN_LOVERQ == 10)goto s_Coal3;
+	if(EIN_LOVERQ == 9)goto s_Coal2;
+	if(EIN_LOVERQ == 8)goto s_Coal1;
+	if(EIN_LOVERQ == 7)goto s_Advent;
+	mes "[Satra]";
+	mes "A wandering";
+	mes "adventurer...?";
+	mes "How sinfully";
+	mes "intriguing!";
+	mes "Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Oh, do not worry";
+	mes "I'm sure the beauty of";
+	mes "my home has captured your";
+	mes "curiosity. My brutish excuse";
+	mes "for a husband would have you";
+	mes "beat if he found you...";
+	next;
+	mes "[Satra]";
+	mes "But I'm far more genteel";
+	mes "then Megass. You're more";
+	mes "than welcome to enjoy the";
+	mes "furnishings. Ho ho ho ho~";
+	close;
+
+s_Advent:
+	mes "[Satra]";
+	mes "A wandering adventurer...?";
+	mes "How ravishingly delightful!";
+	mes "You must have risked life and";
+	mes "limb to sneak past my husband";
+	mes "to enjoy the captivating sights";
+	mes "of my home. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Since you're a very";
+	mes "unique quest, I shall";
+	mes "give you a unique honor";
+	mes "and deign to converse";
+	mes "with you, adventurer.";
+	next;
+	mes "[Satra]";
+	mes "Einbech exists to provide";
+	mes "my family with coal and";
+	mes "materials from their mines.";
+	mes "It's a natural law: workers";
+	mes "must be led by a chosen few.";
+	next;
+	mes "[Satra]";
+	mes "It's delightfully";
+	mes "ludicrous to see those";
+	mes "workers aspire to reach";
+	mes "our heights of social";
+	mes "prestige. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Oh, I haven't spoken to";
+	mes "someone from a lower";
+	mes "class in ages! It feels";
+	mes "so forbiddenly exciting!";
+	next;
+	mes "[Satra]";
+	mes "Well adventurer, that's";
+	mes "the end of our informal";
+	mes "chat. I'll even grant you";
+	mes "full permission to boast";
+	mes "of the fact that you've";
+	mes "spoken to Lady Satra.";
+	next;
+	mes "[Satra]";
+	mes "If you wish for";
+	mes "me to share words with";
+	mes "you once more, prove to";
+	mes "me that you're worthier";
+	mes "than the other peons of";
+	mes "my graceful presence.";
+	next;
+s_Coal1:
+	mes "[Satra]";
+	mes "Oh, I have a marvelous";
+	mes "idea! Why don't you bring";
+	mes "me ^9C0000Coals^000000? It's not impossible";
+	mes "for someone like yourself, but";
+	mes "this kind of task will require";
+	mes "some effort on your part.";
+	next;
+	if(EIN_LOVERQ == 8 && countitem(1003) > 9)goto s_GotCoal1;
+	mes "[Satra]";
+	mes "Tah tah,";
+	mes "adventurer~";
+	if(EIN_LOVERQ == 7)set EIN_LOVERQ,8;
+	close;
+
+s_GotCoal1:
+	mes "[Satra]";
+	mes "My, you've already";
+	mes "brought the Coal?";
+	mes "How charmingly";
+	mes "prompt you are~";
+	next;
+	mes "[Satra]";
+	mes "On behalf of the";
+	mes "Kappellthaine family,";
+	mes "I shall ignore your lowly";
+	mes "status and graciously";
+	mes "accept your small gift.";
+	mes "Ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Do you hail from";
+	mes "Einbech, adventurer?";
+	mes "Ah, the Rune-Midgarts";
+	mes "kingdom! I've visited your";
+	mes "country. It's quite quaint";
+	mes "and Jawaii is very lovely.";
+	next;
+	mes "[Satra]";
+	mes "Well, I shall try to";
+	mes "find some use for these.";
+	mes "I'm afraid the gift I've asked";
+	mes "from you isn't very practical.";
+	mes "How is coal usually used?";
+	mes "Ah, I have a novel idea!";
+	next;
+	mes "[Satra]";
+	mes "Wouldn't it be";
+	mes "intoxicatingly wild if";
+	mes "Megass were to hold one";
+	mes "of those social functions that";
+	mes "the lower classes are so fond";
+	mes "of? A 'barbeque', yes?";
+	next;
+	mes "[Satra]";
+	mes "In any case, If you";
+	mes "bring me more of that";
+	mes "Coal, you would be even";
+	mes "more favored by me and";
+	mes "you'll become a recipient";
+	mes "of my good graces. Ho ho~";
+	set EIN_LOVERQ,9;
+	delitem 1003,10;
+	close;
+
+s_Coal2:
+	mes "[Satra]";
+	mes "^111111*Titter~*^000000";
+	mes "Why, if it isn't my";
+	mes "intrepid adventurer.";
+	mes "Ho ho ho ho~";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal2;
+	mes "[Satra]";
+	mes "My apologies, but you";
+	mes "must first prove to me";
+	mes "that you are worthy of";
+	mes "conversation. Why don't";
+	mes "you deliver more of those";
+	mes "^9C0000Coals^000000, mmm?";
+	next;
+	mes "[Satra]";
+	mes "After all, I have no other";
+	mes "means of knowing whether";
+	mes "or not you appreciate the time";
+	mes "I sacrifice by socializing with";
+	mes "someone of your status.";
+	mes "Ho ho ho ho~";
+	close;
+
+s_GotCoal2:
+	mes "[Satra]";
+	mes "My word!";
+	mes "Why are you carrying";
+	mes "all of that dirty Coal";
+	mes "with you? You poor,";
+	mes "impoverished thing.";
+	next;
+	mes "[Satra]";
+	mes "Oh! Dear me,";
+	mes "I've nearly forgotten~";
+	mes "How divinely silly of me!";
+	mes "Once again, I graciously";
+	mes "accept your small gift on";
+	mes "behalf of the Kappelthaines.";
+	next;
+	mes "[Satra]";
+	mes "Let me share a little";
+	mes "bit of history concerning";
+	mes "our lovely Einbroch. At one";
+	mes "time, there was only Einbech,";
+	mes "the mining village. You can";
+	mes "imagine how long ago that was.";
+	next;
+	mes "[Satra]";
+	mes "However, the minerals";
+	mes "and ores mined in Einbech";
+	mes "need to be processed and";
+	mes "refined in factories that were";
+	mes "all built in a nearby industrial";
+	mes "comple which became Einbroch.";
+	next;
+	mes "[Satra]";
+	mes "Now every citizen in";
+	mes "Einbroch is wealthy and";
+	mes "it's well known that there";
+	mes "is a higher standard of";
+	mes "living here than in Einbech.";
+	next;
+	mes "[Satra]";
+	mes "Goodness, I believe";
+	mes "it's time for a spot of tea~";
+	mes "The next time you wish to have";
+	mes "an audience with me, it would";
+	mes "behoove you to bring another";
+	mes "gift of Coal. Toodles~";
+	set EIN_LOVERQ,10;
+	delitem 1003,10;
+	close;
+
+s_Coal3:
+	mes "[Satra]";
+	mes "Why hello~";
+	mes "Your visits have";
+	mes "recently been quite";
+	mes "delightful, fair adventurer.";
+	next;
+	mes "[Satra]";
+	mes "Oh, my apologies!";
+	mes "I supposed you're just";
+	mes "here for sight seeing,";
+	mes "or perhaps you're running";
+	mes "some sort of adventurer's";
+	mes "errand. Am I right?";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal3;
+	mes "[Satra]";
+	mes "I know you well enough";
+	mes "to know that you wouldn't";
+	mes "be so rude as to stop by";
+	mes "and chat without bringing";
+	mes "any ^9C0000Coal^000000. Ho ho ho ho~";
+	close;
+
+s_GotCoal3:
+	mes "[Satra]";
+	mes "Continue to show";
+	mes "your appreciation";
+	mes "and dedication to me";
+	mes "and you'll soon be known";
+	mes "to be my most favored";
+	mes "commoner. Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "I'm sure you've noticed";
+	mes "the strained relationship";
+	mes "between Einbroch and Einbech";
+	mes "by now. It's a shame, really.";
+	next;
+	mes "[Satra]";
+	mes "As Einbroch grew wealthier";
+	mes "and Einbech became more";
+	mes "destitude, the affluent began";
+	mes "despising the impoverished.";
+	mes "I supposed it follows that the";
+	mes "poor started to resent the rich.";
+	next;
+	mes "[Satra]";
+	mes "It might be said that";
+	mes "both towns have been";
+	mes "trying to take advantage";
+	mes "of each other, but it's";
+	mes "clear that Einbroch has";
+	mes "always had the upper hand.";
+	next;
+	mes "[Satra]";
+	mes "In fact, because of";
+	mes "this rift between our";
+	mes "cities, our families are";
+	mes "taught not to associate";
+	mes "with the people of Einbech.";
+	next;
+	mes "[Satra]";
+	mes "Now, I believe that most";
+	mes "people who live in Einbech";
+	mes "are peons, but that does not";
+	mes "mean I will not give them a";
+	mes "chance to prove their worth.";
+	next;
+	mes "[Satra]";
+	mes "Why should I deprive";
+	mes "the lowly of my gracious";
+	mes "presence if they prove";
+	mes "themselves meritable?";
+	mes "Ho ho ho ho~";
+	next;
+	mes "[Satra]";
+	mes "Oh, that was scrumptious!";
+	mes "If you wish to pay me another";
+	mes "visit, don't forget to bring some";
+	mes "Coal with you. Tah tah~";
+	set EIN_LOVERQ,11;
+	delitem 1003,10;
+	close;
+
+s_Coal4:
+	mes "[Satra]";
+	mes "Ho ho ho ho~";
+	mes "Welcome adventurer,";
+	mes "I so enjoy our little chats.";
+	mes "Hors d'oeuvre?";
+	next;
+	if(countitem(1003) > 9)goto s_GotCoal4;
+	mes "[Satra]";
+	mes "Ah...";
+	mes "It seems you've";
+	mes "forgotten your ^9C0000Coals^000000.";
+	mes "A silly mistake, but one";
+	mes "I'm willing to overlook.";
+	close;
+
+s_GotCoal4:
+	mes "[Satra]";
+	mes "Oh! You can't enjoy";
+	mes "any food in that state!";
+	mes "Your hands are atrociously";
+	mes "grimy! May I ask why?";
+	next;
+	mes "[Satra]";
+	mes "Ah~";
+	mes "In my excitement,";
+	mes "I nearly forgot that";
+	mes "I asked you to bring";
+	mes "Coals to me again!";
+	mes "My apologies~";
+	next;
+	mes "[Satra]";
+	mes "You've brought so much Coal";
+	mes "to me, I'm convinced that you're";
+	mes "much more diligent than those";
+	mes "languid peasants in Einbech.";
+	mes "I appreciate that you've labored";
+	mes "so much to win my favor.";
+	next;
+	mes "[Satra]";
+	mes "Hm, what was that?";
+	mes "someone else provided";
+	mes "these Coals and you were";
+	mes "only delivering them? Then";
+	mes "who actually gathered these?";
+	next;
+	input @str$;
+	if(@str$ != "Clitzer")goto s_WrongName;
+	mes "[Satra]";
+	mes "Ah, Clitzer?";
+	mes "I must say, that's";
+	mes "a very humble name.";
+	mes "Yet it's so familiar...";
+	next;
+	mes "[Satra]";
+	mes "Ah, I recall there";
+	mes "was a hooligan that";
+	mes "has been pestering my";
+	mes "daughter named Clitzer.";
+	mes "Perhaps they are one";
+	mes "and the same. Hmm...";
+	next;
+	mes "[Satra]";
+	mes "I remember that he was";
+	mes "rather shabby looking and";
+	mes "lacked any semblance of";
+	mes "etiquette whatsoever. Clearly,";
+	mes "he is a fool and a coward, but";
+	mes "now I see that he is sincere.";
+	next;
+	mes "[Satra]";
+	mes "It might not be possible";
+	mes "to let him go otu with my";
+	mes "daughter straight away, but";
+	mes "I will invite him for a spot of";
+	mes "tea. And if Calla likes him,";
+	mes "well, he must be special.";
+	next;
+	mes "[Satra]";
+	mes "For a humble peasant,";
+	mes "this must be like a dream";
+	mes "come true! And to have tea";
+	mes "with Clitzer. Oh, what would";
+	mes "the girls say? Ah, but I did";
+	mes "marry that oafish Megass~";
+	next;
+	mes "[Satra]";
+	mes "Anyway, when you next";
+	mes "meet Clitzer, please tell";
+	mes "him to pay me a visit soon.";
+	mes "Oh, and remind him to dress";
+	mes "appropriately for this special";
+	mes "occasion. Ho ho ho ho ho~";
+	set EIN_LOVERQ,12;
+	close;
+
+s_WrongName:
+	mes "[Satra]";
+	mes "I beg your pardon?";
+	mes "" + @str$ + "? Oh my...";
+	mes "I believe I may have";
+	mes "misheard you. Ho ho ho ho~";
+	close;
+
+s_Intimi:
+	mes "[Satra]";
+	mes "I understand that my";
+	mes "home is extravagantly";
+	mes "splendid and to approach";
+	mes "any Kappelthaine is an";
+	mes "honor t most commoners.";
+	next;
+	mes "[Satra]";
+	mes "However, Clitzer";
+	mes "has no reason to feel so";
+	mes "intimidated. Tell the poor";
+	mes "boy that he's earned the";
+	mes "honor of speaking with me.";
+	close;
+
+}
+
+ein_in01.gat,31,138,4	script	Calla	90,{
+	if(EIN_LOVERQ > 4 && EIN_LOVERQ < 14)goto s_NoSwitch;
+	if(EIN_LOVERQ > 1)goto s_Switches;
+s_NoSwitch:
+	mes "[Calla]";
+	mes "Hello adventurer.";
+	mes "Our city must just be";
+	mes "another place where";
+	mes "you'll stay no longer";
+	mes "than a few days.";
+	next;
+	mes "[Calla]";
+	mes "You must have so much";
+	mes "freedom. I envy you. I can't";
+	mes "do what I want to do. I don't";
+	mes "even have the courage to tell";
+	mes "my family what I really want,";
+	mes "much less change things here...";
+	next;
+	mes "[Calla]";
+	mes "How is it like?";
+	mes "Going wherever you";
+	mes "please, following your";
+	mes "heart's true desire?";
+	mes "What I would give to";
+	mes "be able to do that...";
+	if(!EIN_LOVERQ)set EIN_LOVERQ,1;
+	close;
+
+s_Switches:
+	switch(EIN_LOVERQ)
+	{
+
+	case 2:
+		mes "[Calla]";
+		mes "You're the adventurer";
+		mes "from before, aren't you?";
+		mes "Sadly, there isn't much";
+		mes "to do around here. This";
+		mes "place is basically like";
+		mes "a prison to me...";
+		next;
+		mes "[Calla]";
+		mes "Oh, you've met Clitzer?";
+		mes "Isn't he so kind, such";
+		mes "a perfect gentleman?";
+		next;
+		mes "[Calla]";
+		mes "I really wish I could";
+		mes "see him, but it's almost";
+		mes "impossible. My parents think";
+		mes "he's not good enough for me,";
+		mes "but they're wrong! What am";
+		mes "I going to do? Oh, Clitzer...";
+		next;
+		mes "[Calla]";
+		mes "Well, maybe I can't see";
+		mes "him, but would you give";
+		mes "my violin to Clitzer for me?";
+		mes "I used to play this for him";
+		mes "all the time...";
+		next;
+		mes "[Calla]";
+		mes "I'm sorry to trouble you,";
+		mes "but please understand";
+		mes "that I want to comfort my";
+		mes "Clitzer in any way that";
+		mes "I possibly can. Thank";
+		mes "you so much, adventurer...";
+		set EIN_LOVERQ,3;
+		getitem 1901,1;
+		close;
+	break;
+
+	case 3:
+	s_Regards:
+		mes "[Calla]";
+		mes "Oh, please send my";
+		mes "regards to Clitzer for me.";
+		mes "I wish I could comnfort";
+		mes "him in person, but this";
+		mes "is the best I can do for now.";
+		close;
+	break;
+
+	case 4:
+		if(!countitem(712))goto s_Regards;
+		mes "[Calla]";
+		mes "You've spoken";
+		mes "with Clitzer? How";
+		mes "is he? What did he say?";
+		next;
+		mes "[Calla]";
+		mes "Oh...?";
+		mes "He asked you to";
+		mes "deliver this flower";
+		mes "to me? How sweet~";
+		mes "Thank you very much,";
+		mes "kind adventurer~";
+		next;
+		mes "[Calla]";
+		mes "Ah, I'm so rude!";
+		mes "I've been calling you";
+		mes "^111111*adventurer*^000000 this whole";
+		mes "time you've been helping";
+		mes "me! Would you please";
+		mes "tell me your name?";
+		next;
+		input @str$;
+		if(@str$ != strcharinfo(0))goto s_WrongName;
+		mes "[Calla]";
+		mes "Ah, " + strcharinfo(0) + "!";
+		mes "Such a lovely name~";
+		mes "I promise that I won't ever";
+		mes "forget it. Oh, and if you pass by";
+		mes "Einbech, would you thank Clitzer";
+		mes "for the flower for me please?";
+		next;
+		mes "[Calla]";
+		mes "A-and... And...";
+		mes "Please tell him that";
+		mes "I really miss him a lot.";
+		mes "^565656*Sob Sob...*";
+		delitem 712,1;
+		set EIN_LOVERQ,5;
+		close;
+	break;
+
+	case 14:
+		mes "[Calla]";
+		mes "I just heard from my mother";
+		mes "that she's planning to have";
+		mes "tea with Clitzer! I'm sure that";
+		mes "I have you to thank for this~";
+		next;
+		mes "[Calla]";
+		mes "I never dreamed that";
+		mes "something as wonderful";
+		mes "as this could happen.";
+		mes "I'm so happy, I could cry...";
+		mes "I'll always be grateful";
+		mes "for what you've done.";
+		next;
+		mes "[Calla]";
+		mes "I feel like such a fool,";
+		mes "thinking it was all hopeless.";
+		mes "I'll be doing my best to have";
+		mes "my parents accept Clitzer and";
+		mes "someday we'll be married~";
+		next;
+		mes "[Calla]";
+		mes "There isn't much that I can";
+		mes "give you, but I can show you";
+		mes "one of my family's secrets.";
+		mes "It's an invigorating massage";
+		mes "technique that makes you alot";
+		mes "healthier in only ten seconds.";
+		next;
+		mes "[Calla]";
+		mes "Well, please take";
+		mes "off your equipment";
+		mes "and stand still while";
+		mes "I give the massage. It";
+		mes "might hurt a bit at first...";
+		nude;
+		next;
+		mes "^3151FF*Rub Rub Rub*";
+		mes "*Knead Knead Knead*";
+		mes "*Crrack C-c-c--c-crack*";
+		mes "*Crack Crack Crrrrrack*";
+		mes "*Rub Crrraaaaaaaaaackk*^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ooooooooh...";
+		mes "I feel sooo";
+		mes "sore and yet";
+		mes "soooooo good.";
+		mes "Wait. Now I just";
+		mes "feel goooood~";
+		if(BaseLevel < 41)set BaseExp,BaseExp+3712;
+		else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+7425;
+		else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+14850;
+		else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+29700;
+		else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+59400;
+		else if(BaseLevel > 90)set BaseExp,BaseExp+118800;
+		set EIN_LOVERQ,15;
+		next;
+		mes "[Calla]";
+		mes "So how was it?";
+		mes "I hope it was refreshing.";
+		mes "Please understand that";
+		mes "it's the best thing I can";
+		mes "give you to show my gratitude.";
+		next;
+		mes "[Calla]";
+		mes "Once again,";
+		mes "thank you so";
+		mes "much, " + strcharinfo(0) + ".";
+		mes "I'll always pray for";
+		mes "your safety on your";
+		mes "your adventures~";
+		close;
+	break;
+
+	case 15:
+		mes "[Calla]";
+		mes "Thank you so much!";
+		mes "I'll try my best to convince";
+		mes "my parents to accept our";
+		mes "relationship. It'll be hard,";
+		mes "but it's a good first step~";
+		next;
+		mes "[Calla]";
+		mes "I hope that we can all";
+		mes "work together ti improve";
+		mes "relations between Einbech";
+		mes "and Einbroch. The hatred";
+		mes "between our towns must end...";
+		next;
+		mes "[Calla]";
+		mes "I really appreciate";
+		mes "what you've done for";
+		mes "all of use. I'll be praying";
+		mes "for your safety, adventurer.";
+		close;
+	break;
+
+	}
+
+s_WrongName:
+	mes "[Calla]";
+	mes "I'm sorry...";
+	mes "I didn't catch that.";
+	mes "would you please tell";
+	mes "me your name again?";
+	close;
+
+}
