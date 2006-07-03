@@ -1473,6 +1473,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			status_change_end(bl,SC_RUN,-1);
 		if (sc->data[SC_DANCING].timer!=-1) // clear dance effect when warping [Valaris]
 			skill_stop_dancing(bl);
+		if (sc->data[SC_WARM].timer!=-1)
+			status_change_end(bl, SC_WARM, -1);
 		if (sc->data[SC_DEVOTION].timer!=-1)
 			status_change_end(bl,SC_DEVOTION,-1);
 		if (sc->data[SC_MARIONETTE].timer!=-1)

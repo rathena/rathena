@@ -3305,10 +3305,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			do {
 				abra_skillid = rand() % MAX_SKILL_ABRA_DB;
-				if (skill_abra_db[abra_skillid].req_lv > skilllv ||
-					rand()%10000 >= skill_abra_db[abra_skillid].per ||
-					skill_get_inf2(abra_skillid)&INF2_NPC_SKILL ||
-					skill_get_unit_flag(abra_skillid) &(UF_DANCE|UF_ENSEMBLE|UF_SONG)
+				if (
+					skill_get_inf2(abra_skillid)&(INF2_NPC_SKILL|INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL) || //NPC/Song/Dance skills are out
+					!skill_get_inf(abra_skillid) || //Passive skills cannot be casted
+					skill_abra_db[abra_skillid].req_lv > skilllv || //Required lv for it to appear
+					rand()%10000 >= skill_abra_db[abra_skillid].per
 				)
 					abra_skillid = 0;	// reset to get a new id
 			} while (abra_skillid == 0);

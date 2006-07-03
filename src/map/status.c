@@ -6454,13 +6454,13 @@ int status_readdb(void) {
 	}
 	i=0;
 	while(fgets(line, sizeof(line)-1, fp)){
-		char *split[16];
+		char *split[MAX_REFINE+4];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		if(atoi(line)<=0)
 			continue;
 		memset(split,0,sizeof(split));
-		for(j=0,p=line;j<16 && p;j++){
+		for(j=0,p=line;j<MAX_REFINE+4 && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
