@@ -2989,7 +2989,7 @@ int parse_frommap(int fd) {
 
 		case 0x2736:
 			if (RFIFOREST(fd) < 6) return 0;
-			ShowInfo("Updated IP address of Server #%d to %d.%d.%d.%d.\n",i,
+			ShowInfo("Updated IP address of Server #%d to %d.%d.%d.%d.\n",id,
 				(int)RFIFOB(fd,2),(int)RFIFOB(fd,3),
 				(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 			server[id].ip = RFIFOL(fd, 2);
