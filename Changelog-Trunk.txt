@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/03
+	* Cleared up the bAutoSpellWhenHit description in doc/item_bonus.txt
+	  [Skotelx]
+	* Fixed Phantasmic Arrow and Magical Bullet not being correctly tagged as a
+	  ranged arrow-type attack. [Skotlex]
+	* Updated help.txt and help2.txt, thanks to Inuyasha for providing the
+	  updated files. [Skotlex]
 	* Char-server SQL won't perform the reconnect cleanup routines when
 	  kick_on_disconnect is disabled. [Skotlex]
 	* Renamed summons_inherit_effects to summons_trigger_autospells as the

@@ -6402,7 +6402,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		{	//Take on the base element, not the elemental one.
 			struct status_data *bstatus = status_get_base_status(src);
 			val1 = bstatus?bstatus->rhw.ele:status->rhw.ele;
-			if (sd) sd->state.arrow_atk = 0; //Disable consumption rigth away.
+			if (sd) sd->state.arrow_atk = 0; //Disable consumption right away.
 			else if (!val1) val1 = ELE_WATER+rand()%(ELE_WIND-ELE_WATER);
 			break;
 		}

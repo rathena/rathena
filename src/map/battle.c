@@ -843,7 +843,12 @@ static struct Damage battle_calc_weapon_attack(
 				}
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
-				
+			case GS_MAGICALBULLET:
+			case HT_PHANTASMIC:
+				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
+				flag.arrow = 1;
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+				break;
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
 				flag.weapon = 0;
