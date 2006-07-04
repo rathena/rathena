@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/07/04
+	* Added a check when joining a chat to make sure the target object is of
+	  type BL_CHAT. [Skotlex]
 2006/07/03
 	* Cleared up the bAutoSpellWhenHit description in doc/item_bonus.txt
 	  [Skotelx]
