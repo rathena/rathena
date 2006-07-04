@@ -46,6 +46,7 @@
 //= Gives 1/4 chance of being eligible. Real way to be eligible is through
 //= President's Quest, which isn't yet released.
 //===== Version History: ====================================
+//= 1.7	Fixed bug of DTS_Admin not running by itself [Evera] (7/03/06)
 //= 1.6 Removed Duplicates [Silent]
 //= 1.5 Mushed voting varialbes into 1 variable. [Evera] (5/29/06)
 //= 1.4 Changed global variables to read from 3 global variables, updated names,
@@ -879,7 +880,7 @@ function	script	F_DTS_Warp	{
 
 //Elections administration NPC (hidden)
 -	script DTS_Admin -1,{
-	On000100:					//Works only at 1am on sunday
+	OnSun0100:					//Works only at 1am on sunday
 		if($dtsv == 0){				//If tied, gives random side 100 votes
 			set $@dtstemp,rand(1,2);
 			if($@dtstemp == 1) set $dtsv,$dtsv+100;

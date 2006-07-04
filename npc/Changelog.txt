@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/03
+	* Fixed bug in DTS warper that votes weren't counted on Sunday [Evera]
 	* eAAC update to donation girl. [erKURITA]
 	* Split cities/einbroch.txt to cities/einbroch.txt and quests/quests_einbroch.txt [Evera]
 	- Fixed some small typos [Evera]
