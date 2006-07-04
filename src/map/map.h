@@ -255,6 +255,13 @@ enum {
 	MAX_ITEMGROUP,
 } item_group_list;
 
+enum {
+	ATF_SELF=0x01,
+	ATF_TARGET=0x02,
+	ATF_SHORT=0x04,
+	ATF_LONG=0x08
+} auto_trigger_flag;
+
 struct block_list {
 	struct block_list *next,*prev;
 	int id;
@@ -610,8 +617,6 @@ struct map_session_data {
 	int subrace[RC_MAX];
 	int subrace2[RC_MAX];
 	int subsize[3];
-	int addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	int addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int weapon_coma_ele[ELE_MAX];
 	int weapon_coma_race[RC_MAX];
@@ -620,22 +625,22 @@ struct map_session_data {
 	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
 	int arrow_addsize[3];
-	int arrow_addeff[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	int arrow_addeff2[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	int magic_addele[ELE_MAX];
 	int magic_addrace[RC_MAX];
 	int magic_addsize[3];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
 	int itemhealrate[MAX_ITEMGROUP];
-	int addeff3[SC_COMMON_MAX-SC_COMMON_MIN+1];
-	short addeff3_type[SC_COMMON_MAX-SC_COMMON_MIN+1];
 	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell{
 		short id, lv, rate, card_id;
 	} autospell[MAX_PC_BONUS], autospell2[MAX_PC_BONUS];
+	struct s_addeffect{
+		short id, rate, arrow_rate;
+		unsigned char flag;
+	} addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
 	struct { //skillatk raises bonus dmg% of skills, skillblown increases bonus blewcount for some skills.
 		short id, val;
 	} skillatk[MAX_PC_BONUS], skillblown[MAX_PC_BONUS];

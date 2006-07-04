@@ -1324,14 +1324,34 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	}
 
-	if(sd && skillid != MC_CARTREVOLUTION && skillid != AM_DEMONSTRATION && skillid != CR_REFLECTSHIELD && attack_type&BF_WEAPON){	/* カードによる追加効果 */
+	if(sd && attack_type&BF_WEAPON &&
+		skillid != MC_CARTREVOLUTION &&
+		skillid != AM_DEMONSTRATION &&
+		skillid != CR_REFLECTSHIELD
+	){	//Trigger status effects
 		int i, type;
-		for(i=SC_COMMON_MIN;i<=SC_COMMON_MAX;i++){
-			type=i-SC_COMMON_MIN;
-			rate = sd->addeff[type]+(sd->state.arrow_atk?sd->arrow_addeff[type]:0);
-			if (!rate)
-				continue; //Code Speedup.
-			status_change_start(bl,i,rate,7,0,0,0,skill_get_time2(StatusSkillChangeTable[type],7),0);
+		for(i=0; i < MAX_PC_BONUS && sd->addeff[i].id; i++)
+		{
+			rate = sd->addeff[i].rate;
+			type = sd->state.arrow_atk; //Ranged?
+			if (type)
+				rate += sd->addeff[i].arrow_rate;
+			if (!rate) continue;
+			
+			if (!(sd->addeff[i].flag&ATF_LONG && sd->addeff[i].flag&ATF_SHORT))
+			{	//Trigger has range consideration.
+				if ((sd->addeff[i].flag&ATF_LONG && !type) ||
+					(sd->addeff[i].flag&ATF_SHORT && type))
+					continue; //Range Failed.
+			}
+			type =  sd->addeff[i].id;
+			skill = skill_get_time2(StatusSkillChangeTable[type],7);
+			
+			if (sd->addeff[i].flag&ATF_TARGET)
+				status_change_start(bl,type,rate,7,0,0,0,skill,0);
+			
+			if (sd->addeff[i].flag&ATF_SELF)
+				status_change_start(src,type,rate,7,0,0,0,skill,0);
 		}
 	}
 
@@ -1445,24 +1465,35 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		clif_skill_nodamage(src,bl,HW_SOULDRAIN,rate,1);
 		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
 	}
-	
-	if((sd||dstsd) && skillid != MC_CARTREVOLUTION && attack_type&BF_WEAPON){	/* カードによる追加効果 */
-		int i, type;
 
-		for(i=SC_COMMON_MIN;i<=SC_COMMON_MAX;i++){
-			type=i-SC_COMMON_MIN;
+	if(dstsd && attack_type&BF_WEAPON)
+	{	//Counter effects.
+		int i, type, time;
+		for(i=0; i < MAX_PC_BONUS && dstsd->addeff2[i].id; i++)
+		{
+			rate = dstsd->addeff2[i].rate;
+			type = (sd && sd->state.arrow_atk) || (status_get_range(src)>2);
+			if (type)
+				rate+=dstsd->addeff2[i].arrow_rate;
+			if (!rate) continue;
 			
+			if (!(dstsd->addeff2[i].flag&ATF_LONG && dstsd->addeff2[i].flag&ATF_SHORT))
+			{	//Trigger has range consideration.
+				if ((dstsd->addeff2[i].flag&ATF_LONG && !type) ||
+					(dstsd->addeff2[i].flag&ATF_SHORT && type))
+					continue; //Range Failed.
+			}
+			type =  dstsd->addeff2[i].id;
+			time = skill_get_time2(StatusSkillChangeTable[type],7);
 			
-			rate = sd?(sd->addeff2[type]+(sd->state.arrow_atk?sd->arrow_addeff2[type]:0)):0;
-			if (rate) //Self inflicted status from attacking.
-				status_change_start(src,i,rate,7,0,0,0,skill_get_time2(StatusSkillChangeTable[type],7),0);
-
-			rate = dstsd?dstsd->addeff3[type]:0;
-			if (rate && (dstsd->addeff3_type[type] == 1 || ((sd && sd->state.arrow_atk) || (status_get_range(src)>2))))
-				status_change_start(src,i,rate,7,0,0,0,skill_get_time2(StatusSkillChangeTable[type],7),0);
+			if (dstsd->addeff2[i].flag&ATF_TARGET)
+				status_change_start(src,type,rate,7,0,0,0,time,0);
+			
+			if (dstsd->addeff2[i].flag&ATF_SELF && !status_isdead(bl))
+				status_change_start(bl,type,rate,7,0,0,0,time,0);
 		}
 	}
-
+	
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
 	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{

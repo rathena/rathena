@@ -1171,6 +1171,29 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	return 1;
 }
 
+static int pc_bonus_addeff(struct s_addeffect *effect, int max, short id, short rate, short arrow_rate, unsigned char flag) {
+	int i;
+
+	for (i = 0; i < max && effect[i].id; i++) {
+		if (effect[i].id == id && effect[i].flag == flag)
+		{
+			effect[i].rate += rate;
+			effect[i].arrow_rate += rate;
+			return 1;
+		}
+	}
+	if (i == max) {
+		if (battle_config.error_log)
+			ShowWarning("pc_bonus: Reached max (%d) number of add effects per character!\n", max);
+		return 0;
+	}
+	effect[i].id = id;
+	effect[i].rate = rate;
+	effect[i].arrow_rate = arrow_rate;
+	effect[i].flag = flag;
+	return 1;
+}
+
 static int pc_bonus_item_drop(struct s_add_drop *drop, short *count, short id, short group, int race, int rate) {
 	int i;
 	//Apply config rate adjustment settings.
@@ -1815,24 +1838,22 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->subrace[type2]+=val;
 		break;
 	case SP_ADDEFF:
-		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
+		if (type2 > SC_MAX) {
 			ShowWarning("pc_bonus2 (Add Effect): %d is not supported.\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2)
-			sd->addeff[type2-SC_COMMON_MIN]+=val;
-		else
-			sd->arrow_addeff[type2-SC_COMMON_MIN]+=val;
+		pc_bonus_addeff(sd->addeff, MAX_PC_BONUS, type2,
+			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0,
+			ATF_SHORT|ATF_LONG|ATF_TARGET);
 		break;
 	case SP_ADDEFF2:
-		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
+		if (type2 > SC_MAX) {
 			ShowWarning("pc_bonus2 (Add Effect2): %d is not supported.\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2)
-			sd->addeff2[type2-SC_COMMON_MIN]+=val;
-		else
-			sd->arrow_addeff2[type2-SC_COMMON_MIN]+=val;
+		pc_bonus_addeff(sd->addeff, MAX_PC_BONUS, type2,
+			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0,
+			ATF_SHORT|ATF_LONG|ATF_SELF);
 		break;
 	case SP_RESEFF:
 		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
@@ -2040,24 +2061,22 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->critaddrace[type2] += val*10;
 		break;
 	case SP_ADDEFF_WHENHIT:
-		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
+		if (type2 > SC_MAX) {
 			ShowWarning("pc_bonus2 (Add Effect when hit): %d is not supported.\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2) {
-			sd->addeff3[type2-SC_COMMON_MIN]+=val;
-			sd->addeff3_type[type2-SC_COMMON_MIN]=1;
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_addeff(sd->addeff2, MAX_PC_BONUS, type2, val, 0,
+				ATF_SHORT|ATF_LONG|ATF_TARGET);
 		break;
 	case SP_ADDEFF_WHENHIT_SHORT:
-		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
+		if (type2 > SC_MAX) {
 			ShowWarning("pc_bonus2 (Add Effect when hit short): %d is not supported.\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2) {
-			sd->addeff3[type2-SC_COMMON_MIN]+=val;
-			sd->addeff3_type[type2-SC_COMMON_MIN]=0;
-		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_addeff(sd->addeff2, MAX_PC_BONUS, type2, val, 0,
+				ATF_SHORT|ATF_TARGET);
 		break;
 	case SP_SKILL_ATK:
 		for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
@@ -2249,6 +2268,26 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 	case SP_ADD_MONSTER_DROP_ITEMGROUP:
 		if (sd->state.lr_flag != 2)
 			pc_bonus_item_drop(sd->add_drop, &sd->add_drop_count, 0, type2, 1<<type3, val);
+		break;
+
+	case SP_ADDEFF:
+		if (type2 > SC_MAX) {
+			ShowWarning("pc_bonus3 (Add Effect): %d is not supported.\n", type2);
+			break;
+		}
+		pc_bonus_addeff(sd->addeff, MAX_PC_BONUS, type2,
+			sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0,
+			ATF_SHORT|ATF_LONG|(val?ATF_TARGET:ATF_SELF)|(val==2?ATF_SELF:0));
+		break;
+
+	case SP_ADDEFF_WHENHIT:
+		if (type2 > SC_MAX) {
+			ShowWarning("pc_bonus3 (Add Effect when hit): %d is not supported.\n", type2);
+			break;
+		}
+		if(sd->state.lr_flag != 2)
+			pc_bonus_addeff(sd->addeff2, MAX_PC_BONUS, type2, type3, 0,
+				ATF_SHORT|ATF_LONG|(val?ATF_TARGET:ATF_SELF)|(val==2?ATF_SELF:0));
 		break;
 
 	default:
