@@ -25,6 +25,8 @@
 
 =========================
 07/04
+	* Updated the cooking items so they are ready for official implementation [Playtester]
+	- also slightly raised drop rates of Cooking Sets
 	* Silver Tiara's bonus is Int AGAIN (Gravity can't decide) [Playtester]
 07/03
 	* Fixed the UF * flags of Songs/Dances in skill_unit_db. [Skotlex]
