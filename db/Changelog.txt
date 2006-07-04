@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/04
+	* Silver Tiara's bonus is Int AGAIN (Gravity can't decide) [Playtester]
 07/03
 	* Fixed the UF * flags of Songs/Dances in skill_unit_db. [Skotlex]
 07/02

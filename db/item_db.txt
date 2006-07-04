@@ -1711,7 +1711,7 @@
 5146,Elephant_Hat,Elephant Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,0,1,215,{ bonus bVit,1; bonus2 bSubRace,RC_Brute,7; skill 86,1; },{},{}
 5147,Baseball_Cap,Baseball Cap,5,,10,200,,3,,0,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
 5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; },{},{}
-5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bDex,2; },{},{}
+5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; },{},{}
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; },{},{}
 5151,Note_Headphones,Note Headphones,5,,,100,,1,,1,0xFFFFFFFF,7,2,256,,,1,220,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
 5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,0,0xFFFFFFFF,7,2,768,,,1,221,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
