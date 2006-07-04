@@ -20,7 +20,7 @@
 //=					= (1<<4) Cool Corp won last election
 //=					= (1<<5) Kafra won last election
 //=					= (1<<6) Global Eligibility
-//=Character -	dtseligible 		= eligibility status, 0 not eligible, 1 eligible, 2 eligible & voted, 3 tried for elig.
+//=Character -	dtseligible 		= eligibility status, 0 not eligible yet, 1 eligible, 2 eligible & voted.
 //=					= (By default, 1/4 chance of being able to vote. set to 1 after having random selection;
 //=					= not used if $dtsglobalelig == 1) 
 //=NPC Func. -	arg(0) 			= 0, Cool Event Corp Voting Staff; 1, Kafra Corp Voting Staff
@@ -43,9 +43,9 @@
 //= Includes NPCs in Cool Event Corp headquarters
 //= Also known as Zondaman in other languages (?)
 //= Pretty sure there are more locations I didn't find.
-//= Gives 1/4 chance of being eligible. Real way to be eligible is through
-//= President's Quest, which isn't yet released.
+//= Base level 60 required to vote
 //===== Version History: ====================================
+//= 1.8	Changed requirement to lvl 60 [Evera] (7/03/06)
 //= 1.7	Fixed bug of DTS_Admin not running by itself [Evera] (7/03/06)
 //= 1.6 Removed Duplicates [Silent]
 //= 1.5 Mushed voting varialbes into 1 variable. [Evera] (5/29/06)
@@ -203,28 +203,19 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 			mes "Voting Staff, please.";			//End unofficial text
 			close;
 		}
+		if(dtseligible == 0 && baselevel >= 60 || dtseligible == 3 && baselevel >= 60) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
 		switch(dtseligible){
-			case 0:
-				set @randapply,rand(3);			//Gives random(1/4) chance of being eligible
-				switch(@randapply){			//Unofficial, until President's quest is completed
-				case 0:
-				case 1:
-				case 2:
-					mes "[Saera]";
-					mes "Only a limited number of";
-					mes "voters will be chosen, so";
-					mes "you can check your voting";
-					mes "eligibility at the headquarters";
-					mes "of both participating companies.";
-					mes "Thank you for your patronage~";
-					set dtseligible,3;
-					close;
-					break;
-				case 3:
-					set dtseligible,1;
-					break;
-				default: break;
-				}
+			default:
+				mes "[Saera]";
+				mes "Only a limited number of";
+				mes "voters will be chosen, so";
+				mes "you can check your voting";
+				mes "eligibility at the headquarters";
+				mes "of both participating companies.";
+				mes "Thank you for your patronage~";
+				set dtseligible,3;
+				close;
+				break;
 			case 1:
 				mes "[Saera]";
 				mes "It appears that you are";
@@ -239,17 +230,6 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 				mes "You are eligible to vote, but";
 				mes "you have already voted. Thank";
 				mes "you for your participation";
-				close;
-				break;
-			case 3:
-			default:
-				mes "[Saera]";
-				mes "Only a limited number of";
-				mes "voters will be chosen, so";
-				mes "you can check your voting";
-				mes "eligibility at the headquarters";
-				mes "of both participating companies.";
-				mes "Thank you for your patronage~";
 				close;
 				break;
 		}
@@ -502,10 +482,7 @@ function	script	F_DTS_Warp	{
 		set $dts,$dts|(1<<0);
 		set $dts,$dts|(1<<3);
 	}
-	if(dtseligible == 0){						//Gives random(1/4) chance of being eligible
-		set @randapply,rand(3);					//Unofficial, until President's quest is finished
-		if(@randapply == 0) set dtseligible,1;
-	}
+	if(dtseligible == 0 && baselevel >= 60 || dtseligible == 3 && baselevel >= 60) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
 	switch(getarg(0)){
 	case 0:
 		cutin "zonda_01",2;
@@ -653,7 +630,7 @@ function	script	F_DTS_Warp	{
 		goto Lend;
 
 	Leligible: 							//Text displayed if eligible to vote
-		if(dtseligible == 3 || dtseligible == 2) goto Lnoteligible; //Var check if voted
+		if(dtseligible == 2) goto Lnoteligible; //Var check if voted
 		switch(getarg(0)){
 		case 0:
 			mes "[Cool Event Corp. Voting Staff]"; 		//Unofficial text

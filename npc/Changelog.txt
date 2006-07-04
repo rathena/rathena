@@ -40,6 +40,9 @@ Date		Added
 ======
 07/03
 	* Fixed bug in DTS warper that votes weren't counted on Sunday [Evera]
+	- Changed requirement for vote eligibility in DTS warper to 60
+	  (Was previously completion of President's Quest, but since it wasn't
+	  done, I used a random chance) [Evera] 
 	* eAAC update to donation girl. [erKURITA]
 	* Split cities/einbroch.txt to cities/einbroch.txt and quests/quests_einbroch.txt [Evera]
 	- Fixed some small typos [Evera]
