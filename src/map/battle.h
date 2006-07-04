@@ -167,6 +167,7 @@ extern struct Battle_Config {
 	unsigned short guild_emperium_check;
 	unsigned short guild_exp_limit;
 	unsigned short guild_max_castles;
+	unsigned short emergency_call;
 	unsigned short pc_invincible_time;
 	unsigned short pet_catch_rate;
 	unsigned short pet_rename;
