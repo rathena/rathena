@@ -1,0 +1,825 @@
+//===== eAthena Script =======================================
+//= Socket Enchant
+//===== By: ==================================================
+//= Sousuke_PL
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= item loses all element refinement and upgrades but
+//= cards too?
+//===== Additional Comments: =================================
+//= 0.1
+//============================================================
+
+
+lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
+
+
+  mes "[Socket Enchant]";
+  mes "Hello.";
+  mes "How can I help you?";
+  next;
+  menu "Upgrade my item",-,"Nothing",L_Not;
+
+  mes "[Socket Enchant]";
+  mes "This is weapon or armor?";
+  next;
+  menu "Weapon",L_Weapon1,"Armor",L_Armor1;
+
+
+//============================================================
+//= Weapon
+//============================================================
+
+  L_WaepJump:
+      mes "[Socket Enchant]";
+      mes "Choose the number of page. Type 1 to 5:";
+      next;
+      input @weapsite;
+      if(@weapsite > 5) goto L_WaepJump;
+
+      if(@weapsite == 1) goto L_Weapon1;
+      if(@weapsite == 2) goto L_Weapon2;
+      if(@weapsite == 3) goto L_Weapon3;
+      if(@weapsite == 4) goto L_Weapon4;
+      if(@weapsite == 5) goto L_Weapon5; 
+
+
+
+  L_Weapon1:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Trident[2]",Trident,"Rope[3]",Rope,"Violin[3]",Violin,"Chain[2]",Chain,"Gladius[2]",Gladius,"Gakkung Bow[1]",Gakkung_Bow,"Next",L_Weapon2,"Jump to page...",L_WaepJump;
+
+  L_Weapon2:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Pike[3]",Pike,"Haedonggum[1]",Haedonggum,"Lute[2]",Lute,"Wire Whip[2]",Wire_Whip,"Waghnak[3]",Waghnak,"Arbalest[1]",Arbalest,"Next",L_Weapon3,"Jump to page...",L_WaepJump;
+
+  L_Weapon3:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Hunter Bow",Hunter_Bow,"(Int) Survivor's Rod",Int_Survivors_Rod,"Zweihander",Zweihander,"Flamberge",Flamberge,"Infiltrator",Infiltrator,"Ballista",Ballista,"Next",L_Weapon4,"Jump to page...",L_WaepJump;
+
+  L_Weapon4:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Stunner",Stunner,"Berserk",Berserk,"Claymore",Claymore,"Gungnir",Gungnir,"Poison Knife",Poison_Knife,"Sucsamad",Sucsamad,"Next",L_Weapon5,"Jump to page...",L_WaepJump;
+
+  L_Weapon5:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Ginnungagap",Ginnungagap,"Cutlus",Cutlus,"Crescent Scythe",Crescent_Scythe,"Ice Pick",Ice_Pick,"(Dex) Survivor's Rod",Dex_Survivors_Rod,"Next",L_Weapon1,"Jump to page...",L_WaepJump;
+
+
+      Trident:
+           set @olditem,1460;
+           set @newitem,1461;
+           callfunc "f_weapon_c";
+
+      Rope:
+           set @olditem,1950;
+           set @newitem,1951;
+           callfunc "f_weapon_c";
+
+      Violin:
+           set @olditem,1901;
+           set @newitem,1902;
+           callfunc "f_weapon_c";
+
+      Chain:
+           set @olditem,1519;
+           set @newitem,1520;
+           callfunc "f_weapon_b";
+
+      Gladius:
+           set @olditem,1219;
+           set @newitem,1220;
+           callfunc "f_weapon_b";
+
+      Gakkung_Bow:
+           set @olditem,1714;
+           set @newitem,1716;
+           callfunc "f_weapon_b";
+
+      Pike:
+           set @olditem,1407;
+           set @newitem,1408;
+           callfunc "f_weapon_b";
+
+      Haedonggum:
+           set @olditem,1123;
+           set @newitem,1128;
+           callfunc "f_weapon_b";
+
+      Lute:
+           set @olditem,1905;
+           set @newitem,1906;
+           callfunc "f_weapon_b";
+
+      Wire_Whip:
+           set @olditem,1954;
+           set @newitem,1955;
+           callfunc "f_weapon_b";
+
+      Waghnak:
+           set @olditem,1801;
+           set @newitem,1802;
+           callfunc "f_weapon_b";
+
+      Arbalest:
+           set @olditem,1713;
+           set @newitem,1715;
+           callfunc "f_weapon_b";
+
+      Hunter_Bow:
+           set @olditem,1718;
+           set @newitem,1726;
+           callfunc "f_weapon_a";
+
+      Int_Survivors_Rod:
+           set @olditem,1619;
+           set @newitem,1620;
+           callfunc "f_weapon_a";
+
+      Zweihander:
+           set @olditem,1168;
+           set @newitem,1716;
+           callfunc "f_weapon_a3";
+
+      Flamberge:
+           set @olditem,1129;
+           set @newitem,1149;
+           callfunc "f_weapon_a";
+
+      Infiltrator:
+           set @olditem,1261;
+           set @newitem,1266;
+           callfunc "f_weapon_a2";
+
+      Ballista:
+           set @olditem,1722;
+           set @newitem,1727;
+           callfunc "f_weapon_a";
+
+      Stunner:
+           set @olditem,1522;
+           set @newitem,1532;
+           callfunc "f_weapon_a";
+
+      Berserk:
+           set @olditem,1814;
+           set @newitem,1816;
+           callfunc "f_weapon_a";
+
+      Claymore:
+           set @olditem,1163;
+           set @newitem,1172;
+           callfunc "f_weapon_a";
+
+      Gungnir:
+           set @olditem,1413;
+           set @newitem,1418;
+           callfunc "f_weapon_s";
+
+      Poison_Knife:
+           set @olditem,1239;
+           set @newitem,13016;
+           callfunc "f_weapon_s";
+
+      Sucsamad:
+           set @olditem,1236;
+           set @newitem,13018;
+           callfunc "f_weapon_s";
+
+      Ginnungagap:
+           set @olditem,13002;
+           set @newitem,13019;
+           callfunc "f_weapon_s";
+
+      Cutlus:
+           set @olditem,1135;
+           set @newitem,13400;
+           callfunc "f_weapon_s";
+
+      Crescent_Scythe:
+           set @olditem,1466;
+           set @newitem,1476;
+           callfunc "f_weapon_s";
+
+      Ice_Pick:
+           set @olditem,1230;
+           set @newitem,13017;
+           callfunc "f_weapon_s2";
+
+      Dex_Survivors_Rod:
+           set @olditem,1617;
+           set @newitem,1618;
+           callfunc "f_weapon_s2";
+
+	   
+
+//============================================================
+//= Armor
+//============================================================
+
+  L_ArmorJump:
+      mes "[Socket Enchant]";
+      mes "Choose the number of page. Type 1 to 6:";
+      next;
+      input @weapsite;
+      if(@armorsite > 6) goto L_ArmorJump;
+
+      if(@armorsite == 1) goto L_ArmorJump1;
+      if(@armorsite == 2) goto L_ArmorJump2;
+      if(@armorsite == 3) goto L_ArmorJump3;
+      if(@armorsite == 4) goto L_ArmorJump4;
+      if(@armorsite == 5) goto L_ArmorJump5;
+      if(@armorsite == 6) goto L_ArmorJump6;
+
+
+  L_Armor1:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Mantle",Mantle,"Coat",Coat,"Circlet",Circlet,"Biretta",Biretta,"Mirror Shield",Mirror_Shield,"Chain Mail",Chain_Mail,"Shield",Shield,"Bongun Hat",Bongun_Hat,"Next",L_Armor2,"Jump to page...",L_ArmorJump;
+  L_Armor2:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Saint's Robe",Saints_Robe,"Silk Robe",Silk_Robe,"Boots",Boots,"Shoes",Shoes,"Muffler",Muffler,"Guard",Guard,"Buckler",Buckler,"Munak Hat",Munak_Hat,"Next",L_Armor3,"Jump to page...",L_ArmorJump;
+
+  L_Armor3:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Gemmed Sallet",Gemmed_Sallet,"Bucket Hat",Bucket_Hat,"Memory Book",Memory_Book,"Tights",Tights,"Legion Plate Armor",Legion_Plate_Armor,"Full Plate",Full_Plate,"Thief Clothes",Thief_Clothes,"Next",L_Armor4,"Jump to page...",L_ArmorJump;
+
+  L_Armor4:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Greaves",Greaves,"Coif",Coif,"Manteau",Manteau,"Helm",Helm,"Ninja Suit",Ninja_Suit,"Orc Helm",Orc_Helm,"Ancient Cape",Ancient_Cape,"Next",L_Armor5,"Jump to page...",L_ArmorJump;
+
+  L_Armor5:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Monk Hat",Monk_Hat,"Golden Gear",Golden_Gear,"Brooch",Brooch,"Tiara",Tiara,"Sphinx Hat",Sphinx_Hat,"Robe of Cast",Robe_of_Cast,"Earring",Earring,"Next",L_Armor6,"Jump to page...",L_ArmorJump;
+
+  L_Armor6:
+
+      close2;
+      mes "[Socket Enchant]";
+      mes "Please choose your item:";
+      menu "Ring",Ring,"Bow Thimble",Bow_Thimble,"Majestic Goat",Majestic_Goat,"Spiky Band",Spiky_Band,"Bone Helm",Bone_Helm,"Corsair",Corsair,"Crown",Crown,"Next",L_Armor1,"Jump to page...",L_ArmorJump;
+
+
+      Mantle:
+           set @olditem,2307;
+           set @newitem,2308;
+           callfunc "f_armor_c";
+
+      Coat: //http://ro.doddlercon.com/wiki/index.php?title=Socket_Enchant it's Long Coat O_o
+           set @olditem,2309;
+           set @newitem,2310;
+           callfunc "f_armor_c";
+
+      Circlet:
+           set @olditem,2232;
+           set @newitem,2233;
+           callfunc "f_armor_c";
+
+      Biretta:
+           set @olditem,2216;
+           set @newitem,2217;
+           callfunc "f_armor_c";
+
+      Mirror_Shield:
+           set @olditem,2107;
+           set @newitem,2108;
+           callfunc "f_armor_b";
+
+      Chain_Mail:
+           set @olditem,2314;
+           set @newitem,2315;
+           callfunc "f_armor_b";
+
+      Shield:
+           set @olditem,2105;
+           set @newitem,2106;
+           callfunc "f_armor_b";
+
+      Bongun_Hat:
+           set @olditem,5046;
+           set @newitem,5168;
+           callfunc "f_armor_b";
+
+      Saints_Robe:
+           set @olditem,2325;
+           set @newitem,2326;
+           callfunc "f_armor_b2";
+
+      Silk_Robe:
+           set @olditem,2321;
+           set @newitem,2322;
+           callfunc "f_armor_b2";
+
+      Boots:
+           set @olditem,2405;
+           set @newitem,2406;
+           callfunc "f_armor_b2";
+
+      Shoes:
+           set @olditem,2403;
+           set @newitem,2404;
+           callfunc "f_armor_b2";
+
+      Muffler:
+           set @olditem,2503;
+           set @newitem,2504;
+           callfunc "f_armor_b2";
+
+      Guard:
+           set @olditem,2101;
+           set @newitem,2102;
+           callfunc "f_armor_b2";
+
+      Buckler:
+           set @olditem,2103;
+           set @newitem,2104;
+           callfunc "f_armor_b2";
+
+      Munak_Hat:
+           set @olditem,2264;
+           set @newitem,5167;
+           callfunc "f_armor_a";
+
+      Gemmed_Sallet:
+           set @olditem,2230;
+           set @newitem,2231;
+           callfunc "f_armor_a2";
+
+      Bucket_Hat:
+           set @olditem,5114;
+           set @newitem,5120;
+           callfunc "f_armor_a2";
+
+      Memory_Book:
+           set @olditem,2109;
+           set @newitem,2121;
+           callfunc "f_armor_a2";
+
+      Tights:
+           set @olditem,2330;
+           set @newitem,2331;
+           callfunc "f_armor_a2";
+
+      Legion_Plate_Armor:
+           set @olditem,2341;
+           set @newitem,2342;
+           callfunc "f_armor_a2";
+
+      Full_Plate:
+           set @olditem,2316;
+           set @newitem,2317;
+           callfunc "f_armor_a2";
+
+      Thief_Clothes:
+           set @olditem,2335;
+           set @newitem,2336;
+           callfunc "f_armor_a2";
+
+      Greaves:
+           set @olditem,2411;
+           set @newitem,2412;
+           callfunc "f_armor_a2";
+
+      Coif:
+           set @olditem,5092;
+           set @newitem,5093;
+           callfunc "f_armor_c";
+
+      Manteau:
+           set @olditem,2505;
+           set @newitem,2506;
+           callfunc "f_armor_c";
+
+      Helm:
+           set @olditem,2228;
+           set @newitem,2229;
+           callfunc "f_armor_c";
+
+      Ninja_Suit:
+           set @olditem,2337;
+           set @newitem,2359;
+           callfunc "f_armor_c";
+
+      Orc_Helm:
+           set @olditem,2299;
+           set @newitem,5157;
+           callfunc "f_armor_c";
+
+      Ancient_Cape:
+           set @olditem,2507;
+           set @newitem,2525;
+           callfunc "f_armor_a2";
+
+      Monk_Hat:
+           set @olditem,2251;
+           set @newitem,5158;
+           callfunc "f_armor_a2";
+
+      Golden_Gear:
+           set @olditem,2246;
+           set @newitem,5159;
+           callfunc "f_armor_a2";
+
+      Brooch:
+           set @olditem,2605;
+           set @newitem,2625;
+           callfunc "f_armor_a2";
+
+      Tiara:
+           set @olditem,2234;
+           set @newitem,5164;
+           callfunc "f_armor_s";
+
+      Sphinx_Hat:
+           set @olditem,5053;
+           set @newitem,5166;
+           callfunc "f_armor_s";
+
+      Robe_of_Cast:
+           set @olditem,2343;
+           set @newitem,2360;
+           callfunc "f_armor_s";
+
+      Earring:
+           set @olditem,2602;
+           set @newitem,2622;
+           callfunc "f_armor_s";
+
+      Ring:
+           set @olditem,2601;
+           set @newitem,2621;
+           callfunc "f_armor_s";
+
+      Bow_Thimble:
+           set @olditem,2619;
+           set @newitem,2671;
+           callfunc "f_armor_s";
+
+      Majestic_Goat:
+           set @olditem,2256;
+           set @newitem,5160;
+           callfunc "f_armor_s2";
+
+      Spiky_Band:
+           set @olditem,2258;
+           set @newitem,5161;
+           callfunc "f_armor_s2";
+
+      Bone_Helm:
+           set @olditem,5017;
+           set @newitem,5162;
+           callfunc "f_armor_s2";
+
+      Corsair:
+           set @olditem,5019;
+           set @newitem,5163;
+           callfunc "f_armor_s2";
+
+      Crown:
+           set @olditem,2235;
+           set @newitem,5165;
+           callfunc "f_armor_s2";
+
+
+
+
+//============================================================
+//= Other
+//============================================================
+
+  L_Not:
+      mes "[Socket Enchant]";
+      mes "Bye~!";
+      close;
+
+  L_No:
+      mes "[Socket Enchant]";
+      mes "Ok, Bye.";
+      close;
+
+}
+
+//============================================================
+//= Functions add slots
+//============================================================
+
+function	script	addslot	{
+
+      mes "[Socket Enchant]";
+      mes "Upgrade cost "+@addprice+" zeny and ^5533FF"+@itemupname$+"^000000.";
+      next;
+      mes "[Socket Enchant]";
+      mes "Are you sure? Remember that it can fail.";
+      mes "Do you want to continue?";
+      next;
+      menu "Yes",-,"No",L_No;
+
+
+           if(countitem(@olditem)<1) goto L_NoItem;
+           if(Zeny<@addprice) goto L_NoZeny;
+           if(countitem(@itemup)<@itemupiece) goto L_NoItemUp;
+
+           delitem @itemup,@itemupiece;
+           set Zeny,Zeny-@addprice;
+           delitem @olditem,1;
+           if(@rateit>rand(1,100))goto L_Fail;
+           getitem @newitem,1;
+
+      mes "[Socket Enchant]";
+      mes "Ok, take your item, Bye.";
+      close;
+
+
+  L_NoItem:
+      mes "[Socket Enchant]";
+      mes "You don't have this item.";
+      mes "Come back when you get it.";
+      close;
+
+  L_NoItemUp:
+      mes "[Socket Enchant]";
+      mes "You don't have all ingridients. Come back when you get it.";
+      close;
+
+  L_NoZeny:
+      mes "[Socket Enchant]";
+      mes "You don't have enough money. Come back later.";
+      close;
+
+  L_Fail:
+      mes "[Socket Enchant]";
+      mes "Sorry, but i could't upgrade it.";
+      close;
+      
+}
+
+//============================================================
+
+function	script	addslot2	{
+
+      mes "[Socket Enchant]";
+      mes "Upgrade cost "+@addprice+" zeny and ^5533FF"+@itemupname1$+"^000000 and ^5533FF"+@itemupname2$+"^000000.";
+      next;
+      mes "[Socket Enchant]";
+      mes "Are you sure? Remember that it can fail.";
+      mes "Do you want to continue?";
+      next;
+      menu "Yes",-,"No",L_No;
+
+
+           if(countitem(@olditem)<1) goto L_NoItem;
+           if(Zeny<@addprice) goto L_NoZeny;
+           if((countitem(@itemup1)<@itemupiece1) && (countitem(@itemup2)<@itemupiece2)) goto L_NoItemUp;
+
+           delitem @itemup1,@itemupiece1;
+           delitem @itemup2,@itemupiece2;
+           set Zeny,Zeny-@addprice;
+           delitem @olditem,1;
+           if(@rateit>rand(1,100))goto L_Fail;
+           getitem @newitem,1;
+
+      mes "[Socket Enchant]";
+      mes "Ok, take your item, Bye.";
+      close;
+
+      
+  L_NoItem:
+      mes "[Socket Enchant]";
+      mes "You don't have this item.";
+      mes "Come back when you get it.";
+      close;
+
+  L_NoItemUp:
+      mes "[Socket Enchant]";
+      mes "You don't have all ingridients. Come back when you get it.";
+      close;
+
+  L_NoZeny:
+      mes "[Socket Enchant]";
+      mes "You don't have enough money. Come back later.";
+      close;
+
+  L_Fail:
+      mes "[Socket Enchant]";
+      mes "Sorry, but i could't upgrade it.";
+      close;
+
+}
+
+
+//============================================================
+//= Functions
+//============================================================
+
+//= Weapon
+
+function	script	f_weapon_c	{
+  
+      set @rateit,50;  //success rate
+      set @addprice,200000;
+      set @itemup,1010;
+      set @itemupiece,10;
+      set @itemupname$,"10 Phracon";
+      callfunc "addslot";
+
+}
+
+function	script	f_weapon_b	{
+
+      set @rateit,40;  //success rate
+      set @addprice,300000;
+      set @itemup1,984;
+      set @itemupiece1,2;
+      set @itemupname1$,"2 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,5;
+      set @itemupname2$,"5 Steel";
+      callfunc "addslot2";
+
+}
+
+function	script	f_weapon_a	{
+
+      set @rateit,30;  //success rate
+      set @addprice,500000;
+      set @itemup1,984;
+      set @itemupiece1,2;
+      set @itemupname1$,"2 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,10;
+      set @itemupname2$,"10 Steel";
+      callfunc "addslot2";
+
+}
+
+function	script	f_weapon_a2	{
+
+      set @rateit,30;  //success rate
+      set @addprice,700000;
+      set @itemup1,984;
+      set @itemupiece1,2;
+      set @itemupname1$,"2 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,10;
+      set @itemupname2$,"10 Steel";
+      callfunc "addslot2";
+
+}
+
+function	script	f_weapon_a3	{
+
+      set @rateit,30;  //success rate
+      set @addprice,800000;
+      set @itemup1,984;
+      set @itemupiece1,2;
+      set @itemupname1$,"2 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,10;
+      set @itemupname2$,"10 Steel";
+      callfunc "addslot2";
+
+}
+
+function	script	f_weapon_s	{
+
+      set @rateit,20;  //success rate
+      set @addprice,1000000;
+      set @itemup1,984;
+      set @itemupiece1,5;
+      set @itemupname1$,"5 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,10;
+      set @itemupname2$,"10 Steel";
+      callfunc "addslot2";
+
+}
+
+function	script	f_weapon_s2	{
+
+      set @rateit,20;  //success rate
+      set @addprice,2000000;
+      set @itemup1,984;
+      set @itemupiece1,5;
+      set @itemupname1$,"5 Oridecon";
+      set @itemup2,999;
+      set @itemupiece2,10;
+      set @itemupname2$,"10 Steel";
+      callfunc "addslot2";
+
+}
+
+//= Armor
+
+function	script	f_armor_c	{
+
+      set @rateit,50;  //success rate
+      set @addprice,200000;
+      set @itemup,999;
+      set @itemupiece,3;
+      set @itemupname$,"3 Steel";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_b	{
+
+      set @rateit,40;  //success rate
+      set @addprice,250000;
+      set @itemup,999;
+      set @itemupiece,5;
+      set @itemupname$,"5 Steel";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_b2	{
+
+      set @rateit,40;  //success rate
+      set @addprice,300000;
+      set @itemup,999;
+      set @itemupiece,5;
+      set @itemupname$,"5 Steel";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_a	{
+
+      set @rateit,30;  //success rate
+      set @addprice,300000;
+      set @itemup,985;
+      set @itemupiece,1;
+      set @itemupname$,"1 Elunium";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_a2	{
+
+      set @rateit,30;  //success rate
+      set @addprice,400000;
+      set @itemup,985;
+      set @itemupiece,1;
+      set @itemupname$,"1 Elunium";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_s	{
+
+      set @rateit,20;  //success rate
+      set @addprice,1000000;
+      set @itemup,985;
+      set @itemupiece,2;
+      set @itemupname$,"2 Elunium";
+      callfunc "addslot";
+
+}
+
+function	script	f_armor_s2	{
+
+      set @rateit,20;  //success rate
+      set @addprice,2000000;
+      set @itemup,985;
+      set @itemupiece,2;
+      set @itemupname$,"2 Elunium";
+      callfunc "addslot";
+
+}
+
+
+prt_in.gat,32,72,5	duplicate(Socket Enchant)	Socket Enchant	84
+payon.gat,141,164,6	duplicate(Socket Enchant)	Socket Enchant	84
+morocc_in.gat,62,40,5	duplicate(Socket Enchant)	Socket Enchant	84

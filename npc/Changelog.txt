@@ -39,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/04
+	* Added the Socket Enchant NPC written by Sousuke_PL [Playtester]
+	- I already tested and fixed some stuff but requires some more testing
 	* Implemented the official 2004 Headgear quests, thanks to Dj-Yhn [MasterOfMuppets]
 	  for the conversion from Aegis format.
 07/03
