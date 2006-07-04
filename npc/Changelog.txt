@@ -38,6 +38,9 @@ Playtester
 
 Date		Added
 ======
+07/04
+	* Implemented the official 2004 Headgear quests, thanks to Dj-Yhn [MasterOfMuppets]
+	  for the conversion from Aegis format.
 07/03
 	* Fixed bug in DTS warper that votes weren't counted on Sunday [Evera]
 	- Changed requirement for vote eligibility in DTS warper to 60
