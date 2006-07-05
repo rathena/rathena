@@ -40,3 +40,15 @@
 5132,27,100	// ?????
 //Leather Pouch (part of Cooking Quest)
 7432,123,100
+// Keys (Thanatos Tower Quest)
+7421,123,100
+7422,123,100
+7423,123,100
+7424,123,100
+7425,123,100
+// Magical Stones (Thanatos Tower Quest)
+7426,123,100
+7427,123,100
+7428,123,100
+7429,123,100
+7430,123,100

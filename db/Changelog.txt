@@ -25,6 +25,7 @@
 
 =========================
 07/05
+	* Added Thanatos Tower Quest items to item_trade.txt [Playtester]
 	* Added correct card effects for "Status Effect on both" [Playtester]
 07/04
 	* Added temp plugs for new headgears. [Vicious]
