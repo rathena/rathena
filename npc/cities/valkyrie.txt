@@ -4,7 +4,7 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 2.2 Now ALL quests skills are saved/restored [Lupus]
 //= 2.3 Removed Duplicates [Silent]
 //= 2.4 Fixed typos, optimized [Lupus]
+//= 2.5 Fixed a stuck bug [Lupus]
 //============================================================ 
 
 
@@ -34,7 +35,7 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
 	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
-	if(valkyrie_Q == 1) goto L_CONT;
+	if(valkyrie_Q >= 1) goto L_CONT;
 L_IGNORE:
 	mes ". . . . .";
 	close;
