@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/05
+	* Fixed bugs / typos in 2004_headgears.txt, thanks to Qwadrat [Lupus]
 	* Updated Socket Enchant NPC [Playtester]
 	- fixed various bugs
 	- adjusted success rates
