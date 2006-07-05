@@ -5471,6 +5471,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
+	case NJ_BAKUENRYU:   /* ??? */
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_unitsetting(src,skillid,skilllv,bl->x,bl->y,0);
+		flag|=1;
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
@@ -6040,7 +6046,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
 	case NJ_HYOUSYOURAKU:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		flag|=1;
 		break;
