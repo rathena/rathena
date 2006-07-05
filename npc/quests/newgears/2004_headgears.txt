@@ -2304,7 +2304,6 @@ end;
 }
 pay_dun03.gat,48,84,1	script	NT	-1,{
 OnMobDead:
-announce "Dbbug",0;
 enablenpc "Nine Tail#1";
 end;
 }

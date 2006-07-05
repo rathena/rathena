@@ -39,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/05
+	* Removed that Dbbug announce line from the 2004 headgears quest npc.
+	  [Skotlex]
 	* Fixed Book of Yamir stucking [Lupus]
 	* Fixed bugs / typos in 2004_headgears.txt, thanks to Qwadrat [Lupus]
 	* Updated Socket Enchant NPC [Playtester]
