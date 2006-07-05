@@ -6743,298 +6743,312 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		sstatus->matk_min = sc->data[SC_MAGICPOWER].val4;
 	}
 
-	switch (sg->unit_id) {
-	case UNT_FIREWALL:
-		{
-			int count=0;
-			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				//This is the best Aegis approximation we can do without 
-				//changing the minimum skill unit interval. [Skotlex]
-				while (count++ < battle_config.firewall_hits_on_undead && src->val2-- && !status_isdead(bl))
-					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*10,1);
-			} else {
-				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-				src->val2--;
+	switch (sg->unit_id)
+	{
+		case UNT_FIREWALL:
+			{
+				int count=0;
+				if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
+					//This is the best Aegis approximation we can do without 
+					//changing the minimum skill unit interval. [Skotlex]
+					while (count++ < battle_config.firewall_hits_on_undead && src->val2-- && !status_isdead(bl))
+						skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*10,1);
+				} else {
+					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+					src->val2--;
+				}
+				if (src->val2<=0)
+					skill_delunit(src);
+			break;
 			}
-			if (src->val2<=0)
-				skill_delunit(src);
-		break;
-		}
-	case UNT_SANCTUARY:
-		if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
-		{	//Only damage enemies with offensive Sanctuary. [Skotlex]
-			if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
-				skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0))
-				// reduce healing count if this was meant for damaging [hekate]
-				sg->val1 -= 2;
-		} else {
-			int heal = sg->val2;
-			if (tstatus->hp >= tstatus->max_hp)
+
+		case UNT_SANCTUARY:
+			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
+			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
+				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
+					skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0))
+					// reduce healing count if this was meant for damaging [hekate]
+					sg->val1 -= 2;
+			} else {
+				int heal = sg->val2;
+				if (tstatus->hp >= tstatus->max_hp)
+					break;
+				if (status_isimmune(bl))
+					heal = 0;	/* 黄金蟲カード（ヒール量０） */
+				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
+				status_heal(bl, heal, 0, 0);
+				if (diff >= 500)
+					sg->val1--;
+			}
+			if (sg->val1 <= 0)
+				skill_delunitgroup(NULL,sg);
+			break;
+
+		case UNT_MAGNUS:
+			if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
 				break;
-			if (status_isimmune(bl))
-				heal = 0;	/* 黄金蟲カード（ヒール量０） */
-			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
-			status_heal(bl, heal, 0, 0);
-			if (diff >= 500)
-				sg->val1--;
-		}
-		if (sg->val1 <= 0)
-			skill_delunitgroup(NULL,sg);
-		break;
-	case UNT_MAGNUS:
-		if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
+			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
-		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		break;
 
-	case UNT_ATTACK_SKILLS:
-		switch (sg->skill_id) 
-		{
-			case SG_SUN_WARM: //SG skills [Komurka]
-			case SG_MOON_WARM:
-			case SG_STAR_WARM:
-				if(bl->type==BL_PC)
-					//Only damage SP [Skotlex]
-					status_zap(bl, 0, 60);
-				else if(status_charge(bl, 0, 2))
-					//Otherwise, Knockback attack.
-					skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+		case UNT_ATTACK_SKILLS:
+			switch (sg->skill_id) 
+			{
+				case SG_SUN_WARM: //SG skills [Komurka]
+				case SG_MOON_WARM:
+				case SG_STAR_WARM:
+					if(bl->type==BL_PC)
+						//Only damage SP [Skotlex]
+						status_zap(bl, 0, 60);
+					else if(status_charge(bl, 0, 2))
+						//Otherwise, Knockback attack.
+						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+				break;
+
+				default:
+					skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
+			}
 			break;
-			default:
-				skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
-		}
-		break;
-	case UNT_DESPERADO:
-		if (!(rand()%10)) //Has a low chance of connecting. [Skotlex]
-			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		break;
-	case UNT_GROUNDDRIFT:
-		skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,sg->val1);
-		break;
 
-	case UNT_FIREPILLAR_WAITING:
-		skill_unitsetting(ss,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
-		skill_delunit(src);
-		break;
+		case UNT_FIREPILLAR_WAITING:
+			skill_unitsetting(ss,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
+			skill_delunit(src);
+			break;
 
-	case UNT_FIREPILLAR_ACTIVE:
-		map_foreachinrange(skill_attack_area,bl,
-			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-			BF_MAGIC,ss,&src->bl,sg->skill_id,sg->skill_lv,tick,0,BCT_ENEMY);  // area damage [Celest]
-		sg->interval = -1; //Mark it used up so others can't trigger it for massive splash damage. [Skotlex]
-		sg->limit=DIFF_TICK(tick,sg->tick) + 1500;
-		break;
+		case UNT_FIREPILLAR_ACTIVE:
+			map_foreachinrange(skill_attack_area,bl,
+				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
+				BF_MAGIC,ss,&src->bl,sg->skill_id,sg->skill_lv,tick,0,BCT_ENEMY);  // area damage [Celest]
+			sg->interval = -1; //Mark it used up so others can't trigger it for massive splash damage. [Skotlex]
+			sg->limit=DIFF_TICK(tick,sg->tick) + 1500;
+			break;
 
-	case UNT_SKIDTRAP:
-		{
-			skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv)|0x10000);
+		case UNT_SKIDTRAP:
+			{
+				skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv)|0x10000);
+				sg->unit_id = UNT_USED_TRAPS;
+				clif_changetraplook(&src->bl, UNT_USED_TRAPS);
+				sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+				sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			}
+			break;
+
+		case UNT_SPIDERWEB:
+		case UNT_ANKLESNARE:
+			if(sg->val2==0 && tsc && tsc->data[type].timer==-1){
+				int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
+				if (sc_start(bl,type,100,sg->skill_lv,sec))
+				{
+					struct TimerData* td = get_timer(tsc->data[type].timer); 
+					if (td) sec = DIFF_TICK(td->tick, tick);
+					map_moveblock(bl, src->bl.x, src->bl.y, tick);
+					clif_fixpos(bl);
+					sg->val2=bl->id;
+				} else
+					sec = 3000; //Couldn't trap it?
+				//clif_01ac(&src->bl); //Removed? Check the openkore description of this packet: [Skotlex]
+				// 01AC: long ID
+				// Indicates that an object is trapped, but ID is not a
+				// valid monster or player ID.
+				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
+				sg->interval = -1;
+				src->range = 0;
+			}
+			break;
+
+		case UNT_VENOMDUST:
+			if(tsc && tsc->data[type].timer==-1 )
+				status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),8);
+			break;
+
+		case UNT_LANDMINE:
+			skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			sg->unit_id = UNT_USED_TRAPS;
+			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
+			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			break;
+
+		case UNT_CLAYMORETRAP:
+		case UNT_BLASTMINE:
+			//Hold number of targets (required for damage calculation)
+			type = map_foreachinrange(skill_count_target,&src->bl,
+				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl);
+		case UNT_SHOCKWAVE:
+		case UNT_SANDMAN:
+		case UNT_FLASHER:
+		case UNT_FREEZINGTRAP:
+			map_foreachinrange(skill_trap_splash,&src->bl,
+				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
+				&src->bl,tick,type);
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
-		}
-		break;
-
-	case UNT_SPIDERWEB:
-	case UNT_ANKLESNARE:
-		if(sg->val2==0 && tsc && tsc->data[type].timer==-1){
-		 	int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-			if (sc_start(bl,type,100,sg->skill_lv,sec))
-			{
-				struct TimerData* td = get_timer(tsc->data[type].timer); 
-				if (td) sec = DIFF_TICK(td->tick, tick);
-				map_moveblock(bl, src->bl.x, src->bl.y, tick);
- 				clif_fixpos(bl);
-				sg->val2=bl->id;
-			} else
-				sec = 3000; //Couldn't trap it?
-			//clif_01ac(&src->bl); //Removed? Check the openkore description of this packet: [Skotlex]
-			// 01AC: long ID
-			// Indicates that an object is trapped, but ID is not a
-			// valid monster or player ID.
-			sg->limit = DIFF_TICK(tick,sg->tick)+sec;
-			sg->interval = -1;
-			src->range = 0;
-		}
-		break;
-
-	case UNT_VENOMDUST:
-		if(tsc && tsc->data[type].timer==-1 )
-			status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),8);
-		break;
-
-	case UNT_LANDMINE:
-		skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		sg->unit_id = UNT_USED_TRAPS;
-		clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
-		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-		sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
-		break;
-
-	case UNT_CLAYMORETRAP:
-	case UNT_BLASTMINE:
-		//Hold number of targets (required for damage calculation)
-		type = map_foreachinrange(skill_count_target,&src->bl,
-			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl);
-	case UNT_SHOCKWAVE:
-	case UNT_SANDMAN:
-	case UNT_FLASHER:
-	case UNT_FREEZINGTRAP:
-		map_foreachinrange(skill_trap_splash,&src->bl,
-			skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-			&src->bl,tick,type);
-		sg->unit_id = UNT_USED_TRAPS;
-		clif_changetraplook(&src->bl, UNT_USED_TRAPS);
-		sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-		sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
-		break;
-		
-	case UNT_TALKIEBOX:
-		if (sg->src_id == bl->id) //自分が踏んでも発動しない
 			break;
-		if (sg->val2 == 0){
-			clif_talkiebox(&src->bl, sg->valstr);
-			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
-			sg->limit = DIFF_TICK(tick, sg->tick) + 5000;
-			sg->val2 = -1; //踏んだ
-			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
-		}
-		break;
 
-	case UNT_LULLABY:
-		if (ss->id == bl->id)
+		case UNT_TALKIEBOX:
+			if (sg->src_id == bl->id) //自分が踏んでも発動しない
+				break;
+			if (sg->val2 == 0){
+				clif_talkiebox(&src->bl, sg->valstr);
+				sg->unit_id = UNT_USED_TRAPS;
+				clif_changetraplook(&src->bl, UNT_USED_TRAPS);
+				sg->limit = DIFF_TICK(tick, sg->tick) + 5000;
+				sg->val2 = -1; //踏んだ
+				sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
+			}
 			break;
-		skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
-		break;
 
-	case UNT_UGLYDANCE:	//Ugly Dance [Skotlex]
-		if (ss->id != bl->id && bl->type == BL_PC)
+		case UNT_LULLABY:
+			if (ss->id == bl->id)
+				break;
 			skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
-		if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
-		{	//Restore values.
-			sg->skill_id = skillid;
-			sg->unit_id = src->val1;
-			src->val1 = DC_UGLYDANCE;
-		}
-		break;
-
-	case UNT_DISSONANCE:
-		skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
-		if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
-		{	//Restore values.
-			sg->skill_id = skillid;
-			sg->unit_id = src->val1;
-			src->val1 = BA_DISSONANCE;
-		}
-		break;
-
-	case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
-	{
-		int heal;
-		if (sg->src_id == bl->id)
 			break;
-		heal = sg->val2;
-		clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
-		status_heal(bl, heal, 0, 0);
-		break;	
-	}
 
-	case UNT_DEMONSTRATION:
-		skill_attack(BF_WEAPON, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
-		break;
-
-	case UNT_GOSPEL:
-		if (rand()%100 > sg->skill_lv*10)
+		case UNT_UGLYDANCE:	//Ugly Dance [Skotlex]
+			if (ss->id != bl->id && bl->type == BL_PC)
+				skill_additional_effect(ss, bl, sg->skill_id, sg->skill_lv, BF_LONG|BF_SKILL|BF_MISC, tick);
+			if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
+			{	//Restore values.
+				sg->skill_id = skillid;
+				sg->unit_id = src->val1;
+				src->val1 = DC_UGLYDANCE;
+			}
 			break;
-		if (ss != bl && battle_check_target(ss,bl,BCT_PARTY)>0) { // Support Effect only on party, not guild
-			int i = rand()%13; // Positive buff count
-			switch (i)
-			{
-				case 0: // Heal 1~9999 HP
-					{
-						int heal = rand() %9999+1;
-						clif_skill_nodamage(ss,bl,AL_HEAL,heal,1);
-						status_heal(bl,heal,0,0);
-					}
-					break;
-				case 1: // End all negative status
-					status_change_clear_buffs(bl,2);
-					break;
-				case 2: // Level 10 Blessing
-					sc_start(bl,SC_BLESSING,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 3: // Level 10 Increase AGI
-					sc_start(bl,SC_INCREASEAGI,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 4: // Enchant weapon with Holy element
-					sc_start(bl,SC_ASPERSIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 5: // Enchant armor with Holy element
-					sc_start(bl,SC_BENEDICTIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 6: // MaxHP +100%
-					sc_start(bl,SC_INCMHPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-				case 7: // MaxSP +100%
-					sc_start(bl,SC_INCMSPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-				case 8: // All stats +20
-					sc_start(bl,SC_INCALLSTATUS,100,20,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-   				case 9: // DEF +25%
-					sc_start(bl,SC_INCDEFRATE,100,25,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-				case 10: // ATK +100%
-					sc_start(bl,SC_INCATKRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-				case 11: // HIT/Flee +50
-					sc_start(bl,SC_INCHIT,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
-					sc_start(bl,SC_INCFLEE,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
-				    break;
-				case 12: // Immunity to all status
-					sc_start(bl,SC_SCRESIST,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-			}
-		}			
-		else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0) { // Offensive Effect
-			int i = rand()%9; // Negative buff count
-			switch (i)
-			{
-				case 0: // Deal 1~9999 damage
-					skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-					break;
-				case 1: // Curse
-					sc_start(bl,SC_CURSE,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 2: // Blind
-					sc_start(bl,SC_BLIND,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 3: // Poison
-					sc_start(bl,SC_POISON,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 4: // Level 10 Provoke
-					sc_start(bl,SC_PROVOKE,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 5: // DEF -100%
-					sc_start(bl,SC_INCDEFRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-  				case 6: // ATK -100%
-					sc_start(bl,SC_INCATKRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-  				case 7: // Flee -100%
-					sc_start(bl,SC_INCFLEERATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case 8: // Speed/ASPD -25%
-				   sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-			}
-		}
-		break;
 
-	case UNT_GRAVITATION:
-		skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-		break;
+		case UNT_DISSONANCE:
+			skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			if (sg->state.song_dance && src->val2&UF_ENSEMBLE)
+			{	//Restore values.
+				sg->skill_id = skillid;
+				sg->unit_id = src->val1;
+				src->val1 = BA_DISSONANCE;
+			}
+			break;
+
+		case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
+		{
+			int heal;
+			if (sg->src_id == bl->id)
+				break;
+			heal = sg->val2;
+			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
+			status_heal(bl, heal, 0, 0);
+			break;	
+		}
+
+		case UNT_DEMONSTRATION:
+			skill_attack(BF_WEAPON, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			break;
+
+		case UNT_GOSPEL:
+			if (rand()%100 > sg->skill_lv*10)
+				break;
+			if (ss != bl && battle_check_target(ss,bl,BCT_PARTY)>0) { // Support Effect only on party, not guild
+				int i = rand()%13; // Positive buff count
+				switch (i)
+				{
+					case 0: // Heal 1~9999 HP
+						{
+							int heal = rand() %9999+1;
+							clif_skill_nodamage(ss,bl,AL_HEAL,heal,1);
+							status_heal(bl,heal,0,0);
+						}
+						break;
+					case 1: // End all negative status
+						status_change_clear_buffs(bl,2);
+						break;
+					case 2: // Level 10 Blessing
+						sc_start(bl,SC_BLESSING,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 3: // Level 10 Increase AGI
+						sc_start(bl,SC_INCREASEAGI,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 4: // Enchant weapon with Holy element
+						sc_start(bl,SC_ASPERSIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 5: // Enchant armor with Holy element
+						sc_start(bl,SC_BENEDICTIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 6: // MaxHP +100%
+						sc_start(bl,SC_INCMHPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 7: // MaxSP +100%
+						sc_start(bl,SC_INCMSPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 8: // All stats +20
+						sc_start(bl,SC_INCALLSTATUS,100,20,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 9: // DEF +25%
+						sc_start(bl,SC_INCDEFRATE,100,25,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 10: // ATK +100%
+						sc_start(bl,SC_INCATKRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 11: // HIT/Flee +50
+						sc_start(bl,SC_INCHIT,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_INCFLEE,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 12: // Immunity to all status
+						sc_start(bl,SC_SCRESIST,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+				}
+			}
+			else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0) { // Offensive Effect
+				int i = rand()%9; // Negative buff count
+				switch (i)
+				{
+					case 0: // Deal 1~9999 damage
+						skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+						break;
+					case 1: // Curse
+						sc_start(bl,SC_CURSE,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 2: // Blind
+						sc_start(bl,SC_BLIND,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 3: // Poison
+						sc_start(bl,SC_POISON,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 4: // Level 10 Provoke
+						sc_start(bl,SC_PROVOKE,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 5: // DEF -100%
+						sc_start(bl,SC_INCDEFRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 6: // ATK -100%
+						sc_start(bl,SC_INCATKRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 7: // Flee -100%
+						sc_start(bl,SC_INCFLEERATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+					case 8: // Speed/ASPD -25%
+						sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,skill_get_time2(sg->skill_id, sg->skill_lv));
+						break;
+				}
+			}
+			break;
+
+		case UNT_GRAVITATION:
+			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+
+		case UNT_DESPERADO:
+			if (!(rand()%10)) //Has a low chance of connecting. [Skotlex]
+				skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+
+		case UNT_GROUNDDRIFT:
+			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,sg->val1);
+			break;
+
+		case UNT_KAENSIN:
+		{
+			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			src->val2--;
+			if (--src->val2<=0)
+			skill_delunit(src);
+		}
 	}
 
 	if (sg->state.magic_power && sc && sc->data[SC_MAGICPOWER].timer == -1)
