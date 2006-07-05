@@ -1486,7 +1486,7 @@
 4330,Evil_Snake_Lord_Card,Evil Snake Lord Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,3; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Curse,10000; },{},{}
 4331,Heater_Card,Heater Card,6,,10,10,,,,,,,,136,,,,,{ bonus bCritical,3; if(BaseClass == Job_Swordman) bonus bFlee2,3; },{},{}
 4332,Waste_Stove_Card,Waste Stove Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,5; bonus bInt,1; if(isequipped(4185,4293,4312)) { bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus4 bAutoSpell,32,5,10,1; bonus2 bSkillAtk,271,10; if(BaseJob == Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel,0; } } },{},{}
-4333,Venomous_Card,Venomous Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Poison,3000; },{},{}
+4333,Venomous_Card,Venomous Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Poison,3000,2; },{},{}
 4334,Noxious_Card,Noxious Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLongAtkDef,20; },{},{}
 4335,Pitman_Card,Pitman Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,90,2; bonus2 bSkillAtk,91,2; },{},{}
 4336,Ungoliant_Card,Ungoliant Card,6,,10,10,,,,,,,,769,,,,,{ bonus bHPrecovRate,10; bonus2 bResEff,Eff_Bleeding,10000; },{},{}
@@ -1536,7 +1536,7 @@
 4380,Red_Ferus_Card,Red Ferus Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,80,2; bonus2 bSkillAtk,83,2; },{},{}
 4381,Green_Ferus_Card,Green Ferus Card,6,,10,10,,,,,,,,64,,,,,{ bonus bVit,1; bonus bMaxHPrate,10; if(isequipped(4199,4234,4252,4178)) { bonus bDex,5; bonus2 bSkillAtk,394,5; bonus2 bSkillAtk,324,10; bonus2 bSkillAtk,316,10; if(BaseJob == Job_Bard || BaseJob == Job_Dancer) { bonus4 bAutoSpellWhenHit,489,2,50,1; } } },{},{}
 4382,Yellow_Novus_Card,Yellow Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,500; bonus bHPrecovRate,10; if(isequipped(4208,4258,4325,4327)) { bonus bInt,3; bonus2 bSkillAtk,91,10; bonus2 bSkillAtk,21,10; if(BaseJob == Job_Sage) { bonus bMagicDamageReturn,20; bonus2 bAddMonsterDropItem,716,1; bonus2 bAddMonsterDropItem,715,1; bonus bCastrate,-20; },{},{}
-4383,Red_Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Confusion,3000; },{},{}
+4383,Red_Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Confusion,3000,2; },{},{}
 4384,Hydro_Card,Hydro Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,277,1,100; },{},{}
 4385,Dragon_Egg_Card,Dragon Egg Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12048,RC_Dragon,1; },{},{}
 4386,Detale_Card,Detale Card,3,,10,10,,,,,,,,,,,,,{},{},{}
@@ -1557,7 +1557,7 @@
 4401,Alicel_Card,Alicel Card,6,,10,10,,,,,,,,16,,,,,{ bonus bFlee,10; bonus bDef,-5; },{},{}
 4402,Aliot_Card,Aliot Card,6,,10,10,,,,,,,,4,,,,,{ if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) { bonus bStr, 2; bonus bMaxHPrate, 5; } if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) { bonus bInt, 2; bonus bMaxSPrate, 5; } },{},{}
 4403,Kiel_D-01_Card,Kiel D-01 Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4404,Skogul_Card,Skogul Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Bleeding,3000; },{},{}
+4404,Skogul_Card,Skogul Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Bleeding,3000,2; },{},{}
 4405,Frus_Card,Frus Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 4406,Skeggiold_Card,Skeggiold Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 4407,Valkyrie_Randgris_Card,Valkyrie Randgris Card,3,,10,10,,,,,,,,,,,,,{},{},{}

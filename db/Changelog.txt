@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/05
+	* Added correct card effects for "Status Effect on both" [Playtester]
 07/04
 	* Added temp plugs for new headgears. [Vicious]
 	- I only added this for VIEW ID. so someone needs to update everything else.
