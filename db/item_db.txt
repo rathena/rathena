@@ -1740,9 +1740,17 @@
 5175,Anonymity_Request,Anonymity Request,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,229,{ bonus2 bResEff,Eff_Curse,500; bonus bMdef,1; bonus bHit,-5; },{},{}
 5176,Smiling_Mask,Smiling Mask,5,,10,100,,2,,0,0xFFFFFFFF,7,2,513,,30,0,230,{ if(BaseClass==Job_Taekwon){ bonus bLuk,1; bonus bFlee2,2; } },{},{}
 5177,Lion_Masquerade,Lion Masquerade,5,,10,500,,5,,1,0xFFFFFFFF,7,2,768,,40,1,231,{ if(BaseClass==Job_Taekwon){ bonus bDex,2; bonus bBaseAtk,2*getrefine(); bonus2 bAddEff,Eff_Stun,100; } },{},{}
-5178,Candle,Candle,5,,10,150,,0,,0,0xFFFFFFFF,7,2,256,,0,1,232,{ bonus bAllStats,1; },{},{}
-5179,Golden_Tiara,Golden Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,233,{ bonus bInt,2; },{},{}
-5180,France_Holiday_Hat,France Holiday Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,234,{ bonus bVit,1; },{},{}
+5178,Candle,Candle,5,,10,150,,0,,0,0xFFFFFFFF,7,2,256,,0,1,113,{ bonus bAllStats,1; },{},{}
+5179,Golden_Tiara,Golden Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,232,{ bonus bInt,2; },{},{}
+5180,France_Holiday_Hat,France Holiday Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bVit,1; },{},{}
+5181,Darkness_Helm,Helm of Darkness,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,233,{},{},{}
+5182,Nest_Hat,Nest Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,234,{},{},{}
+5183,Laurel_Crown,Laurel_Crown,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,235,{},{},{}
+5184,Captains_Hat,Captain's Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,236,{},{},{}
+5185,Laurel_Crown,Laurel Crown,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,237,{},{},{}
+5186,Decoration_Geographer,Decoration Geographer,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,238,{},{},{}
+5187,Twin_Ribbon,Twin Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,239,{},{},{}
+
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
