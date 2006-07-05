@@ -3051,7 +3051,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NJ_HYOUSENSOU:
 	case NJ_HYOUSYOURAKU:
 	case NJ_HUUJIN:
-	case NJ_RAIGEKISAI:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case NJ_KAMAITACHI:
@@ -3072,7 +3071,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	//case NJ_HYOUSENSOU:
 	//case NJ_HYOUSYOURAKU:
 	//case NJ_HUUJIN:
-	//case NJ_RAIGEKISAI:
 	//case NJ_KAMAITACHI:
 	case NJ_ISSEN:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
@@ -3172,14 +3170,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 		//These are actually ground placed.
-		case CR_GRANDCROSS:
-		case NPC_GRANDDARKNESS:
-		//Until they're at right position - gs_ground- [Vicious]
-		case GS_DESPERADO:
-		case NJ_KAENSIN:	/*火炎陣*/
-		case NJ_HYOUSYOURAKU:
-		case NJ_RAIGEKISAI:
-			return skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,0);
+		case NJ_BAKUENRYU: //Doesn't works on the default because it is enemy-targetted.
+			return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
+		default:
+			if (src == bl && skill_get_unit_flag(skillid)) //Skill is actually ground placed.
+				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
 	if (skillid > 0)
@@ -4115,29 +4110,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,-1,i);
 		if (!i && sd)
 			clif_skill_fail(sd,skillid,0,0);
-		break;
-
-	/* 対地スキル */
-	case BD_LULLABY:			/* 子守唄 */
-	case BD_RICHMANKIM:			/* ニヨルドの宴 */
-	case BD_ETERNALCHAOS:		/* 永遠の混沌 */
-	case BD_DRUMBATTLEFIELD:	/* 戦太鼓の響き */
-	case BD_RINGNIBELUNGEN:		/* ニーベルングの指輪 */
-	case BD_ROKISWEIL:			/* ロキの叫び */
-	case BD_INTOABYSS:			/* 深淵の中に */
-	case BD_SIEGFRIED:			/* 不死身のジークフリード */
-	case BA_DISSONANCE:			/* 不協和音 */
-	case BA_POEMBRAGI:			/* ブラギの詩 */
-	case BA_WHISTLE:			/* 口笛 */
-	case BA_ASSASSINCROSS:		/* 夕陽のアサシンクロス */
-	case BA_APPLEIDUN:			/* イドゥンの林檎 */
-	case DC_UGLYDANCE:			/* 自分勝手なダンス */
-	case DC_HUMMING:			/* ハミング */
-	case DC_DONTFORGETME:		/* 私を忘れないで… */
-	case DC_FORTUNEKISS:		/* 幸運のキス */
-	case DC_SERVICEFORYOU:		/* サービスフォーユー */
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
 		break;
 
 	case HP_BASILICA:			/* バジリカ */
@@ -5471,12 +5443,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case NJ_BAKUENRYU:   /* ??? */
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		skill_unitsetting(src,skillid,skilllv,bl->x,bl->y,0);
-		flag|=1;
-		break;
-
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();
@@ -5790,15 +5756,21 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	sc = status_get_sc(src); //Needed for Magic Power checks.
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded.
-	
-	if(skillid != WZ_METEOR &&
-		skillid != MO_BODYRELOCATION &&
-		skillid != CR_CULTIVATION)
-		clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 
+	switch (skillid) { //Skill effect.
+		case WZ_METEOR:
+		case MO_BODYRELOCATION:
+		case CR_CULTIVATION:
+			break; //Effect is displayed on respective switch case.
+		default:
+			if(skill_get_inf(skillid)&INF_SELF_SKILL)
+				clif_skill_nodamage(src,src,skillid,skilllv,1);
+			else
+				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
+	}
 	switch(skillid)
 	{
-	case PR_BENEDICTIO:			/* 聖体降福 */
+	case PR_BENEDICTIO:
 		skill_area_temp[1] = src->id;
 		i = skill_get_splash(skillid, skilllv);
 		map_foreachinarea(skill_area_sub, 
@@ -5819,7 +5791,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			skill_castend_nodamage_id);
 		break;
 
-	case HT_DETECTING:				/* ディテクティング */
+	case HT_DETECTING:
 		i = skill_get_splash(skillid, skilllv);
 		map_foreachinarea( status_change_timer_sub,
 			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
@@ -5829,39 +5801,66 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			src->m, x-i, y-i, x+i,y+i,BL_SKILL);
 		break;
 
-	case MG_SAFETYWALL:			/* セイフティウォール */
-	case MG_FIREWALL:			/* ファイヤーウォール */
-	case MG_THUNDERSTORM:		/* サンダーストーム */
-	case AL_PNEUMA:				/* ニューマ */
-	case WZ_ICEWALL:			/* アイスウォール */
-	case WZ_FIREPILLAR:			/* ファイアピラー */
-	case WZ_QUAGMIRE:			/* クァグマイア */
-	case WZ_VERMILION:			/* ロードオブヴァーミリオン */
-	case WZ_STORMGUST:			/* ストームガスト */
-	case WZ_HEAVENDRIVE:		/* ヘヴンズドライブ */
-	case PR_SANCTUARY:			/* サンクチュアリ */
-	case PR_MAGNUS:				/* マグヌスエクソシズム */
-	case CR_GRANDCROSS:			/* グランドクロス */
-	case NPC_GRANDDARKNESS:		/*闇グランドクロス*/
-	case HT_SKIDTRAP:			/* スキッドトラップ */
-	case HT_LANDMINE:			/* ランドマイン */
-	case HT_ANKLESNARE:			/* アンクルスネア */
-	case HT_SHOCKWAVE:			/* ショックウェーブトラップ */
-	case HT_SANDMAN:			/* サンドマン */
-	case HT_FLASHER:			/* フラッシャー */
-	case HT_FREEZINGTRAP:		/* フリージングトラップ */
-	case HT_BLASTMINE:			/* ブラストマイン */
-	case HT_CLAYMORETRAP:		/* クレイモアートラップ */
-	case AS_VENOMDUST:			/* ベノムダスト */
-	case AM_DEMONSTRATION:			/* デモンストレーション */
-	case PF_FOGWALL:			/* フォグウォール */
-	case PF_SPIDERWEB:			/* スパイダーウェッブ */
-	case HT_TALKIEBOX:			/* トーキーボックス */
+	case MG_SAFETYWALL:
+	case MG_FIREWALL:	
+	case MG_THUNDERSTORM:
+	case AL_PNEUMA:
+	case WZ_ICEWALL:
+	case WZ_FIREPILLAR:
+	case WZ_QUAGMIRE:
+	case WZ_VERMILION:
+	case WZ_STORMGUST:
+	case WZ_HEAVENDRIVE:
+	case PR_SANCTUARY:
+	case PR_MAGNUS:
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+	case HT_SKIDTRAP:
+	case HT_LANDMINE:
+	case HT_ANKLESNARE:
+	case HT_SHOCKWAVE:
+	case HT_SANDMAN:
+	case HT_FLASHER:
+	case HT_FREEZINGTRAP:
+	case HT_BLASTMINE:
+	case HT_CLAYMORETRAP:
+	case AS_VENOMDUST:
+	case AM_DEMONSTRATION:
+	case PF_FOGWALL:
+	case PF_SPIDERWEB:
+	case HT_TALKIEBOX:
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case AC_SHOWER:	//Ground-placed skill implementation.
+	case SA_VOLCANO:
+	case SA_DELUGE:
+	case SA_VIOLENTGALE:
+	case SA_LANDPROTECTOR:
+	case BD_LULLABY:
+	case BD_RICHMANKIM:
+	case BD_ETERNALCHAOS:
+	case BD_DRUMBATTLEFIELD:
+	case BD_RINGNIBELUNGEN:
+	case BD_ROKISWEIL:
+	case BD_INTOABYSS:
+	case BD_SIEGFRIED:
+	case BA_DISSONANCE:
+	case BA_POEMBRAGI:
+	case BA_WHISTLE:
+	case BA_ASSASSINCROSS:
+	case BA_APPLEIDUN:
+	case DC_UGLYDANCE:
+	case DC_HUMMING:
+	case DC_DONTFORGETME:
+	case DC_FORTUNEKISS:
+	case DC_SERVICEFORYOU:
 	case GS_DESPERADO:
+	case NJ_SUITON:
+	case NJ_BAKUENRYU:
+	case NJ_KAENSIN:
+	case NJ_HYOUSYOURAKU:
+	case NJ_RAIGEKISAI:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -5875,14 +5874,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case RG_CLEANER: // [Valaris]
 		i = skill_get_splash(skillid, skilllv);
 		map_foreachinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL);
-		break;
-	case SA_VOLCANO:		/* ボルケーノ */
-	case SA_DELUGE:			/* デリュージ */
-	case SA_VIOLENTGALE:	/* バイオレントゲイル */
-	case SA_LANDPROTECTOR:	/* ランドプロテクター */
-	case NJ_SUITON:
-		skill_unitsetting(src,skillid,skilllv,x,y,0);
-		flag|=1;
 		break;
 
 	case WZ_METEOR:				//メテオストーム
@@ -6040,20 +6031,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 					clif_skill_fail(sd,skillid,0,0);
 			}
 		}
-		break;
-	
-	//Until they're at right position - gs_unit- [Vicious]
-	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
-	case NJ_HYOUSYOURAKU:
-		skill_unitsetting(src,skillid,skilllv,x,y,0);
-		flag|=1;
-		break;
-		
-	case NJ_RAIGEKISAI:
-		map_foreachinrange(skill_attack_area, src,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
-			BF_MAGIC, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);
 		break;
 	}
 

@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/05
+	* Merged some skill db data of NJ skills, thanks to RockmanEXE [Skotlex]
+	* Cleaned up some of the skill logic, so that skills that are casted on
+	  self, but have a unit id (an entry in skill_unit_db) will automatically
+	  re-route themself from a targetted-no-damage-skill to a ground-skill. When
+	  this happens, the effect packet is clif_skill_nodamage rather than
+	  clif_skill_poseffect (this is because that's how the dance/songs/encores
+	  behave). The repercussion this will have on Grandcross and the
+	  self-targetted Ninja skills have yet to be tested. [Skotlex]
 	* Updated  @refine to take account of MAX_REFINE, thanks to Omega... GM
 	  Designer. [Skotlex]
 	- Also optimized the @refine loop for better performance.
