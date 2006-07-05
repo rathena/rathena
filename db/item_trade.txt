@@ -12,26 +12,31 @@
 //Example:
 //1161,67,50 //Balmung: No drop, No trade, No Guild Store (1+2+64 =67),
 //only GMs of GM-level 50 and up can override the setting.
-2634,111,100
-2635,111,100
-2644,99,100
-//Novice Red Potion
-569,8,100
-//Cook Books (you can recieve them trough the Cooking Quest only)
-//Actually, you can pass your books, but have to return them before borrowing another one [Lupus]
-//7472,123,100
-//7473,123,100
-//7474,123,100
-//7475,123,100
-//7476,123,100
+2634,127,100	// ??????
+2635,127,100	// ??????
+//The Sign Quest related items
+7177,123,100	// ?? ?????
+7178,123,100	// ?? ???
+7304,123,100	// ??????
+7305,123,100	// ???????
+7306,123,100	// ?????
+7307,123,100	// ??????
+7308,123,100	// ?????
+7309,123,100	// ??????
+2642,123,100	// ??????
+2644,123,100	// ??? armor
+7314,123,100	// ??? event
+7025,27,100	// ??? ??
+7527,122,100	// ????? ???
+12142,122,100	// ????? ???
+2647,123,100	// ????
+//Eye of Hellion quest related items
+7332,123,100	// ??
+7333,123,100	// ????_1
+7334,123,100	// ????_2
+7335,123,100	// ????_3
+7336,123,100	// ????_4
+7339,123,100	// ??????_
+5132,27,100	// ?????
 //Leather Pouch (part of Cooking Quest)
 7432,123,100
-//The Sign Quest related items
-7177,127,100
-7178,127,100
-//Eye of Hellion quest related items
-7332,127,100
-7333,127,100
-7334,127,100
-7335,127,100
-7336,127,100
