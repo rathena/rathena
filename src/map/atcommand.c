@@ -3753,7 +3753,7 @@ int atcommand_refine(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int i, position = 0, refine = 0, current_position, final_refine;
+	int i,j, position = 0, refine = 0, current_position, final_refine;
 	int count;
 	nullpo_retr(-1, sd);
 
@@ -3764,34 +3764,34 @@ int atcommand_refine(
 		return -1;
 	}
 
-	if (refine < -10)
-		refine = -10;
-	else if (refine > 10)
-		refine = 10;
+	if (refine < -MAX_REFINE)
+		refine = -MAX_REFINE;
+	else if (refine > MAX_REFINE)
+		refine = MAX_REFINE;
 	else if (refine == 0)
 		refine = 1;
 
 	count = 0;
-	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->status.inventory[i].nameid &&	// ŠY“–ŒÂŠ‚Ì‘•”õ‚ð¸˜B‚·‚é
-		    (sd->status.inventory[i].equip & position ||
-			(sd->status.inventory[i].equip && !position))) {
-			final_refine = sd->status.inventory[i].refine + refine;
-			if (final_refine > 10)
-				final_refine = 10;
-			else if (final_refine < 0)
-				final_refine = 0;
-			if (sd->status.inventory[i].refine != final_refine) {
-				sd->status.inventory[i].refine = final_refine;
-				current_position = sd->status.inventory[i].equip;
-				pc_unequipitem(sd, i, 3);
-				clif_refine(fd, sd, 0, i, sd->status.inventory[i].refine);
-				clif_delitem(sd, i, 1);
-				clif_additem(sd, i, 1, 0);
-				pc_equipitem(sd, i, current_position);
-				clif_misceffect((struct block_list*)&sd->bl, 3);
-				count++;
-			}
+	for (j = 0; j < 10; j++) {
+		if ((i = sd->equip_index[j]) < 0)
+			continue;
+		if(position && !(sd->status.inventory[i].equip & position))
+			continue;
+		final_refine = sd->status.inventory[i].refine + refine;
+		if (final_refine > MAX_REFINE)
+			final_refine = MAX_REFINE;
+		else if (final_refine < 0)
+			final_refine = 0;
+		if (sd->status.inventory[i].refine != final_refine) {
+			sd->status.inventory[i].refine = final_refine;
+			current_position = sd->status.inventory[i].equip;
+			pc_unequipitem(sd, i, 3);
+			clif_refine(fd, sd, 0, i, sd->status.inventory[i].refine);
+			clif_delitem(sd, i, 1);
+			clif_additem(sd, i, 1, 0);
+			pc_equipitem(sd, i, current_position);
+			clif_misceffect(&sd->bl, 3);
+			count++;
 		}
 	}
 
