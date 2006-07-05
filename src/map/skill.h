@@ -937,8 +937,9 @@ enum {
 	UNT_HERMODE,
 	//0xba
 	UNT_SUITON = 0xbb,
-	UNT_DESPERADO,
-	//0xbd, 0xbe, 0xc0, 0xc1 //Maybe the other elements of Ground Drift?
+	UNT_DESPERADO, //NJ_TATAMIGAESHI is 0xbc as well?
+	UNT_KAENSIN,
+	//0xbe, 0xc0, 0xc1 //Maybe the other elements of Ground Drift?
 	UNT_GROUNDDRIFT = 0xc2,
 };
 

@@ -79,7 +79,6 @@
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS#闇グランドクロス
 362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA#バジリカ
 369,0xb3,    , -1, 0,10000,all,  0x000	//PA_GOSPEL#ゴスペル
-
 404,0xb6,    , -1, 0,  -1,all,   0x000	//PF_FOGWALL#フォグウォール
 405,0xb7,    ,  0, 1,1000,enemy, 0x000	//PF_SPIDERWEB#スパイダーウェッブ
 409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
@@ -89,9 +88,10 @@
 430,0x86,    ,  0, 1, 500,enemy, 0x000	//SG_STAR_WARM
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
-535,0x86,    ,  0, 2,2000,enemy,0x008,NJ_KAENSIN#火炎陣#
-536,0x86,    ,  0, 2, 300,enemy,0x008,NJ_BAKUENRYU#爆炎龍#
-538,0xbb,,1:1:1:2:2:2:3:3:3:4,0, -1,all,0x010,NJ_SUITON#水遁#
-516,0xbc,    ,  0, 3, 100,enemy,0x000,GS_DESPERADO#デスペラード
-521,0xc2,    ,  0, 1,1000,enemy,0x006,GS_GROUNDDRIFT#グラウンドドリフト
+527,0xbc,    , -1, 1,2000,enemy, 0x000	//NJ_TATAMIGAESHI#???_???
+535,0xbd,    ,  2, 0,2000,enemy, 0x000	//NJ_KAENSIN#???(???)
+536,0x86,    ,  2, 0, 300,enemy, 0x000	//NJ_BAKUENRYU#???(???)
+538,0xbb,,1:1:1:2:2:2:3:3:3:4,0, -1,all,0x010	//NJ_SUITON#水遁
+516,0xbc,    ,  0, 3, 100,enemy, 0x000	//GS_DESPERADO#デスペラード
+521,0xc2,    ,  0, 1,1000,enemy, 0x006	//GS_GROUNDDRIFT#グラウンドドリフト
 

@@ -6040,6 +6040,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
 	case NJ_HYOUSYOURAKU:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		flag|=1;
 		break;
@@ -6437,6 +6438,13 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		break;
 	case WE_CALLBABY:
 		if (sd) val1 = sd->status.child;
+		break;
+	case NJ_KAENSIN:
+		val1 = skilllv;
+		val2 = (skilllv+1)/2 + 4;
+		break;
+	case NJ_BAKUENRYU:
+		val1 = 3;
 		break;
 	case GS_GROUNDDRIFT:
 		{	//Take on the base element, not the elemental one.
@@ -10500,6 +10508,15 @@ void skill_init_unit_layout (void)
 					 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
 					 3, 3, 3};
 				skill_unit_layout[pos].count = 33;
+				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
+				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
+				break;
+			}
+			case NJ_TATAMIGAESHI:
+			{
+				static const int dx[] = {-1, 0, 0, 1};
+				static const int dy[] = { 0,-1, 1, 0};
+				skill_unit_layout[pos].count = 4;
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 				break;
