@@ -38,6 +38,11 @@ Playtester
 
 Date		Added
 ======
+07/05
+	* Updated Socket Enchant NPC [Playtester]
+	- fixed various bugs
+	- adjusted success rates
+	- now has official coordinates and sprite
 07/04
 	* Added the Socket Enchant NPC written by Sousuke_PL [Playtester]
 	- I already tested and fixed some stuff but requires some more testing

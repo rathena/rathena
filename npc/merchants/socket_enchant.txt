@@ -38,14 +38,13 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       mes "Choose the number of page. Type 1 to 5:";
       next;
       input @weapsite;
-      if(@weapsite > 5) goto L_WaepJump;
+      if(@weapsite > 5 || @weapsite < 1) goto L_WaepJump;
 
       if(@weapsite == 1) goto L_Weapon1;
       if(@weapsite == 2) goto L_Weapon2;
       if(@weapsite == 3) goto L_Weapon3;
       if(@weapsite == 4) goto L_Weapon4;
       if(@weapsite == 5) goto L_Weapon5; 
-
 
 
   L_Weapon1:
@@ -239,15 +238,15 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       mes "[Socket Enchant]";
       mes "Choose the number of page. Type 1 to 6:";
       next;
-      input @weapsite;
-      if(@armorsite > 6) goto L_ArmorJump;
+      input @armorsite;
+      if(@armorsite > 6 || @armorsite < 1) goto L_ArmorJump;
 
-      if(@armorsite == 1) goto L_ArmorJump1;
-      if(@armorsite == 2) goto L_ArmorJump2;
-      if(@armorsite == 3) goto L_ArmorJump3;
-      if(@armorsite == 4) goto L_ArmorJump4;
-      if(@armorsite == 5) goto L_ArmorJump5;
-      if(@armorsite == 6) goto L_ArmorJump6;
+      if(@armorsite == 1) goto L_Armor1;
+      if(@armorsite == 2) goto L_Armor2;
+      if(@armorsite == 3) goto L_Armor3;
+      if(@armorsite == 4) goto L_Armor4;
+      if(@armorsite == 5) goto L_Armor5;
+      if(@armorsite == 6) goto L_Armor6;
 
 
   L_Armor1:
@@ -256,6 +255,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       mes "[Socket Enchant]";
       mes "Please choose your item:";
       menu "Mantle",Mantle,"Coat",Coat,"Circlet",Circlet,"Biretta",Biretta,"Mirror Shield",Mirror_Shield,"Chain Mail",Chain_Mail,"Shield",Shield,"Bongun Hat",Bongun_Hat,"Next",L_Armor2,"Jump to page...",L_ArmorJump;
+
   L_Armor2:
 
       close2;
@@ -554,7 +554,7 @@ function	script	addslot	{
            delitem @itemup,@itemupiece;
            set Zeny,Zeny-@addprice;
            delitem @olditem,1;
-           if(@rateit>rand(1,100))goto L_Fail;
+           if(@rateit<rand(1,100))goto L_Fail;
            getitem @newitem,1;
 
       mes "[Socket Enchant]";
@@ -607,7 +607,7 @@ function	script	addslot2	{
            delitem @itemup2,@itemupiece2;
            set Zeny,Zeny-@addprice;
            delitem @olditem,1;
-           if(@rateit>rand(1,100))goto L_Fail;
+           if(@rateit<rand(1,100))goto L_Fail;
            getitem @newitem,1;
 
       mes "[Socket Enchant]";
@@ -647,7 +647,7 @@ function	script	addslot2	{
 
 function	script	f_weapon_c	{
   
-      set @rateit,50;  //success rate
+      set @rateit,25;  //success rate
       set @addprice,200000;
       set @itemup,1010;
       set @itemupiece,10;
@@ -658,7 +658,7 @@ function	script	f_weapon_c	{
 
 function	script	f_weapon_b	{
 
-      set @rateit,40;  //success rate
+      set @rateit,20;  //success rate
       set @addprice,300000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -672,7 +672,7 @@ function	script	f_weapon_b	{
 
 function	script	f_weapon_a	{
 
-      set @rateit,30;  //success rate
+      set @rateit,15;  //success rate
       set @addprice,500000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -686,7 +686,7 @@ function	script	f_weapon_a	{
 
 function	script	f_weapon_a2	{
 
-      set @rateit,30;  //success rate
+      set @rateit,15;  //success rate
       set @addprice,700000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -700,7 +700,7 @@ function	script	f_weapon_a2	{
 
 function	script	f_weapon_a3	{
 
-      set @rateit,30;  //success rate
+      set @rateit,15;  //success rate
       set @addprice,800000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -714,7 +714,7 @@ function	script	f_weapon_a3	{
 
 function	script	f_weapon_s	{
 
-      set @rateit,20;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,1000000;
       set @itemup1,984;
       set @itemupiece1,5;
@@ -728,7 +728,7 @@ function	script	f_weapon_s	{
 
 function	script	f_weapon_s2	{
 
-      set @rateit,20;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,2000000;
       set @itemup1,984;
       set @itemupiece1,5;
@@ -744,7 +744,7 @@ function	script	f_weapon_s2	{
 
 function	script	f_armor_c	{
 
-      set @rateit,50;  //success rate
+      set @rateit,25;  //success rate
       set @addprice,200000;
       set @itemup,999;
       set @itemupiece,3;
@@ -755,7 +755,7 @@ function	script	f_armor_c	{
 
 function	script	f_armor_b	{
 
-      set @rateit,40;  //success rate
+      set @rateit,20;  //success rate
       set @addprice,250000;
       set @itemup,999;
       set @itemupiece,5;
@@ -766,7 +766,7 @@ function	script	f_armor_b	{
 
 function	script	f_armor_b2	{
 
-      set @rateit,40;  //success rate
+      set @rateit,20;  //success rate
       set @addprice,300000;
       set @itemup,999;
       set @itemupiece,5;
@@ -777,7 +777,7 @@ function	script	f_armor_b2	{
 
 function	script	f_armor_a	{
 
-      set @rateit,30;  //success rate
+      set @rateit,15;  //success rate
       set @addprice,300000;
       set @itemup,985;
       set @itemupiece,1;
@@ -788,7 +788,7 @@ function	script	f_armor_a	{
 
 function	script	f_armor_a2	{
 
-      set @rateit,30;  //success rate
+      set @rateit,15;  //success rate
       set @addprice,400000;
       set @itemup,985;
       set @itemupiece,1;
@@ -799,7 +799,7 @@ function	script	f_armor_a2	{
 
 function	script	f_armor_s	{
 
-      set @rateit,20;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,1000000;
       set @itemup,985;
       set @itemupiece,2;
@@ -810,7 +810,7 @@ function	script	f_armor_s	{
 
 function	script	f_armor_s2	{
 
-      set @rateit,20;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,2000000;
       set @itemup,985;
       set @itemupiece,2;
@@ -820,6 +820,6 @@ function	script	f_armor_s2	{
 }
 
 
-prt_in.gat,32,72,5	duplicate(Socket Enchant)	Socket Enchant	84
-payon.gat,141,164,6	duplicate(Socket Enchant)	Socket Enchant	84
-morocc_in.gat,62,40,5	duplicate(Socket Enchant)	Socket Enchant	84
+prt_in.gat,33,70,5	duplicate(Socket Enchant)	Socket Enchant	84
+payon.gat,140,151,5	duplicate(Socket Enchant)	Socket Enchant	84
+morocc.gat,51,41,5	duplicate(Socket Enchant)	Socket Enchant	84
