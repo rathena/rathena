@@ -3959,7 +3959,7 @@ int buildin_getitem(struct script_state *st)
 			return 0;
 		if((flag = pc_additem(sd,&item_tmp,amount))) {
 			clif_additem(sd,0,0,flag);
-			if(pc_candrop(sd,nameid))
+			if (pc_candrop(sd, &item_tmp))
 				map_addflooritem(&item_tmp,amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 		}
 

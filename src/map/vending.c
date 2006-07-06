@@ -231,7 +231,7 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 		for(i = 0, j = 0; (85 + 8 * j < len) && (i < MAX_VENDING); i++, j++) {
 			sd->vending[i].index = *(short*)(p+8*j)-2;
 			if (sd->vending[i].index < 0 || sd->vending[i].index >= MAX_CART ||
-				!itemdb_cantrade(sd->status.cart[sd->vending[i].index].nameid, pc_isGM(sd), pc_isGM(sd)))
+				!itemdb_cantrade(&sd->status.cart[sd->vending[i].index], pc_isGM(sd), pc_isGM(sd)))
 			{
 				i--; //Preserve the vending index, skip to the next item.
 				continue;

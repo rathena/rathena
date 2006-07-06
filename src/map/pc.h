@@ -246,7 +246,7 @@ struct map_session_data *pc_get_child(struct map_session_data *sd);
 
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
-int pc_candrop(struct map_session_data *sd,int item_id);
+int pc_candrop(struct map_session_data *sd,struct item *item);
 
 int pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex

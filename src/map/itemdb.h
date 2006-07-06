@@ -88,13 +88,21 @@ int itemdb_searchrandomid(int flags);
 #define itemdb_value_notoc(n) itemdb_search(n)->flag.value_notoc
 #define itemdb_canrefine(n) itemdb_search(n)->flag.no_refine
 //Item trade restrictions [Skotlex]
-int itemdb_isdropable(int nameid, int gmlv);
-int itemdb_cantrade(int nameid, int gmlv, int gmlv2);
-int itemdb_cansell(int nameid, int gmlv);
-int itemdb_canstore(int nameid, int gmlv);
-int itemdb_canguildstore(int nameid, int gmlv);
-int itemdb_cancartstore(int nameid, int gmlv);
-int itemdb_canpartnertrade(int nameid, int gmlv, int gmlv2);
+int itemdb_isdropable_sub(struct item_data *, int, int);
+int itemdb_cantrade_sub(struct item_data*, int, int);
+int itemdb_canpartnertrade_sub(struct item_data*, int, int);
+int itemdb_cansell_sub(struct item_data*,int, int);
+int itemdb_cancartstore_sub(struct item_data*, int, int);
+int itemdb_canstore_sub(struct item_data*, int, int);
+int itemdb_canguildstore_sub(struct item_data*, int, int);
+int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
+#define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
+#define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
+#define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
+#define itemdb_cansell(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cansell_sub)
+#define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
+#define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub) 
+#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub) 
 
 int itemdb_isequip(int);
 int itemdb_isequip2(struct item_data *);

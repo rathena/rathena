@@ -289,46 +289,61 @@ static int itemdb_ispetequip(struct item_data *data)
  * Trade Restriction functions [Skotlex]
  *------------------------------------------
  */
-int itemdb_isdropable(int nameid, int gmlv)
+int itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused)
 {
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&1) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_cantrade(int nameid, int gmlv, int gmlv2)
+int itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2)
 {
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&2) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-int itemdb_canpartnertrade(int nameid, int gmlv, int gmlv2)
+int itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2)
 {
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (item->flag.trade_restriction&4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
-int itemdb_cansell(int nameid, int gmlv)
+int itemdb_cansell_sub(struct item_data* item, int gmlv, int unused)
 {
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&8) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_cancartstore(int nameid, int gmlv)
+int itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused)
 {	
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&16) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canstore(int nameid, int gmlv)
+int itemdb_canstore_sub(struct item_data* item, int gmlv, int unused)
 {	
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&32) || gmlv >= item->gm_lv_trade_override));
 }
 
-int itemdb_canguildstore(int nameid, int gmlv)
+int itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused)
 {	
-	struct item_data* item = itemdb_exists(nameid);
 	return (item && (!(item->flag.trade_restriction&64) || gmlv >= item->gm_lv_trade_override));
+}
+
+int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int))
+{
+	struct item_data* item_data = itemdb_search(item->nameid);
+	int i;
+
+	if (!func(item_data, gmlv, gmlv2))
+		return 0;
+	
+	if(item_data->slot == 0 ||
+		item->card[0] ==(short)0xff00 ||
+		item->card[0]==0x00ff ||
+	  	item->card[0]==0x00fe)
+		return 1;
+	
+	for(i = 0; i < item_data->slot; i++) {
+		if (!item->card[i]) continue;
+		if (!func(itemdb_search(item->card[i]), gmlv, gmlv2))
+			return 0;
+	}
+	return 1;
 }
 
 /*==========================================

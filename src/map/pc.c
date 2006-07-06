@@ -2672,7 +2672,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}
 	
-	if (!pc_candrop(sd,sd->status.inventory[n].nameid)) {
+	if (!pc_candrop(sd,&sd->status.inventory[n])) {
 		clif_displaymessage (sd->fd, msg_txt(263));
 		return 0;
 	}
@@ -2914,7 +2914,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	data = itemdb_search(item_data->nameid);
 
-	if(!itemdb_cancartstore(item_data->nameid, pc_isGM(sd)))
+	if(!itemdb_cancartstore(item_data, pc_isGM(sd)))
 	{	//Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;
@@ -5645,12 +5645,12 @@ int pc_setriding(struct map_session_data *sd)
  * アイテムドロップ可不可判定
  *------------------------------------------
  */
-int pc_candrop(struct map_session_data *sd,int item_id)
+int pc_candrop(struct map_session_data *sd,struct item *item)
 {
 	int level = pc_isGM(sd);
 	if ( pc_can_give_items(level) ) //check if this GM level can drop items
 		return 0;
-	return (itemdb_isdropable(item_id, level));
+	return (itemdb_isdropable(item, level));
 }
 
 /*==========================================

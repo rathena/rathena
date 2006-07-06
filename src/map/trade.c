@@ -294,7 +294,8 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
  */
 void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 	struct map_session_data *target_sd;
-	int trade_i, trade_weight, nameid;
+	struct item *item;
+	int trade_i, trade_weight;
 
 	nullpo_retv(sd);
 	if (!sd->state.trading || sd->state.deal_locked > 0)
@@ -324,10 +325,12 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 	if (amount < 0 || amount > sd->status.inventory[index].amount)
 		return;
 
-	nameid = sd->inventory_data[index]->nameid;
-
-	if (!itemdb_cantrade(nameid, pc_isGM(sd), pc_isGM(target_sd)) &&	//Can't trade
-		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(nameid, pc_isGM(sd), pc_isGM(target_sd))))	//Can't partner-trade
+	item = &sd->status.inventory[index];
+	trade_i = pc_isGM(sd); //Recycling the variables to check for trad restrict.
+	trade_weight = pc_isGM(target_sd);
+	if (!itemdb_cantrade(item, trade_i, trade_weight) &&	//Can't trade
+		(pc_get_partner(sd) != target_sd ||
+		!itemdb_canpartnertrade(item, trade_i, trade_weight))) //Can't partner-trade
 	{
 		clif_displaymessage (sd->fd, msg_txt(260));
 		return;

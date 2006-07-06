@@ -168,7 +168,7 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 	
 	data = itemdb_search(item_data->nameid);
 
-	if (!itemdb_canstore(item_data->nameid, pc_isGM(sd)))
+	if (!itemdb_canstore(item_data, pc_isGM(sd)))
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;
@@ -517,7 +517,7 @@ int guild_storage_additem(struct map_session_data *sd,struct guild_storage *stor
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
-	if (!itemdb_canguildstore(item_data->nameid, pc_isGM(sd)))
+	if (!itemdb_canguildstore(item_data, pc_isGM(sd)))
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
 		return 1;

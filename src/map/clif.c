@@ -1873,7 +1873,7 @@ int clif_selllist(struct map_session_data *sd) {
 	WFIFOW(fd,0)=0xc7;
 	for(i=0;i<MAX_INVENTORY;i++) {
 		if(sd->status.inventory[i].nameid > 0 && sd->inventory_data[i]) {
-			if (!itemdb_cansell(sd->status.inventory[i].nameid, pc_isGM(sd)))
+			if (!itemdb_cansell(&sd->status.inventory[i], pc_isGM(sd)))
 				continue;
 
 			val=sd->inventory_data[i]->value_sell;
