@@ -4,6 +4,16 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/06
+	* Modified the party_data structure on the map server to remove some
+	  redundant data. Added a party_data structure on the char-server to hold a
+	  more complete set of information about parties. Added to the party_member
+	  structure the class of each member so that the map server can do the
+	  appropiate checks even if the character is on another mapserver/offline.
+	  Due to the format changes in the party structure, txt servers will have to
+	  wipe their party file... (sql save format has not been changed) [Skotlex]
+	* Added function char_family to check if there's a family state given the
+	  three character ids, instead of doing individual checks all the time.
+	  [Skotlex]
 	* Rewrote all the item restriction functions so that they will take into
 	  account slotted card restrictions as well. [Skotlex]
 	* Added no_skill_delay setting, when set, affected object types will have

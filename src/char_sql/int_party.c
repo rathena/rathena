@@ -7,18 +7,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include "char.h"
 #include "../common/db.h"
 #include "../common/strlib.h"
 #include "../common/socket.h"
 #include "../common/showmsg.h"
 
-static struct party *party_pt;
+struct party_data {
+	struct party party;
+	unsigned int min_lv, max_lv;
+	unsigned char size; //Total size of party.
+	unsigned family :1; //Is this party a family?
+};
+
+static struct party_data *party_pt;
 static struct dbt *party_db_;
 
 int mapif_party_broken(int party_id,int flag);
-int party_check_empty(struct party *p);
+int party_check_empty(struct party_data *p);
 int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id);
+int party_check_exp_share(struct party_data *p);
+int mapif_party_optionchanged(int fd,struct party *p, int account_id, int flag);
 
 #ifndef SQL_DEBUG
 
@@ -43,15 +53,76 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id);
 #define PS_DELMEMBER 0x10
 //Specify that this party must be deleted.
 #define PS_BREAK 0x20
+	
+//Updates party's level range and unsets even share if broken.
+static int int_party_check_lv(struct party_data *p) {
+	int i,lv;
+	p->min_lv = UINT_MAX;
+	p->max_lv = 0;
+	for(i=0;i<MAX_PARTY;i++){
+		if(!p->party.member[i].online)
+			continue;
+
+		lv=p->party.member[i].lv;
+		if (lv < p->min_lv) p->min_lv = lv;
+		if (lv > p->max_lv) p->max_lv = lv;
+	}
+
+	if (p->party.exp && !party_check_exp_share(p)) {
+		p->party.exp = 0;
+		mapif_party_optionchanged(0, &p->party, 0, 0);
+		return 0;
+	}
+	return 1;
+}
+//Calculates the state of a party.
+static void int_party_calc_state(struct party_data *p)
+{
+	int i, lv;
+	p->min_lv = UINT_MAX;
+	p->max_lv = 0;
+	p->party.count =
+	p->size =
+	p->family = 0;
+
+	//Check party size, max/min levels.
+	for(i=0;i<MAX_PARTY;i++){
+		lv=p->party.member[i].lv;
+		if (!lv) continue;
+		p->size++;
+		if(p->party.member[i].online)
+		{
+			if( lv < p->min_lv ) p->min_lv=lv;
+			if( p->max_lv < lv ) p->max_lv=lv;
+			p->party.count++;
+		}
+	}
+	if(p->size == 3) {
+		//Check Family State.
+		p->family = char_family(
+			p->party.member[0].char_id,
+			p->party.member[1].char_id,
+			p->party.member[2].char_id
+		);
+	}
+
+	if (p->party.exp && !party_check_exp_share(p)) {
+		p->party.exp = 0; //Set off even share.
+		mapif_party_optionchanged(0, &p->party, 0, 0);
+	}
+	return;
+}
 
 // Save party to mysql
-int inter_party_tosql(struct party *p, int flag, int index)
+int inter_party_tosql(struct party_data *party, int flag, int index)
 {
 	// 'party' ('party_id','name','exp','item','leader_id','leader_char')
 	char t_name[NAME_LENGTH*2]; //Required for jstrescapecpy [Skotlex]
+	struct party *p;
 	int party_id;
-	if (p == NULL || p->party_id == 0)
+	if (party == NULL || party->party.party_id == 0)
 		return 0;
+	p = &party->party;
 	party_id = p->party_id;
 
 #ifdef NOISY
@@ -84,18 +155,19 @@ int inter_party_tosql(struct party *p, int flag, int index)
 		if (mysql_query(&mysql_handle, tmp_sql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			aFree(p); //Free party, couldn't create it.
+			aFree(party); //Free party, couldn't create it.
 			return 0;
 		}
 		if(mysql_field_count(&mysql_handle) == 0 &&
 			mysql_insert_id(&mysql_handle) != 0)
 			party_id = p->party_id = (int)mysql_insert_id(&mysql_handle);
 		else { //Failed to retrieve ID??
-			aFree(p); //Free party, couldn't create it.
+			aFree(party); //Free party, couldn't create it.
 			return 0;
 		}
 		//Add party to db
-		idb_put(party_db_, party_id, p);
+		int_party_calc_state(party);
+		idb_put(party_db_, party_id, party);
 	}
 
 	if (flag&PS_BASIC) {
@@ -144,10 +216,10 @@ int inter_party_tosql(struct party *p, int flag, int index)
 }
 
 // Read party from mysql
-struct party *inter_party_fromsql(int party_id)
+struct party_data *inter_party_fromsql(int party_id)
 {
 	int leader_id = 0, leader_char = 0;
-	struct party *p;
+	struct party_data *p;
 #ifdef NOISY
 	ShowInfo("Load party request ("CL_BOLD"%d"CL_RESET")\n", party_id);
 #endif
@@ -159,7 +231,7 @@ struct party *inter_party_fromsql(int party_id)
 		return p;
 	
 	p = party_pt;
-	memset(p, 0, sizeof(struct party));
+	memset(p, 0, sizeof(struct party_data));
 
 	sprintf(tmp_sql, "SELECT `party_id`, `name`,`exp`,`item`, `leader_id`, `leader_char` FROM `%s` WHERE `party_id`='%d'",
 		party_db, party_id); // TBR
@@ -177,16 +249,16 @@ struct party *inter_party_fromsql(int party_id)
 		mysql_free_result(sql_res);
 		return NULL;
 	}
-	p->party_id = party_id;
-	memcpy(p->name, sql_row[1], NAME_LENGTH-1);
-	p->exp = atoi(sql_row[2])?1:0;
-	p->item = atoi(sql_row[3]);
+	p->party.party_id = party_id;
+	memcpy(&p->party.name, sql_row[1], NAME_LENGTH-1);
+	p->party.exp = atoi(sql_row[2])?1:0;
+	p->party.item = atoi(sql_row[3]);
 	leader_id = atoi(sql_row[4]);
 	leader_char = atoi(sql_row[5]);
 	mysql_free_result(sql_res);
 
 	// Load members
-	sprintf(tmp_sql,"SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online` FROM `%s` WHERE `party_id`='%d'",
+	sprintf(tmp_sql,"SELECT `account_id`,`char_id`,`name`,`base_level`,`last_map`,`online`,`class` FROM `%s` WHERE `party_id`='%d'",
 		char_db, party_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -196,8 +268,8 @@ struct party *inter_party_fromsql(int party_id)
 	sql_res = mysql_store_result(&mysql_handle);
 	if (sql_res) {
 		int i;
-		for (i = 0; (sql_row = mysql_fetch_row(sql_res)); i++) {
-			struct party_member *m = &p->member[i];
+		for (i = 0; i<MAX_PARTY && (sql_row = mysql_fetch_row(sql_res)); i++) {
+			struct party_member *m = &p->party.member[i];
 			m->account_id = atoi(sql_row[0]);
 			m->char_id = atoi(sql_row[1]);
 			m->leader = (m->account_id == leader_id && m->char_id == leader_char)?1:0;
@@ -205,15 +277,18 @@ struct party *inter_party_fromsql(int party_id)
 			m->lv = atoi(sql_row[3]);
 			m->map = mapindex_name2id(sql_row[4]);
 			m->online = atoi(sql_row[5])?1:0;
+			m->class_ = atoi(sql_row[6]);
 		}
 		mysql_free_result(sql_res);
 	}
 
 	if (save_log)
-		ShowInfo("Party loaded (%d - %s).\n",party_id, p->name);
+		ShowInfo("Party loaded (%d - %s).\n",party_id, p->party.name);
 	//Add party to memory.
-	p = aCalloc(1, sizeof(struct party));
-	memcpy(p, party_pt, sizeof(struct party));
+	p = aCalloc(1, sizeof(struct party_data));
+	memcpy(p, party_pt, sizeof(struct party_data));
+	//init state
+	int_party_calc_state(p);
 	idb_put(party_db_, party_id, p);
 	return p;
 }
@@ -221,7 +296,7 @@ struct party *inter_party_fromsql(int party_id)
 int inter_party_sql_init(void){
 	//memory alloc
 	party_db_ = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	party_pt = (struct party*)aCalloc(sizeof(struct party), 1);
+	party_pt = (struct party_data*)aCalloc(sizeof(struct party_data), 1);
 	if (!party_pt) {
 		ShowFatalError("inter_party_sql_init: Out of Memory!\n");
 		exit(1);
@@ -248,7 +323,7 @@ void inter_party_sql_final(void)
 }
 
 // Search for the party according to its name
-struct party* search_partyname(char *str)
+struct party_data* search_partyname(char *str)
 {
 	char t_name[NAME_LENGTH*2];
 	int party_id;
@@ -271,51 +346,23 @@ struct party* search_partyname(char *str)
 	return inter_party_fromsql(party_id);
 }
 
-// EXP公平分配できるかチェック
-int party_check_exp_share(struct party *p)
+// Returns whether this party can keep having exp share or not.
+int party_check_exp_share(struct party_data *p)
 {
-	int i, oi[MAX_PARTY], dudes=0;
-	int maxlv=0,minlv=0x7fffffff;
-	
-	for(i=0;i<MAX_PARTY;i++){
-		int lv=p->member[i].lv;
-		if (!lv) continue;
-		if( p->member[i].online ){
-			if( lv < minlv ) minlv=lv;
-			if( maxlv < lv ) maxlv=lv;
-			if( lv >= 70 ) dudes+=1000;
-			oi[dudes%1000] = i;
-			dudes++;
-		}
-	}
-	if((dudes/1000 >= 2) && (dudes%1000 == 3) && maxlv-minlv>party_share_level)
-	{
-		int pl1=0,pl2=0,pl3=0;
-		pl1=p->member[oi[0]].char_id;
-		pl2=p->member[oi[1]].char_id;
-		pl3=p->member[oi[2]].char_id;
-		if (char_married(pl1,pl2) && char_child(pl1,pl3))
-			return 1;
-		if (char_married(pl1,pl3) && char_child(pl1,pl2))
-			return 1;
-		if (char_married(pl2,pl3) && char_child(pl2,pl1))
-			return 1;
-	}
-	return (maxlv==0 || maxlv-minlv<=party_share_level);
+	return (p->party.count == 0 || //If noone is online, don't mess with the share type.
+		(p->family && p->party.count == 3) || //All 3 MUST be online for share to trigger.
+	  	p->max_lv - p->min_lv <= party_share_level);
 }
 
 // Is there any member in the party?
-int party_check_empty(struct party *p)
+int party_check_empty(struct party_data *p)
 {
 	int i;
-	if (p==NULL||p->party_id==0) return 1;
-	for(i=0;i<MAX_PARTY;i++){
-		if(p->member[i].account_id>0){
-			return 0;
-		}
-	}
+	if (p==NULL||p->party.party_id==0) return 1;
+	for(i=0;i<MAX_PARTY && !p->party.member[i].account_id;i++);
+	if (i < MAX_PARTY) return 0;
 	// If there is no member, then break the party
-	mapif_party_broken(p->party_id,0);
+	mapif_party_broken(p->party.party_id,0);
 	inter_party_tosql(p, PS_BREAK, 0);
 	return 1;
 }
@@ -364,10 +411,11 @@ int mapif_party_noinfo(int fd,int party_id)
 // パーティ情報まとめ送り
 int mapif_party_info(int fd,struct party *p)
 {
-	unsigned char buf[10+sizeof(struct party)];
+	unsigned char buf[5+sizeof(struct party)];
 	WBUFW(buf,0)=0x3821;
-	memcpy(buf+4,p,sizeof(struct party));
 	WBUFW(buf,2)=4+sizeof(struct party);
+	memcpy(buf+4,p,sizeof(struct party));
+
 	if(fd<0)
 		mapif_sendall(buf,WBUFW(buf,2));
 	else
@@ -407,7 +455,7 @@ int mapif_party_optionchanged(int fd,struct party *p,int account_id,int flag)
 //Checks whether the even-share setting of a party is broken when a character logs in. [Skotlex]
 int inter_party_logged(int party_id, int account_id, int char_id)
 {
-	struct party *p;
+	struct party_data *p;
 	int i;
 
 	if (party_id <= 0)
@@ -420,17 +468,19 @@ int inter_party_logged(int party_id, int account_id, int char_id)
 		return 0;
 	
 	for(i = 0; i < MAX_PARTY; i++)
-		if (p->member[i].account_id==account_id && p->member[i].char_id==char_id) {
-			p->member[i].online = 1;
+		if(p->party.member[i].account_id==account_id &&
+			p->party.member[i].char_id==char_id)
+	  	{
+			if (!p->party.member[i].online) {
+				p->party.member[i].online = 1;
+				p->party.count++;
+				if(p->party.member[i].lv < p->min_lv ||
+					p->party.member[i].lv > p->max_lv)
+					int_party_check_lv(p);
+			}
 			break;
 		}
 	
-	if(p->exp && !party_check_exp_share(p))
-	{
-		p->exp=0;
-		mapif_party_optionchanged(0,p,0,0);
-		return 1;
-	}
 	return 0;
 }
 
@@ -491,108 +541,100 @@ int mapif_party_message(int party_id,int account_id,char *mes,int len, int sfd)
 
 
 // Create Party
-int mapif_parse_CreateParty(int fd, int account_id, int char_id, char *name, char *nick, unsigned short map, int lv, int item, int item2)
+int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct party_member *leader)
 {
-	struct party *p;
+	struct party_data *p;
 	int i;
 	if( (p=search_partyname(name))!=NULL){
-		mapif_party_created(fd,account_id,char_id,NULL);
+		mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 		return 0;
 	}
 	// Check Authorised letters/symbols in the name of the character
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
 			if (strchr(char_name_letters, name[i]) == NULL) {
-				mapif_party_created(fd,account_id,char_id,NULL);
+				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 				return 0;
 			}
 	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
 			if (strchr(char_name_letters, name[i]) != NULL) {
-				mapif_party_created(fd,account_id,char_id,NULL);
+				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 				return 0;
 			}
 	}
 
-	p= aCalloc(1, sizeof(struct party));
+	p= aCalloc(1, sizeof(struct party_data));
 	
-	memcpy(p->name,name,NAME_LENGTH);
-	p->exp=0;
-	p->item=(item?1:0)|(item2?2:0);
+	memcpy(p->party.name,name,NAME_LENGTH);
+	p->party.exp=0;
+	p->party.item=(item?1:0)|(item2?2:0);
 
-	p->member[0].account_id=account_id;
-	p->member[0].char_id =char_id;
-	memcpy(p->member[0].name,nick,NAME_LENGTH-1);
-	p->member[0].map = map;
-	p->member[0].leader=1;
-	p->member[0].online=1;
-	p->member[0].lv=lv;
+	memcpy(&p->party.member[0], leader, sizeof(struct party_member));
+	p->party.member[0].leader=1;
+	p->party.member[0].online=1;
 
-	p->party_id=-1;//New party.
+	p->party.party_id=-1;//New party.
 	if (inter_party_tosql(p,PS_CREATE|PS_ADDMEMBER,0)) {
-		mapif_party_created(fd,account_id,char_id,p);
-		mapif_party_info(fd,p);
+		mapif_party_created(fd,leader->account_id,leader->char_id,&p->party);
+		mapif_party_info(fd,&p->party);
 	} else //Failed to create party.
-		mapif_party_created(fd,account_id,char_id,NULL);
+		mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 
 	return 0;
 }
 // パーティ情報要求
 int mapif_parse_PartyInfo(int fd,int party_id)
 {
-	struct party *p;
+	struct party_data *p;
 	p = inter_party_fromsql(party_id);
 
 	if (p)
-		mapif_party_info(fd,p);
+		mapif_party_info(fd,&p->party);
 	else
 		mapif_party_noinfo(fd,party_id);
 	return 0;
 }
 // パーティ追加要求
-int mapif_parse_PartyAddMember(int fd, int party_id, int account_id, int char_id, char *nick, unsigned short map, int lv) {
-	struct party *p;
+int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member) {
+	struct party_data *p;
 	int i;
 
 	p = inter_party_fromsql(party_id);
 
-	if(!p){
-		mapif_party_memberadded(fd,party_id,account_id,char_id,1);
+	if(!p || p->size == MAX_PARTY){
+		mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,1);
 		return 0;
 	}
 
 	for(i=0;i<MAX_PARTY;i++){
-		if(p->member[i].account_id==0){
-			int flag=0;
+		if(p->party.member[i].account_id)
+			continue;
 
-			p->member[i].account_id=account_id;
-			p->member[i].char_id=char_id;
-			memcpy(p->member[i].name,nick,NAME_LENGTH);
-			p->member[i].map = map;
-			p->member[i].leader=0;
-			p->member[i].online=1;
-			p->member[i].lv=lv;
-			mapif_party_memberadded(fd,party_id,account_id,char_id,0);
-			mapif_party_info(-1,p);
+		memcpy(&p->party.member[i], member, sizeof(struct party_member));
+		p->party.member[i].leader=0;
+		if (p->party.member[i].online) p->party.count++;
+		p->size++;
+		if (member->lv < p->min_lv || member->lv > p->max_lv || p->family)
+		{
+			if (p->family) p->family = 0; //Family state broken.
+			int_party_check_lv(p);
+		} else if (p->size == 3) //Check family state.
+			int_party_calc_state(p);
 
-			if( p->exp && !party_check_exp_share(p) ){
-				p->exp=0;
-				flag=0x01;
-			}
-			if(flag)
-				mapif_party_optionchanged(fd,p,0,0);
-
-			inter_party_tosql(p, PS_ADDMEMBER, i);
-			return 0;
-		}
+		mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,0);
+		mapif_party_info(-1,&p->party);
+		inter_party_tosql(p, PS_ADDMEMBER, i);
+		return 0;
 	}
-	mapif_party_memberadded(fd,party_id,account_id,char_id,1);
+	//Party full
+	mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,1);
 	return 0;
 }
 // パーティー設定変更要求
 int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int flag)
 {
-	struct party *p;
+	struct party_data *p;
 	//NOTE: No clue what that flag is about, in all observations so far it always comes as 0. [Skotlex]
 	flag = 0;
 	p = inter_party_fromsql(party_id);
@@ -600,20 +642,20 @@ int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int
 	if(!p)
 		return 0;
 
-	p->exp=exp;
+	p->party.exp=exp;
 	if( exp && !party_check_exp_share(p) ){
 		flag|=0x01;
-		p->exp=0;
+		p->party.exp=0;
 	}
-	mapif_party_optionchanged(fd,p,account_id,flag);
+	mapif_party_optionchanged(fd,&p->party,account_id,flag);
 	inter_party_tosql(p, PS_BASIC, 0);
 	return 0;
 }
 // パーティ脱退要求
 int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 {
-	struct party *p;
-	int i;
+	struct party_data *p;
+	int i,j=-1;
 
 	p = inter_party_fromsql(party_id);
 	if (!p) { //Party does not exists?
@@ -626,43 +668,46 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	}
 
 	for (i = 0; i < MAX_PARTY; i++) {
-		if (p->member[i].account_id == account_id && p->member[i].char_id == char_id)
+		if(p->party.member[i].account_id == account_id &&
+			p->party.member[i].char_id == char_id) {
 			break;
+		}
 	}
-	if (i>= MAX_PARTY)
+	if (i >= MAX_PARTY)
 		return 0; //Member not found?
 
 	mapif_party_leaved(party_id, account_id, char_id);
 
-	if (p->member[i].leader){
-		int j;
+	if (p->party.member[i].leader){
+		p->party.member[i].account_id = 0;
 		for (j = 0; j < MAX_PARTY; j++) {
-			if (p->member[j].account_id > 0 && j != i) {
-				mapif_party_leaved(party_id, p->member[j].account_id, p->member[j].char_id);
-				p->member[j].account_id = 0;
-			}
-			p->member[i].account_id = 0;
+			if (!p->party.member[j].account_id)
+				continue;
+			mapif_party_leaved(party_id, p->party.member[j].account_id, p->party.member[j].char_id);
+			p->party.member[j].account_id = 0;
 		}
 		//Party gets deleted on the check_empty call below.
 	} else {
 		inter_party_tosql(p,PS_DELMEMBER,i);
-		memset(&p->member[i], 0, sizeof(struct party_member));
-		//Normally unneeded except when a family is even-sharing
-		//and one of the three leaves the party.
-		if(p->exp && !party_check_exp_share(p) ){
-			p->exp=0;
-			mapif_party_optionchanged(fd,p,0,0);
+		j = p->party.member[i].lv;
+		if(p->party.member[i].online) p->party.count--;
+		memset(&p->party.member[i], 0, sizeof(struct party_member));
+		p->size--;
+		if (j == p->min_lv || j == p->max_lv || p->family)
+		{
+			if(p->family) p->family = 0; //Family state broken.
+			int_party_check_lv(p);
 		}
 	}
 		
 	if (party_check_empty(p) == 0)
-		mapif_party_info(-1,p);
+		mapif_party_info(-1,&p->party);
 	return 0;
 }
 // When member goes to other map
 int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id, unsigned short map, int online, int lv)
 {
-	struct party *p;
+	struct party_data *p;
 	int i;
 
 	p = inter_party_fromsql(party_id);
@@ -670,18 +715,25 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 		return 0;
 
 	for(i = 0; i < MAX_PARTY; i++) {
-		if (p->member[i].account_id == account_id && p->member[i].char_id == char_id)
+		if(p->party.member[i].account_id == account_id &&
+			p->party.member[i].char_id == char_id)
 		{
-			p->member[i].map = map;
-			p->member[i].online = online;
-			if (p->member[i].lv != lv) {
-				p->member[i].lv = lv;
-			  	if (p->exp && !party_check_exp_share(p)) {
-					p->exp = 0;
-					mapif_party_optionchanged(fd, p, 0, 0);
-				}
+			p->party.member[i].map = map;
+			if (p->party.member[i].online != online) {
+				p->party.member[i].online = online;
+				if (online) p->party.count++;
+				else p->party.count--;
 			}
-			mapif_party_membermoved(p, i);
+			if (p->party.member[i].lv != lv) {
+				if(p->party.member[i].lv == p->min_lv ||
+					p->party.member[i].lv == p->max_lv)
+				{
+					p->party.member[i].lv = lv;
+					int_party_check_lv(p);
+				} else
+					p->party.member[i].lv = lv;
+			}
+			mapif_party_membermoved(&p->party, i);
 			break;
 		}
 	}
@@ -690,7 +742,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 // パーティ解散要求
 int mapif_parse_BreakParty(int fd,int party_id)
 {
-	struct party *p;
+	struct party_data *p;
 
 	p = inter_party_fromsql(party_id);
 
@@ -713,7 +765,7 @@ int mapif_parse_PartyCheck(int fd,int party_id,int account_id,int char_id)
 
 int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id)
 {
-	struct party *p;
+	struct party_data *p;
 	int i;
 
 	p = inter_party_fromsql(party_id);
@@ -723,10 +775,12 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 
 	for (i = 0; i < MAX_PARTY; i++)
 	{
-		if(p->member[i].leader) 
-			p->member[i].leader = 0;
-		if(p->member[i].account_id == account_id && p->member[i].char_id == char_id) {
-			p->member[i].leader = 1;
+		if(p->party.member[i].leader) 
+			p->party.member[i].leader = 0;
+		if(p->party.member[i].account_id == account_id &&
+			p->party.member[i].char_id == char_id)
+	  	{
+			p->party.member[i].leader = 1;
 			inter_party_tosql(p,PS_LEADER, i);
 		}
 	}
@@ -742,9 +796,9 @@ int inter_party_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)) {
-	case 0x3020: mapif_parse_CreateParty(fd, RFIFOL(fd,2), RFIFOL(fd,6),(char*)RFIFOP(fd,10), (char*)RFIFOP(fd,34), RFIFOW(fd,58), RFIFOW(fd,60), RFIFOB(fd,62), RFIFOB(fd,63)); break;
+	case 0x3020: mapif_parse_CreateParty(fd, (char*)RFIFOP(fd,4), RFIFOB(fd,28), RFIFOB(fd,29), (struct party_member*)RFIFOP(fd,30)); break;
 	case 0x3021: mapif_parse_PartyInfo(fd, RFIFOL(fd,2)); break;
-	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), (char*)RFIFOP(fd,14), RFIFOW(fd,38), RFIFOW(fd,40)); break;
+	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,4), (struct party_member*)RFIFOP(fd,8)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOW(fd,10), RFIFOW(fd,12)); break;
 	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOW(fd,14), RFIFOB(fd,16), RFIFOW(fd,17)); break;
@@ -765,11 +819,11 @@ int inter_party_leave(int party_id,int account_id, int char_id)
 }
 
 int inter_party_CharOnline(int char_id, int party_id) {
-   struct party *p;
+   struct party_data *p;
    int i;
    
 	if (party_id == -1) {
-		//Get guild_id from the database
+		//Get party_id from the database
 		sprintf (tmp_sql , "SELECT party_id FROM `%s` WHERE char_id='%d'",char_db,char_id);
 		if(mysql_query(&mysql_handle, tmp_sql) ) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -796,8 +850,14 @@ int inter_party_CharOnline(int char_id, int party_id) {
 
 	//Set member online
 	for(i=0; i<MAX_PARTY; i++) {
-		if (p->member[i].char_id == char_id) {
-			p->member[i].online = 1;
+		if (p->party.member[i].char_id == char_id) {
+			if (!p->party.member[i].online) {
+				p->party.member[i].online = 1;
+				p->party.count++;
+				if (p->party.member[i].lv < p->min_lv ||
+					p->party.member[i].lv > p->max_lv)
+					int_party_check_lv(p);
+			}
 			break;
 		}
 	}
@@ -805,8 +865,8 @@ int inter_party_CharOnline(int char_id, int party_id) {
 }
 
 int inter_party_CharOffline(int char_id, int party_id) {
-	struct party *p=NULL;
-	int online_count=0, i;
+	struct party_data *p=NULL;
+	int i;
 
 	if (party_id == -1) {
 		//Get guild_id from the database
@@ -834,13 +894,18 @@ int inter_party_CharOffline(int char_id, int party_id) {
 
 	//Set member offline
 	for(i=0; i< MAX_PARTY; i++) {
-		if(p->member[i].char_id == char_id)
-			p->member[i].online = 0;
-		if(p->member[i].online)
-			online_count++;
+		if(p->party.member[i].char_id == char_id)
+		{
+			p->party.member[i].online = 0;
+			p->party.count--;
+			if(p->party.member[i].lv == p->min_lv ||
+				p->party.member[i].lv == p->max_lv)
+				int_party_check_lv(p);
+			break;
+		}
 	}
 
-	if(online_count == 0)
+	if(!p->party.count)
 		//Parties don't have any data that needs be saved at this point... so just remove it from memory.
 		idb_remove(party_db_, party_id);
 	return 1;

@@ -21,9 +21,10 @@ int intif_request_guild_storage(int account_id, int guild_id);
 int intif_send_guild_storage(int account_id, struct guild_storage *gstor);
 
 
-int intif_create_party(struct map_session_data *sd,char *name,int item,int item2);
+int intif_create_party(struct party_member *member,char *name,int item,int item2);
 int intif_request_partyinfo(int party_id);
-int intif_party_addmember(int party_id, struct map_session_data *sd);
+
+int intif_party_addmember(int party_id,struct party_member *member);
 int intif_party_changeoption(int party_id, int account_id, int exp, int item);
 int intif_party_leave(int party_id,int account_id, int char_id);
 int intif_party_changemap(struct map_session_data *sd, int online);

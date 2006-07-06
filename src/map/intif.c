@@ -371,23 +371,20 @@ int intif_send_guild_storage(int account_id,struct guild_storage *gstor)
 }
 
 // パーティ作成要求
-int intif_create_party(struct map_session_data *sd,char *name,int item,int item2)
+int intif_create_party(struct party_member *member,char *name,int item,int item2)
 {
 	if (CheckForCharServer())
 		return 0;
-	nullpo_retr(0, sd);
+	nullpo_retr(0, member);
 
 	WFIFOHEAD(inter_fd,64);
 	WFIFOW(inter_fd,0) = 0x3020;
-	WFIFOL(inter_fd,2) = sd->status.account_id;
-	WFIFOL(inter_fd,6) = sd->status.char_id;
-	memcpy(WFIFOP(inter_fd,10),name, NAME_LENGTH);
-	memcpy(WFIFOP(inter_fd,34),sd->status.name,NAME_LENGTH);
-	WFIFOW(inter_fd,58) = sd->mapindex;
-	WFIFOW(inter_fd,60)= sd->status.base_level;
-	WFIFOB(inter_fd,62)= item;
-	WFIFOB(inter_fd,63)= item2;
-	WFIFOSET(inter_fd,64);
+	WFIFOW(inter_fd,2) = 24+2+sizeof(struct party_member);
+	memcpy(WFIFOP(inter_fd,4),name, NAME_LENGTH);
+	WFIFOB(inter_fd,28)= item;
+	WFIFOB(inter_fd,29)= item2;
+	memcpy(WFIFOP(inter_fd,30), member, sizeof(struct party_member));
+	WFIFOSET(inter_fd,WFIFOW(inter_fd, 2));
 	return 0;
 }
 // パーティ情報要求
@@ -404,20 +401,17 @@ int intif_request_partyinfo(int party_id)
 	return 0;
 }
 // パーティ追加要求
-int intif_party_addmember(int party_id,struct map_session_data *sd)
+int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
 	
 	WFIFOHEAD(inter_fd,42);
 	WFIFOW(inter_fd,0)=0x3022;
-	WFIFOL(inter_fd,2)=party_id;
-	WFIFOL(inter_fd,6)=sd->status.account_id;
-	WFIFOL(inter_fd,10)=sd->status.char_id;
-	memcpy(WFIFOP(inter_fd,14),sd->status.name,NAME_LENGTH);
-	WFIFOW(inter_fd,38) = sd->mapindex;
-	WFIFOW(inter_fd,40)=sd->status.base_level;
-	WFIFOSET(inter_fd,42);
+	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
+	WFIFOL(inter_fd,4)=party_id;
+	memcpy(WFIFOP(inter_fd,8),member,sizeof(struct party_member));
+	WFIFOSET(inter_fd,WFIFOW(inter_fd, 2));
 	return 1;
 }
 // パーティ設定変更

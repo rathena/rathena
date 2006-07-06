@@ -28,6 +28,23 @@ static struct dbt* party_db;
 static struct party_data* party_cache = NULL; //party in cache for skipping consecutive lookups. [Skotlex]
 int party_share_level = 10;
 int party_send_xy_timer(int tid,unsigned int tick,int id,int data);
+
+/*==========================================
+ * Fills the given party_member structure according to the sd provided. 
+ * Used when creating/adding people to a party. [Skotlex]
+ *------------------------------------------
+ */
+static void party_fill_member(struct party_member *member, struct map_session_data *sd) {
+  	member->account_id = sd->status.account_id;
+	member->char_id = sd->status.char_id;
+	memcpy(member->name,sd->status.name,NAME_LENGTH);
+	member->class_ = sd->status.class_;
+	member->map = sd->mapindex;
+	member->lv = sd->status.base_level;
+	member->online = 1;
+	member->leader = 0;
+}
+
 /*==========================================
  * I—¹
  *------------------------------------------
@@ -74,12 +91,18 @@ struct party_data* party_searchname(char *str)
 
 int party_create(struct map_session_data *sd,char *name,int item,int item2)
 {
+	struct party_member leader;
 	nullpo_retr(0, sd);
 
-	if(sd->status.party_id==0)
-		intif_create_party(sd,name,item,item2);
-	else
+	if(sd->status.party_id) {
 		clif_party_created(sd,2);
+		return 0;
+	}
+
+	party_fill_member(&leader, sd);
+	leader.leader = 1;
+
+	intif_create_party(&leader,name,item,item2);
 	return 0;
 }
 
@@ -176,21 +199,27 @@ static void party_check_state(struct party_data *p)
 	memset(&p->state, 0, sizeof(p->state));
 	for (i = 0; i < MAX_PARTY; i ++)
 	{
-		if (!p->data[i].sd) continue;
-		if ((p->data[i].sd->class_&MAPID_UPPERMASK) == MAPID_MONK)
+		if (!p->party.member[i].online) continue; //Those not online shouldn't aport to skill usage and all that.
+		switch (p->party.member[i].class_) {
+		case JOB_MONK:
+		case JOB_BABY_MONK:
+		case JOB_CHAMPION:
 			p->state.monk = 1;
-		else
-		if ((p->data[i].sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
+		break;
+		case JOB_STAR_GLADIATOR:
 			p->state.sg = 1;
-		else
-		if ((p->data[i].sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		break;
+		case JOB_SUPER_NOVICE:
+		case JOB_SUPER_BABY:
 			p->state.snovice = 1;
-		else
-		if ((p->data[i].sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON)
+		break;
+		case JOB_TAEKWON:
 			p->state.tk = 1;
+		break;
+		}
 	}
-	//TODO: Family state check.
 }
+
 int party_recv_info(struct party *sp)
 {
 	struct map_session_data *sd;
@@ -271,11 +300,12 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 {
 	struct map_session_data *tsd= map_id2sd(account_id);
-
+	struct party_member member;
 	nullpo_retr(0, sd);
 
 	if(flag==1){
-		intif_party_addmember( sd->party_invite, sd);
+		party_fill_member(&member, sd);
+		intif_party_addmember(sd->party_invite, &member);
 		return 0;
 	}
 	sd->party_invite=0;
@@ -308,7 +338,6 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		return 0;
 	}
 
-	sd2=map_id2sd(sd->party_invite_account);
 	if(!flag) {
 		sd->state.party_sent=0;
 		sd->status.party_id=party_id;
@@ -316,6 +345,8 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		clif_party_join_info(&p->party,sd);
 		clif_charnameupdate(sd); //Update char name's display [Skotlex]
 	}
+
+	sd2=map_id2sd(sd->party_invite_account);
 	if (sd2)
 		clif_party_inviteack(sd2,sd->status.name,flag?2:0);
 	return 0;
@@ -387,6 +418,8 @@ int party_member_leaved(int party_id,int account_id,int char_id)
 				clif_party_leaved(p,sd,account_id,p->party.member[i].name,0x00);
 				memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
 				memset(&p->data[i], 0, sizeof(p->data[0]));
+				p->party.count--;
+				party_check_state(p);
 				break;
 			}
 	}
@@ -394,7 +427,6 @@ int party_member_leaved(int party_id,int account_id,int char_id)
 		sd->status.party_id=0;
 		sd->state.party_sent=0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
-		party_check_state(p);
 	}
 	return 0;
 }

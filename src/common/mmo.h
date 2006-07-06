@@ -244,6 +244,7 @@ struct party_member {
 	int account_id;
 	int char_id;
 	char name[NAME_LENGTH];
+	unsigned short class_;
 	unsigned short map;
 	unsigned short lv;
 	unsigned leader : 1,
@@ -253,6 +254,7 @@ struct party_member {
 struct party {
 	int party_id;
 	char name[NAME_LENGTH];
+	unsigned char count; //Count of online characters.
 	unsigned exp : 1,
 				item : 2; //&1: Party-Share (round-robin), &2: pickup style: shared.
 	struct party_member member[MAX_PARTY];

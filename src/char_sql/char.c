@@ -4408,3 +4408,48 @@ int char_married(int pl1,int pl2) {
 		else
 			return 0;
 }
+
+int char_family(int pl1,int pl2,int pl3) {
+	int charid, partnerid, childid;
+	sprintf (tmp_sql, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", char_db, pl1, pl2, pl3);
+	if (mysql_query (&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return 0;
+	}
+	sql_res = mysql_store_result (&mysql_handle);
+	if (!sql_res) return 0;
+
+	while((sql_row = mysql_fetch_row(sql_res)))
+	{
+		charid =  atoi(sql_row[0]);
+		partnerid = atoi(sql_row[1]);
+		childid = atoi(sql_row[2]);
+		if (charid == pl1) {
+			if ((pl2 == partnerid && pl3 == childid) ||
+				(pl3 == partnerid && pl2 == childid)
+			) {
+				mysql_free_result (sql_res);
+				return 1;
+			}
+		}
+		if(charid == pl2) {
+			if ((pl1 == partnerid && pl3 == childid) ||
+				(pl3 == partnerid && pl1 == childid)
+			) {
+				mysql_free_result (sql_res);
+				return 1;
+			}
+		}
+		if(charid == pl3) {
+			if ((pl1 == partnerid && pl2 == childid) ||
+				(pl2 == partnerid && pl1 == childid)
+			) {
+				mysql_free_result (sql_res);
+				return 1;
+			}
+		}
+	}
+	mysql_free_result (sql_res);
+	return 0;
+}

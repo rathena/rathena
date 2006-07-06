@@ -205,6 +205,16 @@ int isGM(int account_id) {
 	return 0;
 }
 
+//Search character data from the aid/cid givem
+struct mmo_charstatus* search_character(int aid, int cid) {
+	int i;
+	for (i = 0; i < char_num; i++) {
+		if (char_dat[i].status.char_id == cid && char_dat[i].status.account_id == aid)
+			return &char_dat[i].status;
+	}
+	return NULL;
+}
+	
 //----------------------------------------------
 // Search an character id
 //   (return character index or -1 (if not found))
@@ -1695,6 +1705,35 @@ int char_child(int parent_id, int child_id) {
 		(char_dat[parent_id].status.char_id == char_dat[child_id].status.mother)));		
 }
 
+int char_family(int cid1, int cid2, int cid3) {
+	int i, idx1 = -1, idx2 =-1;//, idx3 =-1;
+	for(i = 0; i < char_num && (idx1 == -1 || idx2 == -1/* || idx3 == 1*/); i++)
+  	{
+		if (char_dat[i].status.char_id == cid1)
+			idx1 = i;
+		if (char_dat[i].status.char_id == cid2)
+			idx2 = i;
+//		if (char_dat[i].status.char_id == cid2)
+//			idx3 = i;
+	}
+	if (idx1 == -1 || idx2 == -1/* || idx3 == -1*/)
+  		return 0; //Some character not found??
+
+	//Unless the dbs are corrupted, these 3 checks should suffice, even though 
+	//we could do a lot more checks and force cross-reference integrity.
+	if(char_dat[idx1].status.partner_id == cid2 &&
+		char_dat[idx1].status.child == cid3)
+		return 1; //cid1/cid2 parents. cid3 child.
+
+	if(char_dat[idx1].status.partner_id == cid3 &&
+		char_dat[idx1].status.child == cid2)
+		return 1; //cid1/cid3 parents. cid2 child.
+
+	if(char_dat[idx2].status.partner_id == cid3 &&
+		char_dat[idx2].status.child == cid1)
+		return 1; //cid2/cid3 parents. cid1 child.
+	return 0;
+}
 //------------------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
 //------------------------------------------------------------
@@ -2636,8 +2675,6 @@ int parse_frommap(int fd) {
 			data = status_search_scdata(aid, cid);
 			if (data->count > 0)
 			{	//Deliver status change data.
-				int i;
-				
 				WFIFOW(fd,0) = 0x2b1d;
 				WFIFOW(fd,2) = 14 + data->count*sizeof(struct status_change_data);
 				WFIFOL(fd,4) = aid;
@@ -2739,7 +2776,7 @@ int parse_frommap(int fd) {
 				return 0;
 			{
 				unsigned short name;
-				int map_id, map_fd = -1, i;
+				int map_id, map_fd = -1;
 				struct online_char_data* data;
 				struct mmo_charstatus* char_data;
 
@@ -2948,7 +2985,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 12)
 				return 0;
 			{
-				int i, j;
+				int j;
 				int id = RFIFOL(fd, 2);
 				int fame = RFIFOL(fd, 6);
 				char type = RFIFOB(fd, 10);
@@ -3054,7 +3091,7 @@ int parse_frommap(int fd) {
 				return 0;
 		{
 #ifdef ENABLE_SC_SAVING
-			int count, aid, cid, i;
+			int count, aid, cid;
 			struct scdata *data;
 			aid = RFIFOL(fd, 4);
 			cid = RFIFOL(fd, 8);
