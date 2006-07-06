@@ -1017,14 +1017,6 @@ struct pet_data {
 
 enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
 
-// For equipment breaking/stripping effects
-enum {
-	EQP_WEAPON		= 1,		// Both weapons
-	EQP_ARMOR		= 2,		// Armor
-	EQP_SHIELD		= 4,		// Shield
-	EQP_HELM		= 8,		// Top-head headgear
-};
-
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
@@ -1285,9 +1277,7 @@ int map_getusers(void);
 // block削除関連
 int map_freeblock(struct block_list *bl);
 int map_freeblock_lock(void);
-//int map_freeblock_unlock(void);
-#define map_freeblock_unlock() map_freeblock_unlock_sub(__FILE__, __LINE__)
-int map_freeblock_unlock_sub(const char * file, int line);
+int map_freeblock_unlock(void);
 // block関連
 int map_addblock_sub(struct block_list *, int);
 int map_delblock_sub(struct block_list *, int);

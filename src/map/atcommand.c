@@ -3772,7 +3772,7 @@ int atcommand_refine(
 		refine = 1;
 
 	count = 0;
-	for (j = 0; j < 10; j++) {
+	for (j = 0; j < EQI_MAX-1; j++) {
 		if ((i = sd->equip_index[j]) < 0)
 			continue;
 		if(position && !(sd->status.inventory[i].equip & position))

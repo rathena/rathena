@@ -1618,15 +1618,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		);
 
 	// Parse equipment.
-	for(i=0;i<10;i++) {
+	for(i=0;i<EQI_MAX-1;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
-		if(i == 9 && sd->equip_index[8] == index)
+		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
 			continue;
-		if(i == 5 && sd->equip_index[4] == index)
+		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
 			continue;
-		if(i == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index))
+		if(i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index))
 			continue;
 		if(!sd->inventory_data[index])
 			continue;
@@ -1647,7 +1647,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			
 			if (wlv >= MAX_REFINE_BONUS) 
 				wlv = MAX_REFINE_BONUS - 1;
-			if(i == 8 && sd->status.inventory[index].equip == 0x20) {
+			if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = status->lhw;
 			} else {
@@ -1692,8 +1692,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 	}
 
-	if(sd->equip_index[10] >= 0){ // –î
-		index = sd->equip_index[10];
+	if(sd->equip_index[EQI_AMMO] >= 0){ // –î
+		index = sd->equip_index[EQI_AMMO];
 		if(sd->inventory_data[index]){		// Arrows
 			sd->state.lr_flag = 2;
 			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
@@ -1711,15 +1711,15 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	status->def += (refinedef+50)/100;
 
 	//Parse Cards
-	for(i=0;i<10;i++) {
+	for(i=0;i<EQI_MAX-1;i++) {
 		current_equip_item_index = index = sd->equip_index[i]; //We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		if(index < 0)
 			continue;
-		if(i == 9 && sd->equip_index[8] == index)
+		if(i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index)
 			continue;
-		if(i == 5 && sd->equip_index[4] == index)
+		if(i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index)
 			continue;
-		if(i == 6 && (sd->equip_index[5] == index || sd->equip_index[4] == index))
+		if(i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index))
 			continue;
 
 		if(sd->inventory_data[index]) {
@@ -1754,7 +1754,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 					if(map_flag_gvg(sd->bl.m) && data->flag.no_equip&2) 
 						continue;
 				}
-				if(i == 8 && sd->status.inventory[index].equip == 0x20)
+				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L)
 				{	//Left hand status.
 					sd->state.lr_flag = 1;
 					run_script(data->script,0,sd->bl.id,0);

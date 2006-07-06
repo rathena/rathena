@@ -40,6 +40,43 @@ enum {
 	MAX_WEAPON_TYPE
 } weapon_type;
 
+//Equip position constants
+enum {
+	EQP_HEAD_LOW = 0x0001, 
+	EQP_HEAD_MID = 0x0200, //512
+	EQP_HEAD_TOP = 0x0100, //256
+	EQP_HAND_R   = 0x0002,
+	EQP_HAND_L   = 0x0020, //32
+	EQP_ARMOR    = 0x0010, //16
+	EQP_SHOES    = 0x0040, //64
+	EQP_GARMENT  = 0x0004,
+	EQP_ACC_L    = 0x0008,
+	EQP_ACC_R    = 0x0080, //128
+	EQP_AMMO     = 0x8000, //32768
+} equip_pos_enum;
+
+#define EQP_WEAPON (EQP_HAND_R|EQP_HAND_L)
+#define EQP_SHIELD EQP_HAND_L
+#define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
+#define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
+
+//Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
+//where the arrows are equipped)
+enum {
+	EQI_ACC_L = 0,
+	EQI_ACC_R,
+	EQI_SHOES,
+	EQI_GARMENT,
+	EQI_HEAD_LOW,
+	EQI_HEAD_MID,
+	EQI_HEAD_TOP,
+	EQI_ARMOR,
+	EQI_HAND_L,
+	EQI_HAND_R,
+	EQI_AMMO,
+	EQI_MAX
+} equip_index_enum;
+
 #define pc_setdead(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 1)
 #define pc_setsit(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 2)
 #define pc_isdead(sd) ((sd)->state.dead_sit == 1)

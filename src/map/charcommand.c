@@ -777,33 +777,33 @@ charcommand_itemlist(
 					}
 					if ((equip = i_item->equip)) {
 						strcpy(equipstr, "| equiped: ");
-						if (equip & 4)
+						if (equip & EQP_GARMENT)
 							strcat(equipstr, "robe/gargment, ");
-						if (equip & 8)
+						if (equip & EQP_ACC_L)
 							strcat(equipstr, "left accessory, ");
-						if (equip & 16)
+						if (equip & EQP_ARMOR)
 							strcat(equipstr, "body/armor, ");
-						if ((equip & 34) == 2)
+						if ((equip & EQP_WEAPON) == EQP_HAND_R)
 							strcat(equipstr, "right hand, ");
-						if ((equip & 34) == 32)
+						if ((equip & EQP_WEAPON) == EQP_HAND_L)
 							strcat(equipstr, "left hand, ");
-						if ((equip & 34) == 34)
+						if ((equip & EQP_WEAPON) == EQP_WEAPON)
 							strcat(equipstr, "both hands, ");
-						if (equip & 64)
+						if (equip & EQP_SHOES)
 							strcat(equipstr, "feet, ");
-						if (equip & 128)
+						if (equip & EQP_ACC_R)
 							strcat(equipstr, "right accessory, ");
-						if ((equip & 769) == 1)
+						if ((equip & EQP_HELM) == EQP_HEAD_LOW)
 							strcat(equipstr, "lower head, ");
-						if ((equip & 769) == 256)
+						if ((equip & EQP_HELM) == EQP_HEAD_TOP)
 							strcat(equipstr, "top head, ");
-						if ((equip & 769) == 257)
+						if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP))
 							strcat(equipstr, "lower/top head, ");
-						if ((equip & 769) == 512)
+						if ((equip & EQP_HELM) == EQP_HEAD_MID)
 							strcat(equipstr, "mid head, ");
-						if ((equip & 769) == 512)
+						if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID))
 							strcat(equipstr, "lower/mid head, ");
-						if ((equip & 769) == 769)
+						if ((equip & EQP_HELM) == EQP_HELM)
 							strcat(equipstr, "lower/mid/top head, ");
 						// remove final ', '
 						equipstr[strlen(equipstr) - 2] = '\0';

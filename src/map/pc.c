@@ -57,7 +57,7 @@ struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
-static unsigned int equip_pos[11]={0x0080,0x0008,0x0040,0x0004,0x0001,0x0200,0x0100,0x0010,0x0020,0x0002,0x8000};
+static unsigned short equip_pos[EQI_MAX]={EQP_ACC_L,EQP_ACC_R,EQP_SHOES,EQP_GARMENT,EQP_HEAD_LOW,EQP_HEAD_MID,EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_AMMO};
 
 static struct gm_account *gm_account = NULL;
 static int GM_num = 0;
@@ -391,8 +391,8 @@ int pc_equippoint(struct map_session_data *sd,int n)
 		if(sd->inventory_data[n]->look == W_DAGGER	||
 			sd->inventory_data[n]->look == W_1HSWORD ||
 			sd->inventory_data[n]->look == W_1HAXE) {
-			if(ep == 2 && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN))
-				return 34;
+			if(ep == EQP_HAND_R && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN))
+				return EQP_WEAPON;
 		}
 	}
 	return ep;
@@ -446,26 +446,26 @@ int pc_setequipindex(struct map_session_data *sd)
 
 	nullpo_retr(0, sd);
 
-	for(i=0;i<11;i++)
+	for(i=0;i<EQI_MAX;i++)
 		sd->equip_index[i] = -1;
 
 	for(i=0;i<MAX_INVENTORY;i++) {
 		if(sd->status.inventory[i].nameid <= 0)
 			continue;
 		if(sd->status.inventory[i].equip) {
-			for(j=0;j<11;j++)
+			for(j=0;j<EQI_MAX;j++)
 				if(sd->status.inventory[i].equip & equip_pos[j])
 					sd->equip_index[j] = i;
-			if(sd->status.inventory[i].equip & 0x0002) {
+			if(sd->status.inventory[i].equip & EQP_HAND_R) {
 				if(sd->inventory_data[i])
 					sd->weapontype1 = sd->inventory_data[i]->look;
 				else
 					sd->weapontype1 = 0;
 			}
-			if(sd->status.inventory[i].equip & 0x0020) {
+			if(sd->status.inventory[i].equip & EQP_HAND_L) {
 				if(sd->inventory_data[i]) {
 					if(sd->inventory_data[i]->type == 4) {
-						if(sd->status.inventory[i].equip == 0x0020)
+						if(sd->status.inventory[i].equip == EQP_HAND_L)
 							sd->weapontype2 = sd->inventory_data[i]->look;
 						else
 							sd->weapontype2 = 0;
@@ -530,21 +530,21 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if (sd->sc.count) {
 			
-		if((item->equip & 0x0002 || item->equip & 0x0020) && item->type == 4 && sd->sc.data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
+		if(item->equip & EQP_WEAPON && item->type == 4 && sd->sc.data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
 			return 0;
-		if(item->equip & 0x0020 && item->type == 5 && sd->sc.data[SC_STRIPSHIELD].timer != -1) // Also works with left-hand weapons [DracoRPG]
+		if(item->equip & EQP_SHIELD && item->type == 5 && sd->sc.data[SC_STRIPSHIELD].timer != -1)
 			return 0;
-		if(item->equip & 0x0010 && sd->sc.data[SC_STRIPARMOR].timer != -1)
+		if(item->equip & EQP_ARMOR && sd->sc.data[SC_STRIPARMOR].timer != -1)
 			return 0;
-		if(item->equip & 0x0100 && sd->sc.data[SC_STRIPHELM].timer != -1)
+		if(item->equip & EQP_HELM && sd->sc.data[SC_STRIPHELM].timer != -1)
 			return 0;
 
 		if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SUPERNOVICE) {
 			//Spirit of Super Novice equip bonuses. [Skotlex]
-			if (sd->status.base_level > 90 && item->equip & 0x301)
+			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
 				return 1; //Can equip all helms
 
-			if (sd->status.base_level > 96 && item->equip & 0x022 && item->type == 4)
+			if (sd->status.base_level > 96 && item->equip & EQP_WEAPON && item->type == 4)
 				switch(item->look) { //In weapons, the look determines type of weapon.
 					case W_DAGGER: //Level 4 Knives are equippable.. this means all knives, I'd guess?
 					case W_1HSWORD: //All 1H swords
@@ -2389,7 +2389,7 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
 		sd->status.inventory[idx_equip].card[0]==0x00fe ||
 		sd->status.inventory[idx_equip].card[0]==(short)0xff00 ||
 		!(sd->inventory_data[idx_equip]->equip&ep) ||					// ? 備個所違い
-		(sd->inventory_data[idx_equip]->type==4 && ep==32) ||			// ? 手武器と盾カ?ド
+		(sd->inventory_data[idx_equip]->type==4 && ep==EQP_SHIELD) ||			// ? 手武器と盾カ?ド
 		sd->status.inventory[idx_equip].equip){
 
 		clif_insert_card(sd,idx_equip,idx_card,1);
@@ -3460,7 +3460,7 @@ int pc_checkequip(struct map_session_data *sd,int pos)
 
 	nullpo_retr(-1, sd);
 
-	for(i=0;i<11;i++){
+	for(i=0;i<EQI_MAX;i++){
 		if(pos & equip_pos[i])
 			return sd->equip_index[i];
 	}
@@ -6108,20 +6108,19 @@ int pc_cleareventtimer(struct map_session_data *sd)
  * アイテムを?備する
  *------------------------------------------
  */
-int pc_equipitem(struct map_session_data *sd,int n,int pos)
+int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 {
-	int i,nameid, arrow;
+	int i,pos;
 	struct item_data *id;
-	//?生や養子の場合の元の職業を算出する
 
 	nullpo_retr(0, sd);
 
-	nameid = sd->status.inventory[n].nameid;
 	id = sd->inventory_data[n];
-	pos = pc_equippoint(sd,n);
+	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
+
 	if(battle_config.battle_log)
-		ShowInfo("equip %d(%d) %x:%x\n",nameid,n,id->equip,pos);
-	if(!pc_isequip(sd,n) || !pos || sd->status.inventory[n].attribute==1 ) { // [Valaris]
+		ShowInfo("equip %d(%d) %x:%x\n",sd->status.inventory[n].nameid,n,id->equip,req_pos);
+	if(!pc_isequip(sd,n) || !(pos&req_pos) || sd->status.inventory[n].attribute==1 ) { // [Valaris]
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -6133,51 +6132,41 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		return 0;
 	}
 
-	if(pos==0x88){ // アクセサリ用例外?理
-		int epor=0;
-		if(sd->equip_index[0] >= 0)
-			epor |= sd->status.inventory[sd->equip_index[0]].equip;
-		if(sd->equip_index[1] >= 0)
-			epor |= sd->status.inventory[sd->equip_index[1]].equip;
-		epor &= 0x88;
-		pos = epor == 0x08 ? 0x80 : 0x08;
+	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
+		pos = req_pos&EQP_ACC;
+		if (pos == EQP_ACC) //User specified both slots.. 
+			pos = sd->equip_index[EQI_ACC_L] >= 0 ? EQP_ACC_R : EQP_ACC_L;
 	}
 
-	// 二刀流?理
-	if ((pos==0x22) // 一?、?備要求箇所が二刀流武器かチェックする
-	 &&	(id->equip==2)	// ? 手武器
-	 &&	(pc_checkskill(sd, AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN) ) // 左手修?有
-	{
-		int tpos=0;
-		if(sd->equip_index[8] >= 0)
-			tpos |= sd->status.inventory[sd->equip_index[8]].equip;
-		if(sd->equip_index[9] >= 0)
-			tpos |= sd->status.inventory[sd->equip_index[9]].equip;
-		tpos &= 0x02;
-		pos = tpos == 0x02 ? 0x20 : 0x02;
+	if(pos == EQP_WEAPON && id->equip == EQP_HAND_R &&
+		(pc_checkskill(sd, AS_LEFT) > 0 ||
+		(sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN)
+	) {	//Dual wield capable weapon.
+	  	pos = (req_pos&EQP_WEAPON);
+		if (pos == EQP_WEAPON) //User specified both slots, pick one for them.
+			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
 	}
+	
+	for(i=0;i<EQI_MAX;i++) {
 
-	arrow=pc_search_inventory(sd,pc_checkequip(sd,9));	// Added by RoVeRT
-	for(i=0;i<11;i++) {
-		if(sd->equip_index[i] >= 0 && sd->status.inventory[sd->equip_index[i]].equip&pos) {
-			pc_unequipitem(sd,sd->equip_index[i],2);
+		if(pos & equip_pos[i]) {
+			if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
+				pc_unequipitem(sd,sd->equip_index[i],2);
+
+			sd->equip_index[i] = n;
 		}
 	}
-	// 弓矢?備
-	if(pos==0x8000){
+	
+	if(pos==EQP_AMMO){
 		clif_arrowequip(sd,n);
-		clif_arrow_fail(sd,3);	// 3=矢が?備できました
+		clif_arrow_fail(sd,3);
 	}
 	else
 		clif_equipitemack(sd,n,pos,1);
 
-	for(i=0;i<11;i++) {
-		if(pos & equip_pos[i])
-			sd->equip_index[i] = n;
-	}
 	sd->status.inventory[n].equip=pos;
 
-	if(sd->status.inventory[n].equip & 0x0002) {
+	if(sd->status.inventory[n].equip & EQP_HAND_R) {
 		if(sd->inventory_data[n])
 			sd->weapontype1 = sd->inventory_data[n]->look;
 		else
@@ -6185,11 +6174,11 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 	}
-	if(sd->status.inventory[n].equip & 0x0020) {
+	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		if(sd->inventory_data[n]) {
 			if(sd->inventory_data[n]->type == 4) {
 				sd->status.shield = 0;
-				if(sd->status.inventory[n].equip == 0x0020)
+				if(sd->status.inventory[n].equip == EQP_HAND_L)
 					sd->weapontype2 = sd->inventory_data[n]->look;
 				else
 					sd->weapontype2 = 0;
@@ -6204,35 +6193,42 @@ int pc_equipitem(struct map_session_data *sd,int n,int pos)
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
-	if(sd->status.inventory[n].equip & 0x0001) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_LOW) {
 		if(sd->inventory_data[n])
 			sd->status.head_bottom = sd->inventory_data[n]->look;
 		else
 			sd->status.head_bottom = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
 	}
-	if(sd->status.inventory[n].equip & 0x0100) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_TOP) {
 		if(sd->inventory_data[n])
 			sd->status.head_top = sd->inventory_data[n]->look;
 		else
 			sd->status.head_top = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
 	}
-	if(sd->status.inventory[n].equip & 0x0200) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_MID) {
 		if(sd->inventory_data[n])
 			sd->status.head_mid = sd->inventory_data[n]->look;
 		else
 			sd->status.head_mid = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
 	}
-	if(sd->status.inventory[n].equip & 0x0040)
+	if(sd->status.inventory[n].equip & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	pc_checkallowskill(sd);	// ?備品でスキルか解除されるかチェック
-	if (itemdb_look(sd->status.inventory[n].nameid) == 11 && (arrow >= 0)){	// Added by RoVeRT
+	pc_checkallowskill(sd); //Check if status changes should be halted.
+
+
+/* WTF? pc_checkequip returns an item index, pc_search_inventory expects a 
+ * nameid as argument. This function is totally broken, so most (all?) of the
+ *  time it would return arrow == -1 anyway...?? [Skotlex]
+	arrow=pc_search_inventory(sd,pc_checkequip(sd,EQI_AMMO));	// Added by RoVeRT
+	if (itemdb_look(sd->status.inventory[n].nameid) == W_BOW && (arrow >= 0)){	// Added by RoVeRT
 		clif_arrowequip(sd,arrow);
-		sd->status.inventory[arrow].equip=32768;
+		sd->status.inventory[arrow].equip=EQP_AMMO;
 	}
+*/
 	status_calc_pc(sd,0);
 	//OnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
@@ -6284,12 +6280,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
-	for(i=0;i<11;i++) {
+	for(i=0;i<EQI_MAX;i++) {
 		if(sd->status.inventory[n].equip & equip_pos[i])
 			sd->equip_index[i] = -1;
 	}
 
-	if(sd->status.inventory[n].equip & 0x0002) {
+	if(sd->status.inventory[n].equip & EQP_HAND_R) {
 		sd->weapontype1 = 0;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
@@ -6297,29 +6293,29 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		if(sd->sc.data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
 			skill_stop_dancing(&sd->bl);
 	}
-	if(sd->status.inventory[n].equip & 0x0020) {
+	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
-	if(sd->status.inventory[n].equip & 0x0001) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_LOW) {
 		sd->status.head_bottom = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
 	}
-	if(sd->status.inventory[n].equip & 0x0100) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_TOP) {
 		sd->status.head_top = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
 	}
-	if(sd->status.inventory[n].equip & 0x0200) {
+	if(sd->status.inventory[n].equip & EQP_HEAD_MID) {
 		sd->status.head_mid = 0;
 		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
 	}
-	if(sd->status.inventory[n].equip & 0x0040)
+	if(sd->status.inventory[n].equip & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
 	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
 
-	if((sd->status.inventory[n].equip&0x0022) && 
+	if((sd->status.inventory[n].equip & EQP_WEAPON) && 
 		sd->weapontype1 == 0 && sd->weapontype2 == 0)
 		skill_enchant_elemental_end(&sd->bl,-1);
 	

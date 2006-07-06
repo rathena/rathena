@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/06
+	* Cleaned up pc_equipitem. When dual wielding or equipping accessories, if
+	  the client actually specifies one of the two positions, it will be taken
+	  into account (now, does the client actually does this?) [Skotlex]
 	* Fixed GrandCross and similar skills. [Skotlex]
 	* FogWall will now also affect the caster. [Skotlex]
 2006/07/05
