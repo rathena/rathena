@@ -8300,8 +8300,8 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	
 	nullpo_retr(0, bl);
 
-	if (bl->type == BL_MOB)
-		return 0; //Mobs have no delay other than the skill-specific delay in their skill db. [Skotlex]
+	if (bl->type&battle_config.no_skill_delay)
+		return battle_config.min_skill_delay_limit; 
 	
 	// instant cast attack skills depend on aspd as delay [celest]
 	if (time == 0) {
