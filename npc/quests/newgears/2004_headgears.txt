@@ -44,7 +44,7 @@
 //=   o yuno_in03.gat 20 18
 //=14) Alarm Mask [Muscle Man*]{Aldebaran}
 //=   o alde_alche.gat 88 180
-//=15) Drooping Kitty, Huge Leaf, Lazy Raccoon
+//=15) Drooping Kitty, Huge Leaf, Lazy Smokie
 //= 	and Blue Fish [Traveler*] {Morroc}
 //=   o morocc.gat 273 79
 //=16) Fox Mask [Nine Tail*] {Payon Dungeon}
@@ -917,11 +917,11 @@ xmas.gat,183,267,3	script	Pretty Lindsay	793,{
 		mes "Haya, yah!";
 		next;
 		misceffect 261;
-		mes "^FF0000Lindsay put the Racoon Hat on the ground,";
+		mes "^FF0000Lindsay put the RaccoonHat on the ground,";
 		mes "and place the Smokie Leaf on top of it.";
 		mes "Then she say something that none could understand its meaning.";
 		mes "There's a bright glitter,";
-		mes "and the fur of the Racoon Hat slowly turns into blue color.";
+		mes "and the fur of the RaccoonHat slowly turns into blue color.";
 		mes "And finally, the shape of Smokie turns into Otter.";
 		next;
 		mes "[Pretty Lindsay]";
@@ -960,12 +960,12 @@ xmas.gat,183,267,3	script	Pretty Lindsay	793,{
 		next;
 		mes "[Pretty Lindsay]";
 		mes "However, production of ^4D4DFFSea-Otter Hat^000000 requires,";
-		mes "^0000FFRacoon Hat^000000 x1 ^0000FFSmokie Leaf^000000 x1";
+		mes "^0000FFRaccoonHat^000000 x1 ^0000FFSmokie Leaf^000000 x1";
 		mes "So, if you want to get a Sea-Otter Hat, brother,";
 		mes "just bring along the materials,";
 		mes "and Lindsay will make it for you immediately.";
 		next;
-		switch(select("I will come again when I have collected them.:Yo..why Racoon Hat?")) {
+		switch(select("I will come again when I have collected them.:Yo..why RaccoonHat?")) {
 		case 1:
 		  mes "[Pretty Lindsay]";
 		  mes "Hmm~ Come back soon~";
@@ -978,9 +978,9 @@ xmas.gat,183,267,3	script	Pretty Lindsay	793,{
 		  mes "Hmm. .That's because. . . secrets.. .";
 		  next;
 		  mes "[Pretty Lindsay]";
-		  mes "When you place Smokie Leaf with Racoon Hat,";
+		  mes "When you place Smokie Leaf with RaccoonHat,";
 		  mes "and say the spell,";
-		  mes "according to what my mom had taught, the Racoon Hat will";
+		  mes "according to what my mom had taught, the RaccoonHat will";
 		  mes "^003063Bang!!^000000 and turn into Sea-Otter Hat.";
 		  next;
 		  mes "[Pretty Lindsay]";
@@ -2019,7 +2019,7 @@ alde_alche.gat,95,184,3	script	#Masked Alarm4	1193,{ end;
 OnBlast:
 misceffect 106;
 end; }
-//Morocc /= Drooping Kitty, Huge Leaf, Lazy Raccoon and Blue Fish =/
+//Morocc /= Drooping Kitty, Huge Leaf, Lazy Smokie and Blue Fish =/
 morocc.gat,273,79,4	script	Traveler	99,{
 	function creation_lines {
 	 	mes "[Human]";
@@ -2146,7 +2146,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 			  mes "If you bring it to me, I will make the headgear for you.";
 			  close;
 			}
-		case 3: //Lazy Raccoon [5084]
+		case 3: //Lazy Smokie [5084]
 		  if (countitem(1026)>999 && countitem(7065)>99 && countitem(945)>9 && countitem(7030)) {
 				delitem 1026,1000;
 				delitem 7065,100;
@@ -2157,7 +2157,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 				close;
 			} else {
 			  mes "[Human]";
-			  mes "Ah, so you want the Lazy Raccoon.";
+			  mes "Ah, so you want the Lazy Smokie.";
 			  mes "Well,";
 			  mes "I can make that for you,";
 			  mes "but you will have to";
