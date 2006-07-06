@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Payon
+//= Quest NPCs related to Payon
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 

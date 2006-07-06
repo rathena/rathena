@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Morroc
+//= Quest NPCs related to Morroc
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 

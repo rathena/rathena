@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Lighthalzen
+//= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
 //===== Current Version: ===================================== 

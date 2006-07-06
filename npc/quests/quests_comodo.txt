@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Comodo
+//= Quest NPCs related to Comodo
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 

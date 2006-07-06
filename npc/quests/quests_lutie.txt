@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Lutie
+//= Quest NPCs related to Lutie
 //===== By: ================================================== 
 //= TonyMan
 //===== Current Version: ===================================== 

@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Aldebaran 
+//= Quest NPCs related to Aldebaran 
 //===== By: ================================================== 
-//=
+//= eAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 

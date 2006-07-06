@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Items Quest NPC's located in Alberta
+//= Quest NPCs related to Alberta
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 

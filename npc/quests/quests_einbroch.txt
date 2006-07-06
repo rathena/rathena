@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
-//= Quests NPCs located in Einbrochjhgfdsa
+//= Quest NPCs related to Einbroch
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 

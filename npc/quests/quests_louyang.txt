@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Louyang
+//= Quest NPCs related to Louyang
 //===== By: ================================================== 
-//= Evera
+//= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 

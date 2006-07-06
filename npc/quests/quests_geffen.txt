@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Item Quest NPCs located in Geffen
+//= Quest NPCs related to Geffen
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 

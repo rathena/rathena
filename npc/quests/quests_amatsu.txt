@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Quests NPCs related to Amatsu City
+//= Quest NPCs related to Amatsu
 //===== By: ================================================== 
 //= eAthena team & others? & MasterOfMuppets
 //===== Current Version: ===================================== 

@@ -1,7 +1,7 @@
 //===== eAthena Script ======================================= 
-//= Quests NPCs located in Niflheim
+//= Quest NPCs related to Niflheim
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
@@ -9,7 +9,7 @@
 //===== Description: ========================================= 
 //= Book of Devil and Piano Key quest
 //===== Additional Comments: ================================= 
-//= 1.0 Initial release, moved Book of Devil and Piano quest from npc/cities/niflheim.txt
+//= 1.0 Initial release, moved Book of Devil and Piano quest from npc/cities/niflheim.txt [Evera]
 //============================================================ 
 
 //=============================================================

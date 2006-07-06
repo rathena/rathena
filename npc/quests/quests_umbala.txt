@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Quests NPCs related to Umbala City
+//= Quest NPCs related to Umbala
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 

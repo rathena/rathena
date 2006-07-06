@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Quests NPCs located in Yuno City
+//= Quest NPCs related to Yuno
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
