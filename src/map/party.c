@@ -203,7 +203,6 @@ int party_recv_info(struct party *sp)
 	if (!p->party.party_id) //party just received.
 		party_check_member(sp);
 	memcpy(&p->party,sp,sizeof(struct party));
-	p->count = 0;
 	memset(&p->state, 0, sizeof(p->state));
 	memset(&p->data, 0, sizeof(p->data));
 	for(i=0;i<MAX_PARTY;i++){
@@ -214,7 +213,6 @@ int party_recv_info(struct party *sp)
 			&& sd->status.char_id == p->party.member[i].char_id
 			&& !sd->state.waitingdisconnect)
 			p->data[i].sd = sd;
-		p->count++;
 	}
 	party_check_state(p);
 	for(i=0;i<MAX_PARTY;i++){
@@ -389,7 +387,6 @@ int party_member_leaved(int party_id,int account_id,int char_id)
 				clif_party_leaved(p,sd,account_id,p->party.member[i].name,0x00);
 				memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
 				memset(&p->data[i], 0, sizeof(p->data[0]));
-				p->count--;
 				break;
 			}
 	}

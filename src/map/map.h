@@ -474,10 +474,8 @@ struct party_member_data {
 struct party_data {
 	struct party party;
 	struct party_member_data data[MAX_PARTY];
-	unsigned char count; //Online count of members.
 	unsigned char itemc; //For item distribution.
 	struct {
-		unsigned family : 1; //Is this party a family?
 		unsigned monk : 1; //There's at least one monk in party?
 		unsigned sg : 1;	//There's at least one Star Gladiator in party?
 		unsigned snovice :1; //There's a Super Novice
@@ -861,7 +859,7 @@ struct spawn_data {
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
 	struct {
 		unsigned size :2; //Holds if mob has to be tiny/large
-		unsigned ai :1;	//Holds if mob is special ai.
+		unsigned ai :2;	//Holds if mob is special ai.
 	} state;
 	char name[NAME_LENGTH],eventname[50]; //Name/event
 };

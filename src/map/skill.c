@@ -3173,7 +3173,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case NJ_BAKUENRYU: //Doesn't works on the default because it is enemy-targetted.
 			return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 		default:
-			if (src == bl && skill_get_unit_flag(skillid)) //Skill is actually ground placed.
+			if (src == bl && skill_get_unit_id(skillid,0)) //Skill is actually ground placed.
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
@@ -6634,8 +6634,6 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		}
 		break;
 	case UNT_FOGWALL:
-		if (sg->src_id==bl->id)
-			return 0;
 		if (sc && sc->data[type].timer==-1)
 		{
 			sc_start4(bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);
