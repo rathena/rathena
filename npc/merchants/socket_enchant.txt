@@ -3,14 +3,14 @@
 //===== By: ==================================================
 //= Sousuke_PL
 //===== Current Version: =====================================
-//= 0.1
+//= 0.1a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= item loses all element refinement and upgrades but
 //= cards too?
 //===== Additional Comments: =================================
-//= 0.1
+//= 0.1a added missing L_No: to 2 funcs [Lupus]
 //============================================================
 
 
@@ -512,9 +512,6 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
            set @newitem,5165;
            callfunc "f_armor_s2";
 
-
-
-
 //============================================================
 //= Other
 //============================================================
@@ -522,11 +519,6 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
   L_Not:
       mes "[Socket Enchant]";
       mes "Bye~!";
-      close;
-
-  L_No:
-      mes "[Socket Enchant]";
-      mes "Ok, Bye.";
       close;
 
 }
@@ -582,7 +574,12 @@ function	script	addslot	{
       mes "[Socket Enchant]";
       mes "Sorry, but i could't upgrade it.";
       close;
-      
+
+  L_No:
+      mes "[Socket Enchant]";
+      mes "Ok, Bye.";
+      close;
+     
 }
 
 //============================================================
@@ -634,6 +631,11 @@ function	script	addslot2	{
   L_Fail:
       mes "[Socket Enchant]";
       mes "Sorry, but i could't upgrade it.";
+      close;
+
+  L_No:
+      mes "[Socket Enchant]";
+      mes "Ok, Bye.";
       close;
 
 }
