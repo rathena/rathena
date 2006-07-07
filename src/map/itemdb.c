@@ -134,7 +134,9 @@ int itemdb_group (int nameid)
  */
 struct item_data* itemdb_exists(int nameid)
 {
-	struct item_data* id = idb_get(item_db,nameid);
+	struct item_data* id;
+	if (!nameid) return NULL;
+	id = idb_get(item_db,nameid);
 //	if (id == &dummy_item) return NULL; //Let dummy items go through... technically they "exist" because someone already has them...
 	return id;
 }
