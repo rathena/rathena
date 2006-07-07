@@ -24,7 +24,7 @@
 prt_church.gat,184,41,4	script	Father Mareusis	60,{
 	callfunc "F_ToHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"Father Mareusis";
 	mes "[Father Mareusis]";
-	if(BaseJob==Job_Novice && job_acolyte_q > 0) goto L_Check;
+	if(BaseJob == Job_Novice && job_acolyte_q > 0) goto L_Check;
 	mes "What is it you are looking for?";
 	next;
 	menu "Father, I want to become an Acolyte.",M_0,"The Requirements.",M_1,"I'm just looking around that's all",M_End;
@@ -176,8 +176,8 @@ L_Check:
 // -- Father Rubalkabara --
 prt_fild03.gat,365,259,2	script	Father Rubalkabara	110,{
 	mes "[Father Rubalkabara]";
-	if(BaseJob==Job_Acolyte || BaseJob==Job_Priest) callfunc "F_FatherRub";
-	if(BaseJob==Job_Novice) goto L_Novice;
+	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_FatherRub";
+	if(BaseJob == Job_Novice) goto L_Novice;
 
 L_Other:
 	mes "Oh.. Have you come here to train Or are you just a Wanderer..?";
@@ -237,7 +237,7 @@ L_Start:
 // -- Mother Marthilda --
 moc_fild07.gat,36,354,4	script	Mother Marthilda	79,{
 	mes "[Mother Marthilda]";
-	if(BaseJob == Job_Acolyte || BaseJob==Job_Priest) callfunc "F_MotherMart";
+	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_MotherMart";
 	if(BaseJob == Job_Novice) goto L_Novice;
 
 L_Other:
@@ -292,7 +292,7 @@ L_Start:
 // -- Father Yosuke --
 prt_fild00.gat,208,218,6	script	Father Yosuke	120,{
 	mes "[Father Yosuke]";
-	if(BaseJob == Job_Acolyte || BaseJob==Job_Priest) callfunc "F_FatherYos";
+	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_FatherYos";
 	if(BaseJob == Job_Novice) goto L_Novice;
 
 L_Other:

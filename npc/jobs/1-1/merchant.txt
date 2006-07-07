@@ -25,10 +25,10 @@
 alberta_in.gat,53,43,6	script	Chief Mahnsoo	86,{
 	callfunc "F_ToHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"Chief Mahnsoo";
 	mes "[Chief Mahnsoo]";
-	if(BaseJob==Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
-	if(BaseJob==Job_Novice && job_merchant_q3 == 3) goto L_GiveRecpt;
-	if(BaseJob==Job_Novice && job_merchant_q3 == 5) goto L_Failed;
-	if(BaseJob==Job_Novice && job_merchant_q2 > 0) goto L_Back;
+	if(BaseJob == Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
+	if(BaseJob == Job_Novice && job_merchant_q3 == 3) goto L_GiveRecpt;
+	if(BaseJob == Job_Novice && job_merchant_q3 == 5) goto L_Failed;
+	if(BaseJob == Job_Novice && job_merchant_q2 > 0) goto L_Back;
 
 	mes "What brings you here? Something on your mind?";
 M_Menu:
@@ -37,7 +37,7 @@ M_Menu:
 
      	M_0:
 
-     		if(BaseJob==Job_Merchant) {
+     		if(BaseJob == Job_Merchant) {
 			mes "[Chief Mahnsoo]";
 			mes "Huh? What did you say? You noodle head! Take a good look at yourself.  Your ALREADY A MERCHANT!  Good lord!";
 			emotion e_what;
@@ -401,7 +401,7 @@ L_Failed:
 
 // -- Wharehouse Manager Kay --
 alberta_in.gat,28,29,2	script	Merchant Guildsman	83,{
-	if(BaseJob==Job_Novice && job_merchant_q3 > 0) goto L_Check;
+	if(BaseJob == Job_Novice && job_merchant_q3 > 0) goto L_Check;
 
 	mes "[Wharehouse Manager Kay]";
 	mes "Hey~ What brings you here?";
@@ -410,7 +410,7 @@ alberta_in.gat,28,29,2	script	Merchant Guildsman	83,{
 
 	M_0:
 		mes "[Wharehouse Manager Kay]";
-		if(BaseJob!=0) goto L_NotNov;
+		if(BaseJob != Job_Novice) goto L_NotNov;
 		if(job_merchant_q==0) goto L_NotRdy;
 		mes "You're ^0000cc"+ strcharinfo(0) +"^000000, right?  Ok I'll give you a product to deliver.  First I'll need the destination";
 		next;
@@ -721,7 +721,7 @@ L_WrongDest:
 // -- Kafra(Prontera) --
 prontera.gat,248,42,8	script	Kafra#01	115,{
 	cutin "kafra_03",2;
-	if(BaseJob==Job_Novice && job_merchant_q3>0) goto L_Start;
+	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 L_Other:
 	mes "[Kafra]";
 	mes "Hello.  I am a Kafra Service Agent.  As you can see, the ^3355FFSwordsman Association^000000 has moved to Izlude.";
@@ -828,7 +828,7 @@ L_WrongDest:
 // -- Guild Staff --
 geffen_in.gat,155,122,4	script	Guild Staff	47,{
 
-	if(BaseJob==Job_Novice && job_merchant_q3>0) goto L_Start;
+	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 L_Other:
 	mes "[Guild Staff]";
 	mes "It should be arriving any time now...... it seems to be late.... Hmm...";
@@ -898,7 +898,7 @@ L_WrongProd:
 
 // -- Dyer's Student --
 morocc_in.gat,140,102,4	script	Dyer's Student	86,{
-	if(BaseJob==Job_Novice && job_merchant_q3>0) goto L_Start;
+	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 
 L_Other:
 	mes "[Dyer's Student]";

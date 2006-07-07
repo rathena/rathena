@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -30,8 +30,8 @@
 //==================================
 yuno_in02.gat,38,61,4	script	Magic Academy Headmaster 	743,{
 	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_Professor,"Professor","Keiron";
-	if(BaseJob == 16) goto L_Menu3_3;
-	if(BaseJob != 2) goto L_Menu2_1;
+	if(BaseJob == Job_Sage) goto L_Menu3_3;
+	if(BaseJob != Job_Mage) goto L_Menu2_1;
 	if(SAGE_Q == 11) goto L_Menu3_1;
 	if(SAGE_Q >= 3) goto L_Menu2_2;
 	mes "[Keiron]";
@@ -160,8 +160,8 @@ L_Menu3_3:
 //Biotech Lab
 //===============================
 yuno_in03.gat,244,31,3	script	Physics Professor	120,{
-	if(BaseJob == 16) goto L_Menu3_2;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu3_2;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu3_1;
 	if(SAGE_Q2 == 8) goto L_Menu2_1;
 	if(SAGE_Q2 == 9) goto L_Menu2_3;
@@ -571,8 +571,8 @@ L_Menu3_2:
 //==================================
 
 yuno_in03.gat,32,102,0	script	Biology Professor	755,{
-	if(BaseJob == 16) goto L_Menu5_4;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu5_4;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu5_3;
 	if((SAGE_Q2 >= 1) && (SAGE_Q2 <= 3)) goto L_Menu3_1;
 	if((SAGE_Q2 >= 4) && (SAGE_Q2 <= 6)) goto L_Menu4_1;
@@ -942,8 +942,8 @@ L_Menu5_4:
 yuno_in03.gat,154,35,4	script	Academy Staff	742,{
 	callfunc "F_BlockHigh",26,"High Mage",40,"Professor","Mathias";
 
-	if(BaseJob == 16) goto L_Menu6_4;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu6_4;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu6_3;
 	if(SAGE_Q >= 4) goto L_Menu6_2;
 	if(SAGE_Q == 3) goto L_Menu6_1;
@@ -1227,8 +1227,8 @@ L_Menu6_4:
 }
 
 yuno_in03.gat,169,180,4	script	Test Professor	755,{
-	if(BaseJob == 16) goto L_Menu4_5;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu4_5;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 5) goto L_Menu2_1;
 	if(SAGE_Q == 6) goto L_Menu2_3;
 	if(SAGE_Q == 7) goto L_Menu3_1;
@@ -1372,8 +1372,8 @@ L_Menu4_5:
 }
 
 yuno_in03.gat,62,176,3	script	History Professor	109,{
-	if(BaseJob == 16) goto L_Menu2_2;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu2_2;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu2_1;
 	mes "[Sapien]";
 	mes "You don't seem sure of your intended direction of study.";
@@ -1415,8 +1415,8 @@ L_Menu2_2:
 }
 
 yuno_in03.gat,105,177,4	script	Placement Test Professor	754,{
-	if(BaseJob == 16) goto L_Menu3_4;
-	if(BaseJob != 2) goto L_Menu1_1;
+	if(BaseJob == Job_Sage) goto L_Menu3_4;
+	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu3_3;
 	if(SAGE_Q >= 6) goto L_Menu3_2;
 	if(SAGE_Q == 3) goto L_Menu1_2;

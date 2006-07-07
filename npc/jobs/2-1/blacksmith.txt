@@ -242,7 +242,7 @@ L_Change:
 //<=============================================== Geshupenschte: 1st, 2nd, 3rd Test ===================================================>\\
 ein_in01.gat,201,27,4	script	Geshupenschte	63,{
 
-	if(BaseJob==5) goto L_merchant;
+	if(BaseJob == Job_Merchant) goto L_merchant;
 	mes "[Geshupenschte]";
 	mes "Hello sir! I'm the blacksmith.  Geshupenschte! Nice to meet you!";
 	next;

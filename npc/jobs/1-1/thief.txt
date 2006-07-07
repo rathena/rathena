@@ -157,8 +157,6 @@ M_Menu:
 		next;
 		mes "[Thief Guide]";
 		mes "   This sounds easy but ^009900do know, there are Monsters who guard Mushrooms^000000?";
-				// had to leave the engrish in, it was to good not too.  d^_^b
-				// And I took it out.  :D  [KillerBox]
 		mes "   Stop reading Fairy Tales and ^FF0000brace up your nerves; this will be the toughest experience ever^000000.";
 		next;
 		mes "[Thief Guide]";
@@ -244,8 +242,8 @@ M_Menu:
 // -- Test Grader --
 moc_prydb1.gat,42,133,2	script	Comrade Brad	118,{
 	callfunc "F_ToHigh",Job_Thief_High,"Thief High",Job_Assassin_Cross,"Brad";
-	if(BaseJob == 0) goto L_Novice;
-	if(BaseJob == 6) goto L_Thief;
+	if(BaseJob == Job_Novice) goto L_Novice;
+	if(BaseJob == Job_Thief) goto L_Thief;
 
 L_Other:
 	mes "[Brad]";
@@ -338,8 +336,8 @@ L_4:
 
 // -- Irrelevant Man --
 moc_ruins.gat,141,125,3	script	Irrelevant Man	118,{
-	if(BaseJob == 6) goto L_Thief;
-	if(BaseJob == 0) goto L_Novice;
+	if(BaseJob == Job_Thief) goto L_Thief;
+	if(BaseJob == Job_Novice) goto L_Novice;
 
 L_Other:
 	if(@s_flag==1) goto L_1b;

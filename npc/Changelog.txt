@@ -39,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/05
+	* Went trough all scripts and turned all job numbers -> constants [Lupus]
+07/05
 	* fixed missing labels socket_enchant.txt [Lupus]
 	* Standardized NPCs quest/quests_city headers, now says 'Quest NPCs related to'
 	- Also fixed typos in those NPC city headers [Evera]

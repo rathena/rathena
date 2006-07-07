@@ -36,13 +36,13 @@ hu_in01.gat,386,374,4	script	Hunter Sharon	727,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Sniper,"Sniper","Hunter Sharon";
 
 	mes "[Hunter Sharon]";
-	if(BaseJob==Job_Archer) goto L_Start;
-	if(BaseJob==Job_Novice){
+	if(BaseJob == Job_Archer) goto L_Start;
+	if(BaseJob == Job_Novice){
 		mes "What's a novice like you doing here? Leave, we have nothing for you.";
 		emotion e_what;
 		close;
 	}
-	if(BaseJob==Job_Hunter){
+	if(BaseJob == Job_Hunter){
 		mes "What up! "+strcharinfo(0)+" Why did you come back? Falcon run away or something? Te hehe.";
 		emotion e_heh;
 		next;

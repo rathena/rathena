@@ -663,7 +663,7 @@ function	script	F_RogueTest3	{
 	mes "[???]";
 	mes "Who's there?!!!";
 	mes "Who dares to trespass on my territory?";
-	if(BaseJob!=Job_Thief || ROGUE_Q<3 || ROGUE_Q2==0) close;
+	if(BaseJob != Job_Thief || ROGUE_Q<3 || ROGUE_Q2==0) close;
 
 	deletearray @choice$[1], 4;
 	next;

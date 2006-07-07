@@ -71,7 +71,7 @@ L1:
 }
 //= 1st quest NPC, asks for Items and/or money, then passes you onto the next NPC
 job_duncer.gat,43,93,4	script	Aire	724,{
-	if ((BaseJob == Job_Archer) && (Sex == 0)) goto Larcher;
+	if (BaseJob == Job_Archer && Sex == 0) goto Larcher;
 	if (BaseJob == Job_Dancer) goto Ldancer;
 	if (Upper==1) goto LUpper1;
 	mes "[Aire]";
@@ -320,7 +320,7 @@ LUpper1:
 }
 //= 2nd "Quest" and Job changer for after the 3rd Quest
 job_duncer.gat,95,93,4	script	Bijou	101,{
-	if ((BaseJob == Job_Archer) && (Sex == 0)) goto LArcher;
+	if (BaseJob == Job_Archer && Sex == 0) goto LArcher;
 	if (BaseJob == Job_Dancer) goto LDancer;
 	mes "[Bijou]";
 	mes "Welcome to our Dance Theater, there are many dancers around here.";

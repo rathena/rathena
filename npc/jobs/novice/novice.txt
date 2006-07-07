@@ -28,7 +28,7 @@ new_1-1.gat,66,114,4	script	Bulletin Board	111,{
 }
 
 new_1-1.gat,53,114,4	script	Shion	727,{
-	if(BaseJob != 0 || Upper==1) goto L_Fail;
+	if(BaseJob != Job_Novice || Upper==1) goto L_Fail;
 	switch (NEW_MES_FLAG0) {
 	case 0:	mes "[Shion]";
 		mes "Hello there~";
@@ -237,7 +237,7 @@ new_1-1.gat,144,107,2	script	Guard#02	105,{
 
 //Receptionist
 new_1-2.gat,100,29,4	script	Receptionist	86,{
-	if(BaseJob != 0 || Upper==1) goto L_Fail;
+	if(BaseJob != Job_Novice || Upper==1) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
 	mes "You are at the entrance";

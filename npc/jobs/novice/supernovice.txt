@@ -25,7 +25,7 @@
 aldeba_in.gat,223,167,3	script	Tozel	709,{
 	if(SUPNOV_Q == 1) goto L_Start2;
 	if(BaseJob == Job_SuperNovice) goto L_Twice;
-	if(BaseJob != 0 || Upper==1) goto L_Otherjob;
+	if(BaseJob != Job_Novice || Upper==1) goto L_Otherjob;
 	mes "[Tozel]";
 	mes "Hello, Novice!";
 	mes "Are you enjoying yourself as a novice, the preferred class of the common man?";
@@ -181,7 +181,7 @@ L_Otherjob:
 // -- Totaly Useless :) --
 aldeba_in.gat,216,169,5	script	Serei	86,{
 	if(BaseJob == Job_SuperNovice) goto L_Supernovice;
-	if(BaseJob != 0) goto L_Otherjob;
+	if(BaseJob != Job_Novice) goto L_Otherjob;
 	mes "[Serei]";
 	mes "You're pretty common.";
 	mes "A common man should live a happy life.";
