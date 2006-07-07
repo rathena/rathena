@@ -2595,11 +2595,16 @@ int parse_frommap(int fd) {
 			if (
 				(character = idb_get(online_char_db, aid)) != NULL &&
 				character->char_id == cid)
+				; //Temporary debug. Set chars online and save.
+			else {
+				ShowWarning("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d). Setting char online.\n", aid, cid);
+				set_char_online(id, cid, aid);
+			}
+
 			{
 				memcpy(&char_dat, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
 				mmo_char_tosql(cid, &char_dat);
-			} else 
-				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d)!\n", aid, cid);
+			}
 
 			if (RFIFOB(fd,12)) //Flag? Set character offline after saving [Skotlex]
 				set_char_offline(cid, aid);
