@@ -175,13 +175,13 @@ L_Done:
 // -- Warp to test room --
 izlude_in.gat,62,170,0	script	w1039	45,1,1,{
 	if(BaseJob == Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
-	if(job_sword_q == 0) doevent "Swordsman::OnStart";
+	if(job_sword_q == 0) doevent "Swordsman#02::OnStart";
 	end;
 }
 
 // -- Swordsman --
 izlude_in.gat,65,171,5	script	Swordsman#01	85,{
-	doevent "Swordsman::OnStart";
+	doevent "Swordsman#02::OnStart";
 	end;
 }
 
