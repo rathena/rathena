@@ -1694,7 +1694,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	if(sd->equip_index[EQI_AMMO] >= 0){ // –î
 		index = sd->equip_index[EQI_AMMO];
-		if(sd->inventory_data[index]){		// Arrows
+		//FIXME: The equip check is a temporary measure until a speed exploit
+		// that has yet to be fixed!
+		if(sd->inventory_data[index] && sd->status.inventory[index].equip&EQP_AMMO){		// Arrows
 			sd->state.lr_flag = 2;
 			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
