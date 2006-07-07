@@ -2648,8 +2648,10 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	{
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
 		//Since mode changed, reset their state.
-		unit_stop_attack(bl);
-		unit_stop_walking(bl,0);
+		if (!(status->mode&MD_CANATTACK))
+			unit_stop_attack(bl);
+		if (!(status->mode&MD_CANMOVE))
+			unit_stop_walking(bl,0);
 	}
 
 // No status changes alter these yet.
