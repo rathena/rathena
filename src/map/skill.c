@@ -3673,18 +3673,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
-	case SG_SUN_WARM:
-	case SG_MOON_WARM:
-	case SG_STAR_WARM:
-	{
-		struct skill_unit_group *sg;
-		if (!tsc) break;
-		sg = skill_unitsetting(bl,skillid,skilllv,src->x,src->y,0);
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv)));
-		break;
-	}
-
 	case CG_MOONLIT:		/* 月明りの泉に落ちる花びら */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (sd && battle_config.player_skill_partner_check &&
@@ -6015,24 +6003,37 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 
 	// Plant Cultivation [Celest]
 	case CR_CULTIVATION:
-		{
-			if (sd) {
-				int i = skilllv - 1;
-				int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
-				if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
-					sd->status.inventory[j].amount < skill_db[skillid].amount[i]) {
-					clif_skill_fail(sd,skillid,0,0);
-					return 1;
-				}
-				pc_delitem(sd,j,skill_db[skillid].amount[i],0);
-				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
-				if (rand()%100 < 50)
-					mob_once_spawn(sd, "this", x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
-				else
-					clif_skill_fail(sd,skillid,0,0);
+		if (sd) {
+			int i = skilllv - 1;
+			int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
+			if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
+				sd->status.inventory[j].amount < skill_db[skillid].amount[i]) {
+				clif_skill_fail(sd,skillid,0,0);
+				return 1;
 			}
+			pc_delitem(sd,j,skill_db[skillid].amount[i],0);
+			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
+			if (rand()%100 < 50)
+				mob_once_spawn(sd, "this", x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
+			else
+				clif_skill_fail(sd,skillid,0,0);
 		}
 		break;
+	case SG_SUN_WARM:
+	case SG_MOON_WARM:
+	case SG_STAR_WARM:
+		{
+			struct skill_unit_group *sg;
+			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+			clif_skill_nodamage(src,src,skillid,skilllv,
+				sc_start4(src,SkillStatusChangeTable(skillid),
+					100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv)));
+		}
+		break;
+	default:
+		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
+		map_freeblock_unlock();
+		return 1;
 	}
 
 	if (sc && sc->data[SC_MAGICPOWER].timer != -1)

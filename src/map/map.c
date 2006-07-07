@@ -1706,7 +1706,6 @@ void map_quit_ack(struct map_session_data *sd) {
 	if (sd && sd->state.finalsave) {
 		idb_remove(pc_db,sd->status.account_id);
 		aFree(sd);
-		ShowDebug("Final Save Ack for character %d:%d\n", sd->status.account_id, sd->status.char_id);
 	}
 }
 
