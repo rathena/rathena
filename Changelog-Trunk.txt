@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/07
+	* Now, when the login-char connection is cut, the char-server won't set
+	  everyone offline on reconnect, instead it will send the list of online
+	  accounts to the login server. [Skotlex]
 	* Modified the error on the char-sql server to set chars online when it
 	  receives a save packet from a character tagged as offline (until it can be
 	  figured out why this is happening) [Skotlex]

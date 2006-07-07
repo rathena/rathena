@@ -1826,6 +1826,8 @@ static int char_delete(struct mmo_charstatus *cs) {
 	return 0;
 }
 
+int send_accounts_tologin(int tid, unsigned int tick, int id, int data);
+
 int parse_tologin(int fd) {
 	int i;
 	struct char_session_data *sd;
@@ -1862,8 +1864,15 @@ int parse_tologin(int fd) {
 				exit(1);
 			} else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
-				if (kick_on_disconnect)
-					set_all_offline();
+//				Don't set them offline as there's no packet to tell the map server
+//				to kick everyone out. Also, a disconnection from the login server is
+//				NOT something serious to the data integrity as a char-map disconnect
+//				is. [Skotlex]
+//				if (kick_on_disconnect)
+//					set_all_offline();
+//				However, on reconnect, DO send our connected accounts to login.
+				send_accounts_tologin(-1, gettick(), 0, 0);
+
 				// if no map-server already connected, display a message...
 				for(i = 0; i < MAX_MAP_SERVERS; i++)
 					if (server_fd[i] >= 0 && server[i].map[0]) // if map-server online and at least 1 map
