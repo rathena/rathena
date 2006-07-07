@@ -36,7 +36,7 @@ struct accreg {
 	struct global_reg reg[ACCOUNT_REG_NUM];
 };
 
-int party_share_level = 10;
+unsigned int party_share_level = 10;
 int kick_on_disconnect = 1;
 
 // 送信パケット長リスト
@@ -209,9 +209,7 @@ int inter_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "kick_on_disconnect") == 0) {
 			kick_on_disconnect = atoi(w2);
 		} else if (strcmpi(w1, "party_share_level") == 0) {
-			party_share_level = atoi(w2);
-			if (party_share_level < 0)
-				party_share_level = 0;
+			party_share_level = (unsigned int)atof(w2);
 		} else if (strcmpi(w1, "inter_log_filename") == 0) {
 			strncpy(inter_log_filename, w2, sizeof(inter_log_filename));
 		} else if(strcmpi(w1,"log_inter")==0) {

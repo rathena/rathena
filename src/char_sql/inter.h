@@ -18,7 +18,7 @@ int inter_log(char *fmt,...);
 
 #define inter_cfgName "conf/inter_athena.conf"
 
-extern int party_share_level;
+extern unsigned int party_share_level;
 extern int kick_on_disconnect; //For deciding whether characters are kicked or not on reconnections. [Skotlex]
 extern char inter_log_filename[1024];
 

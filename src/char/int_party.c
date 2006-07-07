@@ -35,7 +35,8 @@ int mapif_party_optionchanged(int fd,struct party *p, int account_id, int flag);
 
 //Updates party's level range and unsets even share if broken.
 static int int_party_check_lv(struct party_data *p) {
-	int i,lv;
+	int i;
+	unsigned int lv;
 	p->min_lv = UINT_MAX;
 	p->max_lv = 0;
 	for(i=0;i<MAX_PARTY;i++){
@@ -58,7 +59,8 @@ static int int_party_check_lv(struct party_data *p) {
 //Calculates the state of a party.
 static void int_party_calc_state(struct party_data *p)
 {
-	int i, lv;
+	int i;
+	unsigned int lv;
 	p->min_lv = UINT_MAX;
 	p->max_lv = 0;
 	p->party.count =
