@@ -40,7 +40,7 @@ Date		Added
 ======
 07/07
 	* Fixed a small bug in the swordsman job quest [MasterOfMuppets]
-	- thanks to Belle for notifying me about it.
+	- thanks to tenshi7angel for notifying me about it.
 	* Small fix in the Blacksmith Quest [Playtester]
 07/05
 	* Fixed Dancer Job Quest (3rd part) thx2Alis [Lupus]
