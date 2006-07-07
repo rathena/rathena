@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/05
+	* Fixed Dancer Job Quest (3rd part) thx2Alis [Lupus]
 	* Went trough all scripts and turned all job numbers -> constants [Lupus]
 07/05
 	* fixed missing labels socket_enchant.txt [Lupus]

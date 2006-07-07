@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Script check #1. [Lance]
+//= 2.2 Fixed unpassable part, thx2 Alis [Lupus]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -680,25 +681,24 @@ Ljobchange:
 	close;
 
 }
+
 //=Start of the 3rd quest is here, once complete you go back to Bijou to change job
 job_duncer.gat,32,152,6	script	Guide::dancew	69,{
 	end;
-OnWarp:
+	OnWarp:
 	warpwaitingpc "job_duncer.gat",70,112,1;
 	disablewaitingroomevent;
-	doevent "jobDq::OnStart";
+	       initnpctimer "jobDq";
 	end;
 OnInit:
 	waitingroom "Dance lesson waiting room",20,"dancew::OnWarp",1;
 	end;
 }
+
 job_duncer.gat,0,0,0	script	jobDq	-1,{
 	end;
 
 OnStart:
-	attachnpctimer;
-	initnpctimer;
-	end;
 
 OnTimer1000:
 	mapannounce "job_duncer.gat","Bijou: The test begins, Total time allowed is 1 minute.",8;
