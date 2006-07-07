@@ -382,6 +382,10 @@ int chrif_changemapserverack(int fd)
 		return 0;
 	}
 	clif_changemapserver(sd, (char*)mapindex_id2name(RFIFOW(fd,18)), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28));
+
+	//Player has been saved already, remove him from memory. [Skotlex]	
+	map_quit(sd);
+	map_quit_ack(sd);
 	return 0;
 }
 

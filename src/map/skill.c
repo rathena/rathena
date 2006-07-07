@@ -3545,9 +3545,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			pc_delitem(sd, i, skill_db[skillid].amount[0], 0);
 		}
 		// 100% success rate at lv4 & 5, but lasts longer at lv5
-		i = skilllv <4?(60+skilllv*10):100;
-		i = sc_start(bl,type,i,skilllv,skill_get_time(skillid,skilllv));
-		if(!i) {
+		if(!clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,(60+skilllv*10),skilllv,
+					skill_get_time(skillid,skilllv)))
+		) {
 			if (sd) clif_skill_fail(sd,skillid,0,0);
 			if (skill_break_equip(bl, EQP_WEAPON, 10000, BCT_PARTY) &&
 				sd && sd != dstsd)
