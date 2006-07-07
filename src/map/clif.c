@@ -6311,7 +6311,7 @@ int clif_pet_performance(struct block_list *bl,int param)
 	return 0;
 }
 
-int clif_pet_equip(struct pet_data *pd,int nameid)
+int clif_pet_equip(struct pet_data *pd)
 {
 	unsigned char buf[16];
 
@@ -7727,7 +7727,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 				WBUFW(buf, 0) = cmd = 0x195;
 				sprintf(mobhp, "HP: %u/%u", md->status.hp, md->status.max_hp);
 				//Even thought mobhp ain't a name, we send it as one so the client
-				//can parse it.
+				//can parse it. [Skotlex]
 				memcpy(WBUFP(buf,30), mobhp, NAME_LENGTH);
 				WBUFB(buf,54) = 0;
 				memcpy(WBUFP(buf,78), mobhp, NAME_LENGTH);

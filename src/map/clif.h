@@ -315,7 +315,7 @@ int clif_send_petdata(struct map_session_data *sd,int type,int param);
 int clif_send_petstatus(struct map_session_data *sd);
 int clif_pet_emotion(struct pet_data *pd,int param);
 int clif_pet_performance(struct block_list *bl,int param);
-int clif_pet_equip(struct pet_data *pd,int nameid);
+int clif_pet_equip(struct pet_data *pd);
 int clif_pet_food(struct map_session_data *sd,int foodid,int fail);
 int clif_send (unsigned char *buf, int len, struct block_list *bl, int type);
 
