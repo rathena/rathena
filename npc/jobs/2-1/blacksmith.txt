@@ -1323,7 +1323,7 @@ L_Start:
 		mes "[Mitmayer]";
 		mes "5. How much can you earn with max overcharge?";
 		next;
-		menu "21 % ",sM_1e,"22 % ",sM_1e,"23 % ",-,"24 % ",sM_1e;
+		menu "21 % ",sM_1e,"22 % ",sM_1e,"23 % ",sM_1e,"24 % ",-;
 
 			set @score,@score+20;
 		sM_1e:

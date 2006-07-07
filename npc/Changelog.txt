@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/07
+	* Small fix in the Blacksmith Quest [Playtester]
 07/05
 	* Fixed Dancer Job Quest (3rd part) thx2Alis [Lupus]
 	* Went trough all scripts and turned all job numbers -> constants [Lupus]
