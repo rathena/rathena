@@ -2214,8 +2214,8 @@ int clif_delitem(struct map_session_data *sd,int n,int amount)
 }
 
 // Simplifies inventory/cart/storage packets by handling the packet section relevant to items. [Skotlex]
-// Equip is > 0 for equippable items (holds the equip-point)
-// 0 for stackable items, -1 for stackable items where arrows must send in the equip-point.
+// Equip is >= 0 for equippable items (holds the equip-point, is 0 for pet 
+// armor/egg) -1 for stackable items, -2 for stackable items where arrows must send in the equip-point.
 void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *id, int equip)
 {
 	if (id->view_id > 0)
@@ -2224,15 +2224,15 @@ void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *
 		WBUFW(buf,n)=i->nameid;
 	WBUFB(buf,n+2)=itemtype(id->type);
 	WBUFB(buf,n+3)=i->identify;
-	if (equip > 0 || id->type == 7) { //Equippable item (pet eggs also count).
+	if (equip >= 0) { //Equippable item 
 		WBUFW(buf,n+4)=equip;
 		WBUFW(buf,n+6)=i->equip;
 		WBUFB(buf,n+8)=i->attribute;
 		WBUFB(buf,n+9)=i->refine;
 	} else { //Stackable item.
 		WBUFW(buf,n+4)=i->amount;
-		if (equip == -1 && id->equip == 0x8000)
-			WBUFW(buf,n+6)=0x8000;
+		if (equip == -2 && id->equip == EQP_AMMO)
+			WBUFW(buf,n+6)=EQP_AMMO;
 		else
 			WBUFW(buf,n+6)=0;
 	}
@@ -2265,8 +2265,8 @@ void clif_inventorylist(struct map_session_data *sd)
 			ne++;
 		} else { //Stackable.
 			WBUFW(buf,n*s+4)=i+2;
-			clif_item_sub(buf, n*s+6, &sd->status.inventory[i], sd->inventory_data[i], -1);
-			if (sd->inventory_data[i]->equip == 0x8000 &&
+			clif_item_sub(buf, n*s+6, &sd->status.inventory[i], sd->inventory_data[i], -2);
+			if (sd->inventory_data[i]->equip == EQP_AMMO &&
 				sd->status.inventory[i].equip)
 				arrow=i;
 #if PACKETVER >= 5
@@ -2349,7 +2349,7 @@ void clif_storagelist(struct map_session_data *sd,struct storage *stor)
 			ne++;
 		} else { //Stackable
 			WBUFW(buf,n*s+4)=i+1;
-			clif_item_sub(buf, n*s+6, &stor->storage_[i], id, 0);
+			clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
 #if PACKETVER >= 5
 			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
 #endif
@@ -2399,7 +2399,7 @@ void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *sto
 			ne++;
 		} else { //Stackable
 			WBUFW(buf,n*s+4)=i+1;
-			clif_item_sub(buf, n*s+6, &stor->storage_[i], id, 0);
+			clif_item_sub(buf, n*s+6, &stor->storage_[i], id,-1);
 #if PACKETVER >= 5
 			clif_addcards(WBUFP(buf,n*s+14), &stor->storage_[i]);
 #endif
@@ -2448,7 +2448,7 @@ void clif_cartlist(struct map_session_data *sd)
 			ne++;
 		} else { //Stackable
 			WBUFW(buf,n*s+4)=i+2;
-			clif_item_sub(buf, n*s+6, &sd->status.cart[i], id, 0);
+			clif_item_sub(buf, n*s+6, &sd->status.cart[i], id,-1);
 #if PACKETVER >= 5
 			clif_addcards(WBUFP(buf,n*s+14), &sd->status.cart[i]);
 #endif
