@@ -1657,7 +1657,6 @@ int map_quit(struct map_session_data *sd) {
 
 	//nullpo_retr(0, sd); //Utterly innecessary, all invokations to this function already have an SD non-null check.
 	//Learn to use proper coding and stop relying on nullpo_'s for safety :P [Skotlex]
-
 	if(!sd->state.waitingdisconnect) {
 		if (sd->npc_timer_id != -1) //Cancel the event timer.
 			npc_timerevent_quit(sd);
@@ -1680,7 +1679,6 @@ int map_quit(struct map_session_data *sd) {
 	//Do we really need to remove the name?
 	idb_remove(charid_db,sd->status.char_id);
 	idb_remove(id_db,sd->bl.id);
-	idb_remove(pc_db,sd->bl.id);
 
 	if(sd->reg)
 	{	//Double logout already freed pointer fix... [Skotlex]
@@ -1694,10 +1692,36 @@ int map_quit(struct map_session_data *sd) {
 		sd->regstr = NULL;
 		sd->regstr_num = 0;
 	}
+	if(sd->fd)
+  	{	//Player will be free'd on save-ack. [Skotlex]
+		if (session[sd->fd] && session[sd->fd]->session_data == sd)
+			session[sd->fd]->session_data = NULL;
+		sd->fd = 0;
+	}
 
-	if(!sd->fd) //There is no session connected, and as such socket.c won't free the data, we must do it. [Skotlex]
-		aFree(sd);
 	return 0;
+}
+
+void map_quit_ack(struct map_session_data *sd) {
+	if (sd && sd->state.finalsave) {
+		idb_remove(pc_db,sd->status.account_id);
+		aFree(sd);
+		ShowDebug("Final Save Ack for character %d:%d\n", sd->status.account_id, sd->status.char_id);
+	}
+}
+
+static int do_reconnect_map_sub(DBKey key,void *data,va_list va) {
+	struct map_session_data *sd = (TBL_PC*)data;
+	if (sd->state.finalsave) {
+		sd->state.finalsave = 0;
+		chrif_save(sd, 1); //Resend to save!
+		return 1;
+	}
+	return 0;
+}
+
+void do_reconnect_map(void) {
+	pc_db->foreach(pc_db,do_reconnect_map_sub);
 }
 
 /*==========================================

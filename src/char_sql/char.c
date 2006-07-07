@@ -2615,8 +2615,14 @@ int parse_frommap(int fd) {
 				mmo_char_tosql(cid, &char_dat);
 			}
 
-			if (RFIFOB(fd,12)) //Flag? Set character offline after saving [Skotlex]
+			if (RFIFOB(fd,12))
+		  	{ //Flag? Set character offline after saving [Skotlex]
 				set_char_offline(cid, aid);
+				WFIFOW(fd, 0) = 0x2b21; //Save ack only needed on final save.
+				WFIFOL(fd, 2) = aid;
+				WFIFOL(fd, 6) = cid;
+				WFIFOSET(fd, 10);
+			}
 			RFIFOSKIP(fd,size);
 			break;
 		}

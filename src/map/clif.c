@@ -1683,12 +1683,9 @@ int clif_move(struct block_list *bl) {
 static int clif_delayquit(int tid, unsigned int tick, int id, int data) {
 	struct map_session_data *sd = NULL;
 
-	if (chrif_isconnect())
-	{	//Remove player from map server
-		if ((sd = map_id2sd(id)) != NULL && sd->fd == 0) //Should be a disconnected player.
-			map_quit(sd);
-	} else //Save later.
-		add_timer(tick + 10000, clif_delayquit, id, 0);
+	//Remove player from map server
+	if ((sd = map_id2sd(id)) != NULL && sd->fd == 0) //Should be a disconnected player.
+		map_quit(sd);
 	return 0;
 }
 
@@ -1698,12 +1695,12 @@ static int clif_delayquit(int tid, unsigned int tick, int id, int data) {
  */
 void clif_quitsave(int fd,struct map_session_data *sd)
 {
-	if (chrif_isconnect() && (sd->state.waitingdisconnect || //Was already waiting to be disconnected.
-		!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout))
+	if (sd->state.waitingdisconnect || //Was already waiting to be disconnected.
+		!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		map_quit(sd);
 	else if (sd->fd)
 	{	//Disassociate session from player (session is deleted after this function was called)
-		//And set a timer to delete this player later.
+		//And set a timer to make him quit later.
 		session[fd]->session_data = NULL;
 		sd->fd = 0;
 		add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
@@ -8018,7 +8015,9 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		if ((old_sd = map_id2sd(account_id)) != NULL)
 		{	// if same account already connected, we disconnect the 2 sessions
 			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
-			if (!old_sd->fd)
+			if (old_sd->state.finalsave)
+				; //Ack has not arrived yet from char-server, be patient!
+			else if (!old_sd->fd)
 				map_quit(old_sd);
 			else 
 				clif_authfail_fd(old_sd->fd, 2); // same id
