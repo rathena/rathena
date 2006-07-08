@@ -617,6 +617,7 @@ void status_calc_misc(struct status_data *status, int level);
 void status_freecast_switch(struct map_session_data *sd);
 int status_getrefinebonus(int lv,int type);
 int status_check_skilluse(struct block_list *src, struct block_list *target, int skill_num, int flag); // [Skotlex]
+int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
 
 int status_readdb(void);
 int do_init_status(void);

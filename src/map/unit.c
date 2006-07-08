@@ -226,7 +226,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	} else if (ud->target) {
 		//Update target trajectory.
 		struct block_list *tbl = map_id2bl(ud->target);
-		if (!tbl) {	//Cancel chase.
+		if (!tbl || !status_check_visibility(bl, tbl)) {	//Cancel chase.
 			ud->to_x = bl->x;
 			ud->to_y = bl->y;
 			return 0;

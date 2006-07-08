@@ -1027,6 +1027,56 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	return 1;
 }
 
+//Checks whether the source can see and chase target.
+int status_check_visibility(struct block_list *src, struct block_list *target)
+{
+	int view_range;
+	struct status_data* status = status_get_status_data(src);
+	struct status_change* tsc = status_get_sc(target);
+	switch (src->type) {
+	case BL_MOB:
+		view_range = ((TBL_MOB*)src)->min_chase;
+		break;
+	case BL_PET:
+		view_range = ((TBL_PET*)src)->db->range2;
+		break;
+	default:
+		view_range = AREA_SIZE;
+	}
+
+	if (src->m != target->m || !check_distance_bl(src, target, view_range))
+		return 0;
+	
+	switch (target->type)
+	{
+	case BL_PC:
+		{
+			if (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)
+				&& !(status->mode&MD_BOSS) && (
+					((TBL_PC*)target)->state.perfect_hiding || !(
+					status->race == RC_INSECT ||
+				  	status->race == RC_DEMON ||
+				  	status->mode&MD_DETECTOR
+				)))
+				return 0;
+		}
+		break;
+	default:
+		//Check for chase-walk/hiding/cloaking opponents.
+		if (tsc && !(status->mode&MD_BOSS))
+		{
+			if (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)
+				&& !(
+					status->race == RC_INSECT ||
+				  	status->race == RC_DEMON ||
+				  	status->mode&MD_DETECTOR
+				))
+				return 0;
+		}
+	}
+	return 1;
+}
+
 void status_calc_bl(struct block_list *bl, unsigned long flag);
 
 static int status_base_atk(struct block_list *bl, struct status_data *status)
