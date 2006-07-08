@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dj-Yhn
 //===== Current Version: ===================================== 
-//= 1.01
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -55,6 +55,8 @@
 //= 1.01 Fixed items names iRO->kRO, fixed some bugs [Qwadrat]
 //=	Fixed possible item exploits, fixed Straw Hat
 //= 	Added missing checks [Lupus]
+//= 1.1	Fixed a bug in Giant-band-aid that didn't counting rotten bandages
+//	Fixed a bug in Fur Hat that didn't count yarn [Evera]
 //============================================================
 
 //Payon /=Black cat ears=/
@@ -188,7 +190,7 @@ geffen.gat,129,148,3	script	Arjen	779,{
 			close;
 		}
 	case 2:
-		if ((countitem(970) > 0) & (countitem(930) > 499)) {
+		if (countitem(970) > 0) && (countitem(930) > 499) {
 			mes "[Arjen]";
 			mes "Giant Band Aid??..";
 			mes "Oh well- Then,";
@@ -197,7 +199,7 @@ geffen.gat,129,148,3	script	Arjen	779,{
 			mes "^3131FF &#1038;V Sha Sha !! - ^000000";
 			mes "^3131FF - Cha Sha Haa  !! - ^000000";
 			next;
-			if ((countitem(970) > 0) & (countitem(930) > 499)) {
+			if (countitem(970) > 0) && (countitem(930) > 499) {
 				delitem 970,1;
 				delitem 930,500;
 				getitem 5063,1; //another one in wich I love gravity for changing names =X
@@ -1618,7 +1620,7 @@ xmas_in.gat,35,30,3	script	Headgear Merchant	797,{
 			close;
 		}
 	case 5: //fur hat [5076]
-	  if (countitem(2226) && countitem(7038 > 499)) {
+	  if (countitem(2226) && countitem(7038) > 499) {
 	    mes "[Mike]";
 	    mes "Fur Hat! Yo, Man! Check it out!";
 	    mes "It's good for keeping warm! But it's fashionable too!";
@@ -1649,7 +1651,7 @@ xmas_in.gat,35,30,3	script	Headgear Merchant	797,{
 				mes "poterpote poterpote";
 				mes "PosongPosong PosongPosong";
 				next;
-				if (countitem(2226) && countitem(7038 > 499)) {
+				if (countitem(2226) && countitem(7038) > 499) {
 					delitem 2226,1;
 					delitem 7038,500;
 					getitem 5076,1;

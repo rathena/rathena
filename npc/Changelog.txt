@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/07
+	* Fixed a few bugs in 2004_headgears.txt [Evera]
 	* Fixed a small bug in the swordsman job quest [MasterOfMuppets]
 	- thanks to tenshi7angel for notifying me about it.
 	* Small fix in the Blacksmith Quest [Playtester]
