@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/08
+	* Fixed the new addeff structure not working well with SC_STONE (because
+	  SC_STONE is 0, which was by default not handled as a valid value).
+	  [Skotlex]
+	* Added back the TF_MISS walking speed bonus to assassin type classes (how
+	  did that got lost?) [Skotlex]
 	* Fixed mobinfo displaying exp as signed ints rather than unsigned.
 	  [Skotlex]
 	* Added status_check_visibility to check if an object is within range of

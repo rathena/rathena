@@ -1339,7 +1339,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		skillid != CR_REFLECTSHIELD
 	){	//Trigger status effects
 		int i, type;
-		for(i=0; i < MAX_PC_BONUS && sd->addeff[i].id; i++)
+		for(i=0; i < MAX_PC_BONUS && sd->addeff[i].flag; i++)
 		{
 			rate = sd->addeff[i].rate;
 			type = sd->state.arrow_atk; //Ranged?
@@ -1478,7 +1478,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if(dstsd && attack_type&BF_WEAPON)
 	{	//Counter effects.
 		int i, type, time;
-		for(i=0; i < MAX_PC_BONUS && dstsd->addeff2[i].id; i++)
+		for(i=0; i < MAX_PC_BONUS && dstsd->addeff2[i].flag; i++)
 		{
 			rate = dstsd->addeff2[i].rate;
 			type = (sd && sd->state.arrow_atk) || (status_get_range(src)>2);

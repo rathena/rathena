@@ -2011,6 +2011,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // ----- WALKING SPEED CALCULATION -----
 
 	// Relative modifiers from passive skills
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (skill=pc_checkskill(sd,TF_MISS))>0)
+		status->speed -= status->speed * skill/100;
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		status->speed -= status->speed * 25/100;
 	if(pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)

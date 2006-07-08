@@ -1173,12 +1173,11 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 
 static int pc_bonus_addeff(struct s_addeffect *effect, int max, short id, short rate, short arrow_rate, unsigned char flag) {
 	int i;
-
-	for (i = 0; i < max && effect[i].id; i++) {
+	for (i = 0; i < max && effect[i].flag; i++) {
 		if (effect[i].id == id && effect[i].flag == flag)
 		{
 			effect[i].rate += rate;
-			effect[i].arrow_rate += rate;
+			effect[i].arrow_rate += arrow_rate;
 			return 1;
 		}
 	}
