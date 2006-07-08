@@ -906,6 +906,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
+			break;
 		case GD_EMERGENCYCALL:
 			if (!battle_config.emergency_call ||
 				(map[sd->bl.m].flag.nowarpto && battle_config.emergency_call&1))
@@ -3554,7 +3555,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sd && sd != dstsd)
 				clif_displaymessage(sd->fd,"You broke target's weapon");
 		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,i);
 		break;
 
 	case PR_ASPERSIO:		/* アスペルシオ */
@@ -4909,14 +4909,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case WE_MALE:
 		{
 			int hp_rate=(skilllv <= 0)? 0:skill_db[skillid].hp_rate[skilllv-1];
-			int gain_hp= sstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
+			int gain_hp= tstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skillid,status_heal(bl, gain_hp, 0, 0),1);
 		}
 		break;
 	case WE_FEMALE:
 		{
 			int sp_rate=(skilllv <= 0)? 0:skill_db[skillid].sp_rate[skilllv-1];
-			int gain_sp=sstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
+			int gain_sp=tstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skillid,status_heal(bl, 0, gain_sp, 0),1);
 		}
 		break;

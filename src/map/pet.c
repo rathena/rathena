@@ -502,7 +502,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 			clif_spawn(&sd->pd->bl);
 			clif_send_petdata(sd,0,0);
 			clif_send_petdata(sd,5,battle_config.pet_hair_style);
-//			clif_pet_equip(sd->pd);
+			clif_pet_equip(sd->pd);
 			clif_send_petstatus(sd);
 		}
 	}

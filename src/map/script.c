@@ -6804,6 +6804,7 @@ int buildin_warpwaitingpc(struct script_state *st)
 	char *str;
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 	struct chat_data *cd;
+	struct map_session_data *sd;
 
 	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL )
 		return 0;
@@ -6817,8 +6818,9 @@ int buildin_warpwaitingpc(struct script_state *st)
 		n=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
 	for(i=0;i<n;i++){
-		struct map_session_data *sd=cd->usersd[0];	// リスト先頭のPCを次々に。
-
+		sd=cd->usersd[0];
+		if (!sd) continue; //Broken npc chat room?
+		
 		mapreg_setreg(add_str((unsigned char *) "$@warpwaitingpc")+(i<<24),sd->bl.id);
 
 		if(strcmp(str,"Random")==0)
