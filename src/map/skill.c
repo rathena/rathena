@@ -10087,7 +10087,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					if (sd->menuskill_lv >= 15) //Legendary Cooking Set.
 						make_per = 10000; //100% Success
 					else
-						make_per = 120*(sd->menuskill_lv-10) //12% chance per set level.
+						make_per = 1200*(sd->menuskill_lv-10) //12% chance per set level.
 							+ 7000 - 700*(skill_produce_db[idx].itemlv-10); //70% - 7% per dish level
 					break;
 				}
