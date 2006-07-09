@@ -1331,7 +1331,7 @@
 4172,The_Paper_Card,The Paper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus2 bSPDrainValue,-1,0; },{},{}
 4173,Demon_Pungus_Card,Demon Pungus Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,2000; },{},{}
 4174,Deviling_Card,Deviling Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,50; bonus2 bSubEle,Ele_Water,-50; bonus2 bSubEle,Ele_Earth,-50; bonus2 bSubEle,Ele_Fire,-50; bonus2 bSubEle,Ele_Wind,-50; bonus2 bSubEle,Ele_Poison,-50; bonus2 bSubEle,Ele_Holy,-50; bonus2 bSubEle,Ele_Dark,-50; bonus2 bSubEle,Ele_Ghost,-50; bonus2 bSubEle,Ele_Undead,-50; },{},{}
-4175,Poisonous_Toad_Card,Poisonous Toad Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpellWhenHit,52,1,20,1; },{},{}
+4175,Poisonous_Toad_Card,Poisonous Toad Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpell,52,1,20,1; },{},{}
 4176,Dullahan_Card,Dullahan Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Dragon,7; },{},{}
 4177,Dryad_Card,Dryad Card,6,,10,10,,,,,,,,769,,,,,{ bonus3 bAddMonsterDropItem,993,3,15; bonus2 bSubEle,Ele_Earth,10; },{},{}
 4178,Dragon_Tail_Card,Dragon Tail Card,6,,10,10,,,,,,,,4,,,,,{ bonus bAgi,1; bonus bFlee,10; bonus2 bSkillAtk,46,5; bonus2 bSkillAtk,47,5; },{},{}
@@ -1717,7 +1717,7 @@
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; },{},{}
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; },{},{}
 5151,Note_Headphones,Note Headphones,5,,,100,,1,,1,0xFFFFFFFF,7,2,256,,,1,220,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
-5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,0,0xFFFFFFFF,7,2,768,,,1,221,{ bonus2 bResEff,Eff_Stan,1000; bonus bInt,1; bonus bMdef,2; },{},{}
+5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,0,0xFFFFFFFF,7,2,768,,,1,221,{ bonus2 bResEff,Eff_Stun,1000; bonus bInt,1; bonus bMdef,2; },{},{}
 5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,0,0xFFFFFFFF,7,2,256,,,1,222,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
 5155,Father's_White_Beard,Father's White Beard,5,,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,,25,{ bonus bAtk,20; },{},{}
@@ -1746,14 +1746,13 @@
 5178,Candle,Candle,5,,10,150,,0,,0,0xFFFFFFFF,7,2,256,,0,1,113,{ bonus bAllStats,1; },{},{}
 5179,Golden_Tiara,Golden Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,232,{ bonus bInt,2; },{},{}
 5180,France_Holiday_Hat,France Holiday Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bVit,1; },{},{}
-5181,Darkness_Helm,Helm of Darkness,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,233,{},{},{}
-5182,Nest_Hat,Nest Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,234,{},{},{}
-5183,Laurel_Crown,Laurel_Crown,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,235,{},{},{}
-5184,Captains_Hat,Captain's Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,236,{},{},{}
-5185,Laurel_Crown,Laurel Crown,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,237,{},{},{}
-5186,Decoration_Geographer,Decoration Geographer,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,238,{},{},{}
-5187,Twin_Ribbon,Twin Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,239,{},{},{}
-
+5181,Helm_of_Darkness,Helm of Darkness,5,,10,500,,3,,1,0x000654E2,7,2,768,,50,1,233,{ bonus bStr,2; },{},{}
+5182,Puppy_Hat,Puppy Hat,5,,10,500,,3,,0,0xFFFFFFFF,7,2,256,,30,0,234,{ bonus bAgi,1; bonus4 bAutoSpell,75,1,10+20*(readparam(bAgi)>=77),0; },{},{}
+5183,Nest_Hat,Nest Hat,5,,10,500,,3,,0,0xFFFFFFFF,7,2,256,,10,1,235,{ bonus bDex,1; bonus bAgi,1; bonus2 bResEff,Eff_Stun,1000; },{},{}
+5184,Captain's_Hat,Captain's Hat,5,,10,500,,4,,0,0xFFFFFFFE,7,2,256,,30,1,236,{ bonus2 bSubEle,Ele_Water,5; },{},{}
+5185,Laurel_Crown,Laurel Crown,5,,10,100,,1,,1,0xFFFFFFFF,7,2,256,,10,1,237,{ bonus bLuk,3; bonus2 bResEff,Eff_Blind,500; bonus2 bResEff,Eff_Curse,500; },{},{}
+5186,Geographer_Decoration,Geographer Decoration,5,,10,500,,1,,0,0xFFFFFFFF,7,2,256,,30,0,238,{ bonus bInt,1; bonus4 bAutoSpellWhenHit,28,1,10,0; },{},{}
+5187,Twin_Ribbon,Twin Ribbon,5,,10,200,,3,,1,0xFFFFFFFF,7,2,256,,30,1,239,{ bonus bMaxSP,30; bonus bMdef,3; },{},{}
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -2320,7 +2319,7 @@
 7563,Bloody_Rune,Bloody Rune,3,,10,10,,,,,,,,,,,,,{},{},{}
 7564,Rotten_Meat,Rotten Meat,3,,10,10,,,,,,,,,,,,,{},{},{}
 7565,Sticky_Poison,Sticky_Poison,3,,10,10,,,,,,,,,,,,,{},{},{}
-7566,Unknown,Unknown,3,,10,10,,,,,,,,,,,,,{},{},{}
+7566,Will_of_Red_Darkness,Will of Red Darkness,3,,10,10,,,,,,,,,,,,,{},{},{}
 7567,Suspicious_Hat,Suspicious Hat,3,,10,10,,,,,,,,,,,,,{},{},{}
 7568,White_Mask,White Mask,3,,10,10,,,,,,,,,,,,,{},{},{}
 7569,Hammer_of_Wind,Hammer of Wind,3,,10,0,,,,,,,,,,,,,{},{},{}

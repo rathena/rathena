@@ -25,6 +25,7 @@
 
 =========================
 07/09
+	* More item updates thanks to Haplo [Playtester]
 	* Added various items and fixed armor charm [Playtester]
 07/05
 	* Added Thanatos Tower Quest items to item_trade.txt [Playtester]
