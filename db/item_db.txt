@@ -89,6 +89,8 @@
 585,Brusti,Brusti,0,15,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; },{},{}
 586,Mother's_Cake,Mother's Cake,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,404),0; },{},{}
 587,Red_Thorn_Fruit,Red Thorn Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(35,49),rand(10,19); },{},{}
+588,Spaghetti,Spaghetti,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(45,64),0; },{},{}
+589,Pizza,Pizza,0,,10,150,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(45,64),0; },{},{}
 // Usable Items
 //===================================================================
 601,Fly_Wing,Fly Wing,2,60,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
@@ -785,6 +787,7 @@
 1769,Mute_Arrow,Mute Arrow,10,3,,3,1,,,,0x000A0848,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Silence,1000; },{},{}
 1770,Iron_Arrow,Iron Arrow,10,2,,1,30,,,,0x000A0848,7,2,32768,,1,,1,{},{},{}
 1771,Venom_Knife,Venom Knife,10,50,,5,30,,,,0x00001000,7,2,32768,,1,,2,{},{},{}
+1772,Holy_Arrow,Holy Arrow,10,3,,2,50,,,,0x000A0848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; bonus2 bAddRace,RC_Demon,5; },{},{}
 // Knuckles
 1801,Waghnak,Waghnak,4,8000,,400,30,,1,3,0x00008100,7,2,2,1,1,1,12,{},{},{}
 1802,Waghnak_,Waghnak,4,8000,,400,30,,1,4,0x00008100,7,2,2,1,1,1,12,{},{},{}
@@ -1136,7 +1139,7 @@
 2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,90,0,0,{},{},{}
 2654,Shinobi_Sash,Shinobi Sash,5,,10,300,,0,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; if(isequipped(2337)) { bonus bUseSPrate,-20; bonus bMaxHP,300; } },{},{}
 2655,Bloodied_Shackle_Ball,Bloodied Shackle Ball,5,,10,4000,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{ if (isequipped(2408)) { bonus bAtk,50; bonus2 bAddDefClass,1196,20; bonus2 bAddDefClass,1197,20; } },{},{}
-2656,Armor_Charm,Armor Charm,5,,10,1000,,0,,0,0x000654E2,7,2,136,,0,0,0,{ if(isequipped(2312) || isequipped(2313)) { bonus bDef,6; bonus bMaxHP,200; } },{},{}
+2656,Armor_Charm,Armor Charm,5,,10,1000,,1,,0,0x000654E2,7,2,136,,0,0,0,{ bonus bMaxHP,50; if(isequipped(2312) || isequipped(2313)) { bonus bDef,5; bonus bMaxHP,150; } },{},{}
 2657,Laboratory_Permit,Laboratory Permit,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2658,Nile_Rose_,Nile Rose,5,,10,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
 2659,Vesper_Core_01,Vesper Core 01,5,,10,500,,1,,0,0x00CFDF80,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}
@@ -2270,7 +2273,8 @@
 7516,Green_Keycard,Green Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7517,Gold_Coin,Golden Coin,3,,10,100,,,,,,0,2,,,,,,{},{},{}
 7518,Women's_Medal,Women's Medal,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-//Some items missing here
+7519,Handsel,Handsel,3,,10,10,,,,,,,,,,,,,{},{},{}
+7520,Please_Be_Rich,Please Be Rich,3,,10,10,,,,,,,,,,,,,{},{},{}
 7521,Burning_Stone,Burning Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
 7522,Freezing_Stone,Freezing Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
 7523,Windchime_Stone,Windchime Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
@@ -2328,6 +2332,8 @@
 7575,Red-colored_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7576,Blue-colored_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7577,Yellow-colored_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
+7578,Countermagic_Crystal,Countermagic Crystal,3,,10,10,,,,,,,,,,,,,{},{},{}
+7579,Silk_Handkerchief_of_Zhi_Nu,Silk Handkerchief of Zhi Nu,3,,10,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
@@ -2578,6 +2584,9 @@
 12180,Spearman_Mercenary_Summon_Scroll_Level_8,Spearman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12181,Spearman_Mercenary_Summon_Scroll_Level_9,Spearman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12182,Spearman_Mercenary_Summon_Scroll_Level_10,Spearman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12183,Holy_Arrow_Quiver,Holy Arrow Quiver,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
+12185,Mercenary's_Red_Potion,Mercenary's Red Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12186,Mercenary's_Blue_Potion,Mercenary's Blue Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers

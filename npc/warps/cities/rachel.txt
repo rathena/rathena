@@ -120,3 +120,8 @@ ra_in01.gat,220,379,0	warp	ra_in013a	2,2,ra_in01.gat,289,372
 ra_in01.gat,313,374,0	warp	ra_in014	2,2,ra_in01.gat,358,373
 ra_in01.gat,354,373,0	warp	ra_in014a	2,2,ra_in01.gat,308,374
 
+//Rachel City
+//Some additional warps that were missing
+rachel.gat,149,249,0	warp	rachel001	1,1,ra_temple.gat,119,28
+rachel.gat,273,125,0	warp	rachel009	1,1,ra_fild12.gat,41,225
+rachel.gat,25,125,0	warp	rachel010	1,1,ra_fild11.gat,357,225

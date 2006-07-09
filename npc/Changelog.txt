@@ -38,6 +38,9 @@ Playtester
 
 Date		Added
 ======
+07/09
+	* Added some missing Rachel Warps [Playtester]
+	* Added a fix to npc/other/books.txt [Playtester]
 07/07
 	* Fixed a few bugs in 2004_headgears.txt [Evera]
 	* Fixed a small bug in the swordsman job quest [MasterOfMuppets]

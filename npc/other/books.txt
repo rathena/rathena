@@ -1321,7 +1321,7 @@ prt_in.gat,168,56,4	script	Monster Encyclopedia::me_prt_in5	111,{
 	menu "Monsters of Water Property",MonWatPro,"Monsters of Wind Property",MonWinPro,"Monsters of Spiritual Property",MonSpiPro,"Cancel",Cancel;
 
 	MonWatPro:
-		menu "Small Size Monster",SmaMonWatPro,"Medium Size Monster",MidMonWatPro,"Great Size Monster",GrMonWatPro,"Cancel",EndWatPro;
+		menu "Small Size Monster",SmaMonWatPro,"Medium Size Monster",MidMonWatPro,"Great Size Monster",GrMonWatPro,"Cancel",EndMonWatPro;
 
 		SmaMonWatPro:
 			mes "^FF0000[Water, Small Monster Encyclopedia]^000000";
