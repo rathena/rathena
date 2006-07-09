@@ -25,6 +25,7 @@
 
 =========================
 07/09
+	* Added Guillontine's SP Drain per attack [Playtester]
 	* More item updates thanks to Haplo [Playtester]
 	* Added various items and fixed armor charm [Playtester]
 07/05

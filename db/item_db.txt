@@ -617,7 +617,7 @@
 1366,Light_Epsilon,Light Epsilon,4,,10,2300,180,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Holy; skill 28,3; bonus2 bAddRace,RC_Demon,3; },{},{}
 1367,Slaughter,Slaughter,4,,10,2500,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bIgnoreDefRace,RC_Brute; bonus2 bWeaponComaRace,RC_Brute,40; bonus bAtkEle,Ele_Earth; },{},{}
 1368,Tomahawk,Tomahawk,4,,10,2500,165,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Wind; skill 337,1; },{},{}
-1369,Guillotine,Guillotine,4,,10,3000,215,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus2 bSPGainRace,RC_DemiHuman,20; },{},{}
+1369,Guillotine,Guillotine,4,,10,3000,215,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus2 bSPDrainValueRace,RC_DemiHuman,2; bonus2 bSPGainRace,RC_DemiHuman,20; },{},{}
 // 1-Handed Spears
 1401,Javelin,Javelin,4,150,,700,28,,3,3,0x00004082,7,2,2,1,4,1,4,{},{},{}
 1402,Javelin_,Javelin,4,150,,700,28,,3,4,0x00004082,7,2,2,1,4,1,4,{},{},{}
