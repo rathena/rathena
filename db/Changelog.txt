@@ -24,6 +24,11 @@
 	-----
 
 =========================
+
+07/10
+	* Corrected skill require entry from the Twilight Pharmacy skills.
+	  [Skotlex]
+	* Removed Frost Nova's skill_unit_db entry. [Skotlex]
 07/09
 	* Added Guillontine's SP Drain per attack [Playtester]
 	* More item updates thanks to Haplo [Playtester]

@@ -4119,19 +4119,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case PA_GOSPEL:				/* ゴスペル */
-		if (!tsc) break;
-		if (tsc->data[type].timer != -1 && tsc->data[type].val4 == BCT_SELF) {
-			i = status_change_end(bl,SC_GOSPEL,-1);
-		} else {
-			struct skill_unit_group *sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
-			if (tsc->data[type].timer != -1)
-				status_change_end(bl,type,-1); //Was under someone else's Gospel. [Skotlex]
-			i = sc_start4(bl,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,i);
-		break;
-
 	case BD_ADAPTATION:			/* アドリブ */
 		if(tsc && tsc->data[SC_DANCING].timer!=-1){
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5729,7 +5716,8 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 {
 	struct map_session_data *sd=NULL;
 	struct status_change *sc;
-	int i;
+	struct skill_unit_group *sg;
+	int i,type;
 
 	//if(skilllv <= 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
@@ -5742,14 +5730,16 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	if(src->type==BL_PC)
 		sd=(struct map_session_data *)src;
 
-	sc = status_get_sc(src); //Needed for Magic Power checks.
+	sc = status_get_sc(src);
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded.
+	type = SkillStatusChangeTable(skillid);
 
 	switch (skillid) { //Skill effect.
 		case WZ_METEOR:
 		case MO_BODYRELOCATION:
 		case CR_CULTIVATION:
+		case HW_GANBANTEIN:
 			break; //Effect is displayed on respective switch case.
 		default:
 			if(skill_get_inf(skillid)&INF_SELF_SKILL)
@@ -5991,14 +5981,9 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 	
 	case HW_GRAVITATION:
-		{
-			struct skill_unit_group *sg;
-			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
-			sg = skill_unitsetting(src,skillid,skilllv,x,y,0);	
-			sc_start4(src,SkillStatusChangeTable(skillid),100,
-				skilllv,0,BCT_SELF,(int)sg,skill_get_time(skillid,skilllv));
-			flag|=1;
-		}
+		sg = skill_unitsetting(src,skillid,skilllv,x,y,0);	
+		sc_start4(src,type,100,skilllv,0,BCT_SELF,(int)sg,skill_get_time(skillid,skilllv));
+		flag|=1;
 		break;
 
 	// Plant Cultivation [Celest]
@@ -6019,20 +6004,29 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 				clif_skill_fail(sd,skillid,0,0);
 		}
 		break;
+
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
-		{
-			struct skill_unit_group *sg;
+		sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+		sc_start4(src,type,100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv));
+		flag|=1;
+		break;
+
+	case PA_GOSPEL:
+		if (sc && sc->data[type].timer != -1 && sc->data[type].val4 == BCT_SELF)
+			status_change_end(src,SC_GOSPEL,-1);
+		else
+	  	{
 			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
-			clif_skill_nodamage(src,src,skillid,skilllv,
-				sc_start4(src,SkillStatusChangeTable(skillid),
-					100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv)));
+			if (sc->data[type].timer != -1)
+				status_change_end(src,type,-1); //Was under someone else's Gospel. [Skotlex]
+			sc_start4(src,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
 		}
 		break;
+
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
-		map_freeblock_unlock();
 		return 1;
 	}
 

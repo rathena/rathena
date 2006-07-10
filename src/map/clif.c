@@ -4827,7 +4827,7 @@ int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 //		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_fix(NULL,dst,100,i+1,status->def_ele, status->ele_lv))<0?0:fix);
 
 	if(sd->status.party_id>0)
-		clif_send(buf,packet_len_table[0x18c],&sd->bl,PARTY_AREA);
+		clif_send(buf,packet_len_table[0x18c],&sd->bl,PARTY_SAMEMAP);
 	else{
 		WFIFOHEAD(sd->fd,packet_len_table[0x18c]);
 		memcpy(WFIFOP(sd->fd,0),buf,packet_len_table[0x18c]);
