@@ -1193,7 +1193,7 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 void itemdb_reload(void)
 {
 	// free up all item scripts first
-	item_db->foreach(item_db, itemdb_final_sub, 0);
+	item_db->clear(item_db, itemdb_final_sub, 0);
 	itemdb_read();
 }
 
