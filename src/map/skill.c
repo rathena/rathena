@@ -6019,7 +6019,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		else
 	  	{
 			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
-			if (sc->data[type].timer != -1)
+			if (sc && sc->data[type].timer != -1)
 				status_change_end(src,type,-1); //Was under someone else's Gospel. [Skotlex]
 			sc_start4(src,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
 		}
