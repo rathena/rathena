@@ -6445,7 +6445,11 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)); //Store the magic power flag. [Skotlex]
 	group->state.ammo_consume = (sd && sd->state.arrow_atk); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)); //Signals if this is a song/dance (does not counts duets)
-	
+
+  	//if tick is greater than current, do not invoke onplace function just yet. [Skotlex]
+	if (DIFF_TICK(group->tick, gettick()) > 100)
+		active_flag = 0;
+
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
 		group->valstr=(char *) aMallocA(MESSAGE_SIZE*sizeof(char));
