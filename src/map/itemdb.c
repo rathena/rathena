@@ -228,7 +228,16 @@ static void* create_item_data(DBKey key, va_list args) {
  */
 struct item_data* itemdb_load(int nameid)
 {
-	return idb_ensure(item_db,nameid,create_item_data);
+	struct item_data *id = idb_ensure(item_db,nameid,create_item_data);
+	if (id == &dummy_item)
+  	{	//Remove dummy_item, replace by real data.
+		DBKey key;
+		key.i = nameid;
+		idb_remove(item_db,nameid);
+		id = create_item_data(key, NULL);
+		idb_put(item_db,nameid,id);
+	}
+	return id;
 }
 
 static void* return_dummy_data(DBKey key, va_list args) {
@@ -1193,7 +1202,7 @@ static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 void itemdb_reload(void)
 {
 	// free up all item scripts first
-	item_db->clear(item_db, itemdb_final_sub, 0);
+	item_db->foreach(item_db, itemdb_final_sub, 0);
 	itemdb_read();
 }
 
