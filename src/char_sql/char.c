@@ -337,6 +337,7 @@ void set_all_offline_sql(void) {
 	if(mysql_query(&mysql_handle, tmp_sql)){
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
 }
 
 //----------------------------------------------------------------------
@@ -3767,10 +3768,6 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data) {
 }
 
 int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
-	struct char_session_data *sd;
-	int i, cc;
-	unsigned char buf[16];
-
 	if (login_fd > 0 || session[login_fd] != NULL) 
 		return 0;
 
@@ -4047,7 +4044,7 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "passwd") == 0) {
 			strncpy(passwd, w2, 24);
 		} else if (strcmpi(w1, "server_name") == 0) {
-			strncpy(server_name, w2, 20)
+			strncpy(server_name, w2, 20);
 			server_name[sizeof(server_name) - 1] = '\0';
 			ShowStatus("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {
