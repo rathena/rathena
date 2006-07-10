@@ -4,6 +4,22 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/10
+	* Added login-char packet 0x2737. Sets all characters offline (login-server
+	  side). [Skotlex]
+	* Cleaned up char server "set all offline" implementation to remove only
+	  characters from the map-server from which the packet was invoked. It will
+	  also now correctly kick/set-character offline from the map-server if they
+	  are connected. [Skotlex]
+	* Cleaned up the char-sql reconnect code. It no longer sets everyone to
+	  offline. [Skotlex]
+	* Removed setting "kick_on_disconnect", servers will no longer kick
+	  characters out when there's a disconnection. Instead, it'll use the most
+	  logical approach: Set characters into a "lost" state when there's a
+	  disconnection, on reconnect, resent the list of online-characters, do a
+	  sync, and let the difference be characters to be removed. Also, the
+	  map-server won't release character data until it's saved and the ack
+	  returns from the char-server to prevent data loss (all this data is resent
+	  on reconnect for saving anyway). [Skotlex]
 	* Added a check in pc_equipitem so that when switching weapons and you have
 	  the skill_range_by_weapon setting active, the skill info block (which
 	  includes range) will be resent when the new weapon to equip has a range

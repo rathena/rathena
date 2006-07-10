@@ -37,7 +37,6 @@ struct accreg {
 };
 
 unsigned int party_share_level = 10;
-int kick_on_disconnect = 1;
 
 // 送信パケット長リスト
 int inter_send_packet_length[] = {
@@ -206,8 +205,6 @@ int inter_config_read(const char *cfgName) {
 			strncpy(accreg_txt, w2, sizeof(accreg_txt));
 		} else if (strcmpi(w1, "guild_storage_txt") == 0) {
 			strncpy(guild_storage_txt, w2, sizeof(guild_storage_txt));
-		} else if (strcmpi(w1, "kick_on_disconnect") == 0) {
-			kick_on_disconnect = atoi(w2);
 		} else if (strcmpi(w1, "party_share_level") == 0) {
 			party_share_level = (unsigned int)atof(w2);
 		} else if (strcmpi(w1, "inter_log_filename") == 0) {

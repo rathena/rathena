@@ -1401,6 +1401,13 @@ int parse_fromchar(int fd){
 			server[id].ip = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
 			break;
+
+		case 0x2737: //Request to set all offline.
+			ShowInfo("Setting accounts from char-server %d offline.\n", id);
+			online_db->foreach(online_db,online_db_setoffline,id);
+			RFIFOSKIP(fd,2);
+			break;
+
 		default:
 			ShowError("login: unknown packet %x! (from char).\n", RFIFOW(fd,0));
 			session[fd]->eof = 1;

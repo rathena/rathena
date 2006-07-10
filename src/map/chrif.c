@@ -454,7 +454,7 @@ int chrif_scdata_request(int account_id, int char_id)
 #endif
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 10);
+	WFIFOHEAD(char_fd, 10);
 	WFIFOW(char_fd, 0) = 0x2afc;
 	WFIFOL(char_fd, 2) = account_id;
 	WFIFOL(char_fd, 6) = char_id;
@@ -1344,7 +1344,7 @@ int chrif_char_offline(struct map_session_data *sd)
 {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 10);
+	WFIFOHEAD(char_fd, 10);
 	WFIFOW(char_fd,0) = 0x2b17;
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.account_id;
@@ -1374,7 +1374,7 @@ int chrif_flush_fifo(void) {
 int chrif_char_reset_offline(void) {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 2);
+	WFIFOHEAD(char_fd, 2);
 	WFIFOW(char_fd,0) = 0x2b18;
 	WFIFOSET(char_fd,2);
 
@@ -1399,35 +1399,15 @@ int chrif_char_online(struct map_session_data *sd)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int chrif_disconnect_sub(struct map_session_data* sd,va_list va) {
-	if (sd->fd)
-		clif_authfail_fd(sd->fd,1);
-	else
-		map_quit(sd);
-	return 0;
-}
-
 int chrif_disconnect(int fd) {
 	if(fd == char_fd) {
 		char_fd = 0;
 		ShowWarning("Map Server disconnected from Char Server.\n\n");
-		if (kick_on_disconnect)
-			clif_foreachclient(chrif_disconnect_sub);
 		chrif_connected = 0;
 		
 	 	other_mapserver_count=0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
 		map_eraseallipport();
 
-		// 倉庫キャッシュを消す
-		if (kick_on_disconnect)
-		{	//Do not clean the storage if players are gonna be left inside. [Skotlex]
-			do_final_storage();
-			do_init_storage();
-		}
 		//Attempt to reconnect in a second. [Skotlex]
 		add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
 	}

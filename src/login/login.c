@@ -1952,7 +1952,6 @@ int parse_fromchar(int fd) {
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
 			break;
-
 		case 0x2736: // WAN IP update from char-server
 			if (RFIFOREST(fd) < 6)
 				return 0;
@@ -1961,6 +1960,12 @@ int parse_fromchar(int fd) {
 			(int)RFIFOB(fd,4),(int)RFIFOB(fd,5));
 			server[id].ip = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
+			break;
+
+		case 0x2737: //Request to set all offline.
+			ShowInfo("Setting accounts from char-server %d offline.\n", id);
+			online_db->foreach(online_db,online_db_setoffline,id);
+			RFIFOSKIP(fd,2);
 			break;
 
 		case 0x3000: //change sex for chrif_changesex()

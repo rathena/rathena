@@ -1247,7 +1247,6 @@ extern int autosave_interval;
 extern int save_settings;
 extern int agit_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
-extern int kick_on_disconnect; //To allow inter-server reconnections without kicking players out [Skotlex]
 extern int enable_spy; //Determines if @spy commands are active.
 extern char db_path[256];
 

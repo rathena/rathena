@@ -30,7 +30,6 @@ static struct accreg *accreg_pt;
 
 
 unsigned int party_share_level = 10;
-int kick_on_disconnect = 1;
 MYSQL mysql_handle;
 MYSQL_RES* 	sql_res ;
 MYSQL_ROW	sql_row ;
@@ -255,9 +254,6 @@ int inter_config_read(const char *cfgName) {
 		else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n",w2);
-		}
-		else if(strcmpi(w1,"kick_on_disconnect")==0){
-			kick_on_disconnect=atoi(w2);
 		}
 		else if(strcmpi(w1,"party_share_level")==0){
 			party_share_level=(unsigned int)atof(w2);

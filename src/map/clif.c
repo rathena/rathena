@@ -11390,9 +11390,9 @@ int clif_parse(int fd) {
 	}
 
 	sd = (struct map_session_data*)session[fd]->session_data;
-
-	// Ú‘±‚ªØ‚ê‚Ä‚é‚Ì‚ÅŒãŽn––
-	if (!chrif_isconnect() && kick_on_disconnect)
+/* This behaviour has been deprecated due to actually causing trouble instead
+ * of helping against exploits ~.~ [Skotlex]
+	if (!chrif_isconnect())
 	{
 		ShowInfo("Closing session #%d (Not connected to Char server)\n", fd);
 		if (sd && sd->state.auth)
@@ -11400,6 +11400,7 @@ int clif_parse(int fd) {
 		do_close(fd);
 		return 0;
 	} else
+	*/
 	if (session[fd]->eof) {
 		if (sd && sd->state.autotrade) {
 			//Disassociate character from the socket connection.

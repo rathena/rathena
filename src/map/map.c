@@ -172,7 +172,6 @@ int save_settings = 0xFFFF;
 int charsave_method = 0; //Default 'OLD' Save method (SQL ONLY!) [Sirius]
 int agit_flag = 0;
 int night_flag = 0; // 0=day, 1=night [Yor]
-int kick_on_disconnect = 1;
 
 struct charid2nick {
 	char nick[NAME_LENGTH];
@@ -3383,9 +3382,7 @@ int inter_config_read(char *cfgName)
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-		if(strcmpi(w1,"kick_on_disconnect")==0){
-			kick_on_disconnect = battle_config_switch(w2);
-		} else if(strcmpi(w1,"party_share_level")==0){
+		if(strcmpi(w1,"party_share_level")==0){
 			party_share_level = battle_config_switch(w2);
 		} else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);

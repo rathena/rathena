@@ -290,38 +290,55 @@ static int char_db_setoffline(DBKey key, void* data, va_list ap) {
 	return 0;
 }
 
-void set_all_offline(void) {
-	MYSQL_RES*       sql_res2; //Needed because it is used inside inter_guild_CharOffline; [Skotlex]
-	int char_id;
-	sprintf(tmp_sql, "SELECT `account_id`, `char_id`, `guild_id` FROM `%s` WHERE `online`='1'",char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	ShowNotice("Sending all users offline.\n");
-	sql_res2 = mysql_store_result(&mysql_handle);
-	if (sql_res2) {
-		while((sql_row = mysql_fetch_row(sql_res2))) {
-			char_id = atoi(sql_row[1]);
-			inter_guild_CharOffline(char_id, atoi(sql_row[2]));
+static int char_db_kickoffline(DBKey key, void* data, va_list ap) {
+	struct online_char_data* character = (struct online_char_data*)data;
+	int server = va_arg(ap, int);
+	if (server > -1 && character->server != server)
+		return 0;
 
-			if ( login_fd > 0 ) {
-				ShowInfo("send user offline: %d\n",char_id);
-				WFIFOW(login_fd,0) = 0x272c;
-				WFIFOL(login_fd,2) = char_id;
-				WFIFOSET(login_fd,6);
-			}
-		}
-		mysql_free_result(sql_res2);
-	}
-
-	sprintf(tmp_sql,"UPDATE `%s` SET `online`='0' WHERE `online`='1'", char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	online_char_db->foreach(online_char_db,char_db_setoffline,-1);
+	//Kick out any connected characters, and set them offline as appropiate.
+	if (character->server > -1)
+		mapif_disconnectplayer(server_fd[character->server],
+			character->account_id, character->char_id, 1);
+	else if (!character->waiting_disconnect)
+		set_char_offline(character->char_id, character->account_id);
+	else return 0;
+	return 1;
 }
+
+void set_all_offline(int id) {
+	if (id < 0)
+		ShowNotice("Sending all users offline.\n");
+	else
+		ShowNotice("Sending users of map-server %d offline.\n",id);
+	online_char_db->foreach(online_char_db,char_db_kickoffline,id);
+
+	if (id >= 0 || login_fd <= 0 || session[login_fd]->eof)
+		return;
+	//Tell login-server to also mark all our characters as offline.
+	WFIFOHEAD(login_fd, 2);
+	WFIFOW(login_fd,0) = 0x2737;
+	WFIFOSET(login_fd,2);
+}
+
+void set_all_offline_sql(void) {
+	//Set all players to 'OFFLINE'
+	sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", char_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", guild_member_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sprintf(tmp_sql, "UPDATE `%s` SET `connect_member` = '0'", guild_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+}
+
 //----------------------------------------------------------------------
 // Determine if an account (id) is a GM account
 // and returns its level (or 0 if it isn't a GM account or if not found)
@@ -1812,13 +1829,8 @@ int parse_tologin(int fd) {
 				//exit(1); //fixed for server shutdown.
 			}else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
-//				Don't set them offline as there's no packet to tell the map server
-//				to kick everyone out. Also, a disconnection from the login server is
-//				NOT something serious to the data integrity as a char-map disconnect
-//				is. [Skotlex]
-//				if (kick_on_disconnect)
-//					set_all_offline();
-//				However, on reconnect, DO send our connected accounts to login.
+				
+				//Send online accounts to login server.
 				send_accounts_tologin(-1, gettick(), 0, 0);
 			
 				// if no map-server already connected, display a message...
@@ -2453,8 +2465,7 @@ int parse_frommap(int fd) {
 				ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
 				       id, j, p[0], p[1], p[2], p[3], server[id].port);
 				ShowStatus("Map-server %d loading complete.\n", id);
-				if (kick_on_disconnect)
-					set_all_offline();
+				
 				if (max_account_id != DEFAULT_MAX_ACCOUNT_ID || max_char_id != DEFAULT_MAX_CHAR_ID)
 					mapif_send_maxid(max_account_id, max_char_id); //Send the current max ids to the server to keep in sync [Skotlex]
 			}
@@ -2951,8 +2962,7 @@ int parse_frommap(int fd) {
 			break;
 		// Reset all chars to offline [Wizputer]
 		case 0x2b18:
-			ShowNotice("Map server [%d] requested to set all characters offline.\n", id);
-			set_all_offline();
+			set_all_offline(id);
 			RFIFOSKIP(fd,2);
 			break;
 		// Character set online [Wizputer]
@@ -3751,112 +3761,41 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data) {
 		WFIFOL(login_fd,4) = users;
 		online_char_db->foreach(online_char_db, send_accounts_tologin_sub, &i, users);
 		WFIFOW(login_fd,2) = 8+ i*4;
-		if (i > 0)
-			WFIFOSET(login_fd,WFIFOW(login_fd,2));
+		WFIFOSET(login_fd,WFIFOW(login_fd,2));
 	}
 	return 0;
 }
 
 int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
-	if (login_fd <= 0 || session[login_fd] == NULL) {
-		struct char_session_data *sd;
-		int i, cc;
-		unsigned char buf[16];
+	struct char_session_data *sd;
+	int i, cc;
+	unsigned char buf[16];
 
-		ShowInfo("Attempt to connect to login-server...\n");
-		login_fd = make_connection(login_ip, login_port);
-		if (login_fd == -1)
-		{	//Try again later. [Skotlex]
-			login_fd = 0;
-			return 0;
-		}
-		session[login_fd]->func_parse = parse_tologin;
-		realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-		WFIFOW(login_fd,0) = 0x2710;
-		memcpy(WFIFOP(login_fd,2), userid, 24);
-		memcpy(WFIFOP(login_fd,26), passwd, 24);
-		WFIFOL(login_fd,50) = 0;
-		WFIFOL(login_fd,54) = char_ip;
-		WFIFOL(login_fd,58) = char_port;
-		memset(WFIFOP(login_fd,60), 0, 20);
-		memcpy(WFIFOP(login_fd,60), server_name, strlen(server_name) < 20 ? strlen(server_name) : 20);
-		WFIFOW(login_fd,80) = 0;
-		WFIFOW(login_fd,82) = char_maintenance;
+	if (login_fd > 0 || session[login_fd] != NULL) 
+		return 0;
 
-		WFIFOW(login_fd,84) = char_new_display; //only display (New) if they want to [Kevin]
-
-		WFIFOSET(login_fd,86);
-
-		if (!kick_on_disconnect)
-			return 0; //Do not perform on-connect cleanup duties.
-
-		//(re)connected to login-server,
-		//now wi'll look in sql which player's are ON and set them OFF
-		//AND send to all mapservers (if we have one / ..) to kick the players
-		//so the bug is fixed, if'ure using more than one charservers (worlds)
-		//that the player'S got reejected from server after a 'world' crash^^
-		//2b1f AID.L B1
-
-		sprintf(tmp_sql, "SELECT `account_id`, `online` FROM `%s` WHERE `online` = '1'", char_db);
-		if(mysql_query(&mysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return -1;
-		}
-
-		sql_res = mysql_store_result(&mysql_handle);
-		if(sql_res){
-			cc = (int)mysql_num_rows(sql_res);
-			ShowStatus("Setting %d Players offline\n", cc);
-			while((sql_row = mysql_fetch_row(sql_res))){
-				//sql_row[0] == AID
-				//tell the loginserver
-				WFIFOW(login_fd, 0) = 0x272c; //set off
-				WFIFOL(login_fd, 2) = atoi(sql_row[0]); //AID
-				WFIFOSET(login_fd, 6);
-
-				//tell map to 'kick' the player (incase of 'on' ..)
-				WBUFW(buf, 0) = 0x2b1f;
-				WBUFL(buf, 2) = atoi(sql_row[0]);
-				WBUFB(buf, 6) = 1;
-				mapif_sendall(buf, 7);
-
-				//kick the player if he's on charselect
-				for(i = 0; i < fd_max; i++){
-					if(session[i] && (sd = (struct char_session_data*)session[i]->session_data)){
-						if(sd->account_id == atoi(sql_row[0])){
-							session[i]->eof = 1;
-							break;
-						}
-					}
-				}
-
-			}
-			mysql_free_result(sql_res);
-		}else{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return -1;
-		}
-
-		//Now Update all players to 'OFFLINE'
-		sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", char_db);
-		if(mysql_query(&mysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		sprintf(tmp_sql, "UPDATE `%s` SET `online` = '0'", guild_member_db);
-		if(mysql_query(&mysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		sprintf(tmp_sql, "UPDATE `%s` SET `connect_member` = '0'", guild_db);
-		if(mysql_query(&mysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-
+	ShowInfo("Attempt to connect to login-server...\n");
+	login_fd = make_connection(login_ip, login_port);
+	if (login_fd == -1)
+	{	//Try again later. [Skotlex]
+		login_fd = 0;
+		return 0;
 	}
+	session[login_fd]->func_parse = parse_tologin;
+	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
+	WFIFOW(login_fd,0) = 0x2710;
+	memcpy(WFIFOP(login_fd,2), userid, 24);
+	memcpy(WFIFOP(login_fd,26), passwd, 24);
+	WFIFOL(login_fd,50) = 0;
+	WFIFOL(login_fd,54) = char_ip;
+	WFIFOL(login_fd,58) = char_port;
+	memcpy(WFIFOP(login_fd,60), server_name, 20);
+	WFIFOW(login_fd,80) = 0;
+	WFIFOW(login_fd,82) = char_maintenance;
+
+	WFIFOW(login_fd,84) = char_new_display; //only display (New) if they want to [Kevin]
+
+	WFIFOSET(login_fd,86);
 	return 0;
 }
 
@@ -3951,7 +3890,8 @@ void do_final(void) {
 	//check SQL save progress.
 	//wait until save char complete
 
-	set_all_offline();
+	set_all_offline(-1);
+	set_all_offline_sql();
 
 	inter_final();
 
@@ -4107,7 +4047,7 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "passwd") == 0) {
 			strncpy(passwd, w2, 24);
 		} else if (strcmpi(w1, "server_name") == 0) {
-			memcpy(server_name, w2, sizeof(server_name));
+			strncpy(server_name, w2, 20)
 			server_name[sizeof(server_name) - 1] = '\0';
 			ShowStatus("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {

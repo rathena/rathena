@@ -19,7 +19,6 @@ int inter_log(char *fmt,...);
 #define inter_cfgName "conf/inter_athena.conf"
 
 extern unsigned int party_share_level;
-extern int kick_on_disconnect;
 extern char inter_log_filename[1024];
 extern int log_inter;
 
