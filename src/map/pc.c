@@ -6109,7 +6109,7 @@ int pc_cleareventtimer(struct map_session_data *sd)
  */
 int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 {
-	int i,pos;
+	int i,pos,flag=0;
 	struct item_data *id;
 
 	nullpo_retr(0, sd);
@@ -6130,7 +6130,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
-
+	
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots.. 
@@ -6146,8 +6146,17 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
 	}
 	
-	for(i=0;i<EQI_MAX;i++) {
 
+	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range)
+	{	//Update skill-block range database when weapon range changes. [Skotlex]
+		i = sd->equip_index[EQI_HAND_R];
+		if (i < 0 || !sd->inventory_data[i]) //No data, or no weapon equipped
+			flag = 1;
+		else
+			flag = id->range != sd->inventory_data[i]->range;
+	}
+
+	for(i=0;i<EQI_MAX;i++) {
 		if(pos & equip_pos[i]) {
 			if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
 				pc_unequipitem(sd,sd->equip_index[i],2);
@@ -6229,6 +6238,9 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	}
 */
 	status_calc_pc(sd,0);
+	if (flag) //Update skill data
+		clif_skillinfoblock(sd);
+
 	//OnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
 		int i;
