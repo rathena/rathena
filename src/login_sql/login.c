@@ -787,12 +787,18 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state}
 	if (ban_until_time != 0) { // if account is banned
-		strftime(tmpstr, 20, date_format, localtime(&ban_until_time));
-		tmpstr[19] = '\0';
-		if (ban_until_time > time(NULL)) { // always banned
+		if (ban_until_time > time(NULL)) // always banned
 			return 6; // 6 = Your are Prohibited to log in until %s
-		} else { // ban is finished
+
+		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+		if (mysql_query(&mysql_handle, tmpsql)) {
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		}
+
+		// ban is finished
 			// reset the ban time
+/*		//Removed "state" of bans, it behaves now like their TXT counter-part. [Skotlex]
 			if (atoi(sql_row[9])==7) {//it was a temp ban - so we set STATE to 0
 				sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0', `state`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
 				strcpy(sql_row[9],"0"); //we clear STATE
@@ -803,7 +809,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
-		}
+*/
 	}
 
 	if (atoi(sql_row[9])) {
@@ -1198,7 +1204,7 @@ int parse_fromchar(int fd){
 						charif_sendallwos(-1, buf, 11);
 					}
 					ShowNotice("Account: %d Banned until: %ld\n", acc, timestamp);
-					sprintf(tmpsql, "UPDATE `%s` SET `ban_until` = '%ld', `state`='7' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, acc);
+					sprintf(tmpsql, "UPDATE `%s` SET `ban_until` = '%ld' WHERE `%s` = '%d'", login_db, (unsigned long)timestamp, login_db_account_id, acc);
 					// query
 					if (mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));

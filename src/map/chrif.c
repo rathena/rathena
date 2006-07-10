@@ -684,7 +684,7 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
 		WFIFOW(char_fd, 40) = minute;
 		WFIFOW(char_fd, 42) = second;
 	}
-	ShowInfo("chrif : sended 0x2b0e\n");
+//	ShowInfo("chrif : sent 0x2b0e\n");
 	WFIFOSET(char_fd,44);
 
 	return 0;
@@ -702,7 +702,7 @@ int chrif_changesex(int id, int sex) {
 	WFIFOW(char_fd,2) = 9;
 	WFIFOL(char_fd,4) = id;
 	WFIFOB(char_fd,8) = sex;
-	ShowInfo("chrif : sent 0x3000(changesex)\n");
+//	ShowInfo("chrif : sent 0x3000(changesex)\n");
 	WFIFOSET(char_fd,9);
 	return 0;
 }
