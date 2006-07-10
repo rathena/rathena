@@ -3768,7 +3768,7 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data) {
 }
 
 int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
-	if (login_fd > 0 || session[login_fd] != NULL) 
+	if (login_fd > 0 && session[login_fd] != NULL) 
 		return 0;
 
 	ShowInfo("Attempt to connect to login-server...\n");
