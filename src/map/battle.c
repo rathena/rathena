@@ -3028,8 +3028,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_PC *sd = (TBL_PC*)t_bl;
 			if (sd->invincible_timer != -1 || pc_isinvisible(sd))
 				return -1; //Cannot be targeted yet.
-			if (sd->state.monster_ignore && src->type == BL_MOB)
-				return 0; //option to have monsters ignore GMs [Valaris]
+			if (sd->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
+				return 0; //Global inmunity to attacks.
 			if (sd->special_state.killable && t_bl != s_bl)
 			{
 				state |= BCT_ENEMY; //Universal Victim

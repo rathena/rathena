@@ -6746,7 +6746,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		matk_max = sstatus->matk_max;
 		//Note to NOT return from the function until this is unset!
 		sstatus->matk_min = sc->data[SC_MAGICPOWER].val3;
-		sstatus->matk_min = sc->data[SC_MAGICPOWER].val4;
+		sstatus->matk_max = sc->data[SC_MAGICPOWER].val4;
 	}
 
 	switch (sg->unit_id)

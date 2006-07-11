@@ -590,6 +590,7 @@ static AtCommandInfo atcommand_info[] = {
 
 	{ AtCommand_Me,					"@me",			20, atcommand_me }, //added by massdriller, code by lordalfa
 	{ AtCommand_MonsterIgnore,		"@monsterignore",		99, atcommand_monsterignore }, // [Valaris]
+	{ AtCommand_MonsterIgnore,		"@battleignore",		99, atcommand_monsterignore },
 	{ AtCommand_FakeName,			"@fakename",		20, atcommand_fakename }, // [Valaris]
 	{ AtCommand_Size,				"@size",			20, atcommand_size },
 	{ AtCommand_ShowExp,			"@showexp", 		10, atcommand_showexp},
@@ -9772,10 +9773,10 @@ int atcommand_monsterignore(
 
 	if (!sd->state.monster_ignore) {
 		sd->state.monster_ignore = 1;
-		clif_displaymessage(sd->fd, "Monsters will now ignore you.");
+		clif_displaymessage(sd->fd, "You are now inmune to attacks.");
 	} else {
 		sd->state.monster_ignore = 0;
-		clif_displaymessage(sd->fd, "Monsters are no longer ignoring you.");
+		clif_displaymessage(sd->fd, "Returned to normal state.");
 	}
 
 	return 0;
@@ -9795,7 +9796,7 @@ int atcommand_fakename(
 	
 	if((!message || !*message) && strlen(sd->fakename) > 1) {
 		sd->fakename[0]='\0';
-		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, 3);
+		clif_charnameack(0, &sd->bl);
 		clif_displaymessage(sd->fd,"Returned to real name.");
 		return 0;
 	}

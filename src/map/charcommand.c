@@ -1246,7 +1246,7 @@ int charcommand_fakename(
 	if(strlen(name) < 1 || !name) {
 		if(strlen(pl_sd->fakename) > 1) {
 			pl_sd->fakename[0]='\0';
-			pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, sd->bl.y, 3);
+			clif_charnameack(0, &pl_sd->bl);
 			clif_displaymessage(sd->fd,"Returned to real name.");
 		} else {
 			clif_displaymessage(sd->fd,"Character does not has a fake name.");
@@ -1260,7 +1260,7 @@ int charcommand_fakename(
 	}
 	
 	memcpy(pl_sd->fakename,name, NAME_LENGTH-1);
-	pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
+	clif_charnameack(0, &pl_sd->bl);
 	clif_displaymessage(sd->fd,"Fake name enabled.");
 	
 	return 0;
