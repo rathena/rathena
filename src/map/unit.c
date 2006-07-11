@@ -198,11 +198,14 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	  		return 0;
 		if (md->min_chase > md->db->range2) md->min_chase--;
 		//Walk skills are triggered regardless of target due to the idle-walk mob state.
-		//However, avoid triggering them when there's a forced stop-walk call 
-		//(tid == -1) or client desync problems can appear.
-		if(tid != -1 && !(ud->walk_count%WALK_SKILL_INTERVAL) &&
+		//But avoid triggering on stop-walk calls.
+		if(tid != -1 &&
+			!(ud->walk_count%WALK_SKILL_INTERVAL) &&
 			mobskill_use(md, tick, -1))
+	  	{
+			clif_fixpos(bl); //Fix position as walk has been cancelled.
 			return 0;
+		}
 	}
 
 	if(tid == -1) //A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
