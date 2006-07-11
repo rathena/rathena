@@ -7105,7 +7105,16 @@ int pc_read_gm_account(int fd)
 	}
 	return GM_num;
 }
-
+static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
+{
+	if (sd->state.night != night_flag && map[sd->bl.m].flag.nightenabled)
+  	{	//Night/day state does not match.
+		clif_status_load(&sd->bl, SI_NIGHT, night_flag); //New night effect by dynamix [Skotlex]
+		sd->state.night = night_flag;
+		return 1;
+	}
+	return 0;
+}
 /*================================================
  * timer to do the day [Yor]
  * data: 0 = called by timer, 1 = gmcommand/script
@@ -7114,29 +7123,17 @@ int pc_read_gm_account(int fd)
 int map_day_timer(int tid, unsigned int tick, int id, int data)
 {
 	char tmp_soutput[1024];
-	struct map_session_data *pl_sd;
 
 	if (data == 0 && battle_config.day_duration <= 0)	// if we want a day
 		return 0;
 	
-	if (night_flag != 0) {
-		int i;
-		night_flag = 0; // 0=day, 1=night [Yor]
-
-		for(i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && pl_sd->fd)
-			{
-				if (pl_sd->state.night) {
-					clif_status_load(&pl_sd->bl, SI_NIGHT, 0); //New night effect by dynamix [Skotlex]
-					pl_sd->state.night = 0;
-				}
-			}
-		}
-
-		strcpy(tmp_soutput, (data == 0) ? msg_txt(502) : msg_txt(60)); // The day has arrived!
-		intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
-	}
-
+	if (!night_flag)
+		return 0; //Already day.
+	
+	night_flag = 0; // 0=day, 1=night [Yor]
+	clif_foreachclient(pc_daynight_timer_sub);
+	strcpy(tmp_soutput, (data == 0) ? msg_txt(502) : msg_txt(60)); // The day has arrived!
+	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
 }
 
@@ -7148,27 +7145,17 @@ int map_day_timer(int tid, unsigned int tick, int id, int data)
 int map_night_timer(int tid, unsigned int tick, int id, int data)
 {
 	char tmp_soutput[1024];
-	struct map_session_data *pl_sd;
 
 	if (data == 0 && battle_config.night_duration <= 0)	// if we want a night
 		return 0;
 	
-	if (night_flag == 0) {
-		int i;
-		night_flag = 1; // 0=day, 1=night [Yor]
-		for(i = 0; i < fd_max; i++) {
-			if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth && pl_sd->fd)
-			{
-				if (!pl_sd->state.night && map[pl_sd->bl.m].flag.nightenabled) {
-					clif_status_load(&pl_sd->bl, SI_NIGHT, 1); //New night effect by dynamix [Skotlex]
-					pl_sd->state.night = 1;
-				}
-			}
-		}
-		strcpy(tmp_soutput, (data == 0) ? msg_txt(503) : msg_txt(59)); // The night has fallen...
-		intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
-	}
+	if (night_flag)
+		return 0; //Already nigth.
 
+	night_flag = 1; // 0=day, 1=night [Yor]
+	clif_foreachclient(pc_daynight_timer_sub);
+	strcpy(tmp_soutput, (data == 0) ? msg_txt(503) : msg_txt(59)); // The night has fallen...
+	intif_GMmessage(tmp_soutput, strlen(tmp_soutput) + 1, 0);
 	return 0;
 }
 

@@ -4,6 +4,17 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/11
+	* Fixed clif_parse not checking for func_parse before sending data to the
+	  connected clients. This in turn required various code-rewrites in: [Skotlex]
+	- duel related messaging functions (added clif targets DUEL/DUEL_WOS).
+	- intif whisper to gm function
+	- day/night timers
+	- Rewrote the parse_console function to stop allocating/deallocating memory
+	  on every call.
+	- Modified chrif_charselectreq to receive the player's ip among the data.
+	* Added function clif_disp_message, which is the same as
+	  clif_disp_onlyself, except you can specify the targets (it sends a
+	  guild-chat packet) [Skotlex]
 	* Fixed the subele bonus (elemental reduction) being applied to the element
 	  of the attacker instead of the element of the attack. [Skotlex]
 	* mob skills now won't trigger on unit_stopwalking calls. [Skotlex]

@@ -831,10 +831,22 @@ int intif_parse_WisEnd(int fd) {
 	return 0;
 }
 
+static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va) {
+	int min_gm_level = va_arg(va, int);
+	char *wisp_name;
+	char *message;
+	int len;
+	if (pc_isGM(sd) < min_gm_level) return 0;
+	clif_wis_message(sd->fd, wisp_name, message, len);
+	wisp_name = va_arg(va, char*);
+	message = va_arg(va, char*);
+	len = va_arg(va, int);
+	return 1;
+}
+
 // Received wisp message from map-server via char-server for ALL gm
 int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
-	int i, min_gm_level, mes_len;
-	struct map_session_data *pl_sd;
+	int min_gm_level, mes_len;
 	char Wisp_name[NAME_LENGTH];
 	char mbuf[255];
 	char *message;
@@ -849,14 +861,10 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 	memcpy(message, RFIFOP(fd,30), mes_len);
 	message[mes_len-1] = '\0';
 	// information is sended to all online GM
-	for (i = 0; i < fd_max; i++)
-		if (session[i] && (pl_sd = (struct map_session_data *) session[i]->session_data) && pl_sd->state.auth)
-			if (pc_isGM(pl_sd) >= min_gm_level)
-				clif_wis_message(i, Wisp_name, message, strlen(message) + 1);
+	clif_foreachclient(mapif_parse_WisToGM_sub, min_gm_level, Wisp_name, message, mes_len);
 
 	if (message != mbuf)
 		aFree(message);
-
 	return 0;
 }
 

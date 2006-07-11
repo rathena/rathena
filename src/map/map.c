@@ -1693,11 +1693,10 @@ int map_quit(struct map_session_data *sd) {
 	}
 	if(sd->fd)
   	{	//Player will be free'd on save-ack. [Skotlex]
-		if (session[sd->fd] && session[sd->fd]->session_data == sd)
+		if (session[sd->fd])
 			session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
 	}
-
 	return 0;
 }
 
@@ -3195,54 +3194,38 @@ static int char_ip_set = 0;
  *------------------------------------------
  */
 int parse_console(char *buf) {
-	char *type,*command,*map, *buf2;
+	char type[64],command[64],map[64], buf2[72];
 	int x = 0, y = 0;
 	int m, n;
-	struct map_session_data *sd;
+	struct map_session_data sd;
 
-	sd = (struct map_session_data*)aCalloc(sizeof(struct map_session_data), 1);
-
-	sd->fd = 0;
-	strcpy( sd->status.name , "console");
-
-	type = (char *)aCallocA(64,1);
-	command = (char *)aCallocA(64,1);
-	map = (char *)aCallocA(64,1);
-	buf2 = (char *)aCallocA(72,1);
+	memset(&sd, 0, sizeof(struct map_session_data));
+	strcpy( sd.status.name , "console");
 
 	if ( ( n = sscanf(buf, "%[^:]:%[^:]:%99s %d %d[^\n]", type , command , map , &x , &y )) < 5 )
 		if ( ( n = sscanf(buf, "%[^:]:%[^\n]", type , command )) < 2 )
 			n = sscanf(buf,"%[^\n]",type);
 
 	if ( n == 5 ) {
-		if (x <= 0) {
-			x = rand() % 399 + 1;
-			sd->bl.x = x;
-		} else {
-			sd->bl.x = x;
-		}
-
-		if (y <= 0) {
-			y = rand() % 399 + 1;
-			sd->bl.y = y;
-		} else {
-			sd->bl.y = y;
-		}
-
 		m = map_mapname2mapid(map);
-		if ( m >= 0 )
-			sd->bl.m = m;
-		else {
+		if ( m < 0 ) {
 			ShowWarning("Console: Unknown map\n");
-			goto end;
+			return 0;
 		}
+		sd.bl.m = m;
+		map_search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0); 
+		if (x > 0)
+			sd.bl.x = x;
+
+		if (y > 0)
+			sd.bl.y = y;
 	}
 
 	ShowInfo("Type of command: %s || Command: %s || Map: %s Coords: %d %d\n",type,command,map,x,y);
 
 	if ( strcmpi("admin",type) == 0 && n == 5 ) {
 		sprintf(buf2,"console: %s",command);
-		if( is_atcommand(sd->fd,sd,buf2,99) == AtCommand_None )
+		if( is_atcommand(sd.fd,&sd,buf2,99) == AtCommand_None )
 			printf("Console: not atcommand\n");
 	} else if ( strcmpi("server",type) == 0 && n == 2 ) {
 		if ( strcmpi("shutdown", command) == 0 || strcmpi("exit",command) == 0 || strcmpi("quit",command) == 0 ) {
@@ -3258,14 +3241,6 @@ int parse_console(char *buf) {
 		printf("To shutdown the server:\n");
 		printf("server:shutdown\n");
 	}
-
-	end:
-	aFree(buf);
-	aFree(type);
-	aFree(command);
-	aFree(map);
-	aFree(buf2);
-	aFree(sd);
 
 	return 0;
 }

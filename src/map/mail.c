@@ -330,7 +330,10 @@ int mail_check_timer(int tid,unsigned int tick,int id,int data)
 
 		while ((mail_row = mysql_fetch_row(mail_res))) {
 			for (i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = (struct map_session_data *) session[i]->session_data) && sd->state.auth){
+				if (session[i] && session[i]->func_parse == clif_parse &&	
+					(sd = (struct map_session_data *) session[i]->session_data) &&
+					sd->state.auth)
+				{
 					if(pc_isGM(sd) < 80 && sd->mail_counter > 0)
 						sd->mail_counter--;
 					if(sd->status.account_id==atoi(mail_row[0]))

@@ -568,24 +568,15 @@ int auth_db_cleanup(int tid, unsigned int tick, int id, int data) {
  *
  *------------------------------------------
  */
-int chrif_charselectreq(struct map_session_data *sd)
+int chrif_charselectreq(struct map_session_data *sd, unsigned long s_ip)
 {
-	int i, s_ip;
-
 	nullpo_retr(-1, sd);
 
 	if( !sd || !sd->bl.id || !sd->login_id1 )
 		return -1;
 	chrif_check(-1);
 
-	s_ip = 0;
-	for(i = 0; i < fd_max; i++)
-		if (session[i] && session[i]->session_data == sd) {
-			s_ip = session[i]->client_addr.sin_addr.s_addr;
-			break;
-		}
-
-        WFIFOHEAD(char_fd, 18);
+	WFIFOHEAD(char_fd, 18);
 	WFIFOW(char_fd, 0) = 0x2b02;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;

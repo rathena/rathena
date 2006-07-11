@@ -43,7 +43,9 @@ enum {
 	GUILD_SAMEMAP_WOS,
 	GUILD_AREA,
 	GUILD_AREA_WOS,	// end additions [Valaris]
-	SELF
+	SELF,
+	DUEL,
+	DUEL_WOS
 };
 
 extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
@@ -297,6 +299,7 @@ int clif_guild_xy_remove(struct map_session_data *sd);
 // atcommand
 int clif_displaymessage(const int fd,char* mes);
 int clif_disp_onlyself(struct map_session_data *sd,char *mes,int len);
+void clif_disp_message(struct block_list *src, char *mes, int len, int type);
 int clif_GMmessage(struct block_list *bl,char* mes,int len,int flag);
 void clif_MainChatMessage(char* message); //luzza
 int clif_announce(struct block_list *bl, char* mes, int len, unsigned long color, int flag);
