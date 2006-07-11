@@ -2383,7 +2383,7 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
 
 	//Check validity
 	if( nameid <= 0 || cardid <= 0 ||
-		(sd->inventory_data[idx_equip]->type!=IT_WEAPON && sd->inventory_data[idx_equip]->type!=IT_WEAPON)||
+		(sd->inventory_data[idx_equip]->type!=IT_WEAPON && sd->inventory_data[idx_equip]->type!=IT_ARMOR)||
 		sd->inventory_data[idx_card]->type!=IT_CARD || // Prevent Hack [Ancyker]
 		sd->status.inventory[idx_equip].identify==0 ||
 		itemdb_isspecial(sd->status.inventory[idx_equip].card[0]) ||
