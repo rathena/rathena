@@ -1452,6 +1452,47 @@ int lan_subnetcheck(long *p) {
 	return 0;
 }
 
+int login_ip_ban_check(char p*)
+{
+	MYSQL_RES* sql_res;
+	MYSQL_ROW  sql_row;
+	//ip ban
+	//p[0], p[1], p[2], p[3]
+	//request DB connection
+	//check
+	sprintf(tmpsql, "SELECT count(*) FROM `ipbanlist` WHERE `list` = '%d.*.*.*' OR `list` = '%d.%d.*.*' OR `list` = '%d.%d.%d.*' OR `list` = '%d.%d.%d.%d'",
+		p[0], p[0], p[1], p[0], p[1], p[2], p[0], p[1], p[2], p[3]);
+	if (mysql_query(&mysql_handle, tmpsql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		// close connection because we can't verify their connectivity.
+		return 1;
+	}
+	sql_res = mysql_store_result(&mysql_handle) ;
+	sql_row = sql_res?mysql_fetch_row(sql_res):NULL;	//row fetching
+
+	if(!sql_row) return 1; //Shouldn't happen, but just in case...
+
+	if (atoi(sql_row[0]) == 0) { //No ban
+		mysql_free_result(sql_res);
+		return 0;
+	}
+		
+	// ip ban ok.
+	ShowWarning("packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
+
+	if (log_login)
+	{
+		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, *((ulong *)p));
+		// query
+		if(mysql_query(&mysql_handle, tmpsql)) {
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		}
+	}
+	mysql_free_result(sql_res);
+	return 1;
+}
 //----------------------------------------------------------------------------------------
 // Default packet parsing (normal players or administation/char-server connection requests)
 //----------------------------------------------------------------------------------------
@@ -1462,7 +1503,6 @@ int parse_login(int fd) {
 	MYSQL_ROW  sql_row = NULL;
 
 	char t_uid[100];
-	//int sql_fields, sql_cnt;
 	struct mmo_account account;
 	long subnet_char_ip;
 	int packet_len;
@@ -1474,47 +1514,8 @@ int parse_login(int fd) {
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
 	memset(&account, 0, sizeof(account));
+	i = RFIFOREST(fd)>=2?RFIFOW(fd,0):0;
 
-	if (ipban > 0) {
-		//ip ban
-		//p[0], p[1], p[2], p[3]
-		//request DB connection
-		//check
-		sprintf(tmpsql, "SELECT count(*) FROM `ipbanlist` WHERE `list` = '%d.*.*.*' OR `list` = '%d.%d.*.*' OR `list` = '%d.%d.%d.*' OR `list` = '%d.%d.%d.%d'",
-			p[0], p[0], p[1], p[0], p[1], p[2], p[0], p[1], p[2], p[3]);
-		if (mysql_query(&mysql_handle, tmpsql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			// close connection because we can't verify their connectivity.
-			session[fd]->eof = 1;
-		} else { //Avoid entering as it causes a crash.
-			sql_res = mysql_store_result(&mysql_handle) ;
-			sql_row = mysql_fetch_row(sql_res);	//row fetching
-
-			if (atoi(sql_row[0]) >0) {
-				// ip ban ok.
-				ShowWarning("packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
-				if (log_login)
-				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, *((ulong *)p));
-
-					// query
-					if(mysql_query(&mysql_handle, tmpsql)) {
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-					}
-				}
-				ShowInfo ("close session connection...\n");
-
-				// close connection
-				session[fd]->eof = 1;
-
-			} else {
-				ShowInfo ("packet from ip (ban check ok) : %d.%d.%d.%d" RETCODE, p[0], p[1], p[2], p[3]);
-			}
-			mysql_free_result(sql_res);
-		}
-	}
 	if (session[fd]->eof) {
 		for(i = 0; i < MAX_SERVERS; i++)
 			if (server_fd[i] == fd)
@@ -1523,7 +1524,7 @@ int parse_login(int fd) {
 		return 0;
 	}
 
-	while(RFIFOREST(fd)>=2){
+	while(RFIFOREST(fd)>=2 && !session[fd]->eof){
 		ShowDebug("parse_login : %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
 
 		switch(RFIFOW(fd,0)){
@@ -1542,9 +1543,18 @@ int parse_login(int fd) {
 		case 0x277: // New login packet
 		case 0x64:		// request client login
 		case 0x01dd:	// request client login with encrypt
+
 			packet_len = RFIFOREST(fd);
 
-			switch(RFIFOW(fd, 0)){
+			//Perform ip-ban check ONLY on login packets
+			if (ipban > 0 && login_ip_ban_check(p))
+			{
+				RFIFOSKIP(fd,packet_len);
+				session[fd]->eof = 1;
+				break;
+			}
+
+			switch(RFIFOW(fd,0)){
 				case 0x64:
 					if(packet_len < 55)
 						return 0;

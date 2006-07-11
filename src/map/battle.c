@@ -1423,10 +1423,10 @@ static struct Damage battle_calc_weapon_attack(
 				case WS_CARTTERMINATION:
 					i = (10 * (16 - skill_lv));
 					if (i < 1) i = 1;
-					if(sd && sd->cart_weight > 0)
-						skillratio += sd->cart_weight / i - 100;
+					if(sd && sd->cart_weight > 0) //Preserve damage ratio when max cart weight is changed.
+						skillratio += (sd->cart_weight * 8000)  / (i * battle_config.max_cart_weight) - 100;
 					else if (!sd)
-						skillratio += battle_config.max_cart_weight / i - 100;
+						skillratio += 8000 / i - 100;
 					flag.cardfix = 0;
 					break;
 				case TK_DOWNKICK:
