@@ -25,6 +25,7 @@
 
 =========================
 07/11
+	* Fixed Nurse Cap, Memory Book and Dagger of Counter [Playtester]
 	* Marionette now drops "Marionette Doll" [Playtester]
 07/10
 	* Corrected Frost Nova's splash range and Land Protector's cast range.
