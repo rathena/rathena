@@ -438,6 +438,9 @@ int buildin_sleep(struct script_state *st);
 int buildin_sleep2(struct script_state *st);
 int buildin_awake(struct script_state *st);
 int buildin_getvariableofnpc(struct script_state *st);
+// [blackhole89] -->
+int buildin_warpportal(struct script_state *st);
+// <-- [blackhole89]
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -779,6 +782,9 @@ struct {
 	{buildin_sleep2,"sleep2","i"},
 	{buildin_awake,"awake","s"},
 	{buildin_getvariableofnpc,"getvariableofnpc","is"},
+	// [blackhole89] -->
+	{buildin_warpportal,"warpportal","iisii"},
+	// <--- [blackhole89]
 	{NULL,NULL,NULL},
 };
 
@@ -11011,6 +11017,39 @@ int buildin_getvariableofnpc(struct script_state *st)
 	}
 	return 0;
 }
+
+// [blackhole89] --->
+
+// Set a warp portal.
+int buildin_warpportal(struct script_state *st){
+	struct skill_unit_group *group;
+	unsigned short mapindex;
+	long spx,spy,tpx,tpy;
+	struct block_list *bl=map_id2bl(st->oid);
+
+	nullpo_retr(0,bl);
+
+	spx=conv_num(st, & (st->stack->stack_data[st->start+2]));
+	spy=conv_num(st, & (st->stack->stack_data[st->start+3]));
+	mapindex  = mapindex_name2id((char*)conv_str(st,& (st->stack->stack_data[st->start+4])));
+	printf("mapindex: %d\n",mapindex);
+	tpx=conv_num(st, & (st->stack->stack_data[st->start+5]));
+	tpy=conv_num(st, & (st->stack->stack_data[st->start+6]));
+
+	if(!mapindex) return 0;
+
+	if((group=skill_unitsetting(bl,AL_WARP,4,spx,spy,1))==NULL) {
+		return 0;
+	}
+
+	group->val2=(tpx<<16)|tpy;
+	group->val3 = mapindex;
+
+	return 0;
+}
+
+// <-- [blackhole89]
+
 //
 // ŽÀs•”main
 //

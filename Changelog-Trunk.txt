@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/07/11
+	* Added script function warpportal(x,y,targetmap$,targetx,targety).
+	  This creates warp portals as in the skill unit as a volatile alternative
+	  to static warp portals. [blackhole89]
 	* Modified the login-sql server to do the ip-ban check only on the
 	  auth-packets instead of on every packet. [Skotlex]
 2006/07/10

@@ -3176,6 +3176,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 		case BL_SKILL: //Skill with no owner? Fishy, but let it through.
 			break;
+		case BL_NPC:	// allows NPC-set skill units to proceed [blackhole89]
+			break;
 		default:	//Invalid source of attack?
 			return 0;
 	}
