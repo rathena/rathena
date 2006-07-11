@@ -302,11 +302,18 @@ int mail_send(struct map_session_data *sd, char *name, char *message, int flag)
 	return 0;
 }
 
+static int mail_check_timer_sub(struct map_session_data *sd, va_list va)
+{
+	int id = va_arg(va, int);
+	if(pc_isGM(sd) < 80 && sd->mail_counter > 0)
+		sd->mail_counter--;
+	if(sd->status.account_id==id)
+		clif_displaymessage(sd->fd, msg_txt(526)); //you got new email.
+	return 0;
+}
+
 int mail_check_timer(int tid,unsigned int tick,int id,int data)
 {
-	struct map_session_data *sd = NULL;
-	int i;
-
 	if(mail_timer != tid)
 		return 0;
 
@@ -328,20 +335,8 @@ int mail_check_timer(int tid,unsigned int tick,int id,int data)
 			return 0;
 		}
 
-		while ((mail_row = mysql_fetch_row(mail_res))) {
-			for (i = 0; i < fd_max; i++) {
-				if (session[i] && session[i]->func_parse == clif_parse &&	
-					(sd = (struct map_session_data *) session[i]->session_data) &&
-					sd->state.auth)
-				{
-					if(pc_isGM(sd) < 80 && sd->mail_counter > 0)
-						sd->mail_counter--;
-					if(sd->status.account_id==atoi(mail_row[0]))
-						//clif_displaymessage(sd->fd, "You have new mail.");
-						clif_displaymessage(sd->fd, msg_txt(526));
-				}
-			}
-		}
+		while ((mail_row = mysql_fetch_row(mail_res)))
+			clif_foreachclient(mail_check_timer_sub, atoi(mail_row[0]));
 	}
 
 	sprintf(tmp_sql,"UPDATE `%s` SET `check_flag`='1' WHERE `check_flag`= '0' ", mail_db);
