@@ -3,8 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-
 2006/07/11
+	* Fixed the subele bonus (elemental reduction) being applied to the element
+	  of the attacker instead of the element of the attack. [Skotlex]
+	* mob skills now won't trigger on unit_stopwalking calls. [Skotlex]
 	* Coded @reset. [Skotlex]
 	* Reenabled @changesex [Skotlex]
 	* Added function pet_create_egg which handles creating pet eggs correctly

@@ -1833,7 +1833,9 @@ static struct Damage battle_calc_weapon_attack(
 		s_race2 = status_get_race2(src);
 		s_class = status_get_class(src);
 		
-		cardfix=cardfix*(100-tsd->subele[sstatus->def_ele])/100;
+		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
+		if (flag.lh && s_ele_ != s_ele)
+			cardfix=cardfix*(100-tsd->subele[s_ele_])/100;
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
  		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
@@ -2357,7 +2359,7 @@ struct Damage battle_calc_magic_attack(
 			short cardfix=100;
 
 			if (flag.elefix)
-				cardfix=cardfix*(100-tsd->subele[sstatus->def_ele])/100;
+				cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 			cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 			cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
@@ -2595,7 +2597,7 @@ struct Damage  battle_calc_misc_attack(
 	if(md.damage && flag.cardfix && tsd){
 		int cardfix = 10000;
 		int race2 = status_get_race(src);
-		cardfix=cardfix*(100-tsd->subele[sstatus->def_ele])/100;
+		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
 		cardfix=cardfix*(100-tsd->subrace2[race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
