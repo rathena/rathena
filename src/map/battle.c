@@ -239,6 +239,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		md=(struct mob_data *)bl;
 	} else if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
+		//Special no damage states
+		if(flag&BF_WEAPON && sd->special_state.no_weapon_damage)
+			damage -= damage*sd->special_state.no_weapon_damage/100;
+
+		if(flag&BF_MAGIC && sd->special_state.no_magic_damage)
+			damage -= damage*sd->special_state.no_magic_damage/100;
+
+		if(!damage) return 0;
 	}
 
 	sc = status_get_sc(bl);
@@ -390,13 +398,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if((--sci->val3)<=0 || (sci->val2<=0) || skill_num == AL_HOLYLIGHT)
 				status_change_end(bl, SC_KYRIE, -1);
 		}
-
-		//Special no damage states
-		if(flag&BF_WEAPON && sd && sd->special_state.no_weapon_damage)
-			damage -= damage*sd->special_state.no_weapon_damage/100;
-
-		if(flag&BF_MAGIC && sd && sd->special_state.no_magic_damage)
-			damage -= damage*sd->special_state.no_magic_damage/100;
 
 		if (!damage) return 0;
 	}
