@@ -108,7 +108,7 @@
 85,9,8,2,4,0,0,10,-10,yes,0,0,0,magic,0	//WZ_VERMILION#Lord of Vermilion#
 86,9,8,1,1,0,0,5,1,yes,0,0,0,magic,0	//WZ_WATERBALL#Water Ball#
 87,9,6,2,1,0,0,10,1,yes,0,0,0,magic,0	//WZ_ICEWALL#Ice Wall#
-88,9,6,4,1,2,5,10,1,yes,0,0,0,magic,0	//WZ_FROSTNOVA#Frost Nova#
+88,0,6,4,1,2,2,10,1,yes,0,0,0,magic,0	//WZ_FROSTNOVA#Frost Nova#
 89,9,6,2,1,0,0,10,1,yes,0,0,0,magic,2	//WZ_STORMGUST#Storm Gust#
 90,9,8,1,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_EARTHSPIKE#Earth Spike#
 91,9,8,2,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0	//WZ_HEAVENDRIVE#Heaven's Drive#
@@ -308,7 +308,7 @@
 285,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VOLCANO#Volcano#
 286,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
 287,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
-288,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
+288,7:7:9:9:11,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
 289,9,6,1,0,1,0,5,1,yes,0,0,0,magic,0	//SA_DISPELL#Dispel#
 290,0,6,4,0,1,0,10,1,yes,0,0,0,magic,0	//SA_ABRACADABRA#Hocus-pocus#
 291,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_MONOCELL#Monocell#
@@ -519,7 +519,7 @@
 496,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT1#Twilight Alchemy 1#
 497,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 498,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
-499,-9,8,4,-1,0,0,1,2,no,0,8,0,weapon,0	//HT_POWER#Beast Strafing#
+499,-9,8,4,-1,0,0,1,2,no,0,520,0,weapon,0	//HT_POWER#Beast Strafing#
 //Temp Plugs(using bash as base)
 500,0,6,4,0,0,0,5,1,no,0,0,0,none,0	//GS_GLITTERING#Flip the Coin#
 501,-3,6,1,0,0,0,1,1,no,0,0,0,weapon,0	//GS_FLING#Fling#

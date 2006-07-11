@@ -1524,7 +1524,6 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		if(sd->guild_alliance>0)
 			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 
-		pc_stop_following(sd);
 		pc_delinvincibletimer(sd);
 
 		if(sd->pvp_timer!=-1) {

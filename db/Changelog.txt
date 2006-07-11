@@ -26,6 +26,12 @@
 =========================
 
 07/10
+	* Corrected Frost Nova's splash range and Land Protector's cast range.
+	  Thanks to Haplo.  [Skotlex]
+	* Fixed Beast Strafing not having inf2 = 512 (to make it a
+	  target-auto-select skill) [Skotlex]
+	* Fixed the duration of Land Protector, removed unused time2 value from
+	  their entries in skill_cast_db. Thanks to Haplo. [Skotlex]
 	* Corrected skill require entry from the Twilight Pharmacy skills.
 	  [Skotlex]
 	* Removed Frost Nova's skill_unit_db entry. [Skotlex]

@@ -6242,6 +6242,15 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	unit_flag = skill_get_unit_flag(skillid);
 	layout = skill_get_unit_layout(skillid,skilllv,src,x,y);
 
+	if (skillid == AL_WARP && flag && src->type == BL_SKILL)
+	{	//Warp Portal morphing to active mode, extract relevant data from src. [Skotlex]
+		group= ((TBL_SKILL*)src)->group;
+		src = map_id2bl(group->src_id);
+		if (!src) return NULL;
+		val2=group->val2; //Copy the (x,y) position you warp to
+		val3=group->val3; //as well as the mapindex to warp to.
+	}
+	
 	BL_CAST(BL_PC, src, sd);
 	status = status_get_status_data(src);
 	sc= status_get_sc(src);	// for traps, firewall and fogwall - celest
@@ -6263,7 +6272,6 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1=skilllv+6;
 		if(!(flag&1))
 			limit=2000;
-		active_flag=0;
 		break;
 
 	case PR_SANCTUARY:			/* サンクチュアリ */
@@ -7259,16 +7267,8 @@ int skill_unit_onlimit (struct skill_unit *src, unsigned int tick)
 	nullpo_retr(0, sg=src->group);
 
 	switch(sg->unit_id){
-	case UNT_WARP_ACTIVE:	/* ワープポータル(発動前) */
-		{
-			struct skill_unit_group *group=
-				skill_unitsetting(map_id2bl(sg->src_id),sg->skill_id,sg->skill_lv,
-					src->bl.x,src->bl.y,1);
-			if(group == NULL)
-				return 0;
-			group->val2=sg->val2; //Copy the (x,y) position you warp to
-			group->val3=sg->val3; //as well as the mapindex to warp to.
-		}
+	case UNT_WARP_ACTIVE:
+		skill_unitsetting(&src->bl,sg->skill_id,sg->skill_lv,src->bl.x,src->bl.y,1);
 		break;
 
 	case UNT_ICEWALL:	/* アイスウォール */
