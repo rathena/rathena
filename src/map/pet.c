@@ -108,6 +108,20 @@ static int pet_calc_pos(struct pet_data *pd,int tx,int ty,int dir)
 	return 0;
 }
 
+int pet_create_egg(struct map_session_data *sd, int item_id)
+{
+	int pet_id = search_petDB_index(item_id, PET_EGG);
+	if (pet_id < 0) return 0; //No pet egg here.
+	sd->catch_target_class = pet_db[pet_id].class_;
+	intif_create_pet(sd->status.account_id, sd->status.char_id,
+		(short)pet_db[pet_id].class_,
+		(short)mob_db(pet_db[pet_id].class_)->lv,
+		(short)pet_db[pet_id].EggID, 0,
+		(short)pet_db[pet_id].intimate,
+		100, 0, 1, pet_db[pet_id].jname);
+	return 1;
+}
+
 int pet_unlocktarget(struct pet_data *pd)
 {
 	nullpo_retr(0, pd);
@@ -335,7 +349,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = pd->petDB->EggID;
 	tmp_item.identify = 1;
-	tmp_item.card[0] = (short)0xff00;
+	tmp_item.card[0] = CARD0_PET;
 	tmp_item.card[1] = GetWord(sd->pet.pet_id,0);
 	tmp_item.card[2] = GetWord(sd->pet.pet_id,1);
 	tmp_item.card[3] = sd->pet.rename_flag;
@@ -481,7 +495,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 		int i;
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
-			if(sd->status.inventory[i].card[0] == (short)0xff00 &&
+			if(sd->status.inventory[i].card[0] == CARD0_PET &&
 				p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
 				break;
 		}
@@ -517,7 +531,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
 
-	if(sd->status.inventory[egg_index].card[0] == (short)0xff00)
+	if(sd->status.inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
 	else {
 		if(battle_config.error_log)
@@ -637,7 +651,7 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = pet_db[i].EggID;
 	tmp_item.identify = 1;
-	tmp_item.card[0] = (short)0xff00;
+	tmp_item.card[0] = CARD0_PET;
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.

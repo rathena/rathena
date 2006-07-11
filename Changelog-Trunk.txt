@@ -5,6 +5,23 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/07/11
+	* Coded @reset. [Skotlex]
+	* Reenabled @changesex [Skotlex]
+	* Added function pet_create_egg which handles creating pet eggs correctly
+	  (when passed item id is indeed a valid petegg). Applied this on @createitem
+	  and getitem. [Skotlex]
+	* Cleaned up code of @item [Skotlex]
+	* Cleaned up the itemdb_isequip functions. itemdb_isequip will now return
+	  if the item is equipable by players, itemdb_isstackable returns if the item
+	  can be stacked, and itemdb_isidentified returns if the item should drop
+	  identified. [Skotlex]
+	* Added defines CARD0_PET/CARD0_FORGE/CARD0_CREATED to identify if a given
+	  item has "invalid" cards, added define function itemdb_isspecial to
+	  simplify this check. [Skotlex]
+	* Removed itemdb.c considering item ids above 20000 as invalid. [Skotlex]
+	* Cleaned up script commands getitem and card-counting related ones.
+	  [Skotlex]
+	* Cleaned up a bit more pc_isequip [Skotlex]
 	* Added script function warpportal(x,y,targetmap$,targetx,targety).
 	  This creates warp portals as in the skill unit as a volatile alternative
 	  to static warp portals. [blackhole89]

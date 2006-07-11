@@ -33,6 +33,7 @@ extern struct pet_db pet_db[MAX_PET_DB];
 
 enum { PET_CLASS,PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
+int pet_create_egg(struct map_session_data *sd, int item_id);
 int pet_hungry_val(struct map_session_data *sd);
 int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type);
 int pet_unlocktarget(struct pet_data *pd);

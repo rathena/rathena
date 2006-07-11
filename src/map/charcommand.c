@@ -817,17 +817,17 @@ charcommand_itemlist(
 					memset(output, '\0', sizeof(output));
 					counter2 = 0;
 
-					if(i_item->card[0]==(short)0xff00) { //pet eggs
+					if(i_item->card[0]==CARD0_PET) { //pet eggs
 						if (i_item->card[3])
 							sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
 						else
 							sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
 						strcat(output, outputtmp);
 					} else
-					if(i_item->card[0]==0x00ff) { //forged items.
+					if(i_item->card[0]==CARD0_FORGE) { //forged items.
 						sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
 					} else
-					if(i_item->card[0]==0x00fe) { //created items.
+					if(i_item->card[0]==CARD0_CREATE) { //created items.
 						sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
 						strcat(output, outputtmp);
 					} else //Normal slots

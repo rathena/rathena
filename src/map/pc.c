@@ -386,14 +386,18 @@ int pc_equippoint(struct map_session_data *sd,int n)
 
 	nullpo_retr(0, sd);
 
-	if(sd->inventory_data[n]) {
-		ep = sd->inventory_data[n]->equip;
-		if(sd->inventory_data[n]->look == W_DAGGER	||
-			sd->inventory_data[n]->look == W_1HSWORD ||
-			sd->inventory_data[n]->look == W_1HAXE) {
-			if(ep == EQP_HAND_R && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN))
-				return EQP_WEAPON;
-		}
+	if(!sd->inventory_data[n])
+		return 0;
+
+	if (!itemdb_isequip2(sd->inventory_data[n]))
+		return 0; //Not equippable by players.
+	
+	ep = sd->inventory_data[n]->equip;
+	if(sd->inventory_data[n]->look == W_DAGGER	||
+		sd->inventory_data[n]->look == W_1HSWORD ||
+		sd->inventory_data[n]->look == W_1HAXE) {
+		if(ep == EQP_HAND_R && (pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN))
+			return EQP_WEAPON;
 	}
 	return ep;
 }
@@ -487,11 +491,8 @@ static int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int 
 	int i;
 	struct item *item = &sd->status.inventory[eqindex];
 	struct item_data *data;
-	if (	//Crafted/made/hatched items.
-		item->card[0]==0x00ff ||
-		item->card[0]==0x00fe ||
-		item->card[0]==(short)0xff00
-	)
+	//Crafted/made/hatched items.
+	if (itemdb_isspecial(item->card[0]))
 		return 1;
 	
 	for (i=0;i<s;i++)	{
@@ -2380,26 +2381,23 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
 	cardid=sd->status.inventory[idx_card].nameid;
 	ep=sd->inventory_data[idx_card]->equip;
 
+	//Check validity
 	if( nameid <= 0 || cardid <= 0 ||
-		(sd->inventory_data[idx_equip]->type!=4 && sd->inventory_data[idx_equip]->type!=5)||	// ? ”õ‚¶‚á‚È‚¢
-		sd->inventory_data[idx_card]->type!=6 || // Prevent Hack [Ancyker]
-		sd->status.inventory[idx_equip].identify==0 ||		// –¢ŠÓ’è
-		sd->status.inventory[idx_equip].card[0]==0x00ff ||		// »‘¢•Ší
-		sd->status.inventory[idx_equip].card[0]==0x00fe ||
-		sd->status.inventory[idx_equip].card[0]==(short)0xff00 ||
-		!(sd->inventory_data[idx_equip]->equip&ep) ||					// ? ”õŒÂŠˆá‚¢
-		(sd->inventory_data[idx_equip]->type==4 && ep==EQP_SHIELD) ||			// ? è•Ší‚Æ‚ƒJ?ƒh
+		(sd->inventory_data[idx_equip]->type!=IT_WEAPON && sd->inventory_data[idx_equip]->type!=IT_WEAPON)||
+		sd->inventory_data[idx_card]->type!=IT_CARD || // Prevent Hack [Ancyker]
+		sd->status.inventory[idx_equip].identify==0 ||
+		itemdb_isspecial(sd->status.inventory[idx_equip].card[0]) ||
+		!(sd->inventory_data[idx_equip]->equip&ep) ||
+		(sd->inventory_data[idx_equip]->type==IT_WEAPON && ep==EQP_SHIELD) || //Card shield attempted to place on left-hand weapon.
 		sd->status.inventory[idx_equip].equip){
 
 		clif_insert_card(sd,idx_equip,idx_card,1);
 		return 0;
 	}
 	for(i=0;i<sd->inventory_data[idx_equip]->slot;i++){
-		if( sd->status.inventory[idx_equip].card[i] == 0){
-		// ‹ó‚«ƒXƒƒbƒg‚ª‚ ‚Á‚½‚Ì‚Å·‚µ?‚Ş
+		if( sd->status.inventory[idx_equip].card[i] == 0)
+		{	//Free slot found.
 			sd->status.inventory[idx_equip].card[i]=cardid;
-
-		// ƒJ?ƒh‚ÍŒ¸‚ç‚·
 			clif_insert_card(sd,idx_equip,idx_card,0);
 			pc_delitem(sd,idx_card,1,1);
 			return 0;
@@ -2461,7 +2459,7 @@ int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
 
 	nullpo_retr(0, sd);
 
-	if(itemdb_isequip(nameid))
+	if(!itemdb_isstackable(nameid))
 		return ADDITEM_NEW;
 
 	for(i=0;i<MAX_INVENTORY;i++){
@@ -2584,7 +2582,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	i = MAX_INVENTORY;
 
-	if (!itemdb_isequip2(data))
+	if (itemdb_isstackable2(data))
 	{ //Stackable
 		for (i = 0; i < MAX_INVENTORY; i++)
 		{
@@ -2883,7 +2881,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		//Logs
 		pc_delitem(sd,n,1,1);
 	}
-	if(sd->status.inventory[n].card[0]==0x00fe &&
+	if(sd->status.inventory[n].card[0]==CARD0_CREATE &&
 		pc_famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
 	{
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
@@ -2924,8 +2922,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 
 	i=MAX_CART;
-	if(!itemdb_isequip2(data)){
-		// ‘• ”õ•i‚Å‚Í‚È‚¢‚Ì‚ÅAŠùŠ—L•i‚È‚çŒÂ”‚Ì‚İ•Ï‰»‚³‚¹‚é
+	if(itemdb_isstackable2(data)){
 		for(i=0;i<MAX_CART;i++){
 			if(sd->status.cart[i].nameid==item_data->nameid &&
 				sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
@@ -2939,7 +2936,6 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		}
 	}
 	if(i >= MAX_CART){
-		// ‘• ”õ•i‚©–¢Š—L•i‚¾‚Á‚½‚Ì‚Å‹ó‚«—“‚Ö’Ç‰Á
 		for(i=0;i<MAX_CART;i++){
 			if(sd->status.cart[i].nameid==0){
 				memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
@@ -3134,7 +3130,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
-	tmp_item.identify = !itemdb_isequip3(itemid);
+	tmp_item.identify = itemdb_isidentified(itemid);
 	flag = pc_additem(sd,&tmp_item,1);
 
 	if(battle_config.show_steal_in_same_party)
@@ -4486,7 +4482,7 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 	clif_updatestatus(sd,SP_UDEX);
 	clif_updatestatus(sd,SP_ULUK);	// End Addition
 
-	for(i=0;i<11;i++) { // unequip items that can't be equipped by base 1 [Valaris]
+	for(i=0;i<EQI_MAX;i++) { // unequip items that can't be equipped by base 1 [Valaris]
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
 				pc_unequipitem(sd,sd->equip_index[i],2);
@@ -4820,7 +4816,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		memset(&item_tmp,0,sizeof(item_tmp));
 		item_tmp.nameid=7420; //PVP Skull item ID
 		item_tmp.identify=1;
-		item_tmp.card[0]=0x00fe;
+		item_tmp.card[0]=CARD0_CREATE;
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->char_id,1);
@@ -5388,7 +5384,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	clif_updatestatus(sd,SP_JOBEXP);
 	clif_updatestatus(sd,SP_NEXTJOBEXP);
 
-	for(i=0;i<11;i++) {
+	for(i=0;i<EQI_MAX;i++) {
 		if(sd->equip_index[i] >= 0)
 			if(!pc_isequip(sd,sd->equip_index[i]))
 				pc_unequipitem(sd,sd->equip_index[i],2);	// ?”õŠO‚µ
@@ -6248,9 +6244,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		struct item_data *data;
 		if (sd->inventory_data[n]->equip_script)
 			run_script(sd->inventory_data[n]->equip_script,0,sd->bl.id,fake_nd->bl.id);
-		if(sd->status.inventory[n].card[0]==0x00ff ||
-			sd->status.inventory[n].card[0]==0x00fe ||
-			sd->status.inventory[n].card[0]==(short)0xff00)
+		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
 		else
 		for(i=0;i<sd->inventory_data[n]->slot; i++)
@@ -6346,9 +6340,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		struct item_data *data;
 		if (sd->inventory_data[n]->unequip_script)
 			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,fake_nd->bl.id);
-		if(sd->status.inventory[n].card[0]==0x00ff ||
-			sd->status.inventory[n].card[0]==0x00fe ||
-			sd->status.inventory[n].card[0]==(short)0xff00)
+		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
 		else
 		for(i=0;i<sd->inventory_data[n]->slot; i++)

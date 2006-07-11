@@ -215,6 +215,7 @@ ACMD_FUNC(cleanmap);
 ACMD_FUNC(npctalk);
 ACMD_FUNC(pettalk);
 ACMD_FUNC(users);
+ACMD_FUNC(reset);
 ACMD_FUNC(autoloot);  // Improved version imported from Freya.
 
 #ifndef TXT_ONLY
@@ -510,7 +511,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_UnMute,			"@unmute",			60, atcommand_unmute }, // [Valaris]
 	{ AtCommand_Clearweather,		"@clearweather",		99, atcommand_clearweather }, // Dexity
 	{ AtCommand_UpTime,			"@uptime",			 1, atcommand_uptime }, // by MC Cameri
-//	{ AtCommand_ChangeSex,			"@changesex",		 1, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken]
+	{ AtCommand_ChangeSex,			"@changesex",		 60, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken] <- why not? [Skotlex]
 	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
 	{ AtCommand_Mute,				"@red",			99, atcommand_mute }, // [celest]
 	{ AtCommand_WhoZeny,			"@whozeny",			20, atcommand_whozeny }, // [Valaris]
@@ -525,7 +526,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_NpcTalk,			"@npctalk",			20, atcommand_npctalk },
 	{ AtCommand_PetTalk,			"@pettalk",			10, atcommand_pettalk },
 	{ AtCommand_Users,			"@users",			40, atcommand_users },
-	{ AtCommand_ResetState,			"/reset",			40, NULL },
+	{ AtCommand_ResetState,			"@reset",			40, atcommand_reset },
 
 #ifndef TXT_ONLY // sql-only commands
 	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
@@ -2543,7 +2544,7 @@ int atcommand_item(
 	int number = 0, item_id, flag;
 	struct item item_tmp;
 	struct item_data *item_data;
-	int get_count, i, pet_id;
+	int get_count, i;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
@@ -2565,24 +2566,14 @@ int atcommand_item(
 
 	item_id = item_data->nameid;
 	get_count = number;
-	// check pet egg
-	pet_id = search_petDB_index(item_id, PET_EGG);
+	//Check if it's stackable.
 	if (item_data->type == 4 || item_data->type == 5 ||
 		item_data->type == 7 || item_data->type == 8) {
 		get_count = 1;
 	}
 	for (i = 0; i < number; i += get_count) {
-		// if pet egg
-		if (pet_id >= 0) {
-			sd->catch_target_class = pet_db[pet_id].class_;
-			intif_create_pet(sd->status.account_id, sd->status.char_id,
-				(short)pet_db[pet_id].class_,
-				(short)mob_db(pet_db[pet_id].class_)->lv,
-				(short)pet_db[pet_id].EggID, 0,
-			  	(short)pet_db[pet_id].intimate,
-				100, 0, 1, pet_db[pet_id].jname);
 		// if not pet egg
-		} else {
+		if (!pet_create_egg(sd, item_id)) {
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_id;
 			item_tmp.identify = 1;
@@ -3831,15 +3822,15 @@ int atcommand_produce(
 	}
 
 	item_id = 0;
-	if ((item_data = itemdb_searchname(item_name)) != NULL ||
-	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
-		item_id = item_data->nameid;
-
-	if (itemdb_exists(item_id) &&
-	    (item_id <= 500 || item_id > 1099) &&
-	    (item_id < 4001 || item_id > 4148) &&
-	    (item_id < 7001 || item_id > 10019) &&
-	    itemdb_isequip(item_id)) {
+	if ((item_data = itemdb_searchname(item_name)) == NULL &&
+	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
+	{
+		sprintf(atcmd_output, msg_table[170]); // This item is not an equipment.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	item_id = item_data->nameid;
+	if (itemdb_isequip2(item_data) && item_data->type == IT_WEAPON) {
 		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
 			attribute = ATTRIBUTE_NORMAL;
 		if (star < MIN_STAR || star > MAX_STAR)
@@ -3848,12 +3839,12 @@ int atcommand_produce(
 		tmp_item.nameid = item_id;
 		tmp_item.amount = 1;
 		tmp_item.identify = 1;
-		tmp_item.card[0] = 0x00ff;
+		tmp_item.card[0] = CARD0_FORGE;
 		tmp_item.card[1] = ((star * 5) << 8) + attribute;
 		tmp_item.card[2] = GetWord(sd->char_id, 0);
 		tmp_item.card[3] = GetWord(sd->char_id, 1);
-		clif_produceeffect(sd, 0, item_id); // 製造エフェクトパケット
-		clif_misceffect(&sd->bl, 3); // 他人にも成功を通知
+		clif_produceeffect(sd, 0, item_id);
+		clif_misceffect(&sd->bl, 3);
 
 		//Logs (A)dmins items [Lupus]
 		if(log_config.pick > 0 ) {
@@ -3864,12 +3855,7 @@ int atcommand_produce(
 		if ((flag = pc_additem(sd, &tmp_item, 1)))
 			clif_additem(sd, 0, 0, flag);
 	} else {
-		if (battle_config.error_log)
-			ShowError("@produce NOT WEAPON [%d]\n", item_id);
-		if (item_id != 0 && itemdb_exists(item_id))
-			sprintf(atcmd_output, msg_table[169], item_id, item_data->name); // This item (%d: '%s') is not an equipment.
-		else
-			sprintf(atcmd_output, msg_table[170]); // This item is not an equipment.
+		sprintf(atcmd_output, msg_table[169], item_id, item_data->name); // This item (%d: '%s') is not an equipment.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
@@ -8184,6 +8170,18 @@ atcommand_users(
 	users_db->foreach(users_db,atcommand_users_sub2,sd);
 	sprintf(buf,"all : %d",users_all);
 	clif_displaymessage(fd,buf);
+	return 0;
+}
+
+int
+atcommand_reset(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	pc_resetstate(sd);
+	pc_resetskill(sd,1);
+	sprintf(atcmd_output, msg_table[208], sd->status.name); // '%s' skill and stats points reseted!
+	clif_displaymessage(fd, atcmd_output);
 	return 0;
 }
 

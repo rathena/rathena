@@ -2097,14 +2097,14 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 		WBUFW(buf,6)=0;
 		return;
 	}
-	if(item->card[0]==(short)0xff00) { //pet eggs
+	if(item->card[0]==CARD0_PET) { //pet eggs
 		WBUFW(buf,0)=0;
 		WBUFW(buf,2)=0;
 		WBUFW(buf,4)=0;
 		WBUFW(buf,6)=item->card[3]; //Pet renamed flag.
 		return;
 	}
-	if(item->card[0]==0x00ff || item->card[0]==0x00fe) { //Forged/created items
+	if(item->card[0]==CARD0_FORGE || item->card[0]==CARD0_CREATE) { //Forged/created items
 		WBUFW(buf,0)=item->card[0];
 		WBUFW(buf,2)=item->card[1];
 		WBUFW(buf,4)=item->card[2];
@@ -2257,8 +2257,8 @@ void clif_inventorylist(struct map_session_data *sd)
 		if (sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL)
 			continue;  
 	
-		if(itemdb_isequip2(sd->inventory_data[i])) 
-		{	//Equippable
+		if(!itemdb_isstackable2(sd->inventory_data[i])) 
+		{	//Non-stackable (Equippable)
 			WBUFW(bufe,ne*20+4)=i+2;
 			clif_item_sub(bufe, ne*20+6, &sd->status.inventory[i], sd->inventory_data[i], pc_equippoint(sd,i));
 			clif_addcards(WBUFP(bufe, ne*20+16), &sd->status.inventory[i]);
@@ -2307,7 +2307,7 @@ void clif_equiplist(struct map_session_data *sd)
 		if (sd->status.inventory[i].nameid <=0 || sd->inventory_data[i] == NULL)
 			continue;  
 	
-		if(!itemdb_isequip2(sd->inventory_data[i])) 
+		if(itemdb_isstackable2(sd->inventory_data[i])) 
 			continue;
 		//Equippable
 		WBUFW(buf,n*20+4)=i+2;
@@ -2341,7 +2341,7 @@ void clif_storagelist(struct map_session_data *sd,struct storage *stor)
 		if(stor->storage_[i].nameid<=0)
 			continue;
 		id = itemdb_search(stor->storage_[i].nameid);
-		if(itemdb_isequip2(id))
+		if(!itemdb_isstackable2(id))
 		{ //Equippable
 			WBUFW(bufe,ne*20+4)=i+1;
 			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
@@ -2391,7 +2391,7 @@ void clif_guildstoragelist(struct map_session_data *sd,struct guild_storage *sto
 		if(stor->storage_[i].nameid<=0)
 			continue;
 		id = itemdb_search(stor->storage_[i].nameid);
-		if(itemdb_isequip2(id))
+		if(!itemdb_isstackable2(id))
 		{ //Equippable
 			WBUFW(bufe,ne*20+4)=i+1;
 			clif_item_sub(bufe, ne*20+6, &stor->storage_[i], id, id->equip);
@@ -2440,7 +2440,7 @@ void clif_cartlist(struct map_session_data *sd)
 		if(sd->status.cart[i].nameid<=0)
 			continue;
 		id = itemdb_search(sd->status.cart[i].nameid);
-		if(itemdb_isequip2(id))
+		if(!itemdb_isstackable2(id))
 		{ //Equippable
 			WBUFW(bufe,ne*20+4)=i+2;
 			clif_item_sub(bufe, ne*20+6, &sd->status.cart[i], id, id->equip);
@@ -5233,7 +5233,7 @@ int clif_use_card(struct map_session_data *sd,int idx)
 	if (idx < 0 || idx >= MAX_INVENTORY) //Crash-fix from bad packets.
 		return 0;
 
-	if (!sd->inventory_data[idx] || sd->inventory_data[idx]->type != 6)
+	if (!sd->inventory_data[idx] || sd->inventory_data[idx]->type != IT_CARD)
 		return 0; //Avoid parsing invalid item indexes (no card/no item)
 			
 	ep=sd->inventory_data[idx]->equip;
@@ -5245,22 +5245,25 @@ int clif_use_card(struct map_session_data *sd,int idx)
 
 		if(sd->inventory_data[i] == NULL)
 			continue;
-		if(sd->inventory_data[i]->type!=4 && sd->inventory_data[i]->type!=5)	// 武器防具じゃない
+		if(sd->inventory_data[i]->type!=IT_WEAPON && sd->inventory_data[i]->type!=IT_ARMOR)
 			continue;
-		if(sd->status.inventory[i].card[0]==0x00ff || sd->status.inventory[i].card[0]==(short)0xff00 || sd->status.inventory[i].card[0]==0x00fe)
-			continue;
-		if(sd->status.inventory[i].identify==0 )	// 未鑑定
+		if(itemdb_isspecial(sd->status.inventory[i].card[0])) //Can't slot it
 			continue;
 
-		if((sd->inventory_data[i]->equip&ep)==0)	// 装備個所が違う
+		if(sd->status.inventory[i].identify==0 )	//Not identified
 			continue;
-		if(sd->inventory_data[i]->type==4 && ep==32)	// 盾カードと両手武器
+
+		if((sd->inventory_data[i]->equip&ep)==0)	//Not equippable on this part.
 			continue;
+
+		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_HAND_L) //Shield card won't go on left weapon.
+			continue;
+
 		for(j=0;j<sd->inventory_data[i]->slot;j++){
 			if( sd->status.inventory[i].card[j]==0 )
 				break;
 		}
-		if(j==sd->inventory_data[i]->slot)	// すでにカードが一杯
+		if(j==sd->inventory_data[i]->slot)	// No room
 			continue;
 
 		WFIFOW(fd,4+c*2)=i+2;
@@ -9177,14 +9180,13 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	}
 	//ペット用装備であるかないか
 	if(sd->inventory_data[index]) {
-		if(sd->inventory_data[index]->type != 8){
-			if(sd->inventory_data[index]->type == 10)
-				RFIFOW(fd,4)=0x8000;	// 矢を無理やり装備できるように（－－；
-			pc_equipitem(sd,index,RFIFOW(fd,4));
-		} else{
-			if(sd->pd)
-				pet_equipitem(sd,index);
-		}
+		if(sd->inventory_data[index]->type != IT_PETARMOR){
+			if(sd->inventory_data[index]->type == IT_AMMO)
+				pc_equipitem(sd,index,EQP_AMMO); //Client doesn't sends the position.
+			else
+				pc_equipitem(sd,index,RFIFOW(fd,4));
+		} else
+			pet_equipitem(sd,index);
 	}
 }
 

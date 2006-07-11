@@ -108,7 +108,7 @@ int intif_delete_petdata(int pet_id)
 	WFIFOL(inter_fd,2) = pet_id;
 	WFIFOSET(inter_fd,6);
 
-	return 0;
+	return 1;
 }
 int intif_rename_pet(struct map_session_data *sd,char *name)
 {

@@ -7,6 +7,32 @@
 #include "map.h"
 #define MAX_RANDITEM	10000
 
+enum {
+	IT_HEALING = 0,
+	IT_UNKNOWN, //1
+	IT_USABLE,  //2
+	IT_ETC,     //3
+	IT_WEAPON,  //4
+	IT_ARMOR,   //5
+	IT_CARD,    //6
+	IT_PETEGG,  //7
+	IT_PETARMOR,//8
+	IT_UNKNOWN2,//9
+	IT_AMMO,    //10
+	IT_DELAYCONSUME,//11
+	IT_MAX 
+} item_types;
+
+#define CARD0_FORGE 0x00FF
+#define CARD0_CREATE 0x00FE
+#define CARD0_PET ((short)0xFF00)
+
+//Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
+#define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
+
+//Use apple for unknown items.
+#define UNKNOWN_ITEM_ID 512
+
 struct item_data {
 	int nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
@@ -106,7 +132,9 @@ int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(stru
 
 int itemdb_isequip(int);
 int itemdb_isequip2(struct item_data *);
-int itemdb_isequip3(int);
+int itemdb_isidentified(int);
+int itemdb_isstackable(int);
+int itemdb_isstackable2(struct item_data *);
 
 // itemdb_equipマクロとitemdb_equippointとの違いは
 // 前者が鯖側dbで定義された値そのものを返すのに対し

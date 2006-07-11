@@ -1721,7 +1721,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 					return 1;
 			}
 
-			if(sd->status.inventory[index].card[0]==0x00ff)
+			if(sd->status.inventory[index].card[0]==CARD0_FORGE)
 			{	// Forged weapon
 				wd->star += (sd->status.inventory[index].card[1]>>8);
 				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
@@ -1777,9 +1777,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			struct item_data *data;
 	
 			//Card script execution.
-			if(sd->status.inventory[index].card[0]==0x00ff ||
-				sd->status.inventory[index].card[0]==0x00fe ||
-				sd->status.inventory[index].card[0]==(short)0xff00)
+			if(itemdb_isspecial(sd->status.inventory[index].card[0]))
 				continue;
 			for(j=0;j<sd->inventory_data[index]->slot;j++){	
 				current_equip_card_id= c= sd->status.inventory[index].card[j];

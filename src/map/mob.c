@@ -1415,7 +1415,7 @@ static struct item_drop* mob_setdropitem(int nameid, int qty)
 	memset(&drop->item_data, 0, sizeof(struct item));
 	drop->item_data.nameid = nameid;
 	drop->item_data.amount = qty;
-	drop->item_data.identify = !itemdb_isequip3(nameid);
+	drop->item_data.identify = itemdb_isidentified(nameid);
 	drop->next = NULL;
 	return drop;
 };
@@ -2043,7 +2043,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			memset(&item,0,sizeof(item));
 			item.nameid=md->db->mvpitem[i].nameid;
-			item.identify=!itemdb_isequip3(item.nameid);
+			item.identify= itemdb_isidentified(item.nameid);
 			clif_mvp_item(mvp_sd,item.nameid);
 			log_mvp[0] = item.nameid;
 			
@@ -3278,7 +3278,7 @@ static int mob_readdb(void)
 				}
 				else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 				{
-				case 0:
+				case IT_HEALING:
 					if (status->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_heal_boss;
 					else
@@ -3286,7 +3286,7 @@ static int mob_readdb(void)
 					ratemin = battle_config.item_drop_heal_min;
 					ratemax = battle_config.item_drop_heal_max;
 					break;
-				case 2:
+				case IT_USABLE:
 					if (status->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_use_boss;
 					else
@@ -3294,9 +3294,9 @@ static int mob_readdb(void)
 					ratemin = battle_config.item_drop_use_min;
 					ratemax = battle_config.item_drop_use_max;
 					break;
-				case 4:
-				case 5:
-				case 8:		// Changed to include Pet Equip
+				case IT_WEAPON:
+				case IT_ARMOR:
+				case IT_PETARMOR:		// Changed to include Pet Equip
 					if (status->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_equip_boss;
 					else
@@ -3304,7 +3304,7 @@ static int mob_readdb(void)
 					ratemin = battle_config.item_drop_equip_min;
 					ratemax = battle_config.item_drop_equip_max;
 					break;
-				case 6:
+				case IT_CARD:
 					if (status->mode&MD_BOSS)
 						rate_adjust = battle_config.item_rate_card_boss;
 					else
@@ -3958,7 +3958,7 @@ static int mob_read_sqldb(void)
 					}
 					else switch (type)	// Added suport to restrict normal drops of MVP's [Reddozen]
 					{
-					case 0:	// Val added heal restrictions
+					case IT_HEALING:	// Val added heal restrictions
 						if (status->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_heal_boss;
 						else
@@ -3966,7 +3966,7 @@ static int mob_read_sqldb(void)
 						ratemin = battle_config.item_drop_heal_min;
 						ratemax = battle_config.item_drop_heal_max;
 						break;
-					case 2:
+					case IT_USABLE:
 						if (status->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_use_boss;
 						else
@@ -3974,9 +3974,9 @@ static int mob_read_sqldb(void)
 						ratemin = battle_config.item_drop_use_min;
 						ratemax = battle_config.item_drop_use_max;
 						break;
-					case 4:
-					case 5:
-					case 8:		// Changed to include Pet Equip
+					case IT_WEAPON:
+					case IT_ARMOR:
+					case IT_PETEQUIP:		// Changed to include Pet Equip
 						if (status->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_equip_boss;
 						else
@@ -3984,7 +3984,7 @@ static int mob_read_sqldb(void)
 						ratemin = battle_config.item_drop_equip_min;
 						ratemax = battle_config.item_drop_equip_max;
 						break;
-					case 6:
+					case IT_CARD:
 						if (status->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_card_boss;
 						else

@@ -8595,7 +8595,8 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
-				if(item->refine == MAX_REFINE && item->card[0] == 0x00ff && MakeDWord(item->card[2],item->card[3]) == sd->char_id){ // Fame point system [DracoRPG]
+				if(item->refine == MAX_REFINE && item->card[0] == CARD0_FORGE &&
+					MakeDWord(item->card[2],item->card[3]) == sd->char_id){ // Fame point system [DracoRPG]
 					switch(ditem->wlv){
 						case 1:
 							pc_addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
@@ -10118,7 +10119,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		tmp_item.amount=1;
 		tmp_item.identify=1;
 		if(equip){
-			tmp_item.card[0]=0x00ff;
+			tmp_item.card[0]=CARD0_FORGE;
 			tmp_item.card[1]=((sc*5)<<8)+ele;
 			tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
 			tmp_item.card[3]=GetWord(sd->char_id,1);
@@ -10142,7 +10143,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					break;
 			}
 			if (flag) {
-				tmp_item.card[0]=0x00fe;
+				tmp_item.card[0]=CARD0_CREATE;
 				tmp_item.card[1]=0;
 				tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
 				tmp_item.card[3]=GetWord(sd->char_id,1);
@@ -10286,7 +10287,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 		tmp_item.nameid = skill_arrow_db[index].cre_id[i];
 		tmp_item.amount = skill_arrow_db[index].cre_amount[i];
 		if(battle_config.making_arrow_name_input) {
-			tmp_item.card[0]=0x00fe;
+			tmp_item.card[0]=CARD0_CREATE;
 			tmp_item.card[1]=0;
 			tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
 			tmp_item.card[3]=GetWord(sd->char_id,1);
