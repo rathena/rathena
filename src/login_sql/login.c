@@ -1452,7 +1452,7 @@ int lan_subnetcheck(long *p) {
 	return 0;
 }
 
-int login_ip_ban_check(char p*)
+int login_ip_ban_check(unsigned char *p)
 {
 	MYSQL_RES* sql_res;
 	MYSQL_ROW  sql_row;
