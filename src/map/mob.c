@@ -3976,7 +3976,7 @@ static int mob_read_sqldb(void)
 						break;
 					case IT_WEAPON:
 					case IT_ARMOR:
-					case IT_PETEQUIP:		// Changed to include Pet Equip
+					case IT_PETARMOR:		// Changed to include Pet Equip
 						if (status->mode&MD_BOSS)
 							rate_adjust = battle_config.item_rate_equip_boss;
 						else
