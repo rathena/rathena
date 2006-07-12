@@ -523,8 +523,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	
 	status = status_get_status_data(target);
 	
-	if (status == &dummy_status || !status->hp || !target->prev)
-		return 0; //Invalid targets: no damage, dead, not on a map.
+	if (status == &dummy_status || !status->hp)
+		return 0; //Invalid targets: no damage or dead
+
+	if (!target->prev && !(flag&2))
+		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
 
 	sc = status_get_sc(target);
 
