@@ -1266,16 +1266,24 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->param_bonus[type-SP_STR]+=val;
 		break;
 	case SP_ATK1:
-		if(!sd->state.lr_flag)
-			status->rhw.atk+=val;
-		else if(sd->state.lr_flag == 1)
-			status->lhw->atk+=val;
+		if(!sd->state.lr_flag) {
+			if(!(val<0 && ((val-val-val)>status->rhw.atk)))
+				status->rhw.atk+=val;
+		}
+		else if(sd->state.lr_flag == 1) {
+			if(!(val<0 && ((val-val-val)>status->lhw.atk)))
+				status->lhw->atk+=val;
+		}
 		break;
 	case SP_ATK2:
-		if(!sd->state.lr_flag)
-			status->rhw.atk2+=val;
-		else if(sd->state.lr_flag == 1)
-			status->lhw->atk2+=val;
+		if(!sd->state.lr_flag) {
+			if(!(val<0 && ((val-val-val)>status->rhw.atk2)))
+				status->rhw.atk2+=val;
+		}
+		else if(sd->state.lr_flag == 1) {
+			if(!(val<0 && ((val-val-val)>status->lhw.atk2)))
+				status->lhw->atk2+=val;
+		}
 		break;
 	case SP_BASE_ATK:
 		if(sd->state.lr_flag != 2) {
@@ -1284,41 +1292,55 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_MATK1:
-		if(sd->state.lr_flag != 2)
-			status->matk_max += val;
+		if(sd->state.lr_flag != 2) {
+			if(!(val<0 && ((val-val-val)>status->matk_max)))
+				status->matk_max += val;
+		}
 		break;
 	case SP_MATK2:
-		if(sd->state.lr_flag != 2)
-			status->matk_min += val;
+		if(sd->state.lr_flag != 2) {
+			if(!(val<0 && ((val-val-val)>status->matk_min)))
+				status->matk_min += val;
+		}
 		break;
 	case SP_MATK:
 		if(sd->state.lr_flag != 2) {
-			status->matk_max += val;
-			status->matk_min += val;
+			if(!(val<0 && ((val-val-val)>status->matk_max)))
+				status->matk_max += val;
+			if(!(val<0 && ((val-val-val)>status->matk_min)))
+				status->matk_min += val;
 		}
 		break;
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
-			bonus = status->def + val;
-			status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			if(!(val<0 && ((val-val-val)>status->def))) {
+				bonus = status->def + val;
+				status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			}
 		}
 		break;
 	case SP_DEF2:
 		if(sd->state.lr_flag != 2) {
-			bonus = status->def2 + val;
-			status->def2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+			if(!(val<0 && ((val-val-val)>status->def2))) {
+				bonus = status->def2 + val;
+				status->def2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+			}
 		}
 		break;
 	case SP_MDEF1:
 		if(sd->state.lr_flag != 2) {
-			bonus = status->mdef + val;
-			status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			if(!(val<0 && ((val-val-val)>status->matk_mdef))) {
+				bonus = status->mdef + val;
+				status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+			}
 		}
 		break;
 	case SP_MDEF2:
 		if(sd->state.lr_flag != 2) {
-			bonus = status->mdef2 + val;
-			status->mdef2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+			if(!(val<0 && ((val-val-val)>status->matk_mdef2))) {
+				bonus = status->mdef2 + val;
+				status->mdef2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+			}
 		}
 		break;
 	case SP_HIT:
