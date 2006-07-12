@@ -935,7 +935,7 @@ enum {
 	UNT_SPIDERWEB,
 	UNT_GRAVITATION,
 	UNT_HERMODE,
-	//0xba
+	UNT_TATAMIGAESHI, //0xba //Temporary setting until correct value is found.
 	UNT_SUITON = 0xbb,
 	UNT_DESPERADO, //NJ_TATAMIGAESHI is 0xbc as well?
 	UNT_KAENSIN,

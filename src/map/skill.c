@@ -3654,25 +3654,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
-	case NJ_TATAMIGAESHI:
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-
-		i = skill_get_range(skillid, skilllv); //use i for range.
-		type = skill_get_splash(skillid, skilllv); //reuse type for splash
-		map_foreachinpath(skill_attack_area,src->m,
-			src->x,src->y,src->x-i,src->y,type,BL_CHAR,
-			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-		map_foreachinpath(skill_attack_area,src->m,
-			src->x,src->y,src->x+i,src->y,type,BL_CHAR,
-			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-		map_foreachinpath(skill_attack_area,src->m,
-			src->x,src->y,src->x,src->y-i,type,BL_CHAR,
-			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-		map_foreachinpath(skill_attack_area,src->m,
-			src->x,src->y,src->x,src->y+i,type,BL_CHAR,
-			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
-		break;
 
 	case CG_MOONLIT:		/* 月明りの泉に落ちる花びら */
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -6025,7 +6006,10 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			sc_start4(src,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
 		}
 		break;
-
+	case NJ_TATAMIGAESHI:
+		sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
+		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+		break;
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
@@ -6945,8 +6929,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;	
 		}
 
+		case UNT_TATAMIGAESHI:
 		case UNT_DEMONSTRATION:
-			skill_attack(BF_WEAPON, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
 		case UNT_GOSPEL:
@@ -7051,12 +7036,11 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_KAENSIN:
-		{
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			src->val2--;
 			if (--src->val2<=0)
 			skill_delunit(src);
-		}
+			break;
 	}
 
 	if (sg->state.magic_power && sc && sc->data[SC_MAGICPOWER].timer == -1)
@@ -10511,11 +10495,42 @@ void skill_init_unit_layout (void)
 			}
 			case NJ_TATAMIGAESHI:
 			{
-				static const int dx[] = {-1, 0, 0, 1};
-				static const int dy[] = { 0,-1, 1, 0};
+				//Level 1 (count 4, cross of 3x3)
+				static const int dx1[] = {-1, 1, 0, 0};
+				static const int dy1[] = { 0, 0,-1, 1};
+				//Level 2-3 (count 8, cross of 5x5)
+				static const int dx2[] = {-2,-1, 1, 2, 0, 0, 0, 0};
+				static const int dy2[] = { 0, 0, 0, 0,-2,-1, 1, 2};
+				//Level 4-5 (count 12, cross of 7x7
+				static const int dx3[] = {-3,-2,-1, 1, 2, 3, 0, 0, 0, 0, 0, 0};
+				static const int dy3[] = { 0, 0, 0, 0, 0, 0,-3,-2,-1, 1, 2, 3};
+				//lv1
+				j = 0;
 				skill_unit_layout[pos].count = 4;
-				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
-				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
+				memcpy(skill_unit_layout[pos].dx,dx1,sizeof(dx1));
+				memcpy(skill_unit_layout[pos].dy,dy1,sizeof(dy1));
+				skill_db[i].unit_layout_type[j] = pos;
+				//lv2/3
+				j++;
+				pos++;
+				skill_unit_layout[pos].count = 8;
+				memcpy(skill_unit_layout[pos].dx,dx2,sizeof(dx2));
+				memcpy(skill_unit_layout[pos].dy,dy2,sizeof(dy2));
+				skill_db[i].unit_layout_type[j] = pos;
+				skill_db[i].unit_layout_type[++j] = pos;
+				//lv4/5
+				j++;
+				pos++;
+				skill_unit_layout[pos].count = 12;
+				memcpy(skill_unit_layout[pos].dx,dx3,sizeof(dx3));
+				memcpy(skill_unit_layout[pos].dy,dy3,sizeof(dy3));
+				skill_db[i].unit_layout_type[j] = pos;
+				skill_db[i].unit_layout_type[++j] = pos;
+				//Fill in the rest using lv 5.
+				for (;j<MAX_SKILL_LEVEL;j++)
+					skill_db[i].unit_layout_type[j] = pos;
+				//Skip, this way the check below will fail and continue to the next skill.
+				pos++;
 				break;
 			}
 			default:

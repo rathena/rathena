@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/12
+	* Fixed NJ_TATAMIGAESHI to use ground-tiles rather than "for each in path"
+	  calls. The skill should be working correctly now, except for the fact that
+	  the correct "unit id" is missing (this is what would give the ground tile
+	  it's correct display). Temporarily it is using 0xba until the correct value
+	  is found. [Skotlex]
 	* Added back the undead check to turn undead/resurrection to prevent
 	  damaging non-undead targets, removed it from the battle damage section.
 	  [Skotlex]
