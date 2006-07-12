@@ -718,8 +718,8 @@ int storage_guild_storageclose(struct map_session_data *sd)
 			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
 		else
 			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
+		stor->storage_status=0;
 	}
-	stor->storage_status=0;
 	sd->state.storage_flag = 0;
 
 	return 0;
