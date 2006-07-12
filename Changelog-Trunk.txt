@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/12
+	* Resurrection will now silently fail when used on non-undead + not-dead
+	  characters. [Skotlex]
 	* Poem of bragi/magic String's base delay reduction at level 10 (or above)
 	  is now 50% instead of 3*lv%. [Skotlex]
 	* status_damage will no longer fail when the target is not on a map AND the
