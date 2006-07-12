@@ -2684,15 +2684,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,skillid == KN_CHARGEATK?1:flag);
 		break;
 
-	/* 武器系範囲攻撃スキル */
-	case AS_GRIMTOOTH:		/* グリムトゥース */
-	case MC_CARTREVOLUTION:	/* カートレヴォリューション */
-	case NPC_SPLASHATTACK:	/* スプラッシュアタック */
+	//Splash attack skills.
+	case AS_GRIMTOOTH:
+	case MC_CARTREVOLUTION:	
+	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	//Targetted skill implementation.
+	case NJ_BAKUENRYU:
 		if(flag&1){
-			/* 個別にダメージを与える */
 			if(bl->id!=skill_area_temp[1]){
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,
+				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,
 					0x0500);				
 			}
 		} else {
@@ -2702,7 +2702,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
 			//Skill-attack at the end in case it has knockback. [Skotlex]
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
+			skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,0);
 		}
 		break;
 
@@ -3171,11 +3171,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
-		//These are actually ground placed.
-		case NJ_BAKUENRYU: //Doesn't works on the default because it is enemy-targetted.
-			return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 		default:
-			if (src == bl && skill_get_unit_id(skillid,0)) //Skill is actually ground placed.
+			//Skill is actually ground placed.
+			if (src == bl && skill_get_unit_id(skillid,0))
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
@@ -5818,7 +5816,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case DC_SERVICEFORYOU:
 	case GS_DESPERADO:
 	case NJ_SUITON:
-	case NJ_BAKUENRYU:
 	case NJ_KAENSIN:
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
@@ -6415,9 +6412,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1 = skilllv;
 		val2 = (skilllv+1)/2 + 4;
 		break;
-	case NJ_BAKUENRYU:
-		val1 = 3;
-		break;
+
 	case GS_GROUNDDRIFT:
 		{	//Take on the base element, not the elemental one.
 			struct status_data *bstatus = status_get_base_status(src);

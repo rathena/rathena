@@ -89,7 +89,6 @@
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 527,0xba,    , -1, 0,2000,enemy, 0x000	//NJ_TATAMIGAESHI
 535,0xbd,    ,  2, 0,2000,enemy, 0x000	//NJ_KAENSIN
-536,0x86,    ,  2, 0, 300,enemy, 0x000	//NJ_BAKUENRYU
 541,0x86,,0,2:2:3:3:4,1000,enemy,0x000 //NJ_RAIGEKISAI
 538,0xbb,,1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
 516,0xbc,    ,  0, 3, 100,enemy, 0x000	//GS_DESPERADO

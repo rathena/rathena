@@ -2268,7 +2268,7 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50 + 150*skill_lv;
+						skillratio += 50*(skill_lv-1);
 						break;
 					case NJ_HYOUSYOURAKU:
 						skillratio += 50*skill_lv;
