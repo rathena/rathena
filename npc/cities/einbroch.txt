@@ -1336,12 +1336,12 @@ s_Switches:
 		delitem 7319,10;
 		set EinFactory,16;
 		if (BaseLevel < 41) set BaseExp,BaseExp+615;
-		if ((BaseLevel >= 40) && (BaseLevel < 50)) set BaseExp,BaseExp+3075;
-		if ((BaseLevel >= 50) && (BaseLevel < 60)) set BaseExp,BaseExp+6604;
-		if ((BaseLevel >= 60) && (BaseLevel < 70)) set BaseExp,BaseExp+18508;
-		if ((BaseLevel >= 70) && (BaseLevel < 80)) set BaseExp,BaseExp+32062;
-		if ((BaseLevel >= 80) && (BaseLevel < 90)) set BaseExp,BaseExp+76026;
-		if (BaseLevel >= 90) set BaseExp,BaseExp+290675;
+		if ((BaseLevel >= 41) && (BaseLevel < 51)) set BaseExp,BaseExp+3075;
+		if ((BaseLevel >= 51) && (BaseLevel < 61)) set BaseExp,BaseExp+6604;
+		if ((BaseLevel >= 61) && (BaseLevel < 71)) set BaseExp,BaseExp+18508;
+		if ((BaseLevel >= 71) && (BaseLevel < 81)) set BaseExp,BaseExp+32062;
+		if ((BaseLevel >= 81) && (BaseLevel < 91)) set BaseExp,BaseExp+76026;
+		if (BaseLevel >= 91) set BaseExp,BaseExp+290675;
 		mes "[Zelmeto]";
 		mes "I don't know how";
 		mes "I can possible pay you";
