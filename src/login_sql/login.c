@@ -1514,7 +1514,6 @@ int parse_login(int fd) {
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
 	memset(&account, 0, sizeof(account));
-	i = RFIFOREST(fd)>=2?RFIFOW(fd,0):0;
 
 	if (session[fd]->eof) {
 		for(i = 0; i < MAX_SERVERS; i++)

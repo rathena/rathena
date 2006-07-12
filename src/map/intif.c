@@ -837,10 +837,10 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va) {
 	char *message;
 	int len;
 	if (pc_isGM(sd) < min_gm_level) return 0;
-	clif_wis_message(sd->fd, wisp_name, message, len);
 	wisp_name = va_arg(va, char*);
 	message = va_arg(va, char*);
 	len = va_arg(va, int);
+	clif_wis_message(sd->fd, wisp_name, message, len);
 	return 1;
 }
 
