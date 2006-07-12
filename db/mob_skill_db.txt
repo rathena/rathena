@@ -2519,8 +2519,8 @@
 1583,Tao Gunka@NPC_MENTALBREAKER,chase,159,5,2000,0,5000,yes,target,always,0,,,,,,7
 1583,Tao Gunka@NPC_STUNATTACK,attack,179,5,2000,0,5000,yes,target,always,0,,,,,,7
 1583,Tao Gunka@NPC_STUNATTACK,chase,179,5,2000,0,5000,yes,target,always,0,,,,,,7
-1583,Tao Gunka@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,4,1274,,,,,
-1583,Tao Gunka@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,4,1274,,,,,
+1583,Tao Gunka@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,4,1793,,,,,
+1583,Tao Gunka@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,4,1793,,,,,
 1583,Tao Gunka@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1274,,,,,
 1584,Tamruan@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,9,,,,,
 1584,Tamruan@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,,,,,
@@ -3909,3 +3909,12 @@
 1767,Deviling@NPC_SUMMONSLAVE,attack,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
 1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
 1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,0,1242,1242,1242,1109,,
+1793,Megalith@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,,,,,
+1795,Bloody Knight@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1795,Bloody Knight@CR_SHIELDCHARGE,attack,250,5,500,0,5000,yes,target,always,0,,,,,,9
+1795,Bloody Knight@KN_BRANDISHSPEAR,attack,57,5,500,1000,5000,no,target,always,0,,,,,,9
+1795,Bloody Knight@NPC_CHANGEFIRE,attack,164,1,10000,2000,600000,no,self,myhpltmaxrate,20,,,,,,
+1795,Bloody Knight@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,9
+1795,Bloody Knight@NPC_WEAPONBRAKER,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
+1795,Bloody Knight@WZ_METEOR,attack,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
+1795,Bloody Knight@WZ_METEOR,chase,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,

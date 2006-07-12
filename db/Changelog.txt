@@ -25,6 +25,8 @@
 
 =========================
 07/12
+	* Tao Gunga will now summon G_Megalith's. [Poki#3]
+	* Updated the new Rachel mob names and the new G_ mobs stats & skills. Also removed there poring drops. [Poki#3]
 	* Updated Detale's Skills [Playtester]
 	* Fixed element, mode and attack speed of some monsters [Playtester]
 07/11
