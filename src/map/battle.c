@@ -2167,15 +2167,14 @@ struct Damage battle_calc_magic_attack(
 				break;
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
-				if(battle_check_undead(tstatus->race,tstatus->def_ele)){
-					int thres;
-					thres = (skill_lv * 20) + sstatus->luk + sstatus->int_ + status_get_lv(src) + ((200 - tstatus->hp * 200 / tstatus->max_hp));
-					if(thres > 700) thres = 700;
-					if(rand()%1000 < thres && !(tstatus->mode&MD_BOSS))
-						ad.damage = tstatus->hp;
-					else
-						ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
-				}
+				//Undead check is on skill_castend_damageid code.
+				i = 20*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
+				  	+ 200 - 200*tstatus->hp/tstatus->max_hp;
+				if(i > 700) i = 700;
+				if(rand()%1000 < i && !(tstatus->mode&MD_BOSS))
+					ad.damage = tstatus->hp;
+				else
+					ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;

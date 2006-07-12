@@ -2817,9 +2817,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, skillid, skilllv, BF_WEAPON, flag);
 		break;	
 
-	case ALL_RESURRECTION:		/* リザレクション */
-	case PR_TURNUNDEAD:			/* ターンアンデッド */
-	//Undead check is on unit-use skill
+	case PR_TURNUNDEAD:
+	case ALL_RESURRECTION:
+		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
+			break;
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
