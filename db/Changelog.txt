@@ -25,6 +25,7 @@
 
 =========================
 07/12
+	* Updated Detale's Skills [Playtester]
 	* Fixed element, mode and attack speed of some monsters [Playtester]
 07/11
 	* Fixed Nurse Cap, Memory Book and Dagger of Counter [Playtester]
