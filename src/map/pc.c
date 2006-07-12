@@ -1278,8 +1278,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->lhw->atk2+=val;
 		break;
 	case SP_BASE_ATK:
-		if(sd->state.lr_flag != 2)
-			status->batk+=val;
+		if(sd->state.lr_flag != 2) {
+			if(!(val<0 && ((val-val-val)>status->batk)))
+				status->batk+=val;
+		}
 		break;
 	case SP_MATK1:
 		if(sd->state.lr_flag != 2)

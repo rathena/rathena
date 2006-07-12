@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/12
+	* Fixed exploit in pc_bonus there are no checks that check that the value being
+	  added onto a status don't make it go below zero, which means if you have a mineral
+	  card and reset stats it reduces your base attack to lower than zero, making it
+	  go up to 64000. Fixed by adding a check for SP_BASE_ATK, although i recommend
+	  doing it for other status bonuses also [Zido]
 	* Recoded NJ_BAKUENRYU to behave as I understand it best from the
 	  skill-description (since Haplo told me this skill doesn't really has video
 	  information or anything...) [Skotlex]
