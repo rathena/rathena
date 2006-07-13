@@ -39,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/13
+	* Added Sephiroth's version of the Rachel Sanctuary Warps [Playtester]
+	- remove the comments in the warp file if you want to use them
 	* Fixed some typos thanks to Zarnox [Playtester]
 	* Disabled socket enchant npc. [Musashiden]
 07/09
