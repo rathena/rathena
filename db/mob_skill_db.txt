@@ -3550,6 +3550,7 @@
 1719,Detale@WZ_METEOR,attack,83,11,500,0,5000,yes,target,always,0,,,,,,
 1719,Detale@WZ_METEOR,chase,83,11,500,0,5000,yes,target,always,0,,,,,,
 1719,Detale@SM_MAGNUM,attack,7,20,2000,0,5000,yes,self,attackpcgt,2,,,,,,
+1719,Detale@MG_FIREBALL,attack,17,10,2000,0,5000,yes,target,always,0,,,,,,
 1719,Detale@MG_FIREBALL,chase,17,10,2000,0,5000,yes,target,always,0,,,,,,
 1719,Detale@NPC_BREAKWEAPON,attack,343,10,500,0,5000,no,target,always,0,,,,,,
 1719,Detale@NPC_BREAKARMOR,attack,344,10,500,0,5000,no,target,always,0,,,,,,
