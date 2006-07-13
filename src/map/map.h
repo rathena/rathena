@@ -155,7 +155,7 @@ enum {
 //Don't change this, as the client seems to always send/receive 80 characters as it currently is. [Skotlex]
 #define MESSAGE_SIZE 80
 
-#define DEFAULT_AUTOSAVE_INTERVAL 60*1000
+#define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
 //Specifies maps where players may hit each other
 #define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || (agit_flag && map[m].flag.gvg_castle))

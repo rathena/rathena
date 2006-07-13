@@ -3292,9 +3292,13 @@ int map_config_read(char *cfgName) {
 			} else if (strcmpi(w1, "delnpc") == 0) {
 				npc_delsrcfile(w2);
 			} else if (strcmpi(w1, "autosave_time") == 0) {
-				autosave_interval = atoi(w2) * 1000;
-				if (autosave_interval <= 0)
+				autosave_interval = atoi(w2);
+				if (!autosave_interval) //Revert to default saving.
 					autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+				else if (autosave_interval > 0) //Pass from MS to seconds
+					autosave_interval *= 1000;
+				else if (autosave_interval > -100) //Use lower cap of 100ms
+					autosave_interval = -100;
 			} else if (strcmpi(w1, "save_settings") == 0) {
 				save_settings = atoi(w2);
 			} else if (strcmpi(w1, "motd_txt") == 0) {

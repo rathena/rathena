@@ -7095,6 +7095,9 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 	if(save_flag==0)
 		last_save_fd=0;
 
+	if (autosave_interval < 0)
+		return 0; //Fixed interval for saving. [Skotlex]
+
 	interval = autosave_interval/(clif_countusers()+1);
 	if(interval <= 0)
 		interval = 1;
@@ -7510,7 +7513,11 @@ int do_init_pc(void) {
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	natural_heal_prev_tick = gettick();
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
-	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
+
+	if (autosave_interval > 0) //Normal saving.
+		add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
+	else //Constant save interval.
+		add_timer_interval(gettick() -autosave_interval, pc_autosave, 0, 0, -autosave_interval);
 
 	if (battle_config.day_duration > 0 && battle_config.night_duration > 0) {
 		int day_duration = battle_config.day_duration;
