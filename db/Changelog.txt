@@ -24,6 +24,9 @@
 	-----
 
 =========================
+07/13
+	* Fixed the Kaensin info in skill_db/skill_unit_db... before the skill was
+	  overpowered. Now... I think it's underpowered :D [Skotlex]
 07/12
 	* Tao Gunga will now summon G_Megalith's. [Poki#3]
 	* Updated the new Rachel mob names and the new G_ mobs stats & skills. Also removed there poring drops. [Poki#3]

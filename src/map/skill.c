@@ -3069,7 +3069,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	//case NJ_KASUMIKIRI:
 	//case NJ_KIRIKAGE:
 	//case NJ_KOUENKA:
-	case NJ_KAENSIN:
 	//case NJ_HYOUSENSOU:
 	//case NJ_HYOUSYOURAKU:
 	//case NJ_HUUJIN:
@@ -6409,8 +6408,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if (sd) val1 = sd->status.child;
 		break;
 	case NJ_KAENSIN:
-		val1 = skilllv;
-		val2 = (skilllv+1)/2 + 4;
+		val1 = (skilllv+1)/2 + 4;
+		skill_clear_group(src,1);
 		break;
 
 	case GS_GROUNDDRIFT:
@@ -7032,9 +7031,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_KAENSIN:
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			src->val2--;
-			if (--src->val2<=0)
-			skill_delunit(src);
+			if (--sg->val1 <= 0)
+				skill_delunitgroup(NULL,sg);
 			break;
 	}
 
@@ -8895,6 +8893,7 @@ int skill_clear_group (struct block_list *bl, int flag)
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
+			case NJ_KAENSIN:
 				if (flag&1)
 					group[count++]= ud->skillunit[i];
 				break;
@@ -9441,7 +9440,6 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 		group->valstr=NULL;
 	}
 
-	map_freeblock((struct block_list*)group->unit);	/* aFree()の替わり */
 	group->unit=NULL;
 	group->group_id=0;
 	group->unit_count=0;
