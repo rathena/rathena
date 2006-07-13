@@ -118,7 +118,10 @@ int storage_delete(int account_id)
 }
 
 /*==========================================
- * カプラ倉庫を開く
+ * Opens a storage. Returns:
+ * 0 - success
+ * 1 - fail
+ * 2 - Storage requested from char-server (will open automatically later)
  *------------------------------------------
  */
 int storage_storageopen(struct map_session_data *sd)
@@ -141,7 +144,7 @@ int storage_storageopen(struct map_session_data *sd)
 	if((stor = idb_get(storage_db,sd->status.account_id)) == NULL)
   	{	//Request storage.
 		intif_request_storage(sd->status.account_id);
-		return 1;
+		return 2;
 	}
   
 	if (stor->storage_status)

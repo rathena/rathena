@@ -7142,9 +7142,17 @@ atcommand_storeall(const int fd, struct map_session_data* sd,
 {
 	int i;
 	nullpo_retr(-1, sd);
-	if (storage_storageopen(sd) == 1) {
-		clif_displaymessage(fd, "run this command again..");
-		return 0;
+
+	if (sd->state.storage_flag != 1)
+  	{	//Open storage.
+		switch (storage_storageopen(sd)) {
+		case 2: //Try again
+			clif_displaymessage(fd, "run this command again..");
+			return 0;
+		case 1: //Failure
+			clif_displaymessage(fd, "You can't open the storage currently.");
+			return 1;
+		}
 	}
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
@@ -7177,11 +7185,19 @@ atcommand_charstoreall(const int fd, struct map_session_data* sd,
 	if((pl_sd=map_nick2sd((char *) message)) == NULL)
 		return -1;
 
-	if (storage_storageopen(pl_sd) == 1) {
-		clif_displaymessage(fd, "Had to open the characters storage window...");
-		clif_displaymessage(fd, "run this command again..");
-		return 0;
+	if (pl_sd->state.storage_flag != 1)
+  	{	//Open storage.
+		switch (storage_storageopen(pl_sd)) {
+		case 2: //Try again
+			clif_displaymessage(fd, "Had to open the characters storage window...");
+			clif_displaymessage(fd, "run this command again..");
+			return 0;
+		case 1: //Failure
+			clif_displaymessage(fd, "The character currently can't use the storage.");
+			return 1;
+		}
 	}
+
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (pl_sd->status.inventory[i].amount) {
 			if(pl_sd->status.inventory[i].equip != 0)
