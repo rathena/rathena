@@ -1267,80 +1267,72 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_ATK1:
 		if(!sd->state.lr_flag) {
-			if(!(val<0 && ((val-val-val)>status->rhw.atk)))
-				status->rhw.atk+=val;
+			bonus = status->rhw.atk + val;
+			status->rhw.atk = cap_value(bonus, 0, USHRT_MAX);
 		}
 		else if(sd->state.lr_flag == 1) {
-			if(!(val<0 && ((val-val-val)>status->lhw->atk)))
-				status->lhw->atk+=val;
+			bonus = status->lhw->atk + val;
+			status->lhw->atk =  cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_ATK2:
 		if(!sd->state.lr_flag) {
-			if(!(val<0 && ((val-val-val)>status->rhw.atk2)))
-				status->rhw.atk2+=val;
+			bonus = status->rhw.atk2 + val;
+			status->rhw.atk2 = cap_value(bonus, 0, USHRT_MAX);
 		}
 		else if(sd->state.lr_flag == 1) {
-			if(!(val<0 && ((val-val-val)>status->lhw->atk2)))
-				status->lhw->atk2+=val;
+			bonus = status->lhw->atk2 + val;
+			status->lhw->atk2 =  cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_BASE_ATK:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->batk)))
-				status->batk+=val;
+			bonus = status->batk + val;
+			status->batk = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_MATK1:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->matk_max)))
-				status->matk_max += val;
+			bonus = status->matk_max + val;
+			status->matk_max = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_MATK2:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->matk_min)))
-				status->matk_min += val;
+			bonus = status->matk_min + val;
+			status->matk_min = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_MATK:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->matk_max)))
-				status->matk_max += val;
-			if(!(val<0 && ((val-val-val)>status->matk_min)))
-				status->matk_min += val;
+			bonus = status->matk_max + val;
+			status->matk_max = cap_value(bonus, 0, USHRT_MAX);
+			bonus = status->matk_min + val;
+			status->matk_min = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->def))) {
-				bonus = status->def + val;
-				status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-			}
+			bonus = status->def + val;
+			status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
 		}
 		break;
 	case SP_DEF2:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->def2))) {
-				bonus = status->def2 + val;
-				status->def2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-			}
+			bonus = status->def2 + val;
+			status->def2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 		}
 		break;
 	case SP_MDEF1:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->mdef))) {
-				bonus = status->mdef + val;
-				status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-			}
+			bonus = status->mdef + val;
+			status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
 		}
 		break;
 	case SP_MDEF2:
 		if(sd->state.lr_flag != 2) {
-			if(!(val<0 && ((val-val-val)>status->mdef2))) {
-				bonus = status->mdef2 + val;
-				status->mdef2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-			}
+			bonus = status->mdef2 + val;
+			status->mdef2 = cap_value(bonus, SHRT_MIN, SHRT_MAX);
 		}
 		break;
 	case SP_HIT:
@@ -1692,14 +1684,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_PERFECT_HIDE: // [Valaris]
-		if(sd->state.lr_flag!=2) {
+		if(sd->state.lr_flag!=2)
 			sd->state.perfect_hiding=1;
-		}
 		break;
 	case SP_UNBREAKABLE:
-		if(sd->state.lr_flag!=2) {
+		if(sd->state.lr_flag!=2)
 			sd->unbreakable += val;
-		}
 		break;
 	case SP_UNBREAKABLE_WEAPON:
 		if(sd->state.lr_flag != 2)

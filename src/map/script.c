@@ -8815,14 +8815,10 @@ int buildin_recovery(struct script_state *st)
 	for (i = 0; i < users; i++)
 	{
 		sd = all_sd[i];
-		sd->status.hp = sd->status.max_hp;
-		sd->status.sp = sd->status.max_sp;
-		clif_updatestatus(sd, SP_HP);
-		clif_updatestatus(sd, SP_SP);
-		if(pc_isdead(sd)){
-			pc_setstand(sd);
-			clif_resurrection(&sd->bl, 1);
-		}
+		if(pc_isdead(sd))
+			status_revive(&sd->bl, 100, 100);
+		else
+			status_percent_heal(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,"You have been recovered!");
 	}
 	return 0;
