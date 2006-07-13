@@ -1426,7 +1426,9 @@ static struct Damage battle_calc_weapon_attack(
 					if (i < 1) i = 1;
 					//Preserve damage ratio when max cart weight is changed.
 					if(sd && sd->cart_weight && sd->cart_max_weight)
-						skillratio += (sd->cart_weight * 80000) / (i * sd->cart_max_weight) - 100;
+//	FIXME: Something is wrong with this check! But what...? [Skotlex]
+//						skillratio += (sd->cart_weight * 80000) / (i * sd->cart_max_weight) - 100;
+						skillratio += sd->cart_weight/i - 100;
 					else if (!sd)
 						skillratio += 80000 / i - 100;
 					flag.cardfix = 0;

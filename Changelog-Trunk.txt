@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/13
+	* Reverted temporarily the Cart Termination equation until it can be
+	  fixed... [Skotlex]
 	* Fixed script command "recovery". [Skotlex]
 2006/07/12
 	* Fixed a small typo in my code [Zido]
