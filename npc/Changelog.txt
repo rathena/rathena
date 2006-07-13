@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/09
+	* Disabled socket enchant npc. [Musashiden]
 	* Added some missing Rachel Warps [Playtester]
 	* Added a fix to npc/other/books.txt [Playtester]
 07/07
