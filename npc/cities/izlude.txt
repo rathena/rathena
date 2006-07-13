@@ -11,7 +11,7 @@
 //===== Additional Comments: ================================= 
 //= Fully working
 //= 1.1 fixed 2 zeny bugs/checks [Lupus]
-//= 1.2 Fixed a lot of typo’s [Nexon]
+//= 1.2 Fixed a lot of typos [Nexon]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Added a Jawaii related npc. 1.4a Fixed a small bug to
 //=	the Jawaii warper, thanks to reddozen and Silent [MasterOfMuppets]
@@ -530,7 +530,7 @@ izlude.gat,58,126,1	script	Red	98,{
 		mes "Hahahaha!! See!? Someone who";
 		mes "pursues a different job agrees with";
 		mes "me~! You really are a great guy!";
-		mes "Hahaha!! Undoubtedly, onlu ^FF0000Bash^000000";
+		mes "Hahaha!! Undoubtedly, only ^FF0000Bash^000000";
 		mes "suits a Swordman. Please tell that";
 		mes "to this NIMROD over here~ Hahaha!";
 		close;
@@ -660,7 +660,7 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 		mes "Hahahaha!! See!? Someone who";
 		mes "pursues a different job agrees with";
 		mes "me~! You really are a great guy!";
-		mes "Hahaha!! Undoubtedly, onlu ^FF0000Bash^000000";
+		mes "Hahaha!! Undoubtedly, only ^FF0000Bash^000000";
 		mes "suits a Swordman. Please tell that";
 		mes "to this NIMROD over here~ Hahaha!";
 		close;

@@ -110,7 +110,7 @@ L_NOTICE:
  	goto L_MENU;
 L_END:
  	mes "[Izlude Guide]";
- 	mes "Okay then, feel free to come to me if you ever geel lost around Izlude, alright?";
+ 	mes "Okay then, feel free to come to me if you ever feel lost around Izlude, alright?";
 	cutin "prt_soldier",255; 
  	close;
 }
