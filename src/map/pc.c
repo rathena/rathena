@@ -1271,7 +1271,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				status->rhw.atk+=val;
 		}
 		else if(sd->state.lr_flag == 1) {
-			if(!(val<0 && ((val-val-val)>status->lhw.atk)))
+			if(!(val<0 && ((val-val-val)>status->lhw->atk)))
 				status->lhw->atk+=val;
 		}
 		break;
@@ -1281,7 +1281,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 				status->rhw.atk2+=val;
 		}
 		else if(sd->state.lr_flag == 1) {
-			if(!(val<0 && ((val-val-val)>status->lhw.atk2)))
+			if(!(val<0 && ((val-val-val)>status->lhw->atk2)))
 				status->lhw->atk2+=val;
 		}
 		break;
