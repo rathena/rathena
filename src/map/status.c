@@ -3165,7 +3165,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 	if(sc->data[SC_KEEPING].timer!=-1)
 		return 100;
 	if(sc->data[SC_SKA].timer != -1)
-		return rand()%100; //Reports indicate SKA actually randomizes defense.
+		return sc->data[SC_SKA].val3;
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		return 90;
 	if(sc->data[SC_DRUMBATTLE].timer!=-1)
@@ -5199,6 +5199,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 20*val1; //matk increase.
 			val3 = 12*val1; //mdef2 reduction.
 			break;
+		case SC_SKA:
+			val2 = tick/1000;
+			val3 = rand()%100; //Def changes randomly every second...
+			tick = 1000;
+			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?
@@ -5871,10 +5876,8 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	hp = status->max_hp - status->hp;
 	if (hp > sc->data[data].val2)
 		hp = sc->data[data].val2;
-	if (hp) {
-		status_heal(bl, hp, 0, 0);
-		clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
-	}
+	if (hp)
+		status_heal(bl, hp, 0, 2);
 	sc->data[data].val4=-1;
 	return 1;
 }
@@ -5944,6 +5947,15 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		return 0;
 	break;
 
+	case SC_SKA:
+		if((--sc->data[type].val2)>0){
+			sc->data[type].val3 = rand()%100; //Random defense.
+			sc->data[type].timer=add_timer(
+				1000+tick, status_change_timer,
+				bl->id, data);
+			return 0;
+		}
+	
 	case SC_HIDING:
 		if((--sc->data[type].val2)>0){
 			
