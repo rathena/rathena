@@ -25,6 +25,8 @@
 
 =========================
 07/14
+	* Added more X.4 and 11.1 item drops [Playtester]
+	- we don't know about the others yet
 	* Adjusted Odin Temple drops and drop rates with help from Tharis [Playtester]
 	- note: I'm working on adding the X.4 and 11.1 drops now
 07/13
