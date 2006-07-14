@@ -53,27 +53,27 @@ ayothaya.gat,212,169,5	script	Kafra::kaf_ayothaya	116,{
 
 // Einbech -----------------------------------------------------------------
 
-einbech.gat,181,131,5	script	Kafra::kaf_einbech	860,{
+einbech.gat,181,132,4	script	Kafra::kaf_einbech	860,{
 	cutin "kafra_08",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "einbech.gat",181,124;
+		savepoint "einbech.gat",182,124;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Einbroch (North-East) ---------------------------------------------------
-einbroch.gat,242,205,4	script	Kafra::kaf_einbroch	115,{
+einbroch.gat,242,205,5	script	Kafra::kaf_einbroch	115,{
 	cutin "kafra_03",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "einbroch.gat",240,197;
+		savepoint "einbroch.gat",238,198;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Einbroch (East) ---------------------------------------------------------
-einbroch.gat,59,203,4	script	Kafra::kaf_einbroch2	117,{
+einbroch.gat,59,203,5	script	Kafra::kaf_einbroch2	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,4,1;
 
@@ -95,7 +95,7 @@ gonryun.gat,159,122,4	script	Kafra::kaf_gonryun	116,{
 // Lighthalzen--------------------------------------------------------------
 
 //Outside the hotel
-lighthalzen.gat,164,100,3	script	Kafra::kaf_lighthalzen	860,{
+lighthalzen.gat,164,100,4	script	Kafra::kaf_lighthalzen	860,{
 	cutin "kafra_08",2;
 	callfunc "F_Kafra",0,4,1;
 

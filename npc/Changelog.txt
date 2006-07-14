@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/14
+	* Small Kafra coordinate fixes [Playtester]
 07/13
 	* Fixed an invalid savepoint in Lighthalzen Inn. [Adam]
 	* Added Sephiroth's version of the Rachel Sanctuary Warps [Playtester]
