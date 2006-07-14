@@ -2098,7 +2098,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 		mes "^FF0000the level of refines and cards will dissapear too.^000000";
 		mes "So please confirm the item you require.";
 		next;
-		switch(select("Drooping Cat:Huge Leaf:Lazy Smokie:Blue Fish:There's nothing that I like.")) {
+		switch(select("Drooping Cat:Smokie Leaf:Lazy Smokie:Blue Fish:There's nothing that I like.")) {
 		case 1:
 		  if (countitem(2233) && countitem(983) && countitem(7206) > 299 && countitem(7030)) {
 				delitem 2233,1;
@@ -2125,16 +2125,16 @@ morocc.gat,273,79,4	script	Traveler	99,{
 			  mes "If you bring them to me, I will make the Cat for you.";
 			  close;
 			}
-		case 2: //Huge Leaf [7198]
+		case 2: //Smokie Leaf [5064]
 		  if (countitem(945) > 599 && countitem(7030)) {
 				delitem 945,600;
 				delitem 7030,1;
 				creation_lines;
-				getitem 7198,1;
+				getitem 5064,1;
 				close;
 			} else {
 			  mes "[Human]";
-			  mes "Ah, so you want the Huge Leaf.";
+			  mes "Ah, so you want the Smokie Leaf.";
 			  mes "Well,";
 			  mes "I can make that for you,";
 			  mes "but you will have to";
