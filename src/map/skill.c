@@ -6408,7 +6408,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if (sd) val1 = sd->status.child;
 		break;
 	case NJ_KAENSIN:
-		val1 = (skilllv+1)/2 + 4;
+		val2 = (skilllv+1)/2 + 4;
 		skill_clear_group(src,1);
 		break;
 
@@ -6461,6 +6461,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		uy = y + layout->dy[i];
 		switch (skillid) {
 		case MG_FIREWALL:		/* ファイヤーウォール */
+		case NJ_KAENSIN:
 			val2=group->val2;
 			break;
 		case WZ_ICEWALL:		/* アイスウォール */
@@ -7031,8 +7032,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_KAENSIN:
 			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			if (--sg->val1 <= 0)
-				skill_delunitgroup(NULL,sg);
+			if (--src->val2 <= 0)
+				skill_delunit(src);
 			break;
 	}
 
