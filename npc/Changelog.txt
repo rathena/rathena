@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/13
+	* Fixed an invalid savepoint in Lighthalzen Inn. [Adam]
 	* Added Sephiroth's version of the Rachel Sanctuary Warps [Playtester]
 	- remove the comments in the warp file if you want to use them
 	* Fixed some typos thanks to Zarnox [Playtester]

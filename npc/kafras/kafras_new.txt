@@ -27,6 +27,8 @@
 //= 2.7b Chanced the Sprite of the Einbech Kafra. [Poki#3]
 //= 2.7c Added missing kafra in Lighthalzen, thanks to Muad_Dib [Vicious]
 //= 2.8 Removed warps from Umbala and Gonryun, thanks Drakee [Evera]
+//= 2.9 Fixed an incorrect savepoint (inside the hotel) the map was wrong.
+
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
@@ -118,7 +120,7 @@ lhz_in02.gat,237,284,4	script	Kafra::kaf_lhz_in02	861,{
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",278,215;
+		savepoint "lhz_in02.gat",278,215;
 		callfunc "F_KafEnd",0,1;
 }
 
