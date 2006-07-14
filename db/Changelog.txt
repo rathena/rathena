@@ -24,6 +24,9 @@
 	-----
 
 =========================
+07/14
+	* Adjusted Odin Temple drops and drop rates with help from Tharis [Playtester]
+	- note: I'm working on adding the X.4 and 11.1 drops now
 07/13
 	* Fixed the Kaensin info in skill_db/skill_unit_db... before the skill was
 	  overpowered. Now... I think it's underpowered :D [Skotlex]
