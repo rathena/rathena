@@ -2267,47 +2267,49 @@ morocc.gat,273,79,4	script	Traveler	99,{
 }
 //Payon /=Fox Mask=/ //==Lets hope this works as it's supposed==//
 pay_dun03.gat,48,84,4	script	Nine Tail#1	1180,1,1{
-mes "[Nine Tail]";
-mes "Kee! KeeKee!";
-mes "KeeKeeKee! KeeKee! KeeKee!";
-next;
-switch(select("Shaking your head:Nodding")) {
-case 1:
 	mes "[Nine Tail]";
-	mes "KeeKee! Ke! Kee!";
-	donpcevent "Nine Tail#1::OnReset";
-	close;
-case 2:
-	emotion e_hmm;
-	disablenpc "Nine Tail#1";
-	enablenpc "Nine Tail#2";
-	close;
-}
+	mes "Kee! KeeKee!";
+	mes "KeeKeeKee! KeeKee! KeeKee!";
+	next;
+	switch(select("Shaking your head:Nodding")) {
+	case 1:
+		mes "[Nine Tail]";
+		mes "KeeKee! Ke! Kee!";
+		close2;
+		donpcevent "Nine Tail#1::OnReset";
+		end;
+	case 2:
+		emotion e_hmm;
+		close2;
+		disablenpc "Nine Tail#1";
+		enablenpc "Nine Tail#2";
+		end;
+	}
 
 OnInit:
-disablenpc "Nine Tail#1";
-disablenpc "Nine Tail#2";
-monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
-end;
+	disablenpc "Nine Tail#1";
+	disablenpc "Nine Tail#2";
+	monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
+	end;
 
 OnReset:
-killmonster "pay_dun03.gat","NT::OnMobDeadGlobal";
-disablenpc "Nine Tail#1";
-disablenpc "Nine Tail#2";
-initnpctimer;
-end;
+	killmonster "pay_dun03.gat","NT::OnMobDeadGlobal";
+	disablenpc "Nine Tail#1";
+	disablenpc "Nine Tail#2";
+	initnpctimer;
+	end;
 
-OnTimer3000://00:
+OnTimer300000:
 OnSpawn:
-stopnpctimer;
-killmonster "pay_dun03.gat","Nine Tail#1::OnMobDead";
-monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
-end;
+	stopnpctimer;
+	killmonster "pay_dun03.gat","Nine Tail#1::OnMobDead";
+	monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
+	end;
 }
 pay_dun03.gat,48,84,1	script	NT	-1,{
 OnMobDead:
-enablenpc "Nine Tail#1";
-end;
+	enablenpc "Nine Tail#1";
+	end;
 }
 pay_dun03.gat,48,84,4	script	Nine Tail#2	1180,{
 	if(countitem(1022)>998) {
@@ -2317,33 +2319,37 @@ pay_dun03.gat,48,84,4	script	Nine Tail#2	1180,{
 		next;
 		switch(select("Give it to him:Do not give it to him")) {
 		case 1:
-		  mes "[Nine Tail]";
-		  mes "Go now. You have got what you wanted, human. Now leave!";
+			mes "[Nine Tail]";
+			mes "Go now. You have got what you wanted, human. Now leave!";
 			if(countitem(1022)>998) {
-			  delitem 1022,999;
-			  getitem 5069,1;
+				delitem 1022,999;
+				getitem 5069,1;
 			}
-		  disablenpc "Nine Tail#2";
+			close2;
+		  	disablenpc "Nine Tail#2";
 			donpcevent "Nine Tail#1::OnReset";
-			close;
+			end;		
 		case 2:
+			close2;
 			disablenpc "Nine Tail#2";
 			donpcevent "Nine Tail#1::OnReset";
+			end;
 		}
-	} else {
-	  mes "[Nine Tail]";
-	  mes "......Aiyo? Isn't this the appearance of a human boy?";
-	  mes "Has my transfiguration skill gonewrong again... Oh... Oh well.";
+	} 
+	else {
+		mes "[Nine Tail]";
+		mes "......Aiyo? Isn't this the appearance of a human boy?";
+		mes "Has my transfiguration skill gone wrong again... oh... oh well.";
 		next;
 		mes "[Nine Tail]";
-		mes "Do you know how it feels to be chased everyday? How tough that is? huh?";
+		mes "Do you know how it feels to be chased everyday? How tough that is? Huh?";
 		mes "I just want to live a quiet life with my husband!";
 		next;
 		mes "[Nine Tail]";
-		mes "But one day, someone intrude into our habitat and try to catch us.";
+		mes "But one day, someone intruded into our habitat and tried to catch us.";
 		next;
 		mes "[Nine Tail]";
-		mes "Do you know how much that Sohee that live besides me like to complain to me everyday? Some will pull a disgusting face and said 'Haha, Miss Sohee~' and they will chase to rip off her clothes. They are making her crazy!";
+		mes "Do you know how much that Sohee that lives besides me likes to complain to me everyday? Someone will pull a disgusting face and say 'Haha, Miss Sohee~' and they will chase to rip off her clothes. They are making her crazy!";
 		next;
 		mes "[Nine Tail]";
 		mes "It is just a flawless body as fine as pine, and as beautiful as the flower. Why can't anyone understand that?";
@@ -2355,19 +2361,20 @@ pay_dun03.gat,48,84,4	script	Nine Tail#2	1180,{
 		next;
 		mes "[Nine Tail]";
 		mes "To save my husband,";
-		mes "please bring along ^0000FFNine Tails^FF00000999^0000FFUnit^000000";
+		mes "please bring along ^FF0000999 ^0000FFNine Tails^000000!";
 		mes "What? You said that's too much?";
 		next;
 		mes "[Nine Tail]";
 		mes "Hmmph, it really makes me angry to think of what you've done to us...";
-		mes "I undertand. You human won't do anything without a reward....";
+		mes "I understand. You human won't do anything without a reward...";
 		next;
 		mes "[Nine Tail]";
-		mes "Hmm, ok. What do you think of the mask I'm wearing. The ^0000FFKitsune Mask^000000?? Gather the item I want, and I will give you this.";
-		mes "You must gather ^0000FFNine Tails^FF0000 999^0000FF Unit^000000!";
+		mes "Hmm, ok. What do you think of the mask I'm wearing? The ^0000FFKitsune Mask^000000. Gather the item I want, and I will give you this.";
+		mes "You must gather ^FF0000999 ^0000FFNine Tails^000000!";
+		close2;
 		disablenpc "Nine Tail#2";
 		donpcevent "Nine Tail#1::OnReset";
-		close;
+		end;
 	}
 }
 //Orc Village /=Orc Hero Helm=/

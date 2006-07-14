@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/14
+	* Improved the Fox Mask quest [Playtester]
 	* Small Kafra coordinate fixes [Playtester]
 07/13
 	* Fixed an invalid savepoint in Lighthalzen Inn. [Adam]
