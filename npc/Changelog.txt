@@ -40,6 +40,8 @@ Date		Added
 ======
 07/15
 	* Removed global eligibility option from DTS warper [Evera]
+	- Added old global eligibility variable for DTS warper to garbage [Evera]
+	- Fixed incorrect information in DTS warper header [Evera]
 	* Fixed Detale's spawn location [Playtester]
 	* Fixed Blue Fish quest only removing 1 Stinky Scale [Playtester]
 	* Fixed some typos in cities/izlude.txt thanks to Zarnox [Playtester]
