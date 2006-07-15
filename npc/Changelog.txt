@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/15
+	* Fixes some typos in cities/izlude.txt thanks to Zarnox [Playtester]
 07/14
 	* Fixed a quest NPC giving you a Huge Leaf rather than Smokie Leaf [Playtester]
 	* Improved the Fox Mask quest [Playtester]

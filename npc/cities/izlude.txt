@@ -115,8 +115,8 @@ izlude.gat,119,121,1	script	Cuskoal	124,{
 		next;
 		mes "[Cuskoal]";
 		mes "So if you listen carefully, you";
-		mes "just might get lucky abd learn some";
-		mes "very usefull information for";
+		mes "just might get lucky and learn some";
+		mes "very useful information for";
 		mes "yourself.";
 		close;
 }
@@ -146,7 +146,7 @@ izlude.gat,135,78,2	script	Charfri	91,{
 	L_R0:
 		mes "Though it is very beautiful, Byalan";
 		mes "Island has a mysterious dungeon";
-		mes "that exstends deep under the sea.";
+		mes "that extends deep under the sea.";
 		next;
 		mes "[Charfri]";
 		mes "People who've actually been there";
@@ -218,7 +218,7 @@ izlude.gat,150,118,3	script	Dega	84,{
 		mes "for Golem.";
 		close;
 	L_R1:
-		mes "Theres a very delightful place";
+		mes "There's a very delightful place";
 		mes "where you can find every";
 		mes "type of Poring.";
 		next;
@@ -253,7 +253,7 @@ izlude.gat,150,118,3	script	Dega	84,{
 		mes "even bump into Angeling, the";
 		mes "Poring with Angel wings.";
 		next;
-		menu "Ghostring?",-,"Angelring?",M1,"End Conversation.",MEnd;
+		menu "Ghostring?",-,"Angeling?",M1,"End Conversation.",MEnd;
 
 			mes "[Dega]";
 			mes "Ghostring is a grayish Poring that";
@@ -348,7 +348,7 @@ izlude.gat,150,143,4	script	Kylick	97,{
 // Soldier ------------------------------------------------------------------------------
 izlude.gat,124,178,4	script	Soldier	105,{
 	mes "[Soldier]";
-	mes "HeHeHeHe... HaHaHaHa";
+	mes "Hehehehe... Hahahaha";
 	mes "Huh? Why am I so happy?";
 	mes "You wanna know?";
 	next;
@@ -364,8 +364,8 @@ izlude.gat,124,178,4	script	Soldier	105,{
 		
 		sM_0:
 			mes "[Soldier]";
-			mes "HaHa, in fact, that used to be part";
-			mes "of our job. But tere were more and";
+			mes "Haha, in fact, that used to be part";
+			mes "of our job. But there were more and";
 			mes "more hunters who come in order to";
 			mes "get paid, so it became too much to";
 			mes "handle.";
@@ -414,7 +414,7 @@ izlude.gat,124,178,4	script	Soldier	105,{
 			next;
 			mes "[Soldier]";
 			mes "HaHa, in fact, that used to be part";
-			mes "of our job. But tere were more and";
+			mes "of our job. But there were more and";
 			mes "more hunters who come in order to";
 			mes "get paid, so it became too much to";
 			mes "handle.";
@@ -457,7 +457,7 @@ izlude.gat,124,178,4	script	Soldier	105,{
 izlude.gat,58,126,1	script	Red	98,{
 
 	mes "[Red]";
-	mes "The only slill that's needed for a";
+	mes "The only skill that's needed for a";
 	mes "Swordman is ^FF0000Bash^000000! Bash, Bash and";
 	mes "ONLY ^FF0000BASH^000000! No need to waste time";
 	mes "and effort for smaller skills!";
@@ -537,15 +537,15 @@ izlude.gat,58,126,1	script	Red	98,{
 		
 		L00:
 			mes "Hahahaha!!! I knew you'd see things";
-			mes "my way! you ARE a great guy!!";
+			mes "my way! You ARE a great guy!!";
 			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
 			mes "Swordman. Please tell that to this";
-			mes "BONEHAD over here~ Hahaha!";
+			mes "BONEHEAD over here~ Hahaha!";
 			next;
 			mes "[Red]";
 			mes "Hmm, let me give you a bit of";
 			mes "advice. After you achieve level 5";
-			mes "'Bash', the amount of SP consumed";
+			mes "Bash', the amount of SP consumed";
 			mes "by the skill increased greatly, so";
 			mes "watch out for your SP.";
 			close;
@@ -554,14 +554,14 @@ izlude.gat,58,126,1	script	Red	98,{
 		if( baseClass == Job_Swordman ) goto L01;
 		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
 		mes "You know what you're talking about,";
-		mes "eh? I don't know why this jerkface";
+		mes "eh? I don't know why this jerk face";
 		mes "is being sooooo stubborn.";
 		close;
 
 		L01:
 			mes "Alright!! ^FF0000Magnum Break^000000 is the";
 			mes "BEST!! Now you're talking~!! You";
-			mes "know the stuff~HaHaHa!";
+			mes "know the stuff~Hahaha!";
 			next;
 			mes "[Cebalis]";
 			mes "You wanna know some useful";
@@ -667,15 +667,15 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 		
 		L00:
 			mes "Hahahaha!!! I knew you'd see things";
-			mes "my way! you ARE a great guy!!";
+			mes "my way! You ARE a great guy!!";
 			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
 			mes "Swordman. Please tell that to this";
-			mes "BONEHAD over here~ Hahaha!";
+			mes "BONEHEAD over here~ Hahaha!";
 			next;
 			mes "[Red]";
 			mes "Hmm, let me give you a bit of";
 			mes "advice. After you achieve level 5";
-			mes "'Bash', the amount of SP consumed";
+			mes "Bash', the amount of SP consumed";
 			mes "by the skill increased greatly, so";
 			mes "watch out for your SP.";
 			close;
@@ -684,7 +684,7 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 		if( baseClass == Job_Swordman ) goto L01;
 		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
 		mes "You know what you're talking about,";
-		mes "eh? I don't know why this jerkface";
+		mes "eh? I don't know why this jerk face";
 		mes "is being sooooo stubborn.";
 		close;
 
@@ -718,7 +718,7 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 	mes "[Aaron]";
 	mes "Don't you think Strong VIT and";
 	mes "training in a unique breathing";
-	mes "method wich enables quick HP";
+	mes "method which enables quick HP";
 	mes "recovery are the greatest";
 	mes "advantages for a Swordman?";
 	next;
@@ -774,7 +774,7 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 		mes "critical hits, it's a good idea to";
 		mes "invest in LUK. INT also increases";
 		mes "Max SP, which is needed to use";
-		mes "various skils... But it's really";
+		mes "various skills... but it's really";
 		mes "up to you.";
 		close;
 	LEnd:
@@ -807,10 +807,10 @@ izlude.gat,182,186,6	script	Edgar	709,{
 	mes "support if you meet his price.";
 	next;
 	mes "[Edgar]";
-	mes "Lately, people in alberta say that";
+	mes "Lately, people in Alberta say that";
 	mes "he is really trying to help folks";
 	mes "and that his demand for Jellopies";
-	mes "is just a coverup. Well, you";
+	mes "is just a cover-up. Well, you";
 	mes "should take a look at what he has";
 	mes "to offer.";
 M_Menu:
@@ -1000,6 +1000,6 @@ s_Cancel:
 			mes "There's nothing that is as exciting as";
 			mes "travelling together, especially when";
 			mes "you're travelling with your loved ones.";
-			mes "You must be very happy, isn't it?";
+			mes "You must be very happy, aren't you?";
 			close;
 }
