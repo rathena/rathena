@@ -44,7 +44,7 @@
 //=   o yuno_in03.gat 20 18
 //=14) Alarm Mask [Muscle Man*]{Aldebaran}
 //=   o alde_alche.gat 88 180
-//=15) Drooping Kitty, Huge Leaf, Lazy Smokie
+//=15) Drooping Kitty, Smokie Leaf, Lazy Smokie
 //= 	and Blue Fish [Traveler*] {Morroc}
 //=   o morocc.gat 273 79
 //=16) Fox Mask [Nine Tail*] {Payon Dungeon}
@@ -2177,7 +2177,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 		case 4: //Blue Fish [5065]
 		  if (countitem(624) && countitem(959)>299 && countitem(544)>49 && countitem(1023) && countitem(938)>99 && countitem(7030)) {
 				delitem 624,1;
-				delitem 959,1;
+				delitem 959,300;
 				delitem 544,50;
 				delitem 1023,1;
 				delitem 938,100;
