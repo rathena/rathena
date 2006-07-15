@@ -3554,6 +3554,8 @@
 1719,Detale@MG_FIREBALL,chase,17,10,2000,0,5000,yes,target,always,0,,,,,,
 1719,Detale@NPC_BREAKWEAPON,attack,343,10,500,0,5000,no,target,always,0,,,,,,
 1719,Detale@NPC_BREAKARMOR,attack,344,10,500,0,5000,no,target,always,0,,,,,,
+1719,Detale@CR_REFLECTSHIELD,attack,252,10,10000,0,300000,yes,self,always,0,,,,,,6
+1719,Detale@CR_REFLECTSHIELD,chase,252,10,10000,0,300000,yes,self,always,0,,,,,,6
 1719,Detale@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1719,Detale@NPC_SUMMONSLAVE,attack,196,1,10000,700,10000,no,self,slavele,0,1756,,,,,

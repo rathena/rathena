@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/15
+	* Fixed Detale's spawn location [Playtester]
 	* Fixed Blue Fish quest only removing 1 Stinky Scale [Playtester]
 	* Fixed some typos in cities/izlude.txt thanks to Zarnox [Playtester]
 07/14

@@ -46,4 +46,4 @@ abyss_03.gat,0,0,0,0	monster	Ferus	1714,10,0,0,0
 abyss_03.gat,0,0,0,0	monster	Ferus	1717,10,0,0,0
 abyss_03.gat,0,0,0,0	monster	Dragon Egg	1721,10,0,0,0
 abyss_03.gat,0,0,0,0	monster	Hydro	1720,3,1800000,900000,0
-abyss_03.gat,0,0,0,0	monster	Detale	1719,1,7200000,3600000,0
+abyss_03.gat,98,104,5,5	monster	Detale	1719,1,7200000,3600000,0
