@@ -25,6 +25,7 @@
 
 =========================
 07/14
+	* Adjusted attack speed of Thanatos Tower mobs [Playtester]
 	* Adjusted move- and attack-speed of all Abyss Lake mobs [Playtester]
 	- also fixed Novus dropping the correct card
 	- added Detale's Reflect Shield skill
