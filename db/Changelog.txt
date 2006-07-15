@@ -24,11 +24,13 @@
 	-----
 
 =========================
-07/14
+07/15
+	* Hydro's drop change... [Playtester]
 	* Adjusted attack speed of Thanatos Tower mobs [Playtester]
 	* Adjusted move- and attack-speed of all Abyss Lake mobs [Playtester]
 	- also fixed Novus dropping the correct card
 	- added Detale's Reflect Shield skill
+07/14
 	* Added more X.4 and 11.1 item drops [Playtester]
 	- we don't know about the others yet
 	* Adjusted Odin Temple drops and drop rates with help from Tharis [Playtester]
