@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -19,10 +19,7 @@
 //=					= (1<<3) No winner last election
 //=					= (1<<4) Cool Corp won last election
 //=					= (1<<5) Kafra won last election
-//=					= (1<<6) Global Eligibility
 //=Character -	dtseligible 		= eligibility status, 0 not eligible yet, 1 eligible, 2 eligible & voted.
-//=					= (By default, 1/4 chance of being able to vote. set to 1 after having random selection;
-//=					= not used if $dtsglobalelig == 1) 
 //=NPC Func. -	arg(0) 			= 0, Cool Event Corp Voting Staff; 1, Kafra Corp Voting Staff
 //=		arg(1)			= Kafra only, Cool Corp script does not use. Changes illus for different sprites.
 //=					= 0 = 4_f_kafra6 (yellow ponytail, classic outfit, spr 112)
@@ -45,6 +42,7 @@
 //= Pretty sure there are more locations I didn't find.
 //= Base level 60 required to vote
 //===== Version History: ====================================
+//= 1.9 Removed global eligibility option [Evera] (7/15/06)
 //= 1.8	Changed requirement to lvl 60 [Evera] (7/03/06)
 //= 1.7	Fixed bug of DTS_Admin not running by itself [Evera] (7/03/06)
 //= 1.6 Removed Duplicates [Silent]
@@ -196,13 +194,6 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 		mes "selecting our valued customers";
 		mes "to choose the company they want.";
 		next;
-		if($dtsglobalelig == 1){				//Check for global elig
-			mes "[Saera]";					//Unofficial text
-			mes "Global eligiblity is enabled.";
-			mes "Please vote at the nearest";
-			mes "Voting Staff, please.";			//End unofficial text
-			close;
-		}
 		if(dtseligible == 0 && baselevel >= 60 || dtseligible == 3 && baselevel >= 60) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
 		switch(dtseligible){
 			default:
@@ -604,7 +595,7 @@ function	script	F_DTS_Warp	{
 		goto Lend;
 
 	Lvote: //If you clicked you wanted to vote
-		if(dtseligible == 1 || $dts&(1<<6)) goto Leligible; 			//Var check if eligible or global eligibility
+		if(dtseligible == 1) goto Leligible; 			//Var check if eligible
 
 	Lnoteligible: 							//Text displayed if wanted to vote, but not eligible/voted
 		switch(getarg(0)){
