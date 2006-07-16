@@ -25,6 +25,7 @@
 
 =========================
 07/16
+	* Added Angel's Kiss drop to Toad [Playtester]
 	* Valkyrie drops slotted helm again, Valkyrie Helm requires a quest [Playtester]
 07/15
 	* Hydro's drop change... [Playtester]
