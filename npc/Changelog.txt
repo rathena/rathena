@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/16
+	* Small spawn update in Kiel Dungeon [Playtester]
 07/15
 	* Removed global eligibility option from DTS warper [Evera]
 	- Added old global eligibility variable for DTS warper to garbage [Evera]
