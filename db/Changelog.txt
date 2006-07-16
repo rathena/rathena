@@ -25,6 +25,7 @@
 
 =========================
 07/16
+	* Updated Speed, aDelay, aMotion, dMotion of some mobs to Aegis [Playtester]
 	* Raised speed of Kiel mobs until we know official values [Playtester]
 	* Added Angel's Kiss drop to Toad [Playtester]
 	* Valkyrie drops slotted helm again, Valkyrie Helm requires a quest [Playtester]
