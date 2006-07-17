@@ -4371,10 +4371,16 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 {
 	nullpo_retr(0, sd);
 
-	if( skill_num>=GD_SKILLBASE){
+	if(skill_num >= GD_SKILLBASE){
 		guild_skillup(sd,skill_num,0);
 		return 0;
 	}
+
+	if(skill_num >= HM_SKILLBASE){
+		merc_hom_skillup(sd->hd, skill_num);
+		return 0;
+	}
+
 	if (skill_num < 0 || skill_num >= MAX_SKILL)
 		return 0;
 	

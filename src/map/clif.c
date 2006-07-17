@@ -1588,19 +1588,6 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
 	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0); //move to master
 }
 
-// player spend a skillpoint for homunculus
-void clif_parse_HomUseSKillPoint(int fd, struct map_session_data *sd) {	//[orn]
-	int skillid ;
-	nullpo_retv(sd);
-	nullpo_retv(sd->hd);
-
-	if ( !sd->hd ) 
-		return ;
-	skillid = RFIFOW(fd,2);
-
-	merc_hom_skillup(sd->hd, skillid);
-}
-
 // Request a Homunculus move-to-position
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	int x,y,cmd;
@@ -11917,7 +11904,6 @@ static int packetdb_readdb(void)
 		{clif_parse_HomMoveToMaster,"hommovetomaster"},
 		{clif_parse_HomMoveTo,"hommoveto"},
 		{clif_parse_HomAttack,"homattack"},
-		{clif_parse_HomUseSKillPoint,"homuseskillpoint"},
 		{clif_parse_HomMenu,"hommenu"},
 		{NULL,NULL}
 	};
