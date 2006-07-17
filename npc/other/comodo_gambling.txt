@@ -364,7 +364,7 @@ comodo.gat,219,160,3	script	Kachua	91,{
 										set @gamble,rand(1,500);
 											if ((@gamble > 200) && (@gamble < 204))
 												{
-												set @gamble2,rand(1,10);
+												set @gamble2,rand(1,11);
 												if ((@gamble2 > 0) && (@gamble2 < 3))
 													set @item,2506;
 												else if ((@gamble2 > 2) && (@gamble2 < 5))
@@ -373,6 +373,8 @@ comodo.gat,219,160,3	script	Kachua	91,{
 													set @item,2508;
 												else if ((@gamble2 > 7) && (@gamble2 < 11))
 													set @item,2507;
+												else if (@gamble2 == 11)
+													set @item,2523;
 												}
 											else if ((@gamble > 0) && (@gamble < 101))
 												set @item,2503;
