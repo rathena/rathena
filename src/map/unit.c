@@ -15,6 +15,7 @@
 #include "pc.h"
 #include "mob.h"
 #include "pet.h"
+#include "mercenary.h"	///[orn]
 #include "skill.h"
 #include "clif.h"
 #include "npc.h"
@@ -38,6 +39,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl) {
 	if( bl->type == BL_MOB) return &((struct mob_data*)bl)->ud;
 	if( bl->type == BL_PET) return &((struct pet_data*)bl)->ud;
 	if( bl->type == BL_NPC) return &((struct npc_data*)bl)->ud;
+	if( bl->type == BL_HOMUNCULUS) return &((struct homun_data*)bl)->ud;	//[orn]
 	return NULL;
 }
 
@@ -100,6 +102,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	struct block_list       *bl;
 	struct map_session_data *sd = NULL;
 	struct mob_data         *md = NULL;
+	struct homun_data       *hd = NULL;	//[orn]
 	struct unit_data        *ud = NULL;
 
 	bl=map_id2bl(id);
@@ -109,6 +112,8 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		ud = &sd->ud;
 	} else if( BL_CAST( BL_MOB, bl, md ) ) {
 		ud = &md->ud;
+	} else if( BL_CAST( BL_HOMUNCULUS, bl, hd ) ) {	//[orn]
+		ud = &hd->ud;
 	} else
 		ud = unit_bl2ud(bl);
 	
@@ -262,6 +267,9 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 
 	nullpo_retr(0, bl);
 	
+	if ( status_isdead(bl) )	//[orn]
+		return 0;
+
 	ud = unit_bl2ud(bl);
 	
 	if( ud == NULL) return 0;
@@ -707,6 +715,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	struct status_data *tstatus;
 	struct status_change *sc;
 	struct map_session_data *sd = NULL;
+	struct homun_data *hd = NULL;	//[orn]
 	struct block_list * target = NULL;
 	unsigned int tick = gettick();
 	int temp;
@@ -717,6 +726,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 
 	if( BL_CAST( BL_PC,  src, sd ) ) {
 		ud = &sd->ud;
+	} else 	if( BL_CAST( BL_HOMUNCULUS,  src, hd ) ) {	//[orn]
+		ud = &hd->ud;
 	} else
 		ud = unit_bl2ud(src);
 
@@ -1184,6 +1195,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	struct status_data *sstatus;
 	struct map_session_data *sd = NULL;
 	struct mob_data *md = NULL;
+	struct homun_data *hd = NULL;	//[orn]
 	int range;
 	
 	if((ud=unit_bl2ud(src))==NULL)
@@ -1195,6 +1207,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 	BL_CAST( BL_PC , src, sd);
 	BL_CAST( BL_MOB, src, md);
+	BL_CAST( BL_HOMUNCULUS, src, hd);	//[orn]
 	ud->attacktimer=-1;
 	target=map_id2bl(ud->target);
 
@@ -1704,6 +1717,16 @@ int unit_free(struct block_list *bl) {
 		}
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
+	} else if( bl->type == BL_HOMUNCULUS ) {	//[orn]
+		struct homun_data *hd = (struct homun_data*)bl;
+		struct map_session_data *sd = hd->master;
+		merc_hom_hungry_timer_delete(hd);
+		merc_natural_heal_timer_delete(hd) ;
+		if (sd) {
+//			if(hd->intimacy > 0)
+//				intif_save_mercdata(sd->status.account_id,&sd->hom);
+			sd->hd = NULL;
+		}
 	}
 
 	skill_clear_unitgroup(bl);
@@ -1729,4 +1752,3 @@ int do_final_unit(void) {
 	// nothing to do
 	return 0;
 }
-

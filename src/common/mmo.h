@@ -117,6 +117,11 @@
 
 #define CHAR_CONF_NAME  "conf/char_athena.conf"
 
+//Base Homun skill.
+#define HM_SKILLBASE 8000
+#define MAX_HOMUNSKILL 16
+#define MAX_HOMUNCULUS_CLASS	16	//[orn]
+
 struct item {
 	int id;
 	short nameid;
@@ -163,6 +168,29 @@ struct s_pet {
 	char incuvate;
 };
 
+struct s_homunculus {	//[orn]
+	char name[NAME_LENGTH];
+	int hom_id;
+	int char_id;
+	short class_;
+	int hp,max_hp,sp,max_sp;
+	short alive; //albator
+	unsigned long intimacy;	//[orn]
+	short hunger;
+	struct skill hskill[MAX_HOMUNSKILL]; //albator
+	short skillpts;
+	short level;
+	unsigned long exp;
+	short rename_flag;
+	short vaporize; //albator
+	int str ;
+	int agi ;
+	int vit ;
+	int int_ ;
+	int dex ;
+	int luk ;
+};
+
 struct friend {
 	int account_id;
 	int char_id;
@@ -188,6 +216,7 @@ struct mmo_charstatus {
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
 	int party_id,guild_id,pet_id;
+	int hom_id;	//[orn]
 	int fame;
 
 	short weapon,shield;
@@ -385,9 +414,6 @@ enum {
 	GD_DEVELOPMENT=10014,
 };
 
-//Base Homun skill.
-#define HM_SKILLBASE 8001
-#define MAX_HOMUNSKILL 16
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum {

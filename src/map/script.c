@@ -36,6 +36,7 @@
 #include "mob.h"
 #include "npc.h"
 #include "pet.h"
+#include "mercenary.h"	//[orn]
 #include "intif.h"
 #include "skill.h"
 #include "chat.h"
@@ -441,6 +442,7 @@ int buildin_getvariableofnpc(struct script_state *st);
 // [blackhole89] -->
 int buildin_warpportal(struct script_state *st);
 // <-- [blackhole89]
+int buildin_homunculus_evolution(struct script_state *st) ;	//[orn]
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
@@ -785,6 +787,7 @@ struct {
 	// [blackhole89] -->
 	{buildin_warpportal,"warpportal","iisii"},
 	// <--- [blackhole89]
+	{buildin_homunculus_evolution,"homevolution",""},	//[orn]
 	{NULL,NULL,NULL},
 };
 
@@ -6517,6 +6520,21 @@ int buildin_catchpet(struct script_state *st)
 }
 
 /*==========================================
+ * [orn]
+ *------------------------------------------
+ */
+int buildin_homunculus_evolution(struct script_state *st)
+{
+	struct map_session_data *sd;
+	sd=script_rid2sd(st);
+	if ( sd->hd && sd->hd->homunculusDB->evo_class && sd->homunculus.intimacy > 91000 ) {
+		return merc_hom_evolution(sd->hd) ;
+	}
+	clif_emotion(&sd->hd->bl, 4) ;	//swt
+	return 0;
+}
+
+/*==========================================
  *Œg‘Ñ—‘›z‰»‹@Žg—p
  *------------------------------------------
  */
@@ -10388,7 +10406,7 @@ int buildin_rid2name(struct script_state *st){
 				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->name);
 				break;
 			case BL_HOMUNCULUS:
-				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->name);
+				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->master->homunculus.name);
 				break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
@@ -10810,7 +10828,7 @@ int buildin_unittalk(struct script_state *st)
 				memcpy(message, ((TBL_NPC *)bl)->name, NAME_LENGTH);
 				break;
 			case BL_HOMUNCULUS:
-				memcpy(message, ((TBL_HOMUNCULUS *)bl)->name, NAME_LENGTH);
+				memcpy(message, ((TBL_HOMUNCULUS *)bl)->master->homunculus.name, NAME_LENGTH);
 				break;
 			case BL_PET:
 				memcpy(message, ((TBL_PET *)bl)->name, NAME_LENGTH);

@@ -24,6 +24,7 @@
 #include "guild.h"
 #include "pet.h"
 #include "atcommand.h"
+#include "mercenary.h" //albator
 
 static const int packet_len_table[]={
 	-1,-1,27,-1, -1, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
@@ -35,6 +36,7 @@ static const int packet_len_table[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
+	16,-1, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3890  Homunculus [albator]
 };
 
 extern int char_fd;		// inter serverのfdはchar_fdを使う
@@ -132,13 +134,13 @@ int intif_GMmessage(char* mes,int len,int flag)
 
 	// Send to the local players
 	clif_GMmessage(NULL, mes, len, flag);
-	
+
 	if (CheckForCharServer())
 		return 0;
-	
+
 	if (other_mapserver_count < 1)
 		return 0; //No need to send.
-	
+
 	WFIFOHEAD(inter_fd,lp + len + 4);
 	WFIFOW(inter_fd,0) = 0x3000;
 	WFIFOW(inter_fd,2) = lp + len + 4;
@@ -156,13 +158,13 @@ int intif_announce(char* mes,int len, unsigned long color, int flag)
 		clif_MainChatMessage(mes);
 	else
 		clif_announce(NULL, mes, len, color, flag);
-	
+
 	if (CheckForCharServer())
 		return 0;
 
 	if (other_mapserver_count < 1)
 		return 0; //No need to send.
-	
+
 	WFIFOHEAD(inter_fd, 8 + len);
 	WFIFOW(inter_fd,0) = 0x3000;
 	WFIFOW(inter_fd,2) = 8 + len;
@@ -182,8 +184,8 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 	{	//Character not found.
 		clif_wis_end(sd->fd, 1);
 		return 0;
-	}	
-		
+	}
+
 	WFIFOHEAD(inter_fd,mes_len + 52);
 	WFIFOW(inter_fd,0) = 0x3001;
 	WFIFOW(inter_fd,2) = mes_len + 52;
@@ -236,7 +238,7 @@ int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes) {
 
 int intif_regtostr(char* str, struct global_reg *reg, int qty) {
 	int len =0, i;
-	
+
 	for (i = 0; i < qty; i++) {
 		len+= sprintf(str+len, "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
 		len+= sprintf(str+len, "%s", reg[i].value)+1;
@@ -252,7 +254,7 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 
 	if (CheckForCharServer())
 		return -1;
-	
+
 	switch (type) {
 	case 3: //Character reg
 		reg = sd->save_reg.global;
@@ -311,7 +313,7 @@ int intif_request_registry(struct map_session_data *sd, int flag)
 	WFIFOW(inter_fd,0) = 0x3005;
 	WFIFOL(inter_fd,2) = sd->status.account_id;
 	WFIFOL(inter_fd,6) = sd->status.char_id;
-	WFIFOB(inter_fd,10) = (flag&1?1:0); //Request Acc Reg 2 
+	WFIFOB(inter_fd,10) = (flag&1?1:0); //Request Acc Reg 2
 	WFIFOB(inter_fd,11) = (flag&2?1:0); //Request Acc Reg
 	WFIFOB(inter_fd,12) = (flag&4?1:0); //Request Char Reg
 	WFIFOSET(inter_fd,13);
@@ -405,7 +407,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,42);
 	WFIFOW(inter_fd,0)=0x3022;
 	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
@@ -448,7 +450,7 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 		return 0;
 	if(!sd)
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,19);
 	WFIFOW(inter_fd,0)=0x3025;
 	WFIFOL(inter_fd,2)=sd->status.party_id;
@@ -777,6 +779,72 @@ int intif_guild_castle_datasave(int castle_id,int index, int value)
 }
 
 //-----------------------------------------------------------------
+// Homunculus Packets send to Inter server [albator]
+//-----------------------------------------------------------------
+
+int intif_homunculus_create(int account_id, struct s_homunculus *sh)
+{
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd, 44+NAME_LENGHT);
+	WFIFOW(inter_fd, 0) = 0x3090;
+	WFIFOL(inter_fd, 2) = account_id;
+	WFIFOL(inter_fd, 6) = sh->char_id;
+	WFIFOW(inter_fd, 10) = sh->class_;
+	WFIFOL(inter_fd,12) = sh->max_hp;
+	WFIFOL(inter_fd,16) = sh->max_sp;
+	memcpy(WFIFOP(inter_fd,20), sh->name, NAME_LENGTH);
+	WFIFOL(inter_fd,44) = sh->str;
+	WFIFOL(inter_fd,48) = sh->agi;
+	WFIFOL(inter_fd,52) = sh->vit;
+	WFIFOL(inter_fd,56) = sh->int_;
+	WFIFOL(inter_fd,60) = sh->dex;
+	WFIFOL(inter_fd,64) = sh->luk;
+	WFIFOSET(inter_fd, 44+NAME_LENGTH);
+	
+	return 0;
+}
+
+int intif_homunculus_requestload(int account_id, int homun_id)
+{
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd, 10);
+	WFIFOW(inter_fd,0) = 0x3091;
+	WFIFOL(inter_fd,2) = account_id;
+	WFIFOL(inter_fd,6) = homun_id;
+	WFIFOSET(inter_fd, 10);
+	return 0;
+}
+
+int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh)
+{
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd, sizeof(struct s_homunculus)+10);
+	WFIFOW(inter_fd,0) = 0x3092;
+	WFIFOL(inter_fd,2) =  sizeof(struct s_homunculus)+10;
+	WFIFOL(inter_fd,6) = account_id;
+	memcpy(WFIFOP(inter_fd,10),sh,sizeof(struct s_homunculus));
+	WFIFOSET(inter_fd, sizeof(struct s_homunculus)+10);
+	return 0;
+
+}
+
+int intif_homunculus_requestdelete(int homun_id)
+{
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd, 6);
+	WFIFOW(inter_fd, 0) = 0x3093;
+	WFIFOL(inter_fd,2) = homun_id;
+	WFIFOSET(inter_fd,6);
+	return 0;
+
+}
+
+
+//-----------------------------------------------------------------
 // Packets receive from inter server
 
 // Wisp/Page reception
@@ -881,9 +949,9 @@ int intif_parse_Registers(int fd) {
 
 	if (RFIFOB(fd,12) == 3 && sd->status.char_id != RFIFOL(fd,8))
 		return 1; //Character registry from another character.
-	
+
 	flag = (sd->save_reg.global_num == -1 || sd->save_reg.account_num == -1 || sd->save_reg.account2_num == -1);
-	
+
 	switch (RFIFOB(fd,12)) {
 		case 3: //Character Registry
 			reg = sd->save_reg.global;
@@ -1370,6 +1438,74 @@ int intif_parse_RenamePetOk(int fd)
 	return 0;
 }
 
+//----------------------------------------------------------------
+// Homunculus recv packets [albator]
+
+int intif_parse_CreateHomunculus(int fd)
+{
+	struct map_session_data *sd = NULL;
+	RFIFOHEAD(fd);
+
+	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL  ||
+		sd->status.char_id != RFIFOL(fd,6))
+		return 0;
+
+	if(RFIFOW(fd,10)==1)
+	{
+		ShowInfo("Homunculus created successfully\n");
+		sd->status.hom_id = sd->homunculus.hom_id = RFIFOL(fd,12);
+		merc_hom_recv_data(RFIFOL(fd,2), &sd->homunculus, 1) ;
+	}
+	else
+	{
+		ShowError("intif_parse_CreateHomunculus: failed to create homunculus\n");
+		clif_displaymessage(sd->fd, "[debug] fail to create homunculus"); // display error message..
+	}
+
+	return 0;
+}
+
+int intif_parse_RecvHomunculusData(int fd)
+{
+	struct s_homunculus sh;
+	int len;
+
+	RFIFOHEAD(fd);
+	len=RFIFOW(fd,2);
+
+	if(sizeof(struct s_homunculus)!=len-9) {
+		if(battle_config.etc_log)
+			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len-9);
+	}
+	else{
+		memcpy(&sh,RFIFOP(fd,9),sizeof(struct s_homunculus));
+		merc_hom_recv_data(RFIFOL(fd,4),&sh,RFIFOB(fd,8));
+	}
+
+	return 0;
+
+}
+
+int intif_parse_SaveHomunculusOk(int fd)
+{
+	RFIFOHEAD(fd);
+	if(RFIFOB(fd,2) != 1) {
+		if(battle_config.error_log)
+			ShowError("homunculus data save failure\n");
+	}
+	return 0;
+}
+
+int intif_parse_DeleteHomunculusOk(int fd)
+{
+	RFIFOHEAD(fd);
+	if(RFIFOB(fd,2) != 1) {
+		if(battle_config.error_log)
+			ShowError("Homunculus data delete failure\n");
+	}
+
+	return 0;
+}
 //-----------------------------------------------------------------
 // inter serverからの通信
 // エラーがあれば0(false)を返すこと
@@ -1398,7 +1534,7 @@ int intif_parse(int fd)
 	}
 	// 処理分岐
 	switch(cmd){
-	case 0x3800:	
+	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
 			clif_GMmessage(NULL,(char *) RFIFOP(fd,8),packet_len-8,0);
 		else if (RFIFOL(fd,4) == 0xFE000000) //Main chat message [LuzZza]
@@ -1445,6 +1581,10 @@ int intif_parse(int fd)
 	case 0x3882:	intif_parse_SavePetOk(fd); break;
 	case 0x3883:	intif_parse_DeletePetOk(fd); break;
 	case 0x3884:   intif_parse_RenamePetOk(fd); break;
+	case 0x3890:	intif_parse_CreateHomunculus(fd); break;
+	case 0x3891:	intif_parse_RecvHomunculusData(fd); break;
+	case 0x3892:	intif_parse_SaveHomunculusOk(fd); break;
+	case 0x3893:	intif_parse_DeleteHomunculusOk(fd); break;
 	default:
 		if(battle_config.error_log)
 			ShowError("intif_parse : unknown packet %d %x\n",fd,RFIFOW(fd,0));

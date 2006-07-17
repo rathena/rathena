@@ -24,6 +24,7 @@
 #include "npc.h"
 #include "mob.h"
 #include "pet.h"
+#include "mercenary.h"	//orn
 #include "itemdb.h"
 #include "script.h"
 #include "battle.h"
@@ -675,6 +676,10 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// pet
 	if (sd->status.pet_id > 0)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
+
+	// Homunculus [albator]
+	if (sd->status.hom_id > 0)	
+			intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
 	// パ?ティ、ギルドデ?タの要求
 	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
@@ -3257,6 +3262,10 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 					unit_remove_map(&sd->pd->bl, clrtype);
 					intif_save_petdata(sd->status.account_id,&sd->pet);
 				}
+				if(sd->status.hom_id > 0 && sd->hd) {	//orn
+					unit_remove_map(&sd->hd->bl, clrtype);
+					intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus);
+				}
 				chrif_save(sd,2);
 				chrif_changemapserver(sd, mapindex, x, y, ip, (short)port);
 				return 0;
@@ -3289,6 +3298,8 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		unit_remove_map(&sd->bl, clrtype);
 		if(sd->status.pet_id > 0 && sd->pd)
 			unit_remove_map(&sd->pd->bl, clrtype);
+		if(sd->status.hom_id > 0 && sd->hd)	//orn
+			unit_remove_map(&sd->hd->bl, clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	} else if(sd->state.auth)
 		//Tag player for rewarping after map-loading is done. [Skotlex]
@@ -3304,6 +3315,13 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		sd->pd->bl.x = sd->pd->ud.to_x = x;
 		sd->pd->bl.y = sd->pd->ud.to_y = y;
 		sd->pd->ud.dir = sd->ud.dir;
+	}
+
+	if(sd->status.hom_id > 0 && sd->hd ) {	//orn
+		sd->hd->bl.m = m;
+		sd->hd->bl.x = sd->hd->ud.to_x = x;
+		sd->hd->bl.y = sd->hd->ud.to_y = y;
+		sd->hd->ud.dir = sd->ud.dir;
 	}
 
 	return 0;
@@ -4716,6 +4734,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if(sd->pd->target_id) // Unlock all targets...
 			pet_unlocktarget(sd->pd);
 	}
+
+	if(sd->status.hom_id > 0 && sd->hd)	//orn
+	{
+		merc_stop_walking(sd->hd, 1) ;
+		merc_stop_attack(sd->hd) ;
+		merc_hom_delete(sd->hd,0);
+	}
+			
 
 	// Leave duel if you die [LuzZza]
 	if(battle_config.duel_autoleave_when_die) {

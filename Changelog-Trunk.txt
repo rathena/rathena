@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/17
+	* Added Homunculus system, enjoy! [orn aka Nylou]
+	  - WARNING: This currently only works with the SQL version, as the TXT char-server
+	    has no code for it at the moment. You TXT server won't break, but the char-server
+	    will complain of an unknown packet if you try to get an Homunculus
 	* Updated nomemo mapflags based on info from http://ro.doddlercon.com/images/memo.jpg [Poki#3]
 
 2006/07/15

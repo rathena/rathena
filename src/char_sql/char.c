@@ -491,7 +491,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
 			"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
 			"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
-			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',"
+			"`option`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',`homun_id`='%d',"	//[orn] add homun_id (homunculus id)
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
@@ -499,7 +499,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			p->base_exp, p->job_exp, p->zeny,
 			p->max_hp, p->hp, p->max_sp, p->sp, p->status_point, p->skill_point,
 			p->str, p->agi, p->vit, p->int_, p->dex, p->luk,
-			p->option, p->party_id, p->guild_id, p->pet_id,
+			p->option, p->party_id, p->guild_id, p->pet_id, p->hom_id,	//[orn] add homun_id (homunculus id)
 			p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
 			mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y,
 			mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y,
@@ -956,7 +956,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 
 	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`,"
 		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,"
-		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child`, `fame`"
+		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child`, `fame`, `homun_id`"	//[orn] homun_id
 		"FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -977,6 +977,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		p->save_point.map = mapindex_name2id(sql_row[17]); p->save_point.x = atoi(sql_row[18]);	p->save_point.y = atoi(sql_row[19]);
 		p->partner_id = atoi(sql_row[20]); p->father = atoi(sql_row[21]); p->mother = atoi(sql_row[22]); p->child = atoi(sql_row[23]);
 		p->fame = atoi(sql_row[24]);
+		p->hom_id = atoi(sql_row[25]);	//[orn] homunculus id
 
 		strcat (t_msg, " status2");
 	} else
@@ -3036,7 +3037,7 @@ int parse_frommap(int fd) {
 			}
 
 			// no inter server packet. no char server packet -> disconnect
-			ShowError("Unknown packet 0x%04x from map server, disconnecting.\n", RFIFOW(fd,0));
+			ShowError("Unknown packet 0x%04x ( %s ) from map server, disconnecting.\n", RFIFOW(fd,0), (char*)RFIFOP(fd,0));
 			session[fd]->eof = 1;
 			return 0;
 		}

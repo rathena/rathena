@@ -20,6 +20,7 @@
 #include "pc.h"
 #include "status.h"
 #include "pet.h"
+#include "mercenary.h"	//[orn]
 #include "mob.h"
 #include "battle.h"
 #include "party.h"
@@ -706,6 +707,8 @@ const char*	skill_get_name( int id ){
 		return "UNKNOWN_SKILL";
 	if (id >= GD_SKILLBASE)
 		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
+	if (id >= HM_SKILLBASE)	//[orn]
+		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
 	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].name==NULL)
 		return "UNKNOWN_SKILL"; //Can't use skill_chk because we return a string.
 	return skill_db[id].name; 
@@ -809,6 +812,8 @@ int skill_calc_heal (struct block_list *bl, int skill_lv)
 	if(bl->type == BL_PC && (skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
 		heal += heal * skill * 2 / 100;
 
+	if(bl->type == BL_HOMUNCULUS && (skill = merc_hom_checkskill( ((TBL_HOMUNCULUS*)bl)->master, HLIF_BRAIN)) > 0)	//[orn]
+		heal += heal * skill * 2 / 100;
 	return heal;
 }
 
@@ -846,6 +851,8 @@ int skillnotok (int skillid, struct map_session_data *sd)
 
 	if (i >= GD_SKILLBASE)
 		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+	if (i >= HM_SKILLBASE)	//[orn]
+		i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
 	
 	if (i > MAX_SKILL || i < 0)
 		return 1;
@@ -917,6 +924,49 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			break;
 	}
 	return (map[sd->bl.m].flag.noskill);
+}
+
+// [orn] - skill ok to cast? and when?	//homunculus
+int skillnotok_hom (int skillid, struct homun_data *hd)
+{	
+	int i = skillid;
+	nullpo_retr (1, hd);
+	//if (sd == 0)
+		//return 0; 
+		//return 1;
+	// I think it was meant to be "no skills allowed when not a valid sd"
+	
+	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
+		return 1;
+
+	if (i >= GD_SKILLBASE)
+		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+	if (i >= HM_SKILLBASE)	//[orn]
+		i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
+	
+	if (i > MAX_SKILL || i < 0)
+		return 1;
+	
+	if (hd->blockskill[i] > 0)
+		return 1;
+
+	// Check skill restrictions [Celest]
+	if(!map_flag_vs(hd->bl.m) && skill_get_nocast (skillid) & 1)
+		return 1;
+	if(map[hd->bl.m].flag.pvp) {
+		if(!battle_config.pk_mode && skill_get_nocast (skillid) & 2)
+			return 1;
+		if(battle_config.pk_mode && skill_get_nocast (skillid) & 16)
+			return 1;
+	}
+	if(map_flag_gvg(hd->bl.m) && skill_get_nocast (skillid) & 4)
+		return 1;
+	if(agit_flag && skill_get_nocast (skillid) & 8)
+		return 1;
+	if(map[hd->bl.m].flag.restricted && map[hd->bl.m].zone && skill_get_nocast (skillid) & (8*map[hd->bl.m].zone))
+		return 1;
+
+	return (map[hd->bl.m].flag.noskill);
 }
 
 /* スキルユニットの配置情報を返す */
@@ -2263,6 +2313,99 @@ int skill_guildaura_sub (struct block_list *bl, va_list ap)
 	return 0;
 }
 
+/*==========================================
+ * [orn]
+ * Checks that you have the requirements for casting a skill for homunculus.
+ * Flag:
+ * &1: finished casting the skill (invoke hp/sp/item consumption)
+ * &2: picked menu entry (Warp Portal, Teleport and other menu based skills)
+ *------------------------------------------
+ */
+static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, int type)
+{
+	struct status_data *status;
+	struct status_change *sc;
+	int j,hp,sp,hp_rate,sp_rate,state,mhp ;
+
+	nullpo_retr(0, hd);
+
+	if (lv <= 0) return 0;
+
+	status = &hd->battle_status;
+	sc = &hd->sc;
+	if (!sc->count)
+		sc = NULL;
+	
+	// for the guild skills [celest]
+	if (skill >= HM_SKILLBASE)	//[orn]
+		j = HM_SKILLRANGEMIN + skill - HM_SKILLBASE;
+	else
+		j = skill;
+	if (j < 0 || j >= MAX_SKILL_DB)
+  		return 0;
+	//Code speedup, rather than using skill_get_* over and over again.
+	if (lv < 1 || lv > MAX_SKILL_LEVEL)
+		return 0;
+	hp = skill_db[j].hp[lv-1];
+	sp = skill_db[j].sp[lv-1];
+	hp_rate = skill_db[j].hp_rate[lv-1];
+	sp_rate = skill_db[j].sp_rate[lv-1];
+	state = skill_db[j].state;
+	mhp = skill_db[j].mhp[lv-1];
+	if(mhp > 0)
+		hp += (status->max_hp * mhp)/100;
+	if(hp_rate > 0)
+		hp += (status->hp * hp_rate)/100;
+	else
+		hp += (status->max_hp * (-hp_rate))/100;
+	if(sp_rate > 0)
+		sp += (status->sp * sp_rate)/100;
+	else
+		sp += (status->max_sp * (-sp_rate))/100;
+
+	switch(skill) { // Check for cost reductions due to skills & SCs
+		case HFLI_SBR44:
+			if(hd->master->homunculus.intimacy < 200)
+				return 0;
+			break;
+		case HVAN_EXPLOSION:
+			if(hd->master->homunculus.intimacy < battle_config.hvan_explosion_intimate)
+				return 0;
+			break;
+	}
+	if(!(type&2)){
+		if( hp>0 && status->hp <= (unsigned int)hp) {
+			clif_skill_fail(hd->master,skill,2,0);
+			return 0;
+		}
+		if( sp>0 && status->sp < (unsigned int)sp) {
+			clif_skill_fail(hd->master,skill,1,0);
+			return 0;
+		}
+	}
+
+	switch(state) {
+	case ST_MOVE_ENABLE:
+		//Check only on begin casting. [Skotlex]
+		if(!type && !unit_can_move(&hd->bl)) {
+			clif_skill_fail(hd->master,skill,0,0);
+			return 0;
+		}
+		break;
+	}
+
+	if(!(type&1))
+		return 1;
+
+	if(type&2)
+		return 1;
+
+	if(sp || hp)
+		status_zap(&hd->bl, hp, sp);
+
+	return 1;
+}
+
 /*=========================================================================
  * 範囲スキル使用処理小分けここから
  */
@@ -2454,6 +2597,7 @@ static int skill_reveal_trap (struct block_list *bl, va_list ap)
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
+	struct homun_data *hd = NULL ;	//[orn]
 	struct status_data *tstatus;
 	struct status_change *sc;
 
@@ -2472,6 +2616,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		sd = (struct map_session_data *)src;
 	if (bl->type == BL_PC)
 		tsd = (struct map_session_data *)bl;
+	if (bl->type == BL_HOMUNCULUS)	//[orn]
+		hd = (struct homun_data *)bl;
 
 	if (status_isdead(src) || (src != bl && status_isdead(bl)))
 		return 1;
@@ -2568,6 +2714,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case TK_DOWNKICK:
 	case TK_COUNTER:
 	case ASC_BREAKER:
+	case HFLI_MOON:	//[orn]
+	case HFLI_SBR44:	//[orn]
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -2725,8 +2873,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_castend_damage_id);
 		}
 		break;
-
-
 	case SM_MAGNUM:
 		if(flag&1)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
@@ -2974,6 +3120,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case TF_THROWSTONE:
 	case NPC_SMOKING:
 	case NPC_SELFDESTRUCTION:
+	case HVAN_EXPLOSION:	//[orn]
 	case GS_FLING:
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
@@ -3112,6 +3259,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
 {
 	struct map_session_data *sd = NULL;
+	struct homun_data *hd = NULL;
 	struct map_session_data *dstsd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
@@ -3129,6 +3277,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	if (src->type == BL_PC) {
 		sd = (struct map_session_data *)src;
+	} else if (src->type == BL_HOMUNCULUS) {	//[orn]
+		hd = (struct homun_data *)src;
 	} else if (src->type == BL_MOB) {
 		md = (struct mob_data *)src;
 	}
@@ -3151,7 +3301,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
-		case AL_HEAL:
+		case HLIF_HEAL:	//[orn]
+			if ( !hd ) {
+			        clif_skill_fail(hd->master,skillid,0,0) ;
+			        break ;
+			}
+ 		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
 			if (battle_check_undead(tstatus->race,tstatus->def_ele)) {
@@ -3184,6 +3339,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	map_freeblock_lock();
 	switch(skillid)
 	{
+	case HLIF_HEAL:	//[orn]
 	case AL_HEAL:				/* ヒール */
 		{
 			int heal = skill_calc_heal(src, skilllv);
@@ -3969,6 +4125,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src, skillid, skilllv, tick, flag|BCT_ENEMY,
 			skill_castend_damage_id);
+		status_damage(src, src, sstatus->max_hp,0,0,1);
+		break;
+	case HVAN_EXPLOSION:	//[orn]
+		ShowDebug("skill_castend_nodamage_id : intimacy = %d\n", hd->master->homunculus.intimacy) ;	//ORN DEBUG
+		clif_skill_nodamage(src, src, skillid, -1, 1);
+		map_foreachinrange(skill_area_sub, bl,
+			skill_get_splash(skillid, skilllv), BL_CHAR,
+			src, skillid, skilllv, tick, flag|BCT_ENEMY,
+			skill_castend_damage_id);
+		if(hd){
+			hd->master->homunculus.intimacy = 200;
+			clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
+		}
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
@@ -5397,6 +5566,149 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				pc_delspiritball(sd,1,0);
 		}
 		break;
+	
+	case AM_CALLHOMUN:	//[orn]
+	{
+		int i = 0;
+		if (sd && (sd->status.hom_id == 0 || sd->homunculus.vaporize == 1)) {
+			if (sd->status.hom_id == 0) {
+				i = pc_search_inventory(sd,7142);
+				if(i < 0) {
+					clif_skill_fail(sd,skillid,0,0);
+					break ;
+				}
+				pc_delitem(sd,i,1,0);
+			}
+			if (merc_call_homunculus(sd))
+				break;
+		}
+		
+		clif_skill_fail(sd,skillid,0,0);
+		break;
+	}
+	case AM_REST:	//[orn]
+	{
+		if (sd && sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
+			sd->homunculus.vaporize = 1;
+			merc_hom_delete(sd->hd, 0) ;
+		} else if ( sd ) 
+		{
+			clif_skill_fail(sd,skillid,0,0);
+		}
+		
+		break;
+	}
+	case AM_RESURRECTHOMUN:	//[orn]
+	{
+		if ( sd && sd->status.hom_id ) {
+			if( map_flag_gvg(bl->m) )
+			{	//No reviving in WoE grounds!
+				clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
+			if ( sd->homunculus.alive == 0 ) {
+				int per = 10 * skilllv;
+	
+				if (merc_hom_revive(sd, per) )
+				{
+					clif_skill_nodamage(src,&sd->hd->bl,AM_RESURRECTHOMUN,skilllv,1);
+				} else {
+					clif_skill_fail(sd,skillid,0,0);
+				}
+			} else {	
+				clif_skill_fail(sd,skillid,0,0);
+			}
+
+		}
+		break;
+	}
+
+	case HAMI_CASTLE:	//[orn]
+		{
+			if(hd && rand()%100 < 20*skilllv)
+			{
+				int x,y;
+				struct walkpath_data wpd;
+				struct map_session_data *sd = hd->master;
+				if( path_search(&wpd,hd->bl.m,hd->bl.x,hd->bl.y,sd->bl.x,sd->bl.y,0) != 0 ) {
+					clif_skill_fail(sd,skillid,0,0);
+					break;
+				}
+
+				clif_skill_nodamage(&hd->bl,&sd->bl,skillid,skilllv,1);
+
+				x = hd->bl.x;
+				y = hd->bl.y;
+
+				unit_movepos(&hd->bl,sd->bl.x,sd->bl.y,0,0);
+				unit_movepos(&sd->bl,x,y,0,0);
+				clif_fixpos(&hd->bl) ;
+				clif_fixpos(&sd->bl) ;
+
+				map_foreachinarea(skill_chastle_mob_changetarget,hd->bl.m,
+						  hd->bl.x-AREA_SIZE,hd->bl.y-AREA_SIZE,
+						  hd->bl.x+AREA_SIZE,hd->bl.y+AREA_SIZE,
+						  BL_MOB,&hd->master->bl,&hd->bl);
+			}
+		}
+		break;
+	case HVAN_CHAOTIC:	//[orn]
+		{
+			if(hd){
+				//HOM,PC,MOB
+				struct block_list* heal_target=NULL;
+				int heal = skill_calc_heal( src, 1+rand()%skilllv );
+				static const int per[10][2]={{20,50},{50,60},{25,75},{60,64},{34,67},
+											 {34,67},{34,67},{34,67},{34,67},{34,67}};
+				int rnd = rand()%100;
+				if(rnd<per[skilllv-1][0])
+				{
+					heal_target = &hd->bl;
+				}else if(rnd<per[skilllv-1][1])
+				{
+					if(!status_isdead(&hd->master->bl))
+						heal_target = &hd->master->bl;
+					else
+						heal_target = &hd->bl;
+				}else{//MOB
+					heal_target = map_id2bl(hd->target_id);
+					if(heal_target==NULL)
+						heal_target = &hd->bl;
+				}
+				clif_skill_nodamage(src,heal_target,AL_HEAL,heal,1);
+				clif_skill_nodamage(src,heal_target,skillid,heal,1);
+				status_heal(heal_target, heal, 0, 0);
+				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
+			}
+		}
+		break;
+	case HLIF_AVOID:	//[orn]
+	case HAMI_DEFENCE:	//[orn]
+		if ( hd ) {
+			clif_skill_nodamage(src,&hd->master->bl,skillid,skilllv,
+				sc_start(&hd->master->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
+		}
+	case HAMI_BLOODLUST:	//[orn]
+	case HFLI_FLEET:	//[orn]
+	case HFLI_SPEED:	//[orn]
+		if ( hd ) {
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(&hd->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
+			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
+		}
+		else
+				clif_skill_fail(hd->master,skillid,0,0);
+		break;
+	case HLIF_CHANGE:	//[orn]
+		if ( hd ) {
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(&hd->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
+			status_heal(&hd->bl, hd->master->homunculus.max_hp, 0, 0);
+			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
+		}
+		else
+				clif_skill_fail(hd->master,skillid,0,0);
+		break;
 
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
@@ -5421,6 +5733,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 {
 	struct block_list *target, *src = map_id2bl(id);
 	struct map_session_data* sd = NULL;
+	struct homun_data* hd = NULL;	//[orn]
 	struct mob_data* md = NULL;
 	struct unit_data* ud = unit_bl2ud(src);
 	struct status_change *sc;
@@ -5429,6 +5742,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC,  src, sd);
+	BL_CAST( BL_HOMUNCULUS,  src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -5538,6 +5852,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv,1))		/* 使用条件チェック */
 			break;
 			
+		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv,1))	//[orn]
+			break;
+			
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 		
@@ -5585,12 +5902,14 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 	struct block_list* src = map_id2bl(id);
 	int maxcount;
 	struct map_session_data *sd = NULL;
+	struct homun_data *hd = NULL;	//[orn]
 	struct unit_data *ud = unit_bl2ud(src);
 	struct mob_data *md = NULL;
 
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC , src, sd);
+	BL_CAST( BL_HOMUNCULUS , src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -5649,6 +5968,9 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		}
 			
 		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv, 1))	/* 使用条件チェック */
+			break;
+
+		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv, 1))	//[orn]
 			break;
 
 		if(md) {
@@ -7586,6 +7908,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	// for the guild skills [celest]
 	if (skill >= GD_SKILLBASE)
 		j = GD_SKILLRANGEMIN + skill - GD_SKILLBASE;
+	else if (skill >= HM_SKILLBASE)	//[orn]
+		j = HM_SKILLRANGEMIN + skill - HM_SKILLBASE;
 	else
 		j = skill;
 	if (j < 0 || j >= MAX_SKILL_DB)
@@ -9035,6 +9359,23 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 }
 
 /*==========================================
+ * �L���X�����O�̃^�[�Q�b�g�ύX
+ *------------------------------------------
+ */
+int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap)
+{
+	struct mob_data* md;
+	struct block_list *from_bl;
+	struct block_list *to_bl;
+	nullpo_retr(0, md = (struct mob_data*)bl);
+	nullpo_retr(0, from_bl = va_arg(ap,struct block_list *));
+	nullpo_retr(0, to_bl = va_arg(ap,struct block_list *));
+	if(md->target_id == from_bl->id)
+		md->target_id = to_bl->id;
+	return 0;
+}
+
+/*==========================================
  * 指定範囲内でsrcに対して有効なターゲットのblの数を数える(foreachinarea)
  *------------------------------------------
  */
@@ -10303,11 +10644,38 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 
 	if (skillid >= GD_SKILLBASE)
 		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
+	if (skillid >= HM_SKILLBASE)	//[orn]
+		skillid = HM_SKILLRANGEMIN + skillid - HM_SKILLBASE;
 	if (skillid < 1 || skillid > MAX_SKILL)
 		return -1;
 
 	sd->blockskill[skillid] = 1;
 	return add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid);
+}
+
+int skill_blockmerc_end (int tid, unsigned int tick, int id, int data)	//[orn]
+{
+	struct homun_data *hd = (TBL_HOMUNCULUS*) map_id2bl(id);
+	if (data <= 0 || data >= MAX_SKILL)
+		return 0;
+	if (hd) hd->blockskill[data] = 0;
+	
+	return 1;
+}
+
+int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
+{
+	nullpo_retr (-1, hd);
+
+	if (skillid >= GD_SKILLBASE)
+		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
+	if (skillid >= HM_SKILLBASE)	//[orn]
+		skillid = HM_SKILLRANGEMIN + skillid - HM_SKILLBASE;
+	if (skillid < 1 || skillid > MAX_SKILL)
+		return -1;
+
+	hd->blockskill[skillid] = 1;
+	return add_timer(gettick()+tick,skill_blockmerc_end,hd->bl.id,skillid);
 }
 
 
@@ -10641,6 +11009,8 @@ int skill_readdb (void)
 		}
 		if (i >= GD_SKILLBASE)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if (i >= HM_SKILLBASE)	//[orn]
+			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 		
@@ -10697,6 +11067,8 @@ int skill_readdb (void)
 		i=atoi(split[0]);
 		if (i >= GD_SKILLBASE)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if (i >= HM_SKILLBASE)	//[orn]
+			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
@@ -10784,6 +11156,8 @@ int skill_readdb (void)
 		i=atoi(split[0]);
 		if (i >= GD_SKILLBASE)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if (i >= HM_SKILLBASE)	//[orn]
+			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 
@@ -10816,6 +11190,8 @@ int skill_readdb (void)
 		i=atoi(split[0]);
 		if (i >= GD_SKILLBASE)
 			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
+		if (i >= HM_SKILLBASE)	//[orn]
+			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
 		if(i<=0 || i>MAX_SKILL_DB)
 			continue;
 		skill_db[i].unit_id[0] = strtol(split[1],NULL,16);

@@ -22,6 +22,7 @@
 #include "npc.h"
 #include "pc.h"
 #include "status.h"
+#include "mercenary.h"
 #ifndef TXT_ONLY
 #include "charsave.h"
 #endif

@@ -761,6 +761,7 @@ static struct Damage battle_calc_weapon_attack(
 	short i;
 
 	struct map_session_data *sd, *tsd;
+	struct homun_data *hd;	//[orn]
 	struct Damage wd;
 	struct status_change *sc = status_get_sc(src);
 	struct status_change *tsc = status_get_sc(target);
@@ -813,6 +814,7 @@ static struct Damage battle_calc_weapon_attack(
 
 	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, target, tsd);
+	BL_CAST(BL_HOMUNCULUS, src, hd);	//[orn]
 
 	if(sd) {
 		if (sd->skillblown[0].id != 0)
@@ -1029,6 +1031,7 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_MENTALBREAKER:
 				case GS_GROUNDDRIFT:
 				case NJ_TATAMIGAESHI:
+				case HVAN_EXPLOSION:	//[orn]
 					flag.hit = 1;
 					break;
 				case CR_SHIELDBOOMERANG:
@@ -1177,6 +1180,14 @@ static struct Damage battle_calc_weapon_attack(
 						ATK_ADD(sd->inventory_data[index]->weight/10);
 					break;
 				}
+			case HFLI_SBR44:	//[orn]
+				if(hd){
+					wd.damage = hd->master->homunculus.intimacy ;
+					wd.damage2 = hd->master->homunculus.intimacy ;
+					hd->master->homunculus.intimacy = 200;
+					clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
+				}
+				break;
 			default:
 			{
 				i = (flag.cri?1:0)|(flag.arrow?2:0)|(skill_num == HW_MAGICCRASHER?4:0)|(skill_num == MO_EXTREMITYFIST?8:0);
@@ -1499,6 +1510,12 @@ static struct Damage battle_calc_weapon_attack(
 				case MO_BALKYOUNG:
 					skillratio += 200;
 					break;
+				case HFLI_MOON:	//[orn]
+					skillratio += ( 110 * (skill_lv + 1) ) - 100 ;
+					skillratio /= wd.div_ ;
+					break;
+				case HFLI_SBR44:	//[orn]
+					skillratio += 100 * skill_lv ;
 			}
 
 			ATK_RATE(skillratio);
@@ -2468,6 +2485,7 @@ struct Damage  battle_calc_misc_attack(
 	case CR_ACIDDEMONSTRATION:
 		md.flag = (md.flag&~BF_RANGEMASK)|BF_LONG;
 		break;
+	case HVAN_EXPLOSION:	//[orn]
 	case NPC_SELFDESTRUCTION:
 	case NPC_SMOKING:
 		flag.elefix = flag.cardfix = 0;
@@ -2553,6 +2571,9 @@ struct Damage  battle_calc_misc_attack(
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
 		break;
+	case HVAN_EXPLOSION:	//[orn]
+		md.damage = sstatus->hp * (50 + 50 * skill_lv) / 100 ;
+		break ;
 	}
 	
 	damage_div_fix(md.damage, md.div_);
@@ -3619,6 +3640,7 @@ static const struct battle_data_short {
 	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 	{ "override_mob_names", 				&battle_config.override_mob_names },
 	{ "min_chat_delay",						&battle_config.min_chat_delay },
+	{ "homunculus_show_growth",					&battle_config.homunculus_show_growth },	//[orn]
 };
 
 static const struct battle_data_int {
@@ -3662,7 +3684,7 @@ static const struct battle_data_int {
 	{ "max_heal",                          &battle_config.max_heal },
 	{ "mob_remove_delay",                  &battle_config.mob_remove_delay	},
 	{ "sg_miracle_skill_duration",				&battle_config.sg_miracle_skill_duration },
-
+	{ "hvan_explosion_intimate",					&battle_config.hvan_explosion_intimate },	//[orn]
 };
 
 int battle_set_value(char *w1, char *w2) {
@@ -4045,6 +4067,8 @@ void battle_set_defaults() {
 	battle_config.autospell_stacking = 0;
 	battle_config.override_mob_names = 0;
 	battle_config.min_chat_delay = 0;
+	battle_config.hvan_explosion_intimate = 45000;	//[orn]
+	battle_config.homunculus_show_growth = 0;	//[orn]
 }
 
 void battle_validate_conf() {
@@ -4257,6 +4281,9 @@ void battle_validate_conf() {
 	if (battle_config.cell_stack_limit != 1)
 		ShowWarning("Battle setting 'cell_stack_limit' takes no effect as this server was compiled without Cell Stack Limit support.\n");
 #endif
+
+	if(battle_config.hvan_explosion_intimate > 100000)	//[orn]
+		battle_config.hvan_explosion_intimate = 100000;
 }
 
 /*==========================================

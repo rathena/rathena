@@ -60,6 +60,13 @@ int intif_save_petdata(int account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);
 int intif_rename_pet(struct map_session_data *sd, char *name);
 
+
+int intif_homunculus_create(int account_id, struct s_homunculus *sh);
+int intif_homunculus_requestload(int account_id, int homun_id);
+int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
+int intif_homunculus_requestdelete(int homun_id);
+
+
 int CheckForCharServer(void);
 
 #endif

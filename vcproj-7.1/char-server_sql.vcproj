@@ -161,6 +161,9 @@
 				RelativePath="..\src\char_sql\int_guild.c">
 			</File>
 			<File
+				RelativePath="..\src\char_sql\int_homun.c">
+			</File>
+			<File
 				RelativePath="..\src\char_sql\int_party.c">
 			</File>
 			<File
@@ -241,6 +244,9 @@
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_guild.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_homun.h">
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_party.h">

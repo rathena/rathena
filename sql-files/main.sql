@@ -57,6 +57,7 @@ CREATE TABLE `char` (
   `party_id` int(11) unsigned NOT NULL default '0',
   `guild_id` int(11) unsigned NOT NULL default '0',
   `pet_id` int(11) unsigned NOT NULL default '0',
+  `homun_id` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) unsigned NOT NULL default '0',
   `hair_color` smallint(5) unsigned NOT NULL default '0',
   `clothes_color` smallint(5) unsigned NOT NULL default '0',
@@ -308,8 +309,39 @@ CREATE TABLE `guild_storage` (
   CONSTRAINT `guild_storage_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guild` (`guild_id`) ON DELETE CASCADE
 ) TYPE=InnoDB;
 
--- Database: Ragnarok
--- Table: 'interlog'
+--
+-- Table structure for table `homunculus`
+--
+
+DROP TABLE IF EXISTS `homunculus`;
+CREATE TABLE `homunculus` (
+  `homun_id` int(11) NOT NULL auto_increment,
+  `char_id` int(11) NOT NULL,
+  `class` mediumint(9) unsigned NOT NULL default '0',
+  `name` varchar(24) NOT NULL default '',
+  `level` smallint(4) NOT NULL default '0',
+  `exp` int(12) NOT NULL default '0',
+  `intimacy` int(12) NOT NULL default '0',
+  `hunger` smallint(4) NOT NULL default '0',
+  `str` smallint(4) unsigned NOT NULL default '0',
+  `agi` smallint(4) unsigned NOT NULL default '0',
+  `vit` smallint(4) unsigned NOT NULL default '0',
+  `int` smallint(4) unsigned NOT NULL default '0',
+  `dex` smallint(4) unsigned NOT NULL default '0',
+  `luk` smallint(4) unsigned NOT NULL default '0',
+  `hp` int(12) NOT NULL default '1',
+  `max_hp` int(12) NOT NULL default '1',
+  `sp` int(12) NOT NULL default '1',
+  `max_sp` int(12) NOT NULL default '1',
+  `skill_point` smallint(4) unsigned NOT NULL default '0',
+  `alive` tinyint(2) NOT NULL default '1',
+  `rename_flag` tinyint(2) NOT NULL default '0',
+  `vaporize` tinyint(2) NOT NULL default '0',
+  PRIMARY KEY  (`homun_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Table structure for table `interlog`
 --
 
 DROP TABLE IF EXISTS `interlog`;
@@ -381,6 +413,19 @@ CREATE TABLE `login` (
 -- inserted into the table called login which is above
 
 INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
+
+--
+-- Table structure for table `mapreg`
+--
+
+DROP TABLE IF EXISTS `mapreg`;
+CREATE TABLE `mapreg` (
+  `varname` varchar(32) NOT NULL,
+  `index` int(11) unsigned NOT NULL default '0',
+  `value` varchar(255) NOT NULL,
+  KEY `varname` (`varname`),
+  KEY `index` (`index`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `sc_data`
@@ -494,6 +539,18 @@ CREATE TABLE `skill` (
 ) TYPE=MyISAM;
 
 --
+-- Table structure for table `skill_homunculus`
+--
+
+DROP TABLE IF EXISTS `skill_homunculus`;
+CREATE TABLE `skill_homunculus` (
+  `homun_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `lv` smallint(6) NOT NULL,
+  PRIMARY KEY  (`homun_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `sstatus`
 --
 
@@ -524,17 +581,4 @@ CREATE TABLE `storage` (
   `card3` smallint(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `account_id` (`account_id`)
-) TYPE=MyISAM;
-
---
--- Table structure for table `mapreg`
---
-
-DROP TABLE IF EXISTS `mapreg`;
-CREATE TABLE `mapreg` (
-  `varname` varchar(32) NOT NULL,
-  `index` int(11) unsigned NOT NULL default '0',
-  `value` varchar(255) NOT NULL,
-  KEY `varname` (`varname`),
-  KEY `index` (`index`)
 ) TYPE=MyISAM;

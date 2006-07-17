@@ -436,6 +436,8 @@ extern struct Battle_Config {
 	unsigned short autospell_stacking; //Enables autospell cards to stack. [Skotlex]
 	unsigned short override_mob_names; //Enables overriding spawn mob names with the mob_db names. [Skotlex]
 	unsigned short min_chat_delay; //Minimum time between client messages. [Skotlex]
+	unsigned int hvan_explosion_intimate ;	// fix [albator]
+	unsigned short homunculus_show_growth ;	//[orn]
 
 } battle_config;
 

@@ -253,6 +253,8 @@ enum {
 	SC_CHANGE,
 	SC_BLOODLUST,
 	SC_FLEET,
+	SC_SPEED,	//[orn]
+	SC_DEFENCE,	//[orn]
 	SC_INCAGIRATE,
 	SC_INCDEXRATE,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]

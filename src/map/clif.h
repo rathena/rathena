@@ -354,9 +354,13 @@ void clif_mission_mob(struct map_session_data *sd, unsigned short mob_id, unsign
 
 // [blackhole89]
 int clif_spawnhomun(struct homun_data *hd);
-int clif_homunack(struct map_session_data *sd);
-int clif_homuninfo(struct map_session_data *sd);
-int clif_homunskillinfoblock(struct map_session_data *sd);
+int clif_hominfo(struct map_session_data *sd, int flag);
+int clif_homskillinfoblock(struct map_session_data *sd);
+void clif_homskillup(struct map_session_data *sd, int skill_num) ;	//[orn]
+int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
+void clif_send_homdata(struct map_session_data *sd, int type, int param);	//[orn]
+int clif_hwalkok(struct homun_data *hd);	//[orn]
+
 #endif
 
 

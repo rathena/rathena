@@ -27,6 +27,7 @@
 #include "skill.h"
 #include "mob.h"
 #include "pet.h"
+#include "mercenary.h"	//[orn]
 #include "battle.h"
 #include "party.h"
 #include "guild.h"
@@ -297,6 +298,13 @@ ACMD_FUNC(tonpc); // LuzZza
 ACMD_FUNC(commands); // [Skotlex]
 ACMD_FUNC(noask); //LuzZza
 ACMD_FUNC(request); //[Skotlex]
+
+ACMD_FUNC(homlevel);	//[orn]
+ACMD_FUNC(homevolution);	//[orn]
+ACMD_FUNC(makehomun);	//[orn]
+ACMD_FUNC(homfriendly);	//[orn]
+ACMD_FUNC(homhungry);	//[orn]
+ACMD_FUNC(homtalk);	//[orn]
 
 /*==========================================
  *AtCommandInfo atcommand_info[]\‘¢‘Ì‚Ì’è‹`
@@ -615,6 +623,13 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
 	{ AtCommand_NoAsk,				"@noask",			1, atcommand_noask }, // [LuzZza]
 	{ AtCommand_Request,				"@request",			20, atcommand_request }, // [Skotlex]
+
+	{ AtCommand_HomLevel,				"@homlvup",		60, atcommand_homlevel	},
+	{ AtCommand_HomEvolution,				"@homevolution",	60, atcommand_homevolution	},
+	{ AtCommand_MakeHomun,				"@makehomun",	60, atcommand_makehomun	},
+	{ AtCommand_HomFriendly,			"@homfriendly",		60, atcommand_homfriendly },
+	{ AtCommand_HomHungry,			"@homhungry",		60, atcommand_homhungry },
+	{ AtCommand_HomTalk,			"@homtalk",		0, atcommand_homtalk },
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -9422,6 +9437,160 @@ int atcommand_mobinfo(
 				clif_displaymessage(fd, atcmd_output);
 		}
 	}
+	return 0;
+}
+
+/*==========================================
+ * homunculus level up [orn]
+ *------------------------------------------
+ */
+int atcommand_homlevel(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int level = 0, i = 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+		
+	if ( sd->status.hom_id == 0 || !sd->homunculus.alive || sd->homunculus.vaporize )
+		return 1 ;
+
+	level = atoi(message);
+	if ( ( level + sd->homunculus.level ) > MAX_LEVEL )
+		level = MAX_LEVEL - sd->homunculus.level ;
+	if (level >= 1) {
+		for (i = 1; i <= level ; i++){
+			merc_hom_levelup(sd->hd) ;
+		}
+		clif_misceffect2(&sd->hd->bl,568) ;
+	}
+	
+	return 0;
+}
+
+/*==========================================
+ * homunculus evolution H [orn]
+ *------------------------------------------
+ */
+int atcommand_homevolution(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	nullpo_retr(-1, sd);
+	
+	if (sd->hd && sd->hd->homunculusDB->evo_class)
+	{
+		merc_hom_evolution(sd->hd) ;
+	}
+	return 0;
+}
+
+/*==========================================
+ * call choosen homunculus [orn]
+ *------------------------------------------
+ */
+int
+atcommand_makehomun(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int homunid;
+	nullpo_retr(-1, sd);
+	if(sscanf(message, "%d", &homunid)<1)
+		return -1;
+	if( homunid < 6001 || homunid > 6016 )
+		return -1;
+	if(sd->status.hom_id == 0)
+	{
+		merc_create_homunculus(sd,homunid);
+	}
+	else
+	{
+		clif_displaymessage(fd,msg_txt(144));
+	}
+	return 0;
+}
+
+/*==========================================
+ * modify homunculus intimacy [orn]
+ *------------------------------------------
+ */
+int atcommand_homfriendly(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int friendly = 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+
+	friendly = atoi(message);
+	if (sd->status.hom_id > 0 && sd->hd) {
+		if (friendly > 0 && friendly <= 1000) {
+			sd->homunculus.intimacy = friendly * 100 ;
+			clif_send_homdata(sd,SP_INTIMATE,friendly);
+		} else {
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * modify homunculus hunger [orn]
+ *------------------------------------------
+ */
+int atcommand_homhungry(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int hungry = 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+
+	hungry = atoi(message);
+	if (sd->status.hom_id > 0 && sd->hd) {
+		if (hungry >= 0 && hungry <= 100) {
+			sd->homunculus.hunger = hungry;
+			clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
+		} else {
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * modify homunculus hunger [orn]
+ *------------------------------------------
+ */
+int atcommand_homtalk(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char mes[100],temp[100];
+
+	nullpo_retr(-1, sd);
+
+	if(!sd->status.hom_id || !sd->hd || !sd->homunculus.alive )
+		return -1;
+
+	if (sscanf(message, "%99[^\n]", mes) < 1)
+		return -1;
+
+	snprintf(temp, sizeof temp ,"%s : %s",sd->homunculus.name,mes);
+	clif_message(&sd->hd->bl, temp);
+
 	return 0;
 }
 

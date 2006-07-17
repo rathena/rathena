@@ -22,6 +22,7 @@
 #include "pc.h"
 #include "status.h"
 #include "mob.h"
+#include "mercenary.h"	//[orn]
 #include "guild.h"
 #include "itemdb.h"
 #include "skill.h"
@@ -761,6 +762,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
  */
 static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 {
+	struct map_session_data *sd;
 	struct mob_data *md;
 	struct block_list **target;
 	int dist;
@@ -783,9 +785,15 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
+	{
 		if (((TBL_PC*)bl)->state.gangsterparadise &&
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
+		sd = (TBL_PC*)bl;	//[orn] monster target homunculus while hunting
+		if (sd->hd && sd->homunculus.alive && (distance_bl(&md->bl,  &sd->hd->bl ) < md->db->range2 ) )	//
+			return 0; //Gangster paradise protection.
+	}
+	case BL_HOMUNCULUS:	//[orn]
 	case BL_MOB:
 		if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
 			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
@@ -824,6 +832,7 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
+	case BL_HOMUNCULUS:	//[orn]
 	case BL_MOB:
 		if(check_distance_bl(&md->bl, bl, md->status.rhw.range) &&
 			battle_check_range (&md->bl, bl, md->status.rhw.range)
@@ -1167,13 +1176,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
 	) {
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
-			view_range, md->special_state.ai?BL_CHAR:BL_PC, md, &tbl);
+			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS, md, &tbl);	//[orn]
 		if(!tbl && mode&MD_ANGRY && !md->state.aggressive)
 			md->state.aggressive = 1; //Restore angry state when no targets are visible.
 	} else if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW)) {
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
-				search_size, (md->special_state.ai?BL_CHAR:BL_PC), md, &tbl);
+				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS), md, &tbl);	//[orn]
 	}
 
 	if (tbl)
@@ -1596,7 +1605,16 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		case BL_PC: 
 		{
 			struct map_session_data *sd = (TBL_PC*)src;
-			id = sd->status.char_id;
+//			id = sd->status.char_id;
+			id = sd->bl.id;	//[orn]
+			if(rand()%1000 < 1000/md->attacked_players)
+				md->attacked_id = src->id;
+			break;
+		}
+		case BL_HOMUNCULUS:	//[orn]
+		{
+			struct homun_data *hd = (TBL_HOMUNCULUS*)src;
+			id = hd->bl.id;
 			if(rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = src->id;
 			break;
@@ -1605,7 +1623,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		{
 			struct pet_data *pd = (TBL_PET*)src;
 			if (battle_config.pet_attack_exp_to_master) {
-				id = pd->msd->status.char_id;
+//				id = pd->msd->status.char_id;
+				id = pd->msd->bl.id;	//[orn]
 				damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
 			}
 			//Let mobs retaliate against the pet's master [Skotlex]
@@ -1618,7 +1637,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			struct mob_data* md2 = (TBL_MOB*)src;
 			if(md2->special_state.ai && md2->master_id) {
 				struct map_session_data* msd = map_id2sd(md2->master_id);
-				if (msd) id = msd->status.char_id;
+//				if (msd) id = msd->status.char_id;
+				if (msd) id = msd->bl.id;	//[orn]
 			}
 			if(rand()%1000 < 1000/md->attacked_players)
 			{	//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
@@ -1670,8 +1690,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 int mob_dead(struct mob_data *md, struct block_list *src, int type)
 {
 	struct status_data *status;
-	struct map_session_data *sd = NULL,*tmpsd[DAMAGELOG_SIZE],
+	struct map_session_data *sd = NULL,/**tmpsd[DAMAGELOG_SIZE],*/
 		*mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
+	struct block_list *tmpbl[DAMAGELOG_SIZE] ;	//[orn]
 	
 	struct {
 		struct party_data *p;
@@ -1706,7 +1727,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	map_freeblock_lock();
 
-	memset(tmpsd,0,sizeof(tmpsd));
+	memset(tmpbl,0,sizeof(tmpbl));
 	memset(pt,0,sizeof(pt));
 
 	if(src && src->type == BL_MOB)
@@ -1735,16 +1756,19 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	for(temp=0,i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
 	{
-		tmpsd[temp] = map_charid2sd(md->dmglog[i].id);
-		if(tmpsd[temp] == NULL)
+		tmpbl[temp] = (struct block_list*)map_id2bl(md->dmglog[i].id);
+		if(tmpbl[temp] == NULL)
 			continue;
-		if(tmpsd[temp]->bl.m != md->bl.m || pc_isdead(tmpsd[temp]))
+		if( (tmpbl[temp])->m != md->bl.m || status_isdead(tmpbl[temp]))
 			continue;
 
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
-			mvp_sd=tmpsd[temp];
+			if ( (tmpbl[temp])->type == BL_HOMUNCULUS ) {
+				mvp_sd = (struct map_session_data *) ((struct homun_data *)tmpbl[temp])->master ;
+			} else
+				mvp_sd=(struct map_session_data *)tmpbl[temp];
 			mvp_damage=md->dmglog[i].dmg;
 		}
 
@@ -1758,7 +1782,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		(!map[md->bl.m].flag.nobaseexp || !map[md->bl.m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
 
-	for(i=0;i<DAMAGELOG_SIZE && tmpsd[i];i++){
+	for(i=0;i<DAMAGELOG_SIZE && tmpbl[i];i++){
 		int flag=1,zeny=0;
 		unsigned int base_exp,job_exp;
 		double per; //Your share of the mob's exp
@@ -1835,7 +1859,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				job_exp = 1;
 		}
  		
-		if((temp=tmpsd[i]->status.party_id)>0)
+		if( (tmpbl[i]->type == BL_PC) && (temp = ((struct map_session_data *)tmpbl[i])->status.party_id )>0 )	//only pc have party [orn]
 		{
 			int j;
 			for(j=0;j<pnum && pt[j].id!=temp;j++); //Locate party.
@@ -1866,11 +1890,22 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				flag=0;
 			}
 		}
-		if(flag) {
-			if(base_exp || job_exp)
-				pc_gainexp(tmpsd[i], &md->bl, base_exp,job_exp);
-			if(zeny) // zeny from mobs [Valaris]
-				pc_getzeny(tmpsd[i], zeny);
+		if(flag) {	//homunculus aren't considered in party [orn]
+			switch( (tmpbl[i])->type ) {
+				case BL_PC:
+					if(base_exp || job_exp)
+						pc_gainexp((struct map_session_data *)tmpbl[i], &md->bl, base_exp,job_exp);
+					if(zeny) // zeny from mobs [Valaris]
+						pc_getzeny((struct map_session_data *)tmpbl[i], zeny);
+					break ;
+				case BL_HOMUNCULUS:
+					if(base_exp)
+						merc_hom_gainexp((struct homun_data *)tmpbl[i], base_exp);
+					if(zeny)	//homunculus give zeny to master
+						pc_getzeny((struct map_session_data *)((struct homun_data *)tmpbl[i])->master, zeny);
+					break ;
+
+			}
 		}
 	}
 	

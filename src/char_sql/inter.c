@@ -15,6 +15,7 @@
 #include "int_guild.h"
 #include "int_storage.h"
 #include "int_pet.h"
+#include "int_homun.h" //albator
 
 #define WISDATA_TTL (60*1000)	// Wisƒf[ƒ^‚Ì¶‘¶ŠÔ(60•b)
 #define WISDELLIST_MAX 256			// Wisƒf[ƒ^íœƒŠƒXƒg‚Ì—v‘f”
@@ -79,6 +80,10 @@ int inter_recv_packet_length[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	48,14,-1, 6, 35, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3080-0x308f
+//	44,10,-1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3090 - 0x309f  Homunculus packets [albator]
+	68,10,-1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3090 - 0x309f  Homunculus packets [albator]
+	
+
 };
 
 struct WisData {
@@ -362,6 +367,7 @@ int inter_init(const char *file)
 	inter_party_sql_init();
 
 	inter_pet_sql_init();
+	inter_homunculus_sql_init(); // albator
 	inter_accreg_sql_init();
 
 	//printf ("interserver timer initializing : %d sec...\n",autosave_interval);
@@ -419,6 +425,7 @@ void inter_final(void) {
 	inter_storage_sql_final();
 	inter_party_sql_final();
 	inter_pet_sql_final();
+	inter_homunculus_sql_final();	//[orn]
 	
 	if (accreg_pt) aFree(accreg_pt);
 	return;
@@ -753,7 +760,7 @@ int inter_parse_frommap(int fd)
 	int cmd=RFIFOW(fd,0);
 	int len=0;
 
-	// interIŠÇŠ‚©‚ğ’²‚×‚é
+	// interIŠÇŠ‚©‚ğ’²‚×‚
 	if(cmd < 0x3000 || cmd >= 0x3000 + (sizeof(inter_recv_packet_length)/
 		sizeof(inter_recv_packet_length[0]) ) )
 		return 0;
@@ -780,6 +787,8 @@ int inter_parse_frommap(int fd)
 		if(inter_storage_parse_frommap(fd))
 			break;
 		if(inter_pet_parse_frommap(fd))
+			break;
+		if(inter_homunculus_parse_frommap(fd)) //albator
 			break;
 		return 0;
 	}

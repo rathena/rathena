@@ -271,6 +271,12 @@ enum AtCommandType {
 	AtCommand_Commands, // [Skotlex]
 	AtCommand_NoAsk, // [LuzZza]
 	AtCommand_Request, // [Skotlex], supposedly taken from Freya (heard the command was there, but I haven't seen the code yet)
+	AtCommand_HomLevel, //[orn]
+	AtCommand_HomEvolution, //[orn]
+	AtCommand_MakeHomun, //[orn]
+	AtCommand_HomFriendly, //[orn]
+	AtCommand_HomHungry, //[orn]
+	AtCommand_HomTalk, //[orn]
 	// end <- Ahem, guys, don't place AtCommands after AtCommand_Unknown! [Skotlex]
 	AtCommand_Unknown,
 	AtCommand_MAX

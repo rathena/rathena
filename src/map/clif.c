@@ -41,6 +41,7 @@
 #include "guild.h"
 #include "vending.h"
 #include "pet.h"
+#include "mercenary.h"	//[orn]
 #include "log.h"
 
 #include "irc.h"
@@ -1449,93 +1450,89 @@ int clif_spawn(struct block_list *bl)
 	}
 	return 0;
 }
-/*==========================================
- * Homunculus [blackhole89]
- *------------------------------------------
- */
-// Can somebody tell me why exactly I have commented this lot of stuff out?
-// acknowledge client it has a homunculus
-int clif_homunack(struct map_session_data *sd)
-{
-	struct homun_data *hd = sd->hd;
-	unsigned char buf[64];
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, sd->hd);
-
-	//memset(buf,0,packet_len_table[0x230]);
-	memset(buf,0,12); //not yet set that stuff
-	WBUFW(buf,0)=0x230;
-	WBUFL(buf,4)=hd->bl.id;
-	ShowError("in clif_homunack~\n");
-	clif_send(buf,/*packet_len_table[0x230]*/12,&sd->bl,SELF);
-
-	return 0;
-}
-
-// homunculus stats et al
-int clif_homuninfo(struct map_session_data *sd)
+//[orn]
+int clif_hominfo(struct map_session_data *sd, int flag)
 {
 	struct homun_data *hd = sd->hd;
 	struct status_data *status;
 	unsigned char buf[128];
 	
 	nullpo_retr(0, hd);
+
+//	if ( sd->hd ) 
+//		return 0 ;
+
 	status = &hd->battle_status;
 	memset(buf,0,71); //packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
-	memcpy(WBUFP(buf,2),hd->name,NAME_LENGTH);
-	WBUFW(buf,27)=hd->level;
-	WBUFW(buf,29)=hd->hunger_rate;
-	WBUFL(buf,31)=0xFF;	//intimacy, leave it as is
-	WBUFW(buf,35)=status->batk;
+	memcpy(WBUFP(buf,2),hd->master->homunculus.name,NAME_LENGTH);
+	WBUFB(buf,26)=hd->master->homunculus.rename_flag * 2;
+	WBUFW(buf,27)=hd->master->homunculus.level;
+	WBUFW(buf,29)=hd->master->homunculus.hunger;
+	WBUFW(buf,31)=(unsigned short) (hd->master->homunculus.intimacy / 100) ;
+	WBUFW(buf,33)=0;			// equip id
+	WBUFW(buf,35)=status->rhw.atk2;
 	WBUFW(buf,37)=status->matk_max;
 	WBUFW(buf,39)=status->hit;
 	WBUFW(buf,41)=status->cri/10;	//crit is a +1 decimal value!
-	WBUFW(buf,43)=status->def;
+	WBUFW(buf,43)=status->def + status->vit ;
 	WBUFW(buf,45)=status->mdef;
 	WBUFW(buf,47)=status->flee;
-	WBUFW(buf,49)=status->amotion;
+	WBUFW(buf,49)=(flag)?0:status->amotion;
 	WBUFW(buf,51)=status->hp;
 	WBUFW(buf,53)=status->max_hp;
 	WBUFW(buf,55)=status->sp;
 	WBUFW(buf,57)=status->max_sp;
-	WBUFL(buf,59)=hd->exp;
+	WBUFL(buf,59)=hd->master->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
-	WBUFW(buf,67)=hd->skillpts;
-	WBUFW(buf,69)=0x21;
+	WBUFW(buf,67)=hd->master->homunculus.skillpts;
+	WBUFW(buf,69)=hd->attackable;
 	clif_send(buf,/*packet_len_table[0x22e]*/71,&sd->bl,SELF); 
 	return 0;
 }
 
-// like skillinfoblock, just for homunculi.
-int clif_homunskillinfoblock(struct map_session_data *sd)
-{
+/*==========================================
+ *
+ *------------------------------------------
+ */
+void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[orn]
 	int fd;
-	int i,c,len=4,id/*, inf2*/;
+	nullpo_retv(sd);
+	nullpo_retv(sd->hd);
+
+	fd=sd->fd;
+	WFIFOW(fd,0)=0x230;
+	WFIFOW(fd,2)=type;
+	WFIFOL(fd,4)=sd->hd->bl.id;
+	WFIFOL(fd,8)=param;
+	WFIFOSET(fd,packet_len_table[0x230]);
+
+	return;
+}
+// like skillinfoblock, just for homunculi.
+int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
+	int fd;
+	int i,j,c,len=4,id/*, inf2*/;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, sd->hd);
 
+	if ( !sd->hd ) 
+		return 0 ;
+
 	fd=sd->fd;
-	WFIFOHEAD(fd, 4 * 37 + 4);
 	WFIFOW(fd,0)=0x235;
-	for ( i = c = 0; i < 4; i++){
-		if( (id=sd->hd->hskill[i].id)!=0 ){
-			WFIFOW(fd,len  ) = id;
-			WFIFOW(fd,len+2) = skill_get_inf(id-7300);		// H. skills mapped to 700 and above
-			WFIFOW(fd,len+4) = 0;
-			WFIFOW(fd,len+6) = sd->hd->hskill[i].level;
-			WFIFOW(fd,len+8) = skill_get_sp(id,sd->hd->hskill[i].level);
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->hd->hskill[i].level);
-			strncpy(WFIFOP(fd,len+12), /*merc_skill_get_name(id)*/ "", NAME_LENGTH); // can somebody tell me what exactly that function was good for anyway
-		/*	inf2 = skill_get_inf2(id);
-			if(((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL))) ||
-				(battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill) )
-				//WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_get_max(id) && sd->status.skill[i].flag ==0 )? 1:0;
-				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_) && sd->status.skill[i].flag ==0 )? 1:0;
-			else */
+	for ( i = c = 0; i < MAX_HOMUNSKILL; i++){
+		if( (id = sd->homunculus.hskill[i].id) != 0 ){
+			j = id - HM_SKILLBASE - 1 ;
+			WFIFOW(fd,len  ) = id ;
+			WFIFOW(fd,len+2) = skill_get_inf(id) ;
+			WFIFOW(fd,len+4) = 0 ;
+			WFIFOW(fd,len+6) = sd->homunculus.hskill[j].lv ;
+			WFIFOW(fd,len+8) = skill_get_sp(id,sd->homunculus.hskill[j].lv) ;
+			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,sd->homunculus.hskill[j].lv) ;
+			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
 				WFIFOB(fd,len+36) = 1;//0;
 			len+=37;
 			c++;
@@ -1547,31 +1544,72 @@ int clif_homunskillinfoblock(struct map_session_data *sd)
 	return 0;
 }
 
+void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
+	int range,fd,skillid;
+
+	nullpo_retv(sd);
+	skillid = skill_num - HM_SKILLBASE ;
+
+	fd=sd->fd;
+	WFIFOW(fd,0) = 0x10e;
+	WFIFOW(fd,2) = skill_num;
+	WFIFOW(fd,4) = sd->homunculus.hskill[skillid].lv;
+	WFIFOW(fd,6) = skill_get_sp(skill_num,sd->homunculus.hskill[skillid].lv);
+	range = skill_get_range(skill_num,sd->homunculus.hskill[skillid].lv);
+	if(range < 0)
+		range = status_get_range(&sd->bl) - (range + 1);
+	WFIFOW(fd,8) = range;
+	WFIFOB(fd,10) = (sd->homunculus.hskill[skillid].lv < skill_get_max(sd->homunculus.hskill[skillid].id)) ? 1 : 0;
+	WFIFOSET(fd,packet_len_table[0x10e]);
+
+	return;
+}
+
 // Request a Homunculus name change
-void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {
+void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[orn]
 	RFIFOHEAD(fd);
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
-	memcpy(sd->hd->name,RFIFOP(fd,2),24);
-	clif_homuninfo(sd);
+	memcpy(sd->homunculus.name,RFIFOP(fd,2),24);
+	sd->homunculus.rename_flag = 1 ;
+	clif_hominfo(sd,0);
 	clif_charnameack(sd->fd,&sd->hd->bl);
 }
 
 // Somebody who is less lazy than me rename this to ReturnToMaster or something
-void clif_parse_QueryHomunPos(int fd, struct map_session_data *sd) {
+void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
 	RFIFOHEAD(fd);
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
+
+	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
+		return ;
+
 	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0); //move to master
-	//clif_homunposack(sd->hd);
+}
+
+// player spend a skillpoint for homunculus
+void clif_parse_HomUseSKillPoint(int fd, struct map_session_data *sd) {	//[orn]
+	int skillid ;
+	nullpo_retv(sd);
+	nullpo_retv(sd->hd);
+
+	if ( !sd->hd ) 
+		return ;
+	skillid = RFIFOW(fd,2);
+
+	merc_hom_skillup(sd->hd, skillid);
 }
 
 // Request a Homunculus move-to-position
-void clif_parse_HMoveTo(int fd,struct map_session_data *sd) {
+void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	int x,y,cmd;
 
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
+
+	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
+		return ;
 
 	cmd = RFIFOW(fd,0);
 	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
@@ -1579,17 +1617,73 @@ void clif_parse_HMoveTo(int fd,struct map_session_data *sd) {
 	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
 
-	unit_walktoxy(&sd->hd->bl,x,y,0);
+	unit_walktoxy(&(sd->hd->bl),x,y,0);
 }
 
 // Request the Homunculus attacking a bl
-void clif_parse_HAttack(int fd,struct map_session_data *sd) {
+void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
+	struct block_list *target;
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
+	
+	target=map_id2bl(RFIFOL(fd,6));
+	
+	if ( sd->hd && target && ( status_isdead(&sd->hd->bl) || status_isdead(target) ) ) 
+		return ;
 
 	if(sd->hd->bl.id != RFIFOL(fd,2)) return;
-	
-	printf("unit_attack returned: %d\n",unit_attack(&sd->hd->bl,RFIFOL(fd,6),0));
+	merc_stop_walking(sd->hd, 1);
+	merc_stop_attack(sd->hd);
+	if ( sd->hd && target ) {
+		sd->hd->target_id = RFIFOL(fd,6) ;
+		unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
+	}
+}
+
+void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
+	int cmd;
+	cmd = RFIFOW(fd,0);
+	RFIFOHEAD(fd);
+	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
+		return ;
+	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
+}
+
+int clif_hom_food(struct map_session_data *sd,int foodid,int fail)	//[orn]
+{
+	int fd;
+
+	nullpo_retr(0, sd);
+
+	fd=sd->fd;
+	WFIFOHEAD(fd,packet_len_table[0x22f]);
+	WFIFOW(fd,0)=0x22f;
+	WFIFOB(fd,2)=fail;
+	WFIFOW(fd,3)=foodid;
+	WFIFOSET(fd,packet_len_table[0x22f]);
+
+	return 0;
+}
+
+/*==========================================
+ * orn
+ *------------------------------------------
+ */
+int clif_hwalkok(struct homun_data *hd)
+{
+	int fd;
+
+	nullpo_retr(0, hd);
+
+	fd=hd->master->fd;
+	WFIFOHEAD(fd, packet_len_table[0x87]);
+	WFIFOW(fd,0)=0x87;
+	WFIFOL(fd,2)=gettick();
+	WFIFOPOS2(fd,6,hd->bl.x,hd->bl.y,hd->ud.to_x,hd->ud.to_y);
+	WFIFOB(fd,11)=0x88;
+	WFIFOSET(fd,packet_len_table[0x87]);
+
+	return 0;
 }
 
 /*==========================================
@@ -7751,7 +7845,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 		break;
 	//[blackhole89]
 	case BL_HOMUNCULUS:
-		memcpy(WBUFP(buf,6), ((struct homun_data*)bl)->name, NAME_LENGTH);
+		memcpy(WBUFP(buf,6), ((struct homun_data*)bl)->master->homunculus.name, NAME_LENGTH);
 		break;
 	case BL_PET:
 		memcpy(WBUFP(buf,6), ((struct pet_data*)bl)->name, NAME_LENGTH);
@@ -8210,10 +8304,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->hd && sd->hd->battle_status.hp) {
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
-		clif_homunack(sd);
-		clif_homuninfo(sd);
-		clif_homuninfo(sd); //for some reason, at least older clients want this sent twice
-		clif_homunskillinfoblock(sd);
+//		clif_homunack(sd);
+		clif_hominfo(sd,1);
+		clif_hominfo(sd,0); //for some reason, at least older clients want this sent twice
+		clif_send_homdata(sd,0,0);
+		clif_homskillinfoblock(sd);
 	}
 
 	if(sd->state.connect_new) {
@@ -9612,6 +9707,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (skillnotok(skillnum, sd))
 		return;
 
+	if (sd->hd && skillnotok_hom(skillnum, sd->hd))	//[orn]
+		return;
+
 	if (sd->bl.id != target_id &&
 		!sd->state.skill_flag &&
 		skill_get_inf(skillnum)&INF_SELF_SKILL)
@@ -9680,12 +9778,19 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		if (skillnum >= GD_SKILLBASE && sd->state.gmaster_flag)
 			skilllv = guild_checkskill(sd->state.gmaster_flag, skillnum);
 		
-		if ((lv = pc_checkskill(sd, skillnum)) > 0) {
-			if (skilllv > lv)
-				skilllv = lv;
-			unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
-			if (sd->state.skill_flag)
-				sd->state.skill_flag = 0;
+		if ( ( skillnum >= HM_SKILLBASE ) && sd->status.hom_id && sd->homunculus.alive && !sd->homunculus.vaporize ) {	//[orn]
+			if ( ( lv = merc_hom_checkskill(sd, skillnum) ) > 0 )
+				if (skilllv > lv)
+					skilllv = lv;
+			unit_skilluse_id(&sd->hd->bl, target_id, skillnum, skilllv);
+		} else {
+			if ((lv = pc_checkskill(sd, skillnum)) > 0) {
+				if (skilllv > lv)
+					skilllv = lv;
+				unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
+				if (sd->state.skill_flag)
+					sd->state.skill_flag = 0;
+			}
 		}
 	}
 }
@@ -11559,6 +11664,36 @@ int clif_parse(int fd) {
 
 	#if DUMP_ALL_PACKETS
 		dump = 1;
+				int i;
+				FILE *fp;
+				char packet_txt[256] = "save/packet.txt";
+				time_t now;
+				dump = 1;
+
+				if ((fp = fopen(packet_txt, "a")) == NULL) {
+					ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
+					return 1;
+				} else {
+					time(&now);
+					if (sd && sd->state.auth) {
+						if (sd->status.name != NULL)
+							fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent packet:\n",
+							        asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
+						else
+							fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
+					} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
+						fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
+
+					fprintf(fp, "\tsession #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
+					fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+					for(i = 0; i < packet_len; i++) {
+						if ((i & 15) == 0)
+							fprintf(fp, "\n\t%04X ", i);
+						fprintf(fp, "%02X ", RFIFOB(fd,i));
+					}
+					fprintf(fp, "\n\n");
+					fclose(fp);
+				}
 	#endif
 
 	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
@@ -11777,11 +11912,13 @@ static int packetdb_readdb(void)
 		{clif_parse_FeelSaveOk,"feelsaveok"},
 		{clif_parse_AdoptRequest,"adopt"},
 		{clif_parse_debug,"debug"},
-		//[blackhole89]
+		//[blackhole89]	//[orn]
 		{clif_parse_ChangeHomunculusName,"changehomunculusname"},
-		{clif_parse_QueryHomunPos,"queryhomunpos"},
-		{clif_parse_HMoveTo,"hmoveto"},
-		{clif_parse_HAttack,"hattack"},
+		{clif_parse_HomMoveToMaster,"hommovetomaster"},
+		{clif_parse_HomMoveTo,"hommoveto"},
+		{clif_parse_HomAttack,"homattack"},
+		{clif_parse_HomUseSKillPoint,"homuseskillpoint"},
+		{clif_parse_HomMenu,"hommenu"},
 		{NULL,NULL}
 	};
 
