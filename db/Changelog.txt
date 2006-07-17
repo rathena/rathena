@@ -25,6 +25,7 @@
 
 =========================
 07/17
+	* Speed/Delay updates for Pasana, Rybio and Phendark [Playtester]
 	* Ooops, forgot to update packet_db [DracoRPG]
 07/16
 	* Updated Speed, aDelay, aMotion, dMotion of some mobs to Aegis [Playtester]
