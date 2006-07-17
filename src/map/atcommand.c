@@ -7075,15 +7075,21 @@ atcommand_follow(const int fd, struct map_session_data* sd,
 			return -1; 
 	
 		pc_stop_following (sd); 
-		clif_displaymessage(fd, "Stop following"); 
+		clif_displaymessage(fd, "Follow mode OFF."); 
 		return 0; 
 	} 
 	if ((pl_sd = map_nick2sd((char *) message)) != NULL) {
-		if (sd->followtarget == pl_sd->bl.id)
+		if (sd->followtarget == pl_sd->bl.id) {
 			pc_stop_following (sd);
-		else
+			clif_displaymessage(fd, "Follow mode OFF.");
+		} else {
 			pc_follow(sd, pl_sd->bl.id);
+			clif_displaymessage(fd, "Follow mode ON.");
+		}
 		return 0;
+	} else {
+		clif_displaymessage(fd, "Character not found.");
+		return -1;
 	}
 	
 	return 1;
