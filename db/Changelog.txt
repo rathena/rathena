@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/17
+	* Ooops, forgot to update packet_db [DracoRPG]
 07/16
 	* Updated Speed, aDelay, aMotion, dMotion of some mobs to Aegis [Playtester]
 	* Raised speed of Kiel mobs until we know official values [Playtester]
