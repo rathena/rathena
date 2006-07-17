@@ -460,7 +460,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       Tiara:
            set @olditem,2234;
            set @newitem,5164;
-           callfunc "f_armor_s";
+           callfunc "f_armor_s2";
 
       Sphinx_Hat:
            set @olditem,5053;
