@@ -158,3 +158,6 @@ nguild_alde.gat	mapflag	nosave	SavePoint
 nguild_gef.gat	mapflag	nosave	SavePoint
 nguild_pay.gat	mapflag	nosave	SavePoint
 nguild_prt.gat	mapflag	nosave	SavePoint
+
+//Normal Maps =================================
+yggdrasil01.gat	mapflag	nosave	SavePoint
