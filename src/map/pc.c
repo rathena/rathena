@@ -7093,25 +7093,38 @@ int pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
  * 自動セ?ブ 各クライアント
  *------------------------------------------
  */
-static int last_save_fd,save_flag;
-static int pc_autosave_sub(struct map_session_data *sd,va_list ap)
+static int last_save_id=0,save_flag=0;
+static int pc_autosave_sub(DBKey key,void * data,va_list app)
 {
-	nullpo_retr(0, sd);
-
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
-
-	if(save_flag==0 && sd->fd>last_save_fd && !sd->state.waitingdisconnect)
-	{
-		// pet
-		if(sd->status.pet_id > 0 && sd->pd)
-			intif_save_petdata(sd->status.account_id,&sd->pet);
-
-		chrif_save(sd,0);
-		save_flag=1;
-		last_save_fd = sd->fd;
+	struct map_session_data *sd = (TBL_PC*)data;
+	
+	if(sd->bl.id == last_save_id) {
+		save_flag = 1;
+		return 1;
 	}
 
-	return 0;
+	if(save_flag != 1) //Not our turn to save yet.
+		return 0;
+
+	if (sd->state.waitingdisconnect) //Invalid char to save.
+		return 0;
+
+	//Save char.
+	last_save_id = sd->bl.id;
+	save_flag=2;
+
+	// pet
+	if(sd->status.pet_id > 0 && sd->pd)
+		intif_save_petdata(sd->status.account_id,&sd->pet);
+
+	if(sd->state.finalsave)
+  	{	//Save ack hasn't returned from char-server yet? Retry.
+		ShowDebug("pc_autosave: Resending to save logging out char %d:%d (save ack from char-server hasn't arrived yet)\n", sd->status.account_id, sd->status.char_id);
+		sd->state.finalsave = 0;
+		chrif_save(sd,1);
+	} else
+		chrif_save(sd,0);
+	return 1;
 }
 
 /*==========================================
@@ -7122,10 +7135,11 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 {
 	int interval;
 
-	save_flag=0;
-	clif_foreachclient(pc_autosave_sub);
-	if(save_flag==0)
-		last_save_fd=0;
+	if(save_flag == 2) //Someone was saved on last call, normal cycle
+		save_flag = 0;
+	else
+		save_flag = 1; //Noone was saved, so save first found char.
+	map_foreachpc(pc_autosave_sub);
 
 	if (autosave_interval < 0)
 		return 0; //Fixed interval for saving. [Skotlex]

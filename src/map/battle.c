@@ -1437,9 +1437,8 @@ static struct Damage battle_calc_weapon_attack(
 					if (i < 1) i = 1;
 					//Preserve damage ratio when max cart weight is changed.
 					if(sd && sd->cart_weight && sd->cart_max_weight)
-//	FIXME: Something is wrong with this check! But what...? [Skotlex]
-//						skillratio += (sd->cart_weight * 80000) / (i * sd->cart_max_weight) - 100;
-						skillratio += sd->cart_weight/i - 100;
+						skillratio += sd->cart_weight/i * 80000/sd->cart_max_weight - 100;
+//						skillratio += sd->cart_weight/i - 100;
 					else if (!sd)
 						skillratio += 80000 / i - 100;
 					flag.cardfix = 0;
@@ -2337,7 +2336,8 @@ struct Damage battle_calc_magic_attack(
 		if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
 		{	//Apply the physical part of the skill's damage. [Skotlex]
 			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
-			ad.damage = (wd.damage + ad.damage) * (100 + 40*skill_lv)/100;
+			//When mflag, this is a no-splash attack, damage gets a bonus of 100%
+			ad.damage = (wd.damage + ad.damage) * ((mflag?200:100) + 40*skill_lv)/100;
 			if(src==target)
 			{
 				if (src->type == BL_PC)

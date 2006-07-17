@@ -5291,6 +5291,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				ud->attackabletime = gettick()+tick;
 				unit_set_walkdelay(bl, gettick(), tick, 1);
 			}
+			val4 = tick; //Store combo-time in val4.
 		}
 			break;
 		case SC_TKREST:
@@ -6347,7 +6348,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_DEVOTION:
 		{	//Check range and timeleft to preserve status [Skotlex]
-			//This implementation won't work for mobs because of map_id2sd, but it's a small cost in exchange of the speed of map_id2sd over map_id2sd
+			//This implementation won't work for mobs because of map_id2sd, but it's a small cost in exchange of the speed of map_id2sd over map_id2bl
 			struct map_session_data *md = map_id2sd(sc->data[type].val1);
 			if (md && check_distance_bl(bl, &md->bl, sc->data[type].val3) && (sc->data[type].val4-=1000)>0)
 			{

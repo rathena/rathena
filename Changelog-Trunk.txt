@@ -4,6 +4,22 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/17
+	* Should have fixed the Cart Termination damage code to be scaled correctly
+	  when you change the max cart weight. Thanks to The Ultra Mage for the error
+	  clarification. [Skotlex]
+	* Implemented Grandcross weird property where if there's noone on the path
+	  it'll hit twice for the skill's reported damage, and when there is (or you
+	  can't knockback the target) it'll do a splash attack that hits twice for
+	  500% to all affected targets.  [Skotlex]
+	* Some cleaning of the combo code. TK Rankers will now get their combo-time
+	  extended each time they trigger a kick, enabling them to do "unlimited
+	  combos". [Skotlex]
+	* Modified the autosave function to use a sweep across the player db
+	  instead of across connected clients. This will cause non-connected players
+	  (like autotraders) to also be saved on a regular interval, may help with
+	  possible data-loss from said characters on unclean shutdowns. [Skotlex]
+	* Removed the code that forces aggressive mobs to go after a Homun instead
+	  of their master (no reason why there should be such a condition). [Skotlex]
 	* Some sign quest map flag updates [MasterOfMuppets]
 	* atcommand_follow is now more verbose. [Adam]
 	* Manually added int_homun.c to the VS8 char_sql project, *should* work [DracoRPG]

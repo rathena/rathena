@@ -1342,6 +1342,7 @@ int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 struct map_session_data** map_getallusers(int *users);
+void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(char*);

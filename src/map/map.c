@@ -1846,6 +1846,13 @@ struct map_session_data** map_getallusers(int *users) {
 	return all_sd;
 }
 
+void map_foreachpc(int (*func)(DBKey,void*,va_list),...) {
+	va_list ap;
+	va_start(ap,func);
+	pc_db->foreach(pc_db,func,ap);
+	va_end(ap);
+}
+
 /*==========================================
  * id_db?‚Ì‘S‚Ä‚Éfunc‚ğ?s
  *------------------------------------------

@@ -1068,15 +1068,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			// Chance to trigger Taekwon kicks [Dralnu]
 			if(sd->sc.count && sd->sc.data[SC_COMBO].timer == -1) {
 				if(sd->sc.data[SC_READYSTORM].timer != -1 &&
-					sc_start4(src,SC_COMBO, 15, TK_STORMKICK,0,0,0,
+					sc_start(src,SC_COMBO, 15, TK_STORMKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
 				else if(sd->sc.data[SC_READYDOWN].timer != -1 &&
-					sc_start4(src,SC_COMBO, 15, TK_DOWNKICK,0,0,0,
+					sc_start(src,SC_COMBO, 15, TK_DOWNKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
 				else if(sd->sc.data[SC_READYTURN].timer != -1 && 
-					sc_start4(src,SC_COMBO, 15, TK_TURNKICK,0,0,0,
+					sc_start(src,SC_COMBO, 15, TK_TURNKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
 				else if(sd->sc.data[SC_READYCOUNTER].timer != -1)
@@ -1764,7 +1764,7 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 	if(!(count&0x20000)) 
 		clif_blown(target);
 
-	return 0;
+	return (count&0xFFFF); //Return amount of knocked back cells.
 }
 
 /*
@@ -1895,7 +1895,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(src == bl) type = 4;	// 反動はダメージモーションなし
 	}
 
-//使用者がPCの場合の処理ここから
 	if(sd) {
 		//Sorry for removing the Japanese comments, but they were actually distracting 
 		//from the actual code and I couldn't understand a thing anyway >.< [Skotlex]
@@ -1910,7 +1909,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				sd->skillid_old = skillid;
 				sd->skilllv_old = skilllv;
 				if (pc_famerank(sd->char_id,MAPID_TAEKWON))
-					break; //Do not end combo state.
+			  	{	//Extend combo time.
+					delete_timer(sc->data[SC_COMBO].timer, status_change_timer);
+					sd->sc.data[SC_COMBO].timer = add_timer(
+						tick+sd->sc.data[SC_COMBO].val4,
+					  	status_change_timer, src->id, SC_COMBO);
+					break;
+				}
 			default:
 				status_change_end(src,SC_COMBO,-1);
 			}
@@ -1920,10 +1925,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			case MO_TRIPLEATTACK:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if (damage < (signed int)tstatus->hp &&
-					pc_checkskill(sd, MO_CHAINCOMBO) > 0)
+				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0)
 					delay += 300 * battle_config.combo_delay_rate / 100;
-				sc_start4(src,SC_COMBO,100,MO_TRIPLEATTACK,skilllv,0,0,delay);
+				sc_start(src,SC_COMBO,100,MO_TRIPLEATTACK,delay);
 				clif_combo_delay(src, delay);
 				
 				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
@@ -1933,51 +1937,51 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			case MO_CHAINCOMBO:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < (signed int)tstatus->hp &&
-					(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0))
+				if(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0)
 					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start4(src,SC_COMBO,100,MO_CHAINCOMBO,skilllv,0,0,delay);
+				sc_start(src,SC_COMBO,100,MO_CHAINCOMBO,delay);
 				clif_combo_delay(src,delay);
 				break;
 			}
 			case MO_COMBOFINISH:
 			{
 				int delay = 700 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < (signed int)tstatus->hp &&
-				(
+				if (
 					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
 					(pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) ||
 					(pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1)
-				))
+				)
 					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start4(src,SC_COMBO,100,MO_COMBOFINISH,skilllv,0,0,delay);
+				sc_start(src,SC_COMBO,100,MO_COMBOFINISH,delay);
 				clif_combo_delay(src,delay);
 				break;
 			}
 			case CH_TIGERFIST:
 			{	//Tigerfist is now a combo-only skill. [Skotlex]
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < (signed int)tstatus->hp &&
-				(
+				if(
 					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 3 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
 					(pc_checkskill(sd, CH_CHAINCRUSH) > 0)
-				))
+				)
 					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start4(src,SC_COMBO,100,CH_TIGERFIST,skilllv,0,0,delay);
+				sc_start(src,SC_COMBO,100,CH_TIGERFIST,delay);
 				clif_combo_delay(src,delay);
 				break;
 			}
 			case CH_CHAINCRUSH:
 			{
 				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(damage < (signed int)tstatus->hp)
+				if(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 &&
+					sd->spiritball >= 1 &&
+					sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1)
 					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start4(src,SC_COMBO,100,CH_CHAINCRUSH,skilllv,0,0,delay);
+				sc_start(src,SC_COMBO,100,CH_CHAINCRUSH,delay);
 				clif_combo_delay(src,delay);
 				break;
 			}
 			case AC_DOUBLE:
-				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) && damage < (signed int)tstatus->hp && pc_checkskill(sd, HT_POWER)) {
+				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) &&
+					pc_checkskill(sd, HT_POWER)) {
 					//TODO: This code was taken from Triple Blows, is this even how it should be? [Skotlex]
 					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
 					clif_combo_delay(src,2000);
@@ -2890,34 +2894,39 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 
-	case KN_BOWLINGBASH:	/* ボウリングバッシュ */
+	case KN_BOWLINGBASH:
 		if(flag&1){
-			/* 個別にダメージを与える */
-			if(bl->id!=skill_area_temp[1])
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0x0500);
+			if(bl->id==skill_area_temp[1])
+				break;
+			//Splash damage is always two hits for 500%
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0x0500);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0x0500);
 		} else {
-				int i,c;	/* 他人から聞いた動きなので間違ってる可能性大＆効率が悪いっす＞＜ */
-				/* まずターゲットに攻撃を加える */
-				c = skill_get_blewcount(skillid,skilllv);
-				if(map_flag_gvg(bl->m) || status_get_mexp(bl)) 
-					c = 0;
-				for(i=0;i<c;i++){
-					skill_blown(src,bl,0x20000|1);
-					skill_area_temp[0]=0;
-					map_foreachinrange(skill_area_sub,bl,
-						skill_get_splash(skillid, skilllv),BL_CHAR,
-						src,skillid,skilllv,tick, flag|BCT_ENEMY,
-						skill_area_sub_count);
-					if(skill_area_temp[0]>1) break;
-				}
-				clif_blown(bl); //Update target pos.
+			int i,c;
+			c = skill_get_blewcount(skillid,skilllv);
+			for(i=0;i<c;i++){
+				if (!skill_blown(src,bl,0x20000|1))
+					break; //Can't knockback
+				skill_area_temp[0]=0;
+				map_foreachinrange(skill_area_sub,bl,
+					skill_get_splash(skillid, skilllv),BL_CHAR,
+					src,skillid,skilllv,tick, flag|BCT_ENEMY,
+					skill_area_sub_count);
+				if(skill_area_temp[0]>1) break;
+			}
+			clif_blown(bl); //Update target pos.
+			if (i==c) { //No targets found. Single attack for 600%
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,1);
+			} else {
 				skill_area_temp[1]=bl->id;
-				/* その後ターゲット以外の範囲内の敵全体に処理を行う */
 				map_foreachinrange(skill_area_sub,bl,
 					skill_get_splash(skillid, skilllv),BL_CHAR,
 					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 					skill_castend_damage_id);
+				//Weirdo dual-hit property, two attacks for 500%
 				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
+			} 
 		}
 		break;
 	

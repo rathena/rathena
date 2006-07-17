@@ -762,7 +762,6 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
  */
 static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 {
-	struct map_session_data *sd;
 	struct mob_data *md;
 	struct block_list **target;
 	int dist;
@@ -788,9 +787,6 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	{
 		if (((TBL_PC*)bl)->state.gangsterparadise &&
 			!(status_get_mode(&md->bl)&MD_BOSS))
-			return 0; //Gangster paradise protection.
-		sd = (TBL_PC*)bl;	//[orn] monster target homunculus while hunting
-		if (sd->hd && sd->homunculus.alive && (distance_bl(&md->bl,  &sd->hd->bl ) < md->db->range2 ) )	//
 			return 0; //Gangster paradise protection.
 	}
 	case BL_HOMUNCULUS:	//[orn]
