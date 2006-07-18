@@ -2601,7 +2601,6 @@ static int skill_reveal_trap (struct block_list *bl, va_list ap)
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
-	struct homun_data *hd = NULL ;	//[orn]
 	struct status_data *tstatus;
 	struct status_change *sc;
 
@@ -2620,10 +2619,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		sd = (struct map_session_data *)src;
 	if (bl->type == BL_PC)
 		tsd = (struct map_session_data *)bl;
-	if (bl->type == BL_HOMUNCULUS)	//[orn]
-		hd = (struct homun_data *)bl;
 
-	if (status_isdead(src) || (src != bl && status_isdead(bl)))
+	if (status_isdead(bl))
 		return 1;
 
 	if (skillid && skill_get_type(skillid) == BF_MAGIC)
@@ -2864,21 +2861,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case AS_SPLASHER:
 		if (flag & 1) {	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
-			if (bl->id != skill_area_temp[1])
-				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-			else
-				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, 0);
+			if (bl->id != skill_area_temp[0])
+				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, 1);
 		} else {
-			skill_area_temp[0] = 0;
-			skill_area_temp[1] = bl->id;
-			map_foreachinrange(skill_area_sub, bl, 
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-			skill_area_temp[0]--; //Substract one, the original target shouldn't count. [Skotlex]
+			skill_area_temp[0] = bl->id;
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, BCT_ENEMY|1,
 				skill_castend_damage_id);
+			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, 0);
 		}
 		break;
 	case SM_MAGNUM:
@@ -3315,9 +3306,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
 		case HLIF_HEAL:	//[orn]
-			if ( !hd ) {
-			        clif_skill_fail(hd->master,skillid,0,0) ;
-			        break ;
+			if (bl->type != BL_HOMUNCULUS) {
+				if (sd) clif_skill_fail(sd,skillid,0,0) ;
+	        break ;
 			}
  		case AL_HEAL:
 		case ALL_RESURRECTION:

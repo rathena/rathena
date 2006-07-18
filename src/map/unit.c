@@ -667,7 +667,8 @@ int unit_can_move(struct block_list *bl)
 			(sc->data[SC_GOSPEL].timer !=-1 && sc->data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
 			sc->data[SC_STOP].timer != -1 ||
 			sc->data[SC_CLOSECONFINE].timer != -1 ||
-			sc->data[SC_CLOSECONFINE2].timer != -1
+			sc->data[SC_CLOSECONFINE2].timer != -1 ||
+			(sc->data[SC_CLOAKING].timer != -1 && sc->data[SC_CLOAKING].val1 < 3)
 		))
 			return 0;
 	}

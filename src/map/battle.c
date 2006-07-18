@@ -1406,11 +1406,10 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 100+100*skill_lv;
 					break;
 				case AS_SPLASHER:
-					skillratio += 400+50*skill_lv;
-					if (sd)
-						skillratio += 20*pc_checkskill(sd,AS_POISONREACT);
-					if(wflag>1) //FIXME: Splash damage... is this the correct method? [Skotlex]
-						skillratio /= wflag;
+					i = 400+50*skill_lv;
+					if (sd) i += 20*pc_checkskill(sd,AS_POISONREACT);
+					if (wflag) i/=2; //Splash damage is half.
+					skillratio += i;
 					flag.cardfix = 0;
 					break;
 				case ASC_BREAKER:

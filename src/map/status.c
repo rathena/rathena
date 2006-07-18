@@ -897,6 +897,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			|| (sc->data[SC_AUTOCOUNTER].timer != -1 && !flag)
 			|| (sc->data[SC_GOSPEL].timer != -1 && sc->data[SC_GOSPEL].val4 == BCT_SELF && skill_num != PA_GOSPEL)
 			|| (sc->data[SC_GRAVITATION].timer != -1 && sc->data[SC_GRAVITATION].val3 == BCT_SELF && skill_num != HW_GRAVITATION)
+			|| (sc->data[SC_CLOAKING].timer != -1 && sc->data[SC_CLOAKING].val1 < 3 && skill_num != AS_CLOAKING)
 		)
 			return 0;
 
@@ -4420,13 +4421,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CARTBOOST:
 		case SC_ASSNCROS:
 			if (sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1)
-				return 0;
-		break;
-		case SC_CLOAKING:
-		//Avoid cloaking with no wall and low skill level. [Skotlex]
-		//Due to the cloaking card, we have to check the wall versus to known skill level rather than the used one. [Skotlex]
-//			if (sd && skilllv < 3 && skill_check_cloaking(bl,&sd->sc))
-			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl, sc))
 				return 0;
 		break;
 		case SC_MODECHANGE:

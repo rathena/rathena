@@ -448,38 +448,6 @@ static void merc_natural_heal_sp(struct homun_data *hd)
 	return;
 }
 
-static void merc_bleeding (struct homun_data *hd)
-{
-	int hp = 0, sp = 0;
-
-	if (hd->hp_loss_value > 0) {
-		hd->hp_loss_tick += natural_heal_diff_tick;
-		if (hd->hp_loss_tick >= hd->hp_loss_rate) {
-			do {
-				hp += hd->hp_loss_value;
-				hd->hp_loss_tick -= hd->hp_loss_rate;
-			} while (hd->hp_loss_tick >= hd->hp_loss_rate);
-			hd->hp_loss_tick = 0;
-		}
-	}
-	
-	if (hd->sp_loss_value > 0) {
-		hd->sp_loss_tick += natural_heal_diff_tick;
-		if (hd->sp_loss_tick >= hd->sp_loss_rate) {
-			do {
-				sp += hd->sp_loss_value;
-				hd->sp_loss_tick -= hd->sp_loss_rate;
-			} while (hd->sp_loss_tick >= hd->sp_loss_rate);
-			hd->sp_loss_tick = 0;
-		}
-	}
-
-	if (hp > 0 || sp > 0)
-		status_zap(&hd->bl, hp, sp);
-
-	return;
-}
-
 /*==========================================
  * HP/SP natural heal
  *------------------------------------------
@@ -500,20 +468,10 @@ static int merc_natural_heal_sub(struct homun_data *hd,int tick) {
 	) { //Cannot heal neither natural or special.
 		hd->hp_sub = hd->inchealhptick = 0;
 		hd->sp_sub = hd->inchealsptick = 0;
-	} else {
-		if ( DIFF_TICK (tick, hd->canregen_tick)<0 ) {
-			hd->hp_sub = hd->inchealhptick = 0;
-			hd->sp_sub = hd->inchealsptick = 0;
-		} else { //natural heal
-			merc_natural_heal_hp(hd);
-			merc_natural_heal_sp(hd);
-			hd->canregen_tick = tick;
-		}
+	} else {	//natural heal
+		merc_natural_heal_hp(hd);
+		merc_natural_heal_sp(hd);
 	}
-	if (hd->hp_loss_value > 0 || hd->sp_loss_value > 0)
-		merc_bleeding(hd);
-	else
-		hd->hp_loss_tick = hd->sp_loss_tick = 0;
 
 	return 0;
 }
