@@ -2944,7 +2944,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	if (tsc) {
 		if (tsc->data[SC_POISONREACT].timer != -1 && 
-			check_distance_bl(src, target, tstatus->rhw.range+1) &&
+			(rand()%100 < tsc->data[SC_POISONREACT].val3
+			|| sstatus->def_ele == ELE_POISON) &&
+//			check_distance_bl(src, target, tstatus->rhw.range+1) && Doesn't checks range! o.O;
 			status_check_skilluse(target, src, TF_POISON, 0)
 		) {	//Poison React
 			if (sstatus->def_ele == ELE_POISON) {

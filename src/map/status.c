@@ -4669,6 +4669,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_POISONREACT:
 			val2=val1/2 + val1%2; // Number of counters [Celest]
+			val3=50 + 5*val1; //Chance to counter. [Skotlex]
 			break;
 		case SC_MAGICROD:
 			val2 = val1*20; //SP gained

@@ -1910,7 +1910,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				sd->skilllv_old = skilllv;
 				if (pc_famerank(sd->char_id,MAPID_TAEKWON))
 			  	{	//Extend combo time.
-					delete_timer(sc->data[SC_COMBO].timer, status_change_timer);
+					delete_timer(sd->sc.data[SC_COMBO].timer, status_change_timer);
 					sd->sc.data[SC_COMBO].timer = add_timer(
 						tick+sd->sc.data[SC_COMBO].val4,
 					  	status_change_timer, src->id, SC_COMBO);

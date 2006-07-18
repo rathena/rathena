@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/18
+	* Fixed a crash when trying to extend TK's infinite combo feature. [Skotlex]
+	* Corrected Poison React to counter regardless of distance, and to use the
+	  skill's 50+5*lv% counter chance (instead of 100%). [Skotlex]
 	* Corrected Venom splasher's splash damage [Skotlex]
 	* You now can't move/attack/use-skills when using Cloaking of a level less
 	  than 3 [Skotlex]
