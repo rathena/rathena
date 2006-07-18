@@ -3788,8 +3788,6 @@ int do_init(int argc, char *argv[]) {
 	MSG_CONF_NAME = "conf/msg_athena.conf";
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
 
-	chrif_connected = 0;
-
 	srand(gettick());
 
 	for (i = 1; i < argc ; i++) {

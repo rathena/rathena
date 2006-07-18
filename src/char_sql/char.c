@@ -2613,19 +2613,16 @@ int parse_frommap(int fd) {
 				RFIFOSKIP(fd,size);
 				break;
 			}
-			//Check account
-			if (
+			//Check account only if this ain't final save. Final-save goes through because of the char-map reconnect
+			if (RFIFOB(fd,12) || (
 				(character = idb_get(online_char_db, aid)) != NULL &&
-				character->char_id == cid)
-				; //Temporary debug. Set chars online and save.
-			else {
-				ShowWarning("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d). Setting char online.\n", aid, cid);
-				set_char_online(id, cid, aid);
-			}
-
+				character->char_id == cid))
 			{
 				memcpy(&char_dat, RFIFOP(fd,13), sizeof(struct mmo_charstatus));
 				mmo_char_tosql(cid, &char_dat);
+			} else {	//This may be valid on char-server reconnection, when re-sending characters that already logged off.
+				ShowError("parse_from_map (save-char): Received data for non-existant/offline character (%d:%d).\n", aid, cid);
+				set_char_online(id, cid, aid);
 			}
 
 			if (RFIFOB(fd,12))

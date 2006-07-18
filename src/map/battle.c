@@ -761,7 +761,6 @@ static struct Damage battle_calc_weapon_attack(
 	short i;
 
 	struct map_session_data *sd, *tsd;
-	struct homun_data *hd;	//[orn]
 	struct Damage wd;
 	struct status_change *sc = status_get_sc(src);
 	struct status_change *tsc = status_get_sc(target);
@@ -814,7 +813,6 @@ static struct Damage battle_calc_weapon_attack(
 
 	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, target, tsd);
-	BL_CAST(BL_HOMUNCULUS, src, hd);	//[orn]
 
 	if(sd) {
 		if (sd->skillblown[0].id != 0)
@@ -1181,7 +1179,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 			case HFLI_SBR44:	//[orn]
-				if(hd){
+				if(src->type == BL_HOMUNCULUS){
+					TBL_HOMUNCULUS *hd = (TBL_HOMUNCULUS*)src;
 					wd.damage = hd->master->homunculus.intimacy ;
 					wd.damage2 = hd->master->homunculus.intimacy ;
 					hd->master->homunculus.intimacy = 200;

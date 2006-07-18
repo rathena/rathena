@@ -86,7 +86,7 @@ static const int packet_len_table[0x3d] = {
 //2b21: Incomming, chrif_save_ack. Returned after a character has been "final saved" on the char-server. [Skotlex]
 //2b22-2b27: FREE
 
-int chrif_connected;
+int chrif_connected = 0;
 int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
 int srvinfo;
 static char char_ip_str[128];

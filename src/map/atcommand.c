@@ -2569,10 +2569,9 @@ int atcommand_item(
 	item_id = item_data->nameid;
 	get_count = number;
 	//Check if it's stackable.
-	if (item_data->type == 4 || item_data->type == 5 ||
-		item_data->type == 7 || item_data->type == 8) {
+	if (itemdb_isstackable2(item_data))
 		get_count = 1;
-	}
+
 	for (i = 0; i < number; i += get_count) {
 		// if not pet egg
 		if (!pet_create_egg(sd, item_id)) {

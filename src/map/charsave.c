@@ -26,8 +26,8 @@ struct mmo_charstatus *charsave_loadchar(int charid){
 	char *str_p;
 	friends = 0;
 
-	ShowDebug("charsave_loadchar : charid = %d | hd->master->status.char_id = %d\n", charid) ;
-         c = (struct mmo_charstatus *)aCalloc(1,sizeof(struct mmo_charstatus));
+//	ShowDebug("charsave_loadchar : charid = %d | hd->master->status.char_id = %d\n", charid) ;
+	c = (struct mmo_charstatus *)aCalloc(1,sizeof(struct mmo_charstatus));
 
          if(charid <= 0){
          	ShowError("charsave_loadchar() charid <= 0! (%d)", charid);
