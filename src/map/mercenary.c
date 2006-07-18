@@ -140,7 +140,7 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
 	hd->master->homunculus.intimacy -= 100 ;
-	hd->master->homunculus.alive = 0 ;
+	hd->master->homunculus.hp = 0 ;
 	if(hd->master->homunculus.intimacy <= 0) {
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
@@ -161,21 +161,14 @@ int merc_hom_delete(struct homun_data *hd, int flag)
 	// Delete homunculus
 	if ( flag&1 ) {	//sabbath
 		intif_homunculus_requestdelete(hd->master->homunculus.hom_id) ;
-		merc_stop_walking(hd, 1);
-		merc_stop_attack(hd);
 		clif_emotion(&hd->bl, 28) ;	//sob
 		hd->master->status.hom_id = 0;
 		hd->master->homunculus.hom_id = 0;
 		chrif_save(hd->master,0);
-	} 
-	else {
+	} else
 		merc_save(hd) ;
-	}
-	if ( !unit_free(&hd->bl) ) 
-		return 0 ;
-	aFree(hd);
-    	
-	return 1;
+
+	return unit_free(&hd->bl);
 }
 
 int merc_hom_calc_skilltree(struct map_session_data *sd)
@@ -818,7 +811,6 @@ int merc_hom_data_init(struct map_session_data *sd)
 	hd->ud.attacktimer=-1;
 	hd->ud.attackabletime=gettick();
 	hd->target_id = 0 ;
-	hd->attackable = 1 ;
 
 	for(i=0;i<MAX_STATUSCHANGE;i++) {
 		hd->sc.data[i].timer=-1;
@@ -864,7 +856,7 @@ int merc_call_homunculus(struct map_session_data *sd)
 		sd->homunculus.vaporize = 0;
 		merc_hom_data_init(sd);
 
-		if ( sd->homunculus.alive && sd->hd && sd->bl.prev != NULL) {
+		if ( sd->homunculus.hp && sd->hd && sd->bl.prev != NULL) {
 			map_addblock(&sd->hd->bl);
 			clif_spawn(&sd->hd->bl);
 			clif_send_homdata(sd,SP_ACK,0);
@@ -906,9 +898,9 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	
 	if ( flag == 2 ) {
 		sh->hp = 1 ; 
-		sd->homunculus.alive = 1 ;
+		sd->homunculus.hp = 1 ;
 	}
-	if(sd->homunculus.alive && sh->vaporize!=1)
+	if(sd->homunculus.hp && sh->vaporize!=1)
 	{
 		merc_hom_data_init(sd);
 		
@@ -949,7 +941,6 @@ int merc_create_homunculus(struct map_session_data *sd, int class_)
 	sd->homunculus.skillpts = 0;
 	sd->homunculus.char_id = sd->status.char_id;
 	sd->homunculus.vaporize = 0; // albator
-	sd->homunculus.alive = 1 ;
 	
 	sd->homunculus.hp = 10 ;
 	sd->homunculus.sp = 0 ;
@@ -980,8 +971,7 @@ int merc_hom_revive(struct map_session_data *sd, int per)
 {
 	nullpo_retr(0, sd);
 
-		sd->homunculus.alive = 1;
-		merc_hom_data_init(sd);
+	merc_hom_data_init(sd);
 
 		if ( sd->hd && sd->bl.prev != NULL) {
 			sd->homunculus.hp = sd->hd->base_status.hp = sd->hd->battle_status.hp = 1 ;

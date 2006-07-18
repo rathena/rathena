@@ -1466,10 +1466,10 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	status = &hd->battle_status;
 	memset(buf,0,71); //packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
-	memcpy(WBUFP(buf,2),hd->master->homunculus.name,NAME_LENGTH);
-	WBUFB(buf,26)=hd->master->homunculus.rename_flag * 2;
-	WBUFW(buf,27)=hd->master->homunculus.level;
-	WBUFW(buf,29)=hd->master->homunculus.hunger;
+	memcpy(WBUFP(buf,2),sd->homunculus.name,NAME_LENGTH);
+	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
+	WBUFW(buf,27)=sd->homunculus.level;
+	WBUFW(buf,29)=sd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->master->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0;			// equip id
 	WBUFW(buf,35)=status->rhw.atk2;
@@ -1484,10 +1484,10 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	WBUFW(buf,53)=status->max_hp;
 	WBUFW(buf,55)=status->sp;
 	WBUFW(buf,57)=status->max_sp;
-	WBUFL(buf,59)=hd->master->homunculus.exp;
+	WBUFL(buf,59)=sd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
-	WBUFW(buf,67)=hd->master->homunculus.skillpts;
-	WBUFW(buf,69)=hd->attackable;
+	WBUFW(buf,67)=sd->homunculus.skillpts;
+	WBUFW(buf,69)=1; //hd->attackable; FIXME: Attackable? When exactly is a homun not attackable? [Skotlex]
 	clif_send(buf,/*packet_len_table[0x22e]*/71,&sd->bl,SELF); 
 	return 0;
 }
@@ -9669,6 +9669,32 @@ void clif_parse_SkillUp(int fd,struct map_session_data *sd)
 	pc_skillup(sd,RFIFOW(fd,2));
 }
 
+static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, int skillnum, int skilllv, int target_id)
+{
+	int lv;
+
+	if (!hd) return;
+
+	if (skillnotok_hom(skillnum, hd))	//[orn]
+		return;
+
+	if (hd->bl.id != target_id &&
+		skill_get_inf(skillnum)&INF_SELF_SKILL)
+		target_id = hd->bl.id; //What good is it to mess up the target in self skills? Wished I knew... [Skotlex]
+	
+	if (hd->ud.skilltimer != -1) {
+		if (skillnum != SA_CASTCANCEL)
+			return;
+	}
+
+	lv = merc_hom_checkskill(sd, skillnum);
+	if (skilllv > lv)
+		skilllv = lv;
+			
+	if (skilllv)
+		unit_skilluse_id(&hd->bl, target_id, skillnum, skilllv);
+}
+
 /*==========================================
  * スキル使用（ID指定）
  *------------------------------------------
@@ -9690,11 +9716,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
-	
-	if (skillnotok(skillnum, sd))
-		return;
 
-	if (sd->hd && skillnotok_hom(skillnum, sd->hd))	//[orn]
+
+	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL) {
+		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
+		return;
+	}
+
+	if (skillnotok(skillnum, sd))
 		return;
 
 	if (sd->bl.id != target_id &&
@@ -9731,55 +9760,55 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
-	} else {
-		sd->skillitem = sd->skillitemlv = -1;
-		if (skillnum == MO_EXTREMITYFIST) {
-			if ((sd->sc.data[SC_COMBO].timer == -1 ||
-				(sd->sc.data[SC_COMBO].val1 != MO_COMBOFINISH &&
-				sd->sc.data[SC_COMBO].val1 != CH_TIGERFIST &&
-				sd->sc.data[SC_COMBO].val1 != CH_CHAINCRUSH))) {
-				if (!sd->state.skill_flag ) {
-					sd->state.skill_flag = 1;
-					clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
-					return;
-				} else if (sd->bl.id == target_id) {
-					clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
-					return;
-				}
-			}
-		}
-		if (skillnum == TK_JUMPKICK) {
-			if (sd->sc.data[SC_COMBO].timer == -1 ||
-				sd->sc.data[SC_COMBO].val1 != TK_JUMPKICK) {
-				if (!sd->state.skill_flag ) {
-					sd->state.skill_flag = 1;
-					clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
-					return;
-				} else if (sd->bl.id == target_id) {
-					clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
-					return;
-				}
-			}
-		}
-
-		if (skillnum >= GD_SKILLBASE && sd->state.gmaster_flag)
-			skilllv = guild_checkskill(sd->state.gmaster_flag, skillnum);
+		return;
+	}
 		
-		if ( ( skillnum >= HM_SKILLBASE ) && sd->status.hom_id && sd->homunculus.alive && !sd->homunculus.vaporize ) {	//[orn]
-			if ( ( lv = merc_hom_checkskill(sd, skillnum) ) > 0 )
-				if (skilllv > lv)
-					skilllv = lv;
-			unit_skilluse_id(&sd->hd->bl, target_id, skillnum, skilllv);
-		} else {
-			if ((lv = pc_checkskill(sd, skillnum)) > 0) {
-				if (skilllv > lv)
-					skilllv = lv;
-				unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
-				if (sd->state.skill_flag)
-					sd->state.skill_flag = 0;
+	sd->skillitem = sd->skillitemlv = -1;
+	if (skillnum == MO_EXTREMITYFIST) {
+		if ((sd->sc.data[SC_COMBO].timer == -1 ||
+			(sd->sc.data[SC_COMBO].val1 != MO_COMBOFINISH &&
+			sd->sc.data[SC_COMBO].val1 != CH_TIGERFIST &&
+			sd->sc.data[SC_COMBO].val1 != CH_CHAINCRUSH))) {
+			if (!sd->state.skill_flag ) {
+				sd->state.skill_flag = 1;
+				clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
+				return;
+			} else if (sd->bl.id == target_id) {
+				clif_skillinfo(sd, MO_EXTREMITYFIST, INF_ATTACK_SKILL, -1);
+				return;
 			}
 		}
 	}
+	if (skillnum == TK_JUMPKICK) {
+		if (sd->sc.data[SC_COMBO].timer == -1 ||
+			sd->sc.data[SC_COMBO].val1 != TK_JUMPKICK) {
+			if (!sd->state.skill_flag ) {
+				sd->state.skill_flag = 1;
+				clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
+				return;
+			} else if (sd->bl.id == target_id) {
+				clif_skillinfo(sd, TK_JUMPKICK, INF_ATTACK_SKILL, -1);
+				return;
+			}
+		}
+	}
+
+	if (skillnum >= GD_SKILLBASE) {
+		if (sd->state.gmaster_flag)
+			skilllv = guild_checkskill(sd->state.gmaster_flag, skillnum);
+		else
+			skilllv = 0;
+	} else {
+		lv = pc_checkskill(sd, skillnum);
+		if (skilllv > lv)
+			skilllv = lv;
+	}
+
+	if (skilllv)
+		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
+
+	if (sd->state.skill_flag)
+		sd->state.skill_flag = 0;
 }
 
 /*==========================================

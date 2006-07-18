@@ -2150,49 +2150,23 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	memcpy(&b_status, &hd->base_status, sizeof(struct status_data));
 	status = &hd->base_status;
 
-	status->def_ele = b_status.def_ele = hd->homunculusDB->element ;	//[orn]
-	status->ele_lv = b_status.ele_lv = 1 ;	//[orn]
-	status->race = b_status.race = hd->homunculusDB->race ;	//[orn]
-	status->size = b_status.size = hd->homunculusDB->size ;	//[orn]
-	status->rhw.range = b_status.rhw.range = 1 + hd->homunculusDB->size ;	//[orn]
-	status->mode = b_status.mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
-	status->speed = b_status.speed = DEFAULT_WALK_SPEED;
-	status->aspd_rate = b_status.aspd_rate = 1000;
+	status->def_ele =  hd->homunculusDB->element ;	//[orn]
+	status->ele_lv = 1 ;	//[orn]
+	status->race = hd->homunculusDB->race ;	//[orn]
+	status->size = hd->homunculusDB->size ;	//[orn]
+	status->rhw.range = 1 + hd->homunculusDB->size ;	//[orn]
+	status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
+	status->speed = DEFAULT_WALK_SPEED;
+	status->aspd_rate = 1000;
 
-	merc_hom_calc_skilltree(hd->master);	//
+	merc_hom_calc_skilltree(hd->master);
 
-	status_cpy(&b_status, status);
+	status_cpy(&hd->battle_status, status);
 	status_calc_misc(status, hd->master->homunculus.level);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
-	if ( 	(b_status.str != status->str) ||
-				(b_status.agi != status->agi) ||
-				(b_status.vit != status->vit) ||
-				(b_status.int_ != status->int_) ||
-				(b_status.dex != status->dex) ||
-				(b_status.luk != status->luk) ||
-				(b_status.hit != status->hit) ||
-				(b_status.flee != status->flee) ||
-				(b_status.amotion != status->amotion) ||
-				(b_status.rhw.atk != status->rhw.atk) ||
-				(b_status.def != status->def) ||
-				(b_status.rhw.atk2 != status->rhw.atk2) ||
-				(b_status.def2 != status->def2) ||
-				(b_status.flee2 != status->flee2) ||
-				(b_status.cri != status->cri) ||
-				(b_status.matk_max != status->matk_max) ||
-				(b_status.matk_min != status->matk_min) ||
-				(b_status.mdef != status->mdef) ||
-				(b_status.mdef2 != status->mdef2) ||
-				(b_status.rhw.range != status->rhw.range) ||
-				(b_status.max_hp != status->max_hp) ||
-				(b_status.max_sp != status->max_sp) ||
-				(b_status.hp != status->hp) ||
-				(b_status.sp != status->sp)
-			)
-		{
-			clif_hominfo(hd->master,0) ;
-		}
+	if (memcmp(&b_status, status, sizeof(struct status_data)))
+		clif_hominfo(hd->master,0) ;
 
 	return 1;
 }

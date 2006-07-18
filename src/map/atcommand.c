@@ -9460,7 +9460,7 @@ int atcommand_homlevel(
 	if (!message || !*message)
 		return -1;
 		
-	if ( sd->status.hom_id == 0 || !sd->homunculus.alive || sd->homunculus.vaporize )
+	if ( sd->status.hom_id == 0 || !sd->homunculus.hp || sd->homunculus.vaporize )
 		return 1 ;
 
 	level = atoi(message);
@@ -9587,7 +9587,7 @@ int atcommand_homtalk(
 
 	nullpo_retr(-1, sd);
 
-	if(!sd->status.hom_id || !sd->hd || !sd->homunculus.alive )
+	if(!sd->status.hom_id || !sd->hd || !sd->homunculus.hp)
 		return -1;
 
 	if (sscanf(message, "%99[^\n]", mes) < 1)

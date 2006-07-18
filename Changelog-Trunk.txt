@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/18
+	* Added a proper check to make aggressive mobs never override homun targets
+	  regardless of distance. [Skotlex]
+	* Removed a bunch of homun-related variables that are not needed at all.
+	  The alive condition is removed, now the code checks for the hp value to
+	  know if the homun is alive or not. [Skotlex]
+	* Cleaned up a bit the skill-id function, homun skill checks (such as delay
+	  and skill-lv learned) should be correct now. [Skotlex]
+	* Added a proper check to make aggressive mobs never override homun targets
+	  regardless of distance. [Skotlex]
 	* Fixed giving the 100% damage bonus when no-splash-targets are found in
 	  the blown path to Grandcross instead of Bowling Bash. Bowling Bash damage
 	  equation becomes then +50*lv% rather than +40*lv% when there's no

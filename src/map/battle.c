@@ -2006,7 +2006,8 @@ static struct Damage battle_calc_weapon_attack(
 			if (breakrate)
 				skill_break_equip(src, EQP_WEAPON, breakrate, BCT_SELF);
 		}
-		if (battle_config.equip_skill_break_rate)
+		//Cart Termination won't trigger breaking data. Why? No idea, go ask Gravity.
+		if (battle_config.equip_skill_break_rate && skill_num != WS_CARTTERMINATION)
 		{	// Target equipment breaking
 			int breakrate[2] = {0,0}; // weapon = 0, armor = 1
 			if (sd) {	// Break rate from equipment

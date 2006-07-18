@@ -123,17 +123,17 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 		ShowInfo("New homunculus name : %s\n",hd->name);
 
 		sprintf(tmp_sql, "INSERT INTO `homunculus` "
-			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `alive`, `rename_flag`, `vaporize`) "
+			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
 			"VALUES ('%d', '%d', '%s', '%d', '%lu', '%lu', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			hd->char_id, hd->class_,hd->name,hd->level,hd->exp,hd->intimacy,hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->alive, hd->rename_flag, hd->vaporize);
+			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize);
 
 	}
 	else
 	{
-		sprintf(tmp_sql, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%lu',`intimacy`='%lu',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `alive`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+		sprintf(tmp_sql, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%lu',`intimacy`='%lu',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
 			hd->char_id, hd->class_,hd->name,hd->level,hd->exp,hd->intimacy,hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->alive, hd->rename_flag, hd->vaporize, hd->hom_id);
+			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id);
 	}
 
 	if(mysql_query(&mysql_handle, tmp_sql)){
@@ -159,7 +159,7 @@ int mapif_load_homunculus(int fd){
 	int i;
 	memset(homun_pt, 0, sizeof(struct s_homunculus));
 
-	sprintf(tmp_sql,"SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`alive`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%lu'", RFIFOL(fd,6));
+	sprintf(tmp_sql,"SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%lu'", RFIFOL(fd,6));
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -189,9 +189,8 @@ int mapif_load_homunculus(int fd){
 		homun_pt->sp = atoi(sql_row[16]);
 		homun_pt->max_sp = atoi(sql_row[17]);
 		homun_pt->skillpts = atoi(sql_row[18]);
-		homun_pt->alive = atoi(sql_row[19]);
-		homun_pt->rename_flag = atoi(sql_row[20]);
-		homun_pt->vaporize = atoi(sql_row[21]);
+		homun_pt->rename_flag = atoi(sql_row[19]);
+		homun_pt->vaporize = atoi(sql_row[20]);
 	}
 	if(homun_pt->hunger < 0)
 		homun_pt->hunger = 0;

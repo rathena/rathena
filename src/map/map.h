@@ -940,25 +940,12 @@ struct homun_data {
 
 	int hungry_timer;	//[orn]
 
-
 	int target_id,attacked_id;
-	short attackable;
 
 	int natural_heal_timer;	//[orn]
 	int hp_sub,sp_sub;
 	int inchealhptick,inchealsptick;
 	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
-	short hp_loss_value;
-	short sp_loss_value;
-	short hp_loss_type;
-	short sp_gain_value;
-	short hp_gain_value;
-	int hp_loss_tick;
-	int sp_loss_tick;
-	int hp_loss_rate;
-	int sp_loss_rate;
-	unsigned int canregen_tick;
-
 	
 	unsigned short regenhp,regensp;
 	unsigned long exp_next;

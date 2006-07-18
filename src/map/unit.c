@@ -102,7 +102,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	struct block_list       *bl;
 	struct map_session_data *sd = NULL;
 	struct mob_data         *md = NULL;
-	struct homun_data       *hd = NULL;	//[orn]
 	struct unit_data        *ud = NULL;
 
 	bl=map_id2bl(id);
@@ -112,8 +111,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		ud = &sd->ud;
 	} else if( BL_CAST( BL_MOB, bl, md ) ) {
 		ud = &md->ud;
-	} else if( BL_CAST( BL_HOMUNCULUS, bl, hd ) ) {	//[orn]
-		ud = &hd->ud;
 	} else
 		ud = unit_bl2ud(bl);
 	
@@ -715,7 +712,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	struct status_data *tstatus;
 	struct status_change *sc;
 	struct map_session_data *sd = NULL;
-	struct homun_data *hd = NULL;	//[orn]
 	struct block_list * target = NULL;
 	unsigned int tick = gettick();
 	int temp;
@@ -726,8 +722,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 
 	if( BL_CAST( BL_PC,  src, sd ) ) {
 		ud = &sd->ud;
-	} else 	if( BL_CAST( BL_HOMUNCULUS,  src, hd ) ) {	//[orn]
-		ud = &hd->ud;
 	} else
 		ud = unit_bl2ud(src);
 
@@ -765,6 +759,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			if (!sd->status.partner_id)
 				return 0;
 			target = (struct block_list*)map_charid2sd(sd->status.partner_id);
+			if (!target) {
+				clif_skill_fail(sd,skill_num,0,0);
+				return 0;
+			}
+			break;
+		//TODO: here we should place and correct skills that should target homun automatically. However some work still needs be done as "dead homuns" are deleted from memory, and as such, you can't really target them. [Skotlex]
+		case AM_REST:
+//		case AM_RESURRECTHOMUN:
+			target = sd->hd;
 			if (!target) {
 				clif_skill_fail(sd,skill_num,0,0);
 				return 0;
@@ -1195,7 +1198,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	struct status_data *sstatus;
 	struct map_session_data *sd = NULL;
 	struct mob_data *md = NULL;
-	struct homun_data *hd = NULL;	//[orn]
 	int range;
 	
 	if((ud=unit_bl2ud(src))==NULL)
@@ -1207,7 +1209,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 	BL_CAST( BL_PC , src, sd);
 	BL_CAST( BL_MOB, src, md);
-	BL_CAST( BL_HOMUNCULUS, src, hd);	//[orn]
 	ud->attacktimer=-1;
 	target=map_id2bl(ud->target);
 
