@@ -312,12 +312,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_HERMODE].timer != -1 && flag&BF_MAGIC)
 			return 0;
 
-		if(sc->data[SC_FOGWALL].timer != -1 && flag&BF_MAGIC
-			&& rand()%100 < 75 && !(skill_get_inf(skill_num)&INF_GROUND_SKILL))
-			return 0;
-   	
-	
-		if(sc->data[SC_TATAMIGAESHI].timer != -1 && !flag&BF_MAGIC && flag&BF_LONG)
+		if(sc->data[SC_TATAMIGAESHI].timer != -1 && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG)
 			return 0;
 
 		if(sc->data[SC_KAUPE].timer != -1 &&
@@ -351,10 +346,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				damage>>=1; //Receive 50% damage
 		}
 
-		if(sc->data[SC_DEFENDER].timer != -1 && flag&BF_LONG && flag&BF_WEAPON)
+		if(sc->data[SC_DEFENDER].timer != -1 &&
+			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage=damage*(100-sc->data[SC_DEFENDER].val2)/100;
 
-		if(sc->data[SC_FOGWALL].timer != -1 && flag&BF_LONG && flag&BF_WEAPON)
+		if(sc->data[SC_FOGWALL].timer != -1 &&
+			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage >>=1;
 
 		if(sc->data[SC_ENERGYCOAT].timer!=-1 && flag&BF_WEAPON){
@@ -405,13 +402,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	//SC effects from caster side.
 	sc = status_get_sc(src);
 	if (sc && sc->count) {
-		if(sc->data[SC_FOGWALL].timer != -1 && flag&(BF_LONG|BF_MAGIC)) {
-			if (flag&BF_MAGIC) {
-				if(!(skill_get_inf(skill_num)&INF_GROUND_SKILL) && rand()%100 < 75)
-					return 0;
-			} else if (flag&BF_WEAPON)
+		if(sc->data[SC_FOGWALL].timer != -1 &&
+			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 				damage >>=1;
-		}
 	}
 	
 	if (battle_config.pk_mode && sd && damage)

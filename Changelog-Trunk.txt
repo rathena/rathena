@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/18
+	* Corrected Fog of Wall's "targetted spells fail 75% of the time" feature
+	  by making it behave like GTB, that is, you just get a skill-failed on
+	  cast-end, no skill-animation at all. [Skotlex]
 	* Added a proper check to make aggressive mobs never override homun targets
 	  regardless of distance. [Skotlex]
 	* Removed a bunch of homun-related variables that are not needed at all.

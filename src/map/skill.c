@@ -2626,11 +2626,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	if (status_isdead(src) || (src != bl && status_isdead(bl)))
 		return 1;
 
-	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl))
+	if (skillid && skill_get_type(skillid) == BF_MAGIC)
 	{
-		if (sd) clif_skill_fail(sd,skillid,0,0);
-		//GTB makes all targetted skills silently fail.
-		return 1;
+		sc = status_get_sc(bl);
+		if (status_isimmune(bl) || (
+			sc && sc->count && sc->data[SC_FOGWALL].timer != -1 && rand()%100 < 75)
+		) { //GTB/Fogwall makes all targetted skills silently fail.
+			if (sd) clif_skill_fail(sd,skillid,0,0);
+			return 1;
+		}
 	}
 	
 	sc = status_get_sc(src);	
