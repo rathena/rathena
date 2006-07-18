@@ -135,8 +135,11 @@ lhz_in01.gat,191,127,0	warp	lhz047a	1,1,lhz_in01.gat,56,130
 lhz_in01.gat,43,115,0	warp	lhz048	1,1,lhz_in01.gat,278,130
 lhz_in01.gat,278,132,0	warp	lhz048a	1,1,lhz_in01.gat,43,117
 
-lighthalzen.gat,324,301,0	warp	lhz049	1,1,lhz_in03.gat,239,101
-lhz_in03.gat,237,101,0	warp	lhz049a	1,1,lighthalzen.gat,324,299
+//lhz_in01.gat,275,235,0	warp	lhz049	1,1,lhz_in01.gat,275,242  //not sure
+//lhz_in01.gat,275,238,0	warp	lhz049a	1,1,lhz_in01.gat,275,232  //not sure
 
-lighthalzen.gat,323,322,0	warp	lhz050	1,1,lhz_in03.gat,15,162
-lhz_in03.gat,13,162,0	warp	lhz050a	1,1,lighthalzen.gat,321,322
+lighthalzen.gat,324,301,0	warp	lhz050	1,1,lhz_in03.gat,239,101
+lhz_in03.gat,237,101,0	warp	lhz050a	1,1,lighthalzen.gat,324,299
+
+lighthalzen.gat,323,322,0	warp	lhz051	1,1,lhz_in03.gat,15,162
+lhz_in03.gat,13,162,0	warp	lhz051a	1,1,lighthalzen.gat,321,322
