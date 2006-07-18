@@ -25,6 +25,7 @@
 
 =========================
 07/18
+	* Updated speed and delay values of Amatsu mobs [Playtester]
 	* Added more of the X.4 and 11.1 drops [Playtester]
 	- attention: All Stone of Sage (etc) drops have been changed to
 	  Stone of Sage (usable) drops, the etc item is not used anymore!
