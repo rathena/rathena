@@ -1282,7 +1282,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 				case KN_BOWLINGBASH:
-					skillratio+= 40*skill_lv;
+					//When mflag, this is a no-splash attack, damage gets a bonus of 100% at lv 10.
+					skillratio+= (wflag?50:40)*skill_lv;
 					break;
 				case KN_AUTOCOUNTER:
 				case LK_SPIRALPIERCE:
@@ -2335,8 +2336,7 @@ struct Damage battle_calc_magic_attack(
 		if(skill_num == CR_GRANDCROSS || skill_num == NPC_GRANDDARKNESS)
 		{	//Apply the physical part of the skill's damage. [Skotlex]
 			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
-			//When mflag, this is a no-splash attack, damage gets a bonus of 100%
-			ad.damage = (wd.damage + ad.damage) * ((mflag?200:100) + 40*skill_lv)/100;
+			ad.damage = (wd.damage + ad.damage) * (100 + 40*skill_lv)/100;
 			if(src==target)
 			{
 				if (src->type == BL_PC)
