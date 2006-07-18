@@ -82,7 +82,7 @@ int subnet_count = 0;
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
-#define TRIM_CHARS "\032\t\n "
+#define TRIM_CHARS "\032\t\n\013 "
 char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
 
 int log_char = 1;	// loggin char or not [devil]
