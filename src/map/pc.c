@@ -647,7 +647,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	//Set here because we need the inventory data for weapon sprite parsing.
 	status_set_viewdata(&sd->bl, sd->status.class_);
 	unit_dataset(&sd->bl);
-	
+
 	sd->guild_x = -1;
 	sd->guild_y = -1;
 
@@ -4747,7 +4747,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		merc_stop_attack(sd->hd) ;
 		merc_hom_delete(sd->hd,0);
 	}
-			
 
 	// Leave duel if you die [LuzZza]
 	if(battle_config.duel_autoleave_when_die) {

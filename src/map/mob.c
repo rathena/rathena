@@ -626,13 +626,6 @@ int mob_spawn (struct mob_data *md)
 		md->db = mob_db(md->class_);
 		if (md->spawn)
 			memcpy(md->name,md->spawn->name,NAME_LENGTH);
-		/*
-		// Redundant? mob_parse_dataset already have the name copied. [Lance]
-		else if (battle_config.override_mob_names == 1)
-			memcpy(md->name,md->db->name,NAME_LENGTH);
-		else
-			memcpy(md->name,md->db->jname,NAME_LENGTH);
-		*/
 	}
 
 	if (md->spawn) { //Respawn data
@@ -784,11 +777,9 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
-	{
 		if (((TBL_PC*)bl)->state.gangsterparadise &&
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
-	}
 	default:
 		if ((*target) && (*target)->type == BL_HOMUNCULUS && bl->type != BL_HOMUNCULUS)
 			return 0; //For some reason Homun targets are never overriden.

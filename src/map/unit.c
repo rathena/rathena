@@ -768,7 +768,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		//TODO: here we should place and correct skills that should target homun automatically. However some work still needs be done as "dead homuns" are deleted from memory, and as such, you can't really target them. [Skotlex]
 		case AM_REST:
 //		case AM_RESURRECTHOMUN:
-			target = sd->hd;
+			target = (struct block_list*)sd->hd;
 			if (!target) {
 				clif_skill_fail(sd,skill_num,0,0);
 				return 0;
