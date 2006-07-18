@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/18
+	* Speed updates for Anolian and Merman [Playtester]
 07/17
 	* Speed/Delay updates for Pasana, Rybio and Phendark [Playtester]
 	* Ooops, forgot to update packet_db [DracoRPG]

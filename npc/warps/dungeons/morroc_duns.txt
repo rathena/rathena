@@ -50,9 +50,9 @@ moc_pryd04.gat,12,15,0	warp	mocp04-1	3,2,moc_pryd03.gat,12,18
 moc_pryd04.gat,15,187,0	warp	mocp05-1	2,3,moc_pryd03.gat,18,187
 moc_pryd04.gat,184,11,0	warp	mocp06-1	2,3,moc_pryd03.gat,181,11
 moc_pryd04.gat,188,184,0	warp	mocp07-1	3,2,moc_pryd03.gat,188,181
-moc_pryd05.gat,223,9,0	warp	mocp08	2,2,moc_pryd06.gat,192,8
+moc_pryd05.gat,223,9,0	warp	mocp08	2,2,moc_pryd06.gat,192,10
 moc_pryd05.gat,94,98,0	warp	mocp09	2,1,moc_prydb1.gat,100,57
-moc_pryd06.gat,195,8,0	warp	mocp08-1	2,3,moc_pryd05.gat,220,9
+moc_pryd06.gat,197,10,0	warp	mocp08-1	2,3,moc_pryd05.gat,220,9
 moc_prydb1.gat,100,104,0	warp	mocp10	5,2,moc_prydb1.gat,100,74
 moc_prydb1.gat,100,191,0	warp	moco02-1	2,2,moc_pryd01.gat,90,105
 moc_prydb1.gat,100,55,0	warp	mocp09-1	2,1,moc_pryd05.gat,94,96

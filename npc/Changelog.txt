@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/18
+	* Fixed a warp in moc_pryd06 [Playtester]
 07/17
 	* Enchanting a Tiara now costs 2M [Playtester]
 	* Added slotted Running Shirt to Comobo Gambling [Playtester]
