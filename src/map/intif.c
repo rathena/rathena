@@ -417,7 +417,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 	return 1;
 }
 // パーティ設定変更
-int intif_party_changeoption(int party_id,int account_id,int exp,int flag)
+int intif_party_changeoption(int party_id,int account_id,int exp,int item)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -426,7 +426,7 @@ int intif_party_changeoption(int party_id,int account_id,int exp,int flag)
 	WFIFOL(inter_fd,2)=party_id;
 	WFIFOL(inter_fd,6)=account_id;
 	WFIFOW(inter_fd,10)=exp;
-	WFIFOW(inter_fd,12)=flag;
+	WFIFOW(inter_fd,12)=item;
 	WFIFOSET(inter_fd,14);
 	return 0;
 }

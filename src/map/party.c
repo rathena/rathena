@@ -452,13 +452,13 @@ int party_broken(int party_id)
 	return 0;
 }
 
-int party_changeoption(struct map_session_data *sd,int exp,int flag)
+int party_changeoption(struct map_session_data *sd,int exp,int item)
 {
 	nullpo_retr(0, sd);
 
 	if( sd->status.party_id==0)
 		return 0;
-	intif_party_changeoption(sd->status.party_id,sd->status.account_id,exp,flag);
+	intif_party_changeoption(sd->status.party_id,sd->status.account_id,exp,item);
 	return 0;
 }
 

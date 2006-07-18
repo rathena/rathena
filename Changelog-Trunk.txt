@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/18
+	* Added atcommand @partyoption, lets you alter the party item-distribution
+	  type on the go. Usage is "@partyoption <pickup share> <item distribution>",
+	  where both arguments can be 0/1, yes/no, etc. [Skotlex]
+	* Updated @changeleader and @partyoption to use msg_Athena entries.
+	  [Skotlex]
 	* Added character 013 (enter) to the list of characters that are always
 	  removed from new character names. [Skotlex]
 	* Fixed a crash when trying to extend TK's infinite combo feature. [Skotlex]
