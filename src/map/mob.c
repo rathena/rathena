@@ -3231,17 +3231,11 @@ static int mob_readdb(void)
 			if(battle_config.monster_damage_delay_rate != 100)
 				status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
-			status_calc_misc(status, mob_db_data[class_]->lv);
+			status_calc_misc(status, BL_MOB, mob_db_data[class_]->lv);
 				
-			if(!battle_config.enemy_str)
-				status->batk = 0;
-
 			if(battle_config.enemy_critical_rate != 100)
 				status->cri = status->cri*battle_config.enemy_critical_rate/100;
 			if(!status->cri && battle_config.enemy_critical_rate) status->cri = 1;
-
-			if(!battle_config.enemy_perfect_flee)
-				status->flee2 = 0;
 
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
 			mob_db_data[class_]->mexp=atoi(str[30])*battle_config.mvp_exp_rate/100;

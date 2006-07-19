@@ -3321,8 +3321,9 @@ static const struct battle_data_short {
 } battle_data_short[] = {	//List here battle_athena options which are type unsigned short!
 	{ "warp_point_debug",                  &battle_config.warp_point_debug			},
 	{ "enemy_critical_rate",               &battle_config.enemy_critical_rate		},
-	{ "enemy_str",                         &battle_config.enemy_str				},
-	{ "enemy_perfect_flee",                &battle_config.enemy_perfect_flee		},
+	{ "homun_critical_rate",               &battle_config.homun_critical_rate		},
+	{ "enemy_baseatk",                     &battle_config.enable_baseatk				},
+	{ "enable_perfect_flee",               &battle_config.enable_perfect_flee		},
 	{ "casting_rate",                      &battle_config.cast_rate				},
 	{ "delay_rate",                        &battle_config.delay_rate				},
 	{ "delay_dependon_dex",                &battle_config.delay_dependon_dex		},
@@ -3397,7 +3398,6 @@ static const struct battle_data_short {
 	{ "pet_friendly_rate",                 &battle_config.pet_friendly_rate		},
 	{ "pet_hungry_delay_rate",             &battle_config.pet_hungry_delay_rate	},
 	{ "pet_hungry_friendly_decrease",      &battle_config.pet_hungry_friendly_decrease},
-	{ "pet_str",                           &battle_config.pet_str					},
 	{ "pet_status_support",                &battle_config.pet_status_support		},
 	{ "pet_attack_support",                &battle_config.pet_attack_support		},
 	{ "pet_damage_support",                &battle_config.pet_damage_support		},
@@ -3712,8 +3712,9 @@ int battle_get_value(char *w1) {
 void battle_set_defaults() {
 	battle_config.warp_point_debug=0;
 	battle_config.enemy_critical_rate=0;
-	battle_config.enemy_str=1;
-	battle_config.enemy_perfect_flee=0;
+	battle_config.homun_critical_rate=0;
+	battle_config.enable_baseatk = BL_ALL;
+	battle_config.enable_perfect_flee = BL_PC|BL_PET;
 	battle_config.cast_rate=100;
 	battle_config.delay_rate=100;
 	battle_config.delay_dependon_dex=0;
@@ -3797,7 +3798,6 @@ void battle_set_defaults() {
 	battle_config.pet_friendly_rate=100;
 	battle_config.pet_hungry_delay_rate=100;
 	battle_config.pet_hungry_friendly_decrease=5;
-	battle_config.pet_str=0;
 	battle_config.pet_status_support=0;
 	battle_config.pet_attack_support=0;
 	battle_config.pet_damage_support=0;

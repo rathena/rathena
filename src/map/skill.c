@@ -5812,10 +5812,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			inf = skill_get_inf(ud->skillid);
 			inf2 = skill_get_inf2(ud->skillid);
 
-			if((inf&INF_ATTACK_SKILL ||
+			if(inf&INF_ATTACK_SKILL ||
 				(inf&INF_SELF_SKILL && inf2&INF2_NO_TARGET_SELF)) //Combo skills
-			)
-				inf = INF_ATTACK_SKILL; //Offensive skill.
+				inf = BCT_ENEMY; //Offensive skill.
 			else
 				inf = 0;
 
@@ -5824,6 +5823,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 					(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
 					(inf2&INF2_GUILD_ONLY?BCT_GUILD:0)|
 					(inf2&INF2_ALLOW_ENEMY?BCT_ENEMY:0);
+
 			if (inf && battle_check_target(src, target, inf) <= 0)
 				break;
 		}

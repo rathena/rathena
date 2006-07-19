@@ -1091,6 +1091,10 @@ void status_calc_bl(struct block_list *bl, unsigned long flag);
 static int status_base_atk(struct block_list *bl, struct status_data *status)
 {
 	int flag = 0, str, dex, dstr;
+
+	if(!(bl->type&battle_config.enable_baseatk))
+		return 0;
+
 	if (bl->type == BL_PC)
 	switch(((TBL_PC*)bl)->status.weapon){
 		case W_BOW:
@@ -1116,7 +1120,7 @@ static int status_base_atk(struct block_list *bl, struct status_data *status)
 
 
 //Fills in the misc data that can be calculated from the other status info (except for level)
-void status_calc_misc(struct status_data *status, int level)
+void status_calc_misc(struct status_data *status, int type, int level)
 {
 	status->matk_min = status->int_+(status->int_/7)*(status->int_/7);
 	status->matk_max = status->int_+(status->int_/5)*(status->int_/5);
@@ -1127,7 +1131,11 @@ void status_calc_misc(struct status_data *status, int level)
 	status->mdef2 = status->int_ + (status->vit>>1);
 	
 	status->cri = status->luk*3 + 10;
-	status->flee2 = status->luk + 10;
+
+	if (type&battle_config.enable_perfect_flee)
+		status->flee2 = status->luk + 10;
+	else
+		status->flee2 = 0;
 }
 
 //Skotlex: Calculates the initial status for the given mob
@@ -1258,7 +1266,7 @@ int status_calc_mob(struct mob_data* md, int first)
 	}
 
 	status->batk = status_base_atk(&md->bl, status);
-	status_calc_misc(status, md->level);
+	status_calc_misc(status, BL_MOB, md->level);
 
 	if(flag&4)
 	{	// Strengthen Guardians - custom value +10% / lv
@@ -1281,16 +1289,10 @@ int status_calc_mob(struct mob_data* md, int first)
 		status->aspd_rate -= 100*md->guardian_data->guardup_lv;
 	}
 
-	if(!battle_config.enemy_str)
-		status->batk = 0;
-		
 	if(battle_config.enemy_critical_rate != 100)
 		status->cri = status->cri*battle_config.enemy_critical_rate/100;
 	if (!status->cri && battle_config.enemy_critical_rate)
 		status->cri = 1;
-
-	if (!battle_config.enemy_perfect_flee)
-		status->flee2 = 0;
 
 	//Initial battle status
 	if (!first)
@@ -1346,17 +1348,14 @@ int status_calc_pet(struct pet_data *pd, int first)
 			status->luk = cap_value(status->luk,1,battle_config.pet_max_stats);
 
 			status->batk = status_base_atk(&pd->bl, &pd->status);
-			status_calc_misc(&pd->status, lv);
-			if (!battle_config.pet_str)
-				status->batk = 0;
+			status_calc_misc(&pd->status, BL_PET, lv);
+
 			if (!first)	//Not done the first time because the pet is not visible yet
 				clif_send_petstatus(sd);
 		}
 	} else if (first) {
 		pd->status.batk = status_base_atk(&pd->bl, &pd->status);
-		status_calc_misc(&pd->status, pd->db->lv);
-		if (!battle_config.pet_str)
-			pd->status.batk = 0;
+		status_calc_misc(&pd->status, BL_PET, pd->db->lv);
 	}
 	
 	//Support rate modifier (1000 = 100%)
@@ -2155,7 +2154,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->ele_lv = 1 ;	//[orn]
 	status->race = hd->homunculusDB->race ;	//[orn]
 	status->size = hd->homunculusDB->size ;	//[orn]
-	status->rhw.range = 1 + hd->homunculusDB->size ;	//[orn]
+	status->rhw.range = 1 + status->size;	//[orn]
 	status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
 	status->speed = DEFAULT_WALK_SPEED;
 	status->aspd_rate = 1000;
@@ -2163,7 +2162,13 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	merc_hom_calc_skilltree(hd->master);
 
 	status_cpy(&hd->battle_status, status);
-	status_calc_misc(status, hd->master->homunculus.level);
+	status_calc_misc(status, BL_HOMUNCULUS, hd->master->homunculus.level);
+
+	if(battle_config.homun_critical_rate != 100)
+		status->cri = status->cri*battle_config.homun_critical_rate/100;
+	if (!status->cri && battle_config.homun_critical_rate)
+		status->cri = 1;
+
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
 	if (memcmp(&b_status, status, sizeof(struct status_data)))

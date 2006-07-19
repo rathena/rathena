@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/19
+	* Fixed the inf code update breakage which was blocking all offensive
+	  skills. [Skotlex]
+	* Added battle setting homun_critical_rate (defaults to 0) [Skotlex]
+	* Removed enemy_str/pet_str/enemy_perfect_flee and replaced them with
+	  enable_perfect_flee which specifies which objects can have perfect flee and
+	  enable_baseatk which specifies which objects can have a base attack value
+	  (both in battle.conf) [Skotlex]
 	* Modified the targetted skill logic to enable offensive skills to be
 	  targetted at party/guild members if the appropiate inf2 value is set.
 	  [Skotlex]

@@ -95,8 +95,9 @@ int battle_config_switch(const char *str); // [Valaris]
 extern struct Battle_Config {
 	unsigned short warp_point_debug;
 	unsigned short enemy_critical_rate;
-	unsigned short enemy_str;
-	unsigned short enemy_perfect_flee;
+	unsigned short homun_critical_rate;
+	unsigned short enable_baseatk;
+	unsigned short enable_perfect_flee;
 	unsigned short cast_rate,delay_rate,delay_dependon_dex;
 	unsigned short sdelay_attack_enable;
 	unsigned short left_cardfix_to_right;
@@ -174,7 +175,6 @@ extern struct Battle_Config {
 	unsigned short pet_friendly_rate;
 	unsigned short pet_hungry_delay_rate;
 	unsigned short pet_hungry_friendly_decrease;
-	unsigned short pet_str;
 	unsigned short pet_status_support;
 	unsigned short pet_attack_support;
 	unsigned short pet_damage_support;
