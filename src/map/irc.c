@@ -371,12 +371,12 @@ int parse_names_packet(char *str) {
 	memset(names,'\0',1024);
 
 	tok=strtok(str,"\r\n");
-	sscanf(tok,":%255s %10s %255s = %255s :%1023[^\r\n]",source,numeric,target,channel,names);
+	sscanf(tok,":%255s %10s %255s %*1[=@] %255s :%1023[^\r\n]",source,numeric,target,channel,names);
 	if(strcmpi(numeric,"353")==0)
 		parse_names(names);
 
 	while((tok=strtok(NULL,"\r\n"))!=NULL) {
-		sscanf(tok,":%255s %10s %255s = %255s :%1023[^\r\n]",source,numeric,target,channel,names);
+		sscanf(tok,":%255s %10s %255s %*1[=@] %255s :%1023[^\r\n]",source,numeric,target,channel,names);
 		if(strcmpi(numeric,"353")==0)
 			parse_names(names);
 	}
@@ -387,7 +387,7 @@ int parse_names_packet(char *str) {
 //User access level prefix parser [Zido]
 int parse_names(char *str) {
 	char *tok;
-	
+	if (str == NULL)  return 0; //Nothing to parse!
 	tok=strtok(str," ");
 	switch(tok[0]) {
 			case '~':
@@ -433,7 +433,7 @@ int parse_names(char *str) {
 		}
 	}
 	
-	return 0;
+	return 1;
 }
 
 //Store user's access level [Zido]
