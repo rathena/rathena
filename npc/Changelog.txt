@@ -38,6 +38,8 @@ Playtester
 
 Date		Added
 ======
+07/19
+	* Completed the sign quest warps [MasterOfMuppets]
 07/18
 	* Fixed a warp in moc_pryd06 [Playtester]
 07/17

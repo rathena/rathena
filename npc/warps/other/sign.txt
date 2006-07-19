@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 A few warps.  [MasterOfMuppets]
 //= 1.1 A few more warps. [MasterOfMuppets]
+//= 1.2 Completed the warps [MasterOfMuppets]
 //============================================================
 
 cmd_in01.gat,17,34,0	warp	sign01	1,1,comodo.gat,187,164
@@ -25,3 +26,12 @@ um_in.gat,89,9,0	warp	sign04a	1,1,um_in.gat,33,16
 
 um_dun01.gat,132,90,0	warp	sign05	1,1,um_in.gat,12,18
 um_in.gat,10,18,0	warp	sign05a	1,1,um_dun01.gat,129,90
+
+que_sign01.gat,113,133,0	warp	sign06	1,1,nif_in.gat,117,173
+
+que_sign01.gat,45,15,0	warp	sign07	1,1,niflheim.gat,146,245
+
+que_sign01.gat,178,169,0	warp	sign08	1,1,niflheim.gat,30,156
+
+que_sign02.gat,22,314,0	warp	sign09	1,1,niflheim.gat,30,156
+que_sign02.gat,379,235,0	warp	sign09a	1,1,que_sign01.gat,180,172

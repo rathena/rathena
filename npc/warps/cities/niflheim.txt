@@ -45,3 +45,8 @@ niflheim.gat,255,194,0	warp	nwarp15	1,1,nif_in.gat,20,156
 nif_in.gat,18,154,0	warp	nwarp16	1,1,niflheim.gat,254,192
 nif_in.gat,65,168,0	warp	nwarp17	1,1,nif_in.gat,141,174
 nif_in.gat,140,171,0	warp	nwarp18	1,1,nif_in.gat,65,165
+
+niflheim.gat,165,162,0	warp	nwarp19	1,1,nif_in.gat,156,80
+nif_in.gat,169,82,0	warp	nwarp20	1,1,nif_in.gat,189,105
+nif_in.gat,186,105,0	warp	nwarp21	1,1,nif_in.gat,167,82
+nif_in.gat,154,78,0	warp	nwarp22	1,1,niflheim.gat,167,161
