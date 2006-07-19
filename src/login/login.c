@@ -3114,6 +3114,7 @@ int parse_login(int fd) {
 			}
 			
 			account.version = RFIFOL(fd, 2);	//for exe version check [Sirius]
+			if (!account.version) account.version = 1; //Force some version...
 			memcpy(account.userid,RFIFOP(fd,6),NAME_LENGTH);
 			account.userid[23] = '\0';
 			remove_control_chars((unsigned char *)account.userid);

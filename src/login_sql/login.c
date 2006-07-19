@@ -1569,6 +1569,7 @@ int parse_login(int fd) {
 			}
 
 			account.version = RFIFOL(fd, 2);
+			if (!account.version) account.version = 1; //Force some version...
 			memcpy(account.userid,RFIFOP(fd, 6),NAME_LENGTH);
 			account.userid[23] = '\0';
 			memcpy(account.passwd,RFIFOP(fd, 30),NAME_LENGTH);

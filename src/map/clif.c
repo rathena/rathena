@@ -6121,8 +6121,8 @@ int clif_party_hp(struct map_session_data *sd)
 	WBUFW(buf,0)=0x106;
 	WBUFL(buf,2)=sd->status.account_id;
 	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
-		WBUFW(buf,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
-		WBUFW(buf,8) = 10000;
+		WBUFW(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
+		WBUFW(buf,8) = 100;
 	} else {
 		WBUFW(buf,6) = sd->battle_status.hp;
 		WBUFW(buf,8) = sd->battle_status.max_hp;
@@ -6141,8 +6141,8 @@ static void clif_hpmeter_single(int fd, struct map_session_data *sd)
 	WFIFOW(fd,0) = 0x106;
 	WFIFOL(fd,2) = sd->status.account_id;
 	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
-		WFIFOW(fd,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
-		WFIFOW(fd,8) = 10000;
+		WFIFOW(fd,6) = 100*sd->battle_status.hp/(sd->battle_status.max_hp/100);
+		WFIFOW(fd,8) = 100;
 	} else {
 		WFIFOW(fd,6) = sd->battle_status.hp;
 		WFIFOW(fd,8) = sd->battle_status.max_hp;
@@ -6171,8 +6171,8 @@ int clif_hpmeter(struct map_session_data *sd)
 	WBUFW(buf,0) = 0x106;
 	WBUFL(buf,2) = sd->status.account_id;
 	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
-		WBUFW(buf,6) = 10000*sd->battle_status.hp/sd->battle_status.max_hp;
-		WBUFW(buf,8) = 10000;
+		WBUFW(buf,6) = 100*sd->battle_status.hp/(sd->battle_status.max_hp/100);
+		WBUFW(buf,8) = 100;
 	} else {
 		WBUFW(buf,6) = sd->battle_status.hp;
 		WBUFW(buf,8) = sd->battle_status.max_hp;

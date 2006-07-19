@@ -90,7 +90,7 @@ int name_ignoring_case = 0; // Allow or not identical name for characters but wi
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
-#define TRIM_CHARS "\032\t\n\013 "
+#define TRIM_CHARS "\032\t\x0A\x0D "
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 
 int log_char = 1;	// loggin char or not [devil]
