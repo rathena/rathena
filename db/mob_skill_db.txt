@@ -2492,11 +2492,22 @@
 1555,Parasite@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,9
 1555,Parasite@NPC_PETRIFYATTACK,attack,180,3,500,500,5000,no,target,always,0,,,,,,9
 1555,Parasite@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,9
+1566,Wraith Dead@AL_DECAGI,chase,30,9,500,1000,5000,no,target,always,0,,,,,,29
+1566,Wraith Dead@AS_GRIMTOOTH,chase,137,5,2000,0,5000,yes,target,always,0,,,,,,
+1566,Wraith Dead@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
+1566,Wraith Dead@NPC_CURSEATTACK,chase,181,5,500,800,5000,no,target,always,0,,,,,,29
+1566,Wraith Dead@NPC_POISON,attack,176,5,500,800,5000,no,target,always,0,,,,,,29
 1575,Flora@NPC_REVENGE,idle,333,1,10000,0,0,yes,target,masterattacked,,,,,,,
 1575,Flora@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
 1575,Flora@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1579,Hydra@NPC_REVENGE,idle,333,1,10000,0,0,yes,target,masterattacked,,,,,,,
 1579,Hydra@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,
+1580,Incubus@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,0,,,,,,
+1580,Incubus@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,
+1580,Incubus@NPC_DARKSTRIKE,attack,340,9,500,700,5000,no,target,always,0,,,,,,29
+1580,Incubus@NPC_DARKSTRIKE,chase,340,9,500,700,5000,no,target,always,0,,,,,,29
+1580,Incubus@NPC_MENTALBREAKER,attack,159,3,500,800,5000,no,target,always,0,,,,,,14
+1580,Incubus@NPC_MENTALBREAKER,chase,159,3,500,800,5000,no,target,always,0,,,,,,14
 1582,Deviling@AL_DECAGI,chase,30,1,2000,1000,5000,no,target,always,0,,,,,,29
 1582,Deviling@NPC_DARKNESSATTACK,attack,190,2,2000,0,5000,no,target,always,0,,,,,,6
 1582,Deviling@NPC_DARKSTRIKE,attack,340,5,3000,700,0,no,target,always,0,,,,,,32

@@ -25,6 +25,8 @@
 
 =========================
 07/19
+	* Fixed mob skills for G_INCUBUS and G_WRAITH_DEAD [MasterOfMuppets]
+	- Someone needs to implement all of the G_MONSTER skills.
 	* Raised drop rate of Electric Wire and Undershirt [Playtester]
 	* Some speed and aDelay adjustments on Fur_Seal, Metaling, Increase Soil
 	- Incantation Samurai is now moving much faster
