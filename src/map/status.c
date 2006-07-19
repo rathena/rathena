@@ -4613,6 +4613,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ASPDPOTION3:
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
+			case SC_JAILED:
 				break;
 			case SC_GOSPEL:
 				 //Must not override a casting gospel char.
@@ -5376,6 +5377,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = rand()%100; //Def changes randomly every second...
 			tick = 1000;
 			break;
+		case SC_JAILED:
+			tick = val1>0?1000:250;
+			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?
@@ -5566,6 +5570,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
 
+	if (type==SC_JAILED && sd && sd->mapindex != val2) {
+		if (pc_setpos(sd,(unsigned short)val2,0, 0, 3) == 0)
+			pc_setsavepoint(sd, (unsigned short)val2, 0, 0);
+	}
+
 	if (type==SC_BERSERK) {
 		sc->data[type].val2 = 5*status->max_hp/100;
 		status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
@@ -5603,7 +5612,7 @@ int status_change_clear(struct block_list *bl,int type)
 				i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT ||
 				i == SC_FUSION || i == SC_TKREST || i == SC_READYSTORM ||
 			  	i == SC_READYDOWN || i == SC_READYCOUNTER || i == SC_READYTURN ||
-				i == SC_DODGE
+				i == SC_DODGE || i == SC_JAILED
 			)))
 			continue;
 
@@ -5889,6 +5898,16 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				sc->data[type].val4=-1;
 			}
 			break;
+		case SC_JAILED:
+			if(tid == -1)
+				break;
+		  	//natural expiration.
+			if(sd && sd->mapindex == sc->data[type].val2)
+			{
+				if (pc_setpos(sd,(unsigned short)sc->data[type].val3,0, 0, 3) == 0)
+					pc_setsavepoint(sd, (unsigned short)sc->data[type].val3, 0, 0);
+			}
+			break; //guess hes not in jail :P
 		}
 
 	if (sd) 
@@ -6406,6 +6425,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			}
 		}
 		break;
+	case SC_JAILED:
+		if(--sc->data[type].val1 > 0)
+		{
+			sc->data[type].timer=add_timer(
+				60000+tick, status_change_timer, bl->id,data);
+			return 0;
+		}
+		break;
 	}
 
 	// default for all non-handled control paths
@@ -6517,6 +6544,7 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 			case SC_GUILDAURA:
 			case SC_SAFETYWALL:
 			case SC_NOCHAT:
+			case SC_JAILED:
 			case SC_ANKLE:
 			case SC_BLADESTOP:
 			case SC_CP_WEAPON:

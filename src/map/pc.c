@@ -2522,6 +2522,9 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 
 	nullpo_retr(0, sd);
 
+	if(sd->state.finalsave)
+		return 1;
+
 	z = (double)sd->status.zeny;
 	if(sd->status.zeny<zeny || z - (double)zeny > MAX_ZENY)
 		return 1;
@@ -2588,6 +2591,9 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
+
+	if(sd->state.finalsave)
+		return 1;
 
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
@@ -2927,6 +2933,9 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
 
+	if(sd->state.finalsave)
+		return 1;
+
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 	data = itemdb_search(item_data->nameid);
@@ -2980,6 +2989,9 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type)
 {
 	nullpo_retr(1, sd);
+
+	if(sd->state.finalsave)
+		return 1;
 
 	if(sd->status.cart[n].nameid==0 ||
 	   sd->status.cart[n].amount<amount)

@@ -5741,7 +5741,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	struct mob_data* md = NULL;
 	struct unit_data* ud = unit_bl2ud(src);
 	struct status_change *sc;
-	int inf2;
+	int inf,inf2;
 
 	nullpo_retr(0, ud);
 
@@ -5808,11 +5808,23 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				break;
 			}
 		} else {
-			inf2 = skill_get_inf(ud->skillid);
-			if((inf2&INF_ATTACK_SKILL ||
-				(inf2&INF_SELF_SKILL && skill_get_inf2(ud->skillid)&INF2_NO_TARGET_SELF)) //Combo skills
-				&& battle_check_target(src, target, BCT_ENEMY)<=0
+			//Check target validity.
+			inf = skill_get_inf(ud->skillid);
+			inf2 = skill_get_inf2(ud->skillid);
+
+			if((inf&INF_ATTACK_SKILL ||
+				(inf&INF_SELF_SKILL && inf2&INF2_NO_TARGET_SELF)) //Combo skills
 			)
+				inf = INF_ATTACK_SKILL; //Offensive skill.
+			else
+				inf = 0;
+
+			if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target)
+				inf |= 	
+					(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
+					(inf2&INF2_GUILD_ONLY?BCT_GUILD:0)|
+					(inf2&INF2_ALLOW_ENEMY?BCT_ENEMY:0);
+			if (inf && battle_check_target(src, target, inf) <= 0)
 				break;
 		}
 		
@@ -5829,17 +5841,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				if (md->db->skill[md->skillidx].emotion >= 0)
 					clif_emotion(src, md->db->skill[md->skillidx].emotion);
 			}
-		}
-
-		inf2 = skill_get_inf2(ud->skillid);
-		if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target) {
-			inf2 = 	
-				(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
-				(inf2&INF2_GUILD_ONLY?BCT_GUILD:0)|
-				(inf2&INF2_ALLOW_ENEMY?BCT_ENEMY:0);
-
-			if(battle_check_target(src, target, inf2) <= 0)
-				break;
 		}
 
 		if(src != target && battle_config.skill_add_range &&
