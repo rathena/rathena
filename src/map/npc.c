@@ -122,19 +122,24 @@ int npc_enable(const char *name,int flag)
 	if (nd==NULL)
 		return 0;
 
-	if (flag&1) {	// —LŒø‰»
+	if (flag&1)
 		nd->sc.option&=~OPTION_INVISIBLE;
-		clif_changeoption(&nd->bl);
-	}else if (flag&2){
+	else if (flag&2)
 		nd->sc.option&=~OPTION_HIDE;
-		clif_changeoption(&nd->bl);
-	}else if (flag&4){
+	else if (flag&4)
 		nd->sc.option|= OPTION_HIDE;
-		clif_changeoption(&nd->bl);
-	}else{	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
+	else	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
 		nd->sc.option|= OPTION_INVISIBLE;
+
+	if (nd->class_ == WARP_CLASS)
+	{	//Client won't display option changes for warp portals [Toms]
+		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
+			clif_clearchar(&nd->bl, 0);
+		else
+			clif_spawn(&nd->bl);
+	} else
 		clif_changeoption(&nd->bl);
-	}
+		
 	if(flag&3 && (nd->u.scr.xs > 0 || nd->u.scr.ys >0))
 		map_foreachinarea( npc_enable_sub,nd->bl.m,nd->bl.x-nd->u.scr.xs,nd->bl.y-nd->u.scr.ys,nd->bl.x+nd->u.scr.xs,nd->bl.y+nd->u.scr.ys,BL_PC,nd);
 
