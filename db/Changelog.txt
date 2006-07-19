@@ -24,6 +24,10 @@
 	-----
 
 =========================
+07/19
+	* Raised drop rate of Electric Wire and Undershirt [Playtester]
+	* Some speed and aDelay adjustments on Fur_Seal, Metaling, Increase Soil
+	- Incantation Samurai is now moving much faster
 07/18
 	* Updated speed and delay values of Amatsu mobs [Playtester]
 	* Added more of the X.4 and 11.1 drops [Playtester]
