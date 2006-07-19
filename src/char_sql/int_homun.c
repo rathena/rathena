@@ -124,7 +124,7 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 
 		sprintf(tmp_sql, "INSERT INTO `homunculus` "
 			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
-			"VALUES ('%d', '%d', '%s', '%d', '%lu', '%lu', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			"VALUES ('%d', '%d', '%s', '%d', '%lu', '%lu', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			hd->char_id, hd->class_,hd->name,hd->level,hd->exp,hd->intimacy,hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize);
 
