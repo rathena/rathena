@@ -11327,6 +11327,7 @@ void op_2(struct script_state *st,int op)
 	}else{
 		// si,is => error
 		ShowWarning("script: op_2: int&str, str&int not allow.");
+		report_src(st);
 		push_val(st->stack,C_INT,0);
 	}
 }

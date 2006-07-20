@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Added source reporting when you do an invalid int&str or str&int
+	  operation on a script. [Skotlex]
 	* Fixed the intif party creation packet having the incorrect size sent,
 	  hence causing the leader's level to be read as garbage (which caused the
 	  "impossible to even share" bug). [Skotlex]
