@@ -25,6 +25,7 @@
 
 =========================
 07/20
+	* Updated Speed/Delays of Umbala mobs [Playtester]
 	* Updated Speed/Delays of Kunlun mobs [Playtester]
 	* Updated aDelay of some mobs to Aegis [Playtester]
 	- the code now solves the aDelay bug, so we can fully use Aegis values
