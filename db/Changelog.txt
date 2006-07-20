@@ -25,6 +25,7 @@
 
 =========================
 07/20
+	* Updated the sell price of Serin's ring [MasterOfMuppets]
 	* Made Bacsojin's skills uninteruptable [Playtester]
 07/19
 	* Put the newly implemented cards into the old card album list. [MasterOfMuppets]
