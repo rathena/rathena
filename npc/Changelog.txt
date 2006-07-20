@@ -28,6 +28,7 @@ Evera
 	* Dungeon Teleport System NPCs
 	* iRO information gathering.
 	* Kafra maintainment.
+	* Splitting city/'s into quest/'s
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
 	*iRO information gathering.
@@ -39,6 +40,7 @@ Playtester
 Date		Added
 ======
 07/19
+	* Split more Einbroch quests in cities/ to quests/ [Evera]
 	* Completed the sign quest warps [MasterOfMuppets]
 07/18
 	* Fixed a warp in moc_pryd06 [Playtester]
