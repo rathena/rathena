@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Corrected Cloaking level 1-2 not letting you move across walls. [Skotlex]
+	* updated cloaking code so that when you set "enable cloaking without
+	  walls", the code will consider you as "always next to a wall", thus you get
+	  the wall-speed bonus always. [Skotlex]
 	* Applied the fix to homunculus name saving... [Skotlex]
 	* Added battle config settings agi_penalty_target and vit_penalty_target,
 	  they define which object types will get vit/flee reductions when

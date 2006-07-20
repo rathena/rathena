@@ -3473,7 +3473,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	}
 	if(sc->data[SC_CLOAKING].timer!=-1)
 		speed = speed * 100 /(
-			(sc->data[SC_CLOAKING].val4&2?25:0) //Wall speed bonus
+			(sc->data[SC_CLOAKING].val4&1?25:0) //Wall speed bonus
 			+sc->data[SC_CLOAKING].val3); //Normal adjustment bonus.
 	
 	if(sc->data[SC_LONGING].timer!=-1)
@@ -4904,14 +4904,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val3 *= -1; //Substract the Dodge speed bonus.
 			val3+= 70+val1*3; //Speed adjustment without a wall.
 			//With a wall, it is val3 +25.
-			//val4&2 signals the presence of a wall.
-			if (!val4)
-			{ //val4&1 signals eternal cloaking (not cancelled on attack) [Skotlex]
-				if (bl->type == BL_PC)	//Standard cloaking.
-					val4 = battle_config.pc_cloak_check_type&2?1:0;
-				else
-					val4 = battle_config.monster_cloak_check_type&2?1:0;
-			}
+			//val4&1 signals the presence of a wall.
+			//val4&2 signals eternal cloaking (not cancelled on attack) [Skotlex]
+			if (bl->type == BL_PC)	//Standard cloaking.
+				val4 |= battle_config.pc_cloak_check_type&3;
+			else
+				val4 |= battle_config.monster_cloak_check_type&3;
 			break;
 		case SC_SIGHT:			/* サイト/ルアフ */
 		case SC_RUWACH:

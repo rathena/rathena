@@ -9490,16 +9490,16 @@ int skill_check_cloaking(struct block_list *bl, struct status_change *sc)
 		if (sc->data[SC_CLOAKING].timer != -1) {
 			if (sc->data[SC_CLOAKING].val1 < 3) //End cloaking.
 				status_change_end(bl, SC_CLOAKING, -1);
-			else if(sc->data[SC_CLOAKING].val4&2)
+			else if(sc->data[SC_CLOAKING].val4&1)
 			{	//Remove wall bonus
-				sc->data[SC_CLOAKING].val4&=~2;
+				sc->data[SC_CLOAKING].val4&=~1;
 				status_calc_bl(bl,SCB_SPEED);
 			}
 		} 
 	}
-	else if(sc->data[SC_CLOAKING].timer != -1 && !(sc->data[SC_CLOAKING].val4&2))
+	else if(sc->data[SC_CLOAKING].timer != -1 && !(sc->data[SC_CLOAKING].val4&1))
 	{	//Add wall speed bonus
-		sc->data[SC_CLOAKING].val4|=2;
+		sc->data[SC_CLOAKING].val4|=1;
 		status_calc_bl(bl,SCB_SPEED);
 	}
 

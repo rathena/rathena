@@ -2817,7 +2817,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 	}
 
-	if (sc && sc->data[SC_CLOAKING].timer != -1 && !(sc->data[SC_CLOAKING].val4&1))
+	if (sc && sc->data[SC_CLOAKING].timer != -1 && !(sc->data[SC_CLOAKING].val4&2))
 		status_change_end(src,SC_CLOAKING,-1);
 
 	//Check for counter attacks that block your attack. [Skotlex]
