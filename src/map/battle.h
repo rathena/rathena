@@ -228,9 +228,11 @@ extern struct Battle_Config {
 	unsigned short auto_counter_type;
 	unsigned short min_hitrate;	//[Skotlex]
 	unsigned short max_hitrate;	//[Skotlex]
+	unsigned short agi_penalty_target;
 	unsigned short agi_penalty_type;
 	unsigned short agi_penalty_count;
 	unsigned short agi_penalty_num;
+	unsigned short vit_penalty_target;
 	unsigned short vit_penalty_type;
 	unsigned short vit_penalty_count;
 	unsigned short vit_penalty_num;

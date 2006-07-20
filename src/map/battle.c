@@ -1043,7 +1043,8 @@ static struct Damage battle_calc_weapon_attack(
 			flee = tstatus->flee,
 			hitrate=80; //Default hitrate
 
-		if(battle_config.agi_penalty_type)
+		if(battle_config.agi_penalty_type &&
+			battle_config.agi_penalty_target&target->type)
 		{	
 			unsigned char target_count; //256 max targets should be a sane max
 			target_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
@@ -1626,7 +1627,8 @@ static struct Damage battle_calc_weapon_attack(
 			short vit_def;
 			signed char def1 = (signed char)status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
-			if(battle_config.vit_penalty_type)
+			if(battle_config.vit_penalty_type &&
+				battle_config.vit_penalty_target&target->type)
 			{
 				unsigned char target_count; //256 max targets should be a sane max
 				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);
@@ -2582,7 +2584,8 @@ struct Damage  battle_calc_misc_attack(
 				flee = tstatus->flee,
 				hitrate=80; //Default hitrate
 
-			if(battle_config.agi_penalty_type)
+			if(battle_config.agi_penalty_type && 
+				battle_config.agi_penalty_target&target->type)
 			{	
 				unsigned char target_count; //256 max targets should be a sane max
 				target_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
@@ -3450,10 +3453,12 @@ static const struct battle_data_short {
 	{ "auto_counter_type",                 &battle_config.auto_counter_type		},
 	{ "min_hitrate",                       &battle_config.min_hitrate	},
 	{ "max_hitrate",                       &battle_config.max_hitrate	},
+	{ "agi_penalty_target",                &battle_config.agi_penalty_target	},
 	{ "agi_penalty_type",                  &battle_config.agi_penalty_type			},
 	{ "agi_penalty_count",                 &battle_config.agi_penalty_count			},
 	{ "agi_penalty_num",                   &battle_config.agi_penalty_num			},
 	{ "agi_penalty_count_lv",              &battle_config.agi_penalty_count_lv		},
+	{ "vit_penalty_target",                &battle_config.vit_penalty_target },
 	{ "vit_penalty_type",                  &battle_config.vit_penalty_type			},
 	{ "vit_penalty_count",                 &battle_config.vit_penalty_count			},
 	{ "vit_penalty_num",                   &battle_config.vit_penalty_num			},
@@ -3857,10 +3862,12 @@ void battle_set_defaults() {
 	battle_config.auto_counter_type = BL_ALL;
 	battle_config.min_hitrate = 5;
 	battle_config.max_hitrate = 100;
+	battle_config.agi_penalty_target = BL_PC;
 	battle_config.agi_penalty_type = 1;
 	battle_config.agi_penalty_count = 3;
 	battle_config.agi_penalty_num = 10;
 	battle_config.agi_penalty_count_lv = ATK_FLEE;
+	battle_config.vit_penalty_target = BL_PC;
 	battle_config.vit_penalty_type = 1;
 	battle_config.vit_penalty_count = 3;
 	battle_config.vit_penalty_num = 5;

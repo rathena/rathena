@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Added battle config settings agi_penalty_target and vit_penalty_target,
+	  they define which object types will get vit/flee reductions when
+	  multi-targetted and defaults to only players (battle/battle.conf) [Skotlex]
 	* Added the dummy intravision case for the changeoption packet 0x229
 	  [Skotlex]
 	* Corrected Fog of Wall so that all targetted offensive skills (not only
