@@ -40,7 +40,7 @@ Playtester
 Date		Added
 ======
 07/19
-	* Split more Einbroch quests in cities/ to quests/ [Evera]
+	* Split more Einbroch quests in cities/einbroch.txt to quests/quests_einbroch.txt [Evera]
 	* Completed the sign quest warps [MasterOfMuppets]
 07/18
 	* Fixed a warp in moc_pryd06 [Playtester]
