@@ -3769,8 +3769,16 @@ int atcommand_refine(
 	for (j = 0; j < EQI_MAX-1; j++) {
 		if ((i = sd->equip_index[j]) < 0)
 			continue;
+		if(j == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == i)
+			continue;
+		if(j == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == i)
+			continue;
+		if(j == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == i || sd->equip_index[EQI_HEAD_LOW] == i))
+			continue;
+
 		if(position && !(sd->status.inventory[i].equip & position))
 			continue;
+
 		final_refine = sd->status.inventory[i].refine + refine;
 		if (final_refine > MAX_REFINE)
 			final_refine = MAX_REFINE;
