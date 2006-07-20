@@ -25,6 +25,11 @@
 
 =========================
 07/20
+	* Updated aDelay of some mobs to Aegis [Playtester]
+	- the code now solves the aDelay bug, so we can fully use Aegis values
+	- Alice and Zherlthsh finally attack like on official servers
+	- please don't merge the mob_db until the code is merged
+	- Ancient Mimic now drops Freyr's Shoes
 	* Updated the sell price of Serin's ring [MasterOfMuppets]
 	* Made Bacsojin's skills uninteruptable [Playtester]
 07/19
