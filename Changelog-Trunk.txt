@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Corrected fog of wall to behave as best known currently: [Skotlex]
+	- Only takes effect when targetting a character inside it
+	- -50hit/-75% damage when using normal-ranged attacks
+	- -25% damage from all damage skills
+	- 75% chance of all targetted damage skills of failing.
 	* Should have fixed @refine applying multiple times to equipment that uses
 	  multiple equip slots. [Skotlex]
 2006/07/19

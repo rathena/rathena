@@ -350,9 +350,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage=damage*(100-sc->data[SC_DEFENDER].val2)/100;
 
-		if(sc->data[SC_FOGWALL].timer != -1 &&
-			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
-			damage >>=1;
+		if(sc->data[SC_FOGWALL].timer != -1) {
+			if(flag&BF_SKILL) //25% reduction
+				damage -= 25*damage/100;
+			else if ((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+				damage >>= 2; //75% reduction
+		}
 
 		if(sc->data[SC_ENERGYCOAT].timer!=-1 && flag&BF_WEAPON){
 			struct status_data *status = status_get_status_data(bl);
@@ -398,15 +401,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if (!damage) return 0;
 	}
-	
-	//SC effects from caster side.
+	//SC effects from caster side. Currently none.
+/*	
 	sc = status_get_sc(src);
 	if (sc && sc->count) {
-		if(sc->data[SC_FOGWALL].timer != -1 &&
-			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
-				damage >>=1;
 	}
-	
+*/	
 	if (battle_config.pk_mode && sd && damage)
   	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
@@ -943,7 +943,10 @@ static struct Damage battle_calc_weapon_attack(
 
 	//Check for critical
 	if(!flag.cri && sstatus->cri &&
-		(!skill_num || skill_num == KN_AUTOCOUNTER || skill_num == SN_SHARPSHOOTING || skill_num == NJ_KIRIKAGE))
+		(!skill_num ||
+		skill_num == KN_AUTOCOUNTER ||
+		skill_num == SN_SHARPSHOOTING ||
+		skill_num == NJ_KIRIKAGE))
 	{
 		short cri = sstatus->cri;
 		if (sd)
@@ -1056,9 +1059,8 @@ static struct Damage battle_calc_weapon_attack(
 
 		hitrate+= sstatus->hit - flee;
 
-		if(wd.flag&BF_LONG && (
-			(sc && sc->data[SC_FOGWALL].timer!=-1) ||
-		  	(tsc && tsc->data[SC_FOGWALL].timer!=-1)))
+		if(wd.flag&BF_LONG && !skill_num && //Fogwall's hit penalty is only for normal ranged attacks.
+			tsc && tsc->data[SC_FOGWALL].timer!=-1)
 			hitrate-=50;
 			
 		if(sd && flag.arrow)
