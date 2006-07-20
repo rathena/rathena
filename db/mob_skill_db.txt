@@ -2474,14 +2474,14 @@
 1517,Li Me Mang Ryang@NPC_CRITICALSLASH,attack,170,1,500,500,5000,yes,target,always,0,,,,,,6
 1517,Li Me Mang Ryang@NPC_RANGEATTACK,chase,160,1,2000,0,5000,yes,target,always,0,,,,,,24
 1518,Bacsojin@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
-1518,Bacsojin@NPC_INVISIBLE,chase,353,1,2000,1000,30000,yes,self,always,0,,,,,,29
-1518,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,yes,target,always,0,,,,,,6
-1518,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,yes,self,slavele,1,1519,,,,,
-1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,yes,self,slavele,1,1519,,,,,
+1518,Bacsojin@NPC_INVISIBLE,chase,353,1,2000,1000,30000,no,self,always,0,,,,,,29
+1518,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,no,target,always,0,,,,,,6
+1518,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,700,10000,no,self,slavele,1,1519,,,,,
+1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,700,10000,no,self,slavele,1,1519,,,,,
 1518,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,yes,self,onspawn,0,1519,,,,,
 1518,Bacsojin@PR_SANCTUARY,attack,70,10,2000,0,10000,yes,self,always,0,,,,,,18
 1518,Bacsojin@WZ_WATERBALL,attack,86,5,1000,0,5000,yes,target,always,0,,,,,,
-1518,Bacsojin@WZ_WATERBALL,chase,86,3,2000,1000,5000,yes,target,always,0,,,,,,
+1518,Bacsojin@WZ_WATERBALL,chase,86,3,2000,1000,5000,no,target,always,0,,,,,,
 1519,Chung E@CR_SHIELDCHARGE,attack,250,5,5000,0,5000,yes,target,always,0,,,,,,6
 1519,Chung E@PR_LEXDIVINA,chase,76,1,2000,0,5000,yes,target,always,0,,,,,,6
 1519,Chung E@RG_INTIMIDATE,attack,219,1,1000,1000,0,yes,target,always,0,,,,,,6
@@ -2657,14 +2657,14 @@
 1629,Hill Wind (Spear)@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,
 1629,Hill Wind (Spear)@NPC_WINDATTACK,chase,187,3,500,500,5000,no,target,always,0,,,,,,
 1630,Bacsojin@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
-1630,Bacsojin@NPC_INVISIBLE,chase,353,1,2000,1000,30000,yes,self,always,0,,,,,,29
-1630,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,yes,target,always,0,,,,,,6
+1630,Bacsojin@NPC_INVISIBLE,chase,353,1,2000,1000,30000,no,self,always,0,,,,,,29
+1630,Bacsojin@NPC_STOP,attack,342,1,2000,500,15000,no,target,always,0,,,,,,6
 1630,Bacsojin@NPC_SUMMONSLAVE,attack,196,3,10000,0,5000,no,self,slavele,1,1631,,,,,
 1630,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,5000,no,self,slavele,1,1631,,,,,
 1630,Bacsojin@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1631,,,,,
 1630,Bacsojin@PR_SANCTUARY,attack,70,10,2000,0,10000,yes,self,always,0,,,,,,18
 1630,Bacsojin@WZ_WATERBALL,attack,86,5,1000,0,5000,yes,target,always,0,,,,,,
-1630,Bacsojin@WZ_WATERBALL,chase,86,3,2000,1000,5000,yes,target,always,0,,,,,,
+1630,Bacsojin@WZ_WATERBALL,chase,86,3,2000,1000,5000,no,target,always,0,,,,,,
 1631,Chung E@CR_SHIELDCHARGE,attack,250,5,5000,0,5000,yes,target,always,0,,,,,,6
 1631,Chung E@PR_LEXDIVINA,chase,76,1,2000,0,5000,yes,target,always,0,,,,,,6
 1631,Chung E@RG_INTIMIDATE,attack,219,1,1000,1000,0,yes,target,always,0,,,,,,6
