@@ -3474,8 +3474,10 @@ int pc_checkallowskill(struct map_session_data *sd)
 	
 	for (i = 0; i < sizeof(scw_list)/sizeof(scw_list[0]); i++)
 	{	// Skills requiring specific weapon types
-		if(sd->sc.data[scw_list[i]].timer!=-1 && !(skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])&(1<<sd->status.weapon)))
-		status_change_end(&sd->bl,scw_list[i],-1);
+		if(sd->sc.data[scw_list[i]].timer!=-1 &&
+			!pc_check_weapontype(sd,
+			  	skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
+			status_change_end(&sd->bl,scw_list[i],-1);
 	}
 	
 	if(sd->sc.data[SC_SPURT].timer!=-1 && sd->status.weapon)

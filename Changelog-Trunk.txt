@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Added pc_check_weapontype to do a proper skill weapon check that takes
+	  into account dual-wielding. That is, if a skill can be used with
+	  daggers/axes, you'll be able to use the skill when dual-wielding them.
+	  [Skotlex]
 	* Corrected Cloaking level 1-2 not letting you move across walls. [Skotlex]
 	* updated cloaking code so that when you set "enable cloaking without
 	  walls", the code will consider you as "always next to a wall", thus you get

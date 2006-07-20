@@ -4397,7 +4397,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0; //Overthrust can't take effect if under Max Overthrust. [Skotlex]
 		break;
 		case SC_ADRENALINE:
-		 	if (sd && !(skill_get_weapontype(BS_ADRENALINE)&(1<<sd->status.weapon)))
+			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
 				return 0;
 			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
 				sc->data[SC_DONTFORGETME].timer!=-1 ||
@@ -4406,7 +4406,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 		break;
 		case SC_ADRENALINE2:
-			if (sd && !(skill_get_weapontype(BS_ADRENALINE2)&(1<<sd->status.weapon)))
+			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE2)))
 				return 0;
 			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
 				sc->data[SC_DONTFORGETME].timer!=-1 ||

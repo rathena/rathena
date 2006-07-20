@@ -8362,7 +8362,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			clif_skill_fail(sd,skill,5,0);
 			return 0;
 		}
-		if(!(weapon & (1<<sd->status.weapon) ) ) {
+	
+		if(!pc_check_weapontype(sd,weapon)) {
 			clif_skill_fail(sd,skill,6,0);
 			return 0;
 		}
