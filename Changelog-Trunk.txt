@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Fixed the intif party creation packet having the incorrect size sent,
+	  hence causing the leader's level to be read as garbage (which caused the
+	  "impossible to even share" bug). [Skotlex]
 	* Added pc_check_weapontype to do a proper skill weapon check that takes
 	  into account dual-wielding. That is, if a skill can be used with
 	  daggers/axes, you'll be able to use the skill when dual-wielding them.

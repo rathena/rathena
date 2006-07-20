@@ -381,7 +381,7 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 
 	WFIFOHEAD(inter_fd,64);
 	WFIFOW(inter_fd,0) = 0x3020;
-	WFIFOW(inter_fd,2) = 24+2+sizeof(struct party_member);
+	WFIFOW(inter_fd,2) = 30+sizeof(struct party_member);
 	memcpy(WFIFOP(inter_fd,4),name, NAME_LENGTH);
 	WFIFOB(inter_fd,28)= item;
 	WFIFOB(inter_fd,29)= item2;
