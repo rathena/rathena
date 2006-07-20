@@ -9196,7 +9196,8 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	flag=va_arg(ap,int);
 	type=va_arg(ap,int);
 
-	if(battle_check_target(dsrc,bl,type) > 0)
+	if(battle_check_target(dsrc,bl,type) > 0 &&
+		status_check_skilluse(NULL, bl, skillid, 2)) //also check if they can be hit.
 		skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
 
 	return 0;
