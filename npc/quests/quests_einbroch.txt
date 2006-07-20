@@ -16,14 +16,14 @@
 //=================================================== Shinokas
 //====================================================== Quest
 ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
-	if(Shinokas_Quest == 5) goto L_Dead;
-	if(ein_lab == 2) goto L_Lab2;
-	if(Shinokas_Quest == 4) goto L_Lab1;
-	if(EinFactory == 16 && Shinokas_Quest == 3) goto L_Factory2;
-	if(Shinokas_Quest == 3) goto L_Factory3;
-	if(ein_maid) goto L_Factory;
-	if(Shinokas_Quest == 2) goto L_Find;
-	if(!Shinokas_Quest)set Shinokas_Quest,1;
+	if(Shinokas_Quest == 9) goto L_Dead;
+	if(Shinokas_Quest == 8) goto L_Lab2;
+	if(Shinokas_Quest == 7) goto L_Lab1;
+	if(EinFactory == 16 && Shinokas_Quest == 6) goto L_Factory2;
+	if(Shinokas_Quest == 6) goto L_Factory3;
+	if(Shinokas_Quest == 5) goto L_Factory;
+	if(Shinokas_Quest == 4) goto L_Find;
+	//if(!Shinokas_Quest)set Shinokas_Quest,1;
 	mes "[Sick Old Man]";
 	mes "...!";
 	next;
@@ -35,7 +35,7 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 	mes "come back from";
 	mes "the factory...?!";
 	next;
-	if (einbech_buender == 2) goto L_Ask;
+	if (Shinokas_Quest == 3) goto L_Ask;
 	mes "^3131FFYou feel really awkward";
 	mes "just staring at this old";
 	mes "man violently rolling";
@@ -268,7 +268,7 @@ L_Cont:
 	mes "can sympathize with my situation,";
 	mes "please find out if the Kapelltheine";
 	mes "family has any unique ores...";
-	set Shinokas_Quest,2;
+	set Shinokas_Quest,4;
 	close;
 	
 L_Find:
@@ -313,7 +313,7 @@ L_Factory:
 	mes "Please go and search the";
 	mes "Factory for that ore as";
 	mes "soon as you can.";
-	set Shinokas_Quest,3;
+	set Shinokas_Quest,6;
 	close;
 
 L_Factory3:
@@ -416,7 +416,7 @@ while(1)
 			mes "can enter that kind";
 			mes "of place. But I'm sure";
 			mes "you'll figure something out.";
-			set Shinokas_Quest,4;
+			set Shinokas_Quest,7;
 			close;
 	}
 }
@@ -428,7 +428,7 @@ L_Lab1:
 	close;
 
 OnTouch:
-	if (ein_lab < 2) end;
+	if (Shinokas_Quest != 8) end;
 	mes "^3131FFThe open window rattles";
 	mes "as you enter the room and";
 	mes "are welcomed by a sudden";
@@ -439,7 +439,7 @@ OnTouch:
 	mes "rumpled on the bed,";
 	mes "but you can see dark red";
 	mes "stains in between the folds.";
-	set ein_lab,3;
+	//set ein_lab,3; //wth? -Yhn
 	close;
 	
 L_Lab2:
@@ -520,7 +520,7 @@ L_Lab2:
 	mes "Shinokas!";
 	mes "Why, God?";
 	mes "Why...";
-	set Shinokas_Quest,5;
+	set Shinokas_Quest,9;
 	close;
 	
 L_Dead:
@@ -532,7 +532,7 @@ L_Dead:
 }
 
 ein_in01.gat,32,133,6	script	Maid	850,{
-	if (Shinokas_Quest == 2 && ein_maid == 0) goto L_Ore;
+	if (Shinokas_Quest == 4) goto L_Ore;
 	mes "[Maid]";
 	mes "There's no end";
 	mes "to all these plates";
@@ -559,12 +559,12 @@ L_Ore:
 	mes "special or otherwise, here";
 	mes "in the manor. What exactly";
 	mes "do you need them for?";
-	set ein_maid,1;
+	set Shinokas_Quest,5;
 	close;
 }
 
 einbroch.gat,51,52,1	script	lab_warp	45,2,2{
-	if(Shinokas_Quest >= 4 && ein_scientist != 1) goto L_Sec;
+	if(Shinokas_Quest == 7) goto L_Sec;
 	mes "^3131FFThe door is locked.";
 	mes "You cannot enter.";
 	close;
@@ -802,19 +802,19 @@ ein_in01.gat,266,26,1	script	Unknown Stuff	111,{
 	mes "attached to a huge";
 	mes "machine with many cords";
 	mes "and folds of barbed wire";
-	set ein_lab,1;
+	set ein_stuff,1;
 	close;
 }
 
 airplane.gat,31,77,4	script	Drunken Man#03	853,{
-	if (ein_lab == 2) goto L_Done;
+	if (Shinokas_Quest == 8) goto L_Done;
 	mes "[Drunken Man]";
 	mes "Okay okay...";
 	mes "Daddy's gonna";
 	mes "win some Apples";
 	mes "this time for sure!";
 	next;
-	if(ein_lab == 1)
+	if(ein_stuff && ein_scientist)
 	{
 	mes "[Drunken Man]";
 	mes "Let's do it!";
@@ -841,7 +841,7 @@ airplane.gat,31,77,4	script	Drunken Man#03	853,{
 	mes "Waaaaaahhhhhhhhh!";
 	mes "Apples! My apples!";
 	mes "Apples, I need more...!";
-	if (countitem(512) && ein_lab==1) goto L_Apples;
+	if (countitem(512) && ein_stuff && ein_scientist) goto L_Apples;
 	close;
 	
 L_Apples:
@@ -1015,7 +1015,10 @@ L_Apples:
 	mes "must have been a piece";
 	mes "of ^3131FFYmir's Heart^000000. I better";
 	mes "tell Shinokas about this.)";
-	set ein_lab,2;
+	set Shinokas_Quest,8;
+	//cleaning temp variables from the lab.
+	set ein_stuff,0;
+	set ein_scientist,0;
 	close;
 	
 L_Done:

@@ -407,7 +407,7 @@ einbech.gat,57,210,4	script	Young Man#04	854,{
 	mes "that old act that way, but";
 	mes "it makes me wonder what";
 	mes "could have happened to him.";
-	set ein_young_man,1;
+	set Shinokas_Quest,1;
 	close;
 }
 	
@@ -978,13 +978,13 @@ L_FINE:
 }
 
 einbech.gat,165,105,7	script	Buender Hikeman	847,{
-	if(Shinokas_Quest == 5) goto L_P2;
-	if(einbech_buender == 2)goto L_BEST;
-	if(einbech_buender == 1)goto L_BASTARD;
+	if(Shinokas_Quest == 9) goto L_P2;
+	if(Shinokas_Quest == 3)goto L_BEST;
+	if(Shinokas_Quest == 2)goto L_BASTARD;
 	mes "[Buender Hikeman]";
 	mes "...";
 	mes "......";
-	if(!ein_young_man)close;
+	if(!Shinokas_Quest)close;
 	next;
 	mes "[Buender Hikeman]";
 	mes "...";
@@ -1145,7 +1145,7 @@ L_CONTINUE:
 	mes "[Buender Hikeman]";
 	mes "Then I learned...";
 	mes "You planned it all along.";
-	set einbech_buender,1;
+	set Shinokas_Quest,2;
 	close;
 L_ORE:
 	mes "[Buender Hikeman]";
@@ -1244,7 +1244,7 @@ L_CONTINUE2:
 	mes "^0000FFIt wouldn't be a good idea to^000000";
 	mes "^0000FFprovoke the old man anymore,^000000";
 	mes "^0000FFintentionally or not.^000000";
-	set einbech_buender,2;
+	set Shinokas_Quest,3;
 	close;
 L_BEST:
 	mes "^0000FFIt'd be best^000000";
@@ -1267,7 +1267,7 @@ L_P2:
 	mes "^0000FFfrom the look of discomfort^000000";
 	mes "^0000FFon his face, he seems to be^000000";
 	mes "^0000FFhaving a nightmare.^000000";
-	if (einbech_buender == 3) close;
+	if (Shinokas_Quest == 10) close;
 	next;
 	mes "["+strcharinfo(0)+"]";
 	mes "Excuse me...";
@@ -1386,7 +1386,7 @@ L_P2:
 	mes "cruelty? Whoever they are,";
 	mes "their intentions can't be good.";
 	close2;
-	set einbech_buender,3;
+	set Shinokas_Quest,10;
 	if(BaseLevel < 41)set BaseExp,BaseExp+34750;
 	if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
 	if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
