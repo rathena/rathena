@@ -2623,15 +2623,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	if (status_isdead(bl))
 		return 1;
 
-	if (skillid && skill_get_type(skillid) == BF_MAGIC)
-	{
-		sc = status_get_sc(bl);
-		if (status_isimmune(bl) || (
-			sc && sc->count && sc->data[SC_FOGWALL].timer != -1 && rand()%100 < 75)
-		) { //GTB/Fogwall makes all targetted skills silently fail.
-			if (sd) clif_skill_fail(sd,skillid,0,0);
-			return 1;
-		}
+	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl))
+	{	//GTB makes all targetted magic fail silently.
+		if (sd) clif_skill_fail(sd,skillid,0,0);
+		return 1;
 	}
 	
 	sc = status_get_sc(src);	
@@ -3202,7 +3197,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 	case NJ_KOUENKA:
 	case NJ_HYOUSENSOU:
-	case NJ_HYOUSYOURAKU:
 	case NJ_HUUJIN:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
@@ -3221,7 +3215,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	//case NJ_KIRIKAGE:
 	//case NJ_KOUENKA:
 	//case NJ_HYOUSENSOU:
-	//case NJ_HYOUSYOURAKU:
 	//case NJ_HUUJIN:
 	//case NJ_KAMAITACHI:
 	case NJ_ISSEN:
@@ -5826,6 +5819,14 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 
 			if (inf && battle_check_target(src, target, inf) <= 0)
 				break;
+
+			if(inf&BCT_ENEMY && (sc = status_get_sc(target)) &&
+				sc->count && sc->data[SC_FOGWALL].timer != -1 &&
+				rand()%100 < 75)
+		  	{	//Fogwall makes all offensive-type targetted skills fail at 75%
+				if (sd) clif_skill_fail(sd,ud->skillid,0,0);
+				break;
+			}
 		}
 		
 		//Avoid doing double checks for instant-cast skills.

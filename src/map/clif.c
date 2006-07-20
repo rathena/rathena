@@ -342,17 +342,20 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 					{	//option‚ÌC³
 						switch(((unsigned short*)buf)[0])
 						{
-							case 0x119:
-								WFIFOW(sd->fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
-								break;
 #if PACKETVER > 6
-							case 0x22c:
-							case 0x22b:
+							case 0x229:
+								WFIFOL(sd->fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
+								break;
 							case 0x22a:
+							case 0x22b:
+							case 0x22c:
 								WFIFOL(sd->fd,12) &=~(OPTION_HIDE|OPTION_CLOAK);
 								break;
 #endif
 #if PACKETVER > 3
+							case 0x119:
+								WFIFOW(sd->fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
+								break;
 							case 0x1d8:
 							case 0x1d9:
 							case 0x1da:

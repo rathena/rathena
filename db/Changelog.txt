@@ -25,6 +25,8 @@
 
 =========================
 07/20
+	* Added a skill_unit_db entry for NJ_HYOUSYOURAKU, thanks to Eus for the
+	  data. [Skotlex]
 	* Updated Speed/Delays of Niflheim mobs [Playtester]
 	* Updated Speed/Delays of Umbala mobs [Playtester]
 	* Updated Speed/Delays of Kunlun mobs [Playtester]
