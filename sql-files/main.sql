@@ -338,7 +338,7 @@ CREATE TABLE `homunculus` (
   `rename_flag` tinyint(2) NOT NULL default '0',
   `vaporize` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`homun_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=MyISAM;
 
 -- 
 -- Table structure for table `interlog`
@@ -547,8 +547,9 @@ CREATE TABLE `skill_homunculus` (
   `homun_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `lv` smallint(6) NOT NULL,
-  PRIMARY KEY  (`homun_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY  (`homun_id`,`id`),
+  KEY `homun_id` (`homun_id`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `sstatus`

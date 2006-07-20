@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/20
+	* Added the SQL fix to Homunculus skill learning/saving bug [DracoRPG]
 	* Added a status_check_skilluse on skill_attack_area call to prevent splash
 	  damage skills from hitting hidden/trickdead/etc characters. [Skotlex]
 	* Corrected fog of wall to behave as best known currently: [Skotlex]
