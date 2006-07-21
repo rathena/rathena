@@ -1471,6 +1471,8 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),sd->homunculus.name,NAME_LENGTH);
 	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
+	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
+	WBUFB(buf,26)=sd->homunculus.rename_flag | (sd->homunculus.vaporize << 1) | (sd->homunculus.hp?0:4);
 	WBUFW(buf,27)=sd->homunculus.level;
 	WBUFW(buf,29)=sd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->master->homunculus.intimacy / 100) ;
@@ -5043,7 +5045,7 @@ int clif_displaymessage(const int fd, char* mes)
 		int len_mes = strlen(mes);
 
 		if (len_mes > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
-                        WFIFOHEAD(fd, 5 + len_mes);
+			WFIFOHEAD(fd, 5 + len_mes);
 			WFIFOW(fd,0) = 0x8e;
 			WFIFOW(fd,2) = 5 + len_mes; // 4 + len + NULL teminate
 			memcpy(WFIFOP(fd,4), mes, len_mes + 1);

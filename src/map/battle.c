@@ -3088,6 +3088,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 			//Just fallback on master.
 			t_bl=(struct block_list *)((TBL_HOMUNCULUS*)target)->master;
+			if (((TBL_PC*)t_bl)->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
+				return 0;
 			break;
 		}
 		case BL_SKILL: //Skill with no owner? Kinda odd... but.. let it through.

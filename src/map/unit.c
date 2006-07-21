@@ -1638,6 +1638,9 @@ int unit_free(struct block_list *bl) {
 					status_change_end(bl,SC_EXPLOSIONSPIRITS,-1);
 			}
 		}
+		if (sd->followtimer != -1)
+			pc_stop_following(sd);
+		
 		// Notify friends that this char logged out. [Skotlex]
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
 		party_send_logout(sd);

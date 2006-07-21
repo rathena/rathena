@@ -5589,6 +5589,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	{
 		if (sd && sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
 			sd->homunculus.vaporize = 1;
+			clif_hominfo(sd, 0);
 			merc_hom_delete(sd->hd, 0) ;
 		} else if ( sd ) 
 		{

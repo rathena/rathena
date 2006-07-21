@@ -54,14 +54,6 @@ void merc_load_exptables(void);
 int mercskill_castend_id( int tid, unsigned int tick, int id,int data );
 static int merc_hom_hungry(int tid,unsigned int tick,int id,int data);
 
-int do_init_merc (void)
-{
-	merc_load_exptables();
-	memset(homunculus_db,0,sizeof(homunculus_db));	//[orn]
-	read_homunculusdb();	//[orn]
-	return 0;
-}
-
 static unsigned long hexptbl[MAX_LEVEL+1];
 
 void merc_load_exptables(void)
@@ -1086,6 +1078,17 @@ int read_homunculusdb()
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","homun_skill_tree.txt");
 
 
+	return 0;
+}
+
+int do_init_merc (void)
+{
+	merc_load_exptables();
+	memset(homunculus_db,0,sizeof(homunculus_db));	//[orn]
+	read_homunculusdb();	//[orn]
+	// Add homunc timer function to timer func list [Toms]
+	add_timer_func_list(merc_natural_heal, "merc_natural_heal");
+	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
 	return 0;
 }
 
