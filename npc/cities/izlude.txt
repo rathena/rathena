@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //=	the Jawaii warper, thanks to reddozen and Silent [MasterOfMuppets]
 //= 1.5 Replaced iz_move_alberta with MISC_QUEST & 16 [Lupus]
 //= 1.6 Removed Duplicates [Silent]
+//= 1.7 Split quest to quests/quests_izlude.txt [Evera]
 //============================================================
 
 
@@ -782,120 +783,6 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 		mes "Okay then,";
 		mes "train hard~~";
 		close;
-}
-
-//Edgar-------------------------------------------------------------------------------------
-izlude.gat,182,186,6	script	Edgar	709,{
-	
-	mes "[Edgar]";
-	mes "My town, Izlude is connected to";
-	mes "Alberta by the harbor in the West.";
-	mes "There is so much traffic between";
-	mes "us, I almost become an Albertian.";
-	mes "Hehehe~";
-	next;
-	mes "[Edgar]";
-	mes "There's this guy I know pretty";
-	mes "well, Phelix, who lives in Alberta.";
-	mes "That guy is really stingy... He";
-	mes "charges for everything!";
-	next;
-	mes "[Edgar]";
-	mes "But he's a really nice guy and";
-	mes "likes helping other people. He has";
-	mes "a good heart and will give you his";
-	mes "support if you meet his price.";
-	next;
-	mes "[Edgar]";
-	mes "Lately, people in Alberta say that";
-	mes "he is really trying to help folks";
-	mes "and that his demand for Jellopies";
-	mes "is just a cover-up. Well, you";
-	mes "should take a look at what he has";
-	mes "to offer.";
-M_Menu:
-	next;
-	menu "Can you tell me the way to Alberta?",-,"End Conversation",M_End;
-	
-		mes "[Edgar]";
-		mes "Huh? Well, you can use your feet";
-		mes "and just walk. But if you have";
-		mes "money, I'd like to suggest that you";
-		mes "take a ship.";
-		next;
-		menu "Ok, gotcha.",-,"But I'm sick of walking and I'm broke!",sM_1;
-		
-			mes "[Edgar]";
-			mes "Alright, Take  Care~";
-			close;
-
-		sM_1:
-			if (MISC_QUEST & 16) goto sM_2;
-			mes "[Edgar]";
-			mes "Okay...";
-			mes "You don't want to walk AND you've";
-			mes "got no cash, but you still want to";
-			mes "go there? Oh geez.";
-			next;
-			mes "[Edgar]";
-			mes "Fine fine. Me, being the captain of";
-			mes "a ship, can afford to bring you";
-			mes "there at a lower price. How does";
-			mes "250 Zeny sound?";
-			next;
-			menu "Alrighty~?",-,"Bah, what a rip off!!",sm_1b;
-			
-				set MISC_QUEST,MISC_QUEST | 16;
-				if(Zeny < 250) goto sl_NoZeny;
-				set Zeny, Zeny - 250;
-				warp "alberta.gat",195,164;
-
-			sm_1b:
-				mes "[Edgar]";
-				mes "Boy oh boy,";
-				mes "if you think";
-				mes "that's a rip off...";
-				close;
-
-			sM_2:
-				mes "[Edgar]";
-				mes "So are you heading to Alberta";
-				mes "again? Let me give you the same";
-				mes "discount and only charge 250 Zeny,";
-				mes "just like the last time.";
-				mes "How's that sound?";
-				next;
-				menu "Alrighty~!",-,"Why are you being so nice to me?!",sM_2b;
-
-				if(Zeny < 250) goto sl_NoZeny;
-				set Zeny, Zeny - 250;
-				warp "alberta.gat",195,164;
-
-			sM_2b:
-				mes "[Edgar]";
-				mes "It's just the way I am. That, and";
-				mes "your devilish smile reminds me of";
-				mes "my beloved blond haired son who";
-				mes "left home years ago to become a";
-				mes "Sailor on his own ship. Bless his";
-				mes "soul, wherever he is.";
-				close;
-
-				sl_NoZeny:
-					mes "[Edgar]";
-					mes "Um...";
-					mes "This isn't";
-					mes "enough money.";
-					mes "Go and get";
-					mes "some more.";
-					close;
-
-	M_End:
-		mes "[Edgar]";
-		mes "Yeah, alright.";
-		mes "See you later~";
-		close;
-
 }
 
 //Sailor-------------------------------------------------------------------------------------

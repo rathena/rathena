@@ -40,6 +40,7 @@ Playtester
 Date		Added
 ======
 07/20
+	* Split quest from cities/izlude.txt to quests/quests_izlude.txt [Evera]
 	* Split quest from cities/alberta.txt to quests/quests_alberta.txt [Evera]
 	* Split quests from cities/amatsu.txt to quests/quests_amatsu.txt [Evera]
 	* Split quests from cities/ayothaya.txt to quests/quests_ayothaya.txt [Evera]
