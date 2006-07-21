@@ -846,7 +846,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		}
 	}
 
-	if(src->id != target_id &&
+	//Check range when not using skill on yourself or is a combo-skill during attack
+	//(these are supposed to always have the same range as your attack)
+	if(src->id != target_id && (!temp || ud->attacktimer == -1) &&
 		!battle_check_range(src,target,skill_get_range2(src, skill_num,skill_lv)
 		+(skill_num==RG_CLOSECONFINE?0:1))) //Close confine is exploitable thanks to this extra range "feature" of the client. [Skotlex]
 		return 0;

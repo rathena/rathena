@@ -529,8 +529,10 @@ int mapif_parse_PartyInfo(int fd, int party_id) {
 	p = idb_get(party_db, party_id);
 	if (p != NULL)
 		mapif_party_info(fd, &p->party);
-	else
+	else {
 		mapif_party_noinfo(fd, party_id);
+		char_clearparty(party_id);
+	}
 
 	return 0;
 }

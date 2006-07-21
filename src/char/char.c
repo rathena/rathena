@@ -1749,6 +1749,20 @@ int char_family(int cid1, int cid2, int cid3) {
 		return 1; //cid2/cid3 parents. cid1 child.
 	return 0;
 }
+
+//Clears the given party id from all characters.
+//Since sometimes the party format changes and parties must be wiped, this 
+//method is required to prevent stress during the "party not found!" stages.
+void char_clearparty(int party_id) 
+{
+	int i;
+	for(i = 0; i < char_num; i++)
+  	{
+		if (char_dat[i].status.party_id == party_id)
+			char_dat[i].status.party_id = 0;
+	}
+}
+
 //------------------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
 //------------------------------------------------------------
