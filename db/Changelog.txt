@@ -25,6 +25,7 @@
 
 =========================
 07/21
+	* Updated Speed/Delays of Lighthalzen mobs [Playtester]
 	* Updated Speed/Delays of Einbech mobs [Playtester]
 	* Replaced race numbers with constants RC_(race) in the item_db [Playtester]
 	- also changed some success rates of gaining item bonuses
