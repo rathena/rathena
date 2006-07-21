@@ -40,6 +40,7 @@ Playtester
 Date		Added
 ======
 07/19
+	* Split quests from cities/ayothaya.txt to quests/quests_ayothaya.txt [Evera]
 	* Split Doomed Sword quests from cities/comodo.txt to quests/quests_comodo.txt [Evera]
 	* Split Einbech quests from cities/einbech.txt to quests/quests_ein.txt [Evera]
 	* Renamed quests/quests_einbroch.txt to quests/quests_ein.txt [Evera]
