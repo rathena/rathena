@@ -4151,7 +4151,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	else
 		sd->status.job_exp += job_exp;
 
-	while(pc_checkjoblevelup(sd)) ;
+	pc_checkjoblevelup(sd);
 
 	clif_updatestatus(sd,SP_JOBEXP);
 

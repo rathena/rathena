@@ -2571,7 +2571,7 @@ int atcommand_item(
 	item_id = item_data->nameid;
 	get_count = number;
 	//Check if it's stackable.
-	if (itemdb_isstackable2(item_data))
+	if (!itemdb_isstackable2(item_data))
 		get_count = 1;
 
 	for (i = 0; i < number; i += get_count) {
