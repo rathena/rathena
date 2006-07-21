@@ -25,6 +25,8 @@
 
 =========================
 07/21
+	* Replaced race numbers with constants RC_(race) in the item_db [Playtester]
+	- also changed some success rates of gaining item bonuses
 	* Updated Speed/Delay of Louyang and Ayothaya mobs [Playtester]
 	* Fixed Lord of Death Card's Status Change chances [Playtester]
 	* Added G_ L_ and XMAS_ mobs to the race2 races [Playtester]
