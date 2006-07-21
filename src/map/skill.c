@@ -9790,6 +9790,7 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group)
 		group->valstr=NULL;
 	}
 
+	map_freeblock((struct block_list*)group->unit);
 	group->unit=NULL;
 	group->group_id=0;
 	group->unit_count=0;
