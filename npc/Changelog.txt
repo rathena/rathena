@@ -28,7 +28,7 @@ Evera
 	* Dungeon Teleport System NPCs
 	* iRO information gathering.
 	* Kafra maintainment.
-	* Splitting city/'s into quest/'s
+	* Splitting city/'s into quest/'s.
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
 	*iRO information gathering.
