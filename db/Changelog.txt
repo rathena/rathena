@@ -25,6 +25,8 @@
 
 =========================
 07/21
+	* Updated Speed/Delay of Louyang and Ayothaya mobs [Playtester]
+	* Fixed Lord of Death Card's Status Change chances [Playtester]
 	* Added G_ L_ and XMAS_ mobs to the race2 races [Playtester]
 	- also added Rotar Zairo to 'Goblins'
 	* Fixed Anonymity Request and Erende Ebecee Card [Playtester]
