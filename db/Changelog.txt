@@ -25,6 +25,8 @@
 
 =========================
 07/21
+	* Updated Speed/Delay of Juperos mobs [Playtester]
+	- all the official Aegis delays we have are implemented now
 	* Updated Speed/Delays of Lighthalzen mobs [Playtester]
 	* Updated Speed/Delays of Einbech mobs [Playtester]
 	* Replaced race numbers with constants RC_(race) in the item_db [Playtester]
