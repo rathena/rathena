@@ -80,3 +80,133 @@ s_Noentry1:
 	mes "Advanced class characters must be at least base level 90 to enter level 3 of the Bio Lab Dungeon";
 	close;
 }
+
+//----------------- Cube Room Maze ---------------------------
+// -1 are warps facing east.
+// -2 the warps facing south.
+// -3 are warps facing west.
+// -4 are warps facing north.
+//----------------- Room 66 74 -------------------------------
+lhz_cube.gat,74,74,0	script	cubew01-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,66,67,0	warp	cubew01-2	2,2,lhz_cube.gat,10,18
+lhz_cube.gat,59,74,0	script	cubew01-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,66,82,0	script	cubew01-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 66 136 ------------------------------
+lhz_cube.gat,74,136,0	warp	cubew02-1	2,2,lhz_cube.gat,10,193
+lhz_cube.gat,66,129,0	script	cubew02-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,59,136,0	script	cubew02-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,66,144,0	script	cubew02-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 67 193 ------------------------------
+lhz_cube.gat,74,192,0	script	cubew03-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,67,185,0	script	cubew03-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,59,192,0	script	cubew03-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,67,200,0	warp	cubew03-4	2,2,lhz_cube.gat,10,136
+//----------------- Room 66 18 -------------------------------
+lhz_cube.gat,74,18,0	script	cubew04-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,66,11,0	warp	cubew04-2	2,2,lhz_cube.gat,10,18
+lhz_cube.gat,59,18,0	script	cubew04-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,66,26,0	warp	cubew04-4	2,2,lhz_cube.gat,123,18
+//----------------- Room 66 18 -------------------------------
+lhz_cube.gat,18,18,0	warp	cubew05-1	2,2,lhz_cube.gat,10,193
+lhz_cube.gat,10,11,0	warp	cubew05-2	2,2,lhz_cube.gat,123,18
+lhz_cube.gat,3,18,0	script	cubew05-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,10,26,0	script	cubew05-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 74 -------------------------------
+lhz_cube.gat,18,74,0	script	cubew06-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,10,67,0	warp	cubew06-2	2,2,lhz_cube.gat,123,18
+lhz_cube.gat,3,74,0	warp	cubew06-3	2,2,lhz_cube.gat,66,18
+lhz_cube.gat,10,82,0	script	cubew06-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 136 ------------------------------
+lhz_cube.gat,18,136,0	warp	cubew07-1	2,2,lhz_cube.gat,10,74
+lhz_cube.gat,10,129,0	script	cubew07-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,3,136,0	script	cubew07-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,10,144,0	script	cubew07-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 193 ------------------------------
+lhz_cube.gat,18,192,0	script	cubew08-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,10,185,0	script	cubew08-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,3,192,0	warp	cubew08-3	2,2,lhz_cube.gat,10,74
+lhz_cube.gat,10,200,0	warp	cubew08-4	2,2,lhz_cube.gat,66,18
+//----------------- Room 123 18 ------------------------------
+lhz_cube.gat,130,18,0	script	cubew08-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,123,11,0	script	cubew08-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube.gat,115,18,0	warp	cubew08-3	2,2,lhz_cube.gat,248,184
+lhz_cube.gat,123,26,0	script	cubew08-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+ 
+//----- Function for Random Warps ----------------------------
+function	script	randomw	{
+	set @rdm,rand(3);
+	if(@rdm==1)goto rdm1;
+	if(@rdm==2)goto rdm2;
+ 	warp "lhz_cube.gat",67,193; end;
+	rdm1: warp "lhz_cube.gat",66,136; end;
+	rdm2: warp "lhz_cube.gat",66,74; end;
+}

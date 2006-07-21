@@ -552,8 +552,11 @@ L9_1:
 	mes "This is going to be hard~";
 	mes "Let's go!!!";
 	close2;
-	warp "lhz_cube.gat",248,184;
 	set piciburn,piciburn+1;
+	set @rdm,rand(3);
+	if(@rdm==1)goto L_warp1;
+	if(@rdm==2)goto L_warp2;
+ 	warp "lhz_cube.gat",67,193;
 	end;
 
 L_10:
@@ -575,8 +578,17 @@ L10_1:
 	mes "I will send you there again..";
 	mes "Good luck!";
 	close2;
-//	warp "lhz_cube.gat",66,136;
-	warp "lhz_cube.gat",248,184;
+	set @rdm,rand(3);
+	if(@rdm==1)goto L_warp1;
+	if(@rdm==2)goto L_warp2;
+ 	warp "lhz_cube.gat",67,193;
+	end;
+
+L_warp1: 
+	warp "lhz_cube.gat",66,136;
+	end;
+L_warp2:
+	warp "lhz_cube.gat",66,74;
 	end;
 
 L_11:

@@ -155,7 +155,7 @@ L_NOTICE:
   	mes "[Einbroch Guide]";
  	mes "On your Mini-Map, click on the '+' and '-' symbols to zoom in and out of your Mini-Map.";
 	mes "We hope you enjoy your travels here in the city of Einbroch.";
- 	goto L_MENU;
+ 	goto M_Menu;
 
 M_End:
 	mes "[Einbroch Guide]";

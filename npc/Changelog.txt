@@ -39,6 +39,9 @@ Playtester
 
 Date		Added
 ======
+07/21
+	* Fixed a typo in guides_einbr.txt [Playtester]
+	* Added the Cube Room Maze thanks to Tharis and Tantarian [Playtester]
 07/20
 	* Split quest from cities/izlude.txt to quests/quests_izlude.txt [Evera]
 	* Split quest from cities/alberta.txt to quests/quests_alberta.txt [Evera]
