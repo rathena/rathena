@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/21
+	* Fixed Anonymity Request and Erende Ebecee Card [Playtester]
 07/20
 	* Added a skill_unit_db entry for NJ_HYOUSYOURAKU, thanks to Eus for the
 	  data. [Skotlex]

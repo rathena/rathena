@@ -1505,7 +1505,7 @@
 4346,Egnigem_Cenia_Card,Egnigem Cenia Card,6,,10,10,,,,,,,,16,,,,,{ bonus bStr,readparam(bInt)/18; },{},{}
 4347,Armeyer_Dinze_Card,Armeyer Dinze Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddMonsterDropItem,12053,RC_Fish,1; },{},{}
 4348,Wikebine_Tres_Card,Wikebine Tres Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,217,1,50; if(isequipped(4039,4210,4257,4230)) { bonus bStr,6; bonus bAgi,4; bonus2 bSkillAtk,212,10; if(getskilllv(217)==5) bonus3 bAutoSpell,217,5,50; if(BaseJob == Job_Rogue) { bonus bUseSPrate,-20; bonus3 bAutoSpell,219,1,-20; } } },{},{}
-4349,Errende_Ebecee_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpellWhenHit,25,1,50; },{},{}
+4349,Errende_Ebecee_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpellWhenHit,25,1,50,0; },{},{}
 4350,Laurell_Weinder_Card,Laurell Weinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,88,1; bonus2 bSkillAtk,89,1; },{},{}
 4351,Kavach_Icarus_Card,Kavach Icarus Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()<=4) { bonus bFlee,20; bonus bFlee2,1; } else { bonus bFlee,10; } },{},{}
 4352,General_Egnigem_Cenia_Card,General Egnigem Cenia Card,3,,10,10,,,,,,,,,,,,,{},{},{}
@@ -1740,7 +1740,7 @@
 5172,Beret,Beret,5,,10,700,,0,,0,0xFFFFFFFF,7,2,256,,0,0,226,{ bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 5173,Judge_Hat,Judge Hat,5,,10,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,227,{ if(BaseClass==Job_Taekwon){ bonus bAgi,1; bonus bHPrecovRate,3; } },{},{}
 5174,A-yam,A-yam,5,,10,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,228,{ if(BaseClass==Job_Taekwon){ bonus bInt,1; bonus bSPrecovRate,3; } },{},{}
-5175,Anonymity_Request,Anonymity Request,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,229,{ bonus2 bResEff,Eff_Curse,500; bonus bMdef,1; bonus bHit,-5; },{},{}
+5175,Anonymity_Request,Anonymity Request,5,,10,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,229,{ bonus2 bResEff,Eff_Curse,500; bonus bMdef,1; bonus bHit,-5; },{},{}
 5176,Smiling_Mask,Smiling Mask,5,,10,100,,2,,0,0xFFFFFFFF,7,2,513,,30,0,230,{ if(BaseClass==Job_Taekwon){ bonus bLuk,1; bonus bFlee2,2; } },{},{}
 5177,Lion_Masquerade,Lion Masquerade,5,,10,500,,5,,1,0xFFFFFFFF,7,2,768,,40,1,231,{ if(BaseClass==Job_Taekwon){ bonus bDex,2; bonus bBaseAtk,2*getrefine(); bonus2 bAddEff,Eff_Stun,100; } },{},{}
 5178,Candle,Candle,5,,10,150,,0,,0,0xFFFFFFFF,7,2,256,,0,1,113,{ bonus bAllStats,1; },{},{}
