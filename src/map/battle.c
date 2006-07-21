@@ -3082,7 +3082,11 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 0; //Pets cannot be targetted.
 		}
 		case BL_HOMUNCULUS:
-		{	//Just fallback on master.
+		{	
+			 //For some mysterious reason ground-skills can't target homun.
+			if (src->type == BL_SKILL)
+				return 0;
+			//Just fallback on master.
 			t_bl=(struct block_list *)((TBL_HOMUNCULUS*)target)->master;
 			break;
 		}

@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/21
+	* battle_check_target will now tag homunculus as invalid target when the
+	  source is a skill-type object. [Skotlex]
+	* Added a check on pc_equipitem so that when the client specifies to equip
+	  a weapon on the right hand when the left hand is available, the weapon will
+	  be sent to the left hand instead (when dual-wielding is possible,
+	  obviously). Same for the left/right accessories. [Skotlex]
 	* Added the necessary checks so that Suiton makes Fogwall have double
 	  duration, and to make water-requiring skills to consume their cells.
 	  [Skotlex]
