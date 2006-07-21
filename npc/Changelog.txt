@@ -40,6 +40,8 @@ Playtester
 Date		Added
 ======
 07/19
+	* Split Einbech quests from cities/einbech.txt to quests/quests_ein.txt [Evera]
+	* Renamed quests/quests_einbroch.txt to quests/quests_ein.txt [Evera]
 	* Split more Einbroch quests in cities/einbroch.txt to quests/quests_einbroch.txt [Evera]
 	* Completed the sign quest warps [MasterOfMuppets]
 07/18
