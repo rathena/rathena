@@ -6436,6 +6436,15 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			return 0;
 		}
 		break;
+	case SC_BLIND:
+		if(sc->data[SC_FOGWALL].timer!= -1) 
+		{	//Blind lasts forever while you are standing on the fog.
+			sc->data[type].timer=add_timer(
+				5000+tick, status_change_timer,
+				bl->id, data);
+			return 0;
+		}
+		break;
 	}
 
 	// default for all non-handled control paths

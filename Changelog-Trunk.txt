@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/07/21
+	* Added a check to prevent Blind from ending while standing on a fog of
+	  wall. [Skotlex]
+	* The mob Slave ai will be executed now even when the slave has a target.
+	  This will allow for "instant" warping to the master when it changes maps or
+	  teleports. if the slave has a target already, it won't unlock it and chase
+	  back to the master or anything like that. [Skotlex]
+	* Removed a couple of checks that prevents item ids above 20000. However,
+	  remember that the max id is still ~32k or the client is the one who's gonna
+	  crash! [Skotlex]
 2006/07/20
 	* Added source reporting when you do an invalid int&str or str&int
 	  operation on a script. [Skotlex]

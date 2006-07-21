@@ -429,7 +429,7 @@ static int itemdb_read_itemavail (void)
 		}
 
 		if (j < 2 || str[0] == NULL ||
-			(nameid = atoi(str[0])) < 0 || nameid >= 20000 || !(id = itemdb_exists(nameid)))
+			(nameid = atoi(str[0])) < 0 || !(id = itemdb_exists(nameid)))
 			continue;
 
 		k = atoi(str[1]);
@@ -1036,7 +1036,7 @@ static int itemdb_readdb(void)
 				continue;
 
 			nameid=atoi(str[0]);
-			if(nameid<=0 || nameid>=20000)
+			if(nameid<=0)
 				continue;
 			if (j < 19)
 			{	//Crash-fix on broken item lines. [Skotlex]

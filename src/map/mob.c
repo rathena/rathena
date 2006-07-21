@@ -887,14 +887,14 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 	struct block_list *bl;
 	int old_dist;
 
-	nullpo_retr(0, md);
-
 	bl=map_id2bl(md->master_id);
 
 	if (!bl || status_isdead(bl)) {
 		status_kill(&md->bl);
-		return 0;
+		return 1;
 	}
+	if (bl->prev == NULL)
+		return 0; //Master not on a map? Could be warping, do not process.
 
 	if(status_get_mode(&md->bl)&MD_CANMOVE)
 	{	//If the mob can move, follow around. [Check by Skotlex]
@@ -910,8 +910,11 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		){
 			md->master_dist = 0;
 			unit_warp(&md->bl,bl->m,bl->x,bl->y,3);
-			return 0;
+			return 1;
 		}
+
+		if(md->target_id) //Slave is busy with a target.
+			return 0;
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
 		if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
@@ -919,13 +922,14 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		{
 			short x = bl->x, y = bl->y;
 			mob_stop_attack(md);
-			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1))
-				unit_walktoxy(&md->bl, x, y, 0);
+			if(map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
+				&& unit_walktoxy(&md->bl, x, y, 0))
+				return 1;
 		}	
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
 		status_kill(&md->bl);
-		return 0;
+		return 1;
 	}
 	
 	//Avoid attempting to lock the master's target too often to avoid unnecessary overload. [Skotlex]
@@ -951,6 +955,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 				md->min_chase=md->db->range3+distance_bl(&md->bl, tbl);
 				if(md->min_chase>MAX_MINCHASE)
 					md->min_chase=MAX_MINCHASE;
+				return 1;
 			}
 		}
 	}
@@ -1149,9 +1154,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		md->attacked_id = 0;
 	}
 	
-	// Processing of slave monster, is it needed when there's a target to deal with?
-	if (md->master_id > 0 && !tbl)
-		mob_ai_sub_hard_slavemob(md, tick);
+	// Processing of slave monster
+	if (md->master_id > 0 && mob_ai_sub_hard_slavemob(md, tick))
+		return 0;
 
 	// Scan area for targets
 	if (!tbl && mode&MD_LOOTER && md->lootitem && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
