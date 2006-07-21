@@ -198,11 +198,11 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 	ratio = attr_fix_table[def_lv-1][atk_elem][def_type];
 	if (sc && sc->count)
 	{
-		if(sc->data[SC_VOLCANO].timer!=-1 && atk_elem == 3)
+		if(sc->data[SC_VOLCANO].timer!=-1 && atk_elem == ELE_FIRE)
 			ratio += enchant_eff[sc->data[SC_VOLCANO].val1-1];
-		if(sc->data[SC_VIOLENTGALE].timer!=-1 && atk_elem == 4)
+		if(sc->data[SC_VIOLENTGALE].timer!=-1 && atk_elem == ELE_WIND)
 			ratio += enchant_eff[sc->data[SC_VIOLENTGALE].val1-1];
-		if(sc->data[SC_DELUGE].timer!=-1 && atk_elem == 1)
+		if(sc->data[SC_DELUGE].timer!=-1 && atk_elem == ELE_WATER)
 			ratio += enchant_eff[sc->data[SC_DELUGE].val1-1];
 	}
 	if (tsc && tsc->count)

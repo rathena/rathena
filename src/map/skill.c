@@ -2434,6 +2434,8 @@ int skill_count_water (struct block_list *src, int range)
 			continue;
 		}
 		unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL);
+		if (!unit)
+		  unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL);
 		if (unit) {
 			cnt++;
 			skill_delunit(unit);
@@ -6717,8 +6719,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1 = 55 + skilllv*5;	//Elemental Resistance
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
-	case PF_FOGWALL:	/* フォグウォール */
-		if(sc && sc->data[SC_DELUGE].timer!=-1) limit *= 2;
+	case PF_FOGWALL:
+		if(sc && (
+			sc->data[SC_DELUGE].timer!=-1 || sc->data[SC_SUITON].timer != -1
+		)) limit *= 2;
 		break;
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
