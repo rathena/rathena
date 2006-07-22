@@ -25,6 +25,7 @@
 
 =========================
 07/22
+	* Raised the chance of Holden Card Combo dropping a stem [Playtester]
 	* Started to implement the Rachel mobs [Playtester]
 07/21
 	* Updated Speed/Delay of Juperos mobs [Playtester]
