@@ -4758,6 +4758,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.hom_id > 0 && sd->hd)	//orn
 	{
 		sd->homunculus.vaporize = 1;
+		clif_hominfo(sd,0);
 		merc_stop_walking(sd->hd, 1) ;
 		merc_stop_attack(sd->hd) ;
 		merc_hom_delete(sd->hd,0);

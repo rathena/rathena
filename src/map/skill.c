@@ -6212,7 +6212,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, -1, -1, sd->status.name,class_,"");
+			md = mob_once_spawn_sub(src, src->m, x, y, sd->status.name,class_,"");
 			if (md) {
 				md->master_id = src->id;
 				md->special_state.ai = skillid==AM_SPHEREMINE?2:3;

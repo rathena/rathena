@@ -1407,7 +1407,7 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap) {
 // Packet parsing for char-servers
 //--------------------------------
 int parse_fromchar(int fd) {
-	unsigned int i;
+	int i;
 	int j, id;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];

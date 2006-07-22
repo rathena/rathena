@@ -9523,16 +9523,12 @@ int atcommand_homlevel(
 		return 1 ;
 
 	level = atoi(message);
-	if ( ( level + sd->homunculus.level ) > MAX_LEVEL )
-		level = MAX_LEVEL - sd->homunculus.level ;
-	if (level >= 1) {
-		for (i = 1; i <= level ; i++){
-			sd->homunculus.exp += sd->hd->exp_next;
-			merc_hom_levelup(sd->hd) ;
-		}
-		clif_misceffect2(&sd->hd->bl,568) ;
-	}
 	
+	for (i = 1; i <= level && sd->hd->exp_next; i++){
+		sd->homunculus.exp += sd->hd->exp_next;
+		merc_hom_levelup(sd->hd);
+	}
+	clif_misceffect2(&sd->hd->bl,568);
 	return 0;
 }
 

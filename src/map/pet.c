@@ -1034,8 +1034,9 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 
 	sd_id = fitem->first_get_id;
 
-	if(bl->m == pd->bl.m && unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL)
-		&& rand()%1000<1000/(++(*itc)))
+	if(bl->m == pd->bl.m && (!sd_id || sd_id == pd->msd->bl.id) &&
+		unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&
+		rand()%1000<1000/(++(*itc)))
 		pd->target_id=bl->id;
 	return 0;
 }
