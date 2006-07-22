@@ -2318,7 +2318,7 @@
 7562,Ice_Scale,Ice Scale,3,,10,10,,,,,,,,,,,,,{},{},{}
 7563,Bloody_Rune,Bloody Rune,3,,10,10,,,,,,,,,,,,,{},{},{}
 7564,Rotten_Meat,Rotten Meat,3,,10,10,,,,,,,,,,,,,{},{},{}
-7565,Sticky_Poison,Sticky_Poison,3,,10,10,,,,,,,,,,,,,{},{},{}
+7565,Sticky_Poison,Sticky Poison,3,,10,10,,,,,,,,,,,,,{},{},{}
 7566,Will_of_Red_Darkness,Will of Red Darkness,3,,10,10,,,,,,,,,,,,,{},{},{}
 7567,Suspicious_Hat,Suspicious Hat,3,,10,10,,,,,,,,,,,,,{},{},{}
 7568,White_Mask,White Mask,3,,10,10,,,,,,,,,,,,,{},{},{}

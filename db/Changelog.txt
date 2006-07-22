@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/22
+	* Started to implement the Rachel mobs [Playtester]
 07/21
 	* Updated Speed/Delay of Juperos mobs [Playtester]
 	- all the official Aegis delays we have are implemented now
