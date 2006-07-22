@@ -39,6 +39,8 @@ Playtester
 
 Date		Added
 ======
+07/22
+	* Removed two warps in Aldebaran in preparation for the sign quest. [MasterOfMuppets]
 07/21
 	* Fixed a typo in guides_einbr.txt [Playtester]
 	* Added the Cube Room Maze thanks to Tharis and Tantarian [Playtester]
