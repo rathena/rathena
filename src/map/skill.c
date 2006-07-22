@@ -4531,12 +4531,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		}
 		if (dstsd) {
-			for (i=0;i<11;i++) {
+			for (i=0;i<EQI_MAX;i++) {
 				if (dstsd->equip_index[i]<0 || !dstsd->inventory_data[dstsd->equip_index[i]])
 					continue;
 				switch (i) {
-				case 8: //Shield / left-hand weapon
-					if(dstsd->inventory_data[dstsd->equip_index[8]]->type == 5)
+				case EQI_HAND_L: //Shield / left-hand weapon
+					if(dstsd->inventory_data[dstsd->equip_index[EQI_HAND_L]]->type == IT_ARMOR)
 					{ //Shield
 						if (equip&EQP_SHIELD &&
 							!(dstsd->unstripable_equip&EQP_SHIELD) &&
@@ -4548,7 +4548,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						continue;
 					}
 					//Continue to weapon
-				case 9:
+				case EQI_HAND_R:
 					if (equip &EQP_WEAPON &&
 						!(dstsd->unstripable_equip&EQP_WEAPON) &&
 				  		!(tsc && tsc->data[SC_CP_WEAPON].timer != -1)
@@ -4557,7 +4557,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
 					}
 					break;
-				case 7: //Armor
+				case EQI_ARMOR: //Armor
 					if (equip &EQP_ARMOR && 
 						!(dstsd->unstripable_equip &EQP_ARMOR) &&
 					  	!(tsc && tsc->data[SC_CP_ARMOR].timer != -1)
@@ -4566,7 +4566,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						pc_unequipitem(dstsd,dstsd->equip_index[i],3);
 					}
 					break;
-				case 6: //Helm  
+				case EQI_HEAD_TOP: //Helm  
 					if (equip &EQP_HELM &&
 						!(dstsd->unstripable_equip &EQP_HELM) &&
 						!(tsc && tsc->data[SC_CP_HELM].timer != -1)
