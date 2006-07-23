@@ -849,7 +849,7 @@ izlude.gat,171,185,3	script	Honeymoon Helper#Izlude I	71,{
 			next;
 			mes "[Marry Happy]";
 			mes "Since it's a special journey,";
-			mes "the payment will be a bit expensive than normal. It will cost you 100,000z !!";
+			mes "the payment will be a bit expensive than normal. It will cost you 10,000z !!";
 			mes "And that's what lets you enjoy";
 			mes "a peaceful and fascinating";
 			mes "honey moon trip...?";
@@ -865,16 +865,16 @@ s_Go:
 				mes "and cheer yourself up?";
 				close;
 }
-			else if(Zeny < 100000)
+			else if(Zeny < 10000)
 {
 					mes "[Marry Happy]";
 					mes "I've explained about the trip to 'Jawaii'.";
-					mes "You'll need 100,000 z.";
+					mes "You'll need 10,000 z.";
 					mes "If you do not have enough zeny,";
 					mes "why don't you seek help from your partner...?";
 					close;
 }
-				set Zeny,Zeny - 100000;
+				set Zeny,Zeny - 10000;
 				mes "[Marry Happy]";
 				mes "Enjoy your trip...!!";
 				mes "Let's go to 'Jawaii'...!!";
