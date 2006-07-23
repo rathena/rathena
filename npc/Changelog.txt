@@ -39,6 +39,8 @@ Playtester
 
 Date		Added
 ======
+07/23
+	* Changed the names of some NPCs [MasterOfMuppets]
 07/22
 	* Removed two warps in Aldebaran in preparation for the sign quest. [MasterOfMuppets]
 07/21

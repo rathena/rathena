@@ -91,13 +91,13 @@ L_end:
  	close;
 }
 
-nif_in.gat,105,81,3	script	Grey	794,{
-	mes "[Grey]";
+nif_in.gat,105,81,3	script	Crayu	794,{
+	mes "[Crayu]";
 	mes "Ah, there was this poem...";
 	mes "in which author and time of writing was unknown,";
 	mes "and has been circulating since long ago...";
 	next;
-	mes "[Grey]";
+	mes "[Crayu]";
 	mes "^FF0000When the sun sets in the western hills,^000000";
 	mes "^FF0000Where points the velvet gloom of dawn,^000000";
 	mes "^FF0000The beautiful melody surrounding thy soul,^000000";
@@ -105,7 +105,7 @@ nif_in.gat,105,81,3	script	Grey	794,{
 	next;
 	if (nif_quest2 == 1 || (MISC_QUEST & 32)) goto L_end;
 	set @nif_random,rand(1,4);
-	mes "[Grey]";
+	mes "[Crayu]";
 	mes "Heh, let me give you a little exam!";
 	mes "Repeat line no. " + @nif_random + " of the poem";
 	mes "that you have just heard to me!";
@@ -133,7 +133,7 @@ nif_in.gat,105,81,3	script	Grey	794,{
 
 	L_RAN_B:
 		if (@inputstr1$ == @str1$) goto L_RAN_SC;
-		mes "[Grey]";
+		mes "[Crayu]";
 		mes "Aih... If you had paid more attention,";
 		mes "you would have known the correct answer!";
 		mes "Come back for the challenge again,";
@@ -141,7 +141,7 @@ nif_in.gat,105,81,3	script	Grey	794,{
 		close;
 
 	L_RAN_SC:
-		mes "[Grey]";
+		mes "[Crayu]";
 		mes "Hoho... I see you have paid attention!";
 		mes "I am Grey, a wandering poet of yore,";
 		mes "you are the best audience I have had so far,";
@@ -149,13 +149,13 @@ nif_in.gat,105,81,3	script	Grey	794,{
 		getitem 7184,1;//Items: Piano Key,
 		set nif_quest2, 1;
 		next;
-		mes "[Grey]";
+		mes "[Crayu]";
 		mes "I hope you will treat other poets";
 		mes "as well as you treated me, farewell.";
 		close;
 
 L_end:
-	mes "[Grey]";
+	mes "[Crayu]";
 	mes "I wonder what does it mean...";
 	mes "If you read it carefully,";
 	mes "it seems to have a deep meaning,";
@@ -270,14 +270,14 @@ nif_in.gat,118,151,5	script	#5	111,3,3{
 }
 
 nif_in.gat,188,168,3	script	Witch	792,{
-	mes "[Kilgana]";
+	mes "[Kirkena]";
 	mes "Hmm?... Aren't you a living human?";
 	mes "Must have took you some effort";
 	mes "to get to this place...";
 	mes "Whatever reason though, this is not a place";
 	mes "the living shall belong...";
 	next;
-	mes "[Kilgana]";
+	mes "[Kirkena]";
 	mes "I shall use my powers to send you back";
 	mes "but you should not return in the future.";
 	close2;

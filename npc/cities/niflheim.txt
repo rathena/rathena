@@ -130,7 +130,7 @@ nif_in.gat,16,30,4	script	Vampire Bat	799,{
 }
 
 nif_in.gat,156,93,5	script	Child	793,{
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "Where, is this place? I just woke up";
 	mes "and found myself here... mommy...";
 	mes "have you seen my mommy, hmm? ... sob...";
@@ -139,13 +139,13 @@ nif_in.gat,156,93,5	script	Child	793,{
 	menu "About the witch...",L_Wizzard,"About the curse...",L_Curse,"Stop conversation",L_end;
 
 L_Wizzard:
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "A witch? I don't know any witches...";
 	mes "although I read about them in storybooks,";
 	mes "but I don't know if they're real or not,";
 	mes "must be really scary if she is real...";
 	next;
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "But why is it so cold?";
 	if (sex == 1) mes "Aren't you cold, brother? Wierd... Hu~";
 	if (sex == 0) mes "Aren't you cold, sister? Wierd... Hu~";
@@ -154,18 +154,18 @@ L_Wizzard:
 	close;
    
 L_Curse:
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "Curse... My grandma told me";
 	mes "she has a way to avoid any curse";
 	mes "unlifteable by holy blessings...";
 	next;
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "Klaatu...";
 	mes "Verata.....";
 	mes "And... something... something... what was it?";
 	mes "I can't remember the last one.";
 	next;
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "She said if you can pronounce these magic words";
 	mes "to escape a cursed fate.";
 	mes "Now I can't remember what she said was important...";
@@ -173,7 +173,7 @@ L_Curse:
 	close;
    
 L_end:
-	mes "[Anne]";
+	mes "[Alakina Ann]";
 	mes "So cold... so cold... I wish I could";
 	mes "go home... if you can please take me with you...";
 	mes "it's too scary here...";
@@ -183,7 +183,7 @@ L_end:
 
 niflheim.gat,350,258,5	script	Cursed Soul	802,{
 	killmonster "niflheim.gat","mymob";
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "I feel a strong curse on youaaaahhhhh";
 	mes "I shall deny your existanceahhhhhhh";
 	mes "Turn back or you will dieeeaaaahhhh";
@@ -192,7 +192,7 @@ niflheim.gat,350,258,5	script	Cursed Soul	802,{
 	menu "Pick up 1st book",L_book1,"Pick up 2nd book",L_book2,"Pick up 3rd book",L_book3,"Leave silently",L_back;
    
 L_book1:
-	mes "[Aesop]";
+	mes "[Ashe Bruce]";
 	mes "Don't you touch my bookssssahhh!!";
 	mes "Ahahaha, I curse you for being bitten, torn and clawed at!!";
 	mes "Forever binded to this curse!!";
@@ -200,7 +200,7 @@ L_book1:
 	close;
 
 L_book2:
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "I said don't touch my booksssahhh...";
 	mes "Get lost....";
 	mes "Don't disrupt my restingggaaahh!!";
@@ -210,7 +210,7 @@ L_book2:
 L_book3:
 	set @nif_t,0;
 	set @nif_random1,rand(1,10);
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "Ahahaha.... I see you are brave!!";
 	mes "Start reading your prayersahahahah!!";
 	next;
@@ -259,10 +259,10 @@ L_MENU3:
 
 L_score:
 	if (@nif_t == 30) goto L_sucess1;
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "Hahahaha!! Your prayers were wrong!!";
 	mes "Time to face deathohohohoho,";
-	mes "May you be cured forevahahahaha!!";
+	mes "May you be cursed forevahahahaha!!";
 	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"mymob";
 	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"mymob";
 	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"mymob";
@@ -274,20 +274,20 @@ L_score:
 
 L_sucess1:
 	if (@nif_random1 == 10) goto L_sucess2;
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "Your prayers were correctaaahhhh...";
 	mes "but your curse still remainsaaahhhh!!";
 	mes "Haahahahaha.....!!!";
 	close;
 
 L_sucess2:
-       mes "[Aesop Bruce]";
+       mes "[Ashe Bruce]";
        mes "Hahahaha!! Your curse has been lifted!!";
        mes "Gahahahaha.....!!!";
        close;
 
 L_back:
-	mes "[Aesop Bruce]";
+	mes "[Ashe Bruce]";
 	mes "Ahahahaha! Not bad thinking at alllhhhaahaaa...";
 	mes "I shall pray that you live to returnahhhh....";
 	close;
