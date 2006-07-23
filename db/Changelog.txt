@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/23
+	* Completed the temporary Rachel + Ice Dungeon mob stats [Playtester]
 07/22
 	* More Rachel mobs [Playtester]
 	* Raised the chance of Holden Card Combo dropping a stem [Playtester]
