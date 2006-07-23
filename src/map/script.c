@@ -9488,10 +9488,10 @@ int buildin_isequipped(struct script_state *st)
 				continue;
 
 			if(itemdb_type(id) != IT_CARD) { //Non card
-				if (sd->inventory_data[index]->nameid == id) {
-					flag = 1;
-					break;
-				}
+				if (sd->inventory_data[index]->nameid != id)
+					continue;
+				flag = 1;
+				break;
 			} else { //Card
 				if (itemdb_isspecial(sd->status.inventory[index].card[0]))
 					continue;
@@ -9594,7 +9594,6 @@ int buildin_isequipped(struct script_state *st)
 		FETCH (i+2, id) else id = 0;
 		if (id <= 0)
 			continue;
-		
 		flag = 0;
 		for (j=0; j<EQI_MAX; j++)
 		{
@@ -9608,8 +9607,9 @@ int buildin_isequipped(struct script_state *st)
 				continue;
 			
 			if (itemdb_type(id) != IT_CARD) {
-				if (sd->inventory_data[index]->nameid == id)
-					flag = 1;
+				if (sd->inventory_data[index]->nameid != id)
+					continue;
+				flag = 1;
 				break;
 			} else { //Cards
 				if (sd->inventory_data[index]->slot == 0 ||
