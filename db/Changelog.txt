@@ -25,6 +25,7 @@
 
 =========================
 07/23
+	* Added some new items thanks to Haplo [Playtester]
 	* Added Holy Quiver to IG_Quiver [Playtester]
 	* Added the skills of the Rachel + Ice Dungeon mobs [Playtester]
 	- I made it so that the monsters are safe to use
