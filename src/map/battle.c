@@ -3735,8 +3735,8 @@ void battle_set_defaults() {
 	battle_config.left_cardfix_to_right=0;
 	battle_config.skill_add_range=0;
 	battle_config.skill_out_range_consume=1;
-	battle_config.skillrange_by_distance=BL_MOB|BL_PET;
-	battle_config.use_weapon_skill_range=0;
+	battle_config.skillrange_by_distance=BL_MOB|BL_PET|BL_HOMUNCULUS;
+	battle_config.use_weapon_skill_range=BL_MOB|BL_PET|BL_HOMUNCULUS;
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
 	battle_config.vs_traps_bctall=BL_PC;

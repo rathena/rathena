@@ -764,7 +764,7 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 {
 	int range = skill_get_range(id, lv);
 	if(range < 0) {
-		if (battle_config.use_weapon_skill_range)
+		if (battle_config.use_weapon_skill_range&bl->type)
 			return status_get_range(bl);
 		range *=-1;
 	}
