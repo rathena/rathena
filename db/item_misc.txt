@@ -261,6 +261,7 @@
 24,12013,1	//Shadow Arrow Quiver
 24,12014,1	//Immaterial Arrow Quiver
 24,12015,1	//Rusty Arrow Quiver
+24,12183,1	//Holy Arrow Quiver
 //masks
 25,2278,1	//Mr. Smile
 25,2281,1	//Opera Masque
