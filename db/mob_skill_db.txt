@@ -2638,12 +2638,12 @@
 1626,Dark Priest@NPC_DARKSTRIKE,chase,340,10,2000,700,5000,yes,target,always,0,,,,,,9
 1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,2000,2000,30000,no,self,attackpcgt,2,,,,,,9
 1626,Dark Priest@NPC_GRANDDARKNESS,attack,339,5,500,2000,30000,no,self,attackpcgt,2,,,,,,9
-1627,Virus@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,30
-1627,Virus@NPC_BLOODDRAIN,chase,199,1,500,0,5000,yes,target,always,0,,,,,,30
-1627,Virus@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
-1627,Virus@NPC_COMBOATTACK,chase,171,2,500,700,5000,no,target,always,0,,,,,,
-1627,Virus@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
-1627,Virus@NPC_WINDATTACK,chase,187,2,500,500,5000,no,target,always,0,,,,,,
+1627,Anopheles@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,30
+1627,Anopheles@NPC_BLOODDRAIN,chase,199,1,500,0,5000,yes,target,always,0,,,,,,30
+1627,Anopheles@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
+1627,Anopheles@NPC_COMBOATTACK,chase,171,2,500,700,5000,no,target,always,0,,,,,,
+1627,Anopheles@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
+1627,Anopheles@NPC_WINDATTACK,chase,187,2,500,500,5000,no,target,always,0,,,,,,
 1628,Mole@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1628,Mole@NPC_COMBOATTACK,chase,171,1,500,700,5000,no,target,always,0,,,,,,
 1628,Mole@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,
@@ -3923,7 +3923,50 @@
 1767,Deviling@NPC_SUMMONSLAVE,attack,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
 1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,2000,10000,no,self,slavele,3,1595,1595,1595,1433,,6
 1767,Deviling@NPC_SUMMONSLAVE,idle,196,7,10000,0,0,no,self,onspawn,0,1242,1242,1242,1109,,
+1778,Gazeti@MG_COLDBOLT,attack,14,5,1000,0,5000,yes,target,always,0,,,,,,
+1778,Gazeti@MG_COLDBOLT,chase,14,5,1000,0,5000,yes,target,always,0,,,,,,
+1778,Gazeti@CR_AUTOGUARD,attack,249,5,1000,0,300000,yes,self,always,0,,,,,,
+1778,Gazeti@CR_AUTOGUARD,chase,249,5,1000,0,300000,yes,self,always,0,,,,,,
+1779,Ktullanux@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,
+1779,Ktullanux@NPC_SUMMONSLAVE,attack,196,3,10000,2000,10000,no,self,slavele,2,1788,,,,,
+1779,Ktullanux@NPC_SUMMONSLAVE,idle,196,3,10000,2000,10000,no,self,slavele,2,1788,,,,,
+1779,Ktullanux@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1779,Ktullanux@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1780,Muscipular@AL_HEAL,attack,28,9,10000,0,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1780,Muscipular@AL_HEAL,attack,28,9,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,
+1780,Muscipular@AL_HEAL,idle,28,9,10000,0,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1780,Muscipular@AL_HEAL,idle,28,9,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,
+1781,Drosera@KN_PIERCE,attack,56,5,1000,0,5000,yes,target,always,0,,,,,,
+1782,Roween@NPC_COMBOATTACK,attack,171,4,1000,0,5000,yes,target,always,0,,,,,,
+1782,Roween@NPC_COMBOATTACK,chase,171,4,1000,0,5000,yes,target,always,0,,,,,,
+1782,Roween@NPC_WINDATTACK,attack,187,2,1000,0,5000,yes,target,always,0,,,,,,
+1782,Roween@NPC_WINDATTACK,chase,187,2,1000,0,5000,yes,target,always,0,,,,,,
+1783,Galion@NPC_COMBOATTACK,attack,171,2,1000,0,5000,yes,target,always,0,,,,,,
+1783,Galion@NPC_COMBOATTACK,chase,171,2,1000,0,5000,yes,target,always,0,,,,,,
+1783,Galion@AS_SONICBLOW,attack,136,5,1000,0,5000,yes,target,always,0,,,,,,
+1783,Galion@AS_SONICBLOW,chase,136,5,1000,0,5000,yes,target,always,0,,,,,,
+//1783,Galion@NPC_CHANGE(I don't know which element)
+1783,Galion@NPC_SUMMONSLAVE,attack,196,3,10000,2000,10000,no,self,slavele,3,1794,,,,,
+1783,Galion@NPC_SUMMONSLAVE,idle,196,3,10000,2000,10000,no,self,slavele,3,1794,,,,,
+1784,Stapo@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
+1784,Stapo@SM_BASH,chase,5,5,500,0,5000,yes,target,always,0,,,,,,
+1784,Stapo@NPC_KEEPING,attack,201,1,2000,0,5000,yes,self,myhpltmaxrate,30,,,,,,
+1785,Atros@NPC_POWERUP,attack,349,5,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,
+1785,Atros@SM_MAGNUM,attack,7,20,1000,0,5000,yes,self,always,0,,,,,,
+1785,Atros@NPC_SUMMONSLAVE,attack,196,3,10000,2000,10000,no,self,slavele,2,1791,,,,,
+1785,Atros@NPC_SUMMONSLAVE,idle,196,3,10000,2000,10000,no,self,slavele,2,1791,,,,,
+1785,Atros@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1785,Atros@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1791,Galion@NPC_COMBOATTACK,attack,171,2,1000,0,5000,yes,target,always,0,,,,,,
+1791,Galion@NPC_COMBOATTACK,chase,171,2,1000,0,5000,yes,target,always,0,,,,,,
+1791,Galion@AS_SONICBLOW,attack,136,5,1000,0,5000,yes,target,always,0,,,,,,
+1791,Galion@AS_SONICBLOW,chase,136,5,1000,0,5000,yes,target,always,0,,,,,,
+//1791,Galion@NPC_CHANGE(I don't know which element)
 1793,Megalith@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,,,,,
+1794,Roween@NPC_COMBOATTACK,attack,171,4,1000,0,5000,yes,target,always,0,,,,,,
+1794,Roween@NPC_COMBOATTACK,chase,171,4,1000,0,5000,yes,target,always,0,,,,,,
+1794,Roween@NPC_WINDATTACK,attack,187,2,1000,0,5000,yes,target,always,0,,,,,,
+1794,Roween@NPC_WINDATTACK,chase,187,2,1000,0,5000,yes,target,always,0,,,,,,
 1795,Bloody Knight@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1795,Bloody Knight@CR_SHIELDCHARGE,attack,250,5,500,0,5000,yes,target,always,0,,,,,,9
 1795,Bloody Knight@KN_BRANDISHSPEAR,attack,57,5,500,1000,5000,no,target,always,0,,,,,,9

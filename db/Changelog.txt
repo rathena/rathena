@@ -25,7 +25,12 @@
 
 =========================
 07/23
-	* Completed the temporary Rachel + Ice Dungeon mob stats [Playtester]
+	* Added the skills of the Rachel + Ice Dungeon mobs [Playtester]
+	- I made it so that the monsters are safe to use
+	- the skills are official, but some skills are missing
+	- the stats are only 50% official
+	- drops are official, but various are missing
+ 	* Completed the temporary Rachel + Ice Dungeon mob stats [Playtester]
 07/22
 	* More Rachel mobs [Playtester]
 	* Raised the chance of Holden Card Combo dropping a stem [Playtester]
