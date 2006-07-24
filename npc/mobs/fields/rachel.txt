@@ -41,6 +41,7 @@ ra_fild04.gat,0,0,0,0	monster	Roween	1782,60,0,0,0
 ra_fild04.gat,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ra_fild04.gat,0,0,0,0	monster	Wild Rose	1261,10,0,0,0
 ra_fild04.gat,0,0,0,0	monster	Galion	1783,3,0,0,0
+ra_fild04.gat,0,0,0,0	monster	Atros	1785,1,7200000,3600000,1
 
 //==================================================
 // ra_fild05 - Rachel Field
@@ -107,4 +108,4 @@ ra_fild12.gat,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
 //==================================================
 ra_fild13.gat,0,0,0,0	monster	Stapo	1784,60,0,0,0
 ra_fild13.gat,0,0,0,0	monster	Drops	1113,40,0,0,0
-ra_fild13.gat,0,0,0,0	monster	Roween	1794,5,0,0,0
+ra_fild13.gat,0,0,0,0	monster	Roween	1782,5,0,0,0

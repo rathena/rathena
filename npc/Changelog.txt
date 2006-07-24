@@ -39,6 +39,8 @@ Playtester
 
 Date		Added
 ======
+07/24
+	* Added temporary Rachel spawn file, commented for now [Playtester]
 07/23
 	* Removed the regular Thanatos spawn, since the quest is now implemented. [MasterOfMuppets]
 	* Implemented the Niflheim town invasion. [MasterOfMuppets]
