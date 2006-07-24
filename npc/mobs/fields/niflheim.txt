@@ -48,7 +48,7 @@ nif_fild02.gat,62,327,15,15	monster	Bloody Murderer	1507,1,1200000,600000,0
 // niflheim - Niflheim, Realm of the Dead
 //==================================================
 niflheim.gat,0,0,0,0	monster	Quve	1508,20,300000,150000,0
-//niflheim.gat,0,0,0,0	monster	Lude	1509,20,300000,150000,0
+niflheim.gat,0,0,0,0	monster	Lude	1509,20,300000,150000,0
 niflheim.gat,0,0,0,0	monster	Hylozoist	1510,10,1200000,600000,0
 niflheim.gat,0,0,0,0	monster	Gibbet	1503,10,1200000,600000,0
 niflheim.gat,0,0,0,0	monster	Dullahan	1504,5,1800000,1200000,0
