@@ -25,6 +25,7 @@
 
 =========================
 07/24
+	* updated def on 2006 helms in preparation for the 2006 headgears quest. [Reddozen]
 	* Added flag 0x002 (no reiteration) to Deluge/Volcano/Violent Gale
 	  (skill_unit_db) [Skotlex]
 	* Edited Rachel mobs a little and added Beret to Turtle General drops [Playtester]
