@@ -40,6 +40,7 @@ Playtester
 Date		Added
 ======
 07/23
+	* Implemented the Niflheim town invasion. [MasterOfMuppets]
 	* Jawaii warp now costs 10,000z [Playtester]
 	* Implemented the sign quest, please test it if you have some free time :P [MasterOfMuppets]
 	- We need to know if there's any bugs left to implement it in stable
