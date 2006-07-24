@@ -2194,6 +2194,20 @@ static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
 			if(g_skillid != MG_SAFETYWALL && g_skillid != AL_PNEUMA)
 				return 0;
 			break;
+		//Cannot stack among themselves.
+		case SA_VOLCANO:
+		case SA_DELUGE:
+		case SA_VIOLENTGALE:
+			switch (g_skillid)
+			{
+				case SA_VOLCANO:
+				case SA_DELUGE:
+				case SA_VIOLENTGALE:
+					break;
+				default:
+					return 0;
+			}
+			break;
 		case AL_WARP:
 		case HT_SKIDTRAP:
 		case HT_LANDMINE:
@@ -5831,7 +5845,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			break;
 		}
 
-		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv,1))		/* 使用条件チェック */
+		if(sd && !skill_check_condition(sd,ud->skillid, ud->skilllv,1))
 			break;
 			
 		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv,1))	//[orn]
@@ -7683,7 +7697,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if(pc_isdead(tsd))
 		return 0;
 
-	if (tsd->sc.count && (tsd->sc.data[SC_SILENCE].timer != -1 || tsd->sc.data[SC_STUN].timer != -1))
+	if (tsd->sc.count && (tsd->sc.data[SC_SILENCE].timer != -1 || tsd->sc.opt1))
 		return 0;
 	
 	switch(skillid)

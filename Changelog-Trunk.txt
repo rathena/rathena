@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/24
+	* Added a check to prevent Deluge/Volcano/Violent Gale from being placed on
+	  top of each other. Reverted the previous 'fix' where atk was being
+	  increased based on armor element rather than element of attack. [Skotlex]
+	* Removed the noreturn mapflag check from script command warp. [Skotlex]
 	* Homuculus cleanup [DracoRPG]
 	  - Replaced nullpo's in parse functions by silent checks
 	  - Removed server-side effect for menu option 0 (view status window...
