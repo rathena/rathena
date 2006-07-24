@@ -3492,16 +3492,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_ABRACADABRA:
 		{
 			int abra_skillid = 0, abra_skilllv;
-			if (sd)
-			{ //Crash-fix [Skotlex]
-				//require 1 yellow gemstone even with mistress card or Into the Abyss
-				if ((i = pc_search_inventory(sd, 715)) < 0 )
-				{ //bug fixed by Lupus (item pos can be 0, too!)
-					clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
-				pc_delitem(sd, i, 1, 0);
-			}
 			do {
 				abra_skillid = rand() % MAX_SKILL_ABRA_DB;
 				if (
@@ -7847,7 +7837,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	struct status_change *sc;
 	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,ammo_qty,state,spiritball,mhp;
 	int index[10],itemid[10],amount[10];
-	int force_gem_flag = 0;
 	int delitem_flag = 1, checkitem_flag = 1;
 
 	nullpo_retr(0, sd);
@@ -8209,9 +8198,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		if(!sc || sc->data[SC_COMBO].timer == -1 || sc->data[SC_COMBO].val1 != skill)
 			return 0;
 		break;
-	case HW_GANBANTEIN:
-		force_gem_flag = 1;
-		break;
 	case AM_BERSERKPITCHER:
 	case AM_POTIONPITCHER:
 	case CR_SLIMPITCHER:
@@ -8485,11 +8471,19 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			index[i] = -1;
 			if(itemid[i] <= 0)
 				continue;
-			if(itemid[i] >= 715 && itemid[i] <= 717 && sd->special_state.no_gemstone && !force_gem_flag)
+			if(itemid[i] >= 715 && itemid[i] <= 717 && skill != HW_GANBANTEIN)
+			{
+				if (sd->special_state.no_gemstone)
+				{	//Make it substract 1 gem rather than skipping the cost.
+					if (--amount[i] < 1)
+						continue;
+				}
+				if(sc && sc->data[SC_INTOABYSS].timer != -1)
+					continue;
+			} else
+			if(itemid[i] == 1065 && sc && sc->data[SC_INTOABYSS].timer != -1)
 				continue;
-			if(((itemid[i] >= 715 && itemid[i] <= 717) || itemid[i] == 1065)
-				&& sc && sc->data[SC_INTOABYSS].timer != -1 && !force_gem_flag)
-				continue;
+
 			if((skill == AM_POTIONPITCHER ||
 				skill == CR_SLIMPITCHER ||
 				skill == CR_CULTIVATION) && i != x)
@@ -8503,9 +8497,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 					clif_skill_fail(sd,skill,0,0);
 				return 0;
 			}
-			if((itemid[i] >= 715 && itemid[i] <= 717) && sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
+			if(itemid[i] >= 715 && itemid[i] <= 717 && sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
 				index[i] = -1; //Gemstones are checked, but not substracted from inventory.
-				
 		}
 	}
 

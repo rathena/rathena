@@ -47,17 +47,17 @@ time_t curtime;
 //check if this item should be logged according the settings
 int should_log_item(int filter, int nameid, int amount) {
 	struct item_data *item_data;
-	if (nameid<501 || (item_data= itemdb_search(nameid)) == NULL) return 0;
-	if ( (filter&1) || // Filter = 1, we log any item
-		(filter&2 && item_data->type == 0 ) ||	//healing items
-		(filter&4 && (item_data->type == 3 || item_data->type == 10) ) ||	//etc+arrows
-		(filter&8 && (item_data->type == 2 || item_data->type == 11) ) ||	//usable
-		(filter&16 && item_data->type == 4 ) ||	//weapon
-		(filter&32 && item_data->type == 5 ) ||	//armor
-		(filter&64 && item_data->type == 6 ) ||	//cards
-		(filter&128 && (item_data->type == 7 || item_data->type == 8) ) ||	//eggs+pet access
+	if ((item_data= itemdb_exists(nameid)) == NULL) return 0;
+	if ((filter&1) || // Filter = 1, we log any item
+		(filter&2 && item_data->type == IT_HEALING ) ||
+		(filter&4 && (item_data->type == IT_ETC || item_data->type == IT_AMMO) ) ||
+		(filter&8 && item_data->type == IT_USABLE ) ||
+		(filter&16 && item_data->type == IT_WEAPON ) ||
+		(filter&32 && item_data->type == IT_ARMOR ) ||
+		(filter&64 && item_data->type == IT_CARD ) ||
+		(filter&128 && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) ||
 		(filter&256 && item_data->value_buy >= log_config.price_items_log ) ||		//expensive items
-		(filter&512 && amount >= log_config.amount_items_log ) ||			//big amount of items
+		(filter&512 && abs(amount) >= log_config.amount_items_log ) ||			//big amount of items
 		(filter&2048 && ((item_data->maxchance <= log_config.rare_items_log) || item_data->nameid == 714) ) //Rare items or Emperium
 	) return item_data->nameid;
 
