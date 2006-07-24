@@ -498,6 +498,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 				status_change_end(bl, SC_CLOSECONFINE, -1);
 			if (sc->data[SC_CLOSECONFINE2].timer != -1)
 				status_change_end(bl, SC_CLOSECONFINE2, -1);
+			if (sc->data[SC_BLADESTOP].timer != -1)
+				status_change_end(bl, SC_BLADESTOP, -1);
 		}
 	}
 	if (moveblock) map_delblock_sub(bl,0);
@@ -575,21 +577,20 @@ int map_count_oncell(int m, int x, int y, int type) {
 	bx = x/BLOCK_SIZE;
 	by = y/BLOCK_SIZE;
 
-	if (type == 0 || type != BL_MOB)
+	if (type&~BL_MOB)
 	{
 		bl = map[m].block[bx+by*map[m].bxs];
 		c = map[m].block_count[bx+by*map[m].bxs];
 		for(i=0;i<c && bl;i++,bl=bl->next)
-			if(bl->x == x && bl->y == y && bl->type == (type?type:BL_PC)) count++;
+			if(bl->x == x && bl->y == y && bl->type&type) count++;
 	}
 	
-	if (type == 0 || type == BL_MOB)
+	if (type&BL_MOB)
 	{
 		bl = map[m].block_mob[bx+by*map[m].bxs];
 		c = map[m].block_mob_count[bx+by*map[m].bxs];
-		for(i=0;i<c && bl;i++,bl=bl->next){
+		for(i=0;i<c && bl;i++,bl=bl->next)
 			if(bl->x == x && bl->y == y) count++;
-		}
 	}
 	return count;
 }

@@ -297,16 +297,6 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 	}
 	/* removed exp penalty on spawn [Valaris] */
 
-	if(type&2 && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE && battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
-		int zeny = (int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
-		if(zeny < 1) zeny = 1;
-		if (sd->status.zeny > zeny)
-			sd->status.zeny -= zeny;
-		else
-			sd->status.zeny = 0;
-		clif_updatestatus(sd,SP_ZENY);
-	}
-
 	return 0;
 }
 
@@ -4902,7 +4892,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if (battle_config.death_penalty_base > 0) {
 			switch (battle_config.death_penalty_type) {
 				case 1:
-					base_penalty += (unsigned int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
+					base_penalty = (unsigned int) ((double)pc_nextbaseexp(sd) * (double)battle_config.death_penalty_base/10000);
 				break;
 				case 2:
 					base_penalty = (unsigned int) ((double)sd->status.base_exp * (double)battle_config.death_penalty_base/10000);
@@ -4938,6 +4928,12 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 					sd->status.job_exp -= base_penalty;
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
+		}
+		if(battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty)
+	  	{
+			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
+			if(base_penalty)
+				pc_payzeny(sd, base_penalty);
 		}
 	}
 

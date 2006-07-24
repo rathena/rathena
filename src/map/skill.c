@@ -7053,7 +7053,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		
 		// GXは重なっていたら3HITしない
 		if ((skillid==CR_GRANDCROSS || skillid==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
-			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,0)-1);
+			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR)-1);
 	}
 	//Temporarily set magic power to have it take effect. [Skotlex]
 	if (sg->state.magic_power && sc && sc->data[SC_MAGICPOWER].timer == -1)
@@ -8582,14 +8582,16 @@ int skill_castfix_sc (struct block_list *bl, int time)
 {
 	struct status_change *sc = status_get_sc(bl);
 
-//	if (time <= 0) return 0; //Reports say that Suffragium should be consumed even on instant cast skills [Skotlex]
-	
 	if (sc && sc->count) {
 		if (sc->data[SC_SUFFRAGIUM].timer != -1) {
 			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);
 		}
-		if (sc->data[SC_MEMORIZE].timer != -1) {
+
+		if (time <= 0)
+			return 0; //Only Suffragium gets consumed even if time is 0
+	
+		if (sc->data[SC_MEMORIZE].timer != -1 && time > 0) {
 			time>>=1;
 			if ((--sc->data[SC_MEMORIZE].val2) <= 0)
 				status_change_end(bl, SC_MEMORIZE, -1);
