@@ -34,8 +34,6 @@
 #include "mercenary.h"
 #include "charsave.h"
 
-typedef char char32[32];
-
 static int dirx[8]={0,-1,-1,-1,0,1,1,1};	//[orn]
 static int diry[8]={1,1,0,-1,-1,-1,0,1};	//[orn]
 
@@ -44,11 +42,6 @@ static int diry[8]={1,1,0,-1,-1,-1,0,1};	//[orn]
 
 struct homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
-
-char32 merc_skillname[20] = {"NULL","HLIF_HEAL","HLIF_AVOID","HLIF_BRAIN","HLIF_CHANGE",
-							"HAMI_CASTLE","HAMI_DEFENCE","HAMI_SKIN","HAMI_BLOODLUST",
-							"HFLI_MOON","HFLI_FLEET","HFLI_SPEED","HFLI_SBR44",
-							"HVAN_CAPRICE","HVAN_CHAOTIC","HVAN_INSTRUCT","HVAN_EXPLOSION"};
 
 void merc_load_exptables(void);
 int mercskill_castend_id( int tid, unsigned int tick, int id,int data );
@@ -111,11 +104,6 @@ void merc_load_exptables(void)
 
 }
 
-char *merc_hom_skill_get_name(int id)
-{
-	return merc_skillname[id-HM_SKILLBASE];
-}
-
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
 	nullpo_retv(hd);
@@ -150,6 +138,7 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 int merc_hom_delete(struct homun_data *hd, int flag)
 {
 	nullpo_retr(0, hd);
+
 	// Delete homunculus
 	if ( flag&1 ) {	//sabbath
 		intif_homunculus_requestdelete(hd->master->homunculus.hom_id) ;
@@ -568,7 +557,6 @@ int merc_menu(struct map_session_data *sd,int menunum)
 	
 	switch(menunum) {
 		case 0:
-			merc_hom_food(sd, sd->hd);
 			break;
 		case 1:
 			merc_hom_food(sd, sd->hd);
@@ -585,7 +573,7 @@ int merc_menu(struct map_session_data *sd,int menunum)
 
 int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 {
-	int i, k, emotion;
+	int i, k, intimacy, emotion;
 
 	if(hd->master->homunculus.vaporize)
 		return 1 ;
@@ -599,27 +587,28 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	pc_delitem(sd,i,1,0);
 
 	if ( hd->master->homunculus.hunger >= 91 ) {
-		hd->master->homunculus.intimacy -= 50 ;
-		emotion = 16 ;
+		intimacy = -50;
+		emotion = 16;
 	} else if ( hd->master->homunculus.hunger >= 76 ) {
-		hd->master->homunculus.intimacy -= 30 ;
-		emotion = 19 ;
+		intimacy = -30;
+		emotion = 19;
 	} else if ( hd->master->homunculus.hunger >= 26 ) {
-		hd->master->homunculus.intimacy += 80 ;
-		emotion = 2 ;
+		intimacy = 80;
+		emotion = 2;
 	} else if ( hd->master->homunculus.hunger >= 11 ) {
-		hd->master->homunculus.intimacy += 100 ;
-		emotion = 2 ;
+		intimacy = 100;
+		emotion = 2;
 	} else {
-		hd->master->homunculus.intimacy += 50 ;
-		emotion = 2 ;
+		intimacy = 50;
+		emotion = 2;
 	}
+	hd->master->homunculus.intimacy += intimacy;
+	if(hd->master->homunculus.intimacy < 0)
+		hd->master->homunculus.intimacy = 0;
 	if(hd->master->homunculus.intimacy > 100000)
 		hd->master->homunculus.intimacy = 100000;
-	if(hd->master->homunculus.intimacy < 0)
-		hd->master->homunculus.intimacy = 0 ;
 
-	emotion = 5 ; // Thanks 
+	//emotion = 5 ; // FIXME: why the code above and now always set emotion to Thanks? 
 	hd->master->homunculus.hunger += 10;	//dunno increase value for each food
 	if(hd->master->homunculus.hunger > 100)
 		hd->master->homunculus.hunger = 100;
@@ -628,6 +617,13 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
 	clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
 	clif_hom_food(sd,hd->homunculusDB->foodID,1);
+
+	if(hd->master->homunculus.intimacy == 0) {
+		merc_stop_walking(hd, 1);
+		merc_stop_attack(hd);
+		clif_emotion(&hd->master->bl, 23) ;	//omg
+		merc_hom_delete(hd,1) ;
+	}
 
 	return 0;
 }
@@ -662,9 +658,11 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 	}  
 	if(hd->master->homunculus.hunger < 0) {
 		hd->master->homunculus.hunger = 0;
-		hd->master->homunculus.intimacy -= 100 ;
+		hd->master->homunculus.intimacy -= 100;
+		if(hd->master->homunculus.intimacy < 0)
+			hd->master->homunculus.intimacy = 0;
 		clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
-		if ( hd->master->homunculus.intimacy <= 0 ) {
+		if(hd->master->homunculus.intimacy == 0) {
 			merc_stop_walking(hd, 1);
 			merc_stop_attack(hd);
 			clif_emotion(&hd->master->bl, 23) ;	//omg

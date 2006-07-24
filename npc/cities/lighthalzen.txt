@@ -2042,7 +2042,7 @@ s_Yes:
 	mes "[Regenschirm Guard]";
 	mes "I'm sorry but I can't let";
 	mes "staff without proper autorization";
-	mes "pass. Only staff memebers with";
+	mes "pass. Only staff members with";
 	mes "Laboratory Passports are allowed";
 	mes "to enter the underground.";
 	close;

@@ -105,7 +105,7 @@ static const int packet_len_table[MAX_PACKET_DB] = {
 //#0x200
    26, -1,  26, 10, 18, 26, 11, 34,  14, 36, 10, 0,  0, -1, 32, 10, // 0x20c change to 0 (was 19)
    22,  0,  26, 26, 42, -1, -1,  2,   2,282,282,10, 10, -1, -1, 66,
-   10, -1,  -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 64, 5, 69,  5,
+   10, -1,  -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 64, 5, 71,  5,
    12, 26,   9, 11, -1, -1, 10,  2, 282, 11,  4, 36, -1,-1,  4,  2,
    -1, -1,  -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8,12,  4, 10,
     3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4
@@ -1463,11 +1463,8 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	
 	nullpo_retr(0, hd);
 
-//	if ( sd->hd ) 
-//		return 0 ;
-
 	status = &hd->battle_status;
-	memset(buf,0,71); //packet_len_table[0x22e]);
+	memset(buf,0,packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),sd->homunculus.name,NAME_LENGTH);
 	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
@@ -1476,7 +1473,7 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	WBUFW(buf,27)=sd->homunculus.level;
 	WBUFW(buf,29)=sd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->master->homunculus.intimacy / 100) ;
-	WBUFW(buf,33)=0;			// equip id
+	WBUFW(buf,33)=0; // equip id
 	WBUFW(buf,35)=status->rhw.atk2;
 	WBUFW(buf,37)=status->matk_max;
 	WBUFW(buf,39)=status->hit;
@@ -1492,17 +1489,14 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	WBUFL(buf,59)=sd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=sd->homunculus.skillpts;
-	WBUFW(buf,69)=1; //hd->attackable; FIXME: Attackable? When exactly is a homun not attackable? [Skotlex]
-	clif_send(buf,/*packet_len_table[0x22e]*/71,&sd->bl,SELF); 
+	WBUFW(buf,69)=1; // FIXME: Attackable? When exactly is a homun not attackable? [Skotlex]
+	clif_send(buf,packet_len_table[0x22e],&sd->bl,SELF);
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
 void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[orn]
 	int fd;
+
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
 
@@ -1515,7 +1509,7 @@ void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[or
 
 	return;
 }
-// like skillinfoblock, just for homunculi.
+
 int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 	int fd;
 	int i,j,c,len=4,id/*, inf2*/;
@@ -1570,38 +1564,37 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 	return;
 }
 
-// Request a Homunculus name change
 void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[orn]
-	RFIFOHEAD(fd);
+
 	nullpo_retv(sd);
-	nullpo_retv(sd->hd);
+
+	if(sd->hd == NULL)
+		return;
+
+	RFIFOHEAD(fd);
 	memcpy(sd->homunculus.name,RFIFOP(fd,2),24);
-	sd->homunculus.rename_flag = 1 ;
+	sd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,0);
 	clif_charnameack(sd->fd,&sd->hd->bl);
 }
 
-// Somebody who is less lazy than me rename this to ReturnToMaster or something
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
-	RFIFOHEAD(fd);
+
 	nullpo_retv(sd);
-	nullpo_retv(sd->hd);
 
-	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
-		return ;
+	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+		return;
 
-	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0); //move to master
+	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0);
 }
 
-// Request a Homunculus move-to-position
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	int x,y,cmd;
 
 	nullpo_retv(sd);
-	nullpo_retv(sd->hd);
 
-	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
-		return ;
+	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+		return;
 
 	cmd = RFIFOW(fd,0);
 	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
@@ -1612,18 +1605,17 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	unit_walktoxy(&(sd->hd->bl),x,y,0);
 }
 
-// Request the Homunculus attacking a bl
 void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
 	struct block_list *target;
-	nullpo_retv(sd);
-	nullpo_retv(sd->hd);
-	
-	target=map_id2bl(RFIFOL(fd,6));
-	
-	if ( sd->hd && target && ( status_isdead(&sd->hd->bl) || status_isdead(target) ) ) 
-		return ;
 
-	if(sd->hd->bl.id != RFIFOL(fd,2)) return;
+	nullpo_retv(sd);
+
+	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize || sd->hd->bl.id != RFIFOL(fd,2))
+		return;
+	
+	if ((target = map_id2bl(RFIFOL(fd,6))) == NULL || status_isdead(target)) 
+		return;
+
 	merc_stop_walking(sd->hd, 1);
 	merc_stop_attack(sd->hd);
 	if ( sd->hd && target ) {
@@ -1634,10 +1626,13 @@ void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
 
 void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
 	int cmd;
-	cmd = RFIFOW(fd,0);
+
 	RFIFOHEAD(fd);
-	if ( sd->hd && status_isdead(&sd->hd->bl) ) 
-		return ;
+	cmd = RFIFOW(fd,0);
+
+	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+		return;
+
 	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
 }
 
@@ -1653,27 +1648,6 @@ int clif_hom_food(struct map_session_data *sd,int foodid,int fail)	//[orn]
 	WFIFOB(fd,2)=fail;
 	WFIFOW(fd,3)=foodid;
 	WFIFOSET(fd,packet_len_table[0x22f]);
-
-	return 0;
-}
-
-/*==========================================
- * orn
- *------------------------------------------
- */
-int clif_hwalkok(struct homun_data *hd)
-{
-	int fd;
-
-	nullpo_retr(0, hd);
-
-	fd=hd->master->fd;
-	WFIFOHEAD(fd, packet_len_table[0x87]);
-	WFIFOW(fd,0)=0x87;
-	WFIFOL(fd,2)=gettick();
-	WFIFOPOS2(fd,6,hd->bl.x,hd->bl.y,hd->ud.to_x,hd->ud.to_y);
-	WFIFOB(fd,11)=0x88;
-	WFIFOSET(fd,packet_len_table[0x87]);
 
 	return 0;
 }
@@ -9678,7 +9652,8 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 {
 	int lv;
 
-	if (!hd) return;
+	if (!hd)
+		return;
 
 	if (skillnotok_hom(skillnum, hd))	//[orn]
 		return;

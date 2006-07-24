@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/24
+	* Homuculus cleanup [DracoRPG]
+	  - Replaced nullpo's in parse functions by silent checks
+	  - Removed server-side effect for menu option 0 (view status window...
+	    why does the client send us the packet since we don't care? -_-)
+	  - Rewrote intimacy underflow checks so they are really effective (no
+	    need to check if an unsigned is < 0, it won't work... check before!)
 	* fixed unban unblocking players as well. [Skotlex]
 	* Fixed Volcano/Deluge/Violent Gale increasing damage based on element of
 	  attack instead of defense element of attacker. [Skotlex]
