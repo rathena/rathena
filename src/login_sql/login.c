@@ -1429,14 +1429,14 @@ int parse_fromchar(int fd){
 // Test to know if an IP come from LAN or WAN.
 // Rewrote: Adnvanced subnet check [LuzZza]
 //--------------------------------------------
-int lan_subnetcheck(long *p) {
+int lan_subnetcheck(long p) {
 
 	int i;
-	unsigned char *sbn, *msk, *src = (unsigned char *)p;
+	unsigned char *sbn, *msk, *src = (unsigned char *)&p;
 
 	for(i=0; i<subnet_count; i++) {
 
-		if(subnet[i].subnet == (*p & subnet[i].mask)) {
+		if(subnet[i].subnet == (p & subnet[i].mask)) {
 
 			sbn = (unsigned char *)&subnet[i].subnet;
 			msk = (unsigned char *)&subnet[i].mask;
@@ -1509,6 +1509,9 @@ int parse_login(int fd) {
 
 	int result, i;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	//Since we can't cast a structure to a long, we take the base address as
+	//a pointer and cast it (somehow... this seems so wrong to do)
+	unsigned long ipl = *((unsigned long *) &session[fd]->client_addr.sin_addr); 
 	char ip[16];
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
@@ -1524,7 +1527,7 @@ int parse_login(int fd) {
 	}
 
 	while(RFIFOREST(fd)>=2 && !session[fd]->eof){
-		ShowDebug("parse_login : %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
+//		ShowDebug("parse_login : %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
 
 		switch(RFIFOW(fd,0)){
 		case 0x200:		// New alive packet: structure: 0x200 <account.userid>.24B. used to verify if client is always alive.
@@ -1596,7 +1599,7 @@ int parse_login(int fd) {
 				} else {
 
 					if (p[0] != 127 && log_login) {
-						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','100', 'login ok')", loginlog_db, *((ulong *)p), t_uid);
+						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ntohl(ipl), t_uid);
 						//query
 						if(mysql_query(&mysql_handle, tmpsql)) {
 							ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1611,7 +1614,7 @@ int parse_login(int fd) {
 					for(i = 0; i < MAX_SERVERS; i++) {
 						if (server_fd[i] >= 0) {
 							// Advanced subnet check [LuzZza]
-							if((subnet_char_ip = lan_subnetcheck((long *)p)))
+							if((subnet_char_ip = lan_subnetcheck(ipl)))
 								WFIFOL(fd,47+server_num*32) = subnet_char_ip;
 							else
 								WFIFOL(fd,47+server_num*32) = server[i].ip;
@@ -1654,7 +1657,7 @@ int parse_login(int fd) {
 				char error[64];
 				if (log_login)
 				{
-					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %%s')", loginlog_db, *((ulong *)p), t_uid, result);
+					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %%s')", loginlog_db, ntohl(ipl), t_uid, result);
 					switch((result + 1)) {
 					case -2:	//-3 = Account Banned
 						sprintf(tmpsql,tmp_sql,"Account banned.");
@@ -1843,7 +1846,7 @@ int parse_login(int fd) {
 				unsigned char* server_name;
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, *((ulong *)p), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, ntohl(ipl), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
