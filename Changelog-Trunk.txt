@@ -3,6 +3,18 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/07/24
+	* fixed unban unblocking players as well. [Skotlex]
+	* Fixed Volcano/Deluge/Violent Gale increasing damage based on element of
+	  attack instead of defense element of attacker. [Skotlex]
+	* Cleaned up the code of Magic Rod, fixed it not giving SP. [Skotlex]
+	* Moved the code of Hermod and Basilica to castend_pos2 so it should work
+	  now. [Skotlex]
+	* Modified the code of Ankle Snare so the status ends on unit's time-limit
+	  rather than when the snared object moves away. [Skotlex]
+	* Re-worded the water check of ST_WATER skills. [Skotlex]
+	* Allowed sc-cast reductions to be processed even when cast-time is instant
+	  (to let suffragium end even on instant-cast skills) [Skotlex]
 2006/07/23
 	* Modified setting skillrange_by_weapon (skill.conf) to be a
 	  per-object-type setting instead of yes/no. The default now is that

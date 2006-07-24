@@ -1856,22 +1856,18 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	
 		if(sc && sc->data[SC_MAGICROD].timer != -1 && src == dsrc) {
+			struct unit_data *ud;
+			int sp = skill_get_sp(skillid,skilllv);
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
-			if(tsd) {
-				int sp = skill_get_sp(skillid,skilllv);
-				sp = sp * sc->data[SC_MAGICROD].val2 / 100;
-				if(skillid == WZ_WATERBALL && skilllv > 1)
-					sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
-				if(sp > SHRT_MAX) sp = SHRT_MAX;
-				else if(sp < 1) sp = 1;
-				if(sp > tsd->status.max_sp - tsd->status.sp)
-					sp = tsd->status.max_sp - tsd->status.sp;
-				tsd->status.sp += sp;
-				clif_heal(tsd->fd,SP_SP,sp);
-				tsd->ud.canact_tick = tick + skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
-			}
+			sp = sp * sc->data[SC_MAGICROD].val2 / 100;
+			if(skillid == WZ_WATERBALL && skilllv > 1)
+				sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
+			status_heal(bl, 0, sp, 2);
 			clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1);
+			ud = unit_bl2ud(bl);
+			if (ud) ud->canact_tick = tick
+				+ skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
 		}
 	}
 
@@ -4248,24 +4244,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_fail(sd,skillid,0,0);
 		break;
 
-	case HP_BASILICA:			/* バジリカ */
-	case CG_HERMODE:			// Wand of Hermode
-		{
-			struct skill_unit_group *sg;
-			unit_stop_walking(src,1);
-			skill_clear_unitgroup(src);
-			sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
-			if(skillid == CG_HERMODE)
-				i = sc_start4(src,SC_DANCING,100,
-						skillid,0,0,sg->group_id,skill_get_time(skillid,skilllv));
-			else
-				i = sc_start4(src,type,100,
-						skilllv,0,BCT_SELF,sg->group_id,
-						skill_get_time(skillid,skilllv));
-			clif_skill_nodamage(src,bl,skillid,skilllv,i);
-		}
-		break;
-
 	case BD_ADAPTATION:			/* アドリブ */
 		if(tsc && tsc->data[SC_DANCING].timer!=-1){
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5119,11 +5097,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 							map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 						}
 					}
-				}
-				if(su->group->unit_id == UNT_ANKLESNARE && su->group->val2){
-					struct block_list *target=map_id2bl(su->group->val2);
-					if(target)
-						status_change_end(target,SC_ANKLE,-1);
 				}
 				skill_delunit(su);
 			}
@@ -6158,7 +6131,21 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		flag|=1;
 		break;
-
+	case HP_BASILICA:
+		skill_clear_unitgroup(src);
+		sg = skill_unitsetting(src,skillid,skilllv,x,y,0);
+		sc_start4(src,type,100,
+			skilllv,0,BCT_SELF,sg->group_id,
+			skill_get_time(skillid,skilllv));
+		flag|=1;
+		break;
+	case CG_HERMODE:
+		skill_clear_unitgroup(src);
+		sg = skill_unitsetting(src,skillid,skilllv,x,y,0);
+		sc_start4(src,SC_DANCING,100,
+			skillid,0,0,sg->group_id,skill_get_time(skillid,skilllv));
+		flag|=1;
+		break;
 	case RG_CLEANER: // [Valaris]
 		i = skill_get_splash(skillid, skilllv);
 		map_foreachinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL);
@@ -6337,6 +6324,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
 		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
 		break;
+
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
@@ -7409,18 +7397,6 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 		if (sc && sc->data[type].timer!=-1)
 			status_change_end(bl,type,-1);
 		break;
-	case UNT_ANKLESNARE:
-	{
-		struct block_list *target = map_id2bl(sg->val2);
-		if(target && target == bl){
-			status_change_end(bl,SC_ANKLE,-1);
-			sg->limit=DIFF_TICK(tick,sg->tick)+1000;
-			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
-		}
-		else
-			return 0;
-		break;
-	}
 	case UNT_BASILICA: //Clear basilica if the owner moved [Skotlex]
 	case UNT_HERMODE:	//Clear Hermode if the owner moved.
 		if (sc && sc->data[type].timer!=-1 && sc->data[type].val3 == BCT_SELF && sc->data[type].val4 == sg->group_id)
@@ -7602,6 +7578,13 @@ int skill_unit_onlimit (struct skill_unit *src, unsigned int tick)
 				if (sd && !map[sd->bl.m].flag.nowarp)
 					pc_setpos(sd,map[src->bl.m].index,src->bl.x,src->bl.y,3);
 			}
+		}
+		break;
+	case UNT_ANKLESNARE:
+		{
+			struct block_list *target = map_id2bl(sg->val2);
+			if(target)
+				status_change_end(target,SC_ANKLE,-1);
 		}
 		break;
 	}
@@ -8474,14 +8457,12 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case ST_WATER:
-		if (
-			(!sc || (sc->data[SC_DELUGE].timer == -1 && sc->data[SC_SUITON].timer == -1)) &&
-			(!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER))
-		) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
+		if (sc && (sc->data[SC_DELUGE].timer != -1 || sc->data[SC_SUITON].timer != -1))
+			break;
+		if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER))
+			break;
+		clif_skill_fail(sd,skill,0,0);
+		return 0;
 	}
 
 	if (checkitem_flag) {
@@ -8587,7 +8568,7 @@ int skill_castfix_sc (struct block_list *bl, int time)
 {
 	struct status_change *sc = status_get_sc(bl);
 
-	if (time <= 0) return 0;
+//	if (time <= 0) return 0; //Reports say that Suffragium should be consumed even on instant cast skills [Skotlex]
 	
 	if (sc && sc->count) {
 		if (sc->data[SC_SUFFRAGIUM].timer != -1) {

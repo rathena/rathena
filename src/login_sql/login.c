@@ -1319,7 +1319,7 @@ int parse_fromchar(int fd){
 					sql_row = mysql_fetch_row(sql_res);	//row fetching
 				}
 				if (atol(sql_row[0]) != 0) {
-					sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0', `state`='0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
+					sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));

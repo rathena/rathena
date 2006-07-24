@@ -24,6 +24,8 @@
 	-----
 
 =========================
+07/24
+	* Changed Land Protector's range back to 3. [Skotlex]
 07/23
 	* Added some new items thanks to Haplo [Playtester]
 	* Added Holy Quiver to IG_Quiver [Playtester]
