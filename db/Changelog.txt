@@ -1,21 +1,16 @@
 ========================= Items that need fixing/implementing
 
-	2116 Angelic Guard:	Reduce 5% damage from Demon Monsters. (Not Fish :/ )
-	2417 Freyr's Shoes:	Increase heal value of Red, Orange, Yellow and White Potion by 20%.
-				If the owner is equipped with the armor set, it adds Agi+ 3, MHP/MSP + 5%.
-	2418 Vidar's Boots:	Adds VIT +5, Increase HP/SP Recovery speed by 10% if the owner is equipped with the armor set.
-	2515 Eagle Wing:	Increase Movement Speed if the owner is equipped with Wing Staff at the same time.
-	5126 Morpheus's Hood:	Magic spells cannot be dispelled.
+	5126 Morpheus's Hood:	Magic spells cannot be dispelled!?
 
 	2653 Sacrifice Ring:		NO INFO. Item not implemented....
 				[Vicious] On your death it breaks (BS can fix it), you drop all Equipment (equipped, even the ring).
 					  And revive with 1 HP / 1 SP at the place of your death.
 				[Komurka] From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP.
 				[Poki#3]  Theres no official desc! <.< Although you might wanna make it a custom item or something...
-	1475 Cavalry Lance:		NO INFO. Item not implemented...
-	1475 Equestrian's Spear:	NO INFO. Item not implemented...
-	13005 Angelic Wing Dagger:	NO INFO. Item not implemented...
-	1308 Golden Axe:		NO INFO. Item not implemented...
+	1475 Cavalry Lance:		NEED INFO.
+	1475 Equestrian's Spear:	NEED INFO.
+	13005 Angelic Wing Dagger:	NEED INFO.
+	1308 Golden Axe:		NEED INFO.
 	13160, 13161 Destroyer:	Can break target's armor when fired at close range.
 	-----
 	4296 Cramp Card:	Temp Plug: 10z per mob-level on a 3% chance.
