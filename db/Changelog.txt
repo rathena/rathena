@@ -20,6 +20,7 @@
 
 =========================
 07/25
+	* Fixed a bug in the item_db thanks to Toms [Playtester]
 	* Fixed G_Kraben and G_Biolab3 mobs [Playtester]
 	* Item updates by Haplo [Playtester]
 07/24

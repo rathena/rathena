@@ -88,9 +88,9 @@
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 585,Brusti,Brusti,0,15,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; },{},{}
 586,Mother's_Cake,Mother's Cake,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,404),0; },{},{}
-587,Red_Thorn_Fruit,Red Thorn Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(35,49),rand(10,19); },{},{}
-588,Spaghetti,Spaghetti,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(45,64),0; },{},{}
-589,Pizza,Pizza,0,,10,150,,,,,0xFFFFFFFF,7,2,,,,,{ itemheal rand(45,64),0; },{},{}
+587,Red_Thorn_Fruit,Red Thorn Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(35,49),rand(10,19); },{},{}
+588,Spaghetti,Spaghetti,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
+589,Pizza,Pizza,0,,10,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 // Usable Items
 //===================================================================
 601,Fly_Wing,Fly Wing,2,60,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
