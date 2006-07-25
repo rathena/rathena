@@ -39,6 +39,9 @@ Playtester
 
 Date		Added
 ======
+07/25
+	* Updated Thanatos Tower spawns [Playtester]
+	- they are official up to Floor 6 now
 07/24
 	* Tiny typo fix in a Rekenber Guard dialog [DracoRPG]
 	* Added temporary Rachel spawn file, commented for now [Playtester]
