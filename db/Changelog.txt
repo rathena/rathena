@@ -20,6 +20,7 @@
 
 =========================
 07/25
+	* Fixed G_Kraben and G_Biolab3 mobs [Playtester]
 	* Item updates by Haplo [Playtester]
 07/24
 	* Raised drop rate of cook books and sets a little [Playtester]
