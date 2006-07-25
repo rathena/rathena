@@ -1135,15 +1135,15 @@ int duel_accept(
 {
 	char output[256];
 	
-	// " -> Player %s has accepted duel --"
-	sprintf(output, msg_txt(376), (unsigned char *)sd->status.name);
-	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
-	
 	duel_list[did].members_count++;
 	sd->duel_group = sd->duel_invite;
 	duel_list[did].invites_count--;
 	sd->duel_invite = 0;
 	
+	// " -> Player %s has accepted duel --"
+	sprintf(output, msg_txt(376), (unsigned char *)sd->status.name);
+	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
+
 	clif_set0199(sd->fd, 1);
 	//clif_misceffect2(&sd->bl, 159);
 	return 0;
