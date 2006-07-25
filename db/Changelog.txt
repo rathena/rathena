@@ -20,6 +20,7 @@
 
 =========================
 07/25
+	* Added some NPC_Emotions for the Rachel mobs [Playtester]
 	* Fixed Grandcross not being self-targeted for mobs [Playtester]
 	* Final cooking drop rate adjustment [Playtester]
 	* Fixed a bug in the item_db thanks to Toms [Playtester]
