@@ -36,19 +36,19 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 {
 	if(signquest < 1)set signquest,1;
 	cutin "sign_01",4;
-	mes "^3151FFNext";
+	mes "^3355FFNext";
 	next;
 	cutin "",255;	
 	cutin "sign_02",4;
-	mes "^3151FFNext";
+	mes "^3355FFNext";
 	next;
 	cutin "",255;	
 	cutin "sign_03",4;
-	mes "^3151FFNext";
+	mes "^3355FFNext";
 	next;
 	cutin "",255;		
 	cutin "sign_04",4;
-	mes "^3151FFClose";
+	mes "^3355FFClose";
 	close2;
 	cutin "",255;
 	end;
@@ -56,12 +56,12 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 	else
 {
 	if(signquest < 1)set signquest,1;
-	mes "^3151FFTo the talented and";
+	mes "^3355FFTo the talented and";
 	mes "experienced adventurers who";
 	mes "have dreams of achieving true";
 	mes "greatness...";
 	next;
-	mes "^3151FFI present a once in a";
+	mes "^3355FFI present a once in a";
 	mes "lifetime opportunity to the one";
 	mes "who proves most worthy. You must";
 	mes "have the courage to risk peril,";
@@ -69,7 +69,7 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 	mes "action and the strength to be";
 	mes "victorious in combat.";
 	next;
-	mes "^3151FFThe way will be fraught";
+	mes "^3355FFThe way will be fraught";
 	mes "with danger and only the most";
 	mes "adept adventurers may have a";
 	mes "chance of surviving. But if we";
@@ -77,7 +77,7 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 	mes "good name that power beyond";
 	mes "imagining will become yours.";
 	next;
-	mes "^3151FFThose of you who are interested,";
+	mes "^3355FFThose of you who are interested,";
 	mes "come to me and I will test";
 	mes "your abilities. The one who";
 	mes "can manage to pass this testing";
@@ -85,7 +85,7 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 	mes "me prove a forgotten legend";
 	mes "and uncover a long lost power";
 	next;
-	mes "^3151FFI shall be waiting.";
+	mes "^3355FFI shall be waiting.";
 	mes "";
 	mes "^000000-Metz Brayde";
 	close;
@@ -1382,7 +1382,7 @@ payon_in03.gat,11,31,4	script	Daewoon	808,{
 	mes "But first, would you";
 	mes "take a look at this?";
 	next;
-	mes "^3151FFYou carefully take";
+	mes "^3355FFYou carefully take";
 	mes "out the small, lucid";
 	mes "jewel that Arian gave";
 	mes "you and reveal it to";
@@ -2211,7 +2211,7 @@ else {
 	mes "Excuse me...";
 	next;
 	emotion e_omg;
-	mes "^3151FF*Clink*";
+	mes "^3355FF*Clink*";
 	next;
 	mes "[Sir Jore]";
 	mes "...";
@@ -2331,7 +2331,7 @@ s_Daewoon:
 }
 	else
 {
-	mes "^3151FFYou find a tense man";
+	mes "^3355FFYou find a tense man";
 	mes "holding test tubes between";
 	mes "his fingers, standing in a pile";
 	mes "of books. He seems to be in";
@@ -2339,7 +2339,7 @@ s_Daewoon:
 	next;
 	menu "Speak to him.",s_Speak,"Ignore him.",-;
 
-	mes "^3151FFYou decided to leave";
+	mes "^3355FFYou decided to leave";
 	mes "him alone and let him";
 	mes "continue mumbling to";
 	mes "himself and playing";
@@ -2354,13 +2354,13 @@ s_Speak:
 	mes "...";
 	mes "......";
 	next;
-	mes "^3151FFToo preoccupied with";
+	mes "^3355FFToo preoccupied with";
 	mes "his thoughts, this strange";
 	mes "man is unable to hear you.";
 	next;
 	menu "Try again.",s_Again,"Ignore him.",-;
 
-	mes "^3151FFYou decided to leave";
+	mes "^3355FFYou decided to leave";
 	mes "him alone and let him";
 	mes "continue mumbling to";
 	mes "himself and playing";
@@ -2405,7 +2405,7 @@ else
 
 prt_maze02.gat,57,152,1	script	Girl	91,{
 
-	mes "^3151FFYou catch a glimpse";
+	mes "^3355FFYou catch a glimpse";
 	mes "of a girl headin directly";
 	mes "into a deep forest. You decide";
 	if(signquest != 7)goto s_No;
@@ -6366,7 +6366,7 @@ L_FirstTouch:
 	mes "What's happening?!";
 	next;
 	specialeffect2 9;
-	mes "^3151FFFor some reason, in";
+	mes "^3355FFFor some reason, in";
 	mes "this particular spot, the";
 	mes "Sobbing Starlight is reacting";
 	mes "wit the Resin, Stone Hearts";
@@ -7248,7 +7248,7 @@ L_Noworry:
 	close;
 
 L_Memory:
-	mes "^3151FFThis is only";
+	mes "^3355FFThis is only";
 	mes "a lingering trace";
 	mes "of Serin, a manifestation";
 	mes "of her definitive memory.";
@@ -7323,7 +7323,7 @@ L_BranchB:
 	mes "Please follow me";
 	mes "......";
 	close2;
-	if(($signroom2full > 1) || getareausers("que_sign01.gat",229,77,166,12) > 0) goto L_Full;
+	if(($signroom2full > 1) || getareausers("que_sign01.gat",229,77,166,12) > 0) end;
 	donpcevent "#signserin2::OnSerin";
 	donpcevent "#signserin2::OnCooldown";
 	set $signroom2full,2;
@@ -7353,6 +7353,14 @@ L_Advice:
 	mes "and you might understand...";
 	mes "Yes... You should meet him.";
 	if(!Sign_Branch2B) set Sign_Branch2B,1;
+	close;
+
+L_Full:
+	mes "[Serin]";
+	mes "Please wait";
+	mes "a bit. I'm still";
+	mes "trying to finish";
+	mes "these preparations.";
 	close;
 
 }
@@ -8458,6 +8466,7 @@ L_NoRing:
 	mes "Good luck,";
 	mes "" + strcharinfo(0) + "...";
 	close2;
+	if(($signroomfull > 1) || getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) end;
 	donpcevent "#signserin::OnSerin";
 	donpcevent "#signserin::OnCooldown";
 	set $signroomfull,2;
@@ -8597,7 +8606,7 @@ gl_dun02.gat,262,265,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 1) || (brokenseal == 2 && Sign_Seal2 == 1) || (brokenseal == 3 && Sign_Seal3 == 1) || (brokenseal == 4 && Sign_Seal4 == 1))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8606,7 +8615,7 @@ gl_dun02.gat,262,265,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8621,7 +8630,7 @@ gl_dun02.gat,270,98,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 2) || (brokenseal == 2 && Sign_Seal2 == 2) || (brokenseal == 3 && Sign_Seal3 == 2) || (brokenseal == 4 && Sign_Seal4 == 2))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8630,7 +8639,7 @@ gl_dun02.gat,270,98,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8645,7 +8654,7 @@ gl_dun02.gat,268,31,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 3) || (brokenseal == 2 && Sign_Seal2 == 3) || (brokenseal == 3 && Sign_Seal3 == 3) || (brokenseal == 4 && Sign_Seal4 == 3))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8654,7 +8663,7 @@ gl_dun02.gat,268,31,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8669,7 +8678,7 @@ gl_dun02.gat,139,72,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 4) || (brokenseal == 2 && Sign_Seal2 == 4) || (brokenseal == 3 && Sign_Seal3 == 4) || (brokenseal == 4 && Sign_Seal4 == 4))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8678,7 +8687,7 @@ gl_dun02.gat,139,72,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8693,7 +8702,7 @@ gl_dun02.gat,16,26,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 5) || (brokenseal == 2 && Sign_Seal2 == 5) || (brokenseal == 3 && Sign_Seal3 == 5) || (brokenseal == 4 && Sign_Seal4 == 5))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8702,7 +8711,7 @@ gl_dun02.gat,16,26,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8717,7 +8726,7 @@ gl_dun02.gat,120,180,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 6) || (brokenseal == 2 && Sign_Seal2 == 6) || (brokenseal == 3 && Sign_Seal3 == 6) || (brokenseal == 4 && Sign_Seal4 == 6))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8726,7 +8735,7 @@ gl_dun02.gat,120,180,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8741,7 +8750,7 @@ gl_dun02.gat,42,251,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 7) || (brokenseal == 2 && Sign_Seal2 == 7) || (brokenseal == 3 && Sign_Seal3 == 7) || (brokenseal == 4 && Sign_Seal4 == 7))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8750,7 +8759,7 @@ gl_dun02.gat,42,251,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8765,7 +8774,7 @@ gl_dun02.gat,124,231,1	script	Mysterious Energy	111,{
 	if((brokenseal == 1 && Sign_Seal1 == 8) || (brokenseal == 2 && Sign_Seal2 == 8) || (brokenseal == 3 && Sign_Seal3 == 8) || (brokenseal == 4 && Sign_Seal4 == 8))
 {
 		callfunc "Break_Seal";
-		mes "^3151FFThe weapon you're holding";
+		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has";
 		mes "any chance of breaking this seal.";
 		mes "You'll definitely need something";
@@ -8774,7 +8783,7 @@ gl_dun02.gat,124,231,1	script	Mysterious Energy	111,{
 }
 	else
 {
-	mes "^3151FFYou sense a strange";
+	mes "^3355FFYou sense a strange";
 	mes "mysterious energy emanating from";
 	mes "this area. For some reason, this";
 	mes "power strikes you with a faint";
@@ -8799,7 +8808,7 @@ L_Check:
 L_Break:
 	set @sealbreak,rand(100);
 	if(@sealbreak < 11) goto L_Broken;
-	mes "^3151FFYou hit the seal as hard";
+	mes "^3355FFYou hit the seal as hard";
 	mes "as you can with the weapon in your";
 	mes "hand. However, the seal is merely";
 	mes "shaken by the force of your blow.";
@@ -8808,7 +8817,7 @@ L_Break:
 	close;
 
 L_Broken:
-	mes "^3151FFOnce you strike the seal,";
+	mes "^3355FFOnce you strike the seal,";
 	mes "it cracks open and a flash of";
 	mes "mysterious light floods out of it.";
 	mes "Inside of the seal, you find a very";
@@ -8824,13 +8833,13 @@ L_Broken:
 	close;
 
 L_Soul:
-	mes "^3151FFUpon obtaining the last piece";
+	mes "^3355FFUpon obtaining the last piece";
 	mes "of Angrboda's soul, all four soul";
 	mes "pieces emitted a strange light,";
 	mes "rose to the air and combined into";
 	mes "a single transparent jewel.";
 	next;
-	mes "^3151FFThe jewel floated";
+	mes "^3355FFThe jewel floated";
 	mes "down to your waiting";
 	mes "hands, and you hear its";
 	mes "voice speak directly into";
@@ -8851,7 +8860,7 @@ L_Soul:
 
 que_sign01.gat,46,55,1	script	Fountain	111,{
 	if(signquest > 54) goto L_Bottle;
-	mes "^3151FFThe water in this";
+	mes "^3355FFThe water in this";
 	mes "fountain looks clean";
 	mes "enough to drink...";
 	next;
@@ -8866,7 +8875,7 @@ L_No:
 	close;
 
 L_Bottle:
-	mes "^3151FFThe water in this";
+	mes "^3355FFThe water in this";
 	mes "fountain looks clean";
 	mes "enough to be bottled...";
 	next;
@@ -8877,7 +8886,7 @@ L_Bottle:
 	close;
 
 L_Nobottle:
-	mes "^3151FFUnfortunately, it";
+	mes "^3355FFUnfortunately, it";
 	mes "looks like you don't";
 	mes "have any Empty Bottles";
 	mes "to carry any of this water...";
@@ -8929,7 +8938,7 @@ que_sign01.gat,45,227,5	script	Queen of the Dead	856,{
 	mes "water from the fountain";
 	mes "in my mansion, brave hero.";
 	next;
-	mes "^3151FFYou received";
+	mes "^3355FFYou received";
 	mes "the Symbol of the Nine Realms.";
 	delitem 7307,1;
 	getitem 7305,1;
@@ -9355,7 +9364,7 @@ L_NoWord:
 	close;
 
 L_Done:
-	mes "^3151FFYou helped the";
+	mes "^3355FFYou helped the";
 	mes "unconscious Serin";
 	mes "and returned to Niflheim.";
 	close2;
@@ -9570,7 +9579,7 @@ L_NoWord:
 	close;
 
 L_Done:
-	mes "^3151FFYou helped the";
+	mes "^3355FFYou helped the";
 	mes "unconscious Serin";
 	mes "and returned to Niflheim.";
 	close2;

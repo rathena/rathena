@@ -40,6 +40,7 @@ Playtester
 Date		Added
 ======
 07/25
+	* Some small fixes to the sign quest [MasterOfMuppets]
 	* Updated Thanatos Tower spawns [Playtester]
 	- they are official up to Floor 6 now
 07/24
