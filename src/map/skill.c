@@ -9320,21 +9320,24 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 		return 1;
 	}	
 
-	if (skill_get_type(unit->group->skill_id) != BF_MAGIC)
-		return 0; //Only blocks out magical skills.
-	
-	if (skillid == SA_LANDPROTECTOR || skillid == HW_GANBANTEIN ) {
+	if((skillid == SA_LANDPROTECTOR || skillid == HW_GANBANTEIN) &&
+		skill_get_type(unit->group->skill_id) == BF_MAGIC)
+	{	//Delete Magical effects
 		skill_delunit(unit);
-	} else
-	if (unit->group->skill_id == SA_LANDPROTECTOR) {
+		return 1;
+	}
+	if (unit->group->skill_id == SA_LANDPROTECTOR &&
+		skill_get_type(skillid) == BF_MAGIC)
+	{	//Magic tile won't be activated
 		(*alive) = 0;
-	} else
-	if (skillid == HP_BASILICA && unit->group->skill_id == HP_BASILICA) {
-		//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
+		return 1;
+	}
+	if (skillid == HP_BASILICA && unit->group->skill_id == HP_BASILICA)
+	{	//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
 		(*alive) = 0;
-	} else
-		return 0;
-	return 1;
+		return 1;
+	}
+	return 0;
 }
 
 /*==========================================

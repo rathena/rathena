@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/24
+	* Cleaned up the skill_landprotector function to correctly block only magic
+	  skills from being placed on land protectors. [Skotlex]
+	* Corrected itemdb_group so that it will not return the random item givers
+	  (should give priority to actual item groups, so that the item heal bonuses
+	  work correctly) [Skotlex]
 	* Cleaned up the Mistress Card related code so that the no-gemstone bonus
 	  reduces item requirements by one rather than totally skip them. [Skotlex]
 	* Cleaned up the logs "can log"function to use the IT constants. Also
