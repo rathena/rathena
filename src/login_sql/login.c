@@ -1768,7 +1768,7 @@ int parse_login(int fd) {
 				} //End login log of error.
 				if ((result == 1) && (dynamic_pass_failure_ban != 0) && log_login){	// failed password
 					sprintf(tmpsql,"SELECT count(*) FROM `%s` WHERE `ip` = '%lu' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-						loginlog_db,*((ulong *)p), dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
+						loginlog_db,ntohl(ipl), dynamic_pass_failure_ban_time);	//how many times filed account? in one ip.
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);

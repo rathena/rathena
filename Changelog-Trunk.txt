@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/25
+	* Added a missing ntohl call in the loginlog code. [Skotlex]
 	* Added a check when buying from npcs to allow buying of item_avail items.
 	  [Skotlex]
 	* Fixed duel accept invite sending the packet before the duel data is set
