@@ -11464,7 +11464,7 @@ void run_script_main(struct script_state *st)
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	struct script_stack *stack=st->stack;
-	TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
+	TBL_PC *sd = map_id2sd(st->rid);
 	struct script_state *bk_st = NULL;
 	int bk_npcid = 0;
 
@@ -11480,12 +11480,11 @@ void run_script_main(struct script_state *st)
 	if(st->state == RERUNLINE) {
 		st->state = RUN;
 		run_func(st);
-		if(st->state == GOTO){
+		if(st->state == GOTO)
 			st->state = RUN;
-		}
-	} else if(st->state != END){
+	} else if(st->state != END)
 		st->state = RUN;
-	}
+
 	while( st->state == RUN) {
 		c= get_com((unsigned char *) st->script->script_buf,&st->pos);
 		switch(c){
@@ -11522,7 +11521,7 @@ void run_script_main(struct script_state *st)
 			run_func(st);
 			if(st->state==GOTO){
 				// rerun_pos=st->pos;
-				st->state=0;
+				st->state=RUN;
 				if( gotocount>0 && (--gotocount)<=0 ){
 					ShowError("run_script: infinity loop !\n");
 					st->state=END;
@@ -11587,15 +11586,24 @@ void run_script_main(struct script_state *st)
 						sd->state.using_fake_npc = 0;
 					}
 					npc_event_dequeue(sd);
+					//Restore previous script if any.
+					sd->st = bk_st;
+					sd->npc_id = bk_npcid;
+					bk_st = NULL; //Remove tag for removal.
+					if (sd->state.reg_dirty&2)
+						intif_saveregistry(sd,2);
+					if (sd->state.reg_dirty&1)
+						intif_saveregistry(sd,1);
 				}
+				//Remove unneeded script.
+				script_free_stack (st->stack);
+				aFree(st);
 			}
 			break;
 		case RERUNLINE:
-			if(bk_st && sd->st != bk_st && st->sleep.tick <= 0){
+			if(bk_st && sd->st != bk_st && st->sleep.tick <= 0)
 				ShowWarning("Unable to restore stack! Double continuation!\n");
-				script_free_stack(bk_st->stack);
-				aFree(bk_st);
-			}
+
 			if(st->sleep.tick > 0)
 	  		{	//Delay execution
 				if(sd)
@@ -11605,6 +11613,10 @@ void run_script_main(struct script_state *st)
 				st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 					run_script_timer, st->sleep.charid, (int)st);
 				linkdb_insert(&sleep_db, (void*)st->oid, st);
+				//Restore previous script/
+				sd->st = bk_st;
+				sd->npc_id = bk_npcid;
+				bk_st = NULL; //Remove tag for removal.
 			}
 			// Do not call function of commands two time! [ Eoe / jA 1094 ]
 			// For example: select "1", "2", callsub(...);
@@ -11616,31 +11628,14 @@ void run_script_main(struct script_state *st)
 			break;
 	}
 
-	if(st->state == END) {
-		if(sd){
-			script_free_stack(sd->st->stack);
-			aFree(sd->st);
-			sd->st = bk_st;
-			sd->npc_id = bk_npcid;
-			if (sd->state.reg_dirty&2)
-				intif_saveregistry(sd,2);
-			if (sd->state.reg_dirty&1)
-				intif_saveregistry(sd,1);
-		} else {
-			script_free_stack (st->stack);
-			aFree(st);
-		}
-	/*}else{ 
-		if(st->sleep.tick > 0)
-	  	{	//Delay execution
-			TBL_PC *sd = (TBL_PC *)map_id2bl(st->rid);
-			st->sleep.charid = sd?sd->char_id:0;
-			st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-				run_script_timer, st->sleep.charid, (int)st);
-			linkdb_insert(&sleep_db, (void*)st->oid, st);
-		}*/ 
+	if (bk_st)
+	{	//Remove previous script
+		script_free_stack(bk_st->stack);
+		aFree(bk_st);
+		bk_st = NULL;
 	}
 
+	//FIXME: Is it correct to NOT free the script when the state is not END AND there's NO PLAYER running it??
 	return;
 }
 

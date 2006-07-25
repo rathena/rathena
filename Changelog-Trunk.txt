@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/25
+	* Cleaned up run_script_main to properly free previous stack-data when
+	  running scripts. Note that scripts may still leak memory when run by
+	  non-players and they don't reach the "END" state, however I am not sure how
+	  this case should be handled, so it's left as it is for now. [Skotlex]
 	* Added a missing ntohl call in the loginlog code. [Skotlex]
 	* Added a check when buying from npcs to allow buying of item_avail items.
 	  [Skotlex]
