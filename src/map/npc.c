@@ -1197,7 +1197,8 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 
 	for(i=0,w=0,z=0;i<n;i++) {
 		for(j=0;nd->u.shop_item[j].nameid;j++) {
-			if (nd->u.shop_item[j].nameid==item_list[i*2+1])
+			if (nd->u.shop_item[j].nameid==item_list[i*2+1] || //Normal items
+				itemdb_viewid(nd->u.shop_item[j].nameid)==item_list[i*2+1]) //item_avail replacement
 				break;
 		}
 		if (nd->u.shop_item[j].nameid==0)
