@@ -19,6 +19,8 @@
 	-----
 
 =========================
+07/25
+	* Item updates by Haplo [Playtester]
 07/24
 	* Raised drop rate of cook books and sets a little [Playtester]
 	* Raised drop rate of food a little [Playtester]
