@@ -1944,8 +1944,8 @@ static struct Damage battle_calc_weapon_attack(
 	if(!flag.lh && wd.damage2)
 		wd.damage2=0;
 	
-	if(wd.damage > 0 || wd.damage2 > 0)
-	{
+	if(wd.damage + wd.damage2)
+	{	//There is a total damage value
 		if(!wd.damage2) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			if (map_flag_gvg(target->m))
@@ -1955,8 +1955,7 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 			if (map_flag_gvg(target->m))
 				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-		}
-		else
+		} else
 		{
 			int d1=wd.damage+wd.damage2,d2=wd.damage2;
 			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
