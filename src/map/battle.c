@@ -1505,8 +1505,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 200;
 					break;
 				case HFLI_MOON:	//[orn]
-					skillratio += ( 110 * (skill_lv + 1) ) - 100 ;
-					skillratio /= wd.div_ ;
+					skillratio += 10+110*skill_lv;
 					break;
 				case HFLI_SBR44:	//[orn]
 					skillratio += 100 * skill_lv ;
