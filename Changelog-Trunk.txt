@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/26
+	* Added battle_get_master which returns the master bl of a given object.
+	  [Skotlex]
+	* Recoded battle_check_target to use battle_get_master, the src/target
+	  switch has been split into two, so that actual target and master target are
+	  seperately treated (same for source). [Skotlex]
 	* Added support for "sc_end -1" which will clear all status changes. Added
 	  the constant SC_ALL so you can use in scripts "sc_end SC_ALL;" instead.
 	  [Skotlex]

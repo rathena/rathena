@@ -2985,6 +2985,46 @@ int battle_check_undead(int race,int element)
 	return 0;
 }
 
+//Returns the upmost level master starting with the given object
+static struct block_list* battle_get_master(struct block_list *src)
+{
+	do {
+		switch (src->type) {
+			case BL_PET:
+				if (((TBL_PET*)src)->msd)
+					src = (struct block_list*)((TBL_PET*)src)->msd;
+				else
+					return src;
+				break;
+			case BL_MOB:
+				if (((TBL_MOB*)src)->master_id)
+					src = map_id2bl(((TBL_MOB*)src)->master_id);
+				else
+					return src;
+				break;
+			case BL_HOMUNCULUS:
+				if (((TBL_HOMUNCULUS*)src)->master)
+					src = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
+				else
+					return src;
+				break;
+			case BL_SKILL:
+				if (((TBL_SKILL*)src)->group && ((TBL_SKILL*)src)->group->src_id)
+					src = map_id2bl(((TBL_SKILL*)src)->group->src_id);
+				else
+					return src;
+				break;
+			default:
+				return src;
+		}
+#ifdef RECURSIVE_MASTER_CHECK
+	} while (src);
+#else
+	} while (0); //Single pass check.
+#endif
+	return src;
+}
+
 /*==========================================
  * Checks the state between two targets (rewritten by Skotlex)
  * (enemy, friend, party, guild, etc)
@@ -3013,43 +3053,67 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return -1;
 	}
 
-	if (target->type == BL_SKILL) //Needed out of the switch in case the ownership needs to be passed skill->mob->master
-	{
-		struct skill_unit *su = (struct skill_unit *)target;
-		if (!su->group)
-			return 0;
-		if (skill_get_inf2(su->group->skill_id)&INF2_TRAP)
-		{	//Only a few skills can target traps...
-			switch (battle_getcurrentskill(src))
-			{
-				case HT_REMOVETRAP:
-				case AC_SHOWER:
-				case WZ_HEAVENDRIVE:
-					state |= BCT_ENEMY;
-					strip_enemy = 0;
-					break;
-				default:
-					return 0;
+	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
+	//objects involved.
+	if ((t_bl = battle_get_master(target)) == NULL)
+		t_bl = target;
+
+	if ((s_bl = battle_get_master(src)) == NULL)
+		s_bl = src;
+
+	switch (target->type)
+	{	//Checks on actual target
+		case BL_PC:
+			if (((TBL_PC*)target)->invincible_timer != -1 || pc_isinvisible((TBL_PC*)target))
+				return -1; //Cannot be targeted yet.
+			break;
+		case BL_MOB:
+			if (((TBL_MOB*)target)->special_state.ai == 2)
+			{	//Mines are sort of universal enemies.
+				state |= BCT_ENEMY;
+				strip_enemy = 0;
 			}
-		} else if (su->group->skill_id==WZ_ICEWALL)
-		{	//Icewall can be hit by anything except skills.
-			if (src->type == BL_SKILL)
+			break;
+		case BL_SKILL:
+		{
+			TBL_SKILL *su = (TBL_SKILL*)target;
+			if (!su->group)
 				return 0;
-			state |= BCT_ENEMY;
-			strip_enemy = 0;
-		} else	//Excepting traps and icewall, you should not be able to target skills.
+			if (skill_get_inf2(su->group->skill_id)&INF2_TRAP)
+			{	//Only a few skills can target traps...
+				switch (battle_getcurrentskill(src))
+				{
+					case HT_REMOVETRAP:
+					case AC_SHOWER:
+					case WZ_HEAVENDRIVE:
+						state |= BCT_ENEMY;
+						strip_enemy = 0;
+						break;
+					default:
+						return 0;
+				}
+			} else if (su->group->skill_id==WZ_ICEWALL)
+			{	//Icewall can be hit by anything except skills.
+				if (src->type == BL_SKILL)
+					return 0;
+				state |= BCT_ENEMY;
+				strip_enemy = 0;
+			} else	//Excepting traps and icewall, you should not be able to target skills.
+				return 0;
+		}
+		//Valid targets with no special checks here.
+		case BL_HOMUNCULUS:
+			break;
+		//All else not specified is an invalid target.
+		default:	
 			return 0;
-		if ((t_bl = map_id2bl(su->group->src_id)) == NULL)
-			t_bl = target; //Fallback on the trap itself, otherwise consider this a "versus caster" scenario.
 	}
 
 	switch (t_bl->type)
-	{
+	{	//Checks on target master
 		case BL_PC:
 		{
 			TBL_PC *sd = (TBL_PC*)t_bl;
-			if (sd->invincible_timer != -1 || pc_isinvisible(sd))
-				return -1; //Cannot be targeted yet.
 			if (sd->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
 				return 0; //Global inmunity to attacks.
 			if (sd->special_state.killable && t_bl != s_bl)
@@ -3067,57 +3131,47 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
-			if (md->special_state.ai == 2)
-			{	//Mines are sort of universal enemies.
-				state |= BCT_ENEMY;
-				strip_enemy = 0;
-			}
-			if (md->master_id && (t_bl = map_id2bl(md->master_id)) == NULL)
-				t_bl = &md->bl; //Fallback on the mob itself, otherwise consider this a "versus master" scenario.
 			break;
 		}
-		case BL_PET:
-		{
-			return 0; //Pets cannot be targetted.
-		}
-		case BL_HOMUNCULUS:
-		{	
-			 //For some mysterious reason ground-skills can't target homun.
-			if (src->type == BL_SKILL)
-				return 0;
-			//Just fallback on master.
-			t_bl=(struct block_list *)((TBL_HOMUNCULUS*)target)->master;
-			if (((TBL_PC*)t_bl)->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
-				return 0;
-			break;
-		}
-		case BL_SKILL: //Skill with no owner? Kinda odd... but.. let it through.
-			break;
-		default:	//Invalid target
-			return 0;
 	}
 
-	if (src->type == BL_SKILL)
-	{
-		struct skill_unit *su = (struct skill_unit *)src;
-		if (!su->group)
-			return 0;
-
-		if (su->group->src_id == target->id)
+	switch(src->type)
+  	{	//Checks on actual src type
+		case BL_MOB:
+			if (!agit_flag && ((TBL_MOB*)src)->guardian_data && ((TBL_MOB*)src)->guardian_data->guild_id)
+				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
+			break;
+		case BL_PET:
+			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
+				return 0; //Pet may not attack non-mobs.
+			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data && flag&BCT_ENEMY)
+				return 0; //pet may not attack Guardians/Emperium
+			break;
+		case BL_SKILL:
 		{
-			int inf2;
-			inf2 = skill_get_inf2(su->group->skill_id);
-			if (inf2&INF2_NO_TARGET_SELF)
-				return -1;
-			if (inf2&INF2_TARGET_SELF)
-				return 1;
+			struct skill_unit *su = (struct skill_unit *)src;
+			if (!su->group)
+				return 0;
+
+			//For some mysterious reason ground-skills can't target homun.
+			if (target->type == BL_HOMUNCULUS)
+				return 0;
+
+			if (su->group->src_id == target->id)
+			{
+				int inf2;
+				inf2 = skill_get_inf2(su->group->skill_id);
+				if (inf2&INF2_NO_TARGET_SELF)
+					return -1;
+				if (inf2&INF2_TARGET_SELF)
+					return 1;
+			}
+			break;
 		}
-		if ((s_bl = map_id2bl(su->group->src_id)) == NULL)
-			s_bl = src; //Fallback on the trap itself, otherwise consider this a "caster versus enemy" scenario.
 	}
 
 	switch (s_bl->type)
-	{
+	{	//Checks on source master
 		case BL_PC:
 		{
 			TBL_PC *sd = (TBL_PC*) s_bl;
@@ -3149,24 +3203,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB*md = (TBL_MOB*)s_bl;
-#ifdef RECURSIVE_MASTER_CHECK
-			struct block_list *tmp_bl = NULL;
-			TBL_MOB *tmp_md = NULL;
-#endif
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
-#ifdef RECURSIVE_MASTER_CHECK
-			tmp_md = md;
-			while(tmp_md->master_id && (tmp_bl = map_id2bl(tmp_md->master_id))){
-				if(t_bl->id == tmp_bl->id){
-					state |= BCT_PARTY;
-					break;
-				}
-				if(tmp_bl->type != BL_MOB)
-					break;
-				tmp_md = (TBL_MOB *)tmp_bl;
-			}
-#endif
 			if(md->state.killer) // Is on a rampage too :D
 				state |= BCT_ENEMY;
 			else if (!md->special_state.ai) { //Normal mobs.
@@ -3178,38 +3216,13 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 			}
-			if (md->master_id && (s_bl = map_id2bl(md->master_id)) == NULL)
-				s_bl = &md->bl; //Fallback on the mob itself, otherwise consider this a "from master" scenario.
 			break;
 		}
-		case BL_HOMUNCULUS:
-		{
-			//[blackhole89] -- check homunculus' targeting by their masters.
-			if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
-				state |= BCT_ENEMY; //Default enemy. Normal mobs.
-			//Pass on to master.
-			s_bl=(struct block_list *)((struct homun_data*)src)->master;
+		default:
+		//Need some sort of default behaviour for unhandled types.
+			if (t_bl->type != s_bl->type)
+				state |= BCT_ENEMY;
 			break;
-		}
-		case BL_PET:
-		{
-			TBL_PET *pd = (TBL_PET*)s_bl;
-			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
-				return 0; //Pet may not attack non-mobs.
-			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data && flag&BCT_ENEMY)
-				return 0; //pet may not attack Guardians/Emperium
-			if (t_bl->type != BL_PC)
-				state |= BCT_ENEMY; //Stock enemy type.
-			if (pd->msd)
-				s_bl = &pd->msd->bl; //"My master's enemies are my enemies..."
-			break;
-		}
-		case BL_SKILL: //Skill with no owner? Fishy, but let it through.
-			break;
-		case BL_NPC:	// allows NPC-set skill units to proceed [blackhole89]
-			break;
-		default:	//Invalid source of attack?
-			return 0;
 	}
 	
 	if ((flag&BCT_ALL) == BCT_ALL) { //All actually stands for all attackable chars 
@@ -3217,7 +3230,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return 1;
 		else
 			return -1;
-	} else if (flag == BCT_NOONE) //Why would someone use this? no clue.
+	} else
+	if (flag == BCT_NOONE) //Why would someone use this? no clue.
 		return -1;
 	
 	if (t_bl == s_bl)
