@@ -2759,7 +2759,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	}
 	//This function takes care of giving the item to whoever should have it
 	//considering party-share options.
-	if ((flag = party_share_loot(p,sd,&fitem->item_data))) {
+	if ((flag = party_share_loot(p,sd,&fitem->item_data, fitem->first_get_id))) {
 		clif_additem(sd,0,0,flag);
 		return 1;
 	}

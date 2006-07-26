@@ -1481,7 +1481,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 			dlist->first_sd->status.party_id?
 				party_search(dlist->first_sd->status.party_id):
 				NULL,
-			dlist->first_sd,&ditem->item_data) == 0
+			dlist->first_sd,&ditem->item_data,dlist->first_sd->bl.id) == 0
 		) {
 			ers_free(item_drop_ers, ditem);
 			return;

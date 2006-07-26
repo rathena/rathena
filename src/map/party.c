@@ -734,13 +734,14 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 	return 0;
 }
 
-int party_share_loot(struct party_data *p, TBL_PC *sd, struct item *item_data)
+//Does party loot. first holds the id of the player who has time priority to take the item.
+int party_share_loot(struct party_data *p, TBL_PC *sd, struct item *item_data, int first)
 {
 	TBL_PC *target=NULL;
 	int i;
-	if (p && p->party.item&2) {
+	if (p && p->party.item&2 && (first || !(battle_config.party_share_type&1))) {
 		//item distribution to party members.
-		if (battle_config.party_share_type) { //Round Robin
+		if (battle_config.party_share_type&2) { //Round Robin
 			TBL_PC *psd;
 			i = p->itemc;
 			do {
