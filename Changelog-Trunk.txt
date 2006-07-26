@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/07/26
+	* Enabled changing of equipment while stunned/asleep/petrified/etc [Skotlex]
 2006/07/25
 	* Cleaned up run_script_main to properly free previous stack-data when
 	  running scripts. Note that scripts may still leak memory when run by

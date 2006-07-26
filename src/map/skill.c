@@ -3300,9 +3300,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	if(bl->prev == NULL)
 		return 1;
-	if(status_isdead(src) && skillid != NPC_REBIRTH)
+	if(status_isdead(src))
 		return 1;
-	if(status_isdead(bl) && skillid != NPC_REBIRTH && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
+	if(src!=bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
 		return 1;
 
 	tstatus = status_get_status_data(bl);
