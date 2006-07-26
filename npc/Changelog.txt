@@ -38,6 +38,9 @@ Playtester
 
 Date		Added
 ======
+07/26
+	* Fixed the Factory Quest [Playtester]
+	- two NPCs in one line won't work! >_>
 07/25
 	* Added first part of Bio Ethics Quest [Evera]
 	- Far from complete :<

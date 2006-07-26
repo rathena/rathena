@@ -2777,7 +2777,9 @@ s_Budget2:
 	next;
 	goto s_Budget;
 
-}ein_in01.gat,67,243,3	script	Zelmeto	851,{
+}
+
+ein_in01.gat,67,243,3	script	Zelmeto	851,{
 	
 	if(EinFactory > 0)goto s_Switches;
 	mes "[Zelmeto]";
