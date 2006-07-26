@@ -2,12 +2,16 @@
 //= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
+//= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Event for the Mobster respawn
+//= Bio Labs Quest
+//= Friendship Quest
+//= Bio Ethics Quest (UNFINISHED)
 //===== Additional Comments: ================================= 
 //= Grammar/script check please. This was a quick job.
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
@@ -33,6 +37,7 @@
 //= 1.9 Added extra input check on Biolab so that the first letter of the word could be
 //= capitalized or undercase. [Evera]
 //= 2.0 Removed Duplicates [Silent]
+//= 2.1 Added first part of Bio Ethics Quest [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -2615,4 +2620,182 @@ yuno_in04.gat,171,117,1	script	List of Books	111,{
 	mes "a romance novel section?";
 	close;
 
+}
+
+
+//==============================================================
+// Bio Ethics Quest
+//==============================================================
+//==========================UNFINISHED!=========================
+lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
+	mes "[Rekenber Guard]";
+	if(getequipid(9) == 2243){
+		mes "......................";
+		next;
+		switch(select("Nice day, huh?","Cancel")){
+			case 1:
+				mes "[Rekenber Guard]";
+				mes "...";
+				close2;
+				warp "lhz_in01.gat",282,172;
+				end;
+				break;
+			case 2:
+				close;
+				break;
+		}
+	}
+	else{
+		mes "...";
+		close;
+	}
+}
+lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
+	OnTouch:
+		if(class != 18){
+			mes "[Researcher]";
+			mes "This is a restricted";
+			mes "area. Please leave";
+			mes "immediately.";
+			close2;
+			warp "lhz_in01.gat",199,131;
+			end;
+		}
+		//Unofficial Text
+		else{
+			mes "[Researcher]";
+			mes "Keep your eyes open.";
+			mes "I've heard rumors that some";
+			mes "adventurers from Rune-Midgard";
+			mes "are trying to sneak into here!";
+			mes "I know the security here is";
+			mes "pretty much failsafe, but...";
+			close;
+		}
+}
+		
+lhz_in01.gat,285,169,7	script	Researcher	865,{
+//Unknown Text
+end;
+}
+lhz_in01.gat,199,137,8	script	Scientist	865,{
+	mes "[Scientist]";
+	mes "Whoa whoa~!";
+	mes "Please! Don't";
+	mes "touch anything!";
+	mes "I'm dealing with highly";
+	mes "volatile chemicals here!";
+	close;
+}
+lhz_in01.gat,204,138,6	script	Keshibien	750,{
+	mes "[Keshibien]";
+	mes "Hello there~";
+	mes "You must be from";
+	mes "Rune-Midgarts, right?";
+	mes "It's nice to meet you.";
+	next;
+	mes "[Keshibien]";
+	mes "I hear that the";
+	mes "Alchemists from";
+	mes "over there are pretty";
+	mes "skilled. I wonder if I'll";
+	mes "ever get the change to";
+	mes "collaborate with any of them...";
+	close;
+}
+lhz_in01.gat,203,123,8	script	Scientist	750,{
+	mes "[Scientist]";
+	mes "Alright. Pull one test";
+	mes "tube out of the machine,";
+	mes "replace the other test";
+	mes "tube over here and then";
+	mes "clean the first test tube?";
+	next;
+	mes "[Scientist]";
+	mes "Or do I clean the test tube,";
+	mes "put it into the machine and";
+	mes "then replace the other one?";
+	mes "I'm so confused with this";
+	mes "procedure! If only I didn't";
+	mes "lose the instructions...";
+	close;
+}
+lhz_in01.gat,221,131,3	script	Scientist	865,{
+	mes "[Scientist]";
+	mes "It takes so long for";
+	mes "this device to process";
+	mes "all the data and give me";
+	mes "the results. Still, the wait";
+	mes "heightens my anticipation...";
+	close;
+}
+lhz_in01.gat,218,141,0	script	Alchemist	98,{
+	mes "[Alchemist]";
+	mes "Out of all humans,";
+	mes "I believe Kellasus is";
+	mes "the one who has come";
+	mes "closest to discovering";
+	mes "the secrets of life. He";
+	mes "never fails to amaze me...";
+	next;
+	mes "[Alchemist]";
+	mes "I'm also impressed by the";
+	mes "fact that he doesn't let his";
+	mes "work keep him from being the";
+	mes "best father and husband that";
+	mes "he can for his family. He's";
+	mes "an example for all of us.";
+	next;
+	mes "[Alchemist]";
+	mes "Kellasus really is";
+	mes "an amazing person.";
+	mes "There isn't one Alchemist";
+	mes "that I know who doesn't look";
+	mes "up to him in the realms of";
+	mes "both science and personal life.";
+	close;
+}
+lhz_in01.gat,224,140,8	script	Kellasus	57,{
+	mes "[Kellasus]";
+	mes "Hmm. Who decides what";
+	mes "is right and wrong? What is";
+	mes "meant to be known and what";
+	mes "secrets were never intended";
+	mes "for mankind to understand?";
+	close;
+}
+lhz_in01.gat,217,121,6	script	Repairman	851,{
+	mes "[Repairman]";
+	mes "No wonder these things";
+	mes "break all the time! These";
+	mes "machines have been totally";
+	mes "abused! Ugh, there's no";
+	mes "appreciation for all of this";
+	mes "convenient technology...";
+	next;
+	mes "[Repairman]";
+	mes "Yeah, all of this lab";
+	mes "equipment is really sensitive,";
+	mes "not to mention expensive. If";
+	mes "you ever handle this stuff, you";
+	mes "need to be extra cautious.";
+	close;
+}
+lhz_in01.gat,225,122,4	script	Skrajiad	754,{
+	mes "[Skrajiad]";
+	mes "Alchemy is wondrous...";
+	mes "It incorporates every";
+	mes "science and many other";
+	mes "fields of knowledge that";
+	mes "it's not enough to be jack";
+	mes "of all trades... No...";
+	next;
+	mes "[Skrajiad]";
+	mes "In a sense, you must";
+	mes "be a master of all trades";
+	mes "to be proficient in Alchemy";
+	mes "But it's incredibly rewarding to";
+	mes "those of us who never stop askins";
+	mes "how and why our world works.";
+	close;
 }

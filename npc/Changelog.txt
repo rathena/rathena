@@ -28,7 +28,6 @@ Evera
 	* Dungeon Teleport System NPCs
 	* iRO information gathering.
 	* Kafra maintainment.
-	* Splitting city/'s into quest/'s.
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
 	*iRO information gathering.
@@ -40,6 +39,8 @@ Playtester
 Date		Added
 ======
 07/25
+	* Added first part of Bio Ethics Quest [Evera]
+	- Far from complete :<
 	* Some small fixes to the sign quest [MasterOfMuppets]
 	* Updated Thanatos Tower spawns [Playtester]
 	- they are official up to Floor 6 now
