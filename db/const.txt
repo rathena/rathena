@@ -392,6 +392,7 @@ IG_EggGirl	33
 IG_GiftBoxChina	34
 IG_LottoBox 35
 
+SC_ALL -1
 SC_STONE	0
 SC_FREEZE	1
 SC_STAN	2

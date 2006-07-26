@@ -6458,8 +6458,11 @@ int buildin_sc_end(struct script_state *st)
 	if (potion_flag==1 && potion_target)
 		bl = map_id2bl(potion_target);
 
-	if (bl)
+	if (!bl) return 0;
+	if (type >= 0)
 		status_change_end(bl,type,-1);
+	else
+		status_change_clear(bl, 2);
 	return 0;
 }
 /*==========================================
