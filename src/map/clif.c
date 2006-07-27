@@ -2679,6 +2679,8 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->battle_status.hp;
 		if (battle_config.disp_hpmeter)
 			clif_hpmeter(sd);
+		if (!battle_config.party_hp_mode && sd->status.party_id)
+			clif_party_hp(sd);
 		break;
 	case SP_SP:
 		WFIFOL(fd,4)=sd->battle_status.sp;
