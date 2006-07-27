@@ -145,10 +145,10 @@ treasure02.gat,103,143,0,0	monster	Hydra	1068,1,300000,100000,1
 treasure02.gat,0,0,0,0	monster	Mimic	1191,5,0,0,1
 treasure02.gat,101,151,10,10	monster	Mimic	1191,3,500000,200000,1
 treasure02.gat,101,151,10,10	monster	Mimic	1191,2,100000,100000,1
-treasure02.gat,0,0,0,0	monster	Penomena	1216,2,300000,120000,1
+treasure02.gat,0,0,0,0	monster	Penomena	1216,32,300000,120000,1
 treasure02.gat,101,151,10,10	monster	Penomena	1216,4,100000,100000,1
 treasure02.gat,101,126,2,2	monster	Penomena	1216,1,1200000,600000,1
-treasure02.gat,101,135,2,2	monster	Penomena	1216,1,60000,200000,1
+treasure02.gat,101,135,2,2	monster	Penomena	1216,1,600000,200000,1
 treasure02.gat,23,142,1,1	monster	Marionette	1143,1,200000,100000,1
 treasure02.gat,0,0,0,0	monster	Wanderer	1208,1,600000,300000,1
 treasure02.gat,0,0,0,0	monster	Ghostring	1120,1,3600000,1800000,1
