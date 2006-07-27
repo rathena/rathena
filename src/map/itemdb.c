@@ -1130,11 +1130,11 @@ static int itemdb_readdb(void)
 				id->script=NULL;
 			}
 			if (id->equip_script) {
-				aFree(id->equip_script);
+				script_free_code(id->equip_script);
 				id->equip_script=NULL;
 			}
 			if (id->unequip_script) {
-				aFree(id->unequip_script);
+				script_free_code(id->unequip_script);
 				id->unequip_script=NULL;
 			}
 
