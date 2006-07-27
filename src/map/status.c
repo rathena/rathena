@@ -1292,7 +1292,7 @@ int status_calc_mob(struct mob_data* md, int first)
 	if(battle_config.enemy_critical_rate != 100)
 		status->cri = status->cri*battle_config.enemy_critical_rate/100;
 	if (!status->cri && battle_config.enemy_critical_rate)
-		status->cri = 1;
+		status->cri = 10;
 
 	//Initial battle status
 	if (!first)
@@ -2167,7 +2167,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	if(battle_config.homun_critical_rate != 100)
 		status->cri = status->cri*battle_config.homun_critical_rate/100;
 	if (!status->cri && battle_config.homun_critical_rate)
-		status->cri = 1;
+		status->cri = 10;
 
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
@@ -2613,22 +2613,6 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		status->matk_max = status_calc_matk(&hd->bl, &hd->sc, status->matk_max);
 
 	}
-	
-	if(flag&SCB_HIT) {
-		if(status->hit < 1) status->hit = 1;
-	}
-
-	if(flag&SCB_FLEE) {
-		if(status->flee < 1) status->flee = 1;
-	}
-
-	if(flag&SCB_DEF2) {
-		if(status->def2 < 1) status->def2 = 1;
-	}
-
-	if(flag&SCB_MDEF2) {
-		if(status->mdef2 < 1) status->mdef2 = 1;
-	}
 
 	if(flag&SCB_SPEED) {
 		if(status->speed < battle_config.max_walk_speed)
@@ -2657,43 +2641,17 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		status->dmotion = status_calc_dmotion(&hd->bl, &hd->sc, b_status->dmotion);
 	}
 
-	if(flag&SCB_CRI)
-	{
-		if(status->cri < 10) status->cri = 10;
-	}
-
-	if(flag&SCB_FLEE2) {
-		if(status->flee2 < 10) status->flee2 = 10;
-	}
 	if (flag == SCB_ALL)
 		return; //Refresh is done on invoking function (status_calc_hom)
 
-	if ( 	(flag&SCB_SPEED) ||
-				(flag&SCB_STR) ||
-				(flag&SCB_AGI) ||
-				(flag&SCB_VIT) ||
-				(flag&SCB_INT) ||
-				(flag&SCB_DEX) ||
-				(flag&SCB_LUK) ||
-				(flag&SCB_HIT) ||
-				(flag&SCB_FLEE) ||
-				(flag&SCB_ASPD) ||
-				(flag&(SCB_BATK|SCB_WATK)) ||
-				(flag&SCB_DEF) ||
-				(flag&SCB_WATK) ||
-				(flag&SCB_DEF2) ||
-				(flag&SCB_FLEE2) ||
-				(flag&SCB_CRI) ||
-				(flag&SCB_MATK) ||
-				(flag&SCB_MDEF) ||
-				(flag&SCB_MDEF2) ||
-				(flag&SCB_RANGE) ||
-				(flag&SCB_MAXHP) ||
-				(flag&SCB_MAXSP)
-		 )
-		{
-			clif_hominfo(hd->master,0);
-		}
+	if (flag&(
+		SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK|
+		SCB_HIT|SCB_FLEE|SCB_CRI|SCB_FLEE2|
+		SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2|
+		SCB_BATK|SCB_WATK|SCB_MATK|SCB_ASPD|SCB_SPEED|
+		SCB_RANGE|SCB_MAXHP|SCB_MAXSP)
+	)
+		clif_hominfo(hd->master,0);
 }
 
 void status_calc_bl(struct block_list *bl, unsigned long flag)
@@ -3213,7 +3171,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
 {
 	if(!sc || !sc->count)
-		return cap_value(critical,0,SHRT_MAX);
+		return cap_value(critical,10,SHRT_MAX);
 
 	if (sc->data[SC_EXPLOSIONSPIRITS].timer!=-1)
 		critical += sc->data[SC_EXPLOSIONSPIRITS].val2;
@@ -3224,14 +3182,14 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 	if(sc->data[SC_CLOAKING].timer!=-1)
 		critical += critical;
 
-	return cap_value(critical,0,SHRT_MAX);
+	return cap_value(critical,10,SHRT_MAX);
 }
 
 static signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit)
 {
 	
 	if(!sc || !sc->count)
-		return cap_value(hit,0,SHRT_MAX);
+		return cap_value(hit,1,SHRT_MAX);
 
 	if(sc->data[SC_INCHIT].timer != -1)
 		hit += sc->data[SC_INCHIT].val1;
@@ -3252,7 +3210,7 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 	if(sc->data[SC_INCREASING].timer!=-1)
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	
-	return cap_value(hit,0,SHRT_MAX);
+	return cap_value(hit,1,SHRT_MAX);
 }
 
 static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
@@ -3261,7 +3219,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee -= flee * battle_config.gvg_flee_penalty/100;
 
 	if(!sc || !sc->count)
-		return cap_value(flee,0,SHRT_MAX);
+		return cap_value(flee,1,SHRT_MAX);
 
 	if(sc->data[SC_INCFLEE].timer!=-1)
 		flee += sc->data[SC_INCFLEE].val1;
@@ -3292,18 +3250,18 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_SPEED].timer!=-1)
 		flee += 10 + sc->data[SC_SPEED].val1 * 10 ;
 
-	return cap_value(flee,0,SHRT_MAX);
+	return cap_value(flee,1,SHRT_MAX);
 }
 
 static signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2)
 {
 	if(!sc || !sc->count)
-		return cap_value(flee2,0,SHRT_MAX);
+		return cap_value(flee2,10,SHRT_MAX);
 
 	if(sc->data[SC_WHISTLE].timer!=-1)
 		flee2 += sc->data[SC_WHISTLE].val3*10;
 
-	return cap_value(flee2,0,SHRT_MAX);
+	return cap_value(flee2,10,SHRT_MAX);
 }
 
 static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
@@ -3348,7 +3306,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
 {
 	if(!sc || !sc->count)
-		return cap_value(def2,0,SHRT_MAX);
+		return cap_value(def2,1,SHRT_MAX);
 	
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
@@ -3377,7 +3335,7 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	if(sc->data[SC_FLING].timer!=-1)
 		def2 -= def2 * (sc->data[SC_FLING].val3)/100;
 
-	return cap_value(def2,0,SHRT_MAX);
+	return cap_value(def2,1,SHRT_MAX);
 }
 
 static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
