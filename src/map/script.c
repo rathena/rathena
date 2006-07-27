@@ -7553,7 +7553,22 @@ int buildin_setcastledata(struct script_state *st)
 				case 23:
 				case 24:
 				case 25:
-					gc->guardian[index-18].hp = value; break;
+					gc->guardian[index-18].hp = value;
+					if (gc->guardian[index-18].id)
+				  	{	//Update this mob's HP.
+						struct block_list *bl = map_id2bl(gc->guardian[index-18].id);
+						if (!bl)
+					  	{	//Wrong target?
+							gc->guardian[index-18].id = 0;
+							break;
+						}
+						if (value < 1) {
+							status_kill(bl);
+							break;
+						}
+						status_set_hp(bl, value, 0);
+					}
+					break;
 				default: return 0;
 				}
 				guild_castledatasave(gc->castle_id,index,value);

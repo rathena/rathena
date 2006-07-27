@@ -495,6 +495,42 @@ int status_getrefinebonus(int lv,int type)
 	return 0;
 }
 
+//Sets HP to given value. Flag is the flag passed to status_heal in case
+//final value is higher than current (use 2 to make a healing effect display 
+//on players) It will always succeed (overrides Berserk block), but it can't kill.
+int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
+{
+	struct status_data *status;
+	if (hp < 1) return 0;
+	status = status_get_status_data(bl);
+	if (status == &dummy_status)
+		return 0;
+
+	if (hp > status->max_hp) hp = status->max_hp;
+	if (hp == status->hp) return 0;
+	if (hp > status->hp)
+		return status_heal(bl, hp - status->hp, 0, 1|flag);
+	return status_zap(bl, status->hp - hp, 0);
+}
+
+//Sets SP to given value. Flag is the flag passed to status_heal in case
+//final value is higher than current (use 2 to make a healing effect display 
+//on players)
+int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
+{
+	struct status_data *status;
+	
+	status = status_get_status_data(bl);
+	if (status == &dummy_status)
+		return 0;
+
+	if (sp > status->max_sp) sp = status->max_sp;
+	if (sp == status->sp) return 0;
+	if (sp > status->sp)
+		return status_heal(bl, 0, sp - status->sp, 1|flag);
+	return status_zap(bl, 0, status->sp - sp);
+}
+
 //Inflicts damage on the target with the according walkdelay.
 //If flag&1, damage is passive and does not triggers cancelling status changes.
 //If flag&2, fail if target does not has enough to substract.
@@ -504,8 +540,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	struct status_data *status;
 	struct status_change *sc;
 
-	if(sp && target->type != BL_PC && target->type != BL_HOMUNCULUS)	//[orn]
-		sp = 0; //Only players and Homunculus get SP damage.
+	if(sp && !(target->type&BL_CONSUME))
+		sp = 0; //Not a valid SP target.
 	
 	if (hp < 0) { //Assume absorbed damage.
 		status_heal(target, -hp, 0, 1);
@@ -5548,7 +5584,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	if (type==SC_BERSERK) {
 		sc->data[type].val2 = 5*status->max_hp/100;
 		status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
-		status_percent_damage(NULL, bl, 0, 100); //Damage all SP
+		status_set_sp(bl, 0, 0); //Damage all SP
 	}
 
 	if (type==SC_RUN) {
@@ -5822,7 +5858,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_BERSERK:
 			//If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 			if(status->hp > 100 && sc->data[type].val2)
-				status_zap(bl, status->hp-100, 0); 
+				status_set_hp(bl, 100, 0); 
 			if(sc->data[SC_ENDURE].timer != -1)
 				status_change_end(bl, SC_ENDURE, -1);
 			break;
