@@ -956,10 +956,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->script);
 					if (sql_row[19] != NULL) {
 						if (sql_row[19][0] == '{')
-							id->script = parse_script((unsigned char *) sql_row[19], 0);
+							id->script = parse_script((unsigned char *) sql_row[19],item_db_name[i], 0);
 						else {
 							sprintf(script, "{%s}", sql_row[19]);
-							id->script = parse_script((unsigned char *) script, 0);
+							id->script = parse_script((unsigned char *) script, item_db_name[i], 0);
 						}
 					} else id->script = NULL;
 	
@@ -967,10 +967,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->equip_script);
 					if (sql_row[20] != NULL) {
 						if (sql_row[20][0] == '{')
-							id->equip_script = parse_script((unsigned char *) sql_row[20], 0);
+							id->equip_script = parse_script((unsigned char *) sql_row[20], item_db_name[i], 0);
 						else {
 							sprintf(script, "{%s}", sql_row[20]);
-							id->equip_script = parse_script((unsigned char *) script, 0);
+							id->equip_script = parse_script((unsigned char *) script, item_db_name[i], 0);
 						}
 					} else id->equip_script = NULL;
 	
@@ -978,10 +978,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->unequip_script);
 					if (sql_row[21] != NULL) {
 						if (sql_row[21][0] == '{')
-							id->unequip_script = parse_script((unsigned char *) sql_row[21], 0);
+							id->unequip_script = parse_script((unsigned char *) sql_row[21],item_db_name[i], 0);
 						else {
 							sprintf(script, "{%s}", sql_row[21]);
-							id->unequip_script = parse_script((unsigned char *) script, 0);
+							id->unequip_script = parse_script((unsigned char *) script, item_db_name[i], 0);
 						}
 					} else id->unequip_script = NULL;
 				
@@ -1148,11 +1148,11 @@ static int itemdb_readdb(void)
 				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
 			if (!np || !np[1]) {
 				//Couldn't find the end of the script field.
-				id->script = parse_script((unsigned char *) str[19],lines);
+				id->script = parse_script((unsigned char *) str[19],filename[i],lines);
 				continue;
 			}
 			np[1] = '\0'; //Set end of script
-			id->script = parse_script((unsigned char *) str[19],lines);
+			id->script = parse_script((unsigned char *) str[19],filename[i],lines);
 			np+=2; //Skip to next field
 			
 			if(!np || (p=strchr(np,'{'))==NULL)
@@ -1165,18 +1165,18 @@ static int itemdb_readdb(void)
 				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
 			if (!np || !np[1]) {
 				//Couldn't find the end of the script field.
-				id->equip_script = parse_script((unsigned char *) str[20],lines);
+				id->equip_script = parse_script((unsigned char *) str[20],filename[i],lines);
 				continue;
 			}
 			
 			np[1] = '\0'; //Set end of script
-			id->equip_script = parse_script((unsigned char *) str[20],lines);
+			id->equip_script = parse_script((unsigned char *) str[20],filename[i],lines);
 			np+=2; //Skip comma, to next field
 			
 			if(!np || (p=strchr(np,'{'))==NULL)
 				continue;
 			//Unequip script, last column.
-			id->unequip_script = parse_script((unsigned char *) p,lines);
+			id->unequip_script = parse_script((unsigned char *) p,filename[i],lines);
 		}
 		fclose(fp);
 		if (ln > 0) {

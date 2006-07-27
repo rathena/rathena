@@ -4,6 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/27
+	* Synced the script.c file with as much data as possible from jA's:
+	  [Skotlex]
+	- A lot of functions were moved around, a bunch of indentation and
+	  space-usage changes were done to make it easier to diff against their
+	  files.
+	- Miscellanous addition and corrections were applied.
+	- Largest one is likely a restructuring of run_script_main, which hopes to
+	  solve the memory leaks.
+	- script engine now uses the setjmp functions to restore memory state when
+	  there's an error parsing scripts, which means that script errors won't
+	  cause the map-server to inmediately bail out anymore.
+	- NOTE that the amount of changes is pretty extensive, so DON'T USE THIS on
+	  a live server. Update only to help test and debug to see if the script
+	  engine memory leaks are gone.
 	* Added a cleanup routine on shutdown to remove all characters from memory
 	  for whom the save ack has not returned from the char-server yet. [Skotlex]
 	* Now when you set the guardian's HP, if the guardian is spawned, it's HP

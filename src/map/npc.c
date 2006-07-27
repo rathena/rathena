@@ -1023,9 +1023,6 @@ int npc_checknear2(struct map_session_data *sd,struct block_list *bl)
 	if(sd->state.using_fake_npc && sd->npc_id == bl->id)
 		return 0;
 
-//	if (bl->type!=BL_NPC) //Disguised character or something else...
-//		return 1;
-
 	if (status_get_class(bl)<0) //Class-less npc, enable click from anywhere.
 		return 0;
 
@@ -1817,7 +1814,7 @@ static int npc_skip_script (char *w1,char *w2,char *w3,char *w4,char *first_line
 	return 0;
 }
 
-static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_line,FILE *fp,int *lines)
+static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line,FILE *fp,int *lines,const char* file)
 {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
 	char mapname[MAP_NAME_LENGTH];
@@ -1840,7 +1837,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		// 引数の個数チェック
 		if (sscanf(w1, "%15[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ||
 			(strcmp(w2, "script") == 0 && strchr(w4,',') == NULL)) {
-			ShowError("bad script line (in file %s): %s\n", current_file, w3);
+			ShowError("bad script line (in file %s): %s\n", file, w3);
 			return 1;
 		}
 		m = map_mapname2mapid(mapname);
@@ -1876,11 +1873,11 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 				strcat((char *) srcbuf, (const char *) line);
 		}
 		if(curly_count > 0) {
-			ShowError("Missing right curly at file %s, line %d\n",current_file, *lines);
+			ShowError("Missing right curly at file %s, line %d\n",file, *lines);
 			script = NULL;
 		} else {
 			// printf("Ok line %d\n",*lines);
-			script = parse_script((unsigned char *) srcbuf, startline);
+			script = parse_script((unsigned char *) srcbuf, file, startline);
 		}
 		if (script == NULL) {
 			// script parse error?
@@ -1892,11 +1889,11 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 		char srcname[128];
 		struct npc_data *dnd;
 		if (sscanf(w2, "duplicate(%[^)])", srcname) != 1) {
-			ShowError("bad duplicate name (in %s)! : %s", current_file, w2);
+			ShowError("bad duplicate name (in %s)! : %s", file, w2);
 			return 0;
 		}
 		if ((dnd = npc_name2id(srcname)) == NULL) {
-			ShowError("bad duplicate name (in %s)! (not exist) : %s\n", current_file, srcname);
+			ShowError("bad duplicate name (in %s)! (not exist) : %s\n", file, srcname);
 			return 0;
 		}
 		script = dnd->u.scr.script;
@@ -2019,7 +2016,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 			// and already overwritten if this is here is reached
 			// I leave the check anyway but place it correctly to npc_convertlabel_db
 			if (strlen(lname)>NAME_LENGTH-1) {
-				ShowError("npc_parse_script: label name longer than %d chars! '%s' (%s)\n", NAME_LENGTH-1, lname, current_file);
+				ShowError("npc_parse_script: label name longer than %d chars! '%s' (%s)\n", NAME_LENGTH-1, lname, file);
 				exit(1);
 			} else {
 				struct event_data *ev;
@@ -2033,7 +2030,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
 				ev->nd=nd;
 				ev->pos=pos;
 				if (strdb_put(ev_db,buf,ev) != NULL) //There was already another event of the same name?
-					ShowWarning("npc_parse_script : duplicate event %s (%s)\n",buf, current_file);
+					ShowWarning("npc_parse_script : duplicate event %s (%s)\n",buf, file);
 			}
 		}
 	}
@@ -2073,7 +2070,7 @@ static int npc_parse_script (char *w1,char *w2,char *w3,char *w4,char *first_lin
  * function行解析
  *------------------------------------------
  */
-static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *first_line, FILE *fp, int *lines)
+static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *first_line, FILE *fp, int *lines,const char* file)
 {
 	unsigned char *srcbuf, *p;
 	struct script_code *script;
@@ -2112,10 +2109,10 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 			strcat(srcbuf,line);
 	}
 	if(curly_count > 0) {
-		ShowError("Missing right curly at file %s, line %d\n",current_file, *lines);
+		ShowError("Missing right curly at file %s, line %d\n",file, *lines);
 		script = NULL;
 	} else {
-		script = parse_script(srcbuf, startline);
+		script = parse_script(srcbuf, file, startline);
 	}
 	if (script == NULL) {
 		// script parse error?
@@ -2516,7 +2513,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"nochat")==0) { // Skotlex
 		map[m].flag.nochat=state;
 	}
- 
+
 	return 0;
 }
 
@@ -2619,12 +2616,12 @@ void npc_parsesrcfile (char *name)
 			npc_parse_shop(w1,w2,w3,w4);
 		} else if (strcmpi(w2,"script") == 0 && count > 3) {
 			if (strcmpi(w1,"function") == 0) {
-				npc_parse_function(w1,w2,w3,w4,line+w4pos,fp,&lines);
+				npc_parse_function(w1,w2,w3,w4,line+w4pos,fp,&lines,name);
 			} else {
-				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
+				npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines,name);
 			}
 		} else if ((i = 0, sscanf(w2,"duplicate%n",&i), (i > 0 && w2[i] == '(')) && count > 3) {
-			npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines);
+			npc_parse_script(w1,w2,w3,w4,line+w4pos,fp,&lines,name);
 		} else if (strcmpi(w2,"monster") == 0 && count > 3) {
 			npc_parse_mob(w1,w2,w3,w4);
 		} else if (strcmpi(w2,"mapflag") == 0 && count >= 3) {

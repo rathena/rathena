@@ -45,26 +45,24 @@ struct script_code {
 	unsigned char* script_buf;
 	struct linkdb_node* script_vars;
 };
-struct script_stack {
-	int sp,sp_max,defsp;
-	struct script_data *stack_data;
-	struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
-};
+
 struct script_state {
-	struct script_stack *stack;
+	struct script_stack {
+		int sp,sp_max,defsp;
+		struct script_data *stack_data;
+		struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
+	} *stack;
 	int start,end;
 	int pos,state;
 	int rid,oid;
-	//unsigned char *script,*new_script;
-	int new_pos,new_defsp;
 	struct script_code *script, *scriptroot;
 	struct sleep_data {
 		int tick,timer,charid;
 	} sleep;
 };
 
-struct script_code *parse_script(unsigned char *,int);
-void run_script(struct script_code *rootscript,int pos,int rid,int oid);
+struct script_code* parse_script(unsigned char *,const char*,int);
+void run_script(struct script_code*,int,int,int);
 
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);
@@ -74,13 +72,13 @@ int run_script_timer(int tid, unsigned int tick, int id, int data);
 void run_script_main(struct script_state *st);
 
 struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
+void script_free_stack(struct script_stack*); 
 void script_free_code(struct script_code* code);
 
 struct dbt* script_get_label_db(void);
 struct dbt* script_get_userfunc_db(void);
 
 int script_config_read(char *cfgName);
-void script_free_stack(struct script_stack*); 
 int do_init_script(void);
 int do_final_script(void);
 int add_str(const unsigned char *p);
