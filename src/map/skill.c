@@ -633,16 +633,9 @@ static const int diry[8]={1,1,0,-1,-1,-1,0,1};
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
-/*  スキルデータベース */
 struct skill_db skill_db[MAX_SKILL_DB];
-
-/* アイテム作成データベース */
 struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
-
-/* 矢作成スキルデータベース */
 struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
-
-/* アブラカダブラ発動スキルデータベース */
 struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
 // macros to check for out of bounds errors [celest]
@@ -721,7 +714,6 @@ int skill_tree_get_max(int id, int b_class){
 	return skill_get_max (id);
 }
 
-/* プロトタイプ */
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 int skill_frostjoke_scream(struct block_list *bl,va_list ap);
 int status_change_timer_sub(struct block_list *bl, va_list ap);
@@ -969,7 +961,6 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 	return (map[hd->bl.m].flag.noskill);
 }
 
-/* スキルユニットの配置情報を返す */
 struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
 int icewall_unit_pos;
@@ -997,7 +988,7 @@ struct skill_unit_layout *skill_get_unit_layout (int skillid, int skilllv, struc
 }
 
 /*==========================================
- * スキル追加効果
+ * 
  *------------------------------------------
  */
 int skill_additional_effect (struct block_list* src, struct block_list *bl, int skillid, int skilllv, int attack_type, unsigned int tick)
@@ -1111,7 +1102,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 	break;
 
-	case SM_BASH:			/* バッシュ（急所攻撃） */
+	case SM_BASH:
 		if( sd && skilllv > 5 && pc_checkskill(sd,SM_FATALBLOW)>0 ){
 			//TODO: How much % per base level it actually is?
 			sc_start(bl,SC_STUN,(5*(skilllv-5)+(int)sd->status.base_level/10),
@@ -1122,15 +1113,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case AS_VENOMKNIFE:
 		if (sd) //Poison chance must be that of Envenom. [Skotlex]
 			skilllv = pc_checkskill(sd, TF_POISON);
-	case TF_POISON:			/* インベナム */
-	case AS_SPLASHER:		/* ベナムスプラッシャー */
+	case TF_POISON:
+	case AS_SPLASHER:
 		if(!sc_start(bl,SC_POISON,(2*skilllv+10),skilllv,skill_get_time2(skillid,skilllv))
 			&&	sd && skillid==TF_POISON
 		)
 			clif_skill_fail(sd,skillid,0,0);
 		break;
 
-	case AS_SONICBLOW:		/* ソニックブロー */
+	case AS_SONICBLOW:
 		sc_start(bl,SC_STUN,(2*skilllv+10),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1160,15 +1151,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_BLIND,4*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 		
-	case HT_FREEZINGTRAP:	/* フリージングトラップ */
+	case HT_FREEZINGTRAP:
 		sc_start(bl,SC_FREEZE,(3*skilllv+35),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	 case HT_FLASHER:  /* フラッシャー */
+	 case HT_FLASHER:
 		sc_start(bl,SC_BLIND,(10*skilllv+30),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case HT_LANDMINE:		/* ランドマイン */
+	case HT_LANDMINE:
 		sc_start(bl,SC_STUN,(5*skilllv+30),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1176,30 +1167,28 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		status_percent_damage(src, bl, 0, 15*skilllv+5);
 		break;
 
-	case HT_SANDMAN:		/* サンドマン */
+	case HT_SANDMAN:
 		sc_start(bl,SC_SLEEP,(10*skilllv+40),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case TF_SPRINKLESAND:	/* 砂まき */
+	case TF_SPRINKLESAND:
 		sc_start(bl,SC_BLIND,20,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case TF_THROWSTONE:		/* 石投げ */
+	case TF_THROWSTONE:
 		sc_start(bl,SC_STUN,3,skilllv,skill_get_time(skillid,skilllv));
 		sc_start(bl,SC_BLIND,3,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
 	case NPC_DARKCROSS:
-	case CR_HOLYCROSS:		/* ホーリークロス */
+	case CR_HOLYCROSS:
 		sc_start(bl,SC_BLIND,3*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case CR_GRANDCROSS:		/* グランドクロス */
-	case NPC_GRANDDARKNESS:	/*闇グランドクロス*/
-		{
-			if(battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON)
-				sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
-		}
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+		if(battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON)
+			sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
 	case AM_ACIDTERROR:
@@ -1212,7 +1201,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		skill_break_equip(bl, EQP_WEAPON, 100*skilllv, BCT_ENEMY);
 		break;
 		
-	case CR_SHIELDCHARGE:		/* シールドチャージ */
+	case CR_SHIELDCHARGE:
 		sc_start(bl,SC_STUN,(15+skilllv*5),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1220,7 +1209,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		status_percent_damage(src, bl, 0, 15+5*skilllv);
 		break;
 
-	case RG_RAID:		/* サプライズアタック */
+	case RG_RAID:
 		sc_start(bl,SC_STUN,(10+3*skilllv),skilllv,skill_get_time(skillid,skilllv));
 		sc_start(bl,SC_BLIND,(10+3*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -1233,7 +1222,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_STUN,(25+5*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case BD_LULLABY:	/* 子守唄 */
+	case BD_LULLABY:
 		sc_start(bl,SC_SLEEP,15,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1248,7 +1237,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sc_start(bl,SC_STUN,(30+10*skilllv),skilllv,skill_get_time(skillid,skilllv));
 		break;
 			
-	/* MOBの追加効果付きスキル */
 	case NPC_PETRIFYATTACK:
 	case NPC_CURSEATTACK:
 	case NPC_SLEEPATTACK:
@@ -1284,11 +1272,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_STOP,(15+skilllv*5),0,skill_get_time2(skillid,skilllv));
 		break;
 
-	case ST_REJECTSWORD:	/* フリージングトラップ */
+	case ST_REJECTSWORD:
 		sc_start(bl,SC_AUTOCOUNTER,(skilllv*15),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case PF_FOGWALL:		/* ホーリークロス */
+	case PF_FOGWALL:
 		if (src != bl && tsc->data[SC_DELUGE].timer == -1)
 			status_change_start(bl,SC_BLIND,10000,skilllv,0,0,0,skill_get_time2(skillid,skilllv),8);
 		break;
@@ -1298,12 +1286,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sc_start(bl, SC_BLEEDING,50, skilllv, skill_get_time2(skillid,skilllv));
 		break;
 
-	case LK_JOINTBEAT:				/* ジョイントビート */
-		//条件が良く分からないので適当に
+	case LK_JOINTBEAT:
 		sc_start(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	case ASC_METEORASSAULT:			/* メテオアサルト */
+	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*SkillLV% chance.
 		switch(rand()%3) {
 			case 0:
@@ -1317,8 +1304,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
   		}
 		break;
 
-	case HW_NAPALMVULCAN:			/* ナパルムバルカン */
-		// skilllv*5%の確率で呪い
+	case HW_NAPALMVULCAN:
 		sc_start(bl,SC_CURSE,5*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1361,7 +1347,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if(attack_type == BF_MISC) //70% base stun chance...
 			sc_start(bl,SC_STUN,70,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-	//Until they're at right position - gs_statuschange- [Vicious]
 	case GS_BULLSEYE: //0.1% coma rate.
 		status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
 		break;
@@ -1510,8 +1495,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				tick+skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI].val1), 
 				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
 		break;
-	case MO_EXTREMITYFIST:			/* 阿修羅覇凰拳 */
-		//阿修羅を使うと5分間自然回復しないようになる
+	case MO_EXTREMITYFIST:
 		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	}
@@ -1769,13 +1753,13 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 
 /*
  * =========================================================================
- * スキル攻撃効果処理まとめ
- * flagの説明。16進図
+ * �X�L��?U??��?�?�܂Ƃ�
+ * flag��?��?B16?i?
  *	00XRTTff
- *  ff	= magicで計算に渡される）
- *	TT	= パケットのtype部分(0でデフォルト）
- *  X   = パケットのスキルLv
- *  R	= 予約（skill_area_subで使用する）
+ *  ff	= magic�Ōv�Z�ɓn�����?j
+ *	TT	= �p�P�b�g��type����(0�Ńf�t�H���g?j
+ *  X   = �p�P�b�g�̃X�L��Lv
+ *  R	= �\��?iskill_area_sub�Ŏg�p����?j
  *-------------------------------------------------------------------------
  */
 
@@ -1811,7 +1795,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	sstatus = status_get_status_data(dsrc);
 	tstatus = status_get_status_data(bl);
 // Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
-	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y) //使用スキルがフロストノヴァで、dsrcとblが同じ場所なら何もしない
+	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
 		return 0;
 
 	type=-1;
@@ -1886,9 +1870,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			&& skillid != CH_PALMSTRIKE) //Palm Strike is the only skill that will knockback even if it misses. [Skotlex]
 		dmg.blewcount = 0;
 
-	if(skillid == CR_GRANDCROSS||skillid == NPC_GRANDDARKNESS) {//グランドクロス
-		if(battle_config.gx_disptype) dsrc = src;	// 敵ダメージ白文字表示
-		if(src == bl) type = 4;	// 反動はダメージモーションなし
+	if(skillid == CR_GRANDCROSS||skillid == NPC_GRANDDARKNESS) {
+		if(battle_config.gx_disptype) dsrc = src;
+		if(src == bl) type = 4;
 	}
 
 	if(sd) {
@@ -2055,7 +2039,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
 			can_copy(tsd,skillid))	// Split all the check into their own function [Aru]
 		{
-			//既に盗んでいるスキルがあれば該当スキルを消す
 			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
@@ -2133,19 +2116,19 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	map_freeblock_unlock();
 
-	return damage;	/* 与ダメを返す */
+	return damage;
 }
 
 /*==========================================
- * スキル範囲攻撃用(map_foreachinareaから呼ばれる)
- * flagについて：16進図を確認
+ * �X�L����??U?�p(map_foreachinarea����Ă΂��)
+ * flag�ɂ���?F16?i?���m�F
  * MSB <- 00fTffff ->LSB
- *	T	=ターゲット選択用(BCT_*)
- *  ffff=自由に使用可能
- *  0	=予約。0に固定
+ *	T	=�^?�Q�b�g�I?�p(BCT_*)
+ *  ffff=���R�Ɏg�p�\
+ *  0	=�\��?B0�ɌŒ�
  *------------------------------------------
  */
-static int skill_area_temp[8];	/* 一時変数。必要なら使う。 */
+static int skill_area_temp[8];
 static int skill_unit_temp[8];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
 static int skill_unit_index=0;	//Well, yeah... am too lazy to pass pointers around :X
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
@@ -2159,7 +2142,7 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 
-	src=va_arg(ap,struct block_list *); //ここではsrcの値を参照していないのでNULLチェックはしない
+	src=va_arg(ap,struct block_list *);
 	skill_id=va_arg(ap,int);
 	skill_lv=va_arg(ap,int);
 	tick=va_arg(ap,unsigned int);
@@ -2421,9 +2404,8 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 }
 
 /*=========================================================================
- * 範囲スキル使用処理小分けここから
+ *
  */
-/* 対象の数をカウントする。（skill_area_temp[0]を初期化しておくこと） */
 int skill_area_sub_count (struct block_list *src, struct block_list *target, int skillid, int skilllv, unsigned int tick, int flag)
 {
 	if(skill_area_temp[0] < 0xffff)
@@ -2498,8 +2480,8 @@ static int skill_timerskill (int tid, unsigned int tick, int id, int data)
 							unit_warp(target, -1, x, y, 3);
 					}
 					break;
-				case BA_FROSTJOKE:			/* 寒いジョーク */
-				case DC_SCREAM:				/* スクリーム */
+				case BA_FROSTJOKE:
+				case DC_SCREAM:
 					range= skill_get_splash(skl->skill_id, skl->skill_lv);
 					map_foreachinarea(skill_frostjoke_scream,skl->map,skl->x-range,skl->y-range,
 						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
@@ -2606,8 +2588,8 @@ static int skill_reveal_trap (struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- * スキル使用（詠唱完了、ID指定攻撃系）
- * （スパゲッティに向けて１歩前進！(ダメポ)）
+ *
+ *
  *------------------------------------------
  */
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
@@ -2651,52 +2633,45 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	switch(skillid)
 	{
-	/* 武器攻撃系スキル */
-	case SM_BASH:			/* バッシュ */
-	case MC_MAMMONITE:		/* メマーナイト */
+	case SM_BASH:
+	case MC_MAMMONITE:
 	case TF_DOUBLE:
-	case AC_DOUBLE:			/* ダブルストレイフィング */
-	case AS_SONICBLOW:		/* ソニックブロー */
-	case KN_PIERCE:			/* ピアース */
-	case KN_SPEARBOOMERANG:	/* スピアブーメラン */
-	case KN_BRANDISHSPEAR:		/* ブランディッシュスピア */
-	case TF_POISON:			/* インベナム */
-	case TF_SPRINKLESAND:	/* 砂まき */
-	case AC_CHARGEARROW:	/* チャージアロー */
-	case RG_RAID:		/* サプライズアタック */
-	case RG_INTIMIDATE:		/* インティミデイト */
-	case AM_ACIDTERROR:		/* アシッドテラー */
-	case BA_MUSICALSTRIKE:	/* ミュージカルストライク */
-	case DC_THROWARROW:		/* 矢撃ち */
-	case BA_DISSONANCE:		/* 不協和音 */
-	case CR_HOLYCROSS:		/* ホーリークロス */
+	case AC_DOUBLE:
+	case AS_SONICBLOW:
+	case KN_PIERCE:
+	case KN_SPEARBOOMERANG:
+	case KN_BRANDISHSPEAR:
+	case TF_POISON:
+	case TF_SPRINKLESAND:
+	case AC_CHARGEARROW:
+	case RG_RAID:
+	case RG_INTIMIDATE:
+	case AM_ACIDTERROR:
+	case BA_MUSICALSTRIKE:
+	case DC_THROWARROW:
+	case BA_DISSONANCE:
+	case CR_HOLYCROSS:
 	case NPC_DARKCROSS:
 	case CR_SHIELDCHARGE:
 	case CR_SHIELDBOOMERANG:
-	/* 以下MOB専用 */
-	/* 単体攻撃、SP減少攻撃、遠距離攻撃、防御無視攻撃、多段攻撃 */
 	case NPC_PIERCINGATT:
 	case NPC_MENTALBREAKER:
 	case NPC_RANGEATTACK:
 	case NPC_CRITICALSLASH:
 	case NPC_COMBOATTACK:
-	/* 必中攻撃、毒攻撃、暗黒攻撃、沈黙攻撃、スタン攻撃 */
 	case NPC_GUIDEDATTACK:
 	case NPC_POISON:
 	case NPC_BLINDATTACK:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-	/* 石化攻撃、呪い攻撃、睡眠攻撃、ランダムATK攻撃 */
 	case NPC_PETRIFYATTACK:
 	case NPC_CURSEATTACK:
 	case NPC_SLEEPATTACK:
 	case NPC_RANDOMATTACK:
-	/* 水属性攻撃、地属性攻撃、火属性攻撃、風属性攻撃 */
 	case NPC_WATERATTACK:
 	case NPC_GROUNDATTACK:
 	case NPC_FIREATTACK:
 	case NPC_WINDATTACK:
-	/* 毒属性攻撃、聖属性攻撃、闇属性攻撃、念属性攻撃、SP減少攻撃 */
 	case NPC_POISONATTACK:
 	case NPC_HOLYATTACK:
 	case NPC_DARKNESSATTACK:
@@ -2706,19 +2681,19 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_BREAKWEAPON:
 	case NPC_BREAKHELM:
 	case NPC_BREAKSHIELD:
-	case LK_AURABLADE:		/* オーラブレード */
-	case LK_SPIRALPIERCE:	/* スパイラルピアース */
-	case LK_HEADCRUSH:	/* ヘッドクラッシュ */
-	case LK_JOINTBEAT:	/* ジョイントビート */
-	case CG_ARROWVULCAN:			/* アローバルカン */
-	case HW_MAGICCRASHER:		/* マジッククラッシャー */
-	case ASC_METEORASSAULT:	/* メテオアサルト */
+	case LK_AURABLADE:
+	case LK_SPIRALPIERCE:
+	case LK_HEADCRUSH:
+	case LK_JOINTBEAT:
+	case CG_ARROWVULCAN:
+	case HW_MAGICCRASHER:
+	case ASC_METEORASSAULT:
 	case ITM_TOMAHAWK:
 	case MO_TRIPLEATTACK:
-	case CH_CHAINCRUSH:		/* 連柱崩撃 */
-	case CH_TIGERFIST:		/* 伏虎拳 */
+	case CH_CHAINCRUSH:
+	case CH_TIGERFIST:
 	case PA_SHIELDCHAIN:	// Shield Chain
-	case PA_SACRIFICE:	/* サクリファイス */
+	case PA_SACRIFICE:
 	case WS_CARTTERMINATION:	// Cart Termination
 	case AS_VENOMKNIFE:
 	case HT_PHANTASMIC:

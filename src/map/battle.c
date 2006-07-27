@@ -3518,6 +3518,7 @@ static const struct battle_data_short {
 	{ "show_steal_in_same_party",          &battle_config.show_steal_in_same_party		},
 	{ "party_hp_mode",                     &battle_config.party_hp_mode },
 	{ "show_party_share_picker",           &battle_config.party_show_share_picker },
+	{ "party_update_interval",             &battle_config.party_update_interval },
 	{ "party_item_share_type",             &battle_config.party_share_type },
 	{ "mob_ghostring_fix",                 &battle_config.mob_ghostring_fix		},
 	{ "attack_attr_none",                  &battle_config.attack_attr_none		},
@@ -3930,6 +3931,7 @@ void battle_set_defaults() {
 	battle_config.dead_branch_active = 0;
 	battle_config.vending_max_value = 10000000;
 	battle_config.show_steal_in_same_party = 0;
+	battle_config.party_update_interval = 1000;
 	battle_config.party_share_type = 0;
 	battle_config.party_hp_mode = 0;
 	battle_config.party_show_share_picker = 0;
@@ -4171,6 +4173,9 @@ void battle_validate_conf() {
 	if(battle_config.vit_penalty_count < 2)
 		battle_config.vit_penalty_count = 2;
 
+	if(battle_config.party_update_interval < 100)
+		battle_config.party_update_interval = 100;
+	
 	if(battle_config.guild_exp_limit > 99)
 		battle_config.guild_exp_limit = 99;
 /*	if(battle_config.guild_exp_limit < 0)

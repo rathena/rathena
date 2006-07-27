@@ -295,8 +295,6 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 		if ((unsigned int)sd->status.sp < b_status->sp)
 			sd->status.sp = b_status->sp;
 	}
-	/* removed exp penalty on spawn [Valaris] */
-
 	return 0;
 }
 
@@ -3178,6 +3176,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	}
 	return 1;
 }
+
 /*==========================================
  *
  *------------------------------------------
@@ -3896,7 +3895,7 @@ int pc_follow_timer(int tid,unsigned int tick,int id,int data)
 	if ((tbl = map_id2bl(sd->followtarget)) == NULL)
 		return 0;
 
-	if(tbl->type == BL_PC && pc_isdead((TBL_PC *)tbl))
+	if(status_isdead(tbl))
 		return 0;
 
 	// either player or target is currently detached from map blocks (could be teleporting),
@@ -4132,7 +4131,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	else
 		sd->status.base_exp += base_exp;
 	
-	pc_checkbaselevelup(sd) ;
+	pc_checkbaselevelup(sd);
 
 	clif_updatestatus(sd,SP_BASEEXP);
 
@@ -4724,7 +4723,6 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	return;
 }
 
-
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
 	int i=0,j=0;
@@ -5293,7 +5291,6 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 
 	return 0;
 }
-
 
 /*==========================================
  * HP/SP Healing. If flag is passed, the heal type is through clif_heal, otherwise update status.

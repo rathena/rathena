@@ -22,8 +22,6 @@
 #include "skill.h"
 #include "status.h"
 
-#define PARTY_SEND_XY_INVERVAL	1000	// ç¿ïWÇ‚ÇgÇoëóêMÇÃä‘äu
-
 static struct dbt* party_db;
 static struct party_data* party_cache = NULL; //party in cache for skipping consecutive lookups. [Skotlex]
 int party_share_level = 10;
@@ -58,7 +56,7 @@ void do_init_party(void)
 {
 	party_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	add_timer_func_list(party_send_xy_timer,"party_send_xy_timer");
-	add_timer_interval(gettick()+PARTY_SEND_XY_INVERVAL,party_send_xy_timer,0,0,PARTY_SEND_XY_INVERVAL);
+	add_timer_interval(gettick()+battle_config.party_update_interval,party_send_xy_timer,0,0,battle_config.party_update_interval);
 }
 
 // åüçı

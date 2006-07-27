@@ -372,6 +372,7 @@ extern struct Battle_Config {
 	unsigned short no_skill_delay;
 	unsigned short require_glory_guild;
 	unsigned short idle_no_share;
+	unsigned short party_update_interval;
 	unsigned short party_even_share_bonus;
 	unsigned short delay_battle_damage;
 	unsigned short hide_woe_damage;
