@@ -580,7 +580,7 @@ REPLACE INTO `item_db` VALUES (1224,'Swordbreaker','Swordbreaker',4,NULL,10,1000
 REPLACE INTO `item_db` VALUES (1225,'Mailbreaker','Mailbreaker',4,NULL,10,1000,70,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bBreakArmorRate,500; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1226,'Damascus_','Damascus',4,49000,NULL,800,118,NULL,1,2,0x028F5EEE,7,2,2,3,24,1,1,' bonus bUnbreakableWeapon,0; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1227,'Weeder_Knife','Weeder Knife',4,NULL,10,400,80,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bIgnoreDefRace,RC_Plant; bonus2 bAddRace,RC_Plant,15; bonus2 bSubRace,RC_Plant,15; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1228,'Combat_Knife','Combat Knife',4,NULL,10,400,80,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Demon,-10; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1228,'Combat_Knife','Combat Knife',4,NULL,10,400,80,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Demon,-10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1229,'Kitchen_Knife','Kitchen Knife',4,NULL,10,500,75,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bCritical,30; bonus2 bAddRace,RC_DemiHuman,3; bonus3 bAddMonsterDropItem,517,RC_Brute,5000; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1230,'Ice_Pick','Ice Pick',4,NULL,10,600,80,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1231,'Bazerald','Bazerald',4,NULL,10,500,70,NULL,1,0,0x028F5EEE,7,2,2,4,36,1,1,' bonus bAtkEle,Ele_Fire; bonus bInt,5; bonus bMatkRate,10; ',NULL,NULL);

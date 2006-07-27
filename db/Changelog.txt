@@ -20,6 +20,8 @@
 
 =========================
 07/27
+	* Corrected Combat Knife reducing damage from DemiHumans by 10% instead of
+	  increasing damage against them. [Skotlex]
 	* Fixed Independence Memorial Hat weight, set to 0 [Toms]
 07/25
 	* Added rudeattacked teleport to Rachel MVPs [Playtester]
