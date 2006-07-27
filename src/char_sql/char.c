@@ -2877,7 +2877,6 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 12)
 				return 0;
 			{
-				int i;
 				int id = RFIFOL(fd, 2);
 				int fame = RFIFOL(fd, 6);
 				char type = RFIFOB(fd, 10);

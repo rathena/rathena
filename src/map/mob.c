@@ -1765,7 +1765,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				mvp_sd=(struct map_session_data *)tmpbl[temp];
 			mvp_damage=md->dmglog[i].dmg;
 		}
-
 		temp++; // [Lance]
 	}
 	count = i; //Total number of attackers.
