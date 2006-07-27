@@ -26,7 +26,6 @@ struct mmo_charstatus *charsave_loadchar(int charid){
 	char *str_p;
 	friends = 0;
 
-//	ShowDebug("charsave_loadchar : charid = %d | hd->master->status.char_id = %d\n", charid) ;
 	c = (struct mmo_charstatus *)aCalloc(1,sizeof(struct mmo_charstatus));
 
          if(charid <= 0){
@@ -36,7 +35,7 @@ struct mmo_charstatus *charsave_loadchar(int charid){
          }
     // add homun_id [albator]
 	//Tested, Mysql 4.1.9+ has no problems with the long query, the buf is 65k big and the sql server needs for it 0.00009 secs on an athlon xp 2400+ WinXP (1GB Mem) ..  [Sirius]
-         sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, `str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`, `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`, `clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`, `last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child`, `fame`, `homun_id` FROM `char` WHERE `char_id` = '%d'", charid);
+		sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, `str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`, `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`, `clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`, `last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child`, `fame`, `homun_id` FROM `char` WHERE `char_id` = '%d'", charid);
     	if(mysql_query(&charsql_handle, tmp_sql)){
 				ShowSQL("DB error - %s\n",mysql_error(&charsql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -103,9 +102,9 @@ struct mmo_charstatus *charsave_loadchar(int charid){
          c->mother = atoi(charsql_row[44]);
          c->child = atoi(charsql_row[45]);
          c->fame = atoi(charsql_row[46]);
-		 c->hom_id = atoi(charsql_row[47]); // albator
-        	mysql_free_result(charsql_res);
+			c->hom_id = atoi(charsql_row[47]); // albator
 
+			mysql_free_result(charsql_res);
 
 	//Check for '0' Savepoint / LastPoint
 	if (c->last_point.x == 0 || c->last_point.y == 0 || c->last_point.map == 0){
@@ -240,7 +239,6 @@ struct mmo_charstatus *charsave_loadchar(int charid){
          }
 */
 	
-		 
 	//Shamelessly stolen from its_sparky (ie: thanks) and then assimilated by [Skotlex]
 	//Friend list
 	sprintf(tmp_sql, "SELECT f.friend_account, f.friend_id, c.name FROM friends f LEFT JOIN `char` c ON f.friend_account=c.account_id AND f.friend_id=c.char_id WHERE f.char_id='%d'", charid);
@@ -277,7 +275,6 @@ int charsave_savechar(int charid, struct mmo_charstatus *c){
 //	char tmp_str[64];
 //	char tmp_str2[512];
          //First save the 'char'
-	ShowDebug("charsave_savechar : charid = %d | hd->master->status.char_id = %d\n", charid) ;
 	sprintf(tmp_sql ,"UPDATE `char` SET `class`='%d', `base_level`='%d', `job_level`='%d',"
 		"`base_exp`='%d', `job_exp`='%d', `zeny`='%d',"
 		"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"

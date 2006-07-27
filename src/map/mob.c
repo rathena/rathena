@@ -1170,13 +1170,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
 	) {
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
-			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS, md, &tbl);	//[orn]
+			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS, md, &tbl);
 		if(!tbl && mode&MD_ANGRY && !md->state.aggressive)
 			md->state.aggressive = 1; //Restore angry state when no targets are visible.
 	} else if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW)) {
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
-				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS), md, &tbl);	//[orn]
+				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS), md, &tbl);
 	}
 
 	if (tbl)

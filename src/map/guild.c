@@ -869,7 +869,6 @@ int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 
 int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 { // cleaned up [LuzZza]
-	
 	struct guild *g;
 	
 	nullpo_retr(0, sd);
@@ -887,18 +886,16 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 	intif_guild_memberinfoshort(g->guild_id,
 		sd->status.account_id,sd->status.char_id,online,sd->status.base_level,sd->status.class_);
 
-	if(!online) //REMOVE sd pointer or you get a dangling pointer! [Skotlex]
-	{
-		int i = guild_getindex(g,sd->status.account_id,sd->status.char_id);
-		if (i >= 0)
-			g->member[i].sd = NULL;
+	if(!online){
+		int i=guild_getindex(g,sd->status.account_id,sd->status.char_id);
+		if(i>=0)
+			g->member[i].sd=NULL;
+		return 0;
 	}
 	
 	if(sd->state.guild_sent)
 		return 0;
 
-//	guild_check_conflict(sd); // Check if char belongs to more than one guild? Should be unneeded.
-		
 	clif_guild_belonginfo(sd,g);
 	clif_guild_notice(sd,g);
 	

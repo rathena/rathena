@@ -2317,7 +2317,7 @@ struct Damage battle_calc_magic_attack(
 				sd->ignore_mdef_ele & (1<<tstatus->def_ele) ||
 				sd->ignore_mdef_race & (1<<tstatus->race) ||
 				sd->ignore_mdef_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)
-				))
+			))
 				flag.imdef = 1;
 		}
 
@@ -2348,8 +2348,8 @@ struct Damage battle_calc_magic_attack(
 			ad.damage=battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 		if (sd && flag.cardfix) {
-			short cardfix=100;
 			short t_class = status_get_class(target);
+			short cardfix=100;
 
 			cardfix=cardfix*(100+sd->magic_addrace[tstatus->race])/100;
 			if (flag.elefix)

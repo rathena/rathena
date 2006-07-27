@@ -469,9 +469,14 @@ int party_optionchanged(int party_id,int account_id,int exp,int item,int flag)
 	if( (p=party_search(party_id))==NULL)
 		return 0;
 
-	if(!(flag&0x01)) p->party.exp=exp;
-	if(!(flag&0x10)) p->party.item=item;
-	clif_party_option(p,sd,flag);
+	if(!(flag&0x01) && p->party.exp != exp) {
+		p->party.exp=exp;
+		clif_party_option(p,sd,flag); //This packet doesn't updates item info anymore...
+	}
+	if(!(flag&0x10) && p->party.item != item) {
+		p->party.item=item;
+		clif_party_main_info(p,-1);
+	}
 	return 0;
 }
 
