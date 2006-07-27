@@ -210,7 +210,7 @@ morocc.gat,244,134,1	shop	Trader	93,2612:-1
 morocc.gat,259,193,1	shop	Trader	99,747:-1
 morocc.gat,268,193,1	shop	Trader	93,748:-1
 morocc.gat,269,167,4	shop	Pet Merchant	125,537:-1,643:-1,10013:-1,10014:-1
-morocc.gat,120,97,5	shop	Ingredient Seller	86,7452,:-,7453:-1,7454:-1,7455:-1,7456:-1
+morocc.gat,120,97,5	shop	Ingredient Seller	86,7452:-1,7453:-1,7454:-1,7455:-1,7456:-1
 //morocc_in.gat,65,37,4	shop	Miner	48,1010:-1,1011:-1
 morocc_in.gat,132,57,0	shop	Weapon Dealer	99,1146:-1,1245:-1
 

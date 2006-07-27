@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/27
+	* Fixed the Morroc ingredient seller to not appear [Playtester]
 	* Fixed some spawns and a warp in Sunken Ship [Playtester]
 07/26
 	* Fixed the Factory Quest [Playtester]
