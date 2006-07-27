@@ -969,7 +969,7 @@ int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 
 			if( npc_event(sd,name,0)>0 ) {
 				pc_stop_walking(sd,1); //Make it stop walking!
-				npc_click(sd,&(map[m].npc[i]->bl));
+				npc_click(sd,map[m].npc[i]);
 			}
 			//aFree(name);
 			break;
@@ -1082,10 +1082,8 @@ int npc_globalmessage(const char *name,char *mes)
  * ƒNƒŠƒbƒNŽž‚ÌNPCˆ—
  *------------------------------------------
  */
-int npc_click(struct map_session_data *sd,struct block_list *bl)
+int npc_click(struct map_session_data *sd,struct npc_data *nd)
 {
-	struct npc_data *nd = NULL;
-
 	nullpo_retr(1, sd);
 
 	if (sd->npc_id != 0) {
@@ -1094,18 +1092,12 @@ int npc_click(struct map_session_data *sd,struct block_list *bl)
 		return 1;
 	}
 
-	if(!bl) return 1;
-	switch(bl->type){
-		case BL_NPC:
-			if ((nd = npc_checknear(sd,bl)) == NULL)
-				return 1;
-			//Hidden/Disabled npc.
-			if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
-				return 1;
-			break;
-		default:
-			return 1;
-	}
+	if(!nd) return 1;
+	if ((nd = npc_checknear(sd,&nd->bl)) == NULL)
+		return 1;
+	//Hidden/Disabled npc.
+	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
+		return 1;
 
 	switch(nd->bl.subtype) {
 	case SHOP:
