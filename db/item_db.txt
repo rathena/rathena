@@ -1499,7 +1499,7 @@
 4337,Porcellio_Card,Porcellio Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,25; bonus bDef,-5; },{},{}
 4338,Obsidian_Card,Obsidian Card,6,,10,10,,,,,,,,16,,,,,{ bonus bVit,readparam(bDex)/18; },{},{}
 4339,Mineral_Card,Mineral Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,-25; bonus bDef,3; },{},{}
-4340,Teddy_Bear_Card,Teddy Bear Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubEle,RC_Undead,30; },{},{}
+4340,Teddy_Bear_Card,Teddy Bear Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Undead,30; },{},{}
 4341,Metaling_Card,Metaling Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,215,1,50; },{},{}
 4342,RSX_0806_Card,RSX 0806 Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 4343,Holden_Card,Holden Card,6,,10,10,,,,,,,,769,,,,,{ bonus bLuk,2; if(isequipped(4186,4281,4036,4233)) { bonus bStr,4; bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus2 bSkillAtk,42,20; bonus bSPGainValue,1; if(BaseJob == Job_Alchem) { bonus3 bAutoSpell,111,1,10; bonus2 bAddMonsterDropItem,7139,1; bonus2 bAddMonsterDropItem,905,10; } } },{},{}
