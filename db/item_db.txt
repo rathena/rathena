@@ -1758,7 +1758,7 @@
 5187,Twin_Ribbon,Twin Ribbon,5,,10,200,,3,,1,0xFFFFFFFF,7,2,256,,30,1,239,{ bonus bMaxSP,30; bonus bMdef,3; },{},{}
 5188,Wandering_Minstrel_Hat,Wandering Minstrel Hat,5,,10,500,,2,,0,0xFFFFFFFF,7,2,256,,50,1,240,{ bonus bInt,1; bonus bDex,1; },{},{}
 5189,Autumn_Leaves,Autumn Leaves,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,241,{ bonus bMaxHP,40; bonus bMaxSP,40; },{},{}
-5190,Independence_Memorial_Hat,Independence Memorial Hat,5,,10,,,3,,0,0xFFFFFFFF,7,2,256,,,1,242,{},{},{}
+5190,Independence_Memorial_Hat,Independence Memorial Hat,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,,1,242,{},{},{}
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}

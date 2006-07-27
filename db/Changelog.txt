@@ -19,6 +19,8 @@
 	-----
 
 =========================
+07/27
+	* Fixed Independence Memorial Hat weight, set to 0 [Toms]
 07/25
 	* Added rudeattacked teleport to Rachel MVPs [Playtester]
 	* Added some NPC_Emotions for the Rachel mobs [Playtester]

@@ -1788,7 +1788,7 @@ REPLACE INTO `item_db` VALUES (5186,'Geographer_Decoration','Geographer Decorati
 REPLACE INTO `item_db` VALUES (5187,'Twin_Ribbon','Twin Ribbon',5,NULL,10,200,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,1,239,' bonus bMaxSP,30; bonus bMdef,3; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5188,'Wandering_Minstrel_Hat','Wandering Minstrel Hat',5,NULL,10,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,1,240,' bonus bInt,1; bonus bDex,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5189,'Autumn_Leaves','Autumn Leaves',5,NULL,10,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,NULL,1,241,' bonus bMaxHP,40; bonus bMaxSP,40; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5190,'Independence_Memorial_Hat','Independence Memorial Hat',5,NULL,10,NULL,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,NULL,1,242,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5190,'Independence_Memorial_Hat','Independence Memorial Hat',5,NULL,10,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,NULL,1,242,NULL,NULL,NULL);
 # // More Etc Items
 # //===================================================================
 REPLACE INTO `item_db` VALUES (7001,'Mold_Powder','Mould Powder',3,NULL,340,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
