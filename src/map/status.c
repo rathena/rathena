@@ -4428,6 +4428,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1)
 				return 0;
 		break;
+		case SC_CLOAKING:
+			//Avoid cloaking with no wall and low skill level. [Skotlex]
+			//Due to the cloaking card, we have to check the wall versus to known
+			//skill level rather than the used one. [Skotlex]
+			//if (sd && val1 < 3 && skill_check_cloaking(bl))
+			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl,sc))
+				return 0;
+			break;
 		case SC_MODECHANGE:
 		{
 			int mode;
@@ -4998,6 +5006,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//HP healing is performing after the calc_status call.
 			if (sd) sd->canregen_tick = gettick() + 300000;
 			//Val2 holds HP penalty
+			if (!val4) val4 = skill_get_time2(StatusSkillChangeTable[type],val1);
 			if (!val4) val4 = 10000; //Val4 holds damage interval
 			val3 = tick/val4; //val3 holds skill duration
 			tick = val4;
@@ -5853,8 +5862,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 
 		case SC_BERSERK:
-			//val4 indicates if the skill was dispelled. [Skotlex]
-			if(status->hp > 100 && !sc->data[type].val4)
+			//If val2 is removed, no HP penalty (dispelled?) [Skotlex]
+			if(status->hp > 100 && sc->data[type].val2)
 				status_zap(bl, status->hp-100, 0); 
 			if(sc->data[SC_ENDURE].timer != -1)
 				status_change_end(bl, SC_ENDURE, -1);
