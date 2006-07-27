@@ -20,6 +20,7 @@
 
 =========================
 07/27
+	* Hopefully fixed Solace card [Playtester]
 	* Corrected Combat Knife reducing damage from DemiHumans by 10% instead of
 	  increasing damage against them. [Skotlex]
 	* Fixed Independence Memorial Hat weight, set to 0 [Toms]

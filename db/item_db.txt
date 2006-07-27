@@ -1553,7 +1553,7 @@
 4391,Retribution_Card,Retribution Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12068,RC_Angel,10; },{},{}
 4392,Observation_Card,Observation Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDex,readparam(bVit)/18; },{},{}
 4393,Shelter_Card,Shelter Card,6,,10,10,,,,,,,,16,,,,,{ bonus bInt,readparam(bStr)/18; },{},{}
-4394,Solace_Card,Solace Card,6,,10,10,,,,,,,,2,,,,,{ if(BaseJob == Job_Priest) bonus3 bAutoSpell,254,5,10; },{},{}
+4394,Solace_Card,Solace Card,6,,10,10,,,,,,,,2,,,,,{ if(BaseJob == Job_Priest) bonus4 bAutoSpell,254,5,10,0; },{},{}
 4395,Thanatos_Maero_Card,Thanatos Maero Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus3 bAutoSpell,30,3,50; },{},{}
 4396,Thanatos_Odium_Card,Thanatos Odium Card,6,,10,10,,,,,,,,64,,,,,{ bonus bAgi,getrefine()-5;},{},{}
 4397,Thanatos_Despero_Card,Thanatos Despero Card,6,,10,10,,,,,,,,32,,,,,{ bonus bInt,getrefine()-6; },{},{}
