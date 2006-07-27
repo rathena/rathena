@@ -908,7 +908,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 			WBUFW(buf,8)=sc->opt1;
 			WBUFW(buf,10)=sc->opt2;
 			WBUFL(buf,12)=sc->option;
-			WBUFL(buf,42)=sc->opt3;
+			WBUFL(buf,44)=sc->opt3;
 		}
 		WBUFW(buf,16)=vd->class_;
 		WBUFW(buf,18)=vd->hair_style;
@@ -923,7 +923,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFL(buf,36)=guild_id;
 		WBUFW(buf,40)=emblem_id;
 		if (sd) {
-			WBUFW(buf,46)=sd->status.manner;
+			WBUFW(buf,42)=sd->status.manner;
 			WBUFB(buf,48)=sd->status.karma;
 		}
 		WBUFB(buf,49)=vd->sex;
@@ -3876,18 +3876,22 @@ void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->walktimer != -1)
 	{
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
-#else
+#if PACKETVER > 6
+		WFIFOHEAD(sd->fd, packet_len_table[0x22c]);
+#elif PACKETVER > 3
 		WFIFOHEAD(sd->fd, packet_len_table[0x1da]);
+#else
+		WFIFOHEAD(sd->fd, packet_len_table[0x7b]);
 #endif
 		len = clif_set007b(bl,vd,ud,WFIFOP(sd->fd,0));
 		WFIFOSET(sd->fd,len);
 	} else {
-#if PACKETVER < 4
-		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
-#else
+#if PACKETVER > 6
+		WFIFOHEAD(sd->fd,packet_len_table[0x22a]);
+#elif PACKETVER > 3
 		WFIFOHEAD(sd->fd,packet_len_table[0x1d8]);
+#else
+		WFIFOHEAD(sd->fd,packet_len_table[0x78]);
 #endif
 		len = clif_set0078(bl,vd,WFIFOP(sd->fd,0));
 		WFIFOSET(sd->fd,len);

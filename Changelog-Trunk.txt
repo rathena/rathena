@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/27
+	* Fixed packet 0x22a having the manner and opt3 packets in inverted
+	  offsets. [Skotlex]
 	* Readded the check which prevents Cloaking from activating when your
 	  learned level is less than 3 and you aren't next to a wall. [Skotlex]
 	* Some cleanups to the Frenzy/Berserk status change, it should probably

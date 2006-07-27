@@ -921,7 +921,7 @@ int mapif_guild_castle_alldataload_sub(DBKey key, void *data, va_list ap) {
 int mapif_guild_castle_alldataload(int fd) {
 	int len = 4;
 
-        WFIFOHEAD(fd, 0);
+	WFIFOHEAD(fd, 0);
 	WFIFOW(fd,0) = 0x3842;
 	castle_db->foreach(castle_db, mapif_guild_castle_alldataload_sub, fd, &len);
 	WFIFOW(fd,2) = len;

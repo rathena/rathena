@@ -477,6 +477,8 @@ int party_optionchanged(int party_id,int account_id,int exp,int item,int flag)
 		p->party.item=item;
 		clif_party_main_info(p,-1);
 	}
+	if(flag&0x01) //Send denied message
+		clif_party_option(p,sd,flag);
 	return 0;
 }
 
