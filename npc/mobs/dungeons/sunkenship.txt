@@ -99,8 +99,8 @@ treasure01.gat,82,154,11,9	monster	Poison Spore	1077,3,100000,100000,1
 treasure01.gat,54,154,11,9	monster	Poison Spore	1077,3,100000,100000,1
 treasure01.gat,0,0,0,0	monster	Whisper	1179,5,120000,60000,1
 treasure01.gat,164,59,12,10	monster	Whisper	1179,5,300000,100000,1
-treasure02.gat,0,0,0,0	monster	Penomena	1216,1,900000,450000,1
-treasure02.gat,0,0,0,0	monster	Wanderer	1208,1,1800000,900000,1
+treasure01.gat,0,0,0,0	monster	Penomena	1216,1,900000,450000,1
+treasure01.gat,0,0,0,0	monster	Wanderer	1208,1,1800000,900000,1
 
 //==================================================
 // treasure02 - Sunken Ship F2
