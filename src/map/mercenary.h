@@ -76,3 +76,5 @@ int merc_natural_heal_timer_delete(struct homun_data *hd);
 #define merc_stop_walking(hd, type) { if((hd)->ud.walktimer != -1) unit_stop_walking(&(hd)->bl, type); }
 #define merc_stop_attack(hd) { if((hd)->ud.attacktimer != -1) unit_stop_attack(&(hd)->bl); hd->ud.target = 0; }
 int read_homunculusdb(void);
+int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
+int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);

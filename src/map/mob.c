@@ -1893,8 +1893,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 						pc_getzeny((struct map_session_data *)tmpbl[i], zeny);
 					break ;
 				case BL_HOMUNCULUS:
-					if(base_exp)
+					if(base_exp) {
 						merc_hom_gainexp((struct homun_data *)tmpbl[i], base_exp);
+						//homunculus give base_exp to master
+						pc_gainexp(((struct homun_data *)tmpbl[i])->master, &md->bl, base_exp,0);
+					}
 					if(zeny)	//homunculus give zeny to master
 						pc_getzeny((struct map_session_data *)((struct homun_data *)tmpbl[i])->master, zeny);
 					break ;

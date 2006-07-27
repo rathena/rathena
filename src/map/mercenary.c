@@ -104,6 +104,7 @@ void merc_load_exptables(void)
 
 }
 
+
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
 	nullpo_retv(hd);
@@ -119,9 +120,9 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
-	hd->master->homunculus.intimacy -= 100 ;
 	hd->master->homunculus.hp = 0 ;
-	if(hd->master->homunculus.intimacy <= 0) {
+	clif_hominfo(hd->master, 0); // Send dead flag
+	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
 		clif_emotion(&hd->master->bl, 23) ;	//omg
@@ -138,7 +139,6 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 int merc_hom_delete(struct homun_data *hd, int flag)
 {
 	nullpo_retr(0, hd);
-
 	// Delete homunculus
 	if ( flag&1 ) {	//sabbath
 		intif_homunculus_requestdelete(hd->master->homunculus.hom_id) ;
@@ -358,6 +358,35 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 	return 0;
 }
 
+// Return then new value
+int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value)
+{
+	if (hd->master->homunculus.intimacy + value <= 100000)
+	{
+		hd->master->homunculus.intimacy += value;
+	}
+	else
+	{
+		hd->master->homunculus.intimacy = 100000;
+	}
+	return hd->master->homunculus.intimacy;
+}
+
+// Return 0 if decrease fails or intimacy became 0 else the new value
+int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
+{
+	if (hd->master->homunculus.intimacy >= value)
+	{
+		hd->master->homunculus.intimacy -= value;
+	}
+	else
+	{
+		hd->master->homunculus.intimacy = 0;
+	}
+
+	return hd->master->homunculus.intimacy;
+}
+
 int merc_hom_heal(struct homun_data *hd,int hp,int sp)
 {
 	nullpo_retr(0, hd);
@@ -469,6 +498,8 @@ int merc_natural_heal(int tid,unsigned int tick,int id,int data)
 
 	nullpo_retr(0, sd);
 	
+	sd->hd->natural_heal_timer = -1;
+
 	if(sd->homunculus.vaporize)
 		return 1;
 
@@ -573,7 +604,7 @@ int merc_menu(struct map_session_data *sd,int menunum)
 
 int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 {
-	int i, k, intimacy, emotion;
+	int i, k, emotion;
 
 	if(hd->master->homunculus.vaporize)
 		return 1 ;
@@ -587,28 +618,22 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	pc_delitem(sd,i,1,0);
 
 	if ( hd->master->homunculus.hunger >= 91 ) {
-		intimacy = -50;
+		merc_hom_decrease_intimacy(hd, 50);
 		emotion = 16;
 	} else if ( hd->master->homunculus.hunger >= 76 ) {
-		intimacy = -30;
+		merc_hom_decrease_intimacy(hd, 5);
 		emotion = 19;
 	} else if ( hd->master->homunculus.hunger >= 26 ) {
-		intimacy = 80;
+		merc_hom_increase_intimacy(hd, 75);
 		emotion = 2;
 	} else if ( hd->master->homunculus.hunger >= 11 ) {
-		intimacy = 100;
+		merc_hom_increase_intimacy(hd, 100);
 		emotion = 2;
 	} else {
-		intimacy = 50;
+		merc_hom_increase_intimacy(hd, 25);
 		emotion = 2;
 	}
-	hd->master->homunculus.intimacy += intimacy;
-	if(hd->master->homunculus.intimacy < 0)
-		hd->master->homunculus.intimacy = 0;
-	if(hd->master->homunculus.intimacy > 100000)
-		hd->master->homunculus.intimacy = 100000;
 
-	//emotion = 5 ; // FIXME: why the code above and now always set emotion to Thanks? 
 	hd->master->homunculus.hunger += 10;	//dunno increase value for each food
 	if(hd->master->homunculus.hunger > 100)
 		hd->master->homunculus.hunger = 100;
@@ -617,14 +642,17 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
 	clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
 	clif_hom_food(sd,hd->homunculusDB->foodID,1);
-
-	if(hd->master->homunculus.intimacy == 0) {
+       	
+	// Too much food :/
+	if(hd->master->homunculus.intimacy == 0) {  
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
-		clif_emotion(&hd->master->bl, 23) ;	//omg
-		merc_hom_delete(hd,1) ;
-	}
-
+		// Send homunculus_dead to client
+		sd->homunculus.hp = 0;
+		clif_hominfo(sd, 0);
+		merc_hom_delete(hd,1);
+		clif_emotion(&hd->master->bl, 23);     //omg  
+  	}  
 	return 0;
 }
 
@@ -646,37 +674,38 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 			ShowError("merc_hom_hungry_timer %d != %d\n",hd->hungry_timer,tid);
 		return 0 ;
 	}
+
+	hd->hungry_timer = -1;
+	
 	hd->master->homunculus.hunger-- ;
-	if(hd->master->homunculus.hunger >= 0 && hd->master->homunculus.hunger <= 10) {
+	if(hd->master->homunculus.hunger <= 10) {
 		clif_emotion(&hd->bl, 6) ;	//an
-	}
-	if(hd->master->homunculus.hunger == 25) {
+	} else if(hd->master->homunculus.hunger == 25) {
 		clif_emotion(&hd->bl, 20) ;	//hmm
-	}
-	if(hd->master->homunculus.hunger == 75) {
+	} else if(hd->master->homunculus.hunger == 75) {
 		clif_emotion(&hd->bl, 33) ;	//ok
 	}  
+	
 	if(hd->master->homunculus.hunger < 0) {
 		hd->master->homunculus.hunger = 0;
-		hd->master->homunculus.intimacy -= 100;
-		if(hd->master->homunculus.intimacy < 0)
-			hd->master->homunculus.intimacy = 0;
-		clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
-		if(hd->master->homunculus.intimacy == 0) {
+		// Delete the homunculus if intimacy <= 100
+		if ( !merc_hom_decrease_intimacy(hd, 100) ) {
 			merc_stop_walking(hd, 1);
 			merc_stop_attack(hd);
+			// Send homunculus_dead to client
+			sd->homunculus.hp = 0;
+			clif_hominfo(sd, 0);
+			merc_hom_delete(hd,1);
 			clif_emotion(&hd->master->bl, 23) ;	//omg
-			merc_hom_delete(hd,1) ;
+			return 0 ;
+		} else {
+			clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
 		}
-		return 0 ;
-	} else {
-		clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
-	
-		hd->hungry_timer = add_timer(tick+hd->homunculusDB->hungryDelay,merc_hom_hungry,sd->bl.id,0); //simple Fix albator
-		return 1 ;
 	}
 
-
+	clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
+	hd->hungry_timer = add_timer(tick+hd->homunculusDB->hungryDelay,merc_hom_hungry,sd->bl.id,0); //simple Fix albator
+	return 0;
 }
 
 int merc_hom_hungry_timer_delete(struct homun_data *hd)

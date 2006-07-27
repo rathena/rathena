@@ -5546,56 +5546,54 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_CALLHOMUN:	//[orn]
 	{
 		int i = 0;
-		if (sd && (sd->status.hom_id == 0 || sd->homunculus.vaporize == 1)) {
-			if (sd->status.hom_id == 0) {
-				i = pc_search_inventory(sd,7142);
-				if(i < 0) {
-					clif_skill_fail(sd,skillid,0,0);
-					break ;
+		if (sd)
+		{
+			if ((sd->status.hom_id == 0 || sd->homunculus.vaporize == 1)) {
+				if (sd->status.hom_id == 0) {
+					i = pc_search_inventory(sd,7142);
+					if(i < 0) {
+						clif_skill_fail(sd,skillid,0,0);
+						break ;
+					}
+					pc_delitem(sd,i,1,0);
 				}
-				pc_delitem(sd,i,1,0);
+				if (merc_call_homunculus(sd))
+					break;
 			}
-			if (merc_call_homunculus(sd))
-				break;
+			clif_skill_fail(sd,skillid,0,0);
 		}
-		
-		clif_skill_fail(sd,skillid,0,0);
 		break;
 	}
 	case AM_REST:	//[orn]
 	{
-		if (sd && sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
-			sd->homunculus.vaporize = 1;
-			clif_hominfo(sd, 0);
-			merc_hom_delete(sd->hd, 0) ;
-		} else if ( sd ) 
+		if (sd)
 		{
+			if (sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
+				sd->homunculus.vaporize = 1;
+				clif_hominfo(sd, 0);
+				merc_hom_delete(sd->hd, 0) ;
+			}
 			clif_skill_fail(sd,skillid,0,0);
 		}
-		
 		break;
 	}
 	case AM_RESURRECTHOMUN:	//[orn]
 	{
-		if ( sd && sd->status.hom_id ) {
-			if( map_flag_gvg(bl->m) )
-			{	//No reviving in WoE grounds!
-				clif_skill_fail(sd,skillid,0,0);
-				break;
-			}
-			if ( sd->homunculus.hp == 0 ) {
-				int per = 10 * skilllv;
-	
-				if (merc_hom_revive(sd, per) )
-				{
-					clif_skill_nodamage(src,&sd->hd->bl,AM_RESURRECTHOMUN,skilllv,1);
-				} else {
+		if (sd)
+		{
+			if (sd->status.hom_id && sd->homunculus.hp == 0)
+			{
+				if( map_flag_gvg(bl->m) )
+				{	//No reviving in WoE grounds!
 					clif_skill_fail(sd,skillid,0,0);
+					break;
 				}
-			} else {	
+				if (merc_hom_revive(sd, 10 * skilllv) )
+					clif_skill_nodamage(src,&sd->hd->bl,AM_RESURRECTHOMUN,skilllv,1);
+				else
+					clif_skill_fail(sd,skillid,0,0);
+			} else
 				clif_skill_fail(sd,skillid,0,0);
-			}
-
 		}
 		break;
 	}

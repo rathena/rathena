@@ -482,7 +482,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		(p->int_ != cp->int_) || (p->dex != cp->dex) || (p->luk != cp->luk) ||
 		(p->option != cp->option) ||
 		(p->party_id != cp->party_id) || (p->guild_id != cp->guild_id) ||
-		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) ||
+		(p->pet_id != cp->pet_id) || (p->weapon != cp->weapon) || (p->hom_id != cp->hom_id) ||
 		(p->shield != cp->shield) || (p->head_top != cp->head_top) ||
 		(p->head_mid != cp->head_mid) || (p->head_bottom != cp->head_bottom)
 	)
