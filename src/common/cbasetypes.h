@@ -60,15 +60,18 @@
 typedef unsigned char	uchar;
 typedef   signed char	schar;
 typedef   signed short	sshort;
-#ifndef __FREEBSD__
-typedef unsigned short	ushort;
+
+#if !defined(__FREEBSD__) && !defined(_SYS_TYPES_H)
+	typedef unsigned short  ushort;
 #endif
-typedef   signed int	sint;	// don't use (only for ie. scanf)
-#ifndef __FREEBSD__
-typedef unsigned int	uint;	// don't use
+typedef   signed int    sint;   // don't use (only for ie. scanf)
+#if !defined(__FREEBSD__) && !defined(_SYS_TYPES_H)
+	typedef unsigned int    uint;   // don't use
 #endif
-typedef   signed long	slong;	// don't use (only for ie. file-io)
-typedef unsigned long	ulong;	// don't use
+typedef   signed long   slong;  // don't use (only for ie. file-io)
+#ifndef _SYS_TYPES_H
+	typedef unsigned long   ulong;  // don't use
+#endif
 
 #ifndef WIN32
 typedef char*           pchar;
