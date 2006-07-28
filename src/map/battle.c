@@ -1196,11 +1196,12 @@ static struct Damage battle_calc_weapon_attack(
 
 				// Added split damage for Huuma
 				if (skill_num == NJ_HUUMA) // Divide ATK in case of multiple targets skill
-				if(wflag>0)
-					wd.damage/= wflag;
-				else if(battle_config.error_log)
-					ShowError("0 enemies targeted by Throw Huuma, divide per 0 avoided!\n");
-
+				{
+					if(wflag>0)
+						wd.damage/= wflag;
+					else if(battle_config.error_log)
+						ShowError("0 enemies targeted by Throw Huuma, divide per 0 avoided!\n");
+				}
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
