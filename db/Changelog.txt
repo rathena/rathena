@@ -19,6 +19,8 @@
 	-----
 
 =========================
+07/28
+	* Fixed some summon skills [Playtester]
 07/27
 	* Hellion Revenant is now dark element so he can heal himself [Playtester]
 	* Fixed Teddy Bear card [Playtester]
