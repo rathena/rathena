@@ -19,6 +19,9 @@
 	-----
 
 =========================
+07/29
+	* Reverted the Hellion Revenant change. He IS supposed to be undead 3. [MasterOfMuppets]
+	- And yes, he can still heal himself even though he is undead...
 07/28
 	* Fixed some summon skills [Playtester]
 07/27
