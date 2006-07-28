@@ -2659,7 +2659,8 @@ void run_script_main(struct script_state *st)
 	int bk_npcid = 0;
 	struct script_stack *stack=st->stack;
 
-	if(st->rid) sd = map_id2sd(st->rid);
+	sd = st->rid?map_id2sd(st->rid):NULL;
+
 	if(sd){
 		if(sd->st != st){
 			bk_st = sd->st;
