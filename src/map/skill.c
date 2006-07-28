@@ -2087,9 +2087,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(sd && dmg.flag&BF_WEAPON && src != bl && src == dsrc && damage > 0) {
 		if (battle_config.left_cardfix_to_right)
-			battle_drain(sd, tsd, dmg.damage, dmg.damage, tstatus->race, tstatus->mode&MD_BOSS);
+			battle_drain(sd, bl, dmg.damage, dmg.damage, tstatus->race, tstatus->mode&MD_BOSS);
 		else
-			battle_drain(sd, tsd, dmg.damage, dmg.damage2, tstatus->race, tstatus->mode&MD_BOSS);
+			battle_drain(sd, bl, dmg.damage, dmg.damage2, tstatus->race, tstatus->mode&MD_BOSS);
 	}
 
 	if (rdamage>0) {
@@ -3711,8 +3711,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if (skill_break_equip(bl, EQP_WEAPON, 10000, BCT_PARTY) && sd && sd != dstsd)
 				clif_displaymessage(sd->fd,"You broke target's weapon");
 		}
-		//FIXME : Why clif_skill_nodamage 2 times ?
-		//clif_skill_nodamage(src,bl,skillid,skilllv,i);
 		break;
 
 	case PR_ASPERSIO:		/* アスペルシオ */

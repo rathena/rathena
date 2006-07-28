@@ -2765,7 +2765,7 @@ int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	return rdamage;
 }
 
-void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, int boss)
+void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss)
 {
 	struct weapon_data *wd;
 	int type, thp = 0, tsp = 0, rhp = 0, rsp = 0, hp, sp, i, *damage;
@@ -2803,17 +2803,17 @@ void battle_drain(TBL_PC *sd, TBL_PC* tsd, int rdamage, int ldamage, int race, i
 			tsp += sp;
 		}
 	}
+
+	if (sd->sp_vanish_rate && rand()%1000 < sd->sp_vanish_rate)
+		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->sp_vanish_per);
 	if (!thp && !tsp) return;
 
 	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
 	
-	if (tsd) {
-		if (rhp || rsp)
-			status_zap(&tsd->bl, rhp, rsp);
-		if (rand()%1000 < sd->sp_vanish_rate)
-			status_percent_damage(&sd->bl, &tsd->bl, 0, (unsigned char)sd->sp_vanish_per);
-	}
+	if (rhp || rsp)
+		status_zap(tbl, rhp, rsp);
 }
+
 /*==========================================
  * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------
@@ -2978,9 +2978,9 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	if (sd) {
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			if (battle_config.left_cardfix_to_right)
-				battle_drain(sd, tsd, wd.damage, wd.damage, tstatus->race, is_boss(target));
+				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, is_boss(target));
 			else
-				battle_drain(sd, tsd, wd.damage, wd.damage2, tstatus->race, is_boss(target));
+				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, is_boss(target));
 		}
 	}
 	if (rdamage > 0) //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]

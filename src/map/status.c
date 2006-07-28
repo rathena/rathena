@@ -566,8 +566,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	if (status == &dummy_status || !status->hp)
 		return 0; //Invalid targets: no damage or dead
 
-	if (!target->prev && !(flag&2))
-		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
+// Let through. battle.c/skill.c have the whole logic of when it's possible or
+// not to hurt someone (and this check breaks pet catching) [Skotlex]
+//	if (!target->prev && !(flag&2))
+//		return 0; //Cannot damage a bl not on a map, except when "charging" hp/sp
 
 	sc = status_get_sc(target);
 

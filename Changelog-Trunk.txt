@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/28
+	* Some cleaning of battle_drain, Evil Druid card should work now. [Skotlex]
+	* Made status_damage allow damaging of objects not on a map, this should
+	  fix pet-catching making the mob never respawn again. [Skotlex]
 	* Casted nothl to (unsigned int) in sprintf functions, IP is 32bits and sql field the same :) [Toms]
 	* Fixed "warning: `list' might be used uninitialized in this function" in char/char.c@3032 [Toms]
 	* Fixed "uninitialized local variable 'i' used" in skill.c and "warning: suggest explicit braces to avoid ambiguous `else'" in battle.c [Toms]
