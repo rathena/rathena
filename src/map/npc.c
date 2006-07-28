@@ -1302,7 +1302,7 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 		}
 
 		if(log_config.pick) //Logs items, Sold to NPC (S)hop [Lupus]
-			log_pick(sd, "S", 0, nameid, qty, &sd->status.inventory[idx]);
+			log_pick(sd, "S", 0, nameid, -qty, &sd->status.inventory[idx]);
 
 		if(nd) {
 			pc_setreg(sd,add_str("@sold_nameid")+(i<<24),(int)sd->status.inventory[idx].nameid);

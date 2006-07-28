@@ -341,6 +341,8 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		sd->status.party_id=party_id;
 		party_check_conflict(sd);
 		clif_party_join_info(&p->party,sd);
+		clif_party_hp(sd);
+		clif_party_xy(sd);
 		clif_charnameupdate(sd); //Update char name's display [Skotlex]
 	}
 
