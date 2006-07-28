@@ -20,8 +20,11 @@
 
 =========================
 07/29
+	* Shockwave, Flasher and Freezing Trap now consume 2 trap items [Playtester]
+	- this is correct according to info from RagnaInfo and some guides
 	* Reverted the Hellion Revenant change. He IS supposed to be undead 3. [MasterOfMuppets]
 	- And yes, he can still heal himself even though he is undead...
+	- Note by Playtester: On eA right now he can't...
 07/28
 	* Fixed some summon skills [Playtester]
 07/27
