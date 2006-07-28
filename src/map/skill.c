@@ -7533,7 +7533,6 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case SA_VIOLENTGALE:
 		case CG_HERMODE:
 		case HW_GRAVITATION:
-		case NJ_SUITON:
 			if (sc && sc->data[type].timer != -1)
 				status_change_end(bl, type, -1);
 			break;
