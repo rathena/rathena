@@ -2700,6 +2700,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case HT_POWER:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
+	case GS_TRIPLEACTION:
+	case GS_MAGICALBULLET:
+	case GS_CRACKER:
+	case GS_TRACKING:
+	case GS_PIERCINGSHOT:
+	case GS_RAPIDSHOWER:
+	case GS_DUST:
+	case GS_FULLBUSTER:
+	case NJ_SYURIKEN:
+	case NJ_KUNAI:
 	case ASC_BREAKER:
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
@@ -3147,19 +3157,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 
-	//Until they're at right position - gs_damage- [Vicious]
-	case GS_TRIPLEACTION:
-	case GS_MAGICALBULLET:
-	case GS_CRACKER:
-	case GS_TRACKING:
-	case GS_PIERCINGSHOT:
-	case GS_RAPIDSHOWER:
-	case GS_DUST:
-	case GS_FULLBUSTER:
-	case NJ_SYURIKEN:
-	case NJ_KUNAI:
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		break;
 	case GS_BULLSEYE:
 		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
