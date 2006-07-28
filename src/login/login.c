@@ -1407,7 +1407,7 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap) {
 // Packet parsing for char-servers
 //--------------------------------
 int parse_fromchar(int fd) {
-	int i;
+	unsigned int i;
 	int j, id;
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];
@@ -1911,7 +1911,7 @@ int parse_fromchar(int fd) {
 			}
 			{
 				struct online_login_data *p;
-				int aid, users;
+				unsigned int aid, users;
 				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {

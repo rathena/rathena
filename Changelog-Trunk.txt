@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/28
+	* Fixed sign warnings in login/login.c [Toms]
 	* Fixed "conversion from 'double' to 'int', possible loss of data" [Toms]
 	* Fixed "warning: redefinition of [ushort/uint/ulong]" [Toms]
 	* Fixed duplicate case value on NJ_SUITON [Toms]
