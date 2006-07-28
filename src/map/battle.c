@@ -325,8 +325,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-		//Now damage increasing effects
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
+		//Now damage increasing effects // not sure for Throw Zeny
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN && skill_num != NJ_ZENYNAGE){
 			damage<<=1;
 			status_change_end( bl,SC_AETERNA,-1 );
 		}
@@ -615,12 +615,12 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			if((skill = pc_checkskill(sd,AS_KATAR)) > 0)
 				damage += (skill * 3);
 			break;
+		case W_HUUMA: // Added Tobidougu bonus if wearing a Fuuma Shuriken
+			if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) >0)
+				damage += (skill * 3);
+			break;
 	}
-/*//need to add this on shuriken skills.
-	if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
-		damage += (skill * 3);
-	}	
-*/
+
 	return damage;
 }
 /*==========================================
@@ -633,6 +633,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
  * &2: Arrow attack
  * &4: Skill is Magic Crasher
  * &8: Skip target size adjustment (Extremity Fist?)
+ *&16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
  */
 static int battle_calc_base_damage(struct status_data *status, struct weapon_atk *wa, struct status_change *sc, unsigned short t_size, struct map_session_data *sd, int flag)
 {
@@ -666,7 +667,7 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 			if (atkmin > atkmax)
 				atkmin = atkmax;
 			
-			if(flag&2)
+			if(flag&2 && !(flag&16))
 			{	//Bows
 				atkmin = atkmin*atkmax/100;
 				if (atkmin > atkmax)
@@ -1025,6 +1026,7 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_MENTALBREAKER:
 				case GS_GROUNDDRIFT:
 				case NJ_TATAMIGAESHI:
+				case NJ_ISSEN:
 				case HVAN_EXPLOSION:	//[orn]
 					flag.hit = 1;
 					break;
@@ -1186,9 +1188,18 @@ static struct Damage battle_calc_weapon_attack(
 			default:
 			{
 				i = (flag.cri?1:0)|(flag.arrow?2:0)|(skill_num == HW_MAGICCRASHER?4:0)|(skill_num == MO_EXTREMITYFIST?8:0);
+				if ( flag.arrow && sd->status.weapon != W_BOW && sd->status.weapon != W_REVOLVER && sd->status.weapon != W_SHOTGUN 
+					&& sd->status.weapon != W_GATLING && sd->status.weapon != W_GRENADE ) i |= 16; // for ex. shuriken must not be influenced by DEX	
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
 				if (sstatus->lhw)
 					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
+
+				// Added split damage for Huuma
+				if (skill_num == NJ_HUUMA) // Divide ATK in case of multiple targets skill
+				if(wflag>0)
+					wd.damage/= wflag;
+				else if(battle_config.error_log)
+					ShowError("0 enemies targeted by Throw Huuma, divide per 0 avoided!\n");
 
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
@@ -1698,6 +1709,26 @@ static struct Damage battle_calc_weapon_attack(
 		if (flag.rh && wd.damage < 1) wd.damage = 1;
 		if (flag.lh && wd.damage2 < 1) wd.damage2 = 1;
 
+		// Added Tobidougu bonus on throwing weapon ninja skills if not wearing a Fuuma shuriken (bonus already added in battle_addmastery)
+		switch(skill_num)
+		{
+			case NJ_SYURIKEN:
+				if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0 && sd->status.weapon != W_HUUMA) { wd.damage+=skill*3+skill_lv*4; }
+				else {wd.damage+=skill_lv*4; }
+				break;
+			case NJ_KUNAI:
+				if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0 && sd->status.weapon != W_HUUMA) { wd.damage+=skill*3; }
+				break;
+			default:
+				break;
+		}
+
+		if ( skill_num == NJ_ISSEN )
+		{
+			wd.damage=sstatus->str*80+skill_lv*sstatus->hp*8/100;
+			status_zap(src, sstatus->hp-1, 0);
+		}
+
 		if (sd && flag.weapon && skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST
 			&& skill_num != CR_GRANDCROSS)
 		{	//Add mastery damage
@@ -2050,6 +2081,7 @@ struct Damage battle_calc_magic_attack(
 
 	struct map_session_data *sd, *tsd;
 	struct Damage ad;
+	struct status_change *sc;
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct {
@@ -2166,6 +2198,8 @@ struct Damage battle_calc_magic_attack(
 //Adds an absolute value to damage. 100 = +100 damage
 #define MATK_ADD( a ) { ad.damage+= a; }
 
+		sc= status_get_sc(src);
+
 		switch (skill_num)
 		{	//Calc base damage according to skill
 			case AL_HEAL:
@@ -2281,16 +2315,20 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50*(skill_lv-1);
+						skillratio += 50 + 150*skill_lv;
 						break;
+					case NJ_HYOUSENSOU:
+						skillratio -= 30;
+						if ( sc->data[SC_SUITON].timer != -1 ) skillratio += skillratio*sc->data[SC_SUITON].val1*2/100;
+							break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 50*skill_lv;
+						skillratio += 100 + 50*skill_lv;
 						break;
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv;
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100*skill_lv;
+						skillratio += 100 + 100*skill_lv;
 						break;
 				}
 
@@ -2471,6 +2509,7 @@ struct Damage  battle_calc_misc_attack(
 	switch(skill_num){
 	case PA_PRESSURE:
 	case GS_FLING:
+	case NJ_ZENYNAGE: // Throw zeny not affected by cards, elements, race..
 		flag.elefix = flag.cardfix = 0;
 	case HT_BLITZBEAT:
 	case TF_THROWSTONE:
@@ -2557,10 +2596,9 @@ struct Damage  battle_calc_misc_attack(
 	case NJ_ZENYNAGE:
 		md.damage = skill_get_zeny(skill_num ,skill_lv);
 		if (!md.damage) md.damage = 2;
-		md.damage = md.damage/2 + rand()%md.damage;
-		if (sd) pc_payzeny(sd, md.damage);
-		if(map_flag_vs(target->m) || is_boss(target))
-			md.damage>>=1; //temp value
+		md.damage = md.damage + rand()%md.damage;
+		if(is_boss(target)) // deleted || map_flag_vs(target->m) , seemed to reduce damage in PVP mode
+			md.damage=md.damage*60/100; 
 		break;
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
@@ -2639,15 +2677,17 @@ struct Damage  battle_calc_misc_attack(
 
 	if(md.damage < 0)
 		md.damage = 0;
-	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE) //Pressure can vaporize plants.
+	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE && skill_num != NJ_ZENYNAGE) //Pressure can vaporize plants. // damage=1 on plant with Throw zeny ?
 		md.damage = 1;
 	
 	md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
-	if (skill_num != PA_PRESSURE) //Pressure ignores all these things...
+	if (skill_num != PA_PRESSURE && skill_num != NJ_ZENYNAGE) //Pressure ignores all these things... and Throw Money ?
 		md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	if (map_flag_gvg(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
+
+	if ( sd && md.damage && skill_num == NJ_ZENYNAGE ) pc_payzeny(sd, md.damage); // conso zenys at the end of the calculation I think
 
 	return md;
 }

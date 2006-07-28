@@ -2824,7 +2824,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MC_CARTREVOLUTION:	
 	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	//Targetted skill implementation.
-	case NJ_BAKUENRYU:
 		if(flag&1){
 			if(bl->id!=skill_area_temp[1]){
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,
@@ -2994,6 +2993,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (skilllv>1) {
 			int range = skilllv/2;
 			int cnt;
+			// if caster is ONLY on a NJ_SUITON cell, range will be increased by 1 (consuming suiton cells but also deluge cells if there are ones)
+			if ( !map_getcell(src->m,src->x,src->y,CELL_CHKWATER) && !map_find_skill_unit_oncell(src,src->x,src->y,SA_DELUGE,NULL) ) range = skilllv/2+1;
+
 		  	if (sd)
 				cnt = skill_count_water(src,range);
 			else {
@@ -3152,7 +3154,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case GS_FULLBUSTER:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
-	case NJ_HUUMA:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case GS_BULLSEYE:
@@ -3171,6 +3172,41 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv),BL_CHAR,
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
+		}
+		break;
+	case NJ_HUUMA:
+		if (flag & 1) {
+			if (bl->id != skill_area_temp[1])
+				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
+		} else {
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, flag|BCT_ENEMY,
+				skill_area_sub_count);
+			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
+		}
+		break;
+	case NJ_BAKUENRYU:
+		if (flag & 1) {
+				skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
+		} else {
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			if (flag & 0xf00000)
+				map_foreachinrange(skill_area_sub, bl, 
+					skill_get_splash(skillid, skilllv), BL_CHAR,
+					src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, BCT_ENEMY|1,
 				skill_castend_damage_id);
 		}
 		break;
@@ -3194,18 +3230,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);	// varargs
 		break;
 	//Not implemented yet [Vicious]
-	
-	//case NJ_SYURIKEN:
-	//case NJ_KUNAI:
-	//case NJ_HUUMA:
 	//case NJ_KASUMIKIRI:
 	//case NJ_KIRIKAGE:
-	//case NJ_KOUENKA:
-	//case NJ_HYOUSENSOU:
-	//case NJ_HUUJIN:
-	//case NJ_KAMAITACHI:
 	case NJ_ISSEN:
-		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+
+		if (sc && sc->data[SC_NEN].timer != -1)
+			status_change_end(src,SC_NEN,-1);
 		break;
 
 	case 0:
@@ -3683,6 +3714,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sd && sd != dstsd)
 				clif_displaymessage(sd->fd,"You broke target's weapon");
 		}
+		clif_skill_nodamage(src,bl,skillid,skilllv,i);
 		break;
 
 	case PR_ASPERSIO:		/* アスペルシオ */
@@ -6095,6 +6127,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case DC_SERVICEFORYOU:
 	case GS_DESPERADO:
 	case NJ_SUITON:
+	case NJ_BAKUENRYU:
 	case NJ_KAENSIN:
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
@@ -6566,6 +6599,37 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			&& (src->type&battle_config.vs_traps_bctall))
 			target = BCT_ALL;
 		break;
+	case NJ_SUITON:
+		val1 = skilllv*2;
+
+		{
+			// don't call skill_clear_group(src,1), it deletes also kaensin... and I think it doesn't have to
+			// so this is a copy paste of skill_clear_group() function, which only deletes suiton (shoud maybe create a new function)
+			struct unit_data *ud = unit_bl2ud(src);
+			struct skill_unit_group *group[MAX_SKILLUNITGROUP];
+			int i, count=0, tflag=1;
+
+			nullpo_retr(0, src);
+			if (!ud) break;
+
+			for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++)
+			{
+				switch (ud->skillunit[i]->skill_id) {
+					case NJ_SUITON:
+						if (tflag&1)
+							group[count++]= ud->skillunit[i];
+						break;
+					default:
+						if (tflag&2 && skill_get_inf2(ud->skillunit[i]->skill_id)&INF2_TRAP)
+							group[count++]= ud->skillunit[i];
+						break;
+				}
+
+			}
+			for (i=0;i<count;i++)
+				skill_delunitgroup(src, group[i]);
+		}
+		break;
 	case HT_SHOCKWAVE:			/* ショックウェーブトラップ */
 		val1=skilllv*15+10;
 	case HT_SANDMAN:			/* サンドマン */
@@ -6705,8 +6769,35 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if (sd) val1 = sd->status.child;
 		break;
 	case NJ_KAENSIN:
-		val2 = (skilllv+1)/2 + 4;
-		skill_clear_group(src,1);
+		{
+			// don't call skill_clear_group(src,1), it deletes also suiton... and I think it doesn't have to
+			// so this is a copy paste of skill_clear_group() function, which only deletes kaesin (shoud maybe create a new function)
+			struct unit_data *ud = unit_bl2ud(src);
+			struct skill_unit_group *group[MAX_SKILLUNITGROUP];
+			int i, count=0, tflag=1;
+
+			val2 = (skilllv+1)/2 + 4;
+
+			nullpo_retr(0, src);
+			if (!ud) break;
+
+			for (i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++)
+			{
+				switch (ud->skillunit[i]->skill_id) {
+					case NJ_KAENSIN:
+						if (tflag&1)
+							group[count++]= ud->skillunit[i];
+						break;
+					default:
+						if (tflag&2 && skill_get_inf2(ud->skillunit[i]->skill_id)&INF2_TRAP)
+							group[count++]= ud->skillunit[i];
+						break;
+				}
+
+			}
+			for (i=0;i<count;i++)
+				skill_delunitgroup(src, group[i]);
+		}
 		break;
 
 	case GS_GROUNDDRIFT:
@@ -7411,6 +7502,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 	switch (skill_id)
 	{
 		case WZ_QUAGMIRE:
+		case NJ_SUITON:
 			if (bl->type==BL_MOB)
 				break;
 			if (sc && sc->data[type].timer != -1)
@@ -8296,8 +8388,9 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	
 	case NJ_ISSEN:
-		if (sc && sc->data[SC_NEN].timer!=-1)
-			return 0;
+		if (!sc || sc->data[SC_NEN].timer==-1) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0; }
 		break;
 	
 	case NJ_ZENYNAGE:
