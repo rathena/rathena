@@ -1,5 +1,11 @@
 ---> PC Command List
-------> Here's a list of PC commands and what they do. 
+------> Here's a list of scripts that can be triggered by PC actions and what they do. 
+------> Configuration is found at conf/script_athena.conf
+------> There are two methods to define the script to be use (event_script_type)
+------> 0 - By NPC. There has to be an NPC named in the same manner as the event
+------> 1 - By Label. Every label from every NPC with the event name will be 
+            executed (note that in this case the event HAS to start with the 
+            word 'On', eg: 'OnPCBaseLvUpEvent:')
 
 + PCCommand: PCLoginEvent
 + Code by: (davidsiaw)
@@ -18,10 +24,11 @@ every player who logs in will recieve a message 'lmao' in their face as soon
 as they can see the map.
 
 + Note:
- 1) This NPC will only run if its name is 'PCLoginEvent'
+ 1) The name of the NPC has to match the one specified in scripts_athena.conf
  2) I made it invisible because you don't need to see it. Its an abstract NPC
  3) If you don't want it, simply delete it
- 4) If you have more than one PCLoginEvent NPC, strange things will happen.
+ 4) If you have more than one only the first found will be execute (when using
+    event_script_type 0)
  5) You can put this script in ANY file.
  6) I put an end; there because that just makes it do nothing.
  7) Modify this script to your liking and give your players a surprise
@@ -31,36 +38,45 @@ as they can see the map.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: PcBaseUpEvent
++ PCCommand: PcBaseLvUpEvent
 + Code by: lordalfa
 + How it works:
 When a player Base level increases, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
--	Script	PCBaseUpEvent	-1,{
+-	Script	PCBaseLvUpEvent	-1,{
 	mes "zomfg....";
 	close;
 }
 
-+ Explaination:
++ Explanation:
 whenever a player level ups his/her base level, the words zomfg will pop up 
 in his face.
 
 + Note:
  1) This script runs every moment the player gains a level. It is adviced if
     you want to repeatedly use this script, to use a sort of filter.
+ 2) If a player gains multiple levels from a single kill, the script will be 
+    only called once at the end.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: NPCKillEvent
++ PCCommand: PcJobLvUpEvent
++ Code by: lordalfa
++ How it works:
+It's exactly the same as PcBaseLvUpEvent, except it triggers when leveling job.
+
+-----------------------------------------------------------------------------
+
++ PCCommand: OnNPCKillEvent
 + Code by: lordalfa
 + How it works:
 When a player kills a monster, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
--	script	NPCKillEvent	-1,{
+-	script	OnNPCKillEvent	-1,{
    mes "Holy shit";
    close;
 }
@@ -74,6 +90,13 @@ on the guy's face.
     you want to repeatedly use this script, to use a sort of filter.
  2) The var "KilledRid" is set on the killer, this can be used in
     strmobinfo to find out info about the Monster that was killed
+-----------------------------------------------------------------------------
+
++ PCCommand: OnPCKillEvent
++ Code by: zbuffer aka Lance
++ How it works:
+It is exactly the same as OnNPCKillEvent, except it triggers when a player kills another player.
+
 -----------------------------------------------------------------------------
 
 + PCCommand: PCLoadMapEvent
@@ -95,16 +118,12 @@ OnPCLoadMapEvent:
  end;
 
  + Note:
-  1) The first event command would make the npc trigger if the player goes on the map.
-  2) The second one would make the trigger work on all maps reguardless of script definations.
-  3) It is not recommended to use the second one as it is not optimised and will cause 
-     unessecery lag.
-  1) And as usual... This script runs everytime a player kills a monster It is adviced if
-     you want to repeatedly use this script, to use a sort of filter.
+  1) Both types will execute regardless of map.
+  2) The event will only trigger on maps where you enable the 'loadevent' mapflag.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: PCDieEvent
++ PCCommand: OnPCDieEvent
 + Code by: Unknown
 + How it works:
 When a player dies, the event will be run as if a npc were clicked. The RID of the person killed
