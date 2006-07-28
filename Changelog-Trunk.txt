@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/27
+	* Fixed a memory leak when there exists more than one user function with
+	  the same name, added the appropiate warning when this happens. [Skotlex]
+	* Added reporting source file when an npc shops item's price is
+	  exploitable. [Skotlex]
 	* The picklog will now record negative values for items sold to npcs.
 	  [Skotlex]
 	* Added inmediate position and hp-bar update when a character joins a
