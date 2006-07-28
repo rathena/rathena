@@ -348,6 +348,15 @@ void initChangeTables(void) {
 	add_sc(CG_HERMODE, SC_HERMODE);
 	set_sc(SL_HIGH, SC_SPIRIT, SI_SPIRIT, SCB_PC);
 	set_sc(KN_ONEHAND, SC_ONEHAND, SI_ONEHAND, SCB_ASPD);
+	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
+	set_sc(GS_MADNESSCANCEL, SC_MADNESSCANCEL, SI_MADNESSCANCEL, SCB_BATK|SCB_ASPD);
+	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
+	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
+	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
+	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK, SCB_NONE);
+	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI|SCB_SPEED);
+	add_sc(NJ_HYOUSYOURAKU, SC_FREEZE);
+	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
 	set_sc(CR_SHRINK, SC_SHRINK, SI_SHRINK, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE2, SI_CLOSECONFINE2, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE, SI_CLOSECONFINE, SCB_FLEE);
@@ -358,26 +367,13 @@ void initChangeTables(void) {
 	add_sc(SA_ELEMENTFIRE, SC_ELEMENTALCHANGE);
 	add_sc(SA_ELEMENTGROUND, SC_ELEMENTALCHANGE);
 	add_sc(SA_ELEMENTWIND, SC_ELEMENTALCHANGE);
-	add_sc(NJ_HYOUSYOURAKU, SC_FREEZE);
-	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
 
-	//Until they're at right position - gs_set_sc- [Vicious] / some of these don't seem to have a status icon adequate [blackhole89]
-	set_sc(GS_MADNESSCANCEL, SC_MADNESSCANCEL, SI_MADNESSCANCEL, SCB_BATK|SCB_ASPD);
-	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
-	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
-	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
-	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
-	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK, SCB_NONE);
-
-	//Uncomment and update when you plan on implementing.
-//	set_sc(NJ_UTSUSEMI,             SC_UTSUSEMI,            SI_MAEMI);
-	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI|SCB_SPEED);
 	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
 	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
-	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
 	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
 	set_sc(HFLI_SPEED, SC_SPEED, SI_BLANK, SCB_FLEE);	//[orn]
 	set_sc(HAMI_DEFENCE, SC_DEFENCE, SI_BLANK, SCB_DEF);	//[orn]
+	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
 
 	set_sc(GD_LEADERSHIP, SC_GUILDAURA, SI_GUILDAURA, SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX);
 	set_sc(GD_BATTLEORDER, SC_BATTLEORDERS, SI_BATTLEORDERS, SCB_STR|SCB_INT|SCB_DEX);
@@ -2971,7 +2967,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		agi -= sc->data[SC_QUAGMIRE].val2;
-	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val4)
+	if(sc->data[SC_SUITON].timer!=-1)
 		agi -= sc->data[SC_SUITON].val2;
 	if(sc->data[SC_MARIONETTE].timer!=-1)
 		agi -= (sc->data[SC_MARIONETTE].val3>>8)&0xFF;
@@ -3313,7 +3309,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 	if(sc->data[SC_KEEPING].timer!=-1)
 		return 100;
 	if(sc->data[SC_SKA].timer != -1)
-		return rand()%100; //Reports indicate SKA actually randomizes defense.
+		return sc->data[SC_SKA].val3;
 	if (sc->data[SC_DEFENCE].timer != -1)	//[orn]
 		def += sc->data[SC_DEFENCE].val2 ;
 	if(sc->data[SC_STEELBODY].timer!=-1)
@@ -3455,8 +3451,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed = speed * 100/75;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		speed = speed * 100/50;
-	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val4)
-		speed = speed * 100/50;
+	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3)
+		speed = speed * 100/sc->data[SC_SUITON].val3;
 	if(sc->data[SC_DONTFORGETME].timer!=-1)
 		speed = speed * 100/sc->data[SC_DONTFORGETME].val3;
 	if(sc->data[SC_DEFENDER].timer!=-1)
@@ -4766,29 +4762,29 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = 0;
 			break;
 		case SC_SUITON:
-				if (status_get_class(bl) != JOB_NINJA) {
-					if ( bl->type == BL_PC && !map[sd->bl.m].flag.pvp && !map_flag_gvg(sd->bl.m) ) val4=0;
-					else val4=1;
-
-					switch ((val1+1)/3) {
-					case 3:
-						val2 = 8;
-					break;
-					case 2:
-						val2 = 5;
-					break;
-					case 1:
-						val2 = 3;
-					break;
-					case 0: 
-						val2 = 0;
-					break;
-					default:
-						val2 = 3*((val1+1)/3);
-					break;
-
-					}
-				} else val2 = 0;
+			val2 = 0;	//Agi penalty
+			val3 = 0; //Walk speed penalty
+			val4 = 2*val1; //NJ_HYOUSENSOU damage bonus.
+			if (status_get_class(bl) != JOB_NINJA && !map_flag_vs(bl->m)) {
+				val3 = 50;
+				switch ((val1+1)/3) {
+				case 3:
+					val2 = 8;
+				break;
+				case 2:
+					val2 = 5;
+				break;
+				case 1:
+					val2 = 3;
+				break;
+				case 0: 
+					val2 = 0;
+				break;
+				default:
+					val2 = 3*((val1+1)/3);
+				break;
+				}
+			};
 			break;
 		case SC_ONEHAND:
 		case SC_TWOHANDQUICKEN:
@@ -5388,6 +5384,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 20*val1; //matk increase.
 			val3 = 12*val1; //mdef2 reduction.
 			break;
+		case SC_SKA:  
+			val2 = tick/1000;  
+			val3 = rand()%100; //Def changes randomly every second...  
+			tick = 1000;  
+			break;  
 		case SC_JAILED:
 			tick = val1>0?1000:250;
 			break;
@@ -6080,10 +6081,8 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	hp = status->max_hp - status->hp;
 	if (hp > sc->data[data].val2)
 		hp = sc->data[data].val2;
-	if (hp) {
-		status_heal(bl, hp, 0, 0);
-		clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
-	}
+	if (hp)
+		status_heal(bl, hp, 0, 2);
 	sc->data[data].val4=-1;
 	return 1;
 }
@@ -6152,6 +6151,16 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			sc->data[type].val2+tick, status_change_timer, bl->id, data);
 		return 0;
 	break;
+
+	case SC_SKA:  
+		if((--sc->data[type].val2)>0){  
+			sc->data[type].val3 = rand()%100; //Random defense.  
+			sc->data[type].timer=add_timer(  
+				1000+tick, status_change_timer,  
+				bl->id, data);  
+			return 0;  
+		}  
+		break;
 
 	case SC_HIDING:
 		if((--sc->data[type].val2)>0){

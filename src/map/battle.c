@@ -1123,6 +1123,11 @@ static struct Damage battle_calc_weapon_attack(
 
 		switch (skill_num)
 		{	//Calc base damage according to skill
+			case NJ_ISSEN:
+				wd.damage = 80*sstatus->str +skill_lv*sstatus->hp*8/100;
+				wd.damage2 = 0;
+				status_set_hp(src, 1, 0);
+				break;
 			case PA_SACRIFICE:
 				skill = sstatus->max_hp* 9/100;
 				status_zap(src, skill, 0);//Damage to self is always 9%
@@ -1183,20 +1188,29 @@ static struct Damage battle_calc_weapon_attack(
 					wd.damage2 = hd->master->homunculus.intimacy ;
 					hd->master->homunculus.intimacy = 200;
 					clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
+					break;
 				}
-				break;
 			default:
 			{
 				i = (flag.cri?1:0)|(flag.arrow?2:0)|(skill_num == HW_MAGICCRASHER?4:0)|(skill_num == MO_EXTREMITYFIST?8:0);
-				if ( flag.arrow && sd->status.weapon != W_BOW && sd->status.weapon != W_REVOLVER && sd->status.weapon != W_SHOTGUN 
-					&& sd->status.weapon != W_GATLING && sd->status.weapon != W_GRENADE ) i |= 16; // for ex. shuriken must not be influenced by DEX	
+				if (flag.arrow && sd)
+				switch(sd->status.weapon) {
+				case W_BOW:
+				case W_REVOLVER:
+				case W_SHOTGUN:
+				case W_GATLING:
+				case W_GRENADE:
+				  break;
+				default:
+				  i |= 16; // for ex. shuriken must not be influenced by DEX
+				}
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
 				if (sstatus->lhw)
 					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
 
 				// Added split damage for Huuma
-				if (skill_num == NJ_HUUMA) // Divide ATK in case of multiple targets skill
-				{
+				if (skill_num == NJ_HUUMA)
+				{	// Divide ATK in case of multiple targets skill
 					if(wflag>0)
 						wd.damage/= wflag;
 					else if(battle_config.error_log)
@@ -1378,7 +1392,7 @@ static struct Damage battle_calc_weapon_attack(
 						//You'd need something like 6K SP to reach this max, so should be fine for most purposes.
 						if (ratio > 60000) ratio = 60000; //We leave some room here in case skillratio gets further increased.
 						skillratio = (unsigned short)ratio;
-						status_zap(src, 0, sstatus->sp);
+						status_set_sp(src, 0, 0);
 						flag.idef= flag.idef2= 1;
 					}
 					break;
@@ -1549,6 +1563,9 @@ static struct Damage battle_calc_weapon_attack(
 						ATK_ADD(sstatus->matk_min);
 					}
 					break;
+				case NJ_SYURIKEN:
+					ATK_ADD(4*skill_lv);
+					break;
 			}
 		}
 		//Div fix.
@@ -1710,26 +1727,6 @@ static struct Damage battle_calc_weapon_attack(
 		if (flag.rh && wd.damage < 1) wd.damage = 1;
 		if (flag.lh && wd.damage2 < 1) wd.damage2 = 1;
 
-		// Added Tobidougu bonus on throwing weapon ninja skills if not wearing a Fuuma shuriken (bonus already added in battle_addmastery)
-		switch(skill_num)
-		{
-			case NJ_SYURIKEN:
-				if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0 && sd->status.weapon != W_HUUMA) { wd.damage+=skill*3+skill_lv*4; }
-				else {wd.damage+=skill_lv*4; }
-				break;
-			case NJ_KUNAI:
-				if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0 && sd->status.weapon != W_HUUMA) { wd.damage+=skill*3; }
-				break;
-			default:
-				break;
-		}
-
-		if ( skill_num == NJ_ISSEN )
-		{
-			wd.damage=sstatus->str*80+skill_lv*sstatus->hp*8/100;
-			status_zap(src, sstatus->hp-1, 0);
-		}
-
 		if (sd && flag.weapon && skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST
 			&& skill_num != CR_GRANDCROSS)
 		{	//Add mastery damage
@@ -1748,6 +1745,11 @@ static struct Damage battle_calc_weapon_attack(
 				skillratio = (sd->status.base_level + sstatus->dex+ sstatus->luk)/(skill<4?12-3*skill:1);
 				ATK_ADDRATE(skillratio);
 			}
+			// Added Tobidougu bonus on throwing weapon ninja skills if not wearing a Fuuma shuriken (bonus already added in battle_addmastery)
+			if ((skill_num == NJ_SYURIKEN || skill_num == NJ_KUNAI) &&
+				sd->status.weapon != W_HUUMA &&
+			  	(skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0)
+				ATK_ADD(3*skill);
 		}
 	} //Here ends flag.hit section, the rest of the function applies to both hitting and missing attacks
   	else if(wd.div_ < 0) //Since the attack missed...
@@ -2316,20 +2318,21 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50 + 150*skill_lv;
+						skillratio += 50*(skill_lv-1);
 						break;
 					case NJ_HYOUSENSOU:
 						skillratio -= 30;
-						if ( sc->data[SC_SUITON].timer != -1 ) skillratio += skillratio*sc->data[SC_SUITON].val1*2/100;
-							break;
+						if (sc && sc->data[SC_SUITON].timer != -1)
+						  	skillratio += sc->data[SC_SUITON].val4;
+						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 100 + 50*skill_lv;
+						skillratio += 50*skill_lv;
 						break;
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv;
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100 + 100*skill_lv;
+						skillratio += 100*skill_lv;
 						break;
 				}
 
@@ -2510,7 +2513,7 @@ struct Damage  battle_calc_misc_attack(
 	switch(skill_num){
 	case PA_PRESSURE:
 	case GS_FLING:
-	case NJ_ZENYNAGE: // Throw zeny not affected by cards, elements, race..
+	case NJ_ZENYNAGE:
 		flag.elefix = flag.cardfix = 0;
 	case HT_BLITZBEAT:
 	case TF_THROWSTONE:
@@ -2595,10 +2598,10 @@ struct Damage  battle_calc_misc_attack(
 		if (tsd) md.damage>>=1;
 		break;
 	case NJ_ZENYNAGE:
-		md.damage = skill_get_zeny(skill_num ,skill_lv);
+		md.damage = skill_get_zeny(skill_num ,skill_lv)/2;
 		if (!md.damage) md.damage = 2;
 		md.damage = md.damage + rand()%md.damage;
-		if(is_boss(target)) // deleted || map_flag_vs(target->m) , seemed to reduce damage in PVP mode
+		if(is_boss(target))
 			md.damage=md.damage*60/100; 
 		break;
 	case GS_FLING:
