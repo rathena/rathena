@@ -941,7 +941,7 @@ int parse_fromchar(int fd){
 		case 0x2709:
 			if (log_login)
 			{
-				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s','%s', 'GM reload request')", loginlog_db, *((ulong *)p),server[id].name, RETCODE);
+				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','%s', 'GM reload request')", loginlog_db, *((unsigned int*)p),server[id].name, RETCODE);
 				if (mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1483,7 +1483,7 @@ int login_ip_ban_check(unsigned char *p)
 
 	if (log_login)
 	{
-		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', 'unknown','-3', 'ip banned')", loginlog_db, *((ulong *)p));
+		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', 'unknown','-3', 'ip banned')", loginlog_db, *((unsigned int *)p));
 		// query
 		if(mysql_query(&mysql_handle, tmpsql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1599,7 +1599,7 @@ int parse_login(int fd) {
 				} else {
 
 					if (p[0] != 127 && log_login) {
-						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ntohl(ipl), t_uid);
+						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, (unsigned int)ntohl(ipl), t_uid);
 						//query
 						if(mysql_query(&mysql_handle, tmpsql)) {
 							ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1657,7 +1657,7 @@ int parse_login(int fd) {
 				char error[64];
 				if (log_login)
 				{
-					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %%s')", loginlog_db, ntohl(ipl), t_uid, result);
+					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %%s')", loginlog_db, (unsigned int)ntohl(ipl), t_uid, result);
 					switch((result + 1)) {
 					case -2:	//-3 = Account Banned
 						sprintf(tmpsql,tmp_sql,"Account banned.");
@@ -1846,7 +1846,7 @@ int parse_login(int fd) {
 				unsigned char* server_name;
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, ntohl(ipl), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, (unsigned int)ntohl(ipl), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
