@@ -4091,10 +4091,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_SELFDESTRUCTION:
+		//Self Destruction hits everyone in range (allies+enemies)
 		clif_skill_nodamage(src, src, skillid, -1, 1);
 		map_foreachinrange(skill_area_sub, bl,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
-			src, skillid, skilllv, tick, flag|BCT_ENEMY,
+			src, skillid, skilllv, tick, flag|BCT_ALL,
 			skill_castend_damage_id);
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
