@@ -2379,7 +2379,7 @@ void op_2num(struct script_state *st,int op,int i1,int i2)
 		if(ret_double > INT_MAX || ret_double < INT_MIN) {
 			printf("script::op_2num overflow detected op:%d\n",op);
 			report_src(st);
-			ret = cap_value(ret_double,INT_MAX,INT_MIN);
+			ret = (int)cap_value(ret_double,INT_MAX,INT_MIN);
 		}
 	}
 	push_val(st->stack,C_INT,ret);
