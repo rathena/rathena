@@ -3029,7 +3029,7 @@ int parse_frommap(int fd) {
 				char type = RFIFOB(fd, 10);
 				char pos = RFIFOB(fd, 11);
 				int size;
-				struct fame_list *list;
+				struct fame_list *list = NULL;
 				RFIFOSKIP(fd,12);
 				
 				switch(type) {
