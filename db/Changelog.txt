@@ -20,6 +20,8 @@
 
 =========================
 07/29
+	* Memorize cast time now can't be reduced by status changes neither.
+	  [Skotlex]
 	* Large mob_db update [Playtester]
 	- added most of the missing X.4 / 11.1 drops
 	- adjusted the drop rates of Odin Temple and Kiel's Mechanical Doll Factory

@@ -6775,6 +6775,11 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 					unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
 		}
 	}
+	if (!group->alive_count)
+	{	//No cells? Something that was blocked completely by Land Protector?
+		skill_delunitgroup(src, group);
+		return NULL;
+	}
 	
 	return group;
 }
