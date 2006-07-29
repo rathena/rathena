@@ -4379,7 +4379,7 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 		return 0;
 	}
 
-	if(skill_num >= HM_SKILLBASE){
+	if(skill_num >= HM_SKILLBASE && sd->hd){
 		merc_hom_skillup(sd->hd, skill_num);
 		return 0;
 	}
