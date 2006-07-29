@@ -1607,6 +1607,7 @@ static struct Damage battle_calc_weapon_attack(
 		{
 			if (skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE
 				&& skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS
+				&& skill_num != PA_SHIELDCHAIN
 			  	&& !flag.cri)
 			{	//Elemental/Racial adjustments
 				if(sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
