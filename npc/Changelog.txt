@@ -38,6 +38,11 @@ Playtester
 
 Date		Added
 ======
+07/29
+	* Added temporary Beholder and Gremlin spawns [Playtester]
+	- their drops are needed but Airship quest isn't finished yet
+	- should be commented once Airship quest is finished
+	- also added two airship warps
 07/27
 	* Fixed the Morroc ingredient seller to not appear [Playtester]
 	* Fixed some spawns and a warp in Sunken Ship [Playtester]

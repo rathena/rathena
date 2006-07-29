@@ -73,3 +73,7 @@ airplane_01.gat,254,54,0	warp	air_2wp01	1,1,airplane_01.gat,91,67
 airplane_01.gat,87,67,0	warp	air_2wp01a	1,1,airplane_01.gat,250,54
 airplane_01.gat,208,53,0	warp	air_2wp02	1,1,airplane_01.gat,239,160
 airplane_01.gat,245,160,0	warp	air_2wp02a	1,1,airplane_01.gat,214,54
+airplane_01.gat,104,199,0	warp	air_2wp03	1,1,airplane_01.gat,105,72
+airplane_01.gat,103,72,0	warp	air_2wp03a	1,1,airplane_01.gat,102,199
+airplane_01.gat,104,176,0	warp	air_2wp03	1,1,airplane_01.gat,105,52
+airplane_01.gat,103,52,0	warp	air_2wp03a	1,1,airplane_01.gat,102,176
