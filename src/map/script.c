@@ -11186,41 +11186,75 @@ int buildin_setd(struct script_state *st)
 
 #ifndef TXT_ONLY
 int buildin_query_sql(struct script_state *st) {
-	char *name, *query;
-	int num, i = 0;
+	char *name = NULL, *query;
+	int num, i = 0,j, nb_rows;
+	struct { char * dst_var_name; char type; } row[32];
 	struct map_session_data *sd = (st->rid)? script_rid2sd(st) : NULL;
 
 	query = conv_str(st,& (st->stack->stack_data[st->start+2]));
-    strcpy(tmp_sql, query);
+	strcpy(tmp_sql, query);
 	if(mysql_query(&mmysql_handle,tmp_sql)){
 		ShowSQL("DB error - %s\n",mysql_error(&mmysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		push_val(st->stack,C_INT,0);
 		return 1;
 	}
 
-	if(st->end > st->start+3) {
-		if(st->stack->stack_data[st->start+3].type != C_NAME){
-			ShowWarning("buildin_query_sql: 2nd parameter is not a variable!\n");
-		} else {
-			num=st->stack->stack_data[st->start+3].u.num;
-			name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-			if((sql_res = mysql_store_result(&mmysql_handle))){
+	// If some data was returned
+	if((sql_res = mysql_store_result(&mmysql_handle))){
+		// Count the number of rows to store
+		nb_rows = mysql_num_fields(sql_res);
+
+		// Can't store more row than variable
+		if (nb_rows > st->end - (st->start+3))
+			nb_rows = st->end - (st->start+3);
+
+		if (!nb_rows)
+		{
+			push_val(st->stack,C_INT,0);
+			return 0; // Nothing to store
+		}
+
+		if (nb_rows > 32)
+		{
+			ShowWarning("buildin_query_sql: too much rows!\n");
+			push_val(st->stack,C_INT,0);
+			return 1;
+		}
+
+		memset(row, 0, sizeof(row));
+		// Verify argument types
+		for(j=0; j < nb_rows; j++)
+		{
+			if(st->stack->stack_data[st->start+3+j].type != C_NAME){
+				ShowWarning("buildin_query_sql: Parameter %d is not a variable!\n", j);
+				push_val(st->stack,C_INT,0);
+				return 0;
+			} else {
+				// Store type of variable (string = 0/int = 1)
+				num=st->stack->stack_data[st->start+3+j].u.num;
+				name=(char *)(str_buf+str_data[num&0x00ffffff].str);
 				if(name[strlen(name)-1] != '$') {
-					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)atoi(sql_row[0]),st->stack->stack_data[st->start+3].ref);
-						i++;
-					}
-				} else {
-					while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
-						setd_sub(st,sd, name, i, (void *)sql_row[0],st->stack->stack_data[st->start+3].ref);
-						i++;
-					}
+					row[j].type = 1;
 				}
-				mysql_free_result(sql_res);
+				row[j].dst_var_name = name;
 			}
 		}
+		// Store data
+		while(i<128 && (sql_row = mysql_fetch_row(sql_res))){
+			for(j=0; j < nb_rows; j++)
+			{
+				if (row[j].type == 1)
+					setd_sub(st,sd, row[j].dst_var_name, i, (void *)atoi(sql_row[j]),st->stack->stack_data[st->start+3+j].ref);
+				else
+					setd_sub(st,sd, row[j].dst_var_name, i, (void *)sql_row[j],st->stack->stack_data[st->start+3+j].ref);
+			}
+			i++;
+		}
+		// Free data
+		mysql_free_result(sql_res);
 	}
-
+	push_val(st->stack, C_INT, i);
 	return 0;
 }
 

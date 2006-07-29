@@ -4950,18 +4950,17 @@ Example:
 set @i, distance(100,200,101,202);
 
 ---------------------------------------
-*query_sql "your MySQL query", <array name>
-Returns up to 127 values into array.
+*query_sql "your MySQL query", <array name>, [<array name>]
+Returns up to 127 values into array and return the number of row
 
 Example:
-
-query_sql "SELECT name FROM 'char' ORDER BY fame DESC LIMIT 5", @most_fame_dude$;
+set @nb, query_sql("select name,fame from `char` ORDER BY fame DESC LIMIT 5", @name$, @fame);
 mes "Hall Of Fame: TOP5";
-mes "1."+@most_fame_dude$[0]; // Will return a person with the biggest fame value.
-mes "2."+@most_fame_dude$[1];
-mes "3."+@most_fame_dude$[2];
-mes "4."+@most_fame_dude$[3];
-mes "5."+@most_fame_dude$[4];
+mes "1."+@name$[0]+"("+@fame[0]+")"; // Will return a person with the biggest fame value.
+mes "2."+@name$[1]+"("+@fame[1]+")";
+mes "3."+@name$[2]+"("+@fame[2]+")";
+mes "4."+@name$[3]+"("+@fame[3]+")";
+mes "5."+@name$[4]+"("+@fame[4]+")";
 
 Note: It is available in SQL version only.
 Note: Use Text$[] array to recieve all data as text.

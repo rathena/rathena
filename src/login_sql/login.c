@@ -578,7 +578,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	char ip[16];
 
-	unsigned char *sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr;
+	unsigned char * sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr.s_addr;
 
 	char r_ip[16]; // [Zido]
 	char ip_dnsbl[256]; // [Zido]
@@ -905,7 +905,7 @@ int parse_fromchar(int fd){
 	MYSQL_RES* sql_res;
 	MYSQL_ROW  sql_row = NULL;
 
-	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
+	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr.s_addr;
 	char ip[16];
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
@@ -1508,10 +1508,8 @@ int parse_login(int fd) {
 	int packet_len;
 
 	int result, i;
-	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
-	//Since we can't cast a structure to a long, we take the base address as
-	//a pointer and cast it (somehow... this seems so wrong to do)
-	unsigned long ipl = *((unsigned long *) &session[fd]->client_addr.sin_addr); 
+	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr.s_addr;
+	unsigned long ipl = session[fd]->client_addr.sin_addr.s_addr;
 	char ip[16];
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
