@@ -11674,6 +11674,9 @@ int buildin_rid2name(struct script_state *st){
 				push_str(st->stack,C_CONSTSTR,"");
 				break;
 		}
+	} else {
+		ShowError("buildin_rid2name: invalid RID\n");
+		push_str(st->stack,C_CONSTSTR,"(null)");
 	}
 	return 0;
 }
