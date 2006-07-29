@@ -3424,7 +3424,7 @@ static const struct battle_data_short {
 	{ "warp_point_debug",                  &battle_config.warp_point_debug			},
 	{ "enemy_critical_rate",               &battle_config.enemy_critical_rate		},
 	{ "homun_critical_rate",               &battle_config.homun_critical_rate		},
-	{ "enemy_baseatk",                     &battle_config.enable_baseatk				},
+	{ "enable_baseatk",                    &battle_config.enable_baseatk				},
 	{ "enable_perfect_flee",               &battle_config.enable_perfect_flee		},
 	{ "casting_rate",                      &battle_config.cast_rate				},
 	{ "delay_rate",                        &battle_config.delay_rate				},

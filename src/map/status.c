@@ -1439,7 +1439,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	struct status_data b_status, *status;
 	struct weapon_atk b_lhw;
 	struct skill b_skill[MAX_SKILL];
-		
+
 	int b_weight,b_max_weight;
 	int i,index;
 	int skill,refinedef=0;
@@ -1538,7 +1538,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		if (sd->class_&JOBL_BABY) {
 			if (battle_config.character_size&2)
 				status->size++;
-		} if(battle_config.character_size&1)
+		} else
+		if(battle_config.character_size&1)
 			status->size++;
 	}
 	status->aspd_rate = 1000;
@@ -1677,7 +1678,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			{	// Forged weapon
 				wd->star += (sd->status.inventory[index].card[1]>>8);
 				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
-				if(pc_famerank( MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
+				if(pc_famerank(MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
 					wd->star += 10;
 				
 				if (!wa->ele) //Do not overwrite element from previous bonuses.
@@ -1694,7 +1695,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 	}
 
-	if(sd->equip_index[EQI_AMMO] >= 0){ // –î
+	if(sd->equip_index[EQI_AMMO] >= 0){
 		index = sd->equip_index[EQI_AMMO];
 		if(sd->inventory_data[index]){		// Arrows
 			sd->state.lr_flag = 2;

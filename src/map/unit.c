@@ -806,7 +806,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 				sd->skilllv_old = ud->skilllv;
 				break;
 			}
-		case BD_ENCORE:	
+		case BD_ENCORE:
 			//Prevent using the dance skill if you no longer have the skill in your tree. 
 			if(!sd->skillid_dance || pc_checkskill(sd,sd->skillid_dance)<=0){
 				clif_skill_fail(sd,skill_num,0,0);

@@ -3894,12 +3894,12 @@ static int mob_read_sqldb(void)
 				status->ele_lv = i/20;
 				if (status->def_ele >= ELE_MAX)
 				{
-					ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", status->def_ele, ELE_MAX-1);
+					ShowWarning("Mob with ID: %d has invalid element type %d (max element is %d)\n", class_, status->def_ele, ELE_MAX-1);
 					status->def_ele = ELE_NEUTRAL;
 				}
 				if (status->ele_lv < 1 || status->ele_lv > 4)
 				{
-					ShowWarning("Mob with ID: %d has invalid elemnt level %d (max is 4)\n", status->ele_lv);
+					ShowWarning("Mob with ID: %d has invalid elemnt level %d (max is 4)\n", class_, status->ele_lv);
 					status->ele_lv = 1;
 				}
 				status->mode = TO_INT(25);
