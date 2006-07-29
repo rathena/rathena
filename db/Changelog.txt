@@ -20,6 +20,10 @@
 
 =========================
 07/29
+	* Large mob_db update [Playtester]
+	- added most of the missing X.4 / 11.1 drops
+	- adjusted the drop rates of Odin Temple and Kiel's Mechanical Doll Factory
+	- removed beret drop
 	* Reverted the Combat Knife (wrong translated description) [Playtester]
 	* Shockwave, Flasher and Freezing Trap now consume 2 trap items [Playtester]
 	- this is correct according to info from RagnaInfo and some guides
