@@ -69,7 +69,7 @@ tha_t05.gat,0,0,0,0	monster	Plasma	1694,10,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1695,10,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1696,10,0,0,0
 tha_t05.gat,0,0,0,0	monster	Plasma	1697,10,0,0,0
-tha_t05.gat,0,0,0,0	monster	Thanatos Maero	1706,2,1800000,900000,1
+tha_t05.gat,0,0,0,0	monster	Thanatos Dolor	1707,2,1800000,900000,1
 
 //==================================================
 // tha_t06 - Thanatos Tower F6
@@ -83,7 +83,7 @@ tha_t06.gat,0,0,0,0	monster	Plasma	1694,10,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1695,10,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1696,10,0,0,0
 tha_t06.gat,0,0,0,0	monster	Plasma	1697,10,0,0,0
-tha_t06.gat,0,0,0,0	monster	Thanatos Dolor	1707,2,1800000,900000,1
+tha_t06.gat,0,0,0,0	monster	Thanatos Maero	1706,2,1800000,900000,1
 
 //==================================================
 // tha_t07 - Thanatos Tower F7
@@ -116,7 +116,7 @@ tha_t09.gat,0,0,0,0	monster	Observation	1700,5,0,0,0
 tha_t09.gat,0,0,0,0	monster	Shelter	1701,5,0,0,0
 tha_t09.gat,0,0,0,0	monster	Retribution	1702,5,0,0,0
 tha_t09.gat,0,0,0,0	monster	Solace	1703,5,0,0,0
-tha_t09.gat,0,0,0,0	monster	Thanatos Maero	1706,5,1800000,900000,1
+tha_t09.gat,0,0,0,0	monster	Thanatos Dolor	1707,5,1800000,900000,1
 
 //==================================================
 // tha_t10 - Thanatos Tower F10
@@ -127,7 +127,7 @@ tha_t10.gat,0,0,0,0	monster	Observation	1700,5,0,0,0
 tha_t10.gat,0,0,0,0	monster	Shelter	1701,5,0,0,0
 tha_t10.gat,0,0,0,0	monster	Retribution	1702,5,0,0,0
 tha_t10.gat,0,0,0,0	monster	Solace	1703,5,0,0,0
-tha_t10.gat,0,0,0,0	monster	Thanatos Dolor	1707,5,1800000,900000,1
+tha_t10.gat,0,0,0,0	monster	Thanatos Maero	1706,5,1800000,900000,1
 
 //==================================================
 // tha_t11 - Thanatos Tower F11

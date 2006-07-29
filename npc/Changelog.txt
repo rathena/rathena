@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/29
+	* Fixed a mixed up mob id in Thanatos spawns [Playtester]
 	* Added temporary Beholder and Gremlin spawns [Playtester]
 	- their drops are needed but Airship quest isn't finished yet
 	- should be commented once Airship quest is finished
