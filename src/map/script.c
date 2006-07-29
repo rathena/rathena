@@ -2458,6 +2458,7 @@ int run_func(struct script_state *st)
 	int i,start_sp,end_sp,func;
 
 	end_sp=st->stack->sp;
+	func=st->stack->stack_data[st->start].u.num;
 #ifdef DEBUG_RUN
 	if(battle_config.etc_log) {
 		ShowDebug("run_func : %s? (%d(%d)) sp=%d (%d...%d)\n",str_buf+str_data[func].str, func, str_data[func].type, st->stack->sp, st->start, st->end);
@@ -2502,7 +2503,6 @@ int run_func(struct script_state *st)
 	st->start=i-1;
 	st->end=end_sp;
 
-	func=st->stack->stack_data[st->start].u.num;
 	if(str_data[func].type!=C_FUNC ){
 		ShowMessage ("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n");
 //		st->stack->sp=0;
