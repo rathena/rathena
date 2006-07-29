@@ -39,6 +39,7 @@ Playtester
 Date		Added
 ======
 07/29
+	* Some more sign quest warps and a small change to the comodo gambling NPC. [MasterOfMuppets]
 	* Fixed a mixed up mob id in Thanatos spawns [Playtester]
 	* Added temporary Beholder and Gremlin spawns [Playtester]
 	- their drops are needed but Airship quest isn't finished yet
