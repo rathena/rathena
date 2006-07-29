@@ -2854,9 +2854,43 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	if (sd)
 	{
 		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
-		if (sd->state.arrow_atk && sd->equip_index[10]<0) {
-			clif_arrow_fail(sd,0);
-			return 0;
+		if (sd->state.arrow_atk)
+		{	//Recycled damage variable to store index.
+			damage = sd->equip_index[EQI_AMMO];
+			if (damage<0) {
+				clif_arrow_fail(sd,0);
+				return 0;
+			}
+			//Ammo check by Ishizu-chan
+			if (sd->inventory_data[damage])
+			switch (sd->status.weapon) {
+			case W_BOW:
+				if (sd->inventory_data[damage]->look != A_ARROW) {
+					clif_arrow_fail(sd,0);
+					return 0;
+				}
+			break;
+			case W_REVOLVER:
+			case W_RIFLE:
+			case W_GATLING:
+				if (sd->inventory_data[damage]->look != A_BULLET) {
+					clif_arrow_fail(sd,0);
+					return 0;
+				}
+			break;
+			case W_SHOTGUN:
+				if (sd->inventory_data[damage]->look != A_SHELL) {
+					clif_arrow_fail(sd,0);
+					return 0;
+				}
+			break;
+			case W_GRENADE:
+				if (sd->inventory_data[damage]->look != A_GRENADE) {
+					clif_arrow_fail(sd,0);
+					return 0;
+				}
+			break;
+			}
 		}
 	}
 

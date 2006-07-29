@@ -40,6 +40,15 @@ enum {
 	MAX_WEAPON_TYPE
 } weapon_type;
 
+enum {
+	A_ARROW = 1,
+	A_DAGGER,    //2
+	A_BULLET,   //3
+	A_SHELL,    //4
+	A_GRENADE,  //5
+	A_SHURIKEN, //6
+	A_KUNAI     //7
+} ammo_type;
 //Equip position constants
 enum {
 	EQP_HEAD_LOW = 0x0001, 
