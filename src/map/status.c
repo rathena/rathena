@@ -1992,7 +1992,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-		status->aspd_rate -= 5*skill;
+		status->aspd_rate -= (int)((skill+1)/2) * 10;
 	if(pc_isriding(sd))
 		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	
@@ -3242,7 +3242,7 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 	if(sc->data[SC_BLIND].timer != -1)
 		hit -= hit * 25/100;
 	if(sc->data[SC_ADJUSTMENT].timer!=-1)
-		hit += 30;
+		hit -= 30;
 	if(sc->data[SC_INCREASING].timer!=-1)
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	

@@ -534,13 +534,13 @@
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//GS_SNAKEEYE#Snake Eye#
 511,-3,8,0,0,0,0,10,2,no,0,0,0,weapon,0	//GS_CHAINACTION#Chain Action#
 512,3,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#Tracking#
-513,-3,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
+513,7,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
 514,3,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
 515,3,8,1,0,0,0,10,5,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
-516,-5,8,4,0,2,2,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
+516,0,8,4,0,2,2,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
 517,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
-518,-3,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//GS_DUST#Dust#
-519,3,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
+518,3,6,1,0,0,0,10,1,no,0,0,0,weapon,5	//GS_DUST#Dust#
+519,3,6,1,0,0,0,10,1,yes,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
 520,3,6,1,0,2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
 521,3,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//GS_GROUNDDRIFT#Ground Drift#
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#

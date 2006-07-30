@@ -350,6 +350,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage=damage*(100-sc->data[SC_DEFENDER].val2)/100;
 
+		if(sc->data[SC_ADJUSTMENT].timer != -1 &&
+			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+			damage=damage*80/100;
+
 		if(sc->data[SC_FOGWALL].timer != -1) {
 			if(flag&BF_SKILL) //25% reduction
 				damage -= 25*damage/100;
