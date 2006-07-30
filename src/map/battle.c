@@ -2882,13 +2882,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 			case W_REVOLVER:
 			case W_RIFLE:
 			case W_GATLING:
-				if (sd->inventory_data[damage]->look != A_BULLET) {
-					clif_arrow_fail(sd,0);
-					return 0;
-				}
-			break;
 			case W_SHOTGUN:
-				if (sd->inventory_data[damage]->look != A_SHELL) {
+				if (sd->inventory_data[damage]->look != A_BULLET) {
 					clif_arrow_fail(sd,0);
 					return 0;
 				}
