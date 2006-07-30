@@ -537,7 +537,7 @@
 513,7,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
 514,3,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
 515,3,8,1,0,0,0,10,5,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
-516,0,8,4,0,2,2,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
+516,0,8,4,0,2,3,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#
 517,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//GS_GATLINGFEVER#Gatling Fever#
 518,3,6,1,0,0,0,10,1,no,0,0,0,weapon,5	//GS_DUST#Dust#
 519,3,6,1,0,0,0,10,1,yes,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
