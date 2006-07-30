@@ -1686,7 +1686,7 @@
 5115,Winter_Hat,Winter Hat,5,,10,500,,3,,0,0xFFFFFFFF,7,2,256,,0,1,196,{ bonus2 bResEff,Eff_Freeze,1000; },{},{}
 5116,Banana_Hat,Banana Hat,5,,10,200,,1,,0,0xFFFFFFFF,7,2,256,,0,1,197,{ bonus3 bAutoSpell,6,3,30; },{},{}
 5117,Mystic_Rose,Mystic Rose,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,198,{ bonus2 bSubRace,RC_Plant,2; },{},{}
-5118,Puppy_Headband,Puppy Headband,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,199,{},{},{}
+5118,Puppy_Headband,Puppy Headband,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,0,1,199,{},{},{}
 5119,Super_Novice_Hat_,Super Novice Hat,5,8500,,400,,4,,1,0x00000001,7,2,256,,40,1,193,{ bonus bAllStats,1; },{},{}
 5120,Bucket_Hat_,Bucket Hat,5,6000,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,195,{},{},{}
 5121,Zherlthsh_Mask,Zherlthsh Mask,5,,10,400,,3,,0,0xFFFFFFFE,7,2,768,,70,1,200,{ bonus2 bAddRace,RC_DemiHuman,5; bonus2 bSubRace,RC_DemiHuman,5; },{},{}
