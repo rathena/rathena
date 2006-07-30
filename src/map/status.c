@@ -2967,7 +2967,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= 2 + sc->data[SC_DECREASEAGI].val1;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		agi -= sc->data[SC_QUAGMIRE].val2;
-	if(sc->data[SC_SUITON].timer!=-1)
+	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3) // does not affect players when not in PVP nor WoE. Does not affect Ninjas.
 		agi -= sc->data[SC_SUITON].val2;
 	if(sc->data[SC_MARIONETTE].timer!=-1)
 		agi -= (sc->data[SC_MARIONETTE].val3>>8)&0xFF;
@@ -4765,8 +4765,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 0;	//Agi penalty
 			val3 = 0; //Walk speed penalty
 			val4 = 2*val1; //NJ_HYOUSENSOU damage bonus.
-			if (status_get_class(bl) != JOB_NINJA && !map_flag_vs(bl->m)) {
+
+			if (status_get_class(bl) == JOB_NINJA || ( bl->type == BL_PC && !map_flag_vs(bl->m)) )
+				break;
+			else {
 				val3 = 50;
+
 				switch ((val1+1)/3) {
 				case 3:
 					val2 = 8;
@@ -4784,7 +4788,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					val2 = 3*((val1+1)/3);
 				break;
 				}
-			};
+			}
 			break;
 		case SC_ONEHAND:
 		case SC_TWOHANDQUICKEN:

@@ -2748,7 +2748,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		//line of sight between caster and target.
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
 			skill_get_splash(skillid, skilllv),BL_CHAR,
-			BF_WEAPON,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+			BF_MAGIC,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
 	case MO_INVESTIGATE:
@@ -2836,7 +2836,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MC_CARTREVOLUTION:	
 	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	//Targetted skill implementation.
-	case NJ_BAKUENRYU:
 		if(flag&1){
 			if(bl->id!=skill_area_temp[1]){
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,
@@ -3180,6 +3179,21 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
+				skill_castend_damage_id);
+		}
+		break;
+	case NJ_BAKUENRYU:
+		if (flag & 1) {
+				skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
+		} else {
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			skill_area_temp[0] = 0;
+			map_foreachinrange(skill_area_sub, bl, 
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, BCT_ENEMY|1,
 				skill_castend_damage_id);
 		}
 		break;
@@ -6055,10 +6069,12 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case DC_FORTUNEKISS:
 	case DC_SERVICEFORYOU:
 	case GS_DESPERADO:
-	case NJ_SUITON:
 	case NJ_KAENSIN:
+	case NJ_BAKUENRYU:
+	case NJ_SUITON:
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
+	case NJ_KAMAITACHI:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);

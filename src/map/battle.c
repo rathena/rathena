@@ -2323,7 +2323,7 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50*(skill_lv-1);
+						skillratio += 150 + 150*skill_lv; // It has to be MATK +(150+150*SkillLV)% so 1000% at lvl 5, not 900%. Damage is not increased by hits.
 						break;
 					case NJ_HYOUSENSOU:
 						skillratio -= 30;
@@ -2331,13 +2331,13 @@ struct Damage battle_calc_magic_attack(
 						  	skillratio += sc->data[SC_SUITON].val4;
 						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 50*skill_lv;
+						skillratio += 100+50*skill_lv; // correct formula (MATK + 350% = 450% at level 5) (kRO and unofficial descriptions)
 						break;
 					case NJ_RAIGEKISAI:
-						skillratio += 60 + 40*skill_lv;
+						skillratio += 160 + 40*skill_lv; // idem
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100*skill_lv;
+						skillratio += 100 + 100*skill_lv; // idem
 						break;
 				}
 
@@ -2603,9 +2603,10 @@ struct Damage  battle_calc_misc_attack(
 		if (tsd) md.damage>>=1;
 		break;
 	case NJ_ZENYNAGE:
-		md.damage = skill_get_zeny(skill_num ,skill_lv)/2;
+		md.damage = skill_get_zeny(skill_num ,skill_lv);
 		if (!md.damage) md.damage = 2;
 		md.damage = md.damage + rand()%md.damage;
+
 		if(is_boss(target))
 			md.damage=md.damage*60/100; 
 		break;
@@ -2695,7 +2696,12 @@ struct Damage  battle_calc_misc_attack(
 	if (map_flag_gvg(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 
-	if ( sd && md.damage && skill_num == NJ_ZENYNAGE ) pc_payzeny(sd, md.damage); // conso zenys at the end of the calculation I think
+	if ( sd && md.damage && skill_num == NJ_ZENYNAGE )
+	{
+		if ( md.damage > sd->status.zeny )
+			md.damage=sd->status.zeny;
+		pc_payzeny(sd, md.damage);
+	}
 
 	return md;
 }

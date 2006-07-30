@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/30
+	* Merged mpeg's fix on ninja skills and SA_VOLCANO,SA_DELUGE,SA_VIOLENTGALE [Toms]
 	* Added bNoMiscDamage setting so you can specify misc-damage blocking from
 	  skills. Modified battle_calc_damage so that even Pressure and similar
 	  skills will be affected by this setting. [Skotlex]
