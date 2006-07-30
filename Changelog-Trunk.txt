@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/07/30
+	* Force all users offline in sql when char-server starts [Toms]
 2006/07/29
 	* Removed ugly struct cast in login.c [Toms]
 	* New version of buildin_query_sql which accept more than one column and

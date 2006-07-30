@@ -1249,6 +1249,10 @@ int mmo_char_sql_init(void) {
 	//it will dc all off players
 	//and send the loginserver the new state....
 
+	// Force all users offline in sql when starting char-server
+	// (useful when servers crashs and don't clean the database)
+	set_all_offline_sql();
+
 	ShowInfo("Finished initilizing.......\n");
 
 	return 0;
