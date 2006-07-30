@@ -19,6 +19,9 @@
 	-----
 
 =========================
+07/30
+	* Adjusted some drop rates and removed Yoyo's Animal Skin drop [Playtester]
+	* Fixed element of Abyss Lake monsters [Playtester]
 07/29
 	* Memorize cast time now can't be reduced by status changes neither.
 	  [Skotlex]
