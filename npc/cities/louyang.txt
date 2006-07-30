@@ -519,7 +519,7 @@ louyang.gat,276,136,4	script	Fist Master	819,{
 }
 
 louyang.gat,272,133,0	script	Trainee::trainees	819,{
-	set @talk,rand(11);
+	set @talk,rand(12);
 	if(@talk == 1) goto L_QUOT1;
 	if(@talk == 2) goto L_QUOT2;
 	if(@talk == 3) goto L_QUOT3;

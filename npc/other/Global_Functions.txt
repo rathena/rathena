@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.02
+//= 2.03
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.0 Fixed F_Save/LoadQuestSkills functions. Had to split in into 2 vars [Lupus]
 //= 2.01 Added $talk to F_ClearGarbage [Evera]
 //= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
+//= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
 //============================================================ 
 
 
@@ -62,6 +63,7 @@ function	script	F_ClearJobVar	{
 	set TAEK_Q,0;
 	set STGL_Q,0;
 	set SOUL_Q,0;
+	set GUNS_Q,0; set GUNS_Q2,0;
 	return;
 }
 

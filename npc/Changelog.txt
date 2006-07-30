@@ -38,6 +38,9 @@ Playtester
 
 Date		Added
 ======
+
+07/30
+	* Optimized Gunslinger Job Quest, rediced vars number, updated Global_Functions.txt [Lupus]
 07/29
 	* Some more sign quest warps and a small change to the comodo gambling NPC. [MasterOfMuppets]
 	* Fixed a mixed up mob id in Thanatos spawns [Playtester]
