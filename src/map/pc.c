@@ -1625,6 +1625,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		val+= sd->special_state.no_weapon_damage;
 		sd->special_state.no_weapon_damage = cap_value(val,0,100);
 		break;
+	case SP_NO_MISC_DAMAGE:
+		if(sd->state.lr_flag == 2)
+			break;
+		val+= sd->special_state.no_misc_damage;
+		sd->special_state.no_misc_damage = cap_value(val,0,100);
+		break;
 	case SP_NO_GEMSTONE:
 		if(sd->state.lr_flag != 2)
 			sd->special_state.no_gemstone = 1;

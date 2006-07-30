@@ -544,7 +544,7 @@ struct map_session_data {
 		struct guild *gmaster_flag;
 	} state;
 	struct {
-		unsigned char no_weapon_damage, no_magic_damage;
+		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
 		unsigned killer : 1;
 		unsigned killable : 1;
 		unsigned restart_full_recover : 1;
@@ -1152,7 +1152,7 @@ enum {
 	SP_DELAYRATE,SP_HP_DRAIN_RATE_RACE,SP_SP_DRAIN_RATE_RACE, // 1083-1085
 	
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
-	SP_NO_CASTCANCEL2,SP_FREE1,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
+	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
 	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
 
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
@@ -1165,7 +1165,6 @@ enum {
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
 	//Before adding another, note that
 	//1077 (SP_FREE, previously disguise),
-	//2007 (SP_FREE2, previously Infinite Endure)
 	//are available!
 };
 
