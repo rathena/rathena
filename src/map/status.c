@@ -4307,6 +4307,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	struct homun_data *hd = NULL;
 	struct status_change* sc;
 	struct status_data *status;
+	struct view_data *vd;
 	int opt_flag , calc_flag, undead_flag;
 
 	nullpo_retr(0, bl);
@@ -4656,6 +4657,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		sc->data[type].timer = -1;
 	}
 
+	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
 	if(!(flag&4)) //Do not parse val settings when loading SCs
 	switch(type){
@@ -4832,8 +4834,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_WEDDING:
 		case SC_XMAS:
-		{
-			struct view_data *vd = status_get_viewdata(bl);
 			if (!vd) return 0;
 			//Store previous values as they could be removed.
 			val1 = vd->class_;
@@ -4845,7 +4845,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
-		}
 			break;
 		case SC_NOCHAT:
 			if(!battle_config.muting_players) { 
@@ -5301,13 +5300,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			else
 				val2 = 0; //0 -> Half stat.
 			break;
-		case SC_TRICKDEAD:			/* Ž€‚ñ‚¾‚Ó‚è */
-		{
-			struct view_data *vd = status_get_viewdata(bl);
+		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 1;
 			break;
-		}
-
 		case SC_CONCENTRATE:
 			val2 = 2 + val1;
 			if (sd) { //Store the card-bonus data that should not count in the %
@@ -5446,7 +5441,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 	}
 
-	if (sd) //Only for players, client crashes if they receive this for a mob o.O [Skotlex]
+	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1);
 
 	// Set option as needed.
@@ -5662,6 +5657,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	struct map_session_data *sd;
 	struct status_change *sc;
 	struct status_data *status;
+	struct view_data *vd;
 	int opt_flag=0, calc_flag;
 
 	nullpo_retr(0, bl);
@@ -5690,8 +5686,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	switch(type){
 		case SC_WEDDING:
 		case SC_XMAS:
-		{
-			struct view_data *vd = status_get_viewdata(bl);
 			if (!vd) return 0;
 			if (sd) //Load data from sd->status.* as the stored values could have changed.
 				status_set_viewdata(bl, sd->status.class_);
@@ -5705,7 +5699,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			clif_changelook(bl,LOOK_WEAPON,vd->weapon);
 			clif_changelook(bl,LOOK_SHIELD,vd->shield);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
-		}
 		break;
 		case SC_RUN:
 		{
@@ -5895,12 +5888,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_MOONLIT: //Clear the unit effect. [Skotlex]
 			skill_setmapcell(bl,CG_MOONLIT, sc->data[SC_MOONLIT].val1, CELL_CLRMOONLIT);
 			break;
-		case SC_TRICKDEAD:			/* Ž€‚ñ‚¾‚Ó‚è */
-		{
-			struct view_data *vd = status_get_viewdata(bl);
+		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 0;
 			break;
-		}
 		case SC_WARM:
 			if (sc->data[type].val4) { //Clear the group.
 				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val4;
@@ -5927,7 +5917,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break; //guess hes not in jail :P
 		}
 
-	if (sd) 
+	if (vd && pcdb_checkid(vd->class_))
 		clif_status_change(bl,StatusIconChangeTable[type],0);
 
 	opt_flag = 1;

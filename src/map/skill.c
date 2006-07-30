@@ -3280,7 +3280,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 	if(status_isdead(src))
 		return 1;
-if(src!=bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
+	if(src!=bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
 		return 1;
 
 	tstatus = status_get_status_data(bl);
@@ -7029,8 +7029,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 
 		case UNT_SANCTUARY:
-			//Only player casted Sanctuaries will do offensive heal.
-			if (sd && (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON))
+			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
 			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
 					skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0))
