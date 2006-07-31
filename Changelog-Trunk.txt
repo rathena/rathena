@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/31
+	* Removed incorrect "Waterball range+1 when standing on suiton" feature.
+	  [Skotlex]
+	* Corrected the Speed update code to prevent sending "walk to xy" packets
+	  twice when the affected character is a player. [Skotlex]
+	* Expanded mob can't move warning to print out where this mob was stuck at
+	  (map, x,y) [Skotlex]
 	* Fixed segmentation fault in status_change_end, vd wasn't initialized [Toms]
 2006/07/30
 	* NPC_INVISIBLE will now use Cloaking of a level +9 of the used skill

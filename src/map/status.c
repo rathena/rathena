@@ -2802,10 +2802,13 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	}
 
 	if(flag&SCB_SPEED) {
-		struct unit_data *ud = unit_bl2ud(bl);
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
-		if (ud && ud->walktimer != -1) //Re-walk to adjust speed. [Skotlex]
+		if (!sd)
+	  	{	//Player speed is updated on calc_bl_sub_pc
+			struct unit_data *ud = unit_bl2ud(bl);
+		  	if (ud && ud->walktimer != -1) //Re-walk to adjust speed. [Skotlex]
 			unit_walktoxy(bl, ud->to_x, ud->to_y, ud->state.walk_easy);
+		}
 	}
 	if(flag&SCB_CRI && b_status->cri) {
 		if (status->luk == b_status->luk)

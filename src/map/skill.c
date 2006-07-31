@@ -3005,8 +3005,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (skilllv>1) {
 			int range = skilllv/2;
 			int cnt;
-			// if caster is ONLY on a NJ_SUITON cell, range will be increased by 1 (consuming suiton cells but also deluge cells if there are ones)
-			if ( !map_getcell(src->m,src->x,src->y,CELL_CHKWATER) && !map_find_skill_unit_oncell(src,src->x,src->y,SA_DELUGE,NULL) ) range = skilllv/2+1;
 
 		  	if (sd)
 				cnt = skill_count_water(src,range);
