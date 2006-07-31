@@ -11,6 +11,7 @@
 //= Conversion to eA [MasterOfMuppets]
 //= Updated spawns, information from emperium.org [MasterOfMuppets]
 //= Kept the old spawns incase someone would want them.
+//= Aegis ep 10.1 spawns [MasterOfMuppets]
 //============================================================
 
 //==================================================
@@ -22,10 +23,10 @@ gefenia01.gat,0,0,0,0	monster	Mini Demon	1292,20,0,0,0
 gefenia01.gat,0,0,0,0	monster	Abyssmal Knight	1219,10,0,0,0
 gefenia01.gat,0,0,0,0	monster	Incubus	1374,10,0,0,0
 gefenia01.gat,0,0,0,0	monster	Succubus	1370,10,0,0,0
-gefenia01.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,1800000,1
-gefenia01.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,1
-gefenia01.gat,0,0,0,0	monster	Mysteltainn	1203,1,7200000,3600000,1
-gefenia01.gat,0,0,0,0	monster	Executioner	1205,1,7200000,3600000,1
+gefenia01.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,3000000,1
+gefenia01.gat,0,0,0,0	monster	Tyrfing	1204,1,18000000,14400000,1
+gefenia01.gat,0,0,0,0	monster	Mysteltainn	1203,1,10800000,7200000,1
+gefenia01.gat,0,0,0,0	monster	Executioner	1205,1,18000000,14400000,1
 
 //==================================================
 // gefenia02 - Geffenia
@@ -36,10 +37,10 @@ gefenia02.gat,0,0,0,0	monster	Fake Angel	1371,30,0,0,0
 gefenia02.gat,0,0,0,0	monster	Succubus	1370,20,0,0,0
 gefenia02.gat,0,0,0,0	monster	Abyssmal Knight	1219,10,0,0,0
 gefenia02.gat,0,0,0,0	monster	Incubus	1374,10,0,0,0
-gefenia02.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,1800000,1
-gefenia02.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,1
-gefenia02.gat,0,0,0,0	monster	Mysteltainn	1203,1,7200000,3600000,1
-gefenia02.gat,0,0,0,0	monster	Executioner	1205,1,7200000,3600000,1
+gefenia02.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,3000000,1
+gefenia02.gat,0,0,0,0	monster	Tyrfing	1204,1,10800000,7200000,1
+gefenia02.gat,0,0,0,0	monster	Mysteltainn	1203,1,18000000,14400000,1
+gefenia02.gat,0,0,0,0	monster	Executioner	1205,1,18000000,14400000,1
 
 //==================================================
 // gefenia03 - Geffenia
@@ -50,10 +51,10 @@ gefenia03.gat,0,0,0,0	monster	Mini Demon	1292,30,0,0,0
 gefenia03.gat,0,0,0,0	monster	Incubus	1374,20,0,0,0
 gefenia03.gat,0,0,0,0	monster	Abyssmal Knight	1219,10,0,0,0
 gefenia03.gat,0,0,0,0	monster	Succubus	1370,10,0,0,0
-gefenia03.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,1800000,0
-gefenia03.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,0
-gefenia03.gat,0,0,0,0	monster	Mysteltainn	1203,1,7200000,3600000,0
-gefenia03.gat,0,0,0,0	monster	Executioner	1205,1,7200000,3600000,0
+gefenia03.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,3000000,0
+gefenia03.gat,0,0,0,0	monster	Tyrfing	1204,1,18000000,14400000,0
+gefenia03.gat,0,0,0,0	monster	Mysteltainn	1203,1,18000000,14400000,0
+gefenia03.gat,0,0,0,0	monster	Executioner	1205,1,10800000,7200000,0
 
 //==================================================
 // gefenia04 - Geffenia
@@ -62,17 +63,15 @@ gefenia04.gat,0,0,0,0	monster	Fake Angel	1371,30,0,0,0
 gefenia04.gat,0,0,0,0	monster	Violy	1390,30,0,0,0
 gefenia04.gat,0,0,0,0	monster	Mini Demon	1292,20,0,0,0
 gefenia04.gat,0,0,0,0	monster	Abyssmal Knight	1219,10,0,0,0
-gefenia04.gat,0,0,0,0	monster	Incubus	1374,10,0,0,0
-gefenia04.gat,0,0,0,0	monster	Succubus	1370,10,0,0,0
-gefenia04.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,1800000,0
-gefenia04.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,0
-gefenia04.gat,0,0,0,0	monster	Mysteltainn	1203,1,7200000,3600000,0
-gefenia04.gat,0,0,0,0	monster	Executioner	1205,1,7200000,3600000,0
+gefenia04.gat,0,0,0,0	monster	Incubus	1374,10,600000,300000,0
+gefenia04.gat,0,0,0,0	monster	Succubus	1370,10,600000,300000,0
+gefenia04.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,3000000,0
+gefenia04.gat,0,0,0,0	monster	Tyrfing	1204,1,18000000,14400000,0
+gefenia04.gat,0,0,0,0	monster	Mysteltainn	1203,1,18000000,14400000,0
+gefenia04.gat,0,0,0,0	monster	Executioner	1205,1,18000000,14400000,0
 
 
-
-//The spawns bellow, are old ones used in events.
-
+//The spawns bellow, are old ones that were used in events.
 //==================================================
 // gefenia01 - Geffenia (Old)
 //==================================================
