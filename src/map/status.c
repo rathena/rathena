@@ -5682,6 +5682,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	sc->data[type].timer=-1;
 	(sc->count)--;
 
+	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
 	switch(type){
 		case SC_WEDDING:
