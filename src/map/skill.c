@@ -4964,9 +4964,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_INVISIBLE:
-		//val4 passed as 1 is for "infinite cloak".
+		//On level 1, use level 10 cloaking (no speed penalty) 
+		//with val4 passed as 1 is for "infinite cloak".
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,skilllv,0,0,1,skill_get_time(skillid,skilllv)));
+			sc_start4(bl,type,100,9+skilllv,0,0,1,skill_get_time(skillid,skilllv)));
 		break;
 		
 	case NPC_SIEGEMODE:
