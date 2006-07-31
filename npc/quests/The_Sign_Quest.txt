@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= found in the language of your client.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, beware of potential nasty bugs :x [MasterOfMuppets]
+//= 1.1 Finalized for stable, might still contain bugs though. [MasterOfMuppets]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -8519,7 +8520,7 @@ L_Path:
 	mes "be too much for just";
 	mes "one adventurer alone...";
 	close2;
-	warp "que_sign02.gat",135,313;
+	warp "que_sign02.gat",35,313;
 	end;
 
 L_Success:
