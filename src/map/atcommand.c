@@ -10184,7 +10184,8 @@ int atcommand_invite(
 
 	if(battle_config.duel_only_on_same_map && target_sd->bl.m != sd->bl.m)
 	{
-		clif_displaymessage(fd, msg_txt(364));
+		sprintf(atcmd_output, msg_txt(364), message);
+		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
 	
