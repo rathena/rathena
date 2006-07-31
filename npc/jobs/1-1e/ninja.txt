@@ -3,7 +3,7 @@
 //===== Initial Version by: ================================== 
 //= Lord Gywall
 //===== Current Version: ===================================== 
-//= 1.1b
+//= 1.1c
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -53,7 +53,7 @@ N_C:
 	mes "..That's right.";
 	mes "You can be a ninja from this day forward.";
 	next;
-	jobchange Job_Ninja;
+	callfunc "Job_Change",Job_Ninja;
 	mes "[Ninja Master]";
 	mes "Congratulations. Now go train~ desu!";
 	close;

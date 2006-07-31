@@ -50,8 +50,8 @@ if (Class == Job_Novice) {
 			mes "Glad to know you did what Mr. Tanieh asked you to do, makes me know you're worthy of being..";
 			next;
 			mes @npcname$;
-			mes "A gunslinger!!!";
-			jobchange Job_Gunslinger;
+			mes "A Gunslinger!!!";
+			callfunc "Job_Change",Job_Gunslinger;
 			callfunc "F_ClearJobVar";		//clears all job variables for the current player
 			next;
 			mes @npcname$;
