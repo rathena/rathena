@@ -8605,7 +8605,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <len>.w <str>.?B
-	unsigned char *message, *buf, buf2[128];
+	char *message, *buf, buf2[128];
 	RFIFOHEAD(fd);
 	WFIFOHEAD(fd, RFIFOW(fd,2) + 4);
 

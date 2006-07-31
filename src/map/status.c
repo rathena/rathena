@@ -4907,6 +4907,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CHASEWALK:
 			val2 = tick>0?tick:10000; //Interval at which SP is drained.
 			val3 = 65+val1*5; //Speed adjustment.
+			if (sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ROGUE)
+				val3 += 10; //TODO: Figure out real bonus. Temp value +10%
 			val4 = 10+val1*2; //SP cost.
 			if (map_flag_gvg(bl->m)) val4 *= 5;
 			break;
