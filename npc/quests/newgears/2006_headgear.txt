@@ -339,8 +339,8 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			mes "^3355FFJudge Hat^000000";
 			mes "7 Red Orb";
 			mes "7 Blue Orb";
-			mes "7 Yellow Orb"
-			mes "7 Green Orb"
+			mes "7 Yellow Orb";
+			mes "7 Green Orb";
 			mes "300 Shining Scale";
 			next;
 			mes "1 Black Dyestuff";
@@ -411,8 +411,8 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			mes "^3355FFA-Yam Hat^000000";
 			mes "7 Red Orb";
 			mes "7 Blue Orb";
-			mes "7 Yellow Orb"
-			mes "7 Green Orb"
+			mes "7 Yellow Orb";
+			mes "7 Green Orb";
 			mes "300 Shining Scale";
 			next;
 			mes "1 Scarlet Dyestuff";
