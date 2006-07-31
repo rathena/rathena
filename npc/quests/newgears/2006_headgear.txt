@@ -1,7 +1,7 @@
 //===== eAthena Script =======================================
 //= 2006 Headgear
 //===== By: ==================================================
-//= DiviniaRO
+//= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
@@ -10,45 +10,54 @@
 //= Anonymous Mask, Feather Beret, Valk. Helm, Smiling Mask,
 //= Lion Mask, Bride Mask, Judge Hat and A-yam Hat
 //===== Additional Comments: =================================
-//
+//= NPC id's and dialog are custom, please replace
 //============================================================
 
 
 //===================== Anonymous Mask =====================================================
 
-hugel.gat,91,273,4	script	Masked man	880,{
+rachel.gat,91,273,4	script	Masked Man	880,{
 
-	mes "What do you want from me..?";
-	menu "I think you know what i want...",-,"Huh? Sorry, I'm Just looking around.",deny;
-	mes "Like i said, Its easy. all i need is";
-	mes "Ok then... heres the deal.. bring me 100 Slick paper, 99 Sticky Mucus, 1 Black Dysetuff, and 100,000,zeny";
+	mes "Psssst....";
 	next;
+	mes "Shhhh...";
+	mes "Come here, but keep quiet";
+	next;
+	mes "I have something that might intrest you";
 
-	mes "Do you have what i asked for?";
-	menu "Yeah yeah.. take it..",makeitem,"Nope, not yet. Just checking what i need",-;
-	close;
+	switch(select("I think you know what i want...","Huh? Sorry, I'm Just looking around."))
+	{
 
-	makeitem:
-		mes "Alright lets see if youve got everything right..";
-		if ( (countitem(983)<1) || (countitem(7111)<100) || (countitem(938)<99) || (Zeny < 100000) ) goto notenough;
+		case 1:
+			mes "I only need a few things in return";
+			mes "100 Slick paper";
+			mes "99 Sticky Mucus";
+			mes "1 Black Dysetuff";
+			mes "100,000 zeny";
+			next;
 
-		delitem 7111,100;
-		delitem 938,99;
-		delitem 983,1;
-		set Zeny, Zeny-100000;
+			if ( (countitem(983)<1) || (countitem(7111)<100) || (countitem(938)<99) || (Zeny < 100000) ) {
+				mes "Come back when you have what I need...";
+				close;
+			}
 
-		getitem 5175,1;
+			mes "I see you came prepared.";
+			delitem 7111,100;
+			delitem 938,99;
+			delitem 983,1;
+			set Zeny, Zeny-100000;
 
-		mes "You didnt get this from me...";
-		close;
+			getitem 5175,1;
 
-	notenough:
-		mes "What is this? Some kind of joke? Get out of my face...";
-		close;
+			mes "You didnt get this from me by the way...";
+			close;
 
-	deny:
-		mes "Yeah... I knew that.";
-		close;
+
+		case 2:
+			mes "Yeah... I knew that.";
+			close;
+	}
+
 }
 
 
@@ -60,97 +69,120 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 	mes "Mumble mumble..";
 	mes "Stupid Arunafelz Military!";
 	mes "I lost the use of my legs during the Rune-Midgard!";
-	mes "I was in a special unit.. we evenn had our own beret!";
-	mes "Wingmen, they called us.. wanna know how to make it?";
-	menu "Of course i do!",-,"No way man, you creep me out!",deny;
-	mes "Alright then, bring me 1 Beret, 100 Soft Feathers and a White Dyestuff";
+	mes "I was in a special unit.. we even had our own beret!";
+	mes "Wingmen, they called us..";
 	next;
+	mes "If you really want one, I can make a replica for you.";
 
-	mes "Do you have what i asked for?";
-	menu "Of course",makeitem,"Nope, not yet. Just checking what i need",-;
-	close;
+	switch(select("Of course i do!","No way man, you creep me out!"))
+	{
 
-	makeitem:
-		mes "Alright lets see if youve got everything right..";
-		if ( (countitem(5172)<1) || (countitem(982)<1) || (countitem(7063)<100) ) goto notenough;
+		case 1:
+			mes "Alright then, I just need a few things:";
+			mes "1 Beret";
+			mes "100 Soft Feathers";
+			mes "1 White Dyestuff";
+			next;
 
+			if ( (countitem(5172)<1) || (countitem(982)<1) || (countitem(7063)<100) ) {
+				mes "Eh.. I'm old, not Senile..Bring me the rest of the stuff I asked for!";
+				close;
+			}
+
+			mes "Nice to see a well prepared youngster!";
+			next;
 			delitem 5172,1;
 			delitem 7063,100;
 			delitem 982,1;
 
 			getitem 5170,1;
 
-			mes "Here.. This takes me back.. eh.. oh well. Have fun with it!";
+			mes "Here.. This takes me back.. Have fun with it!";
 			close;
 
-		notenough:
-			mes "Eh.. im old, not stupid..Bring me the rest of the stuff i asked for!";
-			close;
 
-		deny:
+		case 2:
 			mes "Fine then! Leave an old man at peace! Git! Go!";
 			close;
+	}
 
 }
 
 
 
-//============================ Valkurie Helm =====================================================
+//============================ Valkyrie Helm =====================================================
 
 hugel.gat,146,105,4	script	Genirhimin	897,{
 
 	mes "Eh?";
 	if (Zeny < 10000000) goto poor;
 	next;
-	mes "Back in my day, They let us mortals Serve Odin and the Valkyries in battle..";
-	mes "So that maybe we would die honorably in battle and return to Val Halla";
-	mes "The bravest of Warriors were rewarded with the Heml of the Valkyries";
+	mes "In days long past us mortals were permitted";
+	mes "to serve Odin and the Valkyries in battle..";
+	mes "So that maybe we would have the cahnce to die";
+	mes "honorably in battle and return to Val Halla";
+	next;
+	mes "The bravest of Warriors were rewarded with";
+	mes "the Heml of the Valkyries";
 	mes "But.. those days are long since passed..";
-	mes "I suppose i could make you one, if you really wanted. It's easy.";
-	menu "Really? I'd love one.",-,"I'm not one for fairy tales old man.",deny;
-	mes "Like i said, Its easy. all i need is";
-	mes "sageworm card, argiope card, dryad card, wooden golem card, bongun card, pirate skel card, marduk card, hode card, elder card, nightmare terror card, rune of darkness 1000, and rune of bloody color 1000";
+	mes "I suppose i could make you one, if you can";
+	mes "gather what i need.";
 	next;
 
-	mes "Do you have what i asked for?";
-	menu "Of course",makeitem,"Nope, not yet. Just checking what i need",-;
-	mes "Like i said, Its easy. all i need is";
-	mes "sageworm card, argiope card, dryad card, wooden golem card, bongun card, pirate skel card, marduk card, hode card, elder card, nightmare terror card, rune of darkness 1000, and rune of bloody color 1000";
-	close;
+	switch(select("Really? I'd love one.","I'm not one for fairy tales old man."))
+	{
 
-	makeitem:
-		mes "Alright lets see if youve got everything right..";
-		if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4711)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) goto notenough;
+		case 1:
+			mes "Here is what i need:";
+			mes "1 sageworm card";
+			mes "1 argiope card";
+			mes "1 dryad card";
+			mes "1 wooden golem card";
+			mes "1 bongun card";
+			mes "1 pirate skel card";
+			mes "1 marduk card";
+			next;
+			mes "1 hode card";
+			mes "1 elder card";
+			mes "1 nightmare terror card";
+			mes "1000 rune of darkness";
+			mes "1000 rune of bloody color";
+			next;
 
-		delitem 4219,1;
-		delitem 4114,1;
-		delitem 4711,1;
-		delitem 4259,1;
-		delitem 4212,1;
-		delitem 4073,1;
-		delitem 4112,1;
-		delitem 4081,1;
-		delitem 4251,1;
-		delitem 4166,1;
-		delitem 7511,1000;
-		delitem 7563,1000;
+			if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4711)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) {
+				mes "I'm sorry, but I need more to make the helm.";
+				close;
+			}
 
-		getitem 5171,1;
+			mes "Give me a minute and i'll work my magic..."
+			next;
+			delitem 4219,1;
+			delitem 4114,1;
+			delitem 4711,1;
+			delitem 4259,1;
+			delitem 4212,1;
+			delitem 4073,1;
+			delitem 4112,1;
+			delitem 4081,1;
+			delitem 4251,1;
+			delitem 4166,1;
+			delitem 7511,1000;
+			delitem 7563,1000;
 
-		mes "This is a serious honor.. You have proved yourself a brave and honorable Warrior, Wear this with Pride";
-		close;
+			getitem 5171,1;
 
-		notenough:
-			mes "I'm sorry, but i need more to make the helm.";
+			mes "This is a serious honor.. You have proven yourself a brave and honorable Warrior, Wear this with Pride";
 			close;
 
-		poor:
-			mes "My time is worth more than the fortunes of Rune-Midgard and Arunafelz combined..";
-			close;
-
-		deny:
+		case 2:
 			mes "So be it, suit yourself..";
 			close;
+	}
+
+	poor:
+		mes "My time is worth more than the fortunes of Rune-Midgard and Arunafelz combined..";
+		close;
+
 
 }
 
@@ -167,12 +199,11 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 	next;
 	mes @npcname$;
 	mes "So, which one will it be?";
-	set @choice, select("Smiling Mask","Lion Mask","Bride Mask","I changed my mind.");
-
-	switch(@choice)
+	next;
+	switch(select("Smiling Mask","Lion Mask","Bride Mask","I changed my mind."))
 	{
 
-		case1:
+		case 1:
 			mes @npcname$;
 			mes "Okay, for the Smiling Mask I need:";
 			mes "1 Four-Leaf Clover";
@@ -205,7 +236,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 			mes "Thanks, you can have your mask now.";
 			close;
 
-		case2:
+		case 2:
 			mes @npcname$;
 			mes "Okay, for the Lion Mask I need:";
 			mes "1 Four-Leaf Clover";
@@ -237,7 +268,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 			close;
 
 
-		case3:
+		case 3:
 			mes @npcname$;
 			mes "Okay, for the Bride Mask I need:";
 			mes "1 Four-Leaf Clover";
@@ -271,7 +302,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 			close;
 
 
-		case4:
+		case 4:
 			mes @npcname$;
 			mes "Okay, come back if you feel up to it later.";
 			close;
@@ -285,8 +316,9 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 //====================== Judge Hat / A-yam Hat =============================================
 
 payon.gat,137,123,5	script	Hangaram	740,{
-	mes "[Hangaram Quest]";
-	mes "Hello dear adventurer";
+
+	mes "[Hangaram]";
+	mes "Hello adventurer!";
 	mes "Our life is complicated";
 	next;
 	
@@ -294,185 +326,154 @@ payon.gat,137,123,5	script	Hangaram	740,{
 	mes "But if you want I can help you by making 2 Hats.";
 	next;
  
-	mes "[Hangaram Quest]";
-	mes "My creations are 2, the Judge Hat and the A-Yam Hat";
+	mes "[Hangaram]";
+	mes "My creations are the Judge Hat and the A-Yam Hat";
+	mes "Which Hat do you want?";
 	next;
 		
-	mes "[Hangaram Quest]";
-	mes "But it's a difficult task to make this items";
-	mes "I need the following items to make the hats.";
-	next;
+	switch(select("Judge Hat","A-yam Hat","No thanks"))
+	{
 
-	mes "[Hangaram Quest]";
-	mes "^3355FF[Judge Hat]^000000 : 7 Red,Blue,Yellow and Green Orbs - 300 Shining Scale - 1 Black Dyestuff - 5 Cracked Diamond - 1 Slotted Hat";
+		case 1:
+			mes "[Hangaram]";
+			mes "^3355FFJudge Hat^000000";
+			mes "7 Red Orb"
+			mes "7 Blue Orb";
+			mes "7 Yellow Orb"
+			mes "7 Green Orb"
+			mes "300 Shining Scale";
+			next;
+			mes "1 Black Dyestuff";
+			mes "5 Cracked Diamond";
+			mes "1 Slotted Hat";
+			next;
+
+			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(983)<1) || (countitem(733)<5) || (countitem(2221)<1) ){
+				mes "please return when you have everythin I need";
+				close;
+			}
+
+
+
+			mes "[Hangaram]";
+			mes "Ok you seem to have all the items";
+			next;
+
+			mes "[Hangaram]";
+			mes "Hmmm.. We now make this... mm ";
+			emotion 9; 	
+			next;
+	
+			mes "[Hangaram]";
+			mes "Now we use the Dyestuff like this";
+			emotion 23;	
+			next;
+
+			mes "[Hangaram]";
+			mes "OMG!!! this is'nt meant to be like this";
+			emotion 28;	
+			next;
+
+			mes "[Hangaram]";
+			mes "....";
+			next;
+
+			mes "[Hangaram]";
+			mes "Sorry, it did'nt work.";
+			next;
+
+			mes "[Hangaram]";
+			mes "Well that's the way life is";
+			next;
+
+			mes "[Hangaram]";
+			mes "JAJAJAJA... I was just kidding here is your item !!";
+			emotion 29;
+			next;
+
+			delitem 7445,7;
+			delitem 954,300;
+			delitem 983,1;
+			delitem 733,5;
+			delitem 2221,1;
+			delitem 7446,7;
+			delitem 7447,7;
+			delitem 7448,7;
+
+			getitem 5173,1;
+
+			mes "[Hangaram Quest]";
+			mes "Good Work";
+			close;
+
+
 	mes "^3355FF[A-Yam Hat]^000000 : 7 Red,Blue,Yellow and Green Orbs - 300 Shining Scale - 1 Scarlet Dyestuff - 5 Cracked Diamond - 50 Soft Silk";
 	next;
 
-	mes "[Hangaram Quest]";
-	mes "Which Hat do you want?";
+		case 2:
+			mes "[Hangaram]";
+			mes "^3355FFA-Yam Hat^000000";
+			mes "7 Red Orb"
+			mes "7 Blue Orb";
+			mes "7 Yellow Orb"
+			mes "7 Green Orb"
+			mes "300 Shining Scale";
+			next;
+			mes "1 Scarlet Dyestuff";
+			mes "5 Cracked Diamond";
+			mes "50 Soft Silk";
+			next;
 
-	menu "Judge Hat",L_judge,"A-yam Hat",L_ayam,"Good Bye",ExEnd;
+			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(975)<1) || (countitem(733)<5) || (countitem(7166)<50) ){
+				mes "please return when you have everythin I need";
+				close;
+			}
 
-	L_judge:
-		mes "[Hangaram Quest]";
-		mes "Let's see if you have all the items";
-		next;
 
-		if(countitem(7445)<7) goto no_orb;
-		if(countitem(954)<300) goto no_scale;
-		if(countitem(983)<1) goto no_dye;
-		if(countitem(733)<5) goto no_diamond;
-		if(countitem(2221)<1) goto no_hat;
-		if(countitem(7446)<7) goto no_orb;
-		if(countitem(7447)<7) goto no_orb;
-		if(countitem(7448)<7) goto no_orb;
+			mes "[Hangaram]";
+			mes "Well, you have everything";
+			next;
 
-		mes "[Hangaram Quest]";
-		mes "Ok you seem to have all the items";
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "Hmmm.. We now make this... mm ";
-		emotion 9; 	
-		next;
+			mes "[Hangaram]";
+			mes "Mmm now we just split this part...";
+			emotion 9; 	
+			next;
 	
-		mes "[Hangaram Quest]";
-		mes "Now we use the Dyestuff like this";
-		emotion 23;	
-		next;
+			mes "[Hangaram]";
+			mes "We throw this ... mmm";
+			emotion 23;	
+			next;
 
-		mes "[Hangaram Quest]";
-		mes "OMG!!! this is'nt meant to be like this";
-		emotion 28;	
-		next;
+			mes "[Hangaram]";
+			mes "this is'nt meant to be like this";
+			emotion 28;	
+			next;
 
-		mes "[Hangaram Quest]";
-		mes "....";
-		next;
+			mes "[Hangaram]";
+			mes "... ready!!!";
+			emotion 21;	
+			next;
 
-		mes "[Hangaram Quest]";
-		mes "Sorry, it did'nt work.";
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "Well that's the way life is";
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "JAJAJAJA... I was just kidding here is your item !!";
-		emotion 29;
-		next;
-
-		delitem 7445,7;
-		delitem 954,300;
-		delitem 983,1;
-		delitem 733,5;
-		delitem 2221,1;
-		delitem 7446,7;
-		delitem 7447,7;
-		delitem 7448,7;
-
-		getitem 5173,1;
-
-		mes "[Hangaram Quest]";
-		mes "Good Work";
-		close;
-
-	L_ayam:
-		mes "[Hangaram Quest]";
-		mes "Now lets see if you have all the items";
-		mes "Mmmm Lets see";
-		next;
-	
-		if(countitem(7445)<7) goto no_orb;
-		if(countitem(954)<300) goto no_scale;
-		if(countitem(975)<1) goto no_dye;
-		if(countitem(733)<5) goto no_diamond;
-		if(countitem(7166)<50) goto no_silk;
-		if(countitem(7446)<7) goto no_orb;
-		if(countitem(7447)<7) goto no_orb;
-		if(countitem(7448)<7) goto no_orb;
-
-
-		mes "[Hangaram Quest]";
-		mes "Well, you have everything";
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "Mmm now we just split this part...";
-		emotion 9; 	
-		next;
-	
-		mes "[Hangaram Quest]";
-		mes "We throw this ... mmm";
-		emotion 23;	
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "this is'nt meant to be like this";
-		emotion 28;	
-		next;
-
-		mes "[Hangaram Quest]";
-		mes "... ready!!!";
-		emotion 21;	
-		next;
-
-
-		delitem 7445,7;
-		delitem 954,300;
-		delitem 975,1;
-		delitem 733,5;
-		delitem 7166,50;
-		delitem 7446,7;
-		delitem 7447,7;
-		delitem 7448,7;
+			delitem 7445,7;
+			delitem 954,300;
+			delitem 975,1;
+			delitem 733,5;
+			delitem 7166,50;
+			delitem 7446,7;
+			delitem 7447,7;
+			delitem 7448,7;
 		
-		getitem 5174,1;
+			getitem 5174,1;
 
-		mes "[Monk Quan]";
-		mes "Here you have my young fella !";
-		close;
-
-	
-	
-
-	no_orb:
-		mes "[Hangaram Quest]";
-		mes "You still need more orbs";
-		close;
-
-	no_scale:
-		mes "[Hangaram Quest]";
-		mes "You need more scales";
-		close;
-
-	no_dye:	
-		mes "[Hangaram Quest]";
-		mes "You need the Dyestuff";
-		close;
-
-	no_diamond:
-		mes "[Hangaram Quest]";
-		mes "You still need more diamonds";
-		close;
-
-	no_hat:
-		mes "[Hangaram Quest]";
-		mes "You need the hat";
-		close;
- 
-	no_silk:
-		mes "[Hangaram Quest]";
-		mes "You still need more silk";
-		close;
+			mes "[Hangaram]";
+			mes "Here you have my young fella !";
+			close;
 
 	
+		case 3:
+        		mes "[Hangaram Quest]";
+			mes "Good bye then.";
+        		close;
 
-	ExEnd:
-        	mes "[Hangaram Quest]";
-		mes "Good bye then.";
-        	close;
-
-close;    }
+	}
 }
