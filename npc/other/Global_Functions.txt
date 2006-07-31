@@ -63,7 +63,7 @@ function	script	F_ClearJobVar	{
 	set TAEK_Q,0;
 	set STGL_Q,0;
 	set SOUL_Q,0;
-	set GUNS_Q,0; set GUNS_Q2,0;
+	set GUNS_Q,0;
 	return;
 }
 

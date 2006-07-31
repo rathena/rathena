@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -11,31 +11,38 @@
 //= Lion Mask, Bride Mask, Judge Hat and A-yam Hat
 //===== Additional Comments: =================================
 //= NPC id's and dialog are custom, please replace
+//= 1.0a fixed typos, added missing names, more cleaned and
+//= standartized stuff a bit [Lupus]
 //============================================================
 
 
 //===================== Anonymous Mask =====================================================
 
 rachel.gat,91,273,4	script	Masked Man	880,{
+	set @npcname$,"[Masked Man]";
 
+	mes @npcname$;
 	mes "Psssst....";
 	next;
+	mes @npcname$;
 	mes "Shhhh...";
 	mes "Come here, but keep quiet";
 	next;
+	mes @npcname$;
 	mes "I have something that might intrest you";
 
-	switch(select("I think you know what i want...","Huh? Sorry, I'm Just looking around."))
+	switch(select("I think you know what I want...","Huh? Sorry, I'm Just looking around."))
 	{
 
 		case 1:
+			mes @npcname$;
 			mes "I only need a few things in return";
-			mes "100 Slick paper";
-			mes "99 Sticky Mucus";
-			mes "1 Black Dysetuff";
-			mes "100,000 zeny";
+			mes "100 Slick Paper,";
+			mes "99 Sticky Mucus,";
+			mes "1 Black Dysetuff and";
+			mes "100,000 Zeny.";
 			next;
-
+			mes @npcname$;
 			if ( (countitem(983)<1) || (countitem(7111)<100) || (countitem(938)<99) || (Zeny < 100000) ) {
 				mes "Come back when you have what I need...";
 				close;
@@ -46,14 +53,15 @@ rachel.gat,91,273,4	script	Masked Man	880,{
 			delitem 938,99;
 			delitem 983,1;
 			set Zeny, Zeny-100000;
-
+			next;
 			getitem 5175,1;
-
+			mes @npcname$;
 			mes "You didnt get this from me by the way...";
 			close;
 
 
 		case 2:
+			mes @npcname$;
 			mes "Yeah... I knew that.";
 			close;
 	}
@@ -65,27 +73,31 @@ rachel.gat,91,273,4	script	Masked Man	880,{
 //======================== Feather Beret ================================================
 
 rachel.gat,135,121,4	script	Sakyul	933,{
+	set @npcname$,"[Sakyul]";
 
+	mes @npcname$;
 	mes "Mumble mumble..";
 	mes "Stupid Arunafelz Military!";
 	mes "I lost the use of my legs during the Rune-Midgard!";
 	mes "I was in a special unit.. we even had our own beret!";
 	mes "Wingmen, they called us..";
 	next;
+	mes @npcname$;
 	mes "If you really want one, I can make a replica for you.";
 
-	switch(select("Of course i do!","No way man, you creep me out!"))
+	switch(select("Of course I do!","No way man, you creep me out!"))
 	{
 
 		case 1:
+			mes @npcname$;
 			mes "Alright then, I just need a few things:";
-			mes "1 Beret";
-			mes "100 Soft Feathers";
-			mes "1 White Dyestuff";
+			mes "1 Beret,";
+			mes "100 Soft Feathers and";
+			mes "1 White Dyestuff.";
 			next;
-
+			mes @npcname$;
 			if ( (countitem(5172)<1) || (countitem(982)<1) || (countitem(7063)<100) ) {
-				mes "Eh.. I'm old, not Senile..Bring me the rest of the stuff I asked for!";
+				mes "Eh.. I'm old, not Senile.. Bring me the rest of the stuff I asked for!";
 				close;
 			}
 
@@ -96,12 +108,13 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 			delitem 982,1;
 
 			getitem 5170,1;
-
+			mes @npcname$;
 			mes "Here.. This takes me back.. Have fun with it!";
 			close;
 
 
 		case 2:
+			mes @npcname$;
 			mes "Fine then! Leave an old man at peace! Git! Go!";
 			close;
 	}
@@ -113,48 +126,54 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 //============================ Valkyrie Helm =====================================================
 
 hugel.gat,146,105,4	script	Genirhimin	897,{
+	set @npcname$,"[Genirhimin]";
 
+	mes @npcname$;
 	mes "Eh?";
-	if (Zeny < 10000000) goto poor;
+	if (Zeny < 10000000) goto L_POOR;
 	next;
+	mes @npcname$;
 	mes "In days long past us mortals were permitted";
 	mes "to serve Odin and the Valkyries in battle..";
 	mes "So that maybe we would have the cahnce to die";
 	mes "honorably in battle and return to Val Halla";
 	next;
+	mes @npcname$;
 	mes "The bravest of Warriors were rewarded with";
 	mes "the Heml of the Valkyries";
 	mes "But.. those days are long since passed..";
-	mes "I suppose i could make you one, if you can";
-	mes "gather what i need.";
+	mes "I suppose I could make you one, if you can";
+	mes "gather what I need.";
 	next;
 
 	switch(select("Really? I'd love one.","I'm not one for fairy tales old man."))
 	{
 
 		case 1:
-			mes "Here is what i need:";
-			mes "1 sageworm card";
-			mes "1 argiope card";
-			mes "1 dryad card";
-			mes "1 wooden golem card";
-			mes "1 bongun card";
-			mes "1 pirate skel card";
-			mes "1 marduk card";
+			mes @npcname$;
+			mes "Here is what I need:";
+			mes "1 Sageworm Card,";
+			mes "1 Argiope Card,";
+			mes "1 Dryad Card,";
+			mes "1 Wooden Golem Card,";
+			mes "1 Bongun Card,";
+			mes "1 Pirate Skel Card,";
+			mes "1 Marduk Card and...";
 			next;
-			mes "1 hode card";
-			mes "1 elder card";
-			mes "1 nightmare terror card";
-			mes "1000 rune of darkness";
-			mes "1000 rune of bloody color";
+			mes @npcname$;
+			mes "1 Hode Card,";
+			mes "1 Elder Card,";
+			mes "1 Nightmare Terror Card,";
+			mes "1000 Runes of Darkness and";
+			mes "1000 Runes of Bloody Color.";
 			next;
-
+			mes @npcname$;
 			if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4711)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) {
 				mes "I'm sorry, but I need more to make the helm.";
 				close;
 			}
 
-			mes "Give me a minute and i'll work my magic...";
+			mes "Give me a minute and I'll work my magic...";
 			next;
 			delitem 4219,1;
 			delitem 4114,1;
@@ -170,19 +189,19 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			delitem 7563,1000;
 
 			getitem 5171,1;
-
+			mes @npcname$;
 			mes "This is a serious honor.. You have proven yourself a brave and honorable Warrior, Wear this with Pride";
 			close;
 
 		case 2:
+			mes @npcname$;
 			mes "So be it, suit yourself..";
 			close;
 	}
 
-	poor:
+	L_POOR:
 		mes "My time is worth more than the fortunes of Rune-Midgard and Arunafelz combined..";
 		close;
-
 
 }
 
@@ -191,7 +210,6 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 //======================= Smiling Mask / Lion Mask / Bride Mask ===============================
 
 payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
-
 	set @npcname$,"[Chung-Wol-Mang]";
 
 	mes @npcname$;
@@ -206,13 +224,13 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 		case 1:
 			mes @npcname$;
 			mes "Okay, for the Smiling Mask I need:";
-			mes "1 Four-Leaf Clover";
-			mes "500 Trunks";
-			mes "10 Elastic Band";
-			mes "20 Memory Bookmark";
-			mes "1 Cigarette";
-			mes "100 Cactus Needle";
-			mes "100 Mane";
+			mes "1 Four-Leaf Clover,";
+			mes "500 Trunks,";
+			mes "10 Elastic Bands,";
+			mes "20 Memory Bookmarks,";
+			mes "1 Cigarette,";
+			mes "100 Cactus Needles and";
+			mes "100 Manes.";
 			next;
 
 			if ( (countitem(706) < 1) || (countitem(1019) < 500) || (countitem(7200) < 10) || (countitem(7015) < 20) || (countitem(2267) < 1) || (countitem(952) < 100) || (countitem(1028) < 100) || (countitem(1028) < 100) ){
@@ -239,12 +257,12 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 		case 2:
 			mes @npcname$;
 			mes "Okay, for the Lion Mask I need:";
-			mes "1 Four-Leaf Clover";
-			mes "500 Trunks";
-			mes "10 Elastic Band";
-			mes "500 Horrendous Hair";
-			mes "2 Ancient Tooth";
-			mes "1 Orange Dyestuff";
+			mes "1 Four-Leaf Clover,";
+			mes "500 Trunks,";
+			mes "10 Elastic Bands,";
+			mes "500 Horrendous Hairs,";
+			mes "2 Ancient Teeth and";
+			mes "1 Orange Dyestuff.";
 			next;
 
 			if ( (countitem(706) < 1) || (countitem(1019) < 500) || (countitem(7200) < 10) || (countitem(1048) < 500) || (countitem(1053) < 2) || (countitem(980) < 1) ) {
@@ -271,13 +289,13 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 		case 3:
 			mes @npcname$;
 			mes "Okay, for the Bride Mask I need:";
-			mes "1 Four-Leaf Clover";
-			mes "500 Trunks";
-			mes "10 Elastic Band";
-			mes "20 Skirt of Virgin";
-			mes "500 Transparent Cloth";
-			mes "2 Ancient Lips";
-			mes "100 Squid Ink";
+			mes "1 Four-Leaf Clover,";
+			mes "500 Trunks,";
+			mes "10 Elastic Bands,";
+			mes "20 Skirts of Virgin,";
+			mes "500 Transparent Clothes,";
+			mes "2 Ancient Lips and";
+			mes "100 Squid Inks.";
 			next;
 
 			if ( (countitem(706) < 1) || (countitem(1019) < 500) || (countitem(7200) < 10) || (countitem(1049) < 20) || (countitem(7165) < 500) || (countitem(1054) < 2) || (countitem(1024) < 100) ) {
@@ -316,18 +334,19 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 //====================== Judge Hat / A-yam Hat =============================================
 
 payon.gat,137,123,5	script	Hangaram	740,{
+	set @npcname$,"[Hangaram]";
 
-	mes "[Hangaram]";
+	mes "@npcname$";
 	mes "Hello adventurer!";
-	mes "Our life is complicated";
+	mes "Our life is complicated.";
 	next;
 	
-	mes "[Hangaram Quest]";
+	mes "@npcname$";
 	mes "But if you want I can help you by making 2 Hats.";
 	next;
  
-	mes "[Hangaram]";
-	mes "My creations are the Judge Hat and the A-Yam Hat";
+	mes "@npcname$";
+	mes "My creations are the Judge Hat and the A-Yam Hat.";
 	mes "Which Hat do you want?";
 	next;
 		
@@ -335,58 +354,56 @@ payon.gat,137,123,5	script	Hangaram	740,{
 	{
 
 		case 1:
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "^3355FFJudge Hat^000000";
-			mes "7 Red Orb";
-			mes "7 Blue Orb";
-			mes "7 Yellow Orb";
-			mes "7 Green Orb";
-			mes "300 Shining Scale";
+			mes "7 Red Orbs,";
+			mes "7 Blue Orbs,";
+			mes "7 Yellow Orbs,";
+			mes "7 Green Orbs,";
+			mes "300 Shining Scales,";
 			next;
-			mes "1 Black Dyestuff";
-			mes "5 Cracked Diamond";
-			mes "1 Slotted Hat";
+			mes "1 Black Dyestuff,";
+			mes "5 Cracked Diamond and";
+			mes "1 Slotted Hat.";
 			next;
 
 			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(983)<1) || (countitem(733)<5) || (countitem(2221)<1) ){
-				mes "please return when you have everythin I need";
+				mes "Please, return when you have everything I need.";
 				close;
 			}
 
-
-
-			mes "[Hangaram]";
-			mes "Ok you seem to have all the items";
+			mes "@npcname$";
+			mes "Ok you seem to have all the items.";
 			next;
 
-			mes "[Hangaram]";
-			mes "Hmmm.. We now make this... mm ";
+			mes "@npcname$";
+			mes "Hmmm.. We now make this... Mmm.";
 			emotion 9; 	
 			next;
 	
-			mes "[Hangaram]";
-			mes "Now we use the Dyestuff like this";
+			mes "@npcname$";
+			mes "Now we use the Dyestuff like this.";
 			emotion 23;	
 			next;
 
-			mes "[Hangaram]";
-			mes "OMG!!! this is'nt meant to be like this";
+			mes "@npcname$";
+			mes "OMG!!! this isn't meant to be like this.";
 			emotion 28;	
 			next;
 
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "....";
 			next;
 
-			mes "[Hangaram]";
-			mes "Sorry, it did'nt work.";
+			mes "@npcname$";
+			mes "Sorry, it didn't work.";
 			next;
 
-			mes "[Hangaram]";
-			mes "Well that's the way life is";
+			mes "@npcname$";
+			mes "Well that's the way life is.";
 			next;
 
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "JAJAJAJA... I was just kidding here is your item !!";
 			emotion 29;
 			next;
@@ -402,50 +419,50 @@ payon.gat,137,123,5	script	Hangaram	740,{
 
 			getitem 5173,1;
 
-			mes "[Hangaram Quest]";
-			mes "Good Work";
+			mes "@npcname$";
+			mes "Good Work.";
 			close;
 
 		case 2:
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "^3355FFA-Yam Hat^000000";
-			mes "7 Red Orb";
-			mes "7 Blue Orb";
-			mes "7 Yellow Orb";
-			mes "7 Green Orb";
-			mes "300 Shining Scale";
+			mes "7 Red Orbs,";
+			mes "7 Blue Orbs,";
+			mes "7 Yellow Orbs,";
+			mes "7 Green Orbs,";
+			mes "300 Shining Scales,";
 			next;
-			mes "1 Scarlet Dyestuff";
-			mes "5 Cracked Diamond";
-			mes "50 Soft Silk";
+			mes "1 Scarlet Dyestuff,";
+			mes "5 Cracked Diamonds and";
+			mes "50 Soft Silks.";
 			next;
 
 			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(975)<1) || (countitem(733)<5) || (countitem(7166)<50) ){
-				mes "please return when you have everythin I need";
+				mes "Please return when you have everything I need";
 				close;
 			}
 
 
-			mes "[Hangaram]";
-			mes "Well, you have everything";
+			mes "@npcname$";
+			mes "Well, you have everything.";
 			next;
 
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "Mmm now we just split this part...";
 			emotion 9; 	
 			next;
 	
-			mes "[Hangaram]";
-			mes "We throw this ... mmm";
+			mes "@npcname$";
+			mes "We throw this ... Mmm..";
 			emotion 23;	
 			next;
 
-			mes "[Hangaram]";
-			mes "this is'nt meant to be like this";
+			mes "@npcname$";
+			mes "This isn't meant to be like this..";
 			emotion 28;	
 			next;
 
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "... ready!!!";
 			emotion 21;	
 			next;
@@ -461,14 +478,14 @@ payon.gat,137,123,5	script	Hangaram	740,{
 		
 			getitem 5174,1;
 
-			mes "[Hangaram]";
+			mes "@npcname$";
 			mes "Here you have my young fella !";
 			close;
 
 	
 		case 3:
-        		mes "[Hangaram Quest]";
-			mes "Good bye then.";
+			mes "@npcname$";
+			mes "Goodbye then.";
         		close;
 
 	}

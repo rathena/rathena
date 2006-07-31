@@ -2545,7 +2545,7 @@ s_Ask:
 
 yuno_in04.gat,168,117,1	script	Book	111,{
 
-	if(friendship3 == 3)goto Book2;
+	if(friendship3 >= 3)goto Book2;
 	if(friendship3 == 2)goto Book;
 	mes "^3131FFThis book is labeled,";
 	mes "\"Benkastein's Journal";

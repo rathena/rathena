@@ -39,6 +39,9 @@ Playtester
 Date		Added
 ======
 
+07/31
+	* Cleared 2006 Headgear quests a bit [Lupus]
+	- Made Gunslinger Job Quest use 1 variable instead of 2 [Lupus]
 07/30
 	* Added 2006 Headgear quests... note that they will need to be updated with official dialog
 	  and NPC ID.	[Reddozen]

@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //=	  3 green herbs. [erKURITA]
 //= 1.6 job number->const, commonized variable name,
 //= 	optimized [Lupus]
+//= 1.7 Now uses only ONE variable GUNS_Q [Lupus]
 //============================================================ 
 
 que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
@@ -31,7 +32,7 @@ if (Class == Job_Novice) {
 		mes @npcname$;
 		mes "So, you've comeback?";
 		next;
-		if (GUNS_Q == 5) {
+		if (GUNS_Q == 10005) {
 			if (SkillPoint > 0) {
 				mes @npcname$;
 				mes "Err, excuse me, but you still have Skill Points left. You have to use them all first before I can turn you into a Gunslinger";
@@ -125,8 +126,7 @@ if (GUNS_Q == 1) {
 	mes "So, will you do it, please?";
 	switch (select ("Yes, I will:Sorry I can't now")) {
 		case 1:
-			set GUNS_Q2,callfunc("F_RandMes",5,1019,1066,1067,1068,7186);
-			set GUNS_Q,2;
+			set GUNS_Q,callfunc("F_RandMes",5,1019,1066,1067,1068,7186);
 			goto L_LIST;
 
 		case 2:
@@ -138,7 +138,7 @@ if (GUNS_Q == 1) {
 			end;
 		}
 
-	} else if (GUNS_Q == 2) {
+	} else if (GUNS_Q > 1 && GUNS_Q < 10000) {
 		mes @npcname$;
 		mes "Oh, you've come back! Have you brought the items?";
 		next;
@@ -163,7 +163,7 @@ if (GUNS_Q == 1) {
 					close2;
 					set @npcname$,"";
 					end;
-				} else if (countitem(GUNS_Q2) < 1) {
+				} else if (countitem(GUNS_Q) < 1) {
 					mes @npcname$;
 					mes "Sorry, you don't have the exact Trunk";
 					close2;
@@ -187,15 +187,14 @@ if (GUNS_Q == 1) {
 					delitem 949,3;
 					delitem 912,3;
 					delitem 1013,3;
-					delitem GUNS_Q2,1;
+					delitem GUNS_Q,1; //here we keep Trunk ID
 					delitem 935,10;
 					delitem 511,3;
 					next;
 					mes @npcname$;
 					mes "Oh my~~ You've been of great help. I'll recommend you to the Einbroch Armory for your job change.";
 					close2;
-					set GUNS_Q,3;
-					set GUNS_Q2,0;
+					set GUNS_Q,10003;
 					set @npcname$,"";
 					end;
 			case 2:
@@ -207,7 +206,7 @@ if (GUNS_Q == 1) {
 				mes "^009933 3 Zargons^000000";
 				mes "^660066 3 Rainbow Shells^000000";
 				mes "^009900 3 Green Herbs^000000";
-				mes "^663300 1 "+getitemname(GUNS_Q2)+"^000000";
+				mes "^663300 1 "+getitemname(GUNS_Q)+"^000000";
 				mes "^FF6600 10 Shells^000000";
 				next;
 				mes @npcname$;
@@ -216,8 +215,8 @@ if (GUNS_Q == 1) {
 				set @npcname$,"";
 				end;
 			}
-	} else if (GUNS_Q == 3) || (GUNS_Q == 4) {
-		if (countitem(519) >= 1) && (GUNS_Q == 4) {
+	} else if (GUNS_Q == 10003) || (GUNS_Q == 10004) {
+		if (countitem(519) >= 1) && (GUNS_Q == 10004) {
 			mes @npcname$;
 			mes "THAT'S IT!! I was missing the Milk! Oh yes, thanks so much, will you give it to me?";
 			switch(select("Yes, take it please:Sorry but I need it")) {
@@ -227,7 +226,7 @@ if (GUNS_Q == 1) {
 					mes "Thanks so much! Go talk again with the Einbroch Armsmith. He'll change you. Thanks again and see you.";
 					delitem 519,1;
 					close2;
-					set GUNS_Q,5;
+					set GUNS_Q,10005;
 					set @npcname$,"";
 					end;
 				case 2:
@@ -243,9 +242,9 @@ if (GUNS_Q == 1) {
 		mes "*sigh* All I need now is wait. Thanks for your help... but I believe there's something missing..";
 		close2;
 		set @npcname$,"";
-		set GUNS_Q,4;
+		set GUNS_Q,10004;
 		end;
-	} else if (Class == Job_Gunslinger) || (GUNS_Q == 5) {
+	} else if (Class == Job_Gunslinger) || (GUNS_Q == 10005) {
 		mes @npcname$;
 		mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients";
 		close2;
