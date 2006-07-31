@@ -40,6 +40,8 @@ Date		Added
 ======
 
 07/30
+	* Added 2006 Headgear quests... note that they will need to be updated with official dialog
+	  and NPC ID.	[Reddozen]
 	* Optimized Gunslinger Job Quest, rediced vars number, updated Global_Functions.txt [Lupus]
 07/29
 	* Some more sign quest warps and a small change to the comodo gambling NPC. [MasterOfMuppets]
