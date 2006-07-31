@@ -10181,6 +10181,12 @@ int atcommand_invite(
 		clif_displaymessage(fd, msg_txt(353));
 		return 0;
 	}
+
+	if(battle_config.duel_only_on_same_map && target_sd->bl.m != sd->bl.m)
+	{
+		clif_displaymessage(fd, msg_txt(364));
+		return 0;
+	}
 	
 	duel_invite(did, sd, target_sd);
 	// "Duel: Invitation has been sent."
