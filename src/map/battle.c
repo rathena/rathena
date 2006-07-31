@@ -823,7 +823,7 @@ static struct Damage battle_calc_weapon_attack(
 	//Set miscellaneous data that needs be filled regardless of hit/miss
 	if(
 		(sd && sd->state.arrow_atk) ||
-		(!sd && ((skill_num && skill_get_ammotype(skill_num)) || status_get_range(src)>3))
+		(!sd && ((skill_num && skill_get_ammotype(skill_num)) || sstatus->rhw.range>3))
 	) {	
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;
@@ -2114,7 +2114,7 @@ struct Damage battle_calc_magic_attack(
 	//Initial Values
 	ad.damage = 1;
 	ad.div_=skill_get_num(skill_num,skill_lv);
-	ad.amotion=skill_get_inf(skill_num)&INF_GROUND_SKILL?0:status_get_amotion(src); //Amotion should be 0 for ground skills.
+	ad.amotion=skill_get_inf(skill_num)&INF_GROUND_SKILL?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 	ad.dmotion=tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_num,skill_lv);
 	ad.flag=BF_MAGIC|BF_LONG|BF_SKILL;
@@ -2663,7 +2663,7 @@ struct Damage  battle_calc_misc_attack(
 
 	if(md.damage && flag.cardfix && tsd){
 		int cardfix = 10000;
-		int race2 = status_get_race(src);
+		int race2 = status_get_race2(src);
 		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
 		cardfix=cardfix*(100-tsd->subrace2[race2])/100;

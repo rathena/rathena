@@ -573,6 +573,17 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 	if (hp && !(flag&1)) {
 		if (sc) {
+			if (sc->data[SC_DEVOTION].val1 && src && battle_getcurrentskill(src) != PA_PRESSURE)
+			{	//Devotion prevents any of the other ailments from ending.
+				struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
+				if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
+				{
+					clif_damage(&sd2->bl, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
+					status_fix_damage(NULL, &sd2->bl, hp, 0);
+					return 0;
+				}
+				status_change_end(target, SC_DEVOTION, -1);
+			}
 			if (sc->data[SC_FREEZE].timer != -1)
 				status_change_end(target,SC_FREEZE,-1);
 			if (sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
@@ -606,17 +617,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 					sc->data[SC_GRAVITATION].val4 = 0;
 					status_change_end(target, SC_GRAVITATION, -1);
 				}
-			}
-			if (sc->data[SC_DEVOTION].val1 && src && battle_getcurrentskill(src) != PA_PRESSURE)
-			{
-				struct map_session_data *sd2 = map_id2sd(sc->data[SC_DEVOTION].val1);
-				if (sd2 && sd2->devotion[sc->data[SC_DEVOTION].val2] == target->id)
-				{
-					clif_damage(&sd2->bl, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
-					status_fix_damage(NULL, &sd2->bl, hp, 0);
-					return 0;
-				}
-				status_change_end(target, SC_DEVOTION, -1);
 			}
 			if(sc->data[SC_DANCING].timer != -1 && hp > (signed int)status->max_hp>>2)
 				skill_stop_dancing(target);

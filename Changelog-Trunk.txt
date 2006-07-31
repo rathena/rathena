@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/07/31
+	* Corrected a status_get_race call which should be status_get_race2 in misc
+	  attacks. [Skotlex]
+	* Moved the Devotion code to the top of the SC list in status_damage,
+	  meaning that now stuff like being asleep or confused won't end if you are
+	  hit, but the damage is absorbed by devotion. [Skotlex]
 	* Added the Soul Link of Rogue speed bonus to Chase-Walk. Since there's no
 	  information of how much the bonus should be, it currently is a conservative
 	  10%. [Skotlex]
