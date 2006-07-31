@@ -466,7 +466,7 @@ int unit_setdir(struct block_list *bl,unsigned char dir)
 	ud->dir = dir;
 	if (bl->type == BL_PC) 
 		((TBL_PC *)bl)->head_dir = dir;
-	clif_changed_dir(bl);
+	clif_changed_dir(bl, AREA);
 	return 0;
 }
 
@@ -1006,7 +1006,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	bl.m = src->m;
 	bl.x = skill_x;
 	bl.y = skill_y;
-	if(skill_num != TK_HIGHJUMP &&
+	if(skill_num != TK_HIGHJUMP && skill_num != NJ_SHADOWJUMP &&
 		!battle_check_range(src,&bl,skill_get_range2(src, skill_num,skill_lv)+1))
 		return 0;
 

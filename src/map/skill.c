@@ -2734,7 +2734,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 
-	case NJ_SHADOWJUMP:	//[blackhole89]
 	case TK_JUMPKICK:
 		if (skillid == TK_JUMPKICK)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
@@ -2766,7 +2765,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 				unit_setdir(bl,dir);
-				clif_changed_dir(bl);
+				//clif_changed_dir(bl); Already done by unit_setdir
 			}
 			else if (sd)
 				clif_skill_fail(sd,skillid,0,0);
@@ -6142,6 +6141,16 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 //			clif_slide(src, src->x, src->y); //Poseffect is the one that makes the char snap on the client...
 			if (sd) skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
 		}
+		break;
+	case NJ_SHADOWJUMP:
+	{
+		unit_movepos(src, x, y, 1, 0);
+		unit_setdir(src, (unit_getdir(src) + 4)%8);
+		clif_slide(src,x,y);
+
+		if (sc && sc->data[SC_HIDING].timer != -1)
+			status_change_end(src, SC_HIDING, -1);
+	}
 		break;
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:

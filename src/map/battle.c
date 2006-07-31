@@ -2206,7 +2206,7 @@ struct Damage battle_calc_magic_attack(
 //Adds an absolute value to damage. 100 = +100 damage
 #define MATK_ADD( a ) { ad.damage+= a; }
 
-		sc= status_get_sc(src);
+		sc= status_get_sc(target); // used for NJ_SUITON increasing NJ_HYOUSENSOU damages
 
 		switch (skill_num)
 		{	//Calc base damage according to skill
@@ -2321,6 +2321,9 @@ struct Damage battle_calc_magic_attack(
 						break;
 					case NJ_KOUENKA:
 						skillratio -= 10;
+						break;
+					case NJ_HUUJIN:
+						skillratio += 50 + 50*skill_lv; // extrapolation from a vid (unsure)
 						break;
 					case NJ_BAKUENRYU:
 						skillratio += 150 + 150*skill_lv; // It has to be MATK +(150+150*SkillLV)% so 1000% at lvl 5, not 900%. Damage is not increased by hits.
