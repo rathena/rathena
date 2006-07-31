@@ -142,7 +142,7 @@
 644,Gift_Box,Gift Box,2,2,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 // ASPD Potions
 645,Concentration_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
-656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0x03E7DEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
+656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
 657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x00E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 658,Tribal_Solidarity,Tribal Solidarity,2,1000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 // New Pet Tames
@@ -1058,7 +1058,7 @@
 2419,Goibne's_Greaves,Goibne's Greaves,5,,10,700,,4,,0,0xFFFFFFFE,7,2,64,,54,1,0,{ bonus bMdef,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; },{},{}
 2420,Angel's_Reincarnation,Angel's Reincarnation,5,,10,700,,0,,1,0x00000001,7,2,64,,54,1,0,{ bonus bMaxHP,100; },{},{}
 2421,Valkyrie's_Shoes,Valkyrie's Shoes,5,,10,500,,4,,1,0xFFFFFFFE,2,2,64,,0,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bMaxHP,(BaseLevel*5); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bMaxSP,(JobLevel*2); },{},{}
-2422,High_Quality_Sandals,High Quality Sandals,5,,10,200,,2,,0,0x00818314,7,2,64,,0,0,1,{ bonus bMdef,10; },{},{}
+2422,High_Quality_Sandals,High Quality Sandals,5,,10,200,,2,,1,0x00818314,7,2,64,,0,0,1,{ bonus bMdef,10; },{},{}
 // Garments
 //===================================================================
 2501,Hood,Hood,5,1000,,200,,1,,0,0xFFFFFFFF,7,2,4,,0,1,0,{},{},{}
@@ -1719,7 +1719,7 @@
 5148,National_Holiday_Hat,National Holiday Hat,5,,10,500,,0,,0,0xFFFFFFFF,7,2,256,,,1,217,{ bonus bInt,2; },{},{}
 5149,Silver_Tiara,Silver Tiara,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,218,{ bonus bInt,2; },{},{}
 5150,Brazil_Event_Hat,Brazil Event Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,219,{ bonus bSpeedRate,35; },{},{}
-5151,Note_Headphones,Note Headphones,5,,,100,,4,,1,0xFFFFFFFF,7,2,256,,,1,220,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
+5151,Note_Headphone,Note Headphone,5,,,100,,4,,1,0xFFFFFFFF,7,2,256,,,1,220,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
 5152,Phoenix_Crown,Phoenix Crown,5,,,2000,,1,,0,0xFFFFFFFF,7,2,768,,,1,221,{ bonus2 bResEff,Eff_Stun,1000; bonus bInt,1; bonus bMdef,2; },{},{}
 5153,Angeling_Pin,Angeling Pin,5,,,700,,1,,0,0xFFFFFFFF,7,2,256,,,1,222,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
 5154,Father's_Sunglasses,Father's Sunglasses,5,,,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,12,{},{},{}
