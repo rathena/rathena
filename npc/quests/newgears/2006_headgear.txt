@@ -154,7 +154,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 				close;
 			}
 
-			mes "Give me a minute and i'll work my magic..."
+			mes "Give me a minute and i'll work my magic...";
 			next;
 			delitem 4219,1;
 			delitem 4114,1;
