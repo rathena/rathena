@@ -2641,6 +2641,8 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 		}
 		node = node->next;
 	}
+	//Cancel tick value or run_script_main can get into an infinite loop by always delaying execution. [Skotlex]
+	st->sleep.tick = 0;
 	run_script_main(st);
 	return 0;
 }
@@ -2774,13 +2776,15 @@ void run_script_main(struct script_state *st)
 			run_script_timer, st->sleep.charid, (int)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
 		//Restore previous script
-		sd->st = bk_st;
-		sd->npc_id = bk_npcid;
-		bk_st = NULL; //Remove tag for removal.
+		if (sd) {
+			sd->st = bk_st;
+			sd->npc_id = bk_npcid;
+			bk_st = NULL; //Remove tag for removal.
+		}
 	}
 	else if(st->state != END && sd){
 		//Resume later (st is already attached to player).
-		if(bk_st && sd->st != bk_st)
+		if(bk_st)
 			ShowWarning("Unable to restore stack! Double continuation!\n");
 	} else {
 		//Dispose of script.
@@ -3247,7 +3251,7 @@ int do_final_script()
 		while(n) {
 			struct script_state *st = (struct script_state *)n->data;
 			script_free_stack(st->stack);
-			free(st);
+			aFree(st);
 			n = n->next;
 		}
 		linkdb_final(&sleep_db);
@@ -3295,7 +3299,7 @@ int script_reload()
 		while(n) {
 			struct script_state *st = (struct script_state *)n->data;
 			script_free_stack(st->stack);
-			free(st);
+			aFree(st);
 			n = n->next;
 		}
 		linkdb_final(&sleep_db);
@@ -12297,6 +12301,7 @@ int buildin_awake(struct script_state *st)
 			delete_timer(tst->sleep.timer, run_script_timer);
 			node = script_erase_sleepdb(node);
 			tst->sleep.timer = -1;
+			tst->sleep.tick = 0;
 			run_script_main(tst);
 		} else {
 			node = node->next;
