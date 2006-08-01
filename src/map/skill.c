@@ -10175,7 +10175,7 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 			if(skill_produce_db[i].itemlv!=trigger)
 				return 0;
 		} else if(trigger>10) { // Food (any item level between 10 and 20 will do)
-			if(skill_produce_db[i].itemlv<=10)
+			if(skill_produce_db[i].itemlv>10 && skill_produce_db[i].itemlv<=20)
 				return 0;
 		} else { // Weapon (itemlv must be higher or equal)
 			if(skill_produce_db[i].itemlv>trigger)
