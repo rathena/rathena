@@ -2881,7 +2881,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 12)
 				return 0;
 			{
-				int id = RFIFOL(fd, 2);
+				int cid = RFIFOL(fd, 2);
 				int fame = RFIFOL(fd, 6);
 				char type = RFIFOB(fd, 10);
 				char pos = RFIFOB(fd, 11);
@@ -2917,7 +2917,7 @@ int parse_frommap(int fd) {
 					}
 					// If the player's already in the list, remove the entry and shift the following ones 1 step up
 					memmove(list+pos, list+pos+1, (size-pos-1) * sizeof(struct fame_list));
-					list[size].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
+					list[size-1].fame = 0; // At worst, the guy'll end up last (shouldn't happen if fame only goes up)
 				}
 
 				// Find the position where the player has to be inserted
@@ -2925,7 +2925,7 @@ int parse_frommap(int fd) {
 				if(i>=size) break; //Out of ranking.
 				// When found someone with less or as much fame, insert just above
 				memmove(list+i+1, list+i, (size-i-1) * sizeof(struct fame_list));
-				list[i].id = id;
+				list[i].id = cid;
 				list[i].fame = fame;
 				// Look for the player's name
 				char_loadName(list[i].id, list[i].name);
