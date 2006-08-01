@@ -3384,6 +3384,7 @@ int buildin_changebase(struct script_state *st);
 int buildin_changesex(struct script_state *st);
 int buildin_waitingroom(struct script_state *st);
 int buildin_delwaitingroom(struct script_state *st);
+int buildin_waitingroomkickall(struct script_state *st);
 int buildin_enablewaitingroomevent(struct script_state *st);
 int buildin_disablewaitingroomevent(struct script_state *st);
 int buildin_getwaitingroomstate(struct script_state *st);
@@ -3710,6 +3711,7 @@ struct script_function buildin_func[] = {
 	{buildin_waitingroom,"waitingroom","si*"},
 	{buildin_warpwaitingpc,"warpwaitingpc","sii"},
 	{buildin_delwaitingroom,"delwaitingroom","*"},
+	{buildin_waitingroomkickall,"kickwaitingroomall","*"},
 	{buildin_enablewaitingroomevent,"enablewaitingroomevent","*"},
 	{buildin_disablewaitingroomevent,"disablewaitingroomevent","*"},
 	{buildin_getwaitingroomstate,"getwaitingroomstate","i*"},

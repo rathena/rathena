@@ -1841,7 +1841,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	
 		if(sc && sc->data[SC_MAGICROD].timer != -1 && src == dsrc) {
-			struct unit_data *ud;
+			//struct unit_data *ud;
 			int sp = skill_get_sp(skillid,skilllv);
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
@@ -1850,9 +1850,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
 			status_heal(bl, 0, sp, 2);
 			clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1);
+			/* It was reported you don't get an act delay once it triggers.
 			ud = unit_bl2ud(bl);
 			if (ud) ud->canact_tick = tick
 				+ skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
+			*/	
 		}
 	}
 
@@ -6625,11 +6627,12 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		break;
 	case DC_DONTFORGETME:
 		val1 = 30*skilllv+status->dex; // ASPD decrease
-		val2 = 100+2*skilllv+status->agi/10; // Movement speed adjustment.
+		val2 = 100 -2*skilllv -status->agi/10; // Movement speed adjustment.
 		if(sd){
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON);
+			val2 -= pc_checkskill(sd,DC_DANCINGLESSON);
 		}
+		if (val2 < 1) val2 = 1;
 		break;
 	case BA_APPLEIDUN:
 		val1 = 5+2*skilllv+status->vit/10; // MaxHP percent increase
