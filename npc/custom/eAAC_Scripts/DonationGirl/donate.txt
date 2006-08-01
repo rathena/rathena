@@ -11,26 +11,28 @@
 //= 1.2 - Modified for public use. Added checkweight feature.
 //= 2.0 - Many changes, especially ones I had always wanted
 //=	  to add to this script. Includes reading items from
-//=	  a separate sql table and more database manipulation
+//=	  a separate SQL table and more database manipulation
 //=	  options for GMs.
 //= 2.1 - Made few changes including the add/remove items
 //=	  feature.
 //= 3.0 - All strings inputed by a user and user/char names
-//=	  in sql queries are now escaped. Each item has a
+//=	  in SQL queries are now escaped. Each item has a
 //=	  price rather than a quantity. This script can work
 //=	  with decimals.
 //= 3.1 - Added quotes to some queries, fixed a variable and
 //=	  removed a comment.
 //= 3.2 - Fixed a problem where eAthena would crash if a
 //=	  query returned NULL.
+//= 3.3 - Optimized query speeds by combining a few select 
+//=	  queries into one. Requires Trunk 7975.
 //===== Compatible With =====================================
-//= eAthena - any version that contains the escape_sql
-//=	      function (Stable 6299 OR Trunk 6262)
+//= eAthena - any version that contains the new query_sql
+//=	      command (Trunk 7975).
 //===== Description =========================================
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.
 //===== Comments ============================================
-//= This script uses sql tables to store variables for the
+//= This script uses SQL tables to store variables for the
 //= amount donated by users and the items claimable.
 //===== Installation ========================================
 //= You must execute donate.sql and donate_item_db.sql before
@@ -40,6 +42,8 @@
 //= Thanks to Lance for helping me with the the arrays and 
 //= for implementing query_sql.
 //= Thanks to Skotlex for implementing escape_sql.
+//= Thanks to Toms for implementing the new multi-column 
+//= query_sql command.
 //===========================================================
 
 prontera.gat,145,179,5	script	Donation Girl	714,{
@@ -67,8 +71,7 @@ menu "Continue",L_START,"Cancel",-;
 close;
 
 L_CHECK:
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @amount$;
-query_sql "SELECT `claimed` FROM `donate` WHERE `account_id` = "+escape_sql(getcharid(3))+"", @claimed$;
+query_sql "SELECT `amount`,`claimed` FROM `donate` WHERE `account_id` = "+getcharid(3)+"", @amount$, @claimed$;
 query_sql "SELECT MIN(price) FROM `donate_item_db`", @min$;
 query_sql "SELECT '"+@amount$+"' - '"+@claimed$+"'", @value$;
 query_sql "SELECT '"+@value$+"' >= '"+@min$+"'", @enough;
@@ -94,7 +97,7 @@ L_YES:
 mes "[Donation Girl]";
 mes "Very well. Which item would you like?";
 next;
-query_sql "SELECT name FROM `donate_item_db` order by name ASC",$@name$;
+query_sql "SELECT `name` FROM `donate_item_db` ORDER BY `name` ASC",$@name$;
 set $@menu$, $@name$[0];
 	for(set $@i, 1; $@i < 127; set $@i, $@i + 1){
 		set $@menu$, $@menu$ + ":" + $@name$[$@i];
@@ -102,8 +105,7 @@ set $@menu$, $@name$[0];
 
 set @menu, (select($@menu$))-1;
 
-query_sql "SELECT ID FROM `donate_item_db` WHERE name = '"+$@name$[@menu]+"'", @id;
-query_sql "SELECT price FROM `donate_item_db` WHERE ID = "+@id+"", @price$;
+query_sql "SELECT `id`,`price` FROM `donate_item_db` WHERE `name` = '"+$@name$[@menu]+"'", @id, @price$;
 query_sql "SELECT TRUNCATE("+@value$+" / "+@price$+",0)", @max;
 
 mes "[Donation Girl]";
@@ -137,7 +139,7 @@ query_sql "SELECT "+@quantity+" * "+@price$+"", @total$;
 mes "Are you sure you want to claim "+@quantity+" "+$@name$[@menu]+"s for $"+@total$+"?";
 next;
 menu "No",L_CLAIM,"Yes",-;
-query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total$+" WHERE `account_id` = '"+escape_sql(getcharid(3))+"'";
+query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total$+" WHERE `account_id` = '"+getcharid(3)+"'";
 getitem @id,@quantity;
 mes "[Donation Girl]";
 mes "Thankyou for donating! We hope you enjoy your gift!";
@@ -234,8 +236,7 @@ close;
 
 L_ALLITEMS:
 mes "[GM Menu]";
-query_sql "SELECT `name` FROM `donate_item_db` ORDER BY `name` ASC", @items$;
-query_sql "SELECT `price` FROM `donate_item_db` ORDER BY `name` ASC", @itemamount$;
+query_sql "SELECT `name`,`price` FROM `donate_item_db` ORDER BY `name` ASC", @items$, @itemamount$;
 for(set @i, 0; @i < getarraysize(@items$); set @i, @i + 1){
 		mes ""+@items$[@i]+" - $"+@itemamount$[@i]+"";
 	}
@@ -351,8 +352,7 @@ goto L_GM;
 
 L_VIEWALL:
 mes "[GM Menu]";
-query_sql "SELECT `account_id` FROM `donate` ORDER BY `amount` DESC", @donatoraid;
-query_sql "SELECT `amount` FROM `donate` ORDER BY `amount` DESC", @donatedamount$;
+query_sql "SELECT `account_id`,`amount` FROM `donate` ORDER BY `amount` DESC", @donatoraid, @donatedamount$;
 for(set @i, 0; @i < getarraysize(@donatoraid); set @i, @i + 1){
 	query_sql "SELECT `userid` FROM `login` WHERE `account_id` = '"+@donatoraid[@i]+"'", @donateruserid$;
 	for(set @j, 0; @j < getarraysize(@donateruserid$); set @j, @j + 1){
