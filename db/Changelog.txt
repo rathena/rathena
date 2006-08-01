@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/01
+	* Small item update from Haplo [Playtester]
 07/31
 	* Updated Awakening Potion, Note Headphone and High Quality Sandals [Playtester]
 07/30
