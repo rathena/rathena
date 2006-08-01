@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/01
+	* Figured out and fixed the issue with Volcano/Deluge/Violent Gale not
+	  really working. Thanks to Mpeg for noting it out. [Skotlex]
 	* Modified Self Destruction, so that Marine Spheres in non-versus maps will
 	  hurt only enemies, while in all other situations this skill will hurt
 	  everyone around them. [Skotlex]

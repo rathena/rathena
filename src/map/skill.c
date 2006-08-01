@@ -2768,7 +2768,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 				unit_setdir(bl,dir);
-				//clif_changed_dir(bl); Already done by unit_setdir
 			}
 			else if (sd)
 				clif_skill_fail(sd,skillid,0,0);
@@ -6880,7 +6879,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_VIOLENTGALE:
 	case UNT_SUITON:
 		if(sc && sc->data[type].timer==-1)
-			sc_start(bl,type,100,sg->skill_lv,skill_get_time2(sg->skill_id,sg->skill_lv));
+			sc_start(bl,type,100,sg->skill_lv,sg->limit);
 		break;
 
 	case UNT_RICHMANKIM:
