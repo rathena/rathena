@@ -1085,9 +1085,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	
 		if (sc && sc->count) {	
 		// Enchant Poison gives a chance to poison attacked enemies
-			if(sc->data[SC_ENCPOISON].timer != -1)
-				sc_start(bl,SC_POISON,10*sc->data[SC_ENCPOISON].val2,sc->data[SC_ENCPOISON].val1,
-					skill_get_time2(AS_ENCHANTPOISON,sc->data[SC_ENCPOISON].val1));
+			if(sc->data[SC_ENCPOISON].timer != -1) //Don't use sc_start since chance comes in 1/10000 rate.
+				status_change_start(bl,SC_POISON,sc->data[SC_ENCPOISON].val2,
+					sc->data[SC_ENCPOISON].val1,0,0,0,
+					skill_get_time2(AS_ENCHANTPOISON,sc->data[SC_ENCPOISON].val1),0);
 			// Enchant Deadly Poison gives a chance to deadly poison attacked enemies
 			if(sc->data[SC_EDP].timer != -1)
 				sc_start4(bl,SC_DPOISON,sc->data[SC_EDP].val2,

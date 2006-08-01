@@ -4704,7 +4704,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = 5; //Lasts 5 hits
 			break;
 		case SC_ENCPOISON:
-			val2= 25+5*val1;	//Poisoning Chance (2.5+5%)
+			val2= 250+50*val1;	//Poisoning Chance (2.5+0.5%) in 1/10000 rate
 		case SC_ASPERSIO:
 		case SC_FIREWEAPON:
 		case SC_WATERWEAPON:

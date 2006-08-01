@@ -1585,8 +1585,8 @@ static struct Damage battle_calc_weapon_attack(
 				skillratio += 150 +50*sc->data[SC_EDP].val1;
 		}
 		switch (skill_num) {
-			case AS_SONICBLOW:
-				if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ASSASIN)
+			case AS_SONICBLOW: //EDP will not stack with Soul Link bonus.
+				if (sc && sc->data[SC_EDP].timer == -1 && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ASSASIN)
 					skillratio += (map_flag_gvg(src->m))?25:100; //+25% dmg on woe/+100% dmg on nonwoe
 				if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
 					skillratio += 10;
