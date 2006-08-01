@@ -20,6 +20,7 @@
 
 =========================
 08/01
+	* Cleaned up some of the db files. [Skotlex]
 	* Fixed name of Freya's Shoes [Playtester]
 	* Small item update from Haplo [Playtester]
 07/31
