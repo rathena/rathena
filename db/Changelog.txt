@@ -20,6 +20,8 @@
 
 =========================
 08/01
+	* Made Deluge/volcano/v. gale be castable on top of each other again
+	  [Skotlex]
 	* Cleaned up some of the db files. [Skotlex]
 	* Fixed name of Freya's Shoes [Playtester]
 	* Small item update from Haplo [Playtester]

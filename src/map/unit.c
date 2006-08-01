@@ -258,6 +258,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
+//Easy parameter: &1 -> 1/2 = easy/hard, &2 -> ignore MD_CANMOVE check
 int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;
@@ -271,11 +272,13 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	
 	if( ud == NULL) return 0;
 
-	// 移動出来ないユニットは弾く
-	if(!(status_get_mode(bl)&MD_CANMOVE) || !unit_can_move(bl))
+	if(!(easy&2) && !status_get_mode(bl)&MD_CANMOVE)
+		return 0;
+	
+	if (!unit_can_move(bl))
 		return 0;
 
-	ud->state.walk_easy = easy;
+	ud->state.walk_easy = easy&1;
 	ud->target = 0;
 	ud->to_x = x;
 	ud->to_y = y;

@@ -2180,20 +2180,6 @@ static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
 			if(g_skillid != MG_SAFETYWALL && g_skillid != AL_PNEUMA)
 				return 0;
 			break;
-		//Cannot stack among themselves.
-		case SA_VOLCANO:
-		case SA_DELUGE:
-		case SA_VIOLENTGALE:
-			switch (g_skillid)
-			{
-				case SA_VOLCANO:
-				case SA_DELUGE:
-				case SA_VIOLENTGALE:
-					break;
-				default:
-					return 0;
-			}
-			break;
 		case AL_WARP:
 		case HT_SKIDTRAP:
 		case HT_LANDMINE:
@@ -4916,8 +4902,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			const int mask[8][2] = {{0,-1},{1,-1},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1}};
 			int dir = (bl == src)?unit_getdir(src):map_calc_dir(src,bl->x,bl->y); //If cast on self, run forward, else run away.
 			unit_stop_attack(src);
-			//Run skillv tiles.
-			unit_walktoxy(src, bl->x + skilllv * mask[dir][0], bl->y + skilllv * mask[dir][1], 0);
+			//Run skillv tiles overriding the can-move check.
+			unit_walktoxy(src, bl->x + skilllv * mask[dir][0], bl->y + skilllv * mask[dir][1], 2);
 		}
 		break;
 
@@ -5114,6 +5100,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				return 1;
 			}
 	
+			if (tsc && tsc->data[type].timer != -1)
+			{	//HelloKitty2 (?) explained that this silently fails when target is
+				//already inflicted. [Skotlex]
+				map_freeblock_unlock();
+				return 1;
+			}
+
 			//Has a 55% + skilllv*5% success chance.
 			if (!clif_skill_nodamage(src,bl,skillid,skilllv,
 				sc_start(bl,type,55+5*skilllv,skilllv,skill_get_time(skillid,skilllv))))
@@ -9282,19 +9275,43 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 	if (unit == NULL || unit->group == NULL)
 		return 0;
 
-	if (skillid == SA_LANDPROTECTOR && unit->group->skill_id == SA_LANDPROTECTOR
-		&& battle_check_target(bl, src, BCT_ENEMY) > 0)
-	{	//Check for offensive Land Protector to delete both. [Skotlex]
-		(*alive) = 0;
-		skill_delunit(unit);
-		return 1;
-	}	
-
-	if((skillid == SA_LANDPROTECTOR || skillid == HW_GANBANTEIN) &&
-		skill_get_type(unit->group->skill_id) == BF_MAGIC)
-	{	//Delete Magical effects
-		skill_delunit(unit);
-		return 1;
+	switch (skillid)
+	{
+		case SA_LANDPROTECTOR:
+			if (unit->group->skill_id == SA_LANDPROTECTOR &&
+				battle_check_target(bl, src, BCT_ENEMY) > 0)
+			{	//Check for offensive Land Protector to delete both. [Skotlex]
+				(*alive) = 0;
+				skill_delunit(unit);
+				return 1;
+			}
+			//Delete the rest of types.
+		case HW_GANBANTEIN:
+			if(skill_get_type(unit->group->skill_id) == BF_MAGIC)
+			{	//Delete Magical effects
+				skill_delunit(unit);
+				return 1;
+			}
+			break;
+		case SA_VOLCANO:
+		case SA_DELUGE:
+		case SA_VIOLENTGALE:
+			switch (unit->group->skill_id)
+			{	//These override each other.
+				case SA_VOLCANO:
+				case SA_DELUGE:
+				case SA_VIOLENTGALE:
+					skill_delunit(unit);
+					return 1;
+			}
+			break;
+		case HP_BASILICA:
+			if (unit->group->skill_id == HP_BASILICA)
+			{	//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
+				(*alive) = 0;
+				return 1;
+			}
+			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
 		skill_get_type(skillid) == BF_MAGIC)
@@ -9302,11 +9319,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 		(*alive) = 0;
 		return 1;
 	}
-	if (skillid == HP_BASILICA && unit->group->skill_id == HP_BASILICA)
-	{	//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
-		(*alive) = 0;
-		return 1;
-	}
+
 	return 0;
 }
 

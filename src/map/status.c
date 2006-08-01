@@ -1238,7 +1238,6 @@ int status_calc_mob(struct mob_data* md, int first)
 		{	// different levels of HP according to skill level
 			if (ud->skillid == AM_SPHEREMINE) {
 				status->max_hp = 2000 + 400*ud->skilllv;
-				status->mode|= MD_CANMOVE; //Needed for the skill
 			} else { //AM_CANNIBALIZE
 				status->max_hp = 1500 + 200*ud->skilllv + 10*status_get_lv(mbl);
 				status->mode|= MD_CANATTACK|MD_AGGRESSIVE;

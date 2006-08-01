@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/01
+	* Modified unit_walktoxy and NPC_RUN to enable running even when the caster
+	  does not has the MD_CANMOVE bit on. [Skotlex]
+	* PF_MINDBREAKER will now silently fail if you try to use it on someone who
+	  already has the status active. [Skotlex]
+	* Cleaned up yet again skill_landprotector, now new cells of
+	  Deluge/Volcano/V.Gale will delete previous cells when they are recasted on
+	  top of each other. [Skotlex]
+	* Summoned Marine Spheres no longer get the MD_CANMOVE bit. [Skotlex]
 	* Cleaned up some more the SC_JAILED code [Skotlex]
 	* merged in atcommands jailfor, jailtime, charjailtime. Thanks to Meruru
 	  and Coltaro for the code. [Skotlex]

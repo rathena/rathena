@@ -1670,8 +1670,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 	}
 	
-	if(md->special_state.ai==2 && md->master_id == src->id)
-	{
+	if(md->special_state.ai==2/* && md->master_id == src->id*/)
+	{	//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
 		md->state.alchemist = 1;
 		mobskill_use(md, gettick(), MSC_ALCHEMIST);
 	}
