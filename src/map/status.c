@@ -5623,16 +5623,36 @@ int status_change_clear(struct block_list *bl,int type)
 		skill_stop_dancing(bl);
 	for(i = 0; i < SC_MAX; i++)
 	{
-		//Type 0: PC killed -> Place here stats that do not dispel on death.
-		if(sc->data[i].timer == -1 ||
-			(type == 0 && (
-				i == SC_EDP || i == SC_MELTDOWN || i == SC_XMAS || i == SC_NOCHAT ||
-				i == SC_FUSION || i == SC_TKREST || i == SC_READYSTORM ||
-			  	i == SC_READYDOWN || i == SC_READYCOUNTER || i == SC_READYTURN ||
-				i == SC_DODGE || i == SC_JAILED
-			)))
+		if(sc->data[i].timer == -1)
+		  continue;
+		if(type == 0)
+		switch (i)
+		{	//Type 0: PC killed -> Place here stats that do not dispel on death.
+		case SC_EDP:
+		case SC_MELTDOWN:
+		case SC_XMAS:
+		case SC_NOCHAT:
+		case SC_FUSION:
+		case SC_TKREST:
+		case SC_READYSTORM:
+		case SC_READYDOWN:
+		case SC_READYCOUNTER:
+		case SC_READYTURN:
+		case SC_DODGE:
+		case SC_JAILED:
+		case SC_STRFOOD:
+		case SC_AGIFOOD:
+		case SC_VITFOOD:
+		case SC_INTFOOD:
+		case SC_DEXFOOD:
+		case SC_LUKFOOD:
+		case SC_HITFOOD:
+		case SC_FLEEFOOD:
+		case SC_BATKFOOD:
+		case SC_WATKFOOD:
+		case SC_MATKFOOD:
 			continue;
-
+		}
 		status_change_end(bl, i, -1);
 
 		if (type == 1 && sc->data[i].timer != -1)
