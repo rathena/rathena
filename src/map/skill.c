@@ -2748,7 +2748,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		//line of sight between caster and target.
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
 			skill_get_splash(skillid, skilllv),BL_CHAR,
-			BF_MAGIC,src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
 	case MO_INVESTIGATE:

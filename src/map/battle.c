@@ -325,8 +325,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-		//Now damage increasing effects // not sure for Throw Zeny
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN && skill_num != NJ_ZENYNAGE){
+		//Now damage increasing effects
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
 			damage<<=1;
 			status_change_end( bl,SC_AETERNA,-1 );
 		}
