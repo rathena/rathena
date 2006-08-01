@@ -20,6 +20,7 @@
 
 =========================
 08/01
+	* Some minor monster skill changes [Playtester]
 	* Made Deluge/volcano/v. gale be castable on top of each other again
 	  [Skotlex]
 	* Cleaned up some of the db files. [Skotlex]
