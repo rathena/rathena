@@ -142,6 +142,9 @@ enum AtCommandType {
 	AtCommand_CharDelItem, // by Yor
 	AtCommand_Jail, // by Yor
 	AtCommand_UnJail, // by Yor
+	AtCommand_JailFor, // Meruru
+	AtCommand_JailTime, // Coltaro
+	AtCommand_CharJailTime, // Coltaro
 	AtCommand_Disguise, // [Valaris]
 	AtCommand_UnDisguise, // by Yor
 	AtCommand_CharDisguise, // Kalaspuff

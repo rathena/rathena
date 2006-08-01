@@ -4311,7 +4311,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	struct status_change* sc;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag , calc_flag, undead_flag;
+	int opt_flag, calc_flag, undead_flag;
 
 	nullpo_retr(0, bl);
 	sc=status_get_sc(bl);
@@ -5395,6 +5395,17 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;  
 		case SC_JAILED:
 			tick = val1>0?1000:250;
+			if (sd && sd->mapindex != val2)
+			{
+				int pos =  (bl->x&0xFFFF)|(bl->y<<16), //Current Coordinates
+				map =  sd->mapindex; //Current Map
+				//1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
+				if (pc_setpos(sd,(unsigned short)val2,val3,val4, 3) == 0)
+					pc_setsavepoint(sd, (unsigned short)val2,val3,val4);
+				//2. Set restore point (val3 -> return map, val4 return coords
+				val3 = map;
+				val4 = pos;
+			}
 			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
@@ -5586,11 +5597,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
-
-	if (type==SC_JAILED && sd && sd->mapindex != val2) {
-		if (pc_setpos(sd,(unsigned short)val2,0, 0, 3) == 0)
-			pc_setsavepoint(sd, (unsigned short)val2, 0, 0);
-	}
 
 	if (type==SC_BERSERK) {
 		sc->data[type].val2 = 5*status->max_hp/100;
@@ -5937,8 +5943,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		  	//natural expiration.
 			if(sd && sd->mapindex == sc->data[type].val2)
 			{
-				if (pc_setpos(sd,(unsigned short)sc->data[type].val3,0, 0, 3) == 0)
-					pc_setsavepoint(sd, (unsigned short)sc->data[type].val3, 0, 0);
+				if (pc_setpos(sd,(unsigned short)sc->data[type].val3,sc->data[type].val4&0xFFFF, sc->data[type].val4>>16, 3) == 0)
+					pc_setsavepoint(sd, sd->mapindex, bl->x, bl->y);
 			}
 			break; //guess hes not in jail :P
 		}

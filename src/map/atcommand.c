@@ -166,6 +166,9 @@ ACMD_FUNC(servertime); // by Yor
 ACMD_FUNC(chardelitem); // by Yor
 ACMD_FUNC(jail); // by Yor
 ACMD_FUNC(unjail); // by Yor
+ACMD_FUNC(jailfor); // Alias Meruru
+ACMD_FUNC(jailtime); // Coltaro
+ACMD_FUNC(charjailtime); // Coltaro
 ACMD_FUNC(disguise); // [Valaris]
 ACMD_FUNC(undisguise); // by Yor
 ACMD_FUNC(chardisguise); // Kalaspuff
@@ -482,6 +485,9 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Jail,				"@jail",			60, atcommand_jail }, // by Yor
 	{ AtCommand_UnJail,			"@unjail",			60, atcommand_unjail }, // by Yor
 	{ AtCommand_UnJail,			"@discharge",		60, atcommand_unjail }, // by Yor
+	{ AtCommand_JailFor,				"@jailfor",		20, atcommand_jailfor }, //Meruru
+	{ AtCommand_JailTime,			"@jailtime", 		1, atcommand_jailtime }, //Change this to 0 in atcommand_conf.txt if you want it accessible to players (you most likely will ;))
+	{ AtCommand_CharJailTime,		"@charjailtime",	20, atcommand_charjailtime },
 	{ AtCommand_Disguise,			"@disguise",		20, atcommand_disguise }, // [Valaris]
 	{ AtCommand_UnDisguise,			"@undisguise",		20, atcommand_undisguise }, // by Yor
 	{ AtCommand_CharDisguise,		"@chardisguise",		60, atcommand_chardisguise }, // Kalaspuff
@@ -6358,6 +6364,33 @@ int atcommand_chardelitem(const int fd, struct map_session_data* sd,
 	return 0;
 }
 
+//Added by Coltaro
+//We're using this function here instead of using time_t so that it only counts player's jail time when he/she's online (and since the idea is to reduce the amount of minutes one by one in status_change_timer...).
+//Well, using time_t could still work but for some reason that looks like more coding x_x
+static void get_jail_time(int jailtime, int* year, int* month, int* day, int* hour, int* minute) {
+	const int factor_year = 518400; //12*30*24*60 = 518400
+	const int factor_month = 43200; //30*24*60 = 43200
+	const int factor_day = 1440; //24*60 = 1440
+	const int factor_hour = 60;
+
+	*year = jailtime/factor_year;
+	jailtime -= *year*factor_year;
+	*month = jailtime/factor_month;
+	jailtime -= *month*factor_month;
+	*day = jailtime/factor_day;
+	jailtime -= *day*factor_day;
+	*hour = jailtime/factor_hour;
+	jailtime -= *hour*factor_hour;
+	*minute = jailtime;
+
+	*year = *year > 0? *year : 0;
+	*month = *month > 0? *month : 0;
+	*day = *day > 0? *day : 0;
+	*hour = *hour > 0? *hour : 0;
+	*minute = *minute > 0? *minute : 0;
+	return;
+}
+
 /*==========================================
  * @jail <char_name> by [Yor]
  * Special warp! No check with nowarp and nowarpto flag
@@ -6379,36 +6412,43 @@ int atcommand_jail(
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can jail only lower or same GM
-			switch(rand() % 2) {
-			case 0:
-				x = 24;
-				y = 75;
-				break;
-			default:
-				x = 49;
-				y = 75;
-				break;
-			}
-			m_index = mapindex_name2id(MAP_JAIL);
-			if (pc_setpos(pl_sd, m_index, x, y, 3) == 0) {
-				pc_setsavepoint(pl_sd, m_index, x, y); // Save Char Respawn Point in the jail room [Lupus]
-				clif_displaymessage(pl_sd->fd, msg_table[117]); // GM has send you in jails.
-				clif_displaymessage(fd, msg_table[118]); // Player warped in jails.
-			} else {
-				clif_displaymessage(fd, msg_table[1]); // Map not found.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
+	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
 
+	if (pc_isGM(sd) < pc_isGM(pl_sd))
+  	{ // you can jail only lower or same GM
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (pl_sd->mapindex == mapindex_name2id(MAP_JAIL))
+  	{	//Already jailed
+		clif_displaymessage(fd, msg_table[118]); // Player warped in jails.
+		return -1;
+	}
+
+	switch(rand() % 2) { //Jail Locations
+	case 0:
+		m_index = mapindex_name2id(MAP_JAIL);
+		x = 24;
+		y = 75;
+		break;
+	default:	
+		m_index = mapindex_name2id(MAP_JAIL);
+		x = 49;
+		y = 75;
+		break;
+	}
+	if (pc_setpos(pl_sd, m_index, x, y, 3)) {
+		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		return -1;
+	}
+
+	pc_setsavepoint(pl_sd, m_index, x, y); // Save Char Respawn Point in the jail room [Lupus]
+	clif_displaymessage(pl_sd->fd, msg_table[117]); // GM has send you in jails.
+	clif_displaymessage(fd, msg_table[118]); // Player warped in jails.
 	return 0;
 }
 
@@ -6423,6 +6463,7 @@ int atcommand_unjail(
 {
 	struct map_session_data *pl_sd;
 	unsigned short m_index;
+	int x=0, y=0;
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
@@ -6431,26 +6472,218 @@ int atcommand_unjail(
 		return -1;
 	}
 
+	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	if (pc_isGM(sd) < pc_isGM(pl_sd)) { // you can jail only lower or same GM
+
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	m_index = mapindex_name2id(MAP_JAIL);
+
+	if (pl_sd->mapindex != m_index) {
+		clif_displaymessage(fd, msg_table[119]); // This player is not in jails.
+		return -1;
+	}
+
+	if (pl_sd->sc.count && pl_sd->sc.data[SC_JAILED].timer != -1)
+	{	//Retrieve return map.
+		m_index = pl_sd->sc.data[SC_JAILED].val3;
+		x =  pl_sd->sc.data[SC_JAILED].val4&0xFFFF;
+		y =  pl_sd->sc.data[SC_JAILED].val4>>16;
+		status_change_end(&pl_sd->bl,SC_JAILED,-1);
+	}
+	
+	if (pc_setpos(pl_sd, m_index, x, y, 3) == 0 ||
+ 		pc_setpos(pl_sd, mapindex_name2id(MAP_PRONTERA), 0, 0, 3) == 0
+	) { //Send to Prontera is saved SC map fails.
+		pc_setsavepoint(pl_sd, m_index, x, y);
+		clif_displaymessage(pl_sd->fd, msg_table[120]); // GM has discharge you.
+		clif_displaymessage(fd, msg_table[121]); // Player unjailed.
+	} else {
+		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		return -1;
+	}
+	return 0;
+}
+
+int atcommand_jailfor(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd = NULL;
+	int year, month, day, hour, minute, value;
+	char * modif_p;
+	int jailtime = 0,x,y;
+	short m_index = 0;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%s %99[^\n]",atcmd_output,atcmd_player_name) < 2) {
+		clif_displaymessage(fd, msg_table[400]);  //Usage: @jailfor <time> <character name>
+		return -1;
+	}
+
+	atcmd_output[sizeof(atcmd_output)-1] = '\0';
+
+	modif_p = atcmd_output;
+	year = month = day = hour = minute = 0;
+	while (modif_p[0] != '\0') {
+		value = atoi(modif_p);
+		if (value == 0)
+			modif_p++;
+		else {
+			if (modif_p[0] == '-' || modif_p[0] == '+')
+				modif_p++;
+			while (modif_p[0] >= '0' && modif_p[0] <= '9')
+				modif_p++;
+			if (modif_p[0] == 'n' || (modif_p[0] == 'm' && modif_p[1] == 'n')) {
+				minute = value;
+				modif_p = modif_p + 2;
+			} else if (modif_p[0] == 'h') {
+				hour = value;
+				modif_p++;
+			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+				day = value;
+				modif_p++;
+			} else if (modif_p[0] == 'm') {
+				month = value;
+				modif_p++;
+			} else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
+				year = value;
+				modif_p++;
+			} else if (modif_p[0] != '\0') {
+				modif_p++;
+			}
+		}
+	}
+
+	if (year == 0 && month == 0 && day == 0 && hour == 0 && minute == 0) {
+		clif_displaymessage(fd, "Invalid time for jail command.");
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	if (pc_isGM(pl_sd) > pc_isGM(sd)) {
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	jailtime = year*12*30*24*60 + month*30*24*60 + day*24*60 + hour*60 + minute;	//In minutes
+
+	if(jailtime==0) {
+		clif_displaymessage(fd, "Invalid time for jail command.");
+		return -1;
+	}
+
+	//Added by Coltaro
+	if (pl_sd->sc.count && pl_sd->sc.data[SC_JAILED].timer != -1)
+  	{	//Update the player's jail time
+		jailtime += pl_sd->sc.data[SC_JAILED].val1;
+		if (jailtime <= 0) {
+			jailtime = 0;
+			clif_displaymessage(pl_sd->fd, msg_table[120]); // GM has discharge you.
+			clif_displaymessage(fd, msg_table[121]); // Player unjailed
+		} else {
+			get_jail_time(jailtime,&year,&month,&day,&hour,&minute);
+			sprintf(atcmd_output,msg_table[402],"You are now",year,month,day,hour,minute); //%s in jail for %d years, %d months, %d days, %d hours and %d minutes
+	 		clif_displaymessage(pl_sd->fd, atcmd_output); 
+			sprintf(atcmd_output,msg_table[402],"This player is now",year,month,day,hour,minute); //This player is now in jail for %d years, %d months, %d days, %d hours and %d minutes
+	 		clif_displaymessage(fd, atcmd_output); 
+		}
+	} else if (jailtime < 0) {
+		clif_displaymessage(fd, "Invalid time for jail command.");
+		return -1;
+	}
+
+	//Jail locations, add more as you wish.
+	switch(rand()%2)
+	{
+		case 1: //Jail #1
+			m_index = mapindex_name2id(MAP_PRONTERA);
+			x = 49; y = 75;
+			break;
+		default: //Default Jail
+			m_index = mapindex_name2id(MAP_PRONTERA);
+			x = 24; y = 75;
+			break;
+	}
+
+	sc_start4(&pl_sd->bl,SC_JAILED,100,jailtime,m_index,x,y,jailtime?60000:1000); //jailtime = 0: Time was reset to 0. Wait 1 second to warp player out (since it's done in status_change_timer).
+	return 0;
+}
+
+
+//By Coltaro
+int atcommand_jailtime(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+	{  
+	int year, month, day, hour, minute;
+
+	nullpo_retr(-1, sd);
+	
+	if (sd->bl.m != map_mapname2mapid(MAP_JAIL)) {
+		clif_displaymessage(fd, "You are not in jail."); // You are not in jail.
+		return -1;
+	}
+
+	if (!sd->sc.count || sd->sc.data[SC_JAILED].timer == -1 || sd->sc.data[SC_JAILED].val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
+		clif_displaymessage(fd, "You have been jailed for an unknown amount of time.");
+		return -1;
+	}
+
+	//Get remaining jail time
+	get_jail_time(sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
+	sprintf(atcmd_output,msg_table[402],"You will remain",year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
+
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+//By Coltaro
+int atcommand_charjailtime(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+	{  
+	struct map_session_data* pl_sd;
+	int year, month, day, hour, minute;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%[^\n]", atcmd_player_name) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: @charjailtime <character name>).");
+		return -1;
+	}
+
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
-		m_index = mapindex_name2id(MAP_PRONTERA);
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can jail only lower or same GM
+		if (pc_isGM(pl_sd) < pc_isGM(sd)) { // only lower or same level
 			if (pl_sd->bl.m != map_mapname2mapid(MAP_JAIL)) {
-				clif_displaymessage(fd, msg_table[119]); // This player is not in jails.
-				return -1;
-			} else if (pc_setpos(pl_sd, m_index, 0, 0, 3) == 0) { //old coords: 156,191
-				pc_setsavepoint(pl_sd, m_index, 0, 0); // Save char respawn point in Prontera
-				clif_displaymessage(pl_sd->fd, msg_table[120]); // GM has discharge you.
-				clif_displaymessage(fd, msg_table[121]); // Player warped to Prontera.
-			} else {
-				clif_displaymessage(fd, msg_table[1]); // Map not found.
+				clif_displaymessage(fd, "This player is not in jail."); // You are not in jail.
 				return -1;
 			}
+			if (!pl_sd->sc.count || pl_sd->sc.data[SC_JAILED].timer == -1 || pl_sd->sc.data[SC_JAILED].val1 <= 0) { // Was not jailed with @jailfor (maybe @jail?)
+				clif_displaymessage(fd, "This player has been jailed for an unknown amount of time.");
+				return -1;
+			}
+			//Get remaining jail time
+			get_jail_time(pl_sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
+			sprintf(atcmd_output,msg_table[402],"This player will remain",year,month,day,hour,minute); 
+			clif_displaymessage(fd, atcmd_output);
 		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorize you to do this action on this player.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
