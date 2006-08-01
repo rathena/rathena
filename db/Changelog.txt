@@ -20,6 +20,7 @@
 
 =========================
 08/01
+	* Fixed name of Freya's Shoes [Playtester]
 	* Small item update from Haplo [Playtester]
 07/31
 	* Updated Awakening Potion, Note Headphone and High Quality Sandals [Playtester]
