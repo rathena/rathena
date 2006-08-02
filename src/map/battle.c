@@ -25,9 +25,6 @@
 #include "guild.h"
 #include "party.h"
 
-// Recursive master check to prevent custom AIs from messing with each other.
-// #define RECURSIVE_MASTER_CHECK
-
 #define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
@@ -3073,40 +3070,28 @@ int battle_check_undead(int race,int element)
 //Returns the upmost level master starting with the given object
 static struct block_list* battle_get_master(struct block_list *src)
 {
+	struct block_list *mst; //Used for infinite loop check (master of yourself?)
 	do {
+		mst = src;
 		switch (src->type) {
 			case BL_PET:
 				if (((TBL_PET*)src)->msd)
-					src = (struct block_list*)((TBL_PET*)src)->msd;
-				else
-					return src;
+					mst = (struct block_list*)((TBL_PET*)src)->msd;
 				break;
 			case BL_MOB:
 				if (((TBL_MOB*)src)->master_id)
-					src = map_id2bl(((TBL_MOB*)src)->master_id);
-				else
-					return src;
+					mst = map_id2bl(((TBL_MOB*)src)->master_id);
 				break;
 			case BL_HOMUNCULUS:
 				if (((TBL_HOMUNCULUS*)src)->master)
-					src = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
-				else
-					return src;
+					mst = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
 				break;
 			case BL_SKILL:
 				if (((TBL_SKILL*)src)->group && ((TBL_SKILL*)src)->group->src_id)
-					src = map_id2bl(((TBL_SKILL*)src)->group->src_id);
-				else
-					return src;
+					mst = map_id2bl(((TBL_SKILL*)src)->group->src_id);
 				break;
-			default:
-				return src;
 		}
-#ifdef RECURSIVE_MASTER_CHECK
-	} while (src);
-#else
-	} while (0); //Single pass check.
-#endif
+	} while (mst && src != mst);
 	return src;
 }
 
