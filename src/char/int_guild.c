@@ -76,12 +76,12 @@ int inter_guild_tostr(char *str, struct guild *g) {
 	}
 	// 追放リスト
 	c = 0;
-	for(i = 0; i < MAX_GUILDEXPLUSION; i++)
-		if (g->explusion[i].account_id > 0)
+	for(i = 0; i < MAX_GUILDEXPULSION; i++)
+		if (g->expulsion[i].account_id > 0)
 			c++;
 	len += sprintf(str + len, "%d\t", c);
-	for(i = 0; i < MAX_GUILDEXPLUSION; i++) {
-		struct guild_explusion *e = &g->explusion[i];
+	for(i = 0; i < MAX_GUILDEXPULSION; i++) {
+		struct guild_expulsion *e = &g->expulsion[i];
 		if (e->account_id > 0)
 			len += sprintf(str + len, "%d,%d,%d,%d\t%s\t%s\t%s#\t",
 			               e->account_id, e->rsv1, e->rsv2, e->rsv3,
@@ -211,7 +211,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		return 1;
 	str = strchr(str + 1, '\t');	// 位置スキップ
 	for(i = 0; i < c; i++) {
-		struct guild_explusion *e = &g->explusion[i];
+		struct guild_expulsion *e = &g->expulsion[i];
 		if (sscanf(str + 1, "%d,%d,%d,%d\t%[^\t]\t%[^\t]\t%[^\t]\t",
 		           &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
 		           tmp_str[0], tmp_str[1], tmp_str[2]) < 6)
@@ -1056,19 +1056,19 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 //				printf("%d %s\n", i, g->member[i].name);
 
 				if (flag) {	// 追放の場合追放リストに入れる
-					for(j = 0; j < MAX_GUILDEXPLUSION; j++) {
-						if (g->explusion[j].account_id == 0)
+					for(j = 0; j < MAX_GUILDEXPULSION; j++) {
+						if (g->expulsion[j].account_id == 0)
 							break;
 					}
-					if (j == MAX_GUILDEXPLUSION) {	// 一杯なので古いのを消す
-						for(j = 0; j < MAX_GUILDEXPLUSION - 1; j++)
-							g->explusion[j] = g->explusion[j+1];
-						j = MAX_GUILDEXPLUSION - 1;
+					if (j == MAX_GUILDEXPULSION) {	// 一杯なので古いのを消す
+						for(j = 0; j < MAX_GUILDEXPULSION - 1; j++)
+							g->expulsion[j] = g->expulsion[j+1];
+						j = MAX_GUILDEXPULSION - 1;
 					}
-					g->explusion[j].account_id = account_id;
-					memcpy(g->explusion[j].acc, "dummy", NAME_LENGTH-1);
-					memcpy(g->explusion[j].name, g->member[i].name, NAME_LENGTH-1);
-					memcpy(g->explusion[j].mes, mes, 40);
+					g->expulsion[j].account_id = account_id;
+					memcpy(g->expulsion[j].acc, "dummy", NAME_LENGTH-1);
+					memcpy(g->expulsion[j].name, g->member[i].name, NAME_LENGTH-1);
+					memcpy(g->expulsion[j].mes, mes, 40);
 				}
 
 				mapif_guild_leaved(guild_id, account_id, char_id, flag, g->member[i].name, mes);
