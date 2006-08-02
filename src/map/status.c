@@ -108,7 +108,7 @@ void initChangeTables(void) {
 
 	//These are the status-change flags for the common ailments.
 	StatusChangeFlagTable[SC_STONE] =     SCB_DEF_ELE;
-	StatusChangeFlagTable[SC_FREEZE] =    SCB_DEF_ELE;
+	StatusChangeFlagTable[SC_FREEZE] =    SCB_DEF_ELE|SCB_DEF|SCB_MDEF;
 //	StatusChangeFlagTable[SC_STUN] =      SCB_NONE;
 //	StatusChangeFlagTable[SC_SLEEP] =     SCB_NONE;
 	StatusChangeFlagTable[SC_POISON] =    SCB_DEF2;

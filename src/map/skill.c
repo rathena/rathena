@@ -10575,8 +10575,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		clif_misceffect(&sd->bl,2);
 	} else {
 		switch (skill_id) {
-			case ASC_CDP: //50% Damage yourself, and display same effect as failed potion.
-				status_percent_damage(NULL, &sd->bl, -50, 0);
+			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
+				status_percent_damage(NULL, &sd->bl, -25, 0);
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:
