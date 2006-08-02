@@ -3153,8 +3153,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return -1; //Cannot be targeted yet.
 			break;
 		case BL_MOB:
-			if (((TBL_MOB*)target)->special_state.ai == 2)
-			{	//Mines are sort of universal enemies.
+			if (((TBL_MOB*)target)->special_state.ai > 1)
+			{	//Alchemist summoned mobs are sort of universal enemies.
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			}

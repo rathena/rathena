@@ -108,20 +108,13 @@ void merc_load_exptables(void)
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
 	nullpo_retv(hd);
-
-	if( hd->battle_status.hp < 0)
-		hd->battle_status.hp = 0;
-	if( hd->battle_status.sp < 0)
-		hd->battle_status.sp = 0;
-	hd->master->homunculus.hp = hd->battle_status.hp ;
-	hd->master->homunculus.sp = hd->battle_status.sp ;
-	clif_hominfo(hd->master,0);
+	clif_hominfo(hd->master,hd,0);
 }
 
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
 	hd->master->homunculus.hp = 0 ;
-	clif_hominfo(hd->master, 0); // Send dead flag
+	clif_hominfo(hd->master,hd,0); // Send dead flag
 	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
@@ -217,7 +210,7 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 			hd->master->homunculus.skillpts-- ;
 			status_calc_homunculus(hd,1) ;
 			clif_homskillup(hd->master, skillnum) ;
-			clif_hominfo(hd->master,0) ;
+			clif_hominfo(hd->master,hd,0) ;
 			clif_homskillinfoblock(hd->master) ;
 		}
 	}
@@ -337,7 +330,7 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 	hd->master->homunculus.exp += exp;
 
 	if(hd->master->homunculus.exp < hd->exp_next) {
-		clif_hominfo(hd->master,0);
+		clif_hominfo(hd->master,hd,0);
 		return 0;
 	}
 
@@ -362,13 +355,9 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 {
 	if (hd->master->homunculus.intimacy + value <= 100000)
-	{
 		hd->master->homunculus.intimacy += value;
-	}
 	else
-	{
 		hd->master->homunculus.intimacy = 100000;
-	}
 	return hd->master->homunculus.intimacy;
 }
 
@@ -376,42 +365,16 @@ int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 {
 	if (hd->master->homunculus.intimacy >= value)
-	{
 		hd->master->homunculus.intimacy -= value;
-	}
 	else
-	{
 		hd->master->homunculus.intimacy = 0;
-	}
 
 	return hd->master->homunculus.intimacy;
 }
 
-int merc_hom_heal(struct homun_data *hd,int hp,int sp)
+void merc_hom_heal(struct homun_data *hd,int hp,int sp)
 {
-	nullpo_retr(0, hd);
-
-	if( hd->battle_status.max_hp < hd->battle_status.hp )
-		hd->battle_status.hp = hd->battle_status.max_hp;
-	else if (hd->battle_status.hp <= 0) {
-		hd->battle_status.hp = 1;
-	}
-
-	if( hd->battle_status.max_sp < hd->battle_status.sp )
-		hd->battle_status.sp = hd->battle_status.max_sp;
-	else if (hd->battle_status.sp < 0) {
-		hd->battle_status.sp = 0;
-	}
-
-	if ( 	(hd->battle_status.hp != hd->base_status.hp) ||
-	 			(hd->battle_status.sp != hd->base_status.sp) )
-	{
-		clif_hominfo(hd->master,0);
-	}
-	hd->master->homunculus.hp = hd->base_status.hp = hd->battle_status.hp ;
-	hd->master->homunculus.sp = hd->base_status.sp = hd->battle_status.sp ;
-
-	return 1;
+	clif_hominfo(hd->master,hd,0);
 }
 
 static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
@@ -606,7 +569,7 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 {
 	int i, k, emotion;
 
-	if(hd->master->homunculus.vaporize)
+	if(sd->homunculus.vaporize)
 		return 1 ;
 
 	k=hd->homunculusDB->foodID;
@@ -617,16 +580,16 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	}
 	pc_delitem(sd,i,1,0);
 
-	if ( hd->master->homunculus.hunger >= 91 ) {
+	if ( sd->homunculus.hunger >= 91 ) {
 		merc_hom_decrease_intimacy(hd, 50);
 		emotion = 16;
-	} else if ( hd->master->homunculus.hunger >= 76 ) {
+	} else if ( sd->homunculus.hunger >= 76 ) {
 		merc_hom_decrease_intimacy(hd, 5);
 		emotion = 19;
-	} else if ( hd->master->homunculus.hunger >= 26 ) {
+	} else if ( sd->homunculus.hunger >= 26 ) {
 		merc_hom_increase_intimacy(hd, 75);
 		emotion = 2;
-	} else if ( hd->master->homunculus.hunger >= 11 ) {
+	} else if ( sd->homunculus.hunger >= 11 ) {
 		merc_hom_increase_intimacy(hd, 100);
 		emotion = 2;
 	} else {
@@ -634,9 +597,9 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 		emotion = 2;
 	}
 
-	hd->master->homunculus.hunger += 10;	//dunno increase value for each food
-	if(hd->master->homunculus.hunger > 100)
-		hd->master->homunculus.hunger = 100;
+	sd->homunculus.hunger += 10;	//dunno increase value for each food
+	if(sd->homunculus.hunger > 100)
+		sd->homunculus.hunger = 100;
 
 	clif_emotion(&hd->bl,emotion) ;
 	clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
@@ -644,14 +607,14 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	clif_hom_food(sd,hd->homunculusDB->foodID,1);
        	
 	// Too much food :/
-	if(hd->master->homunculus.intimacy == 0) {  
+	if(sd->homunculus.intimacy == 0) {  
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
 		// Send homunculus_dead to client
 		sd->homunculus.hp = 0;
-		clif_hominfo(sd, 0);
+		clif_hominfo(sd, hd, 0);
 		merc_hom_delete(hd,1);
-		clif_emotion(&hd->master->bl, 23);     //omg  
+		clif_emotion(&sd->bl, 23);     //omg  
   	}  
 	return 0;
 }
@@ -677,17 +640,17 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 
 	hd->hungry_timer = -1;
 	
-	hd->master->homunculus.hunger-- ;
-	if(hd->master->homunculus.hunger <= 10) {
+	sd->homunculus.hunger-- ;
+	if(sd->homunculus.hunger <= 10) {
 		clif_emotion(&hd->bl, 6) ;	//an
-	} else if(hd->master->homunculus.hunger == 25) {
+	} else if(sd->homunculus.hunger == 25) {
 		clif_emotion(&hd->bl, 20) ;	//hmm
-	} else if(hd->master->homunculus.hunger == 75) {
+	} else if(sd->homunculus.hunger == 75) {
 		clif_emotion(&hd->bl, 33) ;	//ok
 	}  
 	
-	if(hd->master->homunculus.hunger < 0) {
-		hd->master->homunculus.hunger = 0;
+	if(sd->homunculus.hunger < 0) {
+		sd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
 		if ( !merc_hom_decrease_intimacy(hd, 100) ) {
 			merc_stop_walking(hd, 1);
@@ -696,7 +659,7 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 			sd->homunculus.hp = 0;
 			clif_hominfo(sd, 0);
 			merc_hom_delete(hd,1);
-			clif_emotion(&hd->master->bl, 23) ;	//omg
+			clif_emotion(&sd->bl, 23) ;	//omg
 			return 0 ;
 		} else {
 			clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
@@ -837,8 +800,8 @@ int merc_call_homunculus(struct map_session_data *sd)
 			map_addblock(&sd->hd->bl);
 			clif_spawn(&sd->hd->bl);
 			clif_send_homdata(sd,SP_ACK,0);
-			clif_hominfo(sd,1);
-			clif_hominfo(sd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+			clif_hominfo(sd,sd->hd,1);
+			clif_hominfo(sd,sd->hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 			clif_homskillinfoblock(sd);
 		}
 		// save
@@ -872,7 +835,6 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	}
 	memcpy(&sd->homunculus, sh, sizeof(struct s_homunculus));
 
-	
 	if ( flag == 2 ) {
 		sh->hp = 1 ; 
 		sd->homunculus.hp = 1 ;
@@ -884,10 +846,10 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 		if ( sd->hd && sd->bl.prev != NULL) {
 			map_addblock(&sd->hd->bl);
 			clif_spawn(&sd->hd->bl);
-			clif_hominfo(sd,1);
-			clif_hominfo(sd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+			clif_hominfo(sd,sd->hd,1);
+			clif_hominfo(sd,sd->hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 			clif_homskillinfoblock(sd);
-			clif_hominfo(sd,0);
+			clif_hominfo(sd,sd->hd,0);
 			clif_send_homdata(sd,SP_ACK,0);
 		}
 	}
@@ -956,8 +918,8 @@ int merc_hom_revive(struct map_session_data *sd, int per)
 			map_addblock(&sd->hd->bl);
 			clif_spawn(&sd->hd->bl);
 			clif_send_homdata(sd,SP_ACK,0);
-			clif_hominfo(sd,1);
-			clif_hominfo(sd,0);
+			clif_hominfo(sd,sd->hd,1);
+			clif_hominfo(sd,sd->hd,0);
 			clif_homskillinfoblock(sd);
 			clif_specialeffect(&sd->hd->bl,77,AREA) ;	//resurrection angel
 		}

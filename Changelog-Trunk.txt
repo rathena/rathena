@@ -3,6 +3,22 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/08/02
+	* Updated battle_check_target so that all alchemist summoned mobs can be
+	  target by everyone. [Skotlex]
+	* Cleaned up skill_check_condition_mob_master_sub, it will now count both
+	  total number of summoned mobs and amount that belong to the same type.
+	  [Skotlex]
+	* Corrected AM_CANNIBALIZE so it will fail if you already have plants of
+	  another type out. [Skotlex]
+	* Using NPC_SELFDESTRUCTION no longer will make the caster stop walking.
+	  [Skotlex]
+	* Removed SI_GUILDAURA, and replaced it with SI_LANDENDOW, now
+	  Volcano/Deluge/V. Gale will get that funky icon instead. [Skotlex]
+	* Changed clif_hominfo to receive both sd and hd as parameters
+	* Some redundancy cleaning in mercenary.c [Skotlex]
+	* Moved updating of sd->mercenary.hp from merc_damage to pc_makesavestatus.
+	  [Skotlex]
 2006/08/01
 	* Miscellanous fixes which make the Marine Sphere self destruction work as
 	  best as I can. It only has one flaw: It self-destructs instantly after

@@ -5520,7 +5520,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			if (sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
 				sd->homunculus.vaporize = 1;
-				clif_hominfo(sd, 0);
+				clif_hominfo(sd, sd->hd, 0);
 				merc_hom_delete(sd->hd, 0) ;
 			}
 			clif_skill_fail(sd,skillid,0,0);
@@ -7751,19 +7751,23 @@ int skill_check_pc_partner (struct map_session_data *sd, int skill_id, int* skil
 
 static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap)
 {
-	int *c,src_id=0,mob_class=0;
+	int *c,src_id,mob_class,skill;
 	struct mob_data *md;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, md=(struct mob_data*)bl);
-	nullpo_retr(0, src_id=va_arg(ap,int));
-	nullpo_retr(0, mob_class=va_arg(ap,int));
-	nullpo_retr(0, c=va_arg(ap,int *));
+	md=(struct mob_data*)bl;
+	src_id=va_arg(ap,int);
+	mob_class=va_arg(ap,int);
+	skill=va_arg(ap,int);
+	c=va_arg(ap,int *);
 
-	if(md->class_==mob_class && md->master_id==src_id)
+	if(md->master_id != src_id ||
+		md->special_state.ai != (skill == AM_SPHEREMINE?2:3))
+		return 0; //Non alchemist summoned mobs have nothing to do here.
+
+	if(md->class_==mob_class)
 		(*c)++;
-	return 0;
+
+	return 1;
 }
 
 static int skill_check_condition_hermod_sub(struct block_list *bl,va_list ap)
@@ -8142,8 +8146,9 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill);
 			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
-				map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class,&c );
-				if(c >= maxcount){
+				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
+				if(c >= maxcount || (skill==AM_CANNIBALIZE && c != i))
+				{	//Fails when: exceed max limit. There are other plant types already out.
 					clif_skill_fail(sd,skill,0,0);
 					return 0;
 				}

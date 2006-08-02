@@ -345,6 +345,10 @@ int pc_makesavestatus(struct map_session_data *sd)
 			memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	}
 
+	if (sd->hd) { //Update Homun HP info
+		sd->homunculus.hp = sd->hd->battle_status.hp ;
+		sd->homunculus.sp = sd->hd->battle_status.sp ;
+	}
 	return 0;
 }
 
@@ -4752,7 +4756,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.hom_id > 0 && sd->hd)	//orn
 	{
 		sd->homunculus.vaporize = 1;
-		clif_hominfo(sd,0);
+		clif_hominfo(sd,sd->hd,0);
 		merc_stop_walking(sd->hd, 1) ;
 		merc_stop_attack(sd->hd) ;
 		merc_hom_delete(sd->hd,0);

@@ -1455,9 +1455,8 @@ int clif_spawn(struct block_list *bl)
 }
 
 //[orn]
-int clif_hominfo(struct map_session_data *sd, int flag)
+int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 {
-	struct homun_data *hd = sd->hd;
 	struct status_data *status;
 	unsigned char buf[128];
 	
@@ -1472,7 +1471,7 @@ int clif_hominfo(struct map_session_data *sd, int flag)
 	WBUFB(buf,26)=sd->homunculus.rename_flag | (sd->homunculus.vaporize << 1) | (sd->homunculus.hp?0:4);
 	WBUFW(buf,27)=sd->homunculus.level;
 	WBUFW(buf,29)=sd->homunculus.hunger;
-	WBUFW(buf,31)=(unsigned short) (hd->master->homunculus.intimacy / 100) ;
+	WBUFW(buf,31)=(unsigned short) (sd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
 	WBUFW(buf,35)=status->rhw.atk2;
 	WBUFW(buf,37)=status->matk_max;
@@ -1574,7 +1573,7 @@ void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[o
 	RFIFOHEAD(fd);
 	memcpy(sd->homunculus.name,RFIFOP(fd,2),24);
 	sd->homunculus.rename_flag = 1;
-	clif_hominfo(sd,0);
+	clif_hominfo(sd,sd->hd,0);
 	clif_charnameack(sd->fd,&sd->hd->bl);
 }
 
@@ -8277,8 +8276,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
 //		clif_homunack(sd);
-		clif_hominfo(sd,1);
-		clif_hominfo(sd,0); //for some reason, at least older clients want this sent twice
+		clif_hominfo(sd,sd->hd,1);
+		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_send_homdata(sd,0,0);
 		clif_homskillinfoblock(sd);
 	}

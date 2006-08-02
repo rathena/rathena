@@ -943,7 +943,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 		if(sd && pc_checkskill(sd,SA_FREECAST))
 			status_freecast_switch(sd);
-		else
+		else if (skill_num != NPC_SELFDESTRUCTION) //Required for Marine Spheres
 			unit_stop_walking(src,1);
 	}
 	else

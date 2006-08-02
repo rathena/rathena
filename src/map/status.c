@@ -243,9 +243,9 @@ void initChangeTables(void) {
 	set_sc(SA_FROSTWEAPON, SC_WATERWEAPON, SI_WATERWEAPON, SCB_ATK_ELE);
 	set_sc(SA_LIGHTNINGLOADER, SC_WINDWEAPON, SI_WINDWEAPON, SCB_ATK_ELE);
 	set_sc(SA_SEISMICWEAPON, SC_EARTHWEAPON, SI_EARTHWEAPON, SCB_ATK_ELE);
-	set_sc(SA_VOLCANO, SC_VOLCANO, SI_BLANK, SCB_WATK);
-	set_sc(SA_DELUGE, SC_DELUGE, SI_BLANK, SCB_MAXHP);
-	set_sc(SA_VIOLENTGALE, SC_VIOLENTGALE, SI_BLANK, SCB_FLEE);
+	set_sc(SA_VOLCANO, SC_VOLCANO, SI_LANDENDOW, SCB_WATK);
+	set_sc(SA_DELUGE, SC_DELUGE, SI_LANDENDOW, SCB_MAXHP);
+	set_sc(SA_VIOLENTGALE, SC_VIOLENTGALE, SI_LANDENDOW, SCB_FLEE);
 	add_sc(SA_REVERSEORCISH, SC_ORCISH);
 	add_sc(SA_COMA, SC_COMA);
 	set_sc(BD_ENCORE, SC_DANCING, SI_BLANK, SCB_SPEED);
@@ -374,7 +374,7 @@ void initChangeTables(void) {
 	set_sc(HAMI_DEFENCE, SC_DEFENCE, SI_BLANK, SCB_DEF);	//[orn]
 	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
 
-	set_sc(GD_LEADERSHIP, SC_GUILDAURA, SI_GUILDAURA, SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX);
+	set_sc(GD_LEADERSHIP, SC_GUILDAURA, SI_BLANK, SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX);
 	set_sc(GD_BATTLEORDER, SC_BATTLEORDERS, SI_BATTLEORDERS, SCB_STR|SCB_INT|SCB_DEX);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
@@ -2206,7 +2206,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
 	if (memcmp(&b_status, status, sizeof(struct status_data)))
-		clif_hominfo(hd->master,0) ;
+		clif_hominfo(hd->master,hd,0) ;
 
 	return 1;
 }
@@ -2685,7 +2685,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		SCB_BATK|SCB_WATK|SCB_MATK|SCB_ASPD|SCB_SPEED|
 		SCB_RANGE|SCB_MAXHP|SCB_MAXSP)
 	)
-		clif_hominfo(hd->master,0);
+		clif_hominfo(hd->master,hd,0);
 }
 
 void status_calc_bl(struct block_list *bl, unsigned long flag)
