@@ -2759,8 +2759,6 @@ void run_script_main(struct script_state *st)
 		bk_st = NULL;
 	}
 
-
-
 }
 
 /*==========================================
@@ -10028,9 +10026,7 @@ int buildin_getpetinfo(struct script_state *st)
 				break;
 			case 2:
 				if(sd->pet.name)
-				{
 					push_str(st->stack,C_CONSTSTR,(unsigned char *) sd->pet.name);
-				}
 				else
 					push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
 				break;
