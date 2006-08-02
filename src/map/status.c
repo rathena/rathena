@@ -2916,8 +2916,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += sc->data[SC_STRFOOD].val1;
 	if(sc->data[SC_BATTLEORDERS].timer!=-1)
 		str += 5;
-	if(sc->data[SC_GUILDAURA].timer != -1 && ((sc->data[SC_GUILDAURA].val4>>12)&0xF))
-		str += (sc->data[SC_GUILDAURA].val4>>12)&0xF;
+	if(sc->data[SC_GUILDAURA].timer != -1 && sc->data[SC_GUILDAURA].val3>>16)
+		str += sc->data[SC_GUILDAURA].val3>>16;
 	if(sc->data[SC_LOUD].timer!=-1)
 		str += 4;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
@@ -2957,8 +2957,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_INCAGI].val1;
 	if(sc->data[SC_AGIFOOD].timer!=-1)
 		agi += sc->data[SC_AGIFOOD].val1;
-	if(sc->data[SC_GUILDAURA].timer != -1 && ((sc->data[SC_GUILDAURA].val4>>4)&0xF))
-		agi += (sc->data[SC_GUILDAURA].val4>>4)&0xF;
+	if(sc->data[SC_GUILDAURA].timer != -1 && sc->data[SC_GUILDAURA].val4>>16)
+		agi += sc->data[SC_GUILDAURA].val4>>16;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
 		agi += 5;
 	if(sc->data[SC_INCREASEAGI].timer!=-1)
@@ -2992,8 +2992,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_INCVIT].val1;
 	if(sc->data[SC_VITFOOD].timer!=-1)
 		vit += sc->data[SC_VITFOOD].val1;
-	if(sc->data[SC_GUILDAURA].timer != -1 && ((sc->data[SC_GUILDAURA].val4>>8)&0xF))
-		vit += (sc->data[SC_GUILDAURA].val4>>8)&0xF;
+	if(sc->data[SC_GUILDAURA].timer != -1 && sc->data[SC_GUILDAURA].val3&0xFFFF)
+		vit += sc->data[SC_GUILDAURA].val3&0xFFFF;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
 		vit += 5;
 	if(sc->data[SC_STRIPARMOR].timer!=-1)
@@ -3063,8 +3063,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += sc->data[SC_DEXFOOD].val1;
 	if(sc->data[SC_BATTLEORDERS].timer!=-1)
 		dex += 5;
-	if(sc->data[SC_GUILDAURA].timer != -1 && (sc->data[SC_GUILDAURA].val4&0xF))
-		dex += sc->data[SC_GUILDAURA].val4&0xF;
+	if(sc->data[SC_GUILDAURA].timer != -1 && sc->data[SC_GUILDAURA].val4&0xFFFF)
+		dex += sc->data[SC_GUILDAURA].val4&0xFFFF;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
 		dex += 5;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)

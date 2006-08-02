@@ -2274,29 +2274,28 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int ski
 int skill_guildaura_sub (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
-	int gid, id, *flag;
+	int gid, id, strvit, agidex;
 	
-	nullpo_retr(0, sd = (struct map_session_data *)bl);
-	nullpo_retr(0, ap);
+	sd = (struct map_session_data *)bl;
 
 	id = va_arg(ap,int);
 	gid = va_arg(ap,int);
 	if (sd->status.guild_id != gid)
 		return 0;
-	nullpo_retr(0, flag = va_arg(ap,int *));
+	strvit = va_arg(ap,int);
+	agidex = va_arg(ap,int);
 
-	if (flag && *flag > 0) {
-		if (sd->sc.count && sd->sc.data[SC_GUILDAURA].timer != -1) {
-			if (sd->sc.data[SC_GUILDAURA].val4 != *flag) {
-				sd->sc.data[SC_GUILDAURA].val4 = *flag;
-				status_calc_bl(&sd->bl, StatusChangeFlagTable[SC_GUILDAURA]);
-			}
-			return 0;
+	if (sd->sc.count && sd->sc.data[SC_GUILDAURA].timer != -1) {
+		if (sd->sc.data[SC_GUILDAURA].val3 != strvit ||
+			sd->sc.data[SC_GUILDAURA].val4 != agidex) {
+			sd->sc.data[SC_GUILDAURA].val3 = strvit;
+			sd->sc.data[SC_GUILDAURA].val4 = agidex;
+			status_calc_bl(&sd->bl, StatusChangeFlagTable[SC_GUILDAURA]);
 		}
-		sc_start4(&sd->bl, SC_GUILDAURA,100, 1, id, 0, *flag, 1000);
+		return 0;
 	}
-
-	return 0;
+	sc_start4(&sd->bl, SC_GUILDAURA,100, 1, id, strvit, agidex, 1000);
+	return 1;
 }
 
 /*==========================================

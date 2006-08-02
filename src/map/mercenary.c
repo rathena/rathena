@@ -657,7 +657,7 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 			merc_stop_attack(hd);
 			// Send homunculus_dead to client
 			sd->homunculus.hp = 0;
-			clif_hominfo(sd, 0);
+			clif_hominfo(sd, hd, 0);
 			merc_hom_delete(hd,1);
 			clif_emotion(&sd->bl, 23) ;	//omg
 			return 0 ;

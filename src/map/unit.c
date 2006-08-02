@@ -176,14 +176,14 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		if (sd->state.gmaster_flag)
 		{ //Guild Aura: Likely needs to be recoded, this method seems inefficient.
 			struct guild *g = sd->state.gmaster_flag;
-			int skill, guildflag = 0;
-			if ((skill = guild_checkskill(g, GD_LEADERSHIP)) > 0) guildflag |= skill<<12;
-			if ((skill = guild_checkskill(g, GD_GLORYWOUNDS)) > 0) guildflag |= skill<<8;
-			if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) guildflag |= skill<<4;
-			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) guildflag |= skill;
-			if (guildflag)
+			int skill, strvit= 0, agidex = 0;
+			if ((skill = guild_checkskill(g, GD_LEADERSHIP)) > 0) strvit |= (skill&0xFFFF)<<16;
+			if ((skill = guild_checkskill(g, GD_GLORYWOUNDS)) > 0) strvit |= (skill&0xFFFF);
+			if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) agidex |= (skill&0xFFFF)<<16;
+			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= skill&0xFFFF;
+			if (strvit || agidex)
 				map_foreachinrange(skill_guildaura_sub, bl,2, BL_PC,
-					bl->id, sd->status.guild_id, &guildflag);
+					bl->id, sd->status.guild_id, strvit, agidex);
 		}
 		if (
 			(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&

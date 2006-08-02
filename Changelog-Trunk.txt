@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/02
+	* Recoded the GuildAura code to use val3 & val4, allowing much greater stat
+	  bonuses (in case someone wants to get Guild Skill level 20 or something
+	  crazy like that) [Skotlex]
 	* Updated battle_check_target so that all alchemist summoned mobs can be
 	  target by everyone. [Skotlex]
 	* Cleaned up skill_check_condition_mob_master_sub, it will now count both
