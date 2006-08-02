@@ -3085,29 +3085,29 @@ int battle_check_undead(int race,int element)
 //Returns the upmost level master starting with the given object
 static struct block_list* battle_get_master(struct block_list *src)
 {
-	struct block_list *mst; //Used for infinite loop check (master of yourself?)
+	struct block_list *prev; //Used for infinite loop check (master of yourself?)
 	do {
-		mst = src;
+		prev = src;
 		switch (src->type) {
 			case BL_PET:
 				if (((TBL_PET*)src)->msd)
-					mst = (struct block_list*)((TBL_PET*)src)->msd;
+					src = (struct block_list*)((TBL_PET*)src)->msd;
 				break;
 			case BL_MOB:
 				if (((TBL_MOB*)src)->master_id)
-					mst = map_id2bl(((TBL_MOB*)src)->master_id);
+					src = map_id2bl(((TBL_MOB*)src)->master_id);
 				break;
 			case BL_HOMUNCULUS:
 				if (((TBL_HOMUNCULUS*)src)->master)
-					mst = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
+					src = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
 				break;
 			case BL_SKILL:
 				if (((TBL_SKILL*)src)->group && ((TBL_SKILL*)src)->group->src_id)
-					mst = map_id2bl(((TBL_SKILL*)src)->group->src_id);
+					src = map_id2bl(((TBL_SKILL*)src)->group->src_id);
 				break;
 		}
-	} while (mst && src != mst);
-	return src;
+	} while (src && src != prev);
+	return prev;
 }
 
 /*==========================================
