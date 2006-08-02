@@ -649,7 +649,7 @@ function	script	addslot2	{
 
 function	script	f_weapon_c	{
   
-      set @rateit,25;  //success rate
+      set @rateit,50;  //success rate
       set @addprice,200000;
       set @itemup,1010;
       set @itemupiece,10;
@@ -660,7 +660,7 @@ function	script	f_weapon_c	{
 
 function	script	f_weapon_b	{
 
-      set @rateit,20;  //success rate
+      set @rateit,25;  //success rate
       set @addprice,300000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -674,7 +674,7 @@ function	script	f_weapon_b	{
 
 function	script	f_weapon_a	{
 
-      set @rateit,15;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,500000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -688,7 +688,7 @@ function	script	f_weapon_a	{
 
 function	script	f_weapon_a2	{
 
-      set @rateit,15;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,700000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -702,7 +702,7 @@ function	script	f_weapon_a2	{
 
 function	script	f_weapon_a3	{
 
-      set @rateit,15;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,800000;
       set @itemup1,984;
       set @itemupiece1,2;
@@ -716,7 +716,7 @@ function	script	f_weapon_a3	{
 
 function	script	f_weapon_s	{
 
-      set @rateit,10;  //success rate
+      set @rateit,4;  //success rate
       set @addprice,1000000;
       set @itemup1,984;
       set @itemupiece1,5;
@@ -730,7 +730,7 @@ function	script	f_weapon_s	{
 
 function	script	f_weapon_s2	{
 
-      set @rateit,10;  //success rate
+      set @rateit,4;  //success rate
       set @addprice,2000000;
       set @itemup1,984;
       set @itemupiece1,5;
@@ -746,7 +746,7 @@ function	script	f_weapon_s2	{
 
 function	script	f_armor_c	{
 
-      set @rateit,25;  //success rate
+      set @rateit,50;  //success rate
       set @addprice,200000;
       set @itemup,999;
       set @itemupiece,3;
@@ -757,7 +757,7 @@ function	script	f_armor_c	{
 
 function	script	f_armor_b	{
 
-      set @rateit,20;  //success rate
+      set @rateit,25;  //success rate
       set @addprice,250000;
       set @itemup,999;
       set @itemupiece,5;
@@ -768,7 +768,7 @@ function	script	f_armor_b	{
 
 function	script	f_armor_b2	{
 
-      set @rateit,20;  //success rate
+      set @rateit,25;  //success rate
       set @addprice,300000;
       set @itemup,999;
       set @itemupiece,5;
@@ -779,7 +779,7 @@ function	script	f_armor_b2	{
 
 function	script	f_armor_a	{
 
-      set @rateit,15;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,300000;
       set @itemup,985;
       set @itemupiece,1;
@@ -790,7 +790,7 @@ function	script	f_armor_a	{
 
 function	script	f_armor_a2	{
 
-      set @rateit,15;  //success rate
+      set @rateit,10;  //success rate
       set @addprice,400000;
       set @itemup,985;
       set @itemupiece,1;
@@ -801,7 +801,7 @@ function	script	f_armor_a2	{
 
 function	script	f_armor_s	{
 
-      set @rateit,10;  //success rate
+      set @rateit,4;  //success rate
       set @addprice,1000000;
       set @itemup,985;
       set @itemupiece,2;
@@ -812,7 +812,7 @@ function	script	f_armor_s	{
 
 function	script	f_armor_s2	{
 
-      set @rateit,10;  //success rate
+      set @rateit,4;  //success rate
       set @addprice,2000000;
       set @itemup,985;
       set @itemupiece,2;

@@ -34,8 +34,8 @@ Playtester
 
 Date		Added
 ======
-
 08/02
+	* Added official success rates of the Socket Enchant NPC [Playtester]
 	* Fixed Sharon's abuse at Hunter Job Quest 8) Thanks to mike04 for pointing it out [Lupus]
 07/31
 	* Updated the Geffenia spawns. [MasterOfMuppets]

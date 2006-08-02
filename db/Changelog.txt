@@ -20,6 +20,7 @@
 
 =========================
 08/02
+	* Reduced overrefine bonus of level 4 weapons to 13 [Playtester]
 	* Added the new items and fixed selling price of Dark Mask [Playtester]
 08/01
 	* Changed Solace's and Retribution's skills so they feel like on official servers [Playtester]
