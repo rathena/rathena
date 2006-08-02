@@ -1438,7 +1438,7 @@
 4273,Shell_Fish_Card,Shell Fish Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddDamageClass,1073,30; },{},{}
 4274,Zombie_Master_Card,Zombie Master Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSPGainRace,RC_Undead,5; },{ },{ heal 0,-5; }
 4275,Zombie_Prisoner_Card,Zombie Prisoner Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Undead,-20; bonus2 bExpAddRace,RC_Undead,10; },{},{}
-4276,Lord_of_Death_Card,Lord of Death Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEff,Eff_Stun,100; bonus2 bAddEff,Eff_Curse,100; bonus2 bAddEff,Eff_Silence,100; bonus2 bAddEff,Eff_Poison,100; bonus2 bAddEff,Eff_Bleeding,100; bonus2 bWeaponComaRace,RC_NonBoss,30; },{},{}
+4276,Lord_of_Death_Card,Lord of Death Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEff,Eff_Stun,500; bonus2 bAddEff,Eff_Curse,500; bonus2 bAddEff,Eff_Silence,500; bonus2 bAddEff,Eff_Poison,500; bonus2 bAddEff,Eff_Bleeding,500; bonus2 bWeaponComaRace,RC_NonBoss,10; },{},{}
 4277,Zherlthsh_Card,Zherlthsh Card,6,,10,10,,,,,,,,32,,,,,{ bonus bLuk,2; bonus2 bSkillAtk,316,10; bonus2 bSkillAtk,324,10; },{},{}
 4278,Gibbet_Card,Gibbet Card,6,,10,10,,,,,,,,769,,,,,{ if(getrefine()<6) bonus bMdef,5; },{},{}
 4279,Earth_Deleter_Card,Earth Deleter Card,6,,10,10,,,,,,,,16,,,,,{ bonus bSPrecovRate,-100; bonus bSPGainValue,10; },{ },{ heal 0,-100; }
