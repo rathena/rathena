@@ -20,8 +20,8 @@ ein_dun01.gat,0,0,0,0	monster	Pitman	1616,55,0,0,0
 ein_dun01.gat,0,0,0,0	monster	Noxious	1620,40,0,0,0
 ein_dun01.gat,0,0,0,0	monster	Porcellio	1619,30,0,0,0
 ein_dun01.gat,0,0,0,0	monster	Venomous	1621,20,0,0,0
-ein_dun01.gat,0,0,0,0	monster	Waste Stove	1617,5,60000,30000,0
-ein_dun01.gat,0,0,0,0	monster	Ungoliant	1618,1,3600000,1800000,0
+ein_dun01.gat,0,0,0,0	monster	Waste Stove	1617,5,120000,600000,0
+ein_dun01.gat,0,0,0,0	monster	Ungoliant	1618,1,3600000,3000000,0
 
 //==================================================
 // ein_dun02 - Mine Dungeon F2
@@ -31,4 +31,4 @@ ein_dun02.gat,0,0,0,0	monster	Obsidian	1615,40,0,0,0
 ein_dun02.gat,0,0,0,0	monster	Waste Stove	1617,30,0,0,0
 ein_dun02.gat,0,0,0,0	monster	Teddy Bear	1622,30,0,0
 ein_dun02.gat,0,0,0,0	monster	Venomous	1621,20,0,0,0
-ein_dun02.gat,163,137,50,50	monster	RSX 0806	1623,1,7200000,3600000,0
+ein_dun02.gat,0,0,0,0	monster	RSX 0806	1623,1,7500000,7200000,0
