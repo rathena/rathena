@@ -2516,16 +2516,17 @@ int pc_inventoryblank(struct map_session_data *sd)
  */
 int pc_payzeny(struct map_session_data *sd,int zeny)
 {
-	double z;
-
 	nullpo_retr(0, sd);
 
 	if(sd->state.finalsave)
 		return 1;
 
-	z = (double)sd->status.zeny;
-	if(sd->status.zeny<zeny || z - (double)zeny > MAX_ZENY)
-		return 1;
+	if (zeny > 0 && sd->status.zeny < zeny)
+		return 1; //Not enough.
+
+	if (zeny < 0 && sd->status.zeny > MAX_ZENY +zeny)
+		return 1; //Overflow
+
 	sd->status.zeny-=zeny;
 	clif_updatestatus(sd,SP_ZENY);
 

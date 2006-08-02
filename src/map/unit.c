@@ -1724,9 +1724,10 @@ int unit_free(struct block_list *bl) {
 		}
 	} else if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data*)bl;
-		if(md->deletetimer!=-1)
+		if(md->deletetimer!=-1) {
 			delete_timer(md->deletetimer,mob_timer_delete);
-		md->deletetimer=-1;
+			md->deletetimer=-1;
+		}
 		if(md->lootitem) {
 			aFree(md->lootitem);
 			md->lootitem=NULL;
