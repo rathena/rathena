@@ -20,6 +20,7 @@
 
 =========================
 08/02
+	* Changed Scream and Hammerfall's stun duration to 5 seconds. [Skotlex]
 	* Converted NJ_HYOUSYOURAKU from jAthena since our version was lacking a time2 [Playtester]
 	* Reverted LOD card changes as well [Playtester]
 	* Reverted some changes. [MasterOfMuppets]

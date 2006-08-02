@@ -1130,11 +1130,9 @@ static struct Damage battle_calc_weapon_attack(
 				status_set_hp(src, 1, 0);
 				break;
 			case PA_SACRIFICE:
-				skill = sstatus->max_hp* 9/100;
-				status_zap(src, skill, 0);//Damage to self is always 9%
-				clif_damage(src,src, gettick(), 0, 0, skill, 0 , 0, 0);
-				
-				wd.damage = skill;
+				wd.damage = sstatus->max_hp* 9/100;
+				status_zap(src, wd.damage, 0);//Damage to self is always 9%
+				clif_damage(src,src, gettick(), 0, 0, wd.damage, 0 , 0, 0);
 				wd.damage2 = 0;
 
 				if (sc && sc->data[SC_SACRIFICE].timer != -1)
