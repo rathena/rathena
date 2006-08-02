@@ -1398,7 +1398,7 @@
 4233,Baby_Leopard_Card,Baby Leopard Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,3; if(BaseClass == Job_Merchant) bonus bUnbreakableArmor,0; },{},{}
 4234,Anolian_Card,Anolian Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,45,1+9*(getskilllv(45)==10),30,0; },{},{}
 4235,Christmas_Cookie_Card,Christmas Cookie Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Angel,-20; bonus2 bExpAddRace,RC_Angel,10; },{},{}
-4236,Amon_Ra_Card,Amon Ra Card,6,,10,10,,,,,,,,64,,,,,{ bonus bAllStats,1; bonus4 bAutoSpellWhenHit,73,10,(30+70*(readparam(bInt)>=99)),0; },{},{}
+4236,Amon_Ra_Card,Amon Ra Card,6,,10,10,,,,,,,,64,,,,,{ bonus bAllStats,1; bonus4 bAutoSpellWhenHit,73,10,(10+10*(readparam(bInt)>=99)),0; },{},{}
 4237,Owl_Duke_Card,Owl Duke Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpell,66,3,30,0; if(isequipped(4238)) bonus3 bAutoSpell,20,5,20; },{},{}
 4238,Owl_Baron_Card,Owl Baron Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,78,1,30; },{},{}
 4239,Iron_Fist_Card,Iron Fist Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Formless,-20; bonus2 bExpAddRace,RC_Formless,10; },{},{}
