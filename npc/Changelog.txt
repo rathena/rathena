@@ -12,10 +12,6 @@ Mass Zero
 Massdriller
 	* Correcting & Bugfixing scripts
 	* New Novice Grounds from MRO - 65% -(Not sure it should be stopped as DracoRPG 
-	  did it, but intending to add it as an alternative novice quest)
-	* Gonryunn Quests - 0% - Botting on official Servers
-	* Artifacts of God (MRO GOD ITEM QUESTS) - 1% - resources only from MRO Official
-	  guide book so, probably unofficial
 MasterOfMuppets
 	* Working on The Sign Quest atm.
 	* Updating Items / Scripts
@@ -39,6 +35,8 @@ Playtester
 Date		Added
 ======
 
+08/02
+	* Fixed Sharon's abuse at Hunter Job Quest 8) Thanks to mike04 for pointing it out [Lupus]
 07/31
 	* Updated the Geffenia spawns. [MasterOfMuppets]
 	* Some small changes to the sign quest [MasterOfMuppets]

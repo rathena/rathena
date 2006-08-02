@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -28,7 +28,8 @@
 //= 1.7 Moved the Job QUest to Hugel [Poki#3]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
-//= 2.2 Merged JFunc, fixed missing dialoges [Lupus]
+//= 2.2 Merged JFunc, fixed missing dialogues [Lupus]
+//= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -122,8 +123,8 @@ L_Start:
 	M_1:
 		mes "[Hunter Sharon]";
 		mes "The requirements?";
-		mes "1. Be a archer";
-		mes "2. Have a job level of at least 40";
+		mes "1. Be an Archer";
+		mes "2. Have a Job Level of at least 40";
 		mes "3. Pass all of the tests";
 		next;
 		mes "[Hunter Sharon]";
@@ -288,12 +289,14 @@ L_Start:
 			close;
 
 L_Test2:
+	if(HNTR_Q==0){
+		set HNTR_Q, 1;
+		set HNTR_Q2, 0;
+	}
 	mes "What you have to do next is go see ^5533FFMr. Demon Hunter^000000 behind me.  He'll tell you about the second test.";
 	next;
 	mes "[Hunter Sharon]";
 	mes "Good luck!";
-	set HNTR_Q, 1;
-	set HNTR_Q2, 0;
 	close;
 
 L_Test3:
