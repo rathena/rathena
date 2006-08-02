@@ -20,6 +20,7 @@
 
 =========================
 08/02
+	* Converted NJ_HYOUSYOURAKU from jAthena since our version was lacking a time2 [Playtester]
 	* Reverted LOD card changes as well [Playtester]
 	* Reverted some changes. [MasterOfMuppets]
 	* Reduced overrefine bonus of level 4 weapons to 13 [Playtester]
