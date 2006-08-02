@@ -9807,7 +9807,7 @@ atcommand_makehomun(
 	}
 	else
 	{
-		clif_displaymessage(fd,msg_txt(144));
+		clif_displaymessage(fd,msg_txt(450));
 	}
 	return 0;
 }

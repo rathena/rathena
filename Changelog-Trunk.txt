@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/02
+	* Fixed homunculus error message [Toms]
 	* Rewrote pc_payzeny to not use doubles, it may more accurately prevent
 	  charging a player more zeny than they can withhold. [Skotlex]
 	* Fixed failing to create Deadly Poison Bottles damaging 50% of your max
