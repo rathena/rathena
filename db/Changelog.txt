@@ -20,8 +20,7 @@
 
 =========================
 08/02
-	* Adjusted autocast chance of Amon Ra card [Playtester]
-	* Adjusted autocast of Dark Lord and Stormy Knight card [Playtester]
+	* Reverted some changes. [MasterOfMuppets]
 	* Reduced overrefine bonus of level 4 weapons to 13 [Playtester]
 	* Added the new items and fixed selling price of Dark Mask [Playtester]
 08/01
