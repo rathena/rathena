@@ -20,6 +20,8 @@
 
 =========================
 08/02
+	* Gold Lux now makes you autocast Flip Coin on attack [Playtester]
+	- also Gunslinger can use Berserk Potion now
 	* Changed Scream and Hammerfall's stun duration to 5 seconds. [Skotlex]
 	* Converted NJ_HYOUSYOURAKU from jAthena since our version was lacking a time2 [Playtester]
 	* Reverted LOD card changes as well [Playtester]

@@ -143,7 +143,7 @@
 // ASPD Potions
 645,Concentration_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
-657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x00E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
+657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 658,Tribal_Solidarity,Tribal Solidarity,2,1000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 // New Pet Tames
 659,Her_Heart,Her Heart,11,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
@@ -2651,7 +2651,7 @@
 13103,Crimson_Bolt_,Crimson Bolt,4,20000,,450,45,,9,2,0x01000000,7,2,34,2,35,1,17,{ bonus bHit,-10; },{},{}
 13104,Garrison,Garrison,4,48000,,500,70,,9,1,0x01000000,7,2,34,2,55,1,17,{ bonus bHit,-10; },{},{}
 13105,Garrison_,Garrison,4,48000,,500,70,,9,2,0x01000000,7,2,34,2,55,1,17,{ bonus bHit,-10; },{},{}
-13106,Gold_Lux,Gold Lux,4,100000,,500,20,,9,0,0x01000000,7,2,2,3,12,1,17,{ bonus bHit,-10; },{},{}
+13106,Gold_Lux,Gold Lux,4,100000,,500,20,,9,0,0x01000000,7,2,34,3,12,1,17,{ bonus bHit,-10; if(getskilllv(500)>0) bonus3 bAutoSpell,500,getskilllv(500),10; },{},{}
 13150,Branch,Branch,4,3000,,500,50,,9,3,0x01000000,7,2,34,1,1,1,18,{},{},{}
 13151,Cyclone,Cyclone,4,17500,,700,120,,9,1,0x01000000,7,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
 13152,Cyclone_,Cyclone,4,17500,,700,120,,9,2,0x01000000,7,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
