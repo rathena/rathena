@@ -356,6 +356,8 @@ void initChangeTables(void) {
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI|SCB_SPEED);
 	add_sc(NJ_HYOUSYOURAKU, SC_FREEZE);
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
+	set_sc(NJ_UTSUSEMI, SC_UTSUSEMI, SI_UTSUSEMI,SCB_NONE);
+	set_sc(NJ_BUNSINJYUTSU, SC_BUNSINJYUTSU, SI_BLANK, SCB_NONE);
 	set_sc(CR_SHRINK, SC_SHRINK, SI_SHRINK, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE2, SI_CLOSECONFINE2, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE, SI_CLOSECONFINE, SCB_FLEE);
@@ -5406,6 +5408,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val4 = pos;
 			}
 			break;
+		case SC_UTSUSEMI:
+			val2=(val1+1)/2; // number of hits blocked
+			val3=7; // move you back 7 cells
+			break;
+		case SC_BUNSINJYUTSU:
+			val2=(val1+1)/2; // number of hits blocked
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?
@@ -5506,7 +5514,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:
 		case SC_SWOO:	//Why does it shares the same opt as Overthrust? Perhaps we'll never know...
-		case SC_NEN:
 			sc->opt3 |= 2;
 			opt_flag = 0;
 			break;
@@ -6028,7 +6035,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	case SC_OVERTHRUST:
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
-	case SC_NEN:
 		sc->opt3 &= ~2;
 		opt_flag = 0;
 		break;

@@ -786,6 +786,10 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 		else
 			range += 10; //Assume level 10?
 		break;
+	case NJ_KIRIKAGE:
+		if (bl->type == BL_PC)
+			range = skill_get_range(NJ_SHADOWJUMP,pc_checkskill((struct map_session_data *)bl,NJ_SHADOWJUMP));
+		break;
 	}
 
 	if(!range && bl->type != BL_PC)
@@ -1999,6 +2003,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case KN_BRANDISHSPEAR:
+	case NJ_KAMAITACHI:
 		{	//Only display skill animation for skill's target.
 			struct unit_data *ud = unit_bl2ud(src);
 			if (ud && ud->skilltarget == bl->id)
@@ -3192,13 +3197,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NJ_KIRIKAGE:
 		status_change_end(src, SC_HIDING, -1);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		if (unit_movepos(src, bl->x, bl->y, 0, 0))
+		{
+			int dir = unit_getdir(src);
+
+			clif_slide(src,src->x - dirx[dir],src->y - diry[dir]);
+		}
 		break;
 	case NJ_ISSEN:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (sc && sc->data[SC_NEN].timer != -1)
 			status_change_end(src,SC_NEN,-1);
 		break;
-
 	case 0:
 		if(sd) {
 			if (flag & 3){
@@ -3759,12 +3769,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_CRACKER:
 	case NJ_KASUMIKIRI:
 	case NJ_UTSUSEMI:
-	case NJ_BUNSINJYUTSU:
 	case NJ_NEN:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
+	case NJ_BUNSINJYUTSU:
+		{
+			struct status_change *sc;
+			sc = status_get_sc(bl);
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 
+			if (sc && sc->data[SC_NEN].timer != -1)
+				status_change_end(bl,SC_NEN,-1);
+		}
+		break;
 	case CG_MOONLIT:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (sd && battle_config.player_skill_partner_check &&
@@ -5158,7 +5177,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	// Slim Pitcher
+	// Slim Pitcher (normally Condensed Potion doesn't give SP (Heals party members))
 	case CR_SLIMPITCHER:
 		if (potion_hp || potion_sp) {
 			int hp = potion_hp, sp = potion_sp;
@@ -6172,7 +6191,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		}
 		break;
 
-	// Slim Pitcher [Celest]
+	// Slim Pitcher [Celest] (normally Condensed Potion doesn't give SP (Heals party members))
 	case CR_SLIMPITCHER:
 		if (sd) {
 			int i = skilllv%11 - 1;
@@ -8293,6 +8312,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	
 	case NJ_ISSEN:
+	case NJ_BUNSINJYUTSU:
 		if (!sc || sc->data[SC_NEN].timer==-1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;

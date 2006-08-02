@@ -322,8 +322,25 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
+		if(sc->data[SC_UTSUSEMI].timer != -1 && !skill_num)
+		{
+			clif_skill_nodamage(bl,bl,NJ_UTSUSEMI,1,1);
+			skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3|(map_calc_dir(bl,src->x,src->y)<<20));
+			if (--sc->data[SC_UTSUSEMI].val2 <= 0)
+				status_change_end(bl, SC_UTSUSEMI, -1);
+			return 0;
+		}
+
+		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&BF_WEAPON || flag&BF_MISC) )
+		{
+			clif_skill_nodamage(bl,bl,NJ_BUNSINJYUTSU,1,1);
+			if (--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
+				status_change_end(bl, SC_BUNSINJYUTSU, -1);
+			return 0;
+		}
+
 		//Now damage increasing effects
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN && skill_num != NJ_ZENYNAGE){
 			damage<<=1;
 			status_change_end( bl,SC_AETERNA,-1 );
 		}
@@ -1518,7 +1535,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 10*skill_lv;
 					break;
 				case NJ_KIRIKAGE:
-					skillratio += 100*skill_lv-100;
+					skillratio += 100*(skill_lv-1);
 					break;
 				case KN_CHARGEATK:
 					skillratio += wflag*15; //FIXME: How much is the actual bonus? [Skotlex]
@@ -2321,7 +2338,7 @@ struct Damage battle_calc_magic_attack(
 						skillratio += 50 + 50*skill_lv; // extrapolation from a vid (unsure)
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 150 + 150*skill_lv; // It has to be MATK +(150+150*SkillLV)% so 1000% at lvl 5, not 900%. Damage is not increased by hits.
+						skillratio += 50*(skill_lv-1); // recorrected after calculation from vids
 						break;
 					case NJ_HYOUSENSOU:
 						skillratio -= 30;
@@ -2329,13 +2346,13 @@ struct Damage battle_calc_magic_attack(
 						  	skillratio += sc->data[SC_SUITON].val4;
 						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 100+50*skill_lv; // correct formula (MATK + 350% = 450% at level 5) (kRO and unofficial descriptions)
+						skillratio += 50*skill_lv; // recorrected after calculation from vids
 						break;
 					case NJ_RAIGEKISAI:
-						skillratio += 160 + 40*skill_lv; // idem
+						skillratio += 60 + 40*skill_lv; // idem
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100 + 100*skill_lv; // idem
+						skillratio += 100*skill_lv; // idem
 						break;
 				}
 
