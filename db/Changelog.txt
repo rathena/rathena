@@ -20,6 +20,9 @@
 
 =========================
 08/01
+	* Changed Solace's and Retribution's skills so they feel like on official servers [Playtester]
+	* Fire Pillar's aftercast delay is 1 second now [Playtester]
+	* Updated Abyss Lake and Rachel mobs [Playtester]
 	* Some minor monster skill changes [Playtester]
 	* Made Deluge/volcano/v. gale be castable on top of each other again
 	  [Skotlex]
