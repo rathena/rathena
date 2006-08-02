@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/02
+	* Now you can teleport in Thanatos Boss room, but you can't respawn there [Playtester]
 	* Fixed Defender Raising Walk speed instead of diminishing it. [Skotlex]
 	* Added a check on status-change load to prevent loading speed-affecting
 	  status when their speed adjustment is 0 (prevents division by zero)

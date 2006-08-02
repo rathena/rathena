@@ -162,3 +162,4 @@ nguild_prt.gat	mapflag	nosave	SavePoint
 
 //Normal Maps =================================
 yggdrasil01.gat	mapflag	nosave	SavePoint
+thana_boss.gat	mapflag	nosave	SavePoint
