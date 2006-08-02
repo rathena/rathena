@@ -3098,11 +3098,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case CR_ACIDDEMONSTRATION:
 	case TF_THROWSTONE:
 	case NPC_SMOKING:
-	case NPC_SELFDESTRUCTION:
 	case HVAN_EXPLOSION:	//[orn]
 	case GS_FLING:
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
+	case NPC_SELFDESTRUCTION:
+		if (src != bl)
+			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	// Celest
@@ -4903,7 +4907,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int dir = (bl == src)?unit_getdir(src):map_calc_dir(src,bl->x,bl->y); //If cast on self, run forward, else run away.
 			unit_stop_attack(src);
 			//Run skillv tiles overriding the can-move check.
-			unit_walktoxy(src, bl->x + skilllv * mask[dir][0], bl->y + skilllv * mask[dir][1], 2);
+			if (unit_walktoxy(src, src->x + skilllv * mask[dir][0], src->y + skilllv * mask[dir][1], 2) && md)
+				md->state.skillstate = MSS_WALK; //Otherwise it isn't updated in the ai.
 		}
 		break;
 

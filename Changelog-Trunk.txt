@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/01
+	* Miscellanous fixes which make the Marine Sphere self destruction work as
+	  best as I can. It only has one flaw: It self-destructs instantly after
+	  walking because if I make it use self-destruction with a cast-bar,
+	  client-side the object stops moving inmediately... [Skotlex]
 	* Modified unit_walktoxy and NPC_RUN to enable running even when the caster
 	  does not has the MD_CANMOVE bit on. [Skotlex]
 	* PF_MINDBREAKER will now silently fail if you try to use it on someone who
