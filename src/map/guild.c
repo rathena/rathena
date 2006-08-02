@@ -791,7 +791,7 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 	return 0;
 }
 // ƒMƒ‹ƒh’Ç•ú—v‹
-int guild_explusion(struct map_session_data *sd,int guild_id,
+int guild_expulsion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes)
 {
 	struct guild *g;
@@ -844,7 +844,7 @@ int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 				if(!flag)
 					clif_guild_leave(online_member_sd, name, mes);
 				else
-					clif_guild_explusion(online_member_sd, name, mes, account_id);
+					clif_guild_expulsion(online_member_sd, name, mes, account_id);
 
 				memset(&g->member[i],0,sizeof(struct guild_member));
 				clif_guild_memberlist(online_member_sd);

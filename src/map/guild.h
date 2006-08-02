@@ -46,7 +46,7 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
 int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 	const char *name,const char *mes);
-int guild_explusion(struct map_session_data *sd,int guild_id,
+int guild_expulsion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
 int guild_skillup(struct map_session_data *sd,int skill_num,int flag);
 void guild_block_skill(struct map_session_data *sd, int time);

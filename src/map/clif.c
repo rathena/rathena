@@ -7164,7 +7164,7 @@ int clif_guild_leave(struct map_session_data *sd,const char *name,const char *me
  * ギルドメンバ追放通知
  *------------------------------------------
  */
-int clif_guild_explusion(struct map_session_data *sd,const char *name,const char *mes,
+int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char *mes,
 	int account_id)
 {
 	unsigned char buf[128];
@@ -7182,7 +7182,7 @@ int clif_guild_explusion(struct map_session_data *sd,const char *name,const char
  * ギルド追放メンバリスト
  *------------------------------------------
  */
-int clif_guild_explusionlist(struct map_session_data *sd)
+int clif_guild_expulsionlist(struct map_session_data *sd)
 {
 	int fd;
 	int i,c;
@@ -7194,10 +7194,10 @@ int clif_guild_explusionlist(struct map_session_data *sd)
 	g=guild_search(sd->status.guild_id);
 	if(g==NULL)
 		return 0;
-	WFIFOHEAD(fd,MAX_GUILDEXPLUSION * 88 + 4);
+	WFIFOHEAD(fd,MAX_GUILDEXPULSION * 88 + 4);
 	WFIFOW(fd,0)=0x163;
-	for(i=c=0;i<MAX_GUILDEXPLUSION;i++){
-		struct guild_explusion *e=&g->explusion[i];
+	for(i=c=0;i<MAX_GUILDEXPULSION;i++){
+		struct guild_expulsion *e=&g->expulsion[i];
 		if(e->account_id>0){
 			memcpy(WFIFOP(fd,c*88+ 4),e->name,NAME_LENGTH);
 			memcpy(WFIFOP(fd,c*88+28),e->acc,24);
@@ -10476,7 +10476,7 @@ void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd) {
 		clif_guild_skillinfo(sd);
 		break;
 	case 4:	// 追放リスト
-		clif_guild_explusionlist(sd);
+		clif_guild_expulsionlist(sd);
 		break;
 	default:
 		if (battle_config.error_log)
@@ -10584,9 +10584,9 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd) {
  * ギルド追放
  *------------------------------------------
  */
-void clif_parse_GuildExplusion(int fd,struct map_session_data *sd) {
+void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	guild_explusion(sd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
+	guild_expulsion(sd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
 }
 
 /*==========================================
@@ -11913,7 +11913,7 @@ static int packetdb_readdb(void)
 		{clif_parse_GuildInvite,"guildinvite"},
 		{clif_parse_GuildReplyInvite,"guildreplyinvite"},
 		{clif_parse_GuildLeave,"guildleave"},
-		{clif_parse_GuildExplusion,"guildexplusion"},
+		{clif_parse_GuildExpulsion,"guildexplusion"},
 		{clif_parse_GuildMessage,"guildmessage"},
 		{clif_parse_GuildRequestAlliance,"guildrequestalliance"},
 		{clif_parse_GuildReplyAlliance,"guildreplyalliance"},

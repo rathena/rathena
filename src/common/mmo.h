@@ -66,7 +66,7 @@
 #define MAX_PARTY 12
 #define MAX_GUILD 16+10*6	// increased max guild members +6 per 1 extension levels [Lupus]
 #define MAX_GUILDPOSITION 20	// increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
-#define MAX_GUILDEXPLUSION 32
+#define MAX_GUILDEXPULSION 32
 #define MAX_GUILDALLIANCE 16
 #define MAX_GUILDSKILL	15 // increased max guild skills because of new skills [Sara-chan]
 #define MAX_GUILDCASTLE 24	// increased to include novice castles [Valaris]
@@ -297,12 +297,14 @@ struct guild_member {
 	int rsv1,rsv2;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
+	unsigned char modified;
 };
 
 struct guild_position {
 	char name[NAME_LENGTH];
 	int mode;
 	int exp_mode;
+	unsigned char modified;
 };
 
 struct guild_alliance {
@@ -311,7 +313,7 @@ struct guild_alliance {
 	char name[NAME_LENGTH];
 };
 
-struct guild_explusion {
+struct guild_expulsion {
 	char name[NAME_LENGTH];
 	char mes[40];
 	char acc[40];
@@ -339,10 +341,10 @@ struct guild {
 	int emblem_len,emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
-	struct guild_explusion explusion[MAX_GUILDEXPLUSION];
+	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 #ifndef TXT_ONLY
-	unsigned char save_flag;
+	unsigned short save_flag;
 #endif
 };
 
