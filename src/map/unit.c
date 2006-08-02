@@ -205,8 +205,13 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			!(ud->walk_count%WALK_SKILL_INTERVAL) &&
 			mobskill_use(md, tick, -1))
 	  	{
-			clif_fixpos(bl); //Fix position as walk has been cancelled.
-			return 0;
+			if (!(ud->skillid == NPC_SELFDESTRUCTION && ud->skilltimer != -1))
+			{	//Skill used, abort walking
+				clif_fixpos(bl); //Fix position as walk has been cancelled.
+				return 0;
+			}
+			//Resend walk packet for proper Self Destruction display.
+			clif_move(bl);
 		}
 	}
 
@@ -943,7 +948,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 		if(sd && pc_checkskill(sd,SA_FREECAST))
 			status_freecast_switch(sd);
-		else if (skill_num != NPC_SELFDESTRUCTION) //Required for Marine Spheres
+		else
 			unit_stop_walking(src,1);
 	}
 	else

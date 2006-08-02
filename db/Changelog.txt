@@ -20,6 +20,8 @@
 
 =========================
 08/02
+	* Updated the mob skills so that the marine sphere casts self-destruction
+	  with 3 second cast after it starts walking. [Skotlex]
 	* Updated Create Arrow to X.4 [Playtester]
 	* Gold Lux now makes you autocast Flip Coin on attack [Playtester]
 	- also Gunslinger can use Berserk Potion now
