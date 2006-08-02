@@ -55,8 +55,8 @@
 947,1770,35
 // Cactus Needle --> 50 Arrows
 952,1750,50
-// Gill --> 80 Iron Arrows, 150 Crystal Arrows
-956,1770,80,1754,150
+// Gill --> 80 Iron Arrows, 50 Crystal Arrows
+956,1770,80,1754,50
 // Decayed Nail --> 1 Rusted Arrow, 1 Shadow Arrow
 957,1762,1,1767,1
 // Horrendous Mouth --> 5 Shadow Arrow
@@ -71,22 +71,22 @@
 984,1765,250
 // Elunium --> 1000 Steel Arrows, 50 Stun Arrows
 985,1753,1000,1758,50
-// Red Blood --> 600 Fire Arrows
-990,1752,600
-// Crystal Blue --> 150 Crystal Arrows
-991,1754,150
-// Wind of Verdure --> 150 Arrows of Wind
-992,1755,150
-// Green Live --> 150 Stone Arrow
-993,1756,150
-// Flame Heart --> 1800 Fire Arrows, 5 Mute Arrows
-994,1752,1800,1769,5
-// Mystic Frozen --> 450 Crystal Arrows, 5 Freeze Arrows
-995,1754,450,1759,5
-// Rough Wind --> 450 Arrows of Wind, 5 Sleep Arrows
-996,1755,450,1768,5
-// Great Nature --> 450 Stone Arrows, 5 Flash Arrows
-997,1756,450,1760,5
+// Red Blood --> 2000 Fire Arrows
+990,1752,2000
+// Crystal Blue --> 500 Crystal Arrows
+991,1754,500
+// Wind of Verdure --> 500 Arrows of Wind
+992,1755,500
+// Green Live --> 500 Stone Arrow
+993,1756,500
+// Flame Heart --> 6000 Fire Arrows, 5 Mute Arrows
+994,1752,6000,1769,5
+// Mystic Frozen --> 1500 Crystal Arrows, 5 Freeze Arrows
+995,1754,1500,1759,5
+// Rough Wind --> 1500 Arrows of Wind, 5 Sleep Arrows
+996,1755,1500,1768,5
+// Great Nature --> 1500 Stone Arrows, 5 Flash Arrows
+997,1756,1500,1760,5
 // Iron --> 100 Iron Arrows
 998,1770,100
 // Steel --> 100 Steel Arrows
