@@ -1695,6 +1695,13 @@ int map_quit(struct map_session_data *sd) {
 		sd->regstr = NULL;
 		sd->regstr_num = 0;
 	}
+	if (sd->st) {
+		if (sd->st->stack)
+			script_free_stack (sd->st->stack);
+		aFree(sd->st);
+		sd->st = NULL;
+		sd->npc_id = 0;
+	}
 	if(sd->fd)
   	{	//Player will be free'd on save-ack. [Skotlex]
 		if (session[sd->fd])
