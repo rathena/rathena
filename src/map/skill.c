@@ -2012,6 +2012,15 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 			break;
 		}
+	case NJ_HUUMA:
+		{	//Only display skill animation for skill's target.
+			struct unit_data *ud = unit_bl2ud(src);
+			if (ud && ud->skilltarget == bl->id)
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
+			else
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, 0, -1, type); // Skill_id = 0 => no effect on other targets
+			break;
+		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
