@@ -1035,6 +1035,9 @@
 2358,Angel's_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,1,,{ bonus bLuk,4; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x00021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; },{},{}
 2360,Robe_of_Cast_,Robe of Cast,5,,10,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
+2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,75,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,75,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,75,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
 // Footgears
 //===================================================================
 2401,Sandals,Sandals,5,400,,200,,1,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
@@ -1759,6 +1762,13 @@
 5188,Wandering_Minstrel_Hat,Wandering Minstrel Hat,5,,10,500,,2,,0,0xFFFFFFFF,7,2,256,,50,1,240,{ bonus bInt,1; bonus bDex,1; },{},{}
 5189,Autumn_Leaves,Autumn Leaves,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,241,{ bonus bMaxHP,40; bonus bMaxSP,40; },{},{}
 5190,Independence_Memorial_Hat,Independence Memorial Hat,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,,1,242,{},{},{}
+5191,Black_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,243,{ bonus bMdef,3; },{},{}
+5192,Yellow_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,244,{ bonus bMdef,3; },{},{}
+5193,Green_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,245,{ bonus bMdef,3; },{},{}
+5194,Pink_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,246,{ bonus bMdef,3; },{},{}
+5195,Red_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,247,{ bonus bMdef,3; },{},{}
+5196,Orange_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,248,{ bonus bMdef,3; },{},{}
+5197,White_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,249,{ bonus bMdef,3; },{},{}
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -1917,7 +1927,7 @@
 7154,Poisonous_Powder,Poisonous Powder,3,,80,10,,,,,,,,,,,,,{},{},{}
 7155,Poisonous_Toad_Skin,Poisonous Toad Skin,3,,140,10,,,,,,,,,,,,,{},{},{}
 7156,Broken_Shuriken,Broken Shuriken,3,,235,10,,,,,,,,,,,,,{},{},{}
-7157,Dark_Mask,Dark Mask,3,,10,10,,,,,,,,,,,,,{},{},{}
+7157,Dark_Mask,Dark Mask,3,,157,10,,,,,,,,,,,,,{},{},{}
 7158,Broken_Liquor_Jar,Broken Liquor Jar,3,,80,10,,,,,,,,,,,,,{},{},{}
 7159,Tengu_Nose,Tengu Nose,3,,200,10,,,,,,,,,,,,,{},{},{}
 7160,Feudal_Lord_Permit,Feudal Lord Permit,3,,10,10,,,,,,,,,,,,,{},{},{}
@@ -2346,6 +2356,12 @@
 7585,Guard's_Second_Proof,Guard's Second Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
 7586,Guard's_Third_Proof,Guard's Third Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
 7587,Guard's_Fourth_Proof,Guard's Fourth Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
+7588,IPOD_Coupon,IPOD Coupon,3,,10,10,,,,,,,,,,,,,{},{},{}
+7589,Lettered_Moon_Snack_01,Lettered Moon Snack 01,3,,10,10,,,,,,,,,,,,,{},{},{}
+7590,Lettered_Moon_Snack_02,Lettered Moon Snack 02,3,,10,10,,,,,,,,,,,,,{},{},{}
+7591,Lettered_Moon_Snack_03,Lettered Moon Snack 03,3,,10,10,,,,,,,,,,,,,{},{},{}
+7592,Lettered_Moon_Snack_04,Lettered Moon Snack 04,3,,10,10,,,,,,,,,,,,,{},{},{}
+7593,Lettered_Moon_Snack_05,Lettered Moon Snack 05,3,,10,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
@@ -2599,6 +2615,10 @@
 12183,Holy_Arrow_Quiver,Holy Arrow Quiver,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
 12184,Mercenary's_Red_Potion,Mercenary's Red Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12185,Mercenary's_Blue_Potion,Mercenary's Blue Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12186,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12187,Old_Green_Box,Old Green Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12188,Fantastic_Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
+12189,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers

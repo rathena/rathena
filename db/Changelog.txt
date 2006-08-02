@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/02
+	* Added the new items and fixed selling price of Dark Mask [Playtester]
 08/01
 	* Changed Solace's and Retribution's skills so they feel like on official servers [Playtester]
 	* Fire Pillar's aftercast delay is 1 second now [Playtester]
