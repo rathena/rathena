@@ -63,6 +63,7 @@ ACMD_FUNC(happyhappyjoyjoy); // [Valaris]
 ACMD_FUNC(save);
 ACMD_FUNC(load);
 ACMD_FUNC(speed);
+ACMD_FUNC(charspeed);
 ACMD_FUNC(storage);
 ACMD_FUNC(guildstorage);
 ACMD_FUNC(option);
@@ -338,6 +339,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Load,				"@return",			40, atcommand_load },
 	{ AtCommand_Load,				"@load",			40, atcommand_load },
 	{ AtCommand_Speed,			"@speed",			40, atcommand_speed },
+	{ AtCommand_CharSpeed,		"@charspeed",		40, atcommand_charspeed },
 	{ AtCommand_Storage,			"@storage",			 1, atcommand_storage },
 	{ AtCommand_GuildStorage,		"@gstorage",		50, atcommand_guildstorage },
 	{ AtCommand_Option,			"@option",			40, atcommand_option },
@@ -2133,6 +2135,53 @@ int atcommand_speed(
 		return -1;
 	}
 
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int atcommand_charspeed(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	int speed;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", speed, atcmd_player_name) < 2) {
+		sprintf(atcmd_output, "Please, enter a speed and a player name (usage: @charspeed <speed <%d-%d>> <char name>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) {
+		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		return -1;
+	}
+
+	if (pc_isGM(sd) < pc_isGM(pl_sd))
+  	{	//GM level check
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (speed >= MIN_WALK_SPEED && speed <= MAX_WALK_SPEED) {
+		pl_sd->base_status.speed = speed;
+		status_calc_bl(&pl_sd->bl, SCB_SPEED);
+		clif_displaymessage(fd, msg_table[8]); // Speed changed.
+		if(pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, msg_table[8]); // Speed changed.
+	} else {
+		sprintf(atcmd_output, "Please, enter a valid speed value (usage: @speed <%d-%d>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
 	return 0;
 }
 
@@ -6607,11 +6656,11 @@ int atcommand_jailfor(
 	switch(rand()%2)
 	{
 		case 1: //Jail #1
-			m_index = mapindex_name2id(MAP_PRONTERA);
+			m_index = mapindex_name2id(MAP_JAIL);
 			x = 49; y = 75;
 			break;
 		default: //Default Jail
-			m_index = mapindex_name2id(MAP_PRONTERA);
+			m_index = mapindex_name2id(MAP_JAIL);
 			x = 24; y = 75;
 			break;
 	}

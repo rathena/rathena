@@ -325,13 +325,13 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_UTSUSEMI].timer != -1 && !skill_num)
 		{
 			clif_skill_nodamage(bl,bl,NJ_UTSUSEMI,1,1);
-			skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3|(map_calc_dir(bl,src->x,src->y)<<20));
+			skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3);
 			if (--sc->data[SC_UTSUSEMI].val2 <= 0)
 				status_change_end(bl, SC_UTSUSEMI, -1);
 			return 0;
 		}
 
-		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&BF_WEAPON || flag&BF_MISC) )
+		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&(BF_WEAPON|BF_MISC)) )
 		{
 			clif_skill_nodamage(bl,bl,NJ_BUNSINJYUTSU,1,1);
 			if (--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
@@ -340,7 +340,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 
 		//Now damage increasing effects
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN && skill_num != NJ_ZENYNAGE){
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
 			damage<<=1;
 			status_change_end( bl,SC_AETERNA,-1 );
 		}

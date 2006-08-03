@@ -26,6 +26,7 @@ enum AtCommandType {
 	AtCommand_Save,
 	AtCommand_Load,
 	AtCommand_Speed,
+	AtCommand_CharSpeed,
 	AtCommand_Storage,
 	AtCommand_GuildStorage,
 	AtCommand_Option,

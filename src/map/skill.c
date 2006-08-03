@@ -770,7 +770,7 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	case SN_SHARPSHOOTING:
 	case HT_POWER:
 		if (bl->type == BL_PC)
-			range += pc_checkskill((struct map_session_data *)bl, AC_VULTURE);
+			range += pc_checkskill((TBL_PC*)bl, AC_VULTURE);
 		else
 			range += 10; //Assume level 10?
 		break;
@@ -782,13 +782,13 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	case GS_SPREADATTACK:
 	case GS_GROUNDDRIFT:
 		if (bl->type == BL_PC)
-			range += pc_checkskill((struct map_session_data *)bl, GS_SNAKEEYE);
+			range += pc_checkskill((TBL_PC*)bl, GS_SNAKEEYE);
 		else
 			range += 10; //Assume level 10?
 		break;
 	case NJ_KIRIKAGE:
 		if (bl->type == BL_PC)
-			range = skill_get_range(NJ_SHADOWJUMP,pc_checkskill((struct map_session_data *)bl,NJ_SHADOWJUMP));
+			range = skill_get_range(NJ_SHADOWJUMP,pc_checkskill((TBL_PC*)bl,NJ_SHADOWJUMP));
 		break;
 	}
 
@@ -1999,7 +1999,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case SM_MAGNUM:
 	case AS_SPLASHER:
 	case ASC_METEORASSAULT:
-	case GS_SPREADATTACK:
+//	case GS_SPREADATTACK: <- as it is, it shows no animation at all.
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
 		break;
 	case KN_BRANDISHSPEAR:
@@ -3207,9 +3207,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		status_change_end(src, SC_HIDING, -1);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
-		{
+		{	//FIXME: Why are you sending a packet to LIE about where the character is?
+			//If you want to place yourself adjacent to the target, do the proper coding..?
 			int dir = unit_getdir(src);
-
 			clif_slide(src,src->x - dirx[dir],src->y - diry[dir]);
 		}
 		break;
@@ -3783,15 +3783,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 	case NJ_BUNSINJYUTSU:
-		{
-			struct status_change *sc;
-			sc = status_get_sc(bl);
-			clif_skill_nodamage(src,bl,skillid,skilllv,
+		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-
-			if (sc && sc->data[SC_NEN].timer != -1)
-				status_change_end(bl,SC_NEN,-1);
-		}
+		if (tsc && tsc->data[SC_NEN].timer != -1)
+			status_change_end(bl,SC_NEN,-1);
 		break;
 	case CG_MOONLIT:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -9339,7 +9334,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 				case SA_VOLCANO:
 				case SA_DELUGE:
 				case SA_VIOLENTGALE:
-					skill_delunit(unit);
+					(*alive) = 0;
 					return 1;
 			}
 			break;

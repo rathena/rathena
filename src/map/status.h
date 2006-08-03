@@ -308,8 +308,8 @@ enum {
 	//38: Again Aspd Potion
 	//39: Again Aspd Potion
 	//40: Again Aspd Potion
-	SI_SPEEDPOTION		= 41,
-	//42: Again Speed Up
+	SI_SPEEDPOTION1	= 41,
+	SI_SPEEDPOTION2	= 42,
 	SI_STRIPWEAPON		= 50,
 	SI_STRIPSHIELD		= 51,
 	SI_STRIPARMOR		= 52,

@@ -403,8 +403,8 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_ASPDPOTION1] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION2] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION;
-	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION;
+	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION1;
+	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 	
 	//Other SC which are not necessarily associated to skills.
@@ -5406,10 +5406,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_UTSUSEMI:
 			val2=(val1+1)/2; // number of hits blocked
-			val3=7; // move you back 7 cells
+			val3=skill_get_blewcount(NJ_UTSUSEMI, val1); //knockback value.
 			break;
 		case SC_BUNSINJYUTSU:
 			val2=(val1+1)/2; // number of hits blocked
+			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?

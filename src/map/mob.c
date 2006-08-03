@@ -1139,7 +1139,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					//or if the previous target is not attacking the mob. [Skotlex]
 					md->target_id = md->attacked_id; // set target
 					md->state.aggressive = 0; //Retaliating.
-					md->attacked_count = 0;
+					//md->attacked_count = 0; //Should we reset rude attack count?
 					md->min_chase = dist+md->db->range3;
 					if(md->min_chase>MAX_MINCHASE)
 						md->min_chase=MAX_MINCHASE;

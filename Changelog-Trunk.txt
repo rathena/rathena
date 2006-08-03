@@ -3,6 +3,17 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/03
+	* Cleaned up the last NJ update code. [Skotlex]
+	* Added @ command `charspeed` [Skotlex]
+	* Fixed @jailfor using MAP_PRONTERA as jail instead of MAP_JAIL [Skotlex]
+	* Removed case for GS_SPREADATTACK on damage packets to see if the skill
+	  displays correctly now. [Skotlex]
+	* Corrected Deluge/Volcano/V. Gale overlaps so that the placing tiles are
+	  removed, NOT the ones who were already placed. [Skotlex]
+	* Made SC_SPEEDUP0 and SC_SPEEDUP1 use different icon IDs, to fix
+	  icon-confusion when both are enabled at a time. [Skotlex]
+	* Mob rude-attacked count is not reset now on picking a new char (gotta
+	  investigate this further) [Skotlex]
 	* Changed atoi to strtoul for guild-experience's field [Toms]
 	* Fixed a bug in int_storage.c, temp array doesn't have the good size [Toms]
 2006/08/02
