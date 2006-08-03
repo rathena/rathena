@@ -20,6 +20,9 @@
 
 =========================
 08/03
+	* Updated some monsters [Playtester]
+	- Gig and Deleter are now Fire 2 element
+	- reduced attack power of Skeggiolds
 	* Finally updated stats of the monsters that got their exp updated a month ago [Playtester]
 	* Fixed some items I added yesterday [Playtester]
 08/02
