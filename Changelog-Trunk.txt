@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/03
+	* Changed the Battle-Orders icon to be the Strength Up icon (for
+	  Chasewalk's str bonus). [Skotlex]
 	* Fixed using the right-hand weapon's size modifiers regardless of which
 	  weapon's damage was being calculated in regards to. [Skotlex]
 	* Simplified the ignore-size check by making the Weapon Perfection check be

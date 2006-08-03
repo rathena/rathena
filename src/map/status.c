@@ -377,7 +377,7 @@ void initChangeTables(void) {
 	set_sc(HAMI_BLOODLUST, SC_BLOODLUST, SI_BLANK, SCB_BATK|SCB_WATK);
 
 	set_sc(GD_LEADERSHIP, SC_GUILDAURA, SI_BLANK, SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX);
-	set_sc(GD_BATTLEORDER, SC_BATTLEORDERS, SI_BATTLEORDERS, SCB_STR|SCB_INT|SCB_DEX);
+	set_sc(GD_BATTLEORDER, SC_BATTLEORDERS, SI_BLANK, SCB_STR|SCB_INT|SCB_DEX);
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTableArray[SL_ALCHEMIST] =   MAPID_ALCHEMIST,
@@ -405,8 +405,9 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION1;
 	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
+	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
-	
+		
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
