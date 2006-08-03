@@ -2620,6 +2620,10 @@ struct Damage  battle_calc_misc_attack(
 	case CR_ACIDDEMONSTRATION: // updated the formula based on a Japanese formula found to be exact [Reddozen]
 		md.damage = 7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_));
 		if (tsd) md.damage>>=1;
+		if (md.damage < 0 || md.damage > INT_MAX>>1)
+	  	//Overflow prevention, will anyone whine if I cap it to a few billion?
+		//Not capped to INT_MAX to give some room for further damage increase.
+			md.damage = INT_MAX>>1;
 		break;
 	case NJ_ZENYNAGE:
 		md.damage = skill_get_zeny(skill_num ,skill_lv);

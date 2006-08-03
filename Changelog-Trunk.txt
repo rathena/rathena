@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/03
+	* Added a damage cap to CR_ACIDDEMONSTRATION of INT_MAX/2 to prevent
+	  overflows. It is not capped to INT_MAX because damage increasing skills
+	  would cause it to still overflow afterwards. [Skotlex]
 	* Fixed NPC_CRITICALSLASH not being considered as a Critical hit by the
 	  code. [Skotlex]
 	* Added RUDE_ATTACKED_COUNT so you can easily adjust how many rude-attacks
