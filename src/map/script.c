@@ -11642,7 +11642,7 @@ int buildin_rid2name(struct script_state *st){
 			case BL_PET:
 				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->name);
 				break;
-			case BL_HOMUNCULUS:
+			case BL_HOM:
 				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->master->homunculus.name);
 				break;
 			default:
@@ -12067,8 +12067,8 @@ int buildin_unittalk(struct script_state *st)
 			case BL_NPC:
 				memcpy(message, ((TBL_NPC *)bl)->name, NAME_LENGTH);
 				break;
-			case BL_HOMUNCULUS:
-				memcpy(message, ((TBL_HOMUNCULUS *)bl)->master->homunculus.name, NAME_LENGTH);
+			case BL_HOM:
+				memcpy(message, ((TBL_HOM *)bl)->master->homunculus.name, NAME_LENGTH);
 				break;
 			case BL_PET:
 				memcpy(message, ((TBL_PET *)bl)->name, NAME_LENGTH);
@@ -12114,8 +12114,8 @@ int buildin_unitdeadsit(struct script_state *st){
 				case BL_NPC:
 					((TBL_NPC *)bl)->vd->dead_sit = action;
 					break;
-				case BL_HOMUNCULUS:
-					((TBL_HOMUNCULUS *)bl)->vd->dead_sit = action;
+				case BL_HOM:
+					((TBL_HOM *)bl)->vd->dead_sit = action;
 					break;
 				case BL_PET:
 					((TBL_PET *)bl)->vd.dead_sit = action;

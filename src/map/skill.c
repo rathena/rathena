@@ -808,7 +808,7 @@ int skill_calc_heal (struct block_list *bl, int skill_lv)
 	if(bl->type == BL_PC && (skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
 		heal += heal * skill * 2 / 100;
 
-	if(bl->type == BL_HOMUNCULUS && (skill = merc_hom_checkskill( ((TBL_HOMUNCULUS*)bl)->master, HLIF_BRAIN)) > 0)	//[orn]
+	if(bl->type == BL_HOM && (skill = merc_hom_checkskill( ((TBL_HOM*)bl)->master, HLIF_BRAIN)) > 0)	//[orn]
 		heal += heal * skill * 2 / 100;
 	return heal;
 }
@@ -3271,7 +3271,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	if (src->type == BL_PC) {
 		sd = (struct map_session_data *)src;
-	} else if (src->type == BL_HOMUNCULUS) {	//[orn]
+	} else if (src->type == BL_HOM) {	//[orn]
 		hd = (struct homun_data *)src;
 	} else if (src->type == BL_MOB) {
 		md = (struct mob_data *)src;
@@ -3296,7 +3296,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
 		case HLIF_HEAL:	//[orn]
-			if (bl->type != BL_HOMUNCULUS) {
+			if (bl->type != BL_HOM) {
 				if (sd) clif_skill_fail(sd,skillid,0,0) ;
 	        break ;
 			}
@@ -5690,7 +5690,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC,  src, sd);
-	BL_CAST( BL_HOMUNCULUS,  src, hd);	//[orn]
+	BL_CAST( BL_HOM,  src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -5865,7 +5865,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC , src, sd);
-	BL_CAST( BL_HOMUNCULUS , src, hd);	//[orn]
+	BL_CAST( BL_HOM , src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -10668,7 +10668,7 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 
 int skill_blockmerc_end (int tid, unsigned int tick, int id, int data)	//[orn]
 {
-	struct homun_data *hd = (TBL_HOMUNCULUS*) map_id2bl(id);
+	struct homun_data *hd = (TBL_HOM*) map_id2bl(id);
 	if (data <= 0 || data >= MAX_SKILL)
 		return 0;
 	if (hd) hd->blockskill[data] = 0;

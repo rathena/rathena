@@ -654,8 +654,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_PC:
 			pc_damage((TBL_PC*)target,src,hp,sp);
 			break;
-		case BL_HOMUNCULUS:
-			merc_damage((TBL_HOMUNCULUS*)target,src,hp,sp);
+		case BL_HOM:
+			merc_damage((TBL_HOM*)target,src,hp,sp);
 	}
 
 	if (status->hp)
@@ -679,8 +679,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_PC:
 			flag = pc_dead((TBL_PC*)target,src);
 			break;
-		case BL_HOMUNCULUS:
-			flag = merc_hom_dead((TBL_HOMUNCULUS*)target,src);
+		case BL_HOM:
+			flag = merc_hom_dead((TBL_HOM*)target,src);
 			break;
 		default:	//Unhandled case, do nothing to object.
 			flag = 0;
@@ -776,8 +776,8 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	case BL_PC:
 		pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0);
 		break;
-	case BL_HOMUNCULUS:
-		merc_hom_heal((TBL_HOMUNCULUS*)bl,hp,sp);
+	case BL_HOM:
+		merc_hom_heal((TBL_HOM*)bl,hp,sp);
 		break;
 	}
 	return hp+sp;
@@ -858,8 +858,8 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 			break;
 		case BL_PC:
 			pc_revive((TBL_PC*)bl, hp, sp);
-//		case BL_HOMUNCULUS:	//[orn]
-//			merc_hom_revive((TBL_HOMUNCULUS*)bl, hp, sp);
+//		case BL_HOM:	//[orn]
+//			merc_hom_revive((TBL_HOM*)bl, hp, sp);
 //			break;
 	}
 	return 1;
@@ -1794,6 +1794,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->left_weapon.atkmods[1] = atkmods[1][sd->weapontype2];
 	sd->left_weapon.atkmods[2] = atkmods[2][sd->weapontype2];
 
+	if(pc_isriding(sd) &&
+		(sd->status.weapon==W_1HSPEAR || sd->status.weapon==W_2HSPEAR))
+	{	//When Riding with spear, damage modifier to mid-class becomes 
+		//same as versus large size.
+		sd->right_weapon.atkmods[1] = sd->right_weapon.atkmods[2];
+		sd->left_weapon.atkmods[1] = sd->left_weapon.atkmods[2];
+	}
+
 // ----- STATS CALCULATION -----
 
 	// Job bonuses
@@ -2194,7 +2202,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	merc_hom_calc_skilltree(hd->master);
 
 	status_cpy(&hd->battle_status, status);
-	status_calc_misc(status, BL_HOMUNCULUS, hd->master->homunculus.level);
+	status_calc_misc(status, BL_HOM, hd->master->homunculus.level);
 
 	if(battle_config.homun_critical_rate != 100)
 		status->cri = status->cri*battle_config.homun_critical_rate/100;
@@ -2692,7 +2700,6 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	struct status_change *sc;
 	int temp;
 	TBL_PC *sd;
-	TBL_HOMUNCULUS *hd;
 	b_status = status_get_base_status(bl);
 	status = status_get_status_data(bl);
 	sc = status_get_sc(bl);
@@ -2701,7 +2708,6 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		return;
 
 	BL_CAST(BL_PC,bl,sd);
-	BL_CAST(BL_HOMUNCULUS,bl,hd);
 
 	if(sd && flag&SCB_PC)
 	{	//Recalc everything.
@@ -2709,8 +2715,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		return;
 	}
 	
-//	if(!sd && (!sc || !sc->count)) { //No difference.
-	if( (!sd && !hd ) && (!sc || !sc->count)) { //No difference.
+	if( (!bl->type&(BL_PC|BL_HOM) ) && (!sc || !sc->count)) { //No difference.
 		status_cpy(status, b_status);
 		return;
 	}
@@ -2856,9 +2861,9 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		return;
 	}
 	
-	if(hd) {
+	if(bl->type == BL_HOM) {
 		//The remaining are handled quite different by homunculus, so use their own function.
-		status_calc_bl_sub_hom(hd, flag);
+		status_calc_bl_sub_hom((TBL_HOM*)bl, flag);
 		return;
 	}
 	
@@ -3734,7 +3739,7 @@ int status_get_class(struct block_list *bl)
 		return ((struct map_session_data *)bl)->status.class_;
 	if(bl->type==BL_PET)
 		return ((struct pet_data *)bl)->class_;
-	if(bl->type==BL_HOMUNCULUS)
+	if(bl->type==BL_HOM)
 		return ((struct homun_data *)bl)->master->homunculus.class_;
 	return 0;
 }
@@ -3752,8 +3757,8 @@ int status_get_lv(struct block_list *bl)
 		return ((TBL_PC*)bl)->status.base_level;
 	if(bl->type==BL_PET)
 		return ((TBL_PET*)bl)->msd->pet.level;
-	if(bl->type==BL_HOMUNCULUS)
-		return ((TBL_HOMUNCULUS*)bl)->master->homunculus.level;
+	if(bl->type==BL_HOM)
+		return ((TBL_HOM*)bl)->master->homunculus.level;
 	return 1;
 }
 
@@ -3768,8 +3773,8 @@ struct status_data *status_get_status_data(struct block_list *bl)
 			return &((TBL_MOB*)bl)->status;
 		case BL_PET:
 			return &((TBL_PET*)bl)->status;
-		case BL_HOMUNCULUS:
-			return &((TBL_HOMUNCULUS*)bl)->battle_status;
+		case BL_HOM:
+			return &((TBL_HOM*)bl)->battle_status;
 		default:
 			return &dummy_status;
 	}
@@ -3787,8 +3792,8 @@ struct status_data *status_get_base_status(struct block_list *bl)
 				&((TBL_MOB*)bl)->db->status;
 		case BL_PET:
 			return &((TBL_PET*)bl)->db->status;
-		case BL_HOMUNCULUS:
-			return &((TBL_HOMUNCULUS*)bl)->base_status;
+		case BL_HOM:
+			return &((TBL_HOM*)bl)->base_status;
 		default:
 			return NULL;
 	}
@@ -3849,7 +3854,7 @@ int status_get_party_id(struct block_list *bl)
 		}
 		return 0; //No party.
 	}
-	if(bl->type==BL_HOMUNCULUS){	//[orn]
+	if(bl->type==BL_HOM){	//[orn]
 		struct homun_data *hd=(struct homun_data *)bl;
 		if( hd->master->bl.id>0 )
 		{
@@ -3881,7 +3886,7 @@ int status_get_guild_id(struct block_list *bl)
 			return msd->status.guild_id; //Alchemist's mobs [Skotlex]
 		return 0; //No guild.
 	}
-	if(bl->type==BL_HOMUNCULUS){	//[orn]
+	if(bl->type==BL_HOM){	//[orn]
 		struct homun_data *hd=(struct homun_data *)bl;
 		if( hd->master->bl.id>0 )
 		{
@@ -3946,7 +3951,7 @@ struct view_data *status_get_viewdata(struct block_list *bl)
 			return &((TBL_PET*)bl)->vd;
 		case BL_NPC:
 			return ((TBL_NPC*)bl)->vd;
-		case BL_HOMUNCULUS: //[blackhole89]
+		case BL_HOM: //[blackhole89]
 			return ((struct homun_data*)bl)->vd;
 	}
 	return NULL;
@@ -4046,7 +4051,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
 		}
 	break;
-	case BL_HOMUNCULUS:		//[blackhole89]
+	case BL_HOM:		//[blackhole89]
 		{
 			struct homun_data *hd = (struct homun_data*)bl;
 			if (vd)
@@ -4074,8 +4079,8 @@ struct status_change *status_get_sc(struct block_list *bl)
 		return &((TBL_PC*)bl)->sc;
 	case BL_NPC:
 		return &((TBL_NPC*)bl)->sc;
-	case BL_HOMUNCULUS: //[blackhole89]
-		return &((TBL_HOMUNCULUS*)bl)->sc;
+	case BL_HOM: //[blackhole89]
+		return &((TBL_HOM*)bl)->sc;
 	}
 	return NULL;
 }
@@ -4322,7 +4327,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case BL_PC:
 			sd=(struct map_session_data *)bl;
 			break;
-		case BL_HOMUNCULUS:
+		case BL_HOM:
 			hd=(struct homun_data *)bl;	//[orn]
 			break;
 		case BL_MOB:

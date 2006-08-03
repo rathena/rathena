@@ -173,7 +173,7 @@ enum {
 	BL_PC = 0x001,
 	BL_MOB = 0x002,
 	BL_PET = 0x004,
-	BL_HOMUNCULUS = 0x008,	//[blackhole89]
+	BL_HOM = 0x008,	//[blackhole89]
 	BL_ITEM = 0x010,
 	BL_SKILL = 0x020,
 	BL_NPC = 0x040,
@@ -181,7 +181,7 @@ enum {
 };
 
 //For common mapforeach calls. Since pets cannot be affected, they aren't included here yet.
-#define BL_CHAR (BL_PC|BL_MOB|BL_HOMUNCULUS)
+#define BL_CHAR (BL_PC|BL_MOB|BL_HOM)
 #define BL_ALL 0xfff
 
 enum { WARP, SHOP, SCRIPT, MONS };
@@ -1449,7 +1449,7 @@ typedef struct flooritem_data   TBL_ITEM;
 typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
-typedef struct homun_data       TBL_HOMUNCULUS;
+typedef struct homun_data       TBL_HOM;
 
 #define BL_CAST(type_, bl , dest) \
 	(((bl) == NULL || (bl)->type != type_) ? ((dest) = NULL, 0) : ((dest) = (T ## type_ *)(bl), 1))

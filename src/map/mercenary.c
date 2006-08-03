@@ -743,7 +743,7 @@ int merc_hom_data_init(struct map_session_data *sd)
 	hd->bl.x=sd->bl.x;
 	hd->bl.y=sd->bl.y - 1 ;
 	hd->bl.subtype = MONS;
-	hd->bl.type=BL_HOMUNCULUS;
+	hd->bl.type=BL_HOM;
 	hd->bl.id= npc_get_new_npc_id();
 	hd->bl.prev=NULL;
 	hd->bl.next=NULL;

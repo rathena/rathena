@@ -7815,7 +7815,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 		}
 		break;
 	//[blackhole89]
-	case BL_HOMUNCULUS:
+	case BL_HOM:
 		memcpy(WBUFP(buf,6), ((struct homun_data*)bl)->master->homunculus.name, NAME_LENGTH);
 		break;
 	case BL_PET:

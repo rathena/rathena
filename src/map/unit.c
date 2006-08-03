@@ -39,7 +39,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl) {
 	if( bl->type == BL_MOB) return &((struct mob_data*)bl)->ud;
 	if( bl->type == BL_PET) return &((struct pet_data*)bl)->ud;
 	if( bl->type == BL_NPC) return &((struct npc_data*)bl)->ud;
-	if( bl->type == BL_HOMUNCULUS) return &((struct homun_data*)bl)->ud;	//[orn]
+	if( bl->type == BL_HOM) return &((struct homun_data*)bl)->ud;	//[orn]
 	return NULL;
 }
 
@@ -1756,7 +1756,7 @@ int unit_free(struct block_list *bl) {
 		}
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
-	} else if( bl->type == BL_HOMUNCULUS ) {	//[orn]
+	} else if( bl->type == BL_HOM ) {	//[orn]
 		struct homun_data *hd = (struct homun_data*)bl;
 		struct map_session_data *sd = hd->master;
 		merc_hom_hungry_timer_delete(hd);

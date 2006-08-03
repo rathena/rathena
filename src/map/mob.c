@@ -784,7 +784,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
 	default:
-		if ((*target) && (*target)->type == BL_HOMUNCULUS && bl->type != BL_HOMUNCULUS)
+		if ((*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
 			return 0; //For some reason Homun targets are never overriden.
 
 		if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
@@ -824,7 +824,7 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	switch (bl->type)
 	{
 	case BL_PC:
-	case BL_HOMUNCULUS:	//[orn]
+	case BL_HOM:	//[orn]
 	case BL_MOB:
 		if(check_distance_bl(&md->bl, bl, md->status.rhw.range) &&
 			battle_check_range (&md->bl, bl, md->status.rhw.range)
@@ -1174,13 +1174,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
 	) {
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
-			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS, md, &tbl);
+			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM, md, &tbl);
 		if(!tbl && mode&MD_ANGRY && !md->state.aggressive)
 			md->state.aggressive = 1; //Restore angry state when no targets are visible.
 	} else if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW)) {
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
-				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOMUNCULUS), md, &tbl);
+				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM), md, &tbl);
 	}
 
 	if (tbl)
@@ -1609,9 +1609,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				md->attacked_id = src->id;
 			break;
 		}
-		case BL_HOMUNCULUS:	//[orn]
+		case BL_HOM:	//[orn]
 		{
-			struct homun_data *hd = (TBL_HOMUNCULUS*)src;
+			struct homun_data *hd = (TBL_HOM*)src;
 			id = hd->bl.id;
 			if(rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = src->id;
@@ -1763,7 +1763,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
-			if ( (tmpbl[temp])->type == BL_HOMUNCULUS ) {
+			if ( (tmpbl[temp])->type == BL_HOM ) {
 				mvp_sd = (struct map_session_data *) ((struct homun_data *)tmpbl[temp])->master ;
 			} else
 				mvp_sd=(struct map_session_data *)tmpbl[temp];
@@ -1895,7 +1895,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if(zeny) // zeny from mobs [Valaris]
 						pc_getzeny((struct map_session_data *)tmpbl[i], zeny);
 					break ;
-				case BL_HOMUNCULUS:
+				case BL_HOM:
 					if(base_exp) {
 						merc_hom_gainexp((struct homun_data *)tmpbl[i], base_exp);
 						//homunculus give base_exp to master

@@ -673,12 +673,12 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 			atkmin = atkmax;
 	} else {	//PCs
 		atkmax = wa->atk;
+		type = (wa == status->lhw)?EQI_HAND_L:EQI_HAND_R;
 
 		if (!(flag&1) || (flag&2))
 		{	//Normal attacks
 			atkmin = status->dex;
 			
-			type = (wa == status->lhw)?8:9;
 			if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]])
 				atkmin = atkmin*(80 + sd->inventory_data[sd->equip_index[type]]->wlv*20)/100;
 
@@ -710,13 +710,10 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 			damage += ((flag&1)?sd->arrow_atk:rand()%sd->arrow_atk);
 
 		//SizeFix only for players
-		if (!(
-			sd->special_state.no_sizefix ||
-			(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1) ||
-			(pc_isriding(sd) && (sd->status.weapon==W_1HSPEAR || sd->status.weapon==W_2HSPEAR) && t_size==1) ||
-			(flag&8)
-		))
-			damage = damage*(sd->right_weapon.atkmods[t_size])/100;
+		if (!(sd->special_state.no_sizefix || (flag&8)))
+			damage = damage*(type==EQI_HAND_L?
+				sd->left_weapon.atkmods[t_size]:
+				sd->right_weapon.atkmods[t_size])/100;
 	}
 	
 	//Finally, add baseatk
@@ -1202,8 +1199,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 			case HFLI_SBR44:	//[orn]
-				if(src->type == BL_HOMUNCULUS){
-					TBL_HOMUNCULUS *hd = (TBL_HOMUNCULUS*)src;
+				if(src->type == BL_HOM){
+					TBL_HOM *hd = (TBL_HOM*)src;
 					wd.damage = hd->master->homunculus.intimacy ;
 					wd.damage2 = hd->master->homunculus.intimacy ;
 					hd->master->homunculus.intimacy = 200;
@@ -1212,7 +1209,11 @@ static struct Damage battle_calc_weapon_attack(
 				}
 			default:
 			{
-				i = (flag.cri?1:0)|(flag.arrow?2:0)|(skill_num == HW_MAGICCRASHER?4:0)|(skill_num == MO_EXTREMITYFIST?8:0);
+				i = (flag.cri?1:0)|
+					(flag.arrow?2:0)|
+					(skill_num == HW_MAGICCRASHER?4:0)|
+					(skill_num == MO_EXTREMITYFIST?8:0)|
+					(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1)?8:0;
 				if (flag.arrow && sd)
 				switch(sd->status.weapon) {
 				case W_BOW:
@@ -3105,9 +3106,9 @@ static struct block_list* battle_get_master(struct block_list *src)
 				if (((TBL_MOB*)src)->master_id)
 					src = map_id2bl(((TBL_MOB*)src)->master_id);
 				break;
-			case BL_HOMUNCULUS:
-				if (((TBL_HOMUNCULUS*)src)->master)
-					src = (struct block_list*)((TBL_HOMUNCULUS*)src)->master;
+			case BL_HOM:
+				if (((TBL_HOM*)src)->master)
+					src = (struct block_list*)((TBL_HOM*)src)->master;
 				break;
 			case BL_SKILL:
 				if (((TBL_SKILL*)src)->group && ((TBL_SKILL*)src)->group->src_id)
@@ -3195,7 +3196,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 		}
 		//Valid targets with no special checks here.
-		case BL_HOMUNCULUS:
+		case BL_HOM:
 			break;
 		//All else not specified is an invalid target.
 		default:	
@@ -3247,7 +3248,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 
 			//For some mysterious reason ground-skills can't target homun.
-			if (target->type == BL_HOMUNCULUS)
+			if (target->type == BL_HOM)
 				return 0;
 
 			if (su->group->src_id == target->id)
@@ -3844,8 +3845,8 @@ void battle_set_defaults() {
 	battle_config.left_cardfix_to_right=0;
 	battle_config.skill_add_range=0;
 	battle_config.skill_out_range_consume=1;
-	battle_config.skillrange_by_distance=BL_MOB|BL_PET|BL_HOMUNCULUS;
-	battle_config.use_weapon_skill_range=BL_MOB|BL_PET|BL_HOMUNCULUS;
+	battle_config.skillrange_by_distance=BL_MOB|BL_PET|BL_HOM;
+	battle_config.use_weapon_skill_range=BL_MOB|BL_PET|BL_HOM;
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
 	battle_config.vs_traps_bctall=BL_PC;

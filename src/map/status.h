@@ -518,7 +518,7 @@ enum {
 #define SCB_ALL	0x7FFFFFFF
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
-#define BL_CONSUME (BL_PC|BL_HOMUNCULUS)
+#define BL_CONSUME (BL_PC|BL_HOM)
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
