@@ -20,6 +20,7 @@
 
 =========================
 08/03
+	* Finally updated stats of the monsters that got their exp updated a month ago [Playtester]
 	* Fixed some items I added yesterday [Playtester]
 08/02
 	* Added a dummy blind duration of 10 secs to FullBuster. [Skotlex]
