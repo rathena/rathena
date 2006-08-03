@@ -3422,10 +3422,10 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if(sc->data[SC_WEDDING].timer!=-1)
 		speed += 300;
 
-	//% increases (they don't stack)
+	//% increases (they don't stack, with the exception of Speedup1? @.@)
 	if(sc->data[SC_SPEEDUP1].timer!=-1)
 		speed -= speed * 50/100;
-	else if(sc->data[SC_SPEEDUP0].timer!=-1)
+	if(sc->data[SC_SPEEDUP0].timer!=-1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
 		speed -= speed * 25/100;

@@ -20,6 +20,8 @@
 
 =========================
 08/03
+	* Changed the inf2 value of SA_DISPEL so it can be casted on party/guild
+	  mates, but not yourself. [Skotlex]
 	* Updated some monsters [Playtester]
 	- Gig and Deleter are now Fire 2 element
 	- reduced attack power of Skeggiolds

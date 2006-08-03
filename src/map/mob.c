@@ -43,6 +43,9 @@
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
 
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
+
+#define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
+
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
@@ -1105,7 +1108,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				!battle_check_range(&md->bl, tbl, md->status.rhw.range))
 			{	//Rude-attacked (avoid triggering due to can-walk delay).
 				if (DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-				  	md->attacked_count++ > 3)
+				  	md->attacked_count++ >= RUDE_ATTACKED_COUNT)
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		} else
@@ -1120,7 +1123,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					((TBL_PC*)abl)->state.gangsterparadise
 				)
 			)	{	//Can't attack back
-				if (md->attacked_count++ > 3) {
+				if (md->attacked_count++ >= RUDE_ATTACKED_COUNT) {
 					if (mobskill_use(md, tick, MSC_RUDEATTACKED) == 0 && can_move)
 					{
 						int dist = rand() % 10 + 1;//Œã‘Þ‚·‚é‹——£
@@ -1139,7 +1142,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					//or if the previous target is not attacking the mob. [Skotlex]
 					md->target_id = md->attacked_id; // set target
 					md->state.aggressive = 0; //Retaliating.
-					//md->attacked_count = 0; //Should we reset rude attack count?
+					if (md->attacked_count)
+					  md->attacked_count--; //Should we reset rude attack count?
 					md->min_chase = dist+md->db->range3;
 					if(md->min_chase>MAX_MINCHASE)
 						md->min_chase=MAX_MINCHASE;
@@ -2676,7 +2680,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_SKILLUSED:		// specificated skill used
 					flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0)); break;
 				case MSC_RUDEATTACKED:
-					flag = (md->attacked_count >= 3);
+					flag = (md->attacked_count >= RUDE_ATTACKED_COUNT);
 					if (flag) md->attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
 					break;
 				case MSC_MASTERHPLTMAXRATE:
