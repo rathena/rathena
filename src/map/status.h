@@ -344,6 +344,7 @@ enum {
 	SI_WINDWALK		= 116,
 	SI_MELTDOWN		= 117,
 	SI_CARTBOOST		= 118,
+	SI_CHASEWALK		= 119,
 	SI_REJECTSWORD		= 120,
 	SI_MARIONETTE		= 121,
 	SI_MARIONETTE2		= 122,
@@ -352,7 +353,7 @@ enum {
 	SI_JOINTBEAT		= 125,
 	SI_DEVOTION		= 130,
 	SI_STEELBODY		= 132,
-	SI_CHASEWALK		= 134,
+	//134 - Soullink-like effect which makes the character get wavy.
 	SI_READYSTORM		= 135,
 	SI_READYDOWN		= 137,
 	SI_READYTURN		= 139,
