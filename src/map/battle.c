@@ -859,6 +859,10 @@ static struct Damage battle_calc_weapon_attack(
 				flag.arrow = 1;
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
+			case GS_DESPERADO:
+				//This one is the opposite, it consumes ammo, but should count as short range.
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
+				break;
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
 				flag.weapon = 0;

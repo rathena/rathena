@@ -344,7 +344,7 @@ enum {
 	SI_WINDWALK		= 116,
 	SI_MELTDOWN		= 117,
 	SI_CARTBOOST		= 118,
-	SI_CHASEWALK		= 119,
+	//119, blank
 	SI_REJECTSWORD		= 120,
 	SI_MARIONETTE		= 121,
 	SI_MARIONETTE2		= 122,
@@ -381,7 +381,7 @@ enum {
 	SI_MOON_COMFORT		= 170,	
 	SI_STAR_COMFORT		= 171,	
 	SI_PRESERVE		= 181,
-	SI_INCSTR = 182,
+	SI_CHASEWALK	= 182,
 	SI_INTRAVISION	= 184, //WTF?? creates the black shape of 4_m_02 NPC, with NPC talk cursor. Supposedly intravision shows this.
 	SI_DOUBLECAST		= 186,
 	SI_MAXOVERTHRUST	= 188,

@@ -405,7 +405,6 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_ASPDPOTION3] = SI_ASPDPOTION;
 	StatusIconChangeTable[SC_SPEEDUP0] = SI_SPEEDPOTION1;
 	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
-	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 		
 	//Other SC which are not necessarily associated to skills.
