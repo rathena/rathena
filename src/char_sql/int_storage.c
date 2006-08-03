@@ -33,7 +33,7 @@ int storage_tosql(int account_id,struct storage *p){
 //	int eqcount=1;
 //	int noteqcount=1;
 	int count=0;
-	struct itemtmp mapitem[MAX_GUILD_STORAGE];
+	struct itemtmp mapitem[MAX_STORAGE];
 	for(i=0;i<MAX_STORAGE;i++){
 		if(p->storage_[i].nameid>0){
 			mapitem[count].flag=0;
