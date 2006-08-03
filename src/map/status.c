@@ -964,9 +964,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			))
 				return 0;
 
-			if (flag != 2 && ( //Those that block begin/end casting.
-				sc->data[SC_SILENCE].timer != -1
-			))
+			//Silence is a special, but weird, case. It prevents skill begin, and skill end only when there's a target. [Skotlex]
+			if(sc->data[SC_SILENCE].timer != -1 && flag <= (target?1:0))
 				return 0;
 
 			//Skill blocking.
