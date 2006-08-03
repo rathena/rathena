@@ -35,6 +35,8 @@ Playtester
 Date		Added
 ======
 08/03
+	* Once again disabled the socket enchant NPC. 
+	- unless your server's rates are 1/1/1, it will COMPLETELY ruin your server's economy. [Musashiden]
 	* Updated the Kafra Express files to the July 28 release as requested on
 	  the forums. [Skotlex]
 	* Fixed the DTS warper zeny bug [Evera]
