@@ -463,7 +463,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 			m->gender=atoi(sql_row[5]);
 			m->class_=atoi(sql_row[6]);
 			m->lv=atoi(sql_row[7]);
-			m->exp=atoi(sql_row[8]);
+			m->exp=strtoul(sql_row[8],NULL,10);
 			m->exp_payper=atoi(sql_row[9]);
 			m->online=atoi(sql_row[10]);
 			m->position = atoi(sql_row[11]);
