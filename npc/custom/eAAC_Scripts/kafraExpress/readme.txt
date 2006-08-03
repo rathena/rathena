@@ -6,7 +6,7 @@ This file's purpose is to give an indepth explanation about setting up, and
 configuring the Kafra Express Script Package (KESP). It is intended to be
 viewed by a text editor using fixed-width font and 80-character long lines.
 
-Document Version v1.8 (05/February/2006)
+Document Version v1.9 (15/June/2006)
 ////////////////////////////////////////////////////////////////////////////////
 Table of Contents
 ////////////////////////////////////////////////////////////////////////////////
@@ -915,11 +915,10 @@ There are three valid values for this variable: 0, 1, 2.
 0 - Disables this mode.
 1 - Uses the mode on a per character basis; that is, each character needs to
 travel to that town and save and that unlocks warping only for that
-character (note that this mode can mean up to 15+ variables per character,
-which can become quite the overload on a large server). 
+character.
 2 - Uses the mode on a per account basis; that is, once a character has saved
 on a town, all other (and future) characters from the same account have the
-warp unlocked (uses up to 15+ variables per account).
+warp unlocked.
 
 (1) kewt_free
 -------------
@@ -960,11 +959,9 @@ Enables the traveller system. Just like the traveller's system for towns,
 you can't warp to any dungeon to which you have not visited first on foot and
 saved with the corresponding Kafra Express first.
 If 1, traveller's mode is enabled on a per character basis (so once a
-character saves, only that character has unlocked the warp). Note that this
-method stores up to 25 extra variables per character.
+character saves, only that character has unlocked the warp).
 If 2, traveller's mode is enabled on a per account basis (so once a character
 saves, all charaters of the corresponding account have the warp unlocked).
-Note that this method stores up to 25 extra variables per account.
 
 (1) kewd_deep
 -------------

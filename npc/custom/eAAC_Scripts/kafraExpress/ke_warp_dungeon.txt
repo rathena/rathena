@@ -3,14 +3,44 @@
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN R3424+, RO Episode 8+ (LightHalzen)
+//= eAthena SVN R3424+, RO Episode 8+ (Hugel)
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers warping to dungeons. 
 //===== Additional Comments: ================================= 
 //= See config.txt for configuration.
+//= Flag values used for dungeons:
+//= 0x00000001 Abyss Lake
+//= 0x00000002 Amatsu
+//= 0x00000004 AntHell
+//= 0x00000008 Ayothaya
+//= 0x00000010 Byalan
+//= 0x00000020 Comodo
+//= 0x00000040 Clock tower
+//= 0x00000080 Coal Mines
+//= 0x00000100 Culvert
+//= 0x00000200 Einbech
+//= 0x00000400 Gefenia
+//= 0x00000800 Geffen
+//= 0x00001000 GlastHeim
+//= 0x00002000 Gon Ryun
+//= 0x00004000 Hidden Temple
+//= 0x00008000 Juperos
+//= 0x00010000 Lighthalzen
+//= 0x00020000 Lou Yang
+//= 0x00040000 Magma Caves
+//= 0x00080000 Orcs
+//= 0x00100000 Payon
+//= 0x00200000 Pyramid
+//= 0x00400000 Sphinx
+//= 0x00800000 Sunken Ship
+//= 0x01000000 Thanatos
+//= 0x02000000 Toy Factory
+//= 0x04000000 Turtle Island
+//= 0x08000000 Umbala
+
 //============================================================ 
 
 -	script	keInit_warpDungeon	{
@@ -49,7 +79,8 @@ function SF_thanatosTower;
 function SF_toyFactory;
 function SF_turtleIsland;
 function SF_umbala;
-
+	//Store player map, will be needed in any of the submenus.
+	set @map$, getarg(0);
 	do {
 		set @discount,callfunc("F_keCost",100,$@kewd_discount);
 		if ($@kewd_showOnline) {
@@ -252,25 +283,25 @@ function SF_umbala;
 	} while (@kmenu > 1);
 	return;
 
-//Subfunction SF_check(flag1, flag2, cost, floor-count, player-map, dungeon-map#, map#1, map#2, ...)
-//If kewd_travel is set, both flags need to be one to be able to work there.
+//Subfunction SF_check(flag, cost, floor-count, player-map, dungeon-map#, map#1, map#2, ...)
+//If kewd_travel is set, the flag needs to match to be to warp there.
 //Floor count is the amount of levels the dungeon needs a price for,
 //dungeon-map# is the number of maps passed that need to be checked against
 //the player's map to see if they are warping from within the entrance.
 
 function SF_check {
-	if ($@kewd_travel && getarg(0) == 0 && getarg(1) == 0) {
+	if ($@kewd_travel && !((kewd_travel|#kewd_travel)&getarg(0))) {
 		callfunc "F_keIntro", e_sry, "Sorry, but we can only warp you to dungeons you have saved in before.";
 		return 0;
 	}
-	set @cost, getarg(2);
+	set @cost, getarg(1);
 	set @discount,100;
-	set @map$, getarg(4);
-	set @mapI, getarg(5);
+	set @map$, getarg(3);
+	set @mapI, getarg(4);
 
 	while (@mapI > 0)
 	{
-		if (@map$ == getarg(5+@mapI)) {
+		if (@map$ == getarg(4+@mapI)) {
 			set @discount,100-$@kewd_entryDiscount;
 			break;
 		}
@@ -288,7 +319,7 @@ function SF_check {
 	if ($@kewd_deep == 0)
 		return 1;
 
-	switch (getarg(3)) {
+	switch (getarg(2)) {
 	case 9:
 		set @cost9, @cost +8*@inc; 
 	case 8:
@@ -310,7 +341,7 @@ function SF_check {
 }
 
 function SF_abyssLake {
-	if (!(SF_check(kewd_abyss, #kewd_abyss, $@kewd_abyssLake, 3, getarg(0), 1, "hu_fild05.gat")))
+	if (!(SF_check(0x1, $@kewd_abyssLake, 3, @map$, 1, "hu_fild05.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -343,7 +374,7 @@ function SF_abyssLake {
 }
 
 function SF_amatsu {
-	if (!(SF_check(kewd_amatsu, #kewd_amatsu, $@kewd_amatsu, 3, getarg(0), 1, "ama_in02.gat")))
+	if (!(SF_check(0x2, $@kewd_amatsu, 3, @map$, 1, "ama_in02.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -376,7 +407,7 @@ function SF_amatsu {
 }
 
 function SF_antHell {
-	if (!(SF_check(kewd_antHell, #kewd_antHell, $@kewd_antHell, 1, getarg(0), 2, "moc_fild04.gat","moc_fild15.gat")))
+	if (!(SF_check(0x4, $@kewd_antHell, 1, @map$, 2, "moc_fild04.gat","moc_fild15.gat")))
 		return;
 	if ($@kewd_showOnline) {
 		set @submenu, select(
@@ -393,7 +424,7 @@ function SF_antHell {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild04.gat",232,322;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild04.gat",201,327;
 		break;
 	case 3:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild15.gat",246,251;
@@ -402,7 +433,7 @@ function SF_antHell {
 }
 
 function SF_ayothaya {
-	if (!(SF_check(kewd_ayothaya, #kewd_ayothaya, $@kewd_ayothaya, 2, getarg(0), 1, "ayo_fild02.gat")))
+	if (!(SF_check(0x8, $@kewd_ayothaya, 2, @map$, 1, "ayo_fild02.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -430,7 +461,7 @@ function SF_ayothaya {
 }
 
 function SF_byalan {
-	if (!(SF_check(kewd_byalan, #kewd_byalan, $@kewd_byalan, 5, getarg(0), 1, "izlu2dun.gat")))
+	if (!(SF_check(0x10, $@kewd_byalan, 5, @map$, 1, "izlu2dun.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -473,7 +504,7 @@ function SF_byalan {
 }
 
 function SF_comodo {
-	if (!(SF_check(kewd_comodo, #kewd_comodo, $@kewd_comodo, 1, getarg(0), 2, "comodo.gat","cmd_fild01.gat")))
+	if (!(SF_check(0x20, $@kewd_comodo, 1, @map$, 2, "comodo.gat","cmd_fild01.gat")))
 		return;
 
 	if ($@kewd_showOnline) {
@@ -505,7 +536,7 @@ function SF_comodo {
 }
 
 function SF_clockTower {
-	if (!(SF_check(kewd_clockTower, #kewd_clockTower, $@kewd_clockTower, 5, getarg(0), 1, "aldebaran.gat")))
+	if (!(SF_check(0x40, $@kewd_clockTower, 5, @map$, 1, "aldebaran.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -563,7 +594,7 @@ function SF_clockTower {
 }
 
 function SF_coalMine {
-	if (!(SF_check(kewd_coalMines, #kewd_coalMines, $@kewd_coalMines, 3, getarg(0), 1, "mjolnir_02.gat")))
+	if (!(SF_check(0x80, $@kewd_coalMines, 3, @map$, 1, "mjolnir_02.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -596,7 +627,7 @@ function SF_coalMine {
 }
 
 function SF_culvert {
-	if (!(SF_check(kewd_culvert, #kewd_culvert, $@kewd_culvert, 4, getarg(0), 1, "prt_fild05.gat")))
+	if (!(SF_check(0x100, $@kewd_culvert, 4, @map$, 1, "prt_fild05.gat")))
 		return;
 	if ($@kewd_deep == 0) {
 		set @submenu, 2;
@@ -634,7 +665,7 @@ function SF_culvert {
 }
 
 function SF_einbech {
-	if (!(SF_check(kewd_einbech, #kewd_einbech, $@kewd_einbech, 2, getarg(0), 1, "einbech.gat")))
+	if (!(SF_check(0x200, $@kewd_einbech, 2, @map$, 1, "einbech.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -662,7 +693,7 @@ function SF_einbech {
 }
 
 function SF_geffen {
-	if (!(SF_check(kewd_geffen, #kewd_geffen, $@kewd_geffen, 4, getarg(0), 1, "gef_tower.gat")))
+	if (!(SF_check(0x800, $@kewd_geffen, 3, @map$, 1, "gef_tower.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -671,16 +702,16 @@ function SF_geffen {
 			"- Cancel warp to Geffen Dungeon",
 			"- Entrance ("+@cost+"z/"+getmapusers("gef_dun00.gat")+" "+$@ked_users$+")",
 			"- Level 2 ("+@cost2+"z/"+getmapusers("gef_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("gef_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("gef_dun03.gat")+" "+$@ked_users$+")"
+			"- Level 3 ("+@cost3+"z/"+getmapusers("gef_dun02.gat")+" "+$@ked_users$+")"
+//			"- Level 4 ("+@cost4+"z/"+getmapusers("gef_dun03.gat")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
 			"- Cancel warp to Geffen Dungeon",
 			"- Entrance ("+@cost+"z)",
 			"- Level 2 ("+@cost2+"z)",
-			"- Level 3 ("+@cost3+"z)",
-			"- Level 4 ("+@cost4+"z)"
+			"- Level 3 ("+@cost3+"z)"
+//			"- Level 4 ("+@cost4+"z)"
 		);
 	}
 	switch (@submenu) {
@@ -700,7 +731,7 @@ function SF_geffen {
 }
 
 function SF_gefenia {
-	if (!(SF_check(kewd_gefenia, #kewd_gefenia, $@kewd_gefenia, 2, getarg(0), 4, "gefenia01.gat","gefenia02.gat","gefenia03.gat","gefenia04.gat")))
+	if (!(SF_check(0x400, $@kewd_gefenia, 2, @map$, 4, "gefenia01.gat","gefenia02.gat","gefenia03.gat","gefenia04.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -738,7 +769,7 @@ function SF_gefenia {
 }
 
 function SF_glastHeim {
-	if (!(SF_check(kewd_glastHeim, #kewd_glastHeim, $@kewd_glastHeim, 7, getarg(0), 1, "glast_01.gat")))
+	if (!(SF_check(0x1000, $@kewd_glastHeim, 7, @map$, 1, "glast_01.gat")))
 		return;
 	if ($@kewd_deep == 0) {
 		if ($@kewd_showOnline) {
@@ -844,7 +875,7 @@ function SF_glastHeim {
 }
 
 function SF_gonRyun {
-	if (!(SF_check(kewd_gonRyun, #kewd_gonRyun, $@kewd_gonRyun, 3, getarg(0), 1, "gonryun.gat")))
+	if (!(SF_check(0x2000, $@kewd_gonRyun, 3, @map$, 1, "gonryun.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -877,7 +908,7 @@ function SF_gonRyun {
 }
 
 function SF_hiddenTemple {
-	if (!(SF_check(kewd_hiddenTemple, #kewd_hiddenTemple, $@kewd_hiddenTemple, 3, getarg(0), 1, "prt_fild01.gat")))
+	if (!(SF_check(0x4000, $@kewd_hiddenTemple, 3, @map$, 1, "prt_fild01.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -910,7 +941,7 @@ function SF_hiddenTemple {
 }
 
 function SF_juperos {
-	if (!(SF_check(kewd_juperos, #kewd_juperos, $@kewd_juperos, 3, getarg(0), 1, "jupe_cave.gat")))
+	if (!(SF_check(0x8000, $@kewd_juperos, 3, @map$, 1, "jupe_cave.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -923,7 +954,7 @@ function SF_juperos {
 		);	
 	} else {
 		set @submenu, select(
-			"- Cancel warp to the Laberynth Forest",
+			"- Cancel warp to Juperos",
 			"- Entrance ("+@cost+"z)",
 			"- Level 2 ("+@cost2+"z)",
 			"- Core ("+@cost3+"z)"
@@ -943,7 +974,7 @@ function SF_juperos {
 }
 
 function SF_lightHalzen {
-	if (!(SF_check(kewd_lightHalzen, #kewd_lightHalzen, $@kewd_lightHalzen, 3, getarg(0), 1, "lighthalzen.gat")))
+	if (!(SF_check(0x10000, $@kewd_lightHalzen, 3, @map$, 1, "lighthalzen.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -964,7 +995,9 @@ function SF_lightHalzen {
 	}
 	switch (@submenu) {	
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen.gat",74,72;
+//This is the Rekkenber building entrance, which officially is only a dungeon exit.
+//		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen.gat",74,72;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen.gat",303,302;
 		break;
 	case 3:
 		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"lhz_dun02.gat",154,18;
@@ -976,7 +1009,7 @@ function SF_lightHalzen {
 }
 
 function SF_louYang {
-	if (!(SF_check(kewd_louYang, #kewd_louYang, $@kewd_louYang, 3, getarg(0), 1, "louyang.gat")))
+	if (!(SF_check(0x20000, $@kewd_louYang, 3, @map$, 1, "louyang.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1009,7 +1042,7 @@ function SF_louYang {
 }
 
 function SF_magma {
-	if (!(SF_check(kewd_magma, #kewd_magma, $@kewd_magma, 2, getarg(0), 1, "yuno_fild03.gat")))
+	if (!(SF_check(0x40000, $@kewd_magma, 2, @map$, 1, "yuno_fild03.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1037,7 +1070,7 @@ function SF_magma {
 }
 
 function SF_orcs {
-	if (!(SF_check(kewd_orc, #kewd_orc, $@kewd_orc, 2, getarg(0), 1, "gef_fild10.gat")))
+	if (!(SF_check(0x80000, $@kewd_orc, 2, @map$, 1, "gef_fild10.gat")))
 		return;
 	if ($@kewd_showOnline) {
 		set @submenu, select(
@@ -1063,7 +1096,7 @@ function SF_orcs {
 }
 
 function SF_payon {
-	if (!(SF_check(kewd_payon, #kewd_payon, $@kewd_payon, 5, getarg(0), 1, "pay_arche.gat")))
+	if (!(SF_check(0x100000, $@kewd_payon, 5, @map$, 1, "pay_arche.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1106,7 +1139,7 @@ function SF_payon {
 }
 
 function SF_pyramid {
-	if (!(SF_check(kewd_pyramid, #kewd_pyramid, $@kewd_pyramid, 4, getarg(0),1, "moc_ruins.gat")))
+	if (!(SF_check(0x200000, $@kewd_pyramid, 4, @map$,1, "moc_ruins.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1154,7 +1187,7 @@ function SF_pyramid {
 }
 
 function SF_sphinx {
-	if (!(SF_check(kewd_sphinx, #kewd_sphinx, $@kewd_sphinx, 5, getarg(0), 1, "moc_fild19.gat")))
+	if (!(SF_check(0x400000, $@kewd_sphinx, 5, @map$, 1, "moc_fild19.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1198,7 +1231,7 @@ function SF_sphinx {
 }
 
 function SF_sunkenShip {
-	if (!(SF_check(kewd_sunkenShip, #kewd_sunkenShip, $@kewd_sunkenShip, 2, getarg(0), 1, "alb2trea.gat")))
+	if (!(SF_check(0x800000, $@kewd_sunkenShip, 2, @map$, 1, "alb2trea.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1227,7 +1260,7 @@ function SF_sunkenShip {
 }
 
 function SF_thanatosTower {
-	if (!(SF_check(kewd_thanatosTower, #kewd_thanatosTower, $@kewd_thanatosTower, 9, getarg(0), 1, "tha_t01.gat")))
+	if (!(SF_check(0x1000000, $@kewd_thanatosTower, 9, @map$, 1, "tha_t01.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1260,7 +1293,7 @@ function SF_thanatosTower {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tha_t01.gat",149,40;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tha_scene01.gat",139,201;
 		break;
 	case 3:
 		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"tha_t02.gat",149,136;
@@ -1290,7 +1323,7 @@ function SF_thanatosTower {
 }
 
 function SF_toyFactory {
-	if (!(SF_check(kewd_toyFactory, #kewd_toyFactory, $@kewd_toyFactory, 2, getarg(0), 1, "xmas.gat")))
+	if (!(SF_check(0x2000000, $@kewd_toyFactory, 2, @map$, 1, "xmas.gat")))
 		return;
 
 	if ($@kewd_deep == 0)
@@ -1320,7 +1353,7 @@ function SF_toyFactory {
 }
 
 function SF_turtleIsland {
-	if (!(SF_check(kewd_turtleIsland, #kewd_turtleIsland, $@kewd_turtleIsland, 3, getarg(0), 1, "tur_dun01.gat")))
+	if (!(SF_check(0x4000000, $@kewd_turtleIsland, 3, @map$, 1, "tur_dun01.gat")))
 		return;
 	if ($@kewd_deep == 0) {
 		if ($@kewd_turtleCave)
@@ -1361,7 +1394,7 @@ function SF_turtleIsland {
 }
 
 function SF_umbala {
-	if (!(SF_check(kewd_umbala, #kewd_umbala, $@kewd_umbala, 2, getarg(0), 1, "umbala.gat")))
+	if (!(SF_check(0x8000000, $@kewd_umbala, 2, @map$, 1, "umbala.gat")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
@@ -1393,116 +1426,336 @@ function SF_umbala {
 //Invoked when we want to add a map to the list of travelled-to dungeons
 function	script	F_keAddTravelDungeon	{
 	set @map$, getarg(0);
+// Temporary code to update the previous variable format to the new one.
+	if(kewd_abyss) {
+		set kewd_travel,kewd_travel|0x1;
+		set kewd_abyss,0;
+	}
+	if(kewd_amatsu) {
+		set kewd_travel,kewd_travel|0x2;
+		set kewd_amatsu,0;
+	}
+	if(kewd_antHell) {
+		set kewd_travel,kewd_travel|0x4;
+		set kewd_antHell,0;
+	}
+	if(kewd_ayothaya) {
+		set kewd_travel,kewd_travel|0x8;
+		set kewd_ayothaya,0;
+	}
+	if(kewd_byalan) {
+		set kewd_travel,kewd_travel|0x10;
+		set kewd_byalan,0;
+	}
+	if(kewd_comodo) {
+		set kewd_travel,kewd_travel|0x20;
+		set kewd_comodo,0;
+	}
+	if(kewd_clockTower) {
+		set kewd_travel,kewd_travel|0x40;
+		set kewd_clockTower,0;
+	}
+	if(kewd_coalMines) {
+		set kewd_travel,kewd_travel|0x80;
+		set kewd_coalMines,0;
+	}
+	if(kewd_culvert) {
+		set kewd_travel,kewd_travel|0x100;
+		set kewd_culvert,0;
+	}
+	if(kewd_einbech) {
+		set kewd_travel,kewd_travel|0x200;
+		set kewd_einbech,0;
+	}
+	if(kewd_geffen) {
+		set kewd_travel,kewd_travel|0x800;
+		set kewd_geffen,0;
+	}
+	if(kewd_glastHeim) {
+		set kewd_travel,kewd_travel|0x1000;
+		set kewd_glastHeim,0;
+	}
+	if(kewd_gonRyun) {
+		set kewd_travel,kewd_travel|0x2000;
+		set kewd_gonRyun,0;
+	}
+	if(kewd_hiddenTemple) {
+		set kewd_travel,kewd_travel|0x4000;
+		set kewd_hiddenTemple,0;
+	}
+	if(kewd_juperos) {
+		set kewd_travel,kewd_travel|0x8000;
+		set kewd_juperos,0;
+	}
+	if(kewd_lightHalzen) {
+		set kewd_travel,kewd_travel|0x10000;
+		set kewd_lightHalzen,0;
+	}
+	if(kewd_louYang) {
+		set kewd_travel,kewd_travel|0x20000;
+		set kewd_louYang,0;
+	}
+	if(kewd_magma) {
+		set kewd_travel,kewd_travel|0x40000;
+		set kewd_magma,0;
+	}
+	if(kewd_orc) {
+		set kewd_travel,kewd_travel|0x80000;
+		set kewd_orc,0;
+	}
+	if(kewd_payon) {
+		set kewd_travel,kewd_travel|0x100000;
+		set kewd_payon,0;
+	}
+	if(kewd_pyramid) {
+		set kewd_travel,kewd_travel|0x200000;
+		set kewd_pyramid,0;
+	}
+	if(kewd_sphinx) {
+		set kewd_travel,kewd_travel|0x400000;
+		set kewd_sphinx,0;
+	}
+	if(kewd_sunkenShip) {
+		set kewd_travel,kewd_travel|0x800000;
+		set kewd_sunkenShip,0;
+	}
+	if(kewd_thanatosTower) {
+		set kewd_travel,kewd_travel|0x1000000;
+		set kewd_thanatosTower,0;
+	}
+	if(kewd_toyFactory) {
+		set kewd_travel,kewd_travel|0x2000000;
+		set kewd_toyFactory,0;
+	}
+	if(kewd_turtleIsland) {
+		set kewd_travel,kewd_travel|0x4000000;
+		set kewd_turtleIsland,0;
+	}
+	if(kewd_umbala) {
+		set kewd_travel,kewd_travel|0x8000000;
+		set kewd_umbala,0;
+	}
+
+	if(#kewd_abyss) {
+		set #kewd_travel,#kewd_travel|0x1;
+		set #kewd_abyss,0;
+	}
+	if(#kewd_amatsu) {
+		set #kewd_travel,#kewd_travel|0x2;
+		set #kewd_amatsu,0;
+	}
+	if(#kewd_antHell) {
+		set #kewd_travel,#kewd_travel|0x4;
+		set #kewd_antHell,0;
+	}
+	if(#kewd_ayothaya) {
+		set #kewd_travel,#kewd_travel|0x8;
+		set #kewd_ayothaya,0;
+	}
+	if(#kewd_byalan) {
+		set #kewd_travel,#kewd_travel|0x10;
+		set #kewd_byalan,0;
+	}
+	if(#kewd_comodo) {
+		set #kewd_travel,#kewd_travel|0x20;
+		set #kewd_comodo,0;
+	}
+	if(#kewd_clockTower) {
+		set #kewd_travel,#kewd_travel|0x40;
+		set #kewd_clockTower,0;
+	}
+	if(#kewd_coalMines) {
+		set #kewd_travel,#kewd_travel|0x80;
+		set #kewd_coalMines,0;
+	}
+	if(#kewd_culvert) {
+		set #kewd_travel,#kewd_travel|0x100;
+		set #kewd_culvert,0;
+	}
+	if(#kewd_einbech) {
+		set #kewd_travel,#kewd_travel|0x200;
+		set #kewd_einbech,0;
+	}
+	if(#kewd_geffen) {
+		set #kewd_travel,#kewd_travel|0x800;
+		set #kewd_geffen,0;
+	}
+	if(#kewd_glastHeim) {
+		set #kewd_travel,#kewd_travel|0x1000;
+		set #kewd_glastHeim,0;
+	}
+	if(#kewd_gonRyun) {
+		set #kewd_travel,#kewd_travel|0x2000;
+		set #kewd_gonRyun,0;
+	}
+	if(#kewd_hiddenTemple) {
+		set #kewd_travel,#kewd_travel|0x4000;
+		set #kewd_hiddenTemple,0;
+	}
+	if(#kewd_juperos) {
+		set #kewd_travel,#kewd_travel|0x8000;
+		set #kewd_juperos,0;
+	}
+	if(#kewd_lightHalzen) {
+		set #kewd_travel,#kewd_travel|0x10000;
+		set #kewd_lightHalzen,0;
+	}
+	if(#kewd_louYang) {
+		set #kewd_travel,#kewd_travel|0x20000;
+		set #kewd_louYang,0;
+	}
+	if(#kewd_magma) {
+		set #kewd_travel,#kewd_travel|0x40000;
+		set #kewd_magma,0;
+	}
+	if(#kewd_orc) {
+		set #kewd_travel,#kewd_travel|0x80000;
+		set #kewd_orc,0;
+	}
+	if(#kewd_payon) {
+		set #kewd_travel,#kewd_travel|0x100000;
+		set #kewd_payon,0;
+	}
+	if(#kewd_pyramid) {
+		set #kewd_travel,#kewd_travel|0x200000;
+		set #kewd_pyramid,0;
+	}
+	if(#kewd_sphinx) {
+		set #kewd_travel,#kewd_travel|0x400000;
+		set #kewd_sphinx,0;
+	}
+	if(#kewd_sunkenShip) {
+		set #kewd_travel,#kewd_travel|0x800000;
+		set #kewd_sunkenShip,0;
+	}
+	if(#kewd_thanatosTower) {
+		set #kewd_travel,#kewd_travel|0x1000000;
+		set #kewd_thanatosTower,0;
+	}
+	if(#kewd_toyFactory) {
+		set #kewd_travel,#kewd_travel|0x2000000;
+		set #kewd_toyFactory,0;
+	}
+	if(#kewd_turtleIsland) {
+		set #kewd_travel,#kewd_travel|0x4000000;
+		set #kewd_turtleIsland,0;
+	}
+	if(#kewd_umbala) {
+		set #kewd_travel,#kewd_travel|0x8000000;
+		set #kewd_umbala,0;
+	}
+
+// End transition code.
 	if ($@kewd_travel > 1) {
-		if (@map$ == "hu_fild05.gat" || kewd_abyss)
-			set #kewd_abyss,1;
-		if (@map$ == "ama_in02.gat" || kewd_amatsu)
-			set #kewd_amatsu,1;
-		if (@map$ == "moc_fild04.gat" || @map$ == "moc_fild15.gat" || kewd_antHell)
-			set #kewd_antHell,1;
-		if (@map$ == "ayo_fild02.gat" || kewd_ayothaya)
-			set #kewd_ayothaya,1;
-		if (@map$ == "izlu2dun.gat" || kewd_byalan)
-			set #kewd_byalan,1;
-		if (@map$ == "comodo.gat" || @map$ == "cmd_fild01.gat" || kewd_comodo)
-			set #kewd_comodo,1;
-		if (@map$ == "aldebaran.gat" || kewd_clockTower)
-			set #kewd_clockTower,1;
-		if (@map$ == "mjolnir_02.gat" || kewd_coalMines)
-			set #kewd_coalMines,1;
-		if (@map$ == "prt_fild05.gat" || kewd_culvert)
-			set #kewd_culvert,1;
-		if (@map$ == "einbech.gat" || kewd_einbech)
-			set #kewd_einbech,1;
-		if (@map$ == "gef_tower.gat" || kewd_geffen)
-			set #kewd_geffen,1;
-		if (@map$ == "glast_01.gat" || kewd_glastHeim)
-			set #kewd_glastHeim,1;
-		if (@map$ == "gonryun.gat" || kewd_gonRyun)
-			set #kewd_gonRyun,1;
-		if (@map$ == "prt_fild01.gat" || kewd_hiddenTemple)
-			set #kewd_hiddenTemple,1;
-		if (@map$ == "jupe_cave.gat" || kewd_juperos)
-			set #kewd_juperos,1;
-		if (@map$ == "lighthalzen.gat" || kewd_lightHalzen)
-			set #kewd_lightHalzen,1;
-		if (@map$ == "louyang.gat" || kewd_louYang)
-			set #kewd_louYang,1;
-		if (@map$ == "yuno_fild03.gat" || kewd_magma)
-			set #kewd_magma,1;
-		if (@map$ == "in_orcs01.gat" || kewd_orc)
-			set #kewd_orc,1;
-		if (@map$ == "pay_arche.gat" || kewd_payon)
-			set #kewd_payon,1;
-		if (@map$ == "moc_ruins.gat" || kewd_pyramid)
-			set #kewd_pyramid,1;
-		if (@map$ == "moc_fild19.gat" || kewd_sphinx)
-			set #kewd_sphinx,1;
-		if (@map$ == "alb2trea.gat" || kewd_sunkenShip)
-			set #kewd_sunkenShip,1;
-		if (@map$ == "tha_t01.gat" || kewd_thanatosTower)
-			set #kewd_thanatosTower,1;
-		if (@map$ == "xmas.gat" || kewd_toyFactory)
-			set #kewd_toyFactory,1;
-		if (@map$ == "tur_dun01.gat" || kewd_turtleIsland)
-			set #kewd_turtleIsland,1;
-		if (@map$ == "umbala.gat" || kewd_umbala)
-			set #kewd_umbala,1;
+		if (@map$ == "hu_fild05.gat" || kewd_travel&0x1)
+			set #kewd_travel,#kewd_travel|0x1;
+		if (@map$ == "ama_in02.gat" || kewd_travel&0x2)
+			set #kewd_travel,#kewd_travel|0x2;
+		if (@map$ == "moc_fild04.gat" || @map$ == "moc_fild15.gat" || kewd_travel&0x4)
+			set #kewd_travel,#kewd_travel|0x4;
+		if (@map$ == "ayo_fild02.gat" || kewd_travel&0x8)
+			set #kewd_travel,#kewd_travel|0x8;
+		if (@map$ == "izlu2dun.gat" || kewd_travel&0x10)
+			set #kewd_travel,#kewd_travel|0x10;
+		if (@map$ == "comodo.gat" || @map$ == "cmd_fild01.gat" || kewd_travel&0x20)
+			set #kewd_travel,#kewd_travel|0x20;
+		if (@map$ == "aldebaran.gat" || kewd_travel&0x40)
+			set #kewd_travel,#kewd_travel|0x40;
+		if (@map$ == "mjolnir_02.gat" || kewd_travel&0x80)
+			set #kewd_travel,#kewd_travel|0x80;
+		if (@map$ == "prt_fild05.gat" || kewd_travel&0x100)
+			set #kewd_travel,#kewd_travel|0x100;
+		if (@map$ == "einbech.gat" || kewd_travel&0x200)
+			set #kewd_travel,#kewd_travel|0x200;
+		if (@map$ == "gef_tower.gat" || kewd_travel&0x800)
+			set #kewd_travel,#kewd_travel|0x800;
+		if (@map$ == "glast_01.gat" || kewd_travel&0x1000)
+			set #kewd_travel,#kewd_travel|0x1000;
+		if (@map$ == "gonryun.gat" || kewd_travel&0x2000)
+			set #kewd_travel,#kewd_travel|0x2000;
+		if (@map$ == "prt_fild01.gat" || kewd_travel&0x4000)
+			set #kewd_travel,#kewd_travel|0x4000;
+		if (@map$ == "jupe_cave.gat" || kewd_travel&0x8000)
+			set #kewd_travel,#kewd_travel|0x8000;
+		if (@map$ == "lighthalzen.gat" || kewd_travel&0x10000)
+			set #kewd_travel,#kewd_travel|0x10000;
+		if (@map$ == "louyang.gat" || kewd_travel&0x20000)
+			set #kewd_travel,#kewd_travel|0x20000;
+		if (@map$ == "yuno_fild03.gat" || kewd_travel&0x40000)
+			set #kewd_travel,#kewd_travel|0x40000;
+		if (@map$ == "in_orcs01.gat" || kewd_travel&0x80000)
+			set #kewd_travel,#kewd_travel|0x80000;
+		if (@map$ == "pay_arche.gat" || kewd_travel&0x100000)
+			set #kewd_travel,#kewd_travel|0x100000;
+		if (@map$ == "moc_ruins.gat" || kewd_travel&0x200000)
+			set #kewd_travel,#kewd_travel|0x200000;
+		if (@map$ == "moc_fild19.gat" || kewd_travel&0x400000)
+			set #kewd_travel,#kewd_travel|0x400000;
+		if (@map$ == "alb2trea.gat" || kewd_travel&0x800000)
+			set #kewd_travel,#kewd_travel|0x800000;
+		if (@map$ == "tha_t01.gat" || kewd_travel&0x1000000)
+			set #kewd_travel,#kewd_travel|0x1000000;
+		if (@map$ == "xmas.gat" || kewd_travel&0x2000000)
+			set #kewd_travel,#kewd_travel|0x2000000;
+		if (@map$ == "tur_dun01.gat" || kewd_travel&0x4000000)
+			set #kewd_travel,#kewd_travel|0x4000000;
+		if (@map$ == "umbala.gat" || kewd_travel&0x8000000)
+			set #kewd_travel,#kewd_travel|0x8000000;
 	} else {
 		if (@map$ == "hu_fild05.gat")
-			set kewd_abyss,1;
+			set kewd_travel,kewd_travel|0x1;
 		if (@map$ == "ama_in02.gat")
-			set kewd_amatsu,1;
+			set kewd_travel,kewd_travel|0x2;
 		if (@map$ == "moc_fild04.gat" || @map$ == "moc_fild15.gat")
-			set kewd_antHell,1;
+			set kewd_travel,kewd_travel|0x4;
 		if (@map$ == "ayo_fild02.gat")
-			set kewd_ayothaya,1;
+			set kewd_travel,kewd_travel|0x8;
 		if (@map$ == "izlu2dun.gat")
-			set kewd_byalan,1;
+			set kewd_travel,kewd_travel|0x10;
 		if (@map$ == "comodo.gat" || @map$ == "cmd_fild01.gat")
-			set kewd_comodo,1;
+			set kewd_travel,kewd_travel|0x20;
 		if (@map$ == "aldebaran.gat")
-			set kewd_clockTower,1;
+			set kewd_travel,kewd_travel|0x40;
 		if (@map$ == "mjolnir_02.gat")
-			set kewd_coalMines,1;
+			set kewd_travel,kewd_travel|0x80;
 		if (@map$ == "prt_fild05.gat")
-			set kewd_culvert,1;
+			set kewd_travel,kewd_travel|0x100;
 		if (@map$ == "einbech.gat")
-			set kewd_einbech,1;
+			set kewd_travel,kewd_travel|0x200;
 		if (@map$ == "gef_tower.gat")
-			set kewd_geffen,1;
+			set kewd_travel,kewd_travel|0x800;
 		if (@map$ == "glast_01.gat")
-			set kewd_glastHeim,1;
+			set kewd_travel,kewd_travel|0x1000;
 		if (@map$ == "gonryun.gat")
-			set kewd_gonRyun,1;
+			set kewd_travel,kewd_travel|0x2000;
 		if (@map$ == "prt_fild01.gat")
-			set kewd_hiddenTemple,1;
+			set kewd_travel,kewd_travel|0x4000;
 		if (@map$ == "jupe_cave.gat")
-			set kewd_juperos,1;
+			set kewd_travel,kewd_travel|0x8000;
 		if (@map$ == "lighthalzen.gat")
-			set kewd_lightHalzen,1;
+			set kewd_travel,kewd_travel|0x10000;
 		if (@map$ == "louyang.gat")
-			set kewd_louYang,1;
+			set kewd_travel,kewd_travel|0x20000;
 		if (@map$ == "yuno_fild03.gat")
-			set kewd_magma,1;
+			set kewd_travel,kewd_travel|0x40000;
 		if (@map$ == "in_orcs01.gat")
-			set kewd_orc,1;
+			set kewd_travel,kewd_travel|0x80000;
 		if (@map$ == "pay_arche.gat")
-			set kewd_payon,1;
+			set kewd_travel,kewd_travel|0x100000;
 		if (@map$ == "moc_ruins.gat")
-			set kewd_pyramid,1;
+			set kewd_travel,kewd_travel|0x200000;
 		if (@map$ == "moc_fild19.gat")
-			set kewd_sphinx,1;
+			set kewd_travel,kewd_travel|0x400000;
 		if (@map$ == "alb2trea.gat")
-			set kewd_sunkenShip,1;
+			set kewd_travel,kewd_travel|0x800000;
 		if (@map$ == "tha_t01.gat")
-			set kewd_thanatosTower,1;
+			set kewd_travel,kewd_travel|0x1000000;
 		if (@map$ == "xmas.gat")
-			set kewd_toyFactory,1;
+			set kewd_travel,kewd_travel|0x2000000;
 		if (@map$ == "tur_dun01.gat")
-			set kewd_turtleIsland,1;
+			set kewd_travel,kewd_travel|0x4000000;
 		if (@map$ == "umbala.gat")
-			set kewd_umbala,1;
+			set kewd_travel,kewd_travel|0x8000000;
 	}
 	return;
 }
