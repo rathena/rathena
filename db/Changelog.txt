@@ -20,6 +20,7 @@
 
 =========================
 08/03
+	* Hydro is no longer an MVP [Playtester]
 	* Changed the inf2 value of SA_DISPEL so it can be casted on party/guild
 	  mates, but not yourself. [Skotlex]
 	* Updated some monsters [Playtester]
