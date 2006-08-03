@@ -1785,6 +1785,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double per; //Your share of the mob's exp
 		int bonus; //Bonus on top of your share.
 		
+		if (status_isdead(tmpbl[i]) || tmpbl[i]->m != md->bl.m)
+			continue; //When someone is dead or on another map, their share of exp is gone.
+		
 		if (!battle_config.exp_calc_type && md->tdmg)
 			//jAthena's exp formula based on total damage.
 			per = (double)md->dmglog[i].dmg/(double)md->tdmg;
