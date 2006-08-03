@@ -1035,9 +1035,9 @@
 2358,Angel's_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,1,,{ bonus bLuk,4; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x00021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; },{},{}
 2360,Robe_of_Cast_,Robe of Cast,5,,10,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
-2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,75,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
-2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,75,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
-2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,75,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
+2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
 // Footgears
 //===================================================================
 2401,Sandals,Sandals,5,400,,200,,1,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
@@ -1763,12 +1763,12 @@
 5189,Autumn_Leaves,Autumn Leaves,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,,1,241,{ bonus bMaxHP,40; bonus bMaxSP,40; },{},{}
 5190,Independence_Memorial_Hat,Independence Memorial Hat,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,,1,242,{},{},{}
 5191,Black_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,243,{ bonus bMdef,3; },{},{}
-5192,Yellow_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,244,{ bonus bMdef,3; },{},{}
-5193,Green_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,245,{ bonus bMdef,3; },{},{}
-5194,Pink_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,246,{ bonus bMdef,3; },{},{}
-5195,Red_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,247,{ bonus bMdef,3; },{},{}
-5196,Orange_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,248,{ bonus bMdef,3; },{},{}
-5197,White_Ribbon,Black Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,249,{ bonus bMdef,3; },{},{}
+5192,Yellow_Ribbon,Yellow Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,244,{ bonus bMdef,3; },{},{}
+5193,Green_Ribbon,Green Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,245,{ bonus bMdef,3; },{},{}
+5194,Pink_Ribbon,Pink Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,246,{ bonus bMdef,3; },{},{}
+5195,Red_Ribbon,Red Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,247,{ bonus bMdef,3; },{},{}
+5196,Orange_Ribbon,Orange Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,248,{ bonus bMdef,3; },{},{}
+5197,White_Ribbon,White Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,249,{ bonus bMdef,3; },{},{}
 // More Etc Items
 //===================================================================
 7001,Mold_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -2618,7 +2618,7 @@
 12186,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12187,Old_Green_Box,Old Green Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12188,Fantastic_Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
-12189,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12189,Old_Red_Box_,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers

@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/03
+	* Fixed some items I added yesterday [Playtester]
 08/02
 	* Added a dummy blind duration of 10 secs to FullBuster. [Skotlex]
 	* Updated the mob skills so that the marine sphere casts self-destruction
