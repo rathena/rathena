@@ -957,15 +957,12 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
 		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
+				sc->data[SC_SILENCE].timer != -1 ||
 				(sc->data[SC_MARIONETTE].timer != -1 && skill_num != CG_MARIONETTE) ||
 				(sc->data[SC_MARIONETTE2].timer != -1 && skill_num == CG_MARIONETTE) ||
 				sc->data[SC_STEELBODY].timer != -1 ||
 				sc->data[SC_BERSERK].timer != -1
 			))
-				return 0;
-
-			//Silence is a special, but weird, case. It prevents skill begin, and skill end only when there's a target. [Skotlex]
-			if(sc->data[SC_SILENCE].timer != -1 && flag <= (target?1:0))
 				return 0;
 
 			//Skill blocking.
@@ -5471,6 +5468,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CLOAKING:
 		case SC_CHASEWALK:
 			unit_stop_attack(bl);
+		break;
+		case SC_SILENCE:
+			if (battle_config.sc_castcancel)
+				unit_skillcastcancel(bl, 0);
 		break;
 	}
 
