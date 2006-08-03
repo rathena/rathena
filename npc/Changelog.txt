@@ -34,6 +34,8 @@ Playtester
 
 Date		Added
 ======
+08/03
+	* Fixed the DTS warper zeny bug [Evera]
 08/02
 	* Re-enabled the Culvert Save [Evera]
 	* Removed save points outside towns (from inside) from Kafras [Evera]

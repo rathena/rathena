@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -42,6 +42,7 @@
 //= Pretty sure there are more locations I didn't find.
 //= Base level 60 required to vote
 //===== Version History: ====================================
+//= 2.0 Fixed zeny bug [Evera] (7/03/06)
 //= 1.9 Removed global eligibility option [Evera] (7/15/06)
 //= 1.8	Changed requirement to lvl 60 [Evera] (7/03/06)
 //= 1.7	Fixed bug of DTS_Admin not running by itself [Evera] (7/03/06)
@@ -784,7 +785,7 @@ function	script	F_DTS_Warp	{
 	Lwarp:
 		if (@dtswarp$[@num] == "Cancel") goto Lcancel;
 		if (Zeny<4000) goto Lnomoney;
-		set Zeny, Zeny-@dtswarpcost[@num];
+		set Zeny, Zeny-4000;
 		if (@dtswarpmap$[@num] == "Toy Factory, Level 2") warp "xmas_dun02.gat",130,123;
  //Maps to warp to
 		if (@dtswarpmap$[@num] == "Clock Tower, Level 3") warp "alde_dun03.gat",265,22;
