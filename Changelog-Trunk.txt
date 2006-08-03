@@ -3,6 +3,7 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/03
+	* Fixed a logic error preventing from cooking anything [DracoRPG]
 	* Cleaned up the last NJ update code. [Skotlex]
 	* Added @ command `charspeed` [Skotlex]
 	* Fixed @jailfor using MAP_PRONTERA as jail instead of MAP_JAIL [Skotlex]
