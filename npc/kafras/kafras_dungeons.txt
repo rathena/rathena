@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.41
+//= 2.5
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -23,6 +23,7 @@
 //= 2.3 Removed SAVE menu from dungeons Kafras [Lupus]
 //= 2.4 Now Baby Merchant can pass Merch Job Quest w/o probs [Lupus]
 //= 2.41 Removed useless warp points, already nullified by func call [Evera]
+//= 2.5 Allowed Culvert save point [Evera]
 //===============================================================
 
 
@@ -65,7 +66,7 @@ izlu2dun.gat,106,58,8	script	Kafra::kaf_izlu2dun	115,{
 //<============================ Culvert Sewers ============================>\\
 prt_fild05.gat,290,224,1	script	Kafra::prt_fild05	114,{
 	cutin "kafra_04",2;
-	callfunc "F_Kafra",0,2,1;
+	callfunc "F_Kafra",0,1,1;
 
 	M_Save:
 		savepoint "prt_fild05.gat",274,243;

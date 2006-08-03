@@ -35,6 +35,9 @@ Playtester
 Date		Added
 ======
 08/02
+	* Re-enabled the Culvert Save [Evera]
+	* Removed save points outside towns (from inside) from Kafras [Evera]
+	- Kafras will no longer display "Save Outside City," and will just save you inside
 	* Added official success rates of the Socket Enchant NPC [Playtester]
 	* Fixed Sharon's abuse at Hunter Job Quest 8) Thanks to mike04 for pointing it out [Lupus]
 07/31
