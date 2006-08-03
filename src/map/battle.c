@@ -902,6 +902,10 @@ static struct Damage battle_calc_weapon_attack(
 			case KN_AUTOCOUNTER:
 				wd.flag=(wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
+
+			case NPC_CRITICALSLASH:
+				flag.cri = 1; //Always critical skill.
+				break;
 		}
 	}
 
