@@ -2154,7 +2154,7 @@ int atcommand_charspeed(
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	if (!message || !*message || sscanf(message, "%d %23[^\n]", speed, atcmd_player_name) < 2) {
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &speed, atcmd_player_name) < 2) {
 		sprintf(atcmd_output, "Please, enter a speed and a player name (usage: @charspeed <speed <%d-%d>> <char name>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
