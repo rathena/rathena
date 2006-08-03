@@ -1362,9 +1362,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		break;
-	case GS_FULLBUSTER:
-		sc_start(src,SC_BLIND,(2*skilllv),skilllv,skill_get_time2(skillid,1));
-		break;
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -1502,6 +1499,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case MO_EXTREMITYFIST:
 		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case GS_FULLBUSTER:
+		sc_start(src,SC_BLIND,(2*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	}
 

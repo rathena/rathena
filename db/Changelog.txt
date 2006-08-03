@@ -20,6 +20,7 @@
 
 =========================
 08/02
+	* Added a dummy blind duration of 10 secs to FullBuster. [Skotlex]
 	* Updated the mob skills so that the marine sphere casts self-destruction
 	  with 3 second cast after it starts walking. [Skotlex]
 	* Updated Create Arrow to X.4 [Playtester]

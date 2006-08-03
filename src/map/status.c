@@ -1846,17 +1846,17 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = status->str + sd->status.str + sd->param_bonus[0] + sd->param_equip[0];
-	status->str = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->str = cap_value(i,0,USHRT_MAX);
 	i = status->agi + sd->status.agi + sd->param_bonus[1] + sd->param_equip[1];
-	status->agi = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->agi = cap_value(i,0,USHRT_MAX);
 	i = status->vit + sd->status.vit + sd->param_bonus[2] + sd->param_equip[2];
-	status->vit = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->vit = cap_value(i,0,USHRT_MAX);
 	i = status->int_+ sd->status.int_+ sd->param_bonus[3] + sd->param_equip[3];
-	status->int_ = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->int_ = cap_value(i,0,USHRT_MAX);
 	i = status->dex + sd->status.dex + sd->param_bonus[4] + sd->param_equip[4];
-	status->dex = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->dex = cap_value(i,0,USHRT_MAX);
 	i = status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
-	status->luk = i<0?0:(i>USHRT_MAX?USHRT_MAX:i);
+	status->luk = cap_value(i,0,USHRT_MAX);
 	
 // ------ BASE ATTACK CALCULATION ------
 
