@@ -656,7 +656,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 static int battle_calc_base_damage(struct status_data *status, struct weapon_atk *wa, struct status_change *sc, unsigned short t_size, struct map_session_data *sd, int flag)
 {
 	unsigned short atkmin=0, atkmax=0;
-	short type;
+	short type = 0;
 	int damage = 0;
 
 	if (!sd)
