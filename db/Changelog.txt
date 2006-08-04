@@ -20,6 +20,8 @@
 
 =========================
 08/04
+	* Added the remaining official item drop bonus rates [Playtester]
+	- note that some bugs might have appeared, please test!
 	* Added some official item drop bonus rates [Playtester]
 	- also replaced IG_Jellopy with IG_Resist
 	* reverted 13202,Shell_of_Blood back [Lupus]
