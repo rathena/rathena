@@ -253,7 +253,7 @@
 
 //-- Bear Foot Dish <-- 20 Bear's Footskin, 10 Carrot, 10 Jack o' Pumpkin, 2 Aloe Leaflet, 1 Hinalle Leaflet, 1 Plain Sauce
 12073,18,0,7479,0,948,20,515,10,1062,10,521,2,520,1,7454,1
-//-- Royal Tea <-- 4 Thorned Fruit, 10 Hinalle Leaflet, 3 Yggdrasil Leaf, 10 Aloe Leaflet, 6 Royal Jelly, 1 Yellow Spice
+//-- Royal Tea <-- 4 Prickly Fruit, 10 Hinalle Leaflet, 3 Yggdrasil Leaf, 10 Aloe Leaflet, 6 Royal Jelly, 1 Yellow Spice
 12078,18,0,7479,0,576,4,520,10,610,3,521,10,526,6,7453,1
 //-- Special Toast <-- 10 Bread, 2 Royal Jelly, 5 Meat, 10 Strawberry, 1 Hot Sauce, 10 Cheese, 1 Sweet Sauce
 12093,18,0,7479,0,580,10,526,2,517,5,578,10,7455,1,548,10,7453,1
@@ -283,9 +283,9 @@
 
 //-- Tongue Dish <-- 20 Tongue, 1 Pot, 1 Alcohol, 2 Aloevera, 1 Hot Sauce, 5 Royal Jelly, 10 Yggdrasil Leaf, 2 Blue Potion
 12075,20,0,7481,0,1015,20,7482,1,970,1,606,2,7455,1,526,5,610,10,505,2
-//-- Dragon Breath Cocktail <-- 10 Maneater Root, 1 Singing Plant, 5 Aloe Leaflet, 5 Royal Jelly, 5 Lemon, 5 Thorned Fruit, 1 Yggdrasilberry, 10 Blue Herb
+//-- Dragon Breath Cocktail <-- 10 Maneater Root, 1 Singing Plant, 5 Aloe Leaflet, 5 Royal Jelly, 5 Lemon, 5 Prickly Fruit, 1 Yggdrasilberry, 10 Blue Herb
 12080,20,0,7481,0,1033,10,707,1,521,5,526,5,568,5,576,5,607,1,510,10
-//-- Wine of Bergelmir <-- 1 Yggdrasilberry, 10 Ice Cubic, 10 Bacillus, 4 Royal Jelly, 3 Concentration Potion, 5 Alcohol, 2 Thorned Fruit, 1 Illusion Flower
+//-- Wine of Bergelmir <-- 1 Yggdrasilberry, 10 Ice Cubic, 10 Bacillus, 4 Royal Jelly, 3 Concentration Potion, 5 Alcohol, 2 Prickly Fruit, 1 Illusion Flower
 12095,20,0,7481,0,607,1,7066,10,7119,10,526,4,645,3,970,5,576,2,710,1
 //-- Hot Sand Steamed Scorpion <-- 20 Scorpion Tail, 20 Scorpion Claw, 2 Aloevera, 3 Yggdrasil Leaf, 3 Bitter Herb, 10 Royal Jelly , 1 Hot Sauce, 1 Pot
 12090,20,0,7481,0,904,20,7125,20,606,2,610,3,621,3,526,10,7455,1,7482,1
