@@ -111,36 +111,25 @@ int itemdb_searchrandomid(int group)
 		ShowError("itemdb_searchrandomid: No item entries for group id %d\n", group);
 	return UNKNOWN_ITEM_ID;
 }
-
 /*==========================================
- * Returns the group this item belongs to.
- * Skips general random item givers (gift/blue/violet box)
+ * Calculates total item-group related bonuses for the given item. [Skotlex]
  *------------------------------------------
  */
-int itemdb_group (int nameid)
+int itemdb_group_bonus(struct map_session_data *sd, int itemid)
 {
-	int i, j;
+	int bonus = 0, i, j;
 	for (i=0; i < MAX_ITEMGROUP; i++) {
-		switch (i) {
-			case IG_BLUEBOX:
-			case IG_VIOLETBOX:
-			case IG_CARDALBUM:
-			case IG_GIFTBOX:
-			case IG_COOKIEBAG:
-			case IG_GIFTBOX_1:
-			case IG_GIFTBOX_2:
-			case IG_GIFTBOX_3:
-			case IG_GIFTBOX_4:
-			case IG_GIFTBOXCHINA:
-				continue;
-		}
-
+		if (!sd->itemgrouphealrate[i])
+			continue;
 		for (j=0; j < itemgroup_db[i].qty; j++) {
-			if (itemgroup_db[i].id[j] == nameid)
-				return i;
+			if (itemgroup_db[i].id[j] == itemid)
+		 	{
+				bonus += sd->itemgrouphealrate[i];
+				continue;
+			}
 		}
 	}
-	return -1;
+	return bonus;
 }
 
 /*==========================================

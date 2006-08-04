@@ -629,7 +629,7 @@ struct map_session_data {
 	int magic_addsize[3];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
-	int itemhealrate[MAX_ITEMGROUP];
+	int itemgrouphealrate[MAX_ITEMGROUP];
 	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
@@ -651,6 +651,10 @@ struct map_session_data {
 		short id, group;
 		int race, rate;
 	} add_drop[MAX_PC_BONUS];
+	struct {
+		int nameid;
+		int rate;
+	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;

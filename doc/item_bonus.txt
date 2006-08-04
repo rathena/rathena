@@ -183,7 +183,9 @@ bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when
 
 //---- 2/22 new card effects ----
 
-bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%
+bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%,
+                                        you can also use direct item IDs instead
+                                        of group values.
                                         (Check db/item_group_db.txt)
 
 //---- 3/15 new card effects ----

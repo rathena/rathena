@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/04
+	* Modified bAddItemHealRate so it can receive both item-id and item-group
+	  values (since the first item-id is +500, there's no risk of mixing them
+	  up). [Skotlex]
 	* Removed settings enemy_critical_rate, homun_critical_rate. Added settings
 	  enable_critical (defaults to specify only players), mob_critical_rate and
 	  critical_rate. The last applies to all non-mobs and non-players
