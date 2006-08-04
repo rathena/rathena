@@ -2117,7 +2117,7 @@ struct Damage battle_calc_magic_attack(
 
 	struct map_session_data *sd, *tsd;
 	struct Damage ad;
-	struct status_change *sc;
+	struct status_change *tsc;
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct {
@@ -2234,7 +2234,7 @@ struct Damage battle_calc_magic_attack(
 //Adds an absolute value to damage. 100 = +100 damage
 #define MATK_ADD( a ) { ad.damage+= a; }
 
-		sc= status_get_sc(target); // used for NJ_SUITON increasing NJ_HYOUSENSOU damages
+		tsc= status_get_sc(target); // used for NJ_SUITON increasing NJ_HYOUSENSOU damages
 
 		switch (skill_num)
 		{	//Calc base damage according to skill
@@ -2358,8 +2358,8 @@ struct Damage battle_calc_magic_attack(
 						break;
 					case NJ_HYOUSENSOU:
 						skillratio -= 30;
-						if (sc && sc->data[SC_SUITON].timer != -1)
-						  	skillratio += sc->data[SC_SUITON].val4;
+						if (tsc && tsc->data[SC_SUITON].timer != -1)
+						  	skillratio += tsc->data[SC_SUITON].val4;
 						break;
 					case NJ_HYOUSYOURAKU:
 						skillratio += 50*skill_lv; // recorrected after calculation from vids
@@ -3856,8 +3856,8 @@ void battle_set_defaults() {
 	battle_config.left_cardfix_to_right=0;
 	battle_config.skill_add_range=0;
 	battle_config.skill_out_range_consume=1;
-	battle_config.skillrange_by_distance=BL_MOB|BL_PET|BL_HOM;
-	battle_config.use_weapon_skill_range=BL_MOB|BL_PET|BL_HOM;
+	battle_config.skillrange_by_distance=~BL_PC;
+	battle_config.use_weapon_skill_range=~BL_PC;
 	battle_config.pc_damage_delay_rate=100;
 	battle_config.defnotenemy=0;
 	battle_config.vs_traps_bctall=BL_PC;

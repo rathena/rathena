@@ -2004,21 +2004,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		break;
 	case KN_BRANDISHSPEAR:
 	case NJ_KAMAITACHI:
-		{	//Only display skill animation for skill's target.
-			struct unit_data *ud = unit_bl2ud(src);
-			if (ud && ud->skilltarget == bl->id)
-				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
-			else
-				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
-			break;
-		}
 	case NJ_HUUMA:
 		{	//Only display skill animation for skill's target.
 			struct unit_data *ud = unit_bl2ud(src);
 			if (ud && ud->skilltarget == bl->id)
 				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
 			else
-				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, 0, -1, type); // Skill_id = 0 => no effect on other targets
+				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5); //TODO: Check whether it's better to send -1 in skilllv or also send 0 as skillid, maybe even change this to a clif_damage packet?
 			break;
 		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
@@ -2836,6 +2828,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MC_CARTREVOLUTION:	
 	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	//Targetted skill implementation.
+	case NJ_BAKUENRYU:
 		if(flag&1){
 			if(bl->id!=skill_area_temp[1]){
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,
@@ -3181,21 +3174,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
-		break;
-	case NJ_BAKUENRYU:
-		if (flag & 1) {
-				skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-		} else {
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			skill_area_temp[0] = 0;
-			map_foreachinrange(skill_area_sub, bl, 
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY|1,
 				skill_castend_damage_id);
 		}
 		break;
