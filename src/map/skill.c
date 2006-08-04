@@ -6863,8 +6863,13 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 						skill_delunitgroup(NULL, sg);
 				}
 			}
-		} else if(battle_config.mob_warpportal && bl->type != BL_PET)
-			unit_warp(bl,map_mapindex2mapid(sg->val3),sg->val2>>16,sg->val2&0xffff,3);
+		} else
+		if(bl->type == BL_MOB && battle_config.mob_warp&2)
+		{
+			int m = map_mapindex2mapid(sg->val3);
+			if (m < 0) break; //Map not available on this map-server.
+			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,3);
+		}
 		break;
 
 	case UNT_QUAGMIRE:

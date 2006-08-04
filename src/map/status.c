@@ -1155,20 +1155,45 @@ static int status_base_atk(struct block_list *bl, struct status_data *status)
 //Fills in the misc data that can be calculated from the other status info (except for level)
 void status_calc_misc(struct status_data *status, int type, int level)
 {
-	status->matk_min = status->int_+(status->int_/7)*(status->int_/7);
-	status->matk_max = status->int_+(status->int_/5)*(status->int_/5);
+	//Non players get the value set, players need to stack with previous bonuses.
+	if (type != BL_PC)
+		status->matk_min = status->matk_max = status->hit = status->flee =
+		status->def2 = status->mdef2 = status->cri = status->flee2 = 0;
 
-	status->hit = level + status->dex;
-	status->flee = level + status->agi;
-	status->def2 = status->vit;
-	status->mdef2 = status->int_ + (status->vit>>1);
-	
-	status->cri = status->luk*3 + 10;
+	status->matk_min += status->int_+(status->int_/7)*(status->int_/7);
+	status->matk_max += status->int_+(status->int_/5)*(status->int_/5);
+	status->hit += level + status->dex;
+	status->flee += level + status->agi;
+	status->def2 += status->vit;
+	status->mdef2 += status->int_ + (status->vit>>1);
+
+	if (type&battle_config.enable_critical)
+		status->cri += status->luk*3 + 10;
+	else
+		status->cri = 0;
 
 	if (type&battle_config.enable_perfect_flee)
-		status->flee2 = status->luk + 10;
+		status->flee2 += status->luk + 10;
 	else
 		status->flee2 = 0;
+
+	if (status->cri)
+	switch (type) {
+	case BL_MOB:
+		if(battle_config.mob_critical_rate != 100)
+			status->cri = status->cri*battle_config.mob_critical_rate/100;
+		if(!status->cri && battle_config.mob_critical_rate)
+		  	status->cri = 10;
+		break;
+	case BL_PC:
+		//Players don't have a critical adjustment setting as of yet.
+		break;
+	default:
+		if(battle_config.critical_rate != 100)
+			status->cri = status->cri*battle_config.critical_rate/100;
+		if (!status->cri && battle_config.critical_rate)
+			status->cri = 10;
+	}
 }
 
 //Skotlex: Calculates the initial status for the given mob
@@ -1321,11 +1346,6 @@ int status_calc_mob(struct mob_data* md, int first)
 		status->aspd_rate -= 100*md->guardian_data->guardup_lv;
 	}
 
-	if(battle_config.enemy_critical_rate != 100)
-		status->cri = status->cri*battle_config.enemy_critical_rate/100;
-	if (!status->cri && battle_config.enemy_critical_rate)
-		status->cri = 10;
-
 	//Initial battle status
 	if (!first)
 		status_calc_bl(&md->bl, SCB_ALL);
@@ -1409,6 +1429,9 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val -= val * 30/100;
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
+		val += 2000;
+
 	return val;
 }
 
@@ -1874,21 +1897,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		status->batk += 4;
 
-// ----- MATK CALCULATION -----
-
-	// Basic MATK value
-	status->matk_max += status->int_+(status->int_/5)*(status->int_/5);
-	status->matk_min += status->int_+(status->int_/7)*(status->int_/7);
-
-// ----- CRIT CALCULATION -----
-
-	// Basic Crit value
-	status->cri += (status->luk*3)+10;
+// ----- MISC CALCULATION -----
+	status_calc_misc(status, BL_PC, sd->status.base_level);
 
 // ----- HIT CALCULATION -----
-
-	// Basic Hit value
-	status->hit += status->dex + sd->status.base_level;
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,BS_WEAPONRESEARCH))>0)
@@ -1910,24 +1922,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 // ----- FLEE CALCULATION -----
 
-	// Basic Flee value
-	status->flee += status->agi + sd->status.base_level;
-
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
 		status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_BASEMASK) == MAPID_THIEF? 4 : 3);
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
 		status->flee += (skill*3)>>1;
-
-// ----- PERFECT DODGE CALCULATION -----
-
-	// Basic Perfect Dodge value
-	status->flee2 += status->luk+10;
-
-// ----- VIT-DEF CALCULATION -----
-
-	// Basic VIT-DEF value
-	status->def2 += status->vit;
 
 // ----- EQUIPMENT-DEF CALCULATION -----
 
@@ -1942,11 +1941,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->def2 += battle_config.over_def_bonus*(status->def -battle_config.max_def);
 		status->def = (unsigned char)battle_config.max_def;
 	}
-
-// ----- INT-MDEF CALCULATION -----
-
-	// Basic INT-MDEF value
-	status->mdef2 += status->int_ + (status->vit>>1);
 
 // ----- EQUIPMENT-MDEF CALCULATION -----
 
@@ -2015,9 +2009,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
 	sd->status.max_hp = status_base_pc_maxhp(sd,status);
 	status->max_hp += sd->status.max_hp;
-
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
-		status->max_hp += 2000;
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
@@ -2204,11 +2195,6 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 
 	status_cpy(&hd->battle_status, status);
 	status_calc_misc(status, BL_HOM, hd->master->homunculus.level);
-
-	if(battle_config.homun_critical_rate != 100)
-		status->cri = status->cri*battle_config.homun_critical_rate/100;
-	if (!status->cri && battle_config.homun_critical_rate)
-		status->cri = 10;
 
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 

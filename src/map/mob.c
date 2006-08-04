@@ -3247,10 +3247,6 @@ static int mob_readdb(void)
 
 			status_calc_misc(status, BL_MOB, mob_db_data[class_]->lv);
 				
-			if(battle_config.enemy_critical_rate != 100)
-				status->cri = status->cri*battle_config.enemy_critical_rate/100;
-			if(!status->cri && battle_config.enemy_critical_rate) status->cri = 1;
-
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
 			mob_db_data[class_]->mexp=atoi(str[30])*battle_config.mvp_exp_rate/100;
 			mob_db_data[class_]->mexpper=atoi(str[31]);
@@ -3923,10 +3919,6 @@ static int mob_read_sqldb(void)
 
 				status_calc_misc(status, BL_MOB, mob_db_data[class_]->lv);
 				
-				if(battle_config.enemy_critical_rate != 100)
-					status->cri = status->cri*battle_config.enemy_critical_rate/100;
-				if(!status->cri && battle_config.enemy_critical_rate) status->cri = 1;
-
 				// MVP EXP Bonus, Chance: MEXP,ExpPer
 				mob_db_data[class_]->mexp = TO_INT(30) * battle_config.mvp_exp_rate / 100;
 				mob_db_data[class_]->mexpper = TO_INT(31);

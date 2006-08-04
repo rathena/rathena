@@ -95,8 +95,9 @@ int battle_config_switch(const char *str); // [Valaris]
 
 extern struct Battle_Config {
 	unsigned short warp_point_debug;
-	unsigned short enemy_critical_rate;
-	unsigned short homun_critical_rate;
+	unsigned short enable_critical;
+	unsigned short mob_critical_rate;
+	unsigned short critical_rate;
 	unsigned short enable_baseatk;
 	unsigned short enable_perfect_flee;
 	unsigned short cast_rate,delay_rate,delay_dependon_dex;
@@ -269,8 +270,7 @@ extern struct Battle_Config {
 	unsigned short display_delay_skill_fail;
 	unsigned short display_snatcher_skill_fail;
 	unsigned short chat_warpportal;
-	unsigned short mob_warpportal;
-	unsigned short mob_npc_warp;
+	unsigned short mob_warp;
 	unsigned short dead_branch_active;
 	unsigned int vending_max_value;
 	unsigned short show_steal_in_same_party;

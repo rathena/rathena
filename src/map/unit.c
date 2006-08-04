@@ -195,7 +195,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
 		}
 	} else if (md) {
-		if(battle_config.mob_npc_warp && map_getcell(bl->m,x,y,CELL_CHKNPC) &&
+		if(battle_config.mob_warp&1 && map_getcell(bl->m,x,y,CELL_CHKNPC) &&
 			npc_touch_areanpc2(bl)) // Enable mobs to step on warps. [Skotlex]
 	  		return 0;
 		if (md->min_chase > md->db->range2) md->min_chase--;
@@ -506,6 +506,8 @@ int unit_warp(struct block_list *bl,int m,short x,short y,int type)
 	switch (bl->type) {
 		case BL_MOB:
 			if (map[bl->m].flag.monster_noteleport)
+				return 1;
+			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4)
 				return 1;
 			break;
 		case BL_PC:
