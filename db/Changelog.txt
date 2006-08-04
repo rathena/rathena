@@ -20,6 +20,8 @@
 
 =========================
 08/04
+	* Added some official item drop bonus rates [Playtester]
+	- also replaced IG_Jellopy with IG_Resist
 	* reverted 13202,Shell_of_Blood back [Lupus]
 	* Fixed 13202,Shell_of_Blood type to 4 = SHELL for shotgun (not a bullet) [Lupus]
 08/03

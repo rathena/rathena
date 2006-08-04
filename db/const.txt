@@ -374,7 +374,7 @@ IG_Juice	13
 IG_Fish	14
 IG_Box	15
 IG_Gemstone	16
-IG_Jellopy	17
+IG_Resist	17
 IG_Ore	18
 IG_Food	19
 IG_Recovery	20
