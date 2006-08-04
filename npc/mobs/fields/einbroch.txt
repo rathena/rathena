@@ -23,7 +23,7 @@
 //==================================================
 // einbech - Einbech, The Mining Village
 //==================================================
-einbech.gat,0,0,0,0	monster	Tarou	1175,5,3600000,1800000,0
+einbech.gat,0,0,0,0	monster	Tarou	1175,5,1800000,1500000,0
 
 //==================================================
 // ein_fild01 - Einbroch Field
@@ -120,10 +120,13 @@ ein_fild09.gat,0,0,0,0	monster	Red Mushroom	1085,10,180000,90000,1
 //==================================================
 // ein_fild10 - Einbroch Field
 //==================================================
-ein_fild10.gat,193,340,200,100	monster	Porcellio	1619,30,0,0,0
-ein_fild10.gat,257,107,90,90	monster	Flora	1118,20,0,0,0
-ein_fild10.gat,257,107,90,90	monster	Yoyo	1057,10,0,0,0
-ein_fild10.gat,193,340,200,100	monster	Geographer	1368,5,0,0,0
+ein_fild10.gat,152,314,130,30	monster	Porcellio	1619,20,0,0,1
+ein_fild10.gat,0,0,0,0	monster	Porcellio	1619,10,0,0,1
+ein_fild10.gat,225,95,30,45	monster	Flora	1118,10,300000,120000,0
+ein_fild10.gat,320,130,40,40	monster	Flora	1118,10,300000,120000,0
+ein_fild10.gat,225,95,30,45	monster	Yoyo	1057,6,30000,10000,0
+ein_fild10.gat,320,130,40,40	monster	Yoyo	1057,4,30000,10000,0
+ein_fild10.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
 ein_fild10.gat,0,0,0,0	monster	Red Plant	1078,20,180000,90000,1
 ein_fild10.gat,0,0,0,0	monster	Yellow Plant	1081,20,180000,90000,1
 ein_fild10.gat,0,0,0,0	monster	Blue Plant	1079,20,900000,450000,1

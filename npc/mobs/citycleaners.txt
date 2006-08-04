@@ -13,22 +13,22 @@
 //= 0.1b And even more from Poki#3 [Komurka]
 //============================================================
 
-prontera.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-geffen.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-izlude.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-payon.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-alberta.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-morocc.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-comodo.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-yuno.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-aldebaran.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-umbala.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-amatsu.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-gonryun.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-louyang.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-ayothaya.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-einbroch.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-einbech.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-lighthalzen.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0
-xmas.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0 
-hugel.gat,0,0,0,0	monster	Wild Rose	1261,1,1,3600000,0 
+prontera.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+geffen.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+izlude.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+payon.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+alberta.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+morocc.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+comodo.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+yuno.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+aldebaran.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+umbala.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+amatsu.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+gonryun.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+louyang.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+ayothaya.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+einbroch.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+einbech.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+lighthalzen.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+xmas.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0 
+hugel.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0 
