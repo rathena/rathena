@@ -1240,7 +1240,7 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 		pc_additem(sd,&item_tmp,item_list[i*2]);
 
 		//Logs items, Bought in NPC (S)hop [Lupus]
-		if(sd && log_config.pick > 0 )
+		if(log_config.enable_logs&0x20)
 			log_pick(sd, "S", 0, item_tmp.nameid, item_list[i*2], NULL);
 		//Logs
 	}
@@ -1301,7 +1301,7 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 				intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1],sd->status.inventory[idx].card[2]));
 		}
 
-		if(log_config.pick) //Logs items, Sold to NPC (S)hop [Lupus]
+		if(log_config.enable_logs&0x20) //Logs items, Sold to NPC (S)hop [Lupus]
 			log_pick(sd, "S", 0, nameid, -qty, &sd->status.inventory[idx]);
 
 		if(nd) {

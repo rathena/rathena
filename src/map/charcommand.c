@@ -1004,10 +1004,8 @@ charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data
 				clif_additem((struct map_session_data*)sd, 0, 0, flag);
 		}
 		//Logs (A)dmins items [Lupus]
-		if(log_config.pick > 0 ) {
+		if(log_config.enable_logs&0x400)
 			log_pick(sd, "A", 0, item_tmp.nameid, number, &item_tmp);
-		}
-		//Logs
 
 	}
 }
@@ -1075,10 +1073,8 @@ int charcommand_item(
 				}
 
 				//Logs (A)dmins items [Lupus]
-				if(log_config.pick > 0 ) {
+				if(log_config.enable_logs&0x400)
 					log_pick(sd, "A", 0, item_tmp.nameid, number, &item_tmp);
-				}
-				//Logs
 
 				clif_displaymessage(fd, msg_table[18]); // Item created.
 			} else {

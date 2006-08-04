@@ -2642,9 +2642,8 @@ int atcommand_item(
 	}
 
 	//Logs (A)dmins items [Lupus]
-	if(log_config.pick > 0 )
+	if(log_config.enable_logs&0x400)
 		log_pick(sd, "A", 0, item_id, number, NULL);
-	//Logs
 
 	clif_displaymessage(fd, msg_table[18]); // Item created.
 	return 0;
@@ -2718,10 +2717,8 @@ int atcommand_item2(
 		}
 
 		//Logs (A)dmins items [Lupus]
-		if(log_config.pick > 0 ) {
+		if(log_config.enable_logs&0x400)
 			log_pick(sd, "A", 0, item_tmp.nameid, number, &item_tmp);
-		}
-		//Logs
 
 		clif_displaymessage(fd, msg_table[18]); // Item created.
 	} else {
@@ -2747,10 +2744,8 @@ int atcommand_itemreset(
 		if (sd->status.inventory[i].amount && sd->status.inventory[i].equip == 0) {
 
 			//Logs (A)dmins items [Lupus]
-			if(log_config.pick > 0 ) {
+			if(log_config.enable_logs&0x400)
 				log_pick(sd, "A", 0, sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-			}
-			//Logs
 
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0);
 		}
@@ -3913,10 +3908,8 @@ int atcommand_produce(
 		clif_misceffect(&sd->bl, 3);
 
 		//Logs (A)dmins items [Lupus]
-		if(log_config.pick > 0 ) {
+		if(log_config.enable_logs&0x400)
 			log_pick(sd, "A", 0, tmp_item.nameid, 1, &tmp_item);
-		}
-		//Logs
 
 		if ((flag = pc_additem(sd, &tmp_item, 1)))
 			clif_additem(sd, 0, 0, flag);
@@ -6377,10 +6370,8 @@ int atcommand_chardelitem(const int fd, struct map_session_data* sd,
 					for(i = 0; i < number && item_position >= 0; i++) {
 
 						//Logs (A)dmins items [Lupus]
-						if(log_config.pick > 0 ) {
+						if(log_config.enable_logs&0x400)
 							log_pick(pl_sd, "A", 0, pl_sd->status.inventory[item_position].nameid, -1, &pl_sd->status.inventory[item_position]);
-						}
-						//Logs
 
 						pc_delitem(pl_sd, item_position, 1, 0);
 						count++;
@@ -7678,10 +7669,8 @@ void getring (struct map_session_data *sd)
 	item_tmp.card[3]=sd->status.partner_id >> 16;
 
 	//Logs (A)dmins items [Lupus]
-	if(log_config.pick > 0 ) {
+	if(log_config.enable_logs&0x400)
 		log_pick(sd, "A", 0, item_id, 1, &item_tmp);
-	}
-	//Logs
 
 	if((flag = pc_additem(sd,&item_tmp,1))) {
 		clif_additem(sd,0,0,flag);

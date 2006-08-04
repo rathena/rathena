@@ -1695,12 +1695,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(sd->equip_index[EQI_AMMO] >= 0){
 		index = sd->equip_index[EQI_AMMO];
 		if(sd->inventory_data[index]){		// Arrows
+			sd->arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
 			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;
-			sd->arrow_atk += sd->inventory_data[index]->atk;
 		}
 	}
 	

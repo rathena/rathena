@@ -627,9 +627,6 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 				damage += (skill * 3);
 			break;
 		case W_KATAR:
-			if((skill = pc_checkskill(sd,ASC_KATAR)) > 0)
-				//Advanced Katar Research by zanetheinsane
-				damage += damage*(10 +skill * 2)/100;
 			if((skill = pc_checkskill(sd,AS_KATAR)) > 0)
 				damage += (skill * 3);
 			break;
@@ -1756,12 +1753,19 @@ static struct Damage battle_calc_weapon_attack(
 		if (sd && flag.weapon &&
 			skill_num != MO_INVESTIGATE &&
 		  	skill_num != MO_EXTREMITYFIST &&
-		  	skill_num != CR_GRANDCROSS &&
-		  	skill_num != ASC_BREAKER)
+		  	skill_num != CR_GRANDCROSS)
 		{	//Add mastery damage
+			if(skill_num != ASC_BREAKER && sd->status.weapon == W_KATAR &&
+				(skill=pc_checkskill(sd,ASC_KATAR)) > 0)
+		  	{	//Adv Katar Mastery is does not applies to ASC_BREAKER,
+				// but other masteries DO apply >_>
+				ATK_ADDRATE(10+ 2*skill);
+			}
+
 			wd.damage = battle_addmastery(sd,target,wd.damage,0);
 			if (flag.lh) wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
-		
+
+
 			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] || (sc && sc->data[SC_MIRACLE].timer!=-1)))
 			{
 				skillratio = (sd->status.base_level + sstatus->str + sstatus->dex + sstatus->luk)/(skill<4?12-3*skill:1);
