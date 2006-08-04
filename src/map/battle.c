@@ -251,12 +251,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	sc = status_get_sc(bl);
 
-	if(flag&BF_LONG && map_getcell(bl->m, bl->x, bl->y, CELL_CHKPNEUMA) &&
-		((flag&BF_WEAPON && skill_num != NPC_GUIDEDATTACK) ||
-		(flag&BF_MISC && skill_num != PA_PRESSURE)
-		)){
+	if(flag&(BF_MAGIC|BF_LONG) == BF_LONG &&
+		map_getcell(bl->m, bl->x, bl->y, CELL_CHKPNEUMA) &&
+		skill_num != NPC_GUIDEDATTACK)
 		return 0;
-	}
 	
 	if (sc && sc->count) {
 		//First, sc_*'s that reduce damage to 0.
@@ -340,7 +338,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 
 		//Now damage increasing effects
-		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PA_PRESSURE && skill_num != PF_SOULBURN){
+		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PF_SOULBURN){
 			damage<<=1;
 			status_change_end( bl,SC_AETERNA,-1 );
 		}
@@ -2699,7 +2697,8 @@ struct Damage  battle_calc_misc_attack(
 	if(md.damage && flag.cardfix && tsd){
 		int cardfix = 10000;
 		int race2 = status_get_race2(src);
-		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
+		if (flag.elefix)
+			cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
 		cardfix=cardfix*(100-tsd->subrace2[race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
@@ -2724,8 +2723,9 @@ struct Damage  battle_calc_misc_attack(
 		md.damage = 0;
 	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE && skill_num != NJ_ZENYNAGE) //Pressure can vaporize plants. // damage=1 on plant with Throw zeny ?
 		md.damage = 1;
-	
-	md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+
+	if(flag.elefix)
+		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	if (map_flag_gvg(target->m))
