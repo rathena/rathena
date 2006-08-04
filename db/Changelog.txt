@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/04
+	* Fixed 13202,Shell_of_Blood type to 4 = SHELL for shotgun (not a bullet) [Lupus]
 08/03
 	* Hydro is no longer an MVP [Playtester]
 	* Changed the inf2 value of SA_DISPEL so it can be casted on party/guild
