@@ -9737,15 +9737,16 @@ int atcommand_mobinfo(
 		strcpy(atcmd_output, " ");
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP; i++) {
-			if (mob->dropitem[i].nameid <= 0 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_search(mob->dropitem[i].nameid)) == NULL)
 				continue;
-			if (mob->dropitem[i].p > 0) {
+			if (item_data->slot)
+				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)mob->dropitem[i].p / 100);
+			else
 				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)mob->dropitem[i].p / 100);
-				strcat(atcmd_output, atcmd_output2);
-				if (++j % 3 == 0) {
-					clif_displaymessage(fd, atcmd_output);
-					strcpy(atcmd_output, " ");
-				}
+			strcat(atcmd_output, atcmd_output2);
+			if (++j % 3 == 0) {
+				clif_displaymessage(fd, atcmd_output);
+				strcpy(atcmd_output, " ");
 			}
 		}
 		if (j == 0)
