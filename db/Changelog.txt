@@ -20,6 +20,7 @@
 
 =========================
 08/05
+	* Added temporary size fixes for GS/NJ weapons [Playtester]
 	* Raised NJ/GS item MVP drop rates a little [Playtester]
 08/04
 	* Fixed Boots not equipable by Gunslingers [Playtester]
