@@ -297,7 +297,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
            set @newitem,2308;
            callfunc "f_armor_c";
 
-      Coat: //http://ro.doddlercon.com/wiki/index.php?title=Socket_Enchant it's Long Coat O_o
+      Coat:
            set @olditem,2309;
            set @newitem,2310;
            callfunc "f_armor_c";
@@ -415,27 +415,27 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       Coif:
            set @olditem,5092;
            set @newitem,5093;
-           callfunc "f_armor_c";
+           callfunc "f_armor_a2";
 
       Manteau:
            set @olditem,2505;
            set @newitem,2506;
-           callfunc "f_armor_c";
+           callfunc "f_armor_a2";
 
       Helm:
            set @olditem,2228;
            set @newitem,2229;
-           callfunc "f_armor_c";
+           callfunc "f_armor_a2";
 
       Ninja_Suit:
            set @olditem,2337;
            set @newitem,2359;
-           callfunc "f_armor_c";
+           callfunc "f_armor_a2";
 
       Orc_Helm:
            set @olditem,2299;
            set @newitem,5157;
-           callfunc "f_armor_c";
+           callfunc "f_armor_a2";
 
       Ancient_Cape:
            set @olditem,2507;

@@ -34,6 +34,8 @@ Playtester
 
 Date		Added
 ======
+08/05
+	* Fixed the Socket Enchanter thinking some items are Class C [Playtester]
 08/04
 	* Added some official spawn locations from Aegis [Playtester]
 	* Re-enabled Socket Enchanter, it's official thus enabled by default [Playtester]
