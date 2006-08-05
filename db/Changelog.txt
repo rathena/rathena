@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/05
+	* Raised NJ/GS item MVP drop rates a little [Playtester]
 08/04
 	* Fixed Boots not equipable by Gunslingers [Playtester]
 	* Added the remaining official item drop bonus rates [Playtester]
