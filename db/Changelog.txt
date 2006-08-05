@@ -20,6 +20,7 @@
 
 =========================
 08/04
+	* Fixed Boots not equipable by Gunslingers [Playtester]
 	* Added the remaining official item drop bonus rates [Playtester]
 	- note that some bugs might have appeared, please test!
 	* Added some official item drop bonus rates [Playtester]

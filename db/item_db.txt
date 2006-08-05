@@ -1044,8 +1044,8 @@
 2402,Sandals_,Sandals,5,400,,200,,1,,1,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
 2403,Shoes,Shoes,5,3500,,400,,2,,0,0xFFFFFFFE,7,2,64,,0,1,0,{},{},{}
 2404,Shoes_,Shoes,5,3500,,400,,2,,1,0xFFFFFFFE,7,2,64,,0,1,0,{},{},{}
-2405,Boots,Boots,5,18000,,600,,4,,0,0x006E5CEA,7,2,64,,0,1,0,{},{},{}
-2406,Boots_,Boots,5,18000,,600,,4,,1,0x006E5CEA,7,2,64,,0,1,0,{},{},{}
+2405,Boots,Boots,5,18000,,600,,4,,0,0x016E5CEA,7,2,64,,0,1,0,{},{},{}
+2406,Boots_,Boots,5,18000,,600,,4,,1,0x016E5CEA,7,2,64,,0,1,0,{},{},{}
 2407,Crystal_Pumps,Crystal Pumps,5,,10,100,,0,,0,0xFFFFFFFE,7,0,64,,0,1,0,{ bonus bMdef,10; bonus bLuk,5; },{},{}
 2408,Shackles,Shackles,5,5000,,3000,,3,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
 2409,High_Heels,High Heels,5,8500,,600,,2,,0,0xFFFFFFFE,7,2,64,,0,1,0,{ bonus bMdef,5; },{},{}
