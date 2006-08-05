@@ -8368,6 +8368,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
   	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
 		clif_clearchar_area(&sd->bl,1);
+// Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
+//	else
+//		clif_changed_dir(&sd->bl, SELF);
 }
 
 /*==========================================

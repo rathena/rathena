@@ -251,7 +251,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	sc = status_get_sc(bl);
 
-	if(flag&(BF_MAGIC|BF_LONG) == BF_LONG &&
+	if((flag&(BF_MAGIC|BF_LONG)) == BF_LONG &&
 		map_getcell(bl->m, bl->x, bl->y, CELL_CHKPNEUMA) &&
 		skill_num != NPC_GUIDEDATTACK)
 		return 0;
