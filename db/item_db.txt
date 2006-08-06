@@ -1870,7 +1870,7 @@
 7097,Burning_Heart,Burning Heart,3,,462,10,,,,,,,,,,,,,{},{},{}
 7098,Live_Coal,Live Coal,3,,319,10,,,,,,,,,,,,,{},{},{}
 7099,Worn-out_Magic_Scroll,Worn-out Magic Scroll,3,,387,10,,,,,,,,,,,,,{},{},{}
-7100,Sharp_Leaf,Sharp Leaf,3,,10,10,,,,,,,,,,,,,{},{},{}
+7100,Sharp_Leaf,Sharp Leaf,3,,403,10,,,,,,,,,,,,,{},{},{}
 7101,Peco_Peco_Feather,Peco Peco Feather,3,,227,10,,,,,,,,,,,,,{},{},{}
 7102,Nightmare,Nightmare,3,,10,10,,,,,,,,,,,,,{},{},{}
 7103,Unknown_Liquid_Bottle,Unknown Liquid Bottle,3,,10,10,,,,,,,,,,,,,{},{},{}
