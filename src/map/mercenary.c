@@ -479,8 +479,13 @@ int merc_natural_heal(int tid,unsigned int tick,int id,int data)
 #ifndef TXT_ONLY
 void merc_save(struct homun_data *hd)
 {
-	intif_homunculus_requestsave(hd->master->status.account_id, &hd->master->homunculus) ;
-
+	// copy data that must be saved in homunculus struct ( hp / sp )
+	TBL_PC * sd = hd->master;
+	if((sd->homunculus.hp = hd->battle_status.hp) > sd->homunculus.max_hp )
+		sd->homunculus.hp = sd->homunculus.max_hp;
+	if((sd->homunculus.sp = hd->battle_status.sp) > sd->homunculus.max_sp )
+		sd->homunculus.sp = sd->homunculus.max_sp;
+	intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus) ;
 }
 #else
 void merc_save(struct homun_data *hd)
@@ -873,30 +878,22 @@ int merc_create_homunculus(struct map_session_data *sd, int class_)
 
 	sd->homunculus.class_ = class_;
 	sd->homunculus.level=1;
-	sd->homunculus.intimacy = 21;
-	sd->homunculus.hunger = 32;
+	sd->homunculus.intimacy = 500;
+	sd->homunculus.hunger = 50;
 	sd->homunculus.exp = 0;
 	sd->homunculus.rename_flag = 0;
 	sd->homunculus.skillpts = 0;
 	sd->homunculus.char_id = sd->status.char_id;
 	sd->homunculus.vaporize = 0; // albator
 	
-	sd->homunculus.hp = 10 ;
-	sd->homunculus.sp = 0 ;
-	sd->homunculus.max_hp = homunculus_db[i].basemaxHP ;
-	sd->homunculus.max_sp = homunculus_db[i].basemaxSP ;
-	sd->homunculus.str = homunculus_db[i].baseSTR ;
-	sd->homunculus.agi = homunculus_db[i].baseAGI ;
-	sd->homunculus.vit = homunculus_db[i].baseVIT;
-	sd->homunculus.int_ = homunculus_db[i].baseINT ;
-	sd->homunculus.dex = homunculus_db[i].baseDEX ;
-	sd->homunculus.luk = homunculus_db[i].baseLUK ;
-	sd->homunculus.str *= 10 ;
-	sd->homunculus.agi *= 10 ;
-	sd->homunculus.vit *= 10 ;
-	sd->homunculus.int_ *= 10 ;
-	sd->homunculus.dex *= 10 ;
-	sd->homunculus.luk *= 10 ;
+	sd->homunculus.hp = sd->homunculus.max_hp = homunculus_db[i].basemaxHP ;
+	sd->homunculus.sp = sd->homunculus.max_sp = homunculus_db[i].basemaxSP ;
+	sd->homunculus.str = homunculus_db[i].baseSTR * 10;
+	sd->homunculus.agi = homunculus_db[i].baseAGI * 10;
+	sd->homunculus.vit = homunculus_db[i].baseVIT * 10;
+	sd->homunculus.int_ = homunculus_db[i].baseINT * 10;
+	sd->homunculus.dex = homunculus_db[i].baseDEX * 10;
+	sd->homunculus.luk = homunculus_db[i].baseLUK * 10;
 	
 	for(i=0;i<MAX_HOMUNSKILL;i++)
 		sd->homunculus.hskill[i].id = sd->homunculus.hskill[i].lv = sd->homunculus.hskill[i].flag = 0;
