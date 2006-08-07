@@ -2112,6 +2112,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
+		battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 		skill_additional_effect(bl,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
 	}
 

@@ -73,17 +73,9 @@ int battle_getcurrentskill(struct block_list *bl);
 #define BCT_NOONE 0x000000
 #define BCT_SELF 0x010000
 #define BCT_NEUTRAL 0x100000
-/*
-enum {
-	BCT_NOENEMY	=0x00000,
-	BCT_PARTY	=0x10000,
-	BCT_ENEMY	=0x40000,
-	BCT_NOPARTY	=0x50000,
-	BCT_ALL		=0x20000,
-	BCT_NOONE	=0x60000,
-	BCT_SELF	=0x60000,
-};
-*/
+
+#define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
+
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 int battle_check_range(struct block_list *src,struct block_list *bl,int range);

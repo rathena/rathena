@@ -25,8 +25,6 @@
 #include "guild.h"
 #include "party.h"
 
-#define	is_boss(bl)	status_get_mexp(bl)	// Can refine later [Aru]
-
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
@@ -3061,8 +3059,11 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, is_boss(target));
 		}
 	}
-	if (rdamage > 0) //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
+	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
+
+		battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
+	}
 
 	if (tsc) {
 		if (tsc->data[SC_POISONREACT].timer != -1 && 

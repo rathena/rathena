@@ -1992,7 +1992,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
-		status->aspd_rate -= (int)((skill+1)/2) * 10;
+		status->aspd_rate -= ((skill+1)/2) * 10;
 	if(pc_isriding(sd))
 		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	
@@ -3842,16 +3842,8 @@ int status_get_party_id(struct block_list *bl)
 		}
 		return 0; //No party.
 	}
-	if(bl->type==BL_HOM){	//[orn]
-		struct homun_data *hd=(struct homun_data *)bl;
-		if( hd->master->bl.id>0 )
-		{
-			if ( hd->master != NULL)
-				return hd->master->status.party_id;
-			return -1;
-		}
-		return 0; //No party.
-	}
+	if(bl->type==BL_HOM && ((TBL_HOM*)bl)->master)
+		return ((TBL_HOM*)bl)->master->status.party_id;
 	if(bl->type==BL_SKILL)
 		return ((struct skill_unit *)bl)->group->party_id;
 	return 0;
@@ -3874,16 +3866,8 @@ int status_get_guild_id(struct block_list *bl)
 			return msd->status.guild_id; //Alchemist's mobs [Skotlex]
 		return 0; //No guild.
 	}
-	if(bl->type==BL_HOM){	//[orn]
-		struct homun_data *hd=(struct homun_data *)bl;
-		if( hd->master->bl.id>0 )
-		{
-			if ( hd->master != NULL)
-				return hd->master->status.guild_id;
-			return -1;
-		}
-		return 0; //No guild.
-	}
+	if(bl->type==BL_HOM && ((TBL_HOM*)bl)->master)
+		return ((TBL_HOM*)bl)->master->status.guild_id;
 	if (bl->type == BL_NPC && bl->subtype == SCRIPT)
 		return ((TBL_NPC*)bl)->u.scr.guild_id;
 	if(bl->type==BL_SKILL)
@@ -3940,7 +3924,7 @@ struct view_data *status_get_viewdata(struct block_list *bl)
 		case BL_NPC:
 			return ((TBL_NPC*)bl)->vd;
 		case BL_HOM: //[blackhole89]
-			return ((struct homun_data*)bl)->vd;
+			return ((TBL_HOM*)bl)->vd;
 	}
 	return NULL;
 }
@@ -5603,7 +5587,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	sc->data[type].timer = add_timer(
 		gettick() + tick, status_change_timer, bl->id, type);
-
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
