@@ -2217,6 +2217,11 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 			mob.num = 1;
 	}
 
+	if (battle_config.force_random_spawn)
+	{	//Force a random spawn anywhere on the map.
+		mob.x = mob.y = mob.xs = mob.ys = 0;
+	}
+
 	//Apply the spawn delay fix [Skotlex]
 	mode = mob_db(class_)->status.mode;
 	if (mode & MD_BOSS) {	//Bosses

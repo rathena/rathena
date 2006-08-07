@@ -1763,7 +1763,6 @@ static struct Damage battle_calc_weapon_attack(
 			wd.damage = battle_addmastery(sd,target,wd.damage,0);
 			if (flag.lh) wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
 
-
 			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] || (sc && sc->data[SC_MIRACLE].timer!=-1)))
 			{
 				skillratio = (sd->status.base_level + sstatus->str + sstatus->dex + sstatus->luk)/(skill<4?12-3*skill:1);
@@ -3173,8 +3172,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return -1; //Cannot be targeted yet.
 			break;
 		case BL_MOB:
-			if (((TBL_MOB*)target)->special_state.ai > 1)
-			{	//Alchemist summoned mobs are sort of universal enemies.
+			if (((TBL_MOB*)target)->special_state.ai > 1 &&
+				s_bl->type == BL_PC && src->type != BL_MOB)
+			{	//Alchemist summoned mobs are always targettable by players
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			}
@@ -3509,6 +3509,8 @@ static const struct battle_data_short {
 	{ "mob_count_rate",                    &battle_config.mob_count_rate			},
 	{ "mob_spawn_delay",                   &battle_config.mob_spawn_delay			},
 	{ "no_spawn_on_player",                &battle_config.no_spawn_on_player	},
+
+	{ "force_random_spawn",                &battle_config.force_random_spawn	},
 	{ "plant_spawn_delay",                 &battle_config.plant_spawn_delay			},
 	{ "boss_spawn_delay",                  &battle_config.boss_spawn_delay			},
 	{ "slaves_inherit_mode",               &battle_config.slaves_inherit_mode	},
@@ -3914,6 +3916,7 @@ void battle_set_defaults() {
 	battle_config.mob_count_rate=100;
 	battle_config.mob_spawn_delay=100;
 	battle_config.no_spawn_on_player=0;
+	battle_config.force_random_spawn=0;
 	battle_config.plant_spawn_delay=100;
 	battle_config.boss_spawn_delay=100;
 	battle_config.slaves_inherit_mode=1;

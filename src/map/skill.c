@@ -4438,14 +4438,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		int strip_fix, equip = 0;
 		int sclist[4] = {0,0,0,0};
 
-		if (skillid == RG_STRIPWEAPON || skillid == ST_FULLSTRIP || skillid == GS_DISARM)
-		   equip |= EQP_WEAPON;
-		if (skillid == RG_STRIPSHIELD || skillid == ST_FULLSTRIP)
-		   equip |= EQP_SHIELD;
-		if (skillid == RG_STRIPARMOR || skillid == ST_FULLSTRIP)
-		   equip |= EQP_ARMOR;
-		if (skillid == RG_STRIPHELM || skillid == ST_FULLSTRIP)
-		   equip |= EQP_HELM;
+		switch (skillid) {
+		case RG_STRIPWEAPON:
+		case GS_DISARM:
+		   equip = EQP_WEAPON;
+			break;
+		case RG_STRIPSHIELD:
+		   equip = EQP_SHIELD;
+			break;
+		case RG_STRIPARMOR:
+		   equip = EQP_ARMOR;
+			break;
+		case RG_STRIPHELM:
+		   equip = EQP_HELM;
+			break;
+		case ST_FULLSTRIP:
+		   equip = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
+			break;
+		}
 
 		strip_fix = sstatus->dex - tstatus->dex;
 		if(strip_fix < 0)
@@ -4462,7 +4472,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					continue;
 				switch (i) {
 				case EQI_HAND_L: //Shield / left-hand weapon
-					if(dstsd->inventory_data[dstsd->equip_index[EQI_HAND_L]]->type == IT_ARMOR)
+					if(dstsd->inventory_data[dstsd->equip_index[i]]->type == IT_ARMOR)
 					{ //Shield
 						if (equip&EQP_SHIELD &&
 							!(dstsd->unstripable_equip&EQP_SHIELD) &&
@@ -4475,7 +4485,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					}
 					//Continue to weapon
 				case EQI_HAND_R:
-					if (equip &EQP_WEAPON &&
+					if (equip&EQP_WEAPON &&
 						!(dstsd->unstripable_equip&EQP_WEAPON) &&
 				  		!(tsc && tsc->data[SC_CP_WEAPON].timer != -1)
 					) {
@@ -4663,7 +4673,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
 					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
 					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
-					|| i==SC_SAFETYWALL || i==SC_SMA
+					|| i==SC_SAFETYWALL || i==SC_SMA || i==SC_SPEEDUP0
 					)
 					continue;
 				if(i==SC_BERSERK) tsc->data[i].val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
