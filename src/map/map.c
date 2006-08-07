@@ -3313,10 +3313,7 @@ int map_config_read(char *cfgName) {
 				autosave_interval = atoi(w2);
 				if (!autosave_interval) //Revert to default saving.
 					autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-				else if (autosave_interval > 0) //Pass from MS to seconds
-					autosave_interval *= 1000;
-				else if (autosave_interval > -100) //Use lower cap of 100ms
-					autosave_interval = -100;
+				autosave_interval *= 1000; //Pass from sec to ms
 			} else if (strcmpi(w1, "save_settings") == 0) {
 				save_settings = atoi(w2);
 			} else if (strcmpi(w1, "motd_txt") == 0) {

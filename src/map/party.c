@@ -704,7 +704,7 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 {
 	struct map_session_data* sd[MAX_PARTY];
 	int i;
-	short c, bonus =100; // modified [Valaris]
+	unsigned short c, bonus =100; // modified [Valaris]
 
 	nullpo_retr(0, p);
 
