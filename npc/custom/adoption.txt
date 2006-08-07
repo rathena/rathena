@@ -53,17 +53,15 @@ prt_church.gat,162,171,0	warp	prtch01-3	1,2,prt_church.gat,113,122
 
 prt_church.gat,166,176,3	script	Adoption Man	61,{
 
-//GM Menu: Start
-//If u're a GM you can always reset current Adoption process
-	if(getgmlevel(99)<90) goto L_SKIP;
-	mes "[GM Menu]";
-	mes "Would you like to reset curent adoption?";
-	next;
-	menu "Yes",-,"No",L_SKIP;	
-	callfunc "AdoptReset","GM reset";
-	close;
-L_SKIP:
-//GM Menu: End
+	//If u're a GM you can always reset current Adoption process
+	if(getgmlevel(99)>=90) {
+		mes "[GM Menu]";
+		mes "Would you like to reset curent adoption?";
+		next;
+		menu "Yes",-,"No",L_SKIP;	
+		callfunc "AdoptReset","GM reset";
+		close;
+	}
 
 	if($@AdoptionActive == 1) goto A_Cannot;
 	mes "[Oliver]";
@@ -101,8 +99,8 @@ A_Yes:
 	mes "[Oliver]";
 	mes "Well you seem set on this.";
 	next;
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	if ($@AdoptionActive == 1) goto A_Cannot;
 	set $@AdoptionActive,1;
 	set @AdoptionReady,1;
@@ -141,8 +139,8 @@ prt_church.gat,172,177,3	script	Adoption Lady	103,{
 	if (strcharinfo(0)==$@ParentTwo$) goto A_SecondReg;
 	if (@AdoptionReady==0 || $@AdoptionActive==0) goto A_SeeFriend;
 	mes "[Inanna]";
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	mes "So you think you meet our strict requirments?";
 	mes "Let's see here, are you over level 70?";
 	next;
@@ -205,8 +203,8 @@ A_Wedringpassed:
 	mes "[Inanna]";
 	mes "Your partner now has 5 min to talk to me before the adoption is canceled.";
 	next;
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	areaannounce "prt_church.gat",0,0,350,350,"Can I please see "+$@ParentTwo$+" please",0; 
 	mes "[Inanna]";
 	mes "Can you now please wait for me to call you again, thank you.";
@@ -220,8 +218,8 @@ A_AlreadyHaveBaby:
 	callfunc "AdoptReset","the parent has already adopted once before";
 	close;
 A_SecondReg:
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	mes "[Inanna]";
 	mes "You must be "+$@ParentTwo$+", I just talked to your partner "+$@ParentOne$+", they mentioned you want to adopt baby.";
 	next;
@@ -270,15 +268,15 @@ A_YesBaby:
 	mes "[Inanna]";
 	mes "The novice now has 5min to come and talk to me, or the adopt will be canceled.";
 	next;
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	mes "[Inanna]";
 	mes "Thank you, can you please wait with your partner, and wait to be called back.";
 	areaannounce "prt_church.gat",0,0,350,350,"Can I please see "+$@Baby$+", please",0;
 	close;
 A_FinalTest:
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	if(Upper==2) goto A_AlreadyAdopted;
 	if(baseClass == Job_Taekwon) goto A_CantBeAdopted;
 	mes "[Inanna]";
@@ -319,8 +317,8 @@ A_Ready:
 	mes "Before you can be adopted I will need to see your parents, and you, one last time.";
 	set $@FinalQuestion,1;
 	areaannounce "prt_church.gat",0,0,350,350,"Can I please see all people involved with this adoption please",0;
-	deltimer "timeadopt";
-	addtimer 300000,"timeadopt";
+	deltimer "timeadopt::OnAdopt";
+	addtimer 300000,"timeadopt::OnAdopt";
 	close;
 A_AlreadyAdopted:
 	mes "[Inanna]";
@@ -442,7 +440,7 @@ THEEND:
 	logmes "Adoption: "+$@Baby$+" adopted by "+$@ParentOne$+" and "+$@ParentTwo$+".";
 	adopt $@ParentOne$,$@ParentTwo$,$@Baby$;
 	announce $@ParentOne$+" and "+$@ParentTwo$+" has just adopted a new baby "+$@GenderBaby$+", called "+$@Baby$,5;
-	deltimer "timeadopt";
+	deltimer "timeadopt::OnAdopt";
 	set $@AdoptionActive, 0;
 	set $@ParentOne$, null;
 	set $@ParentTwo$, null;
@@ -455,11 +453,12 @@ THEEND:
 }
 
 prt_church.gat,165,175,0	script	timeadopt	-1,{
+OnAdopt:
 	callfunc "AdoptReset","too much time has passed between steps";
 	end;
 }
 function	script	AdoptReset	{
-	deltimer "timeadopt";
+	deltimer "timeadopt::OnAdopt";
 	set $@AdoptionActive, 0;
 	set $@ParentOne$, null;
 	set $@ParentTwo$, null;

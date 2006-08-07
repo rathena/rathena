@@ -35,6 +35,8 @@ Playtester
 Date		Added
 ======
 08/05
+	* Fixed NPC event parameter deprecated of Adoption. [Lupus]
+		Thx 2 tuproc 4 pointing it out
 	* Fixed the Socket Enchanter thinking some items are Class C [Playtester]
 08/04
 	* Added some official spawn locations from Aegis [Playtester]
