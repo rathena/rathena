@@ -2831,7 +2831,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case AS_SPLASHER:
 		if ((flag&1) && bl->id == skill_area_temp[1])
 		{	//Should do 100% damage on targetted character.
-			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, 1);
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, 0);
 			break;
 		}
 	case AS_GRIMTOOTH:

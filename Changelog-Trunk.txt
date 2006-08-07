@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/07
+	* Fixed Venom Splasher doing half-damage instead of full-damage to the
+	  "exploding" character. [Skotlex]
 	* Hopefully fixed the party_even_share cast-overflow bug as reported by
 	  Adobe. [Skotlex]
 	* Standarized the autosave interval setting to be always in seconds
