@@ -2209,17 +2209,18 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	mob.class_ = (short) class_;
 	mob.x = (unsigned short)x;
 	mob.y = (unsigned short)y;
-	mob.xs = (unsigned short)xs;
-	mob.ys = (unsigned short)ys;
+	mob.xs = (signed short)xs;
+	mob.ys = (signed short)ys;
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
 		if ((mob.num = mob.num * battle_config.mob_count_rate / 100) < 1)
 			mob.num = 1;
 	}
 
-	if (battle_config.force_random_spawn)
+	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0))
 	{	//Force a random spawn anywhere on the map.
-		mob.x = mob.y = mob.xs = mob.ys = 0;
+		mob.x = mob.y = 0;
+		mob.xs = mob.ys = -1;
 	}
 
 	//Apply the spawn delay fix [Skotlex]

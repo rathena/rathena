@@ -89,6 +89,6 @@
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0xba,    ,  0, 3, 100,enemy, 0x000	//GS_DESPERADO
 521,0xc2,    ,  0, 1,1000,enemy, 0x006	//GS_GROUNDDRIFT
-527,0xbc,    , -1, 0,2500,enemy, 0x000	//NJ_TATAMIGAESHI
+527,0xbc,    , -1, 0,1000,enemy, 0x000	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0, 200,enemy, 0x008	//NJ_KAENSIN
 538,0xbb,,1:1:1:2:2:2:3:3:3:4,0,-1,all,0x000	//NJ_SUITON

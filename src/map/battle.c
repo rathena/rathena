@@ -2276,20 +2276,12 @@ struct Damage battle_calc_magic_attack(
 
 				switch(skill_num){
 					case MG_NAPALMBEAT:
+					case MG_FIREBALL:
 						skillratio += skill_lv*10-30;
 						break;
 					case MG_SOULSTRIKE:
 						if (battle_check_undead(tstatus->race,tstatus->def_ele))
 							skillratio += 5*skill_lv;
-						break;
-					case MG_FIREBALL:
-						if(mflag>2)
-							ad.damage = 0;
-						else {
-							int drate[]={100,90,70};
-							MATK_RATE(drate[mflag]);
-							skillratio += 70+10*skill_lv;
-						}
 						break;
 					case MG_FIREWALL:
 						skillratio -= 50;

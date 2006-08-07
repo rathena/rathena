@@ -859,7 +859,8 @@ struct guardian_data {
 // Expanded to specify all mob-related spawn data by [Skotlex]
 struct spawn_data {
 	short class_; //Class, used because a mob can change it's class
-	unsigned short m,x,y,xs,ys;	//Spawn information (map, point, spawn-area around point)
+	unsigned short m,x,y;	//Spawn information (map, point, spawn-area around point)
+	signed short xs,ys;
 	unsigned short num; //Number of mobs using this structure.
 	unsigned int level; //Custom level.
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
