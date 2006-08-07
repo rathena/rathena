@@ -638,7 +638,7 @@ int mob_spawn (struct mob_data *md)
 
 		if ((md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys)
 		{	//Monster can be spawned on an area.
-			if (!map_search_freecell(NULL, -1,
+			if (!map_search_freecell(&md->bl, -1,
 			  	&md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys,
 			  	battle_config.no_spawn_on_player?4:0)) {
 				// retry again later
