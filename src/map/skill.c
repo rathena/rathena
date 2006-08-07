@@ -2791,15 +2791,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 	
-	case KN_CHARGEATK:
 	case MO_EXTREMITYFIST:
-		if (skillid == MO_EXTREMITYFIST && sc && sc->count)
+		if (sc && sc->count)
 		{
 			if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
 				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
 			if (sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
 		}
+	case KN_CHARGEATK:
 		if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
 			int dx,dy;
 
@@ -2818,13 +2818,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				break;
 			}
 			clif_slide(src,src->x,src->y);
-			if (skillid != MO_EXTREMITYFIST || battle_check_target(src, bl, BCT_ENEMY) > 0) //Check must be done here because EF should be broken this way.. [Skotlex]
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			else if (sd)
-				clif_skill_fail(sd,skillid,0,0);
-		}
-		else //Assume minimum distance of 1 for Charge.
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,skillid == KN_CHARGEATK?1:flag);
+		} else //Assume minimum distance of 1 for Charge.
+			flag = 1;
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	//Splash attack skills.
@@ -5714,7 +5710,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				break;
 			}
 		}
-		
 		//Avoid doing double checks for instant-cast skills.
 		if (tid != -1 && !status_check_skilluse(src, target, ud->skillid, 1))
 			break;
@@ -5777,6 +5772,34 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		return 1;
 	} while(0);
 	//Skill failed.
+	if (ud->skillid == MO_EXTREMITYFIST && sd)
+  	{	//When Asura fails...
+		//Consume SP/spheres
+		skill_check_condition(sd,ud->skillid, ud->skilllv,1);
+		sc = &sd->sc;
+		if (sc->count)
+		{	//End states
+			if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
+				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
+			if (sc->data[SC_BLADESTOP].timer != -1)
+				status_change_end(src,SC_BLADESTOP,-1);
+		}
+		if (target && target->m == src->m)
+		{	//Move character to target anyway.
+			int dx,dy;
+			dx = target->x - src->x;
+			dy = target->y - src->y;
+			if(dx > 0) dx++;
+			else if(dx < 0) dx--;
+			if (dy > 0) dy++;
+			else if(dy < 0) dy--;
+			
+			if (unit_movepos(src, src->x+dx, src->y+dy, 1, 1))
+				clif_slide(src,src->x,src->y);
+
+			clif_skill_fail(sd,ud->skillid,0,0);
+		}
+	}
 	ud->skillid = ud->skilllv = ud->skilltarget = 0;
 	ud->canact_tick = tick;
 	if(sd) sd->skillitem = sd->skillitemlv = -1;

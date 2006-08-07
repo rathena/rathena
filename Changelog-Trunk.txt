@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/07
+	* Cleaned up the Asura code so that when the skill fails your
+	  SP/Spheres/Fury are all taken away always, as well as moving you next to
+	  the target (as long as the target still exists within a reachable path from
+	  your position) [Skotlex]
+	* SC_GUILDAURA is now removed on logout. [Skotlex]
 	* Fixed Venom Splasher doing half-damage instead of full-damage to the
 	  "exploding" character. [Skotlex]
 	* Hopefully fixed the party_even_share cast-overflow bug as reported by

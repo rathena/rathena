@@ -1628,6 +1628,8 @@ int unit_free(struct block_list *bl) {
 				status_change_end(bl,SC_BERSERK,-1);
 			if(sd->sc.data[SC_TRICKDEAD].timer!=-1)
 				status_change_end(bl,SC_TRICKDEAD,-1);
+			if(sd->sc.data[SC_GUILDAURA].timer!=-1)
+				status_change_end(bl,SC_GUILDAURA,-1);
 			if (battle_config.debuff_on_logout&1) {
 				if(sd->sc.data[SC_ORCISH].timer!=-1)
 					status_change_end(bl,SC_ORCISH,-1);
