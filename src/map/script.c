@@ -3293,6 +3293,7 @@ int buildin_readparam(struct script_state *st);
 int buildin_getcharid(struct script_state *st);
 int buildin_getpartyname(struct script_state *st);
 int buildin_getpartymember(struct script_state *st);
+int buildin_getpartyleader(struct script_state *st);
 int buildin_getguildname(struct script_state *st);
 int buildin_getguildmaster(struct script_state *st);
 int buildin_getguildmasterid(struct script_state *st);
@@ -3619,6 +3620,7 @@ struct script_function buildin_func[] = {
 	{buildin_getcharid,"getcharid","i*"},
 	{buildin_getpartyname,"getpartyname","i"},
 	{buildin_getpartymember,"getpartymember","i*"},
+	{buildin_getpartyleader,"getpartyleader","i*"},
 	{buildin_getguildname,"getguildname","i"},
 	{buildin_getguildmaster,"getguildmaster","i"},
 	{buildin_getguildmasterid,"getguildmasterid","i"},
@@ -5691,6 +5693,57 @@ int buildin_getpartymember(struct script_state *st)
 
 	return 0;
 }
+
+/*==========================================
+ * Retrieves party leader. if flag is specified, 
+ * return some of the leader data. Otherwise, return name.
+ *------------------------------------------
+ */
+int buildin_getpartyleader(struct script_state *st)
+{
+	int party_id, type = 0, i;
+	struct party_data *p;
+
+	party_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	if( st->end>st->start+3 )
+ 		type=conv_num(st,& (st->stack->stack_data[st->start+3]));
+
+	p=party_search(party_id);
+
+	if (p) //Search leader
+	for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
+
+	if (!p || i == MAX_PARTY) { //leader not found
+		if (type)
+			push_val(st->stack,C_INT,-1);
+		else
+			push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
+		return 0;
+	}
+
+	switch (type) {
+		case 1:
+			push_val(st->stack,C_INT,p->party.member[i].account_id);
+		break;
+		case 2:
+			push_val(st->stack,C_INT,p->party.member[i].char_id);
+		break;
+		case 3:
+			push_val(st->stack,C_INT,p->party.member[i].class_);
+		break;
+		case 4:
+			push_val(st->stack,C_INT,p->party.member[i].map);
+		break;
+		case 5:
+			push_val(st->stack,C_INT,p->party.member[i].lv);
+		break;
+		default:
+			push_str(st->stack,C_STR,(unsigned char *)p->party.member[i].name);
+		break;
+	}
+	return 0;
+}
+
 /*==========================================
  *w’èID‚ÌƒMƒ‹ƒh–¼æ“¾
  *------------------------------------------

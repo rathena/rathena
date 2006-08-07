@@ -5469,9 +5469,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 	}
 
-	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
-		clif_status_change(bl,StatusIconChangeTable[type],1);
-
 	// Set option as needed.
 	opt_flag = 1;
 	switch(type){
@@ -5590,9 +5587,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			opt_flag = 0;
 	}
 
+	//On Aegis, when turning on a status change, first goes the option packet,
+	// then the sc packet.
 	if(opt_flag)
 		clif_changeoption(bl);
 
+	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
+		clif_status_change(bl,StatusIconChangeTable[type],1);
 	(sc->count)++;
 
 	sc->data[type].val1 = val1;
@@ -5602,6 +5603,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	sc->data[type].timer = add_timer(
 		gettick() + tick, status_change_timer, bl->id, type);
+
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
@@ -5960,9 +5962,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break; //guess hes not in jail :P
 		}
 
-	if (vd && pcdb_checkid(vd->class_))
-		clif_status_change(bl,StatusIconChangeTable[type],0);
-
 	opt_flag = 1;
 	switch(type){
 	case SC_STONE:
@@ -6076,6 +6075,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	default:
 		opt_flag = 0;
 	}
+
+	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
+	if (vd && pcdb_checkid(vd->class_))
+		clif_status_change(bl,StatusIconChangeTable[type],0);
 
 	if(opt_flag)
 		clif_changeoption(bl);

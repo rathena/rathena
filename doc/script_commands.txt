@@ -2067,6 +2067,20 @@ Example:
 
 ---------------------------------------
 
+*getpartyleader <party id>,[<type>];
+
+This function returns some information about the given party-id's leader. When type is ommitted, the default information retrieved is Character name of the party leader. Possible types are:
+
+	1: Leader account id
+	2: Leader character id
+	3: Leader's class
+	4: Leader's current map index
+	5: Leader's current level as stored on the party structure (may not be
+	   current level if leader leveled up recently).
+
+If retrieval fails (leader not found or party does not exists), "null" is returned instead of character name, and -1 is returned for the other types.
+
+---------------------------------------
 *getguildname(<guild id>)
 
 This function returns a guild's name given an ID number. If there is no such 
