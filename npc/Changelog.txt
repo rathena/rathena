@@ -34,6 +34,9 @@ Playtester
 
 Date		Added
 ======
+08/06
+	* Added official spawn locations for all Yuno Fields [Playtester]
+	- note: only works with Skotlex's spawn area fix
 08/05
 	* Fixed NPC event parameter deprecated of Adoption. [Lupus]
 		Thx 2 tuproc 4 pointing it out
