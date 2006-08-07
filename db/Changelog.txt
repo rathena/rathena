@@ -19,6 +19,9 @@
 	-----
 
 =========================
+08/07
+	* Slightly increased drop rate of some low-level guns [Playtester]
+	- also lowered drop rate of Armor Charm to 0.01% again
 08/06
 	* Fixed selling price of Sharp Leaf [Playtester]
 08/05
