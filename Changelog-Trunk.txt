@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/07
+	* Added in Lupus's suggestion of not making multi-slot headgears set all
+	  slot view-ids, which supposedly causes the client to re-draw the headgear
+	  multiple times on characters. [Skotlex]
 	* Fixed HT_BLITZBEAT hitting neutral characters when it auto-triggers.
 	  [Skotlex]
 	* Simplified the Tatami Gaeshi code. [Skotlex]
