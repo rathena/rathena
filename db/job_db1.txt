@@ -1,7 +1,7 @@
 // Job-specific Values Database
 //
 // Structure of Database:
-// JobID,Weight,HPFactor,HPMultiplicator,SPFactor,BareFist,Dagger,1HSword,2HSword,1HSpear,2HSpear,1HAxe,2HAxe,1HMace,2HMace(unused),Rod,Bow,Knuckle,Instrument,Whip,Book,Katar,Revolver,Rifle,Shotgun,Gatling Gun,Grenade Launcher
+// JobID,Weight,HPFactor,HPMultiplicator,SPFactor,BareFist,Dagger,1HSword,2HSword,1HSpear,2HSpear,1HAxe,2HAxe,1HMace,2HMace(unused),Rod,Bow,Knuckle,Instrument,Whip,Book,Katar,Revolver,Rifle,Shotgun,Gatling Gun,Grenade Launcher,Fuuma Shuriken
 //
 // Novice
 0,	20000,0    ,500  ,100  ,500  ,650  ,700  ,2000 ,2000 ,2000 ,800  ,2000 ,700  ,700  ,650  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000
@@ -53,8 +53,8 @@
 23,	20000,0    ,500  ,100  ,500  ,650  ,700  ,2000 ,2000 ,2000 ,800  ,2000 ,700  ,700  ,650  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000
 // Gunslinger
 24,	27000,75   ,300  ,600,  400  ,2000, 2000, 2000, 2000, 2000, 2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 , 700 , 800 ,1200 ,200  ,1400 ,2000
-// Ninja
-25,	24000,110  ,500  ,400  ,400  ,500  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000, 500
+// Ninja // Dagger is a bit faster than Fuuma Shuriken > temp value
+25,	24000,60   ,700  ,400  ,400  ,500  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000, 550
 // Novice High
 4001,	20000,0    ,500  ,100  ,500  ,650  ,700  ,2000 ,2000 ,2000 ,800  ,2000 ,700  ,700  ,650  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000
 // Swordman High

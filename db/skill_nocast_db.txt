@@ -55,4 +55,4 @@
 //Zone 2 - Jail
 421,64 //TK_JUMPKICK#Flying Side Kick#
 426,64 //TK_HIGHJUMP#Taekwon Jump#
-
+529,64 //NJ_SHADOWJUMP#NJ_SHADOWJUMP#

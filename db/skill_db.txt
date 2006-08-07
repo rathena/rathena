@@ -4,7 +4,7 @@
 // 03 hit (8- repeated hitting, 6- single-hit)
 // 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
 // 05 pl attributes (0- nothing, 1- water, 2- earth, 3- fire, 4- wind, 5- poison, 6- saint, 7- darkness, 8- sense, 9- immortality)
-// 06 nk (0- normal skill, 1-no damage skill, 2-splash damage skill, 3-no damage area skill)
+// 06 nk (0- normal skill, 1-no damage skill, 2-splash damage skill, 3-no damage area skill, 4-splash and split damage skill)
 // 07 splash/effect range (-1 for screen-wide)
 // 08 MaxLv
 // 09 Number of hits (when positive, damage is increased by hits, 
@@ -31,7 +31,7 @@
 8,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//SM_ENDURE#Endure#
 9,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//MG_SRECOVERY#Increase SP Recovery#
 10,0,6,4,3,3,3,1,1,yes,0,0,0,magic,0	//MG_SIGHT#Sight#
-11,9,6,1,8,0,1,10,1,yes,0,0,0,magic,0	//MG_NAPALMBEAT#Napalm Beat#
+11,9,6,1,8,4,1,10,1,yes,0,0,0,magic,0	//MG_NAPALMBEAT#Napalm Beat#
 12,9,8,2,8,1,0,10,1,yes,0,0,0,magic,0	//MG_SAFETYWALL#Safety Wall#
 13,9,8,1,8,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0,0,magic,0	//MG_SOULSTRIKE#Soul Strike#
 14,9,8,1,1,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//MG_COLDBOLT#Cold Bolt#
@@ -420,7 +420,7 @@
 397,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0	//LK_SPIRALPIERCE#Spiral Pierce#
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//LK_HEADCRUSH#Traumatic Blow#
 399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//LK_JOINTBEAT#Vital Strike#
-400,9,8,1,8,0,1,5,1:2:3:4:5,yes,0,0,0,magic,0	//HW_NAPALMVULCAN#Napalm Vulcan#
+400,9,8,1,8,4,1,5,1:2:3:4:5,yes,0,0,0,magic,0	//HW_NAPALMVULCAN#Napalm Vulcan#
 401,0,6,4,0,1,0,1,1,yes,0,0,0,none,0	//CH_SOULCOLLECT#Zen#
 402,9,6,1,0,1,0,5,1,no,0,0,0,none,0	//PF_MINDBREAKER#Mind Breaker#
 403,0,0,4,0,1,0,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#Foresight#
@@ -546,9 +546,9 @@
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#
 523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
 524,9,8,1,-1,0,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#NJ_KUNAI#
-525,9,8,1,-1,0,1,5,-1:-2:-3:-4:-5,yes,0,0,0,weapon,0	//NJ_HUUMA#NJ_HUUMA#
+525,9,8,1,-1,4,1,5,-1:-2:-3:-4:-5,yes,0,0,0,weapon,0	//NJ_HUUMA#NJ_HUUMA#
 526,9,6,1,0,0,0,10,1,no,0,0,0,misc,0	//NJ_ZENYNAGE#NJ_ZENYNAGE#
-527,0,6,4,3,0,0,5,1,no,0,0,0,weapon,3	//NJ_TATAMIGAESHI#NJ_TATAMIGAESHI#
+527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3	//NJ_TATAMIGAESHI#NJ_TATAMIGAESHI#
 528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#NJ_KASUMIKIRI#
 529,7:9:11:13:15,6,2,0,1,0,5,1,no,0,0,0,none,0	//NJ_SHADOWJUMP#NJ_SHADOWJUMP#
 530,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//NJ_KIRIKAGE#NJ_KIRIKAGE#
@@ -557,12 +557,12 @@
 533,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//NJ_NINPOU#NJ_NINPOU#
 534,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//NJ_KOUENKA#NJ_KOUENKA#
 535,0,8,4,3,0,0,10,1,yes,0,0,0,magic,0	//NJ_KAENSIN#NJ_KAENSIN#
-536,9,8,1,3,2,1,5,3,yes,0,0,0,magic,0	//NJ_BAKUENRYU#NJ_BAKUENRYU#
+536,9,8,1,3,2,2,5,3,yes,0,0,0,magic,0	//NJ_BAKUENRYU#NJ_BAKUENRYU#
 537,9,8,1,1,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,0	//NJ_HYOUSENSOU#NJ_HYOUSENSOU#
 538,9,6,2,0,1,0,10,1,yes,0,0,0,magic,0	//NJ_SUITON#NJ_SUITON#
-539,0,6,4,1,1,0,5,1,yes,0,0,0,magic,0	//NJ_HYOUSYOURAKU#NJ_HYOUSYOURAKU#
+539,0,6,4,1,2,3,5,1,yes,0,0,0,magic,0	//NJ_HYOUSYOURAKU#NJ_HYOUSYOURAKU#
 540,9,8,1,4,0,0,10,-1:-2:-2:-3:-3:-4:-4:-5:-5:-6,yes,0,0,0,magic,0	//NJ_HUUJIN#NJ_HUUJIN#
-541,9,6,4,4,1,0,5,1,yes,0,0,0,magic,0	//NJ_RAIGEKISAI#NJ_RAIGEKISAI#
+541,9,6,4,4,2,2:2:3:3:4,5,1,yes,0,0,0,magic,0	//NJ_RAIGEKISAI#NJ_RAIGEKISAI#
 542,5:6:7:8:9,8,1,4,0,2,5,1,yes,0,0,0,magic,0	//NJ_KAMAITACHI#NJ_KAMAITACHI#
 543,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//NJ_NEN#NJ_NEN#
 544,-2,6,1,0,0,0,10,1,yes,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#

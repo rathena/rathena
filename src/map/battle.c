@@ -314,7 +314,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			rand()%100 < sc->data[SC_KAUPE].val2 &&
 			(src->type == BL_PC || !skill_num))
 		{	//Kaupe only blocks all skills of players.
-			clif_skill_nodamage(bl,bl,SL_KAUPE,1,1);
+			clif_specialeffect(bl, 462, AREA);
 			if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
 				status_change_end(bl, SC_KAUPE, -1);
 			return 0;
@@ -322,7 +322,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if(sc->data[SC_UTSUSEMI].timer != -1 && !skill_num)
 		{
-			clif_skill_nodamage(bl,bl,NJ_UTSUSEMI,1,1);
+			clif_specialeffect(bl, 462, AREA);
 			skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3);
 			if (--sc->data[SC_UTSUSEMI].val2 <= 0)
 				status_change_end(bl, SC_UTSUSEMI, -1);
@@ -331,7 +331,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&(BF_WEAPON|BF_MISC)) )
 		{
-			clif_skill_nodamage(bl,bl,NJ_BUNSINJYUTSU,1,1);
 			if (--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
 				status_change_end(bl, SC_BUNSINJYUTSU, -1);
 			return 0;
@@ -2347,8 +2346,8 @@ struct Damage battle_calc_magic_attack(
 					case NJ_KOUENKA:
 						skillratio -= 10;
 						break;
-					case NJ_HUUJIN:
-						skillratio += 50 + 50*skill_lv; // extrapolation from a vid (unsure)
+					case NJ_KAENSIN:
+						skillratio -= 40; // extrapolation from a vid (seems correct +/- 10%)
 						break;
 					case NJ_BAKUENRYU:
 						skillratio += 50*(skill_lv-1); // recorrected after calculation from vids
@@ -2360,6 +2359,9 @@ struct Damage battle_calc_magic_attack(
 						break;
 					case NJ_HYOUSYOURAKU:
 						skillratio += 50*skill_lv; // recorrected after calculation from vids
+						break;
+					case NJ_HUUJIN:
+						skillratio += 50 + 50*skill_lv; // extrapolation from a vid (unsure)
 						break;
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv; // idem

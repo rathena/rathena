@@ -1827,11 +1827,12 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if (attack_type&BF_MAGIC) {
 	 	if(sc && sc->data[SC_KAITE].timer != -1 && (dmg.damage || dmg.damage2)
-			&& !(sstatus->mode&MD_BOSS) && (sd || status_get_lv(dsrc) <= 80) 
-		) {	//Works on players or mobs with level under 80.
-			clif_skill_nodamage(bl,bl,SL_KAITE,sc->data[SC_KAITE].val1,1);
+			&& !(sstatus->mode&MD_BOSS) && (src->type == BL_PC || status_get_lv(src) <= 80) )
+		{	//Works on players or mobs with level under 80.
+			clif_specialeffect(bl, 438, AREA);
 			if (--sc->data[SC_KAITE].val2 <= 0)
 				status_change_end(bl, SC_KAITE, -1);
+			clif_skill_nodamage(bl,src,skillid,skilllv,1);
 			bl = src; //Just make the skill attack yourself @.@
 			sc = status_get_sc(bl);
 			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;
@@ -2010,7 +2011,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if (ud && ud->skilltarget == bl->id)
 				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, (lv!=0)?lv:skilllv, type);
 			else
-				dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5); //TODO: Check whether it's better to send -1 in skilllv or also send 0 as skillid, maybe even change this to a clif_damage packet?
+				dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,8,dmg.damage2); // can't know why 8, but it works for all skills...
 			break;
 		}
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
@@ -2081,7 +2082,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	if (dmg.blewcount > 0 && !status_isdead(bl))
-		skill_blown(dsrc,bl,dmg.blewcount);
+	{
+		if ( skillid != NJ_TATAMIGAESHI ) skill_blown(dsrc,bl,dmg.blewcount);
+		else skill_blown(src,bl,dmg.blewcount);
+	}
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
@@ -2824,40 +2828,39 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	//Splash attack skills.
+	case AS_SPLASHER:
+		if ( (flag&1) && bl->id != skill_area_temp[1] )
+		{
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, 1);
+			break;
+		}
 	case AS_GRIMTOOTH:
 	case MC_CARTREVOLUTION:	
 	case NPC_SPLASHATTACK:
-	case AC_SHOWER:	//Targetted skill implementation.
+	case AC_SHOWER:	
+	case MG_NAPALMBEAT:
+	case MG_FIREBALL:
+	case HW_NAPALMVULCAN:
+	case HT_BLITZBEAT:
+	case NJ_HUUMA:
 	case NJ_BAKUENRYU:
-		if(flag&1){
-			if(bl->id!=skill_area_temp[1]){
-				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,
-					0x0500);				
-			}
+		if (flag & 1) {	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
 		} else {
-			skill_area_temp[1]=bl->id;
+			if ( skillid == NJ_BAKUENRYU ) clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			if ( (skill_get_nk(skillid)&NK_SPLASHSPLIT) || (skillid==HT_BLITZBEAT && flag&0xf00000) ) //Warning, 0x100000 is currently BCT_NEUTRAL, so don't mix it when asking for the enemy. [Skotlex]
+				map_foreachinrange(skill_area_sub, bl, 
+					skill_get_splash(skillid, skilllv), BL_CHAR,
+					src, skillid, skilllv, tick, flag|BCT_ENEMY, skill_area_sub_count);
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
-			//Skill-attack at the end in case it has knockback. [Skotlex]
-			skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,0);
 		}
 		break;
 
-	case AS_SPLASHER:
-		if (flag & 1) {	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
-			if (bl->id != skill_area_temp[0])
-				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, 1);
-		} else {
-			skill_area_temp[0] = bl->id;
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY|1,
-				skill_castend_damage_id);
-			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, 0);
-		}
-		break;
 	case SM_MAGNUM:
 		if(flag&1)
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
@@ -3020,56 +3023,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, flag);
 	break;
 
-	case MG_NAPALMBEAT:
-	case MG_FIREBALL:
-		if (flag & 1) {
-			if (bl->id == skill_area_temp[1])
-				break;
-			if(skillid == MG_FIREBALL) //Store distance.	
-				skill_area_temp[0] = distance_blxy(bl, skill_area_temp[2], skill_area_temp[3]);
-			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick, skill_area_temp[0]| 0x0500);
-		} else {
-			skill_area_temp[0]=0;
-			skill_area_temp[1]=bl->id;
-			switch (skillid) {
-				case MG_NAPALMBEAT:
-					map_foreachinrange(skill_area_sub, bl,
-						skill_get_splash(skillid, skilllv),BL_CHAR,
-						src,skillid,skilllv,tick,flag|BCT_ENEMY,
-						skill_area_sub_count);
-					break;
-				case MG_FIREBALL:
-					skill_area_temp[2]=bl->x;
-					skill_area_temp[3]=bl->y;
-					break;
-			}
-			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick, skill_area_temp[0]);
-			map_foreachinrange(skill_area_sub,bl,
-				skill_get_splash(skillid, skilllv),BL_CHAR,
-				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
-		break;
-
-	case HW_NAPALMVULCAN: // Fixed By SteelViruZ
-		if (flag & 1) {
-			if (bl->id != skill_area_temp[1])
-				skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-		} else {
-			skill_area_temp[0] = 0;
-			skill_area_temp[1] = bl->id;
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY,
-				skill_area_sub_count);
-			skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
-		break;
-
 	case SL_STIN:
 	case SL_STUN:
 	case SL_SMA:
@@ -3079,22 +3032,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			break;
 		}
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-		break;
-		
-	case HT_BLITZBEAT:
-		if (flag & 1) {	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
-			skill_attack(BF_MISC, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-		} else {
-			skill_area_temp[0] = 0;
-			if (flag & 0xf00000) //Warning, 0x100000 is currently BCT_NEUTRAL, so don't mix it when asking for the enemy. [Skotlex]
-				map_foreachinrange(skill_area_sub, bl, 
-					skill_get_splash(skillid, skilllv), BL_CHAR,
-					src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
 		break;
 
 	case NPC_DARKBREATH:
@@ -3162,33 +3099,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				skill_castend_damage_id);
 		}
 		break;
-	case NJ_HUUMA:
-		if (flag & 1) {
-			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, skill_area_temp[0]);
-		} else {
-			skill_area_temp[0] = 0;
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY,
-				skill_area_sub_count);
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
-		}
-		break;
+
 	case NJ_KASUMIKIRI:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
-		status_change_end(src, SC_HIDING, -1);
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (unit_movepos(src, bl->x, bl->y, 0, 0))
-		{	//FIXME: Why are you sending a packet to LIE about where the character is?
-			//If you want to place yourself adjacent to the target, do the proper coding..?
-			int dir = unit_getdir(src);
-			clif_slide(src,src->x - dirx[dir],src->y - diry[dir]);
+		{
+			int dir = map_calc_dir(src,bl->x,bl->y);
+			status_change_end(src, SC_HIDING, -1);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			if (unit_movepos(src, bl->x - dirx[dir], bl->y - diry[dir], 0, 0)) // fixed... sorry for this o_O
+				clif_slide(src,bl->x - dirx[dir],bl->y - diry[dir]);
 		}
 		break;
 	case NJ_ISSEN:
@@ -4065,6 +3987,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			skill_castend_damage_id);
 		break;
 
+	case NJ_HYOUSYOURAKU:
+	case NJ_RAIGEKISAI:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 	case WZ_FROSTNOVA:
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
@@ -6706,7 +6631,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if (sd) val1 = sd->status.child;
 		break;
 	case NJ_KAENSIN:
-		skill_clear_group(src, 4); //Delete previous Kaensins
+		skill_clear_group(src, 1); //Delete previous Kaensins
 		val2 = (skilllv+1)/2 + 4;
 		break;
 
@@ -7231,6 +7156,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		}
 
 		case UNT_TATAMIGAESHI:
+		{
+			struct skill_unit_group *sug; // better name needed :D
+
+			if ( (sug = map_find_skill_unit_oncell(bl,bl->x,bl->y,NJ_TATAMIGAESHI,NULL)->group) != NULL )
+			{
+				if ( DIFF_TICK(gettick(), sug->tick) <= skill_get_time2(sg->skill_id, sg->skill_lv) )
+					skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+ 			}
+			break;
+		}
+
 		case UNT_DEMONSTRATION:
 			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
@@ -9207,11 +9143,8 @@ int skill_clear_group (struct block_list *bl, int flag)
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
-				if (flag&1)
-					group[count++]= ud->skillunit[i];
-				break;
 			case NJ_KAENSIN:
-				if (flag&4)
+				if (flag&1)
 					group[count++]= ud->skillunit[i];
 				break;
 			default:
@@ -9322,11 +9255,15 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 		case SA_VOLCANO:
 		case SA_DELUGE:
 		case SA_VIOLENTGALE:
+		case NJ_SUITON:
+		case NJ_KAENSIN:
 			switch (unit->group->skill_id)
 			{	//These override each other.
 				case SA_VOLCANO:
 				case SA_DELUGE:
 				case SA_VIOLENTGALE:
+				case NJ_SUITON:
+				case NJ_KAENSIN:
 					(*alive) = 0;
 					return 1;
 			}
@@ -10852,6 +10789,15 @@ void skill_init_unit_layout (void)
 					 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
 					 3, 3, 3};
 				skill_unit_layout[pos].count = 33;
+				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
+				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
+				break;
+			}
+			case NJ_KAENSIN:
+			{
+				static const int dx[] = {-2,-1, 0, 1, 2,-2,-1, 0, 1, 2,-2,-1, 1, 2,-2,-1, 0, 1, 2,-2,-1, 0, 1, 2,};
+				static const int dy[] = { 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2,};
+				skill_unit_layout[pos].count = 24;
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 				break;

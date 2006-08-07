@@ -23,7 +23,8 @@
 //Constants to identify a skill's nk value.
 //The NK value applies only to non INF_GROUND_SKILL skills.
 #define NK_NO_DAMAGE 0x1
-#define NK_SPLASH 0x2
+#define NK_SPLASH (0x2|0x4) // 0x4 = splash & split
+#define NK_SPLASHSPLIT 0x4
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
 #define INF2_QUEST_SKILL 1
@@ -938,9 +939,9 @@ enum {
 	UNT_SPIDERWEB,
 	UNT_GRAVITATION,
 	UNT_HERMODE,
-	UNT_TATAMIGAESHI, //0xba //Temporary setting until correct value is found.
+	UNT_DESPERADO, //0xba //Temporary setting until correct value is found.
 	UNT_SUITON = 0xbb,
-	UNT_DESPERADO, //NJ_TATAMIGAESHI is 0xbc as well?
+	UNT_TATAMIGAESHI,
 	UNT_KAENSIN,
 	//0xbe, 0xc0, 0xc1 //Maybe the other elements of Ground Drift?
 	UNT_GROUNDDRIFT = 0xc2,

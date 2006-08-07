@@ -395,7 +395,7 @@ enum {
 	SI_GATLINGFEVER		= 204,
 	SI_TKREST = 205, // 205 = Gloria again (but TK- Happy State looks like it)
 	SI_UTSUSEMI			= 206,
-	// 207 = crash (corresponds to SI_BUNSINJYUTSU). Must be fixed.
+	SI_BUNSINJYUTSU		= 207,
 	SI_NEN				= 208,
 	SI_ADJUSTMENT		= 209,
 	SI_ACCURACY			= 210
