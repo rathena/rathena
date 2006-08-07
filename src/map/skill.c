@@ -1705,6 +1705,8 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 		case BL_MOB:
 			if (((TBL_MOB*)target)->class_ == MOBID_EMPERIUM)
 				return 0;
+			if(src != target && is_boss(target)) //Bosses can't be knocked-back
+				return 0;
 			break;
 		case BL_SKILL:
 			su=(struct skill_unit *)target;
@@ -2938,14 +2940,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if(flag&1){
 			if (bl->id==skill_area_temp[1])
 				break;
-			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0x0500) && !status_get_mexp(bl))
+			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0x0500))
 				skill_blown(src,bl,skill_area_temp[2]);
 		} else {
 			int x=bl->x,y=bl->y,i,dir;
 			dir = map_calc_dir(bl,src->x,src->y);
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[2] = skill_get_blewcount(skillid,skilllv)|dir<<20;
-			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0) && !status_get_mexp(bl))
+			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0))
 				skill_blown(src,bl,skill_area_temp[2]);
 			for (i=0;i<4;i++) {
 				map_foreachincell(skill_area_sub,bl->m,x,y,BL_CHAR,

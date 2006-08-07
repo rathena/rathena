@@ -911,9 +911,6 @@ static struct Damage battle_calc_weapon_attack(
 			wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 	}
 	
-	if(is_boss(target)) //Bosses can't be knocked-back
-		wd.blewcount = 0;
-
 /* Apparently counter attack no longer causes you to be critical'ed by mobs. [Skotlex]
 	//Check for counter 
 	if(!skill_num)
@@ -1209,7 +1206,7 @@ static struct Damage battle_calc_weapon_attack(
 					(flag.arrow?2:0)|
 					(skill_num == HW_MAGICCRASHER?4:0)|
 					(skill_num == MO_EXTREMITYFIST?8:0)|
-					(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1)?8:0;
+					(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1?8:0);
 				if (flag.arrow && sd)
 				switch(sd->status.weapon) {
 				case W_BOW:
@@ -2215,9 +2212,6 @@ struct Damage battle_calc_magic_attack(
 			break;
 	}
 
-	if(is_boss(target)) //Bosses can't be knocked-back
-		ad.blewcount = 0;
-
 	if (!flag.infdef) //No need to do the math for plants
 	{
 
@@ -2526,9 +2520,6 @@ struct Damage  battle_calc_misc_attack(
 				md.blewcount += sd->skillblown[i].val;
 		}
 	}
-
-	if(is_boss(target))
-		md.blewcount = 0;
 
 	s_ele = skill_get_pl(skill_num);
 	if (s_ele < 0) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
@@ -3504,7 +3495,6 @@ static const struct battle_data_short {
 	{ "mob_count_rate",                    &battle_config.mob_count_rate			},
 	{ "mob_spawn_delay",                   &battle_config.mob_spawn_delay			},
 	{ "no_spawn_on_player",                &battle_config.no_spawn_on_player	},
-
 	{ "force_random_spawn",                &battle_config.force_random_spawn	},
 	{ "plant_spawn_delay",                 &battle_config.plant_spawn_delay			},
 	{ "boss_spawn_delay",                  &battle_config.boss_spawn_delay			},
