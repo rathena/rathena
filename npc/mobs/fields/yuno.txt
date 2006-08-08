@@ -75,9 +75,9 @@ yuno_fild04.gat,0,0,0,0	monster	Drops	1113,40,0,0,0
 yuno_fild04.gat,0,0,0,0	monster	Condor	1009,20,0,0,0
 yuno_fild04.gat,0,0,0,0	monster	Pupa	1008,10,0,0,0
 yuno_fild04.gat,0,0,0,0	monster	Mastering	1090,1,3600000,1800000,1
-yuno_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
-yuno_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
-yuno_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
+yuno_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,1800000,900000,1
+yuno_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,1800000,900000,1
+yuno_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,1800000,900000,1
 
 //==================================================
 // yuno_fild05 - El Mes Plateau
