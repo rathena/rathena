@@ -261,8 +261,7 @@ extern struct Battle_Config {
 	unsigned short making_arrow_name_input;
 	unsigned short holywater_name_input;
 	unsigned short cdp_name_input;
-	unsigned short display_delay_skill_fail;
-	unsigned short display_snatcher_skill_fail;
+	unsigned short display_skill_fail;
 	unsigned short chat_warpportal;
 	unsigned short mob_warp;
 	unsigned short dead_branch_active;

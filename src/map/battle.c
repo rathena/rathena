@@ -3604,8 +3604,7 @@ static const struct battle_data_short {
 	{ "making_arrow_name_input",           &battle_config.making_arrow_name_input	},
 	{ "holywater_name_input",              &battle_config.holywater_name_input		},
 	{ "cdp_name_input",                    &battle_config.cdp_name_input		},
-	{ "display_delay_skill_fail",          &battle_config.display_delay_skill_fail	},
-	{ "display_snatcher_skill_fail",       &battle_config.display_snatcher_skill_fail	},
+	{ "display_skill_fail",                &battle_config.display_skill_fail	},
 	{ "chat_warpportal",                   &battle_config.chat_warpportal			},
 	{ "mob_warp",                          &battle_config.mob_warp	},
 	{ "dead_branch_active",                &battle_config.dead_branch_active			},
@@ -4020,8 +4019,7 @@ void battle_set_defaults() {
 	battle_config.making_arrow_name_input = 1;
 	battle_config.holywater_name_input = 1;
 	battle_config.cdp_name_input = 1;
-	battle_config.display_delay_skill_fail = 1;
-	battle_config.display_snatcher_skill_fail = 1;
+	battle_config.display_skill_fail = 0;
 	battle_config.chat_warpportal = 0;
 	battle_config.mob_warp = 0;
 	battle_config.dead_branch_active = 0;

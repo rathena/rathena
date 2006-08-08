@@ -1057,8 +1057,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				(skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill,1);
-				else if (battle_config.display_snatcher_skill_fail)
-					clif_skill_fail(sd,skillid,0,0);
+				else
+					clif_skill_fail(sd,RG_SNATCHER,0,0);
 			}
 			// Chance to trigger Taekwon kicks [Dralnu]
 			if(sd->sc.count && sd->sc.data[SC_COMBO].timer == -1) {

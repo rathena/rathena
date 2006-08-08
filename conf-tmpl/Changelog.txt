@@ -1,5 +1,10 @@
 Date	Added
-
+2006/08/08
+	* Removed config settings display_delay_skill_fail and
+	  display_snatcher_skill_fail, replaced them with display_skill_fail, which
+	  can be used to determine whether you hide ALL skill-failed messages, those
+	  from delay, those from Snatcher or those from Envenom (battle/skill.conf)
+	  [Skotlex]
 2006/08/07
 	* Added config force_random_spawn which overrides the spawn-files defined
 	  coordinates to make all mobs always spawn randomly on the map. [Skotlex]

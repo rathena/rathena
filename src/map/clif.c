@@ -4489,11 +4489,16 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	
 	fd=sd->fd;
 
-	// reset all variables [celest]
-	// Should be handled now by the unit_* code.
-	sd->skillitem = sd->skillitemlv = -1;
+	if(battle_config.display_skill_fail&1)
+		return 0; //Disable all skill failed messages
 
 	if(type==0x4 && !sd->state.showdelay)
+		return 0; //Disable delay failed messages
+	
+	if(skill_id == RG_SNATCHER && battle_config.display_skill_fail&4)
+		return 0;
+
+	if(skill_id == TF_POISON && battle_config.display_skill_fail&8)
 		return 0;
 
 	WFIFOHEAD(fd,packet_len_table[0x110]);
@@ -4505,7 +4510,7 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	WFIFOB(fd,9) = type;
 	WFIFOSET(fd,packet_len_table[0x110]);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
