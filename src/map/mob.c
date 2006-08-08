@@ -1801,8 +1801,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 
-		if (bonus > 400) bonus = 400; //Limit gained exp to quadro the mob's exp. [3->4 Komurka]
-
 		if(battle_config.zeny_from_mobs && md->level) {
 			 // zeny calculation moblv + random moblv [Valaris]
 			zeny=(int) ((md->level+rand()%md->level)*per*bonus/100.);

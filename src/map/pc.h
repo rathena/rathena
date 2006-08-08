@@ -64,8 +64,9 @@ enum {
 	EQP_AMMO     = 0x8000, //32768
 } equip_pos_enum;
 
-#define EQP_WEAPON (EQP_HAND_R|EQP_HAND_L)
+#define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
+#define EQP_ARMS (EQP_HAND_R|EQP_HAND_L)
 #define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
 

@@ -1664,8 +1664,8 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 				case EQI_HAND_R: //Left/Right hands
 				case EQI_HAND_L:
 					flag = (
-						(where&EQP_WEAPON && sd->inventory_data[j]->type == 4) ||
-						(where&EQP_SHIELD && sd->inventory_data[j]->type == 5));
+						(where&EQP_WEAPON && sd->inventory_data[j]->type == IT_WEAPON) ||
+						(where&EQP_SHIELD && sd->inventory_data[j]->type == IT_ARMOR));
 					break;
 				default:
 					continue;

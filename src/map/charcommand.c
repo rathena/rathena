@@ -783,11 +783,11 @@ charcommand_itemlist(
 							strcat(equipstr, "left accessory, ");
 						if (equip & EQP_ARMOR)
 							strcat(equipstr, "body/armor, ");
-						if ((equip & EQP_WEAPON) == EQP_HAND_R)
+						if ((equip & EQP_ARMS) == EQP_HAND_R)
 							strcat(equipstr, "right hand, ");
-						if ((equip & EQP_WEAPON) == EQP_HAND_L)
+						if ((equip & EQP_ARMS) == EQP_HAND_L)
 							strcat(equipstr, "left hand, ");
-						if ((equip & EQP_WEAPON) == EQP_WEAPON)
+						if ((equip & EQP_ARMS) == EQP_ARMS)
 							strcat(equipstr, "both hands, ");
 						if (equip & EQP_SHOES)
 							strcat(equipstr, "feet, ");
