@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/08
+	* Made PF_FOGWALL a targetted skill. [Skotlex]
 08/07
 	* Slightly increased drop rate of some low-level guns [Playtester]
 	- also lowered drop rate of Armor Charm to 0.01% again

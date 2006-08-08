@@ -3233,7 +3233,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 		default:
 			//Skill is actually ground placed.
-			if (src == bl && skill_get_unit_id(skillid,0))
+			if ((src == bl || skillid == PF_SPIDERWEB) && skill_get_unit_id(skillid,0))
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
@@ -5768,8 +5768,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			if (sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
 		}
-		if (target && target->m == src->m)
-		{	//Move character to target anyway.
+		if (target && target->m == src->m &&
+			(tid == -1 || status_check_skilluse(src, target, ud->skillid, 1))
+		)	{	//Move character to target anyway.
 			int dx,dy;
 			dx = target->x - src->x;
 			dy = target->y - src->y;

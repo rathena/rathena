@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/08
+	* Added a check to handle Spider Web as a targetted skill. If there's more
+	  than one character on the targetted cell, a different one may get trapped,
+	  but it will mostly do as it is now. [Skotlex]
+	* Added check to Asura so that it will move you to the target when it fails
+	  ONLY when you can cast the skill on the target (not stunned, asleep, target
+	  not hidden, etc) [Skotlex]
 	* Changed the map_freeblock_unlock code so that when there's an "already
 	  free'd pointer" error, the memory manager will print out the invoking
 	  function rather than map_freeblock_unlock, this should help fix it up next

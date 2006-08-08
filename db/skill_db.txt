@@ -425,7 +425,7 @@
 402,9,6,1,0,1,0,5,1,no,0,0,0,none,0	//PF_MINDBREAKER#Mind Breaker#
 403,0,0,4,0,1,0,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#Foresight#
 404,9,6,2,2,1,0,5,1,yes,0,256,2,magic,0	//PF_FOGWALL#Blinding Mist#
-405,7,6,2,0,1,0,1,1,no,0,128,3,magic,0	//PF_SPIDERWEB#Fiber Lock#
+405,7,6,1,0,1,0,1,1,no,0,128,3,magic,0	//PF_SPIDERWEB#Fiber Lock#
 406,0,6,4,-1,2,2,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#Meteor Assault#
 407,0,6,4,0,1,0,1,0,no,0,0,0,none,0	//ASC_CDP#Create Deadly Poison#
 408,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_BABY#Baby#
