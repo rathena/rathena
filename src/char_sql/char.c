@@ -2582,6 +2582,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
 		{
+			//TODO: When data mismatches memory, update guild/party online/offline states.
 			int i, aid, cid;
 			struct online_char_data* character;
 

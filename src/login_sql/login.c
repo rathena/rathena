@@ -1242,10 +1242,10 @@ int parse_fromchar(int fd){
 			}
 
 			if (strcmpi(sql_row[0], "M") == 0)
-				sex = 1;
+				sex = 0; //Change to female
 			else
-				sex = 0;
-			sprintf(tmpsql,"UPDATE `%s` SET `sex` = '%c' WHERE `%s` = '%d'", login_db, (sex==0?'M':'F'), login_db_account_id, acc);
+				sex = 1; //Change to make
+			sprintf(tmpsql,"UPDATE `%s` SET `sex` = '%c' WHERE `%s` = '%d'", login_db, (sex?'M':'F'), login_db_account_id, acc);
 			//query
 			if(mysql_query(&mysql_handle, tmpsql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));

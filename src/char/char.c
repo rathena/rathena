@@ -2735,6 +2735,7 @@ int parse_frommap(int fd) {
 		case 0x2aff:
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
+			//TODO: When data mismatches memory, update guild/party online/offline states.
 			server[id].users = RFIFOW(fd,4);
 			// add online players in the list by [Yor], adapted to use dbs by [Skotlex]
 			j = 0;

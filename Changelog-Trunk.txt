@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/07
+	* Fixed the login-sql server replying to the change-sex packet with the
+	  wrong gender, causing the char-server to screw-up job-change updates.
+	  [Skotlex]
 	* Cleaned up the apparent mess that is pc_skill. Hopefully it SHOULD work as
 	  described on the docs now, this should also fix adopting not correctly
 	  giving the family-related skills. The flag value of skill should be: 0 to
