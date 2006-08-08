@@ -3267,7 +3267,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	{	//Misc map-changing settings
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
-		skill_clear_group(&sd->bl, 1|4|(battle_config.traps_setting&2));
+		skill_clear_group(&sd->bl, 1|(battle_config.traps_setting&2));
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
 			if (sd->sc.data[SC_WARM].timer != -1)

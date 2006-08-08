@@ -3359,7 +3359,8 @@ static int mob_readdb(void)
 					if (k == MAX_SEARCH)
 						continue;
 				
-					memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+					if (id->mob[k].id != class_)
+						memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
 					id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
 					id->mob[k].id = class_;
 				}
@@ -4028,8 +4029,8 @@ static int mob_read_sqldb(void)
 						}
 						if (k == MAX_SEARCH)
 							continue;
-					
-						memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
+						if (id->mob[k].id != class_)
+							memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
 						id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
 						id->mob[k].id = class_;
 					}

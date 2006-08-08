@@ -2732,8 +2732,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case TK_JUMPKICK:
-		if (skillid == TK_JUMPKICK)
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
 			clif_slide(src,bl->x,bl->y);
 		break;
@@ -6661,7 +6660,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if (sd) val1 = sd->status.child;
 		break;
 	case NJ_KAENSIN:
-		skill_clear_group(src, 4); //Delete previous Kaensins
+		skill_clear_group(src, 1); //Delete previous Kaensins/Suitons
 		val2 = (skilllv+1)/2 + 4;
 		break;
 
@@ -9162,11 +9161,8 @@ int skill_clear_group (struct block_list *bl, int flag)
 			case SA_VIOLENTGALE:
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
-				if (flag&1)
-					group[count++]= ud->skillunit[i];
-				break;
 			case NJ_KAENSIN:
-				if (flag&4)
+				if (flag&1)
 					group[count++]= ud->skillunit[i];
 				break;
 			default:
@@ -9876,9 +9872,7 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 	struct skill_unit_group *group;
 	unsigned int tick;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, unit=(struct skill_unit *)bl);
+	unit=(struct skill_unit *)bl;
 	tick=va_arg(ap,unsigned int);
 
 	if(!unit->alive)

@@ -6523,9 +6523,7 @@ int atcommand_unjail(
 		return -1;
 	}
 
-	m_index = mapindex_name2id(MAP_JAIL);
-
-	if (pl_sd->mapindex != m_index) {
+	if (pl_sd->mapindex != mapindex_name2id(MAP_JAIL)) {
 		clif_displaymessage(fd, msg_table[119]); // This player is not in jails.
 		return -1;
 	}
@@ -6536,7 +6534,8 @@ int atcommand_unjail(
 		x =  pl_sd->sc.data[SC_JAILED].val4&0xFFFF;
 		y =  pl_sd->sc.data[SC_JAILED].val4>>16;
 		status_change_end(&pl_sd->bl,SC_JAILED,-1);
-	}
+	} else
+		m_index = mapindex_name2id(MAP_PRONTERA);
 	
 	if (pc_setpos(pl_sd, m_index, x, y, 3) == 0 ||
  		pc_setpos(pl_sd, mapindex_name2id(MAP_PRONTERA), 0, 0, 3) == 0
