@@ -2348,7 +2348,11 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 }
 
 /*==========================================
- * スクリプトによるスキル所得
+ *	Grants a player a given skill. Flag values are:
+ *	0 - Grant skill unconditionally and forever (only this one invokes status_calc_pc,
+ *	    as the other two are assumed to be invoked from within it)
+ *	1 - Grant an item skill (temporary)
+ *	2 - Like 1, except the level granted can stack with previously learned level.
  *------------------------------------------
  */
 int pc_skill(struct map_session_data *sd,int id,int level,int flag)
@@ -2360,30 +2364,43 @@ int pc_skill(struct map_session_data *sd,int id,int level,int flag)
 			ShowError("pc_skill: Skill level %d too high. Max lv supported is MAX_SKILL_LEVEL (%d)\n", level, MAX_SKILL_LEVEL);
 		return 0;
 	}
-	if(!flag && (sd->status.skill[id].id == id || level == 0)){	// クエスト所得ならここで?件を確認して送信する
+	switch (flag) {
+	case 0: //Set skill data overwriting whatever was there before.
+		sd->status.skill[id].id=id;
 		sd->status.skill[id].lv=level;
+		sd->status.skill[id].flag=0;
+		if (!level) //Remove skill.
+			sd->status.skill[id].id = 0;
 		if (!skill_get_inf(id)) //Only recalculate for passive skills.
 			status_calc_pc(sd,0);
 		clif_skillinfoblock(sd);
-	}
-	else if(flag==2 && (sd->status.skill[id].id == id || level == 0)){	// クエスト所得ならここで?件を確認して送信する
+	break;
+	case 2: //Add skill bonus on top of what you had.
+		if (sd->status.skill[id].id==id) {
+			if (!sd->status.skill[id].flag)
+				sd->status.skill[id].flag=sd->status.skill[id].lv+2; //Store previous level.
+		} else {
+			sd->status.skill[id].id=id;
+			sd->status.skill[id].flag=1; //Set that this is a bonus skill.
+		}
 		sd->status.skill[id].lv+=level;
-		if (!skill_get_inf(id)) //Only recalculate for passive skills.
-			status_calc_pc(sd,0);
-		clif_skillinfoblock(sd);
-	}
-	else if(sd->status.skill[id].lv < level){	// ?えられるがlvが小さいなら
+	break;
+	case 1: //Item bonus skill.
+		if(sd->status.skill[id].lv >= level)
+			return 0;
 		if(sd->status.skill[id].id==id) {
 			if (!sd->status.skill[id].flag) //Non-granted skill, store it's level.
 				sd->status.skill[id].flag=sd->status.skill[id].lv+2;
 		} else {
 			sd->status.skill[id].id=id;
-			sd->status.skill[id].flag=1;	// cardスキルとする
+			sd->status.skill[id].flag=1;
 		}
 		sd->status.skill[id].lv=level;
+	break;
+	default: //Unknown flag?
+		return 0;
 	}
-
-	return 0;
+	return 1;
 }
 /*==========================================
  * カ?ド?入
