@@ -1775,7 +1775,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	struct Damage dmg;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc;
-	struct map_session_data *sd=NULL, *tsd=NULL;
+	struct map_session_data *sd, *tsd;
 	int type,lv,damage,rdamage=0;
 
 	if(skillid > 0 && skilllv <= 0) return 0;
@@ -1793,11 +1793,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if (!status_check_skilluse(dsrc, bl, skillid, 2))
 			return 0;
 	}
-	
-	if (dsrc->type == BL_PC)
-		sd = (struct map_session_data *)dsrc;
-	if (bl->type == BL_PC)
-		tsd = (struct map_session_data *)bl;
+
+	BL_CAST(BL_PC, dsrc, sd);
+	BL_CAST(BL_PC, bl, tsd);
 
 	sstatus = status_get_status_data(dsrc);
 	tstatus = status_get_status_data(bl);
@@ -2111,7 +2109,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
-		battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+		if (tsd && src != bl)
+			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 		skill_additional_effect(bl,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
 	}
 
@@ -2849,8 +2848,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				map_foreachinrange(skill_area_sub, bl, 
 					skill_get_splash(skillid, skilllv), BL_CHAR,
 					src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-			else
-				skill_area_temp[0] = 1;
+			else if (skillid==AS_SPLASHER) //Need split damage anyway.
+				skill_area_temp[0] = 2;
 
 			map_foreachinrange(skill_area_sub, bl,
 				skill_get_splash(skillid, skilllv), BL_CHAR,
@@ -3697,6 +3696,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_KASUMIKIRI:
 	case NJ_UTSUSEMI:
 	case NJ_NEN:
+	case HLIF_AVOID:	//[orn]
+	case HAMI_DEFENCE:	//[orn]
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -5447,8 +5448,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	
 	case AM_CALLHOMUN:	//[orn]
-	{
-		int i = 0;
 		if (sd)
 		{
 			if ((sd->status.hom_id == 0 || sd->homunculus.vaporize == 1)) {
@@ -5466,7 +5465,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_fail(sd,skillid,0,0);
 		}
 		break;
-	}
+
 	case AM_REST:	//[orn]
 	{
 		if (sd)
@@ -5502,31 +5501,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	}
 
 	case HAMI_CASTLE:	//[orn]
+		if(rand()%100 > 20*skilllv || src == bl)
+			break; //Failed.
 		{
-			if(hd && rand()%100 < 20*skilllv)
-			{
-				int x,y;
-				struct walkpath_data wpd;
-				struct map_session_data *sd = hd->master;
-				if( path_search(&wpd,hd->bl.m,hd->bl.x,hd->bl.y,sd->bl.x,sd->bl.y,0) != 0 ) {
-					clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
+			int x,y;
+			x = src->x;
+			y = src->y;
 
-				clif_skill_nodamage(&hd->bl,&sd->bl,skillid,skilllv,1);
+			if (unit_movepos(src,bl->x,bl->y,0,0)) {
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				clif_fixpos(src) ;
+				if (unit_movepos(bl,x,y,0,0))
+					clif_fixpos(bl) ;
 
-				x = hd->bl.x;
-				y = hd->bl.y;
-
-				unit_movepos(&hd->bl,sd->bl.x,sd->bl.y,0,0);
-				unit_movepos(&sd->bl,x,y,0,0);
-				clif_fixpos(&hd->bl) ;
-				clif_fixpos(&sd->bl) ;
-
-				map_foreachinarea(skill_chastle_mob_changetarget,hd->bl.m,
-						  hd->bl.x-AREA_SIZE,hd->bl.y-AREA_SIZE,
-						  hd->bl.x+AREA_SIZE,hd->bl.y+AREA_SIZE,
-						  BL_MOB,&hd->master->bl,&hd->bl);
+				//TODO: Shouldn't also players and the like switch targets?
+				map_foreachinrange(skill_chastle_mob_changetarget,src,
+					AREA_SIZE, BL_MOB, bl, src);
 			}
 		}
 		break;
@@ -5560,12 +5550,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 		}
 		break;
-	case HLIF_AVOID:	//[orn]
-	case HAMI_DEFENCE:	//[orn]
-		if ( hd ) {
-			clif_skill_nodamage(src,&hd->master->bl,skillid,skilllv,
-				sc_start(&hd->master->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
-		}
 	case HAMI_BLOODLUST:	//[orn]
 	case HFLI_FLEET:	//[orn]
 	case HFLI_SPEED:	//[orn]
@@ -5772,8 +5756,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		return 1;
 	} while(0);
 	//Skill failed.
-	if (ud->skillid == MO_EXTREMITYFIST && sd)
-  	{	//When Asura fails...
+	if (ud->skillid == MO_EXTREMITYFIST && sd &&
+		!(sc && sc->count && sc->data[SC_FOGWALL].timer != -1))
+  	{	//When Asura fails... (except when it fails from Fog of Wall)
 		//Consume SP/spheres
 		skill_check_condition(sd,ud->skillid, ud->skilllv,1);
 		sc = &sd->sc;
@@ -8574,7 +8559,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		else
 			time = battle_config.default_skill_delay;
 	} else if (time < 0)
-		time = -time + status_get_adelay(bl);	// if set to <0, the attack delay is added.
+		time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
 
 	if (battle_config.delay_dependon_dex && !(delaynodex&1))
 	{	// if skill casttime is allowed to be reduced by dex
@@ -9354,12 +9339,17 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap)
 {
 	struct mob_data* md;
+	struct unit_data*ud = unit_bl2ud(bl);
 	struct block_list *from_bl;
 	struct block_list *to_bl;
-	nullpo_retr(0, md = (struct mob_data*)bl);
-	nullpo_retr(0, from_bl = va_arg(ap,struct block_list *));
-	nullpo_retr(0, to_bl = va_arg(ap,struct block_list *));
-	if(md->target_id == from_bl->id)
+	md = (struct mob_data*)bl;
+	from_bl = va_arg(ap,struct block_list *);
+	to_bl = va_arg(ap,struct block_list *);
+
+	if(ud && ud->target == from_bl->id)
+		ud->target = to_bl->id;
+
+	if(md->bl.type == BL_MOB && md->target_id == from_bl->id)
 		md->target_id = to_bl->id;
 	return 0;
 }

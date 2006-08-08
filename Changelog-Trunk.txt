@@ -3,6 +3,20 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/08/08
+	* Fixed yet again AS_SPLASHER doing full damage on all characters. Now you
+	  can use the NK split damage value in the skill_db if you want damage
+	  divided by the amount of targets rather than by 2. [Skotlex]
+	* Fixed crash on the battle_drain functions. [Skotlex]
+	* Cleaned up HAMI_CASTLE, HLIF_AVOID, HAMI_DEFENCE so that it's usable by
+	  other types of objects other than Homunculus. [Skotlex]
+	* Cleaned up the Asura Strike code so that the SP/Spheres/States is not
+	  consumed when the skill fails due to Fog of Wall. [Skotlex]
+	* When a negative delay for a skill is specified, this delay is now added
+	  on top of the character's amotion rather than adelay [Skotlex]
+	* Modified main.sql to make the guild table allow NULL on the emblem data.
+	  [Skotlex]
+	* Added file conf-tmpl/Changelog.txt to log config changes. [Skotlex]
 2006/08/07
 	* Fixed the login-sql server replying to the change-sex packet with the
 	  wrong gender, causing the char-server to screw-up job-change updates.

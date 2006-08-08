@@ -1451,7 +1451,7 @@ static struct Damage battle_calc_weapon_attack(
 				case AS_SPLASHER:
 					i = 400+50*skill_lv;
 					if (sd) i += 20*pc_checkskill(sd,AS_POISONREACT);
-					if (wflag) i/=2; //Splash damage is half.
+					if (wflag>1) i/=wflag; //Splash damage is half.
 					skillratio += i;
 					flag.cardfix = 0;
 					break;
@@ -3044,7 +3044,8 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	}
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
 
-		battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
+		if(tsd && src != target)
+			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
 	}
 
@@ -3088,7 +3089,7 @@ int battle_check_undead(int race,int element)
 }
 
 //Returns the upmost level master starting with the given object
-static struct block_list* battle_get_master(struct block_list *src)
+struct block_list* battle_get_master(struct block_list *src)
 {
 	struct block_list *prev; //Used for infinite loop check (master of yourself?)
 	do {

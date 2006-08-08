@@ -1,0 +1,35 @@
+Date	Added
+
+2006/08/07
+	* Added config force_random_spawn which overrides the spawn-files defined
+	  coordinates to make all mobs always spawn randomly on the map. [Skotlex]
+	* SC_SPEEDUP0 is no longer dispellable by SA_DISPEL [Skotlex]
+2006/08/04
+	* Removed settings enemy_critical_rate, homun_critical_rate. Added settings
+	  enable_critical (defaults to specify only players), mob_critical_rate and
+	  critical_rate. The last applies to all non-mobs and non-players
+	  (battle/battle.conf) [Skotlex]
+	* Removed settings mob_npc_warp, mob_warpportal. Replaced with setting
+	  mob_warp which specifies which types of warp can a mob step into
+	  (battle/monster.conf) [Skotlex]
+	* Changed name of the setting log_pick to log_filter since that's what it
+	  does now. [Skotlex]
+	* Modified enable_logs so that instead of a 0/1 setting, you can specify
+	  which kind of events to log (so you can use a combination), see log_athena
+	  for the bitmask configuration. [Skotlex]
+	* Cleaned a bit the contents of log_athena.conf
+2006/08/02
+	* Updated status_cast_cancel to also include silence (so the cast bar is
+	  cancelled if you are silenced during it) [Skotlex]
+2006/08/01
+	* merged in atcommands jailfor, jailtime, charjailtime. Thanks to Meruru
+	  and Coltaro for the code. [Skotlex]
+	* Expanded setting debuff_on_logout so that &1 removes negative buffs and
+	  &2 removes positive buffs. [Skotlex]
+	* Added battle config file status.conf, moved some settings from skill.conf
+	  and battle.conf to it since they are entirely Status-Change related.
+	  [Skotlex]
+2006/07/27
+	* Added config setting party_update_interval so you can specify how often
+	  the party-mate minidots should be updated (defaults to 1 sec). [Skotlex]
+	* Removed a bunch of broken comments in skill.c [Skotlex]

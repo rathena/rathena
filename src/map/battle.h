@@ -55,6 +55,7 @@ int battle_weapon_attack( struct block_list *bl,struct block_list *target,
 	 unsigned int tick,int flag);
 
 // 各種パラメータを得る
+struct block_list* battle_get_master(struct block_list *src);
 struct block_list* battle_gettargeted(struct block_list *target);
 int battle_gettarget(struct block_list *bl);
 int battle_getcurrentskill(struct block_list *bl);

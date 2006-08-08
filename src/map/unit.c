@@ -786,6 +786,16 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		if (target)
 			target_id = target->id;
 	}
+	if (src->type==BL_HOM)
+	switch(skill_num)
+	{ //Homun-auto-target skills.
+		case HLIF_AVOID:
+		case HAMI_DEFENCE:
+		case HAMI_CASTLE:
+			target = battle_get_master(src);
+			if (!target) return 0;
+	}
+
 	if(!target && (target=map_id2bl(target_id)) == NULL )
 		return 0;
 	if(src->m != target->m)
