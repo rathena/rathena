@@ -5786,6 +5786,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
   	{	//When Asura fails... (except when it fails from Fog of Wall)
 		//Consume SP/spheres
 		skill_check_condition(sd,ud->skillid, ud->skilllv,1);
+		status_set_sp(src, 0, 0);
 		sc = &sd->sc;
 		if (sc->count)
 		{	//End states
