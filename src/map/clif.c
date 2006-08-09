@@ -9556,10 +9556,17 @@ void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 	RFIFOHEAD(fd);	
 	t_sd = map_id2sd(RFIFOL(sd->fd,2));
 
-	// @noask [LuzZza]
-	if(t_sd && t_sd->state.noask) {
-		clif_noask_sub(sd, t_sd, 0);
+	if(clif_cant_act(sd))
 		return;
+
+	// @noask [LuzZza]
+	if(t_sd) {
+	 	if (t_sd->state.noask) {
+			clif_noask_sub(sd, t_sd, 0);
+			return;
+		}
+		if(clif_cant_act(t_sd))
+			return;
 	}
 
 	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 1){

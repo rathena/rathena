@@ -4029,7 +4029,7 @@ void battle_set_defaults() {
 	battle_config.party_share_type = 0;
 	battle_config.party_hp_mode = 0;
 	battle_config.party_show_share_picker = 0;
-	battle_config.attack_attr_none = 0;
+	battle_config.attack_attr_none = ~BL_PC;
 	battle_config.mob_ghostring_fix = 1;
 	battle_config.gx_allhit = 1;
 	battle_config.gx_disptype = 1;

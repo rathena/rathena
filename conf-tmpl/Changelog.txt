@@ -1,4 +1,8 @@
 Date	Added
+2006/08/09
+	* Change the default of attack_attr_none to all classes except players.
+	  This means that pet/mobs/homun will always do normal attacks with
+	  no-element modifiers (but elemental reduction cards still apply) [Skotlex]
 2006/08/08
 	* Removed config settings display_delay_skill_fail and
 	  display_snatcher_skill_fail, replaced them with display_skill_fail, which
