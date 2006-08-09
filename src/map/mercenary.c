@@ -186,7 +186,7 @@ int merc_hom_checkskill(struct map_session_data *sd,int skill_id)
 	return 0;
 }
 
-static int merc_skill_tree_get_max(int id, int b_class){
+int merc_skill_tree_get_max(int id, int b_class){
 	int i, skillid;
 	for(i=0;(skillid=hskill_tree[b_class-6001][i].id)>0;i++)
 		if (id == skillid) return hskill_tree[b_class-6001][i].max;

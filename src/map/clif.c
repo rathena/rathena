@@ -1531,7 +1531,7 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->homunculus.hskill[j].lv) ;
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,sd->homunculus.hskill[j].lv) ;
 			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
-				WFIFOB(fd,len+36) = 1;//0;
+			WFIFOB(fd,len+36) = (sd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, sd->homunculus.class_))?1:0;
 			len+=37;
 			c++;
 		}
@@ -1546,10 +1546,10 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 	int range,fd,skillid;
 
 	nullpo_retv(sd);
-	skillid = skill_num - HM_SKILLBASE ;
+	skillid = skill_num - HM_SKILLBASE - 1;
 
 	fd=sd->fd;
-	WFIFOW(fd,0) = 0x10e;
+	WFIFOW(fd,0) = 0x239;
 	WFIFOW(fd,2) = skill_num;
 	WFIFOW(fd,4) = sd->homunculus.hskill[skillid].lv;
 	WFIFOW(fd,6) = skill_get_sp(skill_num,sd->homunculus.hskill[skillid].lv);
