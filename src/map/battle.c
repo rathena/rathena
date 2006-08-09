@@ -1943,23 +1943,23 @@ static struct Damage battle_calc_weapon_attack(
 	
 	if(sd && !skill_num && !flag.cri)
 	{	//Check for double attack.
-		if(( (skill_lv = 5*pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER) ||
-			sd->double_rate > 0) //Success chance is not added, the higher one is used? [Skotlex]
-		{
-			if (rand()%100 < (skill_lv>sd->double_rate?skill_lv:sd->double_rate))
+		if(((skill_lv = pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER) || sd->double_rate > 0)
+		{	//Success chance is not added, the higher one is used [Skotlex]
+			if (rand()%100 < (5*skill_lv>sd->double_rate?5*skill_lv:sd->double_rate))
 			{
-				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv/5:1);
+				wd.div_=skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				damage_div_fix(wd.damage, wd.div_);
 				wd.type = 0x08;
 			}
-		} else if ((skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0 && sd->weapontype1 == W_REVOLVER)
+		} else
+	  	if (sd->weapontype1 == W_REVOLVER &&
+			(skill_lv = pc_checkskill(sd,GS_CHAINACTION)) > 0 &&
+			(rand()%100 < 5*skill_lv)
+			)
 		{
-			if (rand()%100 < 5*skill_lv)
-			{
-				wd.div_=skill_get_num(GS_CHAINACTION,skill_lv);
-				damage_div_fix(wd.damage, wd.div_);
-				wd.type = 0x08;
-			}
+			wd.div_=skill_get_num(GS_CHAINACTION,skill_lv);
+			damage_div_fix(wd.damage, wd.div_);
+			wd.type = 0x08;
 		}
 	}
 	
@@ -2460,7 +2460,7 @@ struct Damage battle_calc_magic_attack(
 	damage_div_fix(ad.damage, ad.div_);
 	
 	if (flag.infdef && ad.damage)
-		ad.damage/= ad.damage; //Why this? Because, well, if damage is absorbed, it should heal 1, not do 1 dmg.
+		ad.damage = ad.damage>0?1:-1;
 		
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	if (map_flag_gvg(target->m))
@@ -2747,10 +2747,8 @@ struct Damage battle_calc_attack(	int attack_type,
 		break;
 	}
 	if (d.damage + d.damage2 < 1 && d.dmg_lv != ATK_LUCKY)
-	{	//Miss/Absorbed
-		d.dmg_lv = ATK_FLEE;
+		//Miss/Absorbed
 		d.dmotion = 0;
-	}
 	return d;
 }
 
