@@ -254,7 +254,7 @@
 //-- Bear Foot Dish <-- 20 Bear's Footskin, 10 Carrot, 10 Jack o' Pumpkin, 2 Aloe Leaflet, 1 Hinalle Leaflet, 1 Plain Sauce
 12073,18,0,7479,0,948,20,515,10,1062,10,521,2,520,1,7454,1
 //-- Royal Tea <-- 4 Prickly Fruit, 10 Hinalle Leaflet, 3 Yggdrasil Leaf, 10 Aloe Leaflet, 6 Royal Jelly, 1 Yellow Spice
-12078,18,0,7479,0,576,4,520,10,610,3,521,10,526,6,7453,1
+12078,18,0,7479,0,576,4,520,10,610,3,521,10,526,6,7452,1
 //-- Special Toast <-- 10 Bread, 2 Royal Jelly, 5 Meat, 10 Strawberry, 1 Hot Sauce, 10 Cheese, 1 Sweet Sauce
 12093,18,0,7479,0,580,10,526,2,517,5,578,10,7455,1,548,10,7453,1
 //-- Very Hot Curry <-- 1 Aloevera, 1 Hot Sauce, 10 Meat, 10 Hinalle Leaflet, 10 Jack o' Pumpkin, 10 Carrot
