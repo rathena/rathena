@@ -20,6 +20,7 @@
 
 =========================
 08/08
+	* Item name update [Vicious]
 	* Made PF_FOGWALL a targetted skill. [Skotlex]
 08/07
 	* Slightly increased drop rate of some low-level guns [Playtester]
