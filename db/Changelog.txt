@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/08
+	* Fixed Rapid Shower only using 1 bullet rather than 5 [Playtester]
 08/08
 	* Item name update [Vicious]
 	* Made PF_FOGWALL a targetted skill. [Skotlex]
