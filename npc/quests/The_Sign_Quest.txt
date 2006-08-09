@@ -9664,7 +9664,7 @@ que_sign01.gat,178,19,0	script	#serinwarp2	45,1,1,{
 
 geffen.gat,119,55,1	script	GeffeniaWarper	45,2,2,{
 
-	switch(rand(1,4))
+	switch($GeffeniaWarp)
 	{
 
 	case 1:
@@ -9730,9 +9730,9 @@ L_Lament:
 
 L_Throw:
 	misceffect 247;
+	set $GeffeniaWarp,rand(1,4);
 	enablenpc "GeffeniaWarper";
 	donpcevent "GeffeniaWarper::OnWarping";
-	set $GeffeniaWarp,1;
 	mes "^3355FFOnce the Lucifer's Lament";
 	mes "splashes into the water, the";
 	mes "light reveals a peculiar warp";
