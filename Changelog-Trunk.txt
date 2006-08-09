@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/09
+	* Adjusted some the dance/song/encore code so that the source of an
+	  ensemble will always get checked, so that walking out of an ensemble skill
+	  should make it end now. However, it's likely this is not completely solved
+	  yet and will require further tweaking. [Skotlex]
 	* Added crash protection to the mob_db txt reading when the mob_db file has
 	  lines with insufficient number of columns. [Skotlex]
 	* Moved the class-change code from battle_calc_weapon_attack to

@@ -323,7 +323,7 @@ struct skill_unit_group {
 		unsigned ammo_consume : 1;
 		unsigned magic_power : 1;
 		unsigned into_abyss : 1;
-		unsigned song_dance : 1;
+		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 	} state;
 };
 struct skill_unit_group_tickset {

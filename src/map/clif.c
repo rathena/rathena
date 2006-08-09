@@ -4748,7 +4748,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 		WBUFL(buf, 6)=unit->group->src_id;
 		WBUFW(buf,10)=unit->bl.x;
 		WBUFW(buf,12)=unit->bl.y;
-		if (unit->group->state.song_dance && unit->val2&UF_ENSEMBLE) {
+		if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) {
 			WBUFB(buf,14)=unit->val2&UF_SONG?UNT_DISSONANCE:UNT_UGLYDANCE;
 		} else {
 			WBUFB(buf,14)=unit->group->unit_id;
@@ -4766,7 +4766,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 	WBUFL(buf, 6)=unit->group->src_id;
 	WBUFW(buf,10)=unit->bl.x;
 	WBUFW(buf,12)=unit->bl.y;
-	if (unit->group->state.song_dance && unit->val2&UF_ENSEMBLE) {
+	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) {
 		WBUFB(buf,14)=unit->val2&UF_SONG?UNT_DISSONANCE:UNT_UGLYDANCE;
 	} else {
 		WBUFB(buf,14)=unit->group->unit_id;
