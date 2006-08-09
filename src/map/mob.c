@@ -3134,8 +3134,7 @@ static int mob_readdb(void)
 				} else
 					str[i]=p;
 			}
-
-			class_ = atoi(str[0]);
+			class_ = str[0]?atoi(str[0]):0;
 			if (class_ == 0)
 				continue; //Leave blank lines alone... [Skotlex]
 
@@ -3146,6 +3145,10 @@ static int mob_readdb(void)
 			} else if (pcdb_checkid(class_))
 			{
 				ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player classes.\n");
+				continue;
+			}
+			if(i < 38+2*MAX_MOB_DROP) {
+				ShowWarning("mob_readdb: Insufficient columns for mob with ID: %d\n", class_);
 				continue;
 			}
 			if (mob_db_data[class_] == NULL)
