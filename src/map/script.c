@@ -5701,7 +5701,7 @@ int buildin_getpartymember(struct script_state *st)
  */
 int buildin_getpartyleader(struct script_state *st)
 {
-	int party_id, type = 0, i;
+	int party_id, type = 0, i=0;
 	struct party_data *p;
 
 	party_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
