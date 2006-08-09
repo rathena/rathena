@@ -43,7 +43,7 @@ int mail_timer;
 int mail_check(struct map_session_data *sd,int type)
 {
 	int i = 0, new_ = 0, priority = 0;
-	char message[50];
+	char message[80];
 
 	nullpo_retr (0, sd);
 
@@ -82,20 +82,17 @@ int mail_check(struct map_session_data *sd,int type)
 					priority++;
 				if(type==2 || type==3) {
 					if(atoi(mail_row[4])) {
-						//sprintf(message, "%d - From : %s (New - Priority)", i, mail_row[2]);
-						sprintf(message, msg_txt(511), i, mail_row[2]);
-
-						clif_displaymessage(sd->fd, jstrescape(message));
+						snprintf(message, 80, msg_txt(511), i, mail_row[2]);
+						clif_displaymessage(sd->fd, message);
 					} else {
 						//sprintf(message, "%d - From : %s (New)", i, mail_row[2]);
-						sprintf(message, msg_txt(512), i, mail_row[2]);
-						clif_displaymessage(sd->fd, jstrescape(message));
+						snprintf(message, 80, msg_txt(512), i, mail_row[2]);
+						clif_displaymessage(sd->fd, message);
 					}
 				}
 			} else if(type==2){
-				//sprintf(message, "%d - From : %s", i, mail_row[2]);
-				sprintf(message, msg_txt(513), i, mail_row[2]);
-				clif_displaymessage(sd->fd, jstrescape(message));
+				snprintf(message, 80, msg_txt(513), i, mail_row[2]);
+				clif_displaymessage(sd->fd, message);
 			}
 		}
 

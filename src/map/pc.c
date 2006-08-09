@@ -6299,7 +6299,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	//Added check to prevent sending the same look on multiple slots ->
 	//causes client to redraw item on top of itself. (suggested by Lupus)
 	if(pos & EQP_HEAD_LOW) {
-		if(sd->inventory_data[n] && !pos&(EQP_HEAD_TOP|EQP_HEAD_MID))
+		if(sd->inventory_data[n] && !(pos&(EQP_HEAD_TOP|EQP_HEAD_MID)))
 			sd->status.head_bottom = sd->inventory_data[n]->look;
 		else
 			sd->status.head_bottom = 0;
@@ -6313,7 +6313,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
 	}
 	if(pos & EQP_HEAD_MID) {
-		if(sd->inventory_data[n] && !pos&EQP_HEAD_TOP)
+		if(sd->inventory_data[n] && !(pos&EQP_HEAD_TOP))
 			sd->status.head_mid = sd->inventory_data[n]->look;
 		else
 			sd->status.head_mid = 0;

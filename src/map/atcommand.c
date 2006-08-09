@@ -809,7 +809,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (map[sd->bl.m].flag.nocommand &&
 		(gmlvl > 0? gmlvl:pc_isGM(sd)) < battle_config.gm_skilluncond)
 	{	//Command not allowed on this map.
-		sprintf(atcmd_output, msg_table[143]); 
+		sprintf(atcmd_output, msg_txt(143)); 
 		clif_displaymessage(fd, atcmd_output);
 		return AtCommand_None;
 	}	
@@ -828,12 +828,12 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 			p++;
 
 		if (type == AtCommand_Unknown || info.proc == NULL) {
-			sprintf(atcmd_output, msg_table[153], command); // %s is Unknown Command.
+			sprintf(atcmd_output, msg_txt(153), command); // %s is Unknown Command.
 			clif_displaymessage(fd, atcmd_output);
 		} else {
 			if (info.proc(fd, sd, command, p) != 0) {
 				// Command can not be executed
-				sprintf(atcmd_output, msg_table[154], command); // %s failed.
+				sprintf(atcmd_output, msg_txt(154), command); // %s failed.
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -1267,10 +1267,10 @@ int atcommand_send(
                 }
 		}
 
-		sprintf (atcmd_output, msg_table[258], type, type);
+		sprintf (atcmd_output, msg_txt(258), type, type);
 		clif_displaymessage(fd, atcmd_output);
 	} else {
-		clif_displaymessage(fd, msg_table[259]);
+		clif_displaymessage(fd, msg_txt(259));
 	}
 
 	return 0;
@@ -1310,26 +1310,26 @@ int atcommand_rura(
 		m = map_mapindex2mapid(mapindex);
 	
 	if (!mapindex || m < 0) {
-		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		clif_displaymessage(fd, msg_txt(1)); // Map not found.
 		return -1;
 	}
 
 	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOPASS)) {
-		clif_displaymessage(fd, msg_table[2]);
+		clif_displaymessage(fd, msg_txt(2));
 		x = y = 0; //Invalid cell, use random spot.
 	}
 	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, msg_table[247]);
+		clif_displaymessage(fd, msg_txt(247));
 		return -1;
 	}
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, msg_table[248]);
+		clif_displaymessage(fd, msg_txt(248));
 		return -1;
 	}
 	if (pc_setpos(sd, mapindex, x, y, 3) == 0)
-		clif_displaymessage(fd, msg_table[0]); // Warped.
+		clif_displaymessage(fd, msg_txt(0)); // Warped.
 	else {
-		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		clif_displaymessage(fd, msg_txt(1)); // Map not found.
 		return -1;
 	}
 
@@ -1405,18 +1405,18 @@ int atcommand_jumpto(
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name)) != NULL) {
 		if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, msg_table[247]);
+			clif_displaymessage(fd, msg_txt(247));
 			return -1;
 		}
 		if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-			clif_displaymessage(fd, msg_table[248]);
+			clif_displaymessage(fd, msg_txt(248));
 			return -1;
 		}
 		pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
-		sprintf(atcmd_output, msg_table[4], atcmd_player_name); // Jump to %s
+		sprintf(atcmd_output, msg_txt(4), atcmd_player_name); // Jump to %s
 		clif_displaymessage(fd, atcmd_output);
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1444,11 +1444,11 @@ int atcommand_jump(
 	if (y <= 0)
 		y = -1;
 	if (sd->bl.m >= 0 && (map[sd->bl.m].flag.nowarp || map[sd->bl.m].flag.nowarpto) && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, msg_table[248]);
+		clif_displaymessage(fd, msg_txt(248));
 		return -1;
 	}
 	pc_setpos(sd, sd->mapindex, x, y, 3);
-	sprintf(atcmd_output, msg_table[5], sd->bl.x, sd->bl.y); // Jump to %d %d
+	sprintf(atcmd_output, msg_txt(5), sd->bl.x, sd->bl.y); // Jump to %d %d
 	clif_displaymessage(fd, atcmd_output);
 	return 0;
 }
@@ -1517,11 +1517,11 @@ int atcommand_who3(
 	}
 
 	if (count == 0)
-		clif_displaymessage(fd, msg_table[28]); // No player found.
+		clif_displaymessage(fd, msg_txt(28)); // No player found.
 	else if (count == 1)
-		clif_displaymessage(fd, msg_table[29]); // 1 player found.
+		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
 	else {
-		sprintf(atcmd_output, msg_table[30], count); // %d players found.
+		sprintf(atcmd_output, msg_txt(30), count); // %d players found.
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -1787,11 +1787,11 @@ int atcommand_whomap2(
 	}
 
 	if (count == 0)
-		sprintf(atcmd_output, msg_table[54], map[map_id].name); // No player found in map '%s'.
+		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
 	else if (count == 1)
-		sprintf(atcmd_output, msg_table[55], map[map_id].name); // 1 player found in map '%s'.
+		sprintf(atcmd_output, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
 	else {
-		sprintf(atcmd_output, msg_table[56], count, map[map_id].name); // %d players found in map '%s'.
+		sprintf(atcmd_output, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, atcmd_output);
 
@@ -1942,11 +1942,11 @@ int atcommand_whogm(
 	}
 
 	if (count == 0)
-		clif_displaymessage(fd, msg_table[150]); // No GM found.
+		clif_displaymessage(fd, msg_txt(150)); // No GM found.
 	else if (count == 1)
-		clif_displaymessage(fd, msg_table[151]); // 1 GM found.
+		clif_displaymessage(fd, msg_txt(151)); // 1 GM found.
 	else {
-		sprintf(atcmd_output, msg_table[152], count); // %d GMs found.
+		sprintf(atcmd_output, msg_txt(152), count); // %d GMs found.
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -1979,7 +1979,7 @@ int atcommand_whozeny(
 	pl_allsd = map_getallusers(&users);
 	if (users < 1)
 	{
-		clif_displaymessage(fd, msg_table[28]); // No player found.
+		clif_displaymessage(fd, msg_txt(28)); // No player found.
 		return 0;
 	}	
 	zeny = (int *)aMallocA(users*sizeof(int));
@@ -2016,11 +2016,11 @@ int atcommand_whozeny(
 	}
 
 	if (count == 0)
-		clif_displaymessage(fd, msg_table[28]); // No player found.
+		clif_displaymessage(fd, msg_txt(28)); // No player found.
 	else if (count == 1)
-		clif_displaymessage(fd, msg_table[29]); // 1 player found.
+		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
 	else {
-		sprintf(atcmd_output, msg_table[30], count); // %d players found.
+		sprintf(atcmd_output, msg_txt(30), count); // %d players found.
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -2071,7 +2071,7 @@ int atcommand_save(
 
 	chrif_save(sd,0);
 	
-	clif_displaymessage(fd, msg_table[6]); // Character data respawn point saved.
+	clif_displaymessage(fd, msg_txt(6)); // Character data respawn point saved.
 
 	return 0;
 }
@@ -2090,16 +2090,16 @@ int atcommand_load(
 
 	m = map_mapindex2mapid(sd->status.save_point.map);
 	if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, msg_table[249]);
+		clif_displaymessage(fd, msg_txt(249));
 		return -1;
 	}
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-		clif_displaymessage(fd, msg_table[248]);
+		clif_displaymessage(fd, msg_txt(248));
 		return -1;
 	}
 
 	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 0);
-	clif_displaymessage(fd, msg_table[7]); // Warping to respawn point.
+	clif_displaymessage(fd, msg_txt(7)); // Warping to respawn point.
 
 	return 0;
 }
@@ -2128,7 +2128,7 @@ int atcommand_speed(
 	if (speed >= MIN_WALK_SPEED && speed <= MAX_WALK_SPEED) {
 		sd->base_status.speed = speed;
 		status_calc_bl(&sd->bl, SCB_SPEED);
-		clif_displaymessage(fd, msg_table[8]); // Speed changed.
+		clif_displaymessage(fd, msg_txt(8)); // Speed changed.
 	} else {
 		sprintf(atcmd_output, "Please, enter a valid speed value (usage: @speed <%d-%d>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
 		clif_displaymessage(fd, atcmd_output);
@@ -6681,7 +6681,7 @@ int atcommand_jailtime(
 
 	//Get remaining jail time
 	get_jail_time(sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
-	sprintf(atcmd_output,msg_table[402],"You will remain",year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
+	sprintf(atcmd_output,msg_txt(402),"You will remain",year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
 
 	clif_displaymessage(fd, atcmd_output);
 
