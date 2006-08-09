@@ -20,6 +20,8 @@
 
 =========================
 09/08
+	* Removed bonus range on some bows (there is a range column for that) [Playtester]
+	- also reverted sidewinder card, chance is handled in the code
 	* Fixed Royal Tea requiring Sweet Sauce rather than Yellow Spice [Playtester]
 	* Fixed Rapid Shower only using 1 bullet rather than 5 [Playtester]
 08/08
