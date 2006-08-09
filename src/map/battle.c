@@ -2024,27 +2024,6 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
-	if(sd && sd->classchange && target->type == BL_MOB && !(tstatus->mode&MD_BOSS) && (rand()%10000 < sd->classchange))
-	{
-		struct mob_data *tmd = (TBL_MOB*)target;
-		if (!tmd->guardian_data && (tmd->class_ < 1324 || tmd->class_ > 1363) && !mob_is_clone(tmd->class_))
-		{	//Classchange:
-			struct mob_db *mob;
-			int k, class_;
-			i = 0;
-			do {
-				do {
-					class_ = rand() % MAX_MOB_DB;
-				} while (!mobdb_checkid(class_));
-				
-				k = rand() % 1000000;
-				mob = mob_db(class_);
-			} while ((mob->status.mode&(MD_BOSS|MD_PLANT) || mob->summonper[0] <= k) && (i++) < 2000);
-			if (i< 2000)
-				mob_class_change(tmd,class_);
-		}
-	}
-	
 	if (wd.damage || wd.damage2) {
 		if (sd && battle_config.equip_self_break_rate)
 		{	// Self weapon breaking

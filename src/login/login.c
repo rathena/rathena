@@ -1911,7 +1911,8 @@ int parse_fromchar(int fd) {
 			}
 			{
 				struct online_login_data *p;
-				unsigned int aid, users;
+				int aid;
+			  	unsigned int users;
 				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
@@ -1952,6 +1953,7 @@ int parse_fromchar(int fd) {
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
 			break;
+
 		case 0x2736: // WAN IP update from char-server
 			if (RFIFOREST(fd) < 6)
 				return 0;

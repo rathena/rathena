@@ -111,6 +111,7 @@ int itemdb_searchrandomid(int group)
 		ShowError("itemdb_searchrandomid: No item entries for group id %d\n", group);
 	return UNKNOWN_ITEM_ID;
 }
+
 /*==========================================
  * Calculates total item-group related bonuses for the given item. [Skotlex]
  *------------------------------------------

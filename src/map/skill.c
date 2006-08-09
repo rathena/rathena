@@ -1454,6 +1454,32 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			break; //Only one auto skill comes off at a time.
 		}
 	}
+
+	//Polymorph
+	if(sd && sd->classchange && attack_type&BF_WEAPON &&
+		dstmd && !(tstatus->mode&MD_BOSS) && !dstmd->guardian_data &&
+	  	(dstmd->class_ < 1324 || dstmd->class_ > 1363) && //Treasure boxes
+	  	!mob_is_clone(dstmd->class_) && 
+	  	(rand()%10000 < sd->classchange)) 
+	{
+		struct mob_db *mob;
+		int class_;
+		skill = 0;
+		do {
+			do {
+				class_ = rand() % MAX_MOB_DB;
+			} while (!mobdb_checkid(class_));
+			
+			rate = rand() % 1000000;
+			mob = mob_db(class_);
+		} while (
+			(mob->status.mode&(MD_BOSS|MD_PLANT) || mob->summonper[0] <= rate) &&
+		  	(skill++) < 2000);
+		if (skill < 2000)
+			mob_class_change(dstmd,class_);
+	}
+	
+
 	return 0;
 }
 

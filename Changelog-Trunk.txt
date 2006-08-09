@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/09
+	* Moved the class-change code from battle_calc_weapon_attack to
+	  skill_additional_effect. Alchemist summons now also have a chance of
+	  triggering polymorphing. [Skotlex]
 	* Removed the code which was auto-setting attacks that do no damage to type
 	  FLEE, since that was disabling status-effects which should incur even when
 	  the damage was blocked. [Skotlex]
