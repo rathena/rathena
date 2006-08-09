@@ -20,6 +20,7 @@
 
 =========================
 09/08
+	* Removed cast time of AM_REST & AM_CALLHOMUNCULUS [Toms]
 	* Hopefully fixed Green Ferus card combo [Playtester]
 	* Removed bonus range on some bows (there is a range column for that) [Playtester]
 	- also reverted sidewinder card, chance is handled in the code
