@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -38,6 +38,8 @@
 //= capitalized or undercase. [Evera]
 //= 2.0 Removed Duplicates [Silent]
 //= 2.1 Added first part of Bio Ethics Quest [Evera]
+//= 2.2 Added bit to say Bio Ethics is unfinished, and if a player attempts, it warps them
+//= 	out after finished part... Don't want players getting stuck ;_; [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -2670,7 +2672,12 @@ lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
 			mes "are trying to sneak into here!";
 			mes "I know the security here is";
 			mes "pretty much failsafe, but...";
-			close;
+		//Okay, we don't want players to get stuck here before quest is finished -.-;
+			next;
+			mes "Sorry, quest under construction";
+			close2;
+			warp "lhz_in01.gat",199,131;
+			end;
 		}
 }
 		
