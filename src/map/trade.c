@@ -151,7 +151,7 @@ int impossible_trade_check(struct map_session_data *sd) {
 	// re-added! [celest]
 	// remove equiped items (they can not be trade)
 	for (i = 0; i < MAX_INVENTORY; i++)
-		if (inventory[i].nameid > 0 && inventory[i].equip && !(inventory[i].equip & 0x8000))
+		if (inventory[i].nameid > 0 && inventory[i].equip && !(inventory[i].equip & EQP_AMMO))
 			memset(&inventory[i], 0, sizeof(struct item));
 
 	// check items in player inventory

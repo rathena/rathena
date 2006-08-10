@@ -1,4 +1,9 @@
 Date	Added
+2006/08/10
+	* Removed setting mob_ghostring_fix [Skotlex]
+	* Changed setting attack_attr_none to affect all neutral-element attacks.
+	  Basicly, this setting is now used to determine who can hit for full damage
+	  always when using neutral-attacks (defaults to non-players) [Skotlex]
 2006/08/09
 	* Change the default of attack_attr_none to all classes except players.
 	  This means that pet/mobs/homun will always do normal attacks with

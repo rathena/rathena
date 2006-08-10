@@ -1586,7 +1586,7 @@ int parse_login(int fd) {
 			result=mmo_auth(&account, fd);
 
 
-			jstrescapecpy(t_uid,(char*)RFIFOP(fd, 6));
+			jstrescapecpy(t_uid,account.userid);
 			if(result==-1){
 				// as we have queried account level earlier in mmo_auth anyway, no need to do this again [zzo]
 				//		    int gm_level = isGM(account.account_id); // removed by [zzo]

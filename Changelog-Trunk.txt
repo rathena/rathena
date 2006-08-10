@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/10
+	* Should have fixed the login-sql crash when passed user-name's length is
+	  beyond the limit. [Skotlex]
+	* Changed setting attack_attr_none to affect all neutral-element attacks.
+	  Basicly, this setting is now used to determine who can hit for full damage
+	  always when using neutral-attacks (defaults to non-players) [Skotlex]
 	* Fixed two instances in the login-sql server where the ip in the log-login
 	  table was being stored backwards. [Skotlex]
 	* Now when a skill's range is 0 and the skill is NOT casted on self, it

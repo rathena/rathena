@@ -1788,19 +1788,16 @@ static struct Damage battle_calc_weapon_attack(
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if (skill_num || !(battle_config.attack_attr_none&src->type))
+	if (s_ele != ELE_NEUTRAL || !(battle_config.attack_attr_none&src->type))
 	{	//Elemental attribute fix
-		if	(!(!sd && tsd && battle_config.mob_ghostring_fix && tstatus->def_ele==ELE_GHOST))
+		if (wd.damage > 0)
 		{
-			if (wd.damage > 0)
-			{
-				wd.damage=battle_attr_fix(src,target,wd.damage,s_ele,tstatus->def_ele, tstatus->ele_lv);
-				if(skill_num==MC_CARTREVOLUTION) //Cart Revolution applies the element fix once more with neutral element
-					wd.damage = battle_attr_fix(src,target,wd.damage,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
-			}
-			if (flag.lh && wd.damage2 > 0)
-				wd.damage2 = battle_attr_fix(src,target,wd.damage2,s_ele_,tstatus->def_ele, tstatus->ele_lv);
+			wd.damage=battle_attr_fix(src,target,wd.damage,s_ele,tstatus->def_ele, tstatus->ele_lv);
+			if(skill_num==MC_CARTREVOLUTION) //Cart Revolution applies the element fix once more with neutral element
+				wd.damage = battle_attr_fix(src,target,wd.damage,ELE_NEUTRAL,tstatus->def_ele, tstatus->ele_lv);
 		}
+		if (flag.lh && wd.damage2 > 0)
+			wd.damage2 = battle_attr_fix(src,target,wd.damage2,s_ele_,tstatus->def_ele, tstatus->ele_lv);
 		if(sc && sc->data[SC_WATK_ELEMENT].timer != -1)
 		{	//Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
 			int damage= battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, (flag.arrow?2:0));
@@ -3590,7 +3587,6 @@ static const struct battle_data_short {
 	{ "show_party_share_picker",           &battle_config.party_show_share_picker },
 	{ "party_update_interval",             &battle_config.party_update_interval },
 	{ "party_item_share_type",             &battle_config.party_share_type },
-	{ "mob_ghostring_fix",                 &battle_config.mob_ghostring_fix		},
 	{ "attack_attr_none",                  &battle_config.attack_attr_none		},
 	{ "gx_allhit",                         &battle_config.gx_allhit				},
 	{ "gx_disptype",                       &battle_config.gx_disptype				},
@@ -4007,7 +4003,6 @@ void battle_set_defaults() {
 	battle_config.party_hp_mode = 0;
 	battle_config.party_show_share_picker = 0;
 	battle_config.attack_attr_none = ~BL_PC;
-	battle_config.mob_ghostring_fix = 1;
 	battle_config.gx_allhit = 1;
 	battle_config.gx_disptype = 1;
 	battle_config.devotion_level_difference = 10;
