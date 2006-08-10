@@ -35,6 +35,7 @@ Playtester
 Date		Added
 ======
 08/10
+	* Fixed header on DTS warper [Evera]
 	* Added bit to Bio Ethics quest to warp out player if attempts quest, since quest is unfinished [Evera]
 	* Some Einbroch respawn time fixes [Playtester]
 08/09

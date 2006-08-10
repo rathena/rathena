@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Dungeon Teleport Service (Cool Event Corp and Kafra Corp competition)
+//= Dungeon Teleport Service
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
@@ -7,7 +7,11 @@
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
-//= All-included file of Cool Event Corp NPCs with Kafra voting system.
+//= Cool Event Corp NPCs vs. Kafra Dungeon Teleport Service and voting system.
+//= This is a special event on official servers where there's a
+//= big competition between Kafra Corp. and Cool Event Corp.
+//= To warp to selected levels of certain dungeons.
+//= Also includes Cool Event Corp HQ NPCs.
 //===== Variables: ===========================================
 //=Server - 	$dtsvote		= Variable for # of votes
 //=					= Positive = Cool Corp winning
@@ -35,26 +39,27 @@
 //=		@dtstemps$		= Temporary buffer, like above, but a string.
 //=		$@dtstempg		= Temporary buffer, but global
 //===== Additional Comments: ================================= 
-//= Some unofficial translations, need Dungeon maps/coords/prices
+//= Some unofficial translations, some unofficial dungeon warps
 //= Also includes unofficial GM-enabled tweaking for script
 //= Includes NPCs in Cool Event Corp headquarters
-//= Also known as Zondaman in other languages (?)
-//= Pretty sure there are more locations I didn't find.
+//= If new locations are found of this NPC, please report on forums
+//= http://www.eathena.ws/board/index.php?showforum=106
 //= Base level 60 required to vote
 //===== Version History: ====================================
-//= 2.0 Fixed zeny bug [Evera] (7/03/06)
-//= 1.9 Removed global eligibility option [Evera] (7/15/06)
-//= 1.8	Changed requirement to lvl 60 [Evera] (7/03/06)
-//= 1.7	Fixed bug of DTS_Admin not running by itself [Evera] (7/03/06)
-//= 1.6 Removed Duplicates [Silent]
-//= 1.5 Mushed voting varialbes into 1 variable. [Evera] (5/29/06)
-//= 1.4 Changed global variables to read from 3 global variables, updated names,
-//= fixed array bug [Evera] (5/28/06)
-//= 1.3 Removed selfconfig [Evera] (5/20/06)
-//= 1.2 Mushed some variables together, optimized a bit [Evera] (5/15/06)
+//= 1.0	Initial release [Evera]
 //= 1.1	SVN release, removed from major town (found true info after research),
-//=	put more arg(2) parameters, fixed a few bugs [Evera] (5/11/06)
-//= 1.0	Initial release [Evera] (5/10/06)
+//=	put more arg(2) parameters, fixed a few bugs [Evera]
+//= 1.2 Mushed some variables together, optimized a bit [Evera]
+//= 1.3 Removed selfconfig [Evera]
+//= 1.4 Changed global variables to read from 3 global variables, updated names,
+//= 	fixed array bug [Evera]
+//= 1.5 Mushed voting varialbes into 1 variable. [Evera]
+//= 1.6 Removed Duplicates [Silent]
+//= 1.7	Fixed bug of DTS_Admin not running by itself [Evera]
+//= 1.8	Changed requirement to lvl 60 [Evera]
+//= 1.9 Removed global eligibility option [Evera]
+//= 2.0 Fixed zeny bug [Evera]
+//= 2.1 Fixed headers with and updated with newer information [Evera]
 //============================================================ 
 
 //Yuno
