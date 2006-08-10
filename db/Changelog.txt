@@ -20,6 +20,7 @@
 
 =========================
 08/10
+	* Reverted Tracking being affected by dex [Playtester]
 	* Aloevera and Anodyne now cast on self [Playtester]
 	* Fixed view id of some new headgears [Playtester]
 	* Added two missing braces to Yellow Novus card script [Playtester]
