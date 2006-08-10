@@ -1669,7 +1669,7 @@ int map_quit(struct map_session_data *sd) {
 		sd->state.waitingdisconnect = 1;
 		if (sd->pd) unit_free(&sd->pd->bl);
 		if(sd->status.hom_id > 0 && sd->hd)	//[orn]
-			merc_hom_delete(sd->hd, 0) ;
+			merc_hom_delete(sd->hd, 2) ;
 		unit_free(&sd->bl);
 		chrif_save(sd,1);
 	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]

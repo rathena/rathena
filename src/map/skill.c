@@ -5489,7 +5489,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_CALLHOMUN:	//[orn]
 		if (sd)
 		{
-			if ((sd->status.hom_id == 0 || sd->homunculus.vaporize == 1)) {
+			if (sd->status.hom_id == 0 || sd->homunculus.vaporize == 1) {
 				if (sd->status.hom_id == 0) {
 					i = pc_search_inventory(sd,7142);
 					if(i < 0) {
@@ -5509,12 +5509,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	{
 		if (sd)
 		{
-			if (sd->hd && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
+			if (sd->hd && !sd->homunculus.vaporize && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
 				sd->homunculus.vaporize = 1;
 				clif_hominfo(sd, sd->hd, 0);
 				merc_hom_delete(sd->hd, 0) ;
-			}
-			clif_skill_fail(sd,skillid,0,0);
+			} else
+				clif_skill_fail(sd,skillid,0,0);
 		}
 		break;
 	}

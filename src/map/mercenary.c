@@ -113,7 +113,7 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
-	hd->master->homunculus.hp = 0 ;
+	hd->battle_status.hp = hd->master->homunculus.hp = 0 ;
 	clif_hominfo(hd->master,hd,0); // Send dead flag
 	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
 		merc_stop_walking(hd, 1);
@@ -122,16 +122,24 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 		merc_hom_delete(hd,1) ;
 		return 1 ;
 	}
+	clif_send_homdata(hd->master,SP_INTIMATE,hd->master->homunculus.intimacy / 100);
 	clif_emotion(&hd->bl, 16) ;	//wah
 	clif_emotion(&hd->master->bl, 28) ;	//sob
 	merc_hom_delete(hd, 0);
 
-	return 3; //Remove it from map.
+	return 1; // Removing is handled by merc_hom_delete
 }
 
 int merc_hom_delete(struct homun_data *hd, int flag)
 {
 	nullpo_retr(0, hd);
+
+	if ((flag & 2) && hd->bl.prev == NULL)
+	{
+		// Homunc was already removed from map, so just free the bl
+		return unit_free(&hd->bl);
+	}
+
 	// Delete homunculus
 	if ( flag&1 ) {	//sabbath
 		intif_homunculus_requestdelete(hd->master->homunculus.hom_id) ;
@@ -140,9 +148,9 @@ int merc_hom_delete(struct homun_data *hd, int flag)
 		hd->master->homunculus.hom_id = 0;
 		chrif_save(hd->master,0);
 	} else
-		merc_save(hd) ;
+		merc_save(hd);
 
-	return unit_free(&hd->bl);
+	return unit_remove_map(&hd->bl, 0);
 }
 
 int merc_hom_calc_skilltree(struct map_session_data *sd)
@@ -456,23 +464,32 @@ static int merc_natural_heal_sub(struct homun_data *hd,int tick) {
 int merc_natural_heal(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd;
+	struct homun_data * hd;
 
 	sd=map_id2sd(id);
-
-	nullpo_retr(0, sd);
-	
-	sd->hd->natural_heal_timer = -1;
-
-	if(sd->homunculus.vaporize)
+	if(!sd)
 		return 1;
 
-	if(sd && sd->hd) {
-		natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-		merc_natural_heal_sub(sd->hd, tick);
-	
-		natural_heal_prev_tick = tick;
-		sd->hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
+	if(!sd->status.hom_id || !(hd = sd->hd))
+		return 1;
+
+	if(hd->natural_heal_timer != tid){
+		if(battle_config.error_log)
+			ShowError("merc_natural_heal %d != %d\n",hd->natural_heal_timer,tid);
+		return 1;
 	}
+
+	hd->natural_heal_timer = -1;
+
+	if(sd->homunculus.vaporize || sd->homunculus.hp == 0)
+		return 1;
+	
+	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
+	merc_natural_heal_sub(hd, tick);
+	
+	natural_heal_prev_tick = tick;
+	sd->hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
+
 	return 0;
 }
 
@@ -721,7 +738,8 @@ int search_homunculusDB_index(int key,int type)
 	return -1;
 }
 
-int merc_hom_data_init(struct map_session_data *sd)
+// Create homunc structure
+int merc_hom_create(struct map_session_data *sd)
 {
 	struct homun_data *hd;
 	int i = 0 ;
@@ -737,12 +755,16 @@ int merc_hom_data_init(struct map_session_data *sd)
 	}
 	sd->hd = hd = (struct homun_data *)aCalloc(1,sizeof(struct homun_data));
 	hd->homunculusDB = &homunculus_db[i];
-	merc_calc_pos(hd,sd->bl.x,sd->bl.y,sd->ud.dir);
-	hd->bl.x = hd->ud.to_x;
-	hd->bl.y = hd->ud.to_y;
 	hd->master = sd;
+	return merc_hom_data_init(sd);
+}
 
-	sd->status.hom_id = sd->homunculus.hom_id ;
+int merc_hom_data_init(struct map_session_data *sd)
+{
+	struct homun_data * hd = sd->hd;
+	int i;
+
+	nullpo_retr(1, hd);
 
 	hd->bl.m=sd->bl.m;
 	hd->bl.x=sd->bl.x;
@@ -782,48 +804,56 @@ int merc_hom_data_init(struct map_session_data *sd)
 	
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
-	//timer
-		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,sd->bl.id,0);
-		natural_heal_prev_tick = gettick();
-		hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
-		
+
+	// Timers
+	hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
+	natural_heal_prev_tick = gettick();
+	hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,hd->master->bl.id,0);
 	return 0;
 }
+
 // FIX call_homunculus [albator]
 int merc_call_homunculus(struct map_session_data *sd)
 {
 	int class_ = 0 ;
 	nullpo_retr(0, sd);
 
-	// call vaporized homunculus [albator]
-	if(sd->homunculus.vaporize == 1)
+	if (!sd->status.hom_id)
 	{
-		sd->homunculus.vaporize = 0;
-		merc_hom_data_init(sd);
-
-		if ( sd->homunculus.hp && sd->hd && sd->bl.prev != NULL) {
-			map_addblock(&sd->hd->bl);
-			clif_spawn(&sd->hd->bl);
-			clif_send_homdata(sd,SP_ACK,0);
-			clif_hominfo(sd,sd->hd,1);
-			clif_hominfo(sd,sd->hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
-			clif_homskillinfoblock(sd);
-		}
-		// save
-		merc_save(sd->hd);
-		return 1;
-		
-	}
-
-	if ( sd->status.hom_id ) {
-		return merc_hom_recv_data(sd->status.account_id, &sd->homunculus, 1 ) ;
-	} else {
 		class_ = 6000 + rand(1, 8) ;
 		return merc_create_homunculus(sd, class_) ;
 	}
 
-	
+	// If homunc not yet loaded, load it, else just activate it
+	if (!sd->hd)
+		merc_hom_create(sd);
+	else
+		merc_hom_data_init(sd);
+
+	// call vaporized homunculus [albator]
+	if(sd->homunculus.vaporize == 1)
+	{
+		sd->homunculus.vaporize = 0;
+	}
+	else
+	{
+		// Homunc was dead, set hp to 1
+		sd->homunculus.hp = 1 ;
+	}
+
+	if ( sd->homunculus.hp && sd->hd && sd->bl.prev != NULL) {
+		map_addblock(&sd->hd->bl);
+		clif_spawn(&sd->hd->bl);
+		clif_send_homdata(sd,SP_ACK,0);
+		clif_hominfo(sd,sd->hd,1);
+		clif_hominfo(sd,sd->hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		clif_homskillinfoblock(sd);
+	}
+	// save
+	merc_save(sd->hd);
+	return 1;
 }
+
 // Albator
 // Recv data of an homunculus after it loading
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
@@ -840,13 +870,9 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	}
 	memcpy(&sd->homunculus, sh, sizeof(struct s_homunculus));
 
-	if ( flag == 2 ) {
-		sh->hp = 1 ; 
-		sd->homunculus.hp = 1 ;
-	}
-	if(sd->homunculus.hp && sh->vaporize!=1)
+	if(sd->homunculus.hp && sd->homunculus.vaporize!=1)
 	{
-		merc_hom_data_init(sd);
+		merc_hom_create(sd);
 		
 		if ( sd->hd && sd->bl.prev != NULL) {
 			map_addblock(&sd->hd->bl);
@@ -907,19 +933,23 @@ int merc_hom_revive(struct map_session_data *sd, int per)
 {
 	nullpo_retr(0, sd);
 
-	merc_hom_data_init(sd);
+	// Homunc not already loaded, load it, else just init timers
+	if (!sd->hd)
+		merc_hom_create(sd);
+	else
+		merc_hom_data_init(sd);
 
-		if ( sd->hd && sd->bl.prev != NULL) {
-			sd->homunculus.hp = sd->hd->base_status.hp = sd->hd->battle_status.hp = 1 ;
-			status_heal(&sd->hd->bl, sd->homunculus.max_hp*per/100, 0, 1) ;
-			map_addblock(&sd->hd->bl);
-			clif_spawn(&sd->hd->bl);
-			clif_send_homdata(sd,SP_ACK,0);
-			clif_hominfo(sd,sd->hd,1);
-			clif_hominfo(sd,sd->hd,0);
-			clif_homskillinfoblock(sd);
-			clif_specialeffect(&sd->hd->bl,77,AREA) ;	//resurrection angel
-		}
+	if ( sd->hd && sd->bl.prev != NULL) {
+		sd->homunculus.hp = sd->hd->base_status.hp = sd->hd->battle_status.hp = 1 ;
+		status_heal(&sd->hd->bl, sd->homunculus.max_hp*per/100, 0, 1) ;
+		map_addblock(&sd->hd->bl);
+		clif_spawn(&sd->hd->bl);
+		clif_send_homdata(sd,SP_ACK,0);
+		clif_hominfo(sd,sd->hd,1);
+		clif_hominfo(sd,sd->hd,0);
+		clif_homskillinfoblock(sd);
+		clif_specialeffect(&sd->hd->bl,77,AREA) ;	//resurrection angel
+	}
 
 	return 1 ;
 }

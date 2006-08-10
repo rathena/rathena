@@ -46,7 +46,8 @@ enum {
 	SP_INTIMATE 	= 0x100,
 	SP_HUNGRY 		= 0x200
 };
-
+// merc_is_hom_alive(struct homun_data *)
+#define merc_is_hom_active(x) (x && x->master && x->master->homunculus.vaporize != 1 && x->battle_status.hp != 0)
 int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
 void merc_load_sub(struct homun_data *hd, struct map_session_data *sd);
@@ -79,3 +80,4 @@ int read_homunculusdb(void);
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int merc_skill_tree_get_max(int id, int b_class);
+int merc_hom_data_init(struct map_session_data *sd);

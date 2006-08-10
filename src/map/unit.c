@@ -1605,6 +1605,30 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			map_freeblock_unlock();
 			return 0;
 		}
+	} else if (bl->type == BL_HOM) {
+		struct homun_data *hd = (struct homun_data *) bl;
+		struct map_session_data *sd = hd->master;
+		
+		// Desactive timers
+		merc_hom_hungry_timer_delete(hd);
+		merc_natural_heal_timer_delete(hd);
+
+		if(!sd) {
+			map_delblock(bl);
+			unit_free(bl);
+			map_freeblock_unlock();
+			return 0;
+		}
+
+		// Homunc was deleted or player is leaving the server, remove it from memory
+		if (sd->homunculus.hom_id == 0 || sd->state.waitingdisconnect)
+		{	//Remove pet.
+			map_delblock(bl);
+			unit_free(bl);
+			sd->hd = NULL;
+			map_freeblock_unlock();
+			return 1;
+		}
 	}
 	map_delblock(bl);
 	map_freeblock_unlock();
@@ -1770,16 +1794,6 @@ int unit_free(struct block_list *bl) {
 		}
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
-	} else if( bl->type == BL_HOM ) {	//[orn]
-		struct homun_data *hd = (struct homun_data*)bl;
-		struct map_session_data *sd = hd->master;
-		merc_hom_hungry_timer_delete(hd);
-		merc_natural_heal_timer_delete(hd) ;
-		if (sd) {
-//			if(hd->intimacy > 0)
-//				intif_save_mercdata(sd->status.account_id,&sd->hom);
-			sd->hd = NULL;
-		}
 	}
 
 	skill_clear_unitgroup(bl);
