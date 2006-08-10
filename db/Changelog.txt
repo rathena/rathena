@@ -20,6 +20,7 @@
 
 =========================
 08/10
+	* Updated the Packet DB up to the 2006-08-07aSakexe client. [Zephiris]
 	* Reverted Tracking being affected by dex [Playtester]
 	* Aloevera and Anodyne now cast on self [Playtester]
 	* Fixed view id of some new headgears [Playtester]
