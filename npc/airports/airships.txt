@@ -26,10 +26,10 @@
 
 airplane.gat,243,74,4	script	#AirshipWarp-1	45,2,2{
 OnTouch:
-	if($airplanelocation == 1)warp "einbroch.gat",90,275;
-	if($airplanelocation == 2)warp "yuno.gat",85,265;
-	if($airplanelocation == 3)warp "lighthalzen.gat",302,75;
-	if($airplanelocation == 4)warp "hugel.gat",182,150;
+	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($@airplanelocation == 2)warp "yuno.gat",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($@airplanelocation == 4)warp "hugel.gat",182,150;
 	end;
 
 OnHide:
@@ -42,10 +42,10 @@ OnUnhide:
 
 airplane.gat,243,29,4	script	#AirshipWarp-2	45,2,2{
 OnTouch:
-	if($airplanelocation == 1)warp "einbroch.gat",90,275;
-	if($airplanelocation == 2)warp "yuno.gat",85,265;
-	if($airplanelocation == 3)warp "lighthalzen.gat",302,75;
-	if($airplanelocation == 4)warp "hugel.gat",182,150;
+	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($@airplanelocation == 2)warp "yuno.gat",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($@airplanelocation == 4)warp "hugel.gat",182,150;
 	end;
 
 OnHide:
@@ -62,7 +62,7 @@ while(1)
 {
 	initnpctimer;
 	setnpctimer 0;
-	set $airplanelocation,0;
+	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
@@ -76,7 +76,7 @@ OnTimer30000:
 	mapannounce "airplane.gat","We will arrive in Hugel shortly.",1,0xBA55D3;
 	end;
 OnTimer45000:
-	set $airplanelocation,4;
+	set $@airplanelocation,4;
 	enablenpc "#AirshipWarp-1";
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
@@ -87,7 +87,7 @@ OnTimer55000:
 	mapannounce "airplane.gat","Currently, we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
 	end;
 OnTimer65000:
-	set $airplanelocation,0;
+	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
@@ -101,7 +101,7 @@ OnTimer95000:
 	mapannounce "airplane.gat","We will arrive in Einbroch shortly.",1,0x00FF00;
 	end;
 OnTimer110000:
-	set $airplanelocation,1;
+	set $@airplanelocation,1;
 	enablenpc "#AirshipWarp-1";
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
@@ -112,7 +112,7 @@ OnTimer120000:
 	mapannounce "airplane.gat","Currently, we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
 	end;
 OnTimer130000:
-	set $airplanelocation,0;
+	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
@@ -126,7 +126,7 @@ OnTimer160000:
 	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF8600;
 	end;
 OnTimer175000:
-	set $airplanelocation,3;
+	set $@airplanelocation,3;
 	enablenpc "#AirshipWarp-1";
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
@@ -137,7 +137,7 @@ OnTimer185000:
 	mapannounce "airplane.gat","Currently, we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
-	set $airplanelocation,0;
+	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
@@ -151,7 +151,7 @@ OnTimer225000:
 	mapannounce "airplane.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
 	end;
 OnTimer240000:
-	set $airplanelocation,2;
+	set $@airplanelocation,2;
 	enablenpc "#AirshipWarp-1";
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
@@ -567,8 +567,8 @@ s_Record:
 
 airplane_01.gat,243,74,4	script	#AirshipWarp-3	45,2,2{
 OnTouch:
-	if($airplanelocation2 == 1)warp "izlude.gat",202,56;
-	if($airplanelocation2 == 2)warp "yuno.gat",20,265;
+	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
 	end;
 
 OnHide:
@@ -581,8 +581,8 @@ OnUnhide:
 
 airplane_01.gat,243,29,4	script	#AirshipWarp-4	45,2,2{
 OnTouch:
-	if($airplanelocation2 == 1)warp "izlude.gat",202,56;
-	if($airplanelocation2 == 2)warp "yuno.gat",20,265;
+	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
 
 OnHide:
 	misceffect 16;
@@ -598,7 +598,7 @@ while(1)
 {
 	initnpctimer;
 	setnpctimer 0;
-	set $airplanelocation2,0;
+	set $@airplanelocation2,0;
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
@@ -612,7 +612,7 @@ OnTimer30000:
 	mapannounce "airplane_01.gat","We will arrive in Izlude shortly.",1,0x00FF00;
 	end;
 OnTimer45000:
-	set $airplanelocation2,1;
+	set $@airplanelocation2,1;
 	enablenpc "#AirshipWarp-3";
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
@@ -623,7 +623,7 @@ OnTimer55000:
 	mapannounce "airplane_01.gat","Currently, we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
 	end;
 OnTimer65000:
-	set $airplanelocation2,0;
+	set $@airplanelocation2,0;
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
@@ -637,7 +637,7 @@ OnTimer95000:
 	mapannounce "airplane_01.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
 	end;
 OnTimer110000:
-	set $airplanelocation2,2;
+	set $@airplanelocation2,2;
 	enablenpc "#AirshipWarp-3";
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";

@@ -35,6 +35,7 @@ Playtester
 Date		Added
 ======
 08/10
+	* Switch airplanelocation variables to temp variables to avoid unusefull mapreg(sql/txt) writes [Toms]
 	* Added file for gunslinger quests [Playtester]
 	- Garrison quest is done and tested
 	* Fixed header on DTS warper [Evera]
