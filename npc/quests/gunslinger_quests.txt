@@ -1,0 +1,94 @@
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= SVN eA
+//===== Description: =========================================
+//= Gunslinger guns and bullet quests
+//===== Additional Comments: =================================
+//= 1.0 Only Garrison Gun done yet [Playtester]
+//============================================================
+
+
+//===================== Garrison =====================================================
+
+que_ng.gat,182,85,3	script	Mr.Garrison	109,{
+	set @npcname$,"[Mr.Garrison]";
+
+	mes @npcname$;
+	mes "I have invented a new Revolver!";
+	mes "I think I call it... Garrison.";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Very innovative name really.";
+	next;
+	if(BaseJob != Job_Gunslinger || BaseLevel < 55){
+		mes @npcname$;
+		mes "I don't think you have enough";
+		mes "knowledge of guns to see its";
+		mes "true beauty.";
+		close;
+	}
+	mes @npcname$;
+	mes "You look like you're an expert";
+	mes "in guns, aren't you?";
+	next;
+	mes "[" +strcharinfo(0) + "]";
+	mes "Yeah you could say so.";
+	next;
+	mes @npcname$;
+	mes "So, do you want me to make a";
+	mes "^0000FFGarrison^000000 for you?";
+	next;
+
+	switch(select("Yes, please.","Nah, I'll stick with my gun."))
+	{
+
+		case 1:
+			mes @npcname$;
+			mes "Great! But first you need to";
+			mes "bring me the materials I need";
+			mes "to create one.";
+			next;
+			mes @npcname$;
+			mes "This is what I need:";
+			mes "^FF000050 Steels^000000,";
+			mes "^FF00003 Eluniums^000000,";
+			mes "^FF00001 Oridecon^000000,";
+			mes "^FF000050 Coals^000000,";
+			mes "^FF000020 Rusty Screws^000000 and";
+			mes "^FF000030000 Zeny^000000.";
+			next;
+			mes @npcname$;
+			if ( (countitem(999)<50) || (countitem(985)<3) || (countitem(984)<1) ||(countitem(1003)<50) || (countitem(7317)<20) || (Zeny < 30000) ) {
+				mes "Come back when you have the materials.";
+				close;
+			}
+			mes "I see you came prepared.";
+			delitem 999,50;
+			delitem 985,3;
+			delitem 984,1;
+			delitem 1003,50;
+			delitem 7317,20;
+			set Zeny,Zeny-30000;
+			next;
+			mes @npcname$;
+			mes "Give me just a minute...";
+			mes "...";
+			mes "...";
+			next;
+			getitem 13104,1;
+			mes @npcname$;
+			mes "It's done. Here, take this";
+			mes "wonderful gun!";
+			close;
+
+		case 2:
+			mes @npcname$;
+			mes "Well, guess a true Gunslinger";
+			mes "will never part from his";
+			mes "favorite gun, heh.";
+			close;
+	}
+}

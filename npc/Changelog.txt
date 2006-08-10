@@ -35,6 +35,8 @@ Playtester
 Date		Added
 ======
 08/10
+	* Added file for gunslinger quests [Playtester]
+	- Garrison quest is done and tested
 	* Fixed header on DTS warper [Evera]
 	* Added bit to Bio Ethics quest to warp out player if attempts quest, since quest is unfinished [Evera]
 	* Some Einbroch respawn time fixes [Playtester]
