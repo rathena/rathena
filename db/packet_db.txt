@@ -675,10 +675,15 @@ packet_ver: 17
 0x022a,58
 0x022b,57
 0x022c,64
-0x022d,5
-0x0232,9
-0x0233,11
-0x0234,-1
+0x022d,5,hommenu,4
+0x022e,71 
+0x022f,5 
+0x0230,12
+0x0231,26,changehomunculusname,0
+0x0232,9,hommoveto,6
+0x0233,11,homattack,0
+0x0234,6,hommovetomaster,0
+0x0235,115
 
 //2005-06-28aSakexe by Sara
 packet_ver: 18
@@ -701,12 +706,6 @@ packet_ver: 18
 0x0190,24,actionrequest,11:23
 0x0193,2,closekafra,0
 0x20e,10
-//Homon Status
-0x22e,71
-//Start Homunculus?
-0x230,12
-//Homon Skill list
-0x235,115
 0x237,2,rankingpk,0
 0x23d,-1
 0x23e,4
