@@ -20,6 +20,7 @@
 
 =========================
 08/10
+	* Fixed view id of some new headgears [Playtester]
 	* Added two missing braces to Yellow Novus card script [Playtester]
 	* Removed cast time on Flip Coin, Tracking is now affected by dex [Playtester]
 08/09
