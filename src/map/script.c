@@ -7571,6 +7571,14 @@ int buildin_sc_start(struct script_state *st)
 		tick/=2; //Thrown potions only last half.
 		val4 = 1; //Mark that this was a thrown sc_effect
 	}
+	if (type >= 0 && type < SC_MAX && val1 && !tick)
+	{	//When there isn't a duration specified, try to get it from the skill_db
+		tick = StatusSkillChangeTable[type];
+		if (tick)
+			tick = skill_get_time(tick,val1);
+		else	//Failed to retrieve duration, reset to what it was.
+			tick = 0;
+	}
 	if (bl)
 		status_change_start(bl,type,10000,val1,0,0,val4,tick,11);
 	return 0;
@@ -7592,6 +7600,15 @@ int buildin_sc_start2(struct script_state *st)
 		bl = map_id2bl(conv_num(st,& (st->stack->stack_data[st->start+6])));
 	else
 		bl = map_id2bl(st->rid);
+
+	if (type >= 0 && type < SC_MAX && val1 && !tick)
+	{	//When there isn't a duration specified, try to get it from the skill_db
+		tick = StatusSkillChangeTable[type];
+		if (tick)
+			tick = skill_get_time(tick,val1);
+		else	//Failed to retrieve duration, reset to what it was.
+			tick = 0;
+	}
 
 	if (potion_flag==1 && potion_target) {
 		bl = map_id2bl(potion_target);
@@ -7624,6 +7641,15 @@ int buildin_sc_start4(struct script_state *st)
 		bl = map_id2bl(conv_num(st,& (st->stack->stack_data[st->start+8])));
 	else
 		bl = map_id2bl(st->rid);
+
+	if (type >= 0 && type < SC_MAX && val1 && !tick)
+	{	//When there isn't a duration specified, try to get it from the skill_db
+		tick = StatusSkillChangeTable[type];
+		if (tick)
+			tick = skill_get_time(tick,val1);
+		else	//Failed to retrieve duration, reset to what it was.
+			tick = 0;
+	}
 
 	if (potion_flag==1 && potion_target) {
 		bl = map_id2bl(potion_target);

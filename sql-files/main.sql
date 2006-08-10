@@ -153,7 +153,7 @@ CREATE TABLE `guild` (
   `mes2` varchar(120) NOT NULL default '',
   `emblem_len` int(11) unsigned NOT NULL default '0',
   `emblem_id` int(11) unsigned NOT NULL default '0',
-  `emblem_data` blob NULL default NULL,
+  `emblem_data` blob,
   PRIMARY KEY  (`guild_id`,`char_id`),
   UNIQUE KEY `guild_id` (`guild_id`),
   KEY `char_id` (`char_id`),

@@ -86,7 +86,10 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 		sd->trade_partner=0;
 		return;
 	}
-	
+
+	if (target_sd->state.trading || target_sd->trade_partner != sd->bl.id)
+		return; //Already trading or wrong partner.
+
 	//Copied here as well since the original character could had warped.
 	if (type == 3 && pc_isGM(target_sd) < lowest_gm_level && (sd->bl.m != target_sd->bl.m ||
 		 (sd->bl.x - target_sd->bl.x <= -5 || sd->bl.x - target_sd->bl.x >= 5) ||
@@ -97,14 +100,15 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 		clif_tradestart(sd, 0); // too far
 		return;
 	}
-	
-	clif_tradestart(target_sd, type);
-	clif_tradestart(sd, type);
+
+	//TODO: Type 4/3? What would 1/2 and the rest do?	
 	if (type == 4) { // Cancel
 		sd->state.deal_locked = 0;
 		sd->trade_partner = 0;
 		target_sd->state.deal_locked = 0;
 		target_sd->trade_partner = 0;
+		clif_tradestart(target_sd, type);
+		clif_tradestart(sd, type);
 	}
 
 	if (type == 3) { //Initiate trade
@@ -112,21 +116,13 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 		target_sd->state.trading = 1;
 		memset(&sd->deal, 0, sizeof(sd->deal));
 		memset(&target_sd->deal, 0, sizeof(target_sd->deal));
+		clif_tradestart(target_sd, type);
+		clif_tradestart(sd, type);
+		if (sd->npc_id)
+			npc_event_dequeue(sd);
+		if (target_sd->npc_id)
+			npc_event_dequeue(target_sd);
 	}
-		
-	if (sd->npc_id)
-		npc_event_dequeue(sd);
-	if (target_sd->npc_id)
-		npc_event_dequeue(target_sd);
-
-	/* Why? It should be allowed to bring items from storage to inventory for trading, but not the other way around
-	 * (this is blocked on clif.c) [Skotlex]
-	//close STORAGE window if it's open. It protects from spooffing packets [Lupus]
-	if (sd->state.storage_flag == 1)
-		storage_storageclose(sd);
-	else if (sd->state.storage_flag == 2)
-		storage_guild_storageclose(sd);
-	*/
 }
 
 /*==========================================

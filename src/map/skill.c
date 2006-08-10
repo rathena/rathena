@@ -760,6 +760,20 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 			return status_get_range(bl);
 		range *=-1;
 	}
+
+	if(!range && !(skill_get_inf(id)&INF_SELF_SKILL))
+	{	//Use weapon's basic range.
+		if (bl->type==BL_PC) {
+			struct map_session_data *sd = (TBL_PC*)bl;
+			range = sd->equip_index[EQI_HAND_R];
+			if (range >= 0 && sd->inventory_data[range])
+				range = sd->inventory_data[range]->range;
+			else
+				range = 1; //Assume fist range.
+		} else
+		  	range = status_get_range(bl);
+	}
+
 	//TODO: Find a way better than hardcoding the list of skills affected by AC_VULTURE
 	switch (id) {
 	case AC_SHOWER:
@@ -10876,8 +10890,8 @@ void skill_init_unit_layout (void)
 			}
 			case NJ_KAENSIN:
 			{
-				static const int dx[] = {-2,-1, 0, 1, 2,-2,-1, 0, 1, 2,-2,-1, 1, 2,-2,-1, 0, 1, 2,-2,-1, 0, 1, 2,};
-				static const int dy[] = { 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2,};
+				static const int dx[] = {-2,-1, 0, 1, 2,-2,-1, 0, 1, 2,-2,-1, 1, 2,-2,-1, 0, 1, 2,-2,-1, 0, 1, 2};
+				static const int dy[] = { 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2};
 				skill_unit_layout[pos].count = 24;
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));

@@ -4,6 +4,17 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/10
+	* Fixed two instances in the login-sql server where the ip in the log-login
+	  table was being stored backwards. [Skotlex]
+	* Now when a skill's range is 0 and the skill is NOT casted on self, it
+	  will take the basic weapon's range (without Vulture/Snake Eye bonus).
+	  [Skotlex]
+	* Now when a duration is not specified, sc_start/sc_start2/sc_start4 will
+	  try to guess the duration by extracting it from the skill_db (it uses
+	  skill_get_time on whatever skill is associated to the status-change using
+	  val1 as skill-level) [Skotlex]
+	* Some cleanups on trade_tradeaccept to prevent packets being resent when
+	  they shouldn't. [Skotlex]
 	* Fixed syntax error in 'guild' create table statement [Toms]
 2006/08/09
 	* Fixed Asura not wasting all SP away when it fails on cast-end. [Skotlex]

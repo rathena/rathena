@@ -906,6 +906,7 @@ int parse_fromchar(int fd){
 	MYSQL_ROW  sql_row = NULL;
 
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr.s_addr;
+	unsigned long ipl = session[fd]->client_addr.sin_addr.s_addr;
 	char ip[16];
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
@@ -941,7 +942,7 @@ int parse_fromchar(int fd){
 		case 0x2709:
 			if (log_login)
 			{
-				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','%s', 'GM reload request')", loginlog_db, *((unsigned int*)p),server[id].name, RETCODE);
+				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','%s', 'GM reload request')", loginlog_db, (unsigned int)ntohl(ipl),server[id].name, RETCODE);
 				if (mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -1452,7 +1453,7 @@ int lan_subnetcheck(long p) {
 	return 0;
 }
 
-int login_ip_ban_check(unsigned char *p)
+int login_ip_ban_check(unsigned char *p, unsigned long ipl)
 {
 	MYSQL_RES* sql_res;
 	MYSQL_ROW  sql_row;
@@ -1483,7 +1484,7 @@ int login_ip_ban_check(unsigned char *p)
 
 	if (log_login)
 	{
-		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', 'unknown','-3', 'ip banned')", loginlog_db, *((unsigned int *)p));
+		sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', 'unknown','-3', 'ip banned')", loginlog_db, (unsigned int)ntohl(ipl));
 		// query
 		if(mysql_query(&mysql_handle, tmpsql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1547,7 +1548,7 @@ int parse_login(int fd) {
 			packet_len = RFIFOREST(fd);
 
 			//Perform ip-ban check ONLY on login packets
-			if (ipban > 0 && login_ip_ban_check(p))
+			if (ipban > 0 && login_ip_ban_check(p,ipl))
 			{
 				RFIFOSKIP(fd,packet_len);
 				session[fd]->eof = 1;
