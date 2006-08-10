@@ -1424,7 +1424,7 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		+ hp_sigma_val[sd->status.class_][sd->status.base_level-1])/100
 		* (100 + status->vit)/100 + sd->param_equip[2];
 	if (sd->class_&JOBL_UPPER)
-		val += val * 30/100;
+		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100;
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON))
@@ -1441,7 +1441,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 	val = (1000 + sd->status.base_level*sp_coefficient[sd->status.class_])/100
 		* (100 + status->int_)/100 + sd->param_equip[3];
 	if (sd->class_&JOBL_UPPER)
-		val += val * 30/100;
+		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100;
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON))

@@ -726,6 +726,11 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 				p->party.member[i].online = online;
 				if (online) p->party.count++;
 				else p->party.count--;
+				if (p->family && p->party.exp && !party_check_exp_share(p))
+			  	{	//Even-share lost.
+					p->party.exp = 0;
+					mapif_party_optionchanged(0, &p->party, 0, 0);
+				}
 			}
 			if (p->party.member[i].lv != lv) {
 				if(p->party.member[i].lv == p->min_lv ||
