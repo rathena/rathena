@@ -47,7 +47,7 @@ enum {
 	SP_HUNGRY 		= 0x200
 };
 
-int do_init_merc (void);
+int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
 void merc_load_sub(struct homun_data *hd, struct map_session_data *sd);
 void merc_load_exptables(void);
