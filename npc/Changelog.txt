@@ -34,6 +34,8 @@ Playtester
 
 Date		Added
 ======
+08/10
+	* Some Einbroch respawn time fixes [Playtester]
 08/09
 	* A small sign quest fix according to a recent patch. [MasterOfMuppets]
 08/06
