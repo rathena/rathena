@@ -5578,6 +5578,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1);
+	else if (sd) //Send packet to self otherwise (disguised player?)
+		clif_status_load(bl,StatusIconChangeTable[type],1);
+
 	(sc->count)++;
 
 	sc->data[type].val1 = val1;
@@ -6062,6 +6065,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	if (vd && pcdb_checkid(vd->class_))
 		clif_status_change(bl,StatusIconChangeTable[type],0);
+	else if (sd)
+		clif_status_load(bl,StatusIconChangeTable[type],0);
 
 	if(opt_flag)
 		clif_changeoption(bl);

@@ -82,7 +82,6 @@ struct item_data {
 struct item_group {
 	int nameid[MAX_RANDITEM];
 	int qty; //Counts amount of items in the group.
-	int id[30];	// 120 bytes
 };
 
 struct item_data* itemdb_searchname(const char *name);
