@@ -20,6 +20,7 @@
 
 =========================
 08/12
+	* Fixed Fling requiring unknown amunition [Playtester]
 	* Changed the aftercast delay of Envenom to 100ms [Playtester]
 	- this will cause that you can cast Envenom as fast as aMotion
 	* Reduced weight of Thanatos Tower quest items to 0 [Playtester]
