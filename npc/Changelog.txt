@@ -34,6 +34,10 @@ Playtester
 
 Date		Added
 ======
+08/12
+	* Added Violin[3] to the Comodo Weapon seller [Playtester]
+	* Optimized a warp near Gunslinger weapon shop [Playtester]
+	* Extended the Garrison quest to slot the Garrison [Playtester]
 08/10
 	* Switch airplanelocation variables to temp variables to avoid unusefull mapreg(sql/txt) writes [Toms]
 	* Added file for gunslinger quests [Playtester]
