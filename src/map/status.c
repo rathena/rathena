@@ -954,6 +954,23 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				default: return 0;
 			}
 		}
+
+		if (sc->data[SC_DANCING].timer != -1 && flag!=2)
+		{
+			if(sc->data[SC_LONGING].timer != -1)
+			{	//Allow everything except dancing/re-dancing. [Skotlex]
+				if (skill_num == BD_ENCORE ||
+					skill_get_inf2(skill_num)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
+				)
+					return 0;
+			} else
+			if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
+				&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
+				return 0;
+			if (sc->data[SC_DANCING].val1 == CG_HERMODE && skill_num == BD_ADAPTATION)
+				return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
+		}
+
 		if (skill_num && //Do not block item-casted skills.
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
 		) {	//Skills blocked through status changes...
@@ -975,21 +992,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			)
 				return 0;
 
-			if (flag!=2 && sc->data[SC_DANCING].timer != -1)
-			{
-				if(sc->data[SC_LONGING].timer != -1)
-			  	{	//Allow everything except dancing/re-dancing. [Skotlex]
-					if (skill_num == BD_ENCORE ||
-						skill_get_inf2(skill_num)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
-					)
-						return 0;
-				} else
-				if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
-					&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
-					return 0;
-				if (sc->data[SC_DANCING].val1 == CG_HERMODE && skill_num == BD_ADAPTATION)
-					return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
-			}
 		}
 	}
 
