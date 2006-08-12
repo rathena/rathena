@@ -4449,6 +4449,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	}
 	//Before overlapping fail, one must check for status cured.
 	switch (type) {
+	case SC_BUNSINJYUTSU:	//[blackhole89]
+		if(sd)
+		{
+			val4=sd->status.clothes_color;
+			pc_changelook(sd,LOOK_CLOTHES_COLOR,0);
+		}
+		break;
 	case SC_BLESSING:
 		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
 			if (sc->data[SC_CURSE].timer!=-1)
@@ -5717,6 +5724,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
 	switch(type){
+		case SC_BUNSINJYUTSU: //[blackhole89]
+			{
+				if(sd) pc_changelook(sd,LOOK_CLOTHES_COLOR,sc->data[type].val4);
+			}
 		case SC_WEDDING:
 		case SC_XMAS:
 			if (!vd) return 0;
