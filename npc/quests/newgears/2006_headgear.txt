@@ -168,7 +168,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			mes "1000 Runes of Bloody Color.";
 			next;
 			mes @npcname$;
-			if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4711)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) {
+			if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4177)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) {
 				mes "I'm sorry, but I need more to make the helm.";
 				close;
 			}
@@ -177,7 +177,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			next;
 			delitem 4219,1;
 			delitem 4114,1;
-			delitem 4711,1;
+			delitem 4177,1;
 			delitem 4259,1;
 			delitem 4212,1;
 			delitem 4073,1;

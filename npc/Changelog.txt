@@ -35,6 +35,7 @@ Playtester
 Date		Added
 ======
 08/12
+	* Fixed id of Dryad Card in the Headgears 2006 quest thanks to tonyfud [Playtester]
 	* Added Violin[3] to the Comodo Weapon seller [Playtester]
 	* Optimized a warp near Gunslinger weapon shop [Playtester]
 	* Extended the Garrison quest to slot the Garrison [Playtester]
