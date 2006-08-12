@@ -20,6 +20,8 @@
 
 =========================
 08/12
+	* Changed the aftercast delay of Envenom to 100ms [Playtester]
+	- this will cause that you can cast Envenom as fast as aMotion
 	* Reduced weight of Thanatos Tower quest items to 0 [Playtester]
 08/10
 	* Updated the Packet DB up to the 2006-08-07aSakexe client. [Zephiris]
