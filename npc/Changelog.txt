@@ -34,6 +34,8 @@ Playtester
 
 Date		Added
 ======
+08/13
+	* The Sign Quest: moved #aldesignwarp to fix enless warp [Lupus]
 08/12
 	* Fixed id of Dryad Card in the Headgears 2006 quest thanks to tonyfud [Playtester]
 	* Added Violin[3] to the Comodo Weapon seller [Playtester]
