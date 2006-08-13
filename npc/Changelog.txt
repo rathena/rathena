@@ -38,6 +38,7 @@ Date		Added
 08/13
 	* Finished Bio Ethics Quest, need bug testers before finalizing and moving to stable [Evera]
 	* Added Bio Ethics Quest variable to bit shift MISC_QUEST|64, and added to quest_variables.txt [Evera]
+	* Fixed Bio Ethics Quest, had a few bugs >_< [Evera]
 	* The Sign Quest: moved #aldesignwarp to fix enless warp [Lupus]
 08/12
 	* Fixed id of Dryad Card in the Headgears 2006 quest thanks to tonyfud [Playtester]
