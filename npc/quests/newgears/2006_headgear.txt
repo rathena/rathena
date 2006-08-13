@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.0b
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= NPC id's and dialog are custom, please replace
 //= 1.0a fixed typos, added missing names, more cleaned and
 //= standartized stuff a bit [Lupus]
+//= 1.0b fixed Helm of Valkyries ingredients
 //============================================================
 
 
