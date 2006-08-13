@@ -4,14 +4,14 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Event for the Mobster respawn
 //= Bio Labs Quest
 //= Friendship Quest
-//= Bio Ethics Quest (UNFINISHED)
+//= Bio Ethics Quest (Need bug testing!)
 //===== Additional Comments: ================================= 
 //= Grammar/script check please. This was a quick job.
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
@@ -40,6 +40,8 @@
 //= 2.1 Added first part of Bio Ethics Quest [Evera]
 //= 2.2 Added bit to say Bio Ethics is unfinished, and if a player attempts, it warps them
 //= 	out after finished part... Don't want players getting stuck ;_; [Evera]
+//= 2.3 Finished Bio Ethics Quest. Need bug testers before moving to trunk, my
+//=	mind was somewhere else when writing @_@ [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -2628,7 +2630,7 @@ yuno_in04.gat,171,117,1	script	List of Books	111,{
 //==============================================================
 // Bio Ethics Quest
 //==============================================================
-//==========================UNFINISHED!=========================
+//=====================Requires Bug Testing=====================
 lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
 	mes "[Rekenber Guard]";
 	if(getequipid(9) == 2243){
@@ -2654,31 +2656,13 @@ lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
 }
 lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
 	OnTouch:
-		if(class != 18){
-			mes "[Researcher]";
-			mes "This is a restricted";
-			mes "area. Please leave";
-			mes "immediately.";
-			close2;
-			warp "lhz_in01.gat",199,131;
-			end;
-		}
-		//Unofficial Text
-		else{
-			mes "[Researcher]";
-			mes "Keep your eyes open.";
-			mes "I've heard rumors that some";
-			mes "adventurers from Rune-Midgard";
-			mes "are trying to sneak into here!";
-			mes "I know the security here is";
-			mes "pretty much failsafe, but...";
-		//Okay, we don't want players to get stuck here before quest is finished -.-;
-			next;
-			mes "Sorry, quest under construction";
-			close2;
-			warp "lhz_in01.gat",199,131;
-			end;
-		}
+		mes "[Researcher]";
+		mes "This is a restricted";
+		mes "area. Please leave";
+		mes "immediately.";
+		close2;
+		warp "lhz_in01.gat",199,131;
+		end;
 }
 		
 lhz_in01.gat,285,169,7	script	Researcher	865,{
@@ -2695,6 +2679,23 @@ lhz_in01.gat,199,137,8	script	Scientist	865,{
 	close;
 }
 lhz_in01.gat,204,138,6	script	Keshibien	750,{
+	if(bioeth >= 2){
+		//Unofficial text
+		mes "[Keshibien]";
+		mes "Hello there~";
+		mes "Are you looking for";
+		mes "more information about";
+		mes "homunculus?";
+		next;
+		mes "[Keshibien]";
+		mes "I shouldn't say";
+		mes "anything, but look";
+		mes "for someone named";
+		mes "Bringel in Lighthalzen.";
+		if(bioeth == 2) set bioeth,3;
+		close;
+		//Unofficial text end
+	}
 	mes "[Keshibien]";
 	mes "Hello there~";
 	mes "You must be from";
@@ -2763,13 +2764,158 @@ lhz_in01.gat,218,141,0	script	Alchemist	98,{
 	close;
 }
 lhz_in01.gat,224,140,8	script	Kellasus	57,{
-	mes "[Kellasus]";
-	mes "Hmm. Who decides what";
-	mes "is right and wrong? What is";
-	mes "meant to be known and what";
-	mes "secrets were never intended";
-	mes "for mankind to understand?";
-	close;
+	if(MISC_QUEST&64){
+		mes "[Kellasus]";
+		mes "I already taught you";
+		mes "skills of the homunculus...";
+		if(getskillv(238) == 0) skill 238,1,0;
+		if(getskillv(243) == 0) skill 243,1,0;
+		if(getskillv(244) == 0) skill 244,1,0;
+		close;
+	}
+	switch(bioeth){
+	default:
+		break;
+	case 4:
+		mes "[Kellasus]";
+		mes "...You're really hard to handle.";
+		mes "I don't think I should";
+		mes "teach you biotechnology.";
+		mes "Besides that, you know";
+		mes "nothing about homunculus!";
+		next;
+		menu "I've learned that",-;
+		mes "[Kellasus]";
+		mes "Oh really?";
+		mes "I will have to test you";
+		mes "on your knowledge of";
+		mes "homunculus then.";
+		next;
+		mes "[Kellasus]";
+		mes "First question.";
+		mes "What is the skill that lets the";
+		mes "homunculus stay in peace?";
+		input @kelques$;
+		next;
+		mes "[Kellasus]";
+		if(@kelques$ != "Rest"){
+			mes "Hmpf. I knew you had";
+			mes "no knowledge on";
+			mes "homunculus.";
+			close;
+		}
+		mes "That's right. Second question.";
+		mes "What is the item";
+		mes "that is required to";
+		mes "summon or create";
+		mes "a homunculus?";
+		input @kelques$;
+		next;
+		mes "[Kellasus]";
+		if(@kelques$ != "Germination Breed"){
+			mes "Hmpf. I knew you had";
+			mes "no knowledge on";
+			mes "homunculus.";
+			close;
+		}
+		mes "Correct. But this is not the end yet.";
+		mes "What is the name";
+		mes "of a skill";
+		mes "that could let you";
+		mes "revive a homunculus?";
+		input @kelques$;
+		next;
+		mes "[Kellasus]";
+		if(@kelques$ != "Resurrect Homunculus"){
+			mes "Hmpf. I knew you had";
+			mes "no knowledge on";
+			mes "homunculus.";
+			close;
+		}
+		mes "After all these discussions,";
+		mes "I won't teach anyone";
+		mes "the skills of homunculus.";
+		mes "The decision is final";
+		mes "and that's it!";
+		set bioeth,5;
+		close;
+		break;
+	case 5:
+		mes "[Kellasus]";
+		mes "After all these discussions,";
+		mes "I won't teach anyone";
+		mes "the skills of homunculus.";
+		mes "The decision is final";
+		mes "and that's it!";
+		close;
+		break;
+	case 6:
+	//Unofficial text and story -.-;
+		mes "[Kellasus]";
+		mes "Oh it's you again? You're really determined.";
+		mes "Well most of the Alchemist";
+		mes "are people who never";
+		mes "let go of their dreams";
+		next;
+		menu "Let's talk about others",-;
+		mes "[Kellasus]";
+		mes "You've spoke to my son?";
+		mes "What did he say?";
+		next;
+		mes "[Kellasus]";
+		mes "...";
+		next;
+		mes "[Kellasus]";
+		mes "I guess I could teach you a few skills..";
+		//Gives player bio ethics, call homun, rest, and sets bitshift for quest finished
+		skill 238,1,0;
+		skill 243,1,0;
+		skill 244,1,0;
+		set MISC_QUEST,MISC_QUEST|64;
+		set bioeth,0;
+		close;
+	}
+	switch(@keltalk){
+	default:
+		mes "[Kellasus]";
+		mes "Hmm. Who decides what";
+		mes "is right and wrong? What is";
+		mes "meant to be known and what";
+		mes "secrets were never intended";
+		mes "for mankind to understand?";
+		set @keltalk,1;
+		close;
+		break;
+	case 1:
+	//No official text to put here, so I just repeated first text
+		mes "[Kellasus]";
+		mes "Hmm. Who decides what";
+		mes "is right and wrong? What is";
+		mes "meant to be known and what";
+		mes "secrets were never intended";
+		mes "for mankind to understand?";
+		set @keltalk,2;
+		close;
+		break;
+	case 2:
+		mes "[Kellasus]";
+		mes "Haven't I told you not to come back again?";
+		mes "Please leave now!";
+		mes "No matter what you do.";
+		mes "I won't teach you anything about homunculus";
+		set @keltalk,3;
+		set bioeth,1;
+		close;
+		break;
+	case 3:
+		mes "[Kellasus]";
+		mes "Haven't I told you not to come back again?";
+		mes "Please leave now!";
+		mes "No matter what you do.";
+		mes "I won't teach you anything about homunculus";
+		close;
+		break;
+	}
 }
 lhz_in01.gat,217,121,6	script	Repairman	851,{
 	mes "[Repairman]";
@@ -2804,5 +2950,46 @@ lhz_in01.gat,225,122,4	script	Skrajiad	754,{
 	mes "But it's incredibly rewarding to";
 	mes "those of us who never stop askins";
 	mes "how and why our world works.";
+	if(bioeth == 1) set bioeth,2;
+	close;
+}
+lhz_in02.gat,269,273,4	script	Bringel	709,{
+//Unofficial Text
+	if(bioeth > 3 || MISC_QUEST&64){
+		if(getskillv(247) == 0) skill 247,1,0;
+	}
+	if(bioeth == 3){
+		mes "[Bringel]";
+		mes "I see you're here to";
+		mes "learn about homunculus...";
+		mes "I will teach you a";
+		mes "valuable skill to use.";
+		//Learn res homun
+		skill 247,1,0;
+		set bioeth,4;
+		close;
+	}
+	mes "[Bringel]";
+	mes "Isn't this hotel great?";
+	mes "I can relax on the couch";
+	mes "And not care about what I";
+	mes "did in the past...";
+	close;
+}
+lhz_in03.gat,106,34,4	script	Golin	706,{
+//Unofficial text
+	if(bioeth == 5){
+		mes "[Golin]";
+		mes "Did you see my";
+		mes "daddy at the lab?";
+		mes "Tell him I said hi!";
+		set bioeth,6;
+		close;
+	}
+	mes "[Golin]";
+	mes "Where's daddy?";
+	mes "I really want";
+	mes "daddy to come back";
+	mes "from the lab.";
 	close;
 }

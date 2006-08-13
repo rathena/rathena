@@ -24,6 +24,7 @@ Evera
 	* Dungeon Teleport System NPCs
 	* iRO information gathering.
 	* Kafra maintainment.
+	* Taking requests.
 Musashiden
 	*Scripting iRO latest towns (warps, NPCs, ect.)
 	*iRO information gathering.
@@ -35,6 +36,8 @@ Playtester
 Date		Added
 ======
 08/13
+	* Finished Bio Ethics Quest, need bug testers before finalizing and moving to stable [Evera]
+	* Added Bio Ethics Quest variable to bit shift MISC_QUEST|64, and added to quest_variables.txt [Evera]
 	* The Sign Quest: moved #aldesignwarp to fix enless warp [Lupus]
 08/12
 	* Fixed id of Dryad Card in the Headgears 2006 quest thanks to tonyfud [Playtester]

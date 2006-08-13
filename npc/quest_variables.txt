@@ -48,6 +48,18 @@ Info:		The only way from Niflheim to Umbala.
 How to set: 	set MISC_QUEST,MISC_QUEST | 32;
 How to check: 	if(MISC_QUEST & 32){}
 
+Quest: 		Piano Quest
+Info:		The only way from Niflheim to Umbala.
+How to set: 	set MISC_QUEST,MISC_QUEST | 32;
+How to check: 	if(MISC_QUEST & 32){}
+
+Quest: 		Bio Ethics Quest
+Info:		Bio Ethics quest for homunculus
+		skill for alchemists. This bit
+		is for final part of quest.
+		(completed or not.)[Evera]
+How to set: 	set MISC_QUEST,MISC_QUEST | 64;
+How to check: 	if(MISC_QUEST & 64){}
 
 Quest: 		?
 Info:		?
