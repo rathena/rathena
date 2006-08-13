@@ -2768,9 +2768,9 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "[Kellasus]";
 		mes "I already taught you";
 		mes "skills of the homunculus...";
-		if(getskillv(238) == 0) skill 238,1,0;
-		if(getskillv(243) == 0) skill 243,1,0;
-		if(getskillv(244) == 0) skill 244,1,0;
+//		if(getskillv(238) == 0) skill 238,1,0;
+//		if(getskillv(243) == 0) skill 243,1,0;
+//		if(getskillv(244) == 0) skill 244,1,0;
 		close;
 	}
 	switch(bioeth){
@@ -2956,7 +2956,7 @@ lhz_in01.gat,225,122,4	script	Skrajiad	754,{
 lhz_in02.gat,269,273,4	script	Bringel	709,{
 //Unofficial Text
 	if(bioeth > 3 || MISC_QUEST&64){
-		if(getskillv(247) == 0) skill 247,1,0;
+//		if(getskillv(247) == 0) skill 247,1,0;
 	}
 	if(bioeth == 3){
 		mes "[Bringel]";
