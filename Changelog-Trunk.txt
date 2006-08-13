@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/08/13
+	* Corrected the mapif_parse_PartyChangeMap function to correctly update
+	  level-range when someone logs on/off, fixes being unable to set even-share
+	  on once it's been broken even when the characters out of range logoff.
+	  [Skotlex]
 2006/08/11
 	* Fixed Kagebunshin no Jutsu crashing for dyes > 0; though this solution
 	  might seem hackish (changing clothes colour to 0 when it starts while
