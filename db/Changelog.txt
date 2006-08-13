@@ -20,6 +20,7 @@
 
 =========================
 08/12
+	* Destroyer now has a 1% chance on breaking armor rather than Hit-10 [Playtester]
 	* Fixed Fling requiring unknown amunition [Playtester]
 	* Changed the aftercast delay of Envenom to 100ms [Playtester]
 	- this will cause that you can cast Envenom as fast as aMotion
