@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/13
+	* Gave elemental -1 to some GS skills. [Vicious]
 08/12
 	* Destroyer now has a 1% chance on breaking armor rather than Hit-10 [Playtester]
 	* Fixed Fling requiring unknown amunition [Playtester]
