@@ -71,7 +71,7 @@ int log_branch(struct map_session_data *sd)
 #endif
 	FILE *logfp;
 
-	if(log_config.enable_logs <= 0)
+	if(!log_config.enable_logs)
 		return 0;
 	nullpo_retr(0, sd);
 #ifndef TXT_ONLY
@@ -168,7 +168,7 @@ int log_pick(struct map_session_data *sd, char *type, int mob_id, int nameid, in
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount)
 {
 //	FILE *logfp;
-	if(log_config.enable_logs <= 0 || (log_config.zeny!=1 && abs(amount)<log_config.zeny))
+	if(!log_config.enable_logs || (log_config.zeny!=1 && abs(amount)<log_config.zeny))
 		return 0;
 
 	nullpo_retr(0, sd);
@@ -200,7 +200,7 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 {
 	FILE *logfp;
 
-	if(log_config.enable_logs <= 0)
+	if(!log_config.enable_logs)
 		return 0;
 	nullpo_retr(0, sd);
 #ifndef TXT_ONLY
@@ -235,7 +235,7 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 		char t_msg[MESSAGE_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
 #endif
 
-	if(log_config.enable_logs <= 0)
+	if(!log_config.enable_logs)
 		return 0;
 	nullpo_retr(0, sd);
 #ifndef TXT_ONLY
@@ -270,7 +270,7 @@ int log_npc(struct map_session_data *sd, const char *message)
 		char t_msg[255+1]; //it's 255 chars MAX. 
 	#endif
 
-	if(log_config.enable_logs <= 0)
+	if(!log_config.enable_logs)
 		return 0;
 	nullpo_retr(0, sd);
 #ifndef TXT_ONLY

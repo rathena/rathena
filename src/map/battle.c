@@ -2722,9 +2722,13 @@ struct Damage battle_calc_attack(	int attack_type,
 		memset(&d,0,sizeof(d));
 		break;
 	}
-	if (d.damage + d.damage2 < 1 && d.dmg_lv != ATK_LUCKY)
-		//Miss/Absorbed
+	if (d.damage + d.damage2 < 1)
+	{	//Miss/Absorbed
+		//Weapon attacks should go through to cause additional effects.
+		if (d.dmg_lv != ATK_LUCKY && attack_type&(BF_MAGIC|BF_MISC))
+			d.dmg_lv = ATK_FLEE;
 		d.dmotion = 0;
+	}
 	return d;
 }
 
@@ -3182,7 +3186,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_PC *sd = (TBL_PC*)t_bl;
 			if (sd->state.monster_ignore && t_bl != s_bl && flag&BCT_ENEMY)
 				return 0; //Global inmunity to attacks.
-			if (sd->special_state.killable && t_bl != s_bl)
+			if (sd->state.killable && t_bl != s_bl)
 			{
 				state |= BCT_ENEMY; //Universal Victim
 				strip_enemy = 0;
@@ -3241,7 +3245,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_PC:
 		{
 			TBL_PC *sd = (TBL_PC*) s_bl;
-			if (sd->special_state.killer && s_bl != t_bl)
+			if (sd->state.killer && s_bl != t_bl)
 			{
 				state |= BCT_ENEMY; //Is on a killing rampage :O
 				strip_enemy = 0;

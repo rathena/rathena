@@ -540,13 +540,13 @@ struct map_session_data {
 		unsigned blockedmove :1;
 		unsigned using_fake_npc :1;
 		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
+		unsigned killer : 1;
+		unsigned killable : 1;
 		unsigned short autoloot;
 		struct guild *gmaster_flag;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
-		unsigned killer : 1;
-		unsigned killable : 1;
 		unsigned restart_full_recover : 1;
 		unsigned no_castcancel : 1;
 		unsigned no_castcancel2 : 1;

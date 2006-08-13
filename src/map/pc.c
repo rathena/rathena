@@ -2425,6 +2425,8 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip)
 
 	//Check validity
 	if( nameid <= 0 || cardid <= 0 ||
+		sd->status.inventory[idx_equip].amount < 1 || //These two should never be required due to pc_delitem zero'ing the data.
+		sd->status.inventory[idx_card].amount < 1 ||
 		(sd->inventory_data[idx_equip]->type!=IT_WEAPON && sd->inventory_data[idx_equip]->type!=IT_ARMOR)||
 		sd->inventory_data[idx_card]->type!=IT_CARD || // Prevent Hack [Ancyker]
 		sd->status.inventory[idx_equip].identify==0 ||

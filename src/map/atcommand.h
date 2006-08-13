@@ -44,7 +44,6 @@ enum AtCommandType {
 	AtCommand_Item,
 	AtCommand_Item2,
 	AtCommand_ItemReset,
-	AtCommand_ItemCheck,
 	AtCommand_BaseLevelUp,
 	AtCommand_JobLevelUp,
 	AtCommand_H,

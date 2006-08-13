@@ -6094,9 +6094,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case HP_BASILICA:
 		skill_clear_unitgroup(src);
 		sg = skill_unitsetting(src,skillid,skilllv,x,y,0);
-		sc_start4(src,type,100,
-			skilllv,0,BCT_SELF,sg->group_id,
-			skill_get_time(skillid,skilllv));
+		sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
 		flag|=1;
 		break;
 	case CG_HERMODE:
@@ -7355,7 +7353,6 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 		if (sc && sc->data[type].timer!=-1)
 			status_change_end(bl,type,-1);
 		break;
-	case UNT_BASILICA: //Clear basilica if the owner moved [Skotlex]
 	case UNT_HERMODE:	//Clear Hermode if the owner moved.
 		if (sc && sc->data[type].timer!=-1 && sc->data[type].val3 == BCT_SELF && sc->data[type].val4 == sg->group_id)
 			status_change_end(bl,type,-1);

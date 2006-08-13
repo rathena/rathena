@@ -5925,10 +5925,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 			break;
 		case SC_HERMODE: 
-		case SC_BASILICA: //Clear the skill area. [Skotlex]
 			if(sc->data[type].val3 == BCT_SELF)
 				skill_clear_unitgroup(bl);
 			break;
+		case SC_BASILICA: //Clear the skill area. [Skotlex]
+				skill_clear_unitgroup(bl);
+				break;
 		case SC_MOONLIT: //Clear the unit effect. [Skotlex]
 			skill_setmapcell(bl,CG_MOONLIT, sc->data[SC_MOONLIT].val1, CELL_CLRMOONLIT);
 			break;

@@ -77,7 +77,6 @@ ACMD_FUNC(heal);
 ACMD_FUNC(item);
 ACMD_FUNC(item2);
 ACMD_FUNC(itemreset);
-ACMD_FUNC(itemcheck);
 ACMD_FUNC(baselevelup);
 ACMD_FUNC(joblevelup);
 ACMD_FUNC(help);
@@ -356,7 +355,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Item,				"@item",			60, atcommand_item },
 	{ AtCommand_Item2,			"@item2",			60, atcommand_item2 },
 	{ AtCommand_ItemReset,			"@itemreset",		40, atcommand_itemreset },
-	{ AtCommand_ItemCheck,			"@itemcheck",		60, atcommand_itemcheck },
 	{ AtCommand_BaseLevelUp,		"@lvup",			60, atcommand_baselevelup },
 	{ AtCommand_BaseLevelUp,		"@blevel",			60, atcommand_baselevelup },
 	{ AtCommand_BaseLevelUp,		"@baselvlup",		60, atcommand_baselevelup },
@@ -525,7 +523,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Trade,			"@trade",			60, atcommand_trade },
 	{ AtCommand_Send,				"@send",			60, atcommand_send },
 	{ AtCommand_SetBattleFlag,		"@setbattleflag",		99, atcommand_setbattleflag },
-	{ AtCommand_UnMute,			"@unmute",			60, atcommand_unmute }, // [Valaris]
+	{ AtCommand_UnMute,			"@unmute",			80, atcommand_unmute }, // [Valaris]
 	{ AtCommand_Clearweather,		"@clearweather",		99, atcommand_clearweather }, // Dexity
 	{ AtCommand_UpTime,			"@uptime",			 1, atcommand_uptime }, // by MC Cameri
 	{ AtCommand_ChangeSex,			"@changesex",		 60, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken] <- why not? [Skotlex]
@@ -2751,20 +2749,6 @@ int atcommand_itemreset(
 		}
 	}
 	clif_displaymessage(fd, msg_txt(20)); // All of your items have been removed.
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-int atcommand_itemcheck(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	nullpo_retr(-1, sd);
-	pc_checkitem(sd);
 
 	return 0;
 }
@@ -7167,12 +7151,12 @@ atcommand_killer(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	sd->special_state.killer = !sd->special_state.killer;
+	sd->state.killer = !sd->state.killer;
 
-	if(sd->special_state.killer)
+	if(sd->state.killer)
 	  clif_displaymessage(fd, msg_txt(241));
-        else
-	  clif_displaymessage(fd, msg_txt(242));
+	else
+	  clif_displaymessage(fd, msg_txt(287));
 
 	return 0;
 }
@@ -7188,12 +7172,12 @@ atcommand_killable(
 	const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	sd->special_state.killable = !sd->special_state.killable;
+	sd->state.killable = !sd->state.killable;
 
-	if(sd->special_state.killable)
+	if(sd->state.killable)
 	  clif_displaymessage(fd, msg_txt(242));
-        else
-	  clif_displaymessage(fd, msg_txt(241));
+	else
+	  clif_displaymessage(fd, msg_txt(288));
 
 	return 0;
 }
@@ -7215,14 +7199,14 @@ atcommand_charkillable(
 		return -1;
 
 	if((pl_sd=map_nick2sd((char *) message)) == NULL)
-                return -1;
+		return -1;
 
-	pl_sd->special_state.killable = !pl_sd->special_state.killable;
+	pl_sd->state.killable = !pl_sd->state.killable;
 
-	if(pl_sd->special_state.killable)
-	  clif_displaymessage(fd, "The player is now killable");
-        else
-	  clif_displaymessage(fd, "The player is no longer killable");
+	if(pl_sd->state.killable)
+		clif_displaymessage(fd, msg_txt(289));
+	else
+		clif_displaymessage(fd, msg_txt(290));
 
 	return 0;
 }
@@ -9511,12 +9495,12 @@ atcommand_charkillableid(
       if((pl_sd= (struct map_session_data *) session[session_id]->session_data) == NULL)
                    return -1;
 
-      pl_sd->special_state.killable = !pl_sd->special_state.killable;
+      pl_sd->state.killable = !pl_sd->state.killable;
 
-      if(pl_sd->special_state.killable)
-        clif_displaymessage(fd, "The player is now killable");
-           else
-        clif_displaymessage(fd, "The player is no longer killable");
+      if(pl_sd->state.killable)
+			clif_displaymessage(fd, msg_txt(289));
+		else
+  			clif_displaymessage(fd, msg_txt(290));
    }
    else
    {
@@ -9550,14 +9534,14 @@ atcommand_charkillableid2(
    if ((session_id=accountid2sessionid(aid))!=0)
    {
       if((pl_sd= (struct map_session_data *) session[session_id]->session_data) == NULL)
-                   return -1;
+			return -1;
 
-      pl_sd->special_state.killable = !pl_sd->special_state.killable;
+      pl_sd->state.killable = !pl_sd->state.killable;
 
-      if(pl_sd->special_state.killable)
-        clif_displaymessage(fd, "The player is now killable");
+      if(pl_sd->state.killable)
+        clif_displaymessage(fd, msg_txt(289));
            else
-        clif_displaymessage(fd, "The player is no longer killable");
+        clif_displaymessage(fd, msg_txt(290));
    }
    else
    {

@@ -502,6 +502,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 				status_change_end(bl, SC_CLOSECONFINE2, -1);
 //			if (sc->data[SC_BLADESTOP].timer != -1) //Won't stop when you are knocked away, go figure...
 //				status_change_end(bl, SC_BLADESTOP, -1);
+			if (sc->data[SC_BASILICA].timer != -1)
+				status_change_end(bl, SC_BASILICA, -1);
 		}
 	}
 	if (moveblock) map_delblock_sub(bl,0);
