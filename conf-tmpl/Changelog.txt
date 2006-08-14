@@ -1,4 +1,9 @@
 Date	Added
+
+2006/08/14
+	* Modified emergency_call setting to allow for more specific configuration
+	  (woe/non-woe, gvg-grounds/non-gvg-grounds, disable from nowarpto maps), see
+	  skill.conf for details. [Skotlex]
 2006/08/10
 	* Removed setting mob_ghostring_fix [Skotlex]
 	* Changed setting attack_attr_none to affect all neutral-element attacks.

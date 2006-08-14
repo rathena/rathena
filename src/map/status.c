@@ -308,7 +308,7 @@ void initChangeTables(void) {
 	add_sc(PF_FOGWALL, SC_FOGWALL);
 	set_sc(PF_SPIDERWEB, SC_SPIDERWEB, SI_BLANK, SCB_FLEE);
 	add_sc(WE_BABY, SC_BABY);
-	set_sc(TK_RUN, SC_RUN, SI_RUN, SCB_SPEED);
+	set_sc(TK_RUN, SC_RUN, SI_RUN, SCB_SPEED|SCB_DSPD);
 	set_sc(TK_RUN, SC_SPURT, SI_SPURT, SCB_STR);
 	set_sc(TK_READYSTORM, SC_READYSTORM, SI_READYSTORM, SCB_NONE);
 	set_sc(TK_READYDOWN, SC_READYDOWN, SI_READYDOWN, SCB_NONE);
@@ -3420,11 +3420,11 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	//% increases (they don't stack, with the exception of Speedup1? @.@)
 	if(sc->data[SC_SPEEDUP1].timer!=-1)
 		speed -= speed * 50/100;
-	if(sc->data[SC_SPEEDUP0].timer!=-1)
+	if(sc->data[SC_RUN].timer!=-1)
+		speed -= speed * 50/100;
+	else if(sc->data[SC_SPEEDUP0].timer!=-1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
-		speed -= speed * 25/100;
-	else if(sc->data[SC_RUN].timer!=-1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
@@ -3584,8 +3584,11 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 	if(!sc || !sc->count || map_flag_gvg(bl->m))
 		return cap_value(dmotion,0,USHRT_MAX);
 		
-	if (sc->data[SC_ENDURE].timer!=-1 ||
-		sc->data[SC_CONCENTRATION].timer!=-1)
+	if (sc->data[SC_ENDURE].timer!=-1)
+		return 0;
+	if (sc->data[SC_CONCENTRATION].timer!=-1)
+		return 0;
+	if(sc->data[SC_RUN].timer!=-1)
 		return 0;
 
 	return cap_value(dmotion,0,USHRT_MAX);

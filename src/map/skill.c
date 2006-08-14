@@ -925,9 +925,11 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			}
 			break;
 		case GD_EMERGENCYCALL:
-			if (!battle_config.emergency_call ||
-				(map[sd->bl.m].flag.nowarpto && battle_config.emergency_call&1))
-			{
+			if (
+				!(battle_config.emergency_call&(agit_flag?2:1)) ||
+				!(battle_config.emergency_call&(map_flag_gvg(sd->bl.m)?8:4)) ||
+				(battle_config.emergency_call&16 && map[sd->bl.m].flag.nowarpto)
+			)	{
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
@@ -6898,7 +6900,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_HERMODE:
 		 //Needed to check when a dancer/bard leaves their ensemble area.
 		if (sg->src_id==bl->id &&
-			!(sc && sc->data[SC_SPIRIT].timer == -1 && sc->data[SC_SPIRIT].val2 != SL_BARDDANCER))
+			!(sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_BARDDANCER))
 			return skillid;
 		if (sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
@@ -8286,22 +8288,16 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
+		//Emergency Recall is handled on skill_notok
+		if (skill != GD_EMERGENCYCALL && !agit_flag) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
 	case GD_EMERGENCYCALL:
 		if (!sd->status.guild_id || !sd->state.gmaster_flag)
 			return 0;
 		if (lv <= 0)
 			return 0;
-			
-		if	(skill == GD_EMERGENCYCALL) {
-			if (!map_flag_gvg(sd->bl.m))
-			{	//if not allowed to warp to the map (castles are always allowed)
-				clif_skill_fail(sd,skill,0,0);
-				return 0;
-			}
-		} else if (!agit_flag) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
 		break;
 
 	case GS_GLITTERING:
