@@ -1,6 +1,9 @@
 Date	Added
 
 2006/08/14
+	* Removed support for negative autosave intervals, instead added a
+	  minsave_interval setting which specifies which is the minimum time between
+	  character saves. Default to 100ms (map_athena.conf). [Skotlex]
 	* Modified emergency_call setting to allow for more specific configuration
 	  (woe/non-woe, gvg-grounds/non-gvg-grounds, disable from nowarpto maps), see
 	  skill.conf for details. [Skotlex]

@@ -169,6 +169,7 @@ int map_num = 0;
 int map_port=0;
 
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
+int minsave_interval = 100;
 int save_settings = 0xFFFF;
 int charsave_method = 0; //Default 'OLD' Save method (SQL ONLY!) [Sirius]
 int agit_flag = 0;
@@ -3314,9 +3315,14 @@ int map_config_read(char *cfgName) {
 				npc_delsrcfile(w2);
 			} else if (strcmpi(w1, "autosave_time") == 0) {
 				autosave_interval = atoi(w2);
-				if (!autosave_interval) //Revert to default saving.
+				if (autosave_interval < 1) //Revert to default saving.
 					autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-				autosave_interval *= 1000; //Pass from sec to ms
+				else
+					autosave_interval *= 1000; //Pass from sec to ms
+			} else if (strcmpi(w1, "minsave_time") == 0) {
+				minsave_interval= atoi(w2);
+				if (minsave_interval < 1)
+					minsave_interval = 1;
 			} else if (strcmpi(w1, "save_settings") == 0) {
 				save_settings = atoi(w2);
 			} else if (strcmpi(w1, "motd_txt") == 0) {
