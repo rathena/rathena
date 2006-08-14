@@ -849,13 +849,10 @@ int can_copy (struct map_session_data *sd, int skillid)
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok (int skillid, struct map_session_data *sd)
 {	
-	int i = skillid;
+	int i = skillid,m;
 	nullpo_retr (1, sd);
-	//if (sd == 0)
-		//return 0; 
-		//return 1;
-	// I think it was meant to be "no skills allowed when not a valid sd"
-	
+	m = sd->bl.m;
+
 	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
 		return 1;
 
@@ -874,33 +871,33 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		return 0;  // gm's can do anything damn thing they want
 
 	// Check skill restrictions [Celest]
-	if(!map_flag_vs(sd->bl.m) && skill_get_nocast (skillid) & 1)
+	if(!map_flag_vs(m) && skill_get_nocast (skillid) & 1)
 		return 1;
-	if(map[sd->bl.m].flag.pvp && skill_get_nocast (skillid) & 2)
+	if(map[m].flag.pvp && skill_get_nocast (skillid) & 2)
 		return 1;
-	if(map_flag_gvg(sd->bl.m) && skill_get_nocast (skillid) & 4)
+	if(map_flag_gvg(m) && skill_get_nocast (skillid) & 4)
 		return 1;
 	if(agit_flag && skill_get_nocast (skillid) & 8)
 		return 1;
-	if(map[sd->bl.m].flag.restricted && map[sd->bl.m].zone && skill_get_nocast (skillid) & (8*map[sd->bl.m].zone))
+	if(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone))
 		return 1;
 
 	switch (skillid) {
 		case AL_WARP:
-			if(map[sd->bl.m].flag.nowarp) {
+			if(map[m].flag.nowarp) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
 			}
 			return 0;
 		break;
 		case AL_TELEPORT:
-			if(map[sd->bl.m].flag.noteleport) {
+			if(map[m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
 			}
 			return 0;
 		case TK_HIGHJUMP:
-			if(map[sd->bl.m].flag.noteleport && !map_flag_vs(sd->bl.m))
+			if(map[m].flag.noteleport && !map_flag_vs(m))
 		  	{	//Can't be used on noteleport maps, except for vs maps [Skotlex]
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
@@ -909,7 +906,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
-			if (map[sd->bl.m].flag.nomemo) {
+			if (map[m].flag.nomemo) {
 				clif_skill_teleportmessage(sd,1);
 				return 1;
 			}
@@ -919,23 +916,24 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			return 0; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
-			if (map[sd->bl.m].flag.noicewall) {
+			if (map[m].flag.noicewall) {
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
 			break;
 		case GD_EMERGENCYCALL:
-			if (
+			if ( //No use map_flag_gvg since config already takes that into account
 				!(battle_config.emergency_call&(agit_flag?2:1)) ||
-				!(battle_config.emergency_call&(map_flag_gvg(sd->bl.m)?8:4)) ||
-				(battle_config.emergency_call&16 && map[sd->bl.m].flag.nowarpto)
+				!(battle_config.emergency_call&
+					(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
+				(battle_config.emergency_call&16 && map[m].flag.nowarpto)
 			)	{
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
 			break;
 	}
-	return (map[sd->bl.m].flag.noskill);
+	return (map[m].flag.noskill);
 }
 
 // [orn] - skill ok to cast? and when?	//homunculus
