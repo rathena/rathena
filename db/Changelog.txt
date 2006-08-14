@@ -20,6 +20,7 @@
 
 =========================
 08/14
+	* Fixed attack power of Dusk [Playtester]
 	* Added official Gunslinger ASPD values according to Ragnarok Monthly [Playtester]
 08/13
 	* Gave elemental -1 to some GS skills. [Vicious]
