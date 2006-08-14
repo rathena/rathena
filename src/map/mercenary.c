@@ -113,44 +113,67 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
-	hd->battle_status.hp = hd->master->homunculus.hp = 0 ;
-	clif_hominfo(hd->master,hd,0); // Send dead flag
-	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
-		merc_stop_walking(hd, 1);
-		merc_stop_attack(hd);
-		clif_emotion(&hd->master->bl, 23) ;	//omg
-		merc_hom_delete(hd,1) ;
-		return 1 ;
+	struct map_session_data *sd = hd->master;
+	if (!sd)
+	{
+		clif_emotion(&hd->bl, 16) ;	//wah
+		return 7;
 	}
+
+	sd->homunculus.hp = 0 ;
+	clif_hominfo(sd,hd,0); // Send dead flag
+
+	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
+		clif_emotion(&sd->bl, 23) ;	//omg
+		return 7; //Delete from memory.
+	}
+
 	clif_send_homdata(hd->master,SP_INTIMATE,hd->master->homunculus.intimacy / 100);
 	clif_emotion(&hd->bl, 16) ;	//wah
-	clif_emotion(&hd->master->bl, 28) ;	//sob
-	merc_hom_delete(hd, 0);
-
-	return 1; // Removing is handled by merc_hom_delete
+	clif_emotion(&sd->bl, 28) ;	//sob
+	return 3; //Remove from map.
 }
 
-int merc_hom_delete(struct homun_data *hd, int flag)
+//Vaporize a character's homun. If flag, HP needs to be 80% or above.
+int merc_hom_vaporize(struct map_session_data *sd, int flag)
 {
-	nullpo_retr(0, hd);
+	struct homun_data *hd;
 
-	if ((flag & 2) && hd->bl.prev == NULL)
-	{
-		// Homunc was already removed from map, so just free the bl
-		return unit_free(&hd->bl);
-	}
+	nullpo_retr(0, sd);
 
-	// Delete homunculus
-	if ( flag&1 ) {	//sabbath
-		intif_homunculus_requestdelete(hd->master->homunculus.hom_id) ;
-		clif_emotion(&hd->bl, 28) ;	//sob
-		hd->master->status.hom_id = 0;
-		hd->master->homunculus.hom_id = 0;
-		chrif_save(hd->master,0);
-	} else
-		merc_save(hd);
+	hd = sd->hd;
+	if (!hd || sd->homunculus.vaporize)
+		return 0;
+	
+	if (flag && hd->battle_status.hp < (hd->battle_status.max_hp*80/100))
+		return 0;
 
+	sd->homunculus.vaporize = 1;
+	clif_hominfo(sd, sd->hd, 0);
+	merc_save(hd);
 	return unit_remove_map(&hd->bl, 0);
+}
+
+//delete a homunculus, completely "killing it". 
+//Emote is the emotion the master should use, send negative to disable.
+int merc_hom_delete(struct homun_data *hd, int emote)
+{
+	struct map_session_data *sd;
+	nullpo_retr(0, hd);
+	sd = hd->master;
+
+	if (!sd)
+		return unit_free(&hd->bl);
+
+	if (emote >= 0)
+		clif_emotion(&sd->bl, emote);
+
+	//This makes it be deleted right away.
+	sd->homunculus.intimacy = 0;
+	// Send homunculus_dead to client
+	sd->homunculus.hp = 0;
+	clif_hominfo(sd, hd, 0);
+	return unit_free(&hd->bl);
 }
 
 int merc_hom_calc_skilltree(struct map_session_data *sd)
@@ -314,7 +337,7 @@ int merc_hom_evolution(struct homun_data *hd)
 		hd->master->homunculus.vaporize = 1;
 		merc_stop_walking(hd, 1);
 		merc_stop_attack(hd);
-		merc_hom_delete(hd, 0) ;
+		merc_hom_delete(hd, -1) ;
 		merc_call_homunculus(hd->master);
 		clif_emotion(&hd->master->bl, 21) ;	//no1
 		clif_misceffect2(&hd->bl,568);
@@ -442,10 +465,10 @@ static int merc_natural_heal_sub(struct homun_data *hd,int tick) {
 //	tick = va_arg(ap,int);
 
 // -- moonsoul (if conditions below altered to disallow natural healing if under berserk status)
-	if (  hd && ( status_isdead(&hd->bl) ||
+	if (  status_isdead(&hd->bl) ||
 		( ( hd->sc.count ) &&
 			( (hd->sc.data[SC_POISON].timer != -1 ) || ( hd->sc.data[SC_BLEEDING].timer != -1 ) )
-		) )
+		)
 	) { //Cannot heal neither natural or special.
 		hd->hp_sub = hd->inchealhptick = 0;
 		hd->sp_sub = hd->inchealsptick = 0;
@@ -578,7 +601,7 @@ int merc_menu(struct map_session_data *sd,int menunum)
 			merc_hom_food(sd, sd->hd);
 			break;
 		case 2:
-			merc_hom_delete(sd->hd, 1);
+			merc_hom_delete(sd->hd, -1);
 			break;
 		default:
 			ShowError("merc_menu : unknown menu choice : %d\n", menunum) ;
@@ -629,15 +652,9 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	clif_hom_food(sd,hd->homunculusDB->foodID,1);
        	
 	// Too much food :/
-	if(sd->homunculus.intimacy == 0) {  
-		merc_stop_walking(hd, 1);
-		merc_stop_attack(hd);
-		// Send homunculus_dead to client
-		sd->homunculus.hp = 0;
-		clif_hominfo(sd, hd, 0);
-		merc_hom_delete(hd,1);
-		clif_emotion(&sd->bl, 23);     //omg  
-  	}  
+	if(sd->homunculus.intimacy == 0)
+		return merc_hom_delete(sd->hd, 23); //omg  
+
 	return 0;
 }
 
@@ -674,18 +691,9 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 	if(sd->homunculus.hunger < 0) {
 		sd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
-		if ( !merc_hom_decrease_intimacy(hd, 100) ) {
-			merc_stop_walking(hd, 1);
-			merc_stop_attack(hd);
-			// Send homunculus_dead to client
-			sd->homunculus.hp = 0;
-			clif_hominfo(sd, hd, 0);
-			merc_hom_delete(hd,1);
-			clif_emotion(&sd->bl, 23) ;	//omg
-			return 0 ;
-		} else {
-			clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
-		}
+		if ( !merc_hom_decrease_intimacy(hd, 100) )
+			return merc_hom_delete(sd->hd, 23); //omg  
+		clif_send_homdata(sd,SP_INTIMATE,sd->homunculus.intimacy / 100);
 	}
 
 	clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
@@ -812,45 +820,34 @@ int merc_hom_data_init(struct map_session_data *sd)
 	return 0;
 }
 
-// FIX call_homunculus [albator]
 int merc_call_homunculus(struct map_session_data *sd)
 {
-	int class_ = 0 ;
-	nullpo_retr(0, sd);
+	struct homun_data *hd;
 
-	if (!sd->status.hom_id)
-	{
-		class_ = 6000 + rand(1, 8) ;
-		return merc_create_homunculus(sd, class_) ;
-	}
+	if (!sd->status.hom_id) //Create a new homun.
+		return merc_create_homunculus(sd, 6000 + rand(1, 8)) ;
 
-	// If homunc not yet loaded, load it, else just activate it
+	//Recall homunculus to you.
+	if (sd->homunculus.vaporize)
+		return 0; //Can't use this when homun was vaporized.
+
+	// If homunc not yet loaded, load it
 	if (!sd->hd)
 		merc_hom_create(sd);
-	else
-		merc_hom_data_init(sd);
 
-	// call vaporized homunculus [albator]
-	if(sd->homunculus.vaporize == 1)
-	{
-		sd->homunculus.vaporize = 0;
-	}
-	else
-	{
-		// Homunc was dead, set hp to 1
-		sd->homunculus.hp = 1 ;
-	}
-
-	if ( sd->homunculus.hp && sd->hd && sd->bl.prev != NULL) {
-		map_addblock(&sd->hd->bl);
-		clif_spawn(&sd->hd->bl);
+	hd = sd->hd;
+	if (hd->bl.prev == NULL)
+	{	//Spawn him
+		map_addblock(&hd->bl);
+		clif_spawn(&hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
-		clif_hominfo(sd,sd->hd,1);
-		clif_hominfo(sd,sd->hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		clif_hominfo(sd,hd,1);
+		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
-	}
-	// save
-	merc_save(sd->hd);
+		merc_save(hd); 
+	} else
+		//Warp him to master.
+		unit_warp(&hd->bl,sd->bl.m,sd->bl.x,sd->bl.y,0);
 	return 1;
 }
 

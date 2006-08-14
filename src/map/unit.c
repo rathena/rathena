@@ -1497,7 +1497,6 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		unit_skillcastcancel(bl,0);
 // Do not reset can-act delay. [Skotlex]
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
-	clif_clearchar_area(bl,clrtype);
 	
 	if(sc && sc->count ) { //map-change/warp dispells.
 		if(sc->data[SC_BLADESTOP].timer!=-1)
@@ -1588,18 +1587,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		struct pet_data *pd = (struct pet_data*)bl;
 		struct map_session_data *sd = pd->msd;
 		
-		if(!sd) {
-			map_delblock(bl);
-			unit_free(bl);
-			map_freeblock_unlock();
-			return 0;
-		}
-		if (sd->pet.intimate <= 0)
-		{	//Remove pet.
-			intif_delete_petdata(sd->status.pet_id);
-			sd->status.pet_id = 0;
-			sd->pd = NULL;
-			pd->msd = NULL;
+		if(!sd || sd->pet.intimate <= 0) {
+			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl);
 			map_freeblock_unlock();
@@ -1608,28 +1597,17 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 	} else if (bl->type == BL_HOM) {
 		struct homun_data *hd = (struct homun_data *) bl;
 		struct map_session_data *sd = hd->master;
-		
-		// Desactive timers
-		merc_hom_hungry_timer_delete(hd);
-		merc_natural_heal_timer_delete(hd);
-
-		if(!sd) {
+		if(!sd || !sd->homunculus.intimacy)
+	  	{	//He's going to be deleted.
+			clif_emotion(bl, 28) ;	//sob
+			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl);
 			map_freeblock_unlock();
 			return 0;
 		}
-
-		// Homunc was deleted or player is leaving the server, remove it from memory
-		if (sd->homunculus.hom_id == 0 || sd->state.waitingdisconnect)
-		{	//Remove pet.
-			map_delblock(bl);
-			unit_free(bl);
-			sd->hd = NULL;
-			map_freeblock_unlock();
-			return 1;
-		}
 	}
+	clif_clearchar_area(bl,clrtype);
 	map_delblock(bl);
 	map_freeblock_unlock();
 	return 1;
@@ -1761,9 +1739,14 @@ int unit_free(struct block_list *bl) {
 			pd->loot = NULL;
 		}
 		if (sd) {
+			sd->pd = NULL;
 			if(sd->pet.intimate > 0)
 				intif_save_petdata(sd->status.account_id,&sd->pet);
-			sd->pd = NULL;
+			else
+			{	//Remove pet.
+				intif_delete_petdata(sd->status.pet_id);
+				sd->status.pet_id = 0;
+			}
 		}
 	} else if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data*)bl;
@@ -1794,6 +1777,24 @@ int unit_free(struct block_list *bl) {
 		}
 		if(mob_is_clone(md->class_))
 			mob_clone_delete(md->class_);
+	} else if(bl->type == BL_HOM) {
+		struct homun_data *hd = (TBL_HOM*)bl;
+		struct map_session_data *sd = hd->master;
+		// Desactive timers
+		merc_hom_hungry_timer_delete(hd);
+		merc_natural_heal_timer_delete(hd);
+		if(sd) {
+			sd->hd = NULL;
+			hd->master = NULL;
+			if (sd->homunculus.intimacy > 0)
+				merc_save(hd); 
+			else
+			{
+				intif_homunculus_requestdelete(sd->homunculus.hom_id) ;
+				sd->status.hom_id = 0;
+				sd->homunculus.hom_id = 0;
+			}
+		}
 	}
 
 	skill_clear_unitgroup(bl);

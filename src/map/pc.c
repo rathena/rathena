@@ -671,7 +671,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 
 	// Homunculus [albator]
 	if (sd->status.hom_id > 0)	
-			intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
+		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
 	// パ?ティ、ギルドデ?タの要求
 	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
@@ -4783,14 +4783,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if(sd->status.hom_id > 0 && sd->hd)	//orn
-	{
-		sd->homunculus.vaporize = 1;
-		clif_hominfo(sd,sd->hd,0);
-		merc_stop_walking(sd->hd, 1) ;
-		merc_stop_attack(sd->hd) ;
-		merc_hom_delete(sd->hd,0);
-	}
+	if(sd->status.hom_id > 0)	//orn
+		merc_hom_vaporize(sd, 0);
 
 	// Leave duel if you die [LuzZza]
 	if(battle_config.duel_autoleave_when_die) {

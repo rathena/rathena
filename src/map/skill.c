@@ -5487,37 +5487,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	
 	case AM_CALLHOMUN:	//[orn]
-		if (sd)
-		{
-			if (sd->status.hom_id == 0 || sd->homunculus.vaporize == 1) {
-				if (sd->status.hom_id == 0) {
-					i = pc_search_inventory(sd,7142);
-					if(i < 0) {
-						clif_skill_fail(sd,skillid,0,0);
-						break ;
-					}
-					pc_delitem(sd,i,1,0);
-				}
-				if (merc_call_homunculus(sd))
-					break;
-			}
+		if (sd && !merc_call_homunculus(sd))
 			clif_skill_fail(sd,skillid,0,0);
-		}
 		break;
 
 	case AM_REST:	//[orn]
-	{
-		if (sd)
-		{
-			if (sd->hd && !sd->homunculus.vaporize && ( sd->hd->battle_status.hp >= (sd->hd->battle_status.max_hp * 80 / 100 ) ) ) {
-				sd->homunculus.vaporize = 1;
-				clif_hominfo(sd, sd->hd, 0);
-				merc_hom_delete(sd->hd, 0) ;
-			} else
-				clif_skill_fail(sd,skillid,0,0);
-		}
+		if (sd && !merc_hom_vaporize(sd,1))
+			clif_skill_fail(sd,skillid,0,0);
 		break;
-	}
+
 	case AM_RESURRECTHOMUN:	//[orn]
 	{
 		if (sd)
@@ -5821,8 +5799,10 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			else if(dy < 0) dy--;
 			
 			if (unit_movepos(src, src->x+dx, src->y+dy, 1, 1))
+			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);
-
+				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5);
+			}
 			clif_skill_fail(sd,ud->skillid,0,0);
 		}
 	}
@@ -8319,6 +8299,14 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		zeny = 0; //Zeny is reduced on skill_attack.
+		break;
+	case AM_CALLHOMUN: //Can't summon if a hom is already out (vaporized also counts).
+		if (sd->status.hom_id || sd->homunculus.vaporize) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		if (sd->status.hom_id) //Don't delete items when hom is already out.
+			delitem_flag = 0;
 		break;
 	}
 
