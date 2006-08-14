@@ -58,8 +58,16 @@ Info:		Bio Ethics quest for homunculus
 		skill for alchemists. This bit
 		is for final part of quest.
 		(completed or not.)[Evera]
-How to set: 	set MISC_QUEST,MISC_QUEST | 64;
-How to check: 	if(MISC_QUEST & 64){}
+How to set: 	set MISC_QUEST,MISC_QUEST|64;
+How to check: 	if(MISC_QUEST&64){}
+
+Quest: 		DTS Warper
+Info:		Not really a quest, but to
+		show if a person has
+		already voted. Cleaning
+		up the variables -.-;[Evera]
+How to set: 	set MISC_QUEST,MISC_QUEST|128;
+How to check: 	if(MISC_QUEST&128){}
 
 Quest: 		?
 Info:		?

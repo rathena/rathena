@@ -36,6 +36,9 @@ Playtester
 Date		Added
 ======
 08/14
+	* Changed DTS warper to use MISC_QUEST|128 instead of dtseligible,2. [Evera]
+	- May be some bugs, it's 1am @_@, look through it before trunk merge. [Evera]
+	* Added Garbage clearing for dtseligible,2 -> MISC_QUEST|128, and added that func call to DTS warper. [Evera]
 	* Added (finally) the official Inn Maid of Rachel. Save and warp points
 	  are official aswell, thanks to RockmanEXE [erKURITA]
 	* Added (finally) the Garrison quest npc. Item requirements are the official ones,

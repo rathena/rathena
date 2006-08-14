@@ -25,6 +25,7 @@
 //= 2.01 Added $talk to F_ClearGarbage [Evera]
 //= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
 //= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
+//= 2.04 Added dtseligible 3 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
 //============================================================ 
 
 
@@ -69,6 +70,8 @@ function	script	F_ClearJobVar	{
 
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
+	if(dtseligible == 2) set MISC_QUEST,MISC_QUEST|128;
+	if(dtseligible == 3) set dtseligible,0;
 	if($talk) set $talk,0;
 	if($dtsglobalelig) set $dtsglobalelig,0;
 	if($dts&(1<<6)) set $dts,$dts&~(1<<6);
