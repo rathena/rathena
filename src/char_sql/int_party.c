@@ -708,7 +708,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 	return 0;
 }
 // When member goes to other map
-int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id, unsigned short map, int online, int lv)
+int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id, unsigned short map, int online, unsigned int lv)
 {
 	struct party_data *p;
 	int i;

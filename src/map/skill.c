@@ -10038,7 +10038,7 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 	struct skill_unit_group *group;
 	struct block_list *target;
 	unsigned int tick,flag,result;
-	int skill_id,unit_id;
+	int skill_id,unit_id=0; //Set to 0 to shut-up compiler warnings.
 
 	target=va_arg(ap,struct block_list*);
 	tick = va_arg(ap,unsigned int);

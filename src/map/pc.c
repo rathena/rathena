@@ -2548,11 +2548,11 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 	if(sd->state.finalsave)
 		return 1;
 
-	if (zeny > 0 && sd->status.zeny < zeny)
-		return 1; //Not enough.
+	if (zeny < 0)
+	  	return pc_getzeny(sd, -zeny);
 
-	if (zeny < 0 && sd->status.zeny > MAX_ZENY +zeny)
-		return 1; //Overflow
+	if (sd->status.zeny < zeny)
+		return 1; //Not enough.
 
 	sd->status.zeny-=zeny;
 	clif_updatestatus(sd,SP_ZENY);
@@ -2566,23 +2566,25 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
  */
 int pc_getzeny(struct map_session_data *sd,int zeny)
 {
-	double z;
-
 	nullpo_retr(0, sd);
 
-	z = (double)sd->status.zeny;
-	if(z + (double)zeny > MAX_ZENY) {
-		zeny = 0;
-		sd->status.zeny = MAX_ZENY;
-	}
+	if(sd->state.finalsave)
+		return 1;
+
+	if(zeny < 0)
+		return pc_payzeny(sd, -zeny);
+
+	if (sd->status.zeny > MAX_ZENY -zeny)
+		return 1; //Overflow
+
 	sd->status.zeny+=zeny;
 	clif_updatestatus(sd,SP_ZENY);
+
 	if(zeny > 0 && sd->state.showzeny){
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
-
 	return 0;
 }
 
@@ -5244,25 +5246,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->status.status_point = val;
 		break;
 	case SP_ZENY:
-		if(val <= MAX_ZENY) {
-			// MAX_ZENY 以下なら代入
-			sd->status.zeny = val;
-		} else {
-			sd->status.zeny = MAX_ZENY;
-			/* Could someone explain the comments below? I have no idea what they are trying to do... 
-			 * if you want to give someone so much zeny, just set their zeny to the max. [Skotlex]
-			if(sd->status.zeny > val) {
-				// Zeny が減少しているなら代入
-				sd->status.zeny = val;
-			} else if(sd->status.zeny <= MAX_ZENY) {
-				// Zeny が増加していて、現在の値がMAX_ZENY 以下ならMAX_ZENY
-				sd->status.zeny = MAX_ZENY;
-			} else {
-				// Zeny が増加していて、現在の値がMAX_ZENY より下なら増加分を無視
-				;
-			}
-			*/
-		}
+		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
 		if(pc_nextbaseexp(sd) > 0) {

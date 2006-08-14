@@ -4019,7 +4019,7 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	WBUFL(buf,14)=sdelay;
 	WBUFL(buf,18)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,22)=div;
+		WBUFW(buf,22)=damage?div:0;
 		WBUFW(buf,27)=damage2?div:0;
 	} else {
 		WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
@@ -4544,7 +4544,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,24)=div;
+		WBUFW(buf,24)=damage?div:0;
 	} else {
 		WBUFW(buf,24)=damage;
 	}
@@ -4575,7 +4575,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFL(buf,24)=div;
+		WBUFL(buf,24)=damage?div:0;
 	} else {
 		WBUFL(buf,24)=damage;
 	}
@@ -4635,7 +4635,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	WBUFW(buf,24)=dst->x;
 	WBUFW(buf,26)=dst->y;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
-		WBUFW(buf,28)=div;
+		WBUFW(buf,28)=damage?div:0;
 	} else {
 		WBUFW(buf,28)=damage;
 	}
