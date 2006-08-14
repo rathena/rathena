@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/14
+	* Added official Gunslinger ASPD values according to Ragnarok Monthly [Playtester]
 08/13
 	* Gave elemental -1 to some GS skills. [Vicious]
 08/12
