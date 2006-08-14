@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -22,10 +22,8 @@
 //= 1.1a Minor bug fixes and optimizations. Switched from @variables 
 //= to arguments.[kobra_k88]
 //= 1.2 Rewrote inn script [Playtester]
-//= 1.3 Removed Duplicates [Silent]
-//= 1.4 Added Rachel Inn. Temporal NPC getarg(0) and warp location,
-//= 	  but the location and sprites are correct. Special thanks
-//=	  to RockmanEXE for the information. [erKURITA]
+//= 1.3 Added (finally) Rachel Inn Maid. Official warp
+//=	  and save points[erKURITA]
 //============================================================ 
 
 

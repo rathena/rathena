@@ -35,6 +35,11 @@ Playtester
 
 Date		Added
 ======
+08/14
+	* Added (finally) the official Inn Maid of Rachel. Save and warp points
+	  are official aswell, thanks to RockmanEXE [erKURITA]
+	* Added (finally) the Garrison quest npc. Item requirements are the official ones,
+	  but the quest... well you know. Thanks to RockmanEXE [erKURITA]
 08/13
 	* Finished Bio Ethics Quest, need bug testers before finalizing and moving to stable [Evera]
 	* Added Bio Ethics Quest variable to bit shift MISC_QUEST|64, and added to quest_variables.txt [Evera]
