@@ -36,6 +36,10 @@ Playtester
 Date		Added
 ======
 08/14
+	* Moved the Gunslinger quest NPCs to gunslinger_quests.txt [Playtester]
+	- put erKURITA's version of the Garrison quest into another file since I already
+	  added a complete version, use it if you like it more
+	- also gave the NPCs their official names
 	* Changed DTS warper to use MISC_QUEST|128 instead of dtseligible,2. [Evera]
 	- May be some bugs, it's 1am @_@, look through it before trunk merge. [Evera]
 	* Added Garbage clearing for dtseligible,2 -> MISC_QUEST|128, and added that func call to DTS warper. [Evera]

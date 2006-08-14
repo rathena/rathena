@@ -166,3 +166,25 @@ L_Already:
 	mes "my gun?";
 	close;
 }
+
+// NPC locations, working on implementing them
+
+que_ng.gat,187,149,3	script	Kenny	83,{
+	end;
+}
+
+que_ng.gat,187,156,3	script	Tony	86,{
+	end;
+}
+
+que_ng.gat,187,163,3	script	Ingrid	744,{
+	end;
+}
+
+que_ng.gat,185,180,3	script	Vanessa	726,{
+	end;
+}
+
+que_ng.gat,149,178,5	script	N.A	744,{
+	end;
+}
