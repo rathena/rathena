@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/14
+	* Fixed 2006 headgears npc giving you Lion Mask rather than Lion Masquerade [Playtester]
 	* Moved the Gunslinger quest NPCs to gunslinger_quests.txt [Playtester]
 	- put erKURITA's version of the Garrison quest into another file since I already
 	  added a complete version, use it if you like it more

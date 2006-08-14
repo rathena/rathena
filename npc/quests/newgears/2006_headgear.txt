@@ -8,7 +8,7 @@
 //= SVN eA
 //===== Description: =========================================
 //= Anonymous Mask, Feather Beret, Valk. Helm, Smiling Mask,
-//= Lion Mask, Bride Mask, Judge Hat and A-yam Hat
+//= Lion Masquerade, Bride Mask, Judge Hat and A-yam Hat
 //===== Additional Comments: =================================
 //= NPC id's and dialog are custom, please replace
 //= 1.0a fixed typos, added missing names, more cleaned and
@@ -208,7 +208,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 
 
 
-//======================= Smiling Mask / Lion Mask / Bride Mask ===============================
+//======================= Smiling Mask / Lion Masquerade / Bride Mask ===============================
 
 payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 	set @npcname$,"[Chung-Wol-Mang]";
@@ -219,7 +219,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 	mes @npcname$;
 	mes "So, which one will it be?";
 	next;
-	switch(select("Smiling Mask","Lion Mask","Bride Mask","I changed my mind."))
+	switch(select("Smiling Mask","Lion Masquerade","Bride Mask","I changed my mind."))
 	{
 
 		case 1:
@@ -281,7 +281,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 			delitem 1053,2;
 			delitem 980,1;
 			next;
-			getitem 5130,1;
+			getitem 5177,1;
 			mes @npcname$;
 			mes "Thanks, you can have your mask now.";
 			close;
