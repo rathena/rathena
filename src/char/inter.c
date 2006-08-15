@@ -19,6 +19,7 @@
 #include "int_status.h"
 #include "int_storage.h"
 #include "int_pet.h"
+#include "int_homun.h"
 
 #define WISDATA_TTL (60*1000)	// Existence time of Wisp/page data (60 seconds)
                              	// that is the waiting time of answers of all map-servers
@@ -199,6 +200,8 @@ int inter_config_read(const char *cfgName) {
 			strncpy(guild_txt, w2, sizeof(guild_txt));
 		} else if (strcmpi(w1, "pet_txt") == 0) {
 			strncpy(pet_txt, w2, sizeof(pet_txt));
+		} else if (strcmpi(w1, "homun_txt") == 0) {
+			strncpy(homun_txt, w2, sizeof(homun_txt));
 		} else if (strcmpi(w1, "castle_txt") == 0) {
 			strncpy(castle_txt, w2, sizeof(castle_txt));
 		} else if (strcmpi(w1, "accreg_txt") == 0) {
@@ -263,6 +266,7 @@ int inter_init(const char *file) {
 	inter_guild_init();
 	inter_storage_init();
 	inter_pet_init();
+	inter_homun_init();
 	inter_accreg_init();
 
 	return 0;
@@ -277,6 +281,7 @@ void inter_final(void) {
 	inter_guild_final();
 	inter_storage_final();
 	inter_pet_final();
+	inter_homun_final();
 
 	return;
 }

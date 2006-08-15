@@ -36,7 +36,7 @@ static const int packet_len_table[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
-	16,-1, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3890  Homunculus [albator]
+	16,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
 extern int char_fd;		// inter server‚Ìfd‚Íchar_fd‚ðŽg‚¤
@@ -1489,9 +1489,9 @@ int intif_parse_RecvHomunculusData(int fd)
 int intif_parse_SaveHomunculusOk(int fd)
 {
 	RFIFOHEAD(fd);
-	if(RFIFOB(fd,2) != 1) {
+	if(RFIFOB(fd,6) != 1) {
 		if(battle_config.error_log)
-			ShowError("homunculus data save failure\n");
+			ShowError("homunculus data save failure for account %d\n", RFIFOL(fd,2));
 	}
 	return 0;
 }

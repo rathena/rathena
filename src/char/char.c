@@ -34,6 +34,7 @@
 #include "char.h"
 #include "inter.h"
 #include "int_pet.h"
+#include "int_homun.h"
 #include "int_guild.h"
 #include "int_party.h"
 #include "int_storage.h"
@@ -1853,6 +1854,8 @@ static int char_delete(struct mmo_charstatus *cs) {
 	// ƒyƒbƒgíœ
 	if (cs->pet_id)
 		inter_pet_delete(cs->pet_id);
+	if (cs->hom_id)
+		inter_homun_delete(cs->hom_id);
 	for (j = 0; j < MAX_INVENTORY; j++)
 		if (cs->inventory[j].card[0] == (short)0xff00)
 			inter_pet_delete(MakeDWord(cs->inventory[j].card[1],cs->inventory[j].card[2]));

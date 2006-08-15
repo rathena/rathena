@@ -1867,12 +1867,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if (attack_type&BF_MAGIC) {
 	 	if(sc && sc->data[SC_KAITE].timer != -1 && (dmg.damage || dmg.damage2)
-			&& !(sstatus->mode&MD_BOSS) && (src->type == BL_PC || status_get_lv(src) <= 80) )
+			&& !(sstatus->mode&MD_BOSS) && (sd || status_get_lv(src) <= 80) )
 		{	//Works on players or mobs with level under 80.
 			clif_specialeffect(bl, 438, AREA);
 			if (--sc->data[SC_KAITE].val2 <= 0)
 				status_change_end(bl, SC_KAITE, -1);
-			clif_skill_nodamage(bl,src,skillid,skilllv,1);
 			bl = src; //Just make the skill attack yourself @.@
 			sc = status_get_sc(bl);
 			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;

@@ -32,14 +32,12 @@ void inter_homunculus_sql_final(void){
 	return;
 }
 
-int mapif_saved_homunculus(int fd, short flag)
+int mapif_saved_homunculus(int fd, int account_id, short flag)
 {
 	WFIFOW(fd,0) = 0x3892;
-	if(flag==1)
-		WFIFOB(fd,2) = 1;
-	else
-		WFIFOB(fd,2) = 0;
-	WFIFOSET(fd, 3);
+	WFIFOL(fd,2)=account_id;
+	WFIFOB(fd,6) = flag;
+	WFIFOSET(fd, 7);
 	return 0;
 }
 int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
@@ -57,13 +55,8 @@ int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
 int mapif_homunculus_deleted(int fd, int flag)
 {
 	WFIFOW(fd, 0) = 0x3893;
-	if(flag == 1)
-		WFIFOB(fd,2) = 1; // Homunculus deleted
-	else
-		WFIFOB(fd,2) = 0; /* Fail /!\ */
-
-    WFIFOSET(fd, 3);
-
+	WFIFOB(fd,2) = flag; //Flag 1 = success
+	WFIFOSET(fd, 3);
 	return 0;
 
 }
@@ -243,7 +236,38 @@ int mapif_delete_homunculus(int fd)
 	 return mapif_homunculus_deleted(fd, 1);
 }
 
+int mapif_rename_homun_ack(int fd, int account_id, int char_id, int flag, char *name){
+	WFIFOW(fd, 0) =0x3894;
+	WFIFOL(fd, 2) =account_id;
+	WFIFOL(fd, 6) =char_id;
+	WFIFOB(fd, 10) =flag;
+	memcpy(WFIFOP(fd, 11), name, NAME_LENGTH);
+	WFIFOSET(fd, NAME_LENGTH+12);
 
+	return 0;
+}
+
+int mapif_rename_homun(int fd, int account_id, int char_id, char *name){
+	int i;
+
+	// Check Authorised letters/symbols in the name of the homun
+	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) == NULL) {
+			mapif_rename_homun_ack(fd, account_id, char_id, 0, name);
+			return 0;
+		}
+	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) != NULL) {
+			mapif_rename_homun_ack(fd, account_id, char_id, 0, name);
+			return 0;
+		}
+	}
+
+	mapif_rename_homun_ack(fd, account_id, char_id, 1, name);
+	return 0;
+}
 
 int mapif_parse_CreateHomunculus(int fd)
 {
@@ -291,9 +315,7 @@ int inter_homunculus_parse_frommap(int fd){
 	case 0x3091: mapif_load_homunculus(fd); break;
 	case 0x3092: mapif_save_homunculus(fd, RFIFOL(fd,6), (struct s_homunculus*) RFIFOP(fd, 10)); break;
 	case 0x3093: mapif_delete_homunculus(fd); break;  // doesn't need to be parse, very simple packet...
-	// rename homunculus is just like save... Map server check the rename flag before, send the save packet
-	// case 0x3094: mapif_parse_rename_homunculus(fd); break;
-
+	case 0x3094: mapif_rename_homun(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10)); break;
 	default:
 		return 0;
 	}
