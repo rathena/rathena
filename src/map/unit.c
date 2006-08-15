@@ -443,7 +443,7 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 				return 0;
 		} else
 			sd->areanpc_id=0;
-		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0)
+		if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0)
 		{	//Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			bl = &sd->pd->bl; //Note that bl now points to the pet! 
@@ -1585,9 +1585,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		md->state.skillstate= MSS_IDLE;
 	} else if (bl->type == BL_PET) {
 		struct pet_data *pd = (struct pet_data*)bl;
-		struct map_session_data *sd = pd->msd;
-		
-		if(!sd || sd->pet.intimate <= 0) {
+		if(pd->pet.intimate <= 0) {
 			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl);
@@ -1738,16 +1736,14 @@ int unit_free(struct block_list *bl) {
 			aFree (pd->loot);
 			pd->loot = NULL;
 		}
-		if (sd) {
-			sd->pd = NULL;
-			if(sd->pet.intimate > 0)
-				intif_save_petdata(sd->status.account_id,&sd->pet);
-			else
-			{	//Remove pet.
-				intif_delete_petdata(sd->status.pet_id);
-				sd->status.pet_id = 0;
-			}
+		if(pd->pet.intimate > 0)
+			intif_save_petdata(pd->pet.account_id,&pd->pet);
+		else
+		{	//Remove pet.
+			intif_delete_petdata(pd->pet.pet_id);
+			if (sd) sd->status.pet_id = 0;
 		}
+		if (sd) sd->pd = NULL;
 	} else if(bl->type == BL_MOB) {
 		struct mob_data *md = (struct mob_data*)bl;
 		if(md->deletetimer!=-1) {

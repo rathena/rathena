@@ -9435,7 +9435,7 @@ int buildin_petskillbonus(struct script_state *st)
 		pd->state.skillbonus=0;	// waiting state
 
 	// wait for timer to start
-	if (battle_config.pet_equip_required && pd->equip == 0)
+	if (battle_config.pet_equip_required && pd->pet.equip == 0)
 		pd->bonus->timer=-1;
 	else
 		pd->bonus->timer=add_timer(gettick()+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
@@ -9760,7 +9760,7 @@ int buildin_petheal(struct script_state *st)
 	pd->s_skill->sp=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
 	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->equip == 0)
+	if (battle_config.pet_equip_required && pd->pet.equip == 0)
 		pd->s_skill->timer=-1;
 	else
 		pd->s_skill->timer=add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
@@ -9850,7 +9850,7 @@ int buildin_petskillsupport(struct script_state *st)
 	pd->s_skill->sp=conv_num(st,& (st->stack->stack_data[st->start+6]));
 
 	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->equip == 0)
+	if (battle_config.pet_equip_required && pd->pet.equip == 0)
 		pd->s_skill->timer=-1;
 	else
 		pd->s_skill->timer=add_timer(gettick()+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
@@ -10055,29 +10055,29 @@ int buildin_recovery(struct script_state *st)
 int buildin_getpetinfo(struct script_state *st)
 {
 	struct map_session_data *sd=script_rid2sd(st);
+	struct pet_data *pd;
 	int type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 
-	if(sd && sd->status.pet_id){
+	if(sd && sd->status.pet_id && sd->pd){
+		pd = sd->pd;
 		switch(type){
 			case 0:
 				push_val(st->stack,C_INT,sd->status.pet_id);
 				break;
 			case 1:
-				push_val(st->stack,C_INT,sd->pet.class_);
+				push_val(st->stack,C_INT,pd->pet.class_);
 				break;
 			case 2:
-				if(sd->pet.name)
-					push_str(st->stack,C_CONSTSTR,(unsigned char *) sd->pet.name);
+				if(pd->pet.name)
+					push_str(st->stack,C_CONSTSTR,(unsigned char *) pd->pet.name);
 				else
 					push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
 				break;
 			case 3:
-				//if(sd->pet.intimate)
-				push_val(st->stack,C_INT,sd->pet.intimate);
+				push_val(st->stack,C_INT,pd->pet.intimate);
 				break;
 			case 4:
-				//if(sd->pet.hungry)
-				push_val(st->stack,C_INT,sd->pet.hungry);
+				push_val(st->stack,C_INT,pd->pet.hungry);
 				break;
 			default:
 				push_val(st->stack,C_INT,0);
@@ -11288,37 +11288,38 @@ int buildin_getd (struct script_state *st)
 // Pet stat [Lance]
 int buildin_petstat(struct script_state *st){
 	struct map_session_data *sd = NULL;
+	struct pet_data *pd;
 	char *tmp;
 	int flag = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	sd = script_rid2sd(st);
-	if(!sd || !sd->pet.pet_id){
+	if(!sd || !sd->status.pet_id || !sd->pd){
 		if(flag == 2)
 			push_str(st->stack, C_CONSTSTR, "");
 		else
 			push_val(st->stack, C_INT, 0);
+		return 0;
 	}
-	else {
-		switch(flag){
-			case 1:
-				push_val(st->stack, C_INT, (int)sd->pet.class_);
-				break;
-			case 2:
-				tmp = aStrdup(sd->pet.name);
-				push_str(st->stack, C_STR, tmp);
-				break;
-			case 3:
-				push_val(st->stack, C_INT, (int)sd->pet.level);
-				break;
-			case 4:
-				push_val(st->stack, C_INT, (int)sd->pet.hungry);
-				break;
-			case 5:
-				push_val(st->stack, C_INT, (int)sd->pet.intimate);
-				break;
-			default:
-				push_val(st->stack, C_INT, 0);
-				break;
-		}
+	pd = sd->pd;
+	switch(flag){
+		case 1:
+			push_val(st->stack, C_INT, (int)pd->pet.class_);
+			break;
+		case 2:
+			tmp = aStrdup(pd->pet.name);
+			push_str(st->stack, C_STR, tmp);
+			break;
+		case 3:
+			push_val(st->stack, C_INT, (int)pd->pet.level);
+			break;
+		case 4:
+			push_val(st->stack, C_INT, (int)pd->pet.hungry);
+			break;
+		case 5:
+			push_val(st->stack, C_INT, (int)pd->pet.intimate);
+			break;
+		default:
+			push_val(st->stack, C_INT, 0);
+			break;
 	}
 	return 0;
 }
@@ -11681,7 +11682,7 @@ int buildin_rid2name(struct script_state *st){
 				push_str(st->stack,C_CONSTSTR,((struct npc_data *)bl)->exname);
 				break;
 			case BL_PET:
-				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->name);
+				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->pet.name);
 				break;
 			case BL_HOM:
 				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->master->homunculus.name);
@@ -12112,7 +12113,7 @@ int buildin_unittalk(struct script_state *st)
 				memcpy(message, ((TBL_HOM *)bl)->master->homunculus.name, NAME_LENGTH);
 				break;
 			case BL_PET:
-				memcpy(message, ((TBL_PET *)bl)->name, NAME_LENGTH);
+				memcpy(message, ((TBL_PET *)bl)->pet.name, NAME_LENGTH);
 				break;
 			default:
 				strcpy(message, "Unknown");

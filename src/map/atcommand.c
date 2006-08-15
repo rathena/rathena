@@ -2065,7 +2065,7 @@ int atcommand_save(
 
 	pc_setsavepoint(sd, sd->mapindex, sd->bl.x, sd->bl.y);
 	if (sd->status.pet_id > 0 && sd->pd)
-		intif_save_petdata(sd->status.account_id, &sd->pet);
+		intif_save_petdata(sd->status.account_id, &sd->pd->pet);
 
 	chrif_save(sd,0);
 	
@@ -4427,6 +4427,7 @@ int atcommand_petfriendly(
 	const char* command, const char* message)
 {
 	int friendly;
+	struct pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (friendly = atoi(message)) < 0) {
@@ -4434,7 +4435,8 @@ int atcommand_petfriendly(
 		return -1;
 	}
 
-	if (!sd->pd) {
+	pd = sd->pd;
+	if (!pd) {
 		clif_displaymessage(fd, msg_txt(184)); // Sorry, but you have no pet.
 		return -1;
 	}
@@ -4445,11 +4447,11 @@ int atcommand_petfriendly(
 		return -1;
 	}
 	
-	if (friendly == sd->pet.intimate) {
+	if (friendly == pd->pet.intimate) {
 		clif_displaymessage(fd, msg_txt(183)); // Pet friendly is already the good value.
 		return -1;
 	}
-	sd->pet.intimate = friendly;
+	pd->pet.intimate = friendly;
 	clif_send_petstatus(sd);
 	clif_displaymessage(fd, msg_txt(182)); // Pet friendly value changed!
 	return 0;
@@ -4464,6 +4466,7 @@ int atcommand_pethungry(
 	const char* command, const char* message)
 {
 	int hungry;
+	struct pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (hungry = atoi(message)) < 0) {
@@ -4471,24 +4474,23 @@ int atcommand_pethungry(
 		return -1;
 	}
 
-	if (sd->status.pet_id > 0 && sd->pd) {
-		if (hungry >= 0 && hungry <= 100) {
-			if (hungry != sd->pet.hungry) {
-				sd->pet.hungry = hungry;
-				clif_send_petstatus(sd);
-				clif_displaymessage(fd, msg_txt(185)); // Pet hungry value changed!
-			} else {
-				clif_displaymessage(fd, msg_txt(186)); // Pet hungry is already the good value.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
-			return -1;
-		}
-	} else {
+	pd = sd->pd;
+	if (!sd->status.pet_id || !pd) {
 		clif_displaymessage(fd, msg_txt(184)); // Sorry, but you have no pet.
 		return -1;
 	}
+	if (hungry < 0 || hungry > 100) {
+		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
+		return -1;
+	}
+	if (hungry == pd->pet.hungry) {
+		clif_displaymessage(fd, msg_txt(186)); // Pet hungry is already the good value.
+		return -1;
+	}
+
+	pd->pet.hungry = hungry;
+	clif_send_petstatus(sd);
+	clif_displaymessage(fd, msg_txt(185)); // Pet hungry value changed!
 
 	return 0;
 }
@@ -4501,21 +4503,22 @@ int atcommand_petrename(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	struct pet_data *pd;
 	nullpo_retr(-1, sd);
-	if (sd->status.pet_id > 0 && sd->pd) {
-		if (sd->pet.rename_flag != 0) {
-			sd->pet.rename_flag = 0;
-			intif_save_petdata(sd->status.account_id, &sd->pet);
-			clif_send_petstatus(sd);
-			clif_displaymessage(fd, msg_txt(187)); // You can now rename your pet.
-		} else {
-			clif_displaymessage(fd, msg_txt(188)); // You can already rename your pet.
-			return -1;
-		}
-	} else {
+	if (!sd->status.pet_id || !sd->pd) {
 		clif_displaymessage(fd, msg_txt(184)); // Sorry, but you have no pet.
 		return -1;
 	}
+	pd = sd->pd;
+	if (pd->pet.rename_flag) {
+		clif_displaymessage(fd, msg_txt(188)); // You can already rename your pet.
+		return -1;
+	}
+
+	pd->pet.rename_flag = 0;
+	intif_save_petdata(sd->status.account_id, &pd->pet);
+	clif_send_petstatus(sd);
+	clif_displaymessage(fd, msg_txt(187)); // You can now rename your pet.
 
 	return 0;
 }
@@ -8466,7 +8469,7 @@ atcommand_pettalk(
 	if (sscanf(message, "%99[^\n]", mes) < 1)
 		return -1;
 
-	snprintf(temp, sizeof temp ,"%s : %s",sd->pet.name,mes);
+	snprintf(temp, sizeof temp ,"%s : %s",pd->pet.name,mes);
 	clif_message(&pd->bl, temp);
 
 	return 0;

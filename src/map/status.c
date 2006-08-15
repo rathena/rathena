@@ -1361,28 +1361,26 @@ int status_calc_mob(struct mob_data* md, int first)
 //Skotlex: Calculates the stats of the given pet.
 int status_calc_pet(struct pet_data *pd, int first)
 {
-	struct map_session_data *sd;
-	int lv;
 	
 	nullpo_retr(0, pd);
-	sd = pd->msd;
-	if(!sd || sd->status.pet_id == 0 || sd->pd == NULL)
-		return 0;
 
 	if (first) {
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
 		pd->status.speed = pd->petDB->speed;
 	}
 
-	if (battle_config.pet_lv_rate)
+	if (battle_config.pet_lv_rate && pd->msd)
 	{
+		struct map_session_data *sd = pd->msd;
+		int lv;
+
 		lv =sd->status.base_level*battle_config.pet_lv_rate/100;
 		if (lv < 0)
 			lv = 1;
-		if (lv != sd->pet.level || first)
+		if (lv != pd->pet.level || first)
 		{
 			struct status_data *bstat = &pd->db->status, *status = &pd->status;
-			sd->pet.level = lv;
+			pd->pet.level = lv;
 			if (!first) //Lv Up animation
 				clif_misceffect(&pd->bl, 0);
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
@@ -1415,7 +1413,7 @@ int status_calc_pet(struct pet_data *pd, int first)
 	}
 	
 	//Support rate modifier (1000 = 100%)
-	pd->rate_fix = 1000*(sd->pet.intimate - battle_config.pet_support_min_friendly)/(1000- battle_config.pet_support_min_friendly) +500;
+	pd->rate_fix = 1000*(pd->pet.intimate - battle_config.pet_support_min_friendly)/(1000- battle_config.pet_support_min_friendly) +500;
 	if(battle_config.pet_support_rate != 100)
 		pd->rate_fix = pd->rate_fix*battle_config.pet_support_rate/100;
 	return 1;
@@ -1793,10 +1791,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 	}
 	
-	if(sd->status.pet_id > 0 && battle_config.pet_status_support && sd->pet.intimate > 0)
+	if(sd->pd && battle_config.pet_status_support)
 	{ // Pet
 		struct pet_data *pd=sd->pd;
-		if(pd && (!battle_config.pet_equip_required || pd->equip > 0) &&
+		if(pd && pd->pet.intimate > 0 &&
+			(!battle_config.pet_equip_required || pd->pet.equip > 0) &&
 			pd->state.skillbonus == 1 && pd->bonus) //Skotlex: Readjusted for pets
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
@@ -3736,7 +3735,7 @@ int status_get_class(struct block_list *bl)
 	if(bl->type==BL_PC)
 		return ((struct map_session_data *)bl)->status.class_;
 	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->class_;
+		return ((struct pet_data *)bl)->pet.class_;
 	if(bl->type==BL_HOM)
 		return ((struct homun_data *)bl)->master->homunculus.class_;
 	return 0;
@@ -3754,7 +3753,7 @@ int status_get_lv(struct block_list *bl)
 	if(bl->type==BL_PC)
 		return ((TBL_PC*)bl)->status.base_level;
 	if(bl->type==BL_PET)
-		return ((TBL_PET*)bl)->msd->pet.level;
+		return ((TBL_PET*)bl)->pet.level;
 	if(bl->type==BL_HOM)
 		return ((TBL_HOM*)bl)->master->homunculus.level;
 	return 1;
@@ -4014,10 +4013,10 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				memcpy(&pd->vd, vd, sizeof(struct view_data));
 				if (!pcdb_checkid(vd->class_)) {
 					pd->vd.hair_style = battle_config.pet_hair_style;
-					if(pd->equip) {
-						pd->vd.head_bottom = itemdb_viewid(pd->equip);
+					if(pd->pet.equip) {
+						pd->vd.head_bottom = itemdb_viewid(pd->pet.equip);
 						if (!pd->vd.head_bottom)
-							pd->vd.head_bottom = pd->equip;
+							pd->vd.head_bottom = pd->pet.equip;
 					}
 				}
 			} else if (battle_config.error_log)

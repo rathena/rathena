@@ -3300,12 +3300,12 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 				sd->state.waitingdisconnect=1;
 				pc_clean_skilltree(sd);
 				if(sd->status.pet_id > 0 && sd->pd) {
+					intif_save_petdata(sd->status.account_id,&sd->pd->pet);
 					unit_remove_map(&sd->pd->bl, clrtype);
-					intif_save_petdata(sd->status.account_id,&sd->pet);
 				}
 				if(sd->status.hom_id > 0 && sd->hd) {	//orn
-					unit_remove_map(&sd->hd->bl, clrtype);
 					intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus);
+					unit_remove_map(&sd->hd->bl, clrtype);
 				}
 				chrif_save(sd,2);
 				chrif_changemapserver(sd, mapindex, x, y, ip, (short)port);
@@ -3351,7 +3351,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	sd->bl.x = sd->ud.to_x = x;
 	sd->bl.y = sd->ud.to_y = y;
 
-	if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 0) {
+	if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0) {
 		sd->pd->bl.m = m;
 		sd->pd->bl.x = sd->pd->ud.to_x = x;
 		sd->pd->bl.y = sd->pd->ud.to_y = y;
@@ -4773,11 +4773,12 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if(sd->status.pet_id > 0 && sd->pd)
 	{
+		struct s_pet *pet = &sd->pd->pet;
 		if(!map[sd->bl.m].flag.nopenalty){
-			sd->pet.intimate -= sd->pd->petDB->die;
-			if(sd->pet.intimate < 0)
-				sd->pet.intimate = 0;
-			clif_send_petdata(sd,1,sd->pet.intimate);
+			pet->intimate -= sd->pd->petDB->die;
+			if(pet->intimate < 0)
+				pet->intimate = 0;
+			clif_send_petdata(sd,1,pet->intimate);
 		}
 		if(sd->pd->target_id) // Unlock all targets...
 			pet_unlocktarget(sd->pd);
@@ -7149,7 +7150,7 @@ static int pc_autosave_sub(DBKey key,void * data,va_list app)
 
 	// pet
 	if(sd->status.pet_id > 0 && sd->pd)
-		intif_save_petdata(sd->status.account_id,&sd->pet);
+		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
 
 	if(sd->state.finalsave)
   	{	//Save ack hasn't returned from char-server yet? Retry.

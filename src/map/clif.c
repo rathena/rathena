@@ -6350,18 +6350,21 @@ int clif_send_petdata(struct map_session_data *sd,int type,int param)
 int clif_send_petstatus(struct map_session_data *sd)
 {
 	int fd;
+	struct s_pet *pet;
 
 	nullpo_retr(0, sd);
+	nullpo_retr(0, sd->pd);
 
 	fd=sd->fd;
+	pet = &sd->pd->pet;
 	WFIFOHEAD(fd,packet_len_table[0x1a2]);
 	WFIFOW(fd,0)=0x1a2;
-	memcpy(WFIFOP(fd,2),sd->pet.name,NAME_LENGTH);
-	WFIFOB(fd,26)=(battle_config.pet_rename == 1)? 0:sd->pet.rename_flag;
-	WFIFOW(fd,27)=sd->pet.level;
-	WFIFOW(fd,29)=sd->pet.hungry;
-	WFIFOW(fd,31)=sd->pet.intimate;
-	WFIFOW(fd,33)=sd->pet.equip;
+	memcpy(WFIFOP(fd,2),pet->name,NAME_LENGTH);
+	WFIFOB(fd,26)=(battle_config.pet_rename == 1)? 0:pet->rename_flag;
+	WFIFOW(fd,27)=pet->level;
+	WFIFOW(fd,29)=pet->hungry;
+	WFIFOW(fd,31)=pet->intimate;
+	WFIFOW(fd,33)=pet->equip;
 	WFIFOSET(fd,packet_len_table[0x1a2]);
 
 	return 0;
@@ -6385,7 +6388,7 @@ int clif_pet_emotion(struct pet_data *pd,int param)
 		if(pd->petDB->talk_convert_class < 0)
 			return 0;
 		else if(pd->petDB->talk_convert_class > 0) {
-			param -= (pd->class_ - 100)*100;
+			param -= (pd->pet.class_ - 100)*100;
 			param += (pd->petDB->talk_convert_class - 100)*100;
 		}
 	}
@@ -7824,7 +7827,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 		memcpy(WBUFP(buf,6), ((struct homun_data*)bl)->master->homunculus.name, NAME_LENGTH);
 		break;
 	case BL_PET:
-		memcpy(WBUFP(buf,6), ((struct pet_data*)bl)->name, NAME_LENGTH);
+		memcpy(WBUFP(buf,6), ((struct pet_data*)bl)->pet.name, NAME_LENGTH);
 		break;
 	case BL_NPC:
 		memcpy(WBUFP(buf,6), ((struct npc_data*)bl)->name, NAME_LENGTH);
@@ -8315,8 +8318,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 				sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
 		}
 
-		if(sd->status.pet_id > 0 && sd->pd && sd->pet.intimate > 900)
-			clif_pet_emotion(sd->pd,(sd->pd->class_ - 100)*100 + 50 + pet_hungry_val(sd));
+		if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 900)
+			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
 		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
 		//[LuzZza]
 		//clif_guild_send_onlineinfo(sd);

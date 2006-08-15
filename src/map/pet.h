@@ -34,14 +34,14 @@ extern struct pet_db pet_db[MAX_PET_DB];
 enum { PET_CLASS,PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
 
 int pet_create_egg(struct map_session_data *sd, int item_id);
-int pet_hungry_val(struct map_session_data *sd);
+int pet_hungry_val(struct pet_data *pd);
 int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type);
 int pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 int search_petDB_index(int key,int type);
 int pet_hungry_timer_delete(struct pet_data *pd);
-int pet_data_init(struct map_session_data *sd);
-int pet_birth_process(struct map_session_data *sd);
+int pet_data_init(struct map_session_data *sd, struct s_pet *pet);
+int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
 int pet_recv_petdata(int account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);
 int pet_catch_process1(struct map_session_data *sd,int target_class);

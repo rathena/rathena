@@ -362,6 +362,7 @@ int charcommand_petrename(
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
+	struct pet_data *pd;
 
 	memset(character, '\0', sizeof(character));
 
@@ -370,26 +371,26 @@ int charcommand_petrename(
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pl_sd->status.pet_id > 0 && pl_sd->pd) {
-			if (pl_sd->pet.rename_flag != 0) {
-				pl_sd->pet.rename_flag = 0;
-				intif_save_petdata(pl_sd->status.account_id, &pl_sd->pet);
-				clif_send_petstatus(pl_sd);
-				clif_displaymessage(fd, msg_table[189]); // This player can now rename his/her pet.
-			} else {
-				clif_displaymessage(fd, msg_table[190]); // This player can already rename his/her pet.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
-			return -1;
-		}
-	} else {
+	if ((pl_sd = map_nick2sd(character)) == NULL) {
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
+	if (!pl_sd->status.pet_id || !pl_sd->pd) {
+		clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
+		return -1;
+	}
+
+	pd = pl_sd->pd;
+
+	if (pd->pet.rename_flag) {
+		clif_displaymessage(fd, msg_table[190]); // This player can already rename his/her pet.
+		return -1;
+	}
+	pd->pet.rename_flag = 0;
+	intif_save_petdata(pl_sd->status.account_id, &pd->pet);
+	clif_send_petstatus(pl_sd);
+	clif_displaymessage(fd, msg_table[189]); // This player can now rename his/her pet.
 	return 0;
 }
 
@@ -403,9 +404,9 @@ int charcommand_petfriendly(
 	const char* command, const char* message)
 {
 	int friendly = 0;
-	int t = 0;
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
+	struct pet_data *pd;
 
 	memset(character, '\0', sizeof(character));
 	if (!message || !*message || sscanf(message,"%d %23s",&friendly,character) < 2) {
@@ -414,32 +415,33 @@ int charcommand_petfriendly(
 		return -1;
 	}
 
-	if (((pl_sd = map_nick2sd(character)) != NULL) && pc_isGM(sd)>pc_isGM(pl_sd)) {
-		if (pl_sd->status.pet_id > 0 && pl_sd->pd) {
-			if (friendly >= 0 && friendly <= 1000) {
-				if (friendly != pl_sd->pet.intimate) {
-					t = pl_sd->pet.intimate;
-					pl_sd->pet.intimate = friendly;
-					clif_send_petstatus(pl_sd);
-					clif_pet_emotion(pl_sd->pd,0);
-					clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
-					clif_displaymessage(sd->fd, msg_table[182]); // Pet friendly value changed!
-				} else {
-					clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
-				return -1;
-			}
-		} else {
-			return -1;
-		}
-	} else {
+	if (((pl_sd = map_nick2sd(character)) == NULL) ||
+		pc_isGM(sd)<pc_isGM(pl_sd)) {
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
+	if (!pl_sd->status.pet_id  || !pl_sd->pd) {
+		clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
+		return -1;
+	}
+
+	if (friendly < 0 || friendly > 1000) {
+		clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
+		return -1;
+	}
+
+	pd = pl_sd->pd;
+	if (friendly == pd->pet.intimate) {
+		clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
+		return -1;
+	}
+	
+	pd->pet.intimate = friendly;
+	clif_send_petstatus(pl_sd);
+	clif_pet_emotion(pd,0);
+	clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
+	clif_displaymessage(sd->fd, msg_table[182]); // Pet friendly value changed!
 	return 0;
 }
 
