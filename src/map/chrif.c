@@ -215,10 +215,8 @@ int chrif_save(struct map_session_data *sd, int flag)
 		charsave_savechar(sd->char_id, &sd->status);
 		if (flag) //Character final saved.
 			sd->state.finalsave = 1;
-		if (flag == 1) {
+		if (flag == 1)
 			chrif_char_offline(sd); //Tell char server that character went offline.
-			map_quit_ack(sd); //Remove from memory.
-		}
 		return 0;	
 	}
 #endif

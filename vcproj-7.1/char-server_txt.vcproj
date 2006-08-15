@@ -165,6 +165,10 @@
 				RelativePath="..\src\char\int_pet.c">
 			</File>
 			<File
+				RelativePath="..\src\char\int_pet.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_status.c">
 			</File>
 			<File

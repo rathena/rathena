@@ -230,6 +230,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_homun.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_status.c"
 				>
 			</File>
