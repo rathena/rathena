@@ -852,16 +852,18 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	status->hp += hp;
 	status->sp += sp;
 
-	clif_resurrection(bl, 1);
+	if (bl->prev) //Animation only if character is already on a map.
+		clif_resurrection(bl, 1);
 	switch (bl->type) {
 		case BL_MOB:
 			mob_revive((TBL_MOB*)bl, hp);
 			break;
 		case BL_PC:
 			pc_revive((TBL_PC*)bl, hp, sp);
-//		case BL_HOM:	//[orn]
-//			merc_hom_revive((TBL_HOM*)bl, hp, sp);
-//			break;
+			break;
+		case BL_HOM:	//[orn]
+			merc_homun_revive((TBL_HOM*)bl, hp, sp);
+			break;
 	}
 	return 1;
 }

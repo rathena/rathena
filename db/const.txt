@@ -79,7 +79,7 @@ Job_Star_Gladiator2	4048
 Job_Soul_Linker	4049
 
 Option_Wedding	4096
-Option_Xmas 32768
+Option_Xmas 131072
 
 bc_all	0
 bc_map	1

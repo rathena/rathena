@@ -5486,36 +5486,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	
-	case AM_CALLHOMUN:	//[orn]
-		if (sd && !merc_call_homunculus(sd))
-			clif_skill_fail(sd,skillid,0,0);
-		break;
-
 	case AM_REST:	//[orn]
 		if (sd && !merc_hom_vaporize(sd,1))
 			clif_skill_fail(sd,skillid,0,0);
 		break;
-
-	case AM_RESURRECTHOMUN:	//[orn]
-	{
-		if (sd)
-		{
-			if (sd->status.hom_id && sd->homunculus.hp == 0)
-			{
-				if( map_flag_gvg(bl->m) )
-				{	//No reviving in WoE grounds!
-					clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
-				if (merc_hom_revive(sd, 10 * skilllv) )
-					clif_skill_nodamage(src,&sd->hd->bl,AM_RESURRECTHOMUN,skilllv,1);
-				else
-					clif_skill_fail(sd,skillid,0,0);
-			} else
-				clif_skill_fail(sd,skillid,0,0);
-		}
-		break;
-	}
 
 	case HAMI_CASTLE:	//[orn]
 		if(rand()%100 > 20*skilllv || src == bl)
@@ -5631,10 +5605,12 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	}
 
 	switch (ud->skillid) {
-		//These three should become skill_castend_pos
+		//These should become skill_castend_pos
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
-		case WE_CALLBABY: 
+		case WE_CALLBABY:
+		case AM_CALLHOMUN:	
+		case AM_RESURRECTHOMUN:
 			//Find a random spot to place the skill. [Skotlex]
 			inf2 = skill_get_splash(ud->skillid, ud->skilllv);
 			ud->skillx = src->x + inf2;
@@ -5787,9 +5763,8 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			if (sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
 		}
-		if (target && target->m == src->m &&
-			(tid == -1 || status_check_skilluse(src, target, ud->skillid, 1))
-		)	{	//Move character to target anyway.
+		if (target && target->m == src->m)
+		{	//Move character to target anyway.
 			int dx,dy;
 			dx = target->x - src->x;
 			dy = target->y - src->y;
@@ -6271,6 +6246,23 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_TATAMIGAESHI:
 		sc_start(src,type,100,skilllv,skill_get_time2(skillid,skilllv));
 		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
+		break;
+
+	case AM_CALLHOMUN:	//[orn]
+		if (sd && !merc_call_homunculus(sd, x, y))
+			clif_skill_fail(sd,skillid,0,0);
+		break;
+
+	case AM_RESURRECTHOMUN:	//[orn]
+		if (sd)
+		{
+			if (map_flag_gvg(src->m) || //No reviving in WoE grounds!
+				!merc_revive_homunculus(sd, 10*skilllv, x, y))
+			{
+				clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
+		}
 		break;
 
 	default:
@@ -9149,26 +9141,23 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	int atk_type,skillid,skilllv,flag,type;
 	unsigned int tick;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
+	if(status_isdead(bl))
+		return 0;
 
 	atk_type = va_arg(ap,int);
-	if((src=va_arg(ap,struct block_list*)) == NULL)
-		return 0;
-	if((dsrc=va_arg(ap,struct block_list*)) == NULL)
-		return 0;
+	src=va_arg(ap,struct block_list*);
+	dsrc=va_arg(ap,struct block_list*);
 	skillid=va_arg(ap,int);
 	skilllv=va_arg(ap,int);
-	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 	tick=va_arg(ap,unsigned int);
 	flag=va_arg(ap,int);
 	type=va_arg(ap,int);
 
-	if(battle_check_target(dsrc,bl,type) > 0 &&
-		status_check_skilluse(NULL, bl, skillid, 2)) //also check if they can be hit.
-		skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
-
-	return 0;
+	if(battle_check_target(dsrc,bl,type) <= 0 ||
+		!status_check_skilluse(NULL, bl, skillid, 2))
+		return 0;
+		
+	return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
 }
 /*==========================================
  *

@@ -4,6 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/15
+	* Asura Strike now moves you to the target on fail always (unless the
+	  target does not exists or is in another map or there's a obstacle on the
+	  way) [Skotlex]
+	* Corrected skill_attack_area hitting dead characters on it's splash range.
+	  [Skotlex]
+	* Swapped the values for OPTION_XMAS and OPTION_FLYING. This should enable
+	  SG to show the fly animation again, even if sometimes others will see him
+	  as Santa. As for xmas cloth, it shouldn't make much of a difference since
+	  the view class is changed to christmas anyway. [Skotlex]
+	* Made AM_CALLHOMUN and AM_RESURRECTHOMUN be like the wedding skills, where
+	  they automatically pick a spot around you. [Skotlex]
+	* Cleaned up some the AM_RESURRECTHOMUN code. Hopefully it works now.
+	  [Skotlex]
+	* Cleaned up some the hom evolution code. [Skotlex]
 	* Fixed SIGSEGV with homunc save [Toms]
 2006/08/14
 	* Removed support for negative autosave intervals, instead added a
