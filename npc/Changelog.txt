@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/14
+	* Updated header in other/Global_Functions.txt [Evera]
 	* Fixed the int&str bug of test tube in bio labs quest [Evera]
 	* Fixed 2006 headgears npc giving you Lion Mask rather than Lion Masquerade [Playtester]
 	* Moved the Gunslinger quest NPCs to gunslinger_quests.txt [Playtester]

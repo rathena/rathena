@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.03
+//= 2.04
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -25,7 +25,7 @@
 //= 2.01 Added $talk to F_ClearGarbage [Evera]
 //= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
 //= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
-//= 2.04 Added dtseligible 3 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
+//= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
 //============================================================ 
 
 
