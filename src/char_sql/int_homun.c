@@ -142,7 +142,7 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 	else
 	{
 		flag = mapif_save_homunculus_skills(hd);
-		mapif_saved_homunculus(fd, flag);
+		mapif_saved_homunculus(fd, account_id, flag);
 	}
 	return flag;
 }
