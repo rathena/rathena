@@ -1,0 +1,100 @@
+//===== eAthena Script =======================================
+//= Ammo Dealer
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena
+//===== Description: =========================================
+//= trades items for spheres
+//===== Additional Comments: =================================
+//= 1.0 first version [Playtester]
+//============================================================
+
+// Ammo Dealer Tony
+que_ng.gat,187,156,3	script	Tony	86,{
+	mes "[Tony]";
+	mes "I can make spheres for you.";
+	mes "Spheres are the ammunition for";
+	mes "grenade launchers.";
+	next;
+	mes "[Tony]";
+	mes "For 30 spheres, I need";
+	mes "^FF00001 Phracon^000000";
+	mes "and";
+	mes "^FF00001 Emveretarcon^000000.";
+	next;
+	mes "[Tony]";
+	mes "I also need another material,";
+	mes "depending on which sphere type";
+	mes "you want to create.";
+	next;
+	mes "[Tony]";
+	mes "Here's a list:";
+	mes "Flare Sphere - ^FF00002 Burning Hearts^000000";
+	mes "Lightning Sphere - ^FF00003 Cyfars^000000";
+	mes "Poison Sphere - ^FF000010 Venom Canines^000000";
+	mes "Blind Sphere - ^FF00005 Squid Inks^000000";
+	mes "Freezing Sphere - ^FF00002 Brigans^000000";
+	next;
+	mes "[Tony]";
+	mes "So which ones do you want me";
+	mes "to create?";
+	next;
+	menu "Flare Sphere",-,"Lightning Sphere",S2,"Poison Sphere",S3,"Blind Sphere",S4,"Freezing Sphere",S5;
+
+	callsub sF_Make,13203,7097,2;
+S2:
+	callsub sF_Make,13204,7053,3;
+S3:
+	callsub sF_Make,13205,937,10;
+S4:
+	callsub sF_Make,13206,1024,5;
+S5:
+	callsub sF_Make,13207,7054,2;
+
+//Subfunction, getarg(0):created sphere, getarg(1):special material, getarg(2):number needed
+sF_Make:
+	if( (countitem(1010)<1) || (countitem(1011)<1) || (countitem(getarg(1))<getarg(2)) ) goto L_NoMat;
+	mes "[Tony]";
+	mes "So how many ^0000FF30x packages^000000 do";
+	mes "you want me to make?";
+	next;
+	menu "-Exchange as many as possible.",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
+
+	M_0:
+		set @amount, 500;
+		if(countitem(1010) < @amount) set @amount,countitem(1010);
+		if(countitem(1011) < @amount) set @amount,countitem(1011);
+		if(countitem(getarg(1))/getarg(2) < @amount) set @amount,countitem(getarg(1))/getarg(2);
+		if(@amount > 0) goto L_Make;
+		mes "[Tony]";
+		mes "Are you trying to make a fool of me...?";
+		close;
+
+	M_1:
+		input @amount;
+		if(@amount < 1 || @amount > 500) goto M_End;
+		if(countitem(1010) < @amount) goto L_NoMat;
+		if(countitem(1011) < @amount) goto L_NoMat;
+		if(countitem(getarg(1))/getarg(2) < @amount) goto L_NoMat;
+
+	L_Make:
+		delitem 1010,@amount;
+		delitem 1011,@amount;
+		delitem getarg(1),@amount*getarg(2);
+		getitem getarg(0),@amount*30;
+
+	M_End:
+		mes "[Tony]";
+		mes "Come back anytime.";
+		close;
+
+	L_NoMat:
+		mes "[Tony]";
+		mes "I'm sorry but you don't have";
+		mes "enough materials to create the";
+		mes "spheres.";
+		close;
+}

@@ -170,11 +170,6 @@ L_Already:
 	close;
 }
 
-//Make Spheres here
-que_ng.gat,187,156,3	script	Tony	86,{
-	end;
-}
-
 que_ng.gat,187,163,3	script	Ingrid	744,{
 	set @npcname$,"[Ingrid]";
 
