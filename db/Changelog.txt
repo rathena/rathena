@@ -20,6 +20,7 @@
 
 =========================
 08/15
+	* Made Kiel MVP's skills non-cancelable [Playtester]
 	* Fixed Masamune and Kamaitachi using bAspd rather than bAspdRate [Playtester]
 08/14
 	* Updated mob stats according to official kRO website [Playtester]
