@@ -81,4 +81,4 @@ int read_homunculusdb(void);
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int merc_skill_tree_get_max(int id, int b_class);
-int merc_hom_data_init(struct map_session_data *sd);
+void merc_hom_init_timers(struct homun_data * hd);

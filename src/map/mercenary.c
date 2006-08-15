@@ -769,15 +769,6 @@ int merc_hom_create(struct map_session_data *sd)
 	sd->hd = hd = (struct homun_data *)aCalloc(1,sizeof(struct homun_data));
 	hd->homunculusDB = &homunculus_db[i];
 	hd->master = sd;
-	return merc_hom_data_init(sd);
-}
-
-int merc_hom_data_init(struct map_session_data *sd)
-{
-	struct homun_data * hd = sd->hd;
-	int i;
-
-	nullpo_retr(1, hd);
 
 	hd->bl.m=sd->bl.m;
 	hd->bl.x=sd->bl.x;
@@ -819,10 +810,19 @@ int merc_hom_data_init(struct map_session_data *sd)
 	status_calc_homunculus(hd,1);
 
 	// Timers
-	hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
-	natural_heal_prev_tick = gettick();
-	hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,hd->master->bl.id,0);
+	merc_hom_init_timers(hd);
 	return 0;
+}
+
+void merc_hom_init_timers(struct homun_data * hd)
+{
+	if (hd->hungry_timer == -1)
+		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
+	if (hd->natural_heal_timer == -1)
+	{
+		natural_heal_prev_tick = gettick();
+		hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,hd->master->bl.id,0);
+	}
 }
 
 int merc_call_homunculus(struct map_session_data *sd, short x, short y)
@@ -833,11 +833,13 @@ int merc_call_homunculus(struct map_session_data *sd, short x, short y)
 		return merc_create_homunculus(sd, 6000 + rand(1, 8)) ;
 
 	if (!sd->homunculus.vaporize)
-		return 0; //Can't use this when homun was vaporized.
+		return 0; //Can't use this if homun wasn't vaporized.
 
 	// If homunc not yet loaded, load it
 	if (!sd->hd)
 		merc_hom_create(sd);
+	else
+		merc_hom_init_timers(sd->hd);
 
 	hd = sd->hd;
 	sd->homunculus.vaporize = 0;
@@ -942,6 +944,8 @@ int merc_revive_homunculus(struct map_session_data *sd, unsigned char per, short
 
 	if (!sd->hd) //Load homun data;
 		merc_hom_create(sd);
+	else
+		merc_hom_init_timers(sd->hd);
 	
 	hd = sd->hd;
 

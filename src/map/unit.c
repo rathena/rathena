@@ -1595,6 +1595,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 	} else if (bl->type == BL_HOM) {
 		struct homun_data *hd = (struct homun_data *) bl;
 		struct map_session_data *sd = hd->master;
+		merc_hom_hungry_timer_delete(hd);
+		merc_natural_heal_timer_delete(hd);
 		if(!sd || !sd->homunculus.intimacy)
 	  	{	//He's going to be deleted.
 			clif_emotion(bl, 28) ;	//sob
