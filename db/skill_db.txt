@@ -537,7 +537,7 @@
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//GS_SNAKEEYE#Snake Eye#
 511,-3,8,0,0,0,0,10,2,no,0,0,0,weapon,0	//GS_CHAINACTION#Chain Action#
 512,3,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//GS_TRACKING#Tracking#
-513,7,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
+513,7,6,1,-1,1,0,5,1,no,0,0,0,weapon,0	//GS_DISARM#Disarm#
 514,3,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//GS_PIERCINGSHOT#Piercing Shot#
 515,3,8,1,-1,0,0,10,5,no,0,0,0,weapon,0	//GS_RAPIDSHOWER#Rapid Shower#
 516,0,8,4,-1,2,3,10,1,no,0,0,0,weapon,0	//GS_DESPERADO#Desperado#

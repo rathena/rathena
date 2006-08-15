@@ -20,6 +20,8 @@
 
 =========================
 08/15
+	* Fixed disarm not working [Playtester]
+	- also fixed duration of Gatling Fever
 	* Made Kiel MVP's skills non-cancelable [Playtester]
 	* Fixed Masamune and Kamaitachi using bAspd rather than bAspdRate [Playtester]
 08/14
