@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/15
+	* Fixed Masamune and Kamaitachi using bAspd rather than bAspdRate [Playtester]
 08/14
 	* Updated mob stats according to official kRO website [Playtester]
 	* Fixed attack power of Dusk [Playtester]
