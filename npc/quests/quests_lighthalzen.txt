@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -42,6 +42,8 @@
 //= 	out after finished part... Don't want players getting stuck ;_; [Evera]
 //= 2.3 Finished Bio Ethics Quest. Need bug testers before moving to trunk, my
 //=	mind was somewhere else when writing @_@ [Evera]
+//= 2.4	Fixed the bug where a str&int debug was shown in the console for
+//=	test tube in bio labs quest. [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -1215,7 +1217,7 @@ L_3:
 	next;
 	input @answer$;
 
-	if (@answer$ == "Laboratory Permit" || @answer$ == "permit" || @answer$ == "laboratory permit" || @answer == "Permit") goto L_4;
+	if (@answer$ == "Laboratory Permit" || @answer$ == "permit" || @answer$ == "laboratory permit" || @answer$ == "Permit") goto L_4;
 	mes "Nothing happened.";
 	close;
 

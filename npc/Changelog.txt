@@ -21,7 +21,7 @@ erKURITA
 	* Warps maintainment
 Evera
 	* Everything.
-	* Dungeon Teleport System NPCs
+	* Dungeon Teleport System NPCs.
 	* iRO information gathering.
 	* Kafra maintainment.
 	* Taking requests.
@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/14
+	* Fixed the int&str bug of test tube in bio labs quest [Evera]
 	* Fixed 2006 headgears npc giving you Lion Mask rather than Lion Masquerade [Playtester]
 	* Moved the Gunslinger quest NPCs to gunslinger_quests.txt [Playtester]
 	- put erKURITA's version of the Garrison quest into another file since I already
