@@ -120,6 +120,9 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 		return 7;
 	}
 
+	//Delete timers when dead.
+	merc_hom_hungry_timer_delete(hd);
+	merc_natural_heal_timer_delete(hd);
 	sd->homunculus.hp = 0 ;
 	clif_hominfo(sd,hd,0); // Send dead flag
 
@@ -148,6 +151,9 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	if (flag && hd->battle_status.hp < (hd->battle_status.max_hp*80/100))
 		return 0;
 
+	//Delete timers when vaporized.
+	merc_hom_hungry_timer_delete(hd);
+	merc_natural_heal_timer_delete(hd);
 	sd->homunculus.vaporize = 1;
 	clif_hominfo(sd, sd->hd, 0);
 	merc_save(hd);
@@ -813,7 +819,6 @@ void merc_hom_init_timers(struct homun_data * hd)
 		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
 	if (hd->natural_heal_timer == -1)
 	{
-		natural_heal_prev_tick = gettick();
 		hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,hd->master->bl.id,0);
 	}
 }
@@ -1115,6 +1120,7 @@ int do_init_merc (void)
 	memset(homunculus_db,0,sizeof(homunculus_db));	//[orn]
 	read_homunculusdb();	//[orn]
 	// Add homunc timer function to timer func list [Toms]
+	natural_heal_prev_tick = gettick();
 	add_timer_func_list(merc_natural_heal, "merc_natural_heal");
 	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
 	return 0;
