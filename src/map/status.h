@@ -514,8 +514,10 @@ enum {
 #define SCB_SIZE	0x04000000
 #define SCB_RACE	0x08000000
 #define SCB_RANGE	0x10000000
+//SCB_DYE means the sc should force cloth-dye change to 0 to avoid client crashes.
+#define SCB_DYE	0x40000000
 #define SCB_PC		0x80000000
-#define SCB_ALL	0x7FFFFFFF
+#define SCB_ALL	0x3FFFFFFF
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM)

@@ -357,7 +357,7 @@ void initChangeTables(void) {
 	add_sc(NJ_HYOUSYOURAKU, SC_FREEZE);
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
 	set_sc(NJ_UTSUSEMI, SC_UTSUSEMI, SI_UTSUSEMI,SCB_NONE);
-	set_sc(NJ_BUNSINJYUTSU, SC_BUNSINJYUTSU, SI_BUNSINJYUTSU, SCB_NONE);
+	set_sc(NJ_BUNSINJYUTSU, SC_BUNSINJYUTSU, SI_BUNSINJYUTSU, SCB_DYE);
 	set_sc(CR_SHRINK, SC_SHRINK, SI_SHRINK, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE2, SI_CLOSECONFINE2, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE, SI_CLOSECONFINE, SCB_FLEE);
@@ -4454,13 +4454,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	}
 	//Before overlapping fail, one must check for status cured.
 	switch (type) {
-	case SC_BUNSINJYUTSU:	//[blackhole89]
-		if(sd)
-		{
-			val4=sd->status.clothes_color;
-			pc_changelook(sd,LOOK_CLOTHES_COLOR,0);
-		}
-		break;
 	case SC_BLESSING:
 		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
 			if (sc->data[SC_CURSE].timer!=-1)
@@ -5590,6 +5583,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	if(opt_flag)
 		clif_changeoption(bl);
 
+	if (calc_flag&SCB_DYE)
+	{	//Reset DYE color
+		if (vd && vd->cloth_color)
+		{
+			val4 = vd->cloth_color;
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,0);
+		}
+		calc_flag&=~SCB_DYE;
+	}
+
 	if (vd && pcdb_checkid(vd->class_)) //Only for players sprites, client crashes if they receive this for a mob o.O [Skotlex]
 		clif_status_change(bl,StatusIconChangeTable[type],1);
 	else if (sd) //Send packet to self otherwise (disguised player?)
@@ -5729,10 +5732,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
 	switch(type){
-		case SC_BUNSINJYUTSU: //[blackhole89]
-			{
-				if(sd) pc_changelook(sd,LOOK_CLOTHES_COLOR,sc->data[type].val4);
-			}
 		case SC_WEDDING:
 		case SC_XMAS:
 			if (!vd) return 0;
@@ -6080,6 +6079,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		break;
 	default:
 		opt_flag = 0;
+	}
+
+	if (calc_flag&SCB_DYE)
+	{	//Restore DYE color
+		if (vd && !vd->cloth_color && sc->data[type].val4)
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,sc->data[type].val4);
+		calc_flag&=~SCB_DYE;
 	}
 
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
