@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/15
+	* Added a crash-fix on status_calc_bl_sub_homun to abort in case the homun
+	  has no master (need to clean up this function later) [Skotlex]
+	* Tested char-txt load/save, it seems to be working fine, but you should
+	  STILL backup, as I only launched the server (read old character format),
+	  closed it down (saved into the new format) and relaunch it (read the new
+	  format) and it didn't give problems (but there's still the possibility of
+	  some field being read in the incorrect offset or such). [Skotlex]
 	* Updated the char save structure for char-TXT servers so that the homun id
 	  will be saved, now also the map info (last point, save point, memo maps)
 	  are now saved using the mapindex rather than the string. BACKUP BEFORE

@@ -2537,6 +2537,9 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	struct status_data *status = &hd->battle_status, *b_status = &hd->base_status;
 	int skill = 0;
 
+	if (!hd->master)
+		return; //Don't do anything if there isn't a master...
+
 	if(flag&(SCB_MAXHP|SCB_VIT))
 	{
 		flag|=SCB_MAXHP; //Ensures client-side refresh
