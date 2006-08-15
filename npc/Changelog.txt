@@ -36,6 +36,10 @@ Playtester
 Date		Added
 ======
 08/14
+	* Various changes in other/dts_warper.txt [Evera]
+	- Uses new global var $dtsday to count voting sessions [Evera]
+	- Bug fix for a bug involving both warpers being activated at the same time [Evera]
+	- Need bug testers for these fixes before stable merge [Evera]
 	* Updated header in other/Global_Functions.txt [Evera]
 	* Fixed the int&str bug of test tube in bio labs quest [Evera]
 	* Fixed 2006 headgears npc giving you Lion Mask rather than Lion Masquerade [Playtester]

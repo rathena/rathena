@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -23,7 +23,9 @@
 //=					= (1<<3) No winner last election
 //=					= (1<<4) Cool Corp won last election
 //=					= (1<<5) Kafra won last election
-//=Character -	dtseligible 		= eligibility status, 0 not eligible yet, 1 eligible. 0 Also used when MISC_QUEST|128, and signifies that person already voted.
+//=		$dtsday			= Week count for dts vote count, used for resetting players' votes
+//=Character -	dtseligible 		= eligibility status, 0 not eligible yet, 1 eligible.
+//=					= $dtsday used when MISC_QUEST|128, and signifies that person already voted.
 //=		MISC_QUEST		= |128 = eligible and voted.
 //=NPC Func. -	arg(0) 			= 0, Cool Event Corp Voting Staff; 1, Kafra Corp Voting Staff
 //=		arg(1)			= Kafra only, Cool Corp script does not use. Changes illus for different sprites.
@@ -63,6 +65,10 @@
 //= 2.1 Fixed headers with and updated with newer information [Evera]
 //= 2.2 Changed dtseligible 2 to MISC_QUEST|128, to clean up variable usage. [Evera]
 //=	Also added F_ClearGarbage function to the scripts. [Evera]
+//= 2.3	Changed dtseligible to be $dtsday when MISC_QUEST|128
+//=	Added $dtsday for vote session counter
+//=	Fixed bug that involved having both warpers enabled at the same time. [Evera]
+//=	New $dtsday system and bug fix needs bug testing (how ironic -.-;) [Evera]
 //============================================================ 
 
 //Yuno
@@ -154,6 +160,18 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 		set $dts,$dts|(1<<0);				//Sets NPCs to election mode if first time running
 		set $dts,$dts|(1<<3);
 	}
+	if($dts&(1<<1) && $dts&(1<<2) || $dts&(1<<0) && $dts&(1<<1) || $dts&(1<<0) && $dts&(1<<2)){
+		if($dts&(1<<0)) set $dts,$dts&~(1<<0);
+		if($dts&(1<<1)) set $dts,$dts&~(1<<1);
+		if($dts&(1<<2)) set $dts,$dts&~(1<<2);
+		set $dts,$dts|(1<<0);
+	}
+	if($dts&(1<<4) && $dts&(1<<5) || $dts&(1<<3) && $dts&(1<<4) || $dts&(1<<3) && $dts&(1<<5)){
+		if($dts&(1<<3)) set $dts,$dts&~(1<<3);
+		if($dts&(1<<4)) set $dts,$dts&~(1<<4);
+		if($dts&(1<<5)) set $dts,$dts&~(1<<5);
+		set $dts,$dts|(1<<3);
+	}
 	mes "[Saera]";
 	mes "Welcome to the";
 	mes "temporary headquarters";
@@ -205,6 +223,10 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 		mes "to choose the company they want.";
 		next;
 		if(dtseligible == 0 && baselevel >= 60 && MISC_QUEST&128 == 0 || dtseligible == 3 && baselevel >= 60 && MISC_QUEST&128 == 0) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
+		if(dtseligible != $dtsday && baselevel >= 60 && MISC_QUEST&128){
+			set MISC_QUEST,MISC_QUEST&~128;
+			set dtseligible,1;
+		}
 		switch(dtseligible){
 			default:
 				mes "[Saera]";
@@ -429,6 +451,20 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 		menu "Yes",Lmanuvoteyes,"No",Lnothx;
 
 	Lmanuvoteyes:
+		if($dtsday<4 || $dtsday>=100) set $dtsday,4;
+		else set $dtsday,$dtsday+1;
+		if($dts&(1<<1) && $dts&(1<<2) || $dts&(1<<0) && $dts&(1<<1) || $dts&(1<<0) && $dts&(1<<2)){
+			if($dts&(1<<0)) set $dts,$dts&~(1<<0);
+			if($dts&(1<<1)) set $dts,$dts&~(1<<1);
+			if($dts&(1<<2)) set $dts,$dts&~(1<<2);
+			set $dts,$dts|(1<<0);
+		}
+		if($dts&(1<<4) && $dts&(1<<5) || $dts&(1<<3) && $dts&(1<<4) || $dts&(1<<3) && $dts&(1<<5)){
+			if($dts&(1<<3)) set $dts,$dts&~(1<<3);
+			if($dts&(1<<4)) set $dts,$dts&~(1<<4);
+			if($dts&(1<<5)) set $dts,$dts&~(1<<5);
+			set $dts,$dts|(1<<3);
+		}
 		if($dtsv == 0){
 			set $@dtstemp,rand(1,2);
 			if($@dtstemp == 1) set $dtsv,$dtsv+100;
@@ -440,8 +476,8 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 			if($dts&(1<<5)) set $dts,$dts&~(1<<5);
 			if($dts&(1<<0)){
 				set $dts,$dts&~(1<<0);				//removes winner variable
-				set $dts,$dts|(1<<1);				//sets last winner varialbe
-				set $dts,$dts|(1<<3);				//sets current winner variable
+				set $dts,$dts|(1<<3);				//sets last winner varialbe
+				set $dts,$dts|(1<<1);				//sets current winner variable
 			}
 			if($dts&(1<<1)) set $dts,$dts|(1<<4);
 			if($dts&(1<<2)){
@@ -461,7 +497,7 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 				set $dts,$dts|(1<<3);
 			}
 			if($dts&(1<<1)){
-				set $dts,$dts&~(1<<2);
+				set $dts,$dts&~(1<<1);
 				set $dts,$dts|(1<<2);
 				set $dts,$dts|(1<<4);
 			}
@@ -484,6 +520,10 @@ function	script	F_DTS_Warp	{
 		set $dts,$dts|(1<<3);
 	}
 	if(dtseligible == 0 && baselevel >= 60 && MISC_QUEST&128 == 0 || dtseligible == 3 && baselevel >= 60 && MISC_QUEST&128 == 0) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
+	if(dtseligible != $dtsday && baselevel >= 60 && MISC_QUEST&128){
+		set MISC_QUEST,MISC_QUEST&~128;
+		set dtseligible,1;
+	}
 	switch(getarg(0)){
 	case 0:
 		cutin "zonda_01",2;
@@ -631,7 +671,7 @@ function	script	F_DTS_Warp	{
 		goto Lend;
 
 	Leligible: 							//Text displayed if eligible to vote
-		if(MISC_QUEST&128) goto Lnoteligible; //Var check if voted
+		if(MISC_QUEST&128 && $dtsday == dtseligible) goto Lnoteligible; //Var check if voted
 		switch(getarg(0)){
 		case 0:
 			mes "[Cool Event Corp. Voting Staff]"; 		//Unofficial text
@@ -655,7 +695,7 @@ function	script	F_DTS_Warp	{
 	Lvotecool:
 		set $dtsv,$dtsv+1;				//Adds 1 to cool count
 		set MISC_QUEST,MISC_QUEST|128;				//Sets var so that you can't vote over and over
-		set dtseligible,0;
+		set dtseligible,$dtsday;
 		switch(getarg(0)){
 		case 0:
 			mes "[Cool Event Corp. Voting Staff]";
@@ -677,7 +717,7 @@ function	script	F_DTS_Warp	{
 	Lvotekafra:
 		setd $dtsv,$dtsv-1; 				//Adds 1 to kafra count
 		set MISC_QUEST,MISC_QUEST|128; 			//Sets var to prevent cheating
-		set dtseligible,0;
+		set dtseligible,$dtsday;
 		switch(getarg(0)){
 		case 0:
 			mes "[Cool Event Corp. Voting Staff]";		//Unofficial Text
@@ -861,6 +901,24 @@ function	script	F_DTS_Warp	{
 //Elections administration NPC (hidden)
 -	script DTS_Admin -1,{
 	OnSun0100:					//Works only at 1am on sunday
+		if($dtsday<4 || $dtsday>=100) set $dtsday,4;
+		else set $dtsday,$dtsday+1;
+		if($dts == 0){
+			set $dts,$dts|(1<<0);
+			set $dts,$dts|(1<<3);
+		}
+		if($dts&(1<<1) && $dts&(1<<2) || $dts&(1<<0) && $dts&(1<<1) || $dts&(1<<0) && $dts&(1<<2)){
+			if($dts&(1<<0)) set $dts,$dts&~(1<<0);
+			if($dts&(1<<1)) set $dts,$dts&~(1<<1);
+			if($dts&(1<<2)) set $dts,$dts&~(1<<2);
+			set $dts,$dts|(1<<0);
+		}
+		if($dts&(1<<4) && $dts&(1<<5) || $dts&(1<<3) && $dts&(1<<4) || $dts&(1<<3) && $dts&(1<<5)){
+			if($dts&(1<<3)) set $dts,$dts&~(1<<3);
+			if($dts&(1<<4)) set $dts,$dts&~(1<<4);
+			if($dts&(1<<5)) set $dts,$dts&~(1<<5);
+			set $dts,$dts|(1<<3);
+		}
 		if($dtsv == 0){				//If tied, gives random side 100 votes
 			set $@dtstemp,rand(1,2);
 			if($@dtstemp == 1) set $dtsv,$dtsv+100;
@@ -893,7 +951,7 @@ function	script	F_DTS_Warp	{
 				set $dts,$dts|(1<<3);
 			}
 			if($dts&(1<<1)){
-				set $dts,$dts&~(1<<2);
+				set $dts,$dts&~(1<<1);
 				set $dts,$dts|(1<<2);
 				set $dts,$dts|(1<<4);
 			}
