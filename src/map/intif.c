@@ -821,12 +821,12 @@ int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd, sizeof(struct s_homunculus)+10);
+	WFIFOHEAD(inter_fd, sizeof(struct s_homunculus)+8);
 	WFIFOW(inter_fd,0) = 0x3092;
-	WFIFOL(inter_fd,2) =  sizeof(struct s_homunculus)+10;
-	WFIFOL(inter_fd,6) = account_id;
-	memcpy(WFIFOP(inter_fd,10),sh,sizeof(struct s_homunculus));
-	WFIFOSET(inter_fd, sizeof(struct s_homunculus)+10);
+	WFIFOW(inter_fd,2) = sizeof(struct s_homunculus)+8;
+	WFIFOL(inter_fd,4) = account_id;
+	memcpy(WFIFOP(inter_fd,8),sh,sizeof(struct s_homunculus));
+	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 	return 0;
 
 }

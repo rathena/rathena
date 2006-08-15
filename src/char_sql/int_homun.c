@@ -321,7 +321,7 @@ int inter_homunculus_parse_frommap(int fd){
 	switch(RFIFOW(fd, 0)){
 	case 0x3090: mapif_parse_CreateHomunculus(fd); break;
 	case 0x3091: mapif_load_homunculus(fd); break;
-	case 0x3092: mapif_save_homunculus(fd, RFIFOL(fd,6), (struct s_homunculus*) RFIFOP(fd, 10)); break;
+	case 0x3092: mapif_save_homunculus(fd, RFIFOW(fd,4), (struct s_homunculus*) RFIFOP(fd, 8)); break;
 	case 0x3093: mapif_delete_homunculus(fd); break;  // doesn't need to be parse, very simple packet...
 	case 0x3094: mapif_rename_homun(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10)); break;
 	default:

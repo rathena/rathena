@@ -351,7 +351,7 @@ void initChangeTables(void) {
 	set_sc(GS_MADNESSCANCEL, SC_MADNESSCANCEL, SI_MADNESSCANCEL, SCB_BATK|SCB_ASPD);
 	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
 	set_sc(GS_INCREASING, SC_INCREASING, SI_ACCURACY, SCB_AGI|SCB_DEX|SCB_HIT);
-	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD);
+	set_sc(GS_GATLINGFEVER, SC_GATLINGFEVER, SI_GATLINGFEVER, SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD);
 	set_sc(NJ_TATAMIGAESHI, SC_TATAMIGAESHI, SI_BLANK, SCB_NONE);
 	set_sc(NJ_SUITON, SC_SUITON, SI_BLANK, SCB_AGI|SCB_SPEED);
 	add_sc(NJ_HYOUSYOURAKU, SC_FREEZE);
@@ -698,20 +698,19 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		skill_clear_unitgroup(target);
 	status_change_clear(target,0);
 
-	if(flag&2) //remove the unit from the map.
+	if(flag&4) //Delete from memory. (also invokes map removal code)
+		unit_free(target);
+	else
+	if(flag&2) //remove from map
 		unit_remove_map(target,1);
-	else { //These are handled by unit_remove_map.
+	else
+	{ //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,0);
 		unit_skillcastcancel(target,0);
 		clif_clearchar_area(target,1);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
-	}
-
-	if(flag&4) { //Delete from memory.
-		map_delblock(target);
-		unit_free(target);
 	}
 		
 	return hp+sp;
@@ -3137,6 +3136,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 //Curse shouldn't effect on this?  <- Curse OR Bleeding??
 //	if(sc->data[SC_BLEEDING].timer != -1)
 //		batk -= batk * 25/100;
+	if(sc->data[SC_GATLINGFEVER].timer!=-1)
+		batk += sc->data[SC_GATLINGFEVER].val3;
 	if(sc->data[SC_MADNESSCANCEL].timer!=-1)
 		batk += 100;
 	return cap_value(batk,0,USHRT_MAX);
@@ -3280,7 +3281,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_ADJUSTMENT].timer!=-1)
 		flee += 30;
 	if(sc->data[SC_GATLINGFEVER].timer!=-1)
-		flee -= sc->data[SC_GATLINGFEVER].val1*5;
+		flee -= sc->data[SC_GATLINGFEVER].val4;
 	if(sc->data[SC_SPEED].timer!=-1)
 		flee += 10 + sc->data[SC_SPEED].val1 * 10 ;
 
@@ -5342,7 +5343,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		// gs_something1 [Vicious]
 		case SC_GATLINGFEVER:
 			val2 = 20*val1; //Aspd increase
-			val3 = 5*val1; //Flee decrease
+			val3 = 20+10*val1; //Batk increase
+			val4 = 5*val1; //Flee decrease
 			break;
 
 		case SC_FLING:

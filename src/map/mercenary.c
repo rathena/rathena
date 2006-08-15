@@ -521,7 +521,6 @@ int merc_natural_heal(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-#ifndef TXT_ONLY
 void merc_save(struct homun_data *hd)
 {
 	// copy data that must be saved in homunculus struct ( hp / sp )
@@ -532,12 +531,6 @@ void merc_save(struct homun_data *hd)
 		sd->homunculus.sp = sd->homunculus.max_sp;
 	intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus) ;
 }
-#else
-void merc_save(struct homun_data *hd)
-{
-	//Not implemented...
-}
-#endif
 
 static int merc_calc_pos(struct homun_data *hd,int tx,int ty,int dir)	//[orn]
 {

@@ -92,13 +92,13 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 	p->luk = tmp_int[17];
 
 	//Read skills.
-	while(str[next]) {
+	while(str[next] && str[next] != '\n') {
 		if (sscanf(str+next, "%d,%d,%n", &tmp_int[0], &tmp_int[1], &len) != 2)
 			return 2;
 
-		if (tmp_int[0] >= HM_SKILLBASE && tmp_int[0] < HM_SKILLBASE+MAX_HOMUNSKILL)
+		if (tmp_int[0] > HM_SKILLBASE && tmp_int[0] <= HM_SKILLBASE+MAX_HOMUNSKILL)
 		{
-			i = tmp_int[0] - HM_SKILLBASE;
+			i = tmp_int[0] - HM_SKILLBASE -1;
 			p->hskill[i].id = tmp_int[0];
 			p->hskill[i].lv = tmp_int[1];
 		} else
@@ -327,7 +327,7 @@ int mapif_save_homun(int fd,int account_id,struct s_homunculus *data)
 	hom_id = data->hom_id;
 	p= idb_ensure(homun_db,hom_id,create_homun);
 	memcpy(p,data,sizeof(struct s_homunculus));
-	mapif_save_homun_ack(fd,account_id,0);
+	mapif_save_homun_ack(fd,account_id,1);
 	return 0;
 }
 
@@ -382,11 +382,11 @@ int inter_homun_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
-	case 0x3080: mapif_create_homun(fd); break;
-	case 0x3081: mapif_load_homun(fd); break;
-	case 0x3082: mapif_parse_SaveHomun(fd); break;
-	case 0x3083: mapif_parse_DeleteHomun(fd); break;
-	case 0x3084: mapif_parse_RenameHomun(fd); break;
+	case 0x3090: mapif_create_homun(fd); break;
+	case 0x3091: mapif_load_homun(fd); break;
+	case 0x3092: mapif_parse_SaveHomun(fd); break;
+	case 0x3093: mapif_parse_DeleteHomun(fd); break;
+	case 0x3094: mapif_parse_RenameHomun(fd); break;
 	default:
 		return 0;
 	}

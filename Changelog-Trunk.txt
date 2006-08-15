@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/15
+	* Applied multiple fixes which should take care of making homun save/load
+	  work on TXT now. [Skotlex]
+	* Added Gatling Fever's batk bonus. [Skotlex]
+	* Some cleaning in status_damage which should prevent trying to free
+	  already free'd pointers when unit_remove_map invokes unit_free (when
+	  status_damage was going to invoke unit_free anyway) [Skotlex]
 	* Delete homunc's skills from sql when the homunc is destroyed [Toms]
 	* Homunc Timers should be disabled when the homunc is vaporized or dead an re-enabled on call/resu [Toms]
 	* Updated vc-project files to compile with the new int_homun files.
