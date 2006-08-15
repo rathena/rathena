@@ -1,7 +1,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -64,7 +64,7 @@ que_ng.gat,182,85,3	script	Mr.Garrison	109,{
 			mes "^FF000030000 Zeny^000000.";
 			next;
 			mes @npcname$;
-			if ( (countitem(999)<50) || (countitem(985)<3) || (countitem(984)<1) ||(countitem(1003)<50) || (countitem(7317)<20) || (Zeny < 30000) ) {
+			if ( (countitem(999)<50) || (countitem(985)<3) || (countitem(984)<1) || (countitem(1003)<50) || (countitem(7317)<20) || (Zeny < 30000) ) {
 				mes "Come back when you have the materials.";
 				close;
 			}
@@ -178,13 +178,232 @@ que_ng.gat,187,156,3	script	Tony	86,{
 }
 
 que_ng.gat,187,163,3	script	Ingrid	744,{
-	end;
+	set @npcname$,"[Ingrid]";
+
+	mes @npcname$;
+	mes "I can make the strongest of";
+	mes "all weapons. The ultimate";
+	mes "grenade launcher.";
+	mes "It's called ^0000FFInferno^000000.";
+	next;
+	if(BaseJob != Job_Gunslinger || BaseLevel < 65){
+		mes @npcname$;
+		mes "But I don't think you are";
+		mes "experienced enough to use it.";
+		next;
+		mes @npcname$;
+		mes "You'll probably kill yourself.";
+		mes "It's just too powerful to use";
+		mes "for a beginner. I refuse to";
+		mes "make one for you.";
+		close;
+	}
+	mes @npcname$;
+	mes "You look experienced.";
+	mes "I think I could make one";
+	mes "for you.";
+	next;
+	mes @npcname$;
+	mes "So, do you want me to make an";
+	mes "^0000FFInferno^000000 for you?";
+	next;
+
+	switch(select("Yes, please.","No thanks."))
+	{
+
+		case 1:
+			mes @npcname$;
+			mes "Okay, but first you need to";
+			mes "bring me the materials I need";
+			mes "to create one.";
+			next;
+			mes @npcname$;
+			mes "This is what I need:";
+			mes "^FF0000100 Used Iron Plates^000000,";
+			mes "^FF000010 Oridecons^000000,";
+			mes "^FF000050 Rusty Screws^000000,";
+			mes "^FF0000100 Burning Hearts^000000 and";
+			mes "^FF0000200000 Zeny^000000.";
+			next;
+			mes @npcname$;
+			if ( (countitem(7319)<100) || (countitem(984)<10) || (countitem(7317)<50) || (countitem(7097)<100) || (Zeny < 200000) ) {
+				mes "Come back when you have the materials.";
+				close;
+			}
+			mes "Oh, you already have the materials.";
+			next;
+			delitem 7319,100;
+			delitem 984,10;
+			delitem 7317,50;
+			delitem 7097,100;
+			set Zeny,Zeny-200000;
+			mes @npcname$;
+			mes "I need to be careful...";
+			mes "...";
+			mes "...";
+			next;
+			getitem 13162,1;
+			mes @npcname$;
+			mes "It's done.";
+			mes "Be careful with it.";
+			close;
+
+		case 2:
+			mes @npcname$;
+			mes "Probably a good choice.";
+			mes "It's really dangerous.";
+			close;
+	}
 }
 
 que_ng.gat,185,180,3	script	Vanessa	726,{
-	end;
+	set @npcname$,"[Vanessa]";
+
+	mes @npcname$;
+	mes "I can make a grenade launcher";
+	mes "that can destroy armors.";
+	mes "It's called ^0000FFDestroyer^000000.";
+	next;
+	if(BaseJob != Job_Gunslinger || BaseLevel < 52){
+		mes @npcname$;
+		mes "But I don't think you are";
+		mes "experienced enough to use it.";
+		next;
+		mes @npcname$;
+		mes "Come back when you think";
+		mes "you are worthy to use this";
+		mes "weapon.";
+		close;
+	}
+	mes @npcname$;
+	mes "You look experienced.";
+	mes "I think I could make one";
+	mes "for you.";
+	next;
+	mes @npcname$;
+	mes "So, do you want me to make a";
+	mes "^0000FFDestroyer^000000 for you?";
+	next;
+
+	switch(select("Yes, please.","No thanks."))
+	{
+
+		case 1:
+			mes @npcname$;
+			mes "Okay, but first you need to";
+			mes "bring me the materials I need";
+			mes "to create one.";
+			next;
+			mes @npcname$;
+			mes "This is what I need:";
+			mes "^FF000050 Used Iron Plates^000000,";
+			mes "^FF00005 Oridecons^000000,";
+			mes "^FF000070 Rusty Screws^000000 and";
+			mes "^FF0000100000 Zeny^000000.";
+			next;
+			mes @npcname$;
+			if ( (countitem(7319)<50) || (countitem(984)<5) || (countitem(7317)<70) || (Zeny < 100000) ) {
+				mes "Come back when you have the materials.";
+				close;
+			}
+			mes "Oh, you already have the materials.";
+			next;
+			delitem 7319,50;
+			delitem 984,5;
+			delitem 7317,70;
+			set Zeny,Zeny-100000;
+			mes @npcname$;
+			mes "I'll make it in a minute...";
+			mes "...";
+			mes "...";
+			next;
+			getitem 13160,1;
+			mes @npcname$;
+			mes "It's done.";
+			mes "Be careful with it.";
+			close;
+
+		case 2:
+			mes @npcname$;
+			mes "Oh well, your loss.";
+			close;
+	}
 }
 
 que_ng.gat,149,178,5	script	N.A	744,{
-	end;
+	set @npcname$,"[N.A]";
+
+	mes @npcname$;
+	mes "If you like gatling guns, I'm the";
+	mes "right person to talk to.";
+	mes "I can make a ^0000FFDrifter^000000.";
+	next;
+	if(BaseJob != Job_Gunslinger || BaseLevel < 55){
+		mes @npcname$;
+		mes "But I don't think you are";
+		mes "experienced enough to use it.";
+		next;
+		mes @npcname$;
+		mes "Come back when you think";
+		mes "you are worthy to use this";
+		mes "weapon.";
+		close;
+	}
+	mes @npcname$;
+	mes "You look experienced.";
+	mes "I think I could make one";
+	mes "for you.";
+	next;
+	mes @npcname$;
+	mes "So, do you want me to make a";
+	mes "^0000FFDrifter^000000 for you?";
+	next;
+
+	switch(select("Yes, please.","No thanks."))
+	{
+
+		case 1:
+			mes @npcname$;
+			mes "Okay, but first you need to";
+			mes "bring me the materials I need";
+			mes "to create one.";
+			next;
+			mes @npcname$;
+			mes "This is what I need:";
+			mes "^FF000070 Steels^000000,";
+			mes "^FF00005 Eluniums^000000,";
+			mes "^FF00003 Oridecons^000000,";
+			mes "^FF000070 Coals^000000,";
+			mes "^FF000050 Rusty Screws^000000 and";
+			mes "^FF000050000 Zeny^000000.";
+			next;
+			mes @npcname$;
+			if ( (countitem(999)<70) || (countitem(985)<5) || (countitem(984)<3) || (countitem(1003)<70) || (countitem(7317)<50) || (Zeny < 50000) ) {
+				mes "Come back when you have the materials.";
+				close;
+			}
+			mes "I see you came prepared.";
+			next;
+			delitem 999,70;
+			delitem 985,5;
+			delitem 984,3;
+			delitem 1003,70;
+			delitem 7317,50;
+			set Zeny,Zeny-50000;
+			mes @npcname$;
+			mes "Alright, you won't regret it...";
+			mes "...";
+			mes "...";
+			next;
+			getitem 13157,1;
+			mes @npcname$;
+			mes "It's done. Now shoot the";
+			mes "enemies with no mercy!";
+			close;
+
+		case 2:
+			mes @npcname$;
+			mes "Oh well, your loss.";
+			close;
+	}
 }

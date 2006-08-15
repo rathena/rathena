@@ -35,6 +35,10 @@ Playtester
 
 Date		Added
 ======
+08/15
+	* Added all the Gunslinger gun quests [Playtester]
+	- sphere creation and ammo casing are still missing, working on it
+	- removed erKURITA's version, he's okay with it
 08/14
 	* Various changes in other/dts_warper.txt [Evera]
 	- Uses new global var $dtsday to count voting sessions [Evera]
