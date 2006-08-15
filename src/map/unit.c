@@ -1784,8 +1784,6 @@ int unit_free(struct block_list *bl) {
 		merc_hom_hungry_timer_delete(hd);
 		merc_natural_heal_timer_delete(hd);
 		if(sd) {
-			sd->hd = NULL;
-			hd->master = NULL;
 			if (sd->homunculus.intimacy > 0)
 				merc_save(hd); 
 			else
@@ -1794,6 +1792,8 @@ int unit_free(struct block_list *bl) {
 				sd->status.hom_id = 0;
 				sd->homunculus.hom_id = 0;
 			}
+			sd->hd = NULL;
+			hd->master = NULL;
 		}
 	}
 
