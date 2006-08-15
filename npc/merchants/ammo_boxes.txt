@@ -1,0 +1,116 @@
+//===== eAthena Script ========================================
+//= Ammo Box Event
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Turns bullets into ammo boxes.
+//===== Additional Comments: =================================
+//= 1.0 Added the first 8 ammo boxes [Playtester]
+//============================================================
+
+que_ng.gat,187,149,3	script	Kenny	83,{
+	mes "[Kenny]";
+	mes "My name is Kenny.";
+	mes "I can create ^0000FFbullet casings^000000";
+	mes "and ^0000FFsphere packs^000000.";
+	next;
+	mes "[Kenny]";
+	mes "Would you like to try using one of";
+	mes "my bullet bullet casings or sphere";
+	mes "packs?";
+	mes "Select the one you want me to make!";
+	next;
+
+	menu "Bullet Casing",-,"Silver Bullet Casing",Q2,"Shell of Blood Casing",Q3,"Lightning Sphere Pack",Q4,"Blind Sphere Pack",Q5,"Poison Sphere Pack",Q6,"Freezing Sphere Pack",Q7,"Flare Sphere Pack",Q8;
+
+// Arguments
+//===========
+		callsub sF_Make, 13200,500,12149, "Bullet Casings";
+			goto M_Menu;
+Q2:
+		callsub sF_Make, 13201,500,12151, "Silver Bullet Casings";
+			goto M_Menu;
+Q3:
+		callsub sF_Make, 13202,500,12150, "Shell of Blood Casings";
+			goto M_Menu;
+Q4:
+		callsub sF_Make, 13204,500,12144, "Lightning Sphere Packs";
+			goto M_Menu;
+Q5:
+		callsub sF_Make, 13206,500,12145, "Blind Sphere Packs";
+			goto M_Menu;
+Q6:
+		callsub sF_Make, 13205,500,12146, "Poison Sphere Packs";
+			goto M_Menu;
+Q7:
+		callsub sF_Make, 13207,500,12147, "Freezing Sphere Packs";
+			goto M_Menu;
+Q8:
+		callsub sF_Make, 13203,500,12148, "Flare Sphere Packs";
+			goto M_Menu;
+
+// Subfunction for making ammo boxes
+//==================================
+sF_Make:
+	set @ammonum,500;
+	if(countitem(getarg(0)) < @ammonum) goto L_NdAmmo;
+	if(Zeny < getarg(1)) goto L_NdZeny;
+	mes "[Kenny]";
+	mes "What do you want me to do?";
+	next;
+	menu "Give me as many as you can.",-, "I want to set the amount.",sM_0b, "Nevermind",M_End;
+
+		set @amount,50;
+		if(zeny/getarg(1) < @amount) set @amount, zeny/getarg(1);
+		if(countitem(getarg(0))/@ammonum < @amount) set @amount, countitem(getarg(0))/@ammonum;
+		if(@amount > 0) goto L_End;
+		mes "[Kenny]";
+		mes "Dude, you don't even have the right items...";
+		close;
+		
+	sM_0b:
+		input @amount;
+		if(@amount<1 || @amount>50) goto L_BadAmnt;
+		if(countitem(getarg(0))/@ammonum < @amount) goto L_NdAmmo;
+		if(Zeny < (getarg(1)*@amount)) goto L_NdZeny;
+
+	L_End:
+		set Zeny, Zeny - (getarg(1)*@amount);
+		delitem getarg(0), (@amount*@ammonum);
+		getitem getarg(2), @amount;
+		mes "[Kenny]";
+		mes "There you go~!";
+		mes "Here are your " +getarg(3)+ ".";
+		close;
+
+	L_NdAmmo:
+		mes "[Kenny]";
+		mes "Sorry, but you need 500 bullets or"; 
+		mes "spheres and 500 zeny to make";
+		mes "1 bullet casing or 1 sphere pack.";
+		close;
+		
+	L_NdZeny:
+		mes "[Kenny]";
+		mes "You don't have enough zeny for that many.";
+		close;
+
+	L_BadAmnt:
+		mes "[Kenny]";
+		mes "Please choose a number between 1 and 50.";	
+		close;
+
+L_Come:
+	mes "[Kenny]";
+	mes "Please, come again whenever you want too.";
+	close;
+M_End:
+	mes "[Kenny]";
+	mes "Sure, no problem.";
+	mes "Come back any time.";
+	close;
+}

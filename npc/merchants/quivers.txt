@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib (Prometheus Project)
 //===== Current Version: =====================================
-//= 1.0b
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= Converted to eAthena format by Dr.Evil
 //= added prize to quest - 500 Zeny
 //= Fixed a few spelling errors. [Nexon]
+//= 1.1 Added Holy Arrow Quivers [Playtester]
 //============================================================
 
 
@@ -46,7 +47,7 @@ payon_in01.gat,5,134,4	script	Inventor Jaax	89,{
 	mes "appreciate my genius!";
 	next;
 
-	menu "Arrow Quiver",-,"Iron Arrow Quiver",Q2,"Steel Arrow Quiver",Q3,"Oridecon Arrow Quiver",Q4,"Fire Arrow Quiver",Q5,"Silver Arrow Quiver",Q6,"Wind Arrow Quiver",Q7,"Stone Arrow Quiver",Q8,"Crystal Arrow Quiver",Q9,"Shadow Arrow Quiver",Q10,"Immaterial Arrow Quiver",Q11,"Rusty Arrow Quiver",Q12;
+	menu "Arrow Quiver",-,"Iron Arrow Quiver",Q2,"Steel Arrow Quiver",Q3,"Oridecon Arrow Quiver",Q4,"Fire Arrow Quiver",Q5,"Silver Arrow Quiver",Q6,"Wind Arrow Quiver",Q7,"Stone Arrow Quiver",Q8,"Crystal Arrow Quiver",Q9,"Shadow Arrow Quiver",Q10,"Immaterial Arrow Quiver",Q11,"Rusty Arrow Quiver",Q12,"Holy Arrow Quiver",Q13;
 
 // Arguments
 //===========
@@ -84,6 +85,9 @@ Q11:
 			goto M_Menu;
 Q12:
 		callsub sF_Make, 1762,500,12015, "Rusty Arrow Quiver";
+			goto M_Menu;
+Q13:
+		callsub sF_Make, 1772,500,12183, "Holy Arrow Quiver";
 			goto M_Menu;
 
 // Subfunction for making quivers

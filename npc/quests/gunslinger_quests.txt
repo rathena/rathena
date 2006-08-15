@@ -8,7 +8,8 @@
 //= Gunslinger guns and bullet quests
 //===== Additional Comments: =================================
 //= 1.0 Only Garrison Gun done yet [Playtester]
-//= 1.1 Added Garrison[2]
+//= 1.1 Added Garrison[2] [Playtester]
+//= 1.2 Added Drifter, Destroyer and Inferno [Playtester]
 //============================================================
 
 
@@ -68,14 +69,15 @@ que_ng.gat,182,85,3	script	Mr.Garrison	109,{
 				mes "Come back when you have the materials.";
 				close;
 			}
-			mes "I see you came prepared.";
-			next;
 			delitem 999,50;
 			delitem 985,3;
 			delitem 984,1;
 			delitem 1003,50;
 			delitem 7317,20;
 			set Zeny,Zeny-30000;
+			mes "I see you came prepared.";
+			mes "Let me take those material.";
+			next;
 			mes @npcname$;
 			mes "Give me just a minute...";
 			mes "...";
@@ -134,14 +136,15 @@ L_Slot:
 				mes "Come back when you have the materials.";
 				close;
 			}
-			mes "I see you came prepared.";
-			next;
 			delitem 999,10;
 			delitem 985,1;
 			delitem 1011,10;
 			delitem 1003,30;
 			delitem 7317,10;
 			delitem 13104,1;
+			mes "I see you came prepared.";
+			mes "Let me take those materials.";
+			next;
 			mes @npcname$;
 			mes "Give me just a minute...";
 			mes "...";
@@ -167,12 +170,7 @@ L_Already:
 	close;
 }
 
-// NPC locations, working on implementing them
-
-que_ng.gat,187,149,3	script	Kenny	83,{
-	end;
-}
-
+//Make Spheres here
 que_ng.gat,187,156,3	script	Tony	86,{
 	end;
 }
@@ -230,13 +228,14 @@ que_ng.gat,187,163,3	script	Ingrid	744,{
 				mes "Come back when you have the materials.";
 				close;
 			}
-			mes "Oh, you already have the materials.";
-			next;
 			delitem 7319,100;
 			delitem 984,10;
 			delitem 7317,50;
 			delitem 7097,100;
 			set Zeny,Zeny-200000;
+			mes "Oh, you already have the materials.";
+			mes "Let me have them.";
+			next;
 			mes @npcname$;
 			mes "I need to be careful...";
 			mes "...";
@@ -306,12 +305,13 @@ que_ng.gat,185,180,3	script	Vanessa	726,{
 				mes "Come back when you have the materials.";
 				close;
 			}
-			mes "Oh, you already have the materials.";
-			next;
 			delitem 7319,50;
 			delitem 984,5;
 			delitem 7317,70;
 			set Zeny,Zeny-100000;
+			mes "Oh, you already have the materials.";
+			mes "Let me have them.";
+			next;
 			mes @npcname$;
 			mes "I'll make it in a minute...";
 			mes "...";
@@ -382,14 +382,15 @@ que_ng.gat,149,178,5	script	N.A	744,{
 				mes "Come back when you have the materials.";
 				close;
 			}
-			mes "I see you came prepared.";
-			next;
 			delitem 999,70;
 			delitem 985,5;
 			delitem 984,3;
 			delitem 1003,70;
 			delitem 7317,50;
 			set Zeny,Zeny-50000;
+			mes "I see you came prepared.";
+			mes "Let me take those materials.";
+			next;
 			mes @npcname$;
 			mes "Alright, you won't regret it...";
 			mes "...";

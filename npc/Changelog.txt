@@ -36,6 +36,9 @@ Playtester
 Date		Added
 ======
 08/15
+	* Fixed some parts of the Gunslinger gun quests [Playtester]
+	* Added Ammo Casing Seller Kenny [Playtester]
+	* Added Holy Arrow Quivers to Inventor Jaax [Playtester]
 	* Added all the Gunslinger gun quests [Playtester]
 	- sphere creation and ammo casing are still missing, working on it
 	- removed erKURITA's version, he's okay with it
