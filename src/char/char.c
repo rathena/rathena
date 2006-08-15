@@ -400,9 +400,13 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->last_point.y = 354;
 	}
 	*/
-	str_p += sprintf(str_p, "%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
-		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-		"\t%s,%d,%d\t%s,%d,%d,%d,%d,%d,%d,%d\t",
+	str_p += sprintf(str_p,
+		"%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d" //Up to Zeny field
+		"\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d" //Up to Skill Point
+		"\t%d,%d,%d\t%d,%d,%d,%d" //Up to hom id
+		"\t%d,%d,%d\t%d,%d,%d,%d,%d" //Up to head bottom
+		"\t%d,%d,%d\t%d,%d,%d" //last point + save point
+		",%d,%d,%d,%d,%d\t",	//Family info
 		p->char_id, p->account_id, p->char_num, p->name, //
 		p->class_, p->base_level, p->job_level,
 		p->base_exp, p->job_exp, p->zeny,
@@ -410,15 +414,15 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->str, p->agi, p->vit, p->int_, p->dex, p->luk,
 		p->status_point, p->skill_point,
 		p->option, p->karma, p->manner,	//
-		p->party_id, p->guild_id, p->pet_id,
+		p->party_id, p->guild_id, p->pet_id, p->hom_id,
 		p->hair, p->hair_color, p->clothes_color,
 		p->weapon, p->shield, p->head_top, p->head_mid, p->head_bottom,
-		mapindex_id2name(p->last_point.map), p->last_point.x, p->last_point.y, //
-		mapindex_id2name(p->save_point.map), p->save_point.x, p->save_point.y,
+		p->last_point.map, p->last_point.x, p->last_point.y, //
+		p->save_point.map, p->save_point.x, p->save_point.y,
 		p->partner_id,p->father,p->mother,p->child,p->fame);
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < MAX_MEMOPOINTS; i++)
 		if (p->memo_point[i].map) {
-			str_p += sprintf(str_p, "%s,%d,%d", mapindex_id2name(p->memo_point[i].map), p->memo_point[i].x, p->memo_point[i].y);
+			str_p += sprintf(str_p, "%d,%d,%d", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
 		}
 	*(str_p++) = '\t';
 
@@ -471,7 +475,26 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	// initilialise character
 	memset(p, '\0', sizeof(struct mmo_charstatus));
 	
-	// If it's not char structure of version 1488 and after
+// Char structure of version 1500 (homun + mapindex maps)
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d,%d,%d,%d,%d,%d%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0],
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26], &tmp_int[44],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		&tmp_int[45], &tmp_int[35], &tmp_int[36],
+		&tmp_int[46], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+		&tmp_int[40], &tmp_int[41], &tmp_int[42], &tmp_int[43], &next)) != 48)
+	{
+	tmp_int[44] = 0; //Hom ID.
+// Char structure of version 1488 (fame field addition)
 	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
 		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
 		"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d,%d,%d,%d,%d%n",
@@ -489,109 +512,100 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
 		&tmp_int[40], &tmp_int[41], &tmp_int[42], &tmp_int[43], &next)) != 47)
 	{
-		tmp_int[43] = 0;	
-		// If it's not char structure of version 1363 and after
-		if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
-			"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-			"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d,%d,%d,%d%n",
-			&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
-			&tmp_int[3], &tmp_int[4], &tmp_int[5],
-			&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
-			&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
-			&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
-			&tmp_int[19], &tmp_int[20],
-			&tmp_int[21], &tmp_int[22], &tmp_int[23], //
-			&tmp_int[24], &tmp_int[25], &tmp_int[26],
-			&tmp_int[27], &tmp_int[28], &tmp_int[29],
-			&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
-			tmp_str[1], &tmp_int[35], &tmp_int[36], //
-			tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
-			&tmp_int[40], &tmp_int[41], &tmp_int[42], &next)) != 46)
-		{
-			tmp_int[40] = 0; // father
-			tmp_int[41] = 0; // mother
-			tmp_int[42] = 0; // child
-			// If it's not char structure of version 1008 and before 1363
-			if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
-				"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-				"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d%n",
-				&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
-				&tmp_int[3], &tmp_int[4], &tmp_int[5],
-				&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
-				&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
-				&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
-				&tmp_int[19], &tmp_int[20],
-				&tmp_int[21], &tmp_int[22], &tmp_int[23], //
-				&tmp_int[24], &tmp_int[25], &tmp_int[26],
-				&tmp_int[27], &tmp_int[28], &tmp_int[29],
-				&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
-				tmp_str[1], &tmp_int[35], &tmp_int[36], //
-				tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], &next)) != 43)
-			{
-				tmp_int[39] = 0; // partner id
-				// If not char structure from version 384 to 1007
-				if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
-					"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-					"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
-					&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
-					&tmp_int[3], &tmp_int[4], &tmp_int[5],
-					&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
-					&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
-					&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
-					&tmp_int[19], &tmp_int[20],
-					&tmp_int[21], &tmp_int[22], &tmp_int[23], //
-					&tmp_int[24], &tmp_int[25], &tmp_int[26],
-					&tmp_int[27], &tmp_int[28], &tmp_int[29],
-					&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
-					tmp_str[1], &tmp_int[35], &tmp_int[36], //
-					tmp_str[2], &tmp_int[37], &tmp_int[38], &next)) != 42)
-				{
-					// It's char structure of a version before 384
-					tmp_int[26] = 0; // pet id
-					set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
-					"\t%d,%d,%d\t%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
-					"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
-					&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
-					&tmp_int[3], &tmp_int[4], &tmp_int[5],
-					&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
-					&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
-					&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
-					&tmp_int[19], &tmp_int[20],
-					&tmp_int[21], &tmp_int[22], &tmp_int[23], //
-					&tmp_int[24], &tmp_int[25], //
-					&tmp_int[27], &tmp_int[28], &tmp_int[29],
-					&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
-					tmp_str[1], &tmp_int[35], &tmp_int[36], //
-					tmp_str[2], &tmp_int[37], &tmp_int[38], &next);
-					set += 2;
-					//printf("char: old char data ver.1\n");
-				// Char structure of version 1007 or older
-				} else {
-					set++;
-					//printf("char: old char data ver.2\n");
-				}
-			// Char structure of version 1008+
-			} else {
-				set += 3;
-				//printf("char: new char data ver.3\n");
-			}
-		// Char structture of version 1363+
-		} else {
-			set++;
-			//printf("char: new char data ver.4\n");
-		}
-	// Char structure of version 1488+
-	} else {
-		//printf("char: new char data ver.5\n");
-	}
-	if (set != 47)
+	tmp_int[43] = 0; //Fame
+// Char structure of version 1363 (family data addition)
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d,%d,%d,%d%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		tmp_str[1], &tmp_int[35], &tmp_int[36], //
+		tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], 
+		&tmp_int[40], &tmp_int[41], &tmp_int[42], &next)) != 46)
+	{
+	tmp_int[40] = 0; // father
+	tmp_int[41] = 0; // mother
+	tmp_int[42] = 0; // child
+// Char structure version 1008 (marriage partner addition)
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%127[^,],%d,%d\t%127[^,],%d,%d,%d%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		tmp_str[1], &tmp_int[35], &tmp_int[36], //
+		tmp_str[2], &tmp_int[37], &tmp_int[38], &tmp_int[39], &next)) != 43)
+	{
+	tmp_int[39] = 0; // partner id
+// Char structure version 384 (pet addition)
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], &tmp_int[26],
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		tmp_str[1], &tmp_int[35], &tmp_int[36], //
+		tmp_str[2], &tmp_int[37], &tmp_int[38], &next)) != 42)
+	{
+	tmp_int[26] = 0; // pet id
+// Char structure of a version 1 (original data structure)
+	if ((set = sscanf(str, "%d\t%d,%d\t%127[^\t]\t%d,%d,%d\t%u,%u,%d\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d"
+		"\t%d,%d,%d\t%d,%d\t%d,%d,%d\t%d,%d,%d,%d,%d"
+		"\t%127[^,],%d,%d\t%127[^,],%d,%d%n",
+		&tmp_int[0], &tmp_int[1], &tmp_int[2], tmp_str[0], //
+		&tmp_int[3], &tmp_int[4], &tmp_int[5],
+		&tmp_uint[0], &tmp_uint[1], &tmp_int[8],
+		&tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12],
+		&tmp_int[13], &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18],
+		&tmp_int[19], &tmp_int[20],
+		&tmp_int[21], &tmp_int[22], &tmp_int[23], //
+		&tmp_int[24], &tmp_int[25], //
+		&tmp_int[27], &tmp_int[28], &tmp_int[29],
+		&tmp_int[30], &tmp_int[31], &tmp_int[32], &tmp_int[33], &tmp_int[34],
+		tmp_str[1], &tmp_int[35], &tmp_int[36], //
+		tmp_str[2], &tmp_int[37], &tmp_int[38], &next)) != 41)
+	{
+		ShowError("Char-loading: Unrecognized character data version, info lost!\n");
+		ShowDebug("Character info: %s\n", str);
 		return 0;
+	}
+	}	// Char structure version 384 (pet addition)
+	}	// Char structure version 1008 (marriage partner addition)
+	}	// Char structure of version 1363 (family data addition)
+	}	// Char structure of version 1488 (fame field addition)
+	//Convert save data from string to integer for older formats
+		tmp_int[45] = mapindex_name2id(tmp_str[1]);
+		tmp_int[46] = mapindex_name2id(tmp_str[2]);
+	}	// Char structure of version 1500 (homun + mapindex maps)
 
 	memcpy(p->name, tmp_str[0], NAME_LENGTH-1); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
 	p->account_id = tmp_int[1];
 	p->char_num = tmp_int[2];
 	p->class_ = tmp_int[3];
+/* Unneeded unless you are running a real old character database now.
 	//Temporal fix until all chars are reverted from peco-flying-class to 
 	//normal classes. [Skotlex]
 	switch (p->class_) {
@@ -617,6 +631,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 			p->class_ = JOB_STAR_GLADIATOR;
 			break;
 	}
+*/
 	p->base_level = tmp_int[4];
 	p->job_level = tmp_int[5];
 	p->base_exp = tmp_uint[0];
@@ -648,10 +663,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->head_top = tmp_int[32];
 	p->head_mid = tmp_int[33];
 	p->head_bottom = tmp_int[34];
-	p->last_point.map = mapindex_name2id(tmp_str[1]);
 	p->last_point.x = tmp_int[35];
 	p->last_point.y = tmp_int[36];
-	p->save_point.map = mapindex_name2id(tmp_str[2]);
 	p->save_point.x = tmp_int[37];
 	p->save_point.y = tmp_int[38];
 	p->partner_id = tmp_int[39];
@@ -659,6 +672,9 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->mother = tmp_int[41];
 	p->child = tmp_int[42];
 	p->fame = tmp_int[43];
+	p->hom_id = tmp_int[44];
+	p->last_point.map = tmp_int[45];
+	p->save_point.map = tmp_int[46];
 
 	// Some checks
 	for(i = 0; i < char_num; i++) {
@@ -689,11 +705,19 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	next++;
 
 	for(i = 0; str[next] && str[next] != '\t'; i++) {
-		if (sscanf(str+next, "%[^,],%d,%d%n", tmp_str[0], &tmp_int[0], &tmp_int[1], &len) != 3)
-			return -3;
-		p->memo_point[i].map = mapindex_name2id(tmp_str[0]);
-		p->memo_point[i].x = tmp_int[0];
-		p->memo_point[i].y = tmp_int[1];
+		//mapindex memo format
+		if (sscanf(str+next, "%d,%d,%d%n", &tmp_int[2], &tmp_int[0], &tmp_int[1], &len) != 3)
+		{	//Old string-based memo format.
+			if (sscanf(str+next, "%[^,],%d,%d%n", tmp_str[0], &tmp_int[0], &tmp_int[1], &len) != 3)
+				return -3;
+			tmp_int[2] = mapindex_name2id(tmp_str[0]);
+		}
+		if (i < MAX_MEMOPOINTS)
+	  	{	//Avoid overflowing (but we must also read through all saved memos)
+			p->memo_point[i].x = tmp_int[0];
+			p->memo_point[i].y = tmp_int[1];
+			p->memo_point[i].map = tmp_int[2];
+		}
 		next += len;
 		if (str[next] == ' ')
 			next++;

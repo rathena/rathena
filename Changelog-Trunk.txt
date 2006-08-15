@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/15
+	* Updated the char save structure for char-TXT servers so that the homun id
+	  will be saved, now also the map info (last point, save point, memo maps)
+	  are now saved using the mapindex rather than the string. BACKUP BEFORE
+	  UPDATING since this code isn't yet tested. [Skotlex]
+	* Cleaned up a bit the char-saving code, added overflow crash prevention in
+	  case there are more memos than the max-allowed saved. [Skotlex]
+	* AM_CALLHOMUN can now be used to recall vaporized homuns. [Skotlex]
+	* AM_RESURRECTHOMUN will now fail when the homun is vaporized. [Skotlex]
 	* Added SCB_DYE which marks which status-changes need a forced cloth dye
 	  change to 0 due to sprite issues. Currently only NJ_BUNSINJYUTSU's status
 	  uses it. [Skotlex]

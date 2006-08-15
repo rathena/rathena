@@ -832,8 +832,7 @@ int merc_call_homunculus(struct map_session_data *sd, short x, short y)
 	if (!sd->status.hom_id) //Create a new homun.
 		return merc_create_homunculus(sd, 6000 + rand(1, 8)) ;
 
-	//Recall homunculus to you.
-	if (sd->homunculus.vaporize)
+	if (!sd->homunculus.vaporize)
 		return 0; //Can't use this when homun was vaporized.
 
 	// If homunc not yet loaded, load it
@@ -841,6 +840,7 @@ int merc_call_homunculus(struct map_session_data *sd, short x, short y)
 		merc_hom_create(sd);
 
 	hd = sd->hd;
+	sd->homunculus.vaporize = 0;
 	if (hd->bl.prev == NULL)
 	{	//Spawn him
 		hd->bl.x = x;
@@ -937,7 +937,7 @@ int merc_revive_homunculus(struct map_session_data *sd, unsigned char per, short
 {
 	struct homun_data *hd;
 	nullpo_retr(0, sd);
-	if (!sd->status.hom_id)
+	if (!sd->status.hom_id || sd->homunculus.vaporize)
 		return 0;
 
 	if (!sd->hd) //Load homun data;

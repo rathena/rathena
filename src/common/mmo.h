@@ -214,8 +214,7 @@ struct mmo_charstatus {
 	short manner;
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
-	int party_id,guild_id,pet_id;
-	int hom_id;	//[orn]
+	int party_id,guild_id,pet_id,hom_id;
 	int fame;
 
 	short weapon,shield;

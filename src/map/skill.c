@@ -8292,8 +8292,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		zeny = 0; //Zeny is reduced on skill_attack.
 		break;
-	case AM_CALLHOMUN: //Can't summon if a hom is already out (vaporized also counts).
-		if (sd->status.hom_id || sd->homunculus.vaporize) {
+	case AM_CALLHOMUN: //Can't summon if a hom is already out
+		if (sd->status.hom_id && !sd->homunculus.vaporize) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
