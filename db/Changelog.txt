@@ -20,6 +20,7 @@
 
 =========================
 08/16
+	* Added WE_CALLBABY to Gunslinger and Ninja [Playtester]
 	* Fixed various bullets, spheres and kunais [Playtester]
 	* NJ_NEN now requires a Fang [Playtester]
 08/15
