@@ -175,7 +175,7 @@ int mapif_pet_created(int fd,int account_id,struct s_pet *p)
 
 int mapif_pet_info(int fd,int account_id,struct s_pet *p)
 {
-        WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
+	WFIFOHEAD(fd, sizeof(struct s_pet) + 9);
 	WFIFOW(fd,0)=0x3881;
 	WFIFOW(fd,2)=sizeof(struct s_pet) + 9;
 	WFIFOL(fd,4)=account_id;

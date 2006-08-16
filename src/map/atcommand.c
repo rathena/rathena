@@ -3875,7 +3875,7 @@ int atcommand_produce(
 		return -1;
 	}
 	item_id = item_data->nameid;
-	if (itemdb_isequip2(item_data) && item_data->type == IT_WEAPON) {
+	if (itemdb_isequip2(item_data)) {
 		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
 			attribute = ATTRIBUTE_NORMAL;
 		if (star < MIN_STAR || star > MAX_STAR)
@@ -3885,7 +3885,8 @@ int atcommand_produce(
 		tmp_item.amount = 1;
 		tmp_item.identify = 1;
 		tmp_item.card[0] = CARD0_FORGE;
-		tmp_item.card[1] = ((star * 5) << 8) + attribute;
+		tmp_item.card[1] = item_data->type==IT_WEAPON?
+			((star*5) << 8) + attribute:0;
 		tmp_item.card[2] = GetWord(sd->char_id, 0);
 		tmp_item.card[3] = GetWord(sd->char_id, 1);
 		clif_produceeffect(sd, 0, item_id);

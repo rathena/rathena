@@ -410,11 +410,11 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
 	pd->bl.id = npc_get_new_npc_id();
-	pd->db = mob_db(pd->pet.class_);
+	pd->db = mob_db(pet->class_);
 	pd->bl.subtype = MONS;
 	pd->bl.type = BL_PET;
 	pd->msd = sd;
-	status_set_viewdata(&pd->bl, pd->pet.class_);
+	status_set_viewdata(&pd->bl, pet->class_);
 	unit_dataset(&pd->bl);
 	pd->ud.dir = sd->ud.dir;
 	pd->last_thinktime = gettick();
