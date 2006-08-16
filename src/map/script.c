@@ -1479,8 +1479,8 @@ static void add_buildin_func(void)
 static void read_constdb(void)
 {
 	FILE *fp;
-	char line[1024],name[1024];
-	int val,n,i,type;
+	char line[1024],name[1024],val[1024];
+	int n,i,type;
 
 	sprintf(line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
@@ -1492,8 +1492,9 @@ static void read_constdb(void)
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		type=0;
-		if(sscanf(line,"%[A-Za-z0-9_],%d,%d",name,&val,&type)>=2 ||
-		   sscanf(line,"%[A-Za-z0-9_] %d %d",name,&val,&type)>=2){
+		if(sscanf(line,"%[A-Za-z0-9_],%[0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
+		   sscanf(line,"%[A-Za-z0-9_] %[0-9xXA-Fa-f] %d",name,val,&type)>=2){
+
 			for(i=0;name[i];i++)
 				name[i]=tolower(name[i]);
 			n=add_str((const unsigned char *) name);
@@ -1501,7 +1502,7 @@ static void read_constdb(void)
 				str_data[n].type=C_INT;
 			else
 				str_data[n].type=C_PARAM;
-			str_data[n].val=val;
+			str_data[n].val= (int)strtol(val,NULL,0);
 		}
 	}
 	fclose(fp);
