@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/16
+	* NJ_NEN now requires a Fang [Playtester]
 08/15
 	* Fixed disarm not working [Playtester]
 	- also fixed duration of Gatling Fever
