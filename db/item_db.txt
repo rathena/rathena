@@ -2668,12 +2668,12 @@
 // Bullets
 13200,Bullet,Bullet,10,1,,2,10,,,,0x01000000,7,2,32768,,1,,3,{},{},{}
 13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,0x01000000,7,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
-13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,0x01000000,7,2,32768,,1,,3,{ bonus2 bAddEff,Eff_Bleeding,50; },{},{}
+13202,Shell_of_Blood,Shell of Blood,10,30,,2,30,,,,0x01000000,7,2,32768,,1,,3,{ bonus2 bAddEff,Eff_Bleeding,500; },{},{}
 13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
 13204,Lightning_Sphere,Lightning Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
-13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,50; },{},{}
-13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,50; },{},{}
-13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,50; },{},{}
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
+13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; },{},{}
+13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,0x01000000,7,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,500; },{},{}
 // Shurikens & Kunais
 13250,Shuriken,Shuriken,10,4,,5,10,,,,0x02000000,7,2,32768,,1,,6,{},{},{}
 13251,Raincloud_Shuriken,Raincloud Shuriken,10,10,,5,30,,,,0x02000000,7,2,32768,,20,,6,{},{},{}
@@ -2684,7 +2684,7 @@
 13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; },{},{}
 13257,Kunai_of_Violent_Winds,Kunai of Violent Winds,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Wind; },{},{}
 13258,Kunai_of_Fierce_Heat,Kunai of Fierce Heat,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Fire; },{},{}
-13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus2 bAddEff,Eff_Poison,50; },{},{}
+13259,Kunai_of_Deadly_Poison,Kunai of Deadly Poison,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
 // Ninja Fuuma Shurikens
 13300,Kazema_Beneki,Fuuma Shuriken Beneki,4,90000,,3000,150,,1,0,0x02000000,7,2,34,4,65,1,22,{ bonus bAtkEle,Ele_Wind; bonus bAgi,-1; bonus bDex,-2; },{},{}
 13301,Kazema_Daisharin,Fuuma Shuriken Daisharin,4,40000,,2500,50,,1,3,0x02000000,7,2,34,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,500; },{},{}

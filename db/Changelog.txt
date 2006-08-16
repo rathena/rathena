@@ -20,6 +20,7 @@
 
 =========================
 08/16
+	* Fixed various bullets, spheres and kunais [Playtester]
 	* NJ_NEN now requires a Fang [Playtester]
 08/15
 	* Fixed disarm not working [Playtester]
