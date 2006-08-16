@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/16
+	* Updated mob_ai so that mobs will use their rude-attacked skill when they
+	  can't reach their current target. [Skotlex]
+	* Fixed the default txt config making pets be saved to the homun file
+	  instead of to the pet file. [Skotlex]
 	* Now arrow-consuming skills where your main weapon is a whip or musical
 	  instrument WILL count as arrow-type attacks, using the atk of the arrow and
 	  all related bonuses. [Skotlex]
