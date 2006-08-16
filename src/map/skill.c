@@ -761,18 +761,9 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 		range *=-1;
 	}
 
+	//Use attack range.
 	if(!range && !(skill_get_inf(id)&INF_SELF_SKILL))
-	{	//Use weapon's basic range.
-		if (bl->type==BL_PC) {
-			struct map_session_data *sd = (TBL_PC*)bl;
-			range = sd->equip_index[EQI_HAND_R];
-			if (range >= 0 && sd->inventory_data[range])
-				range = sd->inventory_data[range]->range;
-			else
-				range = 1; //Assume fist range.
-		} else
-		  	range = status_get_range(bl);
-	}
+		return status_get_range(bl);
 
 	//TODO: Find a way better than hardcoding the list of skills affected by AC_VULTURE
 	switch (id) {
@@ -8307,7 +8298,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		if (sd->status.hom_id) //Don't delete items when hom is already out.
-			delitem_flag = 0;
+			checkitem_flag = delitem_flag = 0;
 		break;
 	}
 
