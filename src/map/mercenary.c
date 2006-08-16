@@ -778,14 +778,6 @@ int merc_hom_create(struct map_session_data *sd)
 	hd->bl.prev=NULL;
 	hd->bl.next=NULL;
 	hd->exp_next=hexptbl[hd->master->homunculus.level - 1];
-	hd->ud.attacktimer=-1;
-	hd->ud.attackabletime=gettick();
-	hd->target_id = 0 ;
-
-	for(i=0;i<MAX_STATUSCHANGE;i++) {
-		hd->sc.data[i].timer=-1;
-		hd->sc.data[i].val1 = hd->sc.data[i].val2 = hd->sc.data[i].val3 = hd->sc.data[i].val4 = 0;
-	}
 
 	hd->base_status.hp = hd->master->homunculus.hp ;
 	hd->base_status.max_hp = hd->master->homunculus.max_hp ;
@@ -802,13 +794,14 @@ int merc_hom_create(struct map_session_data *sd)
 
 	status_set_viewdata(&hd->bl, hd->master->homunculus.class_);
 	status_change_init(&hd->bl);
-	hd->ud.dir = sd->ud.dir;
 	unit_dataset(&hd->bl);
+	hd->ud.dir = sd->ud.dir;
 	
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
 
 	// Timers
+	hd->hungry_timer = hd->natural_heal_timer = -1;
 	merc_hom_init_timers(hd);
 	return 0;
 }

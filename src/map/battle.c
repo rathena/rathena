@@ -1213,6 +1213,8 @@ static struct Damage battle_calc_weapon_attack(
 				case W_SHOTGUN:
 				case W_GATLING:
 				case W_GRENADE:
+				case W_WHIP:	//These two do use arrow based skills.
+				case W_MUSICAL:
 				  break;
 				default:
 				  i |= 16; // for ex. shuriken must not be influenced by DEX

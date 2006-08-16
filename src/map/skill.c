@@ -7448,7 +7448,7 @@ int skill_unit_effect (struct block_list *bl, va_list ap)
 {
 	struct skill_unit *unit;
 	struct skill_unit_group *group;
-	int flag,unit_id,skill_id;
+	int flag,unit_id=0,skill_id;
 	unsigned int tick;
 
 	unit=va_arg(ap,struct skill_unit*);

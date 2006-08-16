@@ -402,7 +402,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	}
 	sd->pd = pd = (struct pet_data *)aCalloc(1,sizeof(struct pet_data));
 	pd->petDB = &pet_db[i];
-	memcpy(&pd->pet, pet, sizeof(pet));
+	memcpy(&pd->pet, pet, sizeof(struct s_pet));
 	pd->bl.m = sd->bl.m;
 	pd->bl.x = sd->bl.x;
 	pd->bl.y = sd->bl.y;
@@ -737,7 +737,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	pc_delitem(sd,index,1,0);
 	pd->pet.equip = nameid;
-	status_set_viewdata(&pd->bl, pd->vd.class_); //Updates view_data.
+	status_set_viewdata(&pd->bl, pd->pet.class_); //Updates view_data.
 	clif_pet_equip(pd);
 	if (battle_config.pet_equip_required)
 	{ 	//Skotlex: start support timers if need
@@ -766,7 +766,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 
 	nameid = pd->pet.equip;
 	pd->pet.equip = 0;
-	status_set_viewdata(&pd->bl, pd->vd.class_);
+	status_set_viewdata(&pd->bl, pd->pet.class_);
 	clif_pet_equip(pd);
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
