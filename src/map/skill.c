@@ -1877,8 +1877,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;
 			if (sc && !sc->count)
 				sc = NULL; //Don't need it.
-			if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
-			{	//Spirit of Wizard blocks bounced back spells.
+			//Spirit of Wizard blocks bounced back spells.
+			if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD
+				&& !(tsd && (type = pc_search_inventory (tsd, 7321)) < 0))
+			{
+				if (tsd) pc_delitem(tsd, type, 1, 0);
 				dmg.damage = dmg.damage2 = 0;
 				dmg.dmg_lv = ATK_FLEE;
 			}

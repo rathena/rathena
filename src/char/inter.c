@@ -396,7 +396,7 @@ int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
 	if (fd < 0)
 		return -1;
 	
-        WFIFOHEAD(fd, 7);
+	WFIFOHEAD(fd, 7);
 	WFIFOW(fd,0) = 0x2b1f;
 	WFIFOL(fd,2) = account_id;
 	WFIFOB(fd,6) = reason;

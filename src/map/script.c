@@ -3267,6 +3267,7 @@ int buildin_heal(struct script_state *st);
 int buildin_itemheal(struct script_state *st);
 int buildin_percentheal(struct script_state *st);
 int buildin_jobchange(struct script_state *st);
+int buildin_jobname(struct script_state *st);
 int buildin_input(struct script_state *st);
 int buildin_setlook(struct script_state *st);
 int buildin_set(struct script_state *st);
@@ -3583,6 +3584,7 @@ struct script_function buildin_func[] = {
 	{buildin_return,"return","*"},
 	{buildin_getarg,"getarg","i"},
 	{buildin_jobchange,"jobchange","i*"},
+	{buildin_jobname,"jobname","i"},
 	{buildin_input,"input","*"},
 	{buildin_warp,"warp","sii"},
 	{buildin_areawarp,"areawarp","siiiisii"},
@@ -4563,6 +4565,17 @@ int buildin_jobchange(struct script_state *st)
 			irc_announce_jobchange(script_rid2sd(st));
 	}
 
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------
+ */
+int buildin_jobname(struct script_state *st)
+{
+	int class_=conv_num(st,& (st->stack->stack_data[st->start+2]));
+	push_str(st->stack,C_CONSTSTR,job_name(class_));
 	return 0;
 }
 

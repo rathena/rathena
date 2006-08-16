@@ -1257,6 +1257,16 @@ changing jobs, which can be checked for later in scripts.
 
 ---------------------------------------
 
+*jobname <job number>
+
+This command retrieves the name of the given job using the msg_athena entries 550->650.
+
+		mes "[Kid]";
+		mes "I never thought I'd met a "+jobname(Class)+" here of all places.";
+		close;
+
+---------------------------------------
+
 *input <variable>;
 
 This command will make an input box pop up on the client connected to the 
