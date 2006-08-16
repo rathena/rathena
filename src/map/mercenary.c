@@ -353,7 +353,7 @@ int merc_hom_evolution(struct homun_data *hd)
 	y = hd->bl.y;
 	merc_hom_vaporize(sd, 0);
 	unit_free(&hd->bl);
-	merc_call_homunculus(hd->master, x, y);
+	merc_call_homunculus(sd, x, y);
 	clif_emotion(&sd->bl, 21) ;	//no1
 	clif_misceffect2(&hd->bl,568);
 	return 1 ;
