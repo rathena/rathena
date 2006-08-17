@@ -7,6 +7,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Updated SQL files [Playtester]
 	* Corrected map_random_dir algorithm [Toms]
 	* Fixed homunc natural heal and little code cleanup [Toms]
+	* Changed AM_CALLHOMUN Skill to spawn the homunc at 1 cell from his master [Toms]
 2006/08/16
 	* Fixed being unable to recast Adrenaline Rush to reset the duration
 	  timers. [Skotlex]
