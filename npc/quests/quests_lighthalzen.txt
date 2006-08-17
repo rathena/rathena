@@ -44,6 +44,7 @@
 //=	mind was somewhere else when writing @_@ [Evera]
 //= 2.4	Fixed the bug where a str&int debug was shown in the console for
 //=	test tube in bio labs quest. [Evera]
+//= 2.5	Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -2771,8 +2772,6 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "I already taught you";
 		mes "skills of the homunculus...";
 		if (getskilllv(238) == 0) skill 238,1,0;
-		if (getskilllv(243) == 0) skill 243,1,0;
-		if (getskilllv(244) == 0) skill 244,1,0;
 		close;
 	}
 	switch(bioeth){
@@ -2869,10 +2868,8 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		next;
 		mes "[Kellasus]";
 		mes "I guess I could teach you a few skills..";
-		//Gives player bio ethics, call homun, rest, and sets bitshift for quest finished
+		//Gives player bio ethics and sets bitshift for quest finished
 		skill 238,1,0;
-		skill 243,1,0;
-		skill 244,1,0;
 		set MISC_QUEST,MISC_QUEST|64;
 		set bioeth,0;
 		close;

@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/15
+	* Fixed Kellasus giving extra skills in Bio Ethics Quest [Evera]
 	* Added Ammo Dealer Tony [Playtester]
 	* Fixed some parts of the Gunslinger gun quests [Playtester]
 	* Added Ammo Casing Seller Kenny [Playtester]
