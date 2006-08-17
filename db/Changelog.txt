@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/17
+	* Gospel can't stack anymore [Playtester]
 08/16
 	* Added WE_CALLBABY to Gunslinger and Ninja [Playtester]
 	* Fixed various bullets, spheres and kunais [Playtester]
