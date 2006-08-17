@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
