@@ -465,6 +465,34 @@ struct view_data {
 	unsigned dead_sit : 2;
 };
 
+struct regen_data {
+
+	int flag; //Marks what stuff you may heal or not.
+	unsigned int
+		hp_tick, //tick accumulation before healing.
+		sp_tick,
+		shp_tick,
+		ssp_tick;
+	
+	unsigned short
+		hp, //natural heal
+		sp,
+		s_hp, //natural heal from skills
+		s_sp;
+
+	unsigned char //Skill related regen rates.
+		hpfactor,
+		spfactor,
+		shpfactor,
+		sspfactor;
+	
+	struct {
+		unsigned walk_regen :1; //Can you regen even when walking?
+		unsigned overweight :1; //Block regen due to overweight.
+		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
+	} state;
+};
+
 struct party_member_data {
 	struct map_session_data *sd;
 	unsigned int hp; //For HP,x,y refreshing.

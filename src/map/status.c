@@ -3509,12 +3509,12 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			max = sc->data[SC_ONEHAND].val2;
 
 		if(sc->data[SC_ADRENALINE2].timer!=-1 &&
-			max < sc->data[SC_ADRENALINE2].val2)
-			max = sc->data[SC_ADRENALINE2].val2;
+			max < sc->data[SC_ADRENALINE2].val3)
+			max = sc->data[SC_ADRENALINE2].val3;
 		
 		if(sc->data[SC_ADRENALINE].timer!=-1 &&
-			max < sc->data[SC_ADRENALINE].val2)
-			max = sc->data[SC_ADRENALINE].val2;
+			max < sc->data[SC_ADRENALINE].val3)
+			max = sc->data[SC_ADRENALINE].val3;
 		
 		if(sc->data[SC_SPEARQUICKEN].timer!=-1 &&
 			max < sc->data[SC_SPEARQUICKEN].val2)
@@ -5304,9 +5304,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ADRENALINE2:
 		case SC_ADRENALINE:
 			if (val2 || !battle_config.party_skill_penalty)
-				val2 = 300;
+				val3 = 300;
 			else
-				val2 = 200;
+				val3 = 200;
 			break;
 		case SC_CONCENTRATION:
 			val2 = 5*val1; //Batk/Watk Increase
