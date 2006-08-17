@@ -266,7 +266,7 @@
 //240,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//AM_CREATECREATURE#Life Creation#
 //241,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//AM_CULTIVATION#Cultivation#
 //242,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//AM_FLAMECONTROL#Flame Control#
-243,0,0,4,0,1,0,1,0,no,0,0,0,none,0	//AM_CALLHOMUN#Call Homunculus#
+243,0,0,4,0,1,1,1,0,no,0,0,0,none,0	//AM_CALLHOMUN#Call Homunculus#
 244,0,0,4,0,1,0,1,0,no,0,0,0,none,0	//AM_REST#Peaceful Rest#
 //245,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//AM_DRILLMASTER#Drillmaster#
 //246,9,0,0,0,0,0,10,0,no,0,0,0,none,0	//AM_HEALHOMUN#Heal Homunculus#

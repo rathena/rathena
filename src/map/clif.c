@@ -1511,7 +1511,7 @@ void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[or
 
 int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 	int fd;
-	int i,j,c,len=4,id/*, inf2*/;
+	int i,j,len=4,id/*, inf2*/;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, sd->hd);
@@ -1521,7 +1521,7 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 
 	fd=sd->fd;
 	WFIFOW(fd,0)=0x235;
-	for ( i = c = 0; i < MAX_HOMUNSKILL; i++){
+	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		if( (id = sd->homunculus.hskill[i].id) != 0 ){
 			j = id - HM_SKILLBASE - 1 ;
 			WFIFOW(fd,len  ) = id ;
@@ -1533,7 +1533,6 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
 			WFIFOB(fd,len+36) = (sd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, sd->homunculus.class_))?1:0;
 			len+=37;
-			c++;
 		}
 	}
 	WFIFOW(fd,2)=len;
@@ -1558,7 +1557,7 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 		range = status_get_range(&sd->bl) - (range + 1);
 	WFIFOW(fd,8) = range;
 	WFIFOB(fd,10) = (sd->homunculus.hskill[skillid].lv < skill_get_max(sd->homunculus.hskill[skillid].id)) ? 1 : 0;
-	WFIFOSET(fd,packet_len_table[0x10e]);
+	WFIFOSET(fd,packet_len_table[0x239]);
 
 	return;
 }

@@ -2170,7 +2170,7 @@ int map_random_dir(struct block_list *bl, short *x, short *y) {
 	
 	do {
 		j = rand()%8; //Pick a random direction
-		segment = rand()%dist; //Pick a random interval from the whole vector in that direction
+		segment = 1+(rand()%dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
 		segment = (short)sqrt(dist2 - segment*segment); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];

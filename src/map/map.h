@@ -975,9 +975,6 @@ struct homun_data {
 	int target_id,attacked_id;
 
 	int natural_heal_timer;	//[orn]
-	int hp_sub,sp_sub;
-	int inchealhptick,inchealsptick;
-	int nhealhp,nhealsp,nshealhp,nshealsp,nsshealhp,nsshealsp;
 	
 	unsigned short regenhp,regensp;
 	unsigned long exp_next;

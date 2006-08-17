@@ -419,80 +419,8 @@ void merc_hom_heal(struct homun_data *hd,int hp,int sp)
 	clif_hominfo(hd->master,hd,0);
 }
 
-static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static void merc_natural_heal_hp(struct homun_data *hd)
-{
-
-	nullpo_retv(hd);
-
-//	ShowDebug("merc_natural_heal_hp (1) : homunculus = %s | hd->ud.walktimer = %d |\n", hd->name, hd->ud.walktimer) ;
-	if(hd->ud.walktimer == -1) {
-		hd->inchealhptick += natural_heal_diff_tick;
-	}
-	else {
-		hd->inchealhptick = 0;
-		return;
-	}
-
-//	ShowDebug("merc_natural_heal_hp (2) : homunculus = %s | hd->regenhp = %d |\n", hd->name, hd->regenhp) ;
-	if (hd->battle_status.hp != hd->battle_status.max_hp) {
-		if ((unsigned int)status_heal(&hd->bl, hd->regenhp, 0, 1) < hd->regenhp)
-		{	//At full.
-			hd->inchealhptick = 0;
-			return;
-		}
-	}
-
-	return;
-}
-
-static void merc_natural_heal_sp(struct homun_data *hd)
-{
-
-	nullpo_retv(hd);
-
-//	ShowDebug("merc_natural_heal_sp (1) : homunculus = %s | hd->regensp = %d |\n", hd->name, hd->regensp) ;
-	if (hd->battle_status.sp != hd->battle_status.max_sp) {
-		if ((unsigned int)status_heal(&hd->bl, 0, hd->regensp, 1) < hd->regensp)
-		{	//At full.
-			hd->inchealsptick = 0;
-			return;
-		}
-	}
-
-	return;
-}
-
 /*==========================================
- * HP/SP natural heal
- *------------------------------------------
- */
-
-//static int merc_natural_heal_sub(struct homun_data *hd,va_list ap) {
-static int merc_natural_heal_sub(struct homun_data *hd,int tick) {
-//	int tick;
-
-	nullpo_retr(0, hd);
-//	tick = va_arg(ap,int);
-
-// -- moonsoul (if conditions below altered to disallow natural healing if under berserk status)
-	if (  status_isdead(&hd->bl) ||
-		( ( hd->sc.count ) &&
-			( (hd->sc.data[SC_POISON].timer != -1 ) || ( hd->sc.data[SC_BLEEDING].timer != -1 ) )
-		)
-	) { //Cannot heal neither natural or special.
-		hd->hp_sub = hd->inchealhptick = 0;
-		hd->sp_sub = hd->inchealsptick = 0;
-	} else {	//natural heal
-		merc_natural_heal_hp(hd);
-		merc_natural_heal_sp(hd);
-	}
-
-	return 0;
-}
-
-/*==========================================
- * orn
+ * Homunculus natural heal hp/sp
  *------------------------------------------
  */
 int merc_natural_heal(int tid,unsigned int tick,int id,int data)
@@ -515,14 +443,13 @@ int merc_natural_heal(int tid,unsigned int tick,int id,int data)
 
 	hd->natural_heal_timer = -1;
 
-	if(sd->homunculus.vaporize || sd->homunculus.hp == 0)
+	// Can't heal if homunc is vaporized, dead or under poison/bleeding effect 
+	if (sd->homunculus.vaporize || status_isdead(&hd->bl) || ( hd->sc.count && ( hd->sc.data[SC_POISON].timer != -1  || hd->sc.data[SC_BLEEDING].timer != -1 ) ) ) 
 		return 1;
+
+	status_heal(&hd->bl, hd->regenhp, hd->regensp, 1);
 	
-	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	merc_natural_heal_sub(hd, tick);
-	
-	natural_heal_prev_tick = tick;
-	sd->hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
+	sd->hd->natural_heal_timer = add_timer(tick+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
 
 	return 0;
 }
@@ -1113,7 +1040,6 @@ int do_init_merc (void)
 	memset(homunculus_db,0,sizeof(homunculus_db));	//[orn]
 	read_homunculusdb();	//[orn]
 	// Add homunc timer function to timer func list [Toms]
-	natural_heal_prev_tick = gettick();
 	add_timer_func_list(merc_natural_heal, "merc_natural_heal");
 	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
 	return 0;

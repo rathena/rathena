@@ -2532,10 +2532,11 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 //Calculates some attributes that depends on modified stats from status changes.
 void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 {
+	TBL_PC * sd;
 	struct status_data *status = &hd->battle_status, *b_status = &hd->base_status;
 	int skill = 0;
 
-	if (!hd->master)
+	if (!(sd = hd->master))
 		return; //Don't do anything if there isn't a master...
 
 	if(flag&(SCB_MAXHP|SCB_VIT))
@@ -2554,8 +2555,8 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		if(hd->regenhp < 1) hd->regenhp = 1;
 
 		// Skill-related Adamantium Skin
-		if((skill=merc_hom_checkskill(hd->master,HAMI_SKIN)) > 0) {
-			status->max_hp = hd->master->homunculus.max_hp + skill * 2 * hd->master->homunculus.max_hp / 100 ;
+		if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0) {
+			status->max_hp = sd->homunculus.max_hp + skill * 2 * sd->homunculus.max_hp / 100 ;
 			hd->regenhp += skill * 5 * hd->regenhp / 100 ;
 		}
 
@@ -2564,10 +2565,10 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	}
 	if(flag&SCB_DEF)
 	{
-		status->def =	hd->master->homunculus.level / 10 + status->vit / 5 ;
+		status->def = sd->homunculus.level / 10 + status->vit / 5 ;
 		if(hd->sc.data[SC_DEFENCE].timer != -1)
 			status->def += hd->sc.data[SC_DEFENCE].val2;
-		if((skill=merc_hom_checkskill(hd->master,HAMI_SKIN)) > 0) {
+		if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0) {
 			status->def +=	skill * 4 ;
 		}
 	}
@@ -2576,7 +2577,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		flag|=SCB_MAXSP;
 		
 		// Skill-related Instruction Change
-		if((skill = merc_hom_checkskill(hd->master,HVAN_INSTRUCT)) > 0) {
+		if((skill = merc_hom_checkskill(sd,HVAN_INSTRUCT)) > 0) {
 			if ( skill == 5 ) {
 				status->int_ += 3 ;
 			} else if ( skill == 1 ) {
@@ -2593,8 +2594,8 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 			}
 		}
 
-		if((skill = merc_hom_checkskill(hd->master,HLIF_BRAIN)) > 0) {
-			status->max_sp = hd->master->homunculus.max_sp + skill * 2 * hd->master->homunculus.max_sp / 100 ;
+		if((skill = merc_hom_checkskill(sd,HLIF_BRAIN)) > 0) {
+			status->max_sp = sd->homunculus.max_sp + skill * 2 * sd->homunculus.max_sp / 100 ;
 			hd->regensp += skill * 3 * hd->regensp / 100 ;
 			if ( skill == 5 ) {
 				status->max_sp *= 103 / 100 ;
@@ -2605,7 +2606,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 			}
 		}
 
-		status->mdef =	hd->master->homunculus.level / 10 + status->int_ / 5 ;
+		status->mdef =	sd->homunculus.level / 10 + status->int_ / 5 ;
 		status->max_sp = status_calc_maxsp(&hd->bl, &hd->sc, status->max_sp);
 		
 		if(status->max_sp > (unsigned int)battle_config.max_sp)
@@ -2629,8 +2630,8 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	if(flag&(SCB_BATK|SCB_WATK)) {
 		status->rhw.atk = status->rhw.atk2 = status->str + ( status->str / 10 ) * ( status->str / 10 ) ;
 		status->rhw.atk += status->dex ;
-		if ( (status->str + hd->master->homunculus.level) > status->dex ) 
-			status->rhw.atk2 += status->str + hd->master->homunculus.level ;
+		if ( (status->str + sd->homunculus.level) > status->dex ) 
+			status->rhw.atk2 += status->str + sd->homunculus.level ;
 		else
 			status->rhw.atk2 += status->dex ;
 
@@ -2684,7 +2685,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		SCB_BATK|SCB_WATK|SCB_MATK|SCB_ASPD|SCB_SPEED|
 		SCB_RANGE|SCB_MAXHP|SCB_MAXSP)
 	)
-		clif_hominfo(hd->master,hd,0);
+		clif_hominfo(sd,hd,0);
 }
 
 void status_calc_bl(struct block_list *bl, unsigned long flag)
