@@ -418,7 +418,7 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 				guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
 			}
-			unit_free(&md->bl); //Remove guardian.
+			unit_free(&md->bl,0); //Remove guardian.
 		}
 		return 0;
 	}
@@ -594,7 +594,7 @@ int mob_setdelayspawn(struct mob_data *md)
 
 
 	if (!md->spawn) //Doesn't has respawn data!
-		return unit_free(&md->bl);
+		return unit_free(&md->bl,1);
 
 	spawntime1 = md->last_spawntime + md->spawn->delay1;
 	spawntime2 = md->last_deadtime + md->spawn->delay2;
@@ -1494,8 +1494,7 @@ int mob_timer_delete(int tid, unsigned int tick, int id, int data)
 		return 0; //??
 //for Alchemist CANNIBALIZE [Lupus]
 	((TBL_MOB*)bl)->deletetimer = -1;
-	unit_remove_map(bl, 3);
-	unit_free(bl);
+	unit_free(bl,3);
 	return 0;
 }
 
@@ -2205,7 +2204,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 				guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
 			}
-			unit_free(&md->bl); //Remove guardian.
+			unit_free(&md->bl,0); //Remove guardian.
 		}
 		return 0;
 	}
@@ -2217,7 +2216,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 		md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 		guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
-		unit_free(&md->bl);
+		unit_free(&md->bl,0);
 		return 0;
 	}
 

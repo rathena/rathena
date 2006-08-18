@@ -11795,7 +11795,7 @@ int buildin_mobremove(struct script_state *st) {
 
 	bl = map_id2bl(id);
 	if (bl && bl->type == BL_MOB)
-		unit_free(bl);
+		unit_free(bl,0);
 
 	return 0;
 }

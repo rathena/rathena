@@ -170,7 +170,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	sd = hd->master;
 
 	if (!sd)
-		return unit_free(&hd->bl);
+		return unit_free(&hd->bl,1);
 
 	if (emote >= 0)
 		clif_emotion(&sd->bl, emote);
@@ -180,7 +180,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	sd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_free(&hd->bl);
+	return unit_free(&hd->bl,1);
 }
 
 int merc_hom_calc_skilltree(struct map_session_data *sd)
@@ -342,7 +342,7 @@ int merc_hom_evolution(struct homun_data *hd)
 	x = hd->bl.x;
 	y = hd->bl.y;
 	merc_hom_vaporize(sd, 0);
-	unit_free(&hd->bl);
+	unit_free(&hd->bl,0);
 	merc_call_homunculus(sd, x, y);
 	clif_emotion(&sd->bl, 21) ;	//no1
 	clif_misceffect2(&hd->bl,568);

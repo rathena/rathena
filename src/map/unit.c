@@ -1579,7 +1579,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		if(pd->pet.intimate <= 0) {
 			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
-			unit_free(bl);
+			unit_free(bl,0);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -1591,7 +1591,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
-			unit_free(bl);
+			unit_free(bl,0);
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -1604,17 +1604,17 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 
 /*==========================================
  * Function to free all related resources to the bl
- * if unit is on map, it is removed using clrtype 0.
+ * if unit is on map, it is removed using the clrtype specified
  *------------------------------------------
  */
 
-int unit_free(struct block_list *bl) {
+int unit_free(struct block_list *bl, int clrtype) {
 	struct unit_data *ud = unit_bl2ud( bl );
 	nullpo_retr(0, ud);
 
 	map_freeblock_lock();
 	if( bl->prev )	//Players are supposed to logout with a "warp" effect.
-		unit_remove_map(bl, bl->type==BL_PC?3:0);
+		unit_remove_map(bl, clrtype);
 	
 	if( bl->type == BL_PC ) {
 		struct map_session_data *sd = (struct map_session_data*)bl;

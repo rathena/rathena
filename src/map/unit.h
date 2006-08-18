@@ -60,7 +60,7 @@ int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int
 // ‚»‚Ì‘¼
 struct unit_data* unit_bl2ud(struct block_list *bl);
 int unit_remove_map(struct block_list *bl, int clrtype);
-int unit_free(struct block_list *bl);
+int unit_free(struct block_list *bl, int clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
 
 // ‰Šú‰»ƒ‹[ƒ`ƒ“

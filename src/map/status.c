@@ -712,7 +712,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			memset(&regen->tick, 0, sizeof(regen->tick));
 	}
 	if(flag&4) //Delete from memory. (also invokes map removal code)
-		unit_free(target);
+		unit_free(target,1);
 	else
 	if(flag&2) //remove from map
 		unit_remove_map(target,1);
@@ -6843,13 +6843,13 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 			rate/=2;
 		regen->tick.hp += rate;
 		
-		if(regen->tick.hp >= battle_config.natural_healhp_interval)
+		if(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval)
 		{
 			val = 0;
 			do {
 				val += regen->hp;
 				regen->tick.hp -= battle_config.natural_healhp_interval;
-			} while(regen->tick.hp >= battle_config.natural_healhp_interval);
+			} while(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval);
 			if (status_heal(bl, val, 0, 1) < val)
 				flag&=~RGN_SHP; //full.
 		}
@@ -6858,7 +6858,7 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 	{
 		regen->tick.shp += natural_heal_diff_tick * regen->rate.shp;
 		
-		while(regen->tick.shp >= battle_config.natural_heal_skill_interval)
+		while(regen->tick.shp >= (unsigned int)battle_config.natural_heal_skill_interval)
 		{
 			regen->tick.shp -= battle_config.natural_heal_skill_interval;
 			if(status_heal(bl, regen->shp, 0, 3) < regen->shp)
@@ -6869,13 +6869,13 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 	{
 		regen->tick.sp += natural_heal_diff_tick*(regen->rate.sp+bonus);
 		
-		if(regen->tick.sp >= battle_config.natural_healsp_interval)
+		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval)
 		{
 			val = 0;
 			do {
 				val += regen->sp;
 				regen->tick.sp -= battle_config.natural_healsp_interval;
-			} while(regen->tick.sp >= battle_config.natural_healsp_interval);
+			} while(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval);
 			if (status_heal(bl, 0, val, 1) < val)
 				flag&=~RGN_SSP; //full.
 		}
@@ -6883,7 +6883,7 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 	if(flag&RGN_SSP)
 	{
 		regen->tick.ssp += natural_heal_diff_tick * regen->rate.ssp;
-		while(regen->tick.ssp >= battle_config.natural_heal_skill_interval)
+		while(regen->tick.ssp >= (unsigned int)battle_config.natural_heal_skill_interval)
 		{
 			regen->tick.ssp -= battle_config.natural_heal_skill_interval;
 			if(status_heal(bl, 0, regen->ssp, 3) < regen->ssp)

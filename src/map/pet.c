@@ -364,7 +364,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 		pd->state.skillbonus = 0;
 		status_calc_pc(sd,0);
 	}
-	unit_free(&pd->bl);
+	unit_free(&pd->bl,0);
 	sd->status.pet_id = 0;
 
 	return 1;

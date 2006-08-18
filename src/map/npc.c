@@ -2780,7 +2780,7 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 		npc_unload((struct npc_data *)bl);
 		break;
 	case BL_MOB:
-		unit_free(bl);
+		unit_free(bl,0);
 		break;
 	}
 
