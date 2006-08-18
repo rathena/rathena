@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/17
+	* Vaporize will no fail when the homun is dead. [Skotlex]
+	* Corrected thhe double free issue that occurs when a homun dies and has no
+	  intimacy left. [Skotlex]
+	* Fixed the charsave_method:1 saving/loading exp as signed ints rather than
+	  unsigned. [Skotlex]
 	* Applied use of structure regen_data for a unified regen module. Natural
 	  and skill-heal is handled by this structure, while sitting-skill-heal is
 	  still player dependant (mostly because the other object types can't sit)

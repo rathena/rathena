@@ -24,6 +24,7 @@ struct mmo_charstatus *charsave_loadchar(int charid){
 	int i,j, friends;
 	struct mmo_charstatus *c;
 	char *str_p;
+	double exp;
 	friends = 0;
 
 	c = (struct mmo_charstatus *)aCalloc(1,sizeof(struct mmo_charstatus));
@@ -62,8 +63,10 @@ struct mmo_charstatus *charsave_loadchar(int charid){
          c->class_ = atoi(charsql_row[4]);
          c->base_level = atoi(charsql_row[5]);
          c->job_level = atoi(charsql_row[6]);
-         c->base_exp = atoi(charsql_row[7]);
-         c->job_exp = atoi(charsql_row[8]);
+			exp = atof(charsql_row[7]);
+			c->base_exp = (unsigned int)cap_value(exp,0,UINT_MAX);
+			exp = atof(charsql_row[8]);
+			c->job_exp = (unsigned int)cap_value(exp,0,UINT_MAX);
          c->zeny = atoi(charsql_row[9]);
          c->str = atoi(charsql_row[10]);
          c->agi = atoi(charsql_row[11]);
@@ -276,7 +279,7 @@ int charsave_savechar(int charid, struct mmo_charstatus *c){
 //	char tmp_str2[512];
          //First save the 'char'
 	sprintf(tmp_sql ,"UPDATE `char` SET `class`='%d', `base_level`='%d', `job_level`='%d',"
-		"`base_exp`='%d', `job_exp`='%d', `zeny`='%d',"
+		"`base_exp`='%u', `job_exp`='%u', `zeny`='%d',"
 		"`max_hp`='%d',`hp`='%d',`max_sp`='%d',`sp`='%d',`status_point`='%d',`skill_point`='%d',"
 		"`str`='%d',`agi`='%d',`vit`='%d',`int`='%d',`dex`='%d',`luk`='%d',"
 		"`option`='%d',`karma`='%d',`manner`='%d',`party_id`='%d',`guild_id`='%d',`pet_id`='%d',"

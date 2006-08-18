@@ -114,26 +114,25 @@ void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 {
 	struct map_session_data *sd = hd->master;
+
+	clif_emotion(&hd->bl, 16) ;	//wah
 	if (!sd)
-	{
-		clif_emotion(&hd->bl, 16) ;	//wah
 		return 7;
-	}
 
 	//Delete timers when dead.
 	merc_hom_hungry_timer_delete(hd);
 	sd->homunculus.hp = 0 ;
 	clif_hominfo(sd,hd,0); // Send dead flag
 
-	if(!merc_hom_decrease_intimacy(hd, 100)) { // Intimacy was < 100
+	if(!merc_hom_decrease_intimacy(hd, 100)) // Intimacy was < 100
 		clif_emotion(&sd->bl, 23) ;	//omg
-		return 7; //Delete from memory.
+	else {
+		clif_emotion(&sd->bl, 28) ;	//sob
+		clif_send_homdata(hd->master,SP_INTIMATE,hd->master->homunculus.intimacy / 100);
 	}
 
-	clif_send_homdata(hd->master,SP_INTIMATE,hd->master->homunculus.intimacy / 100);
-	clif_emotion(&hd->bl, 16) ;	//wah
-	clif_emotion(&sd->bl, 28) ;	//sob
-	return 3; //Remove from map.
+	//Remove from map (if it has no intimacy, it is auto-removed from memory)
+	return 3;
 }
 
 //Vaporize a character's homun. If flag, HP needs to be 80% or above.
@@ -147,6 +146,9 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	if (!hd || sd->homunculus.vaporize)
 		return 0;
 	
+	if (status_isdead(&hd->bl))
+		return 0; //Can't vaporize a dead homun.
+
 	if (flag && hd->battle_status.hp < (hd->battle_status.max_hp*80/100))
 		return 0;
 
