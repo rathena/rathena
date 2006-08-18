@@ -9775,6 +9775,7 @@ int atcommand_homlevel(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
+	TBL_HOM * hd;
 	int level = 0, i = 0;
 
 	nullpo_retr(-1, sd);
@@ -9786,12 +9787,15 @@ int atcommand_homlevel(
 		return 1 ;
 
 	level = atoi(message);
+	hd = sd->hd;
 	
-	for (i = 1; i <= level && sd->hd->exp_next; i++){
-		sd->homunculus.exp += sd->hd->exp_next;
-		merc_hom_levelup(sd->hd);
+	for (i = 1; i <= level && hd->exp_next; i++){
+		sd->homunculus.exp += hd->exp_next;
+		merc_hom_levelup(hd);
 	}
-	clif_misceffect2(&sd->hd->bl,568);
+	status_calc_homunculus(hd,0);
+	status_percent_heal(&hd->bl, 100, 100);
+	clif_misceffect2(&hd->bl,568);
 	return 0;
 }
 
