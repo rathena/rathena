@@ -3337,7 +3337,7 @@ int parse_login(int fd) {
 
 		case 0x7530:	// Request of the server version
 			login_log("Sending of the server version (ip: %s)" RETCODE, ip);
-                        WFIFOHEAD(fd, 10);
+			WFIFOHEAD(fd, 10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
@@ -3365,7 +3365,7 @@ int parse_login(int fd) {
 			} else {
 				struct login_session_data *ld = (struct login_session_data*)session[fd]->session_data;
 				if (RFIFOW(fd,2) == 0) {	// non encrypted password
-					char* password="";
+					char password[25];
 					memcpy(password, RFIFOP(fd,4), 24);
 					password[24] = '\0';
 					remove_control_chars((unsigned char *)password);

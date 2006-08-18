@@ -8265,7 +8265,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case GD_REGENERATION:
 	case GD_RESTORE:
 		//Emergency Recall is handled on skill_notok
-		if (skill != GD_EMERGENCYCALL && !agit_flag) {
+		if (!agit_flag) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
