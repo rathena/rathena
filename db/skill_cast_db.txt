@@ -886,8 +886,8 @@
 525,1000,1000,0,0,0
 //-- NJ_ZENYNAGE
 526,0,5000,0,0,0
-//-- NJ_TATAMIGAESHI // Duration1 is land-effect & range-inmunity effect. Duration2 is skill_attack duration (minimal value)
-527,0,3000,0,3000,200
+//-- NJ_TATAMIGAESHI // Duration1 is land-effect, Duration2 is range-inmunity effect.
+527,0,3000,0,3000,3000
 //-- NJ_KASUMIKIRI // Delay unknown (if there is one)
 528,0,0,0,30000:60000:90000:120000:150000:180000:210000:240000:270000:300000,0
 //-- NJ_SHADOWJUMP // Delay unknown (if there is one)
