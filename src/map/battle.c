@@ -1230,8 +1230,8 @@ static struct Damage battle_calc_weapon_attack(
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
-					if (sd->status.weapon < MAX_WEAPON_TYPE && (sd->atk_rate != 100 || sd->weapon_atk_rate[sd->status.weapon] != 0))
-						ATK_RATE(sd->atk_rate + sd->weapon_atk_rate[sd->status.weapon]);
+					if ((sd->atk_rate != 100 || sd->weapon_atk_rate[sd->weapontype1] != 0))
+						ATK_RATE(sd->atk_rate + sd->weapon_atk_rate[sd->weapontype1]);
 
 					if(flag.cri && sd->crit_atk_rate)
 						ATK_ADDRATE(sd->crit_atk_rate);
