@@ -2321,6 +2321,10 @@ int skill_guildaura_sub (struct block_list *bl, va_list ap)
 	gid = va_arg(ap,int);
 	if (sd->status.guild_id != gid)
 		return 0;
+
+	if(id == sd->bl.id && battle_config.guild_aura&16)
+		return 0;
+
 	strvit = va_arg(ap,int);
 	agidex = va_arg(ap,int);
 

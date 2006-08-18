@@ -3441,6 +3441,7 @@ static const struct battle_data_short {
 	{ "gtb_sc_immunity",                   &battle_config.gtb_sc_immunity},
 	{ "guild_max_castles",                 &battle_config.guild_max_castles		},
 	{ "emergency_call",                    &battle_config.emergency_call },
+	{ "guild_aura",                        &battle_config.guild_aura	},
 	{ "death_penalty_type",                &battle_config.death_penalty_type		},
 	{ "death_penalty_base",                &battle_config.death_penalty_base		},
 	{ "death_penalty_job",                 &battle_config.death_penalty_job		},
@@ -3864,7 +3865,8 @@ void battle_set_defaults() {
 	battle_config.gm_join_chat=0;
 	battle_config.gm_kick_chat=0;
 	battle_config.guild_max_castles=0;
-	battle_config.emergency_call=2;
+	battle_config.emergency_call=15;
+	battle_config.guild_aura=31;
 	battle_config.skillfree = 0;
 	battle_config.skillup_limit = 0;
 	battle_config.wp_rate=100;

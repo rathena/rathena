@@ -1,5 +1,9 @@
 Date	Added
 
+2006/08/18
+	* Added guild_aura (skill.conf) setting so you can specify when it works
+	  and if it works on the guild-master itself. Defaults to working all the
+	  time on everyone except GM. [Skotlex]
 2006/08/14
 	* Removed support for negative autosave intervals, instead added a
 	  minsave_interval setting which specifies which is the minimum time between
