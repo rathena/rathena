@@ -67,4 +67,6 @@ int unit_changeviewsize(struct block_list *bl,short size);
 int do_init_unit(void);
 int do_final_unit(void);
 
+extern const int dirx[8];
+extern const int diry[8];
 #endif /* _UNIT_H_ */

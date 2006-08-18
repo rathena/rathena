@@ -15,7 +15,7 @@
 #include "pc.h"
 #include "mob.h"
 #include "pet.h"
-#include "mercenary.h"	///[orn]
+#include "mercenary.h"
 #include "skill.h"
 #include "clif.h"
 #include "npc.h"
@@ -30,8 +30,8 @@
 #include "chrif.h"
 #include "script.h"
 
-static int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static int diry[8]={1,1,0,-1,-1,-1,0,1};
+const int dirx[8]={0,-1,-1,-1,0,1,1,1};
+const int diry[8]={1,1,0,-1,-1,-1,0,1};
 
 struct unit_data* unit_bl2ud(struct block_list *bl) {
 	if( bl == NULL) return NULL;

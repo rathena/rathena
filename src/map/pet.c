@@ -34,9 +34,6 @@ struct pet_db pet_db[MAX_PET_DB];
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
-static int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static int diry[8]={1,1,0,-1,-1,-1,0,1};
-
 int pet_hungry_val(struct pet_data *pd)
 {
 	nullpo_retr(0, pd);

@@ -627,9 +627,6 @@ const struct skill_name_db skill_names[] = {
  { 0, "UNKNOWN_SKILL", "Unknown_Skill" }
 };
 
-static const int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static const int diry[8]={1,1,0,-1,-1,-1,0,1};
-
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 

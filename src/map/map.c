@@ -196,9 +196,6 @@ char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 
-static const int dirx[8]={0,-1,-1,-1,0,1,1,1};
-static const int diry[8]={1,1,0,-1,-1,-1,0,1};
-
 /*==========================================
  * ‘SmapI?Œv‚Å‚ÌÚ??İ’è
  * (charI‚©‚ç‘—‚ç‚ê‚Ä‚­‚é)

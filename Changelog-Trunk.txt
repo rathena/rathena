@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/18
+	* Little code cleanup [Toms]
+	* Cleaned merc_hom_evolution to avoid free'ing/realloc'ing [Toms]
+	* Fixed "args of aFree is freed pointer" on Homunc deletion [Toms]
 	* Changed unit_free so that it receives which cleartype should be used when
 	  the character is still on a map. Used this on status_damage so that mobs
 	  that do not respawn when killed will properly display the death animation.

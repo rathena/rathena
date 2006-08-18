@@ -34,9 +34,6 @@
 #include "mercenary.h"
 #include "charsave.h"
 
-static int dirx[8]={0,-1,-1,-1,0,1,1,1};	//[orn]
-static int diry[8]={1,1,0,-1,-1,-1,0,1};	//[orn]
-
 //Better equiprobability than rand()% [orn]
 #define rand(a, b) a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0))
 
@@ -180,7 +177,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	sd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_free(&hd->bl,1);
+	return unit_remove_map(&hd->bl,0);
 }
 
 int merc_hom_calc_skilltree(struct map_session_data *sd)
@@ -323,10 +320,22 @@ int merc_hom_levelup(struct homun_data *hd)
 	return 1 ;
 }
 
+int merc_hom_change_class(struct homun_data *hd, short class_)
+{
+	int i;
+	i = search_homunculusDB_index(class_,HOMUNCULUS_CLASS);
+	if(i < 0) {
+		return 0;
+	}
+	hd->homunculusDB = &homunculus_db[i];
+	hd->master->homunculus.class_ = class_;
+	status_set_viewdata(&hd->bl, class_);
+	return 1;
+}
+
 int merc_hom_evolution(struct homun_data *hd)
 {
 	struct map_session_data *sd;
-	short x,y;
 	nullpo_retr(0, hd);
 
 	if(!hd->homunculusDB->evo_class)
@@ -337,13 +346,12 @@ int merc_hom_evolution(struct homun_data *hd)
 	sd = hd->master;
 	if (!sd) return 0;
 
-	//TODO: Clean this up to avoid free'ing/realloc'ing. 
-	sd->homunculus.class_ = hd->homunculusDB->evo_class;
-	x = hd->bl.x;
-	y = hd->bl.y;
 	merc_hom_vaporize(sd, 0);
-	unit_free(&hd->bl,0);
-	merc_call_homunculus(sd, x, y);
+
+	if (!merc_hom_change_class(hd, hd->homunculusDB->evo_class))
+		ShowError("merc_hom_evolution: Can't evoluate homunc from %d to %d", hd->master->homunculus.class_, hd->homunculusDB->evo_class);
+
+	merc_call_homunculus(sd, hd->bl.x, hd->bl.y);
 	clif_emotion(&sd->bl, 21) ;	//no1
 	clif_misceffect2(&hd->bl,568);
 	return 1 ;
