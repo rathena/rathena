@@ -5368,7 +5368,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GD_REGENERATION:
 		if(flag&1) {
 			if (status_get_guild_id(src) == status_get_guild_id(bl))
-				sc_start(bl,SC_REGENERATION,100,skilllv,skill_get_time(skillid, skilllv));
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid, skilllv));
 		} else if (status_get_guild_id(src)) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			map_foreachinrange(skill_area_sub, src,

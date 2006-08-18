@@ -122,7 +122,6 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 
 	//Delete timers when dead.
 	merc_hom_hungry_timer_delete(hd);
-	merc_natural_heal_timer_delete(hd);
 	sd->homunculus.hp = 0 ;
 	clif_hominfo(sd,hd,0); // Send dead flag
 
@@ -151,9 +150,9 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	if (flag && hd->battle_status.hp < (hd->battle_status.max_hp*80/100))
 		return 0;
 
+	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	merc_hom_hungry_timer_delete(hd);
-	merc_natural_heal_timer_delete(hd);
 	sd->homunculus.vaporize = 1;
 	clif_hominfo(sd, sd->hd, 0);
 	merc_save(hd);
@@ -245,7 +244,7 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 		{
 			hd->master->homunculus.hskill[i].lv++ ;
 			hd->master->homunculus.skillpts-- ;
-			status_calc_homunculus(hd,1) ;
+			status_calc_homunculus(hd,0) ;
 			clif_homskillup(hd->master, skillnum) ;
 			clif_hominfo(hd->master,hd,0) ;
 			clif_homskillinfoblock(hd->master) ;
@@ -317,17 +316,6 @@ int merc_hom_levelup(struct homun_data *hd)
 			clif_disp_onlyself(hd->master,output,strlen(output));
 	}
 	
-	hd->base_status.str = (int) (hd->master->homunculus.str / 10) ;
-	hd->base_status.agi = (int) (hd->master->homunculus.agi / 10) ;
-	hd->base_status.vit = (int) (hd->master->homunculus.vit / 10) ;
-	hd->base_status.dex = (int) (hd->master->homunculus.dex / 10) ;
-	hd->base_status.int_ = (int) (hd->master->homunculus.int_ / 10) ;
-	hd->base_status.luk = (int) (hd->master->homunculus.luk / 10) ;
-			
-	memcpy(&hd->battle_status, &hd->base_status, sizeof(struct status_data)) ;
-	status_calc_homunculus(hd,1) ;
-
-	status_percent_heal(&hd->bl, 100, 100);
 //	merc_save(hd) ;	//not necessary
 	
 	return 1 ;
@@ -383,13 +371,12 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 	}
 	while(hd->master->homunculus.exp > hd->exp_next && hd->exp_next != 0 );
 		
-	if( hd->exp_next == 0 ) {
+	if( hd->exp_next == 0 )
 		hd->master->homunculus.exp = 0 ;
-	}
 
-	status_calc_homunculus(hd,1);
 	clif_misceffect2(&hd->bl,568);
-	status_calc_homunculus(hd,1);
+	status_calc_homunculus(hd,0);
+	status_percent_heal(&hd->bl, 100, 100);
 	return 0;
 }
 
@@ -417,41 +404,6 @@ int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value)
 void merc_hom_heal(struct homun_data *hd,int hp,int sp)
 {
 	clif_hominfo(hd->master,hd,0);
-}
-
-/*==========================================
- * Homunculus natural heal hp/sp
- *------------------------------------------
- */
-int merc_natural_heal(int tid,unsigned int tick,int id,int data)
-{
-	struct map_session_data *sd;
-	struct homun_data * hd;
-
-	sd=map_id2sd(id);
-	if(!sd)
-		return 1;
-
-	if(!sd->status.hom_id || !(hd = sd->hd))
-		return 1;
-
-	if(hd->natural_heal_timer != tid){
-		if(battle_config.error_log)
-			ShowError("merc_natural_heal %d != %d\n",hd->natural_heal_timer,tid);
-		return 1;
-	}
-
-	hd->natural_heal_timer = -1;
-
-	// Can't heal if homunc is vaporized, dead or under poison/bleeding effect 
-	if (sd->homunculus.vaporize || status_isdead(&hd->bl) || ( hd->sc.count && ( hd->sc.data[SC_POISON].timer != -1  || hd->sc.data[SC_BLEEDING].timer != -1 ) ) ) 
-		return 1;
-
-	status_heal(&hd->bl, hd->regenhp, hd->regensp, 1);
-	
-	sd->hd->natural_heal_timer = add_timer(tick+battle_config.natural_healhp_interval, merc_natural_heal,sd->bl.id,0);
-
-	return 0;
 }
 
 void merc_save(struct homun_data *hd)
@@ -643,17 +595,6 @@ int merc_hom_hungry_timer_delete(struct homun_data *hd)
 	return 1;
 }
 
-int merc_natural_heal_timer_delete(struct homun_data *hd)
-{
-	nullpo_retr(0, hd);
-	if(hd->natural_heal_timer != -1) {
-		delete_timer(hd->natural_heal_timer,merc_natural_heal);
-		hd->natural_heal_timer = -1;
-	}
-
-	return 1;
-}
-
 int search_homunculusDB_index(int key,int type)
 {
 	int i;
@@ -706,19 +647,6 @@ int merc_hom_create(struct map_session_data *sd)
 	hd->bl.next=NULL;
 	hd->exp_next=hexptbl[hd->master->homunculus.level - 1];
 
-	hd->base_status.hp = hd->master->homunculus.hp ;
-	hd->base_status.max_hp = hd->master->homunculus.max_hp ;
-	hd->base_status.sp = hd->master->homunculus.sp ;
-	hd->base_status.max_sp = hd->master->homunculus.max_sp ;
-	hd->base_status.str = (int) (hd->master->homunculus.str / 10) ;
-	hd->base_status.agi = (int) (hd->master->homunculus.agi / 10) ;
-	hd->base_status.vit = (int) (hd->master->homunculus.vit / 10) ;
-	hd->base_status.int_ = (int) (hd->master->homunculus.int_ / 10) ;
-	hd->base_status.dex = (int) (hd->master->homunculus.dex / 10) ;
-	hd->base_status.luk = (int) (hd->master->homunculus.luk / 10) ;
-			
-	memcpy(&hd->battle_status, &hd->base_status, sizeof(struct status_data)) ;
-
 	status_set_viewdata(&hd->bl, hd->master->homunculus.class_);
 	status_change_init(&hd->bl);
 	unit_dataset(&hd->bl);
@@ -728,7 +656,7 @@ int merc_hom_create(struct map_session_data *sd)
 	status_calc_homunculus(hd,1);
 
 	// Timers
-	hd->hungry_timer = hd->natural_heal_timer = -1;
+	hd->hungry_timer = -1;
 	merc_hom_init_timers(hd);
 	return 0;
 }
@@ -737,10 +665,7 @@ void merc_hom_init_timers(struct homun_data * hd)
 {
 	if (hd->hungry_timer == -1)
 		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
-	if (hd->natural_heal_timer == -1)
-	{
-		hd->natural_heal_timer = add_timer(gettick()+battle_config.natural_healhp_interval, merc_natural_heal,hd->master->bl.id,0);
-	}
+	hd->regen.state.block = 0; //Restore HP/SP block.
 }
 
 int merc_call_homunculus(struct map_session_data *sd, short x, short y)
@@ -1040,7 +965,6 @@ int do_init_merc (void)
 	memset(homunculus_db,0,sizeof(homunculus_db));	//[orn]
 	read_homunculusdb();	//[orn]
 	// Add homunc timer function to timer func list [Toms]
-	add_timer_func_list(merc_natural_heal, "merc_natural_heal");
 	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
 	return 0;
 }

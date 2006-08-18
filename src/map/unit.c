@@ -1769,7 +1769,6 @@ int unit_free(struct block_list *bl) {
 		struct map_session_data *sd = hd->master;
 		// Desactive timers
 		merc_hom_hungry_timer_delete(hd);
-		merc_natural_heal_timer_delete(hd);
 		if(sd) {
 			if (sd->homunculus.intimacy > 0)
 				merc_save(hd); 

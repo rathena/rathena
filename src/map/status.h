@@ -515,12 +515,15 @@ enum {
 #define SCB_RACE	0x08000000
 #define SCB_RANGE	0x10000000
 //SCB_DYE means the sc should force cloth-dye change to 0 to avoid client crashes.
+#define SCB_REGEN	0x20000000
 #define SCB_DYE	0x40000000
 #define SCB_PC		0x80000000
 #define SCB_ALL	0x3FFFFFFF
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM)
+//Define to determine who has regen
+#define BL_REGEN (BL_PC|BL_HOM)
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
@@ -546,6 +549,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 #define status_cpy(a, b) { memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)+sizeof((a)->lhw))); \
 	if ((a)->lhw && (b)->lhw) { memcpy((a)->lhw, (b)->lhw, sizeof(struct weapon_atk)); }}
 
+struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);
 struct status_data *status_get_base_status(struct block_list *bl);
 int status_get_class(struct block_list *bl);

@@ -603,7 +603,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->skillitemlv = -1;
 	sd->invincible_timer = -1;
 	
-	sd->canregen_tick = tick;
 	sd->canuseitem_tick = tick;
 	sd->cantalk_tick = tick;
 
@@ -1089,6 +1088,8 @@ int pc_checkweighticon(struct map_session_data *sd)
 		if(sd->sc.data[SC_WEIGHT90].timer!=-1)
 			status_change_end(&sd->bl,SC_WEIGHT90,-1);
 	}
+	if (flag != sd->regen.state.overweight)
+		sd->regen.state.overweight = flag;
 	return 0;
 }
 
@@ -1740,7 +1741,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_NO_REGEN:
 		if(sd->state.lr_flag != 2)
-			sd->no_regen = val;
+			sd->regen.state.block|=val;
 		break;
 	case SP_UNSTRIPABLE_WEAPON:
 		if(sd->state.lr_flag != 2)
@@ -3272,6 +3273,8 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
 		skill_clear_group(&sd->bl, 1|(battle_config.traps_setting&2));
+		if (sd->regen.state.gc)
+			sd->regen.state.gc = 0;
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
 			if (sd->sc.data[SC_WARM].timer != -1)
@@ -3350,6 +3353,13 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 	sd->bl.m = m;
 	sd->bl.x = sd->ud.to_x = x;
 	sd->bl.y = sd->ud.to_y = y;
+
+	if (sd->status.guild_id > 0 && map[m].flag.gvg_castle)
+	{	// Increased guild castle regen [Valaris]
+		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
+		if(gc && gc->guild_id == sd->status.guild_id)
+			sd->regen.state.gc = 1;
+	}
 
 	if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0) {
 		sd->pd->bl.m = m;
@@ -4796,7 +4806,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	
 	pc_setdead(sd);
-	sd->canregen_tick = tick;
+	//Reset ticks.
+	sd->inchealspirithptick = sd->inchealspiritsptick =
+	sd->hp_loss_tick = sd->sp_loss_tick = 0;
 	
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
 	
@@ -6742,280 +6754,60 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
 	return NULL;
 }
 
-//
-// 自然回復物
-//
-/*==========================================
- * SP回復量計算
- *------------------------------------------
- */
-static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static int pc_spheal(struct map_session_data *sd)
+int pc_spirit_heal_hp(struct map_session_data *sd, unsigned int diff_tick)
 {
-	int a = natural_heal_diff_tick;
-	
-	if(pc_issit(sd))
-		a += a;
-	if (sd->sc.count) {
-		if (sd->sc.data[SC_MAGNIFICAT].timer!=-1)	// マグニフィカ?ト
-			a += a;
-		if (sd->sc.data[SC_REGENERATION].timer != -1)
-			a *= sd->sc.data[SC_REGENERATION].val3;
-	}
-	// Re-added back to status_calc
-	//if((skill = pc_checkskill(sd,HP_MEDITATIO)) > 0) //Increase natural SP regen with Meditatio [DracoRPG]
-		//a += a*skill*3/100;
-	
-	if (sd->status.guild_id > 0) {
-		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);	// Increased guild castle regen [Valaris]
-		if(gc)	{
-			struct guild *g = guild_search(sd->status.guild_id);
-			if(g && g->guild_id == gc->guild_id)
-				a += a;
-		}	// end addition [Valaris]
-	}
-
-	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKREGEN))
-		a += a;
-
-	return a;
-}
-
-/*==========================================
- * HP回復量計算
- *------------------------------------------
- */
-static int pc_hpheal(struct map_session_data *sd)
-{
-	int a = natural_heal_diff_tick;
-
-	if(pc_issit(sd))
-		a += a;
-	if (sd->sc.count) {
-		if (sd->sc.data[SC_MAGNIFICAT].timer != -1)	// Modified by RoVeRT
-			a += a;
-		if (sd->sc.data[SC_REGENERATION].timer != -1)
-			a *= sd->sc.data[SC_REGENERATION].val2;
-	}
-	if (sd->status.guild_id > 0) {
-		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);	// Increased guild castle regen [Valaris]
-		if(gc)	{
-			struct guild *g = guild_search(sd->status.guild_id);
-			if(g && g->guild_id == gc->guild_id)
-				a += a;
-		}	// end addition [Valaris]
-	}
-
-	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKREGEN))
-		a += a;
-
-	return a;
-}
-
-static void pc_natural_heal_hp(struct map_session_data *sd)
-{
-	unsigned int hp;
-	int inc_num,bonus,hp_flag;
-
-	if (sd->no_regen & 1)
-		return;
-
-	if(pc_checkoverhp(sd)) {
-		sd->hp_sub = sd->inchealhptick = 0;
-		return;
-	}
-
-	hp_flag = (pc_checkskill(sd,SM_MOVINGRECOVERY) > 0 && sd->ud.walktimer != -1);
-
-	if(sd->ud.walktimer == -1) {
-		inc_num = pc_hpheal(sd);
-		if(sd->sc.data[SC_TENSIONRELAX].timer!=-1 ){
-			sd->hp_sub += 2*inc_num;
-			sd->inchealhptick += 3*natural_heal_diff_tick;
-		} else {
-			sd->hp_sub += inc_num;
-			sd->inchealhptick += natural_heal_diff_tick;
-		}
-	}
-	else if(hp_flag) {
-		inc_num = pc_hpheal(sd);
-		sd->hp_sub += inc_num;
-		sd->inchealhptick = 0;
-	}
-	else {
-		sd->hp_sub = sd->inchealhptick = 0;
-		return;
-	}
-
-	if(sd->hp_sub >= battle_config.natural_healhp_interval) {
-		hp = 0;
-		bonus = sd->nhealhp;
-		if(hp_flag) {
-			bonus >>= 2;
-			if(bonus <= 0) bonus = 1;
-		}
-		do {
-			sd->hp_sub -= battle_config.natural_healhp_interval;
-			hp+= bonus;
-		} while(sd->hp_sub >= battle_config.natural_healhp_interval);
-		
-		if ((unsigned int)status_heal(&sd->bl, hp, 0, 1) < hp)
-		{	//At full.
-			sd->inchealhptick = 0;
-			return;
-		}
-	}
-
-	if(sd->nshealhp <= 0)
-	{
-		sd->inchealhptick = 0;
-		return;
-	}
-
-	while(sd->inchealhptick >= battle_config.natural_heal_skill_interval)
-	{
-		sd->inchealhptick -= battle_config.natural_heal_skill_interval;
-		if(status_heal(&sd->bl, sd->nshealhp, 0, 3) < sd->nshealhp)
-		{
-			sd->hp_sub = sd->inchealhptick = 0;
-			break;
-		}
-	}
-
-	return;
-}
-
-static void pc_natural_heal_sp(struct map_session_data *sd)
-{
-	int sp;
-	int inc_num,bonus;
-
-	if (sd->no_regen & 2)
-		return;
-
-	if(pc_checkoversp(sd)) {
-		sd->sp_sub = sd->inchealsptick = 0;
-		return;
-	}
-
-	inc_num = pc_spheal(sd);
-	if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer == -1 || (sd->sc.data[SC_SPIRIT].timer!=-1 && sd->sc.data[SC_SPIRIT].val2 == SL_MONK))
-		sd->sp_sub += inc_num;
-	if(sd->ud.walktimer == -1)
-		sd->inchealsptick += natural_heal_diff_tick;
-	else
-		sd->inchealsptick = 0;
-
-	if(sd->sp_sub >= battle_config.natural_healsp_interval){
-		bonus = sd->nhealsp;
-		sp = 0;
-		do {
-			sd->sp_sub -= battle_config.natural_healsp_interval;
-			sp += bonus;
-		} while(sd->sp_sub >= battle_config.natural_healsp_interval);
-		if (status_heal(&sd->bl, 0, sp, 1) < sp) {
-			sd->inchealsptick = 0;
-			return;
-		}
-	}
-
-	if(sd->nshealsp <= 0) {
-		sd->inchealsptick = 0;
-		return;
-	}
-	if(sd->inchealsptick >= battle_config.natural_heal_skill_interval)
-	{
-		sp = 0;
-		if(sd->doridori_counter) {
-			bonus = sd->nshealsp*2;
-			sd->doridori_counter = 0;
-		} else
-			bonus = sd->nshealsp;
-		do {
-			sd->inchealsptick -= battle_config.natural_heal_skill_interval;
-			if (status_heal(&sd->bl, 0, bonus, 3) < sp) {
-				sd->sp_sub = sd->inchealsptick = 0;
-				break;
-			}
-		} while(sd->inchealsptick >= battle_config.natural_heal_skill_interval);
-	}
-
-	return;
-}
-
-static void pc_spirit_heal_hp(struct map_session_data *sd)
-{
-	int bonus_hp,interval = battle_config.natural_heal_skill_interval;
-
-	if(pc_checkoverhp(sd)) {
-		sd->inchealspirithptick = 0;
-		return;
-	}
-
-	sd->inchealspirithptick += natural_heal_diff_tick;
-
-	if(sd->weight*100/sd->max_weight >= battle_config.natural_heal_weight_rate)
-		interval += interval;
-
-	if(sd->inchealspirithptick < interval)
-		return;
+	int interval = battle_config.natural_heal_skill_interval;
 
 	if(!pc_issit(sd))
+		return 0;
+	
+	if(sd->regen.state.overweight)
+		interval += interval;
+
+	sd->inchealspirithptick += diff_tick;
+
+	while(sd->inchealspirithptick >= interval)
 	{
-		sd->inchealspirithptick -= natural_heal_diff_tick;
-		return;
-	}
-	bonus_hp = sd->nsshealhp;
-	while(sd->inchealspirithptick >= interval) {
 		sd->inchealspirithptick -= interval;
-		if(status_heal(&sd->bl, bonus_hp, 0, 3) < bonus_hp) {
+		if(status_heal(&sd->bl, sd->nsshealhp, 0, 3) < sd->nsshealhp)
+		{
 			sd->inchealspirithptick = 0;
-			break;
+			return 1;
 		}
 	}
-	return;
+	return 0;
 }
-static void pc_spirit_heal_sp(struct map_session_data *sd)
+
+int pc_spirit_heal_sp(struct map_session_data *sd, unsigned int diff_tick)
 {
-	int bonus_sp,interval = battle_config.natural_heal_skill_interval;
-
-	if(pc_checkoversp(sd)) {
-		sd->inchealspiritsptick = 0;
-		return;
-	}
-
-	sd->inchealspiritsptick += natural_heal_diff_tick;
-
-	if(sd->weight*100/sd->max_weight >= battle_config.natural_heal_weight_rate)
-		interval += interval;
-
-	if(sd->inchealspiritsptick < interval)
-		return;
+	int interval = battle_config.natural_heal_skill_interval;
 
 	if(!pc_issit(sd))
+		return 0;
+	
+	if(sd->regen.state.overweight)
+		interval += interval;
+
+	sd->inchealspiritsptick += diff_tick;
+
+	while(sd->inchealspiritsptick >= interval)
 	{
-		sd->inchealspiritsptick -= natural_heal_diff_tick;
-		return;
-	}
-	bonus_sp = sd->nsshealsp;
-	while(sd->inchealspiritsptick >= interval) {
 		sd->inchealspiritsptick -= interval;
-		if(status_heal(&sd->bl, 0, bonus_sp, 3) < bonus_sp)
+		if(status_heal(&sd->bl, 0, sd->nsshealsp, 3) < sd->nsshealsp)
 		{
 			sd->inchealspiritsptick = 0;
-			break;
+			return 1;
 		}
 	}
-
-	return;
+	return 0;
 }
 
-static void pc_bleeding (struct map_session_data *sd)
+void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 {
 	int hp = 0, sp = 0;
 
 	if (sd->hp_loss_value > 0) {
-		sd->hp_loss_tick += natural_heal_diff_tick;
+		sd->hp_loss_tick += diff_tick;
 		if (sd->hp_loss_tick >= sd->hp_loss_rate) {
 			do {
 				hp += sd->hp_loss_value;
@@ -7026,7 +6818,7 @@ static void pc_bleeding (struct map_session_data *sd)
 	}
 	
 	if (sd->sp_loss_value > 0) {
-		sd->sp_loss_tick += natural_heal_diff_tick;
+		sd->sp_loss_tick += diff_tick;
 		if (sd->sp_loss_tick >= sd->sp_loss_rate) {
 			do {
 				sp += sd->sp_loss_value;
@@ -7040,73 +6832,6 @@ static void pc_bleeding (struct map_session_data *sd)
 		status_zap(&sd->bl, hp, sp);
 
 	return;
-}
-
-/*==========================================
- * HP/SP 自然回復 各クライアント
- *------------------------------------------
- */
-
-static int pc_natural_heal_sub(struct map_session_data *sd,va_list ap) {
-	int tick;
-
-	nullpo_retr(0, sd);
-	tick = va_arg(ap,int);
-
-// -- moonsoul (if conditions below altered to disallow natural healing if under berserk status)
-	if (pc_isdead(sd) || pc_ishiding(sd) ||
-	//-- cannot regen for 5 minutes after using Berserk --- [Celest]
-		(sd->sc.count && (
-			(sd->sc.data[SC_POISON].timer != -1 && sd->sc.data[SC_SLOWPOISON].timer == -1) ||
-			(sd->sc.data[SC_DPOISON].timer != -1 && sd->sc.data[SC_SLOWPOISON].timer == -1) ||
-			sd->sc.data[SC_BERSERK].timer != -1 ||
-			sd->sc.data[SC_TRICKDEAD].timer != -1 ||
-			sd->sc.data[SC_BLEEDING].timer != -1
-		))
-	) { //Cannot heal neither natural or special.
-		sd->hp_sub = sd->inchealhptick = sd->inchealspirithptick = 0;
-		sd->sp_sub = sd->inchealsptick = sd->inchealspiritsptick = 0;
-	} else {
-		if (DIFF_TICK (tick, sd->canregen_tick)<0 ||
-			sd->weight*100/sd->max_weight >= battle_config.natural_heal_weight_rate) { //Cannot heal natural HP/SP
-			sd->hp_sub = sd->inchealhptick = 0;
-			sd->sp_sub = sd->inchealsptick = 0;
-		} else { //natural heal
-			pc_natural_heal_hp(sd);
-			if(sd->sc.count && (
-				sd->sc.data[SC_EXTREMITYFIST].timer != -1 ||
-				sd->sc.data[SC_DANCING].timer != -1
-			))	//No SP natural heal.
-				sd->sp_sub = sd->inchealsptick = 0;
-			else
-				pc_natural_heal_sp(sd);
-			sd->canregen_tick = tick;
-		}
-		//Sitting Healing
-		if (sd->nsshealhp)
-			pc_spirit_heal_hp(sd);
-		if (sd->nsshealsp)
-			pc_spirit_heal_sp(sd);
-	}
-	if (sd->hp_loss_value > 0 || sd->sp_loss_value > 0)
-		pc_bleeding(sd);
-	else
-		sd->hp_loss_tick = sd->sp_loss_tick = 0;
-
-	return 0;
-}
-
-/*==========================================
- * HP/SP自然回復 (interval timer??)
- *------------------------------------------
- */
-int pc_natural_heal(int tid,unsigned int tick,int id,int data)
-{
-	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	clif_foreachclient(pc_natural_heal_sub, tick);
-
-	natural_heal_prev_tick = tick;
-	return 0;
 }
 
 /*==========================================
@@ -7260,6 +6985,8 @@ void pc_setstand(struct map_session_data *sd){
 	if(sd->sc.count && sd->sc.data[SC_TENSIONRELAX].timer!=-1)
 		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
+	//Reset sitting tick.
+	sd->inchealspirithptick = sd->inchealspiritsptick = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;
 }
 
@@ -7582,15 +7309,12 @@ int do_init_pc(void) {
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
 
-	add_timer_func_list(pc_natural_heal, "pc_natural_heal");
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
-	natural_heal_prev_tick = gettick();
-	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, pc_natural_heal, 0, 0, NATURAL_HEAL_INTERVAL);
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

@@ -72,9 +72,6 @@ int search_homunculusDB_index(int key,int type);
 int merc_menu(struct map_session_data *sd,int menunum);
 int merc_hom_food(struct map_session_data *sd, struct homun_data *hd);
 int merc_hom_hungry_timer_delete(struct homun_data *hd);
-int merc_natural_heal_timer_delete(struct homun_data *hd);
-#define merc_checkoverhp(hd) (hd->battle_status.hp == hd->battle_status.max_hp)
-#define merc_checkoversp(hd) (hd->battle_status.sp == hd->battle_status.max_sp)
 #define merc_stop_walking(hd, type) { if((hd)->ud.walktimer != -1) unit_stop_walking(&(hd)->bl, type); }
 #define merc_stop_attack(hd) { if((hd)->ud.attacktimer != -1) unit_stop_attack(&(hd)->bl); hd->ud.target = 0; }
 int read_homunculusdb(void);

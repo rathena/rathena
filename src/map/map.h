@@ -467,28 +467,25 @@ struct view_data {
 
 struct regen_data {
 
-	int flag; //Marks what stuff you may heal or not.
-	unsigned int
-		hp_tick, //tick accumulation before healing.
-		sp_tick,
-		shp_tick,
-		ssp_tick;
-	
+	unsigned short flag; //Marks what stuff you may heal or not.
 	unsigned short
-		hp, //natural heal
-		sp,
-		s_hp, //natural heal from skills
-		s_sp;
+		hp,sp,shp,ssp;
 
-	unsigned char //Skill related regen rates.
-		hpfactor,
-		spfactor,
-		shpfactor,
-		sspfactor;
+	//tick accumulation before healing.
+	struct {
+		unsigned int hp,sp,shp,ssp;
+	} tick;
+	
+	//Regen rates (where every 1 means +100% regen)
+	struct {
+		unsigned char
+		hp,sp,shp,ssp;
+	} rate;
 	
 	struct {
-		unsigned walk_regen :1; //Can you regen even when walking?
-		unsigned overweight :1; //Block regen due to overweight.
+		unsigned walk:1; //Can you regen even when walking?
+		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
+		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
 };
@@ -524,6 +521,7 @@ struct map_session_data {
 	struct status_data base_status, battle_status;
 	struct weapon_atk base_lhw, battle_lhw; //Left-hand weapon atk data.
 	struct status_change sc;
+	struct regen_data regen;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
@@ -627,11 +625,9 @@ struct map_session_data {
 
 	int invincible_timer;
 	unsigned int canlog_tick;
-	unsigned int canregen_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
 	unsigned int cantalk_tick;
-	int hp_sub,sp_sub;
-	int inchealhptick,inchealsptick,inchealspirithptick,inchealspiritsptick;
+	int inchealspirithptick,inchealspiritsptick;
 
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
@@ -720,7 +716,6 @@ struct map_session_data {
 	unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 	unsigned short unbreakable_equip; //100% break resistance on certain equipment
 	unsigned short unstripable_equip;
-	short no_regen;
 	short add_def_count,add_mdef_count;
 	short add_dmg_count,add_mdmg_count;
 
@@ -966,17 +961,12 @@ struct homun_data {
 	struct view_data *vd;
 	struct status_data base_status, battle_status;
 	struct status_change sc;
+	struct regen_data regen;
 	struct homunculus_db *homunculusDB;	//[orn]
 
 	struct map_session_data *master; //pointer back to its master
-
 	int hungry_timer;	//[orn]
-
 	int target_id,attacked_id;
-
-	int natural_heal_timer;	//[orn]
-	
-	unsigned short regenhp,regensp;
 	unsigned long exp_next;
 	char blockskill[MAX_SKILL];	// [orn]
 };

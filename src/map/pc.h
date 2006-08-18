@@ -180,7 +180,6 @@ int pc_modifysellvalue(struct map_session_data*,int);
 int pc_follow(struct map_session_data*, int); // [MouseJstr]
 int pc_stop_following(struct map_session_data*);
 
-
 unsigned int pc_maxbaselv(struct map_session_data *sd);
 unsigned int pc_maxjoblv(struct map_session_data *sd);
 int pc_checkbaselevelup(struct map_session_data *sd);
@@ -256,6 +255,11 @@ struct map_session_data *pc_get_partner(struct map_session_data *sd);
 struct map_session_data *pc_get_father(struct map_session_data *sd);
 struct map_session_data *pc_get_mother(struct map_session_data *sd);
 struct map_session_data *pc_get_child(struct map_session_data *sd);
+
+int pc_spirit_heal_hp(struct map_session_data *sd, unsigned int diff_tick);
+int pc_spirit_heal_sp(struct map_session_data *sd, unsigned int diff_tick);
+void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick);
+
 
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);
