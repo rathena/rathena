@@ -790,6 +790,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		case HAMI_CASTLE:
 			target = battle_get_master(src);
 			if (!target) return 0;
+			target_id = target->id;
 	}
 
 	if(!target && (target=map_id2bl(target_id)) == NULL )
