@@ -784,6 +784,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	if (src->type==BL_HOM)
 	switch(skill_num)
 	{ //Homun-auto-target skills.
+		case HLIF_HEAL:
 		case HLIF_AVOID:
 		case HAMI_DEFENCE:
 		case HAMI_CASTLE:

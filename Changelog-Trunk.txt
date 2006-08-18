@@ -4,6 +4,17 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/18
+	* Made HLIF_HEAL a self skill that auto-selects target to caster's master.
+	  [Skotlex]
+	* Implemented SC_BLOODLUST and SC_CHANGE, cleaned up HLIF_CHANGE [Skotlex]
+	* Applied a correction to HVAN_EXPLOSION [Skotlex]
+	* Fixed Homun ASPD calculation being able to underflow and give you min
+	  speed. [Skotlex]
+	* Added monster_ai&128 to make aggressive mobs ignore that behaviour of
+	  always picking Homun targets above player targets regardless of who is
+	  closer. [Skotlex]
+	* Fixed homun info packet being unable to display HP/SP correctly once the
+	  values are above 32k. [Skotlex]
 	* Applied Mpeg's work on ninja [Toms]
 	* Fixed @homlvup [Toms]
 	* Added guild_aura (skill.conf) setting so you can specify when it works

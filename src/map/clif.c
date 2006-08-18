@@ -1466,14 +1466,14 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	memset(buf,0,packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),sd->homunculus.name,NAME_LENGTH);
-	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
+//	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
 	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
 	WBUFB(buf,26)=sd->homunculus.rename_flag | (sd->homunculus.vaporize << 1) | (sd->homunculus.hp?0:4);
 	WBUFW(buf,27)=sd->homunculus.level;
 	WBUFW(buf,29)=sd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (sd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
-	WBUFW(buf,35)=status->rhw.atk2;
+	WBUFW(buf,35)=status->rhw.atk2+status->batk;
 	WBUFW(buf,37)=status->matk_max;
 	WBUFW(buf,39)=status->hit;
 	WBUFW(buf,41)=status->cri/10;	//crit is a +1 decimal value!
@@ -1481,10 +1481,20 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,45)=status->mdef;
 	WBUFW(buf,47)=status->flee;
 	WBUFW(buf,49)=(flag)?0:status->amotion;
-	WBUFW(buf,51)=status->hp;
-	WBUFW(buf,53)=status->max_hp;
-	WBUFW(buf,55)=status->sp;
-	WBUFW(buf,57)=status->max_sp;
+	if (status->max_hp > SHRT_MAX) {
+		WBUFW(buf,51) = status->hp/(status->max_hp/100);
+		WBUFW(buf,53) = 100;
+	} else {
+		WBUFW(buf,51)=status->hp;
+		WBUFW(buf,53)=status->max_hp;
+	}
+	if (status->max_sp > SHRT_MAX) {
+		WBUFW(buf,55) = status->sp/(status->max_sp/100);
+		WBUFW(buf,57) = 100;
+	} else {
+		WBUFW(buf,55)=status->sp;
+		WBUFW(buf,57)=status->max_sp;
+	}
 	WBUFL(buf,59)=sd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=sd->homunculus.skillpts;

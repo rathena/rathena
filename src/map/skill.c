@@ -3091,12 +3091,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case CR_ACIDDEMONSTRATION:
 	case TF_THROWSTONE:
 	case NPC_SMOKING:
-	case HVAN_EXPLOSION:	//[orn]
 	case GS_FLING:
 	case NJ_ZENYNAGE:
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
+	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
@@ -4063,7 +4063,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemy.
-		i = (md && md->special_state.ai == 2 && !map_flag_vs(src->m))?
+		i = ((hd || (md && md->special_state.ai == 2)) && !map_flag_vs(src->m))?
 			BCT_ENEMY:BCT_ALL;
 		clif_skill_nodamage(src, src, skillid, -1, 1);
 		map_foreachinrange(skill_area_sub, bl,
@@ -5554,14 +5554,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_fail(hd->master,skillid,0,0);
 		break;
 	case HLIF_CHANGE:	//[orn]
-		if ( hd ) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,
-				sc_start(&hd->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
-			status_heal(&hd->bl, hd->master->homunculus.max_hp, 0, 0);
-			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
-		}
-		else
-				clif_skill_fail(hd->master,skillid,0,0);
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		if (sd)
+			skill_blockpc_start(sd, skillid, skill_get_time2(skillid,skilllv));
+		if (hd)
+			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 		break;
 
 	default:

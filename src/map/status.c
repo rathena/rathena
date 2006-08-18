@@ -376,7 +376,7 @@ void initChangeTables(void) {
 	add_sc(SA_ELEMENTWIND, SC_ELEMENTALCHANGE);
 
 	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
-	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_INT);
+	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_MAXHP|SCB_MAXSP);
 	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
 	set_sc(HFLI_SPEED, SC_SPEED, SI_BLANK, SCB_FLEE);	//[orn]
 	set_sc(HAMI_DEFENCE, SC_DEFENCE, SI_BLANK, SCB_DEF);	//[orn]
@@ -2255,6 +2255,14 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->rhw.atk = status->dex;
 	status->rhw.atk2 = status->str + hom->level;
 
+	status->aspd_rate = 1000;
+
+	skill = (1000 -4*status->agi -status->dex)
+			*hd->homunculusDB->baseASPD/1000;
+	
+	status->amotion = cap_value(skill,battle_config.max_aspd,2000);
+	status->adelay = 2*status->amotion;
+
 	status_calc_misc(status, BL_HOM, hom->level);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
@@ -2725,14 +2733,15 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
-		status->amotion = hd->homunculusDB->baseASPD - ((status->agi*4+status->dex)* hd->homunculusDB->baseASPD / 1000);
 
+		skill = (1000 -4*status->agi -status->dex)
+			*hd->homunculusDB->baseASPD/1000;
+		
 		status->aspd_rate = status_calc_aspd_rate(&hd->bl, &hd->sc , b_status->aspd_rate);
 		if(status->aspd_rate != 1000)
-			status->amotion = status->amotion *status->aspd_rate/1000;
+			skill = skill*status->aspd_rate/1000;
 
-		status->amotion = cap_value(status->amotion,battle_config.max_aspd,2000);
-
+		status->amotion = cap_value(skill,battle_config.max_aspd,2000);
 		status->adelay = 2*status->amotion;
 	}
 	
@@ -3109,8 +3118,6 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ -= int_ * sc->data[SC_STRIPHELM].val2/100;
 	if(sc->data[SC_NEN].timer!=-1)
 		int_ += sc->data[SC_NEN].val1;
-	if(sc->data[SC_CHANGE].timer!=-1)
-		int_ += 60;
 	if(sc->data[SC_MARIONETTE].timer!=-1)
 		int_ -= (sc->data[SC_MARIONETTE].val4>>16)&0xFF;
 	if(sc->data[SC_MARIONETTE2].timer!=-1)
@@ -3686,6 +3693,8 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(maxhp,1,UINT_MAX);
 
+	if(sc->data[SC_CHANGE].timer!=-1)
+		maxhp = sc->data[SC_CHANGE].val3;
 	if(sc->data[SC_INCMHPRATE].timer!=-1)
 		maxhp += maxhp * sc->data[SC_INCMHPRATE].val1/100;
 	if(sc->data[SC_APPLEIDUN].timer!=-1)
@@ -3703,6 +3712,8 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(maxsp,1,UINT_MAX);
 
+	if(sc->data[SC_CHANGE].timer!=-1)
+		maxsp = sc->data[SC_CHANGE].val2;
 	if(sc->data[SC_INCMSPRATE].timer!=-1)
 		maxsp += maxsp * sc->data[SC_INCMSPRATE].val1/100;
 	if(sc->data[SC_SERVICE4U].timer!=-1)
@@ -5459,6 +5470,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_BLOODLUST:
 			val2 = 20+10*val1; //Atk rate change.
+			val3 = 3*val1; //Leech chance
+			val4 = 20; //Leech percent
 			break;
 		case SC_FLEET:
 			val2 = 30*val1; //Aspd change
@@ -5493,6 +5506,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_BUNSINJYUTSU:
 			val2=(val1+1)/2; // number of hits blocked
+			break;
+		case SC_CHANGE:
+			{
+				struct status_data *status = status_get_base_status(bl);
+				if (!status) return 0;
+				val2= status->max_hp; //Base Max HP
+				val3= status->max_sp; //Base Max SP
+			}
 			break;
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
@@ -5717,7 +5738,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		sc->data[type].val2 = 5*status->max_hp/100;
 		status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
 		status_set_sp(bl, 0, 0); //Damage all SP
-	}
+	} else if (type==SC_CHANGE) //Heal all HP
+		status_percent_heal(bl, 100, 0);
+
 
 	if (type==SC_RUN) {
 		struct unit_data *ud = unit_bl2ud(bl);

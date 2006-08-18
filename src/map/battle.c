@@ -404,6 +404,13 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 
 		if (!damage) return 0;
+
+		//Probably not the most correct place, but it'll do here
+		//(since battle_drain is strictly for players currently)
+		if (sc->data[SC_BLOODLUST].timer != -1 && flag&BF_WEAPON && damage > 0 &&
+			rand()%100 < sc->data[SC_BLOODLUST].val3)
+			status_heal(src, damage*sc->data[SC_BLOODLUST].val4/100, 0, 3);
+
 	}
 	//SC effects from caster side. Currently none.
 /*	
@@ -1030,7 +1037,6 @@ static struct Damage battle_calc_weapon_attack(
 				case GS_GROUNDDRIFT:
 				case NJ_TATAMIGAESHI:
 				case NJ_ISSEN:
-				case HVAN_EXPLOSION:	//[orn]
 					flag.hit = 1;
 					break;
 				case CR_SHIELDBOOMERANG:
@@ -1195,6 +1201,7 @@ static struct Damage battle_calc_weapon_attack(
 				i = (flag.cri?1:0)|
 					(flag.arrow?2:0)|
 					(skill_num == HW_MAGICCRASHER?4:0)|
+					(!skill_num && sc && sc->data[SC_CHANGE].timer!=-1?4:0)|
 					(skill_num == MO_EXTREMITYFIST?8:0)|
 					(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1?8:0);
 				if (flag.arrow && sd)
@@ -2504,7 +2511,7 @@ struct Damage  battle_calc_misc_attack(
 	case CR_ACIDDEMONSTRATION:
 		md.flag = (md.flag&~BF_RANGEMASK)|BF_LONG;
 		break;
-	case HVAN_EXPLOSION:	//[orn]
+	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
 	case NPC_SMOKING:
 		flag.elefix = flag.cardfix = 0;
@@ -2726,8 +2733,8 @@ int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	struct map_session_data *sd=NULL;
 	struct status_change *sc;
 	int rdamage = 0;
-	
-	if (bl->type == BL_PC) sd = (struct map_session_data*)bl;
+
+	BL_CAST(BL_PC, bl, sd);
 	sc = status_get_sc(bl);
 
 	if(flag&BF_WEAPON) {

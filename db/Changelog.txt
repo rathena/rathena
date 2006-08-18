@@ -20,6 +20,8 @@
 
 =========================
 08/18
+	* Made HLIF_HEAL a self skill that auto-selects target to caster's master.
+	  [Skotlex]
 	* Fixed Kouenka not having an aftercast delay on levels greater 1 [Playtester]
 08/17
 	* Gospel can't stack anymore [Playtester]

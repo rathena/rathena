@@ -1,6 +1,9 @@
 Date	Added
 
 2006/08/18
+	* Added monster_ai&128 to make aggressive mobs ignore that behaviour of
+	  always picking Homun targets above player targets regardless of who is
+	  closer. [Skotlex]
 	* Added guild_aura (skill.conf) setting so you can specify when it works
 	  and if it works on the guild-master itself. Defaults to working all the
 	  time on everyone except GM. [Skotlex]

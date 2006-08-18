@@ -591,7 +591,7 @@
 1019,9,6,1,4,1,0,1,1,yes,0,1,0,magic,0	//SA_ELEMENTWIND#Elemental Change Wind#
 
 //homunculus
-8001,9,6,16,0,1,0,5,1,no,0,0,0,magic,0	//HLIF_HEAL#Healing hand#
+8001,9,6,4,0,1,0,5,1,no,0,0,0,magic,0	//HLIF_HEAL#Healing hand#
 8002,0,6,4,0,3,-1,5,1,no,0,0,0,none,0	//HLIF_AVOID
 8003,0,0,0,0,0,1,5,0,no,0,0,0,none,0	//HLIF_BRAIN
 8004,0,6,4,0,1,0,3,0,no,0,0,0,none,0	//HLIF_CHANGE
