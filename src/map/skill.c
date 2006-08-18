@@ -9694,8 +9694,6 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 	group->tick=gettick();
 	if (skillid == PR_SANCTUARY) //Sanctuary starts healing +1500ms after casted. [Skotlex]
 		group->tick += 1500;
-	else if (skillid == PA_GOSPEL) //Prevent Gospel from triggering bonuses right away. [Skotlex]
-		group->tick += interval;
 	group->valstr=NULL;
 
 	i = skill_get_unit_flag(skillid); //Reuse for faster access from here on. [Skotlex]

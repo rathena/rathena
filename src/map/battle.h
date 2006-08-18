@@ -197,9 +197,9 @@ extern struct Battle_Config {
 	unsigned short wedding_modifydisplay;
 	unsigned short wedding_ignorepalette;	//[Skotlex]
 	unsigned short xmas_ignorepalette;	// [Valaris]
-	unsigned int natural_healhp_interval;
-	unsigned int natural_healsp_interval;
-	unsigned int natural_heal_skill_interval;
+	int natural_healhp_interval;
+	int natural_healsp_interval;
+	int natural_heal_skill_interval;
 	unsigned short natural_heal_weight_rate;
 	unsigned short item_name_override_grffile;
 	unsigned short indoors_override_grffile;	// [Celest]
