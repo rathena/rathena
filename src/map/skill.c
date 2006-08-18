@@ -6245,7 +6245,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		}
 		break;
 	case NJ_TATAMIGAESHI:
-		sc_start(src,type,100,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
 		skill_unitsetting(src,skillid,skilllv,src->x,src->y,0);
 		break;
 
@@ -7174,7 +7174,20 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;	
 		}
 
-		case UNT_TATAMIGAESHI:
+ 		case UNT_TATAMIGAESHI:
+		{
+			/* NJ_TATAMIGAESHI has to work like that (has to be instant, instead of during 1s), according to Tharis' last video
+			   Did not find a better way to do it (even in traps' code) */
+
+			struct skill_unit_group *sug; // better name needed
+
+			if ( (sug = map_find_skill_unit_oncell(bl,bl->x,bl->y,NJ_TATAMIGAESHI,NULL)->group) != NULL )
+			{
+				if ( DIFF_TICK(gettick(), sug->tick) <= skill_get_time2(sg->skill_id, sg->skill_lv) )
+					skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+ 			}
+			break;
+		}
 		case UNT_DEMONSTRATION:
 			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;

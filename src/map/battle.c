@@ -318,15 +318,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-		if(sc->data[SC_UTSUSEMI].timer != -1 && !skill_num)
-		{
-			clif_specialeffect(bl, 462, AREA);
-			skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3);
-			if (--sc->data[SC_UTSUSEMI].val2 <= 0)
-				status_change_end(bl, SC_UTSUSEMI, -1);
-			return 0;
-		}
-
 		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&(BF_WEAPON|BF_MISC)) )
 		{
 			if (--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
@@ -2926,6 +2917,13 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0,(int)src, duration);
 				return 0;
 			}
+		}
+		if (tsc->data[SC_UTSUSEMI].timer != -1) {
+			clif_specialeffect(target, 462, AREA);
+			skill_blown (src, target, tsc->data[SC_UTSUSEMI].val3);
+			if (--tsc->data[SC_UTSUSEMI].val2 <= 0)
+				status_change_end(target, SC_UTSUSEMI, -1);
+			return 0;
 		}
 	}
 	//Recycled the damage variable rather than use a new one... [Skotlex]

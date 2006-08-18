@@ -111,7 +111,7 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		19: Shotguns
 		20: Gatling guns
 		21: Grenade launchers
-		22: Huuma
+		22: Fuuma Shurikens
 
 	For ammo, the types are:
 		1: Arrows
