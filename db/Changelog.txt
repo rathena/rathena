@@ -19,6 +19,9 @@
 	-----
 
 =========================
+08/19
+	* Updated Kouenka, removed aftercast delay [Toms]
+	* Fixed some Ninja weapons (1Hand Sword -> Dagger) [Toms]
 08/18
 	* Made HLIF_HEAL a self skill that auto-selects target to caster's master.
 	  [Skotlex]
