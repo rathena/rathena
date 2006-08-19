@@ -190,8 +190,9 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 		bclass[2] |= 1<<MAPID_MERCHANT;
 	if (jobmask & 1<<JOB_BARD)
 		bclass[2] |= 1<<MAPID_ARCHER;
-	if (jobmask & 1<<JOB_DANCER)
-		bclass[2] |= 1<<MAPID_ARCHER;
+//	Bard/Dancer share the same slot now.
+//	if (jobmask & 1<<JOB_DANCER)
+//		bclass[2] |= 1<<MAPID_ARCHER;
 	if (jobmask & 1<<JOB_ROGUE)
 		bclass[2] |= 1<<MAPID_THIEF;
 	//Special classes that don't fit above.
