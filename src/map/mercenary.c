@@ -393,6 +393,9 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 // Return then new value
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 {
+	if (battle_config.homunculus_friendly_rate != 100)
+		value = (value * battle_config.homunculus_friendly_rate) / 100;
+
 	if (hd->master->homunculus.intimacy + value <= 100000)
 		hd->master->homunculus.intimacy += value;
 	else

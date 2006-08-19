@@ -437,7 +437,7 @@ extern struct Battle_Config {
 	unsigned short min_chat_delay; //Minimum time between client messages. [Skotlex]
 	unsigned int hvan_explosion_intimate ;	// fix [albator]
 	unsigned short homunculus_show_growth ;	//[orn]
-
+	unsigned short homunculus_friendly_rate;
 } battle_config;
 
 void do_init_battle(void);
