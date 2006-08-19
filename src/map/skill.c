@@ -8349,6 +8349,20 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		if (sd->status.hom_id) //Don't delete items when hom is already out.
 			checkitem_flag = delitem_flag = 0;
 		break;
+	case AM_REST: //Can't vapo homun if you don't have an active homunc or it's hp is < 80%
+		if (!merc_is_hom_active(sd->hd) || sd->hd->battle_status.hp < (sd->hd->battle_status.max_hp*80/100))
+		{
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
+	case AM_RESURRECTHOMUN: // Can't resurrect homun if you don't have a dead homun
+		if (!sd->status.hom_id || sd->homunculus.vaporize || !sd->hd || sd->hd->battle_status.hp)
+		{
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
+		break;
 	}
 
 	if(!(type&2)){

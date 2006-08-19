@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/19
+	* Fixed @homlvup bug [Toms]
+	* Fixed AM_REST & AM_RESU consumming SP if they fail [Toms]
+	* Fixed homunc spawning bug (they was spawned after an AM_REST + master warp for example)[Toms]
 	* Fixed GS_GROUNDDRIFT [Skotlex]
 	* Increased chance of GS_DESPERADO connecting to 20% [Skotlex]
 	* Fixed battle_calc_base_damage being called for the left hand even for

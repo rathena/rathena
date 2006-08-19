@@ -3368,7 +3368,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		sd->pd->ud.dir = sd->ud.dir;
 	}
 
-	if(sd->status.hom_id > 0 && sd->hd ) {	//orn
+	if(sd->status.hom_id > 0 && merc_is_hom_active(sd->hd)) {	//orn
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
 		sd->hd->bl.y = sd->hd->ud.to_y = y;

@@ -9783,7 +9783,7 @@ int atcommand_homlevel(
 	if (!message || !*message)
 		return -1;
 		
-	if ( sd->status.hom_id == 0 || !sd->homunculus.hp || sd->homunculus.vaporize )
+	if ( !merc_is_hom_active(sd->hd) )
 		return 1 ;
 
 	level = atoi(message);
