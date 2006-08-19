@@ -713,10 +713,19 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 		damage += status->batk;
 	
 	//rodatazone says that Overrefine bonuses are part of baseatk
+	//Here we also apply the weapon_atk_rate bonus so it is correctly applied on left/right hands.
 	if(sd) {
-		type = (wa == status->lhw)?sd->left_weapon.overrefine:sd->right_weapon.overrefine;
-		if (type > 0)
-			damage += rand()%type+1;
+		if (type == EQI_HAND_L) {
+			if(sd->left_weapon.overrefine)
+				damage += rand()%sd->left_weapon.overrefine+1;
+			if (sd->weapon_atk_rate[sd->weapontype2])
+				damage += damage*sd->weapon_atk_rate[sd->weapontype2]/100;;
+		} else { //Right hand
+			if(sd->right_weapon.overrefine)
+				damage += rand()%sd->right_weapon.overrefine+1;
+			if (sd->weapon_atk_rate[sd->weapontype1])
+				damage += damage*sd->weapon_atk_rate[sd->weapontype1]/100;;
+		}
 	}
 	return damage;
 }
@@ -1216,7 +1225,7 @@ static struct Damage battle_calc_weapon_attack(
 				  i |= 16; // for ex. shuriken must not be influenced by DEX
 				}
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
-				if (sstatus->lhw)
+				if (sstatus->lhw && flag.lh)
 					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
 
 				// Added split damage for Huuma
@@ -1230,8 +1239,8 @@ static struct Damage battle_calc_weapon_attack(
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
-					if ((sd->atk_rate != 100 || sd->weapon_atk_rate[sd->weapontype1] != 0))
-						ATK_RATE(sd->atk_rate + sd->weapon_atk_rate[sd->weapontype1]);
+					if (sd->atk_rate != 100)
+						ATK_RATE(sd->atk_rate);
 
 					if(flag.cri && sd->crit_atk_rate)
 						ATK_ADDRATE(sd->crit_atk_rate);
