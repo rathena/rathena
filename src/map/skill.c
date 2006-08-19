@@ -2435,7 +2435,6 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 
 	if (checkitem_flag) {
 		for(i=0;i<10;i++) {
-			int x = lv%11 - 1;
 			index[i] = -1;
 			if(itemid[i] <= 0)
 				continue;

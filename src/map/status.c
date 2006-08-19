@@ -6795,7 +6795,7 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 	struct status_change *sc;
 	struct unit_data *ud;
 	struct map_session_data *sd;
-	int val,rate,bonus,flag;
+	int val,rate,bonus = 0,flag;
 
 	if (!(bl->type&BL_REGEN))
 		return 0;
@@ -6850,7 +6850,6 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 	if (flag&(RGN_HP|RGN_SP))
 	{
 		struct view_data *vd = status_get_viewdata(bl);
-		bonus = 0;
 		if(vd && vd->dead_sit)
 			bonus++;
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKREGEN))

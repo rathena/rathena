@@ -427,6 +427,8 @@ void merc_save(struct homun_data *hd)
 	intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus) ;
 }
 
+#if 0
+// Not currently used [Toms]
 static int merc_calc_pos(struct homun_data *hd,int tx,int ty,int dir)	//[orn]
 {
 	int x,y,dx,dy;
@@ -480,6 +482,7 @@ static int merc_calc_pos(struct homun_data *hd,int tx,int ty,int dir)	//[orn]
 	hd->ud.to_y = y;
 	return 0;
 }
+#endif
 
 int merc_menu(struct map_session_data *sd,int menunum)
 {
