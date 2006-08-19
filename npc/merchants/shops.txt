@@ -22,6 +22,7 @@
 //= 1.6 Implemented a missing Tool Shop in Lighthalzen [MasterOfMuppets]
 //= 1.7 Added some missing iRO - Lighthalzen NPCs [Musashiden]
 //= 1.8 Added Rachel Official shops. Special Thanks to RockmanEXE. [erKURITA]
+//= 1.9 Uncommented Homunculus shop, since Homunculus is working on trunk now. [Evera]
 //============================================================ 
 
 
@@ -45,8 +46,8 @@ aldeba_in.gat,20,60,5	shop	Armor Dealer	101,2228:-1,2103:-1,2105:-1,2307:-1,2309
 aldeba_in.gat,28,54,5	shop	Weapon Dealer	85,1201:-1,1204:-1,1207:-1,1210:-1,1213:-1,1216:-1,1219:-1,1222:-1,1771:-1
 aldeba_in.gat,22,47,4	shop	Weapon Dealer	713,1146:-1,1245:-1
 aldeba_in.gat,94,56,5	shop	Tool Dealer	83,501:-1,502:-1,503:-1,504:-1,506:-1,601:-1,602:-1,611:-1,610:-1,645:-1,656:-1
-//Commented out for now, until we get Homunculus working.
-//alde_alche.gat,38,184,2	shop	Homunculus Supplies	755,7143:-1,7141:-1,7140:-1,12040:-1
+//Uncommented for homunculus on trunk
+alde_alche.gat,38,184,2	shop	Homunculus Supplies	755,7143:-1,7141:-1,7140:-1,12040:-1
 aldebaran.gat,166,109,7	shop	Ingredient Seller	750,580:-1,7482:-1	//temp goods
 
 //=======================================================
