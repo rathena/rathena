@@ -1668,7 +1668,7 @@
 5093,Blue_Coif_,Coif,5,12000,,300,,5,,1,0x00001100,7,0,768,,65,1,177,{ bonus bMaxSP,100; },{},{}
 5094,Orc_Hero_Helm,Helmet of Orc Hero,5,,10,900,,5,,0,0xFFFFFFFE,7,2,768,,55,1,178,{ bonus bStr,2; bonus bVit,1; },{},{}
 5096,Assassin_Mask_,Assassin Mask,5,,10,100,,0,,0,0x00001100,7,2,1,,70,0,180,{},{},{}
-5097,Cone_Hat_,4 Years Anniversary Hat,5,,10,400,,4,,0,0xFFFFFFFF,7,2,256,,0,1,144,{ bonus bAllStats,4; bonus bMdef,4; },{},{}
+5097,Cone_Hat_,4 Years Anniversary Hat,5,,10,400,,4,,0,0xFFFFFFFF,7,2,256,,0,1,144,{},{},{}
 5098,Tiger_Mask,Tiger Mask,5,,10,400,,2,,0,0xFFFFFFFF,7,2,768,,50,0,181,{ bonus bStr,3; bonus bMaxHP,100; },{},{}
 5099,Cat_Hat,Neko Mimi,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,0,1,182,{ bonus bLuk,2; bonus bMdef,10; bonus2 bSubRace,RC_Brute,5; },{},{}
 5100,Sales_Signboard,Sales Banner,5,,10,800,,1,,0,0xFFFFFFFF,7,2,256,,75,1,183,{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; },{},{}

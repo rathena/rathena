@@ -20,6 +20,7 @@
 
 =========================
 08/19
+	* Removed event bonus of 4 year anniversary hat [Playtester]
 	* Added HAMI_CASTLE block time [Toms]
 	* Updated NJ_BAKUENRYU skill tree [Toms]
 	* Updated HLIF_CHANGE skill [Toms]
