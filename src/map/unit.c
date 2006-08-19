@@ -1785,7 +1785,6 @@ int unit_free(struct block_list *bl, int clrtype) {
 				sd->homunculus.hom_id = 0;
 			}
 			sd->hd = NULL;
-			hd->master = NULL;
 		}
 	}
 
