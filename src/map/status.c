@@ -2236,15 +2236,18 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	
 	if((skill = merc_hom_checkskill(hd->master,HVAN_INSTRUCT)) > 0)
 	{
-		status->int_+=	1 +skill/2 +skill/4 +skill/5;
-		status->str +=	1 +2*(skill/3) +skill/4;
+		status->int_ +=	1 +skill/2 -skill/4 +skill/5;
+		status->str  +=	1 +2*(skill/3) +skill/4;
 	}
 
 	if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0)
 		status->max_hp += skill * 2 * status->max_hp / 100;
 
 	if((skill = merc_hom_checkskill(hd->master,HLIF_BRAIN)) > 0)
-		status->max_sp += skill * 1 * status->max_sp / 100 ;
+	{
+		int p = 1 +skill/2 -skill/4 +skill/5;
+		status->max_sp += p * status->max_sp / 100 ;
+	}
 
 	if (first) {
 		hd->battle_status.hp = hom->hp ;
