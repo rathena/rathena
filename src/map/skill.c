@@ -2353,9 +2353,13 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 {
 	struct status_data *status;
 	struct status_change *sc;
-	int j,hp,sp,hp_rate,sp_rate,state,mhp ;
-
+	TBL_PC * sd;
+	int i,j,hp,sp,hp_rate,sp_rate,state,mhp ;
+	int index[10],itemid[10],amount[10];
+	int checkitem_flag = 1, delitem_flag = 1;
+	
 	nullpo_retr(0, hd);
+	sd = hd->master;
 
 	if (lv <= 0) return 0;
 
@@ -2374,6 +2378,12 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	//Code speedup, rather than using skill_get_* over and over again.
 	if (lv < 1 || lv > MAX_SKILL_LEVEL)
 		return 0;
+
+	for(i = 0; i < 10; i++) {
+		itemid[i] = skill_db[j].itemid[i];
+		amount[i] = skill_db[j].amount[i];
+	}
+
 	hp = skill_db[j].hp[lv-1];
 	sp = skill_db[j].sp[lv-1];
 	hp_rate = skill_db[j].hp_rate[lv-1];
@@ -2393,21 +2403,22 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case HFLI_SBR44:
-			if(hd->master->homunculus.intimacy < 200)
+			if(sd->homunculus.intimacy < 200)
 				return 0;
 			break;
 		case HVAN_EXPLOSION:
-			if(hd->master->homunculus.intimacy < battle_config.hvan_explosion_intimate)
+			if(sd->homunculus.intimacy < battle_config.hvan_explosion_intimate)
 				return 0;
 			break;
 	}
+
 	if(!(type&2)){
 		if( hp>0 && status->hp <= (unsigned int)hp) {
-			clif_skill_fail(hd->master,skill,2,0);
+			clif_skill_fail(sd,skill,2,0);
 			return 0;
 		}
 		if( sp>0 && status->sp < (unsigned int)sp) {
-			clif_skill_fail(hd->master,skill,1,0);
+			clif_skill_fail(sd,skill,1,0);
 			return 0;
 		}
 	}
@@ -2416,14 +2427,37 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	case ST_MOVE_ENABLE:
 		//Check only on begin casting. [Skotlex]
 		if(!type && !unit_can_move(&hd->bl)) {
-			clif_skill_fail(hd->master,skill,0,0);
+			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
 		break;
 	}
 
+	if (checkitem_flag) {
+		for(i=0;i<10;i++) {
+			int x = lv%11 - 1;
+			index[i] = -1;
+			if(itemid[i] <= 0)
+				continue;
+
+			index[i] = pc_search_inventory(sd,itemid[i]);
+			if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i])
+			{
+				clif_skill_fail(sd,skill,0,0);
+				return 0;
+			}
+		}
+	}
+
 	if(!(type&1))
 		return 1;
+
+	if(delitem_flag) {
+		for(i=0;i<10;i++) {
+			if(index[i] >= 0)
+				pc_delitem(sd,index[i],amount[i],0);
+		}
+	}
 
 	if(type&2)
 		return 1;
