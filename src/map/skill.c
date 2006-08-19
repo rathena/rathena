@@ -5523,12 +5523,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if(rand()%100 > 20*skilllv || src == bl)
-			break; //Failed.
+		if (src == bl && sd && sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+			bl = &sd->hd->bl;
+		if(rand()%100 < 20*skilllv && src != bl)
 		{
 			int x,y;
 			x = src->x;
 			y = src->y;
+			if (hd)
+				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5540,6 +5543,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				map_foreachinrange(skill_chastle_mob_changetarget,src,
 					AREA_SIZE, BL_MOB, bl, src);
 			}
+		}
+		else
+		{
+			// Failed
+			if (hd)
+				clif_skill_fail(hd->master, skillid, 0, 0);
+			else
+				clif_skill_fail(sd, skillid, 0, 0);
 		}
 		break;
 	case HVAN_CHAOTIC:	//[orn]

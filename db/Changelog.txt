@@ -20,6 +20,7 @@
 
 =========================
 08/19
+	* Added HAMI_CASTLE block time [Toms]
 	* Updated NJ_BAKUENRYU skill tree [Toms]
 	* Updated HLIF_CHANGE skill [Toms]
 	* Updated Kouenka, removed aftercast delay [Toms]
