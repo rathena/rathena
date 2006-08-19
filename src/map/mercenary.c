@@ -537,7 +537,7 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 		merc_hom_increase_intimacy(hd, 100);
 		emotion = 2;
 	} else {
-		merc_hom_increase_intimacy(hd, 25);
+		merc_hom_increase_intimacy(hd, 50);
 		emotion = 2;
 	}
 
