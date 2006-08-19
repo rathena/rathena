@@ -330,6 +330,7 @@ int merc_hom_change_class(struct homun_data *hd, short class_)
 	hd->homunculusDB = &homunculus_db[i];
 	hd->master->homunculus.class_ = class_;
 	status_set_viewdata(&hd->bl, class_);
+	merc_hom_calc_skilltree(hd->master);
 	return 1;
 }
 

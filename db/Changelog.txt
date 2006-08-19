@@ -20,6 +20,8 @@
 
 =========================
 08/19
+	* Updated NJ_BAKUENRYU skill tree [Toms]
+	* Updated HLIF_CHANGE skill [Toms]
 	* Updated Kouenka, removed aftercast delay [Toms]
 	* Fixed some Ninja weapons (1Hand Sword -> Dagger) [Toms]
 08/18

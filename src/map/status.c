@@ -5741,8 +5741,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		sc->data[type].val2 = 5*status->max_hp/100;
 		status_heal(bl, status->max_hp, 0, 1); //Do not use percent_heal as this healing must override BERSERK's block.
 		status_set_sp(bl, 0, 0); //Damage all SP
-	} else if (type==SC_CHANGE) //Heal all HP
-		status_percent_heal(bl, 100, 0);
+	} else if (type==SC_CHANGE) //Heal all HP/SP
+		status_percent_heal(bl, 100, 100);
 
 
 	if (type==SC_RUN) {
@@ -6092,6 +6092,11 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					pc_setsavepoint(sd, sd->mapindex, bl->x, bl->y);
 			}
 			break; //guess hes not in jail :P
+		case SC_CHANGE:
+			// "lose almost all her HP and SP"
+			status_set_hp(bl, 10, 0);
+			status_set_sp(bl, 10, 0);
+			break;
 		}
 
 	opt_flag = 1;
