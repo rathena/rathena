@@ -3191,6 +3191,14 @@ static int mob_readdb(void)
 			status->int_=atoi(str[17]);
 			status->dex=atoi(str[18]);
 			status->luk=atoi(str[19]);
+			//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
+			if (status->str < 1) status->str = 1;
+			if (status->agi < 1) status->agi = 1;
+			if (status->vit < 1) status->vit = 1;
+			if (status->int_< 1) status->int_= 1;
+			if (status->dex < 1) status->dex = 1;
+			if (status->luk < 1) status->luk = 1;
+
 			mob_db_data[class_]->range2=atoi(str[20]);
 			mob_db_data[class_]->range3=atoi(str[21]);
 			if (battle_config.view_range_rate!=100)
@@ -3250,10 +3258,11 @@ static int mob_readdb(void)
 					maxhp = maxhp * (double)battle_config.mvp_hp_rate /100.;
 			} else if (battle_config.monster_hp_rate != 100) //Normal mob
 				maxhp = maxhp * (double)battle_config.monster_hp_rate /100.;
-			if (maxhp < 1) maxhp = 1;
-			else if (maxhp > UINT_MAX) maxhp = UINT_MAX;
+			if (maxhp > UINT_MAX) maxhp = UINT_MAX;
 			status->max_hp = (unsigned int)maxhp;
 
+			if(status->max_hp < 1) status->max_hp = 1;
+			if(status->max_sp < 1) status->max_sp = 1;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
 
@@ -3367,11 +3376,6 @@ static int mob_readdb(void)
 					id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
 					id->mob[k].id = class_;
 				}
-			}
-
-			if (status->max_hp <= 0) {
-				ShowWarning ("Mob %d (%s) has no HP, using poring data for it\n", class_, mob_db_data[class_]->sprite);
-				mob_makedummymobdb(class_);
 			}
 		}
 		fclose(fp);
@@ -3880,6 +3884,14 @@ static int mob_read_sqldb(void)
 				status->int_ = TO_INT(17);
 				status->dex = TO_INT(18);
 				status->luk = TO_INT(19);
+				//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
+				if (status->str < 1) status->str = 1;
+				if (status->agi < 1) status->agi = 1;
+				if (status->vit < 1) status->vit = 1;
+				if (status->int_< 1) status->int_= 1;
+				if (status->dex < 1) status->dex = 1;
+				if (status->luk < 1) status->luk = 1;
+
 				mob_db_data[class_]->range2 = TO_INT(20);
 				mob_db_data[class_]->range3 = TO_INT(21);
 				status->size = TO_INT(22);
@@ -3923,10 +3935,11 @@ static int mob_read_sqldb(void)
 						maxhp = maxhp * (double)battle_config.mvp_hp_rate /100.;
 				} else if (battle_config.monster_hp_rate != 100) //Normal mob
 					maxhp = maxhp * (double)battle_config.monster_hp_rate /100.;
-				if (maxhp < 0) maxhp = 1;
-				else if (maxhp > UINT_MAX) maxhp = UINT_MAX;
+				if (maxhp > UINT_MAX) maxhp = UINT_MAX;
 				status->max_hp = (unsigned int)maxhp;
 
+				if(status->max_hp < 1) status->max_hp = 1;
+				if(status->max_sp < 1) status->max_sp = 1;
 				//Since mobs always respawn with full life...
 				status->hp = status->max_hp;
 				status->sp = status->max_sp;
@@ -4037,10 +4050,6 @@ static int mob_read_sqldb(void)
 						id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
 						id->mob[k].id = class_;
 					}
-				}
-				if (status->max_hp <= 0) {
-					ShowWarning ("Mob %d (%s) has no HP, using poring data for it\n", class_, mob_db_data[class_]->sprite);
-					mob_makedummymobdb(class_);
 				}
 			}
 

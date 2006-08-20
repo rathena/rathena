@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2006/08/20
+	* Added a check during mob_db loading so that the six basic stats, max hp
+	  and max sp are never below 1, as this could cause crashes when using
+	  certain skills. [Skotlex]
 	* Gravitation now only blocks the caster from using potions. [Skotlex]
 	* Corrected Madness Canceller letting you walk while the effect lasts.
 	  [Skotlex]
