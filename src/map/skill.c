@@ -5814,13 +5814,19 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				clif_slide(src,src->x,src->y);
 				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5);
 			}
-			clif_skill_fail(sd,ud->skillid,0,0);
 		}
 	}
 	ud->skillid = ud->skilllv = ud->skilltarget = 0;
 	ud->canact_tick = tick;
-	if(sd) sd->skillitem = sd->skillitemlv = -1;
-	if(md) md->skillidx  = -1;
+	if(sd)
+	{
+		sd->skillitem = sd->skillitemlv = -1;
+		clif_skill_fail(sd, ud->skillid, 0, 0);
+	}
+	else if (hd)
+		clif_skill_fail(hd->master, ud->skillid, 0, 0);
+	else if(md)
+		md->skillidx  = -1;
 	return 0;
 }
 
@@ -5935,7 +5941,10 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		clif_skill_fail(sd,ud->skillid,0,0);
 		sd->skillitem = sd->skillitemlv = -1;
 	}
-	if(md) md->skillidx  = -1;
+	else if (hd)
+		clif_skill_fail(hd->master, ud->skillid, 0, 0);
+	else if(md)
+		md->skillidx  = -1;
 	return 0;
 
 }

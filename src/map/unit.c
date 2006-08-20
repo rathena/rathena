@@ -733,9 +733,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	if(status_isdead(src))
 		return 0; // Ž€‚ñ‚Å‚¢‚È‚¢‚©
 
-	if( BL_CAST( BL_PC,  src, sd ) ) {
+	if( BL_CAST( BL_PC,  src, sd ) )
 		ud = &sd->ud;
-	} else
+	else 
 		ud = unit_bl2ud(src);
 
 	if(ud == NULL) return 0;

@@ -9754,7 +9754,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
 
-	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL) {
+	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
 		return;
 	}

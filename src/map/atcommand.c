@@ -7563,7 +7563,7 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 		return -1;
 	}
 
-	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL
+	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL
 		&& sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
@@ -9867,7 +9867,7 @@ int atcommand_homfriendly(
 		return -1;
 
 	friendly = atoi(message);
-	if (sd->status.hom_id > 0 && sd->hd) {
+	if (merc_is_hom_active(sd->hd)) {
 		if (friendly > 0 && friendly <= 1000) {
 			sd->homunculus.intimacy = friendly * 100 ;
 			clif_send_homdata(sd,SP_INTIMATE,friendly);
