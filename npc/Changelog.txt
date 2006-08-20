@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/20
+	* Implemented the Einbroch polution script. [MasterOfMuppets]
 	* Implemented the official 2005 headgear quests. [MasterOfMuppets]
 08/19
 	* Uncommented Homunculus shop for Homunculus in Trunk [Evera]

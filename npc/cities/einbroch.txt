@@ -25,6 +25,7 @@
 //= 1.1	Split quests into quests/cities_einbroch.txt [Evera]
 //= 1.2 Split more quests into above file [Evera]
 //= 1.3 Added (finally) the Garrison quest npc [erKURITA]
+//= 1.4 Implemented the polution script. [MasterOfMuppets]
 //============================================================
 
 
@@ -146,18 +147,48 @@ einbroch.gat,176,172,5	script	Khemko	855,{
 	set @Tower_Name$,"Khemko";
 	callfunc "Ein_Tower";
 	end;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Khemko";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,218,198,5	script	Mark	855,{
 	set @Tower_Name$,"Mark";
 	callfunc "Ein_Tower";
 	end;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Mark";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,174,228,5	script	Oberu	855,{
 	set @Tower_Name$,"Oberu";
 	callfunc "Ein_Tower";
 	end;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Oberu";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,175,196,5	script	Morei	854,{
@@ -195,6 +226,16 @@ s_Goback:
 	if(@towerwarp == 1)warp "einbroch.gat",178,172;
 	if(@towerwarp == 3)warp "einbroch.gat",172,228;
 	end;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Morei";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,208,208,3	script	Kesunboss	850,{
@@ -227,6 +268,17 @@ einbroch.gat,208,208,3	script	Kesunboss	850,{
 	mes "here if you wish to marvel in its";
 	mes "beauty and elegance.";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Kesunboss";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
+
 }
 
 einbroch.gat,232,255,5	script	Khowropher	847,{
@@ -253,6 +305,17 @@ einbroch.gat,232,255,5	script	Khowropher	847,{
 	mes "fate to suffer from this fould air";
 	mes "until the day I die.^6A6A6A*Sigh...*";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Khowropher";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
+
 }
 
 einbroch.gat,259,327,5	script	Leslie	846,{
@@ -276,6 +339,16 @@ einbroch.gat,259,327,5	script	Leslie	846,{
 	mes "pricks! But they sell stuff";
 	mes "here I can't buy back home...";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Leslie";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 
 einbroch.gat,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
@@ -332,6 +405,15 @@ s_Enviroment:
 	mes "the Einbroch Smog Alert, you";
 	mes "should find shelter immediately!";
 	close;
+
+OnHide:
+	specialeffect 16;
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#02	852
@@ -357,6 +439,16 @@ einbroch.gat,228,121,5	script	Little Toby	855,{
 	mes "going?! Dont leave";
 	mes "me, I'm all alone...!";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Little Toby";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 	
 einbroch.gat,229,149,3	script	Sleik	854,{
@@ -375,6 +467,16 @@ einbroch.gat,229,149,3	script	Sleik	854,{
 	mes "still, I guess having our own";
 	mes "Train Station is a good thing";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Sleik";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 
 einbroch.gat,236,191,3	script	Tan	855,{
@@ -399,6 +501,16 @@ einbroch.gat,236,191,3	script	Tan	855,{
 	mes "If you'll be here a while,";
 	mes "you should carry one with you.";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Tan";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 
 ein_in01.gat,31,217,3	script	Cendadt	851,{
@@ -432,6 +544,7 @@ ein_in01.gat,31,217,3	script	Cendadt	851,{
 	mes "before I get";
 	mes "in trouble...";
 	close;
+
 }
 
 ein_in01.gat,36,204,3	script	Rombell	851,{
@@ -459,6 +572,7 @@ ein_in01.gat,36,204,3	script	Rombell	851,{
 	mes "worse. How can we";
 	mes "solve this problem?";
 	close;
+
 }
 
 ein_in01.gat,49,202,3	script	Dorf	851,{
@@ -483,6 +597,7 @@ ein_in01.gat,49,202,3	script	Dorf	851,{
 	mes "thing keeps working the";
 	mes "way I want it to!";
 	close;
+
 }
 
 ein_in01.gat,48,220,3	script	Lowe	851,{
@@ -514,6 +629,7 @@ ein_in01.gat,48,220,3	script	Lowe	851,{
 	mes "of reaction's an old";
 	mes "habit for me, adventurer.";
 	close;
+
 }
 
 ein_in01.gat,43,253,4	script	Canphotii	852,{
@@ -539,6 +655,7 @@ ein_in01.gat,43,253,4	script	Canphotii	852,{
 	mes "in! This requires extreme";
 	mes "disciplinary action!";
 	close;
+
 }
 
 ein_in01.gat,68,209,4	script	Khashurantze	852,{
@@ -763,6 +880,16 @@ einbroch.gat,188,72,3	script	Keneshiotz	855,{
 	mes "know that money makes";
 	mes "the world go 'round?";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Keneshiotz";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 
 ein_in01.gat,206,224,2	script	Hotel Employee	855,{

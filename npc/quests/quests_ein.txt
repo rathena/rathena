@@ -14,6 +14,7 @@
 //= 1.1 Added more quests [Evera]
 //= 1.2 Added quest bits from Einbech and renamed file to
 //=	quests_ein.txt [Evera]
+//= 1.3 Implemented the polution quest. [MasterOfMuppets]
 //============================================================ 
 
 //============================================================
@@ -730,6 +731,16 @@ einbroch.gat,51,56,6	script	Laboratory Soldier#01	852,{
 	mes "Please leave";
 	mes "immediately";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Laboratory Soldier#01";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 einbroch.gat,51,47,6	script	Laboratory Soldier#02	852,{
 	mes "[Laboratory Soldier]";
@@ -737,6 +748,16 @@ einbroch.gat,51,47,6	script	Laboratory Soldier#02	852,{
 	mes "Please leave";
 	mes "immediately";
 	close;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Laboratory Soldier#02";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 ein_in01.gat,254,35,1	script	Scientist	749,{
 	mes "[Scientist]";
@@ -2716,12 +2737,230 @@ s_Giveclothes:
 }
 
 //============================================================
+//=========================================== Einbroch Polution
+//============================================================
+
+einbroch.gat,1,1,0	script	#PolutionNPC	-1,{
+OnPolution:
+
+	donpcevent "Liotzburg::OnHide";
+	donpcevent "Morei::OnHide";
+	donpcevent "Mark::OnHide";
+	donpcevent "Khemko::OnHide";
+	donpcevent "Oberu::OnHide";
+	donpcevent "Khowroper::OnHide";
+	donpcevent "Kesunboss::OnHide";
+	donpcevent "Train Station Staff#01::OnHide";
+	donpcevent "Train Station Staff#02::OnHide";
+	donpcevent "Leslie::OnHide";
+	donpcevent "Little Toby::OnHide";
+	donpcevent "Tan::OnHide";
+	donpcevent "Keneshiotz::OnHide";
+	donpcevent "Sleik::OnHide";
+	donpcevent "Uwe Kleine::OnHide";
+	donpcevent "Laboratory Soldier#01::OnHide";
+	donpcevent "Laboratory Soldier#02::OnHide";
+	disablenpc "Paddler";
+	disablenpc "Head Gear Dealer";
+
+	mapannounce "einbroch.gat","This is a state of emercency! Harmful smog is reaching high levels of saturation. Residents of Einbroch must find shelter immediately.",bc_map;
+	monster "einbroch.gat",82,332,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",99,328,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",122,317,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",138,319,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",147,312,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",159,316,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",173,315,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",161,311,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",147,296,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",168,282,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",175,271,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",146,274,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",160,272,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",155,256,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",179,262,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",192,248,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",212,255,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",230,250,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",246,251,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",262,254,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",253,240,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",202,245,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",181,251,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",172,238,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",146,242,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",186,226,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",173,239,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",124,248,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",120,234,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",98,234,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",101,219,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",89,208,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",96,191,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",76,194,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",60,196,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",45,194,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",34,201,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",40,184,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",64,173,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",96,173,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",41,155,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",46,131,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",46,108,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",38,93,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",55,86,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",81,81,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",107,82,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",107,104,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",123,73,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",132,87,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",125,63,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",142,64,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",150,52,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",157,37,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",179,39,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",197,46,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",217,67,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",246,54,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",228,110,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",250,118,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",273,127,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",288,138,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",281,160,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",281,192,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",291,201,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",283,218,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",268,216,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",273,196,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk"; 
+	monster "einbroch.gat",262,164,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",241,180,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",216,205,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",209,198,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",224,177,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",227,163,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",208,166,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",132,87,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",149,119,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",119,36,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",84,155,"Toxic Fog",1621,1,"#PolutionNPC::OnMobChk";
+	monster "einbroch.gat",82,107,"Red Fog",1620,1,"#PolutionNPC::OnMobChk";
+	initnpctimer;
+	end;
+
+OnMobChk:
+	if(mobcount("einbroch.gat","#PolutionNPC::OnMobChk"))end;
+
+OnTimer600000:
+	killmonster "einbroch.gat","#PolutionNPC::OnMobChk";
+	mapannounce "einbroch.gat","Emergency status is now cancelled. Air pollution levels are now within the safety zone.",bc_map;
+	enablenpc "Liotzburg";
+	donpcevent "Liotzburg::OnUnHide";
+	enablenpc "Morei";
+	donpcevent "Morei::OnUnHide";
+	enablenpc "Mark";
+	donpcevent "Mark::OnUnHide";
+	enablenpc "Khemko";
+	donpcevent "Khemko::OnUnHide";
+	enablenpc "Oberu";
+	donpcevent "Oberu::OnUnHide";
+	enablenpc "Khowroper";
+	donpcevent "Khowroper::OnUnHide";
+	enablenpc "Kesunboss";
+	donpcevent "Kesunboss::OnUnHide";
+	enablenpc "Train Station Staff#01";
+	donpcevent "Train Station Staff#01::OnUnHide";
+	enablenpc "Train Station Staff#02";
+	donpcevent "Train Station Staff#02::OnUnHide";
+	enablenpc "Leslie";
+	donpcevent "Leslie::OnUnHide";
+	enablenpc "Little Toby";
+	donpcevent "Little Toby::OnUnHide";
+	enablenpc "Tan";
+	donpcevent "Tan::OnUnHide";
+	enablenpc "Keneshiotz";
+	donpcevent "Keneshiotz::OnUnHide";
+	enablenpc "Sleik";
+	donpcevent "Sleik::OnUnHide";
+	enablenpc "Uwe Kleine";
+	donpcevent "Uwe Kleine::OnUnHide";
+	enablenpc "Laboratory Soldier#01";
+	donpcevent "Laboratory Soldier#01::OnUnHide";
+	enablenpc "Laboratory Soldier#02";
+	donpcevent "Laboratory Soldier#02::OnUnHide";
+	enablenpc "Paddler";
+	enablenpc "Head Gear Dealer";
+	set $EinPolution,0;
+	end;
+
+}
+
+sec_in02.gat,127,86,3	script	Einbroch Polution	851,{
+
+	if(getgmlevel() > 79)
+	{
+	mes "[Einbroch Polution Variable Management]";
+	mes "$EinPolution is currently: " + $EinPolution + ".";
+	mes "What would you like to do?";
+	next;
+	menu "Reset $EinPolution to 0",s_0,"Input My Own Value",s_Input,"Cancel.",-;
+
+	close;
+
+s_0:
+	mes "[Einbroch Polution Variable Management]";
+	mes "$EinPolution has been reset to 0.";
+	close;
+
+s_Input:
+	mes "[Einbroch Polution Variable Management]";
+	mes "Insert a number you want $EinFactory";
+	mes "to be replaced with. Type '0' to cancel.";
+	input @temppol;
+	if(@temppol < 0)goto s_Error;
+	if(@temppol == 0)close;
+	set $EinPolution,@temppol;
+	mes "[Einbroch Polution Variable Management]";
+	mes "$EinPolution has been set to: " + $EinPolution + ".";
+	close;
+
+	}
+	else
+	{
+	mes "[Einbroch Polution Variable Management]";
+	mes "Sorry you don't have authorization";
+	mes "to use this NPC.";
+	close;
+	}
+
+}
+
+//============================================================
 //=========================================== Einbroch Factory
 //====================================================== Quest
+
 einbroch.gat,132,84,3	script	Liotzburg	853,{
 
-if(EinFactory > 13)goto s_Budget2;
-if(EinFactory == 13)goto s_Budget;
+	if($EinPolution > 9)
+	{
+	mes "[Liotzburg]";
+	mes "What's going on?!";
+	mes "Who's responsible?!";
+	mes "God, I can't believe";
+	mes "this is happening!";
+	mes "^333333*Cough Cough!*^000000";
+	next;
+	mes "[Liotzburg]";
+	mes "I need to get out of here!";
+	mes "You! D-do something and";
+	mes "fix this! I gotta hide and find";
+	mes "someplace safe!";
+	close2;
+	donpcevent "#PolutionNPC::OnPolution";
+	end;
+	}
+
+	if(EinFactory > 13)goto s_Budget2;
+	if(EinFactory == 13)goto s_Budget;
 	mes "[Liotzburg]";
 	mes "I'm the plant";
 	mes "superintendant of this";
@@ -2777,9 +3016,50 @@ s_Budget2:
 	next;
 	goto s_Budget;
 
+OnHide:
+	specialeffect 16;
+	disablenpc "Liotzburg";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
+
 }
 
 ein_in01.gat,67,243,3	script	Zelmeto	851,{
+
+	if($EinPolution > 9)
+	{
+	mes "[Zelmeto]";
+	mes "We've got a big problem";
+	mes "here! I appreciate that you've";
+	mes "been gathering the materials,";
+	mes "but the machines have been";
+	mes "broken for too long!";
+	next;
+	mes "[Zelmeto]";
+	mes "Right when I tried to";
+	mes "fix it, a huge shortout";
+	mes "occurred. Our town is";
+	mes "probably filled with";
+	mes "toxic fog right now!";
+	next;
+	mes "[Zelmeto]";
+	mes "I'll try my best to fix";
+	mes "this, but we really should";
+	mes "have allocated some funds";
+	mes "to fix this machine earlier!";
+	next;
+	mes "[Zelmeto]";
+	mes "The most important";
+	mes "thing is that you get";
+	mes "out of here and find";
+	mes "shelter! Right now!";
+	close2;
+	warp "einbroch.gat",131,83;
+	end;
+	}
 	
 	if(EinFactory > 0)goto s_Switches;
 	mes "[Zelmeto]";
@@ -3314,6 +3594,7 @@ s_Switches:
 		delitem 7317,10;
 		delitem 7319,10;
 		set EinFactory,16;
+		set $EinPolution,$EinPolution+1;
 		if (BaseLevel < 41) set BaseExp,BaseExp+615;
 		if ((BaseLevel >= 41) && (BaseLevel < 51)) set BaseExp,BaseExp+3075;
 		if ((BaseLevel >= 51) && (BaseLevel < 61)) set BaseExp,BaseExp+6604;
@@ -3871,5 +4152,14 @@ s_Cooking:
 	mes "want to ask me...?";
 	next;
 	goto s_Menu3;
+
+OnHide:
+	specialeffect 16;
+	disablenpc "Uwe Kleine";
+	end;
+
+OnUnhide:
+	misceffect 215;
+	end;
 
 }
