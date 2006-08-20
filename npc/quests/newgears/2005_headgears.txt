@@ -1,3 +1,17 @@
+//===== eAthena Script ======================================= 
+//= 2005 Headgear Quests
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: ========================================= 
+//= 2005 Headgears Official Quest.
+//===== Additional Comments: =================================
+// 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
+//============================================================ 
+
 yuno.gat,222,116,3	script	Kasis#LhzHat	851,{
 
 	if(countitem(519) > 49 && countitem(7031) > 49 && countitem(548) > 49 && countitem(539) > 49)
