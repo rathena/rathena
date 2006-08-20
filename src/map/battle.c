@@ -754,6 +754,9 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 		pc_delitem(sd,sd->equip_index[10],qty,0);
 }
 
+struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
+struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
+
 //For quick div adjustment.
 #define damage_div_fix(dmg, div) { if (div > 1) (dmg)*=div; else if (div < 0) (div)*=-1; }
 /*==========================================
@@ -1813,10 +1816,6 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	}
 
-	//Breaker's int-based damage (applies after attribute modifiers)
-	if(skill_num==ASC_BREAKER)
-		ATK_ADD(rand()%500 + 500 + skill_lv * sstatus->int_ * 5);
-
 	if ((!flag.rh || !wd.damage) && (!flag.lh || !wd.damage2))
 		flag.cardfix = 0;	//When the attack does no damage, avoid doing %bonuses
 
@@ -2025,6 +2024,12 @@ static struct Damage battle_calc_weapon_attack(
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2=1;
 			wd.damage-=wd.damage2;
 		}
+	}
+
+	if(skill_num==ASC_BREAKER)
+	{	//Breaker's int-based damage (a misc attack?)
+		struct Damage md = battle_calc_misc_attack(src, target, skill_num, skill_lv, wflag);
+		wd.damage += md.damage;
 	}
 
 	if (wd.damage || wd.damage2) {
@@ -2518,6 +2523,7 @@ struct Damage  battle_calc_misc_attack(
 	case SN_FALCONASSAULT:
 	case PA_GOSPEL:
 	case CR_ACIDDEMONSTRATION:
+	case ASC_BREAKER:
 		md.flag = (md.flag&~BF_RANGEMASK)|BF_LONG;
 		break;
 	case HVAN_EXPLOSION:
@@ -2613,6 +2619,9 @@ struct Damage  battle_calc_misc_attack(
 	case HVAN_EXPLOSION:	//[orn]
 		md.damage = sstatus->hp * (50 + 50 * skill_lv) / 100 ;
 		break ;
+	case ASC_BREAKER:
+		md.damage = 500+rand()%500 + 5*skill_lv * sstatus->int_;
+		break;
 	}
 	
 	damage_div_fix(md.damage, md.div_);

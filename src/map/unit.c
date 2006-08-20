@@ -664,23 +664,24 @@ int unit_can_move(struct block_list *bl)
 			return 0;
 
 		if (sc->count && (
-			sc->data[SC_ANKLE].timer != -1 ||
-			sc->data[SC_AUTOCOUNTER].timer !=-1 ||
-			sc->data[SC_TRICKDEAD].timer !=-1 ||
-			sc->data[SC_BLADESTOP].timer !=-1 ||
-			sc->data[SC_BLADESTOP_WAIT].timer !=-1 ||
-			sc->data[SC_SPIDERWEB].timer !=-1 ||
-			(sc->data[SC_DANCING].timer !=-1 && (
+			sc->data[SC_ANKLE].timer != -1
+			|| sc->data[SC_AUTOCOUNTER].timer !=-1
+			|| sc->data[SC_TRICKDEAD].timer !=-1
+			|| sc->data[SC_BLADESTOP].timer !=-1
+			|| sc->data[SC_BLADESTOP_WAIT].timer !=-1
+			|| sc->data[SC_SPIDERWEB].timer !=-1
+			|| (sc->data[SC_DANCING].timer !=-1 && (
 				(sc->data[SC_DANCING].val4 && sc->data[SC_LONGING].timer == -1) ||
 				sc->data[SC_DANCING].val1 == CG_HERMODE	//cannot move while Hermod is active.
-			)) ||
-			sc->data[SC_MOONLIT].timer != -1 ||
-			(sc->data[SC_GOSPEL].timer !=-1 && sc->data[SC_GOSPEL].val4 == BCT_SELF) ||	// cannot move while gospel is in effect
-			sc->data[SC_STOP].timer != -1 ||
-			sc->data[SC_CLOSECONFINE].timer != -1 ||
-			sc->data[SC_CLOSECONFINE2].timer != -1 ||
-			(sc->data[SC_CLOAKING].timer != -1 && //Need wall at level 1-2
-			 sc->data[SC_CLOAKING].val1 < 3 && !(sc->data[SC_CLOAKING].val4&1))
+			))
+			|| sc->data[SC_MOONLIT].timer != -1
+			|| (sc->data[SC_GOSPEL].timer !=-1 && sc->data[SC_GOSPEL].val4 == BCT_SELF)	// cannot move while gospel is in effect
+			|| sc->data[SC_STOP].timer != -1
+			|| sc->data[SC_CLOSECONFINE].timer != -1
+			|| sc->data[SC_CLOSECONFINE2].timer != -1
+			|| (sc->data[SC_CLOAKING].timer != -1 && //Need wall at level 1-2
+				sc->data[SC_CLOAKING].val1 < 3 && !(sc->data[SC_CLOAKING].val4&1))
+			|| sc->data[SC_MADNESSCANCEL].timer != -1
 		))
 			return 0;
 	}
