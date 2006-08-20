@@ -3465,7 +3465,7 @@ int pc_memo(struct map_session_data *sd, int i) {
 int pc_checkskill(struct map_session_data *sd,int skill_id)
 {
 	if(sd == NULL) return 0;
-	if( skill_id>=10000 ){
+	if( skill_id>=GD_SKILLBASE){
 		struct guild *g;
 		if( sd->status.guild_id>0 && (g=guild_search(sd->status.guild_id))!=NULL)
 			return guild_checkskill(g,skill_id);

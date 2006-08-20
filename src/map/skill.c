@@ -5434,12 +5434,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			g = sd?sd->state.gmaster_flag:guild_search(status_get_guild_id(src));
 			if (!g)
 				break;
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			for(i = 0; i < g->max_member; i++, j++) {
 				if (j>8) j=0;
 				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd) {
 					 if (map[dstsd->bl.m].flag.nowarp && !map_flag_gvg(dstsd->bl.m))
 						 continue;
-					clif_skill_nodamage(src,bl,skillid,skilllv,1);
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
 					pc_setpos(dstsd, map[src->m].index, src->x+dx[j], src->y+dy[j], 2);
@@ -5510,7 +5510,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GLITTERING:
 		if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(rand()%100 < (50+10*skilllv))
+			if(rand()%100 < (10+10*skilllv))
 				pc_addspiritball(sd,skill_get_time(skillid,skilllv),10);
 			else if(sd->spiritball > 0)
 				pc_delspiritball(sd,1,0);
