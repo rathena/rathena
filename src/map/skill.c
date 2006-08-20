@@ -5523,8 +5523,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if (src == bl && sd && sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
-			bl = &sd->hd->bl;
 		if(rand()%100 < 20*skilllv && src != bl)
 		{
 			int x,y;
@@ -5549,7 +5547,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			// Failed
 			if (hd)
 				clif_skill_fail(hd->master, skillid, 0, 0);
-			else
+			else if (sd)
 				clif_skill_fail(sd, skillid, 0, 0);
 		}
 		break;

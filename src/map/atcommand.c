@@ -7547,6 +7547,7 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
+	struct block_list *bl;
 	int skillnum;
 	int skilllv;
 	char target[255];
@@ -7562,10 +7563,16 @@ atcommand_useskill(const int fd, struct map_session_data* sd,
 		return -1;
 	}
 
-	if (skill_get_inf(skillnum)&INF_GROUND_SKILL)
-		unit_skilluse_pos(&sd->bl, pl_sd->bl.x, pl_sd->bl.y, skillnum, skilllv);
+	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL
+		&& sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+		bl = &sd->hd->bl;
 	else
-		unit_skilluse_id(&sd->bl, pl_sd->bl.id, skillnum, skilllv);
+		bl = &sd->bl;
+	
+	if (skill_get_inf(skillnum)&INF_GROUND_SKILL)
+		unit_skilluse_pos(bl, pl_sd->bl.x, pl_sd->bl.y, skillnum, skilllv);
+	else
+		unit_skilluse_id(bl, pl_sd->bl.id, skillnum, skilllv);
 
 	return 0;
 }

@@ -2220,8 +2220,10 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->rhw.range = 1 + status->size;	//[orn]
 	status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
 	status->speed = DEFAULT_WALK_SPEED;
-	status->def = cap_value(hom->level/10 + status->vit/5, 0, SCHAR_MAX);
-	status->mdef = cap_value(hom->level/10 + status->int_/5, 0, SCHAR_MAX);
+	skill = hom->level/10 + status->vit/5;
+	status->def = cap_value(skill, 0, 99);
+	skill = hom->level/10 + status->int_/5;
+	status->mdef = cap_value(skill, 0, 99);
 
 	status->hp = 1;
 	status->sp = 1;
@@ -2243,10 +2245,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->max_hp += skill * 2 * status->max_hp / 100;
 
 	if((skill = merc_hom_checkskill(hd->master,HLIF_BRAIN)) > 0)
-	{
-		int p = 1 +skill/2 -skill/4 +skill/5;
-		status->max_sp += p * status->max_sp / 100 ;
-	}
+		status->max_sp += (1 +skill/2 -skill/4 +skill/5) * status->max_sp / 100 ;
 
 	if (first) {
 		hd->battle_status.hp = hom->hp ;
