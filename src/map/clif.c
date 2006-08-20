@@ -1473,8 +1473,8 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,29)=sd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (sd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
-	WBUFW(buf,35)=status->rhw.atk2+status->batk;
-	WBUFW(buf,37)=status->matk_max;
+	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
+	WBUFW(buf,37)=cap_value(status->matk_max, 0, SHRT_MAX);
 	WBUFW(buf,39)=status->hit;
 	WBUFW(buf,41)=status->cri/10;	//crit is a +1 decimal value!
 	WBUFW(buf,43)=status->def + status->vit ;

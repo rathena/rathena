@@ -2,7 +2,9 @@ Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
-
+2006/08/20
+	* Fixed some Homunc issues with HR servers (capping some values) [Toms]
+	* Added @hominfo command to obtain real values (not capped ones) [Toms]
 2006/08/19
 	* Fixed @homlvup bug [Toms]
 	* Fixed AM_REST & AM_RESU consumming SP if they fail [Toms]

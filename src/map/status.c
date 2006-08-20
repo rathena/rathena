@@ -2206,12 +2206,12 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 
 	status = &hd->base_status;
 	
-	status->str = (int) (hom->str / 10);
-	status->agi = (int) (hom->agi / 10);
-	status->vit = (int) (hom->vit / 10);
-	status->dex = (int) (hom->dex / 10);
-	status->int_ = (int) (hom->int_ / 10);
-	status->luk = (int) (hom->luk / 10);
+	status->str = hom->str / 10;
+	status->agi = hom->agi / 10;
+	status->vit = hom->vit / 10;
+	status->dex = hom->dex / 10;
+	status->int_ = hom->int_ / 10;
+	status->luk = hom->luk / 10;
 
 	status->def_ele =  hd->homunculusDB->element ;	//[orn]
 	status->ele_lv = 1;
@@ -2220,9 +2220,8 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->rhw.range = 1 + status->size;	//[orn]
 	status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
 	status->speed = DEFAULT_WALK_SPEED;
-	status->aspd_rate = 1000;
-	status->def =	hom->level/10 + status->vit/5;
-	status->mdef =	hom->level/10 + status->int_/5;
+	status->def = cap_value(hom->level/10 + status->vit/5, 0, SCHAR_MAX);
+	status->mdef = cap_value(hom->level/10 + status->int_/5, 0, SCHAR_MAX);
 
 	status->hp = 1;
 	status->sp = 1;

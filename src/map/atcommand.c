@@ -309,6 +309,7 @@ ACMD_FUNC(makehomun);	//[orn]
 ACMD_FUNC(homfriendly);	//[orn]
 ACMD_FUNC(homhungry);	//[orn]
 ACMD_FUNC(homtalk);	//[orn]
+ACMD_FUNC(hominfo);	//[Toms]
 
 /*==========================================
  *AtCommandInfo atcommand_info[]\‘¢‘Ì‚Ì’è‹`
@@ -638,6 +639,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_HomFriendly,			"@homfriendly",		60, atcommand_homfriendly },
 	{ AtCommand_HomHungry,			"@homhungry",		60, atcommand_homhungry },
 	{ AtCommand_HomTalk,			"@homtalk",		0, atcommand_homtalk },
+	{ AtCommand_HomInfo,			"@hominfo",		0, atcommand_hominfo },
 
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -9918,6 +9920,34 @@ int atcommand_homtalk(
 
 	snprintf(temp, sizeof temp ,"%s : %s",sd->homunculus.name,mes);
 	clif_message(&sd->hd->bl, temp);
+
+	return 0;
+}
+
+/*==========================================
+ * Show homunculus stats
+ *------------------------------------------
+ */
+int atcommand_hominfo(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+
+	nullpo_retr(-1, sd);
+
+	if(!merc_is_hom_active(sd->hd))
+		return -1;
+
+	clif_displaymessage(fd, "Homunculus stats :");
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"HP : %d/%d - SP : %d/%d", sd->hd->battle_status.hp, sd->hd->battle_status.max_hp, sd->hd->battle_status.sp, sd->hd->battle_status.max_sp);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"ATK : %d - MATK : %d~%d", sd->hd->battle_status.rhw.atk2+sd->hd->battle_status.batk, sd->hd->battle_status.matk_min, sd->hd->battle_status.matk_max);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %d", sd->homunculus.hunger, sd->homunculus.intimacy);
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }
