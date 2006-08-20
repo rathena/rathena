@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/20
+	* Fixed Fling not reducing DEF for 30 seconds [Playtester]
 08/19
 	* Removed event bonus of 4 year anniversary hat [Playtester]
 	* Added HAMI_CASTLE block time [Toms]
