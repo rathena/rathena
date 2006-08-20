@@ -174,12 +174,12 @@ struct s_homunculus {	//[orn]
 	int char_id;
 	short class_;
 	int hp,max_hp,sp,max_sp;
-	unsigned long intimacy;	//[orn]
+	unsigned int intimacy;	//[orn]
 	short hunger;
 	struct skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
-	unsigned long exp;
+	unsigned int exp;
 	short rename_flag;
 	short vaporize; //albator
 	int str ;
