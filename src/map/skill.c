@@ -1818,14 +1818,14 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			return 0;
 	} else if (flag && skill_get_nk(skillid)&NK_SPLASH) {
 		//Note that splash attacks often only check versus the targetted mob, those around the splash area normally don't get checked for being hidden/cloaked/etc. [Skotlex]
-		if (!status_check_skilluse(dsrc, bl, skillid, 2))
+		if (!status_check_skilluse(src, bl, skillid, 2))
 			return 0;
 	}
 
-	BL_CAST(BL_PC, dsrc, sd);
+	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, bl, tsd);
 
-	sstatus = status_get_status_data(dsrc);
+	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(bl);
 // Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
@@ -5510,7 +5510,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_GLITTERING:
 		if(sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(rand()%100 < (10+10*skilllv))
+			if(rand()%100 < (20+10*skilllv))
 				pc_addspiritball(sd,skill_get_time(skillid,skilllv),10);
 			else if(sd->spiritball > 0)
 				pc_delspiritball(sd,1,0);

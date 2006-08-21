@@ -10796,6 +10796,8 @@ int buildin_isequipped(struct script_state *st)
 	int i, j, k, id = 1;
 	int index, flag;
 	int ret = -1;
+	//Original hash to reverse it when full check fails.
+	unsigned int setitem_hash = 0, setitem_hash2 = 0;
 
 	sd = script_rid2sd(st);
 	
@@ -10803,7 +10805,9 @@ int buildin_isequipped(struct script_state *st)
 		push_val(st->stack,C_INT,0);
 		return 0;
 	}
-	
+
+	setitem_hash = sd->setitem_hash;
+	setitem_hash2 = sd->setitem_hash2;
 	for (i=0; id!=0; i++)
 	{
 		FETCH (i+2, id) else id = 0;
@@ -10860,7 +10864,11 @@ int buildin_isequipped(struct script_state *st)
 			ret &= flag;
 		if (!ret) break;
 	}
-	
+	if (!ret)
+  	{	//When check fails, restore original hash values. [Skotlex]
+		sd->setitem_hash = setitem_hash;
+		sd->setitem_hash2 = setitem_hash2;
+	}
 	push_val(st->stack,C_INT,ret);
 	return 0;
 }

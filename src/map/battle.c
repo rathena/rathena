@@ -2519,13 +2519,14 @@ struct Damage  battle_calc_misc_attack(
 	case PA_PRESSURE:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
-		flag.elefix = flag.cardfix = 0;
+		flag.cardfix = 0;
+	case ASC_BREAKER:
+		flag.elefix = 0;
 	case HT_BLITZBEAT:
 	case TF_THROWSTONE:
 	case SN_FALCONASSAULT:
 	case PA_GOSPEL:
 	case CR_ACIDDEMONSTRATION:
-	case ASC_BREAKER:
 		md.flag = (md.flag&~BF_RANGEMASK)|BF_LONG;
 		break;
 	case HVAN_EXPLOSION:
