@@ -4807,7 +4807,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	
 	pc_setdead(sd);
 	//Reset ticks.
-	sd->inchealspirithptick = sd->inchealspiritsptick =
 	sd->hp_loss_tick = sd->sp_loss_tick = 0;
 	
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
@@ -6753,54 +6752,6 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
 	return NULL;
 }
 
-int pc_spirit_heal_hp(struct map_session_data *sd, unsigned int diff_tick)
-{
-	int interval = battle_config.natural_heal_skill_interval;
-
-	if(!pc_issit(sd))
-		return 0;
-	
-	if(sd->regen.state.overweight)
-		interval += interval;
-
-	sd->inchealspirithptick += diff_tick;
-
-	while(sd->inchealspirithptick >= interval)
-	{
-		sd->inchealspirithptick -= interval;
-		if(status_heal(&sd->bl, sd->nsshealhp, 0, 3) < sd->nsshealhp)
-		{
-			sd->inchealspirithptick = 0;
-			return 1;
-		}
-	}
-	return 0;
-}
-
-int pc_spirit_heal_sp(struct map_session_data *sd, unsigned int diff_tick)
-{
-	int interval = battle_config.natural_heal_skill_interval;
-
-	if(!pc_issit(sd))
-		return 0;
-	
-	if(sd->regen.state.overweight)
-		interval += interval;
-
-	sd->inchealspiritsptick += diff_tick;
-
-	while(sd->inchealspiritsptick >= interval)
-	{
-		sd->inchealspiritsptick -= interval;
-		if(status_heal(&sd->bl, 0, sd->nsshealsp, 3) < sd->nsshealsp)
-		{
-			sd->inchealspiritsptick = 0;
-			return 1;
-		}
-	}
-	return 0;
-}
-
 void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 {
 	int hp = 0, sp = 0;
@@ -6985,7 +6936,7 @@ void pc_setstand(struct map_session_data *sd){
 		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
 	//Reset sitting tick.
-	sd->inchealspirithptick = sd->inchealspiritsptick = 0;
+	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;
 }
 

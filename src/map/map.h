@@ -465,6 +465,22 @@ struct view_data {
 	unsigned dead_sit : 2;
 };
 
+//Additional regen data that only players have.
+struct regen_data_sub {
+	unsigned short
+		hp,sp;
+
+	//tick accumulation before healing.
+	struct {
+		unsigned int hp,sp;
+	} tick;
+	
+	//Regen rates (where every 1 means +100% regen)
+	struct {
+		unsigned char hp,sp;
+	} rate;
+};
+
 struct regen_data {
 
 	unsigned short flag; //Marks what stuff you may heal or not.
@@ -488,6 +504,9 @@ struct regen_data {
 		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
+
+	//skill-regen, sitting-skill-regen (since not all chars with regen need it)
+	struct regen_data_sub *sregen, *ssregen;
 };
 
 struct party_member_data {
@@ -522,6 +541,7 @@ struct map_session_data {
 	struct weapon_atk base_lhw, battle_lhw; //Left-hand weapon atk data.
 	struct status_change sc;
 	struct regen_data regen;
+	struct regen_data_sub sregen, ssregen;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
@@ -627,7 +647,6 @@ struct map_session_data {
 	unsigned int canlog_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
 	unsigned int cantalk_tick;
-	int inchealspirithptick,inchealspiritsptick;
 
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]

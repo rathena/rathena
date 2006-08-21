@@ -256,10 +256,7 @@ struct map_session_data *pc_get_father(struct map_session_data *sd);
 struct map_session_data *pc_get_mother(struct map_session_data *sd);
 struct map_session_data *pc_get_child(struct map_session_data *sd);
 
-int pc_spirit_heal_hp(struct map_session_data *sd, unsigned int diff_tick);
-int pc_spirit_heal_sp(struct map_session_data *sd, unsigned int diff_tick);
 void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick);
-
 
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);

@@ -127,12 +127,6 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	//歩いたので息吹のタイマーを初期化
-	if(sd) {
-		sd->inchealspirithptick = 0;
-		sd->inchealspiritsptick = 0;
-	}
-	
 	if(ud->walkpath.path[ud->walkpath.path_pos]>=8)
 		return 1;
 	x = bl->x;
