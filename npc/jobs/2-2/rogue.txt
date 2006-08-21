@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -20,6 +20,8 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged JFunc [Lupus]
+//= 2.3 Added a possibility for players doing Meginjyard quest
+//= to enter Rogue guild as there's a NPC inside [SinSloth]
 //============================================================ 
 
 
@@ -663,8 +665,9 @@ function	script	F_RogueTest3	{
 	mes "[???]";
 	mes "Who's there?!!!";
 	mes "Who dares to trespass on my territory?";
+	if(god_megin_2 > 0 && getarg(1) == "Aragham") goto L_Pass;
 	if(BaseJob != Job_Thief || ROGUE_Q<3 || ROGUE_Q2==0) close;
-
+L_Pass:
 	deletearray @choice$[1], 4;
 	next;
 	menu "My father",M_1a, "Aragham",M_1b, "Antonio",M_1c, "Legolas",M_1d;
@@ -734,7 +737,9 @@ function	script	F_RogueTest3	{
 
 L_Check:
 	callsub sF_Password;
+	if(god_megin_2 > 0) goto L_Enter;
 	if(ROGUE_Q2 != getarg(0)) goto L_Wrong;
+L_Enter:
 	if((@choice$[1] != getarg(1)) || (@choice$[2] != getarg(2)) || (@choice$[3] != getarg(3)) || (@choice$[4] != getarg(4))) goto L_Wrong;
 	mes "~ creeek ~";
 	mes "You hear the door begining to open........";
@@ -784,6 +789,7 @@ in_rogue.gat,183,105,4	script	Antonio Junior#02	88,{
 // Function for Guildsman =============================
 function	script	F_RogueTest4	{
 
+	if(Class != Job_Thief || ROGUE_Q2 != 1) goto L_NoThief;
 	if(ROGUE_Q == 4) goto L_Restart;
 	mes "[" + getarg(0) + "]";
 	mes "Hello there... You must be from the Rogue guild.  My name is " + getarg(0) + "...... I am the Rogue of the Desert..............";
@@ -836,6 +842,26 @@ L_Restart:
 	mes "If you're up for it, I'll send you back in.  Failure has a way of teaching success.... yada yada yada....";
 	percentheal 100,100;
 	goto M_Menu;
+
+L_NoThief:
+	mes "[" + getarg(0) +"]";
+	mes "I don't know how you got the";
+		if(ROGUE_Q2)
+	{
+		mes "pass, but I am not the one";
+		mes "in charge of your test.";
+	}
+		else
+	{
+		mes "pass, but looking at your face,";
+		mes "I guess you're not here for the";
+		mes "Rogue test.";
+	}
+	next;
+	mes "[" + getarg(0) +"]";
+	mes "Please hurry up and leave";
+	mes "this place as soon as you can!";
+	close;
 }
 
 //================================================
