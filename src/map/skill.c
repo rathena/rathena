@@ -3766,9 +3766,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 	case HLIF_AVOID:
+		if (hd)
+			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 	case HAMI_DEFENCE:
 		i = skill_get_time(skillid,skilllv);
-		clif_skill_nodamage(src,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,i)); // Master
+		clif_skill_nodamage(bl,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,i)); // Master
 		clif_skill_nodamage(src,src,skillid,skilllv,sc_start(src,type,100,skilllv,i)); // Homunc
 		break;
 	case NJ_BUNSINJYUTSU:
@@ -5532,10 +5534,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				clif_skill_nodamage(src,src,skillid,skilllv,1); // Homunc
 				clif_fixpos(src) ;
 				if (unit_movepos(bl,x,y,0,0))
+				{
+					clif_skill_nodamage(bl,bl,skillid,skilllv,1); // Master
 					clif_fixpos(bl) ;
+				}
 
 				//TODO: Shouldn't also players and the like switch targets?
 				map_foreachinrange(skill_chastle_mob_changetarget,src,
