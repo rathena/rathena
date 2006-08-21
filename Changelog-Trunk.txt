@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/21
+	* Moved homunc battle conf from misc.conf to homunc.conf [Toms]
 	* Some cleaning in skill.c in regard to homun skills. [Skotlex]
 	* Madness Canceller now stacks with other aspd bonuses, just like Berserk
 	  does. [Skotlex]
