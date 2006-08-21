@@ -35,6 +35,11 @@ Playtester
 
 Date		Added
 ======
+08/21
+	* Implemented the God item quest. [MasterOfMuppets]
+	- Thanks to SinSloth for scripting most of it.
+	- Beware of potential bugs.
+	- A grammar check-up would be appreciated.
 08/20
 	* Implemented the Einbroch polution script. [MasterOfMuppets]
 	* Implemented the official 2005 headgear quests. [MasterOfMuppets]

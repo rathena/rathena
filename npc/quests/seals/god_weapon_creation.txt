@@ -1,0 +1,1595 @@
+//===== eAthena Script ======================================= 
+//= God items creation NPCs
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: ========================================= 
+//= 
+//===== Additional Comments: =================================
+// 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//============================================================
+
+gld_dun01.gat,28,85,0	script	Grunburti	826,{
+
+	mes "[Dwarf Grunburti]";
+	mes "Hmmhah! What brought you here, human!";
+	mes "Living in Midgard and away from my home town is painful enough, let alone facing a whiney human. Leave me alone!";
+	next;
+		switch( select( "Ask him about dwarves.", "Ask him what he is doing.", "Request a weapon creation.", "Cancel." ) )
+	{
+
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "Ah, what an annoying human! What do you want to know about us, huh?";
+		mes "We are the toughest race that have bare to live in the barren land. Feeble-minded midgardians can not imagine how sterile our land is!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "All the knowledge and skills that you are proud of were used to be ours.";
+		mes "Even weapons used by ancient Gods were made by our ancestors. Do you know that?";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "We have the greatest knowlege and skills yet we have taken our fate to live in the barren land of Giants, that's who we are!";
+		close;
+	break;
+
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "Did you just ask what I am doing here?";
+		mes "Muhahahaha....I was waiting for the time to kick your ass!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Heheheheh, don't you worry. In fact, I will only humiliate myself by fighting with such a weakling like you.";
+		mes "Humans are so weak yet are too arrogant and love power struggling each other. You are just helpless...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "My home town....I will never be able to go back...from this Midgard.";
+		mes "Because Yggdrasil tree, the only way to my home town have dissappeared during the war in 1000 years ago.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "That is why I have been staying in Midgard!";
+		mes "At least I am lucky because I found this cave where the environment is similar as my home town...";
+		close;
+	break;
+
+	case 3:
+		set @god_guild,getcharid(2);
+			if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+		{
+				if ($God1 > 49 && $God2 > 49 && $God3 > 49 && $God4 > 49 && strcharinfo(0) == getguildmaster(@god_guild))
+			{
+				mes "[Dwarf Grunburti]";
+				mes "Hmm...I need some materials to make a weapon.";
+				mes "Which weapon do you want to have?";
+				next;
+					switch( select(	 "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+				{
+					case 1:
+						mes "[Dwarf Grunburti]";
+              				        mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+					        mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+				}
+			}
+				else
+			{
+				mes "[Dwarf Grunburti]";
+				mes "We, dwarves have too high pride to share own skills with such a low race like human!";
+				mes "Stop interrupting me and leave immediately! Go play with monsters, your favorite toys!";
+				close;
+			}
+		}
+			if (strcharinfo(0) != getguildmaster(@god_guild))
+		{
+			mes "[Dwarf Grunburti]";
+			mes "I will only present my significant skills to humans of high social standing!";
+			mes "Go bring your ^0000FFguildmaster^000000!";
+			close;
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "since you are a master of guild and all the seals have been released, I think I can give you a chance to look at.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "First of all, I shall confirm if you have brought all the necessary materials to forge a godly item or not!";
+		mes "I hate to see humans wandering about my home without any purpose!";
+		next;
+					if (countitem(7073) > 3 && countitem(7077) > 3 && countitem(7088) > 2 && countitem(7090) > 2 && countitem(7092) > 2 && countitem(726) > 1 && countitem(722) > 2 && countitem(727) > 9 && countitem(724) > 4 && countitem(969) > 19 && countitem(2603) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFBrisingamen^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7058) > 0 && countitem(969) > 19 && countitem(726) > 9 && countitem(984) > 9 && countitem(2627) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMegingjard^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7076) > 2 && countitem(7079) > 4 && countitem(7083) > 2 && countitem(7086) > 3 && countitem(7087) > 2 && countitem(969) > 19 && countitem(985) > 9 && countitem(2406) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFSleipnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7074) > 1 && countitem(7075) > 3 && countitem(7078) > 4 && countitem(7089) > 4 && countitem(7091) > 4 && countitem(984) > 19 && countitem(985) > 4 && countitem(969) > 39 && countitem(1522) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMjolnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "...........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "....";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "?! You have not brought all the necessary materials!";
+					mes "...did you forget what you need?";
+					mes "Listen carefully this time!";
+					next;
+						switch( select( "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+					{
+					case 1:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+					}
+				}
+		mes "[Dwarf Grunburti]";
+		mes "I will do a favor for you this time.";
+		mes "I cannot start to work in here. Come to ^0000FFthe underground laboratory^000000.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
+		close2;
+		warp "que_god01.gat",214,63;
+		end;
+	break;
+
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "Muhahahahahaha!";
+		mes "Go grow up first!";
+		close;
+	break;
+
+	}
+}
+
+gld_dun02.gat,85,84,0	script	Grunburti	826,{
+
+	mes "[Dwarf Grunburti]";
+	mes "Hmmhah! What brought you here, human!";
+	mes "Living in Midgard and away from my home town is painful enough, let alone facing a whiney human. Leave me alone!";
+	next;
+		switch( select( "Ask him about dwarves.", "Ask him what he is doing.", "Request a weapon creation.", "Cancel." ) )
+	{
+
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "Ah, what an annoying human! What do you want to know about us, huh?";
+		mes "We are the toughest race that have bare to live in the barren land. Feeble-minded midgardians can not imagine how sterile our land is!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "All the knowledge and skills that you are proud of were used to be ours.";
+		mes "Even weapons used by ancient Gods were made by our ancestors. Do you know that?";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "We have the greatest knowlege and skills yet we have taken our fate to live in the barren land of Giants, that's who we are!";
+		close;
+	break;
+
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "Did you just ask what I am doing here?";
+		mes "Muhahahaha....I was waiting for the time to kick your ass!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Heheheheh, don't you worry. In fact, I will only humiliate myself by fighting with such a weakling like you.";
+		mes "Humans are so weak yet are too arrogant and love power struggling each other. You are just helpless...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "My home town....I will never be able to go back...from this Midgard.";
+		mes "Because Yggdrasil tree, the only way to my home town have dissappeared during the war in 1000 years ago.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "That is why I have been staying in Midgard!";
+		mes "At least I am lucky because I found this cave where the environment is similar as my home town...";
+		close;
+	break;
+
+	case 3:
+		set @god_guild,getcharid(2);
+			if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+		{
+				if ($God1 > 49 && $God2 > 49 && $God3 > 49 && $God4 > 49 && strcharinfo(0) == getguildmaster(@god_guild))
+			{
+				mes "[Dwarf Grunburti]";
+				mes "Hmm...I need some materials to make a weapon.";
+				mes "Which weapon do you want to have?";
+				next;
+					switch( select(	 "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+				{
+					case 1:
+						mes "[Dwarf Grunburti]";
+              				        mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+					        mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+				}
+			}
+				else
+			{
+				mes "[Dwarf Grunburti]";
+				mes "We, dwarves have too high pride to share own skills with such a low race like human!";
+				mes "Stop interrupting me and leave immediately! Go play with monsters, your favorite toys!";
+				close;
+			}
+		}
+			if (strcharinfo(0) != getguildmaster(@god_guild))
+		{
+			mes "[Dwarf Grunburti]";
+			mes "I will only present my significant skills to humans of high social standing!";
+			mes "Go bring your ^0000FFguildmaster^000000!";
+			close;
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "since you are a master of guild and all the seals have been released, I think I can give you a chance to look at.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "First of all, I shall confirm if you have brought all the necessary materials to forge a godly item or not!";
+		mes "I hate to see humans wandering about my home without any purpose!";
+		next;
+					if (countitem(7073) > 3 && countitem(7077) > 3 && countitem(7088) > 2 && countitem(7090) > 2 && countitem(7092) > 2 && countitem(726) > 1 && countitem(722) > 2 && countitem(727) > 9 && countitem(724) > 4 && countitem(969) > 19 && countitem(2603) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFBrisingamen^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7058) > 0 && countitem(969) > 19 && countitem(726) > 9 && countitem(984) > 9 && countitem(2627) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMegingjard^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7076) > 2 && countitem(7079) > 4 && countitem(7083) > 2 && countitem(7086) > 3 && countitem(7087) > 2 && countitem(969) > 19 && countitem(985) > 9 && countitem(2406) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFSleipnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7074) > 1 && countitem(7075) > 3 && countitem(7078) > 4 && countitem(7089) > 4 && countitem(7091) > 4 && countitem(984) > 19 && countitem(985) > 4 && countitem(969) > 39 && countitem(1522) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMjolnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "...........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "....";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "?! You have not brought all the necessary materials!";
+					mes "...did you forget what you need?";
+					mes "Listen carefully this time!";
+					next;
+						switch( select( "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+					{
+					case 1:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+					}
+				}
+		mes "[Dwarf Grunburti]";
+		mes "I will do a favor for you this time.";
+		mes "I cannot start to work in here. Come to ^0000FFthe underground laboratory^000000.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
+		close2;
+		warp "que_god01.gat",214,63;
+		end;
+	break;
+
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "Muhahahahahaha!";
+		mes "Go grow up first!";
+		close;
+	break;
+
+	}
+}
+
+gld_dun03.gat,92,105,0	script	Grunburti	826,{
+
+	mes "[Dwarf Grunburti]";
+	mes "Hmmhah! What brought you here, human!";
+	mes "Living in Midgard and away from my home town is painful enough, let alone facing a whiney human. Leave me alone!";
+	next;
+		switch( select( "Ask him about dwarves.", "Ask him what he is doing.", "Request a weapon creation.", "Cancel." ) )
+	{
+
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "Ah, what an annoying human! What do you want to know about us, huh?";
+		mes "We are the toughest race that have bare to live in the barren land. Feeble-minded midgardians can not imagine how sterile our land is!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "All the knowledge and skills that you are proud of were used to be ours.";
+		mes "Even weapons used by ancient Gods were made by our ancestors. Do you know that?";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "We have the greatest knowlege and skills yet we have taken our fate to live in the barren land of Giants, that's who we are!";
+		close;
+	break;
+
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "Did you just ask what I am doing here?";
+		mes "Muhahahaha....I was waiting for the time to kick your ass!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Heheheheh, don't you worry. In fact, I will only humiliate myself by fighting with such a weakling like you.";
+		mes "Humans are so weak yet are too arrogant and love power struggling each other. You are just helpless...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "My home town....I will never be able to go back...from this Midgard.";
+		mes "Because Yggdrasil tree, the only way to my home town have dissappeared during the war in 1000 years ago.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "That is why I have been staying in Midgard!";
+		mes "At least I am lucky because I found this cave where the environment is similar as my home town...";
+		close;
+	break;
+
+	case 3:
+		set @god_guild,getcharid(2);
+			if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+		{
+				if ($God1 > 49 && $God2 > 49 && $God3 > 49 && $God4 > 49 && strcharinfo(0) == getguildmaster(@god_guild))
+			{
+				mes "[Dwarf Grunburti]";
+				mes "Hmm...I need some materials to make a weapon.";
+				mes "Which weapon do you want to have?";
+				next;
+					switch( select(	 "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+				{
+					case 1:
+						mes "[Dwarf Grunburti]";
+              				        mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+					        mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+				}
+			}
+				else
+			{
+				mes "[Dwarf Grunburti]";
+				mes "We, dwarves have too high pride to share own skills with such a low race like human!";
+				mes "Stop interrupting me and leave immediately! Go play with monsters, your favorite toys!";
+				close;
+			}
+		}
+			if (strcharinfo(0) != getguildmaster(@god_guild))
+		{
+			mes "[Dwarf Grunburti]";
+			mes "I will only present my significant skills to humans of high social standing!";
+			mes "Go bring your ^0000FFguildmaster^000000!";
+			close;
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "since you are a master of guild and all the seals have been released, I think I can give you a chance to look at.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "First of all, I shall confirm if you have brought all the necessary materials to forge a godly item or not!";
+		mes "I hate to see humans wandering about my home without any purpose!";
+		next;
+					if (countitem(7073) > 3 && countitem(7077) > 3 && countitem(7088) > 2 && countitem(7090) > 2 && countitem(7092) > 2 && countitem(726) > 1 && countitem(722) > 2 && countitem(727) > 9 && countitem(724) > 4 && countitem(969) > 19 && countitem(2603) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFBrisingamen^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7058) > 0 && countitem(969) > 19 && countitem(726) > 9 && countitem(984) > 9 && countitem(2627) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMegingjard^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7076) > 2 && countitem(7079) > 4 && countitem(7083) > 2 && countitem(7086) > 3 && countitem(7087) > 2 && countitem(969) > 19 && countitem(985) > 9 && countitem(2406) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFSleipnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7074) > 1 && countitem(7075) > 3 && countitem(7078) > 4 && countitem(7089) > 4 && countitem(7091) > 4 && countitem(984) > 19 && countitem(985) > 4 && countitem(969) > 39 && countitem(1522) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMjolnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "...........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "....";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "?! You have not brought all the necessary materials!";
+					mes "...did you forget what you need?";
+					mes "Listen carefully this time!";
+					next;
+						switch( select( "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+					{
+					case 1:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+					}
+				}
+		mes "[Dwarf Grunburti]";
+		mes "I will do a favor for you this time.";
+		mes "I cannot start to work in here. Come to ^0000FFthe underground laboratory^000000.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
+		close2;
+		warp "que_god01.gat",214,63;
+		end;
+	break;
+
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "Muhahahahahaha!";
+		mes "Go grow up first!";
+		close;
+	break;
+
+	}
+}
+
+gld_dun04.gat,268,230,0	script	Grunburti	826,{
+
+	mes "[Dwarf Grunburti]";
+	mes "Hmmhah! What brought you here, human!";
+	mes "Living in Midgard and away from my home town is painful enough, let alone facing a whiney human. Leave me alone!";
+	next;
+		switch( select( "Ask him about dwarves.", "Ask him what he is doing.", "Request a weapon creation.", "Cancel." ) )
+	{
+
+	case 1:
+		mes "[Dwarf Grunburti]";
+		mes "Ah, what an annoying human! What do you want to know about us, huh?";
+		mes "We are the toughest race that have bare to live in the barren land. Feeble-minded midgardians can not imagine how sterile our land is!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "All the knowledge and skills that you are proud of were used to be ours.";
+		mes "Even weapons used by ancient Gods were made by our ancestors. Do you know that?";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "We have the greatest knowlege and skills yet we have taken our fate to live in the barren land of Giants, that's who we are!";
+		close;
+	break;
+
+	case 2:
+		mes "[Dwarf Grunburti]";
+		mes "Did you just ask what I am doing here?";
+		mes "Muhahahaha....I was waiting for the time to kick your ass!";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Heheheheh, don't you worry. In fact, I will only humiliate myself by fighting with such a weakling like you.";
+		mes "Humans are so weak yet are too arrogant and love power struggling each other. You are just helpless...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "My home town....I will never be able to go back...from this Midgard.";
+		mes "Because Yggdrasil tree, the only way to my home town have dissappeared during the war in 1000 years ago.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "That is why I have been staying in Midgard!";
+		mes "At least I am lucky because I found this cave where the environment is similar as my home town...";
+		close;
+	break;
+
+	case 3:
+		set @god_guild,getcharid(2);
+			if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+		{
+				if ($God1 > 49 && $God2 > 49 && $God3 > 49 && $God4 > 49 && strcharinfo(0) == getguildmaster(@god_guild))
+			{
+				mes "[Dwarf Grunburti]";
+				mes "Hmm...I need some materials to make a weapon.";
+				mes "Which weapon do you want to have?";
+				next;
+					switch( select(	 "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+				{
+					case 1:
+						mes "[Dwarf Grunburti]";
+              				        mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+					        mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "...";
+						mes "However, the time has not come yet. So wait until then. Muhahaha!";
+						close;
+					break;
+				}
+			}
+				else
+			{
+				mes "[Dwarf Grunburti]";
+				mes "We, dwarves have too high pride to share own skills with such a low race like human!";
+				mes "Stop interrupting me and leave immediately! Go play with monsters, your favorite toys!";
+				close;
+			}
+		}
+			if (strcharinfo(0) != getguildmaster(@god_guild))
+		{
+			mes "[Dwarf Grunburti]";
+			mes "I will only present my significant skills to humans of high social standing!";
+			mes "Go bring your ^0000FFguildmaster^000000!";
+			close;
+		}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "since you are a master of guild and all the seals have been released, I think I can give you a chance to look at.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "First of all, I shall confirm if you have brought all the necessary materials to forge a godly item or not!";
+		mes "I hate to see humans wandering about my home without any purpose!";
+		next;
+					if (countitem(7073) > 3 && countitem(7077) > 3 && countitem(7088) > 2 && countitem(7090) > 2 && countitem(7092) > 2 && countitem(726) > 1 && countitem(722) > 2 && countitem(727) > 9 && countitem(724) > 4 && countitem(969) > 19 && countitem(2603) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFBrisingamen^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7058) > 0 && countitem(969) > 19 && countitem(726) > 9 && countitem(984) > 9 && countitem(2627) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMegingjard^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7076) > 2 && countitem(7079) > 4 && countitem(7083) > 2 && countitem(7086) > 3 && countitem(7087) > 2 && countitem(969) > 19 && countitem(985) > 9 && countitem(2406) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFSleipnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else if (countitem(7074) > 1 && countitem(7075) > 3 && countitem(7078) > 4 && countitem(7089) > 4 && countitem(7091) > 4 && countitem(984) > 19 && countitem(985) > 4 && countitem(969) > 39 && countitem(1522) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Hmm, I guess you want to have ^0000FFMjolnir^000000!";
+					mes "Okay...then.";
+					next;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "...........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "........";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "....";
+					next;
+					mes "[Dwarf Grunburti]";
+					mes "?! You have not brought all the necessary materials!";
+					mes "...did you forget what you need?";
+					mes "Listen carefully this time!";
+					next;
+						switch( select( "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+					{
+					case 1:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF4 Freya's Jewel";
+						mes "4 Silver Ornament";
+						mes "3 Snow Crystal";
+						mes "3 Ripple";
+						mes "3 Drifting Air";
+						mes "2 Sapphire";
+						mes "3 Pearl";
+						mes "10 Opal";
+						mes "5 Cursed Ruby";
+						mes "20 Gold and";
+						mes "1 Necklace^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 2:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF1 Gleipnir";
+						mes "20 Gold";
+						mes "10 Sapphire";
+						mes "10 Oridecon";
+						mes "and 1 Belt^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 3:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF3 Wheel of the Unknown";
+						mes "5 Feather of Angel Wing";
+						mes "3 Sprit of Fish";
+						mes "4 Amblem of the Sun God";
+						mes "3 Breath of Spirit";
+						mes "20 Gold";
+						mes "10 Elunium";
+						mes "and 1 Slotted Boots^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+
+					case 4:
+						mes "[Dwarf Grunburti]";
+                                                mes "I will need...";
+						mes "^0000FF2 Thor's Gauntlets";
+						mes "4 Iron Maiden";
+						mes "5 Wrath of Valkyrie";
+						mes "5 Omen of Tempest";
+						mes "5 Billow";
+						mes "20 Oridecon";
+						mes "5 Elunium";
+						mes "40 Gold and";
+						mes "1 Stunner^000000...";
+						next;
+						mes "[Dwarf Grunburti]";
+						mes "....however, you seem to be slower than other human...";
+						mes "I start to wonder if you can have the godly item this time or not. Anyways, go for it!";
+						close;
+					break;
+					}
+				}
+		mes "[Dwarf Grunburti]";
+		mes "I will do a favor for you this time.";
+		mes "I cannot start to work in here. Come to ^0000FFthe underground laboratory^000000.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
+		close2;
+		warp "que_god01.gat",214,63;
+		end;
+	break;
+
+	case 4:
+		mes "[Dwarf Grunburti]";
+		mes "Muhahahahahaha!";
+		mes "Go grow up first!";
+		close;
+	break;
+
+	}
+}
+
+que_god01.gat,215,127,0	script	#god_hopewarp1	111,{
+	end;
+
+	OnInit:
+		waitingroom "Laboratory Entrance",2,"#god_hopewarp1::OnWarp",1;
+		end;
+	
+	OnWarp:
+		warpwaitingpc "que_god01.gat",155,63;
+		donpcevent "Grunburti#god::OnRun";
+		delwaitingroom;
+		end;
+}
+
+que_god01.gat,214,128,0	script	#que_godnpc1	111,{
+
+		mes "[Entrance Notice]";
+		mes "Only the quickest human being will possess the power of God.";
+		close;
+
+}
+
+que_god01.gat,215,128,0	script	#que_godnpc2"	111,{
+
+		mes "[Entrance Notice]";
+		mes "Only the quickest human being will possess the power of God.";
+		close;
+
+}
+
+que_god01.gat,213,128,0	script	#que_godnpc3	111,{
+
+		mes "[Entrance Notice]";
+		mes "Only the quickest human being will possess the power of God.";
+		close;
+
+}
+
+que_god01.gat,154,112,4	script	Grunburti#god	826,{
+
+		if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+	{
+		mes "[Dwarf Grunburti]";
+		mes "The godly item has been created already.";
+		mes "You must wait until all the seals are released again! Hahahaha!";
+		close;
+	}
+		set @god_guild,getcharid(2);
+		if (strcharinfo(0) != getguildmaster(@god_guild))
+	{
+			mes "[Dwarf Grunburti]";
+			mes "?! How did you come in here?";
+			mes "Get out immediately! I will only speak to humans of high social standing!";
+			close;
+	}
+		mes "[Dwarf Grunburti]";
+		mes "Although it is very humiliating to present my valuable skills to a human being...";
+		mes "I will do a favor for you this time.";
+		next;
+		mes "[Dwarf Grunburti]";
+		mes "Now! Choose an item that you wish to have! You have only ^FF000010 minutes to complete the weapon creation process^000000!";
+		mes "I am busy of course, also ^0000FFall the seals will be sealed up again shortly^000000!";
+		mes "^FF0000Don't be too slow^000000, otherwise ^FF0000I will give the chance to another human^000000 right away!";
+		next;
+			switch( select( "Brisingamen", "Megingjard", "Sleipnir", "Mjolnir" ) )
+		{
+
+		case 1:
+			mes "[Dwarf Grunburti]";
+			mes "Brisingamen!";
+			mes "How dare an insignificant man to own such a precious treasure!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "I must say, this necklace will possess no meaning unless it is worn by the goddess Freya!";
+			mes "Treasure will select its owner with its will. Let's see if it recognizes you as the owner or not!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Once again, I need following materials in order to reproduce the godly item.";
+			mes "^0000FF4 Freya's Jewel";
+			mes "4 Silver Ornament";
+			mes "3 Snow Crystal";
+			mes "3 Ripple";
+			mes "3 Drifting Air";
+			mes "2 Sapphire";
+			mes "3 Pearl";
+			mes "10 Opal";
+			mes "5 Cursed Ruby";
+			mes "20 Gold and";
+			mes "1 Necklace^000000...";
+			next;
+
+				switch( select( "Make Brisingamen.", "Cancel." ) )
+			{
+
+			case 1:
+					if (countitem(7073) > 3 && countitem(7077) > 3 && countitem(7088) > 2 && countitem(7090) > 2 && countitem(7092) > 2 && countitem(726) > 1 && countitem(722) > 2 && countitem(727) > 9 && countitem(724) > 4 && countitem(969) > 19 && countitem(2603) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Muhahahahaha!";
+					mes "I didn't imagine that I would use my skills for a human being...give me a moment!";
+					next;
+						if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+					{
+						mes "[Dwarf Grunburti]";
+						mes "The godly item has been created already.";
+						mes "You must wait until all the seals are released again! Hahahaha!";
+						close;
+					}
+					delitem 7073,4;
+					delitem 7077,4;
+					delitem 7088,3;
+					delitem 7090,3;
+					delitem 7092,3;
+					delitem 726,2;
+					delitem 722,3;
+					delitem 726,10;
+					delitem 724,5;
+					delitem 969,20;
+					delitem 2603,1;
+					getitem 2630,1;
+					set $God1,0;
+					set $God2,0;
+					set $God3,0;
+					set $God4,0;
+					announce "[Brisingamen] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					mes "[Dwarf Grunburti]";
+					mes "Look at this dazzling necklace, isn't it beautiful!";
+					mes "Ah~ surely there is no existance that can compete this item in this world.";
+					close;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Bah! You idiotic human being! You have not brought all the necessary materials! Go hurry up, be quick!";
+					close;
+				}
+			break;
+
+			case 2:
+				mes "[Dwarf Grunburti]";
+				mes "Muhahahaha~ somehow I figured that!";
+				close;
+			break;
+
+			}
+
+		break;
+
+		case 2:
+			mes "[Dwarf Grunburti]";
+			mes "Me.. Megingjard!";
+			mes "How dare an insignificant man to own such a precious treasure!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "This belt used to be worn by the greatest warrior Thor long time ago!";
+			mes "Treasure will select its owner with its will. Let's see if it recognizes you as the owner or not!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Once again, I need following materials in order to reproduce the godly item.";
+                        mes "^0000FF1 Gleipnir";
+			mes "20 Gold";
+			mes "10 Sapphire";
+			mes "10 Oridecon";
+			mes "and 1 Belt^000000...";
+			next;
+
+				switch( select( "Make Megingjard.", "Cancel." ) )
+			{
+
+			case 1:
+					if (countitem(7058) > 0 && countitem(969) > 19 && countitem(726) > 9 && countitem(984) > 9 && countitem(2627) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Muhahahahaha!";
+					mes "I didn't imagine that I would use my skills for a human being...give me a moment!";
+					next;
+						if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+					{
+						mes "[Dwarf Grunburti]";
+						mes "The godly item has been created already.";
+						mes "You must wait until all the seals are released again! Hahahaha!";
+						close;
+					}
+					
+					delitem 7058,1;
+					delitem 969,20;
+					delitem 726,10;
+					delitem 984,10;
+					delitem 2627,1;
+					getitem 2629,1;
+					set $God1,0;
+					set $God2,0;
+					set $God3,0;
+					set $God4,0;
+					announce "[Megingjard] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					mes "[Dwarf Grunburti]";
+					mes "Here you go!";
+					mes "Ah~ look at this majestic appearance...! I am overwhelmed already...";
+					close;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Bah! You idiotic human being! You have not brought all the necessary materials! Go hurry up, be quick!";
+					close;
+				}
+			break;
+
+			case 2:
+				mes "[Dwarf Grunburti]";
+				mes "Muhahahaha~ somehow I figured that!";
+				close;
+			break;
+
+			}
+
+		break;
+
+		case 3:
+			mes "[Dwarf Grunburti]";
+			mes "....the eight legged stallion, Sleipnir?!";
+			mes "How dare an insignificant man to own such a precious treasure!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Unfortunately I can only produce an object...not a life.";
+			mes "However, I can craft a pair of shoes that possess the power of Sleipnir.";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "Of course, even the shoes are too valuable to be given out to a human.";
+			mes "Once again, I need following materials in order to reproduce the godly item.";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "^0000FF3 Wheel of the Unknown";
+			mes "5 Feather of Angel Wing";
+			mes "3 Spirit of Fish";
+			mes "4 Amblem of the Sun God";
+			mes "3 Breath of Spirit";
+			mes "20 Gold";
+			mes "10 Elunium";
+			mes "and 1 Slotted Boots^000000...";
+			next;
+				switch( select( "Make Sleipnir.", "Cancel." ) )
+			{
+
+			case 1:
+					if (countitem(7076) > 2 && countitem(7079) > 4 && countitem(7083) > 2 && countitem(7086) > 3 && countitem(7087) > 2 && countitem(969) > 19 && countitem(985) > 9 && countitem(2406) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Muhahahahaha!";
+					mes "I didn't imagine that I would use my skills for a human being...give me a moment!";
+					next;
+						if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+					{
+						mes "[Dwarf Grunburti]";
+						mes "The godly item has been created already.";
+						mes "You must wait until all the seals are released again! Hahahaha!";
+						close;
+					}
+					delitem 7076,3;
+					delitem 7079,5;
+					delitem 7083,3;
+					delitem 7086,4;
+					delitem 7087,3;
+					delitem 969,20;
+					delitem 985,10;
+					delitem 2406,1;
+					getitem 2410,1;
+					set $God1,0;
+					set $God2,0;
+					set $God3,0;
+					set $God4,0;
+					announce "[Sleipnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					mes "[Dwarf Grunburti]";
+					mes "Here you go!";
+					mes "This pair of shoes are so light, you will never feel like wearing anything on your feet with this shoes!";
+					close;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Bah! You idiotic human being! You have not brought all the necessary materials! Go hurry up, be quick!";
+					close;
+				}
+			break;
+
+			case 2:
+				mes "[Dwarf Grunburti]";
+				mes "Muhahahaha~ somehow I figured that!";
+				close;
+			break;
+
+			}
+
+		break;
+
+		case 4:
+			mes "[Dwarf Grunburti]";
+			mes "Mjo!...Mjo....Mjolnir!";
+			mes "How dare an insignificant man to own such a precious treasure!";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "I haven't assured if you are qualified to possess this yet.";
+			mes "Are you confident that you would not disgrace Thor, the greatest warrior?";
+			next;
+			mes "[Dwarf Grunburti]";
+			mes "....sigh...";
+			mes "Somehow humans are too greedy to listen to my concern.";
+			mes "I will create it for you though. However you will realise how limitted you are to handle this item...";
+			mes "Once again, I need following materials in order to reproduce the godly item.";
+			next;
+			mes "[Dwarf Grunburti]";
+                        mes "^0000FF2 Thor's Gauntlets";
+			mes "4 Iron Maiden";
+			mes "5 Wrath of Valkyrie";
+			mes "5 Omen of Tempest";
+			mes "5 Billow";
+			mes "20 Oridecon";
+			mes "5 Elunium";
+			mes "40 Gold and";
+			mes "1 Stunner^000000...";
+			next;
+				switch( select( "Make Mjolnir.", "Cancel." ) )
+			{
+
+			case 1:
+					if (countitem(7074) > 1 && countitem(7075) > 3 && countitem(7078) > 4 && countitem(7089) > 4 && countitem(7091) > 4 && countitem(984) > 19 && countitem(985) > 4 && countitem(969) > 39 && countitem(1522) > 0)
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Muhahahahaha!";
+					mes "I didn't imagine that I would use my skills for a human being...give me a moment!";
+					next;
+						if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
+					{
+						mes "[Dwarf Grunburti]";
+						mes "The godly item has been created already.";
+						mes "You must wait until all the seals are released again! Hahahaha!";
+						close;
+					}
+					delitem 7074,2;
+					delitem 7075,4;
+					delitem 7078,5;
+					delitem 7089,5;
+					delitem 7091,5;
+					delitem 984,20;
+					delitem 985,5;
+					delitem 969,40;
+					delitem 1522,1;
+					getitem 1530,1;
+					set $God1,0;
+					set $God2,0;
+					set $God3,0;
+					set $God4,0;
+					announce "[Mjolnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					mes "[Dwarf Grunburti]";
+					mes "Here you go!";
+					mes "Although it may appear too small to be such a powerful hammer, there is no weapon that can compete to Mjolnir!";
+					close;
+				}
+					else
+				{
+					mes "[Dwarf Grunburti]";
+					mes "Bah! You idiotic human being! You have not brought all the necessary materials! Go hurry up, be quick!";
+					close;
+				}
+			break;
+
+			case 2:
+				mes "[Dwarf Grunburti]";
+				mes "Muhahahaha~ somehow I figured that!";
+				close;
+			break;
+
+			}
+
+		break;
+
+		}
+
+OnRun:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	mapannounce "que_god01.gat","Remember that you only have 10 minutes for this! Hurry up!",0;
+	end;
+
+OnTimer610000:
+	mapannounce "que_god01.gat","You are too slow! I am going to give the chance to the other! Next!",0;
+	end;
+
+OnTimer612000:
+	areawarp "que_god01.gat",154,67,4,7,"prontera.gat",156,324;
+	areawarp "que_god01.gat",154,82,4,7,"prontera.gat",156,324;
+	areawarp "que_god01.gat",145,99,9,9,"prontera.gat",156,324;
+	areawarp "que_god01.gat",164,99,9,9,"prontera.gat",156,324;
+	areawarp "que_god01.gat",145,118,9,9,"prontera.gat",156,324;
+	areawarp "que_god01.gat",164,118,9,9,"prontera.gat",156,324;
+	end;
+
+OnTimer615000:
+	donpcevent "#god_hopewarp1::OnInit";
+	stopnpctimer;
+	end;
+
+}

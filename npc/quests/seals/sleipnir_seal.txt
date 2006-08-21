@@ -1,0 +1,2295 @@
+//===== eAthena Script ======================================= 
+//= Sleipnir seal unlocking NPCs.
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: ========================================= 
+//= Quest for breaking the seal of Sleipnir.
+//===== Additional Comments: =================================
+// 1.0 First version. [MasterOfMuppets]
+//============================================================
+// Juno citizen Noyee
+yuno.gat,164,200,4	script	Noyee#God	101,{
+
+    if(BaseLevel < 70)
+      {
+      mes "[Noyee]";
+      mes "Do you know that there are two different types of armor?";
+      mes "There are general armors that you can purchase from NPC shops";
+      next;
+      mes "[Noyee]";
+      mes "and ones that you can obtain by hunting monsters.";
+      mes "The difference between the two is if they're slotted or not.";
+      next;
+      mes "[Noyee]";
+      mes "Defence wise, both of them possess the same rate.";
+      mes "However, since a slotted armor allows you to put 'a monster card' in the slot,";
+      mes "it will enhance the armor with a different ability.";
+      next;
+      mes "[Noyee]";
+      mes "At the same time, both of slotted armors or monster cards";
+      mes "are very rare to obtain. Therefore, you seldom see";
+      mes "those kinds in the market.";
+      close;
+      }
+      if($God1 > 99)
+      {
+      mes "[Noyee]";
+      mes "Do you know that there are two different types of armor?";
+      mes "There are general armors that you can purchase from NPC shops";
+      next;
+      mes "[Noyee]";
+      mes "and ones that you can obtain by hunting monsters.";
+      mes "The difference between the two is if they're slotted or not.";
+      next;
+      mes "[Noyee]";
+      mes "Defence wise, both of them possess the same rate.";
+      mes "However, since a slotted armor allows you to put 'a monster card' in the slot,";
+      mes "it will enhance the armor with a different ability.";
+      next;
+      mes "[Noyee]";
+      mes "At the same time, both of slotted armors or monster cards";
+      mes "are very rare to obtain. Therefore, you seldom see";
+      mes "those kinds in the market.";
+      close;
+      }
+        mes "[Noyee]";
+        mes "Ah, I just remembered something.";
+        mes "There is a very interesting place in ...";
+        mes "It looks like a kind of laboratory but nobody knows";
+        mes "what it is....";
+        next;
+        mes "[Noyee]";
+        mes "Recently there have been many rumors going around";
+        mes "the place...? I have no idea what people are talking about.";
+        mes "Anyways, that place looks very interesting.";
+        if(god_sl_1 == 0)set god_sl_1,1;
+        close;
+
+}
+
+//Cukure Kirin
+que_god01.gat,98,98,4	script	Manager#God	69,{
+
+	set @NowWeight, MaxWeight - Weight;
+	if (@NowWeight >= 5000) goto NOT_OW;
+	mes "- Wait a minute! -";
+	mes "- Currently you are overweight. -";
+	mes "- Please lighten your weight -";
+	mes "- and try again. -";
+	close;
+
+NOT_OW:
+    if(BaseLevel < 70)
+      {
+      mes "[Cukure]";
+      mes "Awww...";
+      mes "I get too busy nowadays.";
+      mes "I don't even have times for a date.";
+      mes "Damn it....";
+      next;
+      mes "[Cukure]";
+      mes "Wait, when was the last time I went on a date...?";
+      mes "Umm....";
+      mes "Awww....I am so busy...busy!";
+      emotion 19;
+      close;
+      }
+    	
+      if($God1 < 100)
+      {
+        if(god_sl_1 == 0)
+	{
+        mes "[Cukure]";
+        mes "Awww...";
+        mes "I get too busy nowadays.";
+        mes "I don't even have times for a date.";
+        mes "Damn it....";
+        next;
+        mes "[Cukure]";
+        mes "Wait, when was the last time I went on a date...?";
+        mes "Umm....";
+        mes "Awww....I am so busy...busy!";
+        emotion 19;
+        close;
+	}
+        else if(god_sl_1 == 1)
+	{
+          mes "[Cukure]";
+          mes "We research signs of Gods that were left behind in this world long time ago.";
+          mes "Specifically, we are studying tools that represent the power of God.";
+          next;
+          mes "[Cukure]";
+          mes "...";
+          mes "Recently many of members except leaders";
+          mes "have retired due to their personal matters and whatsoever.";
+          mes "So we are running out of manpower.";
+          next;
+          mes "[Cukure]";
+          mes "Because of the problem, we have stopped";
+          mes "the most of researches on the progress.";
+          mes "Speaking of which...";
+          next;
+          mes "[Cukure]";
+          mes "Do you mind if I ask you to help our research?";
+          mes "I will reward you afterwards.";
+          next;
+          switch( select( "I am kind of busy...", "Sure, why not." ) )
+	  {
+            case 1:
+              mes "[Cukure]";
+              mes "Oh...are you?";
+              mes "I see.";
+              mes "Then, would you like to recommend someone";
+              mes "who can help us to continue researches?";
+              next;
+              mes "[Cukure]";
+              mes "I am so sorry to ask you of this, but....";
+              mes "we are that understaffed...I hope you will understand.";
+              mes ".......";
+              close;
+            break;
+
+            case 2:
+              mes "[Cukure]";
+              mes "?! Are you sure?";
+              mes "Hahahahaha~";
+              mes "I am so glad to hear that.";
+              next;
+              mes "[Cukure]";
+              mes "There are investigators inside.";
+              mes "They will need your help, please go visit them.";
+              next;
+              mes "[Cukure]";
+              mes "Oh, wait...";
+              mes "Let me give you a temporary admission pass.";
+              mes "Thank you so much for your help.";
+              next;
+              mes "^ff0000You have received a temporary admission pass.^000000";
+              set god_sl_1,2;
+              close;
+            break;
+
+	  }
+
+	}
+        else if(god_sl_1 < 10)
+	{
+         mes "[Cukure]";
+         mes "It seems very difficult to manage a laboratory.";
+         mes "Other laboratories always try to take our members away or to interrupt our business...";
+         mes "So I donnot have a personal life because of my job...";
+         mes ".......";
+         next;
+         mes "[Cukure]";
+         mes "Ah...umm....";
+         mes "Hahahaha...";
+         mes "What am I doing with a visitor...";
+         mes "Heh, please disregard what I said.";
+         mes "Hahahahaha...";
+         close;
+	}
+        else if(god_sl_1 < 50)
+	{
+          mes "[Cukure]";
+          mes "Ah, thank you for your help so far.";
+          mes "I hope you will continue to help us.";
+          mes "Although our investigators are kind of strange";
+          mes "they are all nice. I hope you will understand even if they treat you rudely.";
+         close;
+	}
+        else if(god_sl_1 == 50)
+	{
+          mes "[Cukure]";
+          mes "Ah...~";
+          mes "You gave us a great help.";
+          mes "Hahahaha...";
+          mes "We would have a harder time if you didn't help us.";
+          next;
+          mes "[Cukure]";
+          mes "As you have noticed already,";
+          mes "we have researched 'Sleipnir'";
+          mes "if we can reproduct this 'godly item' or not.";
+          next;
+          mes "[Cukure]";
+          mes "However....";
+          mes "so far, the result shows that it is almost impossible with";
+          mes "the technology we have.";
+          mes "Hmmm...";
+          next;
+          mes "[Cukure]";
+          mes "Anyways, we will continue to research";
+          mes "with a hope.";
+          next;
+          mes "[Cukure]";
+          mes "With your help, we succeeded to complete the basic reserach.";
+          mes "From now on, we will plan out further research";
+          mes "based on the result we made this time.";
+          next;
+          mes "[Cukure]";
+          mes "Oh, since you helped us, I am going to reward you.";
+          mes "Please give me a minute...";
+          next;
+          mes "[Cukure]";
+          mes "There it is.";
+          mes "It might not be a great reward but";
+          mes "I hope you will take it as a token of my gratitute.";
+          mes "Have a good travel!";
+          if($God1 < 100)set $God1,$God1+1;
+
+          if($God1 == 50)
+          	announce "The first seal of [Sleipnir] has appeared.",bc_all,0xFF0000;
+          else if($God1 == 100)
+	  {
+            if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100)
+            	announce "Four seals have been released at the same time with the seal of [Sleipnir].",bc_all,0xFF0000;
+            else
+            	announce "The seal of [Sleipnir] has been released.",bc_all,0xFF0000;
+	  }
+
+          set god_sl_1,51;
+          set @god_treasure,rand(1,900);
+          set @god_treasure1,rand(1,1000);
+
+          if(@god_treasure < 101)
+	    {
+            if(@god_treasure1 < 210)
+              getitem 2102,1;
+            else if(@god_treasure1 < 420)
+              getitem 2104,1;
+            else if(@god_treasure1 < 630)
+              getitem 2106,1;
+            else if(@god_treasure1 < 840)
+              getitem 2108,1;
+            else
+              getitem 2109,1;
+            }
+          
+          else if(@god_treasure < 201)
+	    {
+            if(@god_treasure1 < 48)
+              getitem 2207,1;
+            else if(@god_treasure1 < 96)
+              getitem 2210,1;
+            else if(@god_treasure1 < 150)
+              getitem 2213,1;
+            else if(@god_treasure1 < 190)
+              getitem 2215,1;
+            else if(@god_treasure1 < 238)
+              getitem 2217,1;
+            else if(@god_treasure1 < 290)
+              getitem 2223,1;
+            else if(@god_treasure1 < 340)
+              getitem 2227,1;
+            else if(@god_treasure1 < 348)
+              getitem 2229,1;
+            else if(@god_treasure1 < 400)
+              getitem 2231,1;
+            else if(@god_treasure1 < 448)
+              getitem 2233,1;
+            else if(@god_treasure1 < 496)
+              getitem 2236,1;
+            else if(@god_treasure1 < 544)
+              getitem 2244,1;
+            else if(@god_treasure1 < 592)
+              getitem 2245,1;
+            else if(@god_treasure1 < 640)
+              getitem 2247,1;
+            else if(@god_treasure1 < 688)
+              getitem 2248,1;
+            else if(@god_treasure1 < 736)
+              getitem 2250,1;
+            else if(@god_treasure1 < 784)
+              getitem 2251,1;
+            else if(@god_treasure1 < 832)
+              getitem 2252,1;
+            else if(@god_treasure1 < 880)
+              getitem 2253,1;
+            else if(@god_treasure1 < 940)
+              getitem 2257,1;
+            else
+              getitem 2259,1;
+            }
+            
+          else if(@god_treasure < 301)
+	    {
+            if(@god_treasure1 < 160)
+              getitem 2267,1;
+            else if(@god_treasure1 < 320)
+              getitem 2262,1;
+            else if(@god_treasure1 < 480)
+              getitem 2263,1;
+            else if(@god_treasure1 < 540)
+              getitem 2265,1;
+            else if(@god_treasure1 < 700)
+              getitem 2266,1;
+            else if(@god_treasure1 < 800)
+              getitem 2260,1;
+            else if(@god_treasure1 < 900)
+              getitem 2269,1;
+            else
+              getitem 2270,1;
+            }
+            
+          else if(@god_treasure < 401)
+	    {
+            if(@god_treasure1 < 70)
+              getitem 2298,1;
+            else if(@god_treasure1 < 140)
+              getitem 2275,1;
+            else if(@god_treasure1 < 210)
+              getitem 2276,1;
+            else if(@god_treasure1 < 280)
+              getitem 2277,1;
+            else if(@god_treasure1 < 350)
+              getitem 2279,1;
+            else if(@god_treasure1 < 420)
+              getitem 2254,1;
+            else if(@god_treasure1 < 490)
+              getitem 2299,1;
+            else if(@god_treasure1 < 560)
+              getitem 2287,1;
+            else if(@god_treasure1 < 630)
+              getitem 2289,1;
+            else if(@god_treasure1 < 700)
+              getitem 2290,1;
+            else if(@god_treasure1 < 770)
+              getitem 2291,1;
+            else if(@god_treasure1 < 840)
+              getitem 2294,1;
+            else if(@god_treasure1 < 900)
+              getitem 2295,1;
+            else if(@god_treasure1 < 950)
+              getitem 2271,1;
+            else
+              getitem 2285,1;
+            }
+              
+          else if(@god_treasure < 501)
+	    {
+            if(@god_treasure1 < 80)
+              getitem 2306,1;
+            else if(@god_treasure1 < 160)
+              getitem 2308,1;
+            else if(@god_treasure1 < 240)
+              getitem 2310,1;
+            else if(@god_treasure1 < 320)
+              getitem 2311,1;
+            else if(@god_treasure1 < 400)
+              getitem 2313,1;
+            else if(@god_treasure1 < 480)
+              getitem 2315,1;
+            else if(@god_treasure1 < 560)
+              getitem 2329,1;
+            else if(@god_treasure1 < 630)
+              getitem 2320,1;
+            else if(@god_treasure1 < 700)
+              getitem 2322,1;
+            else if(@god_treasure1 < 760)
+              getitem 2324,1;
+            else if(@god_treasure1 < 810)
+              getitem 2326,1;
+            else if(@god_treasure1 < 850)
+              getitem 2317,1;
+            else if(@god_treasure1 < 900)
+              getitem 2331,1;
+            else if(@god_treasure1 < 950)
+              getitem 2333,1;
+            else
+              getitem 2336,1;
+            }
+          
+          else if(@god_treasure < 601)
+	    {
+            if(@god_treasure1 < 200)
+              getitem 2402,1;
+            else if(@god_treasure1 < 400)
+              getitem 2404,1;
+            else if(@god_treasure1 < 600)
+              getitem 2406,1;
+            else if(@god_treasure1 < 800)
+              getitem 2407,1;
+            else
+              getitem 2409,1;
+            }
+            
+          else if(@god_treasure < 701)
+	    {
+            if(@god_treasure1 < 300)
+              getitem 2502,1;
+            else if(@god_treasure1 < 550)
+              getitem 2504,1;
+            else if(@god_treasure1 < 750)
+              getitem 2506,1;
+            else
+              getitem 2508,1;
+            }
+          
+          else if(@god_treasure < 801)
+	    {
+            if(@god_treasure1 < 110)
+              getitem 2601,1;
+            else if(@god_treasure1 < 220)
+              getitem 2602,1;
+            else if(@god_treasure1 < 330)
+              getitem 2603,1;
+            else if(@god_treasure1 < 440)
+              getitem 2604,1;
+            else if(@god_treasure1 < 550)
+              getitem 2605,1;
+            else if(@god_treasure1 < 660)
+              getitem 2607,1;
+            else if(@god_treasure1 < 770)
+              getitem 2608,1;
+            else if(@god_treasure1 < 880)
+              getitem 2617,1;
+            else
+              getitem 2618,1;
+            }
+              
+          else
+	    {
+            if(@god_treasure1 < 150)
+              getitem 2288,1;
+            else if(@god_treasure1 < 260)
+              getitem 2297,1;
+            else if(@god_treasure1 < 370)
+              getitem 5087,1;
+            else if(@god_treasure1 < 480)
+              getitem 5088,1;
+            else if(@god_treasure1 < 590)
+              getitem 5089,1;
+            else if(@god_treasure1 < 700)
+              getitem 5090,1;
+            else if(@god_treasure1 < 810)
+              getitem 5046,1;
+            else if(@god_treasure1 < 920)
+              getitem 2264,1;
+            else
+              getitem 2225,1;
+            }
+          //endif
+          next;
+          mes "[Cukure]";
+          mes "Ah....also,";
+          mes "let me retrieve the temporary pass given to you.";
+          mes "Well...";
+          close;
+	}
+        else
+	{
+        mes "[Cukure]";
+        mes "With your help, we succeeded to complete the basic reserach.";
+        mes "From now on, we will plan out further research";
+        mes "based on the result we made this time.";
+        mes "That means I can go on a date...hahaha...";
+        close;
+        }
+      }
+      else
+      {
+        if(god_sl_1 == 0)
+	{
+        mes "[Cukure]";
+        mes "Awww...";
+        mes "I get too busy nowadays.";
+        mes "I don't even have times for a date.";
+        mes "Damn it....";
+        next;
+        mes "[Cukure]";
+        mes "next;, when was the last time I went on a date...?";
+        mes "Umm....";
+        mes "Awww....I am so busy...busy!";
+        emotion 19;
+        close;
+	}
+        else if(god_sl_1 < 51)
+	{
+          mes "[Cukure]";
+          mes "Ah, you came back.";
+          mes "I know you were going to help us...";
+          mes "but someone already did the job and";
+          mes "we successfully finished the research.";
+          next;
+          mes "[Cukure]";
+          mes "Thank you anways though.";
+          mes "I hope you will come help us for the next research.";
+          close;
+	}
+        else
+	{
+          mes "[Cukure]";
+          mes "We have succeeded to complete the basic reserach.";
+          mes "From now on, we will plan out further research";
+          mes "based on the result we made this time.";
+          mes "That means I can go on a date...hahaha...";
+          close;
+        }
+      }
+
+}
+
+// Hallandaute Lagunis - Wheel of the Unknown
+que_god01.gat,66,125,6	script	Investigator#God1	89,{
+
+    if($God2 < 100)
+    {
+      if(god_sl_1 == 2)set god_sl_1,11;
+
+      if(god_sl_1 == 11 || god_sl_1 == 22 || god_sl_1 == 33 || god_sl_1 == 44)
+      {
+        if(god_sl_2  == 0)
+	{
+          mes "[Hallandaute]";
+          mes "Ah...are you the one who Ms. Kirin was talking about?";
+          mes "Yes, she said you are going to assist us for the research.";
+          mes "Hmmm...";
+          next;
+          mes "[Hallandaute]";
+          mes "Frankly, we donnot need people who are not specialised in this field";
+          mes "even if we are running out of manpower.";
+          mes "But you can support us through doing stuffs that we are too lazy to do";
+          mes "on our own....if you don't mind.";
+          next;
+          mes "[Hallandaute]";
+          mes "Oh well...";
+          mes "What would be a good job for you....";
+          mes "Let me think...";
+          mes "Ah...";
+          next;
+          mes "[Hallandaute]";
+          mes "I got it.";
+          mes "Can you go visit ^ff0000Metto^000000 for me?";
+          mes "Please bring me his news.";
+          next;
+          mes "[Hallandaute]";
+          mes "Since he is working on a similar subject as mine,";
+          mes "I guess that he might be able to help me.";
+          mes "He's in Juno, you can easily find him.";
+          set god_sl_2,1;
+          close;
+	}
+        else if(god_sl_2 == 1)
+	{
+          if (metto_q == 0)
+	  {
+            mes "[Hallandaute]";
+            mes "I guess you haven't seen him yet.";
+            mes "Although he is kind of fastidious, he is not a bad guy at all.";
+            mes "We have been friends for a long time";
+            mes "since we work in the similar field.";
+            next;
+            mes "[Hallandaute]";
+            mes "I am wondering how he has been doing.";
+            mes "You can just ask him about his research progress.";
+            mes "Thank you for your trouble.";
+            close;
+	  }
+          else if(metto_q < 9)
+	  {
+            mes "[Hallandaute]";
+            mes "Hmmm....";
+            mes "I see....";
+            mes "Thank you for your trouble...";
+            mes "Hmmm...it seems he changed...";
+            mes "hmmm..";
+            close;
+	  }
+          else
+	  {
+           mes "[Hallandaute]";
+           mes "?!";
+           mes "...........";
+           mes "Oh well.....";
+           mes "I have never expected that the situation would turn into this way.";
+           mes "Ummm....";
+           emotion 20; //ET_SCRATCH
+           next;
+           mes "[Hallandaute]";
+           mes "Oh well, it happened already. Okay, thank you for the help.";
+           mes "Please wait for a moment.";
+           mes "I have something to think about.";
+           mes "Ummmmm...";
+           emotion 9; //ET_THINK
+           set god_sl_2,2;
+           close;
+           }
+	}
+        else if(god_sl_2 == 2)
+	{
+          if(rand(1,10) == 7)
+	  {
+            mes "[Hallandaute]";
+            mes "Ah...";
+            mes "You came back.";
+            mes "...Let me give you the gist of research I am working on.";
+            next;
+            mes "[Hallandaute]";
+            mes "I am working on";
+            mes "'^ff0000a Wheel of the Unknown^000000' that was discovered to be a peace";
+            mes "of '^ff0000Sleipnir^000000'.";
+            mes "It looks like a normal cogwheel but";
+            mes "I cannot figure out how it works.";
+            next;
+            mes "[Hallandaute]";
+            mes "The most strange thing about this cogwheel is";
+            mes "its material.";
+            next;
+            mes "[Hallandaute]";
+            mes "It seems to be made out of steel but";
+            mes "no matter how long I heated it up,";
+            mes "it never responded to the heat.";
+            mes "It worked the same when I tried to freeze it.";
+            next;
+            mes "[Hallandaute]";
+            mes "Besides, it never responds to any kinds of impact either.";
+            mes "No matter how hard it was crashed or dropped,";
+            mes "it does not seem to be influenced.";
+            next;
+            mes "[Hallandaute]";
+            mes "But I found out that this thing seems to be resonant with";
+            mes "certain objects.";
+            mes "Then again, it does not seem to work the same all the time.";
+            next;
+            mes "[Hallandaute]";
+            mes "Let's say, it was resonant with an object 'A' but";
+            mes "when I try again, it does not work at all with A.";
+            mes "Surely, there should be some kind of conditions to satisfy";
+            mes "in order to make it resonant...";
+            mes "Hmm hmmm...";
+            next;
+            mes "[Hallandaute]";
+            mes "Ah....";
+            mes "I apologize for speaking things that are not important.";
+            mes "Please disregard words I said.";
+            mes "Thank you for your help anyways.";
+            mes "Other investigators might need your help as well.";
+            mes "Hmmm...";
+            set god_sl_2,0;
+            if(god_sl_1 == 11)
+              set god_sl_1,12;
+            if(god_sl_1 == 22)
+              set god_sl_1,23;
+            if(god_sl_1 == 33)
+              set god_sl_1,34;
+            if(god_sl_1 == 44)
+              set god_sl_1,50;
+            close;
+	  }
+          else
+	  {
+           mes "[Hallandaute]";
+           mes "Oh, please give me a moment.";
+           mes "I have something to organize.";
+           mes "Ummm....";
+           mes "Therefore...";
+           mes "Mumble mumble...";
+           close;
+          }
+	}
+        else
+	{
+          mes "[Hallandaute]";
+          mes "Hmmm...";
+          mes "Therefore....";
+          mes "It works this way...";
+          mes "Umm....that is...";
+          mes "Oh well, it would be better if it was in a good shape...";
+          mes "Sigh...";
+          close;
+        }
+      }
+      else
+      {
+        mes "[Hallandaute]";
+        mes "Ummm....";
+        mes "So it will be......";
+        mes "Bah! It is not easy to work on this by myself!";
+        mes "It is always good to have an assistant.";
+        next;
+        mes "[Hallandaute]";
+        mes "I can share the load of work with him.";
+        mes "However, types of work affects on the types of assistant I need.";
+        next;
+        mes "[Hallandaute]";
+        mes "For instance, if I am working on a project called 'A'";
+        mes "I will need an assistant named 'G' who is specialised in the project.";
+        mes "But if I am working on a project called 'B'";
+        mes "I will need 'H' who is specialised in the project.";
+        next;
+        mes "[Hallandaute]";
+        mes "Of course, there could be people who are good at everything.";
+        mes "But since they are hard to find, we must choose right people for each project.";
+        close;
+      }
+    }
+    else
+    {
+        mes "[Hallandaute]";
+        mes "Ummm....";
+        mes "So it will be......";
+        mes "Bah! It is not easy to work on this by myself!";
+        mes "It is always good to have an assistant.";
+        next;
+        mes "[Hallandaute]";
+        mes "I can share the load of work with him.";
+        mes "However, types of work affects on the types of assistant I need.";
+        next;
+        mes "[Hallandaute]";
+        mes "For instance, if I am working on a project called 'A'";
+        mes "I will need an assistant named 'G' who is specialised in the project.";
+        mes "But if I am working on a project called 'B'";
+        mes "I will need 'H' who is specialised in the project.";
+        next;
+        mes "[Hallandaute]";
+        mes "Of course, there could be people who are good at everything.";
+        mes "But since they are hard to find, we must choose right people for each project.";
+      close;
+    }
+}
+
+//Aadin Keil - Feather of Angel Wing
+que_god01.gat,11,136,6	script	Investigator#God2	742,{
+
+    if($God1 < 100)
+    {
+      if(god_sl_1 == 2)set god_sl_1,21;
+
+      if(god_sl_1 == 21 || god_sl_1 == 32 || god_sl_1 == 43 || god_sl_1 == 14)
+      {
+        if(god_sl_2 == 0)
+	{
+          mes "[Aadin]";
+          mes "*yawn*~";
+          mes "Umm?";
+          mes "Hmmmm....";
+          next;
+          mes "[Aadin]";
+          mes "Nice to meet you.";
+          mes "I know you are the temporary assistant joined this time.";
+          mes "That's great, I was having a hard time to do something on my own.";
+          next;
+          mes "[Aadin]";
+          mes "Okay...";
+          mes "Let me explain what I am doing at this moment.";
+          mes "I am studying 'Feather of Angel Wing' which is";
+          mes "revealed to be the material of 'Sleipnir'.";
+          next;
+          mes "[Aadin]";
+          mes "Especially I am focusing on the behind story";
+          mes "of this feather like how it became the material of 'Sleipnir'.";
+          mes "I was told that there is a person in 'Payon'";
+          mes "who knows about the story.";
+          mes "So I tried to send a staff to the village in order to";
+          mes "gather information from him....";
+          next;
+          mes "[Aadin]";
+          mes "But the situation does not allow me to use any of manpower in the laboratory...";
+          mes "so I have been debating myself if I should go there on my own or not.";
+          mes "Because I don't feel safe to leave this studying room with this feather alone.";
+          next;
+          mes "[Aadin]";
+          mes "Therefore...";
+          mes "as you might guessed already....";
+          mes "I would like to ask you to go talk to the person in Payon";
+          mes "about the story and come back to me.";
+          next;
+          mes "[Aadin]";
+          mes "I assume that it should not be that difficult to find the person.";
+          mes "But you must memorize every single word from him.";
+          mes "The result of research could be affected by words you delievered to me.";
+          next;
+          mes "[Aadin]";
+          mes "Thank you in advance.";
+          mes "There is no time limit for this, but faster will be better...";
+          mes "Have a good travel!";
+          set god_sl_2,1;
+          close;
+	}
+        else if(god_sl_2 == 1)
+	{
+          mes "[Aadin]";
+          mes "You have not gone to Payon yet.";
+          mes "Please leave to Payon as soon as possible.";
+          mes "Have a good travel!";
+          close;
+	}
+        else if(god_sl_2 == 2)
+	{
+         mes "[Aadin]";
+         mes "Ah, you came back.";
+         mes "So, have you memorized the story?";
+         mes "Yes, I know it would be really convenient";
+         mes "if they kept the story as a book.";
+         mes "But it seems that they have some kind of rules that do not allow them";
+         mes "to write down the story but to tell people by word of mouth.";
+         next;
+         mes "[Aadin]";
+         mes "Okay, I am ready to listen.";
+         mes "Please go ahead.";
+         mes ".......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         mes ".........";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         mes ".........";
+         mes "..........";
+         next;
+         mes "[Aadin]";
+         mes "Hmm......";
+         mes "I see.";
+         mes "Now I have a better understanding about it.";
+         mes "Oh next;...";
+         next;
+         mes "[Aadin]";
+         mes "It seems you missed some important part of the story!";
+         mes "I am so sorry to tell you this but do you mind going back to Payon";
+         mes "and listening the story again? I would like to listen to the story again.";
+         set god_sl_2,3;
+         close;
+	}
+        else if(god_sl_2 == 3)
+	{
+          mes "[Aadin]";
+          mes "You haven't left to Payon yet.";
+          mes "I hope you will leave as soon as possible.";
+          mes "Even with the story you have brought, I think I can";
+          mes "complete most part of the research.";
+          close;
+	}
+        else if(god_sl_2 == 4)
+	{
+         mes "[Aadin]";
+         mes "Oh, you came back.";
+         mes "Okay, I am ready to listen.";
+         mes "Please go ahead.";
+         mes ".......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         mes ".........";
+         next;
+         mes "[Aadin]";
+         mes ".";
+         mes "..";
+         mes "...";
+         mes "....";
+         mes ".....";
+         mes "......";
+         mes ".......";
+         mes "........";
+         mes ".........";
+         mes "..........";
+         next;
+         mes "[Aadin]";
+         mes "Hmm...I see.";
+         mes "It seems your story is almost accurate as the original one.";
+         mes "It is understandable that the story is differentiated by the person";
+         mes "who is telling it since we share the story by word of mouth.";
+         next;
+         mes "[Aadin]";
+         mes "Yes, most of my questions finally found their answers.";
+         mes "At the same time, the story gave me new questions.";
+         mes "Hmmm...this is not easy at all.";
+         mes "Thank you for your help though.";
+          set god_sl_2,0;
+          if(god_sl_1 == 21)
+            set god_sl_1,22;
+          else if(god_sl_1 == 32)
+            set god_sl_1,33;
+          else if(god_sl_1 == 43)
+            set god_sl_1,44;
+          else if(god_sl_1 == 14)
+            set god_sl_1,50;
+          close;
+        }
+      }
+      else
+      {
+        mes "[Aadin]";
+        mes "Hmmm....";
+        mes "Sometimes a legend or a myth";
+        mes "tells two different stories within that are totally conflicting each other.";
+        mes "You can find the reason by finding the origin of the stories.";
+        close;
+      }
+    }
+    else
+    {
+        mes "[Aadin]";
+        mes "Hmmm....";
+        mes "Sometimes a legend or a myth";
+        mes "tells two different stories within that are totally conflicting each other.";
+        mes "You can find the reason by finding the origin of the stories.";
+        close;
+    }
+
+}
+
+//Kurdt Jerremant - Spirit of Fish
+que_god01.gat,55,47,3	script	Investigator#God3	803,{
+
+    if ($God1 < 100)
+    {
+      if(god_sl_1 == 2)set god_sl_1,31;
+
+      if(god_sl_1 == 31 || god_sl_1 == 42 || god_sl_1 == 13 || god_sl_1 == 24)
+      {
+        if(god_sl_2 == 0)
+	{
+          mes "[Kurdt]";
+          mes "Ah, you must be the new assistant.";
+          mes "I am pleased to meet you.";
+          next;
+          mes "[Kurdt]";
+          mes "I was kind of expecting a professional assistant";
+          mes "but it is understandable since the situation does not allow us.";
+          mes "Also, sometimes ordinary people";
+          mes "make a better result than professional assistants.";
+          mes "So I hope we will make a good team together.";
+          next;
+          mes "[Kurdt]";
+          mes "In fact, I am almost at the end of the research,";
+          mes "therefore I do not need that much of help...";
+          mes "However, the last thing I need to do is pretty difficult";
+          mes "for one to do alone...I was thinking to hire an agency from outside.";
+          next;
+          mes "[Kurdt]";
+          mes "But! I don't need to do that now, since you are here.";
+          mes "What I need now are materials to reproduce";
+          mes "'Spirit of Fish'.";
+          next;
+          mes "[Kurdt]";
+          mes "I am not sure yet if I can actually reproduce it or not.";
+          mes "But we can at least try it.";
+          next;
+          mes "[Kurdt]";
+          mes "Basically, you can go ahead and gather stuffs like";
+          mes "'Fish Scales' or 'Fish Tails'";
+          mes "or anything that you can obtain from marine life.";
+          mes "I donnot need too many but about 10 of them.";
+          next;
+          mes "[Kurdt]";
+          mes "I hope you will not have a hard time to gather them.";
+          mes "Thank you for your trouble and have a good travel!";
+          set god_sl_2,1;
+          close;
+	}
+        else if(god_sl_2 == 1)
+	{
+          mes "[Kurdt]";
+          mes "Ah, you came back.";
+          mes "Okay, let me check what you have brought to me.";
+          mes "Hmmm....";
+          mes ".........";
+          next;
+          mes "[Kurdt]";
+          mes "Hmmm......";
+          mes "I could use these...";
+          mes "and these too.....";
+          mes "aaand those too......";
+          mes "Umm.....";
+	  set @itemcount,0;
+          if(countitem(918) > 8)set @itemcount,1;
+          if(countitem(950) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(951) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(956) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(959) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(960) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(961) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(962) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(963) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(964) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(965) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(966) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(7013) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1054) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1053) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1052) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1051) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1050) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1024) > 8)set @itemcount,@itemcount + 1;
+          if(countitem(1023) > 8)set @itemcount,@itemcount + 1;
+          next;
+          if(@itemcount > 14)
+	  {
+            mes "[Kurdt]";
+            mes "Ah....!";
+            mes "You gathered everything I need.";
+            mes "Thank you so much.";
+            mes "With these, I can continue my research with no problem.";
+            next;
+            mes "[Kurdt]";
+            mes "I didn't expect you to do such a good job...";
+            mes "you are great!";
+            mes "Thank you so much!";
+            mes "Hahaha....";
+            mes "Just like me, other investigator might need you to help them.";
+
+          if(countitem(918) > 8)delitem 918,9;
+          if(countitem(950) > 8)delitem 950,9;
+          if(countitem(951) > 8)delitem 951,9;
+          if(countitem(956) > 8)delitem 956,9;
+          if(countitem(959) > 8)delitem 959,9;
+          if(countitem(960) > 8)delitem 960,9;
+          if(countitem(961) > 8)delitem 961,9;
+          if(countitem(962) > 8)delitem 962,9;
+          if(countitem(963) > 8)delitem 963,9;
+          if(countitem(964) > 8)delitem 964,9;
+          if(countitem(965) > 8)delitem 965,9;
+          if(countitem(966) > 8)delitem 966,9;
+          if(countitem(7013) > 8)delitem 7013,9;
+          if(countitem(1054) > 8)delitem 1054,9;
+          if(countitem(1053) > 8)delitem 1053,9;
+          if(countitem(1052) > 8)delitem 1052,9;
+          if(countitem(1051) > 8)delitem 1051,9;
+          if(countitem(1050) > 8)delitem 1050,9;
+          if(countitem(1024) > 8)delitem 1024,9;
+          if(countitem(1023) > 8)delitem 1023,9;
+
+              set god_sl_2,0;
+            if(god_sl_1 == 31)
+              set god_sl_1,32;
+            if(god_sl_1 == 42)
+              set god_sl_1,43;
+            if(god_sl_1 == 13)
+              set god_sl_1,14;
+            if(god_sl_1 == 24)
+              set god_sl_1,50;
+            close;
+	  }
+          else
+	  {
+            mes "[Kurdt]";
+            mes "Errr.........";
+            mes "It does not seem to be enough for the research.";
+            mes "Sorry for the trouble, please go gather some more.";
+            close;
+          }
+        }
+      }
+      else
+      {
+        mes "[Kurdt]";
+        mes "Hmmm....";
+        mes "Studying somthing does not only require";
+        mes "funds and manpower but enthusiasm and passion as well.";
+        next;
+        mes "[Kurdt]";
+        mes "Some financiers are so ignorant that they think";
+        mes "study only takes money and manpower.";
+        mes "However, even if they have enough funds and much of manpower";
+        mes "but they donnot give any motivation to the people who study";
+        mes "then the study cannot be succeeded.";
+        close;
+      }
+    }
+    else
+    {
+       mes "[Kurdt]";
+       mes "Hmmm....";
+       mes "Studying somthing does not only require";
+       mes "funds and manpower but enthusiasm and passion as well.";
+       next;
+       mes "[Kurdt]";
+       mes "Some financiers are so ignorant that they think";
+       mes "study only takes money and manpower.";
+       mes "However, even if they have enough funds and much of manpower";
+       mes "but they donnot give any motivation to the people who study";
+       mes "then the study cannot be succeeded.";
+       close;
+    }
+
+}
+
+//Pavel Stheinus Breath of Spirit
+que_god01.gat,14,47,3	script	Investigator#God4	713,{
+
+    if($God1 < 100)
+    {
+      if(god_sl_1 == 2)set god_sl_1,41;
+
+      if(god_sl_1 == 41 || god_sl_1 == 12 || god_sl_1 == 23 || god_sl_1 == 34)
+      {
+        if(god_sl_2 == 0)
+	{
+          mes "[Pavel]";
+          mes "*sniff sniff*...";
+          mes "Achoo!";
+          mes "Huh?";
+          mes "Who are you....?";
+          mes "....";
+          next;
+          mes "[Pavel]";
+          mes "Ah, my apology.";
+          mes "You must be the new assistant...Aaachoo!";
+          mes "Hmm hmm *sniff sniff*...I am sorry, I am having a flu...";
+          mes "*sniff sniff*...";
+          mes "*sniff*...hmmm...";
+          next;
+          mes "[Pavel]";
+          mes "Umm....";
+          mes "It is good to know that you are here to help me....";
+          mes "However...Aaaachooo!";
+          mes "*sniff sniff*...";
+          next;
+          mes "[Pavel]";
+          mes "Hmm...Aaachooo!";
+          mes "Anyways, go look at...Aaachoo! that...Aaachoo!";
+          mes "thing...*sniff sniff*~";
+          set god_sl_2,1;
+          close;
+	}
+        else if(god_sl_2 == 1)
+	{
+          mes "[Pavel]";
+          mes "I told you to go look at Aaachhoooo! that...Aaachoooo! Achoo!";
+          mes "*glhk glhk*...";
+          mes "Hmm hmm..";
+          close;
+	}
+        else if(god_sl_2 == 2)
+	{
+          mes "[Pavel]";
+          mes "*cough cough*...";
+          mes "*sniff sniff*...";
+          mes "So did you go look at that?";
+          mes "Yeah, I don't think you understand even if you saw it.";
+          mes "*glhk glhk*...";
+          next;
+          mes "[Pavel]";
+          mes "AAAAACHHHOOO!";
+          mes "That slab of stone...no wait...Achoo!";
+          mes "The letters engaraved on the indescribable thing";
+          mes "are ancient....Achoo! ...language that are....Achoo!";
+          mes "no longer used nowadays.";
+          next;
+          mes "[Pavel]";
+          mes "I cannot ...*glhk glhk* tell what ancient";
+          mes "language..Achoo! it is...Achoo!";
+          mes "So...err...hmm hmm *sniff sniff*";
+          next;
+          mes "[Pavel]";
+          mes "Considering...Achoo! *sniff sniff* the material";
+          mes "Achoo! Achoo! used for the slab...*sniff sniff*,";
+          mes "it is not an Achoo! Achoo! *sniff sniff*ordinary slab of stone...";
+          mes "I guess...Aaaachoo!!!!! there must be some kind of";
+          mes "device installed on *sniff sniff*...";
+          next;
+          mes "[Pavel]";
+          mes "Aachoooo!! *sniff sniff* Not only that...*sniff sniff*";
+          mes "letters are not just engraved...*sniff sniff* Achhoo!!";
+          mes "but something Achooo!! covers...Achooo!";
+          mes "AAACHHHOOOO~~ the surfaces...*sniff sniff*";
+          next;
+          mes "[Pavel]";
+          mes "I must *cough cough* remove the device for...*cough cough*";
+          mes "further research...*cough cough*...but look at me.";
+          mes "I cannot even talk...*ghlk ghlk* clearly...";
+          next;
+          mes "[Pavel]";
+          mes "Hmm *sniff sniff*...so I hope you don't";
+          mes "mind Achoo!...helping me to remove Achoo!!...the device...";
+          mes "Achoo! ~ Thank you....";
+          mes "AAAACHHHOOOO~";
+          set god_sl_2,3;
+          close;
+	}
+        else if(god_sl_2 == 3)
+	{
+          mes "[Pavel]";
+          mes "Aaaaa...Cccccchhhh...oooo..!";
+          mes "*sniff sniff*...";
+          mes "Err...what I meant was..AAACHHOOO!...";
+          mes "*sniff sniff*...";
+          close;
+	}
+        else if(god_sl_2 == 4)
+	{
+          mes "[Pavel]";
+          mes "*cough*...";
+          mes "......!!";
+          mes "Oh...Acchhhoo!~";
+          mes "Now I see...";
+          mes "*sniff sniff*...";
+          next;
+          mes "[Pavel]";
+          mes "I was~Achoo! right, Achoo!";
+          mes "there was a device installed...Achoo! on it.";
+          mes "I could...*cough cough* not...*sniff sniff*";
+          mes "investigate...Achoo! the slab thoroughly...Achoo!";
+          mes "because of this god damn flu making me sneeze.";
+          next;
+          mes "[Pavel]";
+          mes "Achoo! Achoo! ~ thank you for your help....*sniff sniff*";
+          mes "Haha....*ghlk ghlk*...you did a good job.";
+          mes "*cough cough*..";
+          set god_sl_2,0;
+          if(god_sl_1 == 41)
+	    set god_sl_1,42;
+          if(god_sl_1 == 12)
+            set god_sl_1,13;
+          if(god_sl_1 == 23)
+            set god_sl_1,24;
+          if(god_sl_1 == 34)
+            set god_sl_1,50;
+          close;
+        }
+      }
+      else
+      {
+        mes "[Pavel]";
+        mes "Umm....";
+        mes "It is not that important whether or not";
+        mes "we can embody a spirit into a shape.";
+        mes "It is important whether we";
+        mes "can prove the existance of spirit or not.";
+        close;
+      }
+    }
+    else
+    {
+        mes "[Pavel]";
+        mes "Umm....";
+        mes "It is not that important whether or not";
+        mes "we can embody a spirit into a shape.";
+        mes "It is important whether we";
+        mes "can prove the existance of spirit or not.";
+      close;
+    }
+
+}
+  
+que_god01.gat,20,48,0	script	Slab#God	111,{
+
+  if($God1 < 100)
+  {
+    if(god_sl_1 == 41 || god_sl_1 == 12 || god_sl_1 == 23 || god_sl_1 == 34)
+    {
+      if(god_sl_2 == 1 || god_sl_2 == 2)
+      {
+        mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+        mes "............djswhgks wkdusdnlrnlfn";
+        mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+        mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+        set god_sl_2,2;
+        next;
+        mes "Unknown letters are engraved on the slab of stone.";
+        mes "They look like an ancient language.";
+        mes "The slab of stone has been severely damaged";
+        mes "to recognize every letter.";
+        mes "As you touched the surface, it was warm.";
+        mes "Definately, the slab didn't seem to be made of an ordinary stone.";
+        close;
+      }
+      else if(god_sl_2 == 3)
+      {
+        mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfn";
+        mes "............djswhgks wkdusdnlrnlfn";
+        mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+        mes "^ff00ffghswka^000000gks.........fusjs tmld.........";
+        next;
+        mes "As you took a close look, you found strange traces on each letter.";
+        mes "It seemed there was a kind of device installed on letters.";
+        next;
+        mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+        mes "............djswhgks wkdusdnlrnlfn";
+        mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+        mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+        next;
+        input @str$;
+        if (@str$ == "dirdnl")
+	{
+          mes "Zap~";
+          mes "As you pressed a word '^ff0000dirdnl^000000',";
+          mes "the slab made a strange noise.";
+          mes "However, there were no other changes other than the noise.";
+          mes "You decided to touch other words.";
+          next;
+          mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+          mes "............djswhgks wkdusdnlrnlfn";
+          mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+          mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+          mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+          mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+          next;
+	}
+        else
+	{
+          mes "You touched a word ^ff0000"+@str$+"^000000, nothing happened.";
+          mes "You decided to think up something different.";
+          close;
+        }
+        input @str$;
+        if (@str$ == "tkaryf")
+	{
+          mes "Zap~";
+          mes "As you pressed a word '^ff0000tkaryf^000000',";
+          mes "the slab made a strange noise.";
+          mes "However, there were no other changes other than the noise.";
+          mes "You decided to touch other words.";
+          next;
+          mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+          mes "............djswhgks wkdusdnlrnlfn";
+          mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+          mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+          mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+          mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+          next;
+	}
+        else
+	{
+          mes "You touched a word ^ff0000"+@str$+"^000000, nothing happened.";
+          mes "You decided to think up something different.";
+          close;
+        }
+        input @str$;
+        if (@str$ == "ghswka")
+	{
+          mes "Zap~";
+          mes "As you pressed a word '^ff0000ghswka^000000',";
+          mes "the slab made a strange noise.";
+          mes "However, there were no other changes other than the noise.";
+          mes "You decided to touch other words.";
+          next;
+          mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+          mes "............djswhgks wkdusdnlrnlfn";
+          mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+          mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+          mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+          mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+          next;
+	}
+        else
+	{
+          mes "You touched a word ^ff0000"+@str$+"^000000, nothing happened.";
+          mes "You decided to think up something different.";
+          close;
+        }
+        mes "Eeeeeeeeee~";
+        mes "As you pressed the three words in order,";
+        mes "the slab started vibrating with a strange noise.";
+        mes "At the same time, the strange traces on letters slowly dissappeared";
+        mes "and different letters appeared from underneath them.";
+        next;
+        mes "wkrdjswhgks dirdnlsjs wkrdjswhgks whdtnfh";
+        mes "wkrdjswhgks dldgnsdjs wkrdjswhgks wkdusdnlrnlfn";
+        mes "thfdh duTsjswhsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks tkatnfu";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkrdjswhgks dldgns";
+        mes "ghswkagks tkatnfusjs tmldaldgks akrnl";
+        next;
+        mes "..........";
+        mes "You still could not understand what those letters meant.";
+        mes ".........";
+        set god_sl_2,4;
+        next;
+        mes "After a while, those new letters dissappeared.";
+        mes "It seemed that you could only cancel";
+        mes "the device on the letters for a duration.";
+        close;
+      }
+      else
+      {
+        mes "....whgks dirdnlsjs wkrdjswhgks whdtnfn";
+        mes "............djswhgks wkdusdnlrnlfn";
+        mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks ......";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+        mes "ghswkagks .........fusjs tmld.........";
+        next;
+        mes "The slab of stone has been severely damaged";
+        mes "to recognize every letter.";
+        mes "As you touched the surface, it was warm.";
+        mes "Definately, the slab didn't seem to be made of an ordinary stone.";
+        mes "You decided to not care about the stone any longer.";
+        close;
+      }
+    }
+    else
+    {
+        mes "....whgks dirdnlsjs wkrdjswhgks whdtnfn";
+        mes "............djswhgks wkdusdnlrnlfn";
+        mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+        mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks ......";
+        mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+        mes "ghswkagks .........fusjs tmld.........";
+        next;
+        mes "The slab of stone has been severely damaged";
+        mes "to recognize every letter.";
+        mes "As you touched the surface, it was warm.";
+        mes "Definately, the slab didn't seem to be made of an ordinary stone.";
+      close;
+    }
+  }
+  else
+  {
+      mes "You found a slab of stone with strange letters engraved on the surface.";
+      mes "You could not identify what language it was.";
+      close;
+  }
+
+}
+
+//Lania Grunkurque
+payon.gat,79,171,4	script	Friar#God5	95,{
+
+    if($God1 < 100)
+    {
+    if(god_sl_1 == 21 || god_sl_1 == 32 || god_sl_1 == 43 || god_sl_1 == 14)
+    {
+      if(god_sl_2 == 1 || god_sl_2 == 3)
+      {
+        mes "[Lania]";
+        mes "You can find good advice for yourself from folklores and legends.";
+        mes "No matter how many years have passed and how improved people have,";
+        mes "the basic of life will never change.";
+        next;
+        switch( select( "Umm.....", "I see." ) )
+	{
+
+          case 1:
+          mes "[Lania]";
+          mes "Well......";
+          mes "You seem to have a business with me, may I ask?";
+          mes "I will help you as much as I can.";
+          next;
+          mes "[Lania]";
+          mes "It is no use to have a power to help others";
+          mes "unless you use the power in a right purpose.";
+          next;
+
+              switch( select( "Nothing. Your words helped me already.","Regarding Sleipnir." ) )
+	      {
+
+              case 1:
+                mes "[Lania]";
+                mes "I must misunderstood.";
+                mes "However, feel free to ask me a help whenever you need it.";
+                mes "It is also a training for me to help others.";
+                mes "I hope you will be generous to others as well...";
+                close;
+              break;
+
+              case 2:
+                mes "[Lania]";
+                mes "Umm.........";
+                mes "I see.";
+                mes "I think I can help you for that.";
+                mes "Please give me some time to remember it....Sleipnir...";
+                mes "Hmmm....";
+                mes "..........";
+                mes "...................";
+                next;
+                mes "[Lania]";
+                mes "Ah.........";
+                mes "I remember it now...";
+                mes "Yes, Sleipnir was the name of Odin's stallion.";
+                next;
+                mes "[Lania]";
+                mes "In the world of Gods, there were three legendary stallions.";
+                mes "They were ^ff0000'Sleipnir (A thing that ride as sliding)'";
+                mes "'Svadilfari (An unfortunate traveller)'";
+                mes "'Gullfaxi (Golden Mane)'^000000.";
+                next;
+                mes "[Lania]";
+                mes "Gullfaxi was owned by Hrungnir, the giant king and";
+                mes "Svadilfari was owned by Hrimthurs.";
+                mes "Also, 'Svadilfari' was the father of 'Sleipnir'.";
+                next;
+                mes "[Lania]";
+                mes "Okay, now let's talk about how 'Sleipnir' was born.";
+                mes "Well...we can see even Gods made mistakes";
+                mes "through this story.";
+                next;
+                mes "[Lania]";
+                mes "In Asgard the world of Gods,";
+                mes "there was a huge rampart.";
+                mes "Something happened and the rampart was destroyed.";
+                mes "Since this castle wall was too huge, Gods could";
+                mes "not dare to start mending it.";
+                next;
+                mes "[Lania]";
+                mes "One day, a very skinny man rode a dark horse into Asgard.";
+                mes "The man told Heimdall who was patrolling the wall";
+                mes "that he had something to tell Odin regarding the rampart.";
+                next;
+                mes "[Lania]";
+                mes "Since he was greatly concerned about the wall";
+                mes "Heimdall didn't hesitate to report it to Odin.";
+                mes "At the time, Odin was with other Gods in Valhala.";
+                next;
+                mes "[Lania]";
+                mes "Man promised to Odin that he could";
+                mes "build the rampart just like a new one";
+                mes "in 18 months.";
+                next;
+                mes "[Lania]";
+                mes "Although Odin felt something suspicious about the man,";
+                mes "Gods needed to repair the wall as soon as possible.";
+                mes "So, Odin asked him what he needed in return.";
+                mes "He asked to give him the goddess 'Freya' and";
+                mes "'the Sun and the Moon' as the payment.";
+                next;
+                mes "[Lania]";
+                mes ".....";
+                mes "Are you bored?";
+                mes "If you are, let's talk about this later.";
+                next;
+                switch( select( "See you later.", "No, please go ahead." ) )
+		{
+
+                  case 1:
+                    mes "[Lania]";
+                    mes "I understand that my story was not that interesting.";
+                    mes "I will try my best to satisfy you next time.";
+                    mes "Have a good travel.";
+                    close;
+                  break;
+
+                  case 2:
+                    mes "[Lania]";
+                    mes "Oh ok.";
+                    mes "Then let me continue the story.";
+                    next;
+                  break;
+
+                }
+
+                mes "[Lania]";
+                mes "Gods were all stunned and became furious";
+                mes "due to the man's request.";
+                mes "He was asking everything that Gods have.";
+                next;
+                mes "[Lania]";
+                mes "At this time, a God approached to Odin.";
+                mes "It was the infamous Loki.";
+                mes "Loki said to Odin that";
+                mes "they could manipulate the man to repair";
+                mes "the rampart without paying him anything in return.";
+                next;
+                mes "[Lania]";
+                mes "Odin decided to follow Loki's suggestion.";
+                mes "So Odin told the man that he must";
+                mes "complete to repair the wall within 6 months";
+                mes "not 18 months in order to have 'Freya' and 'the Sun and the Moon'.";
+                next;
+                mes "[Lania]";
+                mes ".....";
+                mes "Are you bored?";
+                mes "If you are, let's talk about this later.";
+                next;
+                switch( select( "Let me organize the story first.", "See you later.", "No, please go ahead." ) )
+		{
+
+                  case 1:
+                    mes "[Lania]";
+                    mes "Ah....";
+                    mes "The story must be too long.";
+                    mes "My apology...";
+                    mes "Okay, I will next; for you to finish organizing the story...";
+                    next;
+                    mes "......................";
+                    mes "..................";
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "..................";
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "......";
+                    next;
+                    mes "[Lania]";
+                    mes "May I continue the story now?";
+                    next;
+                    menu "Yes, please.",-;
+                    mes "[Lania]";
+                    mes "Okay, here it goes.";
+                    next;
+                  break;
+
+                  case 2:
+                    mes "[Lania]";
+                    mes "I understand that my story was not that interesting.";
+                    mes "I will try my best to satisfy you next time.";
+                    mes "Have a good travel.";
+                    close;
+                  break;
+
+                  case 3:
+                    mes "[Lania]";
+                    mes "Oh ok.";
+                    mes "Then let me continue the story.";
+                    next;
+                  break;
+
+               }
+
+                mes "[Lania]";
+                mes "Then the man asked Odin to let him";
+                mes "use his horse for the reconstruction work.";
+                mes "Because the horse looked very base and contemptible,";
+                mes "Odin didn't think twice about his request but accepted it on right the second.";
+                next;
+                mes "[Lania]";
+                mes "However, the man and the horse started repairing";
+                mes "the rampart in an amazing speed.";
+                mes "His skill was great but the horse's skill was greater than its owner";
+                mes "to mend the wall.";
+                mes "It was the legendary horse, Svadilfari.";
+                next;
+                mes "[Lania]";
+                mes "As more time went by, more anxious Gods were.";
+                mes "Because both of the castle wall menders";
+                mes "looked like they would complete the reconstruction work";
+                mes "even before the 6 months passed.";
+                mes "So Gods took their anger and axiouty on Loki";
+                mes "for his silly suggestion.";
+                next;
+                mes "[Lania]";
+                mes "However, Loki seemed confident.";
+                mes "He assured Gods to count on him.";
+                mes "Although Gods didn't trust Loki for his slyness and wickedness,";
+                mes "they decided to give him a chance since";
+                mes "the situation was desperate.";
+                next;
+                mes "[Lania]";
+                mes "And a strange thing happened. Ever since Loki";
+                mes "assurred Gods for the result, the progress of the reconstruction";
+                mes "had stopped. Just like a magic.";
+                next;
+                mes "[Lania]";
+                mes ".....";
+                mes "Are you bored?";
+                mes "If you are, let's talk about this later.";
+                next;
+                switch( select( "See you later.", "No, please go ahead." ) )
+		{
+
+                  case 1:
+                    mes "[Lania]";
+                    mes "I understand that my story was not that interesting.";
+                    mes "I will try my best to satisfy you next time.";
+                    mes "Have a good travel.";
+                    close;
+                  break;
+
+                  case 2:
+                    mes "[Lania]";
+                    mes "Oh ok.";
+                    mes "Then let me continue the story.";
+                    next;
+                  break;
+
+                }
+
+                mes "[Lania]";
+                mes "Gods became curious so they decided to investigate the reason.";
+                mes "The found Svadilfari fell in love with a beautiful mare";
+                mes "and didn't work on repairing the rampart.";
+                mes "So when the 6 months passed, the man";
+                mes "finished everything but the castle gate to repair.";
+                next;
+                mes "[Lania]";
+                mes "Gods were so happy to tell the man";
+                mes "that they could not accept his payment request";
+                mes "since he could not keep the contract.";
+                mes "Man got into rage and claimed";
+                mes "that Gods tricked him in order to avoid giving him";
+                mes "'Freya' and 'the Sun and the Moon'.";
+                next;
+                mes "[Lania]";
+                mes "And he revealed his true identity.";
+                mes "He was a giant from Jotunnheim.";
+                mes "He was so angry and started committing an outrage.";
+                next;
+                mes "[Lania]";
+                mes ".....";
+                mes "Are you bored?";
+                mes "If you are, let's talk about this later.";
+                next;
+                switch( select( "See you later.", "No, please go ahead." ) )
+		{
+
+                  case 1:
+                    mes "[Lania]";
+                    mes "I understand that my story was not that interesting.";
+                    mes "I will try my best to satisfy you next time.";
+                    mes "Have a good travel.";
+                    close;
+                  break;
+
+                  case 2:
+                    mes "[Lania]";
+                    mes "Oh ok.";
+                    mes "Then let me continue the story.";
+                    next;
+                  break;
+
+                }
+
+                mes "[Lania]";
+                mes "Later on, this giant turned out to be Hrimthurs.";
+                mes "However, even if Hrimthurs was commiting an outrage";
+                mes "Gods did not worry about him at all.";
+                mes "Because they had Thor, the giant hunter.";
+                next;
+                mes "[Lania]";
+                mes "As Thor hurled his legendary hammer 'Mjolnir'";
+                mes "at Hrimthurs, the giant's head was bursted into fragments";
+                mes "and he fell to the hell.";
+                next;
+                mes "[Lania]";
+                mes ".....";
+                mes "Are you bored?";
+                mes "If you are, let's talk about this later.";
+                next;
+                switch( select( "Let me organize the story first.", "See you later.", "No, please go ahead." ) )
+		{
+
+                  case 1:
+                    mes "[Lania]";
+                    mes "Ah....";
+                    mes "The story must be too complicated for you to understand.";
+                    mes "My apology...";
+                    mes "Okay, I will wait for you to finish organizing the story...";
+                    next;
+                    mes "......................";
+                    mes "..................";
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "..................";
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "...............";
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "............";
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes ".........";
+                    mes "......";
+                    next;
+                    mes "......";
+                    next;
+                    mes "[Lania]";
+                    mes "May I continue the story now?";
+                    next;
+                    menu "Yes, please.",-;
+                        mes "[Lania]";
+                        mes "Okay, here it goes.";
+                        next;
+                  break;
+
+                  case 2:
+                    mes "[Lania]";
+                    mes "I understand that my story was not that interesting.";
+                    mes "I will try my best to satisfy you next time.";
+                    mes "Have a good travel.";
+                    close;
+                  break;
+
+                  case 3:
+                    mes "[Lania]";
+                    mes "Oh ok.";
+                    mes "Then let me continue the story.";
+                    next;
+                  break;
+
+                }
+                mes "[Lania]";
+                mes "After a while, Loki who looked tattered and worn out";
+                mes "brought a strange looking pony with eight leggs to Asgard.";
+                mes "And Loki introduced the pony as 'Sleipnir' and";
+                mes "presented it to Odin.";
+                mes "Odin thankfully accepted Loki's present.";
+                next;
+                mes "[Lania]";
+                mes "The fact was Loki transformed into the mare that";
+                mes "attracted Svadilfari and eventually he was impregnated";
+                mes "of the pony. That was the story of";
+                mes "how 'Sleipnir' was born.";
+                next;
+                mes "[Lania]";
+                mes "We, friars only hand down this story by word of mouth.";
+                mes "Therefore, small details might be different from the other.";
+                mes "However, the fundamental story line should not be different.";
+                next;
+                mes "[Lania]";
+                mes "I have not been able to practice myself that well,";
+                mes "I am not that confident if I told you the story as much as the original story.";
+                mes "But I hope you will understand that I did my best.";
+                mes "That was all I could help you.";
+                next;
+                mes "[Lania]";
+                mes "If you wish to listen to the story again,";
+                mes "you are always welcomed.";
+                mes "Have a safe travel.";
+                if(god_sl_2 == 1)
+                  set god_sl_2,2;
+                else if(god_sl_2 == 3)
+                  set god_sl_2,4;
+                close;
+              break;
+            }
+          break;
+
+          case 2:
+            mes "[Lania]";
+            mes "When you are in agony,";
+            mes "please look back on your past.";
+            mes "Just like legends or myths,";
+            mes "yours is also a story of the past.";
+            mes "You will find out a right solution from your past.";
+            close;
+          break;
+        }
+      }
+      else
+      {
+        mes "[Lania]";
+        mes "I told you everything I know.";
+        mes "I hope it will be a help for you.";
+        mes "Please be helpful for others...";
+        close;
+      }
+    }
+    else
+    {
+      mes "[Lania]";
+      mes "............";
+      mes "Training does not include only physical or mental practice.";
+      mes "Leading a life and meeting people are also considered";
+      mes "as a part of practice. Of course, everyone will have a different result.";
+      close;
+    }
+  }  
+  else
+  {
+      mes "[Lania]";
+      mes "............";
+      mes "Training does not include only physical or mental practice.";
+      mes "Leading a life and meeting people are also considered";
+      mes "as a part of practice. Of course, everyone will have a different result.";
+      close;
+  }
+
+}
+  
+// warp 0 -laboratory entrance
+que_god01.gat,84,95,0	script	Switch#God0	111,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      close2;
+      warp "que_god01.gat",60,88;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,84,92,0	script	god_sl_w0	45,1,1,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",60,88;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+// 워프 1번 -하란도트
+que_god01.gat,49,97,0	script	Switch#God1	111,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",62,119;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,46,97,0	script	god_sl_w1	45,1,1,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",62,119;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+
+// 워프 2번 -아딘
+que_god01.gat,19,97,0	script	Switch#God2	111,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",12,119;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,16,97,0	script	god_sl_w2	45,1,1,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",12,119;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,14,80,0	script	Switch#God3	111,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01",12,52;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,17,80,0	script	god_sl_w3	45,1,1,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",12,52;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+// 워프 4번 쿠르트
+que_god01.gat,44,80,0	script	Switch#God4	111,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",50,52;
+      end;
+     }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}
+
+que_god01.gat,47,80,0	script	god_sl_w4	45,1,1,{
+
+    if(god_sl_1 > 1 && god_sl_1 < 51)
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "As you put your temporary pass onto the detector,";
+      mes "the door was open.";
+      next;
+      warp "que_god01.gat",50,52;
+      end;
+    }
+    else
+    {
+      mes "The door was locked.";
+      mes "You looked around and found out a detector";
+      mes "at the right side of the door.";
+      mes "It seemed you need to put something onto";
+      mes "the detector in order to open the door.";
+      close;
+    }
+
+}

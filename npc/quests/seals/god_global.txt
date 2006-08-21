@@ -1,0 +1,123 @@
+//===== eAthena Script ======================================= 
+//= Variable Management NPC for the god item quest
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: ========================================= 
+//= Use this NPC if the seals quest variables get messed up.
+//===== Additional Comments: =================================
+// 1.0 First version. [MasterOfMuppets]
+//============================================================
+
+sec_in02.gat,15,170,0	script	Seals Quest Vars	817,{
+
+	if(getgmlevel() > 98)
+	{
+	mes "[Variable Management]";
+	mes "Welcome to the God Item Quest";
+	mes "Global Variable Management";
+	mes "function.";
+	next;
+	  while(1)
+	  {
+	menu "Check current variable values",s_Values,"Change variable values",s_Change,"Cancel",-;
+	close;
+
+s_Change:
+	mes "[Variable Management]";
+	mes "Which variable would you";
+	mes "like to change?";
+	next;
+	menu "$God1",-,"$God2",s_2,"$God3",s_3,"$God4",s_4;
+
+	mes "[Variable Management]";
+	mes "^0000FF$God1^000000 is currently ^FF0000" + $God1 + "^000000.";
+	mes "What would you like to";
+	mes "change it to? (Enter";
+	mes "101 to cancel)";
+	next;
+	input @temp;
+	if(@temp == 101)goto s_Canceled;
+	if(@temp < 0 || @temp > 100)goto s_BadValue;
+	set $God1,@temp;
+	mes "[Variable Management]";
+	mes "^0000FF$God1^000000 was changed to ^FF0000" + $God1 + "^000000.";
+	close;
+
+s_2:
+	mes "[Variable Management]";
+	mes "^0000FF$God2^000000 is currently ^FF0000" + $God2 + "^000000.";
+	mes "What would you like to";
+	mes "change it to? (Enter";
+	mes "101 to cancel)";
+	next;
+	input @temp;
+	if(@temp == 101)goto s_Canceled;
+	if(@temp < 0 || @temp > 100)goto s_BadValue;
+	set $God2,@temp;
+	mes "[Variable Management]";
+	mes "^0000FF$God2^000000 was changed to ^FF0000" + $God2 + "^000000.";
+	close;
+
+s_3:
+	mes "[Variable Management]";
+	mes "^0000FF$God3^000000 is currently ^FF0000" + $God3 + "^000000.";
+	mes "What would you like to";
+	mes "change it to? (Enter";
+	mes "101 to cancel)";
+	next;
+	input @temp;
+	if(@temp == 101)goto s_Canceled;
+	if(@temp < 0 || @temp > 100)goto s_BadValue;
+	set $God3,@temp;
+	mes "[Variable Management]";
+	mes "^0000FF$God3^000000 was changed to ^FF0000" + $God3 + "^000000.";
+	close;
+
+s_4:
+	mes "[Variable Management]";
+	mes "^0000FF$God4^000000 is currently ^FF0000" + $God4 + "^000000.";
+	mes "What would you like to";
+	mes "change it to? (Enter";
+	mes "101 to cancel)";
+	next;
+	input @temp;
+	if(@temp == 101)goto s_Canceled;
+	if(@temp < 0 || @temp > 100)goto s_BadValue;
+	set $God4,@temp;
+	mes "[Variable Management]";
+	mes "^0000FF$God4^000000 was changed to ^FF0000" + $God4 + "^000000.";
+	close;
+
+s_Canceled:
+	close;
+
+s_BadValue:
+	mes "[Variable Management]";
+	mes "Please enter a value";
+	mes "between 0-100.";
+	close;
+
+s_Values:
+	mes "[Variable Management]";
+	mes "Current variable values are:";
+	mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+	mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+	mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+	mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+	next;
+	  }
+	}
+	else
+	{
+	mes "[Variable Management]";
+	mes "Sorry. You don't have";
+	mes "authorization to use this";
+	mes "npc.";
+	close;
+	}
+
+}
