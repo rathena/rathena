@@ -156,11 +156,11 @@
 665,Gift_Box_2,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 666,Gift_Box_3,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 667,Gift_Box_4,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-668,Handsei,Red_Envelope,2,1,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); },{},{}
+668,Handsei,Red_Envelope,2,1,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 669,Rice_Cake_Soup,Rice-Cake Soup,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
 // Coins
 670,Gold_Coin_Moneybag,Bag of Gold Coins,2,,10,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-671,Gold_Coin,Gold Coin,2,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,1000); },{},{}
+671,Gold_Coin,Gold Coin,2,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 672,Copper_Coin_Moneybag,Bag of Bronze Coins,2,,10,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 673,Copper_Coin,Bronze Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 674,Mithril_Coin,Mithril Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
@@ -2445,7 +2445,7 @@
 12021,Pork_Belly,Pork,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12022,Spareribs,Galbi,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12023,Giftbox_China,Wrapped Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-12024,Red_Pouch_Of_Surprise,Red Pouch,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,1000); },{},{}
+12024,Red_Pouch_Of_Surprise,Red Pouch,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12025,Egg_Boy,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12026,Egg_Girl,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Effect Boxes
@@ -2563,7 +2563,7 @@
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12132,Red_Bag,Santa's Bag,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
 12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
-12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(100,10000); },{},{}
+12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 12135,Green_Ale,Green Ale,2,,10,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; if(rand(100) >= 90)sc_start SC_Confusion,10000,0; },{},{}
 12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
 12137,First_Stage,First Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
