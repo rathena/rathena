@@ -24,8 +24,8 @@ int inter_homun_tostr(char *str,struct s_homunculus *p)
 	int i;
 
 	str+=sprintf(str,"%d,%d,%s\t%d,%d,%d,%d,%d,"
-		"%lu,%d,%d,%d,"
-		"%lu,%d,%d,"
+		"%u,%d,%d,%d,"
+		"%u,%d,%d,"
 		"%d,%d,%d,%d,%d,%d\t",
 		p->hom_id, p->class_, p->name,
 		p->char_id, p->hp, p->max_hp, p->sp, p->max_sp,

@@ -788,8 +788,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 
 	nullpo_retr(AtCommand_None, sd);
 
-	if (!battle_config.allow_atcommand_when_mute &&
-		sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1) {
+	if (sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND) {
 		return AtCommand_Unknown;
 	}
 
@@ -8473,7 +8472,8 @@ atcommand_pettalk(
 		return -1;
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
+		(sd->sc.data[SC_BERSERK].timer!=-1 ||
+		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
 		return -1;
 
 	if (sscanf(message, "%99[^\n]", mes) < 1)
@@ -8718,17 +8718,11 @@ int atcommand_unmute(
 	struct map_session_data *pl_sd = NULL;
 	nullpo_retr(-1, sd);
 
-	if(!battle_config.muting_players) {
-		clif_displaymessage(fd, "Please enable the muting system before using it.");
-		return 0;
-	}
-
 	if (!message || !*message)
         	return -1;
 
 	if((pl_sd=map_nick2sd((char *) message)) != NULL) {
 		if(pl_sd->sc.data[SC_NOCHAT].timer!=-1) {
-			pl_sd->status.manner = 0; // have to set to 0 first [celest]
 			status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
 			clif_displaymessage(sd->fd,"Player unmuted");
 		}
@@ -8793,11 +8787,6 @@ int atcommand_mute(
 	struct map_session_data *pl_sd = NULL;
 	int manner;
 	nullpo_retr(-1, sd);
-
-	if(!battle_config.muting_players) {
-		clif_displaymessage(fd, "Please enable the muting system before using it.");
-		return 0;
-	}
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &manner, atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Usage: @mute <time> <character name>.");
@@ -10173,11 +10162,6 @@ int atcommand_mutearea(
 	int time;
 	nullpo_retr(0, sd);
 
-	if(!battle_config.muting_players) {
-		clif_displaymessage(fd, "Please enable the muting system before using it.");
-		return 0;
-	}
-
 	time = atoi(message);
 	if (!time)
 		time = 15; // 15 minutes default
@@ -10262,7 +10246,8 @@ int atcommand_me(
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
+		(sd->sc.data[SC_BERSERK].timer!=-1 ||
+		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
 		return -1;
 
 	if (!message || !*message) {
@@ -10725,7 +10710,7 @@ int atcommand_main(
 				sd->state.mainchat = 1;
 				clif_displaymessage(fd, msg_txt(380)); // Main chat has been activated.
 			}
-			if (sd->sc.data[SC_NOCHAT].timer != -1) {
+			if (sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) {
 				clif_displaymessage(fd, msg_txt(387));
 				return -1;
 			}

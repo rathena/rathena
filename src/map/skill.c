@@ -8921,11 +8921,11 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 			}
 
 			per = percentrefinery [ditem->wlv][(int)item->refine];
-			per += (sd->status.job_level-50)/2; //Updated per the new kro descriptions. [Skotlex]
+			per += (((signed int)sd->status.job_level)-50)/2; //Updated per the new kro descriptions. [Skotlex]
 
+			pc_delitem(sd, i, 1, 0);
 			if (per > rand() % 100) {
 				item->refine++;
-				pc_delitem(sd, i, 1, 0);
 				if(item->equip) {
 					ep = item->equip;
 					pc_unequipitem(sd,idx,3);
@@ -8936,8 +8936,10 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
-				if(item->refine == MAX_REFINE && item->card[0] == CARD0_FORGE &&
-					MakeDWord(item->card[2],item->card[3]) == sd->char_id){ // Fame point system [DracoRPG]
+				if(item->refine == MAX_REFINE &&
+					item->card[0] == CARD0_FORGE &&
+					MakeDWord(item->card[2],item->card[3]) == sd->char_id)
+				{ // Fame point system [DracoRPG]
 					switch(ditem->wlv){
 						case 1:
 							pc_addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
@@ -8951,7 +8953,6 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 					}
 				}
 			} else {
-				pc_delitem(sd, i, 1, 0);
 				item->refine = 0;
 				if(item->equip)
 					pc_unequipitem(sd,idx,3);

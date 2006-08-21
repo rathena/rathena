@@ -4847,11 +4847,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pc_setglobalreg(ssd, "killedrid", sd->bl.id);
 			npc_script_event(ssd, NPCE_KILLPC);
 		}
-		if (battle_config.pk_mode && ssd->status.manner >= 0 && battle_config.manner_system) {
+		if (battle_config.pk_mode&2) {
 			ssd->status.manner -= 5;
 			if(ssd->status.manner < 0)
 				sc_start(src,SC_NOCHAT,100,0,0);
-
+		
 		// PK/Karma system code (not enabled yet) [celest]
 		// originally from Kade Online, so i don't know if any of these is correct ^^;
 		// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
@@ -5486,9 +5486,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if(sd->vd.cloth_color)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 	
-	if(battle_config.muting_players && sd->status.manner < 0 && battle_config.manner_system)
+	if(sd->status.manner < 0)
 		clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
-
 	
 	if(pc_isriding(sd)) //Remove Peco Status to prevent display <> class problems.
 		pc_setoption(sd,sd->sc.option&~OPTION_RIDING);

@@ -113,8 +113,8 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 	struct map_session_data *sd = hd->master;
 
 	clif_emotion(&hd->bl, 16) ;	//wah
-	if (!sd)
-		return 7;
+	if (!sd) //unit remove map will invoke unit free
+		return 3;
 
 	//Delete timers when dead.
 	merc_hom_hungry_timer_delete(hd);

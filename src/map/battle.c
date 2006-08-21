@@ -3681,7 +3681,6 @@ static const struct battle_data_short {
 	{ "pet_hair_style",                    &battle_config.pet_hair_style	}, // added by [Skotlex]
 	{ "castrate_dex_scale",                &battle_config.castrate_dex_scale	}, // added by [MouseJstr]
 	{ "area_size",                         &battle_config.area_size	}, // added by [MouseJstr]
-	{ "muting_players",                    &battle_config.muting_players}, // added by [Apple]
 	{ "zeny_from_mobs",                    &battle_config.zeny_from_mobs}, // [Valaris]
 	{ "mobs_level_up",                     &battle_config.mobs_level_up}, // [Valaris]
 	{ "mobs_level_up_exp_rate",		   &battle_config.mobs_level_up_exp_rate}, // [Valaris]

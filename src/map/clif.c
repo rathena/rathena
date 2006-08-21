@@ -3862,7 +3862,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 		)
 		clif_hpmeter_single(sd->fd, dstsd);
 
-	if(dstsd->status.manner < 0 && battle_config.manner_system)
+	if(dstsd->status.manner < 0)
 		clif_changestatus(&dstsd->bl,SP_MANNER,dstsd->status.manner);
 		
 	// pvp circle for duel [LuzZza]
@@ -8358,7 +8358,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 
-	if(battle_config.muting_players && sd->status.manner < 0 && battle_config.manner_system)
+	if(sd->status.manner < 0)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
 // Lance
@@ -8664,7 +8664,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		(is_charcommand(fd, sd, message,0) != CharCommand_None))
 		return;
 	if (sd->sc.count &&
-		(sd->sc.data[SC_BERSERK].timer != -1 || sd->sc.data[SC_NOCHAT].timer != -1 ))
+		(sd->sc.data[SC_BERSERK].timer != -1 ||
+		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
 		return;
 
 	if (battle_config.min_chat_delay)
@@ -9033,7 +9034,8 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	}
 	if(gm_command) aFree(gm_command);
 	if (sd->sc.count &&
-		(sd->sc.data[SC_BERSERK].timer!=-1 || sd->sc.data[SC_NOCHAT].timer != -1))
+		(sd->sc.data[SC_BERSERK].timer!=-1 ||
+		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
 		return;
 
 	if (battle_config.min_chat_delay)
@@ -9102,10 +9104,6 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	if(strcmpi(target, main_chat_nick) == 0) {
 		if(!sd->state.mainchat) {
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
-			return;
-		}
-		if (sd->sc.data[SC_NOCHAT].timer != -1) {
-			clif_displaymessage(fd, msg_txt(387));
 			return;
 		}
 		sprintf(output, msg_txt(386), sd->status.name, (char *)RFIFOP(fd,28));
@@ -9213,7 +9211,7 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd) {
 		if(sd->sc.count && (
 			sd->sc.data[SC_TRICKDEAD].timer != -1 ||
 			sd->sc.data[SC_BLADESTOP].timer != -1 ||
-			sd->sc.data[SC_NOCHAT].timer!=-1 )
+			(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM))
 		)
 			break;
 
@@ -9242,8 +9240,9 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd) {
 		return;
 
 	if (sd->sc.count && (
-		sd->sc.data[SC_AUTOCOUNTER].timer != -1 || //オートカウンター
-		sd->sc.data[SC_BLADESTOP].timer != -1//白刃取り
+		sd->sc.data[SC_AUTOCOUNTER].timer != -1 ||
+		sd->sc.data[SC_BLADESTOP].timer != -1 ||
+		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM)
 	))
 		return;
 
@@ -9283,7 +9282,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 		sd->sc.data[SC_TRICKDEAD].timer != -1 || //死んだふり
 		sd->sc.data[SC_BLADESTOP].timer != -1 || //白刃取り
 		sd->sc.data[SC_BERSERK].timer!=-1 ||	//バーサーク
-		sd->sc.data[SC_NOCHAT].timer!=-1 ||
+		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM) ||
 		sd->sc.data[SC_GRAVITATION].timer!=-1	//会話禁止
 	))
 		return;
@@ -9488,6 +9487,8 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 void clif_parse_CreateChatRoom(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
+	if (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOROOM)
+		return;
 	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 4){
 		chat_createchat(sd,RFIFOW(fd,4),RFIFOB(fd,6),(char*)RFIFOP(fd,7),(char*)RFIFOP(fd,15),RFIFOW(fd,2)-15);
 	} else
@@ -10407,8 +10408,8 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 		is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None)
 		return;
 	if	(sd->sc.count && (
-			sd->sc.data[SC_BERSERK].timer!=-1 ||	//バーサーク時は会話も不可
-			sd->sc.data[SC_NOCHAT].timer!=-1		//チャット禁止
+			sd->sc.data[SC_BERSERK].timer!=-1 ||
+			(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
 		))
 		return;
 
@@ -10458,6 +10459,8 @@ void clif_parse_PurchaseReq(int fd, struct map_session_data *sd) {
 void clif_parse_OpenVending(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 	if (clif_trading(sd))
+		return;
+	if (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOROOM)
 		return;
 	vending_openvending(sd, RFIFOW(fd,2), (char*)RFIFOP(fd,4), RFIFOB(fd,84), RFIFOP(fd,85));
 }
@@ -10626,8 +10629,8 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None)
 		return;
 	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK].timer!=-1 ||	//バーサーク時は会話も不可
-		sd->sc.data[SC_NOCHAT].timer!=-1		//チャット禁止
+		sd->sc.data[SC_BERSERK].timer!=-1 ||
+		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
 	))
 		return;
 
@@ -10871,11 +10874,6 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 	int type, limit, level;
 	struct block_list *bl;
 	struct map_session_data *dstsd;
-
-	if(!battle_config.muting_players) {
-		clif_displaymessage(fd, "Muting is disabled.");
-		return;
-	}
 
 	RFIFOHEAD(fd);
 	bl = map_id2bl(RFIFOL(fd,2));

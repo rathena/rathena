@@ -483,6 +483,13 @@ enum {
 
 #define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
 
+//Defines for the manner system [Skotlex]
+#define MANNER_NOCHAT 0x01
+#define MANNER_NOSKILL 0x02
+#define MANNER_NOCOMMAND 0x04
+#define MANNER_NOITEM 0x08
+#define MANNER_NOROOM 0x10
+
 //Define flags for the status_calc_bl function. [Skotlex]
 #define SCB_NONE	0x00000000
 #define SCB_BASE	0x00000001

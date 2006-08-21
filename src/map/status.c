@@ -1002,7 +1002,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				(sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
 				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(status->mode&MD_BOSS)) ||
 				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
-				sc->data[SC_NOCHAT].timer != -1
+				(sc->data[SC_NOCHAT].timer != -1 && sc->data[SC_NOCHAT].val1&MANNER_NOSKILL)
 			)
 				return 0;
 
@@ -4709,6 +4709,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_CLOSECONFINE2: //Can't be re-closed in.
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
+			case SC_NOCHAT:
 				return 0;
 			case SC_DANCING:
 			case SC_DEVOTION:
@@ -4941,11 +4942,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			break;
 		case SC_NOCHAT:
-			if(!battle_config.muting_players) { 
-				sd->status.manner = 0; //Zido
-				return 0;
-			}
 			tick = 60000;
+			val1 = battle_config.manner_system; //Mute filters.
 			if (sd) clif_updatestatus(sd,SP_MANNER);
 			break;
 
@@ -5965,11 +5963,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				status_change_end(bl,SC_LONGING,-1);				
 			break;
 		case SC_NOCHAT:
-			if (sd && battle_config.manner_system)
-			{
-				//Why set it to 0? Can't we use good manners for something? [Skotlex]
-//					if (sd->status.manner >= 0) // weeee ^^ [celest]
-//						sd->status.manner = 0;
+			if (sd) {
+				if (sd->status.manner < 0) sd->status.manner = 0;
 				clif_updatestatus(sd,SP_MANNER);
 			}
 			break;
@@ -6555,7 +6550,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 	case SC_NOCHAT:
-		if(sd && battle_config.manner_system){
+		if(sd){
 			sd->status.manner++;
 			clif_updatestatus(sd,SP_MANNER);
 			if (sd->status.manner < 0)

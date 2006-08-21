@@ -1,5 +1,12 @@
 Date	Added
 
+2006/08/21
+	* Removed config setting "muting_players", and expanded the manner_system
+	  config to specify how having negative manner (mute) affects a player (see
+	  battle/misc.conf). [Skotlex]
+	* Expanded the pk_mode setting from no/yes to 0/1/2. 1 is normal pk_mode,
+	  if 2 is used, it makes killing players give you a loss of 5 manner points.
+	  [Skotlex]
 2006/08/18
 	* Added monster_ai&128 to make aggressive mobs ignore that behaviour of
 	  always picking Homun targets above player targets regardless of who is

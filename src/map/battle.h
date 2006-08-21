@@ -334,7 +334,6 @@ extern struct Battle_Config {
 	unsigned short hack_info_GM_level; // added by [Yor]
 	unsigned short any_warp_GM_min_level; // added by [Yor]
 	unsigned short packet_ver_flag; // added by [Yor]
-	unsigned short muting_players; // added by [PoW]
 	
 	unsigned short min_hair_style; // added by [MouseJstr]
 	unsigned short max_hair_style; // added by [MouseJstr]
