@@ -840,9 +840,11 @@ void inter_guild_sql_final(void)
 int search_guildname(char *str)
 {
 	int guild_id;
-
+	char t_name[NAME_LENGTH*2];
+	
+	jstrescapecpy(t_name, str);
 	//Lookup guilds with the same name
-	sprintf (tmp_sql , "SELECT guild_id FROM `%s` WHERE name='%s'",guild_db,jstrescape(str));
+	sprintf (tmp_sql , "SELECT guild_id FROM `%s` WHERE name='%s'", guild_db, t_name);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
