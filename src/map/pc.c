@@ -6858,7 +6858,7 @@ static int pc_autosave_sub(DBKey key,void * data,va_list app)
 {
 	struct map_session_data *sd = (TBL_PC*)data;
 	
-	if(sd->bl.id == last_save_id) {
+	if(sd->bl.id == last_save_id && save_flag != 1) {
 		save_flag = 1;
 		return 1;
 	}

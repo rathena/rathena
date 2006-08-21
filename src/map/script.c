@@ -5430,9 +5430,7 @@ int buildin_delitem(struct script_state *st)
 		}
 		//is this item important? does it have cards? or Player's name? or Refined/Upgraded
 		if(itemdb_isspecial(sd->status.inventory[i].card[0]) ||
-			sd->status.inventory[i].card[1] ||
-			sd->status.inventory[i].card[2] ||
-		  	sd->status.inventory[i].card[3] ||
+			sd->status.inventory[i].card[0] ||
 		  	sd->status.inventory[i].refine) {
 			//this is important item, count it (except for pet eggs)
 			if(sd->status.inventory[i].card[0] != CARD0_PET)

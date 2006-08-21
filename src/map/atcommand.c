@@ -510,7 +510,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Charstoreall,		"@charstoreall",		40, atcommand_charstoreall }, // MouseJstr
 	{ AtCommand_Skillid,			"@skillid",			40, atcommand_skillid }, // MouseJstr
 	{ AtCommand_Useskill,			"@useskill",		40, atcommand_useskill }, // MouseJstr
-	{ AtCommand_Rain,				"@rain",			99, atcommand_rain },
+//	{ AtCommand_Rain,				"@rain",			99, atcommand_rain }, //Client no longer supports rain!
 	{ AtCommand_Snow,				"@snow",			99, atcommand_snow },
 	{ AtCommand_Sakura,			"@sakura",			99, atcommand_sakura },
 	{ AtCommand_Clouds,			"@clouds",			99, atcommand_clouds },

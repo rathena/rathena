@@ -2,6 +2,14 @@ Date	Added
 
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
+
+2006/08/21
+	* Fixed the Autosave routine not working when there's only one player
+	  online. [Skotlex]
+	* Disabled command @rain since the client no longer supports it anyway.
+	  [Skotlex]
+	* Fixed delitem not checking for the first slot's card, also optimized it
+	  so that it doesn't checks on the other slots. [Skotlex]
 2006/08/20
 	* Added a check during mob_db loading so that the six basic stats, max hp
 	  and max sp are never below 1, as this could cause crashes when using
