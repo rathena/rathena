@@ -708,6 +708,7 @@ int merc_call_homunculus(struct map_session_data *sd, short x, short y)
 	{	//Spawn him
 		hd->bl.x = x;
 		hd->bl.y = y;
+		hd->bl.m = sd->bl.m;
 		map_addblock(&hd->bl);
 		clif_spawn(&hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
