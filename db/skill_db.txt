@@ -270,7 +270,7 @@
 244,0,0,4,0,1,0,1,0,no,0,0,0,none,0	//AM_REST#Peaceful Rest#
 //245,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//AM_DRILLMASTER#Drillmaster#
 //246,9,0,0,0,0,0,10,0,no,0,0,0,none,0	//AM_HEALHOMUN#Heal Homunculus#
-247,9,6,4,0,1,0,5,0,no,0,0,0,none,0	//AM_RESURRECTHOMUN#Ressurect Homunculus#
+247,9,6,4,0,1,1,5,0,no,0,0,0,none,0	//AM_RESURRECTHOMUN#Ressurect Homunculus#
 248,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//CR_TRUST#Faith#
 249,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//CR_AUTOGUARD#Guard#
 250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9	//CR_SHIELDCHARGE#Smite#

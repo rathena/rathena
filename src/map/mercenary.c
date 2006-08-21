@@ -820,7 +820,9 @@ int merc_revive_homunculus(struct map_session_data *sd, unsigned char per, short
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
 	}
-	return status_revive(&hd->bl, per, 0);
+	status_revive(&hd->bl, per, 0);
+	sd->homunculus.hp = hd->battle_status.hp;
+	return 1;
 }
 
 void merc_homun_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)

@@ -6287,8 +6287,14 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case AM_RESURRECTHOMUN:	//[orn]
 		if (sd)
 		{
+			int p;
+			// If skilllv = 1, range = 1~4%, lv 2 : 5~25%, lv 3 : 25~45%, ...
+			if (skilllv == 1)
+				p = 1 + rand() % 4;
+			else
+				p = 5 + 20 * (skilllv - 2) + rand() % 21;
 			if (map_flag_gvg(src->m) || //No reviving in WoE grounds!
-				!merc_revive_homunculus(sd, 10*skilllv, x, y))
+				!merc_revive_homunculus(sd, p, x, y))
 			{
 				clif_skill_fail(sd,skillid,0,0);
 				break;
@@ -8350,7 +8356,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case AM_RESURRECTHOMUN: // Can't resurrect homun if you don't have a dead homun
-		if (!sd->status.hom_id || sd->homunculus.vaporize || !sd->hd || sd->hd->battle_status.hp)
+		if (!sd->status.hom_id || sd->homunculus.hp)
 		{
 			clif_skill_fail(sd,skill,0,0);
 			return 0;

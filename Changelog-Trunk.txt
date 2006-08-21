@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/21
+	* Fixed AM_RESURRECTION, thanks to RockmanEXE for %HP values [Toms]
 	* Fixed HAMI_CASTLE, HAMI_DEFENCE & HLIF_AVOID [Toms]
 	* Adjusted Glittering's success rate to 20+10*lv% [Skotlex]
 	* Corrected isequipped() so that cards will not be tagged as "used up"
