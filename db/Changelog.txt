@@ -20,6 +20,7 @@
 
 =========================
 08/21
+	* Increased splash range of HVAN_EXPLOSION to 4. [Skotlex]
 	* Added delay to HLIF_AVOID [Toms]
 08/20
 	* Fixed Fling not reducing DEF for 30 seconds [Playtester]

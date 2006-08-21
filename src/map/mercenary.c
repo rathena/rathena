@@ -424,10 +424,11 @@ void merc_save(struct homun_data *hd)
 {
 	// copy data that must be saved in homunculus struct ( hp / sp )
 	TBL_PC * sd = hd->master;
-	if((sd->homunculus.hp = hd->battle_status.hp) > sd->homunculus.max_hp )
-		sd->homunculus.hp = sd->homunculus.max_hp;
-	if((sd->homunculus.sp = hd->battle_status.sp) > sd->homunculus.max_sp )
-		sd->homunculus.sp = sd->homunculus.max_sp;
+	//Do not check for max_hp/max_sp caps as current could be higher to max due
+	//to status changes/skills (they will be capped as needed upon stat 
+	//calculation on login)
+	sd->homunculus.hp = hd->battle_status.hp;
+	sd->homunculus.sp = hd->battle_status.sp;
 	intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus) ;
 }
 

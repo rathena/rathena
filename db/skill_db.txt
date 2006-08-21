@@ -606,7 +606,7 @@
 8013,9,6,1,0,0,0,5,1:2:3:4:5,no,0,0,0,magic,0	//HVAN_CAPRICE
 8014,0,6,4,0,1,0,5,0,no,0,0,0,none,0	//HVAN_CHAOTIC
 8015,0,0,0,0,1,0,5,0,no,0,0,0,none,0	//HVAN_INSTRUCT
-8016,0,6,4,-1,2,2,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
+8016,0,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
 
 //id,range,hit,inf,pl,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count
 10000,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_APPROVAL#Approval#
