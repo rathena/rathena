@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/21
+	* Fixing MoM's typos (Citrin -> Citrine) over Lv4 weapon quest. [erKURITA]
 	* Implemented the God item quest. [MasterOfMuppets]
 	- Thanks to SinSloth for scripting most of it.
 	- Beware of potential bugs.
