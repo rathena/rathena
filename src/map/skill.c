@@ -5542,63 +5542,44 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					AREA_SIZE, BL_MOB, bl, src);
 			}
 		}
-		else
-		{
-			// Failed
-			if (hd)
-				clif_skill_fail(hd->master, skillid, 0, 0);
-			else if (sd)
-				clif_skill_fail(sd, skillid, 0, 0);
-		}
+		// Failed
+		else if (hd && hd->master)
+			clif_skill_fail(hd->master, skillid, 0, 0);
+		else if (sd)
+			clif_skill_fail(sd, skillid, 0, 0);
 		break;
 	case HVAN_CHAOTIC:	//[orn]
 		{
-			if(hd){
-				//HOM,PC,MOB
-				struct block_list* heal_target=NULL;
-				int heal = skill_calc_heal( src, 1+rand()%skilllv );
-				static const int per[10][2]={{20,50},{50,60},{25,75},{60,64},{34,67},
-											 {34,67},{34,67},{34,67},{34,67},{34,67}};
-				int rnd = rand()%100;
-				if(rnd<per[skilllv-1][0])
-				{
-					heal_target = &hd->bl;
-				}else if(rnd<per[skilllv-1][1])
-				{
-					if(!status_isdead(&hd->master->bl))
-						heal_target = &hd->master->bl;
-					else
-						heal_target = &hd->bl;
-				}else{//MOB
-					heal_target = map_id2bl(hd->target_id);
-					if(heal_target==NULL)
-						heal_target = &hd->bl;
-				}
-				clif_skill_nodamage(src,heal_target,AL_HEAL,heal,1);
-				clif_skill_nodamage(src,heal_target,skillid,heal,1);
-				status_heal(heal_target, heal, 0, 0);
+			static const int per[10][2]={{20,50},{50,60},{25,75},{60,64},{34,67},
+										 {34,67},{34,67},{34,67},{34,67},{34,67}};
+			int rnd = rand()%100;
+			if(rnd<per[skilllv-1][0]) //Self
+				bl = src;
+			else if(rnd<per[skilllv-1][1]) //Master
+				bl = battle_get_master(src);
+			else //Enemy
+				bl = map_id2bl(battle_gettarget(src));
+
+			if (!bl) bl = src;
+			i = skill_calc_heal( src, 1+rand()%skilllv);
+			//Eh? why double skill packet?
+			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
+			clif_skill_nodamage(src,bl,skillid,i,1);
+			status_heal(bl, i, 0, 0);
+			if (hd)
 				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
-			}
 		}
 		break;
-	case HAMI_BLOODLUST:	//[orn]
-	case HFLI_FLEET:	//[orn]
-	case HFLI_SPEED:	//[orn]
-		if ( hd ) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,
-				sc_start(&hd->bl,type,100,skilllv,skill_get_time(skillid,skilllv))) ;
-			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
-		}
-		else
-				clif_skill_fail(hd->master,skillid,0,0);
-		break;
-	case HLIF_CHANGE:	//[orn]
+	//Homun single-target support skills [orn]
+	case HAMI_BLOODLUST:
+	case HFLI_FLEET:
+	case HFLI_SPEED:
+	case HLIF_CHANGE:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (hd)
 			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 		break;
-
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		map_freeblock_unlock();

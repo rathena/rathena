@@ -3587,9 +3587,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		if(sc->data[SC_STAR_COMFORT].timer!=-1)
 			max = sc->data[SC_STAR_COMFORT].val2;
 
-		if(sc->data[SC_MADNESSCANCEL].timer!=-1 && max < 200)
-			max = 200;
-	
 		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 &&
 			max < sc->data[SC_TWOHANDQUICKEN].val2)
 			max = sc->data[SC_TWOHANDQUICKEN].val2;
@@ -3639,8 +3636,11 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		}
 		aspd_rate -= max;
 
+	  	//These stack with the rest of bonuses.
 		if(sc->data[SC_BERSERK].timer!=-1)
-			aspd_rate -= 300; //Stacks with the rest of bonuses.
+			aspd_rate -= 300;
+		else if(sc->data[SC_MADNESSCANCEL].timer!=-1)
+			aspd_rate -= 200;
 	}
 	if(sc->data[i=SC_ASPDPOTION3].timer!=-1 ||
 		sc->data[i=SC_ASPDPOTION2].timer!=-1 ||

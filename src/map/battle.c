@@ -100,6 +100,8 @@ int battle_gettarget(struct block_list *bl)
 			return ((struct mob_data*)bl)->target_id;
 		case BL_PET:
 			return ((struct pet_data*)bl)->target_id;
+		case BL_HOM:
+			return ((struct homun_data*)bl)->target_id;
 	}
 	return 0;
 }
@@ -3043,7 +3045,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 		}
 	}
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
-
 		if(tsd && src != target)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
 		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
@@ -4090,7 +4091,7 @@ void battle_set_defaults() {
 	battle_config.equip_skill_break_rate = 100; // [Valaris], adapted by [Skotlex]
 	battle_config.pk_mode = 0; // [Valaris]
 	battle_config.pk_level_range = 0; // [Skotlex]
-	battle_config.manner_system = 1; // [Valaris]
+	battle_config.manner_system = 0xFFF; // [Valaris]
 	battle_config.pet_equip_required = 0; // [Valaris]
 	battle_config.multi_level_up = 0; // [Valaris]
 	battle_config.max_exp_gain_rate	= 0; // [Skotlex]
