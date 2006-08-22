@@ -68,7 +68,7 @@
 //= 2.3	Changed dtseligible to be $dtsday when MISC_QUEST|128
 //=	Added $dtsday for vote session counter
 //=	Fixed bug that involved having both warpers enabled at the same time. [Evera]
-//=	New $dtsday system and bug fix needs bug testing (how ironic -.-;) [Evera]
+//=	New $dtsday system and bug fix[Evera]
 //============================================================ 
 
 //Yuno
