@@ -2300,6 +2300,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 void do_final(void) {
 	//sync account when terminating.
 	//but no need when you using DBMS (mysql)
+	ShowStatus("Terminating...\n");
 	mmo_db_close();
 	online_db->destroy(online_db, NULL);
 	if (gm_account_db)

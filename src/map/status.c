@@ -6489,7 +6489,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_RUN:
 	case SC_DODGE:
 	case SC_AUTOBERSERK: //continues until triggered off manually. [Skotlex]
-	case SC_NEN:
 	case SC_SIGNUMCRUCIS:		/* シグナムクルシス */
 		sc->data[type].timer=add_timer( 1000*600+tick,status_change_timer, bl->id, data );
 		return 0;
