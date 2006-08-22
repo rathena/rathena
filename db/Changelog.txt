@@ -20,6 +20,7 @@
 
 =========================
 08/22
+	* Removed event bonus on Celebration Ring [Playtester]
 	* Applied Mpeg's fix on GS according to kRO's values [Toms]
 	* Updated Embryo creation, put "Potion Creation Guide" instead of "Embryo Creation Guide"
 	  according to RockmanEXE's & iRO info [Toms]
