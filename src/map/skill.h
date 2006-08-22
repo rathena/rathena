@@ -47,6 +47,10 @@
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5
 
+// To be passed to skill_attack, whether the skill damage should disable level or animation. [Skotlex]
+#define SD_LEVEL 0x1000
+#define SD_ANIMATION	0x2000
+
 // スキルデ?タベ?ス
 struct skill_db {
 	char *name;

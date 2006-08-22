@@ -3059,7 +3059,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				tsc->data[SC_POISONREACT].val2 = 0;
 				skill_attack(BF_WEAPON,target,target,src,AS_POISONREACT,tsc->data[SC_POISONREACT].val1,tick,0);
 			} else {
-				skill_attack(BF_WEAPON,target,target,src,TF_POISON, 5, tick, flag);
+				skill_attack(BF_WEAPON,target,target,src,TF_POISON, 5, tick, 0);
 				--tsc->data[SC_POISONREACT].val2;
 			}
 			if (tsc->data[SC_POISONREACT].val2 <= 0)
