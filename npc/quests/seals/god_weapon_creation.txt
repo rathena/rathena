@@ -108,7 +108,7 @@ gld_dun01.gat,28,85,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -253,7 +253,7 @@ gld_dun01.gat,28,85,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -402,7 +402,7 @@ gld_dun02.gat,85,84,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -547,7 +547,7 @@ gld_dun02.gat,85,84,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -696,7 +696,7 @@ gld_dun03.gat,92,105,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -841,7 +841,7 @@ gld_dun03.gat,92,105,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -990,7 +990,7 @@ gld_dun04.gat,268,230,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -1135,7 +1135,7 @@ gld_dun04.gat,268,230,0	script	Grunburti	826,{
 						mes "^0000FF3 Wheel of the Unknown";
 						mes "5 Feather of Angel Wing";
 						mes "3 Sprit of Fish";
-						mes "4 Amblem of the Sun God";
+						mes "4 Emblem of the Sun God";
 						mes "3 Breath of Spirit";
 						mes "20 Gold";
 						mes "10 Elunium";
@@ -1423,7 +1423,7 @@ que_god01.gat,154,112,4	script	Grunburti#god	826,{
 			mes "^0000FF3 Wheel of the Unknown";
 			mes "5 Feather of Angel Wing";
 			mes "3 Spirit of Fish";
-			mes "4 Amblem of the Sun God";
+			mes "4 Emblem of the Sun God";
 			mes "3 Breath of Spirit";
 			mes "20 Gold";
 			mes "10 Elunium";
