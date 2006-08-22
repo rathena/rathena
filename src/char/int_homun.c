@@ -23,7 +23,7 @@ int inter_homun_tostr(char *str,struct s_homunculus *p)
 {
 	int i;
 
-	str+=sprintf(str,"%d,%d,%s\t%d,%d,%d,%d,%d,"
+	str+=sprintf(str,"%d,%d\t%s\t%d,%d,%d,%d,%d,"
 		"%u,%d,%d,%d,"
 		"%u,%d,%d,"
 		"%d,%d,%d,%d,%d,%d\t",
@@ -51,7 +51,7 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 
 	memset(p,0,sizeof(struct s_homunculus));
 
-	i=sscanf(str,"%d,%d,%[^\t]\t%d,%d,%d,%d,%d,"
+	i=sscanf(str,"%d,%d\t%127[^\t]\t%d,%d,%d,%d,%d,"
 		"%u,%d,%d,%d,"
 		"%u,%d,%d,"
 		"%d,%d,%d,%d,%d,%d\t%n",
