@@ -20,6 +20,7 @@
 
 =========================
 08/22
+	* Updated range of guns according to RockmanEXE's info [Playtester]
 	* Updated some items thanks to Haplo [Playtester]
 08/21
 	* Increased splash range of HVAN_EXPLOSION to 4. [Skotlex]
