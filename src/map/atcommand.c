@@ -9505,9 +9505,7 @@ atcommand_charkillableid(
   			clif_displaymessage(fd, msg_txt(290));
    }
    else
-   {
       clif_displaymessage(fd,msg_txt(3));
-   }
    //printf("Session_id = %d, cid = %d\n",session_id,cid);
    return 0;
 }
@@ -9546,9 +9544,7 @@ atcommand_charkillableid2(
         clif_displaymessage(fd, msg_txt(290));
    }
    else
-   {
       clif_displaymessage(fd,msg_txt(3));
-   }
    //printf("Session_id = %d, aid = %d\n",session_id,aid);
    return 0;
 }

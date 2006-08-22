@@ -5299,7 +5299,7 @@ int buildin_getnameditem(struct script_state *st)
 	item_tmp.nameid=nameid;
 	item_tmp.amount=1;
 	item_tmp.identify=1;
-	item_tmp.card[0]=254; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
+	item_tmp.card[0]=CARD0_CREATE; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
 	item_tmp.card[2]=tsd->status.char_id;
 	item_tmp.card[3]=tsd->status.char_id >> 16;
 	if(pc_additem(sd,&item_tmp,1)) {
