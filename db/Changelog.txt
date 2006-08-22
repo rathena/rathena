@@ -20,6 +20,7 @@
 
 =========================
 08/22
+	* Added a duration to Disarm [Playtester]
 	* Final fix on Grand Cross weapon [Playtester]
 	* Some fixes on Grand Cross weapon, might need more fixes [Playtester]
 	* Removed event bonus on Celebration Ring [Playtester]
