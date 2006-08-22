@@ -2879,6 +2879,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case AS_SPLASHER:
 	case AS_GRIMTOOTH:
 	case SM_MAGNUM:
+	case HT_BLITZBEAT:
 	case MC_CARTREVOLUTION:	
 	case NPC_SPLASHATTACK:
 	case AC_SHOWER:	
@@ -2895,7 +2896,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		{	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
 			if (skill_area_temp[1] != bl->id)
 				skill_attack(skill_get_type(skillid), src, src, bl,
-					skillid, skilllv, tick, skill_area_temp[0]|0x1500);
+					skillid, skilllv, tick, skill_area_temp[0]|0x1900);
 			else if (skillid == KN_BRANDISHSPEAR)
 				skill_attack(skill_get_type(skillid), src, src, bl,
 					skillid, skilllv, tick, skill_area_temp[0]);
@@ -2905,7 +2906,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_area_temp[0] = 0;
 		skill_area_temp[1] = bl->id;
-		if (skill_get_nk(skillid)&NK_SPLASHSPLIT)
+		//0xF000 -> Forced splash damage for Auto Blitz-Beat
+		if (flag&0xF000 || skill_get_nk(skillid)&NK_SPLASHSPLIT)
 			map_foreachinrange(skill_area_sub, bl, 
 				skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
@@ -2919,37 +2921,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 		//Splasher Should do 100% damage on targetted character.
 		skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv,
-			tick, skillid == AS_SPLASHER?0:skill_area_temp[0]);
+			tick, (skillid == AS_SPLASHER?0:skill_area_temp[0])|(flag&0xF000));
 
 		if (skillid == SM_MAGNUM) {
 			//Initiate 10% of your damage becomes fire element.
 			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 			if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
-		}
-		break;
-
-	//Done apart because you can't mix the flag with BCT_ENEMY for auto-blitz.
-	case HT_BLITZBEAT:
-		if (flag&1) {
-			if (skill_area_temp[1] != bl->id)
-				skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv,
-					tick, skill_area_temp[0]|(flag&0xFF00));
-		} else {
-			skill_area_temp[0] = 0;
-			skill_area_temp[1] = bl->id;
-			if (flag&0xF000)
-				map_foreachinrange(skill_area_sub, bl, 
-						skill_get_splash(skillid, skilllv), BL_CHAR,
-						src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-			else
-				skill_area_temp[0] = 1;
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY|1|flag,
-				skill_castend_damage_id);
-
-			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv,
-				tick, skill_area_temp[0]|(flag&0xFF00));
 		}
 		break;
 
