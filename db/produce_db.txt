@@ -376,8 +376,9 @@
 606,22,228,7144,0,704,1,518,1,713,1
 //-- Alcohol <-- AM_PHARMACY & Alcohol Creation Guide & 1 Empty Bottle, 5 Poison Spore, 5 Stem, 1 Empty Testtube
 970,22,228,7127,0,713,1,7033,5,905,5,1092,1
-//-- Embryo <-- AM_PHARMACY & Embryo Creation Guide & 1 Seed of Life, 1 Morning Dew of Yggdrasil, 1 Glass Tube
-7142,22,228,7419,0,7140,1,7141,1,7143,1
+//-- Embryo <-- AM_PHARMACY & Potion Creation Guide & 1 Seed of Life, 1 Morning Dew of Yggdrasil, 1 Glass Tube
+7142,22,228,7144,0,7140,1,7141,1,7143,1
+// ProduceItemID,ItemLV,RequireSkill,MaterialID1,MaterialAmount1,......
 //----------------------------------------------
 
 //==============================================

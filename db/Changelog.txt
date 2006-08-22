@@ -20,6 +20,8 @@
 
 =========================
 08/22
+	* Updated Embryo creation, put "Potion Creation Guide" instead of "Embryo Creation Guide"
+	  according to RockmanEXE's & iRO info [Toms]
 	* Updated range of guns according to RockmanEXE's info [Playtester]
 	* Updated some items thanks to Haplo [Playtester]
 08/21
