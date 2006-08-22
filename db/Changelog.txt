@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/22
+	* Updated some items thanks to Haplo [Playtester]
 08/21
 	* Increased splash range of HVAN_EXPLOSION to 4. [Skotlex]
 	* Added delay to HLIF_AVOID [Toms]

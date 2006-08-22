@@ -1668,7 +1668,7 @@
 5093,Blue_Coif_,Coif,5,12000,,300,,5,,1,0x00001100,7,0,768,,65,1,177,{ bonus bMaxSP,100; },{},{}
 5094,Orc_Hero_Helm,Helmet of Orc Hero,5,,10,900,,5,,0,0xFFFFFFFE,7,2,768,,55,1,178,{ bonus bStr,2; bonus bVit,1; },{},{}
 5096,Assassin_Mask_,Assassin Mask,5,,10,100,,0,,0,0x00001100,7,2,1,,70,0,180,{},{},{}
-5097,Cone_Hat_,4 Years Anniversary Hat,5,,10,400,,4,,0,0xFFFFFFFF,7,2,256,,0,1,144,{},{},{}
+5097,Cone_Hat_,4 Years Anniversary Hat,5,,10,400,,0,,0,0xFFFFFFFF,7,2,256,,0,1,144,{},{},{}
 5098,Tiger_Mask,Tiger Mask,5,,10,400,,2,,0,0xFFFFFFFF,7,2,768,,50,0,181,{ bonus bStr,3; bonus bMaxHP,100; },{},{}
 5099,Cat_Hat,Neko Mimi,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,0,1,182,{ bonus bLuk,2; bonus bMdef,10; bonus2 bSubRace,RC_Brute,5; },{},{}
 5100,Sales_Signboard,Sales Banner,5,,10,800,,1,,0,0xFFFFFFFF,7,2,256,,75,1,183,{ bonus bStr,1; bonus bAgi,1; bonus bLuk,1; },{},{}
@@ -1697,19 +1697,19 @@
 5123,Ulle_Cap,Ulle's Cap,5,,10,500,,3,,1,0xFFFFFFFE,7,2,256,,65,1,202,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && bDex>=70) bonus bUseSPrate,-10; },{},{}
 5124,Fricca_Circlet,Frigg's Circlet,5,,10,300,,3,,0,0xFFFFFFFE,7,2,256,,65,1,203,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; },{},{}
 5125,Kiss_Of_Angel,Angel's Kiss,5,,10,300,,2,,1,0x00000001,7,2,256,,50,1,204,{ bonus bSPrecovRate,3; },{},{}
-5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,3,,0,0xFFFFFFFE,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bCastrate,25; } },{},{}
+5126,Morpheus's_Hood,Morpheus's Hood,5,,10,200,,1,,0,0xFFFFFFFE,7,2,256,,33,1,205,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bCastrate,25; } },{},{}
 5127,Morrigane's_Helm,Morrigane's Helm,5,,10,500,,4,,0,0xFFFFFFFE,7,2,256,,61,1,206,{ bonus bLuk,2; bonus bAtk,3; if(isequipped(2519,2650,2651)) { bonus bStr,2; bonus bLuk,9; bonus bCritical,13; bonus bAtk,18; bonus bFlee2,13; } },{},{}
 5128,Goibne's_Helmet,Goibne's Helm,5,,10,500,,5,,0,0xFFFFFFFE,7,2,256,,54,1,207,{ bonus bVit,3; bonus bMdef,3; if(isequipped(2354,2419,2520)) { bonus bVit,5; bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bDef,5; bonus bMdef,15; bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Wind,10; } },{},{}
 5129,Bird_Nest,Bird Nest,5,,10,400,,1,,0,0xFFFFFFFF,7,2,256,,55,1,201,{ bonus bAgi,2; bonus2 bSubRace,RC_Brute,10; },{},{}
 5130,Lion_Mask,Lion Mask,5,,10,700,,0,,0,0x00CFDF80,7,2,768,,75,1,202,{ bonus2 bAddEffWhenHit,Eff_Silence,300; bonus bMdef,1; },{},{}
 5131,Close_Helmet,Close Helmet,5,,10,1200,,8,,0,0x00004082,7,2,769,,75,1,203,{ bonus bVit,3; bonus bMaxHPrate,3; },{},{}
 5132,Angeling_Hat,Angeling Hat,5,,10,700,,2,,0,0xFFFFFFFF,7,2,256,,38,1,204,{ bonus2 bSubRace,RC_DemiHuman,10; },{},{}
-5133,Sheep_Hat,Sheep Hat,5,,10,150,,1,,0,0x00008110,7,2,256,,50,1,205,{ bonus bShortWeaponDamageReturn,5; },{},{}
+5133,Sheep_Hat,Sheep Hat,5,,10,150,,1,,0,0x00008110,7,2,256,,0,1,205,{ bonus bShortWeaponDamageReturn,5; },{},{}
 5134,Pumpkin-Head,Pumpkin-Head,5,,10,200,,2,,0,0xFFFFFFFF,7,2,256,,0,0,206,{},{},{}
 5135,Cyclops_Eye,Cyclops Eye,5,,10,200,,0,,0,0xFFFFFFFE,7,2,512,,75,0,207,{ bonus bMaxSP,50; },{},{}
 5136,Santa's_Hat_,Louise's Santa Hat,5,,10,100,,3,,0,0xFFFFFFFF,7,2,256,,0,1,20,{ bonus bMdef,1; bonus bLuk,1; },{},{}
 5137,Alice_Doll,Alice Doll,5,,10,500,,0,,1,0xFFFFFFFE,7,2,256,,30,0,208,{ bonus bStr,1; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddEff2,Eff_Sleep,10; },{},{}
-5138,Magic_Eyes,Magic Eyes,5,,10,300,,1,,0,0x00810204,7,2,256,,30,1,209,{ bonus bCastrate,-10; bonus bUseSPrate,20; },{},{}
+5138,Magic_Eyes,Magic Eyes,5,,10,300,,1,,0,0x00810204,7,2,256,,30,1,209,{ bonus bMdef,5; bonus bCastrate,-10; bonus bUseSPrate,20; },{},{}
 5139,Lotus,Lotus,5,,10,200,,0,,0,0xFFFFFFFF,7,2,256,,10,0,210,{ bonus bDex,1; bonus bInt,1; bonus bMdef,5; },{},{}
 5140,Kawaii_Ribbon,Kawaii Ribbon,5,,10,400,,1,,1,0xFFFFFFFF,7,2,256,,10,1,211,{ bonus2 bSubRace,RC_Undead,5; bonus2 bSubRace,RC_Demon,5; },{},{}
 5141,Marionette_Doll,Marionette Doll,5,,10,400,,0,,1,0xFFFFFFFE,7,2,256,,30,1,212,{ bonus bStr,1; },{},{}
