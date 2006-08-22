@@ -1481,7 +1481,7 @@ int delete_char_sql(int char_id, int partner_id)
 	char char_name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Name needs be escaped.
 	int account_id=0, party_id=0, guild_id=0, char_base_level=0;
 	
-	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`baselevel` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
