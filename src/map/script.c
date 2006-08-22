@@ -11787,7 +11787,7 @@ int buildin_mobspawn(struct script_state *st){
 	x		=conv_num(st,& (st->stack->stack_data[st->start+5]));
 	y		=conv_num(st,& (st->stack->stack_data[st->start+6]));
 		
-	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,NULL);
+	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,"");
 	push_val(st->stack,C_INT,id);
 
 	return 0;

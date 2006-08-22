@@ -3251,6 +3251,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 //Curse shouldn't effect on this?  <- Curse OR Bleeding??
 //	if(sc->data[SC_BLEEDING].timer != -1)
 //		batk -= batk * 25/100;
+	if(sc->data[SC_FLEET].timer!=-1)
+		batk += batk * sc->data[SC_FLEET].val3/100;
 	if(sc->data[SC_GATLINGFEVER].timer!=-1)
 		batk += sc->data[SC_GATLINGFEVER].val3;
 	if(sc->data[SC_MADNESSCANCEL].timer!=-1)
@@ -5497,7 +5499,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_FLEET:
 			val2 = 30*val1; //Aspd change
-			val3 = 5+5*val1; //Atk rate change
+			val3 = 5+5*val1; //bAtk/wAtk rate change
 			break;
 		case SC_MINDBREAKER:
 			val2 = 20*val1; //matk increase.

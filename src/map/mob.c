@@ -265,8 +265,16 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
 	data.m = m;
 	data.num = 1;
 	data.class_ = class_;
-	strncpy(data.name, mobname, NAME_LENGTH-1);
-	strncpy(data.eventname, event, 50);
+	if (mobname)
+		strncpy(data.name, mobname, NAME_LENGTH-1);
+	else
+	if(battle_config.override_mob_names==1)
+		strcpy(data.name,"--en--");
+	else
+		strcpy(data.name,"--ja--");
+
+	if (event)
+		strncpy(data.eventname, event, 50);
 	
 	if (bl && (x < 0 || y < 0))//Locate spot around player.
 		map_search_freecell(bl, m, &x, &y, 1, 1, 0);
