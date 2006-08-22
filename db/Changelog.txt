@@ -20,6 +20,7 @@
 
 =========================
 08/22
+	* Fixed SP usage of some Gunslinger skills [Playtester]
 	* Added a duration to Disarm [Playtester]
 	* Final fix on Grand Cross weapon [Playtester]
 	* Some fixes on Grand Cross weapon, might need more fixes [Playtester]
