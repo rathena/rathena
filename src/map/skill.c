@@ -5475,10 +5475,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	
 	case AM_REST:
 		if (sd)
+		{
 			if (merc_hom_vaporize(sd,1))
 				clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 			else
 				clif_skill_fail(sd,skillid,0,0);
+		}
 		break;
 
 	case HAMI_CASTLE:	//[orn]
