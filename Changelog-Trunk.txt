@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/22
+	* getnameditem will now also work on stackable items [Skotlex]
+	* Corrected battle_calc_weapon_attack so that all skills ignore your
+	  left-hand weapon, and that the Katar's double-attack damage bonus for the
+	  offhand damage applies ONLY on normal attacks. [Skotlex]
+	* Fixed Resurrect Homunculus's % to 20*lv% [Skotlex]
  	* Added SQL update which should remove \' from guild names [Toms]
 	* Added option to disable character deletion of certain levels [Lupus]
 		check char_athena.conf for this option format

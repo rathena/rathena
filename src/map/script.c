@@ -5276,9 +5276,8 @@ int buildin_getnameditem(struct script_state *st)
 	}else
 		nameid = conv_num(st,data);
 
-	if(!itemdb_exists(nameid) || itemdb_isstackable(nameid))
-	{	//We don't allow non-equipable/stackable items to be named
-		//to avoid any qty exploits that could happen because of it.
+	if(!itemdb_exists(nameid)/* || itemdb_isstackable(nameid)*/)
+	{	//Even though named stackable items "could" be risky, they are required for certain quests.
 		push_val(st->stack,C_INT,0);
 		return 0;
 	}

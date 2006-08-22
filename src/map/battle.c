@@ -953,17 +953,15 @@ static struct Damage battle_calc_weapon_attack(
 	if (skill_num == GS_GROUNDDRIFT)
 		s_ele = s_ele_ = wflag; //element comes in flag.
 
-	if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
-	{
-		flag.rh=0;
-		flag.lh=1;
-	}
-	if (sstatus->lhw && sstatus->lhw->atk)
-		flag.lh=1;
-
-	if (skill_num == ASC_BREAKER)
-	{	//Soul Breaker disregards dual-wielding.
-		flag.rh = 1; flag.lh = 0;
+	if(!skill_num)
+  	{	//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
+		if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
+		{
+			flag.rh=0;
+			flag.lh=1;
+		}
+		if (sstatus->lhw && sstatus->lhw->atk)
+			flag.lh=1;
 	}
 
 	//Check for critical
@@ -1193,7 +1191,6 @@ static struct Damage battle_calc_weapon_attack(
 					short index = sd->equip_index[8];
 					
 					wd.damage = sstatus->batk;
-					if (flag.lh) wd.damage2 = wd.damage;
 
 					if (index >= 0 &&
 						sd->inventory_data[index] &&
@@ -1205,7 +1202,6 @@ static struct Damage battle_calc_weapon_attack(
 				if(src->type == BL_HOM){
 					TBL_HOM *hd = (TBL_HOM*)src;
 					wd.damage = hd->master->homunculus.intimacy ;
-					wd.damage2 = hd->master->homunculus.intimacy ;
 					hd->master->homunculus.intimacy = 200;
 					clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
 					break;
@@ -1230,7 +1226,7 @@ static struct Damage battle_calc_weapon_attack(
 				  i |= 16; // for ex. shuriken must not be influenced by DEX
 				}
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
-				if (sstatus->lhw && flag.lh)
+				if (flag.lh)
 					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
 
 				// Added split damage for Huuma
@@ -1766,7 +1762,8 @@ static struct Damage battle_calc_weapon_attack(
 			}
 
 			wd.damage = battle_addmastery(sd,target,wd.damage,0);
-			if (flag.lh) wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
+			if (flag.lh)
+				wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
 
 			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] || (sc && sc->data[SC_MIRACLE].timer!=-1)))
 			{
@@ -1989,8 +1986,8 @@ static struct Damage battle_calc_weapon_attack(
 				wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
 				if(wd.damage2 < 1) wd.damage2 = 1;
 			}
-		} else if(sd->status.weapon == W_KATAR)
-		{ //Katars
+		} else if(sd->status.weapon == W_KATAR && !skill_num)
+		{ //Katars (offhand damage only applies to normal attacks, tested on Aegis 10.2)
 			skill = pc_checkskill(sd,TF_DOUBLE);
 			wd.damage2 = wd.damage * (1 + (skill * 2))/100;
 
