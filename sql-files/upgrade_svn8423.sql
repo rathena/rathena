@@ -1,0 +1,1 @@
+update guild set name=REPLACE(name,'\\\'','\'');
