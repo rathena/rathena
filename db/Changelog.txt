@@ -20,6 +20,7 @@
 
 =========================
 08/22
+	* Applied Mpeg's fix on GS according to kRO's values [Toms]
 	* Updated Embryo creation, put "Potion Creation Guide" instead of "Embryo Creation Guide"
 	  according to RockmanEXE's & iRO info [Toms]
 	* Updated range of guns according to RockmanEXE's info [Playtester]
