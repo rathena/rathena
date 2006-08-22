@@ -1555,7 +1555,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 10+110*skill_lv;
 					break;
 				case HFLI_SBR44:	//[orn]
-					skillratio += 100 * skill_lv ;
+					skillratio += 100 *(skill_lv-1);
 			}
 
 			ATK_RATE(skillratio);

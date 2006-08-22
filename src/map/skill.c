@@ -6774,19 +6774,15 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 					unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
 		}
 	}
-	if (skillid == NJ_TATAMIGAESHI)
-	{	//Disable it, since it should do instant damage
-	   //(which was done in the map_foreachincell call up there) [Skotlex]
-		group->target_flag=BCT_NOONE;
-		group->bl_flag= 0;
-	}
 
 	if (!group->alive_count)
 	{	//No cells? Something that was blocked completely by Land Protector?
 		skill_delunitgroup(src, group);
 		return NULL;
 	}
-	
+	if (skillid == NJ_TATAMIGAESHI) //Store number of tiles.
+		group->val1 = group->alive_count;
+
 	return group;
 }
 
@@ -6915,7 +6911,6 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			src->limit = DIFF_TICK(tick+700,sg->tick);
 		break;
 	}	
-
 	return skillid;
 }
 
@@ -9997,6 +9992,15 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 		unit->val1 -= 5;
 		if(unit->val1 <= 0 && unit->limit + group->tick > tick + 700)
 			unit->limit = DIFF_TICK(tick+700,group->tick);
+	} else
+	if (group->unit_id == UNT_TATAMIGAESHI && unit->range>=0)
+	{	//Disable processed cell.
+		unit->range = -1;
+		if (--group->val1 <= 0)
+	  	{	//All tiles were processed, disable skill.
+			group->target_flag=BCT_NOONE;
+			group->bl_flag= 0;
+		}
 	}
 
 	return 0;
