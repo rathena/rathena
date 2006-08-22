@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/08/22
+	* Added option to disable character deletion of certain levels [Lupus]
+		check char_athena.conf for this option format
 2006/08/21
 	* Some more cleaning up of the splash skill code. Now the passed hit value
 	  for the splash targetted mobs is 9 instead of 5, this allows multi-hitting

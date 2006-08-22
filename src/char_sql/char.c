@@ -92,6 +92,7 @@ char char_name_letters[1024] = ""; // list of letters/symbols used to authorise 
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 #define TRIM_CHARS "\032\t\x0A\x0D "
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
+int char_del_level = 0; //From which level u can delete character [Lupus]
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -135,7 +136,7 @@ int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int save_log = 1;
-int start_zeny = 500;
+int start_zeny = 0;
 int start_weapon = 1201;
 int start_armor = 2301;
 int guild_exp_rate = 100;
@@ -1478,9 +1479,9 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 int delete_char_sql(int char_id, int partner_id)
 {
 	char char_name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Name needs be escaped.
-	int account_id=0, party_id=0, guild_id=0;
+	int account_id=0, party_id=0, guild_id=0, char_base_level=0;
 	
-	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`baselevel` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1505,7 +1506,19 @@ int delete_char_sql(int char_id, int partner_id)
 	account_id = atoi(sql_row[1]);
 	party_id = atoi(sql_row[2]);
 	guild_id = atoi(sql_row[3]);
+	char_base_level = atoi(sql_row[4]);
 	mysql_free_result(sql_res); //Let's free this as soon as possible to avoid problems later on.
+
+	//check for config char del condition [Lupus]
+	if(char_del_level!=0){
+		if(
+			( char_del_level > 0 && char_base_level >= char_del_level )
+			|| ( char_del_level < 0 && char_base_level <= -char_del_level )
+		) {
+			ShowInfo("Char deletion aborted: %s, BaseLevel: %i\n",char_name,char_base_level);
+			return -1;
+		}
+	}
 
 	/* Divorce [Wizputer] */
 	if (partner_id) {
@@ -3513,7 +3526,7 @@ int parse_char(int fd) {
 					RFIFOSKIP(fd, 46);
 					break;
 				}
-			}
+			}				
 			
 			for(i = 0; i < 9; i++) {
 				/* Debug:
@@ -3554,7 +3567,16 @@ int parse_char(int fd) {
 				mysql_free_result(sql_res);
 			
 				/* Delete character and partner (if any) */
-				delete_char_sql(cid, char_pid);
+				if(delete_char_sql(cid, char_pid)<0){
+					//can't delete the char
+					//either SQL error or can't delete by some CONFIG conditions
+					//del fail
+					WFIFOW(fd, 0) = 0x70;
+					WFIFOB(fd, 2) = 0;
+					WFIFOSET(fd, 3);
+					RFIFOSKIP(fd, 46);
+					break;
+				}
 				if (char_pid != 0)
 				{	/* If there is partner, tell map server to do divorce */
 					WBUFW(buf,0) = 0x2b12;
@@ -3563,7 +3585,7 @@ int parse_char(int fd) {
 					mapif_sendall(buf,10);
 				}
 			}
-			/* Char successfully deleted. <- For sure? There could had been an sql db error, what is done then?. [Skotlex] */
+			/* Char successfully deleted.
 			WFIFOW(fd, 0) = 0x6f;
 			WFIFOSET(fd, 2);
 				
@@ -4144,6 +4166,8 @@ int char_config_read(const char *cfgName) {
 			check_ip_flag = config_switch(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
+		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
+			char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "console") == 0) {
 			if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
 				console = 1;
