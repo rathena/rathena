@@ -35,6 +35,8 @@ Playtester
 
 Date		Added
 ======
+08/22
+	* Updated Gunslinger Quest, removed "Thin Trunk" (7186) according to RockmanEXE [Toms]
 08/21
 	* Fixing MoM's typos (Citrin -> Citrine) over Lv4 weapon quest. [erKURITA]
 	* Implemented the God item quest. [MasterOfMuppets]

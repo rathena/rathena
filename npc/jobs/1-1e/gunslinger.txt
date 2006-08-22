@@ -126,7 +126,7 @@ if (GUNS_Q == 1) {
 	mes "So, will you do it, please?";
 	switch (select ("Yes, I will:Sorry I can't now")) {
 		case 1:
-			set GUNS_Q,callfunc("F_RandMes",5,1019,1066,1067,1068,7186);
+			set GUNS_Q,callfunc("F_RandMes",4,1019,1066,1067,1068);
 			goto L_LIST;
 
 		case 2:
