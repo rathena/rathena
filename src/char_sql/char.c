@@ -1510,14 +1510,11 @@ int delete_char_sql(int char_id, int partner_id)
 	mysql_free_result(sql_res); //Let's free this as soon as possible to avoid problems later on.
 
 	//check for config char del condition [Lupus]
-	if(char_del_level!=0){
-		if(
-			( char_del_level > 0 && char_base_level >= char_del_level )
-			|| ( char_del_level < 0 && char_base_level <= -char_del_level )
-		) {
+	if( ( char_del_level > 0 && char_base_level >= char_del_level )
+	 || ( char_del_level < 0 && char_base_level <= -char_del_level )
+	) {
 			ShowInfo("Char deletion aborted: %s, BaseLevel: %i\n",char_name,char_base_level);
 			return -1;
-		}
 	}
 
 	/* Divorce [Wizputer] */
@@ -3526,7 +3523,7 @@ int parse_char(int fd) {
 					RFIFOSKIP(fd, 46);
 					break;
 				}
-			}				
+			}
 			
 			for(i = 0; i < 9; i++) {
 				/* Debug:
@@ -3585,7 +3582,7 @@ int parse_char(int fd) {
 					mapif_sendall(buf,10);
 				}
 			}
-			/* Char successfully deleted.
+			/* Char successfully deleted.*/
 			WFIFOW(fd, 0) = 0x6f;
 			WFIFOSET(fd, 2);
 				
