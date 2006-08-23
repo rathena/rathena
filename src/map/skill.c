@@ -8343,7 +8343,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		if(ammo) { //Skill requires stuff equipped in the arrow slot.
-			if((i=sd->equip_index[10]) < 0 ||
+			if((i=sd->equip_index[EQI_AMMO]) < 0 ||
 				!sd->inventory_data[i] ||
 				sd->status.inventory[i].amount < ammo_qty
 			) {

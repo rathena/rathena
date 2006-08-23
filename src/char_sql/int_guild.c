@@ -411,10 +411,12 @@ struct guild * inter_guild_fromsql(int guild_id)
 	strncpy(g->master,sql_row[1],NAME_LENGTH-1);
 	g->guild_lv=atoi(sql_row[2]);
 	g->connect_member=atoi(sql_row[3]);
-	if (atoi(sql_row[4]) > MAX_GUILD) // Fix reduction of MAX_GUILD [PoW]
+	g->max_member = atoi(sql_row[4]);
+	if (g->max_member > MAX_GUILD)
+	{	// Fix reduction of MAX_GUILD [PoW]
+		ShowWarning("Guild %d:%s specifies higher capacity (%d) than MAX_GUILD (%d)\n", guild_id, g->name, g->max_member, MAX_GUILD);
 		g->max_member = MAX_GUILD;
-	else
-		g->max_member = atoi(sql_row[4]);
+	}
 	g->average_lv=atoi(sql_row[5]);
 	g->exp=(unsigned int)atof(sql_row[6]);
 	g->next_exp=(unsigned int)atof(sql_row[7]);
