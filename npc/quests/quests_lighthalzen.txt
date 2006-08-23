@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -45,6 +45,7 @@
 //= 2.4	Fixed the bug where a str&int debug was shown in the console for
 //=	test tube in bio labs quest. [Evera]
 //= 2.5	Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
+//= 2.6	Fixed exploit letting any class get homunculus from Bio Ethics Quest [Evera]
 //============================================================ 
 //= aoa's comment
 //= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
@@ -2771,7 +2772,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "[Kellasus]";
 		mes "I already taught you";
 		mes "skills of the homunculus...";
-		if (getskilllv(238) == 0) skill 238,1,0;
+		if (getskilllv(238) == 0 && class == 18) skill 238,1,0;
 		close;
 	}
 	switch(bioeth){
@@ -2869,7 +2870,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "[Kellasus]";
 		mes "I guess I could teach you a few skills..";
 		//Gives player bio ethics and sets bitshift for quest finished
-		skill 238,1,0;
+		if(class == 18) skill 238,1,0;
 		set MISC_QUEST,MISC_QUEST|64;
 		set bioeth,0;
 		close;
@@ -2882,7 +2883,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "meant to be known and what";
 		mes "secrets were never intended";
 		mes "for mankind to understand?";
-		set @keltalk,1;
+		if(class == 18) set @keltalk,1;
 		close;
 		break;
 	case 1:
@@ -2955,7 +2956,7 @@ lhz_in01.gat,225,122,4	script	Skrajiad	754,{
 lhz_in02.gat,269,273,4	script	Bringel	709,{
 //Unofficial Text
 	if(bioeth > 3 || MISC_QUEST&64){
-		if(getskilllv(247) == 0) skill 247,1,0;
+		if(getskilllv(247) == 0 && class == 18) skill 247,1,0;
 	}
 	if(bioeth == 3){
 		mes "[Bringel]";
@@ -2964,7 +2965,7 @@ lhz_in02.gat,269,273,4	script	Bringel	709,{
 		mes "I will teach you a";
 		mes "valuable skill to use.";
 		//Learn res homun
-		skill 247,1,0;
+		if(class == 18) skill 247,1,0;
 		set bioeth,4;
 		close;
 	}

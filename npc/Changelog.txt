@@ -36,6 +36,7 @@ Playtester
 Date		Added
 ======
 08/22
+	* Fixed bug letting anyone get homunculus skills from Bio Ethics [Evera]
 	* Updated Gunslinger Quest, removed "Thin Trunk" (7186) according to RockmanEXE [Toms]
 08/21
 	* Fixing MoM's typos (Citrin -> Citrine) over Lv4 weapon quest. [erKURITA]
