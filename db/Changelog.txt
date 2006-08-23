@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/23
+	* Corrected the healing value of novice pots. [MasterOfMuppets]
 08/22
 	* Fixed SP usage of some Gunslinger skills [Playtester]
 	* Added a duration to Disarm [Playtester]
