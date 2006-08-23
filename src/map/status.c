@@ -4745,6 +4745,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
 			case SC_JAILED:
+			case SC_ARMOR_ELEMENT: // Just delete the current one
 				break;
 			case SC_GOSPEL:
 				 //Must not override a casting gospel char.
@@ -5539,6 +5540,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val3= status->max_sp; //Base Max SP
 			}
 			break;
+		case SC_ARMOR_ELEMENT:
+			break; // It just change the armor element of the player (used by battle_attr_fix)
+				   // So it has no SCB and no skill associated (used by potion scripts)
 		default:
 			if (calc_flag == SCB_NONE && StatusSkillChangeTable[type]==0)
 			{	//Status change with no calc, and no skill associated...? unknown?
