@@ -10470,6 +10470,7 @@ int buildin_getsavepoint(struct script_state *st)
   *                                1 - NPC coord
   *                                2 - Pet coord
   *                                3 - Mob coord (not released)
+  *                                4 - Homun coord
   *                     CharName$ - Name object. If miss or "this" the current object
   *
   *             Return:
@@ -10478,9 +10479,8 @@ int buildin_getsavepoint(struct script_state *st)
   *------------------------------------------
 */
 int buildin_getmapxy(struct script_state *st){
+	struct block_list *bl = NULL;
 	struct map_session_data *sd=NULL;
-        struct npc_data *nd;
-        struct pet_data *pd;
 
 	int num;
 	char *name;
@@ -10490,126 +10490,111 @@ int buildin_getmapxy(struct script_state *st){
 	char mapname[MAP_NAME_LENGTH+1];
 	memset(mapname, 0, sizeof(mapname));
 
-        if( st->stack->stack_data[st->start+2].type!=C_NAME ){
-                ShowWarning("script: buildin_getmapxy: not mapname variable\n");
-                push_val(st->stack,C_INT,-1);
-                return 0;
-        }
-        if( st->stack->stack_data[st->start+3].type!=C_NAME ){
-                ShowWarning("script: buildin_getmapxy: not mapx variable\n");
-                push_val(st->stack,C_INT,-1);
-                return 0;
-        }
-        if( st->stack->stack_data[st->start+4].type!=C_NAME ){
-                ShowWarning("script: buildin_getmapxy: not mapy variable\n");
-                push_val(st->stack,C_INT,-1);
-                return 0;
-        }
+	if( st->stack->stack_data[st->start+2].type!=C_NAME ){
+		ShowWarning("script: buildin_getmapxy: not mapname variable\n");
+		push_val(st->stack,C_INT,-1);
+		return 1;
+	}
+	if( st->stack->stack_data[st->start+3].type!=C_NAME ){
+		ShowWarning("script: buildin_getmapxy: not mapx variable\n");
+		push_val(st->stack,C_INT,-1);
+		return 1;
+	}
+	if( st->stack->stack_data[st->start+4].type!=C_NAME ){
+		ShowWarning("script: buildin_getmapxy: not mapy variable\n");
+		push_val(st->stack,C_INT,-1);
+		return 1;
+	}
 
-//??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
+	//??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
 	type=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
-        switch (type){
-            case 0:                                             //Get Character Position
-                    if( st->end>st->start+6 )
-                        sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
-                    else
-                        sd=script_rid2sd(st);
+	switch (type){
+		case 0:	//Get Character Position
+			if( st->end>st->start+6 )
+				sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
+			else
+				sd=script_rid2sd(st);
 
-                    if ( sd==NULL ) {                   //wrong char name or char offline
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-                    }
+			if (sd)
+				bl = &sd->bl;
+			break;
+		case 1:	//Get NPC Position
+			if( st->end > st->start+6 )
+			{
+				struct npc_data *nd;
+				nd=npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+6])));
+				if (nd)
+					bl = &nd->bl;
+			} else //In case the origin is not an npc?
+				bl=map_id2bl(st->oid);
+			break;
+		case 2:	//Get Pet Position
+			if(st->end>st->start+6)
+				sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
+			else
+				sd=script_rid2sd(st);
 
+			if (sd && sd->pd)
+				bl = &sd->pd->bl;
+			break;
+		case 3:	//Get Mob Position
+			break; //Not supported?
+		case 4:	//Get Homun Position
+			if(st->end>st->start+6)
+				sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
+			else
+				sd=script_rid2sd(st);
 
-                    x=sd->bl.x;
-                    y=sd->bl.y;
-                    memcpy(mapname,mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
-                    break;
-            case 1:                                             //Get NPC Position
-                    if( st->end > st->start+6 )
-                        nd=npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+6])));
-                    else
-                        nd=(struct npc_data *)map_id2bl(st->oid);
+			if (sd && sd->hd)
+				bl = &sd->hd->bl;
+			break;
+	}
+	if (!bl) { //No object found.
+		push_val(st->stack,C_INT,-1);
+		return 0;
+	}
 
-                    if ( nd==NULL ) {                   //wrong npc name or char offline
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-                    }
+	x= bl->x;
+	y= bl->y;
+	memcpy(mapname, map[bl->m].name, MAP_NAME_LENGTH);
+	
+	//Set MapName$
+	num=st->stack->stack_data[st->start+2].u.num;
+	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	prefix=*name;
 
-                    x=nd->bl.x;
-                    y=nd->bl.y;
-                    memcpy(mapname, map[nd->bl.m].name, MAP_NAME_LENGTH);
-                    break;
-            case 2:                                             //Get Pet Position
-                    if( st->end>st->start+6 )
-                        sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+6])));
-                    else
-                        sd=script_rid2sd(st);
+	if(not_server_variable(prefix))
+		sd=script_rid2sd(st);
+	else
+		sd=NULL;
+	set_reg(st,sd,num,name,(void*)mapname,st->stack->stack_data[st->start+2].ref);
 
-                    if ( sd==NULL ) {                   //wrong char name or char offline
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-                    }
+	//Set MapX
+	num=st->stack->stack_data[st->start+3].u.num;
+	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	prefix=*name;
 
-                    pd=sd->pd;
+	if(not_server_variable(prefix))
+		sd=script_rid2sd(st);
+	else
+		sd=NULL;
+	set_reg(st,sd,num,name,(void*)x,st->stack->stack_data[st->start+3].ref);
 
-                    if(pd==NULL){                       //pet data not found
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-                    }
-                    x=pd->bl.x;
-                    y=pd->bl.y;
-                    memcpy(mapname, map[pd->bl.m].name, MAP_NAME_LENGTH);
-                    break;
+	//Set MapY
+	num=st->stack->stack_data[st->start+4].u.num;
+	name=(char *)(str_buf+str_data[num&0x00ffffff].str);
+	prefix=*name;
 
-            case 3:                                             //Get Mob Position
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-            default:                                            //Wrong type parameter
-                        push_val(st->stack,C_INT,-1);
-                        return 0;
-        }
+	if(not_server_variable(prefix))
+		sd=script_rid2sd(st);
+	else
+		sd=NULL;
+	set_reg(st,sd,num,name,(void*)y,st->stack->stack_data[st->start+4].ref);
 
-     //Set MapName$
-        num=st->stack->stack_data[st->start+2].u.num;
-        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-        prefix=*name;
-
-        if(not_server_variable(prefix))
-            sd=script_rid2sd(st);
-        else
-            sd=NULL;
-
-        set_reg(st,sd,num,name,(void*)mapname,st->stack->stack_data[st->start+2].ref);
-
-     //Set MapX
-        num=st->stack->stack_data[st->start+3].u.num;
-        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-        prefix=*name;
-
-        if(not_server_variable(prefix))
-            sd=script_rid2sd(st);
-        else
-            sd=NULL;
-        set_reg(st,sd,num,name,(void*)x,st->stack->stack_data[st->start+3].ref);
-
-
-     //Set MapY
-        num=st->stack->stack_data[st->start+4].u.num;
-        name=(char *)(str_buf+str_data[num&0x00ffffff].str);
-        prefix=*name;
-
-        if(not_server_variable(prefix))
-            sd=script_rid2sd(st);
-        else
-            sd=NULL;
-
-        set_reg(st,sd,num,name,(void*)y,st->stack->stack_data[st->start+4].ref);
-
-     //Return Success value
-        push_val(st->stack,C_INT,0);
-        return 0;
+	//Return Success value
+	push_val(st->stack,C_INT,0);
+	return 0;
 }
 
 /*==========================================
