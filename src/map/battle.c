@@ -365,7 +365,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if(sc->data[SC_ENERGYCOAT].timer!=-1 && flag&BF_WEAPON){
 			struct status_data *status = status_get_status_data(bl);
-			int per = 100*status->sp / status->max_sp;
+			int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
 			per /=20; //Uses 20% SP intervals.
 			//SP Cost: 1% + 0.5% per every 20% SP
 			if (!status_charge(bl, 0, (10+5*per)*status->max_sp/1000))
