@@ -2659,6 +2659,7 @@ void run_script_main(struct script_state *st)
 				st->state = RUN;
 				if( gotocount>0 && (--gotocount)<=0 ){
 					ShowError("run_script: infinity loop !\n");
+					report_src(st);
 					st->state=END;
 				}
 			}
@@ -2706,6 +2707,7 @@ void run_script_main(struct script_state *st)
 		}
 		if( cmdcount>0 && (--cmdcount)<=0 ){
 			ShowError("run_script: infinity loop !\n");
+			report_src(st);
 			st->state=END;
 		}
 	}
@@ -8591,6 +8593,7 @@ int buildin_maprespawnguildid_sub(struct block_list *bl,va_list ap)
 	}
 	return 0;
 }
+
 int buildin_maprespawnguildid(struct script_state *st)
 {
 	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -8599,7 +8602,8 @@ int buildin_maprespawnguildid(struct script_state *st)
 
 	int m=map_mapname2mapid(mapname);
 
-	if(m) map_foreachinmap(buildin_maprespawnguildid_sub,m,BL_CHAR,g_id,flag);
+	if(m != -1)
+		map_foreachinmap(buildin_maprespawnguildid_sub,m,BL_CHAR,g_id,flag);
 	return 0;
 }
 
