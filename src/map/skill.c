@@ -2778,9 +2778,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case TK_STORMKICK: // Taekwon kicks [Dralnu]
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
-			BF_WEAPON, src, src, skillid, skilllv, tick, flag|SD_ANIMATION, BCT_ENEMY);	
+			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 
 	case TK_JUMPKICK:
@@ -2793,10 +2794,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NJ_KAMAITACHI:
 		//It won't shoot through walls since on castend there has to be a direct
 		//line of sight between caster and target.
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_area_temp[1] = bl->id;
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
 			skill_get_splash(skillid, skilllv),BL_CHAR,
-			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag|SD_ANIMATION,BCT_ENEMY);
+			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
 	case MO_INVESTIGATE:
@@ -4036,9 +4037,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_RAIGEKISAI:
 	case WZ_FROSTNOVA:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
-			BF_MAGIC, src, src, skillid, skilllv, tick, flag|SD_ANIMATION, BCT_ENEMY);
+			BF_MAGIC, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);
 		break;
 
 	case HVAN_EXPLOSION:	//[orn]
@@ -7062,6 +7064,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_FIREPILLAR_ACTIVE:
+			skill_area_temp[1] = 0;
 			map_foreachinrange(skill_attack_area,bl,
 				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
 				BF_MAGIC,ss,&src->bl,sg->skill_id,sg->skill_lv,tick,0,BCT_ENEMY);  // area damage [Celest]
@@ -9172,11 +9175,15 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	flag=va_arg(ap,int);
 	type=va_arg(ap,int);
 
+	if (skill_area_temp[1] == bl->id) //This is the target of the skill, do a full attack and skip target checks.
+		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
+
 	if(battle_check_target(dsrc,bl,type) <= 0 ||
 		!status_check_skilluse(NULL, bl, skillid, 2))
 		return 0;
-		
-	return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
+	
+	//Area-splash, disable skill animation.
+	return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag|SD_ANIMATION);
 }
 /*==========================================
  *
