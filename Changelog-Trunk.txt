@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/23
+	* Fixed HVAN_EXPLOSION [Skotlex]
+	* Frost Nova won't display a nodamage skill packet (still need to sort out
+	  a way to fix the splash damaged packets) [Skotlex]
 	* Fixed a possible SIGSEGV on buildin_maprespawnguildid if the map is unknown [Toms]
 	* Added debug on "Inifity loop" to know which script is making this loop [Toms]
 2006/08/22

@@ -2029,6 +2029,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
 	//Skills who's damage should't show any skill-animation.
+	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
 		if(src->type==BL_PC)
 			dmg.blewcount = 10;
@@ -2139,7 +2140,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		sc->count && sc->data[SC_DOUBLECAST].timer != -1 &&
 		rand() % 100 < 40+10*sc->data[SC_DOUBLECAST].val1)
 	{
-//		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|1);
+//		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|2);
 		skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skillid, skilllv, BF_MAGIC, flag|2);
 	}
 
@@ -4035,8 +4036,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
-	case WZ_FROSTNOVA:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+	case WZ_FROSTNOVA:
 		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
@@ -9175,6 +9176,7 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	flag=va_arg(ap,int);
 	type=va_arg(ap,int);
 
+
 	if (skill_area_temp[1] == bl->id) //This is the target of the skill, do a full attack and skip target checks.
 		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
 
@@ -9969,16 +9971,13 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 			case UNT_TALKIEBOX:
 				{
 					struct block_list *src=map_id2bl(group->src_id);
-					if(group->unit_id == UNT_ANKLESNARE && group->val2);
-					else{
-						if(src && src->type==BL_PC && !group->state.into_abyss)
-						{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
-							struct item item_tmp;
-							memset(&item_tmp,0,sizeof(item_tmp));
-							item_tmp.nameid=1065;
-							item_tmp.identify=1;
-							map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);
-						}
+					if(src && src->type==BL_PC && !group->state.into_abyss)
+					{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
+						struct item item_tmp;
+						memset(&item_tmp,0,sizeof(item_tmp));
+						item_tmp.nameid=1065;
+						item_tmp.identify=1;
+						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);
 					}
 					skill_delunit(unit);
 				}
