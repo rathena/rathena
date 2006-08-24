@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/24
+	* Updated X.3 iRO mob names [Playtester]
 08/23
 	* Corrected the healing value of novice pots. [MasterOfMuppets]
 08/22
