@@ -30,7 +30,8 @@ rachel.gat,91,273,4	script	Masked Man	880,{
 	mes "Come here, but keep quiet";
 	next;
 	mes @npcname$;
-	mes "I have something that might intrest you";
+	mes "I have something that might interest you";
+	next;
 
 	switch(select("I think you know what I want...","Huh? Sorry, I'm Just looking around."))
 	{
@@ -85,6 +86,7 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 	next;
 	mes @npcname$;
 	mes "If you really want one, I can make a replica for you.";
+	next;
 
 	switch(select("Of course I do!","No way man, you creep me out!"))
 	{
@@ -103,11 +105,10 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 			}
 
 			mes "Nice to see a well prepared youngster!";
-			next;
 			delitem 5172,1;
 			delitem 7063,100;
 			delitem 982,1;
-
+			next;
 			getitem 5170,1;
 			mes @npcname$;
 			mes "Here.. This takes me back.. Have fun with it!";
@@ -175,7 +176,6 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			}
 
 			mes "Give me a minute and I'll work my magic...";
-			next;
 			delitem 4219,1;
 			delitem 4114,1;
 			delitem 4177,1;
@@ -188,7 +188,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			delitem 4166,1;
 			delitem 7511,1000;
 			delitem 7563,1000;
-
+			next;
 			getitem 5171,1;
 			mes @npcname$;
 			mes "This is a serious honor.. You have proven yourself a brave and honorable Warrior, Wear this with Pride";
@@ -373,6 +373,15 @@ payon.gat,137,123,5	script	Hangaram	740,{
 				close;
 			}
 
+			delitem 7445,7;
+			delitem 7446,7;
+			delitem 7447,7;
+			delitem 7448,7;
+			delitem 954,300;
+			delitem 983,1;
+			delitem 733,5;
+			delitem 2221,1;
+
 			mes "@npcname$";
 			mes "Ok you seem to have all the items.";
 			next;
@@ -409,15 +418,6 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			emotion 29;
 			next;
 
-			delitem 7445,7;
-			delitem 954,300;
-			delitem 983,1;
-			delitem 733,5;
-			delitem 2221,1;
-			delitem 7446,7;
-			delitem 7447,7;
-			delitem 7448,7;
-
 			getitem 5173,1;
 
 			mes "@npcname$";
@@ -442,7 +442,15 @@ payon.gat,137,123,5	script	Hangaram	740,{
 				mes "Please return when you have everything I need";
 				close;
 			}
-
+			
+			delitem 7445,7;
+			delitem 7446,7;
+			delitem 7447,7;
+			delitem 7448,7;
+			delitem 954,300;
+			delitem 975,1;
+			delitem 733,5;
+			delitem 7166,50;
 
 			mes "@npcname$";
 			mes "Well, you have everything.";
@@ -467,15 +475,6 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			mes "... ready!!!";
 			emotion 21;	
 			next;
-
-			delitem 7445,7;
-			delitem 954,300;
-			delitem 975,1;
-			delitem 733,5;
-			delitem 7166,50;
-			delitem 7446,7;
-			delitem 7447,7;
-			delitem 7448,7;
 		
 			getitem 5174,1;
 

@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 08/24
+	* Various fixes on Headgear 2006 quests [Playtester]
 	* Updated Treasure Chests Numver formula to the Aegis one: Economic/5+4 [Lupus]
 	- Updated Bio Ethics Quest to let Creators+Baby Alchemists learn the skill as well
 	- Moved it to Alchemist Skill Quests
