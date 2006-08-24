@@ -2863,7 +2863,9 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	mob_db_data[class_]->status.rhw.atk2+=
 		sd->base_status.rhw.atk + sd->base_status.rhw.atk2 +
 		sd->base_status.lhw->atk + sd->base_status.lhw->atk2; //Max ATK
-	if (flag&1) //Friendly Character, remove looting.
+	if (mode) //User provided mode.
+		mob_db_data[class_]->status.mode = mode; 
+	else if (flag&1) //Friendly Character, remove looting.
 		mob_db_data[class_]->status.mode &= ~MD_LOOTER; 
 	mob_db_data[class_]->status.hp = mob_db_data[class_]->status.max_hp;
 	mob_db_data[class_]->status.sp = mob_db_data[class_]->status.max_sp;
