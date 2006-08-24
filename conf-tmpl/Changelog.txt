@@ -1,6 +1,7 @@
 Date	Added
 
 2006/08/24
+	* Changed the default of clear_skills_on_death to 0 [Skotlex]
 	* Added setting clear_skills_on_warp to specify when a character's
 	  land-based skills are deleted when the caster changes maps. Defaults to all
 	  types (skill.conf). [Skotlex]

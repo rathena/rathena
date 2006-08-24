@@ -2028,13 +2028,15 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
-	//Skills who's damage should't show any skill-animation.
+	//Skills that need be passed as a normal attack for the client to display correctly.
 	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
 		if(src->type==BL_PC)
 			dmg.blewcount = 10;
 		dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
-	case KN_AUTOCOUNTER: //Skills that need be passed as a normal attack for the client to display correctly.
+
+	case KN_AUTOCOUNTER:
+	case NPC_CRITICALSLASH:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
 	case SN_SHARPSHOOTING:
