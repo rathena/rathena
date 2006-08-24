@@ -1954,7 +1954,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
 			}
 			if (sd && battle_config.pk_mode &&
-				(int)(md->db->lv - sd->status.base_level) >= 20)
+				(int)(md->level - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
 //			if (10000 < rand()%10000+drop_rate) //May be better if MAX_RAND is too low?
@@ -2014,7 +2014,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 				
 			if(sd->get_zeny_num && rand()%100 < sd->get_zeny_rate) //Gets get_zeny_num per level +/-10% [Skotlex]
-				pc_getzeny(sd,md->db->lv*sd->get_zeny_num*(90+rand()%21)/100);
+				pc_getzeny(sd,md->level*sd->get_zeny_num*(90+rand()%21)/100);
 		}
 		if(md->lootitem) {
 			for(i=0;i<md->lootitem_count;i++)
@@ -2275,7 +2275,6 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	hp_rate = md->status.hp*100/md->status.max_hp;
 	md->db = mob_db(class_);
-	md->class_ = class_;
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name,NAME_LENGTH-1);
 	else

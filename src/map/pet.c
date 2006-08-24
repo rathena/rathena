@@ -577,23 +577,19 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		pc_delitem(sd,i,1,0);
 	}
 
-	i = search_petDB_index(md->class_,PET_CLASS);
+	i = search_petDB_index(md->vd->class_,PET_CLASS);
 	//catch_target_class == 0 is used for universal lures. [Skotlex]
 	//for now universal lures do not include bosses.
 	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
-		sd->catch_target_class = md->class_;
-	if(i < 0 || sd->catch_target_class != md->class_) {
+		sd->catch_target_class = md->vd->class_;
+	if(i < 0 || sd->catch_target_class != md->vd->class_) {
 		clif_emotion(&md->bl, 7);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_rulet(sd,0);
 		sd->catch_target_class = -1;
 		return 1;
 	}
 
-	//target_id‚É‚æ‚é“G¨—‘”»’è
-//	if(battle_config.etc_log)
-//		printf("mob_id = %d, mob_class = %d\n",md->bl.id,md->class_);
-		//¬Œ÷‚Ìê‡
-	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - md->db->lv)*30 + sd->battle_status.luk*20)*(200 - md->status.hp*100/md->status.max_hp)/100;
+	pet_catch_rate = (pet_db[i].capture + (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - md->status.hp*100/md->status.max_hp)/100;
 	if(pet_catch_rate < 1) pet_catch_rate = 1;
 	if(battle_config.pet_catch_rate != 100)
 		pet_catch_rate = (pet_catch_rate*battle_config.pet_catch_rate)/100;

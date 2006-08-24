@@ -3929,7 +3929,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			pc_delspiritball(dstsd,dstsd->spiritball,0);
 		} else if (dstmd && !(tstatus->mode&MD_BOSS) && rand() % 100 < 20)
 		{	// check if target is a monster and not a Boss, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
-			i = 2 * dstmd->db->lv;
+			i = 2 * dstmd->level;
 			mob_target(dstmd,src,0);
 		}
 		if (i) {
