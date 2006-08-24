@@ -11,12 +11,9 @@ Mass Zero
 	* Redoing lots of the custom scripts.
 Massdriller
 	* Correcting & Bugfixing scripts
-	* New Novice Grounds from MRO - 65% -(Not sure it should be stopped as DracoRPG 
 MasterOfMuppets
 	* Working on The Sign Quest atm.
 	* Updating Items / Scripts
-Nexon
-	* Adding in the new Abyss/Thanatos/Lighthalzen NPC's and optimizing them.
 erKURITA
 	* Warps maintainment
 Evera
@@ -35,6 +32,11 @@ Playtester
 
 Date		Added
 ======
+08/24
+	* Updated Treasure Chests Numver formula to the Aegis one: Economic/5+4 [Lupus]
+	- Updated Bio Ethics Quest to let Creators+Baby Alchemists learn the skill as well
+	- Moved it to Alchemist Skill Quests
+	- Added NO LOOT, NO EXP mapflags to Lighthalzen (Gangsters exploit fix)
 08/22
 	* Fixed bug letting anyone get homunculus skills from Bio Ethics [Evera]
 	* Updated Gunslinger Quest, removed "Thin Trunk" (7186) according to RockmanEXE [Toms]

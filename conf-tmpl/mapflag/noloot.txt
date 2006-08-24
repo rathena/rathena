@@ -2,12 +2,8 @@
 //= Map flags that disable drop of loot
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.2 [Lupus]
-//= 1.3 [massdriller]
-//= 1.4 Lupus
-//= 1.5 Lorky
-//===== Current Version: =====================================
-// 15.06.2005 :: Lorky	:: First release
+//= 1.2 [Lupus] 1.3 [massdriller] 1.4 Lupus 1.5 Lorky
+//= 1.6 Added Lighthalzen (due to quests) [Lupus]
 //============================================================
 
 // Location for Job's Quests
@@ -27,3 +23,6 @@ que_ng.gat	mapflag	noloot
 
 //Thievs have to gather some mushrooms. So they need loot
 //job_thief1.gat	mapflag	noloot
+
+//Lighthalzen Quests
+lighthalzen.gat	mapflag	noloot

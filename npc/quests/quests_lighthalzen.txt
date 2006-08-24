@@ -2,9 +2,9 @@
 //= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, Completed by aoa00
-//= Evera, MasterOfMupppets
+//= Evera, MasterOfMupppets, Lupus
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.6a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,8 +17,7 @@
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
 //= 0.3 Initial Release
 //= 0.5 Added mobsters spawn and Einbroch pollution. Alert lasts either 10 minutes or all mob killed.
-//= 0.6 small bug fixes
-//= 0.9 fix small bug. Added Bio-lab entrance Quest. Added Getting security-card Quest.
+//= 0.6-0.9 fix small bug. Added Bio-lab entrance Quest. Added Getting security-card Quest.
 //= 1.0 Patched "mobsters spawn & Alert" like Real-RO.
 //= 1.0a fixed rand(1,10) + comparision. There just can't be 'X < 1' [Lupus]
 //= 1.1 Changed the mobster spawn to g_mobster to prevent exploits [MasterOfMuppets]
@@ -27,15 +26,13 @@
 //= 1.2a Moved Biolab entrance to lhz_dun warps. [Vicious]
 //= 1.3 Fixed password bug, fixed endless item exploit, some typos [Lupus]
 //= 1.4 Fixed password abuse. When people don't read the password under the picture
-//= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you couls skip
-//=	a part of quest...)
+//= 	and enter Zero shit 8) (TODO: I saw some "Sticks" abuses, too.. where you could skip a part of quest...)
 //= 1.5 Fixed Mobster's OnDead event(it has to start with "On"!) [Playtester]
 //= 1.5a Fixed "free stick" bug, thx 2 Neouni [Lupus]
 //= 1.6 Added Gywall's Pickpocket Quest
 //= 1.7 Implemented the Friendship quest [MasterOfMuppets]
 //= 1.8 Changed the name of the mobsters to Gangster, as it should be. [MasterOfMuppets]
-//= 1.9 Added extra input check on Biolab so that the first letter of the word could be
-//= capitalized or undercase. [Evera]
+//= 1.9 Added extra input check on Biolab so that the first letter of the word could be capitalized or undercase. [Evera]
 //= 2.0 Removed Duplicates [Silent]
 //= 2.1 Added first part of Bio Ethics Quest [Evera]
 //= 2.2 Added bit to say Bio Ethics is unfinished, and if a player attempts, it warps them
@@ -46,10 +43,7 @@
 //=	test tube in bio labs quest. [Evera]
 //= 2.5	Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
 //= 2.6	Fixed exploit letting any class get homunculus from Bio Ethics Quest [Evera]
-//============================================================ 
-//= aoa's comment
-//= In future, Need for new monsters. No-Drop, No-Exp, Weak "Mobster","VENOMOUS","NOXIOUS"
-//= In future, Teleport skill is impossible in Lighthalzen.
+//= 2.6a Moved Bio Ethics Quest to Alchemist SKILL QUESTS [Lupus]
 //============================================================ 
 
 lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
@@ -2628,368 +2622,4 @@ yuno_in04.gat,171,117,1	script	List of Books	111,{
 	mes "a romance novel section?";
 	close;
 
-}
-
-
-//==============================================================
-// Bio Ethics Quest
-//==============================================================
-//=====================Requires Bug Testing=====================
-lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
-	mes "[Rekenber Guard]";
-	if(getequipid(9) == 2243){
-		mes "......................";
-		next;
-		switch(select("Nice day, huh?","Cancel")){
-			case 1:
-				mes "[Rekenber Guard]";
-				mes "...";
-				close2;
-				warp "lhz_in01.gat",282,172;
-				end;
-				break;
-			case 2:
-				close;
-				break;
-		}
-	}
-	else{
-		mes "...";
-		close;
-	}
-}
-lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
-	OnTouch:
-		mes "[Researcher]";
-		mes "This is a restricted";
-		mes "area. Please leave";
-		mes "immediately.";
-		close2;
-		warp "lhz_in01.gat",199,131;
-		end;
-}
-		
-lhz_in01.gat,285,169,7	script	Researcher	865,{
-//Unknown Text
-end;
-}
-lhz_in01.gat,199,137,8	script	Scientist	865,{
-	mes "[Scientist]";
-	mes "Whoa whoa~!";
-	mes "Please! Don't";
-	mes "touch anything!";
-	mes "I'm dealing with highly";
-	mes "volatile chemicals here!";
-	close;
-}
-lhz_in01.gat,204,138,6	script	Keshibien	750,{
-	if(bioeth >= 2){
-		//Unofficial text
-		mes "[Keshibien]";
-		mes "Hello there~";
-		mes "Are you looking for";
-		mes "more information about";
-		mes "homunculus?";
-		next;
-		mes "[Keshibien]";
-		mes "I shouldn't say";
-		mes "anything, but look";
-		mes "for someone named";
-		mes "Bringel in Lighthalzen.";
-		if(bioeth == 2) set bioeth,3;
-		close;
-		//Unofficial text end
-	}
-	mes "[Keshibien]";
-	mes "Hello there~";
-	mes "You must be from";
-	mes "Rune-Midgarts, right?";
-	mes "It's nice to meet you.";
-	next;
-	mes "[Keshibien]";
-	mes "I hear that the";
-	mes "Alchemists from";
-	mes "over there are pretty";
-	mes "skilled. I wonder if I'll";
-	mes "ever get the change to";
-	mes "collaborate with any of them...";
-	close;
-}
-lhz_in01.gat,203,123,8	script	Scientist	750,{
-	mes "[Scientist]";
-	mes "Alright. Pull one test";
-	mes "tube out of the machine,";
-	mes "replace the other test";
-	mes "tube over here and then";
-	mes "clean the first test tube?";
-	next;
-	mes "[Scientist]";
-	mes "Or do I clean the test tube,";
-	mes "put it into the machine and";
-	mes "then replace the other one?";
-	mes "I'm so confused with this";
-	mes "procedure! If only I didn't";
-	mes "lose the instructions...";
-	close;
-}
-lhz_in01.gat,221,131,3	script	Scientist	865,{
-	mes "[Scientist]";
-	mes "It takes so long for";
-	mes "this device to process";
-	mes "all the data and give me";
-	mes "the results. Still, the wait";
-	mes "heightens my anticipation...";
-	close;
-}
-lhz_in01.gat,218,141,0	script	Alchemist	98,{
-	mes "[Alchemist]";
-	mes "Out of all humans,";
-	mes "I believe Kellasus is";
-	mes "the one who has come";
-	mes "closest to discovering";
-	mes "the secrets of life. He";
-	mes "never fails to amaze me...";
-	next;
-	mes "[Alchemist]";
-	mes "I'm also impressed by the";
-	mes "fact that he doesn't let his";
-	mes "work keep him from being the";
-	mes "best father and husband that";
-	mes "he can for his family. He's";
-	mes "an example for all of us.";
-	next;
-	mes "[Alchemist]";
-	mes "Kellasus really is";
-	mes "an amazing person.";
-	mes "There isn't one Alchemist";
-	mes "that I know who doesn't look";
-	mes "up to him in the realms of";
-	mes "both science and personal life.";
-	close;
-}
-lhz_in01.gat,224,140,8	script	Kellasus	57,{
-	if(MISC_QUEST&64){
-		mes "[Kellasus]";
-		mes "I already taught you";
-		mes "skills of the homunculus...";
-		if (getskilllv(238) == 0 && class == 18) skill 238,1,0;
-		close;
-	}
-	switch(bioeth){
-	default:
-		break;
-	case 4:
-		mes "[Kellasus]";
-		mes "...You're really hard to handle.";
-		mes "I don't think I should";
-		mes "teach you biotechnology.";
-		mes "Besides that, you know";
-		mes "nothing about homunculus!";
-		next;
-		menu "I've learned that",-;
-		mes "[Kellasus]";
-		mes "Oh really?";
-		mes "I will have to test you";
-		mes "on your knowledge of";
-		mes "homunculus then.";
-		next;
-		mes "[Kellasus]";
-		mes "First question.";
-		mes "What is the skill that lets the";
-		mes "homunculus stay in peace?";
-		input @kelques$;
-		next;
-		mes "[Kellasus]";
-		if(@kelques$ != "Rest"){
-			mes "Hmpf. I knew you had";
-			mes "no knowledge on";
-			mes "homunculus.";
-			close;
-		}
-		mes "That's right. Second question.";
-		mes "What is the item";
-		mes "that is required to";
-		mes "summon or create";
-		mes "a homunculus?";
-		input @kelques$;
-		next;
-		mes "[Kellasus]";
-		if(@kelques$ != "Germination Breed"){
-			mes "Hmpf. I knew you had";
-			mes "no knowledge on";
-			mes "homunculus.";
-			close;
-		}
-		mes "Correct. But this is not the end yet.";
-		mes "What is the name";
-		mes "of a skill";
-		mes "that could let you";
-		mes "revive a homunculus?";
-		input @kelques$;
-		next;
-		mes "[Kellasus]";
-		if(@kelques$ != "Resurrect Homunculus"){
-			mes "Hmpf. I knew you had";
-			mes "no knowledge on";
-			mes "homunculus.";
-			close;
-		}
-		mes "After all these discussions,";
-		mes "I won't teach anyone";
-		mes "the skills of homunculus.";
-		mes "The decision is final";
-		mes "and that's it!";
-		set bioeth,5;
-		close;
-		break;
-	case 5:
-		mes "[Kellasus]";
-		mes "After all these discussions,";
-		mes "I won't teach anyone";
-		mes "the skills of homunculus.";
-		mes "The decision is final";
-		mes "and that's it!";
-		close;
-		break;
-	case 6:
-	//Unofficial text and story -.-;
-		mes "[Kellasus]";
-		mes "Oh it's you again? You're really determined.";
-		mes "Well most of the Alchemist";
-		mes "are people who never";
-		mes "let go of their dreams";
-		next;
-		menu "Let's talk about others",-;
-		mes "[Kellasus]";
-		mes "You've spoke to my son?";
-		mes "What did he say?";
-		next;
-		mes "[Kellasus]";
-		mes "...";
-		next;
-		mes "[Kellasus]";
-		mes "I guess I could teach you a few skills..";
-		//Gives player bio ethics and sets bitshift for quest finished
-		if(class == 18) skill 238,1,0;
-		set MISC_QUEST,MISC_QUEST|64;
-		set bioeth,0;
-		close;
-	}
-	switch(@keltalk){
-	default:
-		mes "[Kellasus]";
-		mes "Hmm. Who decides what";
-		mes "is right and wrong? What is";
-		mes "meant to be known and what";
-		mes "secrets were never intended";
-		mes "for mankind to understand?";
-		if(class == 18) set @keltalk,1;
-		close;
-		break;
-	case 1:
-	//No official text to put here, so I just repeated first text
-		mes "[Kellasus]";
-		mes "Hmm. Who decides what";
-		mes "is right and wrong? What is";
-		mes "meant to be known and what";
-		mes "secrets were never intended";
-		mes "for mankind to understand?";
-		set @keltalk,2;
-		close;
-		break;
-	case 2:
-		mes "[Kellasus]";
-		mes "Haven't I told you not to come back again?";
-		mes "Please leave now!";
-		mes "No matter what you do.";
-		mes "I won't teach you anything about homunculus";
-		set @keltalk,3;
-		set bioeth,1;
-		close;
-		break;
-	case 3:
-		mes "[Kellasus]";
-		mes "Haven't I told you not to come back again?";
-		mes "Please leave now!";
-		mes "No matter what you do.";
-		mes "I won't teach you anything about homunculus";
-		close;
-		break;
-	}
-}
-lhz_in01.gat,217,121,6	script	Repairman	851,{
-	mes "[Repairman]";
-	mes "No wonder these things";
-	mes "break all the time! These";
-	mes "machines have been totally";
-	mes "abused! Ugh, there's no";
-	mes "appreciation for all of this";
-	mes "convenient technology...";
-	next;
-	mes "[Repairman]";
-	mes "Yeah, all of this lab";
-	mes "equipment is really sensitive,";
-	mes "not to mention expensive. If";
-	mes "you ever handle this stuff, you";
-	mes "need to be extra cautious.";
-	close;
-}
-lhz_in01.gat,225,122,4	script	Skrajiad	754,{
-	mes "[Skrajiad]";
-	mes "Alchemy is wondrous...";
-	mes "It incorporates every";
-	mes "science and many other";
-	mes "fields of knowledge that";
-	mes "it's not enough to be jack";
-	mes "of all trades... No...";
-	next;
-	mes "[Skrajiad]";
-	mes "In a sense, you must";
-	mes "be a master of all trades";
-	mes "to be proficient in Alchemy";
-	mes "But it's incredibly rewarding to";
-	mes "those of us who never stop askins";
-	mes "how and why our world works.";
-	if(bioeth == 1) set bioeth,2;
-	close;
-}
-lhz_in02.gat,269,273,4	script	Bringel	709,{
-//Unofficial Text
-	if(bioeth > 3 || MISC_QUEST&64){
-		if(getskilllv(247) == 0 && class == 18) skill 247,1,0;
-	}
-	if(bioeth == 3){
-		mes "[Bringel]";
-		mes "I see you're here to";
-		mes "learn about homunculus...";
-		mes "I will teach you a";
-		mes "valuable skill to use.";
-		//Learn res homun
-		if(class == 18) skill 247,1,0;
-		set bioeth,4;
-		close;
-	}
-	mes "[Bringel]";
-	mes "Isn't this hotel great?";
-	mes "I can relax on the couch";
-	mes "And not care about what I";
-	mes "did in the past...";
-	close;
-}
-lhz_in03.gat,106,34,4	script	Golin	706,{
-//Unofficial text
-	if(bioeth == 5){
-		mes "[Golin]";
-		mes "Did you see my";
-		mes "daddy at the lab?";
-		mes "Tell him I said hi!";
-		set bioeth,6;
-		close;
-	}
-	mes "[Golin]";
-	mes "Where's daddy?";
-	mes "I really want";
-	mes "daddy to come back";
-	mes "from the lab.";
-	close;
 }
