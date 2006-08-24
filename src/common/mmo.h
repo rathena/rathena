@@ -121,6 +121,8 @@
 #define HM_SKILLBASE 8000
 #define MAX_HOMUNSKILL 16
 #define MAX_HOMUNCULUS_CLASS	16	//[orn]
+#define HM_CLASS_BASE 6001
+#define HM_CLASS_MAX 6099
 
 struct item {
 	int id;

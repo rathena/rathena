@@ -5484,6 +5484,7 @@ int atcommand_reloadmobdb(
 	mob_reload();
 	do_final_pet();
 	read_petdb();
+	merc_reload();
 	clif_displaymessage(fd, msg_txt(98)); // Monster database reloaded.
 
 	return 0;
@@ -5499,6 +5500,7 @@ int atcommand_reloadskilldb(
 {
 	nullpo_retr(-1, sd);
 	skill_reload();
+	merc_skill_reload();
 	clif_displaymessage(fd, msg_txt(99)); // Skill database reloaded.
 
 	return 0;
@@ -9823,11 +9825,11 @@ atcommand_makehomun(
 	nullpo_retr(-1, sd);
 	if(sscanf(message, "%d", &homunid)<1)
 		return -1;
-	if( homunid < 6001 || homunid > 6016 )
+	if( homunid < HM_CLASS_BASE || homunid > HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1 )
 		return -1;
 	if(sd->status.hom_id == 0)
 	{
-		merc_create_homunculus(sd,homunid);
+		merc_create_homunculus_request(sd,homunid);
 	}
 	else
 	{

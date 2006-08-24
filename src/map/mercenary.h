@@ -33,10 +33,7 @@ struct homunculus_db {
 	int gmaxLUK ;
 	int evo_class ;
 	int baseASPD ;
-	//short size ;
-	//short race ;
-	//short element ;
-	unsigned char element, race, size; // albator
+	unsigned char element, race, size;
 	int accessID ;
 };
 extern struct homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
@@ -63,19 +60,21 @@ int merc_hom_levelup(struct homun_data *hd) ;
 int merc_hom_evolution(struct homun_data *hd) ;
 void merc_hom_heal(struct homun_data *hd,int hp,int sp);
 int merc_hom_vaporize(struct map_session_data *sd, int flag);
-int merc_revive_homunculus(struct map_session_data *sd, unsigned char per, short x, short y);
-void merc_homun_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
+int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, short x, short y);
+void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
 void merc_save(struct homun_data *hd);
 int merc_call_homunculus(struct map_session_data *sd, short x, short y);
-int merc_create_homunculus(struct map_session_data *sd, int class_);
+int merc_create_homunculus_request(struct map_session_data *sd, int class_);
 int search_homunculusDB_index(int key,int type);
 int merc_menu(struct map_session_data *sd,int menunum);
 int merc_hom_food(struct map_session_data *sd, struct homun_data *hd);
 int merc_hom_hungry_timer_delete(struct homun_data *hd);
 #define merc_stop_walking(hd, type) { if((hd)->ud.walktimer != -1) unit_stop_walking(&(hd)->bl, type); }
 #define merc_stop_attack(hd) { if((hd)->ud.attacktimer != -1) unit_stop_attack(&(hd)->bl); hd->ud.target = 0; }
-int read_homunculusdb(void);
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int merc_skill_tree_get_max(int id, int b_class);
 void merc_hom_init_timers(struct homun_data * hd);
+void merc_skill_reload();
+void merc_reload();
+

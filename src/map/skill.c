@@ -6257,16 +6257,8 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case AM_RESURRECTHOMUN:	//[orn]
 		if (sd)
 		{
-	/*	According to Tharis, the correct % SHOULD be 20*lv%
-			int p;
-			// If skilllv = 1, range = 1~4%, lv 2 : 5~25%, lv 3 : 25~45%, ...
-			if (skilllv == 1)
-				p = 1 + rand() % 4;
-			else
-				p = 5 + 20 * (skilllv - 2) + rand() % 21;
-	*/
 			if (map_flag_gvg(src->m) || //No reviving in WoE grounds!
-				!merc_revive_homunculus(sd, 20*skilllv, x, y))
+				!merc_resurrect_homunculus(sd, 20*skilllv, x, y))
 			{
 				clif_skill_fail(sd,skillid,0,0);
 				break;

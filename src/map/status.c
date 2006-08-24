@@ -897,7 +897,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 			pc_revive((TBL_PC*)bl, hp, sp);
 			break;
 		case BL_HOM:	//[orn]
-			merc_homun_revive((TBL_HOM*)bl, hp, sp);
+			merc_hom_revive((TBL_HOM*)bl, hp, sp);
 			break;
 	}
 	return 1;
