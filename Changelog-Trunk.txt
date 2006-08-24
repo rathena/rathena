@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/08/24
+	* Applied some change from mpeg on Ninja Skills [Toms]
+	* Put HVAN_Explosion based on max_hp instead of current hp [Toms]
 2006/08/23
 	* Fixed mob_clone_spawn completely ignoring the mode variable. [Skotlex]
 	* Fixed Energy Coat reducing and consuming more than it should when you

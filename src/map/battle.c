@@ -246,8 +246,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(!damage) return 0;
 	}
 	
-	if (skill_num == PA_PRESSURE || skill_num == NJ_ZENYNAGE)
-		return damage; //These two bypass everything else.
+	if (skill_num == PA_PRESSURE)
+		return damage; //This skill bypass everything else.
 
 	sc = status_get_sc(bl);
 
@@ -879,6 +879,7 @@ static struct Damage battle_calc_weapon_attack(
 			case ITM_TOMAHAWK:	//Tomahawk is a ranged attack! [Skotlex]
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS:
+			case NJ_HUUMA:
 			case NJ_TATAMIGAESHI:
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
@@ -2610,14 +2611,21 @@ struct Damage  battle_calc_misc_attack(
 		if (!md.damage) md.damage = 2;
 		md.damage = md.damage + rand()%md.damage;
 
+		if (sd)
+		{
+			if ( md.damage > sd->status.zeny )
+				md.damage=sd->status.zeny;
+			pc_payzeny(sd, md.damage);
+		}
+
 		if(is_boss(target))
-			md.damage=md.damage*60/100; 
+			md.damage=md.damage*60/100;
 		break;
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
 		break;
 	case HVAN_EXPLOSION:	//[orn]
-		md.damage = sstatus->hp * (50 + 50 * skill_lv) / 100 ;
+		md.damage = sstatus->max_hp * (50 + 50 * skill_lv) / 100 ;
 		break ;
 	case ASC_BREAKER:
 		md.damage = 500+rand()%500 + 5*skill_lv * sstatus->int_;
@@ -2694,7 +2702,7 @@ struct Damage  battle_calc_misc_attack(
 
 	if(md.damage < 0)
 		md.damage = 0;
-	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE && skill_num != NJ_ZENYNAGE) //Pressure can vaporize plants. // damage=1 on plant with Throw zeny ?
+	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE) //Pressure can vaporize plants
 		md.damage = 1;
 
 	if(flag.elefix)
@@ -2703,13 +2711,6 @@ struct Damage  battle_calc_misc_attack(
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	if (map_flag_gvg(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-
-	if ( sd && md.damage && skill_num == NJ_ZENYNAGE )
-	{
-		if ( md.damage > sd->status.zeny )
-			md.damage=sd->status.zeny;
-		pc_payzeny(sd, md.damage);
-	}
 
 	return md;
 }
