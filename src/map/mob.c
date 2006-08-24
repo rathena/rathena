@@ -2275,7 +2275,7 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	hp_rate = md->status.hp*100/md->status.max_hp;
 	md->db = mob_db(class_);
-	
+	md->class_ = class_;
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name,NAME_LENGTH-1);
 	else
@@ -2287,7 +2287,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	status_set_viewdata(&md->bl, class_);
 	clif_mob_class_change(md,class_);
 	status_calc_mob(md, 3);
-	
+
 	if (battle_config.monster_class_change_full_recover) {
 		memset(md->dmglog, 0, sizeof(md->dmglog));
 		md->tdmg = 0;
