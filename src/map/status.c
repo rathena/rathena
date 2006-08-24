@@ -812,16 +812,34 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	unsigned int hp  =0, sp = 0;
 
 	status = status_get_status_data(target);
-	
-	if (hp_rate > 0)
-		hp = (hp_rate*status->hp)/100;
+
+	//Change the equation when the values are high enough to discard the
+	//imprecision in exchange of overflow protection [Skotlex]
+	//Also add 100% checks since those are the most used cases where we don't 
+	//want aproximation errors.
+	if (hp_rate > 99)
+		hp = status->hp;
+	else if (hp_rate > 0)
+		hp = status->hp>10000?
+			hp_rate*(status->hp/100):
+			(hp_rate*status->hp)/100;
+	else if (hp_rate < -99)
+		hp = status->max_hp;
 	else if (hp_rate < 0)
-		hp = (-hp_rate)*status->max_hp/100;
+		hp = status->max_hp>10000?
+			(-hp_rate)*(status->max_hp/100):
+			(-hp_rate*status->max_hp)/100;
 	if (hp_rate && !hp)
 		hp = 1;
 
-	if (sp_rate > 0)
+	//Should be safe to not do overflow protection here, noone should have
+	//millions upon millions of SP
+	if (sp_rate > 99)
+		sp = status->sp;
+	else if (sp_rate > 0)
 		sp = (sp_rate*status->sp)/100;
+	else if (sp_rate < -99)
+		sp = status->max_sp;
 	else if (sp_rate < 0)
 		sp = (-sp_rate)*status->max_sp/100;
 	if (sp_rate && !sp)

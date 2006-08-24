@@ -3455,6 +3455,7 @@ static const struct battle_data_short {
 	{ "gvg_traps_target_all",	            &battle_config.vs_traps_bctall			},
 	{ "traps_setting",	                  &battle_config.traps_setting	},
 	{ "clear_skills_on_death",             &battle_config.clear_unit_ondeath },
+	{ "clear_skills_on_warp",              &battle_config.clear_unit_onwarp },
 	{ "random_monster_checklv",            &battle_config.random_monster_checklv	},
 	{ "attribute_recover",                 &battle_config.attr_recover				},
 	{ "flooritem_lifetime",                &battle_config.flooritem_lifetime		},
@@ -3851,6 +3852,7 @@ void battle_set_defaults() {
 	battle_config.vs_traps_bctall=BL_PC;
 	battle_config.traps_setting=0;
 	battle_config.clear_unit_ondeath=BL_ALL;
+	battle_config.clear_unit_onwarp=BL_ALL;
 	battle_config.random_monster_checklv=1;
 	battle_config.attr_recover=1;
 	battle_config.flooritem_lifetime=LIFETIME_FLOORITEM*1000;

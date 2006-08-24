@@ -105,6 +105,7 @@ extern struct Battle_Config {
 	unsigned short vs_traps_bctall;	
 	unsigned short traps_setting;	
 	unsigned short clear_unit_ondeath; //[Skotlex]
+	unsigned short clear_unit_onwarp; //[Skotlex]
 	unsigned short random_monster_checklv;
 	unsigned short attr_recover;
 	unsigned short flooritem_lifetime;

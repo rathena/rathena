@@ -2887,15 +2887,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case ASC_METEORASSAULT:
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
-	case KN_BRANDISHSPEAR:
 		if (flag&1)
 		{	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
 			if (skill_area_temp[1] != bl->id)
 				skill_attack(skill_get_type(skillid), src, src, bl,
 					skillid, skilllv, tick, skill_area_temp[0]|SD_ANIMATION);
-			else if (skillid == KN_BRANDISHSPEAR)
-				skill_attack(skill_get_type(skillid), src, src, bl,
-					skillid, skilllv, tick, skill_area_temp[0]);
 			break;
 		}
 		if ( skillid == NJ_BAKUENRYU )
@@ -2924,6 +2920,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 			if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		}
+		break;
+
+	case KN_BRANDISHSPEAR:
+		//Coded apart for it needs the flag passed to the damage calculation.
+		if (skill_area_temp[1] != bl->id)
+			skill_attack(skill_get_type(skillid), src, src, bl,
+				skillid, skilllv, tick, flag|SD_ANIMATION);
+		else 
+			skill_attack(skill_get_type(skillid), src, src, bl,
+				skillid, skilllv, tick, flag);
 		break;
 
 	case KN_BOWLINGBASH:
@@ -6838,7 +6844,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			if((!sd->chatID || battle_config.chat_warpportal)
 				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y) {
 				if (pc_setpos(sd,sg->val3,sg->val2>>16,sg->val2&0xffff,3) == 0) {
-					if (--sg->val1<=0 || sg->src_id == bl->id)
+					if (--sg->val1<=0)
 						skill_delunitgroup(NULL, sg);
 				}
 			}

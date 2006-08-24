@@ -4,6 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/24
+	* Added setting clear_skills_on_warp to specify when a character's
+	  land-based skills are deleted when the caster changes maps. Defaults to all
+	  types. [Skotlex]
+	* Should have fixed Brandish Spear not passing the flag to skill_attack,
+	  causing it to do miserable damage. [Skotlex]
+	* Warp Portal will no longer be removed when caster steps through it (this
+	  is left to the new clear_skills_on_warp setting) [Skotlex]
+	* Cleaned up status_percent_change to switch equations when the target has
+	  high hp to prevent overflows, also it will directly take hp/maxhp when a
+	  rate of 100 or higher is passed to prevent calculations. [Skotlex]
+	* Traps and Land Elemental fields are no longer automatically removed on
+	  map change (handled now by clear_skills_on_warp) [Skotlex]
+	* traps_setting &2 no longer does anything (handled now by blah blah)
+	  [Skotlex]
 	* Applied some change from mpeg on Ninja Skills [Toms]
 	* Put HVAN_Explosion based on max_hp instead of current hp [Toms]
 2006/08/23
