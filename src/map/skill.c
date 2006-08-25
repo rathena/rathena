@@ -6794,7 +6794,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 
 	if (!group->alive_count)
 	{	//No cells? Something that was blocked completely by Land Protector?
-		skill_delunitgroup(src, group, 1);
+		skill_delunitgroup(src, group, 0);
 		return NULL;
 	}
 	if (skillid == NJ_TATAMIGAESHI) //Store number of tiles.
@@ -7523,7 +7523,7 @@ int skill_unit_effect (struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- * If flag = 1, skill must be deleted, not transformed
+ * If flag, this is a forced delete, otherwise, it's natural expiration.
  *------------------------------------------
  */
 int skill_unit_onlimit (struct skill_unit *src, unsigned int tick, int flag)
@@ -7542,6 +7542,7 @@ int skill_unit_onlimit (struct skill_unit *src, unsigned int tick, int flag)
 		clif_changemapcell(src->bl.m,src->bl.x,src->bl.y,src->val2,1);
 		break;
 	case UNT_CALLFAMILY:
+		if (!flag)
 		{
 			struct map_session_data *sd = NULL;
 			if(sg->val1) {
@@ -7581,7 +7582,7 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 	nullpo_retr(0, sg=src->group);
 
 	if (skill_get_inf2(sg->skill_id)&INF2_TRAP && damage > 0)
-		skill_delunitgroup(NULL,sg, 0);
+		skill_delunitgroup(NULL,sg, 1);
 	else 
 	switch(sg->unit_id){
 	case UNT_ICEWALL:
@@ -9273,7 +9274,7 @@ int skill_graffitiremover (struct block_list *bl, va_list ap)
 		return 0;
 
 	if((unit->group) && (unit->group->unit_id == UNT_GRAFFITI))
-		skill_delunit(unit, 0);
+		skill_delunit(unit, 1);
 
 	return 0;
 }
@@ -9319,7 +9320,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 				battle_check_target(bl, src, BCT_ENEMY) > 0)
 			{	//Check for offensive Land Protector to delete both. [Skotlex]
 				(*alive) = 0;
-				skill_delunit(unit, 0);
+				skill_delunit(unit, 1);
 				return 1;
 			}
 			//Delete the rest of types.
@@ -9382,7 +9383,7 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 //		return 0; //Do not remove traps.
 	
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
-		skill_delunit(unit, 0);
+		skill_delunit(unit, 1);
 	else skill_delunitgroup(NULL, unit->group, 1);
 
 	return 1;
@@ -9630,7 +9631,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 }
 
 /*==========================================
- * If flag = 1, skill must be deleted, not transformed
+ * if flag =1 -> forced removal, 0 is for natural expiration.
  *------------------------------------------
  */
 int skill_delunit (struct skill_unit *unit, int flag)
@@ -9706,7 +9707,7 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 				maxdiff=x;
 				j=i;
 			}
-		skill_delunitgroup(src, ud->skillunit[j], 1); // Force the deletion !
+		skill_delunitgroup(src, ud->skillunit[j], 1);
 		//Since elements must have shifted, we use the last slot.
 		i = MAX_SKILLUNITGROUP-1;
 	}
@@ -9754,7 +9755,7 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 }
 
 /*==========================================
- * If flag == 1, skill must be deleted (not transformed like UNT_WAARP)
+ * If flag, this is a forced deletion, otherwise it's natural expiration.
  *------------------------------------------
  */
 int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group, int flag)
