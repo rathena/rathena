@@ -2037,6 +2037,15 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	case KN_AUTOCOUNTER:
 	case NPC_CRITICALSLASH:
+	case NPC_WATERATTACK:
+	case NPC_GROUNDATTACK:
+	case NPC_FIREATTACK:
+	case NPC_WINDATTACK:
+	case NPC_POISONATTACK:
+	case NPC_HOLYATTACK:
+	case NPC_DARKNESSATTACK:
+	case NPC_TELEKINESISATTACK:
+	case NPC_SPLASHATTACK:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
 	case SN_SHARPSHOOTING:
@@ -7789,7 +7798,9 @@ int skill_isammotype (TBL_PC *sd, int skill)
 	return (
 		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
 		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
-		skill_get_type(skill) == BF_WEAPON && !(skill_get_nk(skill)&NK_NO_DAMAGE) 
+		skill_get_type(skill) == BF_WEAPON &&
+	  	!(skill_get_nk(skill)&NK_NO_DAMAGE) &&
+		!skill_get_spiritball(skill,1) //Assume spirit spheres are used as ammo instead.
 	);
 }
 
@@ -8599,7 +8610,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	
 	// instant cast attack skills depend on aspd as delay [celest]
 	if (time == 0) {
-		if (skill_get_type(skill_id) == BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
+		if (skill_get_type(skill_id)&(BF_WEAPON|BF_MISC) && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
 			time = status_get_adelay(bl); //Use attack delay as default delay.
 		else
 			time = battle_config.default_skill_delay;
