@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+08/25
+	* Little correction on Assassin Job Quest [Toms]
 08/24
 	* Various fixes on Headgear 2006 quests [Playtester]
 	* Updated Treasure Chests Numver formula to the Aegis one: Economic/5+4 [Lupus]

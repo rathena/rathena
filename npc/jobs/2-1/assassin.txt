@@ -28,6 +28,8 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged back JFunc. Fixed missing dialogue [Lupus]
+//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I 
+//= was still able to bypass it) [Toms]
 //============================================================ 
 
 
@@ -536,7 +538,7 @@ sF_Quiz:
 in_moc_16.gat,19,144,1	script	getbacker	139,8,0,{
 	if(ASSIN_Q > 1) end;
 	warp "in_moc_16.gat",19,142;
-	addtimer 700, "Nameless One::OnTimer700";
+	addtimer 100, "Nameless One::OnTimer700";
 	end;
 }
 
@@ -549,7 +551,7 @@ OnTimer700:
 
 	mes "[Nameless One]";
 	mes "Welcome, my guest.  Muhahaha!!!...... There is no use in trying to find me for I am perfectly hidden!";
-	mes "The ability to beome totaly hidden is the TRADEMARK of a GREAT Assassin!!";
+	mes "The ability to become totaly hidden is the TRADEMARK of a GREAT Assassin!!";
 	next;
 	mes "[Nameless One]";
 	mes "Huh? Why don't I have a name? Muhahahahaha!!!... The better question to ask is why am I hidden.....";
