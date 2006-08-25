@@ -19,6 +19,8 @@
 	-----
 
 =========================
+08/25
+	* Shinobi Belt combo now also works with slotted Ninja Suit [Playtester]
 08/24
 	* Updated X.3 iRO mob names [Playtester]
 08/23
