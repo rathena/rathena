@@ -1267,6 +1267,41 @@ This command retrieves the name of the given job using the msg_athena entries 55
 
 ---------------------------------------
 
+*eaclass {<job number>}
+
+This commands returns the "eA job-number" corresponding to the given class (if none is given, it returns uses the invoking player's class as argument). The eA job-number is also a class number system, but it's one that comes with constants which make it easy to convert among classes. The command will return -1 if you pass it a job number which doesn't has a eA Job value equivalent.
+
+	set @eac, eaclass();
+	if ((@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
+		mes "You must be a swordman, knight, crusader, paladin, high swordman, lord knight, baby swordman, baby knight or baby crusader.";
+	if (@eac&EAJL_UPPER)
+		mes "You are a rebirth job.";
+	if ((@eac&EAJ_UPPERMASK) == EAJ_SWORDMAN)
+		mes "You must be a Swordman, Baby Swordman or High Swordman.";
+
+For more information on the eA Job System, see the docs/ea_job_system.txt file.
+
+---------------------------------------
+*roclass <job number> {,<gender>}
+
+Does the opposite of eaclass. That is, given a eA Job class, it returns which is the corresponding RO class number. A gender is required because both Bard and Dancers share the same eA Job value (EAJ_BARDDANCER), if it isn't given, the gender of the executing player is taken (if there's no player running the script, male will be used by default).
+The command returns -1 when there isn't a valid class to represent the required job (for example, if you try to get the baby version of a Taekwon class).
+
+	set @eac, eaclass();
+	//Check if class is already rebirth
+	if (@eac&EAJL_UPPER) {
+		mes "You look strong.";
+		close;
+	}
+	set @eac, roclass(@eac|EAJL_UPPER);
+	//Check if class has a rebirth version
+	if (@eac != -1) {
+		mes "Bet you can't wait to become a "+jobname(@eac)+"!";
+		close;
+	}
+
+---------------------------------------
+
 *input <variable>;
 
 This command will make an input box pop up on the client connected to the 

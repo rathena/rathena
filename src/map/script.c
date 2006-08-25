@@ -3901,6 +3901,8 @@ struct script_function buildin_func[] = {
 	{buildin_warpportal,"warpportal","iisii"},
 	// <--- [blackhole89]
 	{buildin_homunculus_evolution,"homevolution",""},	//[orn]
+	{buildin_eaclass,"eaclass","*"},	//[Skotlex]
+	{buildin_roclass,"roclass","i*"},	//[Skotlex]
 	{NULL,NULL,NULL},
 };
 
@@ -7757,6 +7759,42 @@ int buildin_homunculus_evolution(struct script_state *st)
 		return merc_hom_evolution(sd->hd) ;
 	}
 	clif_emotion(&sd->hd->bl, 4) ;	//swt
+	return 0;
+}
+
+//These two functions bring the eA MAPID_* class functionality to scripts.
+int buildin_eaclass(struct script_state *st)
+{
+	int class_;
+	if( st->end>st->start+2 )
+		class_ = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	else {
+		struct map_session_data *sd;
+		sd=script_rid2sd(st);
+		if (!sd) {
+			push_val(st->stack,C_INT, -1);
+			return 0;
+		}
+		class_ = sd->status.class_;
+	}
+	push_val(st->stack,C_INT, pc_jobid2mapid(class_));
+	return 0;
+}
+
+int buildin_roclass(struct script_state *st)
+{
+	int class_ =conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int sex;
+	if( st->end>st->start+3 )
+		sex = conv_num(st,& (st->stack->stack_data[st->start+3]));
+	else {
+		struct map_session_data *sd;
+		if (st->rid && (sd=script_rid2sd(st)))
+			sex = sd->status.sex;
+		else
+			sex = 1; //Just use male when not found.
+	}
+	push_val(st->stack,C_INT,pc_mapid2jobid(class_, sex));
 	return 0;
 }
 
