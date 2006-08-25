@@ -3563,6 +3563,8 @@ int buildin_getvariableofnpc(struct script_state *st);
 int buildin_warpportal(struct script_state *st);
 // <-- [blackhole89]
 int buildin_homunculus_evolution(struct script_state *st) ;	//[orn]
+int buildin_eaclass(struct script_state *st);
+int buildin_roclass(struct script_state *st);
 int buildin_setitemscript(struct script_state *st);
 int buildin_disguise(struct script_state *st);
 int buildin_undisguise(struct script_state *st);
