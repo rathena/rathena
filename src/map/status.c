@@ -623,7 +623,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				sc->data[SC_GRAVITATION].val3 == BCT_SELF) {
 				struct skill_unit_group *sg = (struct skill_unit_group *)sc->data[SC_GRAVITATION].val4;
 				if (sg) {
-					skill_delunitgroup(target,sg);
+					skill_delunitgroup(target,sg, 0);
 					sc->data[SC_GRAVITATION].val4 = 0;
 					status_change_end(target, SC_GRAVITATION, -1);
 				}
@@ -5991,7 +5991,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				{
 					group = (struct skill_unit_group *)sc->data[type].val2;
 					sc->data[type].val2 = 0;
-					skill_delunitgroup(bl, group);
+					skill_delunitgroup(bl, group, 0);
 				}
 				if(sc->data[type].val4 && sc->data[type].val4 != BCT_SELF && (dsd=map_id2sd(sc->data[type].val4))){
 					dsc = &dsd->sc;
@@ -6092,7 +6092,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			if (sc->data[type].val3) { //Clear the group.
 				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val3;
 				sc->data[type].val3 = 0;
-				skill_delunitgroup(bl, group);
+				skill_delunitgroup(bl, group, 0);
 			}
 			break;
 		case SC_HERMODE: 
@@ -6112,7 +6112,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			if (sc->data[type].val4) { //Clear the group.
 				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val4;
 				sc->data[type].val4 = 0;
-				skill_delunitgroup(bl, group);
+				skill_delunitgroup(bl, group, 0);
 			}
 			break;
 		case SC_KAAHI:

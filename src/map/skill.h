@@ -195,10 +195,10 @@ int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int
 // ユニットスキル
 struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
 struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
-int skill_delunit(struct skill_unit *unit);
+int skill_delunit(struct skill_unit *unit, int flag);
 struct skill_unit_group *skill_initunitgroup(struct block_list *src,
 	int count,int skillid,int skilllv,int unit_id, int limit, int interval);
-int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group);
+int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group, int flag);
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 
