@@ -23,6 +23,3 @@ que_ng.gat	mapflag	noloot
 
 //Thievs have to gather some mushrooms. So they need loot
 //job_thief1.gat	mapflag	noloot
-
-//Lighthalzen Quests
-lighthalzen.gat	mapflag	noloot

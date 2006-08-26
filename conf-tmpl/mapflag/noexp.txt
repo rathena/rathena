@@ -21,6 +21,3 @@ job_sage.gat	mapflag	noexp
 job_soul.gat	mapflag	noexp
 job_star.gat	mapflag	noexp
 que_ng.gat	mapflag	noexp
-
-//Lighthalzen Quests
-lighthalzen.gat	mapflag	noexp
