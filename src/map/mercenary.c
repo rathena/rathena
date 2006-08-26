@@ -968,7 +968,7 @@ void read_homunculus_expdb()
 			if (!hexptbl[j++])
 				break;
 		}
-		if (!feof(fp) || hexptbl[MAX_LEVEL - 1])
+		if (hexptbl[MAX_LEVEL - 1]) // Last permitted level have to be 0!
 		{
 			ShowWarning("read_hexptbl: Reached max level in exp_homun [%d]. Remaining lines were not read.\n ", MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
