@@ -34,9 +34,6 @@ Date		Added
 ======
 08/25
 	* Reverted the mapflag changes to Lighthalzen. [MasterOfMuppets]
-	- Don't just assume everything is what you think Lupus
-	  I've been there myself on iRO and they DO drop items and give exp.
-	  [Another thing, all the job quest monsters do drop items and give exp too]
 	* Little correction on Assassin Job Quest [Toms]
 08/24
 	* Various fixes on Headgear 2006 quests [Playtester]
