@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+08/26
+	* Added official effects to the Socket Enchant NPC [Playtester]
 08/25
 	* Reverted the mapflag changes to Lighthalzen. [MasterOfMuppets]
 	* Little correction on Assassin Job Quest [Toms]

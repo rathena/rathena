@@ -547,6 +547,7 @@ function	script	addslot	{
            set Zeny,Zeny-@addprice;
            delitem @olditem,1;
            if(@rateit<rand(1,100))goto L_Fail;
+           misceffect 83;
            getitem @newitem,1;
 
       mes "[Socket Enchant]";
@@ -571,6 +572,7 @@ function	script	addslot	{
       close;
 
   L_Fail:
+      misceffect 183;
       mes "[Socket Enchant]";
       mes "Sorry, but i could't upgrade it.";
       close;
@@ -605,6 +607,7 @@ function	script	addslot2	{
            set Zeny,Zeny-@addprice;
            delitem @olditem,1;
            if(@rateit<rand(1,100))goto L_Fail;
+           misceffect 83;
            getitem @newitem,1;
 
       mes "[Socket Enchant]";
@@ -629,6 +632,7 @@ function	script	addslot2	{
       close;
 
   L_Fail:
+      misceffect 183;
       mes "[Socket Enchant]";
       mes "Sorry, but i could't upgrade it.";
       close;
