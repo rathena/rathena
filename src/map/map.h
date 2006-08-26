@@ -48,7 +48,7 @@
 #define MAX_VENDING 12
 #define MOBID_EMPERIUM 1288
 
-#define MAX_PC_BONUS 10
+#define MAX_PC_BONUS 15
 //Designed for search functions, species max number of matches to display.
 #define MAX_SEARCH 5
 #define MAX_DUEL 1024

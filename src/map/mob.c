@@ -1116,7 +1116,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
 				(battle_config.mob_ai&2 && !status_check_skilluse(bl, abl, 0, 0)) ||
-				!mob_can_reach(md, abl, dist+2, MSS_RUSH) ||
+				!mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH) ||
 				(	//Gangster Paradise check
 					abl->type == BL_PC && !(mode&MD_BOSS) &&
 					((TBL_PC*)abl)->state.gangsterparadise
