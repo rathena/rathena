@@ -1589,7 +1589,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	malloc_set(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)+sizeof(status->lhw)));
 	malloc_set(status->lhw, 0, sizeof(struct weapon_atk));
 
-	//FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
+	//FIXME: Most of these stuff should be calculated once, but how do I fix the malloc_set above to do that? [Skotlex]
 	status->speed = DEFAULT_WALK_SPEED;
 	status->mode = MD_CANMOVE|MD_CANATTACK|MD_LOOTER|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
 	status->size = (sd->class_&JOBL_BABY)?0:1;

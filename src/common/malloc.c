@@ -116,14 +116,14 @@ void aFree_ (void *p, const char *file, int line, const char *func)
 void* _bcallocA(size_t size, size_t cnt)
 {
 	void *ret = MALLOCA(size * cnt);
-	if (ret) //memset(ret, 0, size * cnt);
+	if (ret) //malloc_set(ret, 0, size * cnt);
 		malloc_set(ret, 0, size*cnt);
 	return ret;
 }
 void* _bcalloc(size_t size, size_t cnt)
 {
 	void *ret = MALLOC(size * cnt);
-	if (ret) //memset(ret, 0, size * cnt);
+	if (ret) //malloc_set(ret, 0, size * cnt);
 		malloc_set(ret, 0, size*cnt);
 	return ret;
 }
@@ -327,7 +327,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 
 void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func ) {
 	void *p = _mmalloc(num * size,file,line,func);
-	//memset(p,0,num * size);
+	//malloc_set(p,0,num * size);
 	malloc_set(p,0,num*size);
 	return p;
 }
@@ -686,79 +686,51 @@ static void memmgr_init (void)
 }
 #endif
 
-#ifdef MEMSET_TURBO
-	// This function is practically useless if the the size of the data is
-	// static. It decides whether to use setword or setdword.
-	void malloc_set(void *dest, int value, int size)
-	{
-		if(size%4 == 0)
-			malloc_tsetdword(dest, value, size);
-		else if(size%2 == 0)
-			malloc_tsetword(dest, (short)value, size);
-		else
-			memset(dest, value, (size_t) size);
-	}
-
-	// Sets 32-bit aligned memory.
-	void malloc_tsetdword(void *dest, int value, int count){
-#ifdef _WIN32
+#if defined(MEMSET_TURBO) || defined(_WIN32)
+	void malloc_set(void *dest, int value, int count){
 		_asm
 			{
-				mov edx, 0
-				mov eax, count
-				mov ebx, 4
-				idiv ebx
+				mov eax, value
+				mov ecx, count
+				mov ebx, ecx
 				mov edi, dest
-				mov ecx, eax
+				shr ecx, 2
+				test ecx, ecx
+				jz ByteOp
+				shl ecx, 2
+				sub ebx, ecx
+				shr ecx, 2
+				rep stosd
+				test ebx, ebx
+				jz Done
+				ByteOp:
+				mov ecx, ebx
+				rep stosb
+				Done:
+			}
+	}
+	// Sets 32-bit aligned memory.
+	void malloc_tsetdword(void *dest, int value, int count){
+		_asm
+			{
+				mov edi, dest
+				mov ecx, count
+				shr ecx, 2
 				mov eax, value
 				rep stosd
 			}
-#else
-		__asm__("movl $0, %%edx;
-				 movl %1, %%eax;
-				 movl $4, %%ebx;
-				 idivl %%ebx;
-				 movl %0, %%edi; 
-				 movl %%eax, %%ecx; 
-				 movl %2, %%eax; 
-				 rep;
-				 stosd;"
-			: 
-			: "g" (dest), "g" (count), "g" (value)
-			: "edx", "eax", "ebx", "edi", "ecx"
-			);
-#endif
 	}
 
 	// Sets 16-bit aligned memory.
 	void malloc_tsetword(void *dest, short value, int count){
-#ifdef _WIN32
 		_asm
 			{
-				mov edx, 0
-				mov eax, count
-				mov ebx, 2
-				idiv ebx
 				mov edi, dest
-				mov ecx, eax
+				mov ecx, count
+				shr ecx, 1
 				mov ax, value
 				rep stosw
 			}
-#else
-		__asm__("movl $0, %%edx;
-				 movl %1, %%eax;
-				 movl $2, %%ebx;
-				 idivl %%ebx;
-				 movl %0, %%edi; 
-				 movl %%eax, %%ecx; 
-				 movw %2, %%ax; 
-				 rep;
-				 stosw;"
-			: 
-			: "g" (dest), "g" (count), "g" (value)
-			: "edx", "eax", "ebx", "edi", "ecx", "ax"
-			);
-#endif
 	}
 #endif
 
