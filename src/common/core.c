@@ -8,6 +8,7 @@
 #endif
 #include <signal.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "core.h"
 #include "../common/db.h"
@@ -32,6 +33,7 @@ char **arg_v = NULL;
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
 static void (*term_func)(void) = NULL;
+static char eA_svn_version[10];
 
 /*======================================
  *	CORE : Set function
@@ -130,23 +132,45 @@ void signals_init (void)
 #else
 const char* get_svn_revision(void)
 {
-	static char version[10];
 	FILE *fp;
 
-	if ((fp = fopen(".svn/entries", "r")) != NULL) {
+	if(*eA_svn_version)
+		return eA_svn_version;
+
+	if ((fp = fopen(".svn/entries", "r")))
+	{
 		char line[1024];
 		int rev;
-		while (fgets(line,1023,fp))
-			if (strstr(line,"revision=")) break;
-		fclose(fp);
-		if (sscanf(line," %*[^\"]\"%d%*[^\n]", &rev) == 1) {
-			sprintf(version, "%d", rev);
-			return version;
+		// Check the version
+		if (fgets(line,sizeof(line),fp))
+		{
+			if(!isdigit(line[0]))
+			{
+				// XML File format
+				while (fgets(line,sizeof(line),fp))
+					if (strstr(line,"revision=")) break;
+				fclose(fp);
+				if (sscanf(line," %*[^\"]\"%d%*[^\n]", &rev) == 1) {
+					snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", rev);
+				}
+			}
+			else
+			{
+				// Bin File format
+				fgets(line,sizeof(line),fp); // Get the name
+				fgets(line,sizeof(line),fp); // Get the entries kind
+				if(fgets(line,sizeof(line),fp)) // Get the rev numver
+				{
+					snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", atoi(line));
+				}
+			}
 		}
 	}
 
-	// if getting revision has failed
-	return "Unknown";
+	if(!(*eA_svn_version))
+		snprintf(eA_svn_version, sizeof(eA_svn_version), "Unknown");
+
+	return eA_svn_version;
 }
 #endif
 
@@ -207,6 +231,7 @@ int main (int argc, char **argv)
 			SERVER_NAME = ++p;
 		arg_c = argc;
 		arg_v = argv;
+		*eA_svn_version = '\0';
 	}
 
 	set_server_type();

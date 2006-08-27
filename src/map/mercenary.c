@@ -588,7 +588,8 @@ int search_homunculusDB_index(int key,int type)
 int merc_hom_alloc(struct map_session_data *sd)
 {
 	struct homun_data *hd;
-	int i = 0 ;
+	int i = 0;
+	short x,y;
 
 	nullpo_retr(1, sd);
 
@@ -605,8 +606,16 @@ int merc_hom_alloc(struct map_session_data *sd)
 	hd->master = sd;
 
 	hd->bl.m = sd->bl.m;
+
+	// Find a random valid pos around the player
 	hd->bl.x = sd->bl.x;
-	hd->bl.y = sd->bl.y - 1 ;
+	hd->bl.y = sd->bl.y;
+	x = sd->bl.x + 1;
+	y = sd->bl.y + 1;
+	map_random_dir(&hd->bl, &x, &y);
+	hd->bl.x = x;
+	hd->bl.y = y;
+
 	hd->bl.subtype = MONS;
 	hd->bl.type = BL_HOM;
 	hd->bl.id = npc_get_new_npc_id();
