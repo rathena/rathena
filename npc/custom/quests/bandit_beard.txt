@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Mega Man Expert & Lupus
 //===== Current Version: ===================================== 
-//= 1.1b
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 0.5.2 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First release
 //= 1.1 Fixed some exploits, bugs and typos. Optimized 8) [Lupus]
 //= 1.1b fixed some typos
+//= 1.2 fixed donpcevent label [Lupus]
 //============================================================
 
 umbala.gat,126,129,4	script	Bearded Man	120,{
@@ -183,7 +184,7 @@ alberta.gat,65,123,6	script	Man	85,{
 	mes "[Thread Merchant]";
 	mes "Oh NO! Here they come!!";
 	emotion 19;
-	donpcevent "BRDQ_MOBS";
+	donpcevent "BRDQ_MOBS::OnStart";
 	close;
 
 L_KILLED:
@@ -208,6 +209,7 @@ M_NO:
 
 //mobsummons -------
 alberta.gat,1,1,1	script	BRDQ_MOBS	-1,{
+OnStart:
 	set $@beardMob,10;
 	set $@beardMobD,0;
 	monster "alberta.gat",65,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";

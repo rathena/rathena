@@ -50,7 +50,12 @@ function	script	F_GldTreas	{
 	killmonster getarg(0)+".gat","Treasure_"+getarg(1)+"::OnDied";
 	if(GetCastleData(getarg(0)+".gat",2) > 100 || GetCastleData(getarg(0)+".gat",1) == 0) return;
 	//sets the counter variable = to the box number amount
-	set $@n,GetCastleData(getarg(0)+".gat",2)/5+4;
+	if(getarg(0) == "nguild_prt" || getarg(0) == "nguild_alde" || getarg(0) == "nguild_gef" || getarg(0) == "nguild_pay" ) {
+		//Novice Castles can't have more than 1
+		set $@n,1;
+	}else{
+		set $@n,GetCastleData(getarg(0)+".gat",2)/5+4;
+	}
 L_SPAWN:
 	areamonster getarg(0)+".gat",getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(5)+($@n & 1),1,"Treasure_"+getarg(1)+"::OnDied";
 	set $@n, $@n - 1;

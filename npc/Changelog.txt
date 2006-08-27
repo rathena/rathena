@@ -32,6 +32,13 @@ Playtester
 
 Date		Added
 ======
+08/27
+	* After big discussion at the board, by default we decided to disable CUSTOM
+	  Guild Storage option in Guild Kafras. You can uncomment it in functions_kafras.txt [Lupus]
+	- Also made Novice Castles Event close to the original: 1st classes over 60 Base Level
+	  can't take part. Novice Castles also manufacture not more than
+	  1 Treasure Chest despite of the Economic invest.
+	- Fixed custom Bandit's Beard quest. Thanks to Vhan Morthis for pointing it out.
 08/26
 	* Added official effects to the Socket Enchant NPC [Playtester]
 08/25

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 1+; RO Episode 4+
 //===== Description: =========================================
@@ -21,6 +21,8 @@
 //= 1.3 Restricted TK,High classes >=90 BaseLevel,
 //= 	updated list of unallowed buffs [Lupus]
 //= 1.4 Restricted it to 80 Base Level [Lupus]
+//= 1.5 According to official info: 1 Treasure Chest per Castle
+//=		TODO: The official entrance is in Izlude.
 //============================================================
 
 
@@ -28,16 +30,15 @@ prontera.gat,146,163,6	script	Novice Castles	729,{
 	mes "[Cita]";
 	mes "Hey! I'm a new usher of Novice Castles.";
 	next;
-	if( (Class>=Job_Novice && Class<=Job_Thief)
-		|| (Class==Job_Taekwon && BaseLevel<80) || Class==Job_SuperNovice || Class==Job_Super_Baby
-		|| (Class>=Job_Baby && Class<=Job_Baby_Thief)
-		|| (Class>=Job_Novice_High && Class<=Job_Thief_High && BaseLevel<80)
+	if( BaseJob == Job_SuperNovice || BaseJob == Job_Novice 
+			|| (Class==Job_Taekwon && BaseLevel<60)
+			|| (Class==Job_Gunslinger && BaseLevel<60)
+			|| (BaseJob>=Job_Novice && BaseJob<=Job_Thief && BaseLevel<60) )
 	) menu "Warp me to Novice Castles",M_WARP,"Cancel",-;
 
 	mes "[Cita]";
-	mes "All the 2nd classes aren't allowed to enter the sacred Novice Castles place.";
-	mes "As well as Teakwons and High Classes from 80 Base Level.";
-	emotion 0;
+	mes "I'm sorry, you can't enter the sacred Novice Castles place.";
+	emotion e_sry;
 	close;
 
 M_WARP:
