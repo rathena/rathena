@@ -686,7 +686,7 @@ static void memmgr_init (void)
 }
 #endif
 
-#if defined(MEMSET_TURBO) || defined(_WIN32)
+#if defined(MEMSET_TURBO) && defined(_WIN32)
 	void malloc_set(void *dest, int value, int count){
 		_asm
 			{

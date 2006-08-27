@@ -156,7 +156,7 @@ unsigned int malloc_usage (void);
 		#define INLINE inline
 	#endif
 #endif
-#if defined(MEMSET_TURBO) || defined(_WIN32)
+#if defined(MEMSET_TURBO) && defined(_WIN32)
 	INLINE void malloc_set(void *, int, int);
 	INLINE void malloc_tsetdword(void *, int, int);
 	INLINE void malloc_tsetword(void *, short, int);
