@@ -165,8 +165,7 @@
 				RelativePath="..\src\char\int_pet.c">
 			</File>
 			<File
-				RelativePath="..\src\char\int_pet.c"
-				>
+				RelativePath="..\src\char\int_pet.c">
 			</File>
 			<File
 				RelativePath="..\src\char\int_status.c">
@@ -237,6 +236,9 @@
 			</File>
 			<File
 				RelativePath="..\src\char\int_guild.h">
+			</File>
+			<File
+				RelativePath="..\src\char\int_homun.c">
 			</File>
 			<File
 				RelativePath="..\src\char\int_party.h">

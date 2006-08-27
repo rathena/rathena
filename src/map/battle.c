@@ -81,7 +81,7 @@ struct block_list* battle_gettargeted(struct block_list *target)
 	int c = 0;
 	nullpo_retr(NULL, target);
 
-	memset(bl_list, 0, sizeof(bl_list));
+	malloc_tsetdword(bl_list, 0, sizeof(bl_list));
 	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
 	if (c == 0 || c > 24)
 		return NULL;
@@ -794,8 +794,8 @@ static struct Damage battle_calc_weapon_attack(
 		unsigned cardfix : 1;
 	}	flag;	
 
-	memset(&wd,0,sizeof(wd));
-	memset(&flag,0,sizeof(flag));
+	malloc_tsetdword(&wd,0,sizeof(wd));
+	malloc_tsetdword(&flag,0,sizeof(flag));
 
 	if(src==NULL || target==NULL)
 	{
@@ -2105,8 +2105,8 @@ struct Damage battle_calc_magic_attack(
 		unsigned cardfix : 1;
 	}	flag;
 
-	memset(&ad,0,sizeof(ad));
-	memset(&flag,0,sizeof(flag));
+	malloc_tsetdword(&ad,0,sizeof(ad));
+	malloc_tsetdword(&flag,0,sizeof(flag));
 
 	if(src==NULL || target==NULL)
 	{
@@ -2477,8 +2477,8 @@ struct Damage  battle_calc_misc_attack(
 		unsigned cardfix : 1;
 	}	flag;
 
-	memset(&md,0,sizeof(md));
-	memset(&flag,0,sizeof(flag));
+	malloc_tsetdword(&md,0,sizeof(md));
+	malloc_tsetdword(&flag,0,sizeof(flag));
 
 	if( src == NULL || target == NULL ){
 		nullpo_info(NLP_MARK);
@@ -2735,7 +2735,7 @@ struct Damage battle_calc_attack(	int attack_type,
 	default:
 		if (battle_config.error_log)
 			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
-		memset(&d,0,sizeof(d));
+		malloc_tsetdword(&d,0,sizeof(d));
 		break;
 	}
 	if (d.damage + d.damage2 < 1)

@@ -795,7 +795,7 @@ int read_homunculusdb()
 	char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
 	char *str[36];
 
-	memset(homunculus_db,0,sizeof(homunculus_db));
+	malloc_set(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<2; i++)
 	{
 		sprintf(line, "%s/%s", db_path, filename[i]);
@@ -882,7 +882,7 @@ int read_homunculus_skilldb()
 	int j = 0;
 	char *split[15];
 
-	memset(hskill_tree,0,sizeof(hskill_tree));
+	malloc_tsetdword(hskill_tree,0,sizeof(hskill_tree));
 	sprintf(line, "%s/homun_skill_tree.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
@@ -949,7 +949,7 @@ void read_homunculus_expdb()
 	int i, j=0;
 	char *filename[]={"exp_homun.txt","exp_homun2.txt"};
 
-	memset(hexptbl,0,sizeof(hexptbl));
+	malloc_tsetdword(hexptbl,0,sizeof(hexptbl));
 	for(i=0; i<2; i++){
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");

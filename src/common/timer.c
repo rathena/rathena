@@ -20,7 +20,7 @@
 #include <time.h>
 
 #include "timer.h"
-#include "malloc.h"
+#include "../common/malloc.h"
 #include "showmsg.h"
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
@@ -137,7 +137,7 @@ static void push_timer_heap(int index)
 		} else {
 			timer_heap_max += 256;
 			timer_heap = (int *) aRealloc( timer_heap, sizeof(int) * timer_heap_max);
-			memset(timer_heap + (timer_heap_max - 256), 0, sizeof(int) * 256);
+			malloc_tsetdword(timer_heap + (timer_heap_max - 256), 0, sizeof(int) * 256);
 		}
 	}
 
@@ -210,7 +210,7 @@ int acquire_timer (void)
 		} else {
 			timer_data_max += 256;
 			timer_data = (struct TimerData *) aRealloc( timer_data, sizeof(struct TimerData) * timer_data_max);
-			memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
+			malloc_tsetdword(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 		}
 	}
 
@@ -383,7 +383,7 @@ int do_timer(unsigned int tick)
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
 					free_timer_list = (int *) aRealloc(free_timer_list, sizeof(int) * free_timer_list_max);
-					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
+					malloc_tsetdword(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
 				}
 				free_timer_list[free_timer_list_pos++] = i;
 				break;

@@ -9,6 +9,7 @@
 #include "battle.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/malloc.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -369,7 +370,7 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	if(flag&1)
 		return -1;
 
-	memset(tp,0,sizeof(tp));
+	malloc_set(tp,0,sizeof(tp));
 
 	i=calc_index(x0,y0);
 	tp[i].x=x0;

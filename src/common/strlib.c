@@ -8,7 +8,7 @@
 
 #include "strlib.h"
 #include "utils.h"
-#include "malloc.h"
+#include "../common/malloc.h"
 
 //-----------------------------------------------
 // string lib.
@@ -123,7 +123,7 @@ char *trim(char *str, const char *delim)
 	char *strp = strtok(str,delim);
 	char buf[1024];
 	char *bufp = buf;
-	memset(buf,0,sizeof buf);
+	malloc_tsetdword(buf,0,sizeof buf);
 
 	while(strp) {
 		strcpy(bufp, strp);

@@ -58,7 +58,7 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 void irc_announce(char *buf)
 {
 	char send_string[256];
-	memset(send_string,'\0',256);
+	malloc_tsetdword(send_string,'\0',256);
 
 	sprintf(send_string,"PRIVMSG %s :%s",irc_channel, buf);
 	irc_send(send_string);
@@ -69,7 +69,7 @@ void irc_announce_jobchange(struct map_session_data *sd)
 	char send_string[256];
 	
 	nullpo_retv(sd);
-	memset(send_string,'\0',256);
+	malloc_tsetdword(send_string,'\0',256);
 
 	sprintf(send_string,"PRIVMSG %s :%s has changed into a %s.",irc_channel,sd->status.name,job_name(sd->status.class_));
 	irc_send(send_string);
@@ -82,8 +82,8 @@ void irc_announce_shop(struct map_session_data *sd, int flag)
 	int maplen = 0;
 	nullpo_retv(sd);
 
-	memset(send_string,'\0',256);
-	memset(mapname,'\0',16);
+	malloc_tsetdword(send_string,'\0',256);
+	malloc_tsetdword(mapname,'\0',16);
 
 	if(flag){
 		strcpy(mapname, map[sd->bl.m].name);
@@ -107,8 +107,8 @@ void irc_announce_mvp(struct map_session_data *sd, struct mob_data *md)
 	nullpo_retv(sd);
 	nullpo_retv(md);
 
-	memset(send_string,'\0',256);
-	memset(mapname,'\0',16);
+	malloc_tsetdword(send_string,'\0',256);
+	malloc_tsetdword(mapname,'\0',16);
 	mapname[15]='\0'; // 15 is the final index, not 16 [Lance]
 	strcpy(mapname, map[md->bl.m].name);
 	maplen = strcspn(mapname,".");
@@ -149,7 +149,7 @@ int irc_parse(int fd)
 int irc_keepalive_timer(int tid, unsigned int tick, int id, int data)
 {
 	char send_string[128];
-	memset(send_string,'\0',128);
+	malloc_tsetdword(send_string,'\0',128);
 
 	sprintf(send_string,"PRIVMSG %s : ", irc_nick);
 	irc_send(send_string);
@@ -172,7 +172,7 @@ void irc_send(char *buf)
 	if(!irc_si || !session[irc_si->fd])
 		return;
 
-	memset(transmit,'\0',4096);
+	malloc_tsetdword(transmit,'\0',4096);
 
 	sprintf(transmit,buf);
 	irc_send_sub(irc_si->fd,transmit);
@@ -200,16 +200,16 @@ void irc_parse_sub(int fd, char *incoming_string)
 
 	struct map_session_data **allsd;
 	
-	memset(source,'\0',256);
-	memset(command,'\0',256);
-	memset(target,'\0',256);
-	memset(message,'\0',8192);
-	memset(send_string,'\0',8192);
+	malloc_tsetdword(source,'\0',256);
+	malloc_tsetdword(command,'\0',256);
+	malloc_tsetdword(target,'\0',256);
+	malloc_tsetdword(message,'\0',8192);
+	malloc_tsetdword(send_string,'\0',8192);
 
-	memset(cmd1,'\0',256);
-	memset(cmd2,'\0',256);
-	memset(cmdname,'\0',256);
-	memset(cmdargs,'\0',256);
+	malloc_tsetdword(cmd1,'\0',256);
+	malloc_tsetdword(cmd2,'\0',256);
+	malloc_tsetdword(cmdname,'\0',256);
+	malloc_tsetdword(cmdargs,'\0',256);
 
 	sscanf(incoming_string, ":%255s %255s %255s :%4095[^\r\n]", source, command, target, message);
 	if (source != NULL) {
@@ -364,11 +364,11 @@ int parse_names_packet(char *str) {
 	char channel[256];
 	char names[1024];
 
-	memset(source,'\0',256);
-	memset(numeric,'\0',10);
-	memset(target,'\0',256);
-	memset(channel,'\0',256);
-	memset(names,'\0',1024);
+	malloc_tsetdword(source,'\0',256);
+	malloc_tsetword(numeric,'\0',10);
+	malloc_tsetdword(target,'\0',256);
+	malloc_tsetdword(channel,'\0',256);
+	malloc_tsetdword(names,'\0',1024);
 
 	tok=strtok(str,"\r\n");
 	sscanf(tok,":%255s %10s %255s %*1[=@] %255s :%1023[^\r\n]",source,numeric,target,channel,names);
@@ -471,7 +471,7 @@ int irc_rmnames() {
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
-		//memset(cd.user[i].name,'\0',256);
+		//malloc_tsetdword(cd.user[i].name,'\0',256);
 		cd.user[i].level=0;
 	}
 
@@ -488,10 +488,10 @@ int irc_read_conf(char *file) {
 	char path[256];
 	char row[1024];
 
-	memset(w1,'\0',256);
-	memset(w2,'\0',256);
-	memset(path,'\0',256);
-	memset(row,'\0',256);
+	malloc_tsetdword(w1,'\0',256);
+	malloc_tsetdword(w2,'\0',256);
+	malloc_tsetdword(path,'\0',256);
+	malloc_tsetdword(row,'\0',256);
 
 	sprintf(path,"conf/%s",file);
 

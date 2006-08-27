@@ -16,7 +16,7 @@ typedef long in_addr_t;
 #include <netinet/in.h>
 #endif
 #include <time.h>
-#include "malloc.h"
+#include "../common/malloc.h"
 #include "cbasetypes.h"
 
 extern time_t last_tick;

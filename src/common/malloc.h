@@ -4,6 +4,8 @@
 #ifndef _MALLOC_H_
 #define _MALLOC_H_
 
+//#define MEMSET_TURBO
+
 #ifndef __NETBSD__
 #if __STDC_VERSION__ < 199901L
 #	if __GNUC__ >= 2
@@ -147,6 +149,22 @@
 ////////////////////////////////////////////////
 
 unsigned int malloc_usage (void);
+#ifndef INLINE
+	#ifdef _WIN32
+		#define INLINE 
+	#else
+		#define INLINE inline
+	#endif
+#endif
+#ifdef MEMSET_TURBO
+	INLINE void malloc_tsetdword(void *dest, int value, int count);
+	INLINE void malloc_tsetword(void *dest, short value, int count);
+	INLINE void malloc_set(void *dest, int value, int size);
+#else
+	#define malloc_tsetdword(x,y,z) memset(x,y,z)
+	#define malloc_tsetword(x,y,z) memset(x,y,z)
+	#define malloc_set(x,y,z) memset(x,y,z)
+#endif
 void malloc_init (void);
 void malloc_final (void);
 

@@ -169,7 +169,7 @@ static void BitConvert(BYTE *Src,char *BitSwapTable)
 	int lop,prm;
 	BYTE tmp[8];
 //	*(DWORD*)tmp=*(DWORD*)(tmp+4)=0;
-	memset(tmp,0,8);
+	malloc_tsetdword(tmp,0,8);
 	for(lop=0;lop!=64;lop++) {
 		prm = BitSwapTable[lop]-1;
 		if (Src[(prm >> 3) & 7] & BitMaskTable[prm & 7]) {
@@ -299,7 +299,7 @@ int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char*
 int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen) {
 	z_stream stream;
 	int err;
-	memset(&stream, 0, sizeof(stream));
+	malloc_tsetdword(&stream, 0, sizeof(stream));
 	stream.next_in = (Bytef*)source;
 	stream.avail_in = (uInt)sourceLen;
 	/* Check for source > 64K on 16-bit machine: */
@@ -479,7 +479,7 @@ static FILELIST* filelist_add(FILELIST *entry)
 
 	if (filelist_entrys >= filelist_maxentry) {
 		filelist = (FILELIST *)aRealloc(filelist, (filelist_maxentry + FILELIST_ADDS) * sizeof(FILELIST));
-		memset(filelist + filelist_maxentry, '\0', FILELIST_ADDS * sizeof(FILELIST));
+		malloc_tsetdword(filelist + filelist_maxentry, '\0', FILELIST_ADDS * sizeof(FILELIST));
 		filelist_maxentry += FILELIST_ADDS;
 	}
 
@@ -949,7 +949,7 @@ char *grfio_alloc_ptr(char *fname)
 	if (gentry_entrys >= gentry_maxentry) {
 		gentry_maxentry += GENTRY_ADDS;
 		gentry_table = (char**)aRealloc(gentry_table, gentry_maxentry * sizeof(char*));
-		memset(gentry_table + (gentry_maxentry - GENTRY_ADDS), 0, sizeof(char*) * GENTRY_ADDS);
+		malloc_tsetdword(gentry_table + (gentry_maxentry - GENTRY_ADDS), 0, sizeof(char*) * GENTRY_ADDS);
 	}
 	len = strlen( fname );
 	buf = (char*)aMallocA(len + 1);

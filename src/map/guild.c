@@ -94,7 +94,7 @@ int guild_read_guildskill_tree_db(void)
 	FILE *fp;
 	char line[1024],*p;
 
-	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
+	malloc_set(guild_skill_tree,0,sizeof(guild_skill_tree));
 	sprintf(line, "%s/guild_skill_tree.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL){
 		ShowError("can't read %s\n", line);
@@ -170,7 +170,7 @@ static int guild_read_castledb(void)
 	while(fgets(line,1020,fp)){
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(str,0,sizeof(str));
+		malloc_tsetdword(str,0,sizeof(str));
 		for(j=0,p=line;j<6 && p;j++){
 			str[j]=p;
 			p=strchr(p,',');
@@ -325,7 +325,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	memset(m,0,sizeof(struct guild_member));
+	malloc_set(m,0,sizeof(struct guild_member));
 	m->account_id	=sd->status.account_id;
 	m->char_id		=sd->status.char_id;
 	m->hair			=sd->status.hair;
@@ -816,7 +816,7 @@ int guild_expulsion(struct map_session_data *sd,int guild_id,
 			intif_guild_leave(g->guild_id,account_id,char_id,1,mes);
 			//It's wrong way, member info will erased later
 			//see guild_member_leaved [LuzZza]
-			//memset(&g->member[i],0,sizeof(struct guild_member));
+			//malloc_set(&g->member[i],0,sizeof(struct guild_member));
 			return 0;
 		}
 	}
@@ -846,7 +846,7 @@ int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
 				else
 					clif_guild_expulsion(online_member_sd, name, mes, account_id);
 
-				memset(&g->member[i],0,sizeof(struct guild_member));
+				malloc_set(&g->member[i],0,sizeof(struct guild_member));
 				clif_guild_memberlist(online_member_sd);
 
 				if(sd != NULL && sd->status.guild_id == guild_id) {

@@ -4398,8 +4398,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			struct item item_tmp;
 			struct block_list tbl;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			memset(&item_tmp,0,sizeof(item_tmp));
-			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
+			malloc_set(&item_tmp,0,sizeof(item_tmp));
+			malloc_set(&tbl,0,sizeof(tbl)); // [MouseJstr]
 			item_tmp.nameid = 7049;
 			item_tmp.identify = 1;
 			tbl.id = 0;
@@ -5029,7 +5029,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					if(battle_config.skill_removetrap_type){
 						for(i=0;i<10;i++) {
 							if(skill_db[su->group->skill_id].itemid[i] > 0){
-								memset(&item_tmp,0,sizeof(item_tmp));
+								malloc_set(&item_tmp,0,sizeof(item_tmp));
 								item_tmp.nameid = skill_db[su->group->skill_id].itemid[i];
 								item_tmp.identify = 1;
 								if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i]))){
@@ -5039,7 +5039,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 							}
 						}
 					}else{
-						memset(&item_tmp,0,sizeof(item_tmp));
+						malloc_set(&item_tmp,0,sizeof(item_tmp));
 						item_tmp.nameid = 1065;
 						item_tmp.identify = 1;
 						if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1))){
@@ -7744,7 +7744,7 @@ int skill_check_pc_partner (struct map_session_data *sd, int skill_id, int* skil
 	}
 	//Else: new search for partners.
 	c = 0;
-	memset (p_sd, 0, sizeof(p_sd));
+	malloc_tsetdword (p_sd, 0, sizeof(p_sd));
 	i = map_foreachinrange(skill_check_condition_char_sub, &sd->bl,
 			range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
 
@@ -9987,7 +9987,7 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 					if(src && src->type==BL_PC && !group->state.into_abyss)
 					{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
 						struct item item_tmp;
-						memset(&item_tmp,0,sizeof(item_tmp));
+						malloc_set(&item_tmp,0,sizeof(item_tmp));
 						item_tmp.nameid=1065;
 						item_tmp.identify=1;
 						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);
@@ -10163,7 +10163,7 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 
 	if (flag&2 && !(flag&1))
 	{	//Onout, clear data
-		memset (&skill_unit_temp,0,sizeof(skill_unit_temp));
+		malloc_tsetdword (&skill_unit_temp,0,sizeof(skill_unit_temp));
 		skill_unit_index=0;
 	}
 		
@@ -10528,7 +10528,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	
 	if(rand()%10000 < make_per || qty > 1){ //Success, or crafting multiple items.
 		struct item tmp_item;
-		memset(&tmp_item,0,sizeof(tmp_item));
+		malloc_set(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.nameid=nameid;
 		tmp_item.amount=1;
 		tmp_item.identify=1;
@@ -10696,7 +10696,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 
 	pc_delitem(sd,j,1,0);
 	for(i=0;i<5;i++) {
-		memset(&tmp_item,0,sizeof(tmp_item));
+		malloc_set(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.identify = 1;
 		tmp_item.nameid = skill_arrow_db[index].cre_id[i];
 		tmp_item.amount = skill_arrow_db[index].cre_amount[i];
@@ -10845,7 +10845,7 @@ void skill_init_unit_layout (void)
 {
 	int i,j,size,pos = 0;
 
-	memset(skill_unit_layout,0,sizeof(skill_unit_layout));
+	malloc_set(skill_unit_layout,0,sizeof(skill_unit_layout));
 	for (i=0; i<=MAX_SQUARE_LAYOUT; i++) {
 		size = i*2+1;
 		skill_unit_layout[i].count = size*size;
@@ -11081,7 +11081,7 @@ int skill_readdb (void)
 	char line[1024],path[1024],*p;
 	char *filename[]={"produce_db.txt","produce_db2.txt"};
 
-	memset(skill_db,0,sizeof(skill_db));
+	malloc_set(skill_db,0,sizeof(skill_db));
 	sprintf(path, "%s/skill_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -11236,7 +11236,7 @@ int skill_readdb (void)
 	while(fgets(line,1020,fp)){
 		char *split[50];
 		l++;
-		memset(split,0,sizeof(split));	// [Valaris] thanks to fov
+		malloc_tsetdword(split,0,sizeof(split));	// [Valaris] thanks to fov
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		j = skill_split_str(line,split,6);
@@ -11321,7 +11321,7 @@ int skill_readdb (void)
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 	skill_init_unit_layout();
 
-	memset(skill_produce_db,0,sizeof(skill_produce_db));
+	malloc_set(skill_produce_db,0,sizeof(skill_produce_db));
 	for(m=0;m<2;m++){
 		sprintf(path, "%s/%s", db_path, filename[m]);
 		fp=fopen(path,"r");
@@ -11337,7 +11337,7 @@ int skill_readdb (void)
 			int x,y;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			memset(split,0,sizeof(split));
+			malloc_tsetdword(split,0,sizeof(split));
 			j = skill_split_str(line,split,(3 + MAX_PRODUCE_RESOURCE * 2));
 			if(split[0]==0) //fixed by Lupus
 				continue;
@@ -11360,7 +11360,7 @@ int skill_readdb (void)
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
 	}
 
-	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
+	malloc_set(skill_arrow_db,0,sizeof(skill_arrow_db));
 
 	sprintf(path, "%s/create_arrow_db.txt", db_path);
 	fp=fopen(path,"r");
@@ -11374,7 +11374,7 @@ int skill_readdb (void)
 		int x,y;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(split,0,sizeof(split));
+		malloc_tsetdword(split,0,sizeof(split));
 		j = skill_split_str(line,split,13);
 		if(split[0]==0) //fixed by Lupus
 			continue;
@@ -11395,7 +11395,7 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
 
-	memset(skill_abra_db,0,sizeof(skill_abra_db));
+	malloc_set(skill_abra_db,0,sizeof(skill_abra_db));
 	sprintf(path, "%s/abra_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -11407,7 +11407,7 @@ int skill_readdb (void)
 		char *split[16];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(split,0,sizeof(split));
+		malloc_tsetdword(split,0,sizeof(split));
 		j = skill_split_str(line,split,13);
 		if(split[0]==0) //fixed by Lupus
 			continue;
@@ -11435,7 +11435,7 @@ int skill_readdb (void)
 		char *split[50];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(split,0,sizeof(split));
+		malloc_tsetdword(split,0,sizeof(split));
 		j = skill_split_str(line,split,3);
 		if(split[0]==0) //fixed by Lupus
 			continue;
@@ -11464,7 +11464,7 @@ int skill_readdb (void)
 		char *split[16];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(split,0,sizeof(split));
+		malloc_tsetdword(split,0,sizeof(split));
 		j = skill_split_str(line,split,2);
 		if(split[0]==0) //fixed by Lupus
 			continue;

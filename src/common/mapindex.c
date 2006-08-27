@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "showmsg.h"
+#include "../common/malloc.h"
 
 #define MAX_MAPINDEX 2000
 
@@ -70,7 +71,7 @@ void mapindex_init(void) {
 	int index, length;
 	char map_name[1024];
 	
-	memset (&indexes, 0, sizeof (indexes));
+	malloc_tsetdword (&indexes, 0, sizeof (indexes));
 	fp=fopen(mapindex_cfgfile,"r");
 	if(fp==NULL){
 		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);

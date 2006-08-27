@@ -361,7 +361,7 @@ return -1;
 
 void log_set_defaults(void)
 {
-	memset(&log_config, 0, sizeof(log_config));
+	malloc_set(&log_config, 0, sizeof(log_config));
 
 	//LOG FILTER Default values
 	log_config.refine_items_log = 5; //log refined items, with refine >= +7

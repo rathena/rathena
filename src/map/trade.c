@@ -17,6 +17,7 @@
 #include "intif.h"
 #include "atcommand.h"
 #include "log.h"
+#include "../common/malloc.h"
 
 
 /*==========================================
@@ -114,8 +115,8 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 	if (type == 3) { //Initiate trade
 		sd->state.trading = 1;
 		target_sd->state.trading = 1;
-		memset(&sd->deal, 0, sizeof(sd->deal));
-		memset(&target_sd->deal, 0, sizeof(target_sd->deal));
+		malloc_set(&sd->deal, 0, sizeof(sd->deal));
+		malloc_set(&target_sd->deal, 0, sizeof(target_sd->deal));
 		clif_tradestart(target_sd, type);
 		clif_tradestart(sd, type);
 		if (sd->npc_id)
@@ -152,7 +153,7 @@ int impossible_trade_check(struct map_session_data *sd) {
 	// remove equiped items (they can not be trade)
 	for (i = 0; i < MAX_INVENTORY; i++)
 		if (inventory[i].nameid > 0 && inventory[i].equip && !(inventory[i].equip & EQP_AMMO))
-			memset(&inventory[i], 0, sizeof(struct item));
+			malloc_set(&inventory[i], 0, sizeof(struct item));
 
 	// check items in player inventory
 	for(i = 0; i < 10; i++) {
@@ -230,7 +231,7 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 						inventory[n].amount -= amount;
 						//let's not make room, as pc_additem is done before pc_delitem, so it could lead to problems depending on order.
 //							if (!inventory[n].amount) 
-//								memset(&inventory[n], 0, sizeof(struct item));
+//								malloc_set(&inventory[n], 0, sizeof(struct item));
 						break;
 					}
 			}
@@ -243,7 +244,7 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 				inventory2[i].amount = amount;
 				inventory[n].amount -= amount;
 //					if (!inventory[n].amount)
-//						memset(&inventory[n], 0, sizeof(struct item));
+//						malloc_set(&inventory[n], 0, sizeof(struct item));
 			}
 		}
 		amount = tsd->deal.item[trade_i].amount;
@@ -265,7 +266,7 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 					inventory[i].amount += amount;
 					inventory2[n].amount -= amount;
 //					if (!inventory2[n].amount)
-//						memset(&inventory2[n], 0, sizeof(struct item));
+//						malloc_set(&inventory2[n], 0, sizeof(struct item));
 					break;
 				}
 		}
@@ -277,7 +278,7 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 			inventory[i].amount = amount;
 			inventory2[n].amount -= amount;
 //			if (!inventory2[n].amount)
-//				memset(&inventory2[n], 0, sizeof(struct item));
+//				malloc_set(&inventory2[n], 0, sizeof(struct item));
 		}
 	}
 

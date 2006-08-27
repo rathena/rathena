@@ -795,7 +795,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (!message || !*message)
 		return AtCommand_None;
 
-	memset(&info, 0, sizeof(info));
+	malloc_set(&info, 0, sizeof(info));
 	str += strlen(sd->status.name);
 	while (*str && (isspace(*str) || (s_flag == 0 && *str == ':'))) {
 		if (*str == ':')
@@ -816,8 +816,8 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (type != AtCommand_None) {
 		char command[100];
 		const char* p = str;
-		memset(command, '\0', sizeof(command));
-		memset(atcmd_output, '\0', sizeof(atcmd_output));
+		malloc_tsetdword(command, '\0', sizeof(command));
+		malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 		while (*p && !isspace(*p))
 			p++;
 		if (p - str >= sizeof(command)) // too long
@@ -862,7 +862,7 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
 	if (*p == command_symbol) { // check first char.
 		char command[101];
 		int i = 0;
-		memset(info, 0, sizeof(AtCommandInfo));
+		malloc_set(info, 0, sizeof(AtCommandInfo));
 		sscanf(p, "%100s", command);
 		command[sizeof(command)-1] = '\0';
 
@@ -907,7 +907,7 @@ int msg_config_read(const char *cfgName) {
 	}
 
 	if ((--called) == 0)
-		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
+		malloc_tsetdword(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
 	while(fgets(line, sizeof(line)-1, fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
@@ -1190,7 +1190,7 @@ int atcommand_commands(
 
 	int i_cur_cmd,gm_lvl = pc_isGM(sd), count = 0;
 
-	memset(cz_line_buff,' ',MESSAGE_SIZE);
+	malloc_tsetdword(cz_line_buff,' ',MESSAGE_SIZE);
 	cz_line_buff[MESSAGE_SIZE] = 0;
 
 	clif_displaymessage(fd, msg_txt(273));
@@ -1208,7 +1208,7 @@ int atcommand_commands(
 		{
 			clif_displaymessage(fd,(char*)cz_line_buff);
 			lpcz_cur = cz_line_buff;
-			memset(cz_line_buff,' ',MESSAGE_SIZE);
+			malloc_tsetdword(cz_line_buff,' ',MESSAGE_SIZE);
 			cz_line_buff[MESSAGE_SIZE] = 0;
 		}
 
@@ -1291,7 +1291,7 @@ int atcommand_rura(
 
 	nullpo_retr(-1, sd);
 
-	memset(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message ||
 		(sscanf(message, "%15s %d %d", map_name, &x, &y) < 3 &&
@@ -1347,7 +1347,7 @@ int atcommand_where(
 	int GM_level, pl_GM_level;
 
 	nullpo_retr(-1, sd);
-	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @where <char name>).");
@@ -1396,7 +1396,7 @@ int atcommand_jumpto(
 		return -1;
 	}
 
-	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof atcmd_player_name);
 	if (sscanf(message, "%23[^\n]", atcmd_player_name) < 1)
 		return -1;
 	if(strncmp(sd->status.name,atcmd_player_name,NAME_LENGTH)==0) //Yourself mate? Tsk tsk tsk.
@@ -1434,7 +1434,7 @@ int atcommand_jump(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	sscanf(message, "%d %d", &x, &y);
 
@@ -1469,9 +1469,9 @@ int atcommand_who3(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(match_text, '\0', sizeof(match_text));
+	malloc_tsetdword(player_name, '\0', sizeof(player_name));
 
 	if (sscanf(message, "%99[^\n]", match_text) < 1)
 		strcpy(match_text, "");
@@ -1544,9 +1544,9 @@ int atcommand_who2(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(match_text, '\0', sizeof(match_text));
+	malloc_tsetdword(player_name, '\0', sizeof(player_name));
 
 	if (sscanf(message, "%99[^\n]", match_text) < 1)
 		strcpy(match_text, "");
@@ -1616,10 +1616,10 @@ int atcommand_who(
 
 	nullpo_retr(-1, sd);
 
-	memset(temp0, '\0', sizeof(temp0));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
+	malloc_tsetdword(temp0, '\0', sizeof(temp0));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(match_text, '\0', sizeof(match_text));
+	malloc_tsetdword(player_name, '\0', sizeof(player_name));
 
 	if (sscanf(message, "%99[^\n]", match_text) < 1)
 		strcpy(match_text, "");
@@ -1693,8 +1693,8 @@ int atcommand_whomap3(
 	int map_id;
 	char map_name[MAP_NAME_LENGTH];
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message)
 		map_id = sd->bl.m;
@@ -1753,8 +1753,8 @@ int atcommand_whomap2(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message)
 		map_id = sd->bl.m;
@@ -1817,10 +1817,10 @@ int atcommand_whomap(
 
 	nullpo_retr(-1, sd);
 
-	memset(temp0, '\0', sizeof(temp0));
-	memset(temp1, '\0', sizeof(temp1));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(temp0, '\0', sizeof(temp0));
+	malloc_tsetdword(temp1, '\0', sizeof(temp1));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message)
 		map_id = sd->bl.m;
@@ -1894,11 +1894,11 @@ int atcommand_whogm(
 
 	nullpo_retr(-1, sd);
 
-	memset(temp0, '\0', sizeof(temp0));
-	memset(temp1, '\0', sizeof(temp1));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
+	malloc_tsetdword(temp0, '\0', sizeof(temp0));
+	malloc_tsetdword(temp1, '\0', sizeof(temp1));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(match_text, '\0', sizeof(match_text));
+	malloc_tsetdword(player_name, '\0', sizeof(player_name));
 
 	if (sscanf(message, "%99[^\n]", match_text) < 1)
 		strcpy(match_text, "");
@@ -1965,9 +1965,9 @@ int atcommand_whozeny(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(match_text, '\0', sizeof(match_text));
+	malloc_tsetdword(player_name, '\0', sizeof(player_name));
 
 	if (sscanf(message, "%99[^\n]", match_text) < 1)
 		strcpy(match_text, "");
@@ -2115,7 +2115,7 @@ int atcommand_speed(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message) {
 		sprintf(atcmd_output, "Please, enter a speed value (usage: @speed <%d-%d>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
@@ -2150,8 +2150,8 @@ int atcommand_charspeed(
 
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &speed, atcmd_player_name) < 2) {
 		sprintf(atcmd_output, "Please, enter a speed and a player name (usage: @charspeed <speed <%d-%d>> <char name>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
@@ -2453,7 +2453,7 @@ int atcommand_kill(
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @kill <char name>).");
@@ -2504,7 +2504,7 @@ int atcommand_kami(
 	unsigned long color=0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if(*(command + 5) != 'c' && *(command + 5) != 'C') {
 
@@ -2605,7 +2605,7 @@ int atcommand_item(
 	int get_count, i;
 	nullpo_retr(-1, sd);
 
-	memset(item_name, '\0', sizeof(item_name));
+	malloc_tsetdword(item_name, '\0', sizeof(item_name));
 
 	if (!message || !*message || sscanf(message, "%99s %d", item_name, &number) < 1) {
 		clif_displaymessage(fd, "Please, enter an item name/id (usage: @item <item name or ID> [quantity]).");
@@ -2631,7 +2631,7 @@ int atcommand_item(
 	for (i = 0; i < number; i += get_count) {
 		// if not pet egg
 		if (!pet_create_egg(sd, item_id)) {
-			memset(&item_tmp, 0, sizeof(item_tmp));
+			malloc_set(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_id;
 			item_tmp.identify = 1;
 
@@ -2666,7 +2666,7 @@ int atcommand_item2(
 	int loop, get_count, i;
 	nullpo_retr(-1, sd);
 
-	memset(item_name, '\0', sizeof(item_name));
+	malloc_tsetdword(item_name, '\0', sizeof(item_name));
 
 	if (!message || !*message || sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9) {
 		clif_displaymessage(fd, "Please, enter all informations (usage: @item2 <item name or ID> <quantity>");
@@ -2702,7 +2702,7 @@ int atcommand_item2(
 			refine = attr = 0;
 		}
 		for (i = 0; i < loop; i++) {
-			memset(&item_tmp, 0, sizeof(item_tmp));
+			malloc_set(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_id;
 			item_tmp.identify = identify;
 			item_tmp.refine = refine;
@@ -2895,7 +2895,7 @@ int atcommand_help(
 	FILE* fp;
 	nullpo_retr(-1, sd);
 
-	memset(buf, '\0', sizeof(buf));
+	malloc_tsetdword(buf, '\0', sizeof(buf));
 
 	if ((fp = fopen(help_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_txt(26)); /* Help commands: */
@@ -2936,7 +2936,7 @@ int atcommand_help2(
 	FILE* fp;
 	nullpo_retr(-1, sd);
 
-	memset(buf, '\0', sizeof(buf));
+	malloc_tsetdword(buf, '\0', sizeof(buf));
 
 	if ((fp = fopen(help2_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_txt(26)); /* Help commands: */
@@ -2976,7 +2976,7 @@ int atcommand_gm(
 	char password[100];
 	nullpo_retr(-1, sd);
 
-	memset(password, '\0', sizeof(password));
+	malloc_tsetdword(password, '\0', sizeof(password));
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", password) < 1) {
 		clif_displaymessage(fd, "Please, enter a password (usage: @gm <password>).");
@@ -3125,7 +3125,7 @@ int atcommand_model(
 	int hair_style = 0, hair_color = 0, cloth_color = 0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d %d %d", &hair_style, &hair_color, &cloth_color) < 1) {
 		sprintf(atcmd_output, "Please, enter at least a value (usage: @model <hair ID: %d-%d> <hair color: %d-%d> <clothes color: %d-%d>).",
@@ -3168,7 +3168,7 @@ int atcommand_dye(const int fd, struct map_session_data* sd, const char* command
 	int cloth_color = 0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &cloth_color) < 1) {
 		sprintf(atcmd_output, "Please, enter a clothes color (usage: @dye/@ccolor <clothes color: %d-%d>).", MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
@@ -3196,7 +3196,7 @@ int atcommand_hair_style(const int fd, struct map_session_data* sd, const char* 
 	int hair_style = 0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &hair_style) < 1) {
 		sprintf(atcmd_output, "Please, enter a hair style (usage: @hairstyle/@hstyle <hair ID: %d-%d>).", MIN_HAIR_STYLE, MAX_HAIR_STYLE);
@@ -3243,7 +3243,7 @@ int atcommand_hair_color(const int fd, struct map_session_data* sd, const char* 
 	int hair_color = 0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &hair_color) < 1) {
 		sprintf(atcmd_output, "Please, enter a hair color (usage: @haircolor/@hcolor <hair color: %d-%d>).", MIN_HAIR_COLOR, MAX_HAIR_COLOR);
@@ -3315,8 +3315,8 @@ int atcommand_go(
 		return 0;
 	}
  
-	memset(map_name, '\0', sizeof(map_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
  
 	// get the number
 	town = atoi(message);
@@ -3469,9 +3469,9 @@ int atcommand_monster(
 	short mx, my;
 	nullpo_retr(-1, sd);
 
-	memset(name, '\0', sizeof(name));
-	memset(monster, '\0', sizeof(monster));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(name, '\0', sizeof(name));
+	malloc_tsetdword(monster, '\0', sizeof(monster));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message) {
 			clif_displaymessage(fd, msg_txt(80)); // Give a display name and monster name/id please.
@@ -3728,7 +3728,7 @@ void atcommand_killmonster_sub(
 
 	if (!sd) return;
 
-	memset(map_name, '\0', sizeof(map_name));
+	malloc_tsetdword(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message || sscanf(message, "%15s", map_name) < 1)
 		map_id = sd->bl.m;
@@ -3786,7 +3786,7 @@ int atcommand_refine(
 	int count;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d %d", &position, &refine) < 2) {
 		clif_displaymessage(fd, "Please, enter a position and a amount (usage: @refine <equip position> <+/- amount>).");
@@ -3859,8 +3859,8 @@ int atcommand_produce(
 	struct item tmp_item;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(item_name, '\0', sizeof(item_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(item_name, '\0', sizeof(item_name));
 
 	if (!message || !*message || sscanf(message, "%99s %d %d", item_name, &attribute, &star) < 1) {
 		clif_displaymessage(fd, "Please, enter at least an item name/id (usage: @produce <equip name or equip ID> <element> <# of very's>).");
@@ -3881,7 +3881,7 @@ int atcommand_produce(
 			attribute = ATTRIBUTE_NORMAL;
 		if (star < MIN_STAR || star > MAX_STAR)
 			star = 0;
-		memset(&tmp_item, 0, sizeof tmp_item);
+		malloc_set(&tmp_item, 0, sizeof tmp_item);
 		tmp_item.nameid = item_id;
 		tmp_item.amount = 1;
 		tmp_item.identify = 1;
@@ -3917,7 +3917,7 @@ void atcommand_memo_sub(struct map_session_data* sd) {
 
 	if (!sd) return;
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	clif_displaymessage(sd->fd,  "Your actual memo positions are (except respawn point):");
 	for (i = MIN_PORTAL_MEMO; i <= MAX_PORTAL_MEMO; i++) {
@@ -3942,7 +3942,7 @@ int atcommand_memo(
 	int position = 0;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &position) < 1)
 		atcommand_memo_sub(sd);
@@ -3985,7 +3985,7 @@ int atcommand_gat(
 	int y;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	for (y = 2; y >= -2; y--) {
 		sprintf(atcmd_output, "%s (x= %d, y= %d) %02X %02X %02X %02X %02X",
@@ -4215,7 +4215,7 @@ int atcommand_param(
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustement>).");
@@ -4543,7 +4543,7 @@ atcommand_recall(
 		return -1;
 	}
 
-	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof atcmd_player_name);
 	if(sscanf(message, "%23[^\n]", atcmd_player_name) < 1)
 		return -1;
 	if(strncmp(sd->status.name,atcmd_player_name,NAME_LENGTH)==0)
@@ -4585,7 +4585,7 @@ int atcommand_revive(
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @revive <char name>).");
@@ -4618,7 +4618,7 @@ int atcommand_char_block(
 {
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charblock/@block <name>).");
@@ -4664,8 +4664,8 @@ int atcommand_char_ban(
 	int year, month, day, hour, minute, second, value;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%s %99[^\n]", atcmd_output, atcmd_player_name) < 2) {
 		clif_displaymessage(fd, "Please, enter ban time and a player name (usage: @charban/@ban/@banish/@charbanish <time> <name>).");
@@ -4738,7 +4738,7 @@ int atcommand_char_unblock(
 {
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charunblock <player_name>).");
@@ -4771,7 +4771,7 @@ int atcommand_char_unban(
 {
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charunban <player_name>).");
@@ -4958,7 +4958,7 @@ int atcommand_kick(
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @kick <charname>).");
@@ -5151,7 +5151,7 @@ int atcommand_party(
 	char party[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
-	memset(party, '\0', sizeof(party));
+	malloc_tsetdword(party, '\0', sizeof(party));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", party) < 1) {
 		clif_displaymessage(fd, "Please, enter a party name (usage: @party <party_name>).");
@@ -5175,7 +5175,7 @@ int atcommand_guild(
 	int prev;
 	nullpo_retr(-1, sd);
 
-	memset(guild, '\0', sizeof(guild));
+	malloc_tsetdword(guild, '\0', sizeof(guild));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", guild) < 1) {
 		clif_displaymessage(fd, "Please, enter a guild name (usage: @guild <guild_name>).");
@@ -5271,8 +5271,8 @@ int atcommand_idsearch(
 	struct item_data *item_array[MAX_SEARCH];
 	nullpo_retr(-1, sd);
 
-	memset(item_name, '\0', sizeof(item_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(item_name, '\0', sizeof(item_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%99s", item_name) < 0) {
 		clif_displaymessage(fd, "Please, enter a part of item name (usage: @idsearch <part_of_item_name>).");
@@ -5310,7 +5310,7 @@ int atcommand_recallall(
 	int count, users;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->bl.m >= 0 && map[sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, "You are not authorised to warp somenone to your actual map.");
@@ -5357,8 +5357,8 @@ int atcommand_guildrecall(
 	struct guild *g;
 	nullpo_retr(-1, sd);
 
-	memset(guild_name, '\0', sizeof(guild_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(guild_name, '\0', sizeof(guild_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", guild_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a guild name/id (usage: @guildrecall <guild_name/id>).");
@@ -5414,8 +5414,8 @@ int atcommand_partyrecall(
 	int count, users;
 	nullpo_retr(-1, sd);
 
-	memset(party_name, '\0', sizeof(party_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(party_name, '\0', sizeof(party_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", party_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a party name/id (usage: @partyrecall <party_name/id>).");
@@ -5644,9 +5644,9 @@ int atcommand_mapinfo(
 	unsigned short m_index;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-	memset(direction, '\0', sizeof(direction));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(direction, '\0', sizeof(direction));
 
 	sscanf(message, "%d %23[^\n]", &list, atcmd_player_name);
 
@@ -5887,7 +5887,7 @@ int atcommand_char_mount_peco(
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charmountpeco <char_name>).");
@@ -5928,8 +5928,8 @@ int atcommand_guildspy(
 	struct guild *g;
 	nullpo_retr(-1, sd);
 
-	memset(guild_name, '\0', sizeof(guild_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(guild_name, '\0', sizeof(guild_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!enable_spy)
 	{
@@ -5972,8 +5972,8 @@ int atcommand_partyspy(
 	struct party_data *p;
 	nullpo_retr(-1, sd);
 
-	memset(party_name, '\0', sizeof(party_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(party_name, '\0', sizeof(party_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!enable_spy)
 	{
@@ -6045,7 +6045,7 @@ int atcommand_nuke(
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @nuke <char name>).");
@@ -6081,7 +6081,7 @@ int atcommand_tonpc(const int fd, struct map_session_data* sd,
 
 	nullpo_retr(-1, sd);
 
-	memset(npcname, 0, sizeof(npcname));
+	malloc_tsetdword(npcname, 0, sizeof(npcname));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", npcname) < 1) {
 		clif_displaymessage(fd, "Please, enter a NPC name (usage: @tonpc <NPC_name>).");
@@ -6111,7 +6111,7 @@ int atcommand_shownpc(const int fd, struct map_session_data* sd,
 	char NPCname[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
-	memset(NPCname, '\0', sizeof(NPCname));
+	malloc_tsetdword(NPCname, '\0', sizeof(NPCname));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, "Please, enter a NPC name (usage: @enablenpc <NPC_name>).");
@@ -6139,7 +6139,7 @@ int atcommand_hidenpc(const int fd, struct map_session_data* sd,
 	char NPCname[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
-	memset(NPCname, '\0', sizeof(NPCname));
+	malloc_tsetdword(NPCname, '\0', sizeof(NPCname));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, "Please, enter a NPC name (usage: @npcoff <NPC_name>).");
@@ -6190,7 +6190,7 @@ int atcommand_unloadnpc(const int fd, struct map_session_data* sd,
 	char NPCname[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
-	memset(NPCname, '\0', sizeof(NPCname));
+	malloc_tsetdword(NPCname, '\0', sizeof(NPCname));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, "Please, enter a NPC name (usage: @npcoff <NPC_name>).");
@@ -6217,8 +6217,8 @@ char * txt_time(unsigned int duration) {
 	char temp[256];
 	static char temp1[256];
 
-	memset(temp, '\0', sizeof(temp));
-	memset(temp1, '\0', sizeof(temp1));
+	malloc_tsetdword(temp, '\0', sizeof(temp));
+	malloc_tsetdword(temp1, '\0', sizeof(temp1));
 
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
@@ -6262,7 +6262,7 @@ int atcommand_servertime(const int fd, struct map_session_data* sd,
 	char temp[256];
 	nullpo_retr(-1, sd);
 
-	memset(temp, '\0', sizeof(temp));
+	malloc_tsetdword(temp, '\0', sizeof(temp));
 
 	time(&time_server);  // get time in seconds since 1/1/1970
 	datetime = localtime(&time_server); // convert seconds in structure
@@ -6338,9 +6338,9 @@ int atcommand_chardelitem(const int fd, struct map_session_data* sd,
 	struct item_data *item_data;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-	memset(item_name, '\0', sizeof(item_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(item_name, '\0', sizeof(item_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%s %d %99[^\n]", item_name, &number, atcmd_player_name) < 3 || number < 1) {
 		clif_displaymessage(fd, "Please, enter an item name/id, a quantity and a player name (usage: @chardelitem <item_name_or_ID> <quantity> <player>).");
@@ -6436,7 +6436,7 @@ int atcommand_jail(
 	unsigned short m_index;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @jail <char_name>).");
@@ -6496,7 +6496,7 @@ int atcommand_unjail(
 	unsigned short m_index;
 	int x=0, y=0;
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @unjail/@discharge <char_name>).");
@@ -6849,7 +6849,7 @@ int atcommand_exp(
 	char output[200];
 	double nextb, nextj;
 	nullpo_retr(-1, sd);
-	memset(output, '\0', sizeof(output));
+	malloc_tsetdword(output, '\0', sizeof(output));
 	
 	nextb = pc_nextbaseexp(sd);
 	if (nextb)
@@ -6875,7 +6875,7 @@ int atcommand_broadcast(
 {
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a message (usage: @broadcast <message>).");
@@ -6898,7 +6898,7 @@ int atcommand_localbroadcast(
 {
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a message (usage: @localbroadcast <message>).");
@@ -6925,8 +6925,8 @@ int atcommand_chardisguise(
 	struct map_session_data* pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-	memset(mob_name, '\0', sizeof(mob_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(mob_name, '\0', sizeof(mob_name));
 
 	if (!message || !*message || sscanf(message, "%s %23[^\n]", mob_name, atcmd_player_name) < 2) {
 		clif_displaymessage(fd, "Please, enter a Monster/NPC name/id and a player name (usage: @chardisguise <monster_name_or_monster_ID> <char name>).");
@@ -6979,7 +6979,7 @@ int atcommand_charundisguise(
 	struct map_session_data* pl_sd;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charundisguise <char name>).");
@@ -7018,8 +7018,8 @@ int atcommand_email(
 	char new_email[100];
 	nullpo_retr(-1, sd);
 
-	memset(actual_email, '\0', sizeof(actual_email));
-	memset(new_email, '\0', sizeof(new_email));
+	malloc_tsetdword(actual_email, '\0', sizeof(actual_email));
+	malloc_tsetdword(new_email, '\0', sizeof(new_email));
 
 	if (!message || !*message || sscanf(message, "%99s %99s", actual_email, new_email) < 2) {
 		clif_displaymessage(fd, "Please enter 2 emails (usage: @email <actual@email> <new@email>).");
@@ -7083,9 +7083,9 @@ atcommand_character_cart_list(
 	int i, j, count, counter, counter2;
 	nullpo_retr(-1, sd);
 
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(outputtmp, '\0', sizeof(outputtmp));
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(outputtmp, '\0', sizeof(outputtmp));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: @charitemlist <char name>).");
@@ -7109,7 +7109,7 @@ atcommand_character_cart_list(
 					else
 						sprintf(atcmd_output, "%d %s (%s, id: %d)", pl_sd->status.cart[i].amount, item_data->name, item_data->jname, pl_sd->status.cart[i].nameid);
 					clif_displaymessage(fd, atcmd_output);
-					memset(atcmd_output, '\0', sizeof(atcmd_output));
+					malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 					counter2 = 0;
 					for (j = 0; j < item_data->slot; j++) {
 						if (pl_sd->status.cart[i].card[j]) {
@@ -7269,7 +7269,7 @@ atcommand_npcmove(const int fd, struct map_session_data* sd,
 	if (!message || !*message)
 		return -1;
 
-	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
+	malloc_tsetdword(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
 	if (sscanf(message, "%d %d %23[^\n]", &x, &y, atcmd_player_name) < 3) {
 		clif_displaymessage(fd, "Usage: @npcmove <X> <Y> <npc_name>");
@@ -7658,7 +7658,7 @@ void getring (struct map_session_data *sd)
 	else
 		item_id = 2634;
 
-	memset(&item_tmp,0,sizeof(item_tmp));
+	malloc_set(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid=item_id;
 	item_tmp.identify=1;
 	item_tmp.card[0]=255;
@@ -8333,7 +8333,7 @@ atcommand_sound(
 		return -1;
 	}
 
-	memset(sound_file, '\0', sizeof(sound_file));
+	malloc_tsetdword(sound_file, '\0', sizeof(sound_file));
 	if(sscanf(message, "%99[^\n]", sound_file) < 1)
 		return -1;
 
@@ -8979,8 +8979,8 @@ int atcommand_jumptoid(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-   memset(atcmd_output, '\0', sizeof(atcmd_output));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
    if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player CID (usage: @jumptoid/@warptoid/@gotoid <char id>).");
@@ -9032,8 +9032,8 @@ int atcommand_jumptoid2(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-   memset(atcmd_output, '\0', sizeof(atcmd_output));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
    if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player AID (usage: @jumptoid/@warptoid/@gotoid <account id>).");
@@ -9084,8 +9084,8 @@ int atcommand_recallid(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-   memset(atcmd_output, '\0', sizeof(atcmd_output));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
    if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player CID (usage: @recallid <char id>).");
@@ -9141,8 +9141,8 @@ int atcommand_recallid2(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-   memset(atcmd_output, '\0', sizeof(atcmd_output));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
    if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player AID (usage: @recallid2 <account id>).");
@@ -9198,7 +9198,7 @@ int atcommand_kickid(
    int cid=0;
    int session_id=0;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player CID (usage: @kickid <char id>).");
@@ -9245,7 +9245,7 @@ int atcommand_kickid2(
    int aid=0;
    int session_id=0;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player AID (usage: @kickid2 <account id>).");
@@ -9292,7 +9292,7 @@ int atcommand_reviveid(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player CID (usage: @reviveid <char id>).");
@@ -9342,7 +9342,7 @@ int atcommand_reviveid2(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player AID (usage: @reviveid2 <account id>).");
@@ -9392,7 +9392,7 @@ int atcommand_killid(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (cid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player CID (usage: @killid <char id>).");
@@ -9440,7 +9440,7 @@ int atcommand_killid2(
    int session_id=0;
    struct map_session_data *pl_sd;
 
-   memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+   malloc_tsetdword(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
    if (!message || (aid = atoi(message)) == 0 || !*message || sscanf(message, "%99[^\n]", atcmd_player_name) < 1) {
       clif_displaymessage(fd, "Please, enter a player AID (usage: @killid2 <account id>).");
@@ -9668,8 +9668,8 @@ int atcommand_mobinfo(
 	int count;
 	int i, j, k;
 
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(atcmd_output2, '\0', sizeof(atcmd_output2));
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(atcmd_output2, '\0', sizeof(atcmd_output2));
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a Monster/ID (usage: @mobinfo <monster_name_or_monster_ID>).");
@@ -10240,8 +10240,8 @@ int atcommand_me(
 	char tempmes[200];
 	nullpo_retr(-1, sd);
    	
-	memset(tempmes, '\0', sizeof(tempmes));    
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	malloc_tsetdword(tempmes, '\0', sizeof(tempmes));    
+	malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->sc.count && //no "chatting" while muted.
 		(sd->sc.data[SC_BERSERK].timer!=-1 ||
@@ -10776,7 +10776,7 @@ int atcommand_request(
 void do_init_atcommand() {
 	users_db = db_alloc(__FILE__,__LINE__,DB_UINT,DB_OPT_BASE,sizeof(int));
 	duel_count = 0;
-	memset(&duel_list[0], 0, sizeof(duel_list));
+	malloc_tsetdword(&duel_list[0], 0, sizeof(duel_list));
 	return;
 }
 

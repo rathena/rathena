@@ -209,7 +209,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 }
 
 static void create_dummy_data(void) {
-	memset(&dummy_item, 0, sizeof(struct item_data));
+	malloc_set(&dummy_item, 0, sizeof(struct item_data));
 	dummy_item.nameid=500;
 	dummy_item.weight=1;
 	dummy_item.value_sell = 1;
@@ -427,7 +427,7 @@ static int itemdb_read_itemavail (void)
 	while (fgets(line, sizeof(line) - 1, fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		memset(str, 0, sizeof(str));
+		malloc_tsetdword(str, 0, sizeof(str));
 		for (j = 0, p = line; j < 2 && p; j++) {
 			str[j] = p;
 			p = strchr(p, ',');
@@ -481,7 +481,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 				continue;
 			}
 		}
-		memset(str,0,sizeof(str));
+		malloc_tsetdword(str,0,sizeof(str));
 		for(j=0,p=line;j<3 && p;j++){
 			str[j]=p;
 			p=strchr(p,',');
@@ -554,7 +554,7 @@ static void itemdb_read_itemgroup(void)
 		"Gift Box China",
 		"Lotto Box",
 	};
-	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
+	malloc_tsetdword(&itemgroup_db, 0, sizeof(itemgroup_db));
 	snprintf(path, 255, "%s/item_group_db.txt", db_path);
 	itemdb_read_itemgroup_sub(path);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","item_group_db.txt");
@@ -732,7 +732,7 @@ static int itemdb_read_noequip(void)
 	while(fgets(line,1020,fp)){
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		memset(str,0,sizeof(str));
+		malloc_tsetdword(str,0,sizeof(str));
 		for(j=0,p=line;j<2 && p;j++){
 			str[j]=p;
 			p=strchr(p,',');
@@ -777,7 +777,7 @@ static int itemdb_read_itemtrade(void)
 	while (fgets(line, sizeof(line) - 1, fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		memset(str, 0, sizeof(str));
+		malloc_tsetdword(str, 0, sizeof(str));
 		for (j = 0, p = line; j < 3 && p; j++) {
 			str[j] = p;
 			p = strchr(p, ',');
@@ -1032,7 +1032,7 @@ static int itemdb_readdb(void)
 			lines++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			memset(str,0,sizeof(str));
+			malloc_tsetdword(str,0,sizeof(str));
 			for(j=0,np=p=line;j<19 && p;j++){
 				str[j]=p;
 				p=strchr(p,',');
