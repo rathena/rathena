@@ -23,12 +23,13 @@
 //============================================================
 
 hu_in01.gat,23,311,4	script	Johsh	898,{
-set @npcname$, "[Josh]";
+	set @npcname$, "[Josh]";
 
-mes @npcname$;
-mes "Hi ho~ I sell some awesome firecrackers, would you like to buy one?";
-mes "Only 500z and you get 5 ^FF0000firecrackers^000000!";
-switch(select("Yes Please:No thanks")) {
+	mes @npcname$;
+	mes "Hi ho~ I sell some awesome firecrackers, would you like to buy one?";
+	mes "Only 500z and you get 5 ^FF0000firecrackers^000000!";
+	next;
+	switch(select("Yes Please:No thanks")) {
 	case 1:
 		if (Zeny < 500) {
 			mes @npcname$;
