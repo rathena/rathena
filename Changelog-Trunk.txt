@@ -7,11 +7,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed exp bonuses applying twice for the job-exp [Skotlex]
 	* @reloadbattleconf  will now also update the ragsrvinfo table on the
 	  char-server. [Skotlex]
-	* Reverted Mpeg's change of NJ_BUNSINJYUTSU SCB [Toms]
 	* Fixed homun hp/sp growth rates stacking with HP/SP passive increasing
 	  skills. [Skotlex]
-	* Applied Mpeg's work on GS [Toms]
-	  ( http://gpegon.free.fr/ea/gunslinger_08-28-06_mpeg.txt )
 2006/08/27
 	* Fixed undefined reference to 'malloc_set' in log.c [Toms]
 	* Updated svn-revision reading, now it can read the new svn file system [Toms]

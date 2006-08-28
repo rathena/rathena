@@ -843,35 +843,41 @@
 //-- GS_GLITTERING
 500,0,0,0,600000,0
 //-- GS_FLING
-501,0,0,0,30000,0
+501,0,1000,0,30000,0
+//-- GS_TRIPLEACTION
+502,0,1000,0,0,0
+//-- GS_BULLSEYE
+503,0,1000,0,0,0
 //-- GS_MADNESSCANCEL
-504,0,0,0,15000,0
-//-- GS_ADJUSTMENT // Duration1 unknown
-505,0,0,0,30000,0
+504,0,1000,0,15000,0
+//-- GS_ADJUSTMENT
+505,0,1000,0,30000,0
 //-- GS_INCREASING
-506,0,0,0,60000,0
-//-- GS_CRACKER // No clue for duration2 (stun time)
-508,0,0,0,0,5000
-//-- GS_TRACKING // Delay unknown
+506,0,1000,0,60000,0
+//-- GS_MAGICALBULLET
+507,0,1000,0,0,0
+//-- GS_CRACKER
+508,0,1000,0,0,5000
+//-- GS_TRACKING
 512,1200:1400:1600:1800:2000:2200:2400:2600:2800:3000,0,0,0,0
-//-- GS_DISARM // Cast&Delay unknown (temp values). No clue for Duration1 (Strip time)...
-513,1000,0,0,30000,0
-//-- GS_PIERCINGSHOT // Cast&Delay unknown (temp values). No clue for Duration2 (Bleeding time)
-514,1000,0,0,0,120000
-//-- GS_RAPIDSHOWER // Delay must be checked (maybe 0(ASPD)...)
+//-- GS_DISARM
+513,0,1000,0,30000,0
+//-- GS_PIERCINGSHOT
+514,0,1000,0,0,120000
+//-- GS_RAPIDSHOWER
 515,0,1000,0,0,0
-//-- GS_DESPERADO // Delay must be checked (very likely to be 1s though)
+//-- GS_DESPERADO
 516,0,1000,1000,1000,0
 //-- GS_GATLINGFEVER
 517,0,1000,0,30000:45000:60000:75000:90000:105000:120000:135000:150000:165000,0
-//-- GS_DUST // Delay must be checked (very long with low agi, still long with full agi, so it must be correct...)
-518,1000,0,0,0,0
+//-- GS_DUST
+518,1000,1000,0,0,0
 //-- GS_FULLBUSTER
 519,1000,1200:1400:1600:1800:2000:2200:2400:2600:2800:3000,0,0,10000
-//-- GS_SPREADATTACK // Delay unknown (if there is one, other that aspd)
-520,1000,0,0,0,0
-//-- GS_GROUNDDRIFT // Delay unknown (if there is one, other that aspd)
-521,1000,0,0,3000:6000:9000:12000:15000:18000:21000:24000:27000:30000,10000
+//-- GS_SPREADATTACK
+520,0,1000,0,0,0
+//-- GS_GROUNDDRIFT
+521,0,1000,0,3000:6000:9000:12000:15000:18000:21000:24000:27000:30000,0
 //==========================================
 
 
