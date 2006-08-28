@@ -2365,8 +2365,6 @@ struct Damage battle_calc_magic_attack(
 					MATK_ADD(50);
 			}
 		}
-		//Adjust damage per number of hits.
-		damage_div_fix(ad.damage, ad.div_);
 
 		if(sd) {
 			//Ignore Defense?
@@ -2451,8 +2449,9 @@ struct Damage battle_calc_magic_attack(
 
 			MATK_RATE(cardfix);
 		}
-	} else //Correct number of hits anyway.
-		damage_div_fix(ad.damage, ad.div_);
+	}
+
+	damage_div_fix(ad.damage, ad.div_);
 	
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;

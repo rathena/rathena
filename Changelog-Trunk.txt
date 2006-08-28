@@ -5,8 +5,6 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/28
 	* Fixed exp bonuses applying twice for the job-exp [Skotlex]
-	* Magic damage adjustment per number of hits is now performed before mdef
-	  reductions. [Skotlex]
 	* @reloadbattleconf  will now also update the ragsrvinfo table on the
 	  char-server. [Skotlex]
 	* Reverted Mpeg's change of NJ_BUNSINJYUTSU SCB [Toms]
