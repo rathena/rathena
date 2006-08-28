@@ -361,8 +361,8 @@ L_Check:
 		mes "[Juan]";
 		mes "In order to learn this skill you will need to bring me the following items:";
 		mes "^5555FF35 Powder of Butterfly,";
-		mes "^10 Horrendous Mouth,";
-		mes "^10 Decayed Nail^000000,";
+		mes "10 Horrendous Mouth,";
+		mes "10 Decayed Nail^000000,";
 		mes "and ^5555FF10 Honeys^000000!";
 		close;
 L_GotSkill:
