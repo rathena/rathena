@@ -19,6 +19,9 @@
 	-----
 
 =========================
+08/28
+ 	* Applied Mpeg's work on GS [Toms]
+	  ( http://gpegon.free.fr/ea/gunslinger_08-28-06_mpeg.txt )
 08/26
 	* Reduced weapon range of all guns by 1 [Playtester]
 08/25

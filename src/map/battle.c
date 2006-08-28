@@ -857,7 +857,6 @@ static struct Damage battle_calc_weapon_attack(
 				}
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
-			case GS_MAGICALBULLET:
 			case HT_PHANTASMIC:
 				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
 				flag.arrow = 1;
@@ -881,6 +880,10 @@ static struct Damage battle_calc_weapon_attack(
 			case NPC_GRANDDARKNESS:
 			case NJ_HUUMA:
 			case NJ_TATAMIGAESHI:
+			case GS_FLING:
+			case GS_TRIPLEACTION:
+			case GS_BULLSEYE:
+			case GS_MAGICALBULLET:
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 
@@ -1505,13 +1508,17 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case GS_BULLSEYE:
 					skillratio += 400;
+					flag.cardfix = 0;
 					break;
 				case GS_TRACKING:
-					skillratio += 60*skill_lv;
+					// Where does this damage calculation come from ? Reverse the changes if necessary (or else delete me)
+					/*skillratio += 60*skill_lv;
 					if (skill_lv == 2) skillratio += 20;
 					if (skill_lv == 3) skillratio += 80;
 					if (skill_lv >= 4) skillratio += 60*(skill_lv-3);
 					if (skill_lv == 10) skillratio += 80;
+					break;*/
+					skillratio += 100 *(skill_lv+1);
 					break;
 				case GS_PIERCINGSHOT:
 					skillratio += 20*skill_lv;
@@ -1520,16 +1527,16 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 10*skill_lv;
 					break;
 				case GS_DESPERADO:
-					skillratio += 50*skill_lv - 50;
+					skillratio += 50*(skill_lv-1);
 					break;
 				case GS_DUST:
 					skillratio += 50*skill_lv;
 					break;
 				case GS_FULLBUSTER:
-					skillratio += 200 + 100*skill_lv;
+					skillratio += 100*(skill_lv+2);
 					break;
 				case GS_SPREADATTACK:
-					skillratio += 20*skill_lv-20;
+					skillratio += 20*(skill_lv-1);
 					break;
 				case NJ_HUUMA:
 					skillratio += 50 + 150*skill_lv;
