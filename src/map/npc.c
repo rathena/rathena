@@ -1164,6 +1164,24 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 	return 0;
 }
 
+//npc_buylist for script-controlled shops.
+static int npc_buylist_sub(
+	struct map_session_data *sd,int n,
+	unsigned short *item_list, struct npc_data *nd)
+{
+	unsigned char npc_ev[51];
+	int i;
+	int regkey = add_str("@bought_nameid");
+	int regkey2 = add_str("@bought_quantity");
+	sprintf(npc_ev, "%s::OnBuyItem", nd->exname);
+	for(i=0;i<n;i++){
+		pc_setreg(sd,regkey+(i<<24),(int)item_list[i*2+1]);
+		pc_setreg(sd,regkey2+(i<<24),(int)item_list[i*2]);
+	}
+	npc_event(sd, npc_ev, 0);
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -1179,6 +1197,9 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 
 	if ((nd = npc_checknear(sd,map_id2bl(sd->npc_shopid))) == NULL)
 		return 3;
+
+	if (nd->master_nd) //Script-based shops.
+		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 
 	if (nd->bl.subtype!=SHOP)
 		return 3;

@@ -583,7 +583,7 @@ static void memmgr_log (char *buf)
 	if (!log_fp) {
 		log_fp = fopen(memmer_logfile,"w");
 		if (!log_fp) log_fp = stdout;
-		fprintf(log_fp, "Memory manager: Memory leaks found.\n");
+		fprintf(log_fp, "Memory manager: Memory leaks found (Revision %s).\n", get_svn_revision());
 	}
 	fprintf(log_fp, buf);
 	return;
