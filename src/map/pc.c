@@ -3323,11 +3323,10 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		x=y=0;
 	if((x==0 && y==0) ||
 		(map_getcell(m, x, y, CELL_CHKNOPASS) &&
-		!map_getcell(m, x, y, CELL_CHKICEWALL) &&
 #ifdef CELL_NOSTACK
 		!map_getcell(m, x, y, CELL_CHKSTACK) &&
 #endif
-		!map_getcell(m, x, y, CELL_CHKMOONLIT))
+		!map_getcell(m, x, y, CELL_CHKICEWALL))
 	){ //It is allowed on top of Moonlight/icewall tiles to prevent force-warping 'cheats' [Skotlex]
 		if(x||y) {
 			if(battle_config.error_log)

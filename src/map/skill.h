@@ -938,7 +938,7 @@ enum {
 	UNT_CALLFAMILY,
 	UNT_GOSPEL,
 	UNT_BASILICA,
-	//0xb5
+	UNT_MOONLIT,//0xb5 //I HOPE this one doesn't shows any effects
 	UNT_FOGWALL = 0xb6,
 	UNT_SPIDERWEB,
 	UNT_GRAVITATION,

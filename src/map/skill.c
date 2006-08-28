@@ -726,7 +726,6 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list
 static int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int tick);
 static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int tick);
 int skill_unit_effect(struct block_list *bl,va_list ap);
-static void skill_moonlit(struct block_list* src, struct block_list* partner, int skilllv);
 
 int enchant_eff[5] = { 10, 14, 17, 19, 20 };
 int deluge_eff[5] = { 5, 9, 12, 14, 15 };
@@ -3749,15 +3748,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (tsc && tsc->data[SC_NEN].timer != -1)
 			status_change_end(bl,SC_NEN,-1);
 		break;
-	case CG_MOONLIT:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if (sd && battle_config.player_skill_partner_check &&
-			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)) {
-			skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
-		} else
-			skill_moonlit(bl, NULL, skilllv); //The knockback must be invoked before starting the effect which places down the map cells. [Skotlex]
-		
-		break;
 /* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
 		if (flag&1)
@@ -4662,7 +4652,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					|| i==SC_STRIPWEAPON || i==SC_STRIPSHIELD || i==SC_STRIPARMOR || i==SC_STRIPHELM
 					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
 					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
-					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN || i==SC_MOONLIT
+					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN
 					|| i==SC_SAFETYWALL || i==SC_SMA || i==SC_SPEEDUP0
 					)
 					continue;
@@ -5211,7 +5201,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CG_LONGINGFREEDOM:
 		{
 			if (tsc && tsc->data[SC_LONGING].timer == -1 && tsc->data[SC_DANCING].timer != -1 && tsc->data[SC_DANCING].val4
-				&& tsc->data[SC_DANCING].val1 != CG_MOONLIT) //Can't use Longing for Freedom while under Moonlight Petals. [Skotlex]
+				&& (tsc->data[SC_DANCING].val1&0xFFFF) != CG_MOONLIT) //Can't use Longing for Freedom while under Moonlight Petals. [Skotlex]
 			{
 				clif_skill_nodamage(src,bl,skillid,skilllv,
 					sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
@@ -6040,6 +6030,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case DC_DONTFORGETME:
 	case DC_FORTUNEKISS:
 	case DC_SERVICEFORYOU:
+	case CG_MOONLIT:
 	case GS_DESPERADO:
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
@@ -6066,7 +6057,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		skill_clear_unitgroup(src);
 		sg = skill_unitsetting(src,skillid,skilllv,x,y,0);
 		sc_start4(src,SC_DANCING,100,
-			skillid,0,0,sg->group_id,skill_get_time(skillid,skilllv));
+			skillid,0,skilllv,sg->group_id,skill_get_time(skillid,skilllv));
 		flag|=1;
 		break;
 	case RG_CLEANER: // [Valaris]
@@ -6927,7 +6918,12 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		if(src->limit + sg->tick > tick + 700)
 			src->limit = DIFF_TICK(tick+700,sg->tick);
 		break;
-	}	
+	case UNT_MOONLIT:
+	//Knockback out of area if affected char isn't in Moonlit effect
+		if (!sc || sc->data[SC_DANCING].timer==-1 || (sc->data[SC_DANCING].val1&0xFFFF) != CG_MOONLIT)
+			skill_blown(ss, bl, skill_get_blewcount(sg->skill_id,sg->skill_lv));
+		break;
+	}
 	return skillid;
 }
 
@@ -7393,7 +7389,8 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case BD_ROKISWEIL:
 		case BD_INTOABYSS:
 		case BD_SIEGFRIED:
-			if(sc && sc->data[SC_DANCING].timer != -1 && sc->data[SC_DANCING].val1 == skill_id)
+			if(sc && sc->data[SC_DANCING].timer != -1 &&
+				(sc->data[SC_DANCING].val1&0xFFFF) == skill_id)
 			{	//Check if you just stepped out of your ensemble skill to cancel dancing. [Skotlex]
 				//We don't check for SC_LONGING because someone could always have knocked you back and out of the song/dance.
 				//FIXME: This code is not perfect, it doesn't checks for the real ensemble's owner,
@@ -7595,41 +7592,6 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 	return damage;
 }
 
-static int skill_moonlit_sub(struct block_list *bl, va_list ap) {
-	struct block_list *src = va_arg(ap, struct block_list*);
-	struct block_list *partner = va_arg(ap, struct block_list*);
-	int blowcount = va_arg(ap, int);
-	if (bl == src || bl == partner)
-		return 0;
-	skill_blown(src, bl, blowcount);
-	return 1;
-}
-
-/*==========================================
- * Starts the moonlit effect by first knocking back all other characters in the vecinity.
- * partner may be null, but src cannot be.
- *------------------------------------------
- */
-static void skill_moonlit (struct block_list* src, struct block_list* partner, int skilllv)
-{
-	int range = skill_get_splash(CG_MOONLIT, skilllv);
-	int blowcount = range+1, time = skill_get_time(CG_MOONLIT,skilllv);
-	
-	map_foreachinrange(skill_moonlit_sub,src,
-		range, BL_CHAR,src,partner,blowcount);
-	if(partner)
-		map_foreachinrange(skill_moonlit_sub,partner,
-			range, BL_CHAR,src,partner,blowcount);
-		
-	sc_start4(src,SC_DANCING,100,CG_MOONLIT,0,0,partner?partner->id:BCT_SELF,time+1000);
-	sc_start4(src,SkillStatusChangeTable(CG_MOONLIT),100,skilllv,0,0,0,time);
-	
-	if (partner) {
-		sc_start4(partner,SC_DANCING,100,CG_MOONLIT,0,0,src->id,time+1000);
-		sc_start4(partner,SkillStatusChangeTable(CG_MOONLIT),100,skilllv,0,0,0,time);
-	}
-	
-}
 /*==========================================
  *
  *------------------------------------------
@@ -7721,20 +7683,11 @@ int skill_check_pc_partner (struct map_session_data *sd, int skill_id, int* skil
 						status_charge(&tsd->bl, 0, 10);
 				}
 				return c;
-			case CG_MOONLIT:
-				if (c > 0 && (tsd = map_id2sd(p_sd[0])) != NULL)
-				{
-					clif_skill_nodamage(&tsd->bl, &sd->bl, skill_id, *skill_lv, 1);
-					skill_moonlit(&sd->bl, &tsd->bl, *skill_lv);
-					tsd->skillid_dance = skill_id;
-					tsd->skilllv_dance = *skill_lv;
-				}
-				return c;
 			default: //Warning: Assuming Ensemble skills here (for speed)
 				if (c > 0 && (tsd = map_id2sd(p_sd[0])) != NULL)
 				{
 					sd->sc.data[SC_DANCING].val4= tsd->bl.id;
-					sc_start4(&tsd->bl,SC_DANCING,100,skill_id,sd->sc.data[SC_DANCING].val2,0,sd->bl.id,skill_get_time(skill_id,*skill_lv)+1000);
+					sc_start4(&tsd->bl,SC_DANCING,100,skill_id,sd->sc.data[SC_DANCING].val2,*skill_lv,sd->bl.id,skill_get_time(skill_id,*skill_lv)+1000);
 					clif_skill_nodamage(&tsd->bl, &sd->bl, skill_id, *skill_lv, 1);
 					tsd->skillid_dance = skill_id;
 					tsd->skilllv_dance = *skill_lv;
@@ -9743,7 +9696,7 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 			sd->skillid_dance=skillid;
 			sd->skilllv_dance=skilllv;
 		}
-		sc_start4(src,SC_DANCING,100,skillid,(int)group,0,(i&UF_ENSEMBLE?BCT_SELF:0),skill_get_time(skillid,skilllv)+1000);
+		sc_start4(src,SC_DANCING,100,skillid,(int)group,skilllv,(i&UF_ENSEMBLE?BCT_SELF:0),skill_get_time(skillid,skilllv)+1000);
 		if (sd && i&UF_ENSEMBLE &&
 			battle_config.player_skill_partner_check &&
 			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)

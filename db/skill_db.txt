@@ -418,7 +418,7 @@
 392,0,0,4,0,1,0,1,1,yes,0,0,0,none,0	//CR_ALCHEMY#Alchemy#
 393,0,0,4,0,1,0,1,1,yes,0,0,0,none,0	//CR_SYNTHESISPOTION#Potion Synthesis#
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0	//CG_ARROWVULCAN#Vulcan Arrow#
-395,0,0,4,0,1,3,1,1,yes,0,64,0,misc,0	//CG_MOONLIT#Sheltering Bliss#
+395,0,0,4,0,1,3,1,1,yes,0,64,0,misc,2	//CG_MOONLIT#Sheltering Bliss#
 396,-1,6,16,0,1,0,1,1,yes,0,1536,0,none,0	//CG_MARIONETTE#Marionette Control#
 397,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0	//LK_SPIRALPIERCE#Spiral Pierce#
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//LK_HEADCRUSH#Traumatic Blow#

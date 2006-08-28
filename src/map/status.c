@@ -302,7 +302,7 @@ void initChangeTables(void) {
 	set_sc(ST_CHASEWALK, SC_CHASEWALK, SI_BLANK, SCB_SPEED);
 	set_sc(ST_REJECTSWORD, SC_REJECTSWORD, SI_REJECTSWORD, SCB_NONE);
 	add_sc(ST_REJECTSWORD, SC_AUTOCOUNTER);
-	set_sc(CG_MOONLIT, SC_MOONLIT, SI_MOONLIT, SCB_NONE);
+//	set_sc(CG_MOONLIT, SC_MOONLIT, SI_MOONLIT, SCB_NONE);
 	set_sc(CG_MARIONETTE, SC_MARIONETTE, SI_MARIONETTE, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK);
 	set_sc(CG_MARIONETTE, SC_MARIONETTE2, SI_MARIONETTE2, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK);
 	add_sc(LK_SPIRALPIERCE, SC_STOP);
@@ -1007,7 +1007,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			if (skill_num != BD_ADAPTATION && skill_num != CG_LONGINGFREEDOM
 				&& skill_num != BA_MUSICALSTRIKE && skill_num != DC_THROWARROW)
 				return 0;
-			if (sc->data[SC_DANCING].val1 == CG_HERMODE && skill_num == BD_ADAPTATION)
+			if ((sc->data[SC_DANCING].val1&0xFFFF) == CG_HERMODE && skill_num == BD_ADAPTATION)
 				return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
 		}
 
@@ -4943,14 +4943,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SPEARQUICKEN:
 			val2 = 200+10*val1;
 			break;
-		case SC_MOONLIT:
-			val2 = bl->id;
-			skill_setmapcell(bl,CG_MOONLIT, val1, CELL_SETMOONLIT);
-			break;
 		case SC_DANCING:
-			//val1 : Skill which is being danced.
+			//val1 : Skill ID + LV
 			//val2 : Skill Group of the Dance.
+			//val3 : Brings the skilllv (merged into val1 here)
 			//val4 : Partner
+			if (val1 == CG_MOONLIT)
+				clif_status_change(bl,SI_MOONLIT,1);
+			val1|= (val3<<16);
 			val3 = 0; //Tick duration/Speed penalty.
 			if (sd) { //Store walk speed change in lower part of val3
 				val3 = 500-40*pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON));
@@ -6005,9 +6005,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 					}
 				}
 			}
-			//Only dance that doesn't has ground tiles... [Skotlex]
-			if(sc->data[type].val1 == CG_MOONLIT)
-				status_change_end(bl, SC_MOONLIT, -1);
+			if ((sc->data[type].val1&0xFFFF) == CG_MOONLIT)
+				clif_status_change(bl,SI_MOONLIT,0);
 
 			if (sc->data[SC_LONGING].timer!=-1)
 				status_change_end(bl,SC_LONGING,-1);				
@@ -6105,9 +6104,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_BASILICA: //Clear the skill area. [Skotlex]
 				skill_clear_unitgroup(bl);
 				break;
-		case SC_MOONLIT: //Clear the unit effect. [Skotlex]
-			skill_setmapcell(bl,CG_MOONLIT, sc->data[SC_MOONLIT].val1, CELL_CLRMOONLIT);
-			break;
 		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 0;
 			break;
@@ -6529,7 +6525,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				break;
 			sc->data[type].val3&= 0xFFFF; //Remove counter
 			sc->data[type].val3|=(counter<<16);//Reset it.
-			switch(sc->data[type].val1){
+			switch(sc->data[type].val1&0xFFFF){
 				case BD_RICHMANKIM:
 				case BD_DRUMBATTLEFIELD:
 				case BD_RINGNIBELUNGEN:
@@ -6557,7 +6553,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 					s=6;
 					break;
 				case CG_MOONLIT:
-					sp= 4*sc->data[SC_MOONLIT].val1; //Moonlit's cost is 4sp*skill_lv [Skotlex]
+					//Moonlit's cost is 4sp*skill_lv [Skotlex]
+					sp= 4*(sc->data[type].val1>>16);
 					//Upkeep is also every 10 secs.
 				case DC_DONTFORGETME:
 					s=10;

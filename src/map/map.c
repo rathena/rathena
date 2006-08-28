@@ -520,13 +520,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 			if (sc->count) {
 				if (sc->data[SC_CLOAKING].timer != -1)
 					skill_check_cloaking(bl, sc);
-				if (sc->data[SC_DANCING].timer != -1) {
-					//Cancel Moonlight Petals if moved from casting position. [Skotlex]
-					if (sc->data[SC_DANCING].val1 == CG_MOONLIT)
-						skill_stop_dancing(bl);
-					else
-						skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_DANCING].val2, bl->m, x1-x0, y1-y0);
-				}
+				if (sc->data[SC_DANCING].timer != -1)
+					skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_DANCING].val2, bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_WARM].timer != -1)
 					skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_WARM].val4, bl->m, x1-x0, y1-y0);
 			}
@@ -2221,13 +2216,13 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 			if (type3 >= battle_config.cell_stack_limit) return 0;
 #endif
 		case CELL_CHKREACH:
-			return (type!=1 && type!=5 && !(type2&(CELL_MOONLIT|CELL_ICEWALL)));
+			return (type!=1 && type!=5 && !(type2&CELL_ICEWALL));
 		case CELL_CHKNOPASS:
 #ifdef CELL_NOSTACK
 			if (type3 >= battle_config.cell_stack_limit) return 1;
 #endif
 		case CELL_CHKNOREACH:
-			return (type==1 || type==5 || type2&(CELL_MOONLIT|CELL_ICEWALL));
+			return (type==1 || type==5 || type2&CELL_ICEWALL);
 		case CELL_CHKSTACK:
 #ifdef CELL_NOSTACK
 			return (type3 >= battle_config.cell_stack_limit);
@@ -2254,8 +2249,6 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 			return (type2&CELL_BASILICA);
 		case CELL_CHKLANDPROTECTOR:
 			return (type2&CELL_LANDPROTECTOR);
-		case CELL_CHKMOONLIT:
-			return (type2&CELL_MOONLIT);
 		case CELL_CHKREGEN:
 			return (type2&CELL_REGEN);
 		case CELL_CHKICEWALL:
@@ -2306,12 +2299,6 @@ void map_setcell(int m,int x,int y,int cell)
 			break;
 		case CELL_CLRSAFETYWALL:
 			map[m].cell[j] &= ~CELL_SAFETYWALL;
-			break;
-		case CELL_SETMOONLIT:
-			map[m].cell[j] |= CELL_MOONLIT;
-			break;
-		case CELL_CLRMOONLIT:
-			map[m].cell[j] &= ~CELL_MOONLIT;
 			break;
 		case CELL_SETLANDPROTECTOR:
 			map[m].cell[j] |= CELL_LANDPROTECTOR;
