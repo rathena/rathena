@@ -4038,10 +4038,10 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 	} else
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON)
+		if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
 	{
-		sc_start(&sd->bl,SkillStatusChangeTable(AL_INCAGI),100,10,skill_get_time(AL_INCAGI,10));
-		sc_start(&sd->bl,SkillStatusChangeTable(AL_BLESSING),100,10,skill_get_time(AL_BLESSING,10));
+		sc_start(&sd->bl,SkillStatusChangeTable(AL_INCAGI),100,10,600000);
+		sc_start(&sd->bl,SkillStatusChangeTable(AL_BLESSING),100,10,600000);
 	}
 	clif_misceffect(&sd->bl,0);
 	//LORDALFA - LVLUPEVENT

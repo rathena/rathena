@@ -603,6 +603,9 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 				damage += (skill * 3);
 			break;
 		case W_FIST:
+			if((skill = pc_checkskill(sd,TK_RUN)) > 0)
+				damage += (skill * 10);
+			// No break, fallthrough to Knuckles
 		case W_KNUCKLE:
 			if((skill = pc_checkskill(sd,MO_IRONHAND)) > 0)
 				damage += (skill * 3);
@@ -612,12 +615,10 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 				damage += (skill * 3);
 			break;
 		case W_WHIP:
-			// Dance Lesson Skill Effect(+3 damage for every lvl = +30)
 			if((skill = pc_checkskill(sd,DC_DANCINGLESSON)) > 0)
 				damage += (skill * 3);
 			break;
 		case W_BOOK:
-			// Advance Book Skill Effect(+3 damage for every lvl = +30)
 			if((skill = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0)
 				damage += (skill * 3);
 			break;
@@ -625,7 +626,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 			if((skill = pc_checkskill(sd,AS_KATAR)) > 0)
 				damage += (skill * 3);
 			break;
-		case W_HUUMA: // Added Tobidougu bonus if wearing a Fuuma Shuriken
+		case W_HUUMA:
 			if((skill = pc_checkskill(sd,NJ_TOBIDOUGU)) >0)
 				damage += (skill * 3);
 			break;
