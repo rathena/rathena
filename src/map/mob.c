@@ -1781,6 +1781,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int flag=1,zeny=0;
 		unsigned int base_exp,job_exp;
 		double per; //Your share of the mob's exp
+		double jper; //For the job-exp
 		int bonus; //Bonus on top of your share.
 		
 		if (status_isdead(tmpbl[i]) || tmpbl[i]->m != md->bl.m)
@@ -1814,11 +1815,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			zeny=(int) ((md->level+rand()%md->level)*per*bonus/100.);
 			if(md->db->mexp > 0)
 				zeny*=rand()%250;
-		}
+		
+		jper = per;
 
 		if (map[md->bl.m].flag.nobaseexp)
 			base_exp=0; 
-		else {
 			temp = bonus; //Do not alter bonus for the jExp section below.
 			if (map[md->bl.m].bexp != 100)
 				temp = map[md->bl.m].bexp*temp/100;
@@ -1842,14 +1843,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (map[md->bl.m].jexp != 100)
 				bonus = map[md->bl.m].jexp*bonus/100;
 			if (bonus != 100)
-				per = per*bonus/100.;
+				jper = jper*bonus/100.;
 	
 			job_exp = md->db->job_exp;
 			
-			if (job_exp*per > UINT_MAX)
+			if (job_exp*jper > UINT_MAX)
 				job_exp = UINT_MAX;
 			else
-				job_exp = (unsigned int)(job_exp*per);
+				job_exp = (unsigned int)(job_exp*jper);
 			
 			if (job_exp < 1)
 				job_exp = 1;

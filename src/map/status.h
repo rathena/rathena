@@ -521,8 +521,8 @@ enum {
 #define SCB_SIZE	0x04000000
 #define SCB_RACE	0x08000000
 #define SCB_RANGE	0x10000000
-//SCB_DYE means the sc should force cloth-dye change to 0 to avoid client crashes.
 #define SCB_REGEN	0x20000000
+//SCB_DYE means the sc should force cloth-dye change to 0 to avoid client crashes.
 #define SCB_DYE	0x40000000
 #define SCB_PC		0x80000000
 #define SCB_ALL	0x3FFFFFFF

@@ -355,7 +355,7 @@ void initChangeTables(void) {
 	set_sc(KN_ONEHAND, SC_ONEHAND, SI_ONEHAND, SCB_ASPD);
 	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
 	add_sc(GS_CRACKER, SC_STUN);
-	set_sc(GS_DISARM, SC_STRIPWEAPON, SI_STRIPWEAPON, SCB_WATK);
+	add_sc(GS_DISARM, SC_STRIPWEAPON);
 	add_sc(GS_PIERCINGSHOT, SC_BLEEDING);
 	set_sc(GS_MADNESSCANCEL, SC_MADNESSCANCEL, SI_MADNESSCANCEL, SCB_BATK|SCB_ASPD);
 	set_sc(GS_ADJUSTMENT, SC_ADJUSTMENT, SI_ADJUSTMENT, SCB_HIT|SCB_FLEE);
@@ -4766,7 +4766,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
 			case SC_JAILED:
-			case SC_ARMOR_ELEMENT: // Just delete the current one
+			case SC_ARMOR_ELEMENT:
 				break;
 			case SC_GOSPEL:
 				 //Must not override a casting gospel char.

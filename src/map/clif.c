@@ -9431,7 +9431,7 @@ void clif_parse_NpcBuyListSend(int fd,struct map_session_data *sd)
 
 	if (sd->state.trading|| !sd->npc_shopid)
 		fail = 1;
-	else{
+	else {
 		if((nd = ((struct npc_data *)map_id2bl(sd->npc_shopid))->master_nd)){
 			int regkey = add_str("@bought_nameid");
 			int regkey2 = add_str("@bought_quantity");

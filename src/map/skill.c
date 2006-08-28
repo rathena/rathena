@@ -5605,7 +5605,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC,  src, sd);
-	BL_CAST( BL_HOM,  src, hd);	//[orn]
+	BL_CAST( BL_HOM, src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -5819,7 +5819,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 	nullpo_retr(0, ud);
 
 	BL_CAST( BL_PC , src, sd);
-	BL_CAST( BL_HOM , src, hd);	//[orn]
+	BL_CAST( BL_HOM, src, hd);	//[orn]
 	BL_CAST( BL_MOB, src, md);
 
 	if( src->prev == NULL ) {
@@ -10069,7 +10069,7 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 		if (--group->val1 <= 0)
 	  	{	//All tiles were processed, disable skill.
 			group->target_flag=BCT_NOONE;
-			group->bl_flag= 0;
+			group->bl_flag= BL_NUL;
 		}
 	}
 

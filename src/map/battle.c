@@ -2365,6 +2365,8 @@ struct Damage battle_calc_magic_attack(
 					MATK_ADD(50);
 			}
 		}
+		//Adjust damage per number of hits.
+		damage_div_fix(ad.damage, ad.div_);
 
 		if(sd) {
 			//Ignore Defense?
@@ -2449,9 +2451,8 @@ struct Damage battle_calc_magic_attack(
 
 			MATK_RATE(cardfix);
 		}
-	}
-
-	damage_div_fix(ad.damage, ad.div_);
+	} else //Correct number of hits anyway.
+		damage_div_fix(ad.damage, ad.div_);
 	
 	if (flag.infdef && ad.damage)
 		ad.damage = ad.damage>0?1:-1;
@@ -3746,7 +3747,6 @@ static const struct battle_data_short {
 	{ "duel_autoleave_when_die",			&battle_config.duel_autoleave_when_die}, //[LuzZza]
 	{ "duel_time_interval",					&battle_config.duel_time_interval}, // [LuzZza]
 	{ "duel_only_on_same_map",				&battle_config.duel_only_on_same_map}, // [Toms]
-
 	{ "skip_teleport_lv1_menu",			&battle_config.skip_teleport_lv1_menu}, // [LuzZza]
 	{ "allow_skill_without_day",			&battle_config.allow_skill_without_day}, // [Komurka]
 	{ "allow_es_magic_player",				&battle_config.allow_es_magic_pc },
