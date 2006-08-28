@@ -250,10 +250,8 @@ int merc_hom_levelup(struct homun_data *hd)
 	else
 		growth_luk = rand(hd->homunculusDB->gminLUK, hd->homunculusDB->gmaxLUK) ;
 
-	hd->base_status.max_hp += growth_max_hp ;
-	hd->base_status.max_sp += growth_max_sp ;
-	hd->master->homunculus.max_hp = hd->base_status.max_hp ;
-	hd->master->homunculus.max_sp = hd->base_status.max_sp ;
+	hd->master->homunculus.max_hp += growth_max_hp;
+	hd->master->homunculus.max_sp += growth_max_sp;
 	hd->master->homunculus.str += growth_str ;
 	hd->master->homunculus.agi += growth_agi ;
 	hd->master->homunculus.vit += growth_vit ;
