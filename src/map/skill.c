@@ -10308,7 +10308,8 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 				return 0;
 		}
 	}
-	if( (j=skill_produce_db[i].req_skill)>0 && pc_checkskill(sd,j)<=0 )
+	if((j=skill_produce_db[i].req_skill)>0 &&
+		pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
 		return 0;
 
 	for(j=0;j<MAX_PRODUCE_RESOURCE;j++){
@@ -11333,12 +11334,12 @@ int skill_readdb (void)
 		}
 		k=0;
 		while(fgets(line,1020,fp)){
-			char *split[6 + MAX_PRODUCE_RESOURCE * 2];
+			char *split[7 + MAX_PRODUCE_RESOURCE * 2];
 			int x,y;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 			malloc_tsetdword(split,0,sizeof(split));
-			j = skill_split_str(line,split,(3 + MAX_PRODUCE_RESOURCE * 2));
+			j = skill_split_str(line,split,(4 + MAX_PRODUCE_RESOURCE * 2));
 			if(split[0]==0) //fixed by Lupus
 				continue;
 			i=atoi(split[0]);
@@ -11347,8 +11348,9 @@ int skill_readdb (void)
 			skill_produce_db[k].nameid=i;
 			skill_produce_db[k].itemlv=atoi(split[1]);
 			skill_produce_db[k].req_skill=atoi(split[2]);
+			skill_produce_db[k].req_skill_lv=atoi(split[3]);
 
-			for(x=3,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
+			for(x=4,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
 				skill_produce_db[k].mat_id[y]=atoi(split[x]);
 				skill_produce_db[k].mat_amount[y]=atoi(split[x+1]);
 			}

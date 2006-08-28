@@ -109,7 +109,7 @@ enum {
 // アイテム作成デ?タベ?ス
 struct skill_produce_db {
 	int nameid, trigger;
-	int req_skill,itemlv;
+	int req_skill,req_skill_lv,itemlv;
 	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
 };
 extern struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];

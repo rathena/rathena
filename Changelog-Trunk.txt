@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/28
+	* Changed the produce_db format, now there's a skill-lv column right after
+	  the skill-id column to specify required skill-level to craft this item.
+	  [Skotlex]
+	* Modified the skill produce_db code to take into account the new skill-lv
+	  requirement. [Skotlex]
 	* Fixed exp bonuses applying twice for the job-exp [Skotlex]
 	* @reloadbattleconf  will now also update the ragsrvinfo table on the
 	  char-server. [Skotlex]
