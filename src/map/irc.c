@@ -48,10 +48,15 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 {
 	if(irc_si && session[irc_si->fd])
 		return 0;
+	//Ok, this ShowInfo and printf are a little ugly, but they are meant to 
+	//debug just how long the code freezes here. [Skotlex]
+	ShowInfo("(IRC) Connecting to %s... ", irc_ip_str);
 	irc_fd = make_connection(irc_ip,irc_port);
 	if(irc_fd > 0){
+		printf("ok\n");
 		session[irc_fd]->func_parse = irc_parse;
-	}
+	} else
+		printf("failed\n");
 	return 0;
 }
 
