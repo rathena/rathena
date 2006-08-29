@@ -13,13 +13,6 @@
 //= 1.1 Fixed Prontera Arena warp [Yor]
 //============================================================
 
-//Prontera Arena
-prt_are_in.gat,142,13,0	warp	warp1076	1,1,prt_are_in.gat,177,78
-prt_are_in.gat,177,75,0	warp	warp1077	1,1,prt_are_in.gat,139,13
-prt_are_in.gat,55,13,0	warp	warp1078	1,1,prt_are_in.gat,125,78
-prt_are_in.gat,125,75,0	warp	warp1079	1,1,prt_are_in.gat,58,13
-prt_are_in.gat,97,7,0	warp	warp1080	1,1,izlude.gat,128,222
-
 //Battle Ordeal Mode
 ordeal_1-1.gat,100,150,0	warp	ord11	1,1,ordeal_1-1.gat,128,150
 ordeal_1-1.gat,123,150,0	warp	ord11-1	1,1,ordeal_1-1.gat,95,150
