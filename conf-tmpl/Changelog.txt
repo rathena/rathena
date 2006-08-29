@@ -1,5 +1,15 @@
 Date	Added
 
+2006/08/29
+	* monster_ai&1 now only signals whether mobs should update their target
+	  cell while chasing more frequently (rather than being state-driven like
+	  Aegis) [Skotlex]
+	* Changed the defaults of view_range_rate and chase_range_rate to 120 to
+	  aproximate better Aegis's view ranges (which are square areas and not
+	  circles), so eA's default of 100 leads to a circular area contained
+	  within a 21x21 square zone (what Aegis uses), by using 20%, the circular
+	  area increases range to 12, which better approximates Aegis's 21x21 area.
+	  [Skotlex]
 2006/08/24
 	* Changed the default of clear_skills_on_death to 0 [Skotlex]
 	* Added setting clear_skills_on_warp to specify when a character's
