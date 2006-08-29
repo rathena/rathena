@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 08/29
+	* Some preparations for the upcoming Izlude Arena [MasterOfMuppets]
 	* eAAC Update to the Coin Banker. [erKURITA]
 08/27
 	* Fixed a syntax error on npc/guild/nguild/nguild_warper.txt line 37 [Toms]

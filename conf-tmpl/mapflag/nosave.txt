@@ -47,6 +47,17 @@ guild_vs3.gat	mapflag	nosave	SavePoint
 guild_vs4.gat	mapflag	nosave	SavePoint
 guild_vs5.gat	mapflag	nosave	SavePoint
 
+// Izlude Arena ========================
+force_1-1.gat	mapflag	nosave	SavePoint
+force_1-2.gat	mapflag	nosave	SavePoint
+force_1-3.gat	mapflag	nosave	SavePoint
+force_2-1.gat	mapflag	nosave	SavePoint
+force_2-2.gat	mapflag	nosave	SavePoint
+force_2-3.gat	mapflag	nosave	SavePoint
+force_3-1.gat	mapflag	nosave	SavePoint
+force_3-2.gat	mapflag	nosave	SavePoint
+force_3-3.gat	mapflag	nosave	SavePoint
+
 //PvP Arenas =================================
 pvp_y_room.gat	mapflag	nosave	SavePoint
 pvp_y_1-1.gat	mapflag	nosave	SavePoint
