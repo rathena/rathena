@@ -529,11 +529,11 @@ if($God1 > 49 && God2 < 100)
 		set $God2,$God2+1;
 
 		if($God2 == 50)
-			announce "The 2nd seal of [Megingjard] has appeared.",bc_all,0xFF0000;
+			announce "The 2nd seal of [Megingjard] has appeared.",bc_all;
 		else if($God1 > 99 && $God2 > 99 && $God3 > 99 && $God4 > 99)
-			announce "The four seals have been released at the same time with the seals of [Megingjard].",bc_all,0xFF0000;
+			announce "The four seals have been released at the same time with the seals of [Megingjard].",bc_all;
 		else if($God2 > 99)
-			announce "The seals of [Megingjard] have been released.",bc_all,0xFF0000;
+			announce "The seals of [Megingjard] have been released.",bc_all;
 
 		if(god_eremes == 23)
 			set god_eremes,25;

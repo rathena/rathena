@@ -1535,11 +1535,11 @@ yuno_in04.gat,47,113,1	script	Studying Scholar#1	749,{
 				
 				if ($God3 < 100) set $God3,$God3 +1;
 				
-					if ($God3 == 50) announce "The 3rd Seal of [Brisingamen] has appeared.",bc_all,0xFF0000;
+					if ($God3 == 50) announce "The 3rd Seal of [Brisingamen] has appeared.",bc_all;
 					else if ($God3 == 100)
 				{				
-					if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100) announce "All 4 Seals of [Brisingamen] have been released.",bc_all,0xFF0000;
-					else announce "A Seal of [Brisingamen] has been released.",bc_all,0xFF0000;
+					if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100) announce "All 4 Seals of [Brisingamen] have been released.",bc_all;
+					else announce "A Seal of [Brisingamen] has been released.",bc_all;
 				}
 				close;
 	}

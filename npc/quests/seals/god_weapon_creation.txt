@@ -1312,7 +1312,7 @@ que_god01.gat,154,112,4	script	Grunburti#god	826,{
 					set $God2,0;
 					set $God3,0;
 					set $God4,0;
-					announce "[Brisingamen] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					announce "[Brisingamen] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all;
 					mes "[Dwarf Grunburti]";
 					mes "Look at this dazzling necklace, isn't it beautiful!";
 					mes "Ah~ surely there is no existance that can compete this item in this world.";
@@ -1382,7 +1382,7 @@ que_god01.gat,154,112,4	script	Grunburti#god	826,{
 					set $God2,0;
 					set $God3,0;
 					set $God4,0;
-					announce "[Megingjard] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					announce "[Megingjard] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all;
 					mes "[Dwarf Grunburti]";
 					mes "Here you go!";
 					mes "Ah~ look at this majestic appearance...! I am overwhelmed already...";
@@ -1459,7 +1459,7 @@ que_god01.gat,154,112,4	script	Grunburti#god	826,{
 					set $God2,0;
 					set $God3,0;
 					set $God4,0;
-					announce "[Sleipnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					announce "[Sleipnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all;
 					mes "[Dwarf Grunburti]";
 					mes "Here you go!";
 					mes "This pair of shoes are so light, you will never feel like wearing anything on your feet with this shoes!";
@@ -1540,7 +1540,7 @@ que_god01.gat,154,112,4	script	Grunburti#god	826,{
 					set $God2,0;
 					set $God3,0;
 					set $God4,0;
-					announce "[Mjolnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all,0xFF0000;
+					announce "[Mjolnir] the godly item has been given to [" + strcharinfo(0) + "], the master of the guild [" + getguildname(@god_guild) + "].",bc_all;
 					mes "[Dwarf Grunburti]";
 					mes "Here you go!";
 					mes "Although it may appear too small to be such a powerful hammer, there is no weapon that can compete to Mjolnir!";

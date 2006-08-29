@@ -241,13 +241,13 @@ NOT_OW:
           if($God1 < 100)set $God1,$God1+1;
 
           if($God1 == 50)
-          	announce "The first seal of [Sleipnir] has appeared.",bc_all,0xFF0000;
+          	announce "The first seal of [Sleipnir] has appeared.",bc_all;
           else if($God1 == 100)
 	  {
             if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100)
-            	announce "Four seals have been released at the same time with the seal of [Sleipnir].",bc_all,0xFF0000;
+            	announce "Four seals have been released at the same time with the seal of [Sleipnir].",bc_all;
             else
-            	announce "The seal of [Sleipnir] has been released.",bc_all,0xFF0000;
+            	announce "The seal of [Sleipnir] has been released.",bc_all;
 	  }
 
           set god_sl_1,51;

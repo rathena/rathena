@@ -182,15 +182,15 @@ prontera.gat,124,297,3	script	Tialfi	706,{
 				set $God4,$God4 +1;
 					if($God4 == 50)
 				{
-					announce "The Fourth Seal of [Mjolnir] has appeared.",bc_all,0xFF0000;
+					announce "The Fourth Seal of [Mjolnir] has appeared.",bc_all;
 				}
 				else if($God4 == 100 && $God2 == 100 && $God3 == 100 && $God1 == 100)
 				{
-					announce "All four seals have been released.",bc_all,0xFF0000;
+					announce "All four seals have been released.",bc_all;
 				}
 				else if($God4 == 100)
 				{
-					announce "[Mjolnir] has been released.",bc_all,0xFF0000;
+					announce "[Mjolnir] has been released.",bc_all;
 				}
 				set god_mjo_0,10;
 				mes "[Tialfi]";

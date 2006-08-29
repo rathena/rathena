@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 08/29
+	* Changed some broadcast colors in the god item quest. [MasterOfMuppets]
 	* Some preparations for the upcoming Izlude Arena [MasterOfMuppets]
 	* eAAC Update to the Coin Banker. [erKURITA]
 08/27
