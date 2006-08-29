@@ -48,6 +48,13 @@
 //|   in the db was Platinum while the script had Silver, so well,
 //|   there you have it. No more silver coins, thanks to you :)
 
+//| Revision:
+//| v.2.6: Added another Weight check to prevent coins from dropping
+//| 	to the ground because A) Too many coins (more than 30,000 ea)
+//| 	B) Your current weight + total coins weight were greater than
+//| 	your max weight, causing them to drop due to "over-weight".
+//|	Thanks to Niktout for spotting it.
+
 //| Upcomming possible updates:
 //| v.3.0: Adding a refining system, so you can gather ore and the likes
 //| 	to make your own coins. They will have a failure chance
@@ -177,7 +184,7 @@ L_ZenyCoin:
 	next;
 	if (MaxWeight*50/100 < Weight) {
 		if (MaxWeight*90/100 < Weight) {
-			mes @npcname;
+			mes @npcname$;
 			mes "Sorry but you have more than 90% weight. Your coins might drop. I can't give you anything.";
 			next;
 			goto L_Menu;
@@ -230,6 +237,18 @@ L_ContinueZenyCoin:
 
 L_Zenycheckout:
 	next;
+	if (((getiteminfo(getarg(0),6))*getarg(2)) > (MaxWeight-Weight)) {
+		mes @npcname$;
+		mes "Sorry, your max weight does not allow me to give you this much of zeny coins";
+		mes "Either choose another type of coins or a lower quantity, thanks";
+		close;
+	} 
+	if (getarg(2) > 30000) {
+		mes @npcname$;
+		mes "Sorry, I can't give you more than 30,000 ea";
+		mes "Pick another coin type";
+		close;
+	}
 	set @itemid,getarg(0);
 	set @pricea,getarg(1)*getarg(2);
 	getitem @itemid,getarg(2);
