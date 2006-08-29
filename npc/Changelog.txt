@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 08/29
+	* Fixed a bug in the sign quest that prevented people from advancing in it. [MasterOfMuppets]
 	* Changed some broadcast colors in the god item quest. [MasterOfMuppets]
 	* Some preparations for the upcoming Izlude Arena [MasterOfMuppets]
 	* eAAC Update to the Coin Banker. [erKURITA]
