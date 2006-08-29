@@ -282,6 +282,7 @@ enum AtCommandType {
 	AtCommand_HomHungry, //[orn]
 	AtCommand_HomTalk, //[orn]
 	AtCommand_HomInfo, //[Toms]
+	AtCommand_ShowMobs, //KarLaeda
 	// end <- Ahem, guys, don't place AtCommands after AtCommand_Unknown! [Skotlex]
 	AtCommand_Unknown,
 	AtCommand_MAX
