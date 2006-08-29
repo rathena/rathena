@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -15,6 +15,8 @@
 //= 1.0 First version, beware of potential nasty bugs :x [MasterOfMuppets]
 //= 1.1 Finalized for stable, might still contain bugs though. [MasterOfMuppets]
 //= 1.1a moved #aldesignwarp to fix enless warp [Lupus]
+//= 1.2 Fixed a minor bug that prevented people from advancing [MasterOfMuppets]
+//= 	quest at one point.
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -664,6 +666,7 @@ L_Where:
 	set @metzmin,gettime(2);
 	if(@metzmin > 29) set @metzhour,@metzhour +1;
 	set signmetzhour,@metzhour + rand(2,4);
+	if(signmetzhour > 23) set signmetzhour,signmetzhour - 24;
 	set signquest,60;
 	close2;
 	cutin "",255;
@@ -5861,6 +5864,7 @@ L_Sign:
 	set @engelmin,gettime(2);
 	if(@engelmin > 29) set @engelhour,@engelhour +1;
 	set signengelhour,@engelhour + rand(2,4);
+	if(signengelhour > 23) set signengelhour,signengelhour - 24;
 	set signquest,62;
 	close;
 
