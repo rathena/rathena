@@ -1356,10 +1356,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case GS_BULLSEYE: //0.1% coma rate.
 		status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
 		break;
-	case GS_CRACKER:
-		if (!dstsd)	// according to latest patch, should not work on players [Reddozen]
-			sc_start(bl,SC_STUN,(100 - 10*distance_bl(src, bl)),skilllv,skill_get_time2(skillid,skilllv)); //Temp stun rate 
-		break;
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -1528,7 +1524,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case GS_FULLBUSTER:
-		sc_start(src,SC_BLIND,(2*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+		status_change_start(src,SC_BLIND,200*skilllv,skilllv,0,0,0,skill_get_time2(skillid,skilllv),10);
 		break;
 	}
 
@@ -2762,7 +2758,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case TK_COUNTER:
 	case GS_TRIPLEACTION:
 	case GS_MAGICALBULLET:
-	case GS_CRACKER:
 	case GS_TRACKING:
 	case GS_PIERCINGSHOT:
 	case GS_RAPIDSHOWER:
@@ -3145,7 +3140,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case GS_BULLSEYE:
-		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN)
+		if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN) && !(tstatus->mode&MD_BOSS))
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		else if (sd)
 			clif_skill_fail(sd,skillid,0,0);
@@ -3727,7 +3722,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GS_MADNESSCANCEL:
 	case GS_ADJUSTMENT:
 	case GS_INCREASING:
-	case GS_CRACKER:
 	case NJ_KASUMIKIRI:
 	case NJ_UTSUSEMI:
 	case NJ_NEN:
@@ -5483,6 +5477,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	
+	case GS_CRACKER:
+		if (!dstsd)	// according to latest patch, should not work on players [Reddozen]
+		{
+			int rate=10+(skill_get_range2(src,skillid,skilllv)-distance_bl(src,bl))*20;
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			sc_start(bl,SC_STUN,(rate>100)?100:rate,skilllv,skill_get_time2(skillid,skilllv)); //New temp stun rate (by RockmanEXE)
+		}
+		else
+			clif_skill_fail(sd,skillid,0,0);
+		break;
 	case AM_REST:
 		if (sd)
 		{
@@ -6474,6 +6478,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	struct status_data *status;
 	struct status_change *sc;
 	int active_flag=1;
+	int subunt=0;
 
 	nullpo_retr(0, src);
 
@@ -6680,17 +6685,36 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		break;
 
 	case GS_GROUNDDRIFT:
-		{	//Take on the base element, not the elemental one.
-			struct status_data *bstatus = status_get_base_status(src);
-			val1 = bstatus?bstatus->rhw.ele:status->rhw.ele;
-			if (sd) sd->state.arrow_atk = 0; //Disable consumption right away.
-			else if (!val1) val1 = ELE_WATER+rand()%(ELE_WIND-ELE_WATER);
-			break;
+		{
+		int element[5]={ELE_WIND,ELE_DARK,ELE_POISON,ELE_WATER,ELE_FIRE};
+
+		if (src->type == BL_PC)
+			val1=sd->arrow_ele;
+		else val1=element[rand()%5];
+
+		switch (val1)
+		{
+			case ELE_FIRE:
+				subunt++;
+			case ELE_WATER:
+				subunt++;
+			case ELE_POISON:
+				subunt++;
+			case ELE_DARK:
+				subunt++;
+			case ELE_WIND:
+				break;
+			default:
+				subunt=rand()%5;
+				break;
+		}
+
+		break;
 		}
 	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
-		skillid,skilllv,skill_get_unit_id(skillid,flag&1), limit, interval));
+		skillid,skilllv,skill_get_unit_id(skillid,flag&1)+subunt, limit, interval));
 	group->val1=val1;
 	group->val2=val2;
 	group->val3=val3;
@@ -7284,8 +7308,26 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
-		case UNT_GROUNDDRIFT:
+		case UNT_GROUNDDRIFT_WIND:
+		case UNT_GROUNDDRIFT_DARK:
+		case UNT_GROUNDDRIFT_POISON:
+		case UNT_GROUNDDRIFT_WATER:
+		case UNT_GROUNDDRIFT_FIRE:
 			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,sg->val1);
+
+			switch (sg->val1)
+			{
+				case ELE_WATER:
+					sc_start(bl,SC_FREEZE,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+					break;
+				case ELE_POISON:
+					sc_start(bl,SC_POISON,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+					break;
+				case ELE_DARK:
+					sc_start(bl,SC_BLIND,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+					break;
+			}
+
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -7751,7 +7793,7 @@ int skill_isammotype (TBL_PC *sd, int skill)
 {
 	return (
 		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
-		skill != HT_PHANTASMIC && skill != GS_MAGICALBULLET &&
+		skill != HT_PHANTASMIC &&
 		skill_get_type(skill) == BF_WEAPON &&
 	  	!(skill_get_nk(skill)&NK_NO_DAMAGE) &&
 		!skill_get_spiritball(skill,1) //Assume spirit spheres are used as ammo instead.

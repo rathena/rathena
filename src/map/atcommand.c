@@ -9805,7 +9805,7 @@ int atcommand_mobinfo(
 	return 0;
 }
 
-*==========================================
+/*=========================================
 * @showmobs by KarLaeda
 * => For 5 sec displays the mobs on minimap
 *------------------------------------------

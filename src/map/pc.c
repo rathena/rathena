@@ -4821,6 +4821,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		npc_script_event(sd,NPCE_DIE);
 	}
 	
+	if ( sd && sd->spiritball && (sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER ) // maybe also monks' spiritballs ?
+		pc_delspiritball(sd,sd->spiritball,0);
+
 	if (src)
 	switch (src->type) {
 	case BL_MOB:
