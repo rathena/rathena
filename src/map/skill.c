@@ -2054,10 +2054,14 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			break;
 		}
 	default:
+// Aegis sends the same packet for both targetted and splash-targetted enemies,
+// therefore SD_ANIMATION isn't really of any use...
+/*
 		if (flag&SD_ANIMATION) //Disable skill animation.
 			dmg.dmotion = clif_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
 				damage, dmg.div_, 8, dmg.damage2);
 		else
+*/
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
 				damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, type);
 		break;
