@@ -10738,6 +10738,11 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 	if (skillid < 1 || skillid > MAX_SKILL)
 		return -1;
 
+	if (tick < 1) {
+		sd->blockskill[skillid] = 0;
+		return -1;
+	}
+
 	sd->blockskill[skillid] = 1;
 	return add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid);
 }
@@ -10755,7 +10760,7 @@ int skill_blockmerc_end (int tid, unsigned int tick, int id, int data)	//[orn]
 int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 {
 	nullpo_retr (-1, hd);
-
+	
 	if (skillid >= GD_SKILLBASE)
 		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
 	if (skillid >= HM_SKILLBASE)	//[orn]
@@ -10763,6 +10768,10 @@ int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 	if (skillid < 1 || skillid > MAX_SKILL)
 		return -1;
 
+	if (tick < 1) {
+		hd->blockskill[skillid] = 0;
+		return -1;
+	}
 	hd->blockskill[skillid] = 1;
 	return add_timer(gettick()+tick,skill_blockmerc_end,hd->bl.id,skillid);
 }

@@ -1529,6 +1529,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			status_change_end(bl, SC_CHASEWALK, -1);
 		if (sc->data[SC_GOSPEL].timer != -1 && sc->data[SC_GOSPEL].val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, -1);
+		if (sc->data[SC_CHANGE].timer!=-1)
+			status_change_end(bl, SC_CHANGE, -1);
 	}
 
 	if (bl->type&BL_CHAR) {

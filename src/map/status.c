@@ -379,7 +379,7 @@ void initChangeTables(void) {
 	add_sc(SA_ELEMENTWIND, SC_ELEMENTALCHANGE);
 
 	set_sc(HLIF_AVOID, SC_AVOID, SI_BLANK, SCB_SPEED);
-	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_MAXHP|SCB_MAXSP);
+	set_sc(HLIF_CHANGE, SC_CHANGE, SI_BLANK, SCB_VIT|SCB_INT);
 	set_sc(HFLI_FLEET, SC_FLEET, SI_BLANK, SCB_ASPD|SCB_BATK|SCB_WATK);
 	set_sc(HFLI_SPEED, SC_SPEED, SI_BLANK, SCB_FLEE);	//[orn]
 	set_sc(HAMI_DEFENCE, SC_DEFENCE, SI_BLANK, SCB_DEF);	//[orn]
@@ -3126,6 +3126,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_INCVIT].val1;
 	if(sc->data[SC_VITFOOD].timer!=-1)
 		vit += sc->data[SC_VITFOOD].val1;
+	if(sc->data[SC_CHANGE].timer!=-1)
+		vit += sc->data[SC_CHANGE].val2;
 	if(sc->data[SC_GUILDAURA].timer != -1 && sc->data[SC_GUILDAURA].val3&0xFFFF)
 		vit += sc->data[SC_GUILDAURA].val3&0xFFFF;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
@@ -3153,6 +3155,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += sc->data[SC_INCINT].val1;
 	if(sc->data[SC_INTFOOD].timer!=-1)
 		int_ += sc->data[SC_INTFOOD].val1;
+	if(sc->data[SC_CHANGE].timer!=-1)
+		int_ += sc->data[SC_CHANGE].val3;
 	if(sc->data[SC_BATTLEORDERS].timer!=-1)
 		int_ += 5;
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
@@ -3744,8 +3748,6 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(maxhp,1,UINT_MAX);
 
-	if(sc->data[SC_CHANGE].timer!=-1)
-		maxhp = sc->data[SC_CHANGE].val3;
 	if(sc->data[SC_INCMHPRATE].timer!=-1)
 		maxhp += maxhp * sc->data[SC_INCMHPRATE].val1/100;
 	if(sc->data[SC_APPLEIDUN].timer!=-1)
@@ -3763,8 +3765,6 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(maxsp,1,UINT_MAX);
 
-	if(sc->data[SC_CHANGE].timer!=-1)
-		maxsp = sc->data[SC_CHANGE].val2;
 	if(sc->data[SC_INCMSPRATE].timer!=-1)
 		maxsp += maxsp * sc->data[SC_INCMSPRATE].val1/100;
 	if(sc->data[SC_SERVICE4U].timer!=-1)
@@ -5554,12 +5554,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2=(val1+1)/2; // number of hits blocked
 			break;
 		case SC_CHANGE:
-			{
-				struct status_data *status = status_get_base_status(bl);
-				if (!status) return 0;
-				val2= status->max_hp; //Base Max HP
-				val3= status->max_sp; //Base Max SP
-			}
+			val2= 30*val1; //Vit increase
+			val3= 20*val1; //Int increase
 			break;
 		case SC_ARMOR_ELEMENT:
 			break; // It just change the armor element of the player (used by battle_attr_fix)
@@ -6132,7 +6128,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 			break; //guess hes not in jail :P
 		case SC_CHANGE:
-			// "lose almost all her HP and SP"
+			if (tid == -1)
+		 		break;
+			// "lose almost all her HP and SP" on natural expiration.
 			status_set_hp(bl, 10, 0);
 			status_set_sp(bl, 10, 0);
 			break;

@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/30
+	* Updated HLIF_CHANGE to work as explained by Tharis -> It now adds 30*lv
+	  vit and 20*lv int, is dispelled on warp, and can-act delay is 5+5*lv
+	  minutes. Hp/Sp is no longer set to 10 after a forced expiration. [Skotlex]
 	* Fixed up char-sql compilation. [Skotlex]
 	* Added a message to @clearweather stating when climate changes will
 	  dispel. [Skotlex]
