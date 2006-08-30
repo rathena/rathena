@@ -4016,6 +4016,10 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"use_sql_db")==0){ // added for sql item_db read for char server [Valaris]
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus("Using SQL dbs: %s\n",w2);
+		}else if(strcmpi(w1,"item_db_db")==0){
+			strcpy(item_db_db,w2);
+		}else if(strcmpi(w1,"item_db2_db")==0){
+			strcpy(item_db2_db,w2);
 		} else if(strcmpi(w1,"connection_ping_interval")==0) {
 			connection_ping_interval = config_switch(w2);
 		//custom columns for login database

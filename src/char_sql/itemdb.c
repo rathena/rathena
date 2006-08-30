@@ -19,6 +19,7 @@
 //#define ITEMDB_OVERRIDE_NAME_VERBOSE	1
 
 char item_db_db[256]="item_db"; // added to specify item_db sql table [Valaris]
+char item_db2_db[256]="item_db2";
 
 static struct dbt* item_db;
 
@@ -168,8 +169,8 @@ static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map
 		sprintf(tmp_sql, "SELECT * FROM `%s`", item_db_name[i]);
 
 		// Execute the query; if the query execution succeeded...
-		if (mysql_query(&mmysql_handle, tmp_sql) == 0) {
-			sql_res = mysql_store_result(&mmysql_handle);
+		if (mysql_query(&mysql_handle, tmp_sql) == 0) {
+			sql_res = mysql_store_result(&mysql_handle);
 
 			// If the storage of the query result succeeded...
 			if (sql_res) {
@@ -203,31 +204,20 @@ static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map
 				ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", ln, item_db_name[i]);
 				ln = 0;
 			} else {
-				ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mmysql_handle));
+				ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
 
 			// Free the query result
 			mysql_free_result(sql_res);
 		} else {
-			ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mmysql_handle));
+			ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
 
 	return 0;
 }
-
-static int itemdb_final(DBKey key,void *data,va_list ap)
-{
-	struct item_data *id = (struct item_data*)data;
-	if(id->use_script)
-		aFree(id->use_script);
-	if(id->equip_script)
-		aFree(id->equip_script);
-	return 0;
-}
-
 
 /*==========================================
  *
@@ -236,7 +226,7 @@ static int itemdb_final(DBKey key,void *data,va_list ap)
 void do_final_itemdb(void)
 {
 	if(item_db){
-		item_db->destroy(item_db,itemdb_final);
+		item_db->destroy(item_db,NULL);
 		item_db=NULL;
 	}
 }

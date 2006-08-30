@@ -793,7 +793,7 @@ void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_homskillinfoblock(sd);
 }
 
-int read_homunculusdb()
+int read_homunculusdb(void)
 {
 	FILE *fp;
 	char line[1024], *p;
@@ -881,7 +881,7 @@ int read_homunculusdb()
 	return 0;
 }
 
-int read_homunculus_skilldb()
+int read_homunculus_skilldb(void)
 {
 	FILE *fp;
 	char line[1024], *p;
@@ -949,7 +949,7 @@ int read_homunculus_skilldb()
 	return 0;
 }
 
-void read_homunculus_expdb()
+void read_homunculus_expdb(void)
 {
 	FILE *fp;
 	char line[1024];
@@ -985,18 +985,18 @@ void read_homunculus_expdb()
 	}
 }
 
-void merc_reload()
+void merc_reload(void)
 {
 	read_homunculusdb();
 	read_homunculus_expdb();
 }
 
-void merc_skill_reload()
+void merc_skill_reload(void)
 {
 	read_homunculus_skilldb();
 }
 
-int do_init_merc()
+int do_init_merc(void)
 {
 	read_homunculusdb();
 	read_homunculus_expdb();
@@ -1006,4 +1006,4 @@ int do_init_merc()
 	return 0;
 }
 
-int do_final_merc();
+int do_final_merc(void);

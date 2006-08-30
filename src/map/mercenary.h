@@ -75,6 +75,5 @@ int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int merc_skill_tree_get_max(int id, int b_class);
 void merc_hom_init_timers(struct homun_data * hd);
-void merc_skill_reload();
-void merc_reload();
-
+void merc_skill_reload(void);
+void merc_reload(void);

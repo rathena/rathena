@@ -29,6 +29,8 @@ struct item_data {
 	int type;
 };
 
+extern char item_db_db[256];
+extern char item_db2_db[256];
 struct item_data* itemdb_search(int nameid);
 #define itemdb_type(n) itemdb_search(n)->type
 
