@@ -96,100 +96,123 @@ static int itemdb_readdb(void)
 {
 	FILE *fp;
 	char line[1024];
-	int ln=0;
+	int ln=0,lines=0;
 	int nameid,j;
-	char *str[128],*p,*np;
+	char *str[32],*p,*np;
 	struct item_data *id;
+	int i=0;
+	char *filename[]={ "item_db.txt","item_db2.txt" };
 
-	sprintf(line, "%s/item_db.txt", db_path);
-	fp=fopen(line,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", str);
-		exit(1);
-	}
-	while(fgets(line,1020,fp)){
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(str,0,sizeof(str));
-		for(j=0,np=p=line;j<17 && p;j++){
-			str[j]=p;
-			p=strchr(p,',');
-			if(p){ *p++=0; np=p; }
+	for(i=0;i<2;i++){
+		sprintf(line, "%s/%s", db_path, filename[i]);
+		fp=fopen(line,"r");
+		if(fp==NULL){
+			if(i>0)
+				continue;
+			ShowFatalError("can't read %s\n",line);
+			exit(1);
 		}
-		if(str[0]==NULL)
-			continue;
 
-		nameid=atoi(str[0]);
-		if(nameid<=0 || nameid>=20000)
-			continue;
-		ln++;
+		lines=0;
+		while(fgets(line,1020,fp)){
+			lines++;
+			if(line[0]=='/' && line[1]=='/')
+				continue;
+			malloc_tsetdword(str,0,sizeof(str));
+			for(j=0,np=p=line;j<4 && p;j++){
+				str[j]=p;
+				p=strchr(p,',');
+				if(p){ *p++=0; np=p; }
+			}
+			if(str[0]==NULL)
+				continue;
 
-		//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Gender,Loc,wLV,eLV,View
-		id=itemdb_search(nameid);
-		memcpy(id->name,str[1],ITEM_NAME_LENGTH-1);
-		memcpy(id->jname,str[2],ITEM_NAME_LENGTH-1);
-		id->type=atoi(str[3]);
+			nameid=atoi(str[0]);
+			if(nameid<=0)
+				continue;
+			if (j < 4)
+			{	//Crash-fix on broken item lines. [Skotlex]
+				ShowWarning("Reading %s: Insufficient fields for item with id %d, skipping.\n", filename[i], nameid);
+				continue;
+			}
+			ln++;
 
+			//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
+			id=itemdb_search(nameid);
+			strncpy(id->name, str[1], ITEM_NAME_LENGTH-1);
+			strncpy(id->jname, str[2], ITEM_NAME_LENGTH-1);
+			id->type=atoi(str[3]);
+			if (id->type == IT_DELAYCONSUME)
+				id->type = IT_USABLE;
+		}
+		fclose(fp);
+		if (ln > 0) {
+			ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",ln,filename[i]);
+		}
+		ln=0;	// reset to 0
 	}
-	fclose(fp);
-	ShowStatus("done reading item_db.txt (count=%d)\n",ln);
 	return 0;
 }
 
 static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map-server item_db read [Valaris]
 {
-	unsigned int nameid; 	// Type should be "unsigned short int", but currently isn't for compatibility with numdb_insert()
+	unsigned short nameid;
 	struct item_data *id;
+	char *item_db_name[] = { item_db_db, item_db2_db };
+	long unsigned int ln = 0;
+	int i;	
 
 	// ----------
 
-	// Output query to retrieve all rows from the item database table
-	sprintf(tmp_sql, "SELECT * FROM `%s`", item_db_db);
+	for (i = 0; i < 2; i++) {
+		sprintf(tmp_sql, "SELECT * FROM `%s`", item_db_name[i]);
 
-	// Execute the query; if the query execution fails, output an error
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+		// Execute the query; if the query execution succeeded...
+		if (mysql_query(&mmysql_handle, tmp_sql) == 0) {
+			sql_res = mysql_store_result(&mmysql_handle);
 
-	// Store the query result
-	sql_res = mysql_store_result(&mysql_handle);
+			// If the storage of the query result succeeded...
+			if (sql_res) {
+				// Parse each row in the query result into sql_row
+				while ((sql_row = mysql_fetch_row(sql_res)))
+				{	/*Table structure is:
+					00  id
+					01  name_english
+					02  name_japanese
+					03  type
+					...
+					*/
+					nameid = atoi(sql_row[0]);
 
-	// If the storage of the query result succeeded
-	if (sql_res) {
-		// Parse each row in the query result into sql_row
-		while ((sql_row = mysql_fetch_row(sql_res))) {
-			nameid = atoi(sql_row[0]);
+					// If the identifier is not within the valid range, process the next row
+					if (nameid == 0)
+						continue;
 
-			// If the identifier is not within the valid range, process the next row
-			if (nameid == 0 || nameid >= 20000)	{	// Should ">= 20000" be "> 20000"?
-				continue;
+					ln++;
+
+					// ----------
+         		id=itemdb_search(nameid);
+					
+					strncpy(id->name, sql_row[1], ITEM_NAME_LENGTH-1);
+					strncpy(id->jname, sql_row[2], ITEM_NAME_LENGTH-1);
+
+					id->type = atoi(sql_row[3]);
+					if (id->type == IT_DELAYCONSUME)
+						id->type = IT_USABLE;
+				}
+				ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", ln, item_db_name[i]);
+				ln = 0;
+			} else {
+				ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mmysql_handle));
+				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
 
-			// ----------
-
-			// Update/Insert row into the item database
-         id=itemdb_search(nameid);
-
-			memcpy(id->name, sql_row[1], ITEM_NAME_LENGTH-1);
-			memcpy(id->jname, sql_row[2], ITEM_NAME_LENGTH-1);
-
-			id->type = atoi(sql_row[3]);
-		}
-
-		// If the retrieval failed, output an error
-		if (mysql_errno(&mysql_handle)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			// Free the query result
+			mysql_free_result(sql_res);
+		} else {
+			ShowSQL("DB error (%s) - %s\n",item_db_name[i], mysql_error(&mmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
-
-		ShowInfo("read %s done (count = %lu)\n", item_db_db, (unsigned long) mysql_num_rows(sql_res));
-
-		// Free the query result
-		mysql_free_result(sql_res);
-	} else {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
 
 	return 0;

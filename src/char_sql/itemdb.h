@@ -5,25 +5,28 @@
 #define _ITEMDB_H_
 #include "mmo.h"
 
+//FIXME: Maybe it would be better to move this enum to mmo.h,
+//instead of having it twice on the map server and here? [Skotlex]
+enum {
+	IT_HEALING = 0,
+	IT_UNKNOWN, //1
+	IT_USABLE,  //2
+	IT_ETC,     //3
+	IT_WEAPON,  //4
+	IT_ARMOR,   //5
+	IT_CARD,    //6
+	IT_PETEGG,  //7
+	IT_PETARMOR,//8
+	IT_UNKNOWN2,//9
+	IT_AMMO,    //10
+	IT_DELAYCONSUME,//11
+	IT_MAX 
+} item_types;
+
 struct item_data {
 	int nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
-	int value_buy,value_sell,value_notdc,value_notoc;
 	int type;
-	int class_;
-	int sex;
-	int equip;
-	int weight;
-	int atk;
-	int def;
-	int range;
-	int slot;
-	int look;
-	int elv;
-	int wlv;
-	char *use_script;	// ‰ñ•œ‚Æ‚©‚à‘S•”‚±‚Ì’†‚Å‚â‚ë‚¤‚©‚È‚Æ
-	char *equip_script;	// UŒ‚,–hŒä‚Ì‘®«İ’è‚à‚±‚Ì’†‚Å‰Â”\‚©‚È?
-	char available;
 };
 
 struct item_data* itemdb_search(int nameid);
