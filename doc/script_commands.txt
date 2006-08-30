@@ -1269,11 +1269,15 @@ This command retrieves the name of the given job using the msg_athena entries 55
 
 *eaclass {<job number>}
 
-This commands returns the "eA job-number" corresponding to the given class (if none is given, it returns uses the invoking player's class as argument). The eA job-number is also a class number system, but it's one that comes with constants which make it easy to convert among classes. The command will return -1 if you pass it a job number which doesn't has a eA Job value equivalent.
+This commands returns the "eA job-number" corresponding to the given class (if none is given, it returns uses
+the invoking player's class as argument). The eA job-number is also a class number system, but it's one that
+comes with constants which make it easy to convert among classes. The command will return -1 if you pass it a
+job number which doesn't has a eA Job value equivalent.
 
 	set @eac, eaclass();
 	if ((@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
-		mes "You must be a swordman, knight, crusader, paladin, high swordman, lord knight, baby swordman, baby knight or baby crusader.";
+		mes "You must be a swordman, knight, crusader, paladin, high swordman, lord knight, baby swordman,";
+		mes "baby knight or baby crusader.";
 	if (@eac&EAJL_UPPER)
 		mes "You are a rebirth job.";
 	if ((@eac&EAJ_UPPERMASK) == EAJ_SWORDMAN)
@@ -1284,8 +1288,11 @@ For more information on the eA Job System, see the docs/ea_job_system.txt file.
 ---------------------------------------
 *roclass <job number> {,<gender>}
 
-Does the opposite of eaclass. That is, given a eA Job class, it returns which is the corresponding RO class number. A gender is required because both Bard and Dancers share the same eA Job value (EAJ_BARDDANCER), if it isn't given, the gender of the executing player is taken (if there's no player running the script, male will be used by default).
-The command returns -1 when there isn't a valid class to represent the required job (for example, if you try to get the baby version of a Taekwon class).
+Does the opposite of eaclass. That is, given a eA Job class, it returns which is the corresponding RO class number. 
+A gender is required because both Bard and Dancers share the same eA Job value (EAJ_BARDDANCER), if it isn't given, the
+gender of the executing player is taken (if there's no player running the script, male will be used by default).
+The command returns -1 when there isn't a valid class to represent the required job (for example, if you try to get the
+baby version of a Taekwon class).
 
 	set @eac, eaclass();
 	//Check if class is already rebirth
@@ -2114,7 +2121,8 @@ Example:
 
 *getpartyleader <party id>,[<type>];
 
-This function returns some information about the given party-id's leader. When type is ommitted, the default information retrieved is Character name of the party leader. Possible types are:
+This function returns some information about the given party-id's leader. When type is ommitted,
+the default information retrieved is Character name of the party leader. Possible types are:
 
 	1: Leader account id
 	2: Leader character id
@@ -2123,7 +2131,8 @@ This function returns some information about the given party-id's leader. When t
 	5: Leader's current level as stored on the party structure (may not be
 	   current level if leader leveled up recently).
 
-If retrieval fails (leader not found or party does not exists), "null" is returned instead of character name, and -1 is returned for the other types.
+If retrieval fails (leader not found or party does not exists), "null" is returned instead of character name,
+and -1 is returned for the other types.
 
 ---------------------------------------
 *getguildname(<guild id>)
@@ -2759,7 +2768,8 @@ being present at the same time in one go.
 
 'setoption' will set options on the invoking character. There are no second and 
 third versions of this command, so you can only change the values in the last
-list (cloak, cart, ruwach, etc). if flag is 1 (default when omitted), the option will be added to what the character currently has; if 0, the option is removed. 
+list (cloak, cart, ruwach, etc). if flag is 1 (default when omitted),
+the option will be added to what the character currently has; if 0, the option is removed. 
 
 This is definitely not a complete list of available option flag numbers. Ask a 
 core developer for the full list.
@@ -5177,7 +5187,8 @@ if (Zeny > 50) && (BaseLevel > 50) {
 } else
 
 set @needed,50-BaseLevel;
-mes "You either are Level "+BaseLevel+", thus you need "+@needed+" more levels to be able to use this npc; or you don't have enough zeny, so get some please";
+mes "You either are Level "+BaseLevel+", thus you need "+@needed+" more levels";
+mes "to be able to use this npc; or you don't have enough zeny, so get some please";
 close;
 
 function SF_Selling {
@@ -5226,6 +5237,44 @@ when you want to check item cards or if it's signed. Useful for such quests as
 
 By Lupus
 
+--------------------------------------
+ 
+*warpparty "mapname.gat",x,y,<party_id>;
+ 
+Warps a party to specified map and coordinate given the party ID, which you can get with
+getcharid(1). You can also request another party id given a member's name with getcharid(1,<player_name>).
+ 
+Example:
+mes "[Party Warper]";
+mes "Here you go!";
+close2;
+set @id,getcharid(1);
+warpparty "prontera.gat",150,100,@id;
+close;
+ 
+---------------------------------------
+ 
+*warpchar "mapname.gat",x,y,<char_id>;
+ 
+Warps another player to specified map and coordinate given the char id, which you can get with
+getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
+is executing this script, unless it's some kind of "chosen" script. 
+ 
+Example:
+ 
+warpchar "prontera.gat",150,100,20000001;
+ 
+---------------------------------------
+ 
+*warpguild "mapname.gat",x,y,<guild_id>;
+ 
+Warps a guild to specified map and coordinate given the guild id, which you can get with 
+getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
+ 
+Example:
+ 
+warpguild "prontera.gat",x,y,Guild_ID;
+ 
 ---------------------------------------
 
 Whew.
