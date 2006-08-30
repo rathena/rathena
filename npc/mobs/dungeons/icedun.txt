@@ -1,0 +1,36 @@
+//===== eAthena Script =======================================
+//= Ice Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Additional Comments: =================================
+//= 1.0 First version from jAthena [Playtester]
+//============================================================
+
+//==================================================
+// ice_dun01 - Ice Cave
+//==================================================
+ice_dun01.gat,0,0,0,0	monster	Gazeti	1778,10,0,0,0
+ice_dun01.gat,0,0,0,0	monster	Roween	1782,40,0,0,0
+ice_dun01.gat,0,0,0,0	monster	Muscipular	1780,20,0,0,0
+ice_dun01.gat,0,0,0,0	monster	Siroma	1776,60,0,0,0
+
+//==================================================
+// ice_dun02 - Ice Cave
+//==================================================
+ice_dun02.gat,0,0,0,0	monster	Gazeti	1778,30,0,0,0
+ice_dun02.gat,0,0,0,0	monster	Iceicle	1789,10,0,0,0
+ice_dun02.gat,0,0,0,0	monster	Snowier	1775,30,0,0,0
+ice_dun02.gat,0,0,0,0	monster	Siroma	1776,20,0,0,0
+ice_dun02.gat,0,0,0,0	monster	Ice Titan	1777,10,0,0,0
+
+//==================================================
+// ice_dun03 - Ice Cave
+//==================================================
+ice_dun03.gat,0,0,0,0	monster	Gazeti	1778,30,0,0,0
+ice_dun03.gat,0,0,0,0	monster	Iceicle	1789,10,0,0,0
+ice_dun03.gat,0,0,0,0	monster	Snowier	1775,30,0,0,0
+ice_dun03.gat,0,0,0,0	monster	Ice Titan	1777,50,0,0,0
