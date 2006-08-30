@@ -166,8 +166,8 @@
 12052,12,0,0,7473,0,966,10,956,5,951,5,579,1
 //-- Black Tea <-- 5 Blue Herb, 10 Red Herb, 10 Yellow Herb
 12047,12,0,0,7473,0,510,5,507,10,508,10
-//-- Smooth Noodle <-- 1 Grain, 1 Plain Sauce, 5 Pumpkin, 3 Carrot
-12057,12,0,0,7473,0,577,1,7454,1,535,5,515,3
+//-- Smooth Noodle <-- 1 Grain, 1 Plain Sauce, 5 Jack o' Pumpkin, 3 Carrot
+12057,12,0,0,7473,0,577,1,7454,1,1062,5,515,3
 //-- Chocolate Mousse Cake <-- 10 Cacao, 1 Piece of Cake, 1 Milk, 1 China
 12062,12,0,0,7473,0,7182,10,539,1,519,1,736,1
 //-- Mixed Juice <-- 3 Apple Juice, 2 Carrot Juice, 1 Grape Juice, 2 Orange Juice

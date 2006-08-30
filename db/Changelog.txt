@@ -20,6 +20,7 @@
 
 =========================
 08/30
+	* Updated ingredients for Smooth Noodle [Playtester]
 	* Updated mob iRO names and mob stats [Playtester]
 08/29
 	* Applied Mpeg's work on GS [Toms]
