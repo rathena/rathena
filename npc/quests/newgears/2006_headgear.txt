@@ -337,16 +337,16 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 payon.gat,137,123,5	script	Hangaram	740,{
 	set @npcname$,"[Hangaram]";
 
-	mes "@npcname$";
+	mes @npcname$;
 	mes "Hello adventurer!";
 	mes "Our life is complicated.";
 	next;
 	
-	mes "@npcname$";
+	mes @npcname$;
 	mes "But if you want I can help you by making 2 Hats.";
 	next;
  
-	mes "@npcname$";
+	mes @npcname$;
 	mes "My creations are the Judge Hat and the A-Yam Hat.";
 	mes "Which Hat do you want?";
 	next;
@@ -355,7 +355,7 @@ payon.gat,137,123,5	script	Hangaram	740,{
 	{
 
 		case 1:
-			mes "@npcname$";
+			mes @npcname$;
 			mes "^3355FFJudge Hat^000000";
 			mes "7 Red Orbs,";
 			mes "7 Blue Orbs,";
@@ -382,50 +382,50 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			delitem 733,5;
 			delitem 2221,1;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Ok you seem to have all the items.";
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Hmmm.. We now make this... Mmm.";
 			emotion 9; 	
 			next;
 	
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Now we use the Dyestuff like this.";
 			emotion 23;	
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "OMG!!! this isn't meant to be like this.";
 			emotion 28;	
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "....";
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Sorry, it didn't work.";
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Well that's the way life is.";
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "JAJAJAJA... I was just kidding here is your item !!";
 			emotion 29;
 			next;
 
 			getitem 5173,1;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Good Work.";
 			close;
 
 		case 2:
-			mes "@npcname$";
+			mes @npcname$;
 			mes "^3355FFA-Yam Hat^000000";
 			mes "7 Red Orbs,";
 			mes "7 Blue Orbs,";
@@ -452,39 +452,39 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			delitem 733,5;
 			delitem 7166,50;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Well, you have everything.";
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Mmm now we just split this part...";
 			emotion 9; 	
 			next;
 	
-			mes "@npcname$";
+			mes @npcname$;
 			mes "We throw this ... Mmm..";
 			emotion 23;	
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "This isn't meant to be like this..";
 			emotion 28;	
 			next;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "... ready!!!";
 			emotion 21;	
 			next;
 		
 			getitem 5174,1;
 
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Here you have my young fella !";
 			close;
 
 	
 		case 3:
-			mes "@npcname$";
+			mes @npcname$;
 			mes "Goodbye then.";
         		close;
 
