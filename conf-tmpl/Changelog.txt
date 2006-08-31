@@ -1,6 +1,9 @@
 Date	Added
 
 2006/08/31
+	* Added setting attack_walk_delay which specifies whether a character
+	  should (or not) be able to move inmediately after starting a normal attack
+	  (battle.conf). Defaults to 0 since that's what Aegis uses. [Skotlex]
 	* Corrected battle config name max_walk_rate, it should be named
 	  max_walk_speed. [Skotlex]
 2006/08/29
