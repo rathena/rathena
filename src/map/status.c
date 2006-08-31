@@ -2109,7 +2109,43 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->dsprate -= sd->sc.data[SC_SERVICE4U].val3;
 	}
 
-	if(sd->dsprate < 0) sd->dsprate = 0;
+	//Underflow protections.
+	if(sd->sprate < 0)
+		sd->sprate = 0;
+	if(sd->dsprate < 0)
+		sd->dsprate = 0;
+	if(sd->hprate < 0)
+		sd->hprate = 0;
+	if(sd->sprate < 0)
+		sd->sprate = 0;
+	if(sd->castrate < 0)
+		sd->castrate = 0;
+	if(sd->delayrate < 0)
+		sd->delayrate = 0;
+	if(sd->speed_rate < 0)
+		sd->speed_rate = 0;
+	if(sd->hprecov_rate < 0)
+		sd->hprecov_rate = 0;
+	if(sd->sprecov_rate < 0)
+		sd->sprecov_rate = 0;
+	if(sd->matk_rate < 0)
+		sd->matk_rate = 0;
+	if(sd->critical_rate < 0) 
+		sd->critical_rate = 0;
+	if(sd->hit_rate < 0)
+		sd->hit_rate = 0;
+	if(sd->flee_rate < 0)
+		sd->flee_rate = 0;
+	if(sd->flee2_rate < 0)
+		sd->flee2_rate = 0;
+	if(sd->def_rate < 0)
+		sd->def_rate = 0;
+	if(sd->def2_rate < 0)
+		sd->def2_rate = 0;
+	if(sd->mdef_rate < 0)
+		sd->mdef_rate = 0;
+	if(sd->mdef2_rate < 0)
+		sd->mdef2_rate = 0;
 
 	// Anti-element and anti-race
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)

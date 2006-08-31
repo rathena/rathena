@@ -8376,6 +8376,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 	}
 
+	if(!type)//States are only checked on begin-casting. [Skotlex]
 	switch(state) {
 	case ST_HIDING:
 		if(!(sc && sc->option&OPTION_HIDE)) {
@@ -8420,7 +8421,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case ST_SIGHT:
-		if((!sc || sc->data[SC_SIGHT].timer == -1) && type&1) {
+		if(!sc || sc->data[SC_SIGHT].timer == -1) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -8444,9 +8445,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case ST_MOVE_ENABLE:
-		if(type)//Check only on begin casting. [Skotlex]
-			break;
-		
 		if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill)
 			sd->ud.canmove_tick = gettick(); //When using a combo, cancel the can't move delay to enable the skill. [Skotlex]
 			

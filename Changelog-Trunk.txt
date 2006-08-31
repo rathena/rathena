@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/30
+	* Skill required-state will now only be checked on cast-begin, not
+	  cast-end. [Skotlex]
+	* Added a check in status_calc_pc to prevent player rate adjustments from
+	  from going below 0. [Skotlex]
 	* Removed sending normal-damage packets instead of skill packets for
 	  splash-damaged skills, since... well, that's how Aegis does it. [Skotlex]
 	* Updated HLIF_CHANGE to work as explained by Tharis -> It now adds 30*lv
