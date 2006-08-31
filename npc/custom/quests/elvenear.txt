@@ -18,7 +18,7 @@ geffen.gat,127,49,5	script	Elven Ears Quest	84,{
 	mes "Hi, today's quest is...."; 
 	mes "Ah, the ^61B031Elven Ears ^000000Quest!"; 
 	next; 
-	menu "Requirements",L_Bl, "Make Item",-,"Cancel",L_Cancel; 
+	menu "Requirements",L_Bl, "Make Item",-,"Cancel",L_Cancel;
 
 	mes "[Elven Ears quest]";
 	mes "Good good, let me just check"; 
@@ -27,7 +27,6 @@ geffen.gat,127,49,5	script	Elven Ears Quest	84,{
 	delitem 2213,1;
 	delitem 1040,20;
 	delitem 919,20;
-	next;
 	mes "[Elven Ears quest]";
 	mes "Give me a second.....";
 	next;

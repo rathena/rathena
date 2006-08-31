@@ -32,8 +32,10 @@ Playtester
 
 Date		Added
 ======
+08/31
+	* Reverted two duplicate next, please check before commit it [Playtester]
 08/30
-	* Added missing NEXT; to some custom quests. Thanks to $ephiroth
+	* Added missing NEXT; to some custom quests. Thanks to $ephiroth [Lupus]
 	* A small fix to the 2006 headgears quest, thanks to Belle for telling me about the problem. [MasterOfMuppets]
 	* Added temporary Ice Dungeon spawn file (commented for now) [Playtester]
 08/29
