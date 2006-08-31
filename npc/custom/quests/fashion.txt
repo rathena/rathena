@@ -19,10 +19,11 @@ izlude.gat,135,96,5	script	Fashion Glasses Quest	76,{
 	mes "Ah, the ^CC6633Fashionable Glasses^000000 Quest!"; 
 	next; 
 	menu "Requirements",M_INFO,"Make Item",-,"Cancel",M_CANCEL; 
-
+	
 	mes "[Fashionable Glasses Quest]";
-	mes "Good good, let me just check"; 
-	if(countitem(2271)<1 || countitem(975)<1) goto M_NOITEMS;
+	mes "Good good, let me just check";
+	next;   
+ 	if(countitem(2271)<1 || countitem(975)<1) goto M_NOITEMS;
 	delitem 2271,1;
 	delitem 975,1;
 	next;
@@ -41,12 +42,14 @@ M_NOITEMS:
 	close;
 
 M_INFO: 
+	mes "[Fashionable Glasses Quest]";
 	mes "Ok all you have to do is collect"; 
 	mes "^CC66331 Jack'a Dandy^000000"; 
 	mes "and ^CC66331 Scalet Dyestuff^000000.";
 	next;
 	menu "Accept",-,"Leave",M_LEAVE;
-
+	
+	mes "[Fashionable Glasses Quest]";
 	mes "When you are done, bring the items to me,";
 	mes "Ok good luck finding those items.";
 	close;

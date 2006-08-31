@@ -50,6 +50,7 @@ L_NotEnough:
 	close;
 
 M_RIPOFF:
+	mes "[Wizard Hat Dude]";
 	mes "What I had to go through was more unfathomable..";
 	mes "If you succeed in getting these items, you will have incredible strength!";
 	emotion e_hmm;
