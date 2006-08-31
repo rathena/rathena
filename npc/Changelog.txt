@@ -33,6 +33,8 @@ Playtester
 Date		Added
 ======
 08/31
+	* Removed a warp from Izlude to make sure people won't get stuck until [MasterOfMuppets]
+	  the arena has been finished.
 	* Reverted two duplicate next, please check before commit it [Playtester]
 08/30
 	* Added missing NEXT; to some custom quests. Thanks to $ephiroth [Lupus]

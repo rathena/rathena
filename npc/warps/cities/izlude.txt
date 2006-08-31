@@ -15,8 +15,6 @@
 
 //= Izlude City ==============================================
 izlude.gat,109,151,0	warp	iz01	3,3,izlude_in.gat,65,87
-//izlude.gat,128,225,0	warp	iz431	1,1,prt_are_in.gat,100,28
-izlude.gat,128,225,0	warp	iz431	1,1,prt_are_in.gat,97,10
 izlude.gat,148,148,0	warp	iz02	2,2,izlude_in.gat,116,49
 izlude.gat,216,129,0	warp	iz03	3,2,izlude_in.gat,151,127
 izlude.gat,30,78,0	warp	iz001	3,3,prt_fild08.gat,367,212
