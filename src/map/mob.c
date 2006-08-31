@@ -2304,8 +2304,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	if(md->lootitem == NULL && md->db->status.mode&MD_LOOTER)
 		md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 
-	if (battle_config.show_mob_hp)
-		clif_charnameack(0, &md->bl);
+	clif_charnameack(0, &md->bl);
 
 	return 0;
 }

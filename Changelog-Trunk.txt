@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/08/31
+	* Fixed new mob's name not sent to the client when the mob is morphed [Toms]
 	* Added setting attack_walk_delay which specifies whether a character
 	  should (or not) be able to move inmediately after starting a normal attack
 	  (battle.conf). Defaults to 0 since that's what Aegis uses. [Skotlex]
