@@ -2997,7 +2997,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 		if (master_id) //Attach to Master
 			md->master_id = master_id;
 		if (duration) //Auto Delete after a while.
-			md->deletetimer = add_timer (gettick() + duration, mob_timer_delete, i, 0);
+			md->deletetimer = add_timer (gettick() + duration, mob_timer_delete, md->bl.id, 0);
 	}
 #if 0
 	//I am playing with this for packet-research purposes, enable it if you want, but don't remove it :X [Skotlex]

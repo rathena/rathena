@@ -1,5 +1,8 @@
 Date	Added
 
+2006/08/31
+	* Corrected battle config name max_walk_rate, it should be named
+	  max_walk_speed. [Skotlex]
 2006/08/29
 	* monster_ai&1 now only signals whether mobs should update their target
 	  cell while chasing more frequently (rather than being state-driven like

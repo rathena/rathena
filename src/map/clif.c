@@ -6323,7 +6323,7 @@ int clif_sendegg(struct map_session_data *sd)
 	if(sd->status.pet_id <= 0) {
 		for(i=0,n=0;i<MAX_INVENTORY;i++){
 			if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-			   sd->inventory_data[i]->type!=7 ||
+			   sd->inventory_data[i]->type!=IT_PETEGG ||
 			   sd->status.inventory[i].amount<=0)
 				continue;
 			WFIFOW(fd,n*2+4)=i+2;
