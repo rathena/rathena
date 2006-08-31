@@ -56,22 +56,13 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 	clif_emotion(&hd->bl, 16) ;	//wah
 	if (!sd) //unit remove map will invoke unit free
 		return 3;
+	//There's no intimacy penalties on death (from Tharis)
 
 	//Delete timers when dead.
 	merc_hom_hungry_timer_delete(hd);
 	sd->homunculus.hp = 0 ;
 	clif_hominfo(sd,hd,0); // Send dead flag
-
-	if(!merc_hom_decrease_intimacy(hd, 100)) // Intimacy was <= 100
-		clif_emotion(&sd->bl, 23) ;	//omg
-	else {
-		clif_emotion(&sd->bl, 28) ;	//sob
-		// Not needed because the status window will be closed until resurect homun and then
-		// Intimacy will be sent
-		//clif_send_homdata(hd->master,SP_INTIMATE,hd->master->homunculus.intimacy / 100);
-	}
-
-	merc_save(hd);
+	clif_emotion(&sd->bl, 28) ;	//sob
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
 }

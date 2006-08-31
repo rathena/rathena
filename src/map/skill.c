@@ -928,10 +928,6 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 {	
 	int i = skillid;
 	nullpo_retr (1, hd);
-	//if (sd == 0)
-		//return 0; 
-		//return 1;
-	// I think it was meant to be "no skills allowed when not a valid sd"
 	
 	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
 		return 1;
@@ -947,23 +943,8 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 	if (hd->blockskill[i] > 0)
 		return 1;
 
-	// Check skill restrictions [Celest]
-	if(!map_flag_vs(hd->bl.m) && skill_get_nocast (skillid) & 1)
-		return 1;
-	if(map[hd->bl.m].flag.pvp) {
-		if(!battle_config.pk_mode && skill_get_nocast (skillid) & 2)
-			return 1;
-		if(battle_config.pk_mode && skill_get_nocast (skillid) & 16)
-			return 1;
-	}
-	if(map_flag_gvg(hd->bl.m) && skill_get_nocast (skillid) & 4)
-		return 1;
-	if(agit_flag && skill_get_nocast (skillid) & 8)
-		return 1;
-	if(map[hd->bl.m].flag.restricted && map[hd->bl.m].zone && skill_get_nocast (skillid) & (8*map[hd->bl.m].zone))
-		return 1;
-
-	return (map[hd->bl.m].flag.noskill);
+	//Use master's criteria.
+	return skillnotok(skillid, hd->master);
 }
 
 struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
@@ -1525,6 +1506,16 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case GS_FULLBUSTER:
 		status_change_start(src,SC_BLIND,200*skilllv,skilllv,0,0,0,skill_get_time2(skillid,skilllv),10);
+		break;
+	case HFLI_SBR44:	//[orn]
+	case HVAN_EXPLOSION:
+		if(src->type == BL_HOM){
+			TBL_HOM *hd = (TBL_HOM*)src;
+			if (hd->master) {
+				hd->master->homunculus.intimacy = 200;
+				clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
+			}
+		}
 		break;
 	}
 
@@ -2421,10 +2412,10 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 		}
 	}
 
+	if (!type) //States are only checked on begin casting.
 	switch(state) {
 	case ST_MOVE_ENABLE:
-		//Check only on begin casting. [Skotlex]
-		if(!type && !unit_can_move(&hd->bl)) {
+		if(!unit_can_move(&hd->bl)) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -4050,10 +4041,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case HVAN_EXPLOSION:	//[orn]
-		if(hd){
-			hd->master->homunculus.intimacy = 200;
-			clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
-		}
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemy.
@@ -8120,7 +8107,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			}
 			group=(struct skill_unit_group*)sc->data[SC_DANCING].val2;
 			time = 1000*(sc->data[SC_DANCING].val3>>16);
-			if (!group || (skill_get_time(sc->data[SC_DANCING].val1,group->skill_lv) - time <= skill_get_time2(skill,lv)))
+			if (!group ||
+				(skill_get_time(group->skill_id,group->skill_lv) - time <= skill_get_time2(skill,lv)))
 			{
 				clif_skill_fail(sd,skill,0,0);
 				return 0;

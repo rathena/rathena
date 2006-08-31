@@ -1204,11 +1204,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 			case HFLI_SBR44:	//[orn]
-				if(src->type == BL_HOM){
-					TBL_HOM *hd = (TBL_HOM*)src;
-					wd.damage = hd->master->homunculus.intimacy ;
-					hd->master->homunculus.intimacy = 200;
-					clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
+				if(src->type == BL_HOM && ((TBL_HOM*)src)->master) {
+					wd.damage = ((TBL_HOM*)src)->master->homunculus.intimacy ;
 					break;
 				}
 			default:
