@@ -296,7 +296,8 @@ int map_freeblock_unlock_sub(char *file, int lineno)
 		for (i = 0; i < block_free_count; i++)
 		{	//Directly calling aFree shouldn't be a leak, as Free remembers the size the original pointed to memory was allocated with? [Skotlex]
 //			aFree(block_free[i]);
-			_mfree(block_free[i], file, lineno, __func__);
+//			_mfree(block_free[i], file, lineno, __func__);
+			_mfree(block_free[i], file, block_free[i]->type*100000+lineno, __func__);
 			block_free[i] = NULL;
 		}
 		block_free_count = 0;

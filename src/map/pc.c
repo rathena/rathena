@@ -6677,7 +6677,8 @@ int pc_divorce(struct map_session_data *sd)
  */
 int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, struct map_session_data *jasd)
 {       
-	int j;          
+	int j,level, job;
+	unsigned int exp;
 	if (sd == NULL || dstsd == NULL || jasd == NULL ||
 		sd->status.partner_id <= 0 || dstsd->status.partner_id <= 0 ||
 		sd->status.partner_id != dstsd->status.char_id || dstsd->status.partner_id != sd->status.char_id ||
@@ -6692,8 +6693,19 @@ int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, stru
 		if(jasd->status.inventory[j].nameid>0 && jasd->status.inventory[j].equip!=0)
 			pc_unequipitem(jasd, j, 3);
 	}
-	if (pc_jobchange(jasd, 4023, 0) == 0)
+
+	//Preserve level and exp.
+	level = jasd->status.job_level;
+	exp = jasd->status.job_exp;
+	job = jasd->class_|JOBL_BABY; //Preserve current Job by babyfying it. [Skotlex]
+	job = pc_mapid2jobid(job, jasd->status.sex);
+	if (job != -1 && pc_jobchange(jasd, job, 0) == 0)
 	{	//Success, and give Junior the Baby skills. [Skotlex]
+		//Restore job level and experience.
+		jasd->status.job_level = level;
+		jasd->status.job_exp = exp;
+		clif_updatestatus(jasd,SP_JOBLEVEL);
+		clif_updatestatus(jasd,SP_JOBEXP);
 		pc_skill(jasd,WE_BABY,1,0);
 		pc_skill(jasd,WE_CALLPARENT,1,0);
 		clif_displaymessage(jasd->fd, msg_txt(12)); // Your job has been changed.
