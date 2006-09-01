@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/01
+	* The duplicate npc report will now print the related file name [Toms]
 	* Added config setting "partial_name_scan", which specifies whether @ given
 	  names should use a partial string lookup or absolute name lookup. Defaults
 	  to no (gm.conf) [Skotlex]
