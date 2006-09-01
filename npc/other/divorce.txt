@@ -1,0 +1,112 @@
+//===== eAthena Script ======================================= 
+//= Divorcing Deviruchi
+//===== By: ================================================== 
+//= Perkka, Scriptor, LightFighter
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena 1 +
+//===== Description: ========================================= 
+//=
+//===== Additional Comments: ================================= 
+//= Both players should be online to get divorced
+//= Fixed menu [Lupus]
+//============================================================ 
+
+
+nif_in.gat,190,112,5	script	Deviruchi	1109,{
+	if (getpartnerid() == 0) {
+		mes "[Deviruchi]";
+		mes "Kekeke, humans are always alone in the end,";
+		mes "The feeling of lonely is just temporarily.";
+		mes "If you feel lonely, how about getting a pet?";
+		mes "I, the Deviruchi is quite popular recently, you know...";
+		close;
+	}
+	mes "[Deviruchi]";
+	mes "You don't look good...";
+	mes "Anything that you have done that makes you feel regret now?";
+	mes "You must know that I am not willing to help happy people.";
+	mes "Deviruchi bear no interest";
+	mes "to those kind of people. Kekeke";
+	next;
+	mes "[Deviruchi]";
+	mes "Let's put everything aside first.";
+	mes "Let me ask you. Are you happy after you get married?";
+	mes "Don't think about love...";
+	mes "I know more than you can imagine.";
+	mes "There're countless problem behind one grand wedding.";
+	next;
+	mes "[Deviruchi]";
+	mes "That's right.";
+	mes "It your fate that you come here.";
+	mes "And I know it's your instinct to change your life too.";
+	mes "Although you have made an oath to your partner,";
+	mes "the heart will still wither somehow...!";
+	next;
+	mes "[Deviruchi]";
+	mes "The method is easy!";
+	mes "Marriage is actually one kind of contract.";
+	mes "Just ask a favor from Deviruchi";
+	mes "and it will destroy the contract for you... Do you get it?";
+	mes "Live a free life!!";
+	next;
+	mes "[Deviruchi]";
+	mes "You don't need to get the agreement of your partner,";
+	mes "You will find another lover soon,";
+	mes "So, why not leave your current partner?";
+	mes "... Want me to help?";
+	mes "I can cancel your marriage now, you know...!";
+	next;
+	menu "No, I am very happy now",-,"Yes, I want a new life",M_NewLife;
+
+	mes "[Deviruchi]";
+	mes "Hmmph, lovers... lovers!!";
+	mes "You will regret,";
+	mes "and come back to find Deviruchi someday!";
+	mes "We'll see how long your happiness will last!!";
+	close2;
+	warp "niflheim.gat",169,162;
+	end;
+
+M_NewLife:
+	mes "[Deviruchi]";
+	mes "Good, you don't need anything.";
+	mes "I just need your heart and 2,500,000 zeny.";
+	mes "You want to get back your life before you get married, don't you?";
+	mes "So, is that it? You're going to cancel the marriage contract?";
+	next;
+	menu "...I need to consider it again",-, "I am paying you to cancel it now!",M_Divorce;
+	mes "[Deviruchi]";
+	mes "Quit considering. Everyone will be alone in the end.";
+	mes "Just make up your mind and prepare the zeny,";
+	mes "then come and look for me...";
+	mes "Kekekeke.....";
+	close;
+
+M_Divorce:
+	if (Zeny < 2500000) goto NoMoney;
+	set Zeny, Zeny - 2500000;
+	mes "[Deviruchi]";
+	mes "Before you change your mind again, I will proceed with your divorce now!!";
+	mes "It might take some time...";
+	mes "So don't go away, and stay here!";
+	next;
+	//ShowEffect "Deviruchi#Divorce" EF_MAGICROD   Dont know, what to do here >.>
+	//ShowEffect "" EF_DEVIL		       same
+	percentheal -100,-100;
+	divorce;
+	mes "[Deviruchi]";
+	mes "Kekeke, you are free now!";
+	mes "Throw away all your sinking feelings!";
+	mes "You should thank Deviruchi.....!";
+	close;
+
+NoMoney:
+	mes "[Deviruchi]";
+	mes "Haven't I said 2,500,000 zeny?";
+	mes "This is the payment for Deviruchi to help you.";
+	mes "If you don't even have that money,";
+	mes "you can rot with that married life of yours... kekeke";
+	close;
+}
