@@ -3193,6 +3193,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			} else	//Excepting traps and icewall, you should not be able to target skills.
 				return 0;
 		}
+			break;
 		//Valid targets with no special checks here.
 		case BL_HOM:
 			break;
@@ -3479,6 +3480,7 @@ static const struct battle_data_short {
 	{ "atcommand_gm_only",                 &battle_config.atc_gmonly				},
 	{ "atcommand_spawn_quantity_limit",    &battle_config.atc_spawn_quantity_limit	},
 	{ "atcommand_slave_clone_limit",       &battle_config.atc_slave_clone_limit},
+	{ "partial_name_scan",                 &battle_config.partial_name_scan	},
 	{ "gm_all_skill",                      &battle_config.gm_allskill				},
 	{ "gm_all_skill_add_abra",	            &battle_config.gm_allskill_addabra		},
 	{ "gm_all_equipment",                  &battle_config.gm_allequip				},
@@ -3884,6 +3886,7 @@ void battle_set_defaults() {
 	battle_config.atc_gmonly=0;
 	battle_config.atc_spawn_quantity_limit=0;
 	battle_config.atc_slave_clone_limit=0;
+	battle_config.partial_name_scan=0;
 	battle_config.gm_allskill=0;
 	battle_config.gm_allequip=0;
 	battle_config.gm_skilluncond=0;

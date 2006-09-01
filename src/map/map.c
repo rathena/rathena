@@ -1787,15 +1787,32 @@ struct map_session_data * map_nick2sd(char *nick) {
 	if (nick == NULL)
 		return NULL;
 
-	 pl_allsd = map_getallusers(&users);
-	 
-	for (i = 0; i < users; i++) {
-		pl_sd = pl_allsd[i];
-		// Without case sensitive check (increase the number of similar character names found)
-		if (strcasecmp(pl_sd->status.name, nick) == 0)
-			return pl_sd;
+	pl_allsd = map_getallusers(&users);
+	if (battle_config.partial_name_scan)
+	{
+		int qty = 0, nicklen = strlen(nick);
+		struct map_session_data *sd = NULL;
+		for (i = 0; i < users; i++) {
+			pl_sd = pl_allsd[i];
+			// Without case sensitive check (increase the number of similar character names found)
+			if (strnicmp(pl_sd->status.name, nick, nicklen) == 0) {
+				// Strict comparison (if found, we finish the function immediatly with correct value)
+				if (strcmp(pl_sd->status.name, nick) == 0)
+					return pl_sd;
+				qty++;
+				sd = pl_sd;
+			}
+		}
+		// We return the found index of a similar account ONLY if there is 1 similar character
+		if (qty == 1)
+			return sd;
+	} else { //Exact Search
+		for (i = 0; i < users; i++) {
+			if (strcasecmp(pl_allsd[i]->status.name, nick) == 0)
+				return pl_allsd[i];
+		}
 	}
-	// Exact character name is not found and 0 or more than 1 similar characters have been found ==> we say not found
+	//Not found.
 	return NULL;
 }
 

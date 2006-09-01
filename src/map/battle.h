@@ -134,6 +134,7 @@ extern struct Battle_Config {
 	unsigned short atc_gmonly;
 	unsigned short atc_spawn_quantity_limit;
 	unsigned short atc_slave_clone_limit;
+	unsigned short partial_name_scan;
 	unsigned short gm_allskill;
 	unsigned short gm_allskill_addabra;
 	unsigned short gm_allequip;
