@@ -4508,7 +4508,7 @@ L_Hope:
 
 }
 
-alberta_in.gat,154,171,5	script	Maid#2	758,{
+alberta_in.gat,154,171,5	script	Maid#3	758,{
 
 	if(bakerlan_test > 11) goto L_Done;
 	if(bakerlan_test == 11) goto L_Thanks;
