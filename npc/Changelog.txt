@@ -32,6 +32,9 @@ Playtester
 
 Date		Added
 ======
+09/01
+	* Rogue Job quest: now baby thieves can pass 4th test [Lupus]
+	- In the same quest, fixed test4 quest NPC, thanks to Dj-Yhn
 08/31
 	* Removed a warp from Izlude to make sure people won't get stuck until [MasterOfMuppets]
 	  the arena has been finished.

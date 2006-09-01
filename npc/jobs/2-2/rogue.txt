@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.3a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -22,6 +22,8 @@
 //= 2.2 Merged JFunc [Lupus]
 //= 2.3 Added a possibility for players doing Meginjyard quest
 //= to enter Rogue guild as there's a NPC inside [SinSloth]
+//= 2.3a fixed test4 person interaction, let BABY thieves pass
+//=	the test, too [Lupus]
 //============================================================ 
 
 
@@ -775,76 +777,76 @@ sF_Password:
 //===============================================
 //---------------------------------------------------------------------------
 in_rogue.gat,244,39,4	script	Aragham Junior#02	99,{
-	callfunc "F_RogueTest4", "Aragham Junior", 245, 27;
+	callfunc "F_RogueTest4", 1, "Aragham Junior", 245, 27;
 }
 //---------------------------------------------------------------------------
 in_rogue.gat,152,27,6	script	Hollgrehen Junior#02	85,{
-	callfunc "F_RogueTest4", "Hollgrehen Junior", 160, 32;
+	callfunc "F_RogueTest4", 2, "Hollgrehen Junior", 160, 32;
 }
 //---------------------------------------------------------------------------
 in_rogue.gat,183,105,4	script	Antonio Junior#02	88,{
-	callfunc "F_RogueTest4", "Antonio Junior", 175, 107;
+	callfunc "F_RogueTest4", 3, "Antonio Junior", 175, 107;
 }
 
 // Function for Guildsman =============================
 function	script	F_RogueTest4	{
 
-	if(Class != Job_Thief || ROGUE_Q2 != 1) goto L_NoThief;
+	if(BaseJob != Job_Thief || ROGUE_Q2 != getarg(0)) goto L_NoThief;
 	if(ROGUE_Q == 4) goto L_Restart;
-	mes "[" + getarg(0) + "]";
-	mes "Hello there... You must be from the Rogue guild.  My name is " + getarg(0) + "...... I am the Rogue of the Desert..............";
+	mes "[" + getarg(1) + "]";
+	mes "Hello there... You must be from the Rogue guild.  My name is " + getarg(1) + "...... I am the Rogue of the Desert..............";
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "Aww who am I kidding...... Let's cut the crap.  So are you ready to become a rogue?";
 	emotion e_swt;
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "You see, the Rogue motto is...... ^5533FF'Avoid the strong! Be malicious to the weak!'^000000";
 	mes "This simple rule applys to fighting monsters as well.";
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "The very last thing you will have to do before you can become a Rogue, is to walk through an underground passage to the Rogue Guild.";
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "Sounds easy huh? Well it's not! But don't worry....";
 	mes "If you stay true to the Rogue motto and use a lot of hide, and do a lot of running, you should be just fine.";
 
 	M_Menu:
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "Ok, are you ready to go?";
 	next;
 	menu "As ready as I'll ever be.",-, "Actually I'm kinda scared...",M_End;
 
-		mes "[" + getarg(0) + "]";
+		mes "[" + getarg(1) + "]";
 		mes "Good luck then.";
 		next;
 		set ROGUE_Q, 4;
 		killmonsterall "in_rogue.gat";
-		savepoint "in_rogue.gat", getarg(1), getarg(2);
+		savepoint "in_rogue.gat", getarg(2), getarg(3);
 		warp "in_rogue.gat", 15, 105;
 		end;
 
 	M_End:
-		mes "[" + getarg(0) + "]";
+		mes "[" + getarg(1) + "]";
 		mes ".....................";
 		next;
-		mes "[" + getarg(0) + "]";
+		mes "[" + getarg(1) + "]";
 		mes "Well take your time then...... I guess.......";
 		close;
 
 L_Restart:
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "....... Looks like you got creamed.......";
 	emotion e_swt;
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "[" + getarg(1) + "]";
 	mes "If you're up for it, I'll send you back in.  Failure has a way of teaching success.... yada yada yada....";
 	percentheal 100,100;
 	goto M_Menu;
 
 L_NoThief:
-	mes "[" + getarg(0) +"]";
+	mes "[" + getarg(1) +"]";
 	mes "I don't know how you got the";
 		if(ROGUE_Q2)
 	{
@@ -858,7 +860,7 @@ L_NoThief:
 		mes "Rogue test.";
 	}
 	next;
-	mes "[" + getarg(0) +"]";
+	mes "[" + getarg(1) +"]";
 	mes "Please hurry up and leave";
 	mes "this place as soon as you can!";
 	close;
