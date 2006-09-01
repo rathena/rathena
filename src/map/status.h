@@ -636,7 +636,7 @@ int status_calc_pet(struct pet_data* pd, int first); // [Skotlex]
 int status_calc_pc(struct map_session_data* sd,int first);
 int status_calc_mob(struct mob_data* md, int first); //[Skotlex]
 int status_calc_homunculus(struct homun_data *hd, int first);
-void status_calc_misc(struct status_data *status, int type, int level);
+void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 
 void status_freecast_switch(struct map_session_data *sd);
 int status_getrefinebonus(int lv,int type);

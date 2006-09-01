@@ -3122,7 +3122,9 @@ static int mob_readdb(void)
 	char *filename[]={ "mob_db.txt","mob_db2.txt" };
 	struct status_data *status;
 	int class_, i, fi, k;
-
+	struct mob_data data;
+	memset(&data, 0, sizeof(struct mob_data));
+	data.bl.type = BL_MOB;
 	for(fi=0;fi<2;fi++){
 		sprintf(line, "%s/%s", db_path, filename[fi]);
 		fp=fopen(line,"r");
@@ -3256,8 +3258,9 @@ static int mob_readdb(void)
 			if(battle_config.monster_damage_delay_rate != 100)
 				status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
-			status_calc_misc(status, BL_MOB, mob_db_data[class_]->lv);
-				
+			data.level = mob_db_data[class_]->lv;
+			memcpy(&data.status, status, sizeof(struct status_data));
+			status_calc_misc(&data.bl, status, mob_db_data[class_]->lv);
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
 			mob_db_data[class_]->mexp=atoi(str[30])*battle_config.mvp_exp_rate/100;
 			mob_db_data[class_]->mexpper=atoi(str[31]);
@@ -3830,6 +3833,9 @@ static int mob_read_sqldb(void)
 	long unsigned int ln = 0;
 	struct status_data *status;
 	char *mob_db_name[] = { mob_db_db, mob_db2_db };
+	struct mob_data data;
+	memset(&data, 0, sizeof(struct mob_data));
+	data.bl.type = BL_MOB;
 
 	//For easier handling of converting. [Skotlex]
 #define TO_INT(a) (sql_row[a]==NULL?0:atoi(sql_row[a]))
@@ -3933,7 +3939,9 @@ static int mob_read_sqldb(void)
 				if(battle_config.monster_damage_delay_rate != 100)
 					status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
-				status_calc_misc(status, BL_MOB, mob_db_data[class_]->lv);
+				data.level = mob_db_data[class_]->lv;
+				memcpy(&data.status, status, sizeof(struct status_data));
+				status_calc_misc(&data.bl, status, mob_db_data[class_]->lv);
 				
 				// MVP EXP Bonus, Chance: MEXP,ExpPer
 				mob_db_data[class_]->mexp = TO_INT(30) * battle_config.mvp_exp_rate / 100;

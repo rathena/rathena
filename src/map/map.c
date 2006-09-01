@@ -1703,6 +1703,8 @@ int map_quit(struct map_session_data *sd) {
 	if(charsave_method)
 	{	//Let player be free'd on closing the connection.
 		idb_remove(pc_db,sd->status.account_id);
+		if (!(sd->fd && session[sd->fd]->session_data))
+			aFree(sd); //In case player was not attached to session.
 		return 0;	
 	}
 #endif
