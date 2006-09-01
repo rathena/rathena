@@ -4939,7 +4939,7 @@ L_Thanks:
 	close;
 }
 
-alde_alche.gat,169,162,7	script	Alchemist#2	749,{
+alde_alche.gat,169,162,7	script	Alchemist#3	749,{
 
 	if(!bakerlan_test)
 	{
