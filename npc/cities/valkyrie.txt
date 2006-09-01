@@ -4,7 +4,7 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -20,10 +20,8 @@
 //= 1.9 Added support for Job NPC Fase pics, sorrected one dialogue stuff [Lupus]
 //= 2.0 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 2.1 Changed all numbers into constants. [Vicious]
-//= 2.2 Now ALL quests skills are saved/restored [Lupus]
-//= 2.3 Removed Duplicates [Silent]
-//= 2.4 Fixed typos, optimized [Lupus]
-//= 2.5 Fixed a stuck bug [Lupus]
+//= 2.2 Now ALL quests skills are saved/restored [Lupus] 2.3 Removed Duplicates [Silent] 2.4 Fixed typos, optimized [Lupus] 2.5 Fixed a stuck bug [Lupus]
+//= 2.6 Adding proper dialogues [Lupus]
 //============================================================ 
 
 
@@ -34,35 +32,37 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
-	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
+	if(Upper==1){
+		mes "...The entrance to the Hall of Honor is open to everyone who will move forward, into their next lives.";
+		mes "It is there to help heroes decide what they want to do, and can access every place in this world.";
+		next;
+		mes "[Book of Ymir]"
+		mes "In the Hall of Honor, everything is perfectly prepared for heroes.";
+		mes "It is rumored that any wish that cannot be fulfilled in our reality can be realized in the Hall of Honor.";
+		next;
+		switch(select("Stop reading.:Continue reading.")) {
+		case 1:
+			mes "[Book of Ymir]"
+			mes ". . . . .";
+			close;
+			break;
+
+		case 2:
+			mes "There is a forgotten path which leads to the Hall of Honor, the closest place to the heavens.";
+			mes "However, it is forbidden for ordinary people to know about it...";
+			close2;
+			warp "valkyrie",48,9; //48,8?
+			end;
+			break;
+		}
+	}
+	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja){
+
+	}
+) goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
 	if(valkyrie_Q >= 1) goto L_CONT;
 L_IGNORE:
 	mes ". . . . .";
-	close;
-
-L_CONT:
-	mes "*The book opens as you approach it.*";
-	next;
-	mes "[Book of Ymir]";
-	mes "Those seeking the final fortress in this world shall venture through hardships let alone to mankind. Venturing through rough times, helped by friends and loved ones, one can finally after a lot of work and commitment see the true view of the world and then... go beyond it.";
-	next;
-	mes "[Book of Ymir]";
-	if(valkyrie_Q == 1){
-		mes "*After reading the two first pages you turn the other page and watch the words fade away as you try to read them...";
-	}else{
-		mes "*After reading the first two pages you flip the last one and continue to read...*";
-		next;
-		mes "[Book of Ymir]";
-		mes "That is when the Gods and Goddesses of this world comes forth towards you in all disguise, checking you through. Reading your mind, thoughts and true feeling of the heart.";
-		mes "If the Gods, descended from the world along time ago, accept you into the halls of Valkyrie, high up above the clouds in the sacred realm of Valkyrie, into Gods light you will be reborn, and sent out to face the world once again.";
-		next;
-		mes "[Book of Ymir]";
-		mes "And only after then, the descended ones will approve you to the highest obedience... Into the warmth of Valkyrie, you will be welcomed by the Gods themselves.";
-		next;
-		mes "[Book of Ymir]";
-		mes "*As you close the book a strange ray of light surrounds you and you suddenly feel light. Everything around you fades away and all you can see left is white before you pass out.*";
-		warp "valkyrie",48,9;
-	}
 	close;
 }
 
@@ -141,10 +141,10 @@ yuno_in02.gat,90,77,4	script	Researcher#06	744,{
 valkyrie.gat,48,86,6	script	Valkyrie	811,{
 	mes "[Valhallana]";
 	if(BaseJob == Job_SuperNovice) goto L_SN;
-	if(baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_TAEKWON; //sent back any Taekwondo/GS/NJ classes
+	if(baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_CANT; //sent back any Taekwondo/GS/NJ classes
 	if(Upper == 2) goto L_BABY;
 	if(Upper > 0) goto L_ALREADY;
-	if(BaseLevel >= 99 && JobLevel >= 50 && BaseJob >= 7) goto L_CHANGE;
+	if(BaseLevel >= 99 && JobLevel >= 50 && BaseJob > Job_Thief) goto L_CHANGE;
 	if(BaseJob <= Job_Thief) goto L_NOTHING;
 
 	mes "You need 99 Base Level and 50 Job Level.";
@@ -161,7 +161,7 @@ L_Y:
 	warp "yuno_in02.gat",93,204;
 	close;
 
-L_TAEKWON:
+L_CANT:
 	mes "How did you get here?";
 	emotion e_what;
 	next;
