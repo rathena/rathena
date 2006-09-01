@@ -330,7 +330,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		//Now damage increasing effects
 		if(sc->data[SC_AETERNA].timer!=-1 && skill_num != PF_SOULBURN){
 			damage<<=1;
-			status_change_end( bl,SC_AETERNA,-1 );
+			//Shouldn't end until Breaker's non-weapon part connects.
+			if (skill_num != ASC_BREAKER || flag&BF_WEAPON)
+				status_change_end( bl,SC_AETERNA,-1 );
 		}
 
 		if(sc->data[SC_SPIDERWEB].timer!=-1)	// [Celest]

@@ -2304,7 +2304,8 @@ int mob_class_change (struct mob_data *md, int class_)
 	if(md->lootitem == NULL && md->db->status.mode&MD_LOOTER)
 		md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 
-	clif_charnameack(0, &md->bl);
+	if (battle_config.show_mob_hp)
+		clif_charnameack(0, &md->bl);
 
 	return 0;
 }
@@ -3250,13 +3251,8 @@ static int mob_readdb(void)
 			status->amotion=atoi(str[28]);
 			status->dmotion=atoi(str[29]);
 			//If the attack animation is longer than the delay, the client crops the attack animation!
-			if (status->adelay < status->amotion) {
-				//Let's try switching them to see what happens.
-//				status->adelay = status->amotion;
-				i = status->adelay;
+			if (status->adelay < status->amotion)
 				status->adelay = status->amotion;
-				status->amotion = i;
-			}
 			if(battle_config.monster_damage_delay_rate != 100)
 				status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
@@ -3932,14 +3928,8 @@ static int mob_read_sqldb(void)
 				status->amotion = TO_INT(28);
 				status->dmotion = TO_INT(29);
 				//If the attack animation is longer than the delay, the client crops the attack animation!
-				if (status->adelay < status->amotion) {
-					//Let's try switching them to see what happens.
-	//				status->adelay = status->amotion;
-					i = status->adelay;
+				if (status->adelay < status->amotion)
 					status->adelay = status->amotion;
-					status->amotion = i;
-				}
-
 				if(battle_config.monster_damage_delay_rate != 100)
 					status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 

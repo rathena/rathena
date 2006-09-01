@@ -1864,7 +1864,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	
 		if(sc && sc->data[SC_MAGICROD].timer != -1 && src == dsrc) {
-			//struct unit_data *ud;
 			int sp = skill_get_sp(skillid,skilllv);
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_FLEE; //This will prevent skill additional effect from taking effect. [Skotlex]
@@ -1873,11 +1872,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
 			status_heal(bl, 0, sp, 2);
 			clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD].val1,1);
-			/* It was reported you don't get an act delay once it triggers.
-			ud = unit_bl2ud(bl);
-			if (ud) ud->canact_tick = tick
-				+ skill_delayfix(bl, SA_MAGICROD, sc->data[SC_MAGICROD].val1);
-			*/	
 		}
 	}
 
@@ -3055,7 +3049,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (skilllv>1) {
 			int range = skilllv/2;
 			int cnt;
-
 		  	if (sd)
 				cnt = skill_count_water(src,range);
 			else {
@@ -5475,7 +5468,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			sc_start(bl,SC_STUN,(rate>100)?100:rate,skilllv,skill_get_time2(skillid,skilllv)); //New temp stun rate (by RockmanEXE)
 		}
-		else
+		else if (sd)
 			clif_skill_fail(sd,skillid,0,0);
 		break;
 	case AM_REST:
@@ -5673,6 +5666,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				break;
 			}
 		}
+
 		//Avoid doing double checks for instant-cast skills.
 		if (tid != -1 && !status_check_skilluse(src, target, ud->skillid, 1))
 			break;
@@ -5764,19 +5758,17 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				clif_slide(src,src->x,src->y);
 				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5);
 			}
+			clif_skill_fail(sd,ud->skillid,0,0);
 		}
 	}
 	ud->skillid = ud->skilllv = ud->skilltarget = 0;
 	ud->canact_tick = tick;
-	if(sd)
-	{
-		sd->skillitem = sd->skillitemlv = -1;
-		clif_skill_fail(sd, ud->skillid, 0, 0);
-	}
-	else if (hd)
-		clif_skill_fail(hd->master, ud->skillid, 0, 0);
-	else if(md)
-		md->skillidx  = -1;
+	//You can't place a skill failed packet here because it would be
+	//sent in ALL cases, even cases where skill_check_condition fails
+	//which would lead to double 'skill failed' messages u.u [Skotlex]
+	if(sd) sd->skillitem = sd->skillitemlv = -1;
+	else
+	if(md) md->skillidx = -1;
 	return 0;
 }
 
@@ -5891,7 +5883,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		clif_skill_fail(sd,ud->skillid,0,0);
 		sd->skillitem = sd->skillitemlv = -1;
 	}
-	else if (hd)
+	else if (hd && hd->master)
 		clif_skill_fail(hd->master, ud->skillid, 0, 0);
 	else if(md)
 		md->skillidx  = -1;
@@ -8098,17 +8090,17 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		return 0;
 	case BD_ADAPTATION:				/* アドリブ */
 		{
-			struct skill_unit_group *group=NULL;
 			int time;
 			if(!sc || sc->data[SC_DANCING].timer==-1)
 			{
 				clif_skill_fail(sd,skill,0,0);
 				return 0;
 			}
-			group=(struct skill_unit_group*)sc->data[SC_DANCING].val2;
 			time = 1000*(sc->data[SC_DANCING].val3>>16);
-			if (!group ||
-				(skill_get_time(group->skill_id,group->skill_lv) - time <= skill_get_time2(skill,lv)))
+			if (skill_get_time(
+				(sc->data[SC_DANCING].val1&0xFFFF), //Dance Skill ID
+				(sc->data[SC_DANCING].val1>>16)) //Dance Skill LV
+				- time <= skill_get_time2(skill,lv))
 			{
 				clif_skill_fail(sd,skill,0,0);
 				return 0;

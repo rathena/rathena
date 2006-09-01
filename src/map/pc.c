@@ -2939,7 +2939,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 
 	sd->canuseitem_tick= tick + battle_config.item_use_interval; //Update item use time.
-	//sd->npc_id = fake_nd->bl.id;
 	run_script(script,0,sd->bl.id,fake_nd->bl.id);
 	potion_flag = 0;
 	return 1;
@@ -4032,7 +4031,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 	} else
-		if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
 	{
 		sc_start(&sd->bl,SkillStatusChangeTable(AL_INCAGI),100,10,600000);
 		sc_start(&sd->bl,SkillStatusChangeTable(AL_BLESSING),100,10,600000);
