@@ -2631,7 +2631,10 @@ void run_script_main(struct script_state *st)
 				{	//sp > defsp is valid in cases when you invoke functions and don't use the returned value. [Skotlex]
 					//Since sp is supposed to be defsp in these cases, we could assume the extra stack elements are unneeded.
 					if (battle_config.etc_log)
+					{
 						ShowWarning("Clearing unused stack stack.sp(%d) -> default(%d)\n",stack->sp,stack->defsp);
+						report_src(st);
+					}
 					pop_stack(stack, stack->defsp, stack->sp); //Clear out the unused stack-section.
 				} else if(battle_config.error_log)
 					ShowError("stack.sp(%d) != default(%d)\n",stack->sp,stack->defsp);
