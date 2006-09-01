@@ -92,7 +92,7 @@ L_nojob:
 //=====================Requires Bug Testing=====================
 lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
 	mes "[Rekenber Guard]";
-	if(getequipid(9) == 2243){
+	if(isequipped(2241) && isequipped(2243)){
 		mes "......................";
 		next;
 		switch(select("Nice day, huh?","Cancel")){
@@ -255,7 +255,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		input @kelques$;
 		next;
 		mes "[Kellasus]";
-		if(@kelques$ != "Rest"){
+		if(@kelques$ != "Vaporize"){
 			mes "Hmpf. I knew you had";
 			mes "no knowledge on";
 			mes "homunculus.";
@@ -269,7 +269,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		input @kelques$;
 		next;
 		mes "[Kellasus]";
-		if(@kelques$ != "Germination Breed"){
+		if(@kelques$ != "Embryo"){
 			mes "Hmpf. I knew you had";
 			mes "no knowledge on";
 			mes "homunculus.";
@@ -283,7 +283,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		input @kelques$;
 		next;
 		mes "[Kellasus]";
-		if(@kelques$ != "Resurrect Homunculus"){
+		if(@kelques$ != "Homunculus Ressurection"){
 			mes "Hmpf. I knew you had";
 			mes "no knowledge on";
 			mes "homunculus.";
@@ -323,8 +323,9 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		mes "...";
 		next;
 		mes "[Kellasus]";
-		mes "I guess I could teach you a few skills..";
-		//Gives player bio ethics and sets bitshift for quest finished
+		mes "He wants me to get back? Okay, well...";
+		mes "I guess you've deserved it.";
+		mes "Here you are, secrets of homunculus are yours now~";
 		if(BaseJob == Job_Alchem) skill 238,1,0;
 		set MISC_QUEST,MISC_QUEST|64;
 		set bioeth,0;
@@ -405,24 +406,23 @@ lhz_in01.gat,225,122,4	script	Skrajiad	754,{
 	mes "be a master of all trades";
 	mes "to be proficient in Alchemy";
 	mes "But it's incredibly rewarding to";
-	mes "those of us who never stop askins";
+	mes "those of us who never stop asking";
 	mes "how and why our world works.";
 	if(bioeth == 1) set bioeth,2;
 	close;
 }
 lhz_in02.gat,269,273,4	script	Bringel	709,{
 //Unofficial Text
-	if(bioeth > 3 || MISC_QUEST&64){
-		if(getskilllv(247) == 0 && BaseJob == Job_Alchem) skill 247,1,0;
-	}
 	if(bioeth == 3){
 		mes "[Bringel]";
-		mes "I see you're here to";
-		mes "learn about homunculus...";
-		mes "I will teach you a";
-		mes "valuable skill to use.";
-		//Learn res homun
-		if(BaseJob == Job_Alchem) skill 247,1,0;
+		mes "Oh, you're here to learn about Homunculus?";
+		mes "Well, I can't really help you...";
+		next;
+		mes "[Bringel]";
+		mes "However, I've heard about a skill named";
+		mes "Homunculus Ressurection.";
+		mes "It seems it is a very important thing";
+		mes "for people working on them.";
 		set bioeth,4;
 		close;
 	}

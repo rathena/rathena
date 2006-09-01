@@ -1952,7 +1952,7 @@ lhz_in01.gat,73,188,4	script	Guide#03	862,{
 
 lhz_in01.gat,34,226,4	script	Rekenber Guard#01	867,{
 
-	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	if(isequipped(2241) && isequipped(2243)) goto s_Staff;
 	mes "[Rekenber Guard]";
 	mes "This is a restricted";
 	mes "area! Please show";
@@ -1987,7 +1987,7 @@ s_Staff:
 
 lhz_in01.gat,19,129,0	script	LhzHiddenTrg1::LhzTrig	-1,1,1{
 OnTouch:
-	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	if(isequipped(2241) && isequipped(2243)) goto s_Staff;
 	mes "[Rekenber Guard]";
 	mes "This area is restricted";
 	mes "to the public! Who are you";
@@ -2015,7 +2015,7 @@ lhz_in01.gat,24,131,2	duplicate(LhzTrig)	Rekenber Guard#02	867
 
 lhz_in01.gat,25,141,4	script	Regenschirm Guard	868,{
 
-	if(getequipid(10) == 2241 && getequipid(9) == 2243)goto s_Staff;
+	if(isequipped(2241) && isequipped(2243)) goto s_Staff;
 	mes "[Regenschirm Guard]";
 	mes "This area is restricted";
 	mes "to the public! Who are you";
@@ -2038,7 +2038,7 @@ s_Staff:
 	close;
 
 s_Yes:
-	if(getequipid(7) == 2657 || getequipid(8) == 2657)goto s_Auth;
+	if(isequipped(2657)) goto s_Auth;
 	mes "[Regenschirm Guard]";
 	mes "I'm sorry but I can't let";
 	mes "staff without proper autorization";

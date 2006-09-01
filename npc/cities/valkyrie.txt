@@ -36,13 +36,13 @@ yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 		mes "...The entrance to the Hall of Honor is open to everyone who will move forward, into their next lives.";
 		mes "It is there to help heroes decide what they want to do, and can access every place in this world.";
 		next;
-		mes "[Book of Ymir]"
+		mes "[Book of Ymir]";
 		mes "In the Hall of Honor, everything is perfectly prepared for heroes.";
 		mes "It is rumored that any wish that cannot be fulfilled in our reality can be realized in the Hall of Honor.";
 		next;
-		switch(select("Stop reading.:Continue reading.")) {
+		switch(select("Stop reading.","Continue reading.")) {
 		case 1:
-			mes "[Book of Ymir]"
+			mes "[Book of Ymir]";
 			mes ". . . . .";
 			close;
 			break;
@@ -56,11 +56,10 @@ yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 			break;
 		}
 	}
-	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja){
-
-	}
-) goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
+	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja)
+		goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
 	if(valkyrie_Q >= 1) goto L_CONT;
+
 L_IGNORE:
 	mes ". . . . .";
 	close;

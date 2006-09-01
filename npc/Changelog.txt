@@ -33,6 +33,13 @@ Playtester
 Date		Added
 ======
 09/01
+	* Removed useless 'npc\other\old' directory, who would need that anyway... [DracoRPG]
+	* Commented out the path to Divorce NPC as Lupus forgot to add it for good [DracoRPG]
+	* Fixed critical syntax errors in the new Valkyrie script, (è_é) @ Lupus [DracoRPG]
+	* Improved Bioethics quest & nearby Rekenber Guards [DracoRPG]
+	  - Used isequipped() instead of getequipid() to simplify code (esp. with accessories)
+	  - Rewritten the custom text about Hom. Res. and removed its actual learning
+	  - iRO-ized answers to the test (text was taken from a pRO guide so pRO names >.>)
 	* Rogue Job quest: now baby thieves can pass 4th test [Lupus]
 	- In the same quest, fixed test4 quest NPC, thanks to Dj-Yhn
 	- Added divorcing Deviruchi, converted by LightFighter
