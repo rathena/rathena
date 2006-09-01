@@ -263,7 +263,7 @@ int add_timer_interval(unsigned int tick, int (*func)(int,unsigned int,int,int),
 int delete_timer(int id, int (*func)(int,unsigned int,int,int))
 {
 	if (id <= 0 || id >= timer_data_num) {
-		ShowError("delete_timer error : no such timer %d\n", id);
+		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", id, (int)func, search_timer_func_list(func));
 		return -1;
 	}
 	if (timer_data[id].func != func) {
