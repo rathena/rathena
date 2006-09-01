@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sousuke_PL
 //===== Current Version: =====================================
-//= 0.1a
+//= 0.1b
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= cards too?
 //===== Additional Comments: =================================
 //= 0.1a added missing L_No: to 2 funcs [Lupus]
+//= 0.1b Removed duplicates [Toms]
 //============================================================
 
 
@@ -826,6 +827,6 @@ function	script	f_armor_s2	{
 }
 
 
-prt_in.gat,33,70,5	duplicate(Socket Enchant)	Socket Enchant	84
-payon.gat,140,151,5	duplicate(Socket Enchant)	Socket Enchant	84
-morocc.gat,51,41,5	duplicate(Socket Enchant)	Socket Enchant	84
+prt_in.gat,33,70,5	duplicate(Socket Enchant)	Socket Enchant#2	84
+payon.gat,140,151,5	duplicate(Socket Enchant)	Socket Enchant#3	84
+morocc.gat,51,41,5	duplicate(Socket Enchant)	Socket Enchant#4	84

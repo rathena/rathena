@@ -20,6 +20,7 @@
 //= 1.7 - Fixed bugs and exploits [Lupus]
 //= 1.8 - Warps you to Niff with 1HP [Lance]
 //= 1.9 - Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate to npc/quests/quests_umbala.txt [Evera]
+//= 2.0 - Removed duplicates, max NPC name length is 23, so Utan Tribe Young Adult#1, the 1 is skipped [Toms]
 //============================================================
 
 
@@ -530,7 +531,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,140,157,6	script	Utan Tribe Young Adult#1	785,{
+umbala.gat,140,157,6	script	Utan Tribe Young Adult::UtanTribeYougAdult1	785,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Seirutan]";
 	mes "Bungy jumping is extremely dangerous.";
@@ -668,7 +669,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,139,205,4	script	Utan Tribe Young Adult#5	785,{
+umbala.gat,139,205,4	script	Utan Tribe Young Adult::UtanTribeYougAdult5	785,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Tsunitan]";
 	mes "Awesome!  I haven't seen an outsider in some time.";

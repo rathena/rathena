@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.1a moved #aldesignwarp to fix enless warp [Lupus]
 //= 1.2 Fixed a minor bug that prevented people from advancing [MasterOfMuppets]
 //= 	quest at one point.
+//= 1.3 Removed duplicates [Toms]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -97,11 +98,11 @@ alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
 
 }	
 
-morocc.gat,168,264,1	duplicate(GeffeniaSigns)	Sign	111
-payon.gat,160,183,1	duplicate(GeffeniaSigns)	Sign	111
-prontera.gat,147,305,1	duplicate(GeffeniaSigns)	Sign	111
-geffen.gat,168,175,1	duplicate(GeffeniaSigns)	Sign	111
-aldebaran.gat,54,223,1	duplicate(GeffeniaSigns)	Sign	111
+morocc.gat,168,264,1	duplicate(GeffeniaSigns)	Sign#2	111
+payon.gat,160,183,1	duplicate(GeffeniaSigns)	Sign#3	111
+prontera.gat,147,305,1	duplicate(GeffeniaSigns)	Sign#4	111
+geffen.gat,168,175,1	duplicate(GeffeniaSigns)	Sign#5	111
+aldebaran.gat,54,223,1	duplicate(GeffeniaSigns)	Sign#6	111
 
 prt_in.gat,228,26,4	script	Steward	55,{
 
@@ -832,13 +833,13 @@ L_Stop:
 
 }
 
-prt_in.gat,248,23,4	script	Maid	1275,{
+prt_in.gat,248,23,4	script	Maid#2	1275,{
 
 end;
 
 }
 
-morocc_in.gat,114,162,4	script	Young Man	118,{
+morocc_in.gat,114,162,4	script	Young Man#13	118,{
 
 	if(signquest == 5)
 {
@@ -1340,9 +1341,9 @@ end;
 
 }
 
-payon_in03.gat,81,21,4	duplicate(Sohee)	Maid	1170
-payon_in03.gat,78,21,4	duplicate(Miyabi)	Maid	1404
-payon_in03.gat,8,31,4	duplicate(Nymph)	Maid	1416
+payon_in03.gat,81,21,4	duplicate(Sohee)	Maid::Sohee2	1170
+payon_in03.gat,78,21,4	duplicate(Miyabi)	Maid::Miyabi2	1404
+payon_in03.gat,8,31,4	duplicate(Nymph)	Maid::Nymph2	1416
 
 payon_in03.gat,11,31,4	script	Daewoon	808,{
 
@@ -2408,7 +2409,7 @@ else
 	end;
 }
 
-prt_maze02.gat,57,152,1	script	Girl	91,{
+prt_maze02.gat,57,152,1	script	Girl#11	91,{
 
 	mes "^3355FFYou catch a glimpse";
 	mes "of a girl headin directly";
@@ -2791,7 +2792,7 @@ L_stuckup:
 	mes "I believe I can be";
 	mes "of assistance.";
 	emotion 0;
-	donpcevent "Aaron::OnHeh";
+	donpcevent "Aaron2::OnHeh";
 	emotion 0,1;
 	next;
 	mes "[Jesqurienne]";
@@ -2839,7 +2840,7 @@ L_won:
 // ---------------------------------------------------------
 
 
-geffen_in.gat,60,70,6	script	Aaron	754,{
+geffen_in.gat,60,70,6	script	Aaron::Aaron2	754,{
 
 	if(signquest == 10) goto L_done;
 	if(@signquiz == 1) goto L_startquiz;
@@ -4507,7 +4508,7 @@ L_Hope:
 
 }
 
-alberta_in.gat,154,171,5	script	Maid	758,{
+alberta_in.gat,154,171,5	script	Maid#2	758,{
 
 	if(bakerlan_test > 11) goto L_Done;
 	if(bakerlan_test == 11) goto L_Thanks;
@@ -4891,7 +4892,7 @@ L_Over:
 	close;
 }
 
-yuno.gat,330,100,3	script	Knight	734,{
+yuno.gat,330,100,3	script	Knight#2	734,{
 
 	if (bakerlan_test > 4) goto L_Thanks;
 	if (bakerlan_test == 3) goto L_Delivery;
@@ -4938,7 +4939,7 @@ L_Thanks:
 	close;
 }
 
-alde_alche.gat,169,162,7	script	Alchemist	749,{
+alde_alche.gat,169,162,7	script	Alchemist#2	749,{
 
 	if(!bakerlan_test)
 	{
@@ -5191,7 +5192,7 @@ L_Done:
 
 }
 
-prt_castle.gat,107,58,5	script	Soldier	105,{
+prt_castle.gat,107,58,5	script	Soldier#2	105,{
 
 	if(bakerlan_test > 10) goto L_Heya;
 	mes "[Maruin]";
@@ -6398,7 +6399,7 @@ L_Warp:
 
 }
 
-himinn.gat,48,86,5	script	Valkyrie	811,{
+himinn.gat,48,86,5	script	Valkyrie#2	811,{
 
 	if(signquest == 58) goto L_Done;
 	if(signquest > 51) goto L_Gods;
@@ -8142,7 +8143,7 @@ nif_in.gat,140,177,1	script	#signgrave	111,{
 
 }
 
-que_sign01.gat,122,141,5	script	Witch	792,{
+que_sign01.gat,122,141,5	script	Witch#2	792,{
 
 	if(Sign_Branch8B && Sign_Branch8B < 4)goto L_MustHurry;
 	if(signquest > 56) goto L_NoMedal;
@@ -8631,7 +8632,7 @@ gl_dun02.gat,262,265,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,270,98,1	script	Mysterious Energy	111,{
+gl_dun02.gat,270,98,1	script	Mysterious Energy#2	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 2) || (brokenseal == 2 && Sign_Seal2 == 2) || (brokenseal == 3 && Sign_Seal3 == 2) || (brokenseal == 4 && Sign_Seal4 == 2))
 {
@@ -8655,7 +8656,7 @@ gl_dun02.gat,270,98,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,268,31,1	script	Mysterious Energy	111,{
+gl_dun02.gat,268,31,1	script	Mysterious Energy#3	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 3) || (brokenseal == 2 && Sign_Seal2 == 3) || (brokenseal == 3 && Sign_Seal3 == 3) || (brokenseal == 4 && Sign_Seal4 == 3))
 {
@@ -8679,7 +8680,7 @@ gl_dun02.gat,268,31,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,139,72,1	script	Mysterious Energy	111,{
+gl_dun02.gat,139,72,1	script	Mysterious Energy#4	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 4) || (brokenseal == 2 && Sign_Seal2 == 4) || (brokenseal == 3 && Sign_Seal3 == 4) || (brokenseal == 4 && Sign_Seal4 == 4))
 {
@@ -8703,7 +8704,7 @@ gl_dun02.gat,139,72,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,16,26,1	script	Mysterious Energy	111,{
+gl_dun02.gat,16,26,1	script	Mysterious Energy#5	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 5) || (brokenseal == 2 && Sign_Seal2 == 5) || (brokenseal == 3 && Sign_Seal3 == 5) || (brokenseal == 4 && Sign_Seal4 == 5))
 {
@@ -8727,7 +8728,7 @@ gl_dun02.gat,16,26,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,120,180,1	script	Mysterious Energy	111,{
+gl_dun02.gat,120,180,1	script	Mysterious Energy#6	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 6) || (brokenseal == 2 && Sign_Seal2 == 6) || (brokenseal == 3 && Sign_Seal3 == 6) || (brokenseal == 4 && Sign_Seal4 == 6))
 {
@@ -8751,7 +8752,7 @@ gl_dun02.gat,120,180,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,42,251,1	script	Mysterious Energy	111,{
+gl_dun02.gat,42,251,1	script	Mysterious Energy#7	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 7) || (brokenseal == 2 && Sign_Seal2 == 7) || (brokenseal == 3 && Sign_Seal3 == 7) || (brokenseal == 4 && Sign_Seal4 == 7))
 {
@@ -8775,7 +8776,7 @@ gl_dun02.gat,42,251,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,124,231,1	script	Mysterious Energy	111,{
+gl_dun02.gat,124,231,1	script	Mysterious Energy#8	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 8) || (brokenseal == 2 && Sign_Seal2 == 8) || (brokenseal == 3 && Sign_Seal3 == 8) || (brokenseal == 4 && Sign_Seal4 == 8))
 {

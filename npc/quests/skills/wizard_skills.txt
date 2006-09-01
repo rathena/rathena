@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.3c
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -18,13 +18,14 @@
 //= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Removed duplicates [Toms]
 //============================================================
 
 
 //============================================================
 // WIZARD - SIGHTBLASTER
 //============================================================
-gef_tower.gat,116,37,1	script	Enoz	748,{
+gef_tower.gat,116,37,1	script	Enoz#2	748,{
 	if(HELLIONQ == 22)goto L_remember;
 	if(HELLIONQ == 21)goto L_joke;
 	if(HELLIONQ == 20)goto L_take;

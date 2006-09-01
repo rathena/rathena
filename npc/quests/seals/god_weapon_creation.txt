@@ -306,7 +306,7 @@ gld_dun01.gat,28,85,0	script	Grunburti	826,{
 	}
 }
 
-gld_dun02.gat,85,84,0	script	Grunburti	826,{
+gld_dun02.gat,85,84,0	script	Grunburti#2	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -600,7 +600,7 @@ gld_dun02.gat,85,84,0	script	Grunburti	826,{
 	}
 }
 
-gld_dun03.gat,92,105,0	script	Grunburti	826,{
+gld_dun03.gat,92,105,0	script	Grunburti#3	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -894,7 +894,7 @@ gld_dun03.gat,92,105,0	script	Grunburti	826,{
 	}
 }
 
-gld_dun04.gat,268,230,0	script	Grunburti	826,{
+gld_dun04.gat,268,230,0	script	Grunburti#4	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";

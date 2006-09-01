@@ -72,18 +72,18 @@
 //============================================================ 
 
 //Yuno
-yuno.gat,153,191,4	script	Cool Event Voting Staff#01	874,{
+yuno.gat,153,191,4	script	Cool Event Voting Staff::CoolEventVotingStaff01	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
 yuno.gat,162,191,6	script	Kafra Voting Staff#01	861,{
 	callfunc "F_DTS_Warp",1,8;
 }
 //Lighthalzen
-lighthalzen.gat,154,60,6	script	Cool Event Voting Staff#02	874,{
+lighthalzen.gat,154,60,6	script	Cool Event Voting Staff::CoolEventVotingStaff02	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
 //Prontera
-prontera.gat,147,125,4	script	Cool Event Voting Staff#03	874,{
+prontera.gat,147,125,4	script	Cool Event Voting Staff::CoolEventVotingStaff03	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
 prontera.gat,164,125,6	script	Kafra Voting Staff#02	115,{
@@ -896,7 +896,8 @@ function	script	F_DTS_Warp	{
 		close2;
 		cutin "", 255;
 		end;
-}
+
+}
 
 //Elections administration NPC (hidden)
 -	script DTS_Admin -1,{

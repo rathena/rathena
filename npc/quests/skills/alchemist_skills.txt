@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.4 Added Creators + Baby Alchemists can pass Bio Ethics
 //= 	Quest too [Lupus]
+//= 1.5 Removed duplicates [Toms]
 //============================================================
 
 
@@ -124,13 +125,13 @@ lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
 		end;
 }
 		
-lhz_in01.gat,285,169,7	script	Researcher	865,{
+lhz_in01.gat,285,169,7	script	Researcher#2	865,{
 //Unknown Text
 	mes "[Researcher]";
 	mes "Hmm... I wonder...";
 	close;
 }
-lhz_in01.gat,199,137,8	script	Scientist	865,{
+lhz_in01.gat,199,137,8	script	Scientist#2	865,{
 	mes "[Scientist]";
 	mes "Whoa whoa~!";
 	mes "Please! Don't";
@@ -172,7 +173,7 @@ lhz_in01.gat,204,138,6	script	Keshibien	750,{
 	mes "collaborate with any of them...";
 	close;
 }
-lhz_in01.gat,203,123,8	script	Scientist	750,{
+lhz_in01.gat,203,123,8	script	Scientist#3	750,{
 	mes "[Scientist]";
 	mes "Alright. Pull one test";
 	mes "tube out of the machine,";
@@ -189,7 +190,7 @@ lhz_in01.gat,203,123,8	script	Scientist	750,{
 	mes "lose the instructions...";
 	close;
 }
-lhz_in01.gat,221,131,3	script	Scientist	865,{
+lhz_in01.gat,221,131,3	script	Scientist#4	865,{
 	mes "[Scientist]";
 	mes "It takes so long for";
 	mes "this device to process";
@@ -198,7 +199,7 @@ lhz_in01.gat,221,131,3	script	Scientist	865,{
 	mes "heightens my anticipation...";
 	close;
 }
-lhz_in01.gat,218,141,0	script	Alchemist	98,{
+lhz_in01.gat,218,141,0	script	Alchemist#2	98,{
 	mes "[Alchemist]";
 	mes "Out of all humans,";
 	mes "I believe Kellasus is";

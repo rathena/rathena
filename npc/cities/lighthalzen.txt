@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.8
+//= 0.9
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 0.6 Fixed some typos+Coordinates. [Musashiden]
 //= 0.7 Implemented some more crap NPCs and the second entrance to biolabs [MasterOfMuppets]
 //= 0.8 Removed Duplicates [Silent]
+//= 0.9 Removed Duplicates [Toms]
 //=============================================================
 
 lighthalzen.gat,198,285,5	script	Jiwon	862,{
@@ -1908,7 +1909,7 @@ lhz_in01.gat,173,28,4	script	Guard#01::LhzRekGuard	868,{
 
 }
 
-lhz_in01.gat,180,28,4	duplicate(LhzRekGuard)	Guard#02	868
+lhz_in01.gat,180,28,4	duplicate(LhzRekGuard)	Guard#03	868
 
 lhz_in01.gat,72,209,4	script	Guide#01	862,{
 

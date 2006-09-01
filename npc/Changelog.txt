@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 09/01
+	* Tried to remove all duplicates (in default NPCs) [Toms]
 	* Removed useless 'npc\other\old' directory, who would need that anyway... [DracoRPG]
 	* Commented out the path to Divorce NPC as Lupus forgot to add it for good [DracoRPG]
 	* Fixed critical syntax errors in the new Valkyrie script, (è_é) @ Lupus [DracoRPG]

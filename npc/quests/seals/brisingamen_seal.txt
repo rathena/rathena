@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Brisingamen.
 //===== Additional Comments: =================================
 // 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+// 1.0a Removed duplicates [Toms]
 //============================================================
 
 prt_fild08.gat,175,374,3	script	Bard#brising	51,{
@@ -2999,7 +3000,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 
 //-----------librarian----------------------------------------------------------
  
-prt_castle.gat,84,51,5	script	Librarian	105,{
+prt_castle.gat,84,51,5	script	Librarian#2	105,{
 
 	if($God2 < 50)
 {

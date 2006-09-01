@@ -23,6 +23,7 @@
 //= 1.6b Updated Sewer Pipe [Vicious]
 //= 1.7 Fixed a warp-back
 //= 1.8 Some small changes [MasterOfMuppets]
+//= 1.9 Removed duplicates [Toms]
 //============================================================
 
 lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,145
@@ -187,16 +188,16 @@ lhz_cube.gat,10,185,0	script	cubew08-2	45,1,1,{
 lhz_cube.gat,3,192,0	warp	cubew08-3	2,2,lhz_cube.gat,10,74
 lhz_cube.gat,10,200,0	warp	cubew08-4	2,2,lhz_cube.gat,66,18
 //----------------- Room 123 18 ------------------------------
-lhz_cube.gat,130,18,0	script	cubew08-1	45,1,1,{
+lhz_cube.gat,130,18,0	script	cubew09-1	45,1,1,{
 	callfunc "randomw";
 	end;
 }
-lhz_cube.gat,123,11,0	script	cubew08-2	45,1,1,{
+lhz_cube.gat,123,11,0	script	cubew09-2	45,1,1,{
 	callfunc "randomw";
 	end;
 }
-lhz_cube.gat,115,18,0	warp	cubew08-3	2,2,lhz_cube.gat,248,184
-lhz_cube.gat,123,26,0	script	cubew08-4	45,1,1,{
+lhz_cube.gat,115,18,0	warp	cubew09-3	2,2,lhz_cube.gat,248,184
+lhz_cube.gat,123,26,0	script	cubew09-4	45,1,1,{
 	callfunc "randomw";
 	end;
 }

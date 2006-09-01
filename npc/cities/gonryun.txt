@@ -12,13 +12,14 @@
 // May be missing npc's and dialogue.
 //= 1.1 Fixed Typoís [Nexon]
 //= 1.2 Removed Duplicates [Silent]
+//= 1.3 Max NPC Name is 23 [Toms]
 //============================================================
 
 
 
 //Eventñ¢í≤ç∏ÅI
 
-alberta.gat,245,69,4	script	Gonryun Public Relations Official#01	776,{
+alberta.gat,245,69,4	script	Public Relations#01	776,{
 	mes "[Waba]";
 	mes "Hello there! I have traveled far from the Kingdom of Gonryun, my hometown.";
 	mes "I invite all to visit and celebrate the diversity of Gonryun! We welcome all sorts of visitors.";
@@ -58,7 +59,7 @@ alberta.gat,245,69,4	script	Gonryun Public Relations Official#01	776,{
 
 //===============================================================================
 
-gon_fild01.gat,255,79,6	script	Gonryun Public Relations Official#02	776,{
+gon_fild01.gat,255,79,6	script	Public Relations#02	776,{
 	mes "[Waba]";
 	mes "We are ready to head back as soon as the conditions are favorable.";
 	next;
@@ -74,7 +75,7 @@ gon_fild01.gat,255,79,6	script	Gonryun Public Relations Official#02	776,{
 
 //===============================================================================
 
-gon_fild01.gat,187,239,4	script	Gonryun Public Relations Official#03	776,{
+gon_fild01.gat,187,239,4	script	Public Relations#03	776,{
 	mes "[Choseryu]";
 	mes "The sacred pillar of light connects this island to Gonryun Kingdom. There's no time to idly chit chat now, be on your way.";
 	mes "I hope you will have many fond memories of Gonryun before you leave.";
@@ -83,7 +84,7 @@ gon_fild01.gat,187,239,4	script	Gonryun Public Relations Official#03	776,{
 
 //===============================================================================
 
-gonryun.gat,153,64,0	script	Gonryun Public Relations Official#04	776,{
+gonryun.gat,153,64,0	script	Public Relations#04	776,{
 	mes "[Choseryu]";
 	mes "If you're ready to set sail I can send you back to the harbor.";
 	next;
