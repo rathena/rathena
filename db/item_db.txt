@@ -1769,6 +1769,9 @@
 5195,Red_Ribbon,Red Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,246,{ bonus bMdef,3; },{},{}
 5196,Orange_Ribbon,Orange Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,247,{ bonus bMdef,3; },{},{}
 5197,White_Ribbon,White Ribbon,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,248,{ bonus bMdef,3; },{},{}
+5198,Drooping_Bunny,Drooping Bunny,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
+5199,Baseball_Cap,Baseball Cap,5,,10,200,,3,,0,0xFFFFFFFF,7,2,256,,,1,250,{},{},{}
+5200,Coppola,Coppola,5,,10,300,,0,,0,0xFFFFFFFF,7,2,256,,,1,251,{},{},{}
 // More Etc Items
 //===================================================================
 7001,Mould_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -2362,6 +2365,15 @@
 7591,Lettered_Moon_Snack_03,Lettered Moon Snack 03,3,,10,10,,,,,,,,,,,,,{},{},{}
 7592,Lettered_Moon_Snack_04,Lettered Moon Snack 04,3,,10,10,,,,,,,,,,,,,{},{},{}
 7593,Lettered_Moon_Snack_05,Lettered Moon Snack 05,3,,10,10,,,,,,,,,,,,,{},{},{}
+7594,Sonia's_Letter,Sonia's Letter,3,,10,10,,,,,,,,,,,,,{},{},{}
+7595,Special_Sword,Special Sword,3,,10,10,,,,,,,,,,,,,{},{},{}
+7596,Special_Shield,Special Shield,3,,10,10,,,,,,,,,,,,,{},{},{}
+7597,Magic_Stone,Magic Stone,3,,10,10,,,,,,,,,,,,,{},{},{}
+7598,Blue_I_Card,Blue I Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+7599,Blue_D_Card,Blue D Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+7600,Blue_K_Card,Blue K Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+7601,Blue_S_Card,Blue S Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+7602,Blue_R_Card,Blue R Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}

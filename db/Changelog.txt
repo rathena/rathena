@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/01
+	* Added some new items thanks to Haplo [Playtester]
 08/30
 	* Updated ingredients for Smooth Noodle [Playtester]
 	* Updated mob iRO names and mob stats [Playtester]
