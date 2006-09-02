@@ -33,6 +33,8 @@ Playtester
 Date		Added
 ======
 09/02
+	* Updated Kiel spawns [Playtester]
+	- first floor is close-to-official, but no idea about second floor
 	* Fixed some Thanatos Tower warps [Playtester]
 	- I hope Ishizu fixes up the quest soon
 09/01
