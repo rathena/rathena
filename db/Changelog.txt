@@ -20,6 +20,8 @@
 
 =========================
 09/02
+	* Applied Vicious's ranges on guns [Playtester]
+	- Rifle & Shotgun = 9, others = 7
 	* Updated various item names thanks to Haplo [Playtester]
 	- please update all the quests that use these item names
 09/01
