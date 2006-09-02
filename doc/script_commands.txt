@@ -2211,7 +2211,7 @@ returned when requesting that information.
 *getequipid(<equipment slot>)
 
 This function returns the item ID of the item equipped in the equipment slot 
-specified on the invoking character. If nothing is equpped there, it returns 0. 
+specified on the invoking character. If nothing is equpped there, it returns -1. 
 Valid equipment slots are:
 
 1  - Upper head gear

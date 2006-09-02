@@ -1308,10 +1308,14 @@ int read_petdb()
 			}
 
 			nameid=atoi(str[0]);
-			if(nameid<=0 || nameid>2000)
+			if(nameid<=0)
 				continue;
-		
-			//MobID,Name,JName,ItemID,EggID,AcceID,FoodID,"Fullness (1‰ñ‚Ì‰a‚Å‚Ì–• “x‘‰Á—¦%)","HungryDeray (/min)","R_Hungry (‹ó• ‰a‚â‚èe–§“x‘‰Á—¦%)","R_Full (‚Æ‚Ä‚à–• ‰a‚â‚èe–§“xŒ¸­—¦%)","Intimate (•ßŠle–§“x%)","Die (€–Se–§“xŒ¸­—¦%)","Capture (•ßŠl—¦%)",(Name)
+
+			if (!mobdb_checkid(nameid)) {
+				ShowWarning("pet_db reading: Invalid mob-class %d, pet not read.\n", nameid);
+				continue;
+			}
+
 			pet_db[j].class_ = nameid;
 			memcpy(pet_db[j].name,str[1],NAME_LENGTH-1);
 			memcpy(pet_db[j].jname,str[2],NAME_LENGTH-1);

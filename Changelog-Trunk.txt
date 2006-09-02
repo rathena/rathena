@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/01
+	* Corrected script_commands description of getequipid, it returns -1, not 0
+	  on fail. [Skotlex]
+	* Fixed the mob-id check during pet_db loading, it will also now print when
+	  a pet is not loaded due to having an invalid mob class specified. [Skotlex]
 	* The "delete_timer error/no such timer" report will now print the related function [Toms]
 	* The Clearing unused stack report will now print the related NPC [Toms]
 	* The duplicate npc report will now print the related file name [Toms]
