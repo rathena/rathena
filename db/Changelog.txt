@@ -19,6 +19,9 @@
 	-----
 
 =========================
+09/02
+	* Updated various item names thanks to Haplo [Playtester]
+	- please update all the quests that use these item names
 09/01
 	* Added some new items thanks to Haplo [Playtester]
 08/30
