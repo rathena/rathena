@@ -2914,7 +2914,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 
 	if(flag&SCB_LUK) {
 		status->luk = status_calc_luk(bl, sc, b_status->luk);
-		flag|=SCB_CRI|SCB_FLEE2;
+		flag|=SCB_BATK|SCB_CRI|SCB_FLEE2;
 	}
 
 	if(flag&SCB_BATK && b_status->batk) {

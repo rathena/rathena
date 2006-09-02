@@ -1634,13 +1634,13 @@ static struct Damage battle_calc_weapon_attack(
 			{	//Elemental/Racial adjustments
 				if(sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
 					sd->right_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
-					sd->right_weapon.def_ratio_atk_race & (is_boss(target)?1<<10:1<<11)
+					sd->right_weapon.def_ratio_atk_race & (1<<(is_boss(target)?RC_BOSS:RC_NONBOSS))
 				)
 					flag.pdef = 1;
 
 				if(sd->left_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||
 					sd->left_weapon.def_ratio_atk_race & (1<<tstatus->race) ||
-					sd->left_weapon.def_ratio_atk_race & (is_boss(target)?1<<10:1<<11)
+					sd->left_weapon.def_ratio_atk_race & (1<<(is_boss(target)?RC_BOSS:RC_NONBOSS))
 				) {	//Pass effect onto right hand if configured so. [Skotlex]
 					if (battle_config.left_cardfix_to_right && flag.rh)
 						flag.pdef = 1;
