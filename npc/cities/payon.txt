@@ -4,7 +4,7 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.6 Fixed typo’s [Nexon]
 //= 1.7 Fixed bugs and exploits V__V [Lupus]
 //= 1.8 Removed Duplicates [Silent]
+//= 1.9 Fixed missing next;'s [Evera]
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady#05	90,{
@@ -88,15 +89,16 @@ payon_in01.gat,180,7,0	script	Waitress	90,{
 	next;
 	mes "[Waitress]";
 	mes "Where can I find the right person who is a really hot, sexy hunk, and who can take me out of this small place?";
+	next;
 	if(Sex == 0) goto LStartF;
 	mes "[Waitress]";
 	mes "Hello, mister?";
+	next;
 	goto L_Start;
 LStartF:
    	mes "[Waitress]";
    	mes "Hello, lady?";
 L_Start:
-	next;
 	mes "[Waitress]";
 	mes "Grandma the fortuneteller told me that I would meet great luck in the near future!"; 
 	mes "But look at me, what's wrong with me!! I am leaving a manageable life everyday!!";
@@ -110,6 +112,7 @@ L_Start:
 	next;
 	mes "[Waitress]";
 	mes "So, how may I help you? ";
+	next;
 	menu "Have you ever heard of Zombies?",L_Menu1,"I want to have my fortune told.",L_Menu2,"I need some booze.",L_Menu3,"I'm good",L_Menu4;
 L_Menu1:
 	mes "[Waitress]";
@@ -276,9 +279,10 @@ L1L:
       mes "Thanksh brothaaa!... archerrrzzz are alwayssszz a generoushhh bunch!...(hicup!)";
 	goto L2L;
 L2L:
-	   emotion e_thx;
-	   if(Zeny < 200) goto L_SUB_1;
-	   set Zeny,Zeny-200;
+	next;
+	emotion e_thx;
+	if(Zeny < 200) goto L_SUB_1;
+	set Zeny,Zeny-200;
 	mes "[Drunk]";
 	mes "Thanks brother! Strangers are always generous without exception! Archer guys are pinch-pennies nowadays!";
 	mes "Muhahahaha! I wasn't like that when I was young.";
@@ -595,7 +599,7 @@ L_Menu2:
 	mes "[Monster Scholar Vuicokk]";
 	mes "In order to do that we must put an end to the source of the problem.  I have tremendous faith that we can succeed in doing so.";
 	close;
-L_Menu3:
+L_Menu3:	mes "[Monster Scholar Vuicokk]";
 	mes "The Monster Research Organization was formed to find ways to counteract the sudden and rapid growth of monsters in Rune Midgard.";
 	next;
 	mes "[Monster Scholar Vuicokk]";
