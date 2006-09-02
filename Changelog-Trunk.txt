@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/02
+	* SC_REGENERATION's val4 now holds the RGN flag of what is blocked rather
+	  than blocking all types of regen. [Skotlex]
+	* LK_BERSERK will now only block natural regen on state-end. [Skotlex]
+	* SC_EXTREMITYFIST/SC_DANCING/SC_EXPLOSIONSPIRITS will only block natural
+	  sp regen and not skill regen [Skotlex]
+	* SC_REGENERATION blocking will be cancelled on logout now. [Skotlex]
 	* Corrected SCB_LUK not updating SCB_BATK as well. [Skotlex]
 2006/09/01
 	* Corrected script_commands description of getequipid, it returns -1, not 0

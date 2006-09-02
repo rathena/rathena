@@ -2490,7 +2490,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		|| sc->data[SC_BERSERK].timer != -1
 		|| sc->data[SC_TRICKDEAD].timer != -1
 		|| sc->data[SC_BLEEDING].timer != -1
-		|| (sc->data[SC_REGENERATION].timer != -1 && sc->data[SC_REGENERATION].val4)
 	)	//No regen
 		regen->flag = 0;
 
@@ -2499,8 +2498,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		|| sc->data[SC_DANCING].timer != -1
 		|| (sc->data[SC_EXPLOSIONSPIRITS].timer != -1
 			&& (sc->data[SC_SPIRIT].timer==-1 || sc->data[SC_SPIRIT].val2 != SL_MONK))
-	)	//No SP regen
-		regen->flag &=~(RGN_SP|RGN_SSP);
+	)	//No natural SP regen
+		regen->flag &=~RGN_SP;
 
 	if(
 		sc->data[SC_TENSIONRELAX].timer!=-1
@@ -2514,10 +2513,14 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->rate.hp += 1;
 		regen->rate.sp += 1;
 	}
-	if (sc->data[SC_REGENERATION].timer != -1 && !sc->data[SC_REGENERATION].val4)
+	if (sc->data[SC_REGENERATION].timer != -1)
 	{
-		regen->rate.hp += sc->data[SC_REGENERATION].val2;
-		regen->rate.sp += sc->data[SC_REGENERATION].val3;
+		if (!sc->data[SC_REGENERATION].val4)
+		{
+			regen->rate.hp += sc->data[SC_REGENERATION].val2;
+			regen->rate.sp += sc->data[SC_REGENERATION].val3;
+		} else
+			regen->flag&=~sc->data[SC_REGENERATION].val4; //Remove regen as specified by val4
 	}
 }
 
@@ -6122,7 +6125,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				status_set_hp(bl, 100, 0); 
 			if(sc->data[SC_ENDURE].timer != -1)
 				status_change_end(bl, SC_ENDURE, -1);
-			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,1,
+			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
 				gettick()+skill_get_time(LK_BERSERK, sc->data[type].val1));
 			break;
 		case SC_GRAVITATION:

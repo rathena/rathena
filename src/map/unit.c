@@ -1655,6 +1655,8 @@ int unit_free(struct block_list *bl, int clrtype) {
 					status_change_end(bl,SC_EXTREMITYFIST,-1);
 				if(sd->sc.data[SC_EXPLOSIONSPIRITS].timer!=-1)
 					status_change_end(bl,SC_EXPLOSIONSPIRITS,-1);
+				if(sd->sc.data[SC_REGENERATION].timer!=-1 && sd->sc.data[SC_REGENERATION].val4)
+					status_change_end(bl,SC_REGENERATION,-1);
 			}
 			if (battle_config.debuff_on_logout&2)
 			{	//Food items are removed on logout.
