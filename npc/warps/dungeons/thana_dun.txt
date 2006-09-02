@@ -58,18 +58,11 @@ tha_t04.gat,60,138,0	warp	WarpThana3b	1,1,tha_t03.gat,60,138
 
 // Thanatos Tower Level 4 (tha_t04.gat)
 tha_t04.gat,82,36,0	warp	WarpThana4a	1,1,tha_t05.gat,62,6
-tha_t05.gat,208,97,0	warp	WarpThana4b	1,1,tha_t04.gat,140,117
 
 // Thanatos Tower Level 5 (tha_t05.gat)
-tha_t05.gat,186,236,0	warp	WarpThana5a	1,1,tha_t06.gat,120,6
-tha_t06.gat,120,3,0	warp	WarpThana5b	1,1,tha_t05.gat,186,233
-tha_t05.gat,61,157,0	script	WarpThana5c	45,1,1,{
-
-  if (rand(2)) warp "tha_t03.gat",139,177;
-  else warp "tha_t06.gat",88,181;
-  end;
-
-}
+tha_t05.gat,61,157,0	warp	WarpThana5a	1,1,tha_t05.gat,211,97
+tha_t05.gat,208,97,0	warp	WarpThana5b	1,1,tha_t05.gat,61,162
+tha_t05.gat,186,236,0	warp	WarpThana5c	1,1,tha_t06.gat,207,6
 
 // Thanatos Tower Level 6 (tha_t06.gat)
 tha_t06.gat,119,120,4	script	WarpThana6a	45,2,2,{
