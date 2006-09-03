@@ -58,6 +58,13 @@ force_3-1.gat	mapflag	nosave	SavePoint
 force_3-2.gat	mapflag	nosave	SavePoint
 force_3-3.gat	mapflag	nosave	SavePoint
 
+// Juperos =============================
+jupe_area1.gat	mapflag	nosave	SavePoint
+jupe_area2.gat	mapflag	nosave	SavePoint
+jupe_ele.gat	mapflag	nosave	SavePoint
+jupe_ele_r.gat	mapflag	nosave	SavePoint
+jupe_gate.gat	mapflag	nosave	SavePoint
+
 //PvP Arenas =================================
 pvp_y_room.gat	mapflag	nosave	SavePoint
 pvp_y_1-1.gat	mapflag	nosave	SavePoint

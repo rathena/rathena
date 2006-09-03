@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/03
+	* Added some Juperos maps to nosave.txt due to an upcoming update. [MasterOfMuppets]
 09/02
 	* Updated Kiel spawns [Playtester]
 	- first floor is close-to-official, but no idea about second floor
