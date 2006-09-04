@@ -6126,7 +6126,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			if(sc->data[SC_ENDURE].timer != -1)
 				status_change_end(bl, SC_ENDURE, -1);
 			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
-				gettick()+skill_get_time(LK_BERSERK, sc->data[type].val1));
+				skill_get_time(LK_BERSERK, sc->data[type].val1));
 			break;
 		case SC_GRAVITATION:
 			if (sc->data[type].val3 == BCT_SELF) {
