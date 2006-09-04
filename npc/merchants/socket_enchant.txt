@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sousuke_PL
 //===== Current Version: =====================================
-//= 0.1b
+//= 0.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 0.1a added missing L_No: to 2 funcs [Lupus]
 //= 0.1b Removed duplicates [Toms]
+//= 0.2	Added missing next;'s [Evera]
 //============================================================
 
 
@@ -53,6 +54,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Trident[2]",Trident,"Rope[3]",Rope,"Violin[3]",Violin,"Chain[2]",Chain,"Gladius[2]",Gladius,"Gakkung Bow[1]",Gakkung_Bow,"Next",L_Weapon2,"Jump to page...",L_WaepJump;
 
   L_Weapon2:
@@ -60,6 +62,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Pike[3]",Pike,"Haedonggum[1]",Haedonggum,"Lute[2]",Lute,"Wire Whip[2]",Wire_Whip,"Waghnak[3]",Waghnak,"Arbalest[1]",Arbalest,"Next",L_Weapon3,"Jump to page...",L_WaepJump;
 
   L_Weapon3:
@@ -67,6 +70,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Hunter Bow",Hunter_Bow,"(Int) Survivor's Rod",Int_Survivors_Rod,"Zweihander",Zweihander,"Flamberge",Flamberge,"Infiltrator",Infiltrator,"Ballista",Ballista,"Next",L_Weapon4,"Jump to page...",L_WaepJump;
 
   L_Weapon4:
@@ -74,6 +78,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Stunner",Stunner,"Berserk",Berserk,"Claymore",Claymore,"Gungnir",Gungnir,"Poison Knife",Poison_Knife,"Sucsamad",Sucsamad,"Next",L_Weapon5,"Jump to page...",L_WaepJump;
 
   L_Weapon5:
@@ -81,6 +86,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Ginnungagap",Ginnungagap,"Cutlus",Cutlus,"Crescent Scythe",Crescent_Scythe,"Ice Pick",Ice_Pick,"(Dex) Survivor's Rod",Dex_Survivors_Rod,"Next",L_Weapon1,"Jump to page...",L_WaepJump;
 
 
@@ -255,6 +261,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Mantle",Mantle,"Coat",Coat,"Circlet",Circlet,"Biretta",Biretta,"Mirror Shield",Mirror_Shield,"Chain Mail",Chain_Mail,"Shield",Shield,"Bongun Hat",Bongun_Hat,"Next",L_Armor2,"Jump to page...",L_ArmorJump;
 
   L_Armor2:
@@ -262,6 +269,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Saint's Robe",Saints_Robe,"Silk Robe",Silk_Robe,"Boots",Boots,"Shoes",Shoes,"Muffler",Muffler,"Guard",Guard,"Buckler",Buckler,"Munak Hat",Munak_Hat,"Next",L_Armor3,"Jump to page...",L_ArmorJump;
 
   L_Armor3:
@@ -269,6 +277,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Gemmed Sallet",Gemmed_Sallet,"Bucket Hat",Bucket_Hat,"Memory Book",Memory_Book,"Tights",Tights,"Legion Plate Armor",Legion_Plate_Armor,"Full Plate",Full_Plate,"Thief Clothes",Thief_Clothes,"Next",L_Armor4,"Jump to page...",L_ArmorJump;
 
   L_Armor4:
@@ -276,6 +285,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Greaves",Greaves,"Coif",Coif,"Manteau",Manteau,"Helm",Helm,"Ninja Suit",Ninja_Suit,"Orc Helm",Orc_Helm,"Ancient Cape",Ancient_Cape,"Next",L_Armor5,"Jump to page...",L_ArmorJump;
 
   L_Armor5:
@@ -283,6 +293,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Monk Hat",Monk_Hat,"Golden Gear",Golden_Gear,"Brooch",Brooch,"Tiara",Tiara,"Sphinx Hat",Sphinx_Hat,"Robe of Cast",Robe_of_Cast,"Earring",Earring,"Next",L_Armor6,"Jump to page...",L_ArmorJump;
 
   L_Armor6:
@@ -290,6 +301,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
       close2;
       mes "[Socket Enchant]";
       mes "Please choose your item:";
+      next;
       menu "Ring",Ring,"Bow Thimble",Bow_Thimble,"Majestic Goat",Majestic_Goat,"Spiky Band",Spiky_Band,"Bone Helm",Bone_Helm,"Corsair",Corsair,"Crown",Crown,"Next",L_Armor1,"Jump to page...",L_ArmorJump;
 
 

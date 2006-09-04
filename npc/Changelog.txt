@@ -33,6 +33,8 @@ Playtester
 Date		Added
 ======
 09/03
+	* Added missing NPC name in text and next;'s in npc/quests/bongunsword.txt,
+	- npc/cities/amatsu.txt, and npc/merchants/socket_enchant.txt. (Thanks $ephiroth) [Evera]
 	* Added some Juperos maps to nosave.txt due to an upcoming update. [MasterOfMuppets]
 09/02
 	* Updated Kiel spawns [Playtester]

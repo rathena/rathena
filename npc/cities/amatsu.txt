@@ -3,23 +3,24 @@
 //===== By: ================================================== 
 //= Some people & eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
-// Amatsu Town NPCs : Revision 2 (Fox quest fix)
-// Translated by Makenshi and dj
-// Revisions and edits by Valaris and Darkchild
-// 1.01 event_sushi -> ama_sushi fixed
-//      and other fixes, thanks to Shinomori
-// 1.02 Fixed & Spell Checked [massdriller]
-// 1.03 Fixed 2 NPC names, slight optimization [Lupus]
-// 1.04 Fixed a few typo's [Nexon]
-// 1.05 Changed all breaks to ends. [Skotlex]
-// 1.06 The Captain now uses iRO dialog [MasterOfMuppets]
-// 1.07 Implemented a missing NPC [MasterOfMuppets]
-// 1.08 Removed Duplicates [Silent]
-// 1.1 Split quests into quests/quests_amatsu.txt [Evera]
+//= Amatsu Town NPCs : Revision 2 (Fox quest fix)
+//= Translated by Makenshi and dj
+//= Revisions and edits by Valaris and Darkchild
+//= 1.01 event_sushi -> ama_sushi fixed
+//=      and other fixes, thanks to Shinomori
+//= 1.02 Fixed & Spell Checked [massdriller]
+//= 1.03 Fixed 2 NPC names, slight optimization [Lupus]
+//= 1.04 Fixed a few typo's [Nexon]
+//= 1.05 Changed all breaks to ends. [Skotlex]
+//= 1.06 The Captain now uses iRO dialog [MasterOfMuppets]
+//= 1.07 Implemented a missing NPC [MasterOfMuppets]
+//= 1.08 Removed Duplicates [Silent]
+//= 1.1 Split quests into quests/quests_amatsu.txt [Evera]
+//= 1.2	Fixed missing name [Evera]
 //=====================================================================
 alberta.gat,245,93,4	script	Sea Captain#01	709,{
 	mes "[Walter Moers]";
@@ -68,6 +69,7 @@ alberta.gat,245,93,4	script	Sea Captain#01	709,{
 		mes "Amatsu, and spread copies of this";
 		mes "map.";
 		next;
+		mes "[Walter Moers]";
 		mes "Many Brave and adventurous";
 		mes "sea captains took the";
 		mes "challenge. Great fortune could";

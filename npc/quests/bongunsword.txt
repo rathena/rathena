@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= eAthena Team
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Quest itms:Sword o'Chinese Exorcist,No Recipient,Her Heart
 //===== Additional Comments: ================================= 
 //= 1.0. merged 3 sep. files, fixed exploits [Lupus]
+//= 1.1	Added missing next;'s [Evera]
 //============================================================ 
 
 
@@ -28,6 +29,7 @@ comodo.gat,135,227,5	script	Sherri	93,{
 	next;
 	mes "[Sherri]";
 	mes "Can you please help me?";
+	next;
 
 	menu "What do I need again?",-,"Here! I got what you need!",ExCreate,"Sorry, I can't help you.",ExEnd;
 
@@ -82,6 +84,7 @@ izlude_in.gat,115,76,5	script	Evan	47,{
 	next;
 	mes "[Evan]";
 	mes "Whaddaya say? ..pal?";
+	next;
 
 	menu "What do I need again?",-,"Here! I got what you need!",ExCreate,"Sorry, I can't help you.",ExEnd;
 
