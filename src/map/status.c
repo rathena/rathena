@@ -6015,7 +6015,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 		case SC_NOCHAT:
 			if (sd) {
-				if (sd->status.manner < 0) sd->status.manner = 0;
+				if (sd->status.manner < 0 && tid != -1)
+				  	sd->status.manner = 0;
 				clif_updatestatus(sd,SP_MANNER);
 			}
 			break;

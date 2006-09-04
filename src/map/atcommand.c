@@ -8767,6 +8767,7 @@ int atcommand_unmute(
 
 	if((pl_sd=map_nick2sd((char *) message)) != NULL) {
 		if(pl_sd->sc.data[SC_NOCHAT].timer!=-1) {
+			pl_sd->status.manner = 0;
 			status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
 			clif_displaymessage(sd->fd,"Player unmuted");
 		}
