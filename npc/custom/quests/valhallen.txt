@@ -191,7 +191,6 @@ L_NOTENOUGH:
 	mes "You are lacking a few items, please return when you have them.";
 	close;
 L_OUT:
-	next;
 	mes "[Lenneth]";
 	mes "Please return when you change your mind.";
 	close;

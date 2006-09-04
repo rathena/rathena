@@ -4,7 +4,7 @@
 //= Edited And removed irrelevent comments by eAthena Dev Team
 //= Draike\Bluto\Hephaestus
 //===== Current Version: =====================================
-//= 2.1 eAthena Release
+//= 2.2
 //===== Compatible With: =====================================
 //= eAthena SVN 02/05/2005 +
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= ALWAYS HAVE AT LEAST TWELVE (12) LOCATIONS AS THE MINIMUM.  This is unless you modify to OnMinutes and change the schedule around.
 //= If you have "airplane.gat,103,72,0	warp	airs02a	1,1,airplane.gat,102,200" as a warp, remove it.  Where it's supposed to go, I have no clue.
 //= 2.1 Removed Duplicates [Silent]
+//= 2.2 Added missing next;'s [Evera]
 //============================================================ 
 payon.gat,153,43,5	script	itinsetter	-1,{
 
@@ -239,6 +240,7 @@ function	script	F_Porter	{
 Board:
 	mes "^FF0000[Porter]^000000";
 	mes "The plane is currently ported.  Would you like to board?";
+	next;
 	menu "Yes.",L_Yes,"No.",L_Nope,"View Hourly Itinerary.",Itin;
 
 L_Yes:
@@ -254,6 +256,7 @@ Notime:
 	mes "^FF0000[Porter]^000000";
 	if(sex==0) mes "Sorry, ma'am, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
 	if(sex==1) mes "Sorry, sir, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
+	next;
 	menu "Yes, please.",Itin,"No thanks.",L_Nope;
 	close;
 	end;
@@ -345,6 +348,7 @@ airplane.gat,102,68,5	script	Docker	852,{
 	if($destination == 250)goto Notime;
 	set @dockky, $destination;
 	if($destination != 250)mes "We are currently docked at "+$locationsname$[$destination]+".  Would you like to exit?";
+	next;
 	menu "Yes.",Lyes,"No.",Lnope;
 
 Lyes:
