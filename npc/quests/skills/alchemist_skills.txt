@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -20,7 +20,7 @@
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.4 Added Creators + Baby Alchemists can pass Bio Ethics
 //= 	Quest too [Lupus]
-//= 1.5 Removed duplicates [Toms]
+//= 1.5 Removed duplicates [Toms] 1.5a fixed typo [Lupus]
 //============================================================
 
 
@@ -284,7 +284,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		input @kelques$;
 		next;
 		mes "[Kellasus]";
-		if(@kelques$ != "Homunculus Ressurection"){
+		if(@kelques$ != "Homunculus Resurrection"){
 			mes "Hmpf. I knew you had";
 			mes "no knowledge on";
 			mes "homunculus.";
@@ -421,7 +421,7 @@ lhz_in02.gat,269,273,4	script	Bringel	709,{
 		next;
 		mes "[Bringel]";
 		mes "However, I've heard about a skill named";
-		mes "Homunculus Ressurection.";
+		mes "Homunculus Resurrection.";
 		mes "It seems it is a very important thing";
 		mes "for people working on them.";
 		set bioeth,4;
