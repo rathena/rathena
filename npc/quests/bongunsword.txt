@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0. merged 3 sep. files, fixed exploits [Lupus]
 //= 1.1	Added missing next;'s [Evera]
+//= 1.2 Added another missing next; [Evera]
 //============================================================ 
 
 
@@ -127,7 +128,7 @@ gef_fild07.gat,183,239,5	script	Old Smith	120,{
 	if(countitem(7110)<1) goto L_NoItemS;//Items: Broken_Sword,
 	mes "[Old Smith]";
 	mes "Hmm, it seems as if you need something. What would that be?";
-
+	next;
 	menu "Can you fix this broken sword?",-,"Nothing really...",ExEnd;
 
 	mes "[Old Smith]";

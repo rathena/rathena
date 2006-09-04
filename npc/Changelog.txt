@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 09/03
+	* Added another next; in bongunsword.txt [Evera]
 	* Added missing NPC name in text and next;'s in npc/quests/bongunsword.txt,
 	- npc/cities/amatsu.txt, and npc/merchants/socket_enchant.txt. (Thanks $ephiroth) [Evera]
 	* Added some Juperos maps to nosave.txt due to an upcoming update. [MasterOfMuppets]
