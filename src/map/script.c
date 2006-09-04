@@ -2582,8 +2582,8 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 		}
 		node = node->next;
 	}
-	//Cancel tick value or run_script_main can get into an infinite loop by always delaying execution. [Skotlex]
-	st->sleep.tick = 0;
+	if(st->state != RERUNLINE)
+		st->sleep.tick = 0;
 	run_script_main(st);
 	return 0;
 }
