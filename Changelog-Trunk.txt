@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/04
+	* SC_REFLECTSHIELD will now be passed to devoted characters at cast-time.
+	  [Skotlex]
+	* Added a check to make a mob's level 1 if the read level from the db is
+	  less than it. [Skotlex]
 	* status_calc_misc will now be invoked in status_calc_bl even on the first
 	  call, since status could have gone up due to skill bonuses. [Skotlex]
 	* Moved max HP/SP calculations to before invoking status_calc_misc

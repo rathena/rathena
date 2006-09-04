@@ -3172,6 +3172,9 @@ static int mob_readdb(void)
 			memcpy(mob_db_data[class_]->jname, str[2], NAME_LENGTH-1);
 			memcpy(mob_db_data[class_]->name, str[3], NAME_LENGTH-1);
 			mob_db_data[class_]->lv = atoi(str[4]);
+			if (mob_db_data[class_]->lv < 1)
+				mob_db_data[class_]->lv = 1;
+
 			status = &mob_db_data[class_]->status;
 
 			status->max_hp = atoi(str[5]);
@@ -3870,6 +3873,9 @@ static int mob_read_sqldb(void)
 				memcpy(mob_db_data[class_]->jname, TO_STR(2), NAME_LENGTH-1);
 				memcpy(mob_db_data[class_]->name, TO_STR(3), NAME_LENGTH-1);
 				mob_db_data[class_]->lv = TO_INT(4);
+				if (mob_db_data[class_]->lv < 1)
+					mob_db_data[class_]->lv = 1;
+
 				status = &mob_db_data[class_]->status;
 				status->max_hp = TO_INT(5);
 				status->max_sp = TO_INT(6);

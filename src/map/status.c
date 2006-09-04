@@ -4911,6 +4911,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_REFLECTSHIELD:
 			val2=10+val1*3; //% Dmg reflected
+			if (sd)
+			{	//Pass it to devoted chars.
+				struct map_session_data *tsd;
+				int i;
+				for (i = 0; i < 5; i++)
+				{	//Pass the status to the other affected chars. [Skotlex]
+					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
+						status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
+				}
+			}
 			break;
 		case SC_STRIPWEAPON:
 			if (bl->type != BL_PC) //Watk reduction
