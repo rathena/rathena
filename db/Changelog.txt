@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/04
+	* Updated Shinobi Sash and Exorcising Ring [Playtester]
 09/02
 	* Applied Vicious's ranges on guns [Playtester]
 	- Rifle & Shotgun = 9, others = 7
