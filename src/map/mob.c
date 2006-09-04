@@ -786,7 +786,7 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			return 0; //For some reason Homun targets are never overriden.
 
 		dist = distance_bl(&md->bl, bl);
-		if(dist < md->db->range2 &&
+		if(
 			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
 			battle_check_range(&md->bl,bl,md->db->range2)
 		) { //Pick closest target?
@@ -825,9 +825,8 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	case BL_PC:
 	case BL_HOM:	//[orn]
 	case BL_MOB:
-		if(check_distance_bl(&md->bl, bl, md->status.rhw.range) &&
-			battle_check_range (&md->bl, bl, md->status.rhw.range)
-		) {
+		if(battle_check_range (&md->bl, bl, md->status.rhw.range))
+	  	{
 			(*target) = bl;
 			md->target_id=bl->id;
 			md->min_chase= md->db->range3;
@@ -852,8 +851,8 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
 
-	if((dist=distance_bl(&md->bl, bl)) < md->db->range2 &&
-		mob_can_reach(md,bl,dist+1, MSS_LOOT) && 
+	dist=distance_bl(&md->bl, bl);
+	if(mob_can_reach(md,bl,dist+1, MSS_LOOT) && 
 		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) //New target closer than previous one.
 	) {
 		(*target) = bl;

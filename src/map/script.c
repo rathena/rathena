@@ -9100,17 +9100,15 @@ int buildin_stoptimer(struct script_state *st)	// Added by RoVeRT
 int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by RoVeRT
 {
 	char *event=va_arg(ap,char *);
-	int *c=va_arg(ap,int *);
-
 	if(strcmp(event,((struct mob_data *)bl)->npc_event)==0)
-		(*c)++;
+		return 1;
 	return 0;
 }
 
 int buildin_mobcount(struct script_state *st)	// Added by RoVeRT
 {
 	char *mapname,*event;
-	int m,c=0;
+	int m;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
 	check_event(st, event);
@@ -9119,9 +9117,8 @@ int buildin_mobcount(struct script_state *st)	// Added by RoVeRT
 		push_val(st->stack,C_INT,-1);
 		return 0;
 	}
-	map_foreachinmap(buildin_mobcount_sub, m, BL_MOB, event,&c );
 
-	push_val(st->stack,C_INT, (c));
+	push_val(st->stack,C_INT,map_foreachinmap(buildin_mobcount_sub, m, BL_MOB, event));
 
 	return 0;
 }

@@ -1941,6 +1941,49 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		status->batk += 4;
 
+// ----- HP MAX CALCULATION -----
+
+	// Basic MaxHP value
+	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
+	sd->status.max_hp = status_base_pc_maxhp(sd,status);
+	status->max_hp += sd->status.max_hp;
+
+	// Absolute modifiers from passive skills
+	if((skill=pc_checkskill(sd,CR_TRUST))>0)
+		status->max_hp += skill*200;
+
+// ----- SP MAX CALCULATION -----
+
+	// Basic MaxSP value
+	sd->status.max_sp = status_base_pc_maxsp(sd,status);
+	status->max_sp += sd->status.max_sp;
+
+	// Absolute modifiers from passive skills
+	if((skill=pc_checkskill(sd,SL_KAINA))>0)
+		status->max_sp += 30*skill;
+
+	if(status->sp>status->max_sp)
+		status->sp=status->max_sp;
+
+// ----- RESPAWN HP/SP -----
+// 
+	//Calc respawn hp and store it on base_status
+	if (sd->special_state.restart_full_recover)
+	{
+		status->hp = status->max_hp;
+		status->sp = status->max_sp;
+	} else {
+		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2) 
+			&& battle_config.restart_hp_rate < 50) 
+			status->hp=status->max_hp>>1;
+		else 
+			status->hp=status->max_hp * battle_config.restart_hp_rate/100;
+		if(!status->hp)
+			status->hp = 1;
+
+		status->sp = status->max_sp * battle_config.restart_sp_rate /100;
+	}
+
 // ----- MISC CALCULATION -----
 	status_calc_misc(&sd->bl, status, sd->status.base_level);
 
@@ -2046,49 +2089,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 //
 	i =  800-status->agi*4;
 	status->dmotion = cap_value(i, 400, 800);
-
-// ----- HP MAX CALCULATION -----
-
-	// Basic MaxHP value
-	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
-	sd->status.max_hp = status_base_pc_maxhp(sd,status);
-	status->max_hp += sd->status.max_hp;
-
-	// Absolute modifiers from passive skills
-	if((skill=pc_checkskill(sd,CR_TRUST))>0)
-		status->max_hp += skill*200;
-
-// ----- SP MAX CALCULATION -----
-
-	// Basic MaxSP value
-	sd->status.max_sp = status_base_pc_maxsp(sd,status);
-	status->max_sp += sd->status.max_sp;
-
-	// Absolute modifiers from passive skills
-	if((skill=pc_checkskill(sd,SL_KAINA))>0)
-		status->max_sp += 30*skill;
-
-	if(status->sp>status->max_sp)
-		status->sp=status->max_sp;
-
-// ----- RESPAWN HP/SP -----
-// 
-	//Calc respawn hp and store it on base_status
-	if (sd->special_state.restart_full_recover)
-	{
-		status->hp = status->max_hp;
-		status->sp = status->max_sp;
-	} else {
-		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2) 
-			&& battle_config.restart_hp_rate < 50) 
-			status->hp=status->max_hp>>1;
-		else 
-			status->hp=status->max_hp * battle_config.restart_hp_rate/100;
-		if(!status->hp)
-			status->hp = 1;
-
-		status->sp = status->max_sp * battle_config.restart_sp_rate /100;
-	}
 
 // ----- MISC CALCULATIONS -----
 
@@ -2720,9 +2720,9 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 			unit_walktoxy(&sd->bl, sd->ud.to_x, sd->ud.to_y, sd->ud.state.walk_easy);
 	}
 
-	//Avoid calculating twice (SCB_ALL -> status_calc_pc -> was calculated in
-	//status_calc_misc() [Skotlex]
-	if(flag&(SCB_INT|SCB_MAXSP|SCB_VIT|SCB_MAXHP) && flag != SCB_ALL)
+	//Needs be done even when it was already done in status_calc_misc, because
+	//int/vit max hp/sp could have changed due to skills.
+	if(flag&(SCB_INT|SCB_MAXSP|SCB_VIT|SCB_MAXHP))
 		status_calc_regen(&sd->bl, status, &sd->regen);
 	
 	if(flag&SCB_REGEN)

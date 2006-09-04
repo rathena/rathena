@@ -14,6 +14,13 @@
 //Only chars affected are those defined in BL_CHAR (mobs and players currently)
 //#define CELL_NOSTACK
 
+//Uncomment to enable circular area checks.
+//By default, all range checks in Aegis are of Square shapes, so a weapon range
+//  of 10 allows you to attack from anywhere within a 21x21 area.
+//Enabling this changes such checks to circular checks, which is more realistic,
+//  but is not the official behaviour.
+//#define CIRCULAR_AREA
+
 #define MAX_PC_CLASS 4050
 #define PC_CLASS_BASE 0
 #define PC_CLASS_BASE2 (PC_CLASS_BASE + 4001)

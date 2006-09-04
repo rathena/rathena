@@ -220,14 +220,20 @@ int map_getusers(void) {
 	return map_users;
 }
 
-
 //Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
 int check_distance(int dx, int dy, int distance) {
+#ifdef CIRCULAR_AREA
 	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
 	return (dx*dx + dy*dy <= distance*distance + (dx&&dy?1:0));
+#else
+	if (dx < 0) dx = -dx;
+	if (dy < 0) dy = -dy;
+	return ((dx<dy?dy:dx) <= distance);
+#endif
 }
 
 unsigned int distance(int dx, int dy) {
+#ifdef CIRCULAR_AREA
 	unsigned int min, max;
 
 	if ( dx < 0 ) dx = -dx;
@@ -247,6 +253,11 @@ unsigned int distance(int dx, int dy) {
    // coefficients equivalent to ( 123/128 * max ) and ( 51/128 * min )
 	return ((( max << 8 ) + ( max << 3 ) - ( max << 4 ) - ( max << 1 ) +
 		( min << 7 ) - ( min << 5 ) + ( min << 3 ) - ( min << 1 )) >> 8 );
+#else
+	if (dx < 0) dx = -dx;
+	if (dy < 0) dy = -dy;
+	return (dx<dy?dy:dx);
+#endif
 }
 
 //
@@ -657,9 +668,9 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl && bl->type&type
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
-						//For speed purposes, it does not checks actual range by default.
-						//Feel free to uncomment if you want a more "exact" approach.
-//						&& check_distance_bl(center, bl, range)
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
 					  	&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
 				}
@@ -673,7 +684,9 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
-//						&& check_distance_bl(center, bl, range)
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
 						&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
 				}
@@ -731,6 +744,9 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl && bl->type&type
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
 						&& path_search_long(NULL,center->m,center->x,center->y,bl->x,bl->y)
 					  	&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
@@ -745,6 +761,9 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 				for(i=0;i<c && bl;i++,bl=bl->next){
 					if(bl
 						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
 						&& path_search_long(NULL,center->m,center->x,center->y,bl->x,bl->y)
 						&& bl_list_count<BL_LIST_MAX)
 						bl_list[bl_list_count++]=bl;
