@@ -1750,24 +1750,25 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	for(temp=0,i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
+	for(i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
 	{
-		tmpbl[temp] = (struct block_list*)map_id2bl(md->dmglog[i].id);
-		if(tmpbl[temp] == NULL)
+		tmpbl[i] = map_id2bl(md->dmglog[i].id);
+		if(tmpbl[i] == NULL)
 			continue;
-		if( (tmpbl[temp])->m != md->bl.m || status_isdead(tmpbl[temp]))
+		if( (tmpbl[i])->m != md->bl.m || status_isdead(tmpbl[i]))
+		{
+			tmpbl[i] = NULL;
 			continue;
-
+		}
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
-			if ( (tmpbl[temp])->type == BL_HOM ) {
-				mvp_sd = (struct map_session_data *) ((struct homun_data *)tmpbl[temp])->master ;
-			} else
-				mvp_sd=(struct map_session_data *)tmpbl[temp];
+			if ( (tmpbl[i])->type == BL_HOM )
+				mvp_sd=((struct homun_data *)tmpbl[i])->master ;
+			else
+				mvp_sd=(struct map_session_data *)tmpbl[i];
 			mvp_damage=md->dmglog[i].dmg;
 		}
-		temp++; // [Lance]
 	}
 	count = i; //Total number of attackers.
 
@@ -1777,16 +1778,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		(!map[md->bl.m].flag.nobaseexp || !map[md->bl.m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
 
-	for(i=0;i<DAMAGELOG_SIZE && tmpbl[i];i++){
+	for(i=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++){
 		int flag=1,zeny=0;
 		unsigned int base_exp,job_exp;
 		double per; //Your share of the mob's exp
 		double jper; //For the job-exp
 		int bonus; //Bonus on top of your share.
-		
-		if (status_isdead(tmpbl[i]) || tmpbl[i]->m != md->bl.m)
-			continue; //When someone is dead or on another map, their share of exp is gone.
-		
+
+		if (!tmpbl[i]) continue;
+
 		if (!battle_config.exp_calc_type && md->tdmg)
 			//jAthena's exp formula based on total damage.
 			per = (double)md->dmglog[i].dmg/(double)md->tdmg;

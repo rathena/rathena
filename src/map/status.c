@@ -3146,7 +3146,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(sc->data[SC_INCREASING].timer!=-1)
 		agi += 4;	// added based on skill updates [Reddozen]
 	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		agi -= 2 + sc->data[SC_DECREASEAGI].val1;
+		agi -= sc->data[SC_DECREASEAGI].val2;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		agi -= sc->data[SC_QUAGMIRE].val2;
 	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3) // does not affect players when not in PVP nor WoE. Does not affect Ninjas.
@@ -4398,88 +4398,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 	return sc_def>10000?10000:sc_def;
 }
 
-//Reduces tick delay based on type and character defenses.
-int status_get_sc_tick(struct block_list *bl, int type, int tick)
-{
-	struct map_session_data *sd;
-	struct status_data* status;
-	int rate=0, min=0;
-	//If rate is positive, it is a % reduction (10000 -> 100%)
-	//if it is negative, it is an absolute reduction in ms.
-	BL_CAST(BL_PC,bl,sd);
-	status = status_get_status_data(bl);
-	switch (type) {
-		case SC_DECREASEAGI:		/* 速度減少 */
-			if (sd)	// Celest
-				tick>>=1;
-		break;
-		case SC_ADRENALINE:
-		case SC_ADRENALINE2:
-		case SC_WEAPONPERFECTION:
-		case SC_OVERTHRUST:
-			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
-				tick += tick / 10;
-		break;
-		case SC_DPOISON:
-		case SC_POISON:
-		case SC_STUN:
-		case SC_BLEEDING:
-		case SC_SILENCE:
-		case SC_CURSE:
-			rate = 100*status->vit;
-		break;
-		case SC_SLEEP:
-			rate = 100*status->int_;
-		break;
-		case SC_STONE:
-			rate = -200*status->mdef;
-		break;
-		case SC_FREEZE:
-			rate = 100*status->mdef;
-		break;
-		case SC_BLIND:
-			rate = 50*status->vit +50*status->int_;
-		break;
-		case SC_CONFUSION:
-			rate = 50*status->str +50*status->int_;
-		break;
-		case SC_SWOO:
-			if (status->mode&MD_BOSS)
-				tick /= 5; //TODO: Reduce skill's duration. But for how long?
-		break;
-		case SC_ANKLE:
-			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
-				tick /= 5;
-			rate = -100*status->agi;
-		// Minimum trap time of 3+0.03*skilllv seconds [celest]
-		// Changed to 3 secs and moved from skill.c [Skotlex]
-			min = 3000;
-		break;
-		case SC_SPIDERWEB:
-			if (map[bl->m].flag.pvp)
-				tick /=2;
-		break;
-	}
-	if (rate) {
-		if (bl->type == BL_PC) {
-			if (battle_config.pc_sc_def_rate != 100)
-				rate = rate*battle_config.pc_sc_def_rate/100;
-			if (battle_config.pc_max_sc_def != 10000)
-				min = tick*(10000-battle_config.pc_max_sc_def)/10000;
-		} else {
-			if (battle_config.mob_sc_def_rate != 100)
-				rate = rate*battle_config.mob_sc_def_rate/100;
-			if (battle_config.mob_max_sc_def != 10000)
-				min = tick*(10000-battle_config.mob_max_sc_def)/10000;
-		}
-		
-		if (rate >0)
-			tick -= tick*rate/10000;
-		else
-			tick += rate;
-	}
-	return tick<min?min:tick;
-}
 /*==========================================
  * Starts a status change.
  * type = type, val1~4 depend on the type.
@@ -4525,22 +4443,21 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	}
 
 	//Check rate
-	if (!(flag&(4|1))) {
-		int def;
-		def = flag&8?0:status_get_sc_def(bl, type); //recycling race to store the sc_def value.
+	if (!(flag&(1|4))) {
+		int def = flag&(2|8)?status_get_sc_def(bl, type):0;
 
-		if (def)
+		if (def && !(flag&8))
 			rate -= rate*def/10000;
 
 		if (!(rand()%10000 < rate))
 			return 0;
-	}
-	
-	//SC duration reduction.
-	if(!(flag&(2|4)) && tick) {
-		tick = status_get_sc_tick(bl, type, tick);
-		if (tick <= 0)
-			return 0;
+
+		if (def && tick && !(flag&2))
+		{
+			tick -= rate*def/10000;
+			if (tick <= 0)
+				return 0;
+		}
 	}
 
 	undead_flag=battle_check_undead(status->race,status->def_ele);
@@ -4850,7 +4767,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	calc_flag = StatusChangeFlagTable[type];
 	if(!(flag&4)) //Do not parse val settings when loading SCs
 	switch(type){
-		case SC_ENDURE:				/* インデュア */
+		case SC_DECREASEAGI:
+			val2 = 2 + val1; //Agi decrease
+			if (sd) tick>>=1; //Half duration for players.
+			break;
+		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
 			break;
 		case SC_AUTOBERSERK:
@@ -5516,6 +5437,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val3 = 300;
 			else
 				val3 = 200;
+		case SC_WEAPONPERFECTION:
+		case SC_OVERTHRUST:
+			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
+				tick += tick / 10;
 			break;
 		case SC_CONCENTRATION:
 			val2 = 5*val1; //Batk/Watk Increase
@@ -5613,6 +5538,28 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_CHANGE:
 			val2= 30*val1; //Vit increase
 			val3= 20*val1; //Int increase
+			break;
+		case SC_SWOO:
+			if(status->mode&MD_BOSS)
+				tick /= 5; //TODO: Reduce skill's duration. But for how long?
+			break;
+		case SC_ANKLE:
+			if (sd && battle_config.pc_sc_def_rate != 100)
+				tick -= tick*status->agi*battle_config.pc_sc_def_rate/10000;
+			else if (battle_config.mob_sc_def_rate != 100)
+				tick -= tick*status->agi*battle_config.mob_sc_def_rate/10000;
+			else
+				tick -= tick*status->agi/100;
+			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
+				tick /= 5;
+			// Minimum trap time of 3+0.03*skilllv seconds [celest]
+			// Changed to 3 secs and moved from skill.c [Skotlex]
+			if (tick < 3000)
+				tick = 3000;
+			break;
+		case SC_SPIDERWEB:
+			if (map[bl->m].flag.pvp)
+				tick /=2;
 			break;
 		case SC_ARMOR_ELEMENT:
 			break; // It just change the armor element of the player (used by battle_attr_fix)
