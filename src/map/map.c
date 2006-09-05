@@ -3302,7 +3302,7 @@ int parse_console(char *buf) {
  *------------------------------------------
  */
 int map_config_read(char *cfgName) {
-	char line[1024], w1[1024], w2[1024];
+	char line[1024], w1[1024], w2[1024], *ptr;
 	FILE *fp;
 
 	fp = fopen(cfgName,"r");
@@ -3313,7 +3313,17 @@ int map_config_read(char *cfgName) {
 	while(fgets(line, sizeof(line) -1, fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
+
+		if ((ptr = strstr(line, "//")) != NULL)
+			*ptr = '\n'; //Strip comments
+
+		if (sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) == 2) {
+			//Strip trailing spaces
+			ptr = w2 + strlen(w2);
+			while (--ptr >= w2 && *ptr == ' ');
+			ptr++;
+			*ptr = '\0';
+			
 			if(strcmpi(w1,"timestamp_format")==0){
 				strncpy(timestamp_format, w2, 20);
 			} else if(strcmpi(w1,"console_silent")==0){
@@ -3390,7 +3400,8 @@ int map_config_read(char *cfgName) {
 					enable_spy = 0;
 			} else if (strcmpi(w1, "import") == 0) {
 				map_config_read(w2);
-			}
+			} else
+				ShowWarning("Unknown setting [%s] in file %s\n", w1, cfgName);
 		}
 	}
 	fclose(fp);

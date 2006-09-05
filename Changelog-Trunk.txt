@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/05
+	* Applied the Ultra Mage's suggestion to have the map server strip trailing
+	  spaces/comments from the config files. It will also now print out when an
+	  unknown config setting is found. [Skotlex]
 	* Fixed status change resistance not being invoked at all for pretty much
 	  all cases. [Skotlex]
 	* Corrected SC_INTRAVISION not starting. [Skotlex]
