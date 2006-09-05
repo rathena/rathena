@@ -9544,16 +9544,16 @@ void skill_stop_dancing (struct block_list *src)
 			dsd = map_id2sd(sc->data[SC_DANCING].val4);
 		sc->data[SC_DANCING].val4 = 0;
 	}
+	status_change_end(src, SC_DANCING, -1);
 
-	if (group)
-		skill_delunitgroup(NULL, group, 0);
-		
 	if (dsd)
 	{
 		dsd->sc.data[SC_DANCING].val4 = dsd->sc.data[SC_DANCING].val2 = 0;
 		status_change_end(&dsd->bl, SC_DANCING, -1);
 	}
-	status_change_end(src, SC_DANCING, -1);
+
+	if (group)
+		skill_delunitgroup(NULL, group, 0);
 }
 
 /*==========================================
@@ -9789,7 +9789,7 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group, 
 		group->valstr=NULL;
 	}
 
-	map_freeblock((struct block_list*)group->unit);
+	map_freeblock(&group->unit->bl);
 	group->unit=NULL;
 	group->group_id=0;
 	group->unit_count=0;
