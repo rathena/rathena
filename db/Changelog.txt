@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/05
+	* Updated comments on Arrow Crafting thanks to Haplo [Playtester]
 09/04
 	* Updated Shinobi Sash and Exorcising Ring [Playtester]
 09/02
