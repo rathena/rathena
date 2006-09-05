@@ -4781,7 +4781,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		
 		case SC_SIGNUMCRUCIS:
-			val2 = 10 + val1*2; //Def reduction
+			val2 = 10 + 4*val1; //Def reduction
 			clif_emotion(bl,4);
 			break;
 		case SC_MAXIMIZEPOWER:
