@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/05
+	* Fixed connect_until field being a smallint rather than int in the login
+	  table (upgrade with upgrade_svn8630.sql) [Skotlex]
 2006/09/04
 	* Fixed crash when using Adaptation during an Encore. [Skotlex]
 	* Should have fixed manner being reset to 0 on logout while muted.
