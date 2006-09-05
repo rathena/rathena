@@ -1584,7 +1584,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
 		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
 
-	if (battle_config.show_mob_hp)
+	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
 	
 	if (!src)
@@ -2185,7 +2185,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 		clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
-	if (battle_config.show_mob_hp)
+	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
 }
 
@@ -2303,8 +2303,8 @@ int mob_class_change (struct mob_data *md, int class_)
 	if(md->lootitem == NULL && md->db->status.mode&MD_LOOTER)
 		md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 
-	if (battle_config.show_mob_hp)
-		clif_charnameack(0, &md->bl);
+	//Need to update name display.
+	clif_charnameack(0, &md->bl);
 
 	return 0;
 }
@@ -2319,7 +2319,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 	// guardian hp update [Valaris] (updated by [Skotlex])
 		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
 
-	if (battle_config.show_mob_hp)
+	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
 }
 

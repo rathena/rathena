@@ -302,8 +302,8 @@ extern struct Battle_Config {
 	unsigned short pk_mode;
 	unsigned short pk_level_range;
 
-	unsigned short manner_system;
-	unsigned short show_mob_hp;  // end additions [Valaris]
+	unsigned short manner_system; // end additions [Valaris]
+	unsigned short show_mob_info; 
 
 	unsigned short agi_penalty_count_lv;
 	unsigned short vit_penalty_count_lv;

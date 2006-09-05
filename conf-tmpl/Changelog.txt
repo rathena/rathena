@@ -1,5 +1,10 @@
 Date	Added
 
+2006/09/05
+	* Removed setting mob_show_hp, it's been replaced now by mob_show_info,
+	  which can be used to specify what kind of info should be displayed from a
+	  mob. Current options are two different formats for Hp display, and current
+	  level (monster.conf). [Skotlex]
 2006/08/31
 	* Added setting attack_walk_delay which specifies whether a character
 	  should (or not) be able to move inmediately after starting a normal attack

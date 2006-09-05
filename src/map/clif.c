@@ -7852,15 +7852,24 @@ int clif_charnameack (int fd, struct block_list *bl)
 				WBUFB(buf,30) = 0;
 				memcpy(WBUFP(buf,54), md->guardian_data->guild_name, NAME_LENGTH);
 				memcpy(WBUFP(buf,78), md->guardian_data->castle->castle_name, NAME_LENGTH);
-			} else if (battle_config.show_mob_hp) {
-				char mobhp[50];
+			} else if (battle_config.show_mob_info) {
+				char mobhp[50], *str_p = mobhp;
+
 				WBUFW(buf, 0) = cmd = 0x195;
-				sprintf(mobhp, "HP: %u/%u", md->status.hp, md->status.max_hp);
+				if (battle_config.show_mob_info&4)
+					str_p += sprintf(str_p, "Lv. %d |", md->level);
+				if (battle_config.show_mob_info&1)
+					str_p += sprintf(str_p, "HP: %u/%u |", md->status.hp, md->status.max_hp);
+				if (battle_config.show_mob_info&2)
+					str_p += sprintf(str_p, "HP: %d%% |", 100*md->status.hp/md->status.max_hp);
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
-				memcpy(WBUFP(buf,30), mobhp, NAME_LENGTH);
-				WBUFB(buf,54) = 0;
-				memcpy(WBUFP(buf,78), mobhp, NAME_LENGTH);
+				if (str_p != mobhp) {
+					*(str_p-2) = '\0'; //Remove trailing space + pipe.
+					memcpy(WBUFP(buf,30), mobhp, NAME_LENGTH);
+					WBUFB(buf,54) = 0;
+					memcpy(WBUFP(buf,78), mobhp, NAME_LENGTH);
+				}
 			}
 		}
 		break;
