@@ -81,8 +81,6 @@ int npc_unload(struct npc_data *nd);
 int npc_reload(void);
 int npc_script_event(TBL_PC* sd, int type);
 
-extern int dummy_npc_id;
-
 extern char *current_file;
 
 struct npc_data *fake_nd;

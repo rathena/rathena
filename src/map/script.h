@@ -35,7 +35,7 @@ struct script_data {
 		int num;
 		char *str;
 	} u;
-	struct linkdb_node** ref; // ƒŠƒtƒ@ƒŒƒ“ƒX
+	struct linkdb_node** ref;
 };
 
 // Moved defsp from script_state to script_stack since

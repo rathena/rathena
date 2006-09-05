@@ -559,8 +559,7 @@ unsigned char* parse_simpleexpr(unsigned char *p)
 		int c,l;
 		char *p2;
 		// label , register , function etc
-		//From what I read, jA figured a better way to handle empty parenthesis '()'
-		if(skip_word(p)==p/* && !(*p==')' && p[-1]=='(')*/){
+		if(skip_word(p)==p){
 			disp_error_message("unexpected character",p);
 			exit(1);
 		}
@@ -1494,7 +1493,6 @@ static void read_constdb(void)
 		type=0;
 		if(sscanf(line,"%[A-Za-z0-9_],%[0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
 		   sscanf(line,"%[A-Za-z0-9_] %[0-9xXA-Fa-f] %d",name,val,&type)>=2){
-
 			for(i=0;name[i];i++)
 				name[i]=tolower(name[i]);
 			n=add_str((const unsigned char *) name);
@@ -1929,12 +1927,13 @@ char* conv_str(struct script_state *st,struct script_data *data)
 		snprintf(buf,ITEM_NAME_LENGTH, "%d",data->u.num);
 		data->type=C_STR;
 		data->u.str=buf;
-#if 1
+	} else if(data->type==C_POS) {
+		// Protect form crashes by passing labels to string-expected args [jA2200]
+		data->type = C_CONSTSTR;
+		data->u.str = "** SCRIPT ERROR **";
 	} else if(data->type==C_NAME){
-		// テンポラリ。本来無いはず
 		data->type=C_CONSTSTR;
 		data->u.str=str_buf+str_data[data->u.num].str;
-#endif
 	}
 	return data->u.str;
 }
@@ -2791,7 +2790,6 @@ int mapreg_setreg(int num,int val)
 			}
 		}
 #endif
-	// else
 	} else { // [zBuffer]
 #if !defined(TXT_ONLY) && defined(MAPREGSQL)
 		if(name[1] != '@') { // Remove from database because it is unused.
@@ -11714,7 +11712,6 @@ int buildin_axtoi(struct script_state *st)
 	push_val(st->stack, C_INT, axtoi(hex));	
 	return 0;
 }
-
 
 // [zBuffer] List of player cont commands --->
 int buildin_rid2name(struct script_state *st){

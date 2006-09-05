@@ -11707,39 +11707,40 @@ int clif_parse(int fd) {
 	if ((int)RFIFOREST(fd) < packet_len)
 		return 0; // まだ1パケット分データが揃ってない
 
-	#if DUMP_ALL_PACKETS
+#if DUMP_ALL_PACKETS
+	{
+		int i;
+		FILE *fp;
+		char packet_txt[256] = "save/packet.txt";
+		time_t now;
 		dump = 1;
-				int i;
-				FILE *fp;
-				char packet_txt[256] = "save/packet.txt";
-				time_t now;
-				dump = 1;
 
-				if ((fp = fopen(packet_txt, "a")) == NULL) {
-					ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
-					return 1;
-				} else {
-					time(&now);
-					if (sd && sd->state.auth) {
-						if (sd->status.name != NULL)
-							fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent packet:\n",
-							        asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
-						else
-							fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
-					} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-						fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
+		if ((fp = fopen(packet_txt, "a")) == NULL) {
+			ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
+			return 1;
+		} else {
+			time(&now);
+			if (sd && sd->state.auth) {
+				if (sd->status.name != NULL)
+					fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent packet:\n",
+							  asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
+				else
+					fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
+			} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
+				fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
 
-					fprintf(fp, "\tsession #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
-					fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-					for(i = 0; i < packet_len; i++) {
-						if ((i & 15) == 0)
-							fprintf(fp, "\n\t%04X ", i);
-						fprintf(fp, "%02X ", RFIFOB(fd,i));
-					}
-					fprintf(fp, "\n\n");
-					fclose(fp);
-				}
-	#endif
+			fprintf(fp, "\tsession #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
+			fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+			for(i = 0; i < packet_len; i++) {
+				if ((i & 15) == 0)
+					fprintf(fp, "\n\t%04X ", i);
+				fprintf(fp, "%02X ", RFIFOB(fd,i));
+			}
+			fprintf(fp, "\n\n");
+			fclose(fp);
+		}
+	}
+#endif
 
 	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
 

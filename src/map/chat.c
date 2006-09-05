@@ -145,16 +145,18 @@ int chat_leavechat(struct map_session_data *sd)
 	pc_setchatid(sd,0);
 
 	if(cd->users == 0 && (*cd->owner)->type==BL_PC){
-			// 全員居なくなった&PCのチャットなので消す
+		//Delete empty chatroom
 		clif_clearchat(cd,0);
-		map_delobject(cd->bl.id);	// freeまでしてくれる
+		map_delobject(cd->bl.id);
 	} else {
 		for(i=leavechar;i < cd->users;i++)
 			cd->usersd[i] = cd->usersd[i+1];
 		if(leavechar==0 && (*cd->owner)->type==BL_PC){
-			// PCのチャットなので所有者が抜けたので位置変更
+			//Adjust Chat location after owner has been changed.
+			map_delblock( &cd->bl );
 			cd->bl.x=cd->usersd[0]->bl.x;
 			cd->bl.y=cd->usersd[0]->bl.y;
+			map_addblock( &cd->bl );
 		}
 		clif_dispchat(cd,0);
 	}
@@ -197,9 +199,10 @@ int chat_changechatowner(struct map_session_data *sd,char *nextownername)
 	cd->usersd[0] = cd->usersd[nextowner];
 	cd->usersd[nextowner] = tmp_sd;
 
-	// 新しい所有者の位置へ変更
+	map_delblock( &cd->bl );
 	cd->bl.x=cd->usersd[0]->bl.x;
 	cd->bl.y=cd->usersd[0]->bl.y;
+	map_addblock( &cd->bl );
 
 	// 再度表示
 	clif_dispchat(cd,0);

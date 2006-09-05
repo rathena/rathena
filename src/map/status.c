@@ -5561,9 +5561,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (map[bl->m].flag.pvp)
 				tick /=2;
 			break;
+		case SC_INTRAVISION:
 		case SC_ARMOR_ELEMENT:
-			break; // It just change the armor element of the player (used by battle_attr_fix)
-				   // So it has no SCB and no skill associated (used by potion scripts)
+			//Place here SCs that have no SCB_* data, no skill associated, no ICON
+			//associated, and yet are not wrong/unknown. [Skotlex]
+			break;
 		default:
 			if (calc_flag == SCB_NONE &&
 				StatusSkillChangeTable[type]==0 &&
