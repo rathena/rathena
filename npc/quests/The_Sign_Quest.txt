@@ -28,8 +28,11 @@ OnInit:
 	set $timezonestring$,"^FF0000GMT^000000";
 
 //= This variable determines whether the "sign_xx.bmps" will be used or
-//= if raw text will be used in the 'Sign::GeffeniaSigns' script. Set it to
-//= 0 if you want to use text.
+//= if raw text will be used in the 'Sign::GeffeniaSigns' script.
+//= Set it to 0 if you want to use text.
+//= The bmp's are in the language of your client. If you are using a
+//= kRO Client, you may want to download the English bmp's available in
+//= the Texture.rar at http://mrmagoo.psiblade.net/translation/index.php?section=downloads
 
 	set $signbmps,1;
 }
