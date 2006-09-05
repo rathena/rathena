@@ -55,6 +55,11 @@
 //| 	your max weight, causing them to drop due to "over-weight".
 //|	Thanks to Niktout for spotting it.
 
+//| Revision:
+//| v.2.7: Added a check to the Zeny -> Coin Mix label. It seems you
+//|	can trade with negative zeny (meh...). This should prevent it.
+//|	Thanks to Niktout.
+
 //| Upcomming possible updates:
 //| v.3.0: Adding a refining system, so you can gather ore and the likes
 //| 	to make your own coins. They will have a failure chance
@@ -319,7 +324,7 @@ L_Mix:
 	mes "Coins:";
 	mes "   ^996600"+@name1$+"s^000000:   "+@bronzecoins+"       ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
 	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
-	if (@totalzeny > @zenyamount) {
+	if (@totalzeny > @zenyamount || @totalzeny < 0) {
 		mes "TOTAL Zeny:   "+@totalcoins+"   - ^CC0000"+@totalzeny+"^000000";
 		mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 		goto L_Overzeny;
@@ -327,7 +332,7 @@ L_Mix:
 	mes "TOTAL Zeny:   "+@totalcoins+"     ^00CC00"+@totalzeny+"^000000";
 	mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 	next;
-	if (@totalzeny > @zenyamount) 
+	if (@totalzeny > @zenyamount || @totalzeny < 0) 
 	mes @npcname$;
 	mes "Is this enough or do you want more?";
 	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
@@ -344,7 +349,7 @@ L_Mix:
 	mes "   ^996600"+@name1$+"s^000000:   "+@bronzecoins+"       ^CC0000"+@bronzecoins*@bronzeprice+"^000000";
 	mes "   ^999999"+@name2$+"s^000000:   "+@silvercoins+"      ^CC0000"+@silvercoins*@silverprice+"^000000";
 	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
-	if (@totalzeny > @zenyamount) {
+	if (@totalzeny > @zenyamount || @totalzeny < 0) {
 		mes "TOTAL Zeny:  "+@totalcoins+"   - ^CC0000"+@totalzeny+"^000000";
 		mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 		goto L_Overzeny;
@@ -352,7 +357,7 @@ L_Mix:
 	mes "TOTAL Zeny:   "+@totalcoins+"     ^00CC00"+@totalzeny+"^000000";
 	mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 	next;
-	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	if (@totalzeny > @zenyamount || @totalzeny < 0) goto L_Overzeny;
 	mes @npcname$;
 	mes "Is this enough or do you want more?";
 	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
@@ -369,7 +374,7 @@ L_Mix:
 	mes "   ^999999"+@name2$+"s^000000:   "+@silvercoins+"      ^CC0000"+@silvercoins*@silverprice+"^000000";
 	mes "   ^FFCC00"+@name3$+"s^000000:   "+@goldcoins+"         ^CC0000"+@goldcoins*@goldprice+"^000000";
 	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
-	if (@totalzeny > @zenyamount) {
+	if (@totalzeny > @zenyamount || @totalzeny < 0) {
 		mes "TOTAL Zeny:   "+@totalcoins+"   - ^CC0000"+@totalzeny+"^000000";
 		mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 		goto L_Overzeny;
@@ -377,7 +382,7 @@ L_Mix:
 	mes "TOTAL Zeny:   "+@totalcoins+"     ^00CC00"+@totalzeny+"^000000";
 	mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 	next;
-	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	if (@totalzeny > @zenyamount || @totalzeny < 0) goto L_Overzeny;
 	mes @npcname$;
 	mes "Is this enough or do you want more?";
 	menu "It's enough, thanks",L_Payoff,"No, I want some more",-;
@@ -395,7 +400,7 @@ L_Mix:
 	mes "   ^FFCC00"+@name3$+"s^000000:   "+@goldcoins+"         ^CC0000"+@goldcoins*@goldprice+"^000000";
 	mes "   ^CCCCCC"+@name4$+"s^000000:   "+@mithrilcoins+"    ^CC0000"+@mithrilcoins*@mithrilprice+"^000000";
 	mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
-	if (@totalzeny > @zenyamount) {
+	if (@totalzeny > @zenyamount || @totalzeny < 0) {
 		mes "TOTAL Zeny:   "+@totalcoins+"   - ^CC0000"+@totalzeny+"^000000";
 		mes "Zeny Left:  "+(@zenyamount-@totalzeny);	
 		goto L_Overzeny;
@@ -403,7 +408,7 @@ L_Mix:
 	mes "TOTAL:   "+@totalcoins+"     ^00CC00"+@totalzeny+"^000000";
 	mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 	next;
-	if (@totalzeny > @zenyamount) goto L_Overzeny;
+	if (@totalzeny > @zenyamount || @totalzeny < 0) goto L_Overzeny;
 	mes @npcname$;
 	mes "Is this ok?: "+@bronzecoins+" "+@name1$+"s, "+@silvercoins+" "+@name2$+"s, "+@goldcoins+" "+@name3$+"s, "+@mithrilcoins+" "+@name4$+"s, for a total amount of "+@totalzeny;
 	menu "Yes, it's ok",L_Payoff,"No, I want to re-intro them",L_Mix,"Sorry, I dont want anything",L_Menu;
