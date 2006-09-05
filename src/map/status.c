@@ -4444,7 +4444,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check rate
 	if (!(flag&(1|4))) {
-		int def = flag&(2|8)?status_get_sc_def(bl, type):0;
+		int def = status_get_sc_def(bl, type);
 
 		if (def && !(flag&8))
 			rate -= rate*def/10000;
