@@ -1395,7 +1395,7 @@ bool session_isActive(int fd)
 in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str) {
 	struct hostent *h = gethostbyname(hostname);
 	unsigned char ip_buf[16];
-	char ip2[4];
+	unsigned char ip2[4];
 	if (!h) return 0;
 	if (ip == NULL) ip = ip2;
 	ip[0] = (unsigned char) h->h_addr[0];

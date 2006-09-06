@@ -310,7 +310,7 @@ bIgnoreMdefEle	1033
 bIgnoreMdefRace	1034
 bMagicAddEle	1035
 bMagicAddRace	1036
-bMagicSubRace	1037
+bMagicAddSize	1037
 bPerfectHitRate	1038
 bPerfectHitAddRate	1039
 bCriticalRate	1040
