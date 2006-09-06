@@ -20,6 +20,11 @@
 
 =========================
 09/06
+	* Updated skill_require_db's entry for Abracadabra, it requires yellow 2
+	  gemstones (there's no such hardcoded yellow gemstone requirement anymore)
+	  [Skotlex]
+	* Corrected db/const.txt entry bMagicSubRace -> bMagicAddSize [Skotlex]
+
 	* Updated attack power of Unholy Touch [Playtester]
 	- also moved combo bonuses to non-accessoire parts
 09/05

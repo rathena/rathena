@@ -4,10 +4,6 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/06
-	* Updated skill_require_db's entry for Abracadabra, it requires yellow 2
-	  gemstones (there's no such hardcoded yellow gemstone requirement anymore)
-	  [Skotlex]
-	* Corrected db/const.txt entry bMagicSubRace -> bMagicAddSize [Skotlex]
 	* Fixed Aex Aeterna ending on Soul Breaker's first half. [Skotlex]
 	* Applied Orn's modification on speed increases/reductions with increase/
 	decrease agi [Toms] 
