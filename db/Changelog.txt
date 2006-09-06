@@ -20,6 +20,7 @@
 
 =========================
 09/06
+	* Changed all bCriticalRate to bCritical [Playtester]
 	* Updated skill_require_db's entry for Abracadabra, it requires yellow 2
 	  gemstones (there's no such hardcoded yellow gemstone requirement anymore)
 	  [Skotlex]
