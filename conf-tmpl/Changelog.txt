@@ -1,5 +1,8 @@
 Date	Added
 
+2006/09/06
+	* Reverted back the default view/chase range of mobs to 100% since eA now
+	  uses square view areas, like Aegis. [Skotlex]
 2006/09/05
 	* Removed setting mob_show_hp, it's been replaced now by mob_show_info,
 	  which can be used to specify what kind of info should be displayed from a
