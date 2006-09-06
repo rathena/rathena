@@ -61,7 +61,7 @@ yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 			break;
 		}
 	}
-	if(valkyrie_Q<=1 || Upper==2 || BaseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja){
+	if(valkyrie_Q<1 || Upper==2 || BaseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja){
 		mes ". . . . .";
 	}
 	mes "...Therefore, ancient heroes were";
