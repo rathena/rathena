@@ -3142,7 +3142,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(sc->data[SC_TRUESIGHT].timer!=-1)
 		agi += 5;
 	if(sc->data[SC_INCREASEAGI].timer!=-1)
-		agi += 2 + sc->data[SC_INCREASEAGI].val1;
+		agi += sc->data[SC_INCREASEAGI].val2;
 	if(sc->data[SC_INCREASING].timer!=-1)
 		agi += 4;	// added based on skill updates [Reddozen]
 	if(sc->data[SC_DECREASEAGI].timer!=-1)
@@ -3619,10 +3619,10 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed -= speed * 50/100;
 	else if(sc->data[SC_SPEEDUP0].timer!=-1)
 		speed -= speed * 25/100;
-	else if(sc->data[SC_INCREASEAGI].timer!=-1)
-		speed -= (sc->data[SC_INCREASEAGI].val1 * 5)/2; //[orn]
 	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
+	else if(sc->data[SC_INCREASEAGI].timer!=-1)
+		speed -= speed * sc->data[SC_INCREASEAGI].val3/100; //[orn]
 	else if(sc->data[SC_CARTBOOST].timer!=-1)
 		speed -= speed * 20/100;
 	else if(sc->data[SC_BERSERK].timer!=-1)
@@ -3635,14 +3635,14 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	//% reductions	 (they stack)
 	if(sc->data[SC_DANCING].timer!=-1 && sc->data[SC_DANCING].val3&0xFFFF)
 		speed += speed*(sc->data[SC_DANCING].val3&0xFFFF)/100;
-	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		speed += (sc->data[SC_DECREASEAGI].val1 * 5)/2; //[orn]
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		speed = speed * 100/75;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		speed = speed * 100/50;
 	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3)
 		speed = speed * 100/sc->data[SC_SUITON].val3;
+	if(sc->data[SC_DECREASEAGI].timer!=-1)
+		speed = speed * 100/sc->data[SC_DECREASEAGI].val3; //[orn]
 	if(sc->data[SC_DONTFORGETME].timer!=-1)
 		speed = speed * 100/sc->data[SC_DONTFORGETME].val3;
 	if(sc->data[SC_DEFENDER].timer!=-1)
@@ -4767,8 +4767,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	calc_flag = StatusChangeFlagTable[type];
 	if(!(flag&4)) //Do not parse val settings when loading SCs
 	switch(type){
+		case SC_INCREASEAGI:
+			val2 = 2 + val1; //Agi increase
+			val3 = (5*val1)/2; //Speed increase
+			break;
 		case SC_DECREASEAGI:
 			val2 = 2 + val1; //Agi decrease
+			val3 = 100 - (5*val1)/2; //Speed decrease
+			if (val3 < 1) val3 = 1;
 			if (sd) tick>>=1; //Half duration for players.
 			break;
 		case SC_ENDURE:
@@ -5590,6 +5596,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		//In case the speed reduction comes loaded incorrectly,
 		//prevent division by 0.
+		case SC_INCREASEAGI:
+		case SC_DECREASEAGI:
 		case SC_DONTFORGETME:
 		case SC_CLOAKING:
 		case SC_LONGING:
