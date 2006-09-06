@@ -19,6 +19,9 @@
 	-----
 
 =========================
+09/06
+	* Updated attack power of Unholy Touch [Playtester]
+	- also moved combo bonuses to non-accessoire parts
 09/05
 	* Updated comments on Arrow Crafting thanks to Haplo [Playtester]
 09/04
