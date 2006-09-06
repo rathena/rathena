@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 09/05
+	* More proper Valyrie dialogues [Lupus]
 	* eAAC Update to the banker. [erKURITA]
 09/04
 	* Added missing next's in npc/custom/airplane.txt and npc/custom/quests/valhallen.txt [Evera]

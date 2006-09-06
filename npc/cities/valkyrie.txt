@@ -4,7 +4,7 @@
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.6a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -21,7 +21,7 @@
 //= 2.0 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 2.1 Changed all numbers into constants. [Vicious]
 //= 2.2 Now ALL quests skills are saved/restored [Lupus] 2.3 Removed Duplicates [Silent] 2.4 Fixed typos, optimized [Lupus] 2.5 Fixed a stuck bug [Lupus]
-//= 2.6 Adding proper dialogues [Lupus]
+//= 2.6a Adding proper dialogues [Lupus]
 //============================================================ 
 
 
@@ -32,36 +32,96 @@ valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
-	if(Upper==1){
-		mes "...The entrance to the Hall of Honor is open to everyone who will move forward, into their next lives.";
-		mes "It is there to help heroes decide what they want to do, and can access every place in this world.";
+	if(Upper==1 || valkyrie_Q>1){
+		mes "...The entrance to the Hall of Honor";
+		mes "is open to everyone who will move forward, into their next lives.";
+		mes "It is there to help heroes decide what they want to do, and can";
+		mes "access every place in this world.";
 		next;
 		mes "[Book of Ymir]";
 		mes "In the Hall of Honor, everything is perfectly prepared for heroes.";
-		mes "It is rumored that any wish that cannot be fulfilled in our reality can be realized in the Hall of Honor.";
+		mes "It is rumored that any wish that";
+		mes "cannot be fulfilled in our reality";
+		mes "can be realized in the Hall of Honor.";
 		next;
-		switch(select("Stop reading.","Continue reading.")) {
+		switch(select("Stop reading.:Continue reading.")) {
 		case 1:
 			mes "[Book of Ymir]";
 			mes ". . . . .";
 			close;
 			break;
-
 		case 2:
-			mes "There is a forgotten path which leads to the Hall of Honor, the closest place to the heavens.";
-			mes "However, it is forbidden for ordinary people to know about it...";
+			mes "[Book of Ymir]";
+			mes "There is a forgotten path which leads to";
+			mes "the Hall of Honor, the closest place to the heavens. However, it is forbidden";
+			mes "for ordinary people to know about it...";
 			close2;
 			warp "valkyrie",48,9; //48,8?
 			end;
 			break;
 		}
 	}
-	if(Upper==2 || baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja)
-		goto L_IGNORE; //don't allow Taekwondo classes, Baby Classes, and GS/NJ
-	if(valkyrie_Q >= 1) goto L_CONT;
-
-L_IGNORE:
-	mes ". . . . .";
+	if(valkyrie_Q<=1 || Upper==2 || BaseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja){
+		mes ". . . . .";
+	}
+	mes "...Therefore, ancient heroes were";
+	mes "always in anguish, knowing that";
+	mes "eventually, they were mortal and";
+	mes "would pass from this realm...";
+	next;
+	mes "[The Book of Ymir]";
+	mes "There were no documents, songs";
+	mes "or remaining folklore that";
+	mes "had any information on life";
+	mes "after death. However, I recently";
+	mes "uncovered an old scroll about";
+	mes "Valkyrie...";
+	next;
+	mes "[The Book of Ymir]";
+	mes "Valkyrie...";
+	mes "The legendary guardian angel";
+	mes "angel of Ragnarok.";
+	next;
+	mes "[The Book of Ymir]";
+	mes "Adventurers of great strength";
+	mes "and bravery will be lead by";
+	mes "Valkyrie to Valhalla, the Hall";
+	mes "of Honor. There, they will be";
+	mes "given a new life.";
+	next;
+	mes "[The Book of Ymir]";
+	mes "Reborn, they will live again as";
+	mes "even greater heroes that will";
+	mes "brighten the world. Bodies that";
+	mes "were exhausted will be filled";
+	mes "with energy...";
+	next;
+	mes "[The Book of Ymir]";
+	mes "And the spirit will be given";
+	mes "abilities with the heart of Ymir.";
+	mes "However, the heart of Ymir was";
+	mes "totally destroyed and scattered";
+	mes "all over the world after the battle of the Rune-Midgarts.";
+	next;
+	mes "[The Book of Ymir]";
+	mes "I had found a small amount of";
+	mes "Ymir heart pieces over a long";
+	mes "long period of time. But I can't";
+	mes "confirm if the story of Valkyrie";
+	mes "and Valhalla is true or not";
+	mes "through scientific tests.";
+	next;
+	mes "[The Book of Ymir]";
+	mes "So, I am leaving this record";
+	mes "and hope that someone in the future";
+	mes "can confirm that Valkyrie and Valhalla";
+	mes "exist through my records.";
+	next;
+	mes "[The book of Ymir]";
+	mes "Let the heroes live new lives";
+	mes "so they could protect the world from danger.";
+	mes "And then......";
+	mes "...........";
 	close;
 }
 
