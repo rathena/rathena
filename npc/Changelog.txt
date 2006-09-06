@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/06
+	* Added a missing feature to the donation NPC in Lighthalzen [MasterOfMuppets]
 09/05
 	* More proper Valyrie dialogues [Lupus]
 	* eAAC Update to the banker. [erKURITA]

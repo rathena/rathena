@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 0.9
+//= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 0.7 Implemented some more crap NPCs and the second entrance to biolabs [MasterOfMuppets]
 //= 0.8 Removed Duplicates [Silent]
 //= 0.9 Removed Duplicates [Toms]
+//= 1.0 Added a missing feature to the donation NPC [MasterOfMuppets]
 //=============================================================
 
 lighthalzen.gat,198,285,5	script	Jiwon	862,{
@@ -626,6 +627,20 @@ s_Sure:
 	mes "donations. I'm glad to see";
 	mes "that there are still kinda and";
 	mes "generous people in the world.";
+	if($donatedzeny > 259999)
+	{
+	next;
+	mes "[Lucius]";
+	mes "This should be enough";
+	mes "to send to the Poor Relief";
+	mes "Organization. Please accpet";
+	mes "this small gift as a token of";
+	mes "my gratitude, adventurer. Bless";
+	mes "you, youngster and take care.";
+	getitem 603,1;
+	getitem 12016,1;
+	set $donatedzeny,0;
+	}
 	close;
 
 s_Much:
