@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/06
+	* Applied Orn's modification on speed increases/reductions with increase/
+	decrease agi [Toms] 
 2006/09/05
 	* Removed setting mob_show_hp, it's been replaced now by mob_show_info,
 	  which can be used to specify what kind of info should be displayed from a

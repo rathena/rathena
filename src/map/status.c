@@ -3620,7 +3620,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	else if(sc->data[SC_SPEEDUP0].timer!=-1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
-		speed -= speed * 25/100;
+		speed -= (sc->data[SC_INCREASEAGI].val1 * 5)/2; //[orn]
 	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_CARTBOOST].timer!=-1)
@@ -3636,7 +3636,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if(sc->data[SC_DANCING].timer!=-1 && sc->data[SC_DANCING].val3&0xFFFF)
 		speed += speed*(sc->data[SC_DANCING].val3&0xFFFF)/100;
 	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		speed = speed * 100/75;
+		speed += (sc->data[SC_DECREASEAGI].val1 * 5)/2; //[orn]
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		speed = speed * 100/75;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
