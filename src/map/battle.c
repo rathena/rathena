@@ -3753,7 +3753,8 @@ static const struct battle_data_short {
 	{ "mob_luk_status_def",					&battle_config.mob_luk_sc_def },
 	{ "pc_max_status_def",					&battle_config.pc_max_sc_def },
 	{ "mob_max_status_def",					&battle_config.mob_max_sc_def },
-	{ "sg_miracle_skill_ratio",				&battle_config.sg_miracle_skill_ratio },
+	{ "sg_miracle_skill_ratio",			&battle_config.sg_miracle_skill_ratio },
+	{ "sg_angel_skill_ratio",		 		&battle_config.sg_angel_skill_ratio },
 	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 	{ "override_mob_names", 				&battle_config.override_mob_names },
 	{ "min_chat_delay",						&battle_config.min_chat_delay },
@@ -4189,6 +4190,7 @@ void battle_set_defaults() {
 	battle_config.pc_max_sc_def = 10000;
 	battle_config.mob_max_sc_def = 5000;
 	battle_config.sg_miracle_skill_ratio=1;
+	battle_config.sg_angel_skill_ratio=1;
 	battle_config.sg_miracle_skill_duration=600000;
 	battle_config.autospell_stacking = 0;
 	battle_config.override_mob_names = 0;

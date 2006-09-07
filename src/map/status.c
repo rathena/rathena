@@ -4701,13 +4701,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				if (sc->data[type].val2 > val2)
 					return 0;
 			break;
-			case SC_WARM:
-			{	//Fetch the Group, half the attack interval. [Skotlex]
-				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val4;
-				if (group)
-					group->interval/=2;
-				return 1;
-			}
 			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
@@ -7012,8 +7005,24 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 		sregen->tick.sp += natural_heal_diff_tick * sregen->rate.sp;
 		while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval)
 		{
+			val = sregen->sp;
+			if (sd && sd->doridori_counter) {
+				val*=2;
+				sd->doridori_counter--;
+				if (
+					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
+					rand()%10000 < battle_config.sg_angel_skill_ratio
+				) { //Angel of the Sun/Moon/Star
+					malloc_set(sd->hate_mob, 0, sizeof(sd->hate_mob));
+					pc_setglobalreg(sd,"PC_HATE_MOB_STAR", 0);
+					pc_setglobalreg(sd,"PC_HATE_MOB_SUN", 0);
+					pc_setglobalreg(sd,"PC_HATE_MOB_MOON", 0);
+					pc_resetfeel(sd);
+					//TODO: Figure out how to make the client-side msg show up.
+				}
+			}
 			sregen->tick.sp -= battle_config.natural_heal_skill_interval;
-			if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp)
+			if(status_heal(bl, 0, val, 3) < val)
 				break; //Full
 		}
 	}

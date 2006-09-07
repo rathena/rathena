@@ -1139,6 +1139,27 @@ int unit_attack(struct block_list *src,int target_id,int type)
 	return 0;
 }
 
+//Cancels an ongoing combo, resets attackable time and restarts the 
+//attack timer to resume attacking after amotion time. [Skotlex]
+int unit_cancel_combo(struct block_list *bl)
+{
+	struct unit_data  *ud;
+
+	if (!status_change_end(bl, SC_COMBO, -1))
+		return 0; //Combo wasn't active.
+
+	ud = unit_bl2ud(bl);
+	nullpo_retr(0, ud);
+
+	ud->attackabletime = gettick() + status_get_amotion(bl);
+
+	if (ud->attacktimer == -1)
+		return 1; //Nothing more to do.
+	
+	delete_timer(ud->attacktimer, unit_attack_timer);
+	ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,bl->id,0);
+	return 1;
+}
 /*==========================================
  *
  *------------------------------------------

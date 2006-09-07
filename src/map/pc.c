@@ -796,8 +796,7 @@ int pc_reg_received(struct map_session_data *sd)
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
 		}
-		sd->hate_mob[i] = pc_readglobalreg(sd,hate_var[i])  - 1;
-		
+		sd->hate_mob[i] = pc_readglobalreg(sd,hate_var[i])-1;
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
