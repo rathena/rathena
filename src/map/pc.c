@@ -1450,8 +1450,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->speed_add_rate = sd->speed_add_rate * (100-val)/100;
 		break;
 	case SP_ASPD:	//Raw increase
-		if(sd->state.lr_flag != 2)
-			status->amotion -= val*10;
+//		if(sd->state.lr_flag != 2)
+//			status->amotion -= val*10;
+		if (battle_config.error_log)			
+			ShowError("pc_bonus: bonus bAspd is no longer supported!\n");
 		break;
 	case SP_ASPD_RATE:	//Non stackable increase
 		if(sd->state.lr_flag != 2 && status->aspd_rate > 1000-val*10)

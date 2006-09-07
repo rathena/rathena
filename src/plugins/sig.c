@@ -27,13 +27,13 @@ PLUGIN_EVENTS_TABLE = {
 
 #if defined(_WIN32) || defined(MINGW)
 	int sig_init() {
-		ShowError("sig: This plugin is not supported - Enable 'exchndl' instead!");
+		ShowError("sig: This plugin is not supported - Enable 'exchndl' instead!\n");
 		return 0;
 	}
 	int sig_final() { return 0; }
 #elif defined (__NETBSD__) || defined (__FREEBSD__)
 	int sig_init() {
-		ShowError("sig: This plugin is not supported!");
+		ShowError("sig: This plugin is not supported!\n");
 		return 0;
 	}
 	int sig_final() { return 0; }
