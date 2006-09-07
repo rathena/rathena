@@ -1848,6 +1848,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			clif_specialeffect(bl, 438, AREA);
 			if (--sc->data[SC_KAITE].val2 <= 0)
 				status_change_end(bl, SC_KAITE, -1);
+			clif_skill_nodamage(bl,src,skillid,skilllv,1);
 			bl = src; //Just make the skill attack yourself @.@
 			sc = status_get_sc(bl);
 			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;
@@ -5128,7 +5129,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	// Slim Pitcher (normally Condensed Potion doesn't give SP (Heals party members))
+	// Slim Pitcher
 	case CR_SLIMPITCHER:
 		if (potion_hp || potion_sp) {
 			int hp = potion_hp, sp = potion_sp;
@@ -5466,7 +5467,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				pc_delspiritball(sd,1,0);
 		}
 		break;
-	
+
 	case GS_CRACKER:
 		if (!dstsd)	// according to latest patch, should not work on players [Reddozen]
 		{

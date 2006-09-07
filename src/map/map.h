@@ -595,6 +595,7 @@ struct map_session_data {
 		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
 		unsigned killer : 1;
 		unsigned killable : 1;
+		unsigned doridori : 1;
 		unsigned short autoloot;
 		struct guild *gmaster_flag;
 	} state;
@@ -765,7 +766,6 @@ struct map_session_data {
 	int spirit_timer[MAX_SKILL_LEVEL];
 
 	int die_counter;
-	short doridori_counter;
 	char potion_success_counter;
 
 	int reg_num;

@@ -19,6 +19,9 @@
 	-----
 
 =========================
+
+09/07
+	* Merged some of mpeg's work on NJ skills [Skotlex]
 09/06
 	* Changed all bCriticalRate to bCritical [Playtester]
 	* Updated skill_require_db's entry for Abracadabra, it requires yellow 2

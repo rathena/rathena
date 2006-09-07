@@ -1,6 +1,8 @@
 Date	Added
 
 2006/09/07
+	* Changed the default of sg_angel_skill_ratio to 10 based on recent
+	  information from Tharis. [Skotlex]
 	* Added sg_angel_skill_ratio to specify rate at which the Angel skill
 	  triggers. [Skotlex]
 	* Increased duration of Miracle of the Sun/Moon/Stars to one hour.

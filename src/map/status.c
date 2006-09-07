@@ -7006,9 +7006,9 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 		while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval)
 		{
 			val = sregen->sp;
-			if (sd && sd->doridori_counter) {
+			if (sd && sd->state.doridori) {
 				val*=2;
-				sd->doridori_counter--;
+				sd->state.doridori = 0;
 				if (
 					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 					rand()%10000 < battle_config.sg_angel_skill_ratio

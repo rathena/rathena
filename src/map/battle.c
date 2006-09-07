@@ -882,7 +882,6 @@ static struct Damage battle_calc_weapon_attack(
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS:
 			case NJ_HUUMA:
-			case NJ_TATAMIGAESHI:
 			case GS_FLING:
 			case GS_TRIPLEACTION:
 			case GS_BULLSEYE:
@@ -2618,7 +2617,7 @@ struct Damage  battle_calc_misc_attack(
 			pc_payzeny(sd, md.damage);
 		}
 
-		if(is_boss(target))
+		if(is_boss(target) || tsd)
 			md.damage=md.damage*60/100;
 		break;
 	case GS_FLING:
