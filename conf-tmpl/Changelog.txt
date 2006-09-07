@@ -1,5 +1,7 @@
 Date	Added
 
+2006/09/07
+	* Changed gvg_short_attack_damage_rate to 80, as leaked X.2 [Vicious]
 2006/09/06
 	* Reverted back the default view/chase range of mobs to 100% since eA now
 	  uses square view areas, like Aegis. [Skotlex]
