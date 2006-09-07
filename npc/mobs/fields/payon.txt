@@ -146,7 +146,7 @@ pay_fild11.gat,0,0,0,0	monster	Poison Spore	1077,40,0,0,0
 pay_fild11.gat,0,0,0,0	monster	Greatest General	1277,30,0,0,0
 pay_fild11.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
 pay_fild11.gat,0,0,0,0	monster	Elder Willow	1033,10,0,0,0
-pay_fild11.gat,0,0,0,0	monster	Dragon Tail	1321,10,0,0,0x
+pay_fild11.gat,0,0,0,0	monster	Dragon Tail	1321,10,0,0,0
 pay_fild11.gat,241,162,5,5	monster	Red Mushroom	1085,3,360000,180000,1
 pay_fild11.gat,66,293,5,5	monster	Red Mushroom	1085,3,360000,180000,1
 pay_fild11.gat,0,0,0,0	monster	Eddga	1115,1,7200000,3600000,1
