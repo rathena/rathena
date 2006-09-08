@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/08
+	* Fixed Einbroch Headgear shop [Playtester]
 09/06
 	* Added a missing feature to the donation NPC in Lighthalzen [MasterOfMuppets]
 09/05
