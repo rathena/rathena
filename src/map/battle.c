@@ -1765,16 +1765,21 @@ static struct Damage battle_calc_weapon_attack(
 			if (flag.lh)
 				wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
 
-			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] || (sc && sc->data[SC_MIRACLE].timer!=-1)))
+			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] ||
+				(sc && sc->data[SC_MIRACLE].timer!=-1)))
 			{
-				skillratio = (sd->status.base_level + sstatus->str + sstatus->dex + sstatus->luk)/(skill<4?12-3*skill:1);
+				skillratio = sd->status.base_level + sstatus->str + sstatus->dex + sstatus->luk;
+				if (skill<4)
+					skillratio /= 12-3*skill;
 				ATK_ADDRATE(skillratio);
 			} else
 			if(
 				((skill=pc_checkskill(sd,SG_SUN_ANGER)) >0 && t_class == sd->hate_mob[0]) ||
 				((skill=pc_checkskill(sd,SG_MOON_ANGER)) >0 && t_class == sd->hate_mob[1])
 			) {
-				skillratio = (sd->status.base_level + sstatus->dex+ sstatus->luk)/(skill<4?12-3*skill:1);
+				skillratio = sd->status.base_level + sstatus->dex+ sstatus->luk;
+				if (skill<4)
+					skillratio /= 12-3*skill;
 				ATK_ADDRATE(skillratio);
 			}
 			// Added Tobidougu bonus on throwing weapon ninja skills if not wearing a Fuuma shuriken (bonus already added in battle_addmastery)

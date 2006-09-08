@@ -1285,12 +1285,16 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 	if(sd->status.guild_id == tsd->status.guild_id)
 		return 0;
 
-	if( guild_get_alliance_count(g[0],0)>=3 )	// 同盟数確認
+	if( guild_get_alliance_count(g[0],0)>=3 )	{
 		clif_guild_allianceack(sd,4);
-	if( guild_get_alliance_count(g[1],0)>=3 )
+		return 0;
+	}
+	if( guild_get_alliance_count(g[1],0)>=3 ) {
 		clif_guild_allianceack(sd,3);
+		return 0;
+	}
 
-	if( tsd->guild_alliance>0 ){	// 相手が同盟要請状態かどうか確認
+	if( tsd->guild_alliance>0 ){
 		clif_guild_allianceack(sd,1);
 		return 0;
 	}
@@ -1393,8 +1397,10 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 	if(sd->status.guild_id == tsd->status.guild_id)
 		return 0;
 
-	if( guild_get_alliance_count(g,1)>=3 )	// 敵対数確認
+	if( guild_get_alliance_count(g,1)>=3 )	{
 		clif_guild_oppositionack(sd,1);
+		return 0;
+	}
 
 	if(agit_flag)	{
 		clif_displaymessage(sd->fd,"You cannot make oppositions during Guild Wars!");

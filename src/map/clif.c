@@ -11093,7 +11093,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 		case MAPID_TAEKWON:
 			if (!sd->state.rest)
 				break;
-			if (level = pc_checkskill(sd,TK_SPTIME))
+			if ((level = pc_checkskill(sd,TK_SPTIME)))
 				sc_start(&sd->bl,SkillStatusChangeTable(TK_SPTIME),
 					100,level,skill_get_time(TK_SPTIME, level));
 		case MAPID_SUPER_NOVICE:
