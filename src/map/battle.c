@@ -3806,7 +3806,8 @@ static const struct battle_data_int {
 	{ "night_duration",                    &battle_config.night_duration	}, // added by [Yor]
 	{ "max_heal",                          &battle_config.max_heal },
 	{ "mob_remove_delay",                  &battle_config.mob_remove_delay	},
-	{ "sg_miracle_skill_duration",				&battle_config.sg_miracle_skill_duration },
+	{ "sg_miracle_skill_min_duration",		&battle_config.sg_miracle_skill_duration_min },
+	{ "sg_miracle_skill_max_duration",		&battle_config.sg_miracle_skill_duration_max },
 	{ "hvan_explosion_intimate",					&battle_config.hvan_explosion_intimate },	//[orn]
 };
 
@@ -4195,7 +4196,8 @@ void battle_set_defaults() {
 	battle_config.mob_max_sc_def = 5000;
 	battle_config.sg_miracle_skill_ratio=1;
 	battle_config.sg_angel_skill_ratio=1;
-	battle_config.sg_miracle_skill_duration=600000;
+	battle_config.sg_miracle_skill_duration_min=3000000;
+	battle_config.sg_miracle_skill_duration_max=9000000;
 	battle_config.autospell_stacking = 0;
 	battle_config.override_mob_names = 0;
 	battle_config.min_chat_delay = 0;
@@ -4370,6 +4372,17 @@ void battle_validate_conf() {
 
 	if (battle_config.sg_miracle_skill_ratio > 10000)
 		battle_config.sg_miracle_skill_ratio = 10000;
+
+	
+	if (battle_config.sg_miracle_skill_duration_min < 1000)
+		battle_config.sg_miracle_skill_duration_min = 1000;
+
+	//Store duration variation in the max setting
+	battle_config.sg_miracle_skill_duration_max -=
+		battle_config.sg_miracle_skill_duration_min;
+
+	if (battle_config.sg_miracle_skill_duration_max < 2000)
+		battle_config.sg_miracle_skill_duration_max = 2000;
 
 	if (battle_config.skill_steal_max_tries > UCHAR_MAX)
 		battle_config.skill_steal_max_tries = UCHAR_MAX;	

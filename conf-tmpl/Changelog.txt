@@ -1,5 +1,10 @@
 Date	Added
 
+2006/09/08
+	* Removed sg_miracle_skill_duration, replaced it with
+	  sg_miracle_skill_min_duration and sg_miracle_skill_max_duration, to specify
+	  a range for the duration of the skill. [Skotlex]
+	* Skill duration for sg miracle is now 1h ~ 2.5h [Skotlex]
 2006/09/07
 	* Changed the default of sg_angel_skill_ratio to 10 based on recent
 	  information from Tharis. [Skotlex]

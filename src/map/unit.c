@@ -190,7 +190,9 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 			rand()%10000 < battle_config.sg_miracle_skill_ratio
 		) {	//SG_MIRACLE [Komurka]
 			clif_displaymessage(sd->fd,"[Miracle of the Sun, Moon and Stars]");
-			sc_start(&sd->bl,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
+			sc_start(&sd->bl,SC_MIRACLE,100,1,
+				battle_config.sg_miracle_skill_duration_min+
+				rand()%battle_config.sg_miracle_skill_duration_max);
 		}
 	} else if (md) {
 		if(battle_config.mob_warp&1 && map_getcell(bl->m,x,y,CELL_CHKNPC) &&
