@@ -5409,52 +5409,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;	
 
 	case SG_HATE:
-		if (sd && skilllv <= 3) {
+		if (sd) {
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if (sd->hate_mob[skilllv-1] != -1)
-			{	//Can't change hate targets.
+			if (!pc_set_hate_mob(sd, skilllv-1, bl))
 				clif_skill_fail(sd,skillid,0,0);
-				break;
-			}
-			if(dstsd)  //PC
-			{
-				sd->hate_mob[skilllv-1] = dstsd->status.class_;
-				pc_setglobalreg(sd,"PC_HATE_MOB_STAR",sd->hate_mob[skilllv-1]+1);
-				clif_hate_mob(sd,skilllv,sd->hate_mob[skilllv-1]);
-				break;
-			}
-			if(dstmd) // mob
-			{ 
-				if (sd->hate_mob[skilllv-1] || tstatus->size != skilllv-1)
-				{	//Can't change hate targets / wrong target size
-					clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
-				switch(skilllv)
-				{
-				case 1:
-					sd->hate_mob[0] = dstmd->class_;
-					pc_setglobalreg(sd,"PC_HATE_MOB_SUN",sd->hate_mob[0]+1);
-					clif_hate_mob(sd,skilllv,sd->hate_mob[skilllv-1]);
-					break;
-				case 2:
-					if (tstatus->max_hp>=6000)
-					{
-						sd->hate_mob[1] = dstmd->class_;
-						pc_setglobalreg(sd,"PC_HATE_MOB_MOON",sd->hate_mob[1]+1);
-						clif_hate_mob(sd,skilllv,sd->hate_mob[skilllv-1]);
-					} else clif_skill_fail(sd,skillid,0,0);
-					break;
-				case 3:
-					if (tstatus->max_hp>=20000)
-					{
-						sd->hate_mob[2] = dstmd->class_;
-						pc_setglobalreg(sd,"PC_HATE_MOB_STAR",sd->hate_mob[2]+1);
-						clif_hate_mob(sd,skilllv,sd->hate_mob[skilllv-1]);
-					} else clif_skill_fail(sd,skillid,0,0);
-					break;
-				}
-			}
 		}
 		break;
 

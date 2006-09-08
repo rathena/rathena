@@ -234,8 +234,8 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str);
 #define pc_setaccountreg2(sd,reg,val) pc_setregistry(sd,reg,val,1)
 #define pc_readaccountreg2str(sd,reg) pc_readregistry_str(sd,reg,1)
 #define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val,1)
-int pc_readregistry(struct map_session_data*,char*,int);
-int pc_setregistry(struct map_session_data*,char*,int,int);
+int pc_readregistry(struct map_session_data*,const char*,int);
+int pc_setregistry(struct map_session_data*,const char*,int,int);
 char *pc_readregistry_str(struct map_session_data*,char*,int);
 int pc_setregistry_str(struct map_session_data*,char*,char*,int);
 
@@ -286,6 +286,7 @@ int pc_delspiritball(struct map_session_data *sd,int,int);
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(int char_id, int job);
 int pc_eventtimer(int tid,unsigned int tick,int id,int data); // for npc_dequeue
+int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];

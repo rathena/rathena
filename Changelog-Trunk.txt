@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/08
+	* Cleaned up SG_HATE, hope it works now. [Skotlex]
 	* Removed sg_miracle_skill_duration, replaced it with
 	  sg_miracle_skill_min_duration and sg_miracle_skill_max_duration, to specify
 	  a range for the duration of the skill. [Skotlex]

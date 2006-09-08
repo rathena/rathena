@@ -646,6 +646,9 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// Moved PVP timer initialisation before set_pos
 	sd->pvp_timer = -1;
 
+	for (i = 0; i < 3; i++)
+		sd->hate_mob[i] = -1;
+
 	// ˆÊ’u‚ÌÝ’è
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, 0)) != 0) {
 		if(battle_config.error_log)
@@ -764,6 +767,28 @@ int pc_authfail(struct map_session_data *sd) {
 	return 0;
 }
 
+//Attempts to set a mob. 
+int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
+{
+	const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
+	int class_;
+	if (!sd || !bl || pos < 0 || pos > 2)
+		return 0;
+	if (sd->hate_mob[pos] != -1)	//Can't change hate targets.
+		return 0;
+
+	class_ = status_get_class(bl);
+	if (!pcdb_checkid(class_)) {
+		unsigned int max_hp = status_get_max_hp(bl);
+		if ((pos == 1 && max_hp < 6000) || (pos == 2 && max_hp < 20000))
+			return 0;
+	}
+	sd->hate_mob[pos] = class_;
+	pc_setglobalreg(sd,hate_var[pos],class_+1);
+	clif_hate_mob(sd,pos,class_);
+	return 1;
+}
+
 /*==========================================
  * Invoked once after the char/account/account2 registry variables are received. [Skotlex]
  *------------------------------------------
@@ -771,8 +796,8 @@ int pc_authfail(struct map_session_data *sd) {
 int pc_reg_received(struct map_session_data *sd)
 {
 	int i,j;
-	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
-	char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
+	const char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
+	const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
@@ -5829,7 +5854,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 	return 0;
 }
 
-int pc_readregistry(struct map_session_data *sd,char *reg,int type) {
+int pc_readregistry(struct map_session_data *sd,const char *reg,int type) {
 	struct global_reg *sd_reg;
 	int i,max;
 	
@@ -5899,7 +5924,7 @@ char* pc_readregistry_str(struct map_session_data *sd,char *reg,int type) {
 	return NULL;
 }
 
-int pc_setregistry(struct map_session_data *sd,char *reg,int val,int type) {
+int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type) {
 	struct global_reg *sd_reg;
 	int i,*max, regmax;
 

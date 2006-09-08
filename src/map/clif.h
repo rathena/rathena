@@ -347,7 +347,7 @@ void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lha
 int clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv); 
 void clif_feel_info(struct map_session_data *sd, int feel_level);
-void clif_hate_mob(struct map_session_data *sd, int skilllv,int mob_id);
+void clif_hate_mob(struct map_session_data *sd, int type,int mob_id);
 void clif_mission_mob(struct map_session_data *sd, unsigned short mob_id, unsigned short progress);
 
 // [blackhole89]

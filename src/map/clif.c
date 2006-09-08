@@ -8034,7 +8034,7 @@ void clif_feel_info(struct map_session_data *sd, int feel_level)
  * Info about Star Glaldiator hate mob [Komurka]
  *------------------------------------------
  */
-void clif_hate_mob(struct map_session_data *sd, int skilllv,int mob_id)
+void clif_hate_mob(struct map_session_data *sd, int type,int mob_id)
 {
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len_table[0x20e]);
@@ -8046,7 +8046,7 @@ void clif_hate_mob(struct map_session_data *sd, int skilllv,int mob_id)
 	else //Really shouldn't happen...
 		malloc_tsetdword(WFIFOP(fd,2), 0, NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOW(fd,30)=0xa00+skilllv-1;
+	WFIFOW(fd,30)=0xa00+type;
 	WFIFOSET(fd, packet_len_table[0x20e]);
 }
 
