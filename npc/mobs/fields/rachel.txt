@@ -14,25 +14,28 @@
 //==================================================
 // ra_fild01 - Rachel Field
 //==================================================
-ra_fild01.gat,0,0,0,0	monster	Muscipular	1780,40,0,0,0
-ra_fild01.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
-ra_fild01.gat,0,0,0,0	monster	Drosera	1781,10,0,0,0
+ra_fild01.gat,0,0,0,0	monster	Muscipular	1780,50,0,0,0
+ra_fild01.gat,0,0,0,0	monster	Geographer	1368,30,0,0,0
+ra_fild01.gat,0,0,0,0	monster	Drosera	1781,20,0,0,0
 ra_fild01.gat,0,0,0,0	monster	Gryphon	1259,3,0,0,0
+ra_fild01.gat,0,0,0,0	monster	Galion	1783,2,0,0,0
 
 //==================================================
 // ra_fild02 - Rachel Field
 //==================================================
-ra_fild02.gat,0,0,0,0	monster	Muscipular	1780,30,0,0,0
+ra_fild02.gat,0,0,0,0	monster	Muscipular	1780,40,0,0,0
 ra_fild02.gat,0,0,0,0	monster	Galion	1783,20,0,0,0
-ra_fild02.gat,0,0,0,0	monster	Drosera	1781,10,0,0,0
+ra_fild02.gat,0,0,0,0	monster	Drosera	1781,20,0,0,0
+ra_fild02.gat,0,0,0,0	monster	Atros	1785,1,7200000,3600000,1
 
 //==================================================
 // ra_fild03 - Rachel Field
 //==================================================
 ra_fild03.gat,0,0,0,0	monster	Galion	1783,30,0,0,0
-ra_fild03.gat,0,0,0,0	monster	Roween	1782,20,0,0,0
+ra_fild03.gat,0,0,0,0	monster	Roween	1782,10,0,0,0
 ra_fild03.gat,0,0,0,0	monster	Drosera	1781,10,0,0,0
 ra_fild03.gat,0,0,0,0	monster	Stapo	1784,10,0,0,0
+ra_fild03.gat,0,0,0,0	monster	Atros	1785,1,7200000,3600000,1
 
 //==================================================
 // ra_fild04 - Rachel Field
@@ -46,53 +49,54 @@ ra_fild04.gat,0,0,0,0	monster	Atros	1785,1,7200000,3600000,1
 //==================================================
 // ra_fild05 - Rachel Field
 //==================================================
-ra_fild05.gat,0,0,0,0	monster	Hill Wind	1680,40,0,0,0
-ra_fild05.gat,0,0,0,0	monster	Drosera	1781,20,0,0,0
-ra_fild05.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
+ra_fild05.gat,0,0,0,0	monster	Hill Wind	1680,50,0,0,0
+ra_fild05.gat,0,0,0,0	monster	Drosera	1781,25,0,0,0
+ra_fild05.gat,0,0,0,0	monster	Geographer	1368,15,0,0,0
 
 //==================================================
 // ra_fild06 - Rachel Field
 //==================================================
-ra_fild06.gat,0,0,0,0	monster	Hill Wind	1680,20,0,0,0
-ra_fild06.gat,0,0,0,0	monster	Anopheles	1627,10,0,0,0
+ra_fild06.gat,0,0,0,0	monster	Hill Wind	1680,30,0,0,0
+ra_fild06.gat,0,0,0,0	monster	Anopheles	1627,20,0,0,0
+ra_fild06.gat,0,0,0,0	monster	Drosera	1781,10,0,0,0
 
 //==================================================
 // ra_fild07 - Rachel Field
 //==================================================
-ra_fild07.gat,0,0,0,0	monster	Roween	1782,30,0,0,0
+ra_fild07.gat,0,0,0,0	monster	Roween	1782,40,0,0,0
+ra_fild07.gat,0,0,0,0	monster	Stapo	1784,30,0,0,0
 ra_fild07.gat,0,0,0,0	monster	Galion	1783,20,0,0,0
-ra_fild07.gat,0,0,0,0	monster	Stapo	1784,20,0,0,0
 
 //==================================================
 // ra_fild08 - Rachel Field
 //==================================================
-ra_fild08.gat,0,0,0,0	monster	Stapo	1784,50,0,0,0
-ra_fild08.gat,0,0,0,0	monster	Drops	1113,20,0,0,0
-ra_fild08.gat,0,0,0,0	monster	Drosera	1781,10,0,0,0
+ra_fild08.gat,0,0,0,0	monster	Stapo	1784,60,0,0,0
+ra_fild08.gat,0,0,0,0	monster	Drops	1113,30,0,0,0
+ra_fild08.gat,0,0,0,0	monster	Drosera	1781,15,0,0,0
 
 //==================================================
 // ra_fild09 - Rachel Field
 //==================================================
-ra_fild09.gat,0,0,0,0	monster	Drosera	1781,30,0,0,0
-ra_fild09.gat,0,0,0,0	monster	Metaling	1613,10,0,0,0
-ra_fild09.gat,0,0,0,0	monster	Hill Wind	1680,5,0,0,0
-ra_fild09.gat,0,0,0,0	monster	Harpy	1376,3,0,0,0
+ra_fild09.gat,0,0,0,0	monster	Drosera	1781,60,0,0,0
+ra_fild09.gat,0,0,0,0	monster	Metaling	1613,20,0,0,0
+ra_fild09.gat,0,0,0,0	monster	Hill Wind	1680,10,0,0,0
+ra_fild09.gat,0,0,0,0	monster	Harpy	1376,1,0,0,0
 
 //==================================================
 // ra_fild10 - Rachel Field
 //==================================================
-ra_fild10.gat,0,0,0,0	monster	Stapo	1784,30,0,0,0
+ra_fild10.gat,0,0,0,0	monster	Stapo	1784,35,0,0,0
 ra_fild10.gat,0,0,0,0	monster	Galion	1783,15,0,0,0
-ra_fild10.gat,0,0,0,0	monster	Roween	1782,5,0,0,0
+ra_fild10.gat,0,0,0,0	monster	Roween	1782,10,0,0,0
 
 //==================================================
 // ra_fild11 - Rachel Field
 //==================================================
-ra_fild11.gat,0,0,0,0	monster	Drops	1113,30,0,0,0
-ra_fild11.gat,0,0,0,0	monster	Stapo	1784,20,0,0,0
-ra_fild11.gat,0,0,0,0	monster	Roween	1782,5,0,0,0
-ra_fild11.gat,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
-ra_fild11.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
+ra_fild11.gat,0,0,0,0	monster	Drops	1113,35,0,0,0
+ra_fild11.gat,0,0,0,0	monster	Stapo	1784,25,0,0,0
+ra_fild11.gat,0,0,0,0	monster	Roween	1782,10,0,0,0
+ra_fild11.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
+ra_fild11.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 
 //==================================================
 // ra_fild12 - Rachel Field
