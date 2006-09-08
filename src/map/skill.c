@@ -8919,131 +8919,97 @@ int skill_autospell (struct map_session_data *sd, int skillid)
 }
 
 /*==========================================
- *
+ * Sitting skills functions.
  *------------------------------------------
  */
-
-static int skill_gangster_count (struct block_list *bl, va_list ap)
+static int skill_sit_count (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
+	int type =va_arg(ap,int);
 	sd=(struct map_session_data*)bl;
 
-	if(sd && pc_issit(sd) && pc_checkskill(sd,RG_GANGSTER) > 0)
+	if(!pc_issit(sd))
+		return 0;
+
+	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
 		return 1;
+
+	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0))
+		return 1;
+
 	return 0;
 }
 
-static int skill_gangster_in (struct block_list *bl, va_list ap)
+static int skill_sit_in (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
+	int type =va_arg(ap,int);
+
 	sd=(struct map_session_data*)bl;
-	if(sd && pc_issit(sd) && pc_checkskill(sd,RG_GANGSTER) > 0)
+
+	if(!pc_issit(sd))
+		return 0;
+
+	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
 		sd->state.gangsterparadise=1;
-	return 0;
-}
 
-static int skill_gangster_out (struct block_list *bl, va_list ap)
-{
-	struct map_session_data *sd;
-	sd=(struct map_session_data*)bl;
-	if(sd && sd->state.gangsterparadise)
-		sd->state.gangsterparadise=0;
-	return 0;
-}
-
-int skill_gangsterparadise (struct map_session_data *sd, int type)
-{
-	int range;
-	nullpo_retr(0, sd);
-
-	if((range = pc_checkskill(sd,RG_GANGSTER)) <= 0)
-		return 0;
-	range = skill_get_splash(RG_GANGSTER, range);
-
-	if(type==1) {
-		if (map_foreachinrange(skill_gangster_count,&sd->bl, range, BL_PC) > 1)
-	  	{
-			map_foreachinrange(skill_gangster_in,&sd->bl, range, BL_PC);
-			sd->state.gangsterparadise = 1;
-		}
-		return 0;
-	}
-	else if(type==0) {
-		if (map_foreachinrange(skill_gangster_count,&sd->bl, range, BL_PC) < 2)
-			map_foreachinrange(skill_gangster_out,&sd->bl, range, BL_PC);
-		sd->state.gangsterparadise = 0;
-		return 0;
-	}
-	return 0;
-}
-/*==========================================
- * Taekwon TK_HPTIME and TK_SPTIME skills [Dralnu]
- *------------------------------------------
- */
-static int skill_rest_count (struct block_list *bl, va_list ap)
-{
-	struct map_session_data *sd;
-	sd=(struct map_session_data*)bl;
-
-	if(sd && pc_issit(sd) && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0  ))
-		return 1;
-	return 0;
-}
-
-static int skill_rest_in(struct block_list *bl, va_list ap)
-{
-	struct map_session_data *sd;
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
-	sd=(struct map_session_data*)bl;
-	if(sd && pc_issit(sd) && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 )){
+	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 ))
+	{
 		sd->state.rest=1;
-		status_calc_pc(sd,0);
-	}		
+		status_calc_regen(bl, status_get_status_data(bl), status_get_regen_data(bl));
+	}
+
 	return 0;
 }
 
-static int skill_rest_out(struct block_list *bl, va_list ap)
+static int skill_sit_out (struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd;
+	int type =va_arg(ap,int);
 	sd=(struct map_session_data*)bl;
-	if(sd && sd->state.rest != 0)
+	if(sd->state.gangsterparadise && type&1)
+		sd->state.gangsterparadise=0;
+	if(sd->state.rest && type&2)
 		sd->state.rest=0;
 	return 0;
 }
 
-int skill_rest(struct map_session_data *sd, int type)
+int skill_sit (struct map_session_data *sd, int type)
 {
-	int range;
+	int flag = 0;
+	int range, lv;
 	nullpo_retr(0, sd);
 
-	if((range = pc_checkskill(sd,TK_HPTIME)) > 0)
-		range = skill_get_splash(TK_HPTIME, range);
-	else if ((range =	pc_checkskill(sd,TK_SPTIME)) > 0)
-		range = skill_get_splash(TK_SPTIME, range);
-	else
-		return 0;
 
-	
-	if(type==1) {	//When you sit down
-		if (map_foreachinrange(skill_rest_count,&sd->bl, range, BL_PC) > 1)
-		{
-			map_foreachinrange(skill_rest_in,&sd->bl, range, BL_PC);
-			sd->state.rest = 1;
-			status_calc_pc(sd,0);
-		}
+	if((lv = pc_checkskill(sd,RG_GANGSTER)) <= 0) {
+		flag|=1;
+		range = skill_get_splash(RG_GANGSTER, lv);
+	}
+	if((lv = pc_checkskill(sd,TK_HPTIME)) > 0) {
+		flag|=2;
+		range = skill_get_splash(TK_HPTIME, lv);
+	}
+	else if ((lv=	pc_checkskill(sd,TK_SPTIME)) > 0) {
+		flag|=2;
+		range = skill_get_splash(TK_SPTIME, lv);
+	}
+
+	if (!flag) return 0;
+
+	if(type==1) {
+		if (map_foreachinrange(skill_sit_count,&sd->bl, range, BL_PC, flag) > 1)
+			map_foreachinrange(skill_sit_in,&sd->bl, range, BL_PC, flag);
 		return 0;
 	}
-	else if(type==0) {	//When you stand up
-		if (map_foreachinrange(skill_rest_count,&sd->bl, range, BL_PC) < 2)
-			map_foreachinrange(skill_rest_out,&sd->bl, range, BL_PC);
-		sd->state.rest = 0;
-		status_calc_pc(sd,0);
+	else
+	if(type==0) {
+		if (map_foreachinrange(skill_sit_count,&sd->bl, range, BL_PC, flag) < 2)
+			map_foreachinrange(skill_sit_out,&sd->bl, range, BL_PC, flag);
 		return 0;
 	}
 	return 0;
 }
+
 /*==========================================
  *
  *------------------------------------------

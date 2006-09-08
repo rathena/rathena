@@ -8921,8 +8921,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states neither.
 		break;
 		pc_setsit(sd);
-		skill_gangsterparadise(sd, 1); // ギャングスターパラダイス設定 fixed Valaris
-		skill_rest(sd, 1); // TK_HPTIME sitting down mode [Dralnu]
+		skill_sit(sd, 1);
 		clif_sitting(sd);
 		break;
 	case 0x03: // standup
@@ -8935,8 +8934,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 		pc_setstand(sd);
-		skill_gangsterparadise(sd, 0); 
-		skill_rest(sd, 0); // TK_HPTIME standing up mode [Dralnu]
+		skill_sit(sd, 0); 
 		WBUFW(buf, 0) = 0x8a;
 		WBUFL(buf, 2) = sd->bl.id;
 		WBUFB(buf,26) = 3;
@@ -11084,8 +11082,6 @@ void clif_parse_PMIgnoreList(int fd,struct map_session_data *sd)
  *------------------------------------------
  */
 void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
-	int level;
-	
 	if (sd->state.doridori) return;
 
 	switch (sd->class_&MAPID_UPPERMASK)
@@ -11093,9 +11089,6 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 		case MAPID_TAEKWON:
 			if (!sd->state.rest)
 				break;
-			if ((level = pc_checkskill(sd,TK_SPTIME)))
-				sc_start(&sd->bl,SkillStatusChangeTable(TK_SPTIME),
-					100,level,skill_get_time(TK_SPTIME, level));
 		case MAPID_SUPER_NOVICE:
 			sd->state.doridori=1;
 			break;	

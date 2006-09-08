@@ -1162,7 +1162,6 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 }
 
 void status_calc_bl(struct block_list *bl, unsigned long flag);
-void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 
 static int status_base_atk(struct block_list *bl, struct status_data *status)
 {
@@ -7009,6 +7008,9 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 			if (sd && sd->state.doridori) {
 				val*=2;
 				sd->state.doridori = 0;
+				if ((rate = pc_checkskill(sd,TK_SPTIME)))
+					sc_start(bl,SkillStatusChangeTable(TK_SPTIME),
+						100,rate,skill_get_time(TK_SPTIME, rate));
 				if (
 					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 					rand()%10000 < battle_config.sg_angel_skill_ratio

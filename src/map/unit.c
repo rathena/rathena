@@ -1596,8 +1596,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 
 		if(pc_issit(sd)) {
 			pc_setstand(sd);
-			skill_gangsterparadise(sd,0);
-			skill_rest(sd,0);
+			skill_sit(sd,0);
 		}
 		party_send_dot_remove(sd);//minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);

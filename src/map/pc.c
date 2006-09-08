@@ -4768,8 +4768,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 
 	if(pc_issit(sd)) {
 		pc_setstand(sd);
-		skill_gangsterparadise(sd,0);
-		skill_rest(sd,0);
+		skill_sit(sd,0);
 	}
 
 	clif_updatestatus(sd,SP_HP);
