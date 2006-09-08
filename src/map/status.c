@@ -6830,7 +6830,7 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 			case SC_BERSERK:
 				if (!(type&1))
 					continue;
-			  	sc->data[i].val4 = 1;
+			  	sc->data[i].val2 = 0;
 				break;
 			default:
 				if (!(type&1))
