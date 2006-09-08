@@ -86,7 +86,6 @@ int clif_selllist(struct map_session_data*);	//self
 int clif_scriptmes(struct map_session_data*,int,char*);	//self
 int clif_scriptnext(struct map_session_data*,int);	//self
 int clif_scriptclose(struct map_session_data*,int);	//self
-void clif_sendfakenpc(struct map_session_data *sd, int npcid);	//self
 int clif_scriptmenu(struct map_session_data*,int,char*);	//self
 int clif_scriptinput(struct map_session_data*,int);	//self
 int clif_scriptinputstr(struct map_session_data *sd,int npcid);	// self

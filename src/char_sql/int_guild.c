@@ -1025,8 +1025,8 @@ int mapif_guild_leaved(int guild_id,int account_id,int char_id,int flag, const c
 	WBUFW(buf, 0)=0x3834;
 	WBUFL(buf, 2)=guild_id;
 	WBUFL(buf, 6)=account_id;
-	WBUFL(buf, 10)=char_id;
-	WBUFB(buf, 14)=flag;
+	WBUFL(buf,10)=char_id;
+	WBUFB(buf,14)=flag;
 	memcpy(WBUFP(buf,15),mes,40);
 	memcpy(WBUFP(buf,55),name,NAME_LENGTH);
 	mapif_sendall(buf,55+NAME_LENGTH);
@@ -1872,7 +1872,6 @@ int mapif_parse_GuildNotice(int fd,int guild_id,const char *mes1,const char *mes
 	g->save_flag |= GS_MES;	//Change mes of guild
 	return mapif_guild_notice(g);
 }
-
 
 int mapif_parse_GuildEmblem(int fd,int len,int guild_id,int dummy,const char *data)
 {
