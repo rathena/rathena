@@ -20,7 +20,8 @@
 
 =========================
 09/08
-	* Added the missing Rachel mob skills [Playtester]
+	* Added missing Ice Dungeon mob skills [Playtester]
+	* Added missing Rachel mob skills [Playtester]
 	* Removed dMotion from Iceicle [Playtester]
 	* Official Rachel mob stats [Playtester]
 	- progress 30%
