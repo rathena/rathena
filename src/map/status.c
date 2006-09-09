@@ -1082,7 +1082,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			if (pc_isinvisible(sd))
 				return 0;
 			if (tsc->option&hide_flag && !(status->mode&MD_BOSS)
-				&& (sd->state.perfect_hiding || !(
+				&& (sd->special_state.perfect_hiding || !(
 					status->race == RC_INSECT ||
 				  	status->race == RC_DEMON ||
 				  	status->mode&MD_DETECTOR
@@ -1137,7 +1137,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 		{
 			if (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)
 				&& !(status->mode&MD_BOSS) && (
-					((TBL_PC*)target)->state.perfect_hiding || !(
+					((TBL_PC*)target)->special_state.perfect_hiding || !(
 					status->race == RC_INSECT ||
 				  	status->race == RC_DEMON ||
 				  	status->mode&MD_DETECTOR

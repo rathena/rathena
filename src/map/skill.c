@@ -8956,7 +8956,8 @@ static int skill_sit_in (struct block_list *bl, va_list ap)
 	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 ))
 	{
 		sd->state.rest=1;
-		status_calc_regen(bl, status_get_status_data(bl), status_get_regen_data(bl));
+		status_calc_regen(bl, &sd->battle_status, &sd->regen);
+		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
 	}
 
 	return 0;
@@ -8969,8 +8970,11 @@ static int skill_sit_out (struct block_list *bl, va_list ap)
 	sd=(struct map_session_data*)bl;
 	if(sd->state.gangsterparadise && type&1)
 		sd->state.gangsterparadise=0;
-	if(sd->state.rest && type&2)
+	if(sd->state.rest && type&2) {
 		sd->state.rest=0;
+		status_calc_regen(bl, &sd->battle_status, &sd->regen);
+		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
+	}
 	return 0;
 }
 
@@ -8981,7 +8985,7 @@ int skill_sit (struct map_session_data *sd, int type)
 	nullpo_retr(0, sd);
 
 
-	if((lv = pc_checkskill(sd,RG_GANGSTER)) <= 0) {
+	if((lv = pc_checkskill(sd,RG_GANGSTER)) > 0) {
 		flag|=1;
 		range = skill_get_splash(RG_GANGSTER, lv);
 	}

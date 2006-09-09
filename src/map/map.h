@@ -575,7 +575,6 @@ struct map_session_data {
 		// Abracadabra bugfix by Aru
 		unsigned abra_flag : 1;
 		unsigned autotrade : 1;	//By Fantik
-		unsigned perfect_hiding : 1; // [Valaris]
 		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
 		unsigned showdelay :1;
 		unsigned showexp :1;
@@ -607,6 +606,7 @@ struct map_session_data {
 		unsigned no_sizefix : 1;
 		unsigned no_gemstone : 1;
 		unsigned intravision : 1; // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
+		unsigned perfect_hiding : 1; // [Valaris]
 	} special_state;
 	int char_id, login_id1, login_id2, sex;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]

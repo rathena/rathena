@@ -1710,7 +1710,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_PERFECT_HIDE: // [Valaris]
 		if(sd->state.lr_flag!=2)
-			sd->state.perfect_hiding=1;
+			sd->special_state.perfect_hiding=1;
 		break;
 	case SP_UNBREAKABLE:
 		if(sd->state.lr_flag!=2)

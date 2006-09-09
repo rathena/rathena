@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/09
+	* Moved perfect_hiding from state to special_state, so that it clears out
+	  when you remove your pet. [Skotlex]
+	* Probably fixed the Taekwon Rest skills. [Skotlex]
 	* Fixed a npc-timer memory leak on npc_unload ("[Warning]: ers_obj_destroy:
 	  X entries missing, continuing destruction. Manager for entries of size
 	  16.") [Skotlex]
