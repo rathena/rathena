@@ -1431,8 +1431,13 @@ int npc_unload (struct npc_data *nd)
 	}
 	if (nd->bl.subtype == SCRIPT) {
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
-		if (nd->u.scr.timerid != -1)
+		if (nd->u.scr.timerid != -1) {
+			struct TimerData *td = NULL;
+			td = get_timer(nd->u.scr.timerid);
+			if (td && td->data) 
+				ers_free(timer_event_ers, (struct event_timer_data*)td->data);
 			delete_timer(nd->u.scr.timerid, npc_timerevent);
+		}
 		npc_cleareventtimer (nd);
 		if (nd->u.scr.timer_event)
 			aFree(nd->u.scr.timer_event);
