@@ -1,5 +1,7 @@
 Date	Added
 
+2006/09/09
+	* Removed noteleport flags from Geffenia maps [Playtester]
 2006/09/08
 	* Removed sg_miracle_skill_duration, replaced it with
 	  sg_miracle_skill_min_duration and sg_miracle_skill_max_duration, to specify
