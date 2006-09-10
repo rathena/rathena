@@ -32,6 +32,9 @@ Playtester
 
 Date		Added
 ======
+09/10
+	* Official Byalan F5 spawns [Playtester]
+	- also updated eamobs accordingly
 09/08
 	* Adjusted Rachel spawns [Playtester]
 	* Fixed Einbroch Headgear shop [Playtester]

@@ -84,11 +84,7 @@ iz_dun03.gat,0,0,0,0	monster	Merman	1264,3,0,0,0
 //==================================================
 // iz_dun04 - Undersea Tunnel F5
 //==================================================
-iz_dun04.gat,0,0,0,0	monster	Merman	1264,40,0,0,0
-iz_dun04.gat,103,231,10,10	monster	Merman	1264,2,750000,300000,0
-iz_dun04.gat,160,231,10,10	monster	Merman	1264,2,770000,300000,0
-iz_dun04.gat,95,147,10,10	monster	Merman	1264,2,750000,300000,0
-iz_dun04.gat,130,216,15,15	monster	Merman	1264,2,760000,300000,0
+iz_dun04.gat,0,0,0,0	monster	Merman	1264,50,0,0,0
 iz_dun04.gat,0,0,0,0	monster	Marine Sphere	1142,10,0,0,0
 iz_dun04.gat,0,0,0,0	monster	Swordfish	1069,10,0,0,0
 iz_dun04.gat,58,135,0,0	monster	Hydra	1068,1,605000,300000,0
@@ -110,5 +106,5 @@ iz_dun04.gat,69,243,0,0	monster	Hydra	1068,1,621000,300000,0
 iz_dun04.gat,124,233,0,0	monster	Hydra	1068,1,600000,300000,0
 iz_dun04.gat,134,233,0,0	monster	Hydra	1068,1,605000,300000,0
 iz_dun04.gat,0,0,0,0	monster	Penomena	1216,10,300000,150000,1
-iz_dun04.gat,0,0,0,0	monster	Strouf	1065,30,0,0,0
+iz_dun04.gat,0,0,0,0	monster	Strouf	1065,50,0,0,0
 iz_dun04.gat,95,147,0,0	monster	Deviace	1108,3,1200000,600000,0
