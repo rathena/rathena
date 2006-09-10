@@ -20,6 +20,7 @@
 
 =========================
 09/10
+	* Removed NPC_Powerup from Dimik [Playtester]
 	* More accurate guess on Strouf's dex [Playtester]
 	* Doubled Strouf's dex [Playtester]
 	* Guard is now equippable by every job [Playtester]
