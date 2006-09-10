@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/10
+	* Guard is now equippable by every job [Playtester]
 09/08
 	* Adjusted various Rachel mob stats and skills [Playtester]
 	* Added missing Ice Dungeon mob skills [Playtester]
