@@ -10905,6 +10905,7 @@ void do_init_atcommand() {
 	users_db = db_alloc(__FILE__,__LINE__,DB_UINT,DB_OPT_BASE,sizeof(int));
 	duel_count = 0;
 	malloc_tsetdword(&duel_list[0], 0, sizeof(duel_list));
+	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
 	return;
 }
 

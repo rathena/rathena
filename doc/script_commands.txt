@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 2.7c
+//= 2.8a
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -5031,7 +5031,7 @@ mes "3."+@name$[2]+"("+@fame[2]+")";
 mes "4."+@name$[3]+"("+@fame[3]+")";
 mes "5."+@name$[4]+"("+@fame[4]+")";
 
-Note: It is available in SQL version only.
+Note: In the TXT version it doesn't fill the array and always return -1.
 Note: Use Text$[] array to recieve all data as text.
 
 ---------------------------------------

@@ -85,7 +85,7 @@ static struct dbt *userfunc_db=NULL;
 struct dbt* script_get_label_db(){ return scriptlabel_db; }
 struct dbt* script_get_userfunc_db(){ return userfunc_db; }
 
-static char pos[11][100] = {"頭","体","左手","右手","ローブ","靴","アクセサリー1","アクセサリー2","頭2","頭3","装着していない"};
+static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3","Not Equipped"};
 
 struct Script_Config script_config;
 static int parse_cmd;
@@ -3526,10 +3526,8 @@ int buildin_equip(struct script_state *st);
 int buildin_autoequip(struct script_state *st);
 int buildin_setbattleflag(struct script_state *st);
 int buildin_getbattleflag(struct script_state *st);
-#ifndef TXT_ONLY
 int buildin_query_sql(struct script_state *st);
 int buildin_escape_sql(struct script_state *st);
-#endif
 int buildin_atoi(struct script_state *st);
 int buildin_axtoi(struct script_state *st);
 // [zBuffer] List of player cont commands --->
@@ -3867,10 +3865,8 @@ struct script_function buildin_func[] = {
 	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
 	{buildin_getmonsterinfo,"getmonsterinfo","ii"}, //Lupus
 	{buildin_axtoi,"axtoi","s"},
-#ifndef TXT_ONLY
 	{buildin_query_sql, "query_sql", "s*"},
 	{buildin_escape_sql, "escape_sql", "s"},
-#endif
 	{buildin_atoi,"atoi","s"},
 	// [zBuffer] List of player cont commands --->
 	{buildin_rid2name,"rid2name","i"},
@@ -11215,8 +11211,8 @@ int buildin_setd(struct script_state *st)
 	return 0;
 }
 
-#ifndef TXT_ONLY
 int buildin_query_sql(struct script_state *st) {
+#ifndef TXT_ONLY
 	char *name = NULL, *query;
 	int num, i = 0,j, nb_rows;
 	struct { char * dst_var_name; char type; } row[32];
@@ -11248,7 +11244,7 @@ int buildin_query_sql(struct script_state *st) {
 
 		if (nb_rows > 32)
 		{
-			ShowWarning("buildin_query_sql: too much rows!\n");
+			ShowWarning("buildin_query_sql: too many rows!\n");
 			push_val(st->stack,C_INT,0);
 			return 1;
 		}
@@ -11286,6 +11282,10 @@ int buildin_query_sql(struct script_state *st) {
 		mysql_free_result(sql_res);
 	}
 	push_val(st->stack, C_INT, i);
+#else
+	//for TXT version, we always return -1
+	push_val(st->stack, C_INT, -1);
+#endif
 	return 0;
 }
 
@@ -11299,7 +11299,6 @@ int buildin_escape_sql(struct script_state *st) {
 	push_str(st->stack,C_STR,(unsigned char *)t_query);
 	return 0;
 }
-#endif
 
 int buildin_getd (struct script_state *st)
 {

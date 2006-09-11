@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/10
+	* Thanks to KarLaeda, added missing function in @showmobs [Lupus]
+	- Script function 'query_sql': In the TXT version it doesn't fill the array
+	  and always return -1. Added for scripts compatibility. Your scripts
+	  won't crash in TXT version. They can work it around.
+		I suggest we need a function getversion()
 	* Updated item_db.sql and mob_db.sql [Playtester]
 2006/09/09
 	* Added a crash protection in case mapfreeblock unlock tries to free a null
