@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/11
+	* Added back Guild Storage. Confirmed kRO feature. [Lupus]
 09/10
 	* Official Byalan F5 spawns [Playtester]
 	- also updated eamobs accordingly
