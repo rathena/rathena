@@ -201,6 +201,8 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			ratio += enchant_eff[sc->data[SC_VIOLENTGALE].val1-1];
 		if(sc->data[SC_DELUGE].timer!=-1 && atk_elem == ELE_WATER)
 			ratio += enchant_eff[sc->data[SC_DELUGE].val1-1];
+		if(sc->data[SC_SPIDERWEB].timer!=-1 && atk_elem == ELE_FIRE) // [Celest]
+			damage *= 2; //FIXME: Double damage instead of double ratio?
 	}
 	if (tsc && tsc->count)
 	{
@@ -334,13 +336,6 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			if (skill_num != ASC_BREAKER || !(flag&BF_WEAPON))
 				status_change_end( bl,SC_AETERNA,-1 );
 		}
-
-		if(sc->data[SC_SPIDERWEB].timer!=-1)	// [Celest]
-			if ((flag&BF_SKILL && skill_get_pl(skill_num)==ELE_FIRE) ||
-				(!flag&BF_SKILL && status_get_attack_element(src)==ELE_FIRE)) {
-				damage<<=1;
-				status_change_end(bl, SC_SPIDERWEB, -1);
-			}
 
 		//Finally damage reductions....
 		if(sc->data[SC_ASSUMPTIO].timer != -1){

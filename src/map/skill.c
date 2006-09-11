@@ -1386,8 +1386,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]
-	if(sd && !status_isdead(bl) && src != bl &&
-		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) {
+	//But Gravity Patched this silently, and it now seems to trigger only on
+	//weapon attacks.
+	if(sd && !status_isdead(bl) && src != bl && attack_type&BF_WEAPON
+//		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)
+	) {
 		struct block_list *tbl;
 		struct unit_data *ud;
 		int i, skilllv;
@@ -3283,13 +3286,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			) { //Bounce back heal
 				if (--tsc->data[SC_KAITE].val2 <= 0)
 					status_change_end(bl, SC_KAITE, -1);
-				if (src == bl) heal=0; //When you try to heal yourself and you are under Kaite, the heal is voided.
-				clif_skill_nodamage (src, src, skillid, heal, 1);
-				heal_get_jobexp = status_heal(src,heal,0,0);
-			} else {
-				clif_skill_nodamage (src, bl, skillid, heal, 1);
-				heal_get_jobexp = status_heal(bl,heal,0,0);
+				if (src == bl)
+				  	heal=0; //When you try to heal yourself under Kaite, the heal is voided.
+				else {
+					bl = src;
+					dstsd = sd;
+				}
 			}
+
+			heal_get_jobexp = status_heal(bl,heal,0,0);
+			//All or nothing check for LK_BERSERK.
+			clif_skill_nodamage (src, bl, skillid, heal_get_jobexp?heal:0, 1);
 
 			if(sd && dstsd && heal > 0 && sd != dstsd && battle_config.heal_exp > 0){
 				heal_get_jobexp = heal_get_jobexp * battle_config.heal_exp / 100;
@@ -8524,11 +8531,7 @@ int skill_castfix_sc (struct block_list *bl, int time)
 			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);
 		}
-
-		if (time <= 0)
-			return 0; //Only Suffragium gets consumed even if time is 0
-	
-		if (sc->data[SC_MEMORIZE].timer != -1 && time > 0) {
+		if (sc->data[SC_MEMORIZE].timer != -1) {
 			time>>=1;
 			if ((--sc->data[SC_MEMORIZE].val2) <= 0)
 				status_change_end(bl, SC_MEMORIZE, -1);

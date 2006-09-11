@@ -655,6 +655,9 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			(sc->data[SC_PROVOKE].timer==-1 || !sc->data[SC_PROVOKE].val2) &&
 			status->hp < status->max_hp>>2)
 			sc_start4(target,SC_PROVOKE,100,10,1,0,0,0);
+		if (sc->data[SC_BERSERK].timer != -1 &&
+		  	status->hp <= 100)
+			status_change_end(target, SC_BERSERK, -1);
 	}
 	
 	switch (target->type)
@@ -5601,6 +5604,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (!val3)
 				return 0;
 			break;
+		case SC_GUILDAURA:
+			//Compatibility Upgrade due to Guild Aura code rewrite 
+			//(older saved SC versions would load up with huge bonuses)
+			return 0;
 	}
 	//Those that make you stop attacking/walking....
 	switch (type) {

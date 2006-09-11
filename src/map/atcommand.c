@@ -9828,8 +9828,6 @@ static int atshowmobs_sub(struct block_list *bl,va_list ap)
     static int number=0;
     struct mob_data *md;
 
-    nullpo_retr(0, bl);
-
     if(!ap){
         number=0;
         return 0;
@@ -9840,7 +9838,10 @@ static int atshowmobs_sub(struct block_list *bl,va_list ap)
 
     md = (struct mob_data *)bl;
 
-    if(md && fd && (mob_id==-1 || (md->class_==mob_id))){
+	 if(md->special_state.ai || md->master_id)
+		 return 0; //Hide slaves and player summoned mobs. [Skotlex]
+
+    if(fd && (mob_id==-1 || (md->class_==mob_id))){
         clif_viewpoint(sd, 1, 1, bl->x, bl->y, ++number, 0xFFFFFF);
         add_timer(gettick()+5000, atshowmobs_timer, fd, number);
     }
