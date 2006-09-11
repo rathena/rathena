@@ -2,6 +2,8 @@
 $db = "item_db";
 $nb_columns = 22;
 @str_col = (1,2,19,20,21);
+$line_format = "([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),([^\,]*),(\{.*\}),(\{.*\}),(\{.*\})";
+#$line_format = ;
 $create_table = "#
 # Table structure for table `item_db`
 #
@@ -43,7 +45,11 @@ while ($ligne=<STDIN>)
 		{
 			printf("# %s\n", $ligne);
 		} else {
-			@champ = split (",(?![^{]*[})])",$ligne);
+			if ($ligne =~ $line_format) {
+				@champ = ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22);
+			} else {
+				@champ = ();
+			}
 			if ($#champ != $nb_columns - 1)
 			{
 				printf ("# WARNING BAD LINE : %d (%s)\n", $#champ, $ligne);
