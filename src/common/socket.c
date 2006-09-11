@@ -84,21 +84,34 @@ void set_defaultparse(int (*defaultparse)(int))
 }
 
 void set_nonblocking(int fd, int yes) {
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+	// I don't think we need this
+	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing. 
+	//setsockopt(sock,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+	
+	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
+	// The argp parameter is zero if nonblocking is to be disabled. 
+#ifdef __WIN32
+	ioctlsocket(fd, FIONBIO, &yes);
+#else
+	ioctl(fd,FIONBIO,&yes); 
+#endif
 }
 
 static void setsocketopts(int fd)
 {
+#ifndef WIN32
 	int yes = 1; // reuse fix
-	size_t buff;
-	size_t buff_size = sizeof (buff);	
-
-	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof yes);
+    // set SO_REAUSEADDR to true, unix only. on windows this option causes
+    // the previous owner of the socket to give up, which is not desirable
+    // in most cases, neither compatible with unix.
+	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof(yes));
 #ifdef SO_REUSEPORT
-	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof yes);
+	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
 #endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
-
+#endif
+//	setsockopt(sock,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof(yes));
+//	setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *) &wfifo_size , sizeof(rfifo_size ));
+//	setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *) &rfifo_size , sizeof(rfifo_size ));
 #ifdef __WIN32
 {	//set SO_LINGER option (from Freya)
 	//(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/closesocket_2.asp)
@@ -109,23 +122,6 @@ static void setsocketopts(int fd)
 		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection %d!\n",fd);
 }
 #endif
-
-	setsockopt(fd, SOL_SOCKET, SO_SNDBUF, (void *)&wfifo_size , sizeof(wfifo_size ));
-	if (getsockopt(fd, SOL_SOCKET, SO_SNDBUF, (void *)&buff, &buff_size) == 0)
-	{
-		if (buff < wfifo_size) //We are not going to complain if we get more, aight? [Skotlex]
-			ShowError("setsocketopts: Requested send buffer size failed (requested %d bytes buffer, received a buffer of size %d)\n", wfifo_size, buff);
-	}
-	else
-		perror("setsocketopts: getsockopt wfifo");
-	setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (void *) &rfifo_size , sizeof(rfifo_size ));
-	if (getsockopt(fd, SOL_SOCKET, SO_RCVBUF, (void *) &buff, &buff_size) == 0)
-	{
-		if (buff < rfifo_size)
-			ShowError("setsocketopts: Requested receive buffer size failed (requested %d bytes buffer, received a buffer of size %d)\n", rfifo_size, buff);
-	}
-	else
-		perror("setsocketopts: getsockopt rfifo");
 }
 
 /*======================================

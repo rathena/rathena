@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/11
+	* Modified set_nonblocking and setsocketoptions in socket.c, using eApp's
+	  code as reference. Hopefully should improve performance somewhat. [Skotlex]
 	* Added a comment explaining what a comment is to login/char/map config
 	  files, as well as the main script config file. [Skotlex]
 	* Modified SG_FEEL so that it works the same way that in Aegis

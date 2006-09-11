@@ -165,6 +165,4 @@ in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str);
 
 extern unsigned int addr_[16];   // ip addresses of local host (host byte order)
 extern unsigned int naddr_;   // # of ip addresses
-
-
 #endif	// _SOCKET_H_
