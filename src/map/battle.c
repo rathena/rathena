@@ -3839,7 +3839,7 @@ void battle_set_defaults() {
 	battle_config.enable_critical=BL_PC;
 	battle_config.mob_critical_rate=100;
 	battle_config.critical_rate=100;
-	battle_config.enable_baseatk = BL_ALL;
+	battle_config.enable_baseatk = BL_PC;
 	battle_config.enable_perfect_flee = BL_PC|BL_PET;
 	battle_config.cast_rate=100;
 	battle_config.delay_rate=100;

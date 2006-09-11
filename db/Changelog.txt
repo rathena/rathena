@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/11
+	* CG_MOONLIT is no longer castable in WoE grounds. [Skotlex]
 09/10
 	* Removed NPC_Powerup from Dimik [Playtester]
 	* More accurate guess on Strouf's dex [Playtester]

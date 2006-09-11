@@ -1,5 +1,8 @@
 Date	Added
 
+2006/09/11
+	* Changed the default of enable_baseatk to 9 (player + homun) [Skotlex]
+	* Changed the default of enable_perfect_flee to 1 (players only) [Skotlex]
 2006/09/09
 	* Removed noteleport flags from Geffenia maps [Playtester]
 2006/09/08
