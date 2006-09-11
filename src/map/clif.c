@@ -11514,18 +11514,19 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 		return;
 	i = sd->menuskill_lv-1;
 	if (i<0 || i > 2) return; //Bug?
+
 	sd->feel_map[i].index = map[sd->bl.m].index;
 	sd->feel_map[i].m = sd->bl.m;
 	pc_setglobalreg(sd,feel_var[i],map[sd->bl.m].index);
-	
+
+	clif_misceffect2(&sd->bl, 0x1b0);
+	clif_misceffect2(&sd->bl, 0x21f);
 	WFIFOHEAD(fd,packet_len_table[0x20e]);
 	WFIFOW(fd,0)=0x20e;
 	memcpy(WFIFOP(fd,2),map[sd->bl.m].name, MAP_NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOW(fd,30)=i;
 	WFIFOSET(fd, packet_len_table[0x20e]);
-	
-	clif_skill_nodamage(&sd->bl,&sd->bl,sd->menuskill_id,sd->menuskill_lv,1);
 	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 
