@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 09/11
+	* Moved custom Umbalian quests to custom folder [Lupus]
 	* Added back Guild Storage. Confirmed kRO feature. [Lupus]
 09/10
 	* Official Byalan F5 spawns [Playtester]
