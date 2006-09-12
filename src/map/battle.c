@@ -1056,6 +1056,11 @@ static struct Damage battle_calc_weapon_attack(
 					if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
 						flag.hit = 1;
 					break;
+				case 0:
+					//If flag, this is splash damage from Baphomet Card and it always hits.
+					if (wflag)
+						flag.hit = 1;
+					break;
 			}
 		if (tsc && !flag.hit && tsc->opt1 && tsc->opt1 != OPT1_STONEWAIT)
 			flag.hit = 1;
