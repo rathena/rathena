@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/12
+	* Added Jaguar's sql script to convert all tables to MyISAM. It's located
+	  in sql-files/convert_engine.sql WARNING: Using MyISAM is much faster than
+	  InnoDB, but you are strongly recommended to backup your database before
+	  switching engines since we don't know if eA is fully coded to work
+	  correctly with MyISAM yet. [Skotlex]
+	* Added manual deletion of sc_data entries when deleting a character
+	  (char-SQL) [Skotlex]
+	* Updated main.sql to use pure MyISAM tables, removed all foreign keys.
+	  [Skotlex]
 	* Updated battle_switch to use strncmpi instead of strcmpi, it makes it so
 	  using "yessir" will match "yes", this is actually needed because if you set
 	  a config setting to "yes " (notice the trailing space), then the map config

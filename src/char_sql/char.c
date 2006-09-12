@@ -1619,6 +1619,16 @@ int delete_char_sql(int char_id, int partner_id)
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
 	
+#ifdef ENABLE_SC_SAVING
+	/* status changes */
+	sprintf(tmp_sql, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
+		scdata_db, account_id, char_id);
+	if(mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+#endif
+
 	if (log_char) {
 		sprintf(tmp_sql,"INSERT INTO `%s`(`time`, `account_id`,`char_num`,`char_msg`,`name`) VALUES (NOW(), '%d', '%d', 'Deleted char (CID %d)', '%s')",
 		charlog_db, account_id, 0, char_id, t_name);
