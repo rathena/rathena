@@ -288,9 +288,11 @@ int merc_hom_evolution(struct homun_data *hd)
 
 	merc_hom_vaporize(sd, 0);
 
-	if (!merc_hom_change_class(hd, hd->homunculusDB->evo_class))
+	if (!merc_hom_change_class(hd, hd->homunculusDB->evo_class)) {
 		ShowError("merc_hom_evolution: Can't evoluate homunc from %d to %d", hd->master->homunculus.class_, hd->homunculusDB->evo_class);
-
+		return 0;
+	}
+	sd->homunculus.intimacy = 500;
 	merc_call_homunculus(sd, hd->bl.x, hd->bl.y);
 	clif_emotion(&sd->bl, 21);	//no1
 	clif_misceffect2(&hd->bl,568);

@@ -3057,7 +3057,6 @@ int parse_login(int fd) {
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr;
 	char ip[16];
 	long subnet_char_ip;
-	int packet_len;
 	
 	RFIFOHEAD(fd);
 
@@ -3098,7 +3097,8 @@ int parse_login(int fd) {
 		case 0x277: // New login packet
 		case 0x64:		// request client login
 		case 0x01dd:	// request client login with encrypt
-			packet_len = RFIFOREST(fd);
+		{
+			int packet_len = RFIFOREST(fd);
 
 			switch(RFIFOW(fd, 0)){
 				case 0x64:
@@ -3231,7 +3231,7 @@ int parse_login(int fd) {
 			}
 			RFIFOSKIP(fd,packet_len);
 			break;
-
+		}
 		case 0x01db:	// Sending request of the coding key
 		case 0x791a:	// Sending request of the coding key (administration packet)
 			{

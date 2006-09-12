@@ -20,7 +20,7 @@
 #include <time.h>
 
 #include "timer.h"
-#include "../common/malloc.h"
+#include "malloc.h"
 #include "showmsg.h"
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に

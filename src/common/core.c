@@ -183,7 +183,8 @@ static void display_title(void)
 {
 	//The clearscreeen is usually more of an annoyance than anything else... [Skotlex]
 //	ClearScreen(); // clear screen and go up/left (0, 0 position in text)
-	ShowMessage("\n");
+	//ShowMessage("\n"); //A blank message??
+	printf("\n");
 	ShowMessage(""CL_WTBL"          (=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=)"CL_CLL""CL_NORMAL"\n"); // white writing (37) on blue background (44), \033[K clean until end of file
 	ShowMessage(""CL_XXBL"          ("CL_BT_YELLOW"        (c)2005 eAthena Development Team presents        "CL_XXBL")"CL_CLL""CL_NORMAL"\n"); // yellow writing (33)
 	ShowMessage(""CL_XXBL"          ("CL_BOLD"       ______  __    __                                  "CL_XXBL")"CL_CLL""CL_NORMAL"\n"); // 1: bold char, 0: normal char

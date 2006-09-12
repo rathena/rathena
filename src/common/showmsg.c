@@ -52,7 +52,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		return 1;
 	}
 
-	if (strlen(timestamp_format) > 0)
+	if (timestamp_format[0])
 	{	//Display time format. [Skotlex]
 		time_t t = time(NULL);
 		strftime(prefix, 80, timestamp_format, localtime(&t));
