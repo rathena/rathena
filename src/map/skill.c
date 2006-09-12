@@ -1438,10 +1438,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	//Polymorph
 	if(sd && sd->classchange && attack_type&BF_WEAPON &&
-		dstmd && !(tstatus->mode&MD_BOSS) && !dstmd->guardian_data &&
-	  	(dstmd->class_ < 1324 || dstmd->class_ > 1363) && //Treasure boxes
-	  	!mob_is_clone(dstmd->class_) && 
-	  	(rand()%10000 < sd->classchange)) 
+		dstmd && !(tstatus->mode&MD_BOSS) &&
+		(rand()%10000 < sd->classchange)) 
 	{
 		struct mob_db *mob;
 		int class_;

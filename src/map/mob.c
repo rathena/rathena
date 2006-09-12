@@ -2275,6 +2275,16 @@ int mob_class_change (struct mob_data *md, int class_)
 	if (md->bl.prev == NULL)
 		return 0;
 
+	//Disable class changing for some targets...
+	if (md->guardian_data)
+		return 0; //Guardians/Emperium
+
+	if (md->class_ >= 1324 && md->class_ <= 1363)
+		return 0; //Treasure Boxes
+
+	if (mob_is_clone(md->class_))
+		return 0; //Clones
+
 	hp_rate = md->status.hp*100/md->status.max_hp;
 	md->db = mob_db(class_);
 	if (battle_config.override_mob_names==1)

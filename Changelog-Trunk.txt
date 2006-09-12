@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/12
+	* Moved the morph restrictions from skill_additional_effect to
+	  mob_class_change, so that SA_MONOCELL will not convert clones, emperium, or
+	  treasure boxes. [Skotlex]
 	* Fixed 'range' might be used uninitialized warning [Toms]
 	* Added Jaguar's sql script to convert all tables to MyISAM. It's located
 	  in sql-files/convert_engine.sql WARNING: Using MyISAM is much faster than
