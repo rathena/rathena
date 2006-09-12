@@ -3429,10 +3429,18 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
  *------------------------------------------
  */
 int battle_config_switch(const char *str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
+	if(strncmpi(str, "on",2) == 0 ||
+		strncmpi(str, "yes",3) == 0 ||
+		strncmpi(str, "oui",3) == 0 ||
+		strncmpi(str, "ja",2) == 0 ||
+		strncmpi(str, "si",2) == 0)
 		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
+	if(strncmpi(str, "off",3) == 0 ||
+		strncmpi(str, "no",2) == 0 ||
+		strncmpi(str, "non",3) == 0 ||
+		strncmpi(str, "nein",4) == 0)
 		return 0;
+
 	return atoi(str);
 }
 

@@ -7022,10 +7022,7 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 					rand()%10000 < battle_config.sg_angel_skill_ratio
 				) { //Angel of the Sun/Moon/Star
-					malloc_set(sd->hate_mob, 0, sizeof(sd->hate_mob));
-					pc_setglobalreg(sd,"PC_HATE_MOB_STAR", 0);
-					pc_setglobalreg(sd,"PC_HATE_MOB_SUN", 0);
-					pc_setglobalreg(sd,"PC_HATE_MOB_MOON", 0);
+					pc_resethate(sd);
 					pc_resetfeel(sd);
 					//TODO: Figure out how to make the client-side msg show up.
 				}

@@ -66,6 +66,9 @@ static int GM_num = 0;
 #define MOTD_LINE_SIZE 128
 char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
 
+static const char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
+static const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
+
 int pc_isGM(struct map_session_data *sd) {
 	int i;
 
@@ -796,8 +799,6 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 int pc_reg_received(struct map_session_data *sd)
 {
 	int i,j;
-	const char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
-	const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
@@ -4732,7 +4733,6 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 int pc_resetfeel(struct map_session_data* sd)
 {
 	int i;
-	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
 	nullpo_retr(0, sd);
 
 	for (i=0; i<3; i++)
@@ -4742,6 +4742,19 @@ int pc_resetfeel(struct map_session_data* sd)
 		pc_setglobalreg(sd,feel_var[i],0);
 	}
 
+	return 0;
+}
+
+int pc_resethate(struct map_session_data* sd)
+{
+	int i;
+	nullpo_retr(0, sd);
+
+	for (i=0; i<3; i++)
+	{
+		sd->hate_mob[i] = -1;
+		pc_setglobalreg(sd,hate_var[i],0);
+	}
 	return 0;
 }
 

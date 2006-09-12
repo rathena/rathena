@@ -196,6 +196,7 @@ int pc_resetlvl(struct map_session_data*,int type);
 int pc_resetstate(struct map_session_data*);
 int pc_resetskill(struct map_session_data*, int);
 int pc_resetfeel(struct map_session_data*);
+int pc_resethate(struct map_session_data*);
 int pc_equipitem(struct map_session_data*,int,int);
 int pc_unequipitem(struct map_session_data*,int,int);
 int pc_checkitem(struct map_session_data*);
