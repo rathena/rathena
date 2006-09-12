@@ -20,6 +20,7 @@
 
 =========================
 09/12
+	* Fixed NPC_ATTRICHANGE being targeted rather than self [Playtester]
 	* Fixed Vesper's summoning behavior [Playtester]
 09/11
 	* CG_MOONLIT is no longer castable in WoE grounds. [Skotlex]
