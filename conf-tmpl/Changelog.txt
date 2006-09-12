@@ -1,5 +1,8 @@
 Date	Added
 
+2006/09/12
+	* case_sensitive is now off by default due to performance issues
+	  (login_athena.conf). [Skotlex]
 2006/09/11
 	* Corrected name of config settings pc_luk_status_def, mob_luk_status_def
 	  (status.conf) [Skotlex]
