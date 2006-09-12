@@ -1,6 +1,8 @@
 Date	Added
 
 2006/09/11
+	* Corrected name of config settings pc_luk_status_def, mob_luk_status_def
+	  (status.conf) [Skotlex]
 	* Changed the default of enable_baseatk to 9 (player + homun) [Skotlex]
 	* Changed the default of enable_perfect_flee to 1 (players only) [Skotlex]
 2006/09/09
