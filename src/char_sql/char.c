@@ -1390,7 +1390,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 	//	fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
 
 	//Check Name (already in use?)
-	sprintf(tmp_sql, "SELECT `name` FROM `%s` WHERE `name` = '%s'",char_db, t_name);
+	sprintf(tmp_sql, "SELECT 1 FROM `%s` WHERE `name` = '%s'",char_db, t_name);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
