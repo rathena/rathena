@@ -8982,7 +8982,7 @@ static int skill_sit_out (struct block_list *bl, va_list ap)
 int skill_sit (struct map_session_data *sd, int type)
 {
 	int flag = 0;
-	int range, lv;
+	int range = 0, lv;
 	nullpo_retr(0, sd);
 
 
@@ -8994,7 +8994,7 @@ int skill_sit (struct map_session_data *sd, int type)
 		flag|=2;
 		range = skill_get_splash(TK_HPTIME, lv);
 	}
-	else if ((lv=	pc_checkskill(sd,TK_SPTIME)) > 0) {
+	else if ((lv = pc_checkskill(sd,TK_SPTIME)) > 0) {
 		flag|=2;
 		range = skill_get_splash(TK_SPTIME, lv);
 	}
@@ -9006,8 +9006,7 @@ int skill_sit (struct map_session_data *sd, int type)
 			map_foreachinrange(skill_sit_in,&sd->bl, range, BL_PC, flag);
 		return 0;
 	}
-	else
-	if(type==0) {
+	else if(type==0) {
 		if (map_foreachinrange(skill_sit_count,&sd->bl, range, BL_PC, flag) < 2)
 			map_foreachinrange(skill_sit_out,&sd->bl, range, BL_PC, flag);
 		return 0;
