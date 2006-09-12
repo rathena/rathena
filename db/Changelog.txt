@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/12
+	* Fixed Vesper's summoning behavior [Playtester]
 09/11
 	* CG_MOONLIT is no longer castable in WoE grounds. [Skotlex]
 09/10

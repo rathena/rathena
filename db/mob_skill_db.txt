@@ -3315,9 +3315,9 @@
 1684,Archdam@NPC_GUIDEDATTACK,attack,172,2,500,1000,20000,no,target,always,0,,,,,,29
 1684,Archdam@NPC_PIERCINGATT,attack,158,5,1000,0,5000,yes,target,always,0,,,,,,
 1684,Archdam@NPC_RANDOMATTACK,attack,183,3,500,500,5000,no,target,always,0,,,,,,
-1685,Vesper@NPC_SUMMONSLAVE,attack,196,3,10000,700,60000,no,self,slavele,2,1365,,,,,
-1685,Vesper@NPC_SUMMONSLAVE,idle,196,3,10000,700,60000,no,self,slavele,2,1365,,,,,
-1685,Vesper@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1365,,,,,
+1685,Vesper@NPC_SUMMONSLAVE,attack,196,3,10000,700,60000,no,self,slavele,12,1365,1669,1675,,,
+1685,Vesper@NPC_SUMMONSLAVE,idle,196,3,10000,700,60000,no,self,slavele,12,1365,1669,1675,,,
+1685,Vesper@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1365,,,,,
 1685,Vesper@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1685,Vesper@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1685,Vesper@NPC_CALLSLAVE,attack,352,1,10000,0,60000,yes,target,always,0,,,,,,
