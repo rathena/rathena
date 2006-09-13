@@ -81,7 +81,9 @@ CREATE TABLE `char` (
   PRIMARY KEY  (`char_id`),
   KEY `account_id` (`account_id`),
   KEY `party_id` (`party_id`),
-  KEY `guild_id` (`guild_id`)
+  KEY `guild_id` (`guild_id`),
+  KEY `name` (`name`),
+  KEY `online` (`online`)
 ) TYPE=MyISAM AUTO_INCREMENT=150000; 
 
 --
@@ -113,7 +115,8 @@ DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
   `char_id` int(11) NOT NULL default '0',
   `friend_account` int(11) NOT NULL default '0',
-  `friend_id` int(11) NOT NULL default '0'
+  `friend_id` int(11) NOT NULL default '0',
+  KEY  `char_id` (`char_id`)
 ) TYPE=MyISAM;
 
 --
@@ -461,7 +464,8 @@ CREATE TABLE `memo` (
   `map` varchar(255) NOT NULL default '',
   `x` smallint(9) unsigned NOT NULL default '0',
   `y` smallint(9) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`memo_id`)
+  PRIMARY KEY  (`memo_id`),
+  KEY `char_id` (`char_id`)
 ) TYPE=MyISAM;
 
 --

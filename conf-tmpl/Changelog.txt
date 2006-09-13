@@ -1,6 +1,8 @@
 Date	Added
 
 2006/09/12
+	* Changed back the default of case-sensitive to ON since it shouldn't be
+	  such a bad performance hog now. [Skotlex]
 	* case_sensitive is now off by default due to performance issues
 	  (login_athena.conf). [Skotlex]
 2006/09/11

@@ -640,7 +640,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	// make query
 	sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`,`%s`"
-		" FROM `%s` WHERE %s `%s`='%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+		" FROM `%s` WHERE `%s`= %s '%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, login_db_userid, case_sensitive ? "BINARY" : "", t_uid);
 	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state/10-level}
 
 	// query
@@ -790,26 +790,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 		if (ban_until_time > time(NULL)) // always banned
 			return 6; // 6 = Your are Prohibited to log in until %s
 
-		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
+		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE `%s`= %s '%s'", login_db, login_db_userid, case_sensitive ? "BINARY" : "", t_uid);
 		if (mysql_query(&mysql_handle, tmpsql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
-
-		// ban is finished
-			// reset the ban time
-/*		//Removed "state" of bans, it behaves now like their TXT counter-part. [Skotlex]
-			if (atoi(sql_row[9])==7) {//it was a temp ban - so we set STATE to 0
-				sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0', `state`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
-				strcpy(sql_row[9],"0"); //we clear STATE
-			} else //it was a permanent ban + temp ban. So we leave STATE = 5, but clear the temp ban
-				sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE %s `%s`='%s'", login_db, case_sensitive ? "BINARY" : "", login_db_userid, t_uid);
-
-			if (mysql_query(&mysql_handle, tmpsql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-*/
 	}
 
 	if (atoi(sql_row[9])) {
@@ -875,8 +860,8 @@ int mmo_auth( struct mmo_account* account , int fd){
 
 	if (account->sex != 2 && account->account_id < START_ACCOUNT_NUM)
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", account->userid, account->account_id, START_ACCOUNT_NUM);
-	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE %s  `%s` = '%s'",
-		login_db, ip, case_sensitive ? "BINARY" : "", login_db_userid, sql_row[1]);
+	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE `%s` = %s '%s'",
+		login_db, ip, login_db_userid, case_sensitive ? "BINARY" : "", sql_row[1]);
 	mysql_free_result(sql_res) ; //resource free
 	if (mysql_query(&mysql_handle, tmpsql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1796,7 +1781,7 @@ int parse_login(int fd) {
 					//result = 5;
 				}
 
-				sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE %s `%s` = '%s'",login_db, case_sensitive ? "BINARY" : "",login_db_userid, t_uid);
+				sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'",login_db, login_db_userid, case_sensitive ? "BINARY" : "", t_uid);
 				if(mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
