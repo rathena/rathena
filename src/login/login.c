@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -1163,14 +1164,18 @@ int mmo_auth(struct mmo_account* account, int fd) {
 
 		dnsbl_serv=strtok(dnsbl_servs,",");
 		sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-		if(resolve_hostbyname(ip_dnsbl,NULL,NULL)) {
+// Using directly gethostbyname should be quicker. [Skotlex]
+//		if(resolve_hostbyname(ip_dnsbl, NULL, NULL)) {
+		if(gethostbyname(ip_dnsbl)) {
 			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 			return 3;
 		}
 
 		while((dnsbl_serv=strtok(dnsbl_servs,","))) {
 			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=0) {
+// Using directly gethostbyname should be quicker. [Skotlex]
+//			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=0) {
+			if(gethostbyname(ip_dnsbl)) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
 				return 3;
 			}
