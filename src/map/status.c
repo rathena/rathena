@@ -4711,6 +4711,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
 			case SC_NOCHAT:
+			case SC_CHANGE: //Otherwise your Hp/Sp would get refilled while still within effect of the last invocation.
 				return 0;
 			case SC_DANCING:
 			case SC_DEVOTION:
