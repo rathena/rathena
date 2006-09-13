@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/13
+	* Started fixing up X.3 drop rates [Playtester]
 09/12
 	* Fixed NPC_ATTRICHANGE being targeted rather than self [Playtester]
 	* Fixed Vesper's summoning behavior [Playtester]
