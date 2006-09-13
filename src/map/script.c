@@ -8317,7 +8317,7 @@ int buildin_setmapflag(struct script_state *st)
 				map[m].flag.restricted=1;
 				break;
 			case MF_NOCOMMAND:
-				map[m].flag.nocommand=1;
+				map[m].nocommand = (!val || atoi(val) <= 0) ? 100 : atoi(val);
 				break;
 			case MF_JEXP:
 				map[m].jexp = (!val || atoi(val) < 0) ? 100 : atoi(val);
@@ -8461,7 +8461,7 @@ int buildin_removemapflag(struct script_state *st)
 				map[m].flag.restricted=0;
 				break;
 			case MF_NOCOMMAND:
-				map[m].flag.nocommand=0;
+				map[m].nocommand=0;
 				break;
 			case MF_JEXP:
 				map[m].jexp=100;

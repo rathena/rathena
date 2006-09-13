@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/13
+	* Modified the nocommand mapflag so you can specify the GM range that is
+	  blocked from using commands (eg: "prontera.gat mapflag nocommand 40"
+	  disables commands to characters in the GM range 0~39) [Skotlex]
 	* Modified the char-server TXT whisper system to use the online_db to know
 	  to which map server forward whispers, instead of just sending the whisper
 	  to every map server. [Skotlex]

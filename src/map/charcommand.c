@@ -148,8 +148,8 @@ is_charcommand(const int fd, struct map_session_data* sd, const char* message, i
 	if (!*str)
 		return CharCommand_None;
 
-	if (map[sd->bl.m].flag.nocommand &&
-		(gmlvl > 0? gmlvl:pc_isGM(sd)) < battle_config.gm_skilluncond)
+	if (map[sd->bl.m].nocommand &&
+		(gmlvl > 0? gmlvl:pc_isGM(sd)) < map[sd->bl.m].nocommand)
 	{	//Command not allowed on this map.
 		char output[200];
 		sprintf(output, msg_table[143]); 

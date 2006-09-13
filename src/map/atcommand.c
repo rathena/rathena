@@ -807,8 +807,8 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (!*str)
 		return AtCommand_None;
 
-	if (map[sd->bl.m].flag.nocommand &&
-		(gmlvl > 0? gmlvl:pc_isGM(sd)) < battle_config.gm_skilluncond)
+	if (map[sd->bl.m].nocommand &&
+		(gmlvl > 0? gmlvl:pc_isGM(sd)) < map[sd->bl.m].nocommand)
 	{	//Command not allowed on this map.
 		sprintf(atcmd_output, msg_txt(143)); 
 		clif_displaymessage(fd, atcmd_output);
@@ -5820,7 +5820,7 @@ int atcommand_mapinfo(
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,"Other Flags: ");
-	if (map[m_id].flag.nocommand)
+	if (map[m_id].nocommand)
 		strcat(atcmd_output, "NoCommand | ");
 	if (map[m_id].flag.nobaseexp)
 		strcat(atcmd_output, "NoBaseEXP | ");

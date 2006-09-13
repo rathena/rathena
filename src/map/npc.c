@@ -2521,7 +2521,13 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 		map[m].flag.nomvploot=state;
 	}
 	else if (strcmpi(w3,"nocommand")==0) { // Skotlex
-		map[m].flag.nocommand=state;
+		if (state) {
+			if (sscanf(w4, "%d", &state) == 1)
+				map[m].nocommand =state;
+			else //No level specified, block everyone.
+				map[m].nocommand =100;
+		} else
+			map[m].nocommand=0;
 	}
 	else if (strcmpi(w3,"restricted")==0) { // Komurka
 		if (state) {
