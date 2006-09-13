@@ -325,6 +325,20 @@ int mapif_GMmessage(unsigned char *mes, int len, unsigned long color, int sfd) {
 	return 0;
 }
 
+// Wisp/page transmission to one map-server
+int mapif_wis_message2(struct WisData *wd, int fd) {
+	WFIFOHEAD(fd, 56+wd->len);
+	WFIFOW(fd, 0) = 0x3801;
+	WFIFOW(fd, 2) = 56 + wd->len;
+	WFIFOL(fd, 4) = wd->id;
+	memcpy(WFIFOP(fd, 8), wd->src, NAME_LENGTH);
+	memcpy(WFIFOP(fd,32), wd->dst, NAME_LENGTH);
+	memcpy(WFIFOP(fd,56), wd->msg, wd->len);
+	wd->count = 1;
+	WFIFOSET(fd,WFIFOW(fd,2));
+	return 1;
+}
+
 // Wisp/page transmission to all map-server
 int mapif_wis_message(struct WisData *wd) {
 	unsigned char buf[2048];
@@ -339,6 +353,16 @@ int mapif_wis_message(struct WisData *wd) {
 	wd->count = mapif_sendall(buf, WBUFW(buf,2));
 
 	return 0;
+}
+
+int mapif_wis_fail(int fd, char *src) {
+	unsigned char buf[27];
+	WBUFW(buf, 0) = 0x3802;
+	memcpy(WBUFP(buf, 2), src, NAME_LENGTH);
+	WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
+	mapif_send(fd, buf, 27);
+	return 0;
+
 }
 
 // Wisp/page transmission result to map-server
@@ -449,12 +473,31 @@ int mapif_parse_GMmessage(int fd) {
 	return 0;
 }
 
+static struct WisData* mapif_create_whisper(int fd, char* src, char* dst, char* mes, int meslen)
+{
+	static int wisid = 0;
+	struct WisData* wd = (struct WisData *)aCalloc(sizeof(struct WisData), 1);
+	if (wd == NULL){
+		ShowFatalError("inter: WisRequest: out of memory !\n");
+		return NULL;
+	}
+	wd->id = ++wisid;
+	wd->fd = fd;
+	wd->len= meslen;
+	memcpy(wd->src, src, NAME_LENGTH);
+	memcpy(wd->dst, dst, NAME_LENGTH);
+	memcpy(wd->msg, mes, meslen);
+	wd->tick = gettick();
+	return wd;
+}
+
 // Wisp/page request to send
 int mapif_parse_WisRequest(int fd) {
+	struct mmo_charstatus* char_status;
 	struct WisData* wd;
 	char name[NAME_LENGTH];
-	static int wisid = 0;
-	int index;
+	int fd2;
+
 	RFIFOHEAD(fd);
 
 	if (RFIFOW(fd,2)-52 >= sizeof(wd->msg)) {
@@ -468,48 +511,37 @@ int mapif_parse_WisRequest(int fd) {
 	memcpy(name, RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 	name[NAME_LENGTH-1]= '\0';
 	// search if character exists before to ask all map-servers
-	if ((index = search_character_index(name)) == -1) {
-		unsigned char buf[27];
-		WBUFW(buf, 0) = 0x3802;
-		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
-		WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-		mapif_send(fd, buf, 27);
-	// Character exists. So, ask all map-servers
-	} else {
-		// to be sure of the correct name, rewrite it
-		memset(name, 0, NAME_LENGTH);
-		strncpy(name, search_character_name(index), NAME_LENGTH);
-		// if source is destination, don't ask other servers.
-		if (strcmp((char*)RFIFOP(fd,4),name) == 0) {
-			unsigned char buf[27];
-			WBUFW(buf, 0) = 0x3802;
-			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
-			WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-			mapif_send(fd, buf, 27);
-		} else {
+	char_status = search_character_byname(name);
+	if (char_status == NULL)
+		return mapif_wis_fail(fd, RFIFOP(fd, 4));
 
-			wd = (struct WisData *)aCalloc(sizeof(struct WisData), 1);
-			if (wd == NULL){
-				ShowFatalError("inter: WisRequest: out of memory !\n");
-				return 0;
-			}
+	// Character exists.
+	// to be sure of the correct name, rewrite it
+	memset(name, 0, NAME_LENGTH);
+	strncpy(name, char_status->name, NAME_LENGTH);
+	// if source is destination, don't ask other servers.
+	if (strcmp((char*)RFIFOP(fd,4),name) == 0)
+		return mapif_wis_fail(fd, RFIFOP(fd, 4));
 
-			// Whether the failure of previous wisp/page transmission (timeout)
-			check_ttl_wisdata();
-
-			wd->id = ++wisid;
-			wd->fd = fd;
-			wd->len= RFIFOW(fd,2)-52;
-			memcpy(wd->src, RFIFOP(fd, 4), NAME_LENGTH);
-			memcpy(wd->dst, RFIFOP(fd,28), NAME_LENGTH);
-			memcpy(wd->msg, RFIFOP(fd,52), wd->len);
-			wd->tick = gettick();
-			idb_put(wis_db, wd->id, wd);
-			mapif_wis_message(wd);
-		}
+	//Look for online character.
+	fd2 = search_character_online(char_status->account_id, char_status->char_id);
+	if (fd2 >= 0) {	//Character online, send whisper.
+		wd = mapif_create_whisper(fd, RFIFOP(fd, 4), RFIFOP(fd,28), RFIFOP(fd,52), RFIFOW(fd,2)-52);
+		if (!wd) return 1;
+		idb_put(wis_db, wd->id, wd);
+		mapif_wis_message2(wd, fd2);
+		return 0;
 	}
+	//Not found.
+	return mapif_wis_fail(fd, RFIFOP(fd, 4));
 
+/* Scrapped since now we know where characters are online in. [Skotlex]
+	wd = mapif_create_whisper(fd, RFIFOP(fd, 4), RFIFOP(fd,28), RFIFOP(fd,52), RFIFOW(fd,2)-52);
+	if (!wd) return 0;
+	idb_put(wis_db, wd->id, wd);
+	mapif_wis_message(wd);
 	return 0;
+*/
 }
 
 // Wisp/page transmission result
@@ -522,7 +554,7 @@ int mapif_parse_WisReply(int fd) {
 	wd = idb_get(wis_db, id);
 
 	if (wd == NULL)
-		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
+		return 0;	// This wisp was probably suppress before, because it was timeout or because of target was found on another map-server
 
 	if ((--wd->count) <= 0 || flag != 1) {
 		mapif_wis_end(wd, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target

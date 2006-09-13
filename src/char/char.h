@@ -24,8 +24,10 @@ struct mmo_map_server{
 };
 
 struct mmo_charstatus* search_character(int aid, int cid);
+struct mmo_charstatus* search_character_byname(char* character_name);
 int search_character_index(char* character_name);
 char * search_character_name(int index);
+int search_character_online(int aid, int cid);
 
 int mapif_sendall(unsigned char *buf, unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf, unsigned int len);

@@ -216,6 +216,13 @@ struct mmo_charstatus* search_character(int aid, int cid) {
 	return NULL;
 }
 	
+struct mmo_charstatus* search_character_byname(char* character_name)
+{
+	int i = search_character_index(character_name);
+	if (i == -1) return NULL;
+	return &char_dat[i].status;
+}
+
 //----------------------------------------------
 // Search an character id
 //   (return character index or -1 (if not found))
@@ -259,6 +266,19 @@ char * search_character_name(int index) {
 	return unknown_char_name;
 }
 
+// Searches if the given character is online, and returns the fd of the
+// map-server it is connected to.
+int search_character_online(int aid, int cid)
+{
+	//Look for online character.
+	struct online_char_data* character;
+	character = idb_get(online_char_db, aid);
+	if(character &&
+		character->char_id == cid &&
+		character->server > -1) 
+		return server_fd[character->server];
+	return -1;
+}
 static void * create_online_char_data(DBKey key, va_list args) {
 	struct online_char_data* character;
 	character = aCalloc(1, sizeof(struct online_char_data));
