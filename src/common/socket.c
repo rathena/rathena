@@ -99,8 +99,8 @@ void set_nonblocking(int fd, int yes) {
 
 static void setsocketopts(int fd)
 {
-#ifndef WIN32
 	int yes = 1; // reuse fix
+#ifndef WIN32
     // set SO_REAUSEADDR to true, unix only. on windows this option causes
     // the previous owner of the socket to give up, which is not desirable
     // in most cases, neither compatible with unix.
