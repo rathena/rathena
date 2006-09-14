@@ -19,6 +19,9 @@
 	-----
 
 =========================
+09/14
+	* Fixed Thanatos Tower drop rates [Playtester]
+	- also updated some related aegis item names
 09/13
 	* Started fixing up X.3 drop rates [Playtester]
 09/12
