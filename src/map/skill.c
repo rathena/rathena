@@ -6079,18 +6079,51 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
-		if(sd) {
+		{
 			int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 			int class_ = skillid==AM_SPHEREMINE?1142:summons[skilllv-1];
+			int count,range;
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, x, y, sd->status.name,class_,"");
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src),class_,"");
 			if (md) {
 				md->master_id = src->id;
 				md->special_state.ai = skillid==AM_SPHEREMINE?2:3;
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, md->bl.id, 0);
 				mob_spawn (md); //Now it is ready for spawning.
+			}
+			count = 5-skilllv;
+			if (count < 1 || skillid == AM_SPHEREMINE)
+				break;
+			//Summon multiple floras based on SkillLV
+			if (sd &&
+				(i = skill_get_itemid(skillid, 0)) > 0 &&
+				(range = skill_get_itemqty(skillid, 0)) > 0
+			) {
+				//FIXME: Should this be expanded to check for all 10 possible items? [Skotlex]
+				i = pc_search_inventory(sd,i);
+				if (i == -1)
+					count = 0;
+				else if (sd->status.inventory[i].amount < count*range)
+					count = sd->status.inventory[i].amount/range;
+				if (count < 1) break;
+				pc_delitem(sd, i, count*range, 0);
+			}
+			range = 3+count/2; //Spread range is based on qty to be summoned.
+			for (; count > 0 ; count--)
+			{	//Summon additional creatures.
+				short xi, yi;
+				xi=x; yi=y;
+				map_search_freecell(src, src->m, &xi, &yi, range, range, 1);
+
+				md = mob_once_spawn_sub(src, src->m, xi, yi, status_get_name(src),class_,"");
+				if (md) {
+					md->master_id = src->id;
+					md->special_state.ai = skillid==AM_SPHEREMINE?2:3;
+					md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, md->bl.id, 0);
+					mob_spawn (md); //Now it is ready for spawning.
+				}
 			}
 		}
 		break;

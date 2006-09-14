@@ -1312,6 +1312,9 @@ int status_calc_mob(struct mob_data* md, int first)
 	if (flag&16 && mbl)
 	{	//Max HP setting from Summon Flora/marine Sphere
 		struct unit_data *ud = unit_bl2ud(mbl);
+		//Remove special AI when this is used by regular mobs.
+		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
+			md->special_state.ai = 0;
 		if (ud)
 		{	// different levels of HP according to skill level
 			if (ud->skillid == AM_SPHEREMINE) {
@@ -3909,6 +3912,23 @@ void status_freecast_switch(struct map_session_data *sd)
 
 	if(b_speed != status->speed)
 		clif_updatestatus(sd,SP_SPEED);
+}
+
+const char * status_get_name(struct block_list *bl)
+{
+	nullpo_retr(0, bl);
+	switch (bl->type) {
+	case BL_MOB:
+		return ((struct mob_data *)bl)->name;
+	case BL_PC:
+		return ((struct map_session_data *)bl)->status.name;
+	case BL_PET:
+		return ((struct pet_data *)bl)->pet.name;
+	case BL_HOM:
+		return ((struct homun_data *)bl)->master->homunculus.name;
+	default:
+		return "Unknown";
+	}
 }
 
 /*==========================================
