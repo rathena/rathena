@@ -5394,8 +5394,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_COMBO:
 		{
+			//val1: Skill ID
+			//val2: When given, target (for autotargetting skills)
+			//val3: When set, this combo time should NOT delay attack/movement
+			//val4: Combo time
 			struct unit_data *ud = unit_bl2ud(bl);
-			switch (val1) { //Val1 contains the skill id
+			switch (val1) {
 				case TK_STORMKICK:
 					clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
 					break;
@@ -5409,7 +5413,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
 					break;
 			}
-			if (ud) {
+			if (ud && !val3) 
+			{
 				ud->attackabletime = gettick()+tick;
 				unit_set_walkdelay(bl, gettick(), tick, 1);
 			}

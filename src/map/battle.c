@@ -302,7 +302,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			&& rand()%100 < 20) {
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (sc->data[SC_COMBO].timer == -1)
-				sc_start4(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 0, 0, 2000);
+				sc_start4(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
 			return 0;
 		}
 

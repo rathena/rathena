@@ -7069,7 +7069,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					if(bl->type==BL_PC)
 						//Only damage SP [Skotlex]
 						status_zap(bl, 0, 60);
-					else if(status_charge(bl, 0, 2))
+					else if(status_charge(ss, 0, 2))
 						//Otherwise, Knockback attack.
 						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 				break;
