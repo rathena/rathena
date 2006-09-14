@@ -5,8 +5,8 @@ prontera.gat,150,193,4	script	Reset Girl	124,{
 	mes "Reset Stats: 5,000z";
 	mes "Reset Skills: 5,000z";
 	mes "Reset Both: 9,000z";
-	next;
 	mes "Please select the service you want:";
+	next;
 	menu "^FF3355Reset Skills",L0,"Reset Stats",L1,"Reset Both^000000",L2,"Quit",LEnd;
 	
 	L0:

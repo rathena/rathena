@@ -102,6 +102,7 @@ L_Check:
 	mes "use ^5555FFHoly Light^000000!";
 	skill 156,1,0;
 	set HOLYLIGHT, 0;
+	next;
 	mes "[Priest]";
 	mes "You have done well.  May God bless you!";
 	emotion e_no1;

@@ -160,6 +160,7 @@ L_GetSkill:
 // Note: It is not supposed to take these items, just check you have collected them
 	skill 154,1,0;
 	set CHANGECART, 0;
+	next;
 	mes "[Charlron]";
 	mes "Good luck, see you around";
 	close;

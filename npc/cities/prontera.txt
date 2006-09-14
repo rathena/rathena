@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.8a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -130,7 +130,7 @@ prontera.gat,102,287,5	script	Shuger	98,{
 
 //------------------------------------------------------------------------------------- Prontera Church -------------------------------------------------------------------------------\\
 // Henson ---------------------------------------------------------------
-prt_church.gat,103,71,2	script	Benson	120,{
+prt_church.gat,103,71,2	script	Henson	120,{
 	mes "[Henson]";
 	mes "Our duty is not only to help others, but to also purify poor souls that have been turned into the Undead.";
 	mes "In order to successfully accomplish our duty, we have to learn special skills and practice them very diligently.";
@@ -157,14 +157,12 @@ L_MENU:
 		next;
 		mes "[Henson]";
 		mes "Also, you have to acquire 3 levels of 'Demon Bane' to use a skill called, 'Signum Crisis', which lowers the Defence of Undead and Dark property monsters.";
-		next;
 		goto L_MENU;
 
 	L2:
 		mes "[Henson]";
 		mes "When you use this skill, the movement speed, attack rate, and evasion rate of a targeted monster will be reduced.";
 		mes "You will need to get 1 level of 'Increase AGI' first, before you can learn 'Decrease AGI.";
-		next;
 		goto L_MENU;
 
 	L3:
@@ -174,7 +172,6 @@ L_MENU:
 		next;
 		mes "[Henson]";
 		mes "Do not be disappointed even if you don't successfully use this skill all the time.  You need level 3 'Demon Bane' to acquire this skill.";
-		next;
 		goto L_MENU;
 
 	L4:
@@ -183,20 +180,17 @@ L_MENU:
 		next;
 		mes "[Henson]";
 		mes "It generates a barrier that defends you perfectly from long-range attacks, such as archer attacks.";
-		next;
 		goto L_MENU;
 
 	L5:
 		mes "[Henson]";
 		mes "Ruwach allows you to see hidden monsters or players.  You also need this skill to learn 'Teleport.";
-		next;
 		goto L_MENU;
 
 	L6:
 		mes "[Henson]";
 		mes "At level 1, it allows you teleport to a random spot on the map you are in.  At level2 it allows you to teleport to your last save point.";
 		mes "You must learn Ruwach first in order to learn teleport.";
-		next;
 		goto L_MENU;
 
 	L_END:
@@ -216,8 +210,8 @@ prt_church.gat,103,76,2	script	Garnet	67,{
 	next;
 	mes "[Garnet]";
 	mes "Feel free to ask me anything.  Although the priest scolds me for my lack of skill, I can assure you I have a VERY STRONG grasp of the theories.";
-	next;
 L_MENU:
+	next;
 	menu "About Heal",-,"About Cure",L1,"About Increase AGI",L2,"About Angelus",L3,"Abour Blessing",L4,"About Warp Portal",L5,"End conversation",L_END;
 	
 		mes "[Garnet]";
@@ -229,19 +223,16 @@ L_MENU:
 		mes "[Garnet]";
 		mes "Here is a little secret... if you use 'Heal' on Undead monsters, it will actually inflict damage, not help them.";
 		mes "Ah~ Don't forget to hold the 'Shift' key when you use it though... Ahem~ shhhhh~~!";
-		next;
 		goto L_MENU;
 
 	L1:
 		mes "[Garnet]";
 		mes "'Cure' can alleviate any abnormal status effects you may have.  You have to have level 2 'Heal' in order to learn Cure though.";
-		next;
 		goto L_MENU;
 
 	L2:
 		mes "[Garnet]";
 		mes "'Increase AGI' increases your movement speed, attack rate, and evade rate.  You can learn it after you've learned 3 levels of 'Heal'.";
-		next;
 		goto L_MENU;
 
 	L3:
@@ -254,7 +245,6 @@ L_MENU:
 		next;
 		mes "[Garnet]";
 		mes "If you practice 'Angelus' you'll be able to use 'Kyrie Eleison' as a Priest, which allows you to evade attacks for a short period of time.";
-		next;
 		goto L_MENU;
 
 	L4:
@@ -263,7 +253,6 @@ L_MENU:
 		next;
 		mes "[Garnet]";
 		mes "'Blessing', like 'Angelus', also requires you know 'Divine Protection'.  But you'll need to have 5 levels of 'Divine Protection' to learn it.";
-		next;
 		goto L_MENU;
 
 	L5:
@@ -283,7 +272,6 @@ L_MENU:
 		next;
 		mes "[Garnet]";
 		mes "One more thing, you cannot Warp to the inside of dungeons so don't even waste your time trying to.";
-		next;
 		goto L_MENU;
 
 	L_END:

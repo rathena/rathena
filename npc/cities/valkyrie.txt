@@ -147,6 +147,7 @@ L_PAY:
 	mes "Two. You have to venture deep inside of Yuno castle, into the Heart of Ymir.";
 	mes "Remember that you cannot view the book unless you have done this.";
 	mes "Now go, brave one.";
+	next;
 	menu "Pay now",-,"Close",M_EXIT;
 
 	mes "[Librarian]";

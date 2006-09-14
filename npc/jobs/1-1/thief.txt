@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.6
+//= 1.6a
 //===== Compatible With: =====================================
 //= eAthena 1.0 +
 //===== Description: =========================================
@@ -15,7 +15,7 @@
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= Fixed possible EXP abuse [Lupus]
 //= 1.5 Now saves/restores all quest skills [Lupus]
-//= 1.6 Merged back JFunc [Lupus]
+//= 1.6 Merged back JFunc [Lupus] 1.6a typos
 //============================================================
 
 
@@ -71,7 +71,6 @@ moc_prydb1.gat,39,129,5	script	Thief Guide	69,{
 	if(job_thief_q==2) goto L_1;
 	if(job_thief_q==1) goto L_Back;
 
-	mes "[Thief Guide]";
 	if(Sex) {
 		mes "Heh... You look like a well to do boy... what brought you down to this rat hole?";
 	}else{

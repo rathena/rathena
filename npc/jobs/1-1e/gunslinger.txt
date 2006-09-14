@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,122 +20,119 @@
 //= 1.6 job number->const, commonized variable name,
 //= 	optimized [Lupus]
 //= 1.7 Now uses only ONE variable GUNS_Q [Lupus]
+//= 1.7a Grammar fixes, few spelling fixes, etc [CBMaster]
 //============================================================ 
 
 que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
 
-set @npcname$,"[Armsmith]";
-
-if (Class == Job_Novice) {
-
-	if (GUNS_Q >= 1) {
-		mes @npcname$;
-		mes "So, you've comeback?";
-		next;
-		if (GUNS_Q == 10005) {
-			if (SkillPoint > 0) {
+	set @npcname$,"[Armsmith]";
+	if (Class == Job_Novice) {
+		if (GUNS_Q >= 1) {
+			mes @npcname$;
+			mes "So, you've come back?";
+			next;
+			if (GUNS_Q == 10005) {
+				if (SkillPoint > 0) {
+					mes @npcname$;
+					mes "Err, excuse me, but you still have Skill Points left. You have to use them all before I can turn you into a Gunslinger.";
+					close2;
+					set @npcname$,"";
+					end;
+				} else if (JobLevel < 10) {
+					mes @npcname$;
+					mes "Err, excuse me, but your job level is not sufficient. You need to have a job level of 10 in order to change to a Gunslinger";
+					close2;
+					set @npcname$,"";
+					end;
+				}
 				mes @npcname$;
-				mes "Err, excuse me, but you still have Skill Points left. You have to use them all first before I can turn you into a Gunslinger";
-				close2;
-				set @npcname$,"";
-				end;
-			} else if (JobLevel < 10) {
+				mes "Glad to know you did what Mr. Tanieh asked you to do, makes me know you're worthy of being..";
+				next;
 				mes @npcname$;
-				mes "Err, excuse me, but you don't have Level 10 Job. You need to have 10 level job in order to change to Gunslinger";
+				mes "A Gunslinger!!";
+				callfunc "Job_Change",Job_Gunslinger;
+				callfunc "F_ClearJobVar";		//clears all job variables for the current player
+				next;
+				mes @npcname$;
+				mes "Oh, I forgot, here's a token of my appreciation";
+				getitem 13150,1;
 				close2;
 				set @npcname$,"";
 				end;
 			}
 			mes @npcname$;
-			mes "Glad to know you did what Mr. Tanieh asked you to do, makes me know you're worthy of being..";
-			next;
-			mes @npcname$;
-			mes "A Gunslinger!!!";
-			callfunc "Job_Change",Job_Gunslinger;
-			callfunc "F_ClearJobVar";		//clears all job variables for the current player
-			next;
-			mes @npcname$;
-			mes "Oh, I forgot, here's a token of my appreciation";
-			getitem 13150,1;
-			close2;
-			set @npcname$,"";
-			end;
-		} else
+			mes "But you still haven't done what I told you, need me to repeat it?";
+			switch (select ("Yes, Please:No, Thanks")) {
+				case 1:
+					next;
+					mes @npcname$;
+					mes "You need to go to Payon. At the small wooden wall and in the south exit, Mr. Tanieh will be there waiting to ask you a few things. Go now...";
+					close2;
+					set @npcname$,"";
+					end;
+				case 2:
+					next;
+					mes @npcname$;
+					mes "Then GET GOING! You do want to become a Gunslinger, right?";
+					close2;
+					set @npcname$,"";
+					end;
+			}
+		}
 		mes @npcname$;
-		mes "But you still haven't done what I told you, need me to repeat it?";
-		switch (select ("Yes, Please:No, Thanks")) {
+		mes "Hi ^0000CC"+strcharinfo(0)+"^000000,I need you to do something for me first, will you?";
+		switch (select ("Yes:No")) {
 			case 1:
 				next;
 				mes @npcname$;
-				mes "You need to go to Payon. At the small wooden wall and in the south exit, Mr. Tanieh will be there waiting to ask you a few things. Go now then";
+				mes "Good, I need you to go to Payon and do a few things from Mr. Tanieh.";
+				next;
+				mes @npcname$;
+				mes "He'll be waiting for you next to the small wooden wall of the south exit. See you later then.";
 				close2;
+				set GUNS_Q,1;
 				set @npcname$,"";
 				end;
 			case 2:
 				next;
 				mes @npcname$;
-				mes "Then GET GOING! Don't you want to become a gunslinger, do you?";
+				mes "Too bad for you son. Come back when you are willing to do so.";
 				close2;
 				set @npcname$,"";
 				end;
-			}
-	} else
-
-	mes @npcname$;
-	mes "Hi ^0000CC"+strcharinfo(0)+"^000000,I need you to do something for me first, will you?";
-	switch (select ("Yes:No")) {
-			case 1:
-			next;
-			mes @npcname$;
-			mes "Good, I need you to go to Payon and do a few things from Mr. Tanieh";
-			next;
-			mes @npcname$;
-			mes "He'll be waiting for you next to the small wooden wall of the south exit. See you later then";
-			close2;
-			set GUNS_Q,1;
-			set @npcname$,"";
-			end;
-		case 2:
-			next;
-			mes @npcname$;
-			mes "Too bad for you son";
-			close2;
-			set @npcname$,"";
-			end;
 		} 
 
-	} else 
-		mes @npcname$;
-		mes "Hi son, how's life treating you?";
-		set @npcname$,"";
-		close;
+	}
+	mes @npcname$;
+	mes "Hi son, how's life treating you?";
+	set @npcname$,"";
+	close;
 }
 
 payon.gat,184,65,3	script	Mr. Tanieh	866,{
 
-set @npcname$,"[Mr. Tanieh]";
+	set @npcname$,"[Mr. Tanieh]";
+	if (GUNS_Q == 1) {
+		mes @npcname$;
+		mes "Oh, you're ^0000CC"+strcharinfo(0)+"^000000, right? Einbroch's Armsmith told me you were going to help me with a few things.";
+		next;
+		mes @npcname$;
+		mes "I need to make a special soup for my wife, but, as you can see, I am not in conditions to look for the items, she's sick you know?";
+		next;
+		mes @npcname$;
+		mes "So, will you do it, please?";
+		switch (select ("Yes, I will:Sorry I can't now")) {
+			case 1:
+				set GUNS_Q,callfunc("F_RandMes",4,1019,1066,1067,1068);
+				goto L_LIST;
 
-if (GUNS_Q == 1) {
-	mes @npcname$;
-	mes "Oh, you're ^0000CC"+strcharinfo(0)+"^000000, right? Einbroch's Armsmith told me you were going to help me in a few things";
-	next;
-	mes @npcname$;
-	mes "I need to make a special soup for my wife, but, as you can see, I am not in conditions to look for the items, she's sick you know?";
-	next;
-	mes @npcname$;
-	mes "So, will you do it, please?";
-	switch (select ("Yes, I will:Sorry I can't now")) {
-		case 1:
-			set GUNS_Q,callfunc("F_RandMes",4,1019,1066,1067,1068);
-			goto L_LIST;
-
-		case 2:
-			next;
-			mes @npcname$;
-			mes "Oh, what am I going to do now...";
-			close2;
-			set @npcname$,"";
-			end;
+			case 2:
+				next;
+				mes @npcname$;
+				mes "Oh, what am I going to do now...";
+				close2;
+				set @npcname$,"";
+				end;
 		}
 
 	} else if (GUNS_Q > 1 && GUNS_Q < 10000) {
@@ -170,33 +167,33 @@ if (GUNS_Q == 1) {
 					set @npcname$,"";
 					end;
 				} else if (countitem(511) < 3) {
-						mes @npcname$;
-						mes "Sorry, you're missing a few Green Herbs";
-						close2;
-						set @npcname$,"";
-						end;
+					mes @npcname$;
+					mes "Sorry, you're missing a few Green Herbs";
+					close2;
+					set @npcname$,"";
+					end;
 				} else if (countitem(935) < 10) {
 					mes @npcname$;
 					mes "Sorry, you're missing a few Shells";
 					close2;
 					set @npcname$,"";
 					end;
-				} else
-					mes @npcname$;
-					mes "GREAT! You brought them all! Thanks very much!";
-					delitem 949,3;
-					delitem 912,3;
-					delitem 1013,3;
-					delitem GUNS_Q,1; //here we keep Trunk ID
-					delitem 935,10;
-					delitem 511,3;
-					next;
-					mes @npcname$;
-					mes "Oh my~~ You've been of great help. I'll recommend you to the Einbroch Armory for your job change.";
-					close2;
-					set GUNS_Q,10003;
-					set @npcname$,"";
-					end;
+				}
+				mes @npcname$;
+				mes "GREAT! You brought them all! Thanks very much!";
+				delitem 949,3;
+				delitem 912,3;
+				delitem 1013,3;
+				delitem GUNS_Q,1; //here we keep Trunk ID
+				delitem 935,10;
+				delitem 511,3;
+				next;
+				mes @npcname$;
+				mes "Oh my, you've been of great help. I'll recommend you to the Einbroch Armory for your job change.";
+				close2;
+				set GUNS_Q,10003;
+				set @npcname$,"";
+				end;
 			case 2:
 			L_LIST:
 				next;
@@ -210,16 +207,16 @@ if (GUNS_Q == 1) {
 				mes "^FF6600 10 Shells^000000";
 				next;
 				mes @npcname$;
-				mes "Hurry please, I am not sure if my wife will last any longer... oh dear";
+				mes "Hurry please, I am not sure if my wife will last any longer... oh dear..";
 				close2;
 				set @npcname$,"";
 				end;
-			}
+		}
 	} else if (GUNS_Q == 10003) || (GUNS_Q == 10004) {
 		if (countitem(519) >= 1) && (GUNS_Q == 10004) {
 			mes @npcname$;
 			mes "THAT'S IT!! I was missing the Milk! Oh yes, thanks so much, will you give it to me?";
-			switch(select("Yes, take it please:Sorry but I need it")) {
+			switch(select("Sure, take it:Sorry but I need it")) {
 				case 1:
 					next;
 					mes @npcname$;
@@ -232,28 +229,28 @@ if (GUNS_Q == 1) {
 				case 2:
 					next;
 					mes @npcname$;
-					mes "OH please, I need it so much, thing about it please";
+					mes "Oh please, I need it so much, think about it please...";
 					close2;
 					set @npcname$,"";
 					end;
 			}
-		} else					
+		}
 		mes @npcname$;
-		mes "*sigh* All I need now is wait. Thanks for your help... but I believe there's something missing..";
+		mes "*sigh* Now I have to wait again... Thanks for your help... but I believe there's something missing..";
 		close2;
 		set @npcname$,"";
 		set GUNS_Q,10004;
 		end;
 	} else if (Class == Job_Gunslinger) || (GUNS_Q == 10005) {
 		mes @npcname$;
-		mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients";
+		mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients...";
 		close2;
 		set @npcname$,"";
 		end;
 	} 
-mes @npcname$;
-mes "Hi son, how you doing? Nice day eh?";
-close2;
-set @npcname$,"";
-end;
+	mes @npcname$;
+	mes "Hi son, how's life treating you? Nice day, isn't it?";
+	close2;
+	set @npcname$,"";
+	end;
 }
