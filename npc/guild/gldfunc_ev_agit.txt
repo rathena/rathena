@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3a
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= v1.2: All OnAgitStart and OnAgitBreak calls will use these functions.[kobra_k88]
 //= v1.2a: Added OnAgitEnd function.[kobra_k88]
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
+//= 1.3a fixed Defence / Economy underflow [Lupus] thanks2 kyoki
 //============================================================
 
 
@@ -127,12 +128,15 @@ function	script	F_AgitBreak	{
 	//killmonsterall getarg(0)+".gat";
 	set @GID,getcharid(2);
 	if (@GID <= 0) return;
-	set @Economy,GetCastleData(getarg(0)+".gat",2);
-	SetCastleData getarg(0)+".gat",2, @Economy-5;
-	if (GetCastleData(getarg(0)+".gat",2) < 0) SetCastleData getarg(0)+".gat",2,0;
-	set @Defence,GetCastleData(getarg(0)+".gat",3);
-	SetCastleData getarg(0)+".gat",3, @Defence-5;
-	if (GetCastleData(getarg(0)+".gat",3) < 0) SetCastleData getarg(0)+".gat",3,0;
+
+	set @Economy,GetCastleData(getarg(0)+".gat",2) - 5;
+	if (@Economy < 0) set @Economy, 0;
+	SetCastleData getarg(0)+".gat",2, @Economy;
+
+	set @Defence,GetCastleData(getarg(0)+".gat",3) - 5;
+	if (@Defence < 0) set @Defence, 0;
+	SetCastleData getarg(0)+".gat",3, @Defence;
+
 	SetCastleData getarg(0)+".gat",1, @GID;
 	MapAnnounce getarg(0)+".gat","The emperium has been destroyed.",17;
 	Announce "Guild Base [" + GetCastleName(getarg(0)+".gat") + "] has been taken by the [" + GetGuildName(@GID) + "] guild.",0;

@@ -35,6 +35,7 @@ Date		Added
 09/14
 	* Fixed typos in Gunslinger & Thief Job Quest & various NPCs [Lupus]
 		thanks to cbmaster & $ephiroth
+	- Fixed Guild Defence / Economy underflow, thx2 kyoki
 09/11
 	* Moved custom Umbalian quests to custom folder [Lupus]
 	* Added back Guild Storage. Confirmed kRO feature. [Lupus]
