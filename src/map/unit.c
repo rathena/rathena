@@ -1020,7 +1020,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	bl.m = src->m;
 	bl.x = skill_x;
 	bl.y = skill_y;
-	if(skill_num != TK_HIGHJUMP && skill_num != NJ_SHADOWJUMP &&
+	if(skill_num != TK_HIGHJUMP &&
 		!battle_check_range(src,&bl,skill_get_range2(src, skill_num,skill_lv)+1))
 		return 0;
 

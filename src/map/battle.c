@@ -3440,7 +3440,6 @@ int battle_config_switch(const char *str) {
 		strncmpi(str, "non",3) == 0 ||
 		strncmpi(str, "nein",4) == 0)
 		return 0;
-
 	return atoi(str);
 }
 

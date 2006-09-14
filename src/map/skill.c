@@ -9006,12 +9006,11 @@ int skill_sit (struct map_session_data *sd, int type)
 
 	if (!flag) return 0;
 
-	if(type==1) {
+	if(type) {
 		if (map_foreachinrange(skill_sit_count,&sd->bl, range, BL_PC, flag) > 1)
 			map_foreachinrange(skill_sit_in,&sd->bl, range, BL_PC, flag);
 		return 0;
-	}
-	else if(type==0) {
+	} else {
 		if (map_foreachinrange(skill_sit_count,&sd->bl, range, BL_PC, flag) < 2)
 			map_foreachinrange(skill_sit_out,&sd->bl, range, BL_PC, flag);
 		return 0;
