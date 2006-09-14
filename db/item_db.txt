@@ -2244,16 +2244,16 @@
 7469,Blue_U_Card,Blue U Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 7470,Blue_W_Card,Blue W Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 7471,Blue_Y_Card,Blue Y Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7472,Lv1_Cookbook,Level 1 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7473,Lv2_Cookbook,Level 2 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7474,Lv3_Cookbook,Level 3 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7475,Lv4_Cookbook,Level 4 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7476,Lv5_Cookbook,Level 5 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7477,Lv6_Cookbook,Level 6 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7478,LV7_Cookbook,Level 7 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7479,Lv8_Cookbook,Level 8 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7480,LV9_Cookbook,Level 9 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7481,Lv10_Cookbook,Level 10 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7472,Cookbook01,Level 1 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7473,Cookbook02,Level 2 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7474,Cookbook03,Level 3 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7475,Cookbook04,Level 4 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7476,Cookbook05,Level 5 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7477,Cookbook06,Level 6 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7478,Cookbook07,Level 7 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7479,Cookbook08,Level 8 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7480,Cookbook09,Level 9 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7481,Cookbook10,Level 10 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
 7482,Pot,Pot,3,200,,10,,,,,,,,,,,,,{},{},{}
 7483,Key_of_the_Seal,Key of the Seal,3,,,10,,,,,,,,,,,,,{},{},{}
 7484,Warrior_Symbol,Symbol of a Brave Warrior,3,,10,10,,,,,,0,2,,,,,,{},{},{}
@@ -2567,9 +2567,9 @@
 // Cooking Sets
 12125,Outdoor_Cooker,Outdoor Cooking Kit,2,500,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
 12126,Home_Cooking_Set,Home Cooking Kit,2,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 12; },{},{}
-12127,Deluxe_Cooking_Set,Professional Cooking Kit,2,2000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 13; },{},{}
-12128,Court_Cooking_Set,Royal Cooking Kit,2,5000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 14; },{},{}
-12129,Legendary_Cooking_Set,Fantastic Cooking Kit,2,10000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 15; },{},{}
+12127,High_end_Cooking_Kits,Professional Cooking Kit,2,2000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 13; },{},{}
+12128,Imperial_Cooking_Kits,Royal Cooking Kit,2,5000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 14; },{},{}
+12129,Fantastic_Cooking_Kits,Fantastic Cooking Kit,2,10000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 15; },{},{}
 //
 12130,Cookie_Bag,Cookie Bag,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; },{},{}
 12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

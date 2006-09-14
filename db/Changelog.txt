@@ -20,6 +20,9 @@
 
 =========================
 09/14
+	* Fixed X.3 Cooking drop rates [Playtester]
+	- also updated related aegis item names
+	- now our db is official up to X.3
 	* Corrected Smokie's pet script to use petskillbonus instead of "bonus"
 	  [Skotlex]
 	* Fixed Abyss Lake drop rates [Playtester]
