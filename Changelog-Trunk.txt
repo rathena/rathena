@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/14
+	* battle_calc_gvg_damage will be invoked in gvg maps regardless of woe
+	  time. [Skotlex]
+	* NPC_MENTALBREAKER now zaps matk*lv SP based on observations by Tharis.
+	  [Skotlex]
+	* md->class_ will be changed on mob-class-change to fix all class-change
+	  related bugs. On respawn, the spawn data will be used to revert to the
+	  original class. [Skotlex]
+	* Improved the pet skillbonus timer for "eternal bonuses" cases where the
+	  bonus delay is 0. [Skotlex]
 2006/09/13
 	* SC_CHANGE cannot override itself anymore. This fixes being able to
 	  "recast" the skill while it's still active to lengthen the duration AND

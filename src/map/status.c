@@ -6143,7 +6143,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_CHANGE:
 			if (tid == -1)
 		 		break;
-			// "lose almost all her HP and SP" on natural expiration.
+			// "lose almost all their HP and SP" on natural expiration.
 			status_set_hp(bl, 10, 0);
 			status_set_sp(bl, 10, 0);
 			break;

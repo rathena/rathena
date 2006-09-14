@@ -1,5 +1,8 @@
 Date	Added
 
+2006/09/14
+	* Adjusted gvg long damage rate to 80%, magic damage rate to 60%
+	  (battle/guild.conf) [Skotlex]
 2006/09/12
 	* Changed back the default of case-sensitive to ON since it shouldn't be
 	  such a bad performance hog now. [Skotlex]

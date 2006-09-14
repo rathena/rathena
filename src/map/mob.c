@@ -632,11 +632,13 @@ int mob_spawn (struct mob_data *md)
 	md->last_thinktime = tick -MIN_MOBTHINKTIME;
 	if (md->bl.prev != NULL)
 		unit_remove_map(&md->bl,2);
-	else if (md->vd->class_ != md->class_) {
+	else
+	if (md->spawn && md->class_ != md->spawn->class_)
+	{
+		md->class_ = md->spawn->class_;
 		status_set_viewdata(&md->bl, md->class_);
 		md->db = mob_db(md->class_);
-		if (md->spawn)
-			memcpy(md->name,md->spawn->name,NAME_LENGTH);
+		memcpy(md->name,md->spawn->name,NAME_LENGTH);
 	}
 
 	if (md->spawn) { //Respawn data
@@ -2286,6 +2288,7 @@ int mob_class_change (struct mob_data *md, int class_)
 		return 0; //Clones
 
 	hp_rate = md->status.hp*100/md->status.max_hp;
+	md->class_ = class_;
 	md->db = mob_db(class_);
 	if (battle_config.override_mob_names==1)
 		memcpy(md->name,md->db->name,NAME_LENGTH-1);

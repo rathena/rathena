@@ -1234,9 +1234,16 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
 		break;
 
-	case NPC_MENTALBREAKER:
-		status_percent_damage(src, bl, 0, -(10+skilllv));
+	case NPC_MENTALBREAKER: 
+	{	//Based on observations by Tharis, Mental Breaker should do SP damage
+	  	//equal to Matk*skLevel.
+		rate = sstatus->matk_min;
+		if (rate < sstatus->matk_max)
+			rate += rand()%(sstatus->matk_max - sstatus->matk_min);
+		rate*=skilllv;
+		status_zap(bl, 0, rate);
 		break;
+	}
 	// Equipment breaking monster skills [Celest]
 	case NPC_BREAKWEAPON:
 		skill_break_equip(bl, EQP_WEAPON, 150*skilllv, BCT_ENEMY);

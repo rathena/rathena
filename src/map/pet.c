@@ -577,12 +577,12 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		pc_delitem(sd,i,1,0);
 	}
 
-	i = search_petDB_index(md->vd->class_,PET_CLASS);
+	i = search_petDB_index(md->class_,PET_CLASS);
 	//catch_target_class == 0 is used for universal lures. [Skotlex]
 	//for now universal lures do not include bosses.
 	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
-		sd->catch_target_class = md->vd->class_;
-	if(i < 0 || sd->catch_target_class != md->vd->class_) {
+		sd->catch_target_class = md->class_;
+	if(i < 0 || sd->catch_target_class != md->class_) {
 		clif_emotion(&md->bl, 7);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_rulet(sd,0);
 		sd->catch_target_class = -1;
@@ -1100,6 +1100,7 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
+	int bonus;
 	int timer = 0;
 
 	if(sd == NULL || sd->pd==NULL || sd->pd->bonus == NULL)
@@ -1117,23 +1118,23 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 	}
 	
 	// determine the time for the next timer
-	if (pd->state.skillbonus) {
-		pd->state.skillbonus = 0;
+	if (pd->state.skillbonus && pd->bonus->delay > 0) {
+		bonus = 0;
 		timer = pd->bonus->delay*1000;	// the duration until pet bonuses will be reactivated again
-		if (timer <= 0) //Always active bonus
-			timer = MIN_PETTHINKTIME; 
 	} else if (pd->pet.intimate) {
-		pd->state.skillbonus = 1;
+		bonus = 1;
 		timer = pd->bonus->duration*1000;	// the duration for pet bonuses to be in effect
 	} else { //Lost pet...
 		pd->bonus->timer = -1;
 		return 0;
 	}
 
-	status_calc_pc(sd, 0);
+	if (pd->state.skillbonus != bonus) {
+		pd->state.skillbonus = bonus;
+		status_calc_pc(sd, 0);
+	}
 	// wait for the next timer
 	pd->bonus->timer=add_timer(tick+timer,pet_skill_bonus_timer,sd->bl.id,0);
-	
 	return 0;
 }
 

@@ -2011,18 +2011,18 @@ static struct Damage battle_calc_weapon_attack(
 	{	//There is a total damage value
 		if(!wd.damage2) {
 			wd.damage=battle_calc_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg(target->m))
+			if (map_flag_gvg2(target->m))
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 		} else
 		if(!wd.damage) {
 			wd.damage2=battle_calc_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg(target->m))
+			if (map_flag_gvg2(target->m))
 				wd.damage2=battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
 		} else
 		{
 			int d1=wd.damage+wd.damage2,d2=wd.damage2;
 			wd.damage=battle_calc_damage(src,target,d1,wd.div_,skill_num,skill_lv,wd.flag);
-			if (map_flag_gvg(target->m))
+			if (map_flag_gvg2(target->m))
 				wd.damage=battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
 			wd.damage2=(d2*100/d1)*wd.damage/100;
 			if(wd.damage > 1 && wd.damage2 < 1) wd.damage2=1;
@@ -2454,7 +2454,7 @@ struct Damage battle_calc_magic_attack(
 		ad.damage = ad.damage>0?1:-1;
 		
 	ad.damage=battle_calc_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
-	if (map_flag_gvg(target->m))
+	if (map_flag_gvg2(target->m))
 		ad.damage=battle_calc_gvg_damage(src,target,ad.damage,ad.div_,skill_num,skill_lv,ad.flag);
 	return ad;
 }
@@ -2713,7 +2713,7 @@ struct Damage  battle_calc_misc_attack(
 		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
-	if (map_flag_gvg(target->m))
+	if (map_flag_gvg2(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 
 	return md;
