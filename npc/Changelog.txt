@@ -33,6 +33,7 @@ Playtester
 Date		Added
 ======
 09/14
+	* Fixed Payon city. Bugs, missing text, etc [Lupus]
 	* Massive Einbroch & Einbech bugfix. WIP [Lupus]
 	* Fixed typos in Gunslinger & Thief Job Quest & various NPCs [Lupus]
 		thanks to cbmaster & $ephiroth

@@ -4,7 +4,7 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -20,12 +20,13 @@
 //= 1.7 Fixed bugs and exploits V__V [Lupus]
 //= 1.8 Removed Duplicates [Silent]
 //= 1.9 Fixed missing next;'s [Evera]
+//= 2.0 fixed some bugs, optimized script, added missing msg [Lupus]
 //============================================================ 
 
 payon.gat,190,115,0	script	Lady#05	90,{
 	mes "[Lady]";
 	mes "Did you know that in the past Payon was not as prosperous as it is now? Back then we had difficulty making a living for ourselves.";
-	   emotion e_gasp;
+	emotion e_gasp;
 	next;
 	mes "[Lady]";
 	mes "The towns people were so poor that they could not even afford to properly bury their deceased family members.";
@@ -71,7 +72,7 @@ payon.gat,104,62,5	script	Young Man#07	88,{
 	next;
 	mes "[Young Man]";
 	mes "Eeeeeeeeekkkkk?! Grampa? I-I-Is-Is t-t-th-that you?? ...";
-	   emotion e_wah;
+	emotion e_wah;
 	next;
 	mes "(you notice that his pants have become wet... eeeewwwwwwwwww!!!....)";
 	close;
@@ -81,7 +82,7 @@ payon_in01.gat,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "People in this place seem to be busy all the time, they come and go to be Archers or to buy arrows, I have to stick with this small shop.";
 	mes "I feel so melancholy and bored.";
-	   emotion e_sob;
+	emotion e_sob;
  	next;
 	mes "[Waitress]";
 	mes "I am sick and tired of noodle soup. I have to take too many showers to get rid of the smell.";
@@ -90,15 +91,12 @@ payon_in01.gat,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "Where can I find the right person who is a really hot, sexy hunk, and who can take me out of this small place?";
 	next;
-	if(Sex == 0) goto LStartF;
 	mes "[Waitress]";
-	mes "Hello, mister?";
+	if(Sex)
+		mes "Hello, mister?";
+	else
+	   	mes "Hello, lady?";
 	next;
-	goto L_Start;
-LStartF:
-   	mes "[Waitress]";
-   	mes "Hello, lady?";
-L_Start:
 	mes "[Waitress]";
 	mes "Grandma the fortuneteller told me that I would meet great luck in the near future!"; 
 	mes "But look at me, what's wrong with me!! I am leaving a manageable life everyday!!";
@@ -132,7 +130,7 @@ L_Menu1:
 L_Menu2:
 	mes "[Waitress]";
 	mes "Oh! I must say she is really an extraordinary person. Well, it could be your luck, she doesn't hang around here much as she used to do.";
-	   emotion e_ic;
+	emotion e_ic;
  	next;
 	mes "[Waitress]";
 	mes "On the first place, she stayed here to mind her business, but ever since the chief recognized her talent, she's stayed in the central palace.";
@@ -148,13 +146,13 @@ L_Menu3:
 	next;
 	mes "[Waitress]";
 	mes "Sorry for your inconvenience.";
-	   emotion e_sry;
+	emotion e_sry;
 	close;
 L_Menu4:
 	mes "[Waitress]";
 	mes "Have a nice day, dear.";
 	mes "Sob...I wish I could be in bed of roses.";
-	   emotion e_sob;
+	emotion e_sob;
  	close;
 }
 
@@ -172,29 +170,28 @@ payon.gat,193,116,1	script	Woman#05	66,{
 	mes "To be honest, things are getting tough because of those creatures... (sighs)...";
 	next;
 	mes "[Woman]";
-	  if(Sex == 0) goto LStartF;
-	mes "Hmm... you look as strong as a Rocker! How many monsters have you killed?";
-	mes "Let me tell you about a place where you can go train and become even stronger.";
-	   emotion e_hmm;
-	goto L_Start;
-LStartF:
-	mes "Miss, how many monsters have you killed?";
-	mes "I know a very good place for you to go train and get good monster drops.";
-	   emotion e_hmm;
-L_Start:
+	if(Sex){
+		mes "Hmm... you look as strong as a Rocker! How many monsters have you killed?";
+		mes "Let me tell you about a place where you can go train and become even stronger.";
+		emotion e_hmm;
+	}else{
+		mes "Miss, how many monsters have you killed?";
+		mes "I know a very good place for you to go train and get good monster drops.";
+		emotion e_hmm;
+	}
     	next;
     	mes "[Woman]";
 	mes "I know of a cave near Archer Village.  Just take the exit north of town and follow the path to your left.";
     	mes "The cave is full of monsters and their spawn rate is very high.  Does it sound interesting to you?";
-      next;
-      menu "It sounds dangerous.",L_Menu1,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
+	next;
+	menu "It sounds dangerous.",L_Menu1,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
 L_Menu1:
 	mes "[Woman]";
 	mes "Oh don't be such a coward! It's just a simple cave filled with normal monsters.  Archer Village is near by so you shouldn't be worried~ hohoho~";
 	next;
 	mes "[Woman]";
 	mes "Of course... there are the zombies... and Munaks... and Bonguns... which can be VERY DEADLY.....";
-	   emotion e_hmm;
+	emotion e_hmm;
 	close;
 L_Menu2:
 	mes "[Woman]";
@@ -202,23 +199,23 @@ L_Menu2:
 	next;
 	mes "[Woman]";
 	mes "I know because he's my husband... oops... I mean an acquaintance of mine... heh heh..";
-	   emotion e_swt;
+	emotion e_swt;
 	close;
 L_Menu3:
 	mes "[Woman]";
 	mes "Oh hohohoho! SO you noticed! This is what's in-style in Prontera these days! The women in this town don't know anything about fashion!";
-	   emotion e_ic;
+	emotion e_ic;
 	next;
 	mes "[Woman]";
 	mes "My husband buys me these clothes with the money he makes selling overpriced items to foolish young people... oh ho oh hoho...";
-	   emotion e_heh;
+	emotion e_heh;
 	close;
 }
 
 payon.gat,190,119,5	script	Woman#06	66,{
 	mes "[Jim's Mother]";
 	mes "Oh boy there she goes again.  She is a confirmed gossip.  Please don't mistake her for being a typical Payon citizen.";
-	   emotion e_dots;
+	emotion e_dots;
 	next;
 	mes "[Jim's Mother]";
 	mes "Believe me, she's an exception.  Not all of us here in Payon have big mouths.  She gets too exited with fortune telling.";
@@ -227,58 +224,54 @@ payon.gat,190,119,5	script	Woman#06	66,{
 	mes "Anyway, you look like a new face.  Are you new in town?";
 	next;
 	mes "[Jim's Mother]";
-	if(Sex == 0) goto LStartF;
-	mes "... Oh, you have broad shoulders ... tehehe! Will you go out with me? I'd like to make you a nice dinner...(bats eyelashes)";
-	emotion e_kis;
-	goto L_Menu;
-LStartF:
-	mes "Don't you think your dress is too lousy?";
-	mes "I don't like young ladies pounce up.";
-L_Menu:
+	if(Sex){
+		mes "... Oh, you have broad shoulders ... tehehe! Will you go out with me? I'd like to make you a nice dinner...(bats eyelashes)";
+		emotion e_kis;
+	}else{
+		mes "Don't you think your dress is too lousy?";
+		mes "I don't like young ladies pounce up.";
+	}
 	next;
-	menu "Fortune Telling?",L_Menu1,"...Good Bye.",L_Menu2;
-L_Menu1:
+	menu "Fortune Telling?",-,"...Good Bye.",L_Bye;
+
 	mes "[Jim's Mother]";
 	mes "Oh yes, there is an extraordinary fortune teller here in town.  You can find her in the central palace.";
 	mes "The more money you pay her the more accurate your fortune will be told.";
 	next;
 	mes "[Jim's Mother]";
 	mes "I saw her recently and she told me that I would meet a handsome young man this month............";
-	  if(Sex == 0) goto L_2;
- 	mes ".......... tehehe. (winks at you)";
-L_2:
-	   emotion e_lv;
+	if(Sex)
+	 	mes ".......... tehehe. (winks at you)";
+	else
+		emotion e_lv;
 	close;
-L_Menu2:
+L_Bye:
 	mes "[Jim's Mother]";
 	mes "What? You have to go? Awwww...Why don't you stay and chit chat with me for a while...hmm? ...";
 	close;
 }
 
 payon.gat,210,110,4	script	Drunk	120,{
-	   if(BaseJob != 3) goto L_Menu1_F1;
 	mes "[Drunk]";
-	mes "Hey hey! I am wondering how stupid archers who don't know how to aim targets could drink alcohol. Hahaha~!";
-	mes "Do you want to buy me a drink?";
-	   emotion e_heh;
-L_Menu1_F1:
-	mes "[Drunk]";
-	mes "Yoyo! Archer brother! Salute to your fingers stretching bowstring!";
-	   emotion e_ho;
+	if(BaseJob == Job_Archer){
+		mes "Yoyo! Archer brother! Salute to your fingers stretching bowstring!";
+		emotion e_ho;
+	}else{
+		mes "Hey hey! I am wondering how stupid archers who don't know how to aim targets could drink alcohol. Hahaha~!";
+		mes "Do you want to buy me a drink?";
+		emotion e_heh;
+	}
 	next;
 	mes "[Drunk]";
 	mes "Do you want to buy me a drink?";
 	next;
 	menu "Promise me you won't drink more than one jug.",L_Menu1,"No thanks,buddy.",L_Menu2,"Oh my god~ hell no~!",L_Menu3;
 L_Menu1:
-	   if(BaseJob == 3) goto L1L; 
-      mes "Thanksh!... shhtrangersszz are alwayssszz a generoushhh bunch!... archer guysh are penny pinchershh nowadayssszz!..(hicup!)";
-	goto L1L;
-L1L:
-	   if(BaseJob != 3) goto L2L; 
-      mes "Thanksh brothaaa!... archerrrzzz are alwayssszz a generoushhh bunch!...(hicup!)";
-	goto L2L;
-L2L:
+	mes "[Drunk]";
+	if(BaseJob == Job_Archer)
+		mes "Thanksh brothaaa!... archerrrzzz are alwayssszz a generoushhh bunch!...(hicup!)";
+	else
+		mes "Thanksh!... shhtrangersszz are alwayssszz a generoushhh bunch!... archer guysh are penny pinchershh nowadayssszz!..(hicup!)";
 	next;
 	emotion e_thx;
 	if(Zeny < 200) goto L_SUB_1;
@@ -291,7 +284,7 @@ L2L:
 	next;
 	mes "[Drunk]";
 	mes "Gulp~Gulp~Man! This is great! Thank you may man! Thank you! Muhahahahaha!";
-	   emotion e_no1;
+	emotion e_no1;
 	close;
 L_SUB_1:
 	mes "[Drunk]";
@@ -301,12 +294,12 @@ L_Menu2:
 	mes "[Drunk]";
 	mes "Blah. Young people don't know how to respect elderly people!";
 	mes "Fine! I won't beg you anymore! I won't...";
-	   emotion e_pif;
+	emotion e_pif;
 	close;
 L_Menu3:
 	mes "[Drunk]";
 	mes "Umm, oookay. Fine by me...";
-	   emotion e_no1;
+	emotion e_no1;
 	close;
 }
 
@@ -315,10 +308,10 @@ payon_in01.gat,47,59,5	script	Archer Zakk	88,{
 	mes "I am so worried about one of my pals. He speaks about much crap.";
 	mes "Well he is an expert of archery, but I hate his big mouth...";
 	mes "Our chief is also fed up with him.";
-	   emotion e_ag;
+	emotion e_ag;
 	next;
-	menu "Archer?",L_Menu1,"Chief?",L_Menu2,"Big Mouth?",L_Menu3;
-L_Menu1:
+	menu "Archer?",-,"Chief?",L_Menu2,"Big Mouth?",L_Menu3;
+
 	mes "[Archer Zakk]";
 	mes "Ah yeah yeah. My friend is the number one archer in Payon, in the same costume as me too.";
 	mes "He teaches newbie archers around the archer village.";
@@ -371,7 +364,7 @@ L_Menu1:
 	next;
 	mes "[Archer Wolt]";
 	mes "Are you curious about HOW we practice?";
-	   emotion e_what;
+	emotion e_what;
 	next;
 	mes "[Archer Wolt]";
 	mes "From sunrise to sunset the Archers of Payon search the surrounding forest for monsters.";
@@ -387,11 +380,11 @@ L_Menu1:
 L_sub1:
 	mes "[Archer Wolt]";
 	mes "....Well YES!! A well crafted Bow is essential to the success of an archer!";
-	   emotion e_ic;
+	emotion e_ic;
 	next;
 	mes "[Archer Wolt]";
 	mes "Bows constructed in Payon are the greatest bows you can find in Rune-Midgard! They are light yet, strong and very durable.";
-	   emotion e_no1;
+	emotion e_no1;
 	next;
 	mes "[Archer Wolt]";
 	mes "This is because they are made out of high quality wood found only in the Payon Forest!";
@@ -435,7 +428,7 @@ L_para2:
 	next;
 	mes "[Archer Wolt]";
 	mes "... uh... anyways... back to the Chief...";
-	   emotion e_swt;
+	emotion e_swt;
 	next;
 	mes "[Archer Wolt]";
 	mes "In the past he bravely protected Payon with his Gakung Bow.  Now he is elderly, though he still worries about the safety of the town.";
@@ -501,7 +494,7 @@ L_temp3:
 pay_arche.gat,77,131,2	script	Archer Joe	88,{
 	mes "[Archer Joe]";
 	mes "Payon! What a wonderful place! Superb Bows! Excellent Archers!";
-	   emotion e_no1;
+	emotion e_no1;
 	next;
 	mes "[Archer Joe]";
 	mes "Hay you! Have you heard of our fame?";
@@ -510,7 +503,7 @@ pay_arche.gat,77,131,2	script	Archer Joe	88,{
 L_Menu1:
 	mes "[Archer Joe]";
 	mes "Oh! You my man buddy! Archers of Payon! You know who we are!";
-	   emotion e_ok;
+	emotion e_ok;
 	next;
 	mes "[Archer Joe]";
 	mes "Arrows of Payon Archers never miss the targets! Even it can aim at the heart of the enemy from a long distance!";
@@ -520,7 +513,7 @@ L_Msub1:
 	mes "[Archer Joe]";
 	mes "Yes! I love this place! So now I am researching Payon!";
 	mes "If you have any questions, please ask me!";
-	   emotion e_ok;
+	emotion e_ok;
 	next;
 	menu "People are wearing unique costumes in here.",L_Mpara1,"Can you tell me what the building is in the middle of town?",L_Mpara2,"Who is the guy drinking...Over there?",L_Mpara3,"Talk to you later.",L_Mpara4;
 L_Mpara1:
@@ -538,7 +531,7 @@ L_Mpara2:
 L_Mpara3:
 	mes "[Archer Joe]";
 	mes "Oh! He is a notorious guy in this town! Don't treat him to drinks! You will regret that!";
-	   emotion e_gasp;
+	emotion e_gasp;
 	close;
 L_Mpara4:
 	mes "[Archer Joe]";
@@ -549,7 +542,7 @@ L_Msub2:
 L_Menu2:
 	mes "[Archer Joe]";
 	mes "Oh boy, what a shame! How on earth can't you know there is something about archers of Payon!";
-	   emotion e_omg;
+	emotion e_omg;
 	next;
 	mes "[Archer Joe]";
 	mes "Please come back later when you become more skillful! Let's talk about what makes archers of Payon so attractive later!";
@@ -558,7 +551,7 @@ L_Menu3:
 	mes "[Archer Joe]";
 	mes "What makes you zip your mouth? Are you shy?";
 	mes "Ummm... you don't have to be shy before me..";
-	   emotion e_hmm;
+	emotion e_hmm;
 	close;	
 }
 
@@ -567,8 +560,8 @@ payon.gat,132,235,2	script	Monster Scholar	98,{
 	mes "Nice to meet you. I am Vuicokk the scholar in the monster research organization of Rune Midgard.";
 	mes "Do you have any questions about monsters of Rune Midgard?";
 	next;
-	menu "Late News.",L_Menu1,"Undead Monster.",L_Menu2,"Monster Research Organization.",L_Menu3,"Good day",L_End;
-L_Menu1:
+	menu "Late News.",-,"Undead Monster.",L_Menu2,"Monster Research Organization.",L_Menu3,"Good day",L_End;
+
 	mes "[Monster Scholar Vuicokk]";
 	mes "Payon is located deep inside the forest, you can easily get attacked by monster troops.";
 	mes "Besides a dangerous cave is near the town.";
@@ -590,7 +583,7 @@ L_Menu2:
 	mes "[Monster Scholar Vuicokk]";
 	mes "It is for this reason that the King of Rune Midgard has a great deal of interest in our research on Undead monsters. ";
 	next;
-      mes "[Monster Scholar Vuicokk]";
+	mes "[Monster Scholar Vuicokk]";
 	mes "To know that they used to be citizens of his kingdom is very troubling to him.....";
 	next;
 	mes "[Monster Scholar Vuicokk]";
@@ -599,7 +592,8 @@ L_Menu2:
 	mes "[Monster Scholar Vuicokk]";
 	mes "In order to do that we must put an end to the source of the problem.  I have tremendous faith that we can succeed in doing so.";
 	close;
-L_Menu3:	mes "[Monster Scholar Vuicokk]";
+L_Menu3:
+	mes "[Monster Scholar Vuicokk]";
 	mes "The Monster Research Organization was formed to find ways to counteract the sudden and rapid growth of monsters in Rune Midgard.";
 	next;
 	mes "[Monster Scholar Vuicokk]";
@@ -613,7 +607,7 @@ L_Menu3:	mes "[Monster Scholar Vuicokk]";
 	next;
 	mes "[Monster Scholar Vuicokk]";
 	mes "However NOTHING can stop us!  We will continue to persevere for the benefit of the people of RUNE MIDGARD!!!";
-	   emotion e_gasp;
+	emotion e_gasp;
 	next;
 	mes "[Monster Scholar Vuicokk]";
 	mes "... Eh em... please excuse my emotional outburst... I am very passionate about this work.....";
@@ -662,14 +656,14 @@ payon_in03.gat,102,185,4	script	Guard#06	708,{
 
 payon_in03.gat,99,190,4	script	Chief	120,{}
 payon_in03.gat,99,189,4	script	PayonChiefAreaTrigger	139,2,1,{
-	if(BaseLevel > 30) goto T_LEVEL; //couldn't test, so left it, but a little bit changed
-	mes "[Guard]";
-	mes "Hey...";
-	mes "Hey...!";
-	mes "Show your respect";
-	mes "to our chief!";
-	close;
-T_LEVEL:
+	if(BaseLevel < 30){
+		mes "[Guard]";
+		mes "Hey...";
+		mes "Hey...!";
+		mes "Show your respect";
+		mes "to our chief!";
+		close;
+	}
 	mes "[Chief]";
 	next;
 	menu "Please tell me about Payon.",L_Menu1,"Where the guards come from?",L_Menu2,"Please tell me about the cave.",L_Menu3,"I am wondering what archer does.",L_Menu4,"I am wondering what hunter does.",L_Menu5;
@@ -737,113 +731,113 @@ L_Menu5:
 
 payon.gat,160,185,0	script	Billboard	111,{
 	mes "^993333- The Billboard Reads -^000000";
-      mes "Welcome, and enjoy your stay in";
-      mes "the beautiful town of Payon.";
-      close;
+	mes "Welcome, and enjoy your stay in";
+	mes "the beautiful town of Payon.";
+	close;
 }
 
 payon.gat,173,238,5 script Jade#01 754,{
-mes "[Jade]";
-mes "Bring me two";
-mes "Gemstones of the";
-mes "same color, and I will";
-mes "change them to Gemstones";
-mes "of a different color.";
-next;
+	mes "[Jade]";
+	mes "Bring me two";
+	mes "Gemstones of the";
+	mes "same color, and I will";
+	mes "change them to Gemstones";
+	mes "of a different color.";
+	next;
 
-menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue,"Cancel",L_Cancel;
+	menu "Blue Gemstones into Red ones!",L_BlueToRed,"Red Gemstones into Yellow ones!",L_RedToYellow,"Yellow Gemstones into Blue ones!",L_YellowToBlue,"Cancel",L_Cancel;
 
 L_BlueToRed:
- set @SourceGemstones$,"Blue";
- set @SourceGemstonesID,717;
- set @TargetGemstones$,"Red";
- set @TargetGemstonesID,716;
- goto L_BeginExchange;
+	set @SourceGemstones$,"Blue";
+	set @SourceGemstonesID,717;
+	set @TargetGemstones$,"Red";
+	set @TargetGemstonesID,716;
+	goto L_BeginExchange;
 
 L_RedToYellow:
- set @SourceGemstones$,"Red";
- set @SourceGemstonesID,716;
- set @TargetGemstones$,"Yellow";
- set @TargetGemstonesID,715;
- goto L_BeginExchange;
+	set @SourceGemstones$,"Red";
+	set @SourceGemstonesID,716;
+	set @TargetGemstones$,"Yellow";
+	set @TargetGemstonesID,715;
+	goto L_BeginExchange;
 
 L_YellowToBlue:
- set @SourceGemstones$,"Yellow";
- set @SourceGemstonesID,715;
- set @TargetGemstones$,"Blue";
- set @TargetGemstonesID,717;
- goto L_BeginExchange;
+	set @SourceGemstones$,"Yellow";
+	set @SourceGemstonesID,715;
+	set @TargetGemstones$,"Blue";
+	set @TargetGemstonesID,717;
+	goto L_BeginExchange;
 
 L_BeginExchange:
- if(countitem(@SourceGemstonesID) >= 2) goto L_ExchangeOK;
- mes "[Jade]";
- mes "Hah...!";
- mes "You're kidding me, right?";
- mes "I can't give you "+@TargetGemstones$+" Gemstones";
- mes "if you don't give me at least";
- mes "2 "+@SourceGemstones$+" Gemstones!";
- close;
+	if(countitem(@SourceGemstonesID) >= 2) goto L_ExchangeOK;
+	mes "[Jade]";
+	mes "Hah...!";
+	mes "You're kidding me, right?";
+	mes "I can't give you "+@TargetGemstones$+" Gemstones";
+	mes "if you don't give me at least";
+	mes "2 "+@SourceGemstones$+" Gemstones!";
+	close;
 
 L_ExchangeOK:
- set @ExchangeCount,countitem(@SourceGemstonesID)/2;
- mes "[Jade]";
- mes "This may Exchange "+@ExchangeCount+" "+@TargetGemstones$+" Gemstones";
- mes "How many do you want?";
- next;
- menu "Exchange all",L_ExchangeAll,"I want to set a number",L_PointCount,"Cancel",L_Cancel;
+	set @ExchangeCount,countitem(@SourceGemstonesID)/2;
+	mes "[Jade]";
+	mes "This may Exchange "+@ExchangeCount+" "+@TargetGemstones$+" Gemstones";
+	mes "How many do you want?";
+	next;
+	menu "Exchange all",L_ExchangeAll,"I want to set a number",L_PointCount,"Cancel",L_Cancel;
 
 L_ExchangeAll:
- if(countitem(@SourceGemstonesID) < @ExchangeCount*2) goto L_ExchangeNo;
- delitem @SourceGemstonesID,@ExchangeCount*2;
- getitem @TargetGemstonesID,@ExchangeCount;
- goto L_ExchangeDone;
+	if(countitem(@SourceGemstonesID) < @ExchangeCount*2) goto L_ExchangeNo;
+	delitem @SourceGemstonesID,@ExchangeCount*2;
+	getitem @TargetGemstonesID,@ExchangeCount;
+	goto L_ExchangeDone;
 
 L_PointCount:
- mes "[Jade]";
- mes "How many do you want?";
- mes "Limit is '100'";
- next;
+	mes "[Jade]";
+	mes "How many do you want?";
+	mes "Limit is '100'";
+	next;
 L_InputPointCount:
- input @number;
- if(@number < 0) goto L_ExchangeNo;
- if(@number > 100) goto L_ExchangeAbove;
- if(@number > @ExchangeCount) goto L_ExchangeNotEnough;
- if(countitem(@SourceGemstonesID) < @number*2) goto L_ExchangeNo;
- delitem @SourceGemstonesID,@number*2;
- getitem @TargetGemstonesID,@number;
- goto L_ExchangeDone;
+	input @number;
+	if(@number <= 0) goto L_ExchangeNo;
+	if(@number > 100) goto L_ExchangeAbove;
+	if(@number > @ExchangeCount) goto L_ExchangeNotEnough;
+	if(countitem(@SourceGemstonesID) < @number*2) goto L_ExchangeNo;
+	delitem @SourceGemstonesID,@number*2;
+	getitem @TargetGemstonesID,@number;
+	goto L_ExchangeDone;
 
 L_ExchangeNo:
- mes "[Jade]";
- mes "Hmmm... Very funny...";
- close;
+	mes "[Jade]";
+	mes "Hmmm... Very funny...";
+	 close;
 
 L_ExchangeAbove:
- mes "[Jade]";
- mes "Hmmm... Please don't set a number above '100'";
- next;
- goto L_InputPointCount;
+	mes "[Jade]";
+	mes "Hmmm... Please don't set a number above '100'";
+	next;
+	goto L_InputPointCount;
 
 L_ExchangeNotEnough:
- mes "[Jade]";
- mes "Hmmm... The "+@SourceGemstones$+" Gemstones you have";
- mes "is not enough for "+@number+" "+@TargetGemstones$+" Gemstones.";
- mes "Please set a new number";
- next;
- goto L_InputPointCount;
+	mes "[Jade]";
+	mes "Hmmm... The "+@SourceGemstones$+" Gemstones you have";
+	mes "is not enough for "+@number+" "+@TargetGemstones$+" Gemstones.";
+	mes "Please set a new number";
+	next;
+	goto L_InputPointCount;
 
 L_ExchangeDone:
- mes "[Jade]";
- mes "Here, This is the "+@TargetGemstones$+" Gemstones you need...";
- mes "Come back to me when you need more";
- mes "...mmm? Is there something on my face?";
- close;
+	mes "[Jade]";
+	mes "Here, This is the "+@TargetGemstones$+" Gemstones you need...";
+	mes "Come back to me when you need more";
+	mes "...mmm? Is there something on my face?";
+	close;
 
 L_Cancel:
- mes "[Jade]";
- mes "OK, Very well... Come back if you need anything.";
- mes "I'll Exchange it for you anytime.";
- close;
+	mes "[Jade]";
+	mes "OK, Very well... Come back if you need anything.";
+	mes "I'll Exchange it for you anytime.";
+	close;
 }
 
 //Need to find out ALL fortunes he can tell for each answer...
@@ -866,18 +860,18 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "Please pay your fee with all of your sincerity.";
 	next;
 	input @fee;
-	if((@fee < 0) || (@fee > Zeny)) goto L_FeeNotOK;
+	if(@fee < 0 || @fee > Zeny) goto L_FeeNotOK;
 	if(@fee > 0) goto L_FeeOK;
 	mes "[Lhimetorra]";
 	mes "Ah...?!";
 	mes "You have angered the monster spirits!";
 	close;
-	L_FeeNotOK:
+L_FeeNotOK:
 	mes "[Lhimetorra]";
 	mes "There's no need to overdo it! Just give with all your heart... *Tsk";
 	mes "tsk*";
 	close;
-	L_FeeOK:
+L_FeeOK:
 	set Zeny,Zeny-@fee;
 	mes "[Lhimetorra]";
 	mes "I accept your heart and your";
@@ -899,31 +893,39 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	next;
 	mes "[Lhimetorra]";
 	menu "(I would like to know my love fortune.)",L_AskLove,"(How rich will I be?)",L_AskMoney,"(I need advice about my future.)",L_AskFuture,"(Can I get a warning of any dangers awaiting?)",L_AskDangers;
-	L_AskLove:
+L_AskLove:
 	mes "[Lhimetorra]";
 	mes "I see it... I see a sign of";
 	mes "love...";
 	next;
-	set @TEMP,rand(5);
+	set @TEMP,rand(6);
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Can't you hear the cry of the card? It is suffering. Love is like that.";
 	if(@TEMP == 1) mes "His navel is very pretty. You have to meet someone with that type of navel to be happy.";
-	if(@TEMP == 2) mes "Hmm. How about giving a cute puppy as a gift? One with a round nose.";
-	if(@TEMP == 2) mes "Then they will surely be happy.";
+	if(@TEMP == 2) {
+		mes "Hmm. How about giving a cute puppy as a gift? One with a round nose.";
+		mes "Then they will surely be happy.";
+	}
 	if(@TEMP == 3) mes "No matter how fearful the bull may be, if it has a nose ring, it has already been tamed by humans. No matter how astonishing that person may be, taming is your responsibility.";
 	if(@TEMP == 4) mes "Who is he so fiercely gazing at with those grand muscles? He is looking at someone else for sure.";
-	if(@TEMP == 5) mes "They may seem dreary and ominous, but their attire is spotless. They show devotion to the other.";
-	if(@TEMP == 5) mes "Even though you are not satisfied with your love right now, take a look at they attire.";
+	if(@TEMP == 5){
+		mes "They may seem dreary and ominous, but their attire is spotless. They show devotion to the other.";
+		mes "Even though you are not satisfied with your love right now, take a look at they attire.";
+	}
 	next;
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "So don't be upset about it!";
 	if(@TEMP == 1) mes "Ok? Keep that in mind~";
-	if(@TEMP == 2) mes "But can't help if they don't";
-	if(@TEMP == 2) mes "like puppies.";
+	if(@TEMP == 2){
+		mes "But can't help if they don't";
+		mes "like puppies.";
+	}
 	if(@TEMP == 3) mes "Approach them with more sincerity and consideration.";
 	if(@TEMP == 4) mes "Don't get sidetracked and look elsewhere! You will be cursed!";
-	if(@TEMP == 5) mes "If it is carefully worn, their";
-	if(@TEMP == 5) mes "heart for you can be seen in it as well..";
+	if(@TEMP == 5){
+		mes "If it is carefully worn, their";
+		mes "heart for you can be seen in it as well..";
+	}
 	next;
 	mes "[Lhimetorra]";
 	mes "You seek advice about love.";
@@ -932,11 +934,11 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "[Lhimetorra]";
 	mes "Then...";
 	close;
-	L_AskMoney:
+L_AskMoney:
 	mes "[Lhimetorra]";
 	mes "Ooh... something about your future is starting to show...";
 	next;
-	set @TEMP,rand(2);
+	set @TEMP,rand(3);
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Do you know what a joker's specialty is? It is tricking others and making money. Be wary of the joker.";
 	if(@TEMP == 1) mes "The Skeleton says that you can make money by going north. Go north.";	
@@ -954,17 +956,18 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "[Lhimetorra]";
 	mes "Therefore, getting a fortune like this is considered being lucky. Use this fortune to prosper.";
 	close;
-	L_AskFuture:
+L_AskFuture:
 	mes "[Lhimetorra]";
 	mes "Future... the card that sees the future is beginning to speak...... Prepare yourself...";
 	next;
-	set @TEMP,0;
+	set @TEMP,,rand(2);
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Jack says you may be frustrated in the future.";
-	if(@TEMP == 0) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";
+	if(@TEMP == 1) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";
 	next;
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Meaning your future will become a battle between happiness and frustration...";
+	if(@TEMP == 1) mes "......"; //missing txt
 	next;
 	mes "[Lhimetorra]";
 	mes "Speaking of the future is as dangerous act.";
@@ -974,28 +977,26 @@ payon_in03.gat,117,128,4	script	Fortune Teller	704,{
 	mes "Your fortune is a rather good one. There are some in this world who get more horrible fortunes.";
 	mes "Use this fortune as a support in your life. Ok?";
 	close;
-	L_AskDangers:
+L_AskDangers:
 	mes "[Lhimetorra]";
 	mes "Someone that knows of the dangers you do not, will warn you in the";
 	mes "form of cards... so listen";
 	mes "carefully-!";
 	next;
-	set @TEMP,0;
+	set @TEMP,rand(2);
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "The pirate is warning you of your beauty. Don't show off your beauty too much. Pirates are very jealous of appearance, as well.";
-	next;
-	mes "[Lhimetorra]";
-	if(@TEMP == 0) mes "A warning is always a useful fortune. You can never lose anything.";
+	if(@TEMP == 1) mes "A warning is always a useful fortune. You can never lose anything.";
 	next;
 	mes "[Lhimetorra]";
 	mes "I hope you will able to avoid misfortune with this warning.";
 	mes "Then...";
 	close;
-	L_No:
+L_No:
 	mes "[Lhimetorra]";
 	mes "Ok then. Young adventurer, may luck be with you.";
 	close;
-	L_Info:
+L_Info:
 	mes "[Lhimetorra]";
 	mes "Monster card reading uses the cards of familiar monsters around us to get advice about our future, love and many other things.";
 	mes "A fortuneteller like me takes a question from a person and asks the card. The card answers and I tell the person.";
