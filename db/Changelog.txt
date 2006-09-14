@@ -20,6 +20,8 @@
 
 =========================
 09/14
+	* Fixed Abyss Lake drop rates [Playtester]
+	- also updated related aegis item names
 	* Fixed Thanatos Tower drop rates [Playtester]
 	- also updated some related aegis item names
 09/13

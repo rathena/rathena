@@ -80,7 +80,7 @@
 576,Prickly_Fruit,Prickly Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); },{},{}
 577,Grain,Bag of Grain,0,200,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,14),0; },{},{}
 578,Strawberry,Strawberry,0,200,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(10,14); },{},{}
-579,Yummy_Fish,Fresh Fish,0,250,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,54),0; },{},{}
+579,Delicious_Fish,Fresh Fish,0,250,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,54),0; },{},{}
 580,Bread,Bread,0,150,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(20,34),0; },{},{}
 581,Mushroom,Edible Mushroom,0,40,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,14),0; },{},{}
 582,Orange,Orange,0,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); },{},{}
@@ -2215,15 +2215,15 @@
 7440,Red_Feather,Red tinted Feather,3,,667,10,,,,,,,,,,,,,{},{},{}
 7441,Blue_Feather,Blue tinted Feather,3,,704,10,,,,,,,,,,,,,{},{},{}
 7442,Cursed_Seal,Cursed Seal,3,,666,10,,,,,,,,,,,,,{},{},{}
-7443,Head_of_3Head_Dragon,Three-Headed_Dragon's_Head,3,,478,10,,,,,,,,,,,,,{},{},{}
+7443,Tri_Headed_Dragon_Head,Three-Headed_Dragon's_Head,3,,478,10,,,,,,,,,,,,,{},{},{}
 7444,Treasure_Box,Treasure Box,3,,150000,10,,,,,,,,,,,,,{},{},{}
-7445,Green_Orb,Green Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
-7446,Blue_Orb,Blue Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
-7447,Red_Orb,Red Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
-7448,Yellow_Orb,Yellow Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
+7445,Dragonball_Green,Green Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
+7446,Dragonball_Blue,Blue Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
+7447,Dragonball_Red,Red Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
+7448,Dragonball_Yellow,Yellow Bijou,3,,443,10,,,,,,,,,,,,,{},{},{}
 7449,Bloody_Page,Bloody Page,3,,340,10,,,,,,,,,,,,,{},{},{}
 7450,Piece_Of_Bone_Armor,Skeletal Armor Piece,3,,1025,10,,,,,,,,,,,,,{},{},{}
-7451,Scale_of_Fire_Dragon,Fire Dragon Scale,3,,926,10,,,,,,,,,,,,,{},{},{}
+7451,Scale_of_Red_Dragon,Fire Dragon Scale,3,,926,10,,,,,,,,,,,,,{},{},{}
 7452,Yellow_Spice,Yellow Spice,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7453,Sweet_Sauce,Sweet Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
 7454,Plain_Sauce,Savory Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
@@ -2256,7 +2256,7 @@
 7481,Lv10_Cookbook,Level 10 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
 7482,Pot,Pot,3,200,,10,,,,,,,,,,,,,{},{},{}
 7483,Key_of_the_Seal,Key of the Seal,3,,,10,,,,,,,,,,,,,{},{},{}
-7484,Symbol_Of_Hero,Symbol of a Brave Warrior,3,,10,10,,,,,,0,2,,,,,,{},{},{}
+7484,Warrior_Symbol,Symbol of a Brave Warrior,3,,10,10,,,,,,0,2,,,,,,{},{},{}
 7485,2nd_Floor_Pass,Cloud General,3,,10,10,,,,,,0,2,,,,,,{},{},{}
 7486,3rd_Floor_Pass,Wind General,3,,10,10,,,,,,0,2,,,,,,{},{},{}
 7487,Pub_Liquor,Pub Liquor,3,,10,0,,,,,,0,2,,,,,,{},{},{}
