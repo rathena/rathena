@@ -612,6 +612,7 @@ L_Menu3:
 	mes "[Monster Scholar Vuicokk]";
 	mes "... Eh em... please excuse my emotional outburst... I am very passionate about this work.....";
 	mes "Anyway if you happen to meet other scholars like myself, please treat them kindly.";
+	close;
 L_End:
 	mes "[Monster Scholar Vuicokk]";
 	mes "Have a nice day.";
