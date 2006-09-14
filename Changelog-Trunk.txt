@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/14
+	* Fixed the can-act delay never being checked when requesting to use
+	  Homunculus Skills. [Skotlex]
 	* Fixed warmth skills draining SP of the target, not the caster. [Skotlex]
 	* When TK_DODGE triggers, it will no longer delay your attack or movement.
 	  [Skotlex]

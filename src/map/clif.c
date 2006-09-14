@@ -9715,7 +9715,8 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 	if (hd->ud.skilltimer != -1) {
 		if (skillnum != SA_CASTCANCEL)
 			return;
-	}
+	} else if (DIFF_TICK(tick, hd->ud.canact_tick) < 0)
+		return;
 
 	lv = merc_hom_checkskill(sd, skillnum);
 	if (skilllv > lv)
