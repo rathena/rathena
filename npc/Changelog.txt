@@ -36,6 +36,8 @@ Date		Added
 	* Fixed typos in Gunslinger & Thief Job Quest & various NPCs [Lupus]
 		thanks to cbmaster & $ephiroth
 	- Fixed Guild Defence / Economy underflow, thx2 kyoki
+	- Zoc's fix to keep number of unopened boxes on reboot
+	- Now each castle spawns 1st/2nd Treasuer Box type as 50%/50% w/o random
 09/11
 	* Moved custom Umbalian quests to custom folder [Lupus]
 	* Added back Guild Storage. Confirmed kRO feature. [Lupus]
