@@ -294,8 +294,12 @@ int inter_guild_tosql(struct guild *g,int flag)
 
 	if (flag&GS_ALLIANCE)
 	{
-		// Delete current alliances
-		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d' OR `alliance_id`='%d'",guild_alliance_db, g->guild_id,g->guild_id);
+		// Delete current alliances 
+		// NOTE: no need to do it on both sides since both guilds in memory had 
+		// their info changed, not to mention this would also mess up oppositions!
+		// [Skotlex]
+//		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d' OR `alliance_id`='%d'",guild_alliance_db, g->guild_id,g->guild_id);
+		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d'",guild_alliance_db, g->guild_id);
 		if(mysql_query(&mysql_handle, tmp_sql) )
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
