@@ -1899,6 +1899,9 @@ static int char_delete(struct mmo_charstatus *cs) {
 		// —£¥
 		char_divorce(cs);
 	}
+#ifdef ENABLE_SC_SAVING
+	status_delete_scdata(cs->account_id, cs->char_id);
+#endif
 	return 0;
 }
 
