@@ -33,11 +33,13 @@ Playtester
 Date		Added
 ======
 09/14
+	* Massive Einbroch & Einbech bugfix. WIP [Lupus]
 	* Fixed typos in Gunslinger & Thief Job Quest & various NPCs [Lupus]
 		thanks to cbmaster & $ephiroth
-	- Fixed Guild Defence / Economy underflow, thx2 kyoki
+	- Fixed Guild Defence / Economy underflow, thanks to kyoki
 	- Zoc's fix to keep number of unopened boxes on reboot
 	- Now each castle spawns 1st/2nd Treasuer Box type as 50%/50% w/o random
+	- Fixed Momotaro Quest, thanks to .~Abism0~.
 09/11
 	* Moved custom Umbalian quests to custom folder [Lupus]
 	* Added back Guild Storage. Confirmed kRO feature. [Lupus]

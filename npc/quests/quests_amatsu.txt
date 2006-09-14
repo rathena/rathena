@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena team & others? & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //=	I'm sorry for the mess, I couldn't do much better with
 //=	the current code I had.
 //= 1.1 Added Sushi Quest and Amatsu Event from cities/ [Evera]
+//= 1.2 Fixed Momotaro Quest, thanks to .~Abism0~. [Lupus]
 //============================================================ 
 
 amatsu.gat,223,235,4	script	Publisher	763,{
@@ -707,29 +708,32 @@ OnStart:
 //=======================================MobCount===============================-
 ama_test.gat,0,1,0	script	mobcount#momotaro	-1,{
 OnMobDead:
-	if ($MomoDokebi >= 8) goto Lfin;
+	if ($MomoDokebi >= 8){
+		areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I will be baaack~~~~!!!",8;
+		attachrid($MomotaroRID);
+		initnpctimer;
+		end;
+	}
 	set $MomoDokebi,$MomoDokebi+1;
-	attachrid($MomotaroRID);
 	set @mobrand,rand(4);
-	if (@mobrand == 1) goto Lrand2;
-	if (@mobrand == 2) goto Lrand3;
-	if (@mobrand == 3) goto Lrand4;
+	if (@mobrand == 1) goto Lrand1;
+	if (@mobrand == 2) goto Lrand2;
+	if (@mobrand == 3) goto Lrand3;
+
+	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I'm sorry~~! Waaaaah~~",8;
+	end;
 Lrand1:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I'm sorry~~! Waaaaah~~",8;detachrid;end;
+	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: !! IT'S A RAID!!!! RUN!!",8;
+	end;
 Lrand2:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: !! IT'S A RAID!!!! RUN!!",8;detachrid;end;
+	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: But I didn't even do anything baaaaad~!",8;
+	end;
 Lrand3:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: But I didn't even do anything baaaaad~!",8;detachrid;end;
-Lrand4:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: Ow, Ouch!!!",8;detachrid;end;
-Lfin:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I will be baaack~~~~!!!",8;
-	initnpctimer;
+	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: Ow, Ouch!!!",8;
 	end;
 OnTimer5000:
 	donpcevent "mobcount2#momotaro::OnTimer5000";
 	end;
-
 }
 //=======================================MobCount2==============================-
 ama_test.gat,50,101,0	script	mobcount2#momotaro	-1,{
