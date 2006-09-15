@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/15
+	* Added the remaining drop changes which I missed before [Playtester]
 09/14
 	* Fixed X.3 Cooking drop rates [Playtester]
 	- also updated related aegis item names
