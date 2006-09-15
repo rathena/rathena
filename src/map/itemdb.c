@@ -53,6 +53,7 @@ int itemdb_searchjname_sub(int key,void *data,va_list ap)
 	char *str;
 	str=va_arg(ap,char *);
 	dst=va_arg(ap,struct item_data **);
+	if(item == &dummy_item) return 0;
 	if( strcmpi(item->jname,str)==0 )
 		*dst=item;
 	return 0;
@@ -142,7 +143,9 @@ struct item_data* itemdb_exists(int nameid)
 	struct item_data* id;
 	if (!nameid) return NULL;
 	id = idb_get(item_db,nameid);
-//	if (id == &dummy_item) return NULL; //Let dummy items go through... technically they "exist" because someone already has them...
+	//Adjust nameid in case it's used outside. [Skotlex]
+	if (id == &dummy_item)
+		dummy_item.nameid = nameid;
 	return id;
 }
 
@@ -249,6 +252,7 @@ struct item_data* itemdb_load(int nameid)
 static void* return_dummy_data(DBKey key, va_list args) {
 	if (battle_config.error_log)
 		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", key.i);
+	dummy_item.nameid = key.i;
 	return &dummy_item;
 }
 
