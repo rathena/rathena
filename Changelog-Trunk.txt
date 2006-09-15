@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/15
+	* Added config setting "friend_auto_add" (battle/player.conf), if set, when
+	  you accept someone as your friend, both characters will show up on each
+	  other's friend list. [Skotlex]
 2006/09/14
 	* Changed Extremity Fist's code to make you actually walk past your target,
 	  which displays a much more correct "animation" for the skill. Thanks to

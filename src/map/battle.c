@@ -3769,6 +3769,7 @@ static const struct battle_data_short {
 	{ "autospell_stacking", 				&battle_config.autospell_stacking },
 	{ "override_mob_names", 				&battle_config.override_mob_names },
 	{ "min_chat_delay",						&battle_config.min_chat_delay },
+	{ "friend_auto_add",						&battle_config.friend_auto_add },
 	{ "homunculus_show_growth",					&battle_config.homunculus_show_growth },	//[orn]
 	{ "homunculus_friendly_rate",				&battle_config.homunculus_friendly_rate },
 };
@@ -4208,6 +4209,7 @@ void battle_set_defaults() {
 	battle_config.autospell_stacking = 0;
 	battle_config.override_mob_names = 0;
 	battle_config.min_chat_delay = 0;
+	battle_config.friend_auto_add = 0;
 	battle_config.hvan_explosion_intimate = 45000;	//[orn]
 	battle_config.homunculus_show_growth = 0;	//[orn]
 	battle_config.homunculus_friendly_rate = 100;
