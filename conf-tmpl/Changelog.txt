@@ -1,5 +1,7 @@
 Date	Added
 
+2006/09/15
+	* Added atcommand.conf entries for @adjgmlvl and @adjcmdlvl [Skotlex]
 2006/09/14
 	* Adjusted gvg long damage rate to 80%, magic damage rate to 60%
 	  (battle/guild.conf) [Skotlex]

@@ -4308,10 +4308,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case BS_REPAIRWEAPON:
-		if(sd && dstsd) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(sd && dstsd)
 			clif_item_repair_list(sd,dstsd);
-		}
 		break;
 
 	case MC_IDENTIFY:
@@ -8817,6 +8815,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 		clif_skill_fail(sd,sd->menuskill_id,0,0);
 		return;
 	}
+	clif_skill_nodamage(&sd->bl,&target_sd->bl,sd->menuskill_id,1,1);
 	item->attribute=0;
 	clif_equiplist(target_sd);
 	pc_delitem(sd,pc_search_inventory(sd,material),1,0);
