@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/15
+	* Now mobs won't do a distance check to lose their target on every ai
+	  iteration, but only when they finish walking (unless you set monster_ai&1)
+	  [Skotlex]
+	* The chase distance before a mob gives up following a player has been
+	  increased from view-size (range2) to min-chase (range3). [Skotlex]
 	* Reverted the Summon Flora change where all plants were being summoned in
 	  one go. [Skotlex]
 	* Moved the weapon repair effect to where it belongs (after successfully
