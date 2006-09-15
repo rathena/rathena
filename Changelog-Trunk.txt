@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/15
+	* Reverted the Summon Flora change where all plants were being summoned in
+	  one go. [Skotlex]
 	* Moved the weapon repair effect to where it belongs (after successfully
 	  repairing an item) [Skotlex]
 	* Added config setting "friend_auto_add" (battle/player.conf), if set, when

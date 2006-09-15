@@ -2067,7 +2067,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(status->speed < battle_config.max_walk_speed)
 		status->speed = battle_config.max_walk_speed;
 
-
 // ----- HIT CALCULATION -----
 
 	// Absolute modifiers from passive skills
@@ -3030,16 +3029,12 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	
 	if(flag&SCB_MAXHP) {
 		status->max_hp = status_calc_maxhp(bl, sc, b_status->max_hp);
-		if (status->max_hp < 1)
-			status->max_hp = 1;
 		if (status->hp > status->max_hp) //FIXME: Should perhaps a status_zap should be issued?
 			status->hp = status->max_hp;
 	}
 
 	if(flag&SCB_MAXSP) {
 		status->max_sp = status_calc_maxsp(bl, sc, b_status->max_sp);
-		if (status->max_sp < 1)
-			status->max_sp = 1;
 		if (status->sp > status->max_sp)
 			status->sp = status->max_sp;
 	}
