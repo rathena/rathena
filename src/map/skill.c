@@ -2788,6 +2788,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 
+	case KN_CHARGEATK:
+		flag = distance_bl(src, bl);
 	case TK_JUMPKICK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
@@ -2850,28 +2852,25 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if (sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
 		}
-	case KN_CHARGEATK:
-		if(!check_distance_bl(src, bl, 2)) { //Need to move to target.
-			int dx,dy;
-
-			dx = bl->x - src->x;
-			dy = bl->y - src->y;
-			if(dx > 0) dx++;
-			else if(dx < 0) dx--;
-			if (dy > 0) dy++;
-			else if(dy < 0) dy--;
-
-			if (skillid == KN_CHARGEATK) //Store distance in flag [Skotlex]
-				flag = distance_bl(src, bl);
-			
-			if (!unit_movepos(src, src->x+dx, src->y+dy, 1, 1)) {
-				if (sd) clif_skill_fail(sd,skillid,0,0);
-				break;
+		//Client expects you to move to target regardless
+		if(unit_walktobl(src, bl, 1, 1)) {
+			struct unit_data *ud = unit_bl2ud(src);
+			int i,speed;
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			if (ud) {
+				ud->target = 0; //Clear target, as you shouldn't be chasing it if you can't get there on time.
+				//Increase can't walk delay to not alter your walk path
+				ud->canmove_tick = tick;
+				speed = status_get_speed(src);
+				for (i = 0; i < ud->walkpath.path_len; i ++)
+				{
+					if(ud->walkpath.path[i]&1)
+						ud->canmove_tick+=7*speed/5;
+					else
+						ud->canmove_tick+=speed;
+				}
 			}
-			clif_slide(src,src->x,src->y);
-		} else //Assume minimum distance of 1 for Charge.
-			flag = 1;
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		}
 		break;
 
 	//Splash attack skills.
