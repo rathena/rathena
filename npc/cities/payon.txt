@@ -961,7 +961,7 @@ L_AskFuture:
 	mes "[Lhimetorra]";
 	mes "Future... the card that sees the future is beginning to speak...... Prepare yourself...";
 	next;
-	set @TEMP,,rand(2);
+	set @TEMP,rand(2);
 	mes "[Lhimetorra]";
 	if(@TEMP == 0) mes "Jack says you may be frustrated in the future.";
 	if(@TEMP == 1) mes "He says to overcome the frustration, it is necessary to think of happy thoughts.";

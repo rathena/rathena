@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/15
+	* Ein.Town Pollution fix [Lupus]
 09/14
 	* Fixed Payon city. Bugs, missing text, etc [Lupus]
 	* Massive Einbroch & Einbech bugfix. WIP [Lupus]
