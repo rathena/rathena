@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/09/16
+	* Added monster_ai&256. When set, a monster will pick a random starting
+	  position to begin checking versus it's skills, otherwise, it will always
+	  begin checking from the beginning. [Skotlex]
 	* Fixed the status change duration reduction equation was was totally
 	  wrong, thanks to k3dt [Skotlex]
 2006/09/15

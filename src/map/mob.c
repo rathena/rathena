@@ -2619,8 +2619,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	if (event < 0 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
 		return 0; //Skill act delay only affects non-event skills.
 
-	//Pick a random starting position and loop from that.
-	i = rand()%md->db->maxskill;
+	//Pick a starting position and loop from that.
+	i = battle_config.mob_ai&256?rand()%md->db->maxskill:0;
 	for (n = 0; n < md->db->maxskill; i++, n++) {
 		int c2, flag = 0;		
 

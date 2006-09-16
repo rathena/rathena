@@ -19,6 +19,10 @@
 	-----
 
 =========================
+
+09/16
+	* Added NPC_CHANGEUNDEAD to the skill_cast_db, fixes it apparently doing
+	  "nothing". [Skotlex]
 09/15
 	* Added the remaining drop changes which I missed before [Playtester]
 09/14
