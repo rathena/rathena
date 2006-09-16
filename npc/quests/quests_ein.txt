@@ -889,30 +889,31 @@ L_Apples:
 	set @kaci,rand(2,12);
 	set @man,rand(2,12);
 	if(@man == @kaci){
-	if(rand(2)){
-		if(@man != 12)
-			set @man,@man+1;
-		else
-			set @man,@man-1;
-	}else{
-		if(@man != 2)
-			set @man,@man-1;
-		else
-			set @man,@man+1;
+		if(rand(2)){
+			if(@man != 12)
+				set @man,@man+1;
+			else
+				set @man,@man-1;
+		}else{
+			if(@man != 2)
+				set @man,@man-1;
+			else
+				set @man,@man+1;
+		}
 	}
 	mes "[Kaci]";
 	mes "Oooh...";
 	mes "I got a total of ^FF0000"+@kaci+"^000000,";
 	mes "and you have a total of ^FF0000"+@man+"^000000.";
 	if(@man < @kaci){
-	mes "I'm sorry, but you lose";
-	mes "again. Better luck next time...";
-	donpcevent "Kaci::OnLose";
-	next;
-	mes "[Drunken Man]";
-	mes "Waaaaaahhhhhhhhhhhh!";
-	mes "Waaaaaaaahhhhhhh!";
-	close;
+		mes "I'm sorry, but you lose";
+		mes "again. Better luck next time...";
+		donpcevent "Kaci::OnLose";
+		next;
+		mes "[Drunken Man]";
+		mes "Waaaaaahhhhhhhhhhhh!";
+		mes "Waaaaaaaahhhhhhh!";
+		close;
 	}
 	mes "Congratulations, you won!";
 	mes "Let me give you your winning";

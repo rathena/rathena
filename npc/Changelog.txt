@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/16
+	* fixed apple dice game in Airship, fixed missing } in Einbech quests [Lupus]
 09/15
 	* Ein.Town Pollution fix [Lupus]
 09/14
@@ -41,7 +43,7 @@ Date		Added
 		thanks to cbmaster & $ephiroth
 	- Fixed Guild Defence / Economy underflow, thanks to kyoki
 	- Zoc's fix to keep number of unopened boxes on reboot
-	- Now each castle spawns 1st/2nd Treasuer Box type as 50%/50% w/o random
+	- Now each castle spawns 1st/2nd Treasure Box type as 50%/50% w/o random
 	- Fixed Momotaro Quest, thanks to .~Abism0~.
 09/11
 	* Moved custom Umbalian quests to custom folder [Lupus]

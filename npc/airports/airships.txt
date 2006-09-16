@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.5a
+//= 0.5b
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,7 +17,7 @@
 //= 0.3 Implemented some more NPCs [MasterOfMuppets]
 //= 0.4 Implemented two mini games scripted by Dj-Yhn [MasterOfMuppets]
 //= 0.5 Removed Duplicates [Silent]
-//= 0.5aFixed a typo [Evera]
+//= 0.5aFixed a typo [Evera] 0.5b Fixed appledice bugs [Lupus]
 //============================================================ 
 
 //============================================================ 
@@ -855,63 +855,64 @@ function script applegamble {
 	mes "to wager some Apples";
 	mes "in a friendly game of Dice?";
 	next;
-	switch(select("Play Dice Game:Learn Dice Game Rules:Cancel")) {
-		case 3:
-		 mes "["+getarg(0)+"]";
-		 mes "I'm up for a game of";
-		 mes "dice whenever you feel";
-		 mes "like it. Just talk to me if";
-		 mes "you ever get hit with the";
-		 mes "sudden urge to gamle, kay?";
-		 close;
-		case 2:
-		 mes "["+getarg(0)+"]";
-		 mes "The rules for the Dice game";
-		 mes "are pretty simple. First, you";
-		 mes "place a bet by wagering Apples.";
-		 mes "You can bet a maximum of 50";
-		 mes "Apples at a time. To keep things";
-		 mes "legal, I can only accept Apples.";
-		 next;
-		 mes "["+getarg(0)+"]";
-		 mes "But hey, if all that zeny";
-		 mes "is burning a hole in your";
-		 mes "pocket, head over to Fruitz";
-		 mes "and you can buy as many";
-		 mes "Apples as you want, playah~";
-		 next;
-		 mes "["+getarg(0)+"]";
-		 mes "Now, we begin with me";
-		 mes "rolling wto 6-sided dice.";
-		 mes "When it's your turn, you'll";
-		 mes "roll two 6-sided dice. After";
-		 mes "that, both of us will have the";
-		 mes "option of rolling a third die.";
-		 next;
-		 mes "["+getarg(0)+"]";
-		 mes "Now here's the important";
-		 mes "thing. If your total is higher";
-		 mes "than 12, you'll bust, meaning";
-		 mes "that you lose. Otherwise, the";
-		 mes "person with the higher total";
-		 mes "is the winner. Got it?";
-		 next;
-		 mes "["+getarg(0)+"]";
-		 mes "Now, you'll be the first";
-		 mes "to decide whether or not";
-		 mes "you'll roll the third die. Then,";
-		 mes "depending on your result, I'll";
-		 mes "roll my third die... Or maybe not.";
-		 next;
-			mes "["+getarg(0)+"]";
-			mes "When you win, you'll";
-			mes "receive twice as many";
-			mes "Apples as you wagered.";
-			mes "But if we happen to tie, you";
-			mes "get the Apples that you bet";
-			mes "returned to you. Fair, right?";
-			close;
-		case 1:
+	switch(select("Play Dice Game:Learn Dice Game Rules:Cancel")){
+	case 3:
+		mes "["+getarg(0)+"]";
+		mes "I'm up for a game of";
+		mes "dice whenever you feel";
+		mes "like it. Just talk to me if";
+		mes "you ever get hit with the";
+		mes "sudden urge to gamle, kay?";
+		close;
+	case 2:
+		mes "["+getarg(0)+"]";
+		mes "The rules for the Dice game";
+		mes "are pretty simple. First, you";
+		mes "place a bet by wagering Apples.";
+		mes "You can bet a maximum of 50";
+		mes "Apples at a time. To keep things";
+		mes "legal, I can only accept Apples.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "But hey, if all that zeny";
+		mes "is burning a hole in your";
+		mes "pocket, head over to Fruitz";
+		mes "and you can buy as many";
+		mes "Apples as you want, playah~";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now, we begin with me";
+		mes "rolling wto 6-sided dice.";
+		mes "When it's your turn, you'll";
+		mes "roll two 6-sided dice. After";
+		mes "that, both of us will have the";
+		mes "option of rolling a third die.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now here's the important";
+		mes "thing. If your total is higher";
+		mes "than 12, you'll bust, meaning";
+		mes "that you lose. Otherwise, the";
+		mes "person with the higher total";
+		mes "is the winner. Got it?";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now, you'll be the first";
+		mes "to decide whether or not";
+		mes "you'll roll the third die. Then,";
+		mes "depending on your result, I'll";
+		mes "roll my third die... Or maybe not.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "When you win, you'll";
+		mes "receive twice as many";
+		mes "Apples as you wagered.";
+		mes "But if we happen to tie, you";
+		mes "get the Apples that you bet";
+		mes "returned to you. Fair, right?";
+		close;
+	case 1:
+		break;
 	}
 	mes "["+getarg(0)+"]";
 	mes "Ooh, so you'll play with";
@@ -923,31 +924,29 @@ function script applegamble {
 	next;
 L_Input:
 	input @amount;
-	if (@amount == 0) {
+	if(@amount == 0) {
 		mes "["+getarg(0)+"]";
 		mes "Changed your mind?";
 		mes "I understand. Well then,";
 		mes "I hope we can play sometime.";
 		close;
 	}
-	if (@amount > 50) set @amount,50;
+	if(@amount > 50) set @amount,50;
 	mes "["+getarg(0)+"]";
 	mes "So you'll be";
 	mes "betting ^FF0000"+@amount+"^000000 Apples.";
 	mes "Is that right?";
 	next;
-	switch(select("Yes:No")) {
-		case 2:
-		 mes "["+getarg(0)+"]";
-		 mes "Mm, made a mistake?";
-		 mes "Alright, please enter the";
-		 mes "number of Apples you";
-		 mes "wish to place in this bet";
-		 next;
-		 goto L_Input;
-		case 1:
+	if(select("Yes:No")==2){
+		mes "["+getarg(0)+"]";
+		mes "Mm, made a mistake?";
+		mes "Alright, please enter the";
+		mes "number of Apples you";
+		mes "wish to place in this bet";
+		next;
+		goto L_Input;
 	}
-	if (countitem(512) < @amount) {
+	if(countitem(512)<@amount){
 		//more apples then in inventory
 		//-Improvised-
 		mes "["+getarg(0)+"]";
@@ -955,7 +954,7 @@ L_Input:
 		mes "You don't have that";
 		mes "much Apples with you,";
 		mes "now do you?";
-	 close;
+		close;
 	}
 	delitem 512,@amount;
 	mes "["+getarg(0)+"]";
@@ -974,6 +973,7 @@ L_Input:
 	mes strcharinfo(0)+".";
 	next;
 	menu "Roll Dice.",-;
+
 	mes "^0000FF*Rolling and rumbling*";
 	set @player1,rand(1,6);
 	set @player2,rand(1,6);
@@ -984,123 +984,120 @@ L_Input:
 	mes "you rolled a "+@player1+" and a "+@player2+",";
 	mes "giving you a total of ^FF0000"+@playersub+"^000000.";
 	next;
- mes "["+getarg(0)+"]";
+	mes "["+getarg(0)+"]";
 	if(@playersub == @tablesub) {
-	 mes "Well, well, well.";
-	 mes "Both of us have a total";
-	 mes "of "+@playersub+". Well, the ball's in";
-	 mes "your court. Are you going";
-	 mes "to roll your third die,";
-	 mes strcharinfo(0)+"?";
-	} else if (@playersub > @tablesub) {
-	 mes "Since my total is only ^0000FF"+@tablesub+"^000000,";
-	 mes "you have the advantage for";
-	 mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
-	 mes "you wanna roll one more die?";
-	 mes "Remember, you'll bust if all three";
-	 mes "of your dice total more than 12.";
-	} else if (@tablesub > @playersub) {
+		mes "Well, well, well.";
+		mes "Both of us have a total";
+		mes "of "+@playersub+". Well, the ball's in";
+		mes "your court. Are you going";
+		mes "to roll your third die,";
+		mes strcharinfo(0)+"?";
+	} else if(@playersub > @tablesub) {
+		mes "Since my total is only ^0000FF"+@tablesub+"^000000,";
+		mes "you have the advantage for";
+		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "you wanna roll one more die?";
+		mes "Remember, you'll bust if all three";
+		mes "of your dice total more than 12.";
+	} else if(@tablesub > @playersub) {
 		mes "Since my total is ^0000FF"+@tablesub+"^000000,";
-	 mes "I have the advantage for";
-	 mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
-	 mes "you wanna roll one more die?";
-	 mes "Remember, you'll bust if all three";
-	 mes "of your dice total more than 12.";
+		mes "I have the advantage for";
+		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "you wanna roll one more die?";
+		mes "Remember, you'll bust if all three";
+		mes "of your dice total more than 12.";
 	}
 	next;
-	switch(select("Roll another die.:Don't Roll.")) {
-		case 2:
-		 mes "["+getarg(0)+"]";
-		 mes "Not gonna roll, huh?";
-			if (@tablesub == @playersub) {
-				mes "You better hope I roll";
-				mes "too high and bust, or";
-				mes "I'll beat you for sure!";
-				mes "Okay, here goes nothing...";
-				next;
-				goto L_Table3;
-			} else if (@tablesub < @playersub) {
-				next;
-				mes "["+getarg(0)+"]";
-				mes "Alright, I see that you";
-				mes "don't want to risk rolling";
-				mes "higher than 12 and busting.";
-				mes "I'll go ahead and roll then.";
-				next;
-				goto L_Table3;
-			} else if (@tablesub > @playersub) {
-			 //you have a lower sub total then table, and do not roll 3th
-	 		//-Improvised-
-			 mes "["+getarg(0)+"]";
-				mes "Not gonna roll, huh?";
-				mes "Well, then I'm not";
-				mes "gonna roll either.";
-				next;
-				mes "["+getarg(0)+"]";
-				mes "That means that I";
-				mes "have a total of ^0000FF"+@tablesub+"^000000";
-				mes "wich beats your ^FF0000"+@playersub+"^000000.";
-				mes "I'm sorry, but you lose";
-				mes "this game, "+strcharinfo(0)+". Better";
-				mes "luck next time.";
-				close;
-			}
-		case 1:
- 	mes "^0000FF*Rolling and rumbling*";
-		set @player3,rand(1,6);
-		set @playersub,@playersub+@player3;
-		if (@playersub > 12) {
-		 //player bust
-			//--Improvised--
-			next;
-		 mes "["+getarg(0)+"]";
-		 mes "Oh my... You rolled a ^FF000"+@player3+"^000000,";
-		 mes "making your total ^FF0000"+@playersub+"^000000.";
-		 mes "That's more then 12, meaning you bust.";
-   mes "Sorry, but you lose this";
-		 mes "game, "+strcharinfo(0)+".";
-		 close;
-		}
-		next;
+	if(select("Roll another dice.:Don't Roll.")==2){
 		mes "["+getarg(0)+"]";
-		mes "Oh hey! You rolled";
-		if(@playersub >= @tablesub) {
-			mes "a ^FF0000"+@player3+"^000000, giving you a total";
-			mes "of ^FF0000"+@playersub+"^000000. Now, if I don't";
-			mes "roll, I'll lose for sure!";
-			mes "I'm gonna go for it...";
+		mes "Not gonna roll, huh?";
+		if(@tablesub == @playersub) {
+			mes "You better hope I roll";
+			mes "too high and bust, or";
+			mes "I'll beat you for sure!";
+			mes "Okay, here goes nothing...";
 			next;
 			goto L_Table3;
-		} else if (@playersub < @tablesub) {
-			//player's sub together with 3th die is still too low
-			//--Improvised--
-			mes "a ^FF0000"+@player3+"^000000, giving";
-			mes "you a total of ^FF0000"+@playersub+"^000000.";
-			mes "Wich still isn't enough";
-			mes "to beat my ^0000FF"+@tablesub+"^000000.";
-			mes "Sorry, but you lose this";
-		 mes "game, "+strcharinfo(0)+". Them's";
-		 mes "the breaks, I suppose...";
-		 close;
+		} else if(@tablesub < @playersub) {
+			next;
+			mes "["+getarg(0)+"]";
+			mes "Alright, I see that you";
+			mes "don't want to risk rolling";
+			mes "higher than 12 and busting.";
+			mes "I'll go ahead and roll then.";
+			next;
+			goto L_Table3;
+		} else if(@tablesub > @playersub) {
+		//you have a lower sub total then table, and do not roll 3th -Improvised-
+			mes "["+getarg(0)+"]";
+			mes "Not gonna roll, huh?";
+			mes "Well, then I'm not";
+			mes "gonna roll either.";
+			next;
+			mes "["+getarg(0)+"]";
+			mes "That means that I";
+			mes "have a total of ^0000FF"+@tablesub+"^000000";
+			mes "wich beats your ^FF0000"+@playersub+"^000000.";
+			mes "I'm sorry, but you lose";
+			mes "this game, "+strcharinfo(0)+". Better";
+			mes "luck next time.";
 		}
-	L_Table3:
+		close;
+	}
+	mes "^0000FF*Rolling and rumbling*";
+	set @player3,rand(1,6);
+	set @playersub,@playersub+@player3;
+	if(@playersub > 12) {
+	//player bust --Improvised--
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Oh my... You rolled a ^FF000"+@player3+"^000000,";
+		mes "making your total ^FF0000"+@playersub+"^000000.";
+		mes "That's more then 12, meaning you bust.";
+		mes "Sorry, but you lose this";
+		mes "game, "+strcharinfo(0)+".";
+		close;
+	}
+	next;
+	mes "["+getarg(0)+"]";
+	mes "Oh hey! You rolled";
+	if(@playersub >= @tablesub) {
+		mes "a ^FF0000"+@player3+"^000000, giving you a total";
+		mes "of ^FF0000"+@playersub+"^000000. Now, if I don't";
+		mes "roll, I'll lose for sure!";
+		mes "I'm gonna go for it...";
+		next;
+		goto L_Table3;
+	} else if(@playersub < @tablesub) {
+		//player's sub together with 3th die is still too low
+		//--Improvised--
+		mes "a ^FF0000"+@player3+"^000000, giving";
+		mes "you a total of ^FF0000"+@playersub+"^000000.";
+		mes "Wich still isn't enough";
+		mes "to beat my ^0000FF"+@tablesub+"^000000.";
+		mes "Sorry, but you lose this";
+		mes "game, "+strcharinfo(0)+". Them's";
+		mes "the breaks, I suppose...";
+		close;
+	}
+L_Table3:
 	mes "^0000FF*Rolling and rumbling*";
 	set @table3,rand(1,6);
 	set @tablesub,@tablesub+@table3;
 	next;
-	if (@tablesub > 12) {
-	 mes "["+getarg(0)+"]";
-	 mes "Eh? I rolled a ^0000FF"+@table3+"^000000, making";
-	 mes "my total ^0000FF"+@tablesub+"^000000. I hate to say";
-	 mes "it, but I gambled and lost.";
-	 mes "Take your winnings before";
-	 mes "I cry, "+strcharinfo(0)+"~!";
-	 close2;
-	 getitem 512,@amount*2;
-	 end;
+	if(@tablesub > 12) {
+		mes "["+getarg(0)+"]";
+		mes "Eh? I rolled a ^0000FF"+@table3+"^000000, making";
+		mes "my total ^0000FF"+@tablesub+"^000000. I hate to say";
+		mes "it, but I gambled and lost.";
+		mes "Take your winnings before";
+		mes "I cry, "+strcharinfo(0)+"~!";
+		close2;
+		getitem 512,@amount*2;
+		end;
 	}
 	mes "["+getarg(0)+"]";
-	if (@tablesub < @playersub) {
+	if(@tablesub < @playersub) {
 		mes "I rolled a "+@table3+", which";
 		mes "gives me a total of ^0000FF"+@tablesub+"^000000.";
 		mes "But... It's still not enough";
@@ -1110,23 +1107,23 @@ L_Input:
 		close2;
 		getitem 512,@amount*2;
 		end;
-	} else if (@tablesub > @playersub) {
-	 mes "I rolled a ^0000FF"+@table3+"^000000, giving";
-	 mes "me a total of ^0000FF"+@tablesub+"^000000 which";
-	 mes "beats your total of ^FF0000"+@playersub+"^000000.";
-	 mes "Sorry, but you lose this";
-	 mes "game, "+strcharinfo(0)+". Them's";
-	 mes "the breaks, I suppose...";
-	 close;
-	} else if (@tablesub == @playersub) {
+	} else if(@tablesub > @playersub) {
+	mes "I rolled a ^0000FF"+@table3+"^000000, giving";
+	mes "me a total of ^0000FF"+@tablesub+"^000000 which";
+	mes "beats your total of ^FF0000"+@playersub+"^000000.";
+	mes "Sorry, but you lose this";
+	mes "game, "+strcharinfo(0)+". Them's";
+	mes "the breaks, I suppose...";
+	close;
+	} else if(@tablesub == @playersub) {
 		//Result = tie, --Improvised--
 		mes "I rolled a ^0000FF"+@table3+"^000000, giving";
 		mes "me a total of ^0000FF"+@tablesub+"^000000, which";
 		mes "is the same as your total.";
 		mes "Well, this game didn't have a";
 		mes "winner or loser, "+strcharinfo(0)+".";
-	 close2;
-	 getitem 512,@amount;
-	 end;
+		close2;
+		getitem 512,@amount;
+		end;
 	}
 }
