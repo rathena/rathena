@@ -4467,7 +4467,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		if (def && tick && !(flag&2))
 		{
-			tick -= rate*def/10000;
+			tick -= tick*def/10000;
 			if (tick <= 0)
 				return 0;
 		}
