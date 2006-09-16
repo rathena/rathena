@@ -2059,14 +2059,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(sd->flee2_rate != 100)
 		status->flee2 = status->flee2 * sd->flee2_rate/100;
 
-	if(sd->speed_rate < 0)
-		sd->speed_rate = 0;
-	if(sd->speed_rate != 100)
-		status->speed = status->speed*sd->speed_rate/100;
-
-	if(status->speed < battle_config.max_walk_speed)
-		status->speed = battle_config.max_walk_speed;
-
 // ----- HIT CALCULATION -----
 
 	// Absolute modifiers from passive skills
@@ -2129,6 +2121,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	
 // ----- WALKING SPEED CALCULATION -----
 
+	if(sd->speed_rate < 0)
+		sd->speed_rate = 0;
+	if(sd->speed_rate != 100)
+		status->speed = status->speed*sd->speed_rate/100;
+
 	// Relative modifiers from passive skills
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && (skill=pc_checkskill(sd,TF_MISS))>0)
 		status->speed -= status->speed * skill/100;
@@ -2136,6 +2133,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->speed -= status->speed * 25/100;
 	if(pc_iscarton(sd) && (skill=pc_checkskill(sd,MC_PUSHCART))>0)
 		status->speed += status->speed * (100-10*skill)/100;
+
+	if(status->speed < battle_config.max_walk_speed)
+		status->speed = battle_config.max_walk_speed;
 
 // ----- ASPD CALCULATION -----
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
