@@ -19,7 +19,8 @@
 	-----
 
 =========================
-
+09/17
+	* Fixed some Thanatos mob names [Playtester]
 09/16
 	* Added NPC_CHANGEUNDEAD to the skill_cast_db, fixes it apparently doing
 	  "nothing". [Skotlex]
