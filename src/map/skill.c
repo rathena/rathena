@@ -4941,7 +4941,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		//On level 1, use level 10 cloaking (no speed penalty) 
 		//with val4 passed as 1 is for "infinite cloak".
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,9+skilllv,0,0,1,skill_get_time(skillid,skilllv)));
+			sc_start4(bl,type,100,9+skilllv,0,0,2,skill_get_time(skillid,skilllv)));
 		break;
 		
 	case NPC_SIEGEMODE:
@@ -8226,7 +8226,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 	case SG_FUSION:
-		if (!sc || sc->data[SC_FUSION].timer!=-1)
+		if (sc && sc->data[SC_FUSION].timer!=-1)
 			return 1;
 		if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_STAR)
 			break;

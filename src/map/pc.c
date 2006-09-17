@@ -2938,10 +2938,13 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC_MARIONETTE].timer!=-1 ||
 		(sd->sc.data[SC_GRAVITATION].timer!=-1 && sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF) ||
 		//Cannot use Potions/Healing items while under Gospel.
-		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 == BCT_SELF && sd->inventory_data[n]->type == IT_HEALING)
+		(sd->sc.data[SC_GOSPEL].timer!=-1 && sd->sc.data[SC_GOSPEL].val4 == BCT_SELF && sd->inventory_data[n]->type == IT_HEALING) ||
+		sd->sc.data[SC_TRICKDEAD].timer != -1 ||
+		sd->sc.data[SC_BLADESTOP].timer != -1 ||
+		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM)
 	))
 		return 0;
-	
+
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;
 	amount = sd->status.inventory[n].amount;

@@ -2284,6 +2284,9 @@ int mob_class_change (struct mob_data *md, int class_)
 	if (md->class_ >= 1324 && md->class_ <= 1363)
 		return 0; //Treasure Boxes
 
+	if (md->special_state.ai > 1)
+		return 0; //Marine Spheres and Floras.
+
 	if (mob_is_clone(md->class_))
 		return 0; //Clones
 

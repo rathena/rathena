@@ -9285,15 +9285,6 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 	if (clif_trading(sd))
 		return;
 	
-	if (sd->sc.count && (
-		sd->sc.data[SC_TRICKDEAD].timer != -1 || //死んだふり
-		sd->sc.data[SC_BLADESTOP].timer != -1 || //白刃取り
-		sd->sc.data[SC_BERSERK].timer!=-1 ||	//バーサーク
-		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_GRAVITATION].timer!=-1	//会話禁止
-	))
-		return;
-
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
 
