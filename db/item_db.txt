@@ -1790,16 +1790,16 @@
 7014,Old_Portrait,Old Portrait,3,,750,100,,,,,,,,,,,,,{},{},{}
 7015,Bookclip_In_Memory,Memory Bookmark,3,,1500,20,,,,,,,,,,,,,{},{},{}
 7016,Spoon_Stub,Bent Spoon,3,,1250,20,,,,,,,,,,,,,{},{},{}
-7017,Executioner's_Mitten,Executioner's Glove,3,,2250,30,,,,,,,,,,,,,{},{},{}
+7017,Executioner's_Mitten,Executioner's Mitten,3,,2250,30,,,,,,,,,,,,,{},{},{}
 7018,Young_Twig,Young Twig,3,,25,10,,,,,,,,,,,,,{},{},{}
 7019,Loki's_Whispers,Loki's Whispers,3,,10,10,,,,,,,,,,,,,{},{},{}
 7020,Mother's_Nightmare,Mother's Nightmare,3,,10,10,,,,,,,,,,,,,{},{},{}
 7021,Foolishness_Of_Blind,Foolishness of the Blind,3,,10,10,,,,,,,,,,,,,{},{},{}
-7022,Old_Hilt,Broken Sword Handle,3,,75,30,,,,,,,,,,,,,{},{},{}
+7022,Old_Hilt,Old Hilt,3,,75,30,,,,,,,,,,,,,{},{},{}
 7023,Blade_Lost_In_Darkness,Blade of Darkness,3,,6000,40,,,,,,,,,,,,,{},{},{}
 7024,Bloody_Edge,Bloody Edge,3,,5000,40,,,,,,,,,,,,,{},{},{}
 7025,Lucifer's_Lament,Lucifer's Lament,3,,15000,50,,,,,,,,,,,,,{},{},{}
-7026,Key_Of_Clock_Tower,Clock_Tower_Key,3,,50,30,,,,,,,,,,,,,{},{},{}
+7026,Key_Of_Clock_Tower,Key of the Clock Tower,3,,50,30,,,,,,,,,,,,,{},{},{}
 7027,Underground_Key,Key of the Underground,3,,50,30,,,,,,,,,,,,,{},{},{}
 7028,Invite_For_Duel,Invite for Duel,3,,0,10,,,,,,,,,,,,,{},{},{}
 7029,Admission_For_Duel,Admission for Duel,3,,10,10,,,,,,,,,,,,,{},{},{}

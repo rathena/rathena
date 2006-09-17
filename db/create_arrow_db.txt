@@ -117,7 +117,7 @@
 1035,1765,1,1770,50
 // Little Evil Horn --> 2 Curse Arrows, 50 Iron Arrows
 1038,1761,2,1770,50
-// Latern --> 80 Iron Arrows
+// Lantern --> 80 Iron Arrows
 1041,1770,80
 // Orc Claw --> 10 Steel Arrows
 1043,1753,10
@@ -151,11 +151,11 @@
 2319,1760,1000
 // Wooden Mail --> 700 Arrows, 500 Iron Arrows
 2328,1750,700,1770,500
-// slotted Wooden Mail --> 1000 Arrows, 700 Iron Arrows
+// Wooden Mail (Slotted) --> 1000 Arrows, 700 Iron Arrows
 2329,1750,1000,1770,700
 // Silver robe --> 700 Silver Arrows
 2332,1751,700
-// slotted Silver Robe --> 1000 Silver Arrows, 10 Immaterial Arrows
+// Silver Robe (Slotted) --> 1000 Silver Arrows, 10 Immaterial Arrows
 2333,1751,1000,1757,10
 // Shackles --> 700 Iron Arrows, 50 Steel Arrows
 2408,1770,700,1753,50
@@ -171,23 +171,23 @@
 7010,1753,250,1763,1
 // Young Twig --> 1000 Mute Arrows
 7018,1769,1000
-// Loki's Whisper --> 1000 Arrows of Shadow
+// Loki's Whispers --> 1000 Arrows of Shadow
 7019,1767,1000
 // Mother's Nightmare --> 1000 Curse Arrows
 7020,1761,1000
 // Foolishness of the Blind --> 200 Flash Arrows
 7021,1760,200
-// Broken Sword Handle --> 1000 Oridecon Arrows
+// Old Hilt --> 1000 Oridecon Arrows
 7022,1765,1000
-// Blade lost in Darkness --> 600 Sharp Arrows, 200 Arrows of Shadow
+// Blade of Darkness --> 600 Sharp Arrows, 200 Arrows of Shadow
 7023,1764,600,1767,200
 // Bloody Edge --> 600 Sharp Arrows, 200 Curse Arrows
 7024,1764,600,1761,200
 // Lucifer's Lament --> 800 Stun Arrows, 400 Mute Arrows, 800 Sleep Arrows
 7025,1758,800,1769,400,1768,800
-// Clock Tower Key --> 50 Oridecon Arrows
+// Key of the Clock Tower --> 50 Oridecon Arrows
 7026,1765,50
-// Key of Underground --> 100 Arrows of Shadow
+// Key of the Underground --> 100 Arrows of Shadow
 7027,1767,100
 // Matchstick --> 3000 Fire Arrows
 7035,1752,3000
