@@ -20,6 +20,7 @@
 
 =========================
 09/18
+	* Fixing Holden combo not draining sp correctly [Playtester]
 	* Added official Rachel Sanctuary mob stats [Playtester]
 	* Fixed the order of mob skills thanks to [Leon] [Playtester]
 	* Changed NPC_CHANGEUNDEAD from a self skill to a targetted skill. Changed
