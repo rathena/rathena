@@ -353,13 +353,14 @@ enum {
 	SI_JOINTBEAT		= 125,
 	SI_DEVOTION		= 130,
 	SI_STEELBODY		= 132,
-	//134 - Soullink-like effect which makes the character get wavy.
+	SI_RUN			= 133,
+	SI_BUMP			= 134,
 	SI_READYSTORM		= 135,
 	SI_READYDOWN		= 137,
 	SI_READYTURN		= 139,
 	SI_READYCOUNTER		= 141,
 	SI_DODGE		= 143,
-	SI_RUN		= 144,
+	//SI_RUN		= 144,  //is not RUN. need info on what this is.
 	SI_SPURT			= 145,
 	SI_SHADOWWEAPON		= 146,
 	SI_ADRENALINE2		= 147,

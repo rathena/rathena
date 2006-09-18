@@ -883,13 +883,6 @@ int skillnotok (int skillid, struct map_session_data *sd)
 				return 1;
 			}
 			return 0;
-		case TK_HIGHJUMP:
-			if(map[m].flag.noteleport && !map_flag_vs(m))
-		  	{	//Can't be used on noteleport maps, except for vs maps [Skotlex]
-				clif_skill_fail(sd,skillid,0,0);
-				return 1;
-			}
-			break;
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
@@ -4162,13 +4155,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,-1,i); //Hide skill-scream animation.
 		break;
 	case TK_RUN:
-			if (tsc && tsc->data[type].timer != -1)
-				i = status_change_end(bl, type, -1);
-			else
-				i = sc_start4(bl,type,100,skilllv,unit_getdir(bl),0,0,0);
-//			If the client receives a skill-use packet inmediately before
-//			a walkok packet, it will discard the walk packet! [Skotlex]
-//			clif_skill_nodamage(src,bl,skillid,skilllv,i);
+			if (tsc && tsc->data[type].timer != -1) 
+				clif_skill_nodamage(src,bl,skillid,skilllv,
+					status_change_end(bl, type, -1));
+			else {
+				clif_skill_nodamage(src,bl,skillid,skilllv,
+					sc_start4(bl,type,100,skilllv,unit_getdir(bl),0,0,0));
+//				If the client receives a skill-use packet inmediately before
+//				a walkok packet, it will discard the walk packet! [Skotlex]
+//				So aegis has to resend the walk ok.
+				if (sd) clif_walkok(sd);
+			}
 		break;
 	case AS_CLOAKING:
 		if(tsc && tsc->data[type].timer!=-1 )
@@ -4680,8 +4677,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int x,y, dir = unit_getdir(src);
 
-			x = src->x + dirx[dir]*skilllv*2;
-			y = src->y + diry[dir]*skilllv*2;
+		  	//Fails on noteleport maps, except for vs maps [Skotlex]
+			if(map[src->m].flag.noteleport && !map_flag_vs(src->m)) {
+				x = src->x;
+				y = src->y;
+			} else {
+				x = src->x + dirx[dir]*skilllv*2;
+				y = src->y + diry[dir]*skilllv*2;
+			}
 			
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skilllv,1);
 			if(map_getcell(src->m,x,y,CELL_CHKPASS)) {

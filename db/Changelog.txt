@@ -20,6 +20,8 @@
 
 =========================
 09/18
+	* Corrected Ki Explosion to have range 1 and to take your weapon's element.
+	  [Skotlex]
 	* Fixing Holden combo not draining sp correctly [Playtester]
 	* Added official Rachel Sanctuary mob stats [Playtester]
 	* Fixed the order of mob skills thanks to [Leon] [Playtester]

@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/09/18
+	* High-Jump is usable everywhere now, except that on maps where it
+	  previously failed, now will just make you jump in place. [Skotlex]
+	* Fixed TK_RUN as per packets provided by AuronX. [Skotlex]
 	* Moved the equipment/card resistances to status ailments outside of
 	  status_get_sc_def, so that they are applied only to rate, not duration.
 	  [Skotlex]
