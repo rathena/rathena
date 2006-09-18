@@ -1654,7 +1654,7 @@ static struct Damage battle_calc_weapon_attack(
 					(target->type == BL_MOB && sd->right_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
 					sd->right_weapon.ignore_def_ele & (1<<tstatus->def_ele) ||
 					sd->right_weapon.ignore_def_race & (1<<tstatus->race) ||
-					sd->right_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
+					sd->right_weapon.ignore_def_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)
 				))
 					flag.idef = 1;
 
@@ -1662,7 +1662,7 @@ static struct Damage battle_calc_weapon_attack(
 					(target->type == BL_MOB && sd->left_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
 					sd->left_weapon.ignore_def_ele & (1<<tstatus->def_ele) ||
 					sd->left_weapon.ignore_def_race & (1<<tstatus->race) ||
-					sd->left_weapon.ignore_def_race & (is_boss(target)?1<<10:1<<11)
+					sd->left_weapon.ignore_def_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)
 				)) {
 						if(battle_config.left_cardfix_to_right && flag.rh) //Move effect to right hand. [Skotlex]
 							flag.idef = 1;

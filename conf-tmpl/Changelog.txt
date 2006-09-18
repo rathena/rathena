@@ -1,5 +1,9 @@
 Date	Added
 
+2006/09/18
+	* Due to a recent update of how cards/equipment status change defense
+	  works, the max sc resistance settings (battle/status.conf) no longer apply
+	  to them. [Skotlex]
 2006/09/16
 	* Added monster_ai&256. When set, a monster will pick a random starting
 	  position to begin checking versus it's skills, otherwise, it will always

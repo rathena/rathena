@@ -4376,10 +4376,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 		if (battle_config.pc_sc_def_rate != 100)
 			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
 
-		if(SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
-			&& sd->reseff[type-SC_COMMON_MIN] > 0)
-			sc_def+= sd->reseff[type-SC_COMMON_MIN];
-
 		if (sc_def < battle_config.pc_max_sc_def)
 			sc_def += (battle_config.pc_max_sc_def - sc_def)*
 				status->luk/battle_config.pc_luk_sc_def;
@@ -4459,18 +4455,25 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	if (!(flag&(1|4))) {
 		int def = status_get_sc_def(bl, type);
 
-		if (def && !(flag&8))
-			rate -= rate*def/10000;
-
-		if (!(rand()%10000 < rate))
-			return 0;
-
 		if (def && tick && !(flag&2))
 		{
 			tick -= tick*def/10000;
 			if (tick <= 0)
 				return 0;
 		}
+
+		//Item defenses do not reduce duration, so they go out of the function.
+		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
+			&& sd->reseff[type-SC_COMMON_MIN] > 0)
+			def += sd->reseff[type-SC_COMMON_MIN];
+
+		if (def && !(flag&8))
+			rate -= rate*def/10000;
+
+		if (!(rand()%10000 < rate))
+			return 0;
+
+
 	}
 
 	undead_flag=battle_check_undead(status->race,status->def_ele);

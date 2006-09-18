@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/09/18
+	* Moved the equipment/card resistances to status ailments outside of
+	  status_get_sc_def, so that they are applied only to rate, not duration.
+	  [Skotlex]
 	* Modified the Asura code (again), hopefully movement sprite issues are
 	  fixed now [Skotlex]
 	* @reloadscript scripts will no longer eliminate mobs with no respawn data.
