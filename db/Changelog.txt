@@ -20,6 +20,7 @@
 
 =========================
 09/18
+	* Added official Rachel Sanctuary mob stats [Playtester]
 	* Fixed the order of mob skills thanks to [Leon] [Playtester]
 	* Changed NPC_CHANGEUNDEAD from a self skill to a targetted skill. Changed
 	  it's duration to 30 secs. [Skotlex]
