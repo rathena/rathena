@@ -5,6 +5,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/09/18
+	* Merged Meruru's update to socket.c, which includes a rewritten parse
+	  function, which should hopefully be more efficient than the previous code.
+	  [Skotlex]
+	* The new code includes support for two config settings
+	  (packet_athena.txt): frame_size, which can be used to alter the logic
+	  packet-size allowed by the code, and mode_neg, which when set to yes, sets
+	  TCP_NODELAY on all connections (defaults to yes). [Skotlex]
 	* High-Jump is usable everywhere now, except that on maps where it
 	  previously failed, now will just make you jump in place. [Skotlex]
 	* Fixed TK_RUN as per packets provided by AuronX. [Skotlex]

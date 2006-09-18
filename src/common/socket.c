@@ -11,6 +11,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <io.h>
+
 typedef int socklen_t;
 #else
 #include <sys/socket.h>
@@ -27,6 +28,14 @@ typedef int socklen_t;
 #include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 #endif
 
+#endif
+
+#ifdef _WIN32
+#define SEBADF	WSAENOTSOCK
+#define serrno	WSAGetLastError()
+#else
+#define SEBADF EBADF
+#define serrno errno
 #endif
 
 #include <fcntl.h>
@@ -49,15 +58,36 @@ int ip_rules = 1;
 	#define SO_REUSEPORT 15
 #endif
 
+#ifndef TCP_FRAME_LEN
+#define TCP_FRAME_LEN	1024
+#endif
+
+#ifndef MINCORE
+enum {
+	ACO_DENY_ALLOW=0,
+	ACO_ALLOW_DENY,
+	ACO_MUTUAL_FAILTURE,
+};
+
+static struct _access_control *access_allow;
+static struct _access_control *access_deny;
+static int access_order=ACO_DENY_ALLOW;
+static int access_allownum=0;
+static int access_denynum=0;
+static int access_debug=0;
+static int mode_neg=1;
+static int frame_size=TCP_FRAME_LEN;
+static int ddos_count     = 10;
+static int ddos_interval  = 3000;
+static int ddos_autoreset = 600*1000;
+#endif
+
+
 // values derived from freya
 // a player that send more than 2k is probably a hacker without be parsed
 // biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
 size_t rfifo_size = (16*1024);
 size_t wfifo_size = (16*1024);
-
-#ifndef TCP_FRAME_LEN
-#define TCP_FRAME_LEN 1053
-#endif
 
 #define CONVIP(ip) ip&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,ip>>24
 
@@ -85,8 +115,9 @@ void set_defaultparse(int (*defaultparse)(int))
 
 void set_nonblocking(int fd, int yes) {
 	// I don't think we need this
-	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing. 
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
+	if(mode_neg)
+		setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
@@ -298,7 +329,7 @@ static int connect_client(int listen_fd)
 	fd = accept(listen_fd,(struct sockaddr*)&client_address,&len);
 #ifdef __WIN32                                               
 	if (fd == SOCKET_ERROR || fd == INVALID_SOCKET || fd < 0) {
-		ShowError("accept failed (code %d)!\n", fd, WSAGetLastError());
+		ShowError("accept failed (code %i)!\n", WSAGetLastError());
 		return -1;
 	}
 #else                                                        
@@ -346,83 +377,6 @@ static int connect_client(int listen_fd)
 	session[fd]->type        = SESSION_UNKNOWN;	// undefined type
 
   //ShowMessage("new_session : %d %d\n",fd,session[fd]->eof);
-	return fd;
-}
-
-int make_listen_port(int port)
-{
-	struct sockaddr_in server_address;
-	int fd;
-	int result;
-
-	fd = socket( AF_INET, SOCK_STREAM, 0 );
-#ifdef __WIN32
-	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, WSAGetLastError());
-		exit(1);
-	}
-#else
-	if (fd == -1) {
-		perror("make_listen_port:socket()");
-		exit(1);
-	}
-#endif
-
-#ifdef __WIN32
-	{
-		unsigned long val = 1;
-		if (ioctlsocket(fd, FIONBIO, &val) != 0)
-			ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", WSAGetLastError());
-	}
-#else
-	if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1)
-		perror("make_listen_port (set nonblock)");
-#endif
-
-	setsocketopts(fd);
-
-	server_address.sin_family      = AF_INET;
-	server_address.sin_addr.s_addr = htonl( INADDR_ANY );
-	server_address.sin_port        = htons((unsigned short)port);
-
-	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
-#ifdef __WIN32
-	if( result == SOCKET_ERROR ) {
-		ShowError("bind failed (socket %d, code %d)!\n", fd, WSAGetLastError());
-		exit(1);
-	}
-#else
-	if( result == -1 ) {
-		perror("bind");
-		exit(1);
-	}
-#endif
-	result = listen( fd, 5 );
-#ifdef __WIN32
-	if( result == SOCKET_ERROR ) {
-		ShowError("listen failed (socket %d, code %d)!\n", fd, WSAGetLastError());
-		exit(1);
-	}
-#else
-	if( result != 0 ) { /* error */
-		perror("listen");
-		exit(1);
-	}
-#endif
-	if ( fd < 0 || fd > FD_SETSIZE ) 
-	{ //Crazy error that can happen in Windows? (info from Freya)
-		ShowFatalError("listen() returned invalid fd %d!\n",fd);
-		exit(1);
-	}
-	
-	if(fd_max<=fd) fd_max=fd+1;
-	FD_SET(fd, &readfds );
-
-	CREATE(session[fd], struct socket_data, 1);
-
-	malloc_set(session[fd],0,sizeof(*session[fd]));
-	session[fd]->func_recv = connect_client;
-
 	return fd;
 }
 
@@ -501,10 +455,12 @@ int make_listen_bind(long ip,int port)
 	malloc_set(session[fd],0,sizeof(*session[fd]));
 	session[fd]->func_recv = connect_client;
 
-	ShowStatus("Open listen port on %d.%d.%d.%d:%i\n",
-		(ip)&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,(ip>>24)&0xFF,port);
-
 	return fd;
+}
+
+int make_listen_port(int port)
+{
+	return make_listen_bind(INADDR_ANY,port);
 }
 
 // Console Reciever [Wizputer]
@@ -657,11 +613,8 @@ int make_connection(long ip,int port)
 	return fd;
 }
 
-int delete_session(int fd)
+void free_session_mem(int fd)
 {
-	if (fd <= 0 || fd >= FD_SETSIZE)
-		return -1;
-	FD_CLR(fd, &readfds);
 	if (session[fd]){
 		if (session[fd]->rdata)
 			aFree(session[fd]->rdata);
@@ -672,6 +625,14 @@ int delete_session(int fd)
 		aFree(session[fd]);
 		session[fd] = NULL;
 	}
+}
+
+int delete_session(int fd)
+{
+	if (fd <= 0 || fd >= FD_SETSIZE)
+		return -1;
+	FD_CLR(fd, &readfds);
+	free_session_mem(fd);
 	//ShowMessage("delete_session:%d\n",fd);
 	return 0;
 }
@@ -749,7 +710,7 @@ int WFIFOSET(int fd,int len)
 	// For inter-server connections, let the reserve be 1/8th of the link size.
 	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK<<3:wfifo_size);
 
-	if (s->wdata_size > (TCP_FRAME_LEN))
+	if(s->wdata_size >= frame_size)
 		send_from_fifo(fd);
 
 	// realloc after sending
@@ -762,127 +723,128 @@ int WFIFOSET(int fd,int len)
 
 int do_sendrecv(int next)
 {
-	fd_set rfd,wfd,efd; //Added the Error Set so that such sockets can be made eof. They are the same as the rfd for now. [Skotlex]
+	fd_set rfd,efd; //Added the Error Set so that such sockets can be made eof. They are the same as the rfd for now. [Skotlex]
+	struct sockaddr_in	addr_check;
 	struct timeval timeout;
-	int ret,i;
+	int ret,i,size;
 
 	last_tick = time(0);
 
-	//memcpy(&rfd, &readfds, sizeof(rfd));
-	//memcpy(&efd, &readfds, sizeof(efd));
-	FD_ZERO(&wfd);
 
-	for (i = 1; i < fd_max; i++){ //Session 0 is never a valid session, so it's best to skip it. [Skotlex]
-		if(!session[i]) {
-			if (FD_ISSET(i, &readfds)){
-				ShowDebug("force clear fds %d\n", i);
-				FD_CLR(i, &readfds);
-				//FD_CLR(i, &rfd);
-				//FD_CLR(i, &efd);
-			}
+	//PRESEND Need to do this to ensure that the clients get something to do
+	//which hopefully will cause them to send packets. [Meruru]
+	for (i = 1; i < fd_max; i++)
+	{
+		if(!session[i])
 			continue;
-		}
-		if(session[i]->wdata_size)
-			FD_SET(i, &wfd);
+
+		if(session[i]->wdata_size && session[i]->func_send)
+			session[i]->func_send(i);
 	}
 
 	timeout.tv_sec  = next/1000;
 	timeout.tv_usec = next%1000*1000;
-	memcpy(&rfd, &readfds, sizeof(rfd));
-	memcpy(&efd, &readfds, sizeof(efd));
-	ret = select(fd_max, &rfd, &wfd, &efd, &timeout);
 
-#ifdef __WIN32
-	if (ret == SOCKET_ERROR) {
-		if (WSAGetLastError() == WSAEWOULDBLOCK)
-			return 0; //Eh... try again later?
-		ShowError("do_sendrecv: select error (code %d)\n", WSAGetLastError());
-#else
-	if (ret < 0) {
-		perror("do_sendrecv");
-		if (errno == 11) //Isn't there a constantI can use instead of this hardcoded value? This should be "resource temporarily unavailable": ie: try again.
+	for(memcpy(&rfd, &readfds, sizeof(rfd)),
+		memcpy(&efd, &readfds, sizeof(efd));
+		(ret = select(fd_max, &rfd, NULL, &efd, &timeout))<0;
+		memcpy(&rfd, &readfds, sizeof(rfd)),
+		memcpy(&efd, &readfds, sizeof(efd)))
+	{
+		if(serrno != SEBADF)
 			return 0;
-#endif
-		
-		//if error, remove invalid connections
-		//Individual socket handling code shamelessly assimilated from Freya :3
-		// an error give invalid values in fd_set structures -> init them again
-		FD_ZERO(&rfd);
-		FD_ZERO(&wfd);
-		FD_ZERO(&efd);
-		for(i = 1; i < fd_max; i++) { //Session 0 is not parsed, it's a 'vacuum' for disconnected sessions. [Skotlex]
-			if (!session[i]) {
-#ifdef __WIN32
-				//Debug to locate runaway sockets in Windows [Skotlex]
-				if (FD_ISSET(i, &readfds)) {
-					FD_CLR(i, &readfds);
-					ShowDebug("Socket %d was set (read fifos) without a session, removed.\n", i);
-				}
-#endif
-				continue;
-			}
-			if (FD_ISSET(i, &readfds)){
-				FD_SET(i, &rfd);
-				FD_SET(i, &efd);
-			}
-			if (session[i]->wdata_size)
-				FD_SET(i, &wfd);
-			timeout.tv_sec = 0;
-			timeout.tv_usec = 0;
-			if (select(i + 1, &rfd, &wfd, &efd, &timeout) >= 0 && !FD_ISSET(i, &efd)) {
-				if (FD_ISSET(i, &wfd)) {
-					if (session[i]->func_send)
-						session[i]->func_send(i);
-					FD_CLR(i, &wfd);
-				}
-				if (FD_ISSET(i, &rfd)) {
-					if (session[i]->func_recv)
-						session[i]->func_recv(i);
-					FD_CLR(i, &rfd);
-				}
-				FD_CLR(i, &efd);
-			} else {
-				ShowDebug("do_sendrecv: Session #%d caused error in select(), disconnecting.\n", i);
-				set_eof(i); // set eof
-				// an error gives invalid values in fd_set structures -> init them again
-				FD_ZERO(&rfd);
-				FD_ZERO(&wfd);
-				FD_ZERO(&efd);
-			}
-		}
-		return 0;
-	}else if(ret > 0) {
-		for (i = 1; i < fd_max; i++){
+
+		//Well then the error is due to a bad socket. Lets find and remove it
+		//and try again
+		for(i = 1; i < fd_max; i++)
+		{
 			if(!session[i])
 				continue;
 
-			if(FD_ISSET(i,&efd)){
-				//ShowMessage("error:%d\n",i);
-				ShowDebug("do_sendrecv: Connection error on Session %d.\n", i);
-				set_eof(i);
-				continue;
-			}
-	
-			if (FD_ISSET(i, &wfd)) {
-				//ShowMessage("write:%d\n",i);
-				if(session[i]->func_send)
-					session[i]->func_send(i);
-			}
-	
-			if(FD_ISSET(i,&rfd)){
-				//ShowMessage("read:%d\n",i);
-				if(session[i]->func_recv)
-					session[i]->func_recv(i);
-			}
+			//check the validity of the socket. Does what the last thing did
+			//just alot faster [Meruru]
+			size = sizeof(struct sockaddr);
+			if(getsockname(i,(struct sockaddr*)&addr_check,&size)<0)
+				if(serrno == SEBADF) //See the #defines at the top
+				{
+					free_session_mem(i); //free the bad session
+					continue;
+				}
 
-		
-			if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
-			{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
-				if (session[i]->func_parse)
-					session[i]->func_parse(i); //This should close the session inmediately.
-			}
-		} // for (i = 0
+			FD_SET(i,&readfds);
+			ret = i;
+		}
+
+		fd_max = ret;
 	}
+
+	//ok under windows to use FD_ISSET is FUCKING stupid
+	//because windows uses an array so lets do them part by part [Meruru]
+#ifdef _WIN32
+		//Do the socket sets. Unlike linux which uses a bit mask windows uses
+		//a array. So calls to FS_ISSET are SLOW AS SHIT. So we have to do
+		//a special case for them which actually turns out ok [Meruru]
+	for(i=0;i<(int)rfd.fd_count;i++)
+	{
+		if(session[rfd.fd_array[i]] &&
+			session[rfd.fd_array[i]]->func_recv)
+			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
+	}
+	for(i=0;i<(int)efd.fd_count;i++)
+		set_eof(efd.fd_array[i]);
+
+	for (i = 1; i < fd_max; i++)
+	{
+		if(!session[i])
+			continue;
+
+		//POSTSEND: Does write EVER BLOCK? NO!! not unless WE ARE CURRENTLY SENDING SOMETHING
+		//Or just have opened a connection and dont know if its ready
+		//And since eA isn't multi threaded and all the sockets are non blocking THIS ISNT A PROBLEM! [Meruru]
+
+		if(session[i]->wdata_size && session[i]->func_send)
+			session[i]->func_send(i);
+
+		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
+		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
+			if (session[i]->func_parse)
+				session[i]->func_parse(i); //This should close the session inmediately.
+		}
+	}
+
+#else //where under linux its just a bit check so its smart [Meruru]
+
+	for (i = 1; i < fd_max; i++){
+		if(!session[i])
+			continue;
+
+		if(FD_ISSET(i,&efd)){
+			//ShowMessage("error:%d\n",i);
+			ShowDebug("do_sendrecv: Connection error on Session %d.\n", i);
+			set_eof(i);
+			continue;
+		}
+
+
+		if(FD_ISSET(i,&rfd)){
+			//ShowMessage("read:%d\n",i);
+			if(session[i]->func_recv)
+				session[i]->func_recv(i);
+		}
+
+		//Does write EVER BLOCK. NO not unless WE ARE CURRENTALLY SENDING SOMETHING
+		//And sence eA isnt multi threaded THIS ISNT A PROBLEM!
+		if(session[i]->wdata_size && session[i]->func_send)
+			session[i]->func_send(i);
+	
+		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
+		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
+			if (session[i]->func_parse)
+				session[i]->func_parse(i); //This should close the session inmediately.
+		}
+	}
+#endif
+
 	return 0;
 }
 
@@ -921,26 +883,10 @@ int do_parsepacket(void)
 
 /* DDoS çUåÇëŒçÙ */
 #ifndef MINICORE
-enum {
-	ACO_DENY_ALLOW=0,
-	ACO_ALLOW_DENY,
-	ACO_MUTUAL_FAILTURE,
-};
-
 struct _access_control {
 	unsigned int ip;
 	unsigned int mask;
 };
-
-static struct _access_control *access_allow;
-static struct _access_control *access_deny;
-static int access_order=ACO_DENY_ALLOW;
-static int access_allownum=0;
-static int access_denynum=0;
-static int access_debug=0;
-static int ddos_count     = 10;
-static int ddos_interval  = 3000;
-static int ddos_autoreset = 600*1000;
 
 struct _connect_history {
 	struct _connect_history *next;
@@ -1193,7 +1139,16 @@ int socket_config_read(const char *cfgName) {
 				access_debug = 0;
 			else access_debug = atoi(w2);
 	#endif
-		} else if (strcmpi(w1, "import") == 0)
+		} else if (strcmpi(w1, "mode_neg") == 0)
+		{
+			if(strcmpi(w2,"yes")==0)
+				mode_neg = 1;
+			else if(strcmpi(w2,"no")==0)
+				mode_neg = 0;
+			else mode_neg = atoi(w2);
+		} else if (strcmpi(w1, "frame_size") == 0)
+			frame_size = atoi(w2);
+		else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}
 	fclose(fp);

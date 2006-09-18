@@ -1,6 +1,10 @@
 Date	Added
 
 2006/09/18
+	* The new socket update code includes support for two new config settings
+	  (packet_athena.txt): frame_size, which can be used to alter the logic
+	  packet-size allowed by the code, and mode_neg, which when set to yes, sets
+	  TCP_NODELAY on all connections (defaults to yes). [Skotlex]
 	* Due to a recent update of how cards/equipment status change defense
 	  works, the max sc resistance settings (battle/status.conf) no longer apply
 	  to them. [Skotlex]
