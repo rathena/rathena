@@ -262,7 +262,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-//Easy parameter: &1 -> 1/2 = easy/hard, &2 -> force walking.
+//Easy parameter: &1 -> 1/0 = easy/hard, &2 -> force walking.
 int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/09/18
+	* Modified the Asura code (again), hopefully movement sprite issues are
+	  fixed now [Skotlex]
 	* @reloadscript scripts will no longer eliminate mobs with no respawn data.
 	  But watch out for possible bugs (I think someone mentioned 1 extra
 	  treasure box will spawn when you use it? This needs testing!) [Skotlex]

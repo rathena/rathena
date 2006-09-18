@@ -2852,13 +2852,31 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if (sc->data[SC_BLADESTOP].timer != -1)
 				status_change_end(src,SC_BLADESTOP,-1);
 		}
-		//Client expects you to move to target regardless
-		if(unit_walktobl(src, bl, 1, 1)) {
+		//Client expects you to move to target regardless of distance
+		{
 			struct unit_data *ud = unit_bl2ud(src);
+			short dx,dy;
 			int i,speed;
+
+			dx = bl->x - src->x;
+			dy = bl->y - src->y;
+			if (dx < 0) dx--;
+			else if (dx > 0) dx++;
+			if (dy < 0) dy--;
+			else if (dy > 0) dy++;
+			if (!dx && !dy) dy++;
+			if (map_getcell(src->m, src->x+dx, src->y+dy, CELL_CHKNOPASS))
+			{
+				dx = bl->x;
+				dy = bl->y;
+			} else {
+				dx = src->x + dx;
+				dy = src->y + dy;
+			}
+
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			if (ud) {
-				ud->target = 0; //Clear target, as you shouldn't be chasing it if you can't get there on time.
+
+			if(unit_walktoxy(src, dx, dy, 2) && ud) {
 				//Increase can't walk delay to not alter your walk path
 				ud->canmove_tick = tick;
 				speed = status_get_speed(src);
