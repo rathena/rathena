@@ -371,7 +371,7 @@
 345,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKHELM#Break helm#
 346,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKSHIELD#Break shield#
 347,-1,6,1,9,0,0,10,1,no,0,2,0,weapon,0	//NPC_UNDEADATTACK
-348,0,0,4,9,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEUNDEAD
+348,9,0,1,9,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEUNDEAD
 349,0,6,4,0,1,0,10,0,no,0,2,0,weapon,0	//NPC_POWERUP
 350,0,6,4,0,1,0,10,0,no,0,2,0,none,0	//NPC_AGIUP
 351,0,0,0,0,1,0,0,0,no,0,2,0,none,0	//NPC_SIEGEMODE

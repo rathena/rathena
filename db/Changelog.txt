@@ -19,6 +19,9 @@
 	-----
 
 =========================
+09/18
+	* Changed NPC_CHANGEUNDEAD from a self skill to a targetted skill. Changed
+	  it's duration to 30 secs. [Skotlex]
 09/17
 	* Updated some item names according to info from Haplo [Playtester]
 	* Fixed some Thanatos mob names [Playtester]

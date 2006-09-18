@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
+2006/09/18
+	* Reenabled client requesting to self mute, as the whole knockback packet
+	  issues of the past which were causing players to mute themselves when being
+	  knockback is no longer there. [Skotlex]
 2006/09/17
 	* Fixed NPC_INVISIBLE's cloak ending after attacking once. [Skotlex]
 	* Fixed SG_FUSION being castable without Soul Link state. [Skotlex]
