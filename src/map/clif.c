@@ -7861,7 +7861,11 @@ int clif_charnameack (int fd, struct block_list *bl)
 				if (battle_config.show_mob_info&1)
 					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if (battle_config.show_mob_info&2)
-					str_p += sprintf(str_p, "HP: %d%% | ", 100*md->status.hp/md->status.max_hp);
+
+					str_p += sprintf(str_p, "HP: %d%% | ", 
+						md->status.max_hp > 10000?
+						md->status.hp/(md->status.max_hp/100):
+						100*md->status.hp/md->status.max_hp);
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
 				if (str_p != mobhp) {
