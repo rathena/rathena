@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Nexon
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -374,22 +374,21 @@ einbroch.gat,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
 	mes "stay in Einbroch.";
 	close;
 s_Yes:
-	if(Zeny < 200)goto s_NEnough;
 	mes "[Staff]";
+	if(Zeny < 200){
+		mes "I'm sorry but you";
+		mes "do not have enough";
+		mes "money to pay the fee.";
+		close;
+	}
+	set Zeny,Zeny - 200;
 	mes "Thank you";
 	mes "very much.";
 	mes "Have a safe trip.";
 	mes "^111111*Ahem*^000000 All aboard!";
 	close2;
-	set Zeny,Zeny - 200;
 	warp "einbech.gat",43,215;
 	end;
-s_NEnough:
-	mes "[Staff]";
-	mes "I'm sorry but you";
-	mes "do not have enough";
-	mes "money to pay the fee.";
-	close;
 s_Enviroment:
 	mes "[Staff]";
 	mes "Einbroch is infamous for";
@@ -665,17 +664,17 @@ ein_in01.gat,68,209,4	script	Khashurantze	852,{
 	mes "special authority in order";
 	mes "to enter this place. I'll have";
 	mes "to ask you to leave right now.";
-	if(EinFactory > 0)goto L_work;
+	if(EinFactory > 0){
+		next;
+		mes "[Khashurantze]";
+		mes "Oh? Mr. Zelmeto asked you to help out?";
+		mes "In that case excuse me.";
+		close;
+	}
 	close2;
 	warp "einbroch.gat",179,63;
 	end;
 
-L_work:
-	next;
-	mes "[Khashurantze]";
-	mes "Oh? Mr. Zelmeto asked you to help out?";
-	mes "In that case excuse me.";
-	close;
 }
 
 ein_in01.gat,113,211,3	script	Treinz	851,{
@@ -923,8 +922,13 @@ s_Save:
 	close;
 
 s_Rest:
-	if(Zeny < 5000)goto s_NEnoughZeny;
 	mes "[Hotel Employee]";
+	if(Zeny < 5000){
+		mes "I'm sorry but";
+		mes "you don't seem";
+		mes "to have enough zeny.";
+		close;
+	}
 	mes "Thank you.";
 	mes "Please enjoy";
 	mes "your rest~";
@@ -933,13 +937,6 @@ s_Rest:
 	warp "ein_in01.gat",272,167;
 	percentheal 100,100;
 	end;
-
-s_NEnoughZeny:
-	mes "[Hotel Employee]";
-	mes "I'm sorry but";
-	mes "you don't seem";
-	mes "to have enough zeny.";
-	close;
 
 }
 

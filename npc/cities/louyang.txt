@@ -8,7 +8,7 @@
 //= MasterOfMuppets (2.0)
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.7a
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -33,7 +33,7 @@
 //= 2.6 Removed Duplicates [Silent]
 //= 2.6a Updated a few names with new item_db.txt names [Evera]
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
-//=	Replaced some instances of using global vars when not needed [Evera]
+//= 2.7a Minor optimizations before Louyang quests [Lupus]
 //============================================================
 
 alberta.gat,245,45,4	script	Girl#02	815,{
@@ -81,8 +81,14 @@ M_GOTO:
 	next;
 	menu "Sure",-,"Cancel",M_CANCEL2;
 
-	if(Zeny < 10000) goto L_NOZENY;
 	mes "[Girl]";
+	if(Zeny < 10000){
+		mes "...";
+		mes "You don't seem";
+		mes "to have 10,100 zeny...";
+		mes "Go get some money first!";
+		close;
+	}
 	mes "Okay~";
 	mes "Ready!";
 	mes "Have fun!";
@@ -90,14 +96,6 @@ M_GOTO:
 	set Zeny,Zeny-10000;
 	warp "lou_fild01.gat",190,101;
 	end;
-
-L_NOZENY:
-	mes "[Girl]";
-	mes "...";
-	mes "You don't seem";
-	mes "to have 10,100 zeny...";
-	mes "Go get some money first!";
-	close;
 
 M_CANCEL:
 	mes "[Girl]";
@@ -519,90 +517,71 @@ louyang.gat,276,136,4	script	Fist Master	819,{
 }
 
 louyang.gat,272,133,0	script	Trainee::trainees	819,{
-	set @talk,rand(12);
-	if(@talk == 1) goto L_QUOT1;
-	if(@talk == 2) goto L_QUOT2;
-	if(@talk == 3) goto L_QUOT3;
-	if(@talk == 4) goto L_QUOT4;
-	if(@talk == 5) goto L_QUOT5;
-	if(@talk == 6) goto L_QUOT6;
-	if(@talk == 7) goto L_QUOT7;
-	if(@talk == 8) goto L_QUOT8;
-	if(@talk == 9) goto L_QUOT9;
-	if(@talk == 10) goto L_QUOT10;
-	if(@talk == 11) goto L_QUOT11;
-L_QUOT0:
 	mes "[Trainee]";
-	mes "Aha~!";
-	mes "Hai~!!";
-	mes "Huh...";
-	close;
-L_QUOT1:
-	mes "[Trainee]";
-	mes "Woh~!";
-	mes "Hai~!!";
-	mes "Huh huh...";
-	close;
-L_QUOT2:
-	mes "[Trainee]";
-	mes "Kyaa~";
-	mes "Yah~~!!";
-	mes ".......";
-	close;
-L_QUOT3:
-	mes "[Trainee]";
-	mes "Hu~!";
-	mes "Hu hu~~!!";
-	mes "Hu...";
-	close;
-L_QUOT4:
-	mes "[Trainee]";
-	mes "Wah?!";
-	mes "Ahchiu~~!!";
-	mes "Wah...";
-	close;
-L_QUOT5:
-	mes "[Trainee]";
-	mes "Yaah~";
-	mes "...!";
-	mes "........!!";
-	close;
-L_QUOT6:
-	mes "[Trainee]";
-	mes "Chongchiu!!";
-	mes "Hu~~!!";
-	mes "Hwooh~~";
-	close;
-L_QUOT7:
-	mes "[Trainee]";
-	mes "Zhua loh~!";
-	mes ".....";
-	mes "Hu";
-	close;
-L_QUOT8:
-	mes "[Trainee]";
-	mes "One hit~!";
-	mes "Hai~!!";
-	mes "Yah~!!";
-	close;
-L_QUOT9:
-	mes "[Trainee]";
-	mes "Ai yah..";
-	mes "Yaahah~~";
-	mes "(rolls around)......";
-	close;
-L_QUOT10:
-	mes "[Trainee]";
-	mes "Niu ah...";
-	mes "One~~!!";
-	mes "Two~~!!!";
-	close;
-L_QUOT11:
-	mes "[Trainee]";
-	mes "Yeeah~!";
-	mes "Ah I’m so tired~~!!";
-	mes "(faints).....";
-	close;
+	switch(rand(12)){
+	case 0:
+		mes "Aha~!";
+		mes "Hai~!!";
+		mes "Huh...";
+		close;
+	case 1:
+		mes "[Trainee]";
+		mes "Woh~!";
+		mes "Hai~!!";
+		mes "Huh huh...";
+		close;
+	case 2:
+		mes "Kyaa~";
+		mes "Yah~~!!";
+		mes ".......";
+		close;
+	case 3:
+		mes "Hu~!";
+		mes "Hu hu~~!!";
+		mes "Hu...";
+		close;
+	case 4:
+		mes "Wah?!";
+		mes "Ahchiu~~!!";
+		mes "Wah...";
+		close;
+	case 5:
+		mes "Yaah~";
+		mes "...!";
+		mes "........!!";
+		close;
+	case 6:
+		mes "Chongchiu!!";
+		mes "Hu~~!!";
+		mes "Hwooh~~";
+		close;
+	case 7:
+		mes "Zhua loh~!";
+		mes ".....";
+		mes "Hu";
+		close;
+	case 8:
+		mes "One hit~!";
+		mes "Hai~!!";
+		mes "Yah~!!";
+		close;
+	case 9:
+		mes "Ai yah..";
+		mes "Yaahah~~";
+		mes "(rolls around)......";
+		close;
+	case 10:
+		mes "Niu ah...";
+		mes "One~~!!";
+		mes "Two~~!!!";
+		close;
+	case 11:
+	default:
+		mes "Yeeah~!";
+		mes "Ah I’m so tired~~!!";
+		mes "(faints).....";
+		close;
+	}
 }
 
 louyang.gat,272,131,0	duplicate(trainees)	Trainee#2	819
@@ -737,8 +716,11 @@ lou_in01.gat,25,23,4	script	Friendly Looking Lady	817,{
 	mes "person.";
 	close;
 s_Yes:
-	if(zeny < 500)goto L_Zeny;
 	mes "[Hong Miao]";
+	if(zeny < 500){
+		mes "I am sorry, but you don't have enough money.";
+		close;
+	}
 	mes "Thank for your patronage.";
 	mes "We are trying to provide you with";
 	mes "the best service, Please";
@@ -747,10 +729,7 @@ s_Yes:
 	set Zeny,Zeny - 500;
 	warp "lou_in01.gat",16,19;
 	end;
-L_Zeny:
-	mes "[Hong Miao]";
-	mes "I am sorry, but you don't have enough money.";
-	close;
+
 s_Next_Time:
 	mes "[Hong Miao]";
 	mes "Please come";
@@ -778,6 +757,6 @@ lou_in02.gat,272,55,1	script	Familiar-Looking Patient	86,{
 	mes "*Cough cough...*";
 	mes "Awww......www...";
 	mes "Aww...wwww..";
-	emotion 9;
+	emotion e_dots;
 	close;
 }

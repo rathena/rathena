@@ -32,6 +32,8 @@ Playtester
 
 Date		Added
 ======
+09/19
+	* Preparations for optimization of Louyang/Nifelhem scripts [Lupus]
 09/16
 	* fixed apple dice game in Airship, fixed missing } in Einbech quests [Lupus]
 09/15
