@@ -6740,8 +6740,6 @@ int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 
 	nullpo_retr(0, g);
 
-	// printf("clif_guild_message(%s, %d, %s)\n", g->name, account_id, mes);
-
 	WBUFW(buf, 0)=0x16d;
 	WBUFL(buf, 2)=g->member[idx].account_id;
 	WBUFL(buf, 6)=g->member[idx].char_id;
@@ -9040,6 +9038,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	if ((is_charcommand(fd, sd, gm_command, 0) != CharCommand_None) ||
 		(is_atcommand(fd, sd, gm_command, 0) != AtCommand_None)) {
 		if(gm_command) aFree(gm_command);
+		clif_wis_end(fd, 0); // Send success to prevent client from self-muting.
 		return;
 	}
 	if(gm_command) aFree(gm_command);
@@ -10393,7 +10392,18 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 
 	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != CharCommand_None ||
 		is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None)
+	{
+		char *mes = RFIFOP(fd,4);
+		int len = RFIFOW(fd,2)-4;
+		//Send text to self to prevent client-muting.
+		WFIFOHEAD(fd, len+8);
+		WFIFOW(fd,0)=0x109;
+		WFIFOW(fd,2)=len+8;
+		WFIFOL(fd,4)=sd->status.account_id;
+		memcpy(WFIFOP(fd,8),mes,len);
+		WFIFOSET(fd, len+8);
 		return;
+	}
 	if	(sd->sc.count && (
 			sd->sc.data[SC_BERSERK].timer!=-1 ||
 			(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
@@ -10614,7 +10624,17 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 
 	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != CharCommand_None ||
 		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None)
+	{
+		char *mes = RFIFOP(fd,4);
+		int len = RFIFOW(fd,2)-4;
+		//Send text to self to prevent client-muting.
+		WFIFOHEAD(fd, len+4);
+		WFIFOW(fd, 0) = 0x17f;
+		WFIFOW(fd, 2) = len+4;
+		memcpy(WFIFOP(fd,4), mes, len);
+		WFIFOSET(fd, len+4);
 		return;
+	}
 	if (sd->sc.count && (
 		sd->sc.data[SC_BERSERK].timer!=-1 ||
 		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)

@@ -2194,21 +2194,13 @@ int atcommand_storage(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	struct storage *stor; //changes from Freya/Yor
 	nullpo_retr(-1, sd);
 
-	if (sd->state.storage_flag) {
+	if (storage_storageopen(sd) == 1)
+  	{	//Already open.
 		clif_displaymessage(fd, msg_txt(250));
 		return -1;
 	}
-
-	if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
-		clif_displaymessage(fd, msg_txt(250));
-		return -1;
-	}
-
-	storage_storageopen(sd);
-
 	return 0;
 }
 
