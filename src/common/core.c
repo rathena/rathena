@@ -233,7 +233,9 @@ int main (int argc, char **argv)
 			SERVER_NAME = ++p;
 		arg_c = argc;
 		arg_v = argv;
-		*eA_svn_version = '\0';
+		#ifndef SVNVERSION
+			*eA_svn_version = '\0';
+		#endif
 	}
 
 	set_server_type();
