@@ -33,7 +33,7 @@ char **arg_v = NULL;
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
 static void (*term_func)(void) = NULL;
-#ifdef SVNVERSION
+#ifndef SVNVERSION
 	static char eA_svn_version[10];
 #endif
 /*======================================
