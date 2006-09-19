@@ -10219,7 +10219,12 @@ int buildin_select(struct script_state *st)
 		sd->state.menu_or_input=0;
 		st->state=END;
 	} else {
-//		pc_setreg(sd,add_str((unsigned char *) "l15"),sd->npc_menu);
+		//Skip empty menu entries which weren't displayed on the client (Skotlex)
+		for(i=st->start+2;i<= (st->start+sd->npc_menu) && sd->npc_menu<(st->end-st->start);i++) {
+			conv_str(st,& (st->stack->stack_data[i])); // we should convert variables to strings before access it [jA1983] [EoE]
+			if((int)strlen(st->stack->stack_data[i].u.str) < 1)
+				sd->npc_menu++; //Empty selection which wasn't displayed on the client.
+		}
 		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		push_val(st->stack,C_INT,sd->npc_menu);
