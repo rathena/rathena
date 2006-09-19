@@ -201,8 +201,6 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			ratio += enchant_eff[sc->data[SC_VIOLENTGALE].val1-1];
 		if(sc->data[SC_DELUGE].timer!=-1 && atk_elem == ELE_WATER)
 			ratio += enchant_eff[sc->data[SC_DELUGE].val1-1];
-		if(sc->data[SC_SPIDERWEB].timer!=-1 && atk_elem == ELE_FIRE) // [Celest]
-			damage *= 2; //FIXME: Double damage instead of double ratio?
 	}
 	if (tsc && tsc->count)
 	{
@@ -214,6 +212,8 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			if (tsc->data[SC_ARMOR_ELEMENT].val3 == atk_elem)
 				ratio -= tsc->data[SC_ARMOR_ELEMENT].val4;
 		}
+		if(tsc->data[SC_SPIDERWEB].timer!=-1 && atk_elem == ELE_FIRE) // [Celest]
+			damage <<= 1;
 	}
 	return damage*ratio/100;
 }

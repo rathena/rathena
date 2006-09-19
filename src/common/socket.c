@@ -62,7 +62,10 @@ int ip_rules = 1;
 #define TCP_FRAME_LEN	1024
 #endif
 
-#ifndef MINCORE
+static int mode_neg=1;
+static int frame_size=TCP_FRAME_LEN;
+
+#ifndef MINICORE
 enum {
 	ACO_DENY_ALLOW=0,
 	ACO_ALLOW_DENY,
@@ -75,8 +78,6 @@ static int access_order=ACO_DENY_ALLOW;
 static int access_allownum=0;
 static int access_denynum=0;
 static int access_debug=0;
-static int mode_neg=1;
-static int frame_size=TCP_FRAME_LEN;
 static int ddos_count     = 10;
 static int ddos_interval  = 3000;
 static int ddos_autoreset = 600*1000;

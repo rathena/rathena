@@ -5,6 +5,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2006/09/18
+	* Fixed Spider Web fire damage bonus. [Skotlex]
+	* Made Global chat always reply back to you even on @/# commands, this
+	  prevents the client from muting yourself due to "hack". However, this same
+	  fix isn't easily applicable to @ commands invoked from whispers or
+	  party/guild messages, those are still pending. [Skotlex]
 	* Merged Meruru's update to socket.c, which includes a rewritten parse
 	  function, which should hopefully be more efficient than the previous code.
 	  [Skotlex]

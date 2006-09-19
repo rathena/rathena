@@ -5834,8 +5834,6 @@ int clif_party_created(struct map_session_data *sd,int flag)
 {
 	int fd;
 
-	// printf("clif_party_message(%s, %d, %s)\n", p->name, account_id, mes);
-
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
@@ -8673,9 +8671,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		return;
 	}
 	
-	if ((is_atcommand(fd, sd, message, 0) != AtCommand_None) ||
-		(is_charcommand(fd, sd, message,0) != CharCommand_None))
-		return;
 	if (sd->sc.count &&
 		(sd->sc.data[SC_BERSERK].timer != -1 ||
 		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
@@ -8687,7 +8682,16 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 			return;
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
-	
+
+	// To prevent client auto-muting, always send global chat back to self.
+	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
+	WFIFOW(fd,0) = 0x8e;
+	WFIFOSET(fd, WFIFOW(fd,2));
+
+	if ((is_atcommand(fd, sd, message, 0) != AtCommand_None) ||
+		(is_charcommand(fd, sd, message,0) != CharCommand_None))
+		return;
+
 	if (RFIFOW(fd,2)+4 < 128)
 		buf = buf2; //Use a static buffer.
 	else
@@ -8701,11 +8705,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	clif_send(buf, WBUFW(buf,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	if(buf != buf2) aFree(buf);
-
-	// send back message to the speaker
-	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
-	WFIFOW(fd,0) = 0x8e;
-	WFIFOSET(fd, WFIFOW(fd,2));
 
 #ifdef PCRE_SUPPORT
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, message, strlen(message), &sd->bl);
