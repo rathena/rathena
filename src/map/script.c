@@ -3868,7 +3868,7 @@ struct script_function buildin_func[] = {
 	{buildin_getbattleflag,"getbattleflag","s"},
 	{buildin_setitemscript,"setitemscript","is"}, //Set NEW item bonus script. Lupus
 	{buildin_disguise,"disguise","i"}, //disguise player. Lupus
-	{buildin_undisguise,"undisguise","i"}, //undisguise player. Lupus
+	{buildin_undisguise,"undisguise","*"}, //undisguise player. Lupus
 	{buildin_getmonsterinfo,"getmonsterinfo","ii"}, //Lupus
 	{buildin_axtoi,"axtoi","s"},
 	{buildin_query_sql, "query_sql", "s*"},
