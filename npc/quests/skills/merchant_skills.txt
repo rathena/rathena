@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4b
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -16,7 +16,7 @@
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploits [Lupus]
-//= 1.4a Fixed some typos [IVBela]
+//= 1.4a Fixed some typos [IVBela] 1.4b Gershuan -> Gershaun 
 //============================================================
 
 
@@ -178,12 +178,12 @@ L_GotSkill:
 }
 
 
-//-------------------------====-------- Gershuan: Cart Revolution ---------------------------------\\
-alberta.gat,232,106,6	script	Gershaun	57,{
+//-------------------------====-------- Gershaun: Cart Revolution ---------------------------------\\
+alberta.gat,232,106,6	script	Gershuan	57,{
 	if (baseClass == Job_Merchant) goto L_Start;
 
 L_Other:
-	mes "[Gershaun]";
+	mes "[Gershuan]";
 	mes "If it doesn't work, make it work!";
 	mes "If it doesn't work, make it work!";
 	mes "If it doesn't work, make it work!";
@@ -192,11 +192,11 @@ L_Other:
 L_Start:
 	if (getskilllv(153)>0) goto L_GotSkill;
 	if (CARTREVO == 1) goto L_GetSkill;
-	mes "[Gershaun]";
+	mes "[Gershuan]";
 	mes "Hmm... a young merchant.  You must use carts too right? Since you have to do all of that vending.....  But is that all you use your cart for?";
 	emotion e_hmm;
 	next;
-	mes "[Gershaun]";
+	mes "[Gershuan]";
 	mes "I researched some ways of using the cart differently.  One way involved cooking ramen and another involved jump-roping (don't ask).";
 	mes "Still none of my new ideas were satisfactory.";
 	next;
@@ -271,7 +271,7 @@ L_GetSkill:
 	delitem 938,30;
 	delitem 601,20;
 	delitem 962,5;
-	mes "[Gershaun]";
+	mes "[Gershuan]";
 	mes "It's good to see you again.  I'm glad you were able to get all of the items.  Take a minute to prepare, for your training is about to take place....";
 	next;
 	mes "[Gershuan]";
@@ -299,7 +299,7 @@ L_GetSkill:
 	close;
 
 L_GotSkill:
-	mes "[Gershaun]";
+	mes "[Gershuan]";
 	mes "So how do you like cart revolution? Remember, the ^3355FFheavier^000000 the cart, the ^3355FFgreater^000000 the damage.";
 	close;
 
