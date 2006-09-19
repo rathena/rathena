@@ -331,7 +331,6 @@ extern struct Battle_Config {
 	unsigned short night_at_start; // added by [Yor]
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
-	unsigned short ban_spoof_namer; // added by [Yor]
 	short ban_hack_trade; // added by [Yor]
 	unsigned short hack_info_GM_level; // added by [Yor]
 	unsigned short any_warp_GM_min_level; // added by [Yor]

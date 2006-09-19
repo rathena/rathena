@@ -3682,7 +3682,6 @@ static const struct battle_data_short {
 	{ "backstab_bow_penalty",              &battle_config.backstab_bow_penalty	},
 	{ "night_at_start",                    &battle_config.night_at_start	}, // added by [Yor]
 	{ "show_mob_info",                     &battle_config.show_mob_info }, // [Valaris]
-	{ "ban_spoof_namer",                   &battle_config.ban_spoof_namer	}, // added by [Yor]
 	{ "hack_info_GM_level",                &battle_config.hack_info_GM_level	}, // added by [Yor]
 	{ "any_warp_GM_min_level",             &battle_config.any_warp_GM_min_level	}, // added by [Yor]
 	{ "packet_ver_flag",                   &battle_config.packet_ver_flag	}, // added by [Yor]
@@ -4118,7 +4117,6 @@ void battle_set_defaults() {
 	battle_config.day_duration = 2*60*60*1000; // added by [Yor] (2 hours)
 	battle_config.night_duration = 30*60*1000; // added by [Yor] (30 minutes)
 	battle_config.show_mob_info = 0;
-	battle_config.ban_spoof_namer = 5; // added by [Yor] (default: 5 minutes)
 	battle_config.hack_info_GM_level = 60; // added by [Yor] (default: 60, GM level)
 	battle_config.any_warp_GM_min_level = 20; // added by [Yor]
 	battle_config.packet_ver_flag = 1023; // added by [Yor]
@@ -4339,9 +4337,6 @@ void battle_validate_conf() {
 	if (battle_config.night_duration != 0 && battle_config.night_duration < 60000) // added by [Yor]
 		battle_config.night_duration = 60000;
 	
-	if (battle_config.ban_spoof_namer > SHRT_MAX)
-		battle_config.ban_spoof_namer = SHRT_MAX;
-
 	if (battle_config.hack_info_GM_level > 100)
 		battle_config.hack_info_GM_level = 100;
 

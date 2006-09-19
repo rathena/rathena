@@ -224,9 +224,9 @@ static void report_src(struct script_state *st) {
 		break;
 		default:
 			if (bl->m >=0)
-				ShowDebug("Source (Non-NPC): type %d at %s (%d,%d)\n", bl->type, map[bl->m].name, bl->x, bl->y);
+				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map[bl->m].name, bl->x, bl->y);
 			else
-				ShowDebug("Source (Non-NPC): type %d (invisible/not on a map)\n", bl->type);
+				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
 		break;
 	}
 }
@@ -2729,8 +2729,14 @@ void run_script_main(struct script_state *st)
 	}
 	else if(st->state != END && sd){
 		//Resume later (st is already attached to player).
-		if(bk_st)
+		if(bk_st) {
 			ShowWarning("Unable to restore stack! Double continuation!\n");
+			//Report BOTH scripts to see if that can help somehow.
+			ShowDebug("Previous script (lost):");
+			report_src(bk_st);
+			ShowDebug("Current script:");
+			report_src(st);
+		}
 	} else {
 		//Dispose of script.
 		if (sd)

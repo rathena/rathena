@@ -1001,6 +1001,9 @@ int intif_parse_LoadStorage(int fd) {
 		return 1;
 	}
 
+	if (sd->state.finalsave)
+		return 1; //Player is already scheduled to leave the server.
+
 	stor = account2storage( RFIFOL(fd,4));
 
 	if (stor->storage_status == 1) { // Already open.. lets ignore this update

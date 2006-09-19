@@ -8641,31 +8641,9 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 	if (strlen(message) < strlen(sd->status.name) || //If the incoming string is too short...
 		strncmp(message, sd->status.name, strlen(sd->status.name)) != 0) //Or the name does not matches...
 	{
-		unsigned char gm_msg[256];
-		ShowWarning("Hack on global message: character '%s' (account: %d), use an other name to send a (normal) message.\n", sd->status.name, sd->status.account_id);
-		// information is sended to all online GM
-		sprintf(gm_msg, "Hack on global message (normal message): character '%s' (account: %d) uses another name.", sd->status.name, sd->status.account_id);
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
-		
-		if (strlen(message) == 0)
-			strcpy(gm_msg, " This player sends a void name and a void message.");
-		else
-			snprintf(gm_msg, 255, " This player sends (name:message): '%128s'.", message);
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
-		// message about the ban
-		if (battle_config.ban_spoof_namer > 0)
-			sprintf(gm_msg, " This player has been banned for %d minute(s).", battle_config.ban_spoof_namer);
-		else
-			sprintf(gm_msg, " This player hasn't been banned (Ban option is disabled).");
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
-
-		// if we ban people
-		if (battle_config.ban_spoof_namer > 0) {
-			chrif_char_ask_name(-1, sd->status.name, 2, 0, 0, 0, 0, battle_config.ban_spoof_namer, 0); // type: 2 - ban (year, month, day, hour, minute, second)
-			clif_setwaitclose(fd); // forced to disconnect because of the hack
-		}
-		else
-			session[fd]->eof = 1; //Disconnect them too, bad packets can cause problems down the road. [Skotlex]
+		//Hacked message, or infamous "client desynch" issue where they pick
+		//one char while loading another. Just kick them out to correct it.
+		clif_setwaitclose(fd);
 		return;
 	}
 	

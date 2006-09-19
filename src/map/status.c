@@ -3921,6 +3921,8 @@ const char * status_get_name(struct block_list *bl)
 		return ((struct pet_data *)bl)->pet.name;
 	case BL_HOM:
 		return ((struct homun_data *)bl)->master->homunculus.name;
+	case BL_NPC:
+		return ((struct npc_data*)bl)->name;
 	default:
 		return "Unknown";
 	}
