@@ -267,7 +267,7 @@ static int graph_draw_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-void graph_add_sensor(const char* string, int interval, unsigned int (*callback_func)(void))
+void graph_add_sensor(const unsigned char* string, int interval, unsigned int (*callback_func)(void))
 {
 	int draw_interval = interval * 2;
 	struct graph *g = graph_create(GRP_WIDTH,GRP_HEIGHT);

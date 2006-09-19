@@ -403,7 +403,7 @@ int deflate_file (const char *source, const char *filename)
 	return 0;
 }
 
-unsigned long grfio_crc32 (const char *buf, unsigned int len)
+unsigned long grfio_crc32 (const unsigned char *buf, unsigned int len)
 {
 	return crc32(crc32(0L, Z_NULL, 0), buf, len);
 }

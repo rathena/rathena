@@ -13,7 +13,7 @@ char *grfio_alloc_ptr(char *fname);
 #define grfio_read(fn) grfio_reads(fn, NULL)
 
 int grfio_size(char*);			// GRFIO data file size get
-unsigned long grfio_crc32(const char *buf, unsigned int len);
+unsigned long grfio_crc32(const unsigned char *buf, unsigned int len);
 
 int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen);
 int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen);
