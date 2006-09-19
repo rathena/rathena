@@ -277,7 +277,7 @@ P9:
 
 P10:
 	mes "20x Blue Potion!";
-	getitem 505,10;
+	getitem 505,20;
 	close;
 
 LEAVE:

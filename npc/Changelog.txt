@@ -33,6 +33,8 @@ Playtester
 Date		Added
 ======
 09/19
+	* Fixed rpsroulette.txt, giving 10 blue potions as prize instead of the 20 it said. Also fixed
+	  a missing variable in sphinx_mask.txt. Noticed by JTE and fixed by Warian [erKURITA]
 	* Preparations for optimization of Louyang/Nifelhem scripts [Lupus]
 09/16
 	* fixed apple dice game in Airship, fixed missing } in Einbech quests [Lupus]

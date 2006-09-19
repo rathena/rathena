@@ -3,12 +3,13 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
 //= this quest is related to Umbalian Chief
 //= 1.1 Removed it from official Umbala quests [Lupus]
+//= 1.2 Added a missing variable (sphmask_q) [erKURITA]
 //============================================================ 
 
 
@@ -56,6 +57,7 @@ morocc.gat,140,156,5	script	Turban Thief	58,{
 				mes "[Turban Thief]";
 				mes "Alright, here you go then...";
 				getitem 7114,1;//Items: Sphinx Mask,
+				set sphmask_q,1;
 				close;
 			NoGoC:
 				next;
