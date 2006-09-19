@@ -785,6 +785,8 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 		unsigned int max_hp = status_get_max_hp(bl);
 		if ((pos == 1 && max_hp < 6000) || (pos == 2 && max_hp < 20000))
 			return 0;
+		if (pos != status_get_size(bl))
+			return 0; //Wrong size
 	}
 	sd->hate_mob[pos] = class_;
 	pc_setglobalreg(sd,hate_var[pos],class_+1);
