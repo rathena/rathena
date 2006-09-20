@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, Completed by aoa00
 //= Evera, MasterOfMupppets, Lupus
 //===== Current Version: ===================================== 
-//= 2.6a
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,8 @@
 //= 2.5	Fixed Kellasus giving you extra skills in Bio Ethics quest [Evera]
 //= 2.6	Fixed exploit letting any class get homunculus from Bio Ethics Quest [Evera]
 //= 2.6a Moved Bio Ethics Quest to Alchemist SKILL QUESTS [Lupus]
+//= 2.7 fixed bugs that let people bypass some quest parts V_V [Lupus]
+//=	reused cubekey var for 4 Cube Room key vars
 //============================================================ 
 
 lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
@@ -642,7 +644,7 @@ L_2:
 //--------------------------Barrel--------------------------
 
 lhz_cube.gat,237,183,0	script	Barrel	111,{
-	if (ykey == 1) goto L_4;
+	if (cubekey&1) goto L_4;
 	if (box == 1) goto L_2;
 	mes "There is a box that looks weak.";
 	if (axe == 0) close;
@@ -692,7 +694,7 @@ L_3:
 	mes "Within the box, there is 'yellow key'.";
 	next;
 	mes "You acquired '^FF0000yellow key^000000'.";
-	set ykey,1;
+	set cubekey,cubekey|1;
 	close;
 
 L_4:
@@ -706,7 +708,7 @@ L_4:
 lhz_cube.gat,242,201,0	script	Drawer	111,{
 	if (knife == 1) goto L_3;
 	mes "The drawer is locked.";
-	if (redkey == 1) goto L_1;
+	if (cubekey&2) goto L_1;
 	close;
 
 L_1:
@@ -732,7 +734,7 @@ L_3:
 //--------------------------Documents--------------------------
 
 lhz_cube.gat,237,198,0	script	Documents	111,{
-	if (redkey == 1) goto L_2;
+	if (cubekey&2) goto L_2;
 	mes "There are tons of documents here.";
 	next;
 	menu "Search the documents.",L_1,"Ignore.",-;
@@ -742,7 +744,7 @@ L_1:
 	mes "As you look through the documents, a 'red key' falls out.";
 	next;
 	mes "You acquired ^FF0000red key^000000.";
-	set redkey,1;
+	set cubekey,cubekey|2;
 	close;
 
 L_2:
@@ -795,7 +797,7 @@ L_2:
 	next;
 	input @bed$;
 
-	if (@bed$ == "long stick" && rod == 1 || @bed$ == "Long Stick" && rod == 1) goto L2_1;
+	if (rod == 1 && (@bed$ == "long stick" || @bed$ == "Long Stick")) goto L2_1;
 	mes "It looks like you need some kind of long item to";
 	mes "Get the item out, you can't reach it!";
 	close;
@@ -816,7 +818,7 @@ L_3:
 //--------------------------Cup--------------------------
 
 lhz_cube.gat,229,184,0	script	Cup	111,{
-	if (fkey == 1) goto L_2;
+	if (cubekey&4) goto L_2;
 	mes "You see an empty bottle and a cup with something in it.";
 	next;
 	menu "Leave it alone.",-,"Look what is inside.",L_1;
@@ -826,7 +828,7 @@ L_1:
 	mes "When you look inside, you see a 'rusty key'.";
 	next;
 	mes "You acquired the '^FF0000rusty key^000000'.";
-	set fkey,1;
+	set cubekey,cubekey|4;
 	close;
 
 L_2:
@@ -838,13 +840,13 @@ L_2:
 //--------------------------Shelf--------------------------
 
 lhz_cube.gat,233,206,0	script	Shelf	111,{
-	if (gkey == 1) goto L_2;
+	if (cubekey&8) goto L_2;
 	mes "There are lots of bottles filled with acids lined up";
 	mes "Along the shelf, they have different labels.";
 	next;
 	input @lathe$;
 
-	if (fkey == 1 && @lathe$ == "rusty key" || fkey == 1 && @lathe$ == "Rusty Key") goto L_1;
+	if (cubekey&4 && (@lathe$ == "rusty key" || @lathe$ == "Rusty Key")) goto L_1;
 	mes "Nothing happened.";
 	close;
 
@@ -854,7 +856,7 @@ L_1:
 	mes "All that's left is a clean, green key.";
 	next;
 	mes "You acquired the '^FF0000green key^000000'";
-	set gkey,1;
+	set cubekey,cubekey|8;
 	close;
 
 L_2:
@@ -870,8 +872,8 @@ L_2:
 lhz_cube.gat,249,191,0	script	Closet	111,{
 	if (polygon >= 1) goto L_4;
 	mes "There is a closet with lots of drawers.";
-	if (gkey == 1) goto L_2;
-	if (gkey == 0) next;
+	if (cubekey&8) goto L_2;
+	next;
 	menu "Leave it alone.",-,"Open one of the drawers.",L_1;
 	close;
 
@@ -964,7 +966,7 @@ L_1:
 	next;
 	input @knife$;
 
-	if (knife == 1 && @knife$ == "small knife" ||knife == 1 &&  @knife$ == "Small Knife") goto L1_1;
+	if (knife == 1 && (@knife$ == "small knife" || @knife$ == "Small Knife")) goto L1_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1046,7 +1048,7 @@ lhz_cube.gat,224,192,0	script	Generator	111,{
 	next;
 	input @key$;
 
-	if (ykey == 1 && @key$ == "yellow key" || ykey == 1 && @key$ == "Yellow Key") goto L_1;
+	if (cubekey&1 && (@key$ == "yellow key" || @key$ == "Yellow Key")) goto L_1;
 	mes "There's nothing to do here.";
 	close;
 
@@ -1068,7 +1070,7 @@ L_2:
 //--------------------------Lamp--------------------------
 
 lhz_cube.gat,248,205,0	script	Lamp	111,{
-	if (bkey == 1) goto L_3;
+	if (cubekey&16) goto L_3;
 	if (machine == 1) goto L_1;
 	mes "There is a bright lamp.";
 	mes "Seems like there is something inside";
@@ -1087,7 +1089,7 @@ L_2:
 	mes "'black key' falls out.";
 	next;
 	mes "You acquired the '^FF0000black key^000000'.";
-	set bkey,1;
+	set cubekey,cubekey|16;
 	close;
 
 L_3:
@@ -1108,7 +1110,7 @@ L_1:
 	if (ellipse == 2) goto L1_2;
 	input @ellipse$;
 
-	if (ellipse == 1 && @ellipse$ == "ellipse model" ||ellipse == 1 && @ellipse$ == "Ellipse Model") goto L1_1;
+	if (ellipse == 1 && (@ellipse$ == "ellipse model" || @ellipse$ == "Ellipse Model")) goto L1_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1126,7 +1128,7 @@ L_2:
 	if (quadrangle == 2) goto L2_2;
 	input @quadrangle$;
 
-	if (quadrangle == 1 && @quadrangle$ == "cube model" || quadrangle == 1 && @quadrangle$ == "Cube Model") goto L2_1;
+	if (quadrangle == 1 && (@quadrangle$ == "cube model" || @quadrangle$ == "Cube Model")) goto L2_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1144,7 +1146,7 @@ L_3:
 	if (polygon == 2) goto L3_2;
 	input @polygon$;
 
-	if (polygon == 1 && @polygon$ == "polygon model" || polygon == 1 && @polygon$ == "Polygon Model") goto L3_1;
+	if (polygon == 1 && (@polygon$ == "polygon model" || @polygon$ == "Polygon Model")) goto L3_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1189,7 +1191,7 @@ lhz_cube.gat,224,197,0	script	Test Tube	111,{
 	next;
 	input @key$;
 
-	if (bkey == 1 && @key$ == "black key" || bkey == 1 && @key$ == "Black Key") goto L_1;
+	if (cubekey&16 && (@key$ == "black key" || @key$ == "Black Key")) goto L_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1226,14 +1228,14 @@ L_4:
 
 L4_1:
 	mes "It connected to a long staircase.";
-	close2;
-	set axe,0;	set ykey,0;	set box,0;	set num1,0;
+	set knife,0;	set axe,0;	set box,0;
+	set cubekey,0;	set machine,0;	set num1,0;
 	set num2,0;	set num3,0;	set num4,0;	set num5,0;
 	set num6,0;	set num7,0;	set num8,0;	set num9,0;
-	set knife,0;	set redkey,0;	set srod1,0;	set srod2,0;
-	set fkey,0;	set gkey,0;	set polygon,0;	set machine,0;
-	set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
+	set rod,0;	set srod1,0;	set srod2,0;
+	set polygon,0;	set ellipse,0;	set quadrangle,0;
 	set hzdun,1;
+	close2;
 	warp "lhz_cube.gat",177,13;
 	end;
 }

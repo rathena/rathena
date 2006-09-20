@@ -30,12 +30,14 @@ Playtester
 Date		Added
 ======
 09/20
+	* Fixed some bugs in Cube Room. Some parts could be skipped [Lupus]
 	* Final optimization of Niflheim quests [Lupus]
 	- Book of Devil Quest uses bit-wise var MISC_QUEST | 256. Removed extra vars
 	- Piano Quest uses 1 bit-wise temp var instead of 5 variables.
 	- Clear Niflheim garbage vars in Global_Functions.txt 
 	- Added few missing NEXT; into job quests, thanks to $ephiroth
 	- Changed permanent variables in 1st Job Quest skills to @temp ones
+	- Cube Room: 5 key vars -> 1 var cubekey
 09/19
 	* Fixed rpsroulette.txt, giving 10 blue potions as prize instead of the 20 it said. Also fixed
 	  a missing variable in sphinx_mask.txt. Noticed by JTE and fixed by Warian [erKURITA]

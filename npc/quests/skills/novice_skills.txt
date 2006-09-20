@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4b
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -22,18 +22,34 @@
 //<---------------------------------------------------------------------------------------------- Nurse Aid: First Aid NPC ---------------------------------------------------------------------------->\\
 prt_in.gat,235,133,4	script	Nurse Aid	90,{
 	mes "[Nurse Aid]";
-	if(FIRSTAID) goto L_GetAid;
-	if(getskilllv(142)>0) goto L_GotAid;
-
+	if(FIRSTAID){
+		if((JobLevel <  3) || (countitem(507) < 5 ) || (countitem(705) < 5) || (countitem(930) < 1)) goto sM_Yes;
+		delitem 507,5;
+		delitem 705,5;
+		delitem 930,1;
+		mes "Oh good.  You have everything needed for me to teach you first aid.  Here we go...";
+		next;
+		mes "....... 1 hour later.......";
+		next;
+		skill 142,1,0;
+		set FIRSTAID,0;
+		set got_bandage,0;
+		mes "[Nurse Aid]";
+		mes "YES! You finally got it.  Now you can heal yourself and continue fighting those bad monsters.  Well, take care.";
+		emotion e_no1;
+		close;
+	}
+	if(getskilllv(142)>0){
+		mes "Well hello again.  I really hope the First Aid skill has been helpful to you.  Make sure to continue your hard work and don't forget to rest and heal!";
+		close;
+	}
 	mes "Oh hello there!  You look tired and a little worn out.  Have the monsters outside of town been giving you trouble?";
 	next;
-	menu "Ha! Me strong like BULL!!",M_Nope, "Well..um..kinda..",M_Yep;
+	menu "Ha! Me strong like BULL!!",-, "Well..um..kinda..",M_Yep;
 
-	M_Nope:
 		mes "[Nurse Aid]";
 		mes "Oh I see.  You must be a mighty warrior.  Well, come back anytime if you do ever feel overwhelmed by the monsters.  I'll be able to help.";
 		close;
-
 	M_Yep:
 		mes "[Nurse Aid]";
 		mes "Well don't feel bad.  It can be very difficult fighting those nasty monsters in the beginning.";
@@ -49,8 +65,12 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 		mes "That's why I've decided to teach people how to heal themselves!  Would you like me to teach you?";
 		emotion e_ic;
 		next;
-		menu "Would you??",sM_Yes, "(...she's nuts!...run!!!)",sM_No;
+		menu "Would you??",sM_Yes, "(...she's nuts!...run!!!)",-;
 
+			mes "[Nurse Aid]";
+			mes "Hey!...Where are you running too??...";
+			emotion e_swt;
+			close;
 		sM_Yes:
 			mes "[Nurse Aid]";
 			mes "In order for me to teach you First Aid you need to have at least a^0000ff Job Level of 3^000000.";
@@ -63,64 +83,79 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 			mes "Once you get Job Level 3 and have all of the items come back and see me, OK?";
 			set FIRSTAID,1;
 			close;				
-
-		sM_No:
-			mes "[Nurse Aid]";
-			mes "Hey!...Where are you running too??...";
-			emotion e_swt;
-			close;
-
-L_GetAid:
-	if((JobLevel <  3) || (countitem(507) < 5 ) || (countitem(705) < 5) || (countitem(930) < 1)) goto sM_Yes;
-	delitem 507,5;
-	delitem 705,5;
-	delitem 930,1;
-	mes "Oh good.  You have everything needed for me to teach you first aid.  Here we go...";
-	next;
-	mes "....... 1 hour later.......";
-	next;
-	skill 142,1,0;
-	set FIRSTAID,0;
-	set got_bandage,0;
-	mes "[Nurse Aid]";
-	mes "YES! You finally got it.  Now you can heal yourself and continue fighting those bad monsters.  Well, take care.";
-	emotion e_no1;
-	close;
-
-L_GotAid:
-	mes "Well hello again.  I really hope the First Aid skill has been helpful to you.  Make sure to continue your hard work and don't forget to rest and heal!";
-	close;
-
 }
 
 
 //<-------------------------------------------------------------------------------------------------- Bulma: Play Dead -------------------------------------------------------------------------------------------->\\
 prt_in.gat,73,87,2	script	Bulma	98,{
 	mes "[Bulma]";
-	if(BaseJob == Job_Novice) goto L_Novice;
-
-L_Other:
-	mes "Yeah... I look great.... After all, I'm a Knight of the Prontera Chivalry.  Kuhahahaha!";
-	emotion e_heh;
-	next;
-	mes "[Bulma]";
-	mes "It hasn't been that long since I became a Knight, but I still look good as one right? What do you think???";
-	emotion e_hmm;
-	close;
-
-L_Novice:
-	if(JobLevel >= 7) goto L_Start;
-	mes "Hello my young friend.  You remind me of myself when I was young.....";
-	mes "Heh heh, I really miss those days..... Wow... It's funny to think about those years now......";
-	next;
-	mes "[Bulma]";
-	mes "They were difficult.... thankfully you can use the ^5555FFPlay Dead^000000 skill when you reach a ^5555FFJob Level of 7^000000.";
-	mes "If you're interested in it come back and talk to me when you've leveled up a bit more.";
-	close;
-
-L_Start:
-	if(PLAYDEAD) goto L_GetSkill;
-	if(getskilllv(143)>0) goto L_GotSkill;
+	if(BaseJob != Job_Novice){
+		mes "Yeah... I look great.... After all, I'm a Knight of the Prontera Chivalry.  Kuhahahaha!";
+		emotion e_heh;
+		next;
+		mes "[Bulma]";
+		mes "It hasn't been that long since I became a Knight, but I still look good as one right? What do you think???";
+		emotion e_hmm;
+		close;
+	}
+	if(JobLevel < 7){
+		mes "Hello my young friend.  You remind me of myself when I was young.....";
+		mes "Heh heh, I really miss those days..... Wow... It's funny to think about those years now......";
+		next;
+		mes "[Bulma]";
+		mes "They were difficult.... thankfully you can use the ^5555FFPlay Dead^000000 skill when you reach a ^5555FFJob Level of 7^000000.";
+		mes "If you're interested in it come back and talk to me when you've leveled up a bit more.";
+		close;
+	}
+	if(PLAYDEAD){
+		if(countitem(7039)<1){
+			mes "HEY! What are you doing here?  It's irresponsible of you to still be here while your time is running out.........";
+			emotion e_gasp;
+			next;
+			mes "[Bulma]";
+			mes "Now GO! Run! Run! RUN!!";
+			emotion e_go;
+			close;
+		}
+		delitem 7039, 1;
+		mes "Good to see you again.  Alright, lets start your training....";
+		next;
+		mes "[Bulma]";
+		mes "Let me first introduce to you the concept of 'Method Acting'.  Method Acting stresses the need to understand every aspect of the role you are playing.";
+		next;
+		mes "[Bulma]";
+		mes "You must learn to think, feel, and even live like your character so that you can understand his/her motivation in any given moment.";
+		next;
+		mes "[Bulma]";
+		mes "Now let us use this technique to develop your ability to Play Dead!";
+		mes "I want you to think like a dead person, feel like a dead person, eat, breath, sleep, kiss, etc. like a person who is dead!!!";
+		next;
+		mes "[Bulma]";
+		mes "Don't just stand there! Lay down on the ground and live life through the eyes of a dead person.... errr or don't live.... anyways just do it!!";
+		next;
+		mes "~ several hours later ~";
+		next;
+		mes "[Bulma]";
+		mes "OK, lights, camera, ACTION! Yes... yes... YES!! That's it!! As I watch you laying there I TRULY believe that you are dead.";
+		mes "What a wonderful performance! BRAVO! BRAVO!";
+		emotion e_gasp;
+		next;
+		mes "[Bulma]";
+		mes "With the right motivation and focus you will be able to play dead anywhere at any given moment.  Congratulations on mastering this skill.";
+		emotion e_no1;
+		skill 143,1,0;
+		set PLAYDEAD, 0;
+		set got_novnametag,0;
+		close;
+	}
+	if(getskilllv(143)>0){
+		mes "Yeah.... I remember back then..... especially those embarrassing novice years... heh.  Luckily there was Play Dead.";
+		mes "That saved me many times in the past.  I'm sure it has been saving you too.";
+		next;
+		mes "[Bulma]";
+		mes "Hopefully it is something you have been using well.  If you have any friends who are novices, tell them about me.  I will help them out as good as I can.";
+		close;
+	}
 	mes "Hello my young friend.  You remind me of myself when I was young..... Heh heh, I really miss those days.....";
 	mes "Look at me acting all sentimental like some old man........";
 	next;
@@ -171,70 +206,18 @@ L_Start:
 	emotion e_go;
 	set PLAYDEAD, 1;
 	close;
-
-L_GetSkill:
-	if(countitem(7039)<1) goto sL_NotRdy;
-	delitem 7039, 1;
-	mes "Good to see you again.  Alright, lets start your training....";
-	next;
-	mes "[Bulma]";
-	mes "Let me first introduce to you the concept of 'Method Acting'.  Method Acting stresses the need to understand every aspect of the role you are playing.";
-	next;
-	mes "[Bulma]";
-	mes "You must learn to think, feel, and even live like your character so that you can understand his/her motivation in any given moment.";
-	next;
-	mes "[Bulma]";
-	mes "Now let us use this technique to develop your ability to Play Dead!";
-	mes "I want you to think like a dead person, feel like a dead person, eat, breath, sleep, kiss, etc. like a person who is dead!!!";
-	next;
-	mes "[Bulma]";
-	mes "Don't just stand there! Lay down on the ground and live life through the eyes of a dead person.... errr or don't live.... anyways just do it!!";
-	next;
-	mes "~ several hours later ~";
-	next;
-	mes "[Bulma]";
-	mes "OK, lights, camera, ACTION! Yes... yes... YES!! That's it!! As I watch you laying there I TRULY believe that you are dead.";
-	mes "What a wonderful performance! BRAVO! BRAVO!";
-	emotion e_gasp;
-	next;
-	mes "[Bulma]";
-	mes "With the right motivation and focus you will be able to play dead anywhere at any given moment.  Congratulations on mastering this skill.";
-	emotion e_no1;
-	skill 143,1,0;
-	set PLAYDEAD, 0;
-	set got_novnametag,0;
-	close;
-
-	sL_NotRdy:
-		mes "HEY! What are you doing here?  It's irresponsible of you to still be here while your time is running out.........";
-		emotion e_gasp;
-		next;
-		mes "[Bulma]";
-		mes "Now GO! Run! Run! RUN!!";
-		emotion e_go;
-		close;
-
-L_GotSkill:
-	mes "Yeah.... I remember back then..... especially those embarrassing novice years... heh.  Luckily there was Play Dead.";
-	mes "That saved me many times in the past.  I'm sure it has been saving you too.";
-	next;
-	mes "[Bulma]";
-	mes "Hopefully it is something you have been using well.  If you have any friends who are novices, tell them about me.  I will help them out as good as I can.";
-	close;
 }
 
 
 //Newbie Assistant------------------------------------------------------------------------------
 prt_castle.gat,174,147,2	script	Newbie Assistant	84,{
 	mes "[Newbie Assistant]";
-	if(BaseJob == Job_Novice) goto L_Start;
-
-L_NonNov:
-	mes "What am I doing here?  I'm just trying to help out young newbies.  You remember how it was to be a newbie... confused.... lost.... heh heh.";
-	emotion e_what;
-	close;
-L_Start:
-	if(FIRSTAID && countitem(930)==0 && got_bandage!=1){
+	if(BaseJob != Job_Novice){
+		mes "What am I doing here?  I'm just trying to help out young newbies.  You remember how it was to be a newbie... confused.... lost.... heh heh.";
+		emotion e_what;
+		close;
+	}
+	if(FIRSTAID && countitem(930)==0 && !got_bandage){
 		mes "So Nurse Aid sent you huh.  She's a great nurse, you should feel very fortunate that she is helping you out.  Here take this.";
 		next;
 		getitem 930,1;
@@ -250,7 +233,7 @@ L_Start:
 		emotion e_lv;
 		close;
 	}
-	if(PLAYDEAD && countitem(7039)==0 && got_novnametag!=1){
+	if(PLAYDEAD && countitem(7039)==0 && !got_novnametag){
 		mes "So Bulma sent you uh.... okay here you go.";
 		getitem 7039,1;
 		set got_novnametag,1;
