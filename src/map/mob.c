@@ -2134,12 +2134,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(md->nd)
 		mob_script_callback(md, src, CALLBACK_DEAD);
 	else if(md->npc_event[0]){
+		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
 		if(src && src->type == BL_PET)
 			sd = ((struct pet_data *)src)->msd;
 		if(sd && battle_config.mob_npc_event_type)
 			npc_event(sd,md->npc_event,0);
 		else if(mvp_sd)
 			npc_event(mvp_sd,md->npc_event,0);
+		md->status.hp = 1;
 	} else if (mvp_sd) {	//lordalfa
 		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
 		if(mvp_sd->state.event_kill_mob)

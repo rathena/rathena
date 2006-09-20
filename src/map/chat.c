@@ -120,8 +120,10 @@ int chat_leavechat(struct map_session_data *sd)
 	nullpo_retr(1, sd);
 
 	cd=(struct chat_data*)map_id2bl(sd->chatID);
-	if(cd==NULL)
+	if(cd==NULL) {
+		sd->chatID = 0;
 		return 1;
+	}
 
 	for(i = 0,leavechar=-1;i < cd->users;i++){
 		if(cd->usersd[i] == sd){
@@ -129,8 +131,11 @@ int chat_leavechat(struct map_session_data *sd)
 			break;
 		}
 	}
-	if(leavechar<0)	// そのchatに所属していないらしい (バグ時のみ)
+	if(leavechar<0)
+  	{	//Not found in the chatroom?
+		sd->chatID = 0;
 		return -1;
+	}
 
 	if(leavechar==0 && cd->users>1 && (*cd->owner)->type==BL_PC){
 		// 所有者だった&他に人が居る&PCのチャット
@@ -148,18 +153,19 @@ int chat_leavechat(struct map_session_data *sd)
 		//Delete empty chatroom
 		clif_clearchat(cd,0);
 		map_delobject(cd->bl.id);
-	} else {
-		for(i=leavechar;i < cd->users;i++)
-			cd->usersd[i] = cd->usersd[i+1];
-		if(leavechar==0 && (*cd->owner)->type==BL_PC){
-			//Adjust Chat location after owner has been changed.
-			map_delblock( &cd->bl );
-			cd->bl.x=cd->usersd[0]->bl.x;
-			cd->bl.y=cd->usersd[0]->bl.y;
-			map_addblock( &cd->bl );
-		}
-		clif_dispchat(cd,0);
+		return 1;
 	}
+	for(i=leavechar;i < cd->users;i++)
+		cd->usersd[i] = cd->usersd[i+1];
+
+	if(leavechar==0 && (*cd->owner)->type==BL_PC){
+		//Adjust Chat location after owner has been changed.
+		map_delblock( &cd->bl );
+		cd->bl.x=cd->usersd[0]->bl.x;
+		cd->bl.y=cd->usersd[0]->bl.y;
+		map_addblock( &cd->bl );
+	}
+	clif_dispchat(cd,0);
 
 	return 0;
 }
@@ -194,7 +200,7 @@ int chat_changechatowner(struct map_session_data *sd,char *nextownername)
 	clif_clearchat(cd,0);
 
 	// userlistの順番変更 (0が所有者なので)
-	if( (tmp_sd = cd->usersd[0]) == NULL )
+	if( (tmp_sd = cd->usersd[0]) == NULL ) //FIXME: How is this even possible!? Invoking character should be owner, hence, it SHOULD be on sc->usersd[0]!
 		return 1; //ありえるのかな？
 	cd->usersd[0] = cd->usersd[nextowner];
 	cd->usersd[nextowner] = tmp_sd;
