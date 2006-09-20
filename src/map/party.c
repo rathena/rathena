@@ -823,10 +823,14 @@ int party_send_dot_remove(struct map_session_data *sd)
 // party_foreachsamemap(party_sub_count, sd, 0, &c);
 int party_sub_count(struct block_list *bl, va_list ap)
 {
-	if(!(((TBL_PC *)bl)->state.autotrade) && (((TBL_PC *)bl)->idletime < (last_tick - battle_config.idle_no_share)))
-		return 1;
-	else
+	if(((TBL_PC *)bl)->state.autotrade)
 		return 0;
+		  
+	if(battle_config.idle_no_share &&
+		((TBL_PC *)bl)->idletime >= (last_tick - battle_config.idle_no_share))
+		return 0;
+
+	return 1;
 }
 
 int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int range,...)

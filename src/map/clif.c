@@ -11077,6 +11077,8 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd) {
 
 	switch (sd->class_&MAPID_UPPERMASK)
 	{
+		case MAPID_SOUL_LINKER:
+		case MAPID_STAR_GLADIATOR:
 		case MAPID_TAEKWON:
 			if (!sd->state.rest)
 				break;
