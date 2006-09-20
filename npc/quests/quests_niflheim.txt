@@ -121,7 +121,7 @@ niflheim.gat,224,243,3	script	Alager	795,{
 	mes "Ah, let me thank you with this,";
 	mes "I found it on the ground, hoho~";
 	getitem 7184,1;//Items: Piano Key,
-	set nif_piano, 1;
+	set nif_piano, nif_piano|1;
 	close;
 L_end:
 	percentheal -30,0;
