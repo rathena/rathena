@@ -17,6 +17,7 @@
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploits [Lupus]
 //= 1.4a Fixed some typos [IVBela] 1.4b Gershuan -> Gershaun 
+//= 	changed perm. variables to temp ones [Lupus]
 //============================================================
 
 
@@ -31,15 +32,15 @@ alberta.gat,89,96,5	script	Necko#01	139,0,4,{
 
 alberta.gat,83,96,5	script	Necko#02	98,{
 	mes "[Necko]";
-	if (baseClass == Job_Merchant) goto L_Start;
+	if(baseClass == Job_Merchant) goto L_Start;
 
 L_Other:
 	mes "Necko's store is closed right now.  Come back later..... Hehe....";
 	close;
 
 L_Start:
-	if (getskilllv(155)>0) goto L_GotSkill;
-	if (CRAZYROAR == 1) goto L_GetSkill;
+	if(getskilllv(155)>0) goto L_GotSkill;
+	if(@CRAZYROAR) goto L_GetSkill;
 	mes "Oh! Did you come here because you were intrigued by my boisterous voice? My voice is quite loud, isn't it?";
 	mes "After all you heared it from a far off distance.";
 	emotion e_what;
@@ -75,7 +76,7 @@ L_Start:
 	mes "[Necko]";
 	mes "Come back when you are ready! I think I shall do a little vocal training myself........";
 	mes "Bbooowuuuuuuuuuuuuuuuuuuuuuuuuuh!!";
-	set CRAZYROAR, 1;
+	set @CRAZYROAR, 1;
 	close;
 
 	L_JobLvl:
@@ -87,7 +88,7 @@ L_Start:
 		close;
 
 L_GetSkill:
-	if ((countitem(722)<7) || (countitem(532)<1) || (countitem(921)<50)) goto L_Items;
+	if((countitem(722)<7) || (countitem(532)<1) || (countitem(921)<50)) goto L_Items;
 	delitem 722,7;
 	delitem 532,1;
 	delitem 921,50;
@@ -101,7 +102,7 @@ L_GetSkill:
 	mes "[Necko]";
 	mes "Raaaaaawwwwrrrrrrrrrrr!....... Ha ha!! Excellent.  Your voice is now finely tuned for ^3355FFCrazy Uproar^000000.  Good job.";
 	skill 155,1,0;
-	set CRAZYROAR, 0;
+	set @CRAZYROAR, 0;
 	emotion e_no1;
 	close;
 
@@ -121,13 +122,13 @@ L_GotSkill:
 //----------------------------------------- Charlron: Change cart ---------------------------------\\
 alberta.gat,119,221,6	script	Charlron	107,{
 	mes "[Charlron]";
-	if (baseClass == Job_Merchant) goto L_Start;
+	if(baseClass == Job_Merchant) goto L_Start;
 L_Other:
 	mes "I am a merchant that deals with many things.  My name is Charlron.  If you ever find anything interesting, come back and try to negotiate a deal with me.";
 	close;
 L_Start:
-	if (getskilllv(154)>0) goto L_GotSkill;
-	if (CHANGECART == 1) goto L_GetSkill;
+	if(getskilllv(154)>0) goto L_GotSkill;
+	if(@CHANGECART) goto L_GetSkill;
 	mes "Welcome young one.  Is selling fun for you? I am the merchant Charlron.";
 	next;
 	mes "[Charlron]";
@@ -140,12 +141,12 @@ L_Start:
 	mes "I can change the way your cart looks for you.  Of course some conditions need to be met......";
 	next;
 	mes "[Charlron]";
-	if (BaseJob==Job_Merchant && JobLevel < 30) goto L_JobLvl;
+	if(BaseJob==Job_Merchant && JobLevel < 30) goto L_JobLvl;
 	mes "First you will need to bring me these items:";
 	mes "^3355FF50 Trunks,";
 	mes "20 Animal Skin,";
 	mes "10 Iron^000000.";
-	set CHANGECART, 1;
+	set @CHANGECART, 1;
 	close;
 
 	L_JobLvl:
@@ -154,12 +155,12 @@ L_Start:
 		close;
 
 L_GetSkill:
-	if ((countitem(1019)<50) || (countitem(998)<10) || (countitem(919)<20)) goto L_Items;
+	if((countitem(1019)<50) || (countitem(998)<10) || (countitem(919)<20)) goto L_Items;
 	mes "Oh good, you have all of the items.  Well here you are..... Hmm?... Oh these are the design sheets for your cart.";
 	mes "Now that you have the proper materials, just follow these guides to make your cart look spectacular.";
 // Note: It is not supposed to take these items, just check you have collected them
 	skill 154,1,0;
-	set CHANGECART, 0;
+	set @CHANGECART, 0;
 	next;
 	mes "[Charlron]";
 	mes "Good luck, see you around";
@@ -180,7 +181,7 @@ L_GotSkill:
 
 //-------------------------====-------- Gershaun: Cart Revolution ---------------------------------\\
 alberta.gat,232,106,6	script	Gershuan	57,{
-	if (baseClass == Job_Merchant) goto L_Start;
+	if(baseClass == Job_Merchant) goto L_Start;
 
 L_Other:
 	mes "[Gershuan]";
@@ -190,8 +191,8 @@ L_Other:
 	close;
 
 L_Start:
-	if (getskilllv(153)>0) goto L_GotSkill;
-	if (CARTREVO == 1) goto L_GetSkill;
+	if(getskilllv(153)>0) goto L_GotSkill;
+	if(@CARTREVO) goto L_GetSkill;
 	mes "[Gershuan]";
 	mes "Hmm... a young merchant.  You must use carts too right? Since you have to do all of that vending.....  But is that all you use your cart for?";
 	emotion e_hmm;
@@ -239,7 +240,7 @@ L_Start:
 
 		sM_0:
 			mes "[Gershuan]";
-			if (BaseJob==Job_Merchant && JobLevel < 35) goto ssL_LowLvl;
+			if(BaseJob==Job_Merchant && JobLevel < 35) goto ssL_LowLvl;
 			mes "OK! I will give you the special training for Cart Revolution.  The first thing you will have to do is bring me these items:";
 			mes "^3355FF30 Sticky Mucus,";
 			mes "20 Fly wings,";
@@ -249,7 +250,7 @@ L_Start:
 			next;
 			mes "[Gershuan]";
 			mes "Come back when you have all of these items.  Good luck.";
-			set CARTREVO, 1;
+			set @CARTREVO, 1;
 			close;
 
 			ssL_LowLvl:
@@ -265,7 +266,7 @@ L_Start:
 			close;
 
 L_GetSkill:
-	if ((countitem(533)<2) || (countitem(998)<15) || (countitem(938)<30) || (countitem(601)<20) || (countitem(962)<5)) goto sM_0;
+	if((countitem(533)<2) || (countitem(998)<15) || (countitem(938)<30) || (countitem(601)<20) || (countitem(962)<5)) goto sM_0;
 	delitem 533,2;
 	delitem 998,15;
 	delitem 938,30;
@@ -292,7 +293,7 @@ L_GetSkill:
 	emotion e_no1;
 	next;
 	skill 153,1,0;
-	set CARTREVO, 0;
+	set @CARTREVO, 0;
 	mes "[Gershuan]";
 	mes "Take care of yourself and remember to fill that cart up so that it can do some major damage.";
 	emotion e_gg;

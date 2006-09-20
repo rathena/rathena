@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed an exploit [Lupus]
+//= 1.4a changed perm. variables to temp ones [Lupus]
 //============================================================
 
 
@@ -29,8 +30,8 @@ L_Other:
 	close;
 
 L_Start:
-	if (HOLYLIGHT == 1) goto L_Check;
-	if (getskilllv(156)>0) goto L_GotSkill;
+	if(@HOLYLIGHT) goto L_Check;
+	if(getskilllv(156)>0) goto L_GotSkill;
 	if(sex==1) mes "Ahh... Brother!";
 	if(sex==0) mes "Ahh... Sister!";
 	mes "Does the task of caring for our lost sheep tire you out? Is it too";
@@ -73,7 +74,7 @@ L_Start:
 			next;
 			mes "[Acolyte Klift]";
 			mes "Come back when you are ready.  I will be here.";
-			set HOLYLIGHT, 1;
+			set @HOLYLIGHT, 1;
 			close;
 	M_End:
 		mes "[Acolyte Klift]";
@@ -85,8 +86,8 @@ L_Check:
 	mes "So, are you ready for the Holy Light training? Let me check....";
 	next;
 	mes "[Acolyte Klift]";
-	if (BaseJob==Job_Acolyte && JobLevel<30) goto L_LowLvl;
-	if (countitem(727)<1 || countitem(991)<1 || countitem(2608)<1) goto L_NoItems;
+	if(BaseJob==Job_Acolyte && JobLevel<30) goto L_LowLvl;
+	if(countitem(727)<1 || countitem(991)<1 || countitem(2608)<1) goto L_NoItems;
 	delitem 727,1;
 	delitem 991,1;
 	delitem 2608,1;
@@ -101,7 +102,7 @@ L_Check:
 	mes "Yes! I feel it. You have released your hidden abilities and can now";
 	mes "use ^5555FFHoly Light^000000!";
 	skill 156,1,0;
-	set HOLYLIGHT, 0;
+	set @HOLYLIGHT, 0;
 	next;
 	mes "[Priest]";
 	mes "You have done well.  May God bless you!";

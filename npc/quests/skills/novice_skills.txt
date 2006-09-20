@@ -22,7 +22,7 @@
 //<---------------------------------------------------------------------------------------------- Nurse Aid: First Aid NPC ---------------------------------------------------------------------------->\\
 prt_in.gat,235,133,4	script	Nurse Aid	90,{
 	mes "[Nurse Aid]";
-	if(FIRSTAID == 1) goto L_GetAid;
+	if(FIRSTAID) goto L_GetAid;
 	if(getskilllv(142)>0) goto L_GotAid;
 
 	mes "Oh hello there!  You look tired and a little worn out.  Have the monsters outside of town been giving you trouble?";
@@ -53,14 +53,14 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 
 		sM_Yes:
 			mes "[Nurse Aid]";
-			mes "In order for me to teach you First Aid you need to have at least a^0000ff job level of 3^000000.";
-			mes "You then need to give me:^ff0000 5 red herbs^000000,^00bb00 5 clovers^000000, and an^aaaa00 old bandage^000000.";
+			mes "In order for me to teach you First Aid you need to have at least a^0000ff Job Level of 3^000000.";
+			mes "You then need to give me:^ff0000 5 Red Herbs^000000,^00bb00 5 Clovers^000000, and an^aaaa00 Old Bandage^000000.";
 			next;
 			mes "[Nurse Aid]";
 			mes "You can get the bandage from the^0000ff 'Newbie Assistant'^000000 located on the second floor of the Castle.";
 			next;
 			mes "[Nurse Aid]";
-			mes "Once you get job level 3 and have all of the items come back and see me, OK?";
+			mes "Once you get Job Level 3 and have all of the items come back and see me, OK?";
 			set FIRSTAID,1;
 			close;				
 
@@ -114,12 +114,12 @@ L_Novice:
 	mes "Heh heh, I really miss those days..... Wow... It's funny to think about those years now......";
 	next;
 	mes "[Bulma]";
-	mes "They were difficult.... thankfully you can use the ^5555FFPlay Dead^000000 skill when you reach a ^5555FFjob level of 7^000000.";
+	mes "They were difficult.... thankfully you can use the ^5555FFPlay Dead^000000 skill when you reach a ^5555FFJob Level of 7^000000.";
 	mes "If you're interested in it come back and talk to me when you've leveled up a bit more.";
 	close;
 
 L_Start:
-	if(PLAYDEAD == 1) goto L_GetSkill;
+	if(PLAYDEAD) goto L_GetSkill;
 	if(getskilllv(143)>0) goto L_GotSkill;
 	mes "Hello my young friend.  You remind me of myself when I was young..... Heh heh, I really miss those days.....";
 	mes "Look at me acting all sentimental like some old man........";
@@ -234,30 +234,30 @@ L_NonNov:
 	emotion e_what;
 	close;
 L_Start:
-	if(FIRSTAID==1 && countitem(930)==0 && got_bandage!=1) goto L_Aid;
-	if(PLAYDEAD==1 && countitem(7039)==0 && got_novnametag!=1) goto L_Play;
+	if(FIRSTAID && countitem(930)==0 && got_bandage!=1){
+		mes "So Nurse Aid sent you huh.  She's a great nurse, you should feel very fortunate that she is helping you out.  Here take this.";
+		next;
+		getitem 930,1;
+		set got_bandage,1;
+		mes "[Newbie Assistant]";
+		mes "You'll need it in order for her to teach you her excellent healing technique.";
+		next;
+		mes "[Newbie Assistant]";
+		mes "When I watch her work it is like watching an angel that has descended down from the heavens.....";
+		next;
+		mes "[Newbie Assistant]";
+		mes "Her beauty, her grace, sometimes I wish........ (blushes).......... um.... well... err... tell her I said hello.";
+		emotion e_lv;
+		close;
+	}
+	if(PLAYDEAD && countitem(7039)==0 && got_novnametag!=1){
+		mes "So Bulma sent you uh.... okay here you go.";
+		getitem 7039,1;
+		set got_novnametag,1;
+		next;
+		mes "Good luck on your adventure.";
+		close;
+	}
 	mes "Hello.  I'm here to provide help to newbies like you.  If there is anything in particular that you need assistance with just let me know.";
-	close;
-L_Aid:
-	mes "So Nurse Aid sent you huh.  She's a great nurse, you should feel very fortunate that she is helping you out.  Here take this.";
-	next;
-	getitem 930,1;
-	set got_bandage,1;
-	mes "[Newbie Assistant]";
-	mes "You'll need it in order for her to teach you her excellent healing technique.";
-	next;
-	mes "[Newbie Assistant]";
-	mes "When I watch her work it is like watching an angel that has descended down from the heavens.....";
-	next;
-	mes "[Newbie Assistant]";
-	mes "Her beauty, her grace, sometimes I wish........ (blushes).......... um.... well... err... tell her I said hello.";
-	emotion e_lv;
-	close;
-L_Play:
-	mes "So Bulma sent you uh.... okay here you go.";
-	getitem 7039,1;
-	set got_novnametag,1;
-	next;
-	mes "Good luck on your adventure.";
 	close;
 }

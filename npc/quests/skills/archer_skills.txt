@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4b
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploits [Lupus]
 //= 1.4a Fixed some typos [IVBela]
+//= 1.4b changed perm. variables to temp ones [Lupus]
 //============================================================
 
 
@@ -25,7 +26,7 @@
 //<======================== Roberto: Arrow crafting =========================>\\
 morocc.gat,121,109,5	script	Roberto	88,{
 	mes "[Roberto]";
-	if (baseClass == Job_Archer) goto L_Start;
+	if(baseClass == Job_Archer) goto L_Start;
 
 L_Other:
 	mes "Eh?... First time seeing an archer or something? Why don't you just";
@@ -34,9 +35,9 @@ L_Other:
 	emotion e_what;
 	close;
 L_Start:
-	if (BaseJob==Job_Archer && JobLevel<30) goto L_LowLvl;
-	if (getskilllv(147)>0) goto L_GotSkill;
-	if (ARWCRFT == 1) goto L_GetSkill;
+	if(BaseJob==Job_Archer && JobLevel<30) goto L_LowLvl;
+	if(getskilllv(147)>0) goto L_GotSkill;
+	if(@ARWCRFT) goto L_GetSkill;
 	mes "Hmmm?.... Oh you seem to be a high level Archer type.  Why don't we";
 	mes "converse for a while, eh? Let me start off by talking about my";
 	mes "childhood.... . . . . . . . . . . .";
@@ -74,7 +75,7 @@ L_Start:
 		mes "41 Pointed Scales,";
 		mes "13 Trunks,";
 		mes "1 Red potion^000000";
-		set ARWCRFT, 1;
+		set @ARWCRFT, 1;
 		emotion e_ic;
 		close;
 	M_1:
@@ -92,7 +93,7 @@ L_Start:
 		close;
 
 L_GetSkill:
-	if ((countitem(907)<20) || (countitem(7033)<7) || (countitem(906)<41) || (countitem(1019)<13) || (countitem(501)<1)) goto L_NotEnuf;
+	if((countitem(907)<20) || (countitem(7033)<7) || (countitem(906)<41) || (countitem(1019)<13) || (countitem(501)<1)) goto L_NotEnuf;
 	delitem 907, 20;
 	delitem 7033, 7;
 	delitem 906, 41;
@@ -117,7 +118,7 @@ L_GetSkill:
 	mes "kind of unique and lengthy training.......";
 	next;
 	skill 147,1,0;
-	set ARWCRFT, 0;
+	set @ARWCRFT, 0;
 	mes "[Roberto]";
 	mes "...... Well good luck and have fun making arrows.  I've got other";
 	mes "things to do if you don't mind.......";
@@ -148,15 +149,15 @@ L_LowLvl:
 //<============================== Arrow Repel ===============================>\\
 payon.gat,103,63,5	script	Jason	88,{
 	mes "[Jason]";
-	if (baseClass == Job_Archer) goto L_Start;
+	if(baseClass == Job_Archer) goto L_Start;
 
 L_Other:
 	mes "What does life need from a lonely lad like me?";
 	close;
 L_Start:
-	if (getskilllv(148)>0) goto L_GotSkill;
-	if (BaseJob == Job_Archer && JobLevel < 35) goto L_LowLvl;
-	if (ARWREP == 1) goto L_Check;
+	if(getskilllv(148)>0) goto L_GotSkill;
+	if(BaseJob == Job_Archer && JobLevel < 35) goto L_LowLvl;
+	if(@ARWREP) goto L_Check;
 	mes "Hi, I'm the master of the skill ^0033FFArrow Repel^000000. I might be able to";
 	mes "teach you the skill, but only if you help me get the ingredients";
 	mes "for my Grandma's soup.";
@@ -178,7 +179,7 @@ L_Start:
 	next;
 	mes "[Jason]";
 	mes "Hurry hurry!";
-	set ARWREP, 1;
+	set @ARWREP, 1;
 	close;
 
 L_LowLvl:
@@ -187,7 +188,7 @@ L_LowLvl:
 	close;
 
 L_Check:
-	if ((countitem(721)<2) || (countitem(942)<3) || (countitem(962)<10) || (countitem(925)<10) || (countitem(532)<36)) goto L_NotEnuf;
+	if((countitem(721)<2) || (countitem(942)<3) || (countitem(962)<10) || (countitem(925)<10) || (countitem(532)<36)) goto L_NotEnuf;
 	delitem 721,2;
 	delitem 942,3;
 	delitem 962,10;
@@ -197,7 +198,7 @@ L_Check:
 	mes "Now it'll be my pleasure to teach you the skill ^0033FFArrow Repel^000000";
 	next;
 	skill 148,1,0;
-	set ARWREP, 0;
+	set @ARWREP, 0;
 	mes "[Jason]";
 	mes "There you go! Happy hunting in the future.";
 	close;

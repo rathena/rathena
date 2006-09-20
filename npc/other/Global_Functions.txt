@@ -37,6 +37,10 @@
 function	script	F_ClearJobVar	{
 	// Misc ---------------------------------
 	set JBLVL,0;
+	set FIRSTAID,0;
+	set PLAYDEAD,0;
+	set got_bandage,0;
+	set got_novnametag,0;
 	// First Class Jobs ---------------------
 	set job_acolyte_q,0; set job_acolyte_q2,0;
 	set job_archer_q,0;
@@ -88,6 +92,8 @@ function	script	F_ClearGarbage	{
 	set niflheimlost2,0; set niflheimlost,0; set lostgirl,0;
 	set nif_random,0; set nif_random1,0;
 	if(MISC_QUEST&32){set nif_quest1,0; set nif_quest2,0; set nif_quest3,0; set nif_quest4,0; set nif_quest5,0;}
+	set ARWCRFT,0; set HOLYLIGHT,0; set ARWREP,0; set ENRGYCOAT,0; set CRAZYROAR,0; set CHANGECART,0; set CARTREVO,0;
+	set SANDATTACK,0; set STONEFLING,0; set BACKSLIDE,0; set BAGNFNTY,0;
 	return;
 }
 

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4b
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploit [Lupus]
 //= 1.4a Fixed some typos [IVBela]
+//= 1.4b changed perm. variables to temp ones [Lupus]
 //============================================================
 
 
@@ -29,7 +30,7 @@ L_Other:
 	close;
 
 L_Start:
-	if(ENRGYCOAT == 1) goto L_GetSkill;
+	if(@ENRGYCOAT) goto L_GetSkill;
 	if(getskilllv(157)>0) goto L_GotSkill;
 	mes "Hey! My friend! I see that you are a magic user.  If you look within yourself, you'll find that you have... 'HIDDEN ABILITIES'!!";
 	next;
@@ -65,7 +66,7 @@ L_Start:
 			next;
 			mes "[BLIZZARDRISS]";
 			mes "When you are fully trained and have all of the required items come back and see me.";
-			set ENRGYCOAT, 1;
+			set @ENRGYCOAT, 1;
 			close;
 
 		sM_End:
@@ -91,7 +92,7 @@ L_GetSkill:
 	mes "~ several hours later ~";
 	next;
 	skill 157,1,0;
-	set ENRGYCOAT,0;
+	set @ENRGYCOAT,0;
  	mes "[BLIZZARDRISS]";
  	mes "You can now use the spell, 'Energy Coat'!! Use it wisely my friend!";
 	emotion e_no1;

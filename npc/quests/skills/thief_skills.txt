@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4a
+//= 1.4b
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploit [Lupus]
 //= 1.4a Fixed some typos [IVBela]
+//= 1.4b changed perm. variables to temp ones [Lupus]
 //============================================================ 
 
 
@@ -59,7 +60,7 @@ M_Menu:
 
 	M_Sand:
 		mes "[Alcouskou]";
-		if(SANDATTACK == 1) goto L_Sand;
+		if(@SANDATTACK) goto L_Sand;
 		if(getskilllv(149) > 0) goto L_GotSand;
 		mes "The most important aspect of being a good Thief/Assassin is stealth.  One should never be seen or touched unless he/she wants to be";
 		next;
@@ -84,12 +85,12 @@ M_Menu:
 		next;
 		mes "[Alcouskou]";
 		mes "Come back when you are ready.";
-		set SANDATTACK, 1;
+		set @SANDATTACK, 1;
 		goto M_Menu;
 	M_Back:
 		mes "[Alcouskou]";
-		if (BACKSLIDE == 1)goto L_Back;
-		if (getskilllv(150)>0) goto L_GotBack;
+		if(@BACKSLIDE)goto L_Back;
+		if(getskilllv(150)>0) goto L_GotBack;
 		mes "People tend to focus on attack and damage, but it's necessary to understand that FLEEING is JUST AS IMPORTANT as attacking!";
 		next;
 		mes "[Alcouskou]";
@@ -120,12 +121,12 @@ M_Menu:
 		mes "[Alcouskou]";
 		mes "Think of it as the first part of your training.";
 		if(BaseJob == Job_Thief) mes "If you are a Thief, you will also need to have a job level of at least ^5555FF35^000000.";
-		set BACKSLIDE, 1;
+		set @BACKSLIDE, 1;
 		goto M_Menu;
 	M_Find:
 		mes "[Alcouskou]";
-		if (FINDSTONE == 1) goto L_Find;
-		if (getskilllv(151)>0) goto L_GotFind;
+		if(@FINDSTONE) goto L_Find;
+		if(getskilllv(151)>0) goto L_GotFind;
 		mes "The more experienced and better skilled members of our guild are quite handy.";
 		mes "They can turn something as common as a rock on the ground into a very effective weapon.";
 		next;
@@ -147,12 +148,12 @@ M_Menu:
 		next;
 		mes "[Alcouskou]";
 		mes "Collecting those items will help you develop the skills necessary to learn Find Stone.";
-		set FINDSTONE, 1;
+		set @FINDSTONE, 1;
 		goto M_Menu;
 	M_Fling:
 		mes "[Alcouskou]";
-		if (STONEFLING == 1) goto L_Fling;
-		if (getskilllv(152)>0) goto L_GotFling;
+		if(@STONEFLING) goto L_Fling;
+		if(getskilllv(152)>0) goto L_GotFling;
 		mes "The more experienced and better skilled members of our guild are quite handy.";
 		mes "They can turn something as common as a rock on the ground into a very effective weapon.";
 		next;
@@ -166,7 +167,7 @@ M_Menu:
 		mes "[Alcouskou]";
 		mes "If you wish to learn Stone Fling you must first bring me ^5555FF2 Garlet and 2 Scell^000000.";
 		mes "You will also need to have mastered ^5555FFFind Stone^000000 as well.";
-		set STONEFLING, 1;
+		set @STONEFLING, 1;
 		goto M_Menu;
 	M_End:
 		mes "[Alcouskou]";
@@ -174,8 +175,8 @@ M_Menu:
 		close;
 
 L_Sand:
-	if (countitem(7041)<5 || countitem(7042)<1) goto L_NotRdy1;
-	if (BaseJob==Job_Thief && JobLevel<25) goto L_LowLvl1;
+	if(countitem(7041)<5 || countitem(7042)<1) goto L_NotRdy1;
+	if(BaseJob==Job_Thief && JobLevel<25) goto L_LowLvl1;
 	delitem 7041, 5;
 	delitem 7042, 1;
 	mes "Alright, you've got all the items.  Now it's time to learn.... the... ultimate.... attack.... Sand Attack!!!";
@@ -201,8 +202,7 @@ L_Sand:
 	mes "Oh and it does Earth Property damage....... (I gotta find a better way to teach this).........";
 	emotion e_swt;
 	skill 149,1,0;
-	set SANDATTACK, 0;
-	set BAGNFNTY, 0;
+	set @SANDATTACK, 0;
 	close;
 
 	L_NotRdy1:
@@ -221,8 +221,8 @@ L_Sand:
 		close;
 
 L_Back:
-	if (countitem(940)<20) goto L_NotRdy2;
-	if (BaseJob==Thief && JobLevel<35) goto L_LowLvl2;
+	if(countitem(940)<20) goto L_NotRdy2;
+	if(BaseJob==Thief && JobLevel<35) goto L_LowLvl2;
 	delitem 940,20;
 	mes "Great, you have the grasshopper legs.  While you were collecting them I'm sure you picked up on many of the characteristics of grasshoppers.";
 	next;
@@ -241,7 +241,7 @@ L_Back:
 	mes "[Alcouskou]";
 	mes "Ah! You've got it.  Just like a pro.  With this skill being overwhelmed by mobs is a thing of the past.";
 	skill 150,1,0;
-	set BACKSLIDE, 0;
+	set @BACKSLIDE, 0;
 	close;
 
 	L_NotRdy2:
@@ -255,7 +255,7 @@ L_Back:
 		close;
 
 L_Find:
-	if (countitem(912)<1 || countitem(948)<1 || countitem(908)<5) goto L_NotRdy3;
+	if(countitem(912)<1 || countitem(948)<1 || countitem(908)<5) goto L_NotRdy3;
 	delitem 912,1;
 	delitem 948,1;
 	delitem 908,5;
@@ -274,7 +274,7 @@ L_Find:
 	mes "Very good.  You have chosen some fine stones.  This tells me that you have now perfected the Find Stone skill.";
 	emotion e_no1;
 	skill 151,1,0;
-	set FINDSTONE, 0;
+	set @FINDSTONE, 0;
 	next;
 	mes "[Alcouskou]";
 	mes "Have fun using it.";
@@ -288,8 +288,8 @@ L_Find:
 		close;
 
 L_Fling:
-	if (getskilllv(151) == 0) goto L_NotRdy4;
-	if ((countitem(910)<2) || (countitem(911)<2)) goto L_NotRdy4;
+	if(getskilllv(151) == 0) goto L_NotRdy4;
+	if((countitem(910)<2) || (countitem(911)<2)) goto L_NotRdy4;
 	delitem 910,2;
 	delitem 911,2;
 	mes "Good! You look like you're ready for me to teach you the Stone Fling skill.  Let us begin....";
@@ -315,7 +315,7 @@ L_Fling:
 	mes "Haha! Excellent! It's a bullseye.  You have now mastered Stone Fling, congratulations.";
 	emotion e_no1;
 	skill 152,1,0;
-	set STONEFLING, 0;
+	set @STONEFLING, 0;
 	next;
 	mes "[Alcouskou]";
 	mes "As you can see this is a skill that relies heavily on concentration.";
@@ -334,7 +334,7 @@ L_Fling:
 //====================================================================================
 payon.gat,91,77,4	script	RuRumuni	99,{
 	mes "[RuRumuni]";
-	if(SANDATTACK == 1 && BAGNFNTY != 2) goto L_Start;
+	if(@SANDATTACK && !countitem(7042)) goto L_Start;
 
 	mes "I am a humble merchant here in Payon.  I buy leather hides, brought in by the hunters, to make leather pouches to sell.";
 	mes "I grew up around leather and am quite good at working with it.";
@@ -345,16 +345,16 @@ payon.gat,91,77,4	script	RuRumuni	99,{
 	close;
 
 L_Start:
-	if(BAGNFNTY == 1) goto L_Check;
+	if(@BAGNFNTY == 1) goto L_Check;
 	mes "Hello.  So you were sent by Alcouskou to obtain a ^5533FF'Leather Bag of Infinity'^000000........";
 	mes "I will be more than happy to make one for you............";
 	next;
 	mes "[RuRumuni]";
 	mes "But this bag is very special, and I will need some special items in order to make it.";
 	next;
-	set BAGNFNTY, 1;
+	set @BAGNFNTY, 1;
 
-	L_List:
+L_List:
 	mes "[RuRumuni]";
 	mes "Here are the items that I will need:";
 	mes "- 5 ^5533FFScorpion Tails^000000";
@@ -382,6 +382,6 @@ L_Check:
 	mes "[RuRumuni]";
 	mes "Here you go, one Leather Bag of Infinity.  Enjoy!";
 	getitem 7042, 1;
-	set BAGNFNTY, 2;
+	set @BAGNFNTY, 0;
 	close;
 }
