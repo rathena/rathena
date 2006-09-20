@@ -807,17 +807,20 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	if (!*str)
 		return AtCommand_None;
 
-	if (map[sd->bl.m].nocommand &&
-		(gmlvl > 0? gmlvl:pc_isGM(sd)) < map[sd->bl.m].nocommand)
-	{	//Command not allowed on this map.
-		sprintf(atcmd_output, msg_txt(143)); 
-		clif_displaymessage(fd, atcmd_output);
-		return AtCommand_None;
-	}	
-	type = atcommand(sd, gmlvl > 0 ? gmlvl : pc_isGM(sd), str, &info);
+	if (!gmlvl) gmlvl = pc_isGM(sd);
+	type = atcommand(sd,  gmlvl, str, &info);
 	if (type != AtCommand_None) {
 		char command[100];
 		const char* p = str;
+
+		if (map[sd->bl.m].nocommand &&
+			gmlvl < map[sd->bl.m].nocommand)
+		{	//Command not allowed on this map.
+			sprintf(atcmd_output, msg_txt(143)); 
+			clif_displaymessage(fd, atcmd_output);
+			return AtCommand_None;
+		}
+
 		malloc_tsetdword(command, '\0', sizeof(command));
 		malloc_tsetdword(atcmd_output, '\0', sizeof(atcmd_output));
 		while (*p && !isspace(*p))
