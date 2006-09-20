@@ -107,23 +107,22 @@ function	script	F_InnMaid	{
 		savepoint getarg(2),getarg(3),getarg(4);
 		close;
 	Mrent:
-		if(Zeny < 5000) goto NoZeny;
 		mes getarg(0);
-		mes "Thank you.";
-		mes "I hope you";
-		mes "enjoy your rest~";
-		close2;
-		set Zeny,Zeny - 5000;
-		percentheal 100,100;
-		return;
-
-		NoZeny:
-			mes getarg(0);
+		if(Zeny < 5000){
 			mes "I'm sorry, but the service charge";
 			mes "is 5,000 zeny. Please make sure";
 			mes "that you have enough money to check";
 			mes "in next time, okay?";
 			close;
+		}
+		set Zeny,Zeny - 5000;
+		percentheal 100,100;
+		mes "Thank you.";
+		mes "I hope you";
+		mes "enjoy your rest~";
+		close2;
+		return;
+
 	Mend:
 		mes getarg(0);
 		mes "I am waiting for a job to do.";

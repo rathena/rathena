@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.04
+//= 2.05
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
 //= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
 //= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
+//= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
 //============================================================ 
 
 
@@ -83,6 +84,10 @@ function	script	F_ClearGarbage	{
 	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4; set MORGEN,0;}
 	set nif_t,0;
 	set QSK1,0; set QSK2,0; set QSK3,0; set QSK4,0;
+	if(niflheimlost2) set MISC_QUEST,MISC_QUEST | 256;
+	set niflheimlost2,0; set niflheimlost,0; set lostgirl,0;
+	set nif_random,0; set nif_random1,0;
+	if(MISC_QUEST&32){set nif_quest1,0; set nif_quest2,0; set nif_quest3,0; set nif_quest4,0; set nif_quest5,0;}
 	return;
 }
 

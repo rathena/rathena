@@ -24,28 +24,6 @@
 //= 1.3 Moved Book of Devil and Piano quest to quests/quests_niflheim.txt [Evera]
 //============================================================ 
 
-//prontera.gat,164,161,4	script	Traveler::NifTrav	68,{
-//	mes "[Traveler]";
-//	mes "I've come across some strange things in my time. Things you'd have to see to believe. Have you heard of Niffleheim, the City of the Dead?";
-//	next;
-//	menu "Show me, please...",M_show, "Sounds scary...Never mind...",-;
-//
-//	mes "[Traveler]";
-//	mes "A wise choice by any means...";
-//	close;
-//M_show:
-//	warp "niflheim.gat",202,171;
-//	close;
-//}
-//-	script	EDNifTrav	-1,{
-//OnInit:
-//OnMinute00:
-//	disablenpc "NifTrav";
-//	end;
-//OnMinute56:
-//	enablenpc "NifTrav";
-//	end;
-//}
 
 niflheim.gat,52,174,3	script	Kirz	796,{
 	mes "[Kirz]";
@@ -73,29 +51,6 @@ niflheim.gat,130,176,0	duplicate(spirits)	Spirit#7	802
 niflheim.gat,173,110,0	duplicate(spirits)	Spirit#8	802
 niflheim.gat,182,167,0	duplicate(spirits)	Spirit#9	802
 
-nif_fild01.gat,213,268,5	script	Little Boy	797,{
-	mes "[Marius]";
-	if(niflheimlost == 1) goto L_alreadydone;
-	if(lostgirl == 1) goto L_sure2;
-	mes "Sairin...where are you?";
-	close;
-L_alreadydone:
-	mes "Thank you for helping us!";
-	close;
-L_sure2:
-	mes "Who are you?";
-	mes "...";
-	mes "You found Sairin?";
-	mes "She ran to Niflheim?";
-	next;
-	set niflheimlost,1;
-	mes "[Marius]";
-	mes "Could you tell her that I am on my way?";
-	mes "I am a little slow, and its very important that she knows.";
-	menu "Yes",L_alreadydone, "No",-;
-
-	close;
-}
 
 niflheim.gat,195,211,5	script	Gigantia	796,{
 	mes "[Gigantia]";
@@ -209,57 +164,31 @@ L_book2:
 
 L_book3:
 	set @nif_t,0;
-	set @nif_random1,rand(1,10);
 	mes "[Ashe Bruce]";
 	mes "Ahahaha.... I see you are brave!!";
 	mes "Start reading your prayersahahahah!!";
 	next;
-L_MENU1:
-	menu "Clover.",L_MENU1_1,"Klaatu.",L_MENU1_2,"Kleitos.",L_MENU1_3;
+	if(select("Clover.:Klaatu.:Kleitos.")==2)
+		set @nif_t,@nif_t + 10;
 
-	L_MENU1_1:
-	goto L_MENU2;
+	if(select("Verit.:Veritas.:Verata.")==3)
+		set @nif_t,@nif_t + 10;
 
-	L_MENU1_2:
-	set @nif_t,@nif_t + 10;
-	goto L_MENU2;
+	if(select("Necktie.:Necklace.:Nero.:^FFFFFFNictu.^000000")==4)
+		set @nif_t,@nif_t + 10;
 
-	L_MENU1_3: 
-	goto L_MENU2;
-
-L_MENU2:
-	menu "Verit.",L_MENU2_1,"Veritas.",L_MENU2_2,"Verata.",L_MENU2_3;
-	
-	L_MENU2_1:
-	goto L_MENU3;
-
-	L_MENU2_2: 
-	goto L_MENU3;
-
-	L_MENU2_3:
-	set @nif_t,@nif_t + 10;
-	goto L_MENU3;
-
-L_MENU3:
-	menu "Necktie.",L_MENU3_1,"Necklace.",L_MENU3_2,"Nero.",L_MENU3_3,"^FFFFFFNictu.^000000",L_MENU3_4;
-
-	L_MENU3_1: 
-	goto L_score;
-
-	L_MENU3_2: 
-	goto L_score;
-
-	L_MENU3_3:
-	goto L_score;
-
-	L_MENU3_4:
-	set @nif_t,@nif_t + 10;
-	goto L_score;
-
-
-L_score:
-	if (@nif_t == 30) goto L_sucess1;
 	mes "[Ashe Bruce]";
+	if(@nif_t == 30){
+		if(rand(9)){
+			mes "Your prayers were correctaaahhhh...";
+			mes "but your curse still remainsaaahhhh!!";
+			mes "Haahahahaha.....!!!";
+			close;
+		}
+	       mes "Hahahaha!! Your curse has been lifted!!";
+	       mes "Gahahahaha.....!!!";
+	       close;
+	}
 	mes "Hahahaha!! Your prayers were wrong!!";
 	mes "Time to face deathohohohoho,";
 	mes "May you be cursed forevahahahaha!!";
@@ -271,20 +200,6 @@ L_score:
 	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"mymob";
 	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"mymob";
 	close;
-
-L_sucess1:
-	if (@nif_random1 == 10) goto L_sucess2;
-	mes "[Ashe Bruce]";
-	mes "Your prayers were correctaaahhhh...";
-	mes "but your curse still remainsaaahhhh!!";
-	mes "Haahahahaha.....!!!";
-	close;
-
-L_sucess2:
-       mes "[Ashe Bruce]";
-       mes "Hahahaha!! Your curse has been lifted!!";
-       mes "Gahahahaha.....!!!";
-       close;
 
 L_back:
 	mes "[Ashe Bruce]";

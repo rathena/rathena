@@ -116,6 +116,7 @@ Larcher:
 	mes "[Aire]";
 	mes "So what do you say?";
 	mes "Are you proposing you become a dancer? or will you be leaving like many before you.";
+	next;
 	menu "Fill in the form",L1,"Leave",-;
 		mes "[Aire]";
 		mes "If you do reconsider please return to me.";

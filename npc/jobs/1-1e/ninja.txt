@@ -35,6 +35,7 @@ N_Question:
 	if(@qnumber==2) goto N_Q2;
 	if(@qnumber==3) goto N_Q3;
 	mes "Where can you find a Poison Toad?";
+	next;
 	menu "Amatsu Field",N_C,"Louyang Field",N_W,"Prontera Field",N_W,"Einbroch Field",N_W;
 N_Q1:
 	mes "Which of these places does not have its own fields?";

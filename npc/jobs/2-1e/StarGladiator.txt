@@ -27,6 +27,7 @@ L_Taekwon:
 	mes "Oooh, a Taekwon!";
 	mes "I don't see many of those around.";
 	mes "I don't suppose you're interested in becoming even stronger?";
+	next;
 	menu "Oh..?",-,"No, not really.",L_No;
 
 	mes "[MooHyun]";
@@ -235,7 +236,7 @@ L_Talk3:
 	mes "I am here to teach you about";
 	mes "the multiple energies that";
 	mes "come from the stars.";
-	//goto L_Itemcheck;
+	next;
 
 L_Itemcheck:
 	if(countitem(1000) < 1 || countitem(1001) < 1) goto L_Noitem3;

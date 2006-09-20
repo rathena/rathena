@@ -683,7 +683,7 @@ Xmas10:
 		getitem 529,5;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 5 Candy  -^000000!";
+		mes "^3355FF- 5 Candy -^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";
@@ -693,7 +693,7 @@ Xmas10:
 		getitem 529,10;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 10 Candy  -^000000!";
+		mes "^3355FF- 10 Candy -^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";
@@ -703,7 +703,7 @@ Xmas10:
 		getitem 530,5;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 5 Candy  Cane-^000000!";
+		mes "^3355FF- 5 Candy Cane-^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";
@@ -713,7 +713,7 @@ Xmas10:
 		getitem 530,10;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 10 Candy  Cane-^000000!";
+		mes "^3355FF- 10 Candy Cane-^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";
@@ -723,7 +723,7 @@ Xmas10:
 		getitem 539,1;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 1 Piece_of_Cake-^000000!";
+		mes "^3355FF- 1 Piece of Cake-^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";
@@ -733,7 +733,7 @@ Xmas10:
 		getitem 539,2;
 		mes "[Jack Frost]";
 		mes "Wow -Congratulations!!";
-		mes "^3355FF- 2 Piece_of_Cake-^000000!";
+		mes "^3355FF- 2 Piece of Cake-^000000!";
 		mes "Dear my friend,";
 		mes "Please visit me from time to time, and take a chitchat with me.";
 		mes "See you soon -";

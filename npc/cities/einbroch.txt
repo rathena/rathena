@@ -123,6 +123,7 @@ s_Tower2:
 	
 s_Apple:
 	if(Zeny < 20)goto s_NEnough;
+	set Zeny,Zeny - 20;
 	mes "["+ @Tower_Name$ +"]";
 	mes "Before I guide you to";
 	mes "the tower, let me check";
@@ -130,7 +131,6 @@ s_Apple:
 	mes "your safety before I give";
 	mes "you the Apple Combo Set.";
 	next;
-	set Zeny,Zeny - 20;
 	getitem 512,1;
 	goto s_Tower2;
 	
@@ -221,11 +221,17 @@ s_Goback:
 	mes "Thank you for using";
 	mes "our services.";
 	close2;
-	set @towerwarp,rand(1,3);
-	if(@towerwarp == 0)warp "einbroch.gat",218,196;
-	if(@towerwarp == 1)warp "einbroch.gat",178,172;
-	if(@towerwarp == 3)warp "einbroch.gat",172,228;
-	end;
+	switch(rand(1,3)){
+	case 0:
+		warp "einbroch.gat",218,196;
+		end;
+	case 1:
+		warp "einbroch.gat",178,172;
+		end;
+	case 3:
+		warp "einbroch.gat",172,228;
+		end;
+	}
 
 OnHide:
 	specialeffect 16;
@@ -277,7 +283,6 @@ OnHide:
 OnUnhide:
 	misceffect 215;
 	end;
-
 
 }
 

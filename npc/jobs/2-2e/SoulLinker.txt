@@ -37,6 +37,7 @@ L_Taekwon:
 	mes "[Little Boy]";
 	mes "Excuse me. *sniff*";
 	mes "I don't suppose you couldvhelp me?";
+	next;
 	menu "Go on...",L_Goon,"No, I'm busy.",L_No;
 
 L_No:

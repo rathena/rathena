@@ -16,9 +16,6 @@
 //============================================================
 
 
-
-//Eventñ¢í≤ç∏ÅI
-
 alberta.gat,245,69,4	script	Public Relations#01	776,{
 	mes "[Waba]";
 	mes "Hello there! I have traveled far from the Kingdom of Gonryun, my hometown.";
@@ -42,14 +39,14 @@ alberta.gat,245,69,4	script	Public Relations#01	776,{
 		next;
 		menu "Let's Go!",-, "Actually... I changed my mind, sorry.",M_End;
 		
-			if (Zeny < 10000) goto L_NoZeny;
+			if (Zeny < 10000){
+				mes "[Waba]";
+				mes "I am sorry if it seems like a lot, but the ^0000ff10,000 zeny^000000 we request is necessary in order to make the trip.";
+				close;
+			}
 			set Zeny,Zeny-10000;
 			warp "gon_fild01.gat",258,82;
 			end;
-		L_NoZeny:
-			mes "[Waba]";
-			mes "I am sorry if it seems like a lot, but the ^0000ff10,000 zeny^000000 we request is necessary in order to make the trip.";
-			close;
 	M_End:
 		mes "[Waba]";	
 		mes "Please see me again if you want to visit! I am pleased just to meet an honored guest from the Continent.";
@@ -102,7 +99,7 @@ gonryun.gat,153,64,0	script	Public Relations#04	776,{
 }
 
 //===============================================================================
-//In èh
+//Inn
 //===============================================================================
 
 gon_in.gat,153,35,4	script	Hotel Manager	702,{
@@ -190,7 +187,7 @@ gonryun.gat,113,127,6	script	Guardsman#02	780,{
 }
 
 //===============================================================================
-//ë∫í∑ëÓ
+//???
 //===============================================================================
 
 gon_in.gat,18,27,4	script	Elder's Wife	771,{

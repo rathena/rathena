@@ -1,15 +1,19 @@
 //===== eAthena Script ======================================= 
 //= Quest NPCs related to Niflheim
 //===== By: ================================================== 
-//= Evera and The eAthena Dev Team
+//= The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//= Book of Devil and Piano Key quest
+//= Book of Devil		(MISC_QUEST | 256)
+//= Piano Key Ouest		(MISC_QUEST | 32)
 //===== Additional Comments: ================================= 
-//= 1.0 Initial release, moved Book of Devil and Piano quest from npc/cities/niflheim.txt [Evera]
+//= 1.0 Initial release, moved Book of Devil and Piano quest
+//=	from npc/cities/niflheim.txt [Evera]
+//= 1.1 Optimized Book of Devil quest. used bit-wise var,
+//=	Optimized Piano Quest - now uses 1 variable [Lupus]
 //============================================================ 
 
 //=============================================================
@@ -17,14 +21,32 @@
 //=============================================================
 niflheim.gat,184,199,5	script	Little Girl#02	793,{
 	mes "[Sairin]";
-	if(niflheimlost2 == 1) goto L_thanks;
-	if(niflheimlost == 1) goto L_foundhim;
-	if(lostgirl == 1) goto L_sure2;
+	if(MISC_QUEST & 256){
+		mes "Thanks again!";
+		close;
+	}
+	if(@niflheimlost == 2){
+		mes "You found him?";
+		mes "Oh thank you!";
+		mes "Please, take this as a token of my appreciation.";
+		getitem 642,1;//Items: Book of Devil,
+		set MISC_QUEST,MISC_QUEST | 256;
+		set @niflheimlost,0;
+		close;
+	}
+	if(@niflheimlost == 1){
+M_YES:
+		set @niflheimlost,1;
+		mes "Please find him and tell him where I am! I saw him last in Niflheim Field, the first one...";
+		close;
+	}
 	mes "Sir, will you please help me?";
-	if(BaseJob==Job_Novice) mes "Oh... you are lost, too..."; //Exploit fix
-	if(BaseJob==Job_Novice) close;
+	if(BaseJob==Job_Novice){
+		mes "Oh... you are lost, too...";
+		close;
+	}
 	next;
-	menu "Yes",-, "No",M_no;
+	menu "Yes",-, "No",M_NO;
 
 	mes "[Sairin]";
 	mes "My friend and I went for a hike and ended up wandering into a strange field.";
@@ -38,22 +60,37 @@ niflheim.gat,184,199,5	script	Little Girl#02	793,{
 	mes "[Sairin]";
 	mes "No one here will help me, and there are ghosts everywhere! Could you help me find my friend?";
 	next;
-	menu "Sure",-, "No",M_no;
-L_sure2:
-	set lostgirl,1;
-	mes "Please find him and tell him where I am! I saw him last in Niflheim Field, the first one...";
+	menu "Sure",M_YES, "No",M_NO;
+M_NO:
 	close;
+}
 
-L_foundhim:
-	mes "You found him?";
-	mes "Oh thank you!";
-	mes "Please, take this as a token of my appreciation.";
-	getitem 642,1;//Items: Book of Devil,
-	set niflheimlost2,1;
-	close;
-L_thanks:
-	mes "Thanks again!";
-M_no:
+nif_fild01.gat,213,268,5	script	Little Boy	797,{
+	if(MISC_QUEST & 256){
+L_DONE:
+		set @niflheimlost,2;
+		mes "[Marius]";
+		mes "Thank you for helping us!";
+		close;
+	}
+	if(@niflheimlost == 2) goto L_PART2;
+	if(@niflheimlost == 1){
+		mes "[Marius]";
+		mes "Who are you?";
+		mes "...";
+		mes "You found Sairin?";
+		mes "She ran to Niflheim?";
+		next;
+L_PART2:
+		mes "[Marius]";
+		mes "Could you tell her that I am on my way?";
+		mes "I am a little slow, and its very important that she knows.";
+		next;
+		menu "Yes",L_DONE, "No",-;
+		close;	
+	}
+	mes "[Marius]";
+	mes "Sairin... where are you?";
 	close;
 }
 
@@ -69,7 +106,7 @@ niflheim.gat,224,243,3	script	Alager	795,{
 	mes "I'm going to eat you...";
 	next;
 	mes "-Chomp bite slurp-";
-	if (nif_quest1 == 1 || (MISC_QUEST & 32)) goto L_end;
+	if(nif_piano&1 || (MISC_QUEST & 32)) goto L_end;
 	percentheal -60,0;
 	next;
 	mes "[Alager]";
@@ -84,7 +121,7 @@ niflheim.gat,224,243,3	script	Alager	795,{
 	mes "Ah, let me thank you with this,";
 	mes "I found it on the ground, hoho~";
 	getitem 7184,1;//Items: Piano Key,
-	set nif_quest1, 1;
+	set nif_piano, 1;
 	close;
 L_end:
 	percentheal -30,0;
@@ -103,64 +140,53 @@ nif_in.gat,105,81,3	script	Crayu	794,{
 	mes "^FF0000The beautiful melody surrounding thy soul,^000000";
 	mes "^FF0000Is the key from Lord Death's wrath.^000000";
 	next;
-	if (nif_quest2 == 1 || (MISC_QUEST & 32)) goto L_end;
-	set @nif_random,rand(1,4);
 	mes "[Crayu]";
+	if(nif_piano&2 || (MISC_QUEST & 32)){
+		mes "I wonder what does it mean...";
+		mes "If you read it carefully,";
+		mes "it seems to have a deep meaning,";
+		mes "as if there is a mysterious secret";
+		mes "hidden within these words...";
+		close;
+	}
+	set @nif_random,rand(1,4);
 	mes "Heh, let me give you a little exam!";
 	mes "Repeat line no. " + @nif_random + " of the poem";
 	mes "that you have just heard to me!";
 	next;
 	input @inputstr1$;
-	if (@nif_random == 2) goto L_RAN_2;
-	if (@nif_random == 3) goto L_RAN_3;
-	if (@nif_random == 4) goto L_RAN_4;
-	//if (@nif_random == 1) goto L_RAN_1;	
-	L_RAN_1:
+	switch(@nif_random){
+	case 1:
 		set @str1$,"When the sun sets in the western hills,";
-		goto L_RAN_B;
-	
-	L_RAN_2:
+		break;
+	case 2:
 		set @str1$,"Where points the velvet gloom of dawn,";
-		goto L_RAN_B;
-
-	L_RAN_3:
+		break;
+	case 3:
 		set @str1$,"The beautiful melody surrounding thy soul,";
-		goto L_RAN_B;
-
-	L_RAN_4:
+		break;
+	case 4:
 		set @str1$,"Is the key from Lord Death's wrath.";
-		goto L_RAN_B;
-
-	L_RAN_B:
-		if (@inputstr1$ == @str1$) goto L_RAN_SC;
-		mes "[Crayu]";
-		mes "Aih... If you had paid more attention,";
-		mes "you would have known the correct answer!";
-		mes "Come back for the challenge again,";
-		mes "when you have thought over it!";
-		close;
-
-	L_RAN_SC:
-		mes "[Crayu]";
+		break;
+	}
+	mes "[Crayu]";
+	if(@inputstr1$ == @str1$){
 		mes "Hoho... I see you have paid attention!";
 		mes "I am Grey, a wandering poet of yore,";
 		mes "you are the best audience I have had so far,";
 		mes "here, take this as a reward.";
 		getitem 7184,1;//Items: Piano Key,
-		set nif_quest2, 1;
+		set nif_piano, nif_piano|2;
 		next;
 		mes "[Crayu]";
 		mes "I hope you will treat other poets";
 		mes "as well as you treated me, farewell.";
 		close;
-
-L_end:
-	mes "[Crayu]";
-	mes "I wonder what does it mean...";
-	mes "If you read it carefully,";
-	mes "it seems to have a deep meaning,";
-	mes "as if there is a mysterious secret";
-	mes "hidden within these words...";
+	}
+	mes "Aih... If you had paid more attention,";
+	mes "you would have known the correct answer!";
+	mes "Come back for the challenge again,";
+	mes "when you have thought over it!";
 	close;
 }
 
@@ -169,13 +195,13 @@ nif_in.gat,31,20,3	script	Kurtz	794,{
 	mes "Business nowadays is really bad...";
 	mes "Back when I used to be alive,";
 	mes "my business was this bad too~!";
-	if (nif_quest3 == 1 || (MISC_QUEST & 32)) close;
+	if(nif_piano&4 || (MISC_QUEST & 32)) close;
 	next;
 	mes "[Kurtz]";
 	mes "Hey! You there! Dump this for me";
 	mes "on the way out will you!";
 	getitem 7184,1;//Items: Piano Key,
-	set nif_quest3, 1;
+	set nif_piano, nif_piano|4;
 	next;
 	mes "[Kurtz]";
 	mes "Why is business so bad lately...";
@@ -184,7 +210,7 @@ nif_in.gat,31,20,3	script	Kurtz	794,{
 }
 
 niflheim.gat,169,71,5	script	#1	111,2,2{
-	if (MISC_QUEST & 32 || nif_quest4 == 1) end;
+	if(MISC_QUEST & 32 || nif_piano&8) end;
 
 	mes "- In the nearby tombs -";
 	mes "- you see something -";
@@ -195,16 +221,26 @@ niflheim.gat,169,71,5	script	#1	111,2,2{
 	mes "- Pick it up? -";
 	menu "Yes",-,"No",L_end;
 	getitem 7184,1;//Items: Piano Key,
-	set nif_quest4, 1;
+	set nif_piano, nif_piano|8;
 L_end:
 	close;
 }
 
 niflheim.gat,208,103,5	script	#2	111,2,2{
-	if (MISC_QUEST & 32) end;
-	if (nif_quest5 == 1) goto L_key2;
-	if (nif_quest5 >= 2) end;
-
+	if(MISC_QUEST & 32 || nif_piano&32) end;
+	if(nif_piano&16){
+		mes "- In the hole you have dug -";
+		mes "- there is something else -";
+		mes "- buried deep in the ground -";
+		mes "- Looks like its another fragment -";
+		next;
+		mes "- Pick it up? -";
+		menu "Yes",-,"No",L_end;
+		getitem 7184,1;//Items: Piano Key,
+		set nif_piano, nif_piano|32;
+	L_end:
+		close;
+	}
 	mes "- In the nearby tombs -";
 	mes "- you see something -";
 	mes "- half buried in the ground -";
@@ -214,40 +250,19 @@ niflheim.gat,208,103,5	script	#2	111,2,2{
 	mes "- Pick it up? -";
 	menu "Yes",-,"No",L_end;
 	getitem 7184,1;//Items: Piano Key,
-	set nif_quest5, 1;
-	close;
-L_key2:
-	mes "- In the hole you have dug -";
-	mes "- there is something else -";
-	mes "- buried deep in the ground -";
-	mes "- Looks like its another fragment -";
-	next;
-	mes "- Pick it up? -";
-	menu "Yes",-,"No",L_end;
-	getitem 7184,1;//Items: Piano Key,
-	set nif_quest5, 2;
-L_end:
+	set nif_piano, nif_piano|16;
 	close;
 }
 
 nif_in.gat,115,181,5	script	#4	111,3,3{
 	mes "- You see a huge old piano -";
-	if ((MISC_QUEST & 32)==0) mes "- with a few keys missing  -";
-	if (MISC_QUEST & 32) mes "- with one key missing -";
-	if ((MISC_QUEST & 32)==0 && countitem(7184) > 5) goto L_event;//Items: Piano Key,
-	close;
+	if((MISC_QUEST & 32)==0) mes "- with a few keys missing  -";
+	if(MISC_QUEST & 32) mes "- with one key missing -";
+	if(MISC_QUEST & 32 || countitem(7184) < 6) close;
 
-L_event:
-	delitem 7184,6;//Items: Piano Key,
+	delitem 7184,countitem(7184);//Items: Piano Key,
 	set MISC_QUEST,MISC_QUEST | 32;
-	//clear auxiliary vars now
-	set nif_quest1, 0;
-	set nif_quest2, 0;
-	set nif_quest3, 0;
-	set nif_quest4, 0;
-	set nif_quest5, 0;
-	set nif_random,0; //clear garbage from the previous version of the script
-	set nif_random1,0; //clear garbage
+	set nif_piano, 0;
 	mes "- You slide the 6 piano keys one -";
 	mes "- by one into the missing slots  -";
 	mes "- on the piano, but you realize  -";
@@ -258,7 +273,6 @@ L_event:
 
 nif_in.gat,118,151,5	script	#5	111,3,3{
 	if((MISC_QUEST & 32)==0) end;
-
 	mes "- The very moment the long shadow -";
 	mes "- of your body falls on the piano -";
 	next;

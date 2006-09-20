@@ -721,12 +721,12 @@ s_Yes:
 		mes "I am sorry, but you don't have enough money.";
 		close;
 	}
+	set Zeny,Zeny - 500;
 	mes "Thank for your patronage.";
 	mes "We are trying to provide you with";
 	mes "the best service, Please";
 	mes "come again.";
 	close2;
-	set Zeny,Zeny - 500;
 	warp "lou_in01.gat",16,19;
 	end;
 
