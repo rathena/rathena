@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 1.6b
+//= 2.0
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 1.7 Fixed a warp-back
 //= 1.8 Some small changes [MasterOfMuppets]
 //= 1.9 Removed duplicates [Toms]
+//= 2.0 Now use MISC_QUEST&512 instead of 'hzdun' [Lupus]
 //============================================================
 
 lhz_dun03.gat,140,139,0	warp	lhz003	1,1,lhz_dun02.gat,150,145
@@ -43,17 +44,16 @@ lhz_dun01.gat,150,290,0	warp	lhz007	1,1,lhz_in01.gat,23,137
 
 lighthalzen.gat,313,301,0	script	Sewer Pipe	111,{
 	mes "You see some pipes for a sewage system.";
-	if(hzdun == 1)goto s_Find;
-	close;
-s_Find:
-	mes "You found the way into the lab.";
-	next;
-	menu "Go in.",L_1,"Do not go in.",-;
-	close;
+	if(MISC_QUEST&512){
+		mes "You found the way into the lab.";
+		next;
+		menu "Go in.",-,"Do not go in.",L_NO;
 
-L_1:
-	warp "lhz_cube.gat",231,17;
-	end;
+		warp "lhz_cube.gat",231,17;
+		end;
+	}
+L_NO:
+	close;
 }
 
 //--------------------------Warp--------------------------

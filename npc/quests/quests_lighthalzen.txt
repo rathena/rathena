@@ -1,16 +1,17 @@
 //===== eAthena Script ======================================= 
 //= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
-//= Persian, Vicious_Pucca, Completed by aoa00
-//= Evera, MasterOfMupppets, Lupus
+//= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
+//= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Event for the Mobster respawn
 //= Bio Labs Quest
 //= Friendship Quest
+//= Pickpocket Mini-Quest
 //= Bio Ethics Quest (Need bug testing!)
 //===== Additional Comments: ================================= 
 //= Grammar/script check please. This was a quick job.
@@ -46,6 +47,8 @@
 //= 2.6a Moved Bio Ethics Quest to Alchemist SKILL QUESTS [Lupus]
 //= 2.7 fixed bugs that let people bypass some quest parts V_V [Lupus]
 //=	reused cubekey var for 4 Cube Room key vars
+//= 2.8 More optimization. Also fixed bug with "2x short sticks -> long" [Lupus]
+//=	Now uses MISC_QUEST&512 instead of 'hzdun'. WIP
 //============================================================ 
 
 lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
@@ -244,13 +247,12 @@ Lhzstop:
 //--------------------------Piciburn--------------------------
 
 lighthalzen.gat,341,224,4	script	Piciburn	868,{
-	if (BaseLevel > 60) goto Lstart;
-	mes "[Piciburn]";
-	mes "Keep moving.";
-	close;
-
-Lstart:
-	if (hzdun == 1) goto L_11;
+	if (BaseLevel < 60){
+		mes "[Piciburn]";
+		mes "Keep moving.";
+		close;
+	}
+	if (MISC_QUEST&512) goto L_DONE;
 	if (piciburn == 7) goto L_10;
 	if (piciburn == 6) goto L_9;
 	if (piciburn == 5) goto L_6;
@@ -600,7 +602,7 @@ L_warp2:
 	warp "lhz_cube.gat",66,74;
 	end;
 
-L_11:
+L_DONE:
 	mes "[Piciburn]";
 	mes "Oh~ I guess you found the entrance.";
 	mes "I'll tell you now...";
@@ -625,7 +627,7 @@ L_11:
 //--------------------------Box--------------------------
 
 lhz_cube.gat,248,179,0	script	Box#01	111,{
-	if (axe == 1) goto L_2;
+	if (MISC_QUEST&512 || cubekey&64) goto L_DONE;
 	mes "There is an axe in the box.";
 	next;
 	menu "Take the axe.",L_1,"Leave it alone.",-;
@@ -633,10 +635,10 @@ lhz_cube.gat,248,179,0	script	Box#01	111,{
 
 L_1:
 	mes "You acquired the ^FF0000axe^000000.";
-	set axe,1;
+	set cubekey,cubekey|64;
 	close;
 
-L_2:
+L_DONE:
 	mes "There is a box that used to contain an ^FF0000axe^000000.";
 	close;
 }
@@ -644,10 +646,10 @@ L_2:
 //--------------------------Barrel--------------------------
 
 lhz_cube.gat,237,183,0	script	Barrel	111,{
-	if (cubekey&1) goto L_4;
-	if (box == 1) goto L_2;
+	if (MISC_QUEST&512 || cubekey&1) goto L_DONE;
+	if (cubekey&128) goto L_2;
 	mes "There is a box that looks weak.";
-	if (axe == 0) close;
+	if ((cubekey&64) == 0) close;
 	next;
 	input @axe$;
 
@@ -660,7 +662,7 @@ L_1:
 	mes "you see that there's a box inside of it.";
 	next;
 	mes "On top of the box, there's a panel with the numbers 1~9";
-	set box,1;
+	set cubekey,cubekey|128;
 	close;
 
 L_2:
@@ -697,7 +699,7 @@ L_3:
 	set cubekey,cubekey|1;
 	close;
 
-L_4:
+L_DONE:
 	mes "This box used to have the '^FF0000yellow key^000000'";
 	mes "The box is now empty.";
 	close;
@@ -706,7 +708,7 @@ L_4:
 //--------------------------Drawer--------------------------
 
 lhz_cube.gat,242,201,0	script	Drawer	111,{
-	if (knife == 1) goto L_3;
+	if (MISC_QUEST&512 || cubekey&32) goto L_DONE;
 	mes "The drawer is locked.";
 	if (cubekey&2) goto L_1;
 	close;
@@ -722,10 +724,10 @@ L_2:
 	mes "You found a 'small knife' inside.";
 	next;
 	mes "You acquired ^FF0000small knife^000000.";
-	set knife,1;
+	set cubekey,cubekey|32;
 	close;
 
-L_3:
+L_DONE:
 	mes "It is the drawer you got ^FF0000small knife^000000 from.";
 	mes "There is nothing inside now.";
 	close;
@@ -734,7 +736,7 @@ L_3:
 //--------------------------Documents--------------------------
 
 lhz_cube.gat,237,198,0	script	Documents	111,{
-	if (cubekey&2) goto L_2;
+	if (MISC_QUEST&512 || cubekey&2) goto L_DONE;
 	mes "There are tons of documents here.";
 	next;
 	menu "Search the documents.",L_1,"Ignore.",-;
@@ -747,7 +749,7 @@ L_1:
 	set cubekey,cubekey|2;
 	close;
 
-L_2:
+L_DONE:
 	mes "This is where you acquired ^FF0000red key^000000.";
 	mes "There's nothing else to do here.";
 	close;
@@ -765,51 +767,46 @@ lhz_cube.gat,247,198,0	script	Bed	111,{
 	close;
 
 L_1:
-	if (quadrangle >= 1) goto L_3;
-	if (srod1 == 1) goto L_2;
+	if (MISC_QUEST&512 || cubekey&131072) goto L_DONE;
+	if (cubekey&2048){
+		mes "As you look under the bed, you see that there";
+		mes "is a small object covered in dust.";
+		next;
+		input @bed$;
+
+		if (cubekey&4096 && (@bed$ == "long stick" || @bed$ == "Long Stick")){
+			mes "You used the long stick to pull it out.";
+			next;
+			mes "You acquired '^FF0000cube model^000000'.";
+			set cubekey,cubekey|131072;
+			close;
+		}
+		mes "It looks like you need some kind of long item to";
+		mes "Get the item out, you can't reach it!";
+		close;
+	}
 	mes "You look below the bed and see a 'small stick'.";
 	mes "It is within your grasp, but there is";
-	mes "Also another item hidden under the bed, which";
-	mes "You'll need some kind of long item to pull it out.";
+	mes "also another item hidden under the bed, which";
+	mes "you'll need some kind of long item to pull it out.";
 	next;
 	mes "You acquired the '^FF0000small stick^000000'.";
 	mes "It looks like this stick could be combined";
-	mes "With another stick to make it larger.";
-	if (srod2 == 1) goto L1_1;
-	if (srod1 == 0) set srod1,1;
+	mes "with another stick to make it larger.";
+	set cubekey,cubekey|2048;
+
+	if ((cubekey&4096) == 0 && cubekey&1024){
+		set cubekey,cubekey|4096;
+		next;
+		mes "It looks similar to the decently sized stick that you";
+		mes "found under the desk.";
+		mes "You put the two end to end, and they click into place.";
+		next;
+		mes "You acquired '^FF0000long stick^000000'.";
+	}
 	close;
 
-L1_1:
-	set srod1,1;
-	if (@bed == 0) next;
-	mes "It looks similar to the 'small stick' that you";
-	mes "found under the bed.";
-	next;
-	mes "You acquired '^FF0000long stick^000000'.";
-	set rod,1;
-	close;
-
-L_2:
-	set @bed,1;
-	if (rod == 0 && srod1 == 1 && srod2 == 1) goto L1_1;
-	mes "As you look under the bed, you see that there";
-	mes "is a small object covered in dust.";
-	next;
-	input @bed$;
-
-	if (rod == 1 && (@bed$ == "long stick" || @bed$ == "Long Stick")) goto L2_1;
-	mes "It looks like you need some kind of long item to";
-	mes "Get the item out, you can't reach it!";
-	close;
-
-L2_1:
-	mes "You used the long stick to pull it out.";
-	next;
-	mes "You acquired '^FF0000cube model^000000'.";
-	set quadrangle,1;
-	close;
-
-L_3:
+L_DONE:
 	mes "This is the place where you got '^FF0000cube model^000000' from.";
 	mes "There is nothing down here now but dust.";
 	close;
@@ -818,7 +815,7 @@ L_3:
 //--------------------------Cup--------------------------
 
 lhz_cube.gat,229,184,0	script	Cup	111,{
-	if (cubekey&4) goto L_2;
+	if (MISC_QUEST&512 || cubekey&4) goto L_DONE;
 	mes "You see an empty bottle and a cup with something in it.";
 	next;
 	menu "Leave it alone.",-,"Look what is inside.",L_1;
@@ -831,7 +828,7 @@ L_1:
 	set cubekey,cubekey|4;
 	close;
 
-L_2:
+L_DONE:
 	mes "You got the '^FF0000rusty key^000000' here.";
 	mes "There's nothing but an empty cup and an empty bottle.";
 	close;
@@ -840,7 +837,7 @@ L_2:
 //--------------------------Shelf--------------------------
 
 lhz_cube.gat,233,206,0	script	Shelf	111,{
-	if (cubekey&8) goto L_2;
+	if (MISC_QUEST&512 || cubekey&8) goto L_DONE;
 	mes "There are lots of bottles filled with acids lined up";
 	mes "Along the shelf, they have different labels.";
 	next;
@@ -859,7 +856,7 @@ L_1:
 	set cubekey,cubekey|8;
 	close;
 
-L_2:
+L_DONE:
 	mes "There is an acid that changed corroded all the rust";
 	mes "off of your key.";
 	next;
@@ -870,7 +867,7 @@ L_2:
 //--------------------------Closet--------------------------
 
 lhz_cube.gat,249,191,0	script	Closet	111,{
-	if (polygon >= 1) goto L_4;
+	if (MISC_QUEST&512 || cubekey&8192) goto L_DONE;
 	mes "There is a closet with lots of drawers.";
 	if (cubekey&8) goto L_2;
 	next;
@@ -896,10 +893,10 @@ L_3:
 	mes "a polygon.";
 	next;
 	mes "'You acquired the ^FF0000polygon model^000000.";
-	set polygon,1;
+	set cubekey,cubekey|8192;
 	close;
 
-L_4:
+L_DONE:
 	mes "This is the closet where you got";
 	mes "the 'polygon model' from.";
 	next;
@@ -920,33 +917,29 @@ lhz_cube.gat,234,200,0	script	Desk	111,{
 	close;
 
 L_1:
-	if (rod == 1 || srod2 == 1) goto L1_2;
+	if(MISC_QUEST&512 || cubekey&1024) goto L_DONE;
+
 	mes "When you look below the desk,";
 	mes "You see a decent sized stick.";
 	next;
 	mes "You acquired '^FF0000short stick^000000'.";
 	mes "It looks like this stick could be combined";
-	mes "With another stick to make it larger.";
-	if (srod2 == 0) set srod2,1;
-	if (srod2 == 0) close;
-
-L1_1:
-	if (@desk == 0) next;
-	mes "It seems like the decently sized stick can be";
-	mes "combined with the 'short stick' from under the bed.";
-	mes "You put the two end to end, and they click into place.";
-	next;
-	mes "You acquired the '^FF0000long stick^000000'";
-	set rod,1;
+	mes "with another stick to make it larger.";
+	set cubekey,cubekey|1024;
+	if(cubekey&2048){
+		set cubekey,cubekey|4096;
+		next;
+		mes "It seems like the decently sized stick can be";
+		mes "combined with the 'short stick' from under the bed.";
+		mes "You put the two end to end, and they click into place.";
+		next;
+		mes "You acquired the '^FF0000long stick^000000'";
+	}
 	close;
-
-L1_2:
-	set @desk,1;
-	if (srod1 == 1 && srod2 == 1) goto L1_1;
+L_DONE:
 	mes "This is where you acquired the '^FF0000short stick^000000'.";
 	mes "There is nothing but dust now.";
 	close;
-
 L_2:
 	mes "It is locked and can't be opened.";
 	close;
@@ -955,7 +948,7 @@ L_2:
 //--------------------------Picture--------------------------
 
 lhz_cube.gat,237,206,0	script	Picture	111,{
-	if (num1 > 0) goto L_2;
+	if (MISC_QUEST&512 || num1 > 0) goto L_DONE;
 	mes "There is a picture on the wall.";
 	next;
 	menu "Move it.",L_1,"Leave it alone.",-;
@@ -966,7 +959,7 @@ L_1:
 	next;
 	input @knife$;
 
-	if (knife == 1 && (@knife$ == "small knife" || @knife$ == "Small Knife")) goto L1_1;
+	if (cubekey&32 && (@knife$ == "small knife" || @knife$ == "Small Knife")) goto L1_1;
 	mes "Nothing happened.";
 	close;
 
@@ -1029,9 +1022,8 @@ L1_1:
 	if (num6 == num9) goto Lset8;
 	if (num7 == num9) goto Lset8;
 	if (num8 == num9) goto Lset8;
-	goto L_2;
 
-L_2:
+L_DONE:
 	mes "There is a number behind the picture.";
 	mes "" + num1 + "3 " + num2 + "6 " + num3 + "9 " + num4 + "4 " + num5 + "8 " + num6 + "1 " + num7 + "7 " + num8 + "2 " + num9 + "5";
 	mes "Perhaps you should write this number down somewhere...";
@@ -1041,7 +1033,7 @@ L_2:
 //--------------------------generator--------------------------
 
 lhz_cube.gat,224,192,0	script	Generator	111,{
-	if (machine == 1) goto L_2;
+	if (MISC_QUEST&512 || cubekey&256) goto L_DONE;
 	mes "The big machine is running, making a huge noise.";
 	mes "There are lots weird symbols and";
 	mes "a small key hole beside them.";
@@ -1059,10 +1051,10 @@ L_1:
 	next;
 	mes "When it was stopped, the lamp next to the bed";
 	mes "also turned off.";
-	set machine,1;
+	set cubekey,cubekey|256;
 	close;
 
-L_2:
+L_DONE:
 	mes "The big machine sits quietly.";
 	close;
 }
@@ -1070,8 +1062,8 @@ L_2:
 //--------------------------Lamp--------------------------
 
 lhz_cube.gat,248,205,0	script	Lamp	111,{
-	if (cubekey&16) goto L_3;
-	if (machine == 1) goto L_1;
+	if (MISC_QUEST&512 || cubekey&16) goto L_DONE;
+	if (cubekey&256) goto L_1;
 	mes "There is a bright lamp.";
 	mes "Seems like there is something inside";
 	mes "but it is too hot to touch.";
@@ -1092,7 +1084,7 @@ L_2:
 	set cubekey,cubekey|16;
 	close;
 
-L_3:
+L_DONE:
 	mes "There nothing but a broken bulb.";
 	close;
 }
@@ -1100,24 +1092,24 @@ L_3:
 //--------------------------Box--------------------------
 
 lhz_cube.gat,248,193,0	script	Box#02	111,{
-	if (countitem(2657) > 0 || @gotkey || hzdun) goto L_5;
+	if (MISC_QUEST&512 || countitem(2657) || @gotLPkey) goto L_DONE;
 	mes "There is a box with three holes.";
 	next;
-	if (ellipse == 2 && quadrangle == 2 && polygon == 2) goto L_4;
+	if (cubekey&65536 && cubekey&262144 && cubekey&16384) goto L_4;
 	menu "Ellipse hole",L_1,"Square hole",L_2,"Polygonal hole",L_3;
 
 L_1:
-	if (ellipse == 2) goto L1_2;
+	if (cubekey&65536) goto L1_2;
 	input @ellipse$;
 
-	if (ellipse == 1 && (@ellipse$ == "ellipse model" || @ellipse$ == "Ellipse Model")) goto L1_1;
+	if (cubekey&32768 && (@ellipse$ == "ellipse model" || @ellipse$ == "Ellipse Model")) goto L1_1;
 	mes "Nothing happened.";
 	close;
 
 L1_1:
 	mes "You inserted the 'ellipse model' into the ellipse-shaped hole.";
 	mes "The box makes a metallic click.";
-	set ellipse,2;
+	set cubekey,cubekey|65536;
 	close;
 
 L1_2:
@@ -1125,17 +1117,17 @@ L1_2:
 	close;
 
 L_2:
-	if (quadrangle == 2) goto L2_2;
+	if (cubekey&262144) goto L2_2;
 	input @quadrangle$;
 
-	if (quadrangle == 1 && (@quadrangle$ == "cube model" || @quadrangle$ == "Cube Model")) goto L2_1;
+	if (cubekey&131072 && (@quadrangle$ == "cube model" || @quadrangle$ == "Cube Model")) goto L2_1;
 	mes "Nothing happened.";
 	close;
 
 L2_1:
 	mes "You inserted the 'cube model' into the square-shaped hole.";
 	mes "The box makes a metallic click.";
-	set quadrangle,2;
+	set cubekey,cubekey|262144;
 	close;
 
 L2_2:
@@ -1143,17 +1135,17 @@ L2_2:
 	close;
 
 L_3:
-	if (polygon == 2) goto L3_2;
+	if (cubekey&16384) goto L3_2;
 	input @polygon$;
 
-	if (polygon == 1 && (@polygon$ == "polygon model" || @polygon$ == "Polygon Model")) goto L3_1;
+	if (cubekey&8192 && (@polygon$ == "polygon model" || @polygon$ == "Polygon Model")) goto L3_1;
 	mes "Nothing happened.";
 	close;
 
 L3_1:
 	mes "You inserted the 'polygon model' into the polygonal hole.";
 	mes "The box makes a metallic click.";
-	set polygon,2;
+	set cubekey,cubekey|16384;
 	close;
 
 L3_2:
@@ -1170,11 +1162,11 @@ L4_1:
 	mes "There is a small card inside of it.";
 	next;
 	mes "You acquired the 'Laboratory Permit'.";
-	set @gotkey,1;
+	set @gotLPkey,1;
 	getitem 2657,1;
 	close;
 
-L_5:
+L_DONE:
 	mes "There is an opened box.";
 	mes "There is nothing inside.";
 	close;
@@ -1183,8 +1175,9 @@ L_5:
 //--------------------------Test tube--------------------------
 
 lhz_cube.gat,224,197,0	script	Test Tube	111,{
+	if (MISC_QUEST&512) goto L_DONE;
 	if (countitem(2657) > 0) goto L_3;
-	if (ellipse >= 1) goto L_2;
+	if (cubekey&32768) goto L_2;
 	mes "There is a weird test tube.";
 	mes "It seems like there is something inside.";
 	mes "There' a keyhole and a hole that fits a thin object.";
@@ -1201,7 +1194,7 @@ L_1:
 	mes "Revealing an ellipse model.";
 	next;
 	mes "You acquired the '^FF0000ellipse model^000000'.";
-	set ellipse,1;
+	set cubekey,cubekey|32768;
 	close;
 
 L_2:
@@ -1228,24 +1221,20 @@ L_4:
 
 L4_1:
 	mes "It connected to a long staircase.";
-	set knife,0;	set axe,0;	set box,0;
-	set cubekey,0;	set machine,0;	set num1,0;
-	set num2,0;	set num3,0;	set num4,0;	set num5,0;
+	set cubekey,0;	
+	set num1,0;	set num2,0;	set num3,0;	set num4,0;	set num5,0;
 	set num6,0;	set num7,0;	set num8,0;	set num9,0;
-	set rod,0;	set srod1,0;	set srod2,0;
-	set polygon,0;	set ellipse,0;	set quadrangle,0;
-	set hzdun,1;
+	set piciburn,0;
+	set MISC_QUEST,MISC_QUEST|512;
 	close2;
+L_DONE:
 	warp "lhz_cube.gat",177,13;
 	end;
 }
 
+//============================================================
 // Lighthalzen Pickpocket Mini-Quest
-// By Lord Gywall
-// Version 1.0
-// Tested on: eAthena SVN Stable (Unknown version)
-// Version History:
-// 1.0 - Completed and working
+//============================================================
 
 lighthalzen.gat,240,216,4	script	Man#Pickpocket1	870,2,2,{
 	end;

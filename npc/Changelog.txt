@@ -29,6 +29,11 @@ Playtester
 
 Date		Added
 ======
+09/21
+	* Feed 15 more permanent character variables. [Lupus]
+	- Fixed old Cube Room sticks-bug
+	- Now Bio-Lab passage uses MISC_QUEST | 512 instead of 'hzdun'
+		Don't forget to update your lhazeh warps script ^_-'
 09/20
 	* Fixed some bugs in Cube Room. Some parts could be skipped [Lupus]
 	* Final optimization of Niflheim quests [Lupus]
