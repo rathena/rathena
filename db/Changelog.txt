@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/21
+	* Implemented Rachel Sanctuary mob skills [Playtester]
 09/18
 	* Corrected Ki Explosion to have range 1 and to take your weapon's element.
 	  [Skotlex]
