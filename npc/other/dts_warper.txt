@@ -223,7 +223,8 @@ lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
 		mes "selecting our valued customers";
 		mes "to choose the company they want.";
 		next;
-		if((dtseligible == 0 || dtseligible == 3) && baselevel >= 60 && MISC_QUEST&128 == 0)) set dtseligible,1;	//Clear previous var of dtseligible,3 being tried for eligibility already
+		if((dtseligible == 0 || dtseligible == 3) && baselevel >= 60 && MISC_QUEST&128 == 0) set dtseligible,1;
+		//Clear previous var of dtseligible,3 being tried for eligibility already
 		if(dtseligible != $dtsday && baselevel >= 60 && MISC_QUEST&128){
 			set MISC_QUEST,MISC_QUEST&~128;
 			set dtseligible,1;
