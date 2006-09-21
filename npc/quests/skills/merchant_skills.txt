@@ -16,7 +16,7 @@
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 1.4 Fixed exploits [Lupus]
-//= 1.4a Fixed some typos [IVBela] 1.4b Gershuan -> Gershaun 
+//= 1.4a Fixed some typos [IVBela] 1.4b  Gershaun -> Gershuan
 //= 	changed perm. variables to temp ones [Lupus]
 //============================================================
 

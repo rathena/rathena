@@ -28,7 +28,7 @@
 //= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
 //= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
 //=	+more garbage clean
-//= 2,06 Pass to Bio-Lab -> MISC_QUEST|256 [Lupus]
+//= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
 //============================================================ 
 
 
@@ -103,16 +103,14 @@ function	script	F_ClearGarbage	{
 	//Cube Room
 	if(hzdun) {
 		set MISC_QUEST,MISC_QUEST|512;
-		set cubekey,0;
-		set axe,0;	set ykey,0;	set box,0;	set num1,0;
-		set num2,0;	set num3,0;	set num4,0;	set num5,0;
+		set num1,0;	set num2,0;	set num3,0;	set num4,0;	set num5,0;
 		set num6,0;	set num7,0;	set num8,0;	set num9,0;
-		set knife,0;	set redkey,0;	set srod1,0;	set srod2,0;
-		set fkey,0;	set gkey,0;	set polygon,0;	set machine,0;
-		set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
-		set hzdun,0;
-		set piciburn,0;
+		set hzdun,0; set cubekey,0; set piciburn,0;
 	}
+	set axe,0;	set ykey,0;	set box,0;	
+	set knife,0;	set redkey,0;	set srod1,0;	set srod2,0;
+	set fkey,0;	set gkey,0;	set polygon,0;	set machine,0;
+	set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
 	return;
 }
 
