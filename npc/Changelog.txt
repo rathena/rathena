@@ -34,6 +34,7 @@ Date		Added
 	- Fixed old Cube Room sticks-bug
 	- Now Bio-Lab passage uses MISC_QUEST | 512 instead of 'hzdun'
 		Don't forget to update your lhazeh warps script ^_-'
+	- Fixed 2 bugs in Dungeon Teleport Service. Should use ( ) !!!
 09/20
 	* Fixed some bugs in Cube Room. Some parts could be skipped [Lupus]
 	* Final optimization of Niflheim quests [Lupus]
