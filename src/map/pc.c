@@ -3665,8 +3665,6 @@ int pc_jobid2mapid(unsigned short b_class)
 			class_ = MAPID_XMAS;
 			break;
 		default:
-			if (battle_config.error_log)
-				ShowError("pc_jobid2mapid: Unrecognized job %d!\n", b_class);
 			return -1;
 	}
 	return class_;
@@ -3816,8 +3814,6 @@ int pc_mapid2jobid(unsigned short class_, int sex) {
 		case MAPID_BABY_ROGUE:
 			return JOB_BABY_ROGUE;
 		default:
-			if (battle_config.error_log)
-				ShowError("pc_mapid2jobid: Unrecognized job %d!\n", class_);
 			return -1;
 	}
 }

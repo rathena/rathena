@@ -83,7 +83,7 @@ in_addr_t char_ip = 0;
 char bind_ip_str[128];
 in_addr_t bind_ip = 0;
 int char_port = 6121;
-int char_maintenance;
+int char_maintenance = 0;
 int char_new;
 int char_new_display;
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
