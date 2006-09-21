@@ -38,7 +38,14 @@ extern time_t stall_time;
 #define RFIFOW(fd,pos) (*(unsigned short*)RFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(unsigned long*)RFIFOP(fd,pos))
 #define RFIFOREST(fd)  (session[fd]->rdata_size-session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd) (memmove(session[fd]->rdata,RFIFOP(fd,0),RFIFOREST(fd)),session[fd]->rdata_size=RFIFOREST(fd),session[fd]->rdata_pos=0)
+#define RFIFOFLUSH(fd) \
+	if(session[fd]->rdata_size == session[fd]->rdata_pos) \
+	{	session[fd]->rdata_size = session[fd]->rdata_pos = 0; } else { \
+		session[fd]->rdata_size -= session[fd]->rdata_pos; \
+		memmove(session[fd]->rdata, session[fd]->rdata+session[fd]->rdata_pos, session[fd]->rdata_size); \
+		session[fd]->rdata_pos=0; \
+	}
+
 //#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
 
 #define RBUFP(p,pos) (((unsigned char*)(p))+(pos))

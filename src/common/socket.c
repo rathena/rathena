@@ -857,7 +857,7 @@ int do_parsepacket(void)
 		sd = session[i];
 		if(!sd)
 			continue;
-		if ((sd->rdata_tick != 0) && DIFF_TICK(last_tick,sd->rdata_tick) > stall_time) {
+		if (sd->rdata_tick && DIFF_TICK(last_tick,sd->rdata_tick) > stall_time) {
 			ShowInfo ("Session #%d timed out\n", i);
 			sd->eof = 1;
 		}
@@ -876,7 +876,7 @@ int do_parsepacket(void)
 				continue;
 			}
 		}
-                RFIFOHEAD(i);
+  		RFIFOHEAD(i);
 		RFIFOFLUSH(i);
 	}
 	return 0;
