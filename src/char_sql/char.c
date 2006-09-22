@@ -222,8 +222,12 @@ void set_char_online(int map_id, int char_id, int account_id) {
 	character = idb_ensure(online_char_db, account_id, create_online_char_data);
 	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
 	{
-		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
-			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
+		//char == 99 <- Character logging in, so someone has logged in while one
+		//char is still on map-server, so kick him out, but don't print "error"
+		//as this is normal behaviour. [Skotlex]
+		if (char_id != 99)
+			ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
+				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
 	}
 	character->char_id = (char_id==99)?-1:char_id;
