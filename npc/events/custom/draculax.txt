@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= valaris (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= eAthena RC4+
 //===== Description: =========================================
@@ -15,19 +15,19 @@ mag_dun02.gat,72,182,1	script	Dracula's Coffin::Dracula_Init	-1,{
 
 OnInit:
 	set $dracula_event,0;
-	Break;
+	end;
 
 OnKilled:
 	MapAnnounce "mag_dun02.gat","Dracula's curse has been lifted!",17;
 	set $dracula_event,0;
 	initnpctimer;
-	Break;
+	end;
 
 OnTimer7200000:
 	if($dracula_event==0) 
 	stopnpctimer;
 	enablenpc "Dracula_Event";
-	Break;
+	end;
 }
 
 mag_dun02.gat,72,182,1	script	Dracula's Coffin::Dracula_Event	801,{
@@ -39,92 +39,92 @@ mag_dun02.gat,72,182,1	script	Dracula's Coffin::Dracula_Event	801,{
 	MapAnnounce "mag_dun02.gat","Count Dracula : Who has awakened me from my slumber?",17;
 	npcskilleffect 21,10,66,175;
 	initnpctimer;
-	Break;
+	end;
 
 OnTimer500:
 	npcskilleffect 21,10,74,187;
-	Break;
+	end;
 
 OnTimer1000:
 	npcskilleffect 21,10,80,180;
-	Break;
+	end;
 	
 OnTimer1500:
 	npcskilleffect 21,10,79,183;
-	Break;
+	end;
 
 OnTimer2000:
 	npcskilleffect 21,10,66,175;
-	Break;
+	end;
 
 OnTimer2500:
 	npcskilleffect 21,10,63,186;
-	Break;
+	end;
 
 OnTimer3000:
 	npcskilleffect 21,10,75,186;
-	Break;
+	end;
 
 OnTimer3500:
 	npcskilleffect 21,10,75,173;
-	Break;
+	end;
 
 OnTimer4000:
 	npcskilleffect 21,10,80,170;
-	Break;
+	end;
 
 OnTimer4500:
 	npcskilleffect 21,10,60,179;
-	Break;
+	end;
 
 OnTimer5000:
 	npcskilleffect 21,10,74,187;
-	Break;
+	end;
 
 OnTimer6000:
 	npcskilleffect 21,10,69,182;
-	Break;
+	end;
 
 OnTimer6500:
 	npcskilleffect 21,10,80,180;
-	Break;
+	end;
 
 OnTimer7000:
 	npcskilleffect 21,10,60,179;
-	Break;
+	end;
 
 OnTimer7500:
 	npcskilleffect 21,10,66,175;
-	Break;
+	end;
 
 OnTimer8000:
 	npcskilleffect 21,10,80,187;
-	Break;
+	end;
 
 OnTimer8500:
 	npcskilleffect 21,10,75,186;
-	Break;
+	end;
 
 OnTimer9000:
 	npcskilleffect 21,10,75,173;
-	Break;
+	end;
 
 OnTimer9500:
 	npcskilleffect 21,10,80,170;
-	Break;
+	end;
 
 OnTimer10000:
 	npcskilleffect 21,10,63,186;
-	Break;
+	end;
 
 OnTimer10500:
 	npcskilleffect 21,10,74,187;
-	Break;
+	end;
 
 OnTimer11000:
 	npcskilleffect 21,10,72,182;
 	monster "mag_dun02.gat",72,182,"Count Dracula",1389,1,"Dracula_Init::OnKilled";
 	stopnpctimer;
 	disablenpc "Dracula_Event";
-	Break;
+	end;
 }
