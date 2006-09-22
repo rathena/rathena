@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -136,8 +136,8 @@ L_FAKE:
 	mes "[Jiu Lian Bu]";
 	mes "Ohhhh man....";
 	mes "This is so not Dragon Soup Broth. Sorry, but would you go and try to get it again?";
-	close;
 	set QL_GOTFAKESOUP,0;
+	close;
 
 L_SOUP:
 	mes "[Jiu Lian Bu]";
