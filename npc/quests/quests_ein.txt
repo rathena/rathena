@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.4.1
+//= 1.4.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //=	quests_ein.txt [Evera]
 //= 1.3 Implemented the polution quest. [MasterOfMuppets]
 //= 1.4.1 Massive bugfix. Fixed Pollution exploit [Lupus]
+//= 1.4.2 Fixed Khowropher bug [Lupus]
 //============================================================ 
 
 
@@ -2706,7 +2707,7 @@ OnPolution:
 	donpcevent "Mark::OnHide";
 	donpcevent "Khemko::OnHide";
 	donpcevent "Oberu::OnHide";
-	donpcevent "Khowroper::OnHide";
+	donpcevent "Khowropher::OnHide";
 	donpcevent "Kesunboss::OnHide";
 	donpcevent "Train Station Staff#01::OnHide";
 	donpcevent "Train Station Staff#02::OnHide";
@@ -2821,8 +2822,8 @@ OnTimer600000:
 	donpcevent "Khemko::OnUnHide";
 	enablenpc "Oberu";
 	donpcevent "Oberu::OnUnHide";
-	enablenpc "Khowroper";
-	donpcevent "Khowroper::OnUnHide";
+	enablenpc "Khowropher";
+	donpcevent "Khowropher::OnUnHide";
 	enablenpc "Kesunboss";
 	donpcevent "Kesunboss::OnUnHide";
 	enablenpc "Train Station Staff#01";

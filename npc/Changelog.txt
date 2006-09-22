@@ -29,6 +29,8 @@ Playtester
 
 Date		Added
 ======
+09/22
+	* Fixed missing npc interaction at Einb Pollution Quest [Lupus]
 09/21
 	* Feed 15 more permanent character variables. [Lupus]
 	- Fixed old Cube Room sticks-bug
