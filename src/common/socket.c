@@ -63,7 +63,7 @@ int ip_rules = 1;
 #endif
 
 static int mode_neg=1;
-static int frame_size=TCP_FRAME_LEN;
+static unsigned int frame_size=TCP_FRAME_LEN;
 
 #ifndef MINICORE
 enum {
@@ -1148,7 +1148,7 @@ int socket_config_read(const char *cfgName) {
 				mode_neg = 0;
 			else mode_neg = atoi(w2);
 		} else if (strcmpi(w1, "frame_size") == 0)
-			frame_size = atoi(w2);
+			frame_size = strtoul(w2, NULL, 10);
 		else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}
