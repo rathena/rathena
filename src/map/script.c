@@ -10220,7 +10220,7 @@ int buildin_select(struct script_state *st)
 		st->state=END;
 	} else {
 		//Skip empty menu entries which weren't displayed on the client (Skotlex)
-		for(i=st->start+2;i<= (st->start+sd->npc_menu) && sd->npc_menu<(st->end-st->start);i++) {
+		for(i=st->start+2;i< (st->start+2+sd->npc_menu) && sd->npc_menu < (st->end-st->start-2);i++) {
 			conv_str(st,& (st->stack->stack_data[i])); // we should convert variables to strings before access it [jA1983] [EoE]
 			if((int)strlen(st->stack->stack_data[i].u.str) < 1)
 				sd->npc_menu++; //Empty selection which wasn't displayed on the client.
