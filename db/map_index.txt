@@ -1,3 +1,6 @@
+//======================================================================================
+// Map Index
+//======================================================================================
 //Contains the list of maps with their respective IDs for inter-server use.
 //IDs must never change, therefore any new maps need to be added at the end,
 //and old ones must not be removed, but may be replaced.
@@ -599,7 +602,38 @@ job_knight.gat
 job_priest.gat
 job_wizard.gat
 g_room2.gat
-//Extra maps
+rachel.gat
+ra_in01.gat
+ra_fild01.gat
+ra_fild02.gat
+ra_fild03.gat
+ra_fild04.gat
+ra_fild05.gat
+ra_fild06.gat
+ra_fild07.gat
+ra_fild08.gat
+ra_fild09.gat
+ra_fild10.gat
+ra_fild11.gat
+ra_fild12.gat
+ra_fild13.gat
+ra_san01.gat
+ra_san02.gat
+ra_san03.gat
+ra_san04.gat
+ra_san05.gat
+ra_temin.gat
+ra_temple.gat
+ra_temsky.gat
+que_rachel.gat
+ice_dun01.gat
+ice_dun02.gat
+ice_dun03.gat
+ice_dun04.gat
+//======================================================================================
+// - Other/Extra maps -
+// Only add maps under this line if they are not standard maps!
+//======================================================================================
 rwc01.gat	1000
 rwc02.gat
 rwc03.gat
@@ -653,34 +687,10 @@ test.gat
 poring_c01.gat
 poring_c02.gat
 que_ng.gat
-rachel.gat
-ra_in01.gat
-ra_fild01.gat
-ra_fild02.gat
-ra_fild03.gat
-ra_fild04.gat
-ra_fild05.gat
-ra_fild06.gat
-ra_fild07.gat
-ra_fild08.gat
-ra_fild09.gat
-ra_fild10.gat
-ra_fild11.gat
-ra_fild12.gat
-ra_fild13.gat
-ra_san01.gat
-ra_san02.gat
-ra_san03.gat
-ra_san04.gat
-ra_san05.gat
-ra_temin.gat
-ra_temple.gat
-ra_temsky.gat
-que_rachel.gat
-ice_dun01.gat
-ice_dun02.gat
-ice_dun03.gat
-ice_dun04.gat
-//Place your custom maps with a starting ID here. Example:
+//======================================================================================
+//Place your custom maps with a starting ID here.
+//======================================================================================
+//Example:
+//
 //mymap.gat	1250
 //mymap-2.gat

@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/22
+	* Fixed some maps in db/mapindex.txt being under the wrong id and added comments
+	  so this will not happen again. [Zephiris]
+	  --- ATTENTION! ---
+	  People running TXT servers will have to tell their players to redo their /memo
+	  points since the map ids of the old file were wrong.
 2006/09/21
 	* Fixed a bug on "select" when skipping empty entries when the selected
 	  entry is the last. [Skotlex]
