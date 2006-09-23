@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/23
+	* Now Valkyrie Randgris will only resummon when she has less than 3 slaves [Playtester]
 09/21
 	* Implemented Rachel Sanctuary mob skills [Playtester]
 09/18
