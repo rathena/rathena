@@ -7898,7 +7898,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 
 	if (!ammo && skill && skill_isammotype(sd, skill))
 	{	//Assume this skill is using the weapon, therefore it requires arrows.
-		ammo = 2;  //1<<1 <- look 1 (arrows) moved right 1 times.
+		ammo = 0xFFFFFFFF; //Enable use on all ammo types.
 		ammo_qty = skill_get_num(skill, lv);
 		if (ammo_qty < 0) ammo_qty *= -1;
 	}

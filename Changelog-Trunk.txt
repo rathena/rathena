@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/24
+	* When the code auto-guesses that a skill should require ammo, it will
+	  accept any type of ammo for using it instead of only arrows. Fixes Magnum
+	  Break usage on Gunslingers. [Skotlex]
 2006/09/22
 	* Probably fixed a signed/unsigned mismatch warning on the new socket code.
 	  [Skotlex]
