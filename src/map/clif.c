@@ -8642,6 +8642,10 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		return;
 	}
 	
+	if ((is_atcommand(fd, sd, message, 0) != AtCommand_None) ||
+		(is_charcommand(fd, sd, message,0) != CharCommand_None))
+		return;
+
 	if (sd->sc.count &&
 		(sd->sc.data[SC_BERSERK].timer != -1 ||
 		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
@@ -8654,14 +8658,9 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	// To prevent client auto-muting, always send global chat back to self.
 	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WFIFOW(fd,0) = 0x8e;
 	WFIFOSET(fd, WFIFOW(fd,2));
-
-	if ((is_atcommand(fd, sd, message, 0) != AtCommand_None) ||
-		(is_charcommand(fd, sd, message,0) != CharCommand_None))
-		return;
 
 	if (RFIFOW(fd,2)+4 < 128)
 		buf = buf2; //Use a static buffer.
@@ -9011,7 +9010,6 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	if ((is_charcommand(fd, sd, gm_command, 0) != CharCommand_None) ||
 		(is_atcommand(fd, sd, gm_command, 0) != AtCommand_None)) {
 		if(gm_command) aFree(gm_command);
-		clif_wis_end(fd, 0); // Send success to prevent client from self-muting.
 		return;
 	}
 	if(gm_command) aFree(gm_command);
@@ -10365,18 +10363,8 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 
 	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != CharCommand_None ||
 		is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None)
-	{
-		char *mes = RFIFOP(fd,4);
-		int len = RFIFOW(fd,2)-4;
-		//Send text to self to prevent client-muting.
-		WFIFOHEAD(fd, len+8);
-		WFIFOW(fd,0)=0x109;
-		WFIFOW(fd,2)=len+8;
-		WFIFOL(fd,4)=sd->status.account_id;
-		memcpy(WFIFOP(fd,8),mes,len);
-		WFIFOSET(fd, len+8);
 		return;
-	}
+
 	if	(sd->sc.count && (
 			sd->sc.data[SC_BERSERK].timer!=-1 ||
 			(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
@@ -10597,17 +10585,8 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 
 	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != CharCommand_None ||
 		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None)
-	{
-		char *mes = RFIFOP(fd,4);
-		int len = RFIFOW(fd,2)-4;
-		//Send text to self to prevent client-muting.
-		WFIFOHEAD(fd, len+4);
-		WFIFOW(fd, 0) = 0x17f;
-		WFIFOW(fd, 2) = len+4;
-		memcpy(WFIFOP(fd,4), mes, len);
-		WFIFOSET(fd, len+4);
 		return;
-	}
+
 	if (sd->sc.count && (
 		sd->sc.data[SC_BERSERK].timer!=-1 ||
 		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
@@ -10867,7 +10846,8 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 		limit = 0 - limit;
 
 	//If type is 2 and the ids don't match, this is a crafted hacked packet!
-	if (type == 2 && sd->bl.id != dstsd->bl.id)
+	//Disabled because clients keep self-muting when you give players public @ commands... [Skotlex]
+	if (type == 2/* && sd->bl.id != dstsd->bl.id*/)
 		return;
 	
 	if (
@@ -10882,7 +10862,6 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 			dstsd->status.manner = 0;
 			status_change_end(bl,SC_NOCHAT,-1);
 		}
-		ShowDebug("GMReqNoChat: name:%s type:%d limit:%d manner:%d\n", dstsd->status.name, type, limit, dstsd->status.manner);
 	}
 
 	return;
