@@ -5262,38 +5262,38 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					stat =max-sd->status.luk;
 				val4 |= stat;
 			} else {
-				struct status_data *status = status_get_base_status(bl);
-				if (!status) return 0;
+				struct status_data *b_status = status_get_base_status(bl);
+				if (!b_status) return 0;
 				max = 0xFF; //Assume a 256 max parameter
 				//Str
 				stat = (psc->data[SC_MARIONETTE].val3>>16)&0xFF;
-				if (status->str+stat > max)
-					stat = max - status->str;
+				if (b_status->str+stat > max)
+					stat = max - b_status->str;
 				val3 |= stat<<16;
 				//Agi
 				stat = (psc->data[SC_MARIONETTE].val3>>8)&0xFF;
-				if (status->agi+stat > max)
-					stat = max - status->agi;
+				if (b_status->agi+stat > max)
+					stat = max - b_status->agi;
 				val3 |= stat<<8;
 				//Vit
 				stat = psc->data[SC_MARIONETTE].val3&0xFF;
-				if (status->vit+stat > max)
-					stat = max - status->vit;
+				if (b_status->vit+stat > max)
+					stat = max - b_status->vit;
 				val3 |= stat;
 				//Int
 				stat = (psc->data[SC_MARIONETTE].val4>>16)&0xFF;
-				if (status->int_+stat > max)
-					stat = max - status->int_;
+				if (b_status->int_+stat > max)
+					stat = max - b_status->int_;
 				val4 |= stat<<16;
 				//Dex
 				stat = (psc->data[SC_MARIONETTE].val4>>8)&0xFF;
-				if (status->dex+stat > max)
-					stat = max - status->dex;
+				if (b_status->dex+stat > max)
+					stat = max - b_status->dex;
 				val4 |= stat<<8;
 				//Luk
 				stat = psc->data[SC_MARIONETTE].val4&0xFF;
-				if (status->luk+stat > max)
-					stat = max - status->luk;
+				if (b_status->luk+stat > max)
+					stat = max - b_status->luk;
 				val4 |= stat;
 			}
 			tick = 1000;
@@ -5488,7 +5488,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2 = (status_get_lv(bl) + status->dex + status->luk)/2; //def increase
 			break;
 		case SC_MOON_COMFORT:
-			val2 = (status_get_lv(bl) + status->dex + status->luk)/10; //luk increase
+			val2 = (status_get_lv(bl) + status->dex + status->luk)/10; //flee increase
 			break;
 		case SC_STAR_COMFORT:
 			val2 = (status_get_lv(bl) + status->dex + status->luk); //Aspd increase

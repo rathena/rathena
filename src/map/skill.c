@@ -4688,8 +4688,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skilllv,1);
 			if(map_getcell(src->m,x,y,CELL_CHKPASS)) {
-				unit_movepos(src, x, y, 1, 0);
 				clif_slide(src,x,y);
+				unit_movepos(src, x, y, 1, 0);
 			}
 		}
 		break;
