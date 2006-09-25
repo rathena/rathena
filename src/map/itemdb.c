@@ -493,8 +493,11 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		}
 		if(str[0]==NULL)
 			continue;
-		if (j<3)
+		if (j<3) {
+			if (j>1) //Or else it barks on blank lines...
+				ShowWarning("itemdb_read_itemgroup: Insufficient fields for entry at %s:%d\n", filename, ln);
 			continue;
+		}
 		groupid = atoi(str[0]);
 		if (groupid < 0 || groupid >= MAX_ITEMGROUP) {
 			ShowWarning("itemdb_read_itemgroup: Invalid group %d in %s:%d\n", groupid, filename, ln);
