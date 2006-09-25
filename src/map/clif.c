@@ -114,10 +114,10 @@ static const int packet_len_table[MAX_PACKET_DB] = {
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == 7)?4:a
 
-#define WBUFPOS(p,pos,x,y) { unsigned char *__p = (p); __p+=(pos); __p[0] = (x)>>2; __p[1] = ((x)<<6) | (((y)>>4)&0x3f); __p[2] = (y)<<4; }
+#define WBUFPOS(p,pos,x,y,dir) { unsigned char *__p = (p); __p+=(pos); __p[0] = (x)>>2; __p[1] = ((x)<<6) | (((y)>>4)&0x3f); __p[2] = ((y)<<4)|((dir)&0xf); }
 #define WBUFPOS2(p,pos,x0,y0,x1,y1) { unsigned char *__p = (p); __p+=(pos); __p[0] = (unsigned char)((x0)>>2); __p[1] = (unsigned char)(((x0)<<6) | (((y0)>>4)&0x3f)); __p[2] = (unsigned char)(((y0)<<4) | (((x1)>>6)&0x0f)); __p[3]=(unsigned char)(((x1)<<2) | (((y1)>>8)&0x03)); __p[4]=(unsigned char)(y1); }
 
-#define WFIFOPOS(fd,pos,x,y) { WBUFPOS (WFIFOP(fd,pos),0,x,y); }
+#define WFIFOPOS(fd,pos,x,y,dir) { WBUFPOS (WFIFOP(fd,pos),0,x,y,dir); }
 #define WFIFOPOS2(fd,pos,x0,y0,x1,y1) { WBUFPOS2(WFIFOP(fd,pos),0,x0,y0,x1,y1); }
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
@@ -635,7 +635,7 @@ int clif_authok(struct map_session_data *sd) {
 	WFIFOHEAD(fd, packet_len_table[0x73]);
 	WFIFOW(fd, 0) = 0x73;
 	WFIFOL(fd, 2) = gettick();
-	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y);
+	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y, sd->ud.dir);
 	WFIFOB(fd, 9) = 5;
 	WFIFOB(fd,10) = 5;
 	WFIFOSET(fd,packet_len_table[0x73]);
@@ -927,8 +927,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 			WBUFB(buf,48)=sd->status.karma;
 		}
 		WBUFB(buf,49)=vd->sex;
-		WBUFPOS(buf,50,bl->x,bl->y);
-		WBUFB(buf,52)|=dir & 0x0f;
+		WBUFPOS(buf,50,bl->x,bl->y,dir);
 		WBUFB(buf,53)=5;
 		WBUFB(buf,54)=5;
 		WBUFB(buf,55)=vd->dead_sit;
@@ -963,8 +962,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 			WBUFB(buf,44)=sd->status.karma;
 		}
 		WBUFB(buf,45)=vd->sex;
-		WBUFPOS(buf,46,bl->x,bl->y);
-		WBUFB(buf,48)|=dir & 0x0f;
+		WBUFPOS(buf,46,bl->x,bl->y,dir);
 		WBUFB(buf,49)=5;
 		WBUFB(buf,50)=5;
 		WBUFB(buf,51)=vd->dead_sit;
@@ -997,8 +995,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		if (sd)
 			WBUFB(buf,44)=sd->status.karma;
 		WBUFB(buf,45)=vd->sex;
-		WBUFPOS(buf,46,bl->x,bl->y);
-		WBUFB(buf,48)|=dir&0x0f;
+		WBUFPOS(buf,46,bl->x,bl->y,dir);
 		WBUFB(buf,49)=5;
 		WBUFB(buf,50)=5;
 		WBUFB(buf,51)=vd->dead_sit;
@@ -1029,8 +1026,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 	WBUFW(buf,32)=dir;
 	WBUFL(buf,34)=guild_id;
 	WBUFL(buf,38)=emblem_id;
-	WBUFPOS(buf,46,bl->x,bl->y);
-	WBUFB(buf,48)|=dir&0x0f;
+	WBUFPOS(buf,46,bl->x,bl->y,dir);
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
 	WBUFW(buf,52)=clif_setlevel(lv);
@@ -1417,7 +1413,7 @@ int clif_spawn(struct block_list *bl)
 		WBUFW(buf,22)=vd->hair_style;  //Required for pets.
 		WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 
-		WBUFPOS(buf,36,bl->x,bl->y);
+		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
 		clif_send(buf,packet_len_table[0x7c],bl,AREA_WOS);
 		if (disguised(bl)) {
 			WBUFL(buf,2)=-bl->id;
@@ -2055,7 +2051,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	WFIFOW(fd,0)=0x78;
 	WFIFOL(fd,2)=npcid;
 	WFIFOW(fd,14)=111;
-	WFIFOPOS(fd,46,sd->bl.x,sd->bl.y);
+	WFIFOPOS(fd,46,sd->bl.x,sd->bl.y,sd->ud.dir);
 	WFIFOB(fd,49)=5;
 	WFIFOB(fd,50)=5;
 	WFIFOSET(fd, packet_len_table[0x78]);
