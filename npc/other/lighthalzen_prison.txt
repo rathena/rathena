@@ -1,0 +1,118 @@
+//===== eAthena Script ========================================
+//= Lightalzen Prison Area
+//===== By: ==================================================
+//= Au{R}oN
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Lighthalzen Prison Area
+//===== Additional Comments: =================================
+//= Converted from Aegis
+//= 1.0 Add all Prison NPC (FACING PROBABLY INCORRECT) [Au{R}oN]
+//============================================================
+
+lhz_in02.gat,145,179,7	script	Drunky Guy::d1	849,{
+
+	mes "[Drunky Guy]";
+	mes "Ahh, ahh...";
+	mes "I'm drunking again... *hiccup*";
+	mes "Heheheheeheh.....";
+	mes "Wine from Morroc is";
+	mes "always the best.";
+	close;
+}
+
+lhz_in02.gat,157,198,8	script	Cool Man	85,{
+
+	mes "[Strong Guy]";
+	mes "Kekekeke!!!";
+	mes "What did you do~";
+	mes "Stole Materials?";
+	mes "I'm innocent!!!";
+	close;
+}
+
+lhz_in02.gat,155,201,7	script	Drunky Guy::d2	870,{
+
+	mes "[Drunky Guy]";
+	mes "........";
+	mes ".....*hiccup*";
+	mes "........Eheheheeheh...";
+	mes "*hiccup hiccup.";
+	next;
+	mes "== Totally Drunk... ==";
+	mes "== Can't talk to him at all... ==";
+	close;
+}
+
+lhz_in02.gat,153,206,6	script	Drunk Guy::d3	853,{
+
+	mes "[Drunk Guy]";
+	mes "I'm innocent~!!!!!!";
+	mes "*cough cough cough cough*";
+	mes "*cough cough cough cough*";
+	mes "Huh... Huh... Huh...";
+	mes "I'M INNOCENT!!!!!";
+	mes "*hiccup hiccup*";
+	next;
+	mes "[Drunk Guy]";
+	mes "I'm just drunk and";
+	mes "sang a song, how is";
+	mes "this a crime!? And so";
+	mes "what if i just want to";
+	mes "make some noise!?";
+	mes "*cough cough cough cough*";
+	mes "*hiccup hiccup*";
+	close;
+}
+
+lhz_in02.gat,147,222,4	script	Police::police1	85,{
+
+	mes "[Police]";
+	mes "Tell me! Tell me already!";
+	mes "Why can't you just tell";
+	mes "the truth! Tell me!";
+	next;
+	mes "[Suspect]";
+	mes "Augh, seriously!";
+	mes "It wasn't me!!!";
+	next;
+	mes "[Police]";
+	mes "...*sigh*";
+	next;
+	mes "[Suspect]";
+	mes "Stop wasting your time...";
+	mes "Just let me go.";
+	next;
+	mes "[Police]";
+	mes "...How's... your mother?";
+	next;
+	mes "[Suspect]";
+	mes "My mother!? She's fine!";
+	next;
+	mes "[Police]";
+	mes "When was the last time";
+	mes "you met your mother?";
+	next;
+	mes "[Suspect]";
+	mes "This dosen't concern you!";
+	next;
+	mes "[Police]";
+	mes "But your mother... She";
+	mes "still worries about you";
+	next;
+	mes "[Suspect]";
+	mes "...";
+	next;
+	mes "[Police]";
+	mes "Well... Want to have some";
+	mes "stir-fried Poring?";
+	next;
+	mes "[Suspect]";
+	mes "Forget it!";
+	close;
+}
+
+lhz_in02.gat,142,221,9	duplicate(police1)	Suspect::plice2	870

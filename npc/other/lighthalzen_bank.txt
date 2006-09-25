@@ -1,0 +1,83 @@
+//===== eAthena Script ========================================
+//= Lighthalzen Bank Area
+//===== By: ==================================================
+//= Au{R}oN
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Lighthalzen Bank
+//===== Additional Comments: =================================
+//= Converted from Aegis
+//= 1.0 Add all Bank NPC (TEMPORARY NAME and FACING PROBABLY INCORRECT) [Au{R}oN]
+//============================================================
+
+lhz_in02.gat,34,41,7	script	Young Man#gli1	849,{
+
+	mes "[Young Man]";
+	mes "Ugh, while the chair are";
+	mes "too hard, I still like how nice and cool it is in the bank!";
+	close;
+}
+
+lhz_in02.gat,28,39,3	script	Young Girl#gli1	703,{
+
+	mes "[Young Girl]";
+	mes "I should work here in";
+	mes "in the Bank after I've grown up... Don't you think this";
+	mes "Job is great? Tee hee hee...";
+	close;
+}
+
+lhz_in02.gat,31,34,3	script	Grandpa#gli1	847,{
+
+	mes "[Grandpa]";
+	mes "The build looks very clean,";
+	mes "it's just so nice to look at";
+	mes "it... Maybe i should make";
+	mes "my house look like this.";
+	close;
+}
+
+lhz_in02.gat,31,33,3	script	Grandma#gli2	863,{
+
+	mes "[Grandma]";
+	mes "It's so comfortable with";
+	mes "the nice scent here...";
+	mes "Isn't this place great?";
+	mes "Only if this is my home...";
+	close;
+}
+
+lhz_in02.gat,34,22,8	script	Bank Employee::alone	755,{
+
+	mes "[Bank Employee]";
+	mes "This Bank is built to";
+	mes "provide a service to the";
+	mes "our service are currently";
+	mes "terminated, we will provide";
+	mes "great services to satisfy";
+	mes "our guests once the system";
+	mes "is recovered.";
+	mes "We apologize for the";
+	mes "inconvenience.";
+	close;
+}
+
+lhz_in02.gat,21,25,9	script	Bank Employee::clone1	86,{
+
+	mes "[Bank Employee]";
+	mes "Currently this Bank has";
+	mes "temporarily terminated";
+	mes "all services due to";
+	mes "internal problems.";
+	mes "We will fix the problems";
+	mes "as soon as possibile and";
+	mes "be in services again.";
+	mes "We apologize for the";
+	mes "inconvenience.";
+	close;
+}
+
+lhz_in02.gat,21,38,9	duplicate(clone1)	Bank Employee::clone2	86

@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+09/25
+	* Thanks to Au{R}oN, added prison and bank Lighthalzen NPC [Lupus]
+	- Thanks to Au{R}oN, added Shuriken Blacksmith. Fixed bugs.
 09/22
 	* Fixed missing npc interaction at Einb Pollution Quest [Lupus]
 09/21
