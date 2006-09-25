@@ -87,7 +87,7 @@ M_DAIS:
 	close;
 
 //=====================DAISHARIN4========================
-M_DAIS:
+M_DAIS4:
 	mes "[Taitsu]";
 	mes "You want make ^FF0000Fuuma Shuriken Daisharin[4]^000000";
 	mes "Fuuma Shuriken Daisharin[4] needs:";

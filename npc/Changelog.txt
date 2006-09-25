@@ -30,6 +30,8 @@ Playtester
 Date		Added
 ======
 09/25
+	* Fixed the Shuriken Blacksmith. Incomplete Label (M_DAIS -> M_DAIS4) and extra
+	  parenthesis on line 128 ( a ) in the end of the condition) [erKURITA]
 	* Thanks to Au{R}oN, added prison and bank Lighthalzen NPC [Lupus]
 	- Thanks to Au{R}oN, added Shuriken Blacksmith. Fixed bugs.
 09/22
