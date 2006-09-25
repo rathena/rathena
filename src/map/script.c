@@ -671,7 +671,9 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 				exit(0);
 			}
 			func=parse_cmd;
-
+			if( *p == '(' && *(plist[i]=(char *)skip_space(p+1)) == ')' ){
+				p=(char *)plist[i]+1; // empty argument list
+			} else
 			while(*p && *p!=')' && i<128) {
 				plist[i]=(char *) p;
 				p=parse_subexpr(p,-1);
@@ -726,12 +728,14 @@ unsigned char* parse_expr(unsigned char *p)
 		disp_error_message("unexpected char",p);
 		exit(1);
 	}
+	/*
 	if(*p == '(') {
 		unsigned char *p2 = skip_space(p + 1);
 		if(*p2 == ')') {
 			return p2 + 1;
 		}
 	}
+	*/
 	p=parse_subexpr(p,-1);
 #ifdef DEBUG_FUNCIN
 	if(battle_config.etc_log)
@@ -800,6 +804,10 @@ unsigned char* parse_line(unsigned char *p)
 	} else {
 		end = ';';
 	}
+
+	if( p && *p == '(' && *(p2=(char *)skip_space(p+1)) == ')' ){
+		p= p2+1; // empty argument list
+	} else
 	while(p && *p && *p != end && i<128){
 		plist[i]=(char *) p;
 
