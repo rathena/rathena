@@ -1320,7 +1320,9 @@ int charcommand_baselevel(
 					level = pl_sd->status.base_level -1;
 				if (pl_sd->status.status_point > 0) {
 					for (i = 0; i > -level; i--)
-						status_point -= (pl_sd->status.base_level +i + 14) / 5;
+						status_point += (pl_sd->status.base_level +i + 14) / 5;
+					if (pl_sd->status.status_point < status_point)
+						pc_resetstate(sd);
 					if (pl_sd->status.status_point < status_point)
 						pl_sd->status.status_point = 0;
 					else
