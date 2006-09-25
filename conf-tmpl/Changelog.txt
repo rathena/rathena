@@ -1,5 +1,8 @@
 Date	Added
 
+2006/09/25
+	* Removed config setting allow_atcommand_when_mute as it's no longer used
+	  (see manner_system in misc.conf for it's replacement) [Skotlex]
 2006/09/19
 	* Removed setting ban_spoof_namer (as now invalid chat packets just cause
 	  the sending character to be disconnected). [Skotlex]

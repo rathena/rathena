@@ -3703,7 +3703,6 @@ static const struct battle_data_short {
 	{ "skill_steal_max_tries",			&battle_config.skill_steal_max_tries}, // [Lupus]
 //	{ "night_darkness_level",              &battle_config.night_darkness_level}, // [celest]
 	{ "motd_type",                         &battle_config.motd_type}, // [celest]
-	{ "allow_atcommand_when_mute",         &battle_config.allow_atcommand_when_mute}, // [celest]
 	{ "finding_ore_rate",                  &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",                     &battle_config.exp_calc_type}, // [celest]
 	{ "min_skill_delay_limit",             &battle_config.min_skill_delay_limit}, // [celest]
@@ -4136,7 +4135,6 @@ void battle_set_defaults() {
 	battle_config.skill_steal_max_tries = 15; //=16 tries
 //	battle_config.night_darkness_level = 9;
 	battle_config.motd_type = 0;
-	battle_config.allow_atcommand_when_mute = 0;
 	battle_config.finding_ore_rate = 100;
 	battle_config.castrate_dex_scale = 150;
 	battle_config.area_size = 14;

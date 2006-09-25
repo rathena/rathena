@@ -7853,7 +7853,6 @@ int clif_charnameack (int fd, struct block_list *bl)
 				if (battle_config.show_mob_info&1)
 					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if (battle_config.show_mob_info&2)
-
 					str_p += sprintf(str_p, "HP: %d%% | ", 
 						md->status.max_hp > 10000?
 						md->status.hp/(md->status.max_hp/100):

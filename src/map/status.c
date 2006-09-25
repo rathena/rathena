@@ -4474,8 +4474,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		if (!(rand()%10000 < rate))
 			return 0;
-
-
 	}
 
 	undead_flag=battle_check_undead(status->race,status->def_ele);
