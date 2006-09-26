@@ -1885,13 +1885,14 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
 
-	if((damage <= 0 || damage < dmg.div_)
-			&& skillid != CH_PALMSTRIKE) //Palm Strike is the only skill that will knockback even if it misses. [Skotlex]
+	if(damage < dmg.div_ 
+		&& skillid != CH_PALMSTRIKE) //Palm Strike is the only skill that will knockback even if it misses. [Skotlex]
 		dmg.blewcount = 0;
 
 	if(skillid == CR_GRANDCROSS||skillid == NPC_GRANDDARKNESS) {
 		if(battle_config.gx_disptype) dsrc = src;
 		if(src == bl) type = 4;
+		else flag|=SD_ANIMATION;
 	}
 
 	if(sd) {
@@ -2033,24 +2034,11 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case SN_SHARPSHOOTING:
 		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
-	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
-		//Only show animation when hitting yourself. [Skotlex]
-		if (src!=bl) {
-			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, skillid, -1, 5);
-			break;
-		}
 	default:
-// Aegis sends the same packet for both targetted and splash-targetted enemies,
-// therefore SD_ANIMATION isn't really of any use...
-/*
-		if (flag&SD_ANIMATION) //Disable skill animation.
-			dmg.dmotion = clif_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
-				damage, dmg.div_, 8, dmg.damage2);
-		else
-*/
-			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
-				damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, type);
+		//Disabling skill animation doesn't works on multi-hit.
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
+			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, 
+			(flag&SD_ANIMATION && dmg.div_ < 2?5:type));
 		break;
 	}
 	
