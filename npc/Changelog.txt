@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+09/26
+	* Shuriken Blacksmith - added missing next; [Lupus]
+	- Finished translation of custom\may_hats, thanks to Playtester ^_-
 09/25
 	* Fixed the Shuriken Blacksmith. Incomplete Label (M_DAIS -> M_DAIS4) and extra
 	  parenthesis on line 128 ( a ) in the end of the condition) [erKURITA]

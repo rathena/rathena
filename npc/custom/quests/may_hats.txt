@@ -4,13 +4,14 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.0
+//= 1.01
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= Custom quest for some RO mobile game bonus items 
 //===== Additional Comments: =================================
 //= 1 May, 2006
+//= 1.01 translated the rest of dialogues
 //============================================================
 
 gonryun.gat,187,140,4	script	Yakima	850,{
@@ -106,12 +107,12 @@ M_3:
 
 M_4:
  mes "[Yakima]";
- mes "Отличная моднючая сумочка - аксессуар! С ней вы сможете унести немного больше товара... +2 к силе, это вам не гнездо на башке носить!";
- mes "Подходит только для Купцов и иже с ними.";
+ mes "It's a fresh style! Ancessory and a bag all in one! You'd get +2 STR... It's different from that sabby nest!";
+ mes "It fits to Merchant classonly.";
  emotion e_heh;
  next;
  mes "[Yakima]";
- mes "У меня таких сумок довольно много... Поэтому и искать вещей вам придется всего 3 вида изделий из цветов и брезентовую основу:";
+ mes "Now my stock is full of those bags... So I'll make it from 3 flower things and a rough piece of clothes:";
  mes "3 Romantic Flowers,";
  mes "3 Fancy Flowers,";
  mes "2 Flower Rings and";

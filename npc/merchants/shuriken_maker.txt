@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Au{R}oN
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.0 Added the 4 Shuriken. [Au{R}oN]
 //= 1.1 Fix getitem bugs and add if ninja job check. [Au{R}oN]
 //= 1.2 more bugs fixed,wrong labels, missing stuf, etc[Lupus]
+//= 1.2a added missing next;
 //============================================================
 
 que_ng.gat,22,62,3	script	Taitsu	709,{
@@ -139,12 +140,14 @@ M_REKKA:
 
 //=====================I'M SORRY========================
 L_NOITEMS:
+	next;
 	mes "[Taitsu]";
 	mes "Sorry, but you not have all required items.";
 	emotion e_sry;
 	close;
 
 L_NOZENY:
+	next;
 	mes "[Taitsu]";
 	mes "I'm sorry, but you need "+@z+"z";
 	emotion e_cash;
