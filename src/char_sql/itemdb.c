@@ -26,29 +26,9 @@ static struct dbt* item_db;
 static void* create_item(DBKey key, va_list args) {
 	struct item_data *id;
 	int nameid = key.i;
-
 	CREATE(id, struct item_data, 1);
-		id->nameid = nameid;
-	if(nameid>500 && nameid<600)
-		id->type=0;   //heal item
-	else if(nameid>600 && nameid<700)
-		id->type=2;   //use item
-	else if((nameid>700 && nameid<1100) ||
-			(nameid>7000 && nameid<8000))
-		id->type=3;   //correction
-	else if(nameid>=1750 && nameid<1771)
-		id->type=10;  //arrow
-	else if(nameid>1100 && nameid<2000)
-		id->type=4;   //weapon
-	else if((nameid>2100 && nameid<3000) ||
-			(nameid>5000 && nameid<6000))
-		id->type=5;   //armor
-	else if(nameid>4000 && nameid<5000)
-		id->type=6;   //card
-	else if(nameid>9000 && nameid<10000)
-		id->type=7;   //egg
-	else if(nameid>10000)
-		id->type=8;   //petequip
+	id->nameid = nameid;
+	id->type = IT_ETC;
 	return id;
 }
 /*==========================================
@@ -67,7 +47,7 @@ struct item_data* itemdb_search(int nameid)
 int itemdb_isequip(int nameid)
 {
 	int type=itemdb_type(nameid);
-	if(type==0 || type==2 || type==3 || type==6 || type==10)
+	if(type==IT_HEALING || type==IT_USABLE || type==IT_ETC || type==IT_CARD || type==IT_AMMO)
 		return 0;
 	return 1;
 }
@@ -79,7 +59,7 @@ int itemdb_isequip2(struct item_data *data)
 {
 	if(data) {
 		int type=data->type;
-		if(type==0 || type==2 || type==3 || type==6 || type==10)
+		if(type==IT_HEALING || type==IT_USABLE || type==IT_ETC || type==IT_CARD || type==IT_AMMO)
 			return 0;
 		else
 			return 1;

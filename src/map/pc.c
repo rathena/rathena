@@ -3259,6 +3259,9 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	if(md->state.steal_coin_flag || md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1)
 		return 0;
 
+	if (md->class_>=1324 && md->class_<1364)
+		return 0;
+
 	skill = pc_checkskill(sd,RG_STEALCOIN)*10;
 	rate = skill + (sd->status.base_level - md->level)*3 + sd->battle_status.dex*2 + sd->battle_status.luk*2;
 	if(rand()%1000 < rate) {
@@ -6261,10 +6264,8 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			pos = sd->equip_index[EQI_ACC_L] >= 0 ? EQP_ACC_R : EQP_ACC_L;
 	}
 
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R &&
-		(pc_checkskill(sd, AS_LEFT) > 0 ||
-		(sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN)
-	) {	//Dual wield capable weapon.
+	if(pos == EQP_ARMS && id->equip == EQP_HAND_R)
+	{	//Dual wield capable weapon.
 	  	pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
 			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
