@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Au{R}oN
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.2b
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.1 Fix getitem bugs and add if ninja job check. [Au{R}oN]
 //= 1.2 more bugs fixed,wrong labels, missing stuf, etc[Lupus]
 //= 1.2a added missing next;
+//= 1.2b Thanks to $ephiroth, fixed wrong ingredient lists
 //============================================================
 
 que_ng.gat,22,62,3	script	Taitsu	709,{
@@ -40,10 +41,10 @@ que_ng.gat,22,62,3	script	Taitsu	709,{
 //=====================BENEKI========================
 M_BENEKI:
 	mes "[Taitsu]";
-	mes "You want make ^FF0000Fuuma Shuriken Beneki^000000";
-	mes "Fuuma Shuriken Beneki needs:";
+	mes "For making ^FF0000Fuuma Shuriken Beneki^000000";
+	mes "you need these items:";
 	mes "50 Steel, 20 Harpy's Feathers, 5 Oridecon, and 90.000z.";
-	mes "Do you want me to make it?";
+	mes "Do you want it?";
 	next;
 	menu "Yes",-,"No Thanks",M_NOPE;
 
@@ -65,10 +66,10 @@ M_BENEKI:
 //=====================DAISHARIN========================
 M_DAIS:
 	mes "[Taitsu]";
-	mes "You want make ^FF0000Fuuma Shuriken Daisharin^000000";
-	mes "Fuuma Shuriken Daisharin needs:";
+	mes "For making ^FF0000Fuuma Shuriken Daisharin^000000";
+	mes "you need these items:";
 	mes "30 Steel, 100 Tassels, 2 Oridecon, and 40.000z.";
-	mes "Do you want me to make it?";
+	mes "Do you want it?";
 	next;
 	menu "Yes",-,"No Thanks",M_NOPE;
 
@@ -90,10 +91,10 @@ M_DAIS:
 //=====================DAISHARIN4========================
 M_DAIS4:
 	mes "[Taitsu]";
-	mes "You want make ^FF0000Fuuma Shuriken Daisharin[4]^000000";
-	mes "Fuuma Shuriken Daisharin[4] needs:";
-	mes "20 Cracked Diamonds, 1 Fuuma Shuriken Daisharin, 2 Oridecon, and 40.000z.";
-	mes "Do you want me to make it?";
+	mes "For making ^FF0000Fuuma Shuriken Daisharin[4]^000000";
+	mes "you need these items:";
+	mes "20 Cracked Diamonds, 1 Fuuma Shuriken Daisharin, 3 Oridecon, and 40.000z.";
+	mes "Do you want it?";
 	next;
 	menu "Yes",-,"No Thanks",M_NOPE;
 
@@ -115,10 +116,10 @@ M_DAIS4:
 //=====================REKKA========================
 M_REKKA:
 	mes "[Taitsu]";
-	mes "You want make ^FF0000Fuuma Shuriken Rekka^000000";
-	mes "Fuuma Shuriken Rekka needs:";
-	mes "50 Steel, 100 Live Coal, 2 Oridecon, 50 Burning Stone and 78.000z.";
-	mes "Do you want me to make it?";
+	mes "For making ^FF0000Fuuma Shuriken Rekka^000000";
+	mes "you need these items:";
+	mes "50 Steel, 100 Live Coal, 100 Burning Heart, 50 Burning Stone and 78.000z.";
+	mes "Do you want it?";
 	next;
 	menu "Yes",-,"No Thanks",M_NOPE;
 

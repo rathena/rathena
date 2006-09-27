@@ -29,7 +29,10 @@ Playtester
 
 Date		Added
 ======
+09/27
+	* Fixed item lists in Shuriken Blacksmith. Thanks to $ephiroth [Lupus]
 09/26
+	* Added Jukka's conversion first_class\tu_acolyte.txt. Not tested, not enabled yet [Lupus]
 	* Shuriken Blacksmith - added missing next; [Lupus]
 	- Finished translation of custom\may_hats, thanks to Playtester ^_-
 09/25
