@@ -19,6 +19,8 @@
 	-----
 
 =========================
+09/27
+	* Raised skill casting rate for Rachel mobs [Playtester]
 09/25
 	* Fixed item group 35 (lottobox) in item_misc.txt [Skotlex]
 	* Added Ninja/Gunslinger job exp as separate exp chart [Playtester]
