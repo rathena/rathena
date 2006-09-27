@@ -32,7 +32,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "you've trained more.";
 		close;
 	}
-	if (BaseClass != Job_Mage)) {
+	if (BaseClass != Job_Mage) {
 		mes "Be more confident in your job.";
 		mes "Sometimes other jobs may seem";
 		mes "better but take a look back at yourself";
@@ -40,7 +40,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "by doing so.";
 		close;
 	}
-	if (eaclass()&(EAJL_UPPER|EAJL_2 && tu_magician01 < 7) {
+	if (eaclass()&(EAJL_UPPER|EAJL_2) && tu_magician01 < 7) {
 		mes "[Mana]";
 		mes "My training isn't very helpful to those that are already skilled in magic. I'm afraid you'll have to rely on yourself to improve your skills.";
 		close;
