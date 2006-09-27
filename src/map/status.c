@@ -4055,12 +4055,16 @@ unsigned char status_get_attack_lelement(struct block_list *bl)
 int status_get_party_id(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
-	if(bl->type==BL_PC)
-		return ((struct map_session_data *)bl)->status.party_id;
-	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->msd->status.party_id;
-	if(bl->type==BL_MOB){
-		struct mob_data *md=(struct mob_data *)bl;
+	switch (bl->type) {
+	case BL_PC:
+		return ((TBL_PC*)bl)->status.party_id;
+	case BL_PET:
+		if (((TBL_PET*)bl)->msd)
+			return ((TBL_PET*)bl)->msd->status.party_id;
+		break;
+	case BL_MOB:
+	{
+		struct mob_data *md=(TBL_MOB*)bl;
 		if( md->master_id>0 )
 		{
 			struct map_session_data *msd;
@@ -4068,23 +4072,30 @@ int status_get_party_id(struct block_list *bl)
 				return msd->status.party_id;
 			return -md->master_id;
 		}
-		return 0; //No party.
+
 	}
-	if(bl->type==BL_HOM && ((TBL_HOM*)bl)->master)
-		return ((TBL_HOM*)bl)->master->status.party_id;
-	if(bl->type==BL_SKILL)
-		return ((struct skill_unit *)bl)->group->party_id;
+		break;
+	case BL_HOM:
+		if (((TBL_HOM*)bl)->master)
+			return ((TBL_HOM*)bl)->master->status.party_id;
+		break;
+	case BL_SKILL:
+		return ((TBL_SKILL*)bl)->group->party_id;
+	}
 	return 0;
 }
 
 int status_get_guild_id(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
-	if(bl->type==BL_PC)
-		return ((struct map_session_data *)bl)->status.guild_id;
-	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->msd->status.guild_id;
-	if(bl->type==BL_MOB)
+	switch (bl->type) {
+	case BL_PC:
+		return ((TBL_PC*)bl)->status.guild_id;
+	case BL_PET:
+		if (((TBL_PET*)bl)->msd)
+			return ((TBL_PET*)bl)->msd->status.guild_id;
+		break;
+	case BL_MOB:
 	{
 		struct map_session_data *msd;
 		struct mob_data *md = (struct mob_data *)bl;
@@ -4092,14 +4103,19 @@ int status_get_guild_id(struct block_list *bl)
 			return md->guardian_data->guild_id;
 		if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
 			return msd->status.guild_id; //Alchemist's mobs [Skotlex]
-		return 0; //No guild.
 	}
-	if(bl->type==BL_HOM && ((TBL_HOM*)bl)->master)
-		return ((TBL_HOM*)bl)->master->status.guild_id;
-	if (bl->type == BL_NPC && bl->subtype == SCRIPT)
-		return ((TBL_NPC*)bl)->u.scr.guild_id;
-	if(bl->type==BL_SKILL)
-		return ((struct skill_unit *)bl)->group->guild_id;
+		break;
+	case BL_HOM:
+	  	if (((TBL_HOM*)bl)->master)
+			return ((TBL_HOM*)bl)->master->status.guild_id;
+		break;
+	case BL_NPC:
+	  	if (bl->subtype == SCRIPT)
+			return ((TBL_NPC*)bl)->u.scr.guild_id;
+		break;
+	case BL_SKILL:
+		return ((TBL_SKILL*)bl)->group->guild_id;
+	}
 	return 0;
 }
 
