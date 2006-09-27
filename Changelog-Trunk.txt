@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/27
+	* Sharp-Shooting will now display a skill animation. [Skotlex]
+	* The no_spawn_on_player setting will now also work for static mobs, but
+	  only if the setting is set to 100 or higher. [Skotlex]
 2006/09/26
 	* Yet again messed with the packet sent during a splash attack, but this
 	  time taking into account the packets that eA was using some many revisions

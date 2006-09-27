@@ -1072,7 +1072,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 //  S
 //////////////////////////////////////////////////////////////
 // Methodology: 
-// My trigonometrics and math is a little rusty... so the approach I am writing 
+// My trigonometrics and math are a little rusty... so the approach I am writing 
 // here is basicly do a double for to check for all targets in the square that 
 // contains the initial and final positions (area range increased to match the 
 // radius given), then for each object to test, calculate the distance to the 
@@ -1082,9 +1082,10 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 // http://astronomy.swin.edu.au/~pbourke/geometry/pointline/ 
 // (they have a link to a C implementation, too)
 // This approach is a lot like #2 commented on this function, which I have no 
-// idea why it was commented. I won't use doubles/floats, but pure int math for speed purposes
-// The range considered is always the same no matter how close/far the target is because that's
-// how SharpShooting works currently in kRO.
+// idea why it was commented. I won't use doubles/floats, but pure int math for
+// speed purposes. The range considered is always the same no matter how 
+// close/far the target is because that's how SharpShooting works currently in
+// kRO.
 
 	//Generic map_foreach* variables.
 	va_list ap;
@@ -1218,7 +1219,8 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		returnCount += func(bl_list[i],ap);
+		if(bl_list[i]->prev)	//This check is done in case some object gets killed due to further skill processing.
+			returnCount += func(bl_list[i],ap);
 
 	map_freeblock_unlock();
 

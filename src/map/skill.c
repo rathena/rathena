@@ -2031,13 +2031,12 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case NPC_SPLASHATTACK:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
-	case SN_SHARPSHOOTING:
 		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
 	default:
 		//Disabling skill animation doesn't works on multi-hit.
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
-			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, 
+			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv,
 			(flag&SD_ANIMATION && dmg.div_ < 2?5:type));
 		break;
 	}
@@ -4038,8 +4037,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 	case WZ_FROSTNOVA:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
