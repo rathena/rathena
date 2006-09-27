@@ -11,7 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
 //= 1.1 Fixed bugs, optimized [Lupus]
-//=	TODO: Test, add missinf misceffects
+//=	TODO: Test, add missing misceffects
 //============================================================ 
 
 

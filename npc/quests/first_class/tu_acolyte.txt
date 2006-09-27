@@ -24,12 +24,11 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 			mes "You're "+strcharinfo(0)+" !";
 			mes "You've grown so much!";
 			mes "I'm truly proud of you.";
-			close;
 		} else {
 			mes "May you";
 			mes "always be blessed...";
-			close;
 		}
+		close;
 	}
 	switch(tu_acolyte01){
 	case 0:
