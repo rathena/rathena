@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+09/28
+	* Added official Kiel Dungeon entrance [Playtester]
+	- commented the custom warps
 09/27
 	* Fixed item lists in Shuriken Blacksmith. Thanks to $ephiroth [Lupus]
 09/26

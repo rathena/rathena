@@ -3,17 +3,42 @@
 //===== By: ==================================================
 //= Lost Kakashi
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= Warp Points for the Kiel Dungeon
 //===== Additional Comments: =================================
-//=
-//===========================================================
+//= 1.1 Added official Kiel Dungeon entrance [Playtester]
+//============================================================
 
-//= Kiel Dungeon ============================================
-kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197
-kh_dun02.gat,45,194,0	warp	warp02	1,1,kh_dun01.gat,4,229
-kh_kiehl02.gat,49,52,0	warp	warp05	1,1,kh_dun01.gat,63,10
-kh_dun01.gat,64,7,0	warp	warp06	1,1,kh_kiehl02.gat,51,49
+//= Kiel Dungeon =============================================
+kh_dun01.gat,3,234,0	warp	khwarp01	1,1,yuno_fild08,69,170
+
+//= Graveyard Switch =========================================
+yuno_fild08.gat,67,169,4	script	Switch#kh	111,1,1,{
+
+  mes "You examine the grave and find a switch!";
+  mes "Do you want to press it?";
+  next;
+
+  menu "Yes.",-,"No.",L_End;
+
+  mes "Suddenly the grave opens and reveals a staircase.";
+  close2;
+
+  warp "kh_dun01",4,229;
+  end;
+
+L_End:
+  mes "You decided not to press it.";
+  close;
+}
+
+
+
+//= Custom Kiel Dungeon Warps ================================
+//kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197
+//kh_dun02.gat,45,194,0	warp	warp02	1,1,kh_dun01.gat,4,229
+//kh_kiehl02.gat,49,52,0	warp	warp05	1,1,kh_dun01.gat,63,10
+//kh_dun01.gat,64,7,0	warp	warp06	1,1,kh_kiehl02.gat,51,49
