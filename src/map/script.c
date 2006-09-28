@@ -408,7 +408,9 @@ static void add_scriptl(int l)
 		add_scriptb(backpatch>>16);
 		break;
 	case C_INT:
-		add_scripti(str_data[l].val);
+		add_scripti(abs(str_data[l].val));
+		if(str_data[l].val < 0) //Notice that this is negative, from jA (Rayce)
+			add_scriptc(C_NEG);
 		break;
 	default:
 		// ‚à‚¤‘¼‚Ì—p“r‚ÆŠm’è‚µ‚Ä‚é‚Ì‚Å”Žš‚ð‚»‚Ì‚Ü‚Ü
@@ -1499,8 +1501,8 @@ static void read_constdb(void)
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		type=0;
-		if(sscanf(line,"%[A-Za-z0-9_],%[0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
-		   sscanf(line,"%[A-Za-z0-9_] %[0-9xXA-Fa-f] %d",name,val,&type)>=2){
+		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
+		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
 			for(i=0;name[i];i++)
 				name[i]=tolower(name[i]);
 			n=add_str((const unsigned char *) name);
