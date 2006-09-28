@@ -18,7 +18,10 @@
 	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
 
-=========================
+========================
+09/28
+	* Raised drop rate of some MVP drops [Playtester]
+	- also added Morrigan's Manteau to Thanatos drops
 09/27
 	* Raised skill casting rate for Rachel mobs [Playtester]
 09/25
