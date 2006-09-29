@@ -20,6 +20,7 @@
 
 ========================
 09/29
+	* Fully official Ktullanux stats [Playtester]
 	* Official X.4 item scripts [Playtester]
 	* Fixed Gunslinger job bonus [Playtester]
 	* Official X.4 aspd values for GS, NJ and SG [Playtester] 
