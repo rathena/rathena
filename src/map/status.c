@@ -2389,7 +2389,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 			*hd->homunculusDB->baseASPD/1000;
 	
 	status->amotion = cap_value(skill,battle_config.max_aspd,2000);
-	status->adelay = 2*status->amotion;
+	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
