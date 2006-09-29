@@ -143,7 +143,7 @@ M_REKKA:
 L_NOITEMS:
 	next;
 	mes "[Taitsu]";
-	mes "Sorry, but you not have all required items.";
+	mes "Sorry, but you don't have all the required items.";
 	emotion e_sry;
 	close;
 
@@ -156,6 +156,6 @@ L_NOZENY:
 
 M_NOPE:
 	mes "[Taitsu]";
-	mes "Ok came back when you want.";
+	mes "OK, came back when you want.";
 	close;
 }

@@ -29,7 +29,9 @@ Playtester
 
 Date		Added
 ======
-09/28
+
+09/28	
+	* $ephiroth converted custom event: Grand Circlet Quest + Excalibur [Lupus]
 	* Added official Kiel Dungeon entrance [Playtester]
 	- commented the custom warps
 09/27
