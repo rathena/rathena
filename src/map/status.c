@@ -5976,8 +5976,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			}
 			if (sc->data[type].val1 >= 7 &&
 				DIFF_TICK(gettick(), sc->data[type].val4) <= 1000 &&
-				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0 &&
-				(sd->class_&MAPID_UPPERMASK) != MAPID_SOUL_LINKER))
+				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 			)
 				sc_start(bl,SC_SPURT,100,sc->data[type].val1,skill_get_time2(StatusSkillChangeTable[type], sc->data[type].val1));
 		}
