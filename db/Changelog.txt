@@ -20,6 +20,7 @@
 
 ========================
 09/29
+	* Fixed Gunslinger job bonus [Playtester]
 	* Official X.4 aspd values for GS, NJ and SG [Playtester] 
 09/28
 	* Raised drop rate of some MVP drops [Playtester]
