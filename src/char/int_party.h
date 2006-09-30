@@ -15,4 +15,6 @@ int inter_party_logged(int party_id, int account_id, int char_id);
 
 extern char party_txt[1024];
 
+//For the TXT->SQL converter
+int inter_party_fromstr(char *str, struct party *p);
 #endif

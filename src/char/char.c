@@ -42,7 +42,13 @@
 #include "int_status.h"
 #endif
 
-struct mmo_map_server server[MAX_MAP_SERVERS];
+#ifndef TXT_SQL_CONVERT
+struct mmo_map_server{
+	long ip;
+	short port;
+	int users;
+	unsigned short map[MAX_MAP_PER_SERVER];
+} server[MAX_MAP_SERVERS];
 int server_fd[MAX_MAP_SERVERS];
 
 int login_fd, char_fd;
@@ -62,9 +68,11 @@ int char_maintenance;
 int char_new;
 int char_new_display;
 int email_creation = 0; // disabled by default
+#endif
 char char_txt[1024]="save/athena.txt";
 char backup_txt[1024]="save/backup.txt"; //By zanetheinsane
 char friends_txt[1024]="save/friends.txt"; // davidsiaw
+#ifndef TXT_SQL_CONVERT
 char backup_txt_flag = 0; // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. => option By [Yor]
 char unknown_char_name[1024] = "Unknown";
 char char_log_filename[1024] = "log/char.log";
@@ -107,11 +115,7 @@ int check_ip_flag = 1; // It's to check IP of a player between char-server and o
 static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 int char_id_count = START_CHAR_NUM;
-struct character_data {
-	struct mmo_charstatus status;
-	int global_num;
-	struct global_reg global[GLOBAL_REG_NUM];
-} *char_dat;
+struct character_data *char_dat;
 
 int char_num, char_max;
 int max_connect_user = 0;
@@ -487,7 +491,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 	*str_p = '\0';
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 //-------------------------------------------------------------------------
 // Function to set the character from the line (at read of characters file)
 //-------------------------------------------------------------------------
@@ -701,6 +705,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->last_point.map = tmp_int[45];
 	p->save_point.map = tmp_int[46];
 
+#ifndef TXT_SQL_CONVERT
 	// Some checks
 	for(i = 0; i < char_num; i++) {
 		if (char_dat[i].status.char_id == p->char_id) {
@@ -723,7 +728,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		char_log("mmo_auth_init: ******WARNING: character name has wisp server name: Character name '%s' = wisp server name '%s'." RETCODE,
 		          p->name, wisp_server_name);
 	}
-
+#endif //TXT_SQL_CONVERT
 	if (str[next] == '\n' || str[next] == '\r')
 		return 1;	// 新規データ
 
@@ -887,7 +892,7 @@ int parse_friend_txt(struct mmo_charstatus *p)
 	fclose(fp);
 	return count;
 }
-
+#ifndef TXT_SQL_CONVERT
 //---------------------------------
 // Function to read characters file
 //---------------------------------
@@ -1680,7 +1685,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
 
-        WFIFOHEAD(fd, offset + found_num * 106);
+	WFIFOHEAD(fd, offset + found_num * 106);
 	memset(WFIFOP(fd,0), 0, offset + found_num * 106);
 	WFIFOW(fd,0) = 0x6b;
 	WFIFOW(fd,2) = offset + found_num * 106;
@@ -4076,6 +4081,7 @@ int char_lan_config_read(const char *lancfgName) {
 	fclose(fp);
 	return 0;
 }
+#endif //TXT_SQL_CONVERT
 
 int char_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
@@ -4103,6 +4109,7 @@ int char_config_read(const char *cfgName) {
 			msg_silent = 0; //To always allow the next line to show up.
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
+#ifndef TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "userid") == 0) {
 			strncpy(userid, w2, 24);
 		} else if (strcmpi(w1, "passwd") == 0) {
@@ -4149,14 +4156,16 @@ int char_config_read(const char *cfgName) {
 			char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "email_creation") == 0) {
 			email_creation = config_switch(w2);
-		} else if (strcmpi(w1, "char_txt") == 0) {
-			strcpy(char_txt, w2);
 		} else if (strcmpi(w1, "scdata_txt") == 0) { //By Skotlex
 			strcpy(scdata_txt, w2);
+#endif
+		} else if (strcmpi(w1, "char_txt") == 0) {
+			strcpy(char_txt, w2);
 		} else if (strcmpi(w1, "backup_txt") == 0) { //By zanetheinsane
 			strcpy(backup_txt, w2);
 		} else if (strcmpi(w1, "friends_txt") == 0) { //By davidsiaw
 			strcpy(friends_txt, w2);
+#ifndef TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "backup_txt_flag") == 0) { // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. By [Yor]
 			backup_txt_flag = config_switch(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
@@ -4258,6 +4267,7 @@ int char_config_read(const char *cfgName) {
 			}
 		} else if (strcmpi(w1, "guild_exp_rate") == 0) {
 			guild_exp_rate = atoi(w2);
+#endif //TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		}
@@ -4268,6 +4278,7 @@ int char_config_read(const char *cfgName) {
 	return 0;
 }
 
+#ifndef TXT_SQL_CONVERT
 int chardb_final(int key, void* data, va_list va)
 {
 	aFree(data);
@@ -4379,7 +4390,7 @@ int do_init(int argc, char **argv) {
 	update_online = time(NULL);
 	create_online_files(); // update online players files at start of the server
 
-	inter_init((argc > 2) ? argv[2] : inter_cfgName);	// inter server 初期化
+	inter_init_txt((argc > 2) ? argv[2] : inter_cfgName);	// inter server 初期化
 
 	set_defaultparse(parse_char);
 
@@ -4411,3 +4422,4 @@ int do_init(int argc, char **argv) {
 
 	return 0;
 }
+#endif //TXT_SQL_CONVERT

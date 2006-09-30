@@ -6400,13 +6400,10 @@ static int skill_dance_overlap_sub(struct block_list *bl, va_list ap)
 		return 0;
 	if (!(target->val2 & src->val2 & ~UF_ENSEMBLE)) //They don't match (song + dance) is valid.
 		return 0;
-	if (flag) { //Set dissonance
-		target->val1 = src->val1 = target->val2&UF_SONG?BA_DISSONANCE:DC_UGLYDANCE;
+	if (flag) //Set dissonance
 		target->val2 |= UF_ENSEMBLE; //Add ensemble to signal this unit is overlapping.
-	} else { //Remove dissonance
-		target->val1 = target->group->skill_id; //Restore skill id
+	else //Remove dissonance
 		target->val2 &= ~UF_ENSEMBLE;
-	}
 	clif_skill_setunit(target); //Update look of affected cell.
 	return 1;
 }
@@ -9158,6 +9155,9 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 		!status_check_skilluse(NULL, bl, skillid, 2))
 		return 0;
 	
+	if (skillid == WZ_FROSTNOVA) //Only skill that doesn't requires the animation to be removed :X
+		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
+
 	//Area-splash, disable skill animation.
 	return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag|SD_ANIMATION);
 }

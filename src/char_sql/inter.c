@@ -21,16 +21,6 @@
 #define WISDELLIST_MAX 256			// Wisデータ削除リストの要素数
 
 
-struct accreg {
-	int account_id, char_id;
-	int reg_num;
-	struct global_reg reg[MAX_REG_NUM];
-};
-
-static struct accreg *accreg_pt;
-
-
-unsigned int party_share_level = 10;
 MYSQL mysql_handle;
 MYSQL_RES* 	sql_res ;
 MYSQL_ROW	sql_row ;
@@ -54,6 +44,10 @@ char login_server_id[32] = "ragnarok";
 char login_server_pw[32] = "ragnarok";
 char login_server_db[32] = "ragnarok";
 
+#ifndef TXT_SQL_CONVERT
+
+static struct accreg *accreg_pt;
+unsigned int party_share_level = 10;
 char main_chat_nick[16] = "Main";
 
 // sending packet list
@@ -93,6 +87,7 @@ static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
 int inter_sql_test (void);
 
+#endif //TXT_SQL_CONVERT
 //--------------------------------------------------------
 // Save registry to sql
 int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type){
@@ -141,6 +136,7 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type
 	}
 	return 1;
 }
+#ifndef TXT_SQL_CONVERT
 
 // Load account_reg from sql (type=2)
 int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int type)
@@ -187,12 +183,13 @@ int inter_accreg_sql_init(void)
 	return 0;
 
 }
+#endif //TXT_SQL_CONVERT
 
 /*==========================================
  * read config file
  *------------------------------------------
  */
-int inter_config_read(const char *cfgName) {
+static int inter_config_read(const char *cfgName) {
 	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
@@ -236,7 +233,6 @@ int inter_config_read(const char *cfgName) {
 		}
 		//Logins information to be read from the inter_athena.conf
 		//for character deletion (checks email in the loginDB)
-
 		else if(strcmpi(w1,"login_server_ip")==0){
 			strcpy(login_server_ip, w2);
 			ShowStatus ("set login_server_ip : %s\n",w2);
@@ -257,19 +253,17 @@ int inter_config_read(const char *cfgName) {
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n",w2);
 		}
+#ifndef TXT_SQL_CONVERT
 		else if(strcmpi(w1,"party_share_level")==0){
 			party_share_level=(unsigned int)atof(w2);
 		}
 		else if(strcmpi(w1,"log_inter")==0){
 			log_inter = atoi(w2);
 		}
-		else if(strcmpi(w1,"login_server_db")==0){
-			strcpy(login_server_db, w2);
-			ShowStatus ("set login_server_db : %s\n",w2);
-		}
 		else if(strcmpi(w1, "main_chat_nick")==0){	// Main chat nick [LuzZza]
 			strcpy(main_chat_nick, w2);				// 			
 		}
+#endif //TXT_SQL_CONVERT
 		else if(strcmpi(w1,"import")==0){
 			inter_config_read(w2);
 		}
@@ -280,6 +274,7 @@ int inter_config_read(const char *cfgName) {
 
 	return 0;
 }
+#ifndef TXT_SQL_CONVERT
 
 // Save interlog into sql
 int inter_log(char *fmt,...)
@@ -312,9 +307,10 @@ int inter_sql_ping(int tid, unsigned int tick, int id, int data)
 		mysql_ping(&lmysql_handle);
 	return 0;
 }
+#endif //TXT_SQL_CONVERT
 
 // initialize
-int inter_init(const char *file)
+int inter_init_sql(const char *file)
 {
 	//int i;
 
@@ -330,6 +326,7 @@ int inter_init(const char *file)
 			ShowFatalError("%s\n",mysql_error(&mysql_handle));
 			exit(1);
 	}
+#ifndef TXT_SQL_CONVERT
 	else if (inter_sql_test()) {
 		ShowStatus("Connect Success! (Character Server)\n");
 	}
@@ -346,37 +343,40 @@ int inter_init(const char *file)
 			ShowStatus ("Connect Success! (Login Server)\n");
 		}
 	}
+#endif //TXT_SQL_CONVERT
 	if(strlen(default_codepage) > 0 ) {
 		sprintf( tmp_sql, "SET NAMES %s", default_codepage );
 		if (mysql_query(&mysql_handle, tmp_sql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
+#ifndef TXT_SQL_CONVERT
 		if(char_gm_read)
 			if (mysql_query(&lmysql_handle, tmp_sql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 			}
+#endif //TXT_SQL_CONVERT
 	}
+
+#ifndef TXT_SQL_CONVERT
 	wis_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
-
 	inter_pet_sql_init();
 	inter_homunculus_sql_init(); // albator
 	inter_accreg_sql_init();
-
-	//printf ("interserver timer initializing : %d sec...\n",autosave_interval);
-	//i=add_timer_interval(gettick()+autosave_interval,inter_save_timer,0,0,autosave_interval);
 
 	if (connection_ping_interval) {
 		add_timer_func_list(inter_sql_ping, "inter_sql_ping");
 		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
 				inter_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
 	}
+#endif //TXT_SQL_CONVERT
 	return 0;
 }
+#ifndef TXT_SQL_CONVERT
 
 int inter_sql_test (void)
 {
@@ -808,3 +808,4 @@ int inter_check_length(int fd, int length)
 
 	return length;
 }
+#endif //TXT_SQL_CONVERT

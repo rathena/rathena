@@ -192,7 +192,7 @@ depend: src/common/GNUmakefile src/login/GNUmakefile src/login_sql/GNUmakefile \
 	cd src/map; makedepend -DTXT_ONLY -fGNUmakefile -ptxtobj/ -Y. -Y../common *.c; cd ../..;
 	cd src/map; makedepend -fGNUmakefile -a -psqlobj/ -Y. -Y../common *.c; cd ../..;
 	cd src/ladmin; makedepend -fGNUmakefile -Y. -Y../common *.c; cd ../..;
-	cd src/txt-converter; makedepend -fGNUmakefile -Y. -Y../common *.c; cd ../..;
+	cd src/txt-converter; makedepend -DTXT_SQL_CONVERT -fGNUmakefile -Y. -Y../common *.c; cd ../..;
 	$(MAKE) -C src/plugins $@
 
 Makefile.cache:

@@ -3,6 +3,22 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/09/30
+	* Rewrote the txt->sql converter. It now links directly to the char server
+	  files so that it should get auto-updated with any code changes in the
+	  later. [Skotlex]
+	* The converter will now also convert: account-wide variables, parties,
+	  guilds, guild storage and guild castles. At this point the only two things
+	  not converted are login-server-wide account variables (##, they belong to
+	  the login converter) and homunculus (the SQL save function is messy and
+	  doesn't lends itself to be integrated with the converter the way all the
+	  other functions are). [Skotlex]
+	* misceffect2 will no longer cause the effect on top of the source object
+	  when it is the fake npc. [Skotlex]
+	* Added check so that Frost Nova doesn't hides hitting animation on
+	  targets. [Skotlex]
+	* Added the missing brackets around the trade logs condition check, thanks
+	  to Coltaro. [Skotlex]
 2006/09/29
 	* Spurt state will now trigger on Soul Linkers as well. [Skotlex]
 	* Added a check un unit_run when unit_walktoxy fails. Should fix running

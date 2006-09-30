@@ -149,6 +149,13 @@ struct global_reg {
 	char value[256]; // [zBuffer]
 };
 
+//Holds array of global registries, used by the char server and converter.
+struct accreg {
+	int account_id, char_id;
+	int reg_num;
+	struct global_reg reg[MAX_REG_NUM];
+};
+
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
 	unsigned short type; //SC_type

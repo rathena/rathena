@@ -13,6 +13,7 @@
 
 #define STORAGE_MEMINC	16
 
+#ifndef TXT_SQL_CONVERT
 // reset by inter_config_read()
 struct storage *storage_pt=NULL;
 struct guild_storage *guild_storage_pt=NULL;
@@ -27,6 +28,7 @@ struct guild_storage *guild_storage_pt=NULL;
 
 #endif
 
+#endif //TXT_SQL_CONVERT
 // storage data -> DB conversion
 int storage_tosql(int account_id,struct storage *p){
 	int i,j;
@@ -55,6 +57,7 @@ int storage_tosql(int account_id,struct storage *p){
 	//printf ("storage dump to DB - id: %d (total: %d)\n", account_id, j);
 	return 0;
 }
+#ifndef TXT_SQL_CONVERT
 
 // DB -> storage data conversion
 int storage_fromsql(int account_id, struct storage *p){
@@ -99,7 +102,7 @@ int storage_fromsql(int account_id, struct storage *p){
 	ShowInfo ("storage load complete from DB - id: %d (total: %d)\n", account_id, p->storage_amount);
 	return 1;
 }
-
+#endif //TXT_SQL_CONVERT
 // Save guild_storage data to sql
 int guild_storage_tosql(int guild_id, struct guild_storage *p){
 	int i,j;
@@ -128,7 +131,7 @@ int guild_storage_tosql(int guild_id, struct guild_storage *p){
 	ShowInfo ("guild storage save to DB - id: %d (total: %d)\n", guild_id,i);
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // Load guild_storage data to mem
 int guild_storage_fromsql(int guild_id, struct guild_storage *p){
 	int i=0,j;
@@ -361,4 +364,4 @@ int inter_storage_parse_frommap(int fd){
 	}
 	return 1;
 }
-
+#endif //TXT_SQL_CONVERT

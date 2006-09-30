@@ -13,4 +13,6 @@ int inter_pet_parse_frommap(int fd);
 
 extern char pet_txt[1024];
 
+//Exported for use in the TXT-SQL converter.
+int inter_pet_fromstr(char *str,struct s_pet *p);
 #endif

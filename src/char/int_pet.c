@@ -16,6 +16,7 @@
 
 char pet_txt[1024]="save/pet.txt";
 
+#ifndef TXT_SQL_CONVERT
 static struct dbt *pet_db;
 static int pet_newid = 100;
 
@@ -38,7 +39,7 @@ int inter_pet_tostr(char *str,struct s_pet *p)
 
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 int inter_pet_fromstr(char *str,struct s_pet *p)
 {
 	int s;
@@ -78,7 +79,7 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 int inter_pet_init()
 {
 	char line[8192];
@@ -416,4 +417,4 @@ int inter_pet_parse_frommap(int fd)
 	}
 	return 1;
 }
-
+#endif //TXT_SQL_CONVERT

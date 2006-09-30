@@ -20,6 +20,7 @@
 char storage_txt[1024]="save/storage.txt";
 char guild_storage_txt[1024]="save/g_storage.txt";
 
+#ifndef TXT_SQL_CONVERT
 static struct dbt *storage_db;
 static struct dbt *guild_storage_db;
 
@@ -48,7 +49,7 @@ int storage_tostr(char *str,struct storage *p)
 		str[0]=0;
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // 文字列を倉庫データに変換
 int storage_fromstr(char *str,struct storage *p)
 {
@@ -89,7 +90,7 @@ int storage_fromstr(char *str,struct storage *p)
 		ShowWarning("storage_fromstr: Found a storage line with more items than MAX_STORAGE (%d), remaining items have been discarded!\n", MAX_STORAGE);
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 int guild_storage_tostr(char *str,struct guild_storage *p)
 {
 	int i,j,f=0;
@@ -114,7 +115,7 @@ int guild_storage_tostr(char *str,struct guild_storage *p)
 		str[0]=0;
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 int guild_storage_fromstr(char *str,struct guild_storage *p)
 {
 	int tmp_int[256];
@@ -153,7 +154,7 @@ int guild_storage_fromstr(char *str,struct guild_storage *p)
 		ShowWarning("guild_storage_fromstr: Found a storage line with more items than MAX_GUILD_STORAGE (%d), remaining items have been discarded!\n", MAX_GUILD_STORAGE);
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 static void* create_storage(DBKey key, va_list args) {
 	struct storage *s;
 	s = (struct storage *) aCalloc(sizeof(struct storage), 1);
@@ -474,3 +475,4 @@ int inter_storage_parse_frommap(int fd)
 	}
 	return 1;
 }
+#endif //TXT_SQL_CONVERT

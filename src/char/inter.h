@@ -4,7 +4,7 @@
 #ifndef _INTER_H_
 #define _INTER_H_
 
-int inter_init(const char *file);
+int inter_init_txt(const char *file);
 void inter_final(void);
 int inter_save(void);
 int inter_parse_frommap(int fd);
@@ -20,8 +20,9 @@ int inter_log(char *fmt,...);
 
 extern unsigned int party_share_level;
 extern char inter_log_filename[1024];
-extern int log_inter;
-
 extern char main_chat_nick[16];
 
+//For TXT->SQL conversion
+extern char accreg_txt[];
+int inter_accreg_fromstr(const char *str, struct accreg *reg);
 #endif

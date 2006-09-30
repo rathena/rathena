@@ -25,17 +25,12 @@
                              	// that is the waiting time of answers of all map-servers
 #define WISDELLIST_MAX 256   	// Number of elements of Wisp/page data deletion list
 
+char accreg_txt[1024] = "save/accreg.txt";
+#ifndef TXT_SQL_CONVERT
 char inter_log_filename[1024] = "log/inter.log";
 char main_chat_nick[16] = "Main";
 
-char accreg_txt[1024] = "save/accreg.txt";
 static struct dbt *accreg_db = NULL;
-
-struct accreg {
-	int account_id, char_id;
-	int reg_num;
-	struct global_reg reg[ACCOUNT_REG_NUM];
-};
 
 unsigned int party_share_level = 10;
 
@@ -89,7 +84,7 @@ int inter_accreg_tostr(char *str, struct accreg *reg) {
 
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // アカウント変数を文字列から変換
 int inter_accreg_fromstr(const char *str, struct accreg *reg) {
 	int j, n;
@@ -106,7 +101,7 @@ int inter_accreg_fromstr(const char *str, struct accreg *reg) {
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // アカウント変数の読み込み
 int inter_accreg_init(void) {
 	char line[8192];
@@ -172,12 +167,12 @@ int inter_accreg_save(void) {
 }
 
 //--------------------------------------------------------
-
+#endif //TXT_SQL_CONVERT
 /*==========================================
  * 設定ファイルを読み込む
  *------------------------------------------
  */
-int inter_config_read(const char *cfgName) {
+static int inter_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
@@ -198,18 +193,19 @@ int inter_config_read(const char *cfgName) {
 			strncpy(storage_txt, w2, sizeof(storage_txt));
 		} else if (strcmpi(w1, "party_txt") == 0) {
 			strncpy(party_txt, w2, sizeof(party_txt));
-		} else if (strcmpi(w1, "guild_txt") == 0) {
-			strncpy(guild_txt, w2, sizeof(guild_txt));
 		} else if (strcmpi(w1, "pet_txt") == 0) {
 			strncpy(pet_txt, w2, sizeof(pet_txt));
-		} else if (strcmpi(w1, "homun_txt") == 0) {
-			strncpy(homun_txt, w2, sizeof(homun_txt));
-		} else if (strcmpi(w1, "castle_txt") == 0) {
-			strncpy(castle_txt, w2, sizeof(castle_txt));
 		} else if (strcmpi(w1, "accreg_txt") == 0) {
 			strncpy(accreg_txt, w2, sizeof(accreg_txt));
+		} else if (strcmpi(w1, "guild_txt") == 0) {
+			strncpy(guild_txt, w2, sizeof(guild_txt));
+		} else if (strcmpi(w1, "castle_txt") == 0) {
+			strncpy(castle_txt, w2, sizeof(castle_txt));
 		} else if (strcmpi(w1, "guild_storage_txt") == 0) {
 			strncpy(guild_storage_txt, w2, sizeof(guild_storage_txt));
+#ifndef TXT_SQL_CONVERT
+		} else if (strcmpi(w1, "homun_txt") == 0) {
+			strncpy(homun_txt, w2, sizeof(homun_txt));
 		} else if (strcmpi(w1, "party_share_level") == 0) {
 			party_share_level = (unsigned int)atof(w2);
 		} else if (strcmpi(w1, "inter_log_filename") == 0) {
@@ -217,7 +213,8 @@ int inter_config_read(const char *cfgName) {
 		} else if(strcmpi(w1,"log_inter")==0) {
 			log_inter = atoi(w2);
 		} else if(strcmpi(w1, "main_chat_nick")==0){	// Main chat nick [LuzZza]
-			strcpy(main_chat_nick, w2);					// 
+			strcpy(main_chat_nick, w2);
+#endif //TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "import") == 0) {
 			inter_config_read(w2);
 		}
@@ -226,7 +223,7 @@ int inter_config_read(const char *cfgName) {
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // ログ書き出し
 int inter_log(char *fmt,...) {
 	FILE *logfp;
@@ -258,11 +255,12 @@ int inter_save(void) {
 
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // 初期化
-int inter_init(const char *file) {
+int inter_init_txt(const char *file) {
 	inter_config_read(file);
 
+#ifndef TXT_SQL_CONVERT
 	wis_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 
 	inter_party_init();
@@ -271,10 +269,10 @@ int inter_init(const char *file) {
 	inter_pet_init();
 	inter_homun_init();
 	inter_accreg_init();
-
+#endif //TXT_SQL_CONVERT
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // finalize
 void inter_final(void) {
 	accreg_db->destroy(accreg_db, NULL);
@@ -690,4 +688,4 @@ int inter_check_length(int fd, int length) {
 
 	return length;
 }
-
+#endif //TXT_SQL_CONVERT

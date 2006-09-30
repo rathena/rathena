@@ -68,7 +68,7 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 		ShowInfo("Pet saved %d - %s.\n", pet_id, p->name);
 	return 1;
 }
-
+#ifndef TXT_SQL_CONVERT
 int inter_pet_fromsql(int pet_id, struct s_pet *p){
 
 #ifdef NOISY
@@ -355,4 +355,4 @@ int inter_pet_parse_frommap(int fd){
 	}
 	return 1;
 }
-
+#endif //TXT_SQL_CONVERT

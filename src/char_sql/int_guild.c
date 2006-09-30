@@ -20,27 +20,6 @@
 #include "db.h"
 #include "malloc.h"
 
-//Guild cache
-static struct dbt *guild_db_;
-
-struct guild_castle castles[MAX_GUILDCASTLE];
-
-static unsigned int guild_exp[100];
-
-#define GS_BASIC 0x0001
-#define GS_MEMBER 0x0002
-#define GS_POSITION 0x0004
-#define GS_ALLIANCE 0x0008
-#define GS_EXPULSION 0x0010
-#define GS_SKILL 0x0020
-#define GS_EMBLEM 0x0040
-#define GS_CONNECT 0x0080
-#define GS_LEVEL 0x0100
-#define GS_MES 0x0200
-#define GS_MASK 0x03FF
-#define GS_BASIC_MASK (GS_BASIC | GS_EMBLEM | GS_CONNECT | GS_LEVEL | GS_MES)
-#define GS_REMOVE 0x8000
-
 #define GS_MEMBER_UNMODIFIED 0x00
 #define GS_MEMBER_MODIFIED 0x01
 #define GS_MEMBER_NEW 0x02
@@ -52,6 +31,16 @@ static unsigned int guild_exp[100];
 #define GUILD_ALLIANCE_TYPE_MASK 0x01
 #define GUILD_ALLIANCE_REMOVE 0x08
 
+static char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+#ifndef TXT_SQL_CONVERT
+//Guild cache
+static struct dbt *guild_db_;
+
+struct guild_castle castles[MAX_GUILDCASTLE];
+
+static unsigned int guild_exp[100];
+
 int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
 int guild_check_empty(struct guild *g);
@@ -60,7 +49,6 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
-static char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
 #define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 
@@ -119,7 +107,7 @@ int inter_guild_removemember_tosql(int account_id, int char_id)
 	}
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // Save guild into sql
 int inter_guild_tosql(struct guild *g,int flag)
 {
@@ -162,6 +150,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	
 	t_info[0]='\0';
 
+#ifndef TXT_SQL_CONVERT
 	// Insert a new guild the guild
 	if (flag&GS_BASIC && g->guild_id == -1)
 	{
@@ -191,7 +180,31 @@ int inter_guild_tosql(struct guild *g,int flag)
 				return 0; //Failed to get ID??
 		}
 	}
-
+#else
+	// Insert a new guild the guild
+	if (flag&GS_BASIC)
+	{
+		strcat(t_info, " guild_create");
+		// Since the PK is guild id + master id, a replace will not be enough if we are overwriting data, we need to wipe the previous guild.
+		sprintf(tmp_sql,"DELETE FROM `%s` where `guild_id` = '%d'", guild_db,g->guild_id);
+		if(mysql_query(&mysql_handle, tmp_sql) )
+		{
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		}
+		// Create a new guild
+		sprintf(tmp_sql,"REPLACE INTO `%s` "
+			"(`guild_id`,`name`,`master`,`guild_lv`,`max_member`,`average_lv`,`char_id`) "
+			"VALUES ('%d', '%s', '%s', '%d', '%d', '%d', '%d')",
+			guild_db,g->guild_id,t_name,jstrescapecpy(t_master,g->master),g->guild_lv,g->max_member,g->average_lv,g->member[0].char_id);
+		if(mysql_query(&mysql_handle, tmp_sql) )
+		{
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0; //Failed to create guild.
+		}
+	}
+#endif //TXT_SQL_CONVERT
 	// If we need an update on an existing guild or more update on the new guild
 	if (((flag & GS_BASIC_MASK) && !new_guild) || ((flag & (GS_BASIC_MASK & ~GS_BASIC)) && new_guild))
 	{
@@ -244,8 +257,10 @@ int inter_guild_tosql(struct guild *g,int flag)
 		// Update only needed players
 		for(i=0;i<g->max_member;i++){
 			m = &g->member[i];
+#ifndef TXT_SQL_CONVERT
 			if (!m->modified)
 				continue;
+#endif
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
 				sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
@@ -279,8 +294,10 @@ int inter_guild_tosql(struct guild *g,int flag)
 		//printf("- Insert guild %d to guild_position\n",g->guild_id);
 		for(i=0;i<MAX_GUILDPOSITION;i++){
 			struct guild_position *p = &g->position[i];
+#ifndef TXT_SQL_CONVERT
 			if (!p->modified)
 				continue;
+#endif
 			sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`position`,`name`,`mode`,`exp_mode`) VALUES ('%d','%d', '%s','%d','%d')",
 				guild_position_db, g->guild_id, i, jstrescapecpy(t_position,p->name),p->mode,p->exp_mode);
 			//printf(" %s\n",tmp_sql);
@@ -366,7 +383,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 		ShowInfo("Saved guild (%d - %s):%s\n",g->guild_id,g->name,t_info);
 	return 1;
 }
-
+#ifndef TXT_SQL_CONVERT
 // Read guild from sql
 struct guild * inter_guild_fromsql(int guild_id)
 {
@@ -582,6 +599,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
+#endif //TXT_SQL_CONVERT
 int inter_guildcastle_tosql(struct guild_castle *gc){
 	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 
@@ -607,12 +625,12 @@ ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
 
-
+#ifndef TXT_SQL_CONVERT
 	memcpy(&castles[gc->castle_id],gc,sizeof(struct guild_castle));
-
+#endif //TXT_SQL_CONVERT
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 
 // Read guild_castle from sql
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
@@ -2083,3 +2101,4 @@ int inter_guild_broken(int guild_id)
 {
 	return mapif_guild_broken(guild_id, 0);
 }
+#endif //TXT_SQL_CONVERT

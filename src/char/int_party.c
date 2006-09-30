@@ -16,7 +16,7 @@
 #include "int_party.h"
 
 char party_txt[1024] = "save/party.txt";
-
+#ifndef TXT_SQL_CONVERT
 struct party_data {
 	struct party party;
 	unsigned int min_lv, max_lv;
@@ -107,13 +107,15 @@ int inter_party_tostr(char *str, struct party *p) {
 
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // パ?ティデ?タの文字列からの?換
 int inter_party_fromstr(char *str, struct party *p) {
 	int i, j;
 	int tmp_int[16];
 	char tmp_str[256];
+#ifndef TXT_SQL_CONVERT
 	struct mmo_charstatus* status;
+#endif
 	
 	memset(p, 0, sizeof(struct party));
 
@@ -144,7 +146,7 @@ int inter_party_fromstr(char *str, struct party *p) {
 		m->leader = tmp_int[2]?1:0;
 
 		str = strchr(str + 1, '\t');
-
+#ifndef TXT_SQL_CONVERT
 		if (!m->account_id) continue;
 		//Lookup player for rest of data.
 		status = search_character(m->account_id, m->char_id);
@@ -154,11 +156,12 @@ int inter_party_fromstr(char *str, struct party *p) {
 		m->class_ = status->class_;
 		m->map = status->last_point.map;
 		m->lv = status->base_level;
+#endif //TXT_SQL_CONVERT
 	}
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // パ?ティデ?タのロ?ド
 int inter_party_init() {
 	char line[8192];
@@ -736,4 +739,4 @@ int inter_party_parse_frommap(int fd) {
 int inter_party_leave(int party_id, int account_id, int char_id) {
 	return mapif_parse_PartyLeave(-1, party_id, account_id, char_id);
 }
-
+#endif //TXT_SQL_CONVERT

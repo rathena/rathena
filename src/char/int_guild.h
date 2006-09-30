@@ -16,4 +16,7 @@ int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender)
 extern char guild_txt[1024];
 extern char castle_txt[1024];
 
+//For the TXT->SQL converter
+int inter_guild_fromstr(char *str, struct guild *g);
+int inter_guildcastle_fromstr(char *str, struct guild_castle *gc);
 #endif

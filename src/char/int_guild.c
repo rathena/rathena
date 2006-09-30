@@ -19,6 +19,7 @@
 char guild_txt[1024] = "save/guild.txt";
 char castle_txt[1024] = "save/castle.txt";
 
+#ifndef TXT_SQL_CONVERT
 static struct dbt *guild_db;
 static struct dbt *castle_db;
 
@@ -95,7 +96,7 @@ int inter_guild_tostr(char *str, struct guild *g) {
 
 	return 0;
 }
-
+#endif //TXT_SQL_CONVERT
 // ギルドデータの文字列からの変換
 int inter_guild_fromstr(char *str, struct guild *g) {
 	int i, j, c;
@@ -118,7 +119,9 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 	g->max_member = tmp_int[2];
 	g->exp = exp;
 	g->skill_point = tmp_int[4];
+#ifndef TXT_SQL_CONVERT
 	g->castle_id = tmp_int[5];
+#endif
 	memcpy(g->name, tmp_str[0], NAME_LENGTH-1);
 	memcpy(g->master, tmp_str[1], NAME_LENGTH-1);
 	memcpy(g->mes1, tmp_str[2], 60);
@@ -242,7 +245,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // ギルド城データの文字列への変換
 int inter_guildcastle_tostr(char *str, struct guild_castle *gc) {
 	int len;
@@ -257,7 +260,7 @@ int inter_guildcastle_tostr(char *str, struct guild_castle *gc) {
 
 	return 0;
 }
-
+#endif ///TXT_SQL_CONVERT
 // ギルド城データの文字列からの変換
 int inter_guildcastle_fromstr(char *str, struct guild_castle *gc) {
 	int tmp_int[26];
@@ -334,7 +337,7 @@ int inter_guildcastle_fromstr(char *str, struct guild_castle *gc) {
 
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 // ギルド関連データベース読み込み
 int inter_guild_readdb(void) {
 	int i;
@@ -1560,3 +1563,4 @@ int inter_guild_mapif_init(int fd) {
 int inter_guild_leave(int guild_id, int account_id, int char_id) {
 	return mapif_parse_GuildLeave(-1, guild_id, account_id, char_id, 0, "** Character Deleted **");
 }
+#endif //TXT_SQL_CONVERT

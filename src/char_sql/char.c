@@ -33,8 +33,9 @@
 #include "malloc.h"
 #include "int_guild.h"
 
+#ifndef TXT_SQL_CONVERT
 static struct dbt *char_db_;
-
+#endif
 char char_db[256] = "char";
 char scdata_db[256] = "sc_data";
 char cart_db[256] = "cart_inventory";
@@ -57,6 +58,10 @@ char party_db[256] = "party";
 char pet_db[256] = "pet";
 char gm_db[256] = "gm_accounts";
 char friend_db[256] = "friends";
+#ifdef TXT_SQL_CONVERT
+int save_log = 0; //Have the logs be off by default when converting
+#else
+int save_log = 1;
 int db_use_sqldbs;
 int connection_ping_interval = 0;
 
@@ -67,7 +72,13 @@ int lowest_gm_level = 1;
 
 char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
-struct mmo_map_server server[MAX_MAP_SERVERS];
+struct mmo_map_server{
+  long ip;
+  short port;
+  int users;
+  unsigned short map[MAX_MAP_PER_SERVER];
+} server[MAX_MAP_SERVERS];
+
 int server_fd[MAX_MAP_SERVERS];
 
 int login_fd, char_fd;
@@ -135,7 +146,6 @@ int char_num,char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-int save_log = 1;
 int start_zeny = 0;
 int start_weapon = 1201;
 int start_armor = 2301;
@@ -385,7 +395,7 @@ void read_gm_account(void) {
 	mysql_free_result(lsql_res);
 	mapif_send_gmaccounts();
 }
-
+#endif //TXT_SQL_CONVERT
 int compare_item(struct item *a, struct item *b) {
 
 	if(a->id == b->id &&
@@ -403,13 +413,14 @@ int compare_item(struct item *a, struct item *b) {
 	return 0;
 }
 
+#ifndef TXT_SQL_CONVERT
 static void* create_charstatus(DBKey key, va_list args) {
 	struct mmo_charstatus *cp;
 	cp = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 	cp->char_id = key.i;
 	return cp;
 }
-
+#endif //TXT_SQL_CONVERT
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	int i=0,j;
 	int count = 0;
@@ -422,7 +433,11 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	if (char_id!=p->char_id) return 0;
 
+#ifndef TXT_SQL_CONVERT
 	cp = idb_ensure(char_db_, char_id, create_charstatus);
+#else
+	cp = aCalloc(1, sizeof(struct mmo_charstatus));
+#endif
 
 	memset(save_status, 0, sizeof(save_status));
 	diff = 0;
@@ -474,6 +489,17 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 	if (diff)
 		if (!memitemdata_to_sql(mapitem, count, p->char_id,TABLE_CART))
 			strcat(save_status, " cart");
+#ifdef TXT_SQL_CONVERT
+	//Insert the barebones to then update the rest.
+	sprintf(tmp_sql, "REPLACE INTO `%s` (`account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%s')",
+		char_db, p->account_id, p->char_num, p->name);
+	if(mysql_query(&mysql_handle, tmp_sql))
+	{
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	} else
+		strcat(save_status, " creation");
+#endif
 
 	if (
 		(p->base_exp != cp->base_exp) || (p->base_level != cp->base_level) ||
@@ -640,71 +666,6 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		} else //Skills removed (reset?)
 			strcat(save_status, " skills");
 	}
-/* Saving of global registry values is now handled by the inter-server. [Skotlex]
-	diff = 0;
-	for(i=0;i<p->global_reg_num;i++) {
-		if ((p->global_reg[i].str == NULL) && (cp->global_reg[i].str == NULL))
-			continue;
-		if (((p->global_reg[i].str == NULL) != (cp->global_reg[i].str == NULL)) ||
-			strcmp(p->global_reg[i].value, cp->global_reg[i].value) != 0 ||
-			strcmp(p->global_reg[i].str, cp->global_reg[i].str) != 0
-		) {
-			diff = 1;
-			break;
-		}
-	}
-
-	if (diff)
-	{	//Save global registry.
-		//`global_reg_value` (`char_id`, `str`, `value`)
-		
-		sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, p->char_id);
-		if (mysql_query(&mysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-
-		//insert here.
-		tmp_ptr = tmp_sql;
-		tmp_ptr += sprintf(tmp_ptr,"INSERT INTO `%s` (`type`, `char_id`, `str`, `value`) VALUES", reg_db);
-		count = 0;
-		for(i=0;i<p->global_reg_num;i++)
-		{
-			if (p->global_reg[i].str && p->global_reg[i].value)
-			{
-				tmp_ptr += sprintf(tmp_ptr,"('3','%d','%s','%s'),",
-					char_id, jstrescapecpy(temp_str,p->global_reg[i].str), jstrescapecpy(temp_str2,p->global_reg[i].value));
-				if (++count%100 == 0)
-				{ //Save every X registers to avoid overflowing tmp_sql [Skotlex]
-					tmp_ptr[-1] = '\0';
-					if(mysql_query(&mysql_handle, tmp_sql))
-					{
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-					} else
-						strcat(save_status, " global_reg");
-						
-					tmp_ptr = tmp_sql;
-					tmp_ptr += sprintf(tmp_ptr,"INSERT INTO `%s` (`type`, `char_id`, `str`, `value`) VALUES", reg_db);
-					count = 0;
-				}
-			}
-		}
-
-		if (count)
-		{
-			tmp_ptr[-1] = '\0';
-			if(mysql_query(&mysql_handle, tmp_sql))
-			{
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			} else
-				strcat(save_status, " global_reg");
-		} else //Values cleared.
-			strcat(save_status, " global_reg");
-	}
-*/
 	diff = 0;
 	for(i = 0; i < MAX_FRIENDS; i++){
 		if(p->friends[i].char_id != cp->friends[i].char_id ||
@@ -748,8 +709,11 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 
 	if (save_status[0]!='\0' && save_log)
 		ShowInfo("Saved char %d - %s:%s.\n", char_id, p->name, save_status);
+#ifndef TXT_SQL_CONVERT
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
-
+#else
+	aFree(cp);
+#endif
 	return 0;
 }
 
@@ -820,6 +784,7 @@ int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tab
 					{ //Do nothing.
 					} else
 //==============================================Memory data > SQL ===============================
+#ifndef TXT_SQL_CONVERT
 					if(!itemdb_isequip(mapitem[i].nameid))
 					{	//Quick update of stackable items. Update Qty and Equip should be enough, but in case we are also updating identify
 						sprintf(tmp_sql,"UPDATE `%s` SET `equip`='%d', `identify`='%d', `amount`='%d' WHERE `id`='%d' LIMIT 1",
@@ -830,6 +795,7 @@ int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tab
 							ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 						}
 					} else 
+#endif //TXT_SQL_CONVERT
 					{	//Equipment or Misc item, just update all fields.
 						str_p = tmp_sql;
 						str_p += sprintf(str_p,"UPDATE `%s` SET `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d'",
@@ -888,7 +854,7 @@ int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tab
 	}
 	return 0;
 }
-
+#ifndef TXT_SQL_CONVERT
 //=====================================================================================================
 int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 	int i,j, n;
@@ -1689,19 +1655,6 @@ int delete_char_sql(int char_id, int partner_id)
 }
 
 //==========================================================================================================
-
-void mmo_char_sync(void)
-{
-	ShowWarning("mmo_char_sync() - nothing to do\n");
-}
-
-// to do
-///////////////////////////
-
-int mmo_char_sync_timer(int tid, unsigned int tick, int id, int data) {
-	ShowWarning("mmo_char_sync_timer() tic - no works to do\n");
-	return 0;
-}
 
 int count_users(void) {
 	int i, users;
@@ -3918,7 +3871,6 @@ int char_lan_config_read(const char *lancfgName) {
 
 void do_final(void) {
 	ShowInfo("Doing final stage...\n");
-	//mmo_char_sync();
 	//inter_save();
 	do_final_itemdb();
 	//check SQL save progress.
@@ -3956,7 +3908,7 @@ void do_final(void) {
 
 	ShowInfo("ok! all done...\n");
 }
-
+#endif //TXT_SQL_CONVERT
 void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
@@ -3975,15 +3927,17 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		if(strcmpi(w1, "gm_read_method") == 0) {
+		if(strcmpi(w1,"char_db")==0){
+			strcpy(char_db,w2);
+#ifndef TXT_SQL_CONVERT
+		} else if(strcmpi(w1, "gm_read_method") == 0) {
 			if(atoi(w2) != 0)
 				char_gm_read = true;
 			else
 				char_gm_read = false;
 		} else if(strcmpi(w1, "gm_db") == 0) {
 			strcpy(gm_db, w2);
-		} else if(strcmpi(w1,"char_db")==0){
-			strcpy(char_db,w2);
+#endif
 		}else if(strcmpi(w1,"scdata_db")==0){
 			strcpy(scdata_db,w2);
 		}else if(strcmpi(w1,"cart_db")==0){
@@ -4024,6 +3978,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(pet_db,w2);
 		}else if(strcmpi(w1,"friend_db")==0){
 			strcpy(friend_db,w2);
+#ifndef TXT_SQL_CONVERT
 		}else if(strcmpi(w1,"db_path")==0){
 			strcpy(db_path,w2);
 		//Map server option to use SQL db or not
@@ -4045,6 +4000,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			lowest_gm_level = atoi(w2);
 			ShowStatus("set lowest_gm_level : %s\n",w2);
 		//support the import command, just like any other config
+#endif
 		}else if(strcmpi(w1,"import")==0){
 			sql_config_read(w2);
 		}
@@ -4053,6 +4009,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 	fclose(fp);
 	ShowInfo("done reading %s.\n", cfgName);
 }
+#ifndef TXT_SQL_CONVERT
 
 int char_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
@@ -4263,7 +4220,7 @@ int do_init(int argc, char **argv){
 	
 	ShowInfo("Finished reading the char-server configuration.\n");
 
-	inter_init((argc > 2) ? argv[2] : inter_cfgName); // inter server 초기화
+	inter_init_sql((argc > 2) ? argv[2] : inter_cfgName); // inter server 초기화
 	ShowInfo("Finished reading the inter-server configuration.\n");
 	
 	//Read ItemDB
@@ -4453,3 +4410,4 @@ int char_family(int pl1,int pl2,int pl3) {
 	mysql_free_result (sql_res);
 	return 0;
 }
+#endif //TXT_SQL_CONVERT
