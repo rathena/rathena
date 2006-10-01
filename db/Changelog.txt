@@ -19,6 +19,9 @@
 	-----
 
 ========================
+10/01
+	* Updated view ids of some headgears [Playtester]
+	- beware of crashes when your client is too old
 09/29
 	* Fully official Ktullanux stats [Playtester]
 	* Official X.4 item scripts [Playtester]
