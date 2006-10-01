@@ -2375,7 +2375,7 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case HFLI_SBR44:
-			if(sd->homunculus.intimacy < 200)
+			if(sd->homunculus.intimacy <= 200)
 				return 0;
 			break;
 		case HVAN_EXPLOSION:

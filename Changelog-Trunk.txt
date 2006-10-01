@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/01
+	* Fixed humunculi skill exploit, thanks to mr.rkit [Lupus]
 2006/09/30
 	* Rewrote the txt->sql converter. It now links directly to the char server
 	  files so that it should get auto-updated with any code changes in the
