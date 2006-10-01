@@ -3618,7 +3618,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
-		speed -= speed * sc->data[SC_INCREASEAGI].val3/100; //[orn]
+		speed -= speed * 25/100;
 	else if(sc->data[SC_CARTBOOST].timer!=-1)
 		speed -= speed * 20/100;
 	else if(sc->data[SC_BERSERK].timer!=-1)
@@ -3638,7 +3638,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3)
 		speed = speed * 100/sc->data[SC_SUITON].val3;
 	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		speed = speed * 100/sc->data[SC_DECREASEAGI].val3; //[orn]
+		speed = speed * 100/75;
 	if(sc->data[SC_DONTFORGETME].timer!=-1)
 		speed = speed * 100/sc->data[SC_DONTFORGETME].val3;
 	if(sc->data[SC_DEFENDER].timer!=-1)
@@ -4793,15 +4793,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	calc_flag = StatusChangeFlagTable[type];
 	if(!(flag&4)) //Do not parse val settings when loading SCs
 	switch(type){
-		case SC_INCREASEAGI:
-			val2 = 2 + val1; //Agi increase
-			val3 = (5*val1)/2; //Speed increase
-			break;
 		case SC_DECREASEAGI:
-			val2 = 2 + val1; //Agi decrease
-			val3 = 100 - (5*val1)/2; //Speed decrease
-			if (val3 < 1) val3 = 1;
 			if (sd) tick>>=1; //Half duration for players.
+		case SC_INCREASEAGI:
+			val2 = 2 + val1; //Agi change
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
@@ -5627,8 +5622,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		//In case the speed reduction comes loaded incorrectly,
 		//prevent division by 0.
-		case SC_INCREASEAGI:
-		case SC_DECREASEAGI:
 		case SC_DONTFORGETME:
 		case SC_CLOAKING:
 		case SC_LONGING:
