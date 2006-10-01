@@ -16,7 +16,7 @@ ra_fild05.gat,349,274,0	warp	ra013	1,1,ra_fild06.gat,23,280
 ra_fild06.gat,19,280,0	warp	ra014	1,1,ra_fild05.gat,345,274
 ra_fild06.gat,296,21,0	warp	ra015	1,1,lhz_fild01.gat,295,381
 lhz_fild01.gat,295,383,0	warp	ra016	1,1,ra_fild06.gat,296,23
-ra_fild12.gat,37,225,0	warp	ra017	1,1,rachel.gat,268,125
+ra_fild12.gat,36,225,0	warp	ra017	1,1,rachel.gat,268,125
 ra_fild08.gat,168,28,0	warp	ra018	1,1,ra_fild12.gat,155,370
 ra_fild12.gat,155,375,0	warp	ra019	1,1,ra_fild08.gat,168,32
 ra_fild12.gat,279,26,0	warp	ra020	1,1,ra_fild13.gat,296,343

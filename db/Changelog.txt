@@ -20,6 +20,7 @@
 
 ========================
 10/01
+	* Adjusted drop rates thanks to info from Tharis [Playtester]
 	* Updated view ids of some headgears [Playtester]
 	- beware of crashes when your client is too old
 09/29

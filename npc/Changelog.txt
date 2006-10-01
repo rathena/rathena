@@ -29,7 +29,8 @@ Playtester
 
 Date		Added
 ======
-
+10/01
+	* Removed some duplicate Rachel warps [Playtester]
 09/28	
 	* $ephiroth converted custom event: Grand Circlet Quest + Excalibur [Lupus]
 	* Added official Kiel Dungeon entrance [Playtester]

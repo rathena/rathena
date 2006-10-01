@@ -44,8 +44,7 @@ rachel.gat,108,200,0	warp	rachel25	1,1,ra_in01.gat,213,83
 ra_in01.gat,192,152,0	warp	rachel26	1,1,rachel.gat,90,193
 rachel.gat,90,189,0	warp	rachel27	1,1,ra_in01.gat,192,148
 rachel.gat,25,125,0	warp	rachel28	1,1,ra_fild11.gat,353,226
-ra_fild12.gat,36,225,0	warp	rachel29	1,1,rachel.gat,270,125
-//
+rachel.gat,273,125,0	warp	rachel29	1,1,ra_fild12.gat,41,225
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~ Custom warps starts here ~~~~~~~~~~~~~~~~~~~
@@ -120,8 +119,5 @@ ra_in01.gat,220,379,0	warp	ra_in013a	2,2,ra_in01.gat,289,372
 ra_in01.gat,313,374,0	warp	ra_in014	2,2,ra_in01.gat,358,373
 ra_in01.gat,354,373,0	warp	ra_in014a	2,2,ra_in01.gat,308,374
 
-//Rachel City
-//Some additional warps that were missing
+//Entrance to the Temple
 rachel.gat,149,249,0	warp	rachel001	1,1,ra_temple.gat,119,28
-rachel.gat,273,125,0	warp	rachel009	1,1,ra_fild12.gat,41,225
-rachel.gat,25,125,0	warp	rachel010	1,1,ra_fild11.gat,357,225
