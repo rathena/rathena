@@ -67,7 +67,7 @@ int convert_init(void){
 				reg.account_id = char_dat.status.account_id;
 				reg.char_id = char_dat.status.char_id;
 				reg.reg_num = char_dat.global_num;
-				memcpy(&reg.reg, &char_dat.global, sizeof(struct global_reg));
+				memcpy(&reg.reg, &char_dat.global, reg.reg_num*sizeof(struct global_reg));
 				inter_accreg_tosql(reg.account_id, reg.char_id, &reg, 3); //Type 3: Character regs
 			} else {
 				ShowError("Error %d converting character line [%s] (at %s:%d).\n", ret, line, char_txt, lineno);
@@ -87,7 +87,7 @@ int convert_init(void){
 			memset (&reg, 0, sizeof(struct accreg));
 			if(inter_accreg_fromstr(line, &reg) == 0 && reg.account_id > 0) {
 				count++;
-				inter_accreg_tosql(reg.account_id, 0, &reg, 3); //Type 2: Account regs
+				inter_accreg_tosql(reg.account_id, 0, &reg, 2); //Type 2: Account regs
 			}else{
 				ShowError("accreg reading: broken data [%s] at %s:%d\n", line, accreg_txt, lineno);
 			}

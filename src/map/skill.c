@@ -6020,7 +6020,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 	case HP_BASILICA:
 		skill_clear_unitgroup(src);
-		if ((sg = skill_unitsetting(src,skillid,skilllv,x,y,0)))
+		if (skill_unitsetting(src,skillid,skilllv,x,y,0))
 			sc_start(src,type,100,skilllv,skill_get_time(skillid,skilllv));
 		flag|=1;
 		break;

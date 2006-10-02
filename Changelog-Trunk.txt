@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/02
+	* Fixed the txt->sql converter only saving the very first character
+	  permanent variable. [Skotlex]
+	* Fixed the txt->sql converter saving account-wide variables as
+	  character-wide ones. [Skotlex]
 	* Renamed nopenalty mapflag to noexppenalty. Using nopenalty will turn
 	  on/off both noexppenalty and nozenypenalty now. [Skotlex]
 2006/10/01
