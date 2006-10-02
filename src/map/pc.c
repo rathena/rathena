@@ -1902,8 +1902,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2 (Resist Effect): %d is not supported.\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2)
-			sd->reseff[type2-SC_COMMON_MIN]+=val;
+		if(sd->state.lr_flag == 2)
+			break;
+		i = sd->reseff[type2-SC_COMMON_MIN]+val;
+		sd->reseff[type2-SC_COMMON_MIN]= cap_value(i, 0, 10000);
 		break;
 	case SP_MAGIC_ADDELE:
 		if(type2 >= ELE_MAX) {

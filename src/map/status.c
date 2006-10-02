@@ -4479,13 +4479,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 		}
 
-		//Item defenses do not reduce duration, so they go out of the function.
-		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
-			&& sd->reseff[type-SC_COMMON_MIN] > 0)
-			def += sd->reseff[type-SC_COMMON_MIN];
+		if (!(flag&8)) {
+			if (def) //Natural resistance
+				rate -= rate*def/10000;
 
-		if (def && !(flag&8))
-			rate -= rate*def/10000;
+			//Item resistance (only applies to rate%)
+			if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
+				&& sd->reseff[type-SC_COMMON_MIN] > 0)
+				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
+		}
 
 		if (!(rand()%10000 < rate))
 			return 0;
