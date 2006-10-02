@@ -218,6 +218,7 @@ mf_bexp		40
 mf_novending	41
 mf_loadevent 42
 mf_nochat	43
+mf_noexppenalty	44
 
 cell_wall	1
 cell_water	3

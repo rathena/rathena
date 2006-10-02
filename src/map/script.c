@@ -205,7 +205,8 @@ enum {
 	MF_BEXP,	//40
 	MF_NOVENDING,
 	MF_LOADEVENT,
-	MF_NOCHAT
+	MF_NOCHAT,
+	MF_NOEXPPENALTY
 };
 
 //Reports on the console the src of an script error.
@@ -8234,7 +8235,8 @@ int buildin_setmapflag(struct script_state *st)
 				map[m].flag.nobranch=1;
 				break;
 			case MF_NOPENALTY:
-				map[m].flag.nopenalty=1;
+				map[m].flag.noexppenalty=1;
+				map[m].flag.nozenypenalty=1;
 				break;
 			case MF_NOZENYPENALTY:
 				map[m].flag.nozenypenalty=1;
@@ -8378,7 +8380,8 @@ int buildin_removemapflag(struct script_state *st)
 				map[m].flag.nobranch=0;
 				break;
 			case MF_NOPENALTY:
-				map[m].flag.nopenalty=0;
+				map[m].flag.noexppenalty=0;
+				map[m].flag.nozenypenalty=0;
 				break;
 			case MF_PVP:
 				map[m].flag.pvp=0;

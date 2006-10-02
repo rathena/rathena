@@ -3327,7 +3327,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			skill_area_temp[0] = 5 - skill_area_temp[0]; // The actual penalty...
-			if (skill_area_temp[0] > 0 && !map[src->m].flag.nopenalty) { //Apply penalty
+			if (skill_area_temp[0] > 0 && !map[src->m].flag.noexppenalty) { //Apply penalty
 				sd->status.base_exp -= pc_nextbaseexp(sd) * skill_area_temp[0] * 2/1000; //0.2% penalty per each.
 				sd->status.job_exp -= pc_nextjobexp(sd) * skill_area_temp[0] * 2/1000;
 				clif_updatestatus(sd,SP_BASEEXP);

@@ -1084,7 +1084,7 @@ struct map_data {
 		unsigned monster_noteleport : 1;
 		unsigned nosave : 1;
 		unsigned nobranch : 1;
-		unsigned nopenalty : 1;
+		unsigned noexppenalty : 1;
 		unsigned pvp : 1;
 		unsigned pvp_noparty : 1;
 		unsigned pvp_noguild : 1;

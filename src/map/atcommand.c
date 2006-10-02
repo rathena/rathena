@@ -5761,7 +5761,7 @@ int atcommand_mapinfo(
 		strcat(atcmd_output, "NoMemo | ");
 	clif_displaymessage(fd, atcmd_output);
 
-	sprintf(atcmd_output, "No Penalty: %s | No Zeny Penalty: %s", (map[m_id].flag.nopenalty) ? "On" : "Off", (map[m_id].flag.nozenypenalty) ? "On" : "Off");
+	sprintf(atcmd_output, "No Exp Penalty: %s | No Zeny Penalty: %s", (map[m_id].flag.noexppenalty) ? "On" : "Off", (map[m_id].flag.nozenypenalty) ? "On" : "Off");
 	clif_displaymessage(fd, atcmd_output);
 
 	if (map[m_id].flag.nosave) {

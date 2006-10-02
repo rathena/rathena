@@ -4822,7 +4822,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(sd->status.pet_id > 0 && sd->pd)
 	{
 		struct s_pet *pet = &sd->pd->pet;
-		if(!map[sd->bl.m].flag.nopenalty){
+		if(!map[sd->bl.m].flag.noexppenalty){
 			pet->intimate -= sd->pd->petDB->die;
 			if(pet->intimate < 0)
 				pet->intimate = 0;
@@ -4970,7 +4970,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type && sd->state.snovice_flag != 4
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
-		&& !map[sd->bl.m].flag.nopenalty && !map_flag_gvg(sd->bl.m)
+		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
 		&& sd->sc.data[SC_BABY].timer == -1)
 	{
 		unsigned int base_penalty =0;
