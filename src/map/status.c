@@ -3615,9 +3615,9 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed -= speed * 50/100;
 	else if(sc->data[SC_SPEEDUP0].timer!=-1)
 		speed -= speed * 25/100;
-	else if(sc->data[SC_FUSION].timer != -1)
-		speed -= speed * 25/100;
 	else if(sc->data[SC_INCREASEAGI].timer!=-1)
+		speed -= speed * 25/100;
+	else if(sc->data[SC_FUSION].timer != -1)
 		speed -= speed * 25/100;
 	else if(sc->data[SC_CARTBOOST].timer!=-1)
 		speed -= speed * 20/100;
@@ -3631,14 +3631,14 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	//% reductions	 (they stack)
 	if(sc->data[SC_DANCING].timer!=-1 && sc->data[SC_DANCING].val3&0xFFFF)
 		speed += speed*(sc->data[SC_DANCING].val3&0xFFFF)/100;
+	if(sc->data[SC_DECREASEAGI].timer!=-1)
+		speed = speed * 100/75;
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		speed = speed * 100/75;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		speed = speed * 100/50;
 	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3)
 		speed = speed * 100/sc->data[SC_SUITON].val3;
-	if(sc->data[SC_DECREASEAGI].timer!=-1)
-		speed = speed * 100/75;
 	if(sc->data[SC_DONTFORGETME].timer!=-1)
 		speed = speed * 100/sc->data[SC_DONTFORGETME].val3;
 	if(sc->data[SC_DEFENDER].timer!=-1)
@@ -4072,7 +4072,6 @@ int status_get_party_id(struct block_list *bl)
 				return msd->status.party_id;
 			return -md->master_id;
 		}
-
 	}
 		break;
 	case BL_HOM:
@@ -5709,6 +5708,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			opt_flag = 0;
 			break;
 		case SC_ENERGYCOAT:
+		case SC_SKE:
 			sc->opt3 |= 4;
 			opt_flag = 0;
 			break;
@@ -6250,6 +6250,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		opt_flag = 0;
 		break;
 	case SC_ENERGYCOAT:
+	case SC_SKE:
 		sc->opt3 &= ~4;
 		opt_flag = 0;
 		break;
