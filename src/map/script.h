@@ -63,8 +63,7 @@ struct script_state {
 
 struct script_code* parse_script(unsigned char *,const char*,int);
 void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);
-//void run_script(struct script_code*,int,int,int);
-#define run_script(sc,pos,rid,oid) run_script_sub(sc,pos,rid,oid,__FILE__,__LINE__)
+void run_script(struct script_code*,int,int,int);
 
 int set_var(struct map_session_data *sd, char *name, void *val);
 int conv_num(struct script_state *st,struct script_data *data);

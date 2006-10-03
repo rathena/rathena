@@ -808,7 +808,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 		return AtCommand_None;
 
 	if (!gmlvl) gmlvl = pc_isGM(sd);
-	type = atcommand(sd,  gmlvl, str, &info);
+	type = atcommand(sd, gmlvl, str, &info);
 	if (type != AtCommand_None) {
 		char command[100];
 		const char* p = str;
@@ -7480,7 +7480,7 @@ atcommand_storeall(const int fd, struct map_session_data* sd,
 			return 0;
 		case 1: //Failure
 			clif_displaymessage(fd, "You can't open the storage currently.");
-			return 1;
+			return -1;
 		}
 	}
 	for (i = 0; i < MAX_INVENTORY; i++) {

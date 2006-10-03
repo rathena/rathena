@@ -2511,9 +2511,7 @@ int run_func(struct script_state *st)
  */
 void run_script_main(struct script_state *st);
 
-//FIXME: Temporary replacement to locate the leak source.
-//void run_script(struct script_code *rootscript,int pos,int rid,int oid)
-void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno)
+void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 {
 	struct script_state *st;
 	struct map_session_data *sd=NULL;
@@ -2526,18 +2524,14 @@ void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char
 		//Resume script.
 		st = sd->st;
 	} else {
-//		st = aCalloc(sizeof(struct script_state), 1);
-		st = _mcalloc(sizeof(struct script_state), 1, file, lineno, __func__);
+		st = aCalloc(sizeof(struct script_state), 1);
 		// the script is different, make new script_state and stack
-//		st->stack = aMalloc (sizeof(struct script_stack));
-		st->stack = _mmalloc(sizeof(struct script_stack), file, lineno, __func__);
+		st->stack = aMalloc (sizeof(struct script_stack));
 		st->stack->sp=0;
 		st->stack->sp_max=64;
-//		st->stack->stack_data = (struct script_data *)aCalloc(st->stack->sp_max,sizeof(st->stack->stack_data[0]));
-		st->stack->stack_data = (struct script_data *)_mcalloc(st->stack->sp_max,sizeof(st->stack->stack_data[0]), file, lineno, __func__);
+		st->stack->stack_data = (struct script_data *)aCalloc(st->stack->sp_max,sizeof(st->stack->stack_data[0]));
 		st->stack->defsp = st->stack->sp;
-//		st->stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
-		st->stack->var_function = _mcalloc(1, sizeof(struct linkdb_node*), file, lineno, __func__);
+		st->stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
 		st->state  = RUN;
 		st->script = rootscript;
 	}
