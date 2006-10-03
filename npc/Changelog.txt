@@ -29,6 +29,8 @@ Playtester
 
 Date		Added
 ======
+10/03
+	* Fixed Assassin Job Quest: Timer bug / NPC bypass exploit [Lupus]
 10/01
 	* Removed some duplicate Rachel warps [Playtester]
 09/28	
