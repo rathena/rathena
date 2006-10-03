@@ -3457,7 +3457,7 @@ static const struct battle_data_short {
 	{ "enable_perfect_flee",               &battle_config.enable_perfect_flee		},
 	{ "casting_rate",                      &battle_config.cast_rate				},
 	{ "delay_rate",                        &battle_config.delay_rate				},
-	{ "delay_dependon_dex",                &battle_config.delay_dependon_dex		},
+	{ "delay_dependon_agi",                &battle_config.delay_dependon_agi },
 	{ "skill_delay_attack_enable",         &battle_config.sdelay_attack_enable		},
 	{ "left_cardfix_to_right",             &battle_config.left_cardfix_to_right	},
 	{ "skill_add_range",            			&battle_config.skill_add_range		},
@@ -3856,7 +3856,7 @@ void battle_set_defaults() {
 	battle_config.enable_perfect_flee = BL_PC|BL_PET;
 	battle_config.cast_rate=100;
 	battle_config.delay_rate=100;
-	battle_config.delay_dependon_dex=0;
+	battle_config.delay_dependon_agi=0;
 	battle_config.sdelay_attack_enable=0;
 	battle_config.left_cardfix_to_right=0;
 	battle_config.skill_add_range=0;

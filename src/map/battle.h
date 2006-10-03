@@ -93,7 +93,7 @@ extern struct Battle_Config {
 	unsigned short critical_rate;
 	unsigned short enable_baseatk;
 	unsigned short enable_perfect_flee;
-	unsigned short cast_rate,delay_rate,delay_dependon_dex;
+	unsigned short cast_rate,delay_rate,delay_dependon_agi;
 	unsigned short sdelay_attack_enable;
 	unsigned short left_cardfix_to_right;
 	unsigned short skill_add_range;

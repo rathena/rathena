@@ -682,7 +682,7 @@ int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
 int	skill_get_blewcount( int id ,int lv ){ skill_get (skill_db[id].blewcount[lv-1], id, lv); }
 int	skill_get_mhp( int id ,int lv ){ skill_get (skill_db[id].mhp[lv-1], id, lv); }
 int	skill_get_castnodex( int id ,int lv ){ skill_get (skill_db[id].castnodex[lv-1], id, lv); }
-int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynodex[lv-1], id, lv); }
+int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynoagi[lv-1], id, lv); }
 int	skill_get_nocast ( int id ){ skill_get (skill_db[id].nocast, id, 1); }
 int	skill_get_type( int id ){ skill_get (skill_db[id].skill_type, id, 1); }
 int	skill_get_unit_id ( int id, int flag ){ skill_get (skill_db[id].unit_id[flag], id, 1); }
@@ -8590,7 +8590,7 @@ int skill_castfix_sc (struct block_list *bl, int time)
  */
 int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
-	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
+	int delaynochange = skill_get_delaynodex(skill_id, skill_lv);
 	int time = skill_get_delay(skill_id, skill_lv);
 	
 	nullpo_retr(0, bl);
@@ -8606,10 +8606,10 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 			time = battle_config.default_skill_delay;
 	} else if (time < 0)
 		time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
-
-	if (battle_config.delay_dependon_dex && !(delaynodex&1))
+	else //Agi reduction should apply only to non-zero delay skills.
+	if (battle_config.delay_dependon_agi && !(delaynochange&1))
 	{	// if skill casttime is allowed to be reduced by dex
-		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+		int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
 		if (scale > 0)
 			time = time * scale / battle_config.castrate_dex_scale;
 		else //To be capped later to minimum.
@@ -8622,7 +8622,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	if (battle_config.delay_rate != 100)
 		time = time * battle_config.delay_rate / 100;
 
-	if (!(delaynodex&2))
+	if (!(delaynochange&2))
 	{
 		struct status_change *sc;
 		sc= status_get_sc(bl);
@@ -11404,7 +11404,7 @@ int skill_readdb (void)
 		skill_split_atoi(split[1],skill_db[i].castnodex);
 		if (!split[2])
 			continue;
-		skill_split_atoi(split[2],skill_db[i].delaynodex);
+		skill_split_atoi(split[2],skill_db[i].delaynoagi);
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);

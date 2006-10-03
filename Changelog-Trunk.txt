@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/03
+	* Renamed setting delay_dependon_dex to delay_dependon_agi, the delay of
+	  skills is reduced now (when enabled) by AGI instead of DEX, which makes a
+	  lot more sense than DEX. [Skotlex]
 2006/10/02
 	* Modified item-granded status resistance reduction to behave as explained
 	  by Vicious (Ragnarok Monthly magazine) [Skotlex]

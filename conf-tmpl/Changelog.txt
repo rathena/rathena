@@ -1,5 +1,9 @@
 Date	Added
 
+2006/10/03
+	* Renamed setting delay_dependon_dex to delay_dependon_agi, the delay of
+	  skills is reduced now (when enabled) by AGI instead of DEX, which makes a
+	  lot more sense than DEX. [Skotlex]
 2006/09/25
 	* Removed config setting allow_atcommand_when_mute as it's no longer used
 	  (see manner_system in misc.conf for it's replacement) [Skotlex]

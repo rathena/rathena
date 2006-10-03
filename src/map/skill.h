@@ -66,7 +66,7 @@ struct skill_db {
 	int weapon,ammo,ammo_qty[MAX_SKILL_LEVEL],state,spiritball[MAX_SKILL_LEVEL];
 	int itemid[10],amount[10];
 	int castnodex[MAX_SKILL_LEVEL];
-	int delaynodex[MAX_SKILL_LEVEL];
+	int delaynoagi[MAX_SKILL_LEVEL];
 	int nocast;
 	int unit_id[2];
 	int unit_layout_type[MAX_SKILL_LEVEL];
