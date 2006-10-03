@@ -5479,7 +5479,6 @@ int atcommand_reloadmobdb(
 {
 	nullpo_retr(-1, sd);
 	mob_reload();
-	do_final_pet();
 	read_petdb();
 	merc_reload();
 	clif_displaymessage(fd, msg_txt(98)); // Monster database reloaded.
