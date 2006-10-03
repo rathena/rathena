@@ -1306,18 +1306,15 @@ int parse_fromchar(int fd){
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 				}
 				sql_res = mysql_store_result(&mysql_handle) ;
-				if (sql_res)	{
-					sql_row = mysql_fetch_row(sql_res);	//row fetching
-				}
-				if (atol(sql_row[0]) != 0) {
+				if (sql_res && mysql_num_rows(sql_res) > 0) { //Found a match
 					sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 					}
-					break;
 				}
+				if (sql_res) mysql_free_result(sql_res);
 				RFIFOSKIP(fd,6);
 			}
 			return 0;
