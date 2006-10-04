@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/04
+	* Bowling bash now always hits twice regardless of situation. [Skotlex]
+	* Added an underflow check to prevent sending to the client negative mdef2
+	  value (for Frenzy'ed characters) [Skotlex]
 	* Modified pc_jobchange so that it automatically removes
 	  peco/falcon/cart/homun if the new job you are changing to does not possess
 	  the required skill for them. [Skotlex]

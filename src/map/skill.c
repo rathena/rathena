@@ -2936,7 +2936,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if(flag&1){
 			if(bl->id==skill_area_temp[1])
 				break;
-			//Splash damage is always two hits for 500%
+			//two hits for 500%
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,SD_ANIMATION);
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,SD_ANIMATION);
 		} else {
@@ -2953,18 +2953,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				if(skill_area_temp[0]>1) break;
 			}
 			clif_blown(bl); //Update target pos.
-			if (i==c) { //No targets found. Single attack for 600%
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,1);
-			} else {
+			if (i!=c) { //Splash
 				skill_area_temp[1]=bl->id;
 				map_foreachinrange(skill_area_sub,bl,
 					skill_get_splash(skillid, skilllv),BL_CHAR,
 					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 					skill_castend_damage_id);
-				//Weirdo dual-hit property, two attacks for 500%
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
-				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
-			} 
+			}
+			//Weirdo dual-hit property, two attacks for 500%
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
 		}
 		break;
 	

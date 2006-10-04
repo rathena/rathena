@@ -1328,8 +1328,7 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 				case KN_BOWLINGBASH:
-					//When mflag, this is a no-splash attack, damage gets a bonus of 100% at lv 10.
-					skillratio+= (wflag?50:40)*skill_lv;
+					skillratio+= 40*skill_lv;
 					break;
 				case KN_AUTOCOUNTER:
 				case LK_SPIRALPIERCE:
