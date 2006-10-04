@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/04
+	* Raised level of Kiel MVP skills [Playtester]
 10/01
 	* Adjusted drop rates thanks to info from Tharis [Playtester]
 	* Updated view ids of some headgears [Playtester]
