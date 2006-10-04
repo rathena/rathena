@@ -1604,7 +1604,7 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 		inter_log("guild %s (id=%d) broken" RETCODE,g->name,guild_id);
 	
 	//Remove the guild from memory. [Skotlex]
-	g = idb_remove(guild_db_, guild_id);
+	idb_remove(guild_db_, guild_id);
 	return 0;
 }
 

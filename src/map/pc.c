@@ -5508,7 +5508,6 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	pc_setglobalreg (sd, "jobchange_level", sd->change_level);
 
 	sd->status.class_ = job;
-	status_set_viewdata(&sd->bl, job);
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
 	sd->status.job_level=1;
@@ -5523,16 +5522,33 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 				pc_unequipitem(sd,sd->equip_index[i],2);	// ?”õŠO‚µ
 	}
 
+	//Change look
+	status_set_viewdata(&sd->bl, job);
 	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
-
 	if(sd->vd.cloth_color)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+
+	//Update skill tree.
+	pc_calc_skilltree(sd);
+	clif_skillinfoblock(sd);
+
+	//Remove peco/cart/falcon
+	i = sd->sc.option;
+	if(i&OPTION_RIDING && !pc_checkskill(sd, KN_RIDING))
+		i&=~OPTION_RIDING;
+	if(i&OPTION_CART && !pc_checkskill(sd, MC_PUSHCART))
+		i&=~OPTION_CART;
+	if(i&OPTION_FALCON && !pc_checkskill(sd, HT_FALCON))
+		i&=~OPTION_FALCON;
+
+	if(i != sd->sc.option)
+		pc_setoption(sd, i);
+
+	if(sd->hd && merc_is_hom_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
+		merc_hom_vaporize(sd, 0);
 	
 	if(sd->status.manner < 0)
 		clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
-	
-	if(pc_isriding(sd)) //Remove Peco Status to prevent display <> class problems.
-		pc_setoption(sd,sd->sc.option&~OPTION_RIDING);
 
 	status_calc_pc(sd,0);
 	pc_checkallowskill(sd);
