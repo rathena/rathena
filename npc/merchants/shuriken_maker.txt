@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Au{R}oN
 //===== Current Version: =====================================
-//= 1.2b
+//= 1.2c
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -21,7 +21,7 @@ que_ng.gat,22,62,3	script	Taitsu	709,{
 
 	mes "[Taitsu]";
 	if(Class!=Job_Ninja){
-		mes "Sorry, buy I can use my ability only for Ninja Class.";
+		mes "Sorry, but I can use my ability only for Ninja Class.";
 		close;
 	}
 	mes "Hello";

@@ -1,0 +1,59 @@
+//===== eAthena Script =======================================
+//= Auction NPC
+//===== By: ==================================================
+//= Au{R}o
+//===== Current Version: =====================================
+//= 1.01
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Auction System
+//===== Additional Comments: =================================
+//= Converted from Aegis
+//= 1.0 Add NPC dialogue (FACING PROBABLY INCORRECT) [Au{R}oN]
+//============================================================
+
+//=======================WARPER===============================
+lighthalzen.gat,205,169,4	script	Auction Guide	833,{
+
+	mes "[Auction Guide]";
+	mes "Trying to go to the acution";
+	next;
+	menu "Yes.",WA_yes,"No.",WA_no;
+WA_yes:
+	mes "[Auction Guide]";
+	mes "Have a good trip~";
+	close2;
+	warp "auction_02.gat",43,24;
+	end;
+
+WA_no:
+	mes "[Auction Guide]";
+	MES "Come visit next time.";
+	close;
+}
+
+//=======================AUCTION NPC==========================
+auction_02.gat,31,46,9	script	Auction Supervisor::as1	874,{
+
+	mes "[Auctioner]";
+	mes "Welcome.";
+	mes "Is there an item that you're";
+	mes "looking for...?";
+	next;
+	menu "Yes.",AU_yes,"No.",AU_no;
+AU_yes;
+	//NEED TO ADD THE COMMAND FOR OPEN AUCTION WINDOW!!
+	mes "Sorry, but at the moment the auction system is in development";//CUSTOM MSG!!
+	close;
+
+AU_no;
+	mes "[Auctioner]";
+	mes "Okay then..";
+	close;
+}
+auction_02.gat,43,65,2	duplicate(as1)	Auction Supervisor::as1	874
+auction_02.gat,56,46,2	duplicate(as1)	Auction Supervisor::as2	874
+
+//=======================WARP=================================
+auction_02.gat,43,17,0	warp	auc_light01	1,1,lighthalzen.gat,209,169

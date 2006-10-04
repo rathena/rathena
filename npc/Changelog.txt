@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+10/04
+	* Updated missing dialogues/NPC to Lighthalzen Bank, Prison,Auction area [Lupus]
+		thanks to Au{R}oN
 10/03
 	* Fixed Assassin Job Quest: Timer bug / NPC bypass exploit [Lupus]
 10/01
