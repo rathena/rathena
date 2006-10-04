@@ -38,7 +38,7 @@ izlude_in.gat,82,163,3	script	Shurank	733,{
 		mes "come back to me...";
 		close;
 	}
-	if (BaseClass == Job_Swordman && eaclass()&(EAJL_2|&EAJL_UPPER)) {
+	if (BaseClass == Job_Swordman && eaclass()&(EAJL_2|EAJL_UPPER)) {
 		mes "From your raiment,";
 		mes "I see that you are";
 		if (Sex)
@@ -928,7 +928,7 @@ geffen.gat,154,143,3	script	Dequ'ee	734,{
 		mes "I don't know how you want to live your life, but you should give the Swordman job some serious thought...";
 		close;
 	}
-	if (BaseClass == Job_Swordman && eaclass()&(EAJL_2|&EAJL_UPPER)) {
+	if (BaseClass == Job_Swordman && eaclass()&(EAJL_2|EAJL_UPPER)) {
 		mes "[Dequ'ee]";
 		mes "Ah...";
 		mes "A fellow sword wielder!";
