@@ -77,6 +77,7 @@ void npc_timerevent_quit(struct map_session_data *sd);
 int npc_gettimerevent_tick(struct npc_data *nd);
 int npc_settimerevent_tick(struct npc_data *nd,int newtimer);
 int npc_remove_map(struct npc_data *nd);
+void npc_unload_duplicates (struct npc_data *nd);
 int npc_unload(struct npc_data *nd);
 int npc_reload(void);
 int npc_script_event(TBL_PC* sd, int type);

@@ -6234,6 +6234,7 @@ int atcommand_unloadnpc(const int fd, struct map_session_data* sd,
 	}
 
 	if ((nd = npc_name2id(NPCname)) != NULL) {
+		npc_unload_duplicates(nd);
 		npc_unload(nd);
 		clif_displaymessage(fd, msg_txt(112)); // Npc Disabled.
 	} else {
