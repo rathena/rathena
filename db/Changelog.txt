@@ -20,6 +20,7 @@
 
 ========================
 10/05
+	* Selling price of Broken Pieces 10z -> 400z [Playtester]
 	* Raised the drop rates of most combo equips [Playtester]
 10/04
 	* Raised level of Kiel MVP skills [Playtester]

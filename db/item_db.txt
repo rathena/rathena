@@ -2284,7 +2284,7 @@
 7509,Gorgeous_Keycard,Gorgeous Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7510,Valhalla's_Flower,Valhalla's Flower,3,,50000,10,,,,,,0,2,,,,,,{},{},{}
 7511,Darkness_Rune,Darkness Rune,3,1263,,10,,,,,,0,2,,,,,,{},{},{}
-7512,Burnt_Pieces,Burnt Pieces,3,,10,10,,,,,,0,2,,,,,,{},{},{}
+7512,Burnt_Pieces,Burnt Pieces,3,,400,10,,,,,,0,2,,,,,,{},{},{}
 7513,Pocket_Watch,Pocket Watch,3,,855,10,,,,,,0,2,,,,,,{},{},{}
 7514,Monster_Ticket,Monster Ticket,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7515,Interesting_Medal,Interesting Medal,3,,10,0,,,,,,0,2,,,,,,{},{},{}
