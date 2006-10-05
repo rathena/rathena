@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+10/05
+	* Umbala: Added official chance of failure to Create Essence (u may get a Garlet instead) [Lupus]
+	- Added official random amount to Dismantle Stone
 10/04
 	* Updated missing dialogues/NPC to Lighthalzen Bank, Prison,Auction area [Lupus]
 		thanks to Au{R}oN

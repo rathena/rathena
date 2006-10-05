@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.2-1.6 fixed some Umbalian Language quests [Lupus]
 //= 1.7 Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate from npc/cities/umbala.txt [Evera]
 //= 1.7a Removed all custom quests to custom folder [Lupus]
+//= 1.8 Added official chance of failure to Create Essence/Dismantle Stone [Lupus]
 //============================================================ 
 
 
@@ -747,9 +748,27 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		mes "Damtsuha Ombabaraka! Unba! Shi!";
 		mes "Sukatamba Aburumba! Umba! Shi!";
 		next;
-		delitem .@need,.@amount;
-		getitem .@gain,1;
 		mes "[Putsuchiritan]";
+		if(countitem(.@need)<.@amount){
+			mes "You're An Amba HacK0R!";
+			mes "I'm clearing your mind!";
+			//we reset the whole quest for the hacker			
+			set event_umbala,0;
+			emotion e_swt,1;
+			close;
+		}
+		delitem .@need,.@amount;
+		if(!rand(10)){
+			getitem,910,1; //if failed get Garlet
+			mes "Your inner power has failed";
+			mes "to convert these objects";
+			mes "from nature into elemental essence...";
+			next;
+			mes "[Putsuchiritan]";
+			mes "Purify your mind and try again.";
+        		close;
+		}
+		getitem .@gain,1;
 		mes "There.  Your inner power has converted";
 		mes "these objects from nature into";
 		mes "elemental essence.  Put";
@@ -825,10 +844,10 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		}
 		mes "[Putsuchiritan]";
 		switch(.@need) {
-			case 997: mes "I will dismantle your earth crystal"; 	break;
-			case 995: mes "I will dismantle your frozen crystal"; 	break;
-			case 994: mes "I will dismantle your heart of flame"; 		break;
-			case 996: mes "I will dismantle your rough wind stone"; 	break;
+			case 997: mes "I will dismantle your earth crystal";	break;
+			case 995: mes "I will dismantle your frozen crystal";	break;
+			case 994: mes "I will dismantle your heart of flame"; 	break;
+			case 996: mes "I will dismantle your rough wind stone"; break;
 		}
 		mes "into its component essence.";
 		mes "Choose a number between 1 and 9.";
@@ -854,11 +873,15 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 			}
 			break;
 		}
-		set .@num,.@num+rand(5);
-		if(.@num>10)
-			set .@num,.@num-10;
-		if(.@num<5)
-			set .@num,.@num+5;
+		set .@num,rand(1,10);	//official amount chance
+		if(.@num == 1)
+			set .@num,10;
+		else if(.@num == 2 || .@num == 3)
+			set .@num,8;
+		else if(.@num < 7)
+			set .@num,7;
+		else
+			set .@num,6;
 		mes "[Putsuchiritan]";
 		mes "Please place the elemental stone";
 		mes "inside this holy circle.  I will chant a";
@@ -872,9 +895,17 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		mes "Anburaka Taburaka Taburakan!  Unba Ra!";
 		mes "Onbaruzu Zan Kata!  Unba Ka!";
 		next;
+		mes "[Putsuchiritan]";
+		if(countitem(.@need)<1){
+			mes "You're An Amba HacK0R!";
+			mes "I'm clearing your mind!";
+			//we reset the whole quest for the hacker			
+			set event_umbala,0;
+			emotion e_swt,1;
+			close;
+		}
 		delitem .@need,1;
 		getitem .@gain,.@num;
-		mes "[Putsuchiritan]";
 		mes "The elemental stone has been";
 		mes "dismantled into its natural";
 		mes "essence.  Please put it to";
