@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/05
+	* Raised the drop rates of most combo equips [Playtester]
 10/04
 	* Raised level of Kiel MVP skills [Playtester]
 10/01
