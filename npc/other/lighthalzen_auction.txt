@@ -42,18 +42,18 @@ auction_02.gat,31,46,9	script	Auction Supervisor::as1	874,{
 	mes "looking for...?";
 	next;
 	menu "Yes.",AU_yes,"No.",AU_no;
-AU_yes;
+AU_yes:
 	//NEED TO ADD THE COMMAND FOR OPEN AUCTION WINDOW!!
 	mes "Sorry, but at the moment the auction system is in development";//CUSTOM MSG!!
 	close;
 
-AU_no;
+AU_no:
 	mes "[Auctioner]";
 	mes "Okay then..";
 	close;
 }
-auction_02.gat,43,65,2	duplicate(as1)	Auction Supervisor::as1	874
-auction_02.gat,56,46,2	duplicate(as1)	Auction Supervisor::as2	874
+auction_02.gat,43,65,2	duplicate(as1)	Auction Supervisor::asd1	874
+auction_02.gat,56,46,2	duplicate(as1)	Auction Supervisor::asd2	874
 
 //=======================WARP=================================
 auction_02.gat,43,17,0	warp	auc_light01	1,1,lighthalzen.gat,209,169

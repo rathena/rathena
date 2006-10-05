@@ -30,6 +30,7 @@ Playtester
 Date		Added
 ======
 10/05
+	* Fixed typo [Vicious]
 	* Umbala: Added official chance of failure to Create Essence (u may get a Garlet instead) [Lupus]
 	- Added official random amount to Dismantle Stone
 10/04

@@ -759,7 +759,7 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		}
 		delitem .@need,.@amount;
 		if(!rand(10)){
-			getitem,910,1; //if failed get Garlet
+			getitem 910,1; //if failed get Garlet
 			mes "Your inner power has failed";
 			mes "to convert these objects";
 			mes "from nature into elemental essence...";
