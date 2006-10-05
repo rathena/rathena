@@ -22,6 +22,7 @@
 #include "pet.h"
 #include "mercenary.h"	//[orn]
 #include "mob.h"
+#include "npc.h"
 #include "battle.h"
 #include "party.h"
 #include "itemdb.h"
@@ -1769,6 +1770,9 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 	
 	if(!(count&0x20000)) 
 		clif_blown(target);
+
+	if(target->type == BL_PC && map_getcell(target->m,x,y,CELL_CHKNPC))
+		npc_touch_areanpc((TBL_PC*)target,target->m,x,y); //Invoke area NPC
 
 	return (count&0xFFFF); //Return amount of knocked back cells.
 }

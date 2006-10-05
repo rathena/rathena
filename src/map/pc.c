@@ -1139,6 +1139,12 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	status_set_viewdata(&sd->bl, class_);
 	clif_changeoption(&sd->bl);
 	clif_spawn(&sd->bl);
+	if (class_ == sd->status.class_ && pc_iscarton(sd))
+	{	//It seems the cart info is lost on undisguise.
+		clif_cartlist(sd);
+		clif_updatestatus(sd,SP_CARTINFO);
+	}
+
 	return 1;
 }
 
