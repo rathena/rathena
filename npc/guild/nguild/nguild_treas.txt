@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
 //=
 //===== Additional Comments: =================================
 //= Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
+//= 1.2 Official treasure spawn [Lupus]
 //============================================================
 
 
@@ -23,7 +24,7 @@ OnRecvCastleN01:
 OnInit:
 	if($boxNumN01 == 0) end;
 	set $@bxN01, $boxNumN01;
-	callfunc "F_GldTreas","nguild_alde","N01",$boxNumN01,$@bxN01,$@boxIdN01,1324,114,218,123,227,1;
+	callfunc "F_GldTreas","nguild_alde","N01",$boxNumN01,$@bxN01,$@boxIdN01,1324+rand(10),114,218,123,227,1;
 	end;
 
 OnDied:
@@ -49,7 +50,7 @@ OnRecvCastleN02:
 OnInit:
 	if($boxNumN02 == 0) end;
 	set $@bxN02, $boxNumN02;
-	callfunc "F_GldTreas","nguild_gef","N02",$boxNumN02,$@bxN02,$@boxIdN02,1334,150,108,158,114,1;
+	callfunc "F_GldTreas","nguild_gef","N02",$boxNumN02,$@bxN02,$@boxIdN02,1334+rand(10),150,108,158,114,1;
 	end;
 
 OnDied:
@@ -74,7 +75,7 @@ OnRecvCastleN03:
 OnInit:
 	if($boxNumN03 == 0) end;
 	set $@bxN03, $boxNumN03;
-	callfunc "F_GldTreas","nguild_pay","N03",$boxNumN03,$@bxN03,$@boxIdN03,1344,286,4,295,13,1;
+	callfunc "F_GldTreas","nguild_pay","N03",$boxNumN03,$@bxN03,$@boxIdN03,1344+rand(10),286,4,295,13,1;
 	end;
 
 OnDied:
@@ -99,7 +100,7 @@ OnRecvCastleN04:
 OnInit:
 	if($boxNumN04 == 0) end;
 	set $@bxN04, $boxNumN04;
-	callfunc "F_GldTreas","nguild_prt","N04",$boxNumN04,$@bxN04,$@boxIdN04,1354,6,204,15,213,1;
+	callfunc "F_GldTreas","nguild_prt","N04",$boxNumN04,$@bxN04,$@boxIdN04,1354+rand(10),6,204,15,213,1;
 	end;
 
 OnDied:

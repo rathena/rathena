@@ -30,6 +30,9 @@ Playtester
 Date		Added
 ======
 10/06
+	* Added official treasure spawn to Novice Castles [Lupus]
+	- Added official Novice WoE restriction: Only the 1st class players (+Novice, SN) < 60 Base Level can enter.
+	- You can't invest Eco/Def, hire Guardians at Novice Castles
 	* Many minor fixes, thanks to theultramage [Lupus]
 	- Fixed "mymob" Niflheim bug, fixed Sworman Job Quest timer issue, fixed overlapping NPCs.
 10/05

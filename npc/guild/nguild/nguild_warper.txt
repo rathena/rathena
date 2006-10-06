@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
-//= eAthena 1+; RO Episode 4+
+//= eAthena 1+ with eaclass(); RO Episode 4+
 //===== Description: =========================================
 //=
 //===== Additional Comments: =================================
@@ -22,7 +22,8 @@
 //= 	updated list of unallowed buffs [Lupus]
 //= 1.4 Restricted it to 80 Base Level [Lupus]
 //= 1.5 According to official info: 1 Treasure Chest per Castle
-//=		TODO: The official entrance is in Izlude.
+//= 1.6 Only 1st Class < 60 BaseLevel Players can participate
+//=	TODO: The official entrance is in Izlude.
 //============================================================
 
 
@@ -30,11 +31,8 @@ prontera.gat,146,163,6	script	Novice Castles	729,{
 	mes "[Cita]";
 	mes "Hey! I'm a new usher of Novice Castles.";
 	next;
-	if( BaseJob == Job_SuperNovice || BaseJob == Job_Novice 
-			|| (Class==Job_Taekwon && BaseLevel<60)
-			|| (Class==Job_Gunslinger && BaseLevel<60)
-			|| (BaseJob>=Job_Novice && BaseJob<=Job_Thief && BaseLevel<60)
-	) menu "Warp me to Novice Castles",M_WARP,"Cancel",-;
+	if( !(eaclass()&(EAJL_2|EAJL_UPPER)) && BaseLevel<60 )
+		menu "Warp me to Novice Castles",M_WARP,"Cancel",-;
 
 	mes "[Cita]";
 	mes "I'm sorry, you can't enter the sacred Novice Castles place.";

@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.41
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -19,18 +19,15 @@
 //=   arg(3): y1 coordinate for warp to treasure room
 //=   arg(4): guild script suffix for kafra, gaurdian scripts etc.
 //===== Additional Comments: =================================
-//= v1.31: Added support for Emsolute Develop [celest]
-//= v1.2: All Guild manager scripts use this function. Optimized
-//= Comerce and Defense investment. [kobra_k88]
-//= v1.2a Function now returns to script that called it.
-//= Added disablenpc line to surrender castle option to remove kafra
-//= upon surrender.[kobra_k88]
-//= v1.2b U can't surrender the base during WOE [Lupus]
-//= v1.2c Fixed issue of guardians hp not increasing upon defense
-//= investment.[kobra_k88]
-//= v1.3 Now you can't install Guardians during WOE [Lupus]
-//= v1.4 Remove surrender abbility (Was 100% custom as far as I can tell) [Kayla]
-//= v1.41 Fixed possible Economy investment overflow with Emsolute Develop learnt [Lupus]
+//= 1.31: Added support for Emsolute Develop [celest]
+//= 1.2: All Guild manager scripts use this function. Optimized Comerce and Defense investment. [kobra_k88]
+//= 1.2a Function now returns to script that called it. Added disablenpc line to surrender castle option to remove kafra upon surrender.[kobra_k88]
+//= 1.2b U can't surrender the base during WOE [Lupus]
+//= 1.2c Fixed issue of guardians hp not increasing upon defense investment.[kobra_k88]
+//= 1.3 Now you can't install Guardians during WOE [Lupus]
+//= 1.4 Remove surrender abbility (Was 100% custom as far as I can tell) [Kayla]
+//= 1.41 Fixed possible Economy investment overflow with Emsolute Develop learnt [Lupus]
+//= 1.5 Official Novice Castles Menu (u can't invest / hire guardians) [Lupus]
 //============================================================
 
 
@@ -63,6 +60,12 @@ L_Start:
 	mes "[ "+getarg(0)+" ]";
 	mes "Welcome Master ^5533FF" + getguildmaster(@GID) + "^000000 ! I will assist you in any way I can!";
 	next;
+
+	//Novice Castles. (we don't need ELSE here. Menu has direct labels)
+	if(getarg(1) == "nguild_prt" || getarg(1) == "nguild_alde" || getarg(1) == "nguild_gef" || getarg(1) == "nguild_pay" )
+		menu "Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
+
+	//Common WoE Castles	
 	menu 	"Guild Base Briefing",M_Base, "Commerce Investment",M_Comrc, "Defence Investment",M_Def, "Guardian Installation",M_Gaurd, 
 		"Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
 

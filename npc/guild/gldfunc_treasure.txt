@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= holyAngelX (1.0) Akaru and ho|yAnge|X (1.1)
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena 1+; RO Episode 4+
 //===== Description: =========================================
@@ -37,6 +37,7 @@
 //= 1.5 Fixed treasure number 'round exploit' [Lupus]
 //= 1.6 to Aegis X.2 formula 4..24 Treasure Chests [Lupus]
 //= 1.7 Box Count fix by Zoc. Now it spawns 1st/2nd Treasure Chest 50%/50% [Lupus]
+//= 1.8 Official Treasure Spawn in Novice Castles. Had to add +1 in odd/even formula to leave correct ID of NG Treasure Box 8) [Lupus]
 //============================================================
 
 
@@ -60,7 +61,7 @@ function	script	F_GldTreas	{
 	set getarg(3), getarg(2);	//sets the counter variable = to the box number amount
 
 L_SPAWN:
-	set getarg(4), getarg(5)+(getarg(3) & 1);	//sets the box id variable = to the box id
+	set getarg(4), getarg(5)+((getarg(3)+1) & 1);	//sets the box id variable = to the box id
 	areamonster getarg(0)+".gat",getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
 	set getarg(3), getarg(3) - 1;
 	if(getarg(3) > 0) goto L_SPAWN;
