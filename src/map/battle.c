@@ -3494,7 +3494,6 @@ static const struct battle_data_short {
 	{ "atcommand_slave_clone_limit",       &battle_config.atc_slave_clone_limit},
 	{ "partial_name_scan",                 &battle_config.partial_name_scan	},
 	{ "gm_all_skill",                      &battle_config.gm_allskill				},
-	{ "gm_all_skill_add_abra",	            &battle_config.gm_allskill_addabra		},
 	{ "gm_all_equipment",                  &battle_config.gm_allequip				},
 	{ "gm_skill_unconditional",            &battle_config.gm_skilluncond			},
 	{ "gm_join_chat",                      &battle_config.gm_join_chat				},

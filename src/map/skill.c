@@ -9288,7 +9288,9 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			}
 			//Delete the rest of types.
 		case HW_GANBANTEIN:
-			if(skill_get_type(unit->group->skill_id) == BF_MAGIC)
+			//Update: It deletes everything except songs/dances/encores.
+			if(!unit->group->state.song_dance)
+//			if(skill_get_type(unit->group->skill_id) == BF_MAGIC)
 			{	//Delete Magical effects
 				skill_delunit(unit, 1);
 				return 1;
@@ -9319,7 +9321,9 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-		skill_get_type(skillid) == BF_MAGIC)
+	//Update: It deletes everything except songs/dances/encores.
+		!(skill_get_inf2(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
+//		skill_get_type(skillid) == BF_MAGIC)
 	{	//Magic tile won't be activated
 		(*alive) = 0;
 		return 1;
