@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.6a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -313,7 +313,7 @@ sword_1-1.gat,1,1,0	script	TimerSwrdmn	-1,{
 		areaannounce "sword_1-1.gat", 0, 0, 400, 400, "[Test Hall Staff]: Your times up!  You failed the test.",0;
 		end;
 	OnTimer428000:
-		stopnpctimer "TimerSwrdmn";
+		stopnpctimer;
 		warp "izlude_in.gat",39,170;
 		end;
 }

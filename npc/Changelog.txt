@@ -29,6 +29,9 @@ Playtester
 
 Date		Added
 ======
+10/06
+	* Many minor fixes, thanks to theultramage [Lupus]
+	- Fixed "mymob" Niflheim bug, fixed Sworman Job Quest timer issue, fixed overlapping NPCs.
 10/05
 	* Fixed typo [Vicious]
 	* Umbala: Added official chance of failure to Create Essence (u may get a Garlet instead) [Lupus]

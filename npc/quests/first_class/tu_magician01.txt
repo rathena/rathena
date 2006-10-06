@@ -16,10 +16,12 @@
 
 
 //=================================================Sign====================================================
-//geffen.gat,61,174,4	script	Sign#M	111,{	// Bad coordinates [Jukka]
-//	mes "- Mage Job Change -";
-//	close;
-//}
+geffen.gat,61,174,4	script	Sign#M	111,{
+  mes "~sign reads...~";
+  mes "Greetings!! This is the Geffen Magic Academy.  Come in if you have an interest in all things magic!";
+  close;
+}
+
 
 //=================================================New Mage Manager====================================================
 geffen.gat,67,180,4	script	New Mage Manager#M	102,{

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -30,11 +30,11 @@ aldebaran.gat,133,104,1	script	Welcome Sign::ws_aldebaran	111,{
 // 				Alberta					//
 //=======================================================================//
 // Sign: Alberta Harbor -----------------------------------------------
-alberta.gat,35,241,1	script	Alberta Harbor	111,{
-  mes "~sign reads....~";
-  mes "Welcome to the port city Alberta! Alberta is the city of the sea! A tourist delight!";
-  close;
-}
+//alberta.gat,35,241,1	script	Alberta Harbor	111,{
+//  mes "~sign reads....~";
+//  mes "Welcome to the port city Alberta! Alberta is the city of the sea! A tourist delight!";
+//  close;
+//}
 
 // Welcome Sign -----------------------------------------------
 alberta.gat,196,152,1	script	Welcome Sign::ws_alberta	111,{
@@ -60,13 +60,6 @@ alberta.gat,37,39,1	script	Merchant Guild	111,{
 geffen.gat,116,58,1	script	Welcome Sign::ws_geffen	111,{
   mes "~sign reads...~";
   mes "Greetings!! You are in the wonderful city of Geffen! Geffen is the city of Magic and home to Mages and Wizards!.";
-  close;
-}
-
-// Sign: Mage Association ---------------------------------------
-geffen.gat,61,174,1	script	Mage Association	111,{
-  mes "~sign reads...~";
-  mes "Greetings!! This is the Geffen Magic Academy.  Come in if you have an interest in all things magic!";
   close;
 }
 

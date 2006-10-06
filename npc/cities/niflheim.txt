@@ -4,7 +4,7 @@
 //= Fyrien, Dizzy, PKGINGO
 //= Official NPCs translated and re-edited by Celest
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= Any eAthena Version; Niflheim Required
 //===== Description: ========================================= 
@@ -137,7 +137,7 @@ L_end:
 }
 
 niflheim.gat,350,258,5	script	Cursed Soul	802,{
-	killmonster "niflheim.gat","mymob";
+	killmonster "niflheim.gat","OnNFMob";
 	mes "[Ashe Bruce]";
 	mes "I feel a strong curse on youaaaahhhhh";
 	mes "I shall deny your existanceahhhhhhh";
@@ -151,7 +151,7 @@ L_book1:
 	mes "Don't you touch my bookssssahhh!!";
 	mes "Ahahaha, I curse you for being bitten, torn and clawed at!!";
 	mes "Forever binded to this curse!!";
-	monster "niflheim.gat",350,258,"Rideword",1478,1,"mymob";
+	monster "niflheim.gat",350,258,"Rideword",1478,1,"OnNFMob";
 	close;
 
 L_book2:
@@ -192,13 +192,13 @@ L_book3:
 	mes "Hahahaha!! Your prayers were wrong!!";
 	mes "Time to face deathohohohoho,";
 	mes "May you be cursed forevahahahaha!!";
-	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",350,252,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",344,255,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"mymob";
-	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"mymob";
+	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",350,252,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",344,255,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"OnNFMob";
+	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"OnNFMob";
 	close;
 
 L_back:
