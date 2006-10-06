@@ -1076,7 +1076,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 
 	// Abnormalities
 	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.data[SC_BLADESTOP].timer != -1)
+  	{	//Should reset targets.
+		md->target_id = md->attacked_id = 0;
 		return 0;
+	}
 
 	if (md->sc.count && md->sc.data[SC_BLIND].timer != -1)
 		view_range = 3;
@@ -2330,6 +2333,9 @@ int mob_class_change (struct mob_data *md, int class_)
 
 	if(md->lootitem == NULL && md->db->status.mode&MD_LOOTER)
 		md->lootitem=(struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
+
+	//Targets should be cleared no morph
+	md->target_id = md->attacked_id = 0;
 
 	//Need to update name display.
 	clif_charnameack(0, &md->bl);

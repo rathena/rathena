@@ -9736,15 +9736,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (sd->ud.skilltimer != -1) {
 		if (skillnum != SA_CASTCANCEL)
 			return;
-	} else if (DIFF_TICK(tick, sd->ud.canact_tick) < 0 &&
-		// allow monk combos to ignore this delay [celest]
-		!(sd->sc.count && sd->sc.data[SC_COMBO].timer!=-1 &&
-		(skillnum == MO_EXTREMITYFIST ||
-		skillnum == MO_CHAINCOMBO ||
-		skillnum == MO_COMBOFINISH ||
-		skillnum == CH_PALMSTRIKE ||
-		skillnum == CH_TIGERFIST ||
-		skillnum == CH_CHAINCRUSH))) {
+	} else if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
 		clif_skill_fail(sd, skillnum, 4, 0);
 		return;
 	}
