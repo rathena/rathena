@@ -58,10 +58,11 @@ prt_church.gat,166,176,3	script	Adoption Man	61,{
 		mes "[GM Menu]";
 		mes "Would you like to reset curent adoption?";
 		next;
-		menu "Yes",-,"No",L_SKIP;	
+		menu "Yes",-,"No",L_SKIP;
 		callfunc "AdoptReset","GM reset";
 		close;
 	}
+L_SKIP:
 
 	if($@AdoptionActive == 1) goto A_Cannot;
 	mes "[Oliver]";
