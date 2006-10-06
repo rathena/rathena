@@ -19,6 +19,9 @@
 	-----
 
 ========================
+10/06
+	* Reverted size fix for Guns and Shuriken [Playtester]
+	- it appears they are 100% to all after all
 10/05
 	* Selling price of Broken Pieces 10z -> 400z [Playtester]
 	* Raised the drop rates of most combo equips [Playtester]
