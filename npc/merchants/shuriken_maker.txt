@@ -127,9 +127,9 @@ M_REKKA:
 	mes "So let me check for your items...";
 	set @z,78000;
 	if(Zeny < @z) goto L_NOZENY;
-	if(countitem(733)<50 || countitem(7098)<100 || countitem(7097)<100 || countitem(7521)<50) goto L_NOITEMS;
+	if(countitem(999)<50 || countitem(7098)<100 || countitem(7097)<100 || countitem(7521)<50) goto L_NOITEMS;
 	set Zeny,Zeny-@z;
-	delitem 733,50;
+	delitem 999,50;
 	delitem 7098,100;
 	delitem 7097,100;
 	delitem 7521,50;

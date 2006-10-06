@@ -30,6 +30,7 @@ Playtester
 Date		Added
 ======
 10/06
+	* Fixed Shuriken Rekka requiring Cracked Diamond rather than Steel [Playtester]
 	* Added official treasure spawn to Novice Castles [Lupus]
 	- Added official Novice WoE restriction: Only the 1st class players (+Novice, SN) < 60 Base Level can enter.
 	- You can't invest Eco/Def, hire Guardians at Novice Castles
