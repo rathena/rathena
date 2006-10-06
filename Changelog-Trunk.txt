@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/06
+	* Now you can trade while in a chatroom. [Skotlex]
+	* Fixed homun-txt reading when the file has DOS line-type delimiters (\r\n)
+	  [Skotlex]
 2006/10/05
 	* skill_blown will now trigger on-touch npcs on the landing tile. [Skotlex]
 	* Max trade distance has been reduced from 5 to 2. [Skotlex]

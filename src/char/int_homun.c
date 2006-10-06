@@ -92,7 +92,7 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 	p->luk = tmp_int[17];
 
 	//Read skills.
-	while(str[next] && str[next] != '\n') {
+	while(str[next] && str[next] != '\n' && str[next] != '\r') {
 		if (sscanf(str+next, "%d,%d,%n", &tmp_int[0], &tmp_int[1], &len) != 2)
 			return 2;
 
