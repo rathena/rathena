@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/08
+	* Probably final drop rate increase [Playtester]
 10/06
 	* Reverted size fix for Guns and Shuriken [Playtester]
 	- it appears they are 100% to all after all
