@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/09
+	* Fixed High Quality Sandals not being refinable [Playtester]
 10/08
 	* Probably final drop rate increase [Playtester]
 10/06
