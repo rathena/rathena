@@ -1,6 +1,9 @@
 Date	Added
 
 2006/10/06
+	* status_cast_cancel is now a type 4 (object bitmasks) setting
+	  (status.conf). [Skotlex]
+2006/10/06
 	* Removed gm_all_skill_add_abra which was doing nothing anyway. [Skotlex]
 2006/10/03
 	* Renamed setting delay_dependon_dex to delay_dependon_agi, the delay of

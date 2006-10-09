@@ -4191,7 +4191,7 @@ void battle_set_defaults() {
 	battle_config.allow_es_magic_pc = 0;
 
 	battle_config.skill_caster_check = 1;
-	battle_config.sc_castcancel = 0;
+	battle_config.sc_castcancel = BL_NUL;
 	battle_config.pc_sc_def_rate = 100;
 	battle_config.mob_sc_def_rate = 100;
 	battle_config.pc_luk_sc_def = 300;

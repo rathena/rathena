@@ -968,8 +968,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	
 	if(sc && sc->count)
 	{
-		if(sc->opt1 >0 && (battle_config.sc_castcancel || flag != 1))
-			//When sc do not cancel casting, the spell should come out.
+		if(sc->opt1 >0 && flag != 1)
+			//When sc do not cancel casting, the spell should come out, and when it does, we can never have
+			//a flag == 1 && sc->opt1 case, since cancelling should had been stopped before.
 			return 0;
 
 		if (
@@ -5649,7 +5650,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			unit_stop_attack(bl);
 			skill_stop_dancing(bl);
 			// Cancel cast when get status [LuzZza]
-			if (battle_config.sc_castcancel)
+			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
 		case SC_STOP:
 		case SC_CONFUSION:
@@ -5665,7 +5666,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			unit_stop_attack(bl);
 		break;
 		case SC_SILENCE:
-			if (battle_config.sc_castcancel)
+			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
 		break;
 	}
@@ -6053,11 +6054,8 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				status_change_end(bl,SC_LONGING,-1);				
 			break;
 		case SC_NOCHAT:
-			if (sd) {
-				if (sd->status.manner < 0 && tid != -1)
-				  	sd->status.manner = 0;
-				clif_updatestatus(sd,SP_MANNER);
-			}
+			if (sd && sd->status.manner < 0 && tid != -1)
+				sd->status.manner = 0;
 			break;
 		case SC_SPLASHER:	
 			{
