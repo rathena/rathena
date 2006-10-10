@@ -29,6 +29,10 @@ Playtester
 
 Date		Added
 ======
+10/10
+	* Fixed Seals quest [Lupus]
+	* Updated Kafra Pavianne [Lupus]
+	* Added new custom Halloween Event by Stryker. I made it safe to use 8) [Lupus]
 10/06
 	* Fixed Shuriken Rekka requiring Cracked Diamond rather than Steel [Playtester]
 	* Added official treasure spawn to Novice Castles [Lupus]

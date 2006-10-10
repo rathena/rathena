@@ -4797,8 +4797,8 @@ currently has active. Valid types are:
  1 - Pet ID number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
  2 - Pet name. Will return "null" if there's no pet. 
- 4 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 3 - Pet hungry level. 100 is completely full.
+ 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
+ 4 - Pet hungry level. 100 is completely full.
 
 ---------------------------------------
 

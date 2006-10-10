@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -19,9 +19,9 @@
 //=  with official prizes (80% official, 4-5 entries are made up)
 //=  also changed typo Orange Potions -> Red Potions [Lupus]
 //= 1.6 Fixed bug (missing label), optimized all menus [Lupus]
-//= 1.7 Fixed exploits [Lupus]
-//= 1.8 Removed Duplicates [Silent]
+//= 1.7 Fixed exploits [Lupus] 1.8 Removed Duplicates [Silent]
 //= 1.9 Fixed a bunch of typos with information from Crono/Hollengrhen [Evera]
+//= 1.9a Now Pavianne doesn't sell Kafra Passes. She refunds them [Lupus]
 //============================================================
 
 
@@ -791,7 +791,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		mes "[Kafra Jasmine]";
 		mes "That... that... that was just an act.... YEAH! An act I put on for the customers. Heh.. heh....";
 		emotion e_swt;
-		cutin "kafra_03",255;
+		cutin "",255;
 		close;
 	M_1:
 		mes "[Kafra Jasmine]";
@@ -805,7 +805,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		mes "[Kafra Jasmine]";
 		mes "So please, DON'T TEMPT ME...!!";
 		emotion e_pif;
-		cutin "kafra_03",255;
+		cutin "",255;
 		close;
 	M_2:
 		mes "[Kafra Jasmine]";
@@ -814,7 +814,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 		mes "[Kafra Jasmine]";
 		mes "Just kidding~~ Tehehe";
 		emotion e_heh;
-		cutin "kafra_03",255;
+		cutin "",255;
 		close;
 }
 
@@ -1001,7 +1001,7 @@ M_Menu:
 	M_End:
 		mes "[Kafra]";
 		mes "Please come back anytime when you have more reserve points.";
-		cutin "kafra_03",255;
+		cutin "",255;
 		close;
 }
 
@@ -1045,13 +1045,13 @@ aldeba_in.gat,88,161,3	script	Kafra#05	115,{
 			sL_NotEnuf:
 				mes "[Kafra]";
 				mes "I'm sorry dear but you do not have enough points for this selection.";
-				cutin "kafra_03",255;
+				cutin "",255;
 				close;
 	M_End:
 		mes "[Kafra]";
 		mes "No problem.  Collect more and more special reserve points by using the Kafra Services found throughout Rune Midgard.";
 		mes "Thank you for using Kafra Corp. services.";
-		cutin "kafra_03",255;
+		cutin "",255;
 		close;
 }
 
@@ -1087,8 +1087,10 @@ function	script	F_Lottery	{
 		if(@Lotto == 1) getitem 2328,1;//Items: Wooden_Mail,
 		if(@Lotto == 2) getitem 2307,1;//Items: Mantle,
 		if(@Lotto == 3) getitem 657,10;//Items: Berserk_Potion,
-		if(@Lotto == 4) getitem 607,2;//Items: Yggdrasilberry,
-		if(@Lotto == 4) getitem 608,1;//Items: Yggdrasil_Seed,
+		if(@Lotto == 4) {
+			getitem 607,2;//Items: Yggdrasilberry,
+			getitem 608,1;//Items: Yggdrasil_Seed,
+		}
 		if(@Lotto == 5) getitem 607,3;//Items: Yggdrasilberry,
 		return;
 	sL_Prize2:
@@ -1098,8 +1100,10 @@ function	script	F_Lottery	{
 		if(@Lotto == 2) getitem 2226,1;//Items: Cap,
 		if(@Lotto == 3) getitem 2201,1;//Items: Sunglasses,
 		if(@Lotto == 4) getitem 526,3;//Items: Royal_Jelly,
-		if(@Lotto == 5) getitem 608,1;//Items: Yggdrasil_Seed,
-		if(@Lotto == 5) getitem 526,10;//Items: Royal_Jelly,
+		if(@Lotto == 5) {
+			getitem 608,1;//Items: Yggdrasil_Seed,
+			getitem 526,10;//Items: Royal_Jelly,
+		}
 		return;
 	sL_Prize3:
 		mes "[Kafra]";
@@ -1147,61 +1151,68 @@ sF_Spin:
 aldeba_in.gat,81,166,4	script	Kafra Pavianee	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Pavianne]";
-	mes "Welcome! I'm Kafra service's first Kafra type 'Pavianne'";
+	mes "Welcome! I'm Pavianne,";
+	mes "one of the senior Kafra Employees.";
+	mes "The Kafra Corporation Service is";
+	mes "always trying to satisfy 100 % of";
+	mes "our customers' expectations.";
 	next;
 	mes "[Kafra Pavianne]";
-	mes "Our Kafra Service is always trying to achieve 100% customer satisfaction based on the 3 principles of Trust, Devotion, and Honesty.";
+	mes "Due to a change in customer support";
+	mes "policy, we no longer accept Kafra";
+	mes "Passes. However, we are offering";
+	mes "refunds for our customers who still";
+	mes "possess these passes.";
 	next;
-	mes "[Kafra Pavianne]";
-	mes "With complete service training and supervision, we are able to fully meet the needs of our customers.";
-	next;
-	menu "Buy a Kafra Pass",-,"What is a Kafra Pass",M_1,"Good Bye",M_3,"I have a question...",M_4;
-	
-		if(Zeny < 2000) goto sL_Zeny;
-		mes "[Kafra Pavianne]";
-		mes "Thank you for using our Kafra Service! Have a Nice Day!";
-		getitem 1084,1;
-		set Zeny, Zeny-2000;
-		emotion e_thx;
-		cutin "kafra_01",255;
-		close;
+	menu "Sell Kafra Pass",-,"Alright, bye~",M_BYE;
 
-		sL_Zeny:
+		set usedKafPass,0; //clear unused global variable
+		mes "[Kafra Pavianne]";	
+		if(!countitem(1084)){
+			mes "I'm sorry,";
+			mes "but you don't";
+			mes "have any Kafra Passes.";
+			emotion e_sry;
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "Let me see ... You have " + countitem(1084) + " Kafra Passes.";
+		mes "So, you will get " + (countitem(1084)*2000) + " zeny.";
+		next;
+		mes "[Kafra Pavianne]";
+		mes "Do you want to sell these?";
+		next;
+		if(select("Sell.:Nevermind.")==1){
 			mes "[Kafra Pavianne]";
-			mes "I'm sorry but you don't have enough zeny.";
-			close;
+			set @t,countitem(1084);
+			if(!@t){
+				mes "Well, you DON'T have any >.<";
+                    		mes "I understand what you want to do but, I can't help you.";
+				emotion e_sry;
+				close2;
+				cutin "",255;
+				end;
+			}
+			delitem 1084,@t;
+			set Zeny,Zeny+@t*2000;
+			emotion e_thx;
+			mes "We already refunded all THE Kafra Passes that you had..";
+			mes "Thank you for using our service !";
+			mes "I am kafra Pavianne.";
 
-	M_1:
+		}
+		close2;
+		cutin "",255;
+		end;
+	M_BYE:
 		mes "[Kafra Pavianne]";
-		mes "It's the best gift you can get yourself and it can only be found at the Kafra Main Office!";
-		next;
-		mes "[Kafra Pavianne]";
-		mes "With a Kafra Pass, you could experience the convenience of Kafra Service world-wide! Hassle free! The price is 2000 zeny~~";
-		next;
-		mes "[Kafra Pavianne]";
-		mes "Visit any Kafra Service in Rune-Midgard, and you could enjoy Kafra Service any time any where for once.";
-		mes "Ending a conversation with Kafra Service Agent will expire the pass.";
-		cutin "kafra_01",255;
-		close;
-	M_3:
-		mes "[Kafra Pavianne]";
-		mes "Thank you for using Kafra Services! I'm Kafra Pavianne, and it was a pleasure to assist you.";
+		mes "Thank you,";
+		mes "have a good day.";
 		emotion e_thx;
-		cutin "kafra_01",255;
-		close;
-
-	M_4:
-		mes "[Kafra Pavianne]";
-		mes "Why? Is there something disturbing you?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "No, but why is the sun not shining?";
-		next;
-		mes "[Kafra Pavianne]";
-		mes "You will only know when your enjoyment obtains the path to illumination.";
-		cutin "kafra_01",255;
-		close;
-
+		close2;
+		cutin "",255;
+		end;
 }
 
 // Kafra Blossom -----------------------------------
@@ -1227,13 +1238,13 @@ aldeba_in.gat,83,244,4	script	Kafra Blossom	116,{
 		mes "[Kafra Blossom]";
 		mes "Don't bother to look in your Item Inventory for it.  It won't be there... tehehe... for my autograph will remain within your heart.";
 		emotion e_ok;
-		cutin "kafra_02",255;
+		cutin "",255;
 		close;
 	M_1:
 		mes "[Kafra Blossom]";
 		mes "Huh? . . . . . That's all? Phew~ such a dull customer...";
 		emotion e_what;
-		cutin "kafra_02",255;
+		cutin "",255;
 		close;
 }
 
@@ -1255,14 +1266,14 @@ aldeba_in.gat,91,244,4	script	Kafra Curly Sue	112,{
 		mes ".... Sob~sob~... WHAT?? I'm NOT some KID!!";
 		emotion e_sob;
 		next;
-		cutin "kafra_06",255;
+		cutin "",255;
 		close;
 	M_End:
 		mes "[Kafra Curly Sue]";
 		mes "Here at Kafra Corp., we're all doing our B-E-S-T to provide our customers with the B-E-S-T service.";
 		mes "We really appreciate your doing business with us.";
 		next;
-		cutin "kafra_06",255;
+		cutin "",255;
 		close;
 }
 
@@ -1293,7 +1304,7 @@ aldeba_in.gat,148,244,4	script	Kafra Roxie	114,{
 	mes "[Kafra Roxie]";
 	mes "Uh... please ignore what I was talking about earlier. Hahaha.....heh...";
 	emotion e_swt;
-	cutin "kafra_04",255;
+	cutin "",255;
 	close;
 }
 

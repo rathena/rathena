@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.01
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Megingjard.
 //===== Additional Comments: =================================
 // 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+// 1.1 fixed exploit [Lupus]
 //============================================================
 
 prt_castle.gat,44,151,0	script	Rebarev Doug	56,{
@@ -506,7 +507,7 @@ else
 
 prt_castle.gat,48,164,0	script	Crusader#God	734,{
 
-if($God1 > 49 && God2 < 100)
+if($God1 > 49 && $God2 < 100)
 {
 	if(god_eremes > 22 && god_eremes < 25)
 	{
