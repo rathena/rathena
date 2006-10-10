@@ -3310,7 +3310,7 @@ int parse_char(int fd) {
 					for(j = 0; j < MAX_MAP_SERVERS; j++)
 						if (server_fd[j] > 0 && server[j].map[0])  {
 							i = j;
-							ShowDebug("Map-server #%d found with a map: '%s'.\n", j, server[j].map[0]);
+							ShowDebug("Map-server #%d found with a map: '%s'.\n", j, mapindex_id2name(server[j].map[0]));
 							break;
 						}
 					// if no map-servers are connected, we send: server closed
