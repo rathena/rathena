@@ -2737,9 +2737,9 @@ void run_script_main(struct script_state *st)
 		if(bk_st) {
 			ShowWarning("Unable to restore stack! Double continuation!\n");
 			//Report BOTH scripts to see if that can help somehow.
-			ShowDebug("Previous script (lost):");
+			ShowDebug("Previous script (lost):\n");
 			report_src(bk_st);
-			ShowDebug("Current script:");
+			ShowDebug("Current script:\n");
 			report_src(st);
 		}
 	} else {

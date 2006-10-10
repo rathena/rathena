@@ -113,7 +113,7 @@ void initChangeTables(void) {
 	StatusSkillChangeTable[SC_DPOISON] =   NPC_POISON;
 
 	//These are the status-change flags for the common ailments.
-	StatusChangeFlagTable[SC_STONE] =     SCB_DEF_ELE;
+	StatusChangeFlagTable[SC_STONE] =     SCB_DEF_ELE|SCB_DEF|SCB_MDEF;
 	StatusChangeFlagTable[SC_FREEZE] =    SCB_DEF_ELE|SCB_DEF|SCB_MDEF;
 //	StatusChangeFlagTable[SC_STUN] =      SCB_NONE;
 //	StatusChangeFlagTable[SC_SLEEP] =     SCB_NONE;
@@ -5007,6 +5007,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = tick/1000; //Petrified HP-damage iterations.
 			if(val3 < 1) val3 = 1; 
 			tick = 5000; //Petrifying time.
+			calc_flag = 0; //Actual status changes take effect on petrified state.
 			break;
 
 		case SC_DPOISON:
@@ -5439,10 +5440,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val4 = gettick(); //Store time at which you started running.
 			break;
 		case SC_KAAHI:
-			if(flag&4) {
-				val4 = -1;
-				break;
-			}
 			val2 = 200*val1; //HP heal
 			val3 = 5*val1; //SP cost 
 			val4 = -1;	//Kaahi Timer.
@@ -6480,7 +6477,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
 			sc->data[type].timer=add_timer(1000+tick,status_change_timer, bl->id, data );
-			status_calc_bl(bl, SCB_DEF_ELE);
+			status_calc_bl(bl, StatusChangeFlagTable[type]);
 			return 0;
 		}
 		if((--sc->data[type].val3) > 0) {
