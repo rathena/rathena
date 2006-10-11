@@ -1473,12 +1473,6 @@ extern char login_db[32];
 extern char login_db_level[32];
 extern char login_db_account_id[32];
 
-extern char gm_db[32];
-extern char gm_db_level[32];
-extern char gm_db_account_id[32];
-
-extern int read_gm_interval;
-
 extern char char_db[32];
 
 extern char mail_db[32];

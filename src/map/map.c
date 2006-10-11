@@ -106,12 +106,6 @@ char mail_server_pw[32] = "ragnarok";
 char mail_server_db[32] = "ragnarok";
 int mail_server_enable = 0;
 
-char gm_db[32] = "login";
-char gm_db_level[32] = "level";
-char gm_db_account_id[32] = "account_id";
-
-int read_gm_interval = 600000;
-
 char char_db[32] = "char";
 
 char mail_db[32] = "mail";
@@ -3457,12 +3451,6 @@ int inter_config_read(char *cfgName)
 			strcpy(login_db,w2);
 		} else if (strcmpi(w1, "char_db") == 0) {
 			strcpy(char_db, w2);
-		} else if(strcmpi(w1,"gm_db_level")==0){
-			strcpy(gm_db_level,w2);
-		} else if(strcmpi(w1,"gm_db_account_id")==0){
-		    strcpy(gm_db_account_id,w2);
-		} else if(strcmpi(w1,"gm_db")==0){
-			strcpy(gm_db,w2);
 		//Map Server SQL DB
 		} else if(strcmpi(w1,"map_server_ip")==0){
 			strcpy(map_server_ip, w2);
@@ -3492,8 +3480,6 @@ int inter_config_read(char *cfgName)
 			strcpy(login_server_pw, w2);
 		} else if(strcmpi(w1,"login_server_db")==0){
 			strcpy(login_server_db, w2);
-		} else if(strcmpi(w1,"read_gm_interval")==0){
-			read_gm_interval = ( atoi(w2) * 60 * 1000 ); // Minutes multiplied by 60 secs per min by 1000 milliseconds per second
 		}else if(strcmpi(w1, "char_server_ip") == 0){
 			strcpy(charsql_host, w2);
 		}else if(strcmpi(w1, "char_server_port") == 0){
