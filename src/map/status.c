@@ -302,7 +302,6 @@ void initChangeTables(void) {
 	set_sc(ST_CHASEWALK, SC_CHASEWALK, SI_BLANK, SCB_SPEED);
 	set_sc(ST_REJECTSWORD, SC_REJECTSWORD, SI_REJECTSWORD, SCB_NONE);
 	add_sc(ST_REJECTSWORD, SC_AUTOCOUNTER);
-//	set_sc(CG_MOONLIT, SC_MOONLIT, SI_MOONLIT, SCB_NONE);
 	set_sc(CG_MARIONETTE, SC_MARIONETTE, SI_MARIONETTE, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK);
 	set_sc(CG_MARIONETTE, SC_MARIONETTE2, SI_MARIONETTE2, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK);
 	add_sc(LK_SPIRALPIERCE, SC_STOP);
@@ -3915,18 +3914,21 @@ const char * status_get_name(struct block_list *bl)
 	nullpo_retr(0, bl);
 	switch (bl->type) {
 	case BL_MOB:
-		return ((struct mob_data *)bl)->name;
+		return ((TBL_MOB*)bl)->name;
 	case BL_PC:
-		return ((struct map_session_data *)bl)->status.name;
+		if(strlen(((TBL_PC *)bl)->fakename)>0)
+			return ((TBL_PC*)bl)->fakename;
+		return ((TBL_PC*)bl)->status.name;
 	case BL_PET:
-		return ((struct pet_data *)bl)->pet.name;
+		return ((TBL_PET*)bl)->pet.name;
 	case BL_HOM:
-		return ((struct homun_data *)bl)->master->homunculus.name;
+		if (((TBL_HOM*)bl)->master)
+			return ((TBL_HOM*)bl)->master->homunculus.name;
+		break;
 	case BL_NPC:
-		return ((struct npc_data*)bl)->name;
-	default:
-		return "Unknown";
+		return ((TBL_NPC*)bl)->name;
 	}
+	return "Unknown";
 }
 
 /*==========================================

@@ -3484,51 +3484,46 @@ int parse_char(int fd) {
 			// if map is not found, we check major cities
 			if (i < 0) {
 				unsigned short j;
-				ShowWarning("Unable to find map-server for '%s', resorting to sending to a major city.\n", mapindex_id2name(cd->last_point.map));
+				//First check that there's actually a map server online.
+				for(j = 0; j < MAX_MAP_SERVERS; j++)
+					if (server_fd[j] >= 0 && server[j].map[0])
+						break;
+				if (j == MAX_MAP_SERVERS) {
+					ShowInfo("Connection Closed. No map servers available.\n");
+					WFIFOHEAD(fd, 3);
+					WFIFOW(fd,0) = 0x81;
+					WFIFOB(fd,2) = 1; // 01 = Server closed
+					WFIFOSET(fd,3);
+					break;
+				}
 				if ((i = search_mapserver((j=mapindex_name2id(MAP_PRONTERA)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 273; // savepoint coordinates
+					cd->last_point.x = 273;
 					cd->last_point.y = 354;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_GEFFEN)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 120; // savepoint coordinates
+					cd->last_point.x = 120;
 					cd->last_point.y = 100;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_MORROC)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 160; // savepoint coordinates
+					cd->last_point.x = 160;
 					cd->last_point.y = 94;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_ALBERTA)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 116; // savepoint coordinates
+					cd->last_point.x = 116;
 					cd->last_point.y = 57;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_PAYON)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 87; // savepoint coordinates
+					cd->last_point.x = 87;
 					cd->last_point.y = 117;
 				} else if ((i = search_mapserver((j=mapindex_name2id(MAP_IZLUDE)),-1,-1)) >= 0) {
-					cd->last_point.map = j;
-					cd->last_point.x = 94; // savepoint coordinates
+					cd->last_point.x = 94;
 					cd->last_point.y = 103;
 				} else {
-					// get first online server (with a map)
-					i = 0;
-					for(j = 0; j < MAX_MAP_SERVERS; j++)
-						if (server_fd[j] >= 0 && server[j].map[0]) { // change save point to one of map found on the server (the first)
-							i = j;
-							cd->last_point.map = server[j].map[0];
-							ShowInfo("Map-server #%d found with a map: '%s'.\n", j, mapindex_id2name(server[j].map[0]));
-							// coordinates are unknown
-							break;
-						}
-					// if no map-server is connected, we send: server closed
-					if (j == MAX_MAP_SERVERS) {
-						WFIFOHEAD(fd, 3);
-						WFIFOW(fd,0) = 0x81;
-						WFIFOB(fd,2) = 1; // 01 = Server closed
-						WFIFOSET(fd,3);
-						break;
-					}
+					ShowInfo("Connection Closed. No map server available that has a major city, and unable to find map-server for '%s'.\n", mapindex_id2name(cd->last_point.map));
+					WFIFOHEAD(fd, 3);
+					WFIFOW(fd,0) = 0x81;
+					WFIFOB(fd,2) = 1; // 01 = Server closed
+					WFIFOSET(fd,3);
+					break;
 				}
+				ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(cd->last_point.map), mapindex_id2name(j));
+				cd->last_point.map = j;
 			}
 			WFIFOHEAD(fd, 28);
 			WFIFOW(fd,0) = 0x71;

@@ -230,9 +230,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 							return 0;
 						inventory2[i].amount += amount;
 						inventory[n].amount -= amount;
-						//let's not make room, as pc_additem is done before pc_delitem, so it could lead to problems depending on order.
-//							if (!inventory[n].amount) 
-//								malloc_set(&inventory[n], 0, sizeof(struct item));
 						break;
 					}
 			}
@@ -244,8 +241,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 				memcpy(&inventory2[i], &inventory[n], sizeof(struct item));
 				inventory2[i].amount = amount;
 				inventory[n].amount -= amount;
-//					if (!inventory[n].amount)
-//						malloc_set(&inventory[n], 0, sizeof(struct item));
 			}
 		}
 		amount = tsd->deal.item[trade_i].amount;
@@ -266,8 +261,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 						return 0;
 					inventory[i].amount += amount;
 					inventory2[n].amount -= amount;
-//					if (!inventory2[n].amount)
-//						malloc_set(&inventory2[n], 0, sizeof(struct item));
 					break;
 				}
 		}
@@ -278,8 +271,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 			memcpy(&inventory[i], &inventory2[n], sizeof(struct item));
 			inventory[i].amount = amount;
 			inventory2[n].amount -= amount;
-//			if (!inventory2[n].amount)
-//				malloc_set(&inventory2[n], 0, sizeof(struct item));
 		}
 	}
 

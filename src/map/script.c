@@ -12114,13 +12114,18 @@ int buildin_unitattack(struct script_state *st) {
 		tbl = &sd->bl;
 
 	if((bl = map_id2bl(id))){
-		if (bl->type == BL_MOB) {
-			((TBL_MOB *)bl)->state.killer = 1;
-			((TBL_MOB *)bl)->target_id = tbl->id;
-		} else if(bl->type == BL_PC){
+		switch (bl->type) {
+		case BL_PC:
 			clif_parse_ActionRequest_sub(((TBL_PC *)bl), actiontype > 0?0x07:0x00, tbl->id, gettick());
 			push_val(st->stack,C_INT,1);
 			return 0;
+		case BL_MOB:
+			((TBL_MOB *)bl)->state.killer = 1;
+			((TBL_MOB *)bl)->target_id = tbl->id;
+			break;
+		case BL_PET:
+			((TBL_PET *)bl)->target_id = tbl->id;
+			break;
 		}
 		push_val(st->stack,C_INT,unit_walktobl(bl, tbl, 65025, 2));
 	} else {
@@ -12160,28 +12165,7 @@ int buildin_unittalk(struct script_state *st)
 
 	bl = map_id2bl(id);
 	if(bl) {
-		switch(bl->type){
-			case BL_MOB:
-				memcpy(message, ((TBL_MOB *)bl)->name, NAME_LENGTH);
-				break;
-			case BL_PC:
-				if(strlen(((TBL_PC *)bl)->fakename)>0)
-					memcpy(message, ((TBL_PC *)bl)->fakename, NAME_LENGTH);
-				else
-					memcpy(message, ((TBL_PC *)bl)->status.name, NAME_LENGTH);
-				break;
-			case BL_NPC:
-				memcpy(message, ((TBL_NPC *)bl)->name, NAME_LENGTH);
-				break;
-			case BL_HOM:
-				memcpy(message, ((TBL_HOM *)bl)->master->homunculus.name, NAME_LENGTH);
-				break;
-			case BL_PET:
-				memcpy(message, ((TBL_PET *)bl)->pet.name, NAME_LENGTH);
-				break;
-			default:
-				strcpy(message, "Unknown");
-		}
+		memcpy(message, status_get_name(bl), NAME_LENGTH);
 		strcat(message," : ");
 		strncat(message,str, 228); //Prevent overflow possibility. [Skotlex]
 		clif_message(bl, message);
@@ -12210,27 +12194,12 @@ int buildin_unitdeadsit(struct script_state *st){
 	if((bl = map_id2bl(id))){
 		if(action > -1 && action < 4){
 			unsigned char buf[61] = "";
-			switch(bl->type){
-				case BL_MOB:
-					((TBL_MOB *)bl)->vd->dead_sit = action;
-					break;
-				case BL_PC:
-					((TBL_PC *)bl)->vd.dead_sit = action;
-					break;
-				case BL_NPC:
-					((TBL_NPC *)bl)->vd->dead_sit = action;
-					break;
-				case BL_HOM:
-					((TBL_HOM *)bl)->vd->dead_sit = action;
-					break;
-				case BL_PET:
-					((TBL_PET *)bl)->vd.dead_sit = action;
-					break;
-				WBUFW(buf, 0) = 0x8a;
-				WBUFL(buf, 2) = bl->id;
-				WBUFB(buf,26) = (unsigned char)action;
-				clif_send(buf, 61, bl, AREA);
-			}
+			struct view_data *vd = status_get_viewdata(bl);
+			if (vd) vd->dead_sit = action;
+			WBUFW(buf, 0) = 0x8a;
+			WBUFL(buf, 2) = bl->id;
+			WBUFB(buf,26) = (unsigned char)action;
+			clif_send(buf, 61, bl, AREA);
 		}else {
 			ShowError("buildin_unitdeadsit: Invalid action.\n");
 			report_src(st);
