@@ -78,20 +78,10 @@ char default_codepage[32] = ""; //Feature by irmin.
 int db_use_sqldbs = 0;
 int connection_ping_interval = 0;
 
-int login_server_port = 3306;
-char login_server_ip[16] = "127.0.0.1";
-char login_server_id[32] = "ragnarok";
-char login_server_pw[32] = "ragnarok";
-char login_server_db[32] = "ragnarok";
-
 char item_db_db[32] = "item_db";
 char item_db2_db[32] = "item_db2";
 char mob_db_db[32] = "mob_db";
 char mob_db2_db[32] = "mob_db2";
-
-char login_db[32] = "login";
-char login_db_level[32] = "level";
-char login_db_account_id[32] = "account_id";
 
 int log_db_port = 3306;
 char log_db_ip[16] = "127.0.0.1";
@@ -3443,12 +3433,6 @@ int inter_config_read(char *cfgName)
 			strcpy(item_db2_db,w2);
 		} else if(strcmpi(w1,"mob_db2_db")==0){
 			strcpy(mob_db2_db,w2);
-		} else if(strcmpi(w1,"login_db_level")==0){
-			strcpy(login_db_level,w2);
-		} else if(strcmpi(w1,"login_db_account_id")==0){
-		    strcpy(login_db_account_id,w2);
-		} else if(strcmpi(w1,"login_db")==0){
-			strcpy(login_db,w2);
 		} else if (strcmpi(w1, "char_db") == 0) {
 			strcpy(char_db, w2);
 		//Map Server SQL DB
@@ -3469,17 +3453,6 @@ int inter_config_read(char *cfgName)
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else if(strcmpi(w1,"connection_ping_interval")==0) {
 			connection_ping_interval = battle_config_switch(w2);
-		//Login Server SQL DB
-		} else if(strcmpi(w1,"login_server_ip")==0){
-			strcpy(login_server_ip, w2);
-        } else if(strcmpi(w1,"login_server_port")==0){
-			login_server_port = atoi(w2);
-		} else if(strcmpi(w1,"login_server_id")==0){
-			strcpy(login_server_id, w2);
-		} else if(strcmpi(w1,"login_server_pw")==0){
-			strcpy(login_server_pw, w2);
-		} else if(strcmpi(w1,"login_server_db")==0){
-			strcpy(login_server_db, w2);
 		}else if(strcmpi(w1, "char_server_ip") == 0){
 			strcpy(charsql_host, w2);
 		}else if(strcmpi(w1, "char_server_port") == 0){
@@ -3961,9 +3934,7 @@ int do_init(int argc, char *argv[]) {
 		do_init_mail();
 
 	if (log_config.sql_logs)
-	{
 		log_sql_init();
-	}
 	
 	if (connection_ping_interval) {
 		add_timer_func_list(map_sql_ping, "map_sql_ping");
