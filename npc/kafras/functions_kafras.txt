@@ -4,7 +4,7 @@
 //= eAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 5.4
+//= 5.4a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -92,12 +92,12 @@ function	script	F_Kafra	{
 			break;
 		//Common w/o teleport
 		case 3: 
-			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Rent a Cart","-Other Information Check","-Cancel";
 			break;
 		//Case 4 is Einbroch no tele message.
 		//Common w/o save and teleport
 		case 5:
-			setarray @K_Menu0$[0],"-Guide","-Use Storage","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Guide","-Use Storage","-Rent a Cart","-Other Information Check","-Cancel";
 			break;
 		//Only storage and other info check
 		case 6:
@@ -105,7 +105,7 @@ function	script	F_Kafra	{
 			break;
 		//Common Kafra
 		default:
-			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Kafra Pass","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Other Information Check","-Cancel";
 			break;
 	}
 	if(getarg(0)==2) {
@@ -170,6 +170,7 @@ function	script	F_Kafra	{
 		}
 		if (@K_Menu0$[@num] == "-Guide"){
 			callfunc "F_KafGuide";
+			next;
 			goto M_Menu;
 		}
 		if (@K_Menu0$[@num] == "-Other Information Check"){
