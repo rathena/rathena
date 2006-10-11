@@ -1592,7 +1592,7 @@ int mob_respawn(int tid, unsigned int tick, int id,int data )
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
-	int id = 0;
+	int char_id = 0, flag = 0;
 
 	md->tdmg+=damage; //Store total damage...
 	
@@ -1616,8 +1616,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		case BL_PC: 
 		{
 			struct map_session_data *sd = (TBL_PC*)src;
-//			id = sd->status.char_id;
-			id = sd->bl.id;	//[orn]
+			char_id = sd->status.char_id;
 			if(rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = src->id;
 			break;
@@ -1625,7 +1624,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		case BL_HOM:	//[orn]
 		{
 			struct homun_data *hd = (TBL_HOM*)src;
-			id = hd->bl.id;
+			flag = 1;
+			if (hd->master)
+				char_id = hd->master->status.char_id;
 			if(rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = src->id;
 			break;
@@ -1633,13 +1634,12 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		case BL_PET:
 		{
 			struct pet_data *pd = (TBL_PET*)src;
-			if (battle_config.pet_attack_exp_to_master) {
-//				id = pd->msd->status.char_id;
-				id = pd->msd->bl.id;	//[orn]
+			if (battle_config.pet_attack_exp_to_master && pd->msd) {
+				char_id = pd->msd->status.char_id;
 				damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
 			}
 			//Let mobs retaliate against the pet's master [Skotlex]
-			if(rand()%1000 < 1000/md->attacked_players)
+			if(pd->msd && rand()%1000 < 1000/md->attacked_players)
 				md->attacked_id = pd->msd->bl.id;
 			break;
 		}
@@ -1648,8 +1648,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			struct mob_data* md2 = (TBL_MOB*)src;
 			if(md2->special_state.ai && md2->master_id) {
 				struct map_session_data* msd = map_id2sd(md2->master_id);
-//				if (msd) id = msd->status.char_id;
-				if (msd) id = msd->bl.id;	//[orn]
+				if (msd) char_id = msd->status.char_id;
 			}
 			if(rand()%1000 < 1000/md->attacked_players)
 			{	//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
@@ -1665,13 +1664,15 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				md->attacked_id = src->id;
 	}
 	//Log damage...
-	if (id && damage > 0) {
+	if (char_id && damage > 0) {
 		int i,minpos,mindmg;
 		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=INT_MAX;i<DAMAGELOG_SIZE;i++){
-			if(md->dmglog[i].id==id)
+			if(md->dmglog[i].id==char_id &&
+				md->dmglog[i].flag==flag)
 				break;
 			if(md->dmglog[i].id==0) {	//Store data in first empty slot.
-				md->dmglog[i].id = id;
+				md->dmglog[i].id  = char_id;
+				md->dmglog[i].flag= flag;
 				break;
 			}
 			if(md->dmglog[i].dmg<mindmg){
@@ -1682,8 +1683,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		if(i<DAMAGELOG_SIZE)
 			md->dmglog[i].dmg+=damage;
 		else {
-			md->dmglog[minpos].id=id;
-			md->dmglog[minpos].dmg=damage;
+			md->dmglog[minpos].id  = char_id;
+			md->dmglog[minpos].flag= flag;
+			md->dmglog[minpos].dmg = damage;
 		}
 	}
 	
@@ -1701,9 +1703,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 int mob_dead(struct mob_data *md, struct block_list *src, int type)
 {
 	struct status_data *status;
-	struct map_session_data *sd = NULL,/**tmpsd[DAMAGELOG_SIZE],*/
+	struct map_session_data *sd = NULL,*tmpsd[DAMAGELOG_SIZE],
 		*mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
-	struct block_list *tmpbl[DAMAGELOG_SIZE] ;	//[orn]
 	
 	struct {
 		struct party_data *p;
@@ -1738,7 +1739,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	map_freeblock_lock();
 
-	malloc_tsetdword(tmpbl,0,sizeof(tmpbl));
+	malloc_tsetdword(tmpsd,0,sizeof(tmpsd));
 	malloc_set(pt,0,sizeof(pt));
 
 	if(src && src->type == BL_MOB)
@@ -1767,21 +1768,18 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	for(i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
 	{
-		tmpbl[i] = map_id2bl(md->dmglog[i].id);
-		if(tmpbl[i] == NULL)
+		tmpsd[i] = map_charid2sd(md->dmglog[i].id);
+		if(tmpsd[i] == NULL)
 			continue;
-		if( (tmpbl[i])->m != md->bl.m || status_isdead(tmpbl[i]))
+		if(tmpsd[i]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
 		{
-			tmpbl[i] = NULL;
+			tmpsd[i] = NULL;
 			continue;
 		}
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
-			if ( (tmpbl[i])->type == BL_HOM )
-				mvp_sd=((struct homun_data *)tmpbl[i])->master ;
-			else
-				mvp_sd=(struct map_session_data *)tmpbl[i];
+			mvp_sd=tmpsd[i];
 			mvp_damage=md->dmglog[i].dmg;
 		}
 	}
@@ -1800,7 +1798,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double jper; //For the job-exp
 		int bonus; //Bonus on top of your share.
 
-		if (!tmpbl[i]) continue;
+		if (!tmpsd[i]) continue;
 
 		if (!battle_config.exp_calc_type && md->tdmg)
 			//jAthena's exp formula based on total damage.
@@ -1852,8 +1850,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (base_exp < 1)
 				base_exp = 1;
 		}
-
-		if (map[md->bl.m].flag.nojobexp)
+		//Homun earned job-exp is always lost.
+		if (map[md->bl.m].flag.nojobexp || md->dmglog[i].flag)
 			job_exp=0; 
 		else {
 			if (map[md->bl.m].jexp != 100)
@@ -1872,8 +1870,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				job_exp = 1;
 		}
  		
-		if( (tmpbl[i]->type == BL_PC) && (temp = ((struct map_session_data *)tmpbl[i])->status.party_id )>0 )	//only pc have party [orn]
-		{
+		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag)
+		{	//Homun-done damage (flag 1) is not given to party 
 			int j;
 			for(j=0;j<pnum && pt[j].id!=temp;j++); //Locate party.
 
@@ -1903,25 +1901,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				flag=0;
 			}
 		}
-		if(flag) {	//homunculus aren't considered in party [orn]
-			switch( (tmpbl[i])->type ) {
-				case BL_PC:
-					if(base_exp || job_exp)
-						pc_gainexp((struct map_session_data *)tmpbl[i], &md->bl, base_exp,job_exp);
-					if(zeny) // zeny from mobs [Valaris]
-						pc_getzeny((struct map_session_data *)tmpbl[i], zeny);
-					break ;
-				case BL_HOM:
-					if(base_exp) {
-						merc_hom_gainexp((struct homun_data *)tmpbl[i], base_exp);
-						//homunculus give base_exp to master
-						pc_gainexp(((struct homun_data *)tmpbl[i])->master, &md->bl, base_exp,0);
-					}
-					if(zeny)	//homunculus give zeny to master
-						pc_getzeny((struct map_session_data *)((struct homun_data *)tmpbl[i])->master, zeny);
-					break ;
-
-			}
+		if(flag) {
+			if(base_exp && md->dmglog[i].flag && tmpsd[i]->hd)
+				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
+			if(base_exp || job_exp)
+				pc_gainexp(tmpsd[i], &md->bl, base_exp,job_exp);
+			if(zeny) // zeny from mobs [Valaris]
+				pc_getzeny(tmpsd[i], zeny);
 		}
 	}
 	

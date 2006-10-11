@@ -953,6 +953,7 @@ struct mob_data {
 	struct {
 		int id;
 		int dmg;
+		unsigned flag : 1; //0: Normal. 1: Homunc exp
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	struct item *lootitem;
