@@ -29,6 +29,12 @@ Playtester
 
 Date		Added
 ======
+10/11
+	* Removed Free Pass from Kafra [Lupus]
+	- Now Kafra can use these tickets (Novice Grounds has to be updated!)
+		7059,Free Ticket for Kafra Storage | 7060,Free Ticket for Kafra Transportation
+		7061,Free Ticket for the Cart Service
+	- Added "-Guide" option to Kafra. WIP (some official servers show u a nearest Guide on your mini-map)
 10/10
 	* Fixed Seals quest [Lupus]
 	* Updated Kafra Pavianne [Lupus]
