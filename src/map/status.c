@@ -7057,6 +7057,7 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 					pc_resethate(sd);
 					pc_resetfeel(sd);
 					//TODO: Figure out how to make the client-side msg show up.
+					clif_displaymessage(sd->fd,"[Angel of the Sun, Moon and Stars]");
 				}
 			}
 			sregen->tick.sp -= battle_config.natural_heal_skill_interval;
