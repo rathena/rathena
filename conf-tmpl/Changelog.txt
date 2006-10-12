@@ -1,5 +1,7 @@
 Date	Added
 
+2006/10/12
+	* Added Homunculus atcommands [Playtester]
 2006/10/11
 	* Removed useless inter_athena settings (they were doing absolutely
 	  nothing): read_gm_interval, gm_db, gm_db_level, gm_db_account_id,
