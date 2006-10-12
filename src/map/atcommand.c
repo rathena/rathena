@@ -3711,8 +3711,8 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap) {
 		return 0; //Do not touch WoE mobs!
 	
 	if (flag)
-		status_kill(bl);
-	else //FIXME: Eh.. what exactly is the difference here?
+		status_zap(bl,md->status.hp, 0);
+	else
 		status_kill(bl);	
 	return 1;
 }
