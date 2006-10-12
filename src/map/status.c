@@ -2341,20 +2341,26 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->int_ = hom->int_ / 10;
 	status->luk = hom->luk / 10;
 
-	status->def_ele =  hd->homunculusDB->element ;	//[orn]
-	status->ele_lv = 1;
-	status->race = hd->homunculusDB->race ;	//[orn]
-	status->size = hd->homunculusDB->size ;	//[orn]
-	status->rhw.range = 1 + status->size;	//[orn]
-	status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;	//[orn]
-	status->speed = DEFAULT_WALK_SPEED;
+	if (first) {	//[orn]
+		status->def_ele =  hd->homunculusDB->element;
+		status->ele_lv = 1;
+		status->race = hd->homunculusDB->race ;
+		status->size = hd->homunculusDB->size ;
+		status->rhw.range = 1 + status->size;
+		status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
+		if (battle_config.slaves_inherit_speed && sd)
+			status->speed = status_get_speed(&sd->bl);
+		else
+			status->speed = DEFAULT_WALK_SPEED;
+		status->hp = 1;
+		status->sp = 1;
+	}
 	skill = hom->level/10 + status->vit/5;
 	status->def = cap_value(skill, 0, 99);
+
 	skill = hom->level/10 + status->int_/5;
 	status->mdef = cap_value(skill, 0, 99);
 
-	status->hp = 1;
-	status->sp = 1;
 	status->max_hp = hom->max_hp ;
 	status->max_sp = hom->max_sp ;
 

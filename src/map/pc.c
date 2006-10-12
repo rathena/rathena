@@ -777,8 +777,11 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 	int class_;
 	if (!sd || !bl || pos < 0 || pos > 2)
 		return 0;
-	if (sd->hate_mob[pos] != -1)	//Can't change hate targets.
+	if (sd->hate_mob[pos] != -1)
+	{	//Can't change hate targets.
+		clif_hate_mob(sd,pos,sd->hate_mob[pos]); //Display current
 		return 0;
+	}
 
 	class_ = status_get_class(bl);
 	if (!pcdb_checkid(class_)) {

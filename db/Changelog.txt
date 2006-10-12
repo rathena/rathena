@@ -20,6 +20,8 @@
 
 ========================
 10/12
+	* Corrected Caprice cast info. No cast time, delay time equal to the bolt
+	  spells. [Skotlex]
 	* Probably official GS/NJ Job Exp [Playtester]
 10/09
 	* Fixed High Quality Sandals not being refinable [Playtester]
