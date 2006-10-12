@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/12
+	* Probably official GS/NJ Job Exp [Playtester]
 10/09
 	* Fixed High Quality Sandals not being refinable [Playtester]
 10/08
