@@ -1,4 +1,4 @@
-//===== eAthena Script ========================================
+f//===== eAthena Script ========================================
 //= Lighthalzen Bank Area
 //===== By: ==================================================
 //= Au{R}oN (Translate by Alan)
@@ -73,7 +73,7 @@ lhz_in02.gat,34,22,8	script	Bank Clerk::1_st	755,{
 
 	mes "[Bank Clerk]";
 	mes "Due to some critical system";
-	mes "errors, all f the bank services";
+	mes "errors, all of the bank services";
 	mes "have been temporarily stopped.";
 	mes "We apologize for any inconvenience.";
 	mes "and appreciate your understanding.";
