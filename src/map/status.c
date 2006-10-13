@@ -939,15 +939,11 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 0;
 	}
 
-	if (skill_num == PA_PRESSURE && flag) {
-	//Gloria Avoids pretty much everything....
-		tsc = target?status_get_sc(target):NULL;
-		if(tsc) {
-			if (tsc->option&OPTION_HIDE)
-				return 0;
-			if (tsc->count && tsc->data[SC_TRICKDEAD].timer != -1)
-				return 0;
-		}
+	if (skill_num == PA_PRESSURE && flag && target) {
+		//Gloria Avoids pretty much everything....
+		tsc = status_get_sc(target);
+		if(tsc && tsc->option&OPTION_HIDE)
+			return 0;
 		return 1;
 	}
 
@@ -1062,7 +1058,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	
 	if(tsc && tsc->count)
 	{	
-		if (!(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD].timer != -1)
+		if(!skill_num && !(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD].timer != -1)
 			return 0;
 		if(skill_num == WZ_STORMGUST && tsc->data[SC_FREEZE].timer != -1)
 			return 0;

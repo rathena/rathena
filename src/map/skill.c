@@ -1822,29 +1822,35 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(bl);
+	sc= status_get_sc(bl);
+	if (sc && !sc->count) sc = NULL; //Don't need it.
+
 // Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
+		return 0;
+	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
+	if (sc && sc->data[SC_TRICKDEAD].timer != -1 && !(sstatus->mode&MD_BOSS))
 		return 0;
 
 	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xFFF);
 
 	//Skotlex: Adjusted to the new system
-	if(src->type==BL_PET && (struct pet_data *)src)
+	if(src->type==BL_PET)
 	{ // [Valaris]
-		struct pet_data *pd = (struct pet_data *)src;
+		struct pet_data *pd = (TBL_PET*)src;
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skillid)
 		{
 			int element = skill_get_pl(skillid);
 			if (skillid == -1)
 				element = sstatus->rhw.ele;
-			dmg.damage=battle_attr_fix(src, bl, skilllv, element, tstatus->def_ele, tstatus->ele_lv);
+			if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
+				dmg.damage=battle_attr_fix(src, bl, skilllv, element, tstatus->def_ele, tstatus->ele_lv);
+			else
+				dmg.damage= skilllv;
 			dmg.damage2=0;
 			dmg.div_= pd->a_skill->div_;
 		}
 	}
-
-	sc= status_get_sc(bl);
-	if (sc && !sc->count) sc = NULL; //Don't need it.
 
 	if (attack_type&BF_MAGIC) {
 	 	if(sc && sc->data[SC_KAITE].timer != -1 && (dmg.damage || dmg.damage2)
