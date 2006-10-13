@@ -20,6 +20,8 @@
 
 ========================
 10/12
+	* Reverted GS/NJ Job Exp [Playtester]
+	- better too high than too low
 	* Corrected Caprice cast info. No cast time, delay time equal to the bolt
 	  spells. [Skotlex]
 	* Probably official GS/NJ Job Exp [Playtester]
