@@ -56,7 +56,6 @@ char guild_skill_db[256] = "guild_skill";
 char guild_storage_db[256] = "guild_storage";
 char party_db[256] = "party";
 char pet_db[256] = "pet";
-char gm_db[256] = "gm_accounts";
 char friend_db[256] = "friends";
 #ifdef TXT_SQL_CONVERT
 int save_log = 0; //Have the logs be off by default when converting
@@ -65,6 +64,7 @@ int save_log = 1;
 int db_use_sqldbs;
 int connection_ping_interval = 0;
 
+char login_db[256] = "login";
 char login_db_account_id[32] = "account_id";
 char login_db_level[32] = "level";
 
@@ -377,7 +377,7 @@ void read_gm_account(void) {
 		aFree(gm_account);
 	GM_num = 0;
 
-	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,gm_db,login_db_level,lowest_gm_level);
+	sprintf(tmp_sql, "SELECT `%s`,`%s` FROM `%s` WHERE `%s`>='%d'",login_db_account_id,login_db_level,login_db,login_db_level,lowest_gm_level);
 	if (mysql_query(&lmysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
@@ -3932,8 +3932,17 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 				char_gm_read = true;
 			else
 				char_gm_read = false;
-		} else if(strcmpi(w1, "gm_db") == 0) {
-			strcpy(gm_db, w2);
+		//custom columns for login database
+		}else if(strcmpi(w1,"login_db")==0){
+			strcpy(login_db, w2);
+		}else if(strcmpi(w1,"login_db_level")==0){
+			strcpy(login_db_level,w2);
+		}else if(strcmpi(w1,"login_db_account_id")==0){
+			strcpy(login_db_account_id,w2);
+		}else if(strcmpi(w1,"lowest_gm_level")==0){
+			lowest_gm_level = atoi(w2);
+			ShowStatus("set lowest_gm_level : %s\n",w2);
+		//support the import command, just like any other config
 #endif
 		}else if(strcmpi(w1,"scdata_db")==0){
 			strcpy(scdata_db,w2);
@@ -3988,15 +3997,7 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(item_db2_db,w2);
 		} else if(strcmpi(w1,"connection_ping_interval")==0) {
 			connection_ping_interval = config_switch(w2);
-		//custom columns for login database
-		}else if(strcmpi(w1,"login_db_level")==0){
-			strcpy(login_db_level,w2);
-		}else if(strcmpi(w1,"login_db_account_id")==0){
-			strcpy(login_db_account_id,w2);
-		}else if(strcmpi(w1,"lowest_gm_level")==0){
-			lowest_gm_level = atoi(w2);
-			ShowStatus("set lowest_gm_level : %s\n",w2);
-		//support the import command, just like any other config
+
 #endif
 		}else if(strcmpi(w1,"import")==0){
 			sql_config_read(w2);

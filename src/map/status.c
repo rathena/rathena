@@ -1188,8 +1188,14 @@ static int status_base_atk(struct block_list *bl, struct status_data *status)
 		str = status->str;
 		dex = status->dex;
 	}
+	//Normally only players have base-atk, but homunc have a different batk
+	// equation, hinting that perhaps non-players should use this for batk.
+	// [Skotlex]
 	dstr = str/10;
-	return str + dstr*dstr + dex/5 + status->luk/5;
+	str += dstr*dstr;
+	if (bl->type == BL_PC)
+		str+= dex/5 + status->luk/5;
+	return str;
 }
 
 #define status_base_matk_max(status) (status->int_+(status->int_/5)*(status->int_/5))

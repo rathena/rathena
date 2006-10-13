@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/13
+	* Base attack for non players is now calculated as str + [str/10]^2 (it
+	  does not has +dex/5+luk/5 which players do have) [Skotlex]
+	* Fixed the char-sql server trying to read the gms off a "gm_db" config
+	  setting stead of "login_db" [Skotlex]
 	* Corrected Throw Arrow/Musical Strike's damage formula [Skotlex]
 	* Altered Trick Dead. It doesn't prevents skills from being casted on you
 	  now, but damage-based skills will do no damage. [Skotlex]
