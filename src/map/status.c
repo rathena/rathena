@@ -6786,13 +6786,11 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		}
 		break;
 	case SC_SIGHTBLASTER:
-		{
-			if (sc && sc->count && sc->data[type].val2 > 0 && battle_check_target( src, bl, BCT_ENEMY ) > 0 &&
-				status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
-			{	//sc_ check prevents a single round of Sight Blaster hitting multiple opponents. [Skotlex]
-				skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,1,tick,0);
-				sc->data[type].val2 = 0; //This signals it to end.
-			}
+		if (battle_check_target( src, bl, BCT_ENEMY ) > 0 &&
+			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
+	  	{
+			skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,1,tick,0);
+			if (sc) sc->data[type].val2 = 0; //This signals it to end.
 		}
 		break;
 	case SC_CLOSECONFINE:
