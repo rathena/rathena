@@ -30,6 +30,8 @@ Playtester
 Date		Added
 ======
 10/14
+	* Fully official Thanatos Tower spawns [Playtester]
+	* Fixed typo in Lighthalzen Bank [Playtester]
 	* Assassin Job quest: Fixed skipping of Nameless NPC [Lupus]
 10/11
 	* Removed Free Pass from Kafra [Lupus]
