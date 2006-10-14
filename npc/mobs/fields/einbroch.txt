@@ -41,25 +41,31 @@ ein_fild02.gat,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
 //==================================================
 // ein_fild03 - Einbroch Field
 //==================================================
-ein_fild03.gat,0,0,0,0	monster	Holden	1628,40,0,0,0
 ein_fild03.gat,0,0,0,0	monster	Metaling	1613,30,0,0,0
-ein_fild03.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
-ein_fild03.gat,0,0,0,0	monster	Caramel	1103,10,0,0,0
-ein_fild03.gat,0,0,0,0	monster	Horn	1128,5,0,0,0
-ein_fild03.gat,0,0,0,0	monster	Green Plant	1080,15,180000,90000,1
-ein_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,15,360000,180000,1
+ein_fild03.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
+ein_fild03.gat,0,0,0,0	monster	Holden	1628,40,0,0,0
+ein_fild03.gat,153,328,100,35	monster	Geographer	1368,10,0,0,0
+ein_fild03.gat,260,190,45,25	monster	Geographer	1368,5,0,0,0
+ein_fild03.gat,88,143,25,70	monster	Caramel	1103,10,60000,30000,1
+ein_fild03.gat,155,40,35,20	monster	Horn	1128,5,60000,30000,1
+ein_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
+ein_fild03.gat,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
 
 //==================================================
 // ein_fild04 - Einbroch Field
 //==================================================
-ein_fild04.gat,0,0,0,0	monster	Geographer	1368,70,0,0,0
+ein_fild04.gat,0,0,0,0	monster	Geographer	1368,15,0,0,0
+ein_fild04.gat,0,0,0,0	monster	Holden	1628,5,0,0,0
+ein_fild04.gat,200,295,125,65	monster	Geographer	1368,45,0,0,0
+ein_fild04.gat,125,135,40,40	monster	Geographer	1368,5,0,0,0
+ein_fild04.gat,260,70,20,30	monster	Geographer	1368,5,0,0,0
 ein_fild04.gat,0,0,0,0	monster	Metaling	1613,50,0,0,0
-ein_fild04.gat,0,0,0,0	monster	Holden	1628,20,0,0,0
-ein_fild04.gat,0,0,0,0	monster	Giearth	1121,10,0,0,0
-ein_fild04.gat,0,0,0,0	monster	Mineral	1614,5,0,0,0
-ein_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
-ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
-ein_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
+ein_fild04.gat,285,240,35,90	monster	Giearth	1121,10,3600000,3000000,0
+ein_fild04.gat,106,284,60,60	monster	Holden	1628,15,0,0,0
+ein_fild04.gat,106,284,60,60	monster	Mineral	1614,5,3600000,3000000,0
+ein_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
+ein_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
+ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 
 //==================================================
 // ein_fild05 - Einbroch Field

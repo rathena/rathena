@@ -21,20 +21,20 @@
 lhz_fild01.gat,0,0,0,0	monster	Metaling	1613,60,0,0,0
 lhz_fild01.gat,0,0,0,0	monster	Holden	1628,60,0,0,0
 lhz_fild01.gat,0,0,0,0	monster	Caramel	1103,20,0,0,0
-lhz_fild01.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
-lhz_fild01.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
-lhz_fild01.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
+lhz_fild01.gat,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
+lhz_fild01.gat,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
+lhz_fild01.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 
 //==================================================
 // lhz_fild02 - Lighthalzen Field (Grim Ripper's Valley)
 //==================================================
 lhz_fild02.gat,0,0,0,0	monster	Metaling	1613,50,0,0,0
 lhz_fild02.gat,0,0,0,0	monster	Caramel	1103,30,0,0,0
-lhz_fild02.gat,0,0,0,0	monster	Anopheles	1627,15,0,0,0
 lhz_fild02.gat,0,0,0,0	monster	Horn	1128,10,0,0,0
 lhz_fild02.gat,0,0,0,0	monster	Holden	1628,10,0,0,0
-lhz_fild02.gat,0,0,0,0	monster	Yellow Plant	1081,15,180000,90000,1
-lhz_fild02.gat,0,0,0,0	monster	Green Plant	1080,15,180000,90000,1
+lhz_fild02.gat,0,0,0,0	monster	Anopheles	1627,15,0,0,0
+lhz_fild02.gat,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
+lhz_fild02.gat,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
 
 //==================================================
 // lhz_fild03 - Lighthalzen Field
@@ -46,4 +46,4 @@ lhz_fild03.gat,0,0,0,0	monster	Caramel	1103,20,0,0,0
 lhz_fild03.gat,0,0,0,0	monster	Hill Wind	1680,12,0,0,0
 lhz_fild03.gat,0,0,0,0	monster	Horn	1128,10,0,0,0
 lhz_fild03.gat,0,0,0,0	monster	Rafflesia	1162,5,0,0,0
-lhz_fild03.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
+lhz_fild03.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
