@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/14
+	* Fixed Bacsojin's and Chung E's stats [Playtester]
 10/12
 	* Reverted GS/NJ Job Exp [Playtester]
 	- better too high than too low
