@@ -29,6 +29,8 @@ Playtester
 
 Date		Added
 ======
+10/14
+	* Assassin Job quest: Fixed skipping of Nameless NPC [Lupus]
 10/11
 	* Removed Free Pass from Kafra [Lupus]
 	- Now Kafra can use these tickets (Novice Grounds has to be updated!)

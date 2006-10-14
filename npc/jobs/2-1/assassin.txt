@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.3t
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena RC4
 //===== Description: ========================================= 
@@ -30,7 +30,7 @@
 //= 2.2 Merged back JFunc. Fixed missing dialogue [Lupus]
 //= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I 
 //= was still able to bypass it) [Toms]
-//= 2.3t Temp fix of: bypassing NPC and timer bug [Lupus]
+//= 2.4 Fixed skipping of Nameless NPC [Lupus]
 //============================================================ 
 
 
@@ -533,22 +533,14 @@ sF_Quiz:
 //				First Test
 //****************************************************************************//
 
-// ----------------------------------------------------------------
-// Keeps the player from moving to far into the room.
-// This is to avoid cheaters who might try to take Bakardi's test first.
-//in_moc_16.gat,19,144,1	script	getbacker	139,8,0,{
-//	if(ASSIN_Q > 1) end;
-//	warp "in_moc_16.gat",19,142;
-//	addtimer 100, "Nameless One::OnTimer700";
-//	end;
-//}
-
 // Namelss One ====================================================
 in_moc_16.gat,19,150,1	script	Nameless One	139,8,6,{
 OnTouch:
 	if(ASSIN_Q > 1) end;
 
-//OnTimer700:
+	warp "in_moc_16.gat",19,142;
+	sleep2 700;
+
 	if(ASSIN_Q == 1) goto L_ReTest;
 	set @LISTEN, 0;
 
