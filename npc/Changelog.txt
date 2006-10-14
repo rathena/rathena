@@ -30,6 +30,7 @@ Playtester
 Date		Added
 ======
 10/14
+	* Some more official spawns [Playtester]
 	* Fully official Juperos and Bio Lab spawns [Playtester]
 	* Updated some field spawns to official [Playtester]
 	* Fully official Abyss Lake spawns [Playtester]

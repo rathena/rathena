@@ -169,8 +169,8 @@ yuno_fild11.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 //==================================================
 // yuno_fild12 - Border Checkpoint
 //==================================================
+yuno_fild12.gat,0,0,0,0	monster	Punk	1199,30,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
-yuno_fild12.gat,0,0,0,0	monster	Punk	1199,20,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Poporing	1031,15,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
