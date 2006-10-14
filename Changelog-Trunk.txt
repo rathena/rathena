@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/14
+	* Homun info window to show crit value. As default, homun does NOT crit,
+	  as monsters do not crit. This is purely for display purpose for players
+	  to identify their homon's luk value. [Vicious]
 2006/10/13
 	* Base attack for non players is now calculated as str + [str/10]^2 (it
 	  does not has +dex/5+luk/5 which players do have) [Skotlex]

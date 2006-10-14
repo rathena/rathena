@@ -1472,7 +1472,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
 	WBUFW(buf,37)=cap_value(status->matk_max, 0, SHRT_MAX);
 	WBUFW(buf,39)=status->hit;
-	WBUFW(buf,41)=status->cri/10;	//crit is a +1 decimal value!
+	WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
 	WBUFW(buf,43)=status->def + status->vit ;
 	WBUFW(buf,45)=status->mdef;
 	WBUFW(buf,47)=status->flee;
