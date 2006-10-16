@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/16
+	* Adjusted UTSUSEMI/BUNSINJYUTSU so that they block range/melee weapon
+	  attacks and only melee misc attacks. This isn't 100% correct, but it's a
+	  better approximation to the way these skills behave. [Skotlex]
 	* Emergency call &16 (disable skill from nowarpto maps) will now NOT block
 	  Emergency Call if that map is also a gvg-castle map. Makes it safe to turn
 	  on this option to prevent usage from special maps (like Lhz3) without

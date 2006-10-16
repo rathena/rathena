@@ -568,7 +568,7 @@
 541,9,6,4,4,2,2:2:3:3:4,5,1,yes,0,0,0,magic,0	//NJ_RAIGEKISAI#NJ_RAIGEKISAI#
 542,5:6:7:8:9,8,1,4,0,1,5,1,yes,0,0,0,magic,0	//NJ_KAMAITACHI#NJ_KAMAITACHI#
 543,0,6,4,0,1,0,5,1,yes,0,0,0,none,0	//NJ_NEN#NJ_NEN#
-544,-4,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#
+544,-5,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#
 
 1001,9,6,1,-1,0,0,1,1,no,0,1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
 1002,0,6,4,0,1,0,1,0,no,0,1,0,weapon,2	//CR_SHRINK#Shrink#
