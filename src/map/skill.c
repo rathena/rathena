@@ -2835,7 +2835,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 	
 	case MO_EXTREMITYFIST:
-		if (sc && sc->count)
+		if (sc)
 		{
 			if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
 				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
@@ -3084,9 +3084,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_attack(BF_MAGIC, src, src, bl, skillid, skilllv, tick, flag);
 	break;
 
+	case SL_SMA:
+		if (sc && sc->data[SC_SMA].timer != -1)
+			status_change_end(src,SC_SMA,-1);
 	case SL_STIN:
 	case SL_STUN:
-	case SL_SMA:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,10);
 			clif_skill_fail(sd,skillid,0,0);

@@ -4752,13 +4752,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_BLIND:
 			case SC_BLEEDING:
 			case SC_DPOISON:
-			case SC_COMBO: //You aren't supposed to change the combo (and it gets turned off when you trigger it)
 			case SC_CLOSECONFINE2: //Can't be re-closed in.
 			case SC_MARIONETTE:
 			case SC_MARIONETTE2:
 			case SC_NOCHAT:
 			case SC_CHANGE: //Otherwise your Hp/Sp would get refilled while still within effect of the last invocation.
 				return 0;
+			case SC_COMBO: 
 			case SC_DANCING:
 			case SC_DEVOTION:
 			case SC_ASPDPOTION0:

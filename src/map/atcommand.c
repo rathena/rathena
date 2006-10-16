@@ -10064,7 +10064,7 @@ int atcommand_hominfo(
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"ATK : %d - MATK : %d~%d", sd->hd->battle_status.rhw.atk2+sd->hd->battle_status.batk, sd->hd->battle_status.matk_min, sd->hd->battle_status.matk_max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %u", sd->homunculus.hunger, sd->homunculus.intimacy);
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %u", sd->homunculus.hunger, sd->homunculus.intimacy/100);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
