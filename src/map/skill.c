@@ -2834,8 +2834,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			status_change_end(src,SC_BLADESTOP,-1);
 		break;
 	
+	case NJ_ISSEN:
+		if (sc) {
+		  	if (sc->data[SC_NEN].timer != -1)
+				status_change_end(src,SC_NEN,-1);
+			if (sc->data[SC_HIDING].timer != -1)
+				status_change_end(src,SC_HIDING,-1);
+		}
 	case MO_EXTREMITYFIST:
-		if (sc)
+		if (sc && skillid == MO_EXTREMITYFIST)
 		{
 			if (sc->data[SC_EXPLOSIONSPIRITS].timer != -1)
 				status_change_end(src, SC_EXPLOSIONSPIRITS, -1);
@@ -2847,13 +2854,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			struct unit_data *ud = unit_bl2ud(src);
 			short dx,dy;
 			int i,speed;
-
+			i = skillid == MO_EXTREMITYFIST?1:2; //Move 2 cells for Issen, 1 for Asura
 			dx = bl->x - src->x;
 			dy = bl->y - src->y;
-			if (dx < 0) dx--;
-			else if (dx > 0) dx++;
-			if (dy < 0) dy--;
-			else if (dy > 0) dy++;
+			if (dx < 0) dx-=i;
+			else if (dx > 0) dx+=i;
+			if (dy < 0) dy-=i;
+			else if (dy > 0) dy+=i;
 			if (!dx && !dy) dy++;
 			if (map_getcell(src->m, src->x+dx, src->y+dy, CELL_CHKNOPASS))
 			{
@@ -3151,22 +3158,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case NJ_KASUMIKIRI:
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
+		if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag) > 0)
+			sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
 		{
-			int dir = map_calc_dir(src,bl->x,bl->y);
+			short x, y;
+			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
 			status_change_end(src, SC_HIDING, -1);
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			if (unit_movepos(src, bl->x - dirx[dir], bl->y - diry[dir], 0, 0))
+			if (unit_movepos(src, x, y, 0, 0))
 				clif_slide(src,src->x,src->y);
+			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		}
-		break;
-	case NJ_ISSEN:
-		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		if (sc && sc->data[SC_NEN].timer != -1)
-			status_change_end(src,SC_NEN,-1);
 		break;
 	case 0:
 		if(sd) {
@@ -6089,7 +6092,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_SHADOWJUMP:
 	{
 		unit_movepos(src, x, y, 1, 0);
-		unit_setdir(src, (unit_getdir(src) + 4)%8);
 		clif_slide(src,x,y);
 
 		if (sc && sc->data[SC_HIDING].timer != -1)
@@ -8304,6 +8306,10 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	
 	case NJ_ISSEN:
+		if (status->hp < 2) {
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
+		}
 	case NJ_BUNSINJYUTSU:
 		if (!sc || sc->data[SC_NEN].timer==-1) {
 			clif_skill_fail(sd,skill,0,0);
@@ -9307,15 +9313,16 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 		case SA_VOLCANO:
 		case SA_DELUGE:
 		case SA_VIOLENTGALE:
-		case NJ_SUITON:
-		case NJ_KAENSIN:
+// Suiton/Kaensin CAN super-impose on each another.
+//		case NJ_SUITON:
+//		case NJ_KAENSIN:
 			switch (unit->group->skill_id)
 			{	//These cannot override each other.
 				case SA_VOLCANO:
 				case SA_DELUGE:
 				case SA_VIOLENTGALE:
-				case NJ_SUITON:
-				case NJ_KAENSIN:
+//				case NJ_SUITON:
+//				case NJ_KAENSIN:
 					(*alive) = 0;
 					return 1;
 			}

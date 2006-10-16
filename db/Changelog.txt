@@ -20,6 +20,8 @@
 
 ========================
 10/16
+	* Applied most of Mpeg's work on Ninja Skills. For information see:
+	  http://gpegon.free.fr/ea/ninja_10-15-06_mpeg.txt [Skotlex]
 	* Small Kiel MVP drop rate increase [Playtester]
 10/14
 	* Fixed Bacsojin's and Chung E's stats [Playtester]

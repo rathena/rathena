@@ -322,9 +322,31 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-		if(sc->data[SC_BUNSINJYUTSU].timer != -1 && (flag&(BF_WEAPON|BF_MISC)) )
+		if ((sc->data[SC_UTSUSEMI].timer != -1 || sc->data[SC_BUNSINJYUTSU].timer != -1)
+		&& (flag&(BF_WEAPON|BF_MISC))
+/* FIXME: This check is awful, there has to be some kind of logic behind this!
+		&& (
+		// there is no rule for that, only some exceptions.. which I listed according to many tests and says
+			skill_num != ASC_BREAKER &&
+			skill_num != NJ_KUNAI &&
+			skill_num != SN_FALCONASSAULT &&
+			skill_num != MO_BALKYOUNG &&
+			skill_num != HT_BLITZBEAT &&
+			skill_num != NJ_SYURIKEN
+			)
+*/
+		)
 		{
-			if (--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
+			if (sc->data[SC_UTSUSEMI].timer != -1) {
+				clif_specialeffect(bl, 462, AREA);
+				skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3);
+			};
+			//Both need to be consumed if they are active.
+			if (sc->data[SC_UTSUSEMI].timer != -1 &&
+				--sc->data[SC_UTSUSEMI].val2 <= 0)
+				status_change_end(bl, SC_UTSUSEMI, -1);
+			if (sc->data[SC_BUNSINJYUTSU].timer != -1 &&
+				--sc->data[SC_BUNSINJYUTSU].val2 <= 0)
 				status_change_end(bl, SC_BUNSINJYUTSU, -1);
 			return 0;
 		}
@@ -497,6 +519,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	//Skills with no damage reduction.
 	case PA_PRESSURE:
 	case HW_GRAVITATION:
+	case NJ_ZENYNAGE:
 		break;
 	default:
 		if (md && md->guardian_data) {
@@ -877,7 +900,7 @@ static struct Damage battle_calc_weapon_attack(
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS:
 			case NJ_HUUMA:
-			case GS_FLING:
+			case NJ_ISSEN:
 			case GS_TRIPLEACTION:
 			case GS_BULLSEYE:
 			case GS_MAGICALBULLET:
@@ -1048,7 +1071,8 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_ENERGYDRAIN:
 				case NPC_MENTALBREAKER:
 				case GS_GROUNDDRIFT:
-				case NJ_TATAMIGAESHI:
+				case NJ_SYURIKEN:
+				case NJ_KUNAI:
 				case NJ_ISSEN:
 					flag.hit = 1;
 					break;
@@ -1151,7 +1175,7 @@ static struct Damage battle_calc_weapon_attack(
 		switch (skill_num)
 		{	//Calc base damage according to skill
 			case NJ_ISSEN:
-				wd.damage = 80*sstatus->str +skill_lv*sstatus->hp*8/100;
+				wd.damage = 40*sstatus->str +skill_lv*(sstatus->hp/10 + 35);
 				wd.damage2 = 0;
 				status_set_hp(src, 1, 0);
 				break;
@@ -1781,11 +1805,10 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio /= 12-3*skill;
 				ATK_ADDRATE(skillratio);
 			}
-			// Added Tobidougu bonus on throwing weapon ninja skills if not wearing a Fuuma shuriken (bonus already added in battle_addmastery)
-			if ((skill_num == NJ_SYURIKEN || skill_num == NJ_KUNAI) &&
-				sd->status.weapon != W_HUUMA &&
-			  	(skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0)
+			if (skill_num == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0)
 				ATK_ADD(3*skill);
+			if (skill_num == NJ_KUNAI)
+				ATK_ADD(60);
 		}
 	} //Here ends flag.hit section, the rest of the function applies to both hitting and missing attacks
   	else if(wd.div_ < 0) //Since the attack missed...
@@ -2098,7 +2121,6 @@ struct Damage battle_calc_magic_attack(
 
 	struct map_session_data *sd, *tsd;
 	struct Damage ad;
-	struct status_change *tsc;
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct {
@@ -2212,8 +2234,6 @@ struct Damage battle_calc_magic_attack(
 //Adds an absolute value to damage. 100 = +100 damage
 #define MATK_ADD( a ) { ad.damage+= a; }
 
-		tsc= status_get_sc(target); // used for NJ_SUITON increasing NJ_HYOUSENSOU damages
-
 		switch (skill_num)
 		{	//Calc base damage according to skill
 			case AL_HEAL:
@@ -2321,27 +2341,19 @@ struct Damage battle_calc_magic_attack(
 						skillratio -= 10;
 						break;
 					case NJ_KAENSIN:
-						skillratio -= 40; // extrapolation from a vid (seems correct +/- 10%)
+						skillratio -= 50;
 						break;
 					case NJ_BAKUENRYU:
-						skillratio += 50*(skill_lv-1); // recorrected after calculation from vids
-						break;
-					case NJ_HYOUSENSOU:
-						skillratio -= 30;
-						if (tsc && tsc->data[SC_SUITON].timer != -1)
-						  	skillratio += tsc->data[SC_SUITON].val4;
+						skillratio += 50*(skill_lv-1);
 						break;
 					case NJ_HYOUSYOURAKU:
-						skillratio += 50*skill_lv; // recorrected after calculation from vids
-						break;
-					case NJ_HUUJIN:
-						skillratio += 50 + 50*skill_lv; // extrapolation from a vid (unsure)
+						skillratio += 50*skill_lv;
 						break;
 					case NJ_RAIGEKISAI:
-						skillratio += 60 + 40*skill_lv; // idem
+						skillratio += 60 + 40*skill_lv;
 						break;
 					case NJ_KAMAITACHI:
-						skillratio += 100*skill_lv; // idem
+						skillratio += 100*skill_lv;
 						break;
 				}
 
@@ -2621,8 +2633,8 @@ struct Damage  battle_calc_misc_attack(
 			pc_payzeny(sd, md.damage);
 		}
 
-		if(is_boss(target) || tsd)
-			md.damage=md.damage*60/100;
+		if(is_boss(target) || tsd || map_flag_gvg2(target->m))
+			md.damage=md.damage/3;
 		break;
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
@@ -2946,13 +2958,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0,(int)src, duration);
 				return 0;
 			}
-		}
-		if (tsc->data[SC_UTSUSEMI].timer != -1) {
-			clif_specialeffect(target, 462, AREA);
-			skill_blown (src, target, tsc->data[SC_UTSUSEMI].val3);
-			if (--tsc->data[SC_UTSUSEMI].val2 <= 0)
-				status_change_end(target, SC_UTSUSEMI, -1);
-			return 0;
 		}
 	}
 	//Recycled the damage variable rather than use a new one... [Skotlex]

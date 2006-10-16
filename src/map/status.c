@@ -1060,7 +1060,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	{	
 		if(!skill_num && !(status->mode&MD_BOSS) && tsc->data[SC_TRICKDEAD].timer != -1)
 			return 0;
-		if(skill_num == WZ_STORMGUST && tsc->data[SC_FREEZE].timer != -1)
+		if((skill_num == WZ_STORMGUST || skill_num == NJ_HYOUSYOURAKU)
+			&& tsc->data[SC_FREEZE].timer != -1)
 			return 0;
 		if(skill_num == PR_LEXAETERNA && (tsc->data[SC_FREEZE].timer != -1 || (tsc->data[SC_STONE].timer != -1 && tsc->opt1 == OPT1_STONE)))
 			return 0;
@@ -4923,33 +4924,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = 0;
 			break;
 		case SC_SUITON:
-			val2 = 0;	//Agi penalty
+			val2 = 0; //Agi penalty
 			val3 = 0; //Walk speed penalty
-			val4 = 2*val1; //NJ_HYOUSENSOU damage bonus.
-
-			if (status_get_class(bl) == JOB_NINJA || ( bl->type == BL_PC && !map_flag_vs(bl->m)) )
+			if (status_get_class(bl) == JOB_NINJA ||
+				(sd && !map_flag_vs(bl->m)))
 				break;
-			else {
-				val3 = 50;
-
-				switch ((val1+1)/3) {
-				case 3:
-					val2 = 8;
-				break;
-				case 2:
-					val2 = 5;
-				break;
-				case 1:
-					val2 = 3;
-				break;
-				case 0: 
-					val2 = 0;
-				break;
-				default:
-					val2 = 3*((val1+1)/3);
-				break;
-				}
-			}
+			val3 = 50;
+			val2 = 3*((val1+1)/3);
+			if (val1 > 4) val2--;
 			break;
 		case SC_ONEHAND:
 		case SC_TWOHANDQUICKEN:
@@ -6788,7 +6770,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 	case SC_SIGHTBLASTER:
 		if (battle_check_target( src, bl, BCT_ENEMY ) > 0 &&
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
-	  	{
+		{
 			skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,1,tick,0);
 			if (sc) sc->data[type].val2 = 0; //This signals it to end.
 		}
