@@ -907,7 +907,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 				!(battle_config.emergency_call&(agit_flag?2:1)) ||
 				!(battle_config.emergency_call&
 					(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
-				(battle_config.emergency_call&16 && map[m].flag.nowarpto)
+				(battle_config.emergency_call&16 && map[m].flag.nowarpto && !map[m].flag.gvg_castle)
 			)	{
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;

@@ -1,5 +1,8 @@
 Date	Added
 
+2006/10/16
+	* Added &16 to the default of the emergency_call setting (skill.conf)
+	  [Skotlex]
 2006/10/12
 	* Added Homunculus atcommands [Playtester]
 2006/10/11
