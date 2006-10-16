@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/16
+	* Small Kiel MVP drop rate increase [Playtester]
 10/14
 	* Fixed Bacsojin's and Chung E's stats [Playtester]
 10/12
