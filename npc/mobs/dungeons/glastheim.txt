@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 [Lupus]
 //= 1.2 Updated to ep 8.5 aegis spawns [MasterOfMuppets]
+//= 1.3 Official 10.1 kRO spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -16,46 +17,46 @@
 //==================================================
 gl_cas01.gat,0,0,0,0	monster	Sage Worm	1281,40,0,0,0
 gl_cas01.gat,0,0,0,0	monster	Carat	1267,40,0,0,0
-gl_cas01.gat,0,0,0,0	monster	Whisper	1179,20,0,0,0
-gl_cas01.gat,0,0,0,0	monster	Dark Frame	1260,20,0,0,0
 gl_cas01.gat,0,0,0,0	monster	Rideword	1195,15,0,0,0
+gl_cas01.gat,0,0,0,0	monster	Dark Frame	1260,20,0,0,0
+gl_cas01.gat,0,0,0,0	monster	Whisper	1179,20,0,0,0
 gl_cas01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
-gl_cas01.gat,0,0,0,0	monster	Owl Baron	1295,3,600000,300000,1
-gl_cas01.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,1
+gl_cas01.gat,0,0,0,0	monster	Ogretooth	1204,1,7200000,3600000,1
+gl_cas01.gat,0,0,0,0	monster	Owl Baron	1295,3,0,0,1
 
 //==================================================
 // gl_cas02 - Glast Heim F2
 //==================================================
-gl_cas02.gat,0,0,0,0	monster	Raydric	1163,44,0,0,0
+gl_cas02.gat,0,0,0,0	monster	Wanderer	1208,20,0,0,0
+gl_cas02.gat,0,0,0,0	monster	Raydric	1163,40,0,0,0
+gl_cas02.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
+gl_cas02.gat,0,0,0,0	monster	Raydric Archer	1276,19,0,0,0
 gl_cas02.gat,193,167,5,5	monster	Raydric	1163,3,300000,120000,0
 gl_cas02.gat,193,135,5,5	monster	Raydric	1163,3,300000,120000,0
-gl_cas02.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
+gl_cas02.gat,104,145,5,5	monster	Mysteltainn	1203,1,7200000,3600000,1
+gl_cas02.gat,102,180,0,0	monster	Whisper	1185,1,1800000,900000,1
+gl_cas02.gat,105,180,0,0	monster	Whisper	1185,1,1800000,900000,1
+gl_cas02.gat,182,12,3,3	monster	Chimera	1283,1,3600000,1800000,1
 gl_cas02.gat,185,11,8,8	monster	Rideword	1195,4,120000,60000,1
-gl_cas02.gat,46,124,15,15	monster	Rideword	1195,15,360000,180000,1
-gl_cas02.gat,0,0,0,0	monster	Wanderer	1208,20,0,0,0
-gl_cas02.gat,190,23,1,1	monster	Wanderer	1208,1,360000,180000,0
-gl_cas02.gat,0,0,0,0	monster	Raydric Archer	1276,19,0,0,0
-gl_cas02.gat,190,38,1,1	monster	Raydric Archer	1276,1,360000,180000,0
 gl_cas02.gat,174,11,8,8	monster	Evil Druid	1117,4,120000,60000,1
+gl_cas02.gat,104,38,4,4	monster	Abysmal Knight	1219,1,1800000,900000,1
+gl_cas02.gat,24,35,4,4	monster	Abysmal Knight	1219,1,1800000,900000,1
+gl_cas02.gat,46,124,15,15	monster	Rideword	1195,15,360000,180000,1
 gl_cas02.gat,16,186,10,10	monster	Evil Druid	1117,5,360000,180000,1
 gl_cas02.gat,133,83,3,3	monster	Khalitzburg	1132,1,360000,180000,1
 gl_cas02.gat,45,177,3,3	monster	Khalitzburg	1132,1,360000,180000,1
 gl_cas02.gat,182,65,3,3	monster	Khalitzburg	1132,1,360000,180000,1
-gl_cas02.gat,189,20,1,1	monster	Khalitzburg	1132,1,360000,180000,0
 gl_cas02.gat,173,127,3,3	monster	Khalitzburg	1132,1,360000,180000,1
 gl_cas02.gat,173,167,3,3	monster	Khalitzburg	1132,1,360000,180000,1
-gl_cas02.gat,83,84,2,2	monster	Mimic	1191,1,360000,180000,1
-gl_cas02.gat,83,80,2,2	monster	Mimic	1191,1,360000,180000,1
-gl_cas02.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
-gl_cas02.gat,104,38,4,4	monster	Abysmal Knight	1219,1,900000,450000,1
-gl_cas02.gat,24,35,4,4	monster	Abysmal Knight	1219,1,900000,450000,1
-gl_cas02.gat,102,180,0,0	monster	Whisper	1185,1,1800000,900000,1
-gl_cas02.gat,105,180,0,0	monster	Whisper	1185,1,1800000,900000,1
 gl_cas02.gat,93,177,3,3	monster	Abysmal Knight	1219,1,1800000,900000,1
 gl_cas02.gat,115,177,3,3	monster	Abysmal Knight	1219,1,1800000,900000,1
-gl_cas02.gat,0,0,0,0	monster	Tyrfing	1204,1,7200000,3600000,1
-gl_cas02.gat,104,145,5,5	monster	Mysteltainn	1203,1,7200000,3600000,1
-gl_cas02.gat,182,12,3,3	monster	Chimera	1283,1,7200000,3600000,1
+gl_cas02.gat,83,84,2,2	monster	Mimic	1191,1,360000,180000,1
+gl_cas02.gat,83,80,2,2	monster	Mimic	1191,1,360000,180000,1
+gl_cas02.gat,0,0,0,0	monster	Ogretooth	1204,1,7200000,3600000,1
+gl_cas02.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+gl_cas02.gat,189,20,1,1	monster	Khalitzburg	1132,1,360000,180000,0
+gl_cas02.gat,190,23,1,1	monster	Wanderer	1208,1,360000,180000,0
+gl_cas02.gat,190,38,1,1	monster	Raydric Archer	1276,1,360000,180000,0
 
 //==================================================
 // gl_in01 - Inside Glast Heim
@@ -64,45 +65,45 @@ gl_in01.gat,41,155,40,45	monster	Marionette	1143,5,0,0,0
 gl_in01.gat,156,147,34,42	monster	Marionette	1143,5,0,0,0
 gl_in01.gat,42,48,41,32	monster	Marionette	1143,5,0,0,0
 gl_in01.gat,154,44,36,33	monster	Marionette	1143,5,0,0,0
-gl_in01.gat,41,154,40,45	monster	Sage Worm	1281,3,0,0,0
-gl_in01.gat,155,147,34,42	monster	Sage Worm	1281,5,0,0,0
-gl_in01.gat,42,47,41,32	monster	Sage Worm	1281,3,0,0,0
-gl_in01.gat,153,44,36,33	monster	Sage Worm	1281,3,0,0,0
-gl_in01.gat,40,150,40,45	monster	Dark Frame	1260,3,0,0,0
-gl_in01.gat,153,146,34,42	monster	Dark Frame	1260,2,0,0,0
-gl_in01.gat,43,45,41,32	monster	Dark Frame	1260,2,0,0,0
-gl_in01.gat,153,44,36,33	monster	Dark Frame	1260,3,0,0,0
 gl_in01.gat,42,154,40,45	monster	Rideword	1195,2,0,0,0
 gl_in01.gat,155,143,34,42	monster	Rideword	1195,1,0,0,0
 gl_in01.gat,41,47,41,32	monster	Rideword	1195,3,0,0,0
 gl_in01.gat,152,44,36,33	monster	Rideword	1195,2,0,0,0
 gl_in01.gat,0,0,0,0	monster	Wanderer	1208,1,0,0,0
 gl_in01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+gl_in01.gat,40,150,40,45	monster	Dark Frame	1260,3,0,0,0
+gl_in01.gat,153,146,34,42	monster	Dark Frame	1260,2,0,0,0
+gl_in01.gat,43,45,41,32	monster	Dark Frame	1260,2,0,0,0
+gl_in01.gat,153,44,36,33	monster	Dark Frame	1260,3,0,0,0
+gl_in01.gat,41,154,40,45	monster	Sage Worm	1281,3,0,0,0
+gl_in01.gat,155,147,34,42	monster	Sage Worm	1281,5,0,0,0
+gl_in01.gat,42,47,41,32	monster	Sage Worm	1281,3,0,0,0
+gl_in01.gat,153,44,36,33	monster	Sage Worm	1281,3,0,0,0
 
 //==================================================
 // gl_prison - Glast Heim Underprison F1
 //==================================================
-gl_prison.gat,0,0,0,0	monster	Zombie Prisoner	1197,50,0,0,0
 gl_prison.gat,0,0,0,0	monster	Injustice	1257,20,0,0,0
-gl_prison.gat,0,0,0,0	monster	Rybio	1201,15,0,0,0
 gl_prison.gat,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
+gl_prison.gat,0,0,0,0	monster	Zombie Prisoner	1197,30,0,0,0
+gl_prison.gat,0,0,0,0	monster	Rybio	1201,15,0,0,0
 
 //==================================================
 // gl_prison1 - Glast Heim Underprison F2
 //==================================================
-gl_prison1.gat,0,0,0,0	monster	Skeleton Prisoner	1196,40,0,0,0
-gl_prison1.gat,0,0,0,0	monster	Injustice	1257,40,0,0,0
+gl_prison1.gat,0,0,0,0	monster	Skeleton Prisoner	1196,30,0,0,0
 gl_prison1.gat,0,0,0,0	monster	Cramp	1209,20,0,0,0
-gl_prison1.gat,0,0,0,0	monster	Phendark	1202,10,0,0,0
-gl_prison1.gat,0,0,0,0	monster	Rybio	1201,10,0,0,0
 gl_prison1.gat,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
-gl_prison1.gat,0,0,0,0	monster	Zherlthsh	1200,1,3600000,1800000,1
+gl_prison1.gat,0,0,0,0	monster	Injustice	1257,40,0,0,0
+gl_prison1.gat,0,0,0,0	monster	Zealotus	1200,1,3600000,1800000,1
+gl_prison1.gat,0,0,0,0	monster	Rybio	1201,10,0,0,0
+gl_prison1.gat,0,0,0,0	monster	Phendark	1202,10,0,0,0
 
 //==================================================
 // glast_01 - Glast Heim
 //==================================================
-glast_01.gat,0,0,0,0	monster	Gargoyle	1253,10,0,0,0
-glast_01.gat,0,0,0,0	monster	Abysmal Knight	1219,2,0,0,0
+glast_01.gat,0,0,0,0	monster	Abysmal Knight	1219,2,600000,300000,1
+glast_01.gat,0,0,0,0	monster	Gargoyle	1253,10,0,0,1
 glast_01.gat,233,209,15,15	monster	Green Plant	1080,8,360000,180000,1
 glast_01.gat,233,209,15,15	monster	Blue Plant	1079,2,900000,450000,1
 glast_01.gat,233,209,15,15	monster	Shining Plant	1083,1,1800000,900000,1
@@ -110,14 +111,14 @@ glast_01.gat,233,209,15,15	monster	Shining Plant	1083,1,1800000,900000,1
 //==================================================
 // gl_church - Glast Heim St. Abbey
 //==================================================
+gl_church.gat,0,0,0,0	monster	Wraith	1192,5,0,0,0
+gl_church.gat,0,0,0,0	monster	Evil Druid	1117,30,0,0,0
 gl_church.gat,0,0,0,0	monster	Ghoul	1036,60,0,0,0
-gl_church.gat,0,0,0,0	monster	Evil Druid	1117,35,0,0,0
-gl_church.gat,0,0,0,0	monster	Mimic	1191,10,0,0,0
+gl_church.gat,0,0,0,0	monster	Dark Illusion	1302,1,3600000,1800000,0
+gl_church.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
 gl_church.gat,155,92,10,10	monster	Mimic	1191,1,30000,15000,0
 gl_church.gat,155,75,10,10	monster	Mimic	1191,2,60000,30000,0
 gl_church.gat,155,54,10,10	monster	Mimic	1191,1,30000,15000,0
-gl_church.gat,0,0,0,0	monster	Wraith	1192,10,0,0,0
-gl_church.gat,0,0,0,0	monster	Dark Illusion	1302,1,3600000,1800000,0
 
 //==================================================
 // gl_chyard - Glast Heim Churchyard
@@ -125,29 +126,29 @@ gl_church.gat,0,0,0,0	monster	Dark Illusion	1302,1,3600000,1800000,0
 gl_chyard.gat,0,0,0,0	monster	Ghoul	1036,35,0,0,0
 gl_chyard.gat,0,0,0,0	monster	Zombie	1015,30,0,0,0
 gl_chyard.gat,0,0,0,0	monster	Wraith	1192,25,0,0,0
-gl_chyard.gat,0,0,0,0	monster	Hunter Fly	1035,20,0,0,0
 gl_chyard.gat,0,0,0,0	monster	Evil Druid	1117,10,0,0,0
+gl_chyard.gat,0,0,0,0	monster	Hunter Fly	1035,20,0,0,0
 gl_chyard.gat,0,0,0,0	monster	Mimic	1191,3,0,0,0
 gl_chyard.gat,0,0,0,0	monster	Dark Lord	1272,1,3600000,1800000,1
 
 //==================================================
 // gl_sew01 - Glast Heim Culvert F1
 //==================================================
-gl_sew01.gat,0,0,0,0	monster	Whisper	1179,50,0,0,0
 gl_sew01.gat,0,0,0,0	monster	Gargoyle	1253,30,0,0,0
-gl_sew01.gat,0,0,0,0	monster	Arclouse	1194,10,0,0,0
+gl_sew01.gat,0,0,0,0	monster	Arclouze	1194,10,0,0,0
+gl_sew01.gat,0,0,0,0	monster	Whisper	1179,40,0,0,0
 
 //==================================================
 // gl_sew02 - Glast Heim Culvert F2
 //==================================================
-gl_sew02.gat,0,0,0,0	monster	Gargoyle	1253,60,0,0,0
-gl_sew02.gat,0,0,0,0	monster	Cramp	1209,40,0,0,0
+gl_sew02.gat,0,0,0,0	monster	Gargoyle	1253,55,0,0,0
+gl_sew02.gat,0,0,0,0	monster	Cramp	1209,15,0,0,0
 
 //==================================================
 // gl_sew03 - Glast Heim Culvert F3
 //==================================================
-gl_sew03.gat,0,0,0,0	monster	Sting	1207,78,0,0,0
-gl_sew03.gat,0,0,0,0	monster	Gargoyle	1253,22,0,0,0
+gl_sew03.gat,0,0,0,0	monster	Sting	1207,70,0,0,0
+gl_sew03.gat,0,0,0,0	monster	Gargoyle	1253,37,0,0,0
 gl_sew03.gat,147,7,5,1	monster	Gargoyle	1253,1,2400000,1800000,0
 gl_sew03.gat,140,7,5,1	monster	Gargoyle	1253,1,3600000,1800000,0
 gl_sew03.gat,158,7,5,1	monster	Gargoyle	1253,1,3600000,1800000,0
@@ -155,70 +156,69 @@ gl_sew03.gat,158,7,5,1	monster	Gargoyle	1253,1,3600000,1800000,0
 //==================================================
 // gl_sew04 - Glast Heim Culvert F4
 //==================================================
-gl_sew04.gat,0,0,0,0	monster	Anolian	1206,60,0,0,0
+gl_sew04.gat,0,0,0,0	monster	Anolian	1206,50,0,0,0
 gl_sew04.gat,0,0,0,0	monster	Gargoyle	1253,30,0,0,0
 gl_sew04.gat,0,0,0,0	monster	Drainliar	1111,10,0,0,0
 
 //==================================================
 // gl_step - Glast Heim Staircase Dungeon
 //==================================================
-gl_step.gat,0,0,0,0	monster	Wind Ghost	1263,30,0,0,0
-gl_step.gat,0,0,0,0	monster	Raydric Archer	1276,30,0,0,0
-gl_step.gat,0,0,0,0	monster	Mimic	1191,20,0,0,0
+gl_step.gat,0,0,0,0	monster	Mimic	1191,20,60000,30000,0
+gl_step.gat,0,0,0,0	monster	Raydric Archer	1276,20,0,0,0
+gl_step.gat,0,0,0,0	monster	Wind Ghost	1263,50,0,0,0
 
 //==================================================
 // gl_knt01 - Inside Glast Heim Chivalry F1
 //==================================================
-gl_knt01.gat,0,0,0,0	monster	Raydric	1163,65,0,0,0
-gl_knt01.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
-gl_knt01.gat,33,120,30,30	monster	Rideword	1195,10,120000,60000,1
-gl_knt01.gat,26,223,20,20	monster	Rideword	1195,10,120000,60000,1
-gl_knt01.gat,122,266,0,0	monster	Rideword	1195,1,120000,60000,1
-gl_knt01.gat,0,0,0,0	monster	Raydric Archer	1276,25,0,0,0
-gl_knt01.gat,0,0,0,0	monster	Khalitzburg	1132,20,0,0,0
+gl_knt01.gat,0,0,0,0	monster	Raydric	1163,60,0,0,0
+gl_knt01.gat,0,0,0,0	monster	Raydric Archer	1276,20,0,0,0
+gl_knt01.gat,0,0,0,0	monster	Khalitzburg	1132,10,0,0,0
 gl_knt01.gat,0,0,0,0	monster	Abysmal Knight	1219,10,0,0,0
 gl_knt01.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
-gl_knt01.gat,9,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,8,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,7,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,6,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,5,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,4,184,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,9,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,8,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,7,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,6,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,5,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,4,185,0,0	monster	Black Mushroom	1084,1,360000,180000,1
-gl_knt01.gat,21,278,0,0	monster	Giant Whisper	1186,1,1800000,900000,1
+gl_knt01.gat,21,278,0,0	monster	Giant Whisper	1186,1,3600000,1800000,1
+gl_knt01.gat,122,266,0,0	monster	Rideword	1195,1,120000,60000,1
+gl_knt01.gat,33,120,30,30	monster	Rideword	1195,10,120000,60000,1
+gl_knt01.gat,26,223,20,20	monster	Rideword	1195,10,120000,60000,1
+gl_knt01.gat,9,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,8,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,7,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,6,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,5,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,4,184,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,9,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,8,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,7,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,6,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,5,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
+gl_knt01.gat,4,185,0,0	monster	Black Mushroom	1084,1,3600000,1800000,1
 
 //==================================================
 // gl_knt02 - Inside Glast Heim Chivalry F2
 //==================================================
-gl_knt02.gat,0,0,0,0	monster	Raydric	1163,55,0,0,0
-gl_knt02.gat,0,0,0,0	monster	Raydric Archer	1276,25,0,0,0
-gl_knt02.gat,0,0,0,0	monster	Khalitzburg	1132,20,0,0,0
-gl_knt02.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
-gl_knt02.gat,99,49,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,62,80,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,82,134,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,60,242,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,118,241,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,114,194,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,196,239,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,208,45,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,243,74,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,232,132,5,5	monster	Khalitzburg	1132,1,600000,300000,1
-gl_knt02.gat,0,0,0,0	monster	Abysmal Knight	1219,5,600000,300000,1
-gl_knt02.gat,149,26,5,5	monster	Abysmal Knight	1219,1,600000,300000,1
+gl_knt02.gat,0,0,0,0	monster	Raydric	1163,50,0,0,0
+gl_knt02.gat,0,0,0,0	monster	Raydric Archer	1276,20,0,0,0
+gl_knt02.gat,0,0,0,0	monster	Khalitzburg	1132,30,0,0,0
 gl_knt02.gat,0,0,0,0	monster	Bloody Knight	1268,1,3600000,1800000,1
-gl_knt02.gat,0,0,0,0	monster	Mysteltainn	1203,1,7200000,3600000,0
+gl_knt02.gat,0,0,0,0	monster	Alice	1275,1,0,0,0
+gl_knt02.gat,0,0,0,0	monster	Mysteltainn	1203,1,1800000,1200000,0
+gl_knt02.gat,0,0,0,0	monster	Abysmal Knight	1219,5,0,0,0
+gl_knt02.gat,149,26,5,5	monster	Abysmal Knight	1219,1,3600000,1800000,1
+gl_knt02.gat,99,49,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,62,80,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,82,134,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,60,242,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,118,241,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,114,194,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,196,239,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,208,45,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,243,74,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
+gl_knt02.gat,232,132,5,5	monster	Khalitzburg	1132,1,1800000,900000,1
 
 //==================================================
 // gl_dun01 - The Lowest Cave in Glast Heim F1
 //==================================================
-gl_dun01.gat,0,0,0,0	monster	Arclouse	1194,50,0,0,0
-gl_dun01.gat,0,0,0,0	monster	Sting	1207,50,0,0,0
+gl_dun01.gat,0,0,0,0	monster	Arclouze	1194,50,0,0,0
+gl_dun01.gat,0,0,0,0	monster	Sting	1207,40,0,0,0
 
 //==================================================
 // gl_dun02 - The Lowest Cave in Glast Heim F2
