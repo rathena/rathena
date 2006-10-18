@@ -36,6 +36,9 @@ Date		Added
 	- Sphinx
 	- Prontera Maze
 	- Sunkenship
+	- Beach Dungeon
+	- Pyramid
+	- Geffen Tower
 	* Official kRO 10.1 spawns for the guild dungeons [Playtester]
 10/14
 	* Some more official spawns [Playtester]
