@@ -814,5 +814,8 @@ packet_ver: 19
 0x027F,8
 0x0283,6
 
+//2006-10-17aSakexe
+0x028A,18
+
 // Add new packets here
 packet_ver: 20

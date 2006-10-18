@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/18
+	* Updated the packetdb for the 2006-10-17a client. [Zephiris]
 10/16
 	* Corrected issen's range to 5, as per the login packet information.
 	  [Skotlex]
