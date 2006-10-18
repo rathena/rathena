@@ -29,6 +29,8 @@ Playtester
 
 Date		Added
 ======
+10/18
+	* Official kRO 10.1 spawns for the guild dungeons [Playtester]
 10/14
 	* Some more official spawns [Playtester]
 	* Fully official Juperos and Bio Lab spawns [Playtester]
