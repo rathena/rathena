@@ -149,7 +149,7 @@ c_tower4.gat,104,14,0,0	monster	Mimic	1191,1,1800000,900000,1
 c_tower4.gat,104,27,0,0	monster	Mimic	1191,1,900000,400000,1
 c_tower4.gat,105,24,0,0	monster	Mimic	1191,1,900000,400000,1
 c_tower4.gat,205,105,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,257,109,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4.gat,0,0,0,0	monster	Mimic	1191,1,1800000,900000,1
 c_tower4.gat,148,85,0,0	monster	Mimic	1191,1,1800000,900000,1
 c_tower4.gat,189,51,0,0	monster	Mimic	1191,1,1800000,900000,1
 c_tower4.gat,170,34,0,0	monster	Mimic	1191,1,1800000,900000,1

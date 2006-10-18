@@ -3,52 +3,51 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//=
+//= 1.1 Official kRO 10.1 spawns [Playtester]
 //============================================================
 
 //==================================================
 // In_sphinx1 - Sphinx F1
 //==================================================
-in_sphinx1.gat,0,0,0,0	monster	Zerom	1178,30,0,0,0
-in_sphinx1.gat,0,0,0,0	monster	Drainliar	1111,30,0,0,0
-in_sphinx1.gat,0,0,0,0	monster	Matyr	1146,20,0,0,0
+in_sphinx1.gat,0,0,0,0	monster	Drainliar	1111,40,0,0,0
 in_sphinx1.gat,0,0,0,0	monster	Requiem	1164,20,0,0,0
+in_sphinx1.gat,0,0,0,0	monster	Zerom	1178,20,0,0,0
+in_sphinx1.gat,0,0,0,0	monster	Matyr	1146,10,0,0,0
 
 //==================================================
 // In_sphinx2 - Sphinx F2
 //==================================================
+in_sphinx2.gat,0,0,0,0	monster	Drainliar	1111,15,0,0,0
 in_sphinx2.gat,0,0,0,0	monster	Requiem	1164,50,0,0,0
 in_sphinx2.gat,0,0,0,0	monster	Zerom	1178,50,0,0,0
 in_sphinx2.gat,0,0,0,0	monster	Matyr	1146,20,0,0,0
-in_sphinx2.gat,0,0,0,0	monster	Drainliar	1111,15,0,0,0
 
 //==================================================
 // In_sphinx3 - Sphinx F3
 //==================================================
+in_sphinx3.gat,0,0,0,0	monster	Matyr	1146,30,0,0,0
+in_sphinx3.gat,0,0,0,0	monster	Pasana	1154,10,0,0,0
 in_sphinx3.gat,0,0,0,0	monster	Marduk	1140,30,0,0,0
-in_sphinx3.gat,0,0,0,0	monster	Matyr	1146,25,0,0,0
-in_sphinx3.gat,0,0,0,0	monster	Requiem	1164,22,0,0,0
-in_sphinx3.gat,0,0,0,0	monster	Pasana	1154,15,0,0,0
-in_sphinx3.gat,0,0,0,0	monster	Mimic	1191,10,300000,150000,0
+in_sphinx3.gat,0,0,0,0	monster	Mimic	1191,10,600000,300000,1
 
 //==================================================
 // In_sphinx4 - Sphinx F4
 //==================================================
 in_sphinx4.gat,0,0,0,0	monster	Minorous	1149,50,0,0,0
-in_sphinx4.gat,0,0,0,0	monster	Pasana	1154,20,0,0,0
 in_sphinx4.gat,0,0,0,0	monster	Marduk	1140,15,0,0,0
-in_sphinx4.gat,0,0,0,0	monster	Mimic	1191,4,300000,150000,0
+in_sphinx4.gat,0,0,0,0	monster	Mimic	1191,4,600000,300000,1
+in_sphinx4.gat,0,0,0,0	monster	Pasana	1154,20,0,0,0
 
 //==================================================
 // In_sphinx5 - Sphinx F5
 //==================================================
-in_sphinx5.gat,0,0,0,0	monster	Matyr	1146,30,0,0,0
-in_sphinx5.gat,0,0,0,0	monster	Marduk	1140,30,0,0,0
-in_sphinx5.gat,0,0,0,0	monster	Pasana	1154,30,0,0,0
+in_sphinx5.gat,0,0,0,0	monster	Pasana	1154,50,0,0,0
+in_sphinx5.gat,0,0,0,0	monster	Matyr	1146,10,0,0,0
 in_sphinx5.gat,0,0,0,0	monster	Side Winder	1037,20,0,0,0
-in_sphinx5.gat,0,0,0,0	monster	Mimic	1191,7,0,0,0
+in_sphinx5.gat,0,0,0,0	monster	Marduk	1140,30,0,0,0
+in_sphinx5.gat,0,0,0,0	monster	Mimic	1191,7,600000,300000,1
 in_sphinx5.gat,0,0,0,0	monster	Pharaoh	1157,1,3600000,1800000,1

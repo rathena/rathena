@@ -33,6 +33,9 @@ Date		Added
 	* Official kRO 10.1 spawns for Glastheim [Playtester]
 	- Turtle Island
 	- Clock Tower
+	- Sphinx
+	- Prontera Maze
+	- Sunkenship
 	* Official kRO 10.1 spawns for the guild dungeons [Playtester]
 10/14
 	* Some more official spawns [Playtester]
