@@ -725,11 +725,15 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 	job_exp/=c;
 	if (base_exp/100 > UINT_MAX/bonus)
 		base_exp= UINT_MAX; //Exp overflow
+	else if (base_exp > 10000)
+		base_exp = (base_exp/100)*bonus; //Calculation overflow protection
 	else
 		base_exp = base_exp*bonus/100;
 
 	if (job_exp/100 > UINT_MAX/bonus)
 		job_exp = UINT_MAX;
+	else if (job_exp > 10000)
+		job_exp = (job_exp/100)*bonus;
 	else
 		job_exp = job_exp*bonus/100;
 
