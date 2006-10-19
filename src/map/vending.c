@@ -160,8 +160,8 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 
 		//Logs sold (V)ending items [Lupus]
 		if(log_config.enable_logs&0x4) {
-			log_pick(vsd, "V", 0, vsd->status.cart[idx].nameid, -amount, (struct item*)&vsd->status.cart[idx]);
-			log_pick( sd, "V", 0, vsd->status.cart[idx].nameid,  amount, (struct item*)&vsd->status.cart[idx]);
+			log_pick_pc(vsd, "V", vsd->status.cart[idx].nameid, -amount, (struct item*)&vsd->status.cart[idx]);
+			log_pick_pc( sd, "V", vsd->status.cart[idx].nameid,  amount, (struct item*)&vsd->status.cart[idx]);
 		}
 		//Logs
 

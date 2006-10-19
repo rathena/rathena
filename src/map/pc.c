@@ -2766,7 +2766,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	
 	//Logs items, dropped by (P)layers [Lupus]
 	if(log_config.enable_logs&0x8)
-		log_pick(sd, "P", 0, sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
+		log_pick_pc(sd, "P", sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
 	//Logs
 
 	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 2))
@@ -2969,7 +2969,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		clif_useitemack(sd,n,amount-1,1);
 		//Logs (C)onsumable items [Lupus]
 		if(log_config.enable_logs&0x100)
-			log_pick(sd, "C", 0, sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
+			log_pick_pc(sd, "C", sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
 		//Logs
 		pc_delitem(sd,n,1,1);
 	}
@@ -3249,8 +3249,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	{	//Only invoke logs if item was successfully added (otherwise logs lie about actual item transaction)
 		//Logs items, Stolen from mobs [Lupus]
 		if(log_config.enable_logs&0x80) {
-			log_pick((struct map_session_data*)md, "M", md->class_, itemid, -1, NULL);
-			log_pick(sd, "P", 0, itemid, 1, NULL);
+			log_pick_mob(md, "M", itemid, -1, NULL);
+			log_pick_pc(sd, "P", itemid, 1, NULL);
 		}
 		
 		//A Rare Steal Global Announce by Lupus

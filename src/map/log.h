@@ -13,7 +13,8 @@ extern char db_server_logdb[32];
 #endif //NOT TXT_ONLY
 
 //New logs
-int log_pick(struct map_session_data *sd, char *type, int mob_id, int nameid, int amount, struct item *itm);
+int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm);
+int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm);
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
 
 int log_npc(struct map_session_data *sd, const char *message);

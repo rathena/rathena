@@ -1280,7 +1280,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			if (md->lootitem_count < LOOTITEM_SIZE) {
 				memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
 				if(log_config.enable_logs&0x10)	//Logs items, taken by (L)ooter Mobs [Lupus]
-					log_pick((struct map_session_data*)md, "L", md->class_, md->lootitem[md->lootitem_count-1].nameid, md->lootitem[md->lootitem_count-1].amount, &md->lootitem[md->lootitem_count-1]);
+					log_pick_mob(md, "L", md->lootitem[md->lootitem_count-1].nameid, md->lootitem[md->lootitem_count-1].amount, &md->lootitem[md->lootitem_count-1]);
 			} else {	//Destroy first looted item...
 				if (md->lootitem[0].card[0] == (short)0xff00)
 					intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
@@ -1487,9 +1487,9 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	if(log_config.enable_logs&0x10)
 	{	//Logs items, dropped by mobs [Lupus]
 		if (loot)
-			log_pick((struct map_session_data*)md, "L", md->class_, ditem->item_data.nameid, -ditem->item_data.amount, &ditem->item_data);
+			log_pick_mob(md, "L", ditem->item_data.nameid, -ditem->item_data.amount, &ditem->item_data);
 		else
-			log_pick((struct map_session_data*)md, "M", md->class_, ditem->item_data.nameid, -ditem->item_data.amount, NULL);
+			log_pick_mob(md, "M", ditem->item_data.nameid, -ditem->item_data.amount, NULL);
 	}
 
 	if (dlist->first_sd && dlist->first_sd->state.autoloot &&
@@ -2102,8 +2102,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			
 			if(log_config.enable_logs&0x200)	{//Logs items, MVP prizes [Lupus]
-				log_pick((struct map_session_data*)md, "M", md->class_, item.nameid, -1, NULL);
-				log_pick(mvp_sd, "P", 0, item.nameid, 1, NULL);
+				log_pick_mob(md, "M", item.nameid, -1, NULL);
+				log_pick_pc(mvp_sd, "P", item.nameid, 1, NULL);
 			}
 			break;
 		}

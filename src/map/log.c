@@ -68,7 +68,7 @@ int should_log_item(int filter, int nameid, int amount) {
 int log_branch(struct map_session_data *sd)
 {
 #ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
+	char t_name[NAME_LENGTH*2];
 #endif
 	FILE *logfp;
 
@@ -84,42 +84,33 @@ int log_branch(struct map_session_data *sd)
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_branch,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%s%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex), RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
-	return 0;
+	if((logfp=fopen(log_config.log_branch,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	fprintf(logfp,"%s - %s[%d:%d]\t%s%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex), RETCODE);
+	fclose(logfp);
+	return 1;
 }
 
 
-int log_pick(struct map_session_data *sd, char *type, int mob_id, int nameid, int amount, struct item *itm)
+int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm)
 {
 	FILE *logfp;
 	char *mapname;
-	int obj_id;
 
 	nullpo_retr(0, sd);
 	//Should we log this item? [Lupus]
 	if (!should_log_item(log_config.filter,nameid, amount))
 		return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
 
-	//either PLAYER or MOB (here we get map name and objects ID)
-	if(mob_id) {
-		struct mob_data *md = (struct mob_data*)sd;
-		obj_id = mob_id;
-		mapname = map[md->bl.m].name;
-	} else {
-		obj_id = sd->char_id;
-		mapname = (char*)mapindex_id2name(sd->mapindex);
-	}
+	mapname = (char*)mapindex_id2name(sd->mapindex);
+
 	if(mapname==NULL)
 		mapname="";
 
@@ -129,42 +120,98 @@ int log_pick(struct map_session_data *sd, char *type, int mob_id, int nameid, in
 		if (itm==NULL) {
 		//We log common item
 			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-			 log_config.log_pick_db, obj_id, type, nameid, amount, mapname);
+			 log_config.log_pick_db, sd->char_id, type, nameid, amount, mapname);
 		} else {
 		//We log Extended item
 			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-			 log_config.log_pick_db, obj_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+			 log_config.log_pick_db, sd->char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
 		}
 
 		if(mysql_query(&logmysql_handle, tmp_sql))
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_pick,"a+")) != NULL) {
-			time_t curtime;
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-
-			if (itm==NULL) {
-			//We log common item
-				fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
-					timestring, obj_id, type, nameid, amount, mapname, RETCODE);
-
-			} else {
-			//We log Extended item
-				fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
-					timestring, obj_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
-			}
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
+	if((logfp=fopen(log_config.log_pick,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+
+	if (itm==NULL) {
+	//We log common item
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
+			timestring, sd->char_id, type, nameid, amount, mapname, RETCODE);
+
+	} else {
+	//We log Extended item
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
+			timestring, sd->char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
+	}
+	fclose(logfp);
 	return 1; //Logged
 }
+
+//Mob picked item
+int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm)
+{
+	FILE *logfp;
+	char *mapname;
+
+	nullpo_retr(0, md);
+	//Should we log this item? [Lupus]
+	if (!should_log_item(log_config.filter,nameid, amount))
+		return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
+
+	//either PLAYER or MOB (here we get map name and objects ID)
+	mapname = map[md->bl.m].name;
+	if(mapname==NULL)
+		mapname="";
+
+#ifndef TXT_ONLY
+	if(log_config.sql_logs > 0)
+	{
+		if (itm==NULL) {
+		//We log common item
+			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
+			 log_config.log_pick_db, md->class_, type, nameid, amount, mapname);
+		} else {
+		//We log Extended item
+			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+			 log_config.log_pick_db, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+		}
+
+		if(mysql_query(&logmysql_handle, tmp_sql))
+		{
+			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
+		}
+		return 1;
+	}
+#endif
+	if((logfp=fopen(log_config.log_pick,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+
+	if (itm==NULL) {
+	//We log common item
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
+			timestring, md->class_, type, nameid, amount, mapname, RETCODE);
+
+	} else {
+	//We log Extended item
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
+			timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
+	}
+	fclose(logfp);
+	return 1; //Logged
+}
+
 
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount)
 {
@@ -182,18 +229,18 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-//		if((logfp=fopen(log_config.log_zeny,"a+")) != NULL) {
-//			time(&curtime);
-//			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-//			fprintf(logfp,"%s - %s[%d]\t%s[%d]\t%d\t%s", timestring, sd->status.name, sd->status.account_id, target_sd->status.name, target_sd->status.account_id, sd->deal.zeny, RETCODE);
-//			fclose(logfp);
-//		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
+//		if((logfp=fopen(log_config.log_zeny,"a+")) == NULL)
+//			return 0;
+//		time(&curtime);
+//		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+//		fprintf(logfp,"%s - %s[%d]\t%s[%d]\t%d\t%s", timestring, sd->status.name, sd->status.account_id, target_sd->status.name, target_sd->status.account_id, sd->deal.zeny, RETCODE);
+//		fclose(logfp);
+//		return 1;
 	return 0;
 }
 
@@ -212,18 +259,17 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_mvpdrop,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
+	if((logfp=fopen(log_config.log_mvpdrop,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], RETCODE);
+	fclose(logfp);
 	return 0;
 }
 
@@ -232,8 +278,8 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 {
 	FILE *logfp;
 #ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
-		char t_msg[MESSAGE_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
+	char t_name[NAME_LENGTH*2];
+	char t_msg[MESSAGE_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
 #endif
 
 	if(!log_config.enable_logs)
@@ -248,28 +294,27 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_gm,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
-	return 0;
+	if((logfp=fopen(log_config.log_gm,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
+	fclose(logfp);
+	return 1;
 }
 
 int log_npc(struct map_session_data *sd, const char *message)
 {	//[Lupus]
 	FILE *logfp;
-	#ifndef TXT_ONLY
-		char t_name[NAME_LENGTH*2];
-		char t_msg[255+1]; //it's 255 chars MAX. 
-	#endif
+#ifndef TXT_ONLY
+	char t_name[NAME_LENGTH*2];
+	char t_msg[255+1]; //it's 255 chars MAX. 
+#endif
 
 	if(!log_config.enable_logs)
 		return 0;
@@ -283,19 +328,18 @@ int log_npc(struct map_session_data *sd, const char *message)
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			return 0;
 		}
-	} else {
-#endif
-		if((logfp=fopen(log_config.log_npc,"a+")) != NULL) {
-			time(&curtime);
-			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
-			fclose(logfp);
-		}
-#ifndef TXT_ONLY
+		return 1;
 	}
 #endif
-	return 0;
+	if((logfp=fopen(log_config.log_npc,"a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
+	fclose(logfp);
+	return 1;
 }
 
 //ChatLogging
@@ -317,11 +361,10 @@ int log_npc(struct map_session_data *sd, const char *message)
 //log_chat: 18	= logs only Whisper, when WOE is off
 
 int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, int x, int y, char *dst_charname, char *message){
+	FILE *logfp;
 #ifndef TXT_ONLY
 	char t_charname[NAME_LENGTH*2];
 	char t_msg[MESSAGE_SIZE*2+1]; //Chat line fully escaped, with an extra space just in case.
-#else
-	FILE *logfp;
 #endif
 	
 	//Check ON/OFF
@@ -336,27 +379,20 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 		if(mysql_query(&logmysql_handle, tmp_sql)){
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return -1;	
-		}else{
-			return 0;
+			return 0;	
 		}
-	}			
-#endif
-
-#ifdef TXT_ONLY
-	if((logfp = fopen(log_config.log_chat, "a+")) != NULL){
-		time(&curtime);
-		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-		//DATE - type,type_id,src_charid,src_accountid,src_map,src_x,src_y,dst_charname,message
-		fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s%s", 
-			timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message, RETCODE);
-		fclose(logfp);
-		return 0;
-	}else{
-		return -1;
+		return 1;
 	}
 #endif
-return -1;
+	if((logfp = fopen(log_config.log_chat, "a+")) == NULL)
+		return 0;
+	time(&curtime);
+	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	//DATE - type,type_id,src_charid,src_accountid,src_map,src_x,src_y,dst_charname,message
+	fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s%s", 
+		timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message, RETCODE);
+	fclose(logfp);
+	return 1;
 }
 
 
