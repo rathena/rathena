@@ -615,7 +615,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 		case TK_COUNTER: //Increase Triple Attack rate of Monks.
 			if (!p->state.monk) return 0;
 			break;
-		case MO_TRIPLEATTACK: //Increase Counter rate of Star Gladiators
+		case MO_COMBOFINISH: //Increase Counter rate of Star Gladiators
 			if (!p->state.sg) return 0;
 			break;
 		case AM_TWILIGHT2: //Twilight Pharmacy, requires Super Novice
@@ -629,21 +629,24 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 	for(i=0;i<MAX_PARTY;i++){
 		if ((p_sd = p->data[i].sd) == NULL)
 			continue;
+		if (sd->bl.m != p_sd->bl.m)
+			continue;
 		switch(skillid) {
 			case TK_COUNTER: //Increase Triple Attack rate of Monks.
 				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_MONK
-					&& sd->bl.m == p_sd->bl.m
 					&& pc_checkskill(p_sd,MO_TRIPLEATTACK)) {
-					int rate = 50 +50*skilllv; //+100/150/200% success rate
-					sc_start4(&p_sd->bl,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,rate,0,0,skill_get_time(SG_FRIEND, 1));
+					sc_start4(&p_sd->bl,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,
+						50+50*skilllv, //+100/150/200% rate
+						0,0,skill_get_time(SG_FRIEND, 1));
 				}
 				break;
-			case MO_TRIPLEATTACK: //Increase Counter rate of Star Gladiators
+			case MO_COMBOFINISH: //Increase Counter rate of Star Gladiators
 				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR
-					&& sd->bl.m == p_sd->bl.m
-					&& pc_checkskill(p_sd,TK_COUNTER)) {
-					int rate = 50 +50*pc_checkskill(p_sd,TK_COUNTER); //+100/150/200% success rate
-					sc_start4(&p_sd->bl,SC_SKILLRATE_UP,100,TK_COUNTER,rate,0,0,skill_get_time(SG_FRIEND, 1));
+					&& sd->sc.data[SC_READYCOUNTER].timer != -1
+					&& pc_checkskill(p_sd,SG_FRIEND)) {
+					sc_start4(&p_sd->bl,SC_SKILLRATE_UP,100,TK_COUNTER,
+						50+50*pc_checkskill(p_sd,SG_FRIEND), //+100/150/200% rate
+						0,0,skill_get_time(SG_FRIEND, 1));
 				}
 				break;
 		}

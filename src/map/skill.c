@@ -1934,8 +1934,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		switch(skillid)
 		{
 			case MO_TRIPLEATTACK:
-				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
-					party_skill_check(sd, sd->status.party_id, MO_TRIPLEATTACK, skilllv);
 				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0)
 					flag=1;
 				break;
@@ -1944,6 +1942,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					flag=1;
 				break;
 			case MO_COMBOFINISH:
+				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
+					party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skilllv);
 				if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0)
 					flag=1;
 			case CH_TIGERFIST:

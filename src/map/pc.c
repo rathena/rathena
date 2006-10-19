@@ -3182,7 +3182,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 {
 	static int i = 0;
-	int rate,itemid,flag;
+	int old_i,rate,itemid,flag;
 	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 	struct item tmp_item;
