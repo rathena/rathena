@@ -29,6 +29,11 @@ Playtester
 
 Date		Added
 ======
+10/19
+	* Official kRO 10.1 spawns for Byalan [Playtester]
+	- Payon Cave
+	- Toy Factory
+	- Lutie Field
 10/18
 	* Llyr fixed The_Sign_Quest [Lupus]
 	* Official kRO 10.1 spawns for Glastheim [Playtester]

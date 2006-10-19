@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 added Garm Baby according to May 10 patch
+//= 1.2 Official kRO 10.1 spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -15,5 +16,5 @@
 //==================================================
 xmas_fild01.gat,0,0,0,0	monster	Marin	1242,35,0,0,0
 xmas_fild01.gat,0,0,0,0	monster	Sasquatch	1243,20,0,0,0
-xmas_fild01.gat,0,0,0,0	monster	Garm Baby	1515,1,1800000,900000,1
+xmas_fild01.gat,0,0,0,0	monster	Garm Baby	1515,1,1800000,0,0
 xmas_fild01.gat,0,0,0,0	monster	Garm	1252,1,7200000,3600000,1

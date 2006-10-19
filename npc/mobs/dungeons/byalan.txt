@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//=
+//= 1.1 Official kRO 10.1 spawns for 1-4 [Playtester]
 //============================================================
 
 //==================================================
@@ -15,39 +15,40 @@
 //==================================================
 iz_dun00.gat,0,0,0,0	monster	Plankton	1161,65,0,0,0
 iz_dun00.gat,0,0,0,0	monster	Marina	1141,45,0,0,0
-iz_dun00.gat,0,0,0,0	monster	Kukre	1070,30,0,0,0
-iz_dun00.gat,0,0,0,0	monster	Vadon	1066,30,0,0,0
+iz_dun00.gat,0,0,0,0	monster	Kukre	1070,15,0,0,0
 iz_dun00.gat,0,0,0,0	monster	Hydra	1068,15,0,0,0
-iz_dun00.gat,0,0,0,0	monster	Black Mushroom	1084,5,360000,180000,1
+iz_dun00.gat,0,0,0,0	monster	Vadon	1066,15,0,0,0
+iz_dun00.gat,0,0,0,0	monster	Black Mushroom	1084,5,180000,90000,1
 
 //==================================================
 // iz_dun01 - Undersea Tunnel F2
 //==================================================
-iz_dun01.gat,0,0,0,0	monster	Vadon	1066,60,0,0,0
-iz_dun01.gat,0,0,0,0	monster	Kukre	1070,50,0,0,0
-iz_dun01.gat,0,0,0,0	monster	Marina	1141,40,0,0,0
-iz_dun01.gat,0,0,0,0	monster	Cornutus	1067,30,0,0,0
-iz_dun01.gat,0,0,0,0	monster	Hydra	1068,30,0,0,0
 iz_dun01.gat,0,0,0,0	monster	Plankton	1161,10,0,0,0
-iz_dun01.gat,0,0,0,0	monster	Black Mushroom	1084,10,360000,180000,1
+iz_dun01.gat,0,0,0,0	monster	Marina	1141,15,0,0,0
+iz_dun01.gat,0,0,0,0	monster	Kukre	1070,50,0,0,0
+iz_dun01.gat,0,0,0,0	monster	Hydra	1068,30,0,0,0
+iz_dun01.gat,0,0,0,0	monster	Vadon	1066,60,0,0,0
+iz_dun01.gat,0,0,0,0	monster	Cornutus	1067,15,300000,150000,1
+iz_dun01.gat,0,0,0,0	monster	Black Mushroom	1084,10,180000,90000,1
 
 //==================================================
 // iz_dun02 - Undersea Tunnel F3
 //==================================================
+iz_dun02.gat,0,0,0,0	monster	Hydra	1068,40,0,0,0
 iz_dun02.gat,0,0,0,0	monster	Cornutus	1067,60,0,0,0
 iz_dun02.gat,0,0,0,0	monster	Marse	1144,40,0,0,0
 iz_dun02.gat,0,0,0,0	monster	Obeaune	1044,40,0,0,0
-iz_dun02.gat,0,0,0,0	monster	Hydra	1068,40,0,0,0
 iz_dun02.gat,0,0,0,0	monster	Merman	1264,1,0,0,0
-iz_dun02.gat,0,0,0,0	monster	Black Mushroom	1084,15,360000,180000,1
+iz_dun02.gat,0,0,0,0	monster	Black Mushroom	1084,15,180000,90000,1
 
 //==================================================
 // iz_dun03 - Undersea Tunnel F4
 //==================================================
-iz_dun03.gat,0,0,0,0	monster	Phen	1158,45,0,0,0
-iz_dun03.gat,0,0,0,0	monster	Marc	1045,40,0,0,0
-iz_dun03.gat,0,0,0,0	monster	Swordfish	1069,40,0,0,0
 iz_dun03.gat,0,0,0,0	monster	Hydra	1068,10,0,0,0
+iz_dun03.gat,0,0,0,0	monster	Phen	1158,45,0,0,0
+iz_dun03.gat,0,0,0,0	monster	Marine Sphere	1142,20,0,0,0
+iz_dun03.gat,0,0,0,0	monster	Swordfish	1069,40,0,0,0
+iz_dun03.gat,0,0,0,0	monster	Marc	1045,40,0,0,0
 iz_dun03.gat,203,59,0,0	monster	Hydra	1068,1,312000,150000,0
 iz_dun03.gat,203,56,0,0	monster	Hydra	1068,1,323000,150000,0
 iz_dun03.gat,203,53,0,0	monster	Hydra	1068,1,317000,150000,0
@@ -78,15 +79,15 @@ iz_dun03.gat,180,251,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03.gat,178,253,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03.gat,108,249,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03.gat,80,163,0,0	monster	Hydra	1068,1,300000,150000,0
-iz_dun03.gat,0,0,0,0	monster	Marine Sphere	1142,20,0,0,0
 iz_dun03.gat,0,0,0,0	monster	Merman	1264,3,0,0,0
 
 //==================================================
 // iz_dun04 - Undersea Tunnel F5
 //==================================================
-iz_dun04.gat,0,0,0,0	monster	Merman	1264,50,0,0,0
 iz_dun04.gat,0,0,0,0	monster	Marine Sphere	1142,10,0,0,0
 iz_dun04.gat,0,0,0,0	monster	Swordfish	1069,10,0,0,0
+iz_dun04.gat,0,0,0,0	monster	Merman	1264,50,0,0,0
+iz_dun04.gat,0,0,0,0	monster	Strouf	1065,50,0,0,0
 iz_dun04.gat,58,135,0,0	monster	Hydra	1068,1,305000,150000,0
 iz_dun04.gat,61,135,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04.gat,42,129,0,0	monster	Hydra	1068,1,312000,150000,0
@@ -105,5 +106,4 @@ iz_dun04.gat,111,35,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04.gat,69,243,0,0	monster	Hydra	1068,1,321000,150000,0
 iz_dun04.gat,124,233,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04.gat,134,233,0,0	monster	Hydra	1068,1,305000,150000,0
-iz_dun04.gat,0,0,0,0	monster	Strouf	1065,50,0,0,0
 iz_dun04.gat,95,147,0,0	monster	Deviace	1108,3,600000,300000,0
