@@ -1031,7 +1031,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if(dstmd && dstmd->state.steal_flag<battle_config.skill_steal_max_tries && sd->status.weapon != W_BOW &&
 				(skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
 				(skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rand()%1000) {
-				if(pc_steal_item(sd,bl))
+				if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
 					clif_skill_nodamage(src,bl,TF_STEAL,skill,1);
 				else
 					clif_skill_fail(sd,RG_SNATCHER,0,0);
@@ -1896,7 +1896,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	type=(skillid==0)?5:skill_get_hit(skillid);
 
 	if(damage < dmg.div_ 
-		&& skillid != CH_PALMSTRIKE) //Palm Strike is the only skill that will knockback even if it misses. [Skotlex]
+		//Only skills that knockback even when they miss. [Skotlex]
+		&& skillid != CH_PALMSTRIKE
+		&& skillid != HT_PHANTASMIC)
 		dmg.blewcount = 0;
 
 	if(skillid == CR_GRANDCROSS||skillid == NPC_GRANDDARKNESS) {
@@ -1906,8 +1908,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	if(sd) {
-		//Sorry for removing the Japanese comments, but they were actually distracting 
-		//from the actual code and I couldn't understand a thing anyway >.< [Skotlex]
+		int flag = 0; //Used to signal if this skill can be combo'ed later on.
 		if (sd->sc.data[SC_COMBO].timer!=-1)
 		{	//End combo state after skill is invoked. [Skotlex]
 			switch (skillid) {
@@ -1933,65 +1934,29 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		switch(skillid)
 		{
 			case MO_TRIPLEATTACK:
-			{
-				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0)
-					delay += 300 * battle_config.combo_delay_rate / 100;
-				sc_start(src,SC_COMBO,100,MO_TRIPLEATTACK,delay);
-				clif_combo_delay(src, delay);
-				
 				if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
 					party_skill_check(sd, sd->status.party_id, MO_TRIPLEATTACK, skilllv);
+				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0)
+					flag=1;
 				break;
-			}
 			case MO_CHAINCOMBO:
-			{
-				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
 				if(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0)
-					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start(src,SC_COMBO,100,MO_CHAINCOMBO,delay);
-				clif_combo_delay(src,delay);
+					flag=1;
 				break;
-			}
 			case MO_COMBOFINISH:
-			{
-				int delay = 700 - 4*sstatus->agi - 2*sstatus->dex;
-				if (
-					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
-					(pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) ||
-					(pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1)
-				)
-					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start(src,SC_COMBO,100,MO_COMBOFINISH,delay);
-				clif_combo_delay(src,delay);
-				break;
-			}
+				if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0)
+					flag=1;
 			case CH_TIGERFIST:
-			{	//Tigerfist is now a combo-only skill. [Skotlex]
-				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(
-					(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 3 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1) ||
-					(pc_checkskill(sd, CH_CHAINCRUSH) > 0)
-				)
-					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start(src,SC_COMBO,100,CH_TIGERFIST,delay);
-				clif_combo_delay(src,delay);
-				break;
-			}
+				if (!flag && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1)
+					flag=1;
 			case CH_CHAINCRUSH:
-			{
-				int delay = 1000 - 4*sstatus->agi - 2*sstatus->dex;
-				if(pc_checkskill(sd, MO_EXTREMITYFIST) > 0 &&
-					sd->spiritball >= 1 &&
-					sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1)
-					delay += 300 * battle_config.combo_delay_rate /100;
-				sc_start(src,SC_COMBO,100,CH_CHAINCRUSH,delay);
-				clif_combo_delay(src,delay);
+				if (!flag && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.data[SC_EXPLOSIONSPIRITS].timer != -1)
+					flag=1;
 				break;
-			}
 			case AC_DOUBLE:
 				if((tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT) &&
-					pc_checkskill(sd, HT_POWER)) {
+					pc_checkskill(sd, HT_POWER))
+				{
 					//TODO: This code was taken from Triple Blows, is this even how it should be? [Skotlex]
 					sc_start4(src,SC_COMBO,100,HT_POWER,bl->id,0,0,2000);
 					clif_combo_delay(src,2000);
@@ -2014,6 +1979,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
 				break;
 		}	//Switch End
+		if (flag) { //Possible to chain
+			flag = DIFF_TICK(sd->ud.canact_tick, tick);
+			if (flag < 0) flag = 0;
+			flag += 300 * battle_config.combo_delay_rate/100;
+			sc_start(src,SC_COMBO,100,skillid,flag);
+			clif_combo_delay(src, flag);
+		}
 	}
 
 	//Display damage.
@@ -4223,7 +4195,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case TF_STEAL:
 		if(sd) {
-			if(pc_steal_item(sd,bl))
+			if(pc_steal_item(sd,bl,skilllv))
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			else
 				clif_skill_fail(sd,skillid,0x0a,0);
@@ -8613,7 +8585,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 
 	if (bl->type&battle_config.no_skill_delay)
 		return battle_config.min_skill_delay_limit; 
-	
+
 	// instant cast attack skills depend on aspd as delay [celest]
 	if (time == 0) {
 		if (skill_get_type(skill_id)&(BF_WEAPON|BF_MISC) && !(skill_get_nk(skill_id)&NK_NO_DAMAGE))
@@ -8623,13 +8595,24 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	} else if (time < 0)
 		time = -time + status_get_amotion(bl);	// if set to <0, the attack motion is added.
 	else //Agi reduction should apply only to non-zero delay skills.
-	if (battle_config.delay_dependon_agi && !(delaynochange&1))
-	{	// if skill casttime is allowed to be reduced by dex
-		int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
-		if (scale > 0)
-			time = time * scale / battle_config.castrate_dex_scale;
-		else //To be capped later to minimum.
-			time = 0;
+	switch (skill_id)
+  	{	//Monk combo skills have their delay reduced by agi/dex.
+	case MO_TRIPLEATTACK:
+	case MO_CHAINCOMBO:
+	case MO_COMBOFINISH:
+	case CH_TIGERFIST:
+	case CH_CHAINCRUSH:
+		time -= 4*status_get_agi(bl) - 2*status_get_dex(bl);
+		break;
+	default:
+		if (battle_config.delay_dependon_agi && !(delaynochange&1))
+		{	// if skill casttime is allowed to be reduced by dex
+			int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
+			if (scale > 0)
+				time = time * scale / battle_config.castrate_dex_scale;
+			else //To be capped later to minimum.
+				time = 0;
+		}
 	}
 
 	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayrate != 100)

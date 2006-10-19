@@ -3179,9 +3179,10 @@ int pc_show_steal(struct block_list *bl,va_list ap)
  *------------------------------------------
  */
 //** pc.c:
-int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
+int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 {
-	int i,skill,itemid,flag;
+	static int i = 0;
+	int rate,itemid,flag;
 	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 	struct item tmp_item;
@@ -3193,33 +3194,43 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl)
 	md_status= status_get_status_data(bl);
 	md = (TBL_MOB *)bl;
 
-	if(md->state.steal_flag>=battle_config.skill_steal_max_tries || md_status->mode&MD_BOSS || md->master_id ||
+	if(md->state.steal_flag>=battle_config.skill_steal_max_tries ||
+		md_status->mode&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
 		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
-		md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1 //status change check
+		md->sc.opt1 //status change check
   	)
 		return 0;
 	
-	skill = battle_config.skill_steal_type == 1
-		? (sd_status->dex - md_status->dex)/2 + pc_checkskill(sd,TF_STEAL)*6 + 10
-		: sd_status->dex - md_status->dex + pc_checkskill(sd,TF_STEAL)*3 + 10;
+	rate = battle_config.skill_steal_type
+		? (sd_status->dex - md_status->dex)/2 + lv*6 + 10
+		: sd_status->dex - md_status->dex + lv*3 + 10;
 
-	skill+= sd->add_steal_rate; //Better make the steal_Rate addition affect % rather than an absolute on top of the total drop rate. [Skotlex]
+	rate += sd->add_steal_rate; //Better make the steal_Rate addition affect % rather than an absolute on top of the total drop rate. [Skotlex]
 		
-	if (skill < 1)
+	if (rate < 1)
 		return 0;
 
 	md->state.steal_flag++; //increase steal tries number
 
-	for(i = 0; i<MAX_MOB_DROP; i++)//Pick one mobs drop slot.
-	{
-		itemid = md->db->dropitem[i].nameid;
-		if(itemid <= 0 || (itemid>4000 && itemid<5000 && pc_checkskill(sd,TF_STEAL) <= 5))
-			continue;
-		if(rand() % 10000 < md->db->dropitem[i].p*skill/100)
-			break;
+	//preliminar statistical data hints at this behaviour:
+	//each steal attempt: try to steal against ONE mob drop, and no more.
+	//We use a static index to prevent giving priority to any of the slots.
+	old_i = i;
+	do {
+		i++;
+		if (i == MAX_MOB_DROP-1 && lv <= 5)
+			continue; //Cannot steal "last slot" (card slot)
+		if (i == MAX_MOB_DROP)
+			i = 0;
+	} while (md->db->dropitem[i].p <= 0 && old_i != i);
+
+	if(old_i == i) {
+		md->state.steal_flag = UCHAR_MAX; //Tag for speed up in case you reinsist
+		return 0; //Mob has nothing stealable!
 	}
-	if (i == MAX_MOB_DROP)
+
+	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
 		return 0;
 	
 	md->state.steal_flag = UCHAR_MAX; //you can't steal from this mob any more

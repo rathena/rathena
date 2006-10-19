@@ -41,27 +41,27 @@ prtg_cas02.gat	mapflag	gvg_castle
 prtg_cas03.gat	mapflag	gvg_castle
 prtg_cas04.gat	mapflag	gvg_castle
 prtg_cas05.gat	mapflag	gvg_castle
-//Also set monster_noteleport to prevent MVPs from "escaping".
-aldeg_cas01.gat	mapflag	monster_noteleport
-aldeg_cas02.gat	mapflag	monster_noteleport
-aldeg_cas03.gat	mapflag	monster_noteleport
-aldeg_cas04.gat	mapflag	monster_noteleport
-aldeg_cas05.gat	mapflag	monster_noteleport
-gefg_cas01.gat	mapflag	monster_noteleport
-gefg_cas02.gat	mapflag	monster_noteleport
-gefg_cas03.gat	mapflag	monster_noteleport
-gefg_cas04.gat	mapflag	monster_noteleport
-gefg_cas05.gat	mapflag	monster_noteleport
-payg_cas01.gat	mapflag	monster_noteleport
-payg_cas02.gat	mapflag	monster_noteleport
-payg_cas03.gat	mapflag	monster_noteleport
-payg_cas04.gat	mapflag	monster_noteleport
-payg_cas05.gat	mapflag	monster_noteleport
-prtg_cas01.gat	mapflag	monster_noteleport
-prtg_cas02.gat	mapflag	monster_noteleport
-prtg_cas03.gat	mapflag	monster_noteleport
-prtg_cas04.gat	mapflag	monster_noteleport
-prtg_cas05.gat	mapflag	monster_noteleport
+//Uncomment to disable monsters teleporting (prevents them from "escaping" when rude attacked)
+//aldeg_cas01.gat	mapflag	monster_noteleport
+//aldeg_cas02.gat	mapflag	monster_noteleport
+//aldeg_cas03.gat	mapflag	monster_noteleport
+//aldeg_cas04.gat	mapflag	monster_noteleport
+//aldeg_cas05.gat	mapflag	monster_noteleport
+//gefg_cas01.gat	mapflag	monster_noteleport
+//gefg_cas02.gat	mapflag	monster_noteleport
+//gefg_cas03.gat	mapflag	monster_noteleport
+//gefg_cas04.gat	mapflag	monster_noteleport
+//gefg_cas05.gat	mapflag	monster_noteleport
+//payg_cas01.gat	mapflag	monster_noteleport
+//payg_cas02.gat	mapflag	monster_noteleport
+//payg_cas03.gat	mapflag	monster_noteleport
+//payg_cas04.gat	mapflag	monster_noteleport
+//payg_cas05.gat	mapflag	monster_noteleport
+//prtg_cas01.gat	mapflag	monster_noteleport
+//prtg_cas02.gat	mapflag	monster_noteleport
+//prtg_cas03.gat	mapflag	monster_noteleport
+//prtg_cas04.gat	mapflag	monster_noteleport
+//prtg_cas05.gat	mapflag	monster_noteleport
 
 // Novice Guild Castles ===
 //n_castle.gat	mapflag	gvg_castle
@@ -70,10 +70,10 @@ nguild_gef.gat	mapflag	gvg_castle
 nguild_pay.gat	mapflag	gvg_castle
 nguild_prt.gat	mapflag	gvg_castle
 
-nguild_alde.gat	mapflag	monster_noteleport
-nguild_gef.gat	mapflag	monster_noteleport
-nguild_pay.gat	mapflag	monster_noteleport
-nguild_prt.gat	mapflag	monster_noteleport
+//nguild_alde.gat	mapflag	monster_noteleport
+//nguild_gef.gat	mapflag	monster_noteleport
+//nguild_pay.gat	mapflag	monster_noteleport
+//nguild_prt.gat	mapflag	monster_noteleport
 
 // Guild Dungeons =========
 gld_dun01.gat	mapflag	gvg_dungeon

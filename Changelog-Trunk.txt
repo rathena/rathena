@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/19
+	* Phantasmic arrow now knockbacks even if it misses. [Skotlex]
+	* Adjusted the way Monk combo times work. The combo time is now always
+	  300ms (adjusted by combo_delay_rate) which takes effect inmediately AFTER
+	  your current skill's canact-delay (which is why the particular skill delays
+	  were moved to skillcast_db) [Skotlex]
+	* Modified skill_delayfix so it performs the can-act reduction from agi/dex
+	  for combos there. [Skotlex]
+	* Modified pc_steal_item so that it behaves more closely to the way it does
+	  on Aegis. [Skotlex]
 2006/10/18
 	* Added a overflow check when calculating party exp share. [Skotlex]
 2006/10/16

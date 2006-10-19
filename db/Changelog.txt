@@ -19,6 +19,12 @@
 	-----
 
 ========================
+10/19
+	* Added the actual skill delay of 1000ms to Triple Attack and Chain combo
+	  in skill_cast_db. Added Combo Finish and TigerFist as well with a delay of
+	  700ms. [Skotlex]
+	* Added the Monk combos to skill_castnodex so their delay is not decreased
+	  by skills. [Skotlex]
 10/18
 	* Updated the packetdb for the 2006-10-17a client. [Zephiris]
 10/16
