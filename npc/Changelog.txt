@@ -34,6 +34,9 @@ Date		Added
 	- Payon Cave
 	- Toy Factory
 	- Lutie Field
+	- Anthell
+	- Orc Dungeon
+	- Coal Mine
 10/18
 	* Llyr fixed The_Sign_Quest [Lupus]
 	* Official kRO 10.1 spawns for Glastheim [Playtester]
