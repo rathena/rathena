@@ -4,7 +4,7 @@
 //= eAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //===== Current Version: ===================================== 
-//= 5.4a
+//= 5.4b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -38,6 +38,7 @@
 //= 5.4 added -Guide option (Kafra shows you nearest Guide) Work in progress. 
 //=	Need all coords for all guides.. and somehow pass their coords to kafra.
 //=	Removed universal Kafra Pass, added 3 new Kafra Tickets [Lupus]
+//= 5.4b temporary moved "-Guide" from the 1st menu punct [Lupus]
 //============================================================ 
 
 
@@ -92,20 +93,20 @@ function	script	F_Kafra	{
 			break;
 		//Common w/o teleport
 		case 3: 
-			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Rent a Cart","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Save","-Use Storage","-Rent a Cart","-Guide","-Other Information Check","-Cancel";
 			break;
 		//Case 4 is Einbroch no tele message.
 		//Common w/o save and teleport
 		case 5:
-			setarray @K_Menu0$[0],"-Guide","-Use Storage","-Rent a Cart","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Use Storage","-Rent a Cart","-Other Information Check","-Guide","-Cancel";
 			break;
 		//Only storage and other info check
 		case 6:
-			setarray @K_Menu0$[0],"-Guide","-Use Storage","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Use Storage","-Guide","-Other Information Check","-Cancel";
 			break;
 		//Common Kafra
 		default:
-			setarray @K_Menu0$[0],"-Guide","-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Guide","-Other Information Check","-Cancel";
 			break;
 	}
 	if(getarg(0)==2) {

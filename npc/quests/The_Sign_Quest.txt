@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -18,6 +18,10 @@
 //= 1.2 Fixed a minor bug that prevented people from advancing [MasterOfMuppets]
 //= 	quest at one point.
 //= 1.3 Removed duplicates [Toms]
+//= 1.4 Fixed a bug in Dearles script where it was checking for the wrong items.
+//=     Fixed a major bug that was allowing players to continue before
+//=     getting all the Sobbing Starlight pieces.
+//=     Also moved the Alberta sign since another NPC was on top of it. [Llyr]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -38,7 +42,7 @@ OnInit:
 }
 //============================================================
 
-alberta.gat,35,241,1	script	Sign::GeffeniaSigns	111,{
+alberta.gat,34,241,1	script	Sign::GeffeniaSigns	111,{
 
 	if($signbmps)
 {
@@ -3925,9 +3929,14 @@ L_Check:
 	if(countitem(741))set @dearles_check,@dearles_check+1;
 	if(countitem(742))set @dearles_check,@dearles_check+1;
 	if(countitem(743))set @dearles_check,@dearles_check+2;
-	if(countitem(744))set @dearles_check,@dearles_check+1;
-	if(countitem(745))set @dearles_check,@dearles_check+1;
-	if(countitem(746))set @dearles_check,@dearles_check+1;
+	// Was checking the wrong items here [Llyr]
+	// Script was checking for:
+	// Bouquet (ID: 744) instead of Red Frame (ID: 734)
+	// Wedding Bouquet (ID: 745) instead of Chung Jah (ID: 735)
+	// Glass Bead (ID: 746) instead of China (ID: 736)
+	if(countitem(734))set @dearles_check,@dearles_check+1;
+	if(countitem(735))set @dearles_check,@dearles_check+1;
+	if(countitem(736))set @dearles_check,@dearles_check+1;
 	if(countitem(747))set @dearles_check,@dearles_check+2;
 	if(countitem(750))set @dearles_check,@dearles_check+10;
 	if(countitem(751))set @dearles_check,@dearles_check+12;
@@ -5407,18 +5416,6 @@ L_Never:
 
 
 geffen_in.gat,159,48,5	script	Woman	711,{
-
-	if(!signquest)
-	{
-	mes "[Brenda Howard]";
-	mes "Hmm...";
-	mes "What should I make for";
-	mes "dinner today? Pickled cabbage?";
-	mes "I learned how to make it a while";
-	mes "ago, but I've never gotten the";
-	mes "chance to make it yet...";
-	close;
-	}
 	if(signquest > 22) goto L_Cherish;
 	if(signquest > 19) goto L_Done;
 	if(signquest == 19 && countitem(7278)) goto L_Letter;
@@ -5450,7 +5447,18 @@ geffen_in.gat,159,48,5	script	Woman	711,{
 	mes "cabbage will turn out?";
 	set @signbrenda,1;
 	close;
-}	
+}
+	// Script could get to this point if the variable "signquest" was non-zero
+	// It would then continue running at the label "L_Husband" [Llyr]
+
+	mes "[Brenda Howard]";
+	mes "Hmm...";
+	mes "What should I make for";
+	mes "dinner today? Pickled cabbage?";
+	mes "I learned how to make it a while";
+	mes "ago, but I've never gotten the";
+	mes "chance to make it yet...";
+	close;
 
 L_Husband:
 	mes "[Brenda Howard]";
