@@ -2134,17 +2134,26 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		mob_script_callback(md, src, CALLBACK_DEAD);
 	else if(md->npc_event[0]){
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
-		if(src && src->type == BL_PET)
-			sd = ((struct pet_data *)src)->msd;
-		if(sd && battle_config.mob_npc_event_type)
+		if(src) 
+		switch (src->type) {
+		case BL_PET:
+			sd = ((TBL_PET*)src)->msd;
+			break;
+		case BL_HOM:
+			sd = ((TBL_HOM*)src)->master;
+			break;
+		}
+		if(sd && battle_config.mob_npc_event_type) {
+			pc_setglobalreg(sd,"killerrid",sd->bl.id);
 			npc_event(sd,md->npc_event,0);
-		else if(mvp_sd)
+		} else if(mvp_sd) {
+			pc_setglobalreg(mvp_sd,"killerrid",sd?sd->bl.id:0);
 			npc_event(mvp_sd,md->npc_event,0);
+		}
 		md->status.hp = 1;
-	} else if (mvp_sd) {	//lordalfa
+	} else if (mvp_sd && mvp_sd->state.event_kill_mob) {	//lordalfa
 		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
-		if(mvp_sd->state.event_kill_mob)
-			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
+		npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}
 
 	if(md->deletetimer!=-1) {

@@ -1,5 +1,10 @@
 Date	Added
 
+2006/10/20
+	* Added config setting "summon_flora_setting" (skill.conf), with it you can
+	  decide now two things: a. Whether or not players can harm your floras
+	  outside versus grounds, and b. Whether or not you can summon out and mix
+	  different types of plants at the same time. [Skotlex]
 2006/10/19
 	* Commented out the monster_noteleport mapflag from the guild castles as
 	  this is the Aegis behaviour [Skotlex]

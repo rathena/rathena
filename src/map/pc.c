@@ -3236,6 +3236,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	md->state.steal_flag = UCHAR_MAX; //you can't steal from this mob any more
 	
 	malloc_set(&tmp_item,0,sizeof(tmp_item));
+	itemid = md->db->dropitem[i].nameid;
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);

@@ -8137,7 +8137,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
 				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
-				if(c >= maxcount || (skill==AM_CANNIBALIZE && c != i))
+				if(c >= maxcount ||
+					(skill==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
 				{	//Fails when: exceed max limit. There are other plant types already out.
 					clif_skill_fail(sd,skill,0,0);
 					return 0;
