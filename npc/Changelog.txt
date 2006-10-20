@@ -37,6 +37,7 @@ Date		Added
 	* Official kRO 10.1 spawns for Mjolnir Field [Playtester]
 	- Comodo Field
 	- Geffen Field (+ 10.4 Orc Village change)
+	- Payon Field
 	* Added official Gonryun Broken Sword Quest [KarLaeda]
 	* Fixed The Sign Exploits [Lupus]
 	- Optimized Novice Exchanged (loot->Red Potions), moved the file to NPC\Merchants
