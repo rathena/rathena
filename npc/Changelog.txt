@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 10/20
+	* Official kRO 10.1 spawns for Morroc Field [Playtester]
+	- Prontera Field
 	* Added official Free Ticket for the Cart Service to the Novice Training Grounds [Lupus]
 	- Fixed endless Novice Potion + Adv Suite exploit
 	- Removed 2 oudated Novice Grounds scrips (they confused many people)
