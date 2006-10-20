@@ -30,6 +30,7 @@ Playtester
 Date		Added
 ======
 10/20	* Fixed The Sign Exploits [Lupus]
+	- Optimized Novice Exchanged (loot->Red Potions), moved the file to NPC\Merchants
 	- Fixed The Sign bugs, thanks to Tantarian
 		+ added get rid of sobbing pieces to let people reborn
 		If u finished the Sign Quest and have some undeleted sobbing pieces, then visit this man

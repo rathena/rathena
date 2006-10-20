@@ -1,0 +1,152 @@
+//===== eAthena Script ========================================
+//= Novice Goods Exchanger
+//===== By: ==================================================
+//= ???, eAthena Team
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= eAthena 1.0+
+//===== Description: =========================================
+//= Exchanges your cheap loot to Red Potions.
+//= Official NPC.
+//===== Additional Comments: =================================
+//= 1.1 Made it as a function. U can add your own Merchs [Lupus]
+//============================================================
+
+function	script	F_NMerch	{
+	mes "["+getarg(0)+"]";
+	if((Weight*100)/MaxWeight >= 90){
+		mes "You will exceed your weight limit if you exchange for the Red Potions.";
+		close;
+	}
+	mes "Good day!";
+	mes "Do you have any collection items such as "+getitemname(getarg(1))+"s or "+getitemname(getarg(3))+"s ?";
+	if(getarg(5))
+		mes "...how about "+getitemname(getarg(5))+"-s ?..";
+	mes "Oh, yeah, I need those for something.";
+	next;
+	mes "["+getarg(0)+"]";
+	mes "Of course I am not asking you to give those for free!";
+	mes "How about...if I give you 1 Red";
+	mes "Potion for "+getarg(2)+" "+getitemname(getarg(1))+"s or "+getarg(4)+" "+getitemname(getarg(3))+"s ?";
+	if(getarg(5))
+		mes "or "+getarg(6)+" "+getitemname(getarg(5))+" ?";
+	next;
+	switch (select("Sure!:Think you're ripping me off...:No, thanks")) {
+	case 1:
+		mes "["+getarg(0)+"]";
+		mes "So which item do you bring me ?";
+		mes ""+getitemname(getarg(1))+"-s?  "+getitemname(getarg(3))+"-s ?";
+		mes "Or "+getitemname(getarg(5))+"-s?";
+		next;
+		if(getarg(5))
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"",""+getitemname(getarg(5))+"","Cancel");
+		else
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"","Cancel");
+		if(@i==4 || (@i==3 && !getarg(5))) {
+			mes "["+getarg(0)+"]";
+			mes "Sure, no problem.";
+			close;
+		}
+		set @have,countitem(getarg(1+@i*2));
+		if(@have < getarg(2+@i*2)) {
+			mes "["+getarg(0)+"]";
+			mes "Hey, where are all those";
+			mes getitemname(getarg(1+@i*2))+"-s you promised?";
+			close;
+		}
+		mes "["+getarg(0)+"]";
+		mes "Okay, let me take a look at the stuff you brought.";
+		next;
+		set @max,@have / getarg(2+@i*2)];	
+		mes "["+getarg(0)+"]";
+		mes "You have total "+@have+" "+getitemname(getarg(1+@i*2))+"-s...";
+		mes "I can give you";
+		mes "total "+@max+" Red Potion for those.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "What do you say? Deal?";
+		next;
+		if(select("Deal.:No deal.")==2) {
+			mes "[Merchant]";
+			mes "Bah~ whatever.";
+			mes "Bah!";
+			close;
+		}
+		mes "["+getarg(0)+"]";
+		mes "You know the exact number of Red Potions";
+		mes "you can receive for "+getitemname(getarg(1+@i*2))+"-s, don't you?";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "You can get Red Potions";
+		mes "from minimum 1 to maximum 100 at once.";
+		mes "If you change your mind, enter '0'";
+		mes "to cancel.";
+		while(1) {
+			next;
+			input @val;
+			if(@val<0 || @val>100) {
+				mes "["+getarg(0)+"]";
+				mes "Uh oh, the number you entered";
+				mes "seemed incorrect.";
+				mes "You'd better check how many red";
+				mes "potions you can get.";
+				continue;
+			}
+			break;
+		}
+		mes "["+getarg(0)+"]";
+		if(@val == 0) {
+			mes "What...how the hell did you even";
+			mes "bother to talk to me?";
+			mes "Leave, I don't deal with whimsical";
+			mes "people.";
+			close;
+		}
+		if(@val > @max) {
+			mes "Uh oh, the number you entered";
+			mes "seemed incorrect.";
+			mes "You'd better check how many red";
+			mes "potions you can get.";
+			close;
+		}
+		delitem getarg(1+@i*2),getarg(2+@i*2)*@val;
+		getitem 501,@val;
+		mes "There you go!";
+		mes "Thanks, it was a good deal.";
+		close;
+	case 2:
+		mes "["+getarg(0)+"]";
+		mes "Did you say I am ripping you off?!";
+		mes "You got to know how ignorant that comment was!";
+		mes "When you check the price of each item,";
+		mes "I am doing a losing business.";
+		mes "If you don't want to do then, fine!";
+		close;
+	case 3:
+		mes "["+getarg(0)+"]";
+		mes "Hah, no problem.";
+		mes "Bah!";
+		close;
+	}
+}
+
+prontera.gat,123,102,5	script	Merchant#1	85,{
+	callfunc "F_NMerch","Merchant",935,5,914,10,909,10;
+}
+
+geffen.gat,173,88,5	script	Merchant#2	85,{
+	callfunc "F_NMerch","Merchant",935,5,915,6,909,10;
+}
+morocc.gat,180,259,3	script	Merchant#3	85,{
+	callfunc "F_NMerch","Merchant",935,5,916,7,909,10;
+}
+
+aldebaran.gat,152,63,5	script	Merchant#4	85,{
+	callfunc "F_NMerch","Merchant",955,1,916,7,909,10;
+}
+
+payon.gat,200,134,5	script	Merchant#5	85,{
+	//we remove 3rd item, by adding 0,0
+	callfunc "F_NMerch","Merchant",902,6,909,10,0,0;
+}
