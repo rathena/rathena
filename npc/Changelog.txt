@@ -49,6 +49,7 @@ Date		Added
 		If u finished the Sign Quest and have some undeleted sobbing pieces, then visit this man
 		mjo_dun02.gat 88,295 Flaming Spirit Man - he'll wipe them 8)
 	- Fixed wrong label names in mjolnir_seal.txt, thanks to Tantarian
+	- Added Feast Day Of Ramadan Idul Fitri Event (official idRO) by $ephiroth
 10/19
 	* Official kRO 10.1 spawns for Byalan [Playtester]
 	- Payon Cave
