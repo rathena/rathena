@@ -58,7 +58,7 @@ function	script	F_NMerch	{
 		mes "["+getarg(0)+"]";
 		mes "Okay, let me take a look at the stuff you brought.";
 		next;
-		set @max,@have / getarg(2+@i*2)];	
+		set @max,@have / getarg(2+@i*2);	
 		mes "["+getarg(0)+"]";
 		mes "You have total "+@have+" "+getitemname(getarg(1+@i*2))+"-s...";
 		mes "I can give you";

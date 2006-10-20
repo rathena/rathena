@@ -3385,7 +3385,7 @@ L_loop2:
 	mes "supplies, I will send you to";
 	mes "the associated town.";
 	next;
-	if(!NEW_ADVSUIT))
+	if(!NEW_ADVSUIT){
 		mes "^882420Item Offer List";
 		mes "^0000301 Adventurer's Suit";
 		mes "^00009910 Novices Red Potions^000000";
