@@ -14,13 +14,12 @@
 
 prontera.gat,146,92,3	script	Cellerb	58,{
 	set @npcname$,"[Staff Idul Fitri]";
+	mes @npcname$;
 	if((gettime(6)==10 && (gettime(5)==24 || gettime(5)==25))==0) {
 		mes "Congratulation! Celebrate Feast Day Of Ramadan Idul Fitri 1427 H.";
 		specialeffect 139;
 		close;	
 	}
-	
-	mes @npcname$;
 	mes "Haii......^FF8800"+strcharinfo(0)+"^000000!!";
 	mes "First day of Idulfitri has arrived.";
 	mes "Congratulation celebrate him.";
