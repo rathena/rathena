@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.0b Temp measure to stop exploits. [Vicious]
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Removed Duplicates [Toms]
+//= 1.4 Added Kafra Free Cart Tickets, as in official one [Lupus]
 //============================================================ 
 
 //====================================================================
@@ -53,79 +54,79 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 		next;
 		switch ( select("Where should I go?","About Basic Interfaces.","What the hell are you!") ) {
 		case 1:	mes "[Shion]";
-		mes "Do you see the bridge to your";
-		mes "right side? Just cross the bridge";
-		mes "and you'll arrive at a castle. All";
-		mes "you have to do is walk inside!";
-		next;
-		mes "[Shion]";
-		mes "The entrance of the castle";
-		mes "is a ^0000FFspinning white light.^000000 These";
-		mes "portals are what allow you to move";
-		mes "from one zone to another.";
-		next;
-		mes "[Shion]";
-		mes "Do you know how to move?";
-		mes "Left click on a spot, and you'll";
-		mes "walk over to that spot. Piece of";
-		mes "cake, huh?";
-		next;
-		mes "[Shion]";
-		mes "So go for it!";
-		mes "Basically, you must enter the";
-		mes "castle in order to start your";
-		mes "adventures.";
-		next;
-		mes "[Shion]";
-		mes "There are soldiers";
-		mes "at the entrance, so don't";
-		mes "worry about getting lost.";
-		mes "Take care now~!";
+			mes "Do you see the bridge to your";
+			mes "right side? Just cross the bridge";
+			mes "and you'll arrive at a castle. All";
+			mes "you have to do is walk inside!";
+			next;
+			mes "[Shion]";
+			mes "The entrance of the castle";
+			mes "is a ^0000FFspinning white light.^000000 These";
+			mes "portals are what allow you to move";
+			mes "from one zone to another.";
+			next;
+			mes "[Shion]";
+			mes "Do you know how to move?";
+			mes "Left click on a spot, and you'll";
+			mes "walk over to that spot. Piece of";
+			mes "cake, huh?";
+			next;
+			mes "[Shion]";
+			mes "So go for it!";
+			mes "Basically, you must enter the";
+			mes "castle in order to start your";
+			mes "adventures.";
+			next;
+			mes "[Shion]";
+			mes "There are soldiers";
+			mes "at the entrance, so don't";
+			mes "worry about getting lost.";
+			mes "Take care now~!";
 			set NEW_MES_FLAG0,1;
 			close;
 		case 2:	mes "[Shion]";
-		mes "Interface...";
-		mes "click','double-click'";
-		mes "and  'drag'is? .";
-		mes "click just one time,";
-		mes "it is called 'click'";
-		mes "click twice straightly,";
-		mes "it is called 'double-click'.";
-		next;
-		mes "[Shion]";
-		mes "'Drag' is dragging your mouse";
-		mes "to the right, left,  up and down";
-		mes "when holding 'left-click'.";
-		mes "when you block a sentence in word";
-		mes "processor program";
-		mes "you use this function";
-		mes "don't you?";
-		next;
-		mes "[Shion]";
-		mes "You need to have some basic knowledge";
-		mes "before you know the interface.";
-		mes "You will see it often in the game and...";
-		next;
-		mes "[Shion]";
-		mes "If you cross the bridge on your right side,";
-		mes "you can go learn in the castle.";
-		mes "This is The Training Grounds";
-		mes "for new novices.";
-		mes "You should go there.";
-		next;
-		mes "[Shion]";
-		mes "Ah, the building's entrance is...";
-		mes "^0000FFSmall Spiral  Light.^000000";
-		mes "Click it exactly and jump in there.";
-		mes "If you get in there, you will meet other helpers.";
-		mes "Don't worry too much.";
+			mes "Interface...";
+			mes "click','double-click'";
+			mes "and  'drag'is? .";
+			mes "click just one time,";
+			mes "it is called 'click'";
+			mes "click twice straightly,";
+			mes "it is called 'double-click'.";
+			next;
+			mes "[Shion]";
+			mes "'Drag' is dragging your mouse";
+			mes "to the right, left,  up and down";
+			mes "when holding 'left-click'.";
+			mes "when you block a sentence in word";
+			mes "processor program";
+			mes "you use this function";
+			mes "don't you?";
+			next;
+			mes "[Shion]";
+			mes "You need to have some basic knowledge";
+			mes "before you know the interface.";
+			mes "You will see it often in the game and...";
+			next;
+			mes "[Shion]";
+			mes "If you cross the bridge on your right side,";
+			mes "you can go learn in the castle.";
+			mes "This is The Training Grounds";
+			mes "for new novices.";
+			mes "You should go there.";
+			next;
+			mes "[Shion]";
+			mes "Ah, the building's entrance is...";
+			mes "^0000FFSmall Spiral  Light.^000000";
+			mes "Click it exactly and jump in there.";
+			mes "If you get in there, you will meet other helpers.";
+			mes "Don't worry too much.";
 			set NEW_MES_FLAG0,1;
 			close;
 		case 3:	mes "[Shion]";
-		mes "Who? me? I am nov_Shion!";
-		mes "Gosh, you are so rude.";
-		mes "I am doing free service, without payment.";
-		mes "I feel so bad.";
+			mes "Who? me? I am nov_Shion!";
+			mes "Gosh, you are so rude.";
+			mes "I am doing free service, without payment.";
+			mes "I feel so bad.";
 			set NEW_MES_FLAG0,2;
 			close;
 		}
@@ -218,8 +219,8 @@ new_1-1.gat,144,116,2	script	Guard#01	105,{
 
 new_1-1.gat,144,107,2	script	Guard#02	105,{
 	mes "[Training Grounds Guard]";
-	switch ( rand(2) ) {
-	case 0:	mes "Come in!";
+	if(rand(2)) {
+		mes "Come in!";
 		mes "I would like";
 		mes "to welcome you to";
 		mes "the Training Grounds!";
@@ -229,8 +230,8 @@ new_1-1.gat,144,107,2	script	Guard#02	105,{
 		mes "yourself for your future";
 		mes "adventures throughout the";
 		mes "Ragnarok world!";
-		break;
-	case 1:	mes "Go, Novice, go!";
+	} else {
+		mes "Go, Novice, go!";
 		mes "Fight, and grow stronger! Look towards a brighter tomorrow!";
 	}
 	close;
@@ -256,14 +257,14 @@ L_loop:
 	case 1:	mes "[Training Grounds Receptionist]";
 		mes "Thank you for applying for Novice training. For detailed information of each training course, please inquire the Guides for assistance.";
 		next;
-		set Zeny,Zeny+50;
 		mes "[Training Grounds Receptionist]";
 		mes "To get you started, we will supply you with a provision of 50 Zeny. When you have questions about the training course process, please feel free to ask any of the Instructors.";
 		next;
 		mes "[Training Grounds Receptionist]";
 		mes "You will now be transferred";
 		mes "to the Training Grounds.";
-		next;
+		close2;
+		set Zeny,Zeny+50;
 		warp "new_1-2.gat",100,70;
 		end;
 	case 2:	mes "[Training Grounds Receptionist]";
@@ -961,25 +962,25 @@ new_1-2.gat,118,108,4	script	Kafra Employee	94,{
 	if ( select("Teleport Service","About Kafra services") == 1 ) {
 		mes "[Kafra Employee]";
 		mes "I see, you must want to teleport to a town in Rune-Midgard imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
-	next;
-	mes "[Kafra Employee]";
-	mes "Prontera is the capital of the Rune-Midgarts kingdom, and its satellite, Izlude, is closeby.";
-	next;
-	mes "[Kafra Employee]";
-	mes "^996633Morroc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
-	next;
-	mes "[Kafra Employee]";
-	mes "^006600Payon^000000 is in the mountains, and is famous for its Archer Village, where Novices can change their jobs to Archers.";
-	next;
-	mes "[Kafra Employee]";
-	mes "The city of magic, ^993300Geffen^000000, is where people go to become Mages and Wizards.";
-	next;
-	mes "[Kafra Employee]";
-	mes "^003399Alberta^000000, the port city, is where the Merchant Guild is located. You must also go to Alberta if you wish to travel by sea.";
-	next;
-	mes "[Kafra Employee]";
-	mes "Please choose";
-	mes "your destination.";
+		next;
+		mes "[Kafra Employee]";
+		mes "Prontera is the capital of the Rune-Midgarts kingdom, and its satellite, Izlude, is closeby.";
+		next;
+		mes "[Kafra Employee]";
+		mes "^996633Morroc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
+		next;
+		mes "[Kafra Employee]";
+		mes "^006600Payon^000000 is in the mountains, and is famous for its Archer Village, where Novices can change their jobs to Archers.";
+		next;
+		mes "[Kafra Employee]";
+		mes "The city of magic, ^993300Geffen^000000, is where people go to become Mages and Wizards.";
+		next;
+		mes "[Kafra Employee]";
+		mes "^003399Alberta^000000, the port city, is where the Merchant Guild is located. You must also go to Alberta if you wish to travel by sea.";
+		next;
+		mes "[Kafra Employee]";
+		mes "Please choose";
+		mes "your destination.";
 		next;
 		if ( NEW_MES_FLAG1 || NEW_MES_FLAG2 || NEW_MES_FLAG3 ) {
 			if ( select("Practical Course","Prontera","Morroc","Payon","Alberta","Geffen") == 1 ) {
@@ -1130,6 +1131,10 @@ L_loop:
 			mes "The Cart Rental service";
 			mes "charge will differ from";
 			mes "town to town.";
+			if (!(NEW_CARTTICKET)) {
+				set NEW_CARTTICKET,1;
+				getitem 7061,5;
+			}
 			break;
 		case 5:	mes "[Kafra Employee]";
 			mes "I hope you are satisfied with my";
@@ -1161,6 +1166,8 @@ L_prewarp:
 	set NEW_LVUP0,0;
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
+	set NEW_CARTTICKET,0;
+	set NEW_ADVSUIT,0;
 	return;
 }
 
@@ -3378,11 +3385,14 @@ L_loop2:
 	mes "supplies, I will send you to";
 	mes "the associated town.";
 	next;
-	mes "^882420Item Offer List";
-	mes "^0000301 Adventurer's Suit";
-	mes "^00009910 Novices Red Potions^000000";
-	getitem 2305,1;
-	getitem 569,10;
+	if(!NEW_ADVSUIT))
+		mes "^882420Item Offer List";
+		mes "^0000301 Adventurer's Suit";
+		mes "^00009910 Novices Red Potions^000000";
+		set NEW_ADVSUIT,1;
+		getitem 2305,1;
+		getitem 569,10;
+	}
 	next;
 	mes "[Hanson]";
 	mes "All the supplies have been given to";
@@ -3481,6 +3491,8 @@ L_cleararg:
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
 	set NEW_GETITEM,0;
+	set NEW_CARTTICKET,0;
+	set NEW_ADVSUIT,0;
 	set NOV_3_SWORDMAN,0;
 	set NOV_3_ARCHER,0;
 	set NOV_3_THIEF,0;

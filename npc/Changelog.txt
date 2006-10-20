@@ -34,6 +34,9 @@ KarLaeda
 Date		Added
 ======
 10/20
+	* Added official Free Ticket for the Cart Service to the Novice Training Grounds [Lupus]
+	- Fixed endless Novice Potion + Adv Suite exploit
+	- Removed 2 oudated Novice Grounds scrips (they confused many people)
 	* Official kRO 10.1 spawns for Mjolnir Field [Playtester]
 	- Comodo Field
 	- Geffen Field (+ 10.4 Orc Village change)
