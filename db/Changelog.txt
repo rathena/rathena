@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/20
+	* Official Muscipular drops [Playtester]
 10/19
 	* Added the actual skill delay of 1000ms to Triple Attack and Chain combo
 	  in skill_cast_db. Added Combo Finish and TigerFist as well with a delay of
