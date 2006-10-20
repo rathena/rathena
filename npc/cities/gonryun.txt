@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Gonryun Town
 //===== By: ================================================== 
-//=  edited by x[tsk] 4/30/04
+//= x[tsk], KarLaeda
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,8 @@
 //= 1.1 Fixed Typo’s [Nexon]
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Max NPC Name is 23 [Toms]
+//= 1.3a Removed temp NPC plugs due Broken Sword quest [Lupus]
+//= 1.4 Added missing NPC [KarLaeda]
 //============================================================
 
 
@@ -123,30 +125,6 @@ gon_in.gat,153,35,4	script	Hotel Manager	702,{
 
 //===============================================================================
 
-gon_in.gat,173,27,2	script	Kuhau	774,{
-	mes "[Kuhau]";
-	mes "This hotel sells the best drinks! Not only is it potent, but it tastes great, too! Of course that's only for the adults.";
-	next;
-	mes "[Kuhau]";
-	mes "But what about the children? We have a secret recipe for brewing great tea! Not only is it excellent, it's also good for them.";
-	close;
-}
-
-//===============================================================================
-
-gon_in.gat,165,16,4	script	Drunkard	748,{
-	mes "[Sorubun]";
-	mes "Oh my head! I had too much to drink yesterday and passed out right here on the table.";
-	mes "The manager told me that I shouldn't drink anymore and I should have listened.";
-	emotion e_swt2;
-	next;
-	mes "[Sorubun]";
-	mes "Wow, the drinks here are strong! Much stronger than anything we have back home.";
-	close;
-}
-
-//===============================================================================
-
 gonryun.gat,139,142,6	script	Girl#08	772,{
 	mes "[Sanfayon]";
 	mes "................";
@@ -160,36 +138,6 @@ gonryun.gat,139,142,6	script	Girl#08	772,{
 
 //===============================================================================
 
-gonryun.gat,113,135,6	script	Guardsman#01	780,{
-	mes "[Guardsman]";
-	mes "Welcome to Gonryun. This is the home of our governor, Sayoumun.";
-	next;
-	mes "[Guardsman]";
-	mes "We're sure your intentions are benign, but any wrong moves and we'll be forced to take action.";
-	next;
-	mes "[Guardsman]";
-	mes "Such a thing rarely happens, but when it does.... we are always ready to deal with any problems!";
-	close;
-}
-
-//===============================================================================
-
-gonryun.gat,113,127,6	script	Guardsman#02	780,{
-	mes "[Guardsman]";
-	mes "Welcome to Gonryun. This is the home of our elder, Sayoumun. He rules all of Gonryun.";
-	next;
-	mes "[Guardsman]";
-	mes "We're sure your intentions are benign, but any wrong moves and we'll be forced to take action.";
-	next;
-	mes "[Guardsman]";
-	mes "Such a thing rarely happens, but when it does. We are always ready to deal with any problems!";
-	close;
-}
-
-//===============================================================================
-//???
-//===============================================================================
-
 gon_in.gat,18,27,4	script	Elder's Wife	771,{
 	mes "[Sangufayon]";
 	mes "Oh my! You look like an important visitor from the outside. Aren't you?";
@@ -200,31 +148,9 @@ gon_in.gat,18,27,4	script	Elder's Wife	771,{
 		mes "We do not get many visitors from the outside to see my husband so it's so easy to spot them. Hohohohoho!";
 		close;
 	M_End:
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		mes "[Sangufayon]";
 		mes "The master of the house, hohohohoho? Why... he is upstairs on the second floor if you need to talk to him, hohohoho.";
 		close;
-}
-
-//===============================================================================
-
-gon_in.gat,17,93,4	script	Village Elder	775,{
-	mes "[Sayoumun]";
-	emotion e_yawn;
-	mes "Zzzzzzzzzzz.......";
-	next;
-	mes "[Sayoumun]";
-	mes "Huh, a visitor?! Oh, hello! I was just, uhm, meditating. I am Sayoumun, mayor of Gonryun village. I welcome you to Gonryun.";
-	next;
-	mes "[Sayoumun]";
-	mes "There used to not be many visitors to this land, until the University of Foreign Studies in Alberta began offering trips to our small island.";
-	next;
-	mes "[Sayoumun]";
-	mes "I personally don't like all these outsiders coming all of the sudden. Alot of them are reckless, but I suppose it's good for business.";
-	next;
-	mes "[Sayoumun]";
-	mes "These reports of a thief in my town continually worry me, however I just know he's an outsider!";
-	close;
 }
 
 //===============================================================================
@@ -235,37 +161,6 @@ gonryun.gat,119,111,4	script	Chen Wan Sok	89,{
 	next;
 	mes "[Chen Wan Sok]";
 	mes "When the Elder's blessing, you can get away with a lot of things in this town. Sometimes there are those that cause mischief, but they are always dealt with.";
-	close;
-}
-
-//===============================================================================
-
-gonryun.gat,100,241,5	script	Unsociable Man	733,{
-	emotion e_dots;
-	mes "[Saunso]";
-	mes "I am too busy to talk, come back later!";
-	close;
-}
-
-//===============================================================================
-
-gonryun.gat,268,88,4	script	Ryan Chun Ho	776,{
-	mes "[Ryan Chun Ho]";
-	mes "We are an independent race, submitting to no aggressor! This is the blessed area which we will never give up.";
-	next;
-	mes "[Ryan Chun Ho]";
-	mes "We believe in victory, it is our glory.";
-	close;
-}
-
-//===============================================================================
-
-gonryun.gat,181,161,4	script	Chon Munjin	773,{
-	mes "[Chon Munjin]";
-	mes "The men of Gonryun must be powerful and bold! But being such a man, one just can not get married. Don't you think?";
-	next;
-	mes "[Chon Munjin]";
-	mes "There's so many more men than women now it makes it even harder to find a woman. I wonder if my son will find himself a good woman?";
 	close;
 }
 
@@ -298,21 +193,380 @@ gonryun.gat,51,101,4	script	Gaiysonchoru	778,{
 
 //===============================================================================
 
-gonryun.gat,166,196,4	script	Soldier#17	780,{
-	mes "[Wagou]";
-	mes "Do you know what this is?";
-	next;
-	menu "Yes.",-, "No.",M_End;
-
-		mes "[Wagou]";
-		mes "I just have to make sure all citizens are warned of the dangers inside before going any further.";
-		close;
-
-	M_End:
-		mes "[Wagou]";
-		mes "Long ago, this was the great hall, but once the great beast had arrived it quickly turned to ruin and became overrun with monsters.";
+gonryun.gat,237,226,3	script	YunKyoHam#gn	776,{
+	mes "[YunKyoHam]";
+	if (nakha < 2) {
+		mes "Oh no~ Holy cow!";
+		mes "Can't believe I dropped";
+		mes "my valuable knife! ahhhhhh.";
+		if (baselevel >= 20) {
+			next;
+			if (nakha == 0) set nakha,1;
+			mes "[YunKyoHam]";
+			mes "I need to go down to get it";
+			mes "but...the monsters..";
+			mes "I am so scared..  What should I do!";
+		}
+	} else if (nakha == 2) {
+		mes "ehhhh.. what should I do..";
+		mes "got any business to";
+		mes "take care of?";
+		mes "hmm?";
+		if (countitem(1201) < 1) close;
 		next;
-		mes "[Wagou]";
-		mes "I just have to make sure all citizens are warned of the dangers inside before going any further.";
+		mes "[YunKyoHam]";
+		mes "uk! that...that knife";
+		mes "is my ancestor's knife that";
+		mes "I dropped from here.";
+		mes "Where did you get it?";
+		next;
+		mes "[YunKyoHam]";
+		mes "I dropped that knife from";
+		mes "here and it belongs to my";
+		mes "ancestor's property. It sure is";
+		mes "a cheap knife,";
+		mes "but really valuable to me";
+		mes "and my family.";
+		next; 
+		mes "[YunKyoHam]";
+		mes "Would you hand that";
+		mes "knife to me?";
+		next;
+		if (select("give.:ignore.") == 2 || countitem(1201) < 1) {
+			mes "[YunKyoHam]";
+			mes "Huk! my family heiloom!!";
+			mes "You Evil! Satan! Animal! Hode";
+			mes "My curse shall be on his head!!!";
+			close;
+		}
+		mes "[YunKyoHam]";
+		mes "ohoh! Thank you!";
+		mes "Take these potions.";
+		mes "They are not expensive";
+		mes "but my favorites.";
+		set nakha,3;
+		delitem 1201, 1; // Knife
+		getitem 505,2; // Blue_Potion
+		next;
+		mes "[YunKyoHam]";
+		mes "You kept my family";
+		mes "treasure safe. Thank you!!";
+		mes "hahaha";
+	} else {
+		mes "next.. I heard my neighbor";
+		mes "is worrying about something";
+		mes "these days.. well, I got my";
+		mes "own business to take care of.";
+	}
+	close;
+}
+
+gon_fild01.gat,245,257,0	script	lost knife#gn	139,1,1,{
+	if (nakha == 1) {
+		set nakha, 2;
+		mes "-something is hidden underneath the sand dunes-";
+		mes " ";
+		mes "-You have found an -";
+		mes "-undefined knife.-";
+		close2;
+		getitem 1201, 1; // Knife
+		end;
+	}
+}
+
+gonryun.gat,200,82,3	script	Sungson Gam#gn	774,{
+	mes "[Sungson Gam]";
+	mes "Festival is always wonderful.";
+	mes "That's why I love this town.";
+	mes "This town make me feel that I am";
+	mes "in the middle of festival all the time. hehe.";
+	close;
+}
+
+gonryun.gat,268,88,3	script	Joonpo Lyang#gn	776,{
+	mes "[Joonpo Lyang]";
+	mes "We are proud in name of independent nation";
+	mes "We've been fighting againt the evil envaders";
+	mes "who wanted to take this blessed land.";
+	mes "And we did win the battles and kept our land until now.";
+	next;
+	mes "[Joonpo Lyang]";
+	mes "We believe in Victory of Triumphal song!";
+	mes "That represents our sunrise!";
+	close;
+}
+
+gonryun.gat,118,111,5	script	Wonsuk Chen#gn	89,{
+	mes "[Wonsuk Chen]";
+	mes "A chieft of this town is";
+	mes "an open-hearted man.";
+	mes "But I heard that there are some";
+	mes "people who don't like his character. hmm..";
+	next;
+	mes "[Wonsuk Chen]";
+	mes "Well, I like my town. Chief's efforts";
+	mes "make our town way better. I just hope";
+	mes "I don't get to see some dummies";
+	mes "around the town anymore.";
+	close;
+}
+
+gonryun.gat,181,161,3	script	Moonjin Chung#gn	773,{
+	mes "[Moonjin Chung]";
+	mes "The men in our town, Gonryun are";
+	mes "all brave and energetic.";
+	mes "But, they are unable to get married";
+	mes "these days..";
+	next;
+	mes "[Moonjin Chung]";
+	mes "It's all because there are";
+	mes "way more men than women.";
+	mes "I am not even sure whether";
+	mes "my son could get married";
+	mes "or not. hmm..";
+	close;
+}
+
+gonryun.gat,113,135,6	script	Gatekeeper#gn1	780,{
+	mes "[Gatekeeper]";
+	mes "Welcome. This is a resident";
+	mes "of SaYumMoon, a chief";
+	mes "of this town.";
+	next;
+	mes "[Gatekeeper]";
+	mes "It won't likely to happen";
+	mes "but, if we see anything suspicious,";
+	mes "we'll arrest you right away.";
+	next;
+	mes "[Gatekeeper]";
+	mes "But do not worry that much.";
+	mes "Nothing will happen I believe.";
+	mes "Enjoy your visit.";
+	close;
+}
+
+gonryun.gat,113,127,6	script	Gatekeeper#gn2	780,{
+	mes "[Gatekeeper]";
+	mes "Welcome. This is a resident";
+	mes "of SaYumMoon, a chief";
+	mes "of this town.";
+	next;
+	mes "[Gatekeeper]";
+	mes "It won't likely to happen";
+	mes "but, if we see anything suspicious,";
+	mes "we'll arrest you right away.";
+	next;
+	mes "[Gatekeeper]";
+	mes "But do not worry that much.";
+	mes "Nothing will happen I believe.";
+	mes "Enjoy your visit.";
+	close;
+}
+
+gon_in.gat,73,82,5	script	SungChul Ki#gn	778,{
+	mes "[SungChul Ki]";
+	if (nakha != 3) {
+		mes "............";
+		next;
+		mes "[SungChul Ki]";
+		mes "puuuuu....This sure is";
+		mes "something to worry about.";
 		close;
+	}
+	set cha, 1;
+	mes "SungChul Ki is my name.";
+	mes "I am a great tea maker.";
+	mes "I give all my efforts";
+	mes "in making tasty tea";
+	mes "night and day.";
+	next;
+	mes "[SungChul Ki]";
+	mes "hu...but I haven't make any";
+	mes "great tea lately.";
+	mes "I need some special";
+	mes "ingredients...";
+	next;
+	mes "[SungChul Ki]";
+	mes "There's a rumor says with snake,";
+	mes "it's possible to make great tea.";
+	mes "But where can I find and how can";
+	mes "I catch one? that's not possible.";
+	mes "hmm...";
+	close;
+
+//	no idea what should happen after you started the quest...
+//	if ((v[cha] == 1) & (v[°Ç°-È¯] > 0))
+//		mes "[SungChul Ki]"
+//		mes "...À_? ¹ìÀ> Àâ_Æ_- _ª¿Â"
+//		mes "¹°°ÇÀÌ¶ó°í? ÈåÀ_..."
+//		mes "¿ØÁö ¸ð¸_°Ô ÁÁ_Æº¸ÀÌ_Â°É."
+//		mes "ÀÌ¸R Áàº¸°Ô. ÇÑ¹ø Â÷¸¦"
+//		mes "¸¸÷é_îº¸°Ú_×!"
+//		next;
+//		mes "................................"
+//		next;
+//		mes "................................"
+//		next;
+//		mes "................................"
+//		next;
+//	endif
+//
+//
+//
+}
+
+//==============ÃàÁ¦ °ü¸RÀÎ================
+//npc "gon_in" "È_ÀÌ _º" 4_M_TWMIDMAN 101 21 3 5 5
+//OnClick:
+//	mes "[È_ÀÌ _º]"
+//	mes "ÈÞ¿ì... °ÆÁ¤ÀÌ+º."
+//	mes "____ ÀÌ¹ø¿¡÷÷ ÃàÁ¦¸¦ ¹úÀÏ"
+//	mes "Å¸ÀÌ¹ÖÀÌ ¿Ô_Â÷_ _îÂî÷È"
+//	mes "ÀÏÀÎÁö ÀüÇô ÃàÁ¦ÁØºñ°¡"
+//	mes "÷ÇÁö_Ê_Ò_î..."
+//	next;
+//	mes "[È_ÀÌ _º]"
+
+gon_in.gat,173,27,3	script	Kuha Woo#gn	774,{
+	mes "[Kuha Woo]";
+	mes "Like I expected, with my age,";
+	mes "they don't sell alcohol to me.";
+	mes "Adults seems enjoying drinks.";
+	mes "I wonder how it taste.";
+	next;
+	mes "[Kuha Woo]";
+	mes "However, they're making";
+	mes "some tasty tea that even kid";
+	mes "like me can enjoy.";
+	mes "It's such a heart beating";
+	mes "just even thinking about this new tea.";
+	close;
+}
+
+gonryun.gat,163,60,4	script	Gonryun Guide	780,{
+	mes "[Wonchi Ha]";
+	mes "Come to Gonryun where passion";
+	mes "and energy overflows. You can feel liveliness";
+	mes "just by walking around!";
+	next;
+	mes "[Wonchi Ha]";
+	mes "I am responsible to help you";
+	mes "with any questions you may have.";
+	mes "so please feel free to ask any";
+	next;
+	switch(select("resident of Chief:Tool Dealer:Weapon Dealer:Armor Dealer:wine shop")){
+	case 1:
+		viewpoint 1,109,131,1,0xFF3355;
+		mes "[Wonchi Ha]";
+		mes "In your minimap";
+		mes "Head to ^FF3355+^000000";
+		mes "You'll get to a resident of chief.";
+		mes "Enjoy your trip in";
+		mes "lovely Gonryun!";
+		break;
+	case 2:
+		viewpoint 1,147,82,2,0xCE6300;
+		mes "[Wonchi Ha]";
+		mes "In your minimap";
+		mes "Head to ^CE6300+^000000";
+		mes "You'll get to a Tool Dealer.";
+		mes "Enjoy your trip in";
+		mes "lovely Gonryun!";
+		break;
+	case 3:
+		viewpoint 1,174,104,3,0x55FF33;
+		mes "[Wonchi Ha]";
+		mes "In your minimap";
+		mes "Head to ^55FF33+^000000";
+		mes "You'll get to a Weapon Dealer.";
+		mes "Enjoy your trip in";
+		mes "lovely Gonryun!";
+		break;
+	case 4:
+		viewpoint 1,173,84,4,0x3355FF;
+		mes "[Wonchi Ha]";
+		mes "In your minimap";
+		mes "Head to ^3355FF+^000000";
+		mes "You'll get to an Armor Dealer.";
+		mes "Enjoy your trip in";
+		mes "lovely Gonryun!";
+		break;
+	case 5:
+		viewpoint 1,215,114,5,0xFFFFFF;
+		mes "[Wonchi Ha]";
+		mes "In your minimap";
+		mes "Head to ^FFFFFF+^000000";
+		mes "You'll get to a wine shop.";
+		mes "Enjoy your trip in";
+		mes "lovely Gonryun!";
+		break;
+	}
+	close;
+}
+
+gonryun.gat,166,196,3	script	Soldier#gn	780,{
+	mes "[Waguo]";
+	if (b_sword < 7) {
+		mes "You know what?";
+		mes "This place used to be a shrine.";
+		mes "From the certain period time,";
+		mes "the Taoist hermits who failed to";
+		mes "get to the kingdom in the sky began";
+		mes "to gather, it became a den of monsters.";
+	} else if (b_sword > 6 && b_sword < 10){
+		mes "It was pretty noisy last night huh?";
+		mes "Because of that theif, it was a mess.";
+		mes "Noisier than the festivals.";
+		mes "I couldn't sleep at all...";
+		next;
+		mes "[Waguo]";
+		mes "Ahh~~~~!";
+		mes "I was night working last night";
+		mes "and all of a sudden, I saw";
+		mes "something running straight";
+		mes "into a shrine.";
+		next;
+		mes "[Waguo]";
+		mes "It was moving so fast that";
+		mes "I couldn't even decide to chase it";
+		mes "at all.  It was a ponderous creature";
+		mes "looked like human.  I wonder";
+		mes "what it was...";
+	} else {
+		mes "You know what??";
+		mes "This place used to be a shrine.";
+		mes "From the certain period time,";
+		mes "the Taoist hermits who failed to";
+		mes "get to the kingdom in the sky began";
+		mes "to gather, it became a den of monsters.";
+		next;
+		mes "[Waguo]";
+		mes "Town is getting ready for the";
+		mes "Festival, But it's taking long time.";
+		mes "It never happended in the past.";
+	}
+	close;
+}
+
+gonryun.gat,169,71,3	script	Guide#gn	770,{
+	mes "[Leeheemin]";
+	mes "Welcome~";
+	mes "Did you enjoy sightseeing";
+	mes "on the way?";
+	mes "Small buildings you saw are a structures";
+	mes "we made with hard working efforts.";
+	next;
+	mes "[Leeheemin]";
+	mes "They are a miniatures of";
+	mes "Rune-Midgarts Kingdom.";
+	mes "You can have a view of";
+	mes "cities at a glance.";
+	mes "It was not easy to work on it.";
+	mes "Don't you think they're masterpiece?";
+	next;
+	mes "[Leeheemin]";
+	mes "If you look around carefully,";
+	mes "You'll find a lots of beautiful";
+	mes "sights all over the town.";
+	close;
 }

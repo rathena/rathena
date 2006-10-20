@@ -24,12 +24,18 @@ Musashiden
 	*iRO information gathering.
 Playtester
 	* Monsters spawn, warps maintainment
+KarLaeda
+	* Fixing bugs
+	* Adding new NPC
+
 
 == Changelog ==
 
 Date		Added
 ======
-10/20	* Fixed The Sign Exploits [Lupus]
+10/20
+	* Added official Gonryun Broken Sword Quest [KarLaeda]
+	* Fixed The Sign Exploits [Lupus]
 	- Optimized Novice Exchanged (loot->Red Potions), moved the file to NPC\Merchants
 	- Fixed The Sign bugs, thanks to Tantarian
 		+ added get rid of sobbing pieces to let people reborn
