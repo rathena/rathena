@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= ???, eAthena Team
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -20,47 +20,50 @@ function	script	F_NMerch	{
 		close;
 	}
 	mes "Good day!";
-	mes "Do you have any collection items such as "+getitemname(getarg(1))+"s or "+getitemname(getarg(3))+"s ?";
+	mes "Do you have any collection items such as "+getitemname(getarg(1))+" or "+getitemname(getarg(3))+"?";
 	if(getarg(5))
-		mes "...how about "+getitemname(getarg(5))+"-s ?..";
+		mes "...how about "+getitemname(getarg(5))+"?..";
 	mes "Oh, yeah, I need those for something.";
 	next;
 	mes "["+getarg(0)+"]";
 	mes "Of course I am not asking you to give those for free!";
-	mes "How about...if I give you 1 Red";
-	mes "Potion for "+getarg(2)+" "+getitemname(getarg(1))+"s or "+getarg(4)+" "+getitemname(getarg(3))+"s ?";
+	mes "How about... if I give you 1 Red";
+	mes "Potion for "+getarg(2)+" "+getitemname(getarg(1))+" or "+getarg(4)+" "+getitemname(getarg(3))+"?";
 	if(getarg(5))
-		mes "or "+getarg(6)+" "+getitemname(getarg(5))+" ?";
+		mes "Or "+getarg(6)+" "+getitemname(getarg(5))+"?";
 	next;
 	switch (select("Sure!:Think you're ripping me off...:No, thanks")) {
 	case 1:
 		mes "["+getarg(0)+"]";
-		mes "So which item do you bring me ?";
-		mes ""+getitemname(getarg(1))+"-s?  "+getitemname(getarg(3))+"-s ?";
-		mes "Or "+getitemname(getarg(5))+"-s?";
+		mes "So which item do you bring me?";
+		mes ""+getitemname(getarg(1))+"?  "+getitemname(getarg(3))+"?";
+		if(getarg(5))
+			mes "Or "+getitemname(getarg(5))+"?";
 		next;
 		if(getarg(5))
-			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"",""+getitemname(getarg(5))+"","Cancel");
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"",""+getitemname(getarg(5))+"","Cancel")-1;
 		else
-			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"","Cancel");
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"","Cancel")-1;
 		if(@i==4 || (@i==3 && !getarg(5))) {
 			mes "["+getarg(0)+"]";
 			mes "Sure, no problem.";
 			close;
 		}
-		set @have,countitem(getarg(1+@i*2));
-		if(@have < getarg(2+@i*2)) {
+		set @item,getarg(1+@i*2);
+		set @amount,getarg(2+@i*2);
+		set @have,countitem(@item);
+		if(@have < @amount) {
 			mes "["+getarg(0)+"]";
 			mes "Hey, where are all those";
-			mes getitemname(getarg(1+@i*2))+"-s you promised?";
+			mes getitemname(@item)+" you promised?";
 			close;
 		}
 		mes "["+getarg(0)+"]";
 		mes "Okay, let me take a look at the stuff you brought.";
 		next;
-		set @max,@have / getarg(2+@i*2);	
+		set @max,@have / @amount;
 		mes "["+getarg(0)+"]";
-		mes "You have total "+@have+" "+getitemname(getarg(1+@i*2))+"-s...";
+		mes "You have total "+@have+" "+getitemname(@item)+"...";
 		mes "I can give you";
 		mes "total "+@max+" Red Potion for those.";
 		next;
@@ -75,7 +78,7 @@ function	script	F_NMerch	{
 		}
 		mes "["+getarg(0)+"]";
 		mes "You know the exact number of Red Potions";
-		mes "you can receive for "+getitemname(getarg(1+@i*2))+"-s, don't you?";
+		mes "you can receive for "+getitemname(@item)+", don't you?";
 		next;
 		mes "["+getarg(0)+"]";
 		mes "You can get Red Potions";
@@ -89,8 +92,8 @@ function	script	F_NMerch	{
 				mes "["+getarg(0)+"]";
 				mes "Uh oh, the number you entered";
 				mes "seemed incorrect.";
-				mes "You'd better check how many red";
-				mes "potions you can get.";
+				mes "You'd better check how many Red";
+				mes "Potions you can get.";
 				continue;
 			}
 			break;
@@ -110,7 +113,7 @@ function	script	F_NMerch	{
 			mes "potions you can get.";
 			close;
 		}
-		delitem getarg(1+@i*2),getarg(2+@i*2)*@val;
+		delitem @item,@amount*@val;
 		getitem 501,@val;
 		mes "There you go!";
 		mes "Thanks, it was a good deal.";
@@ -119,6 +122,8 @@ function	script	F_NMerch	{
 		mes "["+getarg(0)+"]";
 		mes "Did you say I am ripping you off?!";
 		mes "You got to know how ignorant that comment was!";
+		next;
+		mes "["+getarg(0)+"]";
 		mes "When you check the price of each item,";
 		mes "I am doing a losing business.";
 		mes "If you don't want to do then, fine!";
@@ -138,6 +143,7 @@ prontera.gat,123,102,5	script	Merchant#1	85,{
 geffen.gat,173,88,5	script	Merchant#2	85,{
 	callfunc "F_NMerch","Merchant",935,5,915,6,909,10;
 }
+
 morocc.gat,180,259,3	script	Merchant#3	85,{
 	callfunc "F_NMerch","Merchant",935,5,916,7,909,10;
 }
