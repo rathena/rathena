@@ -44,7 +44,7 @@ enum {
 	SP_HUNGRY 		= 0x200
 };
 // merc_is_hom_alive(struct homun_data *)
-#define merc_is_hom_active(x) (x && x->master && x->master->homunculus.vaporize != 1 && x->battle_status.hp != 0)
+#define merc_is_hom_active(x) (x && x->homunculus.vaporize != 1 && x->battle_status.hp > 0)
 int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
 void merc_load_sub(struct homun_data *hd, struct map_session_data *sd);
@@ -53,8 +53,8 @@ char *merc_hom_skill_get_name(int id);
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp);
 int merc_hom_dead(struct homun_data *hd, struct block_list *src);
 void merc_hom_skillup(struct homun_data *hd,int skillnum);
-int merc_hom_calc_skilltree(struct map_session_data *sd) ;
-int merc_hom_checkskill(struct map_session_data *sd,int skill_id) ;
+int merc_hom_calc_skilltree(struct homun_data *hd) ;
+int merc_hom_checkskill(struct homun_data *hd,int skill_id) ;
 int merc_hom_gainexp(struct homun_data *hd,int exp) ;
 int merc_hom_levelup(struct homun_data *hd) ;
 int merc_hom_evolution(struct homun_data *hd) ;
@@ -63,7 +63,7 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag);
 int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, short x, short y);
 void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
 void merc_save(struct homun_data *hd);
-int merc_call_homunculus(struct map_session_data *sd, short x, short y);
+int merc_call_homunculus(struct map_session_data *sd);
 int merc_create_homunculus_request(struct map_session_data *sd, int class_);
 int search_homunculusDB_index(int key,int type);
 int merc_menu(struct map_session_data *sd,int menunum);

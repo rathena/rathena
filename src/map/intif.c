@@ -36,7 +36,7 @@ static const int packet_len_table[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
-	16,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
+	-1,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
 extern int char_fd;		// inter server‚Ìfd‚Íchar_fd‚ðŽg‚¤
@@ -786,22 +786,12 @@ int intif_homunculus_create(int account_id, struct s_homunculus *sh)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd, 44+NAME_LENGHT);
-	WFIFOW(inter_fd, 0) = 0x3090;
-	WFIFOL(inter_fd, 2) = account_id;
-	WFIFOL(inter_fd, 6) = sh->char_id;
-	WFIFOW(inter_fd, 10) = sh->class_;
-	WFIFOL(inter_fd,12) = sh->max_hp;
-	WFIFOL(inter_fd,16) = sh->max_sp;
-	memcpy(WFIFOP(inter_fd,20), sh->name, NAME_LENGTH);
-	WFIFOL(inter_fd,44) = sh->str;
-	WFIFOL(inter_fd,48) = sh->agi;
-	WFIFOL(inter_fd,52) = sh->vit;
-	WFIFOL(inter_fd,56) = sh->int_;
-	WFIFOL(inter_fd,60) = sh->dex;
-	WFIFOL(inter_fd,64) = sh->luk;
-	WFIFOSET(inter_fd, 44+NAME_LENGTH);
-	
+	WFIFOHEAD(inter_fd, sizeof(struct s_homunculus)+8);
+	WFIFOW(inter_fd,0) = 0x3090;
+	WFIFOW(inter_fd,2) = sizeof(struct s_homunculus)+8;
+	WFIFOL(inter_fd,4) = account_id;
+	memcpy(WFIFOP(inter_fd,8),sh,sizeof(struct s_homunculus));
+	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 	return 0;
 }
 
@@ -814,7 +804,7 @@ int intif_homunculus_requestload(int account_id, int homun_id)
 	WFIFOL(inter_fd,2) = account_id;
 	WFIFOL(inter_fd,6) = homun_id;
 	WFIFOSET(inter_fd, 10);
-	return 0;
+	return 1;
 }
 
 int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh)
@@ -1446,47 +1436,32 @@ int intif_parse_RenamePetOk(int fd)
 
 int intif_parse_CreateHomunculus(int fd)
 {
-	struct map_session_data *sd = NULL;
+	int len;
 	RFIFOHEAD(fd);
-
-	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL  ||
-		sd->status.char_id != RFIFOL(fd,6))
+	len=RFIFOW(fd,2)-9;
+	if(sizeof(struct s_homunculus)!=len) {
+		if(battle_config.etc_log)
+			ShowError("intif: create homun data: data size error %d != %d\n",sizeof(struct s_homunculus),len);
 		return 0;
-
-	if(RFIFOW(fd,10)==1)
-	{
-		ShowInfo("Homunculus created successfully\n");
-		sd->status.hom_id = sd->homunculus.hom_id = RFIFOL(fd,12);
-		merc_hom_recv_data(RFIFOL(fd,2), &sd->homunculus, 1) ;
 	}
-	else
-	{
-		ShowError("intif_parse_CreateHomunculus: failed to create homunculus\n");
-		clif_displaymessage(sd->fd, "[debug] fail to create homunculus"); // display error message..
-	}
-
+	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
 	return 0;
 }
 
 int intif_parse_RecvHomunculusData(int fd)
 {
-	struct s_homunculus sh;
 	int len;
 
 	RFIFOHEAD(fd);
-	len=RFIFOW(fd,2);
+	len=RFIFOW(fd,2)-9;
 
-	if(sizeof(struct s_homunculus)!=len-9) {
+	if(sizeof(struct s_homunculus)!=len) {
 		if(battle_config.etc_log)
-			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len-9);
+			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len);
+		return 0;
 	}
-	else{
-		memcpy(&sh,RFIFOP(fd,9),sizeof(struct s_homunculus));
-		merc_hom_recv_data(RFIFOL(fd,4),&sh,RFIFOB(fd,8));
-	}
-
+	merc_hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
 	return 0;
-
 }
 
 int intif_parse_SaveHomunculusOk(int fd)

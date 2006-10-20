@@ -9910,7 +9910,7 @@ int atcommand_homlevel(
 	hd = sd->hd;
 	
 	for (i = 1; i <= level && hd->exp_next; i++){
-		sd->homunculus.exp += hd->exp_next;
+		hd->homunculus.exp += hd->exp_next;
 		merc_hom_levelup(hd);
 	}
 	status_calc_homunculus(hd,0);
@@ -9980,7 +9980,7 @@ int atcommand_homfriendly(
 	friendly = atoi(message);
 	if (merc_is_hom_active(sd->hd)) {
 		if (friendly > 0 && friendly <= 1000) {
-			sd->homunculus.intimacy = friendly * 100 ;
+			sd->hd->homunculus.intimacy = friendly * 100 ;
 			clif_send_homdata(sd,SP_INTIMATE,friendly);
 		} else {
 			return -1;
@@ -10007,9 +10007,10 @@ int atcommand_homhungry(
 
 	hungry = atoi(message);
 	if (sd->status.hom_id > 0 && sd->hd) {
+		struct homun_data *hd = sd->hd;
 		if (hungry >= 0 && hungry <= 100) {
-			sd->homunculus.hunger = hungry;
-			clif_send_homdata(sd,SP_HUNGRY,sd->homunculus.hunger);
+			hd->homunculus.hunger = hungry;
+			clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
 		} else {
 			return -1;
 		}
@@ -10030,13 +10031,13 @@ int atcommand_homtalk(
 
 	nullpo_retr(-1, sd);
 
-	if(!sd->status.hom_id || !sd->hd || !sd->homunculus.hp)
+	if(!merc_is_hom_active(sd->hd))
 		return -1;
 
 	if (sscanf(message, "%99[^\n]", mes) < 1)
 		return -1;
 
-	snprintf(temp, sizeof temp ,"%s : %s",sd->homunculus.name,mes);
+	snprintf(temp, sizeof temp ,"%s : %s",sd->hd->homunculus.name,mes);
 	clif_message(&sd->hd->bl, temp);
 
 	return 0;
@@ -10050,21 +10051,26 @@ int atcommand_hominfo(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-
+	struct homun_data *hd;
+	struct status_data *status;
 	nullpo_retr(-1, sd);
 
 	if(!merc_is_hom_active(sd->hd))
 		return -1;
-
+	hd = sd->hd;
+	status = status_get_status_data(&hd->bl);
 	clif_displaymessage(fd, "Homunculus stats :");
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"HP : %d/%d - SP : %d/%d", sd->hd->battle_status.hp, sd->hd->battle_status.max_hp, sd->hd->battle_status.sp, sd->hd->battle_status.max_sp);
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"HP : %d/%d - SP : %d/%d",
+		status->hp, status->max_hp, status->sp, status->max_sp);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"ATK : %d - MATK : %d~%d", sd->hd->battle_status.rhw.atk2+sd->hd->battle_status.batk, sd->hd->battle_status.matk_min, sd->hd->battle_status.matk_max);
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"ATK : %d - MATK : %d~%d",
+		status->rhw.atk2 +status->batk, status->matk_min, status->matk_max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %u", sd->homunculus.hunger, sd->homunculus.intimacy/100);
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %u",
+		hd->homunculus.hunger, hd->homunculus.intimacy/100);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;

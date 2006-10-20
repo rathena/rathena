@@ -666,6 +666,9 @@ int unit_can_move(struct block_list *bl)
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return 0;
 
+  	if (status_isdead(bl))
+		return 0;
+
 	if (sd && (
 		pc_issit(sd) ||
 		sd->state.blockedmove
@@ -1633,7 +1636,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 	} else if (bl->type == BL_HOM) {
 		struct homun_data *hd = (struct homun_data *) bl;
 		struct map_session_data *sd = hd->master;
-		if(!sd || !sd->homunculus.intimacy)
+		if(!sd || !hd->homunculus.intimacy)
 	  	{	//He's going to be deleted.
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearchar_area(bl,clrtype);
@@ -1818,17 +1821,14 @@ int unit_free(struct block_list *bl, int clrtype) {
 		struct map_session_data *sd = hd->master;
 		// Desactive timers
 		merc_hom_hungry_timer_delete(hd);
-		if(sd) {
-			if (sd->homunculus.intimacy > 0)
-				merc_save(hd); 
-			else
-			{
-				intif_homunculus_requestdelete(sd->homunculus.hom_id) ;
-				sd->status.hom_id = 0;
-				sd->homunculus.hom_id = 0;
-			}
-			sd->hd = NULL;
+		if (hd->homunculus.intimacy > 0)
+			merc_save(hd); 
+		else
+		{
+			intif_homunculus_requestdelete(hd->homunculus.hom_id);
+			if (sd) sd->status.hom_id = 0;
 		}
+		if(sd) sd->hd = NULL;
 	}
 
 	skill_clear_unitgroup(bl);

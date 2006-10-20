@@ -62,26 +62,14 @@ int mapif_homunculus_deleted(int fd, int flag)
 }
 int mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, short flag)
 {
-	WFIFOW(fd, 0) =0x3890;
-	WFIFOL(fd,2) = account_id;
-	WFIFOL(fd,6) = sh->char_id;
-	if(flag==1){
-		WFIFOW(fd, 10)=1;
-		WFIFOL(fd,12) = sh->hom_id;
-    }
-    else{
-		WFIFOW(fd, 10)=0;
-		WFIFOL(fd,12) = 0;
-	}
-	WFIFOSET(fd, 16);
-
+	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
+	WFIFOW(fd,0) = 0x3890;
+	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
+	WFIFOL(fd,4) = account_id;
+	WFIFOB(fd,8)= flag;
+	memcpy(WFIFOP(fd,9),sh,sizeof(struct s_homunculus));
+	WFIFOSET(fd, WFIFOW(fd,2));
 	return 0;
-}
-void init_homun_skills(struct s_homunculus *hd)
-{
-	int i;
-	for(i=0;i<MAX_HOMUNSKILL;i++)
-		hd->hskill[i].id = hd->hskill[i].lv = hd->hskill[i].flag = 0;
 }
 
 // Save/Update Homunculus Skills
@@ -199,7 +187,7 @@ int mapif_load_homunculus(int fd){
 	mysql_free_result(sql_res);
 
 	// Load Homunculus Skill
-	init_homun_skills(homun_pt); //bousille homun_pt !!!
+	memset(homun_pt->hskill, 0, sizeof(homun_pt->hskill));
 
 	sprintf(tmp_sql,"SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d",homun_pt->hom_id);
 	if(mysql_query(&mysql_handle, tmp_sql) ) {
@@ -279,39 +267,12 @@ int mapif_rename_homun(int fd, int account_id, int char_id, char *name){
 
 int mapif_parse_CreateHomunculus(int fd)
 {
-	memset(homun_pt, 0, sizeof(struct s_homunculus));
-
-	/* Data from packet */
-	homun_pt->char_id = RFIFOL(fd,6);
-	homun_pt->class_ = RFIFOW(fd,10);
-	homun_pt->max_hp = RFIFOL(fd,12);
-	homun_pt->max_sp = RFIFOL(fd,16);
-	memcpy(homun_pt->name, (char*)RFIFOP(fd, 20), NAME_LENGTH-1);
-	homun_pt->str = RFIFOL(fd,44);
-	homun_pt->agi = RFIFOL(fd,48);
-	homun_pt->vit = RFIFOL(fd,52);
-	homun_pt->int_ = RFIFOL(fd,56);
-	homun_pt->dex = RFIFOL(fd,60);
-	homun_pt->luk = RFIFOL(fd,64);
-
-	/* Const data for each creation*/
-	homun_pt->hom_id = 0;
-	homun_pt->exp =0;
-	homun_pt->hp = 10 ;
-	homun_pt->sp = 0 ;
-	homun_pt->rename_flag = 0;
-	homun_pt->skillpts =0;
-	homun_pt->hunger = 32;
-	homun_pt->level=1;
-	homun_pt->intimacy = 21;
-
+	memcpy(homun_pt, RFIFOP(fd,8), sizeof(struct s_homunculus));
 	// Save in sql db
-	if(mapif_save_homunculus(fd,RFIFOL(fd,2), homun_pt))
-		return mapif_homunculus_created(fd, RFIFOL(fd,2), homun_pt, 1); // send homun_id
+	if(mapif_save_homunculus(fd,RFIFOL(fd,4), homun_pt))
+		return mapif_homunculus_created(fd, RFIFOL(fd,4), homun_pt, 1); // send homun_id
 	else
-		return mapif_homunculus_created(fd, RFIFOL(fd,2), homun_pt, 0); // fail
-
-
+		return mapif_homunculus_created(fd, RFIFOL(fd,4), homun_pt, 0); // fail
 }
 
 

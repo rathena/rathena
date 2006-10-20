@@ -183,20 +183,15 @@ int inter_homun_delete(int hom_id)
 	return 1;
 }
 
-int mapif_homun_created(int fd,int account_id, int char_id, struct s_homunculus *p)
+int mapif_homun_created(int fd,int account_id, struct s_homunculus *p)
 {
+	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd, 0) =0x3890;
-	WFIFOL(fd,2) = account_id;
-	WFIFOL(fd,6) = char_id;
-	if(p){
-		WFIFOW(fd,10)=1;
-		WFIFOL(fd,12)=p->hom_id;
-    } else{
-		WFIFOW(fd,10)=0;
-		WFIFOL(fd,12)=0;
-	}
-	WFIFOSET(fd, 16);
-
+	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
+	WFIFOL(fd,4) = account_id;
+	WFIFOB(fd,8)= p->hom_id?1:0;
+	memcpy(WFIFOP(fd,9), p, sizeof(struct s_homunculus));
+	WFIFOSET(fd, WFIFOW(fd,2));
 	return 0;
 }
 
@@ -259,40 +254,17 @@ int mapif_rename_homun_ack(int fd, int account_id, int char_id, int flag, char *
 int mapif_create_homun(int fd)
 {
 	struct s_homunculus *p;
-	int account_id = RFIFOL(fd,2);
-	int char_id = RFIFOL(fd,6);
 	p= (struct s_homunculus *) aCalloc(sizeof(struct s_homunculus), 1);
 	if(p==NULL){
 		ShowFatalError("int_homun: out of memory !\n");
-		mapif_homun_created(fd,account_id,char_id,NULL);
+		//Sending the received data will pass hom_id == 0 <- fail.
+		mapif_homun_created(fd,RFIFOL(fd,4),(struct s_homunculus*)RFIFOP(fd,8));
 		return 0;
 	}
-	/* Data from packet */
-	p->char_id = char_id;
-	p->class_ = RFIFOW(fd,10);
-	p->max_hp = RFIFOL(fd,12);
-	p->max_sp = RFIFOL(fd,16);
-	memcpy(p->name, (char*)RFIFOP(fd, 20), NAME_LENGTH-1);
-	p->str = RFIFOL(fd,44);
-	p->agi = RFIFOL(fd,48);
-	p->vit = RFIFOL(fd,52);
-	p->int_ = RFIFOL(fd,56);
-	p->dex = RFIFOL(fd,60);
-	p->luk = RFIFOL(fd,64);
-
-	/* Const data for each creation*/
-	p->hom_id = homun_newid++;
-	p->exp = 0;
-	p->hp = 10 ;
-	p->sp = 0 ;
-	p->rename_flag = 0;
-	p->skillpts =0;
-	p->hunger = 32;
-	p->level=1;
-	p->intimacy = 21;
-
+	memcpy(p, RFIFOP(fd,8), sizeof(struct s_homunculus));
+	p->hom_id = homun_newid++; //New ID
 	idb_put(homun_db,p->hom_id,p);
-	mapif_homun_created(fd,account_id,char_id,p);
+	mapif_homun_created(fd,RFIFOL(fd,4),p);
 	return 0;
 }
 

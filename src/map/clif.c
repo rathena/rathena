@@ -1461,13 +1461,12 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	status = &hd->battle_status;
 	malloc_set(buf,0,packet_len_table[0x22e]);
 	WBUFW(buf,0)=0x22e;
-	memcpy(WBUFP(buf,2),sd->homunculus.name,NAME_LENGTH);
-//	WBUFB(buf,26)=sd->homunculus.rename_flag * 2;
+	memcpy(WBUFP(buf,2),hd->homunculus.name,NAME_LENGTH);
 	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
-	WBUFB(buf,26)=sd->homunculus.rename_flag | (sd->homunculus.vaporize << 1) | (sd->homunculus.hp?0:4);
-	WBUFW(buf,27)=sd->homunculus.level;
-	WBUFW(buf,29)=sd->homunculus.hunger;
-	WBUFW(buf,31)=(unsigned short) (sd->homunculus.intimacy / 100) ;
+	WBUFB(buf,26)=hd->homunculus.rename_flag | (hd->homunculus.vaporize << 1) | (hd->homunculus.hp?0:4);
+	WBUFW(buf,27)=hd->homunculus.level;
+	WBUFW(buf,29)=hd->homunculus.hunger;
+	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
 	WBUFW(buf,37)=cap_value(status->matk_max, 0, SHRT_MAX);
@@ -1491,9 +1490,9 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 		WBUFW(buf,55)=status->sp;
 		WBUFW(buf,57)=status->max_sp;
 	}
-	WBUFL(buf,59)=sd->homunculus.exp;
+	WBUFL(buf,59)=hd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
-	WBUFW(buf,67)=sd->homunculus.skillpts;
+	WBUFW(buf,67)=hd->homunculus.skillpts;
 	WBUFW(buf,69)=1; // FIXME: Attackable? When exactly is a homun not attackable? [Skotlex]
 	clif_send(buf,packet_len_table[0x22e],&sd->bl,SELF);
 	return 0;
@@ -1516,28 +1515,29 @@ void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[or
 }
 
 int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
+	struct homun_data *hd;
 	int fd;
-	int i,j,len=4,id/*, inf2*/;
+	int i,j,len=4,id;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, sd->hd);
 
-	if ( !sd->hd ) 
+	hd = sd->hd;
+	if ( !hd ) 
 		return 0 ;
 
 	fd=sd->fd;
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
-		if( (id = sd->homunculus.hskill[i].id) != 0 ){
+		if( (id = hd->homunculus.hskill[i].id) != 0 ){
 			j = id - HM_SKILLBASE - 1 ;
 			WFIFOW(fd,len  ) = id ;
 			WFIFOW(fd,len+2) = skill_get_inf(id) ;
 			WFIFOW(fd,len+4) = 0 ;
-			WFIFOW(fd,len+6) = sd->homunculus.hskill[j].lv ;
-			WFIFOW(fd,len+8) = skill_get_sp(id,sd->homunculus.hskill[j].lv) ;
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,sd->homunculus.hskill[j].lv) ;
+			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv ;
+			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv) ;
+			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv) ;
 			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
-			WFIFOB(fd,len+36) = (sd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, sd->homunculus.class_))?1:0;
+			WFIFOB(fd,len+36) = (hd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, hd->homunculus.class_))?1:0;
 			len+=37;
 		}
 	}
@@ -1548,47 +1548,49 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 }
 
 void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
-	int range,fd,skillid;
+	struct homun_data *hd;
+	int fd,skillid;
 
 	nullpo_retv(sd);
 	skillid = skill_num - HM_SKILLBASE - 1;
 
 	fd=sd->fd;
+	hd=sd->hd;
+
 	WFIFOW(fd,0) = 0x239;
 	WFIFOW(fd,2) = skill_num;
-	WFIFOW(fd,4) = sd->homunculus.hskill[skillid].lv;
-	WFIFOW(fd,6) = skill_get_sp(skill_num,sd->homunculus.hskill[skillid].lv);
-	range = skill_get_range(skill_num,sd->homunculus.hskill[skillid].lv);
-	if(range < 0)
-		range = status_get_range(&sd->bl) - (range + 1);
-	WFIFOW(fd,8) = range;
-	WFIFOB(fd,10) = (sd->homunculus.hskill[skillid].lv < skill_get_max(sd->homunculus.hskill[skillid].id)) ? 1 : 0;
+	WFIFOW(fd,4) = hd->homunculus.hskill[skillid].lv;
+	WFIFOW(fd,6) = skill_get_sp(skill_num,hd->homunculus.hskill[skillid].lv);
+	WFIFOW(fd,8) = skill_get_range2(&hd->bl, skill_num,hd->homunculus.hskill[skillid].lv);
+	WFIFOB(fd,10) = (hd->homunculus.hskill[skillid].lv < skill_get_max(hd->homunculus.hskill[skillid].id)) ? 1 : 0;
 	WFIFOSET(fd,packet_len_table[0x239]);
 
 	return;
 }
 
 void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[orn]
-
+	struct homun_data *hd;
 	nullpo_retv(sd);
 
-	if(sd->hd == NULL)
+	if((hd=sd->hd) == NULL)
 		return;
 
 	RFIFOHEAD(fd);
-	memcpy(sd->homunculus.name,RFIFOP(fd,2),24);
-	sd->homunculus.rename_flag = 1;
-	clif_hominfo(sd,sd->hd,0);
-	clif_charnameack(sd->fd,&sd->hd->bl);
+	memcpy(hd->homunculus.name,RFIFOP(fd,2),24);
+	hd->homunculus.rename_flag = 1;
+	clif_hominfo(sd,hd,0);
+	clif_charnameack(sd->fd,&hd->bl);
 }
 
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
 
 	nullpo_retv(sd);
 
-	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+	if(!merc_is_hom_active(sd->hd))
 		return;
 
+	if (!unit_can_move(&sd->hd->bl))
+		return;
 	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0);
 }
 
@@ -1597,7 +1599,7 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 
 	nullpo_retv(sd);
 
-	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+	if(!merc_is_hom_active(sd->hd))
 		return;
 
 	cmd = RFIFOW(fd,0);
@@ -1605,6 +1607,9 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
 	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
+
+	if (!unit_can_move(&sd->hd->bl))
+		return;
 
 	unit_walktoxy(&(sd->hd->bl),x,y,0);
 }
@@ -1614,7 +1619,7 @@ void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
 
 	nullpo_retv(sd);
 
-	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize || sd->hd->bl.id != RFIFOL(fd,2))
+	if(!merc_is_hom_active(sd->hd))
 		return;
 	
 	if ((target = map_id2bl(RFIFOL(fd,6))) == NULL || status_isdead(target)) 
@@ -1622,10 +1627,7 @@ void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
 
 	merc_stop_walking(sd->hd, 1);
 	merc_stop_attack(sd->hd);
-	if ( sd->hd && target ) {
-		sd->hd->target_id = RFIFOL(fd,6) ;
-		unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
-	}
+	unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
 }
 
 void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
@@ -1634,7 +1636,7 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
 	RFIFOHEAD(fd);
 	cmd = RFIFOW(fd,0);
 
-	if(sd->hd == NULL || status_isdead(&sd->hd->bl) || sd->homunculus.vaporize)
+	if(!merc_is_hom_active(sd->hd))
 		return;
 
 	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
@@ -7831,13 +7833,13 @@ int clif_charnameack (int fd, struct block_list *bl)
 		break;
 	//[blackhole89]
 	case BL_HOM:
-		memcpy(WBUFP(buf,6), ((struct homun_data*)bl)->master->homunculus.name, NAME_LENGTH);
+		memcpy(WBUFP(buf,6), ((TBL_HOM*)bl)->homunculus.name, NAME_LENGTH);
 		break;
 	case BL_PET:
-		memcpy(WBUFP(buf,6), ((struct pet_data*)bl)->pet.name, NAME_LENGTH);
+		memcpy(WBUFP(buf,6), ((TBL_PET*)bl)->pet.name, NAME_LENGTH);
 		break;
 	case BL_NPC:
-		memcpy(WBUFP(buf,6), ((struct npc_data*)bl)->name, NAME_LENGTH);
+		memcpy(WBUFP(buf,6), ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		break;
 	case BL_MOB:
 		{
@@ -9689,7 +9691,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 	} else if (DIFF_TICK(tick, hd->ud.canact_tick) < 0)
 		return;
 
-	lv = merc_hom_checkskill(sd, skillnum);
+	lv = merc_hom_checkskill(hd, skillnum);
 	if (skilllv > lv)
 		skilllv = lv;
 			
@@ -10155,26 +10157,14 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
  */
 void clif_parse_LGMmessage(int fd, struct map_session_data *sd) {
 	unsigned char buf[512];
-//	int len = RFIFOREST(fd);
-	int plen = RFIFOW(fd,2);
 	RFIFOHEAD(fd);
-
-	//This shouldn't be needed.... because the parsing code makes sure
-	//this function is not invoked until enough bytes have been received.
-	//So if the client "hacks" the packet, all that will happen is that
-	//it will not be parsed until enough data is received, on which point
-	//the following packets will be offset, causing them to fail to parse,
-	//which leads to disconnecting them :3 [Skotlex]
-//	if(plen <= 0 || plen > len) // Possible hack! [Lance]
-//		plen = len;
 
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_LocalBroadcast))) {
 		WBUFW(buf,0) = 0x9a;
-		WBUFW(buf,2) = plen;
-		memcpy(WBUFP(buf,4), RFIFOP(fd,4), plen - 4);
-		WBUFB(buf,plen-1) = '\0'; // Must have NULL termination [Lance]
-		clif_send(buf, plen, &sd->bl, ALL_SAMEMAP);
+		WBUFW(buf,2) = RFIFOW(fd,2);
+		memcpy(WBUFP(buf,4), RFIFOP(fd,4), RFIFOW(fd,2) - 4);
+		clif_send(buf, RFIFOW(fd,2), &sd->bl, ALL_SAMEMAP);
 	}
 }
 

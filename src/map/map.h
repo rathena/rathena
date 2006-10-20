@@ -800,8 +800,6 @@ struct map_session_data {
 	struct vending vending[MAX_VENDING];
 
 	struct pet_data *pd;
-
-	struct s_homunculus homunculus ;	//[orn]
 	struct homun_data *hd;	// [blackhole89]
 
 	struct{
@@ -990,10 +988,10 @@ struct homun_data {
 	struct status_change sc;
 	struct regen_data regen;
 	struct homunculus_db *homunculusDB;	//[orn]
+	struct s_homunculus homunculus ;	//[orn]
 
 	struct map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]
-	int target_id,attacked_id;
 	unsigned int exp_next;
 	char blockskill[MAX_SKILL];	// [orn]
 };

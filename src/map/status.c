@@ -2327,13 +2327,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 int status_calc_homunculus(struct homun_data *hd, int first)
 {
 	struct status_data b_status, *status;
-	struct map_session_data *sd;
 	struct s_homunculus *hom;
 	int skill;
 	
 	memcpy(&b_status, &hd->base_status, sizeof(struct status_data));
-	sd = hd->master;
-	hom = &sd->homunculus;
+	hom = &hd->homunculus;
 
 	status = &hd->base_status;
 	
@@ -2351,8 +2349,8 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->size = hd->homunculusDB->size ;
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
-		if (battle_config.slaves_inherit_speed && sd)
-			status->speed = status_get_speed(&sd->bl);
+		if (battle_config.slaves_inherit_speed && hd->master)
+			status->speed = status_get_speed(&hd->master->bl);
 		else
 			status->speed = DEFAULT_WALK_SPEED;
 		status->hp = 1;
@@ -2367,21 +2365,21 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->max_hp = hom->max_hp ;
 	status->max_sp = hom->max_sp ;
 
-	merc_hom_calc_skilltree(sd);
+	merc_hom_calc_skilltree(hd);
 
-	if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0)
+	if((skill=merc_hom_checkskill(hd,HAMI_SKIN)) > 0)
 		status->def +=	skill * 4;
 	
-	if((skill = merc_hom_checkskill(hd->master,HVAN_INSTRUCT)) > 0)
+	if((skill = merc_hom_checkskill(hd,HVAN_INSTRUCT)) > 0)
 	{
-		status->int_ +=	1 +skill/2 -skill/4 +skill/5;
-		status->str  +=	1 +2*(skill/3) +skill/4;
+		status->int_ += 1 +skill/2 -skill/4 +skill/5;
+		status->str  += 1 +2*(skill/3) +skill/4;
 	}
 
-	if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0)
+	if((skill=merc_hom_checkskill(hd,HAMI_SKIN)) > 0)
 		status->max_hp += skill * 2 * status->max_hp / 100;
 
-	if((skill = merc_hom_checkskill(hd->master,HLIF_BRAIN)) > 0)
+	if((skill = merc_hom_checkskill(hd,HLIF_BRAIN)) > 0)
 		status->max_sp += (1 +skill/2 -skill/4 +skill/5) * status->max_sp / 100 ;
 
 	if (first) {
@@ -2507,15 +2505,15 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 	}
 	
-	if(bl->type==BL_HOM && ((TBL_HOM*)bl)->master)
+	if(bl->type==BL_HOM)
 	{
-		sd = ((TBL_HOM*)bl)->master;
-		if((skill=merc_hom_checkskill(sd,HAMI_SKIN)) > 0)
+		struct homun_data *hd = (TBL_HOM*)bl;
+		if((skill=merc_hom_checkskill(hd,HAMI_SKIN)) > 0)
 		{
 			val = regen->hp*(100+5*skill)/100;
 			regen->hp = cap_value(val, 1, SHRT_MAX);
 		}
-		if((skill = merc_hom_checkskill(sd,HLIF_BRAIN)) > 0)
+		if((skill = merc_hom_checkskill(hd,HLIF_BRAIN)) > 0)
 		{
 			val = regen->sp*(100+3*skill)/100;
 			regen->sp = cap_value(val, 1, SHRT_MAX);
@@ -2725,8 +2723,6 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 			unit_walktoxy(&sd->bl, sd->ud.to_x, sd->ud.to_y, sd->ud.state.walk_easy);
 	}
 
-	//Needs be done even when it was already done in status_calc_misc, because
-	//int/vit max hp/sp could have changed due to skills.
 	if(flag&(SCB_INT|SCB_MAXSP|SCB_VIT|SCB_MAXHP))
 		status_calc_regen(&sd->bl, status, &sd->regen);
 	
@@ -3931,9 +3927,7 @@ const char * status_get_name(struct block_list *bl)
 	case BL_PET:
 		return ((TBL_PET*)bl)->pet.name;
 	case BL_HOM:
-		if (((TBL_HOM*)bl)->master)
-			return ((TBL_HOM*)bl)->master->homunculus.name;
-		break;
+		return ((TBL_HOM*)bl)->homunculus.name;
 	case BL_NPC:
 		return ((TBL_NPC*)bl)->name;
 	}
@@ -3955,7 +3949,7 @@ int status_get_class(struct block_list *bl)
 	if(bl->type==BL_PET)
 		return ((struct pet_data *)bl)->pet.class_;
 	if(bl->type==BL_HOM)
-		return ((struct homun_data *)bl)->master->homunculus.class_;
+		return ((struct homun_data *)bl)->homunculus.class_;
 	return 0;
 }
 /*==========================================
@@ -3973,7 +3967,7 @@ int status_get_lv(struct block_list *bl)
 	if(bl->type==BL_PET)
 		return ((TBL_PET*)bl)->pet.level;
 	if(bl->type==BL_HOM)
-		return ((TBL_HOM*)bl)->master->homunculus.level;
+		return ((TBL_HOM*)bl)->homunculus.level;
 	return 1;
 }
 

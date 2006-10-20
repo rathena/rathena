@@ -757,11 +757,6 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 			return status_get_range(bl);
 		range *=-1;
 	}
-
-	//Use attack range.
-	if(!range && !(skill_get_inf(id)&INF_SELF_SKILL))
-		return status_get_range(bl);
-
 	//TODO: Find a way better than hardcoding the list of skills affected by AC_VULTURE
 	switch (id) {
 	case AC_SHOWER:
@@ -810,7 +805,7 @@ int skill_calc_heal (struct block_list *bl, int skill_lv)
 	if(bl->type == BL_PC && (skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
 		heal += heal * skill * 2 / 100;
 
-	if(bl->type == BL_HOM && (skill = merc_hom_checkskill( ((TBL_HOM*)bl)->master, HLIF_BRAIN)) > 0)	//[orn]
+	if(bl->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)bl), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
 	return heal;
 }
@@ -1513,10 +1508,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	case HVAN_EXPLOSION:
 		if(src->type == BL_HOM){
 			TBL_HOM *hd = (TBL_HOM*)src;
-			if (hd->master) {
-				hd->master->homunculus.intimacy = 200;
-				clif_send_homdata(hd->master,0x100,hd->master->homunculus.intimacy/100);
-			}
+			hd->homunculus.intimacy = 200;
+			if (hd->master)
+				clif_send_homdata(hd->master,0x100,hd->homunculus.intimacy/100);
 		}
 		break;
 	}
@@ -2357,11 +2351,11 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case HFLI_SBR44:
-			if(sd->homunculus.intimacy <= 200)
+			if(hd->homunculus.intimacy <= 200)
 				return 0;
 			break;
 		case HVAN_EXPLOSION:
-			if(sd->homunculus.intimacy < battle_config.hvan_explosion_intimate)
+			if(hd->homunculus.intimacy < battle_config.hvan_explosion_intimate)
 				return 0;
 			break;
 	}
@@ -2752,6 +2746,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case KN_CHARGEATK:
 		flag = distance_bl(src, bl);
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		if (unit_movepos(src, bl->x, bl->y, 1, 1))
+			clif_slide(src,bl->x,bl->y);
+		break;
+
 	case TK_JUMPKICK:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
@@ -5440,6 +5439,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		else if (sd)
 			clif_skill_fail(sd,skillid,0,0);
 		break;
+
+	case AM_CALLHOMUN:	//[orn]
+		if (sd && !merc_call_homunculus(sd))
+			clif_skill_fail(sd,skillid,0,0);
+		break;
+
 	case AM_REST:
 		if (sd)
 		{
@@ -5557,7 +5562,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
-		case AM_CALLHOMUN:	
 		case AM_RESURRECTHOMUN:
 			//Find a random spot to place the skill. [Skotlex]
 			inf2 = skill_get_splash(ud->skillid, ud->skilllv);
@@ -6088,7 +6092,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		}
 		break;
 
-	// Slim Pitcher [Celest] (normally Condensed Potion doesn't give SP (Heals party members))
+	// Slim Pitcher [Celest]
 	case CR_SLIMPITCHER:
 		if (sd) {
 			int i = skilllv%11 - 1;
@@ -6203,11 +6207,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_TATAMIGAESHI:
 		if (skill_unitsetting(src,skillid,skilllv,src->x,src->y,0))
 			sc_start(src,type,100,skilllv,skill_get_time2(skillid,skilllv));
-		break;
-
-	case AM_CALLHOMUN:	//[orn]
-		if (sd && !merc_call_homunculus(sd, x, y))
-			clif_skill_fail(sd,skillid,0,0);
 		break;
 
 	case AM_RESURRECTHOMUN:	//[orn]
@@ -8298,7 +8297,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		zeny = 0; //Zeny is reduced on skill_attack.
 		break;
 	case AM_CALLHOMUN: //Can't summon if a hom is already out
-		if (sd->status.hom_id && !sd->homunculus.vaporize) {
+		if (sd->status.hom_id && sd->hd && !sd->hd->homunculus.vaporize) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
@@ -8313,7 +8312,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case AM_RESURRECTHOMUN: // Can't resurrect homun if you don't have a dead homun
-		if (!sd->status.hom_id || sd->homunculus.hp)
+		if (!sd->status.hom_id || !sd->hd || sd->hd->homunculus.hp)
 		{
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
@@ -9286,10 +9285,8 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			}
 			//Delete the rest of types.
 		case HW_GANBANTEIN:
-			//Update: It deletes everything except songs/dances/encores.
 			if(!unit->group->state.song_dance)
-//			if(skill_get_type(unit->group->skill_id) == BF_MAGIC)
-			{	//Delete Magical effects
+			{	//It deletes everything except songs/dances/encores.
 				skill_delunit(unit, 1);
 				return 1;
 			}
@@ -9320,10 +9317,8 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-	//Update: It deletes everything except songs/dances/encores.
 		!(skill_get_inf2(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
-//		skill_get_type(skillid) == BF_MAGIC)
-	{	//Magic tile won't be activated
+	{	//It deletes everything except songs/dances/encores.
 		(*alive) = 0;
 		return 1;
 	}

@@ -101,7 +101,7 @@ int battle_gettarget(struct block_list *bl)
 		case BL_PET:
 			return ((struct pet_data*)bl)->target_id;
 		case BL_HOM:
-			return ((struct homun_data*)bl)->target_id;
+			return ((struct homun_data*)bl)->ud.target;
 	}
 	return 0;
 }
@@ -300,6 +300,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		if(sc->data[SC_DODGE].timer != -1 && !sc->opt1 &&
 			(flag&BF_LONG || sc->data[SC_SPURT].timer != -1)
 			&& rand()%100 < 20) {
+			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
 			clif_skill_nodamage(bl,bl,TK_DODGE,1,1);
 			if (sc->data[SC_COMBO].timer == -1)
 				sc_start4(bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
@@ -1231,8 +1232,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				}
 			case HFLI_SBR44:	//[orn]
-				if(src->type == BL_HOM && ((TBL_HOM*)src)->master) {
-					wd.damage = ((TBL_HOM*)src)->master->homunculus.intimacy ;
+				if(src->type == BL_HOM) {
+					wd.damage = ((TBL_HOM*)src)->homunculus.intimacy ;
 					break;
 				}
 			default:
@@ -1508,7 +1509,6 @@ static struct Damage battle_calc_weapon_attack(
 					//Preserve damage ratio when max cart weight is changed.
 					if(sd && sd->cart_weight && sd->cart_max_weight)
 						skillratio += sd->cart_weight/i * 80000/sd->cart_max_weight - 100;
-//						skillratio += sd->cart_weight/i - 100;
 					else if (!sd)
 						skillratio += 80000 / i - 100;
 					flag.cardfix = 0;

@@ -7765,7 +7765,7 @@ int buildin_homunculus_evolution(struct script_state *st)
 {
 	struct map_session_data *sd;
 	sd=script_rid2sd(st);
-	if ( sd->hd && sd->hd->homunculusDB->evo_class && sd->homunculus.intimacy > 91000 ) {
+	if ( sd->hd && sd->hd->homunculusDB->evo_class && sd->hd->homunculus.intimacy > 91000 ) {
 		return merc_hom_evolution(sd->hd) ;
 	}
 	clif_emotion(&sd->hd->bl, 4) ;	//swt
@@ -11737,19 +11737,19 @@ int buildin_rid2name(struct script_state *st){
 	if((bl = map_id2bl(rid))){
 		switch(bl->type){
 			case BL_MOB:
-				push_str(st->stack,C_CONSTSTR,((struct mob_data *)bl)->name);
+				push_str(st->stack,C_CONSTSTR,((TBL_MOB*)bl)->name);
 				break;
 			case BL_PC:
-				push_str(st->stack,C_CONSTSTR,((struct map_session_data *)bl)->status.name);
+				push_str(st->stack,C_CONSTSTR,((TBL_PC*)bl)->status.name);
 				break;
 			case BL_NPC:
-				push_str(st->stack,C_CONSTSTR,((struct npc_data *)bl)->exname);
+				push_str(st->stack,C_CONSTSTR,((TBL_NPC*)bl)->exname);
 				break;
 			case BL_PET:
-				push_str(st->stack,C_CONSTSTR,((struct pet_data *)bl)->pet.name);
+				push_str(st->stack,C_CONSTSTR,((TBL_PET*)bl)->pet.name);
 				break;
 			case BL_HOM:
-				push_str(st->stack,C_CONSTSTR,((struct homun_data *)bl)->master->homunculus.name);
+				push_str(st->stack,C_CONSTSTR,((TBL_HOM*)bl)->homunculus.name);
 				break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");

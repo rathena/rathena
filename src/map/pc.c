@@ -3360,7 +3360,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 					unit_remove_map(&sd->pd->bl, clrtype);
 				}
 				if(sd->status.hom_id > 0 && sd->hd) {	//orn
-					intif_homunculus_requestsave(sd->status.account_id, &sd->homunculus);
+					intif_homunculus_requestsave(sd->status.account_id, &sd->hd->homunculus);
 					unit_remove_map(&sd->hd->bl, clrtype);
 				}
 				chrif_save(sd,2);
