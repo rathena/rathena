@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Mjolnir.
 //===== Additional Comments: =================================
 // 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+// 1.1 Fixed wrong label names [Luups]
 //============================================================
 
 prontera.gat,124,297,3	script	Tialfi	706,{
@@ -1773,19 +1774,19 @@ mjolnir_09.gat,209,341,3	script	Dwarf Blacksmith#south	826,{
 				menu "...?!",case41,"Dodge!",case42,"Block!",case43,"Jump!",case44,"Counter back!",case45;
 					case41:
 						set @player_def,0;
-						goto L_PlayerDef2;
+						goto L_DefPlayer2;
 					case42:
 						set @player_def,1;
-						goto L_PlayerDef2;
+						goto L_DefPlayer2;
 					case43:
 						set @player_def,2;
-						goto L_PlayerDef2;
+						goto L_DefPlayer2;
 					case44:
 						set @player_def,3;
-						goto L_PlayerDef2;
+						goto L_DefPlayer2;
 					case45:
 						set @player_def,4;
-						goto L_PlayerDef2;
+						goto L_DefPlayer2;
 				L_DefPlayer2:
 				set @sudri_atk,rand(1,3);
 				set @damage,rand(20,25);
