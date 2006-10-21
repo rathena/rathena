@@ -14,29 +14,29 @@
 //==================================================
 // lou_dun01 - The Royal Tomb
 //==================================================
-lou_dun01.gat,215,159,40,80	monster	Li Me Mang Ryang	1517,25,300000,120000,0
-lou_dun01.gat,0,0,0,0	monster	Li Me Mang Ryang	1517,20,0,0,0
 lou_dun01.gat,0,0,0,0	monster	Horong	1129,15,0,0,0
-lou_dun01.gat,0,0,0,0	monster	Grizzly	1381,15,0,0,0
-lou_dun01.gat,0,0,0,0	monster	Increase Soil	1516,15,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Mi Gao	1516,15,0,0,0
 lou_dun01.gat,215,159,40,80	monster	Side Winder	1037,10,300000,120000,0
-lou_dun01.gat,197,77,10,10	monster	Black Mushroom	1084,5,0,0,0
-lou_dun01.gat,0,0,0,0	monster	Shining Plant	1083,5,1800000,900000,1
+lou_dun01.gat,215,159,40,80	monster	Jing Guai	1517,25,300000,120000,0
+lou_dun01.gat,0,0,0,0	monster	Jing Guai	1517,20,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Grizzly	1381,15,0,0,0
 lou_dun01.gat,0,0,0,0	monster	Leib Olmai	1306,1,300000,120000,0
+lou_dun01.gat,197,77,10,10	monster	Black Mushroom	1084,5,0,0,0
+lou_dun01.gat,0,0,0,0	monster	Shining Plant	1083,5,0,0,0
 
 //==================================================
 // lou_dun02 - Inside the Royal Tomb
 //==================================================
-lou_dun02.gat,0,0,0,0	monster	Hyegun	1512,40,0,0,0
+lou_dun02.gat,0,0,0,0	monster	Yao Jun	1512,40,300000,120000,0
 lou_dun02.gat,0,0,0,0	monster	Munak	1026,25,0,0,0
+lou_dun02.gat,0,0,0,0	monster	Zhu Po Long	1514,5,0,0,0
 lou_dun02.gat,0,0,0,0	monster	Mimic	1191,5,0,0,0
-lou_dun02.gat,0,0,0,0	monster	Dancing Dragon	1514,5,0,0,0
 
 //==================================================
 // lou_dun03 - Suei Long Gon
 //==================================================
-lou_dun03.gat,0,0,0,0	monster	Dancing Dragon	1514,25,0,0,0
-lou_dun03.gat,0,0,0,0	monster	Hyegun	1512,25,0,0,0
-lou_dun03.gat,0,0,0,0	monster	Civil Servant	1513,15,0,0,0
-lou_dun03.gat,0,0,0,0	monster	Chung E	1631,5,3000000,1800000,1
-lou_dun03.gat,0,0,0,0	monster	Bacsojin	1630,1,7000000,5000000,1
+lou_dun03.gat,0,0,0,0	monster	Yao Jun	1512,25,0,0,0
+lou_dun03.gat,0,0,0,0	monster	Zhu Po Long	1514,25,0,0,0
+lou_dun03.gat,0,0,0,0	monster	Mao Guai	1513,15,0,0,0
+lou_dun03.gat,0,0,0,0	monster	Green Maiden	1631,5,3000000,1800000,1
+lou_dun03.gat,0,0,0,0	monster	White Lady	1630,1,7000000,5000000,1

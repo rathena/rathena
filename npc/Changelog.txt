@@ -43,6 +43,11 @@ Date		Added
 	- Umbala Field
 	- Umbala Dungeon
 	- Yggdrasil
+	- Niflheim
+	- Louyang Field
+	- Louyang Dungeon
+	- Ayothaya Field
+	- Ayothaya Dungeon
 10/20
 	* Official kRO 10.1 spawns for Morroc Field [Playtester]
 	- Prontera Field
