@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/20
+	* Made HAMI_CASTLE use clif_slide rather than clif_fixpos. This should
+	  fix clientside problems when castling between two positions the (client)
+	  path finding can't find a walkable bath between anymore. [blackhole89]
 	* Fixed the Homunc not spawning next to you after receiving it's data from
 	  the char-server. [Skotlex]
 	* Fixed Charge Atk being able to go through chasm/pits. [Skotlex]

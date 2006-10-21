@@ -5466,11 +5466,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skillid,skilllv,1); // Homunc
-				clif_fixpos(src) ;
+				clif_slide(src,bl->x,bl->y) ;
 				if (unit_movepos(bl,x,y,0,0))
 				{
 					clif_skill_nodamage(bl,bl,skillid,skilllv,1); // Master
-					clif_fixpos(bl) ;
+					clif_slide(bl,x,y) ;
 				}
 
 				//TODO: Shouldn't also players and the like switch targets?
