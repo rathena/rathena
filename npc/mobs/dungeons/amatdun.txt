@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//=
+//= 1.1 Official kRO 10.1 spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -15,25 +15,27 @@
 //==================================================
 ama_dun01.gat,0,0,0,0	monster	Miyabi Doll	1404,65,0,0,0
 ama_dun01.gat,0,0,0,0	monster	Firelock Soldier	1403,45,0,0,0
-ama_dun01.gat,0,0,0,0	monster	Shinobi	1401,2,0,0,0
+ama_dun01.gat,0,0,0,0	monster	Shinobi	1401,2,180000,90000,0
 
 //==================================================
 // ama_dun02 - Battle Field in the Underground Forest
 //==================================================
-ama_dun02.gat,0,0,0,0	monster	Poison Toad	1402,35,0,0,0
-ama_dun02.gat,0,0,0,0	monster	Horong	1129,10,0,0,0
-ama_dun02.gat,0,0,0,0	monster	Miyabi Doll	1404,5,0,0,0
+ama_dun02.gat,0,0,0,0	monster	Poison Toad	1402,35,180000,90000,0
 ama_dun02.gat,0,0,0,0	monster	Firelock Soldier	1403,20,60000,30000,0
+ama_dun02.gat,0,0,0,0	monster	Miyabi Doll	1404,5,120000,60000,0
 ama_dun02.gat,0,0,0,0	monster	Shinobi	1401,2,180000,90000,0
+ama_dun02.gat,0,0,0,0	monster	Horong	1129,10,0,0,0
 ama_dun02.gat,0,0,0,0	monster	The Paper	1375,1,180000,90000,0
 
 //==================================================
 // ama_dun03 - Amatsu Underground Shrine
 //==================================================
-ama_dun03.gat,0,0,0,0	monster	Shinobi	1401,55,0,0,0
-ama_dun03.gat,0,0,0,0	monster	Tengu	1405,55,0,0,0
+ama_dun03.gat,0,0,0,0	monster	Shinobi	1401,35,600000,300000,0
 ama_dun03.gat,0,0,0,0	monster	Firelock Soldier	1403,25,0,0,0
-ama_dun03.gat,0,0,0,0	monster	The Paper	1375,20,0,0,0
-ama_dun03.gat,0,0,0,0	monster	Mimic	1191,5,0,0,0
 ama_dun03.gat,0,0,0,0	monster	Miyabi Doll	1404,1,0,0,0
-ama_dun03.gat,0,0,0,0	monster	Incantation Samurai	1492,1,5400000,2700000,0
+ama_dun03.gat,0,0,0,0	monster	Tengu	1405,40,600000,300000,0
+ama_dun03.gat,0,0,0,0	monster	Mimic	1191,5,0,0,0
+ama_dun03.gat,0,0,0,0	monster	The Paper	1375,20,600000,300000,0
+ama_dun03.gat,0,0,0,0	monster	Samurai Specter	1492,1,5460000,3600000,0
+ama_dun03.gat,0,0,0,0	monster	Shinobi	1401,20,5450000,3600000,0
+ama_dun03.gat,0,0,0,0	monster	Tengu	1405,15,5440000,3600000,0

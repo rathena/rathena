@@ -33,6 +33,11 @@ KarLaeda
 
 Date		Added
 ======
+10/21
+	* Further spawn updates for Yuno Field [Playtester]
+	- Magma Dungeon
+	- Amatsu Field
+	- Amatsu Dungeon
 10/20
 	* Official kRO 10.1 spawns for Morroc Field [Playtester]
 	- Prontera Field
