@@ -38,6 +38,11 @@ Date		Added
 	- Magma Dungeon
 	- Amatsu Field
 	- Amatsu Dungeon
+	- Gonryun Field
+	- Gonryun Dungeon
+	- Umbala Field
+	- Umbala Dungeon
+	- Yggdrasil
 10/20
 	* Official kRO 10.1 spawns for Morroc Field [Playtester]
 	- Prontera Field
