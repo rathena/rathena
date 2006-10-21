@@ -537,9 +537,19 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 		return 1;
 	}
 	sd->hd = hd = aCalloc(1,sizeof(struct homun_data));
+	hd->bl.subtype = MONS;
+	hd->bl.type = BL_HOM;
+	hd->bl.id = npc_get_new_npc_id();
+
+	hd->master = sd;
 	hd->homunculusDB = &homunculus_db[i];
 	memcpy(&hd->homunculus, hom, sizeof(struct s_homunculus));
-	hd->master = sd;
+	hd->exp_next = hexptbl[hd->homunculus.level - 1];
+
+	status_set_viewdata(&hd->bl, hd->homunculus.class_);
+	status_change_init(&hd->bl);
+	unit_dataset(&hd->bl);
+	hd->ud.dir = sd->ud.dir;
 
 	// Find a random valid pos around the player
 	hd->bl.m = sd->bl.m;
@@ -550,18 +560,6 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	map_random_dir(&hd->bl, &x, &y);
 	hd->bl.x = x;
 	hd->bl.y = y;
-
-	hd->bl.subtype = MONS;
-	hd->bl.type = BL_HOM;
-	hd->bl.id = npc_get_new_npc_id();
-	hd->bl.prev = NULL;
-	hd->bl.next = NULL;
-	hd->exp_next = hexptbl[hd->homunculus.level - 1];
-
-	status_set_viewdata(&hd->bl, hd->homunculus.class_);
-	status_change_init(&hd->bl);
-	unit_dataset(&hd->bl);
-	hd->ud.dir = sd->ud.dir;
 	
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
@@ -644,17 +642,15 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 		merc_hom_alloc(sd, sh);
 	
 	hd = sd->hd;
-	if(hd->homunculus.hp && !hd->homunculus.vaporize)
+	if(hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL)
 	{
-		if (hd->bl.prev != NULL) {
-			map_addblock(&hd->bl);
-			clif_spawn(&hd->bl);
-			clif_hominfo(sd,hd,1);
-			clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
-			clif_homskillinfoblock(sd);
-			clif_hominfo(sd,hd,0);
-			clif_send_homdata(sd,SP_ACK,0);
-		}
+		map_addblock(&hd->bl);
+		clif_spawn(&hd->bl);
+		clif_hominfo(sd,hd,1);
+		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+		clif_homskillinfoblock(sd);
+		clif_hominfo(sd,hd,0);
+		clif_send_homdata(sd,SP_ACK,0);
 	}
 	return 1;
 }

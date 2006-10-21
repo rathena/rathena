@@ -3942,7 +3942,6 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 		}else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
 			ShowStatus("set lowest_gm_level : %s\n",w2);
-		//support the import command, just like any other config
 #endif
 		}else if(strcmpi(w1,"scdata_db")==0){
 			strcpy(scdata_db,w2);
@@ -3997,8 +3996,8 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(item_db2_db,w2);
 		} else if(strcmpi(w1,"connection_ping_interval")==0) {
 			connection_ping_interval = config_switch(w2);
-
 #endif
+		//support the import command, just like any other config
 		}else if(strcmpi(w1,"import")==0){
 			sql_config_read(w2);
 		}

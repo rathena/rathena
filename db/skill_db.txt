@@ -182,7 +182,7 @@
 156,9,6,1,6,0,0,1,1,yes,0,1,0,magic,0	//AL_HOLYLIGHT#Holy Light#
 157,0,6,4,0,1,0,1,1,yes,0,1,0,magic,0	//MG_ENERGYCOAT#Energy Coat#
 158,3,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_PIERCINGATT#Thrusting attack#
-159,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_MENTALBREAKER#Spirit Destruction#
+159,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_MENTALBREAKER#Spirit Destruction#
 160,9,6,1,0,0,0,10,1,no,0,2,0,weapon,0	//NPC_RANGEATTACK#Stand off attack#
 161,0,0,4,0,1,0,1,1,no,0,2,0,magic,0	//NPC_ATTRICHANGE#Run Attribute Change#
 162,0,0,4,1,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEWATER#Water Attribute Change#

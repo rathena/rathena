@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/20
+	* Fixed the Homunc not spawning next to you after receiving it's data from
+	  the char-server. [Skotlex]
 	* Fixed Charge Atk being able to go through chasm/pits. [Skotlex]
 	* Moved the homunculus DB information from the player structure to the
 	  homun structure. Modified the homunculus creation packets to hold this
