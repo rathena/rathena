@@ -33,6 +33,10 @@ KarLaeda
 
 Date		Added
 ======
+10/24
+	* Added official Gonryun Power Arena [KarLaeda]
+	* Removed 2nd entrance warp to Novice Geffen Castle [Lupus]
+	- minor fixes in Novice Exchanger
 10/23
 	* Fixed small typo in the Priest job quest [Playtester]
 10/22

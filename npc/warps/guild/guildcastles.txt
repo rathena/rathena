@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.2
+//= 2.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 2.0 Added Novice Guilds warps, optimized aldg408r warp [Lupus]
 //= 2.1 Fixed some warps positions [Yor]
 //= 2.2 Changed all breaks to end as per the new script engine. [Skotlex]
+//= 2.3 Removed 2nd entrance to Novice Castle Geffen [Lupus]
 //============================================================
 
 
@@ -419,11 +420,7 @@ nguild_alde.gat,171,175,0	warp	naldg108	1,1,nguild_alde.gat,35,197
 nguild_alde.gat,31,197,0	warp	naldg108-1	1,1,nguild_alde.gat,175,175
 
 //Novices Guild: Geffen Castles Map		
-n_castle.gat,183,183,0	script	ngefg01	45,1,1,{
-	if(rand(2)) goto w2;
-	warp "nguild_gef.gat",34,140; end;
-w2:	warp "nguild_gef.gat",95,178; end;
-}
+n_castle.gat,183,183,0	warp	ngefg01	1,1,nguild_gef.gat,34,140
 nguild_gef.gat,34,136,0	warp	ngefg01-1	1,1,n_castle.gat,183,180
 nguild_gef.gat,99,178,0	warp	ngefg02-1	1,1,n_castle.gat,183,180
 

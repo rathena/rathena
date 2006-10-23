@@ -71,7 +71,7 @@ function	script	F_NMerch	{
 		mes "What do you say? Deal?";
 		next;
 		if(select("Deal.:No deal.")==2) {
-			mes "[Merchant]";
+			mes "["+getarg(0)+"]";
 			mes "Bah~ whatever.";
 			mes "Bah!";
 			close;
@@ -109,8 +109,8 @@ function	script	F_NMerch	{
 		if(@val > @max) {
 			mes "Uh oh, the number you entered";
 			mes "seemed incorrect.";
-			mes "You'd better check how many red";
-			mes "potions you can get.";
+			mes "You'd better check how many Red";
+			mes "Potions you can get.";
 			close;
 		}
 		delitem @item,@amount*@val;
