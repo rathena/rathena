@@ -1,7 +1,7 @@
 // Skill Requirements Database
 //
 // Structure of Database:
-// SkillID,HPCost,MaxHPCost,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+// SkillID,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
 //
 // If HP/SPratecost is positive, it is a percent of your current life, otherwise it is a percent of your max life.
 //
@@ -267,7 +267,7 @@
 356,0,0,50,0,0,0,3,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//LK_PARRYING#パリイング#
 357,0,0,14:18:22:26:30,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//LK_CONCENTRATION#コンセントレ?ション#
 358,0,0,15,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//LK_TENSIONRELAX#テンションリラックス#
-359,0,0,100,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//LK_BERSERK#バ?サ?ク#
+359,0,20,100,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//LK_BERSERK#バ?サ?ク#
 361,0,0,20:30:40:50:60,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//HP_ASSUMPTIO#アスムプティオ#
 362,0,0,80:90:100:110:120,0,0,0,99,0,0,none,0,715,1,716,1,717,1,523,1,0,0,0,0,0,0,0,0,0,0,0,0	//HP_BASILICA#バジリカ#
 

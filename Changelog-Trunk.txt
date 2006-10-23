@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/23
+	* Modified the meaning of the third column in the skill_require_db. Instead
+	  of MaxHP, this is now called MaxHPTrigger. This column (which was
+	  previously unused by all skills) signals the limit HP% that you can have to
+	  be able to use the skill. For example, setting it to 20 means the skill is
+	  unusable if you have more than 20% life (note that this is merely a
+	  threshold setting, it won't actually substract HP when used!) [Skotlex]
+	* Adjusted LK_BERSERK so you can only use it when you have 20% or less
+	  life. [Skotlex]
 	* Removed NJ_TOBIDOUGU adding damage to W_HUUMA weapons which somehow got
 	  readded. [Skotlex]
 	* When nonplayers use Cloaking, it will be forced to level 10 since mobs
