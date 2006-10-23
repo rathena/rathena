@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/23
+	* Modified SC_STONE so that the duration of the "petrifying" time is 5 secs
+	  reduced by your natural resistance to petrify (which is mdef%) [Skotlex]
 	* Modified the meaning of the third column in the skill_require_db. Instead
 	  of MaxHP, this is now called MaxHPTrigger. This column (which was
 	  previously unused by all skills) signals the limit HP% that you can have to
