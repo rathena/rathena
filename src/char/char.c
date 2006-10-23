@@ -1792,15 +1792,15 @@ int char_family(int cid1, int cid2, int cid3) {
 	//we could do a lot more checks and force cross-reference integrity.
 	if(char_dat[idx1].status.partner_id == cid2 &&
 		char_dat[idx1].status.child == cid3)
-		return 1; //cid1/cid2 parents. cid3 child.
+		return cid3; //cid1/cid2 parents. cid3 child.
 
 	if(char_dat[idx1].status.partner_id == cid3 &&
 		char_dat[idx1].status.child == cid2)
-		return 1; //cid1/cid3 parents. cid2 child.
+		return cid2; //cid1/cid3 parents. cid2 child.
 
 	if(char_dat[idx2].status.partner_id == cid3 &&
 		char_dat[idx2].status.child == cid1)
-		return 1; //cid2/cid3 parents. cid1 child.
+		return cid1; //cid2/cid3 parents. cid1 child.
 	return 0;
 }
 

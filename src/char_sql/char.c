@@ -4384,7 +4384,7 @@ int char_family(int pl1,int pl2,int pl3) {
 				(pl3 == partnerid && pl2 == childid)
 			) {
 				mysql_free_result (sql_res);
-				return 1;
+				return childid;
 			}
 		}
 		if(charid == pl2) {
@@ -4392,7 +4392,7 @@ int char_family(int pl1,int pl2,int pl3) {
 				(pl3 == partnerid && pl1 == childid)
 			) {
 				mysql_free_result (sql_res);
-				return 1;
+				return childid;
 			}
 		}
 		if(charid == pl3) {
@@ -4400,7 +4400,7 @@ int char_family(int pl1,int pl2,int pl3) {
 				(pl2 == partnerid && pl1 == childid)
 			) {
 				mysql_free_result (sql_res);
-				return 1;
+				return childid;
 			}
 		}
 	}

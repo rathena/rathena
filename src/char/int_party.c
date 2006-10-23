@@ -20,8 +20,8 @@ char party_txt[1024] = "save/party.txt";
 struct party_data {
 	struct party party;
 	unsigned int min_lv, max_lv;
+	int family; //Is this party a family? if so, this holds the child id.
 	unsigned char size; //Total size of party.
-	unsigned family :1; //Is this party a family?
 };
 
 static struct dbt *party_db;
@@ -67,17 +67,12 @@ static void int_party_calc_state(struct party_data *p)
 	p->size =
 	p->family = 0;
 
-	//Check party size, max/min levels.
+	//Check party size.
 	for(i=0;i<MAX_PARTY;i++){
-		lv=p->party.member[i].lv;
-		if (!lv) continue;
+		if (!p->party.member[i].lv) continue;
 		p->size++;
 		if(p->party.member[i].online)
-		{
-			if( lv < p->min_lv ) p->min_lv=lv;
-			if( p->max_lv < lv ) p->max_lv=lv;
 			p->party.count++;
-		}
 	}
 	if(p->size == 3) {
 		//Check Family State.
@@ -86,6 +81,18 @@ static void int_party_calc_state(struct party_data *p)
 			p->party.member[1].char_id,
 			p->party.member[2].char_id
 		);
+	}
+	//max/min levels.
+	for(i=0;i<MAX_PARTY;i++){
+		lv=p->party.member[i].lv;
+		if (!lv) continue;
+		if(p->party.member[i].online &&
+			//On families, the kid is not counted towards exp share rules.
+			p->party.member[i].char_id != p->family)
+		{
+			if( lv < p->min_lv ) p->min_lv=lv;
+			if( p->max_lv < lv ) p->max_lv=lv;
+		}
 	}
 
 	if (p->party.exp && !party_check_exp_share(p)) {
@@ -257,11 +264,9 @@ struct party_data* search_partyname(char *str) {
 	return p;
 }
 
-// EXP公平分配できるかチェック
+// Returns whether this party can keep having exp share or not.
 int party_check_exp_share(struct party_data *p) {
-	return (p->party.count == 0 || //If noone is online, don't mess with the share type.
-		(p->family && p->party.count == 3) || //All 3 MUST be online for share to trigger.
-	  	p->max_lv - p->min_lv <= party_share_level);
+	return (p->party.count < 2|| p->max_lv - p->min_lv <= party_share_level);
 }
 
 // パ?ティが空かどうかチェック
