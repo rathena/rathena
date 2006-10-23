@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+10/23
+	* Fixed small typo in the Priest job quest [Playtester]
 10/22
 	* Small spawn updates for Gefenia and Einbech Dungeon [Playtester]
 10/21
