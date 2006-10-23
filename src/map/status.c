@@ -5043,6 +5043,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (map_flag_gvg(bl->m)) val4 *= 5;
 			break;
 		case SC_CLOAKING:
+			if (!sd) //Monsters should be able to walk no penalties. [Skotlex]
+				val1 = 10;
 			val2 = tick>0?tick:60000; //SP consumption rate.
 			val3 = 0;
 			if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN &&

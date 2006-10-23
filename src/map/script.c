@@ -4574,7 +4574,8 @@ int buildin_jobchange(struct script_state *st)
 	if( st->end>st->start+3 )
 		upper=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	if ((job >= 0 && job < MAX_PC_CLASS)){
+	if ((job >= 0 && job < MAX_PC_CLASS))
+	{
 		pc_jobchange(script_rid2sd(st),job, upper);
 		if(use_irc && irc_announce_jobchange_flag)
 			irc_announce_jobchange(script_rid2sd(st));
@@ -7140,7 +7141,6 @@ int buildin_initnpctimer(struct script_state *st)
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
 
-	//nd->u.scr.rid = st->rid; //NO, use npcattachtimer if you want a player-attached timer! [Skotlex]
 	npc_settimerevent_tick(nd,0);
 	npc_timerevent_start(nd, st->rid);
 	return 0;

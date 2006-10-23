@@ -232,7 +232,7 @@ int mapif_delete_homunculus(int fd)
 	return mapif_homunculus_deleted(fd, 1);
 }
 
-int mapif_rename_homun_ack(int fd, int account_id, int char_id, int flag, char *name){
+int mapif_rename_homun_ack(int fd, int account_id, int char_id, unsigned char flag, char *name){
 	WFIFOW(fd, 0) =0x3894;
 	WFIFOL(fd, 2) =account_id;
 	WFIFOL(fd, 6) =char_id;
