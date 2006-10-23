@@ -17,7 +17,8 @@ CREATE TABLE `picklog` (
   `card2` int(11) NOT NULL default '0',
   `card3` int(11) NOT NULL default '0',
   `map` varchar(20) NOT NULL default 'prontera.gat',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (`type`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 #ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators
@@ -31,7 +32,8 @@ CREATE TABLE `zenylog` (
   `type` set('M','T','V','S','N','A') NOT NULL default 'S',
   `amount` int(11) NOT NULL default '0',
   `map` varchar(20) NOT NULL default 'prontera.gat',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (`type`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
@@ -43,7 +45,9 @@ CREATE TABLE `branchlog` (
   `char_id` int(11) NOT NULL default '0',
   `char_name` varchar(30) NOT NULL default '',
   `map` varchar(20) NOT NULL default 'prontera.gat',
-  PRIMARY KEY  (`branch_id`)
+  PRIMARY KEY  (`branch_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
@@ -69,7 +73,9 @@ CREATE TABLE `atcommandlog` (
   `char_name` varchar(30) NOT NULL default '',
   `map` varchar(20) NOT NULL default 'prontera.gat',
   `command` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`atcommand_id`)
+  PRIMARY KEY  (`atcommand_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 #Database: log
@@ -82,7 +88,9 @@ CREATE TABLE `npclog` (
   `char_name` varchar(30) NOT NULL default '',
   `map` varchar(20) NOT NULL default 'prontera.gat',
   `mes` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`npc_id`)
+  PRIMARY KEY  (`npc_id`),
+  INDEX (`account_id`),
+  INDEX (`char_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 #ChatLOG
@@ -98,5 +106,7 @@ CREATE TABLE `chatlog` (
   `src_map_y` smallint(4) NOT NULL default '0',
   `dst_charname` varchar(25) NOT NULL default '',
   `message` varchar(150) NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  INDEX (`src_accountid`),
+  INDEX (`src_charid`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
