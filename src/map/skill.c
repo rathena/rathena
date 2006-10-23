@@ -3698,6 +3698,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ASC_EDP:			// [Celest]
 	case NPC_STOP:
 	case WZ_SIGHTBLASTER:
+	case PF_DOUBLECASTING:
 	case SG_SUN_COMFORT:
 	case SG_MOON_COMFORT:
 	case SG_STAR_COMFORT:
@@ -4932,10 +4933,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_INVISIBLE:
-		//On level 1, use level 10 cloaking (no speed penalty) 
-		//with val4 passed as 1 is for "infinite cloak".
+		//Have val4 passed as 2 is for "infinite cloak".
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,9+skilllv,0,0,2,skill_get_time(skillid,skilllv)));
+			sc_start4(bl,type,100,skilllv,0,0,2,skill_get_time(skillid,skilllv)));
 		break;
 		
 	case NPC_SIEGEMODE:
@@ -5174,13 +5174,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case RG_CLEANER:	//AppleGirl
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		break;
-
-
-	case PF_DOUBLECASTING:
-		if (!clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,30+ 10*skilllv,skilllv,skill_get_time(skillid,skilllv))))
-			if (sd) clif_skill_fail(sd,skillid,0,0);
 		break;
 
 	case CG_LONGINGFREEDOM:
