@@ -3,6 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/10/24
+	* Cleaned up the "show_steal_in_party" setting so it only takes effect when
+	  the item was successfully stolen (there was no point in telling you the
+	  item couldn't be stolen due to being overweight) [Skotlex]
+	* Cleaned up the pc_steal_item implementation (again). It now uses a more
+	  random, simple approach in each steal attempt. [Skotlex]
+	* Changed the way the skill_steal_max_tries work. Now it actually MEANS the
+	  max number of steal tries, use 0 to disable (unlimited tries). [Skotlex]
 2006/10/23
 	* Added a bunch of important indexes when dealing with the log tables.
 	  Added upgrade_svn9050.sql which adds these indexes as well. [Skotlex]

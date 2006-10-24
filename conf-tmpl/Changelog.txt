@@ -1,5 +1,10 @@
 Date	Added
 
+2006/10/24
+	* Changed the way the skill_steal_max_tries work. Now it actually MEANS the
+	  max number of steal tries, use 0 to disable (unlimited tries). [Skotlex]
+	* Changed the default of skill_steal_max_tries to 0 as there's no proof
+	  anywhere that there should be such a limit. [Skotlex]
 2006/10/20
 	* Added config setting "summon_flora_setting" (skill.conf), with it you can
 	  decide now two things: a. Whether or not players can harm your floras

@@ -3154,23 +3154,14 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	struct item_data *item=NULL;
 	char output[100];
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	nullpo_retr(0, sd=va_arg(ap,struct map_session_data *));
-
+	sd=va_arg(ap,struct map_session_data *);
 	itemid=va_arg(ap,int);
-	type=va_arg(ap,int);
 
-	if(!type){
-		if((item=itemdb_exists(itemid))==NULL)
-			sprintf(output,"%s stole an Unknown Item.",sd->status.name);
-		else
-			sprintf(output,"%s stole %s.",sd->status.name,item->jname);
-		clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
-	}else{
-		sprintf(output,"%s has not stolen the item because of being overweight.",sd->status.name);
-		clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
-	}
+	if((item=itemdb_exists(itemid))==NULL)
+		sprintf(output,"%s stole an Unknown Item.",sd->status.name);
+	else
+		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
+	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
 
 	return 0;
 }
@@ -3181,8 +3172,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 //** pc.c:
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 {
-	static int i = 0;
-	int old_i,rate,itemid,flag;
+	int i,rate,itemid,flag;
 	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 	struct item tmp_item;
@@ -3194,46 +3184,39 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	md_status= status_get_status_data(bl);
 	md = (TBL_MOB *)bl;
 
-	if(md->state.steal_flag>=battle_config.skill_steal_max_tries ||
+	if(md->state.steal_flag == UCHAR_MAX || //already stolen from
 		md_status->mode&MD_BOSS || md->master_id ||
 		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
 		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
 		md->sc.opt1 //status change check
   	)
 		return 0;
-	
+						
+	if(battle_config.skill_steal_max_tries &&
+		md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
+	{	//Reached limit of steal attempts.
+		md->state.steal_flag = UCHAR_MAX;
+		return 0;
+	}
+
 	rate = battle_config.skill_steal_type
 		? (sd_status->dex - md_status->dex)/2 + lv*6 + 10
-		: sd_status->dex - md_status->dex + lv*3 + 10;
+		: (sd_status->dex - md_status->dex)   + lv*3 + 10;
 
 	rate += sd->add_steal_rate; //Better make the steal_Rate addition affect % rather than an absolute on top of the total drop rate. [Skotlex]
 		
 	if (rate < 1)
 		return 0;
 
-	md->state.steal_flag++; //increase steal tries number
-
 	//preliminar statistical data hints at this behaviour:
 	//each steal attempt: try to steal against ONE mob drop, and no more.
-	//We use a static index to prevent giving priority to any of the slots.
-	old_i = i;
-	do {
-		i++;
-		if (i == MAX_MOB_DROP-1 && lv <= 5)
-			continue; //Cannot steal "last slot" (card slot)
-		if (i == MAX_MOB_DROP)
-			i = 0;
-	} while (md->db->dropitem[i].p <= 0 && old_i != i);
-
-	if(old_i == i) {
-		md->state.steal_flag = UCHAR_MAX; //Tag for speed up in case you reinsist
-		return 0; //Mob has nothing stealable!
-	}
+	if (lv > 5) //Include last slot (card slot)
+		i = rand()%MAX_MOB_DROP;
+	else	//Do not include card slot
+		i = rand()%(MAX_MOB_DROP-1);
 
 	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
 		return 0;
-	
-	md->state.steal_flag = UCHAR_MAX; //you can't steal from this mob any more
 	
 	malloc_set(&tmp_item,0,sizeof(tmp_item));
 	itemid = md->db->dropitem[i].nameid;
@@ -3242,27 +3225,31 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	tmp_item.identify = itemdb_isidentified(itemid);
 	flag = pc_additem(sd,&tmp_item,1);
 
-	if(battle_config.show_steal_in_same_party)
-		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid,flag?1:0);
-	if(flag)
+	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?
+	md->state.steal_flag = UCHAR_MAX; //you can't steal from this mob any more
+
+	if(flag) { //Failed to steal due to overweight
 		clif_additem(sd,0,0,flag);
-	else
-	{	//Only invoke logs if item was successfully added (otherwise logs lie about actual item transaction)
-		//Logs items, Stolen from mobs [Lupus]
-		if(log_config.enable_logs&0x80) {
-			log_pick_mob(md, "M", itemid, -1, NULL);
-			log_pick_pc(sd, "P", itemid, 1, NULL);
-		}
+		return 0;
+	}
+	
+	if(battle_config.show_steal_in_same_party)
+		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid);
+
+	//Logs items, Stolen from mobs [Lupus]
+	if(log_config.enable_logs&0x80) {
+		log_pick_mob(md, "M", itemid, -1, NULL);
+		log_pick_pc(sd, "P", itemid, 1, NULL);
+	}
 		
-		//A Rare Steal Global Announce by Lupus
-		if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
-			struct item_data *i_data;
-			char message[128];
-			i_data = itemdb_search(itemid);
-			sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
-			//MSG: "'%s' stole %s's %s (chance: %%%0.02f)"
-			intif_GMmessage(message,strlen(message)+1,0);
-		}
+	//A Rare Steal Global Announce by Lupus
+	if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
+		struct item_data *i_data;
+		char message[128];
+		i_data = itemdb_search(itemid);
+		sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
+		//MSG: "'%s' stole %s's %s (chance: %%%0.02f)"
+		intif_GMmessage(message,strlen(message)+1,0);
 	}
 	return 1;
 }

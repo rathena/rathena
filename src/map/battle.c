@@ -3705,8 +3705,7 @@ static const struct battle_data_short {
 	{ "pk_min_level",                      &battle_config.pk_min_level}, // [celest]
 	{ "skill_steal_type",                  &battle_config.skill_steal_type}, // [celest]
 	{ "skill_steal_rate",                  &battle_config.skill_steal_rate}, // [celest]
-	{ "skill_steal_max_tries",			&battle_config.skill_steal_max_tries}, // [Lupus]
-//	{ "night_darkness_level",              &battle_config.night_darkness_level}, // [celest]
+	{ "skill_steal_max_tries",             &battle_config.skill_steal_max_tries}, // [Lupus]
 	{ "motd_type",                         &battle_config.motd_type}, // [celest]
 	{ "finding_ore_rate",                  &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",                     &battle_config.exp_calc_type}, // [celest]
@@ -4138,8 +4137,7 @@ void battle_set_defaults() {
 	battle_config.pk_min_level = 55;
 	battle_config.skill_steal_type = 1;
 	battle_config.skill_steal_rate = 100;
-	battle_config.skill_steal_max_tries = 15; //=16 tries
-//	battle_config.night_darkness_level = 9;
+	battle_config.skill_steal_max_tries = 0; //Default: unlimited tries.
 	battle_config.motd_type = 0;
 	battle_config.finding_ore_rate = 100;
 	battle_config.castrate_dex_scale = 150;
@@ -4392,7 +4390,7 @@ void battle_validate_conf() {
 	if (battle_config.sg_miracle_skill_duration_max < 2000)
 		battle_config.sg_miracle_skill_duration_max = 2000;
 
-	if (battle_config.skill_steal_max_tries > UCHAR_MAX)
+	if (battle_config.skill_steal_max_tries >= UCHAR_MAX)
 		battle_config.skill_steal_max_tries = UCHAR_MAX;	
 
 #ifdef CELL_NOSTACK
