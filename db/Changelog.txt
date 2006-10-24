@@ -20,6 +20,7 @@
 
 ========================
 10/24
+	* Reverted Lupus' map_index update. map_index should NOT be touched. [Vicious]
 	* Updated map index accordingly [Lupus]
 10/23
 	* Adjusted LK_BERSERK so you can only use it when you have 20% or less
