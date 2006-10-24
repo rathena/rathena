@@ -3713,7 +3713,8 @@
 1737,Aliza@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
 1737,Aliza@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
 //1737,Aliza@?
-1738,Constant@NPC_SELFDESTRUCTION,attack,173,1,500,2000,5000,no,self,myhpltmaxrate,50,,,,,,
+1738,Constant@NPC_SELFDESTRUCTION,attack,173,1,10000,1000,0,no,self,always,0,,,,,,
+1738,Constant@NPC_SELFDESTRUCTION,any,173,1,10000,1000,0,no,self,skillused,173,,,,,,
 1739,Alicel@NPC_GUIDEDATTACK,attack,172,3,500,1000,20000,no,target,always,0,,,,,,
 1739,Alicel@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1739,Alicel@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -3754,7 +3755,8 @@
 1744,Wild Rose@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
 1744,Wild Rose@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1744,Wild Rose@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
-1745,Constant@NPC_SELFDESTRUCTION,attack,173,1,500,2000,5000,no,self,myhpltmaxrate,50,,,,,,
+1745,Constant@NPC_SELFDESTRUCTION,attack,173,1,10000,1000,0,no,self,always,0,,,,,,
+1745,Constant@NPC_SELFDESTRUCTION,any,173,1,10000,1000,0,no,self,skillused,173,,,,,,
 1746,Aliza@AL_HEAL,idle,28,9,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
 1746,Aliza@SM_BASH,angry,5,5,500,0,5000,yes,target,always,0,,,,,,
 1746,Aliza@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,

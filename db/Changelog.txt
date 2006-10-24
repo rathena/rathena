@@ -20,6 +20,7 @@
 
 ========================
 10/24
+	* Kiel Mob updates [Playtester]
 	* Reverted Lupus' map_index update. map_index should NOT be touched. [Vicious]
 	* Updated map index accordingly [Lupus]
 10/23
