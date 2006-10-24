@@ -97,8 +97,8 @@ kh_vila.gat	mapflag	noteleport
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	noteleport
-sword_2-1.gat	mapflag	noteleport
-sword_3-1.gat	mapflag	noteleport
+//sword_2-1.gat	mapflag	noteleport
+//sword_3-1.gat	mapflag	noteleport
 job_thief1.gat	mapflag	noteleport
 // 2-1 -----------------------
 job_prist.gat	mapflag	noteleport

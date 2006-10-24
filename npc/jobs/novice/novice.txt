@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
-//= Ep 8.5+ Novice Training Grounds
+//= Ep 9+ Novice Training Grounds
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Removed Duplicates [Toms]
 //= 1.4 Added Kafra Free Cart Tickets, as in official one [Lupus]
+//= 1.5 Fixed warps, removed map duplicates, typos [Lupus]
 //============================================================ 
 
 //====================================================================
@@ -24,13 +25,13 @@
 //Bulletin Board
 new_1-1.gat,66,114,4	script	Bulletin Board	111,{
 	mes "^FF0000=================================^000000";
-	mes "^FF0000 ==^000000 ^E40CAA[Welcome] ^CC0000to^FF9000Training ^0000FFGrounds^E40CAA [Welcome] ^FF0000==^000000";
+	mes "^FF0000 ==^000000 ^E40CAA[Welcome] ^CC0000to^FF9000Training ^0000FFGrounds^FF0000==^000000";
 	mes "^FF0000=================================^000000";
 	close;
 }
 
 new_1-1.gat,53,114,4	script	Shion	727,{
-	if(BaseJob != Job_Novice || Upper==1) goto L_Fail;
+	if(BaseJob != Job_Novice || Upper) goto L_Fail;
 	switch (NEW_MES_FLAG0) {
 	case 0:	mes "[Shion]";
 		mes "Hello there~";
@@ -239,7 +240,7 @@ new_1-1.gat,144,107,2	script	Guard#02	105,{
 
 //Receptionist
 new_1-2.gat,100,29,4	script	Receptionist	86,{
-	if(BaseJob != Job_Novice || Upper==1) goto L_Fail;
+	if(BaseJob != Job_Novice || Upper) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
 	mes "You are at the entrance";
@@ -295,7 +296,7 @@ L_loop:
 		}
 		end;
 	case 3:	mes "[Training Grounds Receptionist]";
-		mes "This training grounds was established in order to provide useful information to new players of Ragnarok Online by the Rune-Midgarts Kingdom's Board of Education.";
+		mes "This training grounds was established in order to provide useful information to new players of Ragnarok Online by the Rune-Midgards Kingdom's Board of Education.";
 		next;
 		mes "[Training Grounds Receptionist]";
 		mes "The training course is organized into two parts: the Basic Knowledge classes, and Field Combat training.";
@@ -438,7 +439,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			next;
 			if ( select("What? No.","Yes, please send me!") == 1 ) {
 				mes "[Chris]";
-				mes "Then, find me later when you need me..";
+				mes "Then, find me later when you need me.";
 				close;
 			} else {
 				mes "[Chris]";
@@ -456,7 +457,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "Do you need my help?";
 		mes "Can I see your application?";
 		mes "Hmm...";
-		mes "You didn't take the skill lectures.";
+		mes "You didn't take the items lectures.";
 		mes "The Item Instructor is on my rightside.";
 		next;
 		switch( select("Thanks!","Lectures are boring.","Cancel") ) {
@@ -474,7 +475,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			next;
 			if ( select("What? No.","Yes, please send me!") == 1 ) {
 				mes "[Chris]";
-				mes "Then, find me later when you need me..";
+				mes "Then, find me later when you need me.";
 				close;
 			} else {
 				mes "[Chris]";
@@ -671,7 +672,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 	mes "You've finished all the courses.";
 	mes "Ah, you came back to see me";
 	mes "because I am so nice.";
-	mes "is it right?";
+	mes "Is it right?";
 	mes "have you met the Assistants?";
 	next;
 	switch( select("Send me to the next course.","Assistants?","I want to go to town.") ) {
@@ -714,7 +715,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 		mes "Make a right from here and go straight,";
 		mes "you will see her.";
 		mes "HaHaHa!";
-		mes "why don't you hurry up to meet";
+		mes "Why don't you hurry up to meet";
 		mes "her?";
 		close;
 	}
@@ -730,7 +731,7 @@ L_battle:
 }
 
 new_1-2.gat,115,111,4	script	Item Instructor	726,{
-disable_items;
+	disable_items;
 	if (!(NEW_MES_FLAG3)) {
 		mes "[Alice]";
 		mes "Hmm... I am so bored.";
@@ -868,7 +869,7 @@ disable_items;
 		mes "Shecil will be dissapointed.";
 		mes "Why don't you go meet her?";
 		next;
-		menu "yes, I will meet her.",-,"Boring, I want to go to Practical Course.",L_battle1,"What do I have todo to goto town?",L_kafra;
+		menu "Yes, I will meet her.",-,"Boring, I want to go to Practical Course.",L_battle1,"How to get to town?",L_kafra;
 			mes "[Alice]";
 			mes "It's a good idea.";
 			mes "Shecil is on the left side of the hall.";
@@ -964,7 +965,7 @@ new_1-2.gat,118,108,4	script	Kafra Employee	94,{
 		mes "I see, you must want to teleport to a town in Rune-Midgard imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
 		next;
 		mes "[Kafra Employee]";
-		mes "Prontera is the capital of the Rune-Midgarts kingdom, and its satellite, Izlude, is closeby.";
+		mes "Prontera is the capital of the Rune-Midgards kingdom, and its satellite, Izlude, is closeby.";
 		next;
 		mes "[Kafra Employee]";
 		mes "^996633Morroc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
@@ -1101,6 +1102,7 @@ L_loop:
 			if (!(NEW_JOBLVUP)) {
 				set NEW_JOBLVUP,1;
 				set JobExp,JobExp+151;
+				getitem 7059,5;
 			}
 			mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot. The maximum number of items that can be placed in Kafra Storage is 30,000.";
 			break;
@@ -1115,6 +1117,10 @@ L_loop:
 			mes "[Kafra Employee]";
 			mes "We thank our valued customers for their great support and continue to provide them with the best";
 			mes "of service.";
+			if (!(NEW_WARPTICKET)) {
+				set NEW_WARPTICKET,1;
+				getitem 7060,5;
+			}
 			break;
 		case 4:	mes "[Kafra Employee]";
 			mes "The Kafra Corporation";
@@ -1154,8 +1160,9 @@ L_prewarp:
 		getitem 2112,1;
 		getitem 601,10;
 		getitem 602,2;
-		getitem 7059,5;
-		getitem 7060,5;
+		if(!NEW_JOBLVUP) getitem 7059,5;
+		if(!NEW_WARPTICKET) getitem 7060,5;
+		//don't give Cart Tickets
 	}
 	set NEW_MES_FLAG0,0;
 	set NEW_MES_FLAG1,0;
@@ -1167,6 +1174,7 @@ L_prewarp:
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
 	set NEW_CARTTICKET,0;
+	set NEW_WARPTICKET,0;
 	set NEW_ADVSUIT,0;
 	return;
 }
@@ -2030,11 +2038,7 @@ new_1-2.gat,38,182,4	script	Helper	92,{
 			percentheal 100,100;
 		}
 		close2;
-		switch ( rand(3) ) {
-		case 0:	warp "new_1-3.gat",96,21; break;
-		case 1:	warp "new_2-3.gat",96,21; break;
-		case 2:	warp "new_3-3.gat",96,21;
-		}
+		warp "new_1-3.gat",96,21;
 		end;
 	} else {
 		mes "[Kane]";
@@ -2354,8 +2358,8 @@ L_equip:
 	return;
 }
 
-//Training Center Employee functions
-function	script	training_personnel	{
+//Training Center Employee
+new_1-3.gat,95,30,4	script	Training Center Employee#1	84,{
 	mes "[Hoffman]";
 	mes "Hey there~";
 	mes "I'm here to provide";
@@ -2379,128 +2383,35 @@ function	script	training_personnel	{
 	mes "They're not impossible for";
 	mes "Novices. So would you";
 	mes "like to try?";
-	next;
-	return;
-}
-function	script	training_personnel0	{
-	mes "[Hoffman]";
-	mes "Hmmm...?";
-	mes "Are you worried about going";
-	mes "to more challenging places? That's";
-	mes "understandable, since you're still";
-	mes "a new adventurer. Good luck~";
 	close;
-	return;
-}
-function	script	training_personnel1	{
-	mes "[Hoffman]";
-	mes "Hmmm...?";
-	mes "Are you worried about going";
-	mes "to more challenging places? That's";
-	mes "understandable, since you're still";
-	mes "a new adventurer. Good luck~";	
-	close2;
-	warp "new_1-3.gat",96,21;
-	return;
-}
-function	script	training_personnel2	{
-	mes "[Hoffman]";
-	mes "Hmmm...?";
-	mes "Are you worried about going";
-	mes "to more challenging places? That's";
-	mes "understandable, since you're still";
-	mes "a new adventurer. Good luck~";
-	close2;
-	warp "new_" + rand(2,3) + "-3.gat",96,21;
-	return;
-}
-function	script	training_personnel3	{
-	mes "[Hoffman]";
-	mes "You must like";
-	mes "rough challenges,";
-	mes "don't you? Please";
-	mes "be careful, it can get";
-	mes "pretty difficult...";
-	close2;
-	warp "new_" + rand(4,5) + "-3.gat",96,21;
-	return;
 }
 
-new_1-3.gat,95,30,4	script	Training Center Employee::TrainingCenterEmploye#1	84,{
-	callfunc "training_personnel";
-	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
-	case 1:	callfunc "training_personnel2"; break;
-	case 2:	callfunc "training_personnel3"; break;
-	case 3:	callfunc "training_personnel0";
-	}
-}
-new_2-3.gat,95,30,4	script	Training Center Employee::TrainingCenterEmploye#2	84,{
-	callfunc "training_personnel";
-	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
-	case 1:	callfunc "training_personnel1"; break;
-	case 2:	callfunc "training_personnel3"; break;
-	case 3:	callfunc "training_personnel0";
-	}
-}
-new_3-3.gat,95,30,4	script	Training Center Employee::TrainingCenterEmploye#3	84,{
-	callfunc "training_personnel";
-	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
-	case 1:	callfunc "training_personnel1"; break;
-	case 2:	callfunc "training_personnel3"; break;
-	case 3:	callfunc "training_personnel0";
-	}
-}
-new_4-3.gat,95,30,4	script	Training Center Employee::TrainingCenterEmploye#4	84,{
-	callfunc "training_personnel";
-	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
-	case 1:	callfunc "training_personnel1"; break;
-	case 2:	callfunc "training_personnel2"; break;
-	case 3:	callfunc "training_personnel0";
-	}
-}
-new_5-3.gat,95,30,4	script	Training Center Employee::TrainingCenterEmploye#5	84,{
-	callfunc "training_personnel";
-	switch( select("I don't want a challenge~","I wanna fight tough monsters!","Cancel.") ) {
-	case 1:	callfunc "training_personnel1"; break;
-	case 2:	callfunc "training_personnel2"; break;
-	case 3:	callfunc "training_personnel0";
-	}
-}
-
--	script	supervision	85,{
+new_1-3.gat,96,174,4	script	Keyman#1	85,{
 	mes "[Keyman]";
 	mes "Hmmm!";
 	mes "You have practised a lot, would you like to go on with further training?";
 	next;
-	menu "Yes",L1,"No",L2;
-L1:		mes "[Keyman]";
+	if(select("Yes","No")==1){
+		mes "[Keyman]";
 		mes "Don't forget about everything you've learnt here. Have a nice trip.";
-		next;
-		warp "new_1-4.gat",99,10;
 		close2;
 		warp "new_1-4.gat",99,10;
 		end;
-L2:		mes "[Keyman]";
-		mes "So you want to stay here longer? Continue training, and train hard!";
-		close;
+	}
+	mes "[Keyman]";
+	mes "So you want to stay here longer? Continue training, and train hard!";
+	close;
 }
-new_1-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#01	85
-new_2-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#02	85
-new_3-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#03	85
-new_4-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#04	85
-new_5-3.gat,96,174,4	duplicate(supervision)	Petugas Pemeriksa#05	85
 
 //Novice Instructor
 new_1-4.gat,91,22,4	script	Novice Instructor	57,{
 	mes "[Bruce]";
 	mes "You have come from far away.";
 	mes "Thank you for coming here";
-	if(Sex == 1) goto L_FEMALE;
-	mes "Mr '"+strcharinfo(0)+"'";
-	goto L_CONT;
-L_FEMALE:
-	mes "Ms '"+strcharinfo(0)+"'";
-L_CONT:
+	if(sex)
+		mes "Mr '"+strcharinfo(0)+"'";
+	else
+		mes "Ms '"+strcharinfo(0)+"'";
 	mes "It's nice to meet you.";
 	mes "My name is Bruce, and I come";
 	mes "from Rune-Midgard.";
@@ -3492,6 +3403,7 @@ L_cleararg:
 	set NEW_JOBLVUP,0;
 	set NEW_GETITEM,0;
 	set NEW_CARTTICKET,0;
+	set NEW_WARPTICKET,0;
 	set NEW_ADVSUIT,0;
 	set NOV_3_SWORDMAN,0;
 	set NOV_3_ARCHER,0;
@@ -3503,37 +3415,17 @@ L_cleararg:
 }
 
 // Training Ground Mobs
-// new_1-3.gat
 new_1-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
 new_1-3.gat,0,0,0,0	monster	Poring	1002,10,0,0,0
 new_1-3.gat,0,0,0,0	monster	ChonChon	1011,10,0,0,0
 new_1-3.gat,0,0,0,0	monster	Lunatic	1063,10,0,0,0
 new_1-3.gat,0,0,0,0	monster	Drops	1113,10,0,0,0
-
-// new_2-3.gat
-new_2-3.gat,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_2-3.gat,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3.gat,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_2-3.gat,0,0,0,0	monster	Shell Picky	1050,10,0,0,0
-new_2-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
-
-// new_3-3.gat
-new_3-3.gat,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_3-3.gat,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3.gat,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_3-3.gat,0,0,0,0	monster	Shell Picky	1050,10,0,0,0
-new_3-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
-
-// new_4-3.gat
-new_4-3.gat,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_4-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,10,0,0,0
-new_4-3.gat,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3.gat,0,0,0,0	monster	Thief Bug Female	1017,10,0,0,0
-new_4-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
-
-// new_5-3.gat
-new_5-3.gat,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_5-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,10,0,0,0
-new_5-3.gat,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3.gat,0,0,0,0	monster	Thief Bug Female	1017,10,0,0,0
-new_5-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
+// Unsure about the following mobs
+new_1-3.gat,0,0,0,0	monster	Condor	1009,2,0,0,0
+new_1-3.gat,0,0,0,0	monster	Willow	1010,2,0,0,0
+new_1-3.gat,0,0,0,0	monster	Roda Frog	1012,2,0,0,0
+new_1-3.gat,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
+new_1-3.gat,0,0,0,0	monster	Spore	1014,1,0,0,0
+new_1-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
+new_1-3.gat,0,0,0,0	monster	Rocker	1052,1,0,0,0
+new_1-3.gat,0,0,0,0	monster	Thief Bug Female	1017,1,0,0,0

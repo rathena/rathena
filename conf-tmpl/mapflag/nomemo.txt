@@ -150,8 +150,8 @@ yuno_fild10.gat	mapflag	nomemo
 // Job Quests ================
 // First Job Class
 sword_1-1.gat	mapflag	nomemo
-sword_2-1.gat	mapflag	nomemo
-sword_3-1.gat	mapflag	nomemo
+//sword_2-1.gat	mapflag	nomemo
+//sword_3-1.gat	mapflag	nomemo
 job_thief1.gat	mapflag	nomemo
 job_star.gat	mapflag	nomemo
 // Primary Second Job Class
@@ -425,21 +425,21 @@ quiz_00.gat	mapflag	nomemo
 quiz_01.gat	mapflag	nomemo
 sec_in01.gat	mapflag	nomemo
 sec_in02.gat	mapflag	nomemo
-hunter_1-1.gat	mapflag	nomemo
-hunter_2-1.gat	mapflag	nomemo
-hunter_3-1.gat	mapflag	nomemo
-knight_1-1.gat	mapflag	nomemo
-knight_2-1.gat	mapflag	nomemo
-knight_3-1.gat	mapflag	nomemo
-priest_1-1.gat	mapflag	nomemo
-priest_2-1.gat	mapflag	nomemo
-priest_3-1.gat	mapflag	nomemo
+//hunter_1-1.gat	mapflag	nomemo
+//hunter_2-1.gat	mapflag	nomemo
+//hunter_3-1.gat	mapflag	nomemo
+//knight_1-1.gat	mapflag	nomemo
+//knight_2-1.gat	mapflag	nomemo
+//knight_3-1.gat	mapflag	nomemo
+//priest_1-1.gat	mapflag	nomemo
+//priest_2-1.gat	mapflag	nomemo
+//priest_3-1.gat	mapflag	nomemo
 prt_are_in.gat	mapflag	nomemo
 prt_are_in.gat	mapflag	nomemo
 prt_are01.gat	mapflag	nomemo
-wizard_1-1.gat	mapflag	nomemo
-wizard_2-1.gat	mapflag	nomemo
-wizard_3-1.gat	mapflag	nomemo
+//wizard_1-1.gat	mapflag	nomemo
+//wizard_2-1.gat	mapflag	nomemo
+//wizard_3-1.gat	mapflag	nomemo
 
 // PvP Arenas ================
 pvp_y_room.gat	mapflag	nomemo

@@ -99,8 +99,8 @@ ayothaya.gat	mapflag	nopenalty
 
 // Job Quests ========================
 sword_1-1.gat	mapflag	nopenalty
-sword_2-1.gat	mapflag	nopenalty
-sword_3-1.gat	mapflag	nopenalty
+//sword_2-1.gat	mapflag	nopenalty
+//sword_3-1.gat	mapflag	nopenalty
 job_thief1.gat	mapflag	nopenalty
 // 2-1 -----------------------
 job_prist.gat	mapflag	nopenalty

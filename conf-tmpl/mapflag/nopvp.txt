@@ -56,8 +56,8 @@ prt_in.gat	mapflag	pvp	off
 prontera.gat	mapflag	pvp	off
 sec_in01.gat	mapflag	pvp	off
 sword_1-1.gat	mapflag	pvp	off
-sword_2-1.gat	mapflag	pvp	off
-sword_3-1.gat	mapflag	pvp	off
+//sword_2-1.gat	mapflag	pvp	off
+//sword_3-1.gat	mapflag	pvp	off
 um_in.gat	mapflag	pvp	off
 umbala.gat	mapflag	pvp	off
 xmas_in.gat	mapflag	pvp	off

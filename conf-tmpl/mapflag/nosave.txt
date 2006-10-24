@@ -7,8 +7,8 @@
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	nosave	SavePoint
-sword_2-1.gat	mapflag	nosave	SavePoint
-sword_3-1.gat	mapflag	nosave	SavePoint
+//sword_2-1.gat	mapflag	nosave	SavePoint
+//sword_3-1.gat	mapflag	nosave	SavePoint
 //job_thief1.gat	mapflag	nosave	SavePoint
 // 2-1
 job_knt.gat	mapflag	nosave	SavePoint

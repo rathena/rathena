@@ -75,8 +75,8 @@ kh_vila.gat	mapflag	noreturn
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	noreturn
-sword_2-1.gat	mapflag	noreturn
-sword_3-1.gat	mapflag	noreturn
+//sword_2-1.gat	mapflag	noreturn
+//sword_3-1.gat	mapflag	noreturn
 job_thief1.gat	mapflag	noreturn
 // 2-1 -----------------------
 job_hunte.gat	mapflag	noreturn

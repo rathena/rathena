@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.3b
+//= 1.4a
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -23,24 +23,13 @@
 //==============================================================================
 //Novice
 //==============================================================================
-//new_1-1.gat,148,112,0	warp	new11	2,3,new_1-2.gat,100,9
-//new_1-1.gat,166,112,0	warp	new12	2,2,new_1-2.gat,100,153
-//new_1-2.gat,100,150,0	warp	new12-1	2,1,new_1-1.gat,162,112
-//new_1-1.gat,169,75,0	warp	new13	2,2,new_1-2.gat,182,163
-//new_1-2.gat,182,159,0	warp	new13-1	2,2,new_1-1.gat,165,75
-//new_1-1.gat,169,147,0	warp	new14	2,2,new_1-2.gat,18,163
-//new_1-2.gat,18,159,0	warp	new14-1	2,2,new_1-1.gat,165,147
-//new_1-2.gat,100,122,0	warp	new15	2,1,new_1-2.gat,100,162
-//new_1-2.gat,100,165,0	warp	new15-1	2,1,new_1-2.gat,100,119
-//new_1-2.gat,126,106,0	warp	new16	2,4,new_1-2.gat,160,171
-//new_1-2.gat,153,171,0	warp	new16-1	2,4,new_1-2.gat,123,106
 new_1-1.gat,148,112,0		warp	newwarp6001		2,2,new_1-2.gat,100,9
 new_1-2.gat,100,6,0 		warp	newwarp6002		2,2,new_1-1.gat,144,112
 new_1-2.gat,126,106,0		warp	newwarp6003		2,2,new_1-2.gat,160,171
 new_1-2.gat,156,171,0		warp	newwarp6004		2,2,new_1-2.gat,123,106
 new_1-2.gat,73,106,0		warp	newwarp6005		2,2,new_1-2.gat,41,172
 new_1-2.gat,46,172,0		warp	newwarp6006		2,2,new_1-2.gat,78,106
-new_1-3.gat,96,175,0	warp	new17	3,2,new_1-4.gat,100,14
+//new_1-3.gat,96,175,0	warp	new17	3,2,new_1-4.gat,100,14
 
 //==============================================================================
 //Swordman
@@ -50,18 +39,6 @@ sword_1-1.gat,223,243,0	warp	SwordWarp1	2,2,sword_1-1.gat,12,206
 sword_1-1.gat,192,206,0	warp	SwordWarp2	2,2,sword_1-1.gat,215,205
 sword_1-1.gat,223,205,0	warp	SwordWarp3	2,2,sword_1-1.gat,12,168
 sword_1-1.gat,192,168,0	warp	SwordWarp4	2,2,sword_1-1.gat,215,167
-sword_2-1.gat,65,117,0	warp	swd201	1,1,sword_2-1.gat,10,245
-sword_2-1.gat,98,27,0	warp	swd202	1,1,sword_2-1.gat,11,207
-sword_2-1.gat,161,27,0	warp	swd203	1,1,sword_2-1.gat,11,207
-sword_2-1.gat,223,205,0	warp	swd204	1,1,sword_2-1.gat,11,168
-sword_2-1.gat,223,243,0	warp	swd205	1,1,sword_2-1.gat,11,206
-sword_2-1.gat,239,117,0	warp	swd206	1,1,sword_2-1.gat,11,169
-sword_3-1.gat,65,117,0	warp	swd301	1,1,sword_3-1.gat,10,245
-sword_3-1.gat,98,27,0	warp	swd302	1,1,sword_3-1.gat,11,207
-sword_3-1.gat,161,27,0	warp	swd303	1,1,sword_3-1.gat,11,207
-sword_3-1.gat,223,205,0	warp	swd304	1,1,sword_3-1.gat,11,168
-sword_3-1.gat,223,243,0	warp	swd305	1,1,sword_3-1.gat,11,206
-sword_3-1.gat,239,117,0	warp	swd306	1,1,sword_3-1.gat,11,169
 // Underground cave
 sword_1-1.gat,65,117,0	warp	swd101	1,1,sword_1-1.gat,10,245
 sword_1-1.gat,98,27,0	warp	swd102	1,1,sword_1-1.gat,11,207

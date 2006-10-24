@@ -73,8 +73,8 @@ que_rachel.gat	mapflag	nobranch
 
 // Job Quests ====================
 sword_1-1.gat	mapflag	nobranch
-sword_2-1.gat	mapflag	nobranch
-sword_3-1.gat	mapflag	nobranch
+//sword_2-1.gat	mapflag	nobranch
+//sword_3-1.gat	mapflag	nobranch
 job_thief1.gat	mapflag	nobranch
 // 2-1
 job_knt.gat	mapflag	nobranch
@@ -164,20 +164,20 @@ pvp_c_room.gat	mapflag	nobranch
 quiz_00.gat	mapflag	nobranch
 quiz_01.gat	mapflag	nobranch
 sec_in01.gat	mapflag	nobranch
-hunter_1-1.gat	mapflag	nobranch
-hunter_2-1.gat	mapflag	nobranch
-hunter_3-1.gat	mapflag	nobranch
-knight_1-1.gat	mapflag	nobranch
-knight_2-1.gat	mapflag	nobranch
-knight_3-1.gat	mapflag	nobranch
-priest_1-1.gat	mapflag	nobranch
-priest_2-1.gat	mapflag	nobranch
-priest_3-1.gat	mapflag	nobranch
+//hunter_1-1.gat	mapflag	nobranch
+//hunter_2-1.gat	mapflag	nobranch
+//hunter_3-1.gat	mapflag	nobranch
+//knight_1-1.gat	mapflag	nobranch
+//knight_2-1.gat	mapflag	nobranch
+//knight_3-1.gat	mapflag	nobranch
+//priest_1-1.gat	mapflag	nobranch
+//priest_2-1.gat	mapflag	nobranch
+//priest_3-1.gat	mapflag	nobranch
 prt_are_in.gat	mapflag	nobranch
 prt_are01.gat	mapflag	nobranch
-wizard_1-1.gat	mapflag	nobranch
-wizard_2-1.gat	mapflag	nobranch
-wizard_3-1.gat	mapflag	nobranch
+//wizard_1-1.gat	mapflag	nobranch
+//wizard_2-1.gat	mapflag	nobranch
+//wizard_3-1.gat	mapflag	nobranch
 
 // PvP Arenas =========================
 pvp_y_room.gat	mapflag	nobranch
