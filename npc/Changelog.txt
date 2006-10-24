@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 10/24
+	* Spawn updates for Einbroch Fields [Playtester]
 	* Updated Novie Training Grounds: typos, bugs, removed extra maps, duplicates [Lupus]
 	- Removed some unused job-quest map aliases to free some RAM. Thanks to theultramage for pointing it out.
 	!!!WARNING!!! Wipe your memo db. Map indexes have been shifted.

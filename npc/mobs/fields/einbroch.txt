@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -18,6 +18,7 @@
 //= 1.3b Changed the spawn numbers a bit. [Poki#3]
 //=	Thanks to Playtester and Emperium.org
 //= 1.4 Updated by using Tharis' Homun AI, by Tharis [Vicious]
+//= 1.5 Adjusted some spawns according to official info [Playtester]
 //============================================================
 
 //==================================================
@@ -66,7 +67,7 @@ ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 // ein_fild05 - Einbroch Field
 //==================================================
 ein_fild05.gat,0,0,0,0	monster	Mineral	1614,35,0,0,0
-ein_fild05.gat,0,0,0,0	monster	Anopheles	1627,30,0,0
+ein_fild05.gat,0,0,0,0	monster	Anopheles	1627,30,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Obsidian	1615,20,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Demon Pungus	1378,20,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
@@ -80,30 +81,30 @@ ein_fild06.gat,0,0,0,0	monster	Harpy	1376,5,0,0,0
 ein_fild06.gat,0,0,0,0	monster	Giearth	1121,2,3600000,3000000,0
 ein_fild06.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild06.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
-ein_fild06.gat,0,0,0,0	monster	Black Mushroom	1084,5,120000,60000,0
+ein_fild06.gat,0,0,0,0	monster	Black Mushroom	1084,10,120000,60000,0
 
 //==================================================
 // ein_fild07 - Einbroch Field
 //==================================================
-ein_fild07.gat,0,0,0,0	monster	Metaling	1613,60,0,0,0
 ein_fild07.gat,0,0,0,0	monster	Poring	1002,40,0,0,0
 ein_fild07.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
-ein_fild07.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
+ein_fild07.gat,0,0,0,0	monster	Metaling	1613,60,0,0,0
 ein_fild07.gat,0,0,0,0	monster	Flora	1118,20,0,0,0
-ein_fild07.gat,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
+ein_fild07.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
 ein_fild07.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild07.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
 ein_fild07.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
+ein_fild07.gat,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
 
 //==================================================
 // ein_fild08 - Einbroch Field
 //==================================================
-ein_fild08.gat,0,0,0,0	monster	Thief Bug	1051,30,0,0,0
 ein_fild08.gat,0,0,0,0	monster	Poring	1002,25,0,0,0
-ein_fild08.gat,0,0,0,0	monster	Poporing	1031,25,0,0,0
 ein_fild08.gat,0,0,0,0	monster	Drops	1113,25,0,0,0
+ein_fild08.gat,0,0,0,0	monster	Poporing	1031,25,0,0,0
 ein_fild08.gat,0,0,0,0	monster	Metaling	1613,25,0,0,0
 ein_fild08.gat,0,0,0,0	monster	Porcellio	1619,10,0,0,0
+ein_fild08.gat,0,0,0,0	monster	Thief Bug	1051,30,0,0,0
 ein_fild08.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild08.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
 ein_fild08.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
@@ -111,9 +112,9 @@ ein_fild08.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
 //==================================================
 // ein_fild09 - Einbroch Field
 //==================================================
+ein_fild09.gat,0,0,0,0	monster	Metaling	1613,10,0,0,0
 ein_fild09.gat,0,0,0,0	monster	Porcellio	1619,70,0,0,0
 ein_fild09.gat,0,0,0,0	monster	Thief Bug	1051,30,0,0,0
-ein_fild09.gat,0,0,0,0	monster	Metaling	1613,10,0,0,0
 ein_fild09.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild09.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
 ein_fild09.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
@@ -121,13 +122,13 @@ ein_fild09.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
 //==================================================
 // ein_fild10 - Einbroch Field
 //==================================================
-ein_fild10.gat,152,314,130,30	monster	Porcellio	1619,20,0,0,1
+ein_fild10.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
 ein_fild10.gat,0,0,0,0	monster	Porcellio	1619,10,0,0,1
-ein_fild10.gat,225,95,30,45	monster	Flora	1118,10,300000,120000,0
-ein_fild10.gat,320,130,40,40	monster	Flora	1118,10,300000,120000,0
+ein_fild10.gat,152,314,130,30	monster	Porcellio	1619,20,0,0,1
+ein_fild10.gat,0,0,0,0	monster	Red Plant	1078,20,120000,60000,0
+ein_fild10.gat,0,0,0,0	monster	Yellow Plant	1081,20,120000,60000,0
+ein_fild10.gat,0,0,0,0	monster	Blue Plant	1079,20,120000,60000,0
 ein_fild10.gat,225,95,30,45	monster	Yoyo	1057,6,30000,10000,0
 ein_fild10.gat,320,130,40,40	monster	Yoyo	1057,4,30000,10000,0
-ein_fild10.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
-ein_fild10.gat,0,0,0,0	monster	Red Plant	1078,20,180000,90000,1
-ein_fild10.gat,0,0,0,0	monster	Yellow Plant	1081,20,180000,90000,1
-ein_fild10.gat,0,0,0,0	monster	Blue Plant	1079,20,900000,450000,1
+ein_fild10.gat,225,95,30,45	monster	Flora	1118,10,300000,120000,0
+ein_fild10.gat,320,130,40,40	monster	Flora	1118,10,300000,120000,0
