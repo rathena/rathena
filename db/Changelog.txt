@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/24
+	* Updated map index accordingly [Lupus]
 10/23
 	* Adjusted LK_BERSERK so you can only use it when you have 20% or less
 	  life. [Skotlex]

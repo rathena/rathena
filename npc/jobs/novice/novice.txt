@@ -2372,13 +2372,6 @@ new_1-3.gat,95,30,4	script	Training Center Employee#1	84,{
 	mes "and out for blood!";
 	next;
 	mes "[Hoffman]";
-	mes "If you think monsters here are too";
-	mes "weak for you, I can send you to";
-	mes "another taining ground where the";
-	mes "monsters are stronger than the ones";
-	mes "over here.";
-	next;
-	mes "[Hoffman]";
 	mes "But don't worry so much,";
 	mes "They're not impossible for";
 	mes "Novices. So would you";
