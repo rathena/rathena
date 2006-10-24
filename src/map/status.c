@@ -4498,9 +4498,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		if (!(rand()%10000 < rate))
 			return 0;
 
-	  	//Need to store resistance so the petrifying time can also be reduced. [Skotlex]
-		if (type == SC_STONE)
-			val4 = def;
 	}
 
 	undead_flag=battle_check_undead(status->race,status->def_ele);
@@ -4997,11 +4994,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = tick/1000; //Petrified HP-damage iterations.
 			if(val3 < 1) val3 = 1; 
 			tick = 5000; //Petrifying time.
-			if (val4)
-			{	//Apply duration resist to petrifying time as well.
-				tick -= tick*val4/10000;
-				val4 = 0; //Is later used as a tick-damage counter.
-			}
 			calc_flag = 0; //Actual status changes take effect on petrified state.
 			break;
 

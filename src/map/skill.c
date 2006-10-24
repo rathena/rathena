@@ -8603,7 +8603,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		break;
 	default:
 		if (battle_config.delay_dependon_agi && !(delaynochange&1))
-		{	// if skill casttime is allowed to be reduced by dex
+		{	// if skill casttime is allowed to be reduced by agi 
 			int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
 			if (scale > 0)
 				time = time * scale / battle_config.castrate_dex_scale;
