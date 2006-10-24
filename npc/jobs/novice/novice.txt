@@ -346,7 +346,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "[Chris]";
 		mes "Yes, I checked it.";
 		mes "I will teach the real basic interface to "+strcharinfo(0)+".";
-		mes "This is not forced to you so if you don't want,  you don't need to take this course.";
+		mes "This is not forced to you so if you don't want, you don't need to take this course.";
 		next;
 		switch( select("Listen about 'Interface'.","No lecture, I just want Practical Course.","Cancel.") ) {
 		case 1:	mes "[Chris]";
@@ -393,7 +393,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "Like item window, Equipment, status, etc.";
 			next;
 			mes "[Chris]";
-			mes "You might have gotten bored event hough I tried to teach you briefly.";
+			mes "You might have gotten bored even though I tried to teach you briefly.";
 			mes "It is Job EXP this time.";
 			set JobExp,JobExp+151;
 			next;
@@ -695,7 +695,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 		next;
 		mes "[Shecil]";
 		mes "However, it is not good enough for";
-		mes "some people educatioally.";
+		mes "some people educationally.";
 		mes "There will be some people who";
 		mes "want to learn more.";
 		mes "so, to satisfy this, some";
@@ -774,7 +774,7 @@ new_1-2.gat,115,111,4	script	Item Instructor	726,{
 			mes "of the Inventory Window.";
 			next;
 			mes "[Alice]";
-			mes "When you click on the 'equip tab,";
+			mes "When you click on the 'equip tab',";
 			mes "you can view every item in your";
 			mes "inventory that you can equip. Let";
 			mes "me give you some equipment so that";
@@ -2630,7 +2630,7 @@ new_1-4.gat,100,29,4	script	Final Instructor	46,{
 		mes "[Hanson]";
 		mes "Before you take this test,";
 		mes "go to meet 'Bruce' right next to";
-		mes "me and listen about Jobs'.";
+		mes "me and listen about Jobs.";
 		mes "then, come back to me.";
 		close;
 	}
