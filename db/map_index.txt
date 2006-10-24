@@ -99,7 +99,7 @@ izlude_in.gat
 job_thief1.gat
 knight_1-1.gat
 knight_2-1.gat
-/knight_3-1.gat
+knight_3-1.gat
 mjo_dun01.gat
 mjo_dun02.gat
 mjo_dun03.gat
