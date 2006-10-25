@@ -60,7 +60,7 @@ int mapif_homunculus_deleted(int fd, int flag)
 	return 0;
 
 }
-int mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, short flag)
+int mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, unsigned char flag)
 {
 	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd,0) = 0x3890;

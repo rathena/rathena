@@ -1,5 +1,10 @@
 Date	Added
 
+2006/10/25
+	* Added exp-bonus settings exp_bonus_attacker and exp_bonus_max_attacker
+	  (exp.conf, default to 25 and 12) [Skotlex]
+	* Changed the way the party_even_share_bonus setting works. It now uses a
+	  simple linear bonus increase (party.conf) [Skotlex]
 2006/10/24
 	* Changed the way the skill_steal_max_tries work. Now it actually MEANS the
 	  max number of steal tries, use 0 to disable (unlimited tries). [Skotlex]

@@ -1807,8 +1807,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			//eAthena's exp formula based on max hp.
 			per = (double)md->dmglog[i].dmg/(double)status->max_hp;
 	
-		if (count>1)	
-			per *= (9.+(double)((count > 6)? 6:count))/10.; //attackers count bonus.
+		if (count>1 && battle_config.exp_bonus_attacker) {
+			//Exp bonus per additional attacker.
+			if (count > battle_config.exp_bonus_max_attacker)
+				count = battle_config.exp_bonus_max_attacker;
+			count--;
+			per += per*(count*battle_config.exp_bonus_attacker)/100.;
+		}
 
 		if(md->special_state.size==1)	// change experience for different sized monsters [Valaris]
 			per /=2.;
@@ -2053,8 +2058,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		//mapflag: noexp check [Lorky]
 		if (map[md->bl.m].flag.nobaseexp)
 			exp =1; 
-		else 
-			exp = (double)md->db->mexp * (9+count)/10.;	//[Gengar]
+		else {
+			exp = md->db->mexp;
+			exp += exp*(battle_config.exp_bonus_attacker*count)/100.; //[Gengar]
+		}
 		
 		mexp = (exp > UINT_MAX)?UINT_MAX:(exp<1?1:(unsigned int)exp);
 

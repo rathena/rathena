@@ -3709,6 +3709,8 @@ static const struct battle_data_short {
 	{ "motd_type",                         &battle_config.motd_type}, // [celest]
 	{ "finding_ore_rate",                  &battle_config.finding_ore_rate}, // [celest]
 	{ "exp_calc_type",                     &battle_config.exp_calc_type}, // [celest]
+	{ "exp_bonus_attacker",                &battle_config.exp_bonus_attacker}, // [Skotlex]
+	{ "exp_bonus_max_attacker",            &battle_config.exp_bonus_max_attacker}, // [Skotlex]
 	{ "min_skill_delay_limit",             &battle_config.min_skill_delay_limit}, // [celest]
 	{ "default_skill_delay",               &battle_config.default_skill_delay}, // [Skotlex]
 	{ "no_skill_delay",                    &battle_config.no_skill_delay}, // [Skotlex]
@@ -4143,6 +4145,8 @@ void battle_set_defaults() {
 	battle_config.castrate_dex_scale = 150;
 	battle_config.area_size = 14;
 	battle_config.exp_calc_type = 1;
+	battle_config.exp_bonus_attacker = 25;
+	battle_config.exp_bonus_max_attacker = 12;
 	battle_config.min_skill_delay_limit = 100;
 	battle_config.default_skill_delay = 300; //Default skill delay according to official servers.
 	battle_config.no_skill_delay = BL_MOB;
@@ -4350,6 +4354,9 @@ void battle_validate_conf() {
 
 	if (battle_config.min_skill_delay_limit < 10)
 		battle_config.min_skill_delay_limit = 10;	// minimum delay of 10ms
+
+	if (battle_config.exp_bonus_max_attacker < 2)
+		battle_config.exp_bonus_max_attacker = 2;
 
 	if (battle_config.no_spawn_on_player > 100)
 		battle_config.no_spawn_on_player = 100;

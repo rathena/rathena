@@ -707,7 +707,7 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 {
 	struct map_session_data* sd[MAX_PARTY];
 	int i;
-	unsigned short c, bonus =100; // modified [Valaris]
+	unsigned short c;
 
 	nullpo_retr(0, p);
 
@@ -719,32 +719,44 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 		}
 	if (c < 1)
 		return 0;
-	if (battle_config.party_even_share_bonus) //Valaris's even share exp bonus equation.
-		bonus += (battle_config.party_even_share_bonus*c*(c-1)/10);	//Changed Valaris's bonus switch to an equation [Skotlex]
-	else	//Official kRO/iRO sites state that the even share bonus is 10% per additional party member.
-		bonus += (c-1)*10;
 
 	base_exp/=c;	
 	job_exp/=c;
-	if (base_exp/100 > UINT_MAX/bonus)
-		base_exp= UINT_MAX; //Exp overflow
-	else if (base_exp > 10000)
-		base_exp = (base_exp/100)*bonus; //Calculation overflow protection
-	else
-		base_exp = base_exp*bonus/100;
+	zeny/=c;
 
-	if (job_exp/100 > UINT_MAX/bonus)
-		job_exp = UINT_MAX;
-	else if (job_exp > 10000)
-		job_exp = (job_exp/100)*bonus;
-	else
-		job_exp = job_exp*bonus/100;
+	if (battle_config.party_even_share_bonus && c > 1) {
+		unsigned short bonus =100 + battle_config.party_even_share_bonus*(c-1);
+		if (base_exp) {
+			if (base_exp/100 > UINT_MAX/bonus)
+				base_exp= UINT_MAX; //Exp overflow
+			else if (base_exp > 10000)
+				base_exp = (base_exp/100)*bonus; //Calculation overflow protection
+			else
+				base_exp = base_exp*bonus/100;
+		}
+		if (job_exp) {
+			if (job_exp/100 > UINT_MAX/bonus)
+				job_exp = UINT_MAX;
+			else if (job_exp > 10000)
+				job_exp = (job_exp/100)*bonus;
+			else
+				job_exp = job_exp*bonus/100;
+		}
+		if (zeny) {
+			if (zeny/100 > UINT_MAX/bonus)
+				zeny = UINT_MAX;
+			else if (zeny > 10000)
+				zeny = (zeny/100)*bonus;
+			else
+				zeny = zeny*bonus/100;
+		}
+	}
 
 	for (i = 0; i < c; i++)
 	{
 		pc_gainexp(sd[i], src, base_exp, job_exp);
-		if (battle_config.zeny_from_mobs) // zeny from mobs [Valaris]
-			pc_getzeny(sd[i],bonus*zeny/(c*100));
+		if (zeny) // zeny from mobs [Valaris]
+			pc_getzeny(sd[i],zeny);
 	}
 	return 0;
 }

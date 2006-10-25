@@ -359,6 +359,8 @@ extern struct Battle_Config {
 	unsigned short motd_type; // [celest]
 	unsigned short finding_ore_rate; // orn
 	unsigned short exp_calc_type;
+	unsigned short exp_bonus_attacker;
+	unsigned short exp_bonus_max_attacker;
 	unsigned short min_skill_delay_limit;
 	unsigned short default_skill_delay;
 	unsigned short no_skill_delay;
