@@ -6139,19 +6139,16 @@ int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 	if(sd==NULL)
 		return 0;
 
-	for(i=0;i < MAX_EVENTTIMER;i++){
-		if( sd->eventtimer[i]==tid ){
-			sd->eventtimer[i]=-1;
-			npc_event(sd,p,0);
-			break;
-		}
-	}
-	if (p) aFree(p);
-	if(i==MAX_EVENTTIMER) {
-		if(battle_config.error_log)
-			ShowError("pc_eventtimer: no such event timer\n");
-	}
+	for(i=0;i < MAX_EVENTTIMER && sd->eventtimer[i]!=tid; i++);
 
+	if(i < MAX_EVENTTIMER){
+		sd->eventtimer[i]=-1;
+		npc_event(sd,p,0);
+		sd->eventcount--;
+	} else if(battle_config.error_log)
+		ShowError("pc_eventtimer: no such event timer\n");
+
+	if (p) aFree(p);
 	return 0;
 }
 
@@ -6162,20 +6159,19 @@ int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 {
 	int i;
+	char *evname;
 
 	nullpo_retr(0, sd);
 
-	for(i=0;i<MAX_EVENTTIMER;i++)
-		if( sd->eventtimer[i]==-1 )
-			break;
-	if(i<MAX_EVENTTIMER){
-		char *evname = aStrdup(name);
-		//char *evname=(char *)aMallocA((strlen(name)+1)*sizeof(char));
-		//memcpy(evname,name,(strlen(name)+1));
-		sd->eventtimer[i]=add_timer(gettick()+tick,
-			pc_eventtimer,sd->bl.id,(int)evname);
-		sd->eventcount++;
-	}
+	for(i=0;i<MAX_EVENTTIMER && sd->eventtimer[i]!=-1;i++);
+	
+	if(i==MAX_EVENTTIMER)
+		return 0;
+
+	evname = aStrdup(name);
+	sd->eventtimer[i]=add_timer(gettick()+tick,
+		pc_eventtimer,sd->bl.id,(int)evname);
+	sd->eventcount++;
 
 	return 0;
 }
@@ -6246,9 +6242,9 @@ int pc_cleareventtimer(struct map_session_data *sd)
 			char *p = (char *)(get_timer(sd->eventtimer[i])->data);
 			delete_timer(sd->eventtimer[i],pc_eventtimer);
 			sd->eventtimer[i]=-1;
+			sd->eventcount--;
 			if (p) aFree(p);
 		}
-
 	return 0;
 }
 

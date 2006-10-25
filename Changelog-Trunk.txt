@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/25
+	* Some cleaning of the pc_eventtimer and pc enqueue code, it should fix
+	  some memory leaks when the event counter does not matches with the actual
+	  number of queued timers during logout. [Skotlex]
 	* Fixed "skill_sp_override_grffile: yes" causing crashes when parsing
 	  Homuncuus/Guild skills. [Skotlex]
 	* Made the exp bonus settings be adjustable: [Skotlex]

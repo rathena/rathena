@@ -212,7 +212,6 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 	return 1; //Logged
 }
 
-
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount)
 {
 //	FILE *logfp;

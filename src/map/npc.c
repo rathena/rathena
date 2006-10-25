@@ -182,8 +182,8 @@ int npc_event_dequeue(struct map_session_data *sd)
 			// clear the last event
 			sd->eventqueue[MAX_EVENTQUEUE-1][0]=0;
 			// add the timer
-			sd->eventtimer[ev]=add_timer(gettick()+100,pc_eventtimer,sd->bl.id,(int)name);//!!todo!!
-
+			sd->eventtimer[ev]=add_timer(gettick()+100,pc_eventtimer,sd->bl.id,(int)name);//TODO: Someone wrote here "!!todo!!", but what the hell is missing?
+			sd->eventcount++;
 		}else
 			ShowWarning("npc_event_dequeue: event timer is full !\n");
 	}
