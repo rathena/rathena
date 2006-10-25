@@ -11466,7 +11466,13 @@ static int skill_read_skillspamount (void)
 		} else if (new_flag && sscanf(p,"%[^#]#",buf2) == 1) {
 			for (idx=0; skill_names[idx].id != 0; idx++) {
 				if (strstr(buf2, skill_names[idx].name) != NULL) {
-					skill = &skill_db[ skill_names[idx].id ];
+					//Apply Guild/Homunc adjustment.
+					sp = skill_names[idx].id;
+					if (sp >= GD_SKILLBASE) sp = GD_SKILLRANGEMIN + sp - GD_SKILLBASE;
+					if (sp >= HM_SKILLBASE) sp = HM_SKILLRANGEMIN + sp - HM_SKILLBASE;
+					if (sp < 1 || sp >= MAX_SKILL_DB)
+						continue;
+					skill = &skill_db[sp];
 					new_flag = 0;
 					break;
 				}

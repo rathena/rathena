@@ -4,7 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/25
-	- Made the exp bonus settings be adjustable: [Skotlex]
+	* Fixed "skill_sp_override_grffile: yes" causing crashes when parsing
+	  Homuncuus/Guild skills. [Skotlex]
+	* Made the exp bonus settings be adjustable: [Skotlex]
 	- exp_bonus_attacker: Indicates how much additional exp a mob gives per
 	  additional attacker (eg: 10 -> +10%*attacker)
 	- exp_bonus_max_attacker: Indicates at which number of attackers the bonus
