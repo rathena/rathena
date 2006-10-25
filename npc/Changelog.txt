@@ -33,6 +33,11 @@ KarLaeda
 
 Date		Added
 ======
+10/25
+	* Got rid of colned maps. Replaced them by their originals [Lupus]
+		new_1-?.gnd -> new_zone0?.gnd
+		sword_1-1.gnd -> job_sword1.gnd
+	- Fixed item id in socket_enchant.txt, thx to norbert
 10/24
 	* Spawn updates for Einbroch Fields [Playtester]
 	* Updated Novie Training Grounds: typos, bugs, removed extra maps, duplicates [Lupus]

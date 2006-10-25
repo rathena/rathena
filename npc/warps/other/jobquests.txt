@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -17,33 +17,33 @@
 //= Removed unused, duplicate warps. [kobra_k88]
 //= 1.3b activated Dancer JQ warp [Lupus]
 //= 1.4 Imported damn noobie warps from jAthena (because it's broken since last year)
+//= 1.5 Replaced clone maps with the real ones [Lupus]
 //============================================================
 
 
 //==============================================================================
 //Novice
 //==============================================================================
-new_1-1.gat,148,112,0		warp	newwarp6001		2,2,new_1-2.gat,100,9
-new_1-2.gat,100,6,0 		warp	newwarp6002		2,2,new_1-1.gat,144,112
-new_1-2.gat,126,106,0		warp	newwarp6003		2,2,new_1-2.gat,160,171
-new_1-2.gat,156,171,0		warp	newwarp6004		2,2,new_1-2.gat,123,106
-new_1-2.gat,73,106,0		warp	newwarp6005		2,2,new_1-2.gat,41,172
-new_1-2.gat,46,172,0		warp	newwarp6006		2,2,new_1-2.gat,78,106
-//new_1-3.gat,96,175,0	warp	new17	3,2,new_1-4.gat,100,14
+new_zone01.gat,148,112,0	warp	newwarp6001	2,2,new_zone02.gat,100,9
+new_zone02.gat,100,6,0	warp	newwarp6002	2,2,new_zone01.gat,144,112
+new_zone02.gat,126,106,0	warp	newwarp6003	2,2,new_zone02.gat,160,171
+new_zone02.gat,156,171,0	warp	newwarp6004	2,2,new_zone02.gat,123,106
+new_zone02.gat,73,106,0	warp	newwarp6005	2,2,new_zone02.gat,41,172
+new_zone02.gat,46,172,0	warp	newwarp6006	2,2,new_zone02.gat,78,106
 
 //==============================================================================
 //Swordman
 //==============================================================================
-sword_1-1.gat,192,244,0	warp	SwordWarp0	2,2,sword_1-1.gat,215,244
-sword_1-1.gat,223,243,0	warp	SwordWarp1	2,2,sword_1-1.gat,12,206
-sword_1-1.gat,192,206,0	warp	SwordWarp2	2,2,sword_1-1.gat,215,205
-sword_1-1.gat,223,205,0	warp	SwordWarp3	2,2,sword_1-1.gat,12,168
-sword_1-1.gat,192,168,0	warp	SwordWarp4	2,2,sword_1-1.gat,215,167
+job_sword1.gat,192,244,0	warp	SwordWarp0	2,2,job_sword1.gat,215,244
+job_sword1.gat,223,243,0	warp	SwordWarp1	2,2,job_sword1.gat,12,206
+job_sword1.gat,192,206,0	warp	SwordWarp2	2,2,job_sword1.gat,215,205
+job_sword1.gat,223,205,0	warp	SwordWarp3	2,2,job_sword1.gat,12,168
+job_sword1.gat,192,168,0	warp	SwordWarp4	2,2,job_sword1.gat,215,167
 // Underground cave
-sword_1-1.gat,65,117,0	warp	swd101	1,1,sword_1-1.gat,10,245
-sword_1-1.gat,98,27,0	warp	swd102	1,1,sword_1-1.gat,11,207
-sword_1-1.gat,161,27,0	warp	swd103	1,1,sword_1-1.gat,11,207
-sword_1-1.gat,239,117,0	warp	swd106	1,1,sword_1-1.gat,11,169
+job_sword1.gat,65,117,0	warp	swd101	1,1,job_sword1.gat,10,245
+job_sword1.gat,98,27,0	warp	swd102	1,1,job_sword1.gat,11,207
+job_sword1.gat,161,27,0	warp	swd103	1,1,job_sword1.gat,11,207
+job_sword1.gat,239,117,0	warp	swd106	1,1,job_sword1.gat,11,169
 
 //==============================================================================
 //Thief

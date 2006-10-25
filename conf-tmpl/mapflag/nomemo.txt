@@ -30,10 +30,10 @@ moc_castle.gat	mapflag	nomemo
 morocc_in.gat	mapflag	nomemo
 niflheim.gat	mapflag	nomemo
 nif_in.gat	mapflag	nomemo
-new_1-1.gat	mapflag	nomemo
-new_1-2.gat	mapflag	nomemo
-new_1-3.gat	mapflag	nomemo
-new_1-4.gat	mapflag	nomemo
+new_zone01.gat	mapflag	nomemo
+new_zone02.gat	mapflag	nomemo
+new_zone03.gat	mapflag	nomemo
+new_zone04.gat	mapflag	nomemo
 pay_arche.gat	mapflag	nomemo
 payon_in01.gat	mapflag	nomemo
 payon_in02.gat	mapflag	nomemo
@@ -149,9 +149,7 @@ yuno_fild10.gat	mapflag	nomemo
 
 // Job Quests ================
 // First Job Class
-sword_1-1.gat	mapflag	nomemo
-//sword_2-1.gat	mapflag	nomemo
-//sword_3-1.gat	mapflag	nomemo
+job_sword1.gat	mapflag	nomemo
 job_thief1.gat	mapflag	nomemo
 job_star.gat	mapflag	nomemo
 // Primary Second Job Class

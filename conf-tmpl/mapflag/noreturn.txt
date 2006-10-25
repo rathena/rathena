@@ -32,10 +32,10 @@ lou_in01.gat	mapflag	noreturn
 lou_in02.gat	mapflag	noreturn
 moc_castle.gat	mapflag	noreturn
 morocc_in.gat	mapflag	noreturn
-new_1-1.gat	mapflag	noreturn
-new_1-2.gat	mapflag	noreturn
-new_1-3.gat	mapflag	noreturn
-new_1-4.gat	mapflag	noreturn
+new_zone01.gat	mapflag	noreturn
+new_zone02.gat	mapflag	noreturn
+new_zone03.gat	mapflag	noreturn
+new_zone04.gat	mapflag	noreturn
 nif_in.gat	mapflag	noreturn
 payon_in01.gat	mapflag	noreturn
 payon_in02.gat	mapflag	noreturn
@@ -74,9 +74,7 @@ kh_school.gat	mapflag	noreturn
 kh_vila.gat	mapflag	noreturn
 
 // Job Quests ====================
-sword_1-1.gat	mapflag	noreturn
-//sword_2-1.gat	mapflag	noreturn
-//sword_3-1.gat	mapflag	noreturn
+job_sword1.gat	mapflag	noreturn
 job_thief1.gat	mapflag	noreturn
 // 2-1 -----------------------
 job_hunte.gat	mapflag	noreturn

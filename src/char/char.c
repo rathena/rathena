@@ -4332,7 +4332,7 @@ int do_init(int argc, char **argv) {
 	int i;
 
 	mapindex_init(); //Needed here for the start-point reading.
-	start_point.map = mapindex_name2id("new_1-1.gat");
+	start_point.map = mapindex_name2id("new_zone01.gat");
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	char_lan_config_read((argc > 3) ? argv[3] : LOGIN_LAN_CONF_NAME);
 

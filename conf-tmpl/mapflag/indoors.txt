@@ -28,9 +28,7 @@ aldeba_in.gat	mapflag	indoors
 monk_in.gat	mapflag	indoors
 prt_are_in.gat	mapflag	indoors
 arena_room.gat	mapflag	indoors
-sword_1-1.gat	mapflag	indoors
-//sword_2-1.gat	mapflag	indoors
-//sword_3-1.gat	mapflag	indoors
+job_sword1.gat	mapflag	indoors
 xmas_in.gat	mapflag	indoors
 cmd_in01.gat	mapflag	indoors
 cmd_in02.gat	mapflag	indoors

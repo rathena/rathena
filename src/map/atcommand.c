@@ -3295,7 +3295,7 @@ int atcommand_go(
 		{ MAP_UMBALA,		89,  157  },		//	12=Umbala
 		{ MAP_NIFLHEIM,	21,  153  },		//	13=Niflheim
 		{ MAP_LOUYANG,		217,  40  },	//	14=Lou Yang
-		{ "new_1-1.gat",		53,  111  },	//	15=Training Grounds
+		{ "new_zone01.gat",		53,  111  },	//	15=Training Grounds
 		{ MAP_JAIL,		23,   61  },	//	16=Prison
 		{ MAP_JAWAII,		249, 127  },		//  17=Jawaii
 		{ MAP_AYOTHAYA,	151, 117  },		//  18=Ayothaya
@@ -3376,7 +3376,7 @@ int atcommand_go(
 			town = 13;
 		} else if (strncmp(map_name, "louyang.gat", 3) == 0) { // 3 first characters
 			town = 14;
-		} else if (strncmp(map_name, "new_1-1.gat", 3) == 0 || // 3 first characters (or "newbies")
+		} else if (strncmp(map_name, "new_zone01.gat", 3) == 0 || // 3 first characters (or "newbies")
 		           strncmp(map_name, "startpoint.gat", 3) == 0 || // name of the position (3 first characters)
 		           strncmp(map_name, "begining.gat", 3) == 0) { // name of the position (3 first characters)
 			town = 15;

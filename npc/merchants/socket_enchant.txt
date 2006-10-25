@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sousuke_PL
 //===== Current Version: =====================================
-//= 0.2
+//= 0.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -13,11 +13,11 @@
 //= 0.1a added missing L_No: to 2 funcs [Lupus]
 //= 0.1b Removed duplicates [Toms]
 //= 0.2	Added missing next;'s [Evera]
+//= 0.3 Fixed Zweihander[+] id [Lupus]
 //============================================================
 
 
 lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
-
 
   mes "[Socket Enchant]";
   mes "Hello.";
@@ -162,7 +162,7 @@ lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
 
       Zweihander:
            set @olditem,1168;
-           set @newitem,1716;
+           set @newitem,1171;
            callfunc "f_weapon_a3";
 
       Flamberge:

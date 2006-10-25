@@ -8,7 +8,7 @@
 
 // Location for Job's Quests
 job_thief1.gat	mapflag	noexp
-sword_1-1.gat	mapflag	noexp
+job_sword1.gat	mapflag	noexp
 in_moc_16.gat	mapflag	noexp
 job_hunte.gat	mapflag	noexp
 job_knt.gat	mapflag	noexp

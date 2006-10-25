@@ -2,13 +2,11 @@
 //= Map flags that disable auto saving
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.4 [Lupus]
+//= 1.5 [Lupus]
 //===== Current Version: =====================================
 
 // Job Quests ====================
-sword_1-1.gat	mapflag	nosave	SavePoint
-//sword_2-1.gat	mapflag	nosave	SavePoint
-//sword_3-1.gat	mapflag	nosave	SavePoint
+job_sword1.gat	mapflag	nosave	SavePoint
 //job_thief1.gat	mapflag	nosave	SavePoint
 // 2-1
 job_knt.gat	mapflag	nosave	SavePoint

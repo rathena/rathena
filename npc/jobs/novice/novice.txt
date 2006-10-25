@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,21 +17,22 @@
 //= 1.3 Removed Duplicates [Toms]
 //= 1.4 Added Kafra Free Cart Tickets, as in official one [Lupus]
 //= 1.5 Fixed warps, removed map duplicates, typos [Lupus]
+//= 1.6 Changed clone maps new_1-? -> new_zone0? [Lupus]
 //============================================================ 
 
 //====================================================================
 //Ragnarok Online Novice Script by yukito
 //====================================================================
 //Bulletin Board
-new_1-1.gat,66,114,4	script	Bulletin Board	111,{
+new_zone01.gat,66,114,4	script	Bulletin Board	111,{
 	mes "^FF0000=================================^000000";
 	mes "^FF0000 ==^000000 ^E40CAA[Welcome] ^CC0000to^FF9000Training ^0000FFGrounds^FF0000==^000000";
 	mes "^FF0000=================================^000000";
 	close;
 }
 
-new_1-1.gat,53,114,4	script	Shion	727,{
-	if(BaseJob != Job_Novice || Upper) goto L_Fail;
+new_zone01.gat,53,114,4	script	Shion	727,{
+	if(Class != Job_Novice || Upper) goto L_Fail;
 	switch (NEW_MES_FLAG0) {
 	case 0:	mes "[Shion]";
 		mes "Hello there~";
@@ -87,8 +88,8 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 			close;
 		case 2:	mes "[Shion]";
 			mes "Interface...";
-			mes "click','double-click'";
-			mes "and  'drag'is? .";
+			mes "click', 'double-click'";
+			mes "and 'drag' is? .";
 			mes "click just one time,";
 			mes "it is called 'click'";
 			mes "click twice straightly,";
@@ -96,7 +97,7 @@ new_1-1.gat,53,114,4	script	Shion	727,{
 			next;
 			mes "[Shion]";
 			mes "'Drag' is dragging your mouse";
-			mes "to the right, left,  up and down";
+			mes "to the right, left, up and down";
 			mes "when holding 'left-click'.";
 			mes "when you block a sentence in word";
 			mes "processor program";
@@ -211,14 +212,14 @@ L_Fail:
 	end;
 }
 
-new_1-1.gat,144,116,2	script	Guard#01	105,{
+new_zone01.gat,144,116,2	script	Guard#01	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
 
-new_1-1.gat,144,107,2	script	Guard#02	105,{
+new_zone01.gat,144,107,2	script	Guard#02	105,{
 	mes "[Training Grounds Guard]";
 	if(rand(2)) {
 		mes "Come in!";
@@ -239,8 +240,8 @@ new_1-1.gat,144,107,2	script	Guard#02	105,{
 }
 
 //Receptionist
-new_1-2.gat,100,29,4	script	Receptionist	86,{
-	if(BaseJob != Job_Novice || Upper) goto L_Fail;
+new_zone02.gat,100,29,4	script	Receptionist	86,{
+	if(Class != Job_Novice || Upper) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
 	mes "You are at the entrance";
@@ -266,7 +267,7 @@ L_loop:
 		mes "to the Training Grounds.";
 		close2;
 		set Zeny,Zeny+50;
-		warp "new_1-2.gat",100,70;
+		warp "new_zone02.gat",100,70;
 		end;
 	case 2:	mes "[Training Grounds Receptionist]";
 		mes "I understand.";
@@ -338,7 +339,7 @@ L_Fail:
 }
 
 //Interfaces Instructor
-new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
+new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 	if (!(NEW_MES_FLAG1)) {
 		mes "[Chris]";
 		mes "Nice to meet you. could you show me your application?";
@@ -411,7 +412,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "If you think you need to take more lectures,";
 			mes "Come to see me anytime.";
 			close2;
-			warp "new_1-2.gat",28,178;
+			warp "new_zone02.gat",28,178;
 			end;
 		case 3:	emotion e_swt2;
 			close;
@@ -431,7 +432,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "Well, find the skill instructor.";
 			mes "I will send you to him for free of charge.";
 			close2;
-			warp "new_1-2.gat",84,107;
+			warp "new_zone02.gat",84,107;
 			end;
 		case 2:	mes "[Chris]";
 			mes "I will send you to the next course,";
@@ -445,7 +446,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 				mes "[Chris]";
 				mes "I wish you good luck.";
 				close2;
-				warp "new_1-2.gat",28,178;
+				warp "new_zone02.gat",28,178;
 				end;
 			}
 		case 3:	emotion e_swt2;
@@ -467,7 +468,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "Well, Go to the item instructor.";
 			mes "I will send you to him for free of charge.";
 			close2;
-			warp "new_1-2.gat",115,107;
+			warp "new_zone02.gat",115,107;
 			end;
 		case 2:	mes "[Chris]";
 			mes "I will send you to the next course,";
@@ -481,7 +482,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 				mes "[Chris]";
 				mes "I wish you good luck.";
 				close2;
-				warp "new_1-2.gat",28,178;
+				warp "new_zone02.gat",28,178;
 				end;
 			}
 		case 3:	emotion e_swt2;
@@ -500,7 +501,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "Pay attention to what he says, and finish the course safely.";
 		mes "I wish you good luck.";
 		close2;
-		warp "new_1-2.gat",28,178;
+		warp "new_zone02.gat",28,178;
 		end;
 	case 2:	mes "[Chris]";
 		mes "That is a good idea.";
@@ -524,7 +525,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "'Teleportation Service'";
 		mes "'Storage Service'";
 		mes "Meet them";
-		mes "and use their service..";
+		mes "and use their service.";
 		next;
 		mes "[Chris]";
 		mes ".......If you leave here";
@@ -536,7 +537,7 @@ new_1-2.gat,99,105,4	script	Interfaces Instructor	751,{
 	}
 }
 
-new_1-2.gat,83,111,4	script	Skill Instructor	753,{
+new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 	if (!(NEW_MES_FLAG2)) {
 		mes "[Shecil]";
 		mes ""+strcharinfo(0)+"";
@@ -556,7 +557,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Click ^0000FFSkill^000000.";
 			mes "Another window pops up, right?";
 			mes "Short key is ^0000FFS when holding down alt^000000.";
-			mes "From now we will say like 'alt+s'.";
+			mes "From now we will say like 'Alt+S'.";
 			set NEW_MES_FLAG2,1;
 			set JobExp,JobExp+151;
 			next;
@@ -660,7 +661,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Hahaha.";
 			mes "I will send you to the service.";
 			close2;
-			warp "new_1-2.gat",115,107;
+			warp "new_zone02.gat",115,107;
 			break;
 		case 2:	goto L_battle;
 		case 3:	emotion e_omg;
@@ -684,7 +685,7 @@ new_1-2.gat,83,111,4	script	Skill Instructor	753,{
 		mes "My fists have gotten a bit rusty.";
 		mes "Ok, I will send you! You should grow up well!";
 		close2;
-		warp "new_1-2.gat",28,178;
+		warp "new_zone02.gat",28,178;
 		end;
 	case 2:	mes "[Shecil]";
 		mes "Huh? you look like";
@@ -726,11 +727,11 @@ L_battle:
 	mes "Practical Course!";
 	mes "Cheer up!";
 	close2;
-	warp "new_1-2.gat",28,178;
+	warp "new_zone02.gat",28,178;
 	end;
 }
 
-new_1-2.gat,115,111,4	script	Item Instructor	726,{
+new_zone02.gat,115,111,4	script	Item Instructor	726,{
 	disable_items;
 	if (!(NEW_MES_FLAG3)) {
 		mes "[Alice]";
@@ -876,7 +877,7 @@ new_1-2.gat,115,111,4	script	Item Instructor	726,{
 			mes "I will send you there.";
 			mes "Study Hard!";
 			close2;
-			warp "new_1-2.gat",84,107;
+			warp "new_zone02.gat",84,107;
 			end;
 	}
 	mes "[Alice]";
@@ -898,7 +899,7 @@ new_1-2.gat,115,111,4	script	Item Instructor	726,{
 			mes "Wear those tight.";
 			mes "Ok, I will let you go.";
 			close2;
-			warp "new_1-2.gat",28,178;
+			warp "new_zone02.gat",28,178;
 			end;
 		} else {
 			mes "[Alice]";
@@ -923,7 +924,7 @@ L_battle1:
 		mes "Ok, I will send you there.";
 		mes "Goodbye.";
 		close2;
-		warp "new_1-2.gat",28,178;
+		warp "new_zone02.gat",28,178;
 		end;
 	} else {
 		mes "[Alice]";
@@ -945,7 +946,7 @@ L_bye:
 	close;
 }
 
-new_1-2.gat,118,108,4	script	Kafra Employee	94,{
+new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 	mes "[Kafra Employee]";
 	mes "Welcome to";
 	mes "Kafra Corporation.";
@@ -988,7 +989,7 @@ new_1-2.gat,118,108,4	script	Kafra Employee	94,{
 				mes "[Kafra Employee]";
 				mes "You will be sent to Practical Course.";
 				close2;
-				warp "new_1-2.gat",28,178;
+				warp "new_zone02.gat",28,178;
 				end;
 			}
 			set @menu,@menu-1;
@@ -1179,7 +1180,7 @@ L_prewarp:
 	return;
 }
 
-new_1-2.gat,121,101,2	script	Guide Soldier	105,{
+new_zone02.gat,121,101,2	script	Guide Soldier	105,{
 	mes "[Soldier]";
 	mes "We, Soldiers, are guiding Novices here in the gate way of town.";
 	mes "When you go to a new town, Please visit Guide Soldier and receive their information for the map.";
@@ -1196,7 +1197,7 @@ new_1-2.gat,121,101,2	script	Guide Soldier	105,{
 }
 
 //Interface Assistant
-new_1-2.gat,161,182,6	script	Interface Assistant	92,{
+new_zone02.gat,161,182,6	script	Interface Assistant	92,{
 	mes "[Edwin]";
 	mes "I am an Interface Assistant.";
 	mes "Choose what you want to know more about.";
@@ -1334,7 +1335,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_1-2.gat,182,182,4	script	Status Assistant	754,{
+new_zone02.gat,182,182,4	script	Status Assistant	754,{
 	mes "[Jarre Riotte]";
 	mes "Welcome new adventurer.";
 	mes "I, Jarre Riotte will help you learn about the fundamental rules of your characters status.";
@@ -1578,7 +1579,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_1-2.gat,184,172,4	script	Skill Assistant	47,{
+new_zone02.gat,184,172,4	script	Skill Assistant	47,{
 	mes "[Pitch Judas]";
 	mes "Welcome. I have been waiting for";
 	mes "you for a long time!!";
@@ -1953,9 +1954,9 @@ L_loop1:
 }
 
 //Potato Merchant
-new_1-2.gat,28,185,4	shop	Potato Merchant	90,516:15
+new_zone02.gat,28,185,4	shop	Potato Merchant	90,516:15
 
-new_1-2.gat,38,182,4	script	Helper	92,{
+new_zone02.gat,38,182,4	script	Helper	92,{
 	if (!(NEW_MES_FLAG5)) {
 		if (!(NEW_MES_FLAG4)) {
 			mes "[Kane]";
@@ -2000,8 +2001,8 @@ new_1-2.gat,38,182,4	script	Helper	92,{
 				getitem 611,2;
 				getitem 569,300;
 				close2;
-				savepoint "new_1-2.gat",24,188;
-				warp "new_1-3.gat",96,21;
+				savepoint "new_zone02.gat",24,188;
+				warp "new_zone03.gat",96,21;
 				end;
 			} else {
 				mes "[Kane]";
@@ -2038,7 +2039,7 @@ new_1-2.gat,38,182,4	script	Helper	92,{
 			percentheal 100,100;
 		}
 		close2;
-		warp "new_1-3.gat",96,21;
+		warp "new_zone03.gat",96,21;
 		end;
 	} else {
 		mes "[Kane]";
@@ -2050,7 +2051,7 @@ new_1-2.gat,38,182,4	script	Helper	92,{
 	}
 }
 
-new_1-2.gat,17,182,6	script	Helper#2	84,{
+new_zone02.gat,17,182,6	script	Helper#2	84,{
 	if (!(NEW_MES_FLAG4)) {
 		mes "[Elmeen]";
 		mes "Congratulations!";
@@ -2359,7 +2360,7 @@ L_equip:
 }
 
 //Training Center Employee
-new_1-3.gat,95,30,4	script	Training Center Employee#1	84,{
+new_zone03.gat,95,30,4	script	Training Center Employee#1	84,{
 	mes "[Hoffman]";
 	mes "Hey there~";
 	mes "I'm here to provide";
@@ -2379,7 +2380,7 @@ new_1-3.gat,95,30,4	script	Training Center Employee#1	84,{
 	close;
 }
 
-new_1-3.gat,96,174,4	script	Keyman#1	85,{
+new_zone03.gat,96,174,4	script	Keyman#1	85,{
 	mes "[Keyman]";
 	mes "Hmmm!";
 	mes "You have practised a lot, would you like to go on with further training?";
@@ -2388,7 +2389,7 @@ new_1-3.gat,96,174,4	script	Keyman#1	85,{
 		mes "[Keyman]";
 		mes "Don't forget about everything you've learnt here. Have a nice trip.";
 		close2;
-		warp "new_1-4.gat",99,10;
+		warp "new_zone04.gat",99,10;
 		end;
 	}
 	mes "[Keyman]";
@@ -2397,7 +2398,7 @@ new_1-3.gat,96,174,4	script	Keyman#1	85,{
 }
 
 //Novice Instructor
-new_1-4.gat,91,22,4	script	Novice Instructor	57,{
+new_zone04.gat,91,22,4	script	Novice Instructor	57,{
 	mes "[Bruce]";
 	mes "You have come from far away.";
 	mes "Thank you for coming here";
@@ -2611,7 +2612,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_1-4.gat,100,29,4	script	Final Instructor	46,{
+new_zone04.gat,100,29,4	script	Final Instructor	46,{
 	if (!(NEW_MES_FLAG6)) {
 		mes "[Hanson]";
 		mes "Nice to meet you.";
@@ -3408,17 +3409,17 @@ L_cleararg:
 }
 
 // Training Ground Mobs
-new_1-3.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_1-3.gat,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_1-3.gat,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_1-3.gat,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_1-3.gat,0,0,0,0	monster	Drops	1113,10,0,0,0
+new_zone03.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_zone03.gat,0,0,0,0	monster	Poring	1002,10,0,0,0
+new_zone03.gat,0,0,0,0	monster	ChonChon	1011,10,0,0,0
+new_zone03.gat,0,0,0,0	monster	Lunatic	1063,10,0,0,0
+new_zone03.gat,0,0,0,0	monster	Drops	1113,10,0,0,0
 // Unsure about the following mobs
-new_1-3.gat,0,0,0,0	monster	Condor	1009,2,0,0,0
-new_1-3.gat,0,0,0,0	monster	Willow	1010,2,0,0,0
-new_1-3.gat,0,0,0,0	monster	Roda Frog	1012,2,0,0,0
-new_1-3.gat,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
-new_1-3.gat,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_1-3.gat,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
-new_1-3.gat,0,0,0,0	monster	Rocker	1052,1,0,0,0
-new_1-3.gat,0,0,0,0	monster	Thief Bug Female	1017,1,0,0,0
+new_zone03.gat,0,0,0,0	monster	Condor	1009,2,0,0,0
+new_zone03.gat,0,0,0,0	monster	Willow	1010,2,0,0,0
+new_zone03.gat,0,0,0,0	monster	Roda Frog	1012,2,0,0,0
+new_zone03.gat,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
+new_zone03.gat,0,0,0,0	monster	Spore	1014,1,0,0,0
+new_zone03.gat,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
+new_zone03.gat,0,0,0,0	monster	Rocker	1052,1,0,0,0
+new_zone03.gat,0,0,0,0	monster	Thief Bug Female	1017,1,0,0,0
