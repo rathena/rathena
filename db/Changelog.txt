@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/25
+	* Fixed view ids of some headgears [Playtester]
 10/24
 	* Kiel Mob updates [Playtester]
 	* Reverted Lupus' map_index update. map_index should NOT be touched. [Vicious]
