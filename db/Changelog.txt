@@ -20,6 +20,7 @@
 
 ========================
 10/25
+	* More Kiel Mob updates [Playtester]
 	* Changed order of Aliza drops to prevent steal exploit [Playtester]
 	* MG_STONECURSE and NPC_PETRIFYATTACK now use time1 to specify the
 	  "petrifying time". This value has been set to 5 seconds. [Skotlex]
