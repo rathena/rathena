@@ -8344,7 +8344,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
 		//[LuzZza]
 		//clif_guild_send_onlineinfo(sd);
-
+		//On Login Script.
+		npc_script_event(sd, NPCE_LOGIN);
 	} else
 	//New 'night' effect by dynamix [Skotlex]
 	if (night_flag && map[sd->bl.m].flag.nightenabled)

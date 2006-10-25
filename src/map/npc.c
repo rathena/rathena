@@ -162,32 +162,19 @@ int npc_event_dequeue(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	sd->npc_id=0;
-	if (sd->eventqueue[0][0]) {	// キューのイベント処理
-		size_t ev;
+	if (!sd->eventqueue[0][0])
+		return 0; //Nothing to dequeue
 
-		// find an empty place in eventtimer list
-		for(ev=0;ev<MAX_EVENTTIMER;ev++)
-			if( sd->eventtimer[ev]==-1 )
-				break;
-		if(ev<MAX_EVENTTIMER)
-		{	// generate and insert the timer
-			int i;
-			// copy the first event name
-			char *name=(char *)aMalloc(50*sizeof(char));
-			memcpy(name,sd->eventqueue[0],50);
-			// shift queued events down by one
-			for(i=1;i<MAX_EVENTQUEUE;i++)
-				memcpy(sd->eventqueue[i-1],sd->eventqueue[i],50);
-			// clear the last event
-			sd->eventqueue[MAX_EVENTQUEUE-1][0]=0;
-			// add the timer
-			sd->eventtimer[ev]=add_timer(gettick()+100,pc_eventtimer,sd->bl.id,(int)name);//TODO: Someone wrote here "!!todo!!", but what the hell is missing?
-			sd->eventcount++;
-		}else
-			ShowWarning("npc_event_dequeue: event timer is full !\n");
+	if (!pc_addeventtimer(sd,100,sd->eventqueue[0]))
+	{	//Failed to dequeue, couldn't set a timer.
+		ShowWarning("npc_event_dequeue: event timer is full !\n");
+		return 0;
 	}
-	return 0;
+	//Event dequeued successfully, shift other elements.
+	sd->npc_id=0; //FIXME: Shouldn't dequeueing fail when you have an npc_id set?
+	memmove(sd->eventqueue[0], sd->eventqueue[1], (MAX_EVENTQUEUE-1)*sizeof(sd->eventqueue[0]));
+	sd->eventqueue[MAX_EVENTQUEUE-1][0]=0;
+	return 1;
 }
 
 /*==========================================
@@ -801,27 +788,22 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsigned char *eventname){
 
 	if ( sd->npc_id!=0) {
-//		if (battle_config.error_log)
-//			printf("npc_event: npc_id != 0\n");
+		//Enqueue the event trigger.
 		int i;
-		for(i=0;i<MAX_EVENTQUEUE;i++)
-			if (!sd->eventqueue[i][0])
-				break;
+		for(i=0;i<MAX_EVENTQUEUE && sd->eventqueue[i][0];i++)
+		
 		if (i==MAX_EVENTQUEUE) {
 			if (battle_config.error_log)
 				ShowWarning("npc_event: event queue is full !\n");
-		}else{
-//			if (battle_config.etc_log)
-//				printf("npc_event: enqueue\n");
+		}else //Event enqueued.
 			memcpy(sd->eventqueue[i],eventname,50);
-		}
 		return 1;
 	}
-	if (ev->nd->sc.option&OPTION_INVISIBLE) {	// 無効化されている
+	if (ev->nd->sc.option&OPTION_INVISIBLE) {
+		//Disabled npc, shouldn't trigger event.
 		npc_event_dequeue(sd);
-		return 0;
+		return 2;
 	}
-
 	run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
 	return 0;
 }

@@ -861,8 +861,6 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.event_joblvup = 1;
 		sd->state.event_loadmap = 1;
 	}
-
-	npc_script_event(sd, NPCE_LOGIN);
 	return 0;
 }
 
@@ -6131,7 +6129,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
  * イベントタイマ??理
  *------------------------------------------
  */
-int pc_eventtimer(int tid,unsigned int tick,int id,int data)
+static int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
@@ -6142,9 +6140,9 @@ int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 	for(i=0;i < MAX_EVENTTIMER && sd->eventtimer[i]!=tid; i++);
 
 	if(i < MAX_EVENTTIMER){
+		sd->eventcount--;
 		sd->eventtimer[i]=-1;
 		npc_event(sd,p,0);
-		sd->eventcount--;
 	} else if(battle_config.error_log)
 		ShowError("pc_eventtimer: no such event timer\n");
 
@@ -6173,7 +6171,7 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 		pc_eventtimer,sd->bl.id,(int)evname);
 	sd->eventcount++;
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -6197,7 +6195,7 @@ int pc_deleventtimer(struct map_session_data *sd,const char *name)
 				sd->eventtimer[i]=-1;
 				sd->eventcount--;
 				aFree(p);
-				break;
+				return 1;
 			}
 		}
 

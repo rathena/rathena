@@ -286,7 +286,6 @@ int pc_addspiritball(struct map_session_data *sd,int,int);
 int pc_delspiritball(struct map_session_data *sd,int,int);
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(int char_id, int job);
-int pc_eventtimer(int tid,unsigned int tick,int id,int data); // for npc_dequeue
 int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];
