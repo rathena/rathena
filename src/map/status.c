@@ -4993,7 +4993,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (!val2) val2 = 1;
 			val3 = tick/1000; //Petrified HP-damage iterations.
 			if(val3 < 1) val3 = 1; 
-			tick = 5000; //Petrifying time.
+			tick = val4; //Petrifying time.
+			if (tick < 1000)
+				tick = 1000; //Min time
 			calc_flag = 0; //Actual status changes take effect on petrified state.
 			break;
 

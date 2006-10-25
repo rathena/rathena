@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/25
+	* MG_STONECURSE and NPC_PETRIFYATTACK now use time1 to specify the
+	  "petrifying time". This value has been set to 5 seconds. [Skotlex]
+	* Now when SC_STONE is triggered from status-change cards, it's petrifying
+	  duration will be passed as 0, causing the minimum (1 sec) to be used.
+	  [Skotlex]
 	* Got rid of clones in src: old Novice Grounds map -> new_zone0? [Lupus]
 2006/10/24
 	* Removed again your mdef reducing "petrifying" time as apparently it can't

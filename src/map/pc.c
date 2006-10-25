@@ -3149,7 +3149,6 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
 	int itemid;
-	int type;
 
 	struct item_data *item=NULL;
 	char output[100];

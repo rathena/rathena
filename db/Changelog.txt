@@ -20,6 +20,8 @@
 
 ========================
 10/25
+	* MG_STONECURSE and NPC_PETRIFYATTACK now use time1 to specify the
+	  "petrifying time". This value has been set to 5 seconds. [Skotlex]
 	* Fixed view ids of some headgears [Playtester]
 10/24
 	* Kiel Mob updates [Playtester]

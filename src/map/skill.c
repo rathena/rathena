@@ -1214,13 +1214,17 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 			
 	case NPC_PETRIFYATTACK:
+		sc_start4(bl,SkillStatusChangeTable(skillid),50+10*skilllv,
+			skilllv,0,0,skill_get_time(skillid,skilllv), 
+			skill_get_time2(skillid,skilllv));
+		break;
 	case NPC_CURSEATTACK:
 	case NPC_SLEEPATTACK:
 	case NPC_BLINDATTACK:
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,src->type==BL_PET?skilllv*1000:skill_get_time2(skillid,skilllv));
+		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
 	case NPC_MENTALBREAKER: 
@@ -4227,7 +4231,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (sd) clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
-			if (sc_start(bl,SC_STONE,(skilllv*4+20),skilllv,skill_get_time2(skillid,skilllv)))
+			if (sc_start4(bl,SC_STONE,(skilllv*4+20),
+				skilllv, 0, 0, skill_get_time(skillid, skilllv),
+				skill_get_time2(skillid,skilllv)))
 					clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			else if(sd) {
 				clif_skill_fail(sd,skillid,0,0);
