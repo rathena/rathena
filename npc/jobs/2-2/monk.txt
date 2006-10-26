@@ -492,6 +492,7 @@ L_MONK_Q_6:
 		mes "It is the same even if you only wanted to spread the words of God.";
 		mes "Think of your behavior. What's right and wrong?";
 		next;
+		mes "[Elder Wuhai]";
 		mes "I would rather test you again, but I'll let you go this time.";
 		mes "Think carefully about this before returning!";
 		close;
