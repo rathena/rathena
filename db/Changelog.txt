@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/26
+	* Fixed Constant's explode not working as it should [Playtester]
 10/25
 	* More Kiel Mob updates [Playtester]
 	* Changed order of Aliza drops to prevent steal exploit [Playtester]
