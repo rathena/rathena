@@ -1,0 +1,297 @@
+//===== Freya Script =========================================
+//= Louyang Guide NPCs
+//===== By: ==================================================
+//= jAthena/Tsuyuki
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Freya
+//===== Description: =========================================
+//= Louyang Guide NPCs
+//===== Additional Comments: =================================
+//= Fully working
+//= 0.5 Added first, Japanese version [Tsuyuki]
+//= 1.0 Translated to English from iRO NPC Dialogue (100% Official) [Tsuyuki]
+//============================================================
+
+//----------------------------------------------------------------------
+
+louyang.gat,224,104,4	script	Representative#Lou	818,{
+
+	mes "[Representative]";
+	mes "Welcome to Louyang,";
+	mes "an ancient land with";
+	mes "a history full of tales";
+	mes "of bravery.";
+	next;
+	mes "[Representative]";
+	mes "We now provide an ocean lane to";
+	mes "accomodate foreign travelers and";
+	mes "intercultural exchange from which";
+	mes "all can benefit.";
+	next;
+	mes "[Representative]";
+	mes "Louyang is famous for";
+	mes "its elaborate history, as well as";
+	mes "specialties that are unique to this";
+	mes "nation. Please take your time and";
+	mes "enjoy your stay.";
+	next;
+	menu "Ask Building Locations.",LouCase1A,"Remove all marks from mini-map.",LouCase2A,"Cancel.",LouCase3A;
+
+	LouCase1A:
+		mes "[Representative]";
+		mes "Where would you like to go?";
+		next;
+		menu "Dragon Castle",LouCase1B,"Doctor's Office",LouCase2B,"City Hall",LouCase3B,"Weapon Shop",LouCase4B,"Tool Shop",LouCase5B,"Tavern",LouCase6B,"Cancel",LouCase7B;
+
+			LouCase1B:
+				mes "[Representative]";
+				mes "The Dragon Castle is located at ^ff0000+^000000.";
+				mes "It is where all the nobles reside,";
+				mes "including our lord.";
+				next;
+				mes "[Representative]";
+				mes "Since you're an outsider, I guess";
+				mes "it would be appropriate for you to";
+				mes "visit our lord first.";
+				viewpoint 1,218,255,1,0xff0000;
+				close;
+
+			LouCase2B:
+				mes "[Representative]";
+				mes "We have a very skillful doctor.";
+				mes "You can find her office at ^8a0000+^000000.";
+				next;
+				mes "[Representative]";
+				mes "It is said that there";
+				mes "is no disease she cannot cure.";
+				mes "Well, I can't guarantee if that's";
+				mes "true or not.";
+				viewpoint 1,263,93,2,0x8a0000;
+				close;
+
+			LouCase3B:
+				mes "[Representative]";
+				mes "We have a City Hall where the";
+				mes "federal government operates.";
+				mes "It is located at ^777777+^000000.";
+				next;
+				mes "[Representative]";
+				mes "If you have any problems,";
+				mes "you should talk with the";
+				mes "employees in City Hall.";
+				viewpoint 1,309,80,3,0x00ff00;
+				close;
+
+			LouCase4B:
+				mes "[Representative]";
+				mes "The Weapon Shop is located at ^00ff00+^000000.";
+				next;
+				mes "[Representative]";
+				mes "You will see";
+				mes "marvelous weapons forged";
+				mes "by the well-experienced";
+				mes "blacksmiths of Louyang.";
+				viewpoint 1,145,174,4,0x00ff00;
+				close;
+
+			LouCase5B:
+				mes "[Representative]";
+				mes "The Tool Shop is located at ^0000ff+^000000.";
+				next;
+				mes "[Representative]";
+				mes "Knowing your enemy";
+				mes "is half the battle!";
+				mes "It's also safer to prepare yourself";
+				mes "than to be sorry later. Why don't";
+				mes "you go check their supplies?";
+				viewpoint 1,136,97,5,0x0000ff;
+				close;
+
+			LouCase6B:
+				mes "[Representative]";
+				mes "When you get tired during your";
+				mes "trip, I suggest that you visit the";
+				mes "Tavern. It's located at ^00ff00+^000000.";
+				viewpoint 1,280,167,6,0x00ff00;
+				next;
+				mes "[Representative]";
+				mes "The Tavern is a good place";
+				mes "to meet other tourists, as well as";
+				mes "to hear of any news that may be";
+				mes "helpful to know.";
+				close;
+
+			LouCase7B:
+				mes "[Representative]";
+				mes "If you wish to remove all marks";
+				mes "on your mini-map, please choose";
+				mes "'Remove all marks from mini-map.'";
+				mes "from the menu.";
+				close;
+
+	LouCase2A:
+		mes "[Representative]";
+		mes "Done! All the marks on your";
+		mes "mini-map are erased. Feel free to";
+		mes "ask me about building locations";
+		mes "whenever you need to.";
+		viewpoint 2,218,255,1,0xff0000;
+		viewpoint 2,263,93,2,0x8a0000;
+		viewpoint 2,309,80,3,0x00ff00;
+		viewpoint 2,145,174,4,0x00ff00;
+		viewpoint 2,136,97,5,0x0000ff;
+		viewpoint 2,280,167,6,0x00ff00;
+		close;
+
+	LouCase3A:
+		mes "[Representative]";
+		mes "I understand that you want to";
+		mes "explore Louyang and see the";
+		mes "sights for yourself. Alright then,";
+		mes "take care!";
+		close;
+}
+
+louyang.gat,160,175,4	script	Soldier#Lou1	825,{
+
+	mes "[Soldier]";
+	mes "Welcome to Louyang,";
+	mes "a city with a long";
+	mes "and colorful history.";
+	next;
+	mes "[Soldier]";
+	mes "Recently we've developed";
+	mes "an ocean lane to accomodate";
+	mes "positive exchange with";
+	mes "foreign nations.";
+	next;
+	mes "[Soldier]";
+	mes "Louyang is well-known for various";
+	mes "specialties in addition to its rich";
+	mes "history. Here you can find many";
+	mes "things unique to our land.";
+	next;
+	mes "[Soldier]";
+	mes "Please take your time";
+	mes "and we invite you to enjoy";
+	mes "your trip here in Louyang.";
+	next;
+	menu "Ask Building Locations.",LouCase1A,"Remove all marks from mini-map.",LouCase2A,"Cancel.",LouCase3A;
+
+	LouCase1A:
+		mes "[Soldier]";
+		mes "Where would you like to go?";
+		next;
+		menu "Dragon Castle",LouCase1B,"Doctor's Office",LouCase2B,"City Hall",LouCase3B,"Weapon Shop",LouCase4B,"Tool Shop",LouCase5B,"Tavern",LouCase6B,"Cancel",LouCase7B;
+
+			LouCase1B:
+				mes "[Soldier]";
+				mes "The Dragon Castle is located at ^ff0000+^000000.";
+				mes "It is where all the nobles reside,";
+				mes "including our lord.";
+				next;
+				mes "[Soldier]";
+				mes "Since you're an outsider, I guess";
+				mes "it would be appropriate for you to";
+				mes "visit our lord first.";
+				viewpoint 1,218,255,1,0xff0000;
+				close;
+
+			LouCase2B:
+				mes "[Soldier]";
+				mes "We have a very skillful doctor.";
+				mes "You can find her office at ^8a0000+^000000.";
+				next;
+				mes "[Soldier]";
+				mes "It is said that there";
+				mes "is no disease she cannot cure.";
+				mes "Well, I can't guarantee if that's";
+				mes "true or not.";
+				viewpoint 1,263,93,2,0x8a0000;
+				close;
+
+			LouCase3B:
+				mes "[Soldier]";
+				mes "We have a City Hall where the";
+				mes "federal government operates.";
+				mes "It is located at ^777777+^000000.";
+				next;
+				mes "[Soldier]";
+				mes "If you have any problems,";
+				mes "you should talk with the";
+				mes "employees in City Hall.";
+				viewpoint 1,309,80,3,0x00ff00;
+				close;
+
+			LouCase4B:
+				mes "[Soldier]";
+				mes "The Weapon Shop is located at ^00ff00+^000000.";
+				next;
+				mes "[Soldier]";
+				mes "You will see";
+				mes "marvelous weapons forged";
+				mes "by the well-experienced";
+				mes "blacksmiths of Louyang.";
+				viewpoint 1,145,174,4,0x00ff00;
+				close;
+
+			LouCase5B:
+				mes "[Soldier]";
+				mes "The Tool Shop is located at ^0000ff+^000000.";
+				next;
+				mes "[Soldier]";
+				mes "Knowing your enemy";
+				mes "is half the battle!";
+				mes "It's also safer to prepare yourself";
+				mes "than to be sorry later. Why don't";
+				mes "you go check their supplies?";
+				viewpoint 1,136,97,5,0x0000ff;
+				close;
+
+			LouCase6B:
+				mes "[Soldier]";
+				mes "When you get tired during your";
+				mes "trip, I suggest that you visit the";
+				mes "Tavern. It's located at ^00ff00+^000000.";
+				viewpoint 1,280,167,6,0x00ff00;
+				next;
+				mes "[Soldier]";
+				mes "The Tavern is a good place";
+				mes "to meet other tourists, as well as";
+				mes "to hear of any news that may be";
+				mes "helpful to know.";
+				close;
+
+			LouCase7B:
+				mes "[Soldier]";
+				mes "If you wish to remove all marks";
+				mes "on your mini-map, please choose";
+				mes "'Remove all marks from mini-map.'";
+				mes "from the menu.";
+				close;
+
+	LouCase2A:
+		mes "[Soldier]";
+		mes "There, I've erased all the marks on";
+		mes "your mini-map. Feel free to ask me";
+		mes "about building locations whenever";
+		mes "you need to.";
+		viewpoint 2,218,255,1,0xff0000;
+		viewpoint 2,263,93,2,0x8a0000;
+		viewpoint 2,309,80,3,0x00ff00;
+		viewpoint 2,145,174,4,0x00ff00;
+		viewpoint 2,136,97,5,0x0000ff;
+		viewpoint 2,280,167,6,0x00ff00;
+		close;
+
+	LouCase3A:
+		mes "[Soldier]";
+		mes "I guess it's fun";
+		mes "sometimes to go exploring";
+		mes "on your own. Take care.";
+		close;
+}
+
+louyang.gat,213,213,4	duplicate(Soldier#Lou1)	Soldier	825

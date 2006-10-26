@@ -1,23 +1,642 @@
-//===== eAthena script =======================================
-//= Rachel Town script
+//===== Freya Script =======================================
+//= Rachel City NPCs
 //===== By: ==================================================
-//= erKURITA & RockmanEXE
+//= Tsuyuki and Harp
 //===== Current Version: =====================================
-//= 1.0
+//= 0.5
 //===== Compatible With: =====================================
-//= Any eAthena Version; RO Episode XX
+//= Freya
 //===== Description: =========================================
-//= Rachel Town Npcs
-//============================================================
+//= Arunafeltz NPCs
 //===== Additional Comments: =================================
-//=	1.0 Temporal NPC Locations. Will add 2 of these npc's
-//=	    true script. Special thanks to RockmanEXE. [erKURITA]
+//= 0.5 Text translated from Korean > English, incomplete, 
+//= possibly missing some NPCs and missing all quests.
 //============================================================
 
-rachel.gat,109,138,4	script	Zondaman#Rachel	874,{end;}
 
-rachel.gat,138,146,5	script	Guide#Rachel	934,{end;}
-ra_fild12.gat,45,231,2	script	Guard#Field1	934,{end;}
-rachel.gat,268,120,2	script	Guard#Field3	934,{end;}
-rachel.gat,31,130,2	script	Guard#Field4	934,{end;}
-rachel.gat,125,33,5	script	Guard#Field5	934,{end;}
+ra_fild12.gat,45,230,3	script	Airport Guide	934,{
+
+	mes "[Airport Guide]";
+	mes "This international airline, which is run by Shubaltz, runs from Arunafeltz to Richelmanhole.";
+	mes "If you are looking for the airport, please follow the minimap to the indicated spot.";
+	//looks like there's blinking at the far edge of the map - middle right.
+	close;
+}
+
+rachel.gat,268,120,1	script	Rachel  Guard#01	934,{
+
+	mes "[Rachel Guard]";
+	mes "This is the holy capital of ancient";
+	mes "Arunafeltz, Rachel. Please consult";
+	mes "the guide in the center point for";
+	mes "further information and guidance";
+	mes "regarding various services offered here.";
+	close;
+}
+
+rachel.gat,261,175,3	script	Kid	914,{
+
+	mes "[Mankoo]";
+	mes "Ahhh my gosh";
+	mes "I was playing catch with Himuhimu, but";
+	mes "I haven't seen him in an hour.";
+	next;
+	mes "[Mankoo]";
+	mes "I wanted to tell him that I need to";
+	mes "go home because I'm really hungry...";
+	mes "Himuhimu, come out already~!";
+	close;
+}
+
+rachel.gat,201,174,3	script	Freya Follower	926,{
+
+	mes "[Freya Follower]";
+	mes "Arunafeltz is a country that believes 'Praymyiang'.";
+	mes "They call Arunafeltz an old country.";
+	next;
+	mes "[Freya Follower]";
+	mes "There are some peculiarly dressed people";
+	mes "around here, no? The people who wear a hat like";
+	mes "me or just a mask are called an 'ordinary follower.";
+	mes "Of course, everyone is a follower of Freya, but shall";
+	mes "I say.. they're a bit more faithful followers?";
+	next;
+	mes "[Freya Follower]";
+	mes "The people wearing clean neat white outfits";
+	mes "are the 'bishops'. They take care of various deeds";
+	mes "inside the Temple.";
+	next;
+	mes "[Freya Follower]";
+	mes "And the ones to address the Pope and sacrifice";
+	mes "themselves the most for Arunafeltz are the Great Bishops.";
+	mes "Their outfits are a bit more flamboyant than the normal";
+	mes " 'bishops', so you can spot them easily.";
+	next;
+	mes "[Freya Follower]";
+	mes "The Great Bishops seem to be really busy";
+	mes "people, so it would be advised not to get in their way.";
+	close;
+}
+
+rachel.gat,157,183,3	script	Follower Ustiala	916,{
+
+	mes "[Ustialla]";
+	mes "May the blessings of Freya be with you...";
+	next;
+	mes "[Ustialla]";
+	mes "A visitor from a foreign land, are you?";
+	mes "Surely it was Freya that has guided you into wandering to Arunafeltz.";
+	mes "We followers of Freya ... all Freya followers."; //not sure what she's saying here.
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Oh... Hello.";
+	next;
+	menu "I'm here to recieve the teachings of Freya",-,"I'm just here to tour",L_menu2;
+
+		mes "[Ustialla]";
+		mes "The day that our all knowing Freya ressurects,";
+		mes "she shall lead all of us to Valhalla.";
+		mes "May the blessings of Freya be with you as well!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What do you do here?";
+		next;
+		mes "[Ustialla]";
+		mes "May Freya be with you...";
+		next;
+		mes "[Ustialla]";
+		mes "Although Freya is asleep for now, Freya is";
+		mes "always watching us.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Freya is asleep?";
+		next;
+		mes "[Ustialla]";
+		mes "Yes, Freya is asleep.";
+		mes "Long long ago in the Thousand Year War, Freya";
+		mes "waged a war against the Demons for the humans,";
+		mes "but in the process used up all her power for you and me.";
+		mes "Freya now rests in a holy place only meant for her.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "How do you know this?";
+		next;
+		mes "[Ustialla]";
+		mes "It is the truth that all Freya believers know.";
+		mes "Freya speaks to us through The Pope, who is the";
+		mes "human embodiment of Freya.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "The Pope?"; // is the pope evil? o_O Does this mean Freya is evil? lol
+		next;
+		mes "[Ustialla]";
+		mes "Yes. The pope is a brilliantly white and";
+		mes "beautiful - he/she is a glorious person. ";
+		mes "It's proof of being the embodiment of Freya."; 
+		next;
+		mes "[Ustialla]";
+		mes "Yet compared to the Pope, our Megatio...";
+		mes "I stay here in my village, alway offering prayers";
+		mes "for the forgiveness of our Megatio.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Did Megatio commit a sin?";
+		next;
+		mes "[Ustialla]";
+		mes "Egatio has been wilting away since a while ago..";
+		mes "Fate is decided by the gods";
+		mes "This child must have gained the resentment of Freya.";
+		next;
+		mes "[Ustialla]";
+		mes "If we continue praying, I'm sure Freya will forgive";
+		mes "Megatio since Freya is a beautiful but also generous Goddess.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "'......'";
+		mes "'She's sounds crazy...'";
+		next;
+		mes "[Ustialla]";
+		mes "Oh, that's right, my guest from afar, will you";
+		mes "heed a request from us?";
+		mes "Freya is a beautiful goddess. All beautiful things";
+		mes "in the world are meant for her.";
+		next;
+		mes "[Ustialla]";
+		mes "A while ago I attained a precious necklace made by";
+		mes "Dwarves, which rarely show themselves.";
+		mes "The pawn shop owner sold to to me cheaply even though";
+		mes "he went through a lot of trouble to get the necklace.";
+		next;
+		mes "[Ustialla]";
+		mes "If this necklace were to shine brighter, then I think";
+		mes "Freya would bless us more... Can you please help me?";
+		mes "I have to pray for this child in this village,";
+		mes "so I can't move from here.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What do I have to do?";
+		next;
+		mes "[Ustialla]";
+		mes "Maheeo, who will only battle with the greatest";
+		mes "magicians, left for the Ice Cave up north to";
+		mes "defeat Ktullanux.";
+		next;
+		mes "[Ustialla]";
+		mes " ... ";
+		next;
+		menu "Sorry, but I'd rather not get involved..",-,"OK, leave it up to me.",L_Helpout;
+			mes "[Ustialla]";
+			mes "Oh.. I see.. I guess even if we share the";
+			mes "same faith, we're just strangers in the end..";
+			close;
+
+		L_Menu2: // No Info
+		close;
+
+		L_Helpout: // No Info
+		close;
+
+}
+
+rachel.gat,141,168,5	script	Looking for Someone	916,{ // No Info
+
+	end;
+} 
+
+rachel.gat,151,155,3	script	Kid	921,{
+
+	mes "[Kid]";
+	mes "When I grow up, I'm going to become a traveller that";
+	mes "travels a lot to foreign countries.";
+	mes "I can't wait to visit far places, here and there!";
+	next;
+	mes "[Kid]";
+	mes "And then if I find a town I really like, maybe I'll settle";
+	mes "in there... I don't like my town here, so I want to";
+	mes "live somewhere nicer.";
+	next;
+	mes "[Kid]";
+	mes "There's actually someone who's doing the opposite of what";
+	mes "I want to do and has moved in here from afar..";
+	mes "What was her name? M.. May.. Who cares?";
+	next;
+	mes "[Kid]";
+	mes "Maybe some people like this down, but I can't wait 'til I become";
+	mes "a great traveller so I can leave this place.";
+	close;
+}
+
+rachel.gat,124,132,1	script	Town Native	921,{
+
+	mes "[Town Native]";
+	mes "May Freya's blessings be with you...";
+	next;
+	mes "[Town Native]";
+	mes "Freya is the goddess of love and beauty.";
+	mes "Do you suppose that if I were to pray a lot to";
+	mes "Freya that I'd be able to hook up with woman as";
+	mes "beautiful as Freya?";
+	close;
+}
+
+rachel.gat,109,138,5	script	Cool Event Corp	874,{
+
+//	mes "[Cool Event Corp Employee]";
+//	mes "Welcome to Cool Event Corp. We always";
+//	mes "bring you the best service.";
+//	mes "What service do you need?";
+//	next;
+//	mes "Use Save Service",Z_end,"Use Storage Service",Z_end,"Use Cart //Service",Z_end,"End Conversation",Z_end;
+//	
+//	Z_end:
+//		close;
+	end;
+}
+
+ra_in01.gat,376,68,4	script	Hotel Employee	931,{
+
+	mes "[Hotel Employee]";
+	mes "My Freya's blessings be with you...";
+	mes "Welcome to Rachel Hotel. Our Hotel takes pride in being";
+	mes "as comfortable as Freya's endless love.";
+	next;
+	menu "Save",H_end,"Rest here - 5000z",H_end,"End Conversation",H_end;
+
+	H_end:
+		close;
+}
+
+rachel.gat,197,137,3	script	Wandering Citizen	51,{
+
+	mes "[Wandering Citizen]";
+	mes "Oh oh~ I'm the wandering citizen wandering to various lands~";
+	next;
+	mes "[Wandering Citizen]";
+	mes "Today I followed a beautiful light and arrived in Racheeeeeel.";
+	next;
+	mes "[Wandering Citizen]";
+	mes "But then I heard thaaaat...";
+	next;
+	mes "[Wandering Citizen]";
+	mes "The young missy Pope~";
+	next;
+	mes "[Wandering Citizen]";
+	mes "Who is delicate like a flower and brilliantly pure~"; 
+	mes"Lives inside the temple~";
+	next;
+	mes "[Wandering Citizen]";
+	mes "Now how can I meet the Pope~~?"; 
+	mes "Must I tempt her out with beautiful poems and song?";
+	mes "O passer by~~ Tell me how~~ ";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "That was terrible.";
+	next;
+	mes "[Wandering Citizen]";
+	mes "....................."; 
+	emotion 28;
+	close;
+}
+
+rachel.gat,138,73,3	script	Speechless Shopkeeper	85,{
+
+	mes "[Speechless Shopkeeper]";
+	mes "Jeez business is slow today.";
+	mes "I better call it a day, close up, and go home.";
+	close;
+}
+
+rachel.gat,120,46,3	script	Idle Shopkeeper	85,{
+
+	mes "[Idle Shopkeeper]";
+	mes "There's not even a single fly...";
+	mes "Maybe I should give up on this too...";
+	close;
+}
+
+rachel.gat,125,33,5	script	Shopkeeper	85,{
+
+	end;
+}
+
+rachel.gat,206,30,3	script	Freya Bishop	920,{
+
+	mes "[Freya Bishop]";
+	mes "I'm bored...";
+	next;
+	mes "[Freya Bishop]";
+	mes "I said I'm bored!!!";
+	next;
+	menu "Oh... I see.",-,"Want me to entertain you?",L_fun;
+
+		mes "[Freya Bishop]";
+		mes "Hmph.. You sure are a boring one.";
+		close;
+	L_fun:
+		close;
+}
+
+rachel.gat,243,37,3	script	Kid	921,{
+
+	mes	"[Kid]";
+	mes	"Stop trying to pat my head!";
+	mes	"Don't touch me!!";
+	next;
+	mes	"[Kid]";
+	mes	"Didn't I say don't pat me?";
+	mes	"Grrr..";
+	next;
+	mes	"[Kid]";
+	mes	"Where did you come from?";
+	next;
+	mes	"[Kid]";
+	mes	"Overseas?";
+	mes "Overseas, you say?";
+	next;
+	mes	"[Kid]";
+	mes	"What is 'overseas'?";
+	mes	"...";
+	next;
+	mes	"[Kid]";
+	mes	"What, I don't care what it is.";
+	mes	"...";
+	next;
+	mes	"[Kid]";
+	mes	"Do you like candy?";
+	mes	"...";
+	next;
+	menu "A lot!",-,"Yeah",-,"Yeah, I like it lots",-,"Not really",K_end;
+	mes "[Kid]";
+	mes "Oh yeah?";
+	mes	"...";
+	next;	
+	mes "[Kid]";
+	mes "But you're a grown up..";
+	mes	"...";
+	next;
+	mes "[Kid]";
+	mes "What kind of adult likes candy?";
+	mes	"...";
+	next;
+	mes "[Kid]";
+	mes "Beeeeeeh!";	
+	close2;
+
+	K_end: // No Info
+		close;
+}
+
+// bottom right, right bottom of pond.
+
+rachel.gat,266,35,3	script	Grandmother	918,{
+
+	mes "[Grandmother]";
+	mes "This pond not only has a good view, but it makes";
+	mes "me feel very serene so I frequent it often...";
+	next;
+	mes "[Grandmother]";
+	mes "It seems a lot of young couples also frequent this";
+	mes "place, so I don't think it's just my old age thats";
+	mes "making me like this place. ";
+	close;
+}
+
+rachel.gat,273,33,3	script	Little Kid	931,{
+
+	mes "[Little Kid]";
+	mes "I like being alone!!";
+	close;
+}
+
+rachel.gat,265,46,0	script	#someNPC	111,{
+
+	end;
+}
+
+rachel.gat,265,98,3	script	Haiton	930,{
+
+	mes "[Haiton]";
+	mes "I'm studying alone, so ask someone else if";
+	mes "you need help touring.";
+	close;
+}
+
+ra_in01.gat,250,19,3	script	Cendal	929,{
+
+	mes "[Cendal]";
+	mes "It seemed my daughter is going out with someone";
+	mes "lately... She said she was going to go to a another";
+	mes "village and I haven't heard from her since.";
+	mes "Sigh.. I raise a daughter and something like this happens.";
+	mes "I bet she left to travel around with whoever she's dating.";
+	close;
+}
+
+rachel.gat,196,77,3	script	Kid	914,{
+
+	mes "[Kid]";
+	mes "Bluestiti is really nice and pretty. She even";
+	mes "bought me a lot of snacks!";
+	next;
+	mes "[Kid]";
+	mes "What? You haven't seen Bluestiti yet? She is a bit";
+	mes "hard to see nowadays..";
+	next;
+	mes "[Kid]";
+	mes "She has a strong sense of justice so she might seem rash";
+	mes "sometimes, but that's not really a bad point! Hehe.";
+	close;
+}
+
+rachel.gat,113,96,5	script	Mohammed	929,{
+
+	mes "[Mohammed]";
+	mes "It's so hot lately, and my neck feels dry ... sure makes me";
+	mes "feel untalkative and lethargic.";
+	close;
+}
+
+
+rachel.gat,76,77,3	script	Rachel Bishop	927,{ 
+	mes "[Freya Bishop]";
+	mes "Haaa~! Drinks taste the best when I drink";
+	mes "them while on duty!";
+	close;
+}
+
+rachel.gat,74,150,7	script	Village Girl	914,{
+
+	mes "[Village Girl]";
+	mes "Our pope has white skin and white hair.";
+	mes "My father tells me there's always one girl born";
+	mes "with white hair and white skin, who's supposed";
+	mes "to be the human embodiment of Freya...";
+	close;
+}
+
+rachel.gat,73,244,3	script	Ricellen	919,{
+
+	mes "[Ricellen]";
+	mes "My friend Bluestiti is a really good friend.";
+	mes "I say she's really nice to everyone and has a good";
+	mes "heart. She almost seems attractive to me, and I'm a girl!";
+	next;
+	mes "[Ricellen]";
+	mes "She gets a bit nosey and she can be stubborn,";
+	mes "but I guess this is part of being a girl, right?";
+	next;
+	mes "[Ricellen]";
+	mes "How lucky is the guy going out with her? They";
+	mes "just started going out. His name was..";
+	mes "It was a foreign name that was kind of hard to";
+	mes "pronounce, but he's definitely got Lady Luck on his side.";
+	mes "It's not like someone like Bluestiti really";
+	mes "needs a boyfriend..!";
+	next;
+	mes "[Ricellen]";
+	mes "It would've been nice if she could just hang";
+	mes "out with me... pfft..";
+	mes "I better find myself a partner too.";
+	mes "I'm so lonely it's bothering me so much..!";
+	close;
+}
+
+rachel.gat,114,232,3	script	Logan	869,{
+
+	mes "[Logan]";
+	mes "I am Logan. I work here at Sir Jed's Mansion.";
+	next;
+	mes "[Logan]";
+	mes "My workload is demanding, so please stop bothering me.";
+	close;
+}
+
+ra_in01.gat,372,200,3	script	Hanson	929,{
+
+	mes "[Hanson]";
+	mes "This here is Sir Jed's Mansion, and this is";
+	mes "where I work. They call me Hanson. Please don't";
+	mes "dirty up the place with dirty shoes.";
+	close;
+}
+
+ra_in01.gat,384,246,3	script	Vincent	47,{
+
+	mes "[Vincent]";
+	mes "(nod) I am Vincent, and I am the house manager";
+	mes "of this mansion. You're a traveller, I presume?";
+	next;
+	mes "[Vincent]";
+	mes "This Mansion belongs to Sir Jed, who is the";
+	mes "most powerful person in Arunafeltz.";
+	next;
+	mes "[Vincent]";
+	mes "Sir Jed is currently unavailable due to a Great";
+	mes "Bishop Meeting.";
+	next;
+	mes "[Vincent]";
+	mes "In these past few days that the Master has been away,";
+	mes "a problem has occured. We're not sure what we should do...";
+	next;
+	mes "[Vincent]";
+	mes "If you help us solve this problem, we'll even reward you";
+	mes "accordingly. How about it? Will you help us?";
+	next;
+	menu "I'd rather not.",-,"Very well, I'll help.",L_thanks;
+
+		mes "[Vincent]";
+		mes "Oh well.. that's a shame.";
+		close;
+
+	L_thanks:
+		mes "[Vincent]";
+		mes "Good, I want you thank you beforehand";
+		next;
+		mes "[Vincent]";
+		mes "It's a bit of a task, but I was hoping you'd help us";
+		mes "find a certain something.";
+		next;
+		mes "[Vincent]";
+		mes "The jewel that the Pope gave my Master in honor of";
+		mes "all his achievements for Arunafeltz is missing.";
+		next;
+		mes "[Vincent]"; // Pobey? Did kRO mean.. Phoebe?
+		mes "I think that it was stolen by one of the servants";
+		mes "named Pobey - I haven't seen Pobey around since the Jewel";
+		mes "disappeared.";
+		next;
+		mes "[Vincent]";
+		mes "I'd appreciate it if you could bring us back the thief";
+		mes "and the Jewel before the Great Bishops hear about this.";
+		next;
+		mes "[Vincent]";
+		mes "I hope you can do this for us. Don't forget - you";
+		mes "can't tell anyone the Jewel is missing!";
+		next;
+		mes "[Vincent]";
+		mes "The other servants of this house can give you more";
+		mes "details about Pobey";
+		close;
+}
+
+// Player didn't talk to the servants again, but I'd imagine
+// they'd say something different now that Vincent's quest has
+// been started.
+
+rachel.gat,48,237,5	script	Jenny	893,{
+
+	mes "[Jenny]";
+	mes "This is Sir Jed's private residence. Please";
+	mes "refrain from entering and leaving as you please.";
+	close;
+}
+
+rachel.gat,144,243,5	script	Guard#Ra01	934,{
+
+	mes "[Sessimir Guard]";
+	mes "This is the Sessimir Castle. Here resides the Pope,";
+	mes "who is the embodiment of our Goddess Freya.";
+	mes "Empty your mind and spirit, and you may enter.";
+	close;
+}
+
+rachel.gat,155,243,3	script	Guard#Ra02	934,{
+
+	mes "[Sessimir Guard]";
+	mes "This is the Sessimir Castle. Here resides the Pope,";
+	mes "who is the embodiment of our Goddess Freya.";
+	mes "Empty your mind and spirit, and you may enter.";
+	close;
+}
+
+ra_temple.gat,119,179,3	script	#door1	45,2,2,{
+
+OnTouch:
+	mes "** The door is locked. **";
+	next;
+	menu "Kick it",-,"Take out your weapon",L_weap;
+
+	emotion 23;
+	mes "[Bishop Nema]";
+	mes "Please stop!";
+	close;
+	end;
+	
+	L_weap:
+		emotion 23;
+		close;
+}
+
+ra_temple.gat,116,174,3	script	Bishop Nema	920,{
+
+	mes "[Bishop Nema]";
+	mes "I need to get in somehow...";
+	mes "Previously, another Bishop told me that there was";
+	mes "a couple that snuck in the temple as a joke, but";
+	mes "I'm not sure how.";
+	next;
+	mes "[Bishop Nema]";
+	mes "Hmm.. and who were they?";
+	mes "Oh, what do I do..";
+	close;
+}

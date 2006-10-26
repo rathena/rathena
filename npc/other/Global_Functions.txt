@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.05
+//= 2.07
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
 //=	+more garbage clean
 //= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
+//= 2.07 Added TK_Q variable clear [Lupus]
 //============================================================ 
 
 
@@ -68,7 +69,7 @@ function	script	F_ClearJobVar	{
 	set DANC_Q,0;
 	set BARD_Q,0;
 	// Extended Classes
-	set TAEK_Q,0;
+	set TAEK_Q,0; set TK_Q,0;
 	set STGL_Q,0;
 	set SOUL_Q,0;
 	set GUNS_Q,0;

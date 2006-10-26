@@ -33,6 +33,10 @@ KarLaeda
 
 Date		Added
 ======
+10/26
+	* Replaced previous TK Job Quest with this one [Tsuyuki]
+	- Updated Lighthalzen City & Rachel City NPC
+	- Replaced Louyang Guide with new, 100% correct iRO dialogues
 10/25
 	* Got rid of colned maps. Replaced them by their originals [Lupus]
 		new_1-?.gnd -> new_zone0?.gnd

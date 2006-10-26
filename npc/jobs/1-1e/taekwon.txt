@@ -1,113 +1,414 @@
-//===== eAthena Script ======================================= 
+//===== Freya Script ======================================= 
 //= Taekwon Job Quest
 //===== By: ================================================== 
-//= Celestria
+//= Tsuyuki
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 1.0 +
+//= Freya
 //===== Description: ========================================= 
-//= 
+//= Official iRO TaeKwon Job Change Quest
 //===== Additional Comments: ================================= 
-//= A temp Taekwon Job Changer based on the kRO quest.
-//= Quest info from RagnaInfo. Sprites from kRO screenshots
-//= 1.0 Optimized, updated [Lupus]
+//= 1.0 Replaced previous TK Job Quest with this one [Tsuyuki]
 //============================================================ 
 
 
-payon.gat,157,141,5	script	Monk#tktest	753,{
-	if(Class==Job_Novice && TAEK_Q) goto L_Continue;
-	if(Class==Job_Taekwon || Class==Job_Star_Gladiator) {
-		mes "[Monk]";
-		mes "So, how goes the kicking?";
-		close;
-	}
-	mes "[Monk]";
-	mes "All my life I've been punching and punching things.";
-	mes "As such I've developed quite a lot of muscles in my arms.";
-	next;
-	mes "[Monk]";
-	mes "However in my travels I have also walked a lot, and have";
-	mes "developed strong muscles in my legs.";
-	next;
-	if(Class==Job_Novice && JobLevel==10) {
-		mes "[Monk]";
-		mes "Hmmm... You seem to be the kind to walk around a lot.";
-		mes "Perhaps you would be interested in helping me with an experiment?";
-		next;
-		menu "What sort of experiment?",-,"Umm... no.",L_No;
+payon.gat,157,141,5	script	Phoenix#TKJobChange	753,{
 
-		mes "[Monk]";
-		mes "Well you see, I've thought that since one is always";
-		mes "strengthening their legs by walking, if one were to";
-		mes "fight by kicking they would be even stronger than punching.";
-		next;
-		mes "[Monk]";
-		mes "I've already practiced a little myself, but I need";
-		mes "someone young to teach, who can further improve these skills.";
-		next;
-		mes "[Monk]";
-		mes "I was hoping that maybe you could help me test this theory.";
-		next;
-		menu "Sure, I'd love to.",-,"Sorry, but no.",L_No;
+	if (Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker)goto L_Complete;
+	if (TK_Q == 1)goto L_Activated2;
+	if (TK_Q == 2)goto L_JobChange;
+	if (TAEK_Q > 0)goto L_Activated1;
 
-		set TAEK_Q,BaseLevel;
-		mes "[Monk]";
-		mes "Great!";
-		mes "Now, before I teach what moves I've learnt, I need to ask you";
-		mes "to prove that you actually do walk around a lot.";
-		next;
-		mes "[Monk]";
-		mes "So go get ^0000FFone more base level^000000 and then I will teach you what I know.";
-		close;
-	}
-	mes "[Monk]";
-	mes "Hmmm... I wonder...";
+	mes "[Phoenix]";
+	mes "This land. Our once";
+	mes "beautiful world as been";
+	mes "stained by evil: there are";
+	mes "too many men corrupted by";
+	mes "darkness, too many monsters";
+	mes "threatening the innocent...";
+	next;
+	mes "[Phoenix]";
+	mes "The havoc that reigns in this";
+	mes "world is too much for normal";
+	mes "humans, which cannot stand";
+	mes "up for themselves against such";
+	mes "overwhelming odds. Still, one";
+	mes "must aspire to overcome them.";
+	next;
+	mes "[Phoenix]";	
+	mes "And so, I've dedicated";
+	mes "myself to becoming stronger.";
+	mes "I have been training to achieve";
+	mes "enlightenment, developing an art";
+	mes "to hone the mind and body that";
+	mes "I wish to share with the world.";
+	next;
+	mes "[Phoenix]";
+	mes "I may not be able to change";
+	mes "the world on my own, but I'll";
+	mes "never stop training myself";
+	mes "spiritually and physically.";
+	mes "I know that the answer";
+	mes "will come in time...";
+	next;
+	mes "[Phoenix]";
+	mes "If you have not decided on";
+	mes "the path you wish to take in";
+	mes "life, I'd like you to consider";
+	mes "becoming a practitioner of my";
+	mes "art. It won't be easy, but it will";
+	mes "lead you to great strength...";
+	next;
+	menu "Okay, I will join you.",L_Join,"No, thank you.",L_NoThx;
+
+L_Join:
+	if (Class != Job_Novice || JobLevel < 9) goto L_Failed1;
+	mes "[Phoenix]";
+	mes "Very well... I accept you";
+	mes "as my student. In beginning";
+	mes "training, your physical body";
+	mes "must first be conditioned in";
+	mes "order to perform the skills";
+	mes "that you will be learning.";
+	next;
+	mes "[Phoenix]";
+	mes "The mind is not necessarily";
+	mes "bound to the limits of the body,";
+	mes "but you will never fulfill your";
+	mes "true potential without integrating";
+	mes "mind and body. Go, gain ^ff00001 more";
+	mes "Base Level^000000, and then return.";
+	next;
+	mes "[Phoenix]";
+	mes "I understand this is not an";
+	mes "easy task for Novices, but you";
+	mes "must ready yourself for the";
+	mes "hardship for this job. I shall";
+	mes "expect you to be stronger";
+	mes "the next time we meet.";
+	set TAEK_Q,BaseLevel;
 	close;
 
-L_No:
-	mes "[Monk]";
-	mes "I see...";
-	mes "Well, If you change your mind, I'll still be here.";
+L_NoThx:
+	mes "[Phoenix]";
+	mes "I understand. One's life can";
+	mes "take many paths, but you can";
+	mes "only choose to travel on one";
+	mes "at a time. I hope that you work";
+	mes "towards enlightenment in your";
+	mes "very own way, adventurer.";
 	close;
 
-L_Continue:
-	if(TAEK_Q==BaseLevel) goto L_Nolvl;
-	if(SkillPoint){
-		mes "[Monk]";
-		mes "You definately seem to have walked enough, but you still have skill points left over.";
-		next;
-		mes "[Monk]";
-		mes "Use them all up, then you can come talk to me again.";
-		close;
-	}
-	mes "[Monk]";
-	mes "I see that you have walked far.";
+L_Failed1:
+	if (Class != Job_Novice)goto L_Failed2;
+	mes "[Phoenix]";
+	mes "How unfortunate!";
+	mes "You're not yet ready to";
+	mes "begin training under my";
+	mes "tutelege with your current";
+	mes "Job Level. Please return when you";
+	mes "reach Job Level 9 or higher.";
+	close;
+
+L_Failed2: // CUSTOM MESSAGE
+	mes "[Phoenix]";
+	mes "It seems that you have already";
+	mes "chosen a path of life..";
+	close;
+
+L_Activated1:
+	if(TAEK_Q < BaseLevel) goto L_Finish;
+	mes "[Phoenix]";
+	mes "You must gain ^ff00001 more";
+	mes "Base Level^000000 to prove that";
+	mes "you can endure the hardship";
+	mes "that entails this job. Never";
+	mes "neglect your training.";
+	close;
+
+L_Finish:
+	if (SkillPoint > 0) goto L_Failed1;
+	mes "[Phoenix]";
+	mes "Good I sense that you";
+	mes "are more in tune with your";
+	mes "inner strength. That is the";
+	mes "natural result of leveling up.";
+	mes "We're ready to proceed with";
+	mes "the next portion of training.";
+	set TK_Q,1;
+	close;
+
+L_Activated2:
+	mes "[Phoenix]";
+	mes "For your spiritual training,";
+	mes "I will ask you a series of";
+	mes "questions to test your spirit.";
+	mes "Relax. Answer as honestly";
+	mes "as you can. Your will and";
+	mes "convictions will be tested.";
 	next;
-	mes "[Monk]";
-	mes "Very well, I shall teach you all that I know.";
+	mes "[Phoenix]";
+	mes "As a practitioner of my";
+	mes "art, the ability to quickly";
+	mes "make the best decision will";
+	mes "be necessary in battle. Now,";
+	mes "we will begin te questioning.";
 	next;
-	mes "You and the monk spend several hours practicing various kicks.";
-	mes "It soon becomes apparant why he needed you to help him.";
+	mes "[Phoenix]";
+	mes "When you encounter";
+	mes "great difficulty, how do";
+	mes "you generally respond?";
 	next;
-	mes "Wow. You're really good.";
-	mes "I hope you continue to go on fighting with your feet,";
-	mes "I'd really like to see how well that works for you.";
-	if(BaseLevel>TAEK_Q+1) { //u get bonus if leveled up more than a level
-		//in jRO you get a Guard[0]... have to prove it later
-		getitem 2101,1;	//Guard[0]
-	}
+	menu "I face it head on.",L_TKQST1,"Avoid it somehow.",L_TKQST2,"Regroup and analyze the problem.",L_TKQST3;
+
+L_TKQST1:
+	mes "[Phoenix]";
+	mes "Yes, that is the answer";
+	mes "I wanted. Even if you cannot";
+	mes "handle a problem at first, we";
+	mes "can only benefit from such";
+	mes "strong determination. Don't";
+	mes "let any obstacle stop you.";
+	next;
+	mes "[Phoenix]";
+	mes "Even if you fail, you";
+	mes "can only learn from the";
+	mes "experience when you give";
+	mes "your all. Half-hearted";
+	mes "attempts rarely yield";
+	mes "fruitful results.";
+	next;
+	mes "[Phoenix]";
+	mes "Seeing as you already";
+	mes "understance the importance";
+	mes "of one's will, we'll proceed";
+	mes "to the next question.";
+	next;
+	mes "[Phoenix]";
+	mes "On your travels, you will";
+	mes "encounter many people with";
+	mes "differing backgrounds and";
+	mes "viewpoints. Inevitably, you";
+	mes "will encounter someone whose";
+	mes "way of life you cannot fathom.";
+	next;
+	mes "[Phoenix]";
+	mes "Likewise, this person will";
+	mes "not understand your way of";
+	mes "life. When your two viewpoints";
+	mes "clash, causing heated conflict,";
+	mes "how would you respond?";
+	next;
+	menu "Insist that I'm right, regardless",L_TKQST4,"Disregard conflicting viewpoint",L_TKQST5,"Accept differences and learn from them",L_TKQST6;
+
+L_TKQST4:
+	mes "[Phoenix]";
+	mes "It's important to have your";
+	mes "own opinion. However, you";
+	mes "must recognize that you may";
+	mes "be wrong, and an opposing";
+	mes "view may have some merit.";
+	next;
+	mes "[Phoenix]";
+	mes "There is no one right";
+	mes "answer and the light of";
+	mes "truth can take many shades.";
+	mes "Such is the way of nature.";
+	mes "To force ideas on others is";
+	mes "an oppressive practice.";
+	next;
+	mes "[Phoenix]";
+	mes "Do not limit yourself";
+	mes "to a single view, and do";
+	mes "not stifle your growth by";
+	mes "adhering to a single truth.";
+	mes "Contemplate on this, and";
+	mes "then speak with me again.";
+	close;
+
+L_TKQST5:
+	mes "[Phoenix]";
+	mes "It is important to get";
+	mes "along with others, but";
+	mes "you  will bring no value";
+	mes "to this world without your";
+	mes "own unique contributions,";
+	mes "thoughts and opinions.";
+	next;
+	mes "[Phoenix]";
+	mes "A conflict of ideals, when";
+	mes "conducted with respect for";
+	mes "yourself and others, is a";
+	mes "great opportunity to broaden";
+	mes "your understanding of the";
+	mes "world as it is to others.";
+	next;
+	mes "[Phoenix]";
+	mes "Reflect on this idea of";
+	mes "establishing harmony with";
+	mes "the self, and harmony with";
+	mes "others. Then, return to me.";
+	close;
+
+L_TKQST6:
+	mes "[Phoenix]";
+	mes "Good. You must see";
+	mes "differences for what they";
+	mes "truly are. You must also";
+	mes "take criticism to your own";
+	mes "views with grace and";
+	mes "sincere consideration.";
+	next;
+	mes "[Phoenix]";
+	mes "It is impossible to know";
+	mes "everything in this world.";
+	mes "It is impossible to understand";
+	mes "every view. But that does not";
+	mes "mean that views you do not";
+	mes "understand are meritless.";
+	next;
+	mes "[Phoenix]";
+	mes "The one with whom you";
+	mes "disagree may have the";
+	mes "answer you do not know.";	
+	mes "In your time of weakness,";
+	mes "this person may be your";
+	mes "greatest help. Remember that.";
+	next;
+	mes "I am satisfied by the";
+	mes "answers you have given";
+	mes "me. Please reflect on what";
+	mes "we have discussed for a little";
+	mes "while. When your mind is calm,";
+	mes "come and speak to me.";
+	set TK_Q,2;
+	close;
+
+L_TKQST2:
+	mes "[Phoenix]";
+	mes "Fool! How do you expect";
+	mes "to mature if you run away";
+	mes "from challenges? Fear can";
+	mes "be a healthy reaction that";
+	mes "can save your life, but true";
+	mes "cowardice is despicable.";
+	next;
+	mes "[Phoenix]";
+	mes "It disappoints me to";
+	mes "hear you say that. Never";
+	mes "say such a thing to me again.";
+	mes "Hm. Contemplate the meanings";
+	mes "of courage and cowardice, and";
+	mes "then speak to me once again.";
+	close;
+
+L_TKQST3:
+	mes "[Phoenix]";
+	mes "Regroup? It is good to do that";
+	mes "after you have been defeated.";
+	mes "But it is best to face problems";
+	mes "once you encounter them.";
+	mes "You will not always have";
+	mes "the luxury of regrouping.";
+	next;
+	mes "[Phoenix]";
+	mes "Problems can be predicted";
+	mes "and analyzed, but I think";
+	mes "immediate retreat is unwise.";
+	mes "Contemplate on your fears,";
+	mes "as well as what you define as";
+	mes "failure. Then, you return to me.";
+	close;
+
+L_JobChange:
+	mes "[Phoenix]";
+	mes "Are you feeling calm";
+	mes "and at peace? I will ask";
+	mes "you a very important question.";
+	mes "Give me your honest answer.";	
+	next;
+	mes "[Phoenix]";
+	mes "^ff0000Are you ready to dedicate";
+	mes "yourself to the special art";
+	mes "I will teach you, and uphold";
+	mes "the dignity of its philosophy?^000000";
+	next;
+	menu "Yes.",L_JobChangeA,"No.",L_JobChangeB;
+
+L_JobChangeA:
+	mes "[Phoenix]";
+	mes "Very well. You are no";
+	mes "longer just a student.";
+	mes "You are now entrusted with";
+	mes "the powers and responsibilities";
+	mes "of a disciple of ^ff0000Taekwon Do^000000.";
+	next;
+	mes "[Phoenix]";
+	mes "\"Taekwon\" has the meaning";
+	mes "of \"punching and kicking\",";
+	mes "and \"Do\" has the meaning";
+	mes "of \"art.\" This martial art is";
+	mes "focused on skills using";
+	mes "the fists and the feet.";
+	next;
+	mes "[Phoenix]";
+	mes "Please use this discipline";
+	mes "to hone your body and mind";
+	mes "and learn the skills that are";
+	mes "best suited to you. Never";
+	mes "shirk your training, or bring";
+	mes "shame to Taekwon Do.";
+	next;
+	mes "[Phoenix]";
+	mes "You are still young, so";
+	mes "I assume you'll want a job";
+	mes "title. Mm. In that case, you";
+	mes "are now a ^ff0000Taekwon Boy^000000.";
+	mes "Yes, that sounds good.";
 	jobchange Job_Taekwon;
 	callfunc "F_ClearJobVar";
+	getitem 2101,1; // Guard[0]
 	next;
-	mes "Well, you should go practice some more now.";
-	mes "Take care.";
+	mes "[Phoenix]";
+	mes "Please, take this training";
+	mes "uniform and guard set: make";
+	mes "good use of these gifts. As";
+	mes "you travel and train, enlighten";
+	mes "others about our art and learn";
+	mes "what you can from them in return.";
+	next;
+	mes "[Phoenix]";
+	mes "It is now time for you to";
+	mes "embark on your own journey";
+	mes "to find new challenges to";
+	mes "develop your strength.";
+	mes "Carry yourself with pride";
+	mes "as a Taekwon Do practitioner...";
+	next;
+	mes "[Phoenix]";
+	mes "Very well. I wish you luck.";
+	mes "I hope to see you again";
+	mes "sometime, "+strcharinfo(0)+".";
 	close;
 
-L_Nolvl:
-	mes "[Monk]";
-	mes "Hmm...";
-	mes "I don't think you have walked far enough yet.";
-	mes "Go train some more.";
+L_JobChangeB:
+	mes "[Phoenix]";
+	mes "Hm, perhaps you are not";
+	mes "quite ready to progress from";
+	mes "your status as a student to";
+	mes "a full fledged disciple.";
+	mes "When you feel prepared,";
+	mes "come and speak to me.";
+	close;
+
+L_Complete:
+	mes "[Phoenix]";
+	mes "How is your training";
+	mes "coming along? As your";
+	mes "techniques become more";
+	mes "refined or spectacular,";
+	mes "never forget that you can";
+	mes "always rely on the basics.";
 	close;
 }

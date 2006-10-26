@@ -8,7 +8,7 @@
 //= MasterOfMuppets (2.0)
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.7a
+//= 2.7b
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 2.6a Updated a few names with new item_db.txt names [Evera]
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
 //= 2.7a Minor optimizations before Louyang quests [Lupus]
+//= 2.7b Moved guides to the Guides folder [Lupus]
 //============================================================
 
 alberta.gat,245,45,4	script	Girl#02	815,{
@@ -133,195 +134,6 @@ M_CANCEL:
 	mes "And by sights...";
 	mes "I mean girls!";
 	mes "Tee hee~";
-	close;
-}
-
-louyang.gat,224,104,4	script	Representative#01	818,{
-	mes "[Representative]";
-	mes "Welcome to Louyang,";
-	mes "an ancient land with";
-	mes "a history full of tales";
-	mes "of bravery.";
-	next;
-	mes "[Representative]";
-	mes "We now provide an ocean lane to accommodate foreign travelers and intercultural exchange from which all can benefit.";
-	next;	
-	mes "[Representative]";
-	mes "Louyang is famous for it's elaborate history, as well as specialties that are unique to this nation. Please take your time and enjoy your stay.";
-	next;
-	menu "Ask Building Locations.",-,"Remove all marks from mini-map.",M_REMOVE,"Cancel",M_CANCEL;
-	
-	mes "[Representative]";
-	mes "Where would you like to go?";
-	menu "Dragon castle",-,"Doctor's Office",M_DOC,"The City Hall",M_CHALL,"The Weapon Shop",M_WEP,"The Tool Shop",M_TOOL,"The Tavern",M_TAVERN;
-
-	mes "[Representative]";
-	mes "The Dragon Castle is located at ^FFCCFF+^000000.";
-	mes "It is where all the nobles reside,";
-	mes "including our lord.";
-	next;
-	viewpoint 1,218,252,1,0xFFCCFF;
-	mes "[Representative]";
-	mes "Since you're an outsider, I guess it would be appropriate for you to visit our lord first.";
-	close;
-
-M_DOC:
-	mes "[Representative]";
-	mes "We have a very skillful doctor";
-	mes "You can find her office at ^FFFF00+^000000.";
-	next;
-	viewpoint 1,263,93,2,0xFFFF00;
-	mes "[Representative]";
-	mes "It is said that there";
-	mes "is no disease she cannot cure.";
-	mes "Well, I can't guarantee if that's true or not.";
-	close;
-
-M_CHALL:
-	mes "[Representative]";
-	mes "We have a City Hall where the federal government operates.";
-	mes "It is located at ^AFAFAF+^000000.";
-	next;
-	viewpoint 1,310,79,3,0xAFAFAF;
-	mes "[Representative]";
-	mes "If you have any problems, you should talk with the employees in City Hall.";
-	close;
-
-M_WEP:
-	mes "[Representative]";
-	mes "The Weapon Shop is located at ^00FF00+^000000.";
-	next;
-	viewpoint 1,145,175,4,0x00FF00;
-	mes "[Representative]";
-	mes "You will see marvelous weapons forged by the well-experienced blacksmiths of Louyang.";
-	close;
-
-M_TOOL:
-	mes "[Representative]";
-	mes "The Tool Shop is located at ^0000FF+^000000.";
-	next;
-	viewpoint 1,136,97,5,0x0000FF;
-	mes "[Representative]";
-	mes "Knowing your enemy is half the battle!";
-	mes "It's also safer to prepare yourself than the be sorry later. Why don't you go check their supplies?";
-	close;
-
-M_TAVERN:
-	mes "[Representative]";
-	mes "When you get tired during your trip, I suggest that you visit the Tavern. It's located at ^00FF00+^000000.";
-	next;
-	viewpoint 1,279,168,6,0x00FF00;
-	close;
-
-M_REMOVE:
-	viewpoint 2,218,252,1,0xFFCCFF;
-	viewpoint 2,263,93,2,0xFFFF00;
-	viewpoint 2,310,79,3,0xAFAFAF;
-	viewpoint 2,145,175,4,0x00FF00;
-	viewpoint 2,136,97,5,0x0000FF;
-	viewpoint 2,279,168,6,0x00FF00;
-	mes "[Representative]";
-	mes "Done! All the marks on your mini-map are erased. Feel free to ask me about building location whenever you need to.";
-	close;
-
-M_CANCEL:
-	mes "[Representative]";
-	mes "I understand that you want to explore Louyang and see the sights for youself. Alright then,";
-	mes "Take care!";
-	close;
-}
-
-louyang.gat,213,214,4	script	Soldier#10	825,{
-	mes "[Soldier]";
-	mes "Welcome to louyang, a city with a long and colorful history.";
-	next;
-	mes "[Soldier]";
-	mes "Recently we've developed an ocean lane to accommodate positive exchange with foreign nations.";
-	next;	
-	mes "[Soldier]";
-	mes "Louyang is well-known for various specialties in addition to its right. Here you can find many things unique to our land.";
-	next;
-	mes "[Soldier]";
-	mes "Please take your time and we invite you to enjoy your trip here in Louyang.";
-	next;	
-	menu "Ask Building Locations.",-,"Remove all marks from mini-map.",M_REMOVE,"Cancel",M_CANCEL;
-	
-	mes "[Soldier]";
-	mes "Where would you like to go?";
-	menu "Dragon castle",-,"Doctor's Office",M_DOC,"The City Hall",M_CHALL,"The Weapon Shop",M_WEP,"The Tool Shop",M_TOOL,"The Tavern",M_TAVERN;
-
-	mes "[Soldier]";
-	mes "The Dragon Castle is located at ^FFCCFF+^000000.";
-	mes "It is where all the nobles reside,";
-	mes "including our lord.";
-	next;
-	viewpoint 1,218,252,1,0xFFCCFF;
-	mes "[Soldier]";
-	mes "Since you're an outsider, I guess it would be appropriate for you to visit our lord first.";
-	close;
-
-M_DOC:
-	mes "[Soldier]";
-	mes "We have a very skillful doctor";
-	mes "You can find her office at ^FFFF00+^000000.";
-	next;
-	viewpoint 1,263,93,2,0xFFFF00;
-	mes "[Soldier]";
-	mes "It is said that there";
-	mes "is no disease she cannot cure.";
-	mes "Well, I can't guarantee if that's true or not.";
-	close;
-
-M_CHALL:
-	mes "[Soldier]";
-	mes "We have a City Hall where the federal government operates.";
-	mes "It is located at ^AFAFAF+^000000.";
-	next;
-	viewpoint 1,310,79,3,0xAFAFAF;
-	mes "[Soldier]";
-	mes "If you have any problems, you should talk with the employees in City Hall.";
-	close;
-
-M_WEP:
-	mes "[Soldier]";
-	mes "The Weapon Shop is located at ^00FF00+^000000.";
-	next;
-	viewpoint 1,145,175,4,0x00FF00;
-	mes "[Soldier]";
-	mes "You will see marvelous weapons forged by the well-experienced blacksmiths of Louyang.";
-	close;
-
-M_TOOL:
-	mes "[Soldier]";
-	mes "The Tool Shop is located at ^0000FF+^000000.";
-	next;
-	viewpoint 1,136,97,5,0x0000FF;
-	mes "[Soldier]";
-	mes "Knowing your enemy is half the battle!";
-	mes "It's also safer to prepare yourself than the be sorry later. Why don't you go check their supplies?";
-	close;
-
-M_TAVERN:
-	mes "[Soldier]";
-	mes "When you get tired during your trip, I suggest that you visit the Tavern. It's located at ^00FF00+^000000.";
-	next;
-	viewpoint 1,279,168,6,0x00FF00;
-	close;
-
-M_REMOVE:
-	viewpoint 2,218,252,1,0xFFCCFF;
-	viewpoint 2,263,93,2,0xFFFF00;
-	viewpoint 2,310,79,3,0xAFAFAF;
-	viewpoint 2,145,175,4,0x00FF00;
-	viewpoint 2,136,97,5,0x0000FF;
-	viewpoint 2,279,168,6,0x00FF00;
-	mes "[Soldier]";
-	mes "Done! All the marks on your mini-map are erased. Feel free to ask me about building location whenever you need to.";
-	close;
-
-M_CANCEL:
-	mes "[Soldier]";
-	mes "I guess it's fun sometimes to go exploring on your own. Take care.";
 	close;
 }
 
