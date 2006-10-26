@@ -493,9 +493,9 @@ L_Start:
 		mes "[Father Peter]";
 		mes "Oh, is that so, i think i'll need to explain it to you.";
 		mes "After listening to what i have to say, i think you'll understand.";
-		next;
 
 	L_Cont:
+	next;
 	mes "[Father Peter]";
 	mes "What is overcoming evil? its basically destroying it.";
 	mes "What is evil? its basically devil, ghosts etc...";

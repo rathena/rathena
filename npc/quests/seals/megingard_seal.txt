@@ -2705,7 +2705,7 @@ aldebaran.gat,66,213,0	script	Lady#megin	69,{
 
 }
 
-cmd_in02.gat,190,94,3,0	script	Man#megin	828,{
+cmd_in02.gat,190,94,3	script	Man#megin	828,{
 
 	if ($God1 > 49 && $God2 < 100)
 {

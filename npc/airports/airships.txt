@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.5b
+//= 0.5c
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -848,7 +848,7 @@ s_Warp:
 //= Apple Gambling Function
 //============================================================
 
-function script applegamble {
+function	script	applegamble	{
 	mes "["+getarg(0)+"]";
 	mes "Hi, I'm "+getarg(0)+"~";
 	mes "How would you like";

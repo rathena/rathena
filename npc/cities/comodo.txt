@@ -325,7 +325,7 @@ cmd_fild07.gat,299,83,4	script	Sailor#01	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,94,134,4,	script	Sailor#02	100,{
+cmd_fild07.gat,94,134,4	script	Sailor#02	100,{
 	mes "[Sarumane]";
 	mes "Hello my friend, where do you wish to go?";
 	next;

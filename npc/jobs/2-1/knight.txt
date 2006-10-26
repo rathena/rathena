@@ -791,7 +791,7 @@ L_Done:
 
 
 // Waiting Room ---------------------------------------------------------------------------
-job_knt.gat,89,110,4,	script	Sir Windsor#2::SW2	733,{
+job_knt.gat,89,110,4	script	Sir Windsor#2::SW2	733,{
 	mes "[Sir Windsor]";
 	mes ".........."; 
 	next;

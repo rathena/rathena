@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.3a
+//= 2.3b
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -70,6 +70,7 @@
 //=	Fixed bug that involved having both warpers enabled at the same time. [Evera]
 //=	New $dtsday system and bug fix[Evera]
 //= 2.3a fixed 2 bugs with comparision [Lupus]
+//= 2.3b corrected Glast warp coords [Lupus]
 //============================================================ 
 
 //Yuno
@@ -849,7 +850,7 @@ function	script	F_DTS_Warp	{
 
 		if (@dtswarpmap$[@num] == "Clock Tower, Basement 3") warp "alde_dun03.gat",277,178;
 
-		if (@dtswarpmap$[@num] == "Glastheim Entrance") warp "glast_01.gat",375,304;
+		if (@dtswarpmap$[@num] == "Glastheim Entrance") warp "glast_01.gat",370,304;
 
 		cutin "", 255;
 		end;

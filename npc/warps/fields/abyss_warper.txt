@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 Added by Nexon [Nexon]
 //= 1.1 Removed Duplicates [Silent]
+//= 1.2 Fixed tab - missing pillar's appeared [Lupus]
 //============================================================
 
 hu_fild05.gat,168,303,0	script	Pillar#01	111,{
@@ -59,7 +60,7 @@ OnInit:
 }
 
 
-hu_fild05.gat,171,212,0 script Pillar#02 111,{
+hu_fild05.gat,171,212,0	script	Pillar#02	111,{
 	mes "[Ancient Voice]";
 	mes "Leave the island?";
 	next;
