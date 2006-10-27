@@ -2161,7 +2161,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 		// Experimental function overwriting - [Lance]
 		ShowInfo("parse_function: Overwriting user function [%s] (%s:%d)\n", p, file, *lines);
 		script_free_code(oldscript);
-		user_db->remove(user_db,p);
+		user_db->remove(user_db,str2key(p));
 		strdb_put(user_db, p, script);
 	} else
 		strdb_put(user_db, p, script);
