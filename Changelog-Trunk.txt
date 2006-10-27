@@ -5,6 +5,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/26
 	* Updated sql files [Playtester]
+	* Experimental tweak to npc_parse_function - Overwrite existing functions. [Lance]
 2006/10/25
 	* Cleaned up some more the event dequeue code, it will no longer clear out
 	  the npc_id if there's no events waiting to be executed (why does it clears
