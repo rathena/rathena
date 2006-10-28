@@ -743,8 +743,8 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 				job_exp = job_exp*bonus/100;
 		}
 		if (zeny) {
-			if (zeny/100 > UINT_MAX/bonus)
-				zeny = UINT_MAX;
+			if (zeny/100 > INT_MAX/bonus)
+				zeny = INT_MAX;
 			else if (zeny > 10000)
 				zeny = (zeny/100)*bonus;
 			else

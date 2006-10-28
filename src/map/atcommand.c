@@ -642,7 +642,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_HomTalk,			"@homtalk",		0, atcommand_homtalk },
 	{ AtCommand_HomInfo,			"@hominfo",		0, atcommand_hominfo },
 	{ AtCommand_ShowMobs,			"@showmobs",		10, atcommand_showmobs },  //KarLaeda
-
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
 };

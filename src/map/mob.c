@@ -2472,7 +2472,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 			continue;
 		
 		md= mob_spawn_dataset(&data);
-		md->special_state.cached= battle_config.dynamic_mobs;	//[Skotlex]
+		md->special_state.cached= md2->special_state.cached;	//[Skotlex]
 		if(skill_id == NPC_SUMMONSLAVE){
 			md->master_id=md2->bl.id;
 			md->state.killer = md2->state.killer;
@@ -2671,7 +2671,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		flag = (event == ms[i].cond1);
 		//Avoid entering on defined events to avoid "hyper-active skill use" due to the overflow of calls to this function
 		//in battle. The only exception is MSC_SKILLUSED which explicitly uses the event value to trigger. [Skotlex]
-		if (!flag && (event == -1 || event == MSC_SKILLUSED)){
+		if (!flag && (event == -1 || (event & 0xffff) == MSC_SKILLUSED)){
 			switch (ms[i].cond1)
 			{
 				case MSC_ALWAYS:

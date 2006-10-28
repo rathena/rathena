@@ -5549,7 +5549,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if(i != sd->sc.option)
 		pc_setoption(sd, i);
 
-	if(sd->hd && merc_is_hom_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
+	if(merc_is_hom_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
 		merc_hom_vaporize(sd, 0);
 	
 	if(sd->status.manner < 0)
