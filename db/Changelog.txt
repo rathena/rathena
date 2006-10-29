@@ -19,6 +19,9 @@
 	-----
 
 ========================
+10/29
+	* Fixed const.txt, thanks to flaviojs [Vicious]
+	* Fixed homunculus's growth, according to Aegis [Vicious]
 10/27
 	* Made Thief Clothes and Ninja Suit being equippable by Ninja [Playtester]
 	* More Odin/Kiel fixes [Playtester]
