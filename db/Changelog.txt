@@ -20,6 +20,7 @@
 
 ========================
 10/29
+	* Official NJ/GS exp chart for level 1-48 [Playtester]
 	* Added Shinobi Sash to Shinobi drops [Playtester]
 	* Fixed const.txt, thanks to flaviojs [Vicious]
 	* Fixed homunculus's growth, according to Aegis [Vicious]
