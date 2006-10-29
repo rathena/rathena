@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+10/29
+	* Added official jRO 10.3 spawns as custom option [Playtester]
 10/26
 	* Replaced previous TK Job Quest with this one [Tsuyuki]
 	- Updated Lighthalzen City & Rachel City NPC
