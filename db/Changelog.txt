@@ -20,6 +20,7 @@
 
 ========================
 10/29
+	* Added Shinobi Sash to Shinobi drops [Playtester]
 	* Fixed const.txt, thanks to flaviojs [Vicious]
 	* Fixed homunculus's growth, according to Aegis [Vicious]
 10/27
