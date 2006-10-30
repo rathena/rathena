@@ -3006,10 +3006,11 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 			switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
 				case MO_TRIPLEATTACK:
 				case TF_DOUBLE:
+				case GS_CHAINACTION:
 					ms[i].state = MSS_BERSERK;
 					ms[i].target = MST_TARGET;
 					ms[i].cond1 = MSC_ALWAYS;
-					ms[i].permillage = skill_id==TF_DOUBLE?(ms[i].skill_lv*500):(3000-ms[i].skill_lv*100);
+					ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
 					ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
 					break;
 				default: //Untreated Skill

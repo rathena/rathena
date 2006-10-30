@@ -3173,25 +3173,24 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return 0;
 
-	sd_status= status_get_status_data(&sd->bl);
-	md_status= status_get_status_data(bl);
 	md = (TBL_MOB *)bl;
 
-	if(md->state.steal_flag == UCHAR_MAX || //already stolen from
-		md_status->mode&MD_BOSS || md->master_id ||
-		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
-		map[md->bl.m].flag.nomobloot ||        // check noloot map flag [Lorky]
-		md->sc.opt1 //status change check
-  	)
+	if(md->state.steal_flag == UCHAR_MAX || md->sc.opt1) //already stolen from / status change check
 		return 0;
-						
-	if(battle_config.skill_steal_max_tries &&
-		md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
-	{	//Reached limit of steal attempts.
+	
+	sd_status= status_get_status_data(&sd->bl);
+	md_status= status_get_status_data(bl);
+
+	if(md->master_id || md_status->mode&MD_BOSS ||
+		(md->class_>=1324 && md->class_<1364) || // prevent stealing from treasure boxes [Valaris]
+		map[bl->m].flag.nomobloot || // check noloot map flag [Lorky]
+		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
+			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
+  	) { //Can't steal from
 		md->state.steal_flag = UCHAR_MAX;
 		return 0;
 	}
-
+						
 	rate = battle_config.skill_steal_type
 		? (sd_status->dex - md_status->dex)/2 + lv*6 + 10
 		: (sd_status->dex - md_status->dex)   + lv*3 + 10;
@@ -3203,10 +3202,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 
 	//preliminar statistical data hints at this behaviour:
 	//each steal attempt: try to steal against ONE mob drop, and no more.
-	if (lv > 5) //Include last slot (card slot)
-		i = rand()%MAX_MOB_DROP;
-	else	//Do not include card slot
-		i = rand()%(MAX_MOB_DROP-1);
+	i = rand()%(MAX_MOB_DROP-1); //You can't steal from the last slot.
 
 	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
 		return 0;

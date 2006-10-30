@@ -2714,6 +2714,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case HT_POWER:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
+	case GS_CHAINACTION:
 	case GS_TRIPLEACTION:
 	case GS_MAGICALBULLET:
 	case GS_TRACKING:
@@ -7317,6 +7318,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 			switch (sg->val1)
 			{
+				case ELE_WIND:
+					sc_start(bl,SC_STUN,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+					break;
 				case ELE_WATER:
 					sc_start(bl,SC_FREEZE,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
 					break;
@@ -7325,6 +7329,9 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					break;
 				case ELE_DARK:
 					sc_start(bl,SC_BLIND,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+					break;
+				case ELE_FIRE:
+					skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv));
 					break;
 			}
 

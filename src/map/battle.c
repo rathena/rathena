@@ -911,6 +911,7 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 
 			case TF_DOUBLE: //For NPC used skill.
+			case GS_CHAINACTION:
 				wd.type = 0x08;
 				break;
 				
@@ -918,6 +919,7 @@ static struct Damage battle_calc_weapon_attack(
 			case KN_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
+			case GS_GROUNDDRIFT:
 				wd.blewcount=0;
 				break;
 

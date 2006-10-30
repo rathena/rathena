@@ -20,6 +20,10 @@
 
 ========================
 10/30
+	* Corrected GS skill ranges using Aegis data. All their targetted skills
+	  have a base range of 9, and Dust (Choke) has a range of 2. [Skotlex]
+	* Gave Grounddrift a knockback of 3 for the fire-elemental effect (value
+	  totally custom)
 	* Set the inf2 to encore skills of Wand of Hermode [Skotlex]
 10/29
 	* Official NJ/GS exp chart for level 1-48 [Playtester]
