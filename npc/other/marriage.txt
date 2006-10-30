@@ -7,14 +7,14 @@
 //=====By================================================
 // AppleGirl and Evera(version 1.0)
 //=====Current Version===================================
-// 2.7
+// 2.8
 //=====Compatible With:==================================
-// eAthena Version SVN-R4287 and up; RO Episode 6+
+// eAthena Version SVN-R8637 and up; RO Episode 6+
 //=====Description=======================================
 // Fully working wedding script for all kind of weddings
 //=====Additional Comments:==============================
 // Lesbian and Gay Weddings by ShadowLady (version 1.1)
-// Complete Rewrite by Skotlex (version 2.0->2.5)
+// Complete Rewrite by Skotlex (version 2.0->2.8)
 //=======================================================
 //  
 
@@ -35,9 +35,9 @@ OnInit:
 }
 
 // Other Configuration:
-// Line 59,60: Priest location, sprite and name.
-// Line 430,431: Registration location, sprite and name. 
-// Line 803,804: Divorcing location, sprite and name.
+// Line 61,62: Priest location, sprite and name.
+// Line 437,438: Registration location, sprite and name. 
+// Line 813,814: Divorcing location, sprite and name.
 
 // Variable Notes:
 // $wed_progress	Signals that there is a wedding in progress
@@ -51,6 +51,8 @@ OnInit:
 // Retrieve the ring. 4: Retrieved the ring. 5: All set to be wed. 6: Already
 // a couple.
 // ceremony.
+// $wedding_effect_id - When wedding_effect is enabled, sets the ID of the
+// player to show the effect on.
 // $divorce_progress	signals that there is a divorce in progress
 // $@divorcer$ name of the person who requested divorce
 // $@divorcee id of the partner, who has to accept the divorce and pay.
@@ -123,7 +125,7 @@ function SF_Groom {
 
 	switch($wed_groom_progress) {
 	case 1:
-		goto SF_AcceptBride;
+		SF_AcceptBride();
 		break;
 	case 2:
 		mes "["+@name$+"]";
@@ -266,9 +268,10 @@ function SF_RetrieveRingM {
 		mes "What happened to your "+getitemname($@wed_ring)+"? You didn't lose it... did you? We need it to continue with the ceremony!";
 		close;
 	}
-	set @item, 2635;	//Bride's wedding ring
 	if ($wed_bride_sex)
 		set @item, 2634;	//Groom's wedding ring
+	else
+		set @item, 2635;	//Bride's wedding ring
 	if (getnameditem(@item,$wed_groom$) == 0) {
 		mes "You don't seem to have enough space to carry the ring... go free up some space and come back to reclaim your partner's ring.";
 		close;
@@ -276,6 +279,7 @@ function SF_RetrieveRingM {
 	mes "Here's the wedding ring for your bride.";
 	if ($@wed_ring) delitem $@wed_ring,1;
 	set $wed_groom_progress,4;
+	
 	if ($wed_bride_progress == 4)
 		SF_StartCeremony();
 	else {
@@ -290,9 +294,11 @@ function SF_RetrieveRingF {
 		mes "What happened to your "+getitemname($@wed_ring)+"? You didn't lose it... did you? We need it to continue with the ceremony!";
 		close;
 	}
-	set @item, 2635;	//Bride's wedding ring
 	if ($wed_groom_sex)
 		set @item, 2634;	//Groom's wedding ring
+	else
+		set @item, 2635;	//Bride's wedding ring
+
 	if (getnameditem(@item,$wed_bride$) == 0) {
 		mes "You don't seem to have enough space to carry the ring... go free up some space and come back to reclaim your partner's ring.";
 		close;
@@ -300,6 +306,7 @@ function SF_RetrieveRingF {
 	mes "Here's the wedding ring for your groom.";
 	if ($@wed_ring) delitem $@wed_ring,1;
 	set $wed_bride_progress,4;
+
 	if ($wed_groom_progress == 4)
 		SF_StartCeremony();
 	else {
@@ -323,13 +330,8 @@ function SF_StartCeremony {
 	}
 	set $wed_bride_progress,6;
 	set $wed_groom_progress,6;
-	close2;
 	initnpctimer;
-	if ($@wedding_effect == 1)
-		attachnpctimer $wed_bride$;
-	if ($@wedding_effect == 2)
-		attachnpctimer $wed_groom$;
-	end;
+	close;
 }
 
 OnTimer1000:
@@ -378,10 +380,14 @@ OnTimer50000:
 
 OnTimer55000:
 	npctalk "I pronounce you Husband and Wife, you may kiss the bride and exchange rings.";
+	if ($wedding_effect_id && isloggedin($wedding_effect_id))
+	{
+		attachrid($wedding_effect_id);
+		wedding;
+		detachrid;
+	} else
+		wedding;
 	SF_wed_end();
-	wedding;
-	if ($@wedding_effect)
-		detachnpctimer;
 	stopnpctimer;
 	end;
 
@@ -417,6 +423,7 @@ function SF_wed_end {
 	set $wed_groom_progress,0;
 	set $wed_bride_progress,0;
 	set $wed_progress,0;
+	set $wedding_effect_id,0;
 }
 
 OnInit:
@@ -716,10 +723,14 @@ function SF_TryRegister {
 		set $wed_bride_progress,1;
 		set $wed_bride$,strcharinfo(0);
 		set $wed_bride_sex, sex;
+		if ($@wedding_effect == 1) //Store account id for effect.
+			set $wedding_effect_id, getcharid(3);
 	} else {
 		set $wed_groom_progress,1;
 		set $wed_groom$,strcharinfo(0);
 		set $wed_groom_sex, sex;
+		if ($@wedding_effect == 2) //Store account id for effect.
+			set $wedding_effect_id, getcharid(3);
 	}
 }
 
@@ -918,7 +929,7 @@ function SF_DivorceEnd {
 }
 
 OnTimer60000:
-	npctalk "Divorce confirmation timed out. Where did "+$@divorcer$+"'s spouse go...";
+	npctalk "Divorce confirmation time's is up. Where did "+$@divorcer$+"'s spouse go...";
 	emotion e_what;
 	SF_DivorceEnd();
 	end;

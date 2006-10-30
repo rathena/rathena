@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 10/30
+	* Updated the npc/other/marriage.txt wedding script with the most current
+	  version. [Skotlex]
 	* Added Official First Class Quests-Tutorials (Jukka's conversion) [Lupus]
 10/29
 	* Added official jRO 10.3 spawns as custom option [Playtester]
