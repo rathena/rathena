@@ -20,6 +20,7 @@
 
 ========================
 10/30
+	* Added some official X.4 drop rates [Playtester]
 	* Corrected GS skill ranges using Aegis data. All their targetted skills
 	  have a base range of 9, and Dust (Choke) has a range of 2. [Skotlex]
 	* Gave Grounddrift a knockback of 3 for the fire-elemental effect (value
