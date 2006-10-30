@@ -5636,8 +5636,8 @@ int buildin_getcharid(struct script_state *st)
 		sd=map_nick2sd(conv_str(st,& (st->stack->stack_data[st->start+3])));
 	else
 	sd=script_rid2sd(st);
-	if(sd==NULL){
-		push_val(st->stack,C_INT,-1);
+	if(sd==NULL || num<0 || num>3){
+		push_val(st->stack,C_INT,0);	//return 0, according docs
 		return 0;
 	}
 	if(num==0)
