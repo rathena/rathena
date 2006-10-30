@@ -790,7 +790,7 @@ int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsi
 	if ( sd->npc_id!=0) {
 		//Enqueue the event trigger.
 		int i;
-		for(i=0;i<MAX_EVENTQUEUE && sd->eventqueue[i][0];i++)
+		for(i=0;i<MAX_EVENTQUEUE && sd->eventqueue[i][0];i++);
 		
 		if (i==MAX_EVENTQUEUE) {
 			if (battle_config.error_log)
