@@ -1023,7 +1023,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,SD_LEVEL);
 			}
 			// Gank
-			if(dstmd && dstmd->state.steal_flag<battle_config.skill_steal_max_tries && sd->status.weapon != W_BOW &&
+			if(dstmd && sd->status.weapon != W_BOW &&
 				(skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
 				(skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rand()%1000) {
 				if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
@@ -1520,7 +1520,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	if(sd && skillid && attack_type&BF_MAGIC && status_isdead(bl) &&
-	 	skill_get_inf(skillid)!=INF_GROUND_SKILL &&
+	 	!(skill_get_inf(skillid)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
 		(rate=pc_checkskill(sd,HW_SOULDRAIN))>0
 	){	//Soul Drain should only work on targetted spells [Skotlex]
 		if (pc_issit(sd)) pc_setstand(sd); //Character stuck in attacking animation while 'sitting' fix. [Skotlex]
@@ -1888,7 +1888,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	damage = dmg.damage + dmg.damage2;
 
 	if (damage > 0 && src != bl && src == dsrc)
-		rdamage = battle_calc_return_damage(bl, &damage, dmg.flag);
+		rdamage = battle_calc_return_damage(bl, skillid, &damage, dmg.flag);
 
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
@@ -6877,9 +6877,15 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_VOLCANO:
 	case UNT_DELUGE:
 	case UNT_VIOLENTGALE:
-	case UNT_SUITON:
 		if(sc && sc->data[type].timer==-1)
 			sc_start(bl,type,100,sg->skill_lv,sg->limit);
+		break;
+
+	case UNT_SUITON:
+		if(sc && sc->data[type].timer==-1)
+			sc_start4(bl,type,100,sg->skill_lv,
+			battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
+			0,0,sg->limit);
 		break;
 
 	case UNT_RICHMANKIM:

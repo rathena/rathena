@@ -705,8 +705,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_kill_pc = 1;
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
-
-	status_calc_pc(sd,1);
 			
 	sd->state.auth = 1; //Do not auth him until the initial stats have been placed.
 	{	//Add IP field
@@ -749,8 +747,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 
-	if(sd->status.manner < 0) //Needed or manner will always be negative.
-		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 	return 0;
 }
 

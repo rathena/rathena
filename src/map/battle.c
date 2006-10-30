@@ -2761,7 +2761,7 @@ struct Damage battle_calc_attack(	int attack_type,
 	return d;
 }
 
-int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
+int battle_calc_return_damage(struct block_list *bl, int skill, int *damage, int flag) {
 	struct map_session_data *sd=NULL;
 	struct status_change *sc;
 	int rdamage = 0;
@@ -2793,7 +2793,9 @@ int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	// magic_damage_return by [AppleGirl] and [Valaris]
 	if(flag&BF_MAGIC)
 	{
-		if(sd && sd->magic_damage_return && rand()%100 < sd->magic_damage_return)
+		if(sd && sd->magic_damage_return &&
+			!(skill_get_inf(skill)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
+			rand()%100 < sd->magic_damage_return)
 		{	//Bounces back full damage, you take none.
 			rdamage = *damage;
 		 	*damage = 0;
@@ -2980,7 +2982,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
-		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
+		rdamage = battle_calc_return_damage(target, 0, &damage, wd.flag);
 		if (rdamage > 0) {
 			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]

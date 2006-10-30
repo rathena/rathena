@@ -3150,7 +3150,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= sc->data[SC_DECREASEAGI].val2;
 	if(sc->data[SC_QUAGMIRE].timer!=-1)
 		agi -= sc->data[SC_QUAGMIRE].val2;
-	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3) // does not affect players when not in PVP nor WoE. Does not affect Ninjas.
+	if(sc->data[SC_SUITON].timer!=-1 && sc->data[SC_SUITON].val3)
 		agi -= sc->data[SC_SUITON].val2;
 	if(sc->data[SC_MARIONETTE].timer!=-1)
 		agi -= (sc->data[SC_MARIONETTE].val3>>8)&0xFF;
@@ -4919,11 +4919,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = 0;
 			break;
 		case SC_SUITON:
-			val2 = 0; //Agi penalty
-			val3 = 0; //Walk speed penalty
-			if (status_get_class(bl) == JOB_NINJA ||
-				(sd && !map_flag_vs(bl->m)))
+			if (!val2 || (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_NINJA)) {
+				//No penalties.
+				val2 = 0; //Agi penalty
+				val3 = 0; //Walk speed penalty
 				break;
+			}
 			val3 = 50;
 			val2 = 3*((val1+1)/3);
 			if (val1 > 4) val2--;

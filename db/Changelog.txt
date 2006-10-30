@@ -19,6 +19,8 @@
 	-----
 
 ========================
+10/30
+	* Set the inf2 to encore skills of Wand of Hermode [Skotlex]
 10/29
 	* Official NJ/GS exp chart for level 1-48 [Playtester]
 	* Added Shinobi Sash to Shinobi drops [Playtester]

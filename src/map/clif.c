@@ -8218,11 +8218,30 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->npc_id) npc_event_dequeue(sd);
 
 	if(sd->state.connect_new) {
+		status_calc_pc(sd,1);
+
+		if (sd->sc.option&OPTION_FALCON)
+			clif_status_load(&sd->bl, SI_FALCON, 1);
+		if (sd->sc.option&OPTION_RIDING)
+			clif_status_load(&sd->bl, SI_RIDING, 1);
+
+		//Auron reported that This skill only triggers when you logon on the map o.O [Skotlex]
+		if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
+			if(sd->bl.m == sd->feel_map[0].m
+				|| sd->bl.m == sd->feel_map[1].m
+				|| sd->bl.m == sd->feel_map[2].m)
+				sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
+		}
+
 		clif_skillinfoblock(sd);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
 		clif_updatestatus(sd,SP_NEXTJOBEXP);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_initialstatus(sd);
+		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
+		//[LuzZza]
+		//clif_guild_send_onlineinfo(sd);
+
 	} else {
 		//For some reason the client "loses" these on map-change.
 		clif_updatestatus(sd,SP_STR);
@@ -8298,6 +8317,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_send_petdata(sd,0,0);
 		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
+
+		if(sd->state.connect_new &&  sd->pd->pet.intimate > 900)
+			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
 	}
 
 	//homunculus [blackhole89]
@@ -8309,55 +8331,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_send_homdata(sd,0,0);
 		clif_homskillinfoblock(sd);
-	}
-
-	if(sd->state.connect_new) {
-		sd->state.connect_new = 0;
-		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
-		if (night_flag) {
-			char tmpstr[1024];
-			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-			
-			if (map[sd->bl.m].flag.nightenabled)
-				add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
-		}
-
-//		if(sd->status.class_ != sd->vd.class_)
-//			clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BASE,sd->vd.class_,SELF);
-
-		if (sd->sc.option&OPTION_FALCON)
-			clif_status_load(&sd->bl, SI_FALCON, 1);
-		if (sd->sc.option&OPTION_RIDING)
-			clif_status_load(&sd->bl, SI_RIDING, 1);
-
-		//Auron reported that This skill only triggers when you logon on the map o.O [Skotlex]
-		if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
-			if(sd->bl.m == sd->feel_map[0].m
-				|| sd->bl.m == sd->feel_map[1].m
-				|| sd->bl.m == sd->feel_map[2].m)
-				sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
-		}
-
-		if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 900)
-			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
-		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
-		//[LuzZza]
-		//clif_guild_send_onlineinfo(sd);
-		//On Login Script.
-		npc_script_event(sd, NPCE_LOGIN);
-	} else
-	//New 'night' effect by dynamix [Skotlex]
-	if (night_flag && map[sd->bl.m].flag.nightenabled)
-	{	//Display night.
-		if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
-			clif_status_load(&sd->bl, SI_NIGHT, 0);
-		else
-			sd->state.night = 1;
-		clif_status_load(&sd->bl, SI_NIGHT, 1);
-	} else if (sd->state.night) { //Clear night display.
-		sd->state.night = 0;
-		clif_status_load(&sd->bl, SI_NIGHT, 0);
 	}
 
 	// view equipment item
@@ -8373,6 +8346,33 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->status.manner < 0)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
+
+	if(sd->state.connect_new) {
+		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
+		sd->state.connect_new = 0;
+		if (night_flag) {
+			char tmpstr[1024];
+			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+			
+			if (map[sd->bl.m].flag.nightenabled)
+				add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+		}
+		//On Login Script.
+		npc_script_event(sd, NPCE_LOGIN);
+	} else
+	//New 'night' effect by dynamix [Skotlex]
+	if (night_flag && map[sd->bl.m].flag.nightenabled)
+	{	//Display night.
+		if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
+			clif_status_load(&sd->bl, SI_NIGHT, 0);
+		else
+			sd->state.night = 1;
+		clif_status_load(&sd->bl, SI_NIGHT, 1);
+	} else if (sd->state.night) { //Clear night display.
+		sd->state.night = 0;
+		clif_status_load(&sd->bl, SI_NIGHT, 0);
+	}
 
 // Lance
 	if(sd->state.event_loadmap && map[sd->bl.m].flag.loadevent){
