@@ -18,7 +18,7 @@
 //=================================================Guarnien====================================================
 alberta_in.gat,70,51,5	script	Guarnien	98,{
 	mes "[Guarnien]";
-	if (Class != Job_Merchant && Class != Job_Baby_Merchant) {
+	if(Class != Job_Merchant && Class != Job_Baby_Merchant){
 		mes "Hello stranger.";
 		mes "I wish I could";
 		mes "offer you help";
@@ -26,14 +26,14 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		next;
 		mes "[Guarnien]";
 		mes "However, what I have to teach would only benefit Merchants. Trading and monkey making are my areas of expertise. If you have any Merchant friends, send them to me.";
-		if (Class == Job_Merchant_High) {
+		if(Class == Job_Merchant_High){
 			next;
 			mes "[Guarnien]";
 			mes "Technically, yes, you're a Merchant, but I know an expert when I see one. You've been through the Merchant life before, I can tell!";
 		}
 		close;
 	}
-	switch(tu_merchant) {
+	switch(tu_merchant){
 	case 17:
 		mes "We can't even begin";
 		mes "to fathom the number";
@@ -54,7 +54,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "about Vending?";
 		next;
 		set @chk_vend, getskilllv(41);
-		if ((@chk_vend > 3) && (@chk_vend < 10)) {
+		if((@chk_vend > 3) && (@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "Excellent!";
 			mes "You've taught yourself well. Here, you've earned this little reward~";
@@ -62,7 +62,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			set BaseExp, BaseExp + 1860;
 			set JobExp, JobExp + 604;
 			next;
-		} else if (@chk_vend == 10) {
+		} else if(@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "Oh, I see that you're very serious about being a Merchant. I'm proud that you've managed to master this skill! Here, you deserve this reward!";
 			set tu_merchant, 17;
@@ -118,7 +118,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "increase by one.";
 		next;
 		set @chk_vend, getskilllv(41);
-		if ((@chk_vend > 3) && (@chk_vend < 10)) {
+		if((@chk_vend > 3) && (@chk_vend < 10)){
 			mes "[Guarnien]";
 			mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
 			set tu_merchant, 17;
@@ -126,7 +126,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			set JobExp, JobExp + 604;
 			//misceffect EF_HIT5;
 			next;
-		} else if (@chk_vend == 10) {
+		} else if(@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "But it looks like I just put my foot in my mouth. I'm sorry, I didn't notice that you already mastered the Vending skill...";
 			next;
@@ -170,7 +170,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "to Level 4 like I asked?";
 		next;
 		set @chk_cart, getskilllv(39);
-		if (@chk_cart > 3 && @chk_cart < 10) {
+		if(@chk_cart > 3 && @chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Well done~";
 			mes "You've been a very";
@@ -185,7 +185,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
 			close;
-		} else if (@chk_cart == 10) {
+		} else if(@chk_cart == 10){
 			mes "[Guarnien]";
 			mes "Excellent!";
 			mes "You've actually went above and beyond mastered the Push Cart skill. Great work!";
@@ -227,7 +227,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "down at all!";
 		next;
 		set @chk_cart, getskilllv(39);
-		if (@chk_cart > 3 && @chk_cart < 10) {
+		if(@chk_cart > 3 && @chk_cart < 10){
 			mes "[Guarnien]";
 			mes "Ah, and I see that you've been focusing on learning Push Cart. Although you might still have a problem with your movement";
 			mes "speed, it shouldn't be a big deal.";
@@ -240,7 +240,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
 			close;
-		} else if (@chk_cart == 10) {
+		} else if(@chk_cart == 10){
 			mes "[Guarnien]";
 			mes "Wonderful! You've already";
 			mes "mastered the Push Cart skill.";
@@ -271,7 +271,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "^871F78Over Charge^000000 skill?";
 		next;
 		set @chk_over, getskilllv(38);
-		if (@chk_over > 3 && @chk_over < 10) {
+		if(@chk_over > 3 && @chk_over < 10){
 			mes "[Guarnien]";
 			mes "Nice work!";
 			mes "I can tell that";
@@ -286,7 +286,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Next time, I'll discuss the Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
 			close;
-		} else if (@chk_over == 10) {
+		} else if(@chk_over == 10){
 			mes "[Guarnien]";
 			mes "Whoa...";
 			mes "You actually";
@@ -323,7 +323,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "Over Charge allows you to sell items to NPC shops for more Zeny. The higher your Over Charge Skill Level, the more Zeny you'll receive for items sold to NPCs.";
 		next;
 		set @chk_over, getskilllv(38);
-		if (@chk_over > 3 && @chk_over < 10) {
+		if(@chk_over > 3 && @chk_over < 10){
 			mes "[Guarnien]";
 			mes "Ah, you've already learned Level 4 Over Charge. Perfect! Let me give you a little reward~";
 			set tu_merchant, 13;
@@ -335,7 +335,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "Next time, I'll discuss the";
 			mes "Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
 			close;
-		} else if (@chk_over == 10) {
+		} else if(@chk_over == 10){
 			mes "[Guarnien]";
 			mes "Amazing! You've already mastered the Over Charge skill! You must have wanted this reward badly~";
 			set tu_merchant, 13;
@@ -435,7 +435,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		next;
 		mes "[Guarnien]";
 		set @chk_disc, getskilllv(37);
-		if (@chk_disc > 3 && @chk_disc < 10) {
+		if(@chk_disc > 3 && @chk_disc < 10){
 			mes "Ah, you've learned";
 			mes "how to use the Discount skill";
 			mes "well enough. Good, here's a little reward for your hard work~";
@@ -447,7 +447,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
 			close;
-		} else if (@chk_disc == 10) {
+		} else if(@chk_disc == 10){
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
@@ -478,7 +478,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		next;
 		mes "[Guarnien]";
 		set @chk_disc, getskilllv(37);
-		if (@chk_disc > 3 && @chk_disc < 10) {
+		if(@chk_disc > 3 && @chk_disc < 10){
 			mes "Oooh, good work.";
 			mes "I see that you've";
 			mes "raised your Discount";
@@ -494,7 +494,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you";
 			mes "think you're ready, alright?";
 			close;
-		} else if (@chk_disc == 10) {
+		} else if(@chk_disc == 10){
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
@@ -533,7 +533,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		next;
 		mes "[Guarnien]";
 		set @chk_mam, getskilllv(42);
-		if (@chk_mam > 3 && @chk_mam < 10) {
+		if(@chk_mam > 3 && @chk_mam < 10){
 			mes "Ah, I see that you've already tried this skill. How much money have you wasted using Mammonite? Not too much, I hope.";
 			next;
 			mes "[Guarnien]";
@@ -561,7 +561,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		next;
 		mes "[Guarnien]";
 		set @chk_soji, getskilllv(36);
-		if (@chk_soji > 3 && @chk_soji < 10) {
+		if(@chk_soji > 3 && @chk_soji < 10){
 			mes "Ah. I can tell that you have. Not bad! By now you should be able to learn the ^871F78Discount^000000 skill, but I'll teach you about that later.";
 			next;
 			mes "[Guarnien]";
@@ -573,7 +573,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "This skill works exactly like a ^871F78Magnifier^000000, so you won't have to spend any Zeny on them. Also, this skill is mastered at ^871F78Level 1^000000.";
 			next;
-			if (getskilllv(40)) {
+			if(getskilllv(40)){
 				mes "[Guarnien]";
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				set tu_merchant, 2;
@@ -600,11 +600,11 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 	
 	mes "You've just started out as a Merchant, haven't you? How would you like to learn the fundamentals of business from an experienced colleague?";
 	next;
-	if(select("Sure!:I'll make it on my own!")==1) {
+	if(select("Sure!:I'll make it on my own!")==1){
 		set tu_merchant, 1;
-		if (getskilllv(36) < 4) {
+		if(getskilllv(36) < 4){
 			mes "[Guarnien]";
-			if (Sex == 1) {
+			if(Sex == 1){
 				mes "Atta boy~!";
 			} else {
 				mes "Atta girl~!";
@@ -640,7 +640,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 			next;
 			mes "[Guarnien]";
 			set tu_merchant, 2;
-			if (getskilllv(40)) {
+			if(getskilllv(40)){
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				//misceffect EF_HIT5;
 				set BaseExp, BaseExp + 585;
@@ -678,7 +678,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 //=================================================Sagle====================================================
 prontera.gat,66,111,3	script	Sagle	82,{
 	mes "[Sagle]";
-	if (tu_merchant == 8) {
+	if(tu_merchant == 8){
 		mes "Hello, hello~";
 		mes "Why don't you buy";
 		mes "some Red Potions?";
@@ -687,12 +687,12 @@ prontera.gat,66,111,3	script	Sagle	82,{
 		mes "[Sagle]";
 		mes "I will sell you 10 Red Potions for ^871F78420 zeny^000000. You'd better get them now while they're still here!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Sagle]";
 			mes "Excellent!";
 			mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
-			if (Zeny < 420) {
+			if(Zeny < 420){
 				next;
 				mes "[Sagle]";
 				mes "Whoa, hold on!";
@@ -703,7 +703,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 				mes "Zeny, alright?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Sagle]";
 				mes "Whoa, hold on!";
@@ -727,7 +727,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 			break;
 		}
 	}
-	if (tu_merchant == 7) {
+	if(tu_merchant == 7){
 		mes "Hello, hello~";
 		mes "Why don't you buy";
 		mes "some Red Potions?";
@@ -736,12 +736,12 @@ prontera.gat,66,111,3	script	Sagle	82,{
 		mes "[Sagle]";
 		mes "I will sell you 10 Red Potions for ^871F78410 zeny^000000. You'd better get them now while they're still here!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 			case 1:
 				mes "[Sagle]";
 				mes "Excellent!";
 				mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
-				if (Zeny < 410) {
+				if(Zeny < 410){
 					next;
 					mes "[Sagle]";
 					mes "Whoa, hold on!";
@@ -752,7 +752,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 					mes "Zeny, alright?";
 					close;
 				}
-				if (MaxWeight - Weight < 71) {
+				if(MaxWeight - Weight < 71){
 					next;
 					mes "[Sagle]";
 					mes "Whoa, hold on!";
@@ -777,7 +777,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 				break;
 		}
 	}
-	if (tu_merchant == 6) {
+	if(tu_merchant == 6){
 		mes "Hello, hello~";
 		mes "Why don't you buy";
 		mes "some Red Potions?";
@@ -786,12 +786,12 @@ prontera.gat,66,111,3	script	Sagle	82,{
 		mes "[Sagle]";
 		mes "I will sell you 10 Red Potions for ^871F78390 zeny^000000. You'd better get them now while they're still here!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 			case 1:
 				mes "[Sagle]";
 				mes "Excellent!";
 				mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
-				if (Zeny < 390) {
+				if(Zeny < 390){
 					next;
 					mes "[Sagle]";
 					mes "Whoa, hold on!";
@@ -802,7 +802,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 					mes "Zeny, alright?";
 					close;
 				}
-				if (MaxWeight - Weight < 71) {			
+				if(MaxWeight - Weight < 71){			
 					next;
 					mes "[Sagle]";
 					mes "Whoa, hold on!";
@@ -842,25 +842,25 @@ prontera.gat,66,111,3	script	Sagle	82,{
 //=================================================Kellion====================================================
 prontera.gat,93,330,3	script	Kellion	97,{
 	mes "[Kellion]";
-	if (tu_merchant == 8) {
+	if(tu_merchant == 8){
 		mes "I'm selling sets of";
 		mes "10 Red Potions for 340 Zeny.";
 		mes "Would you like some?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Kellion]";
 			mes "Good choice~";
 			mes "Thank you for";
 			mes "using my shop.";
-			if (Zeny < 340) {
+			if(Zeny < 340){
 				next;
 				mes "[Kellion]";
 				mes "Ooops!";
 				mes "I'm sorry, but you don't have enough Zeny. I've got to stay in business somehow, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Kellion]";
 				mes "...Huh?";
@@ -883,25 +883,25 @@ prontera.gat,93,330,3	script	Kellion	97,{
 			break;
 		}
 	}
-	if (tu_merchant == 7) {
+	if(tu_merchant == 7){
 		mes "I'm selling sets of";
 		mes "10 Red Potions for 390 Zeny.";
 		mes "Would you like some?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Kellion]";
 			mes "Good choice~";
 			mes "Thank you for";
 			mes "using my shop.";
-			if (Zeny < 390) {
+			if(Zeny < 390){
 				next;
 				mes "[Kellion]";
 				mes "Ooops!";
 				mes "I'm sorry, but you don't have enough Zeny. I've got to stay in business somehow, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Kellion]";
 				mes "...Huh?";
@@ -924,25 +924,25 @@ prontera.gat,93,330,3	script	Kellion	97,{
 			break;
 		}
 	}
-	if (tu_merchant == 6) {
+	if(tu_merchant == 6){
 		mes "I'm selling sets of";
 		mes "10 Red Potions for 400 Zeny.";
 		mes "Would you like some?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Kellion]";
 			mes "Good choice~";
 			mes "Thank you for";
 			mes "using my shop.";
-			if (Zeny < 400) {
+			if(Zeny < 400){
 				next;
 				mes "[Kellion]";
 				mes "Ooops!";
 				mes "I'm sorry, but you don't have enough Zeny. I've got to stay in business somehow, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Kellion]";
 				mes "...Huh?";
@@ -980,7 +980,7 @@ prontera.gat,93,330,3	script	Kellion	97,{
 	
 //=================================================Aigie====================================================
 prt_in.gat,169,11,3	script	Aigie	92,{
-	if (tu_merchant == 8) {
+	if(tu_merchant == 8){
 		mes "[Aigie]";
 		mes "Welcome to my shop.";
 		mes "I'm just a young girl who's a victim of circumstance, forced to sell potions on the street for dirt cheap prices.";
@@ -990,20 +990,20 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 		mes "to buy 10 Red Potions";
 		mes "for 390 Zeny, kind adventurer?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Aigie]";
 			mes "Thank you so much.";
 			mes "Now I can finally";
 			mes "afford food again...";
-			if (Zeny < 390) {
+			if(Zeny < 390){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
 				mes "I am sorry, but you don't have enough money. Would you please get some more Zeny before coming back?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
@@ -1027,7 +1027,7 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 			break;
 		}					
 	}
-	if (tu_merchant == 7) {
+	if(tu_merchant == 7){
 		mes "[Aigie]";
 		mes "Welcome to my shop.";
 		mes "I'm just a young girl who's a victim of circumstance, forced to sell potions on the street for dirt cheap prices.";
@@ -1037,20 +1037,20 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 		mes "to buy 10 Red Potions";
 		mes "for 420 Zeny, kind adventurer?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Aigie]";
 			mes "Thank you so much.";
 			mes "Now I can finally";
 			mes "afford food again...";
-			if (Zeny < 420) {
+			if(Zeny < 420){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
 				mes "I am sorry, but you don't have enough money. Would you please get some more Zeny before coming back?";
 				close;
 			}
-			if (²now_weight < 71) {
+			if(²now_weight < 71){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
@@ -1074,7 +1074,7 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 			break;
 		}					
 	}
-	if (tu_merchant == 6) {
+	if(tu_merchant == 6){
 		mes "[Aigie]";
 		mes "Welcome to my shop.";
 		mes "I'm just a young girl who's a victim of circumstance, forced to sell potions on the street for dirt cheap prices.";
@@ -1084,20 +1084,20 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 		mes "to buy 10 Red Potions";
 		mes "for 340 Zeny, kind adventurer?";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Aigie]";
 			mes "Thank you so much.";
 			mes "Now I can finally";
 			mes "afford food again...";
-			if (Zeny < 340) {
+			if(Zeny < 340){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
 				mes "I am sorry, but you don't have enough money. Would you please get some more Zeny before coming back?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";
@@ -1131,11 +1131,11 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 	
 //=================================================Jayon====================================================
 prontera.gat,247,129,3	script	Jayon	85,{
-	if (tu_merchant == 8) {
+	if(tu_merchant == 8){
 		mes "[Jayon]";
 		mes "If you've checked out the market for Red Potions, you know that my price is the best. I'm offering 10 Red Potions for only 410 Zeny!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Jayon]";
 			mes "Heh heh...!";
@@ -1144,7 +1144,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 			mes "stuff. You're a";
 			mes "Merchant yourself,";
 			mes "aren't you?";
-			if (Zeny < 410) {
+			if(Zeny < 410){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy.";
@@ -1153,7 +1153,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 				mes "if you want these potions.";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy. I can't let you carry more than you can handle.";
@@ -1179,11 +1179,11 @@ prontera.gat,247,129,3	script	Jayon	85,{
 		}
 	}
 
-	if (tu_merchant == 7) {
+	if(tu_merchant == 7){
 		mes "[Jayon]";
 		mes "If you've checked out the market for Red Potions, you know that my price is the best. I'm offering 10 Red Potions for only 400 Zeny!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Jayon]";
 			mes "Heh heh...!";
@@ -1192,7 +1192,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 			mes "stuff. You're a";
 			mes "Merchant yourself,";
 			mes "aren't you?";
-			if (Zeny < 400) {
+			if(Zeny < 400){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy.";
@@ -1201,7 +1201,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 				mes "if you want these potions.";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy. I can't let you carry more than you can handle.";
@@ -1228,11 +1228,11 @@ prontera.gat,247,129,3	script	Jayon	85,{
 		}
 	}
 
-	if (tu_merchant == 6) {
+	if(tu_merchant == 6){
 		mes "[Jayon]";
 		mes "If you've checked out the market for Red Potions, you know that my price is the best. I'm offering 10 Red Potions for only 410 Zeny!";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Jayon]";
 			mes "Heh heh...!";
@@ -1241,7 +1241,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 			mes "stuff. You're a";
 			mes "Merchant yourself,";
 			mes "aren't you?";
-			if (Zeny < 410) {
+			if(Zeny < 410){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy.";
@@ -1250,7 +1250,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 				mes "if you want these potions.";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Jayon]";
 				mes "But sorry buddy. I can't let you carry more than you can handle.";
@@ -1288,7 +1288,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 
 //=================================================Maos====================================================
 prt_in.gat,251,129,3	script	Maos	709,{
-	if (tu_merchant == 8) {
+	if(tu_merchant == 8){
 		mes "[Maos]";
 		mes "Don't say anything.";
 		mes "I know what you want.";
@@ -1296,18 +1296,18 @@ prt_in.gat,251,129,3	script	Maos	709,{
 		mes "I'll sell them to you";
 		mes "for the low price of 420 Zeny~";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Maos]";
 			mes "Excellent choice!";
 			mes "Good products at affordable prices! That's my ethic as a merchant.";
-			if (Zeny < 420) {
+			if(Zeny < 420){
 				next;
 				mes "[Maos]";
 				mes "Ooh, but you don't even have enough Zeny to purchase these potions. I'm sorry, but I can't sell these just to lose money, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Maos]";
 				mes "Ooh, but it doesn't look like you've got enough inventory space to carry any more items.";
@@ -1326,7 +1326,7 @@ prt_in.gat,251,129,3	script	Maos	709,{
 			break;
 		}
 	}
-	if (tu_merchant == 7) {
+	if(tu_merchant == 7){
 		mes "[Maos]";
 		mes "Don't say anything.";
 		mes "I know what you want.";
@@ -1334,18 +1334,18 @@ prt_in.gat,251,129,3	script	Maos	709,{
 		mes "I'll sell them to you";
 		mes "for the low price of 340 Zeny~";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Maos]";
 			mes "Excellent choice!";
 			mes "Good products at affordable prices! That's my ethic as a merchant.";
-			if (Zeny < 340) {
+			if(Zeny < 340){
 				next;
 				mes "[Maos]";
 				mes "Ooh, but you don't even have enough Zeny to purchase these potions. I'm sorry, but I can't sell these just to lose money, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				mes "[Maos]";
 				mes "Ooh, but it doesn't look like you've got enough inventory space to carry any more items.";
 				close;
@@ -1363,7 +1363,7 @@ prt_in.gat,251,129,3	script	Maos	709,{
 			break;
 		}
 	}
-	if (tu_merchant == 6) {
+	if(tu_merchant == 6){
 		mes "[Maos]";
 		mes "Don't say anything.";
 		mes "I know what you want.";
@@ -1371,18 +1371,18 @@ prt_in.gat,251,129,3	script	Maos	709,{
 		mes "I'll sell them to you";
 		mes "for the low price of 400 Zeny~";
 		next;
-		switch(select("Buy:Cancel")) {
+		switch(select("Buy:Cancel")){
 		case 1:
 			mes "[Maos]";
 			mes "Excellent choice!";
 			mes "Good products at affordable prices! That's my ethic as a merchant.";
-			if (Zeny < 400) {
+			if(Zeny < 400){
 				next;
 				mes "[Maos]";
 				mes "Ooh, but you don't even have enough Zeny to purchase these potions. I'm sorry, but I can't sell these just to lose money, you know?";
 				close;
 			}
-			if (MaxWeight - Weight < 71) {
+			if(MaxWeight - Weight < 71){
 				mes "[Maos]";
 				mes "Ooh, but it doesn't look like you've got enough inventory space to carry any more items.";
 				close;

@@ -26,7 +26,7 @@ geffen.gat,61,174,4	script	Sign#M	111,{
 //=================================================New Mage Manager====================================================
 geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 	mes "[Mana]";
-	if (Class == Job_Novice) {
+	if(Class == Job_Novice){
 		mes "[Mana]";
 		mes "You're not";
 		mes "ready yet.";
@@ -34,7 +34,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "you've trained more.";
 		close;
 	}
-	if (BaseClass != Job_Mage) {
+	if(BaseClass != Job_Mage){
 		mes "Be more confident in your job.";
 		mes "Sometimes other jobs may seem";
 		mes "better but take a look back at yourself";
@@ -42,12 +42,12 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "by doing so.";
 		close;
 	}
-	if (eaclass()&(EAJL_UPPER|EAJL_2) && tu_magician01 < 7) {
+	if(eaclass()&(EAJL_UPPER|EAJL_2) && tu_magician01 < 7){
 		mes "[Mana]";
 		mes "My training isn't very helpful to those that are already skilled in magic. I'm afraid you'll have to rely on yourself to improve your skills.";
 		close;
 	}
-	switch(tu_magician01) {
+	switch(tu_magician01){
 	case 0:
 		mes "Welcome!";
 		mes "I'm Mana, a trainer in charge of those who have justed joined the Mage Guild.";
@@ -55,7 +55,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "[Mana]";
 		mes "I've only been doing this job for a little while, but I'm here to help you if you want to learn more about the Mage job.";
 		next;
-		if(select("Will you teach me?", "Perhaps later...")==2) {
+		if(select("Will you teach me?", "Perhaps later...")==2){
 			mes "[Mana]";
 			mes "Well, I guess";
 			mes "that should be fine.";
@@ -110,8 +110,8 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "have different features that must be considered.";
 		mes "I will explain the properties now.";
 		next;
-		while((1)) {
-			switch(select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")) {
+		while((1)){
+			switch(select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")){
 			case 1:
 				mes "[Mana]";
 				mes "In general, monsters that have the '^ff0000Fire^000000'";
@@ -297,29 +297,29 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 				mes "So listen carefully until you have absorbed all the";
 				mes "information this time.";
 				next;
-				if(select("Then the explanation..", "Quit for sure.")==2) {
+				if(select("Then the explanation..", "Quit for sure.")==2){
 					mes "[Mana]";
 					mes "I'll move onto the next subject then.";
 					mes "Hoho..";
 					set tu_magician01, 2;
 					//misceffect EF_HIT5;
-					if (tu_mana&1) {
+					if(tu_mana&1){
 						set BaseExp, BaseExp + 150;
 						set JobExp,JobExp+70;
 					}
-					if (tu_mana&2) {
+					if(tu_mana&2){
 						set BaseExp, BaseExp + 150;
 						set JobExp,JobExp+70;
 					}
-					if (tu_mana&4) {
+					if(tu_mana&4){
 						set BaseExp, BaseExp + 150;
 						set JobExp,JobExp+70;
 					}
-					if (tu_mana&8) {
+					if(tu_mana&8){
 						set BaseExp, BaseExp + 150;
 						set JobExp,JobExp+70;
 					}
-					if (tu_mana&16) {
+					if(tu_mana&16){
 						set BaseExp, BaseExp + 150;
 						set JobExp,JobExp+70;
 					}
@@ -425,7 +425,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "Ah~ You're here?";
 		mes "Let's see if you gathered all that's needed.";
 		next;
-		if (countitem(915) < 10) {
+		if(countitem(915) < 10){
 			mes "[Mana]";
 			mes "Not quite enough.";
 			mes "Come back when you have gathered some more.";
@@ -455,7 +455,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "Ah~ You're here?";
 		mes "Let's see if you gathered all that's needed.";
 		next;
-		if (countitem(915) < 10) {
+		if(countitem(915) < 10){
 			mes "[Mana]";
 			mes "You need a little bit more.";
 			mes "You can do it!";
@@ -481,7 +481,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 	case 5:
 		mes "Now shall we discuss the more advanced skills?";
 		next;
-		while(1) {
+		while(1){
 			switch(select("Soul Strike", "Safety Wall", "Fire Ball", "Frost Diver", "Thunderstorm", "Fire Wall", "Energy Coat", "Quit.")){
 			case 1:
 				mes "[Mana]";
@@ -630,31 +630,31 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 				set tu_magician01, 6;
 				getitem 1604, 1;
 				//misceffect EF_HIT5;
-				if (tu_mana&1){
+				if(tu_mana&1){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&2){
+				if(tu_mana&2){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&4){
+				if(tu_mana&4){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&8){
+				if(tu_mana&8){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&16){
+				if(tu_mana&16){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&32){
+				if(tu_mana&32){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
-				if (tu_mana&64){
+				if(tu_mana&64){
 					set BaseExp, BaseExp + 300;
 					set JobExp,JobExp+100;
 				}
@@ -682,7 +682,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		mes "return and we will give you some things to support you.";
 		mes "What would you like to do?";
 		next;
-		if(select("Do it.", "Don't do it.")==1) {
+		if(select("Do it.", "Don't do it.")==1){
 			mes "[Mana]";
 			mes "Hoho..of course...";
 			mes "I shall send you to Morroc.";
@@ -741,7 +741,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 		close;
 		break;
 	default:
-		if (tu_magician01 < 27) {
+		if(tu_magician01 < 27){
 			mes "Hmm....";
 			mes "I see....";
 			mes "There is something going on in the Rune";

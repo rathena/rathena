@@ -18,8 +18,8 @@
 //=================================================Priest Praupin====================================================
 prt_church.gat,179,15,1	script	Priest Praupin	110,{
 	mes "[Priest Praupin]";
-	if (BaseClass != Job_Acolyte) {
-		if (tu_acolyte01 == 25) {
+	if(BaseClass != Job_Acolyte){
+		if(tu_acolyte01 == 25){
 			mes "Oh...!";
 			mes "You're "+strcharinfo(0)+" !";
 			mes "You've grown so much!";
@@ -42,7 +42,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 		mes "you may not know what to do";
 		mes "as an Acolyte from here on...";
 		next;
-		switch(select("I'm not worried.:What should I do?")) {
+		switch(select("I'm not worried.:What should I do?")){
 		case 1:
 			mes "[Priest Praupin]";
 			mes "Seeing your eyes filled with such determination assures me. But if you run into any trouble, feel free to ask me for help. Good bye for now, blessed child.";
@@ -59,7 +59,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 			mes "become a better Acolyte after learning from Sister Asthe's instructions. If you like, I can send you to the convent.";
 			set tu_acolyte01, 1;
 			next;
-			if(select("Go to the convent.:Do not go.")==1) {
+			if(select("Go to the convent.:Do not go.")==1){
 				mes "[Priest Praupin]";
 				mes "Please say hello";
 				mes "to Sister Asthe for me.";
@@ -88,7 +88,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 		close;
 		break;
 	case 22:
-		if (countitem(7181) > 0) {	// Receipt_01
+		if(countitem(7181) > 0){	// Receipt_01
 			emotion e_gasp;
 			mes "Oh my, you seem";
 			mes "to be growing quickly";
@@ -113,7 +113,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 			mes "I know I'm not offering much,";
 			mes "but they were quite helpful to me when I was a young Acolyte like yourself.";
 			next;
-			if(select("Maces:Clubs")==1) {
+			if(select("Maces:Clubs")==1){
 				getitem 1604, 1;
 			} else {
 				getitem 1510, 1;
@@ -144,7 +144,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 	mes "[Priest Praupin]";
 	mes "Would you like me to send you to the convent so that you can learn from this wonderful teacher?";
 	next;
-	if(select("Yes, please.:No thanks.")==1) {
+	if(select("Yes, please.:No thanks.")==1){
 		mes "[Priest Praupin]";
 		mes "Please say hello";
 		mes "to Sister Asthe for me.";
@@ -166,7 +166,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 //=================================================Asthe====================================================
 prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 	mes "[Asthe]";
-	switch(tu_acolyte01) {
+	switch(tu_acolyte01){
 	case 1:
 		mes "Oh my...";
 		mes "How did such";
@@ -174,7 +174,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "manage to reach";
 		mes "this remote place?";
 		next;
-		if(select("I came for fun.:Priest Praupin suggested I come here.")==1) {
+		if(select("I came for fun.:Priest Praupin suggested I come here.")==1){
 			mes "[Asthe]";
 			mes "This convent is always quiet and peaceful. Sitting on the benches and feeling the almighty presense all around you is such a relaxing, meditative experience.";
 			close;
@@ -208,7 +208,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes ""+strcharinfo(0)+",";
 		mes "have you thought about what kind of Acolyte you would like to become? It's very important that you plan for the future that you want.";
 		next;
-		if(select("One that supports others.:One that punishes evil.")==1) {
+		if(select("One that supports others.:One that punishes evil.")==1){
 			mes "[Asthe]";
 			mes "Ah, you have such";
 			mes "a generous heart!";
@@ -237,7 +237,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "is the most necessary";
 		mes "skill for an Acolyte?";
 		next;
-		switch(select("Heal:Aqua Benedicta:Teleport")) { 
+		switch(select("Heal:Aqua Benedicta:Teleport")){ 
 		case 1:
 			mes "[Asthe]";
 			mes "Ah, yes.";
@@ -283,7 +283,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "HEAL !!";
 		unitskilluseid getcharid(3),28,10;
 		set tu_acolyte01, 3;
-		if (getskilllv(28) == 0) {
+		if(getskilllv(28) == 0){
 			set JobExp,JobExp+100; 
 			//misceffect EF_CONE;
 		}
@@ -294,7 +294,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "think? I believe learning the basics is your most important";
 		mes "task for now.";
 		next;
-		if (getskilllv(28) < 3) {
+		if(getskilllv(28) < 3){
 			mes "[Asthe]";
 			mes "Well then, learn";
 			mes "the Heal skill up to";
@@ -344,8 +344,8 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		}
 		break;
 	case 4:
-		if (getskilllv(28) > 2) {
-			if (countitem(1504) > 0) {
+		if(getskilllv(28) > 2){
+			if(countitem(1504) > 0){
 				mes "Oh my!";
 				mes "Welcome back~";
 				mes "I see that you've";
@@ -354,7 +354,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 				emotion e_heh;
 				set tu_acolyte01, 5;
 				delitem 1504, 1;
-				if (Class == Job_Acolyte_High) {
+				if(Class == Job_Acolyte_High){
 					set JobExp,JobExp+1000; 
 					set BaseExp, BaseExp + 2000;
 					//misceffect EF_CONE;
@@ -632,7 +632,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "Now, we've covered some";
 		mes "pretty complicated material in this lesson. Would you like to hear this again?";
 		next;
-		if(select("Listen again.:Move to the next topic.")==1) {
+		if(select("Listen again.:Move to the next topic.")==1){
 			mes "[Asthe]";
 			mes "Alright,";
 			mes "give me a moment";
@@ -667,7 +667,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 		mes "[Asthe]";
 		mes "Oh, and this last delivery is a receipt for ^3131FFPriest Praupin^000000, the priest who told you about me.";
 		mes "Here you go, the letters and packages...";
-		if (MaxWeight - Weight < 2430) {
+		if(MaxWeight - Weight < 2430){
 			next;
 			mes "[Asthe]";
 			mes "Oh...!";
@@ -787,8 +787,8 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 //=================================================Priest Gardron====================================================
 monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
 	mes "[Priest Gardron]";
-	if (tu_acolyte01 == 7) {
-		if (countitem(7148) >= 1) {
+	if(tu_acolyte01 == 7){
+		if(countitem(7148) >= 1){
 			mes "Hmm...?";
 			mes "What's that?";
 			mes "You have something for me?";
@@ -817,8 +817,8 @@ monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
 			mes "it or misplaced it somewhere.";
 			close;
 		}
-	} else if (tu_acolyte01 == 8) {
-		if (countitem(957) > 4) {
+	} else if(tu_acolyte01 == 8){
+		if(countitem(957) > 4){
 			mes "Oh..!";
 			mes "You've returned!";
 			mes "Let's see... One...";
@@ -872,7 +872,7 @@ monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
 			mes "Now then...";
 			mes "Will you go to Payon?";
 			next;
-			if(select("Let's go to Payon!:Um, let me get ready first.")==1) {
+			if(select("Let's go to Payon!:Um, let me get ready first.")==1){
 				mes "[Priest Gardron]";
 				mes "Good, good.";
 				mes "I shall send you";
@@ -899,13 +899,13 @@ prt_monk.gat,235,245,5	script	Dog#tu	81,{
 	mes "^CDB79EBark bark!";
 	mes "Woof woof!^000000";
 	next;
-	if (tu_acolyte01 == 10) {
+	if(tu_acolyte01 == 10){
 		set @dog_food, 0;
-		while((1)) {
-			switch(select("Give a treat.:Pet the dog.:End actions.")) {
+		while((1)){
+			switch(select("Give a treat.:Pet the dog.:End actions.")){
 			case 1:
 				set @dog_food, @dog_food + 1;
-				if (@dog_food > 4) {
+				if(@dog_food > 4){
 					mes "[Dog]";
 					mes "^CDB79EGrrrrrr...!^000000";
 					emotion e_an;
@@ -952,7 +952,7 @@ OnTouch:
 //=================================================Ill Girl====================================================
 prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 	mes "[Angelic]";
-	if (tu_acolyte01 > 12) {
+	if(tu_acolyte01 > 12){
 		mes "Thanks for helping me.";
 		mes "I'm sad my older sister is no longer with me, but I oughta";
 		mes "cheer up, right? I'll try my best!";
@@ -963,7 +963,7 @@ prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 	mes "^333333*Sniff* *Cough cough!*^000000";
 	mes "It h-hurts so... much...!";
 	mes "Sis...ter...";
-	if (tu_acolyte01 == 10) {
+	if(tu_acolyte01 == 10){
 		next;
 		mes "[Angelic]";
 		mes "^333333*Sniff...*^000000";
@@ -1028,21 +1028,21 @@ prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 		set tu_acolyte01, 11;
 		close;
 	} else
-	if (tu_acolyte01 == 11) {
+	if(tu_acolyte01 == 11){
 		next;
 		mes "[Angelic]";
 		mes "It hurts...!";
 		mes "I... I can't...!";
 		close;
 	} else
-	if (tu_acolyte01 == 12) {
+	if(tu_acolyte01 == 12){
 		next;
 		mes "^3355FFYou go towards";
 		mes "the girl, place your hands";
 		mes "on her back and perform";
 		mes "a holy spell...^000000";
 		next;
-		switch(select("Heal!:Blessing!:Cure!:Recovery!:Signum Crucis!:B.S Sacramenti!")) {
+		switch(select("Heal!:Blessing!:Cure!:Recovery!:Signum Crucis!:B.S Sacramenti!")){
 		case 1:
 			mes "["+strcharinfo(0)+"]";
 			mes "H...";
@@ -1055,12 +1055,12 @@ prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 			close; 
 			break;
 		case 2:
-			if (getskilllv(34) == 0) goto L_NONE;
+			if(getskilllv(34) == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "B...";
 			mes "Blessing!";
 			next;
-			if (rand(100) < getskilllv(34)*10) {
+			if(rand(100) < getskilllv(34)*10){
 				//misceffect EF_BLESSING;
 				mes "["+strcharinfo(0)+"]";
 				mes "I...";
@@ -1085,7 +1085,7 @@ prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 			}
 			break;
 		case 3:
-			if (getskilllv(35) == 0) goto L_NONE;
+			if(getskilllv(35) == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "C-Cure...!";
 			//misceffect EF_CURE;
@@ -1101,7 +1101,7 @@ prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
 			close;
 			break;
 		case 5:
-			if (getskilllv(32) == 0) goto L_NONE;
+			if(getskilllv(32) == 0) goto L_NONE;
 			mes "["+strcharinfo(0)+"]";
 			mes "S-Signum...";
 			mes "Signum Crucis!";
@@ -1142,7 +1142,7 @@ L_NONE:
 //=================================================Veiner====================================================
 prt_monk.gat,197,228,3	script	Veiner	89,{
 	mes "[Veiner]";
-	if (countitem(1081) && tu_acolyte01 == 18) {
+	if(countitem(1081) && tu_acolyte01 == 18){
 		set tu_acolyte01, 19;
 		delitem 1081, 1;
 		mes "So very exhausted...";
@@ -1167,7 +1167,7 @@ prt_monk.gat,197,228,3	script	Veiner	89,{
 		mes "Thank you very much for delivering this to me. Sorry, but I'm always excited to hear from my cutie pie~";
 		emotion e_thx;
 		close;
-	} else if (tu_acolyte01 > 18) {
+	} else if(tu_acolyte01 > 18){
 		mes "I can't wait";
 		mes "to see her again!";
 		mes "Bibi...! I loooove you!";
@@ -1190,7 +1190,7 @@ prt_monk.gat,28,260,5	script	Hedrick	50,{
 	mes "And so efficiently too!";
 	mes "Awesome job as usual,";
 	mes "Hedrick. You're number one!";
-	if (countitem(7148)==0 || tu_acolyte01 != 19) close;
+	if(countitem(7148)==0 || tu_acolyte01 != 19) close;
 	next;
 	mes "[Hedrick]";
 	mes "Oh...?";
@@ -1220,7 +1220,7 @@ prt_monk.gat,28,260,5	script	Hedrick	50,{
 //=================================================Weapon Merchant====================================================
 prt_monk.gat,135,263,4	script	Weapon Merchant#tu	139,9,9{
 OnTouch:
-	if (tu_acolyte01 != 20 || countitem(1081)==0) end;
+	if(tu_acolyte01 != 20 || countitem(1081)==0) end;
 	delitem 1081, 1;
 	set tu_acolyte01, 21;
 	mes "[Weapon Merchant]";
@@ -1238,7 +1238,7 @@ OnTouch:
 monk_in.gat,103,176,7	script	Karven	60,{
 	mes "[Karven]";
 	mes "May you rest";
-	if (tu_acolyte01 == 21 && countitem(7183)) {
+	if(tu_acolyte01 == 21 && countitem(7183)){
 		delitem 7183, 1;
 		set tu_acolyte01, 22;
 		mes "in peace forever...";
@@ -1270,7 +1270,7 @@ monk_in.gat,103,176,7	script	Karven	60,{
 //=================================================Gloria====================================================
 prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 	mes "[Gloria]";
-	if(BaseJob != Job_Acolyte) {
+	if(BaseJob != Job_Acolyte){
 		mes "Hi, hi~";
 		mes "I'm Gloria.";
 		mes "You wanna know";
@@ -1287,7 +1287,7 @@ prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 		mes "you, but I like my name very much. I mean, it's not like my parents named me after that weapon, right?";
 		close;
 	}
-	if (tu_acolyte01 > 0 && tu_acolyte01 < 25) {
+	if(tu_acolyte01 > 0 && tu_acolyte01 < 25){
 		mes "I'm still";
 		mes "a young Acolyte";
 		mes "in training and I'm";
@@ -1312,7 +1312,7 @@ prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 		mes "send you to Prontera.";
 		mes "Just let me know, okay?";
 		next;
-		switch(select("I'm okay for now.:Send me to Prontera.")) {
+		switch(select("I'm okay for now.:Send me to Prontera.")){
 		case 1:
 			mes "[Gloria]";
 			mes "In order to use";
@@ -1343,7 +1343,7 @@ prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 //=================================================Cleope Verce====================================================  
 prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 	mes "[Cleope Verce]";
-	if (BaseJob != Job_Acolyte) {
+	if(BaseJob != Job_Acolyte){
 		mes "Hello hello.";
 		mes "The sun is very";
 		mes "warm today, don't";
@@ -1351,7 +1351,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 		mes "weather today...";
 		close;
 	}
-	if (JobLevel >= 40) {
+	if(JobLevel >= 40){
 		mes "Hmmm?";
 		mes "It looks like you've";
 		mes "learned quite a lot as";
@@ -1360,7 +1360,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 		mes "call you a rookie anymore~";
 		close; 
 	}
-	if (BaseLevel < 26) {
+	if(BaseLevel < 26){
 		mes "Oh my.. "; 
 		mes "A newbie Acolyte?";
 		mes "It doesn't even seem";
@@ -1402,7 +1402,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 		mes "Good luck...";
 		mes "Rookie.";
 		close;
-	} else if (BaseLevel < 36) {
+	} else if(BaseLevel < 36){
 		mes "Oh my.. "; 
 		mes "A young Acolyte?";
 		mes "You seem to have just";
@@ -1453,7 +1453,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 		mes "Good luck,";
 		mes "young friend.";
 		close;
-	} else if (BaseLevel < 46) {
+	} else if(BaseLevel < 46){
 		mes "Well, well, well~"; 
 		mes "Hello, young Acolyte.";
 		mes "You're still kind of";
@@ -1523,7 +1523,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 //=================================================Range NPC====================================================  
 prt_monk.gat,217,123,4	script	#tu_monk	139,10,10{
 OnTouch:
-	if (BaseJob == Job_Acolyte) {
+	if(BaseJob == Job_Acolyte){
 		switch(tu_acolyte01){
 		case 0:
 			mes "[Sound by Window]";
@@ -1542,7 +1542,7 @@ OnTouch:
 			mes "yonder window...^000000";
 			close;
 		}
-	} else if (BaseClass == Job_Archer) {
+	} else if(BaseClass == Job_Archer){
 		mes "[Sound by Window]";
 		mes "Oh...no.. ....so.....";
 		close;
@@ -1551,11 +1551,11 @@ OnTouch:
 }
 //=================================================Eavesdrop====================================================  
 prt_monk.gat,223,123,3	script	Eavesdrop#tu	111,{
-	if (BaseJob != Job_Acolyte) {
+	if(BaseJob != Job_Acolyte){
 		mes "^3355FFThere's nothing here.^000000";
 		close;
 	}
-	if (tu_acolyte01 > 3 && tu_acolyte01 < 10) {
+	if(tu_acolyte01 > 3 && tu_acolyte01 < 10){
 		mes "[Voices from Window]";
 		mes "^A68064Sir...";
 		mes "Something doesn't";
@@ -1580,7 +1580,7 @@ prt_monk.gat,223,123,3	script	Eavesdrop#tu	111,{
 		mes "Still, I can't help";
 		mes "but feel uneasy...^000000";
 		close;
-	} else if (tu_acolyte01 > 9 && tu_acolyte01 < 25) {
+	} else if(tu_acolyte01 > 9 && tu_acolyte01 < 25){
 		mes "[Voices from Window]";
 		mes "^A68064I heard from an";
 		mes "official at the palace";
@@ -1611,7 +1611,7 @@ prt_monk.gat,223,123,3	script	Eavesdrop#tu	111,{
 		mes "[Voices from Window]";
 		mes "^CD6600Thank you...^000000";
 		close;
-	} else if (tu_acolyte01 > 24) {
+	} else if(tu_acolyte01 > 24){
 		mes "[Voices from Window]";
 		mes "^A68064...Sir, do you know anything about the ^855E42curse of the Geobourg family^A68064?^000000";
 		next;
