@@ -1046,7 +1046,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			case NJ_KIRIKAGE:
 				break;
 			default:
-				return 0;
+				//Non players can use all skills while hidden.
+				if (!skill_num || src->type == BL_PC)
+					return 0;
 		}
 		if (sc->option&OPTION_CHASEWALK && skill_num != ST_CHASEWALK)
 			return 0;
@@ -5047,7 +5049,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (map_flag_gvg(bl->m)) val4 *= 5;
 			break;
 		case SC_CLOAKING:
-			if (!sd) //Monsters should be able to walk no penalties. [Skotlex]
+			if (!sd) //Monsters should be able to walk with no penalties. [Skotlex]
 				val1 = 10;
 			val2 = tick>0?tick:60000; //SP consumption rate.
 			val3 = 0;
@@ -5057,11 +5059,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3+= 70+val1*3; //Speed adjustment without a wall.
 			//With a wall, it is val3 +25.
 			//val4&1 signals the presence of a wall.
-			//val4&2 signals eternal cloaking (not cancelled on attack) [Skotlex]
+			//val4&2 makes cloak not end on normal attacks [Skotlex]
+			//val4&4 makes cloak not end on using skills
 			if (bl->type == BL_PC)	//Standard cloaking.
-				val4 |= battle_config.pc_cloak_check_type&3;
+				val4 |= battle_config.pc_cloak_check_type&7;
 			else
-				val4 |= battle_config.monster_cloak_check_type&3;
+				val4 |= battle_config.monster_cloak_check_type&7;
 			break;
 		case SC_SIGHT:			/* サイト/ルアフ */
 		case SC_RUWACH:

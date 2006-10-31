@@ -5094,21 +5094,24 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if (sd->sc.count && sd->sc.data[SC_KAIZEL].timer != -1)
 	{
+		j = sd->sc.data[SC_KAIZEL].val1; //Kaizel Lv.
 		pc_setstand(sd);
+		status_change_clear(&sd->bl,0);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		if(sd->special_state.restart_full_recover)
 			status_percent_heal(&sd->bl, 100, 100);
 		else
-			status_percent_heal(&sd->bl, 10*sd->sc.data[SC_KAIZEL].val1, 0);
+			status_percent_heal(&sd->bl, 10*j, 0);
+		clif_resurrection(&sd->bl, 1);
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,sd->sc.data[SC_KAIZEL].val1));
-		status_change_end(&sd->bl,SC_KAIZEL,-1);
+		sc_start(&sd->bl,SkillStatusChangeTable(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,j));
 		return 0;
 	}
 	if (sd->state.snovice_flag == 4)
 	{
 		pc_setstand(sd);
+		status_change_clear(&sd->bl,0);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_resurrection(&sd->bl, 1);

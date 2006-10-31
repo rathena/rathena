@@ -1,5 +1,11 @@
 Date	Added
 
+2006/10/31
+	* Modified the player_cloak_check_type and monster_cloak_check_type
+	  settings. 1 makes it check for walls, 2 makes cloaking NOT end on normal
+	  attacks, and 4 makes cloaking NOT end when using skills. The default
+	  setting for players is still 1, but for mobs the default has been changed
+	  to 4 (skill.conf). [Skotlex]
 2006/10/25
 	* Added exp-bonus settings exp_bonus_attacker and exp_bonus_max_attacker
 	  (exp.conf, default to 25 and 12) [Skotlex]

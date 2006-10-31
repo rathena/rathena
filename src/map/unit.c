@@ -970,7 +970,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	ud->skilllv      = skill_lv;
 
  	if(sc && sc->data[SC_CLOAKING].timer != -1 &&
-		!(sc->data[SC_CLOAKING].val4&2) && skill_num != AS_CLOAKING)
+		!(sc->data[SC_CLOAKING].val4&4) && skill_num != AS_CLOAKING)
 		status_change_end(src,SC_CLOAKING,-1);
 
 	if(casttime > 0) {
@@ -1063,7 +1063,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	ud->skilltarget  = 0;
 
 	if (sc && sc->data[SC_CLOAKING].timer != -1 &&
-		!(sc->data[SC_CLOAKING].val4&2))
+		!(sc->data[SC_CLOAKING].val4&4))
 		status_change_end(src,SC_CLOAKING,-1);
 
 	if(casttime > 0) {
