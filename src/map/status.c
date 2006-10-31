@@ -2263,7 +2263,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
 	if(b_status.speed != status->speed)
+	{
 		clif_updatestatus(sd,SP_SPEED);
+		// If speed changes & slaves should inherits master's speed & master have homunc, update it
+		if (sd->hd && battle_config.slaves_inherit_speed)
+			status_calc_bl(&sd->hd->bl, SCB_SPEED);
+	}
 	if(b_weight != sd->weight)
 		clif_updatestatus(sd,SP_WEIGHT);
 	if(b_max_weight != sd->max_weight) {
@@ -2812,6 +2817,13 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 			status->max_sp = 1;
 		if(status->sp > status->max_sp)
 			status->sp = status->max_sp;
+	}
+	if(flag&SCB_SPEED)
+	{
+		if (battle_config.slaves_inherit_speed && hd->master)
+			status->speed = status_get_speed(&hd->master->bl);
+		else
+			status->speed = DEFAULT_WALK_SPEED;
 	}
 	if(flag&SCB_INT) {
 		flag|=SCB_MDEF;
