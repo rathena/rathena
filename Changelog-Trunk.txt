@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/10/31
+	* Fixed song/dance/encore cells not being placed down when casted on top of
+	  a land Protector. [Skotlex]
 	* Update homunc's speed when master's speed changes, should avoid homunc's
 	  speed = 0 on login (homunc's stats are calculated before master's stats) [Toms]
 	* When Kaizel (or super novice rebirth skill) triggers, you get debuffed

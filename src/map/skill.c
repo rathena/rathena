@@ -9333,7 +9333,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-		!(skill_get_inf2(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
+		!(skill_get_unit_flag(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
 	{	//It deletes everything except songs/dances/encores.
 		(*alive) = 0;
 		return 1;
