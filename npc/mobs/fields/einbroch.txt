@@ -24,14 +24,14 @@
 //==================================================
 // ein_fild01 - Einbroch Field
 //==================================================
+ein_fild01.gat,0,0,0,0	monster	Demon Pungus	1378,50,0,0,0
 ein_fild01.gat,0,0,0,0	monster	Punk	1199,50,0,0,0
-ein_fild01.gat,0,0,0,0	monster	Demon Fungus	1378,50,0,0,0
 
 //==================================================
 // ein_fild02 - Einbroch Field
 //==================================================
 ein_fild02.gat,0,0,0,0	monster	Driller	1380,40,0,0,0
-ein_fild02.gat,0,0,0,0	monster	Demon Fungus	1378,25,0,0,0
+ein_fild02.gat,0,0,0,0	monster	Demon Pungus	1378,25,0,0,0
 ein_fild02.gat,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
 
 //==================================================
@@ -67,8 +67,8 @@ ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 // ein_fild05 - Einbroch Field
 //==================================================
 ein_fild05.gat,0,0,0,0	monster	Mineral	1614,35,0,0,0
-ein_fild05.gat,0,0,0,0	monster	Anopheles	1627,30,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Obsidian	1615,20,0,0,0
+ein_fild05.gat,0,0,0,0	monster	Anopheles	1627,30,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Demon Pungus	1378,20,0,0,0
 ein_fild05.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
 
@@ -77,11 +77,11 @@ ein_fild05.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
 //==================================================
 ein_fild06.gat,0,0,0,0	monster	Goat	1372,55,0,0,0
 ein_fild06.gat,0,0,0,0	monster	Pupa	1008,15,0,0,0
-ein_fild06.gat,0,0,0,0	monster	Harpy	1376,5,0,0,0
 ein_fild06.gat,0,0,0,0	monster	Giearth	1121,2,3600000,3000000,0
 ein_fild06.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild06.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
 ein_fild06.gat,0,0,0,0	monster	Black Mushroom	1084,10,120000,60000,0
+ein_fild06.gat,0,0,0,0	monster	Harpy	1376,5,0,0,0
 
 //==================================================
 // ein_fild07 - Einbroch Field
@@ -114,10 +114,12 @@ ein_fild08.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
 //==================================================
 ein_fild09.gat,0,0,0,0	monster	Metaling	1613,10,0,0,0
 ein_fild09.gat,0,0,0,0	monster	Porcellio	1619,70,0,0,0
-ein_fild09.gat,0,0,0,0	monster	Thief Bug	1051,30,0,0,0
+ein_fild09.gat,0,0,0,0	monster	Thief Bug	1051,20,0,0,0
+ein_fild09.gat,100,260,2,2	monster	Thief Bug Egg	1048,3,600000,300000,0
 ein_fild09.gat,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild09.gat,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
 ein_fild09.gat,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
+ein_fild09.gat,260,85,50,20	monster	Flora	1118,5,300000,120000,0
 
 //==================================================
 // ein_fild10 - Einbroch Field

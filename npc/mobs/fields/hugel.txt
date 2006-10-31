@@ -32,14 +32,14 @@ hu_fild01.gat,0,0,0,0	monster	Demon Pungus	1378,30,1200000,600000,0
 //==================================================
 // hu_fild02 - Hugel Field
 //==================================================
-hu_fild02.gat,0,0,0,0	monster	Rafflesia	1162,35,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Anopheles	1627,30,0,0,0
-hu_fild02.gat,0,0,0,0	monster	Metaling	1613,21,0,0,0
+hu_fild02.gat,0,0,0,0	monster	Rafflesia	1162,35,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Savage Babe	1167,21,0,0,0
-hu_fild02.gat,0,0,0,0	monster	Grove	1687,10,0,0,0
+hu_fild02.gat,0,0,0,0	monster	Metaling	1613,21,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Breeze	1692,10,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Geographer	1368,10,0,0,0
-hu_fild02.gat,0,0,0,0	monster	Demon Fungus	1378,5,0,0,0
+hu_fild02.gat,0,0,0,0	monster	Grove	1687,10,0,0,0
+hu_fild02.gat,0,0,0,0	monster	Demon Pungus	1378,5,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Novus	1715,2,0,0,0
 hu_fild02.gat,0,0,0,0	monster	Novus	1718,2,0,0,0
 
@@ -50,8 +50,8 @@ hu_fild03.gat,0,0,0,0	monster	Metaling	1613,80,0,0,0
 hu_fild03.gat,0,0,0,0	monster	Poporing	1031,20,0,0,0
 hu_fild03.gat,0,0,0,0	monster	Grove	1687,10,0,0,0
 hu_fild03.gat,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
-hu_fild03.gat,0,0,0,0	monster	Black Mushroom	1084,10,180000,90000,1
 hu_fild03.gat,0,0,0,0	monster	Red Mushroom	1085,10,180000,90000,1
+hu_fild03.gat,0,0,0,0	monster	Black Mushroom	1084,10,180000,90000,1
 
 //==================================================
 // hu_fild04 - Hugel Field
@@ -65,7 +65,6 @@ hu_fild04.gat,0,0,0,0	monster	Anopheles	1627,50,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Grove	1687,20,0,0,0
 hu_fild04.gat,60,149,35,122	monster	Sleeper	1386,7,600000,300000,0
 hu_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,0,0,0
-hu_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 hu_fild04.gat,206,210,30,18	monster	Blue Plant	1079,4,120000,600000,0
 hu_fild04.gat,206,120,10,10	monster	Blue Plant	1079,2,120000,600000,0

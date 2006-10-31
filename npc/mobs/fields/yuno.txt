@@ -107,10 +107,10 @@ yuno_fild06.gat,0,0,0,0	monster	Green Plant	1080,10,0,0,0
 //==================================================
 // yuno_fild07 - El Mes Gorge (Valley of Abyss)
 //==================================================
-yuno_fild07.gat,0,0,0,0	monster	Harpy	1376,40,0,0,0
-yuno_fild07.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
 yuno_fild07.gat,0,0,0,0	monster	Goat	1372,10,0,0,0
+yuno_fild07.gat,0,0,0,0	monster	Geographer	1368,20,0,0,0
 yuno_fild07.gat,0,0,0,0	monster	Driller	1380,10,0,0,0
+yuno_fild07.gat,0,0,0,0	monster	Harpy	1376,40,1800000,900000,0
 yuno_fild07.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 yuno_fild07.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
 yuno_fild07.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
@@ -170,10 +170,7 @@ yuno_fild11.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 //==================================================
 // yuno_fild12 - Border Checkpoint
 //==================================================
-yuno_fild12.gat,0,0,0,0	monster	Punk	1199,30,0,0,0
+yuno_fild12.gat,0,0,0,0	monster	Dustiness	1114,30,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Poporing	1031,15,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Geographer	1368,5,0,0,0
-yuno_fild12.gat,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
-yuno_fild12.gat,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
-yuno_fild12.gat,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
