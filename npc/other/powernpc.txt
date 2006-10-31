@@ -313,7 +313,7 @@ gon_test.gat,46,14,3	script	Guide of field of fight#gnp	770,{
 	close;
 }
 
-gon_test,70,103,3	script	ChowAnAn#gnp	773,{
+gon_test.gat,70,103,3	script	ChowAnAn#gnp	773,{
 	mes "[ChowAnAn]";
 	mes "Want to go back?";
 	next;
