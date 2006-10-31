@@ -1594,13 +1594,14 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	int char_id = 0, flag = 0;
 
-	md->tdmg+=damage; //Store total damage...
-	
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
 		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
 
 	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
+	
+	if (damage > 0) //Store total damage...
+		md->tdmg+=damage;
 	
 	if (!src)
 		return;
@@ -1675,7 +1676,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				md->dmglog[i].flag= flag;
 				break;
 			}
-			if(md->dmglog[i].dmg<mindmg){
+			if(md->dmglog[i].dmg<mindmg && i)
+			{	//Never overwrite first hit slot (he gets double exp bonus)
 				minpos=i;
 				mindmg=md->dmglog[i].dmg;
 			}
@@ -1784,6 +1786,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 	count = i; //Total number of attackers.
+
+	if(!battle_config.exp_calc_type && count > 1)
+	{	//Apply first-attacker 200% exp share bonus
+		//TODO: Determine if this should go before calculating the MVP player instead of after.
+		md->tdmg += md->dmglog[0].dmg;
+		md->dmglog[0].dmg<<=1;
+	}
 
 	if(!(type&2) && //No exp
 		(!map[md->bl.m].flag.pvp || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
