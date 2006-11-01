@@ -35,7 +35,40 @@ L_End:
   close;
 }
 
+//= Elevator to Floor 2 ======================================
+kh_dun01.gat,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
 
+  mes "The elevator seems to be broken.";
+  mes "But you could repair it with";
+  mes "^0000FF4 Hard Pieces of Steel^000000.";
+  next;
+
+  mes "Be careful, though.";
+  mes "This will only work once and there's no turning back.";
+  next;
+
+  mes "Do you want to repair the elevator?";
+  next;
+
+  menu "Yes.",-,"No.",L_End;
+  
+  if(countitem(7507)<4) goto L_NoItem;
+  delitem 7507,4;
+  mes "The elevator starts moving.";
+  mes "You quickly jump into it.";
+  close2;
+  
+  warp "kh_dun02",44,195;
+  end;
+
+L_NoItem:
+  mes "It appears you don't have enough items.";
+L_End:
+  mes "The elevator remains broken.";
+  close;
+}
+
+kh_dun01.gat,36,195,4	duplicate(khelevator)	Switch#khe2	111,
 
 //= Custom Kiel Dungeon Warps ================================
 //kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197

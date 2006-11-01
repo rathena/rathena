@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/01
+	* Added entrance to Kiel Dungeon F2 [Playtester]
 	* Training grounds: Now Kafra Tickets are given at correct NPC/Actions [Lupus]
 		Only at Kafra Employee 118,108  & Hanson 100,29
 10/31
