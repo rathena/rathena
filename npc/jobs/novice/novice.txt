@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
-//= Ep 9+ Novice Training Grounds
+//= Ep 10+ Novice Training Grounds
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.4 Added Kafra Free Cart Tickets, as in official one [Lupus]
 //= 1.5 Fixed warps, removed map duplicates, typos [Lupus]
 //= 1.6 Changed clone maps new_1-? -> new_zone0? [Lupus]
+//= 1.7 Now Kafra Tickets are given at correct NPC/Actions [Lupus]
 //============================================================ 
 
 //====================================================================
@@ -143,7 +144,7 @@ new_zone01.gat,53,114,4	script	Shion	727,{
 		mes "Grounds, you'll earn all sorts of";
 		mes "things that will help you play the";
 		mes "game. You'll even have the chance";
-		mes "to get zeny and other rewards.";
+		mes "to get Zeny and other rewards.";
 		next;
 		mes "[Shion]";
 		mes "You can even gain";
@@ -1103,7 +1104,6 @@ L_loop:
 			if (!(NEW_JOBLVUP)) {
 				set NEW_JOBLVUP,1;
 				set JobExp,JobExp+151;
-				getitem 7059,5;
 			}
 			mes "Remember though, that in the case of Equipment, each item takes up one Inventory Slot. The maximum number of items that can be placed in Kafra Storage is 30,000.";
 			break;
@@ -1118,10 +1118,6 @@ L_loop:
 			mes "[Kafra Employee]";
 			mes "We thank our valued customers for their great support and continue to provide them with the best";
 			mes "of service.";
-			if (!(NEW_WARPTICKET)) {
-				set NEW_WARPTICKET,1;
-				getitem 7060,5;
-			}
 			break;
 		case 4:	mes "[Kafra Employee]";
 			mes "The Kafra Corporation";
@@ -1138,10 +1134,6 @@ L_loop:
 			mes "The Cart Rental service";
 			mes "charge will differ from";
 			mes "town to town.";
-			if (!(NEW_CARTTICKET)) {
-				set NEW_CARTTICKET,1;
-				getitem 7061,5;
-			}
 			break;
 		case 5:	mes "[Kafra Employee]";
 			mes "I hope you are satisfied with my";
@@ -1161,10 +1153,9 @@ L_prewarp:
 		getitem 2112,1;
 		getitem 601,10;
 		getitem 602,2;
-		if(!NEW_JOBLVUP) getitem 7059,5;
-		if(!NEW_WARPTICKET) getitem 7060,5;
-		//don't give Cart Tickets
 	}
+	getitem 7059,5;	//Free Storage Ticket
+	getitem 7060,5;	//Free Warp Ticket
 	set NEW_MES_FLAG0,0;
 	set NEW_MES_FLAG1,0;
 	set NEW_MES_FLAG2,0;
@@ -1174,9 +1165,6 @@ L_prewarp:
 	set NEW_LVUP0,0;
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
-	set NEW_CARTTICKET,0;
-	set NEW_WARPTICKET,0;
-	set NEW_ADVSUIT,0;
 	return;
 }
 
@@ -1694,7 +1682,7 @@ L_loop1:
 			mes "you can find a full explanation";
 			mes "about trade and exchange with";
 			mes "pictures.";
-			mes "In order to trade items or zeny";
+			mes "In order to trade items or Zeny";
 			mes "with other people, you must learn";
 			mes "at least level 1 basic skill.";
 			next;
@@ -1726,9 +1714,9 @@ L_loop1:
 			mes "For item trade, you should click an";
 			mes "item and drag it to the left side";
 			mes "of the window.";
-			mes "For zeny trade, you can enter the";
-			mes "amount of zeny you want to trade.";
-			mes "After placing items or zeny into";
+			mes "For Zeny trade, you can enter the";
+			mes "amount of Zeny you want to trade.";
+			mes "After placing items or Zeny into";
 			mes "the trade windows";
 			mes "you should press the 'OK' button on";
 			mes "the bottom of the windows.";
@@ -3130,10 +3118,25 @@ L_loop2:
 		case 5:	mes "1 Battle Axe";
 			getitem 1351,1;
 		}
-		mes "7 Phracons";
+		if( @JOB_NUMBER_CHK == 5 ){
+			mes "^0000304 Free Tickets for Kafra Storage";
+			mes "4 Free Tickets for Kafra Transportation";
+			mes "4 Free Tickets for the Cart Service";
+			getitem 7059,4;
+			getitem 7060,4;
+			getitem 7061,4;
+		}else{
+			mes "^0000305 Free Tickets for Kafra Storage";
+			mes "5 Free Tickets for Kafra Transportation";
+			getitem 7059,5;
+			getitem 7060,5;
+		}
+		mes "^0000997 Phracons";
 		mes "10 Novices Red Potions^000000";
+		mes "^000030100 Zeny^000000";
 		getitem 1010,7;
 		getitem 569,10;
+		set Zeny,Zeny+100;
 		next;
 		mes "[Hanson]";
 		mes "All the supplies have been given to";
@@ -3290,14 +3293,17 @@ L_loop2:
 	mes "supplies, I will send you to";
 	mes "the associated town.";
 	next;
-	if(!NEW_ADVSUIT){
-		mes "^882420Item Offer List";
-		mes "^0000301 Adventurer's Suit";
-		mes "^00009910 Novices Red Potions^000000";
-		set NEW_ADVSUIT,1;
-		getitem 2305,1;
-		getitem 569,10;
-	}
+	mes "^882420Item Offer List";
+	mes "^0000301 Adventurer's Suit";
+	mes "^00009910 Novices Red Potions";
+	mes "^0000305 Free Tickets for Kafra Storage";
+	mes "^0000995 Free Tickets for Kafra Transportation";
+	mes "^000030100 Zeny^000000";
+	getitem 7059,5;
+	getitem 7060,5;
+	getitem 2305,1;
+	getitem 569,10;
+	set Zeny,Zeny+100;
 	next;
 	mes "[Hanson]";
 	mes "All the supplies have been given to";
@@ -3396,9 +3402,6 @@ L_cleararg:
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
 	set NEW_GETITEM,0;
-	set NEW_CARTTICKET,0;
-	set NEW_WARPTICKET,0;
-	set NEW_ADVSUIT,0;
 	set NOV_3_SWORDMAN,0;
 	set NOV_3_ARCHER,0;
 	set NOV_3_THIEF,0;

@@ -79,28 +79,8 @@ function	script	F_ClearJobVar	{
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
 	//DTS Vote System
-	if(dtseligible == 2) set MISC_QUEST,MISC_QUEST|128;
-	if(dtseligible == 3) set dtseligible,0;
-	if($talk) set $talk,0;
 	if($dtsglobalelig) set $dtsglobalelig,0;
 	if($dts&(1<<6)) set $dts,$dts&~(1<<6);
-	//Misc Quests
-	if(MARIANNE) {set MISC_QUEST,MISC_QUEST | 1; set MARIANNE,0;}
-	set MEAT,0; set MORRISON,0;
-	set BUNYBND,0; set TEMPESTRA,0; 
-	set sewer_prt,0; set iz_move_alberta,0;
-	if(MORGEN >= 2) {set MISC_QUEST,MISC_QUEST | 4; set MORGEN,0;}
-	//Valhalla Remember Quest Skills. Unused
-	set QSK1,0; set QSK2,0; set QSK3,0; set QSK4,0;
-	//Niflheim
-	if(nif_q_done) {set nif_q_done,0; set MISC_QUEST,MISC_QUEST | 64;}
-	if(niflheimlost2) set MISC_QUEST,MISC_QUEST | 256;
-	set niflheimlost2,0; set niflheimlost,0; set lostgirl,0;
-	set nif_t,0; set nif_random,0; set nif_random1,0;
-	if(MISC_QUEST&32){set nif_quest1,0; set nif_quest2,0; set nif_quest3,0; set nif_quest4,0; set nif_quest5,0;}
-	//1st Class Quest Skills
-	set ARWCRFT,0; set HOLYLIGHT,0; set ARWREP,0; set ENRGYCOAT,0; set CRAZYROAR,0; set CHANGECART,0; set CARTREVO,0;
-	set SANDATTACK,0; set STONEFLING,0; set BACKSLIDE,0; set BAGNFNTY,0;
 	//Cube Room
 	if(hzdun) {
 		set MISC_QUEST,MISC_QUEST|512;
@@ -108,10 +88,6 @@ function	script	F_ClearGarbage	{
 		set num6,0;	set num7,0;	set num8,0;	set num9,0;
 		set hzdun,0; set cubekey,0; set piciburn,0;
 	}
-	set axe,0;	set ykey,0;	set box,0;	
-	set knife,0;	set redkey,0;	set srod1,0;	set srod2,0;
-	set fkey,0;	set gkey,0;	set polygon,0;	set machine,0;
-	set bkey,0;	set ellipse,0;	set quadrangle,0;	set rod,0;
 	return;
 }
 

@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/01
+	* Training grounds: Now Kafra Tickets are given at correct NPC/Actions [Lupus]
+		Only at Kafra Employee 118,108  & Hanson 100,29
 10/31
 	* Official X.4 spawn mob types [Playtester]
 	- numbers are official on 90% of the maps
