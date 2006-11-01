@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/01
+	* Reverted LK_Berserk HP requirement [Vicious]
 10/30
 	* Added some official X.4 drop rates [Playtester]
 	* Corrected GS skill ranges using Aegis data. All their targetted skills
