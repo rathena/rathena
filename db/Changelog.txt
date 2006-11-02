@@ -20,6 +20,9 @@
 
 ========================
 11/02
+	* Official Gunslinger/Ninja weapon drops [Playtester]
+	- updated other mob drops A-M
+	- updated related item names
 	* Official X.4 mob drops [Playtester]
 	* Fixed Aliot's Rebirth skill [Playtester]
 11/01
