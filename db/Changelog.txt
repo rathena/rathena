@@ -20,6 +20,7 @@
 
 ========================
 11/02
+	* Official X.4 mob drops [Playtester]
 	* Fixed Aliot's Rebirth skill [Playtester]
 11/01
 	* Reverted LK_Berserk HP requirement [Vicious]
