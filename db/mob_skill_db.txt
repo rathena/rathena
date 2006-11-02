@@ -3704,7 +3704,7 @@
 //1735,Alicel@?
 1736,Aliot@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
 1736,Aliot@BS_MAXIMIZE,chase,114,5,500,1000,5000,no,self,always,0,,,,,,
-1736,Aliot@NPC_REBIRTH,any,208,2,500,0,0,yes,self,always,0,,,,,,
+1736,Aliot@NPC_REBIRTH,dead,208,2,5000,0,0,yes,self,always,0,,,,,,
 1736,Aliot@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
 1736,Aliot@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
 1736,Aliot@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,
@@ -3724,7 +3724,7 @@
 //1739,Alicel@?
 1740,Aliot@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
 1740,Aliot@BS_MAXIMIZE,chase,114,5,500,1000,5000,no,self,always,0,,,,,,
-1740,Aliot@NPC_REBIRTH,any,208,2,500,0,0,yes,self,always,0,,,,,,
+1740,Aliot@NPC_REBIRTH,dead,208,2,5000,0,0,yes,self,always,0,,,,,,
 1740,Aliot@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
 1740,Aliot@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
 1740,Aliot@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,

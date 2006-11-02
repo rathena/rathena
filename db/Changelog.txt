@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/02
+	* Fixed Aliot's Rebirth skill [Playtester]
 11/01
 	* Reverted LK_Berserk HP requirement [Vicious]
 10/30
