@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/02
+	* Fixed typos and item names in DTS warper, 2006 Headgear Quest [Lupus]
 11/01
 	* Added entrance to Kiel Dungeon F2 [Playtester]
 	* Training grounds: Now Kafra Tickets are given at correct NPC/Actions [Lupus]

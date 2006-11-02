@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.3b
+//= 2.3c
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -70,7 +70,7 @@
 //=	Fixed bug that involved having both warpers enabled at the same time. [Evera]
 //=	New $dtsday system and bug fix[Evera]
 //= 2.3a fixed 2 bugs with comparision [Lupus]
-//= 2.3b corrected Glast warp coords [Lupus]
+//= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
 //============================================================ 
 
 //Yuno
@@ -796,7 +796,7 @@ function	script	F_DTS_Warp	{
 		mes "or award Special Reserve Points";
 		mes "for this service. Now, please";
 		mes "choose your destination.";
-		setarray @dtswarpmap$[0],"Bailand, Level 4","Clock Tower, Basement 3";
+		setarray @dtswarpmap$[0],"Byalan, Level 4","Clock Tower, Basement 3";
 		setarray @dtswarp$[0],@dtswarpmap$[0]+" -> 4,000z",
 		@dtswarpmap$[1]+" -> 4,000z","Cancel";
 		if($dts&(1<<4)){ 
@@ -846,7 +846,7 @@ function	script	F_DTS_Warp	{
 
 		if (@dtswarpmap$[@num] == "Lava Dungeon, Level 2") warp "mag_dun02.gat",47,40;
 
-		if (@dtswarpmap$[@num] == "Bailand, Level 4") warp "iz_dun03.gat",32,63;
+		if (@dtswarpmap$[@num] == "Byalan, Level 4") warp "iz_dun03.gat",32,63;
 
 		if (@dtswarpmap$[@num] == "Clock Tower, Basement 3") warp "alde_dun03.gat",277,178;
 

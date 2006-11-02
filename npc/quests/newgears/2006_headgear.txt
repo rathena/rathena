@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.0b
+//= 1.0c
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.0a fixed typos, added missing names, more cleaned and
 //= standartized stuff a bit [Lupus]
 //= 1.0b fixed Helm of Valkyries ingredients
+//= 1.0c corrected item names according to item_db [Lupus]
 //============================================================
 
 
@@ -166,8 +167,8 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			mes "1 Hode Card,";
 			mes "1 Elder Card,";
 			mes "1 Nightmare Terror Card,";
-			mes "1000 Runes of Darkness and";
-			mes "1000 Runes of Bloody Color.";
+			mes "1000 Darkness Runes and";
+			mes "1000 Bloody Runes.";
 			next;
 			mes @npcname$;
 			if ( (countitem(4219)<1) || (countitem(4114)<1) || (countitem(4177)<1) || (countitem(4259)<1) || (countitem(4212)<1) || (countitem(4073)<1) || (countitem(4112)<1) || (countitem(4081)<1) || (countitem(4251)<1) || (countitem(4166)<1) || (countitem(7511)<1000) || (countitem(7563)<1000) ) {
@@ -257,7 +258,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 
 		case 2:
 			mes @npcname$;
-			mes "Okay, for the Lion Mask I need:";
+			mes "Okay, for the Lion Masquerade I need:";
 			mes "1 Four-Leaf Clover,";
 			mes "500 Trunks,";
 			mes "10 Elastic Bands,";
@@ -294,7 +295,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 			mes "500 Trunks,";
 			mes "10 Elastic Bands,";
 			mes "20 Skirts of Virgin,";
-			mes "500 Transparent Clothes,";
+			mes "500 Transparent Celestial Robes,";
 			mes "2 Ancient Lips and";
 			mes "100 Squid Inks.";
 			next;
@@ -357,10 +358,10 @@ payon.gat,137,123,5	script	Hangaram	740,{
 		case 1:
 			mes @npcname$;
 			mes "^3355FFJudge Hat^000000";
-			mes "7 Red Orbs,";
-			mes "7 Blue Orbs,";
-			mes "7 Yellow Orbs,";
-			mes "7 Green Orbs,";
+			mes "7 Red Bijou,";
+			mes "7 Blue Bijou,";
+			mes "7 Yellow Bijou,";
+			mes "7 Green Bijou,";
 			mes "300 Shining Scales,";
 			next;
 			mes "1 Black Dyestuff,";
@@ -427,10 +428,10 @@ payon.gat,137,123,5	script	Hangaram	740,{
 		case 2:
 			mes @npcname$;
 			mes "^3355FFA-Yam Hat^000000";
-			mes "7 Red Orbs,";
-			mes "7 Blue Orbs,";
-			mes "7 Yellow Orbs,";
-			mes "7 Green Orbs,";
+			mes "7 Red Bijou,";
+			mes "7 Blue Bijou,";
+			mes "7 Yellow Bijou,";
+			mes "7 Green Bijou,";
 			mes "300 Shining Scales,";
 			next;
 			mes "1 Scarlet Dyestuff,";
@@ -462,7 +463,7 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			next;
 	
 			mes @npcname$;
-			mes "We throw this ... Mmm..";
+			mes "We throw this... Mmm..";
 			emotion 23;	
 			next;
 
