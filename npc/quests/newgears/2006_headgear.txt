@@ -8,7 +8,7 @@
 //= SVN eA
 //===== Description: =========================================
 //= Anonymous Mask, Feather Beret, Valk. Helm, Smiling Mask,
-//= Lion Masquerade, Bride Mask, Judge Hat and A-yam Hat
+//= Lion Masquerade, Bride Mask, Judge Hat and A-Yam Hat
 //===== Additional Comments: =================================
 //= NPC id's and dialog are custom, please replace
 //= 1.0a fixed typos, added missing names, more cleaned and
@@ -143,7 +143,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 	next;
 	mes @npcname$;
 	mes "The bravest of Warriors were rewarded with";
-	mes "the Heml of the Valkyries";
+	mes "the Valkyrie Helm";
 	mes "But.. those days are long since passed..";
 	mes "I suppose I could make you one, if you can";
 	mes "gather what I need.";
@@ -192,7 +192,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 			next;
 			getitem 5171,1;
 			mes @npcname$;
-			mes "This is a serious honor.. You have proven yourself a brave and honorable Warrior, Wear this with Pride";
+			mes "This is a serious honour... You have proven yourself a brave and honorable Warrior, Wear this with Pride.";
 			close;
 
 		case 2:
@@ -202,7 +202,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 	}
 
 	L_POOR:
-		mes "My time is worth more than the fortunes of Rune-Midgard and Arunafelz combined..";
+		mes "My time is worth more than the fortunes of Rune-Midgard and Arunafelz combined...";
 		close;
 
 }
@@ -333,7 +333,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 
 
 
-//====================== Judge Hat / A-yam Hat =============================================
+//====================== Judge Hat / A-Yam Hat =============================================
 
 payon.gat,137,123,5	script	Hangaram	740,{
 	set @npcname$,"[Hangaram]";
@@ -352,7 +352,7 @@ payon.gat,137,123,5	script	Hangaram	740,{
 	mes "Which Hat do you want?";
 	next;
 		
-	switch(select("Judge Hat","A-yam Hat","No thanks"))
+	switch(select("Judge Hat","A-Yam Hat","No thanks"))
 	{
 
 		case 1:
@@ -368,12 +368,11 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			mes "5 Cracked Diamond and";
 			mes "1 Slotted Hat.";
 			next;
-
+			mes @npcname$;
 			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(983)<1) || (countitem(733)<5) || (countitem(2221)<1) ){
 				mes "Please, return when you have everything I need.";
 				close;
 			}
-
 			delitem 7445,7;
 			delitem 7446,7;
 			delitem 7447,7;
@@ -383,7 +382,6 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			delitem 733,5;
 			delitem 2221,1;
 
-			mes @npcname$;
 			mes "Ok you seem to have all the items.";
 			next;
 
@@ -438,12 +436,11 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			mes "5 Cracked Diamonds and";
 			mes "50 Soft Silks.";
 			next;
-
+			mes @npcname$;
 			if( (countitem(7445)<7) || (countitem(7446)<7) || (countitem(7447)<7) || (countitem(7448)<7) || (countitem(954)<300) || (countitem(975)<1) || (countitem(733)<5) || (countitem(7166)<50) ){
-				mes "Please return when you have everything I need";
+				mes "Please return when you have everything I need.";
 				close;
 			}
-			
 			delitem 7445,7;
 			delitem 7446,7;
 			delitem 7447,7;
@@ -453,7 +450,6 @@ payon.gat,137,123,5	script	Hangaram	740,{
 			delitem 733,5;
 			delitem 7166,50;
 
-			mes @npcname$;
 			mes "Well, you have everything.";
 			next;
 

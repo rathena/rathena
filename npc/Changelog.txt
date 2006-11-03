@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/02
+	* Amatsu Field: Fixed Hydra -> G_Hydra (to fix drops exploit) [Lupus]
 	* Fixed typos and item names in DTS warper, 2006 Headgear Quest [Lupus]
 11/01
 	* Added entrance to Kiel Dungeon F2 [Playtester]
