@@ -20,6 +20,7 @@
 
 ========================
 11/03
+	* Official NJ/GS job exp up to joblevel 50 [Playtester]
 	* Remaining official X.4 drop updates [Playtester]
 	- updated related item names
 11/02
