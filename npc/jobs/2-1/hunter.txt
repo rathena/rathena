@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2a
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged JFunc, fixed missing dialogues [Lupus]
 //= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
+//= 2.3 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -415,42 +416,45 @@ L_Start:
 		mes "Let's see... the items you need to gather are.....";
 		next;
 		set HNTR_Q2, rand(1,5);
-		if(HNTR_Q2 == 2) goto sL_2;
-		if(HNTR_Q2 == 3) goto sL_3;
-		if(HNTR_Q2 == 4) goto sL_4;
-		if(HNTR_Q2 == 5) goto sL_5;
-
-		sL_1:
-			mes "[Demon Hunter]";
-			mes "^5533FF20 Bill of Birds^000000 for arrow heads.";
-			mes "^5533FF5 Skel-Bones^000000 used here and there.";
-			mes "and ^5533FF20 green herbs^000000.";
-			goto L_Cont;
-		sL_2:
-			mes "[Demon Hunter]";
-			mes "^5533FF7 Venom Canine.";
-			mes "20 Animal Skins.";
-			mes "and 15 red herbs^000000.";
-			goto L_Cont;
-		sL_3:
-			mes "[Demon Hunter]";
-			mes "^5533FF3 Dokebi Horns";
-			mes "3 Pieces of Egg Shell.";
+	L_Repeat:
+		mes "[Demon Hunter]";
+		switch(HNTR_Q2){
+		case 1:
+			mes "^5533FF3 Bill of Birds^000000 for arrow heads,";
+			mes "^5533FF5 Skel-Bones^000000 used here and there";
+			mes "and ^5533FF3 Green Herbs^000000.";
+			break;
+		case 2:
+			mes "^5533FF3 Venom Canine,";
+			mes "3 Animal Skins";
+			mes "and 5 Red Herbs^000000.";
+			break;
+		case 3:
+			mes "^5533FF3 Dokebi Horns,";
+			mes "3 Pieces of Egg Shell";
 			mes "and 10 Feathers^000000.";
-			goto L_Cont;
-		sL_4:
-			mes "[Demon Hunter]";
-			mes "^5533FF20 Rainbow Shells";
-			mes "20 Chrysalis";
-			mes "9 Yellow Herbs^000000";
-			goto L_Cont;
-		sL_5:
-			mes "[Demon Hunter]";
-			mes "^5533FF20 Tooths of Bat.";
-			mes "20 Sticky Mucus.";
-			mes "and 5 Bears foot skin^000000";
-
-		L_Cont:
+			break;
+		case 4:
+			mes "^5533FF9 Yellow Herbs,";
+			mes "9 Worm Peelings";
+			mes "and 9 Shells^000000.";
+			break;
+		case 5:
+			mes "^5533FF3 Tooths of Bat,";
+			mes "1 Sticky Mucus";
+			mes "and 1 Bears Foot Skin^000000.";
+			break;
+		case 6:
+			mes "^5533FF1 Yoyo Tail,";
+			mes "2 Porcupine Quills";
+			mes "and 1 Acorn^000000.";
+			break;
+		case 7:
+			mes "^5533FF3 White Herbs,";
+			mes "5 Trunks";
+			mes "and 5 Claws of Desert Wolf^000000.";
+			break;
+		}
 		next;
 		mes "[Demon Hunter]";
 		mes "When you get all of the items return!";
@@ -459,7 +463,7 @@ L_Start:
 	M_No:
 		mes "[Demon Hunter]";
 		mes "Stop playing around "+strcharinfo(0)+", that's your name, right?";
-		menu "Yes",M_Yes, "uhhh no",sM_End;
+		menu "Yes",M_Yes, "Uhhh no",sM_End;
 	
 		sM_End:
 			mes "[Demon Hunter]";
@@ -471,49 +475,56 @@ L_Start:
 L_Check:
 	mes "Yes?";
 	next;
-	if(HNTR_Q2 == 1) goto L_1;
-	if(HNTR_Q2 == 2) goto L_2;
-	if(HNTR_Q2 == 3) goto L_3;
-	if(HNTR_Q2 == 4) goto L_4;
-	if(HNTR_Q2 == 5) goto L_5;
-
-	L_1:
-		if(countitem(925)<20 || countitem(932)<5 || countitem(511)<20) goto sL_1;
-		delitem 925, 20;
+	switch(HNTR_Q2){
+	case 1:
+		if(countitem(925)<3 || countitem(932)<5 || countitem(511)<3) goto L_Repeat;
+		delitem 925, 3;
 		delitem 932, 5;
-		delitem 511, 20;
-		goto L_End;
-	L_2:
-		if(countitem(937)<7 || countitem(919)<20 || countitem(507)<15) goto sL_2;				
-		delitem 937, 7;
-		delitem 919, 20;
-		delitem 507, 15;
-		goto L_End;
-	L_3:
-		if(countitem(1021)<3 || countitem(7032)<3 || countitem(949)<10) goto sL_3;	
+		delitem 511, 3;
+		break;
+	case 2:
+		if(countitem(937)<3 || countitem(919)<3 || countitem(507)<5) goto L_Repeat;
+		delitem 937, 3;
+		delitem 919, 3;
+		delitem 507, 5;
+		break;
+	case 3:
+		if(countitem(1021)<3 || countitem(7032)<3 || countitem(949)<10) goto L_Repeat;
 		delitem 1021, 3;
 		delitem 7032, 3;
 		delitem 949, 10;
-		goto L_End;
-	L_4:
-		if(countitem(1013)<20 || countitem(915)<20 || countitem(508)<9) goto sL_4;			
-		delitem 1013, 20;
-		delitem 915, 20;
+		break;
+	case 4:
+		if(countitem(508)<9 || countitem(955)<9 || countitem(935)<9) goto L_Repeat;
 		delitem 508, 9;
-		goto L_End;
-	L_5:
-		if(countitem(913)<20 || countitem(938)<20 || countitem(948)<5) goto sL_5;
-		delitem 913, 20;
-		delitem 938, 20;
-		delitem 948, 5;
-
-	L_End:
-		mes "[Demon Hunter]";
-		mes "Good job.  You brought all the necesarry items.  Now go find the ^5533FFGuild Master^000000.";
-		mes "I think he's somewhere in the ^5533FFArcher Guild^000000.  He'll give you your final test. Good luck.";
-		set HNTR_Q, 2;
-		set HNTR_Q2, 0;
-		close;
+		delitem 955, 9;
+		delitem 935, 9;
+		break;
+	case 5:
+		if(countitem(913)<3 || countitem(938)<1 || countitem(948)<1) goto L_Repeat;
+		delitem 913, 3;
+		delitem 938, 1;
+		delitem 948, 1;
+		break;
+	case 6:
+		if(countitem(942)<1 || countitem(1027)<2 || countitem(1026)<1) goto L_Repeat;
+		delitem 942, 1;
+		delitem 1027, 2;
+		delitem 1026, 1;
+		break;
+	case 7:
+		if(countitem(509)<3 || countitem(1019)<5 || countitem(7030)<5) goto L_Repeat;
+		delitem 509, 3;
+		delitem 1019, 5;
+		delitem 7030, 5;
+		break;
+	}
+	mes "[Demon Hunter]";
+	mes "Good job.  You brought all the necesarry items.  Now go find the ^5533FFGuild Master^000000.";
+	mes "I think he's somewhere in the ^5533FFArcher Guild^000000.  He'll give you your final test. Good luck.";
+	set HNTR_Q, 2;
+	set HNTR_Q2, 0;
+	close;
 
 L_Test3:
 	mes "Huh? Can't you find the guild master? He should be in the ^5533FFArcher Guild in Archer village^000000. Go find him.";
@@ -523,7 +534,6 @@ L_Test3:
 L_Done:
 	mes "Ah, you passed the test! Congrats, go see Sharin now.";
 	close;
-
 }
 
 

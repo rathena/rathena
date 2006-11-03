@@ -4,7 +4,7 @@
 //= Edited And removed irrelevent comments by eAthena Dev Team
 //= Draike\Bluto\Hephaestus
 //===== Current Version: =====================================
-//= 2.2
+//= 2.2a
 //===== Compatible With: =====================================
 //= eAthena SVN 02/05/2005 +
 //===== Description: =========================================
@@ -262,7 +262,6 @@ Notime:
 	end;
 
 Itin:
-next;
 mes "^FF0000[Porter]^000000";
 callfunc "F_Itin";
 }
@@ -358,7 +357,6 @@ Lyes:
 	specialeffect2 501;
 
 Lnope:
-	next;
 	mes "^FF0000[Airplane Attendant]^000000";
 	mes "Have a good day.  Thank you for traveling with us.";
 	close;

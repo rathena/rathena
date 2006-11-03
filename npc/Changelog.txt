@@ -33,8 +33,13 @@ KarLaeda
 
 Date		Added
 ======
+11/04
+	* Updated Hunter Job Quest: 7 official item sets of Demon Hunter [Lupus]
+		thanks to Dr.Evil
 11/02
+	* Removed extra NEXT; from custom\airplane.txt, thanks to $ephiroth
 	* Amatsu Field: Fixed Hydra -> G_Hydra (to fix drops exploit) [Lupus]
+		U can put there a normal Hydra to open free Hydra Cards + Macros exploit
 	* Fixed typos and item names in DTS warper, 2006 Headgear Quest [Lupus]
 11/01
 	* Added entrance to Kiel Dungeon F2 [Playtester]
