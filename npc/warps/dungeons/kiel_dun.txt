@@ -40,7 +40,7 @@ kh_dun01.gat,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
 
   mes "The elevator seems to be broken.";
   mes "But you could repair it with";
-  mes "^0000FF4 Hard Pieces of Steel^000000.";
+  mes "^0000FF40 Hard Pieces of Steel^000000.";
   next;
 
   mes "Be careful, though.";
@@ -52,8 +52,8 @@ kh_dun01.gat,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
 
   menu "Yes.",-,"No.",L_End;
   
-  if(countitem(7507)<4) goto L_NoItem;
-  delitem 7507,4;
+  if(countitem(7507)<40) goto L_NoItem;
+  delitem 7507,40;
   mes "The elevator starts moving.";
   mes "You quickly jump into it.";
   close2;
