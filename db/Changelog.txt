@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/03
+	* Remaining official X.4 drop updates [Playtester]
+	- updated related item names
 11/02
 	* Official Gunslinger/Ninja weapon drops [Playtester]
 	- updated other mob drops A-M
