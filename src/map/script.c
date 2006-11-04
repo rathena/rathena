@@ -3380,6 +3380,7 @@ int buildin_announce(struct script_state *st);
 int buildin_mapannounce(struct script_state *st);
 int buildin_areaannounce(struct script_state *st);
 int buildin_getusers(struct script_state *st);
+int buildin_getmapguildusers(struct script_state *st);
 int buildin_getmapusers(struct script_state *st);
 int buildin_getareausers(struct script_state *st);
 int buildin_getareadropitem(struct script_state *st);
@@ -3708,6 +3709,7 @@ struct script_function buildin_func[] = {
 	{buildin_mapannounce,"mapannounce","ssi*"},
 	{buildin_areaannounce,"areaannounce","siiiisi*"},
 	{buildin_getusers,"getusers","i"},
+	{buildin_getmapguildusers,"getmapguildusers","si"},
 	{buildin_getmapusers,"getmapusers","s"},
 	{buildin_getareausers,"getareausers","siiii"},
 	{buildin_getareadropitem,"getareadropitem","siiiii"},
@@ -3798,7 +3800,7 @@ struct script_function buildin_func[] = {
 	{buildin_specialeffect,"specialeffect","i*"}, // npc skill effect [Valaris]
 	{buildin_specialeffect2,"specialeffect2","i*"}, // skill effect on players[Valaris]
 	{buildin_nude,"nude",""}, // nude command [Valaris]
-	{buildin_mapwarp,"mapwarp","ssii"},		// Added by RoVeRT
+	{buildin_mapwarp,"mapwarp","ssiiii"},		// Added by RoVeRT
 	{buildin_inittimer,"inittimer",""},
 	{buildin_stoptimer,"stoptimer",""},
 	{buildin_cmdothernpc,"cmdothernpc","ss"},
@@ -7415,6 +7417,36 @@ int buildin_getusersname(struct script_state *st)
 	return 0;
 }
 /*==========================================
+ * getmapguildusers("mapname.gat",guild ID) Returns the number guild members present on a map [Reddozen]
+ *------------------------------------------
+ */
+int buildin_getmapguildusers(struct script_state *st) {
+	char *str;
+	int m, gid;
+	int i=0,c=0;
+	str=conv_str(st, &(st->stack->stack_data[st->start+2]));
+	gid=conv_num(st, &(st->stack->stack_data[st->start+3]));
+	if ((m = map_mapname2mapid(str)) < 0) { // map id on this server (m == -1 if not in actual map-server)
+		push_val(st->stack, C_INT, -1);
+		return 0;
+	}
+	struct guild *g = guild_search(gid);
+
+	if (g){
+		for(i = 0; i < g->max_member; i++)
+		{
+			if (g->member[i].sd )
+			{
+				if(g->member[i].sd->bl.m == m)
+					c++;
+			}
+		}
+	}
+
+	push_val(st->stack, C_INT, c);
+	return 0;
+}
+/*==========================================
  * マップ指定ユーザー数所得
  *------------------------------------------
  */
@@ -9052,9 +9084,14 @@ int buildin_failedremovecards(struct script_state *st)
 	return 0;
 }
 
+/* ================================================================
+ * mapwarp "<from map>","<to map>",<x>,<y>,<type>,<ID for Type>;
+ * type: 0=everyone, 1=guild, 2=party(uncoded);	[Reddozen]
+ * ================================================================
+ */
 int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 {
-	int x,y,m;
+	int x,y,m,check_val=0,check_ID=0,i=0;
 	char *str;
 	char *mapname;
 	unsigned int index;
@@ -9062,14 +9099,32 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	y=conv_num(st,& (st->stack->stack_data[st->start+5]));
+	check_val=conv_num(st,& (st->stack->stack_data[st->start+6]));
+	check_ID=conv_num(st,& (st->stack->stack_data[st->start+7]));
 
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return 0;
 
 	if(!(index=mapindex_name2id(str)))
 		return 0;
+
+	if(!(check_val))
 	map_foreachinmap(buildin_areawarp_sub,
 		m,BL_PC,index,x,y);
+
+	if(check_val==1){
+		struct guild *g = guild_search(check_ID);
+
+		if (g){
+			for( i=0; i < g->max_member; i++)
+			{
+				if(g->member[i].sd && g->member[i].sd->bl.m==m){
+					pc_setpos(g->member[i].sd,index,x,y,3);
+				}
+			}
+		}
+	}
+
 	return 0;
 }
 
