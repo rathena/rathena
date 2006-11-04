@@ -967,7 +967,7 @@ in_rogue.gat,370,320,0	script	rogue04	45,1,1,{
 //================================================
 // Timer: Keeps monsters from overspawning
 //================================================
-- script RogueTest3 -1,{
+-	script	RogueTest3	-1,{
 	end;
 
 OnMinute10:

@@ -557,7 +557,7 @@ force_1-1.gat,25,26,0	script	arenalv3fail	-1,{
 }
 
 // Reminding the player of time constraints.
-force_1-1.gat,25,26,0	script 	tensecsleft	-1,{
+force_1-1.gat,25,26,0	script	tensecsleft	-1,{
 	announce "Ten seconds remaining!",3;
 }
 

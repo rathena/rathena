@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/04
+	* Many small fixes - tabs, parenthesis [KarLaeda]
 	* Fixed Weight check in 1st class quests [Lupus]
 	- Added missing tabs to airship
 11/03

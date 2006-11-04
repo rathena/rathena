@@ -4,7 +4,7 @@
 //= Old Warper 2 by Darkchild - Remade with quest format by DZeroX
 //= Huge Rewrite by Neouni
 //===== Current Version: ==========================================
-//= 2.0b
+//= 2.0c
 //===== Compatible With: ==========================================
 //= Any eAthena Version
 //===== Description: ==============================================
@@ -70,8 +70,8 @@
 // - Limits dungeon based on Depth, access special setup menu thru GM-Menu
 // - Dungeon fees split up based on  Basic , Advanced & Overseas
 // - Old Dungeon fee system removed, all dungeon fees now set to 0
-//-2.0b
-// - Special warpname menu option name bug fixed
+//-2.0b - Special warpname menu option name bug fixed
+//-2.0c - Parenthesis fixes [KarLaeda]
 //=================================================================
 
 //========================Function=&=Script========================
@@ -145,7 +145,7 @@ next;
 	if ($QW_HF == 1) mes "Healing full = ^00FF00 On ^000000";
 //----------------Healpart
 	if ($QW_HP == 1) mes "Healing partly = ^00FF00 On ^000000";
-	if (($QW_HF == 0)&&($QW_HP == 0)) mes "Healing = ^FF0000 Off ^000000";
+	if ($QW_HF == 0 && $QW_HP == 0) mes "Healing = ^FF0000 Off ^000000";
 //----------------Storage
 	if ($QW_Stor == 1) mes "Storage = ^00FF00 On ^000000";
 	if ($QW_Stor == 0) mes "Storage = ^FF0000 Off ^000000";
@@ -263,7 +263,7 @@ Setprice:
 	if ($QW_HP_S_PRICE != 0) mes "^0000FFSP ^000000Part Healing = ^00FF00 "+$QW_HP_S_PRICE+" ^000000 a point";
 	if ($QW_HP_S_PRICE == 0) mes "^0000FFSP ^000000Part Healing = ^FF0000 Free ^000000";
 //----------------Storage
-	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+	if ($QW_S_PRICE != 0 && $QW_S_PRICE != 60) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
 	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 //----------------Guild-Storage
@@ -349,7 +349,7 @@ case 8:
 
 case 9:
 	next;
-	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+	if ($QW_S_PRICE != 0 && $QW_S_PRICE != 60) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
 	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 	mes "Storage cost, if set to 60 Kafra pricing will be handled";
@@ -526,16 +526,16 @@ PHeal:
 	if(getarg(1) == 1) mes ""+@SpPrice+" Zeny for "+@Sp+" skill points";
 	set @total, @HpPrice+@SpPrice;
 	mes "for a total of "+@total+" zeny";
-    	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
-    	
-    	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
+	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
+	
+	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
 	if(getarg(1) == 1)set @SpPrice, (MaxSp-Sp)*$QW_HP_S_PRICE;
 	set @healfee, @HpPrice+@SpPrice;
-	if (getarg(0) == 1)&&(getarg(1) == 1)&&(Zeny<@healfee) goto Zeny_Short_Both;
-	if (getarg(0) == 1)&&(Zeny<@healfee) goto Zeny_short_HP;
-	if (getarg(1) == 1)&&(Zeny<@healfee) goto Zeny_short_SP;
+	if (getarg(0) == 1 && getarg(1) == 1 && Zeny<@healfee) goto Zeny_Short_Both;
+	if (getarg(0) == 1 && Zeny<@healfee) goto Zeny_short_HP;
+	if (getarg(1) == 1 && Zeny<@healfee) goto Zeny_short_SP;
 	set Zeny, Zeny-@healfee;
-	if (getarg(0) == 1)&&(getarg(1) == 1) percentheal 100,100;
+	if (getarg(0) == 1 && getarg(1) == 1) percentheal 100,100;
 	if (getarg(0) == 1) percentheal 100,0;
 	if (getarg(1) == 1) percentheal 0,100;
 	close;
@@ -553,28 +553,26 @@ Zeny_short_HP:
 	mes "do you want me to partly heal your HP ?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
-    	set @HpPrice, @Hp*$QW_HP_H_PRICE;
-    	if (@Hp == 1) mes "your not worth the effort";
-    	if (@Hp == 1) goto L_end;
-    	set Zeny, Zeny-@HpPrice;
+	set @HpPrice, @Hp*$QW_HP_H_PRICE;
+	if (@Hp == 1) mes "your not worth the effort";
+	if (@Hp == 1) goto L_end;
+	set Zeny, Zeny-@HpPrice;
 	heal @Hp,0;
 	close;
 	end;
-    	
 	
 Zeny_short_SP:
 	mes "[Warpra]";
 	mes "do you want me to partly heal your SP ?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Sp, Zeny/$QW_HP_S_PRICE;
-    	set @SpPrice, @Sp*$QW_HP_S_PRICE;
-    	if (@Sp == 1) mes "your not worth the effort";
-    	if (@Sp == 1) goto L_end;
-    	set Zeny, Zeny-@SpPrice;
+	set @SpPrice, @Sp*$QW_HP_S_PRICE;
+	if (@Sp == 1) mes "your not worth the effort";
+	if (@Sp == 1) goto L_end;
+	set Zeny, Zeny-@SpPrice;
 	heal 0,@Sp;
 	close;
 	end;
-
 
 //=============================Storage=============================
 
@@ -582,8 +580,7 @@ L_Storage:
 	next;
 	if(basicskillcheck(0) > 0 && getskilllv(1) < 6) goto L_StorageJBlow;
 	set @fee, $QW_S_PRICE;
-	if ($QW_S_PRICE == 60)&&(BaseJob == Job_Novice) set @fee, 30;
-	if ($QW_S_PRICE == 60)&&(BaseJob != Job_Novice) set @fee, 60;
+	if ($QW_S_PRICE == 60 && BaseJob == Job_Novice) set @fee, 30;
 	if(Zeny<@fee) callsub L_Short_on_zeny,2;
 	set Zeny, Zeny-@fee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
@@ -742,7 +739,7 @@ function	script	QWS_MMarray	{
 //----------------Special-Warp
 	callfunc "QWS_TownStamps";
 	callfunc "QWS_DungeonStamps";
-	if (@Tstamp == @MaxTstamp)&&(@Dstamp == @MaxDstamp)&&($QW_SP_WarpMap$ != "") {
+	if (@Tstamp == @MaxTstamp && @Dstamp == @MaxDstamp && $QW_SP_WarpMap$ != "") {
 	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
 	set @Mmenuref[@Mj],@Mi;
 	set @Mj,@Mj+1;
@@ -1046,10 +1043,10 @@ menu_item:
 	set @Ti,@Ti+1;
 	return;
 	}
-	if (@pTprice[@Ti] != 0)&&($QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
-	if (@pTprice[@Ti] == 0)&&($QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
-	if (@pTprice[@Ti] != 0)&&($QW_MapUserShow == 1) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" ["+getmapusers(@pTmap$[@Ti])+"]"+" -> "+@pTprice[@Ti];
-	if (@pTprice[@Ti] == 0)&&($QW_MapUserShow == 1) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" ["+getmapusers(@pTmap$[@Ti])+"]";
+	if (@pTprice[@Ti] != 0 && $QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
+	if (@pTprice[@Ti] == 0 && $QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
+	if (@pTprice[@Ti] != 0 && $QW_MapUserShow == 1) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" ["+getmapusers(@pTmap$[@Ti])+"]"+" -> "+@pTprice[@Ti];
+	if (@pTprice[@Ti] == 0 && $QW_MapUserShow == 1) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" ["+getmapusers(@pTmap$[@Ti])+"]";
 	set @Tmenuref[@Tj],@Ti;
 	set @Tj,@Tj+1;
 	set @Ti,@Ti+1;
@@ -1572,17 +1569,16 @@ function	script	QWS_DLarray	{
 	set @DWj,0; // That's the menu lines counter.
 	cleararray @DWLmenulist$[0],"",20; // Clearing the array to get rid off ghost items in menu
 	do {
-		if ($QW_DL == 0)||($QW_DDL >= @DDepth[@DWref]) {
-			
+		if ($QW_DL == 0 || $QW_DDL >= @DDepth[@DWref]) {
 			set @warpprice, (@pDprice[@DwarpMenu]+ (getd(@pDfee$[@DwarpMenu])*@DDepth[@DWref]));
 
-			if (@warpprice != 0)&&($QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" -> "+@warpprice;
-			if (@warpprice == 0)&&($QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref];
-			if (@warpprice != 0)&&($QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"] -> "+@warpprice;
-			if (@warpprice == 0)&&($QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"]";
+			if (@warpprice != 0 && $QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" -> "+@warpprice;
+			if (@warpprice == 0 && $QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref];
+			if (@warpprice != 0 && $QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"] -> "+@warpprice;
+			if (@warpprice == 0 && $QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"]";
 			set @DWLmenuref[@DWj],@DWref;
-		
-		set @DWj,@DWj+1;
+
+			set @DWj,@DWj+1;
 		}
 		set @DWref, @DWref+1;
 		set @DWi,@DWi+1;
@@ -1781,7 +1777,7 @@ function	script	QWS_Dungeon_Warpra	{
 	function QWS_D_getbin;
 	function QWS_D_setbin;
 	
-	if ((QWS_D_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
+	if (QWS_D_getbin(getarg(0)) == 0 && getarg(1) != "") {
 		mes "[Warpra]";
 		mes getarg(1)+" unlocked!";
 		QWS_D_setbin(getarg(0));
@@ -1827,7 +1823,7 @@ function	script	QWS_Town_Warpra	{
 	function QWS_T_getbin;
 	function QWS_T_setbin;
 	
-	if ((QWS_T_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
+	if (QWS_T_getbin(getarg(0)) == 0 && getarg(1) != "") {
 		mes "[Warpra]";
 		mes getarg(1)+" unlocked!";
 		QWS_T_setbin(getarg(0));

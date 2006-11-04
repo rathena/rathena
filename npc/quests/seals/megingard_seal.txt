@@ -2149,7 +2149,7 @@ in_rogue.gat,243,61,0	script	Suspicious Man#God	748,{
 									mes "You are same as others! Go away from me!";
 									set god_megin_2,0;
 									close;
-								break
+								break;
 								case 3:
 									mes "[Cuaque Donon]";
 									mes "And...that night...I heard ^0000FFhe^000000 had an argue with the leader.";

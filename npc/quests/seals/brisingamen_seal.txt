@@ -5096,21 +5096,21 @@ mjolnir_09.gat,85,129,0	script	#brisindwarf3	111,3,3,{
 			mes "Failed.";
 			mes "Failed...";
 			close;
-		break
+		break;
 		case 2:
 			specialeffect 109;
 			mes "[Echoing Voice]";
 			mes "Failed.";
 			mes "Failed...";
 			close;
-		break
+		break;
 		case 3:
 			specialeffect 109;
 			mes "[Echoing Voice]";
 			mes "Failed.";
 			mes "Failed...";
 			close;
-		break
+		break;
 		case 4:
 			specialeffect 109;
 			mes "[Echoing Voice]";
@@ -5124,7 +5124,7 @@ mjolnir_09.gat,85,129,0	script	#brisindwarf3	111,3,3,{
 			mes "gonna drown to death!";
 			mes "Who woke me up?";
 			close;
-		break
+		break;
 	}
 }
 	else

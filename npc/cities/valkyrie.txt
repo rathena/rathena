@@ -26,8 +26,8 @@
 
 
 // -== Warp's needed! ==-
-valkyrie.gat,48,73,0	warp	valk01	1,1,valkyrie.gat,48,64,0
-valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75,0
+valkyrie.gat,48,73,0	warp	valk01	1,1,valkyrie.gat,48,64
+valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75
 
 // -== Book of Ymir (Heavens Door) ==-
 yuno_in02.gat,93,207,0	script	Book of Ymir	111,{

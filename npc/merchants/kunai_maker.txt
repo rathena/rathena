@@ -47,7 +47,7 @@ L_Bye:
 	close;
 }
 
-function	script	Kunai_Trade	-1,{
+function	script	Kunai_Trade	{
 	next;
 	mes "[Jin]";
 	if (MaxWeight*50/100 < Weight) {

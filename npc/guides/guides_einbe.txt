@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_dib
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -15,8 +15,9 @@
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.4 Removed Duplicates [Silent]
+//= 1.4a missing tabs [KarLaeda]
 //============================================================
-einbech.gat,67,37,4 script Guide#1::Einbech_Guide 852,{
+einbech.gat,67,37,4	script	Guide#1::Einbech_Guide	852,{
 	cutin "ein_soldier",2;
 	mes "[Einbech Guide]";
 	mes "Welcome to Einbech, the Mining Town.";

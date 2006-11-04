@@ -737,7 +737,7 @@ payon.gat,160,185,0	script	Billboard	111,{
 	close;
 }
 
-payon.gat,173,238,5 script Jade#01 754,{
+payon.gat,173,238,5	script	Jade#01	754,{
 	mes "[Jade]";
 	mes "Bring me two";
 	mes "Gemstones of the";

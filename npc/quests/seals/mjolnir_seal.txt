@@ -2484,7 +2484,7 @@ mjolnir_01.gat,35,136,7	script	Dwarf Blacksmith#west	826,{
 				
 				PART16:
 					set @vestripart,6;
-					if (getequipisequiped(6)) goto L_Check2-1;
+					if (getequipisequiped(6)) goto L_Check21;
 					goto M_Menu2;
 				
 				PART17:

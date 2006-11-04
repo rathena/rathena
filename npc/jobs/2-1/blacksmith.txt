@@ -27,7 +27,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
-==============================================================
+//==============================================================
 
 
 

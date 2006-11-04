@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.0b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 0.9 Removed Duplicates [Toms]
 //= 1.0 Added a missing feature to the donation NPC [MasterOfMuppets]
 //= 1.0a added constants to emotions, minor optimization [Lupus]
+//= 1.0b npcid fix [KarLaeda]
 //=============================================================
 
 lighthalzen.gat,198,285,5	script	Jiwon	862,{
@@ -2016,7 +2017,7 @@ OnTouch:
 
 }
 
-lhz_in01.gat,23,137,0	duplicate(LhzTrig)	LhzHiddenTrg2	-1,1,1
+lhz_in01.gat,23,137,0	duplicate(LhzTrig)	LhzHiddenTrg2	139,1,1
 
 lhz_in01.gat,24,131,2	duplicate(LhzTrig)	Rekenber Guard#02	867
 

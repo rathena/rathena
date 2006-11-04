@@ -903,7 +903,7 @@ function	script	F_DTS_Warp	{
 }
 
 //Elections administration NPC (hidden)
--	script DTS_Admin -1,{
+-	script	DTS_Admin	-1,{
 	OnSun0100:					//Works only at 1am on sunday
 		if($dtsday<4 || $dtsday>=100) set $dtsday,4;
 		else set $dtsday,$dtsday+1;

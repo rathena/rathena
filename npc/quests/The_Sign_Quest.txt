@@ -1985,8 +1985,6 @@ OnTouch:
 
 }
 
-}
-
 aldeba_in.gat,147,104,1	script	PotionActivator	139,3,0,{
 OnTouch:
 	if(@aldesigncheck == 0)
@@ -4060,8 +4058,6 @@ L_Ever:
 	mes "good luck with that";
 	mes "Sobbing Starlight business.";
 	close;
-}
-
 }
 
 cmd_in01.gat,32,25,3	script	Lamadin	724,{

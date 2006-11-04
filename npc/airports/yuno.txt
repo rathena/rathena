@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3000+
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Cloned from Einbroch [Justin84]
 //= 1.1 Removed Duplicates [Silent]
+//= 1.2 Fixed syntax errors for duplicate [KarLaeda]
 //============================================================
 
 
@@ -53,12 +54,8 @@ y_airport.gat,126,43,4	script	Airport Staff#001::AirportY	90,{
 		close;
 }
 
-y_airport.gat,143,43,4	duplicate(AirportY)	Airport Staff#002	90,{
-// script Airport_Staff_In;
-}
-y_airport.gat,156,43,4	duplicate(AirportY)	Airport Staff#003	90,{
-// script Airport_Staff_In;
-}
+y_airport.gat,143,43,4	duplicate(AirportY)	Airport Staff#002	90
+y_airport.gat,156,43,4	duplicate(AirportY)	Airport Staff#003	90
 
 y_airport.gat,126,51,4	script	Airport Staff#004::AirportY2	90,{
 	mes "[Airport Staff]";
@@ -90,8 +87,5 @@ y_airport.gat,126,51,4	script	Airport Staff#004::AirportY2	90,{
 		close;
 }
 
-y_airport.gat,143,51,4	duplicate(AirportY2)	Airport Staff#005	90,{
-}
-
-y_airport.gat,156,51,4	duplicate(AirportY2)	Airport Staff#006	90,{
-}
+y_airport.gat,143,51,4	duplicate(AirportY2)	Airport Staff#005	90
+y_airport.gat,156,51,4	duplicate(AirportY2)	Airport Staff#006	90

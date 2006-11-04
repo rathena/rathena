@@ -437,7 +437,7 @@ function	script	F_CheckKafCode	{
 }
 
 // Set / Change / Clear Storage Password Function ====================
-function	script	F_SetKafCode	115,{
+function	script	F_SetKafCode	{
 	mes "[Kafra]";
 	if(#kafra_code) {
 		mes "Your storage is protected with a password. What would you do now?";

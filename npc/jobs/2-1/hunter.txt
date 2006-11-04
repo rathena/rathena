@@ -1064,7 +1064,7 @@ job_hunte.gat,76,105,1	duplicate(HntTrap)	50-1	139,0,0
 job_hunte.gat,76,104,1	duplicate(HntTrap)	50-2	139,0,0
 job_hunte.gat,78,101,1	duplicate(HntTrap)	50-3	139,0,2
 job_hunte.gat,79,101,1	duplicate(HntTrap)	50-4	139,0,2
-job_hunte.gat,76,99,1	duplicate(HntTrap)	51-1	139,10
+job_hunte.gat,76,99,1	duplicate(HntTrap)	51-1	139,1,0
 job_hunte.gat,77,98,1	duplicate(HntTrap)	51-2	139,2,0
 job_hunte.gat,74,99,1	duplicate(HntTrap)	51-3	139,0,0
 job_hunte.gat,74,98,1	duplicate(HntTrap)	51-4	139,0,0

@@ -42,7 +42,7 @@ morocc_in.gat,144,138,4	script	PvP Narrator#4	84,{
 	end;
 }
 // Geffen --------------------------------------
-geffen_in.gat, 67,63,4	script	PvP Narrator#5	84,{
+geffen_in.gat,67,63,4	script	PvP Narrator#5	84,{
 	callfunc "F_PvPNarr", "geffen_in.gat", 64, 60;
 	end;
 }
@@ -129,7 +129,7 @@ function	script	F_PvPNarr	{
 //==========================================================================
 
 // Alberta -----------------------------------
-alberta_in.gat, 26,146,4	script	Gate Keeper#1::GateKeep	83,{
+alberta_in.gat,26,146,4	script	Gate Keeper#1::GateKeep	83,{
 	mes "[Gate Keeper]";
 	mes "Hi.  I'm glad to be of service.  I will open the PvP fight square for you!";
 	mes "If you have any questions about the PvP modes or rules, please ask the Narrator.....";
@@ -211,9 +211,9 @@ sF_Move:
 }
 
 // Geffen --------------------------------------------
-geffen_in.gat, 63,63,4	duplicate(GateKeep)	Gate Keeper#2	83
+geffen_in.gat,63,63,4	duplicate(GateKeep)	Gate Keeper#2	83
 // Morroc----------------------------------------------
-morocc_in.gat, 144,142,4	duplicate(GateKeep)	Gate Keeper#3	83
+morocc_in.gat,144,142,4	duplicate(GateKeep)	Gate Keeper#3	83
 // Payon ----------------------------------------------
 payon_in01.gat,175,106,3	duplicate(GateKeep)	Gate Keeper#4	83
 // Prontera -------------------------------------------

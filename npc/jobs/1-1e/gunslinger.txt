@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 1.7b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 	optimized [Lupus]
 //= 1.7 Now uses only ONE variable GUNS_Q [Lupus]
 //= 1.7a Grammar fixes, few spelling fixes, etc [CBMaster]
+//= 1.7b Parenthesis fixes [KarLaeda]
 //============================================================ 
 
 que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
@@ -212,8 +213,8 @@ payon.gat,184,65,3	script	Mr. Tanieh	866,{
 				set @npcname$,"";
 				end;
 		}
-	} else if (GUNS_Q == 10003) || (GUNS_Q == 10004) {
-		if (countitem(519) >= 1) && (GUNS_Q == 10004) {
+	} else if (GUNS_Q == 10003 || GUNS_Q == 10004) {
+		if (countitem(519) >= 1 && GUNS_Q == 10004) {
 			mes @npcname$;
 			mes "THAT'S IT!! I was missing the Milk! Oh yes, thanks so much, will you give it to me?";
 			switch(select("Sure, take it:Sorry but I need it")) {
@@ -241,7 +242,7 @@ payon.gat,184,65,3	script	Mr. Tanieh	866,{
 		set @npcname$,"";
 		set GUNS_Q,10004;
 		end;
-	} else if (Class == Job_Gunslinger) || (GUNS_Q == 10005) {
+	} else if (Class == Job_Gunslinger || GUNS_Q == 10005) {
 		mes @npcname$;
 		mes "Hi ^0000CC"+strcharinfo(0)+"^000000!, how have you been doing? My wife sends you regards and thanks for the ingredients...";
 		close2;

@@ -12,7 +12,7 @@
 //= 2006/09/27: 1.0 Release and fully working. [$ephiroth]
 //============================================================
 
-prt_castle.gat,80,170,4	script	King of Prontera	 108,{
+prt_castle.gat,80,170,4	script	King of Prontera	108,{
 	set @npcname$,"[King of Prontera]";
 
 	mes @npcname$;

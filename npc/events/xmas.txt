@@ -18,7 +18,7 @@
 //= 1.2a Fixed a major problem with the monster spawns, thanks to Playtester [MasterOfMuppets]
 //= 1.2b Fixed a minor problem with the mosnter spawns, thanks to Playtester [Kayla]
 //= 1.3 Added Christmas Orc to the places where other orcs spawn [MasterOfMuppets]
-//=	Added Christmas goblins to yuno_fild09, thanks to Playtester for pointing it out
+//= Added Christmas goblins to yuno_fild09, thanks to Playtester for pointing it out
 //= 1.4 Added a fix to make Lutie & Bard quests passable during this event [Lupus]
 //============================================================
 
@@ -342,14 +342,14 @@ yuno_fild08.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 yuno_fild09.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 yuno_fild11.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 yuno_fild12.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ama_fild01.gat,0,0,0,0  monster	Antonio 1247,1,0,0,0
+ama_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 gon_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 um_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 um_fild02.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 um_fild03.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 um_fild04.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
-nif_fild01.gat,0,0,0,0  monster	Antonio 1247,1,0,0,0
-nif_fild02.gat,0,0,0,0  monster	Antonio 1247,1,0,0,0
+nif_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
+nif_fild02.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 lou_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 hu_fild01.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
 hu_fild04.gat,0,0,0,0	monster	Antonio	1247,1,0,0,0
