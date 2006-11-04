@@ -3,14 +3,14 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
-//= 1.1 optimized [Lupus]
+//= 1.1 optimized [Lupus] 1.2 fixed Weight check
 //=	TODO: Test, Add correct misceffects numbers
 //============================================================ 
 
@@ -413,8 +413,7 @@ payon_in02.gat,54,13,3	script	Master Kavaruk	55,{
 pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 
 	mes "[Reidin Corse]";
-	set @now_weight, MaxWeight - Weight;
-	if(@now_weight < 2000){
+	if(MaxWeight - Weight < 2000){
 		mes "Hey, you're carrying an";
 		mes "awful lot of stuff. You ought";
 		mes "to put some of your things";
@@ -722,8 +721,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "[Reidin Corse]";
 				mes "Remember, the most";
 				mes "important thing is to level the Vulture's Eye skill and test the distance of your attack range.";
-				set @f_arrow,MaxWeight - Weight;
-				if(@f_arrow < 1000){
+				if(MaxWeight - Weight < 1000){
 					mes "You've got plenty of arrows";
 					mes "for that, so go for it!";
 					set tu_archer01, 8;
@@ -890,8 +888,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			close;
 		} else if(tu_archer01 == 11){
 			if((countitem(962) > 9) && (countitem(991) > 0)){
-				set @bow_muge,MaxWeight - Weight;
-				if(@bow_muge < 1000){
+				if(MaxWeight - Weight < 1000){
 					mes "Why are you carrying";
 					mes "so much stuff? You better put everything you don't need into Kafra Storage.";
 					close;
@@ -970,8 +967,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "Take some of these.";
 			next;
 			mes "[Reidin Corse]";
-			set @trip_gift,MaxWeight - Weight;
-			if(@trip_gift < 2100){
+			if(MaxWeight - Weight < 2100){
 				mes "H-hey!";
 				mes "Why are you carrying";
 				mes "so much stuff? You better put everything you don't need into Kafra Storage.";

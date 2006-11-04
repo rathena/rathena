@@ -3,14 +3,14 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working
-//= 1.1 Fixed bugs, optimized [Lupus]
+//= 1.1 Fixed bugs, optimized [Lupus] 1.2 fixed Weight check
 //=	TODO: Test, add missing misceffects
 //============================================================ 
 
@@ -1050,7 +1050,7 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 				mes "I am sorry, but you don't have enough money. Would you please get some more Zeny before coming back?";
 				close;
 			}
-			if(²now_weight < 71){
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Aigie]";
 				mes "Wait, wait!";

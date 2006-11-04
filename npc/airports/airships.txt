@@ -360,7 +360,7 @@ s_Material:
 }
 
 
-airplane.gat,33,69,4 script Kaci 73,{
+airplane.gat,33,69,4	script	Kaci	73,{
 	callfunc "applegamble","Kaci";
 	end;
 

@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/04
+	* Fixed Weight check in 1st class quests [Lupus]
+	- Added missing tabs to airship
 11/03
 	* Small Kiel Quest update [Playtester]
 	* Updated Hunter Job Quest: 7 official item sets of Demon Hunter [Lupus]
