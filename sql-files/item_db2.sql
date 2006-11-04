@@ -22,7 +22,7 @@ CREATE TABLE `item_db2` (
   `weapon_level` tinyint(2) unsigned default NULL,
   `equip_level` tinyint(3) unsigned default NULL,
   `refineable` tinyint(1) unsigned default NULL,
-  `view` tinyint(3) unsigned default NULL,
+  `view` smallint(3) unsigned default NULL,
   `script` text,
   `equip_script` text,
   `unequip_script` text,
