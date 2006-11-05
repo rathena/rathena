@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/05
+	* Fixed extra EOL in jro spawn [KarLaeda]
 	* Fixed reward of gunslinger job quest [Playtester]
 11/04
 	* Many small fixes - tabs, parenthesis [KarLaeda]

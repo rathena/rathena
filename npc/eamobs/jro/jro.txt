@@ -103,8 +103,7 @@ tha_t07.gat,70,105,40,75	monster	Lady Solace	1703,7,300000,120000,0
 tha_t07.gat,70,105,40,75	monster	Mistress of Shelter	1701,7,300000,120000,0
 tha_t07.gat,70,105,40,75	monster	Baroness of Retribution	1702,15,0,0,0
 tha_t07.gat,70,105,40,75	monster	Dame of Sentinel	1700,7,300000,120000,0
-tha_t07.gat,70,105,40,75	monster	Despero of 
-Thanatos	1705,2,1800000,1200000,0
+tha_t07.gat,70,105,40,75	monster	Despero of Thanatos	1705,2,1800000,1200000,0
 
 // tha_t08
 
@@ -112,8 +111,7 @@ tha_t08.gat,70,105,40,80	monster	Death Word	1698,10,300000,120000,0
 tha_t08.gat,70,105,40,80	monster	Ancient Mimic	1699,10,300000,120000,0
 tha_t08.gat,70,105,40,80	monster	Lady Solace	1703,5,0,0,0
 tha_t08.gat,70,105,40,80	monster	Mistress of Shelter	1701,5,0,0,0
-tha_t08.gat,70,105,40,80	monster	Baroness of 
-Retribution	1702,20,300000,120000,0
+tha_t08.gat,70,105,40,80	monster	Baroness of Retribution	1702,20,300000,120000,0
 tha_t08.gat,70,105,40,80	monster	Dame of Sentinel	1700,5,0,0,0
 tha_t08.gat,70,105,40,80	monster	Odium of Thanatos	1704,2,1800000,1200000,0
 
@@ -236,32 +234,28 @@ hu_fild05.gat,112,272,62,82	monster	Petite	1156,2,0,0,0
 hu_fild05.gat,112,272,62,82	monster	Novus	1715,3,0,0,0
 hu_fild05.gat,112,272,62,82	monster	Novus	1718,3,0,0,0
 hu_fild05.gat,112,272,62,82	monster	Anopheles	1627,10,0,0,0
-hu_fild05.gat,112,272,62,82	monster	Mutant 
-Dragonoid	1262,1,24000000,1800000,0
+hu_fild05.gat,112,272,62,82	monster	Mutant Dragonoid	1262,1,24000000,1800000,0
 hu_fild05.gat,276,302,93,60	monster	Grove	1687,15,0,0,0
 hu_fild05.gat,276,302,93,60	monster	Petite	1155,2,0,0,0
 hu_fild05.gat,276,302,93,60	monster	Petite	1156,3,0,0,0
 hu_fild05.gat,276,302,93,60	monster	Novus	1715,3,0,0,0
 hu_fild05.gat,276,302,93,60	monster	Novus	1718,3,0,0,0
 hu_fild05.gat,276,302,93,60	monster	Anopheles	1627,10,0,0,0
-hu_fild05.gat,276,302,93,60	monster	Mutant 
-Dragonoid	1262,1,24000000,1800000,0
+hu_fild05.gat,276,302,93,60	monster	Mutant Dragonoid	1262,1,24000000,1800000,0
 hu_fild05.gat,286,144,82,90	monster	Grove	1687,15,0,0,0
 hu_fild05.gat,286,144,82,90	monster	Petite	1155,3,0,0,0
 hu_fild05.gat,286,144,82,90	monster	Petite	1156,2,0,0,0
 hu_fild05.gat,286,144,82,90	monster	Novus	1715,3,0,0,0
 hu_fild05.gat,286,144,82,90	monster	Novus	1718,3,0,0,0
 hu_fild05.gat,286,144,82,90	monster	Anopheles	1627,10,0,0,0
-hu_fild05.gat,286,144,82,90	monster	Mutant 
-Dragonoid	1262,1,24000000,1800000,0
+hu_fild05.gat,286,144,82,90	monster	Mutant Dragonoid	1262,1,24000000,1800000,0
 hu_fild05.gat,286,144,82,90	monster	Grove	1687,15,0,0,0
 hu_fild05.gat,118,106,80,70	monster	Petite	1155,2,0,0,0
 hu_fild05.gat,118,106,80,70	monster	Petite	1156,3,0,0,0
 hu_fild05.gat,118,106,80,70	monster	Novus	1715,3,0,0,0
 hu_fild05.gat,118,106,80,70	monster	Novus	1718,3,0,0,0
 hu_fild05.gat,118,106,80,70	monster	Anopheles	1627,10,0,0,0
-hu_fild05.gat,118,106,80,70	monster	Mutant 
-Dragonoid	1262,1,24000000,1800000,0
+hu_fild05.gat,118,106,80,70	monster	Mutant Dragonoid	1262,1,24000000,1800000,0
 hu_fild05.gat,0,0,0,0	monster	Anopheles	1627,10,0,0,0
 hu_fild05.gat,0,0,0,0	monster	Dragon Egg	1721,2,3600000,1800000,0
 hu_fild05.gat,196,196,5,5	monster	Dragon Egg	1721,1,3600000,1800000,0
@@ -320,7 +314,6 @@ jupe_core.gat,0,0,0,0	monster	Dimik	1672,40,0,0,1
 jupe_core.gat,0,0,0,0	monster	Dimik	1673,40,0,0,1
 jupe_core.gat,0,0,0,0	monster	Archdam	1668,40,0,0,1
 jupe_core.gat,0,0,0,0	monster	Vesper	1685,1,7200000,3600000,1
-
 
 // lhz_dun01
 
@@ -507,17 +500,12 @@ lhz_dun03.gat,180,113,13,9	monster	Margaretha Sorin	1637,2,300000,120000,0
 lhz_dun03.gat,180,113,13,9	monster	Cecil Damon	1638,5,0,0,0
 lhz_dun03.gat,180,113,13,9	monster	Kathryne Keyron	1639,3,0,0,0
 
-lhz_dun03.gat,114,138,12,16	monster	Lord Knight 
-Seyren	1640,1,2700000,2400000,1
-lhz_dun03.gat,163,138,12,16	monster	Whitesmith 
-Howard	1642,1,3000000,2700000,1
-lhz_dun03.gat,139,158,20,11	monster	Assassin Cross 
-Eremes	1641,1,2580000,2340000,1
+lhz_dun03.gat,114,138,12,16	monster	Lord Knight Seyren	1640,1,2700000,2400000,1
+lhz_dun03.gat,163,138,12,16	monster	Whitesmith Howard	1642,1,3000000,2700000,1
+lhz_dun03.gat,139,158,20,11	monster	Assassin Cross Eremes	1641,1,2580000,2340000,1
 lhz_dun03.gat,139,117,20,11	monster	Sniper Cecil	1644,1,2700000,2500000,1
-lhz_dun03.gat,138,138,36,34	monster	High Priest 
-Margaretha	1643,1,3300000,3000000,1
-lhz_dun03.gat,138,138,36,34	monster	High Wizard 
-Kathryne	1645,1,2580000,2460000,1
+lhz_dun03.gat,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000,1
+lhz_dun03.gat,138,138,36,34	monster	High Wizard Kathryne	1645,1,2580000,2460000,1
 
 // lhz_fild01
 
@@ -527,7 +515,6 @@ lhz_fild01.gat,0,0,0,0	monster	Caramel	1103,20,0,0,0
 lhz_fild01.gat,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
 lhz_fild01.gat,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
 lhz_fild01.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
-
 
 // lhz_fild02
 
@@ -553,7 +540,6 @@ lhz_fild03.gat,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
 lhz_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
 lhz_fild03.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 
-
 // ein_fild03
 
 ein_fild03.gat,0,0,0,0	monster	Metaling	1613,30,0,0,0
@@ -565,7 +551,6 @@ ein_fild03.gat,88,143,25,70	monster	Caramel	1103,10,60000,30000,1
 ein_fild03.gat,155,40,35,20	monster	Horn	1128,5,60000,30000,1
 ein_fild03.gat,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
 ein_fild03.gat,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
-
 
 // ein_fild04
 
@@ -581,9 +566,6 @@ ein_fild04.gat,106,284,60,60	monster	Mineral	1614,5,3600000,3000000,0
 ein_fild04.gat,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
 ein_fild04.gat,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
 ein_fild04.gat,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
-
-
-
 
 // einbech
 
