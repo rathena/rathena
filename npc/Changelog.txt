@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/05
+	* Fixed reward of gunslinger job quest [Playtester]
 11/04
 	* Many small fixes - tabs, parenthesis [KarLaeda]
 	* Fixed Weight check in 1st class quests [Lupus]

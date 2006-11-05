@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.7b
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.7 Now uses only ONE variable GUNS_Q [Lupus]
 //= 1.7a Grammar fixes, few spelling fixes, etc [CBMaster]
 //= 1.7b Parenthesis fixes [KarLaeda]
+//= 1.8 Fixed the reward you can get [Playtester]
 //============================================================ 
 
 que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
@@ -56,7 +57,11 @@ que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
 				next;
 				mes @npcname$;
 				mes "Oh, I forgot, here's a token of my appreciation";
-				getitem 13150,1;
+				if (rand(1,3) < 3) {
+					getitem 13100,1;
+				} else {
+					getitem 13150,1;
+				}
 				close2;
 				set @npcname$,"";
 				end;
