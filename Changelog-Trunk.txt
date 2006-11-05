@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/05
+	* Updated sql files [Toms]
+	* Updated perl files acording to rev 9135 [Toms]
 2006/11/04
 	* Readded duel code in map_quit. Why it has been removed!? [LuzZza]
 	* Converted itemdb tables to use smallint. Credits to ALZ. [Lance]
