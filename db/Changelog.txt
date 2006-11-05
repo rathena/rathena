@@ -20,6 +20,7 @@
 
 ========================
 11/05
+	* Raised the chance to get an OPB from an OPB [Playtester]
 	* Official NJ/GS job exp for level 51+52 [Playtester]
 11/03
 	* Official X.4 MVP rewards [Playtester]

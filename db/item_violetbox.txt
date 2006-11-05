@@ -8979,7 +8979,7 @@
 2,5072,1	//Incubus Horn
 2,5053,1	//Sphinx Hat
 2,616,1	//Old Card Album
-2,617,1	//Old Purple Box
+2,617,100	//Old Purple Box
 2,644,100	//Gift Box
 2,604,100	//Dead Branch
 2,603,600	//Old Blue Box
