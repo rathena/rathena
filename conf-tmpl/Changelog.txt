@@ -1,5 +1,7 @@
 Date	Added
 
+2006/11/05
+	* Added maplags for PowerNPC quest. [KarLaeda]
 2006/10/31
 	* Modified the player_cloak_check_type and monster_cloak_check_type
 	  settings. 1 makes it check for walls, 2 makes cloaking NOT end on normal

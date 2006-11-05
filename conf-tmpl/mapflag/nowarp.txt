@@ -2,10 +2,14 @@
 //= Map flags that disable warp
 //===== By: ==================================================
 //= eAthena Dev Team
-//= v 1.1a
+//= v 1.2
 //===== Current Version: =====================================
 
+// Special Quests Places =====
 ama_test.gat	mapflag	nowarp
+gon_test.gat	mapflag	nowarp
+
+// Guild Castles =============
 aldeg_cas01.gat	mapflag	nowarp
 aldeg_cas02.gat	mapflag	nowarp
 aldeg_cas03.gat	mapflag	nowarp
