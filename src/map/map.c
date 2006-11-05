@@ -1681,6 +1681,14 @@ int map_quit(struct map_session_data *sd) {
 				unit_remove_map(&sd->pd->bl, 0);
 		}
 	}
+	
+	// Force exiting from duel and rejecting
+	// all duel invitations when player quit [LuzZza]
+	if(sd->duel_group > 0)
+		duel_leave(sd->duel_group, sd);
+	   
+	if(sd->duel_invite > 0)
+		duel_reject(sd->duel_invite, sd);
 
 	//Do we really need to remove the name?
 	idb_remove(charid_db,sd->status.char_id);
