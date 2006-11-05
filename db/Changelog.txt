@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/05
+	* Official NJ/GS job exp for level 51+52 [Playtester]
 11/03
 	* Official X.4 MVP rewards [Playtester]
 	* Official NJ/GS job exp up to joblevel 50 [Playtester]
