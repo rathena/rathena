@@ -11,6 +11,7 @@
 //= Official NPC.
 //===== Additional Comments: =================================
 //= 1.1 Made it as a function. U can add your own Merchs [Lupus]
+//= 1.1a Fixed item select [KarLaeda]
 //============================================================
 
 function	script	F_NMerch	{
@@ -41,16 +42,16 @@ function	script	F_NMerch	{
 			mes "Or "+getitemname(getarg(5))+"?";
 		next;
 		if(getarg(5))
-			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"",""+getitemname(getarg(5))+"","Cancel")-1;
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"",""+getitemname(getarg(5))+"","Cancel");
 		else
-			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"","Cancel")-1;
+			set @i,select(""+getitemname(getarg(1))+"",""+getitemname(getarg(3))+"","Cancel");
 		if(@i==4 || (@i==3 && !getarg(5))) {
 			mes "["+getarg(0)+"]";
 			mes "Sure, no problem.";
 			close;
 		}
-		set @item,getarg(1+@i*2);
-		set @amount,getarg(2+@i*2);
+		set @item,getarg(@i*2-1);
+		set @amount,getarg(@i*2);
 		set @have,countitem(@item);
 		if(@have < @amount) {
 			mes "["+getarg(0)+"]";

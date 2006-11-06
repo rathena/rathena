@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/06
+	* Fixed item select in Novice Exchanger [KarLaeda]
 11/05
 	* Fixed extra EOL in jro spawn [KarLaeda]
 	* Fixed reward of gunslinger job quest [Playtester]
