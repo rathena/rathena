@@ -8218,7 +8218,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->npc_id) npc_event_dequeue(sd);
 
 	if(sd->state.connect_new) {
-		status_calc_pc(sd,1);
+		// Temperory moved to pc_reg_received until Skot is back.
+		//status_calc_pc(sd,1);
 
 		if (sd->sc.option&OPTION_FALCON)
 			clif_status_load(&sd->bl, SI_FALCON, 1);

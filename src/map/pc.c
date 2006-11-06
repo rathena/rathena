@@ -803,10 +803,10 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
-	// TODO: You're executing this before your initial loading in clif_parse_LoadEndAck
-	// Removed for stability. [Lance]
 	//if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 	//	status_calc_pc(sd, 0); //Check +10 to all stats bonus.
+	// Let's hope putting this here will end all misery.
+	status_calc_pc(sd,1);
 	if (pc_checkskill(sd, TK_MISSION)) {
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
