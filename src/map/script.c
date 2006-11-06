@@ -7424,13 +7424,14 @@ int buildin_getmapguildusers(struct script_state *st) {
 	char *str;
 	int m, gid;
 	int i=0,c=0;
+	struct guild *g = NULL;
 	str=conv_str(st, &(st->stack->stack_data[st->start+2]));
 	gid=conv_num(st, &(st->stack->stack_data[st->start+3]));
 	if ((m = map_mapname2mapid(str)) < 0) { // map id on this server (m == -1 if not in actual map-server)
 		push_val(st->stack, C_INT, -1);
 		return 0;
 	}
-	struct guild *g = guild_search(gid);
+	g = guild_search(gid);
 
 	if (g){
 		for(i = 0; i < g->max_member; i++)
