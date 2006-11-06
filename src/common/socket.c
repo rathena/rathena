@@ -1290,7 +1290,7 @@ void socket_init (void)
 
 		if(a->sin_family == AF_INET) {
 			u_long ad = ntohl(a->sin_addr.s_addr);
-			if(ad != INADDR_LOOPBACK) {
+			if(ad != INADDR_LOOPBACK && ad != INADDR_ANY) {
 				addr_[naddr_ ++] = ad;
 				if(naddr_ == 16)
 					break;

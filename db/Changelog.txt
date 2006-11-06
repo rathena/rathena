@@ -19,6 +19,10 @@
 	-----
 
 ========================
+
+11/06
+	* Ganbantein's delay is now 2 secs. [Skotlex]
+	* Removed the time2 value of NJ_NEN since it has no use. [Skotlex]
 11/05
 	* Raised the chance to get an OPB from an OPB [Playtester]
 	* Official NJ/GS job exp for level 51+52 [Playtester]

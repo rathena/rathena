@@ -1520,6 +1520,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	int i,index;
 	int skill,refinedef=0;
 
+	if(sd->state.connect_new && !first&1) //Shouldn't invoke yet until player is done loading.
+		return -1;
+
 	if (++calculating > 10) //Too many recursive calls!
 		return -1;
 
@@ -4166,11 +4169,11 @@ int status_isdead(struct block_list *bl)
 int status_isimmune(struct block_list *bl)
 {
 	struct status_change *sc =status_get_sc(bl);
+	if (sc && sc->count && sc->data[SC_HERMODE].timer != -1)
+		return 1;
 	if (bl->type == BL_PC &&
 		((TBL_PC*)bl)->special_state.no_magic_damage)
 		return ((TBL_PC*)bl)->special_state.no_magic_damage > battle_config.gtb_sc_immunity;
-	if (sc && sc->count && sc->data[SC_HERMODE].timer != -1)
-		return 1;
 	return 0;
 }
 

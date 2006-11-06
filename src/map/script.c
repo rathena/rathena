@@ -8650,30 +8650,31 @@ int buildin_emotion(struct script_state *st)
 	return 0;
 }
 
-int buildin_maprespawnguildid_sub(struct block_list *bl,va_list ap)
+static int buildin_maprespawnguildid_sub_pc(DBKey key, void *data, va_list ap)
 {
-	int g_id=va_arg(ap,int);
-	int flag=va_arg(ap,int);
-	struct map_session_data *sd=NULL;
-	struct mob_data *md=NULL;
+	va_list ap2 = va_arg(ap, va_list); // double decode -_-
+	int m=va_arg(ap2,int);
+	int g_id=va_arg(ap2,int);
+	int flag=va_arg(ap2,int);
+	struct map_session_data *sd = (TBL_PC*)data;
 
-	if(bl->type == BL_PC)
-		sd=(struct map_session_data*)bl;
-	if(bl->type == BL_MOB)
-		md=(struct mob_data *)bl;
+	if(!sd || sd->bl.m != m)
+		return 0;
+	if(
+		((sd->status.guild_id == g_id) && flag&1) || //Warp out owners
+		((sd->status.guild_id != g_id) && flag&2) || //Warp out outsiders
+		(sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
+	)
+		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+	return 1;
+}
 
-	if(sd){
-		if((sd->status.guild_id == g_id) && (flag&1))
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
-		else if((sd->status.guild_id != g_id) && (flag&2))
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
-		else if (sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
-			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);	// end addition [Valaris]
-	}
-	if(md && flag&4){
-		if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
-			unit_remove_map(bl,1);
-	}
+static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
+{
+	struct mob_data *md=(struct mob_data *)bl;
+
+	if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
+		status_kill(bl);
 	return 0;
 }
 
@@ -8685,8 +8686,13 @@ int buildin_maprespawnguildid(struct script_state *st)
 
 	int m=map_mapname2mapid(mapname);
 
-	if(m != -1)
-		map_foreachinmap(buildin_maprespawnguildid_sub,m,BL_CHAR,g_id,flag);
+	if(m == -1)
+		return 0;
+
+	//Catch ALL players (in case some are 'between maps' on execution time)
+	map_foreachpc(buildin_maprespawnguildid_sub_pc,m,g_id,flag);
+	if (flag&4) //Remove script mobs.
+		map_foreachinmap(buildin_maprespawnguildid_sub_mob,m,BL_MOB);
 	return 0;
 }
 

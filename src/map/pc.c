@@ -706,7 +706,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
 
-	// Reverted, since it causes tons of problems putting elsewhere.
 	status_calc_pc(sd,1);
 			
 	sd->state.auth = 1; //Do not auth him until the initial stats have been placed.
@@ -813,9 +812,6 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
 
-	if(sd->battle_status.hp == 0)
-		pc_setrestartvalue(sd, 1);
-	
 	//SG map and mob read [Komurka]
 	for(i=0;i<3;i++) //for now - someone need to make reading from txt/sql
 	{
@@ -860,6 +856,7 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.event_joblvup = 1;
 		sd->state.event_loadmap = 1;
 	}
+
 	return 0;
 }
 

@@ -720,8 +720,8 @@ int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, sh
 		hd->bl.m = sd->bl.m;
 		hd->bl.x = x;
 		hd->bl.y = y;
-		map_addblock(&sd->hd->bl);
-		clif_spawn(&sd->hd->bl);
+		map_addblock(&hd->bl);
+		clif_spawn(&hd->bl);
 	}
 	status_revive(&hd->bl, per, 0);
 	return 1;

@@ -1310,17 +1310,19 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case TK_JUMPKICK:
 		//Cancel out Soul Linker status of the target. [Skotlex]
 		if (tsc->count) {
-			if (tsc->data[SC_PRESERVE].timer != -1) //preserve blocks the cleaning
-				break;	
-			//Remove pitched potions effect.
-			if (tsc->data[SC_ASPDPOTION0].timer != -1 && tsc->data[SC_ASPDPOTION0].val4)
+			//Remove NORMAL potions effect.
+			if (tsc->data[SC_ASPDPOTION0].timer != -1 && !tsc->data[SC_ASPDPOTION0].val4)
 				status_change_end(bl, SC_ASPDPOTION0, -1);
-			if (tsc->data[SC_ASPDPOTION1].timer != -1 && tsc->data[SC_ASPDPOTION1].val4)
+			if (tsc->data[SC_ASPDPOTION1].timer != -1 && !tsc->data[SC_ASPDPOTION1].val4)
 				status_change_end(bl, SC_ASPDPOTION1, -1);
-			if (tsc->data[SC_ASPDPOTION2].timer != -1 && tsc->data[SC_ASPDPOTION2].val4)
+			if (tsc->data[SC_ASPDPOTION2].timer != -1 && !tsc->data[SC_ASPDPOTION2].val4)
 				status_change_end(bl, SC_ASPDPOTION2, -1);
-			if (tsc->data[SC_ASPDPOTION3].timer != -1 && tsc->data[SC_ASPDPOTION3].val4)
+			if (tsc->data[SC_ASPDPOTION3].timer != -1 && !tsc->data[SC_ASPDPOTION3].val4)
 				status_change_end(bl, SC_ASPDPOTION3, -1);
+			if (tsc->data[SC_SPEEDUP0].timer != -1 && !tsc->data[SC_SPEEDUP0].val4)
+				status_change_end(bl, SC_SPEEDUP0, -1);
+			if (tsc->data[SC_SPEEDUP1].timer != -1 && !tsc->data[SC_SPEEDUP1].val4)
+				status_change_end(bl, SC_SPEEDUP1, -1);
 			if (tsc->data[SC_SPIRIT].timer != -1)
 				status_change_end(bl, SC_SPIRIT, -1);
 			if (tsc->data[SC_ONEHAND].timer != -1)
@@ -4621,6 +4623,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			i = status_get_sc_def_mdef(bl);
 			if (i >= 10000 ||
+				(dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) ||
 				tsc == NULL || (tsc->data[SC_SPIRIT].timer != -1 && tsc->data[SC_SPIRIT].val2 == SL_ROGUE) || //Rogue's spirit defends againt dispel.
 			//Fixed & changed to use a proportionnal reduction (no info, but seems far more logical) [DracoRPG]
 				rand()%10000 >= (10000-i)*(50+10*skilllv)/100)
@@ -9333,8 +9336,9 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-		!(skill_get_unit_flag(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
-	{	//It deletes everything except songs/dances/encores.
+		skill_get_type(skillid) == BF_MAGIC)
+//		!(skill_get_unit_flag(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
+	{	//When LP is already placed, all it does it prevent magic spells from being placed.
 		(*alive) = 0;
 		return 1;
 	}
@@ -9355,10 +9359,9 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
 		return 0;
 
-// Apparently, it REMOVES traps.
-//	if (skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-//		return 0; //Do not remove traps.
-	
+	if (unit->group->state.song_dance)
+		return 0; //Don't touch song/dance/ensemble.
+
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
 		skill_delunit(unit, 1);
 	else skill_delunitgroup(NULL, unit->group, 1);

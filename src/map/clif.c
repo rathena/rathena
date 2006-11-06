@@ -8218,8 +8218,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->npc_id) npc_event_dequeue(sd);
 
 	if(sd->state.connect_new) {
-		// Temperory moved to pc_reg_received until Skot is back.
-		//status_calc_pc(sd,1);
 
 		if (sd->sc.option&OPTION_FALCON)
 			clif_status_load(&sd->bl, SI_FALCON, 1);
@@ -8318,8 +8316,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_send_petdata(sd,0,0);
 		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
-
-		if(sd->state.connect_new &&  sd->pd->pet.intimate > 900)
+		if(sd->state.connect_new && sd->pd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
 	}
 
@@ -8349,8 +8346,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 
 	if(sd->state.connect_new) {
-		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
 		sd->state.connect_new = 0;
+		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
 		if (night_flag) {
 			char tmpstr[1024];
 			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
@@ -11731,6 +11728,10 @@ int clif_parse(int fd) {
 	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
 
 	} else if (packet_db[packet_ver][cmd].func) {
+		if (sd && sd->bl.prev == NULL &&
+			packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
+			; //Only valid packet when player is not on a map is the finish-loading packet.
+		else
 		if (sd
 			|| packet_db[packet_ver][cmd].func == clif_parse_WantToConnection
 			|| packet_db[packet_ver][cmd].func == clif_parse_debug

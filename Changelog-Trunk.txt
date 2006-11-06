@@ -4,6 +4,25 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/06
+	* Removed the return code entry when logging GM reload-GM requests
+	  (login-sql),it'll just be stored as zero. [Skotlex]
+	* Added a fix on socket.c to not pick INADDR_ANY when choosing our own IP.
+	  [Skotlex]
+	* Applied the correction on maprespawnguildid so that it parses ALL players
+	  and not just those on a map. [Skotlex]
+	* TK_JUMPKICK now dispels normal aspd/speed potions (not berserk pitched
+	  ones) and Preserve will be unable to block this. [Skotlex]
+	* Soul Linkers are now inmune to SA_DISPEL [Skotlex]
+	* You can now place everything (except magic skills) on top of LPs.
+	  [Skotlex]
+	* Corrected Ganbantein to not touch song/dance/ensembles. [Skotlex]
+	* Status_calc_pc will refuse to execute if the player is still tagged as a
+	  "new connection" and the invocation is not meant to be the first one.
+	  [Skotlex]
+	* Swapped the order of checks in status_isimmune so that Wand of Hermod
+	  skill blocking takes precedence over GTB's [Skotlex]
+	* Client packets will all be ignored while a player is not on a map until
+	  the LoadEndAck packet is received. [Skotlex]
 	* Reverted changes, moved status_calc_pc(sd,1) back to pc_authok
 	  since it causes problems. [Lance]
 	* Temperory fixed stability issue caused by initial status_calc_pc
