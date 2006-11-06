@@ -1906,6 +1906,10 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(src == bl) type = 4;
 		else flag|=SD_ANIMATION;
 	}
+	if(skillid == NJ_TATAMIGAESHI) {
+		dsrc = src; //For correct knockback.
+		flag|=SD_ANIMATION;
+	}
 
 	if(sd) {
 		int flag = 0; //Used to signal if this skill can be combo'ed later on.
@@ -2066,7 +2070,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	if (dmg.blewcount > 0 && !status_isdead(bl))
-		skill_blown(skillid==NJ_TATAMIGAESHI?src:dsrc,bl,dmg.blewcount);
+		skill_blown(dsrc,bl,dmg.blewcount);
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)

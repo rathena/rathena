@@ -318,8 +318,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			(src->type == BL_PC || !skill_num))
 		{	//Kaupe only blocks all skills of players.
 			clif_specialeffect(bl, 462, AREA);
-			if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
-				status_change_end(bl, SC_KAUPE, -1);
+			//Shouldn't end until Breaker's non-weapon part connects.
+			if (skill_num != ASC_BREAKER || !(flag&BF_WEAPON))
+				if (--sc->data[SC_KAUPE].val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
+					status_change_end(bl, SC_KAUPE, -1);
 			return 0;
 		}
 

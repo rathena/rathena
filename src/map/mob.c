@@ -2649,7 +2649,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != -1 || !md->db->maxskill)
 		return 0;
 
-	if (event < 0 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
+	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
 		return 0; //Skill act delay only affects non-event skills.
 
 	//Pick a starting position and loop from that.
@@ -2676,11 +2676,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		if (rand() % 10000 > ms[i].permillage) //Lupus (max value = 10000)
 			continue;
 
-		// ðŒ”»’è
-		flag = (event == ms[i].cond1);
-		//Avoid entering on defined events to avoid "hyper-active skill use" due to the overflow of calls to this function
-		//in battle. The only exception is MSC_SKILLUSED which explicitly uses the event value to trigger. [Skotlex]
-		if (!flag && (event == -1 || (event & 0xffff) == MSC_SKILLUSED)){
+		if (ms[i].cond1 == event)
+			flag = 1; //Trigger skill.
+		else if (ms[i].cond1 == MSC_SKILLUSED)
+			flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0));
+		else if(event == -1){
+			//Avoid entering on defined events to avoid "hyper-active skill use" due to the overflow of calls to this function in battle.
 			switch (ms[i].cond1)
 			{
 				case MSC_ALWAYS:
@@ -2723,8 +2724,6 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					flag = (unit_counttargeted(&md->bl, 0) >= c2); break;
 				case MSC_AFTERSKILL:
 					flag = (md->ud.skillid == c2); break;
-				case MSC_SKILLUSED:		// specificated skill used
-					flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0)); break;
 				case MSC_RUDEATTACKED:
 					flag = (md->attacked_count >= RUDE_ATTACKED_COUNT);
 					if (flag) md->attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
@@ -2850,7 +2849,7 @@ int mobskill_event(struct mob_data *md, struct block_list *src, unsigned int tic
 	if (flag == -1)
 		res = mobskill_use(md, tick, MSC_CASTTARGETED);
 	else if ((flag&0xffff) == MSC_SKILLUSED)
-		res = mobskill_use(md,tick,flag);
+		res = mobskill_use(md, tick, flag);
 	else if (flag&BF_SHORT)
 		res = mobskill_use(md, tick, MSC_CLOSEDATTACKED);
 	else if (flag&BF_LONG)
