@@ -21,6 +21,7 @@
 ========================
 
 11/06
+	* Added Bull's Eye 0.5 sec cast time [Skotlex]
 	* Ganbantein's delay is now 2 secs. [Skotlex]
 	* Removed the time2 value of NJ_NEN since it has no use. [Skotlex]
 11/05

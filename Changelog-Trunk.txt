@@ -4,6 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/06
+	* Multiple Gunslinger skill corrections, refer to
+	  http://ro.doddlercon.com/guides/gunslinger.html for information source:
+	  [Skotlex]
+	- Corrected Ground Drift. Splash range of 3x3, stackable and placeable
+	  underneath others, cast time is 2 secs. It's considered ranged, and it's
+	  bonus damage increase is defense ignoring, always neutral.
+	- Corrected Bull's Eye implementation, it should deal normal damage against
+	  non brute/demi-human targets.
+	- GS_DUST is now considered a short-range attack.
+	- Implemented Desperado's hit rate based on distance to caster as it's
+	  believed to behave.
+	- GS_TRACKING's range is no longer affected by Snake Eye.
+	- GS_FLING's defense reduction is now 5*lv%
+	* Suiton's Speed/Agi penalty will affect everyone when used in versus maps.
 	* Corrected Kaupe so it doesn't ends on the first part of Soul Destroyer.
 	  [Skotlex]
 	* Applied some cleaning to the way Tatami Gaeshi knocks back. [Skotlex]

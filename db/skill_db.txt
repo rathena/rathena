@@ -545,7 +545,7 @@
 518,2,6,1,-1,0,0,10,1,no,0,0,0,weapon,5	//GS_DUST#Dust#
 519,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0	//GS_FULLBUSTER#Full Buster#
 520,-9,6,1,-1,2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	//GS_SPREADATTACK#Spread Attack#
-521,-9,6,2,-1,0,0,10,1,no,0,0,0,weapon,3	//GS_GROUNDDRIFT#Ground Drift#
+521,-9,6,2,-1,0,1,10,1,no,0,0,0,weapon,3	//GS_GROUNDDRIFT#Ground Drift#
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_TOBIDOUGU#NJ_TOBIDOUGU#
 523,9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
 524,9,8,1,-1,0,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#NJ_KUNAI#

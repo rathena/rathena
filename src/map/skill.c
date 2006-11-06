@@ -773,7 +773,6 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 		break;
 	// added to allow GS skills to be effected by the range of Snake Eyes [Reddozen]
 	case GS_RAPIDSHOWER:
-	case GS_TRACKING:
 	case GS_PIERCINGSHOT:
 	case GS_FULLBUSTER:
 	case GS_SPREADATTACK:
@@ -1337,7 +1336,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sc_start(bl,SC_STUN,70,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case GS_BULLSEYE: //0.1% coma rate.
-		status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
+		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN)
+			status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
 		break;
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
@@ -3133,10 +3133,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case GS_BULLSEYE:
-		if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN) && !(tstatus->mode&MD_BOSS))
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		else if (sd)
-			clif_skill_fail(sd,skillid,0,0);
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	case NJ_KASUMIKIRI:
@@ -6692,9 +6689,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		{
 		int element[5]={ELE_WIND,ELE_DARK,ELE_POISON,ELE_WATER,ELE_FIRE};
 
-		if (src->type == BL_PC)
+		if (sd)
 			val1=sd->arrow_ele;
-		else val1=element[rand()%5];
+		else
+			val1=element[rand()%5];
 
 		switch (val1)
 		{
@@ -6768,6 +6766,18 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		case RG_GRAFFITI:	/* Graffiti [Valaris] */
 			ux+=(i%5-2);
 			uy+=(i/5-2);
+			break;
+		case UNT_DESPERADO:
+			val1 = abs(layout->dx[i]);
+			val2 = abs(layout->dy[i]);
+			if (val1 < 2 || val2 < 2) { //Nearby cross, linear decrease with no diagonals
+				if (val2 > val1) val1 = val2;
+				if (val1) val1--;
+				val1 = 36 -12*val1;
+			} else //Diagonal edges
+				val1 = 28 -4*val1 -4*val2;
+			if (val1 < 1) val1 = 1;
+			val2 = 0;
 			break;
 		default:
 			if (group->state.song_dance&0x1)
@@ -6892,7 +6902,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_SUITON:
 		if(sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,
-			battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
+			map_flag_vs(bl->m) || battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
 			0,0,sg->limit);
 		break;
 
@@ -7175,6 +7185,21 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 			break;
 
+		case UNT_GROUNDDRIFT_WIND:
+		case UNT_GROUNDDRIFT_DARK:
+		case UNT_GROUNDDRIFT_POISON:
+		case UNT_GROUNDDRIFT_WATER:
+		case UNT_GROUNDDRIFT_FIRE:
+			map_foreachinrange(skill_trap_splash,&src->bl,
+				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
+				&src->bl,tick,0);
+			sg->unit_id = UNT_USED_TRAPS;
+			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
+			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+			sg->state.into_abyss = 1;
+			break;
+
+
 		case UNT_TALKIEBOX:
 			if (sg->src_id == bl->id)
 				break;
@@ -7312,40 +7337,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_DESPERADO:
-			if (!(rand()%5)) //Has a low chance of connecting. [Skotlex]
+			if (rand()%100 < src->val1)
 				skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;
-
-		case UNT_GROUNDDRIFT_WIND:
-		case UNT_GROUNDDRIFT_DARK:
-		case UNT_GROUNDDRIFT_POISON:
-		case UNT_GROUNDDRIFT_WATER:
-		case UNT_GROUNDDRIFT_FIRE:
-			skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,sg->val1);
-
-			switch (sg->val1)
-			{
-				case ELE_WIND:
-					sc_start(bl,SC_STUN,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case ELE_WATER:
-					sc_start(bl,SC_FREEZE,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case ELE_POISON:
-					sc_start(bl,SC_POISON,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case ELE_DARK:
-					sc_start(bl,SC_BLIND,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
-					break;
-				case ELE_FIRE:
-					skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv));
-					break;
-			}
-
-			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
-			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 			break;
 
 		case UNT_KAENSIN:
@@ -9426,27 +9419,49 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 	nullpo_retr(0, sg = unit->group);
 	nullpo_retr(0, ss = map_id2bl(sg->src_id));
 
-	if(battle_check_target(src,bl,BCT_ENEMY) > 0){
-		switch(sg->unit_id){
-			case UNT_SHOCKWAVE:
-			case UNT_SANDMAN:
-			case UNT_FLASHER:        
-				skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
-				break;
-			case UNT_BLASTMINE:
-			case UNT_CLAYMORETRAP:
-				//Special property: Each target is hit N times (N = number of targets on splash area)
-				if (!count) count = 1;
-				for(i=0;i<count;i++)
-					skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
-				break;
-			case UNT_FREEZINGTRAP:
-				skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
-				break;
-		}
-	}
+	if(battle_check_target(src,bl,BCT_ENEMY) <= 0)
+		return 0;
 
-	return 0;
+	switch(sg->unit_id){
+		case UNT_SHOCKWAVE:
+		case UNT_SANDMAN:
+		case UNT_FLASHER:        
+			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
+			break;
+		case UNT_BLASTMINE:
+		case UNT_CLAYMORETRAP:
+			//Special property: Each target is hit N times (N = number of targets on splash area)
+			if (!count) count = 1;
+			for(i=0;i<count;i++)
+				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+		case UNT_FREEZINGTRAP:
+			skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+		case UNT_GROUNDDRIFT_WIND:
+			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+				sc_start(bl,SC_STUN,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+			break;
+		case UNT_GROUNDDRIFT_DARK:
+			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+				sc_start(bl,SC_BLIND,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+			break;
+		case UNT_GROUNDDRIFT_POISON:
+			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+				sc_start(bl,SC_POISON,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+			break;
+		case UNT_GROUNDDRIFT_WATER:
+			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+				sc_start(bl,SC_FREEZE,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+			break;
+		case UNT_GROUNDDRIFT_FIRE:
+			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
+				skill_blown(src,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv));
+			break;
+		default:
+			return 0;
+	}
+	return 1;
 }
 
 /*==========================================

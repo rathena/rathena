@@ -5523,8 +5523,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_FLING:
-			val2 = 3*val1; //Def reduction
-			val3 = 3*val1; //Def2 reduction
+			val2 = 5*val1; //Def reduction
+			val3 = 5*val1; //Def2 reduction
 			break;
 		case SC_PROVOKE:
 			//val2 signals autoprovoke.
