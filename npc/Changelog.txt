@@ -33,6 +33,10 @@ KarLaeda
 
 Date		Added
 ======
+11/07
+	* Added Quiz (Revolution) Part 1. Converted by CAHTXHuK [Lupus]
+	  He's another candidate to the script devs. Work in progress. Help us to find bugs
+		
 11/06
 	* Fixed item select in Novice Exchanger [KarLaeda]
 11/05
