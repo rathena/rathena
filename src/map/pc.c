@@ -775,7 +775,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 		return 0;
 	if (sd->hate_mob[pos] != -1)
 	{	//Can't change hate targets.
-		clif_hate_mob(sd,pos,sd->hate_mob[pos]); //Display current
+		clif_hate_info(sd, pos, sd->hate_mob[pos], 0); //Display current
 		return 0;
 	}
 
@@ -789,7 +789,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 	}
 	sd->hate_mob[pos] = class_;
 	pc_setglobalreg(sd,hate_var[pos],class_+1);
-	clif_hate_mob(sd,pos,class_);
+	clif_hate_info(sd, pos, class_, 1);
 	return 1;
 }
 
@@ -6870,7 +6870,7 @@ int pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
  *------------------------------------------
  */
 static int last_save_id=0,save_flag=0;
-static int pc_autosave_sub(DBKey key,void * data,va_list app)
+static int pc_autosave_sub(DBKey key,void * data,va_list ap)
 {
 	struct map_session_data *sd = (TBL_PC*)data;
 	

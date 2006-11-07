@@ -8652,10 +8652,9 @@ int buildin_emotion(struct script_state *st)
 
 static int buildin_maprespawnguildid_sub_pc(DBKey key, void *data, va_list ap)
 {
-	va_list ap2 = va_arg(ap, va_list); // double decode -_-
-	int m=va_arg(ap2,int);
-	int g_id=va_arg(ap2,int);
-	int flag=va_arg(ap2,int);
+	int m=va_arg(ap,int);
+	int g_id=va_arg(ap,int);
+	int flag=va_arg(ap,int);
 	struct map_session_data *sd = (TBL_PC*)data;
 
 	if(!sd || sd->bl.m != m)

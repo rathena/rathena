@@ -1399,16 +1399,14 @@ static int npc_unload_ev(DBKey key,void *data,va_list ap) {
 	return 0;
 }
 
-static int npc_unload_dup_sub(DBKey key,void * data,va_list app)
+static int npc_unload_dup_sub(DBKey key,void * data,va_list ap)
 {
 	struct npc_data *nd = (struct npc_data *)data;
-	va_list ap;
 	int src_id;
 
 	if(nd->bl.type!=BL_NPC || nd->bl.subtype != SCRIPT)
 		return 0;
 
-	ap = va_arg(app, va_list);
 	src_id=va_arg(ap,int);
 	if (nd->u.scr.src_id == src_id)
 		npc_unload(nd);
@@ -2834,7 +2832,7 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 	return 0;
 }
 
-static int npc_cleanup_dbsub(DBKey key,void * data,va_list app) {
+static int npc_cleanup_dbsub(DBKey key,void * data,va_list ap) {
 	return npc_cleanup_sub((struct block_list*)data, 0);
 }
 

@@ -8020,36 +8020,40 @@ int clif_party_xy_remove(struct map_session_data *sd)
 
 /*==========================================
  * Info about Star Glaldiator save map [Komurka]
+ * type: 1: Information, 0: Map registered
  *------------------------------------------
  */
-void clif_feel_info(struct map_session_data *sd, int feel_level)
+void clif_feel_info(struct map_session_data *sd, unsigned char feel_level, unsigned char type)
 {
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len_table[0x20e]);
 	WFIFOW(fd,0)=0x20e;
 	memcpy(WFIFOP(fd,2),mapindex_id2name(sd->feel_map[feel_level].index), MAP_NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOW(fd,30)=0x100+feel_level;
+	WFIFOB(fd,30)=feel_level;
+	WFIFOB(fd,31)=type?1:0;
 	WFIFOSET(fd, packet_len_table[0x20e]);
 }
 
 /*==========================================
  * Info about Star Glaldiator hate mob [Komurka]
+ * type: 1: Register mob, 0: Information.
  *------------------------------------------
  */
-void clif_hate_mob(struct map_session_data *sd, int type,int mob_id)
+void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int class_, unsigned char type)
 {
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len_table[0x20e]);
 	WFIFOW(fd,0)=0x20e;
-	if (pcdb_checkid(mob_id))
-		strncpy(WFIFOP(fd,2),job_name(mob_id), NAME_LENGTH);
-	else if (mobdb_checkid(mob_id))
-		strncpy(WFIFOP(fd,2),mob_db(mob_id)->jname, NAME_LENGTH);
+	if (pcdb_checkid(class_))
+		strncpy(WFIFOP(fd,2),job_name(class_), NAME_LENGTH);
+	else if (mobdb_checkid(class_))
+		strncpy(WFIFOP(fd,2),mob_db(class_)->jname, NAME_LENGTH);
 	else //Really shouldn't happen...
 		malloc_tsetdword(WFIFOP(fd,2), 0, NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOW(fd,30)=0xa00+type;
+	WFIFOB(fd,30)=hate_level;
+	WFIFOB(fd,31)=type?10:11; //Register/Info
 	WFIFOSET(fd, packet_len_table[0x20e]);
 }
 
@@ -8057,14 +8061,31 @@ void clif_hate_mob(struct map_session_data *sd, int type,int mob_id)
  * Info about TaeKwon Do TK_MISSION mob [Skotlex]
  *------------------------------------------
  */
-void clif_mission_mob(struct map_session_data *sd, unsigned short mob_id, unsigned short progress)
+void clif_mission_info(struct map_session_data *sd, int mob_id, unsigned char progress)
 {
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len_table[0x20e]);
 	WFIFOW(fd,0)=0x20e;
 	strncpy(WFIFOP(fd,2),mob_db(mob_id)->jname, NAME_LENGTH);
 	WFIFOL(fd,26)=mob_id;
-	WFIFOW(fd,30)=0x1400+progress; //Message to display
+	WFIFOB(fd,30)=progress; //Message to display
+	WFIFOB(fd,31)=20;
+	WFIFOSET(fd, packet_len_table[0x20e]);
+}
+
+/*==========================================
+ * Feel/Hate reset (thanks to Rayce) [Skotlex]
+ *------------------------------------------
+ */
+void clif_feel_hate_reset(struct map_session_data *sd)
+{
+	int fd=sd->fd;
+	WFIFOHEAD(fd,packet_len_table[0x20e]);
+	WFIFOW(fd,0)=0x20e;
+	malloc_tsetdword(WFIFOP(fd,2), 0, NAME_LENGTH); //Blank name as all was reset.
+	WFIFOL(fd,26)=sd->bl.id;
+	WFIFOB(fd,30)=0; //Feel/hate level: irrelevant
+	WFIFOB(fd,31)=30;
 	WFIFOSET(fd, packet_len_table[0x20e]);
 }
 
@@ -11491,14 +11512,10 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	sd->feel_map[i].m = sd->bl.m;
 	pc_setglobalreg(sd,feel_var[i],map[sd->bl.m].index);
 
-	clif_misceffect2(&sd->bl, 0x1b0);
-	clif_misceffect2(&sd->bl, 0x21f);
-	WFIFOHEAD(fd,packet_len_table[0x20e]);
-	WFIFOW(fd,0)=0x20e;
-	memcpy(WFIFOP(fd,2),map[sd->bl.m].name, MAP_NAME_LENGTH);
-	WFIFOL(fd,26)=sd->bl.id;
-	WFIFOW(fd,30)=i;
-	WFIFOSET(fd, packet_len_table[0x20e]);
+//Are these really needed? Shouldn't they show up automatically from the feel save packet?
+//	clif_misceffect2(&sd->bl, 0x1b0);
+//	clif_misceffect2(&sd->bl, 0x21f);
+	clif_feel_info(sd, i, 0);
 	sd->menuskill_lv = sd->menuskill_id = 0;
 }
 

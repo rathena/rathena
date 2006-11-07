@@ -6882,7 +6882,7 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 
 //Natural regen related stuff.
 static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static int status_natural_heal(DBKey key,void * data,va_list app)
+static int status_natural_heal(DBKey key,void * data,va_list ap)
 {
 	struct block_list *bl = (struct block_list*)data;
 	struct regen_data *regen;
@@ -7054,10 +7054,9 @@ static int status_natural_heal(DBKey key,void * data,va_list app)
 					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
 					rand()%10000 < battle_config.sg_angel_skill_ratio
 				) { //Angel of the Sun/Moon/Star
+					clif_feel_hate_reset(sd);
 					pc_resethate(sd);
 					pc_resetfeel(sd);
-					//TODO: Figure out how to make the client-side msg show up.
-					clif_displaymessage(sd->fd,"[Angel of the Sun, Moon and Stars]");
 				}
 			}
 			sregen->tick.sp -= battle_config.natural_heal_skill_interval;

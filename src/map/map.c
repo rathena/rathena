@@ -1894,7 +1894,7 @@ struct map_session_data** map_getallusers(int *users) {
 void map_foreachpc(int (*func)(DBKey,void*,va_list),...) {
 	va_list ap;
 	va_start(ap,func);
-	pc_db->foreach(pc_db,func,ap);
+	pc_db->vforeach(pc_db,func,ap);
 	va_end(ap);
 }
 
@@ -1906,7 +1906,7 @@ int map_foreachiddb(int (*func)(DBKey,void*,va_list),...) {
 	va_list ap;
 
 	va_start(ap,func);
-	id_db->foreach(id_db,func,ap);
+	id_db->vforeach(id_db,func,ap);
 	va_end(ap);
 	return 0;
 }

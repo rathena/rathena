@@ -1333,20 +1333,16 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
  * Negligent mode MOB AI (PC is not in near)
  *------------------------------------------
  */
-static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
+static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 {
 	struct mob_data *md = (struct mob_data *)data;
-	va_list ap;
 	unsigned int tick;
 	int mode;
 
 	nullpo_retr(0, md);
-	nullpo_retr(0, app);
 
 	if(md->bl.type!=BL_MOB || md->bl.prev == NULL)
 		return 0;
-
-	ap = va_arg(app, va_list);
 
 	if (md->nd || (battle_config.mob_ai&32 && map[md->bl.m].users>0))
 		return mob_ai_sub_hard(&md->bl, ap);
@@ -1407,7 +1403,6 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list app)
 static int mob_ai_lazy(int tid,unsigned int tick,int id,int data)
 {
 	map_foreachiddb(mob_ai_sub_lazy,tick);
-
 	return 0;
 }
 
@@ -1762,7 +1757,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				sd->mission_mobid = temp;
 				pc_setglobalreg(sd,"TK_MISSION_ID", temp);
 				sd->mission_count = 0;
-				clif_mission_mob(sd, temp, 0);
+				clif_mission_info(sd, temp, 0);
 			}
 			pc_setglobalreg(sd,"TK_MISSION_COUNT", sd->mission_count);
 		}
