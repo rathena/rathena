@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================ 
 
--	script	keInit_uncard	{
+-	script	keInit_uncard	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadUncard";
 	end;
@@ -109,7 +109,7 @@ function SF_uncard {
 		set @failsave, select(
 			"- Cancel",
 			"- Remove cards ("+@price+"z, item gets priority)",
-			"- Remove cards ("+@price+"z, cards get priority)",
+			"- Remove cards ("+@price+"z, cards get priority)"
 		);
 	} else {
 		set @failsave, select(

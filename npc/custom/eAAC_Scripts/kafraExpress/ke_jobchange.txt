@@ -16,7 +16,7 @@
 //= the server wide variables kej_class1 and kej_class2
 //============================================================
 
--	script	keInit_jobchange	{
+-	script	keInit_jobchange	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadJobChange";
 	end;

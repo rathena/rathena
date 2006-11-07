@@ -68,7 +68,7 @@ L_End:
   close;
 }
 
-kh_dun01.gat,36,195,4	duplicate(khelevator)	Switch#khe2	111,
+kh_dun01.gat,36,195,4	duplicate(khelevator)	Switch#khe2	111
 
 //= Custom Kiel Dungeon Warps ================================
 //kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197

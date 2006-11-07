@@ -43,7 +43,7 @@
 
 //============================================================ 
 
--	script	keInit_warpDungeon	{
+-	script	keInit_warpDungeon	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadWarpDungeon";
 	end;

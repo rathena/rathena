@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/07
+	* Another one set of fixes for the scripts syntax. [KarLaeda]
 	* Added Quiz (Revolution) Part 1. Converted by CAHTXHuK [Lupus]
 	  He's another candidate to the script devs. Work in progress. Help us to find bugs
 		

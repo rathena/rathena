@@ -146,7 +146,7 @@ L_BadNumber:
 	mes "Sorry that was an invalid number, please try again";
 	close;
 }
-- script Agit_Event2 -1,{
+-	script	Agit_Event2	-1,{
 	end;
 OnInit:
 disablenpc "Agit_Event";

@@ -189,7 +189,7 @@ glast_01.gat,62,198,6	script	Kafra Express::D_GHChivalry	791,{
 }
 
 //LightHalzen Rekkenber (Sewer Entrance)
-lighthalzen.gat,311,293,17	script	Kafra Express::D_Lhz	860,{
+lighthalzen.gat,311,293,1	script	Kafra Express::D_Lhz	860,{
 	callfunc "F_KafraExpress","Kafra Express","kafra_08",1,"lighthalzen.gat",301,286;
 }
 

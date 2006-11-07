@@ -35,7 +35,7 @@
 //= 0x00100000 Yuno
 //============================================================ 
 
--	script	keInit_warpTown	{
+-	script	keInit_warpTown	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadWarpTown";
 	end;

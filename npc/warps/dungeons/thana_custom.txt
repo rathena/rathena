@@ -90,17 +90,17 @@ tha_t11.gat,93,36,0	warp	tha_t10	1,1,tha_t10.gat,91,130
 tha_t12.gat,129,51,0	warp	tha_t11	1,1,tha_t11.gat,13,38
 
 //Thana_step
-thana_step.gat,12,73,0 warp thana_step1 1,1,tha_t12.gat,128,58
-thana_step.gat,16,16,0 warp thana_step2 1,1,thana_step.gat,32,224
-thana_step.gat,30,224,0 warp thana_step3 1,1,thana_step.gat,19,16
-thana_step.gat,32,166,0 warp thana_step4 1,1,thana_step.gat,184,74
-thana_step.gat,180,74,0 warp thana_step5 1,1,thana_step.gat,36,166
-thana_step.gat,182,16,0 warp thana_step6 1,1,thana_step.gat,184,224
-thana_step.gat,180,224,0 warp thana_step7 1,1,thana_step.gat,185,16
-thana_step.gat,182,166,0 warp thana_step8 1,1,thana_step.gat,73,287
-thana_step.gat,69,287,0 warp thana_step9 1,1,thana_step.gat,186,166
-thana_step.gat,70,371,0 warp thana_step10 1,1,thana_step.gat,170,287
-thana_step.gat,174,287,0 warp thana_step11 1,1,thana_step.gat,74,371 
+thana_step.gat,12,73,0	warp	thana_step1	1,1,tha_t12.gat,128,58
+thana_step.gat,16,16,0	warp	thana_step2	1,1,thana_step.gat,32,224
+thana_step.gat,30,224,0	warp	thana_step3	1,1,thana_step.gat,19,16
+thana_step.gat,32,166,0	warp	thana_step4	1,1,thana_step.gat,184,74
+thana_step.gat,180,74,0	warp	thana_step5	1,1,thana_step.gat,36,166
+thana_step.gat,182,16,0	warp	thana_step6	1,1,thana_step.gat,184,224
+thana_step.gat,180,224,0	warp	thana_step7	1,1,thana_step.gat,185,16
+thana_step.gat,182,166,0	warp	thana_step8	1,1,thana_step.gat,73,287
+thana_step.gat,69,287,0	warp	thana_step9	1,1,thana_step.gat,186,166
+thana_step.gat,70,371,0	warp	thana_step10	1,1,thana_step.gat,170,287
+thana_step.gat,174,287,0	warp	thana_step11	1,1,thana_step.gat,74,371
 
 //Thana_boss
 thana_step.gat,169,371,0	warp	thana_boss	1,1,thana_boss.gat,85,76

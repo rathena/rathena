@@ -19,7 +19,7 @@
 //= kej_prev_dye (cloth dye)
 //============================================================
 
--	script	keInit_jobSwap	{
+-	script	keInit_jobSwap	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadJobSwap";
 	end;

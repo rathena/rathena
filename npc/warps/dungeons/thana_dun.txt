@@ -100,10 +100,10 @@ tha_t09.gat,92,146,0	script	WarpThana9b	45,1,1,{
   end;
 
 }
-thana_step.gat,180,223	warp	WarpThana9c	1,1,tha_t09.gat,89,146
+thana_step.gat,180,223,0	warp	WarpThana9c	1,1,tha_t09.gat,89,146
 
 // Thanatos Tower Level 10 (tha_t10.gat)
-thana_step.gat,182,165	warp	WarpThana10a	1,1,tha_t10.gat,167,138
+thana_step.gat,182,165,0	warp	WarpThana10a	1,1,tha_t10.gat,167,138
 tha_t10.gat,170,138,0	script	WarpThana10b	45,1,1,{
 
   if (ThanaSteps & 4) warp "thana_step.gat",17,73;
@@ -111,10 +111,10 @@ tha_t10.gat,170,138,0	script	WarpThana10b	45,1,1,{
   end;
 
 }
-thana_step.gat,14,73	warp	WarpThana10c	1,1,tha_t10.gat,167,138
+thana_step.gat,14,73,0	warp	WarpThana10c	1,1,tha_t10.gat,167,138
 
 // Thanatos Tower Level 11 (tha_t11.gat)
-thana_step.gat,16,15	warp	WarpThana11a	1,1,tha_t11.gat,89,36
+thana_step.gat,16,15,0	warp	WarpThana11a	1,1,tha_t11.gat,89,36
 tha_t11.gat,92,36,0	script	WarpThana11b	45,1,1,{
 
   if (ThanaSteps & 64) warp "thana_step.gat",183,73;
@@ -122,9 +122,9 @@ tha_t11.gat,92,36,0	script	WarpThana11b	45,1,1,{
   end;
 
 }
-thana_step.gat,180,73	warp	WarpThana11c	1,1,tha_t11.gat,89,36
+thana_step.gat,180,73,0	warp	WarpThana11c	1,1,tha_t11.gat,89,36
 
 // Thanatos Tower Level 12 (tha_t12.gat)
-thana_step.gat,182,15	warp	WarpThana12a	1,1,tha_t12.gat,129,51
-thana_step.gat,70,288	warp	WarpThana12b	1,1,tha_t12.gat,129,51
-thana_step.gat,173,288	warp	WarpThana12c	1,1,thana_boss.gat,135,128
+thana_step.gat,182,15,0	warp	WarpThana12a	1,1,tha_t12.gat,129,51
+thana_step.gat,70,288,0	warp	WarpThana12b	1,1,tha_t12.gat,129,51
+thana_step.gat,173,288,0	warp	WarpThana12c	1,1,thana_boss.gat,135,128

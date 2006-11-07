@@ -14,7 +14,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_refine	{
+-	script	keInit_refine	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadRefine";
 	end;
@@ -33,7 +33,7 @@ function SF_sellOres;
 			"- Refine Equipment",
 			"- Repair Equipment",
 			"- Buy Ores",
-			"- Purify Ores",
+			"- Purify Ores"
 		);
 		switch(@kmenu) {
 		case 2: //Refine

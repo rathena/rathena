@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================ 
 
--	script	keInit_warpPvp	{
+-	script	keInit_warpPvp	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadWarpPvp";
 	end;
