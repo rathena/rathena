@@ -766,18 +766,17 @@ struct map_session_data {
 	short spiritball, spiritball_old;
 	int spirit_timer[MAX_SKILL_LEVEL];
 
-	int die_counter;
-	char potion_success_counter;
+	unsigned char potion_success_counter; //Potion successes in row counter
+	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
+	short mission_mobid; //Stores the target mob_id for TK_MISSION
+	int die_counter; //Total number of times you've died
+	int devotion[5]; //Stores the char IDs of chars devoted to.
+	int reg_num; //Number of registries (type numeric)
+	int regstr_num; //Number of registries (type string)
 
-	int reg_num;
 	struct script_reg *reg;
-	int regstr_num;
 	struct script_regstr *regstr;
 
-	short mission_mobid; //Stores the target mob_id for TK_MISSION
-	short mission_count; //Stores the bounty kill count for TK_MISSION
-	int devotion[5]; //Stores the char IDs of chars devoted to.
-	
 	int trade_partner;
 	struct { 
 		struct {
