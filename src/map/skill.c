@@ -10087,8 +10087,13 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 			}
 			else
 			{
-				if (flag&2 && skill_unit_index < 7) //Store this unit id.
-					skill_unit_temp[skill_unit_index++] = skill_id;
+				if (flag&2) { //Store this unit id.
+					if (skill_unit_index < 7)
+						skill_unit_temp[skill_unit_index++] = skill_id;
+					else if (battle_config.error_log)
+						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+				}
+
 			}
 			if (flag&4)
 				skill_unit_onleft(skill_id,target,tick);
@@ -10112,8 +10117,12 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 	else
 	{
 		result = skill_unit_onout(unit,target,tick);
-		if (flag&2 && skill_unit_index < 7 && result) //Store this unit id.
-			skill_unit_temp[skill_unit_index++] = result;
+		if (flag&2 && result) { //Store this unit id.
+			if (skill_unit_index < 7)
+				skill_unit_temp[skill_unit_index++] = result;
+			else if (battle_config.error_log)
+				ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+		}
 	}
 
 	//TODO: Normally, this is dangerous since the unit and group could be freed

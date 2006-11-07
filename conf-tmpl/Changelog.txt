@@ -1,5 +1,11 @@
 Date	Added
 
+2006/11/07
+	* New Setting "stdout_with_ansisequence"
+	  (login_athena/char_athena/map_athena) allows you to specify whether color
+	  control chars should be printed or not. Is useful to disable for a
+	  "cleaner" output when you are logging the console output. All credit goes
+	  to FlavioJS for coding the whole thing. [Skotlex]
 2006/11/05
 	* Added maplags for PowerNPC quest. [KarLaeda]
 2006/10/31

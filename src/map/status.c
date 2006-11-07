@@ -4825,6 +4825,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
+			if (!(flag&1) && sd && !map_flag_gvg(bl->m))
+			{
+				struct map_session_data *tsd;
+				int i;
+				for (i = 0; i < 5; i++)
+				{	//See if there are devoted characters, and pass the status to them. [Skotlex]
+					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
+						status_change_start(&tsd->bl,type,10000,val1,val2,val3,val4,tick,1);
+				}
+			}
 			break;
 		case SC_AUTOBERSERK:
 			if (status->hp < status->max_hp>>2 &&
@@ -4884,14 +4894,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_REFLECTSHIELD:
 			val2=10+val1*3; //% Dmg reflected
-			if (sd)
+			if (sd && !(flag&1))
 			{	//Pass it to devoted chars.
 				struct map_session_data *tsd;
 				int i;
 				for (i = 0; i < 5; i++)
 				{	//Pass the status to the other affected chars. [Skotlex]
 					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
+						status_change_start(&tsd->bl,type,10000,val1,val2,0,0,tick,1);
 				}
 			}
 			break;
@@ -5103,7 +5113,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_AUTOGUARD:
-			if (!flag)
+			if (!(flag&1))
 			{
 				struct map_session_data *tsd;
 				int i,t;
@@ -5115,13 +5125,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				for (i = 0; i < 5; i++)
 				{	//Pass the status to the other affected chars. [Skotlex]
 					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,SC_AUTOGUARD,10000,val1,val2,0,0,tick,1);
+						status_change_start(&tsd->bl,type,10000,val1,val2,0,0,tick,1);
 				}
 			}
 			break;
 
 		case SC_DEFENDER:
-			if (!flag)
+			if (!(flag&1))
 			{	
 				struct map_session_data *tsd;
 				int i;
@@ -5133,7 +5143,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				for (i = 0; i < 5; i++)
 				{	//See if there are devoted characters, and pass the status to them. [Skotlex]
 					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,SC_DEFENDER,10000,val1,5+val1*5,val3,val4,tick,1);
+						status_change_start(&tsd->bl,type,10000,val1,5+val1*5,val3,val4,tick,1);
 				}
 			}
 			break;
@@ -5361,16 +5371,16 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			{	//Try to inherit the status from the Crusader [Skotlex]
 			//Ideally, we should calculate the remaining time and use that, but we'll trust that
 			//once the Crusader's status changes, it will reflect on the others. 
-				int type2 = SC_AUTOGUARD;
-				if (src->sc.data[type2].timer != -1)
-					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
-				type2 = SC_DEFENDER;
-				if (src->sc.data[type2].timer != -1)
-					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
-				type2 = SC_REFLECTSHIELD;
-				if (src->sc.data[type2].timer != -1)
-					sc_start(bl,type2,100,src->sc.data[type2].val1,skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
-
+				const int types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
+				int type2;
+				int i = map_flag_gvg(bl->m)?2:3;
+				while (i >= 0) {
+					type2 = types[i];
+					if (src->sc.data[type2].timer != -1)
+						sc_start(bl,type2,100,src->sc.data[type2].val1,
+							skill_get_time(StatusSkillChangeTable[type2],src->sc.data[type2].val1));
+					i--;
+				}
 			}
 			break;
 		}
@@ -5992,6 +6002,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_DEFENDER:
 		case SC_REFLECTSHIELD:
 		case SC_AUTOGUARD:
+		case SC_ENDURE:
 		if (sd) {
 			struct map_session_data *tsd;
 			int i;
@@ -6011,13 +6022,15 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				md->devotion[sc->data[type].val2] = 0;
 				clif_devotion(md);
 			}
-			//Remove AutoGuard and Defender [Skotlex]
+			//Remove inherited status [Skotlex]
 			if (sc->data[SC_AUTOGUARD].timer != -1)
 				status_change_end(bl,SC_AUTOGUARD,-1);
 			if (sc->data[SC_DEFENDER].timer != -1)
 				status_change_end(bl,SC_DEFENDER,-1);
 			if (sc->data[SC_REFLECTSHIELD].timer != -1)
 				status_change_end(bl,SC_REFLECTSHIELD,-1);
+			if (sc->data[SC_ENDURE].timer != -1)
+				status_change_end(bl,SC_ENDURE,-1);
 			break;
 		}
 		case SC_BLADESTOP:

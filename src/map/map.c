@@ -3292,6 +3292,18 @@ int parse_console(char *buf) {
 	return 0;
 }
 
+//-------------------------------------------------
+// Return numerical value of a switch configuration
+// on/off, english, franÁais, deutsch, espaÒol
+//-------------------------------------------------
+int config_switch(const char *str) {
+	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
+		return 1;
+	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
+		return 0;
+	return atoi(str);
+}
+
 /*==========================================
  * ê›íËÉtÉ@ÉCÉãÇ?Ç›?Çﬁ
  *------------------------------------------
@@ -3321,6 +3333,8 @@ int map_config_read(char *cfgName) {
 			
 			if(strcmpi(w1,"timestamp_format")==0){
 				strncpy(timestamp_format, w2, 20);
+			} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
+				stdout_with_ansisequence = config_switch(w2);
 			} else if(strcmpi(w1,"console_silent")==0){
 				msg_silent = 0; //To always allow the next line to show up.
 				ShowInfo("Console Silent Setting: %d\n", atoi(w2));

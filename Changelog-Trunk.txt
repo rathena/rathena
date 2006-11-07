@@ -4,6 +4,19 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/07
+	* Applied FlavioJs's patch which enables colored console output for Windows
+	  systems. It also includes a config setting called
+	  "stdout_with_ansisequence" with which you can turn off the color codes (in
+	  case you are logging all output) [Skotlex]
+	* Added error reporting when the max number of ground unit cells has been
+	  reached (this may be the reason why sometimes it fails to recognize when
+	  you step out of a song/dance/encore) [Skotlex]
+	* Added passing the Endure effect to other devoted people. Note that the
+	  "hit count" is individual for each character, and only when it ends on the
+	  Crusader himself will that force it to end on everyone else. It also will
+	  not transfer on gvg grounds, but it does transfer in pvp. [Skotlex]
+	* Fixed Reflect-Shield triggering Auto-Guard instead on devoted chars.
+	  [Skotlex]
 	* Added a check to prevent casting ground skills on a target and vice-versa
 	  when said skill use packets are received. It really shouldn't be
 	  exploitable, but doing that certainly makes the server print a lot of
