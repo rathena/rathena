@@ -1319,7 +1319,11 @@ int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag)
 	struct map_session_data *tsd;
 
 	nullpo_retr(0, sd);
-	nullpo_retr(0, tsd= map_id2sd( account_id ));
+	tsd= map_id2sd( account_id );
+	if (!tsd) { //Character left? Cancel alliance.
+		clif_guild_allianceack(sd,3);
+		return 0;
+	}
 
 	if(sd->guild_alliance!=tsd->status.guild_id)	// Š©—U‚ÆƒMƒ‹ƒhID‚ªˆá‚¤
 		return 0;
@@ -1370,12 +1374,12 @@ int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag)
 // ƒMƒ‹ƒhŠÖŒW‰ğÁ
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 {
+	nullpo_retr(0, sd);
+
 	if(agit_flag)	{	// Disable alliance breaking during woe [Valaris]
 		clif_displaymessage(sd->fd,"Alliances cannot be broken during Guild Wars!");
 		return 0;
 	}	// end addition [Valaris]
-
-	nullpo_retr(0, sd);
 
 	intif_guild_alliance( sd->status.guild_id,guild_id,
 		sd->status.account_id,0,flag|8 );
