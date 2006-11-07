@@ -1,6 +1,7 @@
 Date	Added
 
 2006/11/07
+	* Added nosave mapflag for Guild Dungeons [KarLaeda]
 	* New Setting "stdout_with_ansisequence"
 	  (login_athena/char_athena/map_athena) allows you to specify whether color
 	  control chars should be printed or not. Is useful to disable for a
