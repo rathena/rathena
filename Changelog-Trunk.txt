@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/06
+	* Reapplied 'fix equipment scripts which are based on character variables not
+	  working.' [Lance]
 	* Multiple Gunslinger skill corrections, refer to
 	  http://ro.doddlercon.com/guides/gunslinger.html for information source:
 	  [Skotlex]
