@@ -19,7 +19,8 @@
 	-----
 
 ========================
-
+11/07
+	* Kiel now summons 6 slaves instead of 5 [Playtester]
 11/06
 	* Added Bull's Eye 0.5 sec cast time [Skotlex]
 	* Ganbantein's delay is now 2 secs. [Skotlex]
