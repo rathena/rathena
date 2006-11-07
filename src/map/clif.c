@@ -9724,7 +9724,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
  *------------------------------------------
  */
 void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
-	int skillnum, skilllv, lv, target_id;
+	int skillnum, skilllv, tmp, target_id;
 	unsigned int tick = gettick();
 	RFIFOHEAD(fd);
 
@@ -9741,6 +9741,10 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
 
+	tmp = skill_get_inf(skillnum);
+	if (tmp&INF_GROUND_SKILL)
+		return; //Using a ground skill on a target? WRONG.
+
 	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
 		return;
@@ -9749,9 +9753,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if (skillnotok(skillnum, sd))
 		return;
 
-	if (sd->bl.id != target_id &&
-		!sd->state.skill_flag &&
-		skill_get_inf(skillnum)&INF_SELF_SKILL)
+	if (sd->bl.id != target_id && !sd->state.skill_flag && tmp&INF_SELF_SKILL)
 		target_id = sd->bl.id; //What good is it to mess up the target in self skills? Wished I knew... [Skotlex]
 	
 	if (sd->ud.skilltimer != -1) {
@@ -9814,9 +9816,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		else
 			skilllv = 0;
 	} else {
-		lv = pc_checkskill(sd, skillnum);
-		if (skilllv > lv)
-			skilllv = lv;
+		tmp = pc_checkskill(sd, skillnum);
+		if (skilllv > tmp)
+			skilllv = tmp;
 	}
 
 	if (skilllv)
@@ -9841,6 +9843,9 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 
 	if (skillnotok(skillnum, sd))
 		return;
+
+	if (!(skill_get_inf(skillnum)&INF_GROUND_SKILL))
+		return; //Using a target skill on the ground? WRONG.
 
 	if (skillmoreinfo != -1) {
 		if (pc_issit(sd)) {

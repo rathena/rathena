@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/07
+	* Added a check to prevent casting ground skills on a target and vice-versa
+	  when said skill use packets are received. It really shouldn't be
+	  exploitable, but doing that certainly makes the server print a lot of
+	  "unknown skill used!" messages. [Skotlex]
 	* Fixed map_foreachiddb and map_foreachpc so they don't encapsulate the
 	  variable arguments into  a double va_arg list. Thanks to the Ultra Mage for
 	  the tip. [Skotlex]
