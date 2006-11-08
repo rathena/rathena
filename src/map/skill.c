@@ -7249,84 +7249,94 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				break;
 			if (ss != bl && battle_check_target(ss,bl,BCT_PARTY)>0) { // Support Effect only on party, not guild
 				int i = rand()%13; // Positive buff count
+				type = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
 				switch (i)
 				{
 					case 0: // Heal 1~9999 HP
-						{
-							int heal = rand() %9999+1;
-							clif_skill_nodamage(ss,bl,AL_HEAL,heal,1);
-							status_heal(bl,heal,0,0);
-						}
+						type = rand() %9999+1;
+						clif_skill_nodamage(ss,bl,AL_HEAL,type,1);
+						status_heal(bl,type,0,0);
 						break;
 					case 1: // End all negative status
 						status_change_clear_buffs(bl,2);
+						if (sd) clif_gospel_info(sd, 0x15);
 						break;
-					case 2: // Level 10 Blessing
-						sc_start(bl,SC_BLESSING,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 2: // 100% resist to status changes.
+						sc_start(bl,SC_SCRESIST,100,100,type);
+						if (sd) clif_gospel_info(sd, 0x16);
 						break;
-					case 3: // Level 10 Increase AGI
-						sc_start(bl,SC_INCREASEAGI,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 3: // MaxHP +100%
+						sc_start(bl,SC_INCMHPRATE,100,100,type);
+						if (sd) clif_gospel_info(sd, 0x17);
 						break;
-					case 4: // Enchant weapon with Holy element
-						sc_start(bl,SC_ASPERSIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 4: // MaxSP +100%
+						sc_start(bl,SC_INCMSPRATE,100,100,type);
+						if (sd) clif_gospel_info(sd, 0x18);
 						break;
-					case 5: // Enchant armor with Holy element
-						sc_start(bl,SC_BENEDICTIO,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 5: // All stats +20
+						sc_start(bl,SC_INCALLSTATUS,100,20,type);
+						if (sd) clif_gospel_info(sd, 0x19);
 						break;
-					case 6: // MaxHP +100%
-						sc_start(bl,SC_INCMHPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 6: // Level 10 Blessing
+						sc_start(bl,SC_BLESSING,100,10,type);
 						break;
-					case 7: // MaxSP +100%
-						sc_start(bl,SC_INCMSPRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 7: // Level 10 Increase AGI
+						sc_start(bl,SC_INCREASEAGI,100,10,type);
 						break;
-					case 8: // All stats +20
-						sc_start(bl,SC_INCALLSTATUS,100,20,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 8: // Enchant weapon with Holy element
+						sc_start(bl,SC_ASPERSIO,100,1,type);
+						if (sd) clif_gospel_info(sd, 0x1c);
 						break;
-					case 9: // DEF +25%
-						sc_start(bl,SC_INCDEFRATE,100,25,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 9: // Enchant armor with Holy element
+						sc_start(bl,SC_BENEDICTIO,100,1,type);
+						if (sd) clif_gospel_info(sd, 0x1d);
 						break;
-					case 10: // ATK +100%
-						sc_start(bl,SC_INCATKRATE,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 10: // DEF +25%
+						sc_start(bl,SC_INCDEFRATE,100,25,type);
+						if (sd) clif_gospel_info(sd, 0x1e);
 						break;
-					case 11: // HIT/Flee +50
-						sc_start(bl,SC_INCHIT,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
-						sc_start(bl,SC_INCFLEE,100,50,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 11: // ATK +100%
+						sc_start(bl,SC_INCATKRATE,100,100,type);
+						if (sd) clif_gospel_info(sd, 0x1f);
 						break;
-					case 12: // Immunity to all status
-						sc_start(bl,SC_SCRESIST,100,100,skill_get_time2(sg->skill_id, sg->skill_lv));
+					case 12: // HIT/Flee +50
+						sc_start(bl,SC_INCHIT,100,50,type);
+						sc_start(bl,SC_INCFLEE,100,50,type);
+						if (sd) clif_gospel_info(sd, 0x20);
 						break;
 				}
 			}
 			else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0) { // Offensive Effect
 				int i = rand()%9; // Negative buff count
+				type = skill_get_time2(sg->skill_id, sg->skill_lv);
 				switch (i)
 				{
 					case 0: // Deal 1~9999 damage
 						skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 						break;
 					case 1: // Curse
-						sc_start(bl,SC_CURSE,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_CURSE,100,1,type);
 						break;
 					case 2: // Blind
-						sc_start(bl,SC_BLIND,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_BLIND,100,1,type);
 						break;
 					case 3: // Poison
-						sc_start(bl,SC_POISON,100,1,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_POISON,100,1,type);
 						break;
 					case 4: // Level 10 Provoke
-						sc_start(bl,SC_PROVOKE,100,10,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_PROVOKE,100,10,type);
 						break;
 					case 5: // DEF -100%
-						sc_start(bl,SC_INCDEFRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_INCDEFRATE,100,-100,type);
 						break;
 					case 6: // ATK -100%
-						sc_start(bl,SC_INCATKRATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_INCATKRATE,100,-100,type);
 						break;
 					case 7: // Flee -100%
-						sc_start(bl,SC_INCFLEERATE,100,-100,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start(bl,SC_INCFLEERATE,100,-100,type);
 						break;
 					case 8: // Speed/ASPD -25%
-						sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,type);
 						break;
 				}
 			}

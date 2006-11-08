@@ -104,7 +104,7 @@ static const int packet_len_table[MAX_PACKET_DB] = {
    -1, -1, 20, 10, 32,  9, 34, 14,   2,  6, 48, 56, -1,  4,  5, 10,
 //#0x200
    26, -1,  26, 10, 18, 26, 11, 34,  14, 36, 10, 0,  0, -1, 32, 10, // 0x20c change to 0 (was 19)
-   22,  0,  26, 26, 42, -1, -1,  2,   2,282,282,10, 10, -1, -1, 66,
+   22,  0,  26, 26, 42,  6,  6,  2,   2,282,282,10, 10, -1, -1, 66,
    10, -1,  -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 64, 5, 71,  5,
    12, 26,   9, 11, -1, -1, 10,  2, 282, 11,  4, 36, -1,-1,  4,  2,
    -1, -1,  -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8,12,  4, 10,
@@ -8018,6 +8018,30 @@ int clif_party_xy_remove(struct map_session_data *sd)
 	return 0;
 }
 
+//Displays gospel-buff information (thanks to Rayce):
+//Type determines message based on this table:
+/*
+	0x15 End all negative status
+	0x16 Immunity to all status
+	0x17 MaxHP +100%
+	0x18 MaxSP +100%
+	0x19 All stats +20
+	0x1c Enchant weapon with Holy element
+	0x1d Enchant armor with Holy element
+	0x1e DEF +25%
+	0x1f ATK +100%
+	0x20 HIT/Flee +50
+	0x28 Full strip failed because of coating (unrelated to gospel, maybe for ST_FULLSTRIP)
+*/
+void clif_gospel_info(struct map_session_data *sd, int type)
+{
+	int fd=sd->fd;
+	WFIFOHEAD(fd,packet_len_table[0x215]);
+	WFIFOW(fd,0)=0x215;
+	WFIFOL(fd,2)=type;
+	WFIFOSET(fd, packet_len_table[0x215]);
+
+}
 /*==========================================
  * Info about Star Glaldiator save map [Komurka]
  * type: 1: Information, 0: Map registered
