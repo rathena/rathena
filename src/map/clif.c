@@ -8322,7 +8322,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->duel_group)
 		clif_set0199(fd, 1);
 
-	if(map_flag_gvg(sd->bl.m))
+	if(map_flag_gvg(sd->bl.m) || map[sd->bl.m].flag.gvg_dungeon)
 		clif_set0199(fd,3);
 
 	// pet
