@@ -8248,8 +8248,6 @@ static int clif_nighttimer(int tid, unsigned int tick, int id, int data)
  */
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
-	int i;
-	
 	if(sd->bl.prev != NULL)
 		return;
 		
@@ -8260,41 +8258,16 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	if(sd->npc_id) npc_event_dequeue(sd);
+	// look
+#if PACKETVER < 4
+	clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+	clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
+#else
+	clif_changelook(&sd->bl,LOOK_WEAPON,0);
+#endif
 
-	if(sd->state.connect_new) {
-
-		if (sd->sc.option&OPTION_FALCON)
-			clif_status_load(&sd->bl, SI_FALCON, 1);
-		if (sd->sc.option&OPTION_RIDING)
-			clif_status_load(&sd->bl, SI_RIDING, 1);
-
-		//Auron reported that This skill only triggers when you logon on the map o.O [Skotlex]
-		if ((i = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
-			if(sd->bl.m == sd->feel_map[0].m
-				|| sd->bl.m == sd->feel_map[1].m
-				|| sd->bl.m == sd->feel_map[2].m)
-				sc_start(&sd->bl, SC_KNOWLEDGE, 100, i, skill_get_time(SG_KNOWLEDGE, i));
-		}
-
-		clif_skillinfoblock(sd);
-		clif_updatestatus(sd,SP_NEXTBASEEXP);
-		clif_updatestatus(sd,SP_NEXTJOBEXP);
-		clif_updatestatus(sd,SP_SKILLPOINT);
-		clif_initialstatus(sd);
-		//Removed, for some reason chars get stuck on map-change when you send this packet!? [Skotlex]
-		//[LuzZza]
-		//clif_guild_send_onlineinfo(sd);
-
-	} else {
-		//For some reason the client "loses" these on map-change.
-		clif_updatestatus(sd,SP_STR);
-		clif_updatestatus(sd,SP_AGI);
-		clif_updatestatus(sd,SP_VIT);
-		clif_updatestatus(sd,SP_INT);
-		clif_updatestatus(sd,SP_DEX);
-		clif_updatestatus(sd,SP_LUK);
-	}
+	if(sd->vd.cloth_color)
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 
 	// item
 	pc_checkitem(sd);
@@ -8320,16 +8293,15 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	map_addblock(&sd->bl);	// ƒuƒƒbƒN“o˜^
 	clif_spawn(&sd->bl);	// spawn
 
-	// party
-	party_send_movemap(sd);
+	// Party
+	if(sd->status.party_id) {
+		party_send_movemap(sd);
+		clif_party_hp(sd); // Show hp after displacement [LuzZza]
+	}
+
 	// guild
-	guild_send_memberinfoshort(sd,1);
-
-	// Show hp after displacement [LuzZza]
-	if(sd->status.party_id)
-	    clif_party_hp(sd);
-
-	sd->state.using_fake_npc = 0;
+	if(sd->status.guild_id)
+		guild_send_memberinfoshort(sd,1);
 
 	// pvp
 	//if(sd->pvp_timer!=-1 && !battle_config.pk_mode) /PVP Client crash fix* Removed timer deletion
@@ -8345,24 +8317,21 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->pvp_lost=0;
 		}
 		clif_set0199(fd,1);
-	} else {
-		sd->pvp_timer=-1;
-		// set flag, if it's a duel [LuzZza]
-		if(sd->duel_group)
-			clif_set0199(fd, 1);
-	}
+	} else
+	// set flag, if it's a duel [LuzZza]
+	if(sd->duel_group)
+		clif_set0199(fd, 1);
+
 	if(map_flag_gvg(sd->bl.m))
 		clif_set0199(fd,3);
 
 	// pet
-	if(sd->status.pet_id > 0 && sd->pd) {
+	if(sd->pd) {
 		map_addblock(&sd->pd->bl);
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,0,0);
 		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
-		if(sd->state.connect_new && sd->pd->pet.intimate > 900)
-			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
 	}
 
 	//homunculus [blackhole89]
@@ -8378,48 +8347,71 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED);
 	}
 
-	// view equipment item
-#if PACKETVER < 4
-	clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-	clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-#else
-	clif_changelook(&sd->bl,LOOK_WEAPON,0);
-#endif
-
-	if(sd->vd.cloth_color)
-		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
-
-	if(sd->status.manner < 0)
-		sc_start(&sd->bl,SC_NOCHAT,100,0,0);
-
 	if(sd->state.connect_new) {
+		int lv;
+	
 		sd->state.connect_new = 0;
-		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
-		if (night_flag) {
-			char tmpstr[1024];
-			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-			
-			if (map[sd->bl.m].flag.nightenabled)
-				add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+		clif_skillinfoblock(sd);
+		clif_updatestatus(sd,SP_NEXTBASEEXP);
+		clif_updatestatus(sd,SP_NEXTJOBEXP);
+		clif_updatestatus(sd,SP_SKILLPOINT);
+		clif_initialstatus(sd);
+
+		if (sd->sc.option&OPTION_FALCON)
+			clif_status_load(&sd->bl, SI_FALCON, 1);
+
+		if (sd->sc.option&OPTION_RIDING)
+			clif_status_load(&sd->bl, SI_RIDING, 1);
+
+		if(sd->status.manner < 0)
+			sc_start(&sd->bl,SC_NOCHAT,100,0,0);
+
+		//Auron reported that This skill only triggers when you logon on the map o.O [Skotlex]
+		if ((lv = pc_checkskill(sd,SG_KNOWLEDGE)) > 0) {
+			if(sd->bl.m == sd->feel_map[0].m
+				|| sd->bl.m == sd->feel_map[1].m
+				|| sd->bl.m == sd->feel_map[2].m)
+				sc_start(&sd->bl, SC_KNOWLEDGE, 100, lv, skill_get_time(SG_KNOWLEDGE, lv));
 		}
-		//On Login Script.
+
+		if(sd->pd && sd->pd->pet.intimate > 900)
+			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
+
+		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
+		if (night_flag && map[sd->bl.m].flag.nightenabled)
+			add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+
+		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
-	} else
-	//New 'night' effect by dynamix [Skotlex]
-	if (night_flag && map[sd->bl.m].flag.nightenabled)
-	{	//Display night.
-		if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
+	} else {
+		//For some reason the client "loses" these on map-change.
+		clif_updatestatus(sd,SP_STR);
+		clif_updatestatus(sd,SP_AGI);
+		clif_updatestatus(sd,SP_VIT);
+		clif_updatestatus(sd,SP_INT);
+		clif_updatestatus(sd,SP_DEX);
+		clif_updatestatus(sd,SP_LUK);
+
+		sd->state.using_fake_npc = 0;
+
+		//New 'night' effect by dynamix [Skotlex]
+		if (night_flag && map[sd->bl.m].flag.nightenabled)
+		{	//Display night.
+			if (sd->state.night) //It must be resent because otherwise players get this annoying aura...
+				clif_status_load(&sd->bl, SI_NIGHT, 0);
+			else
+				sd->state.night = 1;
+			clif_status_load(&sd->bl, SI_NIGHT, 1);
+		} else if (sd->state.night) { //Clear night display.
+			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
-		else
-			sd->state.night = 1;
-		clif_status_load(&sd->bl, SI_NIGHT, 1);
-	} else if (sd->state.night) { //Clear night display.
-		sd->state.night = 0;
-		clif_status_load(&sd->bl, SI_NIGHT, 0);
+		}
+
+		if(sd->npc_id)
+			npc_event_dequeue(sd);
 	}
 
-// Lance
+	// Lance
 	if(sd->state.event_loadmap && map[sd->bl.m].flag.loadevent){
 		pc_setregstr(sd, add_str("@maploaded$"), map[sd->bl.m].name);
 		npc_script_event(sd, NPCE_LOADMAP);

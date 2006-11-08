@@ -706,13 +706,22 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
 			
-	sd->state.auth = 1; //Do not auth him until the initial stats have been placed.
+	sd->state.auth = 1;
 	{	//Add IP field
 		unsigned char *ip = (unsigned char *) &session[sd->fd]->client_addr.sin_addr;
 		if (pc_isGM(sd))
-			ShowInfo("GM Character '"CL_WHITE"%s"CL_RESET"' logged in. (Acc. ID: '"CL_WHITE"%d"CL_RESET"', Connection: '"CL_WHITE"%d"CL_RESET"', Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"', GM Level '"CL_WHITE"%d"CL_RESET"').\n", sd->status.name, sd->status.account_id, sd->fd, sd->packet_ver, ip[0],ip[1],ip[2],ip[3], pc_isGM(sd));
+			ShowInfo("GM '"CL_WHITE"%s"CL_RESET"' logged in."
+				" (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
+				" Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
+				" GM Level '"CL_WHITE"%d"CL_RESET"').\n",
+				sd->status.name, sd->status.account_id, sd->status.char_id,
+				sd->packet_ver, ip[0],ip[1],ip[2],ip[3], pc_isGM(sd));
 		else
-			ShowInfo("Character '"CL_WHITE"%s"CL_RESET"' logged in. (Account ID: '"CL_WHITE"%d"CL_RESET"', Connection: '"CL_WHITE"%d"CL_RESET"', Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"').\n", sd->status.name, sd->status.account_id, sd->fd, sd->packet_ver, ip[0],ip[1],ip[2],ip[3]);
+			ShowInfo("'"CL_WHITE"%s"CL_RESET"' logged in."
+				" (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
+				" Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"').\n",
+				sd->status.name, sd->status.account_id, sd->status.char_id,
+				sd->packet_ver, ip[0],ip[1],ip[2],ip[3]);
 	}
 	
 	// Send friends list
@@ -725,14 +734,11 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	}
 
 	// Message of the Day [Valaris]
-	{
-		int ln;
-		for(ln=0; motd_text[ln][0] && ln < MOTD_LINE_SIZE; ln++) {
-			if (battle_config.motd_type)
-				clif_disp_onlyself(sd,motd_text[ln],strlen(motd_text[ln]));
-			else
-				clif_displaymessage(sd->fd, motd_text[ln]);
-		}
+	for(i=0; motd_text[i][0] && i < MOTD_LINE_SIZE; i++) {
+		if (battle_config.motd_type)
+			clif_disp_onlyself(sd,motd_text[i],strlen(motd_text[i]));
+		else
+			clif_displaymessage(sd->fd, motd_text[i]);
 	}
 
 #ifndef TXT_ONLY
@@ -744,6 +750,14 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (connect_until_time != 0) { // don't display if it's unlimited or unknow value
 		char tmpstr[1024];
 		strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(501), localtime(&connect_until_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+	}
+
+	//Night message
+	if (night_flag)
+	{
+		char tmpstr[1024];
+		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 
