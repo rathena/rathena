@@ -1,0 +1,1043 @@
+//===== eAthena Script =======================================
+//= Lighthalzen, Swaltzwalt Quest Part 1
+//= Lighthalzen, Swaltzwalt Quest Part 2
+//= Lighthalzen, Swaltzwalt Quest Part 3
+//===== By: ==================================================
+//= Gravity official script
+//= CallNix (Part 1)
+//= dunkle (Part 2 & 3)
+//===== Current Version: =====================================
+//= 1.0 working version
+//= 1.1 fixed bug with wrong valuable [dunkle]
+//=     added and deleted some checks [dunkle]
+//=     fixed warps (but they are wrong) [dunkle]
+//=     fixed enabling of A Fine Gentleman [dunkle]
+//=     fixed bug with reward [dunkle]
+//= 1.2 fixed bug in part with overflow timer (now you must wait untill next day, not 12 hours) [dunkle]
+//      changed some valuables [dunkle]
+//      fixed bugs in The broken Manufactoring [dunkle]
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= 
+//=
+//===== Additional Comments: =================================
+//In alchemist_skills.txt comment because I use this NPC in the script:
+//lhz_in01.gat,285,169,7	script	Researcher#2	865,{
+//Unknown Text
+//	mes "[Researcher]";
+//	mes "Hmm... I wonder...";
+//	close;
+//}
+//
+//============================================================
+
+
+yuno_pre.gat,79,69,0	warp	inside_pre01	1,1,yuno_pre.gat,97,68
+yuno_pre.gat,113,50,0	warp	inside_pre02	1,1,yuno_pre.gat,58,22
+yuno_pre.gat,54,22,0	warp	inside_pre03	1,1,yuno_pre.gat,113,55
+lhz_in01.gat,275,234,0	warp	inside_pre04	1,1,lhz_in01.gat,277,161 //Здесь порталы поставил наобум, в месте около  двери,
+lhz_in01.gat,277,157,0	warp	inside_pre04	1,1,lhz_in01.gat,275,231 //где не было другого портала :
+
+//OnInit!
+prontera.gat,0,0,0	script	swarzwalt_trilogy	-1,1,1{
+OnInit:
+disablenpc "kurelle";
+disablenpc "President's Secretary#2";
+disablenpc "Security#2";
+disablenpc "area 1-5";
+disablenpc "Kurelle#1";
+set $SCHWALTZVALT_DOOR_FLAG,0;
+stopnpctimer "schwalt2timer";
+end;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Beginning. Lighthalzen, Swaltzwalt Quest Part 1/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+lighthalzen.gat,179,170,4	script	Ordinary man	48,{
+if (SCHWALTZVALT_PART2==23) {
+							mes "[Ghalstein]";
+							mes "arrr...";
+							mes "is you....";
+							mes ".....";
+							mes "Now? verything finish...";
+							mes "dream...vision";
+							next;
+							mes "[Ghalstein]";
+							mes "arr..most forgot...";
+							mes "This is your...";
+							mes "...cure...";
+							mes "Take this pill,";
+							mes "You'll never have to take it";
+							mes "anymore...";
+							next;
+							mes "[Ghalstein]";
+							mes ".......";
+							mes "We'll never meet each other anymore..";
+							getitem  617,1; //Old Violet Box
+							getexp 1800000,0; //Exp 1800000
+							set dtseligible , 1; //Here is Voting Right (dts warper)
+							set SCHWALTZVALT_PART2, 24;
+							close;
+							}
+		
+if questpass_swaltzwaltp1==1 goto l_alreadydone;							
+if quest_swaltzwaltp1==1 goto Quest_enable;
+if  ( (SCHWALTZVALT_PART1==1) && (gettime(5)!=schwalzday) ) goto L_NEXTDAY;
+if  (SCHWALTZVALT_PART1==1) goto l_hadspoken;
+mes "[Ghalstein]";
+mes "Hello,";
+mes "is this a great city?";
+menu "Hello",-,"This is a great city indeed",L_GREAT,"is still ok",L_OK;
+next;
+mes "[Ghalstein]";
+mes " Yes, It a nice day. I wish you have good time in our city. See you later";
+close;
+
+L_OK:
+next;
+mes "[Ghalstein]";
+mes "I like such sunny days... In such beautiful town...";
+close;
+
+L_GREAT:
+next;
+mes "[Ghalstein]";
+mes "Well. This great city is only for really great people.";
+mes "I wish you have good time here. Enjoy.";
+close2;
+mes "[??????]";
+mes "is here";
+mes "......";
+mes "[??????]";
+mes "hurry before we let people discover";
+mes "us...";
+mes "heard a familiar sound";
+menu "Continue listen",l_listen,"do not listen",l_nolisten;
+
+l_listen:
+next;
+mes "[??????]";
+mes "Its all as we suposed to... Everything is similar to our plan";
+mes "[??????]";
+mes "Yes, thats really cool.";
+next;
+mes "[??????]";
+mes "PSSS. Be silent";
+mes "I think somebody else is here listening us. We will meet the other day.";
+mes "[??????]";
+mes "I agree";
+set SCHWALTZVALT_PART1,1;
+set schwalzday, gettime(5);
+close;
+end;
+
+l_nolisten:
+next;
+mes "["+strcharinfo(0)+"]";
+mes "I dont think this is interesting for me.";
+close;
+end;
+
+L_NEXTDAY:
+mes "[Ghalstein]";
+mes "hi, how are you,";
+mes "today weather is good?";
+menu "Yes",l_da,"but last night",-;
+next;
+mes "[Ghalstein]";
+mes "What was last night? I've heard nothing about it. Anything strange had happened?";
+menu "I've heard you speaking to somebody about strange things.",-,"Nothing, sorry",L_NOTHING;
+next;
+mes "[Ghalstein]";
+mes "I think you are mistaken guy. I dont know what are you talking about";
+menu "Dont make a fool from me.",-,"Ok, sory",L_NOTHING;
+next;
+mes "[Ghalstein]";
+mes "I say you, that i hadn't speak to anybody yesterday.Hey, Protector come here plese";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "..........";
+mes "if really not him, he shouldn't";
+mes "denied it so strongly";
+mes "..........";
+next;
+mes "[Protector]";
+mes "I have no intention to";
+mes "interrogation you?";
+mes "just because...";
+menu "The matter that Mr.Ghalstein dealing with..",-,"i feel curious about it?",l_curious;
+next;
+mes "["+strcharinfo(0)+"]";
+mes "I clearly remember him talking to somebody about some strange plans. I think he is planning something restrickted...";
+next;
+mes "[Protector]";
+mes "Hm... Is that so mr. Ghalstein? Do you remember the constitution? Tell us the truth, or i shall arrest you";
+next;
+mes "[Ghalstein]";
+mes "oh.. Ok. I was speaking about our community. Nothing interesting...";
+next;
+mes "[Protector]";
+mes "Ok. Its about your Fishing clan? If so, i leave you. See you later";
+next;
+mes "[Ghalstein]";
+mes "Well, I will tell you the truth. Please give me sometime to consider....";
+mes "I belong to a secret group that antagonistic with another group and so we need some items";
+mes "to be protected. So we were going to organize a trip to Reagent Shaw Research Center.";
+next;
+mes "[Ghalstein]";
+mes "You can get there if you have passed BioLab quest. Its the second and third lvl.";
+mes "But we have no brave to go there. What about helping us?";
+menu "Ok, i shall help",-,"No,thanks",L_NOTHX;
+next;
+mes "[Ghalstein]";
+mes "well then.But you must take this pill to go this quest. This pill will add some status to you.";
+mes "when you shall finish quest - i will delete this status from your char.Is it OK with you?. I think It is.";
+if ( checkweight(7226,1) == 0 ) goto l_overweight;
+getitem (7226),1;
+next;
+mes "[Ghalstein]";
+mes "I want you to collect all related biological exhibit and no need big quantity plus the most important thing.";
+mes "You will simply recognize that things";
+mes "There are some strange mobs there. So be careful. And last...People who go there dissapear. Nobody was back from there...";
+next;
+mes "[Ghalstein]";
+mes "So you had to go to 2 and 3 lvl of BioLab. Be sure you have finish this quest. And bring me 10 Lab staff records, 10 Armlet of prisoner and 1 Pile of Imir heat";
+set quest_swaltzwaltp1,1;
+set schwalzday,0;
+close;
+
+l_curious:
+mes "[Ghalstein]";
+mes "even so i dont want to speak to smb who say such fool things. Cya.";
+close;
+
+L_NOTHX:
+mes "[Ghalstein]";
+mes "ye, its a pity i think. Have a nice day";
+close;
+
+L_NOTHING:
+mes "[Ghalstein]";
+mes "I've never think guy like you can think this way about me. I dont want to speak to you anymore";
+close;
+
+l_overweight:
+mes "["+strcharinfo(0)+"]";
+mes "sorry you can't take this item";
+close;
+
+
+Quest_enable:
+if (countitem (7345) >= 10) && (countitem(7347) >=10) && (countitem(7346) >=1) goto Quest_end;
+mes "[Ghalstein]";
+mes "You havent geather items yet. Come back when you should.";
+close;
+
+Quest_end:
+mes "[Ghalstein]";
+mes "Well done. You have finished my part of quest.";
+mes "Now, Visit Gushaar. He can be found sowhere around Yuno.";
+next;
+mes "[Ghalstein]";
+mes "Yes, i have forgotten....";
+mes "Now you are member of society Wind of Secret!";
+mes "congratulations!";
+delitem (7345),10;
+delitem (7347),10;
+delitem (7346),1;
+getitem (7226),1;
+getitem (7348),1;
+set questpass_swaltwaltp1,1;
+close;
+
+l_hadspoken:
+mes "[Ghalstein]";
+mes "Sorry, but i have nothing to say to you anymore. Buy.";
+close;
+
+l_da:
+mes "[Ghalstein]";
+mes "Im happy you have time to think so too. See you";
+close;
+
+l_alreadydone:
+mes "["+strcharinfo(0)+"]";
+mes "I have already done this quest. I dont want to go there once more time!";
+close;
+}
+//=======================================================================
+lhz_dun02.gat,268,287,4	script	The broken Manufactoring	111,{
+if quest_swaltzwaltp1!=1 goto l_end;
+mes "[The broken Manufactoring]";
+mes "You see something shining inside the spoiling machines.Open up the machinr and check it,detected a round shape";
+mes "object wich circulate with a mysterious shines.";
+menu "Its seems like an important object",-,"But it looks nothing musch",l_nottake;
+getitem(7346),1;
+mes "["+strcharinfo(0)+"]";
+mes "Well, Now i suppose everything will be ok.";
+close2;
+npctalk "Creeep... Creeeep-Creep...*pfu*.";
+mes "["+strcharinfo(0)+"]";
+mes "Oooops....I dont think this machien will work anymore... I'll go better from here";
+set quest_swaltzwaltp1,0;
+close;
+end;
+
+l_nottake:
+close;
+
+l_end:
+mes "You see nothing there...";
+close;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Ending. Lighthalzen, Swaltzwalt Quest Part 1/////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//NPC01 - Dismal Guy
+yuno_fild04.gat,165,245,5	script	Dismal Guy	89,{
+if (SCHWALTZVALT_PART2>0) {
+					mes "[Dismal Guy]";
+					mes "Make your mission..we need you..";
+					close;
+					}
+mes "[Dismal Guy]";	
+mes "Maybe you have some thing to show me?";
+menu "Yeah, I have it",-,"I don't know what do you mean",DG_end01;
+if ((countitem(7348)==0) || (questpass_swaltwaltp1!=1))  { //Membership Card, Здесь проверка, пройдена ли первая часть квеста
+					next; 
+					mes "[Dismal Guy]";
+					mes "You are trying to cheat me?";
+					mes "You don't have item which I am interesting in..";
+					mes "Bye! Come back, when you will have what I want.";
+					close;
+					 }
+//next;
+//mes "[Dismal Guy]";
+//mes "emm....";
+//mes "got red and blue pill,";
+//mes "which one you choose?";
+//menu "Red pill",-,"Blue pill",-; //Надо узнать, что будет если выбрать синию пилюлю (по идеи в первой части НПЦ может дать лмбо синюю, либо красную, но т.к. он дает просто пилюлю, то здесь естесно это ненужно)
+//mes "Nowadays isn't the best time to live..";
+next;
+mes "[Dismal Guy]";
+mes "Schwaltzvalt is control by evil ^0000FFRekenber Enterprise^000000";
+mes "But we have organized a resistance called ^FF0000Wing Of Secret^000000 with the help of the President ^0000FFKarl Weierstrass^000000 to reform Schwaltzvalt Republic from the control of ^0000FFRekenber Enterprise^000000!";
+next;
+mes "[Dismal Guy]";
+mes "I have a task for you.";
+mes "You need to meet the candidate which won the president election ^0000FFKarl Weierstrass^000000";
+mes "He wants to reform Schwaltzvalt Republic from the control of ^0000FFRekenber Enterprise^000000";
+next;
+mes "[Dismal Guy]";
+mes "If you will unable to see ^0000FFKarl Weierstrass^000000, coordinate with his secrtary in Yuno at appointed time.";
+mes "The best time will be betwen 8pm to 11pm or betwen 11am to 2pm";
+set SCHWALTZVALT_PART2, 1; //Первый НПЦ пройден, теперь можно к секретарю.
+next;
+mes "[Dismal Guy]";
+mes "The fate of the whole Republic in your brave hands! Bye!";
+close;
+
+DG_end01:
+next;
+mes "[Dismal Guy]";
+mes "It'a a pity, I am finding you a good person..";
+close;
+}
+
+//NPC02 - President's Secretary
+yuno_pre.gat,69,20,5	script	President's Secretary::pre	862,{
+if (SCHWALTZVALT_PART2==4) {
+							mes "[Hes O'Neil]";
+							if(countitem(7342)==0) {mes "Where is documemt?";close;} //Здесь ИД документа, надо узнать у Лупуса.
+							delitem 7342,1; //Здесь ИД документа, надо узнать у Лупуса.
+							mes "Thanks a lot!";
+							set SCHWALTZVALT_PART2, 5; //Теперь с секретаршей во второй раз все, идем к Venice
+							close;
+							}
+if (SCHWALTZVALT_PART2>=2) {
+						mes "[Hes O'Neil]";
+						mes "I glad to see you again!";
+						close;	
+							}		
+									
+if ( (gettime(3)>23) && (gettime(3)<11) ) || ( (gettime(3)>14) && (gettime(3)<20) ) {
+																					mes "[Hes O'Neil]";
+																					mes "It isn't reception time.";
+																					mes "Come back betwen 8pm to 11pm or betwen 11am to 2pm.";
+																					close;
+ 																					}
+
+
+mes "[Hes O'Neil]";
+mes "Who are you?";
+mes "How can I help?";
+menu "emm..",-,"Meet up with Mr.President",PS_meet,"Nothing",PS_end01;
+
+if (SCHWALTZVALT_PART2==1) {
+							next;
+							mes "[Hes O'Neil]";
+							mes "Heh, you don't know how to explain youself:)";
+							mes "But I know that Mr.President is waiting for you. Good Luck!";
+							set SCHWALTZVALT_PART2, 2; //Второй НПЦ пройден, далее к стражнику.
+							close;
+							}
+
+next;
+mes "[Hes O'Neil]";
+mes "What do you want?";
+mes "Don't waste my time please!";
+close;
+
+PS_meet:
+next;
+mes "[Hes O'Neil]";
+mes "Sorry, but Mr.President is very busy.";
+//emotion 14; //sry
+close;
+
+PS_end01:
+next;
+mes "[Hes O'Neil]";
+mes "Sorry, I did't help you:(";
+//emotion 14; //sry
+close;
+}
+
+yuno_pre.gat,75,71,3	duplicate(pre)	President's Secretary#2	862,0,0
+
+//NPC03 - Security
+yuno_pre.gat,95,71,5	script	Security::sec	899,5,5	{
+if (SCHWALTZVALT_PART2==4) {
+							mes "[Security]";
+							mes "Mr.President still meeting with other person.";
+							close;
+							}
+if  (SCHWALTZVALT_PART2>=3) {
+							mes "[Security]";
+							mes "Mr.Presideny is free now. You can come in.";
+							close2;
+							warp "yuno_pre.gat",75,70;
+							end;
+							}
+if  (SCHWALTZVALT_PART2!=2)  { 
+							mes "[Security]";
+							mes "Nobody has disposed to pass you!";
+							close;
+							}
+if (rand(9)!=0) {
+				mes "[Security]";
+				mes "Please hold on for a moment.";
+				mes "Mr.President still meeting with other person.";
+				close;
+				}
+enablenpc "kurelle";
+mes "[Keshnaar]";
+mes "Mr.President denied my petition about medical marihuana...";
+//emotion 25; //sob
+next;
+mes "[Keshnaar]";
+mes "I have collected 1000 signatures of the townspeople and nothing...";
+//emotion 25; //sob
+next;
+mes "[Keshnaar]";
+mes "Ok I must go and collect more signatures!";
+next;
+disablenpc "A Fine Gentleman";
+
+mes "[Security]";
+mes "Now Mr.President is free, you can pass.";
+G_menu:
+menu "Ok",S_warp,"Who is he?",-;
+next;
+mes "[Security]";
+mes "Are you talking about Mr.Keshnaar?";
+mes "Mr.Keshnaar works for Rekenber. He consulted with Mr.President.";
+next;
+goto G_menu;
+
+S_warp:
+set SCHWALTZVALT_PART2, 3; //У охранника все, теперь к президенту.
+close2;
+warp "yuno_pre.gat",75,70;
+
+OnTouch:
+if (SCHWALTZVALT_PART2==4) { 
+							mes "...Suddenly your heard voices behind the door...";
+							mes "...but is too slighty, can't heard clearly...";
+							next;
+							mes "[?????]";
+							mes "...is true..";
+							mes "so........";
+							mes "......president...";
+							mes "[?????]";
+							mes "..their Investigation...";
+							mes ".........";
+							mes "....trap....";
+							mes "[?????]";
+							mes "...stop them....how?";
+							mes ".....,surely...";
+							mes "[?????]";
+							mes "next?...election...";
+							mes "....elected...";
+							next;
+							mes "...the sound became more slighty...";
+							mes "...can't heard anymore...";
+							close;
+							}
+}
+
+//NPC04 - A Fine Gentleman
+yuno_pre.gat,96,69,3	script	A Fine Gentleman::kurelle	82,{
+close;
+}
+//NPC - KURELLE
+yuno_pre.gat,69,74,0	duplicate(kurelle)	Kurelle#1	109,0,0
+
+//NPC - Security in presidents room
+yuno_pre.gat,76,72,8	duplicate(sec)	Security#2	899,0,0
+
+//NPC05 - President Karl
+yuno_pre.gat,69,79,5	script	President Karl	872,{
+cutin "lhz_karl",2;
+if (SCHWALTZVALT_PART2==22) {
+							mes "...after the story about traitor ^FF0000Kurelle^000000 president looks stunned...";
+							next;
+							mes "[President Karl]";
+							mes "CALL MY SECRETARY NOOOOOOW!!!";
+							next;
+							mes ".....";
+							next;
+							enablenpc "President's Secretary#2";
+							mes "...Secretary looks too afraid...";
+							next;
+							cutin "",255;
+							mes "[Hes O'Neil]";
+							mes "Yes sir! What is your oders?";
+							next;
+							cutin "lhz_karl",2;
+							mes "[President Karl]";
+							mes "INVITE THIS TRAITOR ^FF0000KURELLE^000000 NOOOOW!!!";
+							next;
+							disablenpc "President's Secretary#2";
+							mes ".....";
+							next;
+							enablenpc "Kurelle#1";
+							mes "[President Karl]";
+							mes "What happened? Why did you betray us?";
+							next;
+							cutin "",255;
+							mes "[Kurelle]";
+							mes "You are right. I did it. I report all of your actions to the enterprise...";
+							mes "I did it by myself.";
+							next;
+							mes "[Kurelle]";
+							mes "When I carry on my plan, I meet with Rekenber people who are monitoring you...ha-ha!";
+							next;
+							mes "[Kurelle]";
+							mes "Therefore I take those opportunity to propose them my plan,";
+							mes "I provide information t0 them, to force you step down, I WILL BE THE NEXT PRESIDENT!!! HA-HA-HA";
+							next;
+							mes "[Kurelle]";
+							mes "Although you'll not step down sp soon...but your team will lost seriously!";
+							next;
+							mes "[Kurelle]";
+							mes "Yeap, your era is gone...";
+							mes "Now you can't do anything, just waiting to step down then is enough...";
+							mes "Ha ha...";
+							next;
+							cutin "lhz_karl",2;
+							mes "[President Karl]";
+							mes "SECURITY!!!";
+							enablenpc "Security#2";
+							next;
+							next; 
+							mes "[President Karl]";
+							mes "He is crazy!! Jail him now!";
+							next;
+							cutin "",255;
+							mes "[Security]";
+							mes "Yes sir!";
+							disablenpc "Security#2";
+							disablenpc "Kurelle#1";	
+							next;
+							cutin "lhz_karl",2;
+							mes "[President Karl]";
+							mes "It is the end of our Rebublic..";
+							mes "Soon it will fall..";
+							next;	
+							mes "[President Karl]";
+							mes "Thank you brave man ..";	
+							mes "...go away. Now I must stay here and wait the END..";	
+							set SCHWALTZVALT_PART2, 23;
+							cutin "",255;
+							close;
+							}
+if (SCHWALTZVALT_PART2==20) {
+							mes "[President Karl]";
+							mes "Very interesting...";
+							mes "With this information can give enterprise a big hit.";
+							if(countitem(7343)==0) {mes "Where is documemt?";cutin "",255; close;} //Sealed documemt
+							delitem 7343,1; //Sealed documemt
+							next;
+							mes "[President Karl]";
+							mes "But I can't understand why should we withdraw our members?...";
+							mes "...can you go to Esuna and ask her for reasons?";
+							set SCHWALTZVALT_PART2, 21; //Обратно к Есуне! (издевательство для игроков:))))
+							cutin "",255;
+							close;
+							}
+if (SCHWALTZVALT_PART2==18) {
+							mes "[President Karl]";
+							mes "It can't be true! You broght me a file containing all details of the Shinokas case!! ";
+							if(countitem(7344)==0) {mes "Where is Shinokas documemt?";cutin "",255; close;} //Shinokas documemt
+							delitem 7344,1; //Shinokas documemt
+							set SCHWALTZVALT_PART2, 19; //Обратно к Есуне!
+							next;
+							mes "...President Karl attentivly looking thought the papers...";
+							next;
+							mes "[President Karl]";
+							mes "The death of ^FF0000Shinokas^000000...";
+							mes "It is not important for us.."; 
+							mes "The most important thing is what they are going to do with ^0000FFYmir Heart Piece^000000 what is their main purpose."; 
+							next;
+							mes "[President Karl]";
+							mes "I heard that when you are on the way to me. ^FF0000Esuna^000000 gained new information.";
+							mes "Bye! I will be waiting for new information. ";
+							cutin "",255;
+							close;
+							}
+if (SCHWALTZVALT_PART2==9) {
+							mes "[President Karl]";
+							mes "Ohh! You brought me this secret document!? You are awesome!";
+							if(countitem(7343)==0) {mes "Where is documemt?";cutin "",255; close;} //Sealed Document
+							delitem 7343,1; //Sealed Document
+							mes "Let's see...";
+							next;
+							mes "[President Karl]";
+							mes "...";
+							next;
+							mes "[President Karl]";
+							mes "It is very-very interesting! One of ^0000FFRekenber Enterprise^000000 researcher is hiding in a secret place!";
+							mes "He knows some secret!!!!! His name is ^FF0000Shinokas^000000";
+							mes "...and the secret place is...";
+							next;
+							mes "[President Karl]";
+							mes "...^FF0000Einbroch^000000";
+							mes "So..your second mission is to find ^FF0000Shinokas^FF0000 in ^FF0000Einbroch^000000 and to know his secret!";
+							next;
+							mes "[President Karl]";
+							mes "Do you have any questions?";
+							next;
+							mes "["+strcharinfo(0)+"]";
+							mes "Yes...I hane one..";
+							mes "Shinikas is...";
+							next;
+							cutin "",255;
+							enablenpc "Security#2";
+							enablenpc "President's Secretary#2";
+							next;
+							mes "[Secutity]";
+							mes "Mr.President, Mrs.Hes O'Neil has urgent matter to see you. ";
+							next;
+							mes "...Mrs.Hes O'Neil brooght to the President a pack of documents...";
+							next;
+							cutin "lhz_karl",2;
+							mes "[President Karl]";
+							mes "Thanks to Mrs.Hes O'Neil we found a secret file! It is in the store room of ^0000FFReagent Belfa Headquater^000000";
+							next;
+							mes "[President Karl]";
+							mes "Ok. Go somewhere around ^FF0000Lighthalzen^000000, waiting for ^FF0000kafra service^000000 to contact with you.";
+							set SCHWALTZVALT_PART2, 10; //Взяли вторую миссию у Президента, 
+							next;
+							disablenpc "Security#2";
+							disablenpc "President's Secretary#2";
+							cutin "",255;
+							close;
+							}
+if (SCHWALTZVALT_PART2>=4) {
+							mes "[President Karl]";
+							mes "See ya!";
+							cutin "",255;
+							close;
+}
+if (SCHWALTZVALT_PART2<3) {
+							mes "[President Karl]";
+							mes "Who are you doing here?!";
+							next;
+							mes "[President Karl]";
+							mes "Secutity!!!!";
+							cutin "",255;
+							close2;
+							warp "yuno.gat",153,313;
+							}
+mes "[President Karl]";
+mes "I believe, you have many questions but.. ";
+mes "...I am very busy, so the time I have is limited.";
+
+PK_menu01:
+menu "Objective of the ^FF0000Wing Of Secret^000000f",PK_obj01,"Objective of the ^0000FFRekenber Enterprise^000000",PK_obj02,"What is my Mission?",-;
+
+next;
+mes "[President Karl]";
+mes "The first mission is to go ^0000FF'Aldebaran Kafra Headquater'^000000 to meet a guy called ^FF0000 Venice^000000. Then he will let you know what to do." ;
+next;
+mes "[President Karl]";
+mes "One more thing...";
+mes "Please, bring this document to ^FF0000Hes O'Neil^000000. Then you can continue your mission.";
+getitem 7342,1; //File Folder
+set SCHWALTZVALT_PART2, 4; //С Президентом пока все, идем к секретарше опять.
+cutin "",255;
+close;
+
+PK_obj01:
+next;
+mes "[President Karl]";
+mes "It is resistance organization which try to reform Schwaltzvalt Republic with my help.";
+mes "Before I was elected I was the member of this organization.";
+mes "We should not admit the control of authority by ^0000FFRekenber Enterprise^000000!!!";
+goto PK_menu01;
+
+PK_obj02:
+next;
+mes "[President Karl]";
+mes "^0000FFRekenber Enterprise^000000 - the worst organization in Rune Midgard!!";
+mes "They try to get power.";
+mes "To make the prices in shops is more expensive, to receive greater taxes from the townspeople, to start up development Rune Midgard on a way of fear and terror.";
+goto PK_menu01;
+}
+
+//NPC06 - Venice
+aldeba_in.gat,155,240,3	script	Kafra Employee	859,{
+if (SCHWALTZVALT_PART2==7) {
+							if(countitem(7343)==0) {mes "Where is documemt?";close;} //Здесь ИД документа
+							delitem 7343,1; //Sealed Document
+							mes "[Venice]";
+							mes "That is great!! You got this document!";
+							next;
+							mes "[Venice]";
+							mes "And how is Jargeah? Where is he?";
+							next;
+							mes "["+strcharinfo(0)+"]";
+							mes "He is....";
+							next;
+							mes "[Venice]";
+							mes "I see...";
+							mes "Here is document, give it to the President!";
+							getitem 7343,1; //Sealed Document
+							set SCHWALTZVALT_PART2, 9; //C Venice во второй раз покончено, идем отдавать документ к Президенту.
+							close;
+							}
+if (SCHWALTZVALT_PART2==6) {
+						mes "[Venice]";
+						mes "Find Jargeah please!";
+						close;
+							}
+mes "["+strcharinfo(0)+"]";
+mes "Can I know... are you Venice?";
+next;
+if (SCHWALTZVALT_PART2!=5) {
+							mes "[Kafra Employee]";
+							mes "May be yes and may be no!";
+							mes "I am thinking, go away!";
+							close;
+							}
+mes "[Venice]";
+mes "Yes, I am Venice.";
+mes "What can I do for you?";
+
+menu "Let her see the logo",-,"Nothing",V_end01;
+
+next;
+mes "[Venice]";
+mes "Now I think that I can trust you..";
+next;
+mes "[Venice]";
+mes "I am the member of ^FF0000Wing Of Secret^000000 organization.";
+mes "I got terrible news...";
+next;
+mes "[Venice]";
+mes "With our agent something happened on the half way between ^FF0000Lighthalzen^000000 and ^FF0000Einbroch^000000 in ^FF0000Grim Reaper's Valley^000000.";
+mes "He needs help, his name is ^FF0000Jargeah^000000. Hurry up please!";
+set SCHWALTZVALT_PART2, 6; //С Venice в первый покончено идем искать Jargeah
+close;
+
+
+V_end01:
+next;
+mes "[Venice]";
+mes "Ok, come back when you will ready.";
+close;
+						
+}
+
+//NPC07 - Jargeah
+lhz_fild02.gat,228,214,1	script	A Wounded Man	887,{
+mes "["+strcharinfo(0)+"]";
+mes "It looks like a dead man...";
+if (SCHWALTZVALT_PART2!=6) {
+							mes "["+strcharinfo(0)+"]";
+							mes "He is dead!!! I must go away from here...";
+							close;
+							}
+mes "Maybe I can try to find something in his clothes..";
+mes "...It isn't good, but I need to make it..";
+next;
+mes "...";
+next;
+mes "You found the Sealed Document!";
+next;
+getitem 7343,1; //Sealed Document
+set SCHWALTZVALT_PART2, 7;
+close;
+}
+
+//NPC08 - Esuna
+lhz_fild01.gat,66,219,3	script	A Mystery Woman	859,20,20{
+if (SCHWALTZVALT_PART2==21) {
+							mes "[Esuna]";
+							mes "..........";
+							mes "The traitor in the internal is the problem!";
+							mes "..........";
+							next;
+							mes "[Esuna]";
+							mes "Those who able to seal the secret information, and drain it to opponents, only the President ";
+							mes "or his trusted aide with his ability ^FF0000Kurelle^000000";
+							next;
+							mes "[Esuna]";
+							mes "According to this information, he often meets with the organaizer of enterprize, ";
+							mes "from here we can said that he is the most suspicious target.";
+							next;
+							mes "[Esuna]";
+							mes "After infiltrated his residence, we found a lot of information and evidences that related with him!";
+							next;
+							mes "[Esuna]";
+							mes "The headquater odered us to hold any actions correlated with the President,  ";
+							mes "and we determined that there is only disadvantage and it won't bring benefits anymore...";
+							next;
+							mes "[Esuna]";
+							mes "I think this is the last, good bye...";
+							set SCHWALTZVALT_PART2, 22; //Опять к президенту! (убейся об стену еще раз, и помни, ты это делаешь ради 1.8кк опыта) 
+							close;
+							}
+if (SCHWALTZVALT_PART2==19) {
+							mes "[Esuna]";
+							mes "I am too nervous..I lost many people of my group!";
+							mes "So we should use plan B. We must withdraw our members from Schwaltsvalt!";
+							next;
+							mes "[Esuna]";
+							mes "I think that it will be the best thing which we can do for our people.";
+							mes "Here is documents, containing the plan of operation and some negative information about ^0000FFRekenber Enterprise^000000, go to the President he must look throught this documents.";
+							getitem 7343,1; //Sealed Document
+							set SCHWALTZVALT_PART2, 20; //Опять к президенту! 
+							close;
+							}
+if (SCHWALTZVALT_PART2==17) {
+							mes "[Esuna]";
+							if(countitem(7344)==0) {mes "Where is Case of Xinucarse";close;} //Здесь ИД документа, 
+							mes "Haha!! You got these secret documents!! You are great!";
+							delitem 7344,1; //Case of Xinucarse
+							set SCHWALTZVALT_PART2, 18; //Миссия выполнена! part 2 finished
+							mes "[Esuna]";
+							mes "I addded some new docements to the file! ";
+							getitem 7344,1; //Case of Xinucarse
+							next;
+							mes "[Esuna]";
+							mes "Now go to the President with this documents! ";
+							close;
+							}
+if (SCHWALTZVALT_PART2==10) {
+mes "[Esuna]";
+mes "Due to emergency I'll give you a short brief, firstly the target of the mission is to infiltrate into the internal of enterpeise and steal the secret information.";
+next;
+mes "[Esuna]";
+mes "It's too difficult to ifiltrate into the iternal, but we have secret agent from our side.";
+mes "Go to ^0000FFpass^000000 and disarm the security system, and then bring out the information.";
+next;
+mes "[Esuna]";
+mes "To cheat the security system fo first to the ^FF0000L.T.G. Store^000000 and buy some stuff.";
+mes "After you entered, find a person called ^FF0000Lestin^000000";
+set SCHWALTZVALT_PART2, 11; //C кафро сервисом все, идем искать Лестина
+close;
+}
+mes "[Esuna]";
+mes "I try to find some mushrooms...bye!";
+close;
+OnTouch:
+if (SCHWALTZVALT_PART2==10) {
+mes "?????";
+mes "..here..plz...come over..";
+close;
+														}
+}
+
+//Тут вопрос с варпом, до Лестина не нашел как дойти, надо варп к нему поставить...вот тут lhz_in01 277 157
+//NPC09 - Lestin
+lhz_in01.gat,285,169,3	script	Researcher#2	865,{
+if (SCHWALTZVALT_PART2==16) {
+							mes "[Lestin]";
+							mes "My entry pass! Thank you.";
+							if(countitem(7349)==0) {mes "Where is my enty pass?";close;} //Card To Enter Document Room.
+							delitem 7349,1; //Card To Enter Document Room.
+							set SCHWALTZVALT_PART2, 17; //Теперь можно отдать документы Есуне и закончить вторую часть квеста.
+							next;
+							mes "[Lestin]";
+							mes "Now, go to Esuna with these documents. Bye!";
+							close;
+							}
+if (SCHWALTZVALT_PART2==11) {
+							mes "["+strcharinfo(0)+"]";
+							mes "Are you Lestin?";
+							next;
+							mes "[Lestin]";
+							mes "Yes, I am!";
+							mes "And you are a member of ^FF0000Wing Of Secret^000000 organization!";
+							mes "I can help you to steal secret documents!";
+							next;
+							mes "[Lestin]";
+							mes "Here is my ^0000FFpass^000000, but whis this ^0000FFpass^000000 you only can stay for ^FF00003 minutes^000000";
+							getitem 7349,1; //Card To Enter Document Room.
+							next;
+							mes "[Lestin]";
+							mes "The secret information is located at the right hand-side of the research room where I stayed just now. And this...!";
+							next;
+							mes "[Lestin]";
+							mes "...return me my ^0000FFpass^000000 when you will finish! Good Luck!";
+							set SCHWALTZVALT_PART2, 12; //Теперь идем похищать документ!
+							}
+mes "[Researcher]";
+mes "Hmm... I wonder...";
+close;
+}
+
+//Распишу систему дверей:
+//У Лестина получаем переменную 12...
+//1. если 12, 13 ,14 и флаг двери 0(т.е. есть стражники) идем активировать гвардов
+//2. запускается таймер, стражники пропадают, флаг двери = 1
+//3. у нас есть 3 минуты, чтобы сделать все, подходим к двери, если правильно вводим код, карточка остается в двери, нам присваивают переменную 13, варпает внутрь
+//4. нажимаем на систему поиска, вводим Shinokas, тогда присваивают 14, активируется ареа1-5
+//5. тыркаем на ареа1-5, получаем документы, нам присваивается 15, можно идти к двери
+//6. если у нас 15 и флаг двери 1 (т.е. еше швардов нет), то благополучно получаем карточку назад и выходим, получаем 16
+//Если не успели и мы внутри, значит у нас переменная 13, 14 или 15, флаг двери 0, пропуск исчезает и нас выкидывает из локации, придется снова идти к Лестину за пропуском 
+//Допустим у нас 15 очков мы внутри, время истекло. Два варианта - нажать на дверь, тогда придется идти к лестину снова, переменная 11 становится. Либо умереть и топать к активации гвардов.
+//NPC10 - Door
+lhz_in01.gat,177,30,1	script	Door	111,{
+if ( (SCHWALTZVALT_PART2==15) && ($SCHWALTZVALT_DOOR_FLAG==1) ) {
+																mes "You take out enty key.";
+																next;
+																mes "["+strcharinfo(0)+"]";
+																mes "Hm....I need to bring this key to Lestin!";
+																getitem 7349,1; //Card To Enter Document Room. 
+																set SCHWALTZVALT_PART2, 16; //К Лестину
+																menu "Go out!",-;
+																close2;
+																warp "lhz_in01.gat",177,27;	
+																end;
+																}
+																
+
+if ( (SCHWALTZVALT_PART2<15) && (SCHWALTZVALT_PART2>=13) && ($SCHWALTZVALT_DOOR_FLAG==0) ) {
+																menu "Go out!",-;
+																set SCHWALTZVALT_PART2,11; //неудача, опять к лестину
+																mes "[Guards]";
+																mes "Intruder!!!";
+																close2;
+																warp "lighthalzen.gat",104,238;	
+																end;
+																			}
+if  (SCHWALTZVALT_PART2>15) { mes "I got all the documents I needed!";
+							close;
+							}				
+if ((SCHWALTZVALT_PART2<13) && $SCHWALTZVALT_DOOR_FLAG==0) {
+ 								mes "Here is Guards, they can't let you infiltrate!";
+ 								mes "You need to wait a little.";
+ 								close;
+								}
+if ( (countitem(7349)>0) && (SCHWALTZVALT_PART2==12) && ($SCHWALTZVALT_DOOR_FLAG==1)) {//Card To Enter Document Room. ИД пропуска, спросить у Лупуса
+											mes "You have the entry pass. You can infiltrate now.";
+											menu "Infiltrate",-;
+											mes "Please, input code number!";
+											input @tmp_code;
+											if (@tmp_code != 738495) {next; mes "Incorrect code!"; close;} //Это число в описании пропуска должно быть
+											next;
+											delitem 7349,1; //Card To Enter Document Room
+											mes "Accepted.";
+											mes "You can stay in the documents room only for 3 minutes!.";
+											set SCHWALTZVALT_PART2, 13; //пустили внутрь
+											close2;
+											warp "lhz_in01",178,33;
+											end;
+										}
+mes "....";
+close;
+
+}
+
+//NPC11 - Activate Guards
+lhz_in01.gat,187,30,4	script	Point of the review	111,1,0{
+close;
+OnTouch:
+if ( (SCHWALTZVALT_PART2<=15) && (SCHWALTZVALT_PART2>=12) && ($SCHWALTZVALT_DOOR_FLAG==0) ){
+							mes "...It seemed that guards gonna smoke...";
+							stopnpctimer;
+							initnpctimer "schwalt2timer";
+							set $SCHWALTZVALT_DOOR_FLAG,1;
+							close;
+						}
+mes "Nothing happened..";
+close;
+}
+
+//NPC12 - File Search Engine
+lhz_in01.gat,180,35,4	script	File Search Engine	111,1,0{
+close;
+OnTouch:
+if (SCHWALTZVALT_PART2==13) {
+							mes "-Activating the document seaching program-";
+							mes "-Please key in the information of the document...-";
+							mes "-..that you would like to search-";
+							input @tmp_phrase$;
+							if (@tmp_phrase$!="Shinokas") {next; mes "Nothing interesting was found!"; close;}
+							next;
+							mes "-relevant information of Shinokas-";
+							mes "-is being kept in area 1-5-";
+							enablenpc "area 1-5";
+							set SCHWALTZVALT_PART2, 14; //активировали ареа1-5
+							close;
+							}
+mes "Nothing happened..";
+close;
+}
+
+//NPC13 - area 1-5
+lhz_in01.gat,184,49,4	script	area 1-5	111,1,0{
+close;
+OnTouch:
+if (SCHWALTZVALT_PART2==14) {
+                             mes "It is interesting. Here is the secret indormation about the heart of Ymir. I must bring this case to Esuna.";
+                             getitem 7344,1; //Case of Xinucarse Ид спросить у Лупуса
+                             set SCHWALTZVALT_PART2, 15; //Забрали документ, теперь к двери наружу
+                             close;
+							}
+
+mes "["+strcharinfo(0)+"]";
+mes "I don't know what to find!";
+close;
+}
+//Timer
+lhz_in01.gat,1,1,0	script	schwalt2timer	-1,{
+	OnTimer2000:
+		disablenpc "LhzRekGuard";
+		disablenpc "Guard#03";
+		end;
+	OnTimer182000:
+		enablenpc "LhzRekGuard";
+		enablenpc "Guard#03";
+		disablenpc "area 1-5";
+		set $SCHWALTZVALT_DOOR_FLAG,0;
+		stopnpctimer "schwalt2timer";
+		end;
+}

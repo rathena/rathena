@@ -1,0 +1,127 @@
+// by CallNix v.0.0
+
+//======================================Juno to Izlude  airship=====================================================================
+airplane_01.gat,238,154,4	script	Captain	854,{
+if (airshipquest==0) {
+mes "[Fayroll]";
+mes "I have nothing to say to you anymore";
+close;
+}
+
+if (airshipquest==3) {
+mes "[Fayroll]";
+mes "Oh, you have finished that work. Great. Now i shall read this letter.";
+mes "Dont interrupt me please";
+delitem 7276,1;
+set airshipquest,4;
+//addtimer 30000,"Captain::OnFinish";  Возможно сделать так. Но тут по таймеру, а не по кликам на НПЦ
+close;
+}
+
+if (airshipquest==4) {
+set @k,rand(4);
+if (@k == 2) goto OnFinish;
+mes "[Fayroll]";
+mes "I had not finished the letter yet";
+close;
+}
+
+mes "[Fayroll]";
+mes "Hello, "+strcharinfo(0)+". Nice to see you";
+mes "Anything want from me?";
+next;
+if (select("yes,about airships:no, nothing") == 1) {
+	mes "[Fayroll]";
+	mes "So i think you want to know how airship works";
+	mes "This is the top secret that only a captain will know. Anyway, if you're willing ti help me, I will let you know.";
+	next;
+	menu "I will help you. But what must I do?",-,"No, sorry, I have no time for this.",L_SORRY;
+		mes "[Fayroll]";
+		mes " You see, I have a brother. He is also a captain of airplane in Juno to Lighthalzen airship.";
+		mes "As we are on different ships, i cant communicate with him. Yor is to deliver this letter to him.";
+		mes "If you will do this, I shall tell you the secret.";
+		getitem 7276,1;  //Tarloks letter. Не нашел в базе
+		set airshipquest,1;
+} else {
+	mes "[Fayroll]";
+	mes "Then dont interrupt me. I have alot of work to do.";
+	mes "Go to the Casino on ship. And spen some time there";
+}
+close;
+
+L_SORRY:
+mes "[Fayroll]";
+mes "Ye this is bad, but i cant insist on it. Follow your way";
+mes "See you the other day.";
+close;
+
+OnFinish:
+mes "[Fayroll]";
+mes "Whoo... I finally got it.Now i shall tell you the secret.";
+next;
+mes "[Fayroll]";
+mes "The cocept of the flight of airship";
+mes "is the energy produced from the boiler wich push the propeller";
+mes "that moves the giant beauty. Do you understand now?";
+next;
+menu "Is That all???",-;
+mes "[Fayroll]";
+mes "You cant lift this thing up only with steam.";
+mes "thats why the machien ^5566FF'Enchancer'^000000 is used";
+mes "It is working on Heart of Ymir. Thats all the secret. Now go.";
+set airshipquest,0;
+getexp 200000,10000;
+close;
+}
+//=======================================Juno to Lighthalzen airship====================================================================
+airplane.gat,236,163,4	script	Aiplane Captain	855,{
+if (airshipquest == 1) goto L_QUEST;
+if (airshipquest == 2) goto L_FINISH;
+mes "[Dulu]";
+mes "Welcome on the board of ourship. Guess you will have lots of time here";
+close;
+
+L_QUEST:
+mes "[Dulu]";
+mes "Hello, stranger. I am the Airplane Captain of this ship.";
+mes "If you have any problems with our stuff you can simply tell me about this.";
+next;
+if (select("I have letter for you:hmm.. sorry") == 1) {
+	mes "[Dulu]";
+	mes "You have letter for me?? Really??";
+	delitem 7276,1;
+	mes "WOHHOOO! Its from my brother. Thx alot, stranger..";
+	mes "You see, he has borrowed something from me long ago. But unfortunatly he had lost it";
+	mes "and this reallly bed for you...";
+	next;
+	mes "*Dulu shows you a letter*";
+	mes "^5566FF'The one who send you the letter will find it for me. Don't reply to me if he refuses to do so'^000000";
+	next;
+	mes "[Dulu]";
+	mes "So when you accept that work you accept doing this me. Now i shall tell you your work";
+	next;
+	mes "[Dulu]";
+	mes "My brother had lost 2 Will of Darkness and 2 Prickly Fruits";
+	mes "They can simply be dropped on the deck of the ship. Monsters often atack ships. Get this items for me from them.";
+	mes "Now monster are going to atack Juno to Izlude airship. Go there and get what i need";
+	set airshipquest,2;
+	} else {
+	mes "[Dulu]";
+	mes "Well, you know where to find me. See you later";
+}
+close;
+
+L_FINISH:
+if (countitem(7340)<2 && countitem(576)<2) {
+mes "[Dulu]";
+mes "You havent geather items yet";
+close;
+}
+mes "[Dulu]";
+mes "Great work i can say";
+delitem 7340,2;
+delitem 576,2;
+getitem 7276,1;
+set airshipquest,3;
+close;
+}

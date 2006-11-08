@@ -1,0 +1,1138 @@
+//===== eAthena Script ======================================= 
+//= The Airship System Script
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 0.5c
+//===== Compatible With: ===================================== 
+//= eAthena SVN 3422+(Requires jA Script System)
+//===== Description: ========================================= 
+//= The Airship System used in the official servers, however this
+//= one is still about 25% custom and is missing some npcs.
+//===== Additional Comments: ================================= 
+//= 0.1 Added first version, it might be a little buggy [MasterOfMuppets]
+//= 0.1a Fixed the Airport Staff#Iz which was [MasterOfMuppets]
+//= 	 warping you to the same location as Airport Staff#Ein
+//= 0.2 Implemented some more airship NPCs, more are to come.
+//= 0.3 Implemented some more NPCs [MasterOfMuppets]
+//= 0.4 Implemented two mini games scripted by Dj-Yhn [MasterOfMuppets]
+//= 0.5 Removed Duplicates [Silent]
+//= 0.5aFixed a typo [Evera] 0.5b Fixed appledice bugs [Lupus]
+//============================================================ 
+
+//============================================================ 
+//= The Airship System (Yuno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
+//============================================================ 
+
+airplane.gat,243,74,4	script	#AirshipWarp-1	45,2,2{
+OnTouch:
+	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($@airplanelocation == 2)warp "yuno.gat",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($@airplanelocation == 4)warp "hugel.gat",182,150;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane.gat,243,29,4	script	#AirshipWarp-2	45,2,2{
+OnTouch:
+	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
+	if($@airplanelocation == 2)warp "yuno.gat",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
+	if($@airplanelocation == 4)warp "hugel.gat",182,150;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane.gat,1,1,0	script	EinYuno_Airship	-1,{
+OnInit:
+while(1)
+{
+	initnpctimer;
+	setnpctimer 0;
+	set $@airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Hugel.",1,0xBA55D3;
+	end;
+OnTimer15000:
+	mapannounce "airplane.gat","We are heading to Hugel.",1,0xBA55D3;
+	end;
+OnTimer30000:
+	mapannounce "airplane.gat","We will arrive in Hugel shortly.",1,0xBA55D3;
+	end;
+OnTimer45000:
+	set $@airplanelocation,4;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";	
+	mapannounce "airplane.gat","Welcome to Hugel. Have a safe trip.",1,0xBA55D3;
+	end;
+OnTimer55000:
+	mapannounce "airplane.gat","Currently, we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
+	end;
+OnTimer65000:
+	set $@airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Einbroch.",1,0x00FF00;
+	end;
+OnTimer80000:
+	mapannounce "airplane.gat","We are heading to Einbroch.",1,0x00FF00;
+	end;
+OnTimer95000:
+	mapannounce "airplane.gat","We will arrive in Einbroch shortly.",1,0x00FF00;
+	end;
+OnTimer110000:
+	set $@airplanelocation,1;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Einbroch. Have a safe trip.",1,0x00FF00;
+	end;
+OnTimer120000:
+	mapannounce "airplane.gat","Currently, we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
+	end;
+OnTimer130000:
+	set $@airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF8600;
+	end;
+OnTimer145000:
+	mapannounce "airplane.gat","We are heading to Lighthalzen.",1,0xFF8600;
+	end;
+OnTimer160000:
+	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF8600;
+	end;
+OnTimer175000:
+	set $@airplanelocation,3;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF8600;
+	end;
+OnTimer185000:
+	mapannounce "airplane.gat","Currently, we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
+	end;
+OnTimer195000:
+	set $@airplanelocation,0;
+	donpcevent "#AirshipWarp-1::OnHide";
+	donpcevent "#AirshipWarp-2::OnHide";
+	disablenpc "#AirshipWarp-1";
+	disablenpc "#AirshipWarp-2";
+	mapannounce "airplane.gat","The Airship is now taking off. Our next destination is Yuno.",1,0x70DBDB;
+	end;
+OnTimer210000:
+	mapannounce "airplane.gat","We are heading to Yuno.",1,0x70DBDB;
+	end;
+OnTimer225000:
+	mapannounce "airplane.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	end;
+OnTimer240000:
+	set $@airplanelocation,2;
+	enablenpc "#AirshipWarp-1";
+	enablenpc "#AirshipWarp-2";
+	donpcevent "#AirshipWarp-1::OnUnhide";
+	donpcevent "#AirshipWarp-2::OnUnhide";
+	mapannounce "airplane.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	end;
+OnTimer250000:
+	mapannounce "airplane.gat","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
+	end;
+OnTimer260000:
+	stoptimer;
+}
+}
+
+//C4644E
+
+//============================================================ 
+//= Some normal NPCS (airplane.gat)
+//============================================================ 
+
+airplane.gat,240,64,5	script	Exit#01::Exit2	857,{
+
+end;
+
+}
+
+airplane.gat,247,64,5	duplicate(Exit2)	Exit#02	857
+
+airplane.gat,240,39,1	duplicate(Exit2)	Exit#03	857
+
+airplane.gat,247,39,1	duplicate(Exit2)	Exit#04	857
+
+airplane.gat,100,69,2	script	Airship Crew#01::Airship Crew	852,{
+
+	mes "[Airship Crew]";
+	mes "If we've landed at";
+	mes "your destination and";
+	mes "you'd like to leave the";
+	mes "Airship, please use the";
+	mes "stairs up ahead. Thank";
+	mes "you for you patronage.";
+	close;
+
+}
+
+airplane.gat,250,59,3	script	Airship Staff::AirshipInfo	67,{
+
+	mes "[Airship Staff]";
+	mes "Welcome";
+	mes "to the Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Using the Airship",s_Use,"Captain's Cabin",s_Capt,"Facilities",s_Faci,"Cancel",-;
+
+	mes "[Airship Staff]";
+	mes "Well, I hope you like";
+	mes "your flight aboard";
+	mes "our Airships. Thank";
+	mes "you and have a good day.";
+	close;
+
+s_Use:
+	mes "[Airship Staff]";
+	mes "When you see a broadcast";
+	mes "announcing that we have";
+	mes "arrived at your destination,";
+	mes "please use one of the exits";
+	mes "located at the north and";
+	mes "south ends of the Airship";
+	next;
+	mes "[Airship Staff]";
+	mes "If you happen to miss";
+	mes "your stop, don't worry.";
+	mes "The airship is constantly";
+	mes "on route and you'll get";
+	mes "another chance to arrive";
+	mes "to your intended destination.";
+	close;
+
+s_Capt:
+	mes "[Airship Staff]";
+	mes "The Captain's Cabin";
+	mes "is located at the front";
+	mes "of the Airship. There, you";
+	mes "can meet the captain and";
+	mes "the pilot of the Airship.";
+	close;
+
+s_Faci:
+	mes "[Airship Staff]";
+	mes "The Airship provides";
+	mes "various Mini Games for";
+	mes "the entertainment of all";
+	mes "our passengers. We invite";
+	mes "you to try your luck and skills";
+	mes "in the Airship's Mini Games~";
+	close;
+
+}
+
+airplane.gat,50,66,4	script	Meltz::AirshipApples	86,{
+
+	mes "[Meltz]";
+	mes "Welcome to Meltz's";
+	mes "Shop where you can";
+	mes "purchase Apples or grind";
+	mes "them to make Apple Juice.";
+	next;
+	menu "Buy Apples",s_Buy,"Make Apple Juice",s_Juice,"Cancel.",-;
+
+s_Cancel:
+	mes "[Meltz]";
+	mes "Thanks for stopping";
+	mes "by my shop. Farewell!";
+	mes "Come back anytime when";
+	mes "you feel like having an";
+	mes "Apple to snack on~";
+	close;
+
+s_Buy:
+	mes "[Meltz]";
+	mes "Please enter the amount";
+	mes "of Apples that you wish to";
+	mes "buy. Each Apple is 15 zeny";
+	mes "and you can buy a maximum";
+	mes "of 500 at a time. Please enter";
+	mes "\"0\" to cancel your order.";
+	next;
+	input @tempapple;
+	if(!@tempapple)goto s_Cancel;
+	if(@tempapple > 0 && @tempapple < 501)goto s_AppleBuy;
+	if(@tempapple < 0)close;
+	mes "[Meltz]";
+	mes "The maximum amount of apples";
+	mes "you can buy at the same time";
+	mes "is 500. " + @tempapple + " is clearly";
+	mes "over 500.";
+	close;
+
+s_AppleBuy:
+	mes "[Meltz]";
+	mes "A total of ^FF0000" + @tempapple + "^000000 Apples.";
+	mes "will cost you ^FF0000" + @tempapple * 15 + "^000000 zeny.";
+	mes "Would you like to continue?";
+	next;
+	menu "Yes",-,"No",s_Cancel;
+
+	if(zeny < (@tempapple * 15))goto s_NEnoughZeny;
+	mes "[Meltz]";
+	mes "Thanks for stopping by";
+	mes "my shop. I hope you enjoy";
+	mes "the flavor of these Apples~!";
+	getitem 512,@tempapple;
+	set zeny,zeny - (@tempapple * 15);
+	close;
+
+s_NEnoughZeny:
+	mes "[Meltz]";
+	mes "I'm sorry buy you don't";
+	mes "seem to have enough zeny.";
+	mes "Come back anytime when";
+	mes "you feel like having an";
+	mes "Apple to snack on~";
+	close;
+
+s_Juice:
+	mes "[Meltz]";
+	mes "Okay, I'll need";
+	mes "^FF00003 Apples and 1 Empty Bottle^000000";
+	mes "to make 1 Apple Juice for you.";
+	mes "Would you like to proceed?";
+	next;
+	menu "Yes",-,"No",s_Cancel;
+
+	if(countitem(512) < 3 || !countitem(713))goto s_Material;
+	mes "[Meltz]";
+	mes "Thank you,";
+	mes "please wait";
+	mes "just a moment.";
+	next;
+	mes "*Grind grind*";
+	mes "*Grind grind*";
+	mes "*Clang...!*";
+	next;
+	mes "[Meltz]";
+	mes "There you go~";
+	mes "I hope you enjoy!";
+	mes "Please feel free to";
+	mes "stop by for your Apple";
+	mes "and Apple Juice needs";
+	mes "at anytime, adventurer~";
+	delitem 512,3;
+	delitem 713,1;
+	getitem 531,1;
+	close;
+
+s_Material:
+	mes "[Meltz]";
+	mes "I'm sorry, but you don't";
+	mes "have enough materials to";
+	mes "create a bottle of Apple Juice.";
+	mes "Remember, I need 3 Apples";
+	mes "and 1 Empty Bottle to do it.";
+	close;
+
+}
+
+
+airplane.gat,33,69,4 script Kaci 73,{
+if fragmentauest==1 {
+mes "[Kaci]";
+mes "Oh.. Thx my dear";
+close2;
+emotion e_kis;
+delitem 7148,1;
+set fragmentauest,2;
+end;
+}
+        callfunc "applegamble","Kaci";
+	end;
+
+	OnLose:
+	emotion e_wah;
+	end;
+
+	OnWin:
+	emotion e_no1;
+	end;
+}
+
+airplane.gat,80,71,4	script	Zerta	834,{
+	mes "[Zerta]";
+	mes "Oh, hello adventurer.";
+	mes "I am currently on a";
+	mes "sacred journey, offering";
+	mes "prayer for the sake of the";
+	mes "Rune-Midgard continent.";
+	close;
+}
+
+airplane.gat,65,63,4	script	Maelin	714,{
+	mes "[Maelin]";
+	mes "Um, this Airship is";
+	mes "to Lutie, isn't it? I've";
+	mes "been waiting so long,";
+	mes "but I haven't heard any";
+	mes "broadcast about Lutie.";
+	close;
+}
+
+airplane.gat,32,61,4	script	Nils::TypingContest	49,{
+
+loopback:
+	mes "[Nils]";
+	mes "Welcome to the";
+	mes "^FF0000RO Typing Challenge^000000.";
+	mes "Would you like to play";
+	mes "a quick typing game?";
+	next;
+	menu "Play ^FF0000RO Typing Challenge^000000",s_Play,"Information",s_Info,"View Top Records",s_Record,"Cancel",-;
+
+	mes "[Nils]";
+	mes "Feel free to take on the";
+	mes "Ro Typing Challenge";
+	mes "anytime. I'll be here~";
+	close;
+
+s_Play:
+	mes "[Nils]";
+	mes "Okay, we have";
+	mes "a new challenger!";
+	mes "Enter the following";
+	mes "text as quickly as you";
+	mes "can without making any";
+	mes "mistakes! Let's start~!";
+	next;
+	//below arrays are for simplified entering of new lines ;P
+	//first lines array
+	setarray $textstringsa$[0],"^00FFFFthkelfkskeldmsiejdlsle^0000FFhfndkelsheidl",
+ "^993366hfjdkeldjsieldjs^663366hfjdjeiskdlefvbd",
+ "^00FFFFCoboman no chikara-yumei na",
+ "^993366belief love luck grimace sweat rush",
+ "^00FFFFcallipygian salacious lascivious",
+ "^663366uNflAPPaBLe LoVaBLe SeCreTs AnD",
+ "^00CCFFburrdingdingdilidingdingphoohudaamb",
+ "^FF33CCbarapaphurarlandreamduranbatuhi^990066wooi",
+ "^FF33CCLiGhTsPeEd RiGhT SPEed leFT TURn",
+ "^00CCFFI'm the King of all Weirdos! Now",
+ "^00CCFFBy the power of^000000",
+ "^00CCFF...silence. quiet benevolence...";
+	//second lines array
+	setarray $textstringsb$[0],"skemd",
+	"",
+	"chikara-dalookii na chikara da ze!",
+	"folktale rodimus optimus bumblebee",
+	"licentious prurient concupiscent",
+	"BoWLiNg aGaINST tHe KarMA of YoUtH",
+	"andoora^0000FFbambarambambamburanbamding",
+	"kabamturubamdingding",
+	"RiGhT BuRn OrIGInAL GaNgSteR SmACk",
+	"you know of my true power. Obey~!",
+	"p-po-poi-po-poi-poin-poing",
+	"soul mate... wonder. enigma...";
+	//for the few 3-liners... =X
+	setarray $textstringsc$[0],"",
+	"",
+	"COBO ON!",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"GOD-POING. I NEVER LOSE!",
+ "cloud.";
+	//comparisation strings
+	setarray $compstring$[0],"thkelfkskeldmsiejdlslehfndkelsheidlskemd",
+	"hfjdkeldjsieldjshfjdjeiskdlefvbd",
+	"Coboman no chikara-yumei na chikara-dalookii na chikara da ze! COBO ON",
+	"belief love luck grimace sweat rush folktale rodimus optimus bumblebee",
+	"callipygian salacious lascivious licentious prurient concupiscent",
+	"uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA of YoUtH",
+	"burrdindingdilidingdingphoohudaambandoorabambarambambamburanbamding",
+	"barapaphurarlandreamduranbatuhiwooikabamturubamdingding",
+	"LiGhTsPeEd RiGhT SPEed leFT TURn RiGhT BuRn OrIGInAL GaNgSteR SmACk",
+	"I'm the King of all Weirdos! Now you know of my true power. Obey~!",
+	"By the power of p-po-poi-po-poi-poin-poing GOD-POING. I NEVER LOSE!",
+	"...silence. quiet benevolence... soul mate... wonder. enigma... cloud";
+	//lengths
+	setarray $lengths[0],20,32,73,73,65,66,67,55,67,66,67,69;
+	//	initnpctimer;
+	mes "[Nils]";
+	set @index,rand(1,getarraysize($textstringsa$))-1;
+	set @string1a$,$textstringsa$[@index];
+	set @string1b$,$textstringsb$[@index];
+	set @string1c$,$textstringsc$[@index];
+	set @typingstring1$,$compstring$[@index];
+	set @typingkeys,$lengths[@index];
+	set @index2,rand(1,getarraysize($textstringsa$))-1;
+	while (@index2 == @index) {
+		set @index2,rand(1,getarraysize($textstringsa$))-1;
+	}
+	set @string2a$,$textstringsa$[@index2];
+	set @string2b$,$textstringsb$[@index2];
+	set @string2c$,$textstringsc$[@index2];
+	set @typingstring2$,$compstring$[@index2];
+	set @typingkeys,@typingkeys+$lengths[@index2];
+	set @start,gettime(3)*60*60+gettime(2)*60+gettime(1);
+ mes @string1a$;
+	if(@string1b$ != "")mes @string1b$;
+	if(@string1c$ != "")mes @string1c$;
+	input @comparisonvar$[1];
+	next;
+	mes "^000000[Nils]";
+	mes @string2a$;
+	if(@string2b$ != "")mes @string2b$;
+	if(@string2c$ != "")mes @string2c$;
+	input @comparisonvar$[2];
+	if(@comparisonvar$[1] == @typingstring1$ && @comparisonvar$[2] == @typingstring2$)set @typingcorrect,1;
+	next;
+	if(!@typingcorrect)goto s_Fail;
+	set @time,(gettime(3)*60*60+gettime(2)*60+gettime(1))-@start; //seconds taken
+	set @mypoints,(@typingkeys * 100) / @time;
+	mes "[Nils]";
+	mes "Your typing time";
+	mes "was ^FF0000" + @time + " seconds^000000";
+	mes "and your score is";
+	mes "^0000FF" + @mypoints + "^000000 points";
+	next;
+	if(@mypoints <= $TypingRecord)goto loopback;
+	mes "[Nils]";
+	mes "Congratulations!";
+	mes "It's a new record.";
+	mes "I'll put you on the high-";
+	mes "score list immediately.";
+	set $TypingRecord,@mypoints;
+	set $TypingRecord$,strcharinfo(0);
+	close;
+
+s_Fail:
+	mes "^000000[Nils]";
+	mes "I'm sorry you didn't type";
+	mes "all characters correctly.";
+	mes "But remember, practice makes";
+	mes "perfect!";
+	close;
+
+s_Info:
+	mes "[Nils]";
+	mes "The RO Typing Challenge";
+	mes "is a game where you enter";
+	mes "the given text as quickly as you";
+	mes "can. The name of the top player";
+	mes "is recorded for posterity. If you";
+	mes "want fame, here's your chance!";
+	next;
+	mes "[Nils]";
+	mes "I'd just like to let";
+	mes "you know that you type";
+	mes "all the text that you see";
+	mes "in the single input line that";
+	mes "you're given. So don't press";
+	mes "the enter key, just click 'OK'.";
+	close;
+
+s_Record:
+	mes "[Nils]";
+	mes "^0000FF" + $TypingRecord$ + "^000000";
+	mes "is the current";
+	mes "record holder with";
+	mes "a record of ^0000FF" + $TypingRecord + "^000000";
+	mes "points. Try to beat";
+	mes "that record next time~";
+	close;
+
+}
+
+//============================================================ 
+//= The Airship System (Yuno -> Izlude -> Repeat)
+//============================================================ 
+
+airplane_01.gat,243,74,4	script	#AirshipWarp-3	45,2,2{
+OnTouch:
+	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
+	end;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane_01.gat,243,29,4	script	#AirshipWarp-4	45,2,2{
+OnTouch:
+	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
+	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
+
+OnHide:
+	misceffect 16;
+	end;
+OnUnhide:
+	misceffect 215;
+	end;
+}
+
+airplane_01.gat,1,1,0	script	YunoIzl_Airship	-1,{
+OnInit:
+while(1)
+{
+	initnpctimer;
+	setnpctimer 0;
+	set $@airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	disablenpc "#AirshipWarp-3";
+	disablenpc "#AirshipWarp-4";
+	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Izlude.",1,0x00FF00;
+	end;
+OnTimer15000:
+	mapannounce "airplane_01.gat","We are heading to Izlude.",1,0x00FF00;
+	end;
+OnTimer30000:
+	mapannounce "airplane_01.gat","We will arrive in Izlude shortly.",1,0x00FF00;
+	end;
+OnTimer45000:
+	set $@airplanelocation2,1;
+	enablenpc "#AirshipWarp-3";
+	enablenpc "#AirshipWarp-4";
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";	
+	mapannounce "airplane_01.gat","Welcome to Izlude. Have a safe trip.",1,0x00FF00;
+	end;
+OnTimer55000:
+	mapannounce "airplane_01.gat","Currently, we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
+	end;
+OnTimer65000:
+	set $@airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	disablenpc "#AirshipWarp-3";
+	disablenpc "#AirshipWarp-4";
+	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Yuno.",1,0x70DBDB;
+	end;
+OnTimer80000:
+	mapannounce "airplane_01.gat","We are heading to Yuno.",1,0x70DBDB;
+	end;
+OnTimer95000:
+	mapannounce "airplane_01.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	end;
+OnTimer110000:
+	set $@airplanelocation2,2;
+	enablenpc "#AirshipWarp-3";
+	enablenpc "#AirshipWarp-4";
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	end;
+OnTimer120000:
+	mapannounce "airplane_01.gat","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
+	end;
+OnTimer130000:
+	stoptimer;
+}
+}
+
+//============================================================ 
+//= Some normal NPCS (airplane_01.gat)
+//============================================================ 
+
+airplane_01.gat,240,64,5	duplicate(Exit2)	Exit#05	857
+
+airplane_01.gat,247,64,5	duplicate(Exit2)	Exit#06	857
+
+airplane_01.gat,240,39,1	duplicate(Exit2)	Exit#07	857
+
+airplane_01.gat,247,39,1	duplicate(Exit2)	Exit#08	857
+
+airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew#02	852
+
+airplane_01.gat,250,59,3	duplicate(AirshipInfo)	Airship Staff#info	67
+
+airplane_01.gat,50,66,4	duplicate(AirshipApples)	Meltz	86
+
+airplane_01.gat,32,61,4	duplicate(TypingContest)	Nils	49	
+
+airplane_01.gat,83,61,2	script	Girl#10	72,{
+
+	mes "[Dianne]";
+	mes "It's so weird!";
+	mes "I went to visit the";
+	mes "Airship Captain and";
+	mes "all I saw was this";
+	mes "weird reindeer. Oh!";
+	mes "Do you think that...";
+	close;
+
+}
+
+airplane_01.gat,69,63,2	script	Old Man#06	55,{
+
+	mes "[Mendel]";
+	mes "As I expected, the";
+	mes "in-flight meals are";
+	mes "three star quality at best.";
+	mes "^111111*Harrrumph*^000000 I really should";
+	mes "have brought my chef so that";
+	mes "I could enjoy a real meal.";
+	close;
+
+}
+
+airplane_01.gat,33,68,4	script	Clarice	74,{
+	callfunc "applegamble","Clarice";
+	end;
+}
+
+//============================================================ 
+//= The Izlude Airship Staff
+//============================================================
+
+izlude.gat,201,54,3	script	Airship Staff#izl	91,{
+
+	mes "[Airship Staff]";
+	mes "Welcome to the Izlude Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+		mes "[Airship Staff]";
+		mes "The Airship boarding fee";
+		mes "is 1,200 zeny, but if you've";
+		mes "got a Free Ticket for Airship,"; 
+		mes "the fee will be waived. Will";
+		mes "you board the Airship?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto L_GotTicket;
+		if(Zeny < 1200) goto L_NoZeny;
+			set Zeny, Zeny - 1200;
+			warp "airplane_01.gat",224,64;
+			close;
+
+		L_GotTicket:
+			delitem 7311,1;
+			warp "airplane_01.gat",224,64;
+			close;
+
+	L_NoZeny:
+		mes "[Airship Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+//============================================================ 
+//= The Hugel Airship Staff
+//============================================================
+
+hugel.gat,182,150,3	script	Airship Staff#hu	91,{
+
+	mes "[Airship Staff]";
+	mes "Welcome to the Schwartzwald Republic's Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+		mes "[Airship Staff]";
+		mes "The Airship boarding fee";
+		mes "is 1,200 zeny, but if you've";
+		mes "got a Free Ticket for Airship,"; 
+		mes "the fee will be waived. Will";
+		mes "you board the Airship?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto L_GotTicket;
+		if(Zeny < 1200) goto L_NoZeny;
+			set Zeny, Zeny - 1200;
+			warp "airplane.gat",224,64;
+			close;
+
+		L_GotTicket:
+			delitem 7311,1;
+			warp "airplane.gat",224,64;
+			close;
+
+	L_NoZeny:
+		mes "[Airship Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+//============================================================ 
+//= Yuno Airport NPCs
+//============================================================
+
+y_airport.gat,144,63,4	script	Airport Staff#Ein	91,{
+
+	mes "[Airship Staff]";
+	mes "Good day!";
+	mes "Would you like to go";
+	mes "to ^FF0000Einbroch^000000,^FF0000Hugel^000000 or";
+	mes "^FF0000Lighthalzen^000000?";
+	next;
+	menu "Yes.",s_Warp,"No.",-;
+
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Warp:
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close2;
+	warp "yuno.gat",57,240;
+	end;
+
+}
+	
+y_airport.gat,141,63,4	script	Airport Staff#Izl	91,{
+
+	mes "[Airship Staff]";
+	mes "Good day!";
+	mes "Would you like to go";
+	mes "to ^FF0000Izlude^000000?";
+	next;
+	menu "Yes.",s_Warp,"No.",-;
+
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Warp:
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close2;
+	warp "yuno.gat",50,240;
+	end;
+
+}
+
+//============================================================ 
+//= Apple Gambling Function
+//============================================================
+
+function	script	applegamble	{
+	mes "["+getarg(0)+"]";
+	mes "Hi, I'm "+getarg(0)+"~";
+	mes "How would you like";
+	mes "to wager some Apples";
+	mes "in a friendly game of Dice?";
+	next;
+	switch(select("Play Dice Game:Learn Dice Game Rules:Cancel")){
+	case 3:
+		mes "["+getarg(0)+"]";
+		mes "I'm up for a game of";
+		mes "dice whenever you feel";
+		mes "like it. Just talk to me if";
+		mes "you ever get hit with the";
+		mes "sudden urge to gamle, kay?";
+		close;
+	case 2:
+		mes "["+getarg(0)+"]";
+		mes "The rules for the Dice game";
+		mes "are pretty simple. First, you";
+		mes "place a bet by wagering Apples.";
+		mes "You can bet a maximum of 50";
+		mes "Apples at a time. To keep things";
+		mes "legal, I can only accept Apples.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "But hey, if all that zeny";
+		mes "is burning a hole in your";
+		mes "pocket, head over to Fruitz";
+		mes "and you can buy as many";
+		mes "Apples as you want, playah~";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now, we begin with me";
+		mes "rolling wto 6-sided dice.";
+		mes "When it's your turn, you'll";
+		mes "roll two 6-sided dice. After";
+		mes "that, both of us will have the";
+		mes "option of rolling a third die.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now here's the important";
+		mes "thing. If your total is higher";
+		mes "than 12, you'll bust, meaning";
+		mes "that you lose. Otherwise, the";
+		mes "person with the higher total";
+		mes "is the winner. Got it?";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Now, you'll be the first";
+		mes "to decide whether or not";
+		mes "you'll roll the third die. Then,";
+		mes "depending on your result, I'll";
+		mes "roll my third die... Or maybe not.";
+		next;
+		mes "["+getarg(0)+"]";
+		mes "When you win, you'll";
+		mes "receive twice as many";
+		mes "Apples as you wagered.";
+		mes "But if we happen to tie, you";
+		mes "get the Apples that you bet";
+		mes "returned to you. Fair, right?";
+		close;
+	case 1:
+		break;
+	}
+	mes "["+getarg(0)+"]";
+	mes "Ooh, so you'll play with";
+	mes "me? Great! How many";
+	mes "Apples would you like to bet?";
+	mes "Remember, you can wager";
+	mes "up to 50 Apples. If you'd like";
+	mes "to cancel, please enter '0'.";
+	next;
+L_Input:
+	input @amount;
+	if(@amount == 0) {
+		mes "["+getarg(0)+"]";
+		mes "Changed your mind?";
+		mes "I understand. Well then,";
+		mes "I hope we can play sometime.";
+		close;
+	}
+	if(@amount > 50) set @amount,50;
+	mes "["+getarg(0)+"]";
+	mes "So you'll be";
+	mes "betting ^FF0000"+@amount+"^000000 Apples.";
+	mes "Is that right?";
+	next;
+	if(select("Yes:No")==2){
+		mes "["+getarg(0)+"]";
+		mes "Mm, made a mistake?";
+		mes "Alright, please enter the";
+		mes "number of Apples you";
+		mes "wish to place in this bet";
+		next;
+		goto L_Input;
+	}
+	if(countitem(512)<@amount){
+		//more apples then in inventory
+		//-Improvised-
+		mes "["+getarg(0)+"]";
+		mes "Ooh...";
+		mes "You don't have that";
+		mes "much Apples with you,";
+		mes "now do you?";
+		close;
+	}
+	delitem 512,@amount;
+	mes "["+getarg(0)+"]";
+	mes "Good!";
+	mes "Now we can start";
+	mes "this game! I'll roll first~";
+	next;
+	mes "^0000FF*Rolling and rumbling*";
+	set @table1,rand(1,6);
+	set @table2,rand(1,6);
+	set @tablesub,@table1+@table2;
+	next;
+	mes "I rolled a "+@table1+" and a "+@table2+",";
+	mes "giving me a total of "+@tablesub+".";
+	mes "Now it's your turn,";
+	mes strcharinfo(0)+".";
+	next;
+	menu "Roll Dice.",-;
+
+	mes "^0000FF*Rolling and rumbling*";
+	set @player1,rand(1,6);
+	set @player2,rand(1,6);
+	set @playersub,@player1+@player2;
+	next;
+	mes "["+getarg(0)+"]";
+	mes strcharinfo(0)+",";
+	mes "you rolled a "+@player1+" and a "+@player2+",";
+	mes "giving you a total of ^FF0000"+@playersub+"^000000.";
+	next;
+	mes "["+getarg(0)+"]";
+	if(@playersub == @tablesub) {
+		mes "Well, well, well.";
+		mes "Both of us have a total";
+		mes "of "+@playersub+". Well, the ball's in";
+		mes "your court. Are you going";
+		mes "to roll your third die,";
+		mes strcharinfo(0)+"?";
+	} else if(@playersub > @tablesub) {
+		mes "Since my total is only ^0000FF"+@tablesub+"^000000,";
+		mes "you have the advantage for";
+		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "you wanna roll one more die?";
+		mes "Remember, you'll bust if all three";
+		mes "of your dice total more than 12.";
+	} else if(@tablesub > @playersub) {
+		mes "Since my total is ^0000FF"+@tablesub+"^000000,";
+		mes "I have the advantage for";
+		mes "now with your total of ^FF0000"+@playersub+"^000000. Do";
+		mes "you wanna roll one more die?";
+		mes "Remember, you'll bust if all three";
+		mes "of your dice total more than 12.";
+	}
+	next;
+	if(select("Roll another dice.:Don't Roll.")==2){
+		mes "["+getarg(0)+"]";
+		mes "Not gonna roll, huh?";
+		if(@tablesub == @playersub) {
+			mes "You better hope I roll";
+			mes "too high and bust, or";
+			mes "I'll beat you for sure!";
+			mes "Okay, here goes nothing...";
+			next;
+			goto L_Table3;
+		} else if(@tablesub < @playersub) {
+			next;
+			mes "["+getarg(0)+"]";
+			mes "Alright, I see that you";
+			mes "don't want to risk rolling";
+			mes "higher than 12 and busting.";
+			mes "I'll go ahead and roll then.";
+			next;
+			goto L_Table3;
+		} else if(@tablesub > @playersub) {
+		//you have a lower sub total then table, and do not roll 3th -Improvised-
+			mes "["+getarg(0)+"]";
+			mes "Not gonna roll, huh?";
+			mes "Well, then I'm not";
+			mes "gonna roll either.";
+			next;
+			mes "["+getarg(0)+"]";
+			mes "That means that I";
+			mes "have a total of ^0000FF"+@tablesub+"^000000";
+			mes "wich beats your ^FF0000"+@playersub+"^000000.";
+			mes "I'm sorry, but you lose";
+			mes "this game, "+strcharinfo(0)+". Better";
+			mes "luck next time.";
+		}
+		close;
+	}
+	mes "^0000FF*Rolling and rumbling*";
+	set @player3,rand(1,6);
+	set @playersub,@playersub+@player3;
+	if(@playersub > 12) {
+	//player bust --Improvised--
+		next;
+		mes "["+getarg(0)+"]";
+		mes "Oh my... You rolled a ^FF000"+@player3+"^000000,";
+		mes "making your total ^FF0000"+@playersub+"^000000.";
+		mes "That's more then 12, meaning you bust.";
+		mes "Sorry, but you lose this";
+		mes "game, "+strcharinfo(0)+".";
+		close;
+	}
+	next;
+	mes "["+getarg(0)+"]";
+	mes "Oh hey! You rolled";
+	if(@playersub >= @tablesub) {
+		mes "a ^FF0000"+@player3+"^000000, giving you a total";
+		mes "of ^FF0000"+@playersub+"^000000. Now, if I don't";
+		mes "roll, I'll lose for sure!";
+		mes "I'm gonna go for it...";
+		next;
+		goto L_Table3;
+	} else if(@playersub < @tablesub) {
+		//player's sub together with 3th die is still too low
+		//--Improvised--
+		mes "a ^FF0000"+@player3+"^000000, giving";
+		mes "you a total of ^FF0000"+@playersub+"^000000.";
+		mes "Wich still isn't enough";
+		mes "to beat my ^0000FF"+@tablesub+"^000000.";
+		mes "Sorry, but you lose this";
+		mes "game, "+strcharinfo(0)+". Them's";
+		mes "the breaks, I suppose...";
+		close;
+	}
+L_Table3:
+	mes "^0000FF*Rolling and rumbling*";
+	set @table3,rand(1,6);
+	set @tablesub,@tablesub+@table3;
+	next;
+	if(@tablesub > 12) {
+		mes "["+getarg(0)+"]";
+		mes "Eh? I rolled a ^0000FF"+@table3+"^000000, making";
+		mes "my total ^0000FF"+@tablesub+"^000000. I hate to say";
+		mes "it, but I gambled and lost.";
+		mes "Take your winnings before";
+		mes "I cry, "+strcharinfo(0)+"~!";
+		close2;
+		getitem 512,@amount*2;
+		end;
+	}
+	mes "["+getarg(0)+"]";
+	if(@tablesub < @playersub) {
+		mes "I rolled a "+@table3+", which";
+		mes "gives me a total of ^0000FF"+@tablesub+"^000000.";
+		mes "But... It's still not enough";
+		mes "to beat your ^FF0000"+@playersub+"^000000. It looks";
+		mes "like I can't compete with";
+		mes "you, "+strcharinfo(0)+"...";
+		close2;
+		getitem 512,@amount*2;
+		end;
+	} else if(@tablesub > @playersub) {
+	mes "I rolled a ^0000FF"+@table3+"^000000, giving";
+	mes "me a total of ^0000FF"+@tablesub+"^000000 which";
+	mes "beats your total of ^FF0000"+@playersub+"^000000.";
+	mes "Sorry, but you lose this";
+	mes "game, "+strcharinfo(0)+". Them's";
+	mes "the breaks, I suppose...";
+	close;
+	} else if(@tablesub == @playersub) {
+		//Result = tie, --Improvised--
+		mes "I rolled a ^0000FF"+@table3+"^000000, giving";
+		mes "me a total of ^0000FF"+@tablesub+"^000000, which";
+		mes "is the same as your total.";
+		mes "Well, this game didn't have a";
+		mes "winner or loser, "+strcharinfo(0)+".";
+		close2;
+		getitem 512,@amount;
+		end;
+	}
+}

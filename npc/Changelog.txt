@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/08
+	* Added quest\WIP (work in progress folder) with scripts by Dunkle and CallNIX [Lupus]
 	* Small fix in Hunter Job Quest [KarLaeda]
 11/07
 	* Another one set of fixes for the scripts syntax. [KarLaeda]

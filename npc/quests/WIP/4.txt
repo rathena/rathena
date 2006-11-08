@@ -1,0 +1,112 @@
+// by CallNix v.0.0
+
+airplane.gat,236,63,4    script    Hallen    55,{
+    if (fragmentauest==2) {
+        mes "[Hallen]";
+        mes "Oh, thx hero!Do you like my girls? She's reallybeatiful. Maybe you";
+        mes "shall become her boyfriend?";
+        next;
+        mes "[Hallen]";
+        mes " Its a joke ^_- Never mind.";
+        mes "And you know, there is one thing im really ineterested in....";
+        if (airshipquest != 0) {
+            mes "[Hallen]";
+            mes "You should better ask captain about the airship";
+            mes "You cant understand me if you dont do that...";
+            close;
+        };
+        mes "You see its about the airship works. Heart of Ymir...";
+        mes "Very interesting thing i think...";
+        getitem 501,1;
+        next;
+        mes "[Hallen]";
+        mes "I really want to know something about it.. if somebody could help me...";
+        mes "pity I cant go to einbroch Laboratory...";
+        mes "never mind it just my feelings. Thanks for help..";
+        next;
+        if (select("I can do it for you:Sup, guy..") == 1) {
+            mes "[Hallen]";
+            mes "Really??? Thx. I will wait for you";
+        } else {
+            mes "Hallen";
+	    mes "Well, Thanks afterall.";
+        }
+        close;
+    }
+    if (fragmentauest==3) {
+        mes "[Hallen]";
+        mes "Thanks to you now i got it.. What is that Heart of Ymir..";
+        close2;
+        getexp 700,400;
+        set fragmentauest,4;
+        end;
+    }
+    mes "[Hallen]";
+    disablenpc "Ferlok";
+    mes "Hello, "+strcharinfo(0)+". Nice to see you on ship.";
+    mes "Hows your trips? I suppose you have lots of to tell";
+    mes "your children about";
+    next;
+	menu "Ye.. I have lots of tales..",-,"Nothing really interesting",l_inter,"Have any work for me?",l_work;
+        mes "[Hallen]";
+        mes "Ye.. I would like to listen to them too...";
+        mes "But not now. I have some work to do";
+        close;
+    l_inter:
+        mes "[Hallen]";
+        mes "You are really shy to tell us. ^_- It doesnt matter";
+        mes "we all know about your doings.";
+        mes "Glad to see such a hero i can say";
+        close;
+    l_work:
+        mes "[Hallen]";
+        mes "Hm.. let me see... Ye. Its not so important, but if you have some";
+        mes "free time, can you deliver the letter to my cousin Kaci?";
+        next;
+	if (select("yes, of course:no, sory") == 1) {
+            mes "[Hallen]";
+            mes "She can be found near gaming tables under deck. Thank you";
+            getitem 7148,1;
+            set fragmentauest,1;
+        } else {
+            mes "[Hallen]";
+            mes "Its a pity. Good luck in training";
+        }
+        close;
+}
+//=====================================================================
+ein_in01,261,35,4    script    reader    111,3,3,{
+    mes "[Code reader]";
+    mes "Enter a valid 3 dig code to get information";
+    mes "You can do it 3 times only. Be careful";
+    next;
+    set @number, rand(100,999);
+    set @count, 0;
+l_input:
+    input @input;
+    if (@input != @number) {
+        mes "[Code reader]";
+        mes "you enter not valid digital";
+        set @count,@count+1;
+        next;
+        if (@count < 3) goto l_input;
+        mes "[Code reader]";
+        mes "You have not enter code correct";
+        close;
+    }
+    mes "[Card reader]";
+    mes "It seems to you that you find the information. You try to learn it";
+    next;
+    enablenpc "Ferlok";
+    mes "[Hallen]";
+    mes "Please leave this plce. I will meet you on airplane";
+    set fragmentauset,3;
+    close;
+    }
+}
+//===========================================================================
+ein_in01,255,33,4    script    Ferlok    55,{
+    mes "[Hallen]";
+    mes "I have already told you to go to plane. Hurry!";
+    close;
+}
