@@ -8533,7 +8533,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
  */
 int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 {
-	int castnodex = skill_get_castnodex(skill_id, skill_lv);
 	int time = skill_get_cast(skill_id, skill_lv);	
 	struct map_session_data *sd;
 
@@ -8541,7 +8540,7 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 	BL_CAST(BL_PC, bl, sd);
 	
 	// calculate base cast time (reduced by dex)
-	if (!(castnodex&1)) {			// castnodex&~1? wtf. [blackhole89]
+	if (!(skill_get_castnodex(skill_id, skill_lv)&1)) {
 		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 		if (scale > 0)	// not instant cast
 			time = time * scale / battle_config.castrate_dex_scale;
@@ -8555,10 +8554,6 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
 		time = time * battle_config.cast_rate / 100;
-
-  	// calculate cast time reduced by skill bonuses
-	if (!(castnodex&2))
-		time = skill_castfix_sc(bl, time);
 
 	// return final cast time
 	return (time > 0) ? time : 0;
@@ -9743,7 +9738,7 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 			sd->skilllv_dance=skilllv;
 		}
 		sc_start4(src,SC_DANCING,100,skillid,(int)group,skilllv,(i&UF_ENSEMBLE?BCT_SELF:0),skill_get_time(skillid,skilllv)+1000);
-		if (sd && i&UF_ENSEMBLE &&
+		if (sd && i&UF_ENSEMBLE && skillid != CG_HERMODE && //Hermod is a encore with a warp!
 			battle_config.player_skill_partner_check &&
 			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)
 			) {

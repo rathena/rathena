@@ -320,7 +320,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				//Check if hidden, better to modify the char's buffer than the
 				//given buffer to prevent intravision affecting the packet as 
 				//it's being received by everyone. [Skotlex]
-				/* New implemenation... not quite correct yet as the client no longer
+				/* New implementation... not quite correct yet as the client no longer
 				 * displays correctly the SI_INTRAVISION effect.
 				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 )
 						&& bl != src_bl && WFIFOW(sd->fd,0) == 0x0196)
@@ -8345,11 +8345,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(merc_is_hom_active(sd->hd)) {
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
-//		clif_homunack(sd);
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_send_homdata(sd,0,0);
 		clif_homskillinfoblock(sd);
+		//Homunc mimic their master's speed on each map change. [Skotlex]
+		if (battle_config.slaves_inherit_speed)
+			status_calc_bl(&sd->hd->bl, SCB_SPEED);
 	}
 
 	// view equipment item

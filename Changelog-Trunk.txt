@@ -3,6 +3,22 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/08
+	* Fixed Spider Web not ending when hit by a fireelemental attack. [Skotlex]
+	* Cast-time reductions from status changes will not be executed until right
+	  before casting, to prevent status changes from ending when attempting to
+	  cast and the attempt fails (invalid cells, not enough sp, wrong target,
+	  etc, etc) [Skotlex]
+	* Added check to prevent Wand of Hermod from seeking for a partner to
+	  encore, since the partner is supposed to be the warp. [Skotlex]
+	* Corrected the mob spawn reading code so that the event-name can be up to
+	  50 characters long (which is the actual event length) and so that it can
+	  read spaces within them, it will also strip the leading/trailing quotes if
+	  you use them so that the event is actually found on mob-death (so you can
+	  do stuff like "My NPC::OnDead" as a valid event). [Skotlex]
+	* Moved the homunc inherit speed from the master from status_calc_pc to
+	  LoadEndAck, since the hom's speed matches that of the master each time the
+	  master changes maps. [Skotlex]
 2006/11/07
 	* Applied FlavioJs's patch which enables colored console output for Windows
 	  systems. It also includes a config setting called

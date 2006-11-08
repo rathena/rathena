@@ -2209,7 +2209,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 
 	// 引数の個数チェック
 	if (sscanf(w1, "%15[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3 ||
-		sscanf(w4, "%d,%d,%u,%u,%23s", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname) < 2 ) {
+		sscanf(w4, "%d,%d,%u,%u,%49[^\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname) < 2 ) {
 		ShowError("bad monster line : %s %s %s (file %s)\n", w1, w3, w4, current_file);
 		return 1;
 	}

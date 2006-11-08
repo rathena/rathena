@@ -930,6 +930,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		casttime = casttime * ((distance_bl(src,target)-1)/3+1);
 		break;
 	}
+  	
+	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
+		casttime = skill_castfix_sc(src, casttime);
 
 	if( casttime>0 || temp){ 
 
@@ -1047,12 +1050,14 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	unit_stop_attack(src);
 	ud->state.skillcastcancel = castcancel;
 
+
+	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
+		casttime = skill_castfix_sc(src, casttime);
+
 	if( casttime>0 ) {
 		unit_stop_walking( src, 1);
 		clif_skillcasting(src, src->id, 0, skill_x,skill_y, skill_num,casttime);
-	}
-
-	if( casttime<=0 )
+	} else
 		ud->state.skillcastcancel=0;
 
 	ud->canact_tick  = tick + casttime + 100;
@@ -1727,7 +1732,14 @@ int unit_free(struct block_list *bl, int clrtype) {
 		}
 		if (sd->followtimer != -1)
 			pc_stop_following(sd);
-		
+		// Force exiting from duel and rejecting
+	// all duel invitations when player quit [LuzZza]
+		if(sd->duel_group > 0)
+			duel_leave(sd->duel_group, sd);
+			
+		if(sd->duel_invite > 0)
+			duel_reject(sd->duel_invite, sd);
+	
 		// Notify friends that this char logged out. [Skotlex]
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
 		party_send_logout(sd);

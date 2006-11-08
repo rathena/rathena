@@ -318,9 +318,6 @@ int atcommand_jumpto(const int fd, struct map_session_data* sd, const char* comm
 int atcommand_recall(const int fd, struct map_session_data* sd, const char* command, const char* message); // [Yor]
 int atcommand_monster(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
-int duel_leave(const unsigned int did, struct map_session_data* sd); // [LuzZza]
-int duel_reject(const unsigned int did, struct map_session_data* sd); // [LuzZza]
-
 int atcommand_config_read(const char *cfgName);
 int msg_config_read(const char *cfgName);
 void do_final_msg(void);

@@ -212,8 +212,12 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			if (tsc->data[SC_ARMOR_ELEMENT].val3 == atk_elem)
 				ratio -= tsc->data[SC_ARMOR_ELEMENT].val4;
 		}
-		if(tsc->data[SC_SPIDERWEB].timer!=-1 && atk_elem == ELE_FIRE) // [Celest]
+		if(tsc->data[SC_SPIDERWEB].timer!=-1 && atk_elem == ELE_FIRE)
+		{	// [Celest]
 			damage <<= 1;
+			status_change_end(target, SC_SPIDERWEB, -1);
+		}
+
 	}
 	return damage*ratio/100;
 }

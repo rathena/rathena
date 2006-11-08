@@ -304,6 +304,15 @@ extern int night_timer_tid;
 int map_day_timer(int,unsigned int,int,int); // by [yor]
 int map_night_timer(int,unsigned int,int,int); // by [yor]
 
+//Duel functions // [LuzZza]
+int duel_create(struct map_session_data* sd, const unsigned int maxpl);
+int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd);
+int duel_accept(const unsigned int did, struct map_session_data* sd);
+int duel_reject(const unsigned int did, struct map_session_data* sd);
+int duel_leave(const unsigned int did, struct map_session_data* sd);
+int duel_showinfo(const unsigned int did, struct map_session_data* sd);
+int duel_checktime(struct map_session_data* sd);
+
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 #endif
