@@ -19,6 +19,10 @@
 	-----
 
 ========================
+11/08
+	* Reduced Wand of Hermod's splash range (max distance from a portal) from 3 to
+	  2. Should it really be 1? (that is, be so close that moving a single cell
+	  warps you?) [Skotlex]
 11/07
 	* Kiel now summons 6 slaves instead of 5 [Playtester]
 11/06
