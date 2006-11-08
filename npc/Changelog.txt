@@ -33,11 +33,12 @@ KarLaeda
 
 Date		Added
 ======
+11/08
+	* Small fix in Hunter Job Quest [KarLaeda]
 11/07
 	* Another one set of fixes for the scripts syntax. [KarLaeda]
 	* Added Quiz (Revolution) Part 1. Converted by CAHTXHuK [Lupus]
 	  He's another candidate to the script devs. Work in progress. Help us to find bugs
-		
 11/06
 	* Fixed item select in Novice Exchanger [KarLaeda]
 11/05

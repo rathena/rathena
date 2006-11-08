@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.3a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -30,7 +30,7 @@
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged JFunc, fixed missing dialogues [Lupus]
 //= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
-//= 2.3 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
+//= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -415,7 +415,7 @@ L_Start:
 		mes "[Demon Hunter]";
 		mes "Let's see... the items you need to gather are.....";
 		next;
-		set HNTR_Q2, rand(1,5);
+		set HNTR_Q2, rand(1,7);
 	L_Repeat:
 		mes "[Demon Hunter]";
 		switch(HNTR_Q2){
