@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.7 Added some missing iRO - Lighthalzen NPCs [Musashiden]
 //= 1.8 Added Rachel Official shops. Special Thanks to RockmanEXE. [erKURITA]
 //= 1.9 Uncommented Homunculus shop, since Homunculus is working on trunk now. [Evera]
+//= 1.9a Pet Merchant -> Lighthalzen [erKURITA]
 //============================================================ 
 
 
@@ -169,6 +170,7 @@ lighthalzen.gat,69,75,5 	shop	Fruit Gardener	102,512:-1,513:-1
 lighthalzen.gat,112,44,8	shop	Flower Girl	90,712:-1,744:-1,748:-1
 lighthalzen.gat,126,126,4	shop	Food Seller	83,7456:-1,7452:-1
 lighthalzen.gat,124,129,8	shop	Vegetable Gardener	91,515:-1,516:-1,535:-1
+lighthalzen.gat,222,191,4	shop	Pet Merchant	125,537:-1,643:-1,10013:-1,10014:-1
 lhz_in02.gat,286,95,4	shop	Begginer's Merchant	62,1621:-1,5112:-1,2416:-1,2113:-1,2512:-1
 lhz_in02.gat,271,99,4	shop	Armor Dealer	851,2101:-1,2103:-1,2403:-1,2405:-1,2503:-1,2321:-1,2314:-1,2309:-1,2335:-1,2628:-1
 lhz_in02.gat,276,99,4	shop	Weapon Dealer	851,1201:-1,1207:-1,1216:-1,1107:-1,1122:-1,1116:-1,1154:-1,1407:-1,1457:-1,1354:-1,1519:-1,13003:-1,1771:-1

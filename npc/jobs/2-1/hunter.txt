@@ -31,6 +31,7 @@
 //= 2.2 Merged JFunc, fixed missing dialogues [Lupus]
 //= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
 //= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
+//= 2.4 Added missing next;, missing NPC names [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -139,7 +140,6 @@ L_Start:
 
 
 	L_ReTest:
-		mes "[Hunter Sharon]";
 		mes "Hmm.. what's this? So you wanna do the interview again? Very well.  Hopefully you'll do better this time.";
 		next;
 		mes "[Hunter Sharon]";
@@ -270,6 +270,7 @@ L_Start:
 			mes "[Hunter Sharon]";
 			mes "With your kind of additude and values, you should have no problems becoming a Hunter.";
 			next;
+			mes "[Hunter Sharon]";
 			goto L_Test2;
 		sL_90:
 			mes "[Hunter Sharon]";
@@ -278,6 +279,7 @@ L_Start:
 			mes "[Hunter Sharon]";
 			mes "Work hard on the next test.  Make Sharon happy, okies?";
 			next;
+			mes "[Hunter Sharon]";
 			goto L_Test2;
 		sL_Failed:
 			mes "[Hunter Sharon]";
@@ -463,6 +465,7 @@ L_Start:
 	M_No:
 		mes "[Demon Hunter]";
 		mes "Stop playing around "+strcharinfo(0)+", that's your name, right?";
+		next;
 		menu "Yes",M_Yes, "Uhhh no",sM_End;
 	
 		sM_End:

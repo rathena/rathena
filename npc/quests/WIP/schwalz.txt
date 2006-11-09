@@ -7,15 +7,17 @@
 //= CallNix (Part 1)
 //= dunkle (Part 2 & 3)
 //===== Current Version: =====================================
-//= 1.0 working version
-//= 1.1 fixed bug with wrong valuable [dunkle]
-//=     added and deleted some checks [dunkle]
-//=     fixed warps (but they are wrong) [dunkle]
-//=     fixed enabling of A Fine Gentleman [dunkle]
-//=     fixed bug with reward [dunkle]
-//= 1.2 fixed bug in part with overflow timer (now you must wait untill next day, not 12 hours) [dunkle]
-//      changed some valuables [dunkle]
-//      fixed bugs in The broken Manufactoring [dunkle]
+//= 1.0  working version
+//= 1.1  fixed bug with wrong valuable [dunkle]
+//=      added and deleted some checks [dunkle]
+//=      fixed warps (but they are wrong) [dunkle]
+//=      fixed enabling of A Fine Gentleman [dunkle]
+//=      fixed bug with reward [dunkle]
+//= 1.2  fixed bug in part with overflow timer (now you must wait untill next day, not 12 hours) [dunkle]
+//       changed some valuables [dunkle]
+//       fixed bugs in The broken Manufactoring [dunkle]
+//= 1.2b fixed timer Ordinary Man [dunkle]
+//= 1.3  fixed part1 bugs [dunkle]
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -83,8 +85,9 @@ if (SCHWALTZVALT_PART2==23) {
 							close;
 							}
 		
-if questpass_swaltzwaltp1==1 goto l_alreadydone;							
-if quest_swaltzwaltp1==1 goto Quest_enable;
+
+if (questpass_swaltwaltp1==1) goto l_alreadydone;							
+if ( (SCHWALTZVALT_PART1==2) || (SCHWALTZVALT_PART1==3) ) goto Quest_enable;
 if  ( (SCHWALTZVALT_PART1==1) && (gettime(5)!=schwalzday) ) goto L_NEXTDAY;
 if  (SCHWALTZVALT_PART1==1) goto l_hadspoken;
 mes "[Ghalstein]";
@@ -205,7 +208,8 @@ mes "There are some strange mobs there. So be careful. And last...People who go 
 next;
 mes "[Ghalstein]";
 mes "So you had to go to 2 and 3 lvl of BioLab. Be sure you have finish this quest. And bring me 10 Lab staff records, 10 Armlet of prisoner and 1 Pile of Imir heat";
-set quest_swaltzwaltp1,1;
+set SCHWALTZVALT_PART1,2;
+
 set schwalzday,0;
 close;
 
@@ -270,22 +274,21 @@ close;
 }
 //=======================================================================
 lhz_dun02.gat,268,287,4	script	The broken Manufactoring	111,{
-if quest_swaltzwaltp1!=1 goto l_end;
+if SCHWALTZVALT_PART1!=2 goto l_end;
 mes "[The broken Manufactoring]";
 mes "You see something shining inside the spoiling machines.Open up the machinr and check it,detected a round shape";
 mes "object wich circulate with a mysterious shines.";
 menu "Its seems like an important object",-,"But it looks nothing musch",l_nottake;
 getitem(7346),1;
+set SCHWALTZVALT_PART1,3;
 mes "["+strcharinfo(0)+"]";
 mes "Well, Now i suppose everything will be ok.";
 close2;
 npctalk "Creeep... Creeeep-Creep...*pfu*.";
 mes "["+strcharinfo(0)+"]";
 mes "Oooops....I dont think this machien will work anymore... I'll go better from here";
-set quest_swaltzwaltp1,0;
 close;
 end;
-
 l_nottake:
 close;
 

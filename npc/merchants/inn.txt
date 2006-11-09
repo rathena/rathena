@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 1.2 Rewrote inn script [Playtester]
 //= 1.3 Added (finally) Rachel Inn Maid. Official warp
 //=	  and save points[erKURITA]
+//= 1.4 Added Hugel inn [erKurita]
 //============================================================ 
 
 
@@ -88,6 +89,13 @@ ra_in01.gat,376,69,4	script	Inn Keeper	931,{
 
 	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01.gat",375,58;
 	warp "ra_in01.gat",384,128;
+}
+
+//======================== Hugel ====================================
+hu_in01.gat,246,107,3	script	Inn Maid::Receptionist	53,{
+
+	callfunc "F_InnMaid","[Receptionist]","Hugel Inn","hu_in01.gat",263,95;
+	warp "hu_in01",267,5;
 }
 
 //======================= Inn Function ==============================

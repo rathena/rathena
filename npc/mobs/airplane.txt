@@ -1,3 +1,4 @@
+//v 1.1
 //Temporary spawns until Airship quest is finished
 
 airplane_01.gat,225,52,25,10	monster	Gremlin	1632,9,7200000,3600000,1
@@ -5,3 +6,5 @@ airplane_01.gat,225,52,25,10	monster	Beholder	1633,6,7200000,3600000,1
 airplane_01.gat,225,52,25,10	monster	Picky	1049,4,7200000,3600000,1
 airplane_01.gat,225,52,25,10	monster	Familiar	1005,2,7200000,3600000,1
 airplane_01.gat,225,52,25,10	monster	Drainliar	1111,1,7200000,3600000,1
+airplane_01.gat,225,52,25,10	monster	Rotar Zairo	1392,4,7200000,3600000,1
+airplane_01.gat,225,52,25,10	monster	Steel Chonchon	1042,2,7200000,3600000,1

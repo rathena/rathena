@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.1)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 10+
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 Rewrote all warps to relate houses, and fixed it to kRO. [Er_Maqui]
 //= 1.3a Replaced all spaces with TABs [Lupus]
 //= 1.4 Fixed an back warp on hu_in01,15,70 (walk to the warp, then warps you back) [erKURITA]
+//= 1.5 Added Bingo warps [erKURITA]
 //============================================================
 
 //= Hugel City ================================================
@@ -98,3 +99,11 @@ hugel.gat,80,230,0	warp	hugel57	1,1,hu_in01.gat,24,363
 hu_in01.gat,24,361,0	warp	hugel58	1,1,hugel.gat,82,230
 hugel.gat,93,201,0	warp	hugel60	1,1,hu_in01.gat,303,380
 hu_in01.gat,301,380,0	warp	hugel59	1,1,hugel.gat,93,199
+
+//Bingo
+hugel.gat,55,208,0	warp	hugelwarp1051	1,1,que_bingo.gat,49,9
+que_bingo.gat,49,7,0	warp	hugelwarp1052	1,1,hugel.gat,57,207
+que_bingo.gat,39,34,0	warp	hugelwarp1053	1,1,que_bingo.gat,34,109
+que_bingo.gat,34,105,0	warp	hugelwarp1054	1,1,que_bingo.gat,38,28
+que_bingo.gat,53,34,0	warp	hugelwarp1055	1,1,que_bingo.gat,49,71
+que_bingo.gat,48,66,0	warp	hugelwarp1056	1,1,que_bingo.gat,53,29
