@@ -6661,9 +6661,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
 	case PF_FOGWALL:
-		if(sc && (
-			sc->data[SC_DELUGE].timer!=-1 || sc->data[SC_SUITON].timer != -1
-		)) limit *= 2;
+		//When casted on top of Deluge/Suiton: Double duration.
+		if (map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL) ||
+		  	map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL))
+			limit *= 2;
 		break;
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]

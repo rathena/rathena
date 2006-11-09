@@ -963,10 +963,13 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	
 	if(sc && sc->count)
 	{
-		if(sc->opt1 >0 && flag != 1)
-			//When sc do not cancel casting, the spell should come out, and when it does, we can never have
-			//a flag == 1 && sc->opt1 case, since cancelling should had been stopped before.
-			return 0;
+		if(sc->opt1 >0)
+		{	//Stuned/Frozen/etc
+			if (flag != 1) //Can't cast, casted stuff can't damage. 
+				return 0;
+			if (!skill_get_inf(skill_num)&INF_GROUND_SKILL)
+				return 0; //Targetted spells can't come off.
+		}
 
 		if (
 			(sc->data[SC_TRICKDEAD].timer != -1 && skill_num != NV_TRICKDEAD)

@@ -511,7 +511,7 @@
 485,-2,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//WS_CARTTERMINATION#Cart Termination#
 486,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//WS_OVERTHRUSTMAX#Maximum Power Thrust#
 487,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//CG_LONGINGFREEDOM#Longing for Freedom#
-488,0,6,4,0,1,2,5,1,no,0,64,0,misc,0	//CG_HERMODE#Wand of Hermod#
+488,0,6,4,0,1,1,5,1,no,0,64,0,misc,0	//CG_HERMODE#Wand of Hermod#
 489,9,6,1,0,1,0,5,1,no,0,0,0,misc,0	//CG_TAROTCARD#Tarot Card of Fate#
 490,9,8,1,0,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0	//CR_ACIDDEMONSTRATION#Acid Demonstration#
 491,1,6,2,0,1,0,2,1,no,0,0,0,none,0	//CR_CULTIVATION#Cultivation#
