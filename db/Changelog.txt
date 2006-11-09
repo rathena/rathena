@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/09
+	* Official Weight and Max SP values for TK/SG/SL/GS/NJ [Playtester]
+	- why were ours so far off the official ones?
 11/08
 	* Reduced Wand of Hermod's splash range (max distance from a portal) from 3 to
 	  2. Should it really be 1? (that is, be so close that moving a single cell
