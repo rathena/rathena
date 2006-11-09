@@ -217,7 +217,6 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			damage <<= 1;
 			status_change_end(target, SC_SPIDERWEB, -1);
 		}
-
 	}
 	return damage*ratio/100;
 }

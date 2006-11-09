@@ -1681,7 +1681,7 @@ int map_quit(struct map_session_data *sd) {
 				unit_remove_map(&sd->pd->bl, 0);
 		}
 	}
-	
+
 	//Do we really need to remove the name?
 	idb_remove(charid_db,sd->status.char_id);
 	idb_remove(id_db,sd->bl.id);

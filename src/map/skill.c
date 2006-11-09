@@ -6767,7 +6767,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			ux+=(i%5-2);
 			uy+=(i/5-2);
 			break;
-		case UNT_DESPERADO:
+		case GS_DESPERADO:
 			val1 = abs(layout->dx[i]);
 			val2 = abs(layout->dy[i]);
 			if (val1 < 2 || val2 < 2) { //Nearby cross, linear decrease with no diagonals
@@ -7185,21 +7185,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			sg->state.into_abyss = 1; //Prevent Remove Trap from giving you the trap back. [Skotlex]
 			break;
 
-		case UNT_GROUNDDRIFT_WIND:
-		case UNT_GROUNDDRIFT_DARK:
-		case UNT_GROUNDDRIFT_POISON:
-		case UNT_GROUNDDRIFT_WATER:
-		case UNT_GROUNDDRIFT_FIRE:
-			map_foreachinrange(skill_trap_splash,&src->bl,
-				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-				&src->bl,tick,0);
-			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
-			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-			sg->state.into_abyss = 1;
-			break;
-
-
 		case UNT_TALKIEBOX:
 			if (sg->src_id == bl->id)
 				break;
@@ -7261,7 +7246,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						status_change_clear_buffs(bl,2);
 						if (sd) clif_gospel_info(sd, 0x15);
 						break;
-					case 2: // 100% resist to status changes.
+					case 2: // Immunity to all status
 						sc_start(bl,SC_SCRESIST,100,100,type);
 						if (sd) clif_gospel_info(sd, 0x16);
 						break;
@@ -7349,6 +7334,20 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_DESPERADO:
 			if (rand()%100 < src->val1)
 				skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
+
+		case UNT_GROUNDDRIFT_WIND:
+		case UNT_GROUNDDRIFT_DARK:
+		case UNT_GROUNDDRIFT_POISON:
+		case UNT_GROUNDDRIFT_WATER:
+		case UNT_GROUNDDRIFT_FIRE:
+			map_foreachinrange(skill_trap_splash,&src->bl,
+				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
+				&src->bl,tick,0);
+			sg->unit_id = UNT_USED_TRAPS;
+			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
+			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
+			sg->state.into_abyss = 1;
 			break;
 
 		case UNT_KAENSIN:
@@ -9339,7 +9338,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
 		!(skill_get_unit_flag(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
-	{	//Block stuff from being placed on an LP except for song/dances
+	{	//It deletes everything except songs/dances/encores.
 		(*alive) = 0;
 		return 1;
 	}
