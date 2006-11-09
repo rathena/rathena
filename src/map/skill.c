@@ -4266,7 +4266,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(bl, SC_SILENCE	, -1 );
 		status_change_end(bl, SC_BLIND	, -1 );
 		status_change_end(bl, SC_CONFUSION, -1 );
-		if(battle_check_undead(tstatus->race,tstatus->def_ele))
+		//Confusion on undead won't trigger on undead players.
+		if(!dstsd && battle_check_undead(tstatus->race,tstatus->def_ele))
 			sc_start(bl, SC_CONFUSION,100,1,skill_get_time2(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;

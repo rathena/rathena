@@ -25,6 +25,7 @@ extern int other_mapserver_count;
 
 void chrif_authreq(struct map_session_data *);
 void chrif_authok(int fd);
+int chrif_scdata_request(int account_id, int char_id);
 int chrif_save(struct map_session_data*, int flag);
 int chrif_charselectreq(struct map_session_data *sd, unsigned long s_ip);
 void check_fake_id(int fd, struct map_session_data *sd, int target_id);

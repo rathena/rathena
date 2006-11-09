@@ -820,8 +820,8 @@ int pc_reg_received(struct map_session_data *sd)
 	// The earliest I can get is here to prevent more failures of status_calc_pc
 	// while making equipment scripts with global_regs possible. [Lance]
 	status_calc_pc(sd,1);
-	//if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
-	//	status_calc_pc(sd, 0); //Check +10 to all stats bonus.
+	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
+
 	if (pc_checkskill(sd, TK_MISSION)) {
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");

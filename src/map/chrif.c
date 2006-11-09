@@ -483,7 +483,6 @@ void chrif_authreq(struct map_session_data *sd)
 			auth_data->login_id1 == sd->login_id1)
 		{	//auth ok
 			pc_authok(sd, auth_data->login_id2, auth_data->connect_until_time, auth_data->char_dat);
-			chrif_scdata_request(auth_data->account_id, auth_data->char_dat->char_id);
 		} else { //auth failed
 			pc_authfail(sd);
 			chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
@@ -524,7 +523,6 @@ void chrif_authok(int fd) {
 					auth_data->login_id1 == RFIFOL(fd, 8))
 				{ //Auth Ok
 					pc_authok(auth_data->sd, RFIFOL(fd, 16), RFIFOL(fd, 12), (struct mmo_charstatus*)RFIFOP(fd, 20));
-					chrif_scdata_request(auth_data->account_id, auth_data->sd->status.char_id);
 				} else { //Auth Failed
 					pc_authfail(auth_data->sd);
 					chrif_char_offline(auth_data->sd); //Set him offline, the char server likely has it set as online already.

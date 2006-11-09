@@ -177,7 +177,7 @@ int mob_parse_dataset(struct spawn_data *data) {
 				data->eventname[0] = '\0'; //Clear event as it is not used.
 			}
 		} else {
-			if (data->eventname[i-1] == '"');
+			if (data->eventname[i-1] == '"')
 				data->eventname[i-1] = '\0'; //Remove trailing quote.
 			if (data->eventname[0] == '"') //Strip leading quotes
 				memmove(data->eventname, data->eventname+1, i-1);

@@ -5,6 +5,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/09
 =======
+	* Fixed status-change loading not working. [Skotlex]
+	* Fixed permanent mob-spawn script-events not working. [Skotlex]
+	* AL_CURE won't confuse undead players. [Skotlex]
 	* Corrected the Fog of Wall check so that it lasts 2x when it is placed on
 	  TOP of a suiton/deluge, not when the caster is on top of them. [Skotlex]
 	* Updated status_check_skilluse so that when the caster has a disabling
