@@ -20,6 +20,8 @@
 
 ========================
 11/09
+	* More accurate Max HP values for TK/SG/SL/GS/NJ [Playtester]
+	- TK/SG/SL are official up to level 70
 	* Reduced the check area of hermod to 3x3, you now have to literally stand
 	  next to a warp for it to work. [Skotlex]
 	* Official Weight and Max SP values for TK/SG/SL/GS/NJ [Playtester]
