@@ -4990,7 +4990,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int hp, sp;
 			hp = sstatus->max_hp/10;
-			sp = hp * 10 * skilllv / 100;
+			sp = hp + (hp * 10 * skilllv) / 100;
 			if (!status_charge(src,hp,0)) {
 				if (sd) clif_skill_fail(sd,skillid,0,0);
 				break;
