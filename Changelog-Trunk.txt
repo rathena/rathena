@@ -3,8 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/10
+	* Fog of Wall will fail when casted on top of a Volcano/Violent Gale
+	  [Skotlex]
+	* Applied FlavioJS's fix to the npc whisper system. [Skotlex]
 2006/11/09
-=======
 	* Fixed status-change loading not working. [Skotlex]
 	* Fixed permanent mob-spawn script-events not working. [Skotlex]
 	* AL_CURE won't confuse undead players. [Skotlex]

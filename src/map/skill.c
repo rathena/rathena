@@ -6662,6 +6662,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
 	case PF_FOGWALL:
+		//When casted on top of Volcano/Violent Gale it fails.
+		if (map_find_skill_unit_oncell(src,x,y,SA_VOLCANO,NULL) ||
+		  	map_find_skill_unit_oncell(src,x,y,SA_VIOLENTGALE,NULL))
+			return NULL;
 		//When casted on top of Deluge/Suiton: Double duration.
 		if (map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL) ||
 		  	map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL))

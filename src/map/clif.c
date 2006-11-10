@@ -9044,7 +9044,6 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	int i=0;
 	struct npc_data *npc;
 	char split_data[10][50];
-	int j=0,k=0;
 	char target[NAME_LENGTH+1];
 	char output[256];  
 	RFIFOHEAD(fd);
@@ -9089,32 +9088,36 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		char *whisper_tmp = target+4; //Skip the NPC: string part.
 		if ((npc = npc_name2id(whisper_tmp)))	
 		{
+			char *split, *str;
 			whisper_tmp=(char *)aMallocA((strlen((char *)(RFIFOP(fd,28)))+1)*sizeof(char));
-		   
+		  
+			str=whisper_tmp; 
 			sprintf(whisper_tmp, "%s", (const char*)RFIFOP(fd,28));  
-			for( j=0;whisper_tmp[j]!='\0';j++)
-			{
-				if(whisper_tmp[j]!='#')
-				{
-					split_data[i][j-k]=whisper_tmp[j];
+			for( i=0; i < 10; ++i )
+			{// Splits the message using '#' as separators
+				split = strchr(str,'#');
+				if( split == NULL )
+				{	// use the remaining string
+					strncpy(split_data[i], str, sizeof(split_data[0])/sizeof(char));
+					split_data[i][sizeof(split_data[0])/sizeof(char)-1] = '\0';
+					for( ++i; i < 10; ++i )
+					split_data[i][0] = '\0';
+					break;
 				}
-				else
-				{
-					split_data[i][j-k]='\0';
-					k=j+1;
-					i++;
-				}
-			} // Splits the message using '#' as separators
-			split_data[i][j-k]='\0';
+				*split = '\0';
+				strncpy(split_data[i], str, sizeof(split_data[0])/sizeof(char));
+				split_data[i][sizeof(split_data[0])/sizeof(char)-1] = '\0';
+				str = split+1;
+			}
 			
 			aFree(whisper_tmp);
 			whisper_tmp=(char *)aMallocA(15*sizeof(char));
 			
-			for (j=0;j<=10;j++)
+			for (i=0;i<10;i++)
 			{
-				sprintf(whisper_tmp, "@whispervar%d$", j);
-				set_var(sd,whisper_tmp,(char *) split_data[j]);        
-			}//You don't need to zero them, just reset them [Kevin]
+				sprintf(whisper_tmp, "@whispervar%d$", i);
+				set_var(sd,whisper_tmp,(char *) split_data[i]);        
+			}//You don't need to zero them, iust reset them [Kevin]
 			
 			aFree(whisper_tmp);
 			whisper_tmp=(char *)aMallocA((strlen(npc->name)+18)*sizeof(char));
