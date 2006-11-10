@@ -783,7 +783,6 @@ int pc_authfail(struct map_session_data *sd) {
 //Attempts to set a mob. 
 int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 {
-	const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
 	int class_;
 	if (!sd || !bl || pos < 0 || pos > 2)
 		return 0;
