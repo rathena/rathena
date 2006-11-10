@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/10
+	* Corrected fog of wall, so that the deleted/doubled-duration effects are
+	  calculated on a cell-by-cell basis. [Skotlex]
+	* Updated Land Protector: It will now delete/block effects of ALL ground
+	  skills EXCEPT: Song/Dances/Traps (encores are still blocked). Land skills
+	  blocked/deleted by LP also can't be casted on top of an existing LP. The
+	  code uses the inf2 value of the skill to determine if it is a
+	  song/dance/trap. [Skotlex]
+	* Ganbantein, mimicking LP, will now also remove ensembles. [Skotlex]
 	* Fog of Wall will fail when casted on top of a Volcano/Violent Gale
 	  [Skotlex]
 	* Applied FlavioJS's fix to the npc whisper system. [Skotlex]

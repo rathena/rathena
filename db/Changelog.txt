@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/10
+	* Removed the inf2 = TRAP of FirePillar and Spider Web so they are blocked
+	  by Land Protector. [Skotlex]
 11/09
 	* More accurate Max HP values for TK/SG/SL/GS/NJ [Playtester]
 	- TK/SG/SL are official up to level 70

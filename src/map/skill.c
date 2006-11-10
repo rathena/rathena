@@ -719,7 +719,7 @@ int skill_attack_area(struct block_list *bl,va_list ap);
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl); // [Skotlex]
 int skill_graffitiremover(struct block_list *bl, va_list ap); // [Valaris]
 int skill_greed(struct block_list *bl, va_list ap);
-int skill_landprotector(struct block_list *bl, va_list ap);
+int skill_cell_overlap(struct block_list *bl, va_list ap);
 int skill_ganbatein(struct block_list *bl, va_list ap);
 int skill_trap_splash(struct block_list *bl, va_list ap);
 int skill_count_target(struct block_list *bl, va_list ap);
@@ -6661,16 +6661,6 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1 = 55 + skilllv*5;	//Elemental Resistance
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
-	case PF_FOGWALL:
-		//When casted on top of Volcano/Violent Gale it fails.
-		if (map_find_skill_unit_oncell(src,x,y,SA_VOLCANO,NULL) ||
-		  	map_find_skill_unit_oncell(src,x,y,SA_VIOLENTGALE,NULL))
-			return NULL;
-		//When casted on top of Deluge/Suiton: Double duration.
-		if (map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL) ||
-		  	map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL))
-			limit *= 2;
-		break;
 	case RG_GRAFFITI:			/* Graffiti */
 		count=1;	// Leave this at 1 [Valaris]
 		break;
@@ -6791,7 +6781,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			break;
 		}
 		if(range<=0)
-			map_foreachincell(skill_landprotector,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
+			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
 		
 		if(alive && map_getcell(src->m,ux,uy,CELL_CHKWALL))
 			alive = 0;
@@ -6818,6 +6808,12 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy,val1,val2));
 			unit->limit=limit;
 			unit->range=range;
+
+			if (skillid == PF_FOGWALL && alive == 2)
+			{	//Double duration of cells on top of Deluge/Suiton
+				unit->limit *= 2;
+				group->limit = unit->limit;
+			}
 		
 			if (range==0 && active_flag)
 				map_foreachincell(skill_unit_effect,unit->bl.m,
@@ -9285,7 +9281,7 @@ int skill_greed (struct block_list *bl, va_list ap)
  *
  *------------------------------------------
  */
-int skill_landprotector (struct block_list *bl, va_list ap)
+int skill_cell_overlap(struct block_list *bl, va_list ap)
 {
 	int skillid;
 	int *alive;
@@ -9296,7 +9292,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 	alive = va_arg(ap,int *);
 	src = va_arg(ap,struct block_list *);
 	unit = (struct skill_unit *)bl;
-	if (unit == NULL || unit->group == NULL)
+	if (unit == NULL || unit->group == NULL || (*alive) == 0)
 		return 0;
 
 	switch (skillid)
@@ -9311,8 +9307,8 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			}
 			//Delete the rest of types.
 		case HW_GANBANTEIN:
-			if(!unit->group->state.song_dance)
-			{	//It deletes everything except songs/dances/encores.
+			if(!skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP))
+			{	//It deletes everything except songs/dances
 				skill_delunit(unit, 1);
 				return 1;
 			}
@@ -9334,6 +9330,20 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 					return 1;
 			}
 			break;
+		case PF_FOGWALL:
+			switch(unit->group->skill_id)
+			{
+				case SA_VOLCANO: //Can't be placed on top of these
+				case SA_VIOLENTGALE:
+					(*alive) = 0;
+					return 1;
+				case SA_DELUGE:
+				case NJ_SUITON:
+				//Cheap 'hack' to notify the calling function that duration should be doubled [Skotlex]
+					(*alive) = 2;
+					break;
+			}
+			break;
 		case HP_BASILICA:
 			if (unit->group->skill_id == HP_BASILICA)
 			{	//Basilica can't be placed on top of itself to avoid map-cell stacking problems. [Skotlex]
@@ -9343,8 +9353,8 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 			break;
 	}
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-		!(skill_get_unit_flag(skillid)&(UF_DANCE|UF_SONG|UF_ENSEMBLE)))
-	{	//It deletes everything except songs/dances/encores.
+		!(skill_get_inf2(skillid)&(INF2_SONG_DANCE|INF2_TRAP)))
+	{	//It deletes everything except songs/dances/traps
 		(*alive) = 0;
 		return 1;
 	}
@@ -9353,7 +9363,7 @@ int skill_landprotector (struct block_list *bl, va_list ap)
 }
 
 /*==========================================
- * variation of skill_landprotector
+ * variation of skill_cell_overlap
  *------------------------------------------
  */
 int skill_ganbatein (struct block_list *bl, va_list ap)
@@ -9365,8 +9375,8 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
 		return 0;
 
-	if (unit->group->state.song_dance)
-		return 0; //Don't touch song/dance/ensemble.
+	if (unit->group->state.song_dance&0x1)
+		return 0; //Don't touch song/dance.
 
 	if (unit->group->skill_id == SA_LANDPROTECTOR)
 		skill_delunit(unit, 1);
@@ -9916,7 +9926,7 @@ int skill_unit_timer_sub_onplace (struct block_list *bl, va_list ap)
 
 	nullpo_retr(0, group=unit->group);
 
-	if (skill_get_type(group->skill_id)==BF_MAGIC
+	if (!skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)
 		&& map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
 		return 0; //AoE skills are ineffective. [Skotlex]
 
