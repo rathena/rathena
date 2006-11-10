@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/10
+	* AL_TELEPORT now fails when used on top of Land Protector. [Skotlex]
+	* Some minor cleanings in pc_setpos, it may (or not) help fix that
+	  homunc-caused "map_addblock" error message. [Skotlex]
 	* Corrected fog of wall, so that the deleted/doubled-duration effects are
 	  calculated on a cell-by-cell basis. [Skotlex]
 	* Updated Land Protector: It will now delete/block effects of ALL ground

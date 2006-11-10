@@ -4334,6 +4334,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AL_TELEPORT:
+		//Should fail when used on top of Land Protector [Skotlex]
+		if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
+			break;
+
 		if(sd) {
 			if (map[bl->m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);

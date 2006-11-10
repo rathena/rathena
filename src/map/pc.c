@@ -3350,10 +3350,9 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 					intif_save_petdata(sd->status.account_id,&sd->pd->pet);
 					unit_remove_map(&sd->pd->bl, clrtype);
 				}
-				if(sd->status.hom_id > 0 && sd->hd) {	//orn
-					intif_homunculus_requestsave(sd->status.account_id, &sd->hd->homunculus);
+				if(merc_is_hom_active(sd->hd)) //Hom is auto-saved in chrif_save
 					unit_remove_map(&sd->hd->bl, clrtype);
-				}
+
 				chrif_save(sd,2);
 				chrif_changemapserver(sd, mapindex, x, y, ip, (short)port);
 				return 0;
@@ -3385,7 +3384,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		unit_remove_map(&sd->bl, clrtype);
 		if(sd->status.pet_id > 0 && sd->pd)
 			unit_remove_map(&sd->pd->bl, clrtype);
-		if(sd->status.hom_id > 0 && sd->hd)	//orn
+		if(merc_is_hom_active(sd->hd))
 			unit_remove_map(&sd->hd->bl, clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
 	} else if(sd->state.auth)
@@ -3411,7 +3410,7 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		sd->pd->ud.dir = sd->ud.dir;
 	}
 
-	if(sd->status.hom_id > 0 && merc_is_hom_active(sd->hd)) {	//orn
+	if(merc_is_hom_active(sd->hd)) {	//orn
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
 		sd->hd->bl.y = sd->hd->ud.to_y = y;
