@@ -2639,7 +2639,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	if (status_isdead(bl))
 		return 1;
 
-	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl))
+	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl) == 100)
 	{	//GTB makes all targetted magic fail silently.
 		if (sd) clif_skill_fail(sd,skillid,0,0);
 		return 1;
@@ -9323,6 +9323,15 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 // Suiton/Kaensin CAN super-impose on each another.
 //		case NJ_SUITON:
 //		case NJ_KAENSIN:
+// The official implementation makes them fail to appear when casted on top of ANYTHING
+// but I wonder if they didn't actually meant to fail when casted on top of each other?
+// hence, I leave the alternate implementation here, commented. [Skotlex]
+			if (unit->range <= 0)
+			{
+				(*alive) = 0;
+				return 1;
+			}
+/*
 			switch (unit->group->skill_id)
 			{	//These cannot override each other.
 				case SA_VOLCANO:
@@ -9333,6 +9342,7 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 					(*alive) = 0;
 					return 1;
 			}
+*/
 			break;
 		case PF_FOGWALL:
 			switch(unit->group->skill_id)
