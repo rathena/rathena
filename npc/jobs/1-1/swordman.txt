@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.5.3 Removed Duplicates [Silent]
 //= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //= 1.7 changed location from its clone to the original [Lupus]
+//= 1.7.1 Fixed warp on timeout [KarLaeda]
 //============================================================ 
 
 
@@ -34,7 +35,7 @@ izlude_in.gat,74,172,5	script	Master Swordsman	119,{
 L_Menu:
 	next;
 	menu "Make me a Swordsman!",M_0,"About being a Swordsman.",M_1,"The job requirements.",M_2,"Cancel.",M_End;
-        	close;
+	close;
 
 	M_0:
 		mes "[Master Swordsman]";
@@ -133,11 +134,11 @@ L_Menu:
 		next;
 
 		O_2a:
-			mes "[Master Swordsman]";	
+			mes "[Master Swordsman]";
 			mes "First, You must learn all 9 Basic Skills. If you can't satisfy this condition, you won't be able to become anything.";
 			next;
 			mes "[Master Swordsman]";
-	 		mes "Secondly you must pass the legendary Izlude Swordsman Test.";
+			mes "Secondly you must pass the legendary Izlude Swordsman Test.";
 			next;
 			mes "[Master Swordsman]";
 			mes "When you fullfill these 2 conditions, you can become an offical Swordsman.";
@@ -264,8 +265,7 @@ izlude_in.gat,30,163,8	script	Test Hall Staff	105,{
 	mes "[Test Hall Staff]";
 	mes "Are you ready?";
 	next;
-	menu "Let me at it!!",M_yes,"Ah..maybe later..",M_no;
-	close;
+	menu "Let me at it!!",-,"Ah..maybe later..",M_no;
 
 	M_yes:
 		set SWTEST, SWTEST + 1;
@@ -315,7 +315,7 @@ job_sword1.gat,1,1,0	script	TimerSwrdmn	-1,{
 		end;
 	OnTimer428000:
 		stopnpctimer;
-		warp "izlude_in.gat",39,170;
+		areawarp "job_sword1.gat",0,0,400,400,"izlude_in.gat",39,170;
 		end;
 }
 
@@ -341,7 +341,7 @@ job_sword1.gat,230,242,2	script	Test Hall Staff#01	105,{
 	M_1:
 		mes "[Test Hall Staff]";
 		mes "Bravo! Go for it again!";
-   		close;
+		close;
 }
 
 // -- Medic 2 --
@@ -365,10 +365,10 @@ job_sword1.gat,230,204,2	script	Test Hall Staff#02	105,{
 	M_1:
 		mes "[Test Hall Staff]";
 		mes "Bravo! Go for it again!";
-   		close;
+		close;
 }
 
-// -- Mae (Medic 3) --		
+// -- Mae (Medic 3) --
 job_sword1.gat,223,167,2	script	Mae	92,{
 	mes "[Mae]";
 	mes "I sincerely congratulate you for passing the test!";

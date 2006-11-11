@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/11
+	* Fixed warp on timeout in swordman.txt [KarLaeda]
 11/09
 	* Added Bingo - Hugel warps, thanks to erKURITA [Lupus]
 	- Added Hugel INN
