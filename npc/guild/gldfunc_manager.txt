@@ -1,10 +1,9 @@
 //===== eAthena Script =======================================
 //= War of Emperium Guild Manager Function
 //===== By: ==================================================
-//= jAthena - kalen (1.0)
-//= 1.1 by Akaru, ho|yAnge|X, and Valaris
+//= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -17,7 +16,7 @@
 //=   arg(1): name of guild castle.
 //=   arg(2): x1 coordinate for warp to treasure room
 //=   arg(3): y1 coordinate for warp to treasure room
-//=   arg(4): guild script suffix for kafra, gaurdian scripts etc.
+//=   arg(4): guild script suffix for kafra, Guardian scripts etc.
 //===== Additional Comments: =================================
 //= 1.31: Added support for Emsolute Develop [celest]
 //= 1.2: All Guild manager scripts use this function. Optimized Comerce and Defense investment. [kobra_k88]
@@ -28,6 +27,7 @@
 //= 1.4 Remove surrender abbility (Was 100% custom as far as I can tell) [Kayla]
 //= 1.41 Fixed possible Economy investment overflow with Emsolute Develop learnt [Lupus]
 //= 1.5 Official Novice Castles Menu (u can't invest / hire guardians) [Lupus]
+//= 1.6 According to recent info u can re-install Guardians during WoE [Lupus]
 //============================================================
 
 
@@ -36,28 +36,21 @@
 function	script	F_GldManager	{
 
 	set @GID, GetCastleData(getarg(1)+".gat",1);
-	if (strcharinfo(0) == getguildmaster(@GID)) goto L_Start;
-	if (@GID == 0) goto L_NotOwn;
-	if (getcharid(2) == @GID) goto L_Mem;
-
-L_NotMem:
 	mes "[ "+getarg(0)+" ]";
-	mes "I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command! Hey! Your not even a part of the guild!!";
-	mes "Where are the guardians? Destroy these intruders!";
-	return 0;
+	if (@GID == 0){
+		mes "I am waiting for my master.  Brave adventurer, follow your destiny!";
+		return 0;
+	}
+	if (getcharid(2) == @GID){
+		mes "You're not ^5533FF" + getguildmaster(@GID) + "^000000! I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command only";
+		return 0;
+	}
+	if (strcharinfo(0) != getguildmaster(@GID)){
+		mes "I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command! Hey! Your not even a part of the guild!!";
+		mes "Where are the guardians? Destroy these intruders!";
+		return 0;
+	}
 
-L_NotOwn:
-	mes "[ "+getarg(0)+" ]";
-	mes "I am waiting for my master.  Brave adventurer, follow your destiny!";
-	return 0;
-
-L_Mem:
-	mes "[ "+getarg(0)+" ]";
-	mes "You're not ^5533FF" + getguildmaster(@GID) + "^000000! I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command only";
-	return 0;
-
-L_Start:
-	mes "[ "+getarg(0)+" ]";
 	mes "Welcome Master ^5533FF" + getguildmaster(@GID) + "^000000 ! I will assist you in any way I can!";
 	next;
 
@@ -66,7 +59,7 @@ L_Start:
 		menu "Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
 
 	//Common WoE Castles	
-	menu 	"Guild Base Briefing",M_Base, "Commerce Investment",M_Comrc, "Defence Investment",M_Def, "Guardian Installation",M_Gaurd, 
+	menu 	"Guild Base Briefing",M_Base, "Commerce Investment",M_Comrc, "Defence Investment",M_Def, "Guardian Installation",M_Guard, 
 		"Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
 
 	//========================
@@ -102,43 +95,43 @@ L_Start:
 		if(@Economy >= 88) set @eco_invest,5120000;
 
 		mes "[ "+getarg(0)+" ]";
-		if(@TriggerE == 2) goto L_MaxTimesC;
-		if(@Economy >= 100) goto L_MaxInvestC;
+		if(@TriggerE == 2){
+			mes "^ff0000You have already invested twice today, and that's the limit.^000000 I'm expecting to see our riches grow at a high level.";
+ 			return 0;
+		}
+		if(@Economy >= 100){
+			mes "^ff0000This Castle's commerce investment is already maxed at 100 points. You don't have to invest any further.^000000";
+	 		return 0;
+		}
 		mes "If you improve your Commerce Investment, the guild's productive power increases to produce more goods.";
 		mes "So an investment will be required if you're considering future growth.";
 		next;
 		mes "[ "+getarg(0)+" ]";
-		if(@TriggerE == 0) mes "You can invest up to two times a day, but the second time costs more";
-		if(@TriggerE == 0) mes "The needed investment amount is ^5533FF" + @eco_invest + "^000000 zeny.";
-		if(@TriggerE == 1) set @eco_invest,@eco_invest*4;
-		if(@TriggerE == 1) mes "You've already invested once today, but you can invest again at ^5533FF" + @eco_invest + "^000000 Zeny.";
+		if(@TriggerE == 0) {
+			mes "You can invest up to two times a day, but the second time costs more";
+			mes "The needed investment amount is ^5533FF" + @eco_invest + "^000000 zeny.";
+		} else {
+			set @eco_invest,@eco_invest*4;
+			mes "You've already invested once today, but you can invest again at ^5533FF" + @eco_invest + "^000000 Zeny.";
+		}
 		next;
 		mes "[ "+getarg(0)+" ]";
 		mes "Would you like to invest?";
 		next;
 		menu "Invest Commerce.",-,"Cancel.",M_End;
 
-			if(Zeny < @eco_invest) goto sL_NoZenyC;
+			mes "[ "+getarg(0)+" ]";
+			if(Zeny < @eco_invest){
+				mes "Master, you do not have enough money to invest.  Investment has been cancelled.";
+				return 0;
+			}
 			set Zeny,Zeny-@eco_invest;
 			SetCastleData getarg(1)+".gat",4,@TriggerE+1;
 			// if we learnt Emsolute Develop there's 50% chance to get +1 investment again
 			SetCastleData getarg(1)+".gat",2,@Economy + 1 + (getgdskilllv(@GID,10014)>0 && rand(100)>50 && @Economy<99);
-			mes "[ "+getarg(0)+" ]";
+
 			mes "You have invested successfully.";
 			return 0;
-
-			sL_NoZenyC:
-				mes "[ "+getarg(0)+" ]";
-				mes "Master, you do not have enough money to invest.  Investment has been cancelled.";
-				return 0;
-		L_MaxTimesC:
-			mes "^ff0000You have already invested twice today, and that's the limit.^000000 I'm expecting to see our riches grow at a high level.";
- 			return 0;
-		L_MaxInvestC:
-			mes "[ "+getarg(0)+" ]";
-			mes " ";
-			mes "^ff0000This Castle's commerce investment is already maxed at 100 points. You don't have to invest any further.^000000";
-	 		return 0;
 
 	//=========================
 	M_Def:
@@ -157,23 +150,36 @@ L_Start:
 		if(@Defence >= 88) set @def_invest,10240000;
 
 		mes "[ "+getarg(0)+" ]";
-		if(@TriggerD == 2) goto L_MaxTimesD;
-		if(@Defence >= 100) goto L_MaxInvestD;
+		if(@TriggerD == 2){
+			mes "^ff0000You have already invested twice today, and that's the limit.^000000 I'm expecting to see our riches grow at a high level.";
+ 			return 0;
+		}
+		if(@Defence >= 100){
+			mes "^ff0000This Castle's Defence Investment is already maxed at 100 points. You don't have to invest any further.^000000";
+	 		return 0;
+		}
 		mes "If you improve investment of defence, the durability of our Guardians and the Emperium will increase.";
 		mes "So if you consider our future battles, an investment will be required.";
 		next;
 		mes "[ "+getarg(0)+" ]";
-		if(@TriggerD == 0) mes "You can invest up to two times a day, but the second time costs more";
-		if(@TriggerD == 0) mes "The needed investment amount is ^5533FF" + @def_invest + "^000000 zeny.";	
-		if(@TriggerD == 1) set @def_invest,@def_invest*4;
-		if(@TriggerD == 1) mes "You've already invested once today, but you can invest again at ^5533FF" + @def_invest + "^000000 Zeny.";
+		if(@TriggerD == 0) {
+			mes "You can invest up to two times a day, but the second time costs more";
+			mes "The needed investment amount is ^5533FF" + @def_invest + "^000000 zeny.";
+		} else {
+			set @def_invest,@def_invest*4;
+			mes "You've already invested once today, but you can invest again at ^5533FF" + @def_invest + "^000000 Zeny.";
+		}
 		next;
 		mes "[ "+getarg(0)+" ]";
 		mes "Would you like to invest?";
 		next;
 		menu "Invest Defence.",-, "Cancel",M_End;
 
-			if(Zeny < @def_invest) goto sL_NoZenyD;
+			mes "[ "+getarg(0)+" ]";
+			if(Zeny < @def_invest){
+				mes "Master, you do not have enough money to invest in Defence.  Defence investment has been cancelled.";
+				return 0;
+			}
 			set Zeny,Zeny-@def_invest;
 			SetCastleData getarg(1)+".gat",5,@TriggerD+1;
 			SetCastleData getarg(1)+".gat",3,@Defence+1;
@@ -194,25 +200,19 @@ L_Start:
 			if (GetCastleData(getarg(1)+".gat",16) == 1) SetCastleData getarg(1)+".gat",24,@KGuardian;
 			if (GetCastleData(getarg(1)+".gat",17) == 1) SetCastleData getarg(1)+".gat",25,@KGuardian;
 
-			mes "[ "+getarg(0)+" ]";
 			mes "You have invested successfully.";
 			return 0;
 
-			sL_NoZenyD:
-				mes "[ "+getarg(0)+" ]";
-				mes "Master, you do not have enough money to invest in Defence.  Defence investment has been cancelled.";
-				return 0;
-		L_MaxTimesD:
-			mes "^ff0000You have already invested twice today, and that's the limit.^000000 I'm expecting to see our riches grow at a high level.";
- 			return 0;
-		L_MaxInvestD:
-			mes "^ff0000This Castle's Defence Investment is already maxed at 100 points. You don't have to invest any further.^000000";
-	 		return 0;
-
 	//=========================
-	M_Gaurd:
+	M_Guard:
 	//=========
-		if (getgdskilllv(@GID,10002) == 0) goto L_NoSkGuard;
+		mes "[ "+getarg(0)+" ]";
+		if (getgdskilllv(@GID,10002) == 0){
+			mes "I'm sorry Master but you cannot install any guardians right now.  Your guild must learn the Guild skill ^5533FFGuardian Research^000000 first.";
+			mes "Guardian Installation has been cancelled.";
+			return 0;
+		}
+
 		set @Defence,GetCastleData(getarg(1)+".gat",3);
 		set @Guardian0,guardianinfo(0);
 		set @Guardian1,guardianinfo(1);
@@ -229,8 +229,8 @@ L_Start:
 		//set @KGuardian,strmobinfo(4,1286) + (@Defence*2000);
 		//set @SGuardian,strmobinfo(4,1287) + (@Defence*2000);
 
-		mes "[ "+getarg(0)+" ]";
-		if(agitcheck(0) != 0) goto L_CantGuard;
+		//uncomment the following line to disable guardians Installation during WoE
+		//if(agitcheck(0) != 0) goto L_CantGuard;
 		mes "Would you like to install a guardian? Guardians will protect the guild base from enemies.";
 		mes "Please choose a guardian.";
 		next;
@@ -297,21 +297,16 @@ L_Start:
 			next;
 			menu "Install",-, "Cancel",M_End;
 
-				if (Zeny < 10000) goto sL_NoZenyG;
+				if (Zeny < 10000){
+					mes "[ "+getarg(0)+" ]";
+					mes "I'm sorry Master, but you do not have enough zeny for a Guardian.";
+					return 0;
+				}
 				set Zeny,Zeny-10000;
 				SetCastleData getarg(1)+".gat",@GDnum,1;
 				SetCastleData getarg(1)+".gat",@GDnum2,@GuardianHP;
 				return 1;
 
-				sL_NoZenyG:
-					mes "[ "+getarg(0)+" ]";
-					mes "I'm sorry Master, but you do not have enough zeny for a Guardian.";
-					return 0;
-		L_NoSkGuard:
-			mes "[ "+getarg(0)+" ]";
-			mes "I'm sorry Master but you cannot install any guardians right now.  Your guild must learn the Guild skill ^5533FFGuardian Research^000000 first.";
-			mes "Guardian Installation has been cancelled.";
-			return 0;
 		L_GotGuard:
 			mes "[ "+getarg(0)+" ]";
 			mes "Excuse me Master, but that guardian has already been installed.....";
@@ -327,7 +322,11 @@ L_Start:
 	//======
 		mes "[ "+getarg(0)+" ]";
 		if (GetCastleData(getarg(1)+".gat",9) == 1) goto L_Dismiss;
-		if (getgdskilllv(@GID,10001) == 0) goto L_NoSkKaf;
+		if (getgdskilllv(@GID,10001) == 0){
+			mes "Master, you don't have a contract with the Kafra Service Company.";
+			mes "In order to hire a Kafra, you must first learn the Guild skill ^5533FFContract With Kafra^000000.";
+			return 0;
+		}
 
 		L_Hire:
 			mes "Would you like to employ the services of a Kafra? You will need ^5533FF10,000 Zeny^000000 to do so... ";
@@ -335,7 +334,10 @@ L_Start:
 			menu "Employ Kafra.",-,"Cancel",sM_KafEnd;
 
 				mes "[ "+getarg(0)+" ]";
-				if (Zeny < 10000) goto sL_NoZenyK;
+				if (Zeny < 10000){
+					mes "Master, you do not have enough money to employ a Kafra. Employment has been cancelled.";
+					return 0;
+				}
 				set Zeny,Zeny-10000;
 				enablenpc "Kafra Service#"+getarg(4);
 				SetCastleData getarg(1)+".gat",9,1;
@@ -351,9 +353,6 @@ L_Start:
 				mes "I think the Kafra Service will benefit our guild members.";
 				return 0;
 
-				sL_NoZenyK:
-					mes "Master, you do not have enough money to employ a Kafra. Employment has been cancelled.";
-					return 0;
 			sM_KafEnd:
 				mes "[ "+getarg(0)+" ]";
 				mes "As you wish Master.  But I suggest we get a Kafra as soon as possible!";
@@ -388,11 +387,6 @@ L_Start:
 				mes "[ "+getarg(0)+" ]";
 				mes "Master, I think you should keep the current Kafra Service because she is already trying her best to serve us";
 				return 0;
-
-		L_NoSkKaf:
-			mes "Master, you don't have a contract with the Kafra Service Company.";
-			mes "In order to hire a Kafra, you must first learn the Guild skill ^5533FFContract With Kafra^000000.";
-			return 0;
 
 	//=========================
 	M_Treas:

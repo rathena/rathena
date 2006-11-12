@@ -1,0 +1,416 @@
+//===== eAthena Script ======================================= 
+//= Lighthalzen, Shadow quest
+//===== By: ================================================== 
+//= Gravity official script
+//= ColNix
+//===== Current Version: ===================================== 
+//= Fixed
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Lighthalzen 
+//===== Additional Comments: ================================= 
+//=
+//============================================================
+
+lighthalzen.gat,141,162,4	script	Old man	61,{
+readparam(baselevel);                         
+
+if (baselevel <= 70) {
+mes "["+strcharinfo(0)+"]";
+mes "It seems that i'm not as strong as i thought. Better i go to lvl.";
+close;
+} 
+	if (quest_shadow==1) {
+	mes "[Kamenasai]";
+	mes "Have you already spoken to Kazien? ooh...";
+	mes "Hurry up and find him. He must be in Lighthalzen Castle.";
+	close;
+	}
+		if (quest_shadow>1) {
+		mes "[Kamenasai]";
+		mes "I have nothing to say to you now.";
+		mes "Leave me alone";
+		close;
+		}
+
+mes "[Kamenasai]";
+mes "Hello, "+strcharinfo(0)+". Nice to see you.";
+mes "I've heard alot about you doings. And want to know, if you could help us.";
+next;	
+menu "Hm.. Interesting. Wat's the problem?",-,"No, I'm not interested",l_not;
+mes "[Kamenasai]";
+mes "I knew that you should help. So. My friend Kazien is busy due to a lack of workers,";
+mes "he has some work for you. Find him in Lighthalzen castle. Good luck";
+set quest_shadow,1;
+close;
+
+l_not:
+mes "[Kamenasai]";
+mes "It's a pity. But i cant make you change your mind. GL&HF guy. Cya";
+close;
+}
+
+//====================================================================================
+
+lhz_in01,174,258,4	script	Young man	59,{
+if (quest_shadow==1) goto l_accept;
+if (quest_shadow==3) goto l_nochance;
+if (quest_shadow==4) goto l_part1;
+if (quest_shadow==5) goto l_wtfisthat;
+if (quest_shadow==8) goto l_zadolbal;
+if (quest_shadow==10) goto l_nu;
+
+mes "[Kazien]";
+mes "What do you want? Don't you see that i'm busy now!. Leave me alone!";
+close;
+
+l_accept:
+mes "[Kazien]";
+mes "What do you want from me. Don't you see that i am busy?";
+next;
+menu "Well, i'm, from Kamenasai",-,"hm... Can i borow some money? ^_-",l_nothing;
+mes "[Kazien]";
+mes "Oh, sorry my friend. You come to help me, don't you.";
+mes "Thanks alot. I'm too busy here and cant go myself, so i let my frind to help me";
+mes "His choice is you... So. Can you keep a secret?";
+next;
+menu "Of course i can",-,"i'm not sure.",l_goaway;
+mes "[Kazien]";
+mes "Well then. Lets see. Go to Einbroch Research Facility and find Garins there.";
+set quest_shadow,2;
+close;
+
+l_nothing:
+mes "[Kazien]";
+mes "Then, please leave me alone. I dont have any wish to speak to you.";
+close;
+
+l_goaway:
+mes "[Kazien]";
+mes "Its a pity... I think my friend was wrong sending you to me. Buy.";
+close;
+
+l_part1:
+mes "[Kazien]";
+mes "I see. You dont tell That guard about your quest, so i can rely on you. It was your first task.";
+mes "Now i shall tell you all. I am trying to make some buisness. But i can't deliver goods by myself.";
+mes "So i need somebody. And this somebody is you, "+strcharinfo(0)+".";
+next;
+mes "[Kazien]";
+mes "Go and Find Lyozien near Airship. He will tell you more.";
+close;
+
+l_forget:
+mes "[Kazien]";
+mes "Oh my head. Who are you at last? Im very dull. Somebody tell the police about me";
+mes "I am so bored...So...";
+next;
+goto l_accept;
+close;
+
+l_nochance:
+if (rand(10)==9) goto l_forget;
+mes "[Kazien]";
+mes "You cant keep any secret! What do you want from me?";
+mes "I dont want to see you anymore! Go somewhere else and never come here!";
+close;
+
+l_wtfisthat:
+if (quest_shadow_misc==1) goto l_leftthis;
+mes "[Kazien]";
+mes "Hm... He is saying something interesting. I will give delivery scroll. Go to";
+mes "Lyozien and speak to him...He is at the top of all this.";
+getitem 1072,1;
+getexp 110000,0;
+set quest_shadow_mobs,1;
+set quest_shadow_misc,1;
+set quest_shadow,6;
+close;
+
+l_zadolbal:
+if (quest_shadow_misc==2) goto l_leftthis;
+mes "[Kazien]";
+mes "Hm... He dont answer...You know thats strange. Something is wrong..";
+mes "And this something can destroy our plans....";
+next;
+menu "Also bandits.. and goods",-,"In every way i'm leaving this",l_leftthis;
+mes "[Kazien]";
+mes "Hm.. So you dont still receive goods.. And you say that bandits atack you...";
+mes "Now i understand. Go to Lyozien and be careful!";
+monster "airplane_01.gat",96,48,"Rogue",1268,1,"Man::OnMyMobDeath";
+getexp 150000,0;
+set quest_shadow_misc,2;
+set quest_shadow,9;
+close;
+
+l_leftthis:
+mes "[Kazien]";
+mes "Ye.. Its a pity i think. But its your choice. Remember,if you tell somebody";
+mes "About this you shall be dead...See you later";
+close;
+
+l_nu:
+if (quest_shadow_finish==1) goto l_leftthis;
+mes "[Kazien]";
+mes "How is our work? What about goods?";
+next;
+menu "Everything was really cool. I have lots of fun",-,"It was the wersest thing.",-;
+mes "[Kazien]";
+mes "Well... in everycase.^_^ I think you were really a good comrad";
+mes "["+strcharinfo(0)+"]";
+mes "I dont think so about you. Because i work for you and i must know what ware the goods";
+next;
+mes "[Kazien]";
+mes "Don't you think that it was me who give you work, let me dicide what you must know";
+mes "Afterall thx. Without you, this work wasn't done. You help me alot. I waiting forward hearing about your greatest doings.";
+mes "See you,my hero";
+getexp 150000,0;
+set quest_shadow_finish,1;
+close;
+}
+//===================================================================================
+lhz_in01,156,248,4	script	#Kazien	-1,6,3{
+OnTouch:
+if (quest_shadow_finish==1) {
+mes "[Remindes]";
+mes "[Kazien]";
+mes "How is our work? What about goods?";
+mes "...................................";
+mes "[Kazien]";
+mes "Well... in everycase. I think you were really a good comrade";
+mes "["+strcharinfo(0)+"]";
+mes "I dont think so. Because i work for you and i must know what was there";
+next;
+mes "[Kazien]";
+mes "Don't you think that it was me who give you work, let me dicide what you must know";
+mes "Afterall thx. Without you, this work wasn't done. You help me alot. I waiting forward hearing about your greatest doings.";
+mes "See you,my hero";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "Strange people are they... but i suppose that was really interesting journey...";
+set quest_shadow_finish,0;
+set quest_shadow,11;
+close;
+}
+close;
+}
+//===================================================================================
+airplane_01.gat,96,53,4	script	#maner	-1,6,3{
+OnTouch:
+if ((quest_shadow==6) && (quest_shadow_mobs==1)) {
+monster "airplane_01.gat",96,53,"Rogue",1268,5;
+set quest_shadow_mobs,0;
+}
+close;
+}
+//=======================================================================================
+airplane_01.gat,85,47,4	script	#maner01	-1,6,3{
+OnTouch:
+if ((quest_shadow==6) && (quest_shadow_mobs==1)) {
+monster "airplane_01.gat",85,47,"Rogue",1268,5;
+set quest_shadow_mobs,0;
+}
+close;
+}
+//=======================================================================================
+lhz_in01,175,234,4	script	#Kazien01	-1,6,3{
+OnTouch:
+if (quest_shadow_finish==1) {
+mes "[Remindes]";
+mes "[Kazien]";
+mes "How is our work? What about goods?";
+mes "...................................";
+mes "[Kazien]";
+mes "Well... in everycase. I think you were really a good comrade";
+mes "["+strcharinfo(0)+"]";
+mes "I dont think so. Because i work for you and i must know what was there";
+next;
+mes "[Kazien]";
+mes "Don't you think that it was me who give you work, let me dicide what you must know";
+mes "Afterall thx. Without you, this work wasn't done. You help me alot. I waiting forward hearing about your greatest doings.";
+mes "See you,my hero";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "Strange people are they... but i suppose that was really interesting journey...";
+set quest_shadow_finish,0;
+set quest_shadow,11;
+close;
+}
+close;
+}
+//=======================================================================================
+
+einbroch.gat,54,52,4	script	Guard	734,{
+if (quest_shadow==2) goto l_done;
+
+mes "[Guard]";
+mes "This is restricted zone. Please leave this place.";
+close;
+
+l_done:
+mes "[Guard]";
+mes "Hey. Stop. What do you want here? Dont you know that this is restrickted zone?";
+mes "Tell me why are you here?";
+next;
+menu "Well...I'm leaving now. I dont know that",-,"Hm... Kazien asked me to find Garins.",l_garins;
+close2;
+set quest_shadow,4;
+end;
+
+l_garins:
+mes "[Guard]";
+mes "You say Kazien.. From Lighthalzen....";
+next;
+npctalk "*writing something to the notepad*";
+mes "[Guard]";
+mes "Find Garins.... Ok. Thanks. Now you are free. Go home.";
+set quest_shadow,3;
+close;
+}
+
+//========================================================================================
+
+airplane_01.gat,96,48,4	script	Man	810,{
+if (quest_shadow==4) goto l_allok;
+if (quest_shadow==5) goto l_strange;
+if (quest_shadow==6) goto l_next;
+if (quest_shadow==7) goto l_talked;
+if (quest_shadow==9) goto l_nuinah;
+if (quest_shadow==10) goto l_wazaputaus;
+
+mes "[Lyozien]";
+mes "Greeting to you. Nice weather,isn't it?";
+close;
+
+l_strange:
+mes "[Lyozien]";
+mes "Hm.. strange. Kazien tell me nothing about it. I suppose you will better go to him";
+mes "and ask about this";
+close;
+
+l_allok:
+mes "[Lyozien]";
+mes "Oki doki guy. You see, that this is restricted doing. But we must do it";
+mes "For future of our country. So. That goods are really needed to our goverment, but";
+mes "Some rogues want to robe it. We can't protect them ourselves because we are on kings work";
+next;
+mes "[Lyozien]";
+mes "So its you, who will make it";
+mes "Go to Izlude and found Ahman there. He will give you nececcery items";
+mes "Good luck";
+close;
+
+l_next:
+mes "[Lyozien]";
+mes "So. What he says??";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "He say to come to you. Here is the Scroll of deliver that i must show you.";
+next;
+mes "[Lyozien]";
+mes "I suppose you should better go to Ahman and show this... In cas, i have no goods to give you.";
+close;
+
+l_talked:
+mes "[Lyozien]";
+mes "Well... You say He dont answer... I suppose You better go to Kazien and tell him this.";
+mes "It seemes to that it wasnt our plan.. i fear... Noway. Hurry up to Kazien";
+set quest_shadow,8;
+close;
+
+l_nuinah:
+if mobcount("airplane_01.gat","Man::OnMyMobDeath")==0 goto ondeath;
+mes "[Lyozien]";
+mes "Well.. I really dont know. But i will never tell you wat are the goods";
+mes "hey, Bandit is there! LOOK!!!";
+close;
+
+
+OnDeath:
+if looked==1 {
+mes "[Lyozien]";
+mes "I have already given you medicine. Hurry. Somebody";
+mes "wants to stop us!";
+close;
+}
+
+mes "[Lyozien]";
+mes "Whooo... I was so frightened... Here is potion for you. Hurry up. Go to Ahman";
+getitem 504,1;
+next;
+mes "Suddenly you see that some goods are broken...";
+mes "You decided to examine them";
+set looked,1;
+close;
+end;
+
+l_wazaputaus:
+Mes "[Lyozien]";
+mes "Well Ahmer was right. You are ill. Better have a rest.";
+mes "Go to Kazien. He will help you."; 
+close;
+}
+
+//========================================================================================
+
+izlude.gat,186,57,4	script	Scamp	85,{
+if quest_shadow==4 goto l_gocheck;
+if quest_shadow==6 goto l_done;
+if quest_shadow==9 goto l_nah;
+
+mes "[Ahman]";
+mes "Ahmaaa... Ahnaaa... Ahmaaan....";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "????????";
+next;
+mes "[Ahman]";
+mes "Ahmaaa... Ahnaaa... Ahmaaan....";
+close;
+
+l_gocheck:
+mes "[Ahman]";
+mes "Hello there. What do you want?";
+menu "i want to deliver goods.",-,"nothing",l_close;
+next;
+mes "[Ahman]";
+mes "what goods. What are you talking about? I know nothing about this.";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "Im here from Kazien, who send me to Lyozien who send me to you....";
+next;
+mes "[Ahman]";
+mes "Even so. Goods are already delivered. Go back to Lyozien";
+set quest_shadow,5;
+close;
+
+l_close:
+mes "[Ahman]";
+mes "You are very strange guy..";
+close;
+
+l_done:
+mes "["+strcharinfo(0)+"]";
+mes "hey!...";
+next;
+mes "You stay about 1 hour trying to speak to him. No answer";
+next;
+mes ".........";
+mes "["+strcharinfo(0)+"]";
+mes "Go i better to Lyozien. he is dead i think...";
+set quest_shadow,7;
+close;
+
+l_nah:
+mes "[Ahmar]";
+mes "You look very ill. You know?";
+next;
+mes "["+strcharinfo(0)+"]";
+mes "I dunno. Dont you know about atack on your goods? Some of them were broken. And i examine them..";
+next;
+mes "[Ahmer]";
+mes "What?? You look at them?? Its bad. go to Lyozine. Hurry!";
+set quest_shadow,10;
+close;
+}

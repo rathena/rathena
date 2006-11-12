@@ -1,15 +1,24 @@
-// by CallNix v.0.0
-
 airplane.gat,236,63,4    script    Hallen    55,{
-    if (fragmentauest==2) {
-        mes "[Hallen]";
+    if (fragmentauest>3) {
+	mes "[Hallen]";
+	mes "Nice weather, isnt it?";
+	close;
+	}
+	if (fragmentauest==2) {
+        if (girls==1) {
+	mes "[Hallen]";
+	mes "Have you finished that trip??";
+	close; 
+        }
+	mes "[Hallen]";
         mes "Oh, thx hero!Do you like my girls? She's reallybeatiful. Maybe you";
         mes "shall become her boyfriend?";
         next;
         mes "[Hallen]";
         mes " Its a joke ^_- Never mind.";
         mes "And you know, there is one thing im really ineterested in....";
-        if (airshipquest != 0) {
+        next;
+	if (airshipquest != 5) {
             mes "[Hallen]";
             mes "You should better ask captain about the airship";
             mes "You cant understand me if you dont do that...";
@@ -18,7 +27,8 @@ airplane.gat,236,63,4    script    Hallen    55,{
         mes "You see its about the airship works. Heart of Ymir...";
         mes "Very interesting thing i think...";
         getitem 501,1;
-        next;
+        set girls,1;
+	next;
         mes "[Hallen]";
         mes "I really want to know something about it.. if somebody could help me...";
         mes "pity I cant go to einbroch Laboratory...";
@@ -42,11 +52,11 @@ airplane.gat,236,63,4    script    Hallen    55,{
         end;
     }
     mes "[Hallen]";
-    disablenpc "Ferlok";
     mes "Hello, "+strcharinfo(0)+". Nice to see you on ship.";
     mes "Hows your trips? I suppose you have lots of to tell";
     mes "your children about";
-    next;
+    disablenpc "Ferlok";
+	next;
 	menu "Ye.. I have lots of tales..",-,"Nothing really interesting",l_inter,"Have any work for me?",l_work;
         mes "[Hallen]";
         mes "Ye.. I would like to listen to them too...";
@@ -75,8 +85,9 @@ airplane.gat,236,63,4    script    Hallen    55,{
         close;
 }
 //=====================================================================
-ein_in01,261,35,4    script    reader    111,3,3,{
-    mes "[Code reader]";
+ein_in01,261,37,4    script    #reader    111,4,4,{
+OnTouch:
+mes "[Code reader]";
     mes "Enter a valid 3 dig code to get information";
     mes "You can do it 3 times only. Be careful";
     next;
@@ -109,4 +120,4 @@ ein_in01,255,33,4    script    Ferlok    55,{
     mes "[Hallen]";
     mes "I have already told you to go to plane. Hurry!";
     close;
-}
+s}
