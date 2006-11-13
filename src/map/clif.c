@@ -919,7 +919,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,28)=vd->head_mid;
 		WBUFW(buf,30)=vd->hair_color;
 		WBUFW(buf,32)=vd->cloth_color;
-		WBUFW(buf,34)=sd?sd->head_dir:dir;
+		WBUFW(buf,34)=sd?sd->head_dir:0;
 		WBUFL(buf,36)=guild_id;
 		WBUFW(buf,40)=emblem_id;
 		if (sd) {
@@ -954,7 +954,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,26)=vd->head_mid;
 		WBUFW(buf,28)=vd->hair_color;
 		WBUFW(buf,30)=vd->cloth_color;
-		WBUFW(buf,32)=sd?sd->head_dir:dir;
+		WBUFW(buf,32)=sd?sd->head_dir:0;
 		WBUFL(buf,34)=guild_id;
 		WBUFW(buf,38)=emblem_id;
 		if (sd) {
@@ -989,7 +989,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,26)=vd->head_mid;
 		WBUFW(buf,28)=vd->hair_color;
 		WBUFW(buf,30)=vd->cloth_color;
-		WBUFW(buf,32)=sd?sd->head_dir:dir;
+		WBUFW(buf,32)=sd?sd->head_dir:0;
 		WBUFL(buf,34)=guild_id;
 		WBUFL(buf,38)=emblem_id;
 		if (sd)
@@ -1073,7 +1073,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,32)=vd->head_mid;
 		WBUFW(buf,34)=vd->hair_color;
 		WBUFW(buf,36)=vd->cloth_color;
-		WBUFW(buf,38)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFW(buf,38)=sd?sd->head_dir:0;
 		WBUFL(buf,40)=guild_id;
 		WBUFW(buf,44)=emblem_id;
 		if (sd) {
@@ -1110,7 +1110,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,30)=vd->head_mid;
 		WBUFW(buf,32)=vd->hair_color;
 		WBUFW(buf,34)=vd->cloth_color;
-		WBUFW(buf,36)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFW(buf,36)=sd?sd->head_dir:0;
 		WBUFL(buf,38)=guild_id;
 		WBUFW(buf,42)=emblem_id;
 		if (sd) {
@@ -1147,7 +1147,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,30)=vd->head_mid;
 		WBUFW(buf,32)=vd->hair_color;
 		WBUFW(buf,34)=vd->cloth_color;
-		WBUFW(buf,36)=sd?sd->head_dir:unit_getdir(bl);
+		WBUFW(buf,36)=sd?sd->head_dir:0;
 		WBUFL(buf,38)=guild_id;
 		WBUFL(buf,42)=emblem_id;
 		if (sd)

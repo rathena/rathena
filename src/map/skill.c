@@ -6577,8 +6577,13 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	{
 		struct skill_unit_group *old_sg;
 		if ((old_sg = skill_locate_element_field(src)) != NULL)
-		{
-			if (old_sg->skill_id == skillid && old_sg->limit > 0)
+		{	//HelloKitty confirmed that these are interchangeable,
+			//so you can change element and not consume gemstones.
+			if ((
+				old_sg->skill_id == SA_VOLCANO ||
+				old_sg->skill_id == SA_DELUGE ||
+				old_sg->skill_id == SA_VIOLENTGALE
+			) && old_sg->limit > 0)
 			{	//Use the previous limit (minus the elapsed time) [Skotlex]
 				limit = old_sg->limit - DIFF_TICK(gettick(), old_sg->tick);
 				if (limit < 0)	//This can happen... 
@@ -8204,14 +8209,18 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case SA_DELUGE:
 	case SA_VOLCANO:
 	case SA_VIOLENTGALE:
-	case SA_LANDPROTECTOR:
 	{	//Does not consumes if the skill is already active. [Skotlex]
 		struct skill_unit_group *sg;
-		if ((sg= skill_locate_element_field(&sd->bl)) != NULL && sg->skill_id == skill)
-		{
+		if ((sg= skill_locate_element_field(&sd->bl)) != NULL &&
+		(
+			sg->skill_id == SA_VOLCANO ||
+			sg->skill_id == SA_DELUGE ||
+			sg->skill_id == SA_VIOLENTGALE
+		)) {
 			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
 				checkitem_flag = delitem_flag = 0;
-			else sg->limit = 0; //Disable it.
+			else
+				sg->limit = 0; //Disable it.
 		}
 		break;
 	}
@@ -9940,7 +9949,7 @@ int skill_unit_timer_sub_onplace (struct block_list *bl, va_list ap)
 
 	nullpo_retr(0, group=unit->group);
 
-	if (!skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)
+	if (!(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP))
 		&& map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
 		return 0; //AoE skills are ineffective. [Skotlex]
 
