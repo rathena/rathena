@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.6
+//= 1.6a
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -28,6 +28,7 @@
 //= 1.41 Fixed possible Economy investment overflow with Emsolute Develop learnt [Lupus]
 //= 1.5 Official Novice Castles Menu (u can't invest / hire guardians) [Lupus]
 //= 1.6 According to recent info u can re-install Guardians during WoE [Lupus]
+//= 1.6a Fix for guild manager recognizing [KarLaeda]
 //============================================================
 
 
@@ -41,13 +42,13 @@ function	script	F_GldManager	{
 		mes "I am waiting for my master.  Brave adventurer, follow your destiny!";
 		return 0;
 	}
-	if (getcharid(2) == @GID){
-		mes "You're not ^5533FF" + getguildmaster(@GID) + "^000000! I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command only";
+	if (getcharid(2) != @GID){
+		mes "I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command! Hey! Your not even a part of the guild!!";
+		mes "Where are the guardians? Destroy these intruders!";
 		return 0;
 	}
 	if (strcharinfo(0) != getguildmaster(@GID)){
-		mes "I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command! Hey! Your not even a part of the guild!!";
-		mes "Where are the guardians? Destroy these intruders!";
+		mes "You're not ^5533FF" + getguildmaster(@GID) + "^000000! I am here to follow ^5533FF" + getguildmaster(@GID) + "^000000's command only";
 		return 0;
 	}
 

@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/13
+	* Fix for guild manager recognizing [KarLaeda]
 11/12
 	* According to recent info you can re-install Guardians during WoE [Lupus]
 11/11
