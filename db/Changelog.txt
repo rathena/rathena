@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/13
+	* Changed bAtk to bBaseAtk [Playtester]
 11/10
 	* Fully official GS/NJ Job Exp [Playtester]
 	* Removed the inf2 = TRAP of FirePillar and Spider Web so they are blocked
