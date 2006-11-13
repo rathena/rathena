@@ -451,7 +451,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		p->partner_id,p->father,p->mother,p->child,p->fame);
 	for(i = 0; i < MAX_MEMOPOINTS; i++)
 		if (p->memo_point[i].map) {
-			str_p += sprintf(str_p, "%d,%d,%d", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
+			str_p += sprintf(str_p, "%d,%d,%d ", p->memo_point[i].map, p->memo_point[i].x, p->memo_point[i].y);
 		}
 	*(str_p++) = '\t';
 
