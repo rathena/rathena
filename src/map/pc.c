@@ -705,6 +705,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_kill_pc = 1;
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
+
+	status_calc_pc(sd,1);
 			
 	sd->state.auth = 1;
 	{	//Add IP field
@@ -816,9 +818,8 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
-	// The earliest I can get is here to prevent more failures of status_calc_pc
-	// while making equipment scripts with global_regs possible. [Lance]
-	status_calc_pc(sd,1);
+	if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) 
+		status_calc_pc(sd, 0); //Check +10 to all stats bonus.
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 
 	if (pc_checkskill(sd, TK_MISSION)) {
