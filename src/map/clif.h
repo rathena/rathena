@@ -137,6 +137,7 @@ void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
 int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage);
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick);
+void clif_parse_LoadEndAck(int fd,struct map_session_data *sd);
 
 // trade
 int clif_traderequest(struct map_session_data *sd,char *name);

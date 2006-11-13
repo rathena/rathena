@@ -8250,7 +8250,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
 	if(sd->bl.prev != NULL)
 		return;
-		
+	
+	if (!sd->state.auth)
+	{	//Character loading is not complete yet!
+		//Let pc_reg_received reinvoke this when ready.
+		sd->state.connect_new = 0;
+		return;
+	}
+
 	if (sd->state.rewarp)
   	{	//Rewarp player.
 		sd->state.rewarp = 0;

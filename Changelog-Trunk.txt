@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/13
+	* HP Conversion will fail when used at max SP. It should not display any
+	  errors to the client. [Skotlex]
+	* Modified yet again the login procedure to enable character variables to
+	  work on item scripts. It SHOULD work crashless now. Please report any
+	  problems it may cause.
 	* Volcano/Deluge/Violent Gale are now interchangeable, in the sense that
 	  as long as one of these is out, casting any of the three will not consume
 	  gems, and will use the remaining time of the previous one. In turn, Land

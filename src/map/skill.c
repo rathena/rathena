@@ -8358,6 +8358,10 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		break;
+	case PF_HPCONVERSION:
+		if (status->sp == status->max_sp)
+			return 0; //Unusable when at full SP.
+		break;
 	}
 
 	if(!(type&2)){

@@ -593,7 +593,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	} else
 		sd->class_ = i; 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
-	// Šî–{“I‚È‰Šú‰»
 	sd->state.connect_new = 1;
 
 	sd->followtimer = -1; // [MouseJstr]
@@ -706,9 +705,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_disconnect = 1;
 	sd->state.event_kill_mob = 1;
 
-	status_calc_pc(sd,1);
-			
-	sd->state.auth = 1;
 	{	//Add IP field
 		unsigned char *ip = (unsigned char *) &session[sd->fd]->client_addr.sin_addr;
 		if (pc_isGM(sd))
@@ -818,8 +814,6 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
-	if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) 
-		status_calc_pc(sd, 0); //Check +10 to all stats bonus.
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 
 	if (pc_checkskill(sd, TK_MISSION)) {
@@ -848,7 +842,6 @@ int pc_reg_received(struct map_session_data *sd)
 			if (i < sd->status.skill[sd->cloneskill_id].lv)
 				sd->status.skill[sd->cloneskill_id].lv = i;
 			sd->status.skill[sd->cloneskill_id].flag = 13;	//cloneskill flag			
-			clif_skillinfoblock(sd);
 		}
 	}
 
@@ -871,8 +864,18 @@ int pc_reg_received(struct map_session_data *sd)
 		sd->state.event_joblvup = 1;
 		sd->state.event_loadmap = 1;
 	}
+	//Weird... maybe registries were reloaded?
+	if (sd->state.auth)
+		return 0;
 
-	return 0;
+	status_calc_pc(sd,1);
+	sd->state.auth = 1;
+	if (!sd->state.connect_new && sd->fd)
+	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
+		sd->state.connect_new = 1;
+		clif_parse_LoadEndAck(sd->fd, sd);
+	}
+	return 1;
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
