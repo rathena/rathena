@@ -72,7 +72,7 @@
 568,Lemon,Lemon,0,60,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(20,30); },{},{}
 569,Novice_Potion,Novice Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(22,33),0; },{},{}
 570,Lucky_Candy,Lucky Candy,0,10,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
-571,Lucky_Cnady_Cane,Lucky Candy Cane,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,144),0; },{},{}
+571,Lucky_Candy_Cane,Lucky Candy Cane,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,144),0; },{},{}
 572,Lucky_Cookie,Lucky Cookie,0,15,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 573,Chocolate_Drink,Chocolate Drink,0,,10,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,144),0; },{},{}
 574,Egg,Egg,0,,10,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(16,21),0; },{},{}
