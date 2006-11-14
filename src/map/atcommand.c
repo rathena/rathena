@@ -5652,6 +5652,10 @@ int atcommand_mapinfo(
 		strcat(atcmd_output, "NoMobLoot | ");
 	if (map[m_id].flag.nomvploot)
 		strcat(atcmd_output, "NoMVPLoot | ");
+	if (map[m_id].flag.partylock)
+		strcat(atcmd_output, "PartyLock | ");
+	if (map[m_id].flag.guildlock)
+		strcat(atcmd_output, "GuildLock | ");
 	clif_displaymessage(fd, atcmd_output);
 
 

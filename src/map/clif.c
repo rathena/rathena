@@ -10308,6 +10308,11 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd) {
  */
 void clif_parse_CreateParty(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7) {
 		party_create(sd,(char*)RFIFOP(fd,2),0,0);
 	} else
@@ -10319,6 +10324,11 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_CreateParty2(int fd, struct map_session_data *sd) {
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7){
 		RFIFOHEAD(fd);
 		party_create(sd,(char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27));
@@ -10335,6 +10345,12 @@ void clif_parse_PartyInvite(int fd, struct map_session_data *sd) {
 	struct map_session_data *t_sd;
 	
 	RFIFOHEAD(fd);	
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
+
 	t_sd = map_id2sd(RFIFOL(sd->fd,2));
 
 	// @noask [LuzZza]
@@ -10365,6 +10381,11 @@ void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd) {
  *------------------------------------------
  */
 void clif_parse_LeaveParty(int fd, struct map_session_data *sd) {
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
 	party_leave(sd);
 }
 
@@ -10374,6 +10395,11 @@ void clif_parse_LeaveParty(int fd, struct map_session_data *sd) {
  */
 void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
 	party_removemember(sd,RFIFOL(fd,2),(char*)RFIFOP(fd,6));
 }
 
@@ -10471,6 +10497,11 @@ void clif_parse_OpenVending(int fd,struct map_session_data *sd) {
  */
 void clif_parse_CreateGuild(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
 	guild_create(sd, (char*)RFIFOP(fd,6));
 }
 
@@ -10580,6 +10611,13 @@ void clif_parse_GuildInvite(int fd,struct map_session_data *sd) {
 	struct map_session_data *t_sd;
 	
 	RFIFOHEAD(fd);	
+
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
+
 	t_sd = map_id2sd(RFIFOL(sd->fd,2));
 
 	// @noask [LuzZza]
@@ -10606,6 +10644,11 @@ void clif_parse_GuildReplyInvite(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildLeave(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
 	guild_leave(sd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
 }
 
@@ -10615,6 +10658,11 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
 	guild_expulsion(sd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
 }
 
@@ -10654,6 +10702,13 @@ void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd) {
 	struct map_session_data *t_sd;
 	
 	RFIFOHEAD(fd);	
+
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
+
 	t_sd = map_id2sd(RFIFOL(sd->fd,2));
 
 	// @noask [LuzZza]
@@ -10680,6 +10735,11 @@ void clif_parse_GuildReplyAlliance(int fd, struct map_session_data *sd) {
  */
 void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
 	guild_delalliance(sd,RFIFOL(fd,2),RFIFOL(fd,6));
 }
 
@@ -10692,6 +10752,13 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd) {
 	struct map_session_data *t_sd;
 	
 	RFIFOHEAD(fd);	
+
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
+
 	t_sd = map_id2sd(RFIFOL(sd->fd,2));
 
 	// @noask [LuzZza]
@@ -10709,6 +10776,11 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd) {
  */
 void clif_parse_GuildBreak(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if(map[sd->bl.m].flag.guildlock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(228));
+		return;
+	}
 	guild_break(sd,(char*)RFIFOP(fd,2));
 }
 

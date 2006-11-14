@@ -3,6 +3,27 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/14
+	* Early Christmas present. 3 new "features" which were very easy to code,
+	  and should help scripters tremendously. Eapp is quite a way from being
+	  ready, so these can't hurt:
+	* Implemented Karma: It turns out that when someone has karma, the client
+	  believes this character is "evil", and will give you a cursor sword on top
+	  of them automatically. So now the code will let characters with karma to
+	  fight each other. This enables duels and other types of restricted pvp
+	  where only the characters with karma can hit each others, and the rest of
+	  players with neutral karma cannot be affected. Note that Karma cannot be
+	  negative, and it can have any value between 0 and 256 (any non-zero value
+	  makes them appear evil on the client). For now, characters with karma can
+	  hit each other regardless of karma value, but perhaps it may be better to
+	  let them to hit each other ONLY if they have the same karma (the whole
+	  duel implementation COULD be cleaned up using Karma instead!)
+	* Added mapflags partylock and guildlock, which lock the state of the
+	  parties/guilds on said maps:
+	  partylock: blocks user party requests to create/invite/leave/kick
+	  guildlock: blocks user guild requests to create/invite/leave/expel/
+	     make alliance/make opposition/delete alliance/delete opposition/
+		  break guild
 2006/11/13
 	* Fixed a bug where the char-txt server was incorrectly saving memos,
 	  causing character data to be lost on restart. [Skotlex]

@@ -188,7 +188,7 @@ mf_gvg_noparty	10
 mf_notrade	11
 mf_noskill	12
 mf_nowarp	13
-mf_nopvp	14
+mf_partylock	14
 mf_noicewall	15
 mf_snow		16
 mf_fog		17
@@ -219,6 +219,7 @@ mf_novending	41
 mf_loadevent 42
 mf_nochat	43
 mf_noexppenalty	44
+mf_guildlock	45
 
 cell_wall	1
 cell_water	3

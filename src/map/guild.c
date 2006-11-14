@@ -427,17 +427,19 @@ int guild_create(struct map_session_data *sd,char *name)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->status.guild_id==0){
-		if(!battle_config.guild_emperium_check || pc_search_inventory(sd,714) >= 0) {
-			struct guild_member m;
-			guild_makemember(&m,sd);
-			m.position=0;
-			intif_guild_create(name,&m);
-		} else
-			clif_guild_created(sd,3);	// エンペリウムがいない
-	}else
+	if(sd->status.guild_id)
+	{
 		clif_guild_created(sd,1);	// すでに所属している
-
+		return 0;
+	}
+	if(!battle_config.guild_emperium_check || pc_search_inventory(sd,714) >= 0) {
+		struct guild_member m;
+		guild_makemember(&m,sd);
+		m.position=0;
+		intif_guild_create(name,&m);
+		return 1;
+	}
+	clif_guild_created(sd,3);	// エンペリウムがいない
 	return 0;
 }
 
@@ -635,6 +637,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 
 	if(tsd==NULL || g==NULL)
 		return 0;
+
 	if(!battle_config.invite_request_check) {
 		if (tsd->party_invite>0 || tsd->trade_partner) {	// 相手が取引中かどうか
 			clif_guild_inviteack(sd,0);
