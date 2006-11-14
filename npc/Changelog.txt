@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/14
+	* Replaced current Rachel Sanctuary warps with jAthena's version [Playtester]
+	- some warps still seem to be wrong or missing
 11/13
 	* Fix for guild manager recognizing [KarLaeda]
 11/12

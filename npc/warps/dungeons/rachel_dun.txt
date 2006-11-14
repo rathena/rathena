@@ -1,39 +1,30 @@
-//==== Athena Script =========================
+//==== Athena Script =====================================
 //= Rachel Sanctuary Dungeon Warp Script
-//==== By ====================================
+//==== By ================================================
 //= Playtester
-//==== Current Version :======================
-//= 1.1
-//==== Compatible With :======================
+//==== Current Version :==================================
+//= 1.2
+//==== Compatible With :==================================
 //= Any Athena Version
-//==== Description :==========================
+//==== Description :======================================
 //= Warp Points For Rachel Sanctuary Dungeon
-//==== Additional Comment:====================
+//==== Additional Comment:================================
 //= 1.1 Added $ephiroth's warps [Playtester]
-//============================================
+//= 1.2 Replaced old versions with jAthena's [Playtester]
+//========================================================
 
 // Rachel Sanctuary Dungeon
-ra_san01.gat,140,6,0	warp	rasan001	1,1,ra_temin.gat,276,318
-ra_san01.gat,139,139,0	warp	rasan002	1,1,ra_san03.gat,85,19
-ra_san03.gat,85,14,0	warp	rasan003	1,1,ra_san01.gat,139,133
-ra_san03.gat,279,21,0	warp	rasan004	1,1,ra_san04.gat,119,43
-ra_san04.gat,119,49,0	warp	rasan005	1,1,ra_san03.gat,283,21
-ra_san04.gat,203,222,0	warp	rasan006	1,1,ra_san05.gat,149,12
-ra_san05.gat,149,7,0	warp	rasan007	1,1,ra_san04.gat,203,217
-
-// $ephiroth's version of the warps
-//ra_san01.gat,140,6,0	warp	rasan001	1,1,ra_temin.gat,276,318
-//ra_san01.gat,139,139,0	warp	rasan002	1,1,ra_san02.gat,213,9
-//ra_san02.gat,213,4,0	warp	rasan003	1,1,ra_san01.gat,139,133
-//ra_san02.gat,30,22,0	warp	rasan004	1,1,ra_san03.gat,282,21
-//ra_san03.gat,278,21,0	warp	rasan005	1,1,ra_san02.gat,33,22
-//ra_san02.gat,214,278,0	warp	rasan006	1,1,ra_san03.gat,85,19
-//ra_san03.gat,85,14,0	warp	rasan007	1,1,ra_san02.gat,214,273
-//ra_san02.gat,291,149,0	warp	rasan008	1,1,ra_san03.gat,8,150
-//ra_san03.gat,3,150,0	warp	rasan009	1,1,ra_san02.gat,286,149
-//ra_san03.gat,123,284,0	warp	rasan010	1,1,ra_san04.gat,120,44
-//ra_san04.gat,120,48,0	warp	rasan011	1,1,ra_san03.gat,123,278
-//ra_san04.gat,119,103,0	warp	rasan012	1,1,ra_san05.gat,150,12
-//ra_san05.gat,150,7,0	warp	rasan013	1,1,ra_san04.gat,119,109
-//ra_san04.gat,35,223,0	warp	rasan014	1,1,ra_san05.gat,39,150
-//ra_san04.gat,203,222,0	warp	rasan015	1,1,ra_san05.gat,260,150
+ra_san01.gat,140,6,0	warp	rachelwarp4000	1,1,ra_temin.gat,276,318
+ra_san01.gat,140,140,0	warp	rachelwarp4001	1,1,ra_san02.gat,32,21
+ra_san02.gat,30,21,0	warp	rachelwarp4002	1,1,ra_san01.gat,140,138
+ra_san02.gat,291,149,0	warp	rachelwarp4003	1,1,ra_san03.gat,4,149
+ra_san03.gat,2,149,0	warp	rachelwarp4004	1,1,ra_san02.gat,289,149
+ra_san02.gat,214,2,0	warp	rachelwarp4005	1,1,ra_san04.gat,36,221
+ra_san04.gat,36,223,0	warp	rachelwarp4006	1,1,ra_san02.gat,214,4
+ra_san03.gat,86,14,0	warp	rachelwarp4007	1,1,ra_san04.gat,204,220
+ra_san04.gat,204,222,0	warp	rachelwarp4008	1,1,ra_san03.gat,86,16
+ra_san04.gat,120,50,0	warp	rachelwarp4009	1,1,ra_san05.gat,150,9
+ra_san05.gat,150,7,0	warp	rachelwarp4010	1,1,ra_san04.gat,120,48
+ra_san02.gat,214,278,0	warp	rachelwarp4011	1,1,ra_san01.gat,140,138
+ra_san03.gat,124,283,0	warp	rachelwarp4012	1,1,ra_san01.gat,140,138
+ra_san04.gat,120,104,0	warp	rachelwarp4013	1,1,ra_san01.gat,140,138
