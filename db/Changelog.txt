@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/15
+	* Fixed Gonryun mob stats [Playtester]
+	- also fixed Bacsojin and Chung E
 11/13
 	* Changed bAtk to bBaseAtk [Playtester]
 11/10
