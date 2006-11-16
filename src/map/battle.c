@@ -2635,16 +2635,10 @@ struct Damage  battle_calc_misc_attack(
 		md.damage = skill_get_zeny(skill_num ,skill_lv);
 		if (!md.damage) md.damage = 2;
 		md.damage = md.damage + rand()%md.damage;
-
-		if (sd)
-		{
-			if ( md.damage > sd->status.zeny )
-				md.damage=sd->status.zeny;
-			pc_payzeny(sd, md.damage);
-		}
-
-		if(is_boss(target) || tsd || map_flag_gvg2(target->m))
+		if (is_boss(target))
 			md.damage=md.damage/3;
+		else if (tsd)
+			md.damage=md.damage/2;
 		break;
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
@@ -2736,6 +2730,13 @@ struct Damage  battle_calc_misc_attack(
 	md.damage=battle_calc_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
 	if (map_flag_gvg2(target->m))
 		md.damage=battle_calc_gvg_damage(src,target,md.damage,md.div_,skill_num,skill_lv,md.flag);
+
+	if (skill_num == NJ_ZENYNAGE && sd)
+	{	//Time to Pay Up.
+		if ( md.damage > sd->status.zeny )
+			md.damage=sd->status.zeny;
+		pc_payzeny(sd, md.damage);
+	}
 
 	return md;
 }

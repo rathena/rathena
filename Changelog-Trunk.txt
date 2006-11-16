@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/16
+	* Shadow Jump and Kirikage won't "move" you if you use them in GvG grounds.
+	  Fixed Kirikage so it first warps you, and then you unhide. [Skotlex]
+	* Corrected Zeny Nage so the Zeny spent on the attack is always the exact
+	  same value as the damage you are dealing. Also corrected it so it does half
+	  damage when used on players. [Skotlex]
 	* Overlapping song/dances will now cause dissonance/ugly-dance level 1
 	  instead of retaining the level of their song/dance. [Skotlex]
 	* Fixed wrong check in @petrename, thanks to The Ultra Mage.[Skotlex]

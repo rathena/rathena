@@ -3141,14 +3141,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			sc_start(src,SC_HIDING,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case NJ_KIRIKAGE:
-		{
+		if (!map_flag_gvg(src->m))
+		{	//You don't move on GVG grounds.
 			short x, y;
 			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
-			status_change_end(src, SC_HIDING, -1);
 			if (unit_movepos(src, x, y, 0, 0))
 				clif_slide(src,src->x,src->y);
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		}
+		status_change_end(src, SC_HIDING, -1);
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case 0:
 		if(sd) {
@@ -6077,9 +6078,11 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 	case NJ_SHADOWJUMP:
 	{
-		unit_movepos(src, x, y, 1, 0);
-		clif_slide(src,x,y);
-
+		if (!map_flag_gvg(src->m))
+		{	//You don't move on GVG grounds.
+			unit_movepos(src, x, y, 1, 0);
+			clif_slide(src,x,y);
+		}
 		if (sc && sc->data[SC_HIDING].timer != -1)
 			status_change_end(src, SC_HIDING, -1);
 	}
