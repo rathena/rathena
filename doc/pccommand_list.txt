@@ -7,14 +7,14 @@
             executed (note that in this case the event HAS to start with the 
             word 'On', eg: 'OnPCBaseLvUpEvent:')
 
-+ PCCommand: PCLoginEvent
++ PCCommand: OnPCLoginEvent
 + Code by: (davidsiaw)
 + How it works:
 When a player logs in, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
-prontera.gat,0,0,0	script	PCLoginEvent	-1,{
+prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
 	mes "lmao";
 	close;
  }
@@ -38,14 +38,14 @@ as they can see the map.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: PcBaseLvUpEvent
++ PCCommand: OnPcBaseLvUpEvent
 + Code by: lordalfa
 + How it works:
 When a player Base level increases, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
--	Script	PCBaseLvUpEvent	-1,{
+-	Script	OnPCBaseLvUpEvent	-1,{
 	mes "zomfg....";
 	close;
 }
@@ -62,14 +62,14 @@ in his face.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: PcJobLvUpEvent
++ PCCommand: OnPcJobLvUpEvent
 + Code by: lordalfa
 + How it works:
-It's exactly the same as PcBaseLvUpEvent, except it triggers when leveling job.
+It's exactly the same as OnPcBaseLvUpEvent, except it triggers when leveling job.
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: OnNPCKillEvent
++ PCCommand: OnOnNPCKillEvent
 + Code by: lordalfa
 + How it works:
 When a player kills a monster, the NPC will run as if he just clicked it. Which means
@@ -99,14 +99,14 @@ It is exactly the same as OnNPCKillEvent, except it triggers when a player kills
 
 -----------------------------------------------------------------------------
 
-+ PCCommand: PCLoadMapEvent
++ PCCommand: OnPCLoadMapEvent
 + Code by: zbuffer aka Lance
 + How it works:
 When a player logs in on the map, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
-prontera.gat,159,192,2 script PCLoadMapEvent 101,{
+prontera.gat,159,192,2 script OnPCLoadMapEvent 101,{
    mes "Holy shit";
    close;
 }

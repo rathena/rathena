@@ -33,7 +33,7 @@
 //= 2.3 - Utilizing eAthena's new scripting engine  [Lance]
 //===========================================================
 
-prontera.gat,0,0,0	script	PCLoginEvent	-1,{
+prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
 	callfunc "HallOfFameInit";
 	end;
 
