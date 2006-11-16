@@ -3,6 +3,7 @@
 //===== By ================================================
 //= Fredzilla with help from Kamari,Acky
 //===== Version ===========================================
+//= 1.6a Fixed wrong label name [KarLaeda]
 //= 1.6 Removed call to function Is_Taekwon_Class in favor of baseClass == Job_Taekwon [Silentdragon]
 //= 1.5 Added GM menu to reset current adoption [Lupus]
 //= 1.4 Got rid of useless "event_adoptXXX" variables [Lupus]
@@ -332,7 +333,7 @@ A_CantBeAdopted:
 	callfunc "AdoptReset","the person that would be adopted has a job that can't be adopted";
 	close;
 A_ParentOneEnd:
-	if (@regged>1) goto AlreadyReged;
+	if (@regged>1) goto A_AlreadyReged;
 	if ($@ParentOne$==$@ParentTwo$) goto A_SameFail;
 	mes "[Inanna]";
 	mes "Nice to talk to you again "+$@ParentOne$;
@@ -364,7 +365,7 @@ A_FinalYesP:
 	if ($@checkall==3) goto THEEND;
 	close;
 A_ParentTwoEnd:
-	if (@regged>1) goto AlreadyReged;
+	if (@regged>1) goto A_AlreadyReged;
 	mes "[Inanna]";
 	mes "Nice to talk to you again "+$@ParentTwo$;
 	mes "This is you last chance to back out";
@@ -386,7 +387,7 @@ A_AlreadyReged:
 	mes "Please wait for the others to talk to me";
 	close;
 A_BabyEnd:
-	if (@regged>1) goto AlreadyReged;
+	if (@regged>1) goto A_AlreadyReged;
 	mes "[Inanna]";
 	mes "Nice to talk to you again "+$@Baby$;
 	mes "This is you last chance to back out";
