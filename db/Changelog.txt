@@ -20,6 +20,7 @@
 
 ========================
 11/16
+	* Updated Kiel dungeon mob stats [Playtester]
 	* Changed type of unimplemented cards to "Card" [Playtester]
 11/15
 	* Updated Odin Temple mob stats [Playtester]
