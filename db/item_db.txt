@@ -1504,7 +1504,7 @@
 4339,Mineral_Card,Mineral Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,-25; bonus bDef,3; },{},{}
 4340,Teddy_Bear_Card,Teddy Bear Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Undead,30; },{},{}
 4341,Metaling_Card,Metaling Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,215,1,50; },{},{}
-4342,RSX_0806_Card,RSX 0806 Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4342,RSX_0806_Card,RSX 0806 Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4343,Holden_Card,Holden Card,6,,10,10,,,,,,,,769,,,,,{ bonus bLuk,2; if(isequipped(4186,4281,4036,4233)) { bonus bStr,4; bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus2 bSkillAtk,42,20; bonus bSPDrainValue,1; if(BaseJob == Job_Alchem) { bonus3 bAutoSpell,111,1,10; bonus2 bAddMonsterDropItem,7139,300; bonus2 bAddMonsterDropItem,905,300; } } },{},{}
 4344,Anopheles_Card,Anopheles Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12058,RC_Insect,300; },{},{}
 4345,Hill_Wind_Card,Hill Wind Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,21,2; bonus2 bSkillAtk,84,2; bonus2 bSkillAtk,85,2; },{},{}
@@ -1525,18 +1525,18 @@
 4360,Eremes_Guile_Card,Eremes Guile Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bCriticalAddRace,RC_DemiHuman,10; },{},{}
 4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBreakWeaponRate,1000; bonus bBreakArmorRate,700; },{},{}
 4362,Howard_Alt-Eisen_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,-5; bonus bHit,40; },{},{}
-4363,High_Priest_Card,High Priest Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4364,Margaretha_Solin_Card,Margaretha Solin Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4365,High_Wizard_Card,High Wizard Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,,,,,,{},{},{}
+4364,Margaretha_Solin_Card,Margaretha Solin Card,6,,10,10,,,,,,,,,,,,,{},{},{}
+4365,High_Wizard_Card,High Wizard Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4366,Kathryne_Keyron_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{ bonus bCastrate,getrefine()*-1; },{},{}
 4367,Sniper_Card,Sniper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bNoRegen,1; bonus2 bHpDrainRate,50,20; },{},{}
 4368,Cecil_Damon_Card,Cecil Damon Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,5; bonus bHit,-30; },{},{}
 4369,Venatu_Card,Venatu Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,readparam(bAgi)/18; },{},{}
 4370,Dimik_Card,Dimik Card,6,,10,10,,,,,,,,16,,,,,{ bonus bVit,getrefine()-5; },{},{}
 4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,480,10; bonus2 bSkillAtk,368,10; bonus bCastrate,-10; if(BaseJob == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
-4372,Bacsojin_Card,Bacsojin Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk, getrefine()-5; },{},{}
-4374,Vesper_Card,Vesper Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4374,Vesper_Card,Vesper Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()>=9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{}
 4376,Lady_Tany_Card,Lady Tanee Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-50; bonus bMaxSPrate,50; bonus2 bAddMonsterDropItem,513,500; bonus2 bAddItemHealRate,513,100; },{},{}
 4377,Green_Iguana_Card,Green Iguana Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12063,RC_Formless,300; },{},{}
@@ -1548,7 +1548,7 @@
 4383,Red_Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Confusion,3000,2; },{},{}
 4384,Hydro_Card,Hydro Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,277,1,100; },{},{}
 4385,Dragon_Egg_Card,Dragon Egg Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12048,RC_Dragon,300; },{},{}
-4386,Detale_Card,Detale Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4386,Detale_Card,Detale Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4387,Ancient_Mimic_Card,Ancient Mimic Card,6,,10,10,,,,,,,,16,,,,,{ bonus bAgi,readparam(bLuk)/18; },{},{}
 4388,Deathword_Card,Deathword Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,11,2; bonus2 bSkillAtk,13,2; bonus2 bSkillAtk,400,2; },{},{}
 4389,Plasma_Card,Plasma Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Resist,1200; },{},{}
@@ -1560,16 +1560,16 @@
 4395,Thanatos_Maero_Card,Thanatos Maero Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus3 bAutoSpell,30,3,50; },{},{}
 4396,Thanatos_Odium_Card,Thanatos Odium Card,6,,10,10,,,,,,,,64,,,,,{ bonus bAgi,getrefine()-5;},{},{}
 4397,Thanatos_Despero_Card,Thanatos Despero Card,6,,10,10,,,,,,,,32,,,,,{ bonus bInt,getrefine()-6; },{},{}
-4398,Thanatos_Dolor_Card,Thanatos Dolor Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4398,Thanatos_Dolor_Card,Thanatos Dolor Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4399,Thanatos_Card,Thanatos Card,6,,10,10,,,,,,,,2,,,,,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; bonus bSPDrainValue,-1; bonus bDef,-30; bonus bFlee,-30; },{},{}
 4400,Aliza_Card,Aliza Card,6,,10,10,,,,,,,,16,,,,,{ if(BaseJob == Job_Dancer) { bonus4 bAutoSpellWhenHit,1011,1,100,1; } else  { bonus4 bAutoSpellWhenHit,1011,1,50,1; } },{},{}
 4401,Alicel_Card,Alicel Card,6,,10,10,,,,,,,,16,,,,,{ bonus bFlee,10; bonus bDef,-5; },{},{}
 4402,Aliot_Card,Aliot Card,6,,10,10,,,,,,,,4,,,,,{ if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) { bonus bStr, 2; bonus bMaxHPrate, 5; } if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) { bonus bInt, 2; bonus bMaxSPrate, 5; } },{},{}
-4403,Kiel_D-01_Card,Kiel D-01 Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4403,Kiel_D-01_Card,Kiel D-01 Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4404,Skogul_Card,Skogul Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Bleeding,3000,2; },{},{}
-4405,Frus_Card,Frus Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4406,Skeggiold_Card,Skeggiold Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-4407,Valkyrie_Randgris_Card,Valkyrie Randgris Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+4405,Frus_Card,Frus Card,6,,10,10,,,,,,,,,,,,,{},{},{}
+4406,Skeggiold_Card,Skeggiold Card,6,,10,10,,,,,,,,,,,,,{},{},{}
+4407,Valkyrie_Randgris_Card,Valkyrie Randgris Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 
 // More Headgears
 //===================================================================
