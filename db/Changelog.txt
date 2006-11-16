@@ -20,6 +20,7 @@
 
 ========================
 11/16
+	* Updated X.3 mob stats [Playtester]
 	* Updated Kiel dungeon mob stats [Playtester]
 	* Changed type of unimplemented cards to "Card" [Playtester]
 11/15
