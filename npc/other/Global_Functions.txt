@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.07
+//= 2.08
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //=	+more garbage clean
 //= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
 //= 2.07 Added TK_Q variable clear [Lupus]
+//- 2.08 Added NINJ_Q variable clear [Lupus]
 //============================================================ 
 
 
@@ -73,6 +74,7 @@ function	script	F_ClearJobVar	{
 	set STGL_Q,0;
 	set SOUL_Q,0;
 	set GUNS_Q,0;
+	set NINJ_Q,0;
 	return;
 }
 

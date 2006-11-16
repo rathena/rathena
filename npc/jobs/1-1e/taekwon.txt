@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Tsuyuki
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= Freya
 //===== Description: ========================================= 
@@ -366,7 +366,7 @@ L_JobChangeA:
 	mes "title. Mm. In that case, you";
 	mes "are now a ^ff0000Taekwon Boy^000000.";
 	mes "Yes, that sounds good.";
-	jobchange Job_Taekwon;
+	callfunc "Job_Change",Job_Taekwon;
 	callfunc "F_ClearJobVar";
 	getitem 2101,1; // Guard[0]
 	next;

@@ -1,74 +1,721 @@
 //===== eAthena Script ======================================= 
 //= Ninja Job Quest
-//===== Initial Version by: ================================== 
-//= Lord Gywall
+//===== By: ================================================== 
+//= Legionaire
 //===== Current Version: ===================================== 
-//= 1.1c
+//= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= eAthena SVN that supports Ninjas
 //===== Description: ========================================= 
-//= Temp Ninja Quest
+//= Semi-official Ninja Job Change script using dialogue from
+//= Mandarin Aegis Ninja script.
 //===== Additional Comments: ================================= 
-//= 1.1b Fixed the below fix. [blackhole89]
-//= 1.1 Removed tRO specific questions; minor fixes. [blackhole89]
-//= 1.0 Fixed minor things [Lupus]
+//= The dialouge isn't exactly the best available, but until
+//= The official dialouge in English comes out, this is the
+//= Best that I can do.
+//= 1.1 Optimized, updated, checked [Lupus]
 //============================================================ 
 
 
-amatsu.gat,46,137,4	script	Ninja Master	730,{
-	mes "[Ninja Master]";
-	mes "Huh, what?";
-	if(Class==Job_Novice) goto N_Novice;
-	mes "Hey! Get lost!";
+que_ng.gat,30,65,3	script	Cool Kid	730,{
+	set @npcname$,"[Cool Kid]";
+	if(Class == Job_Novice && JobLevel > 9){
+		switch(NINJ_Q){
+		case 1:
+			mes @npcname$;
+			mes "Mmm... This isn't a pressing matter.";
+			mes "Though I hope you can do it soon.";
+			mes "Wildcat Zhao, he's over in";
+			mes "Einbroch";
+			close;
+		case 2:
+			mes @npcname$;
+			mes "Don't forget to get something from him.";
+			mes "Otherwise he'll forget.";
+			close;
+		case 3:
+			mes @npcname$;
+			mes "Did you bring it back?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yup, right here.";
+			next;
+			mes @npcname$;
+			mes "Ohh, not bad";
+			mes "Hand it over.";
+			mes "Let's see... Well.";
+			mes "- *letter opening sounds*... -";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- He's intently reading -";
+			mes "- the letter I brought back. -";
+			next;
+			mes @npcname$;
+			mes "Ai YA~!! How can this be?!";
+			mes "He rejected my offer of a ceasefire!!!";
+			mes "Could it be... Could it be...!";
+			mes "That he's already made another sword?...";
+			next;
+			mes @npcname$;
+			mes "Ohhh, my head hurts now.";
+			mes "Hey, sorry to bother you again.";
+			mes "I need something to fight";
+			mes "Zhao with,";
+			mes "but I don't have the materials.";
+			next;
+			mes @npcname$;
+			mes "If you bring me the materials...";
+			mes "I'll acknowledge you...";
+			mes "And let you become a Ninja.";
+			mes "I need you to get me...";
+			mes "One piece of Phracon.";
+			mes "and five cygar, quick, there's no time!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Aahh!!";
+			mes "This is...";
+			next;
+			mes @npcname$;
+			mes "Hmm, what's the matter?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "These items... Were the ones";
+			mes "I promised to Mr. Zhao...";
+			next;
+			mes @npcname$;
+			mes "WHAT?!!!";
+			mes "Then the person helping him...";
+			mes "IS!";
+			mes "Aaahhh...";
+			mes "Ai ya, you fool!!!!";
+			next;
+			mes @npcname$;
+			mes "Oh.. Oh... Calm.. Must be calm.";
+			mes "Haha...";
+			next;
+			mes @npcname$;
+			mes "Well, you've already promised to help me.";
+			mes "No point in arguing now...";
+			mes "We can do that later.";
+			mes "Quick, gather the items.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh.. Oh.. Ok..";
+			next;
+			mes @npcname$;
+			mes "Quick~~!!";
+			mes "Aiii~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- I have to give him 1 Phracon... -";
+			mes "- and 5 Cyfars -";
+			set NINJ_Q,4;
+			close;
+		case 4:
+			mes @npcname$;
+			if(countitem(7053) < 4 || countitem(1010) < 1){
+				mes "Bring me a Phracon";
+				mes "and five cyfar";
+				mes "Right now, you still don't have enough.";
+				mes "It's urgent.. So do it quickly.";
+				close;
+			}
+			if(getskilllv(1) < 9){
+				mes "Come back once you have the basic skills...";
+				close;
+			}
+			delitem 1010,1;
+			delitem 7035,1;
+			mes "Oh... you've brought it.";
+			mes "Let's see...";
+			mes "Mmm~ so you've brought it all";
+			mes "and followed my instructions.";
+			next;
+			mes @npcname$;
+			mes "Huu... This doesn't look too bad.";
+			mes "Better than I expected at least?";
+			next;
+			mes @npcname$;
+			mes "Ok.";
+			mes "I'll follow through with the ritual";
+			mes "and change you into a Ninja.";
+			next;
+			mes @npcname$;
+			mes "Well, I guess I can introduce myself to you now.";
+			mes "I am part of the Doga Ninja clan";
+			mes "the top Ninja head in the clan.";
+			mes "I'm the squad leader of the team...";
+			mes "trying to find our chief, Kazma";
+			mes "So here I am.";
+			next;
+			mes @npcname$;
+			mes "Actually, there's been a bit of a distrubance";
+			mes "amongst our ranks";
+			mes "so actually, I didn't want you";
+			mes "to join the clan";
+			mes "at first.";
+			next;
+			mes @npcname$;
+			mes "But Zhao, in the letter...";
+			mes "rate you pretty high, and you performed";
+			mes "orders rather well,";
+			mes "so I had a change of mind.";
+			next;
+			mes @npcname$;
+			mes "Being a Ninja is a solitary job.";
+			mes "We value our work above all";
+			mes "but not to the point of fanaticism.";
+			next;
+			mes @npcname$;
+			mes "Your path will be one of hardship.";
+			mes "Many of us live within villages...";
+			mes "Working away covertly.";
+			next;
+			mes @npcname$;
+			mes "Our techniques and our equipmnet...";
+			mes "How to handle and use them...";
+			mes "That is all done covertly";
+			mes "As well, buying and selling...";
+			mes "is also done via special means, so,";
+			mes "be especially careful.";
+			next;
+			mes @npcname$;
+			mes "Well, from now on";
+			mes "You're a member of the ...";
+			mes "Doga Ninja Clan.";
+			next;
+			mes @npcname$;
+			mes "Speed, as that of the western wind.";
+			mes "Movement, like the falling leaf in that wind";
+			mes "Soft!!!";
+			next;
+			mes @npcname$;
+			mes "Haaa!!!!";
+			next;
+			nude;
+			callfunc "Job_Change",Job_Ninja;
+			callfunc "F_ClearJobVar";				
+			getitem 13010,1;
+			close;
+		default:
+			mes "["+strcharinfo(0)+"]";
+			mes "Hey.";
+			next;
+			mes @npcname$;
+			mes "Oh?...";
+			mes "That's impossible~!!";
+			mes "You can see me!";
+			next;
+			mes @npcname$;
+			mes "Aaaahhh~!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- Kick the man with the chopsticks. -";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- Huu~! -";
+			mes "Ahh~!";
+			mes "Ahh~! What are you doing?!";
+			next;
+			mes @npcname$;
+			mes "Oh?...";
+			mes "You aren't an assassin trying to kill me.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh jeez... What did I get myself into.";
+			mes "This guy is nuts.";
+			mes "Hasn't even seen me and is throwing stuff around...";
+			next;
+			mes @npcname$;
+			mes "ohohoh~! Anger, anger~~";
+			mes "My forever rival... Forever hated enemy!";
+			mes "Wildcat!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "........";
+			next;
+			mes @npcname$;
+			mes "Ahah~~~!!!";
+			mes "E~E~";
+			mes "Pa! Pa! Pa~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- I'm right here... -";
+			next;
+			mes @npcname$;
+			mes "Mmm...";
+			mes "Oh! Who are you?!";
+			mes "When did you suddenly appear";
+			mes "beside me!";
+			mes "Here, TAKE THIS!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Augh...~";
+			mes "Jeez, can't you stop...";
+			mes "What are you doing now..";
+			next;
+			mes @npcname$;
+			mes "Ohoho...";
+			mes "Not bad, not bad~";
+			mes "You managed to dodge my attacks...";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- What.. Is wrong with him... -";
+			mes "- Not listening to me at all. -";
+			next;
+			mes @npcname$;
+			mes "mmm~ok~";
+			mes "Well, why did you come find me?";
+			mes "What do you need?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes ".........";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh...mm...";
+			mes "Right.";
+			mes "I want to become a Ninja.";
+			next;
+			mes @npcname$;
+			mes "Ok, great, perfect...";
+			mes "BUT!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes ".....";
+			next;
+			mes @npcname$;
+			mes "It's not that simple.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "... What now~";
+			next;
+			mes @npcname$;
+			mes "I still have no trust in you.";
+			mes "In my opinion, you have no experience.";
+			mes "You'll have trouble becoming a Ninja.";
+			next;
+			mes @npcname$;
+			mes "So...";
+			mes "You should!!!Go home~!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "...........";
+			next;
+			mes @npcname$;
+			mes "Mmm...";
+			mes "Right!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "...........";
+			next;
+			mes @npcname$;
+			mes "Well, if you aren't deaf, leave.";
+			mes "You've seen it for yourself, I'm a busy fellow.";
+			mes "Aahh...";
+			next;
+			mes @npcname$;
+			mes "My opponents are everywhere...";
+			mes "I cannot afford to waste time!";
+			next;
+			mes @npcname$;
+			mes "Well now, I've got to run";
+			mes "You know, for practice and all.";
+			mes "*prepares to leave*";
+			next;
+			mes @npcname$;
+			mes "I shall win next time!";
+			mes "Wait for me.";
+			mes "Wildcat Zhao!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Wildcat... Zhao?";
+			mes "You're fighting a cat?";
+			next;
+			mes @npcname$;
+			mes "Uhh..? Oh that, hahaha~";
+			mes "Wildcat Zhao is that fellow's...";
+			mes "title.";
+			next;
+			mes @npcname$;
+			mes "He's a vicious and barbaric fellow.";
+			mes "For victory...";
+			mes "He'll use any method.";
+			next;
+			mes @npcname$;
+			mes "His ninjutsu";
+			mes "is also a bit too strong...";
+			next;
+			mes @npcname$;
+			mes "Right now, both of our";
+			mes "shuriken and scrolls...";
+			mes "are still in repair, so,";
+			mes "we're temporarily calling it a break.";
+			next;
+			mes @npcname$;
+			mes "If you really...";
+			mes "Want to become a Ninja.";
+			mes "Wanna help me out?";
+			mes "If you help me...";
+			mes "I probably won't be able to make you a Ninja";
+			mes "But I'll teach you several skills?";
+			next;
+			if(select("Sure.:Reject.") == 2){
+				mes "["+strcharinfo(0)+"]";
+				mes "I'm not here to help";
+				mes "Just looking for someone to teach me the skills.";
+				mes "Sorry.";
+				mes "Find somebody else.";
+				next;
+				mes @npcname$;
+				mes "Oh... I see...";
+				mes "Ok then.";
+				mes "Sorry if I offended you.";
+				mes "You may leave now.";
+				close;
+			}
+			mes "["+strcharinfo(0)+"]";
+			mes "Mm... Ok then.";
+			next;
+			mes @npcname$;
+			mes "Ok..great.";
+			mes "Bring this letter";
+			mes "Over to Wildcat Zhao";
+			mes "Grr... That fellow.";
+			next;
+			mes @npcname$;
+			mes "It basically says...";
+			mes "Let's have a ceasefire";
+			mes "While our equipment is being fixed.";
+			mes "You must get a reply from him.";
+			next;
+			mes @npcname$;
+			mes "I heard he's somewhere...";
+			mes "in Einbroch...";
+			mes "Don't know.";
+			mes "What's he doing over there?";
+			mes "...";
+			next;
+			mes @npcname$;
+			mes "Zhao...";
+			mes "He changes his appearance...";
+			mes "So check everybody, since you won't know who he is.";
+			next;
+			mes @npcname$;
+			mes "Don't give up though.";
+			mes "He likes high places.";
+			mes "Search around.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ok~";
+			mes "Ok.";
+			set NINJ_Q,1;
+			close;
+		}
+	}else if(Class == Job_Novice && JobLevel < 10){
+		mes @npcname$;
+		mes "Not enough training.";
+		mes "Come back later.";
+		close;
+	}
+	mes @npcname$;
+	if(Class == Job_Ninja){
+		mes "Mm... How's it been?";
+		mes "Missions can happen at any moment";
+		mes "At any time";
+		mes "Don't slack off";
+		close;
+	}
+	mes "Oh what, this smell!!";
+	mes "It's coming from you!.";
+	mes "It's been a long time since I've";
+	mes "smelled anybody so stinky.";
+	mes "Away with you!";
 	close;
-N_Novice:
-	mes "Oh, a novice.. I guess your here to learn the ways of a Ninja.";
-	next;
-	menu "I wish to become a Ninja",N_Question,"What are the requirements?",N_Require,"Leave",-;
-	close;
+}
 
-N_Question:
-	mes "[Ninja Master]";
-	if(JobLevel<10 || SkillPoint) goto N_Bad;
-	set @qnumber,rand(1,4);
-	if(@qnumber==1) goto N_Q1;
-	if(@qnumber==2) goto N_Q2;
-	if(@qnumber==3) goto N_Q3;
-	mes "Where can you find a Poison Toad?";
-	next;
-	menu "Amatsu Field",N_C,"Louyang Field",N_W,"Prontera Field",N_W,"Einbroch Field",N_W;
-N_Q1:
-	mes "Which of these places does not have its own fields?";
-	next;
-	menu "Geffen",N_W,"Alberta",N_C,"Payon",N_W,"Lighthalzen",N_W;
-N_Q2:
-	mes "Dammit.. which one is a fake weapon?";
-	next;
-	menu "Dirk",N_W,"Coward",N_W,"Stardust Blade",N_W,"Myrital",N_C;
-N_Q3:
-	mes "Which is the odd one out?";
-	next;
-	menu "Super Novice",N_W,"Gunslinger",N_W,"TaeKwon",N_C,"Ninja",N_W;
-N_C:
-	mes "[Ninja Master]";
-	mes "..That's right.";
-	mes "You can be a ninja from this day forward.";
-	next;
-	callfunc "Job_Change",Job_Ninja;
-	mes "[Ninja Master]";
-	mes "Congratulations. Now go train~ desu!";
-	close;
-N_W:
-	mes "Argh.. Dammit, you baka!";
-	next;
-	menu "Try again",N_Question,"Give up",-;
-	close;
-N_Bad:
-	mes "Wait a second.. You're either too low in job level or you have skill points left...";
-	close;
-N_Require:
-	mes "[Ninja Master]";
-	mes "You have to correctly answer a question I fire at you randomly.";
-	mes "Your job level must be at least 10 before trying.";
-	close;
+einbroch.gat,184,194,3	script	Exceptional Man	881,{
+	if(NINJ_Q >= 3 || Class == Job_Ninja)
+		set @npcname$,"[Red Cougar Zhao]";
+	else
+		set @npcname$,"[Exceptional Man]";
+	if(!NINJ_Q){
+		mes @npcname$;
+		if(Class == Job_Ninja){
+			mes "Oh, you're a Ninja now.";
+			mes "Stay true to the path, though there...";
+			mes "may be difficulties ahead, remember...";
+			mes "train hard.";
+			close;
+		}
+		mes "Whoo... So happy.";
+		mes "I've been to many places.";
+		mes "But a building this tall...";
+		mes "First time I've seen it, and the scenery is beautiful too.";
+		mes "Really too sad that I don't have the time to admire it";
+		mes "*sighs*";
+		close;
+	}
+	switch(NINJ_Q){
+	case 1:
+		mes @npcname$;
+		mes "The place I lived in...";
+		mes "was peaceful, the air was good, the houses were small";
+		mes "but warm.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh, it can't be!";
+		mes "Amatsu?!!!";
+		next;
+		mes @npcname$;
+		mes "Nope.";
+		mes "....";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Mmm~";
+		mes "Wait...";
+		mes "You've lived in Izlude before?";
+		next;
+		mes @npcname$;
+		mes "Yes.";
+		mes "I come from Izlude.";
+		next;
+		mes @npcname$;
+		mes "Due to certain events though...";
+		mes "I've come here, to the mines.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Really...";
+		mes "Oh, do you know a person called.... Wildcat Zhao?";
+		mes "He's a Ninja from Amatsu";
+		next;
+		mes @npcname$;
+		mes "Hmm that's the first time I've heard that name.";
+		mes "You have some important reason..";
+		mes "to meet him?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Yes, I have a latter to give him";
+		mes "and I need a reply letter";
+		mes "before I can change class";
+		mes "and become a Ninja.";
+		next;
+		mes @npcname$;
+		mes "Mm.. So I see, you too, are a traveller.";
+		next;
+		mes @npcname$;
+		mes "Oh, I remember now";
+		mes "I think... I know";
+		mes "Who you're trying to find.";
+		next;
+		mes @npcname$;
+		mes "I saw him here";
+		mes "or at least... I think I did.";
+		next;
+		mes @npcname$;
+		mes "I'd really like to help you";
+		mes "but I still have...";
+		mes "some unfinished business.";
+		next;
+		mes @npcname$;
+		mes "If you can help me do something";
+		mes "I'll help you find him.";
+		next;
+		if(select("I'll find him myself.:Ok, I'll help you.") == 1){
+			mes @npcname$;
+			mes "Ahh ok.";
+			mes "I understand.";
+			mes "Well, good luck";
+			mes "if you ever are in";
+			mes "need of help.";
+			mes "Before I leave";
+			mes "tell me...";
+			close;
+		}else{
+			mes @npcname$;
+			mes "Mm Ok.";
+			mes "I came here";
+			mes "to find some ores.";
+			mes "I have something that needs these ores";
+			mes "in order to work";
+			next;
+			mes @npcname$;
+			mes "I would come with you....";
+			mes "But I need to watch over this, so.";
+			mes "If you can get me five Cyfars, and";
+			mes "one Phracon...";
+			mes "I would really appreciated it.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "- I need to bring, one Phracon and five Cyfars. -";
+			set NINJ_Q,2;
+			close;
+		}
+	case 2:
+		if(countitem(1010) < 1 || countitem(7053) < 5){
+			mes @npcname$;
+			mes "1 Phracon and 5 Cyfars.";
+			mes "Hmm the amount isn't enough.";
+			mes "Even though there's no hurry, still,";
+			mes "bring back the correct amount.";
+			close;
+		}
+		mes @npcname$;
+		mes "Very good, very good..";
+		mes "Mmm.... Ok.";
+		mes "You've given me what I needed";
+		mes "now I need to help you in return";
+		mes "and find him. Mmm....";
+		next;
+		mes @npcname$;
+		mes "Let me see the letter.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "?????!!";
+		next;
+		mes @npcname$;
+		mes "Oh? Can it be him...";
+		mes "that sent it?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh.... So you are";
+		mes "Wildcat~!";
+		next;
+		mes @npcname$;
+		mes "No.";
+		mes "My name is not Wildcat Zhao";
+		mes "It is Cougar Zhao.";
+		mes "Wildcat is the name that kid";
+		mes "uses in order";
+		mes "to aggravate me, haha.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hahaha... ~~";
+		next;
+		set @npcname$,"[Red Cougar Zhao]";
+		mes @npcname$;
+		mes "If you want to become a Ninja";
+		mes "then you must not trust";
+		mes "what you see.";
+		next;
+		mes @npcname$;
+		mes "The clothing and gear you see in books.";
+		mes "Is not used by real Ninjas";
+		mes "or rather, there are very few";
+		mes "who wear such things.";
+		next;
+		mes @npcname$;
+		mes "Do not forget.";
+		mes "Once the identity of a Ninja";
+		mes "has been revealed, his life is";
+		mes "forfeit.";
+		next;
+		mes @npcname$;
+		mes "Even right now";
+		mes "what I say and tell you";
+		mes "may not be the truth.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Ohh...";
+		mes "...........";
+		next;
+		mes @npcname$;
+		mes "Well, can I see it?";
+		mes "That letter.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh ok.";
+		mes "Hmm.";
+		mes "-*Takes out letter*-";
+		next;
+		mes @npcname$;
+		mes "Mmmm.. Let's see...";
+		mes "Oh, and here, I thought it would be";
+		mes "another declaration of battle.";
+		mes "He wants a ceasfire now.";
+		next;
+		mes @npcname$;
+		mes "What to do, what to do.";
+		mes "You've already helped me";
+		mes "make another sword.";
+		mes "Haha~";
+		next;
+		mes @npcname$;
+		mes "I'll write a reply I guess.";
+		mes "From my point of view though";
+		mes "based on the speed that you got what I asked for";
+		mes "if you want to become a Ninja";
+		mes "learn to become a bit faster";
+		mes "and more experienced";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes ".....";
+		next;
+		mes @npcname$;
+		mes "Wait.";
+		mes "I shall write a reply letter.";
+		mes "Let's see...";
+		mes "Mm...*slides letter in*......";
+		next;
+		mes @npcname$;
+		mes "Here you go.";
+		mes "Give it to him";
+		mes "and he'll understand.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "- Good, got the letter -";
+		mes "- that Mr. Zhao wrote in a second. -";
+		next;
+		mes @npcname$;
+		mes "Well now, be on your way.";
+		mes "If you want to become a Ninja";
+		mes "learn to treasure what time you have.";
+		next;
+		mes @npcname$;
+		mes "When you do become a Ninja";
+		mes "Come have a chat with me";
+		mes "I will be waiting for you.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Mmm.... Then I'll....";
+		next;
+		mes @npcname$;
+		mes "Ohh.... It'll take awhile to get to Amatsu";
+		mes "definitely a long trip.";
+		mes "I'll take "+strcharinfo(0)+" to Amatasu.";
+		mes "Ok.";
+		delitem 1010,1;
+		delitem 7053,5;
+		set NINJ_Q,3;
+		close2;
+		warp "amatsu.gat",113,127;
+		end;
+	case 3:
+		mes @npcname$;
+		mes "Hmmm I wonder what happened";
+		mes "you haven't seen him yet";
+		mes "why are you here?";
+		next;
+		mes @npcname$;
+		mes "If you want";
+		mes "I'll take you back to Amatsu.";
+		next;
+		if(select("No thanks.:Sure.") == 1){
+			mes @npcname$;
+			mes "Mm, ok then.";
+			mes "The decision is yours to make.";
+			close;
+		}
+		mes @npcname$;
+		mes "Ok. Then I'll take you to Amatsu.";
+		close2;
+		warp "amatsu.gat",113,127;
+		end;
+	case 4:
+		mes @npcname$;
+		mes "Haha, the kid seems to order you";
+		mes "to do lots of bothersome chores.";
+		mes "Work hard, all of these tasks";
+		mes "will help you become a Ninja.";
+		close;
+	}
 }

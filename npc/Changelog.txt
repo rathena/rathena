@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/16
+	* Added official Ninja Job quest! Thanks to Legionaire for translation [Lupus]
+		Don't forget to update your other\Global_Functions.txt
 11/14
 	* Replaced current Rachel Sanctuary warps with jAthena's version [Playtester]
 	- some warps still seem to be wrong or missing
