@@ -10102,7 +10102,7 @@ int buildin_atcommand(struct script_state *st)
 	if (st->rid)
 		sd = script_rid2sd(st);
 
-	if (sd) is_atcommand(sd->fd, sd, cmd, 99);
+	if (sd) atcommand_sub(sd->fd, sd, cmd, 99);
 	else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
@@ -10113,7 +10113,7 @@ int buildin_atcommand(struct script_state *st)
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		is_atcommand(0, &dummy_sd, cmd, 99);
+		atcommand_sub(0, &dummy_sd, cmd, 99);
 	}
 
 	return 0;
@@ -10129,7 +10129,7 @@ int buildin_charcommand(struct script_state *st)
 	if (st->rid)
 		sd = script_rid2sd(st);
 	
-	if (sd) is_charcommand(sd->fd, sd, cmd, 99);
+	if (sd) charcommand_sub(sd->fd, sd, cmd,99);
 	else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
@@ -10140,7 +10140,7 @@ int buildin_charcommand(struct script_state *st)
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		is_charcommand(0, &dummy_sd, cmd, 99);
+		charcommand_sub(0, &dummy_sd, cmd, 99);
 	}
 
 	return 0;

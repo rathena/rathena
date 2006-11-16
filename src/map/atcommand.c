@@ -776,37 +776,13 @@ int get_atcommand_level(const AtCommandType type) {
 	return 100; // 100: command can not be used
 }
 
-/*==========================================
- *is_atcommand @コマンドに存在するかどうか確認する
- *------------------------------------------
- */
 AtCommandType
-is_atcommand(const int fd, struct map_session_data* sd, const char* message, int gmlvl) {
-	const char* str = message;
-	int s_flag = 0;
+atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
 	AtCommandInfo info;
 	AtCommandType type;
 
-	nullpo_retr(AtCommand_None, sd);
-
-	if (sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND) {
-		return AtCommand_Unknown;
-	}
-
-	if (!message || !*message)
-		return AtCommand_None;
-
 	malloc_set(&info, 0, sizeof(info));
-	str += strlen(sd->status.name);
-	while (*str && (isspace(*str) || (s_flag == 0 && *str == ':'))) {
-		if (*str == ':')
-			s_flag = 1;
-		str++;
-	}
-	if (!*str)
-		return AtCommand_None;
 
-	if (!gmlvl) gmlvl = pc_isGM(sd);
 	type = atcommand(sd, gmlvl, str, &info);
 	if (type != AtCommand_None) {
 		char command[100];
@@ -845,6 +821,36 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message, int
 	}
 
 	return AtCommand_None;
+}
+
+/*==========================================
+ *is_atcommand @コマンドに存在するかどうか確認する
+ *------------------------------------------
+ */
+AtCommandType
+is_atcommand(const int fd, struct map_session_data* sd, const char* message) {
+	const char* str = message;
+	int s_flag = 0;
+
+	nullpo_retr(AtCommand_None, sd);
+
+	if (sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND) {
+		return AtCommand_Unknown;
+	}
+
+	if (!message || !*message)
+		return AtCommand_None;
+
+	str += strlen(sd->status.name);
+	while (*str && (isspace(*str) || (s_flag == 0 && *str == ':'))) {
+		if (*str == ':')
+			s_flag = 1;
+		str++;
+	}
+	if (!*str)
+		return AtCommand_None;
+
+	return atcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
 /*==========================================

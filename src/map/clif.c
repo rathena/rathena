@@ -8694,8 +8694,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		return;
 	}
 	
-	if ((is_atcommand(fd, sd, message, 0) != AtCommand_None) ||
-		(is_charcommand(fd, sd, message,0) != CharCommand_None))
+	if ((is_atcommand(fd, sd, message) != AtCommand_None) ||
+		(is_charcommand(fd, sd, message) != CharCommand_None))
 		return;
 
 	if (sd->sc.count &&
@@ -9059,8 +9059,8 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	gm_command = (char*)aMallocA((strlen((const char*)RFIFOP(fd,28)) + 28)*sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
 
 	sprintf(gm_command, "%s : %s", sd->status.name, RFIFOP(fd,28));
-	if ((is_charcommand(fd, sd, gm_command, 0) != CharCommand_None) ||
-		(is_atcommand(fd, sd, gm_command, 0) != AtCommand_None)) {
+	if ((is_charcommand(fd, sd, gm_command) != CharCommand_None) ||
+		(is_atcommand(fd, sd, gm_command) != AtCommand_None)) {
 		if(gm_command) aFree(gm_command);
 		return;
 	}
@@ -10428,8 +10428,8 @@ void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd) {
 void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != CharCommand_None ||
-		is_atcommand(fd, sd, (char*)RFIFOP(fd,4), 0) != AtCommand_None)
+	if (is_charcommand(fd, sd, (char*)RFIFOP(fd,4)) != CharCommand_None ||
+		is_atcommand(fd, sd, (char*)RFIFOP(fd,4)) != AtCommand_None)
 		return;
 
 	if	(sd->sc.count && (
@@ -10672,8 +10672,8 @@ void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd) {
 void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
-	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != CharCommand_None ||
-		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4), 0) != AtCommand_None)
+	if (is_charcommand(fd, sd, (char*)RFIFOP(fd, 4)) != CharCommand_None ||
+		is_atcommand(fd, sd, (char*)RFIFOP(fd, 4)) != AtCommand_None)
 		return;
 
 	if (sd->sc.count && (
@@ -11427,7 +11427,7 @@ void clif_parse_GMKillAll(int fd,struct map_session_data *sd)
 	char message[50];
 
 	strncpy(message,sd->status.name, NAME_LENGTH);
-	is_atcommand(fd, sd, strcat(message," : @kickall"),0);
+	is_atcommand(fd, sd, strcat(message," : @kickall"));
 
 	return;
 }

@@ -122,33 +122,13 @@ int get_charcommand_level(const CharCommandType type) {
 	return 100; // 100: command can not be used
 }
 
-/*==========================================
- *is_charcommand @コマンドに存在するかどうか確認する
- *------------------------------------------
- */
-CharCommandType
-is_charcommand(const int fd, struct map_session_data* sd, const char* message, int gmlvl) {
-	const char* str = message;
-	int s_flag = 0;
+CharCommandType 
+charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
 	CharCommandInfo info;
 	CharCommandType type;
 
-	nullpo_retr(CharCommand_None, sd);
-
-	if (!message || !*message)
-		return CharCommand_None;
-
 	malloc_set(&info, 0, sizeof(info));
-	str += strlen(sd->status.name);
-	while (*str && (isspace(*str) || (s_flag == 0 && *str == ':'))) {
-		if (*str == ':')
-			s_flag = 1;
-		str++;
-	}
-	if (!*str)
-		return CharCommand_None;
 
-	if (!gmlvl) gmlvl = pc_isGM(sd);
 	type = charcommand(sd, gmlvl, str, &info);
 	if (type != CharCommand_None) {
 		char command[100];
@@ -188,6 +168,32 @@ is_charcommand(const int fd, struct map_session_data* sd, const char* message, i
 	}
 
 	return CharCommand_None;
+}
+
+/*==========================================
+ *is_charcommand @コマンドに存在するかどうか確認する
+ *------------------------------------------
+ */
+CharCommandType
+is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
+	const char* str = message;
+	int s_flag = 0;
+
+	nullpo_retr(CharCommand_None, sd);
+
+	if (!message || !*message)
+		return CharCommand_None;
+
+	str += strlen(sd->status.name);
+	while (*str && (isspace(*str) || (s_flag == 0 && *str == ':'))) {
+		if (*str == ':')
+			s_flag = 1;
+		str++;
+	}
+	if (!*str)
+		return CharCommand_None;
+
+	return charcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
 /*==========================================
