@@ -1,5 +1,6 @@
 // item id,sprite id
-// Client will use sprite ID to display particular item.
+// Replaces an item client-side while keeping them separate server-side.
+// Think of it as a way to disguise items.
 // If 0 is used then item will be disabled.
 2240,2241 //Beard - Grampa Beard
 

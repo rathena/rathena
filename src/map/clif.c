@@ -8356,7 +8356,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		int lv;
-	
 		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
@@ -9124,7 +9123,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 			{
 				sprintf(whisper_tmp, "@whispervar%d$", i);
 				set_var(sd,whisper_tmp,(char *) split_data[i]);        
-			}//You don't need to zero them, iust reset them [Kevin]
+			}//You don't need to zero them, just reset them [Kevin]
 			
 			aFree(whisper_tmp);
 			whisper_tmp=(char *)aMallocA((strlen(npc->name)+18)*sizeof(char));

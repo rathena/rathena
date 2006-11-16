@@ -4337,7 +4337,7 @@ int atcommand_petrename(
 		return -1;
 	}
 	pd = sd->pd;
-	if (pd->pet.rename_flag) {
+	if (!pd->pet.rename_flag) {
 		clif_displaymessage(fd, msg_txt(188)); // You can already rename your pet.
 		return -1;
 	}
