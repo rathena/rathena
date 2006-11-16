@@ -4456,23 +4456,16 @@ everything not equippable by the new job class anyway.
 
 ---------------------------------------
 
-*atcommand "<character name>:<command line>";
+*atcommand "<command line>";
 
 This command will run the given command line exactly as if it was typed in from 
 the keyboard by the player connected to the invoking character, and that 
 character belonged to an account which had GM level 99.
 
-Even though the character name and the ':' are not used for anything whatsoever, 
-it is required to give them in this command because it is processed exactly as 
-if typed from the keyboard, and that is how it will arrive into the processing 
-function if it is typed from the keyboard. The character name given must be the 
-same length as the name of the invoking character object, although nothing else 
-is required of it.
-
     // This will ask the invoker for a character name and then use the '@nuke'
     // GM command on them, killing them mercilessly.
     input @player$;
-    gmcommand strcharinfo(0)+":@nuke "+@player$
+    gmcommand "@nuke "+@player$
 
 This command has a lot of good uses, I am sure you can have some fun with this 
 one.
