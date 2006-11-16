@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Perkka, Scriptor, LightFighter
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= eAthena 1 +
 //===== Description: ========================================= 
@@ -14,7 +14,7 @@
 //============================================================ 
 
 
-nif_in.gat,190,112,5	script	Deviruchi	1109,{
+nif_in.gat,190,112,5	script	Deviruchi#divorce	1109,{
 	if (getpartnerid() == 0) {
 		mes "[Deviruchi]";
 		mes "Kekeke, humans are always alone in the end,";

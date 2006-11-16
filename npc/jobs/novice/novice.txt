@@ -241,7 +241,7 @@ new_zone01.gat,144,107,2	script	Guard#02	105,{
 }
 
 //Receptionist
-new_zone02.gat,100,29,4	script	Receptionist	86,{
+new_zone02.gat,100,29,4	script	Receptionist#nz	86,{
 	if(Class != Job_Novice || Upper) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";

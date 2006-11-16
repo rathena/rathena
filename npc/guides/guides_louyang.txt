@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena/Tsuyuki
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= Freya
 //===== Description: =========================================
@@ -294,4 +294,4 @@ louyang.gat,160,175,4	script	Soldier#Lou1	825,{
 		close;
 }
 
-louyang.gat,213,213,4	duplicate(Soldier#Lou1)	Soldier	825
+louyang.gat,213,213,4	duplicate(Soldier#Lou1)	Soldier#Lou2	825
