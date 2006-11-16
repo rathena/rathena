@@ -20,6 +20,7 @@
 
 ========================
 11/15
+	* Updated Odin Temple mob stats [Playtester]
 	* Fixed Gonryun mob stats [Playtester]
 	- also fixed Bacsojin and Chung E
 11/13
