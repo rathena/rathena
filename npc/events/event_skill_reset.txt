@@ -99,5 +99,6 @@ L_Reset:
 	mes @npcname$;
 	mes "Thank you.";
 	emotion e_thx;
+	logmes "SKILL RESET EVENT";
 	close;
 }
