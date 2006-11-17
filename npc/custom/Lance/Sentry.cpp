@@ -61,7 +61,7 @@
 				if(.ai_busy[.@tmp] == 0){ // Not busy
 					switch(.ai_action[AI_ACTION_TAR_TYPE]){ // Check what have we here.
 							case AI_ACTION_TAR_TYPE_PC: // It's a player
-								if(getd("$pkarma_"+.ai_action[AI_ACTION_TAR]) > .karma){ // pkarma is higher?
+								if(Karma > .karma){ // pkarma is higher?
 									unittalk .ai_action[AI_ACTION_SRC], "Who goes there!";
 									unitemote .ai_action[AI_ACTION_SRC], e_gasp; // !
 									unitattack .ai_action[AI_ACTION_SRC],.ai_action[AI_ACTION_TAR];
@@ -86,7 +86,7 @@
 				break;
 			case AI_ACTION_TYPE_KILL: // We eliminated the criminal
 				if(.ai_action[AI_ACTION_TAR_TYPE] == AI_ACTION_TAR_TYPE_PC)
-					setd "$pkarma_"+.ai_action[AI_ACTION_TAR], 0;
+					set Karma, 0;
 			case AI_ACTION_TYPE_UNLOCK: // Target lost :(
 				if(.@tmp != -1){
 					set .ai_busy[.@tmp], 0; // Remove him, we're free.
@@ -96,14 +96,20 @@
 				break;
 			case AI_ACTION_TYPE_DEAD: // We got killed :(
 				if(.ai_action[AI_ACTION_TAR_TYPE] == AI_ACTION_TAR_TYPE_PC){ // Attacker is a player?
-					setd "$pkarma_"+.ai_action[AI_ACTION_TAR], getd("$pkarma_"+.ai_action[AI_ACTION_TAR]) + 5;
+					if(Karma < 250)
+						set Karma, Karma + 5;
+					else
+						set Karma, 255;
 				}
 				sleep 10000; // 10 seconds until reinforcements arrive
 				spawn_guardian .@tmp;
 				break;
 			case AI_ACTION_TYPE_ATTACK: // Someone attacked us
 				if(.ai_action[AI_ACTION_TAR_TYPE] == AI_ACTION_TAR_TYPE_PC){ // Attacker is a player?
-					setd "$pkarma_"+.ai_action[AI_ACTION_TAR], getd("$pkarma_"+.ai_action[AI_ACTION_TAR]) + 1;
+					if(Karma < 250)
+						set Karma, Karma + 1;
+					else
+						set Karma, 255;
 				}
 				// The system's AI will auto attack any attackers. So we leave it here.
 				break;
