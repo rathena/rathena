@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Poison King  Quest
 //===== Additional Comments: ================================= 
 //= 1.0 Initial Release [Evera]
+//= 1.1 Fixed double levelup bug [Lupus]
 //============================================================ 
 
 //============================================================
@@ -1989,14 +1990,14 @@ s_CameBack:
 	set QL_POISONPATH,0;
 	getitem 678,3;
 	if(BaseLevel < 56)set BaseExp,BaseExp+8909;
-	if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10213;
-	if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+17684;
-	if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+25411;
-	if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+68757;
-	if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+128246;
-	if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+142340;
-	if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
-	if(BaseLevel > 90)set BaseExp,BaseExp+366786;
+	else if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10213;
+	else if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+17684;
+	else if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+25411;
+	else if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+68757;
+	else if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+128246;
+	else if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+142340;
+	else if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
+	else if(BaseLevel > 90)set BaseExp,BaseExp+366786;
 	warp "louyang.gat",270,136;
 	end;
 
@@ -3022,14 +3023,14 @@ s_Letter:
 	mes "like you're becoming more powerful";
 	mes "and gaining experience.";
 	if(BaseLevel < 56)set BaseExp,BaseExp+9000;
-	if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10500;
-	if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+18684;
-	if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+27411;
-	if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+70757;
-	if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+130246;
-	if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+150340;
-	if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+182052;
-	if(BaseLevel > 90)set BaseExp,BaseExp+406786;
+	else if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10500;
+	else if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+18684;
+	else if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+27411;
+	else if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+70757;
+	else if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+130246;
+	else if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+150340;
+	else if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+182052;
+	else if(BaseLevel > 90)set BaseExp,BaseExp+406786;
 	set QL_POISONKING,17;
 	close2;
 	warp "louyang.gat",270,136;

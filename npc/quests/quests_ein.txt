@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.4.2
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.3 Implemented the polution quest. [MasterOfMuppets]
 //= 1.4.1 Massive bugfix. Fixed Pollution exploit [Lupus]
 //= 1.4.2 Fixed Khowropher bug [Lupus]
+//= 1.5 Fixed double levelup bug [Lupus]
 //============================================================ 
 
 
@@ -1466,11 +1467,11 @@ L_P2:
 	close2;
 	set Shinokas_Quest,10;
 	if(BaseLevel < 41)set BaseExp,BaseExp+34750;
-	if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
-	if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
-	if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+278000;
-	if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+417000;
-	if(BaseLevel > 90)set BaseExp,BaseExp+556000;
+	else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
+	else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
+	else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+278000;
+	else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+417000;
+	else if(BaseLevel > 90)set BaseExp,BaseExp+556000;
 	end;
 	
 L_NNotify:
@@ -3543,12 +3544,12 @@ s_Switches:
 		set EinFactory,16;
 		set $EinPolution,$EinPolution+1;
 		if(BaseLevel < 41) set BaseExp,BaseExp+615;
-		if((BaseLevel >= 41) && (BaseLevel < 51)) set BaseExp,BaseExp+3075;
-		if((BaseLevel >= 51) && (BaseLevel < 61)) set BaseExp,BaseExp+6604;
-		if((BaseLevel >= 61) && (BaseLevel < 71)) set BaseExp,BaseExp+18508;
-		if((BaseLevel >= 71) && (BaseLevel < 81)) set BaseExp,BaseExp+32062;
-		if((BaseLevel >= 81) && (BaseLevel < 91)) set BaseExp,BaseExp+76026;
-		if(BaseLevel >= 91) set BaseExp,BaseExp+290675;
+		else if(BaseLevel >= 41 && BaseLevel < 51) set BaseExp,BaseExp+3075;
+		else if(BaseLevel >= 51 && BaseLevel < 61) set BaseExp,BaseExp+6604;
+		else if(BaseLevel >= 61 && BaseLevel < 71) set BaseExp,BaseExp+18508;
+		else if(BaseLevel >= 71 && BaseLevel < 81) set BaseExp,BaseExp+32062;
+		else if(BaseLevel >= 81 && BaseLevel < 91) set BaseExp,BaseExp+76026;
+		else if(BaseLevel >= 91) set BaseExp,BaseExp+290675;
 		mes "[Zelmeto]";
 		mes "I don't know how";
 		mes "I can possible pay you";
