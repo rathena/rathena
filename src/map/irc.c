@@ -63,9 +63,10 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 void irc_announce(char *buf)
 {
 	char send_string[256];
-	malloc_tsetdword(send_string,'\0',256);
+	// malloc_tsetdword(send_string,'\0',256); // NOT REQUIRED
 
-	sprintf(send_string,"PRIVMSG %s :%s",irc_channel, buf);
+	sprintf(send_string,"PRIVMSG %s :",irc_channel);
+	strcat(send_string, buf);
 	irc_send(send_string);
 }
 

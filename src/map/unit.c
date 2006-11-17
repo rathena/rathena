@@ -1837,6 +1837,7 @@ int unit_free(struct block_list *bl, int clrtype) {
 			intif_homunculus_requestdelete(hd->homunculus.hom_id);
 			if (sd) sd->status.hom_id = 0;
 		}
+		aFree(hd); // Remember to free it! [Lance]
 		if(sd) sd->hd = NULL;
 	}
 

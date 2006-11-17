@@ -11988,10 +11988,10 @@ int buildin_setmobdata(struct script_state *st){
 			md->level = (unsigned short)value2;
 			break;
 		case 2:
-			md->status.hp = value2;
+			md->status.hp = (unsigned int)value2;
 			break;
 		case 3:
-			md->status.max_hp = value2;
+			md->status.max_hp = (unsigned int)value2;
 			break;
 		case 4:
 			md->master_id = value2;
@@ -12006,49 +12006,49 @@ int buildin_setmobdata(struct script_state *st){
 			md->bl.y = (short)value2;
 			break;
 		case 8:
-			md->status.speed = (short)value2;
+			md->status.speed = (unsigned short)value2;
 			break;
 		case 9:
-			md->status.mode = (short)value2;
+			md->status.mode = (unsigned short)value2;
 			break;
 		case 10:
 			md->special_state.ai = (unsigned int)value2;
 			break;
 		case 11:
-			md->sc.option = (short)value2;
+			md->sc.option = (unsigned short)value2;
 			break;
 		case 12:
-			md->vd->sex = value2;
+			md->vd->sex = (char)value2;
 			break;
 		case 13:
-			md->vd->class_ = value2;
+			md->vd->class_ = (unsigned short)value2;
 			break;
 		case 14:
-			md->vd->hair_style = (short)value2;
+			md->vd->hair_style = (unsigned short)value2;
 			break;
 		case 15:
-			md->vd->hair_color = (short)value2;
+			md->vd->hair_color = (unsigned short)value2;
 			break;
 		case 16:
-			md->vd->head_bottom = (short)value2;
+			md->vd->head_bottom = (unsigned short)value2;
 			break;
 		case 17:
-			md->vd->head_mid = (short)value2;
+			md->vd->head_mid = (unsigned short)value2;
 			break;
 		case 18:
-			md->vd->head_top = (short)value2;
+			md->vd->head_top = (unsigned short)value2;
 			break;
 		case 19:
-			md->vd->cloth_color = (short)value2;
+			md->vd->cloth_color = (unsigned short)value2;
 			break;
 		case 20:
-			md->vd->shield = value2;
+			md->vd->shield = (unsigned short)value2;
 			break;
 		case 21:
-			md->vd->weapon = (short)value2;
+			md->vd->weapon = (unsigned short)value2;
 			break;
 		case 22:
-			md->vd->shield = (short)value2;
+			md->vd->shield = (unsigned short)value2;
 			break;
 		case 23:
 			md->ud.dir = (unsigned char)value2;
