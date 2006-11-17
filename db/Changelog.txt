@@ -20,6 +20,7 @@
 
 ========================
 11/17
+	* Updated Bio Lab and Juperos mob stats [Playtester]
 	* Fixed some sprite mob names [Playtester]
 11/16
 	* Fixed the misleading description of what item_avail does. [Skotlex]
