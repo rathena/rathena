@@ -9055,12 +9055,23 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	struct npc_data *npc;
 	char split_data[10][50];
 	char target[NAME_LENGTH+1];
-	char output[256];  
+	char output[256];
+	unsigned int speclen, scanlen;
 	RFIFOHEAD(fd);
 
 	//printf("clif_parse_Wis: message: '%s'.\n", RFIFOP(fd,28));
 
-	gm_command = (char*)aMallocA((strlen((const char*)RFIFOP(fd,28)) + 28)*sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
+	// Prevent hacked packets like missing null terminator or wrong len specification. [Lance]
+	speclen = (unsigned int)RFIFOW(fd,2);
+	scanlen = strlen((const char*)RFIFOP(fd,28)) + 28;
+
+	if(scanlen != speclen){
+		ShowWarning("Hack on Whisper: %s (AID: %d)!\n", sd->status.name, sd->bl.id);
+		clif_GM_kick(sd,sd,0);
+		return;
+	}
+
+	gm_command = (char*)aMallocA(speclen * sizeof(char)); // 24+3+(RFIFOW(fd,2)-28)+1 or 24+3+(strlen(RFIFOP(fd,28))+1 (size can be wrong with hacker)
 
 	sprintf(gm_command, "%s : %s", sd->status.name, RFIFOP(fd,28));
 	if ((is_charcommand(fd, sd, gm_command) != CharCommand_None) ||
