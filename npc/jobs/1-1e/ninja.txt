@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Legionaire
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN that supports Ninjas
 //===== Description: ========================================= 
@@ -17,7 +17,7 @@
 //============================================================ 
 
 
-que_ng.gat,30,65,3	script	Cool Kid	730,{
+que_ng.gat,30,65,3	script	Cool Kid#nq	730,{
 	set @npcname$,"[Cool Kid]";
 	if(Class == Job_Novice && JobLevel > 9){
 		switch(NINJ_Q){

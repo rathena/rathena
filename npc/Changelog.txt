@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/17
+	* Added official kRo&idRO Skill Reset Event, thanks to $ephiroth [Lupus]
 11/16
 	* Fixed wrong label name in adoption NPC [KarLaeda]
 	* Added official Ninja Job quest! Thanks to Legionaire for translation [Lupus]

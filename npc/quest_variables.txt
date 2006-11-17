@@ -74,6 +74,11 @@ Info:		Lighthalzen. Cube Room Quest (Pass to Bio-Lab)
 How to set: 	set MISC_QUEST,MISC_QUEST | 512;
 How to check: 	if(MISC_QUEST & 512){}
 
+Quest: 		Reset Skills Event
+Info:		Yuno, Hypnotist Teacher
+How to set: 	set MISC_QUEST,MISC_QUEST | 1024;
+How to check: 	if(MISC_QUEST & 1024){}
+
 --------------------------------------------------------------
 Variable: MISC_QUEST2
 
