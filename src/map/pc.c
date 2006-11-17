@@ -694,9 +694,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (map_charid2nick(sd->status.char_id) == NULL)
 		map_addchariddb(sd->status.char_id, sd->status.name);
 
-	// Notify everyone that this char logged in [Skotlex].
-	clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
-	
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
 	sd->die_counter=-1;
 	//Until the reg values arrive, set them to not require trigger...

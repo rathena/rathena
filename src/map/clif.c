@@ -8202,8 +8202,9 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		if ((old_sd = map_id2sd(account_id)) != NULL)
 		{	// if same account already connected, we disconnect the 2 sessions
 			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
-			if (old_sd->state.finalsave)
-				; //Ack has not arrived yet from char-server, be patient!
+			if (old_sd->state.finalsave || !old_sd->state.auth)
+				; //Previous player is not done loading.
+				//Or he has quit, but is not done saving on the charserver.
 			else if (old_sd->fd)
 				clif_authfail_fd(old_sd->fd, 2); // same id
 			else 
@@ -8386,6 +8387,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
 			add_timer(gettick()+1000,clif_nighttimer,sd->bl.id,0);
+
+		// Notify everyone that this char logged in [Skotlex].
+		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);

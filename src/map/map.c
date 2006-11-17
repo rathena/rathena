@@ -290,7 +290,7 @@ int map_freeblock_unlock_sub(char *file, int lineno)
 	if ((--block_free_lock) == 0) {
 		int i;
 		for (i = 0; i < block_free_count; i++)
-		{	//Directly calling aFree shouldn't be a leak, as Free remembers the size the original pointed to memory was allocated with? [Skotlex]
+		{
 //			aFree(block_free[i]);
 //			_mfree(block_free[i], file, lineno, __func__);
 			_mfree(block_free[i], file, ((block_free[i]?block_free[i]->type:0)*100000)+lineno, __func__);
@@ -300,7 +300,7 @@ int map_freeblock_unlock_sub(char *file, int lineno)
 	} else if (block_free_lock < 0) {
 		if (battle_config.error_log)
 			ShowError("map_freeblock_unlock: lock count < 0 !\n");
-		block_free_lock = 0; // 次回以降のロックに支障が出てくるのでリセット
+		block_free_lock = 0;
 	}
 
 	return block_free_lock;
@@ -1660,8 +1660,12 @@ void map_deliddb(struct block_list *bl) {
  */
 int map_quit(struct map_session_data *sd) {
 
-	//nullpo_retr(0, sd); //Utterly innecessary, all invokations to this function already have an SD non-null check.
-	//Learn to use proper coding and stop relying on nullpo_'s for safety :P [Skotlex]
+	if(!sd->state.auth) { //Removing a player that hasn't even finished loading
+		idb_remove(pc_db,sd->status.account_id);
+		idb_remove(charid_db,sd->status.char_id);
+		idb_remove(id_db,sd->bl.id);
+		return 0;
+	}
 	if(!sd->state.waitingdisconnect) {
 		if (sd->npc_timer_id != -1) //Cancel the event timer.
 			npc_timerevent_quit(sd);
