@@ -35,6 +35,9 @@
 			AI_ACTION_TYPE_ATTACK; // Define engine callback routines.
 		setmobdata .mob_id[getarg(0)], 26, 1; // Prevents random walking.
 		setmobdata .mob_id[getarg(0)], 10, 1; // Enable AI mode 1.
+		getmobdata .ai_action[getarg(0)], .@temp;
+		set .@temp[9], .@temp[9]^(0x400&.@temp[9]); // Check and remove MD_CHANGECHASE mode flag.
+		setmobdata .mob_id[getarg(0)], 9, .@temp[9];
 		return;
 	}
 
