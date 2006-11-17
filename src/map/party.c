@@ -277,14 +277,17 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	for(i=0;i<MAX_PARTY;i++){
 		if(p->party.member[i].account_id == 0) //Room for a new member.
 			flag = 1;
-		if(p->party.member[i].account_id==tsd->status.account_id &&
-			p->party.member[i].char_id==tsd->status.char_id){
-			clif_party_inviteack(sd,tsd->status.name,0);
+	/* By default Aegis BLOCKS more than one char from the same account on a party.
+	 * But eA does support it... so this check is left commented.
+		if(p->party.member[i].account_id==tsd->status.account_id)
+		{
+			clif_party_inviteack(sd,tsd->status.name,4);
 			return 0;
 		}
+	*/
 	}
 	if (!flag) { //Full party.
-		clif_party_inviteack(sd,tsd->status.name,2);
+		clif_party_inviteack(sd,tsd->status.name,3);
 		return 0;
 	}
 		
@@ -348,7 +351,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 
 	sd2=map_id2sd(sd->party_invite_account);
 	if (sd2)
-		clif_party_inviteack(sd2,sd->status.name,flag?2:0);
+		clif_party_inviteack(sd2,sd->status.name,flag?2:1);
 	return 0;
 }
 

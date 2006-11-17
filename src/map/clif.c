@@ -5965,7 +5965,12 @@ int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 }
 
 /*==========================================
- * パーティ勧誘結果
+ * Party invitation result. Flag values are:
+ * 0 -> char is already in a party
+ * 1 -> party invite was rejected
+ * 2 -> party invite was accepted
+ * 3 -> party is full
+ * 4 -> char of the same account already joined the party
  *------------------------------------------
  */
 int clif_party_inviteack(struct map_session_data *sd,char *nick,int flag)

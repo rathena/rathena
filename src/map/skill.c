@@ -8344,6 +8344,10 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		zeny = 0; //Zeny is reduced on skill_attack.
 		break;
+	case PF_HPCONVERSION:
+		if (status->sp == status->max_sp)
+			return 0; //Unusable when at full SP.
+		break;
 	case AM_CALLHOMUN: //Can't summon if a hom is already out
 		if (sd->status.hom_id && sd->hd && !sd->hd->homunculus.vaporize) {
 			clif_skill_fail(sd,skill,0,0);
@@ -8365,10 +8369,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
-		break;
-	case PF_HPCONVERSION:
-		if (status->sp == status->max_sp)
-			return 0; //Unusable when at full SP.
 		break;
 	}
 

@@ -3222,8 +3222,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
 		return 0;
 	
-	malloc_set(&tmp_item,0,sizeof(tmp_item));
 	itemid = md->db->dropitem[i].nameid;
+	malloc_set(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
