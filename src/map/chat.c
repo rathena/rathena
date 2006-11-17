@@ -257,6 +257,8 @@ int chat_kickchat(struct map_session_data *sd,char *kickusername)
 
 	cd = (struct chat_data *)map_id2bl(sd->chatID);
 	
+	if (!cd) return -1;
+
 	for(i = 0; i < cd->users; i++) {
 		if (strcmp(cd->usersd[i]->status.name, kickusername) == 0) {
 			if (battle_config.gm_kick_chat && pc_isGM(cd->usersd[i]) >= battle_config.gm_kick_chat)
