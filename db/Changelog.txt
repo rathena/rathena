@@ -20,6 +20,7 @@
 
 ========================
 11/17
+	* Updated remaining X.2 mob stats [Playtester]
 	* Updated Bio Lab and Juperos mob stats [Playtester]
 	* Fixed some sprite mob names [Playtester]
 11/16
