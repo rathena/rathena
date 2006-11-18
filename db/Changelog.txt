@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/18
+	* Official skills for Detale and Thanatos [Playtester]
+	- pm me if you want to help converting the mob skills
 11/17
 	* Updated remaining X.2 mob stats [Playtester]
 	* Updated Bio Lab and Juperos mob stats [Playtester]
