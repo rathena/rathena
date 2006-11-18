@@ -9068,7 +9068,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 
 	// Prevent hacked packets like missing null terminator or wrong len specification. [Lance]
 	speclen = (unsigned int)RFIFOW(fd,2);
-	scanlen = strlen((const char*)RFIFOP(fd,28)) + 28;
+	scanlen = strlen((const char*)RFIFOP(fd,28)) + 29;
 
 	if(scanlen != speclen){
 		ShowWarning("Hack on Whisper: %s (AID: %d)!\n", sd->status.name, sd->bl.id);
