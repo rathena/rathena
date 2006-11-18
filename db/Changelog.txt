@@ -20,6 +20,7 @@
 
 ========================
 11/18
+	* Updated X.1 mob stats [Playtester]
 	* Official skills for Detale and Thanatos [Playtester]
 	- pm me if you want to help converting the mob skills
 11/17
