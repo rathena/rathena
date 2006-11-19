@@ -213,6 +213,8 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 				mes "you'll figure something out.";
 				set Shinokas_Quest,7;
 				close;
+			default:
+				end;
 			}
 		}
 	}
@@ -341,6 +343,8 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 			if(@shinqst2)set @shinqst2,0;
 			next;
 			break;
+		default:
+			end;
 		}
 	}
 	
@@ -590,11 +594,14 @@ einbroch.gat,51,52,1	script	lab_warp	45,2,2{
 			mes "the security system";
 			mes "will initiate lockout.";
 			close;
+		case 255:
 		case 3: //cancel
 			mes "[Security System]";
 			mes "You have canceled";
 			mes "the ID security check.";
 			close;
+		default:
+			end;
 	}
 	//ID check:
 	mes "[Security System]";
@@ -763,7 +770,7 @@ ein_in01.gat,254,35,1	script	Scientist	749,{
 	mes "..............";
 	mes "*Grumble grumble*";
 	next;
-	if(select("What's wrong?:Catch you later.")==2){
+	if(select("What's wrong?:Catch you later.")!=1){
 		 mes "[Scientist]";
 		 mes "Right.";
 		 mes "Yeah.";
@@ -942,7 +949,7 @@ L_Apples:
 	mes "Hahaha! Th-thank you~";
 	mes "^111111*Hic-hic-hiccup!*^000000";
 	next;
-	if(select("So what was that about Ymir's Heart?:Hehe, you're welcome.")==2){
+	if(select("So what was that about Ymir's Heart?:Hehe, you're welcome.")!=1){
 		 mes "[Drunken Man]";
 		 mes "Hahahaha!";
 		 mes "You're great!";

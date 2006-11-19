@@ -136,11 +136,13 @@ L_MainMenu:
 			mes "[Monster Info]";
 			display_info .@tmp;
 			next;
-            goto L_MainMenu;
+            		goto L_MainMenu;
 			break;
 		case 4: // Actions
 			goto L_AttackMenu;
 			break;
+		default:
+			end;
 	}
 
 L_AttackMenu:
@@ -193,6 +195,8 @@ L_AttackMenu:
 		case 9:
 			next;
 			goto L_MainMenu;
+		default:
+			end;
 	}
 	goto L_AttackMenu;
 }

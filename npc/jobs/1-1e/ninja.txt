@@ -373,6 +373,8 @@ que_ng.gat,30,65,3	script	Cool Kid#nq	730,{
 				mes "You may leave now.";
 				close;
 			}
+			if(@menu > 2)
+				end;
 			mes "["+strcharinfo(0)+"]";
 			mes "Mm... Ok then.";
 			next;
@@ -531,6 +533,8 @@ einbroch.gat,184,194,3	script	Exceptional Man	881,{
 			mes "tell me...";
 			close;
 		}else{
+			if(@menu > 2)
+				end;
 			mes @npcname$;
 			mes "Mm Ok.";
 			mes "I came here";
@@ -699,7 +703,7 @@ einbroch.gat,184,194,3	script	Exceptional Man	881,{
 		mes "If you want";
 		mes "I'll take you back to Amatsu.";
 		next;
-		if(select("No thanks.:Sure.") == 1){
+		if(select("No thanks.:Sure.") != 2){
 			mes @npcname$;
 			mes "Mm, ok then.";
 			mes "The decision is yours to make.";

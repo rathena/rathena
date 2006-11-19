@@ -78,10 +78,17 @@ prontera.gat,153,193,6	script	Job Master	123,{
 							if(Class == Job_Novice_High) goto L_noReq;
 							set @target_job, @menu + 15;
 							break;
-						default:
+						case 1:
+						case 2:
+						case 3:
+						case 4:
+						case 5:
+						case 6:						
 							set @target_job, @menu;
 							if(Class == Job_Novice_High) set @target_job, @target_job + 4001;
 							break;
+						default:
+							end;
 					}
 			}
 			mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
@@ -149,6 +156,8 @@ prontera.gat,153,193,6	script	Job Master	123,{
 					}
 					mes "Welcome, please select the job you wish to change into";
 					set @target_job, @job_opt[select(callfunc("getJobName",@job_opt[0]), callfunc("getJobName",@job_opt[1]))-1];
+					if(@menu < 1 || @menu > 2)
+						end;
 					if(Class > Job_Novice_High && Class < Job_Lord_Knight) set @target_job, @target_job + 4001;
 				}
 				mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
