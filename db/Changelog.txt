@@ -19,6 +19,11 @@
 	-----
 
 ========================
+11/19
+	* Official skills for Abyss Lake mobs [Playtester]
+	- G_Acidus, G_Ferus and Green Iguana don't have skills
+	- someone should test if all skills are working
+	- Green Iguana is now a looter
 11/18
 	* Official skills for Bacsojin and Orc Baby [Playtester]
 	- yes Bacsojin's skills are interuptable despite MVP status
