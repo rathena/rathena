@@ -4127,7 +4127,7 @@ int buildin_close2(struct script_state *st)
 int buildin_menu(struct script_state *st)
 {
 	char *buf;
-	int len,i;
+	int len,i, max = 1;
 	struct map_session_data *sd = script_rid2sd(st);
 
 	nullpo_retr(0, sd);
@@ -4154,6 +4154,11 @@ int buildin_menu(struct script_state *st)
 				strcat(buf,":");
 			}
 		}
+		for(i=0; (unsigned int)i < strlen(buf); i++){
+			if(buf[i] == ':')
+				max++;
+		}
+		sd->max_menu = max;
 		clif_scriptmenu(script_rid2sd(st),st->oid,buf);
 		aFree(buf);
 	} else if(sd->npc_menu==0xff){	// cansel
@@ -10278,7 +10283,7 @@ int buildin_jump_zero(struct script_state *st) {
 int buildin_select(struct script_state *st)
 {
 	char *buf;
-	int len,i;
+	int len,i,max = 1;
 	struct map_session_data *sd;
 
 	sd=script_rid2sd(st);
@@ -10296,6 +10301,11 @@ int buildin_select(struct script_state *st)
 			strcat(buf,st->stack->stack_data[i].u.str);
 			strcat(buf,":");
 		}
+		for(i=0; (unsigned int)i < strlen(buf); i++){
+			if(buf[i] == ':')
+				max++;
+		}
+		sd->max_menu = max;
 		clif_scriptmenu(script_rid2sd(st),st->oid,buf);
 		aFree(buf);
 	} /*else if(sd->npc_menu==0xff){	// Cancel will be parsed since this is select() [Lance]

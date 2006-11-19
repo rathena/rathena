@@ -10059,10 +10059,17 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd) {
  */
 void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 {
+	unsigned char select;
 	RFIFOHEAD(fd);
 
-	sd->npc_menu=RFIFOB(fd,6);
-	npc_scriptcont(sd,RFIFOL(fd,2));
+	select = RFIFOB(fd,6);
+	if((select > sd->max_menu && select != 0xff) || !select){
+		ShowWarning("Hack on NPC Select Menu: %s (AID: %d)!\n",sd->status.name,sd->bl.id);
+		clif_GM_kick(sd,sd,0);
+	} else {
+		sd->npc_menu=select;
+		npc_scriptcont(sd,RFIFOL(fd,2));
+	}
 }
 
 /*==========================================
