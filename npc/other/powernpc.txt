@@ -110,6 +110,7 @@ gonryun.gat,180,118,4	script	Iron man#gnp	85,{
 			mes "something new. Wanna try??";
 			break;
 		case 3:
+		case 255:
 			mes "[Songmoodoo]";
 			mes "I guess not..";
 			mes "....";
@@ -164,7 +165,7 @@ gon_test.gat,50,14,4	script	Administrator#gnp	780,{
 	mes "Remember, you have to pay";
 	mes "500z to fight.";
 	next;
-	if (select("Yes, let me fight!:One moment, please.") == 2) {
+	if (select("Yes, let me fight!:One moment, please.") != 1) {
 		mes "[Administrator]";
 		mes "Ok, see you later.";
 		close;
@@ -199,11 +200,15 @@ gon_test.gat,42,89,4	script	Summoner#gnp	774,{
 	mes "Which monster would you recall?";
 	next;
 	set @gnpGroup,select("Group 1:Group 2:Group 3:Group 4:Group 5:Group 6:Group 7:Group 8:Group 9:Group 10:Group 11");
+	if(@gnpGroup > 11 || @gnpGroup < 1)
+		end;
 	set @gnpGroupMob$,.gnpMobsName$[(@gnpGroup-1)*6];
 	for (set @i,1; @i < 6; set @i, @i+1) {
 		set @gnpGroupMob$, @gnpGroupMob$ + ":" + .gnpMobsName$[(@gnpGroup-1)*6 + @i];
 	}
 	set @gnpMob,select(@gnpGroupMob$);
+	if(@gnpMob > 6 || @gnpMob < 1)
+		end;
 	mes "[SongYeunWoo]";
 	mes "Let the fight begin!";
 	close2;
@@ -305,6 +310,7 @@ gon_test.gat,46,14,3	script	Guide of field of fight#gnp	770,{
 		warp "gonryun.gat",177,112;
 		end;
 	case 5:
+	case 255:
 		mes "[SongHeeYeon]";
 		mes "........";
 		mes "Good bye..";

@@ -134,6 +134,8 @@ function	script	F_NMerch	{
 		mes "Hah, no problem.";
 		mes "Bah!";
 		close;
+	case 255:
+		end;
 	}
 }
 

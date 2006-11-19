@@ -856,6 +856,7 @@ function	script	applegamble	{
 	mes "in a friendly game of Dice?";
 	next;
 	switch(select("Play Dice Game:Learn Dice Game Rules:Cancel")){
+	case 255:
 	case 3:
 		mes "["+getarg(0)+"]";
 		mes "I'm up for a game of";
@@ -937,7 +938,7 @@ L_Input:
 	mes "betting ^FF0000"+@amount+"^000000 Apples.";
 	mes "Is that right?";
 	next;
-	if(select("Yes:No")==2){
+	if(select("Yes:No")==2 || @menu == 255){
 		mes "["+getarg(0)+"]";
 		mes "Mm, made a mistake?";
 		mes "Alright, please enter the";
@@ -1043,6 +1044,9 @@ L_Input:
 			mes "luck next time.";
 		}
 		close;
+	} else {
+		if(@menu == 255)
+			end;
 	}
 	mes "^0000FF*Rolling and rumbling*";
 	set @player3,rand(1,6);

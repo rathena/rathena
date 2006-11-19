@@ -824,17 +824,13 @@ function	script	F_DTS_Warp	{
 	next;
 	switch(select(@dtswarp$[0],@dtswarp$[1],@dtswarp$[2],@dtswarp$[3])){
 		case 1:
-			set @num, 0;
-			break;
 		case 2:
-			set @num, 1;
-			break;
 		case 3:
-			set @num, 2;
-			break;
 		case 4:
-			set @num, 3;
+			set @num, @menu - 1;
 			break;
+		default:
+			end;
 	}
 	Lwarp:
 		if (@dtswarp$[@num] == "Cancel") goto Lcancel;

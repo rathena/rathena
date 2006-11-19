@@ -124,6 +124,8 @@ comodo.gat,219,160,3	script	Kachua	91,{
 		set @item,512;
 		switch( select( "Weapon", "Armor", "Garment", "Helmet", "Shoes", "Shield" ) )
 		{
+			case 255:
+				end;
 										case 1: // Weapons
 											set @gamble,rand(1,1000);
 											if ((@gamble > 920) && (@gamble < 931))

@@ -67,6 +67,7 @@ prontera.gat,146,92,3	script	Cellerb	58,{
 		emotion e_thx;
 		close;
 
+	case 255:
 	case 2:	
 		mes @npcname$;
 		mes "Oh well, maybe you will participate in tommorow's quest.";

@@ -239,6 +239,7 @@ gonryun.gat,237,226,3	script	YunKyoHam#gn	776,{
 			mes "My curse shall be on his head!!!";
 			close;
 		}
+		if(@menu == 255) end;
 		mes "[YunKyoHam]";
 		mes "ohoh! Thank you!";
 		mes "Take these potions.";
@@ -500,6 +501,8 @@ gonryun.gat,163,60,4	script	Gonryun Guide	780,{
 		mes "Enjoy your trip in";
 		mes "lovely Gonryun!";
 		break;
+	case 255:
+		end;
 	}
 	close;
 }

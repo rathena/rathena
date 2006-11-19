@@ -38,6 +38,7 @@ switch(select("10 Poison Kunais:10 Icycle Kunais:10 Rough Wind Kunais:10 Black S
 		callfunc "Kunai_Trade",13254,1,7521,2,13258;
 		goto L_Bye;
 	case 6:
+	case 255:
 		goto L_Bye;
 	}
 L_Bye:
@@ -90,6 +91,7 @@ function	script	Kunai_Trade	{
 			next;
 			return;
 		case 2:
+		case 255:
 			return;
 		}
 L_Return:
