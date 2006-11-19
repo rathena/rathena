@@ -456,7 +456,8 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_zone02.gat",28,178;
 				end;
 			}
-		default: emotion e_swt2;
+		default:
+			emotion e_swt2;
 			close;
 		}
 	}
@@ -492,7 +493,8 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_zone02.gat",28,178;
 				end;
 			}
-		default:emotion e_swt2;
+		default:
+			emotion e_swt2;
 			close;
 		}
 	}
