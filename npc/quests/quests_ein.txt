@@ -18,6 +18,7 @@
 //= 1.4.1 Massive bugfix. Fixed Pollution exploit [Lupus]
 //= 1.4.2 Fixed Khowropher bug [Lupus]
 //= 1.5 Fixed double levelup bug [Lupus]
+//= 1.5.1 Fixed exploit [KarLaeda]
 //============================================================ 
 
 
@@ -1057,7 +1058,7 @@ einbech.gat,57,210,4	script	Young Man#04	854,{
 }
 
 einbech.gat,165,105,7	script	Buender Hikeman	847,{
-	if(Shinokas_Quest == 9) goto L_P2;
+	if(Shinokas_Quest >= 9) goto L_P2;
 	if(Shinokas_Quest == 3)goto L_BEST;
 	if(Shinokas_Quest == 2)goto L_BASTARD;
 	mes "[Buender Hikeman]";
