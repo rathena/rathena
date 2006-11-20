@@ -20,6 +20,9 @@
 
 ========================
 11/20
+	* Official skill for Ancient Mimic, Death Word and Angels [Playtester]
+	- also made NPC_DEFENDER self targeted
+	- Shelter now has angry mode
 	* The max level of NPC_SPLASHATTACK is now 1. [Skotlex]
 	* Flywing and Butterfly Wing will now use the teleport skill [Playtester]
 	* Official skills for Breeze and Plasma [Playtester]

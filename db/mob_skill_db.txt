@@ -1625,11 +1625,11 @@
 1374,Incubus@NPC_MENTALBREAKER,attack,159,3,500,800,5000,no,target,always,0,,,,,,14
 1374,Incubus@NPC_MENTALBREAKER,chase,159,3,500,800,5000,no,target,always,0,,,,,,14
 1375,The Paper@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,6
-1375,The Paper@NPC_DEFENDER,attack,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
-1375,The Paper@NPC_DEFENDER,chase,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
+1375,The Paper@NPC_DEFENDER,attack,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
+1375,The Paper@NPC_DEFENDER,chase,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
 1375,The Paper@NPC_COMBOATTACK,angry,171,2,500,700,5000,no,target,always,0,,,,,,6
-1375,The Paper@NPC_DEFENDER,angry,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
-1375,The Paper@NPC_DEFENDER,follow,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
+1375,The Paper@NPC_DEFENDER,angry,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
+1375,The Paper@NPC_DEFENDER,follow,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
 1376,Harpy@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
 1376,Harpy@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1376,Harpy@NPC_SILENCEATTACK,attack,178,5,500,700,5000,no,target,always,0,,,,,,2
@@ -1715,14 +1715,14 @@
 1386,Sleeper@AS_CLOAKING,attack,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,idle,135,1,100,200,5000,yes,self,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,chase,135,1,2000,200,5000,yes,self,always,0,,,,,,
-1386,Sleeper@NPC_DEFENDER,attack,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
-1386,Sleeper@NPC_DEFENDER,chase,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
+1386,Sleeper@NPC_DEFENDER,attack,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
+1386,Sleeper@NPC_DEFENDER,chase,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
 1386,Sleeper@NPC_SLEEPATTACK,attack,182,5,500,0,5000,yes,target,always,0,,,,,,29
 1386,Sleeper@TF_SPRINKLESAND,attack,149,1,500,0,5000,yes,target,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,angry,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,follow,135,1,2000,200,5000,yes,self,always,0,,,,,,
-1386,Sleeper@NPC_DEFENDER,angry,205,1,500,0,5000,yes,target,always,0,,,,,,
-1386,Sleeper@NPC_DEFENDER,follow,205,1,500,0,5000,yes,target,always,0,,,,,,
+1386,Sleeper@NPC_DEFENDER,angry,205,1,500,0,5000,yes,self,always,0,,,,,,
+1386,Sleeper@NPC_DEFENDER,follow,205,1,500,0,5000,yes,self,always,0,,,,,,
 1386,Sleeper@NPC_SLEEPATTACK,angry,182,5,500,0,5000,yes,target,always,0,,,,,,
 1386,Sleeper@TF_SPRINKLESAND,angry,149,1,500,0,5000,yes,target,always,0,,,,,,
 1387,Gig@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
@@ -3345,7 +3345,7 @@
 1688,Lady Tany@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6
 1688,Lady Tany@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,
 1688,Lady Tany@NPC_STUNATTACK,attack,179,5,500,0,5000,no,target,always,0,,,,,,
-1688,Lady Tany@NPC_DEFENDER,attack,205,1,500,0,30000,yes,target,longrangeattacked,,,,,,,29
+1688,Lady Tany@NPC_DEFENDER,attack,205,1,500,0,30000,yes,self,longrangeattacked,,,,,,,29
 1688,Lady Tany@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
 1688,Lady Tany@NPC_SUMMONSLAVE,attack,196,5,10000,2000,5000,no,self,slavele,2,1691,,,,,
 1688,Lady Tany@NPC_SUMMONSLAVE,idle,196,5,10000,2000,5000,no,self,slavele,2,1691,,,,,
@@ -3368,8 +3368,8 @@
 1691,Kraben@NPC_STUNATTACK,attack,179,1,500,0,5000,no,target,always,0,,,,,,6
 
 //skills based on info from official servers
-1692,Breeze@NPC_DEFENDER,attack,205,1,1000,0,5000,yes,target,longrangeattacked,,,,,,,29
-1692,Breeze@NPC_DEFENDER,chase,205,1,500,0,5000,yes,target,longrangeattacked,,,,,,,29
+1692,Breeze@NPC_DEFENDER,attack,205,1,1000,0,5000,yes,self,longrangeattacked,,,,,,,29
+1692,Breeze@NPC_DEFENDER,chase,205,1,500,0,5000,yes,self,longrangeattacked,,,,,,,29
 1692,Breeze@NPC_CRITICALSLASH,attack,170,1,1000,500,5000,no,target,always,0,,,,,,6
 1692,Breeze@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,6
 1692,Breeze@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6
@@ -3408,48 +3408,50 @@
 1697,Plasma(Blue)@NPC_WATERATTACK,attack,184,3,1000,0,5000,yes,target,always,0,,,,,,21
 
 // Thanatos Tower Mobs
-1698,Deathword@NPC_SPLASHATTACK,angry,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
-1698,Deathword@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
+1698,Deathword@NPC_SPLASHATTACK,attack,174,1,1000,0,5000,yes,target,attackpcgt,2,,,,,,
+1698,Deathword@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2
+1698,Deathword@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,36
 1698,Deathword@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
-1698,Deathword@NPC_BLOODDRAIN,angry,199,1,500,0,5000,yes,target,always,0,,,,,,
-1698,Deathword@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
-1698,Deathword@NPC_PIERCINGATT,angry,158,3,500,0,5000,yes,target,always,0,,,,,,
-1698,Deathword@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,
-1699,Ancient Mimic@CR_AUTOGUARD,attack,249,2,500,0,300000,yes,self,always,0,,,,,,
-1699,Ancient Mimic@CR_AUTOGUARD,chase,249,2,2000,0,300000,yes,self,longrangeattacked,0,,,,,,
-1699,Ancient Mimic@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
-1699,Ancient Mimic@NPC_BLOODDRAIN,chase,199,1,5000,0,5000,yes,target,always,0,,,,,,
-1700,Observation@RG_INTIMIDATE,attack,219,1,500,0,5000,yes,target,always,0,,,,,,
-1700,Observation@NPC_HOLYATTACK,attack,189,3,500,500,5000,no,target,always,0,,,,,,
-1700,Observation@MG_SAFETYWALL,attack,12,5,500,1000,20000,yes,self,always,0,,,,,,
-1700,Observation@WZ_JUPITEL,attack,84,3,500,1500,5000,yes,target,always,0,,,,,,
-1700,Observation@AL_HEAL,chase,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1700,Observation@AL_HEAL,attack,28,3,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1699,Ancient Mimic@CR_AUTOGUARD,chase,249,3,1000,0,250000,yes,self,longrangeattacked,,,,,,,
+1699,Ancient Mimic@CR_AUTOGUARD,attack,249,3,500,0,250000,yes,self,always,0,,,,,,
+1699,Ancient Mimic@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2
 1700,Observation@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1701,Shelter@NPC_DARKTHUNDER,attack,341,3,500,1500,5000,yes,target,always,0,,,,,,
-1701,Shelter@NPC_DARKTHUNDER,chase,341,3,500,1500,5000,yes,target,always,0,,,,,,
-1701,Shelter@NPC_DARKTHUNDER,follow,341,3,500,1500,5000,yes,target,always,0,,,,,,
-1701,Shelter@AS_VENOMDUST,attack,140,1,500,1500,5000,no,target,always,0,,,,,,
-1701,Shelter@NPC_DARKNESSATTACK,attack,190,3,500,0,5000,yes,target,always,0,,,,,,
-1701,Shelter@NPC_BLINDATTACK,angry,177,3,500,0,5000,yes,target,always,0,,,,,,
-1701,Shelter@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
+1700,Observation@NPC_HOLYATTACK,attack,189,2,500,0,5000,no,target,always,0,,,,,,18
+1700,Observation@NPC_HOLYATTACK,chase,189,2,500,0,5000,no,target,always,0,,,,,,18
+1700,Observation@RG_INTIMIDATE,attack,219,5,500,0,5000,yes,target,always,0,,,,,,
+1700,Observation@MG_SAFETYWALL,attack,12,5,1000,1000,5000,no,self,always,0,,,,,,18
+1700,Observation@WZ_JUPITEL,attack,84,4,1000,1000,5000,yes,target,always,0,,,,,,6
+1700,Observation@WZ_JUPITEL,chase,84,4,1000,1000,5000,yes,target,always,0,,,,,,6
+1700,Observation@AL_HEAL,chase,28,9,10000,500,5000,no,friend,friendhpltmaxrate,50,,,,,,18
+1700,Observation@AL_HEAL,attack,28,9,10000,500,5000,no,friend,friendhpltmaxrate,50,,,,,,18
+1700,Observation@AL_HEAL,chase,28,9,10000,500,5000,no,self,myhpltmaxrate,50,,,,,,18
+1700,Observation@AL_HEAL,attack,28,9,10000,500,5000,no,self,myhpltmaxrate,50,,,,,,18
 1701,Shelter@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1702,Retribution@NPC_GRANDDARKNESS,attack,339,1,2000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
-1702,Retribution@NPC_DARKCROSS,attack,338,5,2000,0,10000,no,target,always,0,,,,,,
-1702,Retribution@NPC_DARKNESSATTACK,attack,190,3,2000,0,10000,yes,target,always,0,,,,,,
-1702,Retribution@NPC_DARKBREATH,attack,202,2,2000,0,10000,no,target,always,0,,,,,,
-1702,Retribution@NPC_CURSEATTACK,attack,181,3,2000,0,10000,no,target,always,0,,,,,,
-1702,Retribution@NPC_CURSEATTACK,chase,181,3,2000,0,10000,no,target,always,0,,,,,,
-1702,Retribution@KN_BOWLINGBASH,attack,62,5,500,0,10000,no,target,always,0,,,,,,
+1701,Shelter@NPC_DARKNESSATTACK,chase,190,2,500,500,5000,no,target,always,0,,,,,,36
+1701,Shelter@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,36
+1701,Shelter@NPC_DARKTHUNDER,chase,341,4,500,1000,5000,yes,target,always,0,,,,,,
+1701,Shelter@NPC_DARKTHUNDER,attack,341,4,500,1000,5000,yes,target,always,0,,,,,,
+1701,Shelter@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1701,Shelter@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1701,Shelter@NPC_BLINDATTACK,angry,177,7,500,700,5000,yes,target,always,0,,,,,,29
+1701,Shelter@NPC_BLINDATTACK,follow,177,7,500,700,5000,yes,target,always,0,,,,,,29
 1702,Retribution@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1703,Solace@CR_GRANDCROSS,attack,254,1,2000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
-1703,Solace@PR_LEXAETERNA,attack,78,1,2000,0,10000,yes,target,always,0,,,,,,
-1703,Solace@PR_LEXAETERNA,chase,78,1,2000,0,10000,yes,target,always,0,,,,,,
-1703,Solace@PR_LEXDIVINA,attack,76,5,2000,0,10000,yes,target,always,0,,,,,,
-1703,Solace@PR_LEXDIVINA,chase,76,5,2000,0,10000,yes,target,always,0,,,,,,
-1703,Solace@MG_NAPALMBEAT,attack,11,10,2000,0,10000,no,target,always,0,,,,,,
-1703,Solace@MG_NAPALMBEAT,chase,11,10,2000,0,10000,no,target,always,0,,,,,,
+1702,Retribution@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,36
+1702,Retribution@NPC_GRANDDARKNESS,attack,339,1,500,700,5000,no,self,myhpltmaxrate,50,,,,,,
+1702,Retribution@NPC_DARKCROSS,attack,338,3,500,700,5000,no,target,always,0,,,,,,36
+1702,Retribution@KN_BOWLINGBASH,attack,62,7,500,0,10000,yes,target,always,0,,,,,,
+1702,Retribution@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
+1702,Retribution@NPC_DARKBREATH,attack,202,1,50,800,5000,no,target,always,0,,,,,,29
 1703,Solace@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1703,Solace@NPC_HOLYATTACK,attack,189,2,500,0,5000,no,target,always,0,,,,,,18
+1703,Solace@NPC_HOLYATTACK,chase,189,2,500,0,5000,no,target,always,0,,,,,,18
+1703,Solace@CR_GRANDCROSS,attack,254,1,1000,1500,5000,no,self,myhpltmaxrate,50,,,,,,
+1703,Solace@PR_LEXAETERNA,attack,78,1,500,0,5000,yes,target,always,0,,,,,,6
+1703,Solace@PR_LEXAETERNA,chase,78,1,500,0,5000,yes,target,always,0,,,,,,6
+1703,Solace@PR_LEXDIVINA,chase,76,10,500,0,5000,yes,target,always,0,,,,,,2
+1703,Solace@PR_LEXDIVINA,attack,76,10,500,0,5000,yes,target,always,0,,,,,,2
+1703,Solace@MG_NAPALMBEAT,attack,11,5,1000,0,5000,yes,target,always,0,,,,,,
+1703,Solace@MG_NAPALMBEAT,chase,11,5,1000,0,1000,yes,target,always,0,,,,,,
 1704,Thanatos Odium@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1704,Thanatos Odium@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,
 1704,Thanatos Odium@NPC_DARKNESSATTACK,attack,190,5,500,0,5000,yes,target,always,0,,,,,,
