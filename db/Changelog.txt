@@ -19,6 +19,9 @@
 	-----
 
 ========================
+11/20
+	* Official X.4 skills thanks to Tharis [Playtester]
+	- also set MVP skills to MVP skill level
 11/19
 	* Official skills for Abyss Lake mobs [Playtester]
 	- G_Acidus, G_Ferus and Green Iguana don't have skills
