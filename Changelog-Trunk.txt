@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/20
+	* You now can't use other skills while a skill-induced "window" is up
+	  (teleport, refining, etc). However, be warned that we aren't quite sure how
+	  the server will clear this out if you decide to hit cancel on the window,
+	  so skill-blockage is likely to happen (temporary solution: whenever you
+	  change maps or warp the state is reset server-side). [Skotlex]
 	* Fixed itemskill variable being cleared before parsing the skill, this
 	  causes auto-casted teleport to fail to skip the skill menu. It is now
 	  cleared on castend_pos/id directly. [Skotlex]

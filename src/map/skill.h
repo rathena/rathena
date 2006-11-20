@@ -157,6 +157,7 @@ int	skill_get_splash( int id , int lv );
 int	skill_get_hp( int id ,int lv );
 int	skill_get_mhp( int id ,int lv );
 int	skill_get_sp( int id ,int lv );
+int	skill_get_state(int id);
 int	skill_get_zeny( int id ,int lv );
 int	skill_get_num( int id ,int lv );
 int	skill_get_cast( int id ,int lv );

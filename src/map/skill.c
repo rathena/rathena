@@ -852,6 +852,9 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
 		return 0;  // gm's can do anything damn thing they want
 
+	if(sd->menuskill_id && skillid != sd->menuskill_id)
+		return 1; //Can't use skills while a menu is open.
+
 	// Check skill restrictions [Celest]
 	if(!map_flag_vs(m) && skill_get_nocast (skillid) & 1)
 		return 1;
@@ -8309,7 +8312,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
-		//Emergency Recall is handled on skill_notok
+		//Emergency Recall is handled on skillnotok
 		if (!agit_flag) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;

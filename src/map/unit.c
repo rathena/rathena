@@ -1620,6 +1620,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 			guild_reply_invite(sd,sd->guild_invite,0);
 		if(sd->guild_alliance>0)
 			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
+		if(sd->menuskill_id)
+			sd->menuskill_id = sd->menuskill_lv = 0;
 
 		pc_delinvincibletimer(sd);
 
