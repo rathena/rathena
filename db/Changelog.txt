@@ -20,6 +20,7 @@
 
 ========================
 11/20
+	* Official skills for Breeze and Plasma [Playtester]
 	* Official X.4 skills thanks to Tharis [Playtester]
 	- also set MVP skills to MVP skill level
 11/19
