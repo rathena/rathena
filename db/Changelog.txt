@@ -20,6 +20,7 @@
 
 ========================
 11/20
+	* Flywing and Butterfly Wing will now use the teleport skill [Playtester]
 	* Official skills for Breeze and Plasma [Playtester]
 	* Official X.4 skills thanks to Tharis [Playtester]
 	- also set MVP skills to MVP skill level
