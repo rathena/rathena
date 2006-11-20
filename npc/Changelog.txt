@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/20
+	* Fixed Sage guest [KarLaeda]
 	* Fixed exploit in Shinokas Quest [KarLaeda]
 11/17
 	* Added official kRo&idRO Skill Reset Event, thanks to $ephiroth [Lupus]

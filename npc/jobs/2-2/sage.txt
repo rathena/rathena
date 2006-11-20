@@ -22,6 +22,7 @@
 //= 1.7 Fixed tuition fee. Fixed some answers, names & typos, added missing labels [Lupus]
 //= 1.7a Moved JFunc back in the main file, fixed typos [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
+//= 2.0a Fixed double warp [KarLaeda] 
 //============================================================ 
 
 
@@ -1278,7 +1279,7 @@ L_Menu2_1:
 		mes "[Hermes]";
 		mes "Well, let's get started.";
 		mes "Do your best!";
-		next;
+		close2;
 		warp "job_sage",50,154;
 		end;
 	L_Menu2_2:
@@ -1298,9 +1299,7 @@ L_Menu2_3:
 		mes "[Hermes]";
 		mes "Well, let's get started.";
 		mes "Do your best!";
-		next;
-		warp "job_sage",50,154;
-		next;
+		close2;
 		warp "job_sage",50,154;
 		end;
 L_Menu3_1:
