@@ -10109,8 +10109,14 @@ int buildin_atcommand(struct script_state *st)
 	if (st->rid)
 		sd = script_rid2sd(st);
 
-	if (sd) atcommand_sub(sd->fd, sd, cmd, 99);
-	else { //Use a dummy character.
+	if (sd){
+		if(cmd[0] != '@'){
+			cmd += strlen(sd->status.name);
+			while(*cmd != '@' && cmd != 0)
+				cmd++;
+		}
+		atcommand_sub(sd->fd, sd, cmd, 99);
+	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
 		malloc_set(&dummy_sd, 0, sizeof(struct map_session_data));
@@ -10119,6 +10125,11 @@ int buildin_atcommand(struct script_state *st)
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+		}
+		if(cmd[0] != '@'){
+			cmd += strlen(dummy_sd.status.name);
+			while(*cmd != '@' && cmd != 0)
+				cmd++;
 		}
 		atcommand_sub(0, &dummy_sd, cmd, 99);
 	}
@@ -10136,8 +10147,14 @@ int buildin_charcommand(struct script_state *st)
 	if (st->rid)
 		sd = script_rid2sd(st);
 	
-	if (sd) charcommand_sub(sd->fd, sd, cmd,99);
-	else { //Use a dummy character.
+	if (sd){ 
+		if(cmd[0] != '#'){
+			cmd += strlen(sd->status.name);
+			while(*cmd != '#' && cmd != 0)
+				cmd++;
+		}
+		charcommand_sub(sd->fd, sd, cmd,99);
+	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
 		malloc_set(&dummy_sd, 0, sizeof(struct map_session_data));
@@ -10146,6 +10163,11 @@ int buildin_charcommand(struct script_state *st)
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+		}
+		if(cmd[0] != '#'){
+			cmd += strlen(dummy_sd.status.name);
+			while(*cmd != '#' && cmd != 0)
+				cmd++;
 		}
 		charcommand_sub(0, &dummy_sd, cmd, 99);
 	}
