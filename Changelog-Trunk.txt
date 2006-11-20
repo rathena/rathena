@@ -4,6 +4,19 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/20
+	* Implemented NPC_DEFENDER. Reduces ranged Physical+Misc damage by 80%
+	  [Skotlex]
+	* Improved the battle config reader so it accepts hexadecimal values.
+	  Updated the monster_ai description to make use of this [Skotlex]
+	* Added monster_ai&0x200. When set, mob skill delays are shared. That is,
+	  if the mob has several lines with the same skill, when the skill is used,
+	  the delay will be set to all of them, not just the one entry used.
+	  [Skotlex]
+	* Corrected NPC_BARRIER so it grants 100 def/mdef (and not just mdef)
+	  [Skotlex]
+	* Weapon ATK bonuses will now only apply to watk and NOT watk2 on players
+	  (on players watk2 is refine bonus) [Skotlex]
+	* Corrected NPC_KEEPING. it should give 90 def, not 100 [Skotlex]
 	* You now can't use other skills while a skill-induced "window" is up
 	  (teleport, refining, etc). However, be warned that we aren't quite sure how
 	  the server will clear this out if you decide to hit cancel on the window,

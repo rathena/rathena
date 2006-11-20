@@ -1,5 +1,10 @@
 Date	Added
 
+2006/11/20
+	* Added monster_ai&0x200 (monster.conf). When set, mob skill delays are
+	  shared. That is, if the mob has several lines with the same skill, when the
+	  skill is used, the delay will be set to all of them, not just the one entry
+	  used. [Skotlex]
 2006/11/07
 	* Added nosave mapflag for Guild Dungeons [KarLaeda]
 	* New Setting "stdout_with_ansisequence"

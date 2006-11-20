@@ -390,6 +390,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 				damage >>= 2; //75% reduction
 		}
 
+		if(sc->data[SC_ARMOR].timer != -1 &&
+			sc->data[SC_ARMOR].val3&flag &&
+			sc->data[SC_ARMOR].val4&flag)
+			//NPC_DEFENDER
+			damage -= damage*sc->data[SC_ARMOR].val2/100;
+
 		if(sc->data[SC_ENERGYCOAT].timer!=-1 && flag&BF_WEAPON){
 			struct status_data *status = status_get_status_data(bl);
 			int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
@@ -3463,7 +3469,7 @@ int battle_config_switch(const char *str) {
 		strncmpi(str, "non",3) == 0 ||
 		strncmpi(str, "nein",4) == 0)
 		return 0;
-	return atoi(str);
+	return (int)strtol(str,NULL,0);
 }
 
 static const struct battle_data_short {

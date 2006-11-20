@@ -20,6 +20,7 @@
 
 ========================
 11/20
+	* The max level of NPC_SPLASHATTACK is now 1. [Skotlex]
 	* Flywing and Butterfly Wing will now use the teleport skill [Playtester]
 	* Official skills for Breeze and Plasma [Playtester]
 	* Official X.4 skills thanks to Tharis [Playtester]

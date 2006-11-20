@@ -3537,17 +3537,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case AL_INCAGI:
-	case AL_BLESSING:
-	case PR_SLOWPOISON:
-	case PR_IMPOSITIO:
-	case PR_LEXAETERNA:
-	case PR_SUFFRAGIUM:
-	case PR_BENEDICTIO:
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-		break;
-
 	case CR_PROVIDENCE:
 		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
 			if ((dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER) {	
@@ -3682,6 +3671,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		break;
+
+	case AL_INCAGI:
+	case AL_BLESSING:
+	case PR_SLOWPOISON:
+	case PR_IMPOSITIO:
+	case PR_LEXAETERNA:
+	case PR_SUFFRAGIUM:
+	case PR_BENEDICTIO:
 	case LK_BERSERK:
 	case KN_AUTOCOUNTER:
 	case KN_TWOHANDQUICKEN:	
@@ -3722,6 +3719,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_KASUMIKIRI:
 	case NJ_UTSUSEMI:
 	case NJ_NEN:
+	case NPC_DEFENDER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -4837,8 +4835,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_REBIRTH:
-		//New rebirth System uses Kaizel lv1. [Skotlex]
-		sc_start(bl,type,100,1,skill_get_time(SL_KAIZEL,skilllv));
+		//New rebirth System uses Kaizel [Skotlex]
+		sc_start(bl,type,100,skilllv,skill_get_time(SL_KAIZEL,skilllv));
 		break;
 
 	case NPC_DARKBLESSING:
@@ -4934,10 +4932,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					skillid==NPC_EMOTION   ?md->db->skill[md->skillidx].val[2]:0,
 					skill_get_time(skillid, skilllv));
 		}
-		break;
-
-	case NPC_DEFENDER:
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 
 	case NPC_POWERUP:
@@ -5661,11 +5655,18 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		if(md) {
 			if(ud->skillid != NPC_EMOTION)//Set afterskill delay.
 				md->last_thinktime=tick + (tid==-1?md->status.adelay:md->status.amotion);
+			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
+				int i;
+				for (i = 0; i < md->db->maxskill; i++)
+					if (md->db->skill[i].skill_id == ud->skillid)
+						md->skilldelay[i]=tick;
+			} else
 			if(md->skillidx >= 0) {
 				md->skilldelay[md->skillidx]=tick;
 				if (md->db->skill[md->skillidx].emotion >= 0)
 					clif_emotion(src, md->db->skill[md->skillidx].emotion);
 			}
+
 		}
 
 		if(src != target && battle_config.skill_add_range &&
@@ -5844,6 +5845,12 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 
 		if(md) {
 			md->last_thinktime=tick + (tid==-1?md->status.adelay:md->status.amotion);
+			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
+				int i;
+				for (i = 0; i < md->db->maxskill; i++)
+					if (md->db->skill[i].skill_id == ud->skillid)
+						md->skilldelay[i]=tick;
+			} else
 			if(md->skillidx >= 0) {
 				md->skilldelay[md->skillidx]=tick;
 				if (md->db->skill[md->skillidx].emotion >= 0)
