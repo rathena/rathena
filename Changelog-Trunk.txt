@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/20
+	* Fixed itemskill variable being cleared before parsing the skill, this
+	  causes auto-casted teleport to fail to skip the skill menu. It is now
+	  cleared on castend_pos/id directly. [Skotlex]
+	* Skills with state 'move_enable' will now do a "walk path" check between
+	  target cell/object and caster instead of a "shoot path" check, this would
+	  fix skills like snap or charge from letting you "teleport" across pits.
+	  [Skotlex]
 	* Raised the amount of skills that can stack on a single cell before the
 	  "in-area/out-area" detection code breaks to 24 (from 8) [Skotlex]
 	* Fixed a crash in clif_SkillInfoBlock if the passed player already

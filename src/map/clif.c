@@ -9822,14 +9822,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
 		
-	if (sd->skillitem >= 0 && sd->skillitem == skillnum) {
+	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 		return;
 	}
 		
-	sd->skillitem = sd->skillitemlv = -1;
+	sd->skillitem = sd->skillitemlv = 0;
 	if (skillnum == MO_EXTREMITYFIST) {
 		if ((sd->sc.data[SC_COMBO].timer == -1 ||
 			(sd->sc.data[SC_COMBO].val1 != MO_COMBOFINISH &&
@@ -9918,12 +9918,12 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 	
 	if (sd->invincible_timer != -1)
 		pc_delinvincibletimer(sd);
-	if (sd->skillitem >= 0 && sd->skillitem == skillnum) {
+	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
 		unit_skilluse_pos(&sd->bl, x, y, skillnum, skilllv);
 	} else {
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 		if ((lv = pc_checkskill(sd, skillnum)) > 0) {
 			if (skilllv > lv)
 				skilllv = lv;

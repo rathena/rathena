@@ -596,8 +596,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.connect_new = 1;
 
 	sd->followtimer = -1; // [MouseJstr]
-	sd->skillitem = -1;
-	sd->skillitemlv = -1;
 	sd->invincible_timer = -1;
 	
 	sd->canuseitem_tick = tick;

@@ -5701,6 +5701,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		else
 			skill_castend_damage_id(src,target,ud->skillid,ud->skilllv,tick,0);
 
+		if (sd && sd->skillitem == ud->skillid) //Clear item skill data.
+			sd->skillitem = sd->skillitemlv = 0;
+
 		sc = status_get_sc(src);
 		if(sc && sc->count && sc->data[SC_MAGICPOWER].timer != -1 && ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL)
 			status_change_end(src,SC_MAGICPOWER,-1);		
@@ -5750,7 +5753,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	//You can't place a skill failed packet here because it would be
 	//sent in ALL cases, even cases where skill_check_condition fails
 	//which would lead to double 'skill failed' messages u.u [Skotlex]
-	if(sd) sd->skillitem = sd->skillitemlv = -1;
+	if(sd) sd->skillitem = sd->skillitemlv = 0;
 	else
 	if(md) md->skillidx = -1;
 	return 0;
@@ -5853,6 +5856,9 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
 
+		if (sd && sd->skillitem == ud->skillid) //Clear item skill data.
+			sd->skillitem = sd->skillitemlv = 0;
+
 		if (ud->skilltimer == -1) {
 			if (md) md->skillidx = -1;
 			else ud->skillid = 0; //Non mobs can't clear this one as it is used for skill condition 'afterskill'
@@ -5865,7 +5871,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 	ud->skillid = ud->skilllv = 0;
 	if(sd) {
 		clif_skill_fail(sd,ud->skillid,0,0);
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 	}
 	else if (hd && hd->master)
 		clif_skill_fail(hd->master, ud->skillid, 0, 0);
@@ -6244,7 +6250,6 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 
 	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow if a ground skill was not invoked. [Skotlex]
 		battle_consume_ammo(sd, skillid, skilllv);
-		
 	return 0;
 }
 
@@ -7843,7 +7848,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		pc_isGM(sd)>= battle_config.gm_skilluncond &&
 		sd->skillitem != skill)
 	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 		return 1;
 	}
 
@@ -7854,13 +7859,13 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	
 	if(pc_is90overweight(sd)) {
 		clif_skill_fail(sd,skill,9,0);
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 		return 0;
 	}
 
 	if (sd->state.abra_flag)
 	{
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 		if(type&1) sd->state.abra_flag = 0;
 		return 1;
 	}
@@ -7869,7 +7874,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		(skill == AM_PHARMACY || skill == AC_MAKINGARROW || skill == BS_REPAIRWEAPON ||
 		skill == AM_TWILIGHT1 || skill == AM_TWILIGHT2  || skill == AM_TWILIGHT3 
 	)) {
-		sd->skillitem = sd->skillitemlv = -1;
+		sd->skillitem = sd->skillitemlv = 0;
 		return 0;
 	}
 
@@ -7894,8 +7899,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			else
 				pc_delitem(sd,i,1,0);
 		}
-		if (type&1) //Casting finished
-			sd->skillitem = sd->skillitemlv = -1;
 		return 1;
 	}
 	// for the guild skills [celest]

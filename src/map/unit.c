@@ -880,10 +880,18 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 
 	//Check range when not using skill on yourself or is a combo-skill during attack
 	//(these are supposed to always have the same range as your attack)
-	if(src->id != target_id && (!temp || ud->attacktimer == -1) &&
-		!battle_check_range(src,target,skill_get_range2(src, skill_num,skill_lv)
-		+(skill_num==RG_CLOSECONFINE?0:1))) //Close confine is exploitable thanks to this extra range "feature" of the client. [Skotlex]
-		return 0;
+	if(src->id != target_id && (!temp || ud->attacktimer == -1))
+	{
+		if (skill_get_state(ud->skillid) == ST_MOVE_ENABLE)
+		{
+			if (!unit_can_reach_bl(src, target, skill_get_range2(src, skill_num,skill_lv)+1, 1, NULL, NULL))
+				return 0; //Walk-path check failed.
+		} else
+		if	(!battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv)
+			+(skill_num==RG_CLOSECONFINE?0:1)))
+			//Close confine is exploitable thanks to this extra range "feature" of the client. [Skotlex]
+			return 0; //Arrow-path check failed.
+	}
 
 	if (!temp) //Stop attack on non-combo skills [Skotlex]
 		unit_stop_attack(src);
@@ -1041,9 +1049,14 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	bl.m = src->m;
 	bl.x = skill_x;
 	bl.y = skill_y;
-	if(skill_num != TK_HIGHJUMP &&
-		!battle_check_range(src,&bl,skill_get_range2(src, skill_num,skill_lv)+1))
-		return 0;
+
+	if (skill_get_state(ud->skillid) == ST_MOVE_ENABLE)
+	{
+		if (!unit_can_reach_bl(src, &bl, skill_get_range2(src, skill_num,skill_lv)+1, 1, NULL, NULL))
+			return 0; //Walk-path check failed.
+	} else
+	if	(!battle_check_range(src,&bl,skill_get_range2(src, skill_num,skill_lv)+1))
+		return 0; //Arrow-path check failed.
 
 	unit_stop_attack(src);
 	ud->state.skillcastcancel = castcancel;
@@ -1837,7 +1850,6 @@ int unit_free(struct block_list *bl, int clrtype) {
 			intif_homunculus_requestdelete(hd->homunculus.hom_id);
 			if (sd) sd->status.hom_id = 0;
 		}
-		aFree(hd); // Remember to free it! [Lance]
 		if(sd) sd->hd = NULL;
 	}
 
