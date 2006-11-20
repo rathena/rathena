@@ -17,7 +17,6 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/graph.h"
-#include "../common/grfio.h"
 #include "../common/plugins.h"
 #include "../common/version.h"
 #include "../common/showmsg.h"
