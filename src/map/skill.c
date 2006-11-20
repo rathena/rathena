@@ -2129,7 +2129,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
  *------------------------------------------
  */
 static int skill_area_temp[8];
-static int skill_unit_temp[8];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
+static int skill_unit_temp[24];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
 static int skill_unit_index=0;	//Well, yeah... am too lazy to pass pointers around :X
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
 int skill_area_sub (struct block_list *bl, va_list ap)
@@ -10135,15 +10135,16 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 				if (flag&2)
 				{	//Clear skill ids we have stored in onout.
 					int i;
-					for(i=0; i<8 && skill_unit_temp[i]!=skill_id; i++);
-					if (i<8)
+					for(i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
+						skill_unit_temp[i]!=skill_id; i++);
+					if (i < (sizeof(skill_unit_temp)/sizeof(int)))
 						skill_unit_temp[i] = 0;
 				}
 			}
 			else
 			{
 				if (flag&2) { //Store this unit id.
-					if (skill_unit_index < 7)
+					if (skill_unit_index < (sizeof(skill_unit_temp)/sizeof(int)))
 						skill_unit_temp[skill_unit_index++] = skill_id;
 					else if (battle_config.error_log)
 						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
@@ -10164,8 +10165,9 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 		if (flag&2 && result)
 		{	//Clear skill ids we have stored in onout.
 			int i;
-			for(i=0; i<8 && skill_unit_temp[i]!=result; i++);
-			if (i<8)
+			for(i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
+				skill_unit_temp[i]!=result; i++);
+			if (i < (sizeof(skill_unit_temp)/sizeof(int)))
 				skill_unit_temp[i] = 0;
 		}
 	}
@@ -10173,7 +10175,7 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 	{
 		result = skill_unit_onout(unit,target,tick);
 		if (flag&2 && result) { //Store this unit id.
-			if (skill_unit_index < 7)
+			if (skill_unit_index < (sizeof(skill_unit_temp)/sizeof(int)))
 				skill_unit_temp[skill_unit_index++] = result;
 			else if (battle_config.error_log)
 				ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
@@ -10219,7 +10221,8 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 	if (flag&2 && flag&1)
 	{ //Onplace, check any skill units you have left.
 		int i;
-		for (i=0; i< 8 && skill_unit_temp[i]>0; i++)
+		for (i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
+			skill_unit_temp[i]; i++)
 			skill_unit_onleft(skill_unit_temp[i], bl, tick);
 	}
 

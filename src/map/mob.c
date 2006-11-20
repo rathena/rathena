@@ -2020,6 +2020,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 							drop_rate = battle_config.item_drop_adddrop_min;
 						else if (drop_rate > battle_config.item_drop_adddrop_max)
 							drop_rate = battle_config.item_drop_adddrop_max;
+						if (drop_rate > 10000) drop_rate = 10000;
 					}
 					else
 						//it's positive, then it goes as it is

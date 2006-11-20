@@ -4391,6 +4391,8 @@ int clif_skillinfoblock(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
+	if (!fd) return 0;
+
 	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
 	WFIFOW(fd,0)=0x10f;
 	for ( i = c = 0; i < MAX_SKILL; i++){
@@ -4416,7 +4418,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 	WFIFOW(fd,2)=len;
 	WFIFOSET(fd,len);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
