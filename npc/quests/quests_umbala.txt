@@ -695,8 +695,6 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 					set .@gain,992;
 				}
 				break;
-			default:
-				end;
 		}
 		if(.@need == 0) {
 			next;
@@ -835,8 +833,6 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 					set .@gain,992;
 				}
 				break;
-			default:
-				end;
 		}
 		next;
 		if(.@need == 0) {
@@ -916,13 +912,10 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		mes "good use.";
 		close;
 	case 3:
-	case 255:
 		mes "[Putsuchiritan]";
 		mes "If you don't wish my help at the moment,";
 		mes "that's fine.  When you do, please come";
 		mes "by again.";
 		close;
-	default:
-		end;
 	}
 }

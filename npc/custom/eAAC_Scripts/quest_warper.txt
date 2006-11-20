@@ -449,8 +449,6 @@ L_town:
 
 	set @TWMenu,select(@Tmenulist$[0],@Tmenulist$[1],@Tmenulist$[2],@Tmenulist$[3],@Tmenulist$[4],@Tmenulist$[5],@Tmenulist$[6],@Tmenulist$[7],@Tmenulist$[8],@Tmenulist$[9],@Tmenulist$[10],@Tmenulist$[11],@Tmenulist$[12],@Tmenulist$[13],@Tmenulist$[14],@Tmenulist$[15],@Tmenulist$[16],@Tmenulist$[17],@Tmenulist$[18],@Tmenulist$[19],@Tmenulist$[20],@Tmenulist$[21],@Tmenulist$[22],@Tmenulist$[23],@Tmenulist$[24]);
 
-	if(@TWMenu > 25 || @TWMenu < 1) end;
-
 	if (@Tmenuref[@TWMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 
 	if(Zeny<@pTprice[@Tmenuref[@TWMenu-1]]) callsub L_Short_on_zeny,0;
@@ -471,8 +469,6 @@ L_dungeon:
 
 	set @DWMenu,select(@Dmenulist$[0],@Dmenulist$[1],@Dmenulist$[2],@Dmenulist$[3],@Dmenulist$[4],@Dmenulist$[5],@Dmenulist$[6],@Dmenulist$[7],@Dmenulist$[8],@Dmenulist$[9],@Dmenulist$[10],@Dmenulist$[11],@Dmenulist$[12],@Dmenulist$[13],@Dmenulist$[14],@Dmenulist$[15],@Dmenulist$[16],@Dmenulist$[17],@Dmenulist$[18],@Dmenulist$[19],@Dmenulist$[20],@Dmenulist$[21],@Dmenulist$[22],@Dmenulist$[23],@Dmenulist$[24],@Dmenulist$[25],@Dmenulist$[26],@Dmenulist$[27],@Dmenulist$[28],@Dmenulist$[29],@Dmenulist$[30],@Dmenulist$[31],@Dmenulist$[32],@Dmenulist$[33],@Dmenulist$[34]);
 
-	if(@TWMenu > 35 || @TWMenu < 1) end;
-
 	if (@Dmenuref[@DWMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 	set @DwarpMenu, (@Dmenuref[@DWMenu-1]);
 	callfunc "QWS_DLarray";
@@ -483,8 +479,6 @@ L_dungeon:
 
 // Expected maximum is set to 18 items, if you have dungeons with more levels add more ",@DWLmenulist$[xx]"
 	set @DWLMenu,select(@DWLmenulist$[0], @DWLmenulist$[1], @DWLmenulist$[2], @DWLmenulist$[3], @DWLmenulist$[4], @DWLmenulist$[5], @DWLmenulist$[6], @DWLmenulist$[7], @DWLmenulist$[8], @DWLmenulist$[9], @DWLmenulist$[10], @DWLmenulist$[11], @DWLmenulist$[12], @DWLmenulist$[13], @DWLmenulist$[14], @DWLmenulist$[15], @DWLmenulist$[16], @DWLmenulist$[17]);
-
-	if(@TWMenu > 18 || @TWMenu < 1) end;
 
 	if (@DWLmenuref[@DWLMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 
@@ -532,7 +526,7 @@ PHeal:
 	if(getarg(1) == 1) mes ""+@SpPrice+" Zeny for "+@Sp+" skill points";
 	set @total, @HpPrice+@SpPrice;
 	mes "for a total of "+@total+" zeny";
-	if (select("Heal me","Let me see the choices again")!=1) goto L_heal_Part;
+	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
 	
 	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
 	if(getarg(1) == 1)set @SpPrice, (MaxSp-Sp)*$QW_HP_S_PRICE;
@@ -551,13 +545,13 @@ Zeny_Short_Both:
 	mes "[Warpra]";
 	mes "choose another option, you can afford both.";
 	mes "I can heal as much as you can afford too.";
-	if (select("OK","Exit") != 1) goto L_end;
+	if (select("OK","Exit") == 2) goto L_end;
 	goto PHeal;
 
 Zeny_short_HP:
 	mes "[Warpra]";
 	mes "do you want me to partly heal your HP ?";
-	if (select("Yes","No") != 1) goto L_end;
+	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
 	set @HpPrice, @Hp*$QW_HP_H_PRICE;
 	if (@Hp == 1) mes "your not worth the effort";
@@ -570,7 +564,7 @@ Zeny_short_HP:
 Zeny_short_SP:
 	mes "[Warpra]";
 	mes "do you want me to partly heal your SP ?";
-	if (select("Yes","No") != 1) goto L_end;
+	if (select("Yes","No") == 2) goto L_end;
 	set @Sp, Zeny/$QW_HP_S_PRICE;
 	set @SpPrice, @Sp*$QW_HP_S_PRICE;
 	if (@Sp == 1) mes "your not worth the effort";

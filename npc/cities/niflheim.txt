@@ -171,20 +171,11 @@ L_book3:
 	if(select("Clover.:Klaatu.:Kleitos.")==2)
 		set @nif_t,@nif_t + 10;
 
-	if(@menu == 255)
-		end;
-
 	if(select("Verit.:Veritas.:Verata.")==3)
 		set @nif_t,@nif_t + 10;
 
-	if(@menu == 255)
-		end;
-
 	if(select("Necktie.:Necklace.:Nero.:^FFFFFFNictu.^000000")==4)
 		set @nif_t,@nif_t + 10;
-
-	if(@menu == 255)
-		end;
 
 	mes "[Ashe Bruce]";
 	if(@nif_t == 30){

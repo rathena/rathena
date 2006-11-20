@@ -217,8 +217,6 @@ payon.gat,184,65,3	script	Mr. Tanieh	866,{
 				close2;
 				set @npcname$,"";
 				end;
-			default:
-				end;
 		}
 	} else if (GUNS_Q == 10003 || GUNS_Q == 10004) {
 		if (countitem(519) >= 1 && GUNS_Q == 10004) {
@@ -240,8 +238,6 @@ payon.gat,184,65,3	script	Mr. Tanieh	866,{
 					mes "Oh please, I need it so much, think about it please...";
 					close2;
 					set @npcname$,"";
-					end;
-				default:
 					end;
 			}
 		}

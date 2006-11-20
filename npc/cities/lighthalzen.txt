@@ -1050,7 +1050,7 @@ lighthalzen.gat,312,234,2	script	Beggar	777,{
 	mes "Would you give me";
 	mes "some money?";
 	next;
-	if(select("Give him some money.:Ignore him.")==2 || @menu == 255){
+	if(select("Give him some money.:Ignore him.")==2){
 		mes "[" + strcharinfo(0) + "]";
 		mes "...";
 		mes "......";

@@ -823,9 +823,6 @@ s_Got:
 			set @stoneStr$,"Rough Wind";
 		break;
 
-		case 255:
-			end;
-
 		}
 	if(countitem(@stoneID) < 8)goto s_NEnough;
 	mes "[Laspuchin Gregory]";

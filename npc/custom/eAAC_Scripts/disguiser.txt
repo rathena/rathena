@@ -164,9 +164,6 @@ function	script	PXC_DoMenu	{
 	//Fire our menu
 	set @menu, select($@menu$);
 
-	if(@menu > getarg(1) || @menu < 1)
-		end;
-
 	//Zero deliminated (off-by-one errors sux0r!!!)
 	set @menu, @menu-1;
 

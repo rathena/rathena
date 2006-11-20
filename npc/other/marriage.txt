@@ -215,8 +215,6 @@ function SF_AcceptGroom {
 		mes "["+@name$+"]";
 		mes "After your groom approves, you will be given your rings, the ceremony will begin and you will be officially married.";
 		close;
-	default:
-		end;
 	}
 }
 
@@ -250,8 +248,6 @@ function SF_AcceptBride {
 		mes "["+@name$+"]";
 		mes "After your bride approves, you will be given your rings, the ceremony will begin and you will be officially married.";
 		close;
-	default:
-		end;
 	}
 }
 
@@ -482,8 +478,6 @@ prt_church.gat,106,99,3	script	Sister Mary	67,{
 		case 4: //Register
 			SF_Register();
 			break;
-		default:
-			end;
 		}
 	} while (@menu > 1);
 	end;
@@ -879,8 +873,6 @@ prt_church.gat,94,99,4	script	Sister Lisa	79,{
 			initnpctimer;
 			mes "Very well, get your partner to confirm, and I will collect the fee for filing the divorce then.";
 			close;
-		default:
-			end;
 		}
 	} while (@menu > 1);
 end;
@@ -902,7 +894,7 @@ function SF_InProgress {
 	mes $@divorcer$+" has asked to divorce you. If you accept, and have the fee of "+$@wed_divorce_fee+"z at hand, I will proceed to divorce you two.";
 	mes "So, should I proceed with the divorce?";
 	next;
-	if (select("I don't want to divorce....", "Yes, we have agreed to this.") !=2) {
+	if (select("I don't want to divorce....","Yes, we have agreed to this.")!=2) {
 		mes "["+@name$+"]";
 		mes "I hope you can work things out.";
 		emotion e_pat;

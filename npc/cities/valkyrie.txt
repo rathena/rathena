@@ -45,7 +45,6 @@ yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 		mes "can be realized in the Hall of Honor.";
 		next;
 		switch(select("Stop reading.:Continue reading.")) {
-		case 255:
 		case 1:
 			mes "[Book of Ymir]";
 			mes ". . . . .";

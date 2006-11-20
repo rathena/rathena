@@ -132,8 +132,6 @@ new_zone01.gat,53,114,4	script	Shion	727,{
 			mes "I feel so bad.";
 			set NEW_MES_FLAG0,2;
 			close;
-		default:
-			end;
 		}
 	case 1:	mes "[Shion]";
 		mes "Huh...?";
@@ -329,8 +327,6 @@ L_loop:
 		mes "I understand.";
 		mes "Please, take your time.";
 		close;
-	default:
-		end;
 	}
 	goto L_loop;
 	
@@ -421,8 +417,6 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 			end;
 		case 3:	emotion e_swt2;
 			close;
-		default:
-			end;
 		}
 	}
 	if (!(NEW_MES_FLAG2)) {
@@ -456,8 +450,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_zone02.gat",28,178;
 				end;
 			}
-		default:
-			emotion e_swt2;
+		case 3:	emotion e_swt2;
 			close;
 		}
 	}
@@ -493,8 +486,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				warp "new_zone02.gat",28,178;
 				end;
 			}
-		default:
-			emotion e_swt2;
+		case 3:	emotion e_swt2;
 			close;
 		}
 	}
@@ -543,8 +535,6 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "I hope that you are blessed wherever you go.";
 		mes "Good luck.";
 		close;
-	default:
-		end;
 	}
 }
 
@@ -633,8 +623,6 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 			close;
 		case 2:	goto L_battle;
 		case 3:	emotion e_omg;
-		default:
-			end;
 		}
 		close;
 	}
@@ -656,8 +644,6 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 			close;
 		case 2:	goto L_battle;
 		case 3:	emotion e_omg;
-		default:
-			end;
 		}
 		close;
 	}
@@ -680,8 +666,6 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 			break;
 		case 2:	goto L_battle;
 		case 3:	emotion e_omg;
-		default:
-			end;
 		}
 		close;
 	}
@@ -736,8 +720,6 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 		mes "Why don't you hurry up to meet";
 		mes "her?";
 		close;
-	default:
-		end;
 	}
 	end;
 L_battle:
@@ -1011,7 +993,6 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 				warp "new_zone02.gat",28,178;
 				end;
 			}
-			if(@menu > 6 || @menu == 0) end;
 			set @menu,@menu-1;
 		} else {
 			menu "Prontera",-,"Morroc",-,"Payon",-,"Alberta",-,"Geffen",-;
@@ -1066,11 +1047,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			savepoint "geffen.gat",118,37;
 			warp "geffen.gat",121,65;
 			end;
-		default:
-			end;
 		}
 	} else {
-		if(@menu > 2) end;
 		mes "[Kafra Employee]";
 		mes "Let me introduce you";
 		mes "to the Kafra Services.";
@@ -1161,8 +1139,6 @@ L_loop:
 			mes "I hope you are satisfied with my";
 			mes "explanation about the Kafra corporation.";
 			close;
-		default:
-			end;
 		}
 	goto L_loop;
 	}
@@ -1343,8 +1319,6 @@ L_loop:
 	case 6:	mes "[Edwin]";
 		mes "Feel free to ask me anytime.";
 		close;
-	default:
-		end;
 	}
 	goto L_loop;
 }
@@ -1589,8 +1563,6 @@ L_loop:
 		mes "I hope my class was helpful to you.";
 		mes "I really hope so.";
 		close;
-	default:
-		end;
 	}
 	goto L_loop;
 }
@@ -1897,9 +1869,6 @@ L_loop1:
 			next;
 			mes "[Pitch Judas]";
 			mes "Do you wish to learn about a different subject?";
-			break;
-		default:
-			end;
 		}
 		if ( @menu != 5 ) goto L_loop1;
 		break;
@@ -2132,8 +2101,6 @@ new_zone02.gat,17,182,6	script	Helper#2	84,{
 			case 4:	mes "[Elmeen]";
 				mes "Feel free to ask me if you have any questions.";
 				close;
-			default:
-				end;
 			}
 			goto L_loop;
 		} else {
@@ -2157,8 +2124,6 @@ L_loop1:
 		break;
 	case 5:	callsub L_equip;
 		close;
-	default:
-		end;
 	}
 	goto L_loop1;
 	end;
@@ -2630,8 +2595,6 @@ L_loop:
 		mes "Hanson is waitinging for you now,";
 		mes "good luck out there.";
 		close;
-	default:
-		end;
 	}
 	set NEW_MES_FLAG6,1;
 	goto L_loop;
@@ -2746,7 +2709,6 @@ L_cancel:
 		}
 		end;
 	}
-	if(@menu > 2 || @menu < 1) end;
 	mes "[Hanson]";
 	mes "Excellent choice! You're";
 	mes "You're supposed to take every";
@@ -2780,38 +2742,32 @@ L_cancel:
 	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;
 		set NOV_3_THIEF,NOV_3_THIEF+1;break;
 	case 3:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	case 4:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	default: end;
+	case 4:	set NOV_3_THIEF,NOV_3_THIEF+1;
 	}
 	switch ( select("Change","Conserve") ) {
 	case 1:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	case 2:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	default: end;
+	case 2:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;
 	}
 	switch ( select("Consumer","Seller","Producer") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;
 		set NOV_3_THIEF,NOV_3_THIEF+1;
 		set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
 	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 3:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 3:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	switch ( select("Celebrity","Prudence") ) {
 	case 1:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
-	default: end;
+	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;
 	}
 	switch ( select("Theory","Experience") ) {
 	case 1:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
-	default: end;
+	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;
 	}
 	switch ( select("The past","The reality","The future") ) {
 	case 1:	set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
 	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;
 		set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	case 3: set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 3: set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	mes "[Hanson]";
 	mes "Please answer with 'yes' or 'no' to";
@@ -2823,8 +2779,7 @@ L_cancel:
 	switch ( select("Yes.","No") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
 	case 2:	set NOV_3_THIEF,NOV_3_THIEF+1;
-		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	default: end;
+		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;
 	}
 	mes "[Hanson]";
 	mes "You are often upset to see someone";
@@ -2832,8 +2787,7 @@ L_cancel:
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 2:set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	default: end;
+	case 2:set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;
 	}
 	mes "[Hanson]";
 	mes "You don't mind exploring dangerous";
@@ -2841,16 +2795,14 @@ L_cancel:
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
-	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	mes "[Hanson]";
 	mes "You are a leader-type person.";
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
-	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
-	default: end;
+	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;
 	}
 	mes "[Hanson]";
 	mes "While exploring a dungeon, you";
@@ -2866,8 +2818,7 @@ L_cancel:
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
-	default: end;
+	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;
 	}
 	mes "[Hanson]";
 	mes "You often see things that don't";
@@ -2875,8 +2826,7 @@ L_cancel:
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	mes "[Hanson]";
 	mes "You feel you can fly";
@@ -2884,16 +2834,14 @@ L_cancel:
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	mes "[Hanson]";
 	mes "Money talks. I can buy even human being if I want.";
 	next;
 	switch ( select("Yes","No") ) {
 	case 1:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
-	default: end;
+	case 2:	set NOV_3_ARCHER,NOV_3_ARCHER+1;
 	}
 	mes "[Hanson]";
 	mes "Now, let me give you some different";
@@ -2912,8 +2860,7 @@ L_cancel:
 	case 2:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 		set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
 	case 3:	set NOV_3_ARCHER,NOV_3_ARCHER+1;
-		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	default: end;
+		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;
 	}
 	mes "[Hanson]";
 	mes "During window shopping, you found a";
@@ -2926,8 +2873,7 @@ L_cancel:
 	switch ( select("Think about if you need it.","Check the price.","Buy it without thinking twice...!") ) {
 	case 1:	set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
 	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 3:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	default: end;
+	case 3:	set NOV_3_THIEF,NOV_3_THIEF+1;
 	}
 	mes "[Hanson]";
 	mes "You (____Fill in blank___) to compete";
@@ -2937,8 +2883,7 @@ L_cancel:
 	case 1:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
 	case 2:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
 	case 3:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;
-		set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
-	default: end;
+		set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;
 	}
 	mes "[Hanson]";
 	mes "You're responsible for a task that";
@@ -2953,8 +2898,7 @@ L_cancel:
 	next;
 	switch ( select("Handle it by myself even if it's hard.","Ask friends to help.") ) {
 	case 1:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	default: end;
+	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;
 	}
 	mes "[Hanson]";
 	mes "You happened to find a girl who";
@@ -2967,8 +2911,7 @@ L_cancel:
 		set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
 	case 3:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 		set NOV_3_THIEF,NOV_3_THIEF+1;
-		set NOV_3_MERCHAN,NOV_3_MERCHAN+1;break;
-	default: end;	
+		set NOV_3_MERCHAN,NOV_3_MERCHAN+1;	
 	}
 	mes "[Hanson]";
 	mes "You happened to pick up";
@@ -2979,8 +2922,7 @@ L_cancel:
 	case 1:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
 	case 2:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
 	case 3:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 4:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	default: end;
+	case 4:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 	}
 	mes "[Hanson]";
 	mes "You happened to slip your tongue in";
@@ -2991,8 +2933,7 @@ L_cancel:
 	case 1:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
 	case 2:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
 	case 3:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;break;
-	case 4:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;break;
-	default: end;
+	case 4:	set NOV_3_ACOLYTE,NOV_3_ACOLYTE+1;
 	}
 	mes "[Hanson]";
 	switch (Sex) {
@@ -3012,8 +2953,7 @@ L_cancel:
 	switch ( select("Buy the item for her/him.","Say 'no'.","Promise to buy it next time.") ) {
 	case 1:	set NOV_3_SWORDMAN,NOV_3_SWORDMAN+1;break;
 	case 2:	set NOV_3_MERCHANT,NOV_3_MERCHANT+1;break;
-	case 3:	set NOV_3_THIEF,NOV_3_THIEF+1;break;
-	default: end;
+	case 3:	set NOV_3_THIEF,NOV_3_THIEF+1;
 	}
 	mes "[Hanson]";
 	mes "Ok!! That's all for the test.";
@@ -3176,8 +3116,7 @@ L_loop2:
 			getitem 1504,1;
 			break;
 		case 5:	mes "1 Battle Axe";
-			getitem 1351,1;break;
-		default: end;
+			getitem 1351,1;
 		}
 		if( @JOB_NUMBER_CHK == 5 ){
 			mes "^0000304 Free Tickets for Kafra Storage";
@@ -3257,8 +3196,7 @@ L_loop2:
 			set @JOB_NAME$,"Archer";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,4;
-			set @JOB_NAME$,"Acolyte";break;
-		default: end;
+			set @JOB_NAME$,"Acolyte";
 		}
 		break;
 	case 1:	switch( select("Swordsman","Mage","Merchant","Thief","Acolyte") ) {
@@ -3275,8 +3213,7 @@ L_loop2:
 			set @JOB_NAME$,"Thief";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,4;
-			set @JOB_NAME$,"Acolyte";break;
-		default: end;
+			set @JOB_NAME$,"Acolyte";
 		}
 		break;
 	case 2:	switch( select("Swordsman","Mage","Merchant","Archer","Acolyte") ) {
@@ -3293,8 +3230,7 @@ L_loop2:
 			set @JOB_NAME$,"Archer";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,4;
-			set @JOB_NAME$,"Acolyte";break;
-		default: end;
+			set @JOB_NAME$,"Acolyte";
 		}
 		break;
 	case 3:	switch( select("Swordsman","Merchant","Thief","Archer","Acolyte") ) {
@@ -3311,8 +3247,7 @@ L_loop2:
 			set @JOB_NAME$,"Archer";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,4;
-			set @JOB_NAME$,"Acolyte";break;
-		default: end;
+			set @JOB_NAME$,"Acolyte";
 		}
 		break;
 	case 4:	switch( select("Swordsman","Mage","Merchant","Thief","Archer") ) {
@@ -3329,8 +3264,7 @@ L_loop2:
 			set @JOB_NAME$,"Thief";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,1;
-			set @JOB_NAME$,"Archer";break;
-		default: end;
+			set @JOB_NAME$,"Archer";
 		}
 		break;
 	case 5:	switch( select("Swordsman","Mage","Thief","Archer","Acolyte") ) {
@@ -3347,8 +3281,7 @@ L_loop2:
 			set @JOB_NAME$,"Archer";
 			break;
 		case 5:	set @JOB_NUMBER_CHK,4;
-			set @JOB_NAME$,"Acolyte";break;
-		default: end;
+			set @JOB_NAME$,"Acolyte";
 		}
 	}
 	mes "[Hanson]";

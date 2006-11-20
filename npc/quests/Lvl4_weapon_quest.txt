@@ -150,9 +150,7 @@ L4_0_1:
 			mes "By the way, don't you want to know how evil the city of the dead will be?";
 			mes "I do since that city influences so much of this village";
 			mes "with it's mysterious power, you know.";
-			break;
-		default:
-			end;			
+			break;			
 	}	
 	close;
 	

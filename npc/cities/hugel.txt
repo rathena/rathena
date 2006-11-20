@@ -45,8 +45,6 @@ hu_in01.gat,23,311,4	script	Johsh	898,{
 		mes @npcname$;
 		mes "Aww~~ you miss it";
 		close;
-	case 255:
-		end;
 	}
 }
 

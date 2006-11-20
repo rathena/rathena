@@ -798,13 +798,12 @@ function	script	repairmain	{
 		getitemname(getbrokenid(3)),getitemname(getbrokenid(4)),getitemname(getbrokenid(5)),
 		getitemname(getbrokenid(6)),getitemname(getbrokenid(7)),getitemname(getbrokenid(8)),
 		getitemname(getbrokenid(9)),getitemname(getbrokenid(10)));
-	if(@choice == 255) end;
 	mes "[" + @name$ + "]";
 	mes "You're gonna repair " + getitemname(getbrokenid(@choice)) + ".";
 	mes "To repair this, I need " + @repairprice + " Zeny.";
 	mes "Continue?";
 	next;
-	if(select("Yes","No") == 2 || @menu == 255) {
+	if(select("Yes","No") == 2) {
 		mes "[" + @name$ + "]";
 		mes "Ok, but don't expect to be using that...";
 		close;

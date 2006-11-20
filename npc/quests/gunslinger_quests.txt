@@ -95,9 +95,6 @@ que_ng.gat,182,85,3	script	Mr.Garrison	109,{
 			mes "will never part from his";
 			mes "favorite gun, heh.";
 			close;
-
-		default:
-			end;
 	}
 
 L_Slot:
@@ -165,8 +162,6 @@ L_Slot:
 			mes "Okay, come back when you";
 			mes "changed your mind.";
 			close;
-		default:
-			end;
 	}
 
 L_Already:
@@ -252,8 +247,6 @@ que_ng.gat,187,163,3	script	Ingrid	744,{
 			mes "Probably a good choice.";
 			mes "It's really dangerous.";
 			close;
-		default:
-			end;
 	}
 }
 
@@ -329,8 +322,6 @@ que_ng.gat,185,180,3	script	Vanessa	726,{
 			mes @npcname$;
 			mes "Oh well, your loss.";
 			close;
-		default:
-			end;
 	}
 }
 
@@ -410,7 +401,5 @@ que_ng.gat,149,178,5	script	N.A	744,{
 			mes @npcname$;
 			mes "Oh well, your loss.";
 			close;
-		default:
-			end;
 	}
 }
