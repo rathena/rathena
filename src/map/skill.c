@@ -11285,7 +11285,11 @@ int skill_readdb (void)
 		p = split[8];
 		for(j=0;j<32;j++){
 			l = atoi(p);
-			if (l)
+			if (l==99) {
+				skill_db[i].ammo = 0xffffffff;
+				break;
+			}
+			else if (l)
 				skill_db[i].ammo |= 1<<l;
 			p=strchr(p,':');
 			if(!p)

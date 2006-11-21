@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/21
+	* Added support for specifying ammo type = 99 in the skill_require_db file,
+	  it can be used to specify that any kind of ammo can be used with the skill,
+	  but you NEED to have ammo equipped. [Skotlex]
 	* Corrected GS_DISARM, it is now a normal attack, which, when it connects,
 	  has a chance to do strip weapon at a 3*lv% rate (modified by dex) [Skotlex]
 	* Fixed GS_PIERCINGSHOT, it should ignore defense [Skotlex]

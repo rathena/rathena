@@ -20,6 +20,8 @@
 
 ========================
 11/21
+	* All coin related skills can be used with any weapon. Those that require
+	  ammo can be used with any ammo. [Skotlex]
 	* Fixed all cast times and delays of Gunslinger skills [Playtester]
 	- cast time of Dust is reduced by dex
 	- Tracking cast time cannot be reduced by anything
