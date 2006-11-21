@@ -845,33 +845,33 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 	int id, i;
 	RFIFOHEAD(fd);
 	id=RFIFOL(fd,4);
-	i=0; //,j=0;
 
-//	if(battle_config.etc_log)
-//		printf("intif_parse_wismessage: %d %s %s %s\n",id,RFIFOP(fd,6),RFIFOP(fd,30),RFIFOP(fd,54) );
 	memcpy(name, RFIFOP(fd,32), NAME_LENGTH);
 	name[NAME_LENGTH-1] = '\0'; //In case name arrived without it's terminator. [Skotlex]
-	sd=(struct map_session_data *) map_nick2sd(name);	// 送信先を探す
-	if(sd!=NULL && strcmp(sd->status.name, name) == 0){
-		if(sd->ignoreAll == 1)
-			intif_wis_replay(RFIFOL(fd,4), 2);	// 受信拒否
-		else {
-			wisp_source = (char *) RFIFOP(fd,8); // speed up [Yor]
-			for(i=0;i<MAX_IGNORE_LIST;i++){   //拒否リストに名前があるかどうか判定してあれば拒否
-				if(strcmp(sd->ignore[i].name, wisp_source)==0){
-					break;
-				}
-			}
-			if(i==MAX_IGNORE_LIST) // run out of list, so we are not ignored
-			{
-				clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
-				intif_wis_replay(id,0);   // 送信成功
-			}
-			else
-				intif_wis_replay(id, 2);   // 受信拒否
-		}
-	}else
-		intif_wis_replay(id,1);	// そんな人いません
+	sd = map_nick2sd(name);
+	if(sd == NULL || strcmp(sd->status.name, name) != 0)
+	{	//Not found
+		intif_wis_replay(id,1);
+		return 0;
+	}
+	if(sd->state.ignoreAll) {
+		intif_wis_replay(id, 2);
+		return 0;
+	}
+	wisp_source = (char *) RFIFOP(fd,8); // speed up [Yor]
+	for(i=0; i < MAX_IGNORE_LIST &&
+		sd->ignore[i].name[0] != '\0' &&
+		strcmp(sd->ignore[i].name, wisp_source) != 0
+		; i++);
+	
+	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
+	{	//Ignored
+		intif_wis_replay(id, 2);
+		return 0;
+	}
+	//Success to send whisper.
+	clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
+	intif_wis_replay(id,0);   // 送信成功
 	return 0;
 }
 

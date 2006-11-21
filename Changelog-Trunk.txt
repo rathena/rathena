@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/21
+	* Moved ignoreAll to state.ignoreAll so it saves some space. [Skotlex]
+	* Cleaned up clif_parse_Wis to prevent crashes from forged packets
+	  [Skotlex]
+	* Cleaned up the implementation of the ignore list so it's more efficient.
+	  [Skotlex]
 2006/11/20
 	* Implemented NPC_DEFENDER. Reduces ranged Physical+Misc damage by 80%
 	  [Skotlex]

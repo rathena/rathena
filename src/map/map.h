@@ -596,6 +596,7 @@ struct map_session_data {
 		unsigned killer : 1;
 		unsigned killable : 1;
 		unsigned doridori : 1;
+		unsigned ignoreAll : 1;
 		unsigned short autoloot;
 		struct guild *gmaster_flag;
 	} state;
@@ -638,7 +639,6 @@ struct map_session_data {
 	struct{
 		char name[NAME_LENGTH];
 	} ignore[MAX_IGNORE_LIST];
-	int ignoreAll;
 
 	int followtimer; // [MouseJstr]
 	int followtarget;
