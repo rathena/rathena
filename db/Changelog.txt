@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/21
+	* Updated healing values of Ketupat and Red Thorn Fruit [Playtester]
 11/20
 	* Official skill for Ancient Mimic, Death Word and Angels [Playtester]
 	- also made NPC_DEFENDER self targeted

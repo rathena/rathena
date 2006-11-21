@@ -35,8 +35,8 @@ odin_tem02.gat,0,0,0,0	monster	Skeggiold	1755,3,0,0,0
 odin_tem02.gat,0,0,0,0	monster	Valkyrie	1765,1,0,0,0
 odin_tem02.gat,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
 //Slave of who?
-odin_tem02.gat,0,0,0,0	monster	Skogul	1761,8,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Frus	1762,6,0,0,0
+odin_tem02.gat,0,0,0,0	monster	Skogul	1761,1,0,0,0
+odin_tem02.gat,0,0,0,0	monster	Frus	1762,1,0,0,0
 
 //==================================================
 // odin_tem03 - Odin Temple F3
@@ -51,5 +51,5 @@ odin_tem03.gat,0,0,0,0	monster	Valkyrie Randgris	1751,1,3600000,1800000,1
 odin_tem03.gat,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
 odin_tem03.gat,0,0,0,0	monster	Shining Plant	1083,10,1800000,900000,1
 //Slave of who?
-odin_tem03.gat,0,0,0,0	monster	Skogul	1761,3,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Frus	1762,4,0,0,0
+odin_tem03.gat,0,0,0,0	monster	Skogul	1761,1,0,0,0
+odin_tem03.gat,0,0,0,0	monster	Frus	1762,1,0,0,0

@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/21
+	* Less G_mobs spawning in Odin Temple [Playtester]
 11/20
 	* Updated Skill Resetter Event, thanks to $ephiroth [KarLaeda]
 	* Fixed Sage guest [KarLaeda]
