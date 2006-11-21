@@ -69,7 +69,7 @@ que_ng.gat,30,65,3	script	Cool Kid#nq	730,{
 			mes "And let you become a Ninja.";
 			mes "I need you to get me...";
 			mes "One piece of Phracon.";
-			mes "and five cygar, quick, there's no time!";
+			mes "and five cyfar, quick, there's no time!";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Aahh!!";
