@@ -20,6 +20,10 @@
 
 ========================
 11/21
+	* Fixed all cast times and delays of Gunslinger skills [Playtester]
+	- cast time of Dust is reduced by dex
+	- Tracking cast time cannot be reduced by anything
+	- Increase Accuracy requires 4 coins instead of 2
 	* Updated healing values of Ketupat and Red Thorn Fruit [Playtester]
 11/20
 	* Official skill for Ancient Mimic, Death Word and Angels [Playtester]
