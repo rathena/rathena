@@ -1351,6 +1351,27 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case GS_FLING:
 		sc_start(bl,SC_FLING,100, sd?sd->spiritball_old:5,skill_get_time(skillid,skilllv));
 		break;
+	case GS_DISARM:
+		rate = 3*skilllv;
+		if (sstatus->dex > tstatus->dex)
+			rate += (sstatus->dex - tstatus->dex)/5;
+		
+		if (rand()%100 >= rate)
+			break;
+
+		if (dstsd) {
+			if (dstsd->equip_index[EQI_HAND_R]<0 ||
+				!dstsd->inventory_data[dstsd->equip_index[EQI_HAND_R]] ||
+				!(dstsd->unstripable_equip&EQP_WEAPON) ||
+		  		(tsc && tsc->data[SC_CP_WEAPON].timer != -1)
+			)	//Fail
+				break;
+			pc_unequipitem(dstsd,dstsd->equip_index[EQI_HAND_R],3);
+		} else if (tstatus->mode&MD_BOSS ||
+			(tsc && tsc->data[SC_CP_WEAPON].timer != -1))
+			break;
+		sc_start(bl,SC_STRIPWEAPON,100,skilllv,skill_get_time(skillid,skilllv));
+		break;
 	}
 
 	if(sd && attack_type&BF_WEAPON &&
@@ -2730,6 +2751,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case GS_PIERCINGSHOT:
 	case GS_RAPIDSHOWER:
 	case GS_DUST:
+	case GS_DISARM:				// Added disarm. [Reddozen]
 	case GS_FULLBUSTER:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
@@ -4409,14 +4431,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case RG_STRIPARMOR:
 	case RG_STRIPHELM:
 	case ST_FULLSTRIP:			// Rewritten most of the code [DracoRPG]
-	case GS_DISARM:				// Added disarm. [Reddozen]
 		{
 		int strip_fix, equip = 0;
 		int sclist[4] = {0,0,0,0};
 
 		switch (skillid) {
 		case RG_STRIPWEAPON:
-		case GS_DISARM:
 		   equip = EQP_WEAPON;
 			break;
 		case RG_STRIPSHIELD:
@@ -8018,6 +8038,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case PA_GOSPEL:
 	case CR_SHRINK:
 	case TK_RUN:
+	case GS_GATLINGFEVER:
 		if(sc && sc->data[SkillStatusChangeTable(skill)].timer!=-1)
 			return 1; //Allow turning off.
 		break;

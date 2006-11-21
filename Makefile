@@ -23,6 +23,8 @@ OPT += -ffast-math
 # OPT += -fstack-protector
 # OPT += -fomit-frame-pointer
 OPT += -Wall -Wno-sign-compare
+# Uncomment this one if you are using GCC 4.X
+# OPT += -Wno-unused-parameter -Wno-pointer-sign
 # OPT += -DMAPREGSQL
 # OPT += -DCHRIF_OLDINFO
 # OPT += -DPCRE_SUPPORT

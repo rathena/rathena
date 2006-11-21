@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/21
+	* Corrected GS_DISARM, it is now a normal attack, which, when it connects,
+	  has a chance to do strip weapon at a 3*lv% rate (modified by dex) [Skotlex]
+	* Fixed GS_PIERCINGSHOT, it should ignore defense [Skotlex]
+	* Corrected Gatling Fever costing SP when trying to turn it off. Also,
+	  speed increases bonuses won't take effect while it's active. [Skotlex]
+	* Updated the main makefile with a new OPT line. It is commented by default
+	  since it only works with GCC 4.X, when unset, it will hide away a huge
+	  amount of warnings that have to do with stuff that is not gonna be
+	  corrected in eA anyway. [Skotlex]
 	* Corrected TripleAction's damage. It should do 150%*3 instead of 100*3%
 	  damage. [Skotlex]
 	* Updated GS_CRACKER's stun chance using Doddler's info as reference.

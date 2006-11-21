@@ -1557,6 +1557,7 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case GS_PIERCINGSHOT:
 					skillratio += 20*skill_lv;
+					flag.idef = flag.idef2 = 1;
 					break;
 				case GS_RAPIDSHOWER:
 					skillratio += 10*skill_lv;
