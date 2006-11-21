@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 11/20
+	* Updated Skill Resetter Event, thanks to $ephiroth [KarLaeda]
 	* Fixed Sage guest [KarLaeda]
 	* Fixed exploit in Shinokas Quest [KarLaeda]
 11/17

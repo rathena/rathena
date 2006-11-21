@@ -3,16 +3,20 @@
 //===== By: ================================================== 
 //= $ephiroth
 //===== Current Version: ===================================== 
-//= 1.01
+//= 1.02
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= 2006 - Edition Skill Reset NPC
 //= 2006/11/16: 1.0 Release and fully working. [$ephiroth]
 //= 1.01 Checked, fixed typos, now uses MISC_QUEST var [Lupus]
+//= 1.02 Added missing message,comment,etc. [$ephiroth]
+//===== Additional Comments: =================================
+//= Skill Reset with payment, minimum BaseLv.60 to reset skill.
+//= Each 1 BaseLv need 20.000 Zeny, so be careful to use skill.
 //============================================================
 yuno.gat,138,187,4	script	Hypnotist Teacher	124,{
-	set @npcname$,"[Hypnotist]";
+	set @npcname$,"[^D5A500Hypnotist^000000]";
 	mes @npcname$;
 
 	if(MISC_QUEST & 1024){
@@ -63,6 +67,7 @@ L_Info:
 	mes @npcname$;
 	mes "This skill reset is not FREE OF CHARGE!!";
 	mes "Expense for the reset of skill is ^D5A50020000 Zeny x BaseLv^000000.";
+	mes "Yeah ...each One BaseLv need 20000 Zeny to reset skill.";
 	next;
 	mes @npcname$;
 	mes "Oh yeah, one more thing!";
