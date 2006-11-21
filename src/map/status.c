@@ -5539,7 +5539,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_FLING:
-			val2 = 5*val1; //Def reduction
+			if (bl->type == BL_PC)
+				val2 = 0; //No armor reduction to players.
+			else
+				val2 = 5*val1; //Def reduction
 			val3 = 5*val1; //Def2 reduction
 			break;
 		case SC_PROVOKE:

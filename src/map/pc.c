@@ -3215,7 +3215,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 
 	//preliminar statistical data hints at this behaviour:
 	//each steal attempt: try to steal against ONE mob drop, and no more.
-	i = rand()%(MAX_MOB_DROP-1); //You can't steal from the last slot.
+	i = rand()%(MAX_STEAL_DROP); //You can't steal from the last slot.
 
 	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
 		return 0;

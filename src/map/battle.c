@@ -1541,6 +1541,9 @@ static struct Damage battle_calc_weapon_attack(
 					if (sc && sc->data[SC_COMBO].timer != -1 && sc->data[SC_COMBO].val1 == skill_num)
 						skillratio += 10*status_get_lv(src)/3;
 					break;
+				case GS_TRIPLEACTION:
+					skillratio += 50*skill_lv;
+					break;
 				case GS_BULLSEYE:
 					if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN)
 						&& !(tstatus->mode&MD_BOSS))

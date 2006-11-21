@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/21
+	* Corrected TripleAction's damage. It should do 150%*3 instead of 100*3%
+	  damage. [Skotlex]
+	* Updated GS_CRACKER's stun chance using Doddler's info as reference.
+	  [Skotlex]
+	* GS_FLING won't reduce armor defense when used on players. [Skotlex]
 	* Moved ignoreAll to state.ignoreAll so it saves some space. [Skotlex]
 	* Cleaned up clif_parse_Wis to prevent crashes from forged packets
 	  [Skotlex]
