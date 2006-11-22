@@ -6666,6 +6666,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 		
 	case SC_BERSERK:
+		//The damage below should be made aware that Berserk is active.
+		sc->data[type].timer = temp_timerid;
 		// 5% every 10 seconds [DracoRPG]
 		if((--sc->data[type].val3)>0 && status_charge(bl, sc->data[type].val2, 0))
 		{

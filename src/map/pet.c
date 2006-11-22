@@ -895,7 +895,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 	if(pd->ud.attacktimer != -1 || pd->ud.skilltimer != -1 || pd->bl.m != sd->bl.m)
 		return 0;
 
-	if(pd->ud.walktimer != -1 && pd->ud.walkpath.path_pos <= 3)
+	if(pd->ud.walktimer != -1 && pd->ud.walkpath.path_pos <= 2)
 		return 0; //No thinking when you just started to walk.
 
 	if(pd->pet.intimate <= 0) {
@@ -904,7 +904,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 		return 0;
 	}
 	
-	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range2)) {
+	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range3)) {
 		//Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
@@ -939,10 +939,10 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
 	
 	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick)>0) {
 		//Use half the pet's range of sight.
-		int itc=0;
 		map_foreachinrange(pet_ai_sub_hard_lootsearch,&pd->bl,
-			pd->db->range2/2, BL_ITEM,pd,&itc);
+			pd->db->range2/2, BL_ITEM,pd,&target);
 	}
+	
 	if (!target) {
 	//Just walk around.
 		if (check_distance_bl(&sd->bl, &pd->bl, 3))
@@ -1012,18 +1012,26 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 {
 	struct pet_data* pd;
 	struct flooritem_data *fitem = (struct flooritem_data *)bl;
+	struct block_list **target;
 	int sd_id =0;
-	int *itc;
 
 	pd=va_arg(ap,struct pet_data *);
-	itc=va_arg(ap,int *);
+	target=va_arg(ap,struct block_list**);
 
 	sd_id = fitem->first_get_id;
 
-	if(bl->m == pd->bl.m && (!sd_id || sd_id == pd->msd->bl.id) &&
-		unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&
-		rand()%1000<1000/(++(*itc)))
-		pd->target_id=bl->id;
+	if(sd_id && sd_id != pd->msd->bl.id)
+		return 0;
+	
+	if(unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&
+		((*target) == NULL || //New target closer than previous one.
+		!check_distance_bl(&pd->bl, *target, distance_bl(&pd->bl, bl))))
+	{
+		(*target) = bl;
+		pd->target_id = bl->id;
+		return 1;
+	}
+
 	return 0;
 }
 
