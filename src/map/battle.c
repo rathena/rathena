@@ -3957,8 +3957,8 @@ void battle_set_defaults() {
 	battle_config.force_random_spawn=0;
 	battle_config.plant_spawn_delay=100;
 	battle_config.boss_spawn_delay=100;
-	battle_config.slaves_inherit_mode=1;
-	battle_config.slaves_inherit_speed=1;
+	battle_config.slaves_inherit_mode=2;
+	battle_config.slaves_inherit_speed=3;
  	battle_config.summons_trigger_autospells=1; 
 	battle_config.pc_walk_delay_rate=20;
 	battle_config.walk_delay_rate=100;

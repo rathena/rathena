@@ -1,5 +1,11 @@
 Date	Added
 
+2006/11/22
+	* Modified slaves_inherit_speed (monster.conf): 0 never. 1 - when the
+	  master can move. 2 - when the master can't move. 3 - always (default)
+	* Also modified slaves_inherit_mode: 0 don't change mode. 1 slaves are
+	  always aggressive. 2 slaves are always passive. 3 they copy the
+	  agro/passive mode from their master. Defaults to 2.
 2006/11/20
 	* Added monster_ai&0x200 (monster.conf). When set, mob skill delays are
 	  shared. That is, if the mob has several lines with the same skill, when the

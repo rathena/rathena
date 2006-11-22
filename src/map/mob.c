@@ -728,7 +728,7 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
 	
 	switch (md->state.skillstate) {
 		case MSS_BERSERK: //Only Assist, Angry or Aggressive+CastSensor mobs can change target while attacking.
-			if (mode&(MD_ASSIST|MD_ANGRY) || (mode&(MD_AGGRESSIVE|MD_CASTSENSOR)) == (MD_AGGRESSIVE|MD_CASTSENSOR))
+			if (mode&(MD_ASSIST|MD_ANGRY|MD_CHANGETARGET) || (mode&(MD_AGGRESSIVE|MD_CASTSENSOR)) == (MD_AGGRESSIVE|MD_CASTSENSOR))
 				return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
 			else
 				return 0;
@@ -837,24 +837,18 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 	target= va_arg(ap,struct block_list**);
 
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
-	if ((*target) == bl || battle_check_target(&md->bl,bl,BCT_ENEMY)<=0 || !status_check_skilluse(&md->bl, bl, 0, 0))
+	if ((*target) == bl ||
+		battle_check_target(&md->bl,bl,BCT_ENEMY)<=0 ||
+	  	!status_check_skilluse(&md->bl, bl, 0, 0))
 		return 0;
 
-	switch (bl->type)
-	{
-	case BL_PC:
-	case BL_HOM:	//[orn]
-	case BL_MOB:
-		if(battle_check_range (&md->bl, bl, md->status.rhw.range))
-	  	{
-			(*target) = bl;
-			md->target_id=bl->id;
-			md->min_chase= md->db->range3;
-			return 1;
-		}
-		break;
+	if(battle_check_range (&md->bl, bl, md->status.rhw.range))
+  	{
+		(*target) = bl;
+		md->target_id=bl->id;
+		md->min_chase= md->db->range3;
 	}
-	return 0;
+	return 1;
 }
 
 
@@ -2499,11 +2493,24 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 			md->status.hp = md->status.max_hp*hp_rate/100;
 
 		//Inherit the aggressive mode of the master.
-		if (battle_config.slaves_inherit_mode && md->master_id) {
-			if (md2->status.mode&MD_AGGRESSIVE)
-				sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
-			else
-				sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
+		if (battle_config.slaves_inherit_mode && md->master_id)
+	  	{
+			switch (battle_config.slaves_inherit_mode) {
+			case 1: //Always aggressive
+				if (!(md->status.mode&MD_AGGRESSIVE))
+					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
+				break;
+			case 2: //Always passive
+				if (md->status.mode&MD_AGGRESSIVE)
+					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
+				break;
+			default: //Copy master.
+				if (md2->status.mode&MD_AGGRESSIVE)
+					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
+				else
+					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
+				break;
+			}
 		}
 
 		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);

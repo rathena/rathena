@@ -1313,7 +1313,8 @@ int status_calc_mob(struct mob_data* md, int first)
 
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
-		if (mstatus)
+		if (mstatus &&
+			battle_config.slaves_inherit_speed&(status->mode&MD_CANMOVE?1:2))
 			status->speed = mstatus->speed;
 	}
 		
@@ -4607,6 +4608,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			struct status_data *bstatus = status_get_base_status(bl);
 			if (!bstatus) return 0;
 			mode = val2?val2:bstatus->mode; //Base mode
+			//Mode added AND removed? Added has priority.
+			if ((val3&val4))
+				val4&= ~(val3&val4);
 			if (val3) mode|= val3; //Add mode
 			if (val4) mode&=~val4; //Del mode
 			if (mode == bstatus->mode) { //No change.

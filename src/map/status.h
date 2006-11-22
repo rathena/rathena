@@ -418,7 +418,7 @@ extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% suc
 #define MD_PLANT 0x040
 #define MD_CANATTACK 0x080
 #define MD_DETECTOR 0x100
-//#define MD_CHANGETARGET 0x200 //Mode deprecated, figured out through mob_can_changetarget()
+#define MD_CHANGETARGET 0x200
 #define MD_CHANGECHASE 0x400
 #define MD_ANGRY 0x800
 #define MD_MASK 0xFFF

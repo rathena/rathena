@@ -3527,7 +3527,7 @@ int inter_config_read(char *cfgName)
 
 int map_sql_init(void){
 
-    mysql_init(&mmysql_handle);
+	mysql_init(&mmysql_handle);
 
 	//DB connection start
 	ShowInfo("Connecting to the Map DB Server....\n");
