@@ -564,9 +564,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
 
-	// Timers
 	hd->hungry_timer = -1;
-	merc_hom_init_timers(hd);
 	return 0;
 }
 
@@ -652,6 +650,7 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 		clif_homskillinfoblock(sd);
 		clif_hominfo(sd,hd,0);
 		clif_send_homdata(sd,SP_ACK,0);
+		merc_hom_init_timers(hd);
 	}
 	return 1;
 }
