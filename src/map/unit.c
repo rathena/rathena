@@ -1643,7 +1643,9 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		md->state.skillstate= MSS_IDLE;
 	} else if (bl->type == BL_PET) {
 		struct pet_data *pd = (struct pet_data*)bl;
-		if(pd->pet.intimate <= 0) {
+		if(pd->pet.intimate <= 0 &&
+			!(pd->msd && pd->msd->state.waitingdisconnect)
+		) {	//If logging out, this is deleted on unit_free
 			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl,0);
@@ -1652,9 +1654,9 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		}
 	} else if (bl->type == BL_HOM) {
 		struct homun_data *hd = (struct homun_data *) bl;
-		struct map_session_data *sd = hd->master;
-		if(!sd || !hd->homunculus.intimacy)
-	  	{	//He's going to be deleted.
+		if(!hd->homunculus.intimacy &&
+			!(hd->master && hd->master->state.waitingdisconnect)
+		) {	//If logging out, this is deleted on unit_free
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearchar_area(bl,clrtype);
 			map_delblock(bl);
