@@ -19,6 +19,10 @@
 	-----
 
 ========================
+11/23
+	* Official skills for remaining Thanatos mobs [Playtester]
+	- this completes the X.3 and X.4 mob skill updates
+	- removed various skills from G_mobs
 11/21
 	* All coin related skills can be used with any weapon. Those that require
 	  ammo can be used with any ammo. [Skotlex]
