@@ -113,7 +113,7 @@ que_ng.gat,30,65,3	script	Cool Kid#nq	730,{
 			close;
 		case 4:
 			mes @npcname$;
-			if(countitem(7053) < 4 || countitem(1010) < 1){
+			if(countitem(7053) < 5 || countitem(1010) < 1){
 				mes "Bring me a Phracon";
 				mes "and five cyfar";
 				mes "Right now, you still don't have enough.";
@@ -125,7 +125,7 @@ que_ng.gat,30,65,3	script	Cool Kid#nq	730,{
 				close;
 			}
 			delitem 1010,1;
-			delitem 7035,1;
+			delitem 7053,5;
 			mes "Oh... you've brought it.";
 			mes "Let's see...";
 			mes "Mmm~ so you've brought it all";

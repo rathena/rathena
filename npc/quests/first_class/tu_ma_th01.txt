@@ -661,7 +661,7 @@ moc_fild18.gat,109,197,0	script	battle_traces#15	844,{
 					} else {
 						mes "It did not affect anything. Other things may be necessary.";
 						delitem 506, 1;
-						set tu_thief01, 23;
+						set tu_magician01, 23;
 						close;
 					}
 					break;

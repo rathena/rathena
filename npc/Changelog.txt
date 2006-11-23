@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/23
+	* Fixed Mage Tutorial Quest [KarLaeda]
+	- Fixed typos in Ninja Quest
 11/21
 	* Less G_mobs spawning in Odin Temple [Playtester]
 11/20
