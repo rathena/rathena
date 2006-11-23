@@ -197,7 +197,7 @@
 171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
 172,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
 173,1,6,4,3,2,5,10,1,no,0,2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
-174,-1,6,1,-1,2,3,1,1,no,0,2,0,weapon,0	//NPC_SPLASHATTACK#Range attack#
+174,-1,6,1,-1,2,3,1,1,no,0,2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
 175,0,0,4,0,1,0,10,1,no,0,2,0,misc,0	//NPC_SUICIDE#Suicide#
 176,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_POISON#Poison Attack#
 177,7,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#

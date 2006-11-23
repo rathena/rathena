@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/23
+	* Made WFIFOHEAD() check for available buffer size remaining on the
+	  connection, and when there's not enough space, it will increase it.
+	  [Skotlex]
+	* Added define TURBO to the Makefile. It enables MouseJstr's socket access
+	  optimization which should speed up the code when accessing the write/read
+	  buffers repeatedly within a function. [Skotlex]
+	* Fixed the functions where the RFIFOHEAD/WFIFOHEAD functions were used
+	  incorrectly (prevents TURBO enabled compilations from finishing) [Skotlex]
 2006/11/22
 	* Modified slaves_inherit_speed and slaves_inherit_mode so you get better
 	  control of when to copy/remove modes/speed. See the conf changelog for

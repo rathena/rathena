@@ -701,7 +701,8 @@ int WFIFOSET(int fd,int len)
 		unsigned char *sin_addr = (unsigned char *)&s->client_addr.sin_addr;
 		ShowFatalError("socket: Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %d byteson a %d/%d bytes buffer.\n", fd,
 			sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3], len, s->wdata_size, s->max_wdata);
-		ShowDebug("Likely command that caused it: 0x%x\n", WFIFOW(fd,0));
+		ShowDebug("Likely command that caused it: 0x%x\n",
+			(*(unsigned short*)(s->wdata+s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(1);
 	}

@@ -1541,7 +1541,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 
 void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[orn]
 	int fd;
-
+	WFIFOHEAD(fd, packet_len_table[0x230]);
 	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
 
@@ -1559,7 +1559,7 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 	struct homun_data *hd;
 	int fd;
 	int i,j,len=4,id;
-
+	WFIFOHEAD(fd, 4+37*MAX_HOMUNSKILL);
 	nullpo_retr(0, sd);
 
 	hd = sd->hd;
@@ -1591,7 +1591,7 @@ int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 	struct homun_data *hd;
 	int fd,skillid;
-
+	WFIFOHEAD(sd->fd, packet_len_table[0x239]);
 	nullpo_retv(sd);
 	skillid = skill_num - HM_SKILLBASE - 1;
 
@@ -1611,12 +1611,12 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 
 void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[orn]
 	struct homun_data *hd;
+	RFIFOHEAD(fd);
 	nullpo_retv(sd);
 
 	if((hd=sd->hd) == NULL)
 		return;
 
-	RFIFOHEAD(fd);
 	memcpy(hd->homunculus.name,RFIFOP(fd,2),24);
 	hd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,hd,0);
@@ -1637,7 +1637,7 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
 
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	int x,y,cmd;
-
+	RFIFOHEAD(fd);
 	nullpo_retv(sd);
 
 	if(!merc_is_hom_active(sd->hd))
@@ -1657,7 +1657,7 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 
 void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
 	struct block_list *target;
-
+	RFIFOHEAD(fd);
 	nullpo_retv(sd);
 
 	if(!merc_is_hom_active(sd->hd))
@@ -1686,11 +1686,11 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail)	//[orn]
 {
 	int fd;
+	WFIFOHEAD(sd->fd,packet_len_table[0x22f]);
 
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len_table[0x22f]);
 	WFIFOW(fd,0)=0x22f;
 	WFIFOB(fd,2)=fail;
 	WFIFOW(fd,3)=foodid;
@@ -1706,11 +1706,11 @@ int clif_hom_food(struct map_session_data *sd,int foodid,int fail)	//[orn]
 int clif_walkok(struct map_session_data *sd)
 {
 	int fd;
+	WFIFOHEAD(sd->fd, packet_len_table[0x87]);
 
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len_table[0x87]);
 	WFIFOW(fd,0)=0x87;
 	WFIFOL(fd,2)=gettick();
 	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
@@ -2088,7 +2088,7 @@ int clif_scriptclose(struct map_session_data *sd, int npcid) {
  */
 void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	int fd = sd->fd;
-	//sd->npc_id = npcid;
+	WFIFOHEAD(fd, packet_len_table[0x78]);
 	sd->state.using_fake_npc = 1;
 	malloc_set(WFIFOP(fd,0), 0, packet_len_table[0x78]);
 	WFIFOW(fd,0)=0x78;
@@ -9026,6 +9026,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
  *------------------------------------------
  */
 void clif_parse_ActionRequest(int fd, struct map_session_data *sd) {
+	RFIFOHEAD(fd);
 	clif_parse_ActionRequest_sub(sd,
 		RFIFOB(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]),
 		RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]),
@@ -10158,8 +10159,12 @@ void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd)
  */
 void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 {
-	unsigned short message_len = RFIFOW(fd,2)-7;
+	short message_len;
 	RFIFOHEAD(fd);
+	message_len = RFIFOW(fd,2)-7;
+
+	if(message_len < 1)
+		return; //Blank message?
 
 	if(message_len >= sizeof(sd->npc_str)){
 		ShowWarning("clif: input string too long !\n");
@@ -10169,7 +10174,6 @@ void clif_parse_NpcStringInput(int fd,struct map_session_data *sd)
 	// Exploit prevention if crafted packets (without null) is being sent. [Lance]
 	memcpy(sd->npc_str,RFIFOP(fd,8),message_len); 
 	sd->npc_str[message_len-1]=0;
-
 	npc_scriptcont(sd,RFIFOL(fd,4));
 }
 

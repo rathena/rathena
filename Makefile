@@ -25,8 +25,11 @@ OPT += -ffast-math
 OPT += -Wall -Wno-sign-compare
 # Uncomment this one if you are using GCC 4.X
 # OPT += -Wno-unused-parameter -Wno-pointer-sign
+# Makes map-wide script variables be saved to SQL instead of TXT files.
 # OPT += -DMAPREGSQL
-# OPT += -DCHRIF_OLDINFO
+# Turbo is an alternate socket access implementation which should be faster.
+# OPT += -DTURBO
+# Enable the perl regular expression support for scripts
 # OPT += -DPCRE_SUPPORT
 # OPT += -DGCOLLECT
 # OPT += -DMEMWATCH

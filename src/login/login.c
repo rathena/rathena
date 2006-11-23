@@ -1472,6 +1472,7 @@ int parse_fromchar(int fd) {
 					unsigned int k;
 					time_t connect_until_time = 0;
 					char email[40] = "";
+					WFIFOHEAD(fd,51);
 					auth_fifo[i].delflag = 1;
 					login_log("Char-server '%s': authentification of the account %d accepted (ip: %s)." RETCODE,
 					          server[id].name, acc, ip);

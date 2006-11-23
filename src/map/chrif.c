@@ -319,9 +319,11 @@ int chrif_removemap(int fd){
 }
 
 int chrif_save_ack(int fd) {
-	int aid = RFIFOL(fd,2), cid = RFIFOL(fd,6);
-	struct map_session_data *sd = map_id2sd(aid);
-	if (sd && sd->status.char_id == cid)
+	struct map_session_data *sd;
+	RFIFOHEAD(fd);
+	sd = map_id2sd(RFIFOL(fd,2));
+
+	if (sd && sd->status.char_id == RFIFOL(fd,6))
 		map_quit_ack(sd);
 	return 0;
 }
@@ -1410,7 +1412,7 @@ int chrif_disconnect(int fd) {
 
 void chrif_update_ip(int fd){
 	unsigned long new_ip;
-
+	WFIFOHEAD(fd, 6);
 	new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
 	if (new_ip && new_ip != char_ip)
 		char_ip = new_ip; //Update char_ip

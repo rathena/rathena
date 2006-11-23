@@ -614,7 +614,8 @@ int mapif_parse_Registry(int fd) {
 
 // Request the value of all registries.
 int mapif_parse_RegistryRequest(int fd)
-{
+{	
+	RFIFOHEAD(fd);
 	//Load Char Registry
 	if (RFIFOB(fd,12))
 		char_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6));

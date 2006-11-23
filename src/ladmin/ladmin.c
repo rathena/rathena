@@ -1134,6 +1134,7 @@ void display_help(char* param, int language) {
 int addaccount(char* param, int emailflag) {
 	char name[1023], sex[1023], email[1023], password[1023];
 //	int i;
+	WFIFOHEAD(login_fd,91);
 
 	memset(name, '\0', sizeof(name));
 	memset(sex, '\0', sizeof(sex));
@@ -1264,6 +1265,7 @@ int banaddaccount(char* param) {
 	int year, month, day, hour, minute, second;
 	char * p_modif;
 	int value, i;
+	WFIFOHEAD(login_fd,38);
 
 	memset(name, '\0', sizeof(name));
 	memset(modif, '\0', sizeof(modif));
@@ -1466,6 +1468,7 @@ int bansetaccountsub(char* name, char* date, char* time) {
 	int year, month, day, hour, minute, second;
 	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
 	struct tm *tmtime;
+	WFIFOHEAD(login_fd,30);
 
 	year = month = day = hour = minute = second = 0;
 	ban_until_time = 0;
@@ -1719,6 +1722,7 @@ int unbanaccount(char* param) {
 //---------------------------------------------------------
 int checkaccount(char* param) {
 	char name[1023], password[1023];
+	WFIFOHEAD(login_fd,50);
 
 	memset(name, '\0', sizeof(name));
 	memset(password, '\0', sizeof(password));
@@ -1772,6 +1776,7 @@ int delaccount(char* param) {
 	char letter;
 	char confirm[1023];
 	int i;
+	WFIFOHEAD(login_fd,26);
 
 	memset(name, '\0', sizeof(name));
 
@@ -1839,6 +1844,7 @@ int delaccount(char* param) {
 //----------------------------------------------------------
 int changeemail(char* param) {
 	char name[1023], email[1023];
+	WFIFOHEAD(login_fd,66);
 
 	memset(name, '\0', sizeof(name));
 	memset(email, '\0', sizeof(email));
@@ -1912,6 +1918,7 @@ int changeemail(char* param) {
 // Sub-function: Asking of the number of online players
 //-----------------------------------------------------
 int getlogincount(void) {
+	WFIFOHEAD(login_fd,2);
 	if (defaultlanguage == 'F') {
 		ladmin_log("Envoi d'un requête au serveur de logins pour obtenir le nombre de joueurs en jeu." RETCODE);
 	} else {
@@ -1931,6 +1938,7 @@ int getlogincount(void) {
 int changegmlevel(char* param) {
 	char name[1023];
 	int GM_level;
+	WFIFOHEAD(login_fd,27);
 
 	memset(name, '\0', sizeof(name));
 	GM_level = 0;
@@ -1985,6 +1993,7 @@ int changegmlevel(char* param) {
 //---------------------------------------------
 int idaccount(char* param) {
 	char name[1023];
+	WFIFOHEAD(login_fd,26);
 
 	memset(name, '\0', sizeof(name));
 
@@ -2027,6 +2036,7 @@ int idaccount(char* param) {
 // Sub-function: Asking to displaying information about an account (by its id)
 //----------------------------------------------------------------------------
 int infoaccount(int account_id) {
+	WFIFOHEAD(login_fd,6);
 	if (account_id < 0) {
 		if (defaultlanguage == 'F') {
 			printf("Entrez un id ayant une valeur positive svp.\n");
@@ -2056,7 +2066,9 @@ int infoaccount(int account_id) {
 // Sub-function: Send a broadcast message
 //---------------------------------------
 int sendbroadcast(short type, char* message) {
-	if (strlen(message) == 0) {
+	int len = strlen(message);
+	WFIFOHEAD(login_fd,9+len);
+	if (len == 0) {
 		if (defaultlanguage == 'F') {
 			printf("Entrez un message svp.\n");
 			if (type == 0) {
@@ -2076,12 +2088,12 @@ int sendbroadcast(short type, char* message) {
 		}
 		return 136;
 	}
-
+	len++; //+'\0'
 	WFIFOW(login_fd,0) = 0x794e;
 	WFIFOW(login_fd,2) = type;
-	WFIFOL(login_fd,4) = strlen(message)+1;
-	memcpy(WFIFOP(login_fd,8), message, strlen(message)+1);
-	WFIFOSET(login_fd,8+strlen(message)+1);
+	WFIFOL(login_fd,4) = len;
+	memcpy(WFIFOP(login_fd,8), message, len);
+	WFIFOSET(login_fd,8+len);
 	bytes_to_read = 1;
 
 	return 0;
@@ -2135,6 +2147,7 @@ int changelanguage(char* language) {
 int listaccount(char* param, int type) {
 //int list_first, list_last, list_type; // parameter to display a list of accounts
 	int i;
+	WFIFOHEAD(login_fd,10);
 
 	list_type = type;
 
@@ -2198,6 +2211,7 @@ int listaccount(char* param, int type) {
 //--------------------------------------------
 int changememo(char* param) {
 	char name[1023], memo[1023];
+	WFIFOHEAD(login_fd,28+255);
 
 	memset(name, '\0', sizeof(name));
 	memset(memo, '\0', sizeof(memo));
@@ -2255,6 +2269,7 @@ int changememo(char* param) {
 // Sub-function: Asking to obtain an account name
 //-----------------------------------------------
 int nameaccount(int id) {
+	WFIFOHEAD(login_fd,6);
 	if (id < 0) {
 		if (defaultlanguage == 'F') {
 			printf("Entrez un id ayant une valeur positive svp.\n");
@@ -2285,6 +2300,7 @@ int nameaccount(int id) {
 //------------------------------------------
 int changepasswd(char* param) {
 	char name[1023], password[1023];
+	WFIFOHEAD(login_fd,50);
 
 	memset(name, '\0', sizeof(name));
 	memset(password, '\0', sizeof(password));
@@ -2335,6 +2351,7 @@ int changepasswd(char* param) {
 // this function have no answer
 //----------------------------------------------------------------------
 int reloadGM(void) {
+	WFIFOHEAD(login_fd,2);
 	WFIFOW(login_fd,0) = 0x7955;
 	WFIFOSET(login_fd,2);
 	bytes_to_read = 0;
@@ -2358,6 +2375,7 @@ int reloadGM(void) {
 //-----------------------------------------------------
 int changesex(char* param) {
 	char name[1023], sex[1023];
+	WFIFOHEAD(login_fd,27);
 
 	memset(name, '\0', sizeof(name));
 	memset(sex, '\0', sizeof(sex));
@@ -2414,6 +2432,7 @@ int changesex(char* param) {
 //-------------------------------------------------------------------------
 int changestatesub(char* name, int state, char* error_message7) {
 	char error_message[1023]; // need to use, because we can modify error_message7
+	WFIFOHEAD(login_fd,50);
 
 	memset(error_message, '\0', sizeof(error_message));
 	strncpy(error_message, error_message7, sizeof(error_message)-1);
@@ -2602,6 +2621,7 @@ int timeaddaccount(char* param) {
 	int year, month, day, hour, minute, second;
 	char * p_modif;
 	int value, i;
+	WFIFOHEAD(login_fd,38);
 
 	memset(name, '\0', sizeof(name));
 	memset(modif, '\0', sizeof(modif));
@@ -2804,6 +2824,7 @@ int timesetaccount(char* param) {
 	int year, month, day, hour, minute, second;
 	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct tm *tmtime;
+	WFIFOHEAD(login_fd,30);
 
 	memset(name, '\0', sizeof(name));
 	memset(date, '\0', sizeof(date));
@@ -2966,6 +2987,7 @@ int timesetaccount(char* param) {
 //------------------------------------------------------------------------------
 int whoaccount(char* param) {
 	char name[1023];
+	WFIFOHEAD(login_fd,26);
 
 	memset(name, '\0', sizeof(name));
 
@@ -3007,6 +3029,7 @@ int whoaccount(char* param) {
 // Sub-function: Asking of the version of the login-server
 //--------------------------------------------------------
 int checkloginversion(void) {
+	WFIFOHEAD(login_fd,2);
 	if (defaultlanguage == 'F')
 		ladmin_log("Envoi d'un requête au serveur de logins pour obtenir sa version." RETCODE);
 	else
@@ -3235,6 +3258,7 @@ int prompt(void) {
 int parse_fromlogin(int fd) {
 	struct char_session_data *sd;
 	int id;
+	RFIFOHEAD(fd);
 	if (session[fd]->eof) {
 		if (defaultlanguage == 'F') {
 			printf("Impossible de se connecter au serveur de login [%s:%d] !\n", loginserverip, loginserverport);
@@ -3296,6 +3320,7 @@ int parse_fromlogin(int fd) {
 				return 0;
 		  {
 			char md5str[64] = "", md5bin[32];
+			WFIFOHEAD(login_fd, 20);
 			if (passenc == 1) {
 				strncpy(md5str, (const char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4);
 				strcat(md5str, loginserveradminpassword);
@@ -3368,6 +3393,7 @@ int parse_fromlogin(int fd) {
 				bytes_to_read = 0;
 			} else {
 				int i;
+				WFIFOHEAD(login_fd,10);
 				if (defaultlanguage == 'F')
 					ladmin_log("  Réception d'une liste des comptes." RETCODE);
 				else
@@ -4199,6 +4225,7 @@ int Connect_login_server(void) {
 #ifdef PASSWORDENC
 	if (passenc == 0) {
 #endif
+		WFIFOHEAD(login_fd,28);
 		WFIFOW(login_fd,0) = 0x7918; // Request for administation login
 		WFIFOW(login_fd,2) = 0; // no encrypted
 		memcpy(WFIFOP(login_fd,4), loginserveradminpassword, 24);
@@ -4213,6 +4240,7 @@ int Connect_login_server(void) {
 		}
 #ifdef PASSWORDENC
 	} else {
+		WFIFOHEAD(login_fd,2);
 		WFIFOW(login_fd,0) = 0x791a; // Sending request about the coding key
 		WFIFOSET(login_fd,2);
 		bytes_to_read = 1;

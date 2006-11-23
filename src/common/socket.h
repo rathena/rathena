@@ -58,7 +58,8 @@ extern time_t stall_time;
 #define WFIFOHEAD(fd, x) char *wbPtr = session[fd]->wdata+session[fd]->wdata_size;
 #define WFIFOP(fd,pos) (&wbPtr[pos])
 #else
-#define WFIFOHEAD(fd, x) ;
+#define WFIFOHEAD(fd, size) { if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }
+
 #define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
 #endif
 #define WFIFOB(fd,pos) (*(unsigned char*)WFIFOP(fd,pos))

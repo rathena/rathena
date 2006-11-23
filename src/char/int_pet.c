@@ -222,6 +222,7 @@ int mapif_delete_pet_ack(int fd,int flag)
 }
 
 int mapif_rename_pet_ack(int fd, int account_id, int char_id, int flag, char *name){
+	WFIFOHEAD(fd, NAME_LENGTH+12);
 	WFIFOW(fd, 0) =0x3884;
 	WFIFOL(fd, 2) =account_id;
 	WFIFOL(fd, 6) =char_id;
@@ -394,6 +395,7 @@ int mapif_parse_DeletePet(int fd)
 }
 
 int mapif_parse_RenamePet(int fd){
+	RFIFOHEAD(fd);
 	mapif_rename_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10));
 	return 0;
 }

@@ -2433,6 +2433,7 @@ int parse_tologin(int fd) {
 			new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
 			if (new_ip && new_ip != char_ip)
 			{	//Update ip.
+				WFIFOHEAD(fd,6);
 				char_ip = new_ip;
 				ShowInfo("Updating IP for [%s].\n",char_ip_str);
 				WFIFOW(fd,0) = 0x2736;
@@ -2454,6 +2455,7 @@ int parse_tologin(int fd) {
 
 int request_accreg2(int account_id, int char_id) {
 	if (login_fd > 0) {
+		WFIFOHEAD(login_fd, 10);
 		WFIFOW(login_fd, 0) = 0x272e;
 		WFIFOL(login_fd, 2) = account_id;
 		WFIFOL(login_fd, 6) = char_id;
