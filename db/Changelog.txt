@@ -20,6 +20,7 @@
 
 ========================
 11/23
+	* Fixed sp cost of RG_RAID [Playtester]
 	* Official skills for remaining Thanatos mobs [Playtester]
 	- this completes the X.3 and X.4 mob skill updates
 	- removed various skills from G_mobs
