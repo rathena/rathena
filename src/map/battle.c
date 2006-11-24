@@ -1640,7 +1640,7 @@ static struct Damage battle_calc_weapon_attack(
 				skillratio += 2*sc->data[SC_TRUESIGHT].val1;
 			// It is still not quite decided whether it works on bosses or not...
 			if(sc->data[SC_EDP].timer != -1 /*&& !(t_mode&MD_BOSS)*/ && skill_num != ASC_BREAKER && skill_num != ASC_METEORASSAULT)
-				skillratio += 150 +50*sc->data[SC_EDP].val1;
+				skillratio += sc->data[SC_EDP].val3;
 		}
 		switch (skill_num) {
 			case AS_SONICBLOW: //EDP will not stack with Soul Link bonus.

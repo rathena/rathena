@@ -4862,6 +4862,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2; //Chance to Poison enemies.
+			val3 = 50*(val1+1); //Damage increase (+50 +50*lv%)
 			break;
 		case SC_POISONREACT:
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
@@ -5623,7 +5624,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				tick = 3000;
 			break;
 		case SC_SPIDERWEB:
-			if (map[bl->m].flag.pvp)
+			if (bl->type == BL_PC)
 				tick /=2;
 			break;
 		case SC_ARMOR:
