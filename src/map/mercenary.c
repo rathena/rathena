@@ -114,7 +114,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	hd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_remove_map(&hd->bl,0);
+	return unit_free(&hd->bl,0);
 }
 
 int merc_hom_calc_skilltree(struct homun_data *hd)
@@ -478,7 +478,7 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
 		if ( !merc_hom_decrease_intimacy(hd, 100) )
-			return merc_hom_delete(sd->hd, 23); //omg  
+			return merc_hom_delete(hd, 23); //omg  
 		clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
 	}
 
