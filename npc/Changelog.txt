@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/24
+	* Cleaned up global permanent variables in Airship Quest [KarLaeda]
 11/23
 	* Fixed Mage Tutorial Quest [KarLaeda]
 	- Fixed typos in Ninja Quest

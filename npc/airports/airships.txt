@@ -394,7 +394,7 @@ airplane.gat,65,63,4	script	Maelin	714,{
 }
 
 airplane.gat,32,61,4	script	Nils::TypingContest	49,{
-
+	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
 loopback:
 	mes "[Nils]";
 	mes "Welcome to the";
@@ -421,20 +421,20 @@ s_Play:
 	next;
 	//below arrays are for simplified entering of new lines ;P
 	//first lines array
-	setarray $textstringsa$[0],"^00FFFFthkelfkskeldmsiejdlsle^0000FFhfndkelsheidl",
- "^993366hfjdkeldjsieldjs^663366hfjdjeiskdlefvbd",
- "^00FFFFCoboman no chikara-yumei na",
- "^993366belief love luck grimace sweat rush",
- "^00FFFFcallipygian salacious lascivious",
- "^663366uNflAPPaBLe LoVaBLe SeCreTs AnD",
- "^00CCFFburrdingdingdilidingdingphoohudaamb",
- "^FF33CCbarapaphurarlandreamduranbatuhi^990066wooi",
- "^FF33CCLiGhTsPeEd RiGhT SPEed leFT TURn",
- "^00CCFFI'm the King of all Weirdos! Now",
- "^00CCFFBy the power of^000000",
- "^00CCFF...silence. quiet benevolence...";
+	setarray $@textstringsa$[0],"^00FFFFthkelfkskeldmsiejdlsle^0000FFhfndkelsheidl",
+	"^993366hfjdkeldjsieldjs^663366hfjdjeiskdlefvbd",
+	"^00FFFFCoboman no chikara-yumei na",
+	"^993366belief love luck grimace sweat rush",
+	"^00FFFFcallipygian salacious lascivious",
+	"^663366uNflAPPaBLe LoVaBLe SeCreTs AnD",
+	"^00CCFFburrdingdingdilidingdingphoohudaamb",
+	"^FF33CCbarapaphurarlandreamduranbatuhi^990066wooi",
+	"^FF33CCLiGhTsPeEd RiGhT SPEed leFT TURn",
+	"^00CCFFI'm the King of all Weirdos! Now",
+	"^00CCFFBy the power of^000000",
+	"^00CCFF...silence. quiet benevolence...";
 	//second lines array
-	setarray $textstringsb$[0],"skemd",
+	setarray $@textstringsb$[0],"skemd",
 	"",
 	"chikara-dalookii na chikara da ze!",
 	"folktale rodimus optimus bumblebee",
@@ -447,7 +447,7 @@ s_Play:
 	"p-po-poi-po-poi-poin-poing",
 	"soul mate... wonder. enigma...";
 	//for the few 3-liners... =X
-	setarray $textstringsc$[0],"",
+	setarray $@textstringsc$[0],"",
 	"",
 	"COBO ON!",
 	"",
@@ -458,9 +458,9 @@ s_Play:
 	"",
 	"",
 	"GOD-POING. I NEVER LOSE!",
- "cloud.";
+	"cloud.";
 	//comparisation strings
-	setarray $compstring$[0],"thkelfkskeldmsiejdlslehfndkelsheidlskemd",
+	setarray $@compstring$[0],"thkelfkskeldmsiejdlslehfndkelsheidlskemd",
 	"hfjdkeldjsieldjshfjdjeiskdlefvbd",
 	"Coboman no chikara-yumei na chikara-dalookii na chikara da ze! COBO ON",
 	"belief love luck grimace sweat rush folktale rodimus optimus bumblebee",
@@ -473,26 +473,26 @@ s_Play:
 	"By the power of p-po-poi-po-poi-poin-poing GOD-POING. I NEVER LOSE!",
 	"...silence. quiet benevolence... soul mate... wonder. enigma... cloud";
 	//lengths
-	setarray $lengths[0],20,32,73,73,65,66,67,55,67,66,67,69;
+	setarray $@lengths[0],20,32,73,73,65,66,67,55,67,66,67,69;
 	//	initnpctimer;
 	mes "[Nils]";
-	set @index,rand(1,getarraysize($textstringsa$))-1;
-	set @string1a$,$textstringsa$[@index];
-	set @string1b$,$textstringsb$[@index];
-	set @string1c$,$textstringsc$[@index];
-	set @typingstring1$,$compstring$[@index];
-	set @typingkeys,$lengths[@index];
-	set @index2,rand(1,getarraysize($textstringsa$))-1;
+	set @index,rand(1,getarraysize($@textstringsa$))-1;
+	set @string1a$,$@textstringsa$[@index];
+	set @string1b$,$@textstringsb$[@index];
+	set @string1c$,$@textstringsc$[@index];
+	set @typingstring1$,$@compstring$[@index];
+	set @typingkeys,$@lengths[@index];
+	set @index2,rand(1,getarraysize($@textstringsa$))-1;
 	while (@index2 == @index) {
-		set @index2,rand(1,getarraysize($textstringsa$))-1;
+		set @index2,rand(1,getarraysize($@textstringsa$))-1;
 	}
-	set @string2a$,$textstringsa$[@index2];
-	set @string2b$,$textstringsb$[@index2];
-	set @string2c$,$textstringsc$[@index2];
-	set @typingstring2$,$compstring$[@index2];
-	set @typingkeys,@typingkeys+$lengths[@index2];
+	set @string2a$,$@textstringsa$[@index2];
+	set @string2b$,$@textstringsb$[@index2];
+	set @string2c$,$@textstringsc$[@index2];
+	set @typingstring2$,$@compstring$[@index2];
+	set @typingkeys,@typingkeys+$@lengths[@index2];
 	set @start,gettime(3)*60*60+gettime(2)*60+gettime(1);
- mes @string1a$;
+	mes @string1a$;
 	if(@string1b$ != "")mes @string1b$;
 	if(@string1c$ != "")mes @string1c$;
 	input @comparisonvar$[1];

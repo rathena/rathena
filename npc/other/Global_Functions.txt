@@ -90,6 +90,14 @@ function	script	F_ClearGarbage	{
 		set num6,0;	set num7,0;	set num8,0;	set num9,0;
 		set hzdun,0; set cubekey,0; set piciburn,0;
 	}
+	//Airship
+	if($lengths){
+		cleararray $textstringsa$[0],"",getarraysize($textstringsa$);
+		cleararray $textstringsb$[0],"",getarraysize($textstringsb$);
+		cleararray $textstringsc$[0],"",getarraysize($textstringsc$);
+		cleararray $compstring$[0],"",getarraysize($compstring$);
+		cleararray $lengths[0],0,getarraysize($lengths);
+	}
 	return;
 }
 
