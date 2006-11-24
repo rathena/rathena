@@ -2842,6 +2842,9 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	if(flag|SCB_WATK && status->rhw.atk2 < status->rhw.atk)
 		status->rhw.atk2 = status->rhw.atk;
 
+	if(flag&SCB_MATK) //Hom Min Matk is always the same as Max Matk
+		status->matk_min = status->matk_max;
+	
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
 
@@ -5740,18 +5743,18 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_TWOHANDQUICKEN:
 		case SC_SPEARQUICKEN:
 		case SC_CONCENTRATION:
-			sc->opt3 |= 1;
+			sc->opt3 |= 0x1;
 			opt_flag = 0;
 			break;
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:
 		case SC_SWOO:	//Why does it shares the same opt as Overthrust? Perhaps we'll never know...
-			sc->opt3 |= 2;
+			sc->opt3 |= 0x2;
 			opt_flag = 0;
 			break;
 		case SC_ENERGYCOAT:
 		case SC_SKE:
-			sc->opt3 |= 4;
+			sc->opt3 |= 0x4;
 			opt_flag = 0;
 			break;
 		case SC_INCATKRATE:
@@ -5761,37 +5764,39 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				break;
 			}
 		case SC_EXPLOSIONSPIRITS:
-			sc->opt3 |= 8;
+			sc->opt3 |= 0x8;
 			opt_flag = 0;
 			break;
 		case SC_STEELBODY:
 		case SC_SKA:
-			sc->opt3 |= 16;
+			sc->opt3 |= 0x10;
 			opt_flag = 0;
 			break;
 		case SC_BLADESTOP:
-			sc->opt3 |= 32;
+			sc->opt3 |= 0x20;
 			opt_flag = 0;
 			break;
+		//0x40 missing?
 		case SC_BERSERK:
-			sc->opt3 |= 128;
+			sc->opt3 |= 0x80;
 			opt_flag = 0;
 			break;
+		//0x100, 0x200 missing?
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2:
-			sc->opt3 |= 1024;
+			sc->opt3 |= 0x400;
 			opt_flag = 0;
 			break;
 		case SC_ASSUMPTIO:
-			sc->opt3 |= 2048;
+			sc->opt3 |= 0x800;
 			opt_flag = 0;
 			break;
 		case SC_WARM: //SG skills [Komurka]
-			sc->opt3 |= 4096;
+			sc->opt3 |= 0x1000;
 			opt_flag = 0;
 			break;
 		case SC_KAITE:
-			sc->opt3 |= 8192;
+			sc->opt3 |= 0x2000;
 			opt_flag = 0;
 			break;
 		//OPTION
@@ -6282,55 +6287,55 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	case SC_ONEHAND:
 	case SC_SPEARQUICKEN:
 	case SC_CONCENTRATION:
-		sc->opt3 &= ~1;
+		sc->opt3 &= ~0x1;
 		opt_flag = 0;
 		break;
 	case SC_OVERTHRUST:
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
-		sc->opt3 &= ~2;
+		sc->opt3 &= ~0x2;
 		opt_flag = 0;
 		break;
 	case SC_ENERGYCOAT:
 	case SC_SKE:
-		sc->opt3 &= ~4;
+		sc->opt3 &= ~0x4;
 		opt_flag = 0;
 		break;
 	case SC_INCATKRATE: //Simulated Explosion spirits effect.
 		if (bl->type != BL_MOB)
 			break;
 	case SC_EXPLOSIONSPIRITS:
-		sc->opt3 &= ~8;
+		sc->opt3 &= ~0x8;
 		opt_flag = 0;
 		break;
 	case SC_STEELBODY:
 	case SC_SKA:
-		sc->opt3 &= ~16;
+		sc->opt3 &= ~0x10;
 		opt_flag = 0;
 		break;
 	case SC_BLADESTOP:
-		sc->opt3 &= ~32;
+		sc->opt3 &= ~0x20;
 		opt_flag = 0;
 		break;
 	case SC_BERSERK:
-		sc->opt3 &= ~128;
+		sc->opt3 &= ~0x80;
 		opt_flag = 0;
 		break;
 	case SC_MARIONETTE:
 	case SC_MARIONETTE2:
-		sc->opt3 &= ~1024;
+		sc->opt3 &= ~0x400;
 		opt_flag = 0;
 		break;
 	case SC_ASSUMPTIO:
-		sc->opt3 &= ~2048;
+		sc->opt3 &= ~0x800;
 		opt_flag = 0;
 		break;
 	case SC_WARM: //SG skills [Komurka]
-		sc->opt3 &= ~4096;
+		sc->opt3 &= ~0x1000;
 		opt_flag = 0;
 		break;
 	case SC_KAITE:
-		sc->opt3 &= ~8192;
+		sc->opt3 &= ~0x2000;
 		opt_flag = 0;
 		break;
 	default:

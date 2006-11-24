@@ -446,21 +446,6 @@ enum {
 #define OPT2_DPOISON 0x080
 //0x100 
 
-//Opt3: Skill state changes, stackable.
-#define OPT3_SPEEDUP 0x001 //Quicken skills
-#define OPT3_POWERUP 0x002 //Power Thrust
-#define OPT3_SHIELD 0x004 //Energy Coat
-#define OPT3_FURY 0x008 //Explosion spirits
-#define OPT3_ELECTRIC 0x010 //Steel Body
-#define OPT3_STOP 0x020 //Blade Stop
-//64 Unknown
-#define OPT3_BERSERK 0x080 //Berserk
-//256 Unknown
-//512 Unknown
-#define OPT3_PINKAURA 0x400 //Marionette
-#define OPT3_AURASHIELD 0x800 //Assumptio
-#define OPT3_HEAT 0x1000 //Warmth Skills
-
 #define OPTION_SIGHT 0x00000001
 #define OPTION_HIDE 0x00000002
 #define OPTION_CLOAK 0x00000004
