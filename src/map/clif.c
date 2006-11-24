@@ -1824,7 +1824,7 @@ void clif_quitsave(int fd,struct map_session_data *sd)
 	else if (sd->fd)
 	{	//Disassociate session from player (session is deleted after this function was called)
 		//And set a timer to make him quit later.
-		session[fd]->session_data = NULL;
+		session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
 		add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
 	}
@@ -8210,40 +8210,38 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 	packet_ver = clif_guess_PacketVer(fd, 1);
 	cmd = RFIFOW(fd,0);
 	
-	if (packet_ver > 0)
-	{
-		account_id	= RFIFOL(fd, packet_db[packet_ver][cmd].pos[0]);
-		char_id		= RFIFOL(fd, packet_db[packet_ver][cmd].pos[1]);
-		login_id1	= RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]);
-		client_tick	= RFIFOL(fd, packet_db[packet_ver][cmd].pos[3]);
-		sex			= RFIFOB(fd, packet_db[packet_ver][cmd].pos[4]);
-			
-		if ((old_sd = map_id2sd(account_id)) != NULL)
-		{	// if same account already connected, we disconnect the 2 sessions
-			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
-			if (old_sd->state.finalsave || !old_sd->state.auth)
-				; //Previous player is not done loading.
-				//Or he has quit, but is not done saving on the charserver.
-			else if (old_sd->fd)
-				clif_authfail_fd(old_sd->fd, 2); // same id
-			else 
-				map_quit(old_sd);
-			clif_authfail_fd(fd, 8); // still recognizes last connection
-		} else {
-			sd = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+	if (packet_ver <= 0)
+		return;
 
-			sd->fd = fd;
-			sd->packet_ver = packet_ver;
-			session[fd]->session_data = sd;
-
-			pc_setnewpc(sd, account_id, char_id, login_id1, client_tick, sex, fd);
-			WFIFOHEAD(fd,4);
-			WFIFOL(fd,0) = sd->bl.id;
-			WFIFOSET(fd,4);
-
-			chrif_authreq(sd);
-		}
+	account_id  = RFIFOL(fd, packet_db[packet_ver][cmd].pos[0]);
+	char_id     = RFIFOL(fd, packet_db[packet_ver][cmd].pos[1]);
+	login_id1   = RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]);
+	client_tick = RFIFOL(fd, packet_db[packet_ver][cmd].pos[3]);
+	sex         = RFIFOB(fd, packet_db[packet_ver][cmd].pos[4]);
+		
+	if ((old_sd = map_id2sd(account_id)) != NULL)
+	{	// if same account already connected, we disconnect the 2 sessions
+		//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
+		if (old_sd->state.finalsave || !old_sd->state.auth)
+			; //Previous player is not done loading.
+			//Or he has quit, but is not done saving on the charserver.
+		else if (old_sd->fd)
+			clif_authfail_fd(old_sd->fd, 2); // same id
+		else 
+			map_quit(old_sd);
+		clif_authfail_fd(fd, 8); // still recognizes last connection
+		return;
 	}
+	sd = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+	sd->fd = fd;
+	sd->packet_ver = packet_ver;
+	session[fd]->session_data = sd;
+
+	pc_setnewpc(sd, account_id, char_id, login_id1, client_tick, sex, fd);
+	WFIFOHEAD(fd,4);
+	WFIFOL(fd,0) = sd->bl.id;
+	WFIFOSET(fd,4);
+	chrif_authreq(sd);
 	return;
 }
 
@@ -11757,32 +11755,34 @@ int clif_parse(int fd) {
 	}
 
 	sd = (struct map_session_data*)session[fd]->session_data;
-/* This behaviour has been deprecated due to actually causing trouble instead
- * of helping against exploits ~.~ [Skotlex]
-	if (!chrif_isconnect())
-	{
-		ShowInfo("Closing session #%d (Not connected to Char server)\n", fd);
-		if (sd && sd->state.auth)
-			clif_quitsave(fd, sd); // the function doesn't send to inter-server/char-server if it is not connected [Yor]
-		do_close(fd);
-		return 0;
-	} else
-	*/
+
+	if (sd && sd->fd != fd)
+	{	//FIXME: Temporal debug until a certain mysterious crash is fixed.
+		ShowError("Player's connection value is incorrect! %d != %d\n", sd->fd, fd);
+		sd->fd = fd;
+	}
+
 	if (session[fd]->eof) {
-		if (sd && sd->state.autotrade) {
-			//Disassociate character from the socket connection.
-			session[fd]->session_data = NULL;
-			sd->fd = 0;
-			ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n", (pc_isGM(sd))?"GM ":"",sd->status.name); // Player logout display [Valaris]
-		} else if (sd && sd->state.auth) {
-			clif_quitsave(fd, sd); // the function doesn't send to inter-server/char-server if it is not connected [Yor]
-			if (sd->status.name != NULL)
-				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"",sd->status.name); // Player logout display [Valaris]
-			else
-				ShowInfo("%sCharacter with Account ID '"CL_WHITE"%d"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"", sd->bl.id); // Player logout display [Yor]
+		if (sd) {
+			if (sd->state.autotrade) {
+				//Disassociate character from the socket connection.
+				session[fd]->session_data = NULL;
+				sd->fd = 0;
+				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n",
+					(pc_isGM(sd))?"GM ":"",sd->status.name);
+			} else
+			if (sd->state.auth) {
+				clif_quitsave(fd, sd); // the function doesn't send to inter-server/char-server if it is not connected [Yor]
+				 // Player logout display [Valaris]
+				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n",
+					(pc_isGM(sd))?"GM ":"",sd->status.name);
+			} else {
+				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n",
+					sd->bl.id, sd->char_id);
+			}
 		} else {
 			unsigned char *ip = (unsigned char *) &session[fd]->client_addr.sin_addr;
-			ShowInfo("Player not identified with IP '"CL_WHITE"%d.%d.%d.%d"CL_RESET"' logged off.\n", ip[0],ip[1],ip[2],ip[3]);
+			ShowInfo("Closed connection from '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", ip[0],ip[1],ip[2],ip[3]);
 		}
 		do_close(fd);
 		return 0;
@@ -11913,8 +11913,8 @@ int clif_parse(int fd) {
 	}
 #endif
 
-	if (sd && sd->state.auth == 1 && sd->state.waitingdisconnect == 1) { // 切断待ちの場合パケットを処理しない
-
+	if (sd && sd->state.waitingdisconnect == 1) {
+		// 切断待ちの場合パケットを処理しない
 	} else if (packet_db[packet_ver][cmd].func) {
 		if (sd && sd->bl.prev == NULL &&
 			packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
@@ -11925,44 +11925,38 @@ int clif_parse(int fd) {
 			|| packet_db[packet_ver][cmd].func == clif_parse_debug
 		)	//Only execute the function when there's an sd (except for debug/wanttoconnect packets)
 			packet_db[packet_ver][cmd].func(fd, sd);
-	} else {
-		// 不明なパケット
-		if (battle_config.error_log) {
-#if DUMP_UNKNOWN_PACKET
-			{
-				int i;
-				FILE *fp;
-				char packet_txt[256] = "save/packet.txt";
-				time_t now;
-				dump = 1;
+	}
+#ifdef DUMP_UNKNOWN_PACKET
+	else if (battle_config.error_log)
+  	{
+		int i;
+		FILE *fp;
+		char packet_txt[256] = "save/packet.txt";
+		time_t now;
+		dump = 1;
 
-				if ((fp = fopen(packet_txt, "a")) == NULL) {
-					ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
-					return 1;
-				} else {
-					time(&now);
-					if (sd && sd->state.auth) {
-						if (sd->status.name != NULL)
-							fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent wrong packet:\n",
-							        asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
-						else
-							fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
-					} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-						fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
+		if ((fp = fopen(packet_txt, "a")) == NULL) {
+			ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
+			return 1;
+		} else {
+			time(&now);
+			if (sd && sd->state.auth) {
+				fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent wrong packet:\n",
+					asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
+			} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
+				fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
 
-					fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-					for(i = 0; i < packet_len; i++) {
-						if ((i & 15) == 0)
-							fprintf(fp, "\n\t%04X ", i);
-						fprintf(fp, "%02X ", RFIFOB(fd,i));
-					}
-					fprintf(fp, "\n\n");
-					fclose(fp);
-				}
+			fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+			for(i = 0; i < packet_len; i++) {
+				if ((i & 15) == 0)
+					fprintf(fp, "\n\t%04X ", i);
+				fprintf(fp, "%02X ", RFIFOB(fd,i));
 			}
-#endif
+			fprintf(fp, "\n\n");
+			fclose(fp);
 		}
 	}
+#endif
 
 	if (dump) {
 		int i;
