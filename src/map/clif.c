@@ -5085,7 +5085,7 @@ int clif_GMmessage(struct block_list *bl, char* mes, int len, int flag)
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = len + lp;
-	WBUFL(buf,4) = 0x65756c62;
+	WBUFL(buf,4) = 0x65756c62; //"blue":
 	memcpy(WBUFP(buf,lp), mes, len);
 	flag &= 0x07;
 	clif_send(buf, WBUFW(buf,2), bl,

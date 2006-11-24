@@ -1028,7 +1028,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			//Skill blocking.
 			if (
 				(sc->data[SC_VOLCANO].timer != -1 && skill_num == WZ_ICEWALL) ||
-				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION && !(status->mode&MD_BOSS)) ||
+				(sc->data[SC_ROKISWEIL].timer != -1 && skill_num != BD_ADAPTATION) ||
 				(sc->data[SC_HERMODE].timer != -1 && skill_get_inf(skill_num) & INF_SUPPORT_SKILL) ||
 				(sc->data[SC_NOCHAT].timer != -1 && sc->data[SC_NOCHAT].val1&MANNER_NOSKILL)
 			)

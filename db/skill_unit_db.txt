@@ -36,7 +36,7 @@
  85,0x86,,0,6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x008	//WZ_VERMILION
  87,0x8d,    , -1, 0,  -1,all,   0x000	//WZ_ICEWALL
  89,0x86,    ,  0, 5, 450,enemy, 0x008	//WZ_STORMGUST
- 91,0x86,    ,  0, 2,1000,enemy, 0x080	//WZ_HEAVENDRIVE
+ 91,0x86,    ,  0, 2,1000,enemy, 0x000	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x000	//WZ_QUAGMIRE
 115,0x90,    ,  0, 1,1000,enemy, 0x006	//HT_SKIDTRAP
 116,0x93,    ,  0, 1,1000,enemy, 0x006	//HT_LANDMINE

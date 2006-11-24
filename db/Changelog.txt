@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/24
+	* Heaven's drive no longer targets traps. [Skotlex]
 11/23
 	* Fixed sp cost of RG_RAID [Playtester]
 	* Official skills for remaining Thanatos mobs [Playtester]
