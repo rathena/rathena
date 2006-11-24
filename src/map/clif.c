@@ -1542,12 +1542,9 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 }
 
 void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[orn]
-	int fd;
+	int fd = sd->fd;
 	WFIFOHEAD(fd, packet_len_table[0x230]);
-	nullpo_retv(sd);
 	nullpo_retv(sd->hd);
-
-	fd=sd->fd;
 	WFIFOW(fd,0)=0x230;
 	WFIFOW(fd,2)=type;
 	WFIFOL(fd,4)=sd->hd->bl.id;
@@ -1559,16 +1556,14 @@ void clif_send_homdata(struct map_session_data *sd, int type, int param) {	//[or
 
 int clif_homskillinfoblock(struct map_session_data *sd) {	//[orn]
 	struct homun_data *hd;
-	int fd;
+	int fd = sd->fd;
 	int i,j,len=4,id;
 	WFIFOHEAD(fd, 4+37*MAX_HOMUNSKILL);
-	nullpo_retr(0, sd);
 
 	hd = sd->hd;
 	if ( !hd ) 
 		return 0 ;
 
-	fd=sd->fd;
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		if( (id = hd->homunculus.hskill[i].id) != 0 ){
@@ -2023,13 +2018,9 @@ int clif_selllist(struct map_session_data *sd) {
  *------------------------------------------
  */
 int clif_scriptmes(struct map_session_data *sd, int npcid, char *mes) {
-	int fd;
+	int fd = sd->fd;
 	int slen = strlen(mes) + 9;
 	WFIFOHEAD(fd, slen);
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
 	WFIFOW(fd,0)=0xb4;
 	WFIFOW(fd,2)=slen;
 	WFIFOL(fd,4)=npcid;
@@ -2099,19 +2090,16 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
  *------------------------------------------
  */
 int clif_scriptmenu(struct map_session_data *sd, int npcid, char *mes) {
-	int fd;
+	int fd = sd->fd;
 	int slen = strlen(mes) + 8;
 	struct block_list *bl = NULL;
 	WFIFOHEAD(fd, slen);
-
-	nullpo_retr(0, sd);
 
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 	   clif_sendfakenpc(sd, npcid);
 
-	fd=sd->fd;
 	WFIFOW(fd,0)=0xb7;
 	WFIFOW(fd,2)=slen;
 	WFIFOL(fd,4)=npcid;
