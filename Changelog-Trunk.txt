@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/23
+	* Completed Reddozen's hanging mapwarp code to support party and old syntax. [Lance]
 	* Updated sql files [Playtester]
 	* Made WFIFOHEAD() check for available buffer size remaining on the
 	  connection, and when there's not enough space, it will increase it.

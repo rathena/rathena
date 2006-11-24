@@ -3802,7 +3802,7 @@ struct script_function buildin_func[] = {
 	{buildin_specialeffect,"specialeffect","i*"}, // npc skill effect [Valaris]
 	{buildin_specialeffect2,"specialeffect2","i*"}, // skill effect on players[Valaris]
 	{buildin_nude,"nude",""}, // nude command [Valaris]
-	{buildin_mapwarp,"mapwarp","ssiiii"},		// Added by RoVeRT
+	{buildin_mapwarp,"mapwarp","ssii*"},		// Added by RoVeRT
 	{buildin_inittimer,"inittimer",""},
 	{buildin_stoptimer,"stoptimer",""},
 	{buildin_cmdothernpc,"cmdothernpc","ss"},
@@ -9114,12 +9114,15 @@ int buildin_failedremovecards(struct script_state *st)
 
 /* ================================================================
  * mapwarp "<from map>","<to map>",<x>,<y>,<type>,<ID for Type>;
- * type: 0=everyone, 1=guild, 2=party(uncoded);	[Reddozen]
+ * type: 0=everyone, 1=guild, 2=party;	[Reddozen]
+ * improved by [Lance]
  * ================================================================
  */
 int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 {
 	int x,y,m,check_val=0,check_ID=0,i=0;
+	struct guild *g = NULL;
+	struct party_data *p = NULL;
 	char *str;
 	char *mapname;
 	unsigned int index;
@@ -9127,8 +9130,10 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	y=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	check_val=conv_num(st,& (st->stack->stack_data[st->start+6]));
-	check_ID=conv_num(st,& (st->stack->stack_data[st->start+7]));
+	if(st->end > st->start+7){
+		check_val=conv_num(st,& (st->stack->stack_data[st->start+6]));
+		check_ID=conv_num(st,& (st->stack->stack_data[st->start+7]));
+	}
 
 	if( (m=map_mapname2mapid(mapname))< 0)
 		return 0;
@@ -9136,21 +9141,31 @@ int buildin_mapwarp(struct script_state *st)	// Added by RoVeRT
 	if(!(index=mapindex_name2id(str)))
 		return 0;
 
-	if(!(check_val))
-	map_foreachinmap(buildin_areawarp_sub,
-		m,BL_PC,index,x,y);
-
-	if(check_val==1){
-		struct guild *g = guild_search(check_ID);
-
-		if (g){
-			for( i=0; i < g->max_member; i++)
-			{
-				if(g->member[i].sd && g->member[i].sd->bl.m==m){
-					pc_setpos(g->member[i].sd,index,x,y,3);
+	switch(check_val){
+		case 1:
+			g = guild_search(check_ID);
+			if (g){
+				for( i=0; i < g->max_member; i++)
+				{
+					if(g->member[i].sd && g->member[i].sd->bl.m==m){
+						pc_setpos(g->member[i].sd,index,x,y,3);
+					}
 				}
 			}
-		}
+			break;
+		case 2:
+			p = party_search(check_ID);
+			if(p){
+				for(i=0;i<MAX_PARTY; i++){
+					if(p->data[i].sd && p->data[i].sd->bl.m == m){
+						pc_setpos(p->data[i].sd,index,x,y,3);
+					}
+				}
+			}
+			break;
+		default:
+			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y);
+			break;
 	}
 
 	return 0;
