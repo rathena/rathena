@@ -493,8 +493,9 @@ int mapif_account_reg(int fd,unsigned char *src)
 int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 {
 	struct accreg *reg=accreg_pt;
+	WFIFOHEAD(fd, 13 + 5000);
 	inter_accreg_fromsql(account_id,char_id,reg,type);
-
+	
 	WFIFOW(fd,0)=0x3804;
 	WFIFOL(fd,4)=account_id;
 	WFIFOL(fd,8)=char_id;
@@ -503,11 +504,13 @@ int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 		WFIFOW(fd,2)=13;
 	}else{
 		int i,p;
-		for (p=13,i = 0; i < reg->reg_num; i++) {
+		for (p=13,i = 0; i < reg->reg_num && p < 5000; i++) {
 			p+= sprintf(WFIFOP(fd,p), "%s", reg->reg[i].str)+1; //We add 1 to consider the '\0' in place.
 			p+= sprintf(WFIFOP(fd,p), "%s", reg->reg[i].value)+1;
 		}
 		WFIFOW(fd,2)=p;
+		if (p>= 5000)
+			ShowWarning("Too many acc regs for %d:%d, not all values were loaded.\n", account_id, char_id);
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
@@ -547,14 +550,16 @@ void mapif_send_maxid(int account_id, int char_id)
 //Request to kick char from a certain map server. [Skotlex]
 int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
 {
-	if (fd < 0)
-		return -1;
-	
-	WFIFOW(fd,0) = 0x2b1f;
-	WFIFOL(fd,2) = account_id;
-	WFIFOB(fd,6) = reason;
-	WFIFOSET(fd,7);
-	return 0;
+	if (fd >= 0)
+	{
+		WFIFOHEAD(fd,7);
+		WFIFOW(fd,0) = 0x2b1f;
+		WFIFOL(fd,2) = account_id;
+		WFIFOB(fd,6) = reason;
+		WFIFOSET(fd,7);
+		return 0;
+	}
+	return -1;
 }
 
 //--------------------------------------------------------
@@ -595,6 +600,7 @@ int check_ttl_wisdata(void) {
 // GM message sending
 int mapif_parse_GMmessage(int fd)
 {
+	RFIFOHEAD(fd);
 	mapif_GMmessage(RFIFOP(fd, 8), RFIFOW(fd, 2), RFIFOL(fd, 4), fd);
 	return 0;
 }
@@ -605,7 +611,7 @@ int mapif_parse_WisRequest(int fd) {
 	struct WisData* wd;
 	static int wisid = 0;
 	char name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Needs space to allocate names with escaped chars [Skotlex]
-
+	RFIFOHEAD(fd);
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
 
 	if (RFIFOW(fd,2)-52 >= sizeof(wd->msg)) {
@@ -675,9 +681,12 @@ int mapif_parse_WisRequest(int fd) {
 
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd) {
-	int id = RFIFOL(fd,2), flag = RFIFOB(fd,6);
-	struct WisData *wd = idb_get(wis_db, id);
-
+	int id, flag;
+	struct WisData *wd;
+	RFIFOHEAD(fd);
+	id = RFIFOL(fd,2);
+	flag = RFIFOB(fd,6);
+	wd = idb_get(wis_db, id);
 	if (wd == NULL)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
 
@@ -692,7 +701,7 @@ int mapif_parse_WisReply(int fd) {
 // Received wisp message from map-server for ALL gm (just copy the message and resends it to ALL map-servers)
 int mapif_parse_WisToGM(int fd) {
 	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
-
+	RFIFOHEAD(fd);
 	ShowDebug("Sent packet back!\n");
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;
@@ -706,7 +715,7 @@ int mapif_parse_Registry(int fd)
 {
 	int j,p,len, max;
 	struct accreg *reg=accreg_pt;
-	
+	RFIFOHEAD(fd);	
 	memset(accreg_pt,0,sizeof(struct accreg));
 	switch (RFIFOB(fd, 12)) {
 	case 3: //Character registry
@@ -754,9 +763,10 @@ int mapif_parse_RegistryRequest(int fd)
 //--------------------------------------------------------
 int inter_parse_frommap(int fd)
 {
-	int cmd=RFIFOW(fd,0);
+	int cmd;
 	int len=0;
-
+	RFIFOHEAD(fd);
+	cmd=RFIFOW(fd,0);
 	// interéIä«äçÇ©Çí≤Ç◊Ç
 	if(cmd < 0x3000 || cmd >= 0x3000 + (sizeof(inter_recv_packet_length)/
 		sizeof(inter_recv_packet_length[0]) ) )
@@ -797,6 +807,7 @@ int inter_parse_frommap(int fd)
 // RFIFO check
 int inter_check_length(int fd, int length)
 {
+	RFIFOHEAD(fd);
 	if(length==-1){	// v-len packet
 		if(RFIFOREST(fd)<4)	// packet not yet
 			return 0;

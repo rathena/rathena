@@ -268,8 +268,9 @@ void send_GM_accounts(int fd) {
 			charif_sendallwos(-1, buf, len);
 		else
 		{
+			WFIFOHEAD(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd,len);
+			WFIFOSET(fd, len);
 		}
 		return;
 }
@@ -548,6 +549,7 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	c = 0;
 	for(i = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server_fd[i]) > 0 && fd != sfd) {
+			WFIFOHEAD(fd,len);
 			if (WFIFOSPACE(fd) < len) //Increase buffer size.
 				realloc_writefifo(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
@@ -898,6 +900,7 @@ int parse_fromchar(int fd){
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr.s_addr;
 	unsigned long ipl = session[fd]->client_addr.sin_addr.s_addr;
 	char ip[16];
+	RFIFOHEAD(fd);
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
@@ -949,6 +952,7 @@ int parse_fromchar(int fd){
 				return 0;
 		{
 			int account_id;
+			WFIFOHEAD(fd,51);
 			account_id = RFIFOL(fd,2); // speed up
 			for(i=0;i<AUTH_FIFO_SIZE;i++){
 				if (auth_fifo[i].account_id == account_id &&
@@ -1016,11 +1020,11 @@ int parse_fromchar(int fd){
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 				}
 			}
-
-			// send some answer
+		{	// send some answer
+			WFIFOHEAD(fd,6);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
-
+		}
 			RFIFOSKIP(fd,6);
 			break;
 
@@ -1032,6 +1036,7 @@ int parse_fromchar(int fd){
 			int account_id;
 			time_t connect_until_time = 0;
 			char email[40] = "";
+			WFIFOHEAD(fd,50);
 			account_id=RFIFOL(fd,2);
 			sprintf(tmpsql,"SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, account_id);
 			if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1065,10 +1070,13 @@ int parse_fromchar(int fd){
 			ShowError("change GM error 0 %s\n", RFIFOP(fd, 8));
 
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
+		{
+			WFIFOHEAD(fd, 10);
 			WFIFOW(fd, 0) = 0x2721;
 			WFIFOL(fd, 2) = RFIFOL(fd,4); // oldacc;
 			WFIFOL(fd, 6) = 0; // newacc;
 			WFIFOSET(fd, 10);
+		}
 			return 0;
 
 		// Map server send information to change an email of an account via char-server
@@ -1359,6 +1367,7 @@ int parse_fromchar(int fd){
 				int account_id = RFIFOL(fd, 2);
 				int char_id = RFIFOL(fd, 6);
 				int p;
+				WFIFOHEAD(fd,10000);
 				RFIFOSKIP(fd,10);
 				sprintf(tmpsql, "SELECT `str`,`value` FROM `%s` WHERE `type`='1' AND `account_id`='%d'",reg_db, account_id);
 				if (mysql_query(&mysql_handle, tmpsql)) {
@@ -1374,12 +1383,14 @@ int parse_fromchar(int fd){
 				WFIFOL(fd,4) = account_id;
 				WFIFOL(fd,8) = char_id;
 				WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
-				for(p = 13; (sql_row = mysql_fetch_row(sql_res));){
+				for(p = 13; (sql_row = mysql_fetch_row(sql_res)) && p < 9000;){
 					if (sql_row[0][0]) {
 						p+= sprintf(WFIFOP(fd,p), "%s", sql_row[0])+1; //We add 1 to consider the '\0' in place.
 						p+= sprintf(WFIFOP(fd,p), "%s", sql_row[1])+1;
 					}
 				}
+				if (p >= 9000)
+					ShowWarning("Too many account2 registries for AID %d. Some registries were not sent.\n", account_id);
 				WFIFOW(fd,2) = p;
 				WFIFOSET(fd,WFIFOW(fd,2));
 				mysql_free_result(sql_res);
@@ -1499,6 +1510,7 @@ int parse_login(int fd) {
 	unsigned char *p = (unsigned char *) &session[fd]->client_addr.sin_addr.s_addr;
 	unsigned long ipl = session[fd]->client_addr.sin_addr.s_addr;
 	char ip[16];
+	RFIFOHEAD(fd);
 
 	sprintf(ip, "%d.%d.%d.%d", p[0], p[1], p[2], p[3]);
 
@@ -1579,11 +1591,12 @@ int parse_login(int fd) {
 				//		    int gm_level = isGM(account.account_id); // removed by [zzo]
 
 				if (min_level_to_connect > account.level) {
+					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
 				} else {
-
+					WFIFOHEAD(fd,47+32*MAX_SERVERS);
 					if (p[0] != 127 && log_login) {
 						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, (unsigned int)ntohl(ipl), t_uid);
 						//query
@@ -1641,6 +1654,7 @@ int parse_login(int fd) {
 			} else {
 				char tmp_sql[512];
 				char error[64];
+				WFIFOHEAD(fd,23);
 				if (log_login)
 				{
 					sprintf(tmp_sql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %%s')", loginlog_db, (unsigned int)ntohl(ipl), t_uid, result);
@@ -1817,12 +1831,16 @@ int parse_login(int fd) {
 				session[fd]->eof = 1;
 				return 0;
 			}
-			ShowDebug("Request Password key -%s\n",md5key);
-			RFIFOSKIP(fd,2);
+		{
+			WFIFOHEAD(fd,4+md5keylen);
 			WFIFOW(fd,0)=0x01dc;
 			WFIFOW(fd,2)=4+md5keylen;
 			memcpy(WFIFOP(fd,4),md5key,md5keylen);
 			WFIFOSET(fd,WFIFOW(fd,2));
+
+			ShowDebug("Request Password key -%s\n",md5key);
+			RFIFOSKIP(fd,2);
+		}
 			break;
 
 		case 0x2710:	// request Char-server connection
@@ -1830,9 +1848,27 @@ int parse_login(int fd) {
 				return 0;
 			{
 				unsigned char* server_name;
+				WFIFOHEAD(fd, 3);
+				memcpy(account.userid,RFIFOP(fd, 2),NAME_LENGTH);
+				account.userid[23] = '\0';
+				memcpy(account.passwd,RFIFOP(fd, 26),NAME_LENGTH);
+				account.passwd[23] = '\0';
+				account.passwdenc = 0;
+				server_name = RFIFOP(fd,60);
+				server_name[20] = '\0';
+				ShowInfo("server connection request %s @ %d.%d.%d.%d:%d (%d.%d.%d.%d)\n",
+					server_name, RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58),
+					p[0], p[1], p[2], p[3]);
+				jstrescapecpy(t_uid,server_name);
 				if (log_login)
 				{
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')", loginlog_db, (unsigned int)ntohl(ipl), RFIFOP(fd, 2),RFIFOP(fd, 60),RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58));
+					char t_login[50];
+					jstrescapecpy(t_login,account.userid);
+					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%d.%d.%d.%d:%d')",
+						loginlog_db, (unsigned int)ntohl(ipl),
+						t_login, t_uid, t_uid,
+						RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57),
+						RFIFOW(fd, 58));
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1840,15 +1876,6 @@ int parse_login(int fd) {
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 					}
 				}
-				ShowInfo("server connection request %s @ %d.%d.%d.%d:%d (%d.%d.%d.%d)\n",
-					RFIFOP(fd, 60), RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58),
-					p[0], p[1], p[2], p[3]);
-				memcpy(account.userid,RFIFOP(fd, 2),NAME_LENGTH);
-				account.userid[23] = '\0';
-				memcpy(account.passwd,RFIFOP(fd, 26),NAME_LENGTH);
-				account.passwd[23] = '\0';
-				account.passwdenc = 0;
-				server_name = RFIFOP(fd,60);
 				result = mmo_auth(&account, fd);
 				//printf("Result: %d - Sex: %d - Account ID: %d\n",result,account.sex,(int) account.account_id);
 
@@ -1857,7 +1884,7 @@ int parse_login(int fd) {
 					memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
 					server[account.account_id].ip=RFIFOL(fd,54);
 					server[account.account_id].port=RFIFOW(fd,58);
-					memcpy(server[account.account_id].name,RFIFOP(fd,60),20);
+					memcpy(server[account.account_id].name,server_name,20);
 					server[account.account_id].users=0;
 					server[account.account_id].maintenance=RFIFOW(fd,82);
 					server[account.account_id].new_=RFIFOW(fd,84);
@@ -1869,9 +1896,8 @@ int parse_login(int fd) {
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 					}
 
-					jstrescapecpy(t_uid,server[account.account_id].name);
 					sprintf(tmpsql,"INSERT INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%ld', '%s', '%d')",
-						account.account_id, server[account.account_id].name,0);
+						account.account_id, t_uid,0);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1894,6 +1920,8 @@ int parse_login(int fd) {
 			return 0;
 
 		case 0x7530:	// request Athena information
+		{
+			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0)=0x7531;
 			WFIFOB(fd,2)=ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3)=ATHENA_MINOR_VERSION;
@@ -1906,7 +1934,7 @@ int parse_login(int fd) {
 			RFIFOSKIP(fd,2);
 			ShowInfo ("Athena version check...\n");
 			break;
-
+		}
 		case 0x7532:
 			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
 			session[fd]->eof = 1;

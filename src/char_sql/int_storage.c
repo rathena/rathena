@@ -223,6 +223,7 @@ int inter_guild_storage_delete(int guild_id)
 // recive packet about storage data
 int mapif_load_storage(int fd,int account_id){
 	//load from DB
+	WFIFOHEAD(fd, sizeof(struct storage)+8);
 	storage_fromsql(account_id, storage_pt);
 	WFIFOW(fd,0)=0x3810;
 	WFIFOW(fd,2)=sizeof(struct storage)+8;
@@ -233,6 +234,7 @@ int mapif_load_storage(int fd,int account_id){
 }
 // send ack to map server which is "storage data save ok."
 int mapif_save_storage_ack(int fd,int account_id){
+	WFIFOHEAD(fd, 7);
 	WFIFOW(fd,0)=0x3811;
 	WFIFOL(fd,2)=account_id;
 	WFIFOB(fd,6)=0;
@@ -243,6 +245,7 @@ int mapif_save_storage_ack(int fd,int account_id){
 int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 {
 	int guild_exist=1;
+	WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
 	WFIFOW(fd,0)=0x3818;
 
 #if 0	// innodb guilds should render this check unnecessary [Aru]
@@ -279,6 +282,7 @@ int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 }
 int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 {
+	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0)=0x3819;
 	WFIFOL(fd,2)=account_id;
 	WFIFOL(fd,6)=guild_id;
@@ -292,14 +296,17 @@ int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 
 // recive request about storage data
 int mapif_parse_LoadStorage(int fd){
+	RFIFOHEAD(fd);
 	mapif_load_storage(fd,RFIFOL(fd,2));
 	return 0;
 }
 // storage data recive and save
 int mapif_parse_SaveStorage(int fd){
-	int account_id=RFIFOL(fd,4);
-	int len=RFIFOW(fd,2);
-
+	int account_id;
+	int len;
+	RFIFOHEAD(fd);
+	account_id=RFIFOL(fd,4);
+	len=RFIFOW(fd,2);
 	if(sizeof(struct storage)!=len-8){
 		ShowError("inter storage: data size error %d %d\n",sizeof(struct storage),len-8);
 	}else{
@@ -312,6 +319,7 @@ int mapif_parse_SaveStorage(int fd){
 
 int mapif_parse_LoadGuildStorage(int fd)
 {
+	RFIFOHEAD(fd);
 	mapif_load_guild_storage(fd,RFIFOL(fd,2),RFIFOL(fd,6));
 	return 0;
 }
@@ -319,8 +327,11 @@ int mapif_parse_LoadGuildStorage(int fd)
 int mapif_parse_SaveGuildStorage(int fd)
 {
 	int guild_exist=1;
-	int guild_id=RFIFOL(fd,8);
-	int len=RFIFOW(fd,2);
+	int guild_id;
+	int len;
+	RFIFOHEAD(fd);
+	guild_id=RFIFOL(fd,8);
+	len=RFIFOW(fd,2);
 	if(sizeof(struct guild_storage)!=len-12){
 		ShowError("inter storage: data size error %d %d\n",sizeof(struct guild_storage),len-12);
 	}
@@ -354,6 +365,7 @@ int mapif_parse_SaveGuildStorage(int fd)
 
 
 int inter_storage_parse_frommap(int fd){
+	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
 	case 0x3010: mapif_parse_LoadStorage(fd); break;
 	case 0x3011: mapif_parse_SaveStorage(fd); break;

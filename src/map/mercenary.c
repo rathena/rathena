@@ -186,9 +186,11 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 			hd->homunculus.hskill[i].lv++ ;
 			hd->homunculus.skillpts-- ;
 			status_calc_homunculus(hd,0) ;
-			clif_homskillup(hd->master, skillnum) ;
-			clif_hominfo(hd->master,hd,0) ;
-			clif_homskillinfoblock(hd->master) ;
+			if (hd->master) {
+				clif_homskillup(hd->master, skillnum);
+				clif_hominfo(hd->master,hd,0);
+				clif_homskillinfoblock(hd->master);
+			}
 		}
 	}
 }

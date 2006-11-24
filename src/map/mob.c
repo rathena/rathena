@@ -134,7 +134,7 @@ int mobdb_checkid(const int id)
  * Returns the view data associated to this mob class.
  *------------------------------------------
  */
-struct view_data * mob_get_viewdata(class_) 
+struct view_data * mob_get_viewdata(int class_) 
 {
 	if (mob_db(class_) == mob_dummy)
 		return 0;

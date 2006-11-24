@@ -1995,7 +1995,7 @@ int parse_tologin(int fd) {
 					} else {
 						// refuse connection: too much online players
 //						printf("count_users(): %d < max_connect_use (%d) -> fail...\n", count_users(), max_connect_user);
-                                                WFIFOHEAD(fd, 3);
+						WFIFOHEAD(i, 3);
 						WFIFOW(i,0) = 0x6c;
 						WFIFOW(i,2) = 0;
 						WFIFOSET(i,3);
@@ -2403,7 +2403,7 @@ int parse_tologin(int fd) {
 						for(i = 0; i < fd_max; i++) {
 							if (session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid)
 							{
-								WFIFOHEAD(fd, 3);
+								WFIFOHEAD(i, 3);
 								WFIFOW(i,0) = 0x81;
 								WFIFOB(i,2) = 2;
 								WFIFOSET(i,3);
@@ -2502,7 +2502,7 @@ int char_parse_Registry(int account_id, int char_id, unsigned char *buf, int buf
 //Reply to map server with acc reg values.
 int char_account_reg_reply(int fd,int account_id,int char_id) {
 	int i,j,p;
-	WFIFOHEAD(login_fd, GLOBAL_REG_NUM*288 + 13);
+	WFIFOHEAD(fd, GLOBAL_REG_NUM*288 + 13);
 	WFIFOW(fd,0)=0x3804;
 	WFIFOL(fd,4)=account_id;
 	WFIFOL(fd,8)=char_id;
@@ -2894,6 +2894,7 @@ int parse_frommap(int fd) {
 				if (map_fd>=0 && session[map_fd] && char_data) 
 				{	//Send the map server the auth of this player.
 					//Update the "last map" as this is where the player must be spawned on the new map server.
+					WFIFOHEAD(map_fd, 20 + sizeof(struct mmo_charstatus));
 					char_data->last_point.map = RFIFOW(fd,18);
 					char_data->last_point.x = RFIFOW(fd,20);
 					char_data->last_point.y = RFIFOW(fd,22);
@@ -2949,10 +2950,12 @@ int parse_frommap(int fd) {
 				return 0;
 //			printf("parse_frommap: change gm -> login, account: %d, pass: '%s'.\n", RFIFOL(fd,4), RFIFOP(fd,8));
 			if (login_fd > 0) { // don't send request if no login-server
+				WFIFOHEAD(login_fd, RFIFOW(fd,2));
 				WFIFOW(login_fd,0) = 0x2720;
 				memcpy(WFIFOP(login_fd,2), RFIFOP(fd,2), RFIFOW(fd,2)-2);
 				WFIFOSET(login_fd, RFIFOW(fd,2));
 			} else {
+				WFIFOHEAD(fd, 10);
 				WFIFOW(fd,0) = 0x2b0b;
 				WFIFOL(fd,2) = RFIFOL(fd,4);
 				WFIFOL(fd,6) = 0;
@@ -2966,6 +2969,7 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 86)
 				return 0;
 			if (login_fd > 0) { // don't send request if no login-server
+				WFIFOHEAD(login_fd, 86);
 				memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), 86); // 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
 				WFIFOW(login_fd,0) = 0x2722;
 				WFIFOSET(login_fd, 86);
@@ -2996,6 +3000,7 @@ int parse_frommap(int fd) {
 				case 1: // block
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOHEAD(login_fd, 10);
 							WFIFOW(login_fd,0) = 0x2724;
 							WFIFOL(login_fd,2) = char_dat[i].status.account_id; // account value
 							WFIFOL(login_fd,6) = 5; // status of the account
@@ -3009,6 +3014,7 @@ int parse_frommap(int fd) {
 				case 2: // ban
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOHEAD(login_fd,18);
 							WFIFOW(login_fd, 0) = 0x2725;
 							WFIFOL(login_fd, 2) = char_dat[i].status.account_id; // account value
 							WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
@@ -3028,6 +3034,7 @@ int parse_frommap(int fd) {
 				case 3: // unblock
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOHEAD(login_fd, 10);
 							WFIFOW(login_fd,0) = 0x2724;
 							WFIFOL(login_fd,2) = char_dat[i].status.account_id; // account value
 							WFIFOL(login_fd,6) = 0; // status of the account
@@ -3041,6 +3048,7 @@ int parse_frommap(int fd) {
 				case 4: // unban
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOHEAD(login_fd, 6);
 							WFIFOW(login_fd, 0) = 0x272a;
 							WFIFOL(login_fd, 2) = char_dat[i].status.account_id; // account value
 							WFIFOSET(login_fd, 6);
@@ -3053,6 +3061,7 @@ int parse_frommap(int fd) {
 				case 5: // changesex
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
+							WFIFOHEAD(login_fd, 6);
 							WFIFOW(login_fd, 0) = 0x2727;
 							WFIFOL(login_fd, 2) = char_dat[i].status.account_id; // account value
 							WFIFOSET(login_fd, 6);
@@ -3341,29 +3350,26 @@ int parse_char(int fd) {
 				return 0;
 		  {
 			int GM_value;
-			if ((GM_value = isGM(RFIFOL(fd,2))))
-				ShowInfo("Account Logged On; Account ID: %d (GM level %d).\n", RFIFOL(fd,2), GM_value);
-			else
-				ShowInfo("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
-			if (sd == NULL) {
-				sd = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
-				session[fd]->session_data = sd;
-
-//				memset(sd, 0, sizeof(struct char_session_data)); aCalloc does this [Skotlex]
-				strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
-				sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
-			} else {
+			WFIFOHEAD(fd, 4);
+			if (sd) {
 				//Received again auth packet for already authentified account?? Discard it.
 				//TODO: Perhaps log this as a hack attempt?
 				RFIFOSKIP(fd,17);
 				break;
 			}
+			if ((GM_value = isGM(RFIFOL(fd,2))))
+				ShowInfo("Account Logged On; Account ID: %d (GM level %d).\n", RFIFOL(fd,2), GM_value);
+			else
+				ShowInfo("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
+			sd = (struct char_session_data*)aCalloc(sizeof(struct char_session_data), 1);
+			session[fd]->session_data = sd;
+			strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
+			sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
 			sd->account_id = RFIFOL(fd,2);
 			sd->login_id1 = RFIFOL(fd,6);
 			sd->login_id2 = RFIFOL(fd,10);
 			sd->sex = RFIFOB(fd,16);
 			// send back account_id
-			WFIFOHEAD(fd, 4);
 			WFIFOL(fd,0) = RFIFOL(fd,2);
 			WFIFOSET(fd,4);
 			// search authentification
@@ -3417,6 +3423,7 @@ int parse_char(int fd) {
 					if (max_connect_user == 0 || count_users() < max_connect_user) {
 						if (login_fd > 0) { // don't send request if no login-server
 							// request to login-server to obtain e-mail/time limit
+							WFIFOHEAD(login_fd, 6);
 							WFIFOW(login_fd,0) = 0x2716;
 							WFIFOL(login_fd,2) = sd->account_id;
 							WFIFOSET(login_fd,6);
@@ -3435,6 +3442,7 @@ int parse_char(int fd) {
 			// authentification not found
 			if (i == AUTH_FIFO_SIZE) {
 				if (login_fd > 0) { // don't send request if no login-server
+					WFIFOHEAD(login_fd,19);
 					WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
 					WFIFOL(login_fd,2) = sd->account_id;
 					WFIFOL(login_fd,6) = sd->login_id1;
@@ -3443,6 +3451,7 @@ int parse_char(int fd) {
 					WFIFOL(login_fd,15) = session[fd]->client_addr.sin_addr.s_addr;
 					WFIFOSET(login_fd,19);
 				} else { // if no login-server, we must refuse connection
+					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x6c;
 					WFIFOW(fd,2) = 0;
 					WFIFOSET(fd,3);
@@ -3527,20 +3536,24 @@ int parse_char(int fd) {
 				ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(cd->last_point.map), mapindex_id2name(j));
 				cd->last_point.map = j;
 			}
-			WFIFOHEAD(fd, 28);
-			WFIFOW(fd,0) = 0x71;
-			WFIFOL(fd,2) = cd->char_id;
-			memcpy(WFIFOP(fd,6), mapindex_id2name(cd->last_point.map), MAP_NAME_LENGTH);
-			ShowInfo("Character selection '%s' (account: %d, slot: %d).\n", cd->name, sd->account_id, ch);
+			{	//Send player to map
+				WFIFOHEAD(fd, 28);
+				WFIFOW(fd,0) = 0x71;
+				WFIFOL(fd,2) = cd->char_id;
+				memcpy(WFIFOP(fd,6), mapindex_id2name(cd->last_point.map), MAP_NAME_LENGTH);
 			
-			// Advanced subnet check [LuzZza]
-			if((subnet_map_ip = lan_subnetcheck((long *)p)))
-				WFIFOL(fd,22) = subnet_map_ip;
-			else
-				WFIFOL(fd,22) = server[i].ip;
+				// Advanced subnet check [LuzZza]
+				if((subnet_map_ip = lan_subnetcheck((long *)p)))
+					WFIFOL(fd,22) = subnet_map_ip;
+				else
+					WFIFOL(fd,22) = server[i].ip;
 
-			WFIFOW(fd,26) = server[i].port;
-			WFIFOSET(fd,28);
+				WFIFOW(fd,26) = server[i].port;
+				WFIFOSET(fd,28);
+
+				ShowInfo("Character selection '%s' (account: %d, slot: %d).\n",
+					cd->name, sd->account_id, ch);
+			}
 			if (auth_fifo_pos >= AUTH_FIFO_SIZE)
 				auth_fifo_pos = 0;
 			auth_fifo[auth_fifo_pos].account_id = sd->account_id;
@@ -3556,6 +3569,7 @@ int parse_char(int fd) {
 			//Send NEW auth packet [Kevin]
 			if ((map_fd = server_fd[i]) < 1 || session[map_fd] == NULL)
 			{	//0 Should not be a valid server_fd [Skotlex]
+				WFIFOHEAD(fd, 3);
 				ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
 				server_fd[i] = -1;
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
@@ -3565,15 +3579,17 @@ int parse_char(int fd) {
 				WFIFOSET(fd,3);
 				break;
 			}	
-			WFIFOW(map_fd,0) = 0x2afd;
-			WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
-			WFIFOL(map_fd,4) = auth_fifo[auth_fifo_pos].account_id;
-			WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
-			WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
-			WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
-			memcpy(WFIFOP(map_fd,20), cd, sizeof(struct mmo_charstatus));
-			WFIFOSET(map_fd, WFIFOW(map_fd,2));
-
+			{	//Send auth to server.
+				WFIFOHEAD(map_fd, 20 + sizeof(struct mmo_charstatus));
+				WFIFOW(map_fd,0) = 0x2afd;
+				WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
+				WFIFOL(map_fd,4) = auth_fifo[auth_fifo_pos].account_id;
+				WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
+				WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
+				WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
+				memcpy(WFIFOP(map_fd,20), cd, sizeof(struct mmo_charstatus));
+				WFIFOSET(map_fd, WFIFOW(map_fd,2));
+			}
 			set_char_online(i, cd->char_id, cd->account_id);
 			//Sets char online in the party and breaks even share if needed.
 			inter_party_logged(cd->party_id, cd->account_id, cd->char_id);
@@ -3589,34 +3605,22 @@ int parse_char(int fd) {
 				i = -2;
 			else
 				i = make_new_char(fd, RFIFOP(fd,2));
-				
-			if(i == -1){ //added some better faile reporting to client on the txt version [Kevin]
-                         //already exists
-                            WFIFOHEAD(fd, 3);
-                            WFIFOW(fd, 0) = 0x6e;
-                            WFIFOB(fd, 2) = 0x00;
-                            WFIFOSET(fd, 3);
-                            RFIFOSKIP(fd, 37);
-                            break;
-                        }else if(i == -2){
-                            //denied
-                            WFIFOHEAD(fd, 3);
-                            WFIFOW(fd, 0) = 0x6e;
-                            WFIFOB(fd, 2) = 0x02;
-                            WFIFOSET(fd, 3); 
-                            RFIFOSKIP(fd, 37);                           
-                            break;
-                        }else if(i == -3){
-                            //underaged XD
-                            WFIFOHEAD(fd, 3);
-                            WFIFOW(fd, 0) = 0x6e;
-                            WFIFOB(fd, 2) = 0x01;
-                            WFIFOSET(fd, 3);
-                            RFIFOSKIP(fd, 37);
-                            break;
-                        }
-
-                        WFIFOHEAD(fd, 108);
+			//added some better fail reporting to client on the txt version [Kevin]
+			if (i < 0)
+			{
+				WFIFOHEAD(fd, 3);
+				WFIFOW(fd, 0) = 0x6e;
+				switch (i) {
+				case -1: WFIFOB(fd, 2) = 0x00; break;
+				case -2: WFIFOB(fd, 2) = 0x02; break;
+				case -3: WFIFOB(fd, 2) = 0x01; break;
+				}
+				WFIFOSET(fd, 3);
+				RFIFOSKIP(fd, 37);
+				break;
+			}
+		{	//Send to player.
+			WFIFOHEAD(fd, 108);
 			WFIFOW(fd,0) = 0x6d;
 			memset(WFIFOP(fd,2), 0, 106);
 
@@ -3658,6 +3662,7 @@ int parse_char(int fd) {
 
 			WFIFOSET(fd,108);
 			RFIFOSKIP(fd,37);
+		}
 			for(ch = 0; ch < 9; ch++) {
 				if (sd->found_char[ch] == -1) {
 					sd->found_char[ch] = i;
@@ -3667,7 +3672,9 @@ int parse_char(int fd) {
 
 		case 0x68:	// delete char //Yor's Fix
 			FIFOSD_CHECK(46);
-
+		{
+			WFIFOHEAD(fd, 46);
+			WFIFOHEAD(login_fd,46);
 			memcpy(email, RFIFOP(fd,6), 40);
 			if (e_mail_check(email) == 0)
 				strncpy(email, "a@a.com", 40); // default e-mail
@@ -3760,17 +3767,26 @@ int parse_char(int fd) {
 				}
 				RFIFOSKIP(fd,46);
 			}
+		}
 			break;
 
 		case 0x2af8:	// マップサーバーログイン
 			if (RFIFOREST(fd) < 60)
 				return 0;
+		{
+			char *l_user = RFIFOP(fd, 2);
+			char *l_pass = RFIFOP(fd, 26);
+			WFIFOHEAD(fd, 4+5*GM_num);
+			l_user[23] = '\0';
+			l_pass[23] = '\0';
 			WFIFOW(fd,0) = 0x2af9;
 			for(i = 0; i < MAX_MAP_SERVERS; i++) {
 				if (server_fd[i] < 0)
 					break;
 			}
-			if (i == MAX_MAP_SERVERS || strcmp((char*)RFIFOP(fd,2), userid) || strcmp((char*)RFIFOP(fd,26), passwd)){
+			if (i == MAX_MAP_SERVERS ||
+				strcmp(l_user, userid) ||
+				strcmp(l_pass, passwd)){
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd,3);
 				RFIFOSKIP(fd,60);
@@ -3799,6 +3815,7 @@ int parse_char(int fd) {
 				WFIFOSET(fd,len);
 				return 0;
 			}
+		}
 			break;
 
 		case 0x187:	// Alive信号？
@@ -3808,6 +3825,8 @@ int parse_char(int fd) {
 			break;
 
 		case 0x7530:	// Athena情報所得
+		{
+			WFIFOHEAD(fd, 10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
@@ -3819,7 +3838,7 @@ int parse_char(int fd) {
 			WFIFOSET(fd,10);
 			RFIFOSKIP(fd,2);
 			return 0;
-
+		}
 		case 0x7532:	// 接続の切断(defaultと処理は一緒だが明示的にするため)
 		default:
 			session[fd]->eof = 1;
@@ -3862,6 +3881,7 @@ int mapif_sendall(unsigned char *buf, unsigned int len) {
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		int fd;
 		if ((fd = server_fd[i]) >= 0) {
+#if 0 //This seems to have been fixed long long ago.
 			if (session[fd] == NULL)
 			{	//Could this be the crash's source? [Skotlex]
 				ShowError("mapif_sendall: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", fd, i);
@@ -3869,9 +3889,8 @@ int mapif_sendall(unsigned char *buf, unsigned int len) {
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
 				continue;
 			}
+#endif
 			WFIFOHEAD(fd, len);
-			if (WFIFOSPACE(fd) < len) //Increase buffer size.
-				realloc_writefifo(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
 			c++;

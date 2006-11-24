@@ -34,6 +34,7 @@ void inter_homunculus_sql_final(void){
 
 int mapif_saved_homunculus(int fd, int account_id, unsigned char flag)
 {
+	WFIFOHEAD(fd, 7);
 	WFIFOW(fd,0) = 0x3892;
 	WFIFOL(fd,2) = account_id;
 	WFIFOB(fd,6) = flag;
@@ -42,6 +43,7 @@ int mapif_saved_homunculus(int fd, int account_id, unsigned char flag)
 }
 int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
 {
+	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd,0) = 0x3891;
 	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
 	WFIFOL(fd,4) = account_id;
@@ -54,6 +56,7 @@ int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
 
 int mapif_homunculus_deleted(int fd, int flag)
 {
+	WFIFOHEAD(fd, 3);
 	WFIFOW(fd, 0) = 0x3893;
 	WFIFOB(fd,2) = flag; //Flag 1 = success
 	WFIFOSET(fd, 3);
@@ -140,6 +143,7 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 // Load an homunculus
 int mapif_load_homunculus(int fd){
 	int i;
+	RFIFOHEAD(fd);
 	memset(homun_pt, 0, sizeof(struct s_homunculus));
 
 	sprintf(tmp_sql,"SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%lu'", RFIFOL(fd,6));
@@ -214,6 +218,7 @@ int mapif_load_homunculus(int fd){
 
 int mapif_delete_homunculus(int fd)
 {
+	RFIFOHEAD(fd);
 	sprintf(tmp_sql, "DELETE FROM `homunculus` WHERE `homun_id` = '%lu'", RFIFOL(fd,2));
 	if(mysql_query(&mysql_handle, tmp_sql))
 	{
@@ -233,6 +238,7 @@ int mapif_delete_homunculus(int fd)
 }
 
 int mapif_rename_homun_ack(int fd, int account_id, int char_id, unsigned char flag, char *name){
+	WFIFOHEAD(fd, NAME_LENGTH+12);
 	WFIFOW(fd, 0) =0x3894;
 	WFIFOL(fd, 2) =account_id;
 	WFIFOL(fd, 6) =char_id;
@@ -267,18 +273,16 @@ int mapif_rename_homun(int fd, int account_id, int char_id, char *name){
 
 int mapif_parse_CreateHomunculus(int fd)
 {
+	RFIFOHEAD(fd);
 	memcpy(homun_pt, RFIFOP(fd,8), sizeof(struct s_homunculus));
 	// Save in sql db
 	if(mapif_save_homunculus(fd,RFIFOL(fd,4), homun_pt))
 		return mapif_homunculus_created(fd, RFIFOL(fd,4), homun_pt, 1); // send homun_id
-	else
-		return mapif_homunculus_created(fd, RFIFOL(fd,4), homun_pt, 0); // fail
+	return mapif_homunculus_created(fd, RFIFOL(fd,4), homun_pt, 0); // fail
 }
 
-
-
-
 int inter_homunculus_parse_frommap(int fd){
+	RFIFOHEAD(fd);
 	switch(RFIFOW(fd, 0)){
 	case 0x3090: mapif_parse_CreateHomunculus(fd); break;
 	case 0x3091: mapif_load_homunculus(fd); break;

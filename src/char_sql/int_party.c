@@ -382,6 +382,7 @@ int party_check_conflict(int party_id,int account_id,int char_id)
 // パーティ作成可否
 int mapif_party_created(int fd,int account_id,int char_id,struct party *p)
 {
+	WFIFOHEAD(fd, 39);
 	WFIFOW(fd,0)=0x3820;
 	WFIFOL(fd,2)=account_id;
 	WFIFOL(fd,6)=char_id;
@@ -403,6 +404,7 @@ int mapif_party_created(int fd,int account_id,int char_id,struct party *p)
 // パーティ情報見つからず
 int mapif_party_noinfo(int fd,int party_id)
 {
+	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0)=0x3821;
 	WFIFOW(fd,2)=8;
 	WFIFOL(fd,4)=party_id;

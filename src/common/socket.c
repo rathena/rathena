@@ -877,7 +877,6 @@ int do_parsepacket(void)
 				continue;
 			}
 		}
-  		RFIFOHEAD(i);
 		RFIFOFLUSH(i);
 	}
 	return 0;
