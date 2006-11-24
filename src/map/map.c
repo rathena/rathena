@@ -961,12 +961,8 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list),int m,int x0,i
 	map_freeblock_lock();	// メモリからの解放を禁止する
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev) {	// 有?かどうかチェック
-			if (bl_list[i]->type == BL_PC
-			  && ((TBL_PC*) bl_list[i])->fd == 0)
-				continue;
+		if(bl_list[i]->prev)
 			returnCount += func(bl_list[i],ap);
-		}
 
 	map_freeblock_unlock();	// 解放を許可する
 

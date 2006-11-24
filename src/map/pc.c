@@ -2883,7 +2883,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
 		return 0;
 	}
-	//Butterfly Wing (can't use noreturn flag is on and if duel)
+	//Butterfly Wing (can't use noreturn flag is on)
 	if(nameid == 602 && map[sd->bl.m].flag.noreturn)
 		return 0;
 	//Dead Branch & Bloody Branch & Porings Box (can't use at GVG and when nobranch flag is on)

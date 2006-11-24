@@ -876,7 +876,8 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			return 0;
 		break;
 		case AL_TELEPORT:
-			if(map[m].flag.noteleport) {
+			//Flywing/ButterflyWing are checked elsewhere
+			if(map[m].flag.noteleport && sd->skillitem != skillid) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
 			}
@@ -3945,8 +3946,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			mob_target(dstmd,src,0);
 		}
 		if (i) {
-			status_heal(src, 0, i, 3);
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
+			status_heal(src, 0, i, 3);
 		}
 		break;
 

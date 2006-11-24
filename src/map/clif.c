@@ -2891,9 +2891,8 @@ int clif_changelook(struct block_list *bl,int type,int val)
 	struct view_data *vd;
 	vd = status_get_viewdata(bl);
 	nullpo_retr(0, vd);
-	
-	if(bl->type == BL_PC)
-		sd = (struct map_session_data *)bl;
+
+	BL_CAST(BL_PC, bl, sd);	
 
 	switch(type) {
 		case LOOK_WEAPON:
@@ -11053,25 +11052,34 @@ void clif_parse_GMReqNoChatCount(int fd, struct map_session_data *sd)
 
 static int pstrcmp(const void *a, const void *b)
 {
-	return strcmp((char *)a, (char *)b);
+	char *name1 = (char *)a;
+	char *name2 = (char *)b;
+	if (name1[0] && name2[0])
+		return strcmp(name1, name2);
+	//Since names are sorted in ascending order, send blank entries to the bottom.
+	if (name1[0])
+		return -1;
+	if (name2[0])
+		return 1;
+	return 0;
 }
 
 void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by [Yor]
 	char output[512];
 	char *nick; // S 00cf <nick>.24B <type>.B: 00 (/ex nick) deny speech from nick, 01 (/in nick) allow speech from nick
 	int i;
+	WFIFOHEAD(fd,packet_len_table[0xd1]);
 	RFIFOHEAD(fd);
 
 	malloc_tsetdword(output, '\0', sizeof(output));
 
 	nick = (char*)RFIFOP(fd,2); // speed up
-	RFIFOB(fd,NAME_LENGTH+1) = '\0'; // to be sure that the player name have at maximum 23 characters (nick range: [2]->[26])
+	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name have at maximum 23 characters
 
-	WFIFOHEAD(fd,packet_len_table[0xd1]);
 	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <fail>.B: type: 0: deny, 1: allow, fail: 0: success, 1: fail
 	WFIFOB(fd,2) = RFIFOB(fd,26);
 	// do nothing only if nick can not exist
-	if ((i = strlen(nick)) < 4 || i > NAME_LENGTH) {
+	if ((i = strlen(nick)) < 4) {
 		WFIFOB(fd,3) = 1; // fail
 		WFIFOSET(fd, packet_len_table[0x0d1]);
 		clif_wis_message(fd, wisp_server_name,
