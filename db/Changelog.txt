@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/25
+	* Fixed selling price of Fine Grit 10z -> 60z [Playtester]
 11/24
 	* Heaven's drive no longer targets traps. [Skotlex]
 11/23

@@ -1814,7 +1814,7 @@
 7038,Yarn,Yarn,3,,50,10,,,,,,,,,,,,,{},{},{}
 7039,Novice_Nametag,Newbie Tag,3,,10,10,,,,,,,,,,,,,{},{},{}
 7040,Megaphone,Megaphone,3,,10,10,,,,,,,,,,,,,{},{},{}
-7041,Fine_Grit,Fine Grit,3,,10,10,,,,,,,,,,,,,{},{},{}
+7041,Fine_Grit,Fine Grit,3,,60,10,,,,,,,,,,,,,{},{},{}
 7042,Leather_Bag_Of_Infinity,Leather Bag of Infinity,3,,10,10,,,,,,,,,,,,,{},{},{}
 7043,Fine_Sand,Fine Sand,3,,50,10,,,,,,,,,,,,,{},{},{}
 7044,Vigorgra,Vigorgra,3,,10,10,,,,,,,,,,,,,{},{},{}
