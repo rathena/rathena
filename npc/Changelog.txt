@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/26
+	* Enabled Rachel Field spawns so they can be tested [Playtester]
 11/24
 	* Cleaned up global permanent variables in Airship Quest [KarLaeda]
 11/23
