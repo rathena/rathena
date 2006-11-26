@@ -20,6 +20,7 @@
 
 ========================
 11/26
+	* Updated Rachel Field mob stats and drops [Playtester]
 	* Updated selling price for some common drops [Playtester]
 11/25
 	* Fixed Sphinx Helm, Coif and Orc Hero Helm [Playtester]
