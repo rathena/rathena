@@ -294,7 +294,13 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 		trade_tradecancel(sd);
 		return;
 	}
-	
+
+	if (amount == 0)
+	{	//Why do this.. ~.~ just send an ack, the item won't display on the trade window.
+		clif_tradeitemok(sd, index, 0);
+		return;
+	}
+
 	if (index == 0)
 	{	//Adding Zeny
 		if (amount >= 0 && amount <= sd->status.zeny && // check amount
@@ -302,14 +308,14 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 		{	//Check Ok
 			sd->deal.zeny = amount;
 			clif_tradeadditem(sd, target_sd, 0, amount);
-		} else //Cancel Transaction
-			clif_tradeitemok(sd, 0, 1); //Send overweight when trying to add too much zeny? Hope they get the idea...
+		} else //Send overweight when trying to add too much zeny? Hope they get the idea...
+			clif_tradeitemok(sd, 0, 1);
 		return;
 	}
-	//Add an Item
+
 	index = index -2; //Why the actual index used is -2?
 	//Item checks...
-	if (index < 0 || index > MAX_INVENTORY)
+	if (index < 0 || index >= MAX_INVENTORY)
 		return;
 	if (amount < 0 || amount > sd->status.inventory[index].amount)
 		return;
@@ -332,7 +338,10 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 			break;
 	}
 	if (trade_i >= 10)	//No space left
+	{
+		clif_tradeitemok(sd, index+2, 1);
 		return;
+	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
 	if (target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight)

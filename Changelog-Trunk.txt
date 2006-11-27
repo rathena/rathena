@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/27
+	* Some cleanups on the trade_additem function. When specifying a qty of 0,
+	  an ack will be returned to the client so it doesn't gets stuck. [Skotlex]
 	* Update sql files [Toms]
 	* Corrected the skill animation for Absorb Spirits [Skotlex]
 	* Cleaned up a bit the implementation of how Gravity Field blocks the
