@@ -419,8 +419,8 @@ struct status_change_entry {
 struct status_change {
 	struct status_change_entry data[MAX_STATUSCHANGE];
 	short count;
-	short opt1,opt2,opt3;
-	unsigned short option;
+	unsigned short opt1,opt2;
+	unsigned int opt3, option; //Note that older packet versions use short here.
 };
 
 struct vending {

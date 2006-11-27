@@ -871,9 +871,10 @@ void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lha
 	*rhand = sd->status.weapon;
 	*lhand = sd->status.shield;
 #else
-	if (sd->equip_index[9] >= 0 && sd->inventory_data[sd->equip_index[9]]) 
+	if (sd->equip_index[EQI_HAND_R] >= 0 &&
+		sd->inventory_data[sd->equip_index[EQI_HAND_R]]) 
 	{
-		id = sd->inventory_data[sd->equip_index[9]];
+		id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
 		if (id->view_id > 0)
 			*rhand = id->view_id;
 		else
@@ -881,10 +882,11 @@ void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lha
 	} else
 		*rhand = 0;
 
-	if (sd->equip_index[8] >= 0 && sd->equip_index[8] != sd->equip_index[9]
-			&& sd->inventory_data[sd->equip_index[8]]) 
+	if (sd->equip_index[EQI_HAND_L] >= 0 &&
+		sd->equip_index[EQI_HAND_L] != sd->equip_index[EQI_HAND_R] &&
+		sd->inventory_data[sd->equip_index[EQI_HAND_L]]) 
 	{
-		id = sd->inventory_data[sd->equip_index[8]];
+		id = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
 		if (id->view_id > 0)
 			*lhand = id->view_id;
 		else

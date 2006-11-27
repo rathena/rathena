@@ -219,7 +219,7 @@ struct mmo_charstatus {
 	short class_;
 	unsigned short status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
-	unsigned short option;
+	unsigned int option;
 	short manner;
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
