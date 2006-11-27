@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.4b
+//= 1.4c
 //===== Compatible With: =====================================
 //= eAthena 7.15 +
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.4 Fixed exploits [Lupus]
 //= 1.4a Fixed some typos [IVBela] 1.4b  Gershaun -> Gershuan
 //= 	changed perm. variables to temp ones [Lupus]
+//= 1.4c Fixed exploit [KarLaeda]
 //============================================================
 
 
@@ -156,6 +157,9 @@ L_Start:
 
 L_GetSkill:
 	if((countitem(1019)<50) || (countitem(998)<10) || (countitem(919)<20)) goto L_Items;
+	delitem 1019,50;
+	delitem 998,10;
+	delitem 919,20;
 	mes "Oh good, you have all of the items.  Well here you are..... Hmm?... Oh these are the design sheets for your cart.";
 	mes "Now that you have the proper materials, just follow these guides to make your cart look spectacular.";
 // Note: It is not supposed to take these items, just check you have collected them

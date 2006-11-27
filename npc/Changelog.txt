@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+11/27
+	* Fixed exploit in Merchant Skills Quests [KarLaeda]
 11/26
 	* Added a check to prevent spawning of more than one Thanatos in the Thanatos Quest.
 	  Thanks to Kodachi for reporting on IRC [erKURITA]
