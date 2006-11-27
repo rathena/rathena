@@ -3174,7 +3174,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if (unit_movepos(src, x, y, 0, 0))
 				clif_slide(src,src->x,src->y);
 		}
-		status_change_end(src, SC_HIDING, -1);
+		if (sc && sc->data[SC_HIDING].timer != -1)
+			status_change_end(src, SC_HIDING, -1);
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 	case 0:
@@ -3945,10 +3946,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			i = 2 * dstmd->level;
 			mob_target(dstmd,src,0);
 		}
-		if (i) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,0);
-			status_heal(src, 0, i, 3);
-		}
+		if (i) status_heal(src, 0, i, 3);
+		clif_skill_nodamage(src,bl,skillid,skilllv,i?1:0);
 		break;
 
 	case AC_MAKINGARROW:

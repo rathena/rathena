@@ -3,9 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/11/27
+	* Corrected the skill animation for Absorb Spirits [Skotlex]
+	* Cleaned up a bit the implementation of how Gravity Field blocks the
+	  caster from moving. [Skotlex]
+	* Mob class-changing will fail if the new class is the same as the previous
+	  one. [Skotlex]
 2006/11/24
 	* Homunc's min matk is now always equal to max matk [Skotlex]
-	* Fixed EDP's damage being 100% more than it should (should be 5x, not 6x
+	* Fixed EDP's damage being 100% more than it should (should be 4x, not 5x
 	  on normal attacks) [Skotlex]
 	* Self Destruction will only hit everyone and not just enemies when used by
 	  mobs (non marine spheres) unless the map is a versus map. [Skotlex]

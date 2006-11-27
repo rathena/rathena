@@ -7107,7 +7107,7 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 			WFIFOW(fd,c*37+12) = g->skill[i].lv;
 			WFIFOW(fd,c*37+14) = skill_get_sp(id,g->skill[i].lv);
 			WFIFOW(fd,c*37+16) = skill_get_range(id,g->skill[i].lv);
-			malloc_tsetdword(WFIFOP(fd,c*37+18),0,24);
+			strncpy(WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
 			if(g->skill[i].lv < guild_skill_get_max(id) && (sd == g->member[0].sd))
 				up = 1;
 			else

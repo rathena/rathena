@@ -19,6 +19,11 @@
 	-----
 
 ========================
+11/27
+	* Corrected KiriKage's range so it works correctly when used by non-players
+	  or when use weapon's range is used. [Skotlex]
+	* Changed service for you's flags so it affects all players on range.
+	  [Skotlex]
 11/26
 	* Updated Rachel Field mob stats and drops [Playtester]
 	* Updated selling price for some common drops [Playtester]

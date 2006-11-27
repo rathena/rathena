@@ -5358,13 +5358,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_GRAVITATION:
 			val2 = 50*val1; //aspd reduction
-			if (val3 == BCT_SELF) {
-				struct unit_data *ud = unit_bl2ud(bl);
-				if (ud) {
-					ud->canmove_tick += tick;
-					ud->canact_tick += tick;
-				}
-			} 
 			break;
 
 		case SC_HERMODE:
@@ -6170,13 +6163,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				status_change_end(bl, SC_ENDURE, -1);
 			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
 				skill_get_time(LK_BERSERK, sc->data[type].val1));
-			break;
-		case SC_GRAVITATION:
-			if (sc->data[type].val3 == BCT_SELF) {
-				struct unit_data *ud = unit_bl2ud(bl);
-				if (ud)
-					ud->canmove_tick = ud->canact_tick = gettick();
-			}
 			break;
 		case SC_GOSPEL: //Clear the buffs from other chars.
 			if (sc->data[type].val3) { //Clear the group.

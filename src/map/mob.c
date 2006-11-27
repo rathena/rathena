@@ -2315,6 +2315,9 @@ int mob_class_change (struct mob_data *md, int class_)
 	if (mob_is_clone(md->class_))
 		return 0; //Clones
 
+	if (md->class_ == class_)
+		return 0; //Nothing to change.
+
 	hp_rate = md->status.hp*100/md->status.max_hp;
 	md->class_ = class_;
 	md->db = mob_db(class_);

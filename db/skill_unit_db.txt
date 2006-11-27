@@ -73,7 +73,7 @@
 327,0xac,    ,  3, 0,  -1,all,   0x120	//DC_HUMMING
 328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME
 329,0xae,    ,  3, 0,  -1,all,   0x120	//DC_FORTUNEKISS
-330,0xaf,    ,  3, 0,  -1,party, 0x100	//DC_SERVICEFORYOU
+330,0xaf,    ,  3, 0,  -1,all,   0x120	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS
 362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA

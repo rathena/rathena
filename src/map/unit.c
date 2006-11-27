@@ -699,6 +699,7 @@ int unit_can_move(struct block_list *bl)
 			|| (sc->data[SC_CLOAKING].timer != -1 && //Need wall at level 1-2
 				sc->data[SC_CLOAKING].val1 < 3 && !(sc->data[SC_CLOAKING].val4&1))
 			|| sc->data[SC_MADNESSCANCEL].timer != -1
+			|| (sc->data[SC_GRAVITATION].timer != -1 && sc->data[SC_GRAVITATION].val3 == BCT_SELF)
 		))
 			return 0;
 	}
