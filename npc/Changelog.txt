@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 11/26
+	* Added a check to prevent spawning of more than one Thanatos in the Thanatos Quest.
+	  Thanks to Kodachi for reporting on IRC [erKURITA]
 	* Enabled Rachel Field spawns so they can be tested [Playtester]
 11/24
 	* Cleaned up global permanent variables in Airship Quest [KarLaeda]

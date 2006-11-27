@@ -53,12 +53,18 @@
 //| 	to the ground because A) Too many coins (more than 30,000 ea)
 //| 	B) Your current weight + total coins weight were greater than
 //| 	your max weight, causing them to drop due to "over-weight".
-//|	Thanks to Niktout for spotting it.
+//|		Thanks to Niktout for spotting it.
 
 //| Revision:
 //| v.2.7: Added a check to the Zeny -> Coin Mix label. It seems you
-//|	can trade with negative zeny (meh...). This should prevent it.
-//|	Thanks to Niktout.
+//|		can trade with negative zeny (meh...). This should prevent it.
+//|		Thanks to Niktout.
+
+//| Revision:
+//| v.2.8: Added a n00b check for the Zeny -> Coin function. Should
+//| 	prevent zeny overflow. Also added a variable cleaning section
+//| 	at the beginning of the Mix function, to prevent old values
+//| 	to be used as a payout.
 
 //| Upcomming possible updates:
 //| v.3.0: Adding a refining system, so you can gather ore and the likes
@@ -86,6 +92,7 @@ set @name1$,getitemname(@bronzecoinid);		//|
 set @name2$,getitemname(@silvercoinid);		//|
 set @name3$,getitemname(@goldcoinid);		//|
 set @name4$,getitemname(@mithrilcoinid);	//|
+set @MAX_ZENY,1000000000;			//|
 //|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 mes @npcname$;
@@ -133,16 +140,16 @@ L_Coincheckout:
 switch(getarg(0)) {
 	case @bronzecoinid:
 		set @coinname$,"^996600"+getitemname(getarg(0))+"^000000";
-		goto L_PreInputing;
+		break;
 	case @silvercoinid:
 		set @coinname$,"^999999"+getitemname(getarg(0))+"^000000";
-		goto L_PreInputing;
+		break;
 	case @goldcoinid:
 		set @coinname$,"^FFCC00"+getitemname(getarg(0))+"^000000";
-		goto L_PreInputing;
+		break;
 	case @mithrilcoinid:
 		set @coinname$,"^CCCCCC"+getitemname(getarg(0))+"^000000";
-		goto L_PreInputing;
+		break;
 	}
 
 
@@ -166,6 +173,11 @@ next;
 			mes "You don't have enough coins, please get some";
 			next;
 			goto L_Menu;
+		} else if (@coinamount*getarg(1) > @MAX_ZENY) {
+			mes @npcname$;
+			mes "I'm sorry, the quantity you inputted gives a bigger zeny amount than the max allowed. I can't allow this.";
+			next;
+			goto L_Menu
 		} else
 
 		next;
@@ -310,6 +322,12 @@ L_End:
 //| Mix function
 
 L_Mix:
+	set @totalzeny,0;
+	set @totalcoins,0;
+	set @bronzecoins,0;
+	set @silvercoins,0;
+	set @goldcoins,0;
+	set @mithrilcoins,0;
 	next;
 	mes @npcname$;
 	mes "Ok, let's start with ^996600"+@name1$+"s^000000";
