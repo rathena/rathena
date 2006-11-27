@@ -843,7 +843,7 @@ static int mob_ai_sub_hard_changechase(struct block_list *bl,va_list ap)
 		return 0;
 
 	if(battle_check_range (&md->bl, bl, md->status.rhw.range))
-  	{
+	{
 		(*target) = bl;
 		md->target_id=bl->id;
 		md->min_chase= md->db->range3;

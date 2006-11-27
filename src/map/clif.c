@@ -11968,7 +11968,7 @@ int clif_parse(int fd) {
 		)	//Only execute the function when there's an sd (except for debug/wanttoconnect packets)
 			packet_db[packet_ver][cmd].func(fd, sd);
 	}
-#ifdef DUMP_UNKNOWN_PACKET
+#if DUMP_UNKNOWN_PACKET
 	else if (battle_config.error_log)
   	{
 		int i;
