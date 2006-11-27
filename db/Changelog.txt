@@ -20,6 +20,7 @@
 
 ========================
 11/27
+	* Fixed up healing items [Playtester]
 	* Updated Rachel mob drops [Playtester]
 	* Updated Rachel mob stats [Playtester]
 	* Corrected KiriKage's range so it works correctly when used by non-players
