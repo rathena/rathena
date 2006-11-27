@@ -88,7 +88,7 @@
 584,Skewer_Soup,Skewer Soup,0,50,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 585,Brusti,Brusti,0,15,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,20),0; itemskill 74,3,"Magnificat"; },{},{}
 586,Mother's_Cake,Mother's Cake,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,404),0; },{},{}
-587,Red_Thorn_Fruit,Red Thorn Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); },{},{}
+587,Thorny_Fruit,Red Thorn Fruit,0,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),rand(10,15); },{},{}
 588,Spaghetti,Spaghetti,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 589,Pizza,Pizza,0,,10,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,64),0; },{},{}
 // Usable Items
@@ -2348,9 +2348,9 @@
 7572,Gray_Necklace,Gray Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
 7573,Shining_Necklace,Shining Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
 7574,Ice_Powder,Ice Powder,3,,10,0,,,,,,,,,,,,,{},{},{}
-7575,Red-colored_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
-7576,Blue-colored_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
-7577,Yellow-colored_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
+7575,Red-coloured_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
+7576,Blue-coloured_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
+7577,Yellow-coloured_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7578,Countermagic_Crystal,Countermagic Crystal,3,,10,10,,,,,,,,,,,,,{},{},{}
 7579,Silk_Handkerchief_of_Zhi_Nu,Silk Handkerchief of Zhi Nu,3,,10,10,,,,,,,,,,,,,{},{},{}
 7581,Celebration_Document,Celebration Document,3,,10,10,,,,,,,,,,,,,{},{},{}
@@ -2625,7 +2625,7 @@
 12180,Spearman_Mercenary_Summon_Scroll_Level_8,Spearman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12181,Spearman_Mercenary_Summon_Scroll_Level_9,Spearman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12182,Spearman_Mercenary_Summon_Scroll_Level_10,Spearman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12183,Holy_Arrow_Quiver,Holy Arrow Quiver,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
+12183,Holy_Arrow_Container,Holy Arrow Quiver,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
 12184,Mercenary's_Red_Potion,Mercenary's Red Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12185,Mercenary's_Blue_Potion,Mercenary's Blue Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12186,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
