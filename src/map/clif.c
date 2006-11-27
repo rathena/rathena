@@ -8400,6 +8400,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if(sd->pd && sd->pd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
+		if(sd->hd)
+			merc_hom_init_timers(sd->hd);
 
 		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
