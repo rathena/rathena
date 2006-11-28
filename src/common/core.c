@@ -228,7 +228,7 @@ int main (int argc, char **argv)
 	// initialise program arguments
 	{
 		char *p = SERVER_NAME = argv[0];
-		while ((p = strchr(p, '/')) != NULL)
+		while ((p = strchr(p, '/')) != NULL || (p = strchr(p, '\\')) != NULL)
 			SERVER_NAME = ++p;
 		arg_c = argc;
 		arg_v = argv;

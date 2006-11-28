@@ -253,7 +253,7 @@ static int send_from_fifo(int fd)
 		return 0;
 	}
 #else
-	len=write(fd,session[fd]->wdata,session[fd]->wdata_size);
+	len=send(fd, session[fd]->wdata, session[fd]->wdata_size, MSG_NOSIGNAL);
 	if (len == -1)
 	{
 		if (errno == ECONNABORTED)

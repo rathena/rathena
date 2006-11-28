@@ -12,101 +12,73 @@
 	#undef LOG_MEMMGR
 #endif
 
-void* aMalloc_ (size_t size, const char *file, int line, const char *func)
+void* aMalloc_(size_t size, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	void *ret = MALLOC(size);
-#else
-	void *ret = mwMalloc(size, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: malloc %d\n",file,line,func,size);
+	void *ret = MALLOC(size, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aMalloc %d\n",file,line,func,size);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: malloc error out of memory!\n",file,line,func);
+		ShowFatalError("%s:%d: in func %s: aMalloc error out of memory!\n",file,line,func);
 		exit(1);
 	}
 
 	return ret;
 }
-void* aMallocA_ (size_t size, const char *file, int line, const char *func)
+void* aMallocA_(size_t size, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	void *ret = MALLOCA(size);
-#else
-	void *ret = mwMalloc(size, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: malloc %d\n",file,line,func,size);
+	void *ret = MALLOCA(size, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aMallocA %d\n",file,line,func,size);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: malloc error out of memory!\n",file,line,func);
+		ShowFatalError("%s:%d: in func %s: aMallocA error out of memory!\n",file,line,func);
 		exit(1);
 	}
 
 	return ret;
 }
-void* aCalloc_ (size_t num, size_t size, const char *file, int line, const char *func)
+void* aCalloc_(size_t num, size_t size, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	void *ret = CALLOC(num, size);
-#else
-	void *ret = mwCalloc(num, size, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: calloc %d %d\n",file,line,func,num,size);
+	void *ret = CALLOC(num, size, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aCalloc %d %d\n",file,line,func,num,size);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: calloc error out of memory!\n", file, line, func);
+		ShowFatalError("%s:%d: in func %s: aCalloc error out of memory!\n", file, line, func);
 		exit(1);
 	}
 	return ret;
 }
-void* aCallocA_ (size_t num, size_t size, const char *file, int line, const char *func)
+void* aCallocA_(size_t num, size_t size, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	void *ret = CALLOCA(num, size);
-#else
-	void *ret = mwCalloc(num, size, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: calloc %d %d\n",file,line,func,num,size);
+	void *ret = CALLOCA(num, size, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aCallocA %d %d\n",file,line,func,num,size);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: calloc error out of memory!\n",file,line,func);
+		ShowFatalError("%s:%d: in func %s: aCallocA error out of memory!\n",file,line,func);
 		exit(1);
 	}
 	return ret;
 }
-void* aRealloc_ (void *p, size_t size, const char *file, int line, const char *func)
+void* aRealloc_(void *p, size_t size, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	void *ret = REALLOC(p, size);
-#else
-	void *ret = mwRealloc(p, size, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: realloc %p %d\n",file,line,func,p,size);
+	void *ret = REALLOC(p, size, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aRealloc %p %d\n",file,line,func,p,size);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: realloc error out of memory!\n",file,line,func);
+		ShowFatalError("%s:%d: in func %s: aRealloc error out of memory!\n",file,line,func);
 		exit(1);
 	}
 	return ret;
 }
-char* aStrdup_ (const char *p, const char *file, int line, const char *func)
+char* aStrdup_(const char *p, const char *file, int line, const char *func)
 {
-#ifndef MEMWATCH
-	char *ret = STRDUP(p);
-#else
-	char *ret = mwStrdup(p, file, line);
-#endif
-	// ShowMessage("%s:%d: in func %s: strdup %p\n",file,line,func,p);
+	char *ret = STRDUP(p, file, line, func);
+	// ShowMessage("%s:%d: in func %s: aStrdup %p\n",file,line,func,p);
 	if (ret == NULL){
-		ShowFatalError("%s:%d: in func %s: strdup error out of memory!\n", file, line, func);
+		ShowFatalError("%s:%d: in func %s: aStrdup error out of memory!\n", file, line, func);
 		exit(1);
 	}
 	return ret;
 }
-void aFree_ (void *p, const char *file, int line, const char *func)
+void aFree_(void *p, const char *file, int line, const char *func)
 {
-	// ShowMessage("%s:%d: in func %s: free %p\n",file,line,func,p);
+	// ShowMessage("%s:%d: in func %s: aFree %p\n",file,line,func,p);
 	if (p)
-	#ifndef MEMWATCH
-		FREE(p);
-	#else
-		mwFree(p, file, line);
-	#endif
+		FREE(p, file, line, func);
 
 	p = NULL;
 }
@@ -238,11 +210,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 	/* ブロック長を超える領域の確保には、malloc() を用いる */
 	/* その際、unit_head.block に NULL を代入して区別する */
 	if(size_hash * BLOCK_ALIGNMENT > BLOCK_DATA_SIZE - sizeof(struct unit_head)) {
-#ifdef MEMWATCH
-		struct unit_head_large* p = (struct unit_head_large*)mwMalloc(sizeof(struct unit_head_large) + size,file,line);
-#else
-		struct unit_head_large* p = (struct unit_head_large*) MALLOC (sizeof(struct unit_head_large) + size);
-#endif
+		struct unit_head_large* p = (struct unit_head_large*)MALLOC(sizeof(struct unit_head_large)+size,file,line,func);
 		if(p != NULL) {
 			p->unit_head.block = NULL;
 			p->unit_head.size  = size;
@@ -394,7 +362,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func ) {
 			}
 			head->block = NULL;
 			memmgr_usage_bytes -= head->size;
-			FREE (head_large);			
+			FREE(head_large,file,line,func);
 		} else {
 			ShowError("Memory manager: args of aFree is freed pointer %s:%d@%s\n", file, line, func);
 		}
@@ -510,14 +478,14 @@ static struct block* block_malloc(void) {
 		int block_no;
 		struct block* p;
 		struct chunk* chunk;
-		char *pb = (char *) CALLOC (sizeof(struct block),BLOCK_ALLOC + 1);
+		char *pb = (char *)CALLOC(sizeof(struct block),BLOCK_ALLOC+1,file,line,func);
 		if(pb == NULL) {
 			ShowFatalError("Memory manager::block_alloc failed.\n");
 			exit(1);
 		}
 
 		// store original block address in chunk
-		chunk = (struct chunk *) MALLOC (sizeof(struct chunk));
+		chunk = (struct chunk *)MALLOC(sizeof(struct chunk),file,line,func);
 		if (chunk == NULL) {
 			ShowFatalError("Memory manager::block_alloc failed.\n");
 			exit(1);
@@ -649,8 +617,8 @@ static void memmgr_final (void)
 	chunk = chunk_first;
 	while (chunk) {
 		chunk2 = chunk->next;
-		FREE(chunk->block);
-		FREE(chunk);
+		FREE(chunk->block,file,line,func);
+		FREE(chunk,file,line,func);
 		chunk = chunk2;
 	}
 
@@ -662,7 +630,7 @@ static void memmgr_final (void)
 			large->unit_head.file, large->unit_head.line, large->unit_head.size);
 		memmgr_log (buf);
 	#endif
-		FREE (large);
+		FREE(large,file,line,func);
 		large = large2;
 	}
 #ifdef LOG_MEMMGR
