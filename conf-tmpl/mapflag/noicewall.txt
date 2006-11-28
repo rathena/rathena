@@ -44,13 +44,13 @@ payon_in01.gat	mapflag	noicewall
 payon_in02.gat	mapflag	noicewall
 payon_in03.gat	mapflag	noicewall
 payon.gat	mapflag	noicewall
-pay_arche.gat	mapflag noicewall
+pay_arche.gat	mapflag	noicewall
 prt_are_in.gat	mapflag	noicewall
 prt_are01.gat	mapflag	noicewall
 prt_castle.gat	mapflag	noicewall
 prt_church.gat	mapflag	noicewall
 prt_in.gat	mapflag	noicewall
-prontera.gat	mapflag noicewall
+prontera.gat	mapflag	noicewall
 sec_in01.gat	mapflag	noicewall
 job_sword1.gat	mapflag	noicewall
 um_in.gat	mapflag	noicewall

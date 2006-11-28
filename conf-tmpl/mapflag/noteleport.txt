@@ -63,8 +63,8 @@ yuno.gat	mapflag	noteleport
 yuno_pre.gat	mapflag	noteleport
 y_airport.gat	mapflag	noteleport
 lhz_airport.gat	mapflag	noteleport
-einbroch.gat	mapflag noteleport
-einbech.gat	mapflag noteleport
+einbroch.gat	mapflag	noteleport
+einbech.gat	mapflag	noteleport
 lhz_que01.gat	mapflag	noteleport
 lhz_cube.gat	mapflag	noteleport
 lhz_in01.gat	mapflag	noteleport
@@ -89,7 +89,7 @@ auction_02.gat	mapflag	noteleport
 ra_in01.gat	mapflag	noteleport
 ra_temin.gat	mapflag	noteleport
 ra_temsky.gat	mapflag	noteleport
-que_rachel.gat	mapflag noteleport
+que_rachel.gat	mapflag	noteleport
 kh_mansion.gat	mapflag	noteleport
 kh_rossi.gat	mapflag	noteleport
 kh_school.gat	mapflag	noteleport

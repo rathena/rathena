@@ -198,7 +198,7 @@ hu_fild05.gat	mapflag	nightenabled
 hu_fild04.gat	mapflag	nightenabled
 hu_fild01.gat	mapflag	nightenabled
 yuno_fild06.gat	mapflag	nightenabled
-tha_scene01.gat mapflag nightenabled
+tha_scene01.gat	mapflag	nightenabled
 hugel.gat	mapflag	nightenabled
 p_track01.gat	mapflag	nightenabled
 p_track01.gat	mapflag	nightenabled

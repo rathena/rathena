@@ -2616,7 +2616,7 @@ static int npc_parse_mapcell (char *w1, char *w2, char *w3, char *w4)
 void npc_parsesrcfile (char *name)
 {
 	int m, lines = 0;
-	char line[1024];
+	char line[2048];
 
 	FILE *fp = fopen (name,"r");
 	if (fp == NULL) {
@@ -2626,33 +2626,34 @@ void npc_parsesrcfile (char *name)
 	current_file = name;
 
 	while (fgets(line, sizeof(line) - 1, fp)) {
-		char w1[1024], w2[1024], w3[1024], w4[1024], mapname[1024];
-		int i, j, w4pos, count;
+		char w1[2048], w2[2048], w3[2048], w4[2048], mapname[2048];
+		int i, w4pos, count;
 		lines++;
 
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		// 不要なスペースやタブの連続は詰める
-		for (i = j = 0; line[i]; i++) {
-			if (line[i]==' ') {
-				if (!((line[i+1] && (isspace((unsigned char)line[i+1]) || line[i+1]==',')) ||
-					 (j && line[j-1]==',')))
-					line[j++]=' ';
-			} else if (line[i]=='\t') {
-				if (!(j && line[j-1]=='\t'))
-					line[j++]='\t';
-			} else
-				line[j++]=line[i];
-		}
-		line[j] = '\0'; //Forget to terminate the string. From [jA 1091]
+
+		if (!sscanf(line, " %n", &i) && i == strlen(line)) // just whitespace
+			continue;
+
 		// 最初はタブ区切りでチェックしてみて、ダメならスペース区切りで確認
 		w1[0] = w2[0] = w3[0] = w4[0] = '\0'; //It's best to initialize values
 		//to prevent passing previously parsed values to the parsers when not all
 		//fields are specified. [Skotlex]
-		if ((count = sscanf(line,"%[^\t]\t%[^\t]\t%[^\t\r\n]\t%n%[^\t\r\n]", w1, w2, w3, &w4pos, w4)) < 3 &&
-		   (count = sscanf(line,"%s%s%s%n%s", w1, w2, w3, &w4pos, w4)) < 3) {
-			continue;
+		if ((count = sscanf(line, "%[^\t\n]\t%[^\t\n]\t%[^\t\n]\t%n%[^\n]", w1, w2, w3, &w4pos, w4)) < 3)
+		{
+			if ((count = sscanf(line, "%s %s %[^\t]\t %n%[^\n]", w1, w2, w3, &w4pos, w4)) == 4 ||
+			(count = sscanf(line, "%s %s %s %n%[^\n]\n", w1, w2, w3, &w4pos, w4)) >= 3)
+			{
+				ShowWarning("\r");
+				ShowWarning("Incorrect separator syntax in file '%s', line '%i'. Use tabs instead of spaces!\n * %s %s %s %s\n",current_file,lines,w1,w2,w3,w4);
+			} else {
+				ShowError("\r"); //Erase the npc spinner.
+				ShowError("Could not parse file '%s', line '%i'.\n * %s %s %s %s\n",current_file,lines,w1,w2,w3,w4);
+				continue;
+			}
 		}
+
 		// マップの存在確認
 		if (strcmp(w1,"-") !=0 && strcmpi(w1,"function") != 0 ){
 			sscanf(w1,"%[^,]",mapname);
@@ -2689,7 +2690,7 @@ void npc_parsesrcfile (char *name)
 		} else if (strcmpi(w2,"setcell") == 0 && count >= 3) {
 			npc_parse_mapcell(w1,w2,w3,w4);
 		} else {
-			ShowError("Probably TAB is missing: %s %s %s %s line '%i', file '%s'\n",w1,w2,w3,w4,lines,current_file); //Lupus
+			ShowError("Probably TAB is missing in file '%s', line '%i':\n * %s %s %s %s\n",current_file,lines,w1,w2,w3,w4);
 		}
 	}
 	fclose(fp);
