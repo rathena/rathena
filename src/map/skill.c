@@ -1117,13 +1117,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case WZ_STORMGUST:
-		if (tsc->data[SC_FREEZE].val2 == src->id)
-			tsc->data[SC_FREEZE].val3++; //Repeated hits from same SG
-		else { //New SG, reset count
-			tsc->data[SC_FREEZE].val2 = src->id;
-			tsc->data[SC_FREEZE].val3 = 1; 
-		}
-
+		tsc->data[SC_FREEZE].val3++;
 		if(tsc->data[SC_FREEZE].val3 >= 3) //Tharis pointed out that this is normal freeze chance with a base of 300%
 			sc_start(bl,SC_FREEZE,300,skilllv,skill_get_time2(skillid,skilllv));
 		break;

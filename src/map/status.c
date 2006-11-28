@@ -5894,11 +5894,18 @@ int status_change_clear(struct block_list *bl,int type)
 
 	sc = status_get_sc(bl);
 
-	if (!sc || sc->count == 0)
+	if (!sc)
+		return 0;
+
+	if (sc->data[SC_FREEZE].val3)
+		sc->data[SC_FREEZE].val3 = 0; //Reset freeze counter.
+	
+  	if (!sc->count)
 		return 0;
 
 	if(sc->data[SC_DANCING].timer != -1)
 		skill_stop_dancing(bl);
+
 	for(i = 0; i < SC_MAX; i++)
 	{
 		if(sc->data[i].timer == -1)
@@ -6138,7 +6145,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 
 		case SC_FREEZE:
-			sc->data[type].val2 = 0; //Clear ID of SG caster
+			sc->data[type].val3 = 0; //Clear Storm Gust hit count
 			break;
 
 		case SC_MARIONETTE:
