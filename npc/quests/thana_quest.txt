@@ -1580,22 +1580,23 @@ thana_boss.gat,141,217,0	script	Carvings#6	111,{
 
 	if ($Thana == 15) {
 
-    mes "[Carvings]";
-    mes "You stepped on the plate, and it seems it activated some sort of mechanism.";
-    next;
-
-    if (!getmapmobs("thana_boss.gat")) {
-		monster "thana_boss.gat",135,119,"Thanatos",1708,1,"TimerThana::OnThanaDead";
-	    stopnpctimer "TimerThana";
-	    set $Thana, $Thana | 16; 
-	    mapannounce "thana_boss.gat", "The Seal of Thanatos has been broken.",bc_npc;
-	    mes "[Carvings]";
-	    mes "You hear the screams of the undead coming from below...";
-	    close;
-	} else {
 		mes "[Carvings]";
-		mes "But nothing happened...";
-		close;
+		mes "You stepped on the plate, and it seems it activated some sort of mechanism.";
+		next;
+
+		if (!getmapmobs("thana_boss.gat")) {
+			monster "thana_boss.gat",135,119,"Thanatos",1708,1,"TimerThana::OnThanaDead";
+			stopnpctimer "TimerThana";
+			set $Thana, $Thana | 16; 
+			mapannounce "thana_boss.gat", "The Seal of Thanatos has been broken.",bc_npc;
+			mes "[Carvings]";
+			mes "You hear the screams of the undead coming from below...";
+			close;
+		} else {
+			mes "[Carvings]";
+			mes "But nothing happened...";
+			close;
+		}
 	}
 
 	mes "[Carvings]";
