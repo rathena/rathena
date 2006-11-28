@@ -4318,8 +4318,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	}
 	vd = status_get_viewdata(bl);
 	if (vd && vd->cloth_color && (
-		(vd->class_==JOB_WEDDING && !battle_config.wedding_ignorepalette)
-		|| (vd->class_==JOB_XMAS && !battle_config.xmas_ignorepalette)
+		(vd->class_==JOB_WEDDING && battle_config.wedding_ignorepalette)
+		|| (vd->class_==JOB_XMAS && battle_config.xmas_ignorepalette)
 	))
 		vd->cloth_color = 0;
 }
