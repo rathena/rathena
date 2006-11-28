@@ -227,9 +227,13 @@ int main (int argc, char **argv)
 
 	// initialise program arguments
 	{
-		char *p = SERVER_NAME = argv[0];
-		while ((p = strchr(p, '/')) != NULL || (p = strchr(p, '\\')) != NULL)
-			SERVER_NAME = ++p;
+		char *p1 = SERVER_NAME = argv[0];
+		char *p2 = p1;
+		while ((p1 = strchr(p2, '/')) != NULL || (p1 = strchr(p2, '\\')) != NULL)
+		{
+			SERVER_NAME = ++p1;
+			p2 = p1;
+		}
 		arg_c = argc;
 		arg_v = argv;
 		#ifndef SVNVERSION

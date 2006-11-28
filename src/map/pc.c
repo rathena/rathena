@@ -565,7 +565,6 @@ int pc_isequip(struct map_session_data *sd,int n)
  */
 int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_time, struct mmo_charstatus *st)
 {
-	struct guild *g;
 	int i;
 	unsigned long tick = gettick();
 
@@ -670,22 +669,10 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (sd->status.hom_id > 0)	
 		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
-	// パ?ティ、ギルドデ?タの要求
 	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
 		party_request_info(sd->status.party_id);
-	if (sd->status.guild_id > 0)
-	{
-		if ((g = guild_search(sd->status.guild_id)) == NULL)
-			guild_request_info(sd->status.guild_id);
-		else if (strcmp(sd->status.name,g->master) == 0)
-		{	//Block Guild Skills to prevent logout/login reuse exploiting. [Skotlex]
-			guild_block_skill(sd, 300000);
-			//Also set the Guild Master flag.
-			sd->state.gmaster_flag = g;
-		}
-	}
-
-	// 通知
+	if (sd->status.guild_id > 0 && guild_search(sd->status.guild_id) == NULL)
+		guild_request_info(sd->status.guild_id);
 
 	clif_authok(sd);
 	map_addiddb(&sd->bl);

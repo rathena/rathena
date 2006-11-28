@@ -8355,8 +8355,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case GD_EMERGENCYCALL:
 		if (!sd->status.guild_id || !sd->state.gmaster_flag)
 			return 0;
-		if (lv <= 0)
-			return 0;
 		break;
 
 	case GS_GLITTERING:
