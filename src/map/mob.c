@@ -1842,7 +1842,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 		jper = per;
 
-		if (map[md->bl.m].flag.nobaseexp)
+		if (map[md->bl.m].flag.nobaseexp || !md->db->base_exp)
 			base_exp=0; 
 		else {
 			temp = bonus; //Do not alter bonus for the jExp section below.
@@ -1862,7 +1862,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				base_exp = 1;
 		}
 		//Homun earned job-exp is always lost.
-		if (map[md->bl.m].flag.nojobexp || md->dmglog[i].flag)
+		if (map[md->bl.m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag)
 			job_exp=0; 
 		else {
 			if (map[md->bl.m].jexp != 100)

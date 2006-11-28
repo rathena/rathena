@@ -6134,7 +6134,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 
 		case SC_FREEZE:
-			sc->data[type].val3 = 0; //Clear Storm Gust hit count
+			sc->data[type].val2 = 0; //Clear ID of SG caster
 			break;
 
 		case SC_MARIONETTE:
