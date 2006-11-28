@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/28
+	* Moved the blocking of casting supportive skills on homunculus from
+	  battle_check_target to status_check_skilluse as bct is not invoked unless
+	  the skill is offensive (or party/guild only) [Skotlex]
+	* Cleaned up status_calc_bl_sub_hom, fixed recasting dex/str/vit/int
+	  bonuses skills making their atk/def/mdef stack with itself over and over.
+	  [Skotlex]
 	* Updated sql files [Playtester]
 	* Changing setting the Guild Master from pc_authok to clif_parse_LoadEndAck
 	  so that it will not fail to set the gmaster flag when the first person of a

@@ -3226,10 +3226,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 		}
 			break;
+		//Valid targets with nothing else specified.
 		case BL_HOM:
-			//Except for the master/itself, hom can't be targetted with non-offensive skills. [Skotlex]
-			if (t_bl != s_bl && !(flag&BCT_ENEMY))
-				return 0;
 			break;
 		//All else not specified is an invalid target.
 		default:	

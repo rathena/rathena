@@ -1100,7 +1100,12 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		//TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
 		if (status->mode&MD_LOOTER)
 			return 1;
-		else
+		return 0;
+	case BL_HOM: 
+		//Can't use support skills on homun
+		//Placed here instead of battle_check_target because support skill
+		//invocations don't call that function.
+		if (skill_num && skill_get_inf(skill_num)&INF_SUPPORT_SKILL)
 			return 0;
 	default:
 		//Check for chase-walk/hiding/cloaking opponents.
@@ -2792,6 +2797,7 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 {
 	struct status_data *status = &hd->battle_status, *b_status = &hd->base_status;
+	struct status_change *sc = &hd->sc;
 	int skill = 0;
 
 
@@ -2806,11 +2812,6 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		if(status->hp > status->max_hp)
 			status->hp = status->max_hp;
 	}
-	if(flag&SCB_VIT)
-	{
-		flag|=SCB_DEF;
-		status->def +=	(status->vit/5 - b_status->vit/5);
-	}
 	if(flag&(SCB_MAXSP|SCB_INT))
 	{	
 		flag|=SCB_MAXSP;
@@ -2821,24 +2822,27 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		if(status->sp > status->max_sp)
 			status->sp = status->max_sp;
 	}
-	if(flag&SCB_SPEED)
-	{
-		if (battle_config.slaves_inherit_speed && hd->master)
-			status->speed = status_get_speed(&hd->master->bl);
-		else
-			status->speed = DEFAULT_WALK_SPEED;
+	if(flag&SCB_VIT)
+	{	//Since vit affects def, recalculate def.
+		flag|=SCB_DEF;
+		status->def = status_calc_def(&hd->bl, sc, b_status->def);
+		status->def+=	(status->vit/5 - b_status->vit/5);
 	}
-	if(flag&SCB_INT) {
+	if(flag&SCB_INT)
+	{
 		flag|=SCB_MDEF;
-		status->mdef += (status->int_/5 - b_status->int_/5);
+		status->mdef = status_calc_mdef(&hd->bl, sc, b_status->mdef);
+		status->mdef+= (status->int_/5 - b_status->int_/5);
 	}
 	if(flag&SCB_DEX) {
 		flag |=SCB_WATK;
-		status->rhw.atk += (status->dex - b_status->dex);
+		status->rhw.atk = status_calc_watk(&hd->bl, sc, b_status->rhw.atk);
+		status->rhw.atk+= (status->dex - b_status->dex);
 	}
 	if(flag&SCB_STR) {
 		flag |=SCB_WATK;
-		status->rhw.atk += (status->str - b_status->str);
+		status->rhw.atk2 = status_calc_watk(&hd->bl, sc, b_status->rhw.atk2);
+		status->rhw.atk2+= (status->str - b_status->str);
 	}
 	if(flag|SCB_WATK && status->rhw.atk2 < status->rhw.atk)
 		status->rhw.atk2 = status->rhw.atk;
@@ -2852,7 +2856,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		skill = (1000 -4*status->agi -status->dex)
 			*hd->homunculusDB->baseASPD/1000;
 		
-		status->aspd_rate = status_calc_aspd_rate(&hd->bl, &hd->sc , b_status->aspd_rate);
+		status->aspd_rate = status_calc_aspd_rate(&hd->bl, sc , b_status->aspd_rate);
 		if(status->aspd_rate != 1000)
 			skill = skill*status->aspd_rate/1000;
 
@@ -2863,14 +2867,14 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	if(flag&(SCB_AGI|SCB_DSPD)) {
 		skill = 800-status->agi*4;
 		status->dmotion = cap_value(skill, 400, 800);
-		status->dmotion = status_calc_dmotion(&hd->bl, &hd->sc, b_status->dmotion);
+		status->dmotion = status_calc_dmotion(&hd->bl, sc, b_status->dmotion);
 	}
 
 	if(flag&(SCB_INT|SCB_MAXSP|SCB_VIT|SCB_MAXHP) && flag != SCB_ALL)
 		status_calc_regen(&hd->bl, status, &hd->regen);
 	
 	if(flag&SCB_REGEN)
-		status_calc_regen_rate(&hd->bl, &hd->regen, &hd->sc);
+		status_calc_regen_rate(&hd->bl, &hd->regen, sc);
 
 	if (flag == SCB_ALL)
 		return; //Refresh is done on invoking function (status_calc_hom)
