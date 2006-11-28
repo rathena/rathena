@@ -1323,12 +1323,10 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 
 	if(!check_distance_bl(src,target,range) ) {
 		//Chase if required.
-		if(ud->state.attack_continue) {
-			if(sd)
-				clif_movetoattack(sd,target);
-			else
-				unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
-		}
+		if(sd)
+			clif_movetoattack(sd,target);
+		else if(ud->state.attack_continue)
+			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		return 1;
 	}
 	if(!battle_check_range(src,target,range)) {
