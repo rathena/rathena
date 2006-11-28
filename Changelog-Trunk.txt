@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/28
+	* Updated sql files [Playtester]
 	* Changing setting the Guild Master from pc_authok to clif_parse_LoadEndAck
 	  so that it will not fail to set the gmaster flag when the first person of a
 	  guild to log on is the guild master. [Skotlex]
