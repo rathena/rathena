@@ -1,6 +1,7 @@
 Date	Added
 
 2006/11/22
+	* Added import/script_conf.txt to keep OnPCxxxxxEven settings [Lupus]
 	* Modified slaves_inherit_speed (monster.conf): 0 never. 1 - when the
 	  master can move. 2 - when the master can't move. 3 - always (default)
 	* Also modified slaves_inherit_mode: 0 don't change mode. 1 slaves are
