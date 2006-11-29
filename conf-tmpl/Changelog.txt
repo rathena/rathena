@@ -1,5 +1,7 @@
 Date	Added
 
+2006/11/29
+	* Added Rachel Santuary to nomemo mapflags [Playtester]
 2006/11/22
 	* Added import/script_conf.txt to keep OnPCxxxxxEven settings [Lupus]
 	* Modified slaves_inherit_speed (monster.conf): 0 never. 1 - when the

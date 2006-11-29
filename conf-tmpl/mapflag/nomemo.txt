@@ -343,7 +343,7 @@ thana_step.gat	mapflag	nomemo
 abyss_01.gat	mapflag	nomemo
 abyss_02.gat	mapflag	nomemo
 abyss_03.gat	mapflag	nomemo
-//Odin's Temple & Khiehl
+//Odin's Temple & Kiehl
 odin_tem01.gat	mapflag	nomemo
 odin_tem02.gat	mapflag	nomemo
 odin_tem03.gat	mapflag	nomemo
@@ -360,6 +360,12 @@ ice_dun01.gat	mapflag	nomemo
 ice_dun02.gat	mapflag	nomemo
 ice_dun03.gat	mapflag	nomemo
 ice_dun04.gat	mapflag	nomemo
+//Rachel Santuary
+ra_san01.gat	mapflag	nomemo
+ra_san02.gat	mapflag	nomemo
+ra_san03.gat	mapflag	nomemo
+ra_san04.gat	mapflag	nomemo
+ra_san05.gat	mapflag	nomemo
 
 // Guild Castles =============
 //alde_gld.gat	mapflag	nomemo
