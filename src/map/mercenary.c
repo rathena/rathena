@@ -114,7 +114,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	// Send homunculus_dead to client
 	hd->homunculus.hp = 0;
 	clif_hominfo(sd, hd, 0);
-	return unit_free(&hd->bl,0);
+	return unit_remove_map(&hd->bl,0);
 }
 
 int merc_hom_calc_skilltree(struct homun_data *hd)
