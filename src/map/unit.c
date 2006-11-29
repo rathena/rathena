@@ -1627,6 +1627,7 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 		if(sd->pvp_timer!=-1) {
 			delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
 			sd->pvp_timer = -1;
+			sd->pvp_rank = 0;
 		}
 
 		if(pc_issit(sd)) {

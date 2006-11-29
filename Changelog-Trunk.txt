@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/29
+	* Now gvg_dungeon mapflag will activate the other mapflags which are
+	  required: pvp, pvp_nocalcrank and pvp_noparty/pvp_noguild (they are forced
+	  to off if gvg_dungeon is on and viceversa) [Skotlex]
+	* Cleaned the pvp ranking code so that it takes effect even if
+	  pvp_nocalcrank is active WHEN the map is a gvg_dungeon one. [Skotlex]
+	* Now homuncs and their masters are the only ones who can use support
+	  skills on them. [Skotlex]
 	* Some cleaning on the homunc speed calculating code, so that it correctly
 	  uses the default walk speed if the player has no speed yet. [Skotlex]
 2006/11/28

@@ -5070,14 +5070,16 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 	// pvp
-	if( map[sd->bl.m].flag.pvp && !battle_config.pk_mode){ // disable certain pvp functions on pk_mode [Valaris]
-		if (!map[sd->bl.m].flag.pvp_nocalcrank) {
-			sd->pvp_point -= 5;
-			sd->pvp_lost++;
-			if (src && src->type == BL_PC) {
-				struct map_session_data *ssd = (struct map_session_data *)src;
-				if (ssd) { ssd->pvp_point++; ssd->pvp_won++; }
-			}
+	// disable certain pvp functions on pk_mode [Valaris]
+	if (map[sd->bl.m].flag.pvp && !battle_config.pk_mode &&
+		(!map[sd->bl.m].flag.pvp_nocalcrank || map[sd->bl.m].flag.gvg_dungeon))
+	{	//Pvp points always take effect on gvg_dungeon maps.
+		sd->pvp_point -= 5;
+		sd->pvp_lost++;
+		if (src && src->type == BL_PC) {
+			struct map_session_data *ssd = (struct map_session_data *)src;
+			ssd->pvp_point++;
+			ssd->pvp_won++;
 		}
 		if( sd->pvp_point < 0 ){
 			sd->pvp_point=0;
@@ -6623,14 +6625,8 @@ int pc_calc_pvprank(struct map_session_data *sd)
 {
 	int old;
 	struct map_data *m;
-
-	nullpo_retr(0, sd);
-	nullpo_retr(0, m=&map[sd->bl.m]);
-
+	m=&map[sd->bl.m];
 	old=sd->pvp_rank;
-
-	if( !(m->flag.pvp) )
-		return 0;
 	sd->pvp_rank=1;
 	map_foreachinmap(pc_calc_pvprank_sub,sd->bl.m,BL_PC,sd);
 	if(old!=sd->pvp_rank || sd->pvp_lastusers!=m->users)
@@ -6644,8 +6640,6 @@ int pc_calc_pvprank(struct map_session_data *sd)
 int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=NULL;
-	if(battle_config.pk_mode) // disable pvp ranking if pk_mode on [Valaris]
-		return 0;
 
 	sd=map_id2sd(id);
 	if(sd==NULL)

@@ -1102,10 +1102,11 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 1;
 		return 0;
 	case BL_HOM: 
-		//Can't use support skills on homun
+		//Can't use support skills on homun (only master/self can)
 		//Placed here instead of battle_check_target because support skill
 		//invocations don't call that function.
-		if (skill_num && skill_get_inf(skill_num)&INF_SUPPORT_SKILL)
+		if (skill_num && skill_get_inf(skill_num)&INF_SUPPORT_SKILL &&
+			battle_get_master(target) != src)
 			return 0;
 	default:
 		//Check for chase-walk/hiding/cloaking opponents.
