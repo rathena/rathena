@@ -20,6 +20,7 @@
 
 ========================
 11/29
+	* More drop updates [Playtester]
 	* Updated various drops [Playtester]
 11/28
 	* Fixed Alchemist combo's autospell casting on target instead of self [Playtester]
