@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/28
+	* Fixed Alchemist combo's autospell casting on target instead of self [Playtester]
 11/27
 	* Fixed up healing items [Playtester]
 	* Updated Rachel mob drops [Playtester]
