@@ -2643,7 +2643,7 @@ void npc_parsesrcfile (char *name)
 		w1[0] = w2[0] = w3[0] = w4[0] = '\0'; //It's best to initialize values
 		//to prevent passing previously parsed values to the parsers when not all
 		//fields are specified. [Skotlex]
-		if ((count = sscanf(line, "%[^\t\n]\t%[^\t\n]\t%[^\t\n]\t%n%[^\n]", w1, w2, w3, &w4pos, w4)) < 3)
+		if ((count = sscanf(line, "%[^\t\r\n]\t%[^\t\r\n]\t%[^\t\r\n]\t%n%[^\r\n]", w1, w2, w3, &w4pos, w4)) < 3)
 		{
 			if ((count = sscanf(line, "%s %s %[^\t]\t %n%[^\n]", w1, w2, w3, &w4pos, w4)) == 4 ||
 			(count = sscanf(line, "%s %s %s %n%[^\n]\n", w1, w2, w3, &w4pos, w4)) >= 3)
