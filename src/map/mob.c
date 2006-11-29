@@ -1710,7 +1710,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int id,zeny;
 		unsigned int base_exp,job_exp;
 	} pt[DAMAGELOG_SIZE];
-	int i,temp,count,pnum=0;
+	int i,temp,count,pnum=0,m=md->bl.m;
 	unsigned int mvp_damage, tick = gettick();
 
 	if(src && src->type == BL_PC) {
@@ -1770,11 +1770,17 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		tmpsd[i] = map_charid2sd(md->dmglog[i].id);
 		if(tmpsd[i] == NULL)
 			continue;
-		if(tmpsd[i]->bl.m != md->bl.m || pc_isdead(tmpsd[i]))
+		if(tmpsd[i]->bl.m != m || pc_isdead(tmpsd[i]))
 		{
 			tmpsd[i] = NULL;
 			continue;
 		}
+		if(md->dmglog[i].flag && !merc_is_hom_active(tmpsd[i]->hd))
+		{	//Homunc's share.
+			tmpsd[i] = NULL;
+			continue;
+		}
+
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
@@ -1792,9 +1798,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if(!(type&2) && //No exp
-		(!map[md->bl.m].flag.pvp || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
+		(!map[m].flag.pvp || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]
-		(!map[md->bl.m].flag.nobaseexp || !map[md->bl.m].flag.nojobexp) //Gives Exp
+		(!map[m].flag.nobaseexp || !map[m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
 
 	for(i=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++){
@@ -1842,12 +1848,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 		jper = per;
 
-		if (map[md->bl.m].flag.nobaseexp || !md->db->base_exp)
+		if (map[m].flag.nobaseexp || !md->db->base_exp)
 			base_exp=0; 
 		else {
 			temp = bonus; //Do not alter bonus for the jExp section below.
-			if (map[md->bl.m].bexp != 100)
-				temp = map[md->bl.m].bexp*temp/100;
+			if (map[m].bexp != 100)
+				temp = map[m].bexp*temp/100;
 			if (temp != 100)
 				per = per*temp/100.;
 	
@@ -1862,11 +1868,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				base_exp = 1;
 		}
 		//Homun earned job-exp is always lost.
-		if (map[md->bl.m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag)
+		if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag)
 			job_exp=0; 
 		else {
-			if (map[md->bl.m].jexp != 100)
-				bonus = map[md->bl.m].jexp*bonus/100;
+			if (map[m].jexp != 100)
+				bonus = map[m].jexp*bonus/100;
 			if (bonus != 100)
 				jper = jper*bonus/100.;
 	
@@ -1913,7 +1919,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 		}
 		if(flag) {
-			if(base_exp && md->dmglog[i].flag && tmpsd[i]->hd)
+			if(base_exp && md->dmglog[i].flag) //tmpsd[i] is null if it has no homunc.
 				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
 			if(base_exp || job_exp)
 				pc_gainexp(tmpsd[i], &md->bl, base_exp,job_exp);
@@ -1927,7 +1933,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	} //End EXP giving.
 	
 	if (!(type&1) &&
-		!map[md->bl.m].flag.nomobloot &&
+		!map[m].flag.nomobloot &&
 		(
 		 	!md->special_state.ai || //Non special mob
 			battle_config.alchemist_summon_reward == 2 || //All summoned give drops
@@ -2063,7 +2069,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double exp;
 		
 		//mapflag: noexp check [Lorky]
-		if (map[md->bl.m].flag.nobaseexp)
+		if (map[m].flag.nobaseexp)
 			exp =1; 
 		else {
 			exp = md->db->mexp;
@@ -2079,7 +2085,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		clif_mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd, &md->bl, mexp,0);
 		log_mvp[1] = mexp;
-		if(!map[md->bl.m].flag.nomvploot)
+		if(!map[m].flag.nomvploot)
 		for(j=0;j<3;j++){
 			i = rand() % 3;
 			

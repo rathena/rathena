@@ -1922,8 +1922,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(damage < dmg.div_ 
 		//Only skills that knockback even when they miss. [Skotlex]
-		&& skillid != CH_PALMSTRIKE
-		&& skillid != HT_PHANTASMIC)
+		&& skillid != CH_PALMSTRIKE)
 		dmg.blewcount = 0;
 
 	if(skillid == CR_GRANDCROSS||skillid == NPC_GRANDDARKNESS) {
