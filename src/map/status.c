@@ -1321,7 +1321,7 @@ int status_calc_mob(struct mob_data* md, int first)
 	if (flag&8 && mbl) {
 		struct status_data *mstatus = status_get_base_status(mbl);
 		if (mstatus &&
-			battle_config.slaves_inherit_speed&(status->mode&MD_CANMOVE?1:2))
+			battle_config.slaves_inherit_speed&(mstatus->mode&MD_CANMOVE?1:2))
 			status->speed = mstatus->speed;
 	}
 		

@@ -9168,7 +9168,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 			for (i=0;i<10;i++)
 			{
 				sprintf(output, "@whispervar%d$", i);
-				set_var(sd,output,(char *) split_data[i]);        
+				set_var(sd,output,(char *) split_data[i]);
 			}
 			
 			sprintf(output, "%s::OnWhisperGlobal", npc->name);
@@ -9184,7 +9184,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 		if(!sd->state.mainchat)
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
 		else {
-			sprintf(output, msg_txt(386), sd->status.name, msg);
+			snprintf(output, sizeof(output)/sizeof(char), msg_txt(386), sd->status.name, msg);
 			intif_announce(output, strlen(output) + 1, 0xFE000000, 0);
 		}
 		aFree(command);
@@ -11131,7 +11131,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <fail>.B: type: 0: deny, 1: allow, fail: 0: success, 1: fail
 	WFIFOB(fd,2) = RFIFOB(fd,26);
 	// do nothing only if nick can not exist
-	if ((i = strlen(nick)) < 4) {
+	if (strlen(nick) < 4) {
 		WFIFOB(fd,3) = 1; // fail
 		WFIFOSET(fd, packet_len_table[0x0d1]);
 		clif_wis_message(fd, wisp_server_name,
@@ -11239,7 +11239,7 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd) { // Rewritten 
 		sd->state.ignoreAll = 1;
 		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len_table[0x0d2]);
-		return ;
+		return;
 	}
 	//Unblock everyone
 	if (!sd->state.ignoreAll) {
@@ -11982,7 +11982,7 @@ int clif_parse(int fd) {
 	}
 #if DUMP_UNKNOWN_PACKET
 	else if (battle_config.error_log)
-  	{
+	{
 		int i;
 		FILE *fp;
 		char packet_txt[256] = "save/packet.txt";

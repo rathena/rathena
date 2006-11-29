@@ -1600,6 +1600,7 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case HFLI_SBR44:	//[orn]
 					skillratio += 100 *(skill_lv-1);
+					break;
 			}
 
 			ATK_RATE(skillratio);
@@ -3226,7 +3227,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 		}
 			break;
-		//Valid targets with nothing else specified.
+		//Valid targets with no special checks here.
 		case BL_HOM:
 			break;
 		//All else not specified is an invalid target.
