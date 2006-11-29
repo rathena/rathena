@@ -11826,13 +11826,14 @@ int clif_parse(int fd) {
 					(pc_isGM(sd))?"GM ":"",sd->status.name);
 			} else
 			if (sd->state.auth) {
-				clif_quitsave(fd, sd); // the function doesn't send to inter-server/char-server if it is not connected [Yor]
 				 // Player logout display [Valaris]
 				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n",
 					(pc_isGM(sd))?"GM ":"",sd->status.name);
+				clif_quitsave(fd, sd);
 			} else {
 				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n",
 					sd->bl.id, sd->char_id);
+				map_quit(sd);
 			}
 		} else {
 			unsigned char *ip = (unsigned char *) &session[fd]->client_addr.sin_addr;

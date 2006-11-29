@@ -934,8 +934,7 @@ int intif_parse_Registers(int fd) {
 	int *qty;
 	RFIFOHEAD(fd);
 
-	if( (sd=map_id2sd(RFIFOL(fd,4)))==NULL ||
-			!session_isValid(sd->fd)) // Invalid session
+	if( (sd=map_id2sd(RFIFOL(fd,4)))==NULL)
 		return 1;
 
 	if (RFIFOB(fd,12) == 3 && sd->status.char_id != RFIFOL(fd,8))
@@ -992,9 +991,8 @@ int intif_parse_LoadStorage(int fd) {
 		return 1;
 	}
 
-	if (sd->state.finalsave || //Player is already scheduled to leave the server.
-			!session_isValid(sd->fd)) // Invalid session
-		return 1;
+	if (sd->state.finalsave)
+		return 1; //Player is already scheduled to leave the server.
 
 	stor = account2storage( RFIFOL(fd,4));
 
@@ -1049,9 +1047,7 @@ int intif_parse_LoadGuildStorage(int fd)
 		if(battle_config.error_log)
 			ShowError("intif_parse_LoadGuildStorage: user not found %d\n",RFIFOL(fd,4));
 		return 1;
-	} else if(!session_isValid(sd->fd))
-		return 1; // Invalid session
-	
+	}
 	gstor=guild2storage(guild_id);
 	if(!gstor) {
 		if(battle_config.error_log)
@@ -1424,8 +1420,7 @@ int intif_parse_RenamePetOk(int fd)
 	struct map_session_data *sd = NULL;
 	RFIFOHEAD(fd);
 	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL ||
-		sd->status.char_id != RFIFOL(fd,6) ||
-		!session_isValid(sd->fd)) // Invalid session
+		sd->status.char_id != RFIFOL(fd,6))
 		return 0;
 	if (RFIFOB(fd,10) == 0) {
 		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name for your pet.
