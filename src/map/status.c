@@ -2364,10 +2364,11 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->size = hd->homunculusDB->size ;
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
-		if (battle_config.slaves_inherit_speed && hd->master)
+		status->speed = DEFAULT_WALK_SPEED;
+		if (battle_config.slaves_inherit_speed&1 &&
+			hd->master && hd->master->state.auth) //Master needs be authed to have valid speed.
 			status->speed = status_get_speed(&hd->master->bl);
-		else
-			status->speed = DEFAULT_WALK_SPEED;
+
 		status->hp = 1;
 		status->sp = 1;
 	}
@@ -2849,7 +2850,10 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 
 	if(flag&SCB_MATK) //Hom Min Matk is always the same as Max Matk
 		status->matk_min = status->matk_max;
-	
+
+	if(flag&SCB_SPEED && battle_config.slaves_inherit_speed&1 && hd->master)
+		status->speed = status_get_speed(&hd->master->bl);
+
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
 

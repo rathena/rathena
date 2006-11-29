@@ -666,7 +666,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
 
 	// Homunculus [albator]
-	if (sd->status.hom_id > 0)	
+	if (sd->status.hom_id > 0)
 		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
 	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)

@@ -1258,7 +1258,7 @@ int chrif_load_scdata(int fd)
 {	//Retrieve and load sc_data for a player. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	struct map_session_data *sd;
-	struct status_change_data data;
+	struct status_change_data *data;
 	int aid, cid, i, count;
 	RFIFOHEAD(fd);
 
@@ -1279,13 +1279,13 @@ int chrif_load_scdata(int fd)
 	count = RFIFOW(fd,12); //sc_count
 	for (i = 0; i < count; i++)
 	{
-		memcpy(&data, RFIFOP(fd,14 + i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
-		if (data.tick < 1)
+		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
+		if (data->tick < 1)
 		{	//Protection against invalid tick values. [Skotlex]
-			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data.tick, data.type, sd->status.name);
+			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data->tick, data->type, sd->status.name);
 			continue;
 		}
-		status_change_start(&sd->bl, data.type, 10000, data.val1, data.val2, data.val3, data.val4, data.tick, 15);
+		status_change_start(&sd->bl, data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
 	}
 #endif
 	return 0;
