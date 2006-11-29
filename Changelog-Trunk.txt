@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/11/29
+	* Probably fixed the Segmentation Faults we've been having. [FlavioJS]
+	  Description: A player quits and it's session is freed and set to NULL, 
+	       but the char server already sent a packet with player information 
+	       (registers, storage, ...). If a message is sent in consequence of 
+	       updating that info, a segmentation fault happens because 
+	       session[sd->fd] is already NULL.
+	  Fix: make shure the session of the target player is valid before 
+	       processing the rest of the char server's message.
+	* Some minor cleanups. [FlavioJS]
 	* Fixed the new npc parsing code not accounting for windows-style line
 	  terminators, which as a side effect messed up mapflag parsing if the file
 	  had windows-style terminators, which coincidentally was the case for the

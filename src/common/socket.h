@@ -103,9 +103,9 @@ enum SessionType {
 struct socket_data{
 	unsigned char eof;
 	unsigned char *rdata, *wdata;
-	unsigned int max_rdata, max_wdata;
-	unsigned int rdata_size, wdata_size;
-	int rdata_pos;
+	size_t max_rdata, max_wdata;
+	size_t rdata_size, wdata_size;
+	size_t rdata_pos;
 	time_t rdata_tick;
 	struct sockaddr_in client_addr;
 	int (*func_recv)(int);

@@ -18,7 +18,7 @@ char* jstrescape (char* pt) {
 	int i =0, j=0;
 
 	//copy string to temporary
-	CREATE_A(ptr, char, J_MAX_MALLOC_SIZE);
+	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
 	strcpy(ptr,pt);
 
 	while (ptr[i] != '\0') {
@@ -39,7 +39,7 @@ char* jstrescape (char* pt) {
 		}
 	}
 	pt[j++] = '\0';
-	aFree (ptr);
+	aFree(ptr);
 	return &pt[0];
 }
 

@@ -63,7 +63,7 @@ int ip_rules = 1;
 #endif
 
 static int mode_neg=1;
-static unsigned int frame_size=TCP_FRAME_LEN;
+static size_t frame_size=TCP_FRAME_LEN;
 
 #ifndef MINICORE
 enum {
@@ -273,7 +273,7 @@ static int send_from_fifo(int fd)
 
 	//{ int i; ShowMessage("send %d : ",fd);  for(i=0;i<len;i++){ ShowMessage("%02x ",session[fd]->wdata[i]); } ShowMessage("\n");}
 	if(len>0){
-		if((unsigned int)len<session[fd]->wdata_size){
+		if((size_t)len<session[fd]->wdata_size){
 			memmove(session[fd]->wdata,session[fd]->wdata+len,session[fd]->wdata_size-len);
 			session[fd]->wdata_size-=len;
 		} else {
@@ -328,8 +328,8 @@ static int connect_client(int listen_fd)
 	len=sizeof(client_address);
 
 	fd = accept(listen_fd,(struct sockaddr*)&client_address,&len);
-#ifdef __WIN32                                               
-	if (fd == SOCKET_ERROR || fd == INVALID_SOCKET || fd < 0) {
+#ifdef __WIN32
+	if ( fd == INVALID_SOCKET ) {
 		ShowError("accept failed (code %i)!\n", WSAGetLastError());
 		return -1;
 	}
@@ -362,11 +362,11 @@ static int connect_client(int listen_fd)
 		FD_SET(fd,&readfds);
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE_A(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE_A(session[fd]->wdata, unsigned char, wfifo_size);
+	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
 
-	session[fd]->max_rdata   = (int)rfifo_size;
-	session[fd]->max_wdata   = (int)wfifo_size;
+	session[fd]->max_rdata   = rfifo_size;
+	session[fd]->max_wdata   = wfifo_size;
 	session[fd]->func_recv   = recv_to_fifo;
 	session[fd]->func_send   = send_from_fifo;
 	if(!session[listen_fd]->func_parse)
@@ -469,7 +469,7 @@ int console_recieve(int i) {
 	int n;
 	char *buf;
 
-	CREATE_A(buf, char, 64);
+	CREATE(buf, char, 64);
 	malloc_tsetdword(buf,0,sizeof(64));
 
 	n = read(0, buf , 64);
@@ -601,11 +601,11 @@ int make_connection(long ip,int port)
 	FD_SET(fd,&readfds);
 
 	CREATE(session[fd], struct socket_data, 1);
-	CREATE_A(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE_A(session[fd]->wdata, unsigned char, wfifo_size);
+	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
 
-	session[fd]->max_rdata  = (int)rfifo_size;
-	session[fd]->max_wdata  = (int)wfifo_size;
+	session[fd]->max_rdata  = rfifo_size;
+	session[fd]->max_wdata  = wfifo_size;
 	session[fd]->func_recv  = recv_to_fifo;
 	session[fd]->func_send  = send_from_fifo;
 	session[fd]->func_parse = default_func_parse;
@@ -662,19 +662,19 @@ int realloc_writefifo(int fd, size_t addition)
 	if( !session_isValid(fd) ) // might not happen
 		return 0;
 
-	if( session[fd]->wdata_size + (int)addition  > session[fd]->max_wdata )
+	if( session[fd]->wdata_size + addition  > session[fd]->max_wdata )
 	{	// grow rule; grow in multiples of wfifo_size
 		newsize = wfifo_size;
 		while( session[fd]->wdata_size + addition > newsize ) newsize += newsize;
 	}
 	else if( session[fd]->max_wdata>=FIFOSIZE_SERVERLINK) {
 		//Inter-server adjust. [Skotlex]
-		if ((session[fd]->wdata_size+(int)addition)*4 < session[fd]->max_wdata)
+		if ((session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata)
 			newsize = session[fd]->max_wdata/2;
 		else
 			return 0; //No change
-	} else if( session[fd]->max_wdata>(int)wfifo_size &&
-	  	(session[fd]->wdata_size+(int)addition)*4 < session[fd]->max_wdata )
+	} else if( session[fd]->max_wdata>wfifo_size &&
+	  	(session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
 	{	// shrink rule, shrink by 2 when only a quater of the fifo is used, don't shrink below 4*addition
 		newsize = session[fd]->max_wdata/2;
 	}
@@ -682,7 +682,7 @@ int realloc_writefifo(int fd, size_t addition)
 		return 0;
 
 	RECREATE(session[fd]->wdata, unsigned char, newsize);
-	session[fd]->max_wdata  = (int)newsize;
+	session[fd]->max_wdata  = newsize;
 
 	return 0;
 }
@@ -807,7 +807,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 
-		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
+		if(session[i]->eof) //The session check is for when the connection ended in func_parse
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.
@@ -1148,7 +1148,7 @@ int socket_config_read(const char *cfgName) {
 				mode_neg = 0;
 			else mode_neg = atoi(w2);
 		} else if (strcmpi(w1, "frame_size") == 0)
-			frame_size = strtoul(w2, NULL, 10);
+			frame_size = (size_t)strtoul(w2, NULL, 10);
 		else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}
@@ -1165,7 +1165,7 @@ int RFIFOSKIP(int fd,int len)
 
 	s = session[fd];
 
-	if ((signed int)(s->rdata_size-s->rdata_pos-len)<0) {
+	if ( s->rdata_size - s->rdata_pos - len < 0 ) {
 		//fprintf(stderr,"too many skip\n");
 		//exit(1);
 		//better than a COMPLETE program abort // TEST! :)
@@ -1316,12 +1316,12 @@ void socket_init (void)
 	// session[0] Was for the console (whatever that was?), but is now currently used for disconnected sessions of the map
 	// server, and as such, should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
 	CREATE(session[0], struct socket_data, 1);
-	CREATE_A(session[0]->rdata, unsigned char, 2*rfifo_size);
-	CREATE_A(session[0]->wdata, unsigned char, 2*wfifo_size);
-	session[0]->max_rdata   = (int)2*rfifo_size;
-	session[0]->max_wdata   = (int)2*wfifo_size;
+	CREATE(session[0]->rdata, unsigned char, 2*rfifo_size);
+	CREATE(session[0]->wdata, unsigned char, 2*wfifo_size);
+	session[0]->max_rdata   = 2*rfifo_size;
+	session[0]->max_wdata   = 2*wfifo_size;
 
-	malloc_set (func_parse_table, 0, sizeof(func_parse_table));
+	malloc_set(func_parse_table, 0, sizeof(func_parse_table));
 	func_parse_table[SESSION_RAW].check = default_func_check;
 	func_parse_table[SESSION_RAW].func = default_func_parse;
 
@@ -1351,7 +1351,7 @@ in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str) {
 	if (!h) return 0;
 	if (ip == NULL) ip = ip2;
 	ip[0] = (unsigned char) h->h_addr[0];
-	ip[1]	= (unsigned char) h->h_addr[1];
+	ip[1] = (unsigned char) h->h_addr[1];
 	ip[2] = (unsigned char) h->h_addr[2];
 	ip[3] = (unsigned char) h->h_addr[3];
 	if (ip_str == NULL) ip_str = ip_buf;
