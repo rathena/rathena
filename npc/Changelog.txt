@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+11/30
+	* Added first version of Rachel Sanctuary spawns [Playtester]
+	- commented for now
 11/28
 	* Enabled Ice Dungeon spawns so they can be tested [Playtester]
 11/26
