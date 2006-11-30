@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.4.2 Fixed Khowropher bug [Lupus]
 //= 1.5 Fixed double levelup bug [Lupus]
 //= 1.5.1 Fixed exploit [KarLaeda]
+//= 1.5.2 Updated Shino Quest to leave no grabage vars [Lupus]
 //============================================================ 
 
 
@@ -27,13 +28,13 @@
 //====================================================== Quest
 
 ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
-	if(Shinokas_Quest == 9){
+	switch(Shinokas_Quest){
+	case 9:
 		mes "^3131FFShinokas's";
 		mes "body has grown";
 		mes "cold to the tough.";
 		close;
-	}
-	if(Shinokas_Quest == 8){
+	case 8:
 		mes "["+strcharinfo(0)+"]";
 		mes "Shinokas,";
 		mes "I found something!";
@@ -113,14 +114,12 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 		mes "Why...";
 		set Shinokas_Quest,9;
 		close;
-	}
-	if(Shinokas_Quest == 7){
+	case 7:
 		mes "[Shinokas]";
 		mes "...";
 		mes "......";
-		close;	
-	}
-	if(Shinokas_Quest == 6){
+		close;
+	case 6:
 		mes "[Shinokas]";
 		mes "So...?";
 		mes "Did you learn";
@@ -216,8 +215,7 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 				close;
 			}
 		}
-	}
-	if(Shinokas_Quest == 5){
+	case 5:
 		mes "[Shinokas]";
 		mes "So, did you find";
 		mes "anything from the";
@@ -252,8 +250,7 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 		mes "soon as you can.";
 		set Shinokas_Quest,6;
 		close;
-	}
-	if(Shinokas_Quest == 4){
+	case 4:
 		mes "[Shinokas]";
 		mes "Please...";
 		mes "Find out if the Kapelltheines";
@@ -262,6 +259,7 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 		mes "that leads to the Airport.";
 		close;
 	}
+	//Shinokas_Quest = 0 1 2 3 10
 	mes "[Sick Old Man]";
 	mes "...!";
 	next;
@@ -280,6 +278,7 @@ ein_in01.gat,231,163,1	script	Sick Old Man	849,6,6,{
 		mes "around in his bed.";
 		close;
 	}
+	//Shinokas_Quest = 3
 	mes "["+strcharinfo(0)+"]";
 	mes "Shi...";
 	mes "Shinokas?";
@@ -518,7 +517,6 @@ OnTouch:
 	mes "rumpled on the bed,";
 	mes "but you can see dark red";
 	mes "stains in between the folds.";
-	//set ein_lab,3; //wth? -Yhn
 	close;
 }	
 
@@ -785,7 +783,7 @@ ein_in01.gat,254,35,1	script	Scientist	749,{
 	mes "flirting with that";
 	mes "woman. God...!";
 	mes "I'm like, so teed off!";
-	set ein_scientist,1;
+	if(Shinokas_Quest < 8) set ein_scientist,1;
 	close;
 	
 L_P2:
@@ -808,7 +806,7 @@ ein_in01.gat,266,26,1	script	Unknown Stuff	111,{
 	mes "attached to a huge";
 	mes "machine with many cords";
 	mes "and folds of barbed wire";
-	set ein_stuff,1;
+	if(Shinokas_Quest < 8) set ein_stuff,1;
 	close;
 }
 
@@ -1059,8 +1057,8 @@ einbech.gat,57,210,4	script	Young Man#04	854,{
 
 einbech.gat,165,105,7	script	Buender Hikeman	847,{
 	if(Shinokas_Quest >= 9) goto L_P2;
-	if(Shinokas_Quest == 3)goto L_BEST;
-	if(Shinokas_Quest == 2)goto L_BASTARD;
+	if(Shinokas_Quest == 3) goto L_BEST;
+	if(Shinokas_Quest == 2) goto L_BASTARD;
 	mes "[Buender Hikeman]";
 	mes "...";
 	mes "......";
@@ -1225,7 +1223,7 @@ L_CONTINUE:
 	mes "[Buender Hikeman]";
 	mes "Then I learned...";
 	mes "You planned it all along.";
-	set Shinokas_Quest,2;
+	if(Shinokas_Quest == 1) set Shinokas_Quest,2;
 	close;
 L_ORE:
 	mes "[Buender Hikeman]";
@@ -1324,7 +1322,7 @@ L_CONTINUE2:
 	mes "^0000FFIt wouldn't be a good idea to^000000";
 	mes "^0000FFprovoke the old man anymore,^000000";
 	mes "^0000FFintentionally or not.^000000";
-	set Shinokas_Quest,3;
+	if(Shinokas_Quest == 2) set Shinokas_Quest,3;
 	close;
 L_BEST:
 	mes "^0000FFIt'd be best^000000";
@@ -1402,6 +1400,8 @@ L_P2:
 	mes "Actually...";
 	next;
 	menu "Tell Hikeman about Shinakas's death.",-,"Don't notify Hikeman",L_NNotify;
+
+	set Shinokas_Quest,10;
 	mes "["+strcharinfo(0)+"]";
 	mes "Shinokas died";
 	mes "a while ago in";
@@ -1465,15 +1465,13 @@ L_P2:
 	mes "really worth this kind of";
 	mes "cruelty? Whoever they are,";
 	mes "their intentions can't be good.";
-	close2;
-	set Shinokas_Quest,10;
 	if(BaseLevel < 41)set BaseExp,BaseExp+34750;
 	else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
 	else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
 	else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+278000;
 	else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+417000;
 	else if(BaseLevel > 90)set BaseExp,BaseExp+556000;
-	end;
+	close;
 	
 L_NNotify:
 	mes "["+strcharinfo(0)+"]";

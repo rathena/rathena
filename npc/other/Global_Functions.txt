@@ -98,6 +98,11 @@ function	script	F_ClearGarbage	{
 		cleararray $compstring$[0],"",getarraysize($compstring$);
 		cleararray $lengths[0],0,getarraysize($lengths);
 	}
+	//Shinkskas Quest garbage
+	if(Shinokas_Quest > 7){
+		set ein_scientist,0;
+		set ein_stuff,0;
+	}
 	return;
 }
 
@@ -113,6 +118,7 @@ function	script	Job_Change	{
 		jobchange getarg(0); // Common jobchange
 	else 
 		jobchange getarg(0) + Job_Baby; //Change Job For Baby Class
+	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
 	return;
 }
 

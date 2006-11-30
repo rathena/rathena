@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 11/30
+	* Updated Shinokas Quest to leave no grabage vars [Lupus]
+	- Added a log when players get their jobs
 	* Added first version of Rachel Sanctuary spawns [Playtester]
 	- commented for now
 11/28
