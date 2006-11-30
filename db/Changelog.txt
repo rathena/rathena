@@ -19,6 +19,8 @@
 	-----
 
 ========================
+11/30
+	* Fixed some mob names thanks to Soukosa [Playtester]
 11/29
 	* More drop updates [Playtester]
 	* Updated various drops [Playtester]
