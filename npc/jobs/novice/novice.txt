@@ -3425,4 +3425,4 @@ new_zone03.gat,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
 new_zone03.gat,0,0,0,0	monster	Spore	1014,1,0,0,0
 new_zone03.gat,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
 new_zone03.gat,0,0,0,0	monster	Rocker	1052,1,0,0,0
-new_zone03.gat,0,0,0,0	monster	Thief Bug Female	1017,1,0,0,0
+new_zone03.gat,0,0,0,0	monster	Thief Bug Female	1053,1,0,0,0

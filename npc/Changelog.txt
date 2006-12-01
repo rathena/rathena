@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+12/01
+	* Removed outdated Thief Bug ID [Playtester]
+	- 1017 and 1021 don't exist anymore
 11/30
 	* Updated Shinokas Quest to leave no grabage vars [Lupus]
 	- Added a log when players get their jobs

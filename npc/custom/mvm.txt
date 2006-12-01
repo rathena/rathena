@@ -91,7 +91,7 @@ if (#monster == 92) summon strcharinfo(0) + "'s Rocker",1052, "OnRockerKilled";
 if (#monster == 100) summon strcharinfo(0) + "'s Skeleton",1076, "OnSkeletonKilled";
 if (#monster == 101) summon strcharinfo(0) + "'s Plankton",1161, "OnPlanktonKilled";
 if (#monster == 102) summon strcharinfo(0) + "'s Antonio",1247, "OnAntonioKilled";
-if (#monster == 103) summon strcharinfo(0) + "'s Thief Bug Female",1017, "OnThiefFemaleKilled";
+if (#monster == 103) summon strcharinfo(0) + "'s Thief Bug Female",1053, "OnThiefFemaleKilled";
 close;
 }
 

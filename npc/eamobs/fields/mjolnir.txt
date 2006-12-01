@@ -222,7 +222,7 @@ mjolnir_10.gat,123,331,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 //==================================================
 mjolnir_11.gat,0,0,0,0	monster	Flora	1118,60,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Mandragora	1020,50,0,0,0
-mjolnir_11.gat,0,0,0,0	monster	Thief Bug Male	1021,30,0,0,0
+mjolnir_11.gat,0,0,0,0	monster	Thief Bug Male	1054,30,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Poporing	1031,10,0,0,0
 mjolnir_11.gat,0,0,0,0	monster	Argiope	1099,10,0,0,0
 mjolnir_11.gat,112,276,0,0	monster	Green Plant	1080,1,180000,90000,1
@@ -243,5 +243,5 @@ mjolnir_11.gat,332,327,0,0	monster	Blue Plant	1079,1,360000,180000,1
 // mjolnir_12 - Mt.Mjolnir
 //==================================================
 mjolnir_12.gat,0,0,0,0	monster	Dustiness	1114,50,0,0,0
-mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1017,20,0,0,0
+mjolnir_12.gat,0,0,0,0	monster	Thief Bug Female	1053,20,0,0,0
 mjolnir_12.gat,0,0,0,0	monster	Stem Worm	1215,20,0,0,0
