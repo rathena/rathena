@@ -3702,8 +3702,8 @@ int atcommand_produce(
 		tmp_item.card[0] = CARD0_FORGE;
 		tmp_item.card[1] = item_data->type==IT_WEAPON?
 			((star*5) << 8) + attribute:0;
-		tmp_item.card[2] = GetWord(sd->char_id, 0);
-		tmp_item.card[3] = GetWord(sd->char_id, 1);
+		tmp_item.card[2] = GetWord(sd->status.char_id, 0);
+		tmp_item.card[3] = GetWord(sd->status.char_id, 1);
 		clif_produceeffect(sd, 0, item_id);
 		clif_misceffect(&sd->bl, 3);
 

@@ -120,11 +120,11 @@ int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int a
 		if (itm==NULL) {
 		//We log common item
 			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-			 log_config.log_pick_db, sd->char_id, type, nameid, amount, mapname);
+			 log_config.log_pick_db, sd->status.char_id, type, nameid, amount, mapname);
 		} else {
 		//We log Extended item
 			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-			 log_config.log_pick_db, sd->char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+			 log_config.log_pick_db, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
 		}
 
 		if(mysql_query(&logmysql_handle, tmp_sql))
@@ -144,12 +144,12 @@ int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int a
 	if (itm==NULL) {
 	//We log common item
 		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
-			timestring, sd->char_id, type, nameid, amount, mapname, RETCODE);
+			timestring, sd->status.char_id, type, nameid, amount, mapname, RETCODE);
 
 	} else {
 	//We log Extended item
 		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
-			timestring, sd->char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
+			timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
 	}
 	fclose(logfp);
 	return 1; //Logged
@@ -223,7 +223,7 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 	if(log_config.sql_logs > 0)
 	{
 		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
-			 log_config.log_zeny_db, sd->char_id, src_sd->char_id, type, amount, mapindex_id2name(sd->mapindex));
+			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex));
 		if(mysql_query(&logmysql_handle, tmp_sql))
 		{
 			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));

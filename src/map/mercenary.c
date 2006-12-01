@@ -622,10 +622,10 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	sd = map_id2sd(account_id);
 	if(!sd)
 		return 0;
-	if (sd->char_id != sh->char_id)
+	if (sd->status.char_id != sh->char_id)
 	{
 		if (sd->status.hom_id == sh->hom_id)
-			sh->char_id = sd->char_id; //Correct char id.
+			sh->char_id = sd->status.char_id; //Correct char id.
 		else
 			return 0;
 	}

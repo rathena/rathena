@@ -937,7 +937,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 	if(idx == -1 || c == 0) {
 		// ギルドのメンバー外なので追放扱いする
 		struct map_session_data *sd = map_id2sd(account_id);
-		if(sd && sd->char_id == char_id) {
+		if(sd && sd->status.char_id == char_id) {
 			sd->status.guild_id=0;
 			sd->guild_emblem_id=0;
 			sd->state.guild_sent=0;

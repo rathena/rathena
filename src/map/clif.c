@@ -8316,7 +8316,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		else
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
 	}
-
 	map_addblock(&sd->bl);	// ƒuƒƒbƒN“o˜^
 	clif_spawn(&sd->bl);	// spawn
 
@@ -8347,7 +8346,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->duel_group)
 		clif_set0199(fd, 1);
 
-	if(map_flag_gvg(sd->bl.m) || map[sd->bl.m].flag.gvg_dungeon)
+	if (map[sd->bl.m].flag.gvg_dungeon)
+		clif_set0199(fd,2); //TODO: Figure out the real thing to do here.
+
+	if(map_flag_gvg(sd->bl.m))
 		clif_set0199(fd,3);
 
 	// pet
@@ -8357,6 +8359,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_send_petdata(sd,0,0);
 		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
+//		skill_unit_move(&sd->pd->bl,gettick(),1);
 	}
 
 	//homunculus [blackhole89]
@@ -8370,6 +8373,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Homunc mimic their master's speed on each map change. [Skotlex]
 		if (battle_config.slaves_inherit_speed&1)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED);
+//		Since hom is inmune to land effects, unneeded.
+//		skill_unit_move(&sd->hd->bl,gettick(),1);
 	}
 
 	if(sd->state.connect_new) {
@@ -8474,9 +8479,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
   	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
 		clif_clearchar_area(&sd->bl,1);
+
 // Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
 //	else
 //		clif_changed_dir(&sd->bl, SELF);
+//	Trigger skill effects if you appear standing on them
+	if(!battle_config.pc_invincible_time)
+		skill_unit_move(&sd->bl,gettick(),1);
 }
 
 /*==========================================
@@ -10912,7 +10921,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd) {
 				if (pc_isGM(sd) > pc_isGM(tsd)) {
 					clif_GM_kick(sd, tsd, 1);
 					if((log_config.gm) && (get_atcommand_level(AtCommand_Kick) >= log_config.gm)) {
-						sprintf(message, "/kick %d", ((struct map_session_data*)target)->char_id);
+						sprintf(message, "/kick %d", tsd->status.char_id);
 						log_atcommand(sd, message);
 					}
 				} else
@@ -11832,7 +11841,7 @@ int clif_parse(int fd) {
 				clif_quitsave(fd, sd);
 			} else {
 				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n",
-					sd->bl.id, sd->char_id);
+					sd->bl.id, sd->status.char_id);
 				map_quit(sd);
 			}
 		} else {

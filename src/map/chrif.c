@@ -211,7 +211,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 		intif_saveregistry(sd, 1); //Save account2 regs
 #ifndef TXT_ONLY
 	if(charsave_method){ //New 'Local' save
-		charsave_savechar(sd->char_id, &sd->status);
+		charsave_savechar(sd->status.char_id, &sd->status);
 		if (flag) //Character final saved.
 			sd->state.finalsave = 1;
 		if (flag == 1)
@@ -222,8 +222,8 @@ int chrif_save(struct map_session_data *sd, int flag)
 	WFIFOHEAD(char_fd, sizeof(sd->status) + 13);
 	WFIFOW(char_fd,0) = 0x2b01;
 	WFIFOW(char_fd,2) = sizeof(sd->status) + 13;
-	WFIFOL(char_fd,4) = sd->bl.id;
-	WFIFOL(char_fd,8) = sd->char_id;
+	WFIFOL(char_fd,4) = sd->status.account_id;
+	WFIFOL(char_fd,8) = sd->status.char_id;
 	WFIFOB(char_fd,12) = (flag==1)?1:0; //Flag to tell char-server this character is quitting.
 	memcpy(WFIFOP(char_fd,13), &sd->status, sizeof(sd->status));
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
@@ -1147,10 +1147,10 @@ int chrif_updatefamelist(struct map_session_data *sd)
 
 	WFIFOHEAD(char_fd, 12);
 	WFIFOW(char_fd, 0) = 0x2b10;
-	WFIFOL(char_fd, 2) = sd->char_id;
+	WFIFOL(char_fd, 2) = sd->status.char_id;
 	WFIFOL(char_fd, 6) = sd->status.fame;
 	WFIFOB(char_fd, 10) = type;
-	WFIFOB(char_fd, 11) = pc_famerank(sd->char_id, sd->class_&MAPID_UPPERMASK);
+	WFIFOB(char_fd, 11) = pc_famerank(sd->status.char_id, sd->class_&MAPID_UPPERMASK);
 	WFIFOSET(char_fd, 12);
 
 	return 0;

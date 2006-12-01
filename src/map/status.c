@@ -1494,7 +1494,7 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100;
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON))
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 		val += 2000;
@@ -1511,7 +1511,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100;
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->char_id, MAPID_TAEKWON))
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max SP for top ranking Taekwons over level 90.
 	
 	return val;
@@ -6254,15 +6254,15 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 	case SC_HIDING:
 		sc->option &= ~OPTION_HIDE;
-		opt_flag = 2; //Check for warp trigger.
+		opt_flag|= 2|4; //Check for warp trigger + AoE trigger
 		break;
 	case SC_CLOAKING:
 		sc->option &= ~OPTION_CLOAK;
-		opt_flag = 2;
+		opt_flag|= 2;
 		break;
 	case SC_CHASEWALK:
 		sc->option &= ~(OPTION_CHASEWALK|OPTION_CLOAK);
-		opt_flag = 2;
+		opt_flag|= 2;
 		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
@@ -6364,7 +6364,10 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
-	if(opt_flag == 2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if(opt_flag&4) //Out of hiding, invoke on place.
+		skill_unit_move(bl,gettick(),1);
+
+	if(opt_flag&2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); //Trigger on-touch event.
 
 	return 1;

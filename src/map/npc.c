@@ -2452,10 +2452,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	}
 	else if (strcmpi(w3,"gvg_dungeon")==0) {
 		map[m].flag.gvg_dungeon=state;
-		map[m].flag.pvp=state;
-		map[m].flag.pvp_noparty=!state;
-		map[m].flag.pvp_noguild=!state;
-		map[m].flag.pvp_nocalcrank=state;
+		if (state) map[m].flag.pvp=0;
 	}
 	else if (strcmpi(w3,"gvg_castle")==0) {
 		map[m].flag.gvg_castle=state;

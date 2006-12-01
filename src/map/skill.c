@@ -1944,7 +1944,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			case TK_STORMKICK:
 			case TK_DOWNKICK:
 			case TK_COUNTER:
-				if (pc_famerank(sd->char_id,MAPID_TAEKWON))
+				if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 			  	{	//Extend combo time.
 					sd->skillid_old = skillid; //Set as previous so you can't repeat
 					sd->skilllv_old = skilllv;
@@ -4132,9 +4132,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if (!dstsd || !(
 				(sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SOULLINKER) ||
 				(dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER ||
-				dstsd->char_id == sd->char_id ||
-				dstsd->char_id == sd->status.partner_id ||
-				dstsd->char_id == sd->status.child
+				dstsd->status.char_id == sd->status.char_id ||
+				dstsd->status.char_id == sd->status.partner_id ||
+				dstsd->status.char_id == sd->status.child
 			)) {
 				status_change_start(src,SC_STUN,10000,skilllv,0,0,0,500,8);
 				clif_skill_fail(sd,skillid,0,0);
@@ -4306,10 +4306,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,0);
 			break;
 		}
-		status_change_end(bl, SC_FREEZE	, -1 );
-		status_change_end(bl, SC_STONE	, -1 );
-		status_change_end(bl, SC_SLEEP	, -1 );
-		status_change_end(bl, SC_STUN	, -1 );
+		if (tsc && tsc->opt1) {
+			status_change_end(bl, SC_FREEZE, -1 );
+			status_change_end(bl, SC_STONE, -1 );
+			status_change_end(bl, SC_SLEEP, -1 );
+			status_change_end(bl, SC_STUN, -1 );
+		}
 		//Is this equation really right? It looks so... special.
 		if(battle_check_undead(tstatus->race,tstatus->def_ele) )
 		{
@@ -4319,8 +4321,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_get_time2(skillid, skilllv) * (100-(tstatus->int_+tstatus->vit)/2)/100,10);
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(dstmd)
-			mob_unlocktarget(dstmd,tick);
 		break;
 
 	case WZ_ESTIMATION:
@@ -6772,7 +6772,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	group->bl_flag= skill_get_unit_bl_target(skillid);
 	group->state.into_abyss = (sc && sc->data[SC_INTOABYSS].timer != -1); //Store into abyss state, to know it shouldn't give traps back. [Skotlex]
 	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)); //Store the magic power flag. [Skotlex]
-	group->state.ammo_consume = (sd && sd->state.arrow_atk); //Store if this skill needs to consume ammo.
+	//Store if this skill needs to consume ammo.
+	group->state.ammo_consume = (sd && sd->state.arrow_atk && skillid != GS_GROUNDDRIFT);
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)?1:0)|(unit_flag&UF_ENSEMBLE?2:0); //Signals if this is a song/dance/duet
 
   	//if tick is greater than current, do not invoke onplace function just yet. [Skotlex]
@@ -8151,7 +8152,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0; //Anti-Soul Linker check in case you job-changed with Stances active.
 		if(!sc || sc->data[SC_COMBO].timer == -1)
 			return 0; //Combo needs to be ready
-		if (pc_famerank(sd->char_id,MAPID_TAEKWON))
+		if (pc_famerank(sd->status.char_id,MAPID_TAEKWON))
 		{	//Unlimited Combo
 			if (skill == sd->skillid_old) {
 				status_change_end(&sd->bl, SC_COMBO, -1);
@@ -8971,7 +8972,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				clif_misceffect(&sd->bl,3);
 				if(item->refine == MAX_REFINE &&
 					item->card[0] == CARD0_FORGE &&
-					MakeDWord(item->card[2],item->card[3]) == sd->char_id)
+					MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
 				{ // Fame point system [DracoRPG]
 					switch(ditem->wlv){
 						case 1:
@@ -10045,8 +10046,13 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit)){
 		switch(group->unit_id){
 			case UNT_BLASTMINE:
+			case UNT_GROUNDDRIFT_WIND:
+			case UNT_GROUNDDRIFT_DARK:
+			case UNT_GROUNDDRIFT_POISON:
+			case UNT_GROUNDDRIFT_WATER:
+			case UNT_GROUNDDRIFT_FIRE:
 				group->unit_id = UNT_USED_TRAPS;
-				clif_changetraplook(bl, UNT_USED_TRAPS);
+				clif_changetraplook(bl, UNT_FIREPILLAR_ACTIVE);
 				group->limit=DIFF_TICK(tick+1500,group->tick);
 				unit->limit=DIFF_TICK(tick+1500,group->tick);
 				break;
@@ -10072,18 +10078,6 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 					skill_delunit(unit, 0);
 				}
 				break;
-
-			case 0xc1:
-			case 0xc2:
-			case 0xc3:
-			case 0xc4:
-				{
-					struct block_list *src=map_id2bl(group->src_id);
-					if (src)
-						group->tick = tick;
-				}
-				break;
-
 			default:
 				skill_delunit(unit, 0);
 		}
@@ -10617,8 +10611,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		if(equip){
 			tmp_item.card[0]=CARD0_FORGE;
 			tmp_item.card[1]=((sc*5)<<8)+ele;
-			tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
-			tmp_item.card[3]=GetWord(sd->char_id,1);
+			tmp_item.card[2]=GetWord(sd->status.char_id,0); // CharId
+			tmp_item.card[3]=GetWord(sd->status.char_id,1);
 		} else {
 			//Flag is only used on the end, so it can be used here. [Skotlex]
 			switch (skill_id) {
@@ -10641,8 +10635,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			if (flag) {
 				tmp_item.card[0]=CARD0_CREATE;
 				tmp_item.card[1]=0;
-				tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
-				tmp_item.card[3]=GetWord(sd->char_id,1);
+				tmp_item.card[2]=GetWord(sd->status.char_id,0); // CharId
+				tmp_item.card[3]=GetWord(sd->status.char_id,1);
 			}
 		}
 
@@ -10785,8 +10779,8 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 		if(battle_config.making_arrow_name_input) {
 			tmp_item.card[0]=CARD0_CREATE;
 			tmp_item.card[1]=0;
-			tmp_item.card[2]=GetWord(sd->char_id,0); // CharId
-			tmp_item.card[3]=GetWord(sd->char_id,1);
+			tmp_item.card[2]=GetWord(sd->status.char_id,0); // CharId
+			tmp_item.card[3]=GetWord(sd->status.char_id,1);
 		}
 		if(tmp_item.nameid <= 0 || tmp_item.amount <= 0)
 			continue;

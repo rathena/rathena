@@ -2574,7 +2574,7 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
 	struct linkdb_node *node    = (struct linkdb_node *)sleep_db;
 	struct map_session_data *sd = map_id2sd(st->rid);
 
-	if((sd && sd->char_id != id) || (st->rid && !sd))
+	if((sd && sd->status.char_id != id) || (st->rid && !sd))
 	{	//Character mismatch. Cancel execution.
 		st->rid = 0;
 		st->state = END;
@@ -2722,7 +2722,7 @@ void run_script_main(struct script_state *st)
 
 	if(st->sleep.tick > 0) {
 		//Delay execution
-		st->sleep.charid = sd?sd->char_id:0;
+		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 			run_script_timer, st->sleep.charid, (int)st);
 		linkdb_insert(&sleep_db, (void*)st->oid, st);
@@ -6184,7 +6184,7 @@ int buildin_successrefitem(struct script_state *st)
 		clif_misceffect(&sd->bl,3);
 		if(sd->status.inventory[i].refine == MAX_REFINE &&
 			sd->status.inventory[i].card[0] == CARD0_FORGE &&
-		  	sd->char_id == MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
+		  	sd->status.char_id == MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
 		){ // Fame point system [DracoRPG]
 	 		switch (sd->inventory_data[i]->wlv){
 				case 1:
@@ -12480,7 +12480,7 @@ int buildin_awake(struct script_state *st)
 				node = node->next;
 				continue;
 			}
-			if((sd && sd->char_id != tst->sleep.charid) || (tst->rid && !sd))
+			if((sd && sd->status.char_id != tst->sleep.charid) || (tst->rid && !sd))
 			{	//Cancel Execution
 				tst->state=END;
 				tst->rid = 0;
