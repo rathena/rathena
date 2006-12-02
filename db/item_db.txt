@@ -1037,7 +1037,7 @@
 2357,Valkyrie_Armor,Valkyrie's Armor,5,0,,2800,,6,,1,0xFFFFFFFE,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stun,5000; },{},{}
 2358,Angel_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,0,0,{ bonus bLuk,4; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x02021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; if(isequipped(2654)) { bonus bUseSPrate,-20; bonus bMaxHP,300; } },{},{}
-2360,Robe_of_Casting_,Robe of Cast,5,124800,,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; bonus bMdef4; },{},{}
+2360,Robe_of_Casting_,Robe of Cast,5,124800,,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; bonus bMdef,4; },{},{}
 2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
 2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
 2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
