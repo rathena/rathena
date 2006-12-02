@@ -20,6 +20,7 @@
 
 ========================
 12/01
+	* Removed some mobs that aren't used anymore [Playtester]
 	* Updated various mob stats thanks to Soukosa [Playtester]
 11/30
 	* Fixed some mob names thanks to Soukosa [Playtester]
