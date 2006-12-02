@@ -10353,8 +10353,8 @@ int buildin_select(struct script_state *st)
 		clif_scriptmenu(sd,st->oid,buf);
 		aFree(buf);
 	} else if(sd->npc_menu==0xff){
-	  sd->state.menu_or_input=0;
-	  st->state=END;
+		sd->state.menu_or_input=0;
+		st->state=END;
 	} else {
 		//Skip empty menu entries which weren't displayed on the client (Skotlex)
 		for(i=st->start+2;i< (st->start+2+sd->npc_menu) && sd->npc_menu < (st->end-st->start-2);i++) {
@@ -10365,8 +10365,8 @@ int buildin_select(struct script_state *st)
 		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		push_val(st->stack,C_INT,sd->npc_menu);
-	  }
-	  return 0;
+	}
+	return 0;
 }
 
 int buildin_prompt(struct script_state *st)

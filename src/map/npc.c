@@ -2153,10 +2153,6 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 	oldscript = (struct script_code *)strdb_get(user_db, p);
 	if(oldscript != NULL) {
 		printf("\r"); //Carriage return to clear the 'loading..' line. [Skotlex]
-		//ShowWarning("parse_function: Duplicate user function [%s] (%s:%d)\n", p, file, *lines);
-		//aFree(p);
-		//script_free_code(script);
-		// Experimental function overwriting - [Lance]
 		ShowInfo("parse_function: Overwriting user function [%s] (%s:%d)\n", p, file, *lines);
 		script_free_code(oldscript);
 		user_db->remove(user_db,str2key(p));

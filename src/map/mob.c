@@ -1079,7 +1079,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	// Abnormalities
 	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.data[SC_BLADESTOP].timer != -1)
   	{	//Should reset targets.
-		md->target_id = md->attacked_id = 0;
+		md->target_id = md->attacked_id = md->attacked_players = 0;
 		return 0;
 	}
 
