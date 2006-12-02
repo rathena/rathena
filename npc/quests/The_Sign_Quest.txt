@@ -2448,11 +2448,11 @@ if($signmazemonster == 0)
 }
 else
 {
-	killmonster "prt_maze02.gat","OnMonsterDeadSign";
+	killmonster "prt_maze02.gat","OnMonsterDead";
 	set $signmazemonster,0;
 	goto Loopback;
 }
-OnMonsterDeadSign:
+OnMonsterDead:
 	set $signmazemonster,$signmazemonster - 1;
 
 }

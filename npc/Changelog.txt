@@ -34,6 +34,7 @@ KarLaeda
 Date		Added
 ======
 12/01
+	* Small fix to The Sign Quest [KarLaeda]
 	* Removed outdated Thief Bug ID [Playtester]
 	- 1017 and 1021 don't exist anymore
 11/30
