@@ -137,155 +137,155 @@ gon_test.gat,42,89,4	script	Summoner	774,{
 	L1:
 		menu "Dizziness",L1_1,"The Poison Food",L1_2,"Anemia",L1_3,"The Bug",L1_4,"Incision",L1_5,"Rabies",L1_6,"back",L0;
 		L1_1:
-			monster "gon_test.gat",58,87,"Dizziness",1419,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Dizziness",1419,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L1_2:
-			monster "gon_test.gat",58,87,"The Poison Food",1428,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"The Poison Food",1428,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L1_3:
-			monster "gon_test.gat",58,87,"Anemia",1434,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Anemia",1434,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L1_4:
-			monster "gon_test.gat",58,87,"The Bug",1430,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"The Bug",1430,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L1_5:
-			monster "gon_test.gat",58,87,"Incision",1457,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Incision",1457,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L1_6:
-			monster "gon_test.gat",58,87,"Rabies",1432,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Rabies",1432,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L2:
 		menu "Samael",L2_1,"Toror",L2_2,"Kangeishi",L2_3,"Blackdock",L2_4,"Merou",L2_5,"Kyoushi",L2_6,"back",L0;
 		L2_1:
-			monster "gon_test.gat",58,87,"Samael",1462,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Samael",1462,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L2_2:
-			monster "gon_test.gat",58,87,"Toror",1442,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Toror",1442,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L2_3:
-			monster "gon_test.gat",58,87,"Kangeishi",1469,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Kangeishi",1469,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L2_4:
-			monster "gon_test.gat",58,87,"Blackdock",1460,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Blackdock",1460,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L2_5:
-			monster "gon_test.gat",58,87,"Merou",1425,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Merou",1425,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L2_6:
-			monster "gon_test.gat",58,87,"Kyoushi",1472,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Kyoushi",1472,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L3:
 		menu "Ashimoto",L3_1,"Mushibamu",L3_2,"Sorappo",L3_3,"Freezer",L3_4,"Heat",L3_5,"The Rotten",L3_6,"back",L0;
 		L3_1:
-			monster "gon_test.gat",58,87,"Ashimoto",1454,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Ashimoto",1454,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L3_2:
-			monster "gon_test.gat",58,87,"Mushibamu",1443,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Mushibamu",1443,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L3_3:
-			monster "gon_test.gat",58,87,"Sorappo",1455,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Sorappo",1455,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L3_4:
-			monster "gon_test.gat",58,87,"Freezer",1426,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Freezer",1426,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L3_5:
-			monster "gon_test.gat",58,87,"Heat",1436,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Heat",1436,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L3_6:
-			monster "gon_test.gat",58,87,"The Rotten",1423,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"The Rotten",1423,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L4:
 		menu "Priest",L4_1,"Onion",L4_2,"Big Centipede",L4_3,"Marionette",L4_4,"Matchstick Girl",L4_5,"Firefly",L4_6,"back",L0;
 		L4_1:
-			monster "gon_test.gat",58,87,"Priest",1458,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Priest",1458,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L4_2:
-			monster "gon_test.gat",58,87,"Onion",1440,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Onion",1440,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L4_3:
-			monster "gon_test.gat",58,87,"Big Centipede",1429,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Big Centipede",1429,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L4_4:
-			monster "gon_test.gat",58,87,"Marionette",1459,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Marionette",1459,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L4_5:
-			monster "gon_test.gat",58,87,"Matchstick Girl",1444,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Matchstick Girl",1444,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L4_6:
-			monster "gon_test.gat",58,87,"Fly",1422,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Fly",1422,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L5:
 		menu "Femal Curse",L5_1,"Ikitsuchi",L5_2,"Master Snake",L5_3,"Poison Dragon",L5_4,"Seiryuu, the Blue Dragon",L5_5,"Epidemic Devil",L5_6,"back",L0;
 		L5_1:
-			monster "gon_test.gat",58,87,"Femal Curse",1421,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Femal Curse",1421,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L5_2:
-			monster "gon_test.gat",58,87,"Ikitsuchi",1481,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Ikitsuchi",1481,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L5_3:
-			monster "gon_test.gat",58,87,"Master Snake",1424,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Master Snake",1424,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L5_4:
-			monster "gon_test.gat",58,87,"Poison Dragon",1465,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Poison Dragon",1465,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L5_5:
-			monster "gon_test.gat",58,87,"Seiryuu, the Blue Dragon",1466,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Seiryuu, the Blue Dragon",1466,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L5_6:
-			monster "gon_test.gat",58,87,"Epidemic Devil",1433,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Epidemic Devil",1433,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L6:
 		menu "Tapir",L6_1,"Moat Putter",L6_2,"God of Lightning",L6_3,"Revengeing Ghost",L6_4,"Fusoushin",L6_5,"Hanmou",L6_6,"back",L0;
 		L6_1:
-			monster "gon_test.gat",58,87,"Tapir",1427,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Tapir",1427,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L6_2:
-			monster "gon_test.gat",58,87,"Moat Putter",1473,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Moat Putter",1473,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L6_3:
-			monster "gon_test.gat",58,87,"God of Lightning",1431,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"God of Lightning",1431,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L6_4:
-			monster "gon_test.gat",58,87,"Revengeing Ghost",1446,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Revengeing Ghost",1446,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L6_5:
-			monster "gon_test.gat",58,87,"Fusoushin",1474,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Fusoushin",1474,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L6_6:
-			monster "gon_test.gat",58,87,"Hanmou",1471,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Hanmou",1471,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L7:
 		menu "Cane",L7_1,"Axe",L7_2,"Big Hammer",L7_3,"Armor",L7_4,"Bow",L7_5,"Iron Bullet",L7_6,"back",L0;
 		L7_1:
-			monster "gon_test.gat",58,87,"Cane",1450,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Cane",1450,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L7_2:
-			monster "gon_test.gat",58,87,"Axe",1439,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Axe",1439,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L7_3:
-			monster "gon_test.gat",58,87,"Big Hammer",1461,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Big Hammer",1461,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L7_4:
-			monster "gon_test.gat",58,87,"Armor",1467,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Armor",1467,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L7_5:
-			monster "gon_test.gat",58,87,"Bow",1453,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Bow",1453,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L7_6:
-			monster "gon_test.gat",58,87,"Iron Bullet",1479,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Iron Bullet",1479,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L8:
 		menu "Lips",L8_1,"Tooth",L8_2,"Hair",L8_3,"The Hand",L8_4,"Muscle",L8_5,"Bone",L8_6,"back",L0;
 		L8_1:
-			monster "gon_test.gat",58,87,"Lips",1451,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Lips",1451,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L8_2:
-			monster "gon_test.gat",58,87,"Tooth",1475,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Tooth",1475,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L8_3:
-			monster "gon_test.gat",58,87,"The Hair",1437,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"The Hair",1437,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L8_4:
-			monster "gon_test.gat",58,87,"Hand",1441,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Hand",1441,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L8_5:
-			monster "gon_test.gat",58,87,"Muscle",1476,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Muscle",1476,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L8_6:
-			monster "gon_test.gat",58,87,"Bone",1435,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Bone",1435,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L9:
 		menu "Ball",L9_1,"Mirror",L9_2,"Book",L9_3,"Glove",L9_4,"Bag",L9_5,"Clothes",L9_6,"back",L0;
 		L9_1:
-			monster "gon_test.gat",58,87,"Ball",1477,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Ball",1477,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L9_2:
-			monster "gon_test.gat",58,87,"Mirror",1448,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Mirror",1448,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L9_3:
-			monster "gon_test.gat",58,87,"Book",1478,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Book",1478,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L9_4:
-			monster "gon_test.gat",58,87,"Glove",1489,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Glove",1489,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L9_5:
-			monster "gon_test.gat",58,87,"Bag",1488,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Bag",1488,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L9_6:
-			monster "gon_test.gat",58,87,"Clothes",1438,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Clothes",1438,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L10:
 		menu "The Queen",L10_1,"Hot-Blood-Man",L10_2,"Executioner",L10_3,"Mutant Dragon",L10_4,"Syntetic Beast",L10_5,"Satan",L10_6,"back",L0;
 		L10_1:
-			monster "gon_test.gat",58,87,"The Queen",1482,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"The Queen",1482,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L10_2:
-			monster "gon_test.gat",58,87,"Hot-Blood-Man",1464,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Hot-Blood-Man",1464,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L10_3:
-			monster "gon_test.gat",58,87,"Executioner",1487,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Executioner",1487,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L10_4:
-			monster "gon_test.gat",58,87,"Mutant Dragon",1449,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Mutant Dragon",1449,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L10_5:
-			monster "gon_test.gat",58,87,"Syntetic Beast",1456,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Syntetic Beast",1456,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L10_6:
-			monster "gon_test.gat",58,87,"Satan",1486,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Satan",1486,1,"mobend::OnMobDead";set $@addmon,1;close;
 	L11:
 		menu "Hunter",L11_1,"Assassin",L11_2,"Samurai",L11_3,"Budoka",L11_4,"Fencer",L11_5,"back",L0;
 		L11_1:
-			monster "gon_test.gat",58,87,"Hunter",1447,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Hunter",1447,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L11_2:
-			monster "gon_test.gat",58,87,"Assassin",1483,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Assassin",1483,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L11_3:
-			monster "gon_test.gat",58,87,"Samurai",1490,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Samurai",1490,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L11_4:
-			monster "gon_test.gat",58,87,"Budoka",1484,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Budoka",1484,1,"mobend::OnMobDead";set $@addmon,1;close;
 		L11_5:
-			monster "gon_test.gat",58,87,"Fencer",1485,1,"mobend";set $@addmon,1;close;
+			monster "gon_test.gat",58,87,"Fencer",1485,1,"mobend::OnMobDead";set $@addmon,1;close;
 Lalready:
 	mes "[Son Yon'u]";
 	mes "The monster has been summoned already. It is only possible to summon one monster at a time. Please re-enter the arena, if you wish another opponent.";
@@ -297,6 +297,7 @@ LError:
 }
 //===============================================================================
 gon_test.gat,58,87,0	script	mobend	-1,{
+OnMobDead:
 	mapannounce "gon_test.gat","Summoner: Congratulations.",0;
 	stopnpctimer "gontimer";
 	addtimer 5000, "mobend::OnReturn";

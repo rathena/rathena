@@ -2298,7 +2298,7 @@ OnInit:
 	end;
 
 OnReset:
-	killmonster "pay_dun03.gat","NT::OnMobDeadGlobal";
+	killmonster "pay_dun03.gat","NT::OnMobDead";
 	disablenpc "Nine Tail#1";
 	disablenpc "Nine Tail#2";
 	initnpctimer;

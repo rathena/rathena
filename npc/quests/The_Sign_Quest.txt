@@ -7610,14 +7610,14 @@ L_Check:
 	mes "Muhahahahahaha!";
 	mes "That's not the right spell!";
 	mes "Now death awaits you!";
-	killmonster "niflheim.gat","#signbruce::Onmymob2";
-	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",350,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",344,255,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
-	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"#signbruce::Onmymob2";
+	killmonster "niflheim.gat","#signbruce::Onmymob";
+	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",350,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",344,255,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
 	close;
 
 L_Success:

@@ -1724,7 +1724,7 @@ monk_test.gat,88,91,4	script	Test Assistant#01	52,{
 	mes "Good luck! May God be with you.";
 	next;
 	if(getareausers("monk_test.gat",126,161,165,199) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob1";
+	killmonster "monk_test.gat","monk_mob1::OnMobDead";
 	enablenpc "monk_mob1_1";
 	enablenpc "monk_mob1_2";
 	enablenpc "monk_mob1_3";
@@ -1737,37 +1737,38 @@ L_WAIT:
 	close;
 }
 monk_test.gat,129,180,4	script	monk_mob1_1	139,0,19,{
-	monster "monk_test.gat",130,183,"--ja--",1015,1,"monk_mob1";
-	monster "monk_test.gat",130,177,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",130,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test.gat",130,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_1";
 	end;
 }
 monk_test.gat,133,180,4	script	monk_mob1_2	139,0,19,{
-	monster "monk_test.gat",134,183,"--ja--",1015,1,"monk_mob1";
-	monster "monk_test.gat",134,177,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",134,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test.gat",134,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_2";
 	end;
 }
 monk_test.gat,145,180,4	script	monk_mob1_3	139,0,19,{
-	monster "monk_test.gat",145,180,"--ja--",1041,1,"monk_mob1";
+	monster "monk_test.gat",145,180,"--ja--",1041,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_3";
 	end;
 }
 monk_test.gat,155,180,4	script	monk_mob1_4	139,0,19,{
-	monster "monk_test.gat",157,183,"--ja--",1015,1,"monk_mob1";
-	monster "monk_test.gat",157,177,"--ja--",1015,1,"monk_mob1";
+	monster "monk_test.gat",157,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test.gat",157,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_4";
 	end;
 }
 monk_test.gat,165,179,4	script	monk_mob3_warp#01	45,1,1,{
 	set MONK_Q, 9;
 	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob1";
+	killmonster "monk_test.gat","monk_mob1::OnMobDead";
 	warp "monk_test.gat",317,142;
 	end;
 }
 
 monk_test.gat,1,1,1	script	monk_mob1	-1,{
+OnMobDead:
 		end;
 }
 
@@ -1784,7 +1785,7 @@ monk_test.gat,95,85,4	script	Test Assistant#02	79,{
 	mes "Good luck! May God be with you.";
 	next;
 	if(getareausers("monk_test.gat",126,262,165,300) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob2";
+	killmonster "monk_test.gat","monk_mob2::OnMobDead";
 	enablenpc "monk_mob2_1";
 	enablenpc "monk_mob2_2";
 	enablenpc "monk_mob2_3";
@@ -1799,37 +1800,38 @@ L_WAIT:
 
 }
 monk_test.gat,129,281,4	script	monk_mob2_1	139,0,19,{
-	monster "monk_test.gat",130,278,"--ja--",1015,1,"monk_mob2";
-	monster "monk_test.gat",130,284,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",130,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test.gat",130,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_1";
 	end;
 }
 monk_test.gat,136,281,4	script	monk_mob2_2	139,0,19,{
-	monster "monk_test.gat",139,278,"--ja--",1015,1,"monk_mob2";
-	monster "monk_test.gat",139,284,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",139,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test.gat",139,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_2";
 	end;
 }
 monk_test.gat,144,281,4	script	monk_mob2_3	139,0,19,{
-	monster "monk_test.gat",145,281,"--ja--",1041,1,"monk_mob2";
+	monster "monk_test.gat",145,281,"--ja--",1041,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_3";
 	end;
 }
 monk_test.gat,153,281,4	script	monk_mob2_4	139,0,19,{
-	monster "monk_test.gat",155,278,"--ja--",1015,1,"monk_mob2";
-	monster "monk_test.gat",155,284,"--ja--",1015,1,"monk_mob2";
+	monster "monk_test.gat",155,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test.gat",155,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_4";
 	end;
 }
 monk_test.gat,165,278,4	script	monk_mob2_warp	45,1,1,{
 	set MONK_Q, 9;
 	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob2";
+	killmonster "monk_test.gat","monk_mob2::OnMobDead";
 	warp "monk_test.gat",317,142;
 	end;
 }
 
 monk_test.gat,1,1,1	script	monk_mob2	-1,{
+OnMobDead:
 		end;
 }
 
@@ -1846,7 +1848,7 @@ monk_test.gat,82,85,4	script	Test Assistant#03	95,{
 	mes "Good luck! May God be with you.";
 	next;
 	if(getareausers("monk_test.gat",233,262,269,300) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob3";
+	killmonster "monk_test.gat","monk_mob3::OnMobDead";
 	enablenpc "monk_mob3_1";
 	enablenpc "monk_mob3_2";
 	enablenpc "monk_mob3_3";
@@ -1861,34 +1863,38 @@ L_WAIT:
 }
 
 monk_test.gat,234,281,4	script	monk_mob3_1	139,0,19,{
-	monster "monk_test.gat",235,277,"--ja--",1015,1,"monk_mob3";
-	monster "monk_test.gat",235,284,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",235,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test.gat",235,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_1";
 	end;
 }
 monk_test.gat,239,281,4	script	monk_mob3_2	139,0,19,{
-	monster "monk_test.gat",240,277,"--ja--",1015,1,"monk_mob3";
-	monster "monk_test.gat",240,284,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",240,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test.gat",240,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_2";
 	end;
 }
 monk_test.gat,248,281,4	script	monk_mob3_3	139,0,19,{
-	monster "monk_test.gat",249,281,"--ja--",1041,1,"monk_mob3";
+	monster "monk_test.gat",249,281,"--ja--",1041,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_3";
 	end;
 }
 monk_test.gat,260,281,4	script	monk_mob3_4	139,0,19,{
-	monster "monk_test.gat",261,277,"--ja--",1015,1,"monk_mob3";
-	monster "monk_test.gat",261,284,"--ja--",1015,1,"monk_mob3";
+	monster "monk_test.gat",261,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test.gat",261,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_4";
 	end;
 }
 monk_test.gat,269,279,4	script	monk_mob3_warp#02	45,1,1,{
 	set MONK_Q, 9;
 	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob3";
+	killmonster "monk_test.gat","monk_mob3::OnMobDead";
 	warp "monk_test.gat",317,142;
 	end;
+}
+monk_test.gat,1,1,1	script	monk_mob3	-1,{
+OnMobDead:
+		end;
 }
 
 

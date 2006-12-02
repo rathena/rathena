@@ -354,7 +354,7 @@ N_QuestComp:
 	delitem 957,50;
 	set four_qset,0;
 	set On_Quest,0;
-	killmonster "pay_dun00.gat","kaho";
+	killmonster "pay_dun00.gat","Flora::OnMobDead";
 	close;
 N_QuestStart:
 	mes "[Flora]";
@@ -367,9 +367,11 @@ N_QuestStart:
 	mes "[Flora]";
 	mes "Good Luck";
 	mes "Remember I need 50 Nail's";
-	monster "pay_dun00.gat",0,0,"Flaming Bastard",1072,1,"kaho";
-	monster "pay_dun00.gat",0,0,"Flaming Bastard",1072,1,"kaho";
+	monster "pay_dun00.gat",0,0,"Flaming Bastard",1072,1,"Flora::OnMobDead";
+	monster "pay_dun00.gat",0,0,"Flaming Bastard",1072,1,"Flora::OnMobDead";
 	close;
+OnMobDead:
+	end;
 }
 //4-2;
 yuno.gat,45,138,6	script	Zed	735,{
@@ -439,7 +441,7 @@ N_QuestComp:
 	mes "[Czhore]";
 	mes "Here have these 2 Treasure Tokens.";
 	mes "And some of my old treasure...";
-	monster "prt_gld.gat",155,99,"Old Man's Treasure",1324,1,"treasure";
+	monster "prt_gld.gat",155,99,"Old Man's Treasure",1324,1;
 	set four_qset,0;
 	set On_Quest,0;
 	delitem 714,1;
@@ -652,7 +654,7 @@ N_QuestComp:
 	mes "Oh dear god!!!";
 	mes "One of those evil mosters has followed you up here, Kill it, Kill it!!!";
 	next;
-	monster "gef_tower.gat",42,89,"Evil Nightmare",1061,1,"nightsum";
+	monster "gef_tower.gat",42,89,"Evil Nightmare",1061,1;
 	close;
 N_QuestStart:
 	mes "[Zuuzuu]";

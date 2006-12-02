@@ -93,14 +93,14 @@ force_1-1.gat,99,12,0	script	arenalv3st	-1,{
 // Transmission to the room, and mob organization
 //Time Attack Level 1
 force_1-1.gat,99,12,0	script	arenalv1fgt	-1,{
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
-	monster "force_1-1.gat",25,25,"Arena Enemy",1002,1,"arenalv1mon";
-	monster "force_1-1.gat",20,25,"Arena Enemy",1002,1,"arenalv1mon";
-	monster "force_1-1.gat",25,20,"Arena Enemy",1002,1,"arenalv1mon";
-	monster "force_1-1.gat",30,25,"Arena Enemy",1002,1,"arenalv1mon";
-	monster "force_1-1.gat",25,30,"Arena Enemy",1002,1,"arenalv1mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",25,25,"Arena Enemy",1002,1,"arenalv1fgt::arenalv1mon";
+	monster "force_1-1.gat",20,25,"Arena Enemy",1002,1,"arenalv1fgt::arenalv1mon";
+	monster "force_1-1.gat",25,20,"Arena Enemy",1002,1,"arenalv1fgt::arenalv1mon";
+	monster "force_1-1.gat",30,25,"Arena Enemy",1002,1,"arenalv1fgt::arenalv1mon";
+	monster "force_1-1.gat",25,30,"Arena Enemy",1002,1,"arenalv1fgt::arenalv1mon";
 	set $arena00,5;
 	disablenpc "fc101";
 	disablenpc "fc103";
@@ -111,21 +111,23 @@ force_1-1.gat,99,12,0	script	arenalv1fgt	-1,{
 	announce "Do it within 30 seconds!",19;
 	addtimer 30000,"arenalv1fail";
 	addtimer 20000,"tensecsleft";
+arenalv1mon:
+	end;
 }
 
 //Time Attack Level 2
 force_1-1.gat,99,12,0	script	arenalv2fgt	-1,{
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
-	monster "force_1-1.gat",20,20,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",20,25,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",20,30,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",30,20,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",30,25,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",30,30,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",25,30,"Arena Enemy",1012,1,"arenalv2mon";
-	monster "force_1-1.gat",25,20,"Arena Enemy",1012,1,"arenalv2mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",20,20,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",20,25,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",20,30,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",30,20,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",30,25,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",30,30,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",25,30,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
+	monster "force_1-1.gat",25,20,"Arena Enemy",1012,1,"arenalv2fgt::arenalv2mon";
 	set $arena00,7;
 	disablenpc "fc101";
 	disablenpc "fc103";
@@ -136,23 +138,25 @@ force_1-1.gat,99,12,0	script	arenalv2fgt	-1,{
 	announce "You have 60 seconds to destroy all seven!",19;
 	addtimer 60000,"arenalv2fail";
 	addtimer 50000,"tensecsleft";
+arenalv2mon:
+	end;
 }
 
 //Time Attack Level 3
 force_1-1.gat,99,12,0	script	arenalv3fgt	-1,{
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
-	monster "force_1-1.gat",20,20,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",20,25,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",20,30,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",30,20,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",30,25,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",30,30,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",25,30,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",25,25,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",25,20,"Arena Enemy",1019,1,"arenalv3mon";
-	monster "force_1-1.gat",20,35,"Arena Enemy",1019,1,"arenalv3mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",20,20,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",20,25,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",20,30,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",30,20,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",30,25,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",30,30,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",25,30,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",25,25,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",25,20,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
+	monster "force_1-1.gat",20,35,"Arena Enemy",1019,1,"arenalv3fgt::arenalv3mon";
 	set $arena00,9;
 	disablenpc "fc101";
 	disablenpc "fc103";
@@ -163,6 +167,8 @@ force_1-1.gat,99,12,0	script	arenalv3fgt	-1,{
 	announce "You have 90 seconds to destroy all nine!",19;
 	addtimer 90000,"arenalv3fail";
 	addtimer 80000,"tensecsleft";
+arenalv3mon:
+	end;
 }
 
 // Pushed-down Processing
@@ -369,9 +375,9 @@ L_CONT:
 // Timeout
 force_1-1.gat,25,26,0	script	arenalv1fail	-1,{
 	set $arena00,99;
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
 	announce "Time Over!!",3;
 	areaannounce "force_1-1.gat",0,0,350,350,
 		"You failed Time Attack Level 1.",0;
@@ -432,9 +438,9 @@ force_1-1.gat,25,26,0	script	arenalv1fail	-1,{
 
 force_1-1.gat,25,26,0	script	arenalv2fail	-1,{
 	set $arena00,99;
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
 	announce "Time Over!!",3;
 	areaannounce "force_1-1.gat",0,0,350,350,
 		"You failed Time Attack Level 2.",0;
@@ -495,9 +501,9 @@ force_1-1.gat,25,26,0	script	arenalv2fail	-1,{
 
 force_1-1.gat,25,26,0	script	arenalv3fail	-1,{
 	set $arena00,99;
-	killmonster "force_1-1.gat","arenalv1mon";
-	killmonster "force_1-1.gat","arenalv2mon";
-	killmonster "force_1-1.gat","arenalv3mon";
+	killmonster "force_1-1.gat","arenalv1fgt::arenalv1mon";
+	killmonster "force_1-1.gat","arenalv2fgt::arenalv2mon";
+	killmonster "force_1-1.gat","arenalv3fgt::arenalv3mon";
 	announce "Time Over!!",3;
 	areaannounce "force_1-1.gat",0,0,350,350,
 		"You failed Time Attack Level 2.",0;
