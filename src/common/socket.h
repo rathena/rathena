@@ -72,6 +72,10 @@ extern time_t stall_time;
 #define WBUFW(p,pos) (*(unsigned short*)((p) + (pos)))
 #define WBUFL(p,pos) (*(unsigned long*)((p) + (pos)))
 
+#define TOB(n) ((unsigned char)(n))
+#define TOW(n) ((unsigned short)(n))
+#define TOL(n) ((unsigned long)(n))
+
 //FD_SETSIZE must be modified on the project files/Makefile, since a change here won't affect
 // dependant windows libraries.
 /*

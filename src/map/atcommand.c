@@ -1070,31 +1070,234 @@ int atcommand_send(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int type=0;
-	int info[20];
+	int len=0,off,end,type;
+	long num;
+	(void)command; // not used
 
-	malloc_tsetdword(info,0,sizeof(info));
-
-	if (!message || !*message || sscanf(message,
-		"%x %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-		&type,
-		&info[0], &info[1], &info[2], &info[3], &info[4],
-	  	&info[5], &info[6], &info[7], &info[8], &info[9],
-	  	&info[10], &info[11], &info[12], &info[13], &info[14],
-	  	&info[15], &info[16], &info[17], &info[18], &info[19]) < 1)
-  	{
-		clif_displaymessage(fd, "Please enter a packet number, and - if required - up to 20 additional values.");
-		return -1;
-	}
-
-	if (!clif_send_debug(sd, type, info, sizeof(info)/sizeof(int)))
+	// read message type as hex number (without the 0x)
+	if(!message || !*message ||
+			!((sscanf(message, "len %x", &type)==1 && (len=1))
+			|| sscanf(message, "%x", &type)==1) )
 	{
-		clif_displaymessage(fd, msg_txt(259));
+		clif_displaymessage(fd, "Usage:");
+		clif_displaymessage(fd, "   @send len <packet hex number>");
+		clif_displaymessage(fd, "   @send <packet hex number> {<value>}*");
+		clif_displaymessage(fd, "   Value: <type=B(default),W,L><number> or S<length>\"<string>\"");
 		return -1;
 	}
-	sprintf (atcmd_output, msg_txt(258), type, type);
+
+#define PARSE_ERROR(error,p) \
+	{\
+		clif_displaymessage(fd, (error));\
+		sprintf(atcmd_output, ">%s", (p));\
+		clif_displaymessage(fd, atcmd_output);\
+	}
+//define PARSE_ERROR
+
+#define CHECK_EOS(p) \
+	if(*(p) == 0){\
+		clif_displaymessage(fd, "Unexpected end of string");\
+		return -1;\
+	}
+//define CHECK_EOS
+
+#define SKIP_VALUE(p) \
+	{\
+		while(*(p) && !isspace(*(p))) ++(p); /* non-space */\
+		while(*(p) && isspace(*(p)))  ++(p); /* space */\
+	}
+//define SKIP_VALUE
+
+#define GET_VALUE(p,num) \
+	{\
+		if(sscanf((p), "x%lx", &(num)) < 1 && sscanf((p), "%ld ", &(num)) < 1){\
+			PARSE_ERROR("Invalid number in:",(p));\
+			return -1;\
+		}\
+	}
+//define GET_VALUE
+
+	if (type > 0 && type < MAX_PACKET_DB) {
+
+		if(len)
+		{// show packet length
+			sprintf(atcmd_output, "Packet 0x%x length: %d", type, packet_db[sd->packet_ver][type].len);
+			clif_displaymessage(fd, atcmd_output);
+			return 0;
+		}
+
+		len=packet_db[sd->packet_ver][type].len;
+		off=2;
+		if(len == 0)
+		{// unknown packet - ERROR
+			sprintf(atcmd_output, "Unknown packet: 0x%x", type);
+			clif_displaymessage(fd, atcmd_output);
+			return -1;
+		} else if(len == -1)
+		{// dynamic packet
+			len=SHRT_MAX-4; // maximum length
+			off=4;
+		}
+		WFIFOHEAD(fd, len);
+		WFIFOW(fd,0)=TOW(type);
+
+		// parse packet contents
+		SKIP_VALUE(message);
+		while(*message != 0 && off < len){
+			if(isdigit(*message) || *message == '-' || *message == '+')
+			{// default (byte)
+				GET_VALUE(message,num);
+				WFIFOB(fd,off)=TOB(num);
+				++off;
+			} else if(toupper(*message) == 'B')
+			{// byte
+				++message;
+				GET_VALUE(message,num);
+				WFIFOB(fd,off)=TOB(num);
+				++off;
+			} else if(toupper(*message) == 'W')
+			{// word (2 bytes)
+				++message;
+				GET_VALUE(message,num);
+				WFIFOW(fd,off)=TOW(num);
+				off+=2;
+			} else if(toupper(*message) == 'L')
+			{// long word (4 bytes)
+				++message;
+				GET_VALUE(message,num);
+				WFIFOL(fd,off)=TOL(num);
+				off+=4;
+			} else if(toupper(*message) == 'S')
+			{// string - escapes are valid
+				// get string length - num <= 0 means not fixed length (default)
+				++message;
+				if(*message == '"'){
+					num=0;
+				} else {
+					GET_VALUE(message,num);
+					while(*message != '"')
+					{// find start of string
+						if(*message == 0 || isspace(*message)){
+							PARSE_ERROR("Not a string:",message);
+							return -1;
+						}
+						++message;
+					}
+				}
+
+				// parse string
+				++message;
+				CHECK_EOS(message);
+				end=(num<=0? 0: min(off+((int)num),len));
+				for(; *message != '"' && (off < end || end == 0); ++off){
+					if(*message == '\\'){
+						++message;
+						CHECK_EOS(message);
+						switch(*message){
+							case 'a': num=0x07; break; // Bell
+							case 'b': num=0x08; break; // Backspace
+							case 't': num=0x09; break; // Horizontal tab
+							case 'n': num=0x0A; break; // Line feed
+							case 'v': num=0x0B; break; // Vertical tab
+							case 'f': num=0x0C; break; // Form feed
+							case 'r': num=0x0D; break; // Carriage return
+							case 'e': num=0x1B; break; // Escape
+							default:  num=*message; break;
+							case 'x': // Hexadecimal
+							{
+								++message;
+								CHECK_EOS(message);
+								if(!isxdigit(*message)){
+									PARSE_ERROR("Not a hexadecimal digit:",message);
+									return -1;
+								}
+								num=(isdigit(*message)?*message-'0':tolower(*message)-'a'+10);
+								if(isxdigit(*message)){
+									++message;
+									CHECK_EOS(message);
+									num<<=8;
+									num+=(isdigit(*message)?*message-'0':tolower(*message)-'a'+10);
+								}
+								WFIFOB(fd,off)=TOB(num);
+								++message;
+								CHECK_EOS(message);
+								continue;
+							}
+							case '0':
+							case '1':
+							case '2':
+							case '3':
+							case '4':
+							case '5':
+							case '6':
+							case '7': // Octal
+							{
+								num=*message-'0'; // 1st octal digit
+								++message;
+								CHECK_EOS(message);
+								if(isdigit(*message) && *message < '8'){
+									num<<=3;
+									num+=*message-'0'; // 2nd octal digit
+									++message;
+									CHECK_EOS(message);
+									if(isdigit(*message) && *message < '8'){
+										num<<=3;
+										num+=*message-'0'; // 3rd octal digit
+										++message;
+										CHECK_EOS(message);
+									}
+								}
+								WFIFOB(fd,off)=TOB(num);
+								continue;
+							}
+						}
+					} else
+						num=*message;
+					WFIFOB(fd,off)=TOB(num);
+					++message;
+					CHECK_EOS(message);
+				}//for
+				while(*message != '"')
+				{// ignore extra characters
+					++message;
+					CHECK_EOS(message);
+				}
+
+				// terminate the string
+				if(off < end)
+				{// fill the rest with 0's
+					memset(WFIFOP(fd,off),0,end-off);
+					off=end;
+				}
+			} else
+			{// unknown
+				PARSE_ERROR("Unknown type of value in:",message);
+				return -1;
+			}
+			SKIP_VALUE(message);
+		}
+
+		if(packet_db[sd->packet_ver][type].len == -1)
+		{// send dynamic packet
+			WFIFOW(fd,2)=TOW(off);
+			WFIFOSET(fd,off);
+		} else
+		{// send static packet
+			if(off < len)
+				memset(WFIFOP(fd,off),0,len-off);
+			WFIFOSET(fd,len);
+		}
+	} else {
+		clif_displaymessage(fd, msg_txt(259)); // Invalid packet
+		return -1;
+	}
+	sprintf (atcmd_output, msg_txt(258), type, type); // Sent packet 0x%x (%d)
 	clif_displaymessage(fd, atcmd_output);
 	return 0;
+#undef PARSE_ERROR
+#undef CHECK_EOS
+#undef SKIP_VALUE
+#undef GET_VALUE
 }
 
 // @rura
