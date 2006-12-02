@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/02
+	* Updated shields [Playtester]
 12/01
 	* Removed some mobs that aren't used anymore [Playtester]
 	* Updated various mob stats thanks to Soukosa [Playtester]
