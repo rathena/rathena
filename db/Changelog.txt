@@ -20,6 +20,7 @@
 
 ========================
 12/02
+	* Updated armors [Playtester]
 	* Updated shields [Playtester]
 12/01
 	* Removed some mobs that aren't used anymore [Playtester]

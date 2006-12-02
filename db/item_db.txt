@@ -988,7 +988,7 @@
 2308,Mantle_,Mantle,5,10000,,600,,4,,1,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
 2309,Coat,Coat,5,22000,,1200,,5,,0,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
 2310,Coat_,Coat,5,22000,,1200,,5,,1,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
-2311,Mink_Coat,Mink Coat,5,50000,,2300,,6,,1,0xFFFFFFFE,7,2,16,,30,1,0,{},{},{}
+2311,Mink_Coat,Mink Coat,5,,10,2300,,6,,1,0xFFFFFFFE,7,2,16,,30,1,0,{},{},{}
 2312,Padded_Armor,Padded Armor,5,48000,,2800,,7,,0,0x000654E2,7,2,16,,0,1,0,{ if(isequipped(2656)) { bonus bDef,5; bonus bMaxHP,150; } },{},{}
 2313,Padded_Armor_,Padded Armor,5,48000,,2800,,7,,1,0x000654E2,7,2,16,,0,1,0,{ if(isequipped(2656)) { bonus bDef,5; bonus bMaxHP,150; } },{},{}
 2314,Chain_Mail,Chain Mail,5,65000,,3300,,8,,0,0x000654E2,7,2,16,,0,1,0,{},{},{}
@@ -1019,8 +1019,8 @@
 2339,G_Strings,Pantie,5,1000,,100,,4,,0,0xFFFFFFFF,7,2,16,,0,1,0,{},{},{}
 2340,Novice_Breast,Novice Breastplate,5,89000,,500,,4,,1,0x00000001,7,2,16,,10,1,0,{},{},{}
 2341,Full_Plate_Armor,Legion Plate Armor,5,94000,,5500,,11,,0,0x00004000,7,2,16,,70,1,0,{},{},{}
-2342,Full_Plate_Armor_,Legion Plate Armor,5,94000,,5500,,11,,1,0x00004000,7,2,16,,70,1,0,{},{},{}
-2343,Robe_Of_Casting,Robe of Cast,5,,10,1100,,5,,0,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
+2342,Full_Plate_Armor_,Legion Plate Armor,5,102500,,5500,,11,,1,0x00004000,7,2,16,,70,1,0,{},{},{}
+2343,Robe_Of_Casting,Robe of Cast,5,124800,,1100,,5,,0,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; bonus bMdef,4; },{},{}
 2344,Flame_Sprits_Armor,Lucius's Fierce Armor of Volcano,5,136000,,2200,,4,,0,0x000444A2,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Fire; },{},{}
 2345,Flame_Sprits_Armor_,Lucius's Fierce Armor of Volcano,5,136000,,2200,,4,,1,0xFFFFFFFE,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Fire; },{},{}
 2346,Water_Sprits_Armor,Saphien's Armor of Ocean,5,136000,,2200,,4,,0,0x000444A2,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Water; },{},{}
@@ -1029,15 +1029,15 @@
 2349,Wind_Sprits_Armor_,Aebeccee's Raging Typhoon Armor,5,136000,,2200,,4,,1,0xFFFFFFFE,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Wind; },{},{}
 2350,Earth_Sprits_Armor,Claytos Cracking Earth Armor,5,136000,,2200,,4,,0,0x000444A2,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Earth; },{},{}
 2351,Earth_Sprits_Armor_,Claytos Cracking Earth Armor,5,136000,,2200,,4,,1,0xFFFFFFFE,7,2,16,,45,1,0,{ bonus bDefEle,Ele_Earth; },{},{}
-2352,Novice_Plate,Tattered Novice Ninja Suit,5,,10,1,,4,,0,0x00000001,7,2,16,,0,0,0,{},{},{}
-2353,Odin's_Blessing,Odin's Blessing,5,,10,2500,,6,,1,0xFFFFFFFE,7,2,16,,65,1,0,{},{},{}
-2354,Goibne's_Armor,Goibne's Armor,5,,10,3500,,7,,0,0xFFFFFFFE,7,2,16,,54,1,0,{ bonus bVit,2; bonus bMaxHPrate,10; },{},{}
-2355,Angel's_Protection,Angelic Protection,5,,10,600,,4,,1,0x00000001,7,2,16,,40,1,0,{ bonus bMdef,20; if(isequipped(2116,2420,2521,5125)) { bonus bMaxHP,900; bonus bMaxSP,100; bonus4 bAutoSpellWhenHit,361,1,20,0; } },{},{}
-2356,Holy_Cloth_of_Benefit,Blessed Holy Robe,5,,10,2500,,5,,1,0x00008100,7,2,16,,70,1,,{ bonus bMdef,5; bonus2 bResEff,Eff_Blind,8000; },{},{}
-2357,Valkyrie's_Armor,Valkyrie's Armor,5,,10,2800,,6,,1,0xFFFFFFFE,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stun,5000; },{},{}
-2358,Angel's_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,1,,{ bonus bLuk,4; },{},{}
+2352,Novice_Plate,Tattered Novice Ninja Suit,5,1,,1,,4,,0,0x00000001,7,2,16,,0,0,0,{},{},{}
+2353,Odin's_Blessing,Odin's Blessing,5,30000,,2500,,6,,1,0xFFFFFFFE,7,2,16,,65,1,0,{},{},{}
+2354,Goibne's_Armor,Goibne's Armor,5,50000,,3500,,7,,0,0xFFFFFFFE,7,2,16,,54,1,0,{ bonus bVit,2; bonus bMaxHPrate,10; },{},{}
+2355,Angel's_Protection,Angelic Protection,5,10000,,600,,4,,1,0x00000001,7,2,16,,40,1,0,{ bonus bMdef,20; if(isequipped(2116,2420,2521,5125)) { bonus bMaxHP,900; bonus bMaxSP,100; bonus4 bAutoSpellWhenHit,361,1,20,0; } },{},{}
+2356,Vestment_Of_Grace,Blessed Holy Robe,5,,10,2500,,5,,1,0x00008100,7,2,16,,70,1,0,{ bonus bMdef,5; bonus2 bResEff,Eff_Blind,8000; },{},{}
+2357,Valkyrie_Armor,Valkyrie's Armor,5,0,,2800,,6,,1,0xFFFFFFFE,2,2,16,,0,1,0,{ bonus bAllStats,1; bonus bUnbreakableArmor,0; if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus2 bResEff,Eff_Silence,5000; else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus2 bResEff,Eff_Stun,5000; },{},{}
+2358,Angel_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,0,0,{ bonus bLuk,4; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x02021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; if(isequipped(2654)) { bonus bUseSPrate,-20; bonus bMaxHP,300; } },{},{}
-2360,Robe_of_Cast_,Robe of Cast,5,,10,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; },{},{}
+2360,Robe_of_Casting_,Robe of Cast,5,124800,,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; bonus bMdef4; },{},{}
 2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
 2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
 2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
