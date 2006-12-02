@@ -872,7 +872,10 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
 		return AtCommand_None;
 	}
 
-	if (*p == command_symbol || (p[0] == '|' && p[3] == command_symbol)) { // check first char, try to skip |00 (or something else) [Lance]
+	if(p[0] == '|')
+		p += 3;
+
+	if (*p == command_symbol) { // check first char, try to skip |00 (or something else) [Lance]
 		char command[101];
 		int i = 0;
 		malloc_set(info, 0, sizeof(AtCommandInfo));
