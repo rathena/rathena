@@ -863,13 +863,8 @@ int chrif_changedsex(int fd)
 	sd = map_id2sd(acc);
 	if (acc > 0) {
 		if (sd != NULL && sd->status.sex != sex) {
-			if (sd->status.sex == 0) {
-				sd->status.sex = 1;
-				sd->sex = 1;
-			} else if (sd->status.sex == 1) {
-				sd->status.sex = 0;
-				sd->sex = 0;
-			}
+			sd->status.sex = !sd->status.sex;
+
 			// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 			for (i = 0; i < MAX_INVENTORY; i++) {
 				if (sd->status.inventory[i].nameid && sd->status.inventory[i].equip)

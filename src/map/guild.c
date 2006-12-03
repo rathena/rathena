@@ -330,7 +330,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
 	m->char_id		=sd->status.char_id;
 	m->hair			=sd->status.hair;
 	m->hair_color	=sd->status.hair_color;
-	m->gender		=sd->sex;
+	m->gender		=sd->status.sex;
 	m->class_		=sd->status.class_;
 	m->lv			=sd->status.base_level;
 //	m->exp			=0;

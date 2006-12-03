@@ -7968,12 +7968,10 @@ int buildin_changesex(struct script_state *st) {
 
 	if (sd->status.sex == 0) {
 		sd->status.sex = 1;
-		sd->sex = 1;
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER)
 			sd->status.class_ -= 1;
 	} else if (sd->status.sex == 1) {
 		sd->status.sex = 0;
-		sd->sex = 0;
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER)
 			sd->status.class_ += 1;
 	}

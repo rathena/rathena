@@ -360,10 +360,10 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	sd->bl.id        = account_id;
 	sd->status.char_id      = account_id;
 	sd->status.char_id      = char_id;
+	sd->status.sex   = sex;
 	sd->login_id1    = login_id1;
 	sd->login_id2    = 0; // at this point, we can not know the value :(
 	sd->client_tick  = client_tick;
-	sd->sex          = sex;
 	sd->state.auth   = 0;
 	sd->bl.type      = BL_PC;
 	sd->canlog_tick  = gettick();
@@ -576,12 +576,12 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	}
 		
 	sd->login_id2 = login_id2;
-	memcpy(&sd->status, st, sizeof(*st));
 
-	if (sd->status.sex != sd->sex) {
+	if (st->sex != sd->status.sex) {
 		clif_authfail_fd(sd->fd, 0);
 		return 1;
 	}
+	memcpy(&sd->status, st, sizeof(*st));
 
 	//Set the map-server used job id. [Skotlex]
 	i = pc_jobid2mapid(sd->status.class_);
@@ -593,6 +593,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	} else
 		sd->class_ = i; 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
+	if(!sd->status.hp) pc_setdead(sd);
 	sd->state.connect_new = 1;
 
 	sd->followtimer = -1; // [MouseJstr]
@@ -5177,7 +5178,7 @@ int pc_readparam(struct map_session_data *sd,int type)
 		val= pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex);
 		break;
 	case SP_SEX:
-		val= sd->sex;
+		val= sd->status.sex;
 		break;
 	case SP_WEIGHT:
 		val= sd->weight;
@@ -5312,7 +5313,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		}
 		break;
 	case SP_SEX:
-		sd->sex = val;
+		sd->status.sex = val;
 		break;
 	case SP_WEIGHT:
 		sd->weight = val;
