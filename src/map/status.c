@@ -631,7 +631,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 					status_change_end(target, SC_GRAVITATION, -1);
 				}
 			}
-			if(sc->data[SC_DANCING].timer != -1 && hp > (signed int)status->max_hp>>2)
+			if(sc->data[SC_DANCING].timer != -1 && (unsigned int)hp > status->max_hp>>2)
 				skill_stop_dancing(target);
 		}
 		unit_skillcastcancel(target, 2);

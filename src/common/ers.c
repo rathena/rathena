@@ -293,7 +293,7 @@ static uint32 ers_obj_entry_size(ERInterface self)
 static void ers_obj_destroy(ERInterface self)
 {
 	ERSystem obj = (ERSystem)self;
-	ERLinkedList reuse;
+	ERLinkedList reuse,old;
 	uint32 i, count;
 
 	if (obj == NULL) {
@@ -328,20 +328,20 @@ static void ers_obj_destroy(ERInterface self)
 		}
 		while (reuse && count) {
 			count--;
+			old = reuse;
 			reuse = reuse->next;
+			old->next = NULL; // this makes duplicate frees report as missing entries
 		}
 	}
 	if (count) { // missing entries
-		ShowWarning("ers_obj_destroy: %u entries missing, continuing destruction.\n"
-				"Manager for entries of size %u.\n",
+		ShowWarning("ers_obj_destroy: %u entries missing (possible double free), continuing destruction (entry size=%u).",
 				count, obj->size);
 	} else if (reuse) { // extra entries
 		while (reuse && count != UINT32_MAX) {
 			count++;
 			reuse = reuse->next;
 		}
-		ShowWarning("ers_obj_destroy: %u extra entries found, continuing destruction.\n"
-				"Manager for entries of size %u.\n",
+		ShowWarning("ers_obj_destroy: %u extra entries found, continuing destruction (entry size=%u).",
 				count, obj->size);
 	}
 	// destroy the entry manager

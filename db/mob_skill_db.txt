@@ -21,7 +21,7 @@
 // around3 (7x7 area around self) / around4 (9x9 area around self) /
 // around5 (3x3 area around target) / around6 (5x5 area around target) /
 // around7 (7x7 area around target) / around8 (9x9 area around target) /
-// around (11x11 area around self)
+// around = around4
 //
 //conditions: (condition type) (value which specifies a condition value)
 //	always			unconditional

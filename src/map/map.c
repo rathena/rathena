@@ -11,6 +11,7 @@
 #include <unistd.h>
 #endif
 
+#include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/timer.h"
 #include "../common/grfio.h"
@@ -48,9 +49,6 @@
 #include "charsave.h"
 
 #include "irc.h"
-
-// maybe put basic macros to somewhere else
-#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 
 #ifndef TXT_ONLY
 

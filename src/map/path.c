@@ -5,11 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "map.h"
-#include "battle.h"
+#include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
+#include "map.h"
+#include "battle.h"
 
 #ifdef MEMWATCH
 #include "memwatch.h"
@@ -237,7 +238,6 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
  *  ‰“‹——£UŒ‚‚ª‰Â”\‚©‚Ç‚¤‚©‚ğ•Ô‚·
  *------------------------------------------
  */
-#define swap(x,y) { int t; t = x; x = y; y = t; }
 int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t flag)
 {
 	int dx, dy;
