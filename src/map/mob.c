@@ -1823,8 +1823,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			//Exp bonus per additional attacker.
 			if (count > battle_config.exp_bonus_max_attacker)
 				count = battle_config.exp_bonus_max_attacker;
-			count--;
-			per += per*(count*battle_config.exp_bonus_attacker)/100.;
+			per += per*((count-1)*battle_config.exp_bonus_attacker)/100.;
 		}
 
 		if(md->special_state.size==1)	// change experience for different sized monsters [Valaris]
