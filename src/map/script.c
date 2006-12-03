@@ -3582,6 +3582,8 @@ int buildin_setitemscript(struct script_state *st);
 int buildin_disguise(struct script_state *st);
 int buildin_undisguise(struct script_state *st);
 int buildin_getmonsterinfo(struct script_state *st); // [Lupus]
+int buildin_checkvending(struct script_state *st); // check vending [Nab4]
+int buildin_checkchatting(struct script_state *st); // check chatting [Marka]
 
 #ifdef PCRE_SUPPORT
 int buildin_defpattern(struct script_state *st); // MouseJstr
@@ -3918,6 +3920,8 @@ struct script_function buildin_func[] = {
 	{buildin_homunculus_evolution,"homevolution",""},	//[orn]
 	{buildin_eaclass,"eaclass","*"},	//[Skotlex]
 	{buildin_roclass,"roclass","i*"},	//[Skotlex]
+	{buildin_checkvending,"checkvending","*"},
+	{buildin_checkchatting,"checkchatting","*"},
 	{NULL,NULL,NULL},
 };
 
@@ -11862,6 +11866,39 @@ int buildin_getmonsterinfo(struct script_state *st)
 		default: //wrong Index
 			push_val(st->stack,C_INT,-1);
 	}
+	return 0;
+}
+
+int buildin_checkvending(struct script_state *st){ // check vending [Nab4]
+	struct map_session_data *sd = NULL;
+
+	if(st->end > st->start + 2)
+		sd = map_nick2sd(conv_str(st,&st->stack->stack_data[st->start+2]));
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		push_val(st->stack, C_INT, (sd->vender_id != 0));
+	else
+		push_val(st->stack, C_INT, 0);
+
+	return 0;
+}
+
+
+int buildin_checkchatting(struct script_state *st){ // check chatting [Marka]
+	struct map_session_data *sd = NULL;
+
+	if(st->end > st->start + 2)
+		sd = map_nick2sd(conv_str(st,&st->stack->stack_data[st->start+2]));
+	else
+		sd = script_rid2sd(st);
+
+	if(sd)
+		push_val(st->stack, C_INT, (sd->chatID != 0));
+	else
+		push_val(st->stack, C_INT, 0);
+
 	return 0;
 }
 
