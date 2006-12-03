@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/03
+	* Updated shoes [Playtester]
 12/02
 	* Updated armors [Playtester]
 	* Updated shields [Playtester]
