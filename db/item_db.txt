@@ -1073,25 +1073,26 @@
 2504,Muffler_,Muffler,5,5000,,400,,2,,1,0xFFFFFFFE,7,2,4,,0,1,0,{},{},{}
 2505,Manteau,Manteau,5,32000,,600,,4,,0,0x006654E2,7,2,4,,0,1,0,{},{},{}
 2506,Manteau_,Manteau,5,32000,,600,,4,,1,0x006654E2,7,2,4,,0,1,0,{},{},{}
-2507,Cape_Of_Ancient_Lord,Ancient Cape,5,,10,600,,2,,0,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
-2508,Ragamuffin_Cape,Ragamuffin Manteau,5,,10,500,,1,,0,0xFFFFFFFE,7,2,4,,0,1,0,{ bonus bMdef,10; },{},{}
-2509,Clack_Of_Servival,Survivor's Manteau,5,,10,550,,0,,0,0x00810204,7,2,4,,75,1,0,{ bonus bVit,10; if(isequipped(1618) || isequipped(1620)) bonus bMaxHP,300; bonus bMatkRate,-5; if(isequipped(1617) || isequipped(1618) || isequipped(1619) || isequipped(1620)) bonus bMatkRate,getequiprefinerycnt(4); bonus2 bSubEle,Ele_Neutral,getRefine()*3; },{},{}
-2510,Novice_Hood,Somber Novice Hood,5,,10,1,,2,,0,0x00000001,7,2,4,,0,0,0,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
-2511,Skeletons_Cape,Skeleton Manteau,5,,10,700,,1,,0,0xFFFFFFFE,7,2,4,,75,1,0,{ bonus bStr,2; bonus bInt,-3; bonus bDex,2; bonus bVit,-3; bonus bLuk,2; bonus bAgi,-4; },{},{}
+2507,Cape_Of_Ancient_Lord,Ancient Cape,5,82000,,600,,2,,0,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
+2508,Ragamuffin_Cape,Ragamuffin Manteau,5,56000,,500,,1,,0,0xFFFFFFFE,7,2,4,,0,1,0,{ bonus bMdef,10; },{},{}
+2509,Clack_Of_Servival,Survivor's Manteau,5,20000,,550,,0,,0,0x00810204,7,2,4,,75,1,0,{ bonus bVit,10; if(isequipped(1618) || isequipped(1620)) bonus bMaxHP,300; bonus bMatkRate,-5; if(isequipped(1617) || isequipped(1618) || isequipped(1619) || isequipped(1620)) bonus bMatkRate,getequiprefinerycnt(4); bonus2 bSubEle,Ele_Neutral,getRefine()*3; },{},{}
+2510,Novice_Hood,Somber Novice Hood,5,1,,1,,2,,0,0x00000001,7,2,4,,0,0,0,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
+2511,Skeleton?_Cape,Skeleton Manteau,5,5000,,700,,1,,0,0xFFFFFFFE,7,2,4,,75,1,0,{ bonus bStr,2; bonus bInt,-3; bonus bDex,2; bonus bVit,-3; bonus bLuk,2; bonus bAgi,-4; },{},{}
 2512,Novice_Manteau,Novice Manteau,5,50000,,500,,2,,1,0x00000001,7,2,4,,40,1,0,{ bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2513,Celestial_Robe,Heavenly Maiden Robe,5,,10,500,,3,,1,0xFFFFFFFE,7,2,4,,80,1,0,{},{},{}
 2514,Pauldron,Pauldron,5,,10,800,,5,,1,0x000654E2,7,2,4,,80,1,0,{},{},{}
-2515,Wing_Of_Eagle,Eagle Wing,5,,10,300,,1,,1,0x00810204,7,2,4,,85,1,0,{ if(isequipped(1616)) bonus bSpeedRate,10; },{},{}
-2516,Falcon_Robe,Falcon Muffler,5,,10,400,,3,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus bFlee,15; bonus bFlee2,5; },{},{}
-2517,Vali's_Manteau,Vali's Manteau,5,,10,600,,4,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Neutral,15; },{},{}
-2518,Morpheus's_Shawl,Morpheus's Shawl,5,,10,600,,3,,0,0xFFFFFFFE,7,2,4,,33,1,0,{ bonus bMaxSPrate,10; bonus bMdef,3; },{},{}
-2519,Morrigane's_Manteau,Morrigane's Manteau,5,,10,600,,3,,0,0xFFFFFFFE,7,2,4,,61,1,0,{ bonus bLuk,2; bonus bFlee2,8; },{},{}
-2520,Goibne's_Shoulder_Arms,Goibne's Spaulders,5,,10,700,,3,,0,0xFFFFFFFE,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; bonus bVit,1; },{},{}
-2521,Angel's_Warmth,Angelic Cardigan,5,,10,400,,2,,1,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
-2522,Undershirt,Undershirt,5,,10,150,,2,,0,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
-2523,Undershirt_,Undershirt,5,,10,150,,2,,1,0xFFFFFFFF,7,2,4,,0,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
-2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,,10,500,,3,,1,0xFFFFFFFE,2,2,4,,0,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2); },{},{}
-2525,Ancient_Cape_,Ancient Cape,5,,10,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
+2515,Wing_Of_Eagle,Eagle Wing,5,20000,,300,,1,,1,0x00810204,7,2,4,,85,1,0,{ if(isequipped(1616)) bonus bSpeedRate,10; },{},{}
+2516,Falcon_Robe,Falcon Muffler,5,30000,,400,,3,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus bFlee,15; bonus bFlee2,5; },{},{}
+2517,Vali's_Manteau,Vali's Manteau,5,30000,,600,,4,,0,0xFFFFFFFE,7,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Neutral,15; },{},{}
+2518,Morpheus's_Shawl,Morpheus's Shawl,5,30000,,600,,3,,0,0xFFFFFFFE,7,2,4,,33,1,0,{ bonus bMaxSPrate,10; bonus bMdef,3; },{},{}
+2519,Morrigane's_Manteau,Morrigane's Manteau,5,30000,,600,,3,,0,0xFFFFFFFE,7,2,4,,61,1,0,{ bonus bLuk,2; bonus bFlee2,8; },{},{}
+2520,Goibne's_Shoulder_Arms,Goibne's Spaulders,5,30000,,700,,3,,0,0xFFFFFFFE,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; bonus bVit,1; },{},{}
+2521,Angel's_Warmth,Angelic Cardigan,5,10000,,400,,2,,1,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
+2522,Undershirt,Undershirt,5,20000,,150,,2,,0,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
+2523,Undershirt_,Undershirt,5,20000,,150,,2,,1,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
+2524,Valkyrie's_Manteau,Valkyrie's Manteau,5,0,,500,,3,,1,0xFFFFFFFE,2,2,4,,1,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2); },{},{}
+2525,Ancient_Cape_,Ancient Cape,5,82000,,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
+2526,Dragonscale_Jacket,Dragonscale Jacket,5,,10,10,,4,,0,0xFFFFFFFF,7,2,4,,50,1,0,{},{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
