@@ -671,11 +671,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (sd->status.hom_id > 0)
 		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
-	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
-		party_request_info(sd->status.party_id);
-	if (sd->status.guild_id > 0 && guild_search(sd->status.guild_id) == NULL)
-		guild_request_info(sd->status.guild_id);
-
 	clif_authok(sd);
 	map_addiddb(&sd->bl);
 	if (map_charid2nick(sd->status.char_id) == NULL)
@@ -795,6 +790,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 int pc_reg_received(struct map_session_data *sd)
 {
 	int i,j;
+	struct guild *g = NULL;
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
@@ -851,9 +847,20 @@ int pc_reg_received(struct map_session_data *sd)
 	//Weird... maybe registries were reloaded?
 	if (sd->state.auth)
 		return 0;
+	sd->state.auth = 1;
+
+	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
+		party_request_info(sd->status.party_id);
+	if (sd->status.guild_id > 0 && (g=guild_search(sd->status.guild_id)) == NULL)
+		guild_request_info(sd->status.guild_id);
+	else if (g && strcmp(sd->status.name,g->master) == 0)
+	{	//Block Guild Skills to prevent logout/login reuse exploiting. [Skotlex]
+		guild_block_skill(sd, 300000);
+		//Also set the Guild Master flag.
+		sd->state.gmaster_flag = g;
+	}
 
 	status_calc_pc(sd,1);
-	sd->state.auth = 1;
 	if (!sd->state.connect_new && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;

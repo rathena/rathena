@@ -2072,7 +2072,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			exp =1; 
 		else {
 			exp = md->db->mexp;
-			exp += exp*(battle_config.exp_bonus_attacker*count)/100.; //[Gengar]
+			if (count > 1)
+				exp += exp*(battle_config.exp_bonus_attacker*(count-1))/100.; //[Gengar]
 		}
 		
 		mexp = (exp > UINT_MAX)?UINT_MAX:(exp<1?1:(unsigned int)exp);

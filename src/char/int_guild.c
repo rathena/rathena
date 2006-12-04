@@ -1299,7 +1299,6 @@ int mapif_parse_GuildSkillUp(int fd, int guild_id, int skill_num, int account_id
 		if (guild_calcinfo(g) == 0)
 			mapif_guild_info(-1, g);
 		mapif_guild_skillupack(guild_id, skill_num, account_id);
-		ShowInfo("int_guild: skill %d up\n", skill_num);
 	}
 
 	return 0;

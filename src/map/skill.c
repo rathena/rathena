@@ -4321,6 +4321,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_get_time2(skillid, skilllv) * (100-(tstatus->int_+tstatus->vit)/2)/100,10);
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		if(dstmd)
+			mob_unlocktarget(dstmd,tick);
 		break;
 
 	case WZ_ESTIMATION:

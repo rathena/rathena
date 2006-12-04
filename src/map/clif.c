@@ -8338,7 +8338,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->state.connect_new) {
 		int lv;
-		struct guild *g;
 		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
@@ -8365,17 +8364,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if(sd->pd && sd->pd->pet.intimate > 900)
 			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
-		if(sd->hd)
-			merc_hom_init_timers(sd->hd);
 
-		if (sd->status.guild_id > 0 && !sd->state.gmaster_flag &&
-			(g=guild_search(sd->status.guild_id)) &&
-			strcmp(sd->status.name,g->master) == 0)
-		{	//Block Guild Skills to prevent logout/login reuse exploiting. [Skotlex]
-			guild_block_skill(sd, 300000);
-			//Also set the Guild Master flag.
-			sd->state.gmaster_flag = g;
-		}
+		if(merc_is_hom_active(sd->hd))
+			merc_hom_init_timers(sd->hd);
 
 		//Delayed night effect on log-on fix for the glow-issue. Thanks to Larry.
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
