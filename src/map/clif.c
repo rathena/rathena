@@ -11098,16 +11098,6 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 
 	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <fail>.B: type: 0: deny, 1: allow, fail: 0: success, 1: fail
 	WFIFOB(fd,2) = RFIFOB(fd,26);
-	// do nothing only if nick can not exist
-	if (strlen(nick) < 4) {
-		WFIFOB(fd,3) = 1; // fail
-		WFIFOSET(fd, packet_len_table[0x0d1]);
-		clif_wis_message(fd, wisp_server_name,
-			"This player name is not valid.",
-			strlen("This player name is not valid.")+1);
-		return;
-	}
-	// name can exist
 	// deny action (we add nick only if it's not already exist
 	if (RFIFOB(fd,26) == 0) { // Add block
 		for(i = 0; i < MAX_IGNORE_LIST &&
@@ -11118,9 +11108,6 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 		if (i == MAX_IGNORE_LIST) { //Full List
 			WFIFOB(fd,3) = 1; // fail
 			WFIFOSET(fd, packet_len_table[0x0d1]);
-			clif_wis_message(fd, wisp_server_name,
-				"You can not block more people.",
-				strlen("You can not block more people.") + 1);
 			if (strcmp(wisp_server_name, nick) == 0)
 			{	// to found possible bot users who automaticaly ignore people.
 				sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
@@ -11130,11 +11117,8 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 		}
 		if(sd->ignore[i].name[0] != '\0')
 		{	//Name already exists.
-			WFIFOB(fd,3) = 1; // fail
+			WFIFOB(fd,3) = 0; // Aegis reports success.
 			WFIFOSET(fd, packet_len_table[0x0d1]);
-			clif_wis_message(fd, wisp_server_name,
-				"This player is already blocked.",
-				strlen("This player is already blocked.") + 1);
 			if (strcmp(wisp_server_name, nick) == 0) { // to found possible bot users who automaticaly ignore people.
 				sprintf(output, "Character '%s' (account: %d) has tried AGAIN to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
 				intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
@@ -11168,9 +11152,6 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 	{	//Not found
 		WFIFOB(fd,3) = 1; // fail
 		WFIFOSET(fd, packet_len_table[0x0d1]);
-		clif_wis_message(fd, wisp_server_name,
-			"This player is not blocked by you.",
-			strlen("This player is not blocked by you.") + 1);
 		return;
 	}
 	//Move everything one place down to overwrite removed entry.
@@ -11199,9 +11180,6 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd) { // Rewritten 
 		if (sd->state.ignoreAll) {
 			WFIFOB(fd,3) = 1; // fail
 			WFIFOSET(fd, packet_len_table[0x0d2]);
-			clif_wis_message(fd, wisp_server_name,
-				"You already block everyone.",
-				strlen("You already block everyone.") + 1);
 			return;
 		}
 		sd->state.ignoreAll = 1;
@@ -11211,11 +11189,15 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd) { // Rewritten 
 	}
 	//Unblock everyone
 	if (!sd->state.ignoreAll) {
+		if (sd->ignore[0].name[0] != '\0')
+		{  //Wipe the ignore list.
+			memset(sd->ignore, 0, sizeof(sd->ignore));
+			WFIFOB(fd,3) = 0;
+			WFIFOSET(fd, packet_len_table[0x0d2]);
+			return;
+		}
 		WFIFOB(fd,3) = 1; // fail
 		WFIFOSET(fd, packet_len_table[0x0d2]);
-		clif_wis_message(fd, wisp_server_name,
-			"You already allow everyone.",
-			strlen("You already allow everyone.") + 1);
 		return;
 	}
 	sd->state.ignoreAll = 0;

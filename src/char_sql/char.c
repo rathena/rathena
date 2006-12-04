@@ -492,15 +492,18 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 		if (!memitemdata_to_sql(mapitem, count, p->char_id,TABLE_CART))
 			strcat(save_status, " cart");
 #ifdef TXT_SQL_CONVERT
-	//Insert the barebones to then update the rest.
+{	//Insert the barebones to then update the rest.
+	char t_name[NAME_LENGTH*2];
+	jstrescapecpy(t_name, p->name);
 	sprintf(tmp_sql, "REPLACE INTO `%s` (`account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%s')",
-		char_db, p->account_id, p->char_num, p->name);
+		char_db, p->account_id, p->char_num, t_name);
 	if(mysql_query(&mysql_handle, tmp_sql))
 	{
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	} else
 		strcat(save_status, " creation");
+}
 #endif
 
 	if (

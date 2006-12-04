@@ -358,7 +358,7 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	nullpo_retr(0, sd);
 
 	sd->bl.id        = account_id;
-	sd->status.char_id      = account_id;
+	sd->status.account_id   = account_id;
 	sd->status.char_id      = char_id;
 	sd->status.sex   = sex;
 	sd->login_id1    = login_id1;
@@ -6599,8 +6599,10 @@ int pc_checkitem(struct map_session_data *sd)
 
 	pc_setequipindex(sd);
 	if(calc_flag && sd->state.auth)
+	{
 		status_calc_pc(sd,0);
-
+		pc_equiplookall(sd);
+	}
 	return 0;
 }
 

@@ -1474,8 +1474,11 @@ int status_calc_pet(struct pet_data *pd, int first)
 			if (!first)	//Not done the first time because the pet is not visible yet
 				clif_send_petstatus(sd);
 		}
-	} else if (first)
+	} else if (first) {
 		status_calc_misc(&pd->bl, &pd->status, pd->db->lv);
+		if (!battle_config.pet_lv_rate && pd->pet.level != pd->db->lv)
+			pd->pet.level = pd->db->lv;
+	}
 	
 	//Support rate modifier (1000 = 100%)
 	pd->rate_fix = 1000*(pd->pet.intimate - battle_config.pet_support_min_friendly)/(1000- battle_config.pet_support_min_friendly) +500;
