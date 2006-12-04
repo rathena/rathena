@@ -5675,8 +5675,8 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			break;
 
 		if(md) {
-			if(ud->skillid != NPC_EMOTION)//Set afterskill delay.
-				md->last_thinktime=tick + (tid==-1?md->status.adelay:md->status.amotion);
+			if(tid != -1) //Set afterskill delay.
+				md->last_thinktime=tick + md->status.amotion;
 			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
 				int i;
 				for (i = 0; i < md->db->maxskill; i++)
@@ -5866,7 +5866,8 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 			break;
 
 		if(md) {
-			md->last_thinktime=tick + (tid==-1?md->status.adelay:md->status.amotion);
+			if (tid != -1)
+				md->last_thinktime=tick +md->status.amotion;
 			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
 				int i;
 				for (i = 0; i < md->db->maxskill; i++)

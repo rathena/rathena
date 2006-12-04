@@ -2398,8 +2398,8 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	
 	if((skill = merc_hom_checkskill(hd,HVAN_INSTRUCT)) > 0)
 	{
-		status->int_ += 1 +skill/2 -skill/4 +skill/5;
-		status->str  += 1 +2*(skill/3) +skill/4;
+		status->int_ += 1 +skill/2 +skill/4 +skill/5;
+		status->str  += 1 +skill/3 +skill/3 +skill/4;
 	}
 
 	if((skill=merc_hom_checkskill(hd,HAMI_SKIN)) > 0)

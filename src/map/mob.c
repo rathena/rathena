@@ -641,8 +641,7 @@ int mob_spawn (struct mob_data *md)
 	int i=0;
 	unsigned int c =0, tick = gettick();
 
-	md->last_spawntime = tick;
-	md->last_thinktime = tick -MIN_MOBTHINKTIME;
+	md->last_spawntime = md->last_thinktime = tick;
 	if (md->bl.prev != NULL)
 		unit_remove_map(&md->bl,2);
 	else
@@ -1066,7 +1065,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if(md->bl.prev == NULL || md->status.hp <= 0)
 		return 1;
 		
-	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
+	if (DIFF_TICK(tick, md->last_thinktime) < md->db->min_thinktime)
 		return 0;
 	md->last_thinktime = tick;
 
@@ -1351,7 +1350,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 
 	tick=va_arg(ap,unsigned int);
 
-	if(DIFF_TICK(tick,md->last_thinktime)<MIN_MOBTHINKTIME*10)
+	if(DIFF_TICK(tick,md->last_thinktime)< 10*md->db->min_thinktime)
 		return 0;
 
 	md->last_thinktime=tick;
@@ -3186,6 +3185,7 @@ static int mob_readdb(void)
 	char line[1024];
 	char *filename[]={ "mob_db.txt","mob_db2.txt" };
 	struct status_data *status;
+	struct mob_db *db;
 	int class_, i, fi, k;
 	struct mob_data data;
 	memset(&data, 0, sizeof(struct mob_data));
@@ -3232,35 +3232,36 @@ static int mob_readdb(void)
 			}
 			if (mob_db_data[class_] == NULL)
 				mob_db_data[class_] = aCalloc(1, sizeof (struct mob_data));
+			db = mob_db_data[class_];
 
-			mob_db_data[class_]->vd.class_ = class_;
-			memcpy(mob_db_data[class_]->sprite, str[1], NAME_LENGTH-1);
-			memcpy(mob_db_data[class_]->jname, str[2], NAME_LENGTH-1);
-			memcpy(mob_db_data[class_]->name, str[3], NAME_LENGTH-1);
-			mob_db_data[class_]->lv = atoi(str[4]);
-			if (mob_db_data[class_]->lv < 1)
-				mob_db_data[class_]->lv = 1;
+			db->vd.class_ = class_;
+			memcpy(db->sprite, str[1], NAME_LENGTH-1);
+			memcpy(db->jname, str[2], NAME_LENGTH-1);
+			memcpy(db->name, str[3], NAME_LENGTH-1);
+			db->lv = atoi(str[4]);
+			if (db->lv < 1)
+				db->lv = 1;
 
-			status = &mob_db_data[class_]->status;
+			status = &db->status;
 
 			status->max_hp = atoi(str[5]);
 			status->max_sp = atoi(str[6]);
 
 			exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
 			if (exp < 0)
-				mob_db_data[class_]->base_exp = 0;
+				db->base_exp = 0;
 			if (exp > UINT_MAX)
-				mob_db_data[class_]->base_exp = UINT_MAX;
+				db->base_exp = UINT_MAX;
 			else
-				mob_db_data[class_]->base_exp = (unsigned int)exp;
+				db->base_exp = (unsigned int)exp;
 
 			exp = (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
 			if (exp < 0)
-				mob_db_data[class_]->job_exp = 0;
+				db->job_exp = 0;
 			else if (exp > UINT_MAX)
-				mob_db_data[class_]->job_exp = UINT_MAX;
+				db->job_exp = UINT_MAX;
 			else
-			mob_db_data[class_]->job_exp = (unsigned int)exp;
+				db->job_exp = (unsigned int)exp;
 			
 			status->rhw.range=atoi(str[9]);
 			status->rhw.atk=atoi(str[10]);
@@ -3281,23 +3282,23 @@ static int mob_readdb(void)
 			if (status->dex < 1) status->dex = 1;
 			if (status->luk < 1) status->luk = 1;
 
-			mob_db_data[class_]->range2=atoi(str[20]);
-			mob_db_data[class_]->range3=atoi(str[21]);
+			db->range2=atoi(str[20]);
+			db->range3=atoi(str[21]);
 			if (battle_config.view_range_rate!=100)
 			{
-				mob_db_data[class_]->range2=
-					mob_db_data[class_]->range2
+				db->range2=
+					db->range2
 					*battle_config.view_range_rate/100;
-				if (mob_db_data[class_]->range2<1)
-					mob_db_data[class_]->range2=1;
+				if (db->range2<1)
+					db->range2=1;
 			}
 			if (battle_config.chase_range_rate!=100)
 			{
-				mob_db_data[class_]->range3=
-					mob_db_data[class_]->range3
+				db->range3=
+					db->range3
 					*battle_config.chase_range_rate/100;
-				if (mob_db_data[class_]->range3<mob_db_data[class_]->range2)
-					mob_db_data[class_]->range3=mob_db_data[class_]->range2;
+				if (db->range3<db->range2)
+					db->range3=db->range2;
 			}
 			status->size=atoi(str[22]);
 			status->race=atoi(str[23]);
@@ -3317,25 +3318,26 @@ static int mob_readdb(void)
 			status->mode=atoi(str[25]);
 			status->speed=atoi(str[26]);
 			status->aspd_rate = 1000;
-			status->adelay=atoi(str[27]);
-			status->amotion=atoi(str[28]);
+			db->min_thinktime=atoi(str[27]);
+			status->adelay = status->amotion=atoi(str[28]);
+			if (db->min_thinktime > status->adelay)
+				status->adelay = db->min_thinktime;
+			if (db->min_thinktime < MIN_MOBTHINKTIME)
+				db->min_thinktime = MIN_MOBTHINKTIME;
 			status->dmotion=atoi(str[29]);
-			//If the attack animation is longer than the delay, the client crops the attack animation!
-			if (status->adelay < status->amotion)
-				status->adelay = status->amotion;
 			if(battle_config.monster_damage_delay_rate != 100)
 				status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
-			data.level = mob_db_data[class_]->lv;
+			data.level = db->lv;
 			memcpy(&data.status, status, sizeof(struct status_data));
-			status_calc_misc(&data.bl, status, mob_db_data[class_]->lv);
+			status_calc_misc(&data.bl, status, db->lv);
 			// MVP EXP Bonus, Chance: MEXP,ExpPer
-			mob_db_data[class_]->mexp=atoi(str[30])*battle_config.mvp_exp_rate/100;
-			mob_db_data[class_]->mexpper=atoi(str[31]);
+			db->mexp=atoi(str[30])*battle_config.mvp_exp_rate/100;
+			db->mexpper=atoi(str[31]);
 			//Now that we know if it is an mvp or not,
 			//apply battle_config modifiers [Skotlex]
 			maxhp = (double)status->max_hp;
-			if (mob_db_data[class_]->mexp > 0)
+			if (db->mexp > 0)
 			{	//Mvp
 				if (battle_config.mvp_hp_rate != 100) 
 					maxhp = maxhp * (double)battle_config.mvp_hp_rate /100.;
@@ -3352,21 +3354,21 @@ static int mob_readdb(void)
 			// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 			for(i=0;i<3;i++){
 				struct item_data *id;
-				mob_db_data[class_]->mvpitem[i].nameid=atoi(str[32+i*2]);
-				if (!mob_db_data[class_]->mvpitem[i].nameid) {
+				db->mvpitem[i].nameid=atoi(str[32+i*2]);
+				if (!db->mvpitem[i].nameid) {
 					//No item....
-					mob_db_data[class_]->mvpitem[i].p = 0;
+					db->mvpitem[i].p = 0;
 					continue;
 				}
-				mob_db_data[class_]->mvpitem[i].p= mob_drop_adjust(atoi(str[33+i*2]), battle_config.item_rate_mvp,
+				db->mvpitem[i].p= mob_drop_adjust(atoi(str[33+i*2]), battle_config.item_rate_mvp,
 					battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 				//calculate and store Max available drop chance of the MVP item
-				if (mob_db_data[class_]->mvpitem[i].p) {
-					id = itemdb_search(mob_db_data[class_]->mvpitem[i].nameid);
-					if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->mvpitem[i].p/10+1) ) {
+				if (db->mvpitem[i].p) {
+					id = itemdb_search(db->mvpitem[i].nameid);
+					if (id->maxchance==10000 || (id->maxchance < db->mvpitem[i].p/10+1) ) {
 					//item has bigger drop chance or sold in shops
-						id->maxchance = mob_db_data[class_]->mvpitem[i].p/10+1; //reduce MVP drop info to not spoil common drop rate
+						id->maxchance = db->mvpitem[i].p/10+1; //reduce MVP drop info to not spoil common drop rate
 					}			
 				}
 			}
@@ -3376,13 +3378,13 @@ static int mob_readdb(void)
 				unsigned short ratemin,ratemax;
 				struct item_data *id;
 				k=38+i*2;
-				mob_db_data[class_]->dropitem[i].nameid=atoi(str[k]);
-				if (!mob_db_data[class_]->dropitem[i].nameid) {
+				db->dropitem[i].nameid=atoi(str[k]);
+				if (!db->dropitem[i].nameid) {
 					//No drop.
-					mob_db_data[class_]->dropitem[i].p = 0;
+					db->dropitem[i].p = 0;
 					continue;
 				}
-				type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
+				type = itemdb_type(db->dropitem[i].nameid);
 				rate = atoi(str[k+1]);
 				if (class_ >= 1324 && class_ <= 1363)
 				{	//Treasure box drop rates [Skotlex]
@@ -3436,19 +3438,19 @@ static int mob_readdb(void)
 					ratemax = battle_config.item_drop_common_max;
 					break;
 				}
-				mob_db_data[class_]->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
+				db->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 
 				//calculate and store Max available drop chance of the item
-				if (mob_db_data[class_]->dropitem[i].p &&
+				if (db->dropitem[i].p &&
 					(class_ < 1324 || class_ > 1363) //Skip treasure chests.
 				) {
-					id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
-					if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->dropitem[i].p) ) {
+					id = itemdb_search(db->dropitem[i].nameid);
+					if (id->maxchance==10000 || (id->maxchance < db->dropitem[i].p) ) {
 					//item has bigger drop chance or sold in shops
-						id->maxchance = mob_db_data[class_]->dropitem[i].p;
+						id->maxchance = db->dropitem[i].p;
 					}
 					for (k = 0; k< MAX_SEARCH; k++) {
-						if (id->mob[k].chance < mob_db_data[class_]->dropitem[i].p && id->mob[k].id != class_)
+						if (id->mob[k].chance < db->dropitem[i].p && id->mob[k].id != class_)
 							break;
 					}
 					if (k == MAX_SEARCH)
@@ -3456,7 +3458,7 @@ static int mob_readdb(void)
 				
 					if (id->mob[k].id != class_)
 						memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-					id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
+					id->mob[k].chance = db->dropitem[i].p;
 					id->mob[k].id = class_;
 				}
 			}
@@ -3900,6 +3902,7 @@ static int mob_read_sqldb(void)
 	double exp, maxhp;
 	long unsigned int ln = 0;
 	struct status_data *status;
+	struct mob_db *db;
 	char *mob_db_name[] = { mob_db_db, mob_db2_db };
 	struct mob_data data;
 	memset(&data, 0, sizeof(struct mob_data));
@@ -3930,37 +3933,37 @@ static int mob_read_sqldb(void)
 					continue;
 				}
 				if (mob_db_data[class_] == NULL)
-					mob_db_data[class_] = aCalloc(1, sizeof (struct mob_data));
-				
+					db_data[class_] = aCalloc(1, sizeof (struct mob_data));
+				db = mob_db_data[class_];
 				ln++;
 
-				mob_db_data[class_]->vd.class_ = class_;
-				memcpy(mob_db_data[class_]->sprite, TO_STR(1), NAME_LENGTH-1);
-				memcpy(mob_db_data[class_]->jname, TO_STR(2), NAME_LENGTH-1);
-				memcpy(mob_db_data[class_]->name, TO_STR(3), NAME_LENGTH-1);
-				mob_db_data[class_]->lv = TO_INT(4);
-				if (mob_db_data[class_]->lv < 1)
-					mob_db_data[class_]->lv = 1;
+				db->vd.class_ = class_;
+				memcpy(db->sprite, TO_STR(1), NAME_LENGTH-1);
+				memcpy(db->jname, TO_STR(2), NAME_LENGTH-1);
+				memcpy(db->name, TO_STR(3), NAME_LENGTH-1);
+				db->lv = TO_INT(4);
+				if (db->lv < 1)
+					db->lv = 1;
 
-				status = &mob_db_data[class_]->status;
+				status = &db->status;
 				status->max_hp = TO_INT(5);
 				status->max_sp = TO_INT(6);
 
 				exp = (double)TO_INT(7) * (double)battle_config.base_exp_rate / 100.;
 				if (exp < 0)
-					mob_db_data[class_]->base_exp = 0;
+					db->base_exp = 0;
 				else if (exp > UINT_MAX)
-					mob_db_data[class_]->base_exp = UINT_MAX;
+					db->base_exp = UINT_MAX;
 				else
-					mob_db_data[class_]->base_exp = (unsigned int)exp;
+					db->base_exp = (unsigned int)exp;
 
 				exp = (double)TO_INT(8) * (double)battle_config.job_exp_rate / 100.;
 				if (exp < 0)
-					mob_db_data[class_]->job_exp = 0;
+					db->job_exp = 0;
 				else if (exp > UINT_MAX)
-					mob_db_data[class_]->job_exp = UINT_MAX;
+					db->job_exp = UINT_MAX;
 				else
-					mob_db_data[class_]->job_exp = (unsigned int)exp;
+					db->job_exp = (unsigned int)exp;
 				
 				status->rhw.range = TO_INT(9);
 				status->rhw.atk = TO_INT(10);
@@ -3981,8 +3984,8 @@ static int mob_read_sqldb(void)
 				if (status->dex < 1) status->dex = 1;
 				if (status->luk < 1) status->luk = 1;
 
-				mob_db_data[class_]->range2 = TO_INT(20);
-				mob_db_data[class_]->range3 = TO_INT(21);
+				db->range2 = TO_INT(20);
+				db->range3 = TO_INT(21);
 				status->size = TO_INT(22);
 				status->race = TO_INT(23);
 				i = TO_INT(24); //Element
@@ -4001,26 +4004,27 @@ static int mob_read_sqldb(void)
 				status->mode = TO_INT(25);
 				status->speed = TO_INT(26);
 				status->aspd_rate = 1000;
-				status->adelay = TO_INT(27);
-				status->amotion = TO_INT(28);
+				db->min_thinktime = TO_INT(27);
+				status->adelay = status->amotion = TO_INT(28);
+				if (db->min_thinktime > status->adelay)
+					status->adelay = db->min_thinktime;
+				if (db->min_thinktime < MIN_MOBTHINKTIME)
+					db->min_thinktime = MIN_MOBTHINKTIME;
 				status->dmotion = TO_INT(29);
-				//If the attack animation is longer than the delay, the client crops the attack animation!
-				if (status->adelay < status->amotion)
-					status->adelay = status->amotion;
 				if(battle_config.monster_damage_delay_rate != 100)
 					status->dmotion = status->dmotion*battle_config.monster_damage_delay_rate/100;
 
-				data.level = mob_db_data[class_]->lv;
+				data.level = db->lv;
 				memcpy(&data.status, status, sizeof(struct status_data));
-				status_calc_misc(&data.bl, status, mob_db_data[class_]->lv);
+				status_calc_misc(&data.bl, status, db->lv);
 				
 				// MVP EXP Bonus, Chance: MEXP,ExpPer
-				mob_db_data[class_]->mexp = TO_INT(30) * battle_config.mvp_exp_rate / 100;
-				mob_db_data[class_]->mexpper = TO_INT(31);
+				db->mexp = TO_INT(30) * battle_config.mvp_exp_rate / 100;
+				db->mexpper = TO_INT(31);
 				//Now that we know if it is an mvp or not,
 				//apply battle_config modifiers [Skotlex]
 				maxhp = (double)status->max_hp;
-				if (mob_db_data[class_]->mexp > 0)
+				if (db->mexp > 0)
 				{	//Mvp
 					if (battle_config.mvp_hp_rate != 100) 
 						maxhp = maxhp * (double)battle_config.mvp_hp_rate /100.;
@@ -4038,21 +4042,21 @@ static int mob_read_sqldb(void)
 				// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 				for (i=0; i<3; i++) {
 					struct item_data *id;
-					mob_db_data[class_]->mvpitem[i].nameid = TO_INT(32+i*2);
-					if (!mob_db_data[class_]->mvpitem[i].nameid) {
+					db->mvpitem[i].nameid = TO_INT(32+i*2);
+					if (!db->mvpitem[i].nameid) {
 						//No item....
-						mob_db_data[class_]->mvpitem[i].p = 0;
+						db->mvpitem[i].p = 0;
 						continue;
 					}
-					mob_db_data[class_]->mvpitem[i].p = mob_drop_adjust(TO_INT(33+i*2),
+					db->mvpitem[i].p = mob_drop_adjust(TO_INT(33+i*2),
 						battle_config.item_rate_mvp, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 
 					//calculate and store Max available drop chance of the MVP item
-					id = itemdb_search(mob_db_data[class_]->mvpitem[i].nameid);
-					if (mob_db_data[class_]->mvpitem[i].p) {
-						if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->mvpitem[i].p/10+1) ) {
+					id = itemdb_search(db->mvpitem[i].nameid);
+					if (db->mvpitem[i].p) {
+						if (id->maxchance==10000 || (id->maxchance < db->mvpitem[i].p/10+1) ) {
 						//item has bigger drop chance or sold in shops
-							id->maxchance = mob_db_data[class_]->mvpitem[i].p/10+1; //reduce MVP drop info to not spoil common drop rate
+							id->maxchance = db->mvpitem[i].p/10+1; //reduce MVP drop info to not spoil common drop rate
 						}			
 					}
 				}
@@ -4062,13 +4066,13 @@ static int mob_read_sqldb(void)
 					unsigned short ratemin, ratemax;
 					struct item_data *id;
 					k=38+i*2;
-					mob_db_data[class_]->dropitem[i].nameid=TO_INT(k);
-					if (!mob_db_data[class_]->dropitem[i].nameid) {
+					db->dropitem[i].nameid=TO_INT(k);
+					if (!db->dropitem[i].nameid) {
 						//No drop.
-						mob_db_data[class_]->dropitem[i].p = 0;
+						db->dropitem[i].p = 0;
 						continue;
 					}
-					type = itemdb_type(mob_db_data[class_]->dropitem[i].nameid);
+					type = itemdb_type(db->dropitem[i].nameid);
 					rate = TO_INT(k+1);
 					if (class_ >= 1324 && class_ <= 1363)
 					{	//Treasure box drop rates [Skotlex]
@@ -4121,24 +4125,24 @@ static int mob_read_sqldb(void)
 						ratemax = battle_config.item_drop_common_max;
 						break;
 					}
-					mob_db_data[class_]->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
+					db->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 
 					//calculate and store Max available drop chance of the item
-					if (mob_db_data[class_]->dropitem[i].p) {
-						id = itemdb_search(mob_db_data[class_]->dropitem[i].nameid);
-						if (id->maxchance==10000 || (id->maxchance < mob_db_data[class_]->dropitem[i].p) ) {
+					if (db->dropitem[i].p) {
+						id = itemdb_search(db->dropitem[i].nameid);
+						if (id->maxchance==10000 || (id->maxchance < db->dropitem[i].p) ) {
 						//item has bigger drop chance or sold in shops
-							id->maxchance = mob_db_data[class_]->dropitem[i].p;
+							id->maxchance = db->dropitem[i].p;
 						}			
 						for (k = 0; k< MAX_SEARCH; k++) {
-							if (id->mob[k].chance < mob_db_data[class_]->dropitem[i].p && id->mob[k].id != class_)
+							if (id->mob[k].chance < db->dropitem[i].p && id->mob[k].id != class_)
 								break;
 						}
 						if (k == MAX_SEARCH)
 							continue;
 						if (id->mob[k].id != class_)
 							memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-						id->mob[k].chance = mob_db_data[class_]->dropitem[i].p;
+						id->mob[k].chance = db->dropitem[i].p;
 						id->mob[k].id = class_;
 					}
 				}

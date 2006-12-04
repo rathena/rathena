@@ -58,6 +58,7 @@ struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
 	unsigned int mexp,mexpper;
+	unsigned int min_thinktime; //Min think time, Recharge Time as aegis calls it.
 	int range2,range3;
 	short race2;	// celest
 	unsigned short lv;
