@@ -1497,9 +1497,15 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100;
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
+
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || 
+		(sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
+		val += 100; //Since their HP can't be approximated well enough without this.
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON &&
+		sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE &&
+		sd->status.base_level >= 99)
 		val += 2000;
 
 	return val;

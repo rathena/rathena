@@ -342,7 +342,7 @@ int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, 
 
 	if (other_mapserver_count < 1)
 	{	//No other map servers are online!
-		pc_authfail(sd);
+		clif_authfail_fd(sd->fd, 0);
 		return -1;
 	}
 
@@ -385,7 +385,7 @@ int chrif_changemapserverack(int fd)
 	if (RFIFOL(fd,6) == 1) {
 		if (battle_config.error_log)
 			ShowError("map server change failed.\n");
-		pc_authfail(sd);
+		clif_authfail_fd(sd->fd, 0);
 		return 0;
 	}
 	clif_changemapserver(sd, (char*)mapindex_id2name(RFIFOW(fd,18)), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28));
