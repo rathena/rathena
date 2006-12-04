@@ -1864,8 +1864,9 @@ int clif_changemapserver(struct map_session_data *sd, char *mapname, int x, int 
 
 int clif_blown(struct block_list *bl) {
 //Previous Aegis versions simply used clif_fixpos, but it seems clif_slide works better on current clients.
-//	return clif_fixpos(bl);
-	return clif_slide(bl, bl->x, bl->y);
+// However, because of client desyncs, and because current Aegis captures show that they still use fixpos, keep using that for now.
+	return clif_fixpos(bl);
+//	return clif_slide(bl, bl->x, bl->y);
 	
 }
 /*==========================================
