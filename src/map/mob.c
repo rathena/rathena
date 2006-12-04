@@ -3933,7 +3933,7 @@ static int mob_read_sqldb(void)
 					continue;
 				}
 				if (mob_db_data[class_] == NULL)
-					db_data[class_] = aCalloc(1, sizeof (struct mob_data));
+					mob_db_data[class_] = aCalloc(1, sizeof (struct mob_data));
 				db = mob_db_data[class_];
 				ln++;
 
