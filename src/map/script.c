@@ -25,6 +25,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "map.h"
 #include "clif.h"
@@ -59,6 +60,9 @@
 enum { LABEL_NEXTLINE=1,LABEL_START };
 static unsigned char * script_buf = NULL;
 static int script_pos,script_size;
+
+#define GETVALUE(buf,i)		((int)MakeDWord(MakeWord((buf)[i],(buf)[i+1]),MakeWord((buf)[i+2],0)))
+#define SETVALUE(buf,i,n)	((buf)[i]=GetByte(n,0),(buf)[i+1]=GetByte(n,1),(buf)[i+2]=GetByte(n,2))
 
 static char *str_buf;
 static int str_pos,str_size;
@@ -444,11 +448,9 @@ void set_label(int l,int pos, unsigned char *script_pos)
 	str_data[l].type=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
 	str_data[l].label=pos;
 	for(i=str_data[l].backpatch;i>=0 && i!=0x00ffffff;){
-		next=(*(int*)(script_buf+i)) & 0x00ffffff;
+		next=GETVALUE(script_buf,i);
 		script_buf[i-1]=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
-		script_buf[i]=pos;
-		script_buf[i+1]=pos>>8;
-		script_buf[i+2]=pos>>16;
+		SETVALUE(script_buf,i,pos);
 		i=next;
 	}
 }
@@ -1694,10 +1696,8 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 			str_data[i].type=C_NAME;
 			str_data[i].label=i;
 			for(j=str_data[i].backpatch;j>=0 && j!=0x00ffffff;){
-				next=(*(int*)(script_buf+j)) & 0x00ffffff;
-				script_buf[j]=i;
-				script_buf[j+1]=i>>8;
-				script_buf[j+2]=i>>16;
+				next=GETVALUE(script_buf,j);
+				SETVALUE(script_buf,j,i);
 				j=next;
 			}
 		}
@@ -2628,7 +2628,7 @@ void run_script_main(struct script_state *st)
 		st->state = RUN;
 
 	while(st->state == RUN){
-		c= get_com((unsigned char *) st->script->script_buf,&st->pos);
+		c= get_com(st->script->script_buf,&st->pos);
 		switch(c){
 		case C_EOL:
 			if(stack->sp!=stack->defsp){
@@ -2647,18 +2647,18 @@ void run_script_main(struct script_state *st)
 			}
 			break;
 		case C_INT:
-			push_val(stack,C_INT,get_num((unsigned char *) st->script->script_buf,&st->pos));
+			push_val(stack,C_INT,get_num(st->script->script_buf,&st->pos));
 			break;
 		case C_POS:
 		case C_NAME:
-			push_val(stack,c,(*(int*)(st->script->script_buf+st->pos))&0xffffff);
+			push_val(stack,c,GETVALUE(st->script->script_buf,st->pos));
 			st->pos+=3;
 			break;
 		case C_ARG:
 			push_val(stack,c,0);
 			break;
 		case C_STR:
-			push_str(stack,C_CONSTSTR,(unsigned char *) (st->script->script_buf+st->pos));
+			push_str(stack,C_CONSTSTR,(st->script->script_buf+st->pos));
 			while(st->script->script_buf[st->pos++]);
 			break;
 		case C_FUNC:

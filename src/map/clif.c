@@ -6827,10 +6827,10 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 	WFIFOL(fd,18)=g->average_lv;
 	WFIFOL(fd,22)=g->exp;
 	WFIFOL(fd,26)=g->next_exp;
-	WFIFOL(fd,30)=0;	// 上納
-	WFIFOL(fd,34)=0;	// VW（性格の悪さ？：性向グラフ左右）
-	WFIFOL(fd,38)=0;	// RF（正義の度合い？：性向グラフ上下）
-	WFIFOL(fd,42)=0;	// 人数？
+	WFIFOL(fd,30)=0;	// Tax Points
+	WFIFOL(fd,34)=0;	// Tendency: (left) Vulgar [-100,100] Famed (right)
+	WFIFOL(fd,38)=0;	// Tendency: (down) Wicked [-100,100] Righteous (up)
+	WFIFOL(fd,42)=0;	//## Unknown... // 人数？
 	memcpy(WFIFOP(fd,46),g->name, NAME_LENGTH);
 	memcpy(WFIFOP(fd,70),g->master, NAME_LENGTH);
 
@@ -8111,40 +8111,29 @@ static int clif_guess_PacketVer(int fd, int get_previous)
 	packet_ver = clif_config.packet_db_ver;
 	cmd = RFIFOW(fd,0);
 	packet_len = RFIFOREST(fd);
-	
-	if (
-		cmd == clif_config.connect_cmd[packet_ver] &&
-		packet_len == packet_db[packet_ver][cmd].len &&
-		((value = RFIFOB(fd, packet_db[packet_ver][cmd].pos[4])) == 0 ||	value == 1) &&
-		(value = RFIFOL(fd, packet_db[packet_ver][cmd].pos[0])) > 700000 && //Account ID is valid
-		 value <= max_account_id &&
-		(value = RFIFOL(fd, packet_db[packet_ver][cmd].pos[1])) > 0 &&	//Char ID is valid
-		 value <= max_char_id &&
-		(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]) > 0	//Login 1 is a positive value (?)
-		)
+
+#define IS_PACKET_VER \
+(\
+	( cmd == clif_config.connect_cmd[packet_ver] ) /* it's the wanttoconnection for this version. */ &&\
+	( packet_len == packet_db[packet_ver][cmd].len ) /* has the right size */ &&\
+	( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[0])) >= START_ACCOUNT_NUM && value <= max_account_id ) /* valid account ID */ &&\
+	( (value=(int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[1])) > 0 && value <= max_char_id ) /* valid char ID */ &&\
+	/*            RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]) - don't care about login_id1 */\
+	/*            RFIFOL(fd, packet_db[packet_ver][cmd].pos[3]) - don't care about client_tick */\
+	( (value=(int)RFIFOB(fd, packet_db[packet_ver][cmd].pos[4])) == 0 || value == 1 ) /* valid sex */\
+)
+
+	if (IS_PACKET_VER)
 		return clif_config.packet_db_ver; //Default packet version found.
 	
 	for (packet_ver = MAX_PACKET_VER; packet_ver > 0; packet_ver--)
 	{	//Start guessing the version, giving priority to the newer ones. [Skotlex]
-		if (cmd != clif_config.connect_cmd[packet_ver] ||	//it is not a wanttoconnection for this version.
-			packet_len != packet_db[packet_ver][cmd].len)	//The size of the wantoconnection packet does not matches.
-			continue;
-	
-		if (
-			(value = RFIFOL(fd, packet_db[packet_ver][cmd].pos[0])) < 700000 || value > max_account_id
-			|| (value = RFIFOL(fd, packet_db[packet_ver][cmd].pos[1])) < 1 || value > max_char_id
-			//What is login 1? In my tests it is a very very high value.
-			|| (int)RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]) < 1
-			//This check seems redundant, all wanttoconnection packets have the gender on the very 
-			//last byte of the packet.
-			|| (value = RFIFOB(fd, packet_db[packet_ver][cmd].pos[4])) < 0 || value > 1
-		)
-			continue;
-		
-		return packet_ver; //This is our best guess.
+		if (IS_PACKET_VER)
+			return packet_ver; //This is our best guess.
 	}
 	packet_ver = -1;
 	return -1;
+#undef IS_PACKET_VER
 }
 
 // ------------
@@ -11741,7 +11730,7 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
  */
 int clif_parse(int fd) {
 	int packet_len = 0, cmd, packet_ver, dump = 0;
-	struct map_session_data *sd;
+	TBL_PC *sd;
 	RFIFOHEAD(fd);
 
 	if (fd <= 0)
@@ -11750,7 +11739,7 @@ int clif_parse(int fd) {
 		return 0;
 	}
 
-	sd = (struct map_session_data*)session[fd]->session_data;
+	sd = (TBL_PC *)session[fd]->session_data;
 
 	if (sd && sd->fd != fd)
 	{	//FIXME: Temporal debug until a certain mysterious crash is fixed.
@@ -11792,6 +11781,10 @@ int clif_parse(int fd) {
 
 	cmd = RFIFOW(fd,0);
 
+	/*
+	// These are remants of ladmin packet processing, only in the login server now. [FlavioJS]
+	// @see int parse_admin(int)
+
 	// 管理用パケット処理
 	if (cmd >= 30000) {
 		switch(cmd) {
@@ -11820,12 +11813,14 @@ int clif_parse(int fd) {
 		}
 		return 0;
 	}
+	*/
 
 	// get packet version before to parse
 	packet_ver = 0;
 	if (sd) {
 		packet_ver = sd->packet_ver;
 		if (packet_ver < 0 || packet_ver > MAX_PACKET_VER) {	// This should never happen unless we have some corrupted memory issues :X [Skotlex]
+			ShowWarning("clif_parse: Invalid packet_ver=%d (AID/CID: %d:%d), disconnecting session #%d.", packet_ver, sd->status.account_id, sd->status.char_id, fd);
 			session[fd]->eof = 1;
 			return 0;
 		}

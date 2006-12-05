@@ -112,6 +112,10 @@
 //These are just meant to minimize the updating needed between char/map servers as players login.
 //Room for initial 10K accounts
 #define DEFAULT_MAX_ACCOUNT_ID 2010000
+
+#define START_ACCOUNT_NUM 2000000
+#define END_ACCOUNT_NUM 100000000
+
 //Room for initial 100k characters
 #define DEFAULT_MAX_CHAR_ID 250000
 
