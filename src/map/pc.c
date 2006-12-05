@@ -5133,6 +5133,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 0;
 	}
 
+	//Reset "can log out" tick.
+	if (battle_config.prevent_logout)
+		sd->canlog_tick = gettick() - battle_config.prevent_logout;
 	return 1;
 }
 
