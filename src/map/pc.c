@@ -794,7 +794,6 @@ int pc_reg_received(struct map_session_data *sd)
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
-	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 
 	if (pc_checkskill(sd, TK_MISSION)) {
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
@@ -861,6 +860,8 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	status_calc_pc(sd,1);
+	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
+
 	if (!sd->state.connect_new && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;

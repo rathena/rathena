@@ -709,8 +709,8 @@ int WFIFOSET(int fd,int len)
 
 	s->wdata_size += len;
 	// always keep a wfifo_size reserve in the buffer
-	// For inter-server connections, let the reserve be 1/8th of the link size.
-	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK<<3:wfifo_size);
+	// For inter-server connections, let the reserve be 1/4th of the link size.
+	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK/4:wfifo_size);
 
 	if(s->wdata_size >= frame_size)
 		send_from_fifo(fd);
