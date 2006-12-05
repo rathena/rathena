@@ -5992,6 +5992,7 @@ int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 	if(sd==NULL)
 		return 0;
 	WBUFW(buf,0)=0x101;
+	// WBUFL(buf,2) // that's how the client reads it, still need to check it's uses [FlavioJS]
 	WBUFW(buf,2)=((flag&0x01)?2:p->party.exp);
 	WBUFW(buf,4)=0; //NOTE: We don't know yet what this is for, it is NOT for item share rules, though. [Skotlex]
 	if(flag==0)
@@ -6830,7 +6831,7 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 	WFIFOL(fd,30)=0;	// Tax Points
 	WFIFOL(fd,34)=0;	// Tendency: (left) Vulgar [-100,100] Famed (right)
 	WFIFOL(fd,38)=0;	// Tendency: (down) Wicked [-100,100] Righteous (up)
-	WFIFOL(fd,42)=0;	//## Unknown... // l”H
+	WFIFOL(fd,42)=g->emblem_id;
 	memcpy(WFIFOP(fd,46),g->name, NAME_LENGTH);
 	memcpy(WFIFOP(fd,70),g->master, NAME_LENGTH);
 
@@ -6845,7 +6846,8 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 		strncpy((char*)WFIFOP(fd,94),msg_txt(299),20);
 
 	WFIFOSET(fd,packet_len_table[WFIFOW(fd,0)]);
-	clif_guild_emblem(sd,g);	// Guild emblem vanish fix [Valaris]
+	// Found the appropriate packet field, testing for a trial period. [FlavioJS]
+	//clif_guild_emblem(sd,g);	// Guild emblem vanish fix [Valaris]
 	return 0;
 }
 
