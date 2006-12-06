@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2004/12/06
+	* Added StringBuf_Vprintf to utils.c and changed the showmsg.c buffer.
+	  Now it uses a static buffer and a StringBuf when needed (a debug message 
+	  indicating the static buffer needs to be increased is shown). [FlavioJS]
 2004/12/05
 	* The can log value now is "reset" when you die allowing you to
 	  respawn/quit instantly after death. [Skotlex]

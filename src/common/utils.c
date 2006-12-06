@@ -155,18 +155,15 @@ void StringBuf_Init(struct StringBuf * sbuf)  {
 	sbuf->ptr_ = sbuf->buf_ = (char *) aMallocA(sbuf->max_ + 1);
 }
 
-// printf into a StringBuf, moving the pointer [MouseJstr]
-int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...) 
+// vprintf into a StringBuf, moving the pointer [MouseJstr]
+int StringBuf_Vprintf(struct StringBuf *sbuf,const char *fmt,va_list ap) 
 {
-	va_list ap;
-        int n, size, off;
+	int n, size, off;
 
 	while (1) {
 		/* Try to print in the allocated space. */
-		va_start(ap, fmt);
 		size = sbuf->max_ - (sbuf->ptr_ - sbuf->buf_);
 		n = vsnprintf (sbuf->ptr_, size, fmt, ap);
-		va_end(ap);
 		/* If that worked, return the length. */
 		if (n > -1 && n < size) {
 			sbuf->ptr_ += n;
@@ -178,6 +175,19 @@ int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...)
 		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
 		sbuf->ptr_ = sbuf->buf_ + off;
 	}
+}
+
+// printf into a StringBuf, moving the pointer [MouseJstr]
+int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...) 
+{
+	int len;
+	va_list ap;
+
+	va_start(ap,fmt);
+	len = StringBuf_Vprintf(sbuf,fmt,ap);
+	va_end(ap);
+
+	return len;
 }
 
 // Append buf2 onto the end of buf1 [MouseJstr]

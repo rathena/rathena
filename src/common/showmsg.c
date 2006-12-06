@@ -6,8 +6,9 @@
 #include <stdarg.h>
 #include <time.h>
 #include <stdlib.h> // atexit
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 #include "showmsg.h"
+#include "utils.h"
 
 #ifdef _WIN32
 	#define WIN32_LEAN_AND_MEAN
@@ -50,13 +51,45 @@ int stdout_with_ansisequence = 1;
 int msg_silent; //Specifies how silent the console is.
 
 ///////////////////////////////////////////////////////////////////////////////
-/// small reallocating temporary printer buffer
-static char *tempbuf = NULL;
-static size_t     sz = 0;
-#define      tempbuf_size() (sz)
-static void  tempbuf_free(void){ free(tempbuf); }
-static void  tempbuf_alloc(void){ sz = 256; tempbuf = (char *)malloc(sz); atexit(tempbuf_free); }
-static void  tempbuf_realloc(void){	sz <<= 1; tempbuf = (char *)realloc(tempbuf,sz); }
+/// static/dynamic buffer for the messages
+
+#define SBUF_SIZE 2048 // never put less that what's required for the debug message
+
+#define NEWBUF(buf)				\
+	struct {					\
+		char s_[SBUF_SIZE];		\
+		struct StringBuf *d_;	\
+		char *v_;				\
+		int l_;					\
+	} buf ={"",NULL,NULL,0};	\
+//define NEWBUF
+
+#define BUFVPRINTF(buf,fmt,args)						\
+	buf.l_ = vsnprintf(buf.s_, SBUF_SIZE, fmt, args);	\
+	if( buf.l_ >= 0 && buf.l_ < SBUF_SIZE )				\
+	{/* static buffer */								\
+		buf.v_ = buf.s_;								\
+	}													\
+	else												\
+	{/* dynamic buffer */								\
+		buf.d_ = StringBuf_Malloc();					\
+		buf.l_ = StringBuf_Vprintf(buf.d_, fmt, args);	\
+		buf.v_ = StringBuf_Value(buf.d_);				\
+		ShowDebug("showmsg: dynamic buffer used, increase the static buffer size to %d or more.", buf.l_+1);\
+	}													\
+//define BUFVPRINTF
+
+#define BUFVAL(buf) buf.v_
+#define BUFLEN(buf) buf.l_
+
+#define FREEBUF(buf)			\
+	if( buf.d_ )				\
+	{							\
+		StringBuf_Free(buf.d_);	\
+		buf.d_ = NULL;			\
+	}							\
+	buf.v_ = NULL;				\
+//define FREEBUF
 
 ///////////////////////////////////////////////////////////////////////////////
 #ifdef _WIN32
@@ -166,24 +199,22 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	/////////////////////////////////////////////////////////////////
 	unsigned long	written;
 	char *p, *q;
+	NEWBUF(tempbuf); // temporary buffer
 
 	if(!fmt || !*fmt)
 		return 0;
 
-	if(tempbuf == NULL)
-		tempbuf_alloc();
-	for(; vsnprintf(tempbuf, tempbuf_size(), fmt, argptr)<0; tempbuf_realloc());
-	// vsnprintf returns -1 in case of insufficient buffer size
-	// tempbuf_realloc doubles the size of the buffer in this case
+	// Print everything to the buffer
+	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	if( !is_console(handle) && stdout_with_ansisequence )
 	{
-		WriteFile(handle,tempbuf, strlen(tempbuf), &written, 0);
+		WriteFile(handle, BUFVAL(tempbuf), BUFLEN(tempbuf), &written, 0);
 		return 0;
 	}
 
 	// start with processing
-	p = tempbuf;
+	p = BUFVAL(tempbuf);
 	while ((q = strchr(p, 0x1b)) != NULL)
 	{	// find the escape character
 		if( 0==WriteConsole(handle, p, q-p, &written, 0) ) // write up to the escape
@@ -469,6 +500,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	if (*p)	// write the rest of the buffer
 		if( 0==WriteConsole(handle, p, strlen(p), &written, 0) )
 			WriteFile(handle,p, strlen(p), &written, 0);
+	FREEBUF(tempbuf);
 	return 0;
 }
 
@@ -499,6 +531,7 @@ int	FPRINTF(HANDLE handle, const char *fmt, ...)
 int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 {
 	char *p, *q;
+	NEWBUF(tempbuf); // temporary buffer
 
 	if(!fmt || !*fmt)
 		return 0;
@@ -509,14 +542,11 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 		return 0;
 	}
 
-	if(tempbuf == NULL)
-		tempbuf_alloc();
-	for(; vsnprintf(tempbuf, tempbuf_size(), fmt, argptr)<0; tempbuf_realloc());
-	// vsnprintf returns -1 in case of insufficient buffer size
-	// tempbuf.realloc doubles the size of the buffer in this case
+	// Print everything to the buffer
+	BUFVPRINTF(tempbuf,fmt,argptr);
 
 	// start with processing
-	p = tempbuf;
+	p = BUFVAL(tempbuf);
 	while ((q = strchr(p, 0x1b)) != NULL)
 	{	// find the escape character
 		fprintf(file, "%.*s", (int)(q-p), p); // write up to the escape
@@ -610,6 +640,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	}
 	if (*p)	// write the rest of the buffer
 		fprintf(file, "%s", p);
+	FREEBUF(tempbuf);
 	return 0;
 }
 int	FPRINTF(FILE *file, const char *fmt, ...)
