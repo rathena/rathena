@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2004/12/06
+	* Updated sql-files [Playtester]
 	* Gave a minimum think time to the dummy mob and to clones. [Skotlex]
 	* Moved setting a mob's chase/attack states from the mob_ai to unit_attack
 	  and unit_walktobl for better state-handling precision. [Skotlex]
