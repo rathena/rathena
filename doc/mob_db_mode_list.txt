@@ -4,7 +4,7 @@ MD_CANMOVE            | 0x0001 |    1
 MD_LOOTER             | 0x0002 |    2
 MD_AGGRESSIVE         | 0x0004 |    4
 MD_ASSIST             | 0x0008 |    8
-MD_CASTSENSOR_MELEE   | 0x0010 |   16
+MD_CASTSENSOR_IDLE    | 0x0010 |   16
 MD_BOSS               | 0x0020 |   32
 MD_PLANT              | 0x0040 |   64
 MD_CANATTACK          | 0x0080 |  128
@@ -30,8 +30,8 @@ Aggressive: normal aggressive mob, will look for a close-by player to attack.
 
 Assist: When a nearby mob of the same class attacks, assist types will join them.
 
-Cast Sensor Melee: Will go after characters who start casting on them if idle
-	or during melee attacks (they will leave their current target alone)
+Cast Sensor Idle: Will go after characters who start casting on them if idle
+	or walking (without a target).
 
 Cast Sensor Chase: Will go after characters who start casting on them if idle
 	or chasing other players (they switch chase targets)
@@ -56,3 +56,28 @@ Change Target Melee: Enables a mob to switch targets when attacked while
 
 Change Target Chase: Enables a mob to switch targets when attacked while
 	chasing another character.
+
+Aegis Mob Types
+---------------
+What Aegis has are mob-types, where each type represents an AI behaviour that
+is mimicked by a group of eA mode bits. This is the table to convert from one
+to another:
+
+Aegis/eA (description)
+01: 0x0081 (passive)
+02: 0x0083 (passive looter)
+03: 0x1089 (passive, assist and change-target melee)
+04: 0x3885 (angry, change-target melee/chase)
+05: 0x2085 (aggro, change-target chase)
+06: 0x0000 (plants)
+07: 0x108B (aggro, immobile, assist, change-target melee)
+10: 0x0084 (aggro, immobile)
+12: 0x0085 (aggro)
+13: 0x018D (aggro, assist, detector)
+17: 0x0091 (passive, cast sensor idle)
+19: 0x3095 (aggro, change-target melee/chase, cast sensor idle)
+20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
+21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
+
+- Note that the detector bit due to being Insect/Demon and Boss mode bits need to
+  be added independently of this list.
