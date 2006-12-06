@@ -31,7 +31,7 @@ CREATE TABLE `mob_db` (
   `Element` tinyint(4) unsigned NOT NULL default '0',
   `Mode` smallint(6) unsigned NOT NULL default '0',
   `Speed` smallint(6) unsigned NOT NULL default '0',
-  `ADelay` smallint(6) unsigned NOT NULL default '0',
+  `ThinkTime` smallint(6) unsigned NOT NULL default '0',
   `aMotion` smallint(6) unsigned NOT NULL default '0',
   `dMotion` smallint(6) unsigned NOT NULL default '0',
   `MEXP` mediumint(9) unsigned NOT NULL default '0',
