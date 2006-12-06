@@ -5041,9 +5041,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = vd->shield;
 			val4 = vd->cloth_color;
 			unit_stop_attack(bl);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			break;
 		case SC_NOCHAT:
@@ -5670,9 +5670,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	switch (type) {
 		case SC_WEDDING:
 		case SC_XMAS:
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
 			break;	
 		case SC_KAAHI:
@@ -6023,9 +6023,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				vd->cloth_color = sc->data[type].val4;
 			}
 			clif_changelook(bl,LOOK_BASE,vd->class_);
+			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			clif_changelook(bl,LOOK_WEAPON,vd->weapon);
 			clif_changelook(bl,LOOK_SHIELD,vd->shield);
-			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 		break;
 		case SC_RUN:
 		{
