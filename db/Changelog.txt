@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/06
+	* Updated accessoires [Playtester]
 12/04
 	* Almost official HP values for Ninja/Gunslinger [Playtester]
 	* Updated garments [Playtester]

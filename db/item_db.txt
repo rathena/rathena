@@ -1109,62 +1109,66 @@
 2613,Diamond_Ring,Diamond Ring,5,45000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
 2614,An_Eye_Of_Dullahan,Eye of Dullahan,5,90000,,100,,0,,0,0xFFFFFFFE,7,2,136,,50,0,0,{},{},{}
 2615,Safety_Ring,Safety Ring,5,75000,,100,,3,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bMdef,3; },{},{}
-2616,Critical_Ring,Critical Ring,5,75000,,50,,0,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bCritical,5; },{},{}
-2617,Mitten_Of_Presbyter,Celebrant's Mitten,5,,10,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bInt,1; },{},{}
-2618,Matyr's_Flea_Guard,Matyr's Leash,5,,10,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bAgi,1; },{},{}
+2616,Critical_Ring,Critical Ring,5,75000,,100,,0,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bCritical,5; },{},{}
+2617,Mitten_Of_Presbyter,Celebrant's Mitten,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bInt,1; },{},{}
+2618,Matyr's_Flea_Guard,Matyr's Leash,5,2,,100,,1,,0,0xFFFFFFFE,7,2,136,,35,0,0,{ bonus bAgi,1; },{},{}
 2619,Thimble_Of_Archer,Bow Thimble,5,10000,,100,,0,,0,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
-2620,Ring_Of_Rogue,Rogue's Treasure,5,30000,,100,,0,,0,0x02021040,7,2,136,,70,0,0,{ bonus bAddStealRate,1; },{},{}
-2621,Ring_,Ring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bStr,1; },{},{}
-2622,Earring_,Earring,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bInt,1; },{},{}
-2623,Necklace_,Necklace,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bVit,1; },{},{}
-2624,Glove_,Glove,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bDex,1; },{},{}
-2625,Brooch_,Brooch,5,30000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bAgi,1; },{},{}
-2626,Rosary_,Rosary,5,15000,,200,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bMdef,3; bonus bLuk,1; },{},{}
+2620,Ring_Of_Rogue,Rogue's Treasure,5,10000,,100,,0,,0,0x02021040,7,2,136,,70,0,0,{ bonus bAddStealRate,1; },{},{}
+2621,Ring_,Ring,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bStr,1; },{},{}
+2622,Earring_,Earring,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bInt,1; },{},{}
+2623,Necklace_,Necklace,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bVit,1; },{},{}
+2624,Glove_,Glove,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bDex,1; },{},{}
+2625,Brooch_,Brooch,5,30000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bAgi,1; },{},{}
+2626,Rosary_,Rosary,5,15000,,100,,0,,1,0xFFFFFFFE,7,2,136,,90,0,0,{ bonus bMdef,3; bonus bLuk,1; },{},{}
 2627,Belt,Belt,5,20000,,1200,,0,,1,0xFFFFFFFF,7,2,136,,25,0,0,{},{},{}
-2628,Novice_Armlet,Novice Armlet,5,400,,200,,0,,1,0x00000001,7,2,136,,0,0,0,{ bonus bStr,1; bonus bInt,1; bonus bLuk,1; },{},{}
+2628,Novice_Armlet,Novice Armlet,5,400,,200,,0,,1,0x00000001,7,2,136,,1,0,0,{ bonus bStr,1; bonus bInt,1; bonus bLuk,1; },{},{}
 2629,Magingiorde,Megingjard,5,,10,8000,,2,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,40; bonus bMdef,7; },{},{}
 2630,Brysinggamen,Brisingamen,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,6; bonus bAgi,6; bonus bVit,6; bonus bInt,6; bonus bLuk,10; bonus bMdef,5; },{},{}
-2631,First_Age_Ring,Celebration Ring,5,,10,10,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2634,Bridegroom_Ring,Wedding Ring,5,,10,0,,0,,0,0xFFFFFFFF,7,1,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
-2635,Bride_Ring,Wedding Ring,5,,10,0,,0,,0,0xFFFFFFFF,7,0,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
-2636,Gold_Ring_,Gold Christmas Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2637,Silver_Ring_,Silver Christmas Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2638,Exorcize_Sachet,Sacred Incense,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,1; bonus bLuk,1; },{},{}
-2639,Purification_Sachet,Occult Incense,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAgi,1; bonus bInt,1; },{},{}
-2640,Kafra_Ring,Kafra Ring,5,,10,200,,1,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; bonus bMdef,1; },{},{}
+2631,First_Age_Ring,Celebration Ring,5,1,,10,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAllStats,5; },{},{}
+2632,Korean_Trinket,Korean Trinket,5,125000,,100,,1,,0,0xFFFFFFFE,7,2,136,,65,0,0,{ bonus bVit,1; bonus bDex,1; bonus bLuk,1; },{},{}
+2633,Jade_Ring,Jade Ring,5,204000,,100,,0,,0,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bStr,2; bonus bInt,1; },{},{}
+2634,Bridegroom_Ring,Wedding Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,1,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
+2635,Bride_Ring,Wedding Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,0,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
+2636,Gold_Ring_,Gold Christmas Ring,5,30000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bLuk,1; },{},{}
+2637,Silver_Ring_,Silver Christmas Ring,5,20000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bLuk,1; },{},{}
+2638,Exorcize_Sachet,Sacred Incense,5,20000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,1; bonus bLuk,1; },{},{}
+2639,Purification_Sachet,Occult Incense,5,20000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAgi,1; bonus bInt,1; },{},{}
+2640,Kafra_Ring,Kafra Ring,5,40000,,200,,1,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bInt,1; bonus bLuk,1; bonus bMdef,1; },{},{}
 2641,Fashionable_Sack,Fashion Hip Sack,5,,10,700,,0,,0,0x00040420,7,2,136,,50,0,0,{ bonus bStr,2; },{},{}
 2642,Serin's_Gold_Ring,Serin's Gold Ring,5,,10,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,,22500,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2644,The_Sign_,The Sign,5,,10,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMatkRate,5; bonus bAtkRate,5; },{},{}
-2645,Moonlight_Ring,Moonlight Ring,5,,10,200,,0,,0,0x028F5EEE,7,2,136,,60,0,0,{},{},{}
-2646,Bunch_Of_Carnation,Bunch of Carnations,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2647,Nile_Rose,Nile Rose,5,,10,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
-2648,Morpheus's_Ring,Morpheus's Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; },{},{}
-2649,Morpheus's_Armlet,Morpheus's Bracelet,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; },{},{}
-2650,Morrigane's_Belt,Morrigane's Belt,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bBaseAtk,5; bonus bCritical,3; },{},{}
-2651,Morrigane's_Pendant,Morrigane's Pendant,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bStr,2; bonus bCritical,3; },{},{}
+2643,Serin's_Gold_Ring_,Serin's Gold Ring,5,45000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
+2644,The_Sign_,The Sign,5,2,,0,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMatkRate,5; bonus bAtkRate,5; },{},{}
+2645,Moonlight_Ring,Moonlight Ring,5,40000,,200,,0,,0,0x028F5EEE,7,2,136,,60,0,0,{ bonus bMdef,2; },{},{}
+2646,Bunch_Of_Carnation,Bunch of Carnations,5,2,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAllStats,3; },{},{}
+2647,Nile_Rose,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
+2648,Morpheus's_Ring,Morpheus's Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; },{},{}
+2649,Morpheus's_Armlet,Morpheus's Bracelet,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; },{},{}
+2650,Morrigane's_Belt,Morrigane's Belt,5,30000,,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bBaseAtk,5; bonus bCritical,3; },{},{}
+2651,Morrigane's_Pendant,Morrigane's Pendant,5,30000,,200,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bStr,2; bonus bCritical,3; },{},{}
 2652,Cursed_Lucky_Brooch,Goddess of Fortune's Cursed Brooch,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,40,0,0,{ bonus bCritical,6; bonus2 bAddEff2,Eff_Curse,50; },{},{}
 2653,Sacrifice_Ring,Sacrifice Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,90,0,0,{},{},{}
-2654,Shinobi's_Sash,Shinobi Sash,5,,10,300,,1,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; },{},{}
-2655,Bloody_Iron_Ball,Bloodied Shackle Ball,5,,10,4000,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{},{},{}
-2656,Hyper_Changer,Armor Charm,5,,10,1000,,1,,0,0x000654E2,7,2,136,,0,0,0,{ bonus bMaxHP,50; },{},{}
-2657,Lab_Passport,Laboratory Permit,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2658,Nile_Rose_,Nile Rose,5,,10,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
-2659,Vesper_Core01,Vesper Core 01,5,,10,500,,1,,0,0x00CFDF80,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}
-2660,Vesper_Core02,Vesper Core 02,5,,10,500,,1,,0,0x00CFDF80,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bStr,3; bonus bBaseAtk,10; },{},{}
-2661,Vesper_Core03,Vesper Core 03,5,,10,500,,1,,0,0x00CFDF80,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; },{},{}
-2662,Vesper_Core04,Vesper Core 04,5,,10,500,,1,,0,0x00CFDF80,2,2,136,,0,0,0,{ bonus bMdef,3; bonus bDex,3; bonus bHit,10; },{},{}
+2654,Shinobi's_Sash,Shinobi Sash,5,20000,,300,,1,,0,0x02021040,7,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; },{},{}
+2655,Bloody_Iron_Ball,Bloodied Shackle Ball,5,50000,,4000,,0,,0,0xFFFFFFFE,7,2,136,,1,0,0,{},{},{}
+2656,Hyper_Changer,Armor Charm,5,20000,,1000,,1,,0,0x000654E2,7,2,136,,1,0,0,{ bonus bMaxHP,50; },{},{}
+2657,Lab_Passport,Laboratory Permit,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
+2658,Nile_Rose_,Nile Rose,5,2,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxHP,10; },{},{}
+2659,Vesper_Core01,Vesper Core 01,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}
+2660,Vesper_Core02,Vesper Core 02,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bStr,3; bonus bBaseAtk,10; },{},{}
+2661,Vesper_Core03,Vesper Core 03,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; },{},{}
+2662,Vesper_Core04,Vesper Core 04,5,,10,100,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bDex,3; bonus bHit,10; },{},{}
 2663,Gauntlet_Of_Accuracy,Gauntlet of Hit,5,,10,900,,0,,0,0xFFFFFFFF,7,2,136,,75,0,0,{ bonus bHit,15; bonus bStr,1; },{},{}
 2664,Scarf_Belt,Belcarf,5,,10,200,,0,,0,0xFFFFFFFE,7,2,136,,75,0,0,{ bonus bDex,2; bonus bInt,1; },{},{}
 2665,Ring_of_Exorcism,Exorcising Ring,5,,10,500,,0,,0,0x00008110,7,2,136,,60,0,0,{ bonus bMdef,1; bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; },{},{}
-2666,Lamp_of_Hope,Lantern of Hope,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bStr,2; bonus2 bResEff,Eff_Blind,10; },{},{}
+2666,Lamp_of_Hope,Lantern of Hope,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bStr,2; bonus2 bResEff,Eff_Blind,10; },{},{}
 2667,Glove_of_Archer,Renown Archer's Gloves,5,,10,300,,0,,0,0xFFFFFFFE,7,2,136,,60,0,0,{ bonus bHit,5; bonus bCritical,5; bonus bDex,1; },{},{}
-2668,Woman_Glory,Woman Glory,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{},{},{}
-2669,RJC_Necklace,RJC Necklace,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxSP,10; },{},{}
-2670,Ring_of_Longing,Ring of Longing,5,,,100,,1,,1,0xFFFFFFFF,7,2,136,,30,0,,{ bonus bFlee,5; },{},{}
-2671,Bow_Thimble_,Bow Thimble,5,10000,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
-2672,3rd_Anniversary_Celebration_Ring,3rd Anniversary Celebration Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bAllStats,5; },{},{}
-2673,Warrior's_Shining_Ring,Warrior's Shining Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,48,0,0,{ bonus bBaseAtk,10; bonus bSPrecovRate,3; },{},{}
+2668,Women's_Glory,Woman Glory,5,0,,500,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAllStats,3; bonus bSPrecovRate,20; },{},{}
+2669,Golden_Necklace_,RJC Necklace,5,30000,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bMaxSP,10; },{},{}
+2670,Ring_of_Longing,Ring of Longing,5,,10,100,,1,,0,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bFlee,5; },{},{}
+2671,Thimble_Of_Archer_,Bow Thimble,5,10000,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{ bonus bLongAtkRate,3; },{},{}
+2672,3rd_Anniversary_Ring,3rd Anniversary Celebration Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{ bonus bAllStats,5; },{},{}
+2673,Warrior_Radiating_Ring,Warrior's Shining Ring,5,0,,100,,0,,0,0xFFFFFFFE,7,2,136,,48,0,0,{ bonus bBaseAtk,10; bonus bSPrecovRate,3; },{},{}
+2674,Ring_Of_Honor,Ring of Honor,5,20,,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
+2675,Lord_Ring,Lord Ring,5,0,,10,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAllStats,3; },{},{}
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; },{},{}
