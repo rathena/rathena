@@ -2934,6 +2934,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	mob_db_data[class_]->job_exp=1;
 	mob_db_data[class_]->range2=AREA_SIZE; //Let them have the same view-range as players.
 	mob_db_data[class_]->range3=AREA_SIZE; //Min chase of a screen.
+	mob_db_data[class_]->min_thinktime = 500; //Average player's reflexes?
 	mob_db_data[class_]->option=sd->sc.option;
 
 	//Skill copy [Skotlex]
@@ -3151,6 +3152,7 @@ static int mob_makedummymobdb(int class_)
 	mob_dummy->status.adelay=1000;
 	mob_dummy->status.amotion=500;
 	mob_dummy->status.dmotion=500;
+	mob_dummy->min_thinktime=5000;
 	mob_dummy->base_exp=2;
 	mob_dummy->job_exp=1;
 	mob_dummy->range2=10;
