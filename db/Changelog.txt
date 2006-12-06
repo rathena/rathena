@@ -20,6 +20,7 @@
 
 ========================
 12/06
+	* Fixed mode of guardians [Playtester]
 	* Updated mob modes [Playtester]
 	- they are now in hex format
 	* Updated accessoires [Playtester]
