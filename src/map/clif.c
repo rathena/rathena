@@ -276,6 +276,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	struct map_session_data *sd;
 	unsigned char *buf;
 	int len, type, fd;
+	char flush;
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
@@ -289,6 +290,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	len = va_arg(ap,int);
 	nullpo_retr(0, src_bl = va_arg(ap,struct block_list*));
 	type = va_arg(ap,int);
+	flush = va_arg(ap,char);
 
 	switch(type) {
 	case AREA_WOS:
@@ -315,6 +317,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 			printf("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
 			printf("         Please correct your code.\n");
 			// don't send to not move the pointer of the packet for next sessions in the loop
+			WFIFOSET(fd,0);//## TODO is this ok?
 		} else {
 			if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 				memcpy(WFIFOP(fd,0), buf, len);
@@ -336,7 +339,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 				*/
 
 				// Previous implementation.
-					if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
+				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
 
 					struct status_change *sc = status_get_sc(src_bl);
 					if(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK)))
@@ -371,7 +374,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 						}
 					}
 				}
-				WFIFOSET(fd,len);
+				WFIFOSET2(fd,len,flush);
 			}
 		}
 	}
@@ -383,7 +386,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
  *
  *------------------------------------------
  */
-int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
+int _clif_send(unsigned char *buf, int len, struct block_list *bl, int type, char flush) {
 	int i;
 	struct map_session_data *sd = NULL;
 	struct party_data *p = NULL;
@@ -407,7 +410,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					WFIFOHEAD(i, len);
 					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
+					WFIFOSET2(i,len,flush);
 				}
 			}
 		}
@@ -420,7 +423,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					WFIFOHEAD(i,len);
 					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
+					WFIFOSET2(i,len,flush);
 				}
 			}
 		}
@@ -428,15 +431,15 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 	case AREA:
 	case AREA_WOSC:
 		if (sd && bl->prev == NULL) //Otherwise source misses the packet.[Skotlex]
-			clif_send (buf, len, bl, SELF);
+			clif_send2(buf, len, bl, SELF, flush);
 	case AREA_WOC:
 	case AREA_WOS:
 		map_foreachinarea(clif_send_sub, bl->m, bl->x-AREA_SIZE, bl->y-AREA_SIZE, bl->x+AREA_SIZE, bl->y+AREA_SIZE,
-			BL_PC, buf, len, bl, type);
+			BL_PC, buf, len, bl, type, flush);
 		break;
 	case AREA_CHAT_WOC:
 		map_foreachinarea(clif_send_sub, bl->m, bl->x-(AREA_SIZE-5), bl->y-(AREA_SIZE-5),
-			bl->x+(AREA_SIZE-5), bl->y+(AREA_SIZE-5), BL_PC, buf, len, bl, AREA_WOC);
+			bl->x+(AREA_SIZE-5), bl->y+(AREA_SIZE-5), BL_PC, buf, len, bl, AREA_WOC, flush);
 		break;
 	case CHAT:
 	case CHAT_WOS:
@@ -457,7 +460,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 					{
 						WFIFOHEAD(fd,len);
 						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
+						WFIFOSET2(fd,len,flush);
 					}
 				}
 			}
@@ -469,9 +472,9 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
 				sd->state.mainchat && (fd=sd->fd))
 			{
-				WFIFOHEAD(fd, len);								
+				WFIFOHEAD(fd,len);
 				memcpy(WFIFOP(fd,0), buf, len);
-				WFIFOSET(fd, len);								
+				WFIFOSET2(fd,len,flush);
 			}
 		}
 		break;
@@ -509,7 +512,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 					WFIFOHEAD(fd,len);
 					memcpy(WFIFOP(fd,0), buf, len);
-					WFIFOSET(fd,len);
+					WFIFOSET2(fd,len,flush);
 				}
 			}
 			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
@@ -523,7 +526,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						WFIFOHEAD(fd,len);
 						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
+						WFIFOSET2(fd,len,flush);
 					}
 				}
 			}
@@ -543,7 +546,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { 
 					WFIFOHEAD(i, len);
 					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
+					WFIFOSET2(i,len,flush);
 				}
 			}
 		}
@@ -552,7 +555,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 		if (sd && (fd=sd->fd) && packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd,len);
+			WFIFOSET2(fd,len,flush);
 		}
 		break;
 
@@ -590,7 +593,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						WFIFOHEAD(fd,len);
 						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
+						WFIFOSET2(fd,len,flush);
 					}
 				}
 			}
@@ -603,7 +606,7 @@ int clif_send (unsigned char *buf, int len, struct block_list *bl, int type) {
 					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 						WFIFOHEAD(fd,len);
 						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
+						WFIFOSET2(fd,len,flush);
 					}
 				}
 			}
@@ -640,7 +643,7 @@ int clif_authok(struct map_session_data *sd) {
 	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y, sd->ud.dir);
 	WFIFOB(fd, 9) = 5;
 	WFIFOB(fd,10) = 5;
-	WFIFOSET(fd,packet_len_table[0x73]);
+	WFIFOSET2(fd,packet_len_table[0x73],1);//send immediately
 
 	return 0;
 }
@@ -1664,7 +1667,7 @@ int clif_walkok(struct map_session_data *sd)
 	WFIFOL(fd,2)=gettick();
 	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
 	WFIFOB(fd,11)=0x88;
-	WFIFOSET(fd,packet_len_table[0x87]);
+	WFIFOSET2(fd,packet_len_table[0x87],1);//send immediately
 
 	return 0;
 }
@@ -1699,7 +1702,7 @@ int clif_movepc(struct map_session_data *sd) {
 		WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
-		clif_send(buf, packet_len_table[0x7b], &sd->bl, SELF);
+		clif_send2(buf, packet_len_table[0x7b], &sd->bl, SELF, 1);
 	}
 
 	return 0;
@@ -1725,7 +1728,7 @@ int clif_move(struct block_list *bl) {
 	nullpo_retr(0, ud);
 	
 	len = clif_set007b(bl,vd,ud,buf);
-	clif_send(buf,len,bl,AREA_WOS);
+	clif_send2(buf,len,bl,AREA_WOS,1);
 	if (disguised(bl))
 		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
 		
@@ -3882,7 +3885,7 @@ void clif_getareachar_char(struct map_session_data* sd,struct block_list *bl)
 		WFIFOHEAD(fd, packet_len_table[0x7b]);
 #endif
 		len = clif_set007b(bl,vd,ud,WFIFOP(fd,0));
-		WFIFOSET(fd,len);
+		WFIFOSET2(fd,len,1);//send immediately
 	} else {
 #if PACKETVER > 6
 		WFIFOHEAD(fd,packet_len_table[0x22a]);
@@ -3938,6 +3941,7 @@ int clif_fixpos2(struct block_list* bl)
 	struct view_data *vd;
 	unsigned char buf[256];
 	int len;
+	char flush=0;
 
 	nullpo_retr(0, bl);
 	ud = unit_bl2ud(bl);
@@ -3946,16 +3950,19 @@ int clif_fixpos2(struct block_list* bl)
 		return 0;
 	
 	if(ud && ud->walktimer != -1)
+	{
 		len = clif_set007b(bl,vd,ud,buf);
+		flush=1;
+	}
 	else
 		len = clif_set0078(bl,vd,buf);
 
 	if (disguised(bl)) {
-		clif_send(buf,len,bl,AREA_WOS);
+		clif_send2(buf,len,bl,AREA_WOS,flush);
 		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
 		clif_setdisguise((TBL_PC*)bl, buf, len, 1);
 	} else
-		clif_send(buf,len,bl,AREA);
+		clif_send2(buf,len,bl,AREA,flush);
 	return 0;
 }
 
@@ -8442,7 +8449,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	WFIFOHEAD(fd, packet_len_table[0x7f]);
 	WFIFOW(fd,0)=0x7f;
 	WFIFOL(fd,2)=gettick();
-	WFIFOSET(fd,packet_len_table[0x7f]);
+	WFIFOSET2(fd,packet_len_table[0x7f],1);//send immediately
 	return;
 }
 

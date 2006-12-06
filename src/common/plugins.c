@@ -291,6 +291,12 @@ int plugins_config_read(const char *cfgName)
 	return 0;
 }
 
+/// backward compatibillity function
+int plugin_WFIFOSET(int fd,int len)
+{
+	return _WFIFOSET(fd,len,0);
+}
+
 void plugins_init (void)
 {
 	char *PLUGIN_CONF_FILENAME = "conf/plugin_athena.conf";
@@ -302,7 +308,7 @@ void plugins_init (void)
 	// networking
 	export_symbol (func_parse_table,	18);
 	export_symbol (RFIFOSKIP,			17);
-	export_symbol (WFIFOSET,			16);
+	export_symbol (plugin_WFIFOSET,		16);
 	export_symbol (delete_session,		15);
 	export_symbol (session,				14);
 	export_symbol (&fd_max,				13);

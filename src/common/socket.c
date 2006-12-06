@@ -687,7 +687,7 @@ int realloc_writefifo(int fd, size_t addition)
 	return 0;
 }
 
-int WFIFOSET(int fd,int len)
+int _WFIFOSET(int fd, int len, char flush)
 {
 	size_t newreserve;
 	struct socket_data *s = session[fd];
@@ -712,7 +712,9 @@ int WFIFOSET(int fd,int len)
 	// For inter-server connections, let the reserve be 1/4th of the link size.
 	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK/4:wfifo_size);
 
-	if(s->wdata_size >= frame_size)
+	if( flush )
+		flush_fifo(fd);
+	else if(s->wdata_size >= frame_size)
 		send_from_fifo(fd);
 
 	// realloc after sending
@@ -807,7 +809,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 
-		if(session[i]->eof) //The session check is for when the connection ended in func_parse
+		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.
