@@ -1633,7 +1633,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//FIXME: Most of these stuff should be calculated once, but how do I fix the malloc_set above to do that? [Skotlex]
 	status->speed = DEFAULT_WALK_SPEED;
-	status->mode = MD_CANMOVE|MD_CANATTACK|MD_LOOTER|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
+	status->mode = MD_CANMOVE|MD_CANATTACK|MD_LOOTER|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR_MELEE|MD_CASTSENSOR_CHASE;
 	status->size = (sd->class_&JOBL_BABY)?0:1;
 	if (battle_config.character_size && pc_isriding(sd)) { //[Lupus]
 		if (sd->class_&JOBL_BABY) {
@@ -2373,7 +2373,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->race = hd->homunculusDB->race ;
 		status->size = hd->homunculusDB->size ;
 		status->rhw.range = 1 + status->size;
-		status->mode = MD_CANMOVE|MD_CANATTACK|MD_ASSIST|MD_AGGRESSIVE|MD_CASTSENSOR;
+		status->mode = MD_CANMOVE|MD_CANATTACK;
 		status->speed = DEFAULT_WALK_SPEED;
 		if (battle_config.slaves_inherit_speed&1 &&
 			hd->master && hd->master->state.auth) //Master needs be authed to have valid speed.

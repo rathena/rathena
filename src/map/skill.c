@@ -1780,18 +1780,16 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 	if (!dx && !dy) //Could not knockback.
 		return 0;
 	
-	map_foreachinmovearea(clif_outsight,target->m,
-		x-AREA_SIZE,y-AREA_SIZE,x+AREA_SIZE,y+AREA_SIZE,
-		dx,dy,target->type==BL_PC?BL_ALL:BL_PC,target);
+	map_foreachinmovearea(clif_outsight, target, AREA_SIZE,
+		dx, dy, target->type==BL_PC?BL_ALL:BL_PC, target);
 		
 	if(su)
 		skill_unit_move_unit_group(su->group,target->m,dx,dy);
 	else
 		map_moveblock(target, nx, ny, gettick());
 
-	map_foreachinmovearea(clif_insight,target->m,
-		nx-AREA_SIZE,ny-AREA_SIZE,nx+AREA_SIZE,ny+AREA_SIZE,
-		-dx,-dy,target->type==BL_PC?BL_ALL:BL_PC,target);
+	map_foreachinmovearea(clif_insight, target, AREA_SIZE,
+		-dx, -dy, target->type==BL_PC?BL_ALL:BL_PC, target);
 	
 	if(!(count&0x20000)) 
 		clif_blown(target);

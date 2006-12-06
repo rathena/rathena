@@ -1327,7 +1327,7 @@ int map_foreachinshootrange(int (*)(struct block_list*,va_list),struct block_lis
 int map_foreachinarea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,...);
 // -- moonsoul (added map_foreachincell)
 int map_foreachincell(int (*)(struct block_list*,va_list),int,int,int,int,...);
-int map_foreachinmovearea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,int,int,...);
+int map_foreachinmovearea(int (*)(struct block_list*,va_list),struct block_list*,int,int,int,int,...);
 int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int type,...); // Celest
 int map_foreachinmap(int (*)(struct block_list*,va_list),int,int,...);
 int map_countnearpc(int,int,int);

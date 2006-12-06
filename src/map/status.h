@@ -408,20 +408,21 @@ extern int current_equip_card_id;
 extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% success chance [Skotlex]
 
 //Mode definitions to clear up code reading. [Skotlex]
-#define MD_CANMOVE 0x001
-#define MD_LOOTER 0x002
-//MD_ANGRY mobs are also aggressive.
-#define MD_AGGRESSIVE 0x804
-#define MD_ASSIST 0x008
-#define MD_CASTSENSOR 0x010
-#define MD_BOSS 0x020
-#define MD_PLANT 0x040
-#define MD_CANATTACK 0x080
-#define MD_DETECTOR 0x100
-#define MD_CHANGETARGET 0x200
-#define MD_CHANGECHASE 0x400
-#define MD_ANGRY 0x800
-#define MD_MASK 0xFFF
+#define MD_CANMOVE 0x0001
+#define MD_LOOTER 0x0002
+#define MD_AGGRESSIVE 0x0004
+#define MD_ASSIST 0x0008
+#define MD_CASTSENSOR_MELEE 0x0010
+#define MD_BOSS 0x0020
+#define MD_PLANT 0x0040
+#define MD_CANATTACK 0x0080
+#define MD_DETECTOR 0x0100
+#define MD_CASTSENSOR_CHASE 0x0200
+#define MD_CHANGECHASE 0x0400
+#define MD_ANGRY 0x0800
+#define MD_CHANGETARGET_MELEE 0x1000
+#define MD_CHANGETARGET_CHASE 0x2000
+#define MD_MASK 0xFFFF
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)

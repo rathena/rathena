@@ -1,50 +1,58 @@
 Bit Legend:
 ----------
-MD_CANMOVE      | 0x001 |    1
-MD_LOOTER       | 0x002 |    2
-MD_AGGRESSIVE   | 0x004 |    4
-MD_ASSIST       | 0x008 |    8
-MD_CASTSENSOR   | 0x010 |   16
-MD_BOSS         | 0x020 |   32
-MD_PLANT        | 0x040 |   64
-MD_CANATTACK    | 0x080 |  128
-MD_DETECTOR     | 0x100 |  256
-MD_CHANGETARGET | 0x200 |  512 //removed, not needed
-MD_CHANGECHASE  | 0x400 | 1024
-MD_ANGRY        | 0x800 | 2048
+MD_CANMOVE            | 0x0001 |    1
+MD_LOOTER             | 0x0002 |    2
+MD_AGGRESSIVE         | 0x0004 |    4
+MD_ASSIST             | 0x0008 |    8
+MD_CASTSENSOR_MELEE   | 0x0010 |   16
+MD_BOSS               | 0x0020 |   32
+MD_PLANT              | 0x0040 |   64
+MD_CANATTACK          | 0x0080 |  128
+MD_DETECTOR           | 0x0100 |  256
+MD_CASTSENSOR_CHASE   | 0x0200 |  512
+MD_CHANGECHASE        | 0x0400 | 1024
+MD_ANGRY              | 0x0800 | 2048
+MD_CHANGETARGET_MELEE | 0x1000 | 4096
+MD_CHANGETARGET_CHASE | 0x2000 | 8192
 
-----------
-1: Can Move.
-2: looter.
-4: Aggressive: normal aggressive mob, will look for a close-by player and charge him until death. Aggressive mobs also can change target if they are hit by someone else while chasing someone else.
-8: Assist
-16: Cast Sensor: If mob is aggressive, it will also change targets while chasing/following someone else, otherwise, it'll also be cast-sensitive while idle/random-walking.
-32: Boss. Special flag which makes mobs inmune to certain stuff like status-changes and basilica.
-64: Plant. Always receives 1 damage from stuff.
-128: Can Attack. Everyone with a few exceptions has this. Only prevents normal attacks, not skills.
-256: Detector: can see hidden players. Insects, Demons, and Bosses automatically receive this.
-1024: ChangeChase: When the mob is chasing a player and it passes nearby another player, it will switch targets and hit this other player. Note this only applies if the new player is withing attack range, it won't change it's chase-path to another player!
-2048: Angry: These mobs are "hyper-active". They will change to the closest player while they are following up, They also have skill states "follow" and "angry" (instead of "chase"/"attack") when they pick a new target by their own (ie: not when they change targets due to being attacked). If attacked even once, they loose their Angry mode.
+Explanation for modes:
+---------------------
 
-Change Target: (coded)
-Only Assist, Angry or Aggressive+CastSensor mobs can change target while attacking. Target must be no more than 3 cells away.
-Mob in Hyper-active mode can change target unconditionally.
-Mob that chases player can change target only, when he's Aggresive and get attacked.
+CanMove: Enables the mob to move/chase characters.
 
-Old -> New
-----------
-64 -> 64: Plants
-128 -> 0: Passive immobile beings (pupa) 
-129 -> 129: Normal enemies
-131 -> 131: looters (porings) 
-132 -> 132: Immobile attackers (hydra)
-133 -> 133: Aggressive
-137 -> 137: Assists others (wolves)
-139 -> 139: Assists & loots (thief bugs)
-141 -> 141: Aggressive & Assists (no idea how these would differ from plain aggressive, but there's a lot of enemies defined this way)
-145 -> 145: Detectors (Giearth) 
-149 -> 149: Aggressive & Detector (Hunter Fly)
-159 -> 159: Cast sensor, Assist, Agressive, Looter
-171 -> 171: Boss, summons, assists & loots (Golden Thief Bug) 
-181 -> 1461: Boss, summons, detector & aggressive (pretty much every MVP and miniboss) 
-none -> 2181 : Hyper-active (Familiar)
+CanAttack: Enables the mob to attack/retaliate when you are within attack
+	range. Note that this only enables them to use normal attacks, skills are
+	always allowed.
+
+Looter: The mob will loot up nearby items on the ground when it's on idle state.
+
+Aggressive: normal aggressive mob, will look for a close-by player to attack.
+
+Assist: When a nearby mob of the same class attacks, assist types will join them.
+
+Cast Sensor Melee: Will go after characters who start casting on them if idle
+	or during melee attacks (they will leave their current target alone)
+
+Cast Sensor Chase: Will go after characters who start casting on them if idle
+	or chasing other players (they switch chase targets)
+
+Boss: Special flag which makes mobs inmune to certain status changes and skills.
+
+Plant: Always receives 1 damage from attacks.
+
+Detector: Enables mob to detect and attack characters who are in hiding/cloak.
+
+ChangeChase: Allows chasing mobs to switch targets if another player happens
+	to be within attack range (handy on ranged attackers, for example)
+
+Angry: These mobs are "hyper-active". Apart from "chase"/"attack", they have
+	the states "follow"/"angry". Once hit, they stop using these states and use
+	the normal ones. The new states are used to determine a different skill-set
+	for their "before attacked" and "after attacked" states. Also, when
+	"following", they automatically switch to whoever character is closest.
+
+Change Target Melee: Enables a mob to switch targets when attacked while
+	attacking someone else.
+
+Change Target Chase: Enables a mob to switch targets when attacked while
+	chasing another character.

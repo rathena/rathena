@@ -726,13 +726,12 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
 	}
 	
 	switch (md->state.skillstate) {
-		case MSS_BERSERK: //Only Assist, Angry or Aggressive+CastSensor mobs can change target while attacking.
-			if (mode&(MD_ASSIST|MD_ANGRY|MD_CHANGETARGET) || (mode&(MD_AGGRESSIVE|MD_CASTSENSOR)) == (MD_AGGRESSIVE|MD_CASTSENSOR))
-				return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
-			else
+		case MSS_BERSERK:
+			if (!mode&MD_CHANGETARGET_MELEE)
 				return 0;
+			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
 		case MSS_RUSH:
-			return (mode&MD_AGGRESSIVE);
+			return (mode&MD_CHANGETARGET_CHASE);
 		case MSS_FOLLOW:
 		case MSS_ANGRY:
 		case MSS_IDLE:
@@ -1156,7 +1155,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				{	//Change if the new target is closer than the actual one
 					//or if the previous target is not attacking the mob. [Skotlex]
 					md->target_id = md->attacked_id; // set target
-					md->state.aggressive = 0; //Retaliating.
 					if (md->attacked_count)
 					  md->attacked_count--; //Should we reset rude attack count?
 					md->min_chase = dist+md->db->range3;
@@ -1167,7 +1165,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			}
 		}
 		if (md->state.aggressive && md->attacked_id == md->target_id)
-			md->state.aggressive = 0; //No longer aggressive, change to retaliate AI.
+		{	//No longer aggressive, change to retaliate AI.
+			md->state.aggressive = 0;
+			if(md->state.skillstate== MSS_ANGRY)
+				md->state.skillstate = MSS_BERSERK;
+			if(md->state.skillstate== MSS_FOLLOW)
+				md->state.skillstate = MSS_RUSH;
+		}
 		//Clear it since it's been checked for already.
 		md->attacked_players = 0;
 		md->attacked_id = 0;
@@ -1185,135 +1189,126 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			view_range, BL_ITEM, md, &tbl);
 	}
 
-	if ((!tbl && mode&MD_AGGRESSIVE && battle_config.monster_active_enable) ||
-		(mode&MD_ANGRY && md->state.skillstate == MSS_FOLLOW)
-	) {
+	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
+	{
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
 			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM, md, &tbl);
-		if(!tbl && mode&MD_ANGRY && !md->state.aggressive)
-			md->state.aggressive = 1; //Restore angry state when no targets are visible.
-	} else if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW)) {
+	} else
+	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
+	{
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
 				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM), md, &tbl);
 	}
 
-	if (tbl)
-	{	//Target exists, attack or loot as applicable.
-		if (tbl->type != BL_ITEM)
-		{	//Attempt to attack.
-			//At this point we know the target is attackable, we just gotta check if the range matches.
-			if (md->ud.target == tbl->id && md->ud.attacktimer != -1)
-			{
-				if (md->state.skillstate!=(md->state.aggressive?MSS_ANGRY:MSS_BERSERK))
-					md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;	//Correct the state.
-				return 0; //Already locked.
-			}
-			
-			if (!battle_check_range (&md->bl, tbl, md->status.rhw.range))
-			{	//Out of range...
-				if (!(mode&MD_CANMOVE))
-				{	//Can't chase. Attempt to use a ranged skill at least?
-					md->state.skillstate = MSS_IDLE;
-					if (!mobskill_use(md, tick, -1))
-						mob_unlocktarget(md,tick);
-					return 0;
-				}
+	if (!tbl) { //No targets available.
+		if (mode&MD_ANGRY && !md->state.aggressive)
+			md->state.aggressive = 1; //Restore angry state when no targets are available.
 
-				if (!can_move)
-			  	{	//Stuck. Use an idle skill. o.O'
-					md->state.skillstate = MSS_IDLE;
-					if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
-						mobskill_use(md, tick, -1);
-					return 0;
-				}
-
-				md->state.skillstate = md->state.aggressive?MSS_FOLLOW:MSS_RUSH;
-				if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
-					(
-						!(battle_config.mob_ai&0x1) ||
-						check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
-				)) //Current target tile is still within attack range.
-					return 0;
-
-				//Follow up
-				if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
-					!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
-					//Give up.
-					mob_unlocktarget(md,tick);
+		if(md->ud.walktimer == -1) {
+			// Idle skill.
+			md->state.skillstate = MSS_IDLE;
+			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 				return 0;
-			}
-			//Target within range, engage
-			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
-			unit_attack(&md->bl,tbl->id,1);
-			return 0;
-		} else {	//Target is BL_ITEM, attempt loot.
-			struct flooritem_data *fitem;
-			int i;	
-			if (md->ud.target == tbl->id && md->ud.walktimer != -1)
-				return 0; //Already locked.
-			if (md->lootitem == NULL)
-			{	//Can't loot...
-				mob_unlocktarget (md, tick);
-				mob_stop_walking(md,0);
-				return 0;
-			}
-
-			if (!check_distance_bl(&md->bl, tbl, 1))
-			{	//Still not within loot range.
-				if (!(mode&MD_CANMOVE))
-				{	//A looter that can't move? Real smart.
-					mob_unlocktarget(md,tick);
-					return 0;
-				}
-				if (!can_move) //Stuck. Wait before walking.
-					return 0;
-				md->state.skillstate = MSS_LOOT;	// ルート時スキル使用
-				if (!unit_walktobl(&md->bl, tbl, 0, 1))
-					mob_unlocktarget(md, tick); //Can't loot...
-				return 0;
-			}
-			//Within looting range.
-			if (md->ud.attacktimer != -1)
-				return 0; //Busy attacking?
-
-			fitem = (struct flooritem_data *)tbl;
-			if (md->lootitem_count < LOOTITEM_SIZE) {
-				memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
-				if(log_config.enable_logs&0x10)	//Logs items, taken by (L)ooter Mobs [Lupus]
-					log_pick_mob(md, "L", md->lootitem[md->lootitem_count-1].nameid, md->lootitem[md->lootitem_count-1].amount, &md->lootitem[md->lootitem_count-1]);
-			} else {	//Destroy first looted item...
-				if (md->lootitem[0].card[0] == (short)0xff00)
-					intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
-				for (i = 0; i < LOOTITEM_SIZE - 1; i++)
-					memcpy (&md->lootitem[i], &md->lootitem[i+1], sizeof(md->lootitem[0]));
-				memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item_data, sizeof(md->lootitem[0]));
-			}
-			//Clear item.
-			if (pcdb_checkid(md->vd->class_))
-			{	//Give them walk act/delay to properly mimic players. [Skotlex]
-				clif_takeitem(&md->bl,tbl);
-				md->ud.canact_tick = tick + md->status.amotion;
-				unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
-			}
-			map_clearflooritem (tbl->id);
-			mob_unlocktarget (md,tick);
+		}
+		// Random walk.
+		if (can_move && !md->master_id && DIFF_TICK(md->next_walktime, tick) <= 0)
+			mob_randomwalk(md,tick);
+		return 0;
+	}
+	
+	//Target exists, attack or loot as applicable.
+	if (tbl->type == BL_ITEM)
+	{	//Loot time.
+		struct flooritem_data *fitem;
+		if (md->ud.target == tbl->id && md->ud.walktimer != -1)
+			return 0; //Already locked.
+		if (md->lootitem == NULL)
+		{	//Can't loot...
+			mob_unlocktarget (md, tick);
+			mob_stop_walking(md,0);
 			return 0;
 		}
-	}
-
-	if(md->ud.walktimer == -1) {
-		// When there's no target, it is idling.
-		// Is it terribly exploitable to reuse the walkcounter for idle state skills? [Skotlex]
-		md->state.skillstate = MSS_IDLE;
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
+		if (!check_distance_bl(&md->bl, tbl, 1))
+		{	//Still not within loot range.
+			if (!(mode&MD_CANMOVE))
+			{	//A looter that can't move? Real smart.
+				mob_unlocktarget(md,tick);
+				return 0;
+			}
+			if (!can_move) //Stuck. Wait before walking.
+				return 0;
+			md->state.skillstate = MSS_LOOT;
+			if (!unit_walktobl(&md->bl, tbl, 0, 1))
+				mob_unlocktarget(md, tick); //Can't loot...
 			return 0;
-	}
-	// Nothing else to do... except random walking.
-	// Slaves do not random walk! [Skotlex]
-	if (can_move && !md->master_id && DIFF_TICK(md->next_walktime, tick) <= 0)
-		mob_randomwalk(md,tick);
+		}
+		//Within looting range.
+		if (md->ud.attacktimer != -1)
+			return 0; //Busy attacking?
 
+		fitem = (struct flooritem_data *)tbl;
+		if(log_config.enable_logs&0x10)	//Logs items, taken by (L)ooter Mobs [Lupus]
+			log_pick_mob(md, "L", fitem->item_data.nameid, fitem->item_data.amount, &fitem->item_data);
+
+		if (md->lootitem_count < LOOTITEM_SIZE) {
+			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
+		} else {	//Destroy first looted item...
+			if (md->lootitem[0].card[0] == CARD0_PET)
+				intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
+			memmove(&md->lootitem[0], &md->lootitem[1], sizeof(md->lootitem) - sizeof(md->lootitem[0]));
+			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item_data, sizeof(md->lootitem[0]));
+		}
+		if (pcdb_checkid(md->vd->class_))
+		{	//Give them walk act/delay to properly mimic players. [Skotlex]
+			clif_takeitem(&md->bl,tbl);
+			md->ud.canact_tick = tick + md->status.amotion;
+			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
+		}
+		//Clear item.
+		map_clearflooritem (tbl->id);
+		mob_unlocktarget (md,tick);
+		return 0;
+	}
+	//Attempt to attack.
+	//At this point we know the target is attackable, we just gotta check if the range matches.
+	if (md->ud.target == tbl->id && md->ud.attacktimer != -1) //Already locked.
+		return 0;
+	
+	if (battle_check_range (&md->bl, tbl, md->status.rhw.range))
+	{	//Target within range, engage
+		unit_attack(&md->bl,tbl->id,1);
+		return 0;
+	}
+
+	//Out of range...
+	if (!(mode&MD_CANMOVE))
+	{	//Can't chase. Attempt an idle skill before unlocking.
+		md->state.skillstate = MSS_IDLE;
+		if (!mobskill_use(md, tick, -1))
+			mob_unlocktarget(md,tick);
+		return 0;
+	}
+
+	if (!can_move)
+	{	//Stuck. Attempt an idle skill
+		md->state.skillstate = MSS_IDLE;
+		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+			mobskill_use(md, tick, -1);
+		return 0;
+	}
+
+	if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
+		(
+			!(battle_config.mob_ai&0x1) ||
+			check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
+	)) //Current target tile is still within attack range.
+		return 0;
+
+	//Follow up if possible.
+	if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
+		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+		mob_unlocktarget(md,tick);
 	return 0;
 }
 
@@ -3315,7 +3310,9 @@ static int mob_readdb(void)
 				ShowWarning("Mob with ID: %d has invalid element level %d (max is 4)\n", class_, status->ele_lv);
 				status->ele_lv = 1;
 			}
-			status->mode=atoi(str[25]);
+			status->mode=(int)strtol(str[25],NULL,0);
+			if (!battle_config.monster_active_enable)
+				status->mode&=~MD_AGGRESSIVE;
 			status->speed=atoi(str[26]);
 			status->aspd_rate = 1000;
 			db->min_thinktime=atoi(str[27]);
@@ -4002,6 +3999,8 @@ static int mob_read_sqldb(void)
 					status->ele_lv = 1;
 				}
 				status->mode = TO_INT(25);
+				if (!battle_config.monster_active_enable)
+					status->mode&=~MD_AGGRESSIVE;
 				status->speed = TO_INT(26);
 				status->aspd_rate = 1000;
 				db->min_thinktime = TO_INT(27);
