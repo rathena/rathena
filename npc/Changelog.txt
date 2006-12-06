@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+12/06
+	* Minor fix to the sign quest, thanks to theultramage for pointing it out [MasterOfMuppets]
 12/01
 	* Fixed event's label for many quest-spawned monsters [KarLaeda]
 	* Small fix to The Sign Quest [KarLaeda]

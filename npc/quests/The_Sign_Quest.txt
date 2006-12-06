@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //=     Also moved the Alberta sign since another NPC was on top of it. [Llyr]
 //= 1.5 Fixed exploits and bugs. Plus add a removal of exttra sobbing pieces
 //= 	as suggested Tantarian, to let people Reborn [Lupus]
+//= 1.6 Minor fix, thanks to theultramage for pointing it out. [MasterOfMuppets]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -2454,6 +2455,7 @@ else
 }
 OnMonsterDead:
 	set $signmazemonster,$signmazemonster - 1;
+	end;
 
 }
 
