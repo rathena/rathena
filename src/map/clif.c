@@ -290,7 +290,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	len = va_arg(ap,int);
 	nullpo_retr(0, src_bl = va_arg(ap,struct block_list*));
 	type = va_arg(ap,int);
-	flush = va_arg(ap,char);
+	flush = (char)va_arg(ap,int);
 
 	switch(type) {
 	case AREA_WOS:

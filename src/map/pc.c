@@ -5407,10 +5407,11 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 
 	if(hp) {
 		bonus = 100 + (sd->battle_status.vit<<1)
-			 + pc_checkskill(sd,SM_RECOVERY)*10
+			+ pc_checkskill(sd,SM_RECOVERY)*10
 			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
-		bonus += (potion_flag==2)?50:(potion_flag==3?100:0);
+		if (potion_flag > 1)
+			bonus += bonus*(potion_flag-1)*50/100;
 		//Item Group bonuses
 		bonus += bonus*itemdb_group_bonus(sd, itemid)/100;
 		//Individual item bonuses.
@@ -5428,7 +5429,8 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		bonus = 100 + (sd->battle_status.int_<<1)
 			+ pc_checkskill(sd,MG_SRECOVERY)*10
 			+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
-		bonus += (potion_flag==2)?50:(potion_flag==3?100:0);
+		if (potion_flag > 1)
+			bonus += bonus*(potion_flag-1)*50/100;
 		if(bonus != 100)
 			sp = sp * bonus / 100;
 	}

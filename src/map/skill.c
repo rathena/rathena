@@ -7883,6 +7883,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		sd->skillitem != skill)
 	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->skillitem = sd->skillitemlv = 0;
+		//Need to do arrow state check.
+		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; 
 		return 1;
 	}
 
