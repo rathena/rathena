@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/07
+	* Updated cards according to latest kRO patch [Playtester]
 12/06
 	* Fixed mode of guardians [Playtester]
 	* Updated mob modes [Playtester]

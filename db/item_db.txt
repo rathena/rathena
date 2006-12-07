@@ -1504,8 +1504,8 @@
 4331,Heater_Card,Heater Card,6,,10,10,,,,,,,,136,,,,,{ bonus bCritical,3; if(BaseClass == Job_Swordman) bonus bFlee2,3; },{},{}
 4332,Waste_Stove_Card,Waste Stove Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,5; bonus bInt,1; if(isequipped(4185,4293,4312)) { bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus4 bAutoSpell,32,5,10,1; bonus2 bSkillAtk,271,10; if(BaseJob == Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel,0; } } },{},{}
 4333,Venomous_Card,Venomous Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Poison,3000,2; },{},{}
-4334,Noxious_Card,Noxious Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLongAtkDef,20; },{},{}
-4335,Pitman_Card,Pitman Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,90,2; bonus2 bSkillAtk,91,2; },{},{}
+4334,Noxious_Card,Noxious Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLongAtkDef,10; bonus2 bSubEle,Ele_Neutral,10; },{},{}
+4335,Pitman_Card,Pitman Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,90,5; bonus2 bSkillAtk,91,5; },{},{ heal 0,-50; }
 4336,Ungoliant_Card,Ungoliant Card,6,,10,10,,,,,,,,769,,,,,{ bonus bHPrecovRate,10; bonus2 bResEff,Eff_Bleeding,10000; },{},{}
 4337,Porcellio_Card,Porcellio Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,25; bonus bDef,-5; },{},{}
 4338,Obsidian_Card,Obsidian Card,6,,10,10,,,,,,,,16,,,,,{ bonus bVit,readparam(bDex)/18; },{},{}
@@ -1515,12 +1515,12 @@
 4342,RSX_0806_Card,RSX 0806 Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4343,Holden_Card,Holden Card,6,,10,10,,,,,,,,769,,,,,{ bonus bLuk,2; if(isequipped(4186,4281,4036,4233)) { bonus bStr,4; bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus2 bSkillAtk,42,20; bonus bSPDrainValue,1; if(BaseJob == Job_Alchem) { bonus4 bAutoSpell,111,1,10,0; bonus2 bAddMonsterDropItem,7139,300; bonus2 bAddMonsterDropItem,905,300; } } },{},{}
 4344,Anopheles_Card,Anopheles Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12058,RC_Insect,300; },{},{}
-4345,Hill_Wind_Card,Hill Wind Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,21,2; bonus2 bSkillAtk,84,2; bonus2 bSkillAtk,85,2; },{},{}
+4345,Hill_Wind_Card,Hill Wind Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,21,5; bonus2 bSkillAtk,84,5; bonus2 bSkillAtk,85,5; },{},{ heal 0,-50; }
 4346,Egnigem_Cenia_Card,Egnigem Cenia Card,6,,10,10,,,,,,,,16,,,,,{ bonus bStr,readparam(bInt)/18; },{},{}
 4347,Armeyer_Dinze_Card,Armeyer Dinze Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddMonsterDropItem,12053,RC_Fish,300; },{},{}
 4348,Wikebine_Tres_Card,Wikebine Tres Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,217,1,50; if(isequipped(4039,4210,4257,4230)) { bonus bStr,6; bonus bAgi,4; bonus2 bSkillAtk,212,10; if(getskilllv(217)==5) bonus3 bAutoSpell,217,5,50; if(BaseJob == Job_Rogue) { bonus bUseSPrate,-20; bonus3 bAutoSpell,219,1,-20; } } },{},{}
 4349,Errende_Ebecee_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpellWhenHit,25,1,50,0; },{},{}
-4350,Laurell_Weinder_Card,Laurell Weinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,88,1; bonus2 bSkillAtk,89,1; },{},{}
+4350,Laurell_Weinder_Card,Laurell Weinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,88,3; bonus2 bSkillAtk,89,3; },{},{ heal 0,-50; }
 4351,Kavach_Icarus_Card,Kavach Icarus Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()<=4) { bonus bFlee,20; bonus bFlee2,1; } else { bonus bFlee,10; } },{},{}
 4352,General_Egnigem_Cenia_Card,General Egnigem Cenia Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 4353,Remover_Card,Remover Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,(800-(80*getrefine())); bonus bHPrecovRate,10; },{},{}
@@ -1532,25 +1532,25 @@
 4359,Assassin_Cross_Card,Assassin Cross Card,6,,10,10,,,,,,,,4,,,,,{ skill 135,3; },{},{}
 4360,Eremes_Guile_Card,Eremes Guile Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bCriticalAddRace,RC_DemiHuman,10; },{},{}
 4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBreakWeaponRate,1000; bonus bBreakArmorRate,700; },{},{}
-4362,Howard_Alt-Eisen_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,-5; bonus bHit,40; },{},{}
+4362,Howard_Alt-Eisen_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,-5; bonus bHit,30; },{},{}
 4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4364,Margaretha_Solin_Card,Margaretha Solin Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4365,High_Wizard_Card,High Wizard Card,6,,10,10,,,,,,,,,,,,,{},{},{}
-4366,Kathryne_Keyron_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{ bonus bCastrate,getrefine()*-1; },{},{}
+4366,Kathryne_Keyron_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{ bonus bCastrate,getrefine()*-1; if(getrefine()>=9) { bonus bMatkRate,2; } },{},{}
 4367,Sniper_Card,Sniper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bNoRegen,1; bonus2 bHpDrainRate,50,20; },{},{}
 4368,Cecil_Damon_Card,Cecil Damon Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,5; bonus bHit,-30; },{},{}
 4369,Venatu_Card,Venatu Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,readparam(bAgi)/18; },{},{}
 4370,Dimik_Card,Dimik Card,6,,10,10,,,,,,,,16,,,,,{ bonus bVit,getrefine()-5; },{},{}
 4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,480,10; bonus2 bSkillAtk,368,10; bonus bCastrate,-10; if(BaseJob == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
 4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,,,,,,{},{},{}
-4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk, getrefine()-5; },{},{}
+4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk,getrefine()-5; bonus bCritical,getrefine(); },{},{}
 4374,Vesper_Card,Vesper Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()>=9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{}
 4376,Lady_Tany_Card,Lady Tanee Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-50; bonus bMaxSPrate,50; bonus2 bAddMonsterDropItem,513,500; bonus2 bAddItemHealRate,513,100; },{},{}
 4377,Green_Iguana_Card,Green Iguana Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12063,RC_Formless,300; },{},{}
 4378,Gold_Acidus_Card,Gold Acidus Card,6,,10,10,,,,,,,,64,,,,,{ if(getrefine()<=4) { bonus bMaxHPrate,8; bonus bMaxSPrate,8; bonus bHPrecovRate,5; bonus bSPrecovRate,5; } else { bonus bMaxHPrate,4; bonus bMaxSPrate,4; } },{},{}
 4379,Blue_Acidus_Card,Blue Acidus Card,6,,10,10,,,,,,,,769,,,,,{ if(getrefine()<=4) { bonus bSPrecovRate,5; bonus bMaxSP,80; } else { bonus bMaxSP,40; } },{},{}
-4380,Red_Ferus_Card,Red Ferus Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,80,2; bonus2 bSkillAtk,83,2; },{},{}
+4380,Red_Ferus_Card,Red Ferus Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,80,5; bonus2 bSkillAtk,83,5; },{},{ heal 0,-50; }
 4381,Green_Ferus_Card,Green Ferus Card,6,,10,10,,,,,,,,64,,,,,{ bonus bVit,1; bonus bMaxHPrate,10; if(isequipped(4297,4234,4252,4178)) { bonus bDex,5; bonus2 bSkillAtk,394,5; bonus2 bSkillAtk,324,10; bonus2 bSkillAtk,316,10; if(BaseJob == Job_Bard || BaseJob == Job_Dancer) { bonus4 bAutoSpellWhenHit,489,2,50,1; } } },{},{}
 4382,Yellow_Novus_Card,Yellow Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,500; bonus bHPrecovRate,10; if(isequipped(4208,4258,4325,4327)) { bonus bInt,3; bonus2 bSkillAtk,91,10; bonus2 bSkillAtk,21,10; if(BaseJob == Job_Sage) { bonus bMagicDamageReturn,20; bonus2 bAddMonsterDropItem,716,100; bonus2 bAddMonsterDropItem,715,100; bonus bCastrate,-20; } } },{},{}
 4383,Red_Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Confusion,3000,2; },{},{}
@@ -1558,7 +1558,7 @@
 4385,Dragon_Egg_Card,Dragon Egg Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12048,RC_Dragon,300; },{},{}
 4386,Detale_Card,Detale Card,6,,10,10,,,,,,,,,,,,,{},{},{}
 4387,Ancient_Mimic_Card,Ancient Mimic Card,6,,10,10,,,,,,,,16,,,,,{ bonus bAgi,readparam(bLuk)/18; },{},{}
-4388,Deathword_Card,Deathword Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,11,2; bonus2 bSkillAtk,13,2; bonus2 bSkillAtk,400,2; },{},{}
+4388,Deathword_Card,Deathword Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,11,5; bonus2 bSkillAtk,13,5; bonus2 bSkillAtk,400,5; },{},{ heal 0,-50; }
 4389,Plasma_Card,Plasma Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Resist,1200; },{},{}
 4390,Breeze_Card,Breeze Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus2 bAddEff,Eff_Bleeding,500; },{},{}
 4391,Retribution_Card,Retribution Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12068,RC_Angel,300; },{},{}
