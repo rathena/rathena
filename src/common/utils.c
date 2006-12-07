@@ -8,12 +8,10 @@
 
 #ifdef WIN32
 	#include <windows.h>
-	#define PATHSEP '\\'
 #else
 	#include <unistd.h>
 	#include <dirent.h>
 	#include <sys/stat.h>
-	#define PATHSEP '/'
 #endif
 
 #include "utils.h"
@@ -285,8 +283,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 			}
 		}while (FindNextFile(hFind, &FindFileData) != 0);
 		FindClose(hFind);
-   }
-   return;
+	}
+	return;
 }
 #else
 

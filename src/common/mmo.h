@@ -5,32 +5,8 @@
 #define	_MMO_H_
 
 #include <time.h>
+#include "cbasetypes.h"
 #include "utils.h" // _WIN32
-
-#if ! defined(Assert)
-#if defined(RELEASE)
-#define Assert(EX)
-#else
-// extern "C" {
-#include <assert.h>
-// }
-#ifndef DEFCPP
-#if defined(_WIN32) && !defined(MINGW)
-#include <crtdbg.h>
-#endif
-#endif
-#define Assert(EX) assert(EX)
-#endif
-#endif /* ! defined(Assert) */
-
-#ifdef CYGWIN
-// txtやlogなどの書き出すファイルの改行コード
-#define RETCODE	"\r\n"	// (CR/LF：Windows系)
-#else
-#define RETCODE "\n"	// (LF：Unix系）
-#endif
-
-#define RET RETCODE
 
 #define FIFOSIZE_SERVERLINK	256*1024
 

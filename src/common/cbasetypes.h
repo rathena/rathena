@@ -243,6 +243,9 @@ typedef int bool;
 #endif // not cplusplus
 //////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////
+// macro tools
+
 #ifdef swap // just to be sure
 #undef swap
 #endif
@@ -270,5 +273,46 @@ typedef int bool;
 #ifndef NBBY
 #define	NBBY 8
 #endif
+
+//////////////////////////////////////////////////////////////////////////
+// path separator
+
+#if defined(WIN32)
+#define PATHSEP '\\'
+#elif defined(__APPLE__)
+#define PATHSEP ':'
+#else
+#define PATHSEP '/'
+#endif
+
+//////////////////////////////////////////////////////////////////////////
+// EOL separator
+
+#if defined(WIN32) || defined(CYGWIN)
+#define RETCODE	"\r\n"	// CR/LF : Windows systems
+#elif defined(__APPLE__)
+#define RETCODE "\r"	// CR : Macintosh systems
+#else
+#define RETCODE "\n"	// LF : Unix systems
+#endif
+
+#define RET RETCODE
+
+//////////////////////////////////////////////////////////////////////////
+// Assert
+
+#if ! defined(Assert)
+#if defined(RELEASE)
+#define Assert(EX)
+#else
+// extern "C" {
+#include <assert.h>
+// }
+#if !defined(DEFCPP) && defined(WIN32) && !defined(MINGW)
+#include <crtdbg.h>
+#endif
+#define Assert(EX) assert(EX)
+#endif
+#endif /* ! defined(Assert) */
 
 #endif /* _CBASETYPES_H_ */

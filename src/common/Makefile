@@ -29,9 +29,10 @@ ifeq ($(findstring /,$(HAVESVN)), /)
 svnversion.h:
 	@printf "#define SVNVERSION " > svnversion.h
 	@svnversion . >> svnversion.h
+	@printf "\n" >> svnversion.h
 else
 svnversion.h:
-	@printf "" > svnversion.h
+	@printf "\n" > svnversion.h
 endif
 
 obj/minicore.o: core.c core.h
@@ -54,3 +55,6 @@ obj/plugins.o: plugins.c plugins.h plugin.h
 obj/showmsg.o: showmsg.c showmsg.h
 obj/strlib.o: strlib.c strlib.h utils.h
 obj/mapindex.o: mapindex.c mapindex.h
+obj/utils.o: utils.c utils.h malloc.h showmsg.h mmo.h
+mmo.h: cbasetypes.h
+	@touch mmo.h
