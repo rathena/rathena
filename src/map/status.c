@@ -4631,12 +4631,15 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			int mode;
 			struct status_data *bstatus = status_get_base_status(bl);
 			if (!bstatus) return 0;
+			if (sc->data[type].timer != -1)
+			{	//Pile up with previous values.
+				if(!val2) val2 = sc->data[type].val2;
+				val3 |= sc->data[type].val3;
+				val4 |= sc->data[type].val4;
+			}
 			mode = val2?val2:bstatus->mode; //Base mode
-			//Mode added AND removed? Added has priority.
-			if ((val3&val4))
-				val4&= ~(val3&val4);
-			if (val3) mode|= val3; //Add mode
 			if (val4) mode&=~val4; //Del mode
+			if (val3) mode|= val3; //Add mode
 			if (mode == bstatus->mode) { //No change.
 				if (sc->data[type].timer != -1) //Abort previous status
 					return status_change_end(bl, type, -1);

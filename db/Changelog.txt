@@ -20,6 +20,8 @@
 
 ========================
 12/07
+	* Updated mob_skill_db to account for the updated mob modes on NPC_EMOTION
+	  skills. [Skotlex]
 	* Updated cards according to latest kRO patch [Playtester]
 12/06
 	* Fixed mode of guardians [Playtester]

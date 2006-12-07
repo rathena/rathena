@@ -4937,18 +4937,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_EMOTION_ON:
 	case NPC_EMOTION:
-		if(md && md->skillidx >= 0)
+		//va[0] is the emotion to use.
+		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
+		//val[1] 'sets' the mode
+		//val[2] adds to the current mode
+		//val[3] removes from the current mode
+		//val[4] if set, asks to delete the previous mode change.
+		if(md && md->skillidx >= 0 && tsc)
 		{
-			clif_emotion(&md->bl,md->db->skill[md->skillidx].val[0]);
-			if(!md->special_state.ai &&
-				(md->db->skill[md->skillidx].val[1] || md->db->skill[md->skillidx].val[2]))
-			//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
-				//val[1] 'sets' the mode, val[2] can add/remove from the current mode based on skill used:
-				//NPC_EMOTION_ON adds a mode / NPC_EMOTION removes it.
+			clif_emotion(bl, md->db->skill[md->skillidx].val[0]);
+			if(md->db->skill[md->skillidx].val[4] && tsc->data[type].timer != -1)
+				status_change_end(bl, type, -1);
+
+			if(md->db->skill[md->skillidx].val[1] || md->db->skill[md->skillidx].val[2])
 				sc_start4(src, type, 100, skilllv,
 					md->db->skill[md->skillidx].val[1],
-					skillid==NPC_EMOTION_ON?md->db->skill[md->skillidx].val[2]:0,
-					skillid==NPC_EMOTION   ?md->db->skill[md->skillidx].val[2]:0,
+					md->db->skill[md->skillidx].val[2],
+					md->db->skill[md->skillidx].val[3],
 					skill_get_time(skillid, skilllv));
 		}
 		break;

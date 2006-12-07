@@ -69,15 +69,17 @@ Aegis/eA (description)
 03: 0x1089 (passive, assist and change-target melee)
 04: 0x3885 (angry, change-target melee/chase)
 05: 0x2085 (aggro, change-target chase)
-06: 0x0000 (plants)
+06: 0x0000 (passive, immobile, can't attack) [plants]
 07: 0x108B (aggro, immobile, assist, change-target melee)
+09: 0x3095 (aggro, change-target melee/chase, cast sensor idle) [Guardian]
 10: 0x0084 (aggro, immobile)
-12: 0x0085 (aggro)
-13: 0x018D (aggro, assist, detector)
+11: 0x0084 (aggro, immobile) [Guardian]
+12: 0x2085 (aggro, change-target chase) [Guardian]
+13: 0x308D (aggro, change-target melee/chase, assist)
 17: 0x0091 (passive, cast sensor idle)
 19: 0x3095 (aggro, change-target melee/chase, cast sensor idle)
 20: 0x3295 (aggro, change-target melee/chase, cast sensor idle/chase)
 21: 0x3695 (aggro, change-target melee/chase, cast sensor idle/chase, chase-change target)
 
-- Note that the detector bit due to being Insect/Demon and Boss mode bits need to
-  be added independently of this list.
+- Note that the detector bit due to being Insect/Demon, plant  and Boss mode
+  bits need to be added independently of this list.

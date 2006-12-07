@@ -104,21 +104,21 @@
 1019,PecoPeco@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
 1019,PecoPeco@NPC_PROVOCATION,chase,194,1,200,0,5000,yes,target,always,0,,,,,,19
 1020,Mandragora@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1023,Orc Warrior@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1023,Orc Warrior@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1023,Orc Warrior@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,,,,,,
 1023,Orc Warrior@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6
-1023,Orc Warrior@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,2181,,,,
+1023,Orc Warrior@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,0x3885,,,,
 1023,Orc Warrior@NPC_SMOKING,idle,195,1,500,0,36000000,yes,self,always,0,,,,,,9
-1023,Orc Warrior@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1023,Orc Warrior@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1023,Orc Warrior@NPC_EMOTION,follow,197,1,2000,0,5000,yes,self,always,0,27,,,,,
 1023,Orc Warrior@NPC_GROUNDATTACK,angry,185,2,500,500,5000,no,target,always,0,,,,,,6
 1024,Worm Tail@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6
 1025,Snake@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1025,Snake@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
-1026,Munak@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1026,Munak@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,2181,,,,
+1026,Munak@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1026,Munak@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,0x3885,,,,
 1026,Munak@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,6
-1026,Munak@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1026,Munak@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1026,Munak@NPC_STUNATTACK,angry,179,2,500,1500,5000,no,target,always,0,,,,,,6
 1028,Skeleton Soldier@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1028,Skeleton Soldier@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,6,,,,,
@@ -128,8 +128,8 @@
 1028,Skeleton Soldier@NPC_UNDEADATTACK,angry,347,1,2000,0,5000,yes,target,always,0,,,,,,
 1029,Isis@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6
 1029,Isis@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
-1029,Isis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1029,Isis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,149,,,,
+1029,Isis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1029,Isis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3195,,,,
 1030,Anacondaq@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,
 1030,Anacondaq@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
 1031,Poporing@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
@@ -141,18 +141,18 @@
 1033,Elder Willow@MG_FIREBOLT,attack,19,3,500,1500,5000,yes,target,always,0,,,,,,
 1033,Elder Willow@MG_FIREBOLT,chase,19,3,500,1500,5000,yes,target,always,0,,,,,,
 1033,Elder Willow@NPC_FIREATTACK,attack,186,2,500,500,5000,no,target,always,0,,,,,,6
-1033,Elder Willow@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1033,Elder Willow@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1033,Elder Willow@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1033,Elder Willow@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,
 1034,Thara Frog@NPC_WATERATTACK,attack,184,3,2000,500,5000,no,target,always,0,,,,,,6
 1035,Hunter Fly@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,always,0,,,,,,
 1035,Hunter Fly@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2
 1035,Hunter Fly@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6
-1035,Hunter Fly@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1035,Hunter Fly@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,2181,,,,
+1035,Hunter Fly@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1035,Hunter Fly@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3985,,,,
 1035,Hunter Fly@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1035,Hunter Fly@NPC_BLOODDRAIN,angry,199,1,500,0,5000,yes,target,always,0,,,,,,2
 1035,Hunter Fly@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,6
-1035,Hunter Fly@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1035,Hunter Fly@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1035,Hunter Fly@NPC_WINDATTACK,angry,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1036,Ghoul@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,
 1036,Ghoul@NPC_POISON,angry,176,3,500,800,5000,no,target,always,0,,,,,,
@@ -202,23 +202,23 @@
 1040,Golem@CR_AUTOGUARD,attack,249,2,500,0,300000,yes,self,always,0,,,,,,
 1040,Golem@CR_AUTOGUARD,chase,249,2,2000,0,300000,yes,self,longrangeattacked,,,,,,,
 1041,Mummy@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,9
-1041,Mummy@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1041,Mummy@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,2181,,,,
+1041,Mummy@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1041,Mummy@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3885,,,,
 1041,Mummy@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,9
-1041,Mummy@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1041,Mummy@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1041,Mummy@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,0,,,,,,
 1042,Steel ChonChon@NPC_SILENCEATTACK,attack,178,2,500,700,5000,no,target,always,0,,,,,,
 1042,Steel ChonChon@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
-1044,Obeaune@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1044,Obeaune@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,149,,,,
+1044,Obeaune@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1044,Obeaune@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3095,,,,
 1044,Obeaune@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,6
 1044,Obeaune@PR_LEXDIVINA,attack,76,5,500,1000,5000,yes,target,always,0,,,,,,2
 1044,Obeaune@PR_LEXDIVINA,chase,76,5,500,1000,5000,yes,target,always,0,,,,,,2
-1045,Marc@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1045,Marc@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,2181,,,,
+1045,Marc@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1045,Marc@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3885,,,,
 1045,Marc@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,6
 1045,Marc@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,6
-1045,Marc@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1045,Marc@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1045,Marc@NPC_STUNATTACK,angry,179,2,500,1500,5000,no,target,always,0,,,,,,6
 1045,Marc@NPC_WATERATTACK,angry,184,2,500,500,5000,no,target,always,0,,,,,,6
 1046,Doppelganger@AL_HEAL,attack,28,11,10000,0,5000,yes,friend,friendhpltmaxrate,60,,,,,,2
@@ -300,7 +300,7 @@
 1059,Mistress@NPC_STOP,attack,342,1,2000,0,15000,no,target,always,0,,,,,,6
 1059,Mistress@WZ_JUPITEL,attack,84,28,2000,0,5000,yes,target,always,0,,,,,,
 1059,Mistress@WZ_JUPITEL,chase,84,28,2000,0,5000,yes,target,always,0,,,,,,
-1060,Bigfoot@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1060,Bigfoot@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1060,Bigfoot@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,6,,,,,
 1060,Bigfoot@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1060,Bigfoot@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,
@@ -364,11 +364,11 @@
 1076,Skeleton@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,0,,,,,,
 1077,Poison Spore@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,6
 1077,Poison Spore@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
-1077,Poison Spore@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1077,Poison Spore@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,2181,,,,
+1077,Poison Spore@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1077,Poison Spore@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,0x3885,,,,
 1077,Poison Spore@NPC_POISON,angry,176,3,500,800,5000,no,target,always,0,,,,,,6
 1077,Poison Spore@NPC_POISONATTACK,angry,188,1,2000,0,5000,yes,target,always,0,,,,,,
-1077,Poison Spore@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1077,Poison Spore@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1086,Golden Thief Bug@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1086,Golden Thief Bug@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1086,Golden Thief Bug@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
@@ -461,8 +461,8 @@
 1099,Argiope@AS_VENOMDUST,attack,140,1,500,1500,5000,no,target,always,0,,,,,,
 1099,Argiope@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,
 1099,Argiope@NPC_POISONATTACK,attack,188,2,500,500,5000,no,target,always,0,,,,,,
-1099,Argiope@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1099,Argiope@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1099,Argiope@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1099,Argiope@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3795,,,,
 1100,Argos@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
 1100,Argos@NPC_POISONATTACK,attack,188,1,2000,0,5000,yes,target,always,0,,,,,,
 1101,Baphomet Jr.@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
@@ -472,8 +472,8 @@
 1101,Baphomet Jr.@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1101,Baphomet Jr.@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,29
 1101,Baphomet Jr.@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,29
-1101,Baphomet Jr.@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1101,Baphomet Jr.@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1101,Baphomet Jr.@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1101,Baphomet Jr.@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3795,,,,
 1102,Bathory@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
 1102,Bathory@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,30,,,,,
 1102,Bathory@NPC_ENERGYDRAIN,attack,200,1,500,0,5000,yes,target,always,0,,,,,,30
@@ -483,21 +483,21 @@
 1103,Caramel@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1103,Caramel@NPC_PIERCINGATT,attack,158,5,500,0,5000,yes,target,always,0,,,,,,6
 1104,Coco@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1104,Coco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1104,Coco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1104,Coco@TF_THROWSTONE,chase,152,1,2000,0,5000,yes,target,always,0,,,,,,6
 1105,Deniro@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,19,,,,,
 1105,Deniro@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
 1106,Desert Wolf@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
-1106,Desert Wolf@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1106,Desert Wolf@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,141,,,,
+1106,Desert Wolf@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1106,Desert Wolf@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x308D,,,,
 1106,Desert Wolf@TF_SPRINKLESAND,attack,149,1,500,0,5000,yes,target,always,0,,,,,,6
 1107,Baby Desert Wolf@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1107,Baby Desert Wolf@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
 1108,Deviace@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,9
 1108,Deviace@WZ_WATERBALL,attack,86,4,500,1500,5000,yes,target,always,0,,,,,,
 1108,Deviace@WZ_WATERBALL,chase,86,4,500,1500,5000,yes,target,always,0,,,,,,
-1108,Deviace@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,2181,,,,
-1108,Deviace@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,145,,,,
+1108,Deviace@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,0x3885,,,,
+1108,Deviace@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,0x91,,,,
 1109,Deviruchi@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1109,Deviruchi@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
 1109,Deviruchi@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -598,25 +598,25 @@
 1121,Giearth@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,8,,,,,
 1121,Giearth@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1121,Giearth@TF_SPRINKLESAND,attack,149,1,500,0,5000,yes,target,always,0,,,,,,6
-1122,Goblin 1@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1122,Goblin 1@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1122,Goblin 1@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,18,,,,,
-1122,Goblin 1@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,141,,,,
+1122,Goblin 1@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3695,,,,
 1122,Goblin 1@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
-1123,Goblin 2@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1123,Goblin 2@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1123,Goblin 2@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,29,,,,,
 1123,Goblin 2@NPC_FIREATTACK,attack,186,2,500,500,5000,no,target,always,0,,,,,,
-1123,Goblin 2@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,141,,,,
-1124,Goblin 3@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1123,Goblin 2@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3095,,,,
+1124,Goblin 3@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1124,Goblin 3@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,9,,,,,
 1124,Goblin 3@NPC_POISONATTACK,attack,188,2,500,500,5000,no,target,always,0,,,,,,
-1124,Goblin 3@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,141,,,,
-1125,Goblin 4@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1124,Goblin 3@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x308D,,,,
+1125,Goblin 4@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1125,Goblin 4@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,20,,,,,
 1125,Goblin 4@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
-1125,Goblin 4@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,141,,,,
-1126,Goblin 5@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1125,Goblin 4@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x308D,,,,
+1126,Goblin 5@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1126,Goblin 5@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,28,,,,,
-1126,Goblin 5@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,141,,,,
+1126,Goblin 5@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x308D,,,,
 1126,Goblin 5@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,
 1127,Hode@AS_CLOAKING,attack,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1127,Hode@AS_CLOAKING,idle,135,1,2000,200,5000,yes,self,always,0,,,,,,
@@ -633,8 +633,8 @@
 1130,Jakk@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,29
 1130,Jakk@NPC_CURSEATTACK,chase,181,3,500,800,5000,no,target,always,0,,,,,,29
 1130,Jakk@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1130,Jakk@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1130,Jakk@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,1173,,,,
+1130,Jakk@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1130,Jakk@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3695,,,,
 1131,Joker@MG_FIREBALL,chase,17,5,500,800,5000,yes,target,always,0,,,,,,10
 1131,Joker@MG_FROSTDIVER,chase,15,9,500,1000,5000,yes,target,always,0,,,,,,10
 1131,Joker@MG_SOULSTRIKE,chase,13,9,500,500,5000,yes,target,always,0,,,,,,12
@@ -644,9 +644,9 @@
 1131,Joker@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,yes,target,always,0,,,,,,11
 1131,Joker@NPC_DARKTHUNDER,chase,341,5,500,1500,5000,yes,target,always,0,,,,,,11
 1131,Joker@WZ_QUAGMIRE,chase,92,5,500,700,5000,yes,target,always,0,,,,,,12
-1131,Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,20,129,,,,
-1131,Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,22,131,,,,
-1131,Joker@NPC_EMOTION,idle,197,1,100,0,60000,yes,self,always,0,6,1173,,,,
+1131,Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,20,0x81,,,,
+1131,Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,22,0x83,,,,
+1131,Joker@NPC_EMOTION,idle,197,1,100,0,60000,yes,self,always,0,6,0x3695,,,,
 1131,Joker@NPC_EMOTION,attack,197,1,10000,0,60000,yes,self,always,0,6,,,,,
 1132,Khalitzburg@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1132,Khalitzburg@AS_GRIMTOOTH,chase,137,5,2000,0,5000,yes,target,always,0,,,,,,
@@ -655,25 +655,25 @@
 1132,Khalitzburg@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,9
 1132,Khalitzburg@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,9
 1133,Kobold 1@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,,,,,
-1133,Kobold 1@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,141,,,,
-1133,Kobold 1@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1133,Kobold 1@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x308D,,,,
+1133,Kobold 1@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1133,Kobold 1@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6
 1134,Kobold 2@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,,,,,
-1134,Kobold 2@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,141,,,,
+1134,Kobold 2@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x308D,,,,
 1134,Kobold 2@NPC_POISONATTACK,attack,188,3,500,500,5000,no,target,always,0,,,,,,6
-1134,Kobold 2@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1134,Kobold 2@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1135,Kobold 3@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,,,,,
-1135,Kobold 3@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,141,,,,
+1135,Kobold 3@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x308D,,,,
 1135,Kobold 3@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1135,Kobold 3@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1135,Kobold 3@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1138,Magnolia@HT_FLASHER,idle,120,5,500,0,300000,yes,around2,always,0,,,,,,29
 1138,Magnolia@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,28,,,,,
 1138,Magnolia@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1138,Magnolia@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,0,,,,,,
 1139,Mantis@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6
 1139,Mantis@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,6
-1139,Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1139,Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,149,,,,
+1139,Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1139,Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3195,,,,
 1140,Marduk@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1140,Marduk@MG_FIREBOLT,attack,19,3,500,1500,5000,yes,target,always,0,,,,,,9
 1140,Marduk@MG_FIREBOLT,chase,19,3,500,1500,5000,yes,target,always,0,,,,,,9
@@ -693,15 +693,15 @@
 1143,Marionette@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,6
 1144,Marse@NPC_BLINDATTACK,attack,177,5,2000,0,5000,yes,target,always,0,,,,,,6
 1144,Marse@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,,,,,
-1144,Marse@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,145,,,,
+1144,Marse@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x91,,,,
 1144,Marse@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,6
 1145,Martin@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1145,Martin@TF_HIDING,attack,51,1,2000,500,5000,no,self,myhpltmaxrate,30,,,,,,19
 1145,Martin@TF_SPRINKLESAND,attack,149,1,500,0,5000,yes,target,always,0,,,,,,6
 1146,Matyr@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
 1146,Matyr@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
-1146,Matyr@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,7,129,,,,
-1146,Matyr@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,149,,,,
+1146,Matyr@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,7,0x81,,,,
+1146,Matyr@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3095,,,,
 1147,Maya@AL_HEAL,attack,28,11,10000,0,5000,no,friend,friendhpltmaxrate,60,,,,,,3
 1147,Maya@AL_HEAL,attack,28,11,10000,0,5000,no,self,myhpltmaxrate,30,,,,,,3
 1147,Maya@AL_HEAL,chase,28,11,10000,0,5000,no,friend,friendhpltmaxrate,60,,,,,,3
@@ -725,13 +725,13 @@
 1148,Medusa@MG_STONECURSE,attack,16,10,500,1500,5000,no,target,always,0,,,,,,3
 1148,Medusa@NPC_PETRIFYATTACK,attack,180,5,500,500,5000,no,target,always,0,,,,,,3
 1148,Medusa@NPC_PETRIFYATTACK,chase,180,5,500,500,5000,no,target,always,0,,,,,,3
-1148,Medusa@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1148,Medusa@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1148,Medusa@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1148,Medusa@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3795,,,,
 1149,Minorous@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1149,Minorous@BS_HAMMERFALL,attack,110,3,500,1500,5000,no,target,always,0,,,,,,
 1149,Minorous@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1149,Minorous@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1149,Minorous@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,149,,,,
+1149,Minorous@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1149,Minorous@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3095,,,,
 1149,Minorous@WZ_HEAVENDRIVE,attack,91,3,500,1200,5000,yes,target,always,0,,,,,,19
 1150,Moonlight Flower@AL_HEAL,attack,28,11,10000,0,5000,no,friend,friendhpltmaxrate,60,,,,,,21
 1150,Moonlight Flower@AL_HEAL,attack,28,11,10000,0,5000,no,self,myhpltmaxrate,30,,,,,,21
@@ -773,17 +773,17 @@
 1154,Pasana@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1154,Pasana@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1154,Pasana@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,29
-1154,Pasana@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1154,Pasana@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,149,,,,
+1154,Pasana@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1154,Pasana@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3095,,,,
 1154,Pasana@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
 1155,Petit@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1155,Petit@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
-1155,Petit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1155,Petit@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1155,Petit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1155,Petit@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,
 1155,Petit@NPC_TELEKINESISATTACK,chase,191,5,500,0,5000,yes,target,always,0,,,,,,
 1156,Sky Petit@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
-1156,Sky Petit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1156,Sky Petit@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1156,Sky Petit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1156,Sky Petit@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,
 1156,Sky Petit@NPC_TELEKINESISATTACK,chase,191,5,500,0,5000,yes,target,always,0,,,,,,
 1156,Sky Petit@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6
 1157,Pharaoh@AC_CHARGEARROW,attack,148,1,2000,0,0,yes,target,always,0,,,,,,
@@ -870,21 +870,21 @@
 1177,Zenorc@NPC_POISON,attack,176,2,500,800,5000,no,target,always,0,,,,,,
 1178,Zerom@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,19,,,,,
 1178,Zerom@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1178,Zerom@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1178,Zerom@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,2181,,,,
+1178,Zerom@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1178,Zerom@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3885,,,,
 1178,Zerom@NPC_FIREATTACK,angry,186,3,500,500,5000,no,target,always,0,,,,,,6
-1178,Zerom@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1178,Zerom@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1179,Whisper@AS_CLOAKING,attack,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1179,Whisper@AS_CLOAKING,idle,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1179,Whisper@AS_CLOAKING,chase,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1179,Whisper@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,,,,,,
-1179,Whisper@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,28,149,,,,
-1179,Whisper@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1179,Whisper@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,28,0x3195,,,,
+1179,Whisper@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1179,Whisper@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,28
 1180,Nine-Tail@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1180,Nine-Tail@NPC_ATTRICHANGE,attack,161,1,500,2000,5000,no,self,myhpltmaxrate,30,,,,,,
-1180,Nine-Tail@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1180,Nine-Tail@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1180,Nine-Tail@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1180,Nine-Tail@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1180,Nine-Tail@NPC_RANDOMATTACK,attack,183,3,500,500,5000,no,target,always,0,,,,,,6
 1188,Bon Gun@KN_SPEARSTAB,attack,58,5,500,800,5000,no,target,always,0,,,,,,
 1188,Bon Gun@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,0
@@ -920,13 +920,13 @@
 1192,Wraith@NPC_ENERGYDRAIN,attack,200,1,500,0,5000,yes,target,always,0,,,,,,
 1193,Alarm@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
 1193,Alarm@NPC_DARKBREATH,attack,202,2,500,800,5000,no,target,always,0,,,,,,7
-1193,Alarm@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1193,Alarm@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1193,Alarm@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1193,Alarm@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1193,Alarm@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,6
 1194,Arclouse@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1194,Arclouse@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1194,Arclouse@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1194,Arclouse@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1194,Arclouse@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1194,Arclouse@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3195,,,,
 1195,Rideword@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
 1195,Rideword@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,2
 1195,Rideword@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,2
@@ -940,8 +940,8 @@
 1198,Dark Priest@NPC_DARKBREATH,chase,202,5,500,800,30000,no,target,always,0,,,,,,9
 1198,Dark Priest@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,yes,target,always,0,,,,,,
 1199,Punk@NPC_PETRIFYATTACK,attack,180,3,500,500,5000,no,target,always,0,,,,,,7
-1199,Punk@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1199,Punk@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,149,,,,
+1199,Punk@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1199,Punk@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,
 1199,Punk@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1200,Zherlthsh@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1200,Zherlthsh@AS_SONICBLOW,attack,136,10,500,800,5000,no,target,always,0,,,,,,3
@@ -978,17 +978,17 @@
 1205,Executioner@CR_AUTOGUARD,attack,249,10,500,0,300000,yes,self,always,0,,,,,,
 1205,Executioner@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
 1205,Executioner@NPC_ARMORBRAKE,attack,344,5,500,0,5000,yes,target,always,0,,,,,,
-1206,Anolian@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,1173,,,,
+1206,Anolian@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3695,,,,
 1206,Anolian@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,,,,,
 1206,Anolian@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
 1206,Anolian@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,2
-1206,Anolian@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1206,Anolian@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1207,Sting@AM_POTIONPITCHER,idle,231,4,10000,0,5000,yes,self,mystatuson,hiding,,,,,,
 1207,Sting@KN_SPEARSTAB,attack,58,10,500,800,5000,no,target,always,0,,,,,,11
 1207,Sting@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,,,,,,
 1207,Sting@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,12
-1207,Sting@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1207,Sting@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,20,1173,,,,
+1207,Sting@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1207,Sting@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,20,0x3695,,,,
 1207,Sting@TF_HIDING,attack,51,1,2000,500,5000,no,self,myhpltmaxrate,30,,,,,,10
 1207,Sting@WZ_QUAGMIRE,attack,92,5,500,700,5000,no,target,always,0,,,,,,11
 1207,Sting@WZ_QUAGMIRE,chase,92,5,500,700,5000,no,target,always,0,,,,,,11
@@ -1004,18 +1004,18 @@
 1211,Brilight@NPC_KEEPING,attack,201,1,2000,0,5000,yes,self,myhpltmaxrate,20,,,,,,9
 1211,Brilight@NPC_PIERCINGATT,attack,158,2,500,0,5000,yes,target,always,0,,,,,,
 1211,Brilight@NPC_SILENCEATTACK,attack,178,3,500,700,5000,no,target,always,0,,,,,,
-1213,High Orc@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1213,High Orc@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1213,High Orc@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,6,,,,,
 1213,High Orc@NPC_FIREATTACK,attack,186,2,500,500,5000,no,target,always,0,,,,,,6
 1213,High Orc@CR_SHIELDCHARGE,attack,250,1,500,0,5000,no,target,always,0,,,,,,
-1213,High Orc@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,1173,,,,
+1213,High Orc@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3695,,,,
 1213,High Orc@NPC_SMOKING,idle,195,1,500,0,36000000,yes,self,always,0,,,,,,32
 1214,Choco@AM_POTIONPITCHER,idle,231,1,500,1500,5000,yes,self,always,0,,,,,,
 1214,Choco@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1214,Choco@HT_SKIDTRAP,idle,115,5,500,0,5000,yes,around2,always,0,,,,,,29
 1214,Choco@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,
-1214,Choco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1214,Choco@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,149,,,,
+1214,Choco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1214,Choco@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3095,,,,
 1214,Choco@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1057,,,,,27
 1214,Choco@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1057,,,,,27
 1214,Choco@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1057,,,,,
@@ -1046,14 +1046,14 @@
 1244,Christmas Jakk@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1244,Christmas Jakk@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
 1243,Sasquatch@KN_SPEARSTAB,attack,58,10,500,800,5000,no,target,always,0,,,,,,6
-1243,Sasquatch@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1243,Sasquatch@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1243,Sasquatch@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,6,,,,,
-1243,Sasquatch@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1243,Sasquatch@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1243,Sasquatch@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,6
 1245,Christmas Goblin@MG_FROSTDIVER,attack,15,5,500,1000,5000,yes,target,always,0,,,,,,
-1245,Christmas Goblin@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1245,Christmas Goblin@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1245,Christmas Goblin@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,18,,,,,
-1245,Christmas Goblin@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,1173,,,,
+1245,Christmas Goblin@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x81,,,,
 1245,Christmas Goblin@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
 1246,Christmas Cookie@MG_COLDBOLT,attack,14,3,500,1500,5000,yes,target,always,0,,,,,,21
 1246,Christmas Cookie@MG_COLDBOLT,chase,14,3,500,1500,5000,yes,target,always,0,,,,,,21
@@ -1128,12 +1128,12 @@
 1253,Gargoyle@NPC_KEEPING,attack,201,1,2000,0,5000,yes,self,myhpltmaxrate,30,,,,,,9
 1253,Gargoyle@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1254,Raggler@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,6
-1254,Raggler@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1254,Raggler@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1254,Raggler@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1254,Raggler@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1254,Raggler@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1255,Neraid@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
-1255,Neraid@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1255,Neraid@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,0,1173,,,,
+1255,Neraid@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1255,Neraid@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,0,0x3695,,,,
 1256,Pest@AS_CLOAKING,attack,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1256,Pest@AS_CLOAKING,idle,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1256,Pest@AS_CLOAKING,chase,135,1,2000,200,5000,yes,self,always,0,,,,,,
@@ -1171,8 +1171,8 @@
 1263,Wind Ghost@WZ_JUPITEL,attack,84,3,500,1500,5000,yes,target,always,0,,,,,,6
 1263,Wind Ghost@WZ_JUPITEL,chase,84,3,500,1500,5000,yes,target,always,0,,,,,,6
 1264,Merman@KN_PIERCE,attack,56,5,500,700,5000,no,target,always,0,,,,,,
-1264,Merman@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1264,Merman@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1264,Merman@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1264,Merman@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1264,Merman@NPC_RANGEATTACK,chase,160,1,500,0,5000,yes,target,always,0,,,,,,
 1264,Merman@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,6
 1265,Cookie@AL_HEAL,attack,28,5,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,0
@@ -1204,8 +1204,8 @@
 1269,Clock@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,6
 1269,Clock@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
 1269,Clock@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
-1269,Clock@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,2181,,,,
-1269,Clock@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,145,,,,
+1269,Clock@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,0x3885,,,,
+1269,Clock@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,0x91,,,,
 1270,Tower Keeper@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,always,0,,,,,,
 1270,Tower Keeper@WZ_FIREPILLAR,idle,80,5,500,0,5000,yes,around2,always,0,,,,,,9
 1270,Tower Keeper@SA_DISPELL,attack,289,1,500,0,30000,yes,target,always,0,,,,,,
@@ -1213,10 +1213,10 @@
 1270,Tower Keeper@NPC_SILENCEATTACK,chase,178,5,500,700,5000,no,target,always,0,,,,,,9
 1270,Tower Keeper@NPC_SLEEPATTACK,attack,182,5,500,0,5000,yes,target,always,0,,,,,,9
 1270,Tower Keeper@NPC_SLEEPATTACK,chase,182,5,500,0,5000,yes,target,always,0,,,,,,9
-1270,Tower Keeper@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,2181,,,,
-1270,Tower Keeper@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,129,,,,
+1270,Tower Keeper@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,0x3885,,,,
+1270,Tower Keeper@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,0x91,,,,
 1271,Alligator@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,6
-1271,Alligator@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,145,,,,
+1271,Alligator@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x91,,,,
 1272,Dark Lord@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1272,Dark Lord@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1272,Dark Lord@NPC_AGIUP,attack,350,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
@@ -1256,8 +1256,8 @@
 1277,Greatest General@WZ_EARTHSPIKE,idle,90,3,5000,1500,5000,no,target,casttargeted,,,,,,,6
 1278,Stalactite Golem@NPC_STUNATTACK,attack,179,4,500,1500,5000,no,target,always,0,,,,,,6
 1278,Stalactite Golem@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,6
-1278,Stalactite Golem@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,2181,,,,
-1278,Stalactite Golem@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,145,,,,
+1278,Stalactite Golem@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,0x3885,,,,
+1278,Stalactite Golem@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,0x91,,,,
 1278,Stalactite Golem@CR_AUTOGUARD,chase,249,5,2000,0,300000,yes,self,longrangeattacked,,,,,,,
 1278,Stalactite Golem@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,
 1279,Tri-Joint@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
@@ -1291,8 +1291,8 @@
 1287,Guardian Soldier@SM_BASH,attack,5,10,2000,0,5000,yes,target,always,0,,,,,,
 1289,Maya Purple@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1289,Maya Purple@KN_BRANDISHSPEAR,attack,57,10,500,1000,5000,no,target,always,0,,,,,,
-1289,Maya Purple@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1289,Maya Purple@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,1173,,,,
+1289,Maya Purple@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1289,Maya Purple@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x37B5,,,,
 1289,Maya Purple@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1194,,,,,
 1289,Maya Purple@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1194,,,,,
 1289,Maya Purple@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1194,,,,,
@@ -1314,8 +1314,8 @@
 1292,Mini Demon@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1292,Mini Demon@NPC_DARKBREATH,attack,202,2,500,800,5000,no,target,always,0,,,,,,29
 1292,Mini Demon@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
-1292,Mini Demon@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1292,Mini Demon@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,18,1173,,,,
+1292,Mini Demon@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1292,Mini Demon@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,18,0x3795,,,,
 1292,Mini Demon@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1109,,,,,11
 1292,Mini Demon@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1109,,,,,11
 1292,Mini Demon@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1109,,,,,
@@ -1336,8 +1336,8 @@
 1294,Killer Mantis@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
 1294,Killer Mantis@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,6
 1294,Killer Mantis@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
-1294,Killer Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1294,Killer Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1294,Killer Mantis@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1294,Killer Mantis@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3795,,,,
 1294,Killer Mantis@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1139,,,,,
 1294,Killer Mantis@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1139,,,,,
 1294,Killer Mantis@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1139,,,,,
@@ -1345,9 +1345,9 @@
 1295,Owl Baron@MG_LIGHTNINGBOLT,attack,20,5,2000,0,5000,yes,target,always,0,,,,,,
 1295,Owl Baron@MG_LIGHTNINGBOLT,chase,20,5,2000,0,5000,yes,target,always,0,,,,,,
 1295,Owl Baron@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,,,,,
-1295,Owl Baron@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1295,Owl Baron@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x37B5,,,,
 1295,Owl Baron@SA_DISPELL,attack,289,5,0,0,30000,yes,target,always,0,,,,,,5
-1295,Owl Baron@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1295,Owl Baron@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1320,,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1320,,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1320,,,,,
@@ -1391,8 +1391,8 @@
 1302,Dark Illusion@WZ_METEOR,chase,83,5,500,1500,5000,yes,target,always,0,,,,,,
 1303,Giant Hornet@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1303,Giant Hornet@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,6
-1303,Giant Hornet@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1303,Giant Hornet@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,1173,,,,
+1303,Giant Hornet@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1303,Giant Hornet@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3795,,,,
 1303,Giant Hornet@NPC_SILENCEATTACK,chase,178,3,500,700,5000,no,target,always,0,,,,,,
 1303,Giant Hornet@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1303,Giant Hornet@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,6
@@ -1400,8 +1400,8 @@
 1304,Giant Spider@AS_GRIMTOOTH,chase,137,5,2000,0,5000,yes,target,always,0,,,,,,
 1304,Giant Spider@NPC_POISON,attack,176,5,500,800,5000,no,target,always,0,,,,,,
 1304,Giant Spider@NPC_STOP,attack,342,1,500,0,30000,yes,target,always,0,,,,,,
-1304,Giant Spider@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1304,Giant Spider@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,1173,,,,
+1304,Giant Spider@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1304,Giant Spider@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3795,,,,
 1304,Giant Spider@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1100,,,,,
 1304,Giant Spider@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1100,,,,,
 1304,Giant Spider@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1100,,,,,
@@ -1414,8 +1414,8 @@
 1305,Ancient Worm@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1099,,,,,
 1306,Leib Olmai@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1306,Leib Olmai@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1306,Leib Olmai@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1306,Leib Olmai@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1306,Leib Olmai@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1306,Leib Olmai@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1306,Leib Olmai@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1306,Leib Olmai@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1243,,,,,
 1306,Leib Olmai@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1243,,,,,
@@ -1446,8 +1446,8 @@
 1310,Majoruros@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1310,Majoruros@BS_HAMMERFALL,attack,110,5,500,1500,5000,no,target,always,0,,,,,,
 1310,Majoruros@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1310,Majoruros@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1310,Majoruros@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,1173,,,,
+1310,Majoruros@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1310,Majoruros@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3695,,,,
 1310,Majoruros@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1149,,,,,
 1310,Majoruros@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1149,,,,,
 1310,Majoruros@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1149,,,,,
@@ -1455,8 +1455,8 @@
 1310,Majoruros@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,yes,target,always,0,,,,,,2
 1311,Gullinbursti@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1311,Gullinbursti@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
-1311,Gullinbursti@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1311,Gullinbursti@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1311,Gullinbursti@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1311,Gullinbursti@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1311,Gullinbursti@NPC_STUNATTACK,attack,179,5,500,1500,5000,no,target,always,0,,,,,,6
 1311,Gullinbursti@NPC_SUMMONSLAVE,attack,196,4,10000,2000,60000,no,self,slavele,0,1166,,,,,
 1311,Gullinbursti@NPC_SUMMONSLAVE,idle,196,4,10000,2000,60000,no,self,slavele,0,1166,,,,,
@@ -1495,14 +1495,14 @@
 1314,Perimeter@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
 1314,Perimeter@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,
 1314,Perimeter@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,
-1314,Perimeter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,145,,,,
+1314,Perimeter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x91,,,,
 1314,Perimeter@TF_SPRINKLESAND,attack,149,1,500,0,5000,yes,target,always,0,,,,,,
 1315,Assaulter@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1315,Assaulter@AS_SONICBLOW,attack,136,10,500,800,5000,no,target,always,0,,,,,,
 1315,Assaulter@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1315,Assaulter@NPC_EMOTION,attack,197,1,2000,0,600000,yes,self,myhpltmaxrate,20,23,,,,,
-1315,Assaulter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1315,Assaulter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,1173,,,,
+1315,Assaulter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1315,Assaulter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3695,,,,
 1315,Assaulter@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6
 1315,Assaulter@TF_BACKSLIDING,attack,150,1,10000,500,600000,no,target,myhpltmaxrate,10,,,,,,
 1315,Assaulter@NPC_SUMMONSLAVE,attack,196,3,10000,0,600000,yes,self,myhpltmaxrate,10,1364,,,,,
@@ -1510,45 +1510,45 @@
 1315,Assaulter@NPC_SUMMONSLAVE,idle,196,3,10000,0,600000,yes,self,myhpltmaxrate,10,1364,,,,,
 1316,Solider@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,9,,,,,
 1316,Solider@NPC_GROUNDATTACK,attack,185,3,500,500,5000,no,target,always,0,,,,,,6
-1316,Solider@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,145,,,,
+1316,Solider@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x91,,,,
 1316,Solider@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
 1316,Solider@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1316,Solider@CR_AUTOGUARD,chase,249,2,2000,0,300000,yes,self,longrangeattacked,,,,,,,
 1316,Solider@CR_AUTOGUARD,attack,249,2,500,0,300000,yes,self,always,0,,,,,,
 1317,Seal@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,6
-1317,Seal@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1317,Seal@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,149,,,,
+1317,Seal@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1317,Seal@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,0x3885,,,,
 1317,Seal@NPC_WATERATTACK,attack,184,5,500,500,5000,no,target,always,0,,,,,,6
 1318,Heater@MG_FIREBALL,chase,17,9,500,0,5000,yes,target,always,0,,,,,,
 1318,Heater@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,,,,,
-1318,Heater@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1318,Heater@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1318,Heater@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1318,Heater@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1318,Heater@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1318,Heater@WZ_FIREPILLAR,idle,80,3,500,0,5000,no,around2,always,0,,,,,,6
 1319,Freezer@MG_COLDBOLT,attack,14,3,500,1500,5000,yes,target,always,0,,,,,,
 1319,Freezer@MG_COLDBOLT,chase,14,3,500,1500,5000,yes,target,always,0,,,,,,
 1319,Freezer@MG_FROSTDIVER,attack,15,9,500,1000,5000,yes,target,always,0,,,,,,
 1319,Freezer@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,20,,,,,
-1319,Freezer@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1319,Freezer@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
+1319,Freezer@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1319,Freezer@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3695,,,,
 1319,Freezer@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,0,,,,,,6
 1320,Owl Duke@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1320,Owl Duke@MG_LIGHTNINGBOLT,attack,20,3,2000,0,5000,yes,target,always,0,,,,,,
 1320,Owl Duke@MG_LIGHTNINGBOLT,chase,20,3,2000,0,5000,yes,target,always,0,,,,,,
 1320,Owl Duke@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,,,,,
-1320,Owl Duke@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,1173,,,,
-1320,Owl Duke@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1320,Owl Duke@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x37B5,,,,
+1320,Owl Duke@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1321,Dragon Tail@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
 1321,Dragon Tail@NPC_SLEEPATTACK,attack,182,3,500,0,5000,yes,target,always,0,,,,,,
 1321,Dragon Tail@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
 1322,Spring Rabbit@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1322,Spring Rabbit@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1322,Spring Rabbit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,131,,,,
+1322,Spring Rabbit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x83,,,,
 1322,Spring Rabbit@SM_BASH,attack,5,10,500,0,5000,yes,target,always,0,,,,,,6
 1322,Spring Rabbit@TF_THROWSTONE,chase,152,1,2000,0,5000,yes,target,always,0,,,,,,
 1323,Sea Otter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,,,,,
-1323,Sea Otter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,149,,,,
-1323,Sea Otter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1323,Sea Otter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,22,0x3885,,,,
+1323,Sea Otter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1323,Sea Otter@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
 1323,Sea Otter@WZ_WATERBALL,attack,86,3,500,1500,5000,yes,target,always,0,,,,,,6
 1323,Sea Otter@WZ_WATERBALL,chase,86,3,500,1500,5000,yes,target,always,0,,,,,,6
@@ -1573,9 +1573,9 @@
 1368,Geographer@NPC_SLEEPATTACK,attack,182,5,500,0,5000,yes,target,always,0,,,,,,
 1369,Grand Peco@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
 1369,Grand Peco@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
-1369,Grand Peco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1369,Grand Peco@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,2181,,,,
-1369,Grand Peco@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,129,,,,
+1369,Grand Peco@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1369,Grand Peco@NPC_EMOTION_ON,attack,474,1,10000,0,30000,yes,self,always,0,6,0x3885,,,,
+1369,Grand Peco@NPC_EMOTION,idle,197,1,200,0,30000,yes,self,always,0,9,0x1089,,,,
 1370,Succubus@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,always,0,,,,,,
 1370,Succubus@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,0,,,,,,
 1370,Succubus@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,3
@@ -1600,7 +1600,7 @@
 1371,Fake Angel@NPC_SILENCEATTACK,follow,178,5,500,700,5000,no,target,always,0,,,,,,29
 1372,Goat@BS_ADRENALINE,attack,111,10,500,1500,300000,no,self,always,0,,,,,,6
 1372,Goat@BS_ADRENALINE,chase,111,10,500,1500,300000,no,self,always,0,,,,,,6
-1372,Goat@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,137,,,,
+1372,Goat@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x1089,,,,
 1372,Goat@NPC_SPLASHATTACK,attack,174,1,2000,0,5000,yes,target,attackpcgt,2,,,,,,
 1372,Goat@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1373,Lord of Death@AL_DECAGI,chase,30,10,2000,0,60000,no,target,always,0,,,,,,
@@ -1677,12 +1677,12 @@
 1380,Driller@NPC_COMBOATTACK,angry,171,2,500,700,5000,no,target,always,0,,,,,,
 1380,Driller@NPC_GROUNDATTACK,angry,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1381,Grizzly@KN_SPEARSTAB,attack,58,10,500,800,5000,no,target,always,0,,,,,,6
-1381,Grizzly@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1381,Grizzly@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,2181,,,,
+1381,Grizzly@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1381,Grizzly@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x3885,,,,
 1381,Grizzly@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1381,Grizzly@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,6
 1381,Grizzly@KN_SPEARSTAB,angry,58,10,500,800,5000,no,target,always,0,,,,,,6
-1381,Grizzly@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1381,Grizzly@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1381,Grizzly@NPC_STUNATTACK,angry,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1381,Grizzly@SM_ENDURE,follow,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,6
 1382,Diabolic@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,29
@@ -1703,14 +1703,14 @@
 1384,Sky Deleter@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
 1384,Sky Deleter@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
 1384,Sky Deleter@NPC_PIERCINGATT,attack,158,1,500,0,5000,yes,target,always,0,,,,,,
-1384,Sky Deleter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1384,Sky Deleter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,141,,,,
+1384,Sky Deleter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1384,Sky Deleter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x308D,,,,
 1385,Earth Deleter@MG_FIREWALL,attack,18,5,500,500,5000,yes,target,always,0,,,,,,
 1385,Earth Deleter@MG_FIREWALL,chase,18,5,500,500,5000,yes,target,always,0,,,,,,
 1385,Earth Deleter@NPC_FIREATTACK,attack,186,3,500,500,5000,no,target,always,0,,,,,,6
 1385,Earth Deleter@NPC_FIREATTACK,chase,186,3,500,500,5000,no,target,always,0,,,,,,6
-1385,Earth Deleter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1385,Earth Deleter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,141,,,,
+1385,Earth Deleter@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1385,Earth Deleter@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x308D,,,,
 1385,Earth Deleter@SM_MAGNUM,attack,7,9,500,500,5000,no,self,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,attack,135,1,2000,200,5000,yes,self,always,0,,,,,,
 1386,Sleeper@AS_CLOAKING,idle,135,1,100,200,5000,yes,self,always,0,,,,,,
@@ -1726,12 +1726,12 @@
 1386,Sleeper@NPC_SLEEPATTACK,angry,182,5,500,0,5000,yes,target,always,0,,,,,,
 1386,Sleeper@TF_SPRINKLESAND,angry,149,1,500,0,5000,yes,target,always,0,,,,,,
 1387,Gig@NPC_GROUNDATTACK,attack,185,2,500,500,5000,no,target,always,0,,,,,,
-1387,Gig@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1387,Gig@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,2181,,,,
+1387,Gig@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1387,Gig@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3885,,,,
 1387,Gig@TF_HIDING,attack,51,1,2000,500,5000,no,self,myhpltmaxrate,30,,,,,,19
 1387,Gig@TF_POISON,attack,52,10,500,1000,5000,no,target,always,0,,,,,,
 1387,Gig@NPC_GROUNDATTACK,angry,185,2,500,500,5000,no,target,always,0,,,,,,
-1387,Gig@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,129,,,,
+1387,Gig@NPC_EMOTION,follow,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1387,Gig@TF_HIDING,angry,51,1,2000,500,5000,no,self,myhpltmaxrate,30,,,,,,19
 1387,Gig@TF_POISON,angry,52,10,500,1000,5000,no,target,always,0,,,,,,
 1387,Gig@CR_AUTOGUARD,attack,249,2,500,0,300000,yes,self,always,0,,,,,,
@@ -1782,8 +1782,8 @@
 1390,Violy@NPC_DARKBREATH,attack,202,2,500,800,5000,no,target,always,0,,,,,,
 1390,Violy@PR_LEXDIVINA,attack,76,5,500,1000,5000,yes,target,always,0,,,,,,2
 1391,Galapago@AM_POTIONPITCHER,idle,231,4,500,500,5000,yes,self,myhpltmaxrate,99,,,,,,2
-1391,Galapago@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1391,Galapago@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,139,,,,
+1391,Galapago@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1391,Galapago@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,1,0x108B,,,,
 1391,Galapago@NPC_WATERATTACK,attack,184,2,500,500,5000,no,target,always,0,,,,,,1
 1391,Galapago@WZ_WATERBALL,attack,86,3,500,1500,5000,yes,target,always,0,,,,,,2
 1391,Galapago@WZ_WATERBALL,chase,86,3,500,1500,5000,yes,target,always,0,,,,,,2
@@ -1811,7 +1811,7 @@
 1400,Karakasa@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,31
 1400,Karakasa@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,6
 1400,Karakasa@WZ_WATERBALL,chase,86,1,500,500,5000,yes,target,always,0,,,,,,6
-1400,Karakasa@NPC_EMOTION,attack,197,1,10000,0,30000,yes,self,always,0,28,2181,,,,
+1400,Karakasa@NPC_EMOTION,attack,197,1,10000,0,30000,yes,self,always,0,28,0x3885,,,,
 1401,Shinobi@AL_TELEPORT,idle,26,1,500,0,5000,yes,self,always,0,,,,,,
 1401,Shinobi@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1401,Shinobi@AS_CLOAKING,idle,135,1,500,200,5000,yes,self,always,0,,,,,,
@@ -3360,7 +3360,7 @@
 1689,Bacsojin@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
 1690,Spring Rabbit@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1690,Spring Rabbit@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
-1690,Spring Rabbit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,131,,,,
+1690,Spring Rabbit@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0xC3,,,,
 1690,Spring Rabbit@SM_BASH,attack,5,10,500,0,5000,yes,target,always,0,,,,,,6
 1690,Spring Rabbit@TF_THROWSTONE,chase,152,1,2000,0,5000,yes,target,always,0,,,,,,
 1691,Kraben@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,19
@@ -3572,8 +3572,8 @@
 1714,Ferus@KN_BRANDISHSPEAR,attack,57,10,500,1000,5000,no,target,always,0,,,,,,9
 1714,Ferus@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,
 1714,Ferus@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
-1714,Ferus@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,129,,,,
-1714,Ferus@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,36,149,,,,
+1714,Ferus@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1714,Ferus@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,36,0x3095,,,,
 1714,Ferus@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1714,Ferus@KN_SPEARSTAB,attack,58,10,500,800,5000,no,target,always,0,,,,,,6
 1714,Ferus@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,

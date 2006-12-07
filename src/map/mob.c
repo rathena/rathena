@@ -3797,11 +3797,27 @@ static int mob_readskilldb(void)
 			if (j < tmp)
 				ms->cond2=cond2[j].id;
 			
-			ms->val[0]=atoi(sp[12]);
-			ms->val[1]=atoi(sp[13]);
-			ms->val[2]=atoi(sp[14]);
-			ms->val[3]=atoi(sp[15]);
-			ms->val[4]=atoi(sp[16]);
+			ms->val[0]=(int)strtol(sp[12],NULL,0);
+			ms->val[1]=(int)strtol(sp[13],NULL,0);
+			ms->val[2]=(int)strtol(sp[14],NULL,0);
+			ms->val[3]=(int)strtol(sp[15],NULL,0);
+			ms->val[4]=(int)strtol(sp[16],NULL,0);
+			
+			if(ms->skill_id == NPC_EMOTION && mob_id>0 &&
+				ms->val[1] == mob_db(mob_id)->status.mode)
+			{
+				ms->val[1] = 0;
+				ms->val[4] = 1; //request to return mode to normal.
+			}
+			if(ms->skill_id == NPC_EMOTION_ON && mob_id>0 && ms->val[1])
+			{	//Adds a mode to the mob.
+				//Remove aggressive mode when the new mob type is passive.
+				if (!(ms->val[1]&MD_AGGRESSIVE)) 
+					ms->val[3]|=MD_AGGRESSIVE;
+				ms->val[2]|= ms->val[1]; //Add the new mode.
+				ms->val[1] = 0; //Do not "set" it.
+			}
+
 			if(sp[17] != NULL && strlen(sp[17])>2)
 				ms->emotion=atoi(sp[17]);
 			else
