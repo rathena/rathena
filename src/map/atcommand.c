@@ -42,7 +42,7 @@
 #include "mail.h"
 #endif
 
-static char command_symbol = '@'; // first char of the commands (by [Yor])
+char atcommand_symbol = '@'; // first char of the commands (by [Yor])
 
 char *msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
@@ -875,7 +875,7 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
 	if(p[0] == '|')
 		p += 3;
 
-	if (*p == command_symbol) { // check first char, try to skip |00 (or something else) [Lance]
+	if (*p == atcommand_symbol) { // check first char, try to skip |00 (or something else) [Lance]
 		char command[101];
 		int i = 0;
 		malloc_set(info, 0, sizeof(AtCommandInfo));
@@ -1008,7 +1008,7 @@ int atcommand_config_read(const char *cfgName) {
 				w2[0] != '%' && // symbol of party chat speaking
 				w2[0] != '$' && // symbol of guild chat
 				w2[0] != '#')	// symbol of charcommand
-			command_symbol = w2[0];
+			atcommand_symbol = w2[0];
 	}
 	fclose(fp);
 

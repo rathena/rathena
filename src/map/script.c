@@ -10131,9 +10131,9 @@ int buildin_atcommand(struct script_state *st)
 		sd = script_rid2sd(st);
 
 	if (sd){
-		if(cmd[0] != '@'){
+		if(cmd[0] != atcommand_symbol){
 			cmd += strlen(sd->status.name);
-			while(*cmd != '@' && *cmd != 0)
+			while(*cmd != atcommand_symbol && *cmd != 0)
 				cmd++;
 		}
 		atcommand_sub(sd->fd, sd, cmd, 99);
@@ -10147,9 +10147,9 @@ int buildin_atcommand(struct script_state *st)
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		if(cmd[0] != '@'){
+		if(cmd[0] != atcommand_symbol){
 			cmd += strlen(dummy_sd.status.name);
-			while(*cmd != '@' && *cmd != 0)
+			while(*cmd != atcommand_symbol && *cmd != 0)
 				cmd++;
 		}
 		atcommand_sub(0, &dummy_sd, cmd, 99);
@@ -10169,9 +10169,9 @@ int buildin_charcommand(struct script_state *st)
 		sd = script_rid2sd(st);
 	
 	if (sd){ 
-		if(cmd[0] != '#'){
+		if(cmd[0] != charcommand_symbol){
 			cmd += strlen(sd->status.name);
-			while(*cmd != '#' && *cmd != 0)
+			while(*cmd != charcommand_symbol && *cmd != 0)
 				cmd++;
 		}
 		charcommand_sub(sd->fd, sd, cmd,99);
@@ -10185,9 +10185,9 @@ int buildin_charcommand(struct script_state *st)
 			if (bl->type == BL_NPC)
 				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		if(cmd[0] != '#'){
+		if(cmd[0] != charcommand_symbol){
 			cmd += strlen(dummy_sd.status.name);
-			while(*cmd != '#' && *cmd != 0)
+			while(*cmd != charcommand_symbol && *cmd != 0)
 				cmd++;
 		}
 		charcommand_sub(0, &dummy_sd, cmd, 99);

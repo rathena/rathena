@@ -28,7 +28,7 @@
 #include "charcommand.h"
 #include "atcommand.h"
 
-static char command_symbol = '#';
+char charcommand_symbol = '#';
 
 extern char *msg_table[1000]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
@@ -216,7 +216,7 @@ CharCommandType charcommand(struct map_session_data* sd, const int level, const 
 	if(p[0] == '|')
 		p += 3;
 
-	if (*p == command_symbol) { // check first char, try to skip |00 (or something else) [Lance]
+	if (*p == charcommand_symbol) { // check first char, try to skip |00 (or something else) [Lance]
 		char command[101];
 		int i = 0;
 		malloc_set(info, 0, sizeof(CharCommandInfo));
@@ -299,7 +299,7 @@ int charcommand_config_read(const char *cfgName) {
 				w2[0] != '%' && // symbol of party chat speaking
 				w2[0] != '$' && // symbol of guild chat speaking
 				w2[0] != '@')	// symbol of atcommand
-			command_symbol = w2[0];
+			charcommand_symbol = w2[0];
 	}
 	fclose(fp);
 
