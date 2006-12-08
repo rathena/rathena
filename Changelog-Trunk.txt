@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/08
+	* Now you can request a trade regardless of the state of the target trader.
+	  [Skotlex]
+	* The trade will now fail when you accept it and either character is
+	  speaking with an npc, vending or has the storage open. [Skotlex]
 	* Fixed crash when looters became full. [Skotlex]
 	* Autospell delay time is now the skill's full delay.  [Skotlex]
 2006/12/07
