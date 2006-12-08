@@ -944,6 +944,7 @@ struct mob_data {
 		unsigned alchemist: 1;
 		unsigned no_random_walk: 1;
 		unsigned killer: 1;
+		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
 	} state;
 	struct guardian_data* guardian_data; 
@@ -956,8 +957,6 @@ struct mob_data {
 	struct item *lootitem;
 	short spawn_n;	//Spawn data index on the map server.
 	short class_;
-	short attacked_count;
-	unsigned char attacked_players;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
 	int target_id,attacked_id;

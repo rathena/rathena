@@ -677,8 +677,6 @@ int mob_spawn (struct mob_data *md)
 	malloc_set(&md->state, 0, sizeof(md->state));
 	status_calc_mob(md, 1);
 	md->attacked_id = 0;
-	md->attacked_players = 0;
-	md->attacked_count = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
 
@@ -1077,7 +1075,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	// Abnormalities
 	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.data[SC_BLADESTOP].timer != -1)
   	{	//Should reset targets.
-		md->target_id = md->attacked_id = md->attacked_players = 0;
+		md->target_id = md->attacked_id = 0;
 		return 0;
 	}
 
@@ -1122,7 +1120,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))))
 			{	//Rude-attacked (avoid triggering due to can-walk delay).
 				if (DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-				  	md->attacked_count++ >= RUDE_ATTACKED_COUNT)
+				  	md->state.attacked_count++ >= RUDE_ATTACKED_COUNT)
 					mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		} else
@@ -1137,7 +1135,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					((TBL_PC*)abl)->state.gangsterparadise
 				)
 			)	{	//Can't attack back
-				if (md->attacked_count++ >= RUDE_ATTACKED_COUNT) {
+				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT) {
 					if (mobskill_use(md, tick, MSC_RUDEATTACKED) == 0 && can_move)
 					{
 						int dist = rand() % 10 + 1;//Œã‘Þ‚·‚é‹——£
@@ -1155,8 +1153,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				{	//Change if the new target is closer than the actual one
 					//or if the previous target is not attacking the mob. [Skotlex]
 					md->target_id = md->attacked_id; // set target
-					if (md->attacked_count)
-					  md->attacked_count--; //Should we reset rude attack count?
+					if (md->state.attacked_count)
+					  md->state.attacked_count--; //Should we reset rude attack count?
 					md->min_chase = dist+md->db->range3;
 					if(md->min_chase>MAX_MINCHASE)
 						md->min_chase=MAX_MINCHASE;
@@ -1173,7 +1171,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				md->state.skillstate = MSS_RUSH;
 		}
 		//Clear it since it's been checked for already.
-		md->attacked_players = 0;
 		md->attacked_id = 0;
 	}
 	
@@ -1597,10 +1594,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if (!src)
 		return;
 	
-	md->attacked_players++;
-	if (!md->attacked_players) //Counter overflow o.O
-		md->attacked_players++;
-		
 	if(md->nd)
 		mob_script_callback(md, src, CALLBACK_ATTACK);
 
@@ -1609,8 +1602,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		{
 			struct map_session_data *sd = (TBL_PC*)src;
 			char_id = sd->status.char_id;
-			if(rand()%1000 < 1000/md->attacked_players)
-				md->attacked_id = src->id;
+			md->attacked_id = src->id;
 			break;
 		}
 		case BL_HOM:	//[orn]
@@ -1619,8 +1611,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			flag = 1;
 			if (hd->master)
 				char_id = hd->master->status.char_id;
-			if(rand()%1000 < 1000/md->attacked_players)
-				md->attacked_id = src->id;
+			md->attacked_id = src->id;
 			break;
 		}
 		case BL_PET:
@@ -1631,7 +1622,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
 			}
 			//Let mobs retaliate against the pet's master [Skotlex]
-			if(pd->msd && rand()%1000 < 1000/md->attacked_players)
+			if(pd->msd)
 				md->attacked_id = pd->msd->bl.id;
 			break;
 		}
@@ -1642,18 +1633,15 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				struct map_session_data* msd = map_id2sd(md2->master_id);
 				if (msd) char_id = msd->status.char_id;
 			}
-			if(rand()%1000 < 1000/md->attacked_players)
-			{	//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
-				if (md2->master_id && battle_config.retaliate_to_master)
-					md->attacked_id = md2->master_id;
-				else
-					md->attacked_id = src->id;
-			}
+			//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
+			if (md2->master_id && battle_config.retaliate_to_master)
+				md->attacked_id = md2->master_id;
+			else
+				md->attacked_id = src->id;
 			break;
 		}
 		default: //For all unhandled types.
-			if(rand()%1000 < 1000/md->attacked_players)
-				md->attacked_id = src->id;
+			md->attacked_id = src->id;
 	}
 	//Log damage...
 	if (char_id && damage > 0) {
@@ -2739,8 +2727,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_AFTERSKILL:
 					flag = (md->ud.skillid == c2); break;
 				case MSC_RUDEATTACKED:
-					flag = (md->attacked_count >= RUDE_ATTACKED_COUNT);
-					if (flag) md->attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
+					flag = (md->state.attacked_count >= RUDE_ATTACKED_COUNT);
+					if (flag) md->state.attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
 					break;
 				case MSC_MASTERHPLTMAXRATE:
 					flag = ((fbl = mob_getmasterhpltmaxrate(md, ms[i].cond2)) != NULL); break;
