@@ -1053,7 +1053,7 @@
 1245,Christmas Goblin@MG_FROSTDIVER,attack,15,5,500,1000,5000,yes,target,always,0,,,,,,
 1245,Christmas Goblin@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
 1245,Christmas Goblin@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,18,,,,,
-1245,Christmas Goblin@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x81,,,,
+1245,Christmas Goblin@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,0x3695,,,,
 1245,Christmas Goblin@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
 1246,Christmas Cookie@MG_COLDBOLT,attack,14,3,500,1500,5000,yes,target,always,0,,,,,,21
 1246,Christmas Cookie@MG_COLDBOLT,chase,14,3,500,1500,5000,yes,target,always,0,,,,,,21
