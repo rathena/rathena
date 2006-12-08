@@ -1253,7 +1253,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		} else {	//Destroy first looted item...
 			if (md->lootitem[0].card[0] == CARD0_PET)
 				intif_delete_petdata( MakeDWord(md->lootitem[0].card[1],md->lootitem[0].card[2]) );
-			memmove(&md->lootitem[0], &md->lootitem[1], sizeof(md->lootitem) - sizeof(md->lootitem[0]));
+			memmove(&md->lootitem[0], &md->lootitem[1], (LOOTITEM_SIZE-1)*sizeof(md->lootitem[0]));
 			memcpy (&md->lootitem[LOOTITEM_SIZE-1], &fitem->item_data, sizeof(md->lootitem[0]));
 		}
 		if (pcdb_checkid(md->vd->class_))
