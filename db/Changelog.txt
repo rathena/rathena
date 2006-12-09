@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/09
+	* Implemented Frus Card [Playtester]
 12/07
 	* Updated mob_skill_db to account for the updated mob modes on NPC_EMOTION
 	  skills. [Skotlex]
