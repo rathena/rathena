@@ -67,8 +67,6 @@ extern time_t stall_time;
 #define WFIFOL(fd,pos) (*(unsigned long*)WFIFOP(fd,pos))
 // use function instead of macro.
 //#define WFIFOSET(fd,len) (session[fd]->wdata_size = (session[fd]->wdata_size + (len) + 2048 < session[fd]->max_wdata) ? session[fd]->wdata_size + len : session[fd]->wdata_size)
-#define WFIFOSET(fd,len)        _WFIFOSET(fd,len,0)
-#define WFIFOSET2(fd,len,flush) _WFIFOSET(fd,len,flush)
 #define WBUFP(p,pos) (((unsigned char*)(p)) + (pos))
 #define WBUFB(p,pos) (*(unsigned char*)((p) + (pos)))
 #define WBUFW(p,pos) (*(unsigned short*)((p) + (pos)))
@@ -151,7 +149,7 @@ int make_connection(long,int);
 int delete_session(int);
 int realloc_fifo(int fd,unsigned int rfifo_size,unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
-int _WFIFOSET(int fd,int len,char flush);
+int WFIFOSET(int fd,int len);
 int RFIFOSKIP(int fd,int len);
 
 int do_sendrecv(int next);

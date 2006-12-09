@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/12/09
+	* Reversed revision #9415 (messages with server_tick field being sent as 
+	  soon as possible) since it didn't fix the client synchronization issue.
+	* clif_parse_TickSend is sent immediately so the client gets accurate
+	  "pings". [FlavioJS]
 2006/12/08
 	* Now you can request a trade regardless of the state of the target trader.
 	  [Skotlex]
@@ -52,7 +57,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  version.
 	  [Skotlex]
 	* Messages with server_tick field are sent as soon as possible now.
-	  This might fix client synchronization issues. [FlavioJS]
+	  This might fix client synchronization issues.
 	* Added StringBuf_Vprintf to utils.c and changed the showmsg.c buffer.
 	  Now it uses a static buffer and a StringBuf when needed (a debug message 
 	  indicating the static buffer needs to be increased is shown). [FlavioJS]
@@ -62,12 +67,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed sc data load failing when using charsave_method: 1 [Skotlex]
 	* Fixed the interserver link reserve size being 8 times instead of 1/8th
 	  the default size. Changed it to be 1/4th as well. [Skotlex]
-	* Found the position of emblem_id in packet 1b6. [FlavioJS]
+	* Found the position of emblem_id in packet 1b6.
 	* Moved START_ACCOUNT_NUM and END_ACCOUNT_NUM from login.h to mmo.h and 
-	  changed clif_guess_PacketVer to use that. [FlavioJS]
-	* Made the script engine big-endian compatible. [FlavioJS]
-	* Commented out the remnants of ladmin packet parsing in map-server. 
-	  [FlavioJS]
+	  changed clif_guess_PacketVer to use that.
+	* Made the script engine big-endian compatible.
+	* Commented out the remnants of ladmin packet parsing in map-server.
 	* Added a warning when a player has an invalid packet version (shouldn't 
 	  happen). [FlavioJS]
 2006/12/04
@@ -109,13 +113,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  stuck char) [Skotlex]
 	* Fixed even share exp flutuating as described in:
 	  http://www.eathena.ws/board/index.php?showtopic=126139
-	  thanks to TheUltraMague for the fix. [FlavioJS]
-	* Made ers double frees report as missing entries on destruction. [FlavioJS]
+	  thanks to TheUltraMague for the fix.
+	* Made ers double frees report as missing entries on destruction.
 	* Only one swap function (in cbasetypes.h) is used. [FlavioJS]
 2006/12/02
 	* Added buildin_checkvending and buildin_checkchatting. [Lance]
 	* Enabled atcommand parsing for clients with Korean langtype and version. [Lance]
-	* Added missing min/max definitions to cbasetypes.h, needed for the @send change. [FlavioJS]
+	* Added missing min/max definitions to cbasetypes.h, needed for the @send change.
 	* Replaced @send with the version I use for testing packets.
 	  Can display the packet length. Supports dynamic packets, quoted strings 
 	  with escaped characters and fixed/variable length, and normal/hex 
@@ -140,7 +144,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed land effects not taking effect inmediately on map-load when the
 	  invincible timer is disabled. [Skotlex]
 2006/11/29
-	* Probably fixed the Segmentation Faults we've been having. [FlavioJS]
+	* Probably fixed the Segmentation Faults we've been having.
 	  Description: A player quits and it's session is freed and set to NULL, 
 	       but the char server already sent a packet with player information 
 	       (registers, storage, ...). If a message is sent in consequence of 
@@ -189,9 +193,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  exp at all. [Skotlex]
 	* Changed write to send as suggested by TheUltraMage in:
 	  http://www.eathena.ws/board/index.php?showtopic=105417
-	  Hopefully that will take care of the SIGPIPE problem in Debian and cygwin. [FlavioJS]
-	* Server name in core.c skipping '\\' characters. [FlavioJS]
-	* Memory allocation functions using file,line,func from the invoking functions. [FlavioJS]
+	  Hopefully that will take care of the SIGPIPE problem in Debian and cygwin.
+	* Server name in core.c skipping '\\' characters.
+	* Memory allocation functions using file,line,func from the invoking functions.
 	* Other minor malloc changes. [FlavioJS]
 2006/11/27
 	* Now when a player's "attack once" request fails due to range, the client

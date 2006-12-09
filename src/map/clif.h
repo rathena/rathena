@@ -319,9 +319,7 @@ int clif_pet_emotion(struct pet_data *pd,int param);
 int clif_pet_performance(struct block_list *bl,int param);
 int clif_pet_equip(struct pet_data *pd);
 int clif_pet_food(struct map_session_data *sd,int foodid,int fail);
-#define clif_send(buf,len,bl,type)        _clif_send(buf,len,bl,type,0)
-#define clif_send2(buf,len,bl,type,flush) _clif_send(buf,len,bl,type,flush)
-int _clif_send(unsigned char *buf, int len, struct block_list *bl, int type, char flush);
+int clif_send(unsigned char *buf, int len, struct block_list *bl, int type);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);

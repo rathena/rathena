@@ -687,7 +687,7 @@ int realloc_writefifo(int fd, size_t addition)
 	return 0;
 }
 
-int _WFIFOSET(int fd, int len, char flush)
+int WFIFOSET(int fd,int len)
 {
 	size_t newreserve;
 	struct socket_data *s = session[fd];
@@ -712,9 +712,7 @@ int _WFIFOSET(int fd, int len, char flush)
 	// For inter-server connections, let the reserve be 1/4th of the link size.
 	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK/4:wfifo_size);
 
-	if( flush )
-		flush_fifo(fd);
-	else if(s->wdata_size >= frame_size)
+	if(s->wdata_size >= frame_size)
 		send_from_fifo(fd);
 
 	// realloc after sending
