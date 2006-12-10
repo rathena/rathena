@@ -11,15 +11,17 @@
 #include <ctype.h>
 
 #include "core.h"
-#include "../common/db.h"
 #include "../common/mmo.h"
+#include "../common/version.h"
+#include "../common/showmsg.h"
 #include "../common/malloc.h"
+#ifndef MINICORE
+#include "../common/db.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/graph.h"
 #include "../common/plugins.h"
-#include "../common/version.h"
-#include "../common/showmsg.h"
+#endif
 
 #ifndef _WIN32
 	#include "svnversion.h"
@@ -129,7 +131,7 @@ void signals_init (void)
 	{
 		return xstringify(SVNVERSION);
 	}
-#else
+#else// not SVNVERSION
 const char* get_svn_revision(void)
 {
 	FILE *fp;
@@ -178,7 +180,6 @@ const char* get_svn_revision(void)
  *	CORE : Display title
  *--------------------------------------
  */
-
 static void display_title(void)
 {
 	//The clearscreeen is usually more of an annoyance than anything else... [Skotlex]
@@ -220,13 +221,9 @@ void usercheck(void){
  *	CORE : MAINROUTINE
  *--------------------------------------
  */
-#ifndef MINICORE	// minimalist Core
 int main (int argc, char **argv)
 {
-	int next;
-
-	// initialise program arguments
-	{
+	{// initialize program arguments
 		char *p1 = SERVER_NAME = argv[0];
 		char *p2 = p1;
 		while ((p1 = strchr(p2, '/')) != NULL || (p1 = strchr(p2, '\\')) != NULL)
@@ -241,11 +238,18 @@ int main (int argc, char **argv)
 		#endif
 	}
 
+	malloc_init();// needed for Show* in display_title() [FlavioJS]
+
+#ifdef MINICORE // minimalist Core
+	display_title();
+	usercheck();
+	do_init(argc,argv);
+	do_final();
+#else// not MINICORE
 	set_server_type();
 	display_title();
-      usercheck();
+	usercheck();
 
-	malloc_init(); /* àÍî‘ç≈èâÇ…é¿çsÇ∑ÇÈïKóvÇ™Ç†ÇÈ */
 	db_init();
 	signals_init();
 
@@ -257,12 +261,15 @@ int main (int argc, char **argv)
 	graph_init();
 	plugin_event_trigger("Athena_Init");
 
-	while (runflag) {
-		next = do_timer(gettick_nocache());
-		do_sendrecv(next);
-#ifndef TURBO
-		do_parsepacket();
-#endif
+	{// Main runtime cycle
+		int next;
+		while (runflag) {
+			next = do_timer(gettick_nocache());
+			do_sendrecv(next);
+	#ifndef TURBO
+			do_parsepacket();
+	#endif
+		}
 	}
 
 	plugin_event_trigger("Athena_Final");
@@ -273,30 +280,12 @@ int main (int argc, char **argv)
 	plugins_final();
 	socket_final();
 	db_final();
+#endif
+
 	malloc_final();
 
 	return 0;
 }
-#else
-int main (int argc, char **argv)
-{
-	// initialise program arguments
-	{
-		char *p = SERVER_NAME = argv[0];
-		while ((p = strchr(p, '/')) != NULL)
-			SERVER_NAME = ++p;
-		arg_c = argc;
-		arg_v = argv;
-	}
-
-	display_title();
-      usercheck();
-	do_init(argc,argv);
-	do_final();
-
-	return 0;
-}
-#endif
 
 #ifdef BCHECK
 unsigned int __invalid_size_argument_for_IOC;
