@@ -11856,7 +11856,7 @@ int clif_parse(int fd) {
 		}
 	} else {
 		// check authentification packet to know packet version
-		err = clif_guess_PacketVer(fd, 0, &packet_ver);
+		packet_ver = clif_guess_PacketVer(fd, 0, &err);
 		if (err || // unknown packet version
 			packet_ver < 5 ||	// reject really old client versions
 			(packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) ||	// older than 6sept04
