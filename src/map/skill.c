@@ -5691,7 +5691,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				if (md->db->skill[md->skillidx].emotion >= 0)
 					clif_emotion(src, md->db->skill[md->skillidx].emotion);
 			}
-
 		}
 
 		if(src != target && battle_config.skill_add_range &&
@@ -6286,6 +6285,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 
 	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow if a ground skill was not invoked. [Skotlex]
 		battle_consume_ammo(sd, skillid, skilllv);
+		
 	return 0;
 }
 

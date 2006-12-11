@@ -8115,69 +8115,31 @@ atcommand_partyoption(
  */
 int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	// autoloot command with value
 	int rate;
-
+	double drate;
 	nullpo_retr(-1, sd);
-
 	// autoloot command without value
 	if(!message || !*message)
 	{
-		// autoloot on -> off
-		if(sd->state.autoloot)
-		{
-			clif_displaymessage(fd, "Autoloot is now off.");
-			sd->state.autoloot = 0;
-			return 0;
-		// autoloot off -> on
-		} else {
-			clif_displaymessage(fd, "Autoloot is now on.");
-			sd->state.autoloot = 10000;
-			return 0;
-		}
+		if (sd->state.autoloot)
+			rate = 0;
+		else
+			rate = 10000;
+	} else {
+		drate = atof(message);
+		rate = (int)(drate*100);
 	}
-
-	// get maximum droprate limit
-	rate = (int)(atof(message) * 100.);
-
-	// check for invalid value
-	if(rate > 10000)
-	{
-		clif_displaymessage(fd, "Invalid value. Choose value between 0 and 100.");
-		return 0;
-	}
-
-	// autoloot value is 0, turn autoloot off
-	if(rate == 0)
-	{
-		if(sd->state.autoloot == 0)
-			clif_displaymessage(fd, "Autoloot is already off.");
-		else {
-			clif_displaymessage(fd, "Autoloot is now off.");
-			sd->state.autoloot = 0;
-		}
-		return 0;
-	}
-
-	// autoloot value is 100, turn autoloot on
-	if(rate == 10000)
-	{
-		if(sd->state.autoloot == 10000)
-			clif_displaymessage(fd, "Autoloot is already on.");
-		else {
-			clif_displaymessage(fd, "Autoloot is now on.");
-			sd->state.autoloot = 10000;
-		}
-		return 0;
-	}
-
-	// autoloot value is between 0 and 100
-	snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %0.02f%% and below.", rate/100.);
-	clif_displaymessage(fd, atcmd_output);
+	if (rate < 0) rate = 0;
+	if (rate > 10000) rate = 10000;
+	
 	sd->state.autoloot = rate;
-
-	return 0;
-}
+	if (sd->state.autoloot) { 
+		snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %0.02f%% and below.",((double)sd->state.autoloot)/100.);
+		clif_displaymessage(fd, atcmd_output);
+	}else 
+		clif_displaymessage(fd, "Autoloot is now off.");
+	return 0;  
+}   
 
 
 /*==========================================
@@ -9967,6 +9929,12 @@ int atcommand_hominfo(
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Hungry : %d - Intimacy : %u",
 		hd->homunculus.hunger, hd->homunculus.intimacy/100);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,
+		"Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d",
+		status->str, status->agi, status->vit,
+		status->int_, status->dex, status->luk);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
