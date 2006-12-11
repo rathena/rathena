@@ -34,3 +34,4 @@ ice_dun03.gat,0,0,0,0	monster	Ice Titan	1777,50,0,0,0
 ice_dun03.gat,0,0,0,0	monster	Snowier	1775,30,0,0,0
 ice_dun03.gat,0,0,0,0	monster	Gazeti	1778,30,0,0,0
 ice_dun03.gat,0,0,0,0	monster	Iceicle	1789,10,0,0,0
+ice_dun03.gat,0,0,0,0	monster	Ktullanux	1779,1,86400000,86000000,1

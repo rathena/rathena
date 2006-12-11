@@ -73,11 +73,15 @@ ra_temin.gat,276,326,0	script	Statue#Rachel	111,{
 	mes "Isn't it great?";
 	next;
 	mes "Do you want to enter Rachel Sanctuary?";
+	mes "Please donate ^FF000050000 Zeny^000000 to enter.";
 	next;
 	if(select("Yes", "No") == 1){
-		close2;
-		warp "ra_san01",139,14;
-		end;
+	  if(Zeny >= 50000){
+	    set Zeny,Zeny-50000;
+	    close2;
+	    warp "ra_san01",139,14;
+	    end;
+	  }
 	}
 	close;
 }

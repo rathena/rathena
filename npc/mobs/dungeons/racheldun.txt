@@ -50,4 +50,4 @@ ra_san05.gat,0,0,0,0	monster	Echio	1770,20,0,0,0
 ra_san05.gat,0,0,0,0	monster	Isilla	1772,20,0,0,0
 ra_san05.gat,0,0,0,0	monster	Hodremlin	1773,20,0,0,0
 ra_san05.gat,0,0,0,0	monster	Seeker	1774,20,0,0,0
-ra_san05.gat,0,0,0,0	monster	Gloom Under Night	1768,1,7200000,3600000,1
+ra_san05.gat,0,0,0,0	monster	Gloom Under Night	1768,1,86400000,86000000,1

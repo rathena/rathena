@@ -34,6 +34,10 @@ KarLaeda
 Date		Added
 ======
 12/11
+	* Adjusted Rachel Sanctuary entrance to prevent exploits [Playtester]
+	- added Ktullanux to spawns until the quest is added
+	- all Rachel MVPs now only respawn once a day to prevent exploits
+	- uncommented Rachel Sanctuary spawns by default
 	* Some cleanup & optimization for MvM Arena [KarLaeda]
 	- Added missing close2 to Hunter Job Quest
 	* Added Yuno Government Buildings warps. Thanks to $ephiroth [Lupus]
