@@ -33,7 +33,9 @@ KarLaeda
 
 Date		Added
 ======
-12/11	* Added Yuno Government Buildings warps. Thanks to $ephiroth [Lupus]
+12/11
+	* Some cleanup & optimization for MvM Arena [KarLaeda]
+	* Added Yuno Government Buildings warps. Thanks to $ephiroth [Lupus]
 	- Added missing next, removed extra line to Wizard Job Quest
 	* Fixed Rogue / Assassin exploit, thanks to El Nino
 12/06
