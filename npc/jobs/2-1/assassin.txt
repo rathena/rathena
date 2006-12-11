@@ -43,7 +43,6 @@
 in_moc_16.gat,19,33,4	script	Guildsman	55,{
 	callfunc "F_BlockHigh",Job_Thief_High,"Thief High",Job_Assassin_Cross,"Assassin Cross","Assassin Huey";
 
-	mes "[Angry looking man]";
 	if(BaseJob == Job_Assassin) {
 		mes "[Assassin Huey]";
 		mes "Oohh, its you.  You're...." + strcharinfo(0) + " right?";
@@ -52,6 +51,7 @@ in_moc_16.gat,19,33,4	script	Guildsman	55,{
 		mes "Too bad there's nothing to do right now.  You should go train more.  Bye.";
 		close;
 	}
+	mes "[Angry looking man]";
 	if(baseClass == Job_Novice){
 		mes "....HEY Novice!!! GET out of here now!! I won't be held responsible if anything bad happens to you.......";
 		emotion e_gasp;
