@@ -19,6 +19,9 @@
 	-----
 
 ========================
+12/11
+	* Readded removed mobs in a commented form [Playtester]
+	- also commented all invalid and missing sprite mobs
 12/09
 	* Implemented Frus Card [Playtester]
 12/07
