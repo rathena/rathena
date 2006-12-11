@@ -33,6 +33,9 @@ KarLaeda
 
 Date		Added
 ======
+12/11	* Added Yuno Government Buildings warps. Thanks to $ephiroth [Lupus]
+	- Added missing next, removed extra line to Wizard Job Quest
+	* Fixed Rogue / Assassin exploit, thanks to El Nino
 12/06
 	* Minor fix to the sign quest, thanks to theultramage for pointing it out [MasterOfMuppets]
 12/01

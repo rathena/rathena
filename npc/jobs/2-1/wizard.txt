@@ -1,11 +1,10 @@
 //===== eAthena Script ======================================= 
 //= Wizard Job Quest
 //===== By: ================================================== 
-//= (Aegis) Translated by yoshiki
-//= converted by kobra_k88
+//= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -19,15 +18,13 @@
 //= 1.2b Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
 //= 1.2c changed one Horong to Frilldora (now 3rd room contains 1 agressive mob.)
 //= 1.2d more simplified fire room - removed agressive Desert Wolf [Lupus]
-//= 1.3 Added Baby Class support [Lupus]
-//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.3 Added Baby Class support. 1.5 Fixed possible EXP abuse [Lupus]
 //= 1.6 Added a func which prevent advanced classes passing
-//= 2nd Job Quests again. It also guides adv classes where
-//= to go. [Lupus]
+//= 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
 //= 1.7 Replaced 2 Hodes with 2 Horong's (according to the official guide) [Lupus]
 //= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 2.1 Changed numbers to constants. [Vicious]
-//= 2.2 Merged back JFunc [Lupus]
+//= 2.2 Merged back JFunc [Lupus] 2.2a Removed extra MES, added missing NEXT
 //============================================================ 
 
 
@@ -58,7 +55,6 @@ gef_tower.gat,107,35,5	script	Some Dog	81,{
 	close;
 
 L_JobMage:
-	mes "[Dog]";
 	mes "Ah... I know what you're about to say.... You want to become a Wizard right?";
 	next;
 	mes "[Dog]";
@@ -73,6 +69,7 @@ L_JobMage:
 		mes "[Dog]";
 		mes "~Woof~ What is it? Why are you looking at me like that?? Is this the first time you've seen a dog talk?";
 		emotion e_what;
+		next;
 		mes "[Dog]";
 		mes "~Woof~ I suppose it's not that common to see a talking dog..... ~Woof~..... Yeah, it is a rare site actually.....";
 		next;

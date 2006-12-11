@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena RC4
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I 
 //= was still able to bypass it) [Toms]
 //= 2.4 Fixed skipping of Nameless NPC [Lupus]
+//= 2.5 Fixed a Rogue exploit [Lupus]
 //============================================================ 
 
 
@@ -90,23 +91,23 @@ in_moc_16.gat,19,33,4	script	Guildsman	55,{
 		emotion e_gg;
 		close;
 	}
-	if(baseClass != Job_Thief){
+	if(baseClass != Job_Thief || BaseJob == Job_Rogue){
 		mes ".... Hmm.... although you're not an Assassin or Thief... I have to say I like your sense of style.";
 		close;
 	}
 
-	if(JobLevel >= 40) goto L_Start;
-	mes "Hmm? What brings you here?.... I don't think I like the way you're looking at me....?!";
-	emotion e_what;
-	next;
-	mes "[Angry looking man]";
-	mes ".... Hmm.... You're not qualified yet.  To become an Assassin you will have to meet our expectations.";
-	next;
-	mes "[Angry looking man]";
-	mes "Why don't you go train some more...... You need to have a job level of at least 40 to even hope of becoming one of us....";
-	close;
+	if(JobLevel < 40){
+		mes "Hmm? What brings you here?.... I don't think I like the way you're looking at me....?!";
+		emotion e_what;
+		next;
+		mes "[Angry looking man]";
+		mes ".... Hmm.... You're not qualified yet.  To become an Assassin you will have to meet our expectations.";
+		next;
+		mes "[Angry looking man]";
+		mes "Why don't you go train some more...... You need to have a job level of at least 40 to even hope of becoming one of us....";
+		close;
+	}
 
-L_Start:
 	if(ASSIN_Q == 1) goto L_Failed1;
 	if(ASSIN_Q == 2) goto L_Failed2;
 	if(ASSIN_Q == 4) goto L_Change;

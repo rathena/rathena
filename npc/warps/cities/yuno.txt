@@ -4,7 +4,7 @@
 //= Nana (1.0)
 //= Sara-chan (1.1)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.8
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 5+
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.5 Added Missing Juno warps [musashiden]
 //= 1.6 Corrected duplicate warps [Musashiden]
 //= 1.7 Yet another missing warp [Musashiden]
+//= 1.8 Added Yuno Government Buildings warps
 //============================================================
 
 //= Yuno City ================================================
@@ -200,3 +201,19 @@ w3:	warp "yuno_in05",136,75; end;
 // Yuno In05 (Destination - Escaped Random Warps) ------------------------------
 yuno_in05.gat,31,167,0	warp	yun76	1,1,yuno_in05.gat,50,85
 yuno_in05.gat,50,88,0	warp	yun77	1,1,yuno_in02.gat,85,14
+
+// Yuno Government Buildings ---------------------------------------------------
+yuno_pre.gat,52,22,0	warp	yungvn01	1,1,yuno_pre.gat,37,23
+yuno_pre.gat,87,22,0	warp	yungvn02	1,1,yuno_pre.gat,102,22
+yuno_pre.gat,41,23,0	warp	yungvn03	1,1,yuno_pre.gat,56,22
+yuno_pre.gat,18,35,0	warp	yungvn04	1,1,yuno_pre.gat,18,53
+yuno_pre.gat,98,22,0	warp	yungvn05	1,1,yuno_pre.gat,83,22
+yuno_pre.gat,112,35,0	warp	yungvn06	1,1,yuno_pre.gat,112,52
+yuno_pre.gat,18,48,0	warp	yungvn07	1,1,yuno_pre.gat,18,31
+yuno_pre.gat,18,77,0	warp	yungvn08	1,1,yuno_pre.gat,18,96
+yuno_pre.gat,37,69,0	warp	yungvn09	1,1,yuno_pre.gat,64,69
+yuno_pre.gat,112,48,0	warp	yungvn10	1,1,yuno_pre.gat,112,31
+yuno_pre.gat,94,69,0	warp	yungvn11	1,1,yuno_pre.gat,77,69
+yuno_pre.gat,60,69,0	warp	yungvn12	1,1,yuno_pre.gat,33,69
+yuno_pre.gat,81,69,0	warp	yungvn13	1,1,yuno_pre.gat,98,69
+yuno_pre.gat,18,92,0	warp	yungvn14	1,1,yuno_pre.gat,18,73
