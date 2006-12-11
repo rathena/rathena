@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.3a
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -31,7 +31,7 @@
 //= 2.2 Merged JFunc, fixed missing dialogues [Lupus]
 //= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
 //= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
-//= 2.4 Added missing next;, missing NPC names [Lupus]
+//= 2.4a Added missing next;, missing NPC names [Lupus]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -132,7 +132,7 @@ L_Start:
 		mes "[Hunter Sharon]";
 		mes "If you trained hard enough, you shouldn't have any problems becoming a Hunter.";
 		close;
-	
+
 	M_End:
 		mes "[Hunter Sharon]";
 		mes "Ok, I'll see you later.";
@@ -158,7 +158,7 @@ L_Start:
 
 			set @score, @score + 10;
 		M_1b:
-	
+
 		mes "[Hunter Sharon]";
 		mes "Okay, so you picked your hunting spot! You plan to go to the Sograt Desert to hunt Hodes.";
 		next;
@@ -344,11 +344,11 @@ L_Change:
 		close;
 	sL_NotRdy:
 		mes "[Hunter Sharon]";
-	       	mes "Hmmm, I received news of your success.... But you don't seem to have the ^5533FFNecklace of Wisdom^000000 as proof.";
+		mes "Hmmm, I received news of your success.... But you don't seem to have the ^5533FFNecklace of Wisdom^000000 as proof.";
 		emotion e_hmm;
 		next;
 		mes "[Hunter Sharon]";
-	       	mes "You will need the Necklace of Wisdom to become a Hunter.  If you don't have it you will have to start the test over.";
+		mes "You will need the Necklace of Wisdom to become a Hunter.  If you don't have it you will have to start the test over.";
 		next;
 		menu "Um... I've got it.... somewhere....",-, "Heh heh.... I must have misplaced it.....",sM_ReStart;
 
@@ -362,7 +362,7 @@ L_Change:
 			emotion e_pif;
 			set HNTR_Q, 0;
 			set HNTR_Q2, 0;
-	       		close;
+			close;
 }
 
 
@@ -467,11 +467,12 @@ L_Start:
 		mes "Stop playing around "+strcharinfo(0)+", that's your name, right?";
 		next;
 		menu "Yes",M_Yes, "Uhhh no",sM_End;
-	
+
 		sM_End:
 			mes "[Demon Hunter]";
 			mes "DON'T you mess around with me! If you're gonna fool around then LEAVE!";
 			emotion e_pif;
+			close2;
 			warp "hugel.gat", 207, 222;
 			end;
 
@@ -609,7 +610,7 @@ L_Start:
 		if (countitem(1751) <= 5 && @HNTR_QA==0) callsub sF_GetArrows;
 		mes "[Guild Master]";
 		mes "Good luck, I'll send you to the test room now.";
-		next;
+		close2;
 		set HNTR_Q2, 1;
 		set @HNTR_QA,0;
 		savepoint "payon_in02.gat", 16, 26;
@@ -619,7 +620,7 @@ L_Start:
 		sF_GetArrows:
 			mes "[Guild Master]";
 			mes "This is where your hard work in the 2nd test payed off.  Here are some arrows, made with the items you collected.";
- 			getitem 1751, 200;
+			getitem 1751, 200;
 			set @HNTR_QA,1;
 			next;
 			return;
@@ -684,6 +685,7 @@ L_Start:
 	M_End:
 		mes "[Test Guide]";
 		mes "Alright, I'll send you back to Payon.  Hopefully I'll see you again later.  Don't forget to save!";
+		close2;
 		warp "payon_in02.gat", 16, 26;
 		end;
 
