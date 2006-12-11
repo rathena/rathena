@@ -162,6 +162,7 @@ int npc_event_dequeue(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
+	sd->npc_id=0;
 	if (!sd->eventqueue[0][0])
 		return 0; //Nothing to dequeue
 
@@ -171,7 +172,6 @@ int npc_event_dequeue(struct map_session_data *sd)
 		return 0;
 	}
 	//Event dequeued successfully, shift other elements.
-	sd->npc_id=0; //FIXME: Shouldn't dequeueing fail when you have an npc_id set?
 	memmove(sd->eventqueue[0], sd->eventqueue[1], (MAX_EVENTQUEUE-1)*sizeof(sd->eventqueue[0]));
 	sd->eventqueue[MAX_EVENTQUEUE-1][0]=0;
 	return 1;

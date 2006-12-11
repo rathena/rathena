@@ -606,6 +606,8 @@ int merc_call_homunculus(struct map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
+		if (battle_config.slaves_inherit_speed&1)
+			status_calc_bl(&hd->bl, SCB_SPEED);
 		merc_save(hd); 
 	} else
 		//Warp him to master.

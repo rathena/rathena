@@ -2136,19 +2136,19 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				ATF_SHORT|ATF_TARGET);
 		break;
 	case SP_SKILL_ATK:
+		if(sd->state.lr_flag == 2)
+			break;
 		for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
 		if (i == MAX_PC_BONUS)
 		{	//Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
-		if(sd->state.lr_flag != 2) {
-			if (sd->skillatk[i].id == type2)
-				sd->skillatk[i].val += val;
-			else {
-				sd->skillatk[i].id = type2;
-				sd->skillatk[i].val = val;
-			}
+		if (sd->skillatk[i].id == type2)
+			sd->skillatk[i].val += val;
+		else {
+			sd->skillatk[i].id = type2;
+			sd->skillatk[i].val = val;
 		}
 		break;
 	case SP_ADD_SKILL_BLOW:
