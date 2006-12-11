@@ -4621,10 +4621,10 @@ int atcommand_revive(
 		return -1;
 	}
 	
-	if (!status_revive(&sd->bl, 100, 0))
+	if (!status_revive(&pl_sd->bl, 100, 0))
 		return -1;
 	
-	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	clif_skill_nodamage(&sd->bl,&pl_sd->bl,ALL_RESURRECTION,4,1);
 	clif_displaymessage(fd, msg_txt(51)); // Character revived.
 	return 0;
 }
