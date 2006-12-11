@@ -638,6 +638,9 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	if(tsd==NULL || g==NULL)
 		return 0;
 
+	if( (i=guild_getposition(sd,g))<0 || !(g->position[i].mode&0x0001) )
+		return 0; //Invite permission.
+
 	if(!battle_config.invite_request_check) {
 		if (tsd->party_invite>0 || tsd->trade_partner) {	// ‘Šè‚ªæˆø’†‚©‚Ç‚¤‚©
 			clif_guild_inviteack(sd,0);
@@ -651,7 +654,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		clif_guild_inviteack(sd,0);
 		return 0;
 	}
-	
+
 	// ’èˆõŠm”F
 	for(i=0;i<g->max_member;i++)
 		if(g->member[i].account_id==0)
@@ -770,7 +773,6 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes)
 {
 	struct guild *g;
-	int i;
 
 	nullpo_retr(0, sd);
 
@@ -779,18 +781,12 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 	if(g==NULL)
 		return 0;
 
-	if(	sd->status.account_id!=account_id ||
+	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
 		map[sd->bl.m].flag.gvg_castle) //Can't leave inside guild castles.
 		return 0;
 
-	for(i=0;i<g->max_member;i++){	// Š‘®‚µ‚Ä‚¢‚é‚©
-		if(	g->member[i].account_id==sd->status.account_id &&
-			g->member[i].char_id==sd->status.char_id ){
-			intif_guild_leave(g->guild_id,sd->status.account_id,sd->status.char_id,0,mes);
-			return 0;
-		}
-	}
+	intif_guild_leave(sd->status.guild_id, sd->status.account_id, sd->status.char_id,0,mes);
 	return 0;
 }
 // ƒMƒ‹ƒh’Ç•ú—v‹
@@ -811,15 +807,14 @@ int guild_expulsion(struct map_session_data *sd,int guild_id,
 		return 0;
 
 	if( (ps=guild_getposition(sd,g))<0 || !(g->position[ps].mode&0x0010) )
-		return 0;	// ˆ”±Œ ŒÀ–³‚µ
+		return 0;	//Expulsion permission
 
 	for(i=0;i<g->max_member;i++){	// Š‘®‚µ‚Ä‚¢‚é‚©
-		if(	g->member[i].account_id==account_id &&
+		if(g->member[i].account_id==account_id &&
 			g->member[i].char_id==char_id ){
+			if(!strcmp(g->member[i].name,g->master))
+				return 0; //Can't expel the GM!
 			intif_guild_leave(g->guild_id,account_id,char_id,1,mes);
-			//It's wrong way, member info will erased later
-			//see guild_member_leaved [LuzZza]
-			//malloc_set(&g->member[i],0,sizeof(struct guild_member));
 			return 0;
 		}
 	}
@@ -1023,21 +1018,19 @@ int guild_memberposition_changed(struct guild *g,int idx,int pos)
 	return 0;
 }
 // ƒMƒ‹ƒh–ğE•ÏX
-int guild_change_position(struct map_session_data *sd,int idx,
+int guild_change_position(int guild_id,int idx,
 	int mode,int exp_mode,const char *name)
 {
 	struct guild_position p;
 
-	nullpo_retr(0, sd);
-
-	if(exp_mode>battle_config.guild_exp_limit)
-		exp_mode=battle_config.guild_exp_limit;
-	if(exp_mode<0)exp_mode=0;
-	p.mode=mode;
+	exp_mode = cap_value(exp_mode, 0, battle_config.guild_exp_limit);
+	//Mode 0x01 <- Invite
+	//Mode 0x10 <- Expel.
+	p.mode=mode&0x11;
 	p.exp_mode=exp_mode;
 	memcpy(p.name,name,NAME_LENGTH-1);
 	p.name[NAME_LENGTH-1] = '\0'; //Security check... [Skotlex]
-	return intif_guild_position(sd->status.guild_id,idx,&p);
+	return intif_guild_position(guild_id,idx,&p);
 }
 // ƒMƒ‹ƒh–ğE•ÏX’Ê’m
 int guild_position_changed(int guild_id,int idx,struct guild_position *p)
@@ -1658,7 +1651,7 @@ int guild_break(struct map_session_data *sd,char *name)
 		return 0;
 	if(strcmp(g->name,name)!=0)
 		return 0;
-	if(strcmp(sd->status.name,g->master)!=0)
+	if(!sd->state.gmaster_flag)
 		return 0;
 	for(i=0;i<g->max_member;i++){
 		if(	g->member[i].account_id>0 && (

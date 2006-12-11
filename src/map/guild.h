@@ -63,8 +63,7 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online);
 int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_);
 int guild_change_memberposition(int guild_id,int account_id,int char_id,int idx);
 int guild_memberposition_changed(struct guild *g,int idx,int pos);
-int guild_change_position(struct map_session_data *sd,int idx,
-	int mode,int exp_mode,const char *name);
+int guild_change_position(int guild_id,int idx,int mode,int exp_mode,const char *name);
 int guild_position_changed(int guild_id,int idx,struct guild_position *p);
 int guild_change_notice(struct map_session_data *sd,int guild_id,const char *mes1,const char *mes2);
 int guild_notice_changed(int guild_id,const char *mes1,const char *mes2);

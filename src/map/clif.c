@@ -10578,6 +10578,7 @@ void clif_parse_GuildCheckMaster(int fd, struct map_session_data *sd) {
  */
 void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	if (!sd->status.guild_id) return;
 	switch(RFIFOL(fd,2)){
 	case 0:	// ƒMƒ‹ƒhŠî–{î•ñA“¯–¿“G‘Îî•ñ
 		clif_guild_basicinfo(sd);
@@ -10612,8 +10613,11 @@ void clif_parse_GuildChangePositionInfo(int fd, struct map_session_data *sd) {
 	int i;
 	RFIFOHEAD(fd);
 
+	if(!sd->state.gmaster_flag)
+		return;
+
 	for(i = 4; i < RFIFOW(fd,2); i += 40 ){
-		guild_change_position(sd, RFIFOL(fd,i), RFIFOL(fd,i+4), RFIFOL(fd,i+12), (char*)RFIFOP(fd,i+16));
+		guild_change_position(sd->status.guild_id, RFIFOL(fd,i), RFIFOL(fd,i+4), RFIFOL(fd,i+12), (char*)RFIFOP(fd,i+16));
 	}
 }
 
@@ -10624,6 +10628,9 @@ void clif_parse_GuildChangePositionInfo(int fd, struct map_session_data *sd) {
 void clif_parse_GuildChangeMemberPosition(int fd, struct map_session_data *sd) {
 	int i;
 	RFIFOHEAD(fd);
+	
+	if(!sd->state.gmaster_flag)
+		return;
 
 	for(i=4;i<RFIFOW(fd,2);i+=12){
 		guild_change_memberposition(sd->status.guild_id,
@@ -10649,6 +10656,10 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+
+	if(!sd->state.gmaster_flag)
+		return;
+
 	guild_change_emblem(sd,RFIFOW(fd,2)-4,(char*)RFIFOP(fd,4));
 }
 
@@ -10658,6 +10669,10 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd) {
  */
 void clif_parse_GuildChangeNotice(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+
+	if(!sd->state.gmaster_flag)
+		return;
+
 	guild_change_notice(sd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,66));
 }
 

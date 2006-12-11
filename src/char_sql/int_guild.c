@@ -1773,7 +1773,6 @@ int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position 
 
 	memcpy(&g->position[idx],p,sizeof(struct guild_position));
 	mapif_guild_position(g,idx);
-	ShowInfo("int_guild: position data changed (Guild %d, position %d)\n",guild_id, idx);
 	g->position[idx].modified = GS_POSITION_MODIFIED;
 	g->save_flag |= GS_POSITION; // Change guild_position
 	return 0;
