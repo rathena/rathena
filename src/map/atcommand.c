@@ -2280,7 +2280,7 @@ int atcommand_option(
 
 	sd->sc.opt1 = param1;
 	sd->sc.opt2 = param2;
-	if (!(sd->sc.option & CART_MASK) && param3 & CART_MASK) {
+	if (!(sd->sc.option & OPTION_CART) && param3 & OPTION_CART) {
 		clif_cartlist(sd);
 		clif_updatestatus(sd, SP_CARTINFO);
 	}

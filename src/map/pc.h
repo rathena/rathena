@@ -6,9 +6,7 @@
 
 #include "map.h"
 #include "unit.h"
-
-#define OPTION_MASK 0xd7b8
-#define CART_MASK 0x788
+#include "status.h"
 
 //Update this max as necessary. 53 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 53
@@ -96,7 +94,7 @@ enum {
 #define pc_ishiding(sd) ((sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
 #define pc_iscloaking(sd) (!((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK))
 #define pc_ischasewalk(sd) ((sd)->sc.option&OPTION_CHASEWALK)
-#define pc_iscarton(sd) ((sd)->sc.option&CART_MASK)
+#define pc_iscarton(sd) ((sd)->sc.option&OPTION_CART)
 #define pc_isfalcon(sd) ((sd)->sc.option&OPTION_FALCON)
 #define pc_isriding(sd) ((sd)->sc.option&OPTION_RIDING)
 #define pc_isinvisible(sd) ((sd)->sc.option&OPTION_INVISIBLE)

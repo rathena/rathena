@@ -470,6 +470,8 @@ enum {
 
 #define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
 
+#define OPTION_MASK ~0x40
+
 //Defines for the manner system [Skotlex]
 #define MANNER_NOCHAT 0x01
 #define MANNER_NOSKILL 0x02
