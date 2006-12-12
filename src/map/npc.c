@@ -162,7 +162,21 @@ int npc_event_dequeue(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	sd->npc_id=0;
+	if(sd->npc_id)
+	{	//Current script is aborted.
+		if(sd->state.using_fake_npc){
+			clif_clearchar_id(sd->npc_id, 0, sd->fd);
+			sd->state.using_fake_npc = 0;
+		}
+		if (sd->st) {
+			sd->st->pos = -1;
+			script_free_stack(sd->st->stack);
+			aFree(sd->st);
+			sd->st = NULL;
+		}
+		sd->npc_id = 0;
+	}
+
 	if (!sd->eventqueue[0][0])
 		return 0; //Nothing to dequeue
 
@@ -1079,7 +1093,6 @@ int npc_click(struct map_session_data *sd,struct npc_data *nd)
 	switch(nd->bl.subtype) {
 	case SHOP:
 		clif_npcbuysell(sd,nd->bl.id);
-		npc_event_dequeue(sd);
 		break;
 	case SCRIPT:
 		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
