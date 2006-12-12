@@ -1865,8 +1865,8 @@ int clif_changemapserver(struct map_session_data *sd, char *mapname, int x, int 
 
 int clif_blown(struct block_list *bl) {
 //Aegis packets says fixpos, but it's unsure whether slide works better or not.
-	return clif_fixpos(bl);
-//	return clif_slide(bl, bl->x, bl->y);
+//	return clif_fixpos(bl);
+	return clif_slide(bl, bl->x, bl->y);
 }
 /*==========================================
  *
@@ -4550,12 +4550,14 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,20)=ddelay;
 	WBUFW(buf,26)=skill_lv;
 	WBUFW(buf,28)=div;
-	if (flag && src->type == BL_PC)
+#if 0
+	if (flag && dst->type == BL_PC)
 	{	//Needed for appropiate knockback on the receiving client.
 		WBUFW(buf,24)=-30000;
 		WBUFB(buf,30)=6;
-		clif_send(buf,packet_len_table[0x114],src,SELF);
+		clif_send(buf,packet_len_table[0x114],dst,SELF);
 	}
+#endif
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
 		WBUFW(buf,24)=damage?div:0;
 	} else {
@@ -4587,12 +4589,14 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	WBUFL(buf,20)=ddelay;
 	WBUFW(buf,28)=skill_lv;
 	WBUFW(buf,30)=div;
-	if (flag && src->type == BL_PC)
+#if 0
+	if (flag && dst->type == BL_PC)
 	{	//Needed for appropiate knockback on the receiving client.
 		WBUFL(buf,24)=-30000;
 		WBUFB(buf,32)=6;
-		clif_send(buf,packet_len_table[0x114],src,SELF);
+		clif_send(buf,packet_len_table[0x114],dst,SELF);
 	}
+#endif
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
 		WBUFL(buf,24)=damage?div:0;
 	} else {
