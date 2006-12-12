@@ -4595,7 +4595,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	if(disguised(src)) {
 		WBUFL(buf,4)=-src->id;
 		if(damage > 0)
-			WBUFW(buf,24)=-1;
+			WBUFL(buf,24)=-1;
 		clif_send(buf,packet_len_table[0x1de],src,SELF);
 	}
 	if (disguised(dst)) {
@@ -4603,7 +4603,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 		if (disguised(src))
 			WBUFL(buf,4)=src->id;
 		else if(damage > 0)
-			WBUFW(buf,24)=-1;
+			WBUFL(buf,24)=-1;
 		clif_send(buf,packet_len_table[0x1de],dst,SELF);
 	}
 #endif
