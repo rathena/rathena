@@ -8688,8 +8688,8 @@ static int buildin_maprespawnguildid_sub_pc(DBKey key, void *data, va_list ap)
 	if(!sd || sd->bl.m != m)
 		return 0;
 	if(
-		((sd->status.guild_id == g_id) && flag&1) || //Warp out owners
-		((sd->status.guild_id != g_id) && flag&2) || //Warp out outsiders
+		(sd->status.guild_id == g_id && flag&1) || //Warp out owners
+		(sd->status.guild_id != g_id && flag&2) || //Warp out outsiders
 		(sd->status.guild_id == 0)	// Warp out players not in guild [Valaris]
 	)
 		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);

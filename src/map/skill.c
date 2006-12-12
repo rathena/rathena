@@ -1731,7 +1731,6 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 int skill_blown (struct block_list *src, struct block_list *target, int count)
 {
 	int dx=0,dy=0,nx,ny;
-	int x=target->x,y=target->y;
 	int dir,ret;
 	struct skill_unit *su=NULL;
 
@@ -1767,15 +1766,15 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 		dy = -diry[dir];
 	}
 
-	ret=path_blownpos(target->m,x,y,dx,dy,count&0xffff);
+	ret=path_blownpos(target->m,target->x,target->y,dx,dy,count&0xffff);
 	nx=ret>>16;
 	ny=ret&0xffff;
 
 	if (!su)
 		unit_stop_walking(target,0); 
 
-	dx = nx - x;
-	dy = ny - y;
+	dx = nx - target->x;
+	dy = ny - target->y;
 
 	if (!dx && !dy) //Could not knockback.
 		return 0;
@@ -1794,8 +1793,9 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 	if(!(count&0x20000)) 
 		clif_blown(target);
 
-	if(target->type == BL_PC && map_getcell(target->m,x,y,CELL_CHKNPC))
-		npc_touch_areanpc((TBL_PC*)target,target->m,x,y); //Invoke area NPC
+	if(target->type == BL_PC &&
+		map_getcell(target->m, target->x, target->y, CELL_CHKNPC))
+		npc_touch_areanpc((TBL_PC*)target, target->m, target->x, target->y); //Invoke area NPC
 
 	return (count&0xFFFF); //Return amount of knocked back cells.
 }
@@ -2017,7 +2017,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	//Display damage.
 	switch(skillid){
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
-		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5, dmg.blewcount);
 		break;
 	//Skills that need be passed as a normal attack for the client to display correctly.
 	case HVAN_EXPLOSION:
@@ -2045,7 +2045,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		//Disabling skill animation doesn't works on multi-hit.
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
 			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv,
-			(flag&SD_ANIMATION && dmg.div_ < 2?5:type));
+			(flag&SD_ANIMATION && dmg.div_ < 2?5:type), dmg.blewcount);
 		break;
 	}
 	
@@ -5771,7 +5771,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			if (unit_movepos(src, src->x+dx, src->y+dy, 1, 1))
 			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);
-				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5);
+				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5, 0);
 			}
 			clif_skill_fail(sd,ud->skillid,0,0);
 		}

@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/12
+	* Modified the skill damage packet and the knockback packets to mimic aegis
+	  sent packets for such skills.
 	* Removed CART_MASK as OPTION_CART can take care of that.
 	* Moved the OPTION_MASK define to status.h
 	* Reverted the knockback implementation to use clif_slide instead of

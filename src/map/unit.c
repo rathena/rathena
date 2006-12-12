@@ -145,7 +145,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	
 	// ƒoƒVƒŠƒJ”»’è
 
-	map_foreachinmovearea(clif_outsight,bl, AREA_SIZE,
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE,
 		dx, dy, sd?BL_ALL:BL_PC, bl);
 
 	x += dx;
