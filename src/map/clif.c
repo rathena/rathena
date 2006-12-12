@@ -2857,11 +2857,19 @@ int clif_changelook(struct block_list *bl,int type,int val)
 
 	switch(type) {
 		case LOOK_WEAPON:
-			if (sd) clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+			if (sd)
+			{
+				clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+				val = vd->weapon;
+			}
 			else vd->weapon = val;
 		break;
 		case LOOK_SHIELD:
-			if (sd) clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+			if (sd)
+			{
+				clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+				val = vd->shield;
+			}
 			else vd->shield = val;
 		break;
 		case LOOK_BASE:
