@@ -1162,14 +1162,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				}
 			}
 		}
-		if (md->state.aggressive && md->attacked_id == md->target_id)
-		{	//No longer aggressive, change to retaliate AI.
-			md->state.aggressive = 0;
-			if(md->state.skillstate== MSS_ANGRY)
-				md->state.skillstate = MSS_BERSERK;
-			if(md->state.skillstate== MSS_FOLLOW)
-				md->state.skillstate = MSS_RUSH;
-		}
 		//Clear it since it's been checked for already.
 		md->attacked_id = 0;
 	}
@@ -1582,8 +1574,18 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	int char_id = 0, flag = 0;
 
-	if (damage > 0) //Store total damage...
+	if (damage > 0)
+	{	//Store total damage...
 		md->tdmg+=damage;
+		if (md->state.aggressive)
+		{	//No longer aggressive, change to retaliate AI.
+			md->state.aggressive = 0;
+			if(md->state.skillstate== MSS_ANGRY)
+				md->state.skillstate = MSS_BERSERK;
+			if(md->state.skillstate== MSS_FOLLOW)
+				md->state.skillstate = MSS_RUSH;
+		}
+	}
 
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
 		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;

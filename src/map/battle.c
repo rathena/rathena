@@ -3254,11 +3254,23 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB *md = (TBL_MOB*)t_bl;
-			if(md->state.killer) //Enable retaliation
-				state |= BCT_ENEMY;
-			
+
 			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
+			if(md->state.killer || !(battle_config.mob_ai&0x400))
+				state |= BCT_ENEMY; //By default everyone hates mobs.
+			else
+			{	//Smart enemy criteria.
+				if (!md->special_state.ai) { //Normal mobs.
+					if (s_bl->type == BL_MOB && !((TBL_MOB*)s_bl)->special_state.ai)
+						state |= BCT_PARTY; //Normal mobs with no ai are friends.
+					else
+						state |= BCT_ENEMY; //However, all else are enemies.
+				} else {
+					if (s_bl->type == BL_MOB && !((TBL_MOB*)s_bl)->special_state.ai)
+						state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
+				}
+			}
 			break;
 		}
 	}
@@ -3335,15 +3347,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
 			if(md->state.killer) // Is on a rampage too :D
 				state |= BCT_ENEMY;
-			else if (!md->special_state.ai) { //Normal mobs.
-				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
-					state |= BCT_PARTY; //Normal mobs with no ai are friends.
-				else
-					state |= BCT_ENEMY; //However, all else are enemies.
-			} else {
-				if (t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai)
-					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
-			}
 			break;
 		}
 		default:

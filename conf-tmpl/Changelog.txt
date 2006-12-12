@@ -1,5 +1,9 @@
 Date	Added
 
+2006/12/12
+	* Added monster_ai&0x400 to use the previous 'smart' criteria that prevents
+	  mobs from fighting each another, since now they are all natural enemies
+	  of each another. [Skotlex]
 2006/11/29
 	* Added Rachel Santuary to nomemo mapflags [Playtester]
 2006/11/22
