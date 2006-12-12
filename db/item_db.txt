@@ -69,14 +69,14 @@
 563,Pizza_01,Doublecrust Swiss Fondue,0,1200,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(375,445),0; },{},{}
 564,Rice_Ball,Rice Ball,0,1,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 200,0; },{},{}
 565,Vita500_Bottle,Vita500,0,580,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(142,274),0; },{},{}
-566,Tomyumkung,Tom Yum Goong,0,10000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(244,350),rand(10,30); },{},{}
+566,Tomyumkung,Tom Yum Goong,0,10000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(244,350),rand(10,30); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; },{},{}
 567,Prawn,Shrimp,0,500,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(117,192),0; },{},{}
 568,Lemon,Lemon,0,60,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(10,20); },{},{}
 569,Novice_Potion,Novice Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(22,33),0; },{},{}
 570,Lucky_Candy,Lucky Candy,0,10,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
 571,Lucky_Cnady_Cane,Lucky Candy Cane,0,20,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 572,Lucky_Cookie,Lucky Cookie,0,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(160,200),0; },{},{}
-573,Chocolate_Drink,Chocolate Drink,0,7000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(330,410),rand(45,65); },{},{}
+573,Chocolate_Drink,Chocolate Drink,0,7000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(330,410),rand(45,65); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; },{},{}
 574,Egg,Egg,0,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(33,42),0; },{},{}
 575,Piece_Of_Cake_,2nd Anniversary Cake,0,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(270,330),0; },{},{}
 576,Prickly_Fruit,Prickly Fruit,0,540,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(150,300),rand(20,30); },{},{}
@@ -86,7 +86,7 @@
 580,Bread,Bread,0,150,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 581,Mushroom,Edible Mushroom,0,40,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(20,30),0; },{},{}
 582,Orange,Orange,0,300,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,20),rand(10,20); },{},{}
-583,Ketupat_,Ketupat,0,7000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),rand(40,60); },{},{}
+583,Ketupat_,Ketupat,0,7000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; },{},{}
 584,Skewer_Soup,Skewer Soup,0,100,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,70),0; },{},{}
 585,Brusti,Brusti,0,2,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(15,20),0; itemskill 74,3,"Magnificat"; },{},{}
 586,Mother's_Cake,Mother's Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}

@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/12
+	* Added full status recovery to some healing items [Playtester]
 12/11
 	* Readded removed mobs in a commented form [Playtester]
 	- also commented all invalid and missing sprite mobs
