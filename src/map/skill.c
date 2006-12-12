@@ -11647,8 +11647,8 @@ int do_init_skill (void)
 	skill_readdb();
 	skill_dance_switch_sub(NULL, NULL, 2); //Initialize Song/Dance overlap switch code.
 	
-	skill_unit_ers = ers_new((uint32)sizeof(struct skill_unit_group));
-	skill_timer_ers  = ers_new((uint32)sizeof(struct skill_timerskill));
+	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
+	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 	
 	if (battle_config.skill_sp_override_grffile)
 		skill_read_skillspamount();

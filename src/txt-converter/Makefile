@@ -2,14 +2,14 @@ all sql: char-converter login-converter
 
 char-converter: char-converter.o ../common/obj/minicore.o \
 	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/strlib.o \
-	../common/obj/mapindex.o ../common/obj/ers.o \
+	../common/obj/mapindex.o ../common/obj/ers.o ../common/obj/utils.o \
 	../char/char.o ../char/int_pet.o ../char/int_storage.o ../char/inter.o \
 	../char/int_party.o ../char/int_guild.o \
 	../char_sql/char.o ../char_sql/int_pet.o ../char_sql/int_storage.o \
 	../char_sql/inter.o ../char_sql/int_party.o ../char_sql/int_guild.o
 	$(CC) -o ../../tools/$@ $^ $(LIB_S)
 
-login-converter: login-converter.o ../common/obj/minicore.o ../common/obj/db.o ../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/ers.o
+login-converter: login-converter.o ../common/obj/minicore.o ../common/obj/db.o ../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/ers.o ../common/obj/utils.o
 	$(CC) -o ../../tools/$@ $^ $(LIB_S)
 
 clean:

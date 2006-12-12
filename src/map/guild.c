@@ -206,7 +206,7 @@ void do_init_guild(void)
 	castle_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	guild_expcache_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	guild_infoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-	expcache_ers = ers_new((uint32)sizeof(struct guild_expcache)); 
+	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
 	guild_castleinfoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 
 	guild_read_castledb();

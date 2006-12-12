@@ -1371,8 +1371,8 @@ int do_init_pet(void)
 	malloc_set(pet_db,0,sizeof(pet_db));
 	read_petdb();
 
-	item_drop_ers = ers_new((uint32)sizeof(struct item_drop));
-	item_drop_list_ers = ers_new((uint32)sizeof(struct item_drop_list));
+	item_drop_ers = ers_new(sizeof(struct item_drop));
+	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
 	
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");

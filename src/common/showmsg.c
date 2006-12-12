@@ -230,7 +230,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 		{	// from here, we will skip the '\033['
 			// we break at the first unprocessible position
 			// assuming regular text is starting there
-			uchar numbers[16], numpoint=0;
+			uint8 numbers[16], numpoint=0;
 			CONSOLE_SCREEN_BUFFER_INFO info;
 
 			// initialize
@@ -266,7 +266,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 				}
 				else if( *q == 'm' )
 				{	// \033[#;...;#m - Set Graphics Rendition (SGR)
-					uint i;
+					uint8 i;
 					for(i=0; i<= numpoint; ++i)
 					{
 						if( 0x00 == (0xF0 & numbers[i]) )
@@ -314,7 +314,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 						}
 						else if( 0x30 == (0xF0 & numbers[i]) )
 						{	// foreground
-							uint num = numbers[i]&0x0F;
+							uint8 num = numbers[i]&0x0F;
 							if(num==9) info.wAttributes |= FOREGROUND_INTENSITY;
 							if(num>7) num=7;	// set white for 37, 38 and 39
 							info.wAttributes &= ~(FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
@@ -327,7 +327,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 						}
 						else if( 0x40 == (0xF0 & numbers[i]) )
 						{	// background
-							uint num = numbers[i]&0x0F;
+							uint8 num = numbers[i]&0x0F;
 							if(num==9) info.wAttributes |= BACKGROUND_INTENSITY;
 							if(num>7) num=7;	// set white for 47, 48 and 49
 							info.wAttributes &= ~(BACKGROUND_RED|BACKGROUND_GREEN|BACKGROUND_BLUE);
@@ -347,7 +347,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					//    \033[0J - Clears the screen from cursor to end of display. The cursor position is unchanged.
 					//    \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
 					//    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
-					uint num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
+					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					int cnt;
 					COORD origin = {0,0};
 					if(num==1)
@@ -373,7 +373,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					//    \033[1K - Clears all characters from start of line to the cursor position.
 					//    \033[2K - Clears all characters of the whole line.
 
-					uint num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
+					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					COORD origin = {0,info.dwCursorPosition.Y};
 					SHORT cnt;
 					if(num==1)

@@ -8,10 +8,9 @@
 #include <math.h>
 #include <limits.h>
 
-#include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
-#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"

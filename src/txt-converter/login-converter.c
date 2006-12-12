@@ -4,12 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "cbasetypes.h"
+#ifdef __WIN32
 #include <my_global.h>
+#include <my_sys.h>
+#endif
 #include <mysql.h>
 
+#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/db.h"
-#include "../common/mmo.h"
 
 struct auth_dat_ {
 	int account_id, sex;

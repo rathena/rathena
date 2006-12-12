@@ -54,35 +54,6 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-// useful typedefs
-//////////////////////////////////////////////////////////////////////////
-#define HAVE_UCHAR
-typedef unsigned char	uchar;
-typedef   signed char	schar;
-typedef   signed short	sshort;
-
-#if !defined(__FREEBSD__) && !defined(_SYS_TYPES_H)
-	typedef unsigned short  ushort;
-#endif
-typedef   signed int    sint;   // don't use (only for ie. scanf)
-#if !defined(__FREEBSD__) && !defined(_SYS_TYPES_H)
-	typedef unsigned int    uint;   // don't use
-#endif
-typedef   signed long   slong;  // don't use (only for ie. file-io)
-#ifndef _SYS_TYPES_H
-	typedef unsigned long   ulong;  // don't use
-#endif
-
-#ifndef WIN32
-typedef char*           pchar;
-typedef unsigned char*	puchar;
-#endif
-typedef const char*     cchar;
-typedef void*			ptr;
-typedef int*			pint;
-
-
-//////////////////////////////////////////////////////////////////////////
 // typedefs to compensate type size change from 32bit to 64bit
 // MS implements LLP64 model, normal unix does LP64,
 // only Silicon Graphics/Cray goes ILP64 so don't care (and don't support)
@@ -235,7 +206,7 @@ typedef unsigned long long	uint64;
 //////////////////////////////
 
 // boolean types for C
-typedef int bool;
+typedef char bool;
 #define false	(1==0)
 #define true	(1==1)
 

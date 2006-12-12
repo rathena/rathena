@@ -159,7 +159,7 @@ typedef enum {
 typedef union {
 	int i;
 	unsigned int ui;
-	unsigned char *str;
+	unsigned char *str;//## TODO change to 'const char *'
 } DBKey;
 
 /**

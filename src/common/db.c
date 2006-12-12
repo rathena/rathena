@@ -186,7 +186,7 @@ typedef struct db {
 	unsigned int free_max;
 	unsigned int free_lock;
 	// Other
-	ERInterface nodes;
+	ERS nodes;
 	DBComparator cmp;
 	DBHasher hash;
 	DBReleaser release;
@@ -2165,7 +2165,7 @@ DBInterface db_alloc(const char *file, int line, DBType type, DBOptions options,
 	db->free_max = 0;
 	db->free_lock = 0;
 	/* Other */
-	db->nodes = ers_new((uint32)sizeof(struct dbn));
+	db->nodes = ers_new(sizeof(struct dbn));
 	db->cmp = db_default_cmp(type);
 	db->hash = db_default_hash(type);
 	db->release = db_default_release(type, options);

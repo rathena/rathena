@@ -3013,7 +3013,7 @@ int do_init_npc(void)
 	npcname_db = db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_BASE,NAME_LENGTH);
 
 	malloc_set(&ev_tm_b, -1, sizeof(ev_tm_b));
-	timer_event_ers = ers_new((uint32)sizeof(struct timer_event_data));
+	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 
 	for (nsl = npc_src_first; nsl; nsl = nsl->next) {
 		npc_parsesrcfile(nsl->name);

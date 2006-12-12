@@ -4480,7 +4480,7 @@ int battle_config_read(const char *cfgName)
 }
 
 void do_init_battle(void) {
-	delay_damage_ers = ers_new((uint32)sizeof(struct delay_damage));
+	delay_damage_ers = ers_new(sizeof(struct delay_damage));
 }
 
 void do_final_battle(void) {

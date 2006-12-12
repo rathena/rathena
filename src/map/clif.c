@@ -3242,7 +3242,7 @@ int clif_changeoption(struct block_list* bl)
 	WBUFW(buf,6) = sc->opt1;
 	WBUFW(buf,8) = sc->opt2;
 	WBUFL(buf,10) = sc->option;
-	WBUFB(buf,14) = 0;	// ??
+	WBUFB(buf,14) = 0;	// PK???
 	if(disguised(bl)) {
 		clif_send(buf,packet_len_table[0x229],bl,AREA_WOS);
 		WBUFL(buf,2) = -bl->id;
