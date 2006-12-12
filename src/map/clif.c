@@ -7287,7 +7287,13 @@ int clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char
 	return 0;
 }
 /*==========================================
- * ƒMƒ‹ƒh“¯–¿Œ‹‰Ê
+ * Reply to alliance request.
+ * Flag values are:
+ * 0: Already allied.
+ * 1: You rejected the offer.
+ * 2: You accepted the offer.
+ * 3: They have too any alliances
+ * 4: You have too many alliances.
  *------------------------------------------
  */
 int clif_guild_allianceack(struct map_session_data *sd,int flag)
@@ -10787,6 +10793,9 @@ void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd) {
 	
 	RFIFOHEAD(fd);	
 
+	if(!sd->state.gmaster_flag)
+		return;
+
 	if(map[sd->bl.m].flag.guildlock)
 	{	//Guild locked.
 		clif_displaymessage(fd, msg_txt(228));
@@ -10819,6 +10828,10 @@ void clif_parse_GuildReplyAlliance(int fd, struct map_session_data *sd) {
  */
 void clif_parse_GuildDelAlliance(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
+	
+	if(!sd->state.gmaster_flag)
+		return;
+
 	if(map[sd->bl.m].flag.guildlock)
 	{	//Guild locked.
 		clif_displaymessage(fd, msg_txt(228));
@@ -10835,6 +10848,9 @@ void clif_parse_GuildOpposition(int fd, struct map_session_data *sd) {
 	
 	struct map_session_data *t_sd;
 	RFIFOHEAD(fd);	
+
+	if(!sd->state.gmaster_flag)
+		return;
 
 	if(map[sd->bl.m].flag.guildlock)
 	{	//Guild locked.
