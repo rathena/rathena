@@ -289,9 +289,9 @@ void flush_fifo(int fd, int lock)
 		return;
 	if (lock)
 	{	//Lock the thread until data is sent.
-		set_nonblocking(fd, 1);
-		send_from_fifo(fd);
 		set_nonblocking(fd, 0);
+		send_from_fifo(fd);
+		set_nonblocking(fd, 1);
 		return;
 	}
 	//Send without locking the thread.
