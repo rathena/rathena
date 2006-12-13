@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+12/13
+	* Fixed exploit in the Slotted Sunglasses Quest [KarLaeda]
 12/11
 	* Adjusted Rachel Sanctuary entrance to prevent exploits [Playtester]
 	- added Ktullanux to spawns until the quest is added

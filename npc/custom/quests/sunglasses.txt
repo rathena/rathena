@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Aegis - amichan
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any eAthena Version;
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 by Aegis 1.1 by aichan 1.2 by x[tsk] 1.3 by Darkchild
 //= 1.5 Fixed Exploit [Lupus]
+//= 1.6 Fixed Exploit [KarLaeda]
 //============================================================
 
 // quest will reset it self after 1 pair of Slotted Sunglasses is made. 
@@ -126,11 +127,11 @@ L_SG_Q2_Check:
 	mes "[Maseph]";
 	mes "Here you go my friend.";
 	getitem 2202,1;
+// quest reset
+	set SG_QUEST1,0;
 	next;
 	mes "[Maseph]";
 	mes "Enjoy your ^000088Slotted Sunglasses^000000.";
-// quest reset
-	set SG_QUEST1,0;
 	close;
 L_SG_Sunglasses:
 	mes "[Maseph]";
@@ -141,4 +142,3 @@ L_SG_Funds:
 	mes "You do not have enough money. Please come back to me when you do.";
 	close;
 }
- 
