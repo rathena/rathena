@@ -158,7 +158,7 @@ void do_close(int fd);
 void socket_init(void);
 void socket_final(void);
 
-extern void flush_fifo(int fd);
+extern void flush_fifo(int fd, int lock);
 extern void flush_fifos(void);
 extern void set_nonblocking(int fd, int yes);
 

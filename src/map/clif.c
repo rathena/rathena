@@ -8502,7 +8502,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	WFIFOW(fd,0)=0x7f;
 	WFIFOL(fd,2)=gettick();
 	WFIFOSET(fd,packet_len_table[0x7f]);
-	flush_fifo(fd); // send immediatly so the client gets accurate "pings"
+	flush_fifo(fd,0); // send immediatly so the client gets accurate "pings"
 	return;
 }
 
