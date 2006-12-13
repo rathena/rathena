@@ -1633,44 +1633,48 @@ static struct Damage battle_calc_weapon_attack(
 		}
 		//Div fix.
 		damage_div_fix(wd.damage, wd.div_);
-		//Here comes a second pass for skills that stack to the previously defined % damage. [Skotlex]
-		skillratio = 100;
-		//Skill damage modifiers that affect linearly stacked damage.
-		if (sc && skill_num != PA_SACRIFICE) {
+
+		//The following are applied on top of current damage and are stackable.
+		if (sc) {
 			if(sc->data[SC_TRUESIGHT].timer != -1)
-				skillratio += 2*sc->data[SC_TRUESIGHT].val1;
-			// It is still not quite decided whether it works on bosses or not...
-			if(sc->data[SC_EDP].timer != -1 /*&& !(t_mode&MD_BOSS)*/ && skill_num != ASC_BREAKER && skill_num != ASC_METEORASSAULT)
-				skillratio += sc->data[SC_EDP].val3;
+				ATK_ADDRATE(2*sc->data[SC_TRUESIGHT].val1);
+
+			if(sc->data[SC_EDP].timer != -1 &&
+			  	skill_num != ASC_BREAKER &&
+				skill_num != ASC_METEORASSAULT)
+				ATK_ADDRATE(sc->data[SC_EDP].val3);
 		}
+
 		switch (skill_num) {
 			case AS_SONICBLOW:
-				if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_ASSASIN)
-					skillratio += (map_flag_gvg(src->m))?25:100; //+25% dmg on woe/+100% dmg on nonwoe
+				if (sc && sc->data[SC_SPIRIT].timer != -1 &&
+					sc->data[SC_SPIRIT].val2 == SL_ASSASIN)
+					ATK_ADDRATE(map_flag_gvg(src->m)?25:100); //+25% dmg on woe/+100% dmg on nonwoe
+
 				if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
-					skillratio += 10;
+					ATK_ADDRATE(10);
 			break;
 			case CR_SHIELDBOOMERANG:
-				if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
-					skillratio += 100;
+				if(sc && sc->data[SC_SPIRIT].timer != -1 &&
+					sc->data[SC_SPIRIT].val2 == SL_CRUSADER)
+					ATK_ADDRATE(100);
 				break;
 		}
-		if (sd && sd->skillatk[0].id != 0)
-		{
-			for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id != 0 && sd->skillatk[i].id != skill_num; i++);
-			if (i < MAX_PC_BONUS && sd->skillatk[i].id == skill_num)
-				//May seem wrong as it also applies on top of other modifiers, but adding, say, 10%
-				//to 800% dmg -> 810% would make the bonus a little lame. [Skotlex]
-				skillratio += sd->skillatk[i].val;
-		}
-		if (skillratio != 100)
-			ATK_RATE(skillratio);
 		
 		if(sd)
 		{
-			if (skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE
-				&& skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS
-				&& skill_num != PA_SHIELDCHAIN
+			if (skill_num && sd->skillatk[0].id)
+			{	//Additional skill damage.
+				for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id &&
+				  	sd->skillatk[i].id != skill_num; i++);
+
+				if (i < MAX_PC_BONUS && sd->skillatk[i].id == skill_num)
+					ATK_ADDRATE(sd->skillatk[i].val);
+			}
+
+			if(skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE &&
+				skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS &&
+				skill_num != PA_SHIELDCHAIN
 			  	&& !flag.cri)
 			{	//Elemental/Racial adjustments
 				if(sd->right_weapon.def_ratio_atk_ele & (1<<tstatus->def_ele) ||

@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/13
+	* Additional damage bonuses (True Sight, EDP, Assassin Link, Crusader Link,
+	  Card skill damage bonuses) are now applied independently of each other,
+	  which lets them stack. [Skotlex]
 	* Modified flush_fifo so the code do what is written in the comment [Toms]
 	* Modified flush_fifo so you can decide whether to block the current thread
 	  or not until the data is sent. The server-tick reply no longer blocks the
