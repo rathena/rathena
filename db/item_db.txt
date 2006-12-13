@@ -2412,6 +2412,8 @@
 9025,Bongun_Egg,Bongun Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 9026,Zherlthsh_Egg,Zherlthsh Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 9027,Alice_Egg,Alice Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
+9028,Rice_Cake_Egg,Rice Cake Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
+9029,Gobline_Xmas_Egg,Christmas Goblin Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 // Pet Accessories
 //===================================================================
 10001,Skull_Helm,Skull Helm,8,,10,0,,,,,,,,,,,,,{},{},{}
