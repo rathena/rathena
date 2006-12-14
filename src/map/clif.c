@@ -6869,8 +6869,6 @@ int clif_guild_basicinfo(struct map_session_data *sd)
 		strncpy((char*)WFIFOP(fd,94),msg_txt(299),20);
 
 	WFIFOSET(fd,packet_len_table[WFIFOW(fd,0)]);
-	// Found the appropriate packet field, testing for a trial period. [FlavioJS]
-	//clif_guild_emblem(sd,g);	// Guild emblem vanish fix [Valaris]
 	return 0;
 }
 
@@ -11823,13 +11821,6 @@ int clif_parse(int fd) {
 	}
 
 	sd = (TBL_PC *)session[fd]->session_data;
-
-	if (sd && sd->fd != fd)
-	{	//FIXME: Temporal debug until a certain mysterious crash is fixed.
-		ShowError("Player's connection value is incorrect! %d != %d\n", sd->fd, fd);
-		sd->fd = fd;
-	}
-
 	if (session[fd]->eof) {
 		if (sd) {
 			if (sd->state.autotrade) {

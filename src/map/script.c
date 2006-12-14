@@ -7815,7 +7815,7 @@ int buildin_homunculus_evolution(struct script_state *st)
 	struct map_session_data *sd;
 	sd=script_rid2sd(st);
 	if ( sd->hd && sd->hd->homunculusDB->evo_class && sd->hd->homunculus.intimacy > 91000 ) {
-		return merc_hom_evolution(sd->hd) ;
+		return !merc_hom_evolution(sd->hd) ;
 	}
 	clif_emotion(&sd->hd->bl, 4) ;	//swt
 	return 0;

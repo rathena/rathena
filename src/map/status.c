@@ -1106,8 +1106,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 0;
 	default:
 		//Check for chase-walk/hiding/cloaking opponents.
-		if (tsc && tsc->option&hide_flag && !(status->mode&MD_BOSS) && 
-			!(status->mode&MD_DETECTOR))
+		if (tsc && tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
 			return 0;
 	}
 	return 1;
@@ -1136,19 +1135,17 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	switch (target->type)
 	{	//Check for chase-walk/hiding/cloaking opponents.
 	case BL_PC:
-		{
-			if(tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) &&
-				!(status->mode&MD_BOSS) &&
-				(
-				 	((TBL_PC*)target)->special_state.perfect_hiding ||
-				  	!(status->mode&MD_DETECTOR)
-				))
-				return 0;
-		}
+		if(tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) &&
+			!(status->mode&MD_BOSS) &&
+			(
+				((TBL_PC*)target)->special_state.perfect_hiding ||
+				!(status->mode&MD_DETECTOR)
+			))
+			return 0;
 		break;
 	default:
 		if (tsc && tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) &&
-			!(status->mode&MD_BOSS) && !(status->mode&MD_DETECTOR))
+			!(status->mode&(MD_BOSS|MD_DETECTOR)))
 				return 0;
 	}
 
@@ -4646,6 +4643,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_COMA:
 			case SC_GRAVITATION:
 			case SC_SUITON:
+			case SC_STRIPWEAPON:
+			case SC_STRIPSHIELD:
+			case SC_STRIPARMOR:
+			case SC_STRIPHELM:
 				return 0;
 		}
 	}
@@ -4927,19 +4928,58 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			break;
 		case SC_STRIPWEAPON:
-			if (bl->type != BL_PC) //Watk reduction
+			if (sd) {
+				int i;
+				if(sd->unstripable_equip&EQP_WEAPON)
+					return 0;
+				i = sd->equip_index[EQI_HAND_L];
+				if (i>=0 && sd->inventory_data[i] &&
+					sd->inventory_data[i]->type == IT_WEAPON)
+					pc_unequipitem(sd,i,3); //L-hand weapon
+
+				i = sd->equip_index[EQI_HAND_R];
+				if (i<0 || !sd->inventory_data[i] ||
+					sd->inventory_data[i]->type != IT_WEAPON)
+					return 0;
+				pc_unequipitem(sd,i,3);
+			} else //Watk reduction
 				val2 = 5*val1;
 			break;
 		case SC_STRIPSHIELD:
-			if (bl->type != BL_PC) //Def reduction
+			if (sd) {
+				int i;
+				if(sd->unstripable_equip&EQP_SHIELD)
+					return 0;
+				i = sd->equip_index[EQI_HAND_L];
+				if (i<0 || !sd->inventory_data[i] ||
+					sd->inventory_data[i]->type != IT_ARMOR)
+					return 0;
+				pc_unequipitem(sd,i,3);
+			} else //Def reduction
 				val2 = 3*val1;
 			break;
 		case SC_STRIPARMOR:
-			if (bl->type != BL_PC) //Vit reduction
+			if (sd) {
+				int i;
+				if(sd->unstripable_equip&EQP_ARMOR)
+					return 0;
+				i = sd->equip_index[EQI_ARMOR];
+				if (i<0 || !sd->inventory_data[i])
+					return 0;
+				pc_unequipitem(sd,i,3);
+			} else //Vit reduction
 				val2 = 8*val1;
 			break;
 		case SC_STRIPHELM:
-			if (bl->type != BL_PC) //Int reduction
+			if (sd) {
+				int i;
+				if(sd->unstripable_equip&EQP_HELM)
+					return 0;
+				i = sd->equip_index[EQI_HEAD_TOP];
+				if (i<0 || !sd->inventory_data[i])
+					return 0;
+				pc_unequipitem(sd,i,3);
+			} else //Int reduction
 				val2 = 8*val1;
 			break;
 		case SC_AUTOSPELL:
