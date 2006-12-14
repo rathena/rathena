@@ -19,6 +19,9 @@
 	-----
 
 ========================
+12/14
+	* Old Purple Box now drops Assassin_Mask_ instead of the old one [Playtester]
+	- the old one got removed and will now crash the client
 12/13
 	* Added two new pet eggs [Playtester]
 	* Added boss mode (0x20) to a few mobs that were missing it. [Skotlex]

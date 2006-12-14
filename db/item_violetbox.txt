@@ -8974,7 +8974,7 @@
 2,5007,1	//Grand Circlet
 2,5017,1	//Bone Helm
 2,5019,1	//Corsair
-2,5054,1	//Assassin Mask
+2,5096,1	//Assassin Mask
 2,5066,1	//Succubus Horn
 2,5072,1	//Incubus Horn
 2,5053,1	//Sphinx Hat
