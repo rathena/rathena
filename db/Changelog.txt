@@ -20,6 +20,7 @@
 
 ========================
 12/14
+	* Capped Dex to 255 in the mob_db [Playtester]
 	* Old Purple Box now drops Assassin_Mask_ instead of the old one [Playtester]
 	- the old one got removed and will now crash the client
 12/13
