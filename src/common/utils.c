@@ -18,6 +18,7 @@
 #include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/cbasetypes.h"
 
 void dump(unsigned char *buffer, int num)
 {

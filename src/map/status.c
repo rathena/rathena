@@ -6039,9 +6039,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		case SC_WEDDING:
 		case SC_XMAS:
 			if (!vd) return 0;
-			if (sd) //Load data from sd->status.* as the stored values could have changed.
+			if (sd)
+			{	//Load data from sd->status.* as the stored values could have changed.
+				//Must remove OPTION to prevent class being rechanged.
+				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:~OPTION_XMAS;
 				status_set_viewdata(bl, sd->status.class_);
-			else {
+			} else {
 				vd->class_ = sc->data[type].val1;
 				vd->weapon = sc->data[type].val2;
 				vd->shield = sc->data[type].val3;

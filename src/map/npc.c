@@ -1657,7 +1657,12 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 		nd->u.shop_item[pos].nameid = nameid;
 		id = itemdb_search(nameid);
 		if (value < 0)
+		{
+			if (id->value_buy == 20)
+				ShowWarning ("Selling item %s [%d] with no buying price (defaults to %d) at %s\n",
+					id->name, id->nameid, id->value_buy, current_file);
 			value = id->value_buy;
+		}
 		nd->u.shop_item[pos].value = value;
 		// check for bad prices that can possibly cause exploits
 		if (value/124. < id->value_sell/75.) {  //Clened up formula to prevent overflows.
