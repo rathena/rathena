@@ -988,7 +988,7 @@
 2308,Mantle_,Mantle,5,10000,,600,,4,,1,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
 2309,Coat,Coat,5,22000,,1200,,5,,0,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
 2310,Coat_,Coat,5,22000,,1200,,5,,1,0xFFFFFFFE,7,2,16,,0,1,0,{},{},{}
-2311,Mink_Coat,Mink Coat,5,,10,2300,,6,,1,0xFFFFFFFE,7,2,16,,30,1,0,{},{},{}
+2311,Mink_Coat,Mink Coat,5,50000,,2300,,6,,1,0xFFFFFFFE,7,2,16,,30,1,0,{},{},{}
 2312,Padded_Armor,Padded Armor,5,48000,,2800,,7,,0,0x000654E2,7,2,16,,0,1,0,{ if(isequipped(2656)) { bonus bDef,5; bonus bMaxHP,150; } },{},{}
 2313,Padded_Armor_,Padded Armor,5,48000,,2800,,7,,1,0x000654E2,7,2,16,,0,1,0,{ if(isequipped(2656)) { bonus bDef,5; bonus bMaxHP,150; } },{},{}
 2314,Chain_Mail,Chain Mail,5,65000,,3300,,8,,0,0x000654E2,7,2,16,,0,1,0,{},{},{}

@@ -20,6 +20,7 @@
 
 ========================
 12/15
+	* Reverted price of Mink Coat [Playtester]
 	* Updated some more headgears [Playtester]
 12/14
 	* Added some new headgears [Playtester]
