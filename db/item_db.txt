@@ -964,16 +964,16 @@
 2285,Apple_Of_Archer,Apple of Archer,5,20,,200,,0,,0,0xFFFFFFFE,7,2,256,,30,1,72,{ bonus bDex,3; },{},{}
 2286,Elven_Ears,Elven Ears,5,20,,100,,0,,0,0xFFFFFFFE,7,2,512,,70,0,73,{},{},{}
 2287,Pirate_Bandana,Pirate Bandana,5,20,,100,,3,,0,0xFFFFFFFE,7,2,256,,0,1,74,{ bonus bStr,1; },{},{}
-2288,Mr_Scream,Mr. Scream,5,,10,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,75,{},{},{}
+2288,Mr_Scream,Mr. Scream,5,20,,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,75,{},{},{}
 2289,Poo_Poo_Hat,Poo Poo Hat,5,20,,700,,0,,0,0xFFFFFFFF,7,2,256,,0,0,76,{ bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 2290,Funeral_Costume,Funeral Hat,5,3000,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,0,77,{},{},{}
 2291,Masquerade,Masquerade,5,20,,100,,0,,0,0xFFFFFFFE,7,2,512,,0,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; },{},{}
-2292,Welding_Mask,Welding Mask,5,,10,300,,2,,0,0x00040420,7,2,513,,50,0,79,{ bonus2 bSubEle,Ele_Fire,10; },{},{}
+2292,Welding_Mask,Welding Mask,5,20,,300,,2,,0,0x00040420,7,2,513,,50,0,79,{ bonus2 bSubEle,Ele_Fire,10; },{},{}
 2293,Pretend_Murdered,Pretend Murdered,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,0,80,{},{},{}
 2294,Star_Dust,Stellar,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,81,{},{},{}
 2295,Blinker,Blinker,5,1500,,100,,0,,0,0xFFFFFFFE,7,2,512,,0,0,82,{ bonus2 bResEff,Eff_Blind,10000; },{},{}
 2296,Binoculars,Binoculars,5,20,,100,,1,,0,0x00080808,7,2,512,,50,0,83,{ bonus bDex,1; },{},{}
-2297,Goblini_Mask,Goblin Mask,5,,10,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,84,{},{},{}
+2297,Goblini_Mask,Goblin Mask,5,20,,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,84,{},{},{}
 2298,Green_Feeler,Green Feeler,5,20,,100,,2,,0,0xFFFFFFFF,7,2,256,,0,0,85,{},{},{}
 2299,Viking_Helm,Orc Helm,5,20,,500,,5,,0,0x000654E2,7,2,256,,0,1,86,{},{},{}
 // Armors
@@ -1585,7 +1585,7 @@
 5002,Gemmed_Crown,Jewel Crown,5,20,,600,,4,,0,0x000654E2,7,2,256,,60,1,88,{ bonus bMdef,3; bonus bInt,2; bonus bLuk,1; },{},{}
 5003,Joker_Jester,Joker Jester,5,20,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,89,{ bonus bMdef,5; bonus bLuk,2; },{},{}
 5004,Oxygen_Mask,Oxygen Mask,5,20,,200,,0,,0,0xFFFFFFFE,7,2,1,,0,0,90,{ bonus2 bResEff,Eff_Poison,2000; },{},{}
-5005,Gas_Mask,Gas Mask,5,,10,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,91,{ bonus2 bResEff,Eff_Poison,3000; },{},{}
+5005,Gas_Mask,Gas Mask,5,20,,100,,1,,0,0xFFFFFFFE,7,2,513,,0,0,91,{ bonus2 bResEff,Eff_Poison,3000; },{},{}
 5006,Machoman_Glasses,Machoman's Glasses,5,36000,,100,,1,,0,0xFFFFFFFE,7,2,512,,0,0,92,{},{},{}
 5007,Loard_Circlet,Grand Circlet,5,20,,200,,3,,0,0xFFFFFFFE,7,2,256,,55,1,93,{ bonus bMdef,4; bonus bStr,1; bonus bInt,1; bonus bLuk,1; },{},{}
 5008,Puppy_Love,Puppy Love,5,20,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,0,94,{},{},{}
@@ -1633,7 +1633,7 @@
 5050,Mystery_Fruit_Shell,Wonder_Nutshell,5,20,,300,,5,,0,0xFFFFFFFF,7,2,256,,30,0,134,{},{},{}
 5051,Kitty_Bell,Pussy_Cat_Bell,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,135,{},{},{}
 5052,Blue_Hair_Band,Blue Hairband,5,20,,150,,1,,0,0xFFFFFFFF,7,2,256,,0,1,136,{},{},{}
-5053,Spinx_Helm,Sphinx Hat,5,,10,3000,,5,,0,0x00004082,7,2,257,,65,0,137,{ bonus bStr,3; },{},{}
+5053,Spinx_Helm,Sphinx Hat,5,20,,3000,,5,,0,0x00004082,7,2,769,,65,0,137,{ bonus bStr,2; },{},{}
 5054,Assassin_Mask,Assassin Mask,5,,10,100,,0,,0,0x00001100,7,2,1,,70,0,180,{},{},{}
 5055,Novice_Egg_Cap,Novice False Eggshell,5,1,,1,,3,,0,0x00000001,7,2,256,,0,0,101,{},{},{}
 5056,Love_Berry,Fruit of Love,5,1,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,0,140,{},{},{}
@@ -1666,11 +1666,11 @@
 5083,Red_Tailed_Ribbon,Red Ribbon,5,20,,200,,1,,0,0xFFFFFFFF,7,0,256,,45,1,167,{ bonus bMdef,10; },{},{}
 5084,Lazy_Raccoon,Lazy Smokie,5,20,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,168,{ bonus2 bResEff,Eff_Sleep,2000; },{},{}
 5085,Pair_Of_Red_Ribbon,Small Ribbons,5,20,,100,,1,,0,0xFFFFFFFF,7,0,512,,45,0,169,{},{},{}
-5086,Alarm_Mask,Alarm Mask,5,,10,100,,2,,0,0xFFFFFFFE,7,2,513,,0,0,170,{ bonus2 bResEff,Eff_Blind,5000; },{},{}
-5087,Goblin_Mask_01,Poker Face,5,,10,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,171,{},{},{}
-5088,Goblin_Mask_02,Surprised Mask,5,,10,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,172,{},{},{}
-5089,Goblin_Mask_03,Annoyed Mask,5,,10,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,173,{},{},{}
-5090,Goblin_Mask_04,Goblin Leader Mask,5,,10,100,,2,,0,0xFFFFFFFF,7,2,513,,0,0,174,{},{},{}
+5086,Alarm_Mask,Alarm Mask,5,20,,100,,2,,0,0xFFFFFFFE,7,2,513,,0,0,170,{ bonus2 bResEff,Eff_Blind,5000; },{},{}
+5087,Goblin_Mask_01,Poker Face,5,20,,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,171,{},{},{}
+5088,Goblin_Mask_02,Surprised Mask,5,20,,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,172,{},{},{}
+5089,Goblin_Mask_03,Annoyed Mask,5,20,,100,,1,,0,0xFFFFFFFF,7,2,513,,0,0,173,{},{},{}
+5090,Goblin_Mask_04,Goblin Leader Mask,5,20,,100,,2,,0,0xFFFFFFFF,7,2,513,,0,0,174,{},{},{}
 5091,Big_Golden_Bell,Decorative Golden Bell,5,,10,200,,2,,0,0xFFFFFFFE,7,2,768,,35,1,175,{},{},{}
 5092,Blue_Coif,Coif,5,150000,,300,,5,,0,0x00001100,7,0,768,,65,1,176,{},{},{}
 5093,Blue_Coif_,Coif,5,150000,,300,,5,,1,0x00001100,7,0,768,,65,1,177,{ bonus bMaxSP,100; },{},{}
@@ -1746,7 +1746,7 @@
 5163,Corsair_,Corsair,5,20,,500,,5,,1,0xFFFFFFFE,7,2,256,,0,1,105,{ bonus bVit,1; },{},{}
 5164,Tiara_,Tiara,5,20,,400,,4,,1,0xFFFFFFFE,7,0,256,,45,1,19,{ bonus bInt,1; },{},{}
 5165,Crown_,Crown,5,20,,400,,4,,1,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,1; },{},{}
-5166,Sphinx_Hat_,Sphinx Hat,5,,10,3000,,5,,1,0x00004082,7,2,257,,65,0,137,{ bonus bStr,2; },{},{}
+5166,Spinx_Helm_,Sphinx Hat,5,,10,3000,,5,,1,0x00004082,7,2,769,,65,0,137,{ bonus bStr,2; },{},{}
 5167,Munak_Hat_,Munak Hat,5,,10,300,,5,,1,0xFFFFFFFF,7,2,769,,0,0,51,{ bonus2 bSubRace,RC_Undead,10; },{},{}
 5168,Bongun_Hat_,Bongun Hat,5,,10,300,,5,,1,0xFFFFFFFF,7,2,769,,0,0,139,{},{},{}
 5169,Bride_Mask,Bride Mask,5,,10,500,,4,,1,0xFFFFFFFF,7,2,768,,40,1,223,{ if(BaseClass==Job_Taekwon){ bonus bLuk,2; bonus bCritical,5; } },{},{}
@@ -1756,7 +1756,7 @@
 5173,Judge_Hat,Judge Hat,5,30000,,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,227,{ if(BaseClass==Job_Taekwon){ bonus bAgi,1; bonus bHPrecovRate,3; } },{},{}
 5174,A_yam,A-yam,5,30000,,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,228,{ if(BaseClass==Job_Taekwon){ bonus bInt,1; bonus bSPrecovRate,3; } },{},{}
 5175,Anonimity_Request,Anonymity Request,5,30000,,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,229,{ bonus2 bResEff,Eff_Curse,500; bonus bMdef,1; bonus bHit,-5; },{},{}
-5176,Smiling_Mask,Smiling Mask,5,,10,100,,2,,0,0xFFFFFFFF,7,2,513,,30,0,230,{ if(BaseClass==Job_Taekwon){ bonus bLuk,1; bonus bFlee2,2; } },{},{}
+5176,Smiling_Mask,Smiling Mask,5,30000,,100,,2,,0,0xFFFFFFFF,7,2,513,,30,0,230,{ if(BaseClass==Job_Taekwon){ bonus bLuk,1; bonus bFlee2,2; } },{},{}
 5177,Lion_Masquerade,Lion Masquerade,5,,10,500,,5,,1,0xFFFFFFFF,7,2,768,,40,1,231,{ if(BaseClass==Job_Taekwon){ bonus bDex,2; bonus bBaseAtk,2*getrefine(); bonus2 bAddEff,Eff_Stun,100; } },{},{}
 5178,Candle_,Candle,5,20,,150,,0,,0,0xFFFFFFFF,7,2,256,,0,1,113,{ bonus bAllStats,1; },{},{}
 5179,Golden_Tiara,Golden Tiara,5,0,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,232,{ bonus bInt,2; },{},{}
