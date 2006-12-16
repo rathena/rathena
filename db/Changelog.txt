@@ -20,6 +20,7 @@
 
 ========================
 12/16
+	* Updated some weapons and view ids [Playtester]
 	* Fixed prices of arrows [Playtester]
 	* Update remaining headgears [Playtester]
 12/15
