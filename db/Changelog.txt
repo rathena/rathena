@@ -20,6 +20,7 @@
 
 ========================
 12/16
+	* Fixed prices of arrows [Playtester]
 	* Update remaining headgears [Playtester]
 12/15
 	* Reverted price of Mink Coat [Playtester]
