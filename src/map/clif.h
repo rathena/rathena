@@ -10,7 +10,7 @@
 #define PACKETVER			7
 
 // packet DB
-#define MAX_PACKET_DB		0x25f
+#define MAX_PACKET_DB		0x300
 #define MAX_PACKET_VER		25
 
 struct packet_db {

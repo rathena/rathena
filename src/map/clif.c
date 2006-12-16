@@ -53,6 +53,8 @@ struct Clif_Config {
 
 struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 
+static const int packet_len_table[MAX_PACKET_DB];
+/*
 static const int packet_len_table[MAX_PACKET_DB] = {
    10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -110,6 +112,7 @@ static const int packet_len_table[MAX_PACKET_DB] = {
    -1, -1,  -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8,12,  4, 10,
     3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4
 };
+*/
 
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == 7)?4:a
@@ -639,16 +642,26 @@ int clif_authok(struct map_session_data *sd) {
 	WFIFOW(fd, 0) = 0x73;
 	WFIFOL(fd, 2) = gettick();
 	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y, sd->ud.dir);
-	WFIFOB(fd, 9) = 5;
-	WFIFOB(fd,10) = 5;
+	WFIFOB(fd, 9) = 5; // ignored
+	WFIFOB(fd,10) = 5; // ignored
 	WFIFOSET(fd,packet_len_table[0x73]);
 
 	return 0;
 }
 
 /*==========================================
- *
+ * Authentication failed/disconnect client.
  *------------------------------------------
+ * The client closes it's socket and displays a message according to type:
+ *  1 - server closed -> MsgStringTable[4]
+ *  2 - ID already logged in -> MsgStringTable[5]
+ *  3 - timeout/too much lag -> MsgStringTable[241]
+ *  4 - server full -> MsgStringTable[264]
+ *  5 - underaged -> MsgStringTable[305]
+ *  9 - too many connections from this ip -> MsgStringTable[529]
+ *  10 - payed time has ended -> MsgStringTable[530]
+ *  15 - disconnected by a GM -> if( servicetype == taiwan ) MsgStringTable[579]
+ *  other - disconnected -> MsgStringTable[3]
  */
 int clif_authfail_fd(int fd, int type) {
 	if (!fd || !session[fd] || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
@@ -4195,8 +4208,9 @@ int clif_clearchar_skillunit(struct skill_unit *unit,int fd)
 }
 
 /*==========================================
- *
+ * Unknown... trap related?
  *------------------------------------------
+ * Only affects units with class [139,153] client-side
  */
 int clif_01ac(struct block_list *bl)
 {
@@ -12079,6 +12093,7 @@ static int packetdb_readdb(void)
 	char line[1024];
 	int ln=0;
 	int cmd,i,j,k,packet_ver;
+	int max_cmd=-1;
 	char *str[64],*p,*str2[64],*p2,w1[64],w2[64];
 
 	struct {
@@ -12270,6 +12285,8 @@ static int packetdb_readdb(void)
 		if(str[0]==NULL)
 			continue;
 		cmd=strtol(str[0],(char **)NULL,0);
+		if(max_cmd < cmd)
+			max_cmd = cmd;
 		if(cmd<=0 || cmd>=MAX_PACKET_DB)
 			continue;
 		if(str[1]==NULL){
@@ -12324,6 +12341,11 @@ static int packetdb_readdb(void)
 //			printf("packet_db ver %d: %d 0x%x %d %s %p\n",packet_ver,ln,cmd,packet_db[packet_ver][cmd].len,str[2],packet_db[packet_ver][cmd].func);
 	}
 	fclose(fp);
+	if(max_cmd > MAX_PACKET_DB)
+	{
+		ShowWarning("Found packets up to 0x%X, ignored 0x%X and above.\n", max_cmd, MAX_PACKET_DB);
+		ShowWarning("Please increase MAX_PACKET_DB and recompile.\n");
+	}
 	if (!clif_config.connect_cmd[clif_config.packet_db_ver])
 	{	//Locate the nearest version that we still support. [Skotlex]
 		for(j = clif_config.packet_db_ver; j >= 0 && !clif_config.connect_cmd[j]; j--);
