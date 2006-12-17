@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/17
+	* Fixed Owl Duke and Owl Baron losing boss mode on NPC_EMOTION [Playtester]
 12/16
 	* Updated some weapons and view ids [Playtester]
 	* Fixed prices of arrows [Playtester]

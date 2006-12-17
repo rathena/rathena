@@ -1347,7 +1347,7 @@
 1295,Owl Baron@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,,,,,
 1295,Owl Baron@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x37B5,,,,
 1295,Owl Baron@SA_DISPELL,attack,289,5,0,0,30000,yes,target,always,0,,,,,,5
-1295,Owl Baron@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1295,Owl Baron@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0xA1,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,attack,196,2,10000,2000,60000,no,self,slavele,0,1320,,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,idle,196,2,10000,2000,60000,no,self,slavele,0,1320,,,,,
 1295,Owl Baron@NPC_SUMMONSLAVE,idle,196,2,10000,0,0,no,self,onspawn,0,1320,,,,,
@@ -1537,7 +1537,7 @@
 1320,Owl Duke@MG_LIGHTNINGBOLT,chase,20,3,2000,0,5000,yes,target,always,0,,,,,,
 1320,Owl Duke@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,,,,,
 1320,Owl Duke@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,6,0x37B5,,,,
-1320,Owl Duke@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,
+1320,Owl Duke@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0xA1,,,,
 1321,Dragon Tail@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
 1321,Dragon Tail@NPC_SLEEPATTACK,attack,182,3,500,0,5000,yes,target,always,0,,,,,,
 1321,Dragon Tail@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
