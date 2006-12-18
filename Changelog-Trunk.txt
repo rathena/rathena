@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/12/18
+	* Cosmetic changes to db.
+	* Fixed the unused MAPINDEX_AUTOADD section in mapindex.c (mapindex.h 
+	  wasn't being included) [FlavioJS]
 2006/12/16
 	* Moved packet_len_table values to packet_db[SERVER].
 	* When an invalid packet_ver is found, all it's entries are discarted 

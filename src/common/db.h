@@ -23,8 +23,8 @@
  *  HISTORY:                                                                 *
  *    2.1 (Athena build #???#) - Portability fix                             *
  *      - Fixed the portability of casting to union and added the functions  *
- *        {@link DBInterface#ensure(DBInterface,DBKey,DBCreateData,...)} and *
- *        {@link DBInterface#clear(DBInterface,DBApply,...)}.                *
+ *        {@link DB#ensure(DB,DBKey,DBCreateData,...)} and                   *
+ *        {@link DB#clear(DB,DBApply,...)}.                                  *
  *    2.0 (Athena build 4859) - Transition version                           *
  *      - Almost everything recoded with a strategy similar to objects,      *
  *        database structure is maintained.                                  *
@@ -51,11 +51,11 @@
  *  DBOptions    - Bitfield enumeration of database options.                 *
  *  DBKey        - Union of used key types.                                  *
  *  DBApply      - Format of functions applyed to the databases.             *
- *  DBMatcher    - Format of matchers used in DBInterface->getall.           *
+ *  DBMatcher    - Format of matchers used in DB::getall.                    *
  *  DBComparator - Format of the comparators used by the databases.          *
  *  DBHasher     - Format of the hashers used by the databases.              *
  *  DBReleaser   - Format of the releasers used by the databases.            *
- *  DBInterface  - Structure of the interface of the database.               *
+ *  DB           - Database interface.                                       *
 \*****************************************************************************/
 
 /**
@@ -120,7 +120,7 @@ typedef enum {
  * @param DB_OPT_RELEASE_KEY Releases the key.
  * @param DB_OPT_RELEASE_DATA Releases the data whenever an entry is removed 
  *          from the database.
- *          WARNING: for funtions that return the data (like DBInterface->remove),
+ *          WARNING: for funtions that return the data (like DB::remove),
  *          a dangling pointer will be returned.
  * @param DB_OPT_RELEASE_BOTH Releases both key and data.
  * @param DB_OPT_ALLOW_NULL_KEY Allow NULL keys in the database.
@@ -147,16 +147,11 @@ typedef enum {
  * @param str Type of key for DB_STRING and DB_ISTRING databases
  * @public
  * @see #DBType
- * @see #DBApply(DBKey,void *,va_list)
- * @see #DBMatcher(DBKey,void *,va_list)
- * @see #DBComparator(DBKey,DBKey,unsigned short)
- * @see #DBHasher(DBKey,unsigned short)
- * @see #DBReleaser(DBKey,void *,DBRelease)
- * @see DBInterface#get(DBInterface,DBKey)
- * @see DBInterface#put(DBInterface,DBKey,void *)
- * @see DBInterface#remove(DBInterface,DBKey)
+ * @see DB#get
+ * @see DB#put
+ * @see DB#remove
  */
-typedef union {
+typedef union dbkey {
 	int i;
 	unsigned int ui;
 	unsigned char *str;//## TODO change to 'const char *'
@@ -169,9 +164,8 @@ typedef union {
  * @param args Extra arguments of the funtion
  * @return Data identified by the key to be put in the database
  * @public
- * @see #DBKey
- * @see DBInterface#vensure(DBInterface,DBKey,DBCreateData,va_list)
- * @see DBInterface#ensure(DBInterface,DBKey,DBCreateData,...)
+ * @see DB#vensure
+ * @see DB#ensure
  */
 typedef void *(*DBCreateData)(DBKey key, va_list args);
 
@@ -185,11 +179,10 @@ typedef void *(*DBCreateData)(DBKey key, va_list args);
  * @param args Extra arguments of the funtion
  * @return Value to be added up by the funtion that is applying this
  * @public
- * @see #DBKey
- * @see DBInterface#vforeach(DBInterface,DBApply,va_list)
- * @see DBInterface#foreach(DBInterface,DBApply,...)
- * @see DBInterface#vdestroy(DBInterface,DBApply,va_list)
- * @see DBInterface#destroy(DBInterface,DBApply,...)
+ * @see DB#vforeach
+ * @see DB#foreach
+ * @see DB#vdestroy
+ * @see DB#destroy
  */
 typedef int (*DBApply)(DBKey key, void *data, va_list args);
 
@@ -202,8 +195,7 @@ typedef int (*DBApply)(DBKey key, void *data, va_list args);
  * @param args Extra arguments of the function
  * @return 0 if a match, another number otherwise
  * @public
- * @see #DBKey
- * @see DBInterface#getall(DBInterface,void **,unsigned int,DBMatcher,...)
+ * @see DB#getall
  */
 typedef int (*DBMatcher)(DBKey key, void *data, va_list args);
 
@@ -219,7 +211,6 @@ typedef int (*DBMatcher)(DBKey key, void *data, va_list args);
  *          databases.
  * @return 0 if equal, negative if lower and positive if higher
  * @public
- * @see #DBKey
  * @see #db_default_cmp(DBType)
  */
 typedef int (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
@@ -234,7 +225,6 @@ typedef int (*DBComparator)(DBKey key1, DBKey key2, unsigned short maxlen);
  *          databases.
  * @return Hash of the key
  * @public
- * @see #DBKey
  * @see #db_default_hash(DBType)
  */
 typedef unsigned int (*DBHasher)(DBKey key, unsigned short maxlen);
@@ -248,7 +238,6 @@ typedef unsigned int (*DBHasher)(DBKey key, unsigned short maxlen);
  * @param which What is being requested to be released
  * @public
  * @see #DBRelease
- * @see #DBKey
  * @see #db_default_releaser(DBType,DBOptions)
  * @see #db_custom_release(DBRelease)
  */
@@ -258,21 +247,22 @@ typedef void (*DBReleaser)(DBKey key, void *data, DBRelease which);
  * Public interface of a database. Only contains funtions.
  * All the functions take the interface as the first argument.
  * @public
- * @see DBInterface#get(DBInterface,DBKey)
- * @see DBInterface#getall(DBInterface,void **,unsigned int,DBMatch,...)
- * @see DBInterface#vgetall(DBInterface,void **,unsigned int,DBMatch,va_list)
- * @see DBInterface#put(DBInterface,DBKey,void *)
- * @see DBInterface#remove(DBInterface,DBKey)
- * @see DBInterface#foreach(DBInterface,DBApply,...)
- * @see DBInterface#vforeach(DBInterface,DBApply,va_list)
- * @see DBInterface#destroy(DBInterface,DBApply,...)
- * @see DBInterface#destroy(DBInterface,DBApply,va_list)
- * @see DBInterface#size(DBInterface)
- * @see DBInterface#type(DBInterface)
- * @see DBInterface#options(DBInterface)
+ * @see DB#get(DB,DBKey)
+ * @see DB#getall(DB,void **,unsigned int,DBMatch,...)
+ * @see DB#vgetall(DB,void **,unsigned int,DBMatch,va_list)
+ * @see DB#put(DB,DBKey,void *)
+ * @see DB#remove(DB,DBKey)
+ * @see DB#foreach(DB,DBApply,...)
+ * @see DB#vforeach(DB,DBApply,va_list)
+ * @see DB#destroy(DB,DBApply,...)
+ * @see DB#destroy(DB,DBApply,va_list)
+ * @see DB#size(DB)
+ * @see DB#type(DB)
+ * @see DB#options(DB)
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-typedef struct dbt {
+typedef struct dbt *DB;
+struct dbt {
 
 	/**
 	 * Get the data of the entry identifid by the key.
@@ -280,14 +270,12 @@ typedef struct dbt {
 	 * @param key Key that identifies the entry
 	 * @return Data of the entry or NULL if not found
 	 * @protected
-	 * @see #DBKey
-	 * @see #DBInterface
-	 * @see common\db.c#db_get(DBInterface,DBKey)
+	 * @see #db_get(DB,DBKey)
 	 */
 	void *(*get)(struct dbt *dbi, DBKey key);
 
 	/**
-	 * Just calls {@link DBInterface#vgetall(DBInterface,void **,unsigned int,DBMatch,va_list)}.
+	 * Just calls {@link DB#vgetall(DB,void **,unsigned int,DBMatch,va_list)}.
 	 * Get the data of the entries matched by <code>match</code>.
 	 * It puts a maximum of <code>max</code> entries into <code>buf</code>.
 	 * If <code>buf</code> is NULL, it only counts the matches.
@@ -301,12 +289,10 @@ typedef struct dbt {
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see #DBMatcher(DBKey key, void *data, va_list args)
-	 * @see #DBInterface
-	 * @see DBInterface#vgetall(DBInterface,void **,unsigned int,DBMatch,va_list)
-	 * @see common\db.c#db_getall(DBInterface,void **,unsigned int,DBMatch,...)
+	 * @see DB#vgetall
+	 * @see #db_getall(DB,void **,unsigned int,DBMatch,...)
 	 */
-	unsigned int (*getall)(struct dbt *dbi, void **buf, unsigned int max, DBMatcher match, ...);
+	unsigned int (*getall)(DB self, void **buf, unsigned int max, DBMatcher match, ...);
 
 	/**
 	 * Get the data of the entries matched by <code>match</code>.
@@ -322,15 +308,13 @@ typedef struct dbt {
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see #DBMatcher(DBKey key, void *data, va_list args)
-	 * @see #DBInterface
-	 * @see DBInterface#getall(DBInterface,void **,unsigned int,DBMatch,...)
-	 * @see common\db.c#db_vgetall(DBInterface,void **,unsigned int,DBMatch,va_list)
+	 * @see DB#getall
+	 * @see #db_vgetall(DB,void **,unsigned int,DBMatch,va_list)
 	 */
-	unsigned int (*vgetall)(struct dbt *dbi, void **buf, unsigned int max, DBMatcher match, va_list args);
+	unsigned int (*vgetall)(DB self, void **buf, unsigned int max, DBMatcher match, va_list args);
 
 	/**
-	 * Just calls {@link common\db.h\DBInterface#vensure(DBInterface,DBKey,DBCreateData,va_list)}.
+	 * Just calls {@link common\db.h\DB#vensure(DB,DBKey,DBCreateData,va_list)}.
 	 * Get the data of the entry identified by the key.
 	 * If the entry does not exist, an entry is added with the data returned by 
 	 * <code>create</code>.
@@ -340,13 +324,10 @@ typedef struct dbt {
 	 * @param ... Extra arguments for create
 	 * @return Data of the entry
 	 * @protected
-	 * @see #DBKey
-	 * @see #DBCreateData
-	 * @see #DBInterface
-	 * @see DBInterface#vensure(DBInterface,DBKey,DBCreateData,va_list)
-	 * @see common\db.c#db_ensure(DBInterface,DBKey,DBCreateData,...)
+	 * @see DB#vensure(DB,DBKey,DBCreateData,va_list)
+	 * @see #db_ensure(DB,DBKey,DBCreateData,...)
 	 */
-	void *(*ensure)(struct dbt *dbi, DBKey key, DBCreateData create, ...);
+	void *(*ensure)(DB self, DBKey key, DBCreateData create, ...);
 
 	/**
 	 * Get the data of the entry identified by the key.
@@ -358,13 +339,10 @@ typedef struct dbt {
 	 * @param args Extra arguments for create
 	 * @return Data of the entry
 	 * @protected
-	 * @see #DBKey
-	 * @see #DBCreateData
-	 * @see #DBInterface
-	 * @see DBInterface#ensure(DBInterface,DBKey,DBCreateData,...)
-	 * @see common\db.c#db_vensure(DBInterface,DBKey,DBCreateData,va_list)
+	 * @see DB#ensure(DB,DBKey,DBCreateData,...)
+	 * @see #db_vensure(DB,DBKey,DBCreateData,va_list)
 	 */
-	void *(*vensure)(struct dbt *dbi, DBKey key, DBCreateData create, va_list args);
+	void *(*vensure)(DB self, DBKey key, DBCreateData create, va_list args);
 
 	/**
 	 * Put the data identified by the key in the database.
@@ -375,11 +353,9 @@ typedef struct dbt {
 	 * @param data Data to be put in the database
 	 * @return The previous data if the entry exists or NULL
 	 * @protected
-	 * @see #DBKey
-	 * @see #DBInterface
-	 * @see common\db.c#db_put(DBInterface,DBKey,void *)
+	 * @see #db_put(DB,DBKey,void *)
 	 */
-	void *(*put)(struct dbt *dbi, DBKey key, void *data);
+	void *(*put)(DB self, DBKey key, void *data);
 
 	/**
 	 * Remove an entry from the database.
@@ -389,14 +365,12 @@ typedef struct dbt {
 	 * @param key Key that identifies the entry
 	 * @return The data of the entry or NULL if not found
 	 * @protected
-	 * @see #DBKey
-	 * @see #DBInterface
-	 * @see common\db.c#db_remove(DBInterface,DBKey)
+	 * @see #db_remove(DB,DBKey)
 	 */
-	void *(*remove)(struct dbt *dbi, DBKey key);
+	void *(*remove)(DB self, DBKey key);
 
 	/**
-	 * Just calls {@link DBInterface#vforeach(DBInterface,DBApply,va_list)}.
+	 * Just calls {@link DB#vforeach(DB,DBApply,va_list)}.
 	 * Apply <code>func</code> to every entry in the database.
 	 * Returns the sum of values returned by func.
 	 * @param dbi Interface of the database
@@ -404,12 +378,10 @@ typedef struct dbt {
 	 * @param ... Extra arguments for func
 	 * @return Sum of the values returned by func
 	 * @protected
-	 * @see #DBInterface
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see DBInterface#vforeach(DBInterface,DBApply,va_list)
-	 * @see common\db.c#db_foreach(DBInterface,DBApply,...)
+	 * @see DB#vforeach
+	 * @see #db_foreach(DB,DBApply,...)
 	 */
-	int (*foreach)(struct dbt *dbi, DBApply func, ...);
+	int (*foreach)(DB self, DBApply func, ...);
 
 	/**
 	 * Apply <code>func</code> to every entry in the database.
@@ -419,15 +391,13 @@ typedef struct dbt {
 	 * @param args Extra arguments for func
 	 * @return Sum of the values returned by func
 	 * @protected
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see #DBInterface
-	 * @see DBInterface#foreach(DBInterface,DBApply,...)
-	 * @see common\db.c#db_vforeach(DBInterface,DBApply,va_list)
+	 * @see DB#foreach
+	 * @see #db_vforeach(DB,DBApply,va_list)
 	 */
-	int (*vforeach)(struct dbt *dbi, DBApply func, va_list args);
+	int (*vforeach)(DB self, DBApply func, va_list args);
 
 	/**
-	 * Just calls {@link DBInterface#vclear(DBInterface,DBApply,va_list)}.
+	 * Just calls {@link DB#vclear(DB,DBApply,va_list)}.
 	 * Removes all entries from the database.
 	 * Before deleting an entry, func is applyed to it.
 	 * Releases the key and the data.
@@ -437,12 +407,10 @@ typedef struct dbt {
 	 * @param ... Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see #DBInterface
-	 * @see DBInterface#vclear(DBInterface,DBApply,va_list)
-	 * @see common\db.c#db_clear(DBInterface,DBApply,...)
+	 * @see DB#vclear
+	 * @see #db_clear(DB,DBApply,...)
 	 */
-	int (*clear)(struct dbt *dbi, DBApply func, ...);
+	int (*clear)(DB self, DBApply func, ...);
 
 	/**
 	 * Removes all entries from the database.
@@ -454,15 +422,13 @@ typedef struct dbt {
 	 * @param args Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see #DBInterface
-	 * @see DBInterface#clear(DBInterface,DBApply,...)
-	 * @see common\db.c#vclear(DBInterface,DBApply,va_list)
+	 * @see DB#clear
+	 * @see #vclear(DB,DBApply,va_list)
 	 */
-	int (*vclear)(struct dbt *dbi, DBApply func, va_list args);
+	int (*vclear)(DB self, DBApply func, va_list args);
 
 	/**
-	 * Just calls {@link DBInterface#vdestroy(DBInterface,DBApply,va_list)}.
+	 * Just calls {@link DB#vdestroy(DB,DBApply,va_list)}.
 	 * Finalize the database, feeing all the memory it uses.
 	 * Before deleting an entry, func is applyed to it.
 	 * Releases the key and the data.
@@ -474,12 +440,10 @@ typedef struct dbt {
 	 * @param ... Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see #DBInterface
-	 * @see DBInterface#vdestroy(DBInterface,DBApply,va_list)
-	 * @see common\db.c#db_destroy(DBInterface,DBApply,...)
+	 * @see DB#vdestroy
+	 * @see #db_destroy(DB,DBApply,...)
 	 */
-	int (*destroy)(struct dbt *dbi, DBApply func, ...);
+	int (*destroy)(DB self, DBApply func, ...);
 
 	/**
 	 * Finalize the database, feeing all the memory it uses.
@@ -492,46 +456,39 @@ typedef struct dbt {
 	 * @param args Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see #DBInterface
-	 * @see #DBApply(DBKey,void *,va_list)
-	 * @see DBInterface#destroy(DBInterface,DBApply,...)
-	 * @see common\db.c#db_vdestroy(DBInterface,DBApply,va_list)
+	 * @see DB#destroy
+	 * @see #db_vdestroy(DB,DBApply,va_list)
 	 */
-	int (*vdestroy)(struct dbt *dbi, DBApply func, va_list args);
+	int (*vdestroy)(DB self, DBApply func, va_list args);
 
 	/**
 	 * Return the size of the database (number of items in the database).
 	 * @param dbi Interface of the database
 	 * @return Size of the database
 	 * @protected
-	 * @see #DBInterface
-	 * @see common\db.c#db_size(DBInterface)
+	 * @see #db_size(DB)
 	 */
-	unsigned int (*size)(struct dbt *dbi);
+	unsigned int (*size)(DB self);
 
 	/**
 	 * Return the type of the database.
 	 * @param dbi Interface of the database
 	 * @return Type of the database
 	 * @protected
-	 * @see #DBType
-	 * @see #DBInterface
-	 * @see common\db.c#db_type(DBInterface)
+	 * @see #db_type(DB)
 	 */
-	DBType (*type)(struct dbt *dbi);
+	DBType (*type)(DB self);
 
 	/**
 	 * Return the options of the database.
 	 * @param dbi Interface of the database
 	 * @return Options of the database
 	 * @protected
-	 * @see #DBOptions
-	 * @see #DBInterface
-	 * @see common\db.c#db_options(DBInterface)
+	 * @see #db_options(DB)
 	 */
-	DBOptions (*options)(struct dbt *dbi);
+	DBOptions (*options)(DB self);
 
-} *DBInterface;
+};
 
 //For easy access to the common functions.
 #ifdef DB_MANUAL_CAST_TO_UNION
@@ -664,14 +621,14 @@ DBReleaser db_custom_release(DBRelease which);
  * @return The interface of the database
  * @public
  * @see #DBType
- * @see #DBInterface
+ * @see #DB
  * @see #db_default_cmp(DBType)
  * @see #db_default_hash(DBType)
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  * @see common\db.c#db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-DBInterface db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
+DB db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
 
 #ifdef DB_MANUAL_CAST_TO_UNION
 /**
