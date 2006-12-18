@@ -630,6 +630,20 @@ ice_dun01.gat
 ice_dun02.gat
 ice_dun03.gat
 ice_dun04.gat
+que_thor.gat
+thor_camp.gat
+thor_v01.gat
+thor_v02.gat
+thor_v03.gat
+veins.gat
+ve_in.gat
+ve_fild01.gat
+ve_fild02.gat
+ve_fild03.gat
+ve_fild04.gat
+ve_fild05.gat
+ve_fild06.gat
+ve_fild07.gat
 //======================================================================================
 // - Other/Extra maps -
 // Only add maps under this line if they are not standard maps!
