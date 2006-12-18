@@ -25,6 +25,7 @@
 //= 1.5 Fixed exploits and bugs. Plus add a removal of exttra sobbing pieces
 //= 	as suggested Tantarian, to let people Reborn [Lupus]
 //= 1.6 Minor fix, thanks to theultramage for pointing it out. [MasterOfMuppets]
+//= 1.7 Fixed exploit [KarLaeda]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -3981,6 +3982,7 @@ L_Check:
 
 	else
 {
+	set @dearles_check,0;
 	mes "[Dearles]";
 	mes "Hmm... Some of this";
 	mes "stuff looks good, but";

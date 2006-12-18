@@ -33,6 +33,8 @@ KarLaeda
 
 Date		Added
 ======
+12/17
+	* Fixed exploit in The Sign Quest [KarLaeda]
 12/13
 	* Fixed exploit in the Slotted Sunglasses Quest [KarLaeda]
 12/11
