@@ -1650,6 +1650,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 				case W_MACE: // Axes and Maces can't be broken [DracoRPG]
 				case W_STAFF:
 				case W_BOOK: //Rods and Books can't be broken [Skotlex]
+				case W_HUUMA:
 					where &= ~EQP_WEAPON;
 			}
 		}

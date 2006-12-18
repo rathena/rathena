@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/18
+	* When walking into a Guild Dungeon your pvp_points will be set to 5 so you
+	  have to die twice before being warped out.
+	* If jobchanging while disguised, the disguise will be removed, since it
+	  can't be kept and still calculate correctly the new job class to use.
+	* Fuuma shurikens are now unbreakable code-wise (like all maces, books,
+	  etc)
+	* Applied Meruru's patch to increase speed of easy path seeks. [Skotlex]
 	* Cosmetic changes to db.
 	* Fixed the unused MAPINDEX_AUTOADD section in mapindex.c (mapindex.h 
 	  wasn't being included) [FlavioJS]

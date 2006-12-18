@@ -23,6 +23,13 @@
 struct tmp_path { short x,y,dist,before,cost,flag;};
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
 
+const char walk_choices [3][3] =
+{
+	{1,0,7},
+	{2,-1,6},
+	{3,4,5},
+};
+
 /*==========================================
  * Œo˜H’Tõ•â•heap push
  *------------------------------------------
@@ -307,14 +314,14 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
  * path’Tõ (x0,y0)->(x1,y1)
  *------------------------------------------
  */
+
 int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t flag2)
 {
 	int heap[MAX_HEAP+1];
 	struct tmp_path tp[MAX_WALKPATH*MAX_WALKPATH];
-	int i,rp,x,y;
-	int xs,ys;
+	register int i,x,y,dx,dy;
+	int rp,xs,ys;
 	struct map_data *md;
-	int dx,dy;
 
 	nullpo_retr(0, wpd);
 
@@ -331,36 +338,36 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys || map_getcellp(md,x1,y1,flag2))
 		return -1;
 
-	// easy
-	// ‚±‚Ì“à•”‚Å‚ÍA0 <= x+dx < sx, 0 <= y+dy < sy ‚Í•ÛØ‚³‚ê‚Ä‚¢‚é
-	dx = (x1-x0<0) ? -1 : 1;
-	dy = (y1-y0<0) ? -1 : 1;
-	for(x=x0,y=y0,i=0;x!=x1 || y!=y1;){
-		if(i>=sizeof(wpd->path))
-			return -1;
-		if(x!=x1 && y!=y1){
-			if(map_getcellp(md,x+dx,y   ,flag2))
-				break;
-			if(map_getcellp(md,x   ,y+dy,flag2))
-				break;
-			if(map_getcellp(md,x+dx,y+dy,flag2))
-				break;
-			x+=dx;
-			y+=dy;
-			wpd->path[i++]=(dx<0) ? ((dy>0)? 1 : 3) : ((dy<0)? 5 : 7);
-		} else if(x!=x1){
-			if(map_getcellp(md,x+dx,y   ,flag2))
-				break;
-			x+=dx;
-			wpd->path[i++]=(dx<0) ? 2 : 6;
-		} else if(y!=y1){
-			if(map_getcellp(md,x   ,y+dy,flag2))
-				break;
-			y+=dy;
-			wpd->path[i++]=(dy>0) ? 0 : 4;
-		}
+	// easy and better [Meruru]
+	dx = ((dx = x1-x0)) ? ((dx<0) ? -1 : 1) : 0;
+	dy = ((dy = y1-y0)) ? ((dy<0) ? -1 : 1) : 0;
+
+	//Better faster stronger simple path algo. [Meruru]
+	for(x=x0,y=y0,i=0;i < sizeof(wpd->path);)
+	{
+		wpd->path[i++] = walk_choices[-dy + 1][dx + 1];
+
+		x += dx;
+		y += dy;
+
+		if(x == x1) dx = 0;
+		if(y == y1) dy = 0;
+
+		if((!dx && !dy) || map_getcellp(md,x,y,flag2))
+			break;
 	}
-	if (x==x1 && y==y1) { //easy path successful.
+
+	/*
+	You may be thinking what about diagonal
+	moves? Cant they cause a error with this some how?
+	Answer is NO! The only time this can cause a error
+	is if the target block lies on the diagonal and
+	is non walkable. But rember we already checked that
+	up above! So no problems here... I think [Meruru]
+	*/
+
+	if (x==x1 && y==y1)
+	{ //easy path successful.
 		wpd->path_len=i;
 		wpd->path_pos=0;
 		wpd->path_half=0;

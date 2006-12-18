@@ -5538,7 +5538,11 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 				pc_unequipitem(sd,sd->equip_index[i],2);	// ?”õŠO‚µ
 	}
 
-	//Change look
+	//Change look, if disguised, you need to undisguise 
+	//to correctly calculate new job sprite without
+	if (sd->disguise)
+		pc_disguise(sd, 0);
+
 	status_set_viewdata(&sd->bl, job);
 	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 	if(sd->vd.cloth_color)
