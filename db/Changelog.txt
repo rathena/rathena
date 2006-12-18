@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/18
+	* Fixed some swords [Playtester]
 12/17
 	* Fixed Owl Duke and Owl Baron losing boss mode on NPC_EMOTION [Playtester]
 12/16
