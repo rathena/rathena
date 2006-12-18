@@ -1,5 +1,14 @@
 Date	Added
 
+2006/12/18
+	* Added hom_setting to specify which homunculus 'quirks' are in effect. The
+	  default activates all of them, if you set them to 0 then homuncs will not
+	  be treated in any special matter, pretty much like standard mobs. if I
+	  missed any 'quirky' homunc behaviour from it, report it so it can be added
+	  to the list (This setting was added to pet.conf).
+	* flooritem_lifetime now accepts a much higher max value (previously it was
+	  65k when the default was 60k)
+	* Removed monster_ai 0x80 since it's now handled by hom_setting.
 2006/12/12
 	* Added monster_ai&0x400 to use the previous 'smart' criteria that prevents
 	  mobs from fighting each another, since now they are all natural enemies

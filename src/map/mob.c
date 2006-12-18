@@ -798,7 +798,8 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			!(status_get_mode(&md->bl)&MD_BOSS))
 			return 0; //Gangster paradise protection.
 	default:
-		if (!(battle_config.mob_ai&0x80) && (*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
+		if (battle_config.hom_setting&0x4 &&
+			(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
 			return 0; //For some reason Homun targets are never overriden.
 
 		dist = distance_bl(&md->bl, bl);

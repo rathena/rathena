@@ -109,8 +109,8 @@ extern struct Battle_Config {
 	unsigned short clear_unit_onwarp; //[Skotlex]
 	unsigned short random_monster_checklv;
 	unsigned short attr_recover;
-	unsigned short flooritem_lifetime;
 	unsigned short item_auto_get;
+	int flooritem_lifetime;
 	int item_first_get_time;
 	int item_second_get_time;
 	int item_third_get_time;
@@ -383,6 +383,7 @@ extern struct Battle_Config {
 	unsigned short berserk_cancels_buffs; // [Aru]
 	unsigned short debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	unsigned short mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
+	unsigned short hom_setting; //Configures various homunc settings which make them behave unlike normaly characters.. [Skotlex]
 	unsigned short dynamic_mobs; // Dynamic Mobs [Wizputer] - battle_athena flag implemented by [random]
 	unsigned short mob_remove_damaged; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]
 	int mob_remove_delay; // Dynamic Mobs - delay before removing mobs from a map [Skotlex]

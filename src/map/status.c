@@ -1101,7 +1101,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		//Can't use support skills on homun (only master/self can)
 		//Placed here instead of battle_check_target because support skill
 		//invocations don't call that function.
-		if (skill_num && skill_get_inf(skill_num)&INF_SUPPORT_SKILL &&
+		if (skill_num && battle_config.hom_setting&0x1 &&
+			skill_get_inf(skill_num)&INF_SUPPORT_SKILL &&
 			battle_get_master(target) != src)
 			return 0;
 	default:
@@ -2356,7 +2357,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK;
 		status->speed = DEFAULT_WALK_SPEED;
-		if (battle_config.slaves_inherit_speed&1 &&
+		if (battle_config.hom_setting&0x8 &&
 			hd->master && hd->master->state.auth) //Master needs be authed to have valid speed.
 			status->speed = status_get_speed(&hd->master->bl);
 
@@ -2839,10 +2840,10 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 	if(flag|SCB_WATK && status->rhw.atk2 < status->rhw.atk)
 		status->rhw.atk2 = status->rhw.atk;
 
-	if(flag&SCB_MATK) //Hom Min Matk is always the same as Max Matk
+	if(flag&SCB_MATK && battle_config.hom_setting&0x20) //Hom Min Matk is always the same as Max Matk
 		status->matk_min = status->matk_max;
 
-	if(flag&SCB_SPEED && battle_config.slaves_inherit_speed&1 && hd->master)
+	if(flag&SCB_SPEED && battle_config.hom_setting&0x8 && hd->master)
 		status->speed = status_get_speed(&hd->master->bl);
 
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {

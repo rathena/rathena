@@ -3284,7 +3284,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0;
 
 			//For some mysterious reason ground-skills can't target homun.
-			if (target->type == BL_HOM)
+			if (target->type == BL_HOM && battle_config.hom_setting&0x2)
 				return 0;
 
 			if (su->group->src_id == target->id)
@@ -3507,7 +3507,6 @@ static const struct battle_data_short {
 	{ "clear_skills_on_warp",              &battle_config.clear_unit_onwarp },
 	{ "random_monster_checklv",            &battle_config.random_monster_checklv	},
 	{ "attribute_recover",                 &battle_config.attr_recover				},
-	{ "flooritem_lifetime",                &battle_config.flooritem_lifetime		},
 	{ "item_auto_get",                     &battle_config.item_auto_get			},
 	{ "drop_rate0item",                    &battle_config.drop_rate0item			},
 	{ "pvp_exp",                           &battle_config.pvp_exp		},
@@ -3761,6 +3760,7 @@ static const struct battle_data_short {
 
 	{ "debuff_on_logout",                  &battle_config.debuff_on_logout},
 	{ "monster_ai",                        &battle_config.mob_ai},
+	{ "monster_ai",                        &battle_config.hom_setting},
 	{ "dynamic_mobs",                      &battle_config.dynamic_mobs},
 	{ "mob_remove_damaged",                &battle_config.mob_remove_damaged},
 	{ "show_hp_sp_drain",                  &battle_config.show_hp_sp_drain}, // [Skotlex]
@@ -3813,6 +3813,7 @@ static const struct battle_data_int {
 	const char *str;
 	int *val;
 } battle_data_int[] = {	//List here battle_athena options which are type int!
+	{ "flooritem_lifetime",                &battle_config.flooritem_lifetime		},
 	{ "item_first_get_time",               &battle_config.item_first_get_time		},
 	{ "item_second_get_time",              &battle_config.item_second_get_time		},
 	{ "item_third_get_time",               &battle_config.item_third_get_time		},
@@ -4196,6 +4197,7 @@ void battle_set_defaults() {
 	battle_config.debuff_on_logout = 1;
 	battle_config.use_statpoint_table = 1;
 	battle_config.mob_ai = 0;
+	battle_config.hom_setting = 0xFFFF;
 	battle_config.dynamic_mobs = 1; // use Dynamic Mobs [Wizputer]
 	battle_config.mob_remove_damaged = 1; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]
 	battle_config.mob_remove_delay = 60000;

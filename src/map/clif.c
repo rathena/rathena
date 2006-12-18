@@ -1428,7 +1428,10 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, SHRT_MAX);
 	WBUFW(buf,37)=cap_value(status->matk_max, 0, SHRT_MAX);
 	WBUFW(buf,39)=status->hit;
-	WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
+	if (battle_config.hom_setting&0x10)
+		WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
+	else
+		WBUFW(buf,41)=status->cri/10;
 	WBUFW(buf,43)=status->def + status->vit ;
 	WBUFW(buf,45)=status->mdef;
 	WBUFW(buf,47)=status->flee;
@@ -8336,7 +8339,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_send_homdata(sd,0,0);
 		clif_homskillinfoblock(sd);
 		//Homunc mimic their master's speed on each map change. [Skotlex]
-		if (battle_config.slaves_inherit_speed&1)
+		if (battle_config.hom_setting&0x8)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED);
 //		Since hom is inmune to land effects, unneeded.
 //		skill_unit_move(&sd->hd->bl,gettick(),1);
