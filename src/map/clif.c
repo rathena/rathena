@@ -56,11 +56,29 @@ struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == 7)?4:a
 
-#define WBUFPOS(p,pos,x,y,dir) { unsigned char *__p = (p); __p+=(pos); __p[0] = (x)>>2; __p[1] = ((x)<<6) | (((y)>>4)&0x3f); __p[2] = ((y)<<4)|((dir)&0xf); }
-#define WBUFPOS2(p,pos,x0,y0,x1,y1) { unsigned char *__p = (p); __p+=(pos); __p[0] = (unsigned char)((x0)>>2); __p[1] = (unsigned char)(((x0)<<6) | (((y0)>>4)&0x3f)); __p[2] = (unsigned char)(((y0)<<4) | (((x1)>>6)&0x0f)); __p[3]=(unsigned char)(((x1)<<2) | (((y1)>>8)&0x03)); __p[4]=(unsigned char)(y1); }
+#define WBUFPOS(p,pos,x,y,dir) \
+	do { \
+		uint8 *__p = (p); \
+		__p+=(pos); \
+		__p[0] = (uint8)((x)>>2); \
+		__p[1] = (uint8)(((x)<<6) | (((y)>>4)&0x3f)); \
+		__p[2] = (uint8)(((y)<<4) | ((dir)&0xf)); \
+	} while(0)
+// client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
+#define WBUFPOS2(p,pos,x0,y0,x1,y1,sx0,sy0) \
+	do { \
+		uint8 *__p = (p); \
+		__p+=(pos);	\
+		__p[0]=(uint8)((x0)>>2); \
+		__p[1]=(uint8)(((x0)<<6) | (((y0)>>4)&0x3f)); \
+		__p[2]=(uint8)(((y0)<<4) | (((x1)>>6)&0x0f)); \
+		__p[3]=(uint8)(((x1)<<2) | (((y1)>>8)&0x03)); \
+		__p[4]=(uint8)(y1); \
+		__p[5]=(uint8)(((sx0)<<4) | ((sy0)&0x0f)); \
+	} while(0)
 
-#define WFIFOPOS(fd,pos,x,y,dir) { WBUFPOS (WFIFOP(fd,pos),0,x,y,dir); }
-#define WFIFOPOS2(fd,pos,x0,y0,x1,y1) { WBUFPOS2(WFIFOP(fd,pos),0,x0,y0,x1,y1); }
+#define WFIFOPOS(fd,pos,x,y,dir) WBUFPOS(WFIFOP(fd,pos),0,x,y,dir)
+#define WFIFOPOS2(fd,pos,x0,y0,x1,y1,sx0,sy0) WBUFPOS2(WFIFOP(fd,pos),0,x0,y0,x1,y1,sx0,sy0)
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
 #define clif_setlevel(lv) (lv<battle_config.max_lv?lv:battle_config.max_lv-(lv<battle_config.aura_lv?1:0));
@@ -1038,8 +1056,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 			WBUFB(buf,52)=sd->status.karma;
 		}
 		WBUFB(buf,53)=vd->sex;
-		WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y);
-		WBUFB(buf,59)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 		WBUFB(buf,60)=0;
 		WBUFB(buf,61)=0;
 		WBUFW(buf,62)=clif_setlevel(lv);
@@ -1075,8 +1092,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 			WBUFB(buf,48)=sd->status.karma;
 		}
 		WBUFB(buf,49)=vd->sex;
-		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
 		WBUFW(buf,58)=clif_setlevel(lv);
@@ -1110,8 +1126,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		if (sd)
 			WBUFB(buf,48)=sd->status.karma;
 		WBUFB(buf,49)=vd->sex;
-		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
-		WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
+		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
 		WBUFW(buf,58)=clif_setlevel(lv);
@@ -1139,8 +1154,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	WBUFW(buf,38)=unit_getdir(bl);
 	WBUFL(buf,40)=guild_id;
 	WBUFL(buf,44)=emblem_id;
-	WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y);
-	WBUFB(buf,59)=0x88; // Deals with acceleration in directions. [Valaris]
+	WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFB(buf,60)=0;
 	WBUFB(buf,61)=0;
 	WBUFW(buf,62)=clif_setlevel(lv);
@@ -1164,8 +1178,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	WBUFW(buf,36)=unit_getdir(bl);
 	WBUFL(buf,38)=guild_id;
 	WBUFL(buf,42)=emblem_id;
-	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y);
-	WBUFB(buf,55)=0x88; // Deals with acceleration in directions. [Valaris]
+	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFB(buf,56)=5;
 	WBUFB(buf,57)=5;
 	WBUFW(buf,58)=clif_setlevel(lv);
@@ -1618,8 +1631,7 @@ int clif_walkok(struct map_session_data *sd)
 	WFIFOHEAD(fd, packet_len(0x87));
 	WFIFOW(fd,0)=0x87;
 	WFIFOL(fd,2)=gettick();
-	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
-	WFIFOB(fd,11)=0x88;
+	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y,8,8);
 	WFIFOSET(fd,packet_len(0x87));
 
 	return 0;
@@ -1652,7 +1664,7 @@ int clif_movepc(struct map_session_data *sd) {
 		WBUFW(buf,12)=OPTION_INVISIBLE;
 		WBUFW(buf,14)=100;
 		WBUFL(buf,22)=gettick();
-		WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y);
+		WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y,8,8);
 		WBUFB(buf,56)=5;
 		WBUFB(buf,57)=5;
 		clif_send(buf, packet_len(0x7b), &sd->bl, SELF);
