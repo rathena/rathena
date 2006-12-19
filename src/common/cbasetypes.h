@@ -101,30 +101,30 @@ typedef unsigned int		uint32;
 #undef UINT8_MIN
 #undef UINT16_MIN
 #undef UINT32_MIN
-#define UINT8_MIN	(uint8) 0
-#define UINT16_MIN	(uint16)0
-#define UINT32_MIN	(uint32)0
+#define UINT8_MIN	((uint8) 0)
+#define UINT16_MIN	((uint16)0)
+#define UINT32_MIN	((uint32)0)
 
 #undef UINT8_MAX
 #undef UINT16_MAX
 #undef UINT32_MAX
-#define UINT8_MAX	(uint8) 0xFF
-#define UINT16_MAX	(uint16)0xFFFF
-#define UINT32_MAX	(uint32)0xFFFFFFFF
+#define UINT8_MAX	((uint8) 0xFF)
+#define UINT16_MAX	((uint16)0xFFFF)
+#define UINT32_MAX	((uint32)0xFFFFFFFF)
 
 #undef SINT8_MIN
 #undef SINT16_MIN
 #undef SINT32_MIN
-#define SINT8_MIN	(sint8) 0x80
-#define SINT16_MIN	(sint16)0x8000
-#define SINT32_MIN	(sint32)0x80000000
+#define SINT8_MIN	((sint8) 0x80)
+#define SINT16_MIN	((sint16)0x8000)
+#define SINT32_MIN	((sint32)0x80000000)
 
 #undef SINT8_MAX
 #undef SINT16_MAX
 #undef SINT32_MAX
-#define SINT8_MAX	(sint8) 0x7F
-#define SINT16_MAX	(sint16)0x7FFF
-#define SINT32_MAX	(sint32)0x7FFFFFFF
+#define SINT8_MAX	((sint8) 0x7F)
+#define SINT16_MAX	((sint16)0x7FFF)
+#define SINT32_MAX	((sint32)0x7FFFFFFF)
 
 
 //////////////////////////////////////////////////////////////////////////

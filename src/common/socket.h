@@ -34,47 +34,50 @@ extern time_t stall_time;
 #define RFIFOP(fd,pos) (session[fd]->rdata+session[fd]->rdata_pos+(pos))
 #endif
 // use function instead of macro.
-#define RFIFOB(fd,pos) (*(unsigned char*)RFIFOP(fd,pos))
-#define RFIFOW(fd,pos) (*(unsigned short*)RFIFOP(fd,pos))
-#define RFIFOL(fd,pos) (*(unsigned long*)RFIFOP(fd,pos))
+#define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
+#define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
+#define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define RFIFOREST(fd)  (session[fd]->rdata_size-session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
-	if(session[fd]->rdata_size == session[fd]->rdata_pos) \
-	{	session[fd]->rdata_size = session[fd]->rdata_pos = 0; } else { \
-		session[fd]->rdata_size -= session[fd]->rdata_pos; \
-		memmove(session[fd]->rdata, session[fd]->rdata+session[fd]->rdata_pos, session[fd]->rdata_size); \
-		session[fd]->rdata_pos=0; \
-	}
+	do { \
+		if(session[fd]->rdata_size == session[fd]->rdata_pos){ \
+			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
+		} else { \
+			session[fd]->rdata_size -= session[fd]->rdata_pos; \
+			memmove(session[fd]->rdata, session[fd]->rdata+session[fd]->rdata_pos, session[fd]->rdata_size); \
+			session[fd]->rdata_pos=0; \
+		} \
+	} while(0)
 
 //#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size-session[fd]->rdata_pos-(len)<0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos+=(len)))
 
-#define RBUFP(p,pos) (((unsigned char*)(p))+(pos))
-#define RBUFB(p,pos) (*(unsigned char*)RBUFP((p),(pos)))
-#define RBUFW(p,pos) (*(unsigned short*)RBUFP((p),(pos)))
-#define RBUFL(p,pos) (*(unsigned long*)RBUFP((p),(pos)))
+#define RBUFP(p,pos) (((uint8*)(p))+(pos))
+#define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
+#define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
+#define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
 
 #define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
 #ifdef TURBO
-#define WFIFOHEAD(fd, x) char *wbPtr ## fd = fd?(session[fd]->wdata+session[fd]->wdata_size):0;
+#define WFIFOHEAD(fd, x) uint8 *wbPtr ## fd = fd?(session[fd]->wdata+session[fd]->wdata_size):0;
 #define WFIFOP(fd,pos) (&wbPtr ## fd[pos])
 #else
-#define WFIFOHEAD(fd, size) { if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }
+#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
 
 #define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
 #endif
-#define WFIFOB(fd,pos) (*(unsigned char*)WFIFOP(fd,pos))
-#define WFIFOW(fd,pos) (*(unsigned short*)WFIFOP(fd,pos))
-#define WFIFOL(fd,pos) (*(unsigned long*)WFIFOP(fd,pos))
+#define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
+#define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
+#define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
 // use function instead of macro.
 //#define WFIFOSET(fd,len) (session[fd]->wdata_size = (session[fd]->wdata_size + (len) + 2048 < session[fd]->max_wdata) ? session[fd]->wdata_size + len : session[fd]->wdata_size)
-#define WBUFP(p,pos) (((unsigned char*)(p)) + (pos))
-#define WBUFB(p,pos) (*(unsigned char*)((p) + (pos)))
-#define WBUFW(p,pos) (*(unsigned short*)((p) + (pos)))
-#define WBUFL(p,pos) (*(unsigned long*)((p) + (pos)))
+#define WBUFP(p,pos) (((uint8*)(p)) + (pos))
+#define WBUFB(p,pos) (*(uint8*)((p) + (pos)))
+#define WBUFW(p,pos) (*(uint16*)((p) + (pos)))
+#define WBUFL(p,pos) (*(uint32*)((p) + (pos)))
 
-#define TOB(n) ((unsigned char)(n))
-#define TOW(n) ((unsigned short)(n))
-#define TOL(n) ((unsigned long)(n))
+#define TOB(n) ((uint8)((n)&UINT8_MAX))
+#define TOW(n) ((uint16)((n)&UINT16_MAX))
+#define TOL(n) ((uint32)((n)&UINT32_MAX))
 
 //FD_SETSIZE must be modified on the project files/Makefile, since a change here won't affect
 // dependant windows libraries.

@@ -8450,10 +8450,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
   	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
 		clif_clearchar_area(&sd->bl,1);
-
 // Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
 //	else
 //		clif_changed_dir(&sd->bl, SELF);
+
 //	Trigger skill effects if you appear standing on them
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
@@ -8472,7 +8472,8 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	WFIFOW(fd,0)=0x7f;
 	WFIFOL(fd,2)=gettick();
 	WFIFOSET(fd,packet_len(0x7f));
-	flush_fifo(fd,0); // send immediatly so the client gets accurate "pings"
+	// removed until the socket problems are fixed. [FlavioJS]
+	//flush_fifo(fd,0); // send immediatly so the client gets accurate "pings"
 	return;
 }
 
