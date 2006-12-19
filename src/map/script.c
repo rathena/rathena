@@ -7452,11 +7452,8 @@ int buildin_getmapguildusers(struct script_state *st) {
 	if (g){
 		for(i = 0; i < g->max_member; i++)
 		{
-			if (g->member[i].sd )
-			{
-				if(g->member[i].sd->bl.m == m)
-					c++;
-			}
+			if (g->member[i].sd && g->member[i].sd->bl.m == m)
+				c++;
 		}
 	}
 

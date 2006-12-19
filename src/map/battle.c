@@ -3760,7 +3760,7 @@ static const struct battle_data_short {
 
 	{ "debuff_on_logout",                  &battle_config.debuff_on_logout},
 	{ "monster_ai",                        &battle_config.mob_ai},
-	{ "monster_ai",                        &battle_config.hom_setting},
+	{ "hom_setting",                        &battle_config.hom_setting},
 	{ "dynamic_mobs",                      &battle_config.dynamic_mobs},
 	{ "mob_remove_damaged",                &battle_config.mob_remove_damaged},
 	{ "show_hp_sp_drain",                  &battle_config.show_hp_sp_drain}, // [Skotlex]
