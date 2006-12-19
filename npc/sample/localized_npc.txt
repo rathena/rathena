@@ -1,0 +1,138 @@
+//===== eAthena Script ======================================= 
+//= Sample localized NPC
+//===== By: ================================================== 
+//= eAthena Dev Team
+//===== Current Version: ===================================== 
+//= v1.0
+//===== Compatible With: ===================================== 
+//= eAthena with setd, getd and npc variables '.'
+//===== Description: ========================================= 
+//= Example of a localized NPC.
+//= 
+//= There are many ways to do it, this is just one option.
+//= The player has a global account variable ##_langid_ that 
+//= identifies the it's language.
+//= 
+//= The default language should always have langid 0.
+//= When a message isn't found for the player's langid 
+//= (strlen = 0), the message from langid 0 is used instead.
+//= 
+//= Each message is identified by a string that must only 
+//= contain valid variable name characters.
+//= 
+//= void setlang(langid) - sets the player's langid
+//= int getlang() - returns the player's langid
+//= void setmes2(name,langid,text) - sets the localized text for name
+//= string getmes2(name,langid) - returns the localized text of name
+//= void mes2(name) - displays the localized text of name
+//= 
+//===== Additional Comments: ================================= 
+//= To use this just copy the functions to Global_Functions.txt
+//============================================================ 
+
+//////////////////////////////////////////////////////////////
+/// Sets the language of the player account.
+/// @param langid	Languange identifier (0 for default)
+function	script	setlang	{
+	set ##_langid_, getarg(0);
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Returns the language identifier of the player
+function	script	getlang	{
+	return ##_langid_;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sets a localized text entry.
+/// Does not need a RID attached.
+/// @param name	Message identifier
+/// @param langid	Language identifier (0 for default)
+/// @param text	Text message
+function	script	setmes2	{
+	set $@mes2_name$, getarg(0);
+	set $@mes2_langid, getarg(1);
+	set $@mes2_text$, getarg(2);
+	set $@mes2_var$, "$@__"+ $@mes2_name$ +"_"+ $@mes2_langid +"$";
+
+	//debugmes "setmes2 \""+ $@mes2_var$ +"\", \""+ $@mes2_text$ +"\";";
+
+	// set the localized text
+	setd $@mes2_var$, $@mes2_text$;
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sets a localized text entry.
+/// Does not need a RID attached.
+/// @param name	Message identifier
+/// @param langid	Language identifier (0 for default)
+/// @return	Text message
+function	script	getmes2	{
+	set $@mes2_name$, getarg(0);
+	set $@mes2_langid, getarg(1);
+	set $@mes2_var$, "$@__"+ $@mes2_name$ +"_"+ $@mes2_langid +"$";
+	set $@mes2_text$, getd($@mes2_var$);
+
+	//debugmes "getmes2(\""+ $@mes2_var$ +"\")=\""+ $@mes2_text$ +"\"";
+
+	return $@mes2_text$;
+}
+
+//////////////////////////////////////////////////////////////
+/// mes for localized text.
+/// index should be a unique string, made up only of characters 
+/// that are valis as a variable name
+/// @param index	Message identifier
+function	script	mes2	{
+	set .@mes2_index$, getarg(0);
+
+	if( getstrlen(.@mes2_index$) == 0 )
+		return; // invalid index
+
+	// print localized text
+	set .@mes2_text$, callfunc("getmes2",.@mes2_index$,##_langid_);
+	if( getstrlen(.@mes2_text$) == 0 )
+	{
+		if( ##_langid_ != 0 )
+		{// revert to default language
+			set .@mes2_text$, callfunc("getmes2",.@mes2_index$,0);
+			if( getstrlen(.@mes2_text$) != 0 )
+				mes .@mes2_text$; // default text
+		}
+	} else
+		mes .@mes2_text$; // localized text
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sample localized NPC
+prontera.gat,155,183,4	script	LocalizedNPC	705,{
+	set .@menu1$, callfunc("getmes2","LNPC_lang",0);
+	set .@menu2$, callfunc("getmes2","LNPC_lang",1);
+	do {
+		callfunc "mes2", "LNPC_name";
+		callfunc "mes2", "LNPC_lang";
+		callfunc "mes2", "LNPC_langname";
+		next;
+
+		switch(select(.@menu1$,.@menu2$,"Cancel"))
+		{
+			case 1:
+			case 2:
+				callfunc "setlang",@menu-1;
+				break;
+		}
+	} while( @menu != 3 );
+	close;
+	end;
+
+OnInterIfInitOnce:
+	callfunc "setmes2", "LNPC_name", 0, "[LocalizedNPC]";
+	callfunc "setmes2", "LNPC_lang", 0, "EN";
+	callfunc "setmes2", "LNPC_lang", 1, "PT";
+	callfunc "setmes2", "LNPC_langname", 0, "English";
+	callfunc "setmes2", "LNPC_langname", 1, "Português";
+	end;
+}
