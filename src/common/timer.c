@@ -452,7 +452,7 @@ void timer_final(void)
 	struct timer_func_list *tfl;
 	struct timer_func_list *next;
 
-	for( tfl=tfl_root; tfl != NULL; tfl = next )
+	for( tfl=tfl_root; tfl != NULL; tfl = next ) {
 		next = tfl->next;	// copy next pointer
 		aFree(tfl->name);	// free structures
 		aFree(tfl);
