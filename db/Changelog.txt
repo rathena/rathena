@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/19
+	* Now Peach Tree can move, Parasite can't [Playtester]
 12/18
 	* Fixed some swords [Playtester]
 12/17
