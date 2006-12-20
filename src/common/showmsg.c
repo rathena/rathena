@@ -44,9 +44,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 /// behavioral parameter.
-/// when true, prints ansi sequences also when redirecting outputs to file
-/// otherwise remove them
-int stdout_with_ansisequence = 1;
+/// when redirecting output:
+/// if true prints escape sequences
+/// if false removes the escape sequences
+int stdout_with_ansisequence = 0;
 
 int msg_silent; //Specifies how silent the console is.
 

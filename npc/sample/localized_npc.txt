@@ -20,14 +20,19 @@
 //= Each message is identified by a string that must only 
 //= contain valid variable name characters.
 //= 
-//= void setlang(langid) - sets the player's langid
-//= int getlang() - returns the player's langid
-//= void setmes2(name,langid,text) - sets the localized text for name
-//= string getmes2(name,langid) - returns the localized text of name
-//= void mes2(name) - displays the localized text of name
+//= void setlang(int langid)
+//= - sets the player's language
+//= int getlang(void)
+//= - returns the player's language
+//= void setmes2(string name,int langid,string text)
+//= - sets the localized text for name
+//= string getmes2(string name,int langid)
+//= - returns the localized text of name
+//= void mes2(string name)
+//= - displays the localized text of name
 //= 
 //===== Additional Comments: ================================= 
-//= To use this just copy the functions to Global_Functions.txt
+//= To use this globally, just put the functions in Global_Functions.txt
 //============================================================ 
 
 //////////////////////////////////////////////////////////////
@@ -109,18 +114,22 @@ function	script	mes2	{
 //////////////////////////////////////////////////////////////
 /// Sample localized NPC
 prontera.gat,155,183,4	script	LocalizedNPC	705,{
+	// Get text for specific languages
 	set .@menu1$, callfunc("getmes2","LNPC_lang",0);
 	set .@menu2$, callfunc("getmes2","LNPC_lang",1);
 	do {
+		// get text that fallbacks to language 0
 		callfunc "mes2", "LNPC_name";
+		// localized mes
 		callfunc "mes2", "LNPC_lang";
-		callfunc "mes2", "LNPC_langname";
+		callfunc "mes2", "LNPC_text";
 		next;
 
 		switch(select(.@menu1$,.@menu2$,"Cancel"))
 		{
 			case 1:
 			case 2:
+				// Set player language
 				callfunc "setlang",@menu-1;
 				break;
 		}
@@ -129,10 +138,14 @@ prontera.gat,155,183,4	script	LocalizedNPC	705,{
 	end;
 
 OnInterIfInitOnce:
+	// Load the localized text.
+	// This can be anywhere, as long as it's executed before the coresponding getmes2/mes2 calls
+	//  0 - English (default)
+	//  1 - Portuguese
 	callfunc "setmes2", "LNPC_name", 0, "[LocalizedNPC]";
 	callfunc "setmes2", "LNPC_lang", 0, "EN";
 	callfunc "setmes2", "LNPC_lang", 1, "PT";
-	callfunc "setmes2", "LNPC_langname", 0, "English";
-	callfunc "setmes2", "LNPC_langname", 1, "Português";
+	callfunc "setmes2", "LNPC_text", 0, "Something in english";
+	callfunc "setmes2", "LNPC_text", 1, "Algo em português";
 	end;
 }
