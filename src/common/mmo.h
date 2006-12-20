@@ -8,6 +8,9 @@
 #include "cbasetypes.h"
 #include "utils.h" // _WIN32
 
+// server protocol version
+#define PACKETVER			7
+
 #define FIFOSIZE_SERVERLINK	256*1024
 
 // set to 0 to not check IP of player between each server.

@@ -1685,10 +1685,16 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
 
+#if PACKETVER > 7
+	WFIFOHEAD(fd, offset + found_num * 108);
+	memset(WFIFOP(fd,0), 0, offset + found_num * 108);
+	WFIFOW(fd,2) = offset + found_num * 108;
+#else
 	WFIFOHEAD(fd, offset + found_num * 106);
 	memset(WFIFOP(fd,0), 0, offset + found_num * 106);
-	WFIFOW(fd,0) = 0x6b;
 	WFIFOW(fd,2) = offset + found_num * 106;
+#endif
+	WFIFOW(fd,0) = 0x6b;
 
 	for(i = 0; i < found_num; i++) {
 		p = &char_dat[sd->found_char[i]].status;
@@ -1733,7 +1739,12 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+101) = (p->int_ > 255) ? 255 : p->int_;
 		WFIFOB(fd,j+102) = (p->dex > 255) ? 255 : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > 255) ? 255 : p->luk;
+#if PACKETVER > 7
+		WFIFOW(fd,j+104) = p->char_num;
+		WFIFOB(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#else
 		WFIFOB(fd,j+104) = p->char_num;
+#endif
 	}
 
 	WFIFOSET(fd,WFIFOW(fd,2));

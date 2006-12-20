@@ -1680,7 +1680,11 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
 	struct mmo_charstatus *p = NULL;
 	const int offset = 24;
+#ifdef PACKETVER > 7
+	WFIFOHEAD(fd, offset +9*108);
+#else
 	WFIFOHEAD(fd, offset +9*106);
+#endif
     
 	set_char_online(-1, 99,sd->account_id);
 
@@ -1705,9 +1709,15 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
 
-	memset(WFIFOP(fd, 0), 0, offset + found_num * 106);
 	WFIFOW(fd, 0) = 0x6b;
+
+#ifdef PACKETVER > 7
+	memset(WFIFOP(fd, 0), 0, offset + found_num * 108);
+	WFIFOW(fd, 2) = offset + found_num * 108;
+#endif
+	memset(WFIFOP(fd, 0), 0, offset + found_num * 106);
 	WFIFOW(fd, 2) = offset + found_num * 106;
+#endif
 
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
@@ -1717,7 +1727,11 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 		p = &char_dat;
 
+#ifdef PACKETVER > 7
+		j = offset + (i * 108);
+#else
 		j = offset + (i * 106); // increase speed of code
+#endif
 
 		WFIFOL(fd,j) = p->char_id;
 		WFIFOL(fd,j+4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
@@ -1758,9 +1772,13 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
 		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
+#if PACKETVER > 7
+		WFIFOW(fd,j+104) = p->char_num;
+		WFIFOB(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#else
 		WFIFOB(fd,j+104) = p->char_num;
+#endif
 	}
-
 	WFIFOSET(fd,WFIFOW(fd,2));
 //	printf("mmo_char_send006b end..\n");
 	return 0;
