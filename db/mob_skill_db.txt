@@ -3771,7 +3771,7 @@
 1753,Frus@RG_STRIPARMOR,attack,217,5,1000,0,30000,yes,target,always,0,,,,,,2
 1753,Frus@NPC_POISONATTACK,attack,188,5,1000,0,5000,yes,target,always,0,,,,,,
 1753,Frus@NPC_DARKNESSATTACK,attack,190,5,1000,0,5000,yes,target,always,0,,,,,,2
-1753,Frus@NPC_CHANGEUNDEAD,attack,348,2,1000,0,30000,yes,target,always,0,,,,,,2
+1753,Frus@NPC_CHANGEUNDEAD,attack,348,2,1000,0,30000,yes,self,always,0,,,,,,2
 1753,Frus@MG_FIREWALL,chase,18,5,2000,500,5000,yes,target,always,0,,,,,,2
 1753,Frus@NPC_SUMMONSLAVE,attack,196,1,100,0,3600000,no,self,slavele,0,1761,,,,,
 1754,Skeggiold(Brown)@AL_HEAL,attack,28,9,5000,500,5000,no,friend,friendhpltmaxrate,30,,,,,,18
@@ -3838,7 +3838,7 @@
 1762,Frus@RG_STRIPARMOR,attack,217,5,1000,0,30000,yes,target,always,0,,,,,,2
 1762,Frus@NPC_POISONATTACK,attack,188,5,1000,0,5000,yes,target,always,0,,,,,,
 1762,Frus@NPC_DARKNESSATTACK,attack,190,5,1000,0,5000,yes,target,always,0,,,,,,2
-1762,Frus@NPC_CHANGEUNDEAD,attack,348,2,1000,0,30000,yes,target,always,0,,,,,,2
+1762,Frus@NPC_CHANGEUNDEAD,attack,348,2,1000,0,30000,yes,self,always,0,,,,,,2
 1762,Frus@MG_FIREWALL,chase,18,5,2000,500,5000,yes,target,always,0,,,,,,2
 1763,Skeggiold(Brown)@MG_THUNDERSTORM,attack,21,4,500,1500,10000,no,target,always,0,,,,,,
 1763,Skeggiold(Brown)@MG_THUNDERSTORM,chase,21,4,500,1500,10000,no,target,always,0,,,,,,

@@ -19,8 +19,12 @@
 	-----
 
 ========================
+12/20
+	* Made NPC_CHANGE self targetted for all mobs [Playtester]
+	- it should either be self or target for all but not mixed up	
 12/19
 	* Now Peach Tree can move, Parasite can't [Playtester]
+	- fixed up their AI
 12/18
 	* Fixed some swords [Playtester]
 12/17
