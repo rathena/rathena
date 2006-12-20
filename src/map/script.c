@@ -18,6 +18,7 @@
 #include <time.h>
 #include <setjmp.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/malloc.h"
@@ -64,6 +65,7 @@ static int script_pos,script_size;
 #define GETVALUE(buf,i)		((int)MakeDWord(MakeWord((buf)[i],(buf)[i+1]),MakeWord((buf)[i+2],0)))
 #define SETVALUE(buf,i,n)	((buf)[i]=GetByte(n,0),(buf)[i+1]=GetByte(n,1),(buf)[i+2]=GetByte(n,2))
 
+#define GETSTRING(off) (str_buf+(off))
 static char *str_buf;
 static int str_pos,str_size;
 static struct str_data_struct {
@@ -94,9 +96,9 @@ static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes
 struct Script_Config script_config;
 static int parse_cmd;
 
-static jmp_buf error_jump;
-static char*   error_msg;
-static char*   error_pos;
+static jmp_buf     error_jump;
+static char*       error_msg;
+static const char* error_pos;
 
 // for advanced scripting support ( nested if, switch, while, for, do-while, function, etc )
 // [Eoe / jA 1080, 1081, 1094, 1164]
@@ -111,10 +113,10 @@ static struct {
 	int curly_count;	// 右カッコの数
 	int index;			// スクリプト内で使用した構文の数
 } syntax;
-unsigned char* parse_curly_close(unsigned char *p);
-unsigned char* parse_syntax_close(unsigned char *p);
-unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag);
-unsigned char* parse_syntax(unsigned char *p);
+const char* parse_curly_close(const char* p);
+const char* parse_syntax_close(const char* p);
+const char* parse_syntax_close_sub(const char* p,int* flag);
+const char* parse_syntax(const char* p);
 static int parse_syntax_for_flag = 0;
 
 extern int current_equip_item_index; //for New CARS Scripts. It contains Inventory Index of the EQUIP_SCRIPT caller item. [Lupus]
@@ -148,13 +150,13 @@ static struct linkdb_node *sleep_db;
  * ローカルプロトタイプ宣言 (必要な物のみ)
  *------------------------------------------
  */
-unsigned char* parse_subexpr(unsigned char *,int);
+const char* parse_subexpr(const char* p,int limit);
 void push_val(struct script_stack *stack,int type,int val);
 int run_func(struct script_state *st);
 
 int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
-static void disp_error_message(const char *mes,unsigned char *pos);
+static void disp_error_message(const char *mes,const char *pos);
 
 enum {
 	C_NOP,C_POS,C_INT,C_PARAM,C_FUNC,C_STR,C_CONSTSTR,C_ARG,
@@ -237,7 +239,7 @@ static void report_src(struct script_state *st) {
 	}
 }
 
-static void check_event(struct script_state *st, unsigned char *event){
+static void check_event(struct script_state *st, const char *event){
 	if(event != NULL && event[0] != '\0' && !stristr(event,"::On")){
 		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",event);
 		report_src(st);
@@ -263,12 +265,12 @@ static int calc_hash(const unsigned char *p)
  *------------------------------------------
  */
 // 既存のであれば番号、無ければ-1
-static int search_str(const unsigned char *p)
+static int search_str(const char *p)
 {
 	int i;
 	i=str_hash[calc_hash(p)];
 	while(i){
-		if(strcmp(str_buf+str_data[i].str,(char *) p)==0){
+		if(strcmp(str_buf+str_data[i].str,p)==0){
 			return i;
 		}
 		i=str_data[i].next;
@@ -281,15 +283,16 @@ static int search_str(const unsigned char *p)
  *------------------------------------------
  */
 // 既存のであれば番号、無ければ登録して新規番号
-int add_str(const unsigned char *p)
+int add_str(const char* p)
 {
 	int i;
-	char *lowcase;
+	int len;
+	char* lowcase;
 
-	lowcase=aStrdup((char *) p);
+	lowcase=aStrdup(p);
 	for(i=0;lowcase[i];i++)
-		lowcase[i]=tolower(lowcase[i]);
-	if((i=search_str((unsigned char *) lowcase))>=0){
+		lowcase[i]=TOLOWER(lowcase[i]);
+	if((i=search_str(lowcase))>=0){
 		aFree(lowcase);
 		return i;
 	}
@@ -301,7 +304,7 @@ int add_str(const unsigned char *p)
 	} else {
 		i=str_hash[i];
 		for(;;){
-			if(strcmp(str_buf+str_data[i].str,(char *) p)==0){
+			if(strcmp(str_buf+str_data[i].str,p)==0){
 				return i;
 			}
 			if(str_data[i].next==0)
@@ -312,22 +315,23 @@ int add_str(const unsigned char *p)
 	}
 	if(str_num>=str_data_size){
 		str_data_size+=128;
-		str_data=aRealloc(str_data,sizeof(str_data[0])*str_data_size);
+		RECREATE(str_data,struct str_data_struct,str_data_size);
 		malloc_tsetdword(str_data + (str_data_size - 128), '\0', 128);
 	}
-	while(str_pos+(int)strlen((char *) p)+1>=str_size){
+	len=(int)strlen(p);
+	while(str_pos+len+1>=str_size){
 		str_size+=256;
-		str_buf=(char *)aRealloc(str_buf,str_size);
+		RECREATE(str_buf,char,str_size);
 		malloc_tsetdword(str_buf + (str_size - 256), '\0', 256);
 	}
-	strcpy(str_buf+str_pos, (char *) p);
+	memcpy(str_buf+str_pos,p,len+1);
 	str_data[str_num].type=C_NOP;
 	str_data[str_num].str=str_pos;
 	str_data[str_num].next=0;
 	str_data[str_num].func=NULL;
 	str_data[str_num].backpatch=-1;
 	str_data[str_num].label=-1;
-	str_pos+=(int)strlen( (char *) p)+1;
+	str_pos+=len+1;
 	return str_num++;
 }
 
@@ -351,7 +355,7 @@ static void check_script_buf(int size)
  *------------------------------------------
  */
  
-#define add_scriptb(a) if( script_pos+1>=script_size ) check_script_buf(1); script_buf[script_pos++]=(a);
+#define add_scriptb(a) if( script_pos+1>=script_size ) check_script_buf(1); script_buf[script_pos++]=(uint8)(a);
 
 #if 0
 static void add_scriptb(int a)
@@ -432,7 +436,7 @@ static void add_scriptl(int l)
  * ラベルを解決する
  *------------------------------------------
  */
-void set_label(int l,int pos, unsigned char *script_pos)
+void set_label(int l,int pos, const char* script_pos)
 {
 	int i,next;
 
@@ -459,19 +463,23 @@ void set_label(int l,int pos, unsigned char *script_pos)
  * スペース/コメント読み飛ばし
  *------------------------------------------
  */
-static unsigned char *skip_space(unsigned char *p)
+static const char *skip_space(const char *p)
 {
-	while(1){
-		while(isspace(*p))
-			p++;
-		if(p[0]=='/' && p[1]=='/'){
+	for(;;){
+		while(ISSPACE(*p))
+			++p;
+		if( *p=='/' && p[1]=='/' ){
 			while(*p && *p!='\n')
+				++p;
+		} else if( *p=='/' && p[1]=='*' ){
+			p+=2;
+			if(*p) ++p;
+			while( *p && (p[-1]!='*' || *p!='/') )
 				p++;
-		} else if(p[0]=='/' && p[1]=='*'){
-			p++;
-			while(*p && (p[-1]!='*' || p[0]!='/'))
-				p++;
-			if(*p) p++;
+			if(*p)
+				++p;
+			else
+				disp_error_message("reached end of streams while matching \"*/\"",p);
 		} else
 			break;
 	}
@@ -482,7 +490,7 @@ static unsigned char *skip_space(unsigned char *p)
  * １単語スキップ
  *------------------------------------------
  */
-static unsigned char *skip_word(unsigned char *p)
+static const char *skip_word(const char *p)
 {
 	// prefix
 	if(*p=='.') p++;
@@ -503,11 +511,34 @@ static unsigned char *skip_word(unsigned char *p)
 	return p;
 }
 
+/// Adds a word to str_data
+int add_word(const char *p)
+{
+	char *word;
+	int len;
+	int i;
+
+	// Check for a word
+	len = skip_word(p)-p;
+	if( len == 0 )
+		disp_error_message("expected a word",p);
+
+	// Copy the word
+	CREATE(word,char,len+1);
+	memcpy(word,p,len);
+	word[len]=0;
+	
+	// add the word
+	i=add_str(word);
+	aFree(word);
+	return i;
+}
+
 /*==========================================
  * エラーメッセージ出力
  *------------------------------------------
  */
-static void disp_error_message(const char *mes,unsigned char *pos)
+static void disp_error_message(const char *mes,const char *pos)
 {
 	error_msg = aStrdup(mes);
 	error_pos = pos;
@@ -518,7 +549,7 @@ static void disp_error_message(const char *mes,unsigned char *pos)
  * 項の解析
  *------------------------------------------
  */
-unsigned char* parse_simpleexpr(unsigned char *p)
+const char* parse_simpleexpr(const char *p)
 {
 	int i;
 	p=skip_space(p);
@@ -527,73 +558,55 @@ unsigned char* parse_simpleexpr(unsigned char *p)
 	if(battle_config.etc_log)
 		ShowDebug("parse_simpleexpr %s\n",p);
 #endif
-	if(*p==';' || *p==','){
+	if(*p==';' || *p==',')
 		disp_error_message("unexpected expr end",p);
-		exit(1);
-	}
 	if(*p=='('){
 		p=parse_subexpr(p+1,-1);
 		p=skip_space(p);
-		if((*p++)!=')'){
+		if((*p++)!=')')
 			disp_error_message("unmatch ')'",p);
-			exit(1);
-		}
 	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
 		char *np;
-		i=strtoul((char *) p,&np,0);
+		i=strtoul(p,&np,0);
 		add_scripti(i);
-		p=(unsigned char *) np;
+		p=np;
 	} else if(*p=='"'){
 		add_scriptc(C_STR);
 		p++;
 		while(*p && *p!='"'){
 			if(p[-1]<=0x7e && *p=='\\')
 				p++;
-			else if(*p=='\n'){
+			else if(*p=='\n')
 				disp_error_message("unexpected newline @ string",p);
-				exit(1);
-			}
 			add_scriptb(*p++);
 		}
-		if(!*p){
+		if(!*p)
 			disp_error_message("unexpected eof @ string",p);
-			exit(1);
-		}
 		add_scriptb(0);
 		p++;	//'"'
 	} else {
-		int c,l;
-		char *p2;
+		int l;
 		// label , register , function etc
-		if(skip_word(p)==p){
+		if(skip_word(p)==p)
 			disp_error_message("unexpected character",p);
-			exit(1);
-		}
 
-		p2=(char *) skip_word(p);
-		c=*p2;	*p2=0;	// 名前をadd_strする
-		l=add_str(p);
-
+		l=add_word(p);
 		parse_cmd=l;	// warn_*_mismatch_paramnumのために必要
+		p=skip_word(p);
 
-		*p2=c;	
-		p=(unsigned char *) p2;
-
-		if(str_data[l].type!=C_FUNC && c=='['){
+		if(str_data[l].type!=C_FUNC && *p=='['){
 			// array(name[i] => getelementofarray(name,i) )
-			add_scriptl(search_str((unsigned char *) "getelementofarray"));
+			add_scriptl(search_str("getelementofarray"));
 			add_scriptc(C_ARG);
 			add_scriptl(l);
 			
 			p=parse_subexpr(p+1,-1);
 			p=skip_space(p);
-			if((*p++)!=']'){
+			if((*p++)!=']')
 				disp_error_message("unmatch ']'",p);
-				exit(1);
-			}
 			add_scriptc(C_FUNC);
 		} else if(str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS) {
-			add_scriptl(search_str((unsigned char*)"callsub"));
+			add_scriptl(search_str("callsub"));
 			add_scriptc(C_ARG);
 			add_scriptl(l);
 		}else
@@ -612,10 +625,10 @@ unsigned char* parse_simpleexpr(unsigned char *p)
  * 式の解析
  *------------------------------------------
  */
-unsigned char* parse_subexpr(unsigned char *p,int limit)
+const char* parse_subexpr(const char* p,int limit)
 {
 	int op,opl,len;
-	char *tmpp;
+	const char* tmpp;
 
 #ifdef DEBUG_FUNCIN
 	if(battle_config.etc_log)
@@ -624,14 +637,14 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 	p=skip_space(p);
 
 	if(*p=='-'){
-		tmpp=(char *) skip_space((unsigned char *) (p+1));
+		tmpp=skip_space(p+1);
 		if(*tmpp==';' || *tmpp==','){
 			add_scriptl(LABEL_NEXTLINE);
 			p++;
 			return p;
 		}
 	}
-	tmpp=(char *) p;
+	tmpp=p;
 	if((op=C_NEG,*p=='-') || (op=C_LNOT,*p=='!') || (op=C_NOT,*p=='~')){
 		p=parse_subexpr(p+1,8);
 		add_scriptc(op);
@@ -668,20 +681,16 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 				add_scriptc(C_ARG);
 			} else if(str_data[parse_cmd].type == C_USERFUNC || str_data[parse_cmd].type == C_USERFUNC_POS) {
 				// ユーザー定義関数呼び出し
-				parse_cmd = search_str((unsigned char*)"callsub");
+				parse_cmd = search_str("callsub");
 				i++;
-			} else {
-				disp_error_message(
-					"expect command, missing function name or calling undeclared function",(unsigned char *) tmpp
-				);
-				exit(0);
-			}
+			} else
+				disp_error_message("expect command, missing function name or calling undeclared function",tmpp);
 			func=parse_cmd;
-			if( *p == '(' && *(plist[i]=(char *)skip_space(p+1)) == ')' ){
-				p=(char *)plist[i]+1; // empty argument list
+			if( *p == '(' && *(plist[i]=skip_space(p+1)) == ')' ){
+				p=plist[i]+1; // empty argument list
 			} else
 			while(*p && *p!=')' && i<128) {
-				plist[i]=(char *) p;
+				plist[i]=p;
 				p=parse_subexpr(p,-1);
 				p=skip_space(p);
 				if(*p==',') p++;
@@ -691,7 +700,7 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 				p=skip_space(p);
 				i++;
 			};
-			plist[i]=(char *) p;
+			plist[i]=p;
 			if(*(p++)!=')'){
 				disp_error_message("func request '(' ')'",p);
 				exit(1);
@@ -700,10 +709,11 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
 			if( str_data[func].type==C_FUNC && script_config.warn_func_mismatch_paramnum){
 				const char *arg = buildin_func[str_data[func].val].arg;
 				int j = 0;
-				for (; arg[j]; j++) if (arg[j] == '*') break;
-				if (!(i <= 1 && j == 0) && ((arg[j] == 0 && i != j) || (arg[j] == '*' && i < j))) {
-					disp_error_message("illegal number of parameters",(unsigned char *) (plist[(i<j)?i:j]));
-				}
+				for (; arg[j]; j++)
+					if (arg[j] == '*')
+						break;
+				if (!(i <= 1 && j == 0) && ((arg[j] == 0 && i != j) || (arg[j] == '*' && i < j)))
+					disp_error_message("illegal number of parameters",plist[min(i,j)]);
 			}
 		} else {
 			p=parse_subexpr(p,opl);
@@ -722,7 +732,7 @@ unsigned char* parse_subexpr(unsigned char *p,int limit)
  * 式の評価
  *------------------------------------------
  */
-unsigned char* parse_expr(unsigned char *p)
+const char* parse_expr(const char *p)
 {
 #ifdef DEBUG_FUNCIN
 	if(battle_config.etc_log)
@@ -736,7 +746,7 @@ unsigned char* parse_expr(unsigned char *p)
 	}
 	/*
 	if(*p == '(') {
-		unsigned char *p2 = skip_space(p + 1);
+		const char *p2 = skip_space(p + 1);
 		if(*p2 == ')') {
 			return p2 + 1;
 		}
@@ -754,11 +764,12 @@ unsigned char* parse_expr(unsigned char *p)
  * 行の解析
  *------------------------------------------
  */
-unsigned char* parse_line(unsigned char *p)
+const char* parse_line(const char* p)
 {
-	int i=0,cmd;
-	const char *plist[128];
-	unsigned char *p2;
+	int i=0;
+	int cmd;
+	const char* plist[128];
+	const char* p2;
 	char end;
 
 	p=skip_space(p);
@@ -783,10 +794,11 @@ unsigned char* parse_line(unsigned char *p)
 
 	// 構文関連の処理
 	p2 = parse_syntax(p);
-	if(p2 != NULL) { return p2; }
+	if(p2 != NULL)
+		return p2;
 
 	// 最初は関数名
-	p2=(char *) p;
+	p2=p;
 	p=parse_simpleexpr(p);
 	p=skip_space(p);
 
@@ -795,14 +807,11 @@ unsigned char* parse_line(unsigned char *p)
 		add_scriptc(C_ARG);
 	} else if(str_data[parse_cmd].type == C_USERFUNC || str_data[parse_cmd].type == C_USERFUNC_POS) {
 		// ユーザー定義関数呼び出し
-		parse_cmd = search_str((unsigned char*)"callsub");
+		parse_cmd = search_str("callsub");
 		i++;
-	} else {
-		disp_error_message(
-			"expect command, missing function name or calling undeclared function", (unsigned char *)p2
-		);
-//		exit(0);
-	}
+	} else
+		disp_error_message("expect command, missing function name or calling undeclared function",p2);
+
 	cmd=parse_cmd;
 
 	if(parse_syntax_for_flag) {
@@ -815,7 +824,7 @@ unsigned char* parse_line(unsigned char *p)
 		p= p2+1; // empty argument list
 	} else
 	while(p && *p && *p != end && i<128){
-		plist[i]=(char *) p;
+		plist[i]=p;
 
 		p=parse_expr(p);
 		p=skip_space(p);
@@ -838,7 +847,6 @@ unsigned char* parse_line(unsigned char *p)
 		} else {
 			disp_error_message("need ';'",p);
 		}
-		exit(1);
 	}
 	add_scriptc(C_FUNC);
 
@@ -847,17 +855,18 @@ unsigned char* parse_line(unsigned char *p)
 
 	if( str_data[cmd].type==C_FUNC && script_config.warn_cmd_mismatch_paramnum){
 		const char *arg=buildin_func[str_data[cmd].val].arg;
-		int j=0;
-		for(j=0;arg[j];j++) if(arg[j]=='*')break;
-		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) ){
-			disp_error_message("illegal number of parameters",(unsigned char *) (plist[(i<j)?i:j]));
-		}
+		int j;
+		for(j=0;arg[j];j++)
+			if(arg[j]=='*')
+				break;
+		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
+			disp_error_message("illegal number of parameters",plist[min(i,j)]);
 	}
 	return p;
 }
 
 // { ... } の閉じ処理
-unsigned char* parse_curly_close(unsigned char *p) {
+const char* parse_curly_close(const char* p) {
 	if(syntax.curly_count <= 0) {
 		disp_error_message("unexpected string",p);
 		return p + 1;
@@ -869,7 +878,7 @@ unsigned char* parse_curly_close(unsigned char *p) {
 	} else if(syntax.curly[syntax.curly_count-1].type == TYPE_SWITCH) {
 		// switch() 閉じ判定
 		int pos = syntax.curly_count-1;
-		unsigned char label[256];
+		char label[256];
 		int l;
 		// 一時変数を消す
 		sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
@@ -912,10 +921,10 @@ unsigned char* parse_curly_close(unsigned char *p) {
 // 構文関連の処理
 //	 break, case, continue, default, do, for, function,
 //	 if, switch, while をこの内部で処理します。
-unsigned char* parse_syntax(unsigned char *p) {
-	switch(p[0]) {
+const char* parse_syntax(const char* p) {
+	switch(*p) {
 	case 'b':
-		if(!strncmp(p,"break",5) && !isalpha(*(p + 5))) {
+		if(!strncmp(p,"break",5) && !ISALPHA(p[5])) {
 			// break の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -956,9 +965,10 @@ unsigned char* parse_syntax(unsigned char *p) {
 				disp_error_message("unexpected 'case' ",p);
 				return p+1;
 			} else {
-				char *p2;
+				const char *p2;
 				char label[256];
 				int  l;
+				int len;
 				int pos = syntax.curly_count-1;
 				if(syntax.curly[pos].count != 1) {
 					// FALLTHRU 用のジャンプ
@@ -977,16 +987,15 @@ unsigned char* parse_syntax(unsigned char *p) {
 				p = skip_space(p);
 				p2 = p;
 				p = skip_word(p);
+				len = p-p2;
 				p = skip_space(p);
-				if(*p != ':') {
+				if(*p != ':')
 					disp_error_message("expect ':'",p);
-					exit(1);
-				}
-				*p = 0;
-				sprintf(label,"if(%s != $@__SW%x_VAL) goto __SW%x_%x;",
-					p2,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
+				memcpy(label,"if(",3);
+				snprintf(label+3,len,p2);
+				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
+					syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
-				*p = ':';
 				// ２回parse しないとダメ
 				p2 = parse_line(label);
 				parse_line(p2);
@@ -1038,7 +1047,7 @@ unsigned char* parse_syntax(unsigned char *p) {
 		}
 		break;
 	case 'd':
-		if(!strncmp(p,"default",7) && !isalpha(*(p + 7))) {
+		if(!strncmp(p,"default",7) && !isalpha(p[7])) {
 			// switch - default の処理
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
 				disp_error_message("unexpected 'default'",p);
@@ -1099,7 +1108,7 @@ unsigned char* parse_syntax(unsigned char *p) {
 	case 'f':
 		if(!strncmp(p,"for",3) && !isalpha(*(p + 3))) {
 			int l;
-			unsigned char label[256];
+			char label[256];
 			int  pos = syntax.curly_count;
 			syntax.curly[syntax.curly_count].type  = TYPE_FOR;
 			syntax.curly[syntax.curly_count].count = 1;
@@ -1177,7 +1186,7 @@ unsigned char* parse_syntax(unsigned char *p) {
 			set_label(l,script_pos,p);
 			return p;
 		} else if(!strncmp(p,"function",8) && !isalpha(*(p + 8))) {
-			unsigned char *func_name;
+			const char *func_name;
 			// function
 			p=skip_word(p);
 			p=skip_space(p);
@@ -1186,19 +1195,14 @@ unsigned char* parse_syntax(unsigned char *p) {
 			p=skip_word(p);
 			if(*skip_space(p) == ';') {
 				// 関数の宣言 - 名前を登録して終わり
-				unsigned char c = *p;
 				int l;
-				*p = 0;
-				l=add_str(func_name);
-				*p = c;
-				if(str_data[l].type == C_NOP) {
+				l=add_word(func_name);
+				if(str_data[l].type == C_NOP)
 					str_data[l].type = C_USERFUNC;
-				}
 				return skip_space(p) + 1;
 			} else {
 				// 関数の中身
 				char label[256];
-				unsigned char c = *p;
 				int l;
 				syntax.curly[syntax.curly_count].type  = TYPE_USERFUNC;
 				syntax.curly[syntax.curly_count].count = 1;
@@ -1213,13 +1217,11 @@ unsigned char* parse_syntax(unsigned char *p) {
 				syntax.curly_count--;
 
 				// 関数名のラベルを付ける
-				*p = 0;
-				l=add_str(func_name);
+				l=add_word(func_name);
 				if(str_data[l].type == C_NOP)
 					str_data[l].type = C_USERFUNC;
-				*p = c;
 				set_label(l,script_pos,p);
-				strdb_put(scriptlabel_db,func_name,(void*)script_pos);
+				strdb_put(scriptlabel_db, GETSTRING(str_data[l].str), (void*)script_pos);
 				return skip_space(p);
 			}
 		}
@@ -1256,7 +1258,7 @@ unsigned char* parse_syntax(unsigned char *p) {
 			syntax.curly[syntax.curly_count].flag  = 0;
 			sprintf(label,"$@__SW%x_VAL",syntax.curly[syntax.curly_count].index);
 			syntax.curly_count++;
-			add_scriptl(add_str((unsigned char*)"set"));
+			add_scriptl(add_str("set"));
 			add_scriptc(C_ARG);
 			add_scriptl(add_str(label));
 			p=skip_word(p);
@@ -1302,7 +1304,7 @@ unsigned char* parse_syntax(unsigned char *p) {
 	return NULL;
 }
 
-unsigned char* parse_syntax_close(unsigned char *p) {
+const char* parse_syntax_close(const char *p) {
 	// if(...) for(...) hoge(); のように、１度閉じられたら再度閉じられるか確認する
 	int flag;
 
@@ -1315,8 +1317,8 @@ unsigned char* parse_syntax_close(unsigned char *p) {
 // if, for , while , do の閉じ判定
 //	 flag == 1 : 閉じられた
 //	 flag == 0 : 閉じられない
-unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
-	unsigned char label[256];
+const char* parse_syntax_close_sub(const char* p,int* flag) {
+	char label[256];
 	int pos = syntax.curly_count - 1;
 	int l;
 	*flag = 1;
@@ -1325,7 +1327,7 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 		*flag = 0;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_IF) {
-		char *p2 = p;
+		const char *p2 = p;
 		// if 最終場所へ飛ばす
 		sprintf(label,"goto __IF%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1379,7 +1381,7 @@ unsigned char* parse_syntax_close_sub(unsigned char *p,int *flag) {
 	} else if(syntax.curly[pos].type == TYPE_DO) {
 		int l;
 		char label[256];
-		unsigned char *p2;
+		const char *p2;
 
 		if(syntax.curly[pos].flag) {
 			// 現在地のラベル形成する(continue でここに来る)
@@ -1478,7 +1480,7 @@ static void add_buildin_func(void)
 {
 	int i,n;
 	for(i=0;buildin_func[i].func;i++){
-		n=add_str((unsigned char *) buildin_func[i].name);
+		n=add_str(buildin_func[i].name);
 		str_data[n].type=C_FUNC;
 		str_data[n].val=i;
 		str_data[n].func=buildin_func[i].func;
@@ -1508,8 +1510,8 @@ static void read_constdb(void)
 		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
 		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
 			for(i=0;name[i];i++)
-				name[i]=tolower(name[i]);
-			n=add_str((const unsigned char *) name);
+				name[i]=TOLOWER(name[i]);
+			n=add_str(name);
 			if(type==0)
 				str_data[n].type=C_INT;
 			else
@@ -1527,7 +1529,7 @@ static void read_constdb(void)
 
 const char* script_print_line( const char *p, const char *mark, int line );
 
-void script_error(char *src,const char *file,int start_line, const char *error_msg, const char *error_pos) {
+void script_error(const char *src,const char *file,int start_line, const char *error_msg, const char *error_pos) {
 	// エラーが発生した行を求める
 	int j;
 	int line = start_line;
@@ -1580,9 +1582,9 @@ const char* script_print_line( const char *p, const char *mark, int line ) {
  *------------------------------------------
  */
 
-struct script_code* parse_script(unsigned char *src,const char *file,int line)
+struct script_code* parse_script(const char *src,const char *file,int line)
 {
-	unsigned char *p,*tmpp;
+	const char *p,*tmpp;
 	int i;
 	struct script_code *code;
 	static int first=1;
@@ -1594,7 +1596,7 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 	}
 	first=0;
 
-	script_buf=(unsigned char *)aCalloc(SCRIPT_BLOCK_SIZE,sizeof(unsigned char));
+	CREATE(script_buf,unsigned char,SCRIPT_BLOCK_SIZE);
 	script_pos=0;
 	script_size=SCRIPT_BLOCK_SIZE;
 	str_data[LABEL_NEXTLINE].type=C_NOP;
@@ -1631,7 +1633,6 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 	p=skip_space(p);
 	if(*p!='{'){
 		disp_error_message("not found '{'",p);
-		exit(1);
 	}
 	p++;
 	p = skip_space(p);
@@ -1649,26 +1650,9 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 		// labelだけ特殊処理
 		tmpp=skip_space(skip_word(p));
 		if(*tmpp==':' && !(!strncmp(p,"default:",8) && p + 7 == tmpp)){
-			int l,c;
-
-			c=*skip_word(p);
-			*skip_word(p)=0;
-			if(*p == 0) {
-				*skip_word(p)=c;
-				disp_error_message("label length 0 ",p);
-				exit(1);
-			}
-			l=add_str(p);
-			/* FIXME: How much does it breaks to not restore skipword(p)=c when an error occurs here?
-			if(str_data[l].label!=-1){
-				*skip_word(p)=c;
-				disp_error_message("dup label ",p);
-				exit(1);
-			}
-			*/
-			set_label(l,script_pos,p);
-			strdb_put(scriptlabel_db, p, (void*)script_pos);
-			*skip_word(p)=c;
+			i=add_word(p);
+			set_label(i,script_pos,p);
+			strdb_put(scriptlabel_db, GETSTRING(str_data[i].str), (void*)script_pos);
 			p=tmpp+1;
 			continue;
 		}
@@ -1687,7 +1671,7 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 	add_scriptc(C_NOP);
 
 	script_size = script_pos;
-	script_buf=(unsigned char *)aRealloc(script_buf,script_pos);
+	RECREATE(script_buf,unsigned char,script_pos);
 
 	// 未解決のラベルを解決
 	for(i=LABEL_START;i<str_num;i++){
@@ -1712,7 +1696,7 @@ struct script_code* parse_script(unsigned char *src,const char *file,int line)
 	printf("\n");
 #endif
 
-	code = aCalloc(1, sizeof(struct script_code));
+	CREATE(code,struct script_code,1);
 	code->script_buf  = script_buf;
 	code->script_size = script_size;
 	code->script_vars = NULL;
@@ -1923,7 +1907,7 @@ static int set_reg(struct script_state*st,struct map_session_data *sd,int num,ch
 
 int set_var(struct map_session_data *sd, char *name, void *val)
 {
-    return set_reg(NULL, sd, add_str((unsigned char *) name), name, val, NULL);
+    return set_reg(NULL, sd, add_str(name), name, val, NULL);
 }
 
 /*==========================================
@@ -2003,7 +1987,7 @@ void push_val2(struct script_stack *stack,int type,int val,struct linkdb_node** 
  * スタックへ文字列をプッシュ
  *------------------------------------------
  */
-void push_str(struct script_stack *stack,int type,unsigned char *str)
+void push_str(struct script_stack *stack,int type,char *str)
 {
 	if(stack->sp>=stack->sp_max){
 		stack->sp_max += 64;
@@ -2014,9 +1998,9 @@ void push_str(struct script_stack *stack,int type,unsigned char *str)
 	}
 //	if(battle_config.etc_log)
 //		printf("push (%d,%x)-> %d\n",type,str,stack->sp);
-	stack->stack_data[stack->sp].type=type;
-	stack->stack_data[stack->sp].u.str=(char *) str;
-	stack->stack_data[stack->sp].ref   = NULL;
+	stack->stack_data[stack->sp].type =type;
+	stack->stack_data[stack->sp].u.str=str;
+	stack->stack_data[stack->sp].ref  =NULL;
 	stack->sp++;
 }
 
@@ -2028,10 +2012,10 @@ void push_copy(struct script_stack *stack,int pos)
 {
 	switch(stack->stack_data[pos].type){
 	case C_CONSTSTR:
-		push_str(stack,C_CONSTSTR,(unsigned char *) stack->stack_data[pos].u.str);
+		push_str(stack,C_CONSTSTR,stack->stack_data[pos].u.str);
 		break;
 	case C_STR:
-		push_str(stack,C_STR,(unsigned char *) aStrdup(stack->stack_data[pos].u.str));
+		push_str(stack,C_STR,aStrdup(stack->stack_data[pos].u.str));
 		break;
 	default:
 		push_val2(
@@ -2891,14 +2875,14 @@ static int script_load_mapreg(void)
 			}
 			p=(char *)aMallocA((strlen(buf2) + 1)*sizeof(char));
 			strcpy(p,buf2);
-			s= add_str((unsigned char *) buf1);
+			s= add_str(buf1);
 			idb_put(mapregstr_db,(i<<24)|s,p);
 		}else{
 			if( sscanf(line+n,"%d",&v)!=1 ){
 				ShowError("%s: %s broken data !\n",mapreg_txt,buf1);
 				continue;
 			}
-			s= add_str((unsigned char *) buf1);
+			s= add_str(buf1);
 			idb_put(mapreg_db,(i<<24)|s,(void*)v);
 		}
 	}
@@ -2932,10 +2916,10 @@ static int script_load_mapreg(void)
 				i = atoi(sql_row[1]);
 				p=(char *)aMallocA((strlen(sql_row[2]) + 1)*sizeof(char));
 				strcpy(p,sql_row[2]);
-				s= add_str((unsigned char *) buf1);
+				s= add_str(buf1);
 				idb_put(mapregstr_db,(i<<24)|s,p);
 			}else{
-				s= add_str((unsigned char *) buf1);
+				s= add_str(buf1);
 				v= atoi(sql_row[2]);
 				i = atoi(sql_row[1]);
 				idb_put(mapreg_db,(i<<24)|s,(void *)v);
@@ -2945,7 +2929,7 @@ static int script_load_mapreg(void)
 	ShowInfo("Freeing results...\n");
 	mysql_free_result(sql_res);
 	mapreg_dirty=0;
-	perfomance = ((unsigned int)time(NULL) - perfomance);
+	perfomance = (time(NULL) - perfomance);
 	ShowInfo("SQL Mapreg Loading Completed Under %d Seconds.\n",perfomance);
 	return 0;
 #endif /* TXT_ONLY */
@@ -3178,7 +3162,8 @@ int script_config_read(char *cfgName)
 }
 
 
-static int do_final_userfunc_sub (DBKey key,void *data,va_list ap){
+static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
+{
 	struct script_code *code = (struct script_code *)data;
 	if(code){
 		script_free_vars( &code->script_vars );
@@ -3967,7 +3952,7 @@ int buildin_callfunc(struct script_state *st)
 	struct script_code *scr, *oldscr;
 	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
-	if( (scr=strdb_get(userfunc_db,(unsigned char*)str)) ){
+	if( (scr=strdb_get(userfunc_db,str)) ){
 		int i,j;
 		struct linkdb_node **oldval = st->stack->var_function;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
@@ -4191,7 +4176,7 @@ int buildin_menu(struct script_state *st)
 				st->state=END;
 				return 1;
 			}
-			pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
+			pc_setreg(sd,add_str("@menu"),sd->npc_menu);
 			st->pos=conv_num(st,& (st->stack->stack_data[st->start+sd->npc_menu*2+1]));
 			st->state=GOTO;
 		}
@@ -4651,7 +4636,7 @@ int buildin_input(struct script_state *st)
 			set_reg(st,sd,num,name,(void*)sd->npc_amount,st->stack->stack_data[st->start+2].ref);
 		} else {
 			// ragemu互換のため
-			//pc_setreg(sd,add_str((unsigned char *) "l14"),sd->npc_amount);
+			//pc_setreg(sd,add_str("l14"),sd->npc_amount);
 		}
 		return 0;
 	}
@@ -5694,9 +5679,9 @@ int buildin_getpartyname(struct script_state *st)
 	party_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	name=buildin_getpartyname_sub(party_id);
 	if(name != NULL)
-		push_str(st->stack,C_STR,(unsigned char *)name);
+		push_str(st->stack,C_STR,name);
 	else
-		push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
+		push_str(st->stack,C_CONSTSTR,"null");
 
 	return 0;
 }
@@ -5719,19 +5704,19 @@ int buildin_getpartymember(struct script_state *st)
 			if(p->party.member[i].account_id){
 				switch (type) {
 				case 2:
-					mapreg_setreg(add_str((unsigned char *) "$@partymemberaid")+(j<<24),p->party.member[i].account_id);
+					mapreg_setreg(add_str("$@partymemberaid")+(j<<24),p->party.member[i].account_id);
 					break;
 				case 1:
-					mapreg_setreg(add_str((unsigned char *) "$@partymembercid")+(j<<24),p->party.member[i].char_id);
+					mapreg_setreg(add_str("$@partymembercid")+(j<<24),p->party.member[i].char_id);
 					break;
 				default:
-					mapreg_setregstr(add_str((unsigned char *) "$@partymembername$")+(j<<24),p->party.member[i].name);
+					mapreg_setregstr(add_str("$@partymembername$")+(j<<24),p->party.member[i].name);
 				}
 				j++;
 			}
 		}
 	}
-	mapreg_setreg(add_str((unsigned char *) "$@partymembercount"),j);
+	mapreg_setreg(add_str("$@partymembercount"),j);
 
 	return 0;
 }
@@ -5759,7 +5744,7 @@ int buildin_getpartyleader(struct script_state *st)
 		if (type)
 			push_val(st->stack,C_INT,-1);
 		else
-			push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
+			push_str(st->stack,C_CONSTSTR,"null");
 		return 0;
 	}
 
@@ -5780,7 +5765,7 @@ int buildin_getpartyleader(struct script_state *st)
 			push_val(st->stack,C_INT,p->party.member[i].lv);
 		break;
 		default:
-			push_str(st->stack,C_STR,(unsigned char *)p->party.member[i].name);
+			push_str(st->stack,C_STR,p->party.member[i].name);
 		break;
 	}
 	return 0;
@@ -5810,9 +5795,9 @@ int buildin_getguildname(struct script_state *st)
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	name=buildin_getguildname_sub(guild_id);
 	if(name != NULL)
-		push_str(st->stack,C_STR,(unsigned char *) name);
+		push_str(st->stack,C_STR,name);
 	else
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
+		push_str(st->stack,C_CONSTSTR,"null");
 	return 0;
 }
 
@@ -5841,9 +5826,9 @@ int buildin_getguildmaster(struct script_state *st)
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	master=buildin_getguildmaster_sub(guild_id);
 	if(master!=0)
-		push_str(st->stack,C_STR,(unsigned char *) master);
+		push_str(st->stack,C_STR,master);
 	else
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
+		push_str(st->stack,C_CONSTSTR,"null");
 	return 0;
 }
 
@@ -5877,31 +5862,31 @@ int buildin_strcharinfo(struct script_state *st)
 
 	sd=script_rid2sd(st);
 	if (!sd) { //Avoid crashing....
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+		push_str(st->stack,C_CONSTSTR,"");
 		return 0;
 	}
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	switch(num){
 		case 0:
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) sd->status.name);
+			push_str(st->stack,C_CONSTSTR,sd->status.name);
 			break;
 		case 1:
 			buf=buildin_getpartyname_sub(sd->status.party_id);
 			if(buf!=0)
-				push_str(st->stack,C_STR,(unsigned char *) buf);
+				push_str(st->stack,C_STR,buf);
 			else
-				push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+				push_str(st->stack,C_CONSTSTR,"");
 			break;
 		case 2:
 			buf=buildin_getguildname_sub(sd->status.guild_id);
 			if(buf != NULL)
-				push_str(st->stack,C_STR,(unsigned char *) buf);
+				push_str(st->stack,C_STR,buf);
 			else
-				push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+				push_str(st->stack,C_CONSTSTR,"");
 			break;
 		default:
 			ShowWarning("buildin_strcharinfo: unknown parameter.");
-			push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+			push_str(st->stack,C_CONSTSTR,"");
 			break;
 	}
 
@@ -5964,7 +5949,7 @@ int buildin_getequipname(struct script_state *st)
 	}else{
 		sprintf(buf,"%s-[%s]",pos[num-1],pos[10]);
 	}
-	push_str(st->stack,C_STR,(unsigned char *) buf);
+	push_str(st->stack,C_STR,buf);
 
 	return 0;
 }
@@ -6187,7 +6172,7 @@ int buildin_successrefitem(struct script_state *st)
 		clif_misceffect(&sd->bl,3);
 		if(sd->status.inventory[i].refine == MAX_REFINE &&
 			sd->status.inventory[i].card[0] == CARD0_FORGE &&
-		  	sd->status.char_id == MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
+		  	sd->status.char_id == (int)MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
 		){ // Fame point system [DracoRPG]
 	 		switch (sd->inventory_data[i]->wlv){
 				case 1:
@@ -6773,7 +6758,7 @@ int buildin_gettimestr(struct script_state *st)
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
 	tmpstr[maxlen]='\0';
 
-	push_str(st->stack,C_STR,(unsigned char *) tmpstr);
+	push_str(st->stack,C_STR,tmpstr);
 	return 0;
 }
 
@@ -6986,11 +6971,9 @@ int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 	if(!allflag){
 		if(strcmp(event,md->npc_event)==0)
 			status_kill(bl);
-		return 0;
 	}else{
 		if(!md->spawn)
 			status_kill(bl);
-		return 0;
 	}
 	return 0;
 }
@@ -8143,13 +8126,13 @@ int buildin_getwaitingroomstate(struct script_state *st)
 	case 33: val=(cd->users >= cd->trigger); break;
 
 	case 4:
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->title);
+		push_str(st->stack,C_CONSTSTR,cd->title);
 		return 0;
 	case 5:
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->pass);
+		push_str(st->stack,C_CONSTSTR,cd->pass);
 		return 0;
 	case 16:
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) cd->npc_event);
+		push_str(st->stack,C_CONSTSTR,cd->npc_event);
 		return 0;
 	}
 	push_val(st->stack,C_INT,val);
@@ -8183,7 +8166,7 @@ int buildin_warpwaitingpc(struct script_state *st)
 		sd=cd->usersd[0];
 		if (!sd) continue; //Broken npc chat room?
 		
-		mapreg_setreg(add_str((unsigned char *) "$@warpwaitingpc")+(i<<24),sd->bl.id);
+		mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24),sd->bl.id);
 
 		if(strcmp(str,"Random")==0)
 			pc_randomwarp(sd,3);
@@ -8196,7 +8179,7 @@ int buildin_warpwaitingpc(struct script_state *st)
 		}else
 			pc_setpos(sd,mapindex_name2id(str),x,y,0);
 	}
-	mapreg_setreg(add_str((unsigned char *) "$@warpwaitingpcnum"),n);
+	mapreg_setreg(add_str("$@warpwaitingpcnum"),n);
 	return 0;
 }
 /*==========================================
@@ -8617,7 +8600,7 @@ int buildin_pvpoff(struct script_state *st)
 			if((pl_sd=pl_allsd[i]) && m == pl_sd->bl.m)
 			{
 				clif_pvpset(pl_sd,0,0,2);
-				if(pl_sd->pvp_timer != -1) {
+				if(pl_sd->pvp_timer != UINT_MAX) {
 					delete_timer(pl_sd->pvp_timer,pc_calc_pvprank_timer);
 					pl_sd->pvp_timer = -1;
 				}
@@ -8761,8 +8744,8 @@ int buildin_agitcheck(struct script_state *st)
 		if (agit_flag==0) push_val(st->stack,C_INT,0);
 	} else {
 		sd=script_rid2sd(st);
-		if (agit_flag==1) pc_setreg(sd,add_str((unsigned char *) "@agit_flag"),1);
-		if (agit_flag==0) pc_setreg(sd,add_str((unsigned char *) "@agit_flag"),0);
+		if (agit_flag==1) pc_setreg(sd,add_str("@agit_flag"),1);
+		if (agit_flag==0) pc_setreg(sd,add_str("@agit_flag"),0);
 	}
 	return 0;
 }
@@ -8780,7 +8763,7 @@ int buildin_flagemblem(struct script_state *st)
 int buildin_getcastlename(struct script_state *st)
 {
 	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
-	struct guild_castle *gc;
+	struct guild_castle *gc=NULL;
 	int i;
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		if( (gc=guild_castle_search(i)) != NULL ){
@@ -8790,9 +8773,9 @@ int buildin_getcastlename(struct script_state *st)
 		}
 	}
 	if(gc)
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) gc->castle_name);
+		push_str(st->stack,C_CONSTSTR,gc->castle_name);
 	else
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "");
+		push_str(st->stack,C_CONSTSTR,"");
 	return 0;
 }
 
@@ -9379,10 +9362,10 @@ int buildin_strmobinfo(struct script_state *st)
 
 	switch (num) {
 	case 1:
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->name);
+		push_str(st->stack,C_CONSTSTR,mob_db(class_)->name);
 		break;
 	case 2:
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) mob_db(class_)->jname);
+		push_str(st->stack,C_CONSTSTR,mob_db(class_)->jname);
 		break;
 	case 3:
 		push_val(st->stack,C_INT,mob_db(class_)->lv);
@@ -9476,13 +9459,13 @@ int buildin_getitemname(struct script_state *st)
 	i_data = itemdb_exists(item_id);
 	if (i_data == NULL)
 	{
-		push_str(st->stack,C_CONSTSTR,(unsigned char *) "null");
+		push_str(st->stack,C_CONSTSTR,"null");
 		return 0;
 	}
 	item_name=(char *)aMallocA(ITEM_NAME_LENGTH*sizeof(char));
 
 	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
-	push_str(st->stack,C_STR,(unsigned char *) item_name);
+	push_str(st->stack,C_STR,item_name);
 	return 0;
 }
 /*==========================================
@@ -9664,12 +9647,12 @@ int buildin_getinventorylist(struct script_state *st)
 	if(!sd) return 0;
 	for(i=0;i<MAX_INVENTORY;i++){
 		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount > 0){
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_id")+(j<<24),sd->status.inventory[i].nameid);
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_amount")+(j<<24),sd->status.inventory[i].amount);
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_equip")+(j<<24),sd->status.inventory[i].equip);
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_refine")+(j<<24),sd->status.inventory[i].refine);
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_identify")+(j<<24),sd->status.inventory[i].identify);
-			pc_setreg(sd,add_str((unsigned char *) "@inventorylist_attribute")+(j<<24),sd->status.inventory[i].attribute);
+			pc_setreg(sd,add_str("@inventorylist_id")+(j<<24),sd->status.inventory[i].nameid);
+			pc_setreg(sd,add_str("@inventorylist_amount")+(j<<24),sd->status.inventory[i].amount);
+			pc_setreg(sd,add_str("@inventorylist_equip")+(j<<24),sd->status.inventory[i].equip);
+			pc_setreg(sd,add_str("@inventorylist_refine")+(j<<24),sd->status.inventory[i].refine);
+			pc_setreg(sd,add_str("@inventorylist_identify")+(j<<24),sd->status.inventory[i].identify);
+			pc_setreg(sd,add_str("@inventorylist_attribute")+(j<<24),sd->status.inventory[i].attribute);
 			for (k = 0; k < MAX_SLOTS; k++)
 			{
 				sprintf(card_var, "@inventorylist_card%d",k+1);
@@ -9678,7 +9661,7 @@ int buildin_getinventorylist(struct script_state *st)
 			j++;
 		}
 	}
-	pc_setreg(sd,add_str((unsigned char *) "@inventorylist_count"),j);
+	pc_setreg(sd,add_str("@inventorylist_count"),j);
 	return 0;
 }
 
@@ -9689,13 +9672,13 @@ int buildin_getskilllist(struct script_state *st)
 	if(!sd) return 0;
 	for(i=0;i<MAX_SKILL;i++){
 		if(sd->status.skill[i].id > 0 && sd->status.skill[i].lv > 0){
-			pc_setreg(sd,add_str((unsigned char *) "@skilllist_id")+(j<<24),sd->status.skill[i].id);
-			pc_setreg(sd,add_str((unsigned char *)"@skilllist_lv")+(j<<24),sd->status.skill[i].lv);
-			pc_setreg(sd,add_str((unsigned char *)"@skilllist_flag")+(j<<24),sd->status.skill[i].flag);
+			pc_setreg(sd,add_str("@skilllist_id")+(j<<24),sd->status.skill[i].id);
+			pc_setreg(sd,add_str("@skilllist_lv")+(j<<24),sd->status.skill[i].lv);
+			pc_setreg(sd,add_str("@skilllist_flag")+(j<<24),sd->status.skill[i].flag);
 			j++;
 		}
 	}
-	pc_setreg(sd,add_str((unsigned char *) "@skilllist_count"),j);
+	pc_setreg(sd,add_str("@skilllist_count"),j);
 	return 0;
 }
 
@@ -10262,9 +10245,9 @@ int buildin_getpetinfo(struct script_state *st)
 				break;
 			case 2:
 				if(pd->pet.name)
-					push_str(st->stack,C_CONSTSTR,(unsigned char *) pd->pet.name);
+					push_str(st->stack,C_CONSTSTR,pd->pet.name);
 				else
-					push_str(st->stack,C_CONSTSTR, (unsigned char *) "null");
+					push_str(st->stack,C_CONSTSTR,"null");
 				break;
 			case 3:
 				push_val(st->stack,C_INT,pd->pet.intimate);
@@ -10368,7 +10351,7 @@ int buildin_select(struct script_state *st)
 			if((int)strlen(st->stack->stack_data[i].u.str) < 1)
 				sd->npc_menu++; //Empty selection which wasn't displayed on the client.
 		}
-		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
+		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		push_val(st->stack,C_INT,sd->npc_menu);
 	}
@@ -10413,7 +10396,7 @@ int buildin_prompt(struct script_state *st)
 					sd->npc_menu++; //Empty selection which wasn't displayed on the client.
 			}
 		}
-		pc_setreg(sd,add_str((unsigned char *) "@menu"),sd->npc_menu);
+		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
 		sd->state.menu_or_input=0;
 		push_val(st->stack,C_INT,sd->npc_menu);
 	  }
@@ -10678,7 +10661,7 @@ int buildin_getsavepoint(struct script_state *st)
 			mapname=(char *) aMallocA((MAP_NAME_LENGTH+1)*sizeof(char));
 			memcpy(mapname, mapindex_id2name(sd->status.save_point.map), MAP_NAME_LENGTH);
 			mapname[MAP_NAME_LENGTH]='\0';
-			push_str(st->stack,C_STR,(unsigned char *) mapname);
+			push_str(st->stack,C_STR,mapname);
 		break;
 		case 1:
 			push_val(st->stack,C_INT,x);
@@ -11382,7 +11365,7 @@ int buildin_checkcell(struct script_state *st){
 // [zBuffer] List of dynamic var commands --->
 void setd_sub(struct script_state *st, struct map_session_data *sd, char *varname, int elem, void *value, struct linkdb_node **ref)
 {
-	set_reg(st, sd, add_str((unsigned char *) varname)+(elem<<24), varname, value, ref);
+	set_reg(st, sd, add_str(varname)+(elem<<24), varname, value, ref);
 	return;
 }
 
@@ -11495,7 +11478,7 @@ int buildin_escape_sql(struct script_state *st) {
 	
 	t_query = aMallocA((strlen(query)*2+1)*sizeof(char));
 	jstrescapecpy(t_query,query);
-	push_str(st->stack,C_STR,(unsigned char *)t_query);
+	push_str(st->stack,C_STR,t_query);
 	return 0;
 }
 
@@ -11511,7 +11494,7 @@ int buildin_getd (struct script_state *st)
 		elem = 0;
 
 	/*dat.type=C_NAME;
-	dat.u.num=add_str((unsigned char *) varname)+(elem<<24);
+	dat.u.num=add_str(varname)+(elem<<24);
 	get_val(st,&dat);
 
 	if(dat.type == C_INT)
@@ -11525,7 +11508,7 @@ int buildin_getd (struct script_state *st)
 
 	// Push the 'pointer' so it's more flexible [Lance]
 	push_val(st->stack,C_NAME,
-				(elem<<24) | add_str((unsigned char *) varname));
+				(elem<<24) | add_str(varname));
 
 	return 0;
 }
@@ -11747,7 +11730,7 @@ int buildin_setitemscript(struct script_state *st)
 	if (i_data && script!=NULL && script[0]=='{') {
 		if(i_data->script!=NULL)
 			script_free_code(i_data->script);
-		i_data->script = parse_script((unsigned char *) script, "script_setitemscript", 0);
+		i_data->script = parse_script(script, "script_setitemscript", 0);
 		push_val(st->stack,C_INT,1);
 	} else
 		push_val(st->stack,C_INT,0);
@@ -11800,7 +11783,7 @@ int buildin_getmonsterinfo(struct script_state *st)
 	mob = mob_db(mob_id);
 	switch ( conv_num(st,& (st->stack->stack_data[st->start+3])) ) {
 		case 0: //Name
-			push_str(st->stack,C_CONSTSTR, (unsigned char *) mob->jname);
+			push_str(st->stack,C_CONSTSTR,mob->jname);
 			break;
 		case 1: //Lvl
 			push_val(st->stack,C_INT, mob->lv);

@@ -1361,7 +1361,7 @@ int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 	return 0;
 }
 
-int npc_remove_map (struct npc_data *nd)
+int npc_remove_map(struct npc_data *nd)
 {
 	int m,i;
 	nullpo_retr(1, nd);
@@ -1431,11 +1431,11 @@ void npc_unload_duplicates (struct npc_data *nd)
 	map_foreachiddb(npc_unload_dup_sub,nd->bl.id);
 }
 
-int npc_unload (struct npc_data *nd)
+int npc_unload(struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
-	npc_remove_map (nd);
+	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
 
 	if (nd->chat_id) {
@@ -2943,7 +2943,7 @@ int do_final_npc(void)
 		if ((bl = map_id2bl(i))){
 			if (bl->type == BL_NPC)
 				npc_unload((struct npc_data *)bl);
-			else if (bl->type&(BL_MOB|BL_PET))
+			else if (bl->type&(BL_MOB|BL_PET))//## why BL_PET? [FlavioJS]
 				unit_free(bl, 0);
 		}
 	}

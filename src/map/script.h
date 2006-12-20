@@ -31,7 +31,7 @@ extern struct Script_Config {
 
 struct script_data {
 	int type;
-	union {
+	union script_data_val {
 		int num;
 		char *str;
 	} u;
@@ -61,7 +61,7 @@ struct script_state {
 	} sleep;
 };
 
-struct script_code* parse_script(unsigned char *,const char*,int);
+struct script_code* parse_script(const char* src,const char* file,int line);
 void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);
 void run_script(struct script_code*,int,int,int);
 

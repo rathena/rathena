@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= v1.0
 //===== Compatible With: ===================================== 
-//= eAthena with setd, getd and npc variables '.'
+//= eAthena with setd, getd
 //===== Description: ========================================= 
 //= Example of a localized NPC.
 //= 
@@ -91,23 +91,23 @@ function	script	getmes2	{
 /// that are valis as a variable name
 /// @param index	Message identifier
 function	script	mes2	{
-	set .@mes2_index$, getarg(0);
+	set @mes2_index$, getarg(0);
 
-	if( getstrlen(.@mes2_index$) == 0 )
+	if( getstrlen(@mes2_index$) == 0 )
 		return; // invalid index
 
 	// print localized text
-	set .@mes2_text$, callfunc("getmes2",.@mes2_index$,##_langid_);
-	if( getstrlen(.@mes2_text$) == 0 )
+	set @mes2_text$, callfunc("getmes2",@mes2_index$,##_langid_);
+	if( getstrlen(@mes2_text$) == 0 )
 	{
 		if( ##_langid_ != 0 )
 		{// revert to default language
-			set .@mes2_text$, callfunc("getmes2",.@mes2_index$,0);
-			if( getstrlen(.@mes2_text$) != 0 )
-				mes .@mes2_text$; // default text
+			set @mes2_text$, callfunc("getmes2",@mes2_index$,0);
+			if( getstrlen(@mes2_text$) != 0 )
+				mes @mes2_text$; // default text
 		}
 	} else
-		mes .@mes2_text$; // localized text
+		mes @mes2_text$; // localized text
 	return;
 }
 
@@ -115,8 +115,8 @@ function	script	mes2	{
 /// Sample localized NPC
 prontera.gat,155,183,4	script	LocalizedNPC	705,{
 	// Get text for specific languages
-	set .@menu1$, callfunc("getmes2","LNPC_lang",0);
-	set .@menu2$, callfunc("getmes2","LNPC_lang",1);
+	set @menu1$, callfunc("getmes2","LNPC_lang",0);
+	set @menu2$, callfunc("getmes2","LNPC_lang",1);
 	do {
 		// get text that fallbacks to language 0
 		callfunc "mes2", "LNPC_name";
@@ -125,7 +125,7 @@ prontera.gat,155,183,4	script	LocalizedNPC	705,{
 		callfunc "mes2", "LNPC_text";
 		next;
 
-		switch(select(.@menu1$,.@menu2$,"Cancel"))
+		switch(select(@menu1$,@menu2$,"Cancel"))
 		{
 			case 1:
 			case 2:

@@ -24,7 +24,8 @@ httpd.$(PLUGINEXT): httpd.c
 
 sig.$(PLUGINEXT): sig.c
 	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
-	../common/obj/showmsg.o
+	../common/obj/showmsg.o ../common/obj/utils.o \
+	../common/obj/minimalloc.o
 	@touch $@
 
 gui.$(PLUGINEXT): ../../plugins/gui.conf
