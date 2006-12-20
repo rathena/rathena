@@ -4533,99 +4533,159 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//Check for inmunities / sc fails
 	switch (type) {
-		case SC_FREEZE:
-		case SC_STONE:
-			//Undead are inmune to Freeze/Stone
-			if (undead_flag && !(flag&1))
-				return 0;
-		case SC_SLEEP:
-		case SC_STUN:
-			if (sc->opt1)
-				return 0; //Cannot override other opt1 status changes. [Skotlex]
+	case SC_FREEZE:
+	case SC_STONE:
+		//Undead are inmune to Freeze/Stone
+		if (undead_flag && !(flag&1))
+			return 0;
+	case SC_SLEEP:
+	case SC_STUN:
+		if (sc->opt1)
+			return 0; //Cannot override other opt1 status changes. [Skotlex]
+	break;
+	case SC_CURSE:
+		//Dark Elementals are inmune to curse.
+		if (status->def_ele == ELE_DARK && !(flag&1))
+			return 0;
+	break;
+	case SC_COMA:
+		//Dark elementals and Demons are inmune to coma.
+		if((status->def_ele == ELE_DARK || status->race == RC_DEMON) && !(flag&1))
+			return 0;
+	break;
+	case SC_SIGNUMCRUCIS:
+		//Only affects demons and undead.
+		if(status->race != RC_DEMON && !undead_flag)
+			return 0;
 		break;
-		case SC_CURSE:
-			//Dark Elementals are inmune to curse.
-			if (status->def_ele == ELE_DARK && !(flag&1))
-				return 0;
+	case SC_AETERNA:
+	  if (sc->data[SC_STONE].timer != -1 || sc->data[SC_FREEZE].timer != -1)
+		  return 0;
+	break;
+	case SC_OVERTHRUST:
+		if (sc->data[SC_MAXOVERTHRUST].timer != -1)
+			return 0; //Overthrust can't take effect if under Max Overthrust. [Skotlex]
+	break;
+	case SC_ADRENALINE:
+		if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
+			return 0;
+		if (sc->data[SC_QUAGMIRE].timer!=-1 ||
+			sc->data[SC_DONTFORGETME].timer!=-1 ||
+			sc->data[SC_DECREASEAGI].timer!=-1
+		)
+			return 0;
+	break;
+	case SC_ADRENALINE2:
+		if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE2)))
+			return 0;
+		if (sc->data[SC_QUAGMIRE].timer!=-1 ||
+			sc->data[SC_DONTFORGETME].timer!=-1 ||
+			sc->data[SC_DECREASEAGI].timer!=-1
+		)
+			return 0;
+	break;
+	case SC_ONEHAND:
+	case SC_TWOHANDQUICKEN:
+		if(sc->data[SC_DECREASEAGI].timer!=-1)
+			return 0;
+	case SC_CONCENTRATE:
+	case SC_INCREASEAGI:
+	case SC_SPEARQUICKEN:
+	case SC_TRUESIGHT:
+	case SC_WINDWALK:
+	case SC_CARTBOOST:
+	case SC_ASSNCROS:
+		if (sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1)
+			return 0;
+	break;
+	case SC_CLOAKING:
+		//Avoid cloaking with no wall and low skill level. [Skotlex]
+		//Due to the cloaking card, we have to check the wall versus to known
+		//skill level rather than the used one. [Skotlex]
+		//if (sd && val1 < 3 && skill_check_cloaking(bl))
+		if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl,sc))
+			return 0;
 		break;
-		case SC_COMA:
-			//Dark elementals and Demons are inmune to coma.
-			if((status->def_ele == ELE_DARK || status->race == RC_DEMON) && !(flag&1))
-				return 0;
-		break;
-		case SC_SIGNUMCRUCIS:
-			//Only affects demons and undead.
-			if(status->race != RC_DEMON && !undead_flag)
-				return 0;
-			break;
-		case SC_AETERNA:
-		  if (sc->data[SC_STONE].timer != -1 || sc->data[SC_FREEZE].timer != -1)
-			  return 0;
-		break;
-		case SC_OVERTHRUST:
-			if (sc->data[SC_MAXOVERTHRUST].timer != -1)
-				return 0; //Overthrust can't take effect if under Max Overthrust. [Skotlex]
-		break;
-		case SC_ADRENALINE:
-			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
-				return 0;
-			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
-				sc->data[SC_DONTFORGETME].timer!=-1 ||
-				sc->data[SC_DECREASEAGI].timer!=-1
-			)
-				return 0;
-		break;
-		case SC_ADRENALINE2:
-			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE2)))
-				return 0;
-			if (sc->data[SC_QUAGMIRE].timer!=-1 ||
-				sc->data[SC_DONTFORGETME].timer!=-1 ||
-				sc->data[SC_DECREASEAGI].timer!=-1
-			)
-				return 0;
-		break;
-		case SC_ONEHAND:
-		case SC_TWOHANDQUICKEN:
-			if(sc->data[SC_DECREASEAGI].timer!=-1)
-				return 0;
-		case SC_CONCENTRATE:
-		case SC_INCREASEAGI:
-		case SC_SPEARQUICKEN:
-		case SC_TRUESIGHT:
-		case SC_WINDWALK:
-		case SC_CARTBOOST:
-		case SC_ASSNCROS:
-			if (sc->data[SC_QUAGMIRE].timer!=-1 || sc->data[SC_DONTFORGETME].timer!=-1)
-				return 0;
-		break;
-		case SC_CLOAKING:
-			//Avoid cloaking with no wall and low skill level. [Skotlex]
-			//Due to the cloaking card, we have to check the wall versus to known
-			//skill level rather than the used one. [Skotlex]
-			//if (sd && val1 < 3 && skill_check_cloaking(bl))
-			if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl,sc))
-				return 0;
-			break;
-		case SC_MODECHANGE:
-		{
-			int mode;
-			struct status_data *bstatus = status_get_base_status(bl);
-			if (!bstatus) return 0;
-			if (sc->data[type].timer != -1)
-			{	//Pile up with previous values.
-				if(!val2) val2 = sc->data[type].val2;
-				val3 |= sc->data[type].val3;
-				val4 |= sc->data[type].val4;
-			}
-			mode = val2?val2:bstatus->mode; //Base mode
-			if (val4) mode&=~val4; //Del mode
-			if (val3) mode|= val3; //Add mode
-			if (mode == bstatus->mode) { //No change.
-				if (sc->data[type].timer != -1) //Abort previous status
-					return status_change_end(bl, type, -1);
-				return 0;
-			}
+	case SC_MODECHANGE:
+	{
+		int mode;
+		struct status_data *bstatus = status_get_base_status(bl);
+		if (!bstatus) return 0;
+		if (sc->data[type].timer != -1)
+		{	//Pile up with previous values.
+			if(!val2) val2 = sc->data[type].val2;
+			val3 |= sc->data[type].val3;
+			val4 |= sc->data[type].val4;
 		}
+		mode = val2?val2:bstatus->mode; //Base mode
+		if (val4) mode&=~val4; //Del mode
+		if (val3) mode|= val3; //Add mode
+		if (mode == bstatus->mode) { //No change.
+			if (sc->data[type].timer != -1) //Abort previous status
+				return status_change_end(bl, type, -1);
+			return 0;
+		}
+		break;
+	}
+	//Strip skills, need to divest something or it fails.
+	case SC_STRIPWEAPON:
+		if (sd) {
+			int i;
+			opt_flag = 0; //Reuse to check success condition.
+			if(sd->unstripable_equip&EQP_WEAPON)
+				return 0;
+			i = sd->equip_index[EQI_HAND_L];
+			if (i>=0 && sd->inventory_data[i] &&
+				sd->inventory_data[i]->type == IT_WEAPON)
+			{
+				opt_flag|=1;
+				pc_unequipitem(sd,i,3); //L-hand weapon
+			}
+
+			i = sd->equip_index[EQI_HAND_R];
+			if (i>=0 && sd->inventory_data[i] &&
+				sd->inventory_data[i]->type == IT_WEAPON)
+			{
+				opt_flag|=2;
+				pc_unequipitem(sd,i,3);
+			}
+			if (!opt_flag) return 0;
+		}
+		break;
+	case SC_STRIPSHIELD:
+		if (sd) {
+			int i;
+			if(sd->unstripable_equip&EQP_SHIELD)
+				return 0;
+			i = sd->equip_index[EQI_HAND_L];
+			if (i<0 || !sd->inventory_data[i] ||
+				sd->inventory_data[i]->type != IT_ARMOR)
+				return 0;
+			pc_unequipitem(sd,i,3);
+		}
+		break;
+	case SC_STRIPARMOR:
+		if (sd) {
+			int i;
+			if(sd->unstripable_equip&EQP_ARMOR)
+				return 0;
+			i = sd->equip_index[EQI_ARMOR];
+			if (i<0 || !sd->inventory_data[i])
+				return 0;
+			pc_unequipitem(sd,i,3);
+		}
+		break;
+	case SC_STRIPHELM:
+		if (sd) {
+			int i;
+			if(sd->unstripable_equip&EQP_HELM)
+				return 0;
+			i = sd->equip_index[EQI_HEAD_TOP];
+			if (i<0 || !sd->inventory_data[i])
+				return 0;
+			pc_unequipitem(sd,i,3);
+		}
+		break;
 	}
 
 	//Check for BOSS resistances
@@ -4929,65 +4989,19 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			break;
 		case SC_STRIPWEAPON:
-			if (sd) {
-				int i;
-				opt_flag = 0; //Reuse to check success condition.
-				if(sd->unstripable_equip&EQP_WEAPON)
-					return 0;
-				i = sd->equip_index[EQI_HAND_L];
-				if (i>=0 && sd->inventory_data[i] &&
-					sd->inventory_data[i]->type == IT_WEAPON)
-				{
-					opt_flag|=1;
-					pc_unequipitem(sd,i,3); //L-hand weapon
-				}
-
-				i = sd->equip_index[EQI_HAND_R];
-				if (i>=0 && sd->inventory_data[i] &&
-					sd->inventory_data[i]->type == IT_WEAPON)
-				{
-					opt_flag|=2;
-					pc_unequipitem(sd,i,3);
-				}
-				if (!opt_flag) return 0;
-			} else //Watk reduction
+			if (!sd) //Watk reduction
 				val2 = 5*val1;
 			break;
 		case SC_STRIPSHIELD:
-			if (sd) {
-				int i;
-				if(sd->unstripable_equip&EQP_SHIELD)
-					return 0;
-				i = sd->equip_index[EQI_HAND_L];
-				if (i<0 || !sd->inventory_data[i] ||
-					sd->inventory_data[i]->type != IT_ARMOR)
-					return 0;
-				pc_unequipitem(sd,i,3);
-			} else //Def reduction
+			if (!sd) //Def reduction
 				val2 = 3*val1;
 			break;
 		case SC_STRIPARMOR:
-			if (sd) {
-				int i;
-				if(sd->unstripable_equip&EQP_ARMOR)
-					return 0;
-				i = sd->equip_index[EQI_ARMOR];
-				if (i<0 || !sd->inventory_data[i])
-					return 0;
-				pc_unequipitem(sd,i,3);
-			} else //Vit reduction
+			if (!sd) //Vit reduction
 				val2 = 8*val1;
 			break;
 		case SC_STRIPHELM:
-			if (sd) {
-				int i;
-				if(sd->unstripable_equip&EQP_HELM)
-					return 0;
-				i = sd->equip_index[EQI_HEAD_TOP];
-				if (i<0 || !sd->inventory_data[i])
-					return 0;
-				pc_unequipitem(sd,i,3);
-			} else //Int reduction
+			if (!sd) //Int reduction
 				val2 = 8*val1;
 			break;
 		case SC_AUTOSPELL:
@@ -6034,9 +6048,28 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	if (sc->data[type].timer == -1 ||
 		(sc->data[type].timer != tid && tid != -1))
 		return 0;
-		
-	if (tid == -1)
+	
+	if (tid == -1) {
 		delete_timer(sc->data[type].timer,status_change_timer);
+		if (sc->opt1)
+		switch (type) {
+			//"Ugly workaround"  [Skotlex]
+			//delays status change ending so that a skill that sets opt1 fails to 
+			//trigger when it also removed one
+			case SC_STONE:
+			case SC_FREEZE:
+			case SC_STUN:
+			case SC_SLEEP:
+			if (sc->data[type].val1) {
+			  	//Removing the 'level' shouldn't affect anything in the code
+				//since these SC are not affected by it, and it lets us know
+				//if we have already delayed this attack or not.
+				sc->data[type].val1 = 0;
+				sc->data[type].timer = add_timer(gettick()+10, status_change_timer, bl->id, type);
+				return 1;
+			}
+		}
+	}
 
 	sc->data[type].timer=-1;
 	(sc->count)--;

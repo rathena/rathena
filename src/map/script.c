@@ -499,7 +499,7 @@ static const char *skip_word(const char *p)
 	if(*p=='#') p++;	// account変数用
 	if(*p=='#') p++;	// ワールドaccount変数用
 
-	while(isalnum(*p)||*p=='_'|| *p>=0x81) {
+	while(isalnum(*p)||*p=='_'|| *p>=0x81) { //#FIXME: Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for?
 		if(*p>=0x81 && p[1]){
 			p+=2;
 		} else

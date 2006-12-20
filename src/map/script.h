@@ -82,7 +82,7 @@ struct dbt* script_get_userfunc_db(void);
 int script_config_read(char *cfgName);
 int do_init_script(void);
 int do_final_script(void);
-int add_str(const unsigned char *p);
+int add_str(const char *p);
 int script_reload(void);
 
 extern char mapreg_txt[];
