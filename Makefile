@@ -111,8 +111,6 @@ endif
 .PHONY: txt sql common login login_sql char char_sql map map_sql ladmin converters \
 	addons plugins tools webserver clean zlib depend
 
-all: txt
-
 txt : Makefile.cache conf common login char map ladmin
 
 ifdef SQLFLAG

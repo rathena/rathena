@@ -7204,6 +7204,14 @@ int buildin_getnpctimer(struct script_state *st)
 		nd=npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+3])));
 	else
 		nd=(struct npc_data *)map_id2bl(st->oid);
+	
+	if (!nd || nd->bl.type != BL_NPC)
+	{
+		push_val(st->stack,C_INT,0);
+		if (battle_config.error_log)
+			ShowError("getnpctimer: Invalid NPC\n");
+		return 1;
+	}
 
 	switch(type){
 	case 0: val=npc_gettimerevent_tick(nd); break;
