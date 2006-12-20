@@ -289,7 +289,7 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
 #define TOLOWER(c) ((char)tolower((unsigned char)(c)))
-#define ISSPACE(c) ((char)isspace((unsigned char)(c)))
-#define ISALPHA(c) ((char)isalpha((unsigned char)(c)))
+#define ISSPACE(c) (isspace((unsigned char)(c)))
+#define ISALPHA(c) (isalpha((unsigned char)(c)))
 
 #endif /* _CBASETYPES_H_ */
