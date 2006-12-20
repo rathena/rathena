@@ -1680,7 +1680,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
 	struct mmo_charstatus *p = NULL;
 	const int offset = 24;
-#ifdef PACKETVER > 7
+#if PACKETVER > 7
 	WFIFOHEAD(fd, offset +9*108);
 #else
 	WFIFOHEAD(fd, offset +9*106);
@@ -1711,7 +1711,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 	WFIFOW(fd, 0) = 0x6b;
 
-#ifdef PACKETVER > 7
+#if PACKETVER > 7
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 108);
 	WFIFOW(fd, 2) = offset + found_num * 108;
 #endif
@@ -1727,7 +1727,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 		p = &char_dat;
 
-#ifdef PACKETVER > 7
+#if PACKETVER > 7
 		j = offset + (i * 108);
 #else
 		j = offset + (i * 106); // increase speed of code
