@@ -1714,7 +1714,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 #if PACKETVER > 7
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 108);
 	WFIFOW(fd, 2) = offset + found_num * 108;
-#endif
+#else
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 106);
 	WFIFOW(fd, 2) = offset + found_num * 106;
 #endif
