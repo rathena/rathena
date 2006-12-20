@@ -392,7 +392,7 @@ job_sword1.gat,223,167,2	script	Mae	92,{
 // -- First Section --
 // - Left -
 job_sword1.gat,22,172,1	script	1green_1::green	139,0,0,{
-	heal (-4),0;
+	heal -4,0;
 	end;
 }
 

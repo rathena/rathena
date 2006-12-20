@@ -102,7 +102,7 @@ static const char* error_pos;
 
 // for advanced scripting support ( nested if, switch, while, for, do-while, function, etc )
 // [Eoe / jA 1080, 1081, 1094, 1164]
-enum { TYPE_NULL = 0 , TYPE_IF , TYPE_SWITCH , TYPE_WHILE , TYPE_FOR , TYPE_DO , TYPE_USERFUNC};
+enum curly_type { TYPE_NULL = 0 , TYPE_IF , TYPE_SWITCH , TYPE_WHILE , TYPE_FOR , TYPE_DO , TYPE_USERFUNC};
 static struct {
 	struct {
 		int type;
@@ -442,11 +442,11 @@ void set_label(int l,int pos, const char* script_pos)
 
 	if(str_data[l].type==C_INT || str_data[l].type==C_PARAM)
 	{	//Prevent overwriting constants values and parameters [Skotlex]
-		disp_error_message("invalid label name",script_pos);
+		disp_error_message("set_label: invalid label name",script_pos);
 		return;
 	}
 	if(str_data[l].label!=-1){
-		disp_error_message("dup label ",script_pos);
+		disp_error_message("set_label: dup label ",script_pos);
 		return;
 	}
 	str_data[l].type=(str_data[l].type == C_USERFUNC ? C_USERFUNC_POS : C_POS);
@@ -479,7 +479,7 @@ static const char *skip_space(const char *p)
 			if(*p)
 				++p;
 			else
-				disp_error_message("unexpected eof @ block comment",p);
+				disp_error_message("skip_space: unexpected eof @ block comment",p);
 		} else
 			break;
 	}
@@ -521,7 +521,7 @@ int add_word(const char *p)
 	// Check for a word
 	len = skip_word(p)-p;
 	if( len == 0 )
-		disp_error_message("expected a word",p);
+		disp_error_message("add_word: not a word",p);
 
 	// Copy the word
 	CREATE(word,char,len+1);
@@ -559,12 +559,12 @@ const char* parse_simpleexpr(const char *p)
 		ShowDebug("parse_simpleexpr %s\n",p);
 #endif
 	if(*p==';' || *p==',')
-		disp_error_message("unexpected expr end",p);
+		disp_error_message("parse_simpleexpr: unexpected expr end",p);
 	if(*p=='('){
 		p=parse_subexpr(p+1,-1);
 		p=skip_space(p);
 		if((*p++)!=')')
-			disp_error_message("unmatch ')'",p);
+			disp_error_message("parse_simpleexpr: unmatch ')'",p);
 	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
 		char *np;
 		i=strtoul(p,&np,0);
@@ -577,18 +577,18 @@ const char* parse_simpleexpr(const char *p)
 			if(p[-1]<=0x7e && *p=='\\')
 				p++;
 			else if(*p=='\n')
-				disp_error_message("unexpected newline @ string",p);
+				disp_error_message("parse_simpleexpr: unexpected newline @ string",p);
 			add_scriptb(*p++);
 		}
 		if(!*p)
-			disp_error_message("unexpected eof @ string",p);
+			disp_error_message("parse_simpleexpr: unexpected eof @ string",p);
 		add_scriptb(0);
 		p++;	//'"'
 	} else {
 		int l;
 		// label , register , function etc
 		if(skip_word(p)==p)
-			disp_error_message("unexpected character",p);
+			disp_error_message("parse_simpleexpr: unexpected character",p);
 
 		l=add_word(p);
 		parse_cmd=l;	// warn_*_mismatch_paramnum‚Ì‚½‚ß‚É•K—v
@@ -603,7 +603,7 @@ const char* parse_simpleexpr(const char *p)
 			p=parse_subexpr(p+1,-1);
 			p=skip_space(p);
 			if((*p++)!=']')
-				disp_error_message("unmatch ']'",p);
+				disp_error_message("parse_simpleexpr: unmatch ']'",p);
 			add_scriptc(C_FUNC);
 		} else if(str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS) {
 			add_scriptl(search_str("callsub"));
@@ -688,7 +688,7 @@ const char* parse_subexpr(const char* p,int limit)
 				parse_cmd = search_str("callsub");
 				i++;
 			} else
-				disp_error_message("expect command, missing function name or calling undeclared function",tmpp);
+				disp_error_message("parse_subexpr: expect command, missing function name or calling undeclared function",tmpp);
 			func=parse_cmd;
 			p=skip_space(p);
 
@@ -710,25 +710,23 @@ const char* parse_subexpr(const char* p,int limit)
 						p++; // the next argument is valid, skip the comma
 				}
 				else if(*p!=')' && script_config.warn_func_no_comma){
-					disp_error_message("expect ',' or ')' at func params",p);
+					disp_error_message("parse_subexpr: expect ',' or ')' at func params",p);
 				}
 				p=skip_space(p);
 				i++;
 			}
 			plist[i]=p;
-			if(*(p++)!=')'){
-				disp_error_message("func request '(' ')'",p);
-				//exit(1);
-			}
+			if(*(p++)!=')')
+				disp_error_message("parse_subexpr: func request '(' ')'",p);
 			if(arg) {
 				if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
-					disp_error_message("illegal number of parameters",plist[min(i,j)]);
+					disp_error_message("parse_subexpr: illegal number of parameters",plist[min(i,j)]);
 			}
 		} else if(op == C_OP3) {
 			p=parse_subexpr(p,-1);
 			p=skip_space(p);
 			if( *(p++) != ':')
-				disp_error_message("need ':'", p);
+				disp_error_message("parse_subexpr: need ':'", p);
 			p=parse_subexpr(p,-1);
 		} else {
 			p=parse_subexpr(p,opl);
@@ -756,7 +754,7 @@ const char* parse_expr(const char *p)
 	switch(*p){
 	case ')': case ';': case ':': case '[': case ']':
 	case '}':
-		disp_error_message("unexpected char",p);
+		disp_error_message("parse_expr: unexpected char",p);
 		exit(1);
 	}
 	p=parse_subexpr(p,-1);
@@ -780,6 +778,9 @@ const char* parse_line(const char* p)
 	const char* p2;
 	const char *arg=NULL;
 	char end;
+	char end2=0;
+	int old_flag=0;
+
 
 	p=skip_space(p);
 	if(*p==';') {
@@ -819,7 +820,7 @@ const char* parse_line(const char* p)
 		parse_cmd = search_str("callsub");
 		i++;
 	} else
-		disp_error_message("expect command, missing function name or calling undeclared function",p2);
+		disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p2);
 
 	cmd=parse_cmd;
 
@@ -838,6 +839,15 @@ const char* parse_line(const char* p)
 		}
 	}
 
+	// Check for parenthesis argument list
+	if( *p == '(' ){
+		++p;
+		end2 = end;
+		end = ')';
+		old_flag = parse_syntax_for_flag;
+		parse_syntax_for_flag = 1;
+	}
+
 	while(p && *p && *p != end && i<128){
 		plist[i]=p;
 
@@ -850,30 +860,37 @@ const char* parse_line(const char* p)
 		}
 		else if(*p!=end && script_config.warn_cmd_no_comma){
 			if(parse_syntax_for_flag) {
-				disp_error_message("expect ',' or ')' at cmd params",p);
+				disp_error_message("parse_line: expect ',' or ')' at cmd params",p);
 			} else {
-				disp_error_message("expect ',' or ';' at cmd params",p);
+				disp_error_message("parse_line: expect ',' or ';' at cmd params",p);
 			}
 		}
 		p=skip_space(p);
 		i++;
 	}
 	plist[i]=p;
-	if(!p || *(p++)!=end){
+	if( end2 ){ // restore previous ending and recheck
+		if( *p != ')' )
+			disp_error_message("parse_line: need ')' to end param list",p);
+		p=skip_space(p+1);
+		end = end2;
+		parse_syntax_for_flag = old_flag;
+	}
+	if(!p || *p!=end){
 		if(parse_syntax_for_flag) {
-			disp_error_message("need ')'",p);
+			disp_error_message("parse_line: need ')'",p);
 		} else {
-			disp_error_message("need ';'",p);
+			disp_error_message("parse_line: need ';'",p);
 		}
 	}
 	add_scriptc(C_FUNC);
 
 	// if, for , while ‚Ì•Â‚¶”»’è
-	p = parse_syntax_close(p);
+	p = parse_syntax_close(p+1);
 
 	if(arg) {
 		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
-			disp_error_message("illegal number of parameters",plist[min(i,j)]);
+			disp_error_message("parse_line: illegal number of parameters",plist[min(i,j)]);
 	}
 	return p;
 }
@@ -881,7 +898,7 @@ const char* parse_line(const char* p)
 // { ... } ‚Ì•Â‚¶ˆ—
 const char* parse_curly_close(const char* p) {
 	if(syntax.curly_count <= 0) {
-		disp_error_message("unexpected string",p);
+		disp_error_message("parse_curly_close: unexpected string",p);
 		return p + 1;
 	} else if(syntax.curly[syntax.curly_count-1].type == TYPE_NULL) {
 		syntax.curly_count--;
@@ -926,7 +943,7 @@ const char* parse_curly_close(const char* p) {
 		syntax.curly_count--;
 		return p+1;
 	} else {
-		disp_error_message("unexpected string",p);
+		disp_error_message("parse_curly_close: unexpected string",p);
 		return p + 1;
 	}
 }
@@ -958,7 +975,7 @@ const char* parse_syntax(const char* p) {
 				pos--;
 			}
 			if(pos < 0) {
-				disp_error_message("unexpected 'break'",p);
+				disp_error_message("parse_syntax: unexpected 'break'",p);
 			} else {
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				parse_line(label);
@@ -975,7 +992,7 @@ const char* parse_syntax(const char* p) {
 		if(!strncmp(p,"case",4) && !isalpha(*(p + 4))) {
 			// case ‚Ìˆ—
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
-				disp_error_message("unexpected 'case' ",p);
+				disp_error_message("parse_syntax: unexpected 'case' ",p);
 				return p+1;
 			} else {
 				const char *p2;
@@ -1003,7 +1020,7 @@ const char* parse_syntax(const char* p) {
 				len = p-p2;
 				p = skip_space(p);
 				if(*p != ':')
-					disp_error_message("expect ':'",p);
+					disp_error_message("parse_syntax: expect ':'",p);
 				memcpy(label,"if(",3);
 				snprintf(label+3,len,p2);
 				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
@@ -1046,7 +1063,7 @@ const char* parse_syntax(const char* p) {
 				pos--;
 			}
 			if(pos < 0) {
-				disp_error_message("unexpected 'continue'",p);
+				disp_error_message("parse_syntax: unexpected 'continue'",p);
 			} else {
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				parse_line(label);
@@ -1063,10 +1080,10 @@ const char* parse_syntax(const char* p) {
 		if(!strncmp(p,"default",7) && !isalpha(p[7])) {
 			// switch - default ‚Ìˆ—
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
-				disp_error_message("unexpected 'default'",p);
+				disp_error_message("parse_syntax: unexpected 'default'",p);
 				return p+1;
 			} else if(syntax.curly[syntax.curly_count - 1].flag) {
-				disp_error_message("dup 'default'",p);
+				disp_error_message("parse_syntax: dup 'default'",p);
 				return p+1;
 			} else {
 				char label[256];
@@ -1076,7 +1093,7 @@ const char* parse_syntax(const char* p) {
 				p = skip_word(p);
 				p = skip_space(p);
 				if(*p != ':') {
-					disp_error_message("need ':'",p);
+					disp_error_message("parse_syntax: need ':'",p);
 				}
 				p++;
 				sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
@@ -1133,7 +1150,7 @@ const char* parse_syntax(const char* p) {
 			p=skip_space(p);
 
 			if(*p != '(') {
-				disp_error_message("need '('",p);
+				disp_error_message("parse_syntax: need '('",p);
 				return p+1;
 			}
 			p++;
@@ -1163,7 +1180,7 @@ const char* parse_syntax(const char* p) {
 				add_scriptc(C_FUNC);
 			}
 			if(*p != ';') {
-				disp_error_message("need ';'",p);
+				disp_error_message("parse_syntax: need ';'",p);
 				return p+1;
 			}
 			p++;
@@ -1279,7 +1296,7 @@ const char* parse_syntax(const char* p) {
 			p=parse_expr(p);
 			p=skip_space(p);
 			if(*p != '{') {
-				disp_error_message("need '{'",p);
+				disp_error_message("parse_syntax: need '{'",p);
 			}
 			add_scriptc(C_FUNC);
 			return p + 1;
@@ -1407,7 +1424,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		p = skip_space(p);
 		p2 = skip_word(p);
 		if(p2 - p != 5 || strncmp("while",p,5)) {
-			disp_error_message("need 'while'",p);
+			disp_error_message("parse_syntax: need 'while'",p);
 		}
 		p = p2;
 
@@ -1431,7 +1448,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		set_label(l,script_pos,p);
 		p = skip_space(p);
 		if(*p != ';') {
-			disp_error_message("need ';'",p);
+			disp_error_message("parse_syntax: need ';'",p);
 			return p+1;
 		}
 		p++;
@@ -1642,6 +1659,7 @@ struct script_code* parse_script(const char *src,const char *file,int line)
 		return NULL;
 	}
 
+	parse_syntax_for_flag=0;
 	p=src;
 	p=skip_space(p);
 	if(*p!='{'){

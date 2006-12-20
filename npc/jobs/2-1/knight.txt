@@ -1081,7 +1081,7 @@ L_Knight:
 		M_Yes:
 			mes "^FF0000(SLAPP!! SMACK!! BASH!!)^000000";
 			emotion e_an;
-			percentheal (-10),0;
+			percentheal -10,0;
 			next;
 			mes "[Lady Amy Beatris]";
 			mes "How dare you!! Just what kind of girl do you take me for?";
