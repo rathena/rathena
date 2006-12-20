@@ -163,7 +163,7 @@ enum {
 	C_NAME,C_EOL, C_RETINFO,
 	C_USERFUNC, C_USERFUNC_POS, // user defined functions
 
-	C_LOR,C_LAND,C_LE,C_LT,C_GE,C_GT,C_EQ,C_NE,   //operator
+	C_OP3,C_LOR,C_LAND,C_LE,C_LT,C_GE,C_GT,C_EQ,C_NE,   //operator
 	C_XOR,C_OR,C_AND,C_ADD,C_SUB,C_MUL,C_DIV,C_MOD,C_NEG,C_LNOT,C_NOT,C_R_SHIFT,C_L_SHIFT
 };
 
@@ -344,7 +344,7 @@ static void check_script_buf(int size)
 {
 	if(script_pos+size>=script_size){
 		script_size+=SCRIPT_BLOCK_SIZE;
-		script_buf=(unsigned char *)aRealloc(script_buf,script_size);
+		RECREATE(script_buf,unsigned char,script_size);
 		malloc_tsetdword(script_buf + script_size - SCRIPT_BLOCK_SIZE, '\0',
 			SCRIPT_BLOCK_SIZE);
 	}
@@ -355,7 +355,7 @@ static void check_script_buf(int size)
  *------------------------------------------
  */
  
-#define add_scriptb(a) if( script_pos+1>=script_size ) check_script_buf(1); script_buf[script_pos++]=(uint8)(a);
+#define add_scriptb(a) if( script_pos+1>=script_size ) check_script_buf(1); script_buf[script_pos++]=(uint8)(a)
 
 #if 0
 static void add_scriptb(int a)
@@ -479,7 +479,7 @@ static const char *skip_space(const char *p)
 			if(*p)
 				++p;
 			else
-				disp_error_message("reached end of streams while matching \"*/\"",p);
+				disp_error_message("unexpected eof @ block comment",p);
 		} else
 			break;
 	}
@@ -646,35 +646,39 @@ const char* parse_subexpr(const char* p,int limit)
 	}
 	tmpp=p;
 	if((op=C_NEG,*p=='-') || (op=C_LNOT,*p=='!') || (op=C_NOT,*p=='~')){
-		p=parse_subexpr(p+1,8);
+		p=parse_subexpr(p+1,10);
 		add_scriptc(op);
 	} else
 		p=parse_simpleexpr(p);
 	p=skip_space(p);
 	while((
-			(op=C_ADD,opl=6,len=1,*p=='+') ||
-		   (op=C_SUB,opl=6,len=1,*p=='-') ||
-		   (op=C_MUL,opl=7,len=1,*p=='*') ||
-		   (op=C_DIV,opl=7,len=1,*p=='/') ||
-		   (op=C_MOD,opl=7,len=1,*p=='%') ||
-		   (op=C_FUNC,opl=9,len=1,*p=='(') ||
-		   (op=C_LAND,opl=1,len=2,*p=='&' && p[1]=='&') ||
-		   (op=C_AND,opl=5,len=1,*p=='&') ||
-		   (op=C_LOR,opl=0,len=2,*p=='|' && p[1]=='|') ||
-		   (op=C_OR,opl=4,len=1,*p=='|') ||
-		   (op=C_XOR,opl=3,len=1,*p=='^') ||
-		   (op=C_EQ,opl=2,len=2,*p=='=' && p[1]=='=') ||
-		   (op=C_NE,opl=2,len=2,*p=='!' && p[1]=='=') ||
-		   (op=C_R_SHIFT,opl=5,len=2,*p=='>' && p[1]=='>') ||
-		   (op=C_GE,opl=2,len=2,*p=='>' && p[1]=='=') ||
-		   (op=C_GT,opl=2,len=1,*p=='>') ||
-		   (op=C_L_SHIFT,opl=5,len=2,*p=='<' && p[1]=='<') ||
-		   (op=C_LE,opl=2,len=2,*p=='<' && p[1]=='=') ||
-		   (op=C_LT,opl=2,len=1,*p=='<')) && opl>limit){
+			(op=C_OP3,opl=0,len=1,*p=='?') ||
+			(op=C_ADD,opl=8,len=1,*p=='+') ||
+			(op=C_SUB,opl=8,len=1,*p=='-') ||
+			(op=C_MUL,opl=9,len=1,*p=='*') ||
+			(op=C_DIV,opl=9,len=1,*p=='/') ||
+			(op=C_MOD,opl=9,len=1,*p=='%') ||
+			(op=C_FUNC,opl=11,len=1,*p=='(') ||
+			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
+			(op=C_AND,opl=6,len=1,*p=='&') ||
+			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
+			(op=C_OR,opl=5,len=1,*p=='|') ||
+			(op=C_XOR,opl=4,len=1,*p=='^') ||
+			(op=C_EQ,opl=3,len=2,*p=='=' && p[1]=='=') ||
+			(op=C_NE,opl=3,len=2,*p=='!' && p[1]=='=') ||
+			(op=C_R_SHIFT,opl=7,len=2,*p=='>' && p[1]=='>') ||
+			(op=C_GE,opl=3,len=2,*p=='>' && p[1]=='=') ||
+			(op=C_GT,opl=3,len=1,*p=='>') ||
+			(op=C_L_SHIFT,opl=7,len=2,*p=='<' && p[1]=='<') ||
+			(op=C_LE,opl=3,len=2,*p=='<' && p[1]=='=') ||
+			(op=C_LT,opl=3,len=1,*p=='<')) && opl>limit){
 		p+=len;
 		if(op==C_FUNC){
-			int i=0,func=parse_cmd;
+			int i=0;
+			int j=0;
+			int func=parse_cmd;
 			const char *plist[128];
+			const char *arg = NULL;
 
 			if(str_data[parse_cmd].type == C_FUNC){
 				// í èÌÇÃä÷êî
@@ -686,35 +690,46 @@ const char* parse_subexpr(const char* p,int limit)
 			} else
 				disp_error_message("expect command, missing function name or calling undeclared function",tmpp);
 			func=parse_cmd;
-			if( *p == '(' && *(plist[i]=skip_space(p+1)) == ')' ){
-				p=plist[i]+1; // empty argument list
-			} else
+			p=skip_space(p);
+
+			// check number of arguments of the function
+			if( str_data[func].type == C_FUNC && script_config.warn_cmd_mismatch_paramnum) {
+				arg = buildin_func[str_data[func].val].arg;
+				for(j=0; arg[j]; j++) {
+					if(arg[j] == '*')
+						break;
+				}
+			}
+
 			while(*p && *p!=')' && i<128) {
 				plist[i]=p;
 				p=parse_subexpr(p,-1);
 				p=skip_space(p);
-				if(*p==',') p++;
+				if(*p==',') {
+					if(arg == NULL || arg[j] == '*' || i+1 < j)
+						p++; // the next argument is valid, skip the comma
+				}
 				else if(*p!=')' && script_config.warn_func_no_comma){
 					disp_error_message("expect ',' or ')' at func params",p);
 				}
 				p=skip_space(p);
 				i++;
-			};
+			}
 			plist[i]=p;
 			if(*(p++)!=')'){
 				disp_error_message("func request '(' ')'",p);
-				exit(1);
+				//exit(1);
 			}
-
-			if( str_data[func].type==C_FUNC && script_config.warn_func_mismatch_paramnum){
-				const char *arg = buildin_func[str_data[func].val].arg;
-				int j = 0;
-				for (; arg[j]; j++)
-					if (arg[j] == '*')
-						break;
-				if (!(i <= 1 && j == 0) && ((arg[j] == 0 && i != j) || (arg[j] == '*' && i < j)))
+			if(arg) {
+				if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
 					disp_error_message("illegal number of parameters",plist[min(i,j)]);
 			}
+		} else if(op == C_OP3) {
+			p=parse_subexpr(p,-1);
+			p=skip_space(p);
+			if( *(p++) != ':')
+				disp_error_message("need ':'", p);
+			p=parse_subexpr(p,-1);
 		} else {
 			p=parse_subexpr(p,opl);
 		}
@@ -744,14 +759,6 @@ const char* parse_expr(const char *p)
 		disp_error_message("unexpected char",p);
 		exit(1);
 	}
-	/*
-	if(*p == '(') {
-		const char *p2 = skip_space(p + 1);
-		if(*p2 == ')') {
-			return p2 + 1;
-		}
-	}
-	*/
 	p=parse_subexpr(p,-1);
 #ifdef DEBUG_FUNCIN
 	if(battle_config.etc_log)
@@ -767,9 +774,11 @@ const char* parse_expr(const char *p)
 const char* parse_line(const char* p)
 {
 	int i=0;
+	int j=0;
 	int cmd;
 	const char* plist[128];
 	const char* p2;
+	const char *arg=NULL;
 	char end;
 
 	p=skip_space(p);
@@ -820,17 +829,26 @@ const char* parse_line(const char* p)
 		end = ';';
 	}
 
-	if( p && *p == '(' && *(p2=(char *)skip_space(p+1)) == ')' ){
-		p= p2+1; // empty argument list
-	} else
+	// Check number of arguments of the function
+	if( str_data[cmd].type == C_FUNC && script_config.warn_cmd_mismatch_paramnum) {
+		arg = buildin_func[str_data[cmd].val].arg;
+		for(j=0; arg[j]; j++) {
+			if(arg[j] == '*')
+				break;
+		}
+	}
+
 	while(p && *p && *p != end && i<128){
 		plist[i]=p;
 
 		p=parse_expr(p);
 		p=skip_space(p);
 		// à¯êîãÊêÿÇËÇÃ,èàóù
-		if(*p==',') p++;
-		else if(*p!=end && script_config.warn_cmd_no_comma && 0 <= i ){
+		if(*p==',') {
+			if(arg == NULL || arg[j] == '*' || i+1 < j)
+				p++; // the next argument is valid, skip the comma
+		}
+		else if(*p!=end && script_config.warn_cmd_no_comma){
 			if(parse_syntax_for_flag) {
 				disp_error_message("expect ',' or ')' at cmd params",p);
 			} else {
@@ -840,7 +858,7 @@ const char* parse_line(const char* p)
 		p=skip_space(p);
 		i++;
 	}
-	plist[i]=(char *) p;
+	plist[i]=p;
 	if(!p || *(p++)!=end){
 		if(parse_syntax_for_flag) {
 			disp_error_message("need ')'",p);
@@ -853,12 +871,7 @@ const char* parse_line(const char* p)
 	// if, for , while ÇÃï¬Ç∂îªíË
 	p = parse_syntax_close(p);
 
-	if( str_data[cmd].type==C_FUNC && script_config.warn_cmd_mismatch_paramnum){
-		const char *arg=buildin_func[str_data[cmd].val].arg;
-		int j;
-		for(j=0;arg[j];j++)
-			if(arg[j]=='*')
-				break;
+	if(arg) {
 		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
 			disp_error_message("illegal number of parameters",plist[min(i,j)]);
 	}
@@ -2173,6 +2186,27 @@ int isstr(struct script_data *c) {
 }
 
 /*==========================================
+ * Three-section operator
+ * test ? if_true : if_false
+ *------------------------------------------
+ */
+void op_3(struct script_state *st) {
+	int flag = 0;
+	if( isstr(&st->stack->stack_data[st->stack->sp-3])) {
+		char *str = conv_str(st,& (st->stack->stack_data[st->stack->sp-3]));
+		flag = str[0];
+	} else {
+		flag = conv_num(st,& (st->stack->stack_data[st->stack->sp-3]));
+	}
+	if( flag ) {
+		push_copy(st->stack, st->stack->sp-2 );
+	} else {
+		push_copy(st->stack, st->stack->sp-1 );
+	}
+	pop_stack(st->stack,st->stack->sp-4,st->stack->sp-1);
+}
+
+/*==========================================
  * â¡éZââéZéq
  *------------------------------------------
  */
@@ -2685,6 +2719,10 @@ void run_script_main(struct script_state *st)
 		case C_NOT:
 		case C_LNOT:
 			op_1num(st,c);
+			break;
+
+		case C_OP3:
+			op_3(st);
 			break;
 
 		case C_NOP:
