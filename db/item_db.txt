@@ -45,8 +45,8 @@
 539,Piece_Of_Cake,Piece of Cake,0,3000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(270,330),0; },{},{}
 540,Falcon's_Feed,Falcon food,0,2000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(185,225),0; },{},{}
 541,Pecopeco's_Feed,Peco Peco food,0,3000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
-542,Festive_Cookie,Festival Cookie,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
-543,Festive_Rainbow_Cake,Festival Rainbow Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
+//542,Festive_Cookie,Festival Cookie,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
+//543,Festive_Rainbow_Cake,Festival Rainbow Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 544,Fish_Slice,Raw Fish,0,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(25,60),0; },{},{}
 545,Red_Slim_Potion,Condensed Red Potion,0,150,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
 546,Yellow_Slim_Potion,Condensed Yellow Potion,0,600,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(175,235),0; },{},{}
@@ -914,7 +914,7 @@
 2235,Crown,Crown,5,20,,400,,4,,0,0xFFFFFFFE,7,1,256,,45,1,45,{ bonus bInt,2; },{},{}
 2236,Santa's_Hat,Santa Hat,5,20,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,20,{ bonus bMdef,1; bonus bLuk,1; },{},{}
 2237,Weird_Goatee,Bandit Beard,5,2,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,21,{},{},{}
-2238,Weird_Moustache,Moustache,5,2,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,22,{},{},{}
+//2238,Weird_Moustache,Moustache,5,2,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,22,{},{},{}
 2239,One_Eyed_Glass,Monocle,5,10000,,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,23,{},{},{}
 2240,Beard,Beard,5,2,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,24,{},{},{}
 2241,Granpa_Beard,Grandpa Beard,5,5000,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,25,{},{},{}
@@ -1038,9 +1038,9 @@
 2358,Angel_Dress,Angel's Dress,5,,10,1000,,5,,0,0xFFFFFFFF,7,2,16,,0,0,0,{ bonus bLuk,4; },{},{}
 2359,Ninja_Suit_,Ninja Suit,5,,10,1500,,7,,1,0x02021040,7,2,16,,50,1,0,{ bonus bAgi,1; bonus bMdef,3; if(isequipped(2654)) { bonus bUseSPrate,-20; bonus bMaxHP,300; } },{},{}
 2360,Robe_of_Casting_,Robe of Cast,5,124800,,1100,,5,,1,0x00810200,7,2,16,,75,1,0,{ bonus bCastrate,-3; bonus bMdef,4; },{},{}
-2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
-2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
-2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
+//2361,Blue_Robe,Blue Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+//2362,Red_Robe,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
+//2363,White_Robe,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
 // Footgears
 //===================================================================
 2401,Sandals,Sandals,5,400,,200,,1,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
@@ -1125,8 +1125,8 @@
 2629,Magingiorde,Megingjard,5,,10,8000,,2,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,40; bonus bMdef,7; },{},{}
 2630,Brysinggamen,Brisingamen,5,,10,1500,,1,,0,0xFFFFFFFF,7,2,136,,94,0,0,{ bonus bStr,6; bonus bAgi,6; bonus bVit,6; bonus bInt,6; bonus bLuk,10; bonus bMdef,5; },{},{}
 2631,First_Age_Ring,Celebration Ring,5,1,,10,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAllStats,5; },{},{}
-2632,Korean_Trinket,Korean Trinket,5,125000,,100,,1,,0,0xFFFFFFFE,7,2,136,,65,0,0,{ bonus bVit,1; bonus bDex,1; bonus bLuk,1; },{},{}
-2633,Jade_Ring,Jade Ring,5,204000,,100,,0,,0,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bStr,2; bonus bInt,1; },{},{}
+//2632,Korean_Trinket,Korean Trinket,5,125000,,100,,1,,0,0xFFFFFFFE,7,2,136,,65,0,0,{ bonus bVit,1; bonus bDex,1; bonus bLuk,1; },{},{}
+//2633,Jade_Ring,Jade Ring,5,204000,,100,,0,,0,0xFFFFFFFE,7,2,136,,80,0,0,{ bonus bStr,2; bonus bInt,1; },{},{}
 2634,Bridegroom_Ring,Wedding Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,1,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
 2635,Bride_Ring,Wedding Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,0,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; },{},{}
 2636,Gold_Ring_,Gold Christmas Ring,5,30000,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bLuk,1; },{},{}
@@ -1675,7 +1675,7 @@
 5092,Blue_Coif,Coif,5,150000,,300,,5,,0,0x00001100,7,0,768,,65,1,176,{},{},{}
 5093,Blue_Coif_,Coif,5,150000,,300,,5,,1,0x00001100,7,0,768,,65,1,177,{ bonus bMaxSP,100; },{},{}
 5094,Orc_Hero_Helm,Helmet of Orc Hero,5,500000,,900,,5,,0,0xFFFFFFFE,7,2,768,,55,1,178,{ bonus bStr,2; bonus bVit,1; },{},{}
-5095,Orc_Hero_Helm_,Helmet of Orc Hero,5,800000,,1000,,5,,1,0xFFFFFFFE,7,2,768,,55,1,179,{ bonus bStr,2; bonus bVit,1; },{},{}
+//5095,Orc_Hero_Helm_,Helmet of Orc Hero,5,800000,,1000,,5,,1,0xFFFFFFFE,7,2,768,,55,1,179,{ bonus bStr,2; bonus bVit,1; },{},{}
 5096,Assassin_Mask_,Assassin Mask,5,20,,100,,0,,0,0x00001100,7,2,1,,70,0,180,{},{},{}
 5097,Cone_Hat_,4 Years Anniversary Hat,5,0,,400,,0,,0,0xFFFFFFFF,7,2,256,,0,1,144,{},{},{}
 5098,Tiger_Mask,Tiger Mask,5,20,,400,,2,,0,0xFFFFFFFF,7,2,768,,50,0,181,{ bonus bStr,3; bonus bMaxHP,100; },{},{}
@@ -2044,13 +2044,13 @@
 7252,Herb_Medicine,Herbal Medicine,3,,10,10,,,,,,,,,,,,,{},{},{}
 7253,Taeguk_Flag,Golden Korean Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
 7254,Digital_Print_Ticket,Digital Picture Printing Coupon,3,,10,10,,,,,,,,,,,,,{},{},{}
-7255,China_Marble01,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7256,China_Marble02,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7257,China_Marble03,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7258,China_Marble04,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7259,China_Marble05,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7260,China_Marble06,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7261,China_Marble07,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7255,China_Marble01,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7256,China_Marble02,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7257,China_Marble03,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7258,China_Marble04,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7259,China_Marble05,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7260,China_Marble06,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7261,China_Marble07,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
 7262,Fan,Folding Fan of Cat Ghost,3,,233,10,,,,,,,,,,,,,{},{},{}
 7263,Cat_Eyed_Stone,Cat's Eye,3,,477,10,,,,,,,,,,,,,{},{},{}
 7264,Dried_Sand,Dry Sand,3,,161,10,,,,,,,,,,,,,{},{},{}
@@ -2118,7 +2118,7 @@
 7327,Headlamp,Flashlight,3,,512,10,,,,,,,,,,,,,{},{},{}
 7328,Legendary_Scroll,Legend of Songkran,3,,10,10,,,,,,,,,,,,,{},{},{}
 7329,Old_Copper_Key,Old Bronze Key,3,,10,10,,,,,,,,,,,,,{},{},{}
-7330,Holy_Marble,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
+//7330,Holy_Marble,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
 7331,Flower_Of_Heaven,Heaven Flower,3,,10,10,,,,,,,,,,,,,{},{},{}
 7332,Slate,Complete Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
 7333,Piece_Of_Slate_1,Prontera Tablet,3,,10,10,,,,,,,,,,,,,{},{},{}
@@ -2385,11 +2385,11 @@
 7595,Special_Sword,Special Sword,3,,10,10,,,,,,,,,,,,,{},{},{}
 7596,Special_Shield,Special Shield,3,,10,10,,,,,,,,,,,,,{},{},{}
 7597,Magic_Stone,Magic Stone,3,,10,10,,,,,,,,,,,,,{},{},{}
-7598,Blue_I_Card,Blue I Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7599,Blue_D_Card,Blue D Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7600,Blue_K_Card,Blue K Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7601,Blue_S_Card,Blue S Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7602,Blue_R_Card,Blue R Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7598,Blue_I_Card,Blue I Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7599,Blue_D_Card,Blue D Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7600,Blue_K_Card,Blue K Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7601,Blue_S_Card,Blue S Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7602,Blue_R_Card,Blue R Card,3,,10,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}

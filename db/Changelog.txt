@@ -20,6 +20,7 @@
 
 ========================
 12/20
+	* Commented some items that seem to crash the kRO client [Playtester]
 	* Made NPC_CHANGE self targetted for all mobs [Playtester]
 	- it should either be self or target for all but not mixed up	
 12/19
