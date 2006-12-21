@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/21
+	* Updated two handed weapons [Playtester]
 12/20
 	* NPC_CHANGEUNDEAD is now "target" for all mobs [Playtester]
 	- all other NPC_CHANGE skills stay "self"
