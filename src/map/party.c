@@ -22,8 +22,7 @@
 #include "skill.h"
 #include "status.h"
 
-static struct dbt* party_db;
-static struct party_data* party_cache = NULL; //party in cache for skipping consecutive lookups. [Skotlex]
+static DB party_db;
 int party_share_level = 10;
 int party_send_xy_timer(int tid,unsigned int tick,int id,int data);
 
@@ -34,13 +33,13 @@ int party_send_xy_timer(int tid,unsigned int tick,int id,int data);
  */
 static void party_fill_member(struct party_member *member, struct map_session_data *sd) {
   	member->account_id = sd->status.account_id;
-	member->char_id = sd->status.char_id;
-	memcpy(member->name,sd->status.name,NAME_LENGTH);
-	member->class_ = sd->status.class_;
-	member->map = sd->mapindex;
-	member->lv = sd->status.base_level;
-	member->online = 1;
-	member->leader = 0;
+	member->char_id    = sd->status.char_id;
+	memcpy(member->name, sd->status.name, NAME_LENGTH);
+	member->class_     = sd->status.class_;
+	member->map        = sd->mapindex;
+	member->lv         = sd->status.base_level;
+	member->online     = 1;
+	member->leader     = 0;
 }
 
 /*==========================================
@@ -55,19 +54,16 @@ void do_final_party(void)
 void do_init_party(void)
 {
 	party_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	add_timer_func_list(party_send_xy_timer,"party_send_xy_timer");
-	add_timer_interval(gettick()+battle_config.party_update_interval,party_send_xy_timer,0,0,battle_config.party_update_interval);
+	add_timer_func_list(party_send_xy_timer, "party_send_xy_timer");
+	add_timer_interval(gettick()+battle_config.party_update_interval, party_send_xy_timer, 0, 0, battle_config.party_update_interval);
 }
 
 // ŒŸõ
 struct party_data *party_search(int party_id)
 {
-	if(!party_id) return NULL;
-	if (party_cache && party_cache->party.party_id == party_id)
-		return party_cache;
-
-	party_cache = idb_get(party_db,party_id);
-	return party_cache;
+	if(!party_id)
+		return NULL;
+	return idb_get(party_db,party_id);
 }
 int party_searchname_sub(DBKey key,void *data,va_list ap)
 {
@@ -449,8 +445,6 @@ int party_broken(int party_id)
 			p->data[i].sd->state.party_sent=0;
 		}
 	}
-	if (party_cache && party_cache->party.party_id == party_id)
-		party_cache = NULL;
 	idb_remove(party_db,party_id);
 	return 0;
 }

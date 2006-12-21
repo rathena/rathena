@@ -1,68 +1,68 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
- *  For more information, see LICENCE in the main folder                     *
- *                                                                           *
- *  This file is separated in five sections:                                 *
- *  (1) Private typedefs, enums, structures, defines and gblobal variables   *
- *  (2) Private functions                                                    *
- *  (3) Protected functions used internally                                  *
- *  (4) Protected functions used in the interface of the database            *
- *  (5) Public functions                                                     *
- *                                                                           *
- *  The databases are structured as a hashtable of RED-BLACK trees.          *
- *                                                                           *
- *  <B>Properties of the RED-BLACK trees being used:</B>                     *
- *  1. The value of any node is greater than the value of its left child and *
- *     less than the value of its right child.                               *
- *  2. Every node is colored either RED or BLACK.                            *
- *  3. Every red node that is not a leaf has only black children.            *
- *  4. Every path from the root to a leaf contains the same number of black  *
- *     nodes.                                                                *
- *  5. The root node is black.                                               *
- *  An <code>n</code> node in a RED-BLACK tree has the property that its     *
- *  height is <code>O(lg(n))</code>.                                         *
- *  Another important property is that after adding a node to a RED-BLACK    *
- *  tree, the tree can be readjusted in <code>O(lg(n))</code> time.          *
- *  Similarly, after deleting a node from a RED-BLACK tree, the tree can be  *
- *  readjusted in <code>O(lg(n))</code> time.                                *
- *  {@link http://www.cs.mcgill.ca/~cs251/OldCourses/1997/topic18/}          *
- *                                                                           *
- *  <B>How to add new database types:</B>                                    *
- *  1. Add the identifier of the new database type to the enum DBType        *
- *  2. If not already there, add the data type of the key to the union DBKey *
- *  3. If the key can be considered NULL, update the function db_is_key_null *
- *  4. If the key can be duplicated, update the functions db_dup_key and     *
- *     db_dup_key_free                                                       *
- *  5. Create a comparator and update the function db_default_cmp            *
- *  6. Create a hasher and update the function db_default_hash               *
- *  7. If the new database type requires or does not support some options,   *
- *     update the function db_fix_options                                    *
- *                                                                           *
- *  TODO:                                                                    *
- *  - create test cases to test the database system thoroughly               *
- *  - make data an enumeration                                               *
- *  - finish this header describing the database system                      *
- *  - create custom database allocator                                       *
- *  - make the system thread friendly                                        *
- *  - change the structure of the database to T-Trees                        *
- *  - create a db that organizes itself by splaying                          *
- *                                                                           *
- *  HISTORY:                                                                 *
- *    2.1 (Athena build #???#) - Portability fix                             *
- *      - Fixed the portability of casting to union and added the functions  *
- *        {@link DB#ensure(DB,DBKey,DBCreateData,...)} and                   *
- *        {@link DB#clear(DB,DBApply,...)}.                                  *
- *    2.0 (Athena build 4859) - Transition version                           *
- *      - Almost everything recoded with a strategy similar to objects,      *
- *        database structure is maintained.                                  *
- *    1.0 (up to Athena build 4706)                                          *
- *      - Previous database system.                                          *
- *                                                                           *
- * @version 2.1 (Athena build #???#) - Portability fix                       *
- * @author (Athena build 4859) Flavio @ Amazon Project                       *
- * @author (up to Athena build 4706) Athena Dev Teams                        *
- * @encoding US-ASCII                                                        *
- * @see common#db.h                                                          *
+ *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+ *  For more information, see LICENCE in the main folder
+ *
+ *  This file is separated in five sections:
+ *  (1) Private typedefs, enums, structures, defines and gblobal variables
+ *  (2) Private functions
+ *  (3) Protected functions used internally
+ *  (4) Protected functions used in the interface of the database
+ *  (5) Public functions
+ *
+ *  The databases are structured as a hashtable of RED-BLACK trees.
+ *
+ *  <B>Properties of the RED-BLACK trees being used:</B>
+ *  1. The value of any node is greater than the value of its left child and
+ *     less than the value of its right child.
+ *  2. Every node is colored either RED or BLACK.
+ *  3. Every red node that is not a leaf has only black children.
+ *  4. Every path from the root to a leaf contains the same number of black
+ *     nodes.
+ *  5. The root node is black.
+ *  An <code>n</code> node in a RED-BLACK tree has the property that its
+ *  height is <code>O(lg(n))</code>.
+ *  Another important property is that after adding a node to a RED-BLACK
+ *  tree, the tree can be readjusted in <code>O(lg(n))</code> time.
+ *  Similarly, after deleting a node from a RED-BLACK tree, the tree can be
+ *  readjusted in <code>O(lg(n))</code> time.
+ *  {@link http://www.cs.mcgill.ca/~cs251/OldCourses/1997/topic18/}
+ *
+ *  <B>How to add new database types:</B>
+ *  1. Add the identifier of the new database type to the enum DBType
+ *  2. If not already there, add the data type of the key to the union DBKey
+ *  3. If the key can be considered NULL, update the function db_is_key_null
+ *  4. If the key can be duplicated, update the functions db_dup_key and
+ *     db_dup_key_free
+ *  5. Create a comparator and update the function db_default_cmp
+ *  6. Create a hasher and update the function db_default_hash
+ *  7. If the new database type requires or does not support some options,
+ *     update the function db_fix_options
+ *
+ *  TODO:
+ *  - create test cases to test the database system thoroughly
+ *  - make data an enumeration
+ *  - finish this header describing the database system
+ *  - create custom database allocator
+ *  - make the system thread friendly
+ *  - change the structure of the database to T-Trees
+ *  - create a db that organizes itself by splaying
+ *
+ *  HISTORY:
+ *    2006/12/21 - Added 1-node cache to the database.
+ *    2.1 (Athena build #???#) - Portability fix
+ *      - Fixed the portability of casting to union and added the functions
+ *        {@link DB#ensure(DB,DBKey,DBCreateData,...)} and
+ *        {@link DB#clear(DB,DBApply,...)}.
+ *    2.0 (Athena build 4859) - Transition version
+ *      - Almost everything recoded with a strategy similar to objects,
+ *        database structure is maintained.
+ *    1.0 (up to Athena build 4706)
+ *      - Previous database system.
+ *
+ * @version 2006/12/21
+ * @author Athena Dev team
+ * @encoding US-ASCII
+ * @see #db.h
 \*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -182,9 +182,10 @@ typedef struct db {
 	DBHasher hash;
 	DBReleaser release;
 	DBNode ht[HASH_SIZE];
+	DBNode cache;
 	DBType type;
 	DBOptions options;
-	unsigned int item_count;
+	uint32 item_count;
 	unsigned short maxlen;
 	unsigned global_lock : 1;
 } *DB_impl;
@@ -1129,6 +1130,9 @@ static void *db_obj_get(DB self, DBKey key)
 		return NULL; // nullpo candidate
 	}
 
+	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0)
+		return db->cache->data; // cache hit
+
 	db_free_lock(db);
 	node = db->ht[db->hash(key, db->maxlen)%HASH_SIZE];
 	while (node) {
@@ -1142,6 +1146,7 @@ static void *db_obj_get(DB self, DBKey key)
 		else
 			node = node->right;
 	}
+	db->cache = node;
 	db_free_unlock(db);
 	return data;
 }
@@ -1277,6 +1282,9 @@ static void *db_obj_vensure(DB self, DBKey key, DBCreateData create, va_list arg
 		return NULL; // nullpo candidate
 	}
 
+	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0)
+		return db->cache->data; // cache hit
+
 	db_free_lock(db);
 	hash = db->hash(key, db->maxlen)%HASH_SIZE;
 	node = db->ht[hash];
@@ -1293,7 +1301,7 @@ static void *db_obj_vensure(DB self, DBKey key, DBCreateData create, va_list arg
 	}
 	// Create node if necessary
 	if (node == NULL) {
-		if (db->item_count == (unsigned int)~0) {
+		if (db->item_count == UINT32_MAX) {
 			ShowError("db_vensure: item_count overflow, aborting item insertion.\n"
 					"Database allocated at %s:%d",
 					db->alloc_file, db->alloc_line);
@@ -1334,6 +1342,7 @@ static void *db_obj_vensure(DB self, DBKey key, DBCreateData create, va_list arg
 		node->data = create(key, args);
 	}
 	data = node->data;
+	db->cache = node;
 	db_free_unlock(db);
 	return data;
 }
@@ -1408,7 +1417,7 @@ static void *db_obj_put(DB self, DBKey key, void *data)
 		return NULL; // nullpo candidate
 	}
 
-	if (db->item_count == (unsigned int)~0) {
+	if (db->item_count == UINT32_MAX) {
 		ShowError("db_put: item_count overflow, aborting item insertion.\n"
 				"Database allocated at %s:%d",
 				db->alloc_file, db->alloc_line);
@@ -1471,6 +1480,7 @@ static void *db_obj_put(DB self, DBKey key, void *data)
 		node->key = key;
 	}
 	node->data = data;
+	db->cache = node;
 	db_free_unlock(db);
 	return old_data;
 }
@@ -1515,6 +1525,8 @@ static void *db_obj_remove(DB self, DBKey key)
 		c = db->cmp(key, node->key, db->maxlen);
 		if (c == 0) {
 			if (!(node->deleted)) {
+				if (db->cache == node)
+					db->cache = NULL;
 				data = node->data;
 				db->release(node->key, node->data, DB_RELEASE_DATA);
 				db_free_add(db, node, &db->ht[hash]);
@@ -1641,6 +1653,7 @@ static int db_obj_vclear(DB self, DBApply func, va_list args)
 	if (db == NULL) return 0; // nullpo candidate
 
 	db_free_lock(db);
+	db->cache = NULL;
 	for (i = 0; i < HASH_SIZE; i++) {
 		// Apply the func and delete in the order: left tree, right tree, current node
 		node = db->ht[i];
@@ -1750,18 +1763,10 @@ static int db_obj_vdestroy(DB self, DBApply func, va_list args)
 
 #ifdef DB_ENABLE_STATS
 	switch (db->type) {
-		case DB_INT:
-			COUNT(db_int_destroy);
-			break;
-		case DB_UINT:
-			COUNT(db_uint_destroy);
-			break;
-		case DB_STRING:
-			COUNT(db_string_destroy);
-			break;
-		case DB_ISTRING:
-			COUNT(db_istring_destroy);
-			break;
+		case DB_INT: COUNT(db_int_destroy); break;
+		case DB_UINT: COUNT(db_uint_destroy); break;
+		case DB_STRING: COUNT(db_string_destroy); break;
+		case DB_ISTRING: COUNT(db_istring_destroy); break;
 	}
 #endif /* DB_ENABLE_STATS */
 	db_free_lock(db);
@@ -2110,6 +2115,7 @@ DB db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned
 	db->release = db_default_release(type, options);
 	for (i = 0; i < HASH_SIZE; i++)
 		db->ht[i] = NULL;
+	db->cache = NULL;
 	db->type = type;
 	db->options = options;
 	db->item_count = 0;
