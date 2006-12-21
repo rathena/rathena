@@ -1025,7 +1025,7 @@ const char* parse_syntax(const char* p) {
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
 				memcpy(label,"if(",3);
-				snprintf(label+3,len,p2);
+				strncpy(label+3,p2,len);
 				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
 					syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
