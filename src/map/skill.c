@@ -2167,7 +2167,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
  *------------------------------------------
  */
 static int skill_area_temp[8];
-static int skill_unit_temp[24];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
+static int skill_unit_temp[64];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
 static int skill_unit_index=0;	//Well, yeah... am too lazy to pass pointers around :X
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
 int skill_area_sub (struct block_list *bl, va_list ap)
