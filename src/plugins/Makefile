@@ -42,7 +42,7 @@ upnp.$(PLUGINEXT): ../../plugins/upnp.conf
 depend:
 	makedepend -fGNUmakefile -o.$(PLUGINEXT) -Y. -Y../common *.c
 clean:
-	rm -rf $(PLUGINS)
+	rm -rf $(PLUGINS) GNUmakefile
 
 # DO NOT DELETE
 

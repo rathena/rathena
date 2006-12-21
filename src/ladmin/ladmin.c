@@ -47,7 +47,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/mmo.h"
 
 #ifdef PASSWORDENC
-#include "md5calc.h"
+#include "../common/md5calc.h"
 #endif
 
 //-------------------------------INSTRUCTIONS------------------------------

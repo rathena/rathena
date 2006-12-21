@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2006/12/21
+	* Fixed "warning: comparison is always false due to limited range of data type"
+	  by restricting script words to ASCII characters only.
+	* Moved md5calc to common. [FlavioJS]
 2006/12/20
 	* Fixed ISSPACE and ISALPHA casting their returned value to a char, which
 	  can really mess up the scripting engine when the returned value is true,

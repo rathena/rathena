@@ -499,12 +499,11 @@ static const char *skip_word(const char *p)
 	if(*p=='#') p++;	// account変数用
 	if(*p=='#') p++;	// ワールドaccount変数用
 
-	while(isalnum(*p)||*p=='_'|| *p>=0x81) { //#FIXME: Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for?
-		if(*p>=0x81 && p[1]){
-			p+=2;
-		} else
-			p++;
-	}
+	//# Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for? [Skotlex]
+	//# It's for multibyte encodings like Shift-JIS. Unfortunately this can be problematic for singlebyte encodings.
+	//  Using (*p)>>7 would yield the appropriate result but it's better to restrict words to ASCII characters only. [FlavioJS]
+	while( ISALNUM(*p) || *p == '_' )
+		p++;
 	// postfix
 	if(*p=='$') p++;	// 文字列変数
 
@@ -989,7 +988,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'c':
-		if(!strncmp(p,"case",4) && !isalpha(*(p + 4))) {
+		if(!strncmp(p,"case",4) && !ISALPHA(p[4])) {
 			// case の処理
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'case' ",p);
@@ -1044,7 +1043,7 @@ const char* parse_syntax(const char* p) {
 				syntax.curly[pos].count++;
 			}
 			return p + 1;
-		} else if(!strncmp(p,"continue",8) && !isalpha(*(p + 8))) {
+		} else if(!strncmp(p,"continue",8) && !ISALPHA(p[8])) {
 			// continue の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -1077,7 +1076,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'd':
-		if(!strncmp(p,"default",7) && !isalpha(p[7])) {
+		if(!strncmp(p,"default",7) && !ISALPHA(p[7])) {
 			// switch - default の処理
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'default'",p);
@@ -1117,7 +1116,7 @@ const char* parse_syntax(const char* p) {
 				p = skip_word(p);
 				return p + 1;
 			}
-		} else if(!strncmp(p,"do",2) && !isalpha(*(p + 2))) {
+		} else if(!strncmp(p,"do",2) && !ISALPHA(p[2])) {
 			int l;
 			char label[256];
 			p=skip_word(p);
@@ -1136,7 +1135,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'f':
-		if(!strncmp(p,"for",3) && !isalpha(*(p + 3))) {
+		if(!strncmp(p,"for",3) && !ISALPHA(p[3])) {
 			int l;
 			char label[256];
 			int  pos = syntax.curly_count;
@@ -1215,7 +1214,7 @@ const char* parse_syntax(const char* p) {
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			return p;
-		} else if(!strncmp(p,"function",8) && !isalpha(*(p + 8))) {
+		} else if(!strncmp(p,"function",8) && !ISALPHA(p[8])) {
 			const char *func_name;
 			// function
 			p=skip_word(p);
@@ -1257,7 +1256,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'i':
-		if(!strncmp(p,"if",2) && !isalpha(*(p + 2))) {
+		if(!strncmp(p,"if",2) && !ISALPHA(p[2])) {
 			// if() の処理
 			char label[256];
 			p=skip_word(p);
@@ -1279,7 +1278,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 's':
-		if(!strncmp(p,"switch",6) && !isalpha(*(p + 6))) {
+		if(!strncmp(p,"switch",6) && !ISALPHA(p[6])) {
 			// switch() の処理
 			char label[256];
 			syntax.curly[syntax.curly_count].type  = TYPE_SWITCH;
@@ -1303,7 +1302,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'w':
-		if(!strncmp(p,"while",5) && !isalpha(*(p + 5))) {
+		if(!strncmp(p,"while",5) && !ISALPHA(p[5])) {
 			int l;
 			char label[256];
 			p=skip_word(p);
@@ -1371,11 +1370,11 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 
 		syntax.curly[pos].count++;
 		p = skip_space(p);
-		if(!syntax.curly[pos].flag && !strncmp(p,"else",4) && !isalpha(*(p + 4))) {
+		if(!syntax.curly[pos].flag && !strncmp(p,"else",4) && !ISALPHA(p[4])) {
 			// else  or else - if
 			p = skip_word(p);
 			p = skip_space(p);
-			if(!strncmp(p,"if",2) && !isalpha(*(p + 2))) {
+			if(!strncmp(p,"if",2) && !ISALPHA(p[2])) {
 				// else - if
 				p=skip_word(p);
 				p=skip_space(p);
@@ -11326,7 +11325,7 @@ int buildin_charisalpha(struct script_state *st) {
 	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int pos=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
-	int val = ( str && pos>0 && (unsigned int)pos<strlen(str) ) ? isalpha( str[pos] ) : 0;
+	int val = ( str && pos>0 && (unsigned int)pos<strlen(str) ) ? ISALPHA( str[pos] ) : 0;
 
 	push_val(st->stack,C_INT,val);
 	return 0;
@@ -11366,9 +11365,9 @@ int buildin_compare(struct script_state *st)                                 {
    message = conv_str(st,& (st->stack->stack_data[st->start+2]));
    cmpstring = conv_str(st,& (st->stack->stack_data[st->start+3]));
    for (j = 0; message[j]; j++)
-    message[j] = tolower(message[j]);
+    message[j] = TOLOWER(message[j]);
    for (j = 0; cmpstring[j]; j++)
-    cmpstring[j] = tolower(cmpstring[j]);    
+    cmpstring[j] = TOLOWER(cmpstring[j]);    
    push_val(st->stack,C_INT,(strstr(message,cmpstring) != NULL));
    return 0;
 }

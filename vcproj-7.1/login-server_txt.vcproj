@@ -174,7 +174,7 @@
 				RelativePath="..\src\common\malloc.c">
 			</File>
 			<File
-				RelativePath="..\src\login\md5calc.c">
+				RelativePath="..\src\common\md5calc.c">
 			</File>
 			<File
 				RelativePath="..\src\common\nullpo.c">
@@ -226,7 +226,7 @@
 				RelativePath="..\src\common\malloc.h">
 			</File>
 			<File
-				RelativePath="..\src\login\md5calc.h">
+				RelativePath="..\src\common\md5calc.h">
 			</File>
 			<File
 				RelativePath="..\src\common\mmo.h">

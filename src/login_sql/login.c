@@ -41,7 +41,7 @@
 #include "login.h"
 
 #ifdef PASSWORDENC
-#include "md5calc.h"
+#include "../common/md5calc.h"
 #endif
 
 #define J_MAX_MALLOC_SIZE 65535

@@ -35,7 +35,7 @@
 #include "login.h"
 
 #ifdef PASSWORDENC
-#include "md5calc.h"
+#include "../common/md5calc.h"
 #endif
 
 int account_id_count = START_ACCOUNT_NUM;

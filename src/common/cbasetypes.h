@@ -291,5 +291,6 @@ typedef char bool;
 #define TOLOWER(c) ((char)tolower((unsigned char)(c)))
 #define ISSPACE(c) (isspace((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
+#define ISALNUM(c) (isalnum((unsigned char)(c)))
 
 #endif /* _CBASETYPES_H_ */
