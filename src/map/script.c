@@ -502,8 +502,12 @@ static const char *skip_word(const char *p)
 	//# Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for? [Skotlex]
 	//# It's for multibyte encodings like Shift-JIS. Unfortunately this can be problematic for singlebyte encodings.
 	//  Using (*p)>>7 would yield the appropriate result but it's better to restrict words to ASCII characters only. [FlavioJS]
-	while( ISALNUM(*p) || *p == '_' )
-		p++;
+	while( ISALNUM(*p) || *p == '_' || (*p)>>7 )
+	{
+		if( (*p)>>7 ) // readded the >=0x81 equivalent until I figure out where the script engine is 'being naughty' O.o [FlavioJS]
+			++p;
+		++p;
+	}
 	// postfix
 	if(*p=='$') p++;	// •¶š—ñ•Ï”
 
