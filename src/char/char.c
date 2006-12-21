@@ -3684,9 +3684,12 @@ int parse_char(int fd) {
 		case 0x68:	// delete char //Yor's Fix
 			FIFOSD_CHECK(46);
 		{
+			int cid = RFIFOL(fd,2);
+			struct mmo_charstatus *cs = NULL;
 			WFIFOHEAD(fd, 46);
 			WFIFOHEAD(login_fd,46);
 			memcpy(email, RFIFOP(fd,6), 40);
+			RFIFOSKIP(fd,46);
 			if (e_mail_check(email) == 0)
 				strncpy(email, "a@a.com", 40); // default e-mail
 
@@ -3697,90 +3700,78 @@ int parse_char(int fd) {
 					WFIFOW(fd, 0) = 0x70;
 					WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
 					WFIFOSET(fd, 3);
-					RFIFOSKIP(fd,46);
-				// we act like we have selected a character
-				} else {
-					// we change the packet to set it like selection.
-					for (i = 0; i < 9; i++)
-						if (char_dat[sd->found_char[i]].status.char_id == RFIFOL(fd,2)) {
-							// we save new e-mail
-							memcpy(sd->email, email, 40);
-							// we send new e-mail to login-server ('online' login-server is checked before)
-							WFIFOW(login_fd,0) = 0x2715;
-							WFIFOL(login_fd,2) = sd->account_id;
-							memcpy(WFIFOP(login_fd, 6), email, 40);
-							WFIFOSET(login_fd,46);
-							// skip part of the packet! (46, but leave the size of select packet: 3)
-							RFIFOSKIP(fd,43);
-							// change value to put new packet (char selection)
-							RFIFOW(fd, 0) = 0x66;
-							RFIFOB(fd, 2) = char_dat[sd->found_char[i]].status.char_num;
-							// not send packet, it's modify of actual packet
-							break;
-						}
-					if (i == 9) {
-						WFIFOW(fd, 0) = 0x70;
-						WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
-						WFIFOSET(fd, 3);
-						RFIFOSKIP(fd,46);
-					}
+					break;
 				}
-
-			// otherwise, we delete the character
-			} else {
-				if (strcmpi(email, sd->email) != 0) { // if it's an invalid email
+				// we change the packet to set it like selection.
+				for (i = 0; i < 9; i++)
+					if (sd->found_char[i] != -1 && char_dat[sd->found_char[i]].status.char_id == cid) {
+						// we save new e-mail
+						memcpy(sd->email, email, 40);
+						// we send new e-mail to login-server ('online' login-server is checked before)
+						WFIFOW(login_fd,0) = 0x2715;
+						WFIFOL(login_fd,2) = sd->account_id;
+						memcpy(WFIFOP(login_fd, 6), email, 40);
+						WFIFOSET(login_fd,46);
+						// change value to put new packet (char selection)
+						RFIFOSKIP(fd,-3); //FIXME: Will this work? Messing with the received buffer is ugly anyway... 
+						RFIFOW(fd, 0) = 0x66;
+						RFIFOB(fd, 2) = char_dat[sd->found_char[i]].status.char_num;
+						// not send packet, it's modify of actual packet
+						break;
+					}
+				if (i == 9) {
 					WFIFOW(fd, 0) = 0x70;
 					WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
 					WFIFOSET(fd, 3);
-				// if mail is correct
-				} else {
-					for (i = 0; i < 9; i++) {
-						struct mmo_charstatus *cs = NULL;
-						if ((cs = &char_dat[sd->found_char[i]].status)->char_id == RFIFOL(fd,2)) {
-							char_delete(cs); // deletion process
-
-							if (sd->found_char[i] != char_num - 1) {
-								memcpy(&char_dat[sd->found_char[i]], &char_dat[char_num-1], sizeof(struct mmo_charstatus));
-								// Correct moved character reference in the character's owner
-								{
-									int j, k;
-									struct char_session_data *sd2;
-									for (j = 0; j < fd_max; j++) {
-										if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
-											sd2->account_id == char_dat[char_num-1].status.account_id) {
-											for (k = 0; k < 9; k++) {
-												if (sd2->found_char[k] == char_num-1) {
-													sd2->found_char[k] = sd->found_char[i];
-													break;
-												}
-											}
-											break;
-										}
-									}
-								}
+				}
+				break;
+			}
+			// otherwise, we delete the character
+			if (strcmpi(email, sd->email) != 0) { // if it's an invalid email
+				WFIFOW(fd, 0) = 0x70;
+				WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
+				WFIFOSET(fd, 3);
+				break;
+			}
+			for (i = 0; i < 9; i++) {
+				if (sd->found_char[i] == -1) continue;
+				if (char_dat[sd->found_char[i]].status.char_id == cid) break;
+			}
+			if (i == 9) {
+				WFIFOW(fd,0) = 0x70;
+				WFIFOB(fd,2) = 0;
+				WFIFOSET(fd,3);
+				break;
+			}
+			// deletion process
+			cs = &char_dat[sd->found_char[i]].status;
+			char_delete(cs);
+			if (sd->found_char[i] != char_num - 1) {
+				int j, k;
+				struct char_session_data *sd2;
+				memcpy(&char_dat[sd->found_char[i]], &char_dat[char_num-1], sizeof(struct mmo_charstatus));
+				// Correct moved character reference in the character's owner
+				for (j = 0; j < fd_max; j++) {
+					if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
+						sd2->account_id == char_dat[char_num-1].status.account_id) {
+						for (k = 0; k < 9; k++) {
+							if (sd2->found_char[k] == char_num-1) {
+								sd2->found_char[k] = sd->found_char[i];
+								break;
 							}
-
-							char_num--;
-							for(ch = i; ch < 9-1; ch++)
-								sd->found_char[ch] = sd->found_char[ch+1];
-							sd->found_char[8] = -1;
-							WFIFOW(fd,0) = 0x6f;
-							WFIFOSET(fd,2);
-							break;
 						}
-					}
-
-					if (i == 9) {
-						WFIFOW(fd,0) = 0x70;
-						WFIFOB(fd,2) = 0;
-						WFIFOSET(fd,3);
+						break;
 					}
 				}
-				RFIFOSKIP(fd,46);
 			}
-		}
+			char_num--;
+			for(ch = i; ch < 9-1; ch++)
+				sd->found_char[ch] = sd->found_char[ch+1];
+			sd->found_char[8] = -1;
+			WFIFOW(fd,0) = 0x6f;
+			WFIFOSET(fd,2);
 			break;
-
+		}
 		case 0x2af8:	// マップサーバーログイン
 			if (RFIFOREST(fd) < 60)
 				return 0;

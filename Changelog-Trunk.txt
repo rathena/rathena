@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/21
+	* Some cleaning to the character deletion code.
 	* Changed a certain snprintf to strncpy, which should fix the problems with
 	  parsing switches in the script engine.
 	* Added back cropping the attack delay to attack motion for those weird mobs
