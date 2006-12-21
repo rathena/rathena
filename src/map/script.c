@@ -567,7 +567,7 @@ const char* parse_simpleexpr(const char *p)
 		p=parse_subexpr(p+1,-1);
 		p=skip_space(p);
 		if((*p++)!=')')
-			disp_error_message("parse_simpleexpr: unmatch ')'",p);
+			disp_error_message("parse_simpleexpr: unmatch ')'",p-1);
 	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
 		char *np;
 		i=strtoul(p,&np,0);
@@ -606,7 +606,7 @@ const char* parse_simpleexpr(const char *p)
 			p=parse_subexpr(p+1,-1);
 			p=skip_space(p);
 			if((*p++)!=']')
-				disp_error_message("parse_simpleexpr: unmatch ']'",p);
+				disp_error_message("parse_simpleexpr: unmatch ']'",p-1);
 			add_scriptc(C_FUNC);
 		} else if(str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS) {
 			add_scriptl(search_str("callsub"));
@@ -720,7 +720,7 @@ const char* parse_subexpr(const char* p,int limit)
 			}
 			plist[i]=p;
 			if(*(p++)!=')')
-				disp_error_message("parse_subexpr: func request '(' ')'",p);
+				disp_error_message("parse_subexpr: func request '(' ')'",p-1);
 			if(arg) {
 				if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
 					disp_error_message("parse_subexpr: illegal number of parameters",plist[min(i,j)]);
@@ -729,7 +729,7 @@ const char* parse_subexpr(const char* p,int limit)
 			p=parse_subexpr(p,-1);
 			p=skip_space(p);
 			if( *(p++) != ':')
-				disp_error_message("parse_subexpr: need ':'", p);
+				disp_error_message("parse_subexpr: need ':'", p-1);
 			p=parse_subexpr(p,-1);
 		} else {
 			p=parse_subexpr(p,opl);
@@ -1265,7 +1265,9 @@ const char* parse_syntax(const char* p) {
 			char label[256];
 			p=skip_word(p);
 			p=skip_space(p);
-
+			if(*p != '(') { //Prevent if this {} non-c syntax. from Rayce (jA)
+				disp_error_message("need '('",p);
+			}
 			syntax.curly[syntax.curly_count].type  = TYPE_IF;
 			syntax.curly[syntax.curly_count].count = 1;
 			syntax.curly[syntax.curly_count].index = syntax.index++;
@@ -2444,7 +2446,7 @@ int run_func(struct script_state *st)
 
 	end_sp=st->stack->sp;
 	for(i=end_sp-1;i>=0 && st->stack->stack_data[i].type!=C_ARG;i--);
-	if(i==0){
+	if(i<=0){ //Crash fix when missing "push_val" causes current pointer to become -1. from Rayce (jA)
 		if(battle_config.error_log)
 			ShowError("function not found\n");
 //		st->stack->sp=0;
@@ -4884,6 +4886,7 @@ int buildin_getarraysize(struct script_state *st)
 
 	if( prefix!='$' && prefix!='@' && prefix!='.' ){
 		ShowWarning("buildin_copyarray: illegal scope !\n");
+		push_val(st->stack,C_INT,0);
 		return 1;
 	}
 
@@ -9441,6 +9444,9 @@ int buildin_strmobinfo(struct script_state *st)
 	case 7:
 		push_val(st->stack,C_INT,mob_db(class_)->job_exp);
 		break;
+	default:
+		push_val(st->stack,C_INT,0);
+		break;
 	}
 	return 0;
 }
@@ -10728,6 +10734,9 @@ int buildin_getsavepoint(struct script_state *st)
 		case 2:
 			push_val(st->stack,C_INT,y);
 		break;
+		default:
+			push_val(st->stack,C_INT,0);
+		break;
 	}
 	return 0;
 }
@@ -11190,6 +11199,8 @@ int buildin_getrefine(struct script_state *st)
 	struct map_session_data *sd;
 	if ((sd = script_rid2sd(st))!= NULL)
 		push_val(st->stack, C_INT, sd->status.inventory[current_equip_item_index].refine);
+	else
+		push_val(st->stack,C_INT,0);
 	return 0;
 }
 
