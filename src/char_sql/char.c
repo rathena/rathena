@@ -1680,11 +1680,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
 	struct mmo_charstatus *p = NULL;
 	const int offset = 24;
-#if PACKETVER > 7
 	WFIFOHEAD(fd, offset +9*108);
-#else
-	WFIFOHEAD(fd, offset +9*106);
-#endif
     
 	set_char_online(-1, 99,sd->account_id);
 
@@ -1712,6 +1708,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	WFIFOW(fd, 0) = 0x6b;
 
 #if PACKETVER > 7
+	//Updated packet structure with rename-button included. Credits to Sara-chan
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 108);
 	WFIFOW(fd, 2) = offset + found_num * 108;
 #else
@@ -1773,6 +1770,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 #if PACKETVER > 7
+		//Updated packet structure with rename-button included. Credits to Sara-chan
 		WFIFOW(fd,j+104) = p->char_num;
 		WFIFOB(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
 #else
@@ -3435,12 +3433,12 @@ int parse_char(int fd) {
 				break;
 			}
 		{	//Send data.
-			WFIFOHEAD(fd, 108);
+			WFIFOHEAD(fd, 110);
 			WFIFOW(fd, 0) = 0x6d;
-			memset(WFIFOP(fd, 2), 0x00, 106);
+			memset(WFIFOP(fd, 2), 0x00, 108);
 
 			mmo_char_fromsql_short(i, &char_dat); //Only the short data is needed.
-			WFIFOL(fd, 2) = char_dat.char_id;
+			WFIFOL(fd,2) = char_dat.char_id;
 			WFIFOL(fd,2+4) = char_dat.base_exp>LONG_MAX?LONG_MAX:char_dat.base_exp;
 			WFIFOL(fd,2+8) = char_dat.zeny;
 			WFIFOL(fd,2+12) = char_dat.job_exp>LONG_MAX?LONG_MAX:char_dat.job_exp;
@@ -3474,9 +3472,15 @@ int parse_char(int fd) {
 			WFIFOB(fd,2+101) = char_dat.int_>UCHAR_MAX?UCHAR_MAX:char_dat.int_;
 			WFIFOB(fd,2+102) = char_dat.dex>UCHAR_MAX?UCHAR_MAX:char_dat.dex;
 			WFIFOB(fd,2+103) = char_dat.luk>UCHAR_MAX?UCHAR_MAX:char_dat.luk;
+#if PACKETVER > 7
+			//Updated packet structure with rename-button included. Credits to Sara-chan
+			WFIFOW(fd,2+104) = char_dat.char_num;
+			WFIFOB(fd,2+106) = 1; //Rename bit.
+			WFIFOSET(fd, 110);
+#else
 			WFIFOB(fd,2+104) = char_dat.char_num;
-
 			WFIFOSET(fd, 108);
+#endif	
 			RFIFOSKIP(fd, 37);
 		}	
 			//to do

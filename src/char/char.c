@@ -3631,9 +3631,9 @@ int parse_char(int fd) {
 				break;
 			}
 		{	//Send to player.
-			WFIFOHEAD(fd, 108);
+			WFIFOHEAD(fd, 110);
 			WFIFOW(fd,0) = 0x6d;
-			memset(WFIFOP(fd,2), 0, 106);
+			memset(WFIFOP(fd,2), 0, 108);
 
 			WFIFOL(fd,2) = char_dat[i].status.char_id;
 			WFIFOL(fd,2+4) = char_dat[i].status.base_exp>LONG_MAX?LONG_MAX:char_dat[i].status.base_exp;
@@ -3649,7 +3649,7 @@ int parse_char(int fd) {
 			WFIFOW(fd,2+44) = (char_dat[i].status.max_hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_hp;
 			WFIFOW(fd,2+46) = (char_dat[i].status.sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.sp;
 			WFIFOW(fd,2+48) = (char_dat[i].status.max_sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_sp;
-			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED; // char_dat[i].status.speed;
+			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED;
 			WFIFOW(fd,2+52) = char_dat[i].status.class_;
 			WFIFOW(fd,2+54) = char_dat[i].status.hair;
 
@@ -3669,9 +3669,15 @@ int parse_char(int fd) {
 			WFIFOB(fd,2+101) = (char_dat[i].status.int_ > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.int_;
 			WFIFOB(fd,2+102) = (char_dat[i].status.dex > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.dex;
 			WFIFOB(fd,2+103) = (char_dat[i].status.luk > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.luk;
+#if PACKETVER > 7
+			//Updated packet structure with rename-button included. Credits to Sara-chan
+			WFIFOW(fd,2+104) = char_dat[i].status.char_num;
+			WFIFOB(fd,2+106) = 1; //Rename bit.
+			WFIFOSET(fd,110);
+#else
 			WFIFOB(fd,2+104) = char_dat[i].status.char_num;
-
 			WFIFOSET(fd,108);
+#endif	
 			RFIFOSKIP(fd,37);
 		}
 			for(ch = 0; ch < 9; ch++) {

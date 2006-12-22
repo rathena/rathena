@@ -954,10 +954,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->script);
 					if (sql_row[19] != NULL) {
 						if (sql_row[19][0] == '{')
-							id->script = parse_script((unsigned char *) sql_row[19],item_db_name[i], 0);
+							id->script = parse_script((unsigned char *) sql_row[19],item_db_name[i], ln, 0);
 						else {
 							sprintf(script, "{%s}", sql_row[19]);
-							id->script = parse_script((unsigned char *) script, item_db_name[i], 0);
+							id->script = parse_script((unsigned char *) script, item_db_name[i], ln, 0);
 						}
 					} else id->script = NULL;
 	
@@ -965,10 +965,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->equip_script);
 					if (sql_row[20] != NULL) {
 						if (sql_row[20][0] == '{')
-							id->equip_script = parse_script((unsigned char *) sql_row[20], item_db_name[i], 0);
+							id->equip_script = parse_script((unsigned char *) sql_row[20], item_db_name[i], ln, 0);
 						else {
 							sprintf(script, "{%s}", sql_row[20]);
-							id->equip_script = parse_script((unsigned char *) script, item_db_name[i], 0);
+							id->equip_script = parse_script((unsigned char *) script, item_db_name[i], ln, 0);
 						}
 					} else id->equip_script = NULL;
 	
@@ -976,10 +976,10 @@ static int itemdb_read_sqldb(void)
 						script_free_code(id->unequip_script);
 					if (sql_row[21] != NULL) {
 						if (sql_row[21][0] == '{')
-							id->unequip_script = parse_script((unsigned char *) sql_row[21],item_db_name[i], 0);
+							id->unequip_script = parse_script((unsigned char *) sql_row[21],item_db_name[i], ln, 0);
 						else {
 							sprintf(script, "{%s}", sql_row[21]);
-							id->unequip_script = parse_script((unsigned char *) script, item_db_name[i], 0);
+							id->unequip_script = parse_script((unsigned char *) script, item_db_name[i], ln, 0);
 						}
 					} else id->unequip_script = NULL;
 				

@@ -7314,7 +7314,12 @@ int pc_readdb(void)
 			max_level[job][type]--;
 		if (max_level[job][type] < max) {
 			ShowWarning("pc_readdb: Specified max %d for job %d, but that job's exp table only goes up to level %d.\n", max, job, max_level[job][type]);
-			ShowNotice("(You may still reach lv %d through scripts/gm-commands)\n", max);
+			ShowInfo("Filling the missing values with the last exp entry.\n");
+			//Fill the requested values with the last entry.
+			i = max_level[job][type]-2;
+			if (i < 0) i = 0;
+			for (; i < max-2; i++)
+				exp_table[job][type][i] = exp_table[job][type][i-1];
 			max_level[job][type] = max;
 		}
 //		ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job, max_level[job][type]);
