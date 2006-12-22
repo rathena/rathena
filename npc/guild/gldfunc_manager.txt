@@ -231,7 +231,7 @@ function	script	F_GldManager	{
 		//set @SGuardian,strmobinfo(4,1287) + (@Defence*2000);
 
 		//uncomment the following line to disable guardians Installation during WoE
-		//if(agitcheck(0) != 0) goto L_CantGuard;
+		//if(agitcheck()) goto L_CantGuard;
 		mes "Would you like to install a guardian? Guardians will protect the guild base from enemies.";
 		mes "Please choose a guardian.";
 		next;

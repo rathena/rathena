@@ -25,7 +25,7 @@ function	script	F_keWarpWOE	{
 		callfunc "F_keIntro", e_srt, "Sorry, these warps are only available to people who belong to a Guild.";
 		return;
 	}
-	if ($@kewg_checkAgit && agitcheck(0) == 0) {
+	if ($@kewg_checkAgit && !agitcheck()) {
 		callfunc "F_keIntro", e_srt, "Sorry, these warps are only enabled during the Guild Wars.";
 		return;
 	}

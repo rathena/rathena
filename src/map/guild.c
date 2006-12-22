@@ -1898,8 +1898,7 @@ int guild_agit_break(struct mob_data *md)
 {	// Run One NPC_Event[OnAgitBreak]
 	char *evname;
 
-	nullpo_retr(0, md);
-
+	if(!agit_flag) return 0;	// Agit already End
 	evname=(char *)aMallocA((strlen(md->npc_event) + 1)*sizeof(char));
 
 	strcpy(evname,md->npc_event);
@@ -1908,7 +1907,6 @@ int guild_agit_break(struct mob_data *md)
 // But Script will be stop, so nothing...
 // Maybe will be changed in the futher..
 //      int c = npc_event_do(evname);
-	if(!agit_flag) return 0;	// Agit already End
 	add_timer(gettick()+battle_config.gvg_eliminate_time,guild_gvg_eliminate_timer,md->bl.m,(int)evname);
 	return 0;
 }

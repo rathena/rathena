@@ -3806,7 +3806,7 @@ struct script_function buildin_func[] = {
 	{buildin_maprespawnguildid,"maprespawnguildid","sii"},
 	{buildin_agitstart,"agitstart",""},	// <Agit>
 	{buildin_agitend,"agitend",""},
-	{buildin_agitcheck,"agitcheck","i"},   // <Agitcheck>
+	{buildin_agitcheck,"agitcheck",""},   // <Agitcheck>
 	{buildin_flagemblem,"flagemblem","i"},	// Flag Emblem
 	{buildin_getcastlename,"getcastlename","s"},
 	{buildin_getcastledata,"getcastledata","si*"},
@@ -8790,28 +8790,15 @@ int buildin_agitend(struct script_state *st)
 	return 0;
 }
 /*==========================================
- * agitcheck 1;    // choice script
- * if(@agit_flag == 1) goto agit;
- * if(agitcheck(0) == 1) goto agit;
+ * Returns whether woe is on or off.	// choice script
  *------------------------------------------
  */
 int buildin_agitcheck(struct script_state *st)
 {
-	struct map_session_data *sd;
-	int cond;
-
-	cond=conv_num(st,& (st->stack->stack_data[st->start+2]));
-
-	if(cond == 0) {
-		if (agit_flag==1) push_val(st->stack,C_INT,1);
-		if (agit_flag==0) push_val(st->stack,C_INT,0);
-	} else {
-		sd=script_rid2sd(st);
-		if (agit_flag==1) pc_setreg(sd,add_str("@agit_flag"),1);
-		if (agit_flag==0) pc_setreg(sd,add_str("@agit_flag"),0);
-	}
+	push_val(st->stack,C_INT,agit_flag);
 	return 0;
 }
+
 int buildin_flagemblem(struct script_state *st)
 {
 	int g_id=conv_num(st,& (st->stack->stack_data[st->start+2]));

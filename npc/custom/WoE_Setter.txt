@@ -120,7 +120,7 @@ L_Reset:
 	mes "Are you sure?";
 	next;
 	menu "No, what was I thinking",L_No,"Yes I really want to do it",-;
-	if(agitcheck(0)==1) goto L_WoEOn;
+	if(agitcheck()) goto L_WoEOn;
 	deletearray $sday[0],200;
 	deletearray $eday[0],200;
 	deletearray $woetime[0],200;
@@ -173,14 +173,14 @@ L_StartLoop:
 
 // Stop WoE
 L_End:
-	if(agitcheck(0)==0) end;
+	if(!agitcheck()) end;
 	Announce "The War Of Emperium is over!",8;
 	AgitEnd;
 	end;
 
 // Start WoE
 L_Start:
-	if(agitcheck(0)==1) end;
+	if(agitcheck()) end;
 	Announce "The War Of Emperium has begun!",8;
 	AgitStart;
 	end;
