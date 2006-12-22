@@ -61,7 +61,11 @@ struct script_state {
 	} sleep;
 };
 
-struct script_code* parse_script(const char* src,const char* file,int line);
+enum script_parse_options {
+	SCRIPT_USE_LABEL_DB = 0x1
+};
+
+struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);
 void run_script(struct script_code*,int,int,int);
 

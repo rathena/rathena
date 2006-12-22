@@ -130,7 +130,7 @@ typedef enum {
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-typedef enum {
+typedef enum db_opt {
 	DB_OPT_BASE            = 0,
 	DB_OPT_DUP_KEY         = 1,
 	DB_OPT_RELEASE_KEY     = 2,

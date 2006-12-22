@@ -18,9 +18,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "../common/cbasetypes.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
 #include "timer.h"
-#include "malloc.h"
-#include "showmsg.h"
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
 // サーバーが反応しなくなる場合は、TIMER_MIN_INTERVAL を増やしてください。

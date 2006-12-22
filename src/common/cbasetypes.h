@@ -126,6 +126,10 @@ typedef unsigned int		uint32;
 #define SINT16_MAX	((sint16)0x7FFF)
 #define SINT32_MAX	((sint32)0x7FFFFFFF)
 
+// ILP64 isn't supported, so always 32 bits?
+#ifndef UINT_MAX
+#define UINT_MAX 0xFFFFFFFF
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // Integers with guaranteed _minimum_ size.

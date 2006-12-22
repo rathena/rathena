@@ -1351,7 +1351,7 @@ int read_petdb()
 			pet_db[j].script = NULL;
 			if((np=strchr(p,'{'))==NULL)
 				continue;
-			pet_db[j].script = parse_script((unsigned char *) np, filename[i], lines);
+			pet_db[j].script = parse_script(np, filename[i], lines, 0);
 			j++;
 		}
 		if (j >= MAX_PET_DB)

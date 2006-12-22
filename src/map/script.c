@@ -88,6 +88,7 @@ char mapreg_txt[256]="save/mapreg.txt";
 
 static struct dbt *scriptlabel_db=NULL;
 static struct dbt *userfunc_db=NULL;
+static int parse_options=0;
 struct dbt* script_get_label_db(){ return scriptlabel_db; }
 struct dbt* script_get_userfunc_db(){ return userfunc_db; }
 
@@ -158,7 +159,7 @@ int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
 static void disp_error_message(const char *mes,const char *pos);
 
-enum {
+enum c_op {
 	C_NOP,C_POS,C_INT,C_PARAM,C_FUNC,C_STR,C_CONSTSTR,C_ARG,
 	C_NAME,C_EOL, C_RETINFO,
 	C_USERFUNC, C_USERFUNC_POS, // user defined functions
@@ -502,12 +503,8 @@ static const char *skip_word(const char *p)
 	//# Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for? [Skotlex]
 	//# It's for multibyte encodings like Shift-JIS. Unfortunately this can be problematic for singlebyte encodings.
 	//  Using (*p)>>7 would yield the appropriate result but it's better to restrict words to ASCII characters only. [FlavioJS]
-	while( ISALNUM(*p) || *p == '_' || (*p)>>7 )
-	{
-		if( (*p)>>7 ) // readded the >=0x81 equivalent until I figure out where the script engine is 'being naughty' O.o [FlavioJS]
-			++p;
+	while( ISALNUM(*p) || *p == '_' )
 		++p;
-	}
 	// postfix
 	if(*p=='$') p++;	// 文字列変数
 
@@ -1020,12 +1017,12 @@ const char* parse_syntax(const char* p) {
 				p = skip_space(p);
 				p2 = p;
 				p = skip_word(p);
-				len = p-p2;
+				len = p-p2; // length of word at p2
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
 				memcpy(label,"if(",3);
-				strncpy(label+3,p2,len);
+				memcpy(label+3,p2,len);
 				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
 					syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1254,7 +1251,8 @@ const char* parse_syntax(const char* p) {
 				if(str_data[l].type == C_NOP)
 					str_data[l].type = C_USERFUNC;
 				set_label(l,script_pos,p);
-				strdb_put(scriptlabel_db, GETSTRING(str_data[l].str), (void*)script_pos);
+				if( parse_options&SCRIPT_USE_LABEL_DB )
+					strdb_put(scriptlabel_db, GETSTRING(str_data[l].str), (void*)script_pos);
 				return skip_space(p);
 			}
 		}
@@ -1562,7 +1560,22 @@ static void read_constdb(void)
  *------------------------------------------
  */
 
-const char* script_print_line( const char *p, const char *mark, int line );
+const char* script_print_line( const char *p, const char *mark, int line ) {
+	int i;
+	if( p == NULL || !p[0] ) return NULL;
+	if( line < 0 ) 
+		printf("*% 5d : ", -line);
+	else
+		printf(" % 5d : ", line);
+	for(i=0;p[i] && p[i] != '\n';i++){
+		if(p + i != mark)
+			printf("%c",p[i]);
+		else
+			printf("\'%c\'",p[i]);
+	}
+	printf("\n");
+	return p+i+(p[i] == '\n' ? 1 : 0);
+}
 
 void script_error(const char *src,const char *file,int start_line, const char *error_msg, const char *error_pos) {
 	// エラーが発生した行を求める
@@ -1595,29 +1608,12 @@ void script_error(const char *src,const char *file,int start_line, const char *e
 	}
 }
 
-const char* script_print_line( const char *p, const char *mark, int line ) {
-	int i;
-	if( p == NULL || !p[0] ) return NULL;
-	if( line < 0 ) 
-		printf("*% 5d : ", -line);
-	else
-		printf(" % 5d : ", line);
-	for(i=0;p[i] && p[i] != '\n';i++){
-		if(p + i != mark)
-			printf("%c",p[i]);
-		else
-			printf("\'%c\'",p[i]);
-	}
-	printf("\n");
-	return p+i+(p[i] == '\n' ? 1 : 0);
-}
-
 /*==========================================
  * スクリプトの解析
  *------------------------------------------
  */
 
-struct script_code* parse_script(const char *src,const char *file,int line)
+struct script_code* parse_script(const char *src,const char *file,int line,int options)
 {
 	const char *p,*tmpp;
 	int i;
@@ -1648,8 +1644,11 @@ struct script_code* parse_script(const char *src,const char *file,int line)
 		}
 	}
 
-	//Labels must be reparsed for the script....
-	scriptlabel_db->clear(scriptlabel_db, NULL);
+	// who called parse_script is responsible for clearing the database after using it, but just in case... lets clear it here
+	if( options&SCRIPT_USE_LABEL_DB )
+		scriptlabel_db->clear(scriptlabel_db, NULL);
+	parse_options = options;
+
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
 		script_error(src,file,line,error_msg,error_pos);
@@ -1688,7 +1687,8 @@ struct script_code* parse_script(const char *src,const char *file,int line)
 		if(*tmpp==':' && !(!strncmp(p,"default:",8) && p + 7 == tmpp)){
 			i=add_word(p);
 			set_label(i,script_pos,p);
-			strdb_put(scriptlabel_db, GETSTRING(str_data[i].str), (void*)script_pos);
+			if( parse_options&SCRIPT_USE_LABEL_DB )
+				strdb_put(scriptlabel_db, GETSTRING(str_data[i].str), (void*)script_pos);
 			p=tmpp+1;
 			continue;
 		}
@@ -1955,8 +1955,9 @@ char* conv_str(struct script_state *st,struct script_data *data)
 	get_val(st,data);
 	if(data->type==C_INT){
 		char *buf;
-		buf=(char *)aMallocA(ITEM_NAME_LENGTH*sizeof(char));
+		CREATE(buf,char,ITEM_NAME_LENGTH);
 		snprintf(buf,ITEM_NAME_LENGTH, "%d",data->u.num);
+		buf[ITEM_NAME_LENGTH-1]=0;
 		data->type=C_STR;
 		data->u.str=buf;
 	} else if(data->type==C_POS) {
@@ -3273,7 +3274,7 @@ int do_init_script()
 	mapreg_db= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	mapregstr_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	userfunc_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_RELEASE_BOTH,50);
-	scriptlabel_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_ALLOW_NULL_DATA,50);
+	scriptlabel_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
 	
 	script_load_mapreg();
 
@@ -3978,9 +3979,9 @@ struct script_function buildin_func[] = {
 int buildin_mes(struct script_state *st)
 {
 	struct map_session_data *sd = script_rid2sd(st);
-	conv_str(st,& (st->stack->stack_data[st->start+2]));
+	char *mes = conv_str(st, &(st->stack->stack_data[st->start+2]));
 	if (sd)
-		clif_scriptmes(sd,st->oid,st->stack->stack_data[st->start+2].u.str);
+		clif_scriptmes(sd, st->oid, mes);
 	return 0;
 }
 
@@ -11306,9 +11307,9 @@ int buildin_setbattleflag(struct script_state *st){
 	value = conv_str(st,& (st->stack->stack_data[st->start+3]));
 	
 	if (battle_set_value(flag, value) == 0)
-		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'",flag);
+		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'\n",flag);
 	else
-		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.",flag,value);
+		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.\n",flag,value);
 
 	return 0;
 }
@@ -11800,7 +11801,7 @@ int buildin_setitemscript(struct script_state *st)
 	if (i_data && script!=NULL && script[0]=='{') {
 		if(i_data->script!=NULL)
 			script_free_code(i_data->script);
-		i_data->script = parse_script(script, "script_setitemscript", 0);
+		i_data->script = parse_script(script, "script_setitemscript", 0, 0);
 		push_val(st->stack,C_INT,1);
 	} else
 		push_val(st->stack,C_INT,0);
