@@ -1373,7 +1373,7 @@
 4200,Megalith_Card,Megalith Card,6,,10,10,,,,,,,,64,,,,,{ if(getrefine()<6) bonus bMdef,7; },{},{}
 4201,Majoruros_Card,Majoruros Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stun,2000; },{},{}
 4202,Civil_Servant_Card,Civil Servant Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEle,Ele_Ghost,20; },{},{}
-4203,Mutant_Dragon_Card,Mutant Dragonoid Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus3 bAutoSpell,17,3+7*(getskilllv(17)==10),50; },{},{}
+4203,Mutant_Dragon_Card,Mutant Dragonoid Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus3 bAutoSpell,17,3+2*(getskilllv(17)==10),50; },{},{}
 4204,Mini_Demon_Card,Mini Demon Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Brute,-20; bonus2 bExpAddRace,RC_Brute,10; },{},{}
 4205,Mimic_Card,Mimic Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,603,-6; },{},{}
 4206,Mystcase_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bAddMonsterDropItem,644,-24; },{},{}
