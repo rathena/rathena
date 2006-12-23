@@ -853,8 +853,17 @@ const char* parse_line(const char* p)
 		p=parse_expr(p);
 		p=skip_space(p);
 		// ˆø”‹æØ‚è‚Ì,ˆ—
-		if(*p==',') {
-			if(arg == NULL || arg[j] == '*' || i+1 < j)
+		if( *p==',' ) {
+			if( arg == NULL || arg[j] == '*' || i+1 < j )
+				p++; // the next argument is valid, skip the comma
+		}
+		else if( end2 && i == 0 && *p == ')' && *skip_space(p+1) == ',' )
+		{// parenthesis argument list fallback for "func (exp) , ..."
+			end = end2;
+			parse_syntax_for_flag = old_flag;
+			end2 = 0;
+			p=skip_space(p+1);
+			if( arg == NULL || arg[j] == '*' || i+1 < j )
 				p++; // the next argument is valid, skip the comma
 		}
 		else if(*p!=end && script_config.warn_cmd_no_comma){
