@@ -21,17 +21,18 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
-#include "char.h"
+#include "../common/cbasetypes.h"
 #include "../common/utils.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
+
 #include "itemdb.h"
 #include "inter.h"
 #include "db.h"
 #include "malloc.h"
 #include "int_guild.h"
+#include "char.h"
 
 #ifndef TXT_SQL_CONVERT
 static struct dbt *char_db_;

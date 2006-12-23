@@ -18,8 +18,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/strlib.h"
 #include "../common/core.h"
 #include "../common/socket.h"

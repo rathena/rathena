@@ -6,8 +6,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/db.h"
 #include "../common/nullpo.h"

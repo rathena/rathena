@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/socket.h"
 #include "../common/nullpo.h"

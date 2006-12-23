@@ -5,9 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <limits.h>
 
-#include "battle.h"
+#include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
@@ -24,6 +23,7 @@
 #include "pet.h"
 #include "guild.h"
 #include "party.h"
+#include "battle.h"
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 

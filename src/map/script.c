@@ -10,7 +10,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include <limits.h>
 
 #ifndef _WIN32
 	#include <sys/time.h>
@@ -2991,7 +2990,7 @@ static int script_load_mapreg(void)
 	ShowInfo("Freeing results...\n");
 	mysql_free_result(sql_res);
 	mapreg_dirty=0;
-	perfomance = (time(NULL) - perfomance);
+	perfomance = (((unsigned int)time(NULL)) - perfomance);
 	ShowInfo("SQL Mapreg Loading Completed Under %d Seconds.\n",perfomance);
 	return 0;
 #endif /* TXT_ONLY */

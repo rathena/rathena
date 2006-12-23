@@ -6,8 +6,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/socket.h" // [Valaris]
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -7279,7 +7279,7 @@ int pc_readdb(void)
 	while(fgets(line, sizeof(line)-1, fp)){
 		int jobs[MAX_PC_CLASS], job_count, job;
 		int type;
-		unsigned int max;
+		unsigned int ui,maxlv;
 		char *split[4];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
@@ -7299,28 +7299,27 @@ int pc_readdb(void)
 			ShowError("pc_readdb: Invalid type %d (must be 0 for base levels, 1 for job levels).\n", type);
 			continue;
 		}
-		max = atoi(split[0]);
-		if (max > MAX_LEVEL) {
-			ShowWarning("pc_readdb: Specified max level %d for job %d is beyond server's limit (%d).\n ", max, job, MAX_LEVEL);
-			max = MAX_LEVEL;
+		maxlv = atoi(split[0]);
+		if (maxlv > MAX_LEVEL) {
+			ShowWarning("pc_readdb: Specified max level %u for job %d is beyond server's limit (%u).\n ", maxlv, job, MAX_LEVEL);
+			maxlv = MAX_LEVEL;
 		}
 		//We send one less and then one more because the last entry in the exp array should hold 0.
-		max_level[job][type] = pc_split_atoui(split[3], exp_table[job][type],',',max-1)+1;
+		max_level[job][type] = pc_split_atoui(split[3], exp_table[job][type],',',maxlv-1)+1;
 		//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 		//The reasoning behind the -2 is this... if the max level is 5, then the array
 		//should look like this:
 	   //0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
-		while ((i = max_level[job][type]-2) >= 0 && exp_table[job][type][i] <= 0)
+		while ((ui = max_level[job][type]) >= 2 && exp_table[job][type][ui-2] <= 0)
 			max_level[job][type]--;
-		if (max_level[job][type] < max) {
-			ShowWarning("pc_readdb: Specified max %d for job %d, but that job's exp table only goes up to level %d.\n", max, job, max_level[job][type]);
+		if (max_level[job][type] < maxlv) {
+			ShowWarning("pc_readdb: Specified max %u for job %d, but that job's exp table only goes up to level %u.\n", maxlv, job, max_level[job][type]);
 			ShowInfo("Filling the missing values with the last exp entry.\n");
 			//Fill the requested values with the last entry.
-			i = max_level[job][type]-2;
-			if (i < 0) i = 0;
-			for (; i < max-2; i++)
-				exp_table[job][type][i] = exp_table[job][type][i-1];
-			max_level[job][type] = max;
+			ui = (max_level[job][type] <= 2? 0: max_level[job][type]-2);
+			for (; ui+2 < maxlv; ui++)
+				exp_table[job][type][ui] = exp_table[job][type][ui-1];
+			max_level[job][type] = maxlv;
 		}
 //		ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job, max_level[job][type]);
 		for (i = 1; i < job_count; i++) {
@@ -7330,8 +7329,8 @@ int pc_readdb(void)
 				continue;
 			}
 			memcpy(exp_table[job][type], exp_table[jobs[0]][type], sizeof(exp_table[0][0]));
-			max_level[job][type] = max;
-//			ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job, max_level[job][type]);
+			max_level[job][type] = maxlv;
+//			ShowDebug("%s - Class %d: %u\n", type?"Job":"Base", job, max_level[job][type]);
 		}
 	}
 	fclose(fp);

@@ -4,8 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/socket.h"
 #include "../common/db.h"

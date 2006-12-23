@@ -6,8 +6,8 @@
 #include <string.h>
 #include <sys/types.h>
 #include <time.h>
-#include <limits.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/timer.h"

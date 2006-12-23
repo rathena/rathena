@@ -7,7 +7,12 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
-#include <limits.h>
+
+#include "../common/cbasetypes.h"
+#include "../common/timer.h"
+#include "../common/nullpo.h"
+#include "../common/showmsg.h"
+#include "../common/malloc.h"
 
 #include "pc.h"
 #include "map.h"
@@ -24,11 +29,6 @@
 #include "script.h"
 #include "unit.h"
 #include "mercenary.h"
-
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/malloc.h"
 
 //For specifying where in the SkillStatusChangeTableArray the "out of bounds" skills get stored. [Skotlex]
 #define SC_HM_BASE 800

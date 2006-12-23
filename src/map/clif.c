@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include <limits.h>
 #include <time.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/malloc.h"
@@ -43,7 +43,6 @@
 #include "pet.h"
 #include "mercenary.h"	//[orn]
 #include "log.h"
-
 #include "irc.h"
 
 struct Clif_Config {

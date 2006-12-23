@@ -59,6 +59,12 @@
 // only Silicon Graphics/Cray goes ILP64 so don't care (and don't support)
 //////////////////////////////////////////////////////////////////////////
 
+#include <limits.h>
+// ILP64 isn't supported, so always 32 bits?
+#ifndef UINT_MAX
+#define UINT_MAX 0xffffffff
+#endif
+
 //////////////////////////////////////////////////////////////////////////
 // Integers with guaranteed _exact_ size.
 //////////////////////////////////////////////////////////////////////////
@@ -125,11 +131,6 @@ typedef unsigned int		uint32;
 #define SINT8_MAX	((sint8) 0x7F)
 #define SINT16_MAX	((sint16)0x7FFF)
 #define SINT32_MAX	((sint32)0x7FFFFFFF)
-
-// ILP64 isn't supported, so always 32 bits?
-#ifndef UINT_MAX
-#define UINT_MAX 0xFFFFFFFF
-#endif
 
 //////////////////////////////////////////////////////////////////////////
 // Integers with guaranteed _minimum_ size.
