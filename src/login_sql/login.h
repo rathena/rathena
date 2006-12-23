@@ -25,9 +25,6 @@
 							// It is made into 2 at the time of passwordencrypt2.
 							// When it is made 3, it corresponds to both.
 
-#define START_ACCOUNT_NUM	  2000000
-#define END_ACCOUNT_NUM		100000000
-
 struct mmo_account {
 	int version;	//Added by sirius for versioncheck
 	char userid[NAME_LENGTH];

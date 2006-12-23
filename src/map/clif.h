@@ -45,7 +45,7 @@ enum {
 	DUEL_WOS
 };
 
-// packet_db[SERVER] is reserver for server use
+// packet_db[SERVER] is reserved for server use
 #define SERVER 0
 #define packet_len(x) packet_db[SERVER][x].len
 extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];

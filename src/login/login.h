@@ -4,8 +4,6 @@
 #ifndef _LOGIN_H_
 #define _LOGIN_H_
 
-#include "../common/mmo.h"
-
 #define MAX_SERVERS 30
 
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
