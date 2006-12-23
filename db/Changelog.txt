@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/23
+	* Fixed some autospell bonuses thanks to NLZ [Playtester]
 12/21
 	* Fixed Mutant Dragonoid Card [Playtester]
 	* Updated Bows [Playtester]
