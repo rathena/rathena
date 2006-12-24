@@ -1706,16 +1706,17 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
 
-	WFIFOW(fd, 0) = 0x6b;
-
 #if PACKETVER > 7
 	//Updated packet structure with rename-button included. Credits to Sara-chan
+	WFIFOHEAD(fd, offset + found_num * 108);
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 108);
 	WFIFOW(fd, 2) = offset + found_num * 108;
 #else
+	WFIFOHEAD(fd, offset + found_num * 106);
 	memset(WFIFOP(fd, 0), 0, offset + found_num * 106);
 	WFIFOW(fd, 2) = offset + found_num * 106;
 #endif
+	WFIFOW(fd, 0) = 0x6b;
 
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);

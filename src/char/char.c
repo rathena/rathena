@@ -1686,6 +1686,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		sd->found_char[i] = -1;
 
 #if PACKETVER > 7
+	//Updated packet structure with rename-button included. Credits to Sara-chan
 	WFIFOHEAD(fd, offset + found_num * 108);
 	memset(WFIFOP(fd,0), 0, offset + found_num * 108);
 	WFIFOW(fd,2) = offset + found_num * 108;
