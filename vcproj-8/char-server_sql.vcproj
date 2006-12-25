@@ -300,6 +300,85 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="">
+			<File
+				RelativePath="..\src\char_sql\char.h">
+			</File>
+			<File
+				RelativePath="..\src\common\core.h">
+			</File>
+			<File
+				RelativePath="..\src\common\db.h">
+			</File>
+			<File
+				RelativePath="..\src\common\graph.h">
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_guild.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_homun.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_party.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_pet.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_storage.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\inter.h">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\itemdb.h">
+			</File>
+			<File
+				RelativePath="..\src\common\lock.h">
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.h">
+			</File>
+			<File
+				RelativePath="..\src\common\mapindex.h">
+			</File>
+			<File
+				RelativePath="..\src\common\mmo.h">
+			</File>
+			<File
+				RelativePath="..\src\common\nullpo.h">
+			</File>
+			<File
+				RelativePath="..\src\common\plugin.h">
+			</File>
+			<File
+				RelativePath="..\src\common\plugins.h">
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.h">
+			</File>
+			<File
+				RelativePath="..\src\common\socket.h">
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.h">
+			</File>
+			<File
+				RelativePath="..\src\common\timer.h">
+			</File>
+			<File
+				RelativePath="..\src\common\utils.h">
+			</File>
+			<File
+				RelativePath="..\src\common\version.h">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

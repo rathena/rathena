@@ -4,45 +4,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <errno.h>
 
 #ifdef __WIN32
-#define __USE_W32_SOCKETS
-#include <windows.h>
-#include <winsock.h>
-#include <io.h>
-
-typedef int socklen_t;
+	#define __USE_W32_SOCKETS
+	#include <windows.h>
+	#include <winsock.h>
+	#include <io.h>
 #else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <net/if.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <sys/ioctl.h>
-#include <netdb.h>
-#include <arpa/inet.h>
+	#include <errno.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <netinet/tcp.h>
+	#include <net/if.h>
+	#include <unistd.h>
+	#include <sys/time.h>
+	#include <sys/ioctl.h>
+	#include <netdb.h>
+	#include <arpa/inet.h>
 
-#ifndef SIOCGIFCONF
-#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+	#ifndef SIOCGIFCONF
+		#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+	#endif
 #endif
 
-#endif
-
+// portability layer 
 #ifdef _WIN32
-#define SEBADF	WSAENOTSOCK
-#define serrno	WSAGetLastError()
+	typedef int socklen_t;
+	#define EBADF WSAENOTSOCK
+	#define ECONNABORTED WSAECONNABORTED
+	#define EAGAIN WSAEWOULDBLOCK
 #else
-#define SEBADF EBADF
-#define serrno errno
+	#define SOCKET_ERROR -1
+	#define INVALID_SOCKET -1
+	#define ioctlsocket ioctl
+	#define closesocket close
 #endif
 
 #include <fcntl.h>
 #include <string.h>
 
 #include "../common/socket.h"
-#include "../common/mmo.h"	// [Valaris] thanks to fov
+#include "../common/mmo.h"
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
@@ -114,7 +116,8 @@ void set_defaultparse(int (*defaultparse)(int))
 	default_func_parse = defaultparse;
 }
 
-void set_nonblocking(int fd, int yes) {
+void set_nonblocking(int fd, int yes)
+{
 	// I don't think we need this
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
 	if(mode_neg)
@@ -122,11 +125,8 @@ void set_nonblocking(int fd, int yes) {
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
-#ifdef __WIN32
-	ioctlsocket(fd, FIONBIO, &yes);
-#else
-	ioctl(fd,FIONBIO,&yes); 
-#endif
+	if (ioctlsocket(fd, FIONBIO, &yes) != 0)
+		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", h_errno);
 }
 
 static void setsocketopts(int fd)
@@ -170,48 +170,29 @@ static int recv_to_fifo(int fd)
 {
 	int len;
 
-	if( (fd<0) || (fd>=FD_SETSIZE) || (NULL==session[fd]) )
+	if( (fd < 0) || (fd >= FD_SETSIZE) || (NULL == session[fd]) || (session[fd]->eof) )
 		return -1;
 
-	if(session[fd]->eof)
-		return -1;
+	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0); 
 
-#ifdef __WIN32
-	len=recv(fd,(char *)session[fd]->rdata+session[fd]->rdata_size, RFIFOSPACE(fd), 0);
 	if (len == SOCKET_ERROR) {
-		if (WSAGetLastError() == WSAECONNABORTED) {
+		if (h_errno == ECONNABORTED) {
 			ShowWarning("recv_to_fifo: Software caused connection abort on session #%d\n", fd);
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
-//			exit(1);	//Windows can't really recover from this one. [Skotlex]
 		}
-		if (WSAGetLastError() != WSAEWOULDBLOCK) {
-//			ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", WSAGetLastError(), fd);
+		if (h_errno != EAGAIN) {
+			ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", h_errno, fd);
 			set_eof(fd);
 		}
 		return 0;
 	}
-#else
-	len=read(fd,session[fd]->rdata+session[fd]->rdata_size, RFIFOSPACE(fd));
-	if (len == -1)
-	{
-		if (errno == ECONNABORTED)
-		{
-			ShowFatalError("recv_to_fifo: Network broken (Software caused connection abort on session #%d)\n", fd);
-//			exit(1); //Temporal debug, maybe this can be fixed.
-		}
-		if (errno != EAGAIN) {	//Connection error.
-//			perror("closing session: recv_to_fifo");
-			set_eof(fd);
-		}
-		return 0;
-	}
-#endif	
+
 	if (len <= 0) {	//Normal connection end.
 		set_eof(fd);
 		return 0;
 	}
 
-	session[fd]->rdata_size+=len;
+	session[fd]->rdata_size += len;
 	session[fd]->rdata_tick = last_tick;
 	return 0;
 }
@@ -219,83 +200,47 @@ static int recv_to_fifo(int fd)
 static int send_from_fifo(int fd)
 {
 	int len;
+
 	if( !session_isValid(fd) )
 		return -1;
 
-//	if (s->eof) // if we close connection, we can not send last information (you're been disconnected, etc...) [Yor]
-//		return -1;
-/*
-	// clear write buffer if not connected <- I really like more the idea of sending the last information. [Skotlex]
-	if( session[fd]->eof )
-	{
-		session[fd]->wdata_size = 0;
-		return -1;
-	}
-*/
-	
 	if (session[fd]->wdata_size == 0)
 		return 0;
 
-#ifdef __WIN32
-	len=send(fd, (const char *)session[fd]->wdata,session[fd]->wdata_size, 0);
+	len = send(fd, (const char *) session[fd]->wdata, session[fd]->wdata_size, 0);
+
 	if (len == SOCKET_ERROR) {
-		if (WSAGetLastError() == WSAECONNABORTED) {
+		if (h_errno == ECONNABORTED) {
 			ShowWarning("send_from_fifo: Software caused connection abort on session #%d\n", fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
-		if (WSAGetLastError() != WSAEWOULDBLOCK) {
-//			ShowDebug("send_from_fifo: error %d, ending connection #%d\n", WSAGetLastError(), fd);
+		if (h_errno != EAGAIN) {
+			ShowDebug("send_from_fifo: error %d, ending connection #%d\n", h_errno, fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}
 		return 0;
 	}
-#else
-	len=send(fd, session[fd]->wdata, session[fd]->wdata_size, MSG_NOSIGNAL);
-	if (len == -1)
-	{
-		if (errno == ECONNABORTED)
-		{
-			ShowWarning("send_from_fifo: Network broken (Software caused connection abort on session #%d)\n", fd);
-			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
-			set_eof(fd);
-		}
-		if (errno != EAGAIN) {
-//			perror("closing session: send_from_fifo");
-			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
-			set_eof(fd);
-		}
-		return 0;
-	}
-#endif
 
 	//{ int i; ShowMessage("send %d : ",fd);  for(i=0;i<len;i++){ ShowMessage("%02x ",session[fd]->wdata[i]); } ShowMessage("\n");}
-	if(len>0){
-		if((size_t)len<session[fd]->wdata_size){
-			memmove(session[fd]->wdata,session[fd]->wdata+len,session[fd]->wdata_size-len);
-			session[fd]->wdata_size-=len;
-		} else {
-			session[fd]->wdata_size=0;
-		}
+	if(len > 0) {
+		if((size_t)len < session[fd]->wdata_size)
+			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
+
+		session[fd]->wdata_size -= len;
 	}
+
 	return 0;
 }
 
-void flush_fifo(int fd, int lock)
+/// Best effort
+/// There's no warranty that the data will be sent.
+void flush_fifo(int fd)
 {
-	if(session[fd] == NULL || session[fd]->func_send != send_from_fifo)
-		return;
-	if (lock)
-	{	//Lock the thread until data is sent.
-		set_nonblocking(fd, 0);
+	if(session[fd] != NULL && session[fd]->func_send == send_from_fifo)
 		send_from_fifo(fd);
-		set_nonblocking(fd, 1);
-		return;
-	}
-	//Send without locking the thread.
-	send_from_fifo(fd);
 }
 
 void flush_fifos(void)
@@ -323,42 +268,21 @@ static int connect_client(int listen_fd)
 {
 	int fd;
 	struct sockaddr_in client_address;
-#ifdef __WIN32
-	int len;
-#else
 	socklen_t len;
-#endif
 	//ShowMessage("connect_client : %d\n",listen_fd);
 
 	len=sizeof(client_address);
 
 	fd = accept(listen_fd,(struct sockaddr*)&client_address,&len);
-#ifdef __WIN32
 	if ( fd == INVALID_SOCKET ) {
-		ShowError("accept failed (code %i)!\n", WSAGetLastError());
+		ShowError("accept failed (code %i)!\n", h_errno);
 		return -1;
 	}
-#else                                                        
-	if(fd==-1) {
-		perror("accept");
-		return -1;
-	}
-#endif
 	
 	if(fd_max<=fd) fd_max=fd+1;
 
 	setsocketopts(fd);
-
-#ifdef __WIN32
-	{
-		unsigned long val = 1;
-		if (ioctlsocket(fd, FIONBIO, &val) != 0)
-			ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", WSAGetLastError());
-	}
-#else
-	if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1)
-		perror("connect_client (set nonblock)");
-#endif
+	set_nonblocking(fd, 1);
 
 	if (ip_rules && !connect_check(*(unsigned int*)(&client_address.sin_addr))) {
 		do_close(fd);
@@ -374,15 +298,12 @@ static int connect_client(int listen_fd)
 	session[fd]->max_wdata   = wfifo_size;
 	session[fd]->func_recv   = recv_to_fifo;
 	session[fd]->func_send   = send_from_fifo;
-	if(!session[listen_fd]->func_parse)
-		session[fd]->func_parse = default_func_parse;
-	else
-		session[fd]->func_parse = session[listen_fd]->func_parse;
+	session[fd]->func_parse  = (session[listen_fd]->func_parse) ? session[listen_fd]->func_parse : default_func_parse;
 	session[fd]->client_addr = client_address;
 	session[fd]->rdata_tick  = last_tick;
 	session[fd]->type        = SESSION_UNKNOWN;	// undefined type
 
-  //ShowMessage("new_session : %d %d\n",fd,session[fd]->eof);
+	//ShowMessage("new_session : %d %d\n",fd,session[fd]->eof);
 	return fd;
 }
 
@@ -394,59 +315,28 @@ int make_listen_bind(long ip,int port)
 
 	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
 
-#ifdef __WIN32
 	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, WSAGetLastError());
+		ShowError("socket() creation failed (code %d)!\n", fd, h_errno);
 		exit(1);
 	}
-#else
-	if (fd == -1) {
-		perror("make_listen_port:socket()");
-		exit(1);
-	}
-#endif
-
-#ifdef __WIN32
-	{
-	  	unsigned long val = 1;
-		if (ioctlsocket(fd, FIONBIO, &val) != 0)
-			ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", WSAGetLastError());
-	}
-#else
-	if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1)
-		perror("make_listen_bind (set nonblock)");
-#endif
 
 	setsocketopts(fd);
+	set_nonblocking(fd, 1);
 
 	server_address.sin_family      = AF_INET;
 	server_address.sin_addr.s_addr = ip;
 	server_address.sin_port        = htons((unsigned short)port);
 
 	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
-#ifdef __WIN32
 	if( result == SOCKET_ERROR ) {
-		ShowError("bind failed (socket %d, code %d)!\n", fd, WSAGetLastError());
+		ShowError("bind failed (socket %d, code %d)!\n", fd, h_errno);
 		exit(1);
 	}
-#else
-	if( result == -1 ) {
-		perror("bind");
-		exit(1);
-	}
-#endif
 	result = listen( fd, 5 );
-#ifdef __WIN32
 	if( result == SOCKET_ERROR ) {
-		ShowError("listen failed (socket %d, code %d)!\n", fd, WSAGetLastError());
+		ShowError("listen failed (socket %d, code %d)!\n", fd, h_errno);
 		exit(1);
 	}
-#else
-	if( result != 0) { /* error */
-		perror("listen");
-		exit(1);
-	}
-#endif
 	if ( fd < 0 || fd > FD_SETSIZE ) 
 	{ //Crazy error that can happen in Windows? (info from Freya)
 		ShowFatalError("listen() returned invalid fd %d!\n",fd);
@@ -458,7 +348,6 @@ int make_listen_bind(long ip,int port)
 
 	CREATE(session[fd], struct socket_data, 1);
 
-	malloc_set(session[fd],0,sizeof(*session[fd]));
 	session[fd]->func_recv = connect_client;
 
 	return fd;
@@ -470,12 +359,12 @@ int make_listen_port(int port)
 }
 
 // Console Reciever [Wizputer]
-int console_recieve(int i) {
+int console_recieve(int i)
+{
 	int n;
 	char *buf;
 
 	CREATE(buf, char, 64);
-	malloc_tsetdword(buf,0,sizeof(64));
 
 	n = read(0, buf , 64);
 	if ( n < 0 )
@@ -554,17 +443,10 @@ int make_connection(long ip,int port)
 
 	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
 
-#ifdef __WIN32
 	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, WSAGetLastError());
+		ShowError("socket() creation failed (code %d)!\n", fd, h_errno);
 		return -1;
 	}
-#else
-	if (fd == -1) {
-		perror("make_connection:socket()");
-		return -1;
-	}
-#endif
 
 	setsocketopts(fd);
 
@@ -576,30 +458,13 @@ int make_connection(long ip,int port)
 		(ip)&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,(ip>>24)&0xFF,port);
 
 	result = connect(fd, (struct sockaddr *)(&server_address), sizeof(struct sockaddr_in));
-#ifdef __WIN32
 	if( result == SOCKET_ERROR ) {
-		ShowError("connect failed (socket %d, code %d)!\n", fd, WSAGetLastError());
+		ShowError("connect failed (socket %d, code %d)!\n", fd, h_errno);
 		do_close(fd);
 		return -1;
 	}
-#else
-	if (result < 0) { //This is only used when the map/char server try to connect to each other, so it can be handled. [Skotlex]
-		perror("make_connection");
-		do_close(fd);
-		return -1;
-	}
-#endif
-//Now the socket can be made non-blocking. [Skotlex]
-#ifdef __WIN32
-	{
-		unsigned long val = 1;
-		if (ioctlsocket(fd, FIONBIO, &val) != 0)
-			ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", WSAGetLastError());
-	}
-#else
-	if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1)
-		perror("make_connection (set nonblock)");
-#endif
+	//Now the socket can be made non-blocking. [Skotlex]
+	set_nonblocking(fd, 1);
 
 	if (fd_max <= fd)
 		fd_max = fd + 1;
@@ -758,7 +623,7 @@ int do_sendrecv(int next)
 		memcpy(&rfd, &readfds, sizeof(rfd)),
 		memcpy(&efd, &readfds, sizeof(efd)))
 	{
-		if(serrno != SEBADF)
+		if(h_errno != EBADF)
 			return 0;
 
 		//Well then the error is due to a bad socket. Lets find and remove it
@@ -772,7 +637,7 @@ int do_sendrecv(int next)
 			//just alot faster [Meruru]
 			size = sizeof(struct sockaddr);
 			if(getsockname(i,(struct sockaddr*)&addr_check,&size)<0)
-				if(serrno == SEBADF) //See the #defines at the top
+				if(h_errno == EBADF) //See the #defines at the top
 				{
 					free_session_mem(i); //free the bad session
 					continue;
@@ -1222,15 +1087,10 @@ void do_close(int fd)
 //We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 #ifdef __WIN32
 //	shutdown(fd, SD_BOTH); //FIXME: Shutdown requires winsock2.h! What would be the proper shutting down method for winsock1?
-	if (session[fd] && session[fd]->func_send == send_from_fifo)
-		session[fd]->func_send(fd); //Flush the data as it is gonna be closed down, but it may not succeed as it is a nonblocking socket! [Skotlex]
-	closesocket(fd);
-#else
-	if (close(fd))
-		perror("do_close: close");
+	flush_fifo(fd); // try to send what's left (although it might not succeed since it's a nonblocking socket) 
 #endif
-	if (session[fd])
-		delete_session(fd);
+	closesocket(fd);
+	if (session[fd]) delete_session(fd);
 }
 
 void socket_init (void)
@@ -1242,7 +1102,7 @@ void socket_init (void)
 	char fullhost[255];
 	struct hostent* hent;
 
-		/* Start up the windows networking */
+	/* Start up the windows networking */
 	WORD version_wanted = MAKEWORD(1, 1); //Demand at least WinSocket version 1.1 (from Freya)
 	WSADATA wsaData;
 

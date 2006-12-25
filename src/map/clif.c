@@ -8472,7 +8472,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	WFIFOL(fd,2)=gettick();
 	WFIFOSET(fd,packet_len(0x7f));
 	// removed until the socket problems are fixed. [FlavioJS]
-	//flush_fifo(fd,0); // send immediatly so the client gets accurate "pings"
+	//flush_fifo(fd); // try to send immediatly so the client gets more accurate "pings"
 	return;
 }
 
