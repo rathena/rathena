@@ -7848,7 +7848,7 @@ int buildin_getscrate(struct script_state *st)
 	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	rate=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	if( st->end>st->start+4 ) //Žw’è‚µ‚½ƒLƒƒƒ‰‚Ì‘Ï«‚ðŒvŽZ‚·‚é
-		bl = map_id2bl(conv_num(st,& (st->stack->stack_data[st->start+6])));
+		bl = map_id2bl(conv_num(st,& (st->stack->stack_data[st->start+4])));
 	else
 		bl = map_id2bl(st->rid);
 
