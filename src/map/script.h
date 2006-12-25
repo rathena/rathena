@@ -10,10 +10,7 @@ extern int potion_target;
 
 extern struct Script_Config {
 	unsigned verbose_mode : 1;
-	unsigned warn_func_no_comma : 1;
-	unsigned warn_cmd_no_comma : 1;
 	unsigned warn_func_mismatch_paramnum : 1;
-	unsigned warn_cmd_mismatch_paramnum : 1;
 	int check_cmdcount;
 	int check_gotocount;
 

@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 
+2006/12/25
+	* Fixed a bug in eye_of_hellion.txt and a bug in hunter.txt. [FlavioJS]
 2006/12/22
 	* Corrected scripts to use the new format of agitcheck
 	* Simplified the global function "getJobName" [Skotlex]

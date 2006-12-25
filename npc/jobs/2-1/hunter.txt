@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4a
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 2.2a Fixed Sharon resetting the test2 item set [Lupus]
 //= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
 //= 2.4a Added missing next;, missing NPC names [Lupus]
+//= 2.5 "strcharinfo" -> "strcharinfo(0)" [FlavioJS]
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -554,7 +555,7 @@ L_Other:
 
 L_Hnt:
 	mes "[Guild Master]";
-	mes "Ah, it's you again, "+strcharinfo+"! Good to see you're well.  Me?  I'm still busy as usual.";
+	mes "Ah, it's you again, "+strcharinfo(0)+"! Good to see you're well.  Me?  I'm still busy as usual.";
 	next;
 	mes "[Guild Master]";
 	mes "Well I've gota get back to work.  Stay safe.";

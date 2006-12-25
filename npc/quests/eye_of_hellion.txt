@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //=
 //===== Additional Comments: =================================
 //= 1.0 First version [MasterOfMuppets]
+//= 1.1 a ',' that should be ';' [FlavioJS]
 //============================================================
 
 geffen.gat,110,200,3	script	Sage Welshyun	754,2,2,{
@@ -228,7 +229,7 @@ s_Switches:
 		mes "were too simple...";
 		set HELLIONQ,24;
 		delitem 717,1; //Blue gemstone
-		getitem 7336,1, //Geffen Tablet
+		getitem 7336,1; //Geffen Tablet
 		next;
 		mes "[Welshyun]";
 		mes "Please send my regards";

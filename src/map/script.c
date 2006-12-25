@@ -3,6 +3,7 @@
 
 //#define DEBUG_FUNCIN
 //#define DEBUG_DISP
+//#define DEBUG_DISASM
 //#define DEBUG_RUN
 
 #include <stdio.h>
@@ -94,15 +95,27 @@ struct dbt* script_get_userfunc_db(){ return userfunc_db; }
 static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3","Not Equipped"};
 
 struct Script_Config script_config;
-static int parse_cmd;
 
 static jmp_buf     error_jump;
 static char*       error_msg;
 static const char* error_pos;
+static int         error_report; // if the error should produce output
 
 // for advanced scripting support ( nested if, switch, while, for, do-while, function, etc )
 // [Eoe / jA 1080, 1081, 1094, 1164]
-enum curly_type { TYPE_NULL = 0 , TYPE_IF , TYPE_SWITCH , TYPE_WHILE , TYPE_FOR , TYPE_DO , TYPE_USERFUNC};
+enum curly_type {
+	TYPE_NULL = 0,
+	TYPE_IF,
+	TYPE_SWITCH,
+	TYPE_WHILE,
+	TYPE_FOR,
+	TYPE_DO,
+	TYPE_USERFUNC,
+	TYPE_ARGLIST // function argument list
+};
+#define ARGLIST_UNDEFINED 0
+#define ARGLIST_NO_PAREN  1
+#define ARGLIST_PAREN     2
 static struct {
 	struct {
 		int type;
@@ -156,7 +169,6 @@ int run_func(struct script_state *st);
 
 int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
-static void disp_error_message(const char *mes,const char *pos);
 
 enum c_op {
 	C_NOP,C_POS,C_INT,C_PARAM,C_FUNC,C_STR,C_CONSTSTR,C_ARG,
@@ -238,6 +250,19 @@ static void report_src(struct script_state *st) {
 		break;
 	}
 }
+
+/*==========================================
+ * エラーメッセージ出力
+ *------------------------------------------
+ */
+static void disp_error_message2(const char *mes,const char *pos,int report)
+{
+	error_msg = aStrdup(mes);
+	error_pos = pos;
+	error_report = report;
+	longjmp( error_jump, 1 );
+}
+#define disp_error_message(mes,pos) disp_error_message2(mes,pos,1)
 
 static void check_event(struct script_state *st, const char *event){
 	if(event != NULL && event[0] != '\0' && !stristr(event,"::On")){
@@ -340,14 +365,11 @@ int add_str(const char* p)
  * スクリプトバッファサイズの確認と拡張
  *------------------------------------------
  */
-static void check_script_buf(int size)
+static void expand_script_buf(void)
 {
-	if(script_pos+size>=script_size){
-		script_size+=SCRIPT_BLOCK_SIZE;
-		RECREATE(script_buf,unsigned char,script_size);
-		malloc_tsetdword(script_buf + script_size - SCRIPT_BLOCK_SIZE, '\0',
-			SCRIPT_BLOCK_SIZE);
-	}
+	script_size+=SCRIPT_BLOCK_SIZE;
+	RECREATE(script_buf,unsigned char,script_size);
+	malloc_tsetdword(script_buf + script_size - SCRIPT_BLOCK_SIZE, '\0', SCRIPT_BLOCK_SIZE);
 }
 
 /*==========================================
@@ -355,12 +377,12 @@ static void check_script_buf(int size)
  *------------------------------------------
  */
  
-#define add_scriptb(a) if( script_pos+1>=script_size ) check_script_buf(1); script_buf[script_pos++]=(uint8)(a)
+#define add_scriptb(a) if( script_pos+1>=script_size ) expand_script_buf(); script_buf[script_pos++]=(uint8)(a)
 
 #if 0
 static void add_scriptb(int a)
 {
-	check_script_buf(1);
+	expand_script_buf();
 	script_buf[script_pos++]=a;
 }
 #endif
@@ -533,15 +555,89 @@ int add_word(const char *p)
 	return i;
 }
 
-/*==========================================
- * エラーメッセージ出力
- *------------------------------------------
- */
-static void disp_error_message(const char *mes,const char *pos)
+/// Parses a function call.
+/// The argument list can have parenthesis or not.
+/// The number of arguments is checked.
+static const char* parse_callfunc(const char *p, int require_paren)
 {
-	error_msg = aStrdup(mes);
-	error_pos = pos;
-	longjmp( error_jump, 1 );
+	const char* p2;
+	const char* arg;
+	int func;
+
+	func = add_word(p);
+	if( str_data[func].type == C_FUNC ){
+		// buildin function
+		add_scriptl(func);
+		add_scriptc(C_ARG);
+		arg = buildin_func[str_data[func].val].arg;
+	} else if( str_data[func].type == C_USERFUNC || str_data[func].type == C_USERFUNC_POS ){
+		// script defined function
+		int callsub = search_str("callsub");
+		add_scriptl(callsub);
+		add_scriptc(C_ARG);
+		add_scriptl(func);
+		arg = buildin_func[str_data[callsub].val].arg;
+		if( *arg == 0 )
+			disp_error_message("parse_callfunc: callsub has no arguments, please review it's definition",p);
+		if( *arg != '*' )
+			++arg; // count func as argument
+	} else
+		disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
+
+	p = skip_word(p);
+	p = skip_space(p);
+	syntax.curly[syntax.curly_count].type = TYPE_ARGLIST;
+	syntax.curly[syntax.curly_count].count = 0;
+	if( *p == ';' )
+	{// <func name> ';'
+		syntax.curly[syntax.curly_count].flag = ARGLIST_NO_PAREN;
+	} else if( *p == '(' && *(p2=skip_space(p+1)) == ')' )
+	{// <func name> '(' ')'
+		syntax.curly[syntax.curly_count].flag = ARGLIST_PAREN;
+		p = p2;
+	/*
+	} else if( 0 && require_paren && *p != '(' )
+	{// <func name>
+		syntax.curly[syntax.curly_count].flag = ARGLIST_NO_PAREN;
+	*/
+	} else
+	{// <func name> <arg list>
+		if( require_paren ){
+			if( *p != '(' )
+				disp_error_message("need '('",p);
+			++p; // skip '('
+			syntax.curly[syntax.curly_count].flag = ARGLIST_PAREN;
+		} else if( *p == '(' ){
+			syntax.curly[syntax.curly_count].flag = ARGLIST_UNDEFINED;
+		} else {
+			syntax.curly[syntax.curly_count].flag = ARGLIST_NO_PAREN;
+		}
+		++syntax.curly_count;
+		while( *arg ) {
+			p2=parse_subexpr(p,-1);
+			if( p == p2 )
+				break; // not an argument
+			if( *arg != '*' )
+				++arg; // next argument
+
+			p=skip_space(p2);
+			if( *arg == 0 || *p != ',' )
+				break; // no more arguments
+			++p; // skip comma
+		}
+		--syntax.curly_count;
+	}
+	if( *arg && *arg != '*' )
+		disp_error_message2("parse_callfunc: not enough arguments, expected ','", p, script_config.warn_func_mismatch_paramnum);
+	if( syntax.curly[syntax.curly_count].type != TYPE_ARGLIST )
+		disp_error_message("parse_callfunc: DEBUG last curly is not an argument list",p);
+	if( syntax.curly[syntax.curly_count].flag == ARGLIST_PAREN ){
+		if( *p != ')' )
+			disp_error_message("parse_callfunc: expected ')' to close argument list",p);
+		++p;
+	}
+	add_scriptc(C_FUNC);
+	return p;
 }
 
 /*==========================================
@@ -560,10 +656,22 @@ const char* parse_simpleexpr(const char *p)
 	if(*p==';' || *p==',')
 		disp_error_message("parse_simpleexpr: unexpected expr end",p);
 	if(*p=='('){
+		if( (i=syntax.curly_count-1) >= 0 && syntax.curly[i].type == TYPE_ARGLIST )
+			++syntax.curly[i].count;
 		p=parse_subexpr(p+1,-1);
 		p=skip_space(p);
-		if((*p++)!=')')
-			disp_error_message("parse_simpleexpr: unmatch ')'",p-1);
+		if( (i=syntax.curly_count-1) >= 0 && syntax.curly[i].type == TYPE_ARGLIST &&
+				syntax.curly[i].flag == ARGLIST_UNDEFINED && --syntax.curly[i].count == 0
+		){
+			if( *p == ',' ){
+				syntax.curly[i].flag = ARGLIST_PAREN;
+				return p;
+			} else
+				syntax.curly[i].flag = ARGLIST_NO_PAREN;
+		}
+		if( *p != ')' )
+			disp_error_message("parse_simpleexpr: unmatch ')'",p);
+		++p;
 	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
 		char *np;
 		i=strtoul(p,&np,0);
@@ -590,10 +698,11 @@ const char* parse_simpleexpr(const char *p)
 			disp_error_message("parse_simpleexpr: unexpected character",p);
 
 		l=add_word(p);
-		parse_cmd=l;	// warn_*_mismatch_paramnumのために必要
-		p=skip_word(p);
+		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
+			return parse_callfunc(p,1);
 
-		if(str_data[l].type!=C_FUNC && *p=='['){
+		p=skip_word(p);
+		if( *p == '[' ){
 			// array(name[i] => getelementofarray(name,i) )
 			add_scriptl(search_str("getelementofarray"));
 			add_scriptc(C_ARG);
@@ -601,13 +710,10 @@ const char* parse_simpleexpr(const char *p)
 			
 			p=parse_subexpr(p+1,-1);
 			p=skip_space(p);
-			if((*p++)!=']')
-				disp_error_message("parse_simpleexpr: unmatch ']'",p-1);
+			if( *p != ']' )
+				disp_error_message("parse_simpleexpr: unmatch ']'",p);
+			++p;
 			add_scriptc(C_FUNC);
-		} else if(str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS) {
-			add_scriptl(search_str("callsub"));
-			add_scriptc(C_ARG);
-			add_scriptl(l);
 		}else
 			add_scriptl(l);
 
@@ -657,7 +763,6 @@ const char* parse_subexpr(const char* p,int limit)
 			(op=C_MUL,opl=9,len=1,*p=='*') ||
 			(op=C_DIV,opl=9,len=1,*p=='/') ||
 			(op=C_MOD,opl=9,len=1,*p=='%') ||
-			(op=C_FUNC,opl=11,len=1,*p=='(') ||
 			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
 			(op=C_AND,opl=6,len=1,*p=='&') ||
 			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
@@ -672,56 +777,7 @@ const char* parse_subexpr(const char* p,int limit)
 			(op=C_LE,opl=3,len=2,*p=='<' && p[1]=='=') ||
 			(op=C_LT,opl=3,len=1,*p=='<')) && opl>limit){
 		p+=len;
-		if(op==C_FUNC){
-			int i=0;
-			int j=0;
-			int func=parse_cmd;
-			const char *plist[128];
-			const char *arg = NULL;
-
-			if(str_data[parse_cmd].type == C_FUNC){
-				// 通常の関数
-				add_scriptc(C_ARG);
-			} else if(str_data[parse_cmd].type == C_USERFUNC || str_data[parse_cmd].type == C_USERFUNC_POS) {
-				// ユーザー定義関数呼び出し
-				parse_cmd = search_str("callsub");
-				i++;
-			} else
-				disp_error_message("parse_subexpr: expect command, missing function name or calling undeclared function",tmpp);
-			func=parse_cmd;
-			p=skip_space(p);
-
-			// check number of arguments of the function
-			if( str_data[func].type == C_FUNC && script_config.warn_cmd_mismatch_paramnum) {
-				arg = buildin_func[str_data[func].val].arg;
-				for(j=0; arg[j]; j++) {
-					if(arg[j] == '*')
-						break;
-				}
-			}
-
-			while(*p && *p!=')' && i<128) {
-				plist[i]=p;
-				p=parse_subexpr(p,-1);
-				p=skip_space(p);
-				if(*p==',') {
-					if(arg == NULL || arg[j] == '*' || i+1 < j)
-						p++; // the next argument is valid, skip the comma
-				}
-				else if(*p!=')' && script_config.warn_func_no_comma){
-					disp_error_message("parse_subexpr: expect ',' or ')' at func params",p);
-				}
-				p=skip_space(p);
-				i++;
-			}
-			plist[i]=p;
-			if(*(p++)!=')')
-				disp_error_message("parse_subexpr: func request '(' ')'",p-1);
-			if(arg) {
-				if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
-					disp_error_message("parse_subexpr: illegal number of parameters",plist[min(i,j)]);
-			}
-		} else if(op == C_OP3) {
+		if(op == C_OP3) {
 			p=parse_subexpr(p,-1);
 			p=skip_space(p);
 			if( *(p++) != ':')
@@ -754,7 +810,6 @@ const char* parse_expr(const char *p)
 	case ')': case ';': case ':': case '[': case ']':
 	case '}':
 		disp_error_message("parse_expr: unexpected char",p);
-		exit(1);
 	}
 	p=parse_subexpr(p,-1);
 #ifdef DEBUG_FUNCIN
@@ -770,15 +825,7 @@ const char* parse_expr(const char *p)
  */
 const char* parse_line(const char* p)
 {
-	int i=0;
-	int j=0;
-	int cmd;
-	const char* plist[128];
 	const char* p2;
-	const char *arg=NULL;
-	char end;
-	char end2=0;
-	int old_flag=0;
 
 
 	p=skip_space(p);
@@ -806,100 +853,20 @@ const char* parse_line(const char* p)
 	if(p2 != NULL)
 		return p2;
 
-	// 最初は関数名
-	p2=p;
-	p=parse_simpleexpr(p);
-	p=skip_space(p);
-
-	if(str_data[parse_cmd].type == C_FUNC){
-		// 通常の関数
-		add_scriptc(C_ARG);
-	} else if(str_data[parse_cmd].type == C_USERFUNC || str_data[parse_cmd].type == C_USERFUNC_POS) {
-		// ユーザー定義関数呼び出し
-		parse_cmd = search_str("callsub");
-		i++;
-	} else
-		disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p2);
-
-	cmd=parse_cmd;
+	p = parse_callfunc(p,0);
+	p = skip_space(p);
 
 	if(parse_syntax_for_flag) {
-		end = ')';
-	} else {
-		end = ';';
-	}
-
-	// Check number of arguments of the function
-	if( str_data[cmd].type == C_FUNC && script_config.warn_cmd_mismatch_paramnum) {
-		arg = buildin_func[str_data[cmd].val].arg;
-		for(j=0; arg[j]; j++) {
-			if(arg[j] == '*')
-				break;
-		}
-	}
-
-	// Check for parenthesis argument list
-	if( *p == '(' ){
-		++p;
-		end2 = end;
-		end = ')';
-		old_flag = parse_syntax_for_flag;
-		parse_syntax_for_flag = 1;
-	}
-
-	while(p && *p && *p != end && i<128){
-		plist[i]=p;
-
-		p=parse_expr(p);
-		p=skip_space(p);
-		// 引数区切りの,処理
-		if( *p==',' ) {
-			if( arg == NULL || arg[j] == '*' || i+1 < j )
-				p++; // the next argument is valid, skip the comma
-		}
-		else if( end2 && i == 0 && *p == ')' && *skip_space(p+1) == ',' )
-		{// parenthesis argument list fallback for "func (exp) , ..."
-			end = end2;
-			parse_syntax_for_flag = old_flag;
-			end2 = 0;
-			p=skip_space(p+1);
-			if( arg == NULL || arg[j] == '*' || i+1 < j )
-				p++; // the next argument is valid, skip the comma
-		}
-		else if(*p!=end && script_config.warn_cmd_no_comma){
-			if(parse_syntax_for_flag) {
-				disp_error_message("parse_line: expect ',' or ')' at cmd params",p);
-			} else {
-				disp_error_message("parse_line: expect ',' or ';' at cmd params",p);
-			}
-		}
-		p=skip_space(p);
-		i++;
-	}
-	plist[i]=p;
-	if( end2 ){ // restore previous ending and recheck
 		if( *p != ')' )
-			disp_error_message("parse_line: need ')' to end param list",p);
-		p=skip_space(p+1);
-		end = end2;
-		parse_syntax_for_flag = old_flag;
-	}
-	if(!p || *p!=end){
-		if(parse_syntax_for_flag) {
 			disp_error_message("parse_line: need ')'",p);
-		} else {
+	} else {
+		if( *p != ';' )
 			disp_error_message("parse_line: need ';'",p);
-		}
 	}
-	add_scriptc(C_FUNC);
 
 	// if, for , while の閉じ判定
 	p = parse_syntax_close(p+1);
 
-	if(arg) {
-		if( (arg[j]==0 && i!=j) || (arg[j]=='*' && i<j) )
-			disp_error_message("parse_line: illegal number of parameters",plist[min(i,j)]);
-	}
 	return p;
 }
 
@@ -1293,6 +1260,11 @@ const char* parse_syntax(const char* p) {
 		if(!strncmp(p,"switch",6) && !ISALPHA(p[6])) {
 			// switch() の処理
 			char label[256];
+			p=skip_word(p);
+			p=skip_space(p);
+			if(*p != '(') {
+				disp_error_message("need '('",p);
+			}
 			syntax.curly[syntax.curly_count].type  = TYPE_SWITCH;
 			syntax.curly[syntax.curly_count].count = 1;
 			syntax.curly[syntax.curly_count].index = syntax.index++;
@@ -1302,8 +1274,6 @@ const char* parse_syntax(const char* p) {
 			add_scriptl(add_str("set"));
 			add_scriptc(C_ARG);
 			add_scriptl(add_str(label));
-			p=skip_word(p);
-			p=skip_space(p);
 			p=parse_expr(p);
 			p=skip_space(p);
 			if(*p != '{') {
@@ -1319,7 +1289,9 @@ const char* parse_syntax(const char* p) {
 			char label[256];
 			p=skip_word(p);
 			p=skip_space(p);
-
+			if(*p != '(') {
+				disp_error_message("need '('",p);
+			}
 			syntax.curly[syntax.curly_count].type  = TYPE_WHILE;
 			syntax.curly[syntax.curly_count].count = 1;
 			syntax.curly[syntax.curly_count].index = syntax.index++;
@@ -1390,6 +1362,9 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 				// else - if
 				p=skip_word(p);
 				p=skip_space(p);
+				if(*p != '(') {
+					disp_error_message("need '('",p);
+				}
 				sprintf(label,"__IF%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 				add_scriptl(add_str("jump_zero"));
 				add_scriptc(C_ARG);
@@ -1437,8 +1412,11 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		if(p2 - p != 5 || strncmp("while",p,5)) {
 			disp_error_message("parse_syntax: need 'while'",p);
 		}
-		p = p2;
 
+		p = skip_space(p2);
+		if(*p != '(') {
+			disp_error_message("need '('",p);
+		}
 		sprintf(label,"__DO%x_FIN",syntax.curly[pos].index);
 		add_scriptl(add_str("jump_zero"));
 		add_scriptc(C_ARG);
@@ -1659,7 +1637,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
-		script_error(src,file,line,error_msg,error_pos);
+		if( error_report )
+			script_error(src,file,line,error_msg,error_pos);
 		aFree( error_msg );
 		aFree( script_buf );
 		script_pos  = 0;
@@ -1738,6 +1717,61 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		if((i&15)==15) printf("\n");
 	}
 	printf("\n");
+#endif
+#ifdef DEBUG_DISASM
+	{
+		int i = 0,j;
+		while(i < script_pos) {
+			printf("%06x ",i);
+			j = i;
+			switch(get_com(script_buf,&i)) {
+			case C_EOL:	 printf("C_EOL"); break;
+			case C_INT:	 printf("C_INT %d",get_num(script_buf,&i)); break;
+			case C_POS:
+				printf("C_POS  0x%06x",*(int*)(script_buf+i)&0xffffff);
+				i += 3;
+				break;
+			case C_NAME:
+				j = (*(int*)(script_buf+i)&0xffffff);
+				printf("C_NAME %s",j == 0xffffff ? "?? unknown ??" : str_buf + str_data[j].str);
+				i += 3;
+				break;
+			case C_ARG:		printf("C_ARG"); break;
+			case C_FUNC:	printf("C_FUNC"); break;
+			case C_ADD:	 	printf("C_ADD"); break;
+			case C_SUB:		printf("C_SUB"); break;
+			case C_MUL:		printf("C_MUL"); break;
+			case C_DIV:		printf("C_DIV"); break;
+			case C_MOD:		printf("C_MOD"); break;
+			case C_EQ:		printf("C_EQ"); break;
+			case C_NE:		printf("C_NE"); break;
+			case C_GT:		printf("C_GT"); break;
+			case C_GE:		printf("C_GE"); break;
+			case C_LT:		printf("C_LT"); break;
+			case C_LE:		printf("C_LE"); break;
+			case C_AND:		printf("C_AND"); break;
+			case C_OR:		printf("C_OR"); break;
+			case C_XOR:		printf("C_XOR"); break;
+			case C_LAND:	printf("C_LAND"); break;
+			case C_LOR:		printf("C_LOR"); break;
+			case C_R_SHIFT:	printf("C_R_SHIFT"); break;
+			case C_L_SHIFT:	printf("C_L_SHIFT"); break;
+			case C_NEG:		printf("C_NEG"); break;
+			case C_NOT:		printf("C_NOT"); break;
+			case C_LNOT:	printf("C_LNOT"); break;
+			case C_NOP:		printf("C_NOP"); break;
+			case C_OP3:		printf("C_OP3"); break;
+			case C_STR:
+				j = strlen(script_buf + i);
+				printf("C_STR %s",script_buf + i);
+				i+= j+1;
+				break;
+			default:
+				printf("unknown");
+			}
+			printf("\n");
+		}
+	}
 #endif
 
 	CREATE(code,struct script_code,1);
@@ -3140,17 +3174,8 @@ int script_config_read_sub(char *cfgName)
 		else if(strcmpi(w1,"verbose_mode")==0) {
 			script_config.verbose_mode = battle_config_switch(w2);
 		}
-		else if(strcmpi(w1,"warn_func_no_comma")==0) {
-			script_config.warn_func_no_comma = battle_config_switch(w2);
-		}
-		else if(strcmpi(w1,"warn_cmd_no_comma")==0) {
-			script_config.warn_cmd_no_comma = battle_config_switch(w2);
-		}
 		else if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
 			script_config.warn_func_mismatch_paramnum = battle_config_switch(w2);
-		}
-		else if(strcmpi(w1,"warn_cmd_mismatch_paramnum")==0) {
-			script_config.warn_cmd_mismatch_paramnum = battle_config_switch(w2);
 		}
 		else if(strcmpi(w1,"check_cmdcount")==0) {
 			script_config.check_cmdcount = battle_config_switch(w2);
@@ -3218,10 +3243,7 @@ int script_config_read(char *cfgName)
 
 	malloc_set (&script_config, 0, sizeof(script_config));
 	script_config.verbose_mode = 0;
-	script_config.warn_func_no_comma = 1;
-	script_config.warn_cmd_no_comma = 1;
 	script_config.warn_func_mismatch_paramnum = 1;
-	script_config.warn_cmd_mismatch_paramnum = 1;
 	script_config.check_cmdcount = 65535;
 	script_config.check_gotocount = 2048;
 
