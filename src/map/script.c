@@ -561,7 +561,7 @@ int add_word(const char *p)
 static const char* parse_callfunc(const char *p, int require_paren)
 {
 	const char* p2;
-	const char* arg;
+	const char* arg=NULL;
 	int func;
 
 	func = add_word(p);
