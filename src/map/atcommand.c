@@ -3031,8 +3031,6 @@ int atcommand_pvpoff(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
 	nullpo_retr(-1, sd);
 
 	if (battle_config.pk_mode) { //disable command if server is in PK mode [Valaris]

@@ -1,4 +1,4 @@
-// eAthena's GM Accounts File
+// eAthena's GM Accounts File (for TXT servers only)
 // Edited by MC Cameri to enable account id ranges
 // Changing this file while login server is running 
 // Usage #1(Standard): <account id> <level>
@@ -7,6 +7,4 @@
 // 2000002 99
 // 2000003-2000005 99
 // 2000003~2000005 99
-// 704585 30
-
-704554-704584 99
+// 2000001 30

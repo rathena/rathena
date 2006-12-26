@@ -1587,7 +1587,7 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 100*(skill_lv-1);
 					break;
 				case KN_CHARGEATK:
-					skillratio += wflag*15; //FIXME: How much is the actual bonus? [Skotlex]
+					skillratio += 100*((wflag-1)/3); //+100% every 3 cells.of distance
 					break;
 				case HT_PHANTASMIC:
 					skillratio += 50;
@@ -3259,7 +3259,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			TBL_MOB *md = (TBL_MOB*)t_bl;
 
-			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
+			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperiums owned by Guilds on non-woe times.
 			break;
 		}
@@ -3267,10 +3267,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 	switch(src->type)
   	{	//Checks on actual src type
-		case BL_MOB:
-			if (!agit_flag && ((TBL_MOB*)src)->guardian_data && ((TBL_MOB*)src)->guardian_data->guild_id)
-				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
-			break;
 		case BL_PET:
 			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
 				return 0; //Pet may not attack non-mobs.
@@ -3333,7 +3329,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 		{
 			TBL_MOB*md = (TBL_MOB*)s_bl;
-			if (!agit_flag && md->guardian_data && md->guardian_data->guild_id)
+			if (!(agit_flag && map[m].flag.gvg_castle) && md->guardian_data && md->guardian_data->guild_id)
 				return 0; //Disable guardians/emperium owned by Guilds on non-woe times.
 			if(md->state.killer/* || !(battle_config.mob_ai&0x400)*/)
 				state |= BCT_ENEMY; //By default everyone hates mobs.
