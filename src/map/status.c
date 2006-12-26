@@ -6057,6 +6057,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			//delays status change ending so that a skill that sets opt1 fails to 
 			//trigger when it also removed one
 			case SC_STONE:
+				sc->data[type].val3 = 0; //Petrify time counter.
 			case SC_FREEZE:
 			case SC_STUN:
 			case SC_SLEEP:

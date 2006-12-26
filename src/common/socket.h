@@ -58,7 +58,7 @@ extern time_t stall_time;
 
 #define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
 #ifdef TURBO
-#define WFIFOHEAD(fd, x) uint8 *wbPtr ## fd = fd?(session[fd]->wdata+session[fd]->wdata_size):0;
+#define WFIFOHEAD(fd, x) uint8 *wbPtr ## fd = (fd>0&&session[fd])?(session[fd]->wdata+session[fd]->wdata_size):NULL;
 #define WFIFOP(fd,pos) (&wbPtr ## fd[pos])
 #else
 #define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)

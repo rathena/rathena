@@ -5182,15 +5182,15 @@ int clif_set0199(int fd,int type)
  */
 int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 {
-	nullpo_retr(0, sd);
+	int fd = sd->fd;
 
 	if(type == 2) {
-		WFIFOHEAD(sd->fd,packet_len(0x19a));
-		WFIFOW(sd->fd,0) = 0x19a;
-		WFIFOL(sd->fd,2) = sd->bl.id;
-		WFIFOL(sd->fd,6) = pvprank;
-		WFIFOL(sd->fd,10) = pvpnum;
-		WFIFOSET(sd->fd,packet_len(0x19a));
+		WFIFOHEAD(fd,packet_len(0x19a));
+		WFIFOW(fd,0) = 0x19a;
+		WFIFOL(fd,2) = sd->bl.id;
+		WFIFOL(fd,6) = pvprank;
+		WFIFOL(fd,10) = pvpnum;
+		WFIFOSET(fd,packet_len(0x19a));
 	} else {
 		unsigned char buf[32];
 		WBUFW(buf,0) = 0x19a;
@@ -5971,27 +5971,21 @@ int clif_party_option(struct party_data *p,struct map_session_data *sd,int flag)
 
 	nullpo_retr(0, p);
 
-//	if(battle_config.etc_log)
-//		printf("clif_party_option: %d %d %d\n",p->exp,p->item,flag);
-	if(sd==NULL && flag==0){
+	if(!sd && flag==0){
 		int i;
 		for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
 		if (i < MAX_PARTY)
 			sd = p->data[i].sd;
 	}
-	if(sd==NULL)
-		return 0;
+	if(!sd) return 0;
 	WBUFW(buf,0)=0x101;
 	// WBUFL(buf,2) // that's how the client reads it, still need to check it's uses [FlavioJS]
 	WBUFW(buf,2)=((flag&0x01)?2:p->party.exp);
-	WBUFW(buf,4)=0; //NOTE: We don't know yet what this is for, it is NOT for item share rules, though. [Skotlex]
+	WBUFW(buf,4)=0;
 	if(flag==0)
 		clif_send(buf,packet_len(0x101),&sd->bl,PARTY);
-	else {
-		WFIFOHEAD(sd->fd,packet_len(0x101));
-		memcpy(WFIFOP(sd->fd,0),buf,packet_len(0x101));
-		WFIFOSET(sd->fd,packet_len(0x101));
-	}
+	else
+		clif_send(buf,packet_len(0x101),&sd->bl,SELF);
 	return 0;
 }
 /*==========================================
@@ -6005,24 +5999,24 @@ int clif_party_leaved(struct party_data *p,struct map_session_data *sd,int accou
 
 	nullpo_retr(0, p);
 
+	if(!sd && (flag&0xf0)==0)
+	{
+		for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
+			if (i < MAX_PARTY)
+				sd = p->data[i].sd;
+	}
+
+	if(!sd) return 0;
+
 	WBUFW(buf,0)=0x105;
 	WBUFL(buf,2)=account_id;
 	memcpy(WBUFP(buf,6),name,NAME_LENGTH);
 	WBUFB(buf,30)=flag&0x0f;
 
-	if((flag&0xf0)==0){
-		if(sd==NULL) {
-			for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
-			if (i < MAX_PARTY)
-				sd = p->data[i].sd;
-		}
-		if (sd)		
-			clif_send(buf,packet_len(0x105),&sd->bl,PARTY);
-	} else if (sd!=NULL) {
-		WFIFOHEAD(sd->fd,packet_len(0x105));
-		memcpy(WFIFOP(sd->fd,0),buf,packet_len(0x105));
-		WFIFOSET(sd->fd,packet_len(0x105));
-	}
+	if((flag&0xf0)==0)
+		clif_send(buf,packet_len(0x105),&sd->bl,PARTY);
+	 else
+		clif_send(buf,packet_len(0x105),&sd->bl,SELF);
 	return 0;
 }
 /*==========================================

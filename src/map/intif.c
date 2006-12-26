@@ -364,7 +364,7 @@ int intif_send_guild_storage(int account_id,struct guild_storage *gstor)
 		return 0;
 	WFIFOHEAD(inter_fd,sizeof(struct guild_storage)+12);
 	WFIFOW(inter_fd,0) = 0x3019;
-	WFIFOW(inter_fd,2) = sizeof(struct guild_storage)+12;
+	WFIFOW(inter_fd,2) = (unsigned short)sizeof(struct guild_storage)+12;
 	WFIFOL(inter_fd,4) = account_id;
 	WFIFOL(inter_fd,8) = gstor->guild_id;
 	memcpy( WFIFOP(inter_fd,12),gstor, sizeof(struct guild_storage) );

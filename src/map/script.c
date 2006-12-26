@@ -8671,36 +8671,33 @@ int buildin_pvpon(struct script_state *st)
 	return 0;
 }
 
+static int buildin_pvpoff_sub(struct block_list *bl,va_list ap) {
+	TBL_PC* sd = (TBL_PC*)bl;
+	clif_pvpset(sd, 0, 0, 2);
+	if (sd->pvp_timer != UINT_MAX) {
+		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
+		sd->pvp_timer = UINT_MAX;
+	}
+	return 0;
+}
+
 int buildin_pvpoff(struct script_state *st)
 {
-	int m,i,users;
+	int m;
 	char *str;
-	struct map_session_data *pl_sd=NULL, **pl_allsd;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
-	if(m >= 0 && map[m].flag.pvp) { //fixed Lupus
-		map[m].flag.pvp = 0;
-		clif_send0199(m,0);
+	if(m < 0 || !map[m].flag.pvp)
+		return 0; //fixed Lupus
 
-		if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
-			return 0;
+	map[m].flag.pvp = 0;
+	clif_send0199(m,0);
 
-		pl_allsd = map_getallusers(&users);
-		
-		for(i=0;i<users;i++)
-		{
-			if((pl_sd=pl_allsd[i]) && m == pl_sd->bl.m)
-			{
-				clif_pvpset(pl_sd,0,0,2);
-				if(pl_sd->pvp_timer != UINT_MAX) {
-					delete_timer(pl_sd->pvp_timer,pc_calc_pvprank_timer);
-					pl_sd->pvp_timer = -1;
-				}
-			}
-		}
-	}
-
+	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
+		return 0;
+	
+	map_foreachinmap(buildin_pvpoff_sub, m, BL_PC);
 	return 0;
 }
 

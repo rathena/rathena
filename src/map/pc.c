@@ -6665,7 +6665,7 @@ int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data)
 	sd=map_id2sd(id);
 	if(sd==NULL)
 		return 0;
-	sd->pvp_timer=-1;
+	sd->pvp_timer=UINT_MAX;
 	if( pc_calc_pvprank(sd)>0 )
 		sd->pvp_timer=add_timer(
 			gettick()+PVP_CALCRANK_INTERVAL,
