@@ -1518,7 +1518,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case GS_FULLBUSTER:
-		status_change_start(src,SC_BLIND,200*skilllv,skilllv,0,0,0,skill_get_time2(skillid,skilllv),10);
+		sc_start(src,SC_BLIND,2*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case HFLI_SBR44:	//[orn]
 	case HVAN_EXPLOSION:
