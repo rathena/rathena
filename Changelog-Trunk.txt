@@ -4,13 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2006/12/27
+	* Fixed Super Novice 99%+ invincibility triggering when
+	  the character dies in a GvG area. [blackhole89]
 	* Updated SQL Files [Toms]
 	* Fixed a bug which makes the group heal bonus be applied as many times as
 	  the item is in that group.
 	* Applied Rayce's suggestion to improve the script hash size usage. eA now
 	  uses a hash of 1024.
 	* Full Buster's auto-blind chance is now reducable by stats/items.
-2006/12/26
+2006/12/2
 	* Updated Charge Attack's damage equation as per the only source I've seen
 	  of it so far.
 	* Now Guardians/Emperium can't hit /be hit if their current map isn't a

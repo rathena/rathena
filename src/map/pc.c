@@ -4972,7 +4972,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		if ((i=pc_nextbaseexp(sd))<=0)
 			i=sd->status.base_exp;
-		if (i>0 && (j=sd->status.base_exp*1000/i)>=990 && j<1000)
+		if (i>0 && (j=sd->status.base_exp*1000/i)>=990 && j<1000 && !map_flag_gvg(sd->bl.m))
 			sd->state.snovice_flag = 4;
 	}
 
