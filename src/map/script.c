@@ -78,7 +78,8 @@ static struct str_data_struct {
 	int next;
 } *str_data = NULL;
 int str_num=LABEL_START,str_data_size;
-int str_hash[16];
+#define SCRIPT_HASH_SIZE 1024
+int str_hash[SCRIPT_HASH_SIZE];
 
 static struct dbt *mapreg_db=NULL;
 static struct dbt *mapregstr_db=NULL;
@@ -280,9 +281,9 @@ static int calc_hash(const unsigned char *p)
 	int h=0;
 	while(*p){
 		h=(h<<1)+(h>>3)+(h>>5)+(h>>8);
-		h+=*p++;
+		h+=(unsigned char)tolower(*p++);
 	}
-	return h&15;
+	return h&(SCRIPT_HASH_SIZE-1);
 }
 
 /*==========================================
@@ -295,7 +296,7 @@ static int search_str(const char *p)
 	int i;
 	i=str_hash[calc_hash(p)];
 	while(i){
-		if(strcmp(str_buf+str_data[i].str,p)==0){
+		if(strcasecmp(str_buf+str_data[i].str,p)==0){
 			return i;
 		}
 		i=str_data[i].next;
@@ -312,16 +313,9 @@ int add_str(const char* p)
 {
 	int i;
 	int len;
-	char* lowcase;
 
-	lowcase=aStrdup(p);
-	for(i=0;lowcase[i];i++)
-		lowcase[i]=TOLOWER(lowcase[i]);
-	if((i=search_str(lowcase))>=0){
-		aFree(lowcase);
+	if((i=search_str(p)) >= 0)
 		return i;
-	}
-	aFree(lowcase);
 
 	i=calc_hash(p);
 	if(str_hash[i]==0){
@@ -329,7 +323,7 @@ int add_str(const char* p)
 	} else {
 		i=str_hash[i];
 		for(;;){
-			if(strcmp(str_buf+str_data[i].str,p)==0){
+			if(strcasecmp(str_buf+str_data[i].str,p)==0){
 				return i;
 			}
 			if(str_data[i].next==0)
@@ -369,7 +363,6 @@ static void expand_script_buf(void)
 {
 	script_size+=SCRIPT_BLOCK_SIZE;
 	RECREATE(script_buf,unsigned char,script_size);
-	malloc_tsetdword(script_buf + script_size - SCRIPT_BLOCK_SIZE, '\0', SCRIPT_BLOCK_SIZE);
 }
 
 /*==========================================
@@ -1514,7 +1507,7 @@ static void read_constdb(void)
 {
 	FILE *fp;
 	char line[1024],name[1024],val[1024];
-	int n,i,type;
+	int n,type;
 
 	sprintf(line, "%s/const.txt", db_path);
 	fp=fopen(line, "r");
@@ -1528,8 +1521,6 @@ static void read_constdb(void)
 		type=0;
 		if(sscanf(line,"%[A-Za-z0-9_],%[-0-9xXA-Fa-f],%d",name,val,&type)>=2 ||
 		   sscanf(line,"%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d",name,val,&type)>=2){
-			for(i=0;name[i];i++)
-				name[i]=TOLOWER(name[i]);
 			n=add_str(name);
 			if(type==0)
 				str_data[n].type=C_INT;
@@ -1613,7 +1604,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	}
 	first=0;
 
-	CREATE(script_buf,unsigned char,SCRIPT_BLOCK_SIZE);
+	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
 	script_pos=0;
 	script_size=SCRIPT_BLOCK_SIZE;
 	str_data[LABEL_NEXTLINE].type=C_NOP;
@@ -3270,6 +3261,42 @@ static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
  */
 int do_final_script()
 {
+	if (battle_config.etc_log)
+	{
+		FILE *fp = fopen("hash_dump.txt","wt");
+		if(fp) {
+			int i,count[SCRIPT_HASH_SIZE];
+			int min=0x7fffffff,max=0,zero=0;
+
+			ShowNotice("Dumping script str hash information to hash_dump.txt\n");
+			memset(count, 0, sizeof(count));
+			fprintf(fp,"num : calced_val -> hash : data_name\n");
+			fprintf(fp,"---------------------------------------------------------------\n");
+			for(i=LABEL_START; i<str_num; i++) {
+				int h=0;
+				char *p = str_buf+str_data[i].str;
+				while(*p){
+					h=(h<<1)+(h>>3)+(h>>5)+(h>>8);
+					h+=(unsigned char)tolower(*p++);
+				}
+				fprintf(fp,"%04d: %10d ->  %3d : %s\n",i,h,h&(SCRIPT_HASH_SIZE-1),str_buf+str_data[i].str);
+				count[h&(SCRIPT_HASH_SIZE-1)]++;
+			}
+			fprintf(fp,"--------------------\n\n");
+			for(i=0; i<sizeof(count)/sizeof(count[0]); i++) {
+				fprintf(fp,"  hash %3d = %d\n",i,count[i]);
+				if(min > count[i])
+					min = count[i];		// minimun count of collision
+				if(max < count[i])
+					max = count[i];		// maximun count of collision
+				if(count[i] == 0)
+					zero++;
+			}
+			fprintf(fp,"--------------------\n    min = %d, max = %d, zero = %d\n",min,max,zero);
+			fclose(fp);
+		}
+	}
+
 	if(mapreg_dirty>=0)
 		script_save_mapreg();
 
