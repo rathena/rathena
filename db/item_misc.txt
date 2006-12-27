@@ -1,92 +1,24 @@
 //GroupID,ItemID,Rate
 //
 // Potions
+8,501,5	//Red Potion
+8,502,5	//Orange Potion
+8,503,5	//Yellow Potion
+8,504,5	//White Potion
+8,505,5	//Blue Potion
+8,506,5	//Green Potion
+8,545,5	//Condensed Red Potion
+8,546,5	//Condensed Yellow Potion
+8,547,5	//Condensed White Potion
+8,605,5	//Anodyne
+8,645,5	//Concentration Potion
+8,656,5	//Awakening Potion
+8,657,5	//Berserk Potion
+8,569,5	//Novice Potion
 8,678,1	//Poison Bottle
-8,501,1	//Red Potion
-8,502,1	//Orange Potion
-8,503,1	//Yellow Potion
-8,12017,1	//Slow Potion
-8,504,1	//White Potion
-8,505,1	//Blue Potion
-8,506,1	//Green Potion
-8,545,1	//Condensed Red Potion
-8,546,1	//Condensed Yellow Potion
-8,547,1	//Condensed White Potion
-8,12020,1	//Cursed_Water
-8,645,1	//Concentration Potion
-8,656,1	//Awakening Potion
-8,657,1	//Berserk Potion
-8,569,1	//Novice Potion
-8,605,1	//Anodyne
-8,12016,1	//Speed Potion
-8,501,1	//Red Potion
-8,502,1	//Orange Potion
-8,503,1	//Yellow Potion
-8,12017,1	//Slow Potion
-8,504,1	//White Potion
-8,505,1	//Blue Potion
-8,506,1	//Green Potion
-8,545,1	//Condensed Red Potion
-8,546,1	//Condensed Yellow Potion
-8,547,1	//Condensed White Potion
-8,12020,1	//Cursed_Water
-8,645,1	//Concentration Potion
-8,656,1	//Awakening Potion
-8,657,1	//Berserk Potion
-8,569,1	//Novice Potion
-8,605,1	//Anodyne
-8,12016,1	//Speed Potion
-8,501,1	//Red Potion
-8,502,1	//Orange Potion
-8,503,1	//Yellow Potion
-8,12017,1	//Slow Potion
-8,504,1	//White Potion
-8,505,1	//Blue Potion
-8,506,1	//Green Potion
-8,545,1	//Condensed Red Potion
-8,546,1	//Condensed Yellow Potion
-8,547,1	//Condensed White Potion
-8,12020,1	//Cursed_Water
-8,645,1	//Concentration Potion
-8,656,1	//Awakening Potion
-8,657,1	//Berserk Potion
-8,569,1	//Novice Potion
-8,605,1	//Anodyne
-8,12016,1	//Speed Potion
-8,501,1	//Red Potion
-8,502,1	//Orange Potion
-8,503,1	//Yellow Potion
-8,12017,1	//Slow Potion
-8,504,1	//White Potion
-8,505,1	//Blue Potion
-8,506,1	//Green Potion
-8,545,1	//Condensed Red Potion
-8,546,1	//Condensed Yellow Potion
-8,547,1	//Condensed White Potion
-8,12020,1	//Cursed_Water
-8,645,1	//Concentration Potion
-8,656,1	//Awakening Potion
-8,657,1	//Berserk Potion
-8,569,1	//Novice Potion
-8,605,1	//Anodyne
-8,12016,1	//Speed Potion
-8,501,1	//Red Potion
-8,502,1	//Orange Potion
-8,503,1	//Yellow Potion
-8,12017,1	//Slow Potion
-8,504,1	//White Potion
-8,505,1	//Blue Potion
-8,506,1	//Green Potion
-8,545,1	//Condensed Red Potion
-8,546,1	//Condensed Yellow Potion
-8,547,1	//Condensed White Potion
-8,12020,1	//Cursed_Water
-8,645,1	//Concentration Potion
-8,656,1	//Awakening Potion
-8,657,1	//Berserk Potion
-8,569,1	//Novice Potion
-8,605,1	//Anodyne
-8,12016,1	//Speed Potion
+8,12016,5	//Speed Potion
+8,12017,5	//Slow Potion
+8,12020,5	//Cursed_Water
 // Herbs
 9,507,1
 9,508,1
@@ -377,203 +309,32 @@
 25,5090,1	//Goblin Leader Mask
 25,5121,1	//Zherlthsh Mask
 //accessory
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
-26,2604,1	//Glove
-26,2610,1	//Gold Ring
-26,2617,1	//Celebrant's Mitten
-26,2612,1	//Flower Ring
-26,2603,1	//Necklace
-26,2623,1	//Necklace
-26,2628,1	//Novice Armlet
-26,2613,1	//Diamond Ring
-26,2609,1	//Skull Ring
-26,2619,1	//Bow Thimble
-26,2608,1	//Rosary
-26,2601,1	//Ring
-26,2618,1	//Matyr's Leash
-26,2627,1	//Belt
-26,2605,1	//Brooch
-26,2658,1	//Nile Rose
-26,2611,1	//Silver Ring
-26,2607,1	//Clip
-26,2602,1	//Earring
+26,2601,10	//Ring
+26,2602,10	//Earring
+26,2603,10	//Necklace
+26,2604,10	//Glove
+26,2605,10	//Brooch
+26,2607,10	//Clip
+26,2608,10	//Rosary
+26,2609,10	//Skull Ring
+26,2610,10	//Gold Ring
+26,2611,10	//Silver Ring
+26,2612,10	//Flower Ring
+26,2613,10	//Diamond Ring
 26,2615,1	//Safety Ring
 26,2616,1	//Critical Ring
-26,2624,1	//Glove
+26,2617,10	//Celebrant's Mitten
+26,2618,10	//Matyr's Leash
+26,2619,10	//Bow Thimble
 26,2621,1	//Ring
-26,2626,1	//Rosary
-26,2625,1	//Brooch
 26,2622,1	//Earring
+26,2623,10	//Necklace
+26,2624,1	//Glove
+26,2625,1	//Brooch
+26,2626,1	//Rosary
+26,2627,10	//Belt
+26,2628,10	//Novice Armlet
+26,2658,10	//Nile Rose
 // jewels
 27,718,1
 27,719,1
