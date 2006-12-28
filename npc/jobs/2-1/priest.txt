@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.1a
 //===== Compatible With: ===================================== 
 //= eAthena  1.0
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= to go. [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Merged JFunc [Lupus]
+//= 2.1a Fixed typo [KarLaeda]
 //==========================================================
 
 
@@ -428,7 +429,7 @@ L_Test:
 	mes "That shows that you have true faith! It is my pleasure to allow you to continue on with your test.";
 	next;
 	mes "[Mother Marthilda]";
-	mes "You must now go see ^5533FFFather Yosuke^000000.  He is 1 map North and 2 maps East of Prontera.  I'm sure you will make a fine Priest!";
+	mes "You must now go see ^5533FFFather Yosuke^000000.  He is 1 map North and 2 maps West of Prontera.  I'm sure you will make a fine Priest!";
 	set PRIEST_Q2, 3;
 	close;
 

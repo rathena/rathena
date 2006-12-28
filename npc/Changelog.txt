@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 
+2006/12/28
+	* Fixed typo in the Priest Quest [KarLaeda]
 2006/12/25
 	* Fixed a bug in eye_of_hellion.txt and a bug in hunter.txt. [FlavioJS]
 2006/12/22
@@ -263,7 +265,7 @@ Date		Added
 	* Fixed Assassin Job Quest: Timer bug / NPC bypass exploit [Lupus]
 2006/10/01
 	* Removed some duplicate Rachel warps [Playtester]
-2006/09/28	
+2006/09/28
 	* $ephiroth converted custom event: Grand Circlet Quest + Excalibur [Lupus]
 	* Added official Kiel Dungeon entrance [Playtester]
 	- commented the custom warps
@@ -291,7 +293,7 @@ Date		Added
 	* Final optimization of Niflheim quests [Lupus]
 	- Book of Devil Quest uses bit-wise var MISC_QUEST | 256. Removed extra vars
 	- Piano Quest uses 1 bit-wise temp var instead of 5 variables.
-	- Clear Niflheim garbage vars in Global_Functions.txt 
+	- Clear Niflheim garbage vars in Global_Functions.txt
 	- Added few missing NEXT; into job quests, thanks to $ephiroth
 	- Changed permanent variables in 1st Job Quest skills to @temp ones
 	- Cube Room: 5 key vars -> 1 var cubekey
@@ -460,7 +462,7 @@ Date		Added
 	- If you think it ruins your server's economy COMMENT IT FOR YOUR OWN SERVER, thanks.
 	- If you want it disabled please discuss in the Development forum about it first!
 2006/08/03
-	* Once again disabled the socket enchant NPC. 
+	* Once again disabled the socket enchant NPC.
 	- unless your server's rates are 1/1/1, it will COMPLETELY ruin your server's economy. [Musashiden]
 	* Updated the Kafra Express files to the July 28 release as requested on
 	  the forums. [Skotlex]
@@ -581,7 +583,7 @@ Date		Added
 	* Fixed bug in DTS warper that votes weren't counted on Sunday [Evera]
 	- Changed requirement for vote eligibility in DTS warper to 60
 	  (Was previously completion of President's Quest, but since it wasn't
-	  done, I used a random chance) [Evera] 
+	  done, I used a random chance) [Evera]
 	* eAAC update to donation girl. [erKURITA]
 	* Split cities/einbroch.txt to cities/einbroch.txt and quests/quests_einbroch.txt [Evera]
 	- Fixed some small typos [Evera]
@@ -741,7 +743,7 @@ Date		Added
 	* Added Rachel and Ice Dungeon warps [Playtester]
 	* Now re-using one variable MISC_QUEST for such quests: [Lupus]
 	  Morgenstein, Nifl Witch, Edgar's Offer, Prontera Culvert,
-	  Juice Maker, Tempestra, 
+	  Juice Maker, Tempestra,
 	- replaced BUNYBND with @BUNYBND
 	- added a special global function "F_ClearGarbage" function [Lupus]
 	  that converts old quest variables into MISC_QUEST bits;
@@ -778,7 +780,7 @@ Date		Added
 	* Fixed Abyss Lake spawns [Playtester]
 	* Fixed Thanatos Tower spawns [Playtester]
 	* Added a custom Market Place to clear Prontera streets from annoying shops. [Lupus]
-		'novending' mapflag sample: Try it and adjust the script as you want. 
+		'novending' mapflag sample: Try it and adjust the script as you want.
 	* Optimized a bit scripted warps, got rid of 'anthell' perm var [Lupus]
 2006/05/24
 	* Removed Blue Potions from Yuno Shops [Playtester]
@@ -848,7 +850,7 @@ Date		Added
 2006/04/26
 	* Commented out temp Gunslinger shops. [Lupus]
 	* Fixed Food Seller in Alberta thanks to Sousuke [Playtester]
-	* functions_kafra.txt was pretty buggy, including a zeny exploit (free warps). Thanks to OZ over IRC 
+	* functions_kafra.txt was pretty buggy, including a zeny exploit (free warps). Thanks to OZ over IRC
 	  for pointing out. It needs more optimization too. [erKURITA]
 	* eAAC Update: quest_warper.txt [erKURITA]
 2006/04/25
@@ -919,7 +921,7 @@ Date		Added
 2006/04/12
 	* Added up the locations but temporal names of Poring track npcs. Will be worked
 	  on over time. [erKURITA]
-	* Fitted the many lines into 1 or 2, and corrected some typos on most of 
+	* Fitted the many lines into 1 or 2, and corrected some typos on most of
 	  the npc\guides. Visual update to the guards, for short. [erKURITA]
 	* Fixed a typo in quests/juperos.txt [Playtester]
 	* Fixed Bio Lab spawns to official jRO [Playtester]
@@ -962,7 +964,7 @@ Date		Added
 	* Moved the spawn update to eamobs (of course the custom spawns where not changed... much :P) [Poki#3]
 	* Fixed sage script? [Vicious]
 	* Fixed more of wrong female thief bug spawn [Vicious]
-	* Umbala Bungee Jump - Warps you to Niff with 1HP no watter what [Lance] 
+	* Umbala Bungee Jump - Warps you to Niff with 1HP no watter what [Lance]
 2006/03/30
 	* Fixed refiner full price display, thanks to S4Sly [Vicious]
 	* Training ground giving 5 kafra storage/teleport pass [Vicious]
@@ -1210,7 +1212,7 @@ Date		Added
 	* A small fix to the Louyang script. [MasterOfMuppets]
 2005/12/05
 	* Fixed a typo in Aldebarran Guard "Hace a name". eAOS Bug Report [Kayla]
-	* Fixed another small screw-up in the color codes of the Glastheim Bulletin Board, 
+	* Fixed another small screw-up in the color codes of the Glastheim Bulletin Board,
 	  eaos Bug Report[Kayla]
 	* Fixed a typo in NPC:Raust, eAOS bug report. [Kayla]
 	* Fixed a typo in NPC:Gushenmu, eAOS bug report. [Kayla]
@@ -1245,7 +1247,7 @@ Date		Added
 	* Commented "Traveler" out as it is not needed/official [Vicious]
 2005/11/29
 	* Fixed a Payon dungeon warp that was warping to a non-existant tile [MasterOfMuppets]
-	* Updated the color codes of louyang.txt a little 
+	* Updated the color codes of louyang.txt a little
 	  and fixed the shouting quest to broadcast green text. [MasterOfMuppets]
 	* Fixed quest_lutie, thanks to Manipulator [Vicious]
 	* Updated cooking NPC, thanks to battousai90 [Vicious]
@@ -1291,7 +1293,7 @@ Date		Added
 	* Alberta, fixed bugs [Lupus]
 	* Typos and minor fixes of Assassin JQ and Clothes_dyer. thanks to momotaro_master & WhiteLight for info [Lupus]
 	* Added missing dialogues into Cooking Quest. Fixed a bug when you stuck if u haven't bought [Lupus]
-	  cooking sets before getting the quest, some optimizations, etc. Now fully workign 8) 
+	  cooking sets before getting the quest, some optimizations, etc. Now fully workign 8)
 2005/11/17
 	* Fixed custom MVP arena warper. R4000! [Kayla]
 	* Added more Food Sellers (for Cooking Quest). Some of them have temp sprites and coords [Lupus]
@@ -1399,7 +1401,7 @@ Date		Added
 	*Added real spawns for Thanatos and Abyss. [Nexon]
 2005/10/23
 	* Updated WoE (Guilds War) scripts to work correctly with /breakguild [Lupus]
-	  They should abandon occupied castles of the broken guild 
+	  They should abandon occupied castles of the broken guild
 2005/10/22
 	* Added Abyss warps and a few NPC's. [Nexon]
 	* Added lighthalzen security guard/ security event quest. [Nexon]
@@ -1427,7 +1429,7 @@ Date		Added
 2005/10/13
 	* Updated Thanatos Tower warps, added custom Thanatos Tower Statues quest by Bibilol & Moryagorn [Lupus]
 	* Moved a few misplaced npcs from Einbech to Einbroch [MasterOfMuppets]
-	* Added Bacsojin and Chung E to Louyang dungeon, thanks to Tron and Dr. Evil [MasterOfMuppets]	
+	* Added Bacsojin and Chung E to Louyang dungeon, thanks to Tron and Dr. Evil [MasterOfMuppets]
 2005/10/12
 	* Added Muad-dib's Einbroch Airport, converted by Dr.Evil [Lupus]
 	* Added secret Lighthalzen dungeon entrance point. Provided by Justin84 [Lupus]
@@ -1482,7 +1484,7 @@ Date		Added
 	* Updated some of the Lighthalzen mobs as pointed out by Master of Muppets.
 	  [Skotlex]
 	* Added 5092 Coif into Prontera Church Shop. Thanx 2 andz  [Lupus]
-	* Fixed Thanatos and Abyss Dungeon Spawns. Thanks to Azazel. [Nexon] 
+	* Fixed Thanatos and Abyss Dungeon Spawns. Thanks to Azazel. [Nexon]
 	* Fixed 700+ spelling mistakes. I have alot of time on my hands for some reason... [Nexon]
 2005/10/02
 	* Added Gotanblue#2 to Turtle Island (to be able to return back) [Lupus]
@@ -1509,7 +1511,7 @@ Date		Added
 	- Updated BBS
 2005/09/23
 	* Al De Baran: Finally added the Kafras Special Reserve 2 Lotto with official prizes [Lupus]
-	  (80% official, 4-5 entries are made up) also changed typo Orange Potions -> Red Potions 
+	  (80% official, 4-5 entries are made up) also changed typo Orange Potions -> Red Potions
 2005/09/21
 	* Commented out Mr.Smile Quest (now Tengu drops that mask) [Lupus]
 	* Fixed Bunny Band NPC location, removed NPC dupes [Lupus]
@@ -1673,7 +1675,7 @@ Date		Added
 		dungeons. And 2nd Classes can't seize these Castles.
 		These new castles need a new strategy. It would bring some
 		fun and live to your game.
-		NOTE: If your Guild Master is 2nd class, then he could 
+		NOTE: If your Guild Master is 2nd class, then he could
 		rule the Castles and gather Treasure Boxes after WoE
 	* Fixed typo on JFunc2-1.txt script [Skotlex]
 	* Now adoption.txt NPC can teach parents/babies their missing family skills [Lupus]
@@ -1728,7 +1730,7 @@ Date		Added
 2005/06/13
 	* Fixed Heart of Ymir location/sprite, thanks to Poki#3 [DracoRPG]
 2005/06/10
-	* Fixed small error in Dye_maker, was trying to del an non-existant item, instead on mixture 
+	* Fixed small error in Dye_maker, was trying to del an non-existant item, instead on mixture
 	  Thank you Terminal Vertex
 2005/06/05
 	* Fixed another error [Lunatikbunnie]
@@ -1775,7 +1777,7 @@ Date		Added
 2005/05/17
 	* Fixed Crusader Quest.(Thanks to Komurka) [massdriller]
 2005/05/16
-	* Small fix in the Dancer Job NPC and added checks for skill using, 
+	* Small fix in the Dancer Job NPC and added checks for skill using,
 	  Improved Concentration and Arrow Shower [Fredzilla]
 	* Cleanup in NPCs that are enabled by default : removed most of custom ones
 	  (including dev NPCs, WoE warper, Ayothaya poetry...) [DracoRPG]
@@ -1804,7 +1806,7 @@ Date		Added
 	* Added Penal Servitude script. Some quest for prisoners [Lupus]
 	  This script works with kafra_bank.txt script
 	* Fixed a typo in the warpra, thanks to ShAPoNe
-2005/04/27   
+2005/04/27
 	* Added Einbroch and Ayothaya, cites and dungeons, to the Warpra [Fredzilla]
 	* Added the Engagement Quest into Ayothaya [Fredzilla]
 	* In accordance with this quest I have also added some needed warps
@@ -1854,7 +1856,7 @@ Date		Added
 	* Added Einbroch monsters spawn, fixed one mapflag for Einnech mines [Lupus]
 	* valkyrie.txt Fixed: now alternative classes can use their 1-1 job NPC to become Advanced 1st Class [Lupus]
 2005/04/08
-	* Fixed some Rogue Job Quest bugs [Lupus] 
+	* Fixed some Rogue Job Quest bugs [Lupus]
 2005/04/06
 	* removed previous "fix". Please, never submit "fixes" w/o checking. [Lupus]
 	  that guy didn't know about a special SN Kafra from supernovice.txt file.
@@ -1950,7 +1952,7 @@ Date		Added
 2004/12/29
 	* Added Dino9021's monk job quest script - still need checking before adding to
 	  scripts list [celest]
-	* Added gvg mapflags to the guild dungeons, and removed 4 items from 
+	* Added gvg mapflags to the guild dungeons, and removed 4 items from
 	  item_avail.txt, thanks Poki [celest]
 	* Translated npc/sample/npc_extend_shop.txt [MC Cameri]
 	* Translated npc/sample/bank_test.txt [MC Cameri]
@@ -1978,7 +1980,7 @@ Date		Added
 	* made samesex marriages give out the correct rings [MouseJstr]
 	* Changed $progress -> $@progress in wedding.txt (shadowlady put in comments but didn't add to code) [Aria]
 	* xmas.txt: Added Xmas Jakk, fixed 2 possible items exploits, fixed reward Box ID [Lupus]
-2004/12/18	
+2004/12/18
 	* My NPC is back in action [Aria]
 	* Added 2 temp kRO shops which sell Arrows, Magic Scrolls. Prices,coords, sprites are unsure, but exploitless [Lupus]
 2004/12/12
@@ -1987,7 +1989,7 @@ Date		Added
 	* Fixed memory consumption in npc/other/mc_cameri/warper.txt [MC Cameri]
 2004/12/10
 	* Added npc/other/mc_cameri/warper.txt, a warp npc just like warper2.txt that shows how many people are on each map. [MC Cameri]
-	* Newgearquests (14 files of 16) fixed possible exploits, added a missing close; 
+	* Newgearquests (14 files of 16) fixed possible exploits, added a missing close;
 	  According to kro, changed ingredients of Indead Hairband quest [Lupus]
 2004/12/08
 	* Changed ingredients of Ears of Demon Quest: Deviruchi Hat -> Evil Wing [Lupus]
@@ -2073,7 +2075,7 @@ Date		Added
 	* - Fixed 2 bugs on jobchanger.txt , not being able to change to Creator and Clown,
 	  - Fixed a bug on mage.txt, not deleting the quest items.
 	  - Fixes on bongunsword.txt and fashion.txt , wrong spaces and quest items.
-	  - Added new Ayothana Mob listing, correct IDs, but need correct amount and respawn time. [shadow] 
+	  - Added new Ayothana Mob listing, correct IDs, but need correct amount and respawn time. [shadow]
 2004/11/07
 	* - Fixed platinum_skill.txt, now advanced classes get quest skills.
 	  - Fixed a bug on novice.txt . [shadow]
@@ -2128,7 +2130,7 @@ Date		Added
 	* Replaced some checkcart and checkoption(x) with checkcart(0) in the guild folder [Aria]
 	* Waiting for various devs to tell me their coords, map, biography, quotes,
 	  moving coords, etc. In the meantime, I replaced them with (x,y),(lols),
-	  (sprite),(somewhere), and if they didn't give me any info, I didn't 
+	  (sprite),(somewhere), and if they didn't give me any info, I didn't
 	  add them yet =P. [Aria]
 	* Added Davidsiaw, Shinigami, Lord, Codemaster, MouseJstr, MC Cameri, and Darkchild
 	  to "Dev edition" NPCs [Aria]
@@ -2237,12 +2239,12 @@ Date		Added
 	  Added complete rogue warps. Removed traingnd.txt file as those warps are
 	  already in jobquest.txt.  Added correct tabs to first 2 warps in louyang.txt. [kobra_k88]
 	* Fixed various typos in kafra files.  Now using arrays for the teleport service.
-	  Also added guild options. [kobra_k88] 
+	  Also added guild options. [kobra_k88]
 2004/09/06
-	* Forgot the dun/field warps for payon, added now! [Darkchild]	
+	* Forgot the dun/field warps for payon, added now! [Darkchild]
 	* Fixed: add a forgotten "delitem 2312,1;" in quest/skills/swordmand_skils.txt [Yor]
 2004/09/05
 	* Fixed 2 Bugs In Super Novice Script [Darkchild]
 	* Added Super Novice Official Quest [Darkchild]
 
-	- Started Changelog:		Same As Normal Changelog, but now for scripts, here we can put every lil thing we change :)	
+	- Started Changelog:		Same As Normal Changelog, but now for scripts, here we can put every lil thing we change :)
