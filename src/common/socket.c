@@ -646,6 +646,10 @@ int do_sendrecv(int next)
 				if(h_errno == EBADF) //See the #defines at the top
 				{
 					ShowError("Deleting invalid session %d\n", i);
+				  	//So the code can react accordingly
+					session[i]->eof = 1;
+					if(session[i]->func_parse)
+						session[i]->func_parse(i);
 					free_session_mem(i); //free the bad session
 					continue;
 				}
