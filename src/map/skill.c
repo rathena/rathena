@@ -3208,6 +3208,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	default:
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
+		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
+			0, abs(skill_get_num(skillid, skilllv)),
+			skillid, skilllv, skill_get_hit(skillid), 0);
 		map_freeblock_unlock();
 		return 1;
 	}
@@ -5493,6 +5496,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_freeblock_unlock();
 		return 1;
 	}
