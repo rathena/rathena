@@ -598,7 +598,8 @@ int do_sendrecv(int next)
 	fd_set rfd,efd; //Added the Error Set so that such sockets can be made eof. They are the same as the rfd for now. [Skotlex]
 	struct sockaddr_in	addr_check;
 	struct timeval timeout;
-	int ret,i,size;
+	int ret,i;
+	const int size = sizeof(struct sockaddr);
 
 	last_tick = time(0);
 
@@ -631,22 +632,28 @@ int do_sendrecv(int next)
 		for(i = 1; i < fd_max; i++)
 		{
 			if(!session[i])
+			{
+				if (FD_ISSET(i, &readfds)) {
+					ShowError("Deleting non-cleared session %d\n", i);
+					FD_CLR(i, &readfds);
+				}
 				continue;
+			}
 
 			//check the validity of the socket. Does what the last thing did
 			//just alot faster [Meruru]
-			size = sizeof(struct sockaddr);
 			if(getsockname(i,(struct sockaddr*)&addr_check,&size)<0)
 				if(h_errno == EBADF) //See the #defines at the top
 				{
+					ShowError("Deleting invalid session %d\n", i);
 					free_session_mem(i); //free the bad session
 					continue;
 				}
-
-			FD_SET(i,&readfds);
+			
+			if (!FD_ISSET(i, &readfds))
+				FD_SET(i,&readfds);
 			ret = i;
 		}
-
 		fd_max = ret;
 	}
 
@@ -662,8 +669,10 @@ int do_sendrecv(int next)
 			session[rfd.fd_array[i]]->func_recv)
 			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
 	}
-	for(i=0;i<(int)efd.fd_count;i++)
+	for(i=0;i<(int)efd.fd_count;i++) {
+		ShowDebug("do_sendrecv: Connection error on Session %d.\n", efd.fd_array[i]);
 		set_eof(efd.fd_array[i]);
+	}
 
 	for (i = 1; i < fd_max; i++)
 	{
@@ -677,7 +686,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 
-		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
+		if(session[i]->eof) //func_send can't free a session, this is safe.
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.
@@ -697,7 +706,6 @@ int do_sendrecv(int next)
 			continue;
 		}
 
-
 		if(FD_ISSET(i,&rfd)){
 			//ShowMessage("read:%d\n",i);
 			if(session[i]->func_recv)
@@ -709,7 +717,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 	
-		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
+		if(session[i]->eof)
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.
