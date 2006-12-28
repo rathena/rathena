@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="char-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E3E9646175AF}"
 	RootNamespace="char-server_txt"
@@ -222,15 +222,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_homun.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_party.c"
 				>
 			</File>
 			<File
 				RelativePath="..\src\char\int_pet.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_homun.c"
 				>
 			</File>
 			<File
@@ -300,81 +300,102 @@
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="..\src\char\char.h">
+				RelativePath="..\src\char\char.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\core.h">
+				RelativePath="..\src\common\core.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\db.h">
+				RelativePath="..\src\common\db.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\graph.h">
+				RelativePath="..\src\common\graph.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\grfio.h">
+				RelativePath="..\src\common\grfio.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_guild.h">
+				RelativePath="..\src\char\int_guild.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_homun.c">
+				RelativePath="..\src\char\int_party.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_party.h">
+				RelativePath="..\src\char\int_pet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_pet.h">
+				RelativePath="..\src\char\int_status.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_status.h">
+				RelativePath="..\src\char\int_storage.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_storage.h">
+				RelativePath="..\src\char\inter.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char\inter.h">
+				RelativePath="..\src\common\lock.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\lock.h">
+				RelativePath="..\src\common\malloc.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\malloc.h">
+				RelativePath="..\src\common\mapindex.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\mapindex.h">
+				RelativePath="..\src\common\mmo.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\mmo.h">
+				RelativePath="..\src\common\nullpo.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\nullpo.h">
+				RelativePath="..\src\common\plugin.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugin.h">
+				RelativePath="..\src\common\plugins.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugins.h">
+				RelativePath="..\src\common\showmsg.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\showmsg.h">
+				RelativePath="..\src\common\socket.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\socket.h">
+				RelativePath="..\src\common\strlib.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\strlib.h">
+				RelativePath="..\src\common\timer.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\timer.h">
+				RelativePath="..\src\common\utils.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\utils.h">
-			</File>
-			<File
-				RelativePath="..\src\common\version.h">
+				RelativePath="..\src\common\version.h"
+				>
 			</File>
 		</Filter>
 	</Files>

@@ -6,7 +6,7 @@
 #include <sys/types.h>
 
 #ifdef __WIN32
-	#define __USE_W32_SOCKETS
+	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#include <winsock.h>
 	#include <io.h>
@@ -23,21 +23,28 @@
 	#include <arpa/inet.h>
 
 	#ifndef SIOCGIFCONF
-		#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+	#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 	#endif
 #endif
 
 // portability layer 
 #ifdef _WIN32
 	typedef int socklen_t;
-	#define EBADF WSAENOTSOCK
-	#define ECONNABORTED WSAECONNABORTED
-	#define EAGAIN WSAEWOULDBLOCK
+
+	#define s_errno WSAGetLastError()
+	#define S_ENOTSOCK WSAENOTSOCK
+	#define S_EWOULDBLOCK WSAEWOULDBLOCK
+	#define S_ECONNABORTED WSAECONNABORTED
 #else
 	#define SOCKET_ERROR -1
 	#define INVALID_SOCKET -1
 	#define ioctlsocket ioctl
 	#define closesocket close
+
+	#define s_errno errno
+	#define S_ENOTSOCK EBADF
+	#define S_EWOULDBLOCK EAGAIN
+	#define S_ECONNABORTED ECONNABORTED
 #endif
 
 #include <fcntl.h>
@@ -54,11 +61,6 @@ int fd_max;
 time_t last_tick;
 time_t stall_time = 60;
 int ip_rules = 1;
-
-// reuse port
-#ifndef SO_REUSEPORT
-	#define SO_REUSEPORT 15
-#endif
 
 #ifndef TCP_FRAME_LEN
 #define TCP_FRAME_LEN	1024
@@ -126,7 +128,7 @@ void set_nonblocking(int fd, int yes)
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
 	if (ioctlsocket(fd, FIONBIO, &yes) != 0)
-		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", h_errno);
+		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", s_errno);
 }
 
 static void setsocketopts(int fd)
@@ -176,12 +178,12 @@ static int recv_to_fifo(int fd)
 	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0); 
 
 	if (len == SOCKET_ERROR) {
-		if (h_errno == ECONNABORTED) {
+		if (s_errno == S_ECONNABORTED) {
 			ShowWarning("recv_to_fifo: Software caused connection abort on session #%d\n", fd);
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
-		if (h_errno != EAGAIN) {
-			ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", h_errno, fd);
+		if (s_errno != S_EWOULDBLOCK) {
+			ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", s_errno, fd);
 			set_eof(fd);
 		}
 		return 0;
@@ -210,14 +212,14 @@ static int send_from_fifo(int fd)
 	len = send(fd, (const char *) session[fd]->wdata, session[fd]->wdata_size, 0);
 
 	if (len == SOCKET_ERROR) {
-		if (h_errno == ECONNABORTED) {
+		if (s_errno == S_ECONNABORTED) {
 			ShowWarning("send_from_fifo: Software caused connection abort on session #%d\n", fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
-		if (h_errno != EAGAIN) {
-			ShowDebug("send_from_fifo: error %d, ending connection #%d\n", h_errno, fd);
+		if (s_errno != S_EWOULDBLOCK) {
+			ShowDebug("send_from_fifo: error %d, ending connection #%d\n", s_errno, fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}
@@ -275,7 +277,7 @@ static int connect_client(int listen_fd)
 
 	fd = accept(listen_fd,(struct sockaddr*)&client_address,&len);
 	if ( fd == INVALID_SOCKET ) {
-		ShowError("accept failed (code %i)!\n", h_errno);
+		ShowError("accept failed (code %i)!\n", s_errno);
 		return -1;
 	}
 	
@@ -316,7 +318,7 @@ int make_listen_bind(long ip,int port)
 	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
 
 	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, h_errno);
+		ShowError("socket() creation failed (code %d)!\n", fd, s_errno);
 		exit(1);
 	}
 
@@ -329,12 +331,12 @@ int make_listen_bind(long ip,int port)
 
 	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == SOCKET_ERROR ) {
-		ShowError("bind failed (socket %d, code %d)!\n", fd, h_errno);
+		ShowError("bind failed (socket %d, code %d)!\n", fd, s_errno);
 		exit(1);
 	}
 	result = listen( fd, 5 );
 	if( result == SOCKET_ERROR ) {
-		ShowError("listen failed (socket %d, code %d)!\n", fd, h_errno);
+		ShowError("listen failed (socket %d, code %d)!\n", fd, s_errno);
 		exit(1);
 	}
 	if ( fd < 0 || fd > FD_SETSIZE ) 
@@ -444,7 +446,7 @@ int make_connection(long ip,int port)
 	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
 
 	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, h_errno);
+		ShowError("socket() creation failed (code %d)!\n", fd, s_errno);
 		return -1;
 	}
 
@@ -459,7 +461,7 @@ int make_connection(long ip,int port)
 
 	result = connect(fd, (struct sockaddr *)(&server_address), sizeof(struct sockaddr_in));
 	if( result == SOCKET_ERROR ) {
-		ShowError("connect failed (socket %d, code %d)!\n", fd, h_errno);
+		ShowError("connect failed (socket %d, code %d)!\n", fd, s_errno);
 		do_close(fd);
 		return -1;
 	}
@@ -598,8 +600,7 @@ int do_sendrecv(int next)
 	fd_set rfd,efd; //Added the Error Set so that such sockets can be made eof. They are the same as the rfd for now. [Skotlex]
 	struct sockaddr_in	addr_check;
 	struct timeval timeout;
-	int ret,i;
-	const int size = sizeof(struct sockaddr);
+	int ret,i,size;
 
 	last_tick = time(0);
 
@@ -624,7 +625,7 @@ int do_sendrecv(int next)
 		memcpy(&rfd, &readfds, sizeof(rfd)),
 		memcpy(&efd, &readfds, sizeof(efd)))
 	{
-		if(h_errno != EBADF)
+		if(s_errno != S_ENOTSOCK)
 			return 0;
 
 		//Well then the error is due to a bad socket. Lets find and remove it
@@ -632,32 +633,22 @@ int do_sendrecv(int next)
 		for(i = 1; i < fd_max; i++)
 		{
 			if(!session[i])
-			{
-				if (FD_ISSET(i, &readfds)) {
-					ShowError("Deleting non-cleared session %d\n", i);
-					FD_CLR(i, &readfds);
-				}
 				continue;
-			}
 
 			//check the validity of the socket. Does what the last thing did
 			//just alot faster [Meruru]
+			size = sizeof(struct sockaddr);
 			if(getsockname(i,(struct sockaddr*)&addr_check,&size)<0)
-				if(h_errno == EBADF) //See the #defines at the top
+				if(s_errno == S_ENOTSOCK)
 				{
-					ShowError("Deleting invalid session %d\n", i);
-				  	//So the code can react accordingly
-					session[i]->eof = 1;
-					if(session[i]->func_parse)
-						session[i]->func_parse(i);
 					free_session_mem(i); //free the bad session
 					continue;
 				}
-			
-			if (!FD_ISSET(i, &readfds))
-				FD_SET(i,&readfds);
+
+			FD_SET(i,&readfds);
 			ret = i;
 		}
+
 		fd_max = ret;
 	}
 
@@ -673,10 +664,8 @@ int do_sendrecv(int next)
 			session[rfd.fd_array[i]]->func_recv)
 			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
 	}
-	for(i=0;i<(int)efd.fd_count;i++) {
-		ShowDebug("do_sendrecv: Connection error on Session %d.\n", efd.fd_array[i]);
+	for(i=0;i<(int)efd.fd_count;i++)
 		set_eof(efd.fd_array[i]);
-	}
 
 	for (i = 1; i < fd_max; i++)
 	{
@@ -690,7 +679,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 
-		if(session[i]->eof) //func_send can't free a session, this is safe.
+		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.
@@ -710,6 +699,7 @@ int do_sendrecv(int next)
 			continue;
 		}
 
+
 		if(FD_ISSET(i,&rfd)){
 			//ShowMessage("read:%d\n",i);
 			if(session[i]->func_recv)
@@ -721,7 +711,7 @@ int do_sendrecv(int next)
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 	
-		if(session[i]->eof)
+		if(session[i] && session[i]->eof) //The session check is for when the connection ended in func_parse
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			if (session[i]->func_parse)
 				session[i]->func_parse(i); //This should close the session inmediately.

@@ -78,8 +78,13 @@ static struct str_data_struct {
 	int next;
 } *str_data = NULL;
 int str_num=LABEL_START,str_data_size;
-#define SCRIPT_HASH_SIZE 1024
+// Using a prime number for SCRIPT_HASH_SIZE should give better distributions
+#define SCRIPT_HASH_SIZE 1021
 int str_hash[SCRIPT_HASH_SIZE];
+//#define SCRIPT_HASH_DJB2
+//#define SCRIPT_HASH_SDBM
+//#define SCRIPT_HASH_ELF
+//#define SCRIPT_HASH_PJW
 
 static struct dbt *mapreg_db=NULL;
 static struct dbt *mapregstr_db=NULL;
@@ -272,18 +277,53 @@ static void check_event(struct script_state *st, const char *event){
 	}
 	return;
 }
+
 /*==========================================
  * 文字列のハッシュを計算
  *------------------------------------------
  */
-static int calc_hash(const unsigned char *p)
+#define calc_hash(x) calc_hash2(x)%SCRIPT_HASH_SIZE
+static unsigned int calc_hash2(const unsigned char *p)
 {
-	int h=0;
-	while(*p){
-		h=(h<<1)+(h>>3)+(h>>5)+(h>>8);
+#if defined(SCRIPT_HASH_DJB2)
+	unsigned int h = 5381;
+	while( *p ) // hash*33 + c
+		h = ( h << 5 ) + h + ((unsigned char)tolower(*p++));
+	return h;
+#elif defined(SCRIPT_HASH_SDBM)
+	unsigned int h = 0;
+	while( *p )
+		h = ( h << 6 ) + ( h << 16 ) - h + ((unsigned char)tolower(*p++));
+	return h;
+#elif defined(SCRIPT_HASH_ELF)
+	unsigned int h = 0;
+	unsigned int g;
+	while( *p ){ // UNIX ELF hash
+		h = ( h << 4 ) + ((unsigned char)tolower(*p++));
+		if ( g = h & 0xF0000000 )
+		h ^= g >> 24;
+		h &= ~g;
+	}
+	return h;
+#elif defined(SCRIPT_HASH_PJW)
+	unsigned int h = 0;
+	unsigned int g;
+	while( *p ){
+		h = ( h << 4 ) + ((unsigned char)tolower(*p++));
+		if ( (g=h&0xF0000000) ) {
+			h ^= g>>24;
+			h ^= g;
+		}
+	}
+	return h;
+#else
+	unsigned int h = 0;
+	while( *p ){
+		h = ( h << 1 ) + ( h >> 3 ) + ( h >> 5 ) + ( h >> 8 );
 		h+=(unsigned char)tolower(*p++);
 	}
-	return h&(SCRIPT_HASH_SIZE-1);
+	return h;
+#endif
 }
 
 /*==========================================
@@ -313,9 +353,6 @@ int add_str(const char* p)
 {
 	int i;
 	int len;
-
-	if((i=search_str(p)) >= 0)
-		return i;
 
 	i=calc_hash(p);
 	if(str_hash[i]==0){
@@ -922,7 +959,7 @@ const char* parse_curly_close(const char* p) {
 const char* parse_syntax(const char* p) {
 	switch(*p) {
 	case 'b':
-		if(!strncmp(p,"break",5) && !ISALPHA(p[5])) {
+		if(!strncasecmp(p,"break",5) && !ISALPHA(p[5])) {
 			// break の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -957,7 +994,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'c':
-		if(!strncmp(p,"case",4) && !ISALPHA(p[4])) {
+		if(!strncasecmp(p,"case",4) && !ISALPHA(p[4])) {
 			// case の処理
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'case' ",p);
@@ -1012,7 +1049,7 @@ const char* parse_syntax(const char* p) {
 				syntax.curly[pos].count++;
 			}
 			return p + 1;
-		} else if(!strncmp(p,"continue",8) && !ISALPHA(p[8])) {
+		} else if(!strncasecmp(p,"continue",8) && !ISALPHA(p[8])) {
 			// continue の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -1045,7 +1082,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'd':
-		if(!strncmp(p,"default",7) && !ISALPHA(p[7])) {
+		if(!strncasecmp(p,"default",7) && !ISALPHA(p[7])) {
 			// switch - default の処理
 			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'default'",p);
@@ -1085,7 +1122,7 @@ const char* parse_syntax(const char* p) {
 				p = skip_word(p);
 				return p + 1;
 			}
-		} else if(!strncmp(p,"do",2) && !ISALPHA(p[2])) {
+		} else if(!strncasecmp(p,"do",2) && !ISALPHA(p[2])) {
 			int l;
 			char label[256];
 			p=skip_word(p);
@@ -1104,7 +1141,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'f':
-		if(!strncmp(p,"for",3) && !ISALPHA(p[3])) {
+		if(!strncasecmp(p,"for",3) && !ISALPHA(p[3])) {
 			int l;
 			char label[256];
 			int  pos = syntax.curly_count;
@@ -1183,7 +1220,7 @@ const char* parse_syntax(const char* p) {
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			return p;
-		} else if(!strncmp(p,"function",8) && !ISALPHA(p[8])) {
+		} else if(!strncasecmp(p,"function",8) && !ISALPHA(p[8])) {
 			const char *func_name;
 			// function
 			p=skip_word(p);
@@ -1226,7 +1263,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'i':
-		if(!strncmp(p,"if",2) && !ISALPHA(p[2])) {
+		if(!strncasecmp(p,"if",2) && !ISALPHA(p[2])) {
 			// if() の処理
 			char label[256];
 			p=skip_word(p);
@@ -1250,7 +1287,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 's':
-		if(!strncmp(p,"switch",6) && !ISALPHA(p[6])) {
+		if(!strncasecmp(p,"switch",6) && !ISALPHA(p[6])) {
 			// switch() の処理
 			char label[256];
 			p=skip_word(p);
@@ -1277,7 +1314,7 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'w':
-		if(!strncmp(p,"while",5) && !ISALPHA(p[5])) {
+		if(!strncasecmp(p,"while",5) && !ISALPHA(p[5])) {
 			int l;
 			char label[256];
 			p=skip_word(p);
@@ -1347,11 +1384,11 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 
 		syntax.curly[pos].count++;
 		p = skip_space(p);
-		if(!syntax.curly[pos].flag && !strncmp(p,"else",4) && !ISALPHA(p[4])) {
+		if(!syntax.curly[pos].flag && !strncasecmp(p,"else",4) && !ISALPHA(p[4])) {
 			// else  or else - if
 			p = skip_word(p);
 			p = skip_space(p);
-			if(!strncmp(p,"if",2) && !ISALPHA(p[2])) {
+			if(!strncasecmp(p,"if",2) && !ISALPHA(p[2])) {
 				// else - if
 				p=skip_word(p);
 				p=skip_space(p);
@@ -1402,7 +1439,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		// 条件が偽なら終了地点に飛ばす
 		p = skip_space(p);
 		p2 = skip_word(p);
-		if(p2 - p != 5 || strncmp("while",p,5)) {
+		if(p2 - p != 5 || strncasecmp("while",p,5)) {
 			disp_error_message("parse_syntax: need 'while'",p);
 		}
 
@@ -1662,7 +1699,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		p=skip_space(p);
 		// labelだけ特殊処理
 		tmpp=skip_space(skip_word(p));
-		if(*tmpp==':' && !(!strncmp(p,"default:",8) && p + 7 == tmpp)){
+		if(*tmpp==':' && !(!strncasecmp(p,"default:",8) && p + 7 == tmpp)){
 			i=add_word(p);
 			set_label(i,script_pos,p);
 			if( parse_options&SCRIPT_USE_LABEL_DB )
@@ -3266,24 +3303,25 @@ int do_final_script()
 		FILE *fp = fopen("hash_dump.txt","wt");
 		if(fp) {
 			int i,count[SCRIPT_HASH_SIZE];
-			int min=0x7fffffff,max=0,zero=0;
+			int count2[SCRIPT_HASH_SIZE]; // number of buckets with a certain number of items
+			int n=0;
+			int min=INT_MAX,max=0,zero=0;
+			double mean=0.0f;
+			double median=0.0f;
 
 			ShowNotice("Dumping script str hash information to hash_dump.txt\n");
 			memset(count, 0, sizeof(count));
 			fprintf(fp,"num : calced_val -> hash : data_name\n");
 			fprintf(fp,"---------------------------------------------------------------\n");
 			for(i=LABEL_START; i<str_num; i++) {
-				int h=0;
-				char *p = str_buf+str_data[i].str;
-				while(*p){
-					h=(h<<1)+(h>>3)+(h>>5)+(h>>8);
-					h+=(unsigned char)tolower(*p++);
-				}
-				fprintf(fp,"%04d: %10d ->  %3d : %s\n",i,h,h&(SCRIPT_HASH_SIZE-1),str_buf+str_data[i].str);
-				count[h&(SCRIPT_HASH_SIZE-1)]++;
+				unsigned int h2=calc_hash2(str_buf+str_data[i].str);
+				unsigned int h =h2%SCRIPT_HASH_SIZE;
+				fprintf(fp,"%04d: %10u ->  %3u : %s\n",i,h2,h,str_buf+str_data[i].str);
+				++count[h];
 			}
 			fprintf(fp,"--------------------\n\n");
-			for(i=0; i<sizeof(count)/sizeof(count[0]); i++) {
+			memset(count2, 0, sizeof(count2));
+			for(i=0; i<SCRIPT_HASH_SIZE; i++) {
 				fprintf(fp,"  hash %3d = %d\n",i,count[i]);
 				if(min > count[i])
 					min = count[i];		// minimun count of collision
@@ -3291,8 +3329,25 @@ int do_final_script()
 					max = count[i];		// maximun count of collision
 				if(count[i] == 0)
 					zero++;
+				++count2[count[i]];
 			}
-			fprintf(fp,"--------------------\n    min = %d, max = %d, zero = %d\n",min,max,zero);
+			fprintf(fp,"\n--------------------\n  items : buckets\n--------------------\n");
+			for( i=min; i <= max; ++i ){
+				fprintf(fp,"  %5d : %7d\n",i,count2[i]);
+				mean += 1.0f*i*count2[i]/SCRIPT_HASH_SIZE; // Note: this will always result in <nr labels>/<nr buckets>
+			}
+			for( i=min; i <= max; ++i ){
+				n += count2[i];
+				if( n*2 >= SCRIPT_HASH_SIZE )
+				{
+					if( SCRIPT_HASH_SIZE%2 == 0 && SCRIPT_HASH_SIZE/2 == n )
+						median = (i+i+1)/2.0f;
+					else
+						median = i;
+					break;
+				}
+			}
+			fprintf(fp,"--------------------\n    min = %d, max = %d, zero = %d\n    mean = %lf, median = %lf\n",min,max,zero,mean,median);
 			fclose(fp);
 		}
 	}

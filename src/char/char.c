@@ -1694,7 +1694,12 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 	for(i = 0; i < found_num; i++) {
 		p = &char_dat[sd->found_char[i]].status;
+#if PACKETVER > 7
+		j = offset + (found_num * 2) + (i * 106); // increase speed of code
+		WFIFOW(fd,offset+(i*2)) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#else
 		j = offset + (i * 106); // increase speed of code
+#endif
 
 		WFIFOL(fd,j) = p->char_id;
 		WFIFOL(fd,j+4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
@@ -1709,7 +1714,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOL(fd,j+32) = p->karma;
 		WFIFOL(fd,j+36) = p->manner;
 
-		WFIFOW(fd,j+40) = (p->status_point>SHRT_MAX) ? SHRT_MAX : p->status_point;
+		WFIFOW(fd,j+40) = (p->status_point > SHRT_MAX) ? SHRT_MAX : p->status_point;
 		WFIFOW(fd,j+42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
 		WFIFOW(fd,j+44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
 		WFIFOW(fd,j+46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
@@ -1719,7 +1724,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOW(fd,j+54) = p->hair;
 		WFIFOW(fd,j+56) = p->option&0x20?0:p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 		WFIFOW(fd,j+58) = p->base_level;
-		WFIFOW(fd,j+60) = (p->skill_point>SHRT_MAX)? SHRT_MAX : p->skill_point;
+		WFIFOW(fd,j+60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
 		WFIFOW(fd,j+62) = p->head_bottom;
 		WFIFOW(fd,j+64) = p->shield;
 		WFIFOW(fd,j+66) = p->head_top;
@@ -1729,18 +1734,13 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 		memcpy(WFIFOP(fd,j+74), p->name, NAME_LENGTH);
 
-		WFIFOB(fd,j+98) = (p->str > 255) ? 255 : p->str;
-		WFIFOB(fd,j+99) = (p->agi > 255) ? 255 : p->agi;
-		WFIFOB(fd,j+100) = (p->vit > 255) ? 255 : p->vit;
-		WFIFOB(fd,j+101) = (p->int_ > 255) ? 255 : p->int_;
-		WFIFOB(fd,j+102) = (p->dex > 255) ? 255 : p->dex;
-		WFIFOB(fd,j+103) = (p->luk > 255) ? 255 : p->luk;
-#if PACKETVER > 7
+		WFIFOB(fd,j+98) = (p->str > UCHAR_MAX) ? UCHAR_MAX : p->str;
+		WFIFOB(fd,j+99) = (p->agi > UCHAR_MAX) ? UCHAR_MAX : p->agi;
+		WFIFOB(fd,j+100) = (p->vit > UCHAR_MAX) ? UCHAR_MAX : p->vit;
+		WFIFOB(fd,j+101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
+		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
+		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 		WFIFOW(fd,j+104) = p->char_num;
-		WFIFOB(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
-#else
-		WFIFOB(fd,j+104) = p->char_num;
-#endif
 	}
 
 	WFIFOSET(fd,WFIFOW(fd,2));
