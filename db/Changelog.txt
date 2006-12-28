@@ -19,7 +19,8 @@
 	-----
 
 ========================
-
+12/28
+	* Added some history books [Playtester]
 12/27
 	* Cleaned up item_misc.txt [Skotlex]
 12/23
