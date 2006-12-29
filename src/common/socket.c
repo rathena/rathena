@@ -175,7 +175,7 @@ static int recv_to_fifo(int fd)
 	if( (fd < 0) || (fd >= FD_SETSIZE) || (NULL == session[fd]) || (session[fd]->eof) )
 		return -1;
 
-	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0); 
+	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0);
 
 	if (len == SOCKET_ERROR) {
 		if (s_errno == S_ECONNABORTED) {
