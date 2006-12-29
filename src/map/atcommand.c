@@ -1342,10 +1342,10 @@ int atcommand_rura(
 		return -1;
 	}
 
-	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOPASS)) {
+	/*if ((x || y) && map_getcell(m, x, y, CELL_CHKNOPASS)) {
 		clif_displaymessage(fd, msg_txt(2));
 		x = y = 0; //Invalid cell, use random spot.
-	}
+	}*/
 	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(247));
 		return -1;

@@ -49,11 +49,11 @@ prt_in.gat,254,113,0	warp	prt16	3,2,prt_in.gat,256,134
 prt_in.gat,256,131,0	warp	prt16-1	2,2,prt_in.gat,254,110
 prt_in.gat,263,163,0	warp	prt17	1,3,prt_in.gat,276,163
 prt_in.gat,274,163,0	warp	prt17-1	1,3,prt_in.gat,261,163
-prt_in.gat,280,68,0	warp	w472	6,6,prontera.gat,147,287
-prt_in.gat,281,36,0	warp	w473	6,6,prontera.gat,147,287
-prt_in.gat,282,100,0	warp	w471	6,6,prontera.gat,147,287
+//prt_in.gat,280,68,0	warp	w472	6,6,prontera.gat,147,287
+//prt_in.gat,281,36,0	warp	w473	6,6,prontera.gat,147,287
+//prt_in.gat,282,100,0	warp	w471	6,6,prontera.gat,147,287
 prt_in.gat,282,179,0	warp	prt14	3,1,prontera.gat,87,91
-prt_in.gat,285,130,0	warp	w470	6,6,prontera.gat,147,287
+//prt_in.gat,285,130,0	warp	w470	6,6,prontera.gat,147,287
 prt_in.gat,37,65,0	warp	prt18	1,3,prt_in.gat,51,65
 prt_in.gat,47,29,0	warp	prt10-1	2,1,prontera.gat,46,67
 prt_in.gat,48,65,0	warp	prt18-1	1,3,prt_in.gat,34,65

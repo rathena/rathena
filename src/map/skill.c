@@ -3830,7 +3830,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TK_MISSION:
 		if (sd) {
 			int id;
-			if (sd->mission_mobid && (sd->mission_count || rand()%99)) { //Cannot change target when already have one
+			if (sd->mission_mobid && (sd->mission_count || rand()%100)) { //Cannot change target when already have one
 				clif_mission_info(sd, sd->mission_mobid, sd->mission_count);
 				clif_skill_fail(sd,skillid,0,0);
 				break;
@@ -7834,8 +7834,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		sd->skillitem = sd->skillitemlv = 0;
 		//Need to do arrow state check.
 		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; 
-		//Need to do Spiritball check.
-		sd->spiritball_old = sd->spiritball;
 		return 1;
 	}
 
