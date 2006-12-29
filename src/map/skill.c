@@ -3830,7 +3830,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TK_MISSION:
 		if (sd) {
 			int id;
-			if (sd->mission_mobid && (sd->mission_count || rand()%100)) { //Cannot change target when already have one
+			if (sd->mission_mobid && (sd->mission_count || rand()%99)) { //Cannot change target when already have one
 				clif_mission_info(sd, sd->mission_mobid, sd->mission_count);
 				clif_skill_fail(sd,skillid,0,0);
 				break;
