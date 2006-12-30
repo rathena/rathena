@@ -2619,7 +2619,7 @@
 1623,RSX 0806@NPC_WEAPONBRAKER,attack,343,10,1000,0,60000,no,target,always,0,,,,,,6
 1623,RSX 0806@BS_HAMMERFALL,chase,110,10,2000,0,5000,yes,target,always,0,,,,,,
 1623,RSX 0806@AL_TELEPORT,idle,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
-1623,RSX 0806@AL_TELEPORT,walk,26,1,100000,0,5000,yes,self,rudeattacked,,,,,,,
+1623,RSX 0806@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1623,RSX 0806@NPC_CRITICALSLASH,attack,170,1,2000,500,5000,no,target,always,0,,,,,,
 1623,RSX 0806@AS_SONICBLOW,attack,136,10,1000,0,10000,yes,target,always,0,,,,,,2
 1624,Waste Stove@NPC_STUNATTACK,attack,179,3,1000,1500,5000,no,target,always,0,,,,,,9

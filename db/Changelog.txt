@@ -19,6 +19,8 @@
 	-----
 
 ========================
+12/30
+	* Fixed typo in mob_skill_db [Playtester]
 12/28
 	* Added some history books [Playtester]
 12/27
