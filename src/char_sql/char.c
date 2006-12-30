@@ -1725,8 +1725,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		p = &char_dat;
 
 #if PACKETVER > 7
-		j = offset + (found_num * 2) + (i * 108);
-		WFIFOW(fd,offset+(i*2)) = 1; //TODO: Handle this rename bit: 0 to enable renaming //Updated packet structure with rename-button included. Credits to Sara-chan
+		j = offset + (i * 108);
 #else
 		j = offset + (i * 106); // increase speed of code
 #endif
@@ -1771,6 +1770,10 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 		WFIFOW(fd,j+104) = p->char_num;
+#if PACKETVER > 7
+		//Updated packet structure with rename-button included. Credits to Sara-chan
+		WFIFOW(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#endif
 	}
 	WFIFOSET(fd,WFIFOW(fd,2));
 //	printf("mmo_char_send006b end..\n");

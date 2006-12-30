@@ -1695,8 +1695,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = 0; i < found_num; i++) {
 		p = &char_dat[sd->found_char[i]].status;
 #if PACKETVER > 7
-		j = offset + (found_num * 2) + (i * 106); // increase speed of code
-		WFIFOW(fd,offset+(i*2)) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+		j = offset + (i * 108); // increase speed of code
 #else
 		j = offset + (i * 106); // increase speed of code
 #endif
@@ -1741,6 +1740,9 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 		WFIFOW(fd,j+104) = p->char_num;
+#if PACKETVER > 7
+		WFIFOW(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#endif
 	}
 
 	WFIFOSET(fd,WFIFOW(fd,2));
