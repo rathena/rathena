@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 2.8a
+//= 2.9
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -37,6 +37,7 @@
 //= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a clearer
 //=	  explanation of atoi.Gave a better explanation of OnLabels and modified
 //=	  monster explanation due that L_Label isn't working with monster.
+//= 2.9.20061230 - Updated getitem and guardian  [FlavioJS]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -1663,16 +1664,16 @@ Example 6: Using complex conditions.
 *getitem <item id>,<amount>{,<character ID>};
 *getitem "<item name>",<amount>{,<character ID>};
 
-This command will give a specific amount of specified items to the invoking 
-character. If an optional character ID is specified, and that character is 
-currently online, items will be created in their inventory instead. If they are 
-not online, nothing will happen.
+This command will give a specific amount of specified items to the target 
+character. If the character is not online, nothing will happen.
+If <character ID> is not specified, items will be created in the invoking 
+character inventory instead.
 
-In the first and most commonly used version of this command, tems are referred 
-to by their database ID number found inside 'db/item_db.txt'.
+In the first and most commonly used version of this command, items are 
+referred to by their database ID number found inside 'db/item_db.txt'.
 
-    getitem 502,10 // The person will recieve 10 apples
-    getitem 617,1  // The person will recieve 1 Old Violet Box
+    getitem 502,10 // The person will receive 10 apples
+    getitem 617,1  // The person will receive 1 Old Violet Box
 
 Giving an item ID of -1 will give a specified number of random items from the 
 list of those that fall out of Old Blue Box. Unlike in all other cases, these 
@@ -1687,19 +1688,19 @@ Giving an item ID of -4 will produce the effects of Gift Box.
 Giving an item ID of -5 will produce the effects of Worn Out Scroll, which, in 
 current SVN, drops only Jellopies anyway.
 
-Calling this command with a negative item ID to create a random item will create 
-an entry in the log file for those if such logging is enabled.
+This transaction is logged if the log script generated transactions option is 
+enabled.
 
-You may also create an item by it's name in the 'english name' field in the item 
-database:
+You may also create an item by it's name in the 'english name' field in the 
+item database:
 
     getitem "RED_POTION",10;
 
 Which will do what you'd expect. If it can't find that name in the database, 
 apples will be created anyway. It is often a VERY GOOD IDEA to use it like this.
 
-This used in pretty much all NPC scripts that have to do with items and quite a 
-few item scripts. For more examples check just about any official script.
+This is used in pretty much all NPC scripts that have to do with items and 
+quite a few item scripts. For more examples check just about any official script.
 
 ---------------------------------------
 
@@ -4306,7 +4307,7 @@ per 'db/mob_db.txt'. Type is the kind of information returned. Valid types are:
 
 ---------------------------------------
 
-*guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
+*guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>};
 
 This command is roughly equivalent to 'monster', but is meant to be used with 
 castle guardian monsters and will only work with them. It will set the guardian 

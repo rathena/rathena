@@ -29,8 +29,23 @@ int log_config_read(char *cfgName);
 
 int should_log_item(int filter, int nameid, int amount); //log filter check
 
+enum log_what {
+	LOG_ALL                 = 0xFFF,
+	LOG_TRADES              = 0x002,
+	LOG_VENDING             = 0x004,
+	LOG_PLAYER_ITEMS        = 0x008, // dropped/picked
+	LOG_MONTER_ITEMS        = 0x010, // dropped/looted
+	LOG_NPC_TRANSACTIONS    = 0x020, // npc shops?
+	LOG_SCRIPT_TRANSACTIONS = 0x040,
+	LOG_STOLEN_ITEMS        = 0x080, // stolen from mobs
+	LOG_USED_ITEMS          = 0x100, // used by player
+	LOG_MVP_PRIZE           = 0x200,
+	LOG_COMMAND_ITEMS       = 0x400  // created/deleted through @/# commands
+};
+
 extern struct Log_Config {
-	int enable_logs, filter;
+	enum log_what enable_logs;
+	int filter;
 	int sql_logs;
 	int rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter
 	int branch, drop, mvpdrop, zeny, gm, npc, chat;

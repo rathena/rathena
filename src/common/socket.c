@@ -571,7 +571,7 @@ int WFIFOSET(int fd,int len)
 	if(s->wdata_size+len > s->max_wdata)
 	{	// actually there was a buffer overflow already
 		unsigned char *sin_addr = (unsigned char *)&s->client_addr.sin_addr;
-		ShowFatalError("socket: Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %d byteson a %d/%d bytes buffer.\n", fd,
+		ShowFatalError("socket: Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %d bytes on a %d/%d bytes buffer.\n", fd,
 			sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3], len, s->wdata_size, s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n",
 			(*(unsigned short*)(s->wdata+s->wdata_size)));

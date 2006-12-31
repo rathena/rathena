@@ -53,9 +53,18 @@
 #include "irc.h"
 #include "pet.h"
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Returns the stack_data at the target index
+#define script_getdata(st,i) &((st)->stack->stack_data[(st)->start+(i)])
+/// Returns if the stack contains data at the target index
+#define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
+#define script_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
+#define script_isint(data) ( (data)->type == C_INT )
+
 #define FETCH(n, t) \
-		if(st->end>st->start+(n)) \
-			(t)=conv_num(st,&(st->stack->stack_data[st->start+(n)]));
+		if( script_hasdata(st,n) ) \
+			(t)=conv_num(st,script_getdata(st,n));
 
 #define SCRIPT_BLOCK_SIZE 512
 enum { LABEL_NEXTLINE=1,LABEL_START };
@@ -158,8 +167,8 @@ int get_num(unsigned char *script,int *pos);
 
 extern struct script_function {
 	int (*func)(struct script_state *st);
-	char *name;
-	char *arg;
+	const char *name;
+	const char *arg;
 } buildin_func[];
 
 static struct linkdb_node *sleep_db;
@@ -270,12 +279,13 @@ static void disp_error_message2(const char *mes,const char *pos,int report)
 }
 #define disp_error_message(mes,pos) disp_error_message2(mes,pos,1)
 
-static void check_event(struct script_state *st, const char *event){
-	if(event != NULL && event[0] != '\0' && !stristr(event,"::On")){
-		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",event);
+/// Checks event parameter validity
+static void check_event(struct script_state *st, const char *evt)
+{
+	if( evt != NULL && *evt != '\0' && !stristr(evt,"::On") ){
+		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",evt);
 		report_src(st);
 	}
-	return;
 }
 
 /*==========================================
@@ -657,7 +667,7 @@ static const char* parse_callfunc(const char *p, int require_paren)
 		}
 		--syntax.curly_count;
 	}
-	if( *arg && *arg != '*' )
+	if( *arg && *arg != '?' && *arg != '*' )
 		disp_error_message2("parse_callfunc: not enough arguments, expected ','", p, script_config.warn_func_mismatch_paramnum);
 	if( syntax.curly[syntax.curly_count].type != TYPE_ARGLIST )
 		disp_error_message("parse_callfunc: DEBUG last curly is not an argument list",p);
@@ -1528,11 +1538,29 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 static void add_buildin_func(void)
 {
 	int i,n;
-	for(i=0;buildin_func[i].func;i++){
-		n=add_str(buildin_func[i].name);
-		str_data[n].type=C_FUNC;
-		str_data[n].val=i;
-		str_data[n].func=buildin_func[i].func;
+	const char* p;
+	for( i=0; buildin_func[i].func; i++ ){
+		/// arg must follow the pattern: (v|s|i|l)*\?*\*?
+		/// 'v' - value (either string or int)
+		/// 's' - string
+		/// 'i' - int
+		/// 'l' - label
+		/// '?' - one optional parameter
+		/// '*' - unknown number of optional parameters
+		p=buildin_func[i].arg;
+		while( *p == 'v' || *p == 's' || *p == 'i' || *p == 'l' ) ++p;
+		while( *p == '?' ) ++p;
+		if( *p == '*' ) ++p;
+		if( *p != 0){
+			ShowWarning("add_buildin_func: ignoring function \"%s\" with invalid arg \"%s\".\n", buildin_func[i].name, buildin_func[i].arg);
+		} else if( *skip_word(buildin_func[i].name) != 0 ){
+			ShowWarning("add_buildin_func: ignoring function with invalid name \"%s\" (must be a word).\n", buildin_func[i].name);
+		} else {
+			n=add_str(buildin_func[i].name);
+			str_data[n].type=C_FUNC;
+			str_data[n].val=i;
+			str_data[n].func=buildin_func[i].func;
+		}
 	}
 }
 
@@ -3778,7 +3806,7 @@ struct script_function buildin_func[] = {
 	{buildin_getarraysize,"getarraysize","i"},
 	{buildin_deletearray,"deletearray","ii"},
 	{buildin_getelementofarray,"getelementofarray","ii"},
-	{buildin_getitem,"getitem","ii**"},
+	{buildin_getitem,"getitem","vi?"},
 	{buildin_getitem2,"getitem2","iiiiiiiii*"},
 	{buildin_getnameditem,"getnameditem","is"},
 	{buildin_grouprandomitem,"groupranditem","i"},
@@ -3948,7 +3976,7 @@ struct script_function buildin_func[] = {
 	{buildin_soundeffect,"soundeffect","si"},
 	{buildin_soundeffectall,"soundeffectall","si*"},	// SoundEffectAll [Codemaster]
 	{buildin_strmobinfo,"strmobinfo","ii"},	// display mob data [Valaris]
-	{buildin_guardian,"guardian","siisii*i"},	// summon guardians
+	{buildin_guardian,"guardian","siisii??"},	// summon guardians
 	{buildin_guardianinfo,"guardianinfo","i"},	// display guardian data [Valaris]
 	{buildin_petskillbonus,"petskillbonus","iiii"}, // [Valaris]
 	{buildin_petrecovery,"petrecovery","ii"}, // [Valaris]
@@ -5282,66 +5310,77 @@ int buildin_checkweight(struct script_state *st)
 }
 
 /*==========================================
- *
+ * getitem <item id>,<amount>{,<character ID>};
+ * getitem "<item name>",<amount>{,<character ID>};
  *------------------------------------------
  */
 int buildin_getitem(struct script_state *st)
 {
 	int nameid,amount,flag = 0;
-	struct item item_tmp;
+	struct item it;
 	struct map_session_data *sd;
 	struct script_data *data;
 
-	sd = script_rid2sd(st);
-
-	data=&(st->stack->stack_data[st->start+2]);
+	data=script_getdata(st,2);
 	get_val(st,data);
-	if( data->type==C_STR || data->type==C_CONSTSTR ){
+	if( script_isstring(data) )
+	{// "<item name>"
 		const char *name=conv_str(st,data);
 		struct item_data *item_data = itemdb_searchname(name);
-		if( item_data == NULL) {
-			ShowWarning("buildin_getitem: Nonexistant item %s requested.\n", name);
+		if( item_data == NULL ){
+			ShowError("buildin_getitem: Nonexistant item %s requested.\n", name);
+			report_src(st);
 			return 1; //No item created.
 		}
 		nameid=item_data->nameid;
-	}else
+	} else if( script_isint(data) )
+	{// <item id>
 		nameid=conv_num(st,data);
+		//Violet Box, Blue Box, etc - random item pick
+		if( nameid < 0 ) {
+			nameid=itemdb_searchrandomid(-nameid);
+			flag = 1;
+		}
+		if( nameid <= 0 || !itemdb_exists(nameid) ){
+			ShowError("buildin_getitem: Nonexistant item %d requested.\n", nameid);
+			report_src(st);
+			return 1; //No item created.
+		}
+	} else {
+		ShowError("buildin_getitem: invalid data type for argument #1 (%d).", data->type);
+		report_src(st);
+		return 1;
+	}
 
-	if ( ( amount=conv_num(st,& (st->stack->stack_data[st->start+3])) ) <= 0)
+	// <amount>
+	if( (amount=conv_num(st, script_getdata(st,3))) <= 0)
 		return 0; //return if amount <=0, skip the useles iteration
 
-	//Violet Box, Blue Box, etc - random item pick
-	if(nameid <0) {
-		nameid=itemdb_searchrandomid(-nameid);
-		flag = 1;
-	}
-
-	if(nameid <= 0 || !itemdb_exists(nameid)) {
-		ShowWarning("buildin_getitem: Nonexistant item %d requested.\n", nameid);
-		return 1; //No item created.
-	}
-		
-	malloc_set(&item_tmp,0,sizeof(item_tmp));
-	item_tmp.nameid=nameid;
+	malloc_set(&it,0,sizeof(it));
+	it.nameid=nameid;
 	if(!flag)
-		item_tmp.identify=1;
+		it.identify=1;
 	else
-		item_tmp.identify=itemdb_isidentified(nameid);
-	if( st->end>st->start+5 ) //アイテムを指定したIDに渡す
-		sd=map_id2sd(conv_num(st,& (st->stack->stack_data[st->start+5])));
-	if(sd == NULL) //アイテムを渡す相手がいなかったらお帰り
+		it.identify=itemdb_isidentified(nameid);
+	if( script_hasdata(st,4) )
+	{// <character ID>
+		sd=map_id2sd(conv_num(st,script_getdata(st,4)));
+	} else
+	{// attached player
+		sd=script_rid2sd(st);
+	}
+	if( sd == NULL ) // no target
 		return 0;
-	if(pet_create_egg(sd, nameid))
+	if( pet_create_egg(sd, nameid) )
 		amount = 1; //This is a pet!
-	else
-	if((flag = pc_additem(sd,&item_tmp,amount))) {
+	else if( (flag=pc_additem(sd,&it,amount)) ){
 		clif_additem(sd,0,0,flag);
-		if (pc_candrop(sd, &item_tmp))
-			map_addflooritem(&item_tmp,amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+		if( pc_candrop(sd,&it) )
+			map_addflooritem(&it,amount,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 	}
 
 	//Logs items, got from (N)PC scripts [Lupus]
-	if(log_config.enable_logs&0x40)
+	if(log_config.enable_logs&LOG_SCRIPT_TRANSACTIONS)
 		log_pick_pc(sd, "N", nameid, amount, NULL);
 
 	return 0;
@@ -9550,26 +9589,45 @@ int buildin_strmobinfo(struct script_state *st)
 
 /*==========================================
  * Summon guardians [Valaris]
+ * guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>};
  *------------------------------------------
  */
 int buildin_guardian(struct script_state *st)
 {
 	int class_=0,amount=1,x=0,y=0,guardian=0;
-	char *str,*map,*event="";
+	char *str,*map,*evt="";
+	struct script_data *data;
 
-	map	=conv_str(st,& (st->stack->stack_data[st->start+2]));
-	x	=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	y	=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	str	=conv_str(st,& (st->stack->stack_data[st->start+5]));
-	class_=conv_num(st,& (st->stack->stack_data[st->start+6]));
-	amount=conv_num(st,& (st->stack->stack_data[st->start+7]));
-	event=conv_str(st,& (st->stack->stack_data[st->start+8]));
-	if( st->end>st->start+9 )
-		guardian=conv_num(st,& (st->stack->stack_data[st->start+9]));
+	map	  =conv_str(st,script_getdata(st,2));
+	x	  =conv_num(st,script_getdata(st,3));
+	y	  =conv_num(st,script_getdata(st,4));
+	str	  =conv_str(st,script_getdata(st,5));
+	class_=conv_num(st,script_getdata(st,6));
+	amount=conv_num(st,script_getdata(st,7));
 
-	check_event(st, event);
+	if( script_hasdata(st,9) )
+	{// "<event label>",<guardian index>
+		evt=conv_str(st,script_getdata(st,8));
+		guardian=conv_num(st,script_getdata(st,9));
+	} else if( script_hasdata(st,8) ){
+		data=script_getdata(st,8);
+		get_val(st,data);
+		if( script_isstring(data) )
+		{// "<event label>"
+			evt=conv_str(st,script_getdata(st,8));
+		} else if( script_isint(data) )
+		{// <guardian index>
+			guardian=conv_num(st,script_getdata(st,8));
+		} else {
+			ShowError("buildin_guardian: invalid data type for argument #8 (%d).", data->type);
+			report_src(st);
+			return 1;
+		}
+	}
 
-	mob_spawn_guardian(map_id2sd(st->rid),map,x,y,str,class_,amount,event,guardian);
+	check_event(st, evt);
+
+	mob_spawn_guardian(map_id2sd(st->rid),map,x,y,str,class_,amount,evt,guardian);
 
 	return 0;
 }
