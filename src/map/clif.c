@@ -2585,8 +2585,8 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 	switch(type){
 		// 00b0
 	case SP_WEIGHT:
-		pc_checkweighticon(sd);
-		WFIFOW(fd,0)=0xb0;	//Need to re-set as pc_checkweighticon can alter the buffer. [Skotlex]
+		pc_updateweightstatus(sd);
+		WFIFOW(fd,0)=0xb0;	//Need to re-set as pc_updateweightstatus can alter the buffer. [Skotlex]
 		WFIFOW(fd,2)=type;
 		WFIFOL(fd,4)=sd->weight;
 		break;
@@ -8914,7 +8914,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
-		
+
 	switch(action_type) {
 	case 0x00: // once attack
 	case 0x07: // continuous attack

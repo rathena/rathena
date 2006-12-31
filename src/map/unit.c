@@ -1147,7 +1147,7 @@ int unit_unattackable(struct block_list *bl) {
  *------------------------------------------
  */
 
-int unit_attack(struct block_list *src,int target_id,int type)
+int unit_attack(struct block_list *src,int target_id,int continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
@@ -1160,9 +1160,18 @@ int unit_attack(struct block_list *src,int target_id,int type)
 		return 1;
 	}
 
-	if(src->type == BL_PC && target->type==BL_NPC) { // monster npcs [Valaris]
-		npc_click((TBL_PC*)src,(TBL_NPC*)target); // submitted by leinsirk10 [Celest]
-		return 0;
+	if( src->type == BL_PC ){
+		TBL_PC* sd = (TBL_PC*)src;
+		if( target->type == BL_NPC )
+		{// monster npcs [Valaris]
+			npc_click(sd,(TBL_NPC*)target); // submitted by leinsirk10 [Celest]
+			return 0;
+		} else if( pc_is90overweight(sd) )
+		{// overwheight - stop attacking and walking
+			unit_stop_attack(src);
+			unit_stop_walking(src,1);
+			return 0;
+		}
 	}
 
 	if(battle_check_target(src,target,BCT_ENEMY)<=0 ||
@@ -1173,10 +1182,10 @@ int unit_attack(struct block_list *src,int target_id,int type)
 	}
 
 	ud->target = target_id;
-	ud->state.attack_continue = type;
-	if (type) //If you re to attack continously, set to auto-case character
+	ud->state.attack_continue = continuous;
+	if (continuous) //If you're to attack continously, set to auto-case character
 		ud->chaserange = status_get_range(src);
-	
+
 	//Just change target/type. [Skotlex]
 	if(ud->attacktimer != -1)
 		return 0;

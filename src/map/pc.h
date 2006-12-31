@@ -98,8 +98,8 @@ enum {
 #define pc_isfalcon(sd) ((sd)->sc.option&OPTION_FALCON)
 #define pc_isriding(sd) ((sd)->sc.option&OPTION_RIDING)
 #define pc_isinvisible(sd) ((sd)->sc.option&OPTION_INVISIBLE)
-#define pc_is50overweight(sd) (sd->weight*2 >= sd->max_weight) 
-#define pc_is90overweight(sd) (sd->weight*10 >= sd->max_weight*9)
+#define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
+#define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 #define pc_maxparameter(sd) ((sd->class_&JOBL_BABY) ? battle_config.max_baby_parameter : battle_config.max_parameter)
 
 #define pc_stop_attack(sd) { if (sd->ud.attacktimer!=-1) { unit_stop_attack(&sd->bl); sd->ud.target = 0; } }
@@ -159,7 +159,7 @@ int pc_cartitem_amount(struct map_session_data *sd,int idx,int amount);
 int pc_takeitem(struct map_session_data*,struct flooritem_data*);
 int pc_dropitem(struct map_session_data*,int,int);
 
-int pc_checkweighticon(struct map_session_data *sd);
+int pc_updateweightstatus(struct map_session_data *sd);
 
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);

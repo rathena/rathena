@@ -1089,37 +1089,34 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd) {
 }
 
 /*==========================================
- * 重量アイコンの確認
+ * Updates the weight status
  *------------------------------------------
  */
-int pc_checkweighticon(struct map_session_data *sd)
+int pc_updateweightstatus(struct map_session_data *sd)
 {
 	int flag=0;
 
 	nullpo_retr(0, sd);
 
-	//Consider the battle option 50% criteria....
-	if(sd->weight*100 >= sd->max_weight*battle_config.natural_heal_weight_rate)
-		flag=1;
-	if(sd->weight*10 >= sd->max_weight*9)
+	if( pc_is90overweight(sd) )
 		flag=2;
+	else if( pc_is50overweight(sd) )
+		flag=1;
 
-	if(flag==1){
-		if(sd->sc.data[SC_WEIGHT50].timer==-1)
-			sc_start(&sd->bl,SC_WEIGHT50,100,0,0);
-	}else{
-		if(sd->sc.data[SC_WEIGHT50].timer!=-1)
-			status_change_end(&sd->bl,SC_WEIGHT50,-1);
-	} 
-	if(flag==2){
-		if(sd->sc.data[SC_WEIGHT90].timer==-1)
-			sc_start(&sd->bl,SC_WEIGHT90,100,0,0);
-	}else{
-		if(sd->sc.data[SC_WEIGHT90].timer!=-1)
-			status_change_end(&sd->bl,SC_WEIGHT90,-1);
-	}
+	// 50% overweight icon
+	if( flag == 1 && sd->sc.data[SC_WEIGHT50].timer == -1 )
+		sc_start(&sd->bl,SC_WEIGHT50,100,0,0);
+	else if( sd->sc.data[SC_WEIGHT50].timer != -1 )
+		status_change_end(&sd->bl,SC_WEIGHT50,-1);
+	// 90% overwheight icon
+	if( flag == 2 && sd->sc.data[SC_WEIGHT90].timer == -1 )
+		sc_start(&sd->bl,SC_WEIGHT90,100,0,0);
+	else if( sd->sc.data[SC_WEIGHT90].timer != -1 )
+		status_change_end(&sd->bl,SC_WEIGHT90,-1);
+	// update overweight status
 	if (flag != sd->regen.state.overweight)
 		sd->regen.state.overweight = flag;
+
 	return 0;
 }
 

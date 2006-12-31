@@ -36,7 +36,7 @@ int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, i
 
 // 攻撃関連
 int unit_stop_attack(struct block_list *bl);
-int unit_attack(struct block_list *src,int target_id,int type);
+int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
 
 // スキル使用

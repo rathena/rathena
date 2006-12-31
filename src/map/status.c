@@ -2273,7 +2273,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		clif_updatestatus(sd,SP_WEIGHT);
 	if(b_max_weight != sd->max_weight) {
 		clif_updatestatus(sd,SP_MAXWEIGHT);
-		pc_checkweighticon(sd);
+		pc_updateweightstatus(sd);
 	}
 	if(b_status.str != status->str)
 		clif_updatestatus(sd,SP_STR);
