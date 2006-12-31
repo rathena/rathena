@@ -275,6 +275,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 	
 		if(sc->data[SC_AUTOGUARD].timer != -1 && flag&BF_WEAPON &&
+			skill_num != WS_CARTTERMINATION && // FIXME(?): Quick and dirty check, but HSCR really bypasses Guard [DracoRPG]
 			rand()%100 < sc->data[SC_AUTOGUARD].val2) {
 			int delay;
 			clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sc->data[SC_AUTOGUARD].val1,1);
@@ -2796,7 +2797,7 @@ int battle_calc_return_damage(struct block_list *bl, int skill, int *damage, int
 	BL_CAST(BL_PC, bl, sd);
 	sc = status_get_sc(bl);
 
-	if(flag&BF_WEAPON) {
+	if(flag&BF_WEAPON && skill != WS_CARTTERMINATION) { // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
 		//Bounces back part of the damage.
 		if (flag & BF_SHORT) {
 			if (sd && sd->short_weapon_damage_return)
