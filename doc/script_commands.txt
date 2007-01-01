@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 2.9
+//= 2.10.20070101
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -33,11 +33,13 @@
 //= 2.7a - delitem2, countitems2 commands [Lupus]
 //= 2.7b - clone command [Skotlex]
 //= 2.7c - disguise / undisguise, query_sql commands [Lupus]
-
-//= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a clearer
-//=	  explanation of atoi.Gave a better explanation of OnLabels and modified
-//=	  monster explanation due that L_Label isn't working with monster.
-//= 2.9.20061230 - Updated getitem and guardian  [FlavioJS]
+//= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a
+//=       clearer explanation of atoi.Gave a better explanation of OnLabels
+//=       and modified monster explanation due that L_Label isn't working with
+//=       monster.
+//= 2.9.20061230 - Updated getitem and guardian. [FlavioJS]
+//= 2.10.20070101 - added sleep,sleep2,awake and updated the variables section.
+//=       [FlavioJS]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -60,6 +62,9 @@ switch to Lua scripting language, which will rid us of most of the problems
 mentioned herein and make a new manual necessary. But while we have this one, we 
 should make the most of it, and it might be helpful in making sure the new Lua 
 engine can actually do everything useful that the old engine could.
+Note: The change to lua isn't going to happen because we are switching to eApp.
+      eApp has it's own scripting language and a converter to convert scripts
+      from the current script language.
 
 This is not a place to teach you basic programming. This document will not teach 
 you basic programming by itself. It's more of a reference for those who have at 
@@ -422,51 +427,88 @@ to 'mes 0x10' it will print '16'.
 
 This is not used much, but it pays to know about it.
 
-Variables and scope
--------------------
+Variables
+---------
 
 The meat of every programming language is variables - places where you store 
 data. 
 
-Variables are divided into global (not attached to any specific RID, and 
-independent of whoever triggered the object) and local (attached to a specific 
-character object or a specific account object). They are further divided into 
-permanent (they come back when the server resets) and temporary (they only 
-persist until the server dies). This is what's called variable scope. :)
+Variables are divided into and uniquely identified by the combination of:
+prefix  - determines the scope and extent (or lifetime) of the variable
+name    - an identifier consisting of '_' and alfanumeric characters
+postfix - determines the type of the variable: integer or string
 
-Unlike in more advanced languages, all temporary variables are essentially 
-'global', but not in the sense described above - if one NPC sets a temporary 
-variable, even if it is character based, if that character triggers another NPC 
-object, the variable will still be there, so you should be careful and set the 
-variables you mean to be temporary to something sensible before using them. It 
-also pays to keep variable names descriptive and reasonably long.
+Scope can be:
+global    - global to all servers
+local     - local to the server
+account   - attached to the account of the character identified by RID
+character - attached to the character identified by RID
+npc       - attached to the NPC
 
-Variable scope is defined by a prefix before the variable name:
+Extent can be:
+permanent - Permanent NPC variables exist while the server is running.
+            Others still exist when the server resets.
+temporary - Temporary NPC variables exist while the script instance is running.
+            Others cease to exist when the server resets.
 
-" "  - Thats right, nothing before a variable, this a permanent variable 
-       attached to the character object.
-"@"  - A temporary version of a character-based variable.
-       SVN versions before 2094 revision and RC5 version will also treat 'l' as 
-       a temporary variable prefix, so bevare of having variable names starting 
-       with 'l', they will also be considered temporary, even if you didn't mean 
-       them to be!
-"$"  - A global permanent variable.
-       They are stored in "save\mapreg.txt" file and are the only kind of 
-       variables stored in a text file in the SQL version.
-"$@" - A global temporary variable.
-       This is important for scripts which are called with no RID attached, that 
-       is, not triggered by a specific character object.
-"#"  - A permanent account-based variable.
-       They are stored with all the account data in "save\accreg.txt" in TXT 
-       versions and in the SQL versions in the 'global_reg_value' table using
-		 type 2.
-"##" -	A permanent account-based variable stored by the login server.
-	They are stored in "save\account.txt" and in the SQL versions in the
-	'global_reg_value' table, using type 1. The only difference you will
-	note from normal # variables is when you have multiple char-servers
-	connected to the same login server. The # variables are unique to each
-	char-server, while the ## variables are shared by all these
-	char-servers.
+Prefix: scope and extent
+nothing  - A permanent variable attached to the character, the default 
+           variable type.
+"@"      - A temporary variable attached to the character.
+           SVN versions before 2094 revision and RC5 version will also treat
+           'l' as a temporary variable prefix, so beware of having variable
+           names starting with 'l' if you want full backward compatibility.
+"$"      - A global permanent variable.
+           They are stored in "save\mapreg.txt" file and are the only kind of
+           variables stored in a text file in the SQL version.
+"$@"     - A global temporary variable.
+           This is important for scripts which are called with no RID
+           attached, that is, not triggered by a specific character object.
+"."      - A variable that exists on the NPC as long as the server is running.
+           They are only accessible from inside the NPC or by calling 
+           'getvariableofnpc'.
+".@"     - A temporary variable that exists until the script instance ends.
+           They are only accessible in that NPC instance.
+"#"      - A permanent local account variable.
+           They are stored with all the account data in "save\accreg.txt" in
+           TXT versions and in the SQL versions in the 'global_reg_value'
+           table using type 2.
+"##"     - A permanent global account variable stored by the login server.
+           They are stored in "save\account.txt" and in the SQL versions in the
+           'global_reg_value' table, using type 1. The only difference you will
+           note from normal # variables is when you have multiple char-servers
+           connected to the same login server. The # variables are unique to
+           each char-server, while the ## variables are shared by all these
+           char-servers.
+
+Postfix: integer or string
+nothing - integer variable, can store positive and negative numbers, but only 
+          whole numbers (so don't expect to do any fractional math)
+'$'     - string variable, can store text
+
+Examples:
+  name  - permanent character integer variable
+  name$ - permanent character string variable
+ @name  - temporary character integer variable
+ @name$ - temporary character string variable
+ $name  - permanent global integer variable
+ $name$ - permanent global string variable
+$@name  - temporary global integer variable
+$@name$ - temporary global string variable
+ .name  - permanent npc integer variable
+ .name$ - permanent npc string variable
+.@name  - temporary npc integer variable
+.@name$ - temporary npc string variable
+ #name  - permanent local account integer variable
+ #name$ - permanent local account string variable
+##name  - permanent global account integer variable
+##name$ - permanent global account string variable
+
+If a variable was never set, it is considered to equal zero for integer 
+variables or an empty string ("", nothing between the quotes) for string 
+variables. Once you set it to that, the variable is as good as forgotten 
+forever, and no trace remains of it even if it was stored with character or 
+account data.
 
 Some variables are special, that is, they are already defined for you by the 
 scripting engine. You can see the full list somewhere in 'db/const.txt', which 
@@ -508,21 +550,7 @@ or a function to set something, it's usually preferable to use that instead. The
 notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of zeny.
 
-All of the above variables store numbers. They can store positive and negative 
-numbers, but only whole numbers (so don't expect to do any fractional math). You 
-can also store a string in a variable, but this means naming it specially to 
-denote it contains text rather than a number:
 
-@variable$ is a temporary string variable.
-$@variable$ is a global temporary string variable.
-
-Etc, etc.
-
-If a variable was never set, it is considered to equal zero (for number 
-variables) or an empty string ("", nothing between the quotes) for string 
-variables. Once you set it to that, the variable is as good as forgotten 
-forever, and no trace remains of it even if it was stored with character or 
-account data.
 
 Arrays
 ------
@@ -3306,6 +3334,21 @@ Example 4:
     // Notice the 'close2'. If there were a 'next' there the timer would be 
     // changed only after the player pressed the 'next' button.
     end;
+ 
+---------------------------------------
+ 
+*sleep {<milliseconds>};
+*sleep2 {<milliseconds>};
+*awake "<NPC name>";
+
+Sleep Timers:
+'sleep' and 'sleep2' pauses the execution of the script.
+'sleep' detaches the player from the script and 'sleep2' doesn't.
+'awake' forces all sleep queues on an NPC to execute.
+
+    sleep 10000; // Sleep for 10 seconds, without player attached.
+    sleep2 5000; // Sleep for 5 seconds, with player attached.
+    awake "npc_name"; // Awakes the NPC.
 
 ---------------------------------------
 
