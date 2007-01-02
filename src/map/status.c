@@ -5251,7 +5251,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_JOINTBEAT: // Random break [DracoRPG]
-			val2 = rand()%6; //Type of break
+			val2 = rand()%6; //Type of break -> [0,5]
 			if (val2 == 5) sc_start(bl,SC_BLEEDING,100,val1,skill_get_time2(StatusSkillChangeTable[type],val1));
 			break;
 

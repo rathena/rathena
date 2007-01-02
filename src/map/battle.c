@@ -1028,7 +1028,7 @@ static struct Damage battle_calc_weapon_attack(
 			if (tsc->data[SC_SLEEP].timer!=-1 )
 				cri <<=1;
 			if(tsc->data[SC_JOINTBEAT].timer != -1 &&
-				tsc->data[SC_JOINTBEAT].val2 == 6) // Always take crits with Neck broken by Joint Beat [DracoRPG]
+				tsc->data[SC_JOINTBEAT].val2 == 5) // Always take crits with Neck broken by Joint Beat [DracoRPG]
 				flag.cri=1;
 		}
 		switch (skill_num)
@@ -1213,12 +1213,12 @@ static struct Damage battle_calc_weapon_attack(
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_WEAPON)
 						wd.damage = sd->inventory_data[index]->weight*8/100; //80% of weight
-					
+
 					ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
 					index = sstatus->str/10;
 					index = index*index;
 					ATK_ADD(index); //Add str bonus.
-					
+
 					switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
 						case 0: //Small: 125%
 							ATK_RATE(125);
@@ -1234,7 +1234,7 @@ static struct Damage battle_calc_weapon_attack(
 			case PA_SHIELDCHAIN:
 				if (sd) {
 					short index = sd->equip_index[EQI_HAND_L];
-					
+
 					wd.damage = sstatus->batk;
 
 					if (index >= 0 &&
