@@ -10093,11 +10093,6 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 void clif_parse_NpcNextClicked(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-#ifdef __WIN32
-	//For some extraordinarily eerie reason that noone has figured out yet, 
-	//windows native compiles NEED this nullpo_retv or the function is not found!
-	nullpo_retv(sd);
-#endif
 	npc_scriptcont(sd,RFIFOL(fd,2));
 }
 
@@ -10108,11 +10103,7 @@ void clif_parse_NpcNextClicked(int fd,struct map_session_data *sd)
 void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
-#define RFIFOL_(fd,pos) (*(int*)(session[fd]->rdata+session[fd]->rdata_pos+(pos)))
-	//Input Value overflow Exploit FIX
-	sd->npc_amount=RFIFOL_(fd,6); //fixed by Lupus. npc_amount is (int) but was RFIFOL changing it to (unsigned int)
-#undef RFIFOL_
-
+	sd->npc_amount=(int)RFIFOL(fd,6);
 	npc_scriptcont(sd,RFIFOL(fd,2));
 }
 

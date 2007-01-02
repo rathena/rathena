@@ -917,7 +917,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 
 // [orn] - skill ok to cast? and when?	//homunculus
 int skillnotok_hom (int skillid, struct homun_data *hd)
-{	
+{
 	int i = skillid;
 	nullpo_retr (1, hd);
 	
@@ -1060,7 +1060,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				}
 			}
 		}
-	
+
 		if (sc && sc->count) {	
 		// Enchant Poison gives a chance to poison attacked enemies
 			if(sc->data[SC_ENCPOISON].timer != -1) //Don't use sc_start since chance comes in 1/10000 rate.
@@ -1129,7 +1129,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case WZ_VERMILION:
 		sc_start(bl,SC_BLIND,4*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-		
+
 	case HT_FREEZINGTRAP:
 		sc_start(bl,SC_FREEZE,(3*skilllv+35),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -1215,7 +1215,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if (tstatus->size==1) //Only stuns mid-sized mobs.
 			sc_start(bl,SC_STUN,(30+10*skilllv),skilllv,skill_get_time(skillid,skilllv));
 		break;
-			
+
 	case NPC_PETRIFYATTACK:
 		sc_start4(bl,SkillStatusChangeTable(skillid),50+10*skilllv,
 			skilllv,0,0,skill_get_time(skillid,skilllv), 
@@ -1309,7 +1309,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case TK_DOWNKICK:
 		sc_start(bl,SC_STUN,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-			
+
 	case TK_JUMPKICK:
 		//Cancel out Soul Linker status of the target. [Skotlex]
 		if (tsc->count) {
@@ -1373,7 +1373,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if (type)
 				rate += sd->addeff[i].arrow_rate;
 			if (!rate) continue;
-			
+
 			if (!(sd->addeff[i].flag&ATF_LONG && sd->addeff[i].flag&ATF_SHORT))
 			{	//Trigger has range consideration.
 				if ((sd->addeff[i].flag&ATF_LONG && !type) ||
@@ -1382,7 +1382,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			}
 			type =  sd->addeff[i].id;
 			skill = skill_get_time2(StatusSkillChangeTable[type],7);
-			
+
 			if (sd->addeff[i].flag&ATF_TARGET)
 				status_change_start(bl,type,rate,7,0,0,0,skill,0);
 			
@@ -6984,7 +6984,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
-	struct map_session_data *sd;
+	TBL_PC* sd;
+	TBL_PC* tsd;
 	struct status_data *tstatus, *sstatus;
 	struct status_change *tsc, *sc;
 	struct skill_unit_group_tickset *ts;
@@ -7001,6 +7002,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	nullpo_retr(0, sg=src->group);
 	nullpo_retr(0, ss=map_id2bl(sg->src_id));
 	BL_CAST(BL_PC, ss, sd);
+	BL_CAST(BL_PC, bl, tsd);
 	tsc = status_get_sc(bl);
 	tstatus = status_get_status_data(bl);
 	if (sg->state.magic_power)  //For magic power. 
@@ -7251,23 +7253,23 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						break;
 					case 1: // End all negative status
 						status_change_clear_buffs(bl,2);
-						if (sd) clif_gospel_info(sd, 0x15);
+						if (tsd) clif_gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status
 						sc_start(bl,SC_SCRESIST,100,100,type);
-						if (sd) clif_gospel_info(sd, 0x16);
+						if (tsd) clif_gospel_info(tsd, 0x16);
 						break;
 					case 3: // MaxHP +100%
 						sc_start(bl,SC_INCMHPRATE,100,100,type);
-						if (sd) clif_gospel_info(sd, 0x17);
+						if (tsd) clif_gospel_info(tsd, 0x17);
 						break;
 					case 4: // MaxSP +100%
 						sc_start(bl,SC_INCMSPRATE,100,100,type);
-						if (sd) clif_gospel_info(sd, 0x18);
+						if (tsd) clif_gospel_info(tsd, 0x18);
 						break;
 					case 5: // All stats +20
 						sc_start(bl,SC_INCALLSTATUS,100,20,type);
-						if (sd) clif_gospel_info(sd, 0x19);
+						if (tsd) clif_gospel_info(tsd, 0x19);
 						break;
 					case 6: // Level 10 Blessing
 						sc_start(bl,SC_BLESSING,100,10,type);
@@ -7277,24 +7279,24 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						break;
 					case 8: // Enchant weapon with Holy element
 						sc_start(bl,SC_ASPERSIO,100,1,type);
-						if (sd) clif_gospel_info(sd, 0x1c);
+						if (tsd) clif_gospel_info(tsd, 0x1c);
 						break;
 					case 9: // Enchant armor with Holy element
 						sc_start(bl,SC_BENEDICTIO,100,1,type);
-						if (sd) clif_gospel_info(sd, 0x1d);
+						if (tsd) clif_gospel_info(tsd, 0x1d);
 						break;
 					case 10: // DEF +25%
 						sc_start(bl,SC_INCDEFRATE,100,25,type);
-						if (sd) clif_gospel_info(sd, 0x1e);
+						if (tsd) clif_gospel_info(tsd, 0x1e);
 						break;
 					case 11: // ATK +100%
 						sc_start(bl,SC_INCATKRATE,100,100,type);
-						if (sd) clif_gospel_info(sd, 0x1f);
+						if (tsd) clif_gospel_info(tsd, 0x1f);
 						break;
 					case 12: // HIT/Flee +50
 						sc_start(bl,SC_INCHIT,100,50,type);
 						sc_start(bl,SC_INCFLEE,100,50,type);
-						if (sd) clif_gospel_info(sd, 0x20);
+						if (tsd) clif_gospel_info(tsd, 0x20);
 						break;
 				}
 			}
