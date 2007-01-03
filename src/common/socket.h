@@ -23,7 +23,6 @@ extern time_t last_tick;
 extern time_t stall_time;
 
 // define declaration
-#define TURBO
 
 #define RFIFOSPACE(fd) (session[fd]->max_rdata-session[fd]->rdata_size)
 #ifdef TURBO
