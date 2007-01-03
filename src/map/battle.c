@@ -1027,9 +1027,6 @@ static struct Damage battle_calc_weapon_attack(
 		{
 			if (tsc->data[SC_SLEEP].timer!=-1 )
 				cri <<=1;
-			if(tsc->data[SC_JOINTBEAT].timer != -1 &&
-				tsc->data[SC_JOINTBEAT].val2 == 5) // Always take crits with Neck broken by Joint Beat [DracoRPG]
-				flag.cri=1;
 		}
 		switch (skill_num)
 		{
@@ -1131,7 +1128,7 @@ static struct Damage battle_calc_weapon_attack(
 		if(wd.flag&BF_LONG && !skill_num && //Fogwall's hit penalty is only for normal ranged attacks.
 			tsc && tsc->data[SC_FOGWALL].timer!=-1)
 			hitrate-=50;
-			
+
 		if(sd && flag.arrow)
 			hitrate += sd->arrow_hit;
 		if(skill_num)
@@ -1843,7 +1840,7 @@ static struct Damage battle_calc_weapon_attack(
 
 	if(sd && (skill=pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0) 
 		ATK_ADD(skill*2);
-	
+
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
@@ -1956,10 +1953,10 @@ static struct Damage battle_calc_weapon_attack(
 	if (tsd) {
 		short s_race2,s_class;
 		short cardfix=1000;
-		
+
 		s_race2 = status_get_race2(src);
 		s_class = status_get_class(src);
-		
+
 		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
 		if (flag.lh && s_ele_ != s_ele)
 			cardfix=cardfix*(100-tsd->subele[s_ele_])/100;
@@ -1967,14 +1964,14 @@ static struct Damage battle_calc_weapon_attack(
  		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 		cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
-		
+
 		for(i=0;i<tsd->add_dmg_count;i++) {
 			if(tsd->add_dmg[i].class_ == s_class) {
 				cardfix=cardfix*(100+tsd->add_dmg[i].rate)/100;
 				break;
 			}
 		}
-	
+
 		if(wd.flag&BF_SHORT)
 			cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
 		else	// BF_LONG (there's no other choice)
@@ -1994,7 +1991,7 @@ static struct Damage battle_calc_weapon_attack(
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;
 	}
-	
+
 	if(sd && !skill_num && !flag.cri)
 	{	//Check for double attack.
 		if(((skill_lv = pc_checkskill(sd,TF_DOUBLE)) > 0 && sd->weapontype1 == W_DAGGER) || sd->double_rate > 0)
@@ -2016,7 +2013,7 @@ static struct Damage battle_calc_weapon_attack(
 			wd.type = 0x08;
 		}
 	}
-	
+
 	if (sd)
 	{
 		if (!flag.rh && flag.lh) 
@@ -2051,10 +2048,10 @@ static struct Damage battle_calc_weapon_attack(
 
 	if(!flag.rh && wd.damage)
 		wd.damage=0;
-	
+
 	if(!flag.lh && wd.damage2)
 		wd.damage2=0;
-	
+
 	if(wd.damage + wd.damage2)
 	{	//There is a total damage value
 		if(!wd.damage2) {
@@ -2082,6 +2079,10 @@ static struct Damage battle_calc_weapon_attack(
 	{	//Breaker's int-based damage (a misc attack?)
 		struct Damage md = battle_calc_misc_attack(src, target, skill_num, skill_lv, wflag);
 		wd.damage += md.damage;
+	} else if( skill_num == LK_JOINTBEAT && wflag&BREAK_NECK ) {
+		//##TODO should this be here?[FlavioJS]
+		// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
+		wd.damage *= 2; // 2x damage when breaking neck
 	}
 
 	if (wd.damage || wd.damage2) {
@@ -3002,12 +3003,12 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 	}
 	else if (sc && sc->data[SC_SACRIFICE].timer != -1)
 		return skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE].val1,tick,0);
-			
-	wd = battle_calc_weapon_attack(src,target, 0, 0,0);
+
+	wd = battle_calc_weapon_attack(src, target, 0, 0, flag);
 
 	if (sd && sd->state.arrow_atk) //Consume arrow.
 		battle_consume_ammo(sd, 0, 0);
-	
+
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
 		rdamage = battle_calc_return_damage(target, 0, &damage, wd.flag);

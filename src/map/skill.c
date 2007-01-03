@@ -998,7 +998,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		md = (struct mob_data *)src;
 		break;
 	}
-	
+
 	switch (bl->type) {
 	case BL_PC:
 		dstsd=(struct map_session_data *)bl;
@@ -1061,7 +1061,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			}
 		}
 
-		if (sc && sc->count) {	
+		if (sc && sc->count) {
 		// Enchant Poison gives a chance to poison attacked enemies
 			if(sc->data[SC_ENCPOISON].timer != -1) //Don't use sc_start since chance comes in 1/10000 rate.
 				status_change_start(bl,SC_POISON,sc->data[SC_ENCPOISON].val2,
@@ -1134,7 +1134,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl,SC_FREEZE,(3*skilllv+35),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
-	 case HT_FLASHER:
+	case HT_FLASHER:
 		sc_start(bl,SC_BLIND,(10*skilllv+30),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
@@ -1179,7 +1179,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case AM_DEMONSTRATION:
 		skill_break_equip(bl, EQP_WEAPON, 100*skilllv, BCT_ENEMY);
 		break;
-		
+
 	case CR_SHIELDCHARGE:
 		sc_start(bl,SC_STUN,(15+skilllv*5),skilllv,skill_get_time2(skillid,skilllv));
 		break;
@@ -1275,11 +1275,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(bl, SC_BLEEDING,50, skilllv, skill_get_time2(skillid,skilllv));
 		break;
-
+/*
 	case LK_JOINTBEAT:
-		sc_start(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,skill_get_time2(skillid,skilllv));
+	{
+		int flag = 0;
+		//##TODO how should this be done? the ailment has to be calculated before because it also affects the damage [FlavioJS]
+		sc_start2(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
 		break;
-
+	}
+*/
 	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*SkillLV% chance.
 		switch(rand()%3) {
@@ -1385,7 +1389,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (sd->addeff[i].flag&ATF_TARGET)
 				status_change_start(bl,type,rate,7,0,0,0,skill,0);
-			
+
 			if (sd->addeff[i].flag&ATF_SELF)
 				status_change_start(src,type,rate,7,0,0,0,skill,0);
 		}
@@ -1409,7 +1413,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
-			
+
 			if (skillnotok(skill, sd))
 				continue;
 
@@ -1422,7 +1426,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				tbl = src;
 			else
 				tbl = bl;
-			
+
 			if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, skill, skilllv)))
 				continue; //Autoskills DO check for target-src range. [Skotlex]
 			rate = skill_get_inf(skill);
@@ -1469,7 +1473,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if (skill < 2000)
 			mob_class_change(dstmd,class_);
 	}
-	
 
 	return 0;
 }
@@ -1503,7 +1506,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	tsc = status_get_sc(bl);
 	if (tsc && !tsc->count)
 		tsc = NULL;
-	
+
 	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, bl, dstsd);
 
@@ -1567,7 +1570,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				status_change_start(bl,type,rate,7,0,0,0,time,0);
 		}
 	}
-	
+
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
 	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{
@@ -1636,7 +1639,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 	BL_CAST(BL_PC, bl, sd);
 	if (sc && !sc->count)
 		sc = NULL;
-	
+
 	if (sd) {
 		if (sd->unbreakable_equip)
 			where &= ~sd->unbreakable_equip;
@@ -1794,10 +1797,10 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 
 	if (!dx && !dy) //Could not knockback.
 		return 0;
-	
+
 	map_foreachinmovearea(clif_outsight, target, AREA_SIZE,
 		dx, dy, target->type==BL_PC?BL_ALL:BL_PC, target);
-		
+
 	if(su)
 		skill_unit_move_unit_group(su->group,target->m,dx,dy);
 	else
@@ -1805,7 +1808,7 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 
 	map_foreachinmovearea(clif_insight, target, AREA_SIZE,
 		-dx, -dy, target->type==BL_PC?BL_ALL:BL_PC, target);
-	
+
 	if(!(count&0x20000)) 
 		clif_blown(target);
 
@@ -2682,13 +2685,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (sd) clif_skill_fail(sd,skillid,0,0);
 		return 1;
 	}
-	
+
 	sc = status_get_sc(src);	
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded
-	
+
 	tstatus = status_get_status_data(bl);
-	
+
 	map_freeblock_lock();
 
 	switch(skillid)
@@ -2743,7 +2746,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case LK_AURABLADE:
 	case LK_SPIRALPIERCE:
 	case LK_HEADCRUSH:
-	case LK_JOINTBEAT:
 	case CG_ARROWVULCAN:
 	case HW_MAGICCRASHER:
 	case ITM_TOMAHAWK:
@@ -2773,6 +2775,20 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
+	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
+		switch( rand()%6 ){
+		case 0: flag |= BREAK_ANKLE; break;
+		case 1: flag |= BREAK_WRIST; break;
+		case 2: flag |= BREAK_KNEE; break;
+		case 3: flag |= BREAK_SHOULDER; break;
+		case 4: flag |= BREAK_WAIST; break;
+		case 5: flag |= BREAK_NECK; break;
+		}
+		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+		//##TODO this is a quick&dirty hack. How do I pass the selected ailment to skill_additional_effect? [FlavioJS]
+		sc_start2(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
 		break;
 
 	case MO_COMBOFINISH:
@@ -2806,7 +2822,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (unit_movepos(src, bl->x, bl->y, 0, 0))
 			clif_slide(src,bl->x,bl->y);
 		break;
-	
+
 	case SN_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 		//It won't shoot through walls since on castend there has to be a direct
@@ -2854,7 +2870,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (sc && sc->data[SC_BLADESTOP].timer != -1)
 			status_change_end(src,SC_BLADESTOP,-1);
 		break;
-	
+
 	case NJ_ISSEN:
 		if (sc) {
 		  	if (sc->data[SC_NEN].timer != -1)
@@ -3003,7 +3019,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
 		}
 		break;
-	
+
 	case KN_SPEARSTAB:
 		if(flag&1){
 			if (bl->id==skill_area_temp[1])
@@ -3299,7 +3315,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	if (skillid > 0)
 		type = SkillStatusChangeTable(skillid);
-	
+
 	tsc = status_get_sc(bl);
 
 	map_freeblock_lock();

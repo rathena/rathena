@@ -402,6 +402,15 @@ enum {
 	SI_ACCURACY			= 210
 };
 
+// JOINTBEAT stackable ailments
+#define BREAK_ANKLE    0x01 // MoveSpeed reduced by 50%
+#define BREAK_WRIST    0x02 // ASPD reduced by 25%
+#define BREAK_KNEE     0x04 // MoveSpeed reduced by 30%, ASPD reduced by 10%
+#define BREAK_SHOULDER 0x08 // DEF reduced by 50%
+#define BREAK_WAIST    0x10 // DEF reduced by 25%, ATK reduced by 25%
+#define BREAK_NECK     0x20 // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+#define BREAK_FLAGS    ( BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK )
+
 extern int current_equip_item_index;
 extern int current_equip_card_id;
 
@@ -611,6 +620,7 @@ int status_get_sc_def(struct block_list *bl, int type);
 
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
 #define sc_start(bl, type, rate, val1, tick) status_change_start(bl,type,100*(rate),val1,0,0,0,tick,0)
+#define sc_start2(bl, type, rate, val1, val2, tick) status_change_start(bl,type,100*(rate),val1,val2,0,0,tick,0)
 #define sc_start4(bl, type, rate, val1, val2, val3, val4, tick) status_change_start(bl,type,100*(rate),val1,val2,val3,val4,tick,0)
 
 int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag);

@@ -95,7 +95,7 @@ int clif_additem(struct map_session_data*,int,int,int);	//self
 int clif_delitem(struct map_session_data*,int,int);	//self
 int clif_updatestatus(struct map_session_data*,int);	//self
 int clif_changestatus(struct block_list*,int,int);	//area
-int clif_damage(struct block_list *,struct block_list *,unsigned int,int,int,int,int,int,int);	// area
+int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);	// area
 #define clif_takeitem(src,dst) clif_damage(src,dst,0,0,0,0,0,1,0)
 int clif_changelook(struct block_list *,int,int);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
