@@ -8164,9 +8164,8 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
  *
  *------------------------------------------
  */
-void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
+void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 {
-	struct map_session_data *old_sd;
 	int cmd, account_id, char_id, login_id1, sex;
 	unsigned int client_tick; //The client tick is a tick, therefore it needs be unsigned. [Skotlex]
 	int packet_ver;	// 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
@@ -8178,32 +8177,56 @@ void clif_parse_WantToConnection(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	// Only valid packet version get here
 	packet_ver = clif_guess_PacketVer(fd, 1, NULL);
-	cmd = RFIFOW(fd,0);
-	
-	if (packet_ver <= 0)
-		return;
 
+	cmd = RFIFOW(fd,0);
 	account_id  = RFIFOL(fd, packet_db[packet_ver][cmd].pos[0]);
 	char_id     = RFIFOL(fd, packet_db[packet_ver][cmd].pos[1]);
 	login_id1   = RFIFOL(fd, packet_db[packet_ver][cmd].pos[2]);
 	client_tick = RFIFOL(fd, packet_db[packet_ver][cmd].pos[3]);
 	sex         = RFIFOB(fd, packet_db[packet_ver][cmd].pos[4]);
-		
-	if ((old_sd = map_id2sd(account_id)) != NULL)
-	{	// if same account already connected, we disconnect the 2 sessions
-		//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
-		if (old_sd->state.finalsave || !old_sd->state.auth)
-			; //Previous player is not done loading.
-			//Or he has quit, but is not done saving on the charserver.
-		else if (old_sd->fd)
-			clif_authfail_fd(old_sd->fd, 2); // same id
-		else 
-			map_quit(old_sd);
-		clif_authfail_fd(fd, 8); // still recognizes last connection
+
+	if( packet_ver < 5 || // reject really old client versions
+			(packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) || // older than 6sept04
+			(packet_ver > 9 && (battle_config.packet_ver_flag & 1<<(packet_ver-9)) == 0)) // version not allowed
+	{// packet version rejected
+		WFIFOHEAD(fd,packet_len(0x6a));
+		WFIFOW(fd,0) = 0x6a;
+		WFIFOB(fd,2) = 5; // Your Game's EXE file is not the latest version
+		WFIFOSET(fd,packet_len(0x6a));
+		clif_setwaitclose(fd);
 		return;
+	} else
+	{// packet version accepted
+		TBL_PC* old_sd;
+
+		if( map_id2bl(account_id) != NULL )
+		{// non-player object already has that id
+			ShowError("clif_parse_WantToConnection: a non-player object already has id %d, please increase the starting account number\n", account_id);
+			WFIFOHEAD(fd,packet_len(0x6a));
+			WFIFOW(fd,0) = 0x6a;
+			WFIFOB(fd,2) = 3; // Rejected by server
+			WFIFOSET(fd,packet_len(0x6a));
+			clif_setwaitclose(fd);
+			return;
+
+		} else if( (old_sd=map_id2sd(account_id)) != NULL ){
+			// if same account already connected, we disconnect the 2 sessions
+			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
+			if (old_sd->state.finalsave || !old_sd->state.auth)
+				; //Previous player is not done loading.
+				//Or he has quit, but is not done saving on the charserver.
+			else if (old_sd->fd)
+				clif_authfail_fd(old_sd->fd, 2); // same id
+			else 
+				map_quit(old_sd);
+			clif_authfail_fd(fd, 8); // still recognizes last connection
+			return;
+		}
 	}
-	sd = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+
+	CREATE(sd, TBL_PC, 1);
 	sd->fd = fd;
 	sd->packet_ver = packet_ver;
 	session[fd]->session_data = sd;
@@ -11812,40 +11835,6 @@ int clif_parse(int fd) {
 
 	cmd = RFIFOW(fd,0);
 
-	/*
-	// These are remants of ladmin packet processing, only in the login server now. [FlavioJS]
-	// @see int parse_admin(int)
-
-	// 管理用パケット処理
-	if (cmd >= 30000) {
-		switch(cmd) {
-		case 0x7530: { //Why are we letting people know which version we are running?
-			WFIFOHEAD(fd, 10);
-			WFIFOW(fd,0) = 0x7531;
-			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
-			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
-			WFIFOB(fd,4) = ATHENA_REVISION;
-			WFIFOB(fd,5) = ATHENA_RELEASE_FLAG;
-			WFIFOB(fd,6) = ATHENA_OFFICIAL_FLAG;
-			WFIFOB(fd,7) = ATHENA_SERVER_MAP;
-			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
-			WFIFOSET(fd,10);
-			RFIFOSKIP(fd,2);
-			break;
-		}
-		case 0x7532: // 接続の切断
-			ShowWarning("clif_parse: session #%d disconnected for sending packet 0x04%x\n", fd, cmd);
-			session[fd]->eof=1;
-			break;
-		default:
-			ShowWarning("Unknown incoming packet (command: 0x%04x, session: %d), disconnecting.\n", cmd, fd);
-			session[fd]->eof=1;
-			break;
-		}
-		return 0;
-	}
-	*/
-
 	// get packet version before to parse
 	packet_ver = 0;
 	if (sd) {
@@ -11858,41 +11847,29 @@ int clif_parse(int fd) {
 	} else {
 		// check authentification packet to know packet version
 		packet_ver = clif_guess_PacketVer(fd, 0, &err);
-		if (err || // unknown packet version
-			packet_ver < 5 ||	// reject really old client versions
-			(packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) ||	// older than 6sept04
-			(packet_ver > 9 && (battle_config.packet_ver_flag & 1<<(packet_ver-9)) == 0) ||
-			packet_ver > MAX_PACKET_VER)	// no packet version support yet
-		{
-			if( err )
-			{// failed to identify
-				ShowInfo("clif_parse: Disconnecting session #%d with unknown packet version%s.\n", fd, (
-					err == 1 ? "" :
-					err == 2 ? ", possibly for having an invalid account_id" :
-					err == 3 ? ", possibly for having an invalid char_id." :
-					/* Uncomment when checks are added in clif_guess_PacketVer. [FlavioJS]
-					err == 4 ? ", possibly for having an invalid login_id1." :
-					err == 5 ? ", possibly for having an invalid client_tick." :
-					*/
-					err == 6 ? ", possibly for having an invalid sex." :
-					". ERROR invalid error code"));
-				err = 3; // 3 = Rejected from Server
-			}
-			else
-			{// version not accepted
-				ShowInfo("clif_parse: Disconnecting session #%d for not having latest client version (has version %d).\n", fd, packet_ver);
-				err = 5; // 05 = Game's EXE is not the latest version
-			}
+		if( err )
+		{// failed to identify packet version
+			ShowInfo("clif_parse: Disconnecting session #%d with unknown packet version%s.\n", fd, (
+				err == 1 ? "" :
+				err == 2 ? ", possibly for having an invalid account_id" :
+				err == 3 ? ", possibly for having an invalid char_id." :
+				/* Uncomment when checks are added in clif_guess_PacketVer. [FlavioJS]
+				err == 4 ? ", possibly for having an invalid login_id1." :
+				err == 5 ? ", possibly for having an invalid client_tick." :
+				*/
+				err == 6 ? ", possibly for having an invalid sex." :
+				". ERROR invalid error code"));
 			WFIFOHEAD(fd,packet_len(0x6a));
 			WFIFOW(fd,0) = 0x6a;
-			WFIFOB(fd,2) = err; 
+			WFIFOB(fd,2) = 3; // Rejected from Server
 			WFIFOSET(fd,packet_len(0x6a));
-			packet_len = RFIFOREST(fd);
-			RFIFOSKIP(fd, packet_len);
+			RFIFOSKIP(fd, RFIFOREST(fd));
 			clif_setwaitclose(fd);
+			/*
 			//## TODO check if it still doesn't send and why. [FlavioJS]
 			if (session[fd]->func_send)  //socket.c doesn't wants to send the data when left on it's own... [Skotlex]
 				session[fd]->func_send(fd);
+			*/
 			return 0;
 		}
 	}
