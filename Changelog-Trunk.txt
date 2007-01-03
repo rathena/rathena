@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/03
+	* Added Rachel and Veins to the list of @go destinations.
+	* Added a first approximation of warps for the new maps (by $ephiroth).
+	* Now the server will by default perform symmetric adding of friends. [ultramage]
+	  > TODO - symmetric deletion (http://www.eathena.ws/board/index.php?showtopic=130749)
 	* Fixed TURBO FIFO defines.
 	* Moved refusal of a known packet versions to clif_parse_WantToConnection
 	  and made it check for non-player object with that id.
@@ -16,7 +20,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added support for text/comments at the end of monster spawn lines (<tab> required)
 	* Added the official behavior of monsters regaining full hp when they morph.
 	  > info at http://www.eathena.ws/board/index.php?showtopic=130103
-	* Fixed pc_calc_skilltree ignoring prerequisites / joblvl requirements.
+	* Fixed pc_calc_skilltree ignoring prerequisites / joblvl requirements for soullinked skills.
 	  > TODOs at http://www.eathena.ws/board/index.php?showtopic=130788
 	* Re-applied change r9593 that got accidentally reverted by r9595. [ultramage]
 

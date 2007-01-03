@@ -1,4 +1,17 @@
-//Rachel Fields
+//===== Athena Script ========================================
+//= Rachel Field Warp Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Rachel Field
+//===== Additional Comments: =================================
+//= 1.0 Initial version [Playtester]
+//============================================================
+
 ra_fild01.gat,233,334,0	warp	ra000	1,1,ice_dun01.gat,157,14
 ra_fild01.gat,305,38,0	warp	ra001	1,1,ra_fild04.gat,324,375
 ra_fild04.gat,324,379,0	warp	ra002	1,1,ra_fild01.gat,305,42

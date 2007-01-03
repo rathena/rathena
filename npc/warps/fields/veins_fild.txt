@@ -1,0 +1,35 @@
+//===== Athena Script ========================================
+//= Veins Field Warp Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Veins Field
+//===== Additional Comments: =================================
+//= 1.0 Initial version [$ephiroth]
+//============================================================
+
+//= Beins Field (ve_fild) ====================================
+ve_fild02.gat,196,382,0	warp	veinswarp5001	1,1,rachel.gat,130,23
+ve_fild06.gat,154,219,0	warp	veinswarp5002	1,1,veins.gat,218,358
+ve_fild07.gat,147,372,0	warp	veinswarp5003	1,1,veins.gat,146,27
+ve_fild03.gat,168,241,0	warp	veinswarp5004	1,1,thor_v01.gat,21,226
+ve_fild01.gat,243,369,0	warp	veinswarp5005	1,1,ra_fild11.gat,232,29
+ra_fild11.gat,232,26,0	warp	veinswarp5006	1,1,ve_fild01.gat,243,366
+ve_fild01.gat,367,263,0	warp	veinswarp5007	1,1,ve_fild02.gat,33,259
+ve_fild02.gat,30,259,0	warp	veinswarp5008	1,1,ve_fild01.gat,364,263
+ve_fild01.gat,351,95,0	warp	veinswarp5009	1,1,ve_fild02.gat,76,133
+ve_fild02.gat,73,133,0	warp	veinswarp5010	1,1,ve_fild01.gat,348,95
+ve_fild01.gat,185,19,0	warp	veinswarp5011	1,1,ve_fild04.gat,174,337
+ve_fild04.gat,174,340,0	warp	veinswarp5012	1,1,ve_fild01.gat,185,22
+ve_fild02.gat,385,309,0	warp	veinswarp5013	1,1,ra_fild13.gat,31,311
+ra_fild13.gat,28,311,0	warp	veinswarp5014	1,1,ve_fild02.gat,382,309
+ve_fild03.gat,355,222,0	warp	veinswarp5015	1,1,ve_fild04.gat,46,249
+ve_fild04.gat,43,249,0	warp	veinswarp5016	1,1,ve_fild03.gat,353,221
+ve_fild03.gat,222,42,0	warp	veinswarp5017	1,1,ve_fild05.gat,204,330
+ve_fild05.gat,206,331,0	warp	veinswarp5018	1,1,ve_fild03.gat,222,45
+ve_fild04.gat,115,49,0	warp	veinswarp5019	1,1,ve_fild06.gat,84,179
+ve_fild06.gat,84,176,0	warp	veinswarp5020	1,1,ve_fild04.gat,115,52

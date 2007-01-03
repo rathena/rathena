@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 
+2007/01/03
+	* Added Veins and Thor Dungeon warps, +fixed some headers [ultramage]
 2006/12/28
 	* Fixed typo in the Priest Quest [KarLaeda]
 2006/12/25

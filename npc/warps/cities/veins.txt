@@ -1,19 +1,18 @@
 //===== Athena Script ========================================
-//= Ice Dungeon Warp Script
+//= Veins City Warp Script
 //===== By: ==================================================
-//= Playtester
+//= $ephiroth
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
-//= Warp Points for Ice Dungeon
+//= Warp Points for Veins
 //===== Additional Comments: =================================
-//= 1.0 Initial version [Playtester]
+//= 1.0 Initial version [$ephiroth]
 //============================================================
 
-ice_dun01.gat,157,10,0	warp	ice001	1,1,ra_fild01.gat,233,330
-ice_dun01.gat,145,153,0	warp	ice002	1,1,ice_dun02.gat,151,155
-ice_dun02.gat,151,160,0	warp	ice003	1,1,ice_dun01.gat,146,157
-ice_dun02.gat,150,285,0	warp	ice004	1,1,ice_dun03.gat,149,22
-ice_dun03.gat,149,18,0	warp	ice005	1,1,ice_dun02.gat,150,281
+//= Veins City ================================================
+veins.gat,218,361,0	warp	veinswarp0501	1,1,ve_fild06.gat,152,221
+veins.gat,146,24,0		warp	veinswarp0502	1,1,ve_fild07.gat,148,370
+rachel.gat,130,20,0	warp	veinswarp0503	1,1,ve_fild02.gat,196,379

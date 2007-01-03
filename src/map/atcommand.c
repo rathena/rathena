@@ -3324,6 +3324,8 @@ int atcommand_go(
 		{ MAP_LIGHTHALZEN,	158,  92  },	//  20=Lighthalzen
 		{ MAP_EINBECH,		70,   95  },	//  21=Einbech
 		{ MAP_HUGEL,		96,  145  },		//  22=Hugel
+		{ MAP_RACHEL,		130,  110  },		//  23=Rachel
+		{ MAP_VEINS,		216,  123  },		//  24=Veins
 	};
  
 	nullpo_retr(-1, sd);
