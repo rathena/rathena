@@ -183,7 +183,7 @@ static int recv_to_fifo(int fd)
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
 		if (s_errno != S_EWOULDBLOCK) {
-			ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", s_errno, fd);
+			//ShowDebug("recv_to_fifo: error %d, ending connection #%d\n", s_errno, fd);
 			set_eof(fd);
 		}
 		return 0;
@@ -219,7 +219,7 @@ static int send_from_fifo(int fd)
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
 		if (s_errno != S_EWOULDBLOCK) {
-			ShowDebug("send_from_fifo: error %d, ending connection #%d\n", s_errno, fd);
+			//ShowDebug("send_from_fifo: error %d, ending connection #%d\n", s_errno, fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}

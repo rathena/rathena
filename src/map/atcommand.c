@@ -7120,7 +7120,7 @@ int atcommand_effect(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %d", &type,&flag) < 2) {
-		clif_displaymessage(fd, "Please, enter at least a option (usage: @effect <type+>).");
+		clif_displaymessage(fd, "Please, enter a type and a send flag (usage: @effect <type> <flag>).");
 		return -1;
 	}
 

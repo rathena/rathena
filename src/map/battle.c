@@ -4067,7 +4067,7 @@ void battle_set_defaults() {
 	battle_config.attack_direction_change = BL_ALL;
 	battle_config.land_skill_limit = BL_ALL;
 	battle_config.party_skill_penalty = 1;
-	battle_config.monster_class_change_full_recover = 0;
+	battle_config.monster_class_change_full_recover = 1;
 	battle_config.produce_item_name_input = 1;
 	battle_config.produce_potion_name_input = 1;
 	battle_config.making_arrow_name_input = 1;
