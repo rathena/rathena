@@ -655,7 +655,7 @@ int do_sendrecv(int next)
 					free_session_mem(i); //free the bad session
 					continue;
 				}
-			
+
 			if (!FD_ISSET(i, &readfds))
 				FD_SET(i,&readfds);
 			ret = i;

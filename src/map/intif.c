@@ -40,7 +40,7 @@ static const int packet_len_table[]={
 };
 
 extern int char_fd;		// inter serverのfdはchar_fdを使う
-#define inter_fd (char_fd)	// エイリアス
+#define inter_fd char_fd	// エイリアス
 
 //-----------------------------------------------------------------
 // inter serverへの送信

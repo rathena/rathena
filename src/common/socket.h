@@ -23,11 +23,13 @@ extern time_t last_tick;
 extern time_t stall_time;
 
 // define declaration
+#define TURBO
 
 #define RFIFOSPACE(fd) (session[fd]->max_rdata-session[fd]->rdata_size)
 #ifdef TURBO
-#define RFIFOHEAD(fd) char *rbPtr ## fd = session[fd]->rdata+session[fd]->rdata_pos
-#define RFIFOP(fd,pos) (&rbPtr ## fd[pos])
+#define RFIFOVAR(fd) rbPtr ## fd
+#define RFIFOHEAD(fd) uint8 *RFIFOVAR(fd) = session[fd]->rdata+session[fd]->rdata_pos
+#define RFIFOP(fd,pos) ( &RFIFOVAR(fd) + (pos) )
 #else
 //Make it a comment so it does not disrupts the rest of code.
 #define RFIFOHEAD(fd) //
@@ -58,8 +60,9 @@ extern time_t stall_time;
 
 #define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
 #ifdef TURBO
-#define WFIFOHEAD(fd, x) uint8 *wbPtr ## fd = (fd>0&&session[fd])?(session[fd]->wdata+session[fd]->wdata_size):NULL;
-#define WFIFOP(fd,pos) (&wbPtr ## fd[pos])
+#define WFIFOVAR(fd) wbPtr ## fd
+#define WFIFOHEAD(fd, x) uint8 *WFIFOVAR(fd) = ( (fd) > 0 && session[fd] ? session[fd]->wdata+session[fd]->wdata_size : NULL )
+#define WFIFOP(fd,pos) ( &WFIFOVAR(fd) + (pos) )
 #else
 #define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
 

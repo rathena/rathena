@@ -5011,13 +5011,13 @@ int atcommand_kickall(
 	nullpo_retr(-1, sd);
 
 	pl_allsd = map_getallusers(&users);
-	
+
 	for (i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kick only lower or same gm level
 			if (sd->status.account_id != pl_sd->status.account_id)
 				clif_GM_kick(sd, pl_sd, 0);
-			}
 		}
+	}
 
 	clif_displaymessage(fd, msg_txt(195)); // All players have been kicked!
 

@@ -1871,7 +1871,7 @@ static int map_getallpc_sub(DBKey key,void * data,va_list ap)
 struct map_session_data** map_getallusers(int *users) {
 	static struct map_session_data **all_sd=NULL;
 	static unsigned int all_count = 0;
-	
+
 	if (users == NULL)
 	{	//Free up data
 		if (all_sd) aFree(all_sd);

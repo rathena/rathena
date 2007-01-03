@@ -4851,13 +4851,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if(sd->duel_invite > 0)
 			duel_reject(sd->duel_invite, sd);
 	}
-	
+
 	pc_setdead(sd);
 	//Reset ticks.
 	sd->hp_loss_tick = sd->sp_loss_tick = 0;
-	
+
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
-	
+
 	if (sd->state.event_death){
 		if(!src)
 			pc_setglobalreg(sd, "killerrid", 0);
@@ -4865,7 +4865,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pc_setglobalreg(sd,"killerrid",src->id);
 		npc_script_event(sd,NPCE_DIE);
 	}
-	
+
 	if ( sd && sd->spiritball && (sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER ) // maybe also monks' spiritballs ?
 		pc_delspiritball(sd,sd->spiritball,0);
 
@@ -4900,7 +4900,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			ssd->status.manner -= 5;
 			if(ssd->status.manner < 0)
 				sc_start(src,SC_NOCHAT,100,0,0);
-		
+
 		// PK/Karma system code (not enabled yet) [celest]
 		// originally from Kade Online, so i don't know if any of these is correct ^^;
 		// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
@@ -4926,7 +4926,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	break;
 	}
-		
+
 
 	// PK/Karma system code (not enabled yet) [celest]
 	/*
