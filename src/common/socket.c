@@ -214,8 +214,6 @@ static int send_from_fifo(int fd)
 	if (len == SOCKET_ERROR) {
 		if (s_errno == S_ECONNABORTED) {
 			ShowWarning("send_from_fifo: Software caused connection abort on session #%d\n", fd);
-			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
-			set_eof(fd);
 			FD_CLR(fd, &readfds); //Remove the socket so the select() won't hang on it.
 		}
 		if (s_errno != S_EWOULDBLOCK) {

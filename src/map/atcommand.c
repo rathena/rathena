@@ -3316,7 +3316,7 @@ int atcommand_go(
 		{ MAP_UMBALA,		89,  157  },		//	12=Umbala
 		{ MAP_NIFLHEIM,	21,  153  },		//	13=Niflheim
 		{ MAP_LOUYANG,		217,  40  },	//	14=Lou Yang
-		{ "new_zone01.gat",		53,  111  },	//	15=Training Grounds
+		{ MAP_NOVICE,		53,  111  },	//	15=Training Grounds
 		{ MAP_JAIL,		23,   61  },	//	16=Prison
 		{ MAP_JAWAII,		249, 127  },		//  17=Jawaii
 		{ MAP_AYOTHAYA,	151, 117  },		//  18=Ayothaya
@@ -3352,7 +3352,8 @@ int atcommand_go(
 		clif_displaymessage(fd, " 12=Umbala          13=Niflheim    14=Lou Yang");
 		clif_displaymessage(fd, " 15=Novice Grounds  16=Prison      17=Jawaii");
 		clif_displaymessage(fd, " 18=Ayothaya        19=Einbroch    20=Lighthalzen");
-		clif_displaymessage(fd, " 21=Einbech         22=Hugel");
+		clif_displaymessage(fd, " 21=Einbech         22=Hugel       23=Rachel");
+		clif_displaymessage(fd, " 24=Veins");
 		return -1;
 	} else {
 		// get possible name of the city and add .gat if not in the name
@@ -3423,6 +3424,10 @@ int atcommand_go(
 			town = 21;
 		} else if (strncmp(map_name, "hugel.gat", 3) == 0) {		// 3 first characters
 			town = 22;
+		} else if (strncmp(map_name, "rachel.gat", 3) == 0) {		// 3 first characters
+			town = 23;
+		} else if (strncmp(map_name, "veins.gat", 3) == 0) {		// 3 first characters
+			town = 24;
 		}
  
 		if (town >= -3 && town <= -1) {
