@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="map-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E1E9646175AF}"
 	RootNamespace="map-server_txt"
@@ -20,7 +20,6 @@
 			OutputDirectory="Debug-map"
 			IntermediateDirectory="Debug-map"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -47,13 +46,14 @@
 				MinimalRebuild="true"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				DefaultCharIsUnsigned="true"
+				RuntimeLibrary="3"
+				EnableFunctionLevelLinking="true"
+				DefaultCharIsUnsigned="false"
 				ForceConformanceInForLoopScope="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 				CompileAs="1"
 			/>
 			<Tool
@@ -68,12 +68,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
-				AdditionalDependencies="WSOCK32.lib zdll.lib pcre.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
 				OutputFile="..\map-server.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
+				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/eAthena.pdb"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -107,8 +108,8 @@
 			OutputDirectory="Release-map"
 			IntermediateDirectory="Release-map"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -128,18 +129,21 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
-				RuntimeLibrary="0"
-				DefaultCharIsUnsigned="true"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="false"
+				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
 			<Tool
@@ -153,11 +157,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib zdll.lib pcre.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
 				OutputFile="..\map-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
-				GenerateDebugInformation="false"
+				IgnoreAllDefaultLibraries="true"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

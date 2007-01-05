@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="char-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E3E9646175AF}"
 	RootNamespace="char-server_txt"
@@ -46,8 +46,9 @@
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				DefaultCharIsUnsigned="true"
+				RuntimeLibrary="3"
+				EnableFunctionLevelLinking="true"
+				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -65,12 +66,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
 				OutputFile="..\char-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
+				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/eAthena.pdb"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -124,18 +126,22 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="3"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
-				RuntimeLibrary="0"
-				DefaultCharIsUnsigned="true"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
 			<Tool
@@ -149,14 +155,17 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
 				OutputFile="..\char-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
-				GenerateDebugInformation="false"
+				IgnoreAllDefaultLibraries="true"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool

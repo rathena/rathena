@@ -13,17 +13,7 @@
 #define LOWER(c)   (((c)>='A'  && (c) <= 'Z') ? ((c)+('a'-'A')) : (c))
 #define UPPER(c)   (((c)>='a'  && (c) <= 'z') ? ((c)+('A'-'a')) : (c) )
 
-/* strcasecmp -> stricmp -> str_cmp */
-#if defined(_WIN32) && !defined(MINGW)
-	int	strcasecmp(const char *arg1, const char *arg2);
-	int	strncasecmp(const char *arg1, const char *arg2, size_t n);
-	void str_upper(char *name);
-	void str_lower(char *name);
-    char *rindex(char *str, char c);
-#endif
-
 void dump(unsigned char *buffer, int num);
-int newt_sqrt(int value); //Newton aproximation for getting a fast sqrt.
 
 struct StringBuf {
 	char *buf_;

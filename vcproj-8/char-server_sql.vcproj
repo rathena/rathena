@@ -46,8 +46,9 @@
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
-				DefaultCharIsUnsigned="true"
+				RuntimeLibrary="3"
+				EnableFunctionLevelLinking="true"
+				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -65,13 +66,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
 				OutputFile="../char-server_sql.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
-				IgnoreDefaultLibraryNames="LIBCMT"
+				IgnoreAllDefaultLibraries="true"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/eAthena.pdb"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -125,18 +127,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="3"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
-				RuntimeLibrary="0"
-				DefaultCharIsUnsigned="true"
+				RuntimeLibrary="2"
+				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="0"
+				DebugInformationFormat="3"
 				CompileAs="1"
 			/>
 			<Tool
@@ -150,15 +155,18 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WSOCK32.lib libmysql.lib zdll.lib"
+				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
 				OutputFile="../char-server_sql.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
+				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
-				GenerateDebugInformation="false"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -302,81 +310,106 @@
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="..\src\char_sql\char.h">
+				RelativePath="..\src\char_sql\char.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\core.h">
+				RelativePath="..\src\common\core.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\db.h">
+				RelativePath="..\src\common\db.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\graph.h">
+				RelativePath="..\src\common\graph.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\grfio.h">
+				RelativePath="..\src\common\grfio.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_guild.h">
+				RelativePath="..\src\char_sql\int_guild.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_homun.h">
+				RelativePath="..\src\char_sql\int_homun.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_party.h">
+				RelativePath="..\src\char_sql\int_party.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_pet.h">
+				RelativePath="..\src\char_sql\int_pet.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_storage.h">
+				RelativePath="..\src\char_sql\int_storage.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\inter.h">
+				RelativePath="..\src\char_sql\inter.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\itemdb.h">
+				RelativePath="..\src\char_sql\itemdb.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\lock.h">
+				RelativePath="..\src\common\lock.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\malloc.h">
+				RelativePath="..\src\common\malloc.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\mapindex.h">
+				RelativePath="..\src\common\mapindex.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\mmo.h">
+				RelativePath="..\src\common\mmo.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\nullpo.h">
+				RelativePath="..\src\common\nullpo.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugin.h">
+				RelativePath="..\src\common\plugin.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugins.h">
+				RelativePath="..\src\common\plugins.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\showmsg.h">
+				RelativePath="..\src\common\showmsg.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\socket.h">
+				RelativePath="..\src\common\socket.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\strlib.h">
+				RelativePath="..\src\common\strlib.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\timer.h">
+				RelativePath="..\src\common\timer.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\utils.h">
+				RelativePath="..\src\common\utils.h"
+				>
 			</File>
 			<File
-				RelativePath="..\src\common\version.h">
+				RelativePath="..\src\common\version.h"
+				>
 			</File>
 		</Filter>
 	</Files>

@@ -3,6 +3,23 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/01/05
+	* Also discarded some veeery old utils code that has got equivalents
+	  in the std libs (and therefore is silently causing a nasty collision).
+	* Major reconfiguration of the VS8 project files. [ultramage]
+	- Removed the migration binding to a VS71 template.
+	- Disabled the setting that defines char -> unsigned char (non-conformant).
+	- Switched all projects to use the common C runtime library DLL
+	  instead of linking the static version to each exe.
+	- Enabled edit&continue on the TXT version (SQL already had it).
+	- Reconfigured the linker to use only the really required dependencies.
+	- Enabled full optimization and whole program optimization,
+	  with additional speed-improving settings for the release build.
+	- Set the compiler/linker to produce detailed debug information even for release builds
+	  (no performance penalty because the debug info is stored in a separate .pdb file!).
+	- I tested all 4 build combinations and it works for me, and it should work for you.
+	- There is still one very useful thing missing - setting the working dir to '..'.
+	  I don't know how to do that, tho' since VS stores it in a separate user file.
 2007/01/04
 	* Fixed old @go bug (it ignored einbech) [Lupus]
 	* Added Au{R}oN's updated version of the effect list.
