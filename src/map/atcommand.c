@@ -3414,13 +3414,13 @@ int atcommand_go(
 		} else if (strncmp(map_name, "ayothaya.gat", 2) == 0 || // 2 first characters
 		           strncmp(map_name, "ayotaya.gat", 2) == 0) { // writing error (2 first characters)
 			town = 18;
-		} else if (strncmp(map_name, "einbroch.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "ainbroch.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "einbroch.gat", 5) == 0 || // 5 first characters
+		           strncmp(map_name, "ainbroch.gat", 5) == 0) { // writing error (5 first characters)
 			town = 19;
 		} else if (strncmp(map_name, "lighthalzen.gat", 3) == 0 || // 3 first characters
 		           strncmp(map_name, "reichthalzen.gat", 3) == 0) { // 'alternative' name (3 first characters)
 			town = 20;
-		} else if (strncmp(map_name, "einbech.gat", 5) == 0) {		// 5 first characters
+		} else if (strncmp(map_name, "einbech.gat", 3) == 0) {		// 3 first characters
 			town = 21;
 		} else if (strncmp(map_name, "hugel.gat", 3) == 0) {		// 3 first characters
 			town = 22;
