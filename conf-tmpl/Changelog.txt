@@ -1,5 +1,7 @@
 Date	Added
 
+2007/01/05
+	* Updated noicewall mapflags (to allow them in cities), thanks to Au{R}oN
 2007/01/03
 	* Changed friend_auto_add to 'yes' (closer to official, except for one detail)
 	* Changed monster_class_change_full_recover to 'yes' (official) [ultramage]

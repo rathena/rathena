@@ -1,84 +1,84 @@
 //===== eAthena Script =======================================
-//= Map flags that disable icewall skill
+//= 1.6 Map flags that disable icewall skill
 //===== By: ==================================================
 //= eAthena Dev Team
 //=============================================================
 //= noicewall: Disables Icewall skill.
 //= To disable Icewall on a specific map add the mapname here.
-//= 1.5 [Lupus]
+//= 1.6 Re-enabled icewalls for cities [Lupus]
 //============================================================
 
 ayo_in01.gat	mapflag	noicewall
 ayo_in02.gat	mapflag	noicewall
 alberta_in.gat	mapflag	noicewall
-alberta.gat	mapflag	noicewall
+//alberta.gat	mapflag	noicewall
 alde_alche.gat	mapflag	noicewall
 aldeba_in.gat	mapflag	noicewall
-aldebaran.gat	mapflag	noicewall
+//aldebaran.gat	mapflag	noicewall
 ama_in01.gat	mapflag	noicewall
 ama_in02.gat	mapflag	noicewall
-amatsu.gat	mapflag	noicewall
-ayothaya.gat	mapflag	noicewall
+//amatsu.gat	mapflag	noicewall
+//ayothaya.gat	mapflag	noicewall
 cmd_in01.gat	mapflag	noicewall
 cmd_in02.gat	mapflag	noicewall
-comodo.gat	mapflag	noicewall
-einbroch.gat	mapflag	noicewall
-einbech.gat	mapflag	noicewall
+//comodo.gat	mapflag	noicewall
+//einbroch.gat	mapflag	noicewall
+//einbech.gat	mapflag	noicewall
 gef_tower.gat	mapflag	noicewall
-geffen.gat	mapflag	noicewall
+//geffen.gat	mapflag	noicewall
 geffen_in.gat	mapflag	noicewall
 gon_in.gat	mapflag	noicewall
-gonryun.gat	mapflag	noicewall
+//gonryun.gat	mapflag	noicewall
 in_hunter.gat	mapflag	noicewall
 in_moc_16.gat	mapflag	noicewall
 in_orcs01.gat	mapflag	noicewall
 izlude_in.gat	mapflag	noicewall
-izlude.gat	mapflag	noicewall
-hugel.gat	mapflag	noicewall
-jawaii.gat	mapflag	noicewall
+//izlude.gat	mapflag	noicewall
+//hugel.gat	mapflag	noicewall
+//jawaii.gat	mapflag	noicewall
 moc_castle.gat	mapflag	noicewall
 monk_in.gat	mapflag	noicewall
 morocc_in.gat	mapflag	noicewall
-morocc.gat	mapflag	noicewall
+//morocc.gat	mapflag	noicewall
 payon_in01.gat	mapflag	noicewall
 payon_in02.gat	mapflag	noicewall
 payon_in03.gat	mapflag	noicewall
-payon.gat	mapflag	noicewall
-pay_arche.gat	mapflag	noicewall
+//payon.gat	mapflag	noicewall
+//pay_arche.gat	mapflag	noicewall
 prt_are_in.gat	mapflag	noicewall
 prt_are01.gat	mapflag	noicewall
 prt_castle.gat	mapflag	noicewall
 prt_church.gat	mapflag	noicewall
 prt_in.gat	mapflag	noicewall
-prontera.gat	mapflag	noicewall
+//prontera.gat	mapflag	noicewall
 sec_in01.gat	mapflag	noicewall
 job_sword1.gat	mapflag	noicewall
 um_in.gat	mapflag	noicewall
-umbala.gat	mapflag	noicewall
+//umbala.gat	mapflag	noicewall
 xmas_in.gat	mapflag	noicewall
-xmas.gat	mapflag	noicewall
+//xmas.gat	mapflag	noicewall
 yuno_in01.gat	mapflag	noicewall
 yuno_in02.gat	mapflag	noicewall
 yuno_in03.gat	mapflag	noicewall
 yuno_in04.gat	mapflag	noicewall
 yuno_in05.gat	mapflag	noicewall
-yuno.gat	mapflag	noicewall
+//yuno.gat	mapflag	noicewall
 gon_test.gat	mapflag	noicewall
 nif_in.gat	mapflag	noicewall
-louyang.gat	mapflag	noicewall
+//louyang.gat	mapflag	noicewall
 que_sign01.gat	mapflag	noicewall
 ein_in01.gat	mapflag	noicewall
 airport.gat	mapflag	noicewall
 airplane.gat	mapflag	noicewall
 airplane_01.gat	mapflag	noicewall
-lighthalzen.gat	mapflag	noicewall
+//lighthalzen.gat	mapflag	noicewall
 yuno_pre.gat	mapflag	noicewall
 y_airport.gat	mapflag	noicewall
 lhz_airport.gat	mapflag	noicewall
 lhz_in01.gat	mapflag	noicewall
 lhz_in02.gat	mapflag	noicewall
 lhz_in03.gat	mapflag	noicewall
-rachel.gat	mapflag	noicewall
+//rachel.gat	mapflag	noicewall
 ra_in01.gat	mapflag	noicewall
 ra_temin.gat	mapflag	noicewall
 ra_temple.gat	mapflag	noicewall

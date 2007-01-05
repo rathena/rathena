@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Celestria
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -12,13 +12,14 @@
 //= A temp Soul Linker Job Changer based on the kRO quest.
 //= Quest info from RagnaInfo. Sprites from kRO screenshots
 //= 1.0	Optimized and updated [Lupus]
+//= 1.1 Fixed NPC names according to iRO [Lupus]
 //============================================================ 
 
-morocc_in.gat,174,30,7	script	Little Boy#sltest	716,{
+morocc_in.gat,174,30,7	script	Kid#sltest	716,{
 	if(SOUL_Q==1) goto L_Check;
 	if(SOUL_Q >= 2) goto L_Warp;
 	if(Class==Job_Soul_Linker) goto L_Thanks;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "*sniff sniff*";
 	next;
 	if((Class==Job_Taekwon) && (JobLevel>=40)) goto L_Taekwon;
@@ -28,43 +29,43 @@ morocc_in.gat,174,30,7	script	Little Boy#sltest	716,{
 	close;
 
 L_Thanks:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Hey, Thank you for helping";
 	mes "me earlier ^_^";
 	close;
 
 L_Taekwon:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Excuse me. *sniff*";
 	mes "I don't suppose you couldvhelp me?";
 	next;
 	menu "Go on...",L_Goon,"No, I'm busy.",L_No;
 
 L_No:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Waaaaaaaaaaaaaah~";
 	close;
 
 L_Goon:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Well you see, I was doing some";
 	mes "shopping for my daddy, who's";
 	mes "an alchemist, and on my way home";
 	mes "a thief came and took my shopping!";
 	next;
 	menu "I'll get you your stuff.",-,"Awww, that's too bad.",L_No;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Really!?";
 	mes "You'll do that for me?";
 	set SOUL_Q,1;
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Ok, what I need is:";
-	mes "^0000FF- 1 Witherless Rose^000000";
 	mes "^0000FF- 1 3-Carat Diamond^000000";
+	mes "^0000FF- 1 Witherless Rose^000000";
 	mes "^0000FF- 1 Immortal Heart^000000";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Please find these things quickly...";
 	close;
 
@@ -75,40 +76,41 @@ L_Check:
 	delitem 929,1;
 	set SOUL_Q,2;
 	if(SkillPoint) goto L_Skill;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Wow, Thank you so much!";
 	mes "You're so helpful, I think I";
 	mes "know of a few other people";
 	mes "who could use your help.";
 	next;
 	menu "Lead the way.",L_Warp,"Umm... Not right now.",-;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Okay, come back when you change your mind.";
 	close;
 
 L_Noitem:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Awww... you haven't found all the items yet.";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Remember, it was:";
-	mes "^0000FF- 1 Witherless Rose^000000";
 	mes "^0000FF- 1 3-Carat Diamond^000000";
+	mes "^0000FF- 1 Witherless Rose^000000";
 	mes "^0000FF- 1 Immortal Heart^000000";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Please find these things quickly...";
 	close;
 
 L_Warp:
 	if(SkillPoint) goto L_Skill;
-	mes "[Little Boy]";
-	mes "Okay, here we go";
+	mes "[Kid]";
+	mes "Okay, here we go.";
+	close2;
 	warp "job_soul.gat",30,30;
-	close;
+	end;
 
 L_Skill:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "It seems you have some skill";
 	mes "points left. I can't warp you";
 	mes "to my friends until you use them.";
@@ -269,46 +271,46 @@ L_Talk3:
 	close;
 }
 
-job_soul.gat,35,30,3	script	Little Boy#4	716,{
+job_soul.gat,35,30,3	script	Kid#4	716,{
 	if(SOUL_Q < 5) goto L_Notyet4;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "So you have listened to the tales of my friends?";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "They aren't bad people they've just been depressed for so very long.";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "But they seem to have renewed vigour since they talked to you.";
 	mes "I haven't seen them this lively ever.";
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "You seem to have a gift with people, so with your permisson,";
 	mes "I would like to make you a Soul Linker.";
 	next;
 	menu "Yes",-,"No",L_Warpout;
 
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Very Well then.";
 	mes "You are now a Soul Linker.";
 	jobchange Job_Soul_Linker;
 	callfunc "F_ClearJobVar";
 	misceffect 247;
 	next;
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Please try to help others.";
-	next;
+	close2;
 	warp "morocc_in.gat",175,31;
-	close;
+	end;
 
 L_Warpout:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "If you change your mind come and talk to me.";
-	next;
+	close2;
 	warp "morocc_in.gat",175,31;
-	close;
+	end;
 
 L_Notyet4:
-	mes "[Little Boy]";
+	mes "[Kid]";
 	mes "Please talk to the others first.";
 	close;	
 }
