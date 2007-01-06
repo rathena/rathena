@@ -1094,31 +1094,37 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd) {
 /*==========================================
  * Updates the weight status
  *------------------------------------------
+ * 1: overweight 50%
+ * 2: overweight 90%
+ * It's assumed that SC_WEIGHT50 and SC_WEIGHT90 are only started/stopped here.
  */
 int pc_updateweightstatus(struct map_session_data *sd)
 {
-	int flag=0;
+	int old_overweight;
+	int new_overweight;
 
-	nullpo_retr(0, sd);
+	nullpo_retr(1, sd);
 
-	if( pc_is90overweight(sd) )
-		flag=2;
-	else if( pc_is50overweight(sd) )
-		flag=1;
+	old_overweight = (sd->sc.data[SC_WEIGHT90].timer != -1) ? 2 : (sd->sc.data[SC_WEIGHT50].timer != -1) ? 1 : 0;
+	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is50overweight(sd)) ? 1 : 0;
 
-	// 50% overweight icon
-	if( flag == 1 && sd->sc.data[SC_WEIGHT50].timer == -1 )
-		sc_start(&sd->bl,SC_WEIGHT50,100,0,0);
-	else if( sd->sc.data[SC_WEIGHT50].timer != -1 )
-		status_change_end(&sd->bl,SC_WEIGHT50,-1);
-	// 90% overwheight icon
-	if( flag == 2 && sd->sc.data[SC_WEIGHT90].timer == -1 )
-		sc_start(&sd->bl,SC_WEIGHT90,100,0,0);
-	else if( sd->sc.data[SC_WEIGHT90].timer != -1 )
-		status_change_end(&sd->bl,SC_WEIGHT90,-1);
+	if( old_overweight == new_overweight )
+		return 0; // no change
+
+	// stop old status change
+	if( old_overweight == 1 )
+		status_change_end(&sd->bl, SC_WEIGHT50, -1);
+	else if( old_overweight == 2 )
+		status_change_end(&sd->bl, SC_WEIGHT90, -1);
+
+	// start new status change
+	if( new_overweight == 1 )
+		sc_start(&sd->bl, SC_WEIGHT50, 100, 0, 0);
+	else if( new_overweight == 2 )
+		sc_start(&sd->bl, SC_WEIGHT90, 100, 0, 0);
+
 	// update overweight status
-	if (flag != sd->regen.state.overweight)
-		sd->regen.state.overweight = flag;
+	sd->regen.state.overweight = new_overweight;
 
 	return 0;
 }
