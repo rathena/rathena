@@ -4,20 +4,21 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include <stdio.h>
+#include "../common/cbasetypes.h"
 
-#ifdef __WIN32
-#define __USE_W32_SOCKETS
-#include <windows.h>
-typedef long in_addr_t;
+#ifdef WIN32
+	#define __USE_W32_SOCKETS
+	#include <windows.h>
+	typedef long in_addr_t;
 #else
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
 #endif
+
+#include <stdio.h>
 #include <time.h>
 #include "../common/malloc.h"
-#include "cbasetypes.h"
 
 extern time_t last_tick;
 extern time_t stall_time;
@@ -180,6 +181,8 @@ void set_defaultconsoleparse(int (*defaultparse)(char*));
 //ip_str is a char[16] where the whole ip is stored in string notation (optional)
 in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str);
 
-extern unsigned int addr_[16];   // ip addresses of local host (host byte order)
-extern unsigned int naddr_;   // # of ip addresses
+int socket_getips(uint32 *ips, int max);
+
+extern uint32 addr_[16];   // ip addresses of local host (host byte order)
+extern int naddr_;   // # of ip addresses
 #endif	// _SOCKET_H_

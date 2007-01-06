@@ -8,7 +8,7 @@
 #ifdef __WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
-	#include <winsock.h>
+	#include <winsock2.h>
 	#include <io.h>
 #else
 	#include <errno.h>
@@ -55,6 +55,13 @@
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+
+/// shutdown() constants
+#if defined(SD_RECEIVE) && !defined(SHUT_RD)
+#define SHUT_RD   SD_RECEIVE
+#define SHUT_WR   SD_SEND
+#define SHUT_RDWR SD_BOTH
+#endif
 
 fd_set readfds;
 int fd_max;
@@ -1059,8 +1066,8 @@ int RFIFOSKIP(int fd,int len)
 }
 
 
-unsigned int addr_[16];   // ip addresses of local host (host byte order)
-unsigned int naddr_ = 0;   // # of ip addresses
+uint32 addr_[16];   // ip addresses of local host (host byte order)
+int naddr_ = 0;   // # of ip addresses
 
 void socket_final (void)
 {
@@ -1092,96 +1099,124 @@ void socket_final (void)
 	aFree(session[0]);
 }
 
-//Closes a socket.
-//Needed to simplify shutdown code as well as manage the subtle differences in socket management from Windows and *nix.
+/// Closes a socket.
 void do_close(int fd)
 {
-//We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
-#ifdef __WIN32
-//	shutdown(fd, SD_BOTH); //FIXME: Shutdown requires winsock2.h! What would be the proper shutting down method for winsock1?
-	flush_fifo(fd); // try to send what's left (although it might not succeed since it's a nonblocking socket) 
-#endif
-	closesocket(fd);
+	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
+	shutdown(fd, SHUT_RDWR); // Disallow further reads/writes
+	closesocket(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
 }
 
-void socket_init (void)
+/// Retrieve local ips in host byte order.
+/// Uses loopback is no address is found.
+int socket_getips(uint32 *ips, int max)
 {
-	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-#ifdef __WIN32
-	char** a;
-	unsigned int i;
-	char fullhost[255];
-	struct hostent* hent;
+	int num = 0;
 
-	/* Start up the windows networking */
-	WORD version_wanted = MAKEWORD(1, 1); //Demand at least WinSocket version 1.1 (from Freya)
-	WSADATA wsaData;
+	if( ips == NULL || max <= 0 )
+		return 0;
 
-	if ( WSAStartup(version_wanted, &wsaData) != 0 ) {
-		ShowFatalError("SYSERR: WinSock not available!\n");
-		exit(1);
-	}
-
-	if(gethostname(fullhost, sizeof(fullhost)) == SOCKET_ERROR) {
-		ShowError("Ugg.. no hostname defined!\n");
-		return;
-	}
-
-	// XXX This should look up the local IP addresses in the registry
-	// instead of calling gethostbyname. However, the way IP addresses
-	// are stored in the registry is annoyingly complex, so I'll leave
-	// this as T.B.D.
-	hent = gethostbyname(fullhost);
-	if (hent == NULL) {
-		ShowError("Cannot resolve our own hostname to a IP address");
-		return;
-	}
-
-	a = hent->h_addr_list;
-	for(i = 0; a[i] != 0 && i < 16; ++i) {
-		unsigned long addr1 = ntohl(*(unsigned long*) a[i]);
-		addr_[i] = addr1;
-	}
-	naddr_ = i;
-#else
-	int pos;
-	int fdes = socket(AF_INET, SOCK_STREAM, 0);
-	char buf[16 * sizeof(struct ifreq)];
-	struct ifconf ic;
-
-	// The ioctl call will fail with Invalid Argument if there are more
-	// interfaces than will fit in the buffer
-	ic.ifc_len = sizeof(buf);
-	ic.ifc_buf = buf;
-	if(ioctl(fdes, SIOCGIFCONF, &ic) == -1) {
-		ShowError("SIOCGIFCONF failed!\n");
-		return;
-	}
-
-	for(pos = 0; pos < ic.ifc_len;)
+#ifdef WIN32
 	{
-		struct ifreq * ir = (struct ifreq *) (ic.ifc_buf + pos);
+		char fullhost[255];
+		u_long** a;
+		struct hostent* hent;
 
-		struct sockaddr_in * a = (struct sockaddr_in *) &(ir->ifr_addr);
+		// XXX This should look up the local IP addresses in the registry
+		// instead of calling gethostbyname. However, the way IP addresses
+		// are stored in the registry is annoyingly complex, so I'll leave
+		// this as T.B.D. [Meruru]
+		if( gethostname(fullhost, sizeof(fullhost)) == SOCKET_ERROR )
+		{
+			ShowError("socket_getips: No hostname defined!\n");
+			return 0;
+		}
+		else
+		{
+			hent = gethostbyname(fullhost);
+			if( hent == NULL ){
+				ShowError("socket_getips: Cannot resolve our own hostname to a IP address\n");
+				return 0;
+			}
+			a = (u_long**)hent->h_addr_list;
+			for( ; a[num] != NULL && num < max; ++num)
+				ips[num] = (uint32)ntohl(*a[num]);
+		}
+	}
+#else // not WIN32
+	{
+		int pos;
+		int fd;
+		char buf[2*16*sizeof(struct ifreq)];
+		struct ifconf ic;
+		struct ifreq* ir;
+		struct sockaddr_in* a;
+		u_long ad;
 
-		if(a->sin_family == AF_INET) {
-			u_long ad = ntohl(a->sin_addr.s_addr);
-			if(ad != INADDR_LOOPBACK && ad != INADDR_ANY) {
-				addr_[naddr_ ++] = ad;
-				if(naddr_ == 16)
-					break;
+		fd = socket(AF_INET, SOCK_STREAM, 0);
+
+		// The ioctl call will fail with Invalid Argument if there are more
+		// interfaces than will fit in the buffer
+		ic.ifc_len = sizeof(buf);
+		ic.ifc_buf = buf;
+		if( ioctl(fd, SIOCGIFCONF, &ic) == -1 )
+		{
+			ShowError("socket_getips: SIOCGIFCONF failed!\n");
+			return 0;
+		}
+		else
+		{
+			for( pos=0; pos < ic.ifc_len && num < max; )
+			{
+				ir = (struct ifreq*)(buf+pos);
+				a = (struct sockaddr_in*) &(ir->ifr_addr);
+				if( a->sin_family == AF_INET ){
+					ad = ntohl(a->sin_addr.s_addr);
+					if( ad != INADDR_LOOPBACK && ad != INADDR_ANY )
+						ips[num++] = (uint32)ad;
+				}
+	#if (defined(BSD) && BSD >= 199103) || defined(_AIX) || defined(__APPLE__)
+				pos += ir->ifr_addr.sa_len + sizeof(ir->ifr_name);
+	#else// not AIX or APPLE
+				pos += sizeof(struct ifreq);
+	#endif//not AIX or APPLE
 			}
 		}
+		closesocket(fd);
+	}
+#endif // not W32
 
-	#if defined(_AIX) || defined(__APPLE__)
-		pos += ir->ifr_addr.sa_len;  // For when we port athena to run on Mac's :)
-		pos += sizeof(ir->ifr_name);
-	#else
-		pos += sizeof(struct ifreq);
-	#endif
+	// Use loopback if no ips are found
+	if( num == 0 )
+		ips[num++] = (uint32)INADDR_LOOPBACK;
+
+	return num;
+}
+
+void socket_init(void)
+{
+	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
+	
+#ifdef WIN32
+	{// Start up windows networking
+		WSADATA wsaData;
+		WORD wVersionRequested = MAKEWORD(2, 0);
+		if( WSAStartup(wVersionRequested, &wsaData) != 0 )
+		{
+			ShowError("socket_init: WinSock not available!\n");
+			return;
+		}
+		if( LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 0 )
+		{
+			printf("socket_init: WinSock version mismatch (2.0 or compatible required)!\n");
+			return;
+		}
 	}
 #endif
+
+	// Get initial local ips
+	naddr_ = socket_getips(addr_,16);
 
 	FD_ZERO(&readfds);
 

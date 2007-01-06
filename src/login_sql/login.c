@@ -4,7 +4,7 @@
 #include <sys/types.h>
 
 #ifdef LCCWIN32
-#include <winsock.h>
+#include <winsock2.h>
 #else
 #ifdef __WIN32
 #define WIN32_LEAN_AND_MEAN
