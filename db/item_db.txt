@@ -1388,7 +1388,7 @@
 4215,Blazzer_Card,Blazer Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Food,500; },{},{}
 4216,Sasquatch_Card,Sasquatch Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Freeze,2000; },{},{}
 4217,Live_Peach_Tree_Card,Enchanted Peach Tree Card,6,,10,10,,,,,,,,32,,,,,{ bonus4 bAutoSpell,28,1+9*(getskilllv(28)==10),20,0; if(isequipped(4280,4185,4293,4312)) { bonus bVit,10; bonus bCastrate,-10; bonus bUseSPRate,-10; if(BaseClass == Job_Acolyte) { bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,30; bonus2 bSubRace,RC_Demon,30; } } },{},{}
-4218,Succubus_Card,Succubus Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,1000; bonus bVit,-3+4*isequipped(4269); bonus bHPrecovRate,-20+30*isequipped(4269); },{},{}
+4218,Succubus_Card,Succubus Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,1000; if (isequipped(4269)) { bonus bVit,1; bonus bHPrecovRate,10; } else { bonus bVit,-3; bonus bHPrecovRate,-20; } },{},{}
 4219,Sageworm_Card,Sage Worm Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Gemstone,90; },{},{}
 4220,Solider_Card,Solider Card,6,,10,10,,,,,,,,16,,,,,{ bonus bDef,2; bonus bMdef,2; },{},{}
 4221,Skeleton_General_Card,Skeleton General Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Insect,-20; bonus2 bExpAddRace,RC_Insect,10; },{},{}
@@ -1439,7 +1439,7 @@
 4266,Eclipse_Card,Eclipse Card,6,,10,10,,,,,,,,4,,,,,{ bonus bVit,1; if(isequipped(4006)) bonus bFlee,18; },{},{}
 4267,Explosion_Card,Explosion Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Dragon,-20; bonus2 bExpAddRace,RC_Dragon,10; },{},{}
 4268,Injustice_Card,Injustice Card,6,,10,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,136,1,50; if(isequipped(4277)) { bonus bBaseAtk,20; bonus bLuk,3; } },{},{}
-4269,Incubus_Card,Incubus Card,6,,10,10,,,,,,,,769,,,,,{ bonus bMaxSP,150; bonus bInt,-3+4*isequipped(4218); bonus bSPrecovRate,-20+30*isequipped(4218); },{},{}
+4269,Incubus_Card,Incubus Card,6,,10,10,,,,,,,,769,,,,,{ bonus bMaxSP,150; if(isequipped(4218)) { bonus bInt,1; bonus bSPrecovRate,10; } else { bonus bInt,-3; bonus bSPrecovRate,-20; } },{},{}
 4270,Giant_Spider_Card,Giant Spider Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Poison,2000; },{},{}
 4271,Giant_Honet_Card,Giant Hornet Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSubEle,Ele_Wind,10; bonus3 bAddMonsterDropItem,992,RC_Insect,100; },{},{}
 4272,Dancing_Dragon_Card,Dancing Dragon Card,6,,10,10,,,,,,,,136,,,,,{ bonus bAgi,1; bonus bCritical,3; },{},{}

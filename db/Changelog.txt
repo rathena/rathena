@@ -19,6 +19,10 @@
 	-----
 
 ========================
+
+01/06
+	* Fixed Succubus/Incubus combo not doing regen correctly [ultramage]
+	  Read why at http://www.eathena.ws/board/index.php?showtopic=129814
 12/30
 	* Fixed typo in mob_skill_db [Playtester]
 12/28
