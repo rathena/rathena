@@ -73,6 +73,7 @@ void setd_sub(struct script_state *st, struct map_session_data *sd, char *varnam
 int run_script_timer(int tid, unsigned int tick, int id, int data);
 void run_script_main(struct script_state *st);
 
+void script_stop_sleeptimers(int id);
 struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
 void script_free_stack(struct script_stack*); 
 void script_free_code(struct script_code* code);

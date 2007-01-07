@@ -18,6 +18,8 @@
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
+#define INVALID_TIMER -1
+
 // Struct declaration
 
 typedef int (*TimerFunc)(int,unsigned int,int,int);
@@ -38,7 +40,7 @@ unsigned int gettick_nocache(void);
 unsigned int gettick(void);
 
 int add_timer(unsigned int,TimerFunc f,int,int);
-int add_timer_interval(unsigned int,TimerFunc f,int,int,int);
+int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int interval);
 int delete_timer(int,TimerFunc f);
 
 int addtick_timer(int tid,unsigned int tick);

@@ -1471,6 +1471,7 @@ int npc_unload(struct npc_data *nd)
 			}
 		}
 	}
+	script_stop_sleeptimers(nd->bl.id);
 	aFree(nd);
 
 	return 0;
@@ -2922,7 +2923,7 @@ int npc_reload (void)
 
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
-	
+
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"
 	CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));

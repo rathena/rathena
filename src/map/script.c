@@ -6,18 +6,6 @@
 //#define DEBUG_DISASM
 //#define DEBUG_RUN
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
-
-#ifndef _WIN32
-	#include <sys/time.h>
-#endif
-#include <time.h>
-#include <setjmp.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -52,6 +40,18 @@
 #include "unit.h"
 #include "irc.h"
 #include "pet.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+#ifndef WIN32
+	#include <sys/time.h>
+#endif
+#include <time.h>
+#include <setjmp.h>
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2683,6 +2683,21 @@ void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	run_script_main(st);
 }
 
+void script_stop_sleeptimers(int id)
+{
+	struct script_state* st;
+	for(;;)
+	{
+		st = (struct script_state*)linkdb_erase(&sleep_db,(void*)id);
+		if( st == NULL )
+			break; // no more sleep timers
+		if( st->sleep.timer != INVALID_TIMER )
+			delete_timer(st->sleep.timer, run_script_timer);
+		script_free_stack(st->stack);
+		aFree(st);
+	}
+}
+
 /*==========================================
  * Žw’èƒm[ƒh‚ðsleep_db‚©‚çíœ
  *------------------------------------------
@@ -3439,6 +3454,8 @@ int script_reload()
 		struct linkdb_node *n = (struct linkdb_node *)sleep_db;
 		while(n) {
 			struct script_state *st = (struct script_state *)n->data;
+			if( st->sleep.timer != INVALID_TIMER )
+				delete_timer(st->sleep.timer, run_script_timer);
 			script_free_stack(st->stack);
 			aFree(st);
 			n = n->next;
