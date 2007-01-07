@@ -127,7 +127,7 @@ is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, i
 	CharCommandInfo info;
 	CharCommandType type;
 
-	malloc_set(&info, 0, sizeof(info));
+	memset(&info, 0, sizeof(info));
 
 	type = charcommand(sd, gmlvl, str, &info);
 	if (type != CharCommand_None) {
@@ -143,8 +143,8 @@ is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, i
 			return AtCommand_None;
 		}
 
-		malloc_tsetdword(command, '\0', sizeof(command));
-		malloc_tsetdword(output, '\0', sizeof(output));
+		memset(command, '\0', sizeof(command));
+		memset(output, '\0', sizeof(output));
 		while (*p && !isspace(*p))
 			p++;
 		if (p - str >= sizeof(command)) // too long
@@ -219,7 +219,7 @@ CharCommandType charcommand(struct map_session_data* sd, const int level, const 
 	if (*p == charcommand_symbol) { // check first char, try to skip |00 (or something else) [Lance]
 		char command[101];
 		int i = 0;
-		malloc_set(info, 0, sizeof(CharCommandInfo));
+		memset(info, 0, sizeof(CharCommandInfo));
 		sscanf(p, "%100s", command);
 		command[sizeof(command)-1] = '\0';
 
@@ -318,7 +318,7 @@ int charcommand_jobchange(
 	struct map_session_data* pl_sd;
 	int job = 0, upper = -1;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <char name>).");
@@ -375,7 +375,7 @@ int charcommand_petrename(
 	struct map_session_data *pl_sd;
 	struct pet_data *pd;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #petrename <char name>).");
@@ -419,7 +419,7 @@ int charcommand_petfriendly(
 	struct map_session_data *pl_sd;
 	struct pet_data *pd;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 	if (!message || !*message || sscanf(message,"%d %23s",&friendly,character) < 2) {
 		clif_displaymessage(fd, "Please, enter a valid value (usage: "
 			"#petfriendly <0-1000> <player>).");
@@ -470,9 +470,9 @@ int charcommand_stats(
 	struct map_session_data *pl_sd;
 	int i;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
-	malloc_tsetdword(job_jobname, '\0', sizeof(job_jobname));
-	malloc_tsetdword(output, '\0', sizeof(output));
+	memset(character, '\0', sizeof(character));
+	memset(job_jobname, '\0', sizeof(job_jobname));
+	memset(output, '\0', sizeof(output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #stats <char name>).");
@@ -541,8 +541,8 @@ int charcommand_reset(
 	char output[200];
 	struct map_session_data *pl_sd;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
-	malloc_tsetdword(output, '\0', sizeof(output));
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #reset <charname>).");
@@ -579,7 +579,7 @@ int charcommand_option(
 	int opt1 = 0, opt2 = 0, opt3 = 0;
 	struct map_session_data* pl_sd;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message ||
 		sscanf(message, "%d %d %d %23[^\n]", &opt1, &opt2, &opt3, character) < 4 ||
@@ -620,8 +620,8 @@ int charcommand_save(
 	int x = 0, y = 0;
 	int m;
 
-	malloc_tsetdword(map_name, '\0', sizeof(map_name));
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(map_name, '\0', sizeof(map_name));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%15s %d %d %23[^\n]", map_name, &x, &y, character) < 4 || x < 0 || y < 0) {
 		clif_displaymessage(fd, "Please, enter a valid save point and a player name (usage: #save <map> <x> <y> <charname>).");
@@ -673,8 +673,8 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 	int count, users;
 	struct map_session_data *pl_sd, **pl_allsd;
 
-	malloc_tsetdword(output, '\0', sizeof(output));
-	malloc_tsetdword(gmlevel, '\0', sizeof(gmlevel));
+	memset(output, '\0', sizeof(output));
+	memset(gmlevel, '\0', sizeof(gmlevel));
 
 	count = 0;
 	pl_allsd = map_getallusers(&users);
@@ -717,7 +717,7 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
 	char character[NAME_LENGTH];
 	int spirit = 0;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 
 	if(!message || !*message || sscanf(message, "%d %23[^\n]", &spirit, character) < 2 || spirit < 0 || spirit > 1000) {
 		clif_displaymessage(fd, "Usage: @spiritball <number: 0-1000>) <CHARACTER_NAME>.");
@@ -765,10 +765,10 @@ charcommand_itemlist(
 	struct item *i_item; //Current inventory item.
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(character, '\0', sizeof(character));
-	malloc_tsetdword(output, '\0', sizeof(output));
-	malloc_tsetdword(equipstr, '\0', sizeof(equipstr));
-	malloc_tsetdword(outputtmp, '\0', sizeof(outputtmp));
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(equipstr, '\0', sizeof(equipstr));
+	memset(outputtmp, '\0', sizeof(outputtmp));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #itemlist <char name>).");
@@ -821,13 +821,13 @@ charcommand_itemlist(
 						// remove final ', '
 						equipstr[strlen(equipstr) - 2] = '\0';
 					} else
-						malloc_tsetdword(equipstr, '\0', sizeof(equipstr));
+						memset(equipstr, '\0', sizeof(equipstr));
 					if (i_item->refine)
 						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
 					else
 						sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
 					clif_displaymessage(fd, output);
-					malloc_tsetdword(output, '\0', sizeof(output));
+					memset(output, '\0', sizeof(output));
 					counter2 = 0;
 
 					if(i_item->card[0]==CARD0_PET) { //pet eggs
@@ -925,9 +925,9 @@ charcommand_storagelist(
 	char character[NAME_LENGTH], output[200], outputtmp[200];
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(character, '\0', sizeof(character));
-	malloc_tsetdword(output, '\0', sizeof(output));
-	malloc_tsetdword(outputtmp, '\0', sizeof(outputtmp));
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(outputtmp, '\0', sizeof(outputtmp));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #itemlist <char name>).");
@@ -952,7 +952,7 @@ charcommand_storagelist(
 						else
 							sprintf(output, "%d %s (%s, id: %d)", stor->storage_[i].amount, item_data->name, item_data->jname, stor->storage_[i].nameid);
 						clif_displaymessage(fd, output);
-						malloc_tsetdword(output, '\0', sizeof(output));
+						memset(output, '\0', sizeof(output));
 						counter2 = 0;
 						for (j = 0; j < item_data->slot; j++) {
 							if (stor->storage_[i].card[j]) {
@@ -1008,7 +1008,7 @@ charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data
 			get_count = 1;
 		}
 		for (i = 0; i < loop; i++) {
-			malloc_set(&item_tmp, 0, sizeof(item_tmp));
+			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_data->nameid;
 			item_tmp.identify = 1;
 
@@ -1041,7 +1041,7 @@ int charcommand_item(
 	char tmp_cmdoutput[1024];
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(item_name, '\0', sizeof(item_name));
+	memset(item_name, '\0', sizeof(item_name));
 
 	if (!message || !*message || sscanf(message, "%99s %d %23[^\n]", item_name, &number, character) < 3) {
 		clif_displaymessage(fd, "Please, enter an item name/id (usage: #item <item name or ID> <quantity> <char name>).");
@@ -1076,7 +1076,7 @@ int charcommand_item(
 										 100, 0, 1, pet_db[pet_id].jname);
 					// if not pet egg
 					} else {
-						malloc_set(&item_tmp, 0, sizeof(item_tmp));
+						memset(&item_tmp, 0, sizeof(item_tmp));
 						item_tmp.nameid = item_id;
 						item_tmp.identify = 1;
 
@@ -1135,8 +1135,8 @@ int charcommand_warp(
 
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(map_name, '\0', sizeof(map_name));
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(map_name, '\0', sizeof(map_name));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%15s %d %d %23[^\n]", map_name, &x, &y, character) < 4) {
 		clif_displaymessage(fd, "Usage: #warp/#rura/#rura+ <mapname> <x> <y> <char name>");
@@ -1193,7 +1193,7 @@ int charcommand_zeny(
 	int zeny = 0, new_zeny;
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(character, '\0', sizeof(character));
+	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &zeny, character) < 2 || zeny == 0) {
 		clif_displaymessage(fd, "Please, enter a number and a player name (usage: #zeny <zeny> <name>).");
@@ -1779,8 +1779,8 @@ int charcommand_feelreset(
 	char output[200];
 	struct map_session_data *pl_sd;
 
-	malloc_tsetdword(character, '\0', sizeof(character));
-	malloc_tsetdword(output, '\0', sizeof(output));
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
 		clif_displaymessage(fd, "Please, enter a player name (usage: #feelreset <charname>).");
@@ -1817,7 +1817,7 @@ int charcommand_help(
 	FILE* fp;
 	nullpo_retr(-1, sd);
 
-	malloc_tsetdword(buf, '\0', sizeof(buf));
+	memset(buf, '\0', sizeof(buf));
 
 	if ((fp = fopen(charhelp_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_table[26]); /* Help commands: */

@@ -432,7 +432,7 @@ struct vending {
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
-	// NOTE: if you want to add a non-zeroed variable, you need to update the malloc_set call
+	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
 	int overrefine;
 	int star;

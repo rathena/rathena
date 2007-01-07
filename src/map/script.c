@@ -382,13 +382,13 @@ int add_str(const char* p)
 	if(str_num>=str_data_size){
 		str_data_size+=128;
 		RECREATE(str_data,struct str_data_struct,str_data_size);
-		malloc_tsetdword(str_data + (str_data_size - 128), '\0', 128);
+		memset(str_data + (str_data_size - 128), '\0', 128);
 	}
 	len=(int)strlen(p);
 	while(str_pos+len+1>=str_size){
 		str_size+=256;
 		RECREATE(str_buf,char,str_size);
-		malloc_tsetdword(str_buf + (str_size - 256), '\0', 256);
+		memset(str_buf + (str_size - 256), '\0', 256);
 	}
 	memcpy(str_buf+str_pos,p,len+1);
 	str_data[str_num].type=C_NOP;
@@ -1662,7 +1662,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	struct script_code *code;
 	static int first=1;
 
-	malloc_set(&syntax,0,sizeof(syntax));
+	memset(&syntax,0,sizeof(syntax));
 	if(first){
 		add_buildin_func();
 		read_constdb();
@@ -2097,7 +2097,7 @@ void push_val(struct script_stack *stack,int type,int val)
 		stack->sp_max += 64;
 		stack->stack_data = (struct script_data *)aRealloc(stack->stack_data,
 			sizeof(stack->stack_data[0]) * stack->sp_max);
-		malloc_tsetdword(stack->stack_data + (stack->sp_max - 64), 0,
+		memset(stack->stack_data + (stack->sp_max - 64), 0,
 			64 * sizeof(*(stack->stack_data)));
 	}
 //	if(battle_config.etc_log)
@@ -2128,7 +2128,7 @@ void push_str(struct script_stack *stack,int type,char *str)
 		stack->sp_max += 64;
 		stack->stack_data = (struct script_data *)aRealloc(stack->stack_data,
 			sizeof(stack->stack_data[0]) * stack->sp_max);
-		malloc_tsetdword(stack->stack_data + (stack->sp_max - 64), '\0',
+		memset(stack->stack_data + (stack->sp_max - 64), '\0',
 			64 * sizeof(*(stack->stack_data)));
 	}
 //	if(battle_config.etc_log)
@@ -3297,7 +3297,7 @@ int script_config_read_sub(char *cfgName)
 int script_config_read(char *cfgName)
 {	//Script related variables should be initialized once! [Skotlex]
 
-	malloc_set (&script_config, 0, sizeof(script_config));
+	memset (&script_config, 0, sizeof(script_config));
 	script_config.verbose_mode = 0;
 	script_config.warn_func_mismatch_paramnum = 1;
 	script_config.check_cmdcount = 65535;
@@ -5356,7 +5356,7 @@ int buildin_getitem(struct script_state *st)
 	if( (amount=conv_num(st, script_getdata(st,3))) <= 0)
 		return 0; //return if amount <=0, skip the useles iteration
 
-	malloc_set(&it,0,sizeof(it));
+	memset(&it,0,sizeof(it));
 	it.nameid=nameid;
 	if(!flag)
 		it.identify=1;
@@ -5431,7 +5431,7 @@ int buildin_getitem2(struct script_state *st)
 	}
 
 	if(nameid > 0) {
-		malloc_set(&item_tmp,0,sizeof(item_tmp));
+		memset(&item_tmp,0,sizeof(item_tmp));
 		item_data=itemdb_exists(nameid);
 		if (item_data == NULL)
 			return -1;
@@ -5525,7 +5525,7 @@ int buildin_getnameditem(struct script_state *st)
 		return 0;
 	}
 
-	malloc_set(&item_tmp,0,sizeof(item_tmp));
+	memset(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid=nameid;
 	item_tmp.amount=1;
 	item_tmp.identify=1;
@@ -5602,7 +5602,7 @@ int buildin_makeitem(struct script_state *st)
 	}
 
 	if(nameid > 0) {
-		malloc_set(&item_tmp,0,sizeof(item_tmp));
+		memset(&item_tmp,0,sizeof(item_tmp));
 		item_tmp.nameid=nameid;
 		if(!flag)
 			item_tmp.identify=1;
@@ -10348,7 +10348,7 @@ int buildin_atcommand(struct script_state *st)
 	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
-		malloc_set(&dummy_sd, 0, sizeof(struct map_session_data));
+		memset(&dummy_sd, 0, sizeof(struct map_session_data));
 		if (st->oid) bl = map_id2bl(st->oid);
 		if (bl) {
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
@@ -10386,7 +10386,7 @@ int buildin_charcommand(struct script_state *st)
 	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
-		malloc_set(&dummy_sd, 0, sizeof(struct map_session_data));
+		memset(&dummy_sd, 0, sizeof(struct map_session_data));
 		if (st->oid) bl = map_id2bl(st->oid);
 		if (bl) {
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
@@ -10927,7 +10927,7 @@ int buildin_getmapxy(struct script_state *st){
 
 	int x,y,type;
 	char mapname[MAP_NAME_LENGTH+1];
-	malloc_set(mapname, 0, sizeof(mapname));
+	memset(mapname, 0, sizeof(mapname));
 
 	if( st->stack->stack_data[st->start+2].type!=C_NAME ){
 		ShowWarning("script: buildin_getmapxy: not mapname variable\n");
@@ -11656,7 +11656,7 @@ int buildin_query_sql(struct script_state *st) {
 			return 1;
 		}
 
-		malloc_set(row, 0, sizeof(row));
+		memset(row, 0, sizeof(row));
 		// Verify argument types
 		for(j=0; j < nb_rows; j++)
 		{
@@ -11835,7 +11835,7 @@ int buildin_npcshopitem(struct script_state *st)
 			sizeof(nd->u.shop_item[0]) * amount);
 
 		// Reset sell list.
-		malloc_set(nd->u.shop_item, 0, sizeof(nd->u.shop_item[0]) * amount);
+		memset(nd->u.shop_item, 0, sizeof(nd->u.shop_item[0]) * amount);
 
 		n = 0;
 

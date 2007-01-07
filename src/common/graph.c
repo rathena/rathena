@@ -71,7 +71,7 @@ void graph_pallet(struct graph* g, int index,unsigned long c) {
 	if(g == NULL || c >= 256) return;
 
 	if(g->pallet_count <= index) {
-		malloc_set(g->png_data + 0x29 + 3 * g->pallet_count,0,(index - g->pallet_count) * 3);
+		memset(g->png_data + 0x29 + 3 * g->pallet_count,0,(index - g->pallet_count) * 3);
 		g->pallet_count = index + 1;
 	}
 	g->png_data[0x29 + index * 3    ] = (unsigned char)((c >> 16) & 0xFF); // R

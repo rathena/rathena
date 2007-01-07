@@ -10,8 +10,6 @@
 //    and I have doubts our implementation works.
 //    -> They should NOT be used, period.
 
-#define MEMSET_TURBO
-
 #ifndef __NETBSD__
 #if __STDC_VERSION__ < 199901L
 #	if __GNUC__ >= 2
@@ -162,15 +160,6 @@ unsigned int malloc_usage (void);
 	#else
 		#define INLINE inline
 	#endif
-#endif
-#if defined(MEMSET_TURBO) && defined(_WIN32)
-	INLINE void malloc_set(void *, int, int);
-	INLINE void malloc_tsetdword(void *, int, int);
-	INLINE void malloc_tsetword(void *, short, int);
-#else
-	#define malloc_set(x,y,z) memset(x,y,z)
-	#define malloc_tsetdword(x,y,z) memset(x,y,z)
-	#define malloc_tsetword(x,y,z) memset(x,y,z)
 #endif
 void malloc_init (void);
 void malloc_final (void);

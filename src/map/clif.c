@@ -873,7 +873,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 	lv = status_get_lv(bl);
 	if(pcdb_checkid(vd->class_)) { 
 #if PACKETVER > 6
-		malloc_set(buf,0,packet_len(0x22a));
+		memset(buf,0,packet_len(0x22a));
 
 		WBUFW(buf,0)=0x22a;
 		WBUFL(buf,2)=bl->id;
@@ -908,7 +908,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,56)=clif_setlevel(lv);
 		return packet_len(0x22a);
 #elif PACKETVER > 3
-		malloc_set(buf,0,packet_len(0x1d8));
+		memset(buf,0,packet_len(0x1d8));
 
 		WBUFW(buf,0)=0x1d8;
 		WBUFL(buf,2)=bl->id;
@@ -943,7 +943,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 		WBUFW(buf,52)=clif_setlevel(lv);
 		return packet_len(0x1d8);
 #else
-		malloc_set(buf,0,packet_len(0x78));
+		memset(buf,0,packet_len(0x78));
 
 		WBUFW(buf,0)=0x78;
 		WBUFL(buf,2)=bl->id;
@@ -978,7 +978,7 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 #endif
 	}
 	//Non-player sprites need just a few fields filled.
-	malloc_set(buf,0,packet_len(0x78));
+	memset(buf,0,packet_len(0x78));
 
 	WBUFW(buf,0)=0x78;
 	WBUFL(buf,2)=bl->id;
@@ -1026,7 +1026,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	
 	if(pcdb_checkid(vd->class_)) { 
 #if PACKETVER > 6
-		malloc_set(buf,0,packet_len(0x22c));
+		memset(buf,0,packet_len(0x22c));
 
 		WBUFW(buf,0)=0x22c;
 		WBUFL(buf,2)=bl->id;
@@ -1062,7 +1062,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 
 		return packet_len(0x22c);	
 #elif PACKETVER > 3
-		malloc_set(buf,0,packet_len(0x1da));
+		memset(buf,0,packet_len(0x1da));
 
 		WBUFW(buf,0)=0x1da;
 		WBUFL(buf,2)=bl->id;
@@ -1098,7 +1098,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 
 		return packet_len(0x1da);
 #else
-		malloc_set(buf,0,packet_len(0x7b));
+		memset(buf,0,packet_len(0x7b));
 
 		WBUFW(buf,0)=0x7b;
 		WBUFL(buf,2)=bl->id;
@@ -1135,7 +1135,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	}
 	//Non-player sprites only require a few fields.
 #if PACKETVER > 6
-	malloc_set(buf,0,packet_len(0x22c));
+	memset(buf,0,packet_len(0x22c));
 
 	WBUFW(buf,0)=0x22c;
 	WBUFL(buf,2)=bl->id;
@@ -1159,7 +1159,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	WBUFW(buf,62)=clif_setlevel(lv);
 	return packet_len(0x22c);
 #else
-	malloc_set(buf,0,packet_len(0x7b));
+	memset(buf,0,packet_len(0x7b));
 
 	WBUFW(buf,0)=0x7b;
 	WBUFL(buf,2)=bl->id;
@@ -1369,7 +1369,7 @@ int clif_spawn(struct block_list *bl)
 		}
 	} else {	//Mob spawn packet.
 		struct status_change *sc = status_get_sc(bl);
-		malloc_tsetdword(buf,0,sizeof(buf));
+		memset(buf,0,sizeof(buf));
 		WBUFW(buf,0)=0x7c;
 		WBUFL(buf,2)=bl->id;
 		WBUFW(buf,6)=status_get_speed(bl);
@@ -1428,7 +1428,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	nullpo_retr(0, hd);
 
 	status = &hd->battle_status;
-	malloc_set(buf,0,packet_len(0x22e));
+	memset(buf,0,packet_len(0x22e));
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),hd->homunculus.name,NAME_LENGTH);
 	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
@@ -1654,7 +1654,7 @@ int clif_movepc(struct map_session_data *sd) {
 		|| map[sd->bl.m].flag.rain
 		|| map[sd->bl.m].flag.clouds2
 	) {
-		malloc_set(buf,0,packet_len(0x7b));
+		memset(buf,0,packet_len(0x7b));
 		WBUFW(buf,0)=0x7b;
 		WBUFL(buf,2)=-10;
 		WBUFW(buf,6)=sd->battle_status.speed;
@@ -2001,7 +2001,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	int fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x78));
 	sd->state.using_fake_npc = 1;
-	malloc_set(WFIFOP(fd,0), 0, packet_len(0x78));
+	memset(WFIFOP(fd,0), 0, packet_len(0x78));
 	WFIFOW(fd,0)=0x78;
 	WFIFOL(fd,2)=npcid;
 	WFIFOW(fd,14)=111;
@@ -3186,7 +3186,7 @@ int clif_misceffect2(struct block_list *bl, int type) {
 
 	nullpo_retr(0, bl);
 
-	malloc_set(buf, 0, packet_len(0x1f3));
+	memset(buf, 0, packet_len(0x1f3));
 
 	WBUFW(buf,0) = 0x1f3;
 	WBUFL(buf,2) = bl->id;
@@ -4063,7 +4063,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
 		WFIFOHEAD(fd,packet_len(0x1c9));
-		malloc_set(WFIFOP(fd,0),0,packet_len(0x1c9));
+		memset(WFIFOP(fd,0),0,packet_len(0x1c9));
 		WFIFOW(fd, 0)=0x1c9;
 		WFIFOL(fd, 2)=unit->bl.id;
 		WFIFOL(fd, 6)=unit->group->src_id;
@@ -4078,7 +4078,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	}
 #endif
 	WFIFOHEAD(fd,packet_len(0x11f));
-	malloc_set(WFIFOP(fd,0),0,packet_len(0x11f));
+	memset(WFIFOP(fd,0),0,packet_len(0x11f));
 	WFIFOW(fd, 0)=0x11f;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOL(fd, 6)=unit->group->src_id;
@@ -4097,7 +4097,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	return 0;
 /* Previous implementation guess of packet 0x1c9, who can understand what all those fields are for? [Skotlex]
 	WFIFOHEAD(fd,packet_len(0x1c9));
-	malloc_set(WFIFOP(fd,0),0,packet_len(0x1c9));
+	memset(WFIFOP(fd,0),0,packet_len(0x1c9));
 	WFIFOW(fd, 0)=0x1c9;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOL(fd, 6)=unit->group->src_id;
@@ -4730,7 +4730,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 		
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
-		malloc_set(WBUFP(buf, 0),0,packet_len(0x1c9));
+		memset(WBUFP(buf, 0),0,packet_len(0x1c9));
 		WBUFW(buf, 0)=0x1c9;
 		WBUFL(buf, 2)=unit->bl.id;
 		WBUFL(buf, 6)=unit->group->src_id;
@@ -4748,7 +4748,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 		return 0;
 	}
 #endif
-	malloc_set(WBUFP(buf, 0),0,packet_len(0x11f));
+	memset(WBUFP(buf, 0),0,packet_len(0x11f));
 	WBUFW(buf, 0)=0x11f;
 	WBUFL(buf, 2)=unit->bl.id;
 	WBUFL(buf, 6)=unit->group->src_id;
@@ -4764,7 +4764,7 @@ int clif_skill_setunit(struct skill_unit *unit)
 	return 0;
 	
 /* Previous mysterious implementation noone really understands. [Skotlex]
-		malloc_set(WBUFP(buf, 0),0,packet_len(0x1c9));
+		memset(WBUFP(buf, 0),0,packet_len(0x1c9));
 		WBUFW(buf, 0)=0x1c9;
 		WBUFL(buf, 2)=unit->bl.id;
 		WBUFL(buf, 6)=unit->group->src_id;
@@ -6361,7 +6361,7 @@ int clif_pet_emotion(struct pet_data *pd,int param)
 
 	nullpo_retr(0, pd);
 
-	malloc_set(buf,0,packet_len(0x1aa));
+	memset(buf,0,packet_len(0x1aa));
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
@@ -6386,7 +6386,7 @@ int clif_pet_performance(struct block_list *bl,int param)
 
 	nullpo_retr(0, bl);
 
-	malloc_set(buf,0,packet_len(0x1a4));
+	memset(buf,0,packet_len(0x1a4));
 
 	WBUFW(buf,0)=0x1a4;
 	WBUFB(buf,2)=4;
@@ -6404,7 +6404,7 @@ int clif_pet_equip(struct pet_data *pd)
 
 	nullpo_retr(0, pd);
 
-	malloc_set(buf,0,packet_len(0x1a4));
+	memset(buf,0,packet_len(0x1a4));
 
 	WBUFW(buf,0)=0x1a4;
 	WBUFB(buf,2)=3;
@@ -6695,7 +6695,7 @@ int clif_guild_belonginfo(struct map_session_data *sd,struct guild *g)
 	ps=guild_getposition(sd,g);
 
 	WFIFOHEAD(fd,packet_len(0x16c));
-	malloc_set(WFIFOP(fd,0),0,packet_len(0x16c));
+	memset(WFIFOP(fd,0),0,packet_len(0x16c));
 	WFIFOW(fd,0)=0x16c;
 	WFIFOL(fd,2)=g->guild_id;
 	WFIFOL(fd,6)=g->emblem_id;
@@ -6899,7 +6899,7 @@ int clif_guild_memberlist(struct map_session_data *sd)
 		WFIFOL(fd,c*104+22)=m->exp;
 		WFIFOL(fd,c*104+26)=m->online;
 		WFIFOL(fd,c*104+30)=m->position;
-		malloc_tsetword(WFIFOP(fd,c*104+34),0,50);	// ƒƒ‚H
+		memset(WFIFOP(fd,c*104+34),0,50);	// ƒƒ‚H
 		memcpy(WFIFOP(fd,c*104+84),m->name,NAME_LENGTH);
 		c++;
 	}
@@ -7677,7 +7677,7 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *na
 int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage)
 {
 	unsigned char buf[40];
-	malloc_set(buf, 0, packet_len(0x1d3));
+	memset(buf, 0, packet_len(0x1d3));
 
 	if(coverage < 0 || coverage > 22){
 		ShowError("clif_soundeffectall: undefined coverage.\n");
@@ -7703,7 +7703,7 @@ int clif_specialeffect(struct block_list *bl, int type, int flag)
 
 	nullpo_retr(0, bl);
 
-	malloc_set(buf, 0, packet_len(0x1f3));
+	memset(buf, 0, packet_len(0x1f3));
 
 	WBUFW(buf,0) = 0x1f3;
 	WBUFL(buf,2) = bl->id;
@@ -8045,7 +8045,7 @@ void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int cl
 	else if (mobdb_checkid(class_))
 		strncpy(WFIFOP(fd,2),mob_db(class_)->jname, NAME_LENGTH);
 	else //Really shouldn't happen...
-		malloc_tsetdword(WFIFOP(fd,2), 0, NAME_LENGTH);
+		memset(WFIFOP(fd,2), 0, NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOB(fd,30)=hate_level;
 	WFIFOB(fd,31)=type?10:11; //Register/Info
@@ -8077,7 +8077,7 @@ void clif_feel_hate_reset(struct map_session_data *sd)
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0)=0x20e;
-	malloc_tsetdword(WFIFOP(fd,2), 0, NAME_LENGTH); //Blank name as all was reset.
+	memset(WFIFOP(fd,2), 0, NAME_LENGTH); //Blank name as all was reset.
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOB(fd,30)=0; //Feel/hate level: irrelevant
 	WFIFOB(fd,31)=30;
@@ -8606,7 +8606,7 @@ void check_fake_id(int fd, struct map_session_data *sd, int target_id) {
 		}
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message_to_gm);
 		// send this info cause the bot ask until get an answer, damn spam
-		malloc_tsetdword(WPACKETP(0), 0, packet_len(0x95));
+		memset(WPACKETP(0), 0, packet_len(0x95));
 		WPACKETW(0) = 0x95;
 		WPACKETL(2) = server_char_id;
 		strncpy(WPACKETP(6), sd->status.name, 24);
@@ -8647,7 +8647,7 @@ void check_fake_id(int fd, struct map_session_data *sd, int target_id) {
 		}
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, message_to_gm);
 		// send this info cause the bot ask until get an answer, damn spam
-		malloc_tsetdword(WPACKETP(0), 0, packet_len(0x95));
+		memset(WPACKETP(0), 0, packet_len(0x95));
 		WPACKETW(0) = 0x95;
 		WPACKETL(2) = server_fake_mob_id;
 		fake_mob = fake_mob_list[(sd->bl.m + sd->fd + sd->status.char_id) % (sizeof(fake_mob_list) / sizeof(fake_mob_list[0]))]; // never same mob
@@ -10949,7 +10949,7 @@ void clif_parse_Shift(int fd, struct map_session_data *sd) {	// Rewriten by [Yor
 	char player_name[NAME_LENGTH];
 	char message[MESSAGE_SIZE];
 
-	malloc_tsetdword(player_name, '\0', sizeof(player_name));
+	memset(player_name, '\0', sizeof(player_name));
 
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_JumpTo))) {
@@ -10973,7 +10973,7 @@ void clif_parse_Recall(int fd, struct map_session_data *sd) {	// Added by RoVeRT
 	char player_name[NAME_LENGTH];
 	char message[MESSAGE_SIZE];
 
-	malloc_tsetdword(player_name, '\0', sizeof(player_name));
+	memset(player_name, '\0', sizeof(player_name));
 
 	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
 	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Recall))) {
@@ -10997,7 +10997,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd) {
 	char monster_item_name[NAME_LENGTH+10]; //Additional space is for logging, eg: "@monster Poring"
 	int level;
 
-	malloc_tsetdword(monster_item_name, '\0', sizeof(monster_item_name));
+	memset(monster_item_name, '\0', sizeof(monster_item_name));
 
 	if (battle_config.atc_gmonly == 0 || pc_isGM(sd)) {
 		RFIFOHEAD(fd);
@@ -11133,7 +11133,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 	WFIFOHEAD(fd,packet_len(0xd1));
 	RFIFOHEAD(fd);
 
-	malloc_tsetdword(output, '\0', sizeof(output));
+	memset(output, '\0', sizeof(output));
 
 	nick = (char*)RFIFOP(fd,2); // speed up
 	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name have at maximum 23 characters
@@ -11199,7 +11199,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd) {	// Rewritten by 
 	//Move everything one place down to overwrite removed entry.
 	memmove(sd->ignore[i].name, sd->ignore[i+1].name,
 		(MAX_IGNORE_LIST-i-1)*sizeof(sd->ignore[0].name));
-	malloc_tsetdword(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
+	memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
 	// success
 	WFIFOB(fd,3) = 0;
 	WFIFOSET(fd, packet_len(0x0d1));
@@ -11516,7 +11516,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd) {
 	for(j = i + 1; j < MAX_FRIENDS; j++)
 		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
 
-	malloc_set(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
+	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
 	clif_displaymessage(fd, "Friend removed");
 	
 	WFIFOHEAD(fd,packet_len(0x20a));
@@ -12286,7 +12286,7 @@ static int packetdb_readdb(void)
 		if( skip_ver != 0 )
 			continue; // Skipping current packet version
 
-		malloc_tsetdword(str,0,sizeof(str));
+		memset(str,0,sizeof(str));
 		for(j=0,p=line;j<4 && p;j++){
 			str[j]=p;
 			p=strchr(p,',');
@@ -12320,7 +12320,7 @@ static int packetdb_readdb(void)
 					for(i=0;i<MAX_PACKET_DB;i++){
 						if (packet_db[packet_ver][i].func == clif_parse_func[j].func)
 						{	
-							malloc_tsetword(&packet_db[packet_ver][i], 0, sizeof(struct packet_db));
+							memset(&packet_db[packet_ver][i], 0, sizeof(struct packet_db));
 							break;
 						}
 					}
@@ -12373,9 +12373,9 @@ static int packetdb_readdb(void)
 int do_init_clif(void) {
 	
 	clif_config.packet_db_ver = -1; // the main packet version of the DB
-	malloc_tsetdword(clif_config.connect_cmd, 0, sizeof(clif_config.connect_cmd)); //The default connect command will be determined after reading the packet_db [Skotlex]
+	memset(clif_config.connect_cmd, 0, sizeof(clif_config.connect_cmd)); //The default connect command will be determined after reading the packet_db [Skotlex]
 
-	malloc_tsetword(packet_db,0,sizeof(packet_db));
+	memset(packet_db,0,sizeof(packet_db));
 	//Using the packet_db file is the only way to set up packets now [Skotlex]
 	packetdb_readdb();
 

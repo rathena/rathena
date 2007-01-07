@@ -393,7 +393,7 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 
 void log_set_defaults(void)
 {
-	malloc_set(&log_config, 0, sizeof(log_config));
+	memset(&log_config, 0, sizeof(log_config));
 
 	//LOG FILTER Default values
 	log_config.refine_items_log = 5; //log refined items, with refine >= +7

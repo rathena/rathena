@@ -1175,7 +1175,7 @@ static int pc_bonus_autospell_del(struct s_autospell *spell, int max, short id, 
 			rate-= spell[i].rate;
 			spell[i].rate = 0;
 			memmove(&spell[i], &spell[j], sizeof(struct s_autospell));
-			malloc_set(&spell[j], 0, sizeof(struct s_autospell));
+			memset(&spell[j], 0, sizeof(struct s_autospell));
 			j--;
 		} else {
 			spell[i].rate -= rate;
@@ -2734,7 +2734,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type)
 	if(sd->status.inventory[n].amount<=0){
 		if(sd->status.inventory[n].equip)
 			pc_unequipitem(sd,n,3);
-		malloc_set(&sd->status.inventory[n],0,sizeof(sd->status.inventory[0]));
+		memset(&sd->status.inventory[n],0,sizeof(sd->status.inventory[0]));
 		sd->inventory_data[n] = NULL;
 	}
 	if(!(type&1))
@@ -3077,7 +3077,7 @@ int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type)
 	sd->status.cart[n].amount -= amount;
 	sd->cart_weight -= itemdb_weight(sd->status.cart[n].nameid)*amount ;
 	if(sd->status.cart[n].amount <= 0){
-		malloc_set(&sd->status.cart[n],0,sizeof(sd->status.cart[0]));
+		memset(&sd->status.cart[n],0,sizeof(sd->status.cart[0]));
 		sd->cart_num--;
 	}
 	if(!type) {
@@ -3225,7 +3225,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		return 0;
 	
 	itemid = md->db->dropitem[i].nameid;
-	malloc_set(&tmp_item,0,sizeof(tmp_item));
+	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
@@ -4938,7 +4938,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	/*
 	if(sd->status.karma > 0) {
 		int eq_num=0,eq_n[MAX_INVENTORY];
-		malloc_set(eq_n,0,sizeof(eq_n));
+		memset(eq_n,0,sizeof(eq_n));
 		for(i=0;i<MAX_INVENTORY;i++){
 			int k;
 			for(k=0;k<MAX_INVENTORY;k++){
@@ -4964,7 +4964,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		|| (battle_config.bone_drop==1 && map[sd->bl.m].flag.pvp))
 	{
 		struct item item_tmp;
-		malloc_set(&item_tmp,0,sizeof(item_tmp));
+		memset(&item_tmp,0,sizeof(item_tmp));
 		item_tmp.nameid=7420; //PVP Skull item ID
 		item_tmp.identify=1;
 		item_tmp.card[0]=CARD0_CREATE;
@@ -5046,7 +5046,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				continue;
 			if(id == -1){
 				int eq_num=0,eq_n[MAX_INVENTORY];
-				malloc_tsetdword(eq_n,0,sizeof(eq_n));
+				memset(eq_n,0,sizeof(eq_n));
 				for(i=0;i<MAX_INVENTORY;i++){
 					int k;
 					if( (type == 1 && !sd->status.inventory[i].equip)
@@ -5857,7 +5857,7 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 	}
 	sd->reg_num++;
 	sd->reg = (struct script_reg *) aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
-	malloc_set(sd->reg + (sd->reg_num - 1), 0, sizeof(struct script_reg));
+	memset(sd->reg + (sd->reg_num - 1), 0, sizeof(struct script_reg));
 	sd->reg[i].index = reg;
 	sd->reg[i].data = val;
 
@@ -5907,7 +5907,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 		ShowFatalError("out of memory : pc_setreg\n");
 		exit(1);
 	}
-	malloc_set(sd->regstr + (sd->regstr_num - 1), 0, sizeof(struct script_regstr));
+	memset(sd->regstr + (sd->regstr_num - 1), 0, sizeof(struct script_regstr));
 	sd->regstr[i].index = reg;
 	strcpy(sd->regstr[i].data, str);
 
@@ -6035,7 +6035,7 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 			if (strcmp(sd_reg[i].str, reg) == 0) {
 				if (i != *max - 1)
 					memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-				malloc_tsetdword(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
+				memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
 				(*max)--;
 				sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 				break;
@@ -6054,7 +6054,7 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 
 	// add value if not found
 	if (i < regmax) {
-		malloc_tsetdword(&sd_reg[i], 0, sizeof(struct global_reg));
+		memset(&sd_reg[i], 0, sizeof(struct global_reg));
 		strncpy(sd_reg[i].str, reg, 32);
 		sprintf(sd_reg[i].value, "%d", val); 
 		(*max)++;
@@ -6110,7 +6110,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 			if (strcmp(sd_reg[i].str, reg) == 0) {
 				if (i != *max - 1)
 					memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-				malloc_tsetdword(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
+				memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
 				(*max)--;
 				sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 				if (type!=3) intif_saveregistry(sd,type);
@@ -6131,7 +6131,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 
 	// add value if not found
 	if (i < regmax) {
-		malloc_tsetdword(&sd_reg[i], 0, sizeof(struct global_reg));
+		memset(&sd_reg[i], 0, sizeof(struct global_reg));
 		strncpy(sd_reg[i].str, reg, 32);
 		strncpy(sd_reg[i].value, val, 256);
 		(*max)++;
@@ -6558,7 +6558,7 @@ int pc_checkitem(struct map_session_data *sd)
 		j++;
 	}
 	if(j < MAX_INVENTORY)
-		malloc_set(&sd->status.inventory[j],0,sizeof(struct item)*(MAX_INVENTORY-j));
+		memset(&sd->status.inventory[j],0,sizeof(struct item)*(MAX_INVENTORY-j));
 	for(k=j;k<MAX_INVENTORY;k++)
 		sd->inventory_data[k] = NULL;
 
@@ -6578,7 +6578,7 @@ int pc_checkitem(struct map_session_data *sd)
 		j++;
 	}
 	if(j < MAX_CART)
-		malloc_set(&sd->status.cart[j],0,sizeof(struct item)*(MAX_CART-j));
+		memset(&sd->status.cart[j],0,sizeof(struct item)*(MAX_CART-j));
 
 	// ? 備位置チェック
 
@@ -7274,8 +7274,8 @@ int pc_readdb(void)
 	char line[24000],*p;
 
 	// 必要??値?み?み
-	malloc_tsetword(exp_table,0,sizeof(exp_table));
-	malloc_tsetword(max_level,0,sizeof(max_level));
+	memset(exp_table,0,sizeof(exp_table));
+	memset(max_level,0,sizeof(max_level));
 	sprintf(line, "%s/exp.txt", db_path);
 	fp=fopen(line, "r");
 	if(fp==NULL){
@@ -7352,7 +7352,7 @@ int pc_readdb(void)
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","exp.txt");
 
 	// スキルツリ?
-	malloc_set(skill_tree,0,sizeof(skill_tree));
+	memset(skill_tree,0,sizeof(skill_tree));
 	sprintf(line, "%s/skill_tree.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
@@ -7446,7 +7446,7 @@ int pc_readdb(void)
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","attr_fix.txt");
 
 	// スキルツリ?
-	malloc_set(statp,0,sizeof(statp));
+	memset(statp,0,sizeof(statp));
 	i=1;
 	j=45;	// base points
 	sprintf(line, "%s/statpoint.txt", db_path);
@@ -7482,7 +7482,7 @@ int pc_read_motd(void) {
 	FILE *fp;
 	int ln=0,i=0;
 
-	malloc_set(motd_text,0,sizeof(motd_text));
+	memset(motd_text,0,sizeof(motd_text));
 	if ((fp = fopen(motd_txt, "r")) != NULL) {
 		while ((ln < MOTD_LINE_SIZE) && fgets(motd_text[ln], sizeof(motd_text[ln])-1, fp) != NULL) {
 			if(motd_text[ln][0] == '/' && motd_text[ln][1] == '/')

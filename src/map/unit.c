@@ -1473,7 +1473,7 @@ void unit_dataset(struct block_list *bl) {
 	struct unit_data *ud;
 	nullpo_retv(ud = unit_bl2ud(bl));
 
-	malloc_set( ud, 0, sizeof( struct unit_data) );
+	memset( ud, 0, sizeof( struct unit_data) );
 	ud->bl             = bl;
 	ud->walktimer      = -1;
 	ud->skilltimer     = -1;

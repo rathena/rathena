@@ -140,8 +140,8 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 	//Initiate trade
 	sd->state.trading = 1;
 	tsd->state.trading = 1;
-	malloc_set(&sd->deal, 0, sizeof(sd->deal));
-	malloc_set(&tsd->deal, 0, sizeof(tsd->deal));
+	memset(&sd->deal, 0, sizeof(sd->deal));
+	memset(&tsd->deal, 0, sizeof(tsd->deal));
 	clif_tradestart(tsd, type);
 	clif_tradestart(sd, type);
 }
@@ -173,7 +173,7 @@ int impossible_trade_check(struct map_session_data *sd) {
 	// remove equiped items (they can not be trade)
 	for (i = 0; i < MAX_INVENTORY; i++)
 		if (inventory[i].nameid > 0 && inventory[i].equip && !(inventory[i].equip & EQP_AMMO))
-			malloc_set(&inventory[i], 0, sizeof(struct item));
+			memset(&inventory[i], 0, sizeof(struct item));
 
 	// check items in player inventory
 	for(i = 0; i < 10; i++) {

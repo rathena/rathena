@@ -133,7 +133,7 @@ int export_symbol (void *var, int offset)
 		plugin_call_table = (void**)aRealloc(plugin_call_table, max_call_table*sizeof(void*));
 		
 		// clear the new alloced block
-		malloc_tsetdword(plugin_call_table + call_table_size, 0, (max_call_table-call_table_size)*sizeof(void*));
+		memset(plugin_call_table + call_table_size, 0, (max_call_table-call_table_size)*sizeof(void*));
 	}
 
 	// the new table size is delimited by the new element at the end

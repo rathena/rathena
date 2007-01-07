@@ -123,7 +123,7 @@ char *trim(char *str, const char *delim)
 	char *strp = strtok(str,delim);
 	char buf[1024];
 	char *bufp = buf;
-	malloc_tsetdword(buf,0,sizeof buf);
+	memset(buf,0,sizeof buf);
 
 	while(strp) {
 		strcpy(bufp, strp);

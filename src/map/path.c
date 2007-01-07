@@ -377,7 +377,7 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	if(flag&1)
 		return -1;
 
-	malloc_set(tp,0,sizeof(tp));
+	memset(tp,0,sizeof(tp));
 
 	i=calc_index(x0,y0);
 	tp[i].x=x0;

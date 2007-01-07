@@ -2570,7 +2570,7 @@ static int map_cache_open(char *fn)
 	// ì«Ç›çb›Ç…é∏îsÇµÇΩÇÃÇ≈êVãKÇ…çÏê¨Ç∑ÇÈ
 	map_cache.fp = fopen(fn,"wb");
 	if(map_cache.fp) {
-		malloc_set(&map_cache.head,0,sizeof(struct map_cache_head));
+		memset(&map_cache.head,0,sizeof(struct map_cache_head));
 		map_cache.map   = (struct map_cache_info *) aCalloc(sizeof(struct map_cache_info),MAX_MAP_CACHE);
 		map_cache.head.nmaps         = MAX_MAP_CACHE;
 		map_cache.head.sizeof_header = sizeof(struct map_cache_head);
@@ -3135,7 +3135,7 @@ int map_readallmaps (void)
 		// pre-init some data
 		map[i].alias = NULL;
 		map[i].m = i;
-		malloc_set (map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
+		memset (map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
 		map[i].mob_delete_timer = -1;	//Initialize timer [Skotlex]
 		if (battle_config.pk_mode)
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
@@ -3253,7 +3253,7 @@ int parse_console(char *buf) {
 	int m, n;
 	struct map_session_data sd;
 
-	malloc_set(&sd, 0, sizeof(struct map_session_data));
+	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy( sd.status.name , "console");
 
 	if ( ( n = sscanf(buf, "%[^:]:%[^:]:%99s %d %d[^\n]", type , command , map , &x , &y )) < 5 )

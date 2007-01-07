@@ -95,8 +95,8 @@ void initChangeTables(void) {
 		StatusIconChangeTable[i] = SI_BLANK;
 	for (i = 0; i < MAX_SKILL; i++)
 		SkillStatusChangeTableArray[i] = -1;
-	malloc_set(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
-	malloc_set(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
+	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
+	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 
 	//First we define the skill for common ailments. These are used in 
 	//skill_additional_effect through sc cards. [Skotlex]
@@ -474,7 +474,7 @@ int SkillStatusChangeTable(int skill)
 }
 int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
 static void initDummyData(void) {
-	malloc_set(&dummy_status, 0, sizeof(dummy_status));
+	memset(&dummy_status, 0, sizeof(dummy_status));
 	dummy_status.hp = 
 	dummy_status.max_hp = 
 	dummy_status.max_sp = 
@@ -715,11 +715,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	{	//Reset regen ticks.
 		struct regen_data *regen = status_get_regen_data(target);
 		if (regen) {
-			malloc_set(&regen->tick, 0, sizeof(regen->tick));
+			memset(&regen->tick, 0, sizeof(regen->tick));
 			if (regen->sregen)
-				malloc_set(&regen->sregen->tick, 0, sizeof(regen->sregen->tick));
+				memset(&regen->sregen->tick, 0, sizeof(regen->sregen->tick));
 			if (regen->ssregen)
-				malloc_set(&regen->ssregen->tick, 0, sizeof(regen->ssregen->tick));
+				memset(&regen->ssregen->tick, 0, sizeof(regen->ssregen->tick));
 		}
 	}
 	if(flag&4) //Delete from memory. (also invokes map removal code)
@@ -1580,7 +1580,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// zeroed arays, order follows the order in map.h.
 	// add new arrays to the end of zeroed area in map.h (see comments) and size here. [zzo]
-	malloc_set (sd->param_bonus, 0, sizeof(sd->param_bonus)
+	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
 		+ sizeof(sd->param_equip)
 		+ sizeof(sd->subele)
 		+ sizeof(sd->subrace)
@@ -1603,14 +1603,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->sp_gain_race)
 		);
 
-	malloc_set (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
-	malloc_set (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
+	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
+	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
 
-	malloc_set(&sd->special_state,0,sizeof(sd->special_state));
-	malloc_set(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)+sizeof(status->lhw)));
-	malloc_set(status->lhw, 0, sizeof(struct weapon_atk));
+	memset(&sd->special_state,0,sizeof(sd->special_state));
+	memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)+sizeof(status->lhw)));
+	memset(status->lhw, 0, sizeof(struct weapon_atk));
 
-	//FIXME: Most of these stuff should be calculated once, but how do I fix the malloc_set above to do that? [Skotlex]
+	//FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	status->speed = DEFAULT_WALK_SPEED;
 	//Give them all modes except these (useful for clones)
 	status->mode = MD_MASK&~(MD_BOSS|MD_PLANT|MD_DETECTOR|MD_ANGRY);
@@ -1629,7 +1629,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	status->race = RC_DEMIHUMAN;
 
 	//zero up structures...
-	malloc_set(&sd->autospell,0,sizeof(sd->autospell)
+	memset(&sd->autospell,0,sizeof(sd->autospell)
 		+ sizeof(sd->autospell2)
 		+ sizeof(sd->addeff)
 		+ sizeof(sd->addeff2)
@@ -1644,7 +1644,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	);
 
 	// vars zeroing. ints, shorts, chars. in that order.
-	malloc_set (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
+	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
 		+ sizeof(sd->arrow_ele)
 		+ sizeof(sd->arrow_cri)
 		+ sizeof(sd->arrow_hit)
@@ -1789,7 +1789,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	//Store equipment script bonuses 
 	memcpy(sd->param_equip,sd->param_bonus,sizeof(sd->param_equip));
-	malloc_set(sd->param_bonus, 0, sizeof(sd->param_bonus));
+	memset(sd->param_bonus, 0, sizeof(sd->param_bonus));
 
 	status->def += (refinedef+50)/100;
 
@@ -4337,7 +4337,7 @@ void status_change_init(struct block_list *bl)
 	struct status_change *sc = status_get_sc(bl);
 	int i;
 	nullpo_retv(sc);
-	malloc_set(sc, 0, sizeof (struct status_change));
+	memset(sc, 0, sizeof (struct status_change));
 	for (i=0; i< SC_MAX; i++)
 		sc->data[i].timer = -1;
 }
@@ -7211,7 +7211,7 @@ static int status_calc_sigma(void)
 	unsigned int k;
 
 	for(i=0;i<MAX_PC_CLASS;i++) {
-		malloc_tsetdword(hp_sigma_val[i],0,sizeof(hp_sigma_val[i]));
+		memset(hp_sigma_val[i],0,sizeof(hp_sigma_val[i]));
 		for(k=0,j=2;j<=MAX_LEVEL;j++) {
 			k += hp_coefficient[i]*j + 50;
 			k -= k%100;
@@ -7265,7 +7265,7 @@ int status_readdb(void) {
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-	malloc_tsetdword(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
+	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
 	sprintf(path, "%s/job_db2.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -7306,7 +7306,7 @@ int status_readdb(void) {
 			continue;
 		if(atoi(line)<=0)
 			continue;
-		malloc_tsetdword(split,0,sizeof(split));
+		memset(split,0,sizeof(split));
 		for(j=0,p=line;j<MAX_WEAPON_TYPE && p;j++){
 			split[j]=p;
 			p=strchr(p,',');
@@ -7341,7 +7341,7 @@ int status_readdb(void) {
 			continue;
 		if(atoi(line)<=0)
 			continue;
-		malloc_tsetdword(split,0,sizeof(split));
+		memset(split,0,sizeof(split));
 		for(j=0,p=line;j<MAX_REFINE+4 && p;j++){
 			split[j]=p;
 			p=strchr(p,',');

@@ -1168,9 +1168,9 @@ int chrif_recvfamelist(int fd)
 	int total = 0, len = 8;
 	RFIFOHEAD(fd);
 
-	malloc_tsetdword (smith_fame_list, 0, sizeof(smith_fame_list));
-	malloc_tsetdword (chemist_fame_list, 0, sizeof(chemist_fame_list));
-	malloc_tsetdword (taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+	memset (smith_fame_list, 0, sizeof(smith_fame_list));
+	memset (chemist_fame_list, 0, sizeof(chemist_fame_list));
+	memset (taekwon_fame_list, 0, sizeof(taekwon_fame_list));
 
 	size = RFIFOW(fd, 6); //Blacksmith block size
 	for (num = 0; len < size && num < MAX_FAME_LIST; num++) {
@@ -1317,7 +1317,7 @@ int chrif_load_scdata(int fd)
 		}
 		fclose(fp);
 	} else {
-		malloc_tsetdword(buf, 0, sizeof(buf)); //No data found, send empty packets?
+		memset(buf, 0, sizeof(buf)); //No data found, send empty packets?
 		WFIFOW(char_fd,8) = sizeof(buf) + 10;
 		memcpy(WFIFOP(char_fd,10), buf, sizeof(buf));
 	}

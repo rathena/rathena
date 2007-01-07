@@ -190,7 +190,7 @@ static void* create_party(DBKey key, va_list args) {
 static void party_check_state(struct party_data *p)
 {
 	int i;
-	malloc_set(&p->state, 0, sizeof(p->state));
+	memset(&p->state, 0, sizeof(p->state));
 	for (i = 0; i < MAX_PARTY; i ++)
 	{
 		if (!p->party.member[i].online) continue; //Those not online shouldn't aport to skill usage and all that.
@@ -226,8 +226,8 @@ int party_recv_info(struct party *sp)
 	if (!p->party.party_id) //party just received.
 		party_check_member(sp);
 	memcpy(&p->party,sp,sizeof(struct party));
-	malloc_set(&p->state, 0, sizeof(p->state));
-	malloc_set(&p->data, 0, sizeof(p->data));
+	memset(&p->state, 0, sizeof(p->state));
+	memset(&p->data, 0, sizeof(p->data));
 	for(i=0;i<MAX_PARTY;i++){
 		if (!p->party.member[i].account_id)
 			continue;
@@ -415,8 +415,8 @@ int party_member_leaved(int party_id,int account_id,int char_id)
 			if(p->party.member[i].account_id==account_id &&
 				p->party.member[i].char_id==char_id){
 				clif_party_leaved(p,sd,account_id,p->party.member[i].name,0x00);
-				malloc_set(&p->party.member[i], 0, sizeof(p->party.member[0]));
-				malloc_set(&p->data[i], 0, sizeof(p->data[0]));
+				memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
+				memset(&p->data[i], 0, sizeof(p->data[0]));
 				p->party.count--;
 				party_check_state(p);
 				break;
@@ -563,7 +563,7 @@ int party_send_logout(struct map_session_data *sd)
 
 	for(i=0;i<MAX_PARTY && p->data[i].sd != sd;i++);
 	if (i < MAX_PARTY)
-		malloc_set(&p->data[i], 0, sizeof(p->data[0]));
+		memset(&p->data[i], 0, sizeof(p->data[0]));
 	
 	return 1;
 }

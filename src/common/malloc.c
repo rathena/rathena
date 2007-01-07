@@ -88,15 +88,13 @@ void aFree_(void *p, const char *file, int line, const char *func)
 void* _bcallocA(size_t size, size_t cnt)
 {
 	void *ret = MALLOCA(size * cnt);
-	if (ret) //malloc_set(ret, 0, size * cnt);
-		malloc_set(ret, 0, size*cnt);
+	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 void* _bcalloc(size_t size, size_t cnt)
 {
 	void *ret = MALLOC(size * cnt);
-	if (ret) //malloc_set(ret, 0, size * cnt);
-		malloc_set(ret, 0, size*cnt);
+	if (ret) memset(ret, 0, size * cnt);
 	return ret;
 }
 char* _bstrdup(const char *chr)
@@ -295,8 +293,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 
 void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func ) {
 	void *p = _mmalloc(num * size,file,line,func);
-	//malloc_set(p,0,num * size);
-	malloc_set(p,0,num*size);
+	memset(p,0,num * size);
 	return p;
 }
 
@@ -652,54 +649,6 @@ static void memmgr_init (void)
 	#endif
 	return;
 }
-#endif
-
-#if defined(MEMSET_TURBO) && defined(_WIN32)
-	void malloc_set(void *dest, int value, int count){
-		_asm
-			{
-				mov eax, value
-				mov ecx, count
-				mov ebx, ecx
-				mov edi, dest
-				shr ecx, 2
-				test ecx, ecx
-				jz ByteOp
-				shl ecx, 2
-				sub ebx, ecx
-				shr ecx, 2
-				rep stosd
-				test ebx, ebx
-				jz Done
-				ByteOp:
-				mov ecx, ebx
-				rep stosb
-				Done:
-			}
-	}
-	// Sets 32-bit aligned memory.
-	void malloc_tsetdword(void *dest, int value, int count){
-		_asm
-			{
-				mov edi, dest
-				mov ecx, count
-				shr ecx, 2
-				mov eax, value
-				rep stosd
-			}
-	}
-
-	// Sets 16-bit aligned memory.
-	void malloc_tsetword(void *dest, short value, int count){
-		_asm
-			{
-				mov edi, dest
-				mov ecx, count
-				shr ecx, 1
-				mov ax, value
-				rep stosw
-			}
-	}
 #endif
 
 /*======================================

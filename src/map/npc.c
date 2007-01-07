@@ -1252,7 +1252,7 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 	for(i=0;i<n;i++) {
 		struct item item_tmp;
 
-		malloc_set(&item_tmp,0,sizeof(item_tmp));
+		memset(&item_tmp,0,sizeof(item_tmp));
 		item_tmp.nameid = item_list[i*2+1];
 		item_tmp.identify = 1;	// npc販売アイテムは鑑定済み
 
@@ -1845,7 +1845,7 @@ static int npc_skip_script (char *w1,char *w2,char *w3,char *w4,char *first_line
 		if (strlen((char *)srcbuf) + strlen((char *)line) + 1 >= (size_t)srcsize) {
 			srcsize += 65536;
 			srcbuf = (unsigned char *)aRealloc(srcbuf, srcsize);
-			malloc_tsetdword(srcbuf + srcsize - 65536, '\0', 65536);
+			memset(srcbuf + srcsize - 65536, '\0', 65536);
 		}
 		if (srcbuf[0] != '{') {
 			if (strchr((char *) line,'{')) {
@@ -1909,7 +1909,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 			if (strlen((char *)srcbuf) + strlen((char *)line) + 1 >= (size_t)srcsize) {
 				srcsize += 65536;
 				srcbuf = (unsigned char *)aRealloc(srcbuf, srcsize);
-				malloc_tsetdword(srcbuf + srcsize - 65536, '\0', 65536);
+				memset(srcbuf + srcsize - 65536, '\0', 65536);
 			}
 			if (srcbuf[0] != '{') {
 				if (strchr((char *) line,'{')) {
@@ -2147,7 +2147,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 		if (strlen(srcbuf)+strlen(line)+1 >= (unsigned int)srcsize) {
 			srcsize += 65536;
 			srcbuf = (char *)aRealloc(srcbuf, srcsize);
-			malloc_tsetdword(srcbuf + srcsize - 65536, '\0', 65536);
+			memset(srcbuf + srcsize - 65536, '\0', 65536);
 		}
 		if (srcbuf[0]!='{') {
 			if (strchr(line,'{')) {
@@ -2224,7 +2224,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	char mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 
-	malloc_set(&mob, 0, sizeof(struct spawn_data));
+	memset(&mob, 0, sizeof(struct spawn_data));
 
 	// 引数の個数チェック
 	if (sscanf(w1, "%15[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3 ||
@@ -2876,7 +2876,7 @@ int npc_reload (void)
 		if(battle_config.dynamic_mobs) {	//dynamic check by [random]
 			for (i = 0; i < MAX_MOB_LIST_PER_MAP; i++)
 				if (map[m].moblist[i]) aFree(map[m].moblist[i]);
-			malloc_set (map[m].moblist, 0, sizeof(map[m].moblist));
+			memset (map[m].moblist, 0, sizeof(map[m].moblist));
 		}
 		if (map[m].npc_num > 0 && battle_config.error_log)
 			ShowWarning("npc_reload: %d npcs weren't removed at map %s!\n", map[m].npc_num, map[m].name);
@@ -3008,7 +3008,7 @@ int do_init_npc(void)
 	char c = '-';
 
 	//Stock view data for normal npcs.
-	malloc_set(&npc_viewdb, 0, sizeof(npc_viewdb));
+	memset(&npc_viewdb, 0, sizeof(npc_viewdb));
 	npc_viewdb[0].class_ = INVISIBLE_CLASS; //Invisible class is stored here.
 	for (busy = 1; busy < MAX_NPC_CLASS; busy++) 
 		npc_viewdb[busy].class_ = busy;
@@ -3022,7 +3022,7 @@ int do_init_npc(void)
 	ev_db = db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,51);
 	npcname_db = db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_BASE,NAME_LENGTH);
 
-	malloc_set(&ev_tm_b, -1, sizeof(ev_tm_b));
+	memset(&ev_tm_b, -1, sizeof(ev_tm_b));
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 
 	for (nsl = npc_src_first; nsl; nsl = nsl->next) {
@@ -3056,7 +3056,7 @@ int do_init_npc(void)
 		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - START_NPC_NUM, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
-	malloc_set(script_event, 0, sizeof(script_event));
+	memset(script_event, 0, sizeof(script_event));
 	npc_read_event_script();
 	//Debug function to locate all endless loop warps.
 	if (battle_config.warp_point_debug)

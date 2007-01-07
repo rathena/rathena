@@ -343,7 +343,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	int flag;
 
 	pet_lootitem_drop(pd,sd);
-	malloc_set(&tmp_item,0,sizeof(tmp_item));
+	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = pd->petDB->EggID;
 	tmp_item.identify = 1;
 	tmp_item.card[0] = CARD0_PET;
@@ -634,7 +634,7 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 		return 0;
 	}
 
-	malloc_set(&tmp_item,0,sizeof(tmp_item));
+	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = pet_db[i].EggID;
 	tmp_item.identify = 1;
 	tmp_item.card[0] = CARD0_PET;
@@ -762,7 +762,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 	pd->pet.equip = 0;
 	status_set_viewdata(&pd->bl, pd->pet.class_);
 	clif_pet_equip(pd);
-	malloc_set(&tmp_item,0,sizeof(tmp_item));
+	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
 	tmp_item.identify = 1;
 	if((flag = pc_additem(sd,&tmp_item,1))) {
@@ -1089,7 +1089,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 		}
 	}
 	//The smart thing to do is use pd->loot->max (thanks for pointing it out, Shinomori)
-	malloc_set(pd->loot->item,0,pd->loot->max * sizeof(struct item));
+	memset(pd->loot->item,0,pd->loot->max * sizeof(struct item));
 	pd->loot->count = 0;
 	pd->loot->weight = 0;
 	pd->ud.canact_tick = gettick()+10000;	//	10*1000ms‚ÌŠÔE‚í‚È‚¢
@@ -1288,7 +1288,7 @@ int read_petdb()
 			pet_db[j].script = NULL;
 		}
 	j = 0;
-	malloc_set(pet_db,0,sizeof(pet_db));
+	memset(pet_db,0,sizeof(pet_db));
 	for(i=0;i<2;i++){
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
@@ -1368,7 +1368,7 @@ int read_petdb()
  */
 int do_init_pet(void)
 {
-	malloc_set(pet_db,0,sizeof(pet_db));
+	memset(pet_db,0,sizeof(pet_db));
 	read_petdb();
 
 	item_drop_ers = ers_new(sizeof(struct item_drop));

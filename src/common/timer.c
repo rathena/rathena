@@ -153,7 +153,7 @@ static void push_timer_heap(int tid)
 		} else {
 			timer_heap_max += 256;
 			RECREATE(timer_heap, int, timer_heap_max);
-			malloc_tsetdword(timer_heap + (timer_heap_max - 256), 0, sizeof(int) * 256);
+			memset(timer_heap + (timer_heap_max - 256), 0, sizeof(int) * 256);
 		}
 	}
 
@@ -223,7 +223,7 @@ static int acquire_timer(void)
 		{// add more timers
 			timer_data_max += 256;
 			RECREATE(timer_data, struct TimerData, timer_data_max);
-			malloc_tsetdword(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
+			memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 		}
 	}
 
@@ -412,7 +412,7 @@ int do_timer(unsigned int tick)
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
 					RECREATE(free_timer_list,int,free_timer_list_max);
-					malloc_tsetdword(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
+					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
 				}
 				free_timer_list[free_timer_list_pos++] = i;
 				break;

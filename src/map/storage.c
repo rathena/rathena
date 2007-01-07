@@ -218,7 +218,7 @@ static int storage_delitem(struct map_session_data *sd,struct storage *stor,int 
 
 	stor->storage_[n].amount-=amount;
 	if(stor->storage_[n].amount==0){
-		malloc_set(&stor->storage_[n],0,sizeof(stor->storage_[0]));
+		memset(&stor->storage_[n],0,sizeof(stor->storage_[0]));
 		stor->storage_amount--;
 		clif_updatestorageamount(sd,stor);
 	}
@@ -566,7 +566,7 @@ int guild_storage_delitem(struct map_session_data *sd,struct guild_storage *stor
 
 	stor->storage_[n].amount-=amount;
 	if(stor->storage_[n].amount==0){
-		malloc_set(&stor->storage_[n],0,sizeof(stor->storage_[0]));
+		memset(&stor->storage_[n],0,sizeof(stor->storage_[0]));
 		stor->storage_amount--;
 		clif_updateguildstorageamount(sd,stor);
 	}

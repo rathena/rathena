@@ -274,7 +274,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
 {
 	struct spawn_data data;
 	
-	malloc_set(&data, 0, sizeof(struct spawn_data));
+	memset(&data, 0, sizeof(struct spawn_data));
 	data.m = m;
 	data.num = 1;
 	data.class_ = class_;
@@ -463,7 +463,7 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 	struct guild *g=NULL;
 	struct guild_castle *gc;
 	int m, count;
-	malloc_set(&data, 0, sizeof(struct spawn_data));
+	memset(&data, 0, sizeof(struct spawn_data));
 	data.num = 1;
 
 	if( sd && strcmp(mapname,"this")==0)
@@ -679,7 +679,7 @@ int mob_spawn (struct mob_data *md)
 			return 1;
 		}
 	}
-	malloc_set(&md->state, 0, sizeof(md->state));
+	memset(&md->state, 0, sizeof(md->state));
 	status_calc_mob(md, 1);
 	md->attacked_id = 0;
 	md->target_id = 0;
@@ -696,10 +696,10 @@ int mob_spawn (struct mob_data *md)
 	for (i = 0, c = tick-1000*3600*10; i < MAX_MOBSKILL; i++)
 		md->skilldelay[i] = c;
 
-	malloc_set(md->dmglog, 0, sizeof(md->dmglog));
+	memset(md->dmglog, 0, sizeof(md->dmglog));
 	md->tdmg = 0;
 	if (md->lootitem)
-		malloc_set(md->lootitem, 0, sizeof(md->lootitem));
+		memset(md->lootitem, 0, sizeof(md->lootitem));
 	md->lootitem_count = 0;
 
 	if(md->db->option)
@@ -1419,7 +1419,7 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
 static struct item_drop* mob_setdropitem(int nameid, int qty)
 {
 	struct item_drop *drop = ers_alloc(item_drop_ers, struct item_drop);
-	malloc_set(&drop->item_data, 0, sizeof(struct item));
+	memset(&drop->item_data, 0, sizeof(struct item));
 	drop->item_data.nameid = nameid;
 	drop->item_data.amount = qty;
 	drop->item_data.identify = itemdb_isidentified(nameid);
@@ -1728,8 +1728,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	map_freeblock_lock();
 
-	malloc_tsetdword(tmpsd,0,sizeof(tmpsd));
-	malloc_set(pt,0,sizeof(pt));
+	memset(tmpsd,0,sizeof(tmpsd));
+	memset(pt,0,sizeof(pt));
 
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
@@ -2088,7 +2088,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(temp <= rand()%10000+1) //if ==0, then it doesn't drop
 				continue;
 
-			malloc_set(&item,0,sizeof(item));
+			memset(&item,0,sizeof(item));
 			item.nameid=md->db->mvpitem[i].nameid;
 			item.identify= itemdb_isidentified(item.nameid);
 			clif_mvp_item(mvp_sd,item.nameid);
@@ -2330,7 +2330,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	status_calc_mob(md, 3);
 
 	if (battle_config.monster_class_change_full_recover) {
-		malloc_set(md->dmglog, 0, sizeof(md->dmglog));
+		memset(md->dmglog, 0, sizeof(md->dmglog));
 		md->tdmg = 0;
 	} else {
 		md->status.hp = md->status.max_hp*hp_rate/100;
@@ -2437,7 +2437,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 	nullpo_retr(0, md2);
 	nullpo_retr(0, value);
 
-	malloc_set(&data, 0, sizeof(struct spawn_data));
+	memset(&data, 0, sizeof(struct spawn_data));
 	data.m = md2->bl.m;
 	data.x = md2->bl.x;
 	data.y = md2->bl.y;
@@ -2950,7 +2950,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 			skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
 			continue;
 
-		malloc_set (&ms[i], 0, sizeof(struct mob_skill));
+		memset (&ms[i], 0, sizeof(struct mob_skill));
 		ms[i].skill_id = skill_id;
 		ms[i].skill_lv = sd->status.skill[skill_id].lv;
 		ms[i].state = MSS_ANY;
@@ -3482,7 +3482,7 @@ static int mob_readdb_mobavail(void)
 	while(fgets(line,1020,fp)){
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		malloc_tsetdword(str,0,sizeof(str));
+		memset(str,0,sizeof(str));
 
 		for(j=0,p=line;j<12;j++){
 			if((np=strchr(p,','))!=NULL){
@@ -3507,7 +3507,7 @@ static int mob_readdb_mobavail(void)
 		if(k < 0)
 			continue;
 
-		malloc_set(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
+		memset(&mob_db_data[class_]->vd, 0, sizeof(struct view_data));
 		mob_db_data[class_]->vd.class_=k;
 
 		//Player sprites
@@ -3561,7 +3561,7 @@ static int mob_read_randommonster(void)
 			int class_,per;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
-			malloc_tsetdword(str,0,sizeof(str));
+			memset(str,0,sizeof(str));
 			for(j=0,p=line;j<3 && p;j++){
 				str[j]=p;
 				p=strchr(p,',');
@@ -3686,7 +3686,7 @@ static int mob_readskilldb(void)
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
-			malloc_tsetdword(sp,0,sizeof(sp));
+			memset(sp,0,sizeof(sp));
 			for(i=0,p=line;i<18 && p;i++){
 				sp[i]=p;
 				if((p=strchr(p,','))!=NULL)
@@ -3709,14 +3709,14 @@ static int mob_readskilldb(void)
 			if( strcmp(sp[1],"clear")==0 ){
 				if (mob_id < 0)
 					continue;
-				malloc_set(mob_db_data[mob_id]->skill,0,sizeof(struct mob_skill));
+				memset(mob_db_data[mob_id]->skill,0,sizeof(struct mob_skill));
 					mob_db_data[mob_id]->maxskill=0;
 				continue;
 			}
 
 			if (mob_id < 0)
 			{	//Prepare global skill. [Skotlex]
-				malloc_set(&gms, 0, sizeof (struct mob_skill));
+				memset(&gms, 0, sizeof (struct mob_skill));
 				ms = &gms;
 			} else {			
 				for(i=0;i<MAX_MOBSKILL;i++)
@@ -3867,7 +3867,7 @@ static int mob_readdb_race(void)
 	while(fgets(line,1020,fp)){
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		malloc_tsetdword(str,0,sizeof(str));
+		memset(str,0,sizeof(str));
 
 		for(j=0,p=line;j<12;j++){
 			if((np=strchr(p,','))!=NULL){
@@ -4183,7 +4183,7 @@ void mob_reload(void)
 	for (i = 0; i < MAX_MOB_DB; i++)
 		if (mob_db_data[i])
 		{
-			malloc_set(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
+			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}
 	mob_readskilldb();
@@ -4196,7 +4196,7 @@ void mob_reload(void)
  */
 int do_init_mob(void)
 {	//Initialize the mob database
-	malloc_set(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
+	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
 	mob_db_data[0] = aCalloc(1, sizeof (struct mob_data));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
 	item_drop_ers = ers_new(sizeof(struct item_drop));

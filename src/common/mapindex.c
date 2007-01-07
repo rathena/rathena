@@ -106,7 +106,7 @@ void mapindex_init(void) {
 	int index;
 	char map_name[1024];
 	
-	malloc_tsetdword (&indexes, 0, sizeof (indexes));
+	memset (&indexes, 0, sizeof (indexes));
 	fp=fopen(mapindex_cfgfile,"r");
 	if(fp==NULL){
 		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);

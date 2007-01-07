@@ -99,7 +99,7 @@ static int itemdb_readdb(void)
 			lines++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
-			malloc_tsetdword(str,0,sizeof(str));
+			memset(str,0,sizeof(str));
 			for(j=0,np=p=line;j<4 && p;j++){
 				str[j]=p;
 				p=strchr(p,',');

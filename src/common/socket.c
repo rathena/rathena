@@ -434,7 +434,7 @@ int start_console(void) {
 	if (!session[0]) {	// dummy socket already uses fd 0
 		CREATE(session[0], struct socket_data, 1);
 	}
-	malloc_set(session[0],0,sizeof(*session[0]));
+	memset(session[0],0,sizeof(*session[0]));
 
 	session[0]->func_recv = console_recieve;
 	session[0]->func_console = default_console_parse;
@@ -1233,7 +1233,7 @@ void socket_init(void)
 	session[0]->max_rdata   = 2*rfifo_size;
 	session[0]->max_wdata   = 2*wfifo_size;
 
-	malloc_set(func_parse_table, 0, sizeof(func_parse_table));
+	memset(func_parse_table, 0, sizeof(func_parse_table));
 	func_parse_table[SESSION_RAW].check = default_func_check;
 	func_parse_table[SESSION_RAW].func = default_func_parse;
 
