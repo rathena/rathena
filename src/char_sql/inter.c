@@ -767,7 +767,7 @@ int inter_parse_frommap(int fd)
 	int len=0;
 	RFIFOHEAD(fd);
 	cmd=RFIFOW(fd,0);
-	// interIŠÇŠ‚©‚ğ’²‚×‚
+	// interIŠÇŠ‚©‚ğ’²‚×‚é
 	if(cmd < 0x3000 || cmd >= 0x3000 + (sizeof(inter_recv_packet_length)/
 		sizeof(inter_recv_packet_length[0]) ) )
 		return 0;

@@ -778,7 +778,7 @@ int get_atcommand_level(const AtCommandType type) {
 }
 
 AtCommandType
-atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
+is_atcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
 	AtCommandInfo info;
 	AtCommandType type;
 
@@ -852,7 +852,7 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message) {
 	if (!*str)
 		return AtCommand_None;
 
-	return atcommand_sub(fd,sd,str,pc_isGM(sd));
+	return is_atcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
 /*==========================================

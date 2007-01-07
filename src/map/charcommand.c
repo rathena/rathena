@@ -123,7 +123,7 @@ int get_charcommand_level(const CharCommandType type) {
 }
 
 CharCommandType 
-charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
+is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
 	CharCommandInfo info;
 	CharCommandType type;
 
@@ -194,7 +194,7 @@ is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
 	if (!*str)
 		return CharCommand_None;
 
-	return charcommand_sub(fd,sd,str,pc_isGM(sd));
+	return is_charcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
 /*==========================================

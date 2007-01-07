@@ -62,13 +62,13 @@ typedef struct CharCommandInfo {
 CharCommandType
 is_charcommand(const int fd, struct map_session_data* sd, const char* message);
 CharCommandType 
-charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl);
+is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl);
 
 CharCommandType charcommand(
 	struct map_session_data* sd, const int level, const char* message, CharCommandInfo* info);
 int get_charcommand_level(const CharCommandType type);
 
 int charcommand_config_read(const char *cfgName);
-extern char charcommand_symbol;	
+extern char charcommand_symbol;
 #endif
 

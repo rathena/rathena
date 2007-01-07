@@ -4162,8 +4162,8 @@ int clif_clearchar_skillunit(struct skill_unit *unit,int fd)
 
 /*==========================================
  * Unknown... trap related?
- *------------------------------------------
  * Only affects units with class [139,153] client-side
+ *------------------------------------------
  */
 int clif_01ac(struct block_list *bl)
 {

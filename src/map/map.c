@@ -3278,7 +3278,7 @@ int parse_console(char *buf) {
 	ShowInfo("Type of command: %s || Command: %s || Map: %s Coords: %d %d\n",type,command,map,x,y);
 
 	if ( strcmpi("admin",type) == 0 && n == 5 ) {
-		if( atcommand_sub(sd.fd,&sd,command,99) == AtCommand_None )
+		if( is_atcommand_sub(sd.fd,&sd,command,99) == AtCommand_None )
 			printf("Console: not atcommand\n");
 	} else if ( strcmpi("server",type) == 0 && n == 2 ) {
 		if ( strcmpi("shutdown", command) == 0 || strcmpi("exit",command) == 0 || strcmpi("quit",command) == 0 ) {

@@ -10344,7 +10344,7 @@ int buildin_atcommand(struct script_state *st)
 			while(*cmd != atcommand_symbol && *cmd != 0)
 				cmd++;
 		}
-		atcommand_sub(sd->fd, sd, cmd, 99);
+		is_atcommand_sub(sd->fd, sd, cmd, 99);
 	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
@@ -10360,7 +10360,7 @@ int buildin_atcommand(struct script_state *st)
 			while(*cmd != atcommand_symbol && *cmd != 0)
 				cmd++;
 		}
-		atcommand_sub(0, &dummy_sd, cmd, 99);
+		is_atcommand_sub(0, &dummy_sd, cmd, 99);
 	}
 
 	return 0;
@@ -10382,7 +10382,7 @@ int buildin_charcommand(struct script_state *st)
 			while(*cmd != charcommand_symbol && *cmd != 0)
 				cmd++;
 		}
-		charcommand_sub(sd->fd, sd, cmd,99);
+		is_charcommand_sub(sd->fd, sd, cmd,99);
 	} else { //Use a dummy character.
 		struct map_session_data dummy_sd;
 		struct block_list *bl = NULL;
@@ -10398,7 +10398,7 @@ int buildin_charcommand(struct script_state *st)
 			while(*cmd != charcommand_symbol && *cmd != 0)
 				cmd++;
 		}
-		charcommand_sub(0, &dummy_sd, cmd, 99);
+		is_charcommand_sub(0, &dummy_sd, cmd, 99);
 	}
 
 	return 0;

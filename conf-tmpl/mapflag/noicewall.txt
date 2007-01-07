@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= 1.6 Map flags that disable icewall skill
+//= Map flags that disable icewall skill
 //===== By: ==================================================
 //= eAthena Dev Team
 //=============================================================
