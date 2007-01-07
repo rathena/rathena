@@ -3939,22 +3939,16 @@ These two commands will start and end War of Emperium.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:' events to run everywhere, respectively, and setting a so-called 
-'agit_flag' which also doesn't do much interesting itself. They are used as 
+'OnAgitEnd:' events to run everywhere, respectively. They are used as 
 simple triggers to run a lot of complex scripts all across the server, and they, 
 in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
-*agitcheck(0)
-*agitcheck 1;
+*agitcheck()
 
-These function and command will let you check whether the server is currently in 
-the War of Emperium mode. (that is, if 'agit_flag' is set. Even if it is set, 
-doesn't mean that there's even one map in GVG mode somewhere) Calling 
-'agitcheck' as a function (the argument must be zero) will return 1 if WoE is on 
-and 0 if it isn't. Running 'agitcheck' as a command will instead set a local 
-variable @agit_flag to 1 if the server is in WoE mode and 0 if it isn't.
+These function and command will let you check whether the server is currently
+in the War of Emperium mode. It will return 1 if WoE is on and 0 if it isn't.
 
 ---------------------------------------
 
