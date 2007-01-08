@@ -1959,7 +1959,7 @@ int parse_console(char* buf)
 
 	sscanf(buf, "%[^\n]", command);
 
-	login_log("Console command :%s" RETCODE, command);
+	//login_log("Console command :%s" RETCODE, command);
 
 	if( strcmpi("shutdown", command) == 0 ||
 		strcmpi("exit", command) == 0 ||

@@ -327,7 +327,7 @@ int make_listen_bind(long ip,int port)
 	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
 
 	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, s_errno);
+		ShowError("socket() creation failed (code %d)!\n", s_errno);
 		exit(1);
 	}
 

@@ -26,7 +26,7 @@
 	}while(0)
 #define sleep Sleep
 
-#define pipe_create(p) ( CreatePipe(&p[PIPE_READ], &p[PIPE_WRITE], NULL, 1) != 0 )
+#define pipe_create(p) (CreatePipe(&p[PIPE_READ], &p[PIPE_WRITE], NULL, 1) == 0)
 #define pipe_read(p,data,len) do{ DWORD _b_; ReadFile(p[PIPE_READ], data, len, &_b_, NULL); }while(0)
 #define pipe_write(p,data,len) do{ DWORD _b_; WriteFile(p[PIPE_WRITE], data, len, &_b_, NULL); }while(0)
 #define pipe_close(p,side) CloseHandle(p[side])

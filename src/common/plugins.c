@@ -123,7 +123,7 @@ int plugin_event_trigger(char* name)
 
 int export_symbol(void* var, size_t offset)
 {
-	ShowDebug("export_symbol(0x%x,%d)\n", var,offset);
+	//ShowDebug("export_symbol(0x%x,%d)\n", var,offset);
 
 	// add to the end of the list
 	if( offset < 0 )

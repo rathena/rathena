@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "login-server_sql", "vcproj-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "map-server_sql", "vcproj-8\map-server_sql.vcproj", "{D356871D-58E1-450B-967A-E6E9646175AF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin-console", "vcproj-8\plugin-console.vcproj", "{97D96B7A-817F-4610-8EF4-966384850E65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -39,6 +41,10 @@ Global
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Debug|Win32.Build.0 = Debug|Win32
 		{D356871D-58E1-450B-967A-E6E9646175AF}.Release|Win32.ActiveCfg = Release|Win32
+		{97D96B7A-817F-4610-8EF4-966384850E65}.Debug|Win32.ActiveCfg = Debug|Win32
+		{97D96B7A-817F-4610-8EF4-966384850E65}.Debug|Win32.Build.0 = Debug|Win32
+		{97D96B7A-817F-4610-8EF4-966384850E65}.Release|Win32.ActiveCfg = Release|Win32
+		{97D96B7A-817F-4610-8EF4-966384850E65}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
