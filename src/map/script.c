@@ -8954,6 +8954,7 @@ int buildin_agitend(struct script_state *st)
 	guild_agit_end();
 	return 0;
 }
+
 /*==========================================
  * Returns whether woe is on or off.	// choice script
  *------------------------------------------

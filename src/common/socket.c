@@ -35,6 +35,10 @@
 	#define S_ENOTSOCK WSAENOTSOCK
 	#define S_EWOULDBLOCK WSAEWOULDBLOCK
 	#define S_ECONNABORTED WSAECONNABORTED
+
+	#define SHUT_RD   SD_RECEIVE
+	#define SHUT_WR   SD_SEND
+	#define SHUT_RDWR SD_BOTH
 #else
 	#define SOCKET_ERROR -1
 	#define INVALID_SOCKET -1
@@ -55,17 +59,6 @@
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
-
-/// shutdown() constants
-#ifndef SHUT_RD
-#ifdef SD_RECEIVE
-	#define SHUT_RD   SD_RECEIVE
-	#define SHUT_WR   SD_SEND
-	#define SHUT_RDWR SD_BOTH
-#else
-	#error "Unknown socket constants, please report this to a developer"
-#endif
-#endif
 
 fd_set readfds;
 int fd_max;

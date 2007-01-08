@@ -4962,7 +4962,7 @@ int atcommand_raisemap(
 	nullpo_retr(-1, sd);
 
 	pl_allsd = map_getallusers(&users);
-	
+
 	for (i = 0; i < users; i++) {
 		if (sd->bl.m == pl_allsd[i]->bl.m)
 			atcommand_raise_sub(pl_allsd[i]);
@@ -6898,7 +6898,7 @@ int atcommand_undisguiseall(
 	nullpo_retr(-1, sd);
 
 	pl_allsd = map_getallusers(&users);
-	
+
 	for(i=0; i < users; i++) {
 		if((pl_sd = pl_allsd[i]) && pl_sd->disguise)
 			pc_disguise(pl_sd, 0);

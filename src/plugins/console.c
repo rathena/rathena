@@ -120,7 +120,7 @@ int console_parsebuf(int tid, unsigned int tick, int id, int data_)
 		//printf("console_parsebuf pipe_hasdata\n");
 		// receive string
 		pipe_read(data, &len, sizeof(size_t));
-		pipe_read(data, &buf, len);
+		pipe_read(data, buf, len);
 		buf[len] = '\0';
 		//printf("console_parsebuf buf='%s'\n", buf);
 		// parse it
@@ -128,7 +128,7 @@ int console_parsebuf(int tid, unsigned int tick, int id, int data_)
 		//printf("console_parsebuf writing next\n");
 		// send next state
 		buf[0] = 'R';
-		pipe_write(next, &buf, 1);
+		pipe_write(next, buf, 1);
 		//printf("console_parsebuf done with next\n");
 	}
 	return 0;
