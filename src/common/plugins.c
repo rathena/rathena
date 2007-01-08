@@ -1,14 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#ifndef _WIN32
-#include <unistd.h>
-#endif
-
-#include "plugin.h"
 #include "plugins.h"
 #include "../common/mmo.h"
 #include "../common/core.h"
@@ -19,99 +11,109 @@
 #include "../common/version.h"
 #include "../common/showmsg.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#ifndef WIN32
+#include <unistd.h>
+#endif
+
 //////////////////////////////////////////////
 
 typedef struct _Plugin_Event {
-	void (*func)(void);
-	struct _Plugin_Event *next;
+	struct _Plugin_Event* next;
+	Plugin_Event_Func* func;
 } Plugin_Event;
 
 typedef struct _Plugin_Event_List {
-	char *name;
-	struct _Plugin_Event_List *next;
-	struct _Plugin_Event *events;
+	struct _Plugin_Event_List* next;
+	char* name;
+	struct _Plugin_Event* events;
 } Plugin_Event_List;
 
-static int auto_search = 1;
+static int auto_search = 0;
 static int load_priority = 0;
-Plugin_Event_List *event_head = NULL;
-Plugin *plugin_head = NULL;
+Plugin_Event_List* event_head = NULL;
+Plugin* plugin_head = NULL;
 
-Plugin_Info default_info = { "Unknown", PLUGIN_ALL, "0", PLUGIN_VERSION, "Unknown" };
+static Plugin_Info default_info = { "Unknown", PLUGIN_ALL, "0", PLUGIN_VERSION, "Unknown" };
 
 static size_t call_table_size	= 0;
 static size_t max_call_table	= 0;
 
 ////// Plugin Events Functions //////////////////
 
-int register_plugin_func (char *name)
+int register_plugin_func(char* name)
 {
-	Plugin_Event_List *evl;
-	if (name) {
-		evl = (Plugin_Event_List *) aMalloc(sizeof(Plugin_Event_List));
-		evl->name = (char *) aMalloc (strlen(name) + 1);
-
+	Plugin_Event_List* evl;
+	if( name ){
+		//ShowDebug("register_plugin_func(%s)\n", name);
+		CREATE(evl, Plugin_Event_List, 1);
 		evl->next = event_head;
-		strcpy(evl->name, name);
+		evl->name = aStrdup(name);
 		evl->events = NULL;
 		event_head = evl;
 	}
 	return 0;
 }
 
-Plugin_Event_List *search_plugin_func (char *name)
+static Plugin_Event_List* search_plugin_func(char* name)
 {
-	Plugin_Event_List *evl = event_head;
-	while (evl) {
-		if (strcmpi(evl->name, name) == 0)
+	Plugin_Event_List* evl = event_head;
+	while( evl ){
+		if( strcmpi(evl->name,name) == 0 )
 			return evl;
 		evl = evl->next;
 	}
 	return NULL;
 }
 
-int register_plugin_event (void (*func)(void), char* name)
+int register_plugin_event(Plugin_Event_Func* func, char* name)
 {
-	Plugin_Event_List *evl = search_plugin_func(name);
-	if (!evl) {
-		// register event if it doesn't exist already
+	Plugin_Event_List* evl = search_plugin_func(name);
+	//ShowDebug("register_plugin_event(0x%x, %s)\n", func, name);
+	if( !evl )
+	{// event does not exist, register
 		register_plugin_func(name);
-		// relocate the new event list
+		// get the new event list
 		evl = search_plugin_func(name);
 	}
-	if (evl) {
-		Plugin_Event *ev;
+	if( evl ){
+		Plugin_Event* ev;
 
-		ev = (Plugin_Event *) aMalloc(sizeof(Plugin_Event));
+		CREATE(ev, Plugin_Event, 1);
 		ev->func = func;
 		ev->next = NULL;
 
-		if (evl->events == NULL)
+		// insert event at the end of the linked list
+		if( evl->events == NULL )
 			evl->events = ev;
 		else {
-			Plugin_Event *ev2 = evl->events;
-			while (ev2) {
-				if (ev2->next == NULL) {
-					ev2->next = ev;
+			Plugin_Event* last_ev = evl->events;
+			while( last_ev ){
+				if( last_ev->next == NULL ){
+					last_ev->next = ev;
 					break;
 				}
-				ev2 = ev2->next;
+				last_ev = last_ev->next;
 			}
 		}
 	}
 	return 0;
 }
 
-int plugin_event_trigger (char *name)
+int plugin_event_trigger(char* name)
 {
 	int c = 0;
-	Plugin_Event_List *evl = search_plugin_func(name);
-	if (evl) {
-		Plugin_Event *ev = evl->events;
-		while (ev) {
+	Plugin_Event_List* evl = search_plugin_func(name);
+	//ShowDebug("plugin_event_trigger(%s)\n", name);
+	if( evl ){
+		Plugin_Event* ev = evl->events;
+		while( ev ){
 			ev->func();
+			//ShowDebug("plugin_event_trigger: Executing function 0x%x.\n", ev->func);
 			ev = ev->next;
-			c++;
+			++c;
 		}
 	}
 	return c;
@@ -119,27 +121,27 @@ int plugin_event_trigger (char *name)
 
 ////// Plugins Call Table Functions /////////
 
-int export_symbol (void *var, int offset)
+int export_symbol(void* var, size_t offset)
 {
-	//printf ("0x%x\n", var);
-	
+	ShowDebug("export_symbol(0x%x,%d)\n", var,offset);
+
 	// add to the end of the list
-	if (offset < 0)
+	if( offset < 0 )
 		offset = call_table_size;
-	
-	// realloc if not large enough  
-	if ((size_t)offset >= max_call_table) {
+
+	if( offset >= max_call_table )
+	{// realloc if not large enough  
 		max_call_table = 1 + offset;
-		plugin_call_table = (void**)aRealloc(plugin_call_table, max_call_table*sizeof(void*));
-		
+		RECREATE(plugin_call_table, void*, max_call_table);
+
 		// clear the new alloced block
 		memset(plugin_call_table + call_table_size, 0, (max_call_table-call_table_size)*sizeof(void*));
 	}
 
 	// the new table size is delimited by the new element at the end
-	if ((size_t)offset >= call_table_size)
+	if( offset >= call_table_size )
 		call_table_size = offset+1;
-	
+
 	// put the pointer at the selected place
 	plugin_call_table[offset] = var;
 	return 0;
@@ -147,106 +149,139 @@ int export_symbol (void *var, int offset)
 
 ////// Plugins Core /////////////////////////
 
-Plugin *plugin_open (const char *filename)
+static int plugin_iscompatible(char* version)
 {
-	Plugin *plugin;
-	Plugin_Info *info;
-	Plugin_Event_Table *events;
-	void **procs;
+	int req_major = 0;
+	int req_minor = 0;
+	int major = 0;
+	int minor = 0;
+
+	if( version == NULL )
+		return 0;
+	sscanf(version, "%d.%d", &req_major, &req_minor);
+	sscanf(version, "%d.%d", &major, &minor);
+	return ( req_major == major || req_minor <= minor );
+}
+
+Plugin* plugin_open(const char* filename)
+{
+	Plugin* plugin;
+	Plugin_Info* info;
+	Plugin_Event_Table* events;
+	void** procs;
 	int init_flag = 1;
 
-	//printf ("loading %s\n", filename);
+	//ShowDebug("plugin_open(%s)\n", filename);
 	
 	// Check if the plugin has been loaded before
 	plugin = plugin_head;
 	while (plugin) {
 		// returns handle to the already loaded plugin
-		if (plugin->state && strcmpi(plugin->filename, filename) == 0) {
-			//printf ("not loaded (duplicate) : %s\n", filename);
+		if( plugin->state && strcmpi(plugin->filename, filename) == 0 ){
+			ShowWarning("plugin_open: not loaded (duplicate) : '"CL_WHITE"%s"CL_RESET"'\n", filename);
 			return plugin;
 		}
 		plugin = plugin->next;
 	}
 
-	plugin = (Plugin *)aCalloc(1, sizeof(Plugin));
+	CREATE(plugin, Plugin, 1);
 	plugin->state = -1;	// not loaded
 
 	plugin->dll = DLL_OPEN(filename);
-	if (!plugin->dll) {
-		//printf ("not loaded (invalid file) : %s\n", filename);
+	if( !plugin->dll ){
+		ShowWarning("plugin_open: not loaded (invalid file) : '"CL_WHITE"%s"CL_RESET"'\n", filename);
 		plugin_unload(plugin);
 		return NULL;
 	}
-	
+
 	// Retrieve plugin information
 	plugin->state = 0;	// initialising
-	DLL_SYM (info, plugin->dll, "plugin_info");
+	DLL_SYM(info, plugin->dll, "plugin_info");
 	// For high priority plugins (those that are explicitly loaded from the conf file)
 	// we'll ignore them even (could be a 3rd party dll file)
-	if ((!info && load_priority == 0) ||
-		(info && ((atof(info->req_version) < atof(PLUGIN_VERSION)) ||	// plugin is based on older code
-		(info->type != PLUGIN_ALL && info->type != PLUGIN_CORE && info->type != SERVER_TYPE) ||	// plugin is not for this server
-		(info->type == PLUGIN_CORE && SERVER_TYPE != PLUGIN_LOGIN && SERVER_TYPE != PLUGIN_CHAR && SERVER_TYPE != PLUGIN_MAP))))
-	{
-		//printf ("not loaded (incompatible) : %s\n", filename);
+	if( !info )
+	{// foreign plugin
+		//ShowDebug("plugin_open: plugin_info not found\n");
+		if( load_priority == 0 )
+		{// not requested
+			//ShowDebug("plugin_open: not loaded (not requested) : '"CL_WHITE"%s"CL_RESET"'\n", filename);
+			plugin_unload(plugin);
+			return NULL;
+		}
+	} else if( !plugin_iscompatible(info->req_version) )
+	{// incompatible version
+		ShowWarning("plugin_open: not loaded (incompatible version '%s' -> '%s') : '"CL_WHITE"%s"CL_RESET"'\n", info->req_version, PLUGIN_VERSION, filename);
+		plugin_unload(plugin);
+		return NULL;
+	} else if( (info->type != PLUGIN_ALL && info->type != PLUGIN_CORE && info->type != SERVER_TYPE) ||
+		(info->type == PLUGIN_CORE && SERVER_TYPE != PLUGIN_LOGIN && SERVER_TYPE != PLUGIN_CHAR && SERVER_TYPE != PLUGIN_MAP) )
+	{// not for this server
+		//ShowDebug("plugin_open: not loaded (incompatible) : '"CL_WHITE"%s"CL_RESET"'\n", filename);
 		plugin_unload(plugin);
 		return NULL;
 	}
-	plugin->info = (info) ? info : &default_info;
 
-	plugin->filename = (char *) aMalloc (strlen(filename) + 1);
-	strcpy(plugin->filename, filename);
+	plugin->info = ( info != NULL ? info : &default_info );
+	plugin->filename = aStrdup(filename);
 
 	// Initialise plugin call table (For exporting procedures)
-	DLL_SYM (procs, plugin->dll, "plugin_call_table");
-	if (procs) *procs = plugin_call_table;
-	
+	DLL_SYM(procs, plugin->dll, "plugin_call_table");
+	if( procs )
+		*procs = plugin_call_table;
+	//else ShowDebug("plugin_open: plugin_call_table not found\n");
+
 	// Register plugin events
-	DLL_SYM (events, plugin->dll, "plugin_event_table");
-	if (events) {
+	DLL_SYM(events, plugin->dll, "plugin_event_table");
+	if( events ){
 		int i = 0;
-		while (events[i].func_name) {
-			if (strcmpi(events[i].event_name, "Plugin_Test") == 0) {
-				int (*test_func)(void);
-				DLL_SYM (test_func, plugin->dll, events[i].func_name);
-				if (test_func && test_func() == 0) {
+		//ShowDebug("plugin_open: parsing plugin_event_table\n");
+		while( events[i].func_name ){
+			if( strcmpi(events[i].event_name, EVENT_PLUGIN_TEST) == 0 ){
+				Plugin_Test_Func* test_func;
+				DLL_SYM(test_func, plugin->dll, events[i].func_name);
+				//ShowDebug("plugin_open: invoking "EVENT_PLUGIN_TEST" with %s()\n", events[i].func_name);
+				if( test_func && test_func() == 0 ){
 					// plugin has failed test, disabling
-					//printf ("disabled (failed test) : %s\n", filename);
+					//ShowDebug("plugin_open: disabled (failed test) : %s\n", filename);
 					init_flag = 0;
 				}
 			} else {
-				void (*func)(void);
-				DLL_SYM (func, plugin->dll, events[i].func_name);
-				if (func) register_plugin_event (func, events[i].event_name);
+				Plugin_Event_Func* func;
+				DLL_SYM(func, plugin->dll, events[i].func_name);
+				if (func)
+					register_plugin_event(func, events[i].event_name);
 			}
 			i++;
 		}
 	}
+	//else ShowDebug("plugin_open: plugin_event_table not found\n");
 
 	plugin->next = plugin_head;
 	plugin_head = plugin;
 
 	plugin->state = init_flag;	// fully loaded
-	ShowStatus ("Done loading plugin '"CL_WHITE"%s"CL_RESET"'\n", (info) ? plugin->info->name : filename);
+	ShowStatus("Done loading plugin '"CL_WHITE"%s"CL_RESET"'\n", (info) ? plugin->info->name : filename);
 
 	return plugin;
 }
 
-void plugin_load (const char *filename)
+void plugin_load(const char* filename)
 {
 	plugin_open(filename);
 }
 
-void plugin_unload (Plugin *plugin)
+void plugin_unload(Plugin* plugin)
 {
-	if (plugin == NULL)
+	if( plugin == NULL )
 		return;
-	if (plugin->filename) aFree(plugin->filename);
-	if (plugin->dll) DLL_CLOSE(plugin->dll);
+	if( plugin->filename )
+		aFree(plugin->filename);
+	if( plugin->dll )
+		DLL_CLOSE(plugin->dll);
 	aFree(plugin);
 }
 
-#ifdef _WIN32
+#ifdef WIN32
 char *DLL_ERROR(void)
 {
 	static char dllbuf[80];
@@ -258,107 +293,114 @@ char *DLL_ERROR(void)
 
 ////// Initialize/Finalize ////////////////////
 
-int plugins_config_read(const char *cfgName)
+static int plugins_config_read(const char *cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
 	fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if( fp == NULL ){
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
-	while (fgets(line, 1020, fp)) {
-		if(line[0] == '/' && line[1] == '/')
+	while( fgets(line, 1020, fp) ){
+		if( line[0] == '/' && line[1] == '/' )
 			continue;
-		if (sscanf(line,"%[^:]: %[^\r\n]", w1, w2) != 2)
+		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) != 2 )
 			continue;
 
-		if (strcmpi(w1, "auto_search") == 0) {
-			if(strcmpi(w2, "yes")==0)
+		if( strcmpi(w1,"auto_search") == 0 ){
+			if( strcmpi(w2,"yes") == 0 )
 				auto_search = 1;
-			else if(strcmpi(w2, "no")==0)
+			else if( strcmpi(w2,"no") == 0 )
 				auto_search = 0;
-			else auto_search = atoi(w2);
-		} else if (strcmpi(w1, "plugin") == 0) {
+			else
+				auto_search = atoi(w2);
+		} else if( strcmpi(w1,"plugin") == 0 ){
 			char filename[128];
-			sprintf (filename, "plugins/%s%s", w2, DLL_EXT);
+			sprintf(filename, "plugins/%s%s", w2, DLL_EXT);
 			plugin_load(filename);
-		} else if (strcmpi(w1, "import") == 0)
+		} else if( strcmpi(w1,"import") == 0 )
 			plugins_config_read(w2);
 	}
 	fclose(fp);
 	return 0;
 }
 
-void plugins_init (void)
+void plugins_init(void)
 {
-	char *PLUGIN_CONF_FILENAME = "conf/plugin_athena.conf";
-	register_plugin_func("Plugin_Init");
-	register_plugin_func("Plugin_Final");
-	register_plugin_func("Athena_Init");
-	register_plugin_func("Athena_Final");
+	char* PLUGIN_CONF_FILENAME = "conf/plugin_athena.conf";
+	//ShowDebug("plugins_init()\n");
+	register_plugin_func(EVENT_PLUGIN_INIT);
+	register_plugin_func(EVENT_PLUGIN_FINAL);
+	register_plugin_func(EVENT_ATHENA_INIT);
+	register_plugin_func(EVENT_ATHENA_FINAL);
 
 	// networking
-	export_symbol (func_parse_table,	18);
-	export_symbol (RFIFOSKIP,			17);
-	export_symbol (WFIFOSET,			16);
-	export_symbol (delete_session,		15);
-	export_symbol (session,				14);
-	export_symbol (&fd_max,				13);
-	export_symbol (addr_,				12);
+	export_symbol(func_parse_table, SYMBOL_FUNC_PARSE_TABLE);
+	export_symbol(RFIFOSKIP,        SYMBOL_RFIFOSKIP);
+	export_symbol(WFIFOSET,         SYMBOL_WFIFOSET);
+	export_symbol(delete_session,   SYMBOL_DELETE_SESSION);
+	export_symbol(session,          SYMBOL_SESSION);
+	export_symbol(&fd_max,          SYMBOL_FD_MAX);
+	export_symbol(addr_,            SYMBOL_ADDR);
 	// timers
-	export_symbol (get_uptime,			11);
-	export_symbol (delete_timer,		10);
-	export_symbol (add_timer_func_list,	9);
-	export_symbol (add_timer_interval,	8);
-	export_symbol (add_timer,			7);
-	export_symbol ((void *)get_svn_revision,	6);
-	export_symbol (gettick,				5);
+	export_symbol(get_uptime,              SYMBOL_GET_UPTIME);
+	export_symbol(delete_timer,            SYMBOL_DELETE_TIMER);
+	export_symbol(add_timer_func_list,     SYMBOL_ADD_TIMER_FUNC_LIST);
+	export_symbol(add_timer_interval,      SYMBOL_ADD_TIMER_INTERVAL);
+	export_symbol(add_timer,               SYMBOL_ADD_TIMER);
+	export_symbol((void*)get_svn_revision, SYMBOL_GET_SVN_REVISION);
+	export_symbol(gettick,                 SYMBOL_GETTICK);
 	// core
-	export_symbol (&runflag,			4);
-	export_symbol (arg_v,				3);
-	export_symbol (&arg_c,				2);
-	export_symbol (SERVER_NAME,			1);
-	export_symbol (&SERVER_TYPE,		0);
+	export_symbol(parse_console, SYMBOL_PARSE_CONSOLE);
+	export_symbol(&runflag,      SYMBOL_RUNFLAG);
+	export_symbol(arg_v,         SYMBOL_ARG_V);
+	export_symbol(&arg_c,        SYMBOL_ARG_C);
+	export_symbol(SERVER_NAME,   SYMBOL_SERVER_NAME);
+	export_symbol(&SERVER_TYPE,  SYMBOL_SERVER_TYPE);
 
 	load_priority = 1;
-	plugins_config_read (PLUGIN_CONF_FILENAME);
+	plugins_config_read(PLUGIN_CONF_FILENAME);
 	load_priority = 0;
 
-	if (auto_search)
+	if( auto_search )
 		findfile("plugins", DLL_EXT, plugin_load);
 
-	plugin_event_trigger("Plugin_Init");
+	plugin_event_trigger(EVENT_PLUGIN_INIT);
 
 	return;
 }
 
-void plugins_final (void)
+void plugins_final(void)
 {
-	Plugin *plugin = plugin_head, *plugin2;
-	Plugin_Event_List *evl = event_head, *evl2;
-	Plugin_Event *ev, *ev2;
+	Plugin* plugin = plugin_head;
+	Plugin* next_plugin;
+	Plugin_Event_List* evl = event_head;
+	Plugin_Event_List* next_evl;
+	Plugin_Event* ev;
+	Plugin_Event* next_ev;
 
-	plugin_event_trigger("Plugin_Final");
+	//ShowDebug("plugins_final()\n");
+	plugin_event_trigger(EVENT_PLUGIN_FINAL);
 
-	while (plugin) {
-		plugin2 = plugin->next;
+	while( plugin ){
+		next_plugin = plugin->next;
 		plugin_unload(plugin);
-		plugin = plugin2;
+		plugin = next_plugin;
 	}
 
-	while (evl) {
+	while( evl ){
 		ev = evl->events;
-		while (ev) {
-			ev2 = ev->next;
+		while( ev ){
+			next_ev = ev->next;
 			aFree(ev);
-			ev = ev2;
+			ev = next_ev;
 		}
-		evl2 = evl->next;
+		next_evl = evl->next;
 		aFree(evl->name);
 		aFree(evl);
-		evl = evl2;
+		evl = next_evl;
 	}
 
 	aFree(plugin_call_table);

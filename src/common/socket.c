@@ -57,10 +57,14 @@
 #include "../common/showmsg.h"
 
 /// shutdown() constants
-#if defined(SD_RECEIVE) && !defined(SHUT_RD)
-#define SHUT_RD   SD_RECEIVE
-#define SHUT_WR   SD_SEND
-#define SHUT_RDWR SD_BOTH
+#ifndef SHUT_RD
+#ifdef SD_RECEIVE
+	#define SHUT_RD   SD_RECEIVE
+	#define SHUT_WR   SD_SEND
+	#define SHUT_RDWR SD_BOTH
+#else
+	#error "Unknown socket constants, please report this to a developer"
+#endif
 #endif
 
 fd_set readfds;
@@ -423,12 +427,12 @@ void func_parse_check (struct socket_data *sd)
 }
 
 // Console Input [Wizputer]
-int start_console(void) {
-
+int start_console(void)
+{
 	//Until a better plan is came up with... can't be using session[0] anymore! [Skotlex]
 	ShowNotice("The console is currently nonfunctional.\n");
 	return 0;
-	
+
 	FD_SET(0,&readfds);
 
 	if (!session[0]) {	// dummy socket already uses fd 0
@@ -1197,7 +1201,7 @@ int socket_getips(uint32 *ips, int max)
 void socket_init(void)
 {
 	char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-	
+
 #ifdef WIN32
 	{// Start up windows networking
 		WSADATA wsaData;

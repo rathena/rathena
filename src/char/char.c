@@ -3856,27 +3856,33 @@ int parse_char(int fd) {
 }
 
 // Console Command Parser [Wizputer]
-int parse_console(char *buf) {
-    char *type,*command;
+int parse_console(char* buf)
+{
+	char command[256];
 
-	type = (char *)aCalloc(64,1);
-	command = (char *)aCalloc(64,1);
+	memset(command, 0, sizeof(command));
 
-//	memset(type,0,64);
-//	memset(command,0,64);
+	sscanf(buf, "%[^\n]", command);
 
-    ShowStatus("Console: %s\n",buf);
+	//login_log("Console command :%s" RETCODE, command);
 
-    if ( sscanf(buf, "%[^:]:%[^\n]", type , command ) < 2 )
-        sscanf(buf,"%[^\n]",type);
+	if( strcmpi("shutdown", command) == 0 ||
+		strcmpi("exit", command) == 0 ||
+		strcmpi("quit", command) == 0 ||
+		strcmpi("end", command) == 0 )
+		runflag = 0;
+	else if( strcmpi("alive", command) == 0 ||
+			strcmpi("status", command) == 0 )
+		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+	else if( strcmpi("help", command) == 0 ){
+		printf(CL_BOLD"Help of commands:"CL_RESET"\n");
+		printf("  To shutdown the server:\n");
+		printf("  'shutdown|exit|qui|end'\n");
+		printf("  To know if server is alive:\n");
+		printf("  'alive|status'\n");
+	}
 
-    ShowDebug("Type of command: %s || Command: %s \n",type,command);
-
-    if(buf) aFree(buf);
-    if(type) aFree(type);
-    if(command) aFree(command);
-
-    return 0;
+	return 0;
 }
 
 // 全てのMAPサーバーにデータ送信（送信したmap鯖の数を返す）

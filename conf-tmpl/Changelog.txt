@@ -1,5 +1,7 @@
 Date	Added
 
+2007/01/08
+	* Added the console plugin to plugin_athena.conf commented out. [FlavioJS]
 2007/01/05
 	* Updated noicewall mapflags (to allow them in cities), thanks to Au{R}oN
 2007/01/03

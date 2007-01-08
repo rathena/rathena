@@ -259,7 +259,7 @@ int main (int argc, char **argv)
 
 	do_init(argc,argv);
 	graph_init();
-	plugin_event_trigger("Athena_Init");
+	plugin_event_trigger(EVENT_ATHENA_INIT);
 
 	{// Main runtime cycle
 		int next;
@@ -272,7 +272,7 @@ int main (int argc, char **argv)
 		}
 	}
 
-	plugin_event_trigger("Athena_Final");
+	plugin_event_trigger(EVENT_ATHENA_FINAL);
 	graph_final();
 	do_final();
 

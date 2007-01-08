@@ -1951,25 +1951,31 @@ int parse_login(int fd) {
 }
 
 // Console Command Parser [Wizputer]
-int parse_console(char *buf) {
-	char *type,*command;
+int parse_console(char* buf)
+{
+	char command[256];
 
-	type = (char *)aMalloc(64);
-	command = (char *)aMalloc(64);
+	memset(command, 0, sizeof(command));
 
-	memset(type,0,64);
-	memset(command,0,64);
+	sscanf(buf, "%[^\n]", command);
 
-	ShowInfo("Console: %s\n",buf);
+	login_log("Console command :%s" RETCODE, command);
 
-	if ( sscanf(buf, "%[^:]:%[^\n]", type , command ) < 2 )
-		sscanf(buf,"%[^\n]",type);
-
-	ShowInfo("Type of command: %s || Command: %s \n",type,command);
-
-	if(buf) aFree(buf);
-	if(type) aFree(type);
-	if(command) aFree(command);
+	if( strcmpi("shutdown", command) == 0 ||
+		strcmpi("exit", command) == 0 ||
+		strcmpi("quit", command) == 0 ||
+		strcmpi("end", command) == 0 )
+		runflag = 0;
+	else if( strcmpi("alive", command) == 0 ||
+			strcmpi("status", command) == 0 )
+		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+	else if( strcmpi("help", command) == 0 ){
+		printf(CL_BOLD"Help of commands:"CL_RESET"\n");
+		printf("  To shutdown the server:\n");
+		printf("  'shutdown|exit|qui|end'\n");
+		printf("  To know if server is alive:\n");
+		printf("  'alive|status'\n");
+	}
 
 	return 0;
 }
