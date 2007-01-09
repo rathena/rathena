@@ -6036,7 +6036,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	status = status_get_status_data(bl);
 	nullpo_retr(0,sc);
 	nullpo_retr(0,status);
-	
+
 	if(type < 0 || type >= SC_MAX)
 		return 0;
 

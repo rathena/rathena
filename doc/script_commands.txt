@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 2.10.20070101
+//= 2.11.20070109
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -39,6 +39,9 @@
 //=       monster.
 //= 2.9.20061230 - Updated getitem and guardian. [FlavioJS]
 //= 2.10.20070101 - added sleep,sleep2,awake and updated the variables section.
+//=       [FlavioJS]
+//= 2.11.20070109 - removed the unused flag argument in guildskill, added an 
+//=       optional argument to setcart,setfalcon,setriding and other cleanups 
 //=       [FlavioJS]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
@@ -2578,10 +2581,10 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 
 ---------------------------------------
 
-*bonus <bonus type>,<amount>;
-*bonus2 <bonus type>,<amount>;
-*bonus3 <bonus type>,<amount>;
-*bonus4 <bonus type>,<amount>;
+*bonus <bonus type>,<val1>;
+*bonus2 <bonus type>,<val1>,<val2>;
+*bonus3 <bonus type>,<val1>,<val2>,<val3>;
+*bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>;
 
 These commands are meant to be used in item scripts. They will probably work 
 outside item scripts, but the bonus will not persist for long. They, as 
@@ -2618,7 +2621,7 @@ previously, they will now at 0+the level given.
 
 ---------------------------------------
 
-*guildskill <skill id>,<level>{,<flag>}
+*guildskill <skill id>,<level>
 
 This command will bump up the specified guild skill by the specified number of 
 levels. This refers to the invoking character and will only work if the invoking 
@@ -2680,8 +2683,10 @@ Example 2:
 
 *getgdskilllv(<guild id>,<skill id>)
 
-This function retirns the guild skills for the guild with a specified ID exactly 
-as 'getskilllv' does.
+This function returns the level of the skill <skill id> of the guild <guild id>.
+If the guild does not have that skill, 0 is returned.
+If the guild does not exist, -1 is returned.
+Refer to 'db/skill_db.txt' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -2712,7 +2717,6 @@ specially when talked to by GMs.
 ---------------------------------------
 
 *end;
-*break;
 
 This command will stop the execution for this particular script. The two 
 versions are prefectly equivalent. It is the normal way to end a script which 
@@ -2742,16 +2746,12 @@ Without the use if 'end' it would travel through the labels until the end of the
 script. If you were lvl 10 or less, you would see all the speech lines, the use 
 of 'end' stops this, and ends the script.
 
-Note: Break won't work anymore, it has been commented out in src/map/script.c:
-
-//	{buildin_end,"break",""}, this might confuse advanced scripting support [Eoe]
-
 ---------------------------------------
 
 *checkoption(<option number>)
 *checkoption1(<option number>)
 *checkoption2(<option number>)
-*setoption <option number>{,type};
+*setoption <option number>{,<flag>};
 
 The 'setoption' series of functions check for a so-called option that is set on 
 the invoking character. 'Options' are used to store status conditions and a lot 
@@ -2762,37 +2762,40 @@ return 1 if the option is set and 0 if the option is not set.
 
 Option numbers valid for the first (option) version of this command are:
 
-0x1    - Sight in effect.
-0x2    - Hide in effect.
-0x4    - Cloaking in effect.
-0x8    - Cart number 1 present.
-0x10   - Falcon present.
-0x20   - Peco Peco present.
-0x40   - GM Perfect Hide in effect.
-0x80   - Cart number 2 present.
-0x100  - Cart number 3 present.
-0x200  - Cart number 4 present.
-0x400  - Cart number 5 present.
-0x800  - Orc head present.
-0x1000 - The character is wearing a wedding sprite.
-0x2000 - Ruwach is in effect.
-0x4000 - Chasewalk in effect.
+0x1     - Sight in effect.
+0x2     - Hide in effect.
+0x4     - Cloaking in effect.
+0x8     - Cart number 1 present.
+0x10    - Falcon present.
+0x20    - Peco Peco present.
+0x40    - GM Perfect Hide in effect.
+0x80    - Cart number 2 present.
+0x100   - Cart number 3 present.
+0x200   - Cart number 4 present.
+0x400   - Cart number 5 present.
+0x800   - Orc head present.
+0x1000  - The character is wearing a wedding sprite.
+0x2000  - Ruwach is in effect.
+0x4000  - Chasewalk in effect.
+0x8000  - Flying or Xmas suit.
+0x10000 - Sighttrasher.
 
 Option numbers valid for the second version (opt1) of this command are:
 
-1  - Petrified.
-2  - Frozen.
-3  - Stunned.
-4  - Sleeping.
-6	- Petrifying (the state where you can still walk)
+1 - Petrified.
+2 - Frozen.
+3 - Stunned.
+4 - Sleeping.
+6 - Petrifying (the state where you can still walk)
 
 Option numbers valid for the third version (opt2) of this command are:
 
-1 - Poisoned.
-2 - Cursed.
-4 - Silenced.
-8 - Signum Crucis (plays a howl-like sound effect, but otherwise no visible effects are displayed)
-16 - Blinded.
+0x1  - Poisoned.
+0x2  - Cursed.
+0x4  - Silenced.
+0x8  - Signum Crucis (plays a howl-like sound effect, but otherwise no visible effects are displayed)
+0x10 - Blinded.
+0x80 - Deadly poisoned.
 
 Option numbers (except for opt1) are bitmasks - you can add them up to check
  for several states, but the functions will return true if at least one of them
@@ -2808,12 +2811,14 @@ core developer (or read the source: src/map/status.h) for the full list.
 
 ---------------------------------------
 
-*setcart;
+*setcart {<type>};
 *checkcart()
 
-This command will give the invoking character a cart. The cart given will be 
-cart number 1 and will work regardless of whether the character is a merchant 
-class or not.
+If <type> is 0 this command will remove the cart from the character.
+Otherwise it gives the invoking character a cart. The cart given will be 
+cart number <type> and will work regardless of whether the character is a 
+merchant class or not.
+Note: the character needs to have the skill MC_PUSHCART to gain a cart
 
 The accompanying function will return 1 if the invoking character has a cart 
 (any kind of cart) and 0 if they don't.
@@ -2822,12 +2827,14 @@ The accompanying function will return 1 if the invoking character has a cart
 
 ---------------------------------------
 
-*setfalcon;
+*setfalcon {<flag>};
 *checkfalcon()
 
-This command will give the invoking character a falcon. The falcon will be there 
+If <flag> is 0 this command will remove the falcon from the character.
+Otherwise it gives the invoking character a falcon. The falcon will be there 
 regardless of whether the character is a hunter or not. It will (probably) not 
 have any useful effects for non-hunters though.
+Note: the character needs to have the skill HT_FALCON to gain a falcon
 
 The accompanying function will return 1 if the invoking character has a falcon 
 and 0 if they don't.
@@ -2836,14 +2843,15 @@ and 0 if they don't.
 
 ---------------------------------------
 
-*setriding;
+*setriding {<flag>};
 *checkriding()
 
-This command will give the invoking character a PecoPeco (if they are a Knight 
+If <flag> is 0 this command will remove the mount from the character.
+Otherwise it give the invoking character a PecoPeco (if they are a Knight 
 series class) or a GrandPeco (if they are a Crusader seriesclass). Unlike 
 'setfalcon' and 'setcart' this will not work at all if they aren't of a class 
-which can ride. This will work if the character doesn't have the riding skill, 
-however.
+which can ride.
+Note: the character needs to have the skill KN_RIDING to gain a mount
 
 The accompanying function will return 1 if the invoking character is riding a 
 bird and 0 if they don't.
@@ -2855,8 +2863,8 @@ bird and 0 if they don't.
 *savepoint "<map name>",<x>,<y>;
 *save "<map name>",<x>,<y>;
 
-This command saves a point that the invoking character will return to upon 
-'return to save point' if dead or in some other cases. The two versions are 
+This command saves where the invoking character will return to upon 
+'return to save point', if dead or in some other cases. The two versions are 
 equivalent. Map name, X coordinate and Y coordinate should be perfectly obvious. 
 This ignores any and all map flags, and can make a character respawn where no 
 teleportation is otherwise possible.

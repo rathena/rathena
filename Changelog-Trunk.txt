@@ -3,6 +3,18 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/01/09
+	* Changes to script buildin functions: [FlavioJS]
+	- functions checking if a player is attached as soon as possible.
+	- functions that required a player attached and would crash if none was 
+	  there terminate the script now. (others keep the current behaviour to 
+	  maintain full backward compatibility)
+	- removed the unused flag argument in guildskill.
+	- bonus,bonus2,bonus3,bonus4 use the same function now (remains the same 
+	  script-wise)
+	- added an optional parameter to setcart,setfalcon,setriding so it's 
+	  possible to remove the cart/falcon/mount or select a specific cart
+	- other cleanups
 2007/01/08
 	* Hotfix: Freeing of freed pointer when replacing script functions. [Lance]
 	* Unimportant cleanups

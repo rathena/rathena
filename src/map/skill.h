@@ -272,7 +272,7 @@ enum {
 	ST_RECOV_WEIGHT_RATE,ST_MOVE_ENABLE,ST_WATER,
 };
 
-enum {
+enum _skill {
 	NV_BASIC = 1,
 
 	SM_SWORD,

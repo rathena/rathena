@@ -59,6 +59,9 @@
 #define script_getdata(st,i) &((st)->stack->stack_data[(st)->start+(i)])
 /// Returns if the stack contains data at the target index
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
+/// Returns the index of the last data in the stack
+#define script_lastdata(st) ( (st)->end - (st)->start + 1 )
+#define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
 #define script_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
 #define script_isint(data) ( (data)->type == C_INT )
 
@@ -1852,6 +1855,8 @@ struct map_session_data *script_rid2sd(struct script_state *st)
 	if(!sd){
 		ShowError("script_rid2sd: fatal error ! player not attached!\n");
 		report_src(st);
+		//## I would also terminate script execution. [FlavioJS]
+		//st->state = END;
 	}
 	return sd;
 }
@@ -3866,26 +3871,26 @@ struct script_function buildin_func[] = {
 	{buildin_statusup,"statusup","i"},
 	{buildin_statusup2,"statusup2","ii"},
 	{buildin_bonus,"bonus","ii"},
-	{buildin_bonus2,"bonus2","iii"},
-	{buildin_bonus3,"bonus3","iiii"},
-	{buildin_bonus4,"bonus4","iiiii"},
-	{buildin_skill,"skill","ii*"},
-	{buildin_addtoskill,"addtoskill","ii*"}, // [Valaris]
+	{buildin_bonus,"bonus2","iii"},
+	{buildin_bonus,"bonus3","iiii"},
+	{buildin_bonus,"bonus4","iiiii"},
+	{buildin_skill,"skill","ii?"},
+	{buildin_addtoskill,"addtoskill","ii?"}, // [Valaris]
 	{buildin_guildskill,"guildskill","ii"},
 	{buildin_getskilllv,"getskilllv","i"},
 	{buildin_getgdskilllv,"getgdskilllv","ii"},
-	{buildin_basicskillcheck,"basicskillcheck","*"},
-	{buildin_getgmlevel,"getgmlevel","*"},
+	{buildin_basicskillcheck,"basicskillcheck",""},
+	{buildin_getgmlevel,"getgmlevel",""},
 	{buildin_end,"end",""},
 //	{buildin_end,"break",""}, this might confuse advanced scripting support [Eoe]
 	{buildin_checkoption,"checkoption","i"},
-	{buildin_setoption,"setoption","i*"},
-	{buildin_setcart,"setcart",""},
-	{buildin_checkcart,"checkcart","*"},		//fixed by Lupus (added '*')
-	{buildin_setfalcon,"setfalcon",""},
-	{buildin_checkfalcon,"checkfalcon","*"},	//fixed by Lupus (fixed wrong pointer, added '*')
-	{buildin_setriding,"setriding",""},
-	{buildin_checkriding,"checkriding","*"},	//fixed by Lupus (fixed wrong pointer, added '*')
+	{buildin_setoption,"setoption","i?"},
+	{buildin_setcart,"setcart","?"},
+	{buildin_checkcart,"checkcart",""},
+	{buildin_setfalcon,"setfalcon","?"},
+	{buildin_checkfalcon,"checkfalcon",""},
+	{buildin_setriding,"setriding","?"},
+	{buildin_checkriding,"checkriding",""},
 	{buildin_savepoint,"save","sii"},
 	{buildin_savepoint,"savepoint","sii"},
 	{buildin_gettimetick,"gettimetick","i"},
@@ -6483,408 +6488,436 @@ int buildin_statusup2(struct script_state *st)
 
 	return 0;
 }
-/*==========================================
- * 装備品による能力値ボーナス
- *------------------------------------------
- */
-int buildin_bonus(struct script_state *st)
+
+/// See 'doc/item_bonus.txt'
+/// bonus <bonus type>,<val1>
+/// bonus2 <bonus type>,<val1>,<val2>
+/// bonus3 <bonus type>,<val1>,<val2>,<val3>
+/// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>
+int buildin_bonus(struct script_state* st)
 {
-	int type,val;
-	struct map_session_data *sd;
+	int type;
+	int type2;
+	int type3;
+	int type4;
+	int val;
+	TBL_PC* sd;
 
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	val=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	sd=script_rid2sd(st);
-	pc_bonus(sd,type,val);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0; // no player attached
 
-	return 0;
-}
-/*==========================================
- * 装備品による能力値ボーナス
- *------------------------------------------
- */
-int buildin_bonus2(struct script_state *st)
-{
-	int type,type2,val;
-	struct map_session_data *sd;
-
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	type2=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	val=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	sd=script_rid2sd(st);
-	pc_bonus2(sd,type,type2,val);
-
-	return 0;
-}
-/*==========================================
- * 装備品による能力値ボーナス
- *------------------------------------------
- */
-int buildin_bonus3(struct script_state *st)
-{
-	int type,type2,type3,val;
-	struct map_session_data *sd;
-
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	type2=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	type3=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	val=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	sd=script_rid2sd(st);
-	pc_bonus3(sd,type,type2,type3,val);
-
-	return 0;
-}
-
-int buildin_bonus4(struct script_state *st)
-{
-	int type,type2,type3,type4,val;
-	struct map_session_data *sd;
-
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	type2=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	type3=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	type4=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	val=conv_num(st,& (st->stack->stack_data[st->start+6]));
-	sd=script_rid2sd(st);
-	pc_bonus4(sd,type,type2,type3,type4,val);
-
-	return 0;
-}
-/*==========================================
- * スキル所得
- *------------------------------------------
- */
-int buildin_skill(struct script_state *st)
-{
-	int id,level,flag=1;
-	struct map_session_data *sd;
-
-	id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	level=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	if( st->end>st->start+4 )
-		flag=conv_num(st,&(st->stack->stack_data[st->start+4]) );
-	sd=script_rid2sd(st);
-	pc_skill(sd,id,level,flag);
+	type = conv_num(st, script_getdata(st,2));
+	switch( script_lastdata(st) ){
+	case 3:
+		val  = conv_num(st, script_getdata(st,3));
+		pc_bonus(sd, type, val);
+		break;
+	case 4:
+		type2 = conv_num(st, script_getdata(st,3));
+		val   = conv_num(st, script_getdata(st,4));
+		pc_bonus2(sd, type, type2, val);
+		break;
+	case 5:
+		type2 = conv_num(st, script_getdata(st,3));
+		type3 = conv_num(st, script_getdata(st,4));
+		val   = conv_num(st, script_getdata(st,5));
+		pc_bonus3(sd, type, type2, type3, val);
+		break;
+	case 6:
+		type2 = conv_num(st, script_getdata(st,3));
+		type3 = conv_num(st, script_getdata(st,4));
+		type4 = conv_num(st, script_getdata(st,5));
+		val   = conv_num(st, script_getdata(st,6));
+		pc_bonus4(sd, type, type2, type3, type4, val);
+		break;
+	default:
+		ShowDebug("buildin_bonus: unexpected last data (%d)\n", script_lastdata(st));
+	}
 
 	return 0;
 }
 
-// add x levels of skill (stackable) [Valaris]
-int buildin_addtoskill(struct script_state *st)
+/// Changes the level of a player skill.
+/// skill <skill id>,<level>{,<flag>}
+/// @see pc_skill() for flag
+int buildin_skill(struct script_state* st)
 {
-	int id,level,flag=2;
-	struct map_session_data *sd;
+	int id;
+	int level;
+	int flag = 1;
+	TBL_PC* sd;
 
-	id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	level=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	if( st->end>st->start+4 )
-		flag=conv_num(st,&(st->stack->stack_data[st->start+4]) );
-	sd=script_rid2sd(st);
-	pc_skill(sd,id,level,flag);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0; // no player attached
+
+	id    = conv_num(st, script_getdata(st,2));
+	level = conv_num(st, script_getdata(st,3));
+	if( script_hasdata(st,4) )
+		flag = conv_num(st, script_getdata(st,4));
+	pc_skill(sd, id, level, flag);
 
 	return 0;
 }
 
-/*==========================================
- * ギルドスキル取得
- *------------------------------------------
- */
-int buildin_guildskill(struct script_state *st)
+/// Changes the level of a player skill.
+/// addtoskill <skill id>,<level>{,<flag>}
+/// @see pc_skill() for flag
+int buildin_addtoskill(struct script_state* st)
 {
-	int id,level,flag=0;
-	struct map_session_data *sd;
-	int i=0;
+	int id;
+	int level;
+	int flag = 2;
+	TBL_PC* sd;
 
-	id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	level=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	if( st->end>st->start+4 )
-		flag=conv_num(st,&(st->stack->stack_data[st->start+4]) );
-	sd=script_rid2sd(st);
-	for(i=0;i<level;i++)
-		guild_skillup(sd,id,flag);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0; // no player attached
+
+	id    = conv_num(st, script_getdata(st,2));
+	level = conv_num(st, script_getdata(st,3));
+	if( script_hasdata(st,4) )
+		flag = conv_num(st, script_getdata(st,4));
+	pc_skill(sd, id, level, flag);
 
 	return 0;
 }
-/*==========================================
- * スキルレベル所得
- *------------------------------------------
- */
-int buildin_getskilllv(struct script_state *st)
+
+/// Increases the level of the guild skill.
+/// guildskill <skill id>,<level>
+int buildin_guildskill(struct script_state* st)
 {
-	int id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	push_val(st->stack,C_INT, pc_checkskill( script_rid2sd(st) ,id) );
+	int id;
+	int level;
+	TBL_PC* sd;
+	int i;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0; // needs player attached
+
+	id    = conv_num(st, script_getdata(st,2));
+	level = conv_num(st, script_getdata(st,3));
+	for( i=0; i < level; i++ )
+		guild_skillup(sd, id);
+
 	return 0;
 }
-/*==========================================
- * getgdskilllv(Guild_ID, Skill_ID);
- * skill_id = 10000 : GD_APPROVAL
- *            10001 : GD_KAFRACONTRACT
- *            10002 : GD_GUARDIANRESEARCH
- *            10003 : GD_GUARDUP
- *            10004 : GD_EXTENSION
- *------------------------------------------
- */
-int buildin_getgdskilllv(struct script_state *st)
+
+/// Returns the level of the player skill.
+/// getskilllv(<skill id>) -> <level>
+int buildin_getskilllv(struct script_state* st)
 {
-        int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-        int skill_id=conv_num(st,& (st->stack->stack_data[st->start+3]));
-        struct guild *g=guild_search(guild_id);
-	push_val(st->stack,C_INT, (g==NULL)?-1:guild_checkskill(g,skill_id) );
+	int id;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL ){
+		script_pushint(st, 0);
+		return 0; // needs player attached
+	}
+
+	id = conv_num(st, script_getdata(st,2));
+	script_pushint(st, pc_checkskill(sd,id));
+
+	return 0;
+}
+
+/// Returns the level of the guild skill.
+/// getgdskilllv(<guild id>,<skill id>) -> <level>
+int buildin_getgdskilllv(struct script_state* st)
+{
+	int guild_id;
+	int skill_id;
+	struct guild* g;
+
+	guild_id = conv_num(st, script_getdata(st,2));
+	skill_id = conv_num(st, script_getdata(st,3));
+	g = guild_search(guild_id);
+	if( g == NULL )
+		script_pushint(st, -1);
+	else
+		script_pushint(st, guild_checkskill(g,skill_id));
+
 	return 0;
 /*
-	struct map_session_data *sd=NULL;
-	struct guild *g=NULL;
 	int skill_id;
+	TBL_PC* sd;
+	struct guild* g = NULL;
 
-	skill_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	sd=script_rid2sd(st);
-	if(sd && sd->status.guild_id > 0) g=guild_search(sd->status.guild_id);
-	if(sd && g) {
-		push_val(st->stack,C_INT, guild_checkskill(g,skill_id+9999) );
-	} else {
-		push_val(st->stack,C_INT,-1);
-	}
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0; // needs player attached
+
+	skill_id = conv_num(st, script_getdata(st,2));
+	if( sd->status.guild_id > 0 )
+		g = guild_search(sd->status.guild_id);
+	if( g == NULL )
+		script_pushint(st, -1);
+	else
+		script_pushint(st, guild_checkskill(g,skill_id+9999));
+
 	return 0;
 */
 }
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_basicskillcheck(struct script_state *st)
+
+/// Returns the 'basic_skill_check' setting.
+/// basicskillcheck() -> <setting>
+int buildin_basicskillcheck(struct script_state* st)
 {
-	push_val(st->stack,C_INT, battle_config.basic_skill_check);
-	return 0;
-}
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_getgmlevel(struct script_state *st)
-{
-	push_val(st->stack,C_INT, pc_isGM(script_rid2sd(st)));
+	script_pushint(st, battle_config.basic_skill_check);
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_end(struct script_state *st)
+/// Returns the GM level of the player.
+/// getgmlevel() -> <level>
+int buildin_getgmlevel(struct script_state* st)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL ){
+		script_pushint(st, 0);
+		return 0; // needs player attached
+	}
+
+	script_pushint(st, pc_isGM(sd));
+
+	return 0;
+}
+
+/// Terminates the execution of this script instance.
+/// end
+int buildin_end(struct script_state* st)
 {
 	st->state = END;
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_checkoption(struct script_state *st)
+/// Checks if the player has that option.
+/// checkoption(<option>) -> <bool>
+int buildin_checkoption(struct script_state* st)
 {
-	int type;
-	struct map_session_data *sd;
+	int option;
+	TBL_PC* sd;
 
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	sd=script_rid2sd(st);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
 
-	if(sd->sc.option & type){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
-
-	return 0;
-}
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_checkoption1(struct script_state *st)
-{
-	int type;
-	struct map_session_data *sd;
-
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	sd=script_rid2sd(st);
-
-	if(sd->sc.opt1 & type){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
-
-	return 0;
-}
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_checkoption2(struct script_state *st)
-{
-	int type;
-	struct map_session_data *sd;
-
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	sd=script_rid2sd(st);
-
-	if(sd->sc.opt2 & type){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
+	option = conv_num(st, script_getdata(st,2));
+	if( sd->sc.option&option )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
 
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_setoption(struct script_state *st)
+/// Checks if the player is in that opt1 state.
+/// checkoption1(<opt1>) -> <bool>
+int buildin_checkoption1(struct script_state* st)
 {
-	int type;
-	struct map_session_data *sd;
-	int flag=1;
-	
-	type=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if(st->end>st->start+3 )
-		flag=conv_num(st,&(st->stack->stack_data[st->start+3]) );
-	else if (!type) { //Request to remove everything.
+	int opt1;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
+
+	opt1 = conv_num(st, script_getdata(st,2));
+	if( sd->sc.opt1 == opt1 )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
+
+/// Checks if the player has that opt2.
+/// checkoption2(<opt2>) -> <bool>
+int buildin_checkoption2(struct script_state* st)
+{
+	int opt2;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
+
+	opt2 = conv_num(st, script_getdata(st,2));
+	if( sd->sc.opt2&opt2 )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
+
+/// Changes the option of the player.
+/// setoption <option number>{,<flag>}
+int buildin_setoption(struct script_state* st)
+{
+	int option;
+	int flag = 1;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// needs player attached
+
+	option = conv_num(st, script_getdata(st,2));
+	if( script_hasdata(st,3) )
+		flag = conv_num(st, script_getdata(st,3));
+	else if( !option ){// Request to remove everything.
 		flag = 0;
-		type = OPTION_CART|OPTION_FALCON|OPTION_RIDING;
+		option = OPTION_CART|OPTION_FALCON|OPTION_RIDING;
 	}
-	sd=script_rid2sd(st);
-	if (!sd) return 0;
-
-	if (flag) {//Add option
-		if (type&OPTION_WEDDING && !battle_config.wedding_modifydisplay)
-			type&=~OPTION_WEDDING; //Do not show the wedding sprites
-		pc_setoption(sd,sd->sc.option|type);
-	} else//Remove option
-		pc_setoption(sd,sd->sc.option&~type);
-	return 0;
-}
-
-/*==========================================
- * Checkcart [Valaris]
- *------------------------------------------
- */
-
-int buildin_checkcart(struct script_state *st)
-{
-	struct map_session_data *sd;
-
-	sd=script_rid2sd(st);
-
-	if(pc_iscarton(sd)){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
-	return 0;
-}
-
-/*==========================================
- * カートを付ける
- *------------------------------------------
- */
-int buildin_setcart(struct script_state *st)
-{
-	struct map_session_data *sd;
-
-	sd=script_rid2sd(st);
-	pc_setcart(sd,1);
+	if( flag ){// Add option
+		if( option&OPTION_WEDDING && !battle_config.wedding_modifydisplay )
+			option &= ~OPTION_WEDDING;// Do not show the wedding sprites
+		pc_setoption(sd, sd->sc.option|option);
+	} else// Remove option
+		pc_setoption(sd, sd->sc.option&~option);
 
 	return 0;
 }
 
-/*==========================================
- * checkfalcon [Valaris]
- *------------------------------------------
- */
-
-int buildin_checkfalcon(struct script_state *st)
+/// Returns if the player has a cart.
+/// checkcart() -> <bool>
+/// @author Valaris
+int buildin_checkcart(struct script_state* st)
 {
-	struct map_session_data *sd;
+	TBL_PC* sd;
 
-	sd=script_rid2sd(st);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
 
-	if(pc_isfalcon(sd)){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
+	if( pc_iscarton(sd) )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
 
 	return 0;
 }
 
-
-/*==========================================
- * 鷹を付ける
- *------------------------------------------
- */
-int buildin_setfalcon(struct script_state *st)
+/// Sets the cart of the player.
+/// setcart {<type>}
+int buildin_setcart(struct script_state* st)
 {
-	struct map_session_data *sd;
+	int type = 1;
+	TBL_PC* sd;
 
-	sd=script_rid2sd(st);
-	pc_setfalcon(sd);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// needs player attached
+
+	if( script_hasdata(st,2) )
+		type = conv_num(st, script_getdata(st,2));
+	pc_setcart(sd, type);
 
 	return 0;
 }
 
-/*==========================================
- * Checkcart [Valaris]
- *------------------------------------------
- */
-
-int buildin_checkriding(struct script_state *st)
+/// Returns if the player has a falcon.
+/// checkfalcon() -> <bool>
+/// @author Valaris
+int buildin_checkfalcon(struct script_state* st)
 {
-	struct map_session_data *sd;
+	TBL_PC* sd;
 
-	sd=script_rid2sd(st);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
 
-	if(pc_isriding(sd)){
-		push_val(st->stack,C_INT,1);
-	} else {
-		push_val(st->stack,C_INT,0);
-	}
+	if( pc_isfalcon(sd) )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
 
 	return 0;
 }
 
-
-/*==========================================
- * ペコペコ乗り
- *------------------------------------------
- */
-int buildin_setriding(struct script_state *st)
+/// Sets if the player has a falcon or not.
+/// setfalcon {<flag>}
+int buildin_setfalcon(struct script_state* st)
 {
-	struct map_session_data *sd;
+	int flag = 1;
+	TBL_PC* sd;
 
-	sd=script_rid2sd(st);
-	pc_setriding(sd);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// needs player attached
+
+	if( script_hasdata(st,2) )
+		flag = conv_num(st, script_getdata(st,2));
+
+	pc_setfalcon(sd, flag);
 
 	return 0;
 }
 
-/*==========================================
- *	セーブポイントの保存
- *------------------------------------------
- */
-int buildin_savepoint(struct script_state *st)
+/// Returns if the player is riding.
+/// checkriding() -> <bool>
+/// @author Valaris
+int buildin_checkriding(struct script_state* st)
 {
-	int x,y;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return buildin_end(st);// needs player attached
+
+	if( pc_isriding(sd) )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
+
+/// Sets if the player is riding.
+/// setriding {<flag>}
+int buildin_setriding(struct script_state* st)
+{
+	int flag = 1;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// needs player attached
+
+	if( script_hasdata(st,2) )
+		flag = conv_num(st, script_getdata(st,2));
+	pc_setriding(sd, flag);
+
+	return 0;
+}
+
+/// Sets the save point of the player.
+/// save "<map name>",<x>,<y>
+/// savepoint "<map name>",<x>,<y>
+int buildin_savepoint(struct script_state* st)
+{
+	int x;
+	int y;
 	short map;
-	char *str;
+	char* str;
+	TBL_PC* sd;
 
-	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
-	x=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	y=conv_num(st,& (st->stack->stack_data[st->start+4]));
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// needs player attached
+
+	str = conv_str(st, script_getdata(st,2));
+	x   = conv_num(st, script_getdata(st,3));
+	y   = conv_num(st, script_getdata(st,4));
 	map = mapindex_name2id(str);
-	if (map)
-		pc_setsavepoint(script_rid2sd(st),map,x,y);
+	if( map )
+		pc_setsavepoint(sd, map, x, y);
+
 	return 0;
 }
 

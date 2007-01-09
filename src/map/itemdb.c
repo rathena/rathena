@@ -1141,7 +1141,7 @@ static int itemdb_readdb(void)
 			
 			str[19] = p; //Script
 			np = strchr(p,'}');
-			
+
 			while (np && np[1] && np[1] != ',')
 				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
 			if (!np || !np[1]) {
@@ -1152,13 +1152,13 @@ static int itemdb_readdb(void)
 			np[1] = '\0'; //Set end of script
 			id->script = parse_script(str[19],filename[i],lines,0);
 			np+=2; //Skip to next field
-			
+
 			if(!np || (p=strchr(np,'{'))==NULL)
 				continue;
-			
+
 			str[20] = p; //Equip Script
 			np = strchr(p,'}');
-			
+
 			while (np && np[1] && np[1] != ',')
 				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
 			if (!np || !np[1]) {
@@ -1166,11 +1166,11 @@ static int itemdb_readdb(void)
 				id->equip_script = parse_script(str[20],filename[i],lines,0);
 				continue;
 			}
-			
+
 			np[1] = '\0'; //Set end of script
 			id->equip_script = parse_script(str[20],filename[i],lines,0);
 			np+=2; //Skip comma, to next field
-			
+
 			if(!np || (p=strchr(np,'{'))==NULL)
 				continue;
 			//Unequip script, last column.

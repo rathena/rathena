@@ -2402,47 +2402,47 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
  *	2 - Like 1, except the level granted can stack with previously learned level.
  *------------------------------------------
  */
-int pc_skill(struct map_session_data *sd,int id,int level,int flag)
+int pc_skill(TBL_PC* sd, int id, int level, int flag)
 {
 	nullpo_retr(0, sd);
 
-	if(level>MAX_SKILL_LEVEL){
-		if(battle_config.error_log)
+	if( level > MAX_SKILL_LEVEL ){
+		if( battle_config.error_log )
 			ShowError("pc_skill: Skill level %d too high. Max lv supported is MAX_SKILL_LEVEL (%d)\n", level, MAX_SKILL_LEVEL);
 		return 0;
 	}
-	switch (flag) {
+	switch( flag ){
 	case 0: //Set skill data overwriting whatever was there before.
-		sd->status.skill[id].id=id;
-		sd->status.skill[id].lv=level;
-		sd->status.skill[id].flag=0;
-		if (!level) //Remove skill.
+		sd->status.skill[id].id   = id;
+		sd->status.skill[id].lv   = level;
+		sd->status.skill[id].flag = 0;
+		if( !level ) //Remove skill.
 			sd->status.skill[id].id = 0;
-		if (!skill_get_inf(id)) //Only recalculate for passive skills.
-			status_calc_pc(sd,0);
+		if( !skill_get_inf(id) ) //Only recalculate for passive skills.
+			status_calc_pc(sd, 0);
 		clif_skillinfoblock(sd);
 	break;
 	case 2: //Add skill bonus on top of what you had.
-		if (sd->status.skill[id].id==id) {
-			if (!sd->status.skill[id].flag)
-				sd->status.skill[id].flag=sd->status.skill[id].lv+2; //Store previous level.
+		if( sd->status.skill[id].id == id ){
+			if( !sd->status.skill[id].flag ) // Store previous level.
+				sd->status.skill[id].flag = sd->status.skill[id].lv + 2;
 		} else {
-			sd->status.skill[id].id=id;
-			sd->status.skill[id].flag=1; //Set that this is a bonus skill.
+			sd->status.skill[id].id   = id;
+			sd->status.skill[id].flag = 1; //Set that this is a bonus skill.
 		}
-		sd->status.skill[id].lv+=level;
+		sd->status.skill[id].lv += level;
 	break;
 	case 1: //Item bonus skill.
-		if(sd->status.skill[id].lv >= level)
+		if( sd->status.skill[id].lv >= level )
 			return 0;
-		if(sd->status.skill[id].id==id) {
-			if (!sd->status.skill[id].flag) //Non-granted skill, store it's level.
-				sd->status.skill[id].flag=sd->status.skill[id].lv+2;
+		if( sd->status.skill[id].id == id ){
+			if( !sd->status.skill[id].flag ) //Non-granted skill, store it's level.
+				sd->status.skill[id].flag = sd->status.skill[id].lv + 2;
 		} else {
-			sd->status.skill[id].id=id;
-			sd->status.skill[id].flag=1;
+			sd->status.skill[id].id   = id;
+			sd->status.skill[id].flag = 1;
 		}
-		sd->status.skill[id].lv=level;
+		sd->status.skill[id].lv = level;
 	break;
 	default: //Unknown flag?
 		return 0;
@@ -4467,7 +4467,7 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 	nullpo_retr(0, sd);
 
 	if(skill_num >= GD_SKILLBASE){
-		guild_skillup(sd,skill_num,0);
+		guild_skillup(sd, skill_num);
 		return 0;
 	}
 
@@ -5790,10 +5790,13 @@ int pc_setcart(struct map_session_data *sd,int type)
  * 鷹設定
  *------------------------------------------
  */
-int pc_setfalcon(struct map_session_data *sd)
+int pc_setfalcon(TBL_PC* sd, int flag)
 {
-	if(pc_checkskill(sd,HT_FALCON)>0){	// ファルコンマスタリ?スキル所持
-		pc_setoption(sd,sd->sc.option|OPTION_FALCON);
+	if( flag ){
+		if( pc_checkskill(sd,HT_FALCON)>0 )	// ファルコンマスタリ?スキル所持
+			pc_setoption(sd,sd->sc.option|OPTION_FALCON);
+	} else if( pc_isfalcon(sd) ){
+		pc_setoption(sd,sd->sc.option&~OPTION_FALCON); // remove falcon
 	}
 
 	return 0;
@@ -5803,11 +5806,15 @@ int pc_setfalcon(struct map_session_data *sd)
  * ペコペコ設定
  *------------------------------------------
  */
-int pc_setriding(struct map_session_data *sd)
+int pc_setriding(TBL_PC* sd, int flag)
 {
-	if((pc_checkskill(sd,KN_RIDING)>0)){ // ライディングスキル所持
-		pc_setoption(sd,sd->sc.option|OPTION_RIDING);
+	if( flag ){
+		if( pc_checkskill(sd,KN_RIDING) > 0 ) // ライディングスキル所持
+			pc_setoption(sd, sd->sc.option|OPTION_RIDING);
+	} else if( pc_isriding(sd) ){
+		pc_setoption(sd, sd->sc.option&~OPTION_RIDING);
 	}
+
 	return 0;
 }
 
@@ -6297,7 +6304,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
-	
+
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots.. 
@@ -6328,7 +6335,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			sd->equip_index[i] = n;
 		}
 	}
-	
+
 	if(pos==EQP_AMMO){
 		clif_arrowequip(sd,n);
 		clif_arrow_fail(sd,3);
@@ -6494,7 +6501,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if((sd->status.inventory[n].equip & EQP_ARMS) && 
 		sd->weapontype1 == 0 && sd->weapontype2 == 0)
 		skill_enchant_elemental_end(&sd->bl,-1);
-	
+
 	sd->status.inventory[n].equip=0;
 
 	if(flag&1) {

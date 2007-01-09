@@ -7898,7 +7898,7 @@ int clif_charnameupdate (struct map_session_data *ssd)
 		memcpy(WBUFP(buf,30), p->party.name, NAME_LENGTH);
 	else
 		WBUFB(buf,30) = 0;
-			
+
 	if (g)
 	{
 		int i, ps = -1;

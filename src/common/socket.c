@@ -282,7 +282,7 @@ static int connect_client(int listen_fd)
 		ShowError("accept failed (code %i)!\n", s_errno);
 		return -1;
 	}
-	
+
 	if(fd_max<=fd) fd_max=fd+1;
 
 	setsocketopts(fd);

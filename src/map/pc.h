@@ -165,7 +165,7 @@ int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);
 int pc_bonus4(struct map_session_data *sd,int,int,int,int,int);
-int pc_skill(struct map_session_data*,int,int,int);
+int pc_skill(struct map_session_data* sd, int id, int level, int flag);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
@@ -208,9 +208,9 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 int pc_jobchange(struct map_session_data *,int, int);
 int pc_setoption(struct map_session_data *,int);
-int pc_setcart(struct map_session_data *sd,int type);
-int pc_setfalcon(struct map_session_data *sd);
-int pc_setriding(struct map_session_data *sd);
+int pc_setcart(struct map_session_data* sd, int type);
+int pc_setfalcon(struct map_session_data* sd, int flag);
+int pc_setriding(struct map_session_data* sd, int flag);
 int pc_changelook(struct map_session_data *,int,int);
 int pc_equiplookall(struct map_session_data *sd);
 
