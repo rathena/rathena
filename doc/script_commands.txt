@@ -3955,8 +3955,8 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 
 *agitcheck()
 
-These function and command will let you check whether the server is currently
-in the War of Emperium mode. It will return 1 if WoE is on and 0 if it isn't.
+This function will let you check whether the server is currently in WoE mode.
+It will return 1 if the War of Emperium is on and 0 if it isn't.
 
 ---------------------------------------
 
