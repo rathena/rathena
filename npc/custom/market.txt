@@ -23,7 +23,7 @@ prontera.gat,144,174,3	script	Market Place	722,{
 	end;
 
 M_ENTER:
-	if(rand(10)==0 && checkcart(0) && @mrketflg<30 && @mrketflg>5 && getcharid(2)>1) FlagEmblem getcharid(2);
+	if(rand(10)==0 && checkcart() && @mrketflg<30 && @mrketflg>5 && getcharid(2)>1) FlagEmblem getcharid(2);
 	warp "gon_test",27+rand(5),98;
 	set @mrketflg,@mrketflg+1;
 	end;

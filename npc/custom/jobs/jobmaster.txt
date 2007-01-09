@@ -162,7 +162,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 				}
 				close;
 			}
-			if(checkfalcon(0) || checkcart(0) || checkriding(0)) goto L_remove;
+			if(checkfalcon() || checkcart() || checkriding()) goto L_remove;
 			if((Class >=Job_Knight) && (Class <=Job_Crusader2)){
 				mes "Do you want to reborn?";
 				if(select("Yes","No")==1){

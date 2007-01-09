@@ -25,7 +25,7 @@ L_Menu:
 	close;
 
 L_Cart:
-	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart(0) == 0) goto L_Cart_Ok;
+	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0) goto L_Cart_Ok;
 	if(getskilllv(39)<1) goto L_Need_Skill;
 
 	mes "[Universal Rental Npc]";
@@ -42,7 +42,7 @@ L_Need_Skill:
 	close;
 
 L_Falcon:
-	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon(0) == 0) goto L_Falc;
+	if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0) goto L_Falc;
 	if(getskilllv(127)<1) goto L_Need_Skill2;
 
 	mes "[Universal Rental Npc]";
@@ -59,7 +59,7 @@ L_Need_Skill2:
 	close;
 
 L_Peco:
-	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding(0) == 0) goto L_Peco_Ok;
+	if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0) goto L_Peco_Ok;
 	if(getskilllv(63)<1) goto L_Need_Skill3;
 
 	mes "[Universal Rental Npc]";

@@ -178,7 +178,7 @@ set @stotal,$S1+$S2+$S3+$S4+$S5+$S6+$S7+$S8+$S9+$S10;
 if (@stotal > 0) goto S_Start;
 mes "[Stock Market]";
 mes "Trading is currently closed.";
-if (getgmlevel(3) > 90) goto GM_Open;
+if (getgmlevel() > 90) goto GM_Open;
 close;
 
 // Begining of interface //
@@ -253,7 +253,7 @@ mes "^21698F"+$S10N$+"^000000" + " " + $S10 + "z (" + @S10Update$ + ")";
 next;
 
 // GM Menu link //
-if (getgmlevel(3) > 90) goto GM_subMenu;
+if (getgmlevel() > 90) goto GM_subMenu;
 menu "Portfolio",S_Port,"Buy Shares",S_Buy,"Sell Shares",S_Sell,"Cancel",S_Quit;
 
 GM_subMenu:

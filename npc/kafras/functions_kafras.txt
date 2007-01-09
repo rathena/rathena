@@ -205,7 +205,7 @@ function	script	F_KafStor	{
 		cutin "", 255;
 		close;
 	}
-	if(basicskillcheck(0) && getskilllv(1) < 6){
+	if(basicskillcheck() && getskilllv(1) < 6){
 		mes "[Kafra]";
 		mes "I am sorry but you have to be at least Novice level 6 if you want to use the storage.";
 		return;
@@ -316,7 +316,7 @@ function	script	F_KafCart	{
 		mes "I'm sorry but you need the skill ^0000FF'Pushcart'^000000 to rent a cart.";
 		return 1;
 	}
-	if(checkcart(0) == 1){
+	if(checkcart() == 1){
 		mes "[Kafra]";
 		mes "Excuse me... but you already have a cart....";
 		emotion e_swt;

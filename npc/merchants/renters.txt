@@ -46,7 +46,7 @@ L_Start:
 	M_0:
 		if(getskilllv(63) == 0) goto sL_NeedSkill;
 		if(Zeny < @price) goto sL_Zeny;
-		if(checkriding(0) != 0) goto sL_GotPeco;
+		if(checkriding() != 0) goto sL_GotPeco;
 		set Zeny, Zeny - @price;
 		setriding;
 		mes "Thank you and good day.";
@@ -99,7 +99,7 @@ L_Start:
 	M_0:
 		if(getskilllv(63) == 0) goto sL_NeedSkill;
 		if(Zeny < @price) goto sL_Zeny;
-		if(checkriding(0) != 0) goto sL_GotPeco;
+		if(checkriding() != 0) goto sL_GotPeco;
 		set Zeny, Zeny - @price;
 		setriding;
 		mes "Thank you and good day.";
@@ -147,7 +147,7 @@ hu_in01.gat,375,318,5	script	Falcon Master	59,{
 
 		sM_0:
 			if(BaseJob != Job_Hunter) goto sL_NotHunter;
-			if(checkfalcon(0) != 0) goto sL_GotFalc;
+			if(checkfalcon() != 0) goto sL_GotFalc;
 			if(Zeny < @price) goto sL_Zeny;
 			if(getskilllv(127)==0) goto sL_NoSkill;
 			set Zeny, Zeny - @price;

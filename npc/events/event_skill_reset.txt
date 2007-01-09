@@ -32,7 +32,7 @@ yuno.gat,138,187,4	script	Hypnotist Teacher	124,{
 		mes "Please come again soon!";
 		close;
 	}
-	if(Weight || checkfalcon(0) || checkcart(0) || checkriding(0)) {
+	if(Weight || checkfalcon() || checkcart() || checkriding()) {
 		mes "Would you like to reset skills?";
 		mes "I'm sorry, but...";
 		next;
@@ -41,11 +41,11 @@ yuno.gat,138,187,4	script	Hypnotist Teacher	124,{
 			mes "You cannot reset skills";
 			mes "when you keep";
 			mes "any items.";
-		} else if(checkcart(0))
+		} else if(checkcart())
 			mes "Please, drop your cart and we'll continue.";
-		else if(checkfalcon(0))
+		else if(checkfalcon())
 			mes "Please, free your Falcon and we'll continue.";
-		else if(checkriding(0))
+		else if(checkriding())
 			mes "Please, free your PecoPeco and we'll continue.";
 		next;
 		mes @npcname$;

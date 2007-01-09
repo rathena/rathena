@@ -87,7 +87,7 @@ M_Q1:
 	menu "OK, I'll work off!",-, "I love this prison!",M_NO_THANKS;
 
 	mes "[Saddeus]";
-	if(checkcart(0) || checkfalcon(0) || checkriding(0)){
+	if(checkcart() || checkfalcon() || checkriding()){
 		emotion e_hmm;
 		mes "I'm sorry, you should release your Cart, PecoPeco or Falcon!";
 		close;

@@ -257,9 +257,9 @@ L_CHANGE:
 	next;
 	mes "[Valhallana]";
 	if(Zeny || Weight) goto L_ZENYITEMS;
-	if(checkcart(0)) goto L_CART;
-	if(checkfalcon(0)) goto L_FALCON;
-	if(checkriding(0)) goto L_PECO;
+	if(checkcart()) goto L_CART;
+	if(checkfalcon()) goto L_FALCON;
+	if(checkriding()) goto L_PECO;
 	if(skillpoint > 0) goto L_SKILLPNTS;
 
 	mes "Let's start your reincarnation ceremony...";
@@ -368,9 +368,9 @@ function	script	F_ToHigh	{
 L_GETHIGH:
 	mes "["+getarg(3)+"]";
 	if(JobLevel < 10) goto L_NOTREADY;
-	if(checkcart(0)) goto L_CART;
-	if(checkfalcon(0)) goto L_FALCON;
-	if(checkriding(0)) goto L_PECO;
+	if(checkcart()) goto L_CART;
+	if(checkfalcon()) goto L_FALCON;
+	if(checkriding()) goto L_PECO;
 	if(skillpoint > 0) goto L_SKILLPNTS;
 
 	mes "Hello there, "+strcharinfo(0)+"!";
@@ -450,9 +450,9 @@ function	script	F_Rebirth	{
 
 L_GET3RD:
 	if(JobLevel < 45) goto L_NOTREADY;
-	if(checkcart(0)) goto L_CART;
-	if(checkfalcon(0)) goto L_FALCON;
-	if(checkriding(0)) goto L_PECO;
+	if(checkcart()) goto L_CART;
+	if(checkfalcon()) goto L_FALCON;
+	if(checkriding()) goto L_PECO;
 	if(skillpoint > 0) goto L_SKILLPNTS;
 
 	mes "Congratulations!";

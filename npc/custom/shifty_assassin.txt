@@ -20,7 +20,7 @@ M_Start:
 mes "[Shifty Assassin]";
 mes "What do you want?";
 next;
-if (getgmlevel(3) > 90) goto M_GM;
+if (getgmlevel() > 90) goto M_GM;
 menu "Buy Ninjas",M_Buy,"Assassinate somebody",M_Kill,"Check your Ninjas",M_Check,"Cancel",M_Exit;
 M_GM:
 menu "Buy Ninjas",M_Buy,"Assassinate somebody",M_Kill,"Check your Ninjas",M_Check,"Add Ninjas",M_Add,"Cancel",M_Exit;

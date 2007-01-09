@@ -578,7 +578,7 @@ Zeny_short_SP:
 
 L_Storage:
 	next;
-	if(basicskillcheck(0) > 0 && getskilllv(1) < 6) goto L_StorageJBlow;
+	if(basicskillcheck() > 0 && getskilllv(1) < 6) goto L_StorageJBlow;
 	set @fee, $QW_S_PRICE;
 	if ($QW_S_PRICE == 60 && BaseJob == Job_Novice) set @fee, 30;
 	if(Zeny<@fee) callsub L_Short_on_zeny,2;
@@ -732,9 +732,9 @@ function	script	QWS_MMarray	{
 	set @Mi,0; // That's our loop counter.
 	set @Mj,0; // That's the menu lines counter.
 //----------------GameMaster-Menu
-	if (getgmlevel(80)) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if (getgmlevel(80)) set @Mmenuref[@Mj],@Mi;
-	if (getgmlevel(80)) set @Mj,@Mj+1;
+	if (getgmlevel()>=80) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+	if (getgmlevel()>=80) set @Mmenuref[@Mj],@Mi;
+	if (getgmlevel()>=80) set @Mj,@Mj+1;
 	set @Mi,@Mi+1;
 //----------------Special-Warp
 	callfunc "QWS_TownStamps";

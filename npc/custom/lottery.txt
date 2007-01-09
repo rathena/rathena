@@ -98,7 +98,7 @@ if ($LID > 99999) mes "Your Ticket ("+#LID+"):";
 if ($LID > 99999) mes "^FF0000[" + #LW1 + "] [" + #LW2 + "] [" + #LW3 + "] [" + #LW4 + "] [" + #LW5 + "] [" + #LW6 + "]^000000";
 mes "Next Draw-ID: ^FF0000" + $LID + "^000000.";
 next;
-if (getgmlevel(3) > 90) goto L_GM;
+if (getgmlevel() > 90) goto L_GM;
 menu "Claim Prize",L_Claim,"Buy New Ticket",L_Buy,"Cancel",L_Cancel;
 
 // PURCHASE TICKET

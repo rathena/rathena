@@ -55,7 +55,7 @@ prt_church.gat,162,171,0	warp	prtch01-3	1,2,prt_church.gat,113,122
 prt_church.gat,166,176,3	script	Adoption Man	61,{
 
 	//If u're a GM you can always reset current Adoption process
-	if(getgmlevel(99)>=90) {
+	if(getgmlevel()>=90) {
 		mes "[GM Menu]";
 		mes "Would you like to reset curent adoption?";
 		next;

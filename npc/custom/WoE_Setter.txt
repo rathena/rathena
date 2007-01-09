@@ -26,7 +26,7 @@
 //============================================================ 
 prontera.gat,162,194,5	script	WoE Setter	806,{
 	mes "[Woe Setter]";
-	if(getgmlevel(99)<1) goto L_NotGM;
+	if(getgmlevel()<99) goto L_NotGM;
 	mes "Welcome, I can set WoE times for you";
 	mes "Simply follow the intruction given in each section after this, and it should be set and ready to use";
 	next;
