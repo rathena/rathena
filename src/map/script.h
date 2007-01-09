@@ -77,6 +77,7 @@ void script_stop_sleeptimers(int id);
 struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
 void script_free_stack(struct script_stack*); 
 void script_free_code(struct script_code* code);
+void script_free_vars(struct linkdb_node **node);
 
 struct dbt* script_get_label_db(void);
 struct dbt* script_get_userfunc_db(void);

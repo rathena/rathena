@@ -2178,7 +2178,8 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 	if(oldscript != NULL) {
 		printf("\r"); //Carriage return to clear the 'loading..' line. [Skotlex]
 		ShowInfo("parse_function: Overwriting user function [%s] (%s:%d)\n", p, file, *lines);
-		script_free_code(oldscript);
+		script_free_vars( &oldscript->script_vars );
+		aFree( oldscript->script_buf );
 		user_db->remove(user_db,str2key(p));
 		strdb_put(user_db, p, script);
 	} else
