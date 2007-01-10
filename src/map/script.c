@@ -60,7 +60,7 @@
 /// Returns if the stack contains data at the target index
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
 /// Returns the index of the last data in the stack
-#define script_lastdata(st) ( (st)->end - (st)->start + 1 )
+#define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
 #define script_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
 #define script_isint(data) ( (data)->type == C_INT )
