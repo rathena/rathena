@@ -34,6 +34,8 @@ KarLaeda
 Date		Added
 ======
 
+2007/01/11
+	* Update to the new locations, adds more warps (thor_camp) [ultramage]
 2007/01/09
 	* Updated some functions calls that where using the wrong number of 
 	  arguments with checkcart,checkfalcon,checkriding,getgmlevel,

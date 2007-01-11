@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version 
 //===== Description: =========================================
@@ -11,11 +11,14 @@
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Updated warps, according to Japan site [$ephiroth]
+//= 1.2 Updated more warps to thor_camp [$ephiroth]
 //============================================================
 
 //= Thor's Volcano Dungeon====================================
-thor_v01.gat,21,223,0	warp	thor00	1,1,ve_fild03.gat,168,238
-thor_v01.gat,202,34,0	warp	thor01	1,1,thor_v02.gat,190,57
-thor_v02.gat,191,55,0	warp	thor02	1,1,thor_v01.gat,199,34
-thor_v02.gat,72,206,0	warp	thor03	1,1,thor_v03.gat,31,272
-thor_v03.gat,28,272,0	warp	thor04	1,1,thor_v02.gat,74,205
+thor_v01.gat,21,223,0	warp	veinswarp0504	1,1,ve_fild03.gat,168,238
+thor_v01.gat,202,34,0	warp	veinswarp4001	1,1,thor_v02.gat,74,205
+thor_v02.gat,72,206,0	warp	veinswarp4002	1,1,thor_v01.gat,199,34
+thor_v02.gat,191,55,0	warp	veinswarp4003	1,1,thor_v03.gat,31,272
+thor_v03.gat,28,272,0	warp	veinswarp4004	1,1,thor_v02.gat,190,57
+thor_v02.gat,143,78,0	warp	veinswarp4005	1,1,thor_camp.gat,284,289
+thor_camp.gat,288,289,0	warp	veinswarp4006	1,1,thor_v02.gat,146,86
