@@ -723,10 +723,10 @@ const char* parse_simpleexpr(const char *p)
 	} else if(*p=='"'){
 		add_scriptc(C_STR);
 		p++;
-		while(*p && *p!='"'){
-			if(p[-1]<=0x7e && *p=='\\')
+		while( *p && *p != '"' ){
+			if( (unsigned char)p[-1] <= 0x7e && *p == '\\' )
 				p++;
-			else if(*p=='\n')
+			else if( *p == '\n' )
 				disp_error_message("parse_simpleexpr: unexpected newline @ string",p);
 			add_scriptb(*p++);
 		}
