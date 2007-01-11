@@ -1,5 +1,5 @@
 
-OBJECTS = sample.dll sig.dll pid.dll gui.dll upnp.dll httpd.dll
+OBJECTS = sample.dll sig.dll pid.dll gui.dll upnp.dll httpd.dll console.dll
 
 ifdef CYGWIN
    PLUGINEXT = dll
@@ -8,7 +8,7 @@ else
 endif
 
 PLUGINS = $(OBJECTS:%.dll=%.$(PLUGINEXT))
-COMMON_H = ../common/plugin.h
+COMMON_H = ../common/plugin.h ../common/cbasetypes.h
 
 txt sql all: $(PLUGINS)
 
@@ -40,7 +40,7 @@ upnp.$(PLUGINEXT): ../../plugins/upnp.conf
 ../../plugins/upnp.conf: upnp.txt
 
 depend:
-	makedepend -fGNUmakefile -o.$(PLUGINEXT) -Y. -Y../common *.c
+	makedepend -fGNUmakefile -o.$(PLUGINEXT) -Y. -Y../common *.c $(PLUGINS:%=../../plugins/%)
 clean:
 	rm -rf $(PLUGINS) GNUmakefile
 
