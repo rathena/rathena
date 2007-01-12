@@ -3278,10 +3278,10 @@ int mob_parse_dbrow(char** str)
 	
 	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
 	maxhp = (double)status->max_hp;
-	if (db->mexp > 0) //Mvp
+	if (db->mexp > 0) { //Mvp
 		if (battle_config.mvp_hp_rate != 100) 
 			maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
-	else //Normal mob
+	} else //Normal mob
 		if (battle_config.monster_hp_rate != 100) 
 			maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
 	
