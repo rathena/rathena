@@ -1026,7 +1026,7 @@ int socket_config_read(const char *cfgName) {
 			else if( strcmpi(w2,"mutual-failure") == 0 )
 				access_order=ACO_MUTUAL_FAILURE;
 		} else if( strcmpi(w1,"allow") == 0 ){
-			RECREATE(access_deny, AccessControl, access_denynum+1);
+			RECREATE(access_allow, AccessControl, access_denynum+1);
 			if( access_ipmask(w2,&access_allow[access_allownum]) )
 				++access_allownum;
 			else
