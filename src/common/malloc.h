@@ -145,11 +145,11 @@
 
 ////////////// Others //////////////////////////
 // should be merged with any of above later
-#define CREATE(result, type, number) (result) = (type *) aCalloc ((number), sizeof(type));
+#define CREATE(result, type, number) (result) = (type *) aCalloc ((number), sizeof(type))
 
-#define CREATE_A(result, type, number) (result) = (type *) aCallocA ((number), sizeof(type));
+#define CREATE_A(result, type, number) (result) = (type *) aCallocA ((number), sizeof(type))
 
-#define RECREATE(result, type, number) (result) = (type *) aRealloc ((result), sizeof(type) * (number)); 	
+#define RECREATE(result, type, number) (result) = (type *) aRealloc ((result), sizeof(type) * (number))
 
 ////////////////////////////////////////////////
 
