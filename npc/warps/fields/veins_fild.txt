@@ -40,3 +40,4 @@ ve_fild06.gat,88,176,0	script	#veinswarp5021	45,1,1,{
 	else
 		warp "ve_fild05.gat",354,192;
 	end;
+}
