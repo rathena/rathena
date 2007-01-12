@@ -73,25 +73,6 @@ int ip_rules = 1;
 static int mode_neg=1;
 static size_t frame_size=TCP_FRAME_LEN;
 
-#ifndef MINICORE
-enum {
-	ACO_DENY_ALLOW=0,
-	ACO_ALLOW_DENY,
-	ACO_MUTUAL_FAILTURE,
-};
-
-static struct _access_control *access_allow;
-static struct _access_control *access_deny;
-static int access_order=ACO_DENY_ALLOW;
-static int access_allownum=0;
-static int access_denynum=0;
-static int access_debug=0;
-static int ddos_count     = 10;
-static int ddos_interval  = 3000;
-static int ddos_autoreset = 600*1000;
-#endif
-
-
 // values derived from freya
 // a player that send more than 2k is probably a hacker without be parsed
 // biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
@@ -283,16 +264,17 @@ static int connect_client(int listen_fd)
 		return -1;
 	}
 
-	if(fd_max<=fd) fd_max=fd+1;
-
 	setsocketopts(fd);
 	set_nonblocking(fd, 1);
 
-	if (ip_rules && !connect_check(*(unsigned int*)(&client_address.sin_addr))) {
+	if( ip_rules && !connect_check(*(uint32*)(&client_address.sin_addr)) ){
 		do_close(fd);
 		return -1;
 	} else
 		FD_SET(fd,&readfds);
+
+	if( fd_max <= fd )
+		fd_max = fd + 1;
 
 	CREATE(session[fd], struct socket_data, 1);
 	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
@@ -768,45 +750,72 @@ int do_parsepacket(void)
 	return 0;
 }
 
-/* DDoS 攻撃対策 */
+//////////////////////////////
 #ifndef MINICORE
-struct _access_control {
-	unsigned int ip;
-	unsigned int mask;
+//////////////////////////////
+// IP rules and DDoS protection
+
+typedef struct _connect_history {
+	struct _connect_history* next;
+	uint32 ip;
+	uint32 tick;
+	int count;
+	unsigned ddos : 1;
+} ConnectHistory;
+
+typedef struct _access_control {
+	uint32 ip;
+	uint32 mask;
+} AccessControl;
+
+enum _aco {
+	ACO_DENY_ALLOW,
+	ACO_ALLOW_DENY,
+	ACO_MUTUAL_FAILURE
 };
 
-struct _connect_history {
-	struct _connect_history *next;
-	struct _connect_history *prev;
-	int    status;
-	int    count;
-	unsigned int ip;
-	unsigned int tick;
-};
-static struct _connect_history *connect_history[0x10000];
-static int connect_check_(unsigned int ip);
+static AccessControl* access_allow = NULL;
+static AccessControl* access_deny = NULL;
+static int access_order    = ACO_DENY_ALLOW;
+static int access_allownum = 0;
+static int access_denynum  = 0;
+static int access_debug    = 0;
+static int ddos_count     = 10;
+static int ddos_interval  = 3*1000;
+static int ddos_autoreset = 10*60*1000;
+/// Connection history, an array of linked lists.
+/// The array's index for any ip is ip&0xFFFF
+static ConnectHistory* connect_history[0x10000];
 
-// 接続できるかどうかの確認
-//   false : 接続OK
-//   true  : 接続NG
-static int connect_check(unsigned int ip) {
+static int connect_check_(uint32 ip);
+
+/// Verifies if the IP can connect. (with debug info)
+/// @see connect_check_()
+static int connect_check(uint32 ip)
+{
 	int result = connect_check_(ip);
-	if(access_debug) {
+	if( access_debug ){
 		ShowMessage("connect_check: Connection from %d.%d.%d.%d %s\n",
 			CONVIP(ip),result ? "allowed." : "denied!");
 	}
 	return result;
 }
 
-static int connect_check_(unsigned int ip) {
-	struct _connect_history *hist     = connect_history[ip & 0xFFFF];
-	struct _connect_history *hist_new;
-	int    i,is_allowip = 0,is_denyip = 0,connect_ok = 0;
+/// Verifies if the IP can connect.
+///  0      : Connection Rejected
+///  1 or 2 : Connection Accepted
+static int connect_check_(uint32 ip)
+{
+	ConnectHistory* hist = connect_history[ip&0xFFFF];
+	int i;
+	int is_allowip = 0;
+	int is_denyip = 0;
+	int connect_ok = 0;
 
-	// allow , deny リストに入っているか確認
-	for(i = 0;i < access_allownum; i++) {
-		if((ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask)) {
-			if(access_debug) {
+	// Search the allow list
+	for( i=0; i < access_allownum; ++i ){
+		if( (ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask) ){
+			if( access_debug ){
 				ShowMessage("connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
 					CONVIP(access_allow[i].ip),
@@ -816,9 +825,10 @@ static int connect_check_(unsigned int ip) {
 			break;
 		}
 	}
-	for(i = 0;i < access_denynum; i++) {
-		if((ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask)) {
-			if(access_debug) {
+	// Search the deny list
+	for( i=0; i < access_denynum; ++i ){
+		if( (ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask) ){
+			if( access_debug ){
 				ShowMessage("connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
 					CONVIP(access_deny[i].ip),
@@ -828,61 +838,55 @@ static int connect_check_(unsigned int ip) {
 			break;
 		}
 	}
-	// コネクト出来るかどうか確認
-	// connect_ok
-	//   0 : 無条件に拒否
-	//   1 : 田代砲チェックの結果次第
-	//   2 : 無条件に許可
+	// Decide connection status
+	//  0 : Reject
+	//  1 : Accept
+	//  2 : Unconditional Accept (accepts even if flagged as DDoS)
 	switch(access_order) {
 	case ACO_DENY_ALLOW:
 	default:
-		if(is_allowip) {
-			connect_ok = 2;
-		} else if(is_denyip) {
-			connect_ok = 0;
-		} else {
-			connect_ok = 1;
-		}
+		if( is_denyip )
+			connect_ok = 0; // Reject
+		else if( is_allowip )
+			connect_ok = 2; // Unconditional Accept
+		else
+			connect_ok = 1; // Accept
 		break;
 	case ACO_ALLOW_DENY:
-		if(is_denyip) {
-			connect_ok = 0;
-		} else if(is_allowip) {
-			connect_ok = 2;
-		} else {
-			connect_ok = 1;
-		}
+		if( is_allowip )
+			connect_ok = 2; // Unconditional Accept
+		else if( is_denyip )
+			connect_ok = 0; // Reject
+		else
+			connect_ok = 1; // Accept
 		break;
-	case ACO_MUTUAL_FAILTURE:
-		if(is_allowip) {
-			connect_ok = 2;
-		} else {
-			connect_ok = 0;
-		}
+	case ACO_MUTUAL_FAILURE:
+		if( is_allowip && !is_denyip )
+			connect_ok = 2; // Unconditional Accept
+		else
+			connect_ok = 0; // Reject
 		break;
 	}
 
-	// 接続履歴を調べる
-	while(hist) {
-		if(ip == hist->ip) {
-			// 同じIP発見
-			if(hist->status) {
-				// ban フラグが立ってる
+	// Inspect connection history
+	while( hist ) {
+		if( ip == hist->ip )
+		{// IP found
+			if( hist->ddos )
+			{// flagged as DDoS
 				return (connect_ok == 2 ? 1 : 0);
-			} else if(DIFF_TICK(gettick(),hist->tick) < ddos_interval) {
-				// ddos_interval秒以内にリクエスト有り
+			} else if( DIFF_TICK(gettick(),hist->tick) < ddos_interval )
+			{// connection within ddos_interval
 				hist->tick = gettick();
-				if(hist->count++ >= ddos_count) {
-					// ddos 攻撃を検出
-					hist->status = 1;
-					ShowWarning("connect_check: DDOS Attack detected from %d.%d.%d.%d!\n",
-						CONVIP(ip));
+				if( hist->count++ >= ddos_count )
+				{// DDoS attack detected
+					hist->ddos = 1;
+					ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n", CONVIP(ip));
 					return (connect_ok == 2 ? 1 : 0);
-				} else {
-					return connect_ok;
 				}
-			} else {
-				// ddos_interval秒以内にリクエスト無いのでタイマークリア
+				return connect_ok;
+			} else
+			{// not within ddos_interval, clear data
 				hist->tick  = gettick();
 				hist->count = 0;
 				return connect_ok;
@@ -890,80 +894,92 @@ static int connect_check_(unsigned int ip) {
 		}
 		hist = hist->next;
 	}
-	// IPリストに無いので新規作成
-	hist_new = (struct _connect_history *) aCalloc(1,sizeof(struct _connect_history));
-	hist_new->ip   = ip;
-	hist_new->tick = gettick();
-	if(connect_history[ip & 0xFFFF] != NULL) {
-		hist = connect_history[ip & 0xFFFF];
-		hist->prev = hist_new;
-		hist_new->next = hist;
-	}
-	connect_history[ip & 0xFFFF] = hist_new;
+	// IP not found, add to history
+	CREATE(hist, ConnectHistory, 1);
+	memset(hist, 0, sizeof(ConnectHistory));
+	hist->ip   = ip;
+	hist->tick = gettick();
+	hist->next = connect_history[ip&0xFFFF];
+	connect_history[ip&0xFFFF] = hist;
 	return connect_ok;
 }
 
-static int connect_check_clear(int tid,unsigned int tick,int id,int data) {
+/// Timer function.
+/// Deletes old connection history records.
+static int connect_check_clear(int tid, unsigned int tick, int id, int data)
+{
 	int i;
 	int clear = 0;
 	int list  = 0;
-	struct _connect_history *hist , *hist2;
-	for(i = 0;i < 0x10000 ; i++) {
-		hist = connect_history[i];
-		while(hist) {
-			if ((DIFF_TICK(tick,hist->tick) > ddos_interval * 3 && !hist->status) ||
-				(DIFF_TICK(tick,hist->tick) > ddos_autoreset && hist->status)) {
-				// clear data
-				hist2 = hist->next;
-				if(hist->prev) {
-					hist->prev->next = hist->next;
-				} else {
-					connect_history[i] = hist->next;
-				}
-				if(hist->next) {
-					hist->next->prev = hist->prev;
-				}
+	ConnectHistory root;
+	ConnectHistory* prev_hist;
+	ConnectHistory* hist;
+
+	for( i=0; i < 0x10000 ; ++i ){
+		prev_hist = &root;
+		root.next = hist = connect_history[i];
+		while( hist ){
+			if( (!hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_interval*3) ||
+					(hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_autoreset) )
+			{// Remove connection history
+				prev_hist->next = hist->next;
 				aFree(hist);
-				hist = hist2;
+				hist = prev_hist->next;
 				clear++;
 			} else {
+				prev_hist = hist;
 				hist = hist->next;
 			}
 			list++;
 		}
+		connect_history[i] = root.next;
 	}
-	if(access_debug) {
+	if( access_debug ){
 		ShowMessage("connect_check_clear: Cleared %d of %d from IP list.\n", clear, list);
 	}
 	return list;
 }
 
-// IPマスクチェック
-int access_ipmask(const char *str,struct _access_control* acc)
+/// Parses the ip address and mask and puts it into acc.
+/// Returns 1 is successful, 0 otherwise.
+int access_ipmask(const char* str, AccessControl* acc)
 {
-	unsigned int mask=0,i=0,m,ip, a0,a1,a2,a3;
-	if( !strcmp(str,"all") ) {
+	uint32 ip;
+	uint32 mask;
+	unsigned int a[4];
+	unsigned int m[4];
+	int n;
+
+	if( strcmp(str,"all") == 0 ){
 		ip   = 0;
 		mask = 0;
 	} else {
-		if( sscanf(str,"%d.%d.%d.%d%n",&a0,&a1,&a2,&a3,&i)!=4 || i==0) {
-			ShowError("access_ipmask: Unknown format %s!\n",str);
+		if( ((n=sscanf(str,"%u.%u.%u.%u/%u.%u.%u.%u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
+				(n=sscanf(str,"%u.%u.%u.%u/%u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
+				(n=sscanf(str,"%u.%u.%u.%u",a,a+1,a+2,a+3)) != 4 ) || // not an ip
+				a[0] > 255 || a[1] > 255 || a[2] > 255 || a[3] > 255 || // invalid ip
+				(n == 8 && (m[0] > 255 || m[1] > 255 || m[2] > 255 || m[3] > 255)) || // invalid standard mask
+				(n == 5 && m[0] > 32) ){ // invalid bit mask
 			return 0;
 		}
-		ip = (a3 << 24) | (a2 << 16) | (a1 << 8) | a0;
-
-		if(sscanf(str+i,"/%d.%d.%d.%d",&a0,&a1,&a2,&a3)==4 ){
-			mask = (a3 << 24) | (a2 << 16) | (a1 << 8) | a0;
-		} else if(sscanf(str+i,"/%d",&m) == 1) {
-			for(i=0;i<m;i++) {
+		ip = (uint32)(a[0] | (a[1] << 8) | (a[2] << 16) | (a[3] << 24));
+		if( n == 8 )
+		{// standard mask
+			mask = (uint32)(a[0] | (a[1] << 8) | (a[2] << 16) | (a[3] << 24));
+		} else if( n == 5 )
+		{// bit mask
+			mask = 0;
+			while( m[0] ){
 				mask = (mask >> 1) | 0x80000000;
+				--m[0];
 			}
 			mask = ntohl(mask);
-		} else {
+		} else
+		{// just this ip
 			mask = 0xFFFFFFFF;
 		}
 	}
-	if(access_debug) {
+	if( access_debug ){
 		ShowMessage("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n",
 			CONVIP(ip), CONVIP(mask));
 	}
@@ -971,7 +987,9 @@ int access_ipmask(const char *str,struct _access_control* acc)
 	acc->mask = mask;
 	return 1;
 }
+//////////////////////////////
 #endif
+//////////////////////////////
 
 int socket_config_read(const char *cfgName) {
 	int i;
@@ -992,39 +1010,46 @@ int socket_config_read(const char *cfgName) {
 		if(strcmpi(w1,"stall_time")==0){
 			stall_time = atoi(w2);
 	#ifndef MINICORE
-		} else if(strcmpi(w1,"enable_ip_rules")==0){
-			if(strcmpi(w2,"yes")==0)
+		} else if( strcmpi(w1,"enable_ip_rules") == 0 ){
+			if( strcmpi(w2,"yes") == 0 )
 				ip_rules = 1;
-			else if(strcmpi(w2,"no")==0)
+			else if( strcmpi(w2,"no") == 0 )
 				ip_rules = 0;
-			else ip_rules = atoi(w2);
-		} else if(strcmpi(w1,"order")==0){
-			access_order=atoi(w2);
-			if(strcmpi(w2,"deny,allow")==0) access_order=ACO_DENY_ALLOW;
-			if(strcmpi(w2,"allow,deny")==0) access_order=ACO_ALLOW_DENY;
-			if(strcmpi(w2,"mutual-failure")==0) access_order=ACO_MUTUAL_FAILTURE;
-		} else if(strcmpi(w1,"allow")==0){
-			access_allow = (struct _access_control *) aRealloc(access_allow,(access_allownum+1)*sizeof(struct _access_control));
-			if(access_ipmask(w2,&access_allow[access_allownum])) {
-				access_allownum++;
-			}
-		} else if(strcmpi(w1,"deny")==0){
-			access_deny = (struct _access_control *) aRealloc(access_deny,(access_denynum+1)*sizeof(struct _access_control));
-			if(access_ipmask(w2,&access_deny[access_denynum])) {
-				access_denynum++;
-			}
-		} else if(!strcmpi(w1,"ddos_interval")){
+			else
+				ip_rules = atoi(w2);
+		} else if( strcmpi(w1,"order") == 0 ){
+			access_order = atoi(w2);
+			if( strcmpi(w2,"deny,allow") == 0 )
+				access_order = ACO_DENY_ALLOW;
+			else if( strcmpi(w2,"allow,deny") == 0 )
+				access_order=ACO_ALLOW_DENY;
+			else if( strcmpi(w2,"mutual-failure") == 0 )
+				access_order=ACO_MUTUAL_FAILURE;
+		} else if( strcmpi(w1,"allow") == 0 ){
+			RECREATE(access_deny, AccessControl, access_denynum+1);
+			if( access_ipmask(w2,&access_allow[access_allownum]) )
+				++access_allownum;
+			else
+				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
+		} else if( strcmpi(w1,"deny") == 0 ){
+			RECREATE(access_deny, AccessControl, access_denynum+1);
+			if( access_ipmask(w2,&access_deny[access_denynum]) )
+				++access_denynum;
+			else
+				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
+		} else if( strcmpi(w1,"ddos_interval") == 0){
 			ddos_interval = atoi(w2);
-		} else if(!strcmpi(w1,"ddos_count")){
+		} else if( strcmpi(w1,"ddos_count") == 0){
 			ddos_count = atoi(w2);
-		} else if(!strcmpi(w1,"ddos_autoreset")){
+		} else if( strcmpi(w1,"ddos_autoreset") == 0){
 			ddos_autoreset = atoi(w2);
-		} else if(!strcmpi(w1,"debug")){
-			if(strcmpi(w2,"yes")==0)
+		} else if( strcmpi(w1,"debug") == 0){
+			if( strcmpi(w2,"yes") == 0 )
 				access_debug = 1;
-			else if(strcmpi(w2,"no")==0)
+			else if( strcmpi(w2,"no") == 0 )
 				access_debug = 0;
-			else access_debug = atoi(w2);
+			else
+				access_debug = atoi(w2);
 	#endif
 		} else if (strcmpi(w1, "mode_neg") == 0)
 		{
@@ -1070,18 +1095,20 @@ void socket_final (void)
 {
 	int i;
 #ifndef MINICORE
-	struct _connect_history *hist , *hist2;
-	for(i = 0; i < 0x10000; i++) {
+	ConnectHistory* hist;
+	ConnectHistory* next_hist;
+
+	for( i=0; i < 0x10000; ++i ){
 		hist = connect_history[i];
-		while(hist) {
-			hist2 = hist->next;
+		while( hist ){
+			next_hist = hist->next;
 			aFree(hist);
-			hist = hist2;
+			hist = next_hist;
 		}
 	}
-	if (access_allow)
+	if( access_allow )
 		aFree(access_allow);
-	if (access_deny)
+	if( access_deny )
 		aFree(access_deny);
 #endif
 
@@ -1235,20 +1262,21 @@ void socket_init(void)
 	func_parse_table[SESSION_RAW].func = default_func_parse;
 
 #ifndef MINICORE
-	// とりあえず５分ごとに不要なデータを削除する
+	// Delete old connection history every 5 minutes
+	memset(connect_history, 0, sizeof(connect_history));
 	add_timer_func_list(connect_check_clear, "connect_check_clear");
-	add_timer_interval(gettick()+1000,connect_check_clear,0,0,300*1000);
+	add_timer_interval(gettick()+1000, connect_check_clear, 0, 0, 5*60*1000);
 #endif
 }
 
 
-bool session_isValid(int fd)
+int session_isValid(int fd)
 {	//End of Exam has pointed out that fd==0 is actually an unconnected session! [Skotlex]
 	//But this is not so true, it is used... for... something. The console uses it, would this not cause problems? [Skotlex]
 	return ( (fd>0) && (fd<FD_SETSIZE) && (NULL!=session[fd]) );
 }
 
-bool session_isActive(int fd)
+int session_isActive(int fd)
 {
 	return ( session_isValid(fd) && !session[fd]->eof );
 }

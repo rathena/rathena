@@ -143,8 +143,8 @@ extern int fd_max;
 
 //////////////////////////////////
 // some checking on sockets
-extern bool session_isValid(int fd);
-extern bool session_isActive(int fd);
+extern int session_isValid(int fd);
+extern int session_isActive(int fd);
 //////////////////////////////////
 
 // Function prototype declaration
