@@ -8200,8 +8200,9 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 	} else
 	{// packet version accepted
 		TBL_PC* old_sd;
+		struct block_list* bl;
 
-		if( map_id2bl(account_id) != NULL )
+		if( (bl=map_id2bl(account_id)) != NULL && bl->type != BL_PC )
 		{// non-player object already has that id
 			ShowError("clif_parse_WantToConnection: a non-player object already has id %d, please increase the starting account number\n", account_id);
 			WFIFOHEAD(fd,packet_len(0x6a));
