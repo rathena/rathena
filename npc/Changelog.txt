@@ -33,7 +33,8 @@ KarLaeda
 
 Date		Added
 ======
-
+2007/01/12
+	* Fixed exploits in Valentine Event Scripts [KarLaeda]
 2007/01/11
 	* Update to the new locations, adds more warps (thor_camp) [ultramage]
 2007/01/09

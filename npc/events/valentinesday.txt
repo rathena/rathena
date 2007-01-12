@@ -44,7 +44,7 @@ M_CHOCO:
 	next;
 	set @needmon,0;
 	input @flag_num;
-	if (@flag_num == 0) goto L_NONE;
+	if (@flag_num <= 0) goto L_NONE;
 	if (@flag_num > 5) goto L_ERR;
 	set @needmon,@flag_num*5000;
 	if (Zeny < @needmon) goto L_NOTENO;
