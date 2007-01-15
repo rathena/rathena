@@ -5247,9 +5247,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 
 		case SC_JOINTBEAT:
-			val2 |= sc->data[SC_JOINTBEAT].val2; // stackable ailments
 			if( val2&BREAK_NECK )
 				sc_start(bl,SC_BLEEDING,100,val1,skill_get_time2(StatusSkillChangeTable[type],val1));
+			val2 |= sc->data[SC_JOINTBEAT].val2; // stackable ailments
 			break;
 
 		case SC_BERSERK:

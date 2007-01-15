@@ -471,7 +471,7 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	unsigned int tick = gettick();
 	char user_password[256];
 	//Account Registration Flood Protection by [Kevin]
-	if(tick <= new_reg_tick && num_regs >= allowed_regs) {
+	if(DIFF_TICK(tick, new_reg_tick) < 0 && num_regs >= allowed_regs) {
 		ShowNotice("Account registration denied (registration limit exceeded)\n");
 		return 3;
 	}
@@ -531,10 +531,10 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 		}
 		ShowNotice("Updated New account %s's ID %d->%d (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM, START_ACCOUNT_NUM);
 	}
-	if(tick > new_reg_tick)
+	if(DIFF_TICK(tick, new_reg_tick) > 0)
 	{	//Update the registration check.
 		num_regs=0;
-		new_reg_tick=gettick()+time_allowed*1000;
+		new_reg_tick=tick+time_allowed*1000;
 	}
 	num_regs++;
 
@@ -2397,6 +2397,8 @@ int do_init(int argc,char **argv){
 		set_defaultconsoleparse(parse_console);
 		start_console();
 	}
+
+	new_reg_tick=gettick();
 
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", login_port);
 
