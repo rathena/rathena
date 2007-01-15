@@ -3676,8 +3676,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed = speed * 100/sc->data[SC_DEFENDER].val3;
 	if(sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_ENEMY)
 		speed = speed * 100/75;
-	if(sc->data[SC_JOINTBEAT].timer!=-1) {
-		speed = speed * ( 100
+	if(sc->data[SC_JOINTBEAT].timer!=-1 && sc->data[SC_JOINTBEAT].val2&(BREAK_ANKLE|BREAK_KNEE)) {
+		speed = speed * 100/(100
 			- ( sc->data[SC_JOINTBEAT].val2&BREAK_ANKLE ? 50 : 0 )
 			- ( sc->data[SC_JOINTBEAT].val2&BREAK_KNEE  ? 30 : 0 ));
 	}

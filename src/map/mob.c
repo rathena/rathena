@@ -1101,7 +1101,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			(md->ud.walktimer != -1 && !(battle_config.mob_ai&0x1) && !check_distance_bl(&md->bl, tbl, md->min_chase)) ||
 			(
 				tbl->type == BL_PC && !(mode&MD_BOSS) &&
-				((TBL_PC*)tbl)->state.gangsterparadise
+				(((TBL_PC*)tbl)->state.gangsterparadise ||
+				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
 		)) {	//Unlock current target.
 			if (tbl && tbl->m != md->bl.m && battle_config.mob_ai&0x40)
 			{	//Chase to a nearby warp [Skotlex]

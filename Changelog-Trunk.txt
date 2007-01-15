@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/15
+	* Fixed Joint Beat's speed penalty.
+	* Added a pc_authok check to prevent the case in which somehow another
+	  character of the same account manages to log in as well.
+	* The pc normalize job function will now recognize you as a novice if you
+	  don't have NV_BASIC maxed.
+	* Accessories will now by default go into the rigth-side rather than the
+	  left-side of the equip window.
+	* Added a check in the mob_ai_subhard function to make mobs unlock targets
+	  which have their invincible timer set.
 	* Probably fixed the registration flood protection code being broken.
 	* Joint Break should only re-start the bleeding timer when it currently IS
 	  the one that causes bleeding. [Skotlex]

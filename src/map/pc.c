@@ -125,7 +125,7 @@ static int pc_invincible_timer(int tid,unsigned int tick,int id,int data) {
 int pc_setinvincibletimer(struct map_session_data *sd,int val) {
 	nullpo_retr(0, sd);
 
-	if(sd->invincible_timer != -1)
+	if(sd->invincible_timer != INVALID_TIMER)
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->bl.id,0);
 	return 0;
@@ -134,9 +134,9 @@ int pc_setinvincibletimer(struct map_session_data *sd,int val) {
 int pc_delinvincibletimer(struct map_session_data *sd) {
 	nullpo_retr(0, sd);
 
-	if(sd->invincible_timer != -1) {
+	if(sd->invincible_timer != INVALID_TIMER) {
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
-		sd->invincible_timer = -1;
+		sd->invincible_timer = INVALID_TIMER;
 		skill_unit_move(&sd->bl,gettick(),1);
 	}
 	return 0;
@@ -581,6 +581,14 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_authfail_fd(sd->fd, 0);
 		return 1;
 	}
+
+	if (map_id2sd(st->account_id) != NULL)
+	{	//Somehow a second connection has managed to go through the double-connection
+		//check in clif_parse_WantToConnection! [Skotlex]
+		clif_authfail_fd(sd->fd, 0);
+		return 1;
+	}
+
 	memcpy(&sd->status, st, sizeof(*st));
 
 	//Set the map-server used job id. [Skotlex]
@@ -1037,8 +1045,6 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill) {
 				continue;
 			if (sd->status.job_level < skill_tree[c][i].joblv)
 				continue;
-			else if (pc_checkskill(sd, NV_BASIC) < 9 && id != NV_BASIC && !(skill_get_inf2(id)&INF2_QUEST_SKILL))
-				continue; // Do not unlock normal skills when Basic Skills is not maxed out (can happen because of skill reset)
 			
 			if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
 				//Spirit skills cannot be learned
@@ -1076,7 +1082,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd) {
 		return c; //Only Normalize non-first classes (and non-super novice)
 	
 	skill_point = pc_calc_skillpoint(sd);
-	if(skill_point < 9)
+	if(pc_checkskill(sd, NV_BASIC) < 9) //Consider Novice Tree when you dont have NV_BASIC maxed.
 		c = MAPID_NOVICE;
 	else if (sd->status.skill_point >= (int)sd->status.job_level
 		&& ((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
@@ -6308,7 +6314,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
 		pos = req_pos&EQP_ACC;
 		if (pos == EQP_ACC) //User specified both slots.. 
-			pos = sd->equip_index[EQI_ACC_L] >= 0 ? EQP_ACC_R : EQP_ACC_L;
+			pos = sd->equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
 	}
 
 	if(pos == EQP_ARMS && id->equip == EQP_HAND_R)

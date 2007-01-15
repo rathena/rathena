@@ -871,7 +871,7 @@ static struct Damage battle_calc_weapon_attack(
 	if(
 		(sd && sd->state.arrow_atk) ||
 		(!sd && ((skill_num && skill_get_ammotype(skill_num)) || sstatus->rhw.range>3))
-	) {	
+	) {
 		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		flag.arrow = 1;
 	}

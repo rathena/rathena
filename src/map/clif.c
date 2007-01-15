@@ -8211,8 +8211,8 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 			WFIFOSET(fd,packet_len(0x6a));
 			clif_setwaitclose(fd);
 			return;
-
-		} else if( (old_sd=map_id2sd(account_id)) != NULL ){
+		}
+		if( (old_sd=map_id2sd(account_id)) != NULL ){
 			// if same account already connected, we disconnect the 2 sessions
 			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
 			if (old_sd->state.finalsave || !old_sd->state.auth)
