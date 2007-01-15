@@ -4301,7 +4301,7 @@ int clif_insight(struct block_list *bl,va_list ap)
  */
 int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 {
-	int fd,id, inf2;
+	int fd,id;
 
 	nullpo_retr(0, sd);
 
@@ -4323,12 +4323,8 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 
 	WFIFOW(fd,12)= range;
 	strncpy(WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
-	inf2 = skill_get_inf2(id);
-	if(((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-		!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL))) ||
-		(battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill))
-		//WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_get_max(id) && sd->status.skill[skillid].flag ==0 )? 1:0;
-		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_) && sd->status.skill[skillid].flag ==0 )? 1:0;
+	if(sd->status.skill[skillid].flag ==0)
+		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 	else
 		WFIFOB(fd,38) = 0;
 	WFIFOSET(fd,packet_len(0x147));
@@ -4343,7 +4339,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 int clif_skillinfoblock(struct map_session_data *sd)
 {
 	int fd;
-	int i,c,len=4,id, inf2;
+	int i,c,len=4,id;
 
 	nullpo_retr(0, sd);
 
@@ -4361,11 +4357,8 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
 			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			inf2 = skill_get_inf2(id);
-			if(((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL))) ||
-				(battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill) )
-				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_) && sd->status.skill[i].flag ==0 )? 1:0;
+			if(sd->status.skill[i].flag ==0)
+				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 			else
 				WFIFOB(fd,len+36) = 0;
 			len+=37;
@@ -4395,7 +4388,6 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 	WFIFOW(fd,4) = sd->status.skill[skill_num].lv;
 	WFIFOW(fd,6) = skill_get_sp(skill_num,sd->status.skill[skill_num].lv);
 	WFIFOW(fd,8) = skill_get_range2(&sd->bl,skill_num,sd->status.skill[skill_num].lv);
-	//WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_get_max(sd->status.skill[skill_num].id)) ? 1 : 0;
 	WFIFOB(fd,10) = (sd->status.skill[skill_num].lv < skill_tree_get_max(sd->status.skill[skill_num].id, sd->status.class_)) ? 1 : 0;
 	WFIFOSET(fd,packet_len(0x10e));
 

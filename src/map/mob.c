@@ -957,7 +957,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		
 		if (ud) {
 			struct block_list *tbl=NULL;
-			if (ud->target && ud->attacktimer != -1)
+			if (ud->target && ud->state.attack_continue)
 				tbl=map_id2bl(ud->target);
 			else if (ud->skilltarget) {
 				tbl = map_id2bl(ud->skilltarget);
@@ -2466,7 +2466,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 		if (mobdb_checkid(data.class_) == 0)
 			continue;
 
-		if (map_search_freecell(&md2->bl, 0, &x, &y, 4, 4, 0)) {
+		if (map_search_freecell(&md2->bl, 0, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 0)) {
 			data.x = x;
 			data.y = y;
 		} else {

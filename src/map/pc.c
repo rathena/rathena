@@ -959,7 +959,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	do {
 		flag = 0;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++) {
-			int j, f;
+			int j, f, inf2;
 
 			if(sd->status.skill[id].id)
 				continue; //Skill already known.
@@ -974,19 +974,25 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				}
 				if (sd->status.job_level < skill_tree[c][i].joblv)
 					f = 0; // job level requirement wasn't satisfied
-				else if (pc_checkskill(sd, NV_BASIC) < 9 && id != NV_BASIC && !(skill_get_inf2(id)&INF2_QUEST_SKILL))
-					f = 0; // Do not unlock normal skills when Basic Skill is not maxed out (can happen because of skill reset)
 			}
 
 			if (f) {
+				inf2 = skill_get_inf2(id);
+
+				if(!sd->status.skill[id].lv && (
+					(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
+					inf2&INF2_WEDDING_SKILL ||
+					(inf2&INF2_SPIRIT_SKILL && !(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1))
+				))
+					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
+
 				sd->status.skill[id].id = id;
 
-				if(skill_get_inf2(id)&INF2_SPIRIT_SKILL && sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1)
+				if(inf2&INF2_SPIRIT_SKILL)
 				{	//Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
 					sd->status.skill[id].lv = 1; // need to manually specify a skill level
 					sd->status.skill[id].flag = 1; //So it is not saved, and tagged as a "bonus" skill.
 				}
-
 				flag = 1; // skill list has changed, perform another pass
 			}
 		}
@@ -1046,9 +1052,14 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill) {
 			if (sd->status.job_level < skill_tree[c][i].joblv)
 				continue;
 			
-			if(skill_get_inf2(id)&INF2_SPIRIT_SKILL)
-				//Spirit skills cannot be learned
-				continue;
+			j = skill_get_inf2(id);
+			if(!sd->status.skill[id].lv && (
+				(j&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
+				j&INF2_WEDDING_SKILL ||
+				(j&INF2_SPIRIT_SKILL && !(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1))
+			))
+				continue; //Cannot be learned via normal means.
+
 			sd->status.skill[id].id=id;
 			flag=1;
 		}
@@ -4484,7 +4495,7 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 
 	if (skill_num < 0 || skill_num >= MAX_SKILL)
 		return 0;
-	
+
 	if(sd->status.skill_point>0 &&
 		sd->status.skill[skill_num].id &&
 		sd->status.skill[skill_num].flag==0 && //Don't allow raising while you have granted skills. [Skotlex]
