@@ -1123,12 +1123,16 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		if (md->attacked_id == md->target_id)
 		{
 			if (!battle_check_range(&md->bl, tbl, md->status.rhw.range) &&
-				((!can_move && battle_config.mob_ai&0x2) ||
-				(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))))
+				(
+					(!can_move && battle_config.mob_ai&0x2) ||
+					(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
+				) &&
+				DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
+				md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
+			)
 			{	//Rude-attacked (avoid triggering due to can-walk delay).
-				if (DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-				  	md->state.attacked_count++ >= RUDE_ATTACKED_COUNT)
-					mobskill_use(md, tick, MSC_RUDEATTACKED);
+				if (!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move)
+					unit_escape(bl, tbl, rand()%10 +1);
 			}
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
@@ -1142,15 +1146,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 					((TBL_PC*)abl)->state.gangsterparadise
 				)
 			)	{	//Can't attack back
-				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT) {
-					if (mobskill_use(md, tick, MSC_RUDEATTACKED) == 0 && can_move)
-					{
-						int dist = rand() % 10 + 1;//Œã‘Þ‚·‚é‹——£
-						int dir = map_calc_dir(abl, bl->x, bl->y);
-						int mask[8][2] = {{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},{1,0},{1,1}};
-						unit_walktoxy(&md->bl, md->bl.x + dist * mask[dir][0], md->bl.y + dist * mask[dir][1], 0);
-					}
-				}
+				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
+					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move)
+						unit_escape(bl, abl, rand()%10 +1);
 			} else if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
 				md->attacked_id = 0; //Simply unlock, shouldn't attempt to run away when in dumb_ai mode.

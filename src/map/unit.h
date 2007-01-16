@@ -24,6 +24,7 @@ int unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
 
+int unit_escape(struct block_list *bl, struct block_list *target, int dist);
 // ˆÊ’u‚Ì‹­§ˆÚ“®(‚«”ò‚Î‚µ‚È‚Ç)
 int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkpath);
 int unit_warp(struct block_list *bl, int map, short x, short y, int type);
