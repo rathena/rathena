@@ -1702,8 +1702,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->special_state.no_gemstone = 1;
 		break;
 	case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
-		if(sd->state.lr_flag != 2)
+		if(sd->state.lr_flag != 2) {
 			sd->special_state.intravision = 1;
+			clif_status_load(&sd->bl, SI_INTRAVISION, 1);
+		}
 		break;
 	case SP_SPLASH_RANGE:
 		if(sd->state.lr_flag != 2 && sd->splash_range < val)

@@ -417,7 +417,8 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_SPEEDUP1] = SI_SPEEDPOTION2;
 	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
-	
+	StatusIconChangeTable[SC_INTRAVISION] = SI_INTRAVISION;
+
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
@@ -1605,6 +1606,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
 	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
+
+	if (sd->special_state.intravision) //Clear status change.
+		clif_status_load(&sd->bl, SI_INTRAVISION, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 	memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)+sizeof(status->lhw)));
@@ -5695,7 +5699,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val3 = BF_LONG; //Range
 			val4 = BF_WEAPON|BF_MISC; //Type
 			break;
-		case SC_INTRAVISION:
 		case SC_ARMOR_ELEMENT:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
@@ -5704,7 +5707,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (calc_flag == SCB_NONE &&
 				StatusSkillChangeTable[type]==0 &&
 				StatusIconChangeTable[type]==0)
-			{	//Status change with no calc, and no skill associated...? unknown?
+			{	//Status change with no calc, no icon, and no skill associated...? 
 				if(battle_config.error_log)
 					ShowError("UnknownStatusChange [%d]\n", type);
 				return 0;

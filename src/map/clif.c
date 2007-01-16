@@ -278,59 +278,6 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 		} else {
 			if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
 				memcpy(WFIFOP(fd,0), buf, len);
-				//Check if hidden, better to modify the char's buffer than the
-				//given buffer to prevent intravision affecting the packet as 
-				//it's being received by everyone. [Skotlex]
-				/* New implementation... not quite correct yet as the client no longer
-				 * displays correctly the SI_INTRAVISION effect.
-				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 )
-						&& bl != src_bl && WFIFOW(fd,0) == 0x0196)
-				{	//New intravision method, just modify the status change/start packet. [Skotlex]
-					switch (WFIFOW(fd,2)) {
-						case SI_HIDING:
-						case SI_CLOAKING:
-						case SI_CHASEWALK:
-							WFIFOW(fd,2) = SI_INTRAVISION;
-					}
-				}
-				*/
-
-				// Previous implementation.
-				if ((sd->special_state.intravision || sd->sc.data[SC_INTRAVISION].timer != -1 ) && bl != src_bl) {
-
-					struct status_change *sc = status_get_sc(src_bl);
-					if(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK)))
-					{	//option‚ÌC³
-						switch(((unsigned short*)buf)[0])
-						{
-#if PACKETVER > 6
-							case 0x229:
-								WFIFOL(fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
-								break;
-							case 0x22a:
-							case 0x22b:
-							case 0x22c:
-								WFIFOL(fd,12) &=~(OPTION_HIDE|OPTION_CLOAK);
-								break;
-#endif
-#if PACKETVER > 3
-							case 0x119:
-								WFIFOW(fd,10) &= ~(OPTION_HIDE|OPTION_CLOAK);
-								break;
-							case 0x1d8:
-							case 0x1d9:
-							case 0x1da:
-#endif
-							case 0x78:
-							case 0x79:
-							case 0x7a:
-							case 0x7b:
-							case 0x7c:
-								WFIFOW(fd,12) &=~(OPTION_HIDE|OPTION_CLOAK);
-								break;
-						}
-					}
-				}
 				WFIFOSET(fd,len);
 			}
 		}
