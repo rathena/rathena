@@ -311,6 +311,7 @@ ACMD_FUNC(homfriendly);	//[orn]
 ACMD_FUNC(homhungry);	//[orn]
 ACMD_FUNC(homtalk);	//[orn]
 ACMD_FUNC(hominfo);	//[Toms]
+ACMD_FUNC(homstats);	//[Skotlex]
 ACMD_FUNC(showmobs); //KarLaeda
 
 /*==========================================
@@ -640,8 +641,9 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_MakeHomun,				"@makehomun",	60, atcommand_makehomun	},
 	{ AtCommand_HomFriendly,			"@homfriendly",		60, atcommand_homfriendly },
 	{ AtCommand_HomHungry,			"@homhungry",		60, atcommand_homhungry },
-	{ AtCommand_HomTalk,			"@homtalk",		0, atcommand_homtalk },
-	{ AtCommand_HomInfo,			"@hominfo",		0, atcommand_hominfo },
+	{ AtCommand_HomTalk,			"@homtalk",		10, atcommand_homtalk },
+	{ AtCommand_HomInfo,			"@hominfo",		1, atcommand_hominfo },
+	{ AtCommand_HomStats,			"@homstats",		1, atcommand_homstats },
 	{ AtCommand_ShowMobs,			"@showmobs",		10, atcommand_showmobs },  //KarLaeda
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -9939,6 +9941,64 @@ int atcommand_hominfo(
 		"Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d",
 		status->str, status->agi, status->vit,
 		status->int_, status->dex, status->luk);
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+int atcommand_homstats(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct homun_data *hd;
+	struct homunculus_db *db;
+	struct s_homunculus *hom;
+	int lv;
+
+	nullpo_retr(-1, sd);
+
+	if(!merc_is_hom_active(sd->hd))
+		return -1;
+	hd = sd->hd;
+	
+	hom = &hd->homunculus;
+	db = hd->homunculusDB;
+	lv = hom->level;
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,
+		"Homunculus growth stats (Lv %d %s):", lv, db->name);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max HP: %d (%d~%d)",
+		hom->max_hp, lv*db->gminHP, lv*db->gmaxHP);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max SP: %d (%d~%d)",
+		hom->max_sp, lv*db->gminSP, lv*db->gmaxSP);
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Str: %d (%d~%d)",
+		hom->str/10, lv*db->gminSTR/10, lv*db->gmaxSTR/10); 
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Agi: %d (%d~%d)",
+		hom->agi/10, lv*db->gminAGI/10, lv*db->gmaxAGI/10); 
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Vit: %d (%d~%d)",
+		hom->vit/10, lv*db->gminVIT/10, lv*db->gmaxVIT/10); 
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Int: %d (%d~%d)",
+		hom->int_/10, lv*db->gminINT/10, lv*db->gmaxINT/10); 
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Dex: %d (%d~%d)",
+		hom->dex/10, lv*db->gminDEX/10, lv*db->gmaxDEX/10); 
+	clif_displaymessage(fd, atcmd_output);
+
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Luk: %d (%d~%d)",
+		hom->luk/10, lv*db->gminLUK/10, lv*db->gmaxLUK/10); 
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
