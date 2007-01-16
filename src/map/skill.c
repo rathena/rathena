@@ -7866,9 +7866,18 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 
 	if (sd->state.abra_flag)
 	{
-		sd->skillitem = sd->skillitemlv = 0;
-		if(type&1) sd->state.abra_flag = 0;
-		return 1;
+		if (sd->skillitem != skill)
+		{	//Cancelled, using a different skill.
+			sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
+		} else {
+			//Abracadabra skill, skip requisites!
+			if(type&1)
+			{	//Clear out the data.
+				sd->skillitem = sd->skillitemlv = 0;
+				sd->state.abra_flag = 0;
+			}
+			return 1;
+		}
 	}
 
 	if (sd->menuskill_id == AM_PHARMACY &&

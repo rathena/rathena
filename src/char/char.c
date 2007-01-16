@@ -1739,9 +1739,11 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		WFIFOB(fd,j+101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
 		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
-		WFIFOW(fd,j+104) = p->char_num;
 #if PACKETVER > 7
+		WFIFOW(fd,j+104) = p->char_num;
 		WFIFOW(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+#else
+		WFIFOB(fd,j+104) = p->char_num;
 #endif
 	}
 
@@ -4453,4 +4455,3 @@ int do_init(int argc, char **argv) {
 	return 0;
 }
 #endif //TXT_SQL_CONVERT
-
