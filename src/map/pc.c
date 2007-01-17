@@ -4528,37 +4528,38 @@ int pc_allskillup(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	for(i=0;i<MAX_SKILL;i++){
-		sd->status.skill[i].id=0;
-		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){	// cardスキルなら、
-			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;	// 本?のlvに
-			sd->status.skill[i].flag=0;	// flagは0にしておく
+		if (sd->status.skill[i].flag && sd->status.skill[i].flag != 13){
+			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;
+			sd->status.skill[i].flag=0;
+			if (!sd->status.skill[i].lv)
+				sd->status.skill[i].id=0;
 		}
 	}
 
-	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill){
-		// 全てのスキル
+	//pc_calc_skilltree takes care of setting the ID to valid skills. [Skotlex]
+	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill)
+	{	//Get ALL skills except npc/guild ones. [Skotlex]
+		//and except SG_DEVIL [Komurka]
 		for(i=0;i<MAX_SKILL;i++){
-			if(!(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL))) //Get ALL skills except npc/guild ones. [Skotlex]
-				if (i!=SG_DEVIL) //and except SG_DEVIL [Komurka]
-					sd->status.skill[i].lv=skill_get_max(i); //Nonexistant skills should return a max of 0 anyway.
+			if(!(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) && i!=SG_DEVIL)
+				sd->status.skill[i].lv=skill_get_max(i); //Nonexistant skills should return a max of 0 anyway.
 		}
 	}
-	else {
+	else
+	{
 		int inf2;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[sd->status.class_][i].id)>0;i++){
 			inf2 = skill_get_inf2(id);
-			if(sd->status.skill[id].id==0 &&
-				(!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) &&
-				(id!=SG_DEVIL))
-			 {
-				sd->status.skill[id].id = id;	// celest
-				sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);	// celest
-			}
+			if (
+				(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
+				(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) ||
+				id==SG_DEVIL
+			)
+				continue; //Cannot be learned normally.
+			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);	// celest
 		}
 	}
 	status_calc_pc(sd,0);
-
 	return 0;
 }
 

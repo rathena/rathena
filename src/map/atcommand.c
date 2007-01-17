@@ -9968,37 +9968,38 @@ int atcommand_homstats(
 	snprintf(atcmd_output, sizeof(atcmd_output) ,
 		"Homunculus growth stats (Lv %d %s):", lv, db->name);
 	clif_displaymessage(fd, atcmd_output);
-
+	lv--; //Since the first increase is at level 2.
+	
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max HP: %d (%d~%d)",
-		hom->max_hp, lv*db->gminHP, lv*db->gmaxHP);
+		hom->max_hp, db->basemaxHP +lv*db->gminHP, db->basemaxHP +lv*db->gmaxHP);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max SP: %d (%d~%d)",
-		hom->max_sp, lv*db->gminSP, lv*db->gmaxSP);
+		hom->max_sp, db->basemaxSP +lv*db->gminSP, db->basemaxSP +lv*db->gmaxSP);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Str: %d (%d~%d)",
-		hom->str/10, lv*db->gminSTR/10, lv*db->gmaxSTR/10); 
+		hom->str/10, db->baseSTR +lv*db->gminSTR/10, db->baseSTR +lv*db->gmaxSTR/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Agi: %d (%d~%d)",
-		hom->agi/10, lv*db->gminAGI/10, lv*db->gmaxAGI/10); 
+		hom->agi/10, db->baseAGI +lv*db->gminAGI/10, db->baseAGI +lv*db->gmaxAGI/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Vit: %d (%d~%d)",
-		hom->vit/10, lv*db->gminVIT/10, lv*db->gmaxVIT/10); 
+		hom->vit/10, db->baseVIT +lv*db->gminVIT/10, db->baseVIT +lv*db->gmaxVIT/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Int: %d (%d~%d)",
-		hom->int_/10, lv*db->gminINT/10, lv*db->gmaxINT/10); 
+		hom->int_/10, db->baseINT +lv*db->gminINT/10, db->baseINT +lv*db->gmaxINT/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Dex: %d (%d~%d)",
-		hom->dex/10, lv*db->gminDEX/10, lv*db->gmaxDEX/10); 
+		hom->dex/10, db->baseDEX +lv*db->gminDEX/10, db->baseDEX +lv*db->gmaxDEX/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	snprintf(atcmd_output, sizeof(atcmd_output) ,"Luk: %d (%d~%d)",
-		hom->luk/10, lv*db->gminLUK/10, lv*db->gmaxLUK/10); 
+		hom->luk/10, db->baseLUK +lv*db->gminLUK/10, db->baseLUK +lv*db->gmaxLUK/10);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
