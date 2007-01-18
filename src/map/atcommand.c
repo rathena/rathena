@@ -10013,6 +10013,7 @@ int atcommand_homshuffle(
 {
 	struct homun_data *hd;
 	int lv, i;
+	unsigned int exp;
 	TBL_PC* tsd = sd;
 
 	nullpo_retr(-1, sd);
@@ -10040,6 +10041,7 @@ int atcommand_homshuffle(
 		return -1;
 	
 	lv = hd->homunculus.level;
+	exp = hd->homunculus.exp;
 	//Reset values to level 1.
 	merc_reset_stats(hd);
 	//Level it back up
@@ -10047,6 +10049,7 @@ int atcommand_homshuffle(
 		hd->homunculus.exp += hd->exp_next;
 		merc_hom_levelup(hd);
 	}
+	hd->homunculus.exp = exp;
 	status_calc_homunculus(hd,0);
 	status_percent_heal(&hd->bl, 100, 100);
 	clif_misceffect2(&hd->bl,568);
