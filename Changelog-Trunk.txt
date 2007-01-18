@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/18
+	* Modified the Storm Gust freeze counter code. It now takes into
+	  consideration the ID of the skill before increasing the counter, which
+	  should effectively yield the closest aproximation to official (even though
+	  the counter will reset if you step out of a SG and into another one, we do
+	  not know yet what should happen in such a case).
+	* Added @homshuffle. It recalculates the homunculus stats, as if the homunc
+	  was sent back to level 1, and then releveled. This command is mean to help
+	  fix those previously created Homunculus that are much stronger than they
+	  should be.
 	* Fixed overflow on the mob delay adjustment setting.
 	* Fixed characters being unable to trade again if you attempt a trade on
 	  someone who is on storage/npc when you accept the trade. [Skotlex]

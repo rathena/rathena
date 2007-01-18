@@ -730,6 +730,26 @@ void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_homskillinfoblock(sd);
 }
 
+void merc_reset_stats(struct homun_data *hd)
+{	//Resets a homunc stats back to zero (but doesn't touches hunger or intimacy)
+	struct homunculus_db *db;
+	struct s_homunculus *hom;
+	hom = &hd->homunculus;
+	db = hd->homunculusDB;
+	hom->level = 1;
+	hom->hp = 10;
+	hom->max_hp = db->basemaxHP;
+	hom->max_sp = db->basemaxSP;
+	hom->str = db->baseSTR*10;
+	hom->agi = db->baseAGI*10;
+	hom->vit = db->baseVIT*10;
+	hom->int_= db->baseINT*10;
+	hom->dex = db->baseDEX*10;
+	hom->luk = db->baseLUK*10;
+	hom->exp = 0;
+	hd->exp_next = hexptbl[0];
+}
+
 int read_homunculusdb(void)
 {
 	FILE *fp;

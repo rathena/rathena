@@ -5957,13 +5957,7 @@ int status_change_clear(struct block_list *bl,int type)
 
 	sc = status_get_sc(bl);
 
-	if (!sc)
-		return 0;
-
-	if (sc->data[SC_FREEZE].val3)
-		sc->data[SC_FREEZE].val3 = 0; //Reset freeze counter.
-	
-  	if (!sc->count)
+	if (!sc || !sc->count)
 		return 0;
 
 	if(sc->data[SC_DANCING].timer != -1)

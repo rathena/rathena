@@ -312,6 +312,7 @@ ACMD_FUNC(homhungry);	//[orn]
 ACMD_FUNC(homtalk);	//[orn]
 ACMD_FUNC(hominfo);	//[Toms]
 ACMD_FUNC(homstats);	//[Skotlex]
+ACMD_FUNC(homshuffle);	//[Skotlex]
 ACMD_FUNC(showmobs); //KarLaeda
 
 /*==========================================
@@ -644,6 +645,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_HomTalk,			"@homtalk",		10, atcommand_homtalk },
 	{ AtCommand_HomInfo,			"@hominfo",		1, atcommand_hominfo },
 	{ AtCommand_HomStats,			"@homstats",		1, atcommand_homstats },
+	{ AtCommand_HomShuffle,			"@homshuffle",		60, atcommand_homshuffle },
 	{ AtCommand_ShowMobs,			"@showmobs",		10, atcommand_showmobs },  //KarLaeda
 // add new commands before this line
 	{ AtCommand_Unknown,			NULL,				 1, NULL }
@@ -10002,6 +10004,56 @@ int atcommand_homstats(
 		hom->luk/10, db->baseLUK +lv*db->gminLUK/10, db->baseLUK +lv*db->gmaxLUK/10);
 	clif_displaymessage(fd, atcmd_output);
 
+	return 0;
+}
+
+int atcommand_homshuffle(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct homun_data *hd;
+	int lv, i;
+	TBL_PC* tsd = sd;
+
+	nullpo_retr(-1, sd);
+
+	if ((!message || !*message) && !sd->hd)
+	{
+		clif_displaymessage(fd, "usage: @homshuffle <Alchemist's name>");
+		clif_displaymessage(fd, "Use this to recalculate your (or someone else's) homunculus growth data");
+		return -1;
+	}
+	if (message && *message) {
+		tsd = map_nick2sd((char*)message);
+		if (!tsd) {
+			clif_displaymessage(fd, msg_txt(3)); // Character not found.
+			return -1;
+		}
+		if (pc_isGM(tsd) > pc_isGM(sd)) {
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+			return -1;
+		}
+	}
+
+	hd = tsd->hd;
+	if(!merc_is_hom_active(hd))
+		return -1;
+	
+	lv = hd->homunculus.level;
+	//Reset values to level 1.
+	merc_reset_stats(hd);
+	//Level it back up
+	for (i = 1; i < lv && hd->exp_next; i++){
+		hd->homunculus.exp += hd->exp_next;
+		merc_hom_levelup(hd);
+	}
+	status_calc_homunculus(hd,0);
+	status_percent_heal(&hd->bl, 100, 100);
+	clif_misceffect2(&hd->bl,568);
+	clif_displaymessage(fd, "Homunculus stats altered");
+	//Print out the new stats
+	//This will send the commands to the invoker since they all use this fd regardless of sd value.
+	atcommand_homstats(fd, tsd, command, message);
 	return 0;
 }
 

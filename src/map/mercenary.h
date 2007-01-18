@@ -62,6 +62,7 @@ void merc_hom_heal(struct homun_data *hd,int hp,int sp);
 int merc_hom_vaporize(struct map_session_data *sd, int flag);
 int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, short x, short y);
 void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
+void merc_reset_stats(struct homun_data *hd);
 void merc_save(struct homun_data *hd);
 int merc_call_homunculus(struct map_session_data *sd);
 int merc_create_homunculus_request(struct map_session_data *sd, int class_);
