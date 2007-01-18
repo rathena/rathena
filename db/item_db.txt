@@ -1703,7 +1703,7 @@
 5120,Fedora_,Bucket Hat,5,6000,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,195,{},{},{}
 5121,Zherlthsh_Mask,Zherlthsh Mask,5,20,,400,,3,,0,0xFFFFFFFE,7,2,768,,70,1,200,{ bonus2 bAddRace,RC_DemiHuman,5; bonus2 bSubRace,RC_DemiHuman,5; },{},{}
 5122,Magni_Cap,Magni's Cap,5,30000,,1000,,5,,0,0xFFFFFFFE,7,2,256,,65,1,250,{ bonus bStr,2; },{},{}
-5123,Ulle_Cap,Ulle's Cap,5,30000,,500,,3,,1,0xFFFFFFFE,7,2,256,,65,1,254,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && bDex>=70) bonus bUseSPrate,-10; },{},{}
+5123,Ulle_Cap,Ulle's Cap,5,30000,,500,,3,,1,0xFFFFFFFE,7,2,256,,65,1,254,{ bonus bDex,2; bonus bAgi,1; if(isequipped(2353) && readparam(bDex)>=70) bonus bUseSPrate,-10; },{},{}
 5124,Fricca_Circlet,Frigg's Circlet,5,30000,,300,,3,,0,0xFFFFFFFE,7,2,256,,65,1,251,{ bonus bMdef,10; bonus bInt,2; bonus bMaxSP,50; },{},{}
 5125,Kiss_Of_Angel,Angel's Kiss,5,10000,,300,,3,,1,0x00000001,7,2,256,,50,1,255,{ bonus bSPrecovRate,3; },{},{}
 5126,Morpheus's_Hood,Morpheus's Hood,5,30000,,200,,1,,0,0xFFFFFFFE,7,2,256,,33,1,256,{ bonus bInt,2; if(isequipped(2518,2648,2649)) { bonus bInt,5; bonus bMdef,11; bonus bMaxSPrate,20; bonus bNoCastCancel,0; bonus bCastrate,25; } },{},{}
