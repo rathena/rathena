@@ -1908,18 +1908,18 @@ int guild_agit_break(struct mob_data *md)
 	return 0;
 }
 
-// [MouseJstr]
-//   How many castles does this guild have?
-int guild_checkcastles(struct guild *g) {
-	int i,nb_cas=0, id,cas_id=0;
-	struct guild_castle *gc;
-		id=g->guild_id;
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		gc=guild_castle_search(i);
-		cas_id=gc->guild_id;
-		if(g->guild_id==cas_id)
-			nb_cas=nb_cas+1;
-		} //end for
+// How many castles does this guild have?
+int guild_checkcastles(struct guild *g)
+{
+	int i, nb_cas = 0;
+	struct guild_castle* gc;
+
+	for(i = 0; i < MAX_GUILDCASTLE; i++) {
+		gc = guild_castle_search(i);
+		if(gc && gc->guild_id == g->guild_id)
+			nb_cas++;
+	}
+
 	return nb_cas;
 }
 
