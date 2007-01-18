@@ -132,6 +132,10 @@ void trade_tradeack(struct map_session_data *sd, int type) {
 	if (sd->npc_id || sd->vender_id || sd->state.storage_flag ||
 		tsd->npc_id || tsd->vender_id || tsd->state.storage_flag)
 	{	//Fail
+		sd->state.deal_locked = 0;
+		sd->trade_partner = 0;
+		tsd->state.deal_locked = 0;
+		tsd->trade_partner = 0;
 		clif_tradestart(sd, 2);
 		clif_tradestart(tsd, 2);
 		return;

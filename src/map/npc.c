@@ -2281,20 +2281,21 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 	mode = mob_db(class_)->status.mode;
 	if (mode & MD_BOSS) {	//Bosses
 		if (battle_config.boss_spawn_delay != 100)
-		{
-			mob.delay1 = mob.delay1*battle_config.boss_spawn_delay/100;
-			mob.delay2 = mob.delay2*battle_config.boss_spawn_delay/100;
+		{	// Divide by 100 first to prevent overflows
+			//(precision loss is minimal as duration is in ms already)
+			mob.delay1 = mob.delay1/100*battle_config.boss_spawn_delay;
+			mob.delay2 = mob.delay2/100*battle_config.boss_spawn_delay;
 		}
 	} else if (mode&MD_PLANT) {	//Plants
 		if (battle_config.plant_spawn_delay != 100)
 		{
-			mob.delay1 = mob.delay1*battle_config.plant_spawn_delay/100;
-			mob.delay2 = mob.delay2*battle_config.plant_spawn_delay/100;
+			mob.delay1 = mob.delay1/100*battle_config.plant_spawn_delay;
+			mob.delay2 = mob.delay2/100*battle_config.plant_spawn_delay;
 		}
 	} else if (battle_config.mob_spawn_delay != 100)
 	{	//Normal mobs
-		mob.delay1 = mob.delay1*battle_config.mob_spawn_delay/100;
-		mob.delay2 = mob.delay2*battle_config.mob_spawn_delay/100;
+		mob.delay1 = mob.delay1/100*battle_config.mob_spawn_delay;
+		mob.delay2 = mob.delay2/100*battle_config.mob_spawn_delay;
 	}
 
 	// parse MOB_NAME,[MOB LEVEL]
