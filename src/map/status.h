@@ -399,7 +399,13 @@ enum {
 	SI_BUNSINJYUTSU		= 207,
 	SI_NEN				= 208,
 	SI_ADJUSTMENT		= 209,
-	SI_ACCURACY			= 210
+	SI_ACCURACY			= 210,
+	SI_FOODSTR			= 241,
+	SI_FOODAGI			= 242,
+	SI_FOODVIT			= 243,
+	SI_FOODDEX			= 244,
+	SI_FOODINT			= 245,
+	SI_FOODLUK			= 246,
 };
 
 // JOINTBEAT stackable ailments

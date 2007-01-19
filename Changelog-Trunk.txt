@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/01/19
+	* Merged Rayce's cleanups of the script engine that account for duplicate
+	  labels, non-numeric labels and makes the engine case-insensitive towards
+	  keywords like if/case/switch/etc/
+	* Added the icons for the Food boosts (need packet version 8 to get them,
+	  as these icons will just display Gloria, or crash you, when used on older
+	  clients).
 2007/01/18
 	* Modified the Storm Gust freeze counter code. It now takes into
 	  consideration the ID of the skill before increasing the counter, which

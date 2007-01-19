@@ -418,7 +418,14 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_INCSTR] = SI_INCSTR;
 	StatusIconChangeTable[SC_MIRACLE] = SI_SPIRIT;
 	StatusIconChangeTable[SC_INTRAVISION] = SI_INTRAVISION;
-
+#if PACKETVER > 7
+	StatusIconChangeTable[SC_STRFOOD] = SI_FOODSTR;
+	StatusIconChangeTable[SC_AGIFOOD] = SI_FOODAGI;
+	StatusIconChangeTable[SC_VITFOOD] = SI_FOODVIT;
+	StatusIconChangeTable[SC_INTFOOD] = SI_FOODDEX;
+	StatusIconChangeTable[SC_DEXFOOD] = SI_FOODINT;
+	StatusIconChangeTable[SC_LUKFOOD] = SI_FOODLUK;
+#endif
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;

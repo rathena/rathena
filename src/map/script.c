@@ -140,6 +140,7 @@ static struct {
 		int index;
 		int count;
 		int flag;
+		struct linkdb_node *case_label;
 	} curly[256];		// 右カッコの情報
 	int curly_count;	// 右カッコの数
 	int index;			// スクリプト内で使用した構文の数
@@ -957,7 +958,7 @@ const char* parse_curly_close(const char* p) {
 		sprintf(label,"__SW%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos, p);
-
+		linkdb_final(&syntax.curly[pos].case_label);	// free the list of case label
 		syntax.curly_count--;
 		return p+1;
 	} else {
@@ -970,9 +971,12 @@ const char* parse_curly_close(const char* p) {
 //	 break, case, continue, default, do, for, function,
 //	 if, switch, while をこの内部で処理します。
 const char* parse_syntax(const char* p) {
+	const char *p2 = skip_word(p);
+
 	switch(*p) {
+	case 'B':
 	case 'b':
-		if(!strncasecmp(p,"break",5) && !ISALPHA(p[5])) {
+		if(p2 - p == 5 && !strncasecmp(p,"break",5)) {
 			// break の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -999,7 +1003,10 @@ const char* parse_syntax(const char* p) {
 				parse_line(label);
 				syntax.curly_count--;
 			}
-			p = skip_word(p);
+			p = skip_space(p2);
+			if(*p != ';') {
+				disp_error_message("parse_syntax: need ';'",p);
+			}
 			p++;
 			// if, for , while の閉じ判定
 			p = parse_syntax_close(p + 1);
@@ -1007,17 +1014,17 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'c':
-		if(!strncasecmp(p,"case",4) && !ISALPHA(p[4])) {
+	case 'C':
+		if(p2 - p == 4 && !strncasecmp(p,"case",4)) {
 			// case の処理
-			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
+			int pos = syntax.curly_count-1;
+			if(pos < 0 || syntax.curly[pos].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'case' ",p);
 				return p+1;
 			} else {
-				const char *p2;
+				char *np;
 				char label[256];
-				int  l;
-				int len;
-				int pos = syntax.curly_count-1;
+				int  l,v;
 				if(syntax.curly[pos].count != 1) {
 					// FALLTHRU 用のジャンプ
 					sprintf(label,"goto __SW%x_%xJ;",syntax.curly[pos].index,syntax.curly[pos].count);
@@ -1031,18 +1038,24 @@ const char* parse_syntax(const char* p) {
 					set_label(l,script_pos, p);
 				}
 				// switch 判定文
+				p = skip_space(p2);
+				if(p == p2) {
+					disp_error_message("parse_syntax: expect space ' '",p);
+				}
+				// check whether case label is integer or not
+				v = strtol(p,&np,0);
+				if(np == p)
+					disp_error_message("parse_syntax: 'case' label not integer",p);
+				if((*p == '-' || *p == '+') && isdigit(p[1]))	// pre-skip because '-' can not skip_word
+					p++;
 				p = skip_word(p);
-				p = skip_space(p);
-				p2 = p;
-				p = skip_word(p);
-				len = p-p2; // length of word at p2
+				if(np != p)
+					disp_error_message("parse_syntax: 'case' label not integer",np);
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
-				memcpy(label,"if(",3);
-				memcpy(label+3,p2,len);
-				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
-					syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
+				sprintf(label,"if(%d != $@__SW%x_VAL) goto __SW%x_%x;",
+					v,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				// ２回parse しないとダメ
 				p2 = parse_line(label);
@@ -1054,15 +1067,21 @@ const char* parse_syntax(const char* p) {
 					l=add_str(label);
 					set_label(l,script_pos,p);
 				}
-				// 一時変数を消す
+
+				// check duplication of case label [Rayce]
+				if(linkdb_search(&syntax.curly[pos].case_label, (void*)v) != NULL)
+					disp_error_message("parse_syntax: dup 'case'",p);
+				linkdb_insert(&syntax.curly[pos].case_label, (void*)v, (void*)1);
+				
 				sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
+			
 				parse_line(label);
 				syntax.curly_count--;
 				syntax.curly[pos].count++;
 			}
 			return p + 1;
-		} else if(!strncasecmp(p,"continue",8) && !ISALPHA(p[8])) {
+		} else if(p2 - p == 8 && !strncasecmp(p,"continue",8)) {
 			// continue の処理
 			char label[256];
 			int pos = syntax.curly_count - 1;
@@ -1087,7 +1106,9 @@ const char* parse_syntax(const char* p) {
 				parse_line(label);
 				syntax.curly_count--;
 			}
-			p = skip_word(p);
+			p = skip_space(p2);
+			if(*p != ';')
+				disp_error_message("parse_syntax: need ';'",p);
 			p++;
 			// if, for , while の閉じ判定
 			p = parse_syntax_close(p + 1);
@@ -1095,25 +1116,22 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'd':
-		if(!strncasecmp(p,"default",7) && !ISALPHA(p[7])) {
+	case 'D':
+		if(p2 - p == 7 && !strncasecmp(p,"default",7)) {
 			// switch - default の処理
-			if(syntax.curly_count <= 0 || syntax.curly[syntax.curly_count - 1].type != TYPE_SWITCH) {
+			int pos = syntax.curly_count-1;
+			if(pos < 0 || syntax.curly[pos].type != TYPE_SWITCH) {
 				disp_error_message("parse_syntax: unexpected 'default'",p);
-				return p+1;
-			} else if(syntax.curly[syntax.curly_count - 1].flag) {
+			} else if(syntax.curly[pos].flag) {
 				disp_error_message("parse_syntax: dup 'default'",p);
-				return p+1;
 			} else {
 				char label[256];
 				int l;
-				int pos = syntax.curly_count-1;
 				// 現在地のラベルを付ける
-				p = skip_word(p);
-				p = skip_space(p);
+				p = skip_space(p2);
 				if(*p != ':') {
 					disp_error_message("parse_syntax: need ':'",p);
 				}
-				p++;
 				sprintf(label,"__SW%x_%x",syntax.curly[pos].index,syntax.curly[pos].count);
 				l=add_str(label);
 				set_label(l,script_pos,p);
@@ -1131,15 +1149,12 @@ const char* parse_syntax(const char* p) {
 
 				syntax.curly[syntax.curly_count - 1].flag = 1;
 				syntax.curly[pos].count++;
-
-				p = skip_word(p);
-				return p + 1;
 			}
-		} else if(!strncasecmp(p,"do",2) && !ISALPHA(p[2])) {
+			return p + 1;
+		} else if(p2 - p == 2 && !strncasecmp(p,"do",2)) {
 			int l;
 			char label[256];
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
 
 			syntax.curly[syntax.curly_count].type  = TYPE_DO;
 			syntax.curly[syntax.curly_count].count = 1;
@@ -1154,7 +1169,8 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'f':
-		if(!strncasecmp(p,"for",3) && !ISALPHA(p[3])) {
+	case 'F':
+		if(p2 - p == 3 && !strncasecmp(p,"for",3)) {
 			int l;
 			char label[256];
 			int  pos = syntax.curly_count;
@@ -1164,13 +1180,10 @@ const char* parse_syntax(const char* p) {
 			syntax.curly[syntax.curly_count].flag  = 0;
 			syntax.curly_count++;
 
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
 
-			if(*p != '(') {
+			if(*p != '(')
 				disp_error_message("parse_syntax: need '('",p);
-				return p+1;
-			}
 			p++;
 
 			// 初期化文を実行する
@@ -1197,10 +1210,8 @@ const char* parse_syntax(const char* p) {
 				add_scriptl(add_str(label));
 				add_scriptc(C_FUNC);
 			}
-			if(*p != ';') {
+			if(*p != ';')
 				disp_error_message("parse_syntax: need ';'",p);
-				return p+1;
-			}
 			p++;
 
 			// ループ開始に飛ばす
@@ -1233,11 +1244,12 @@ const char* parse_syntax(const char* p) {
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			return p;
-		} else if(!strncasecmp(p,"function",8) && !ISALPHA(p[8])) {
+		} else if(p2 - p == 8 && !strncasecmp(p,"function",8)) {
 			const char *func_name;
 			// function
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
+			if(p == p2)
+				disp_error_message("parse_syntax: expect space ' '",p);
 			// function - name
 			func_name = p;
 			p=skip_word(p);
@@ -1276,11 +1288,11 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'i':
-		if(!strncasecmp(p,"if",2) && !ISALPHA(p[2])) {
+	case 'I':
+		if(p2 - p == 2 && !strncasecmp(p,"if",2)) {
 			// if() の処理
 			char label[256];
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
 			if(*p != '(') { //Prevent if this {} non-c syntax. from Rayce (jA)
 				disp_error_message("need '('",p);
 			}
@@ -1300,11 +1312,11 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 's':
-		if(!strncasecmp(p,"switch",6) && !ISALPHA(p[6])) {
+	case 'S':
+		if(p2 - p == 6 && !strncasecmp(p,"switch",6)) {
 			// switch() の処理
 			char label[256];
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
 			if(*p != '(') {
 				disp_error_message("need '('",p);
 			}
@@ -1327,11 +1339,11 @@ const char* parse_syntax(const char* p) {
 		}
 		break;
 	case 'w':
-		if(!strncasecmp(p,"while",5) && !ISALPHA(p[5])) {
+	case 'W':
+		if(p2 - p == 5 && !strncasecmp(p,"while",5)) {
 			int l;
 			char label[256];
-			p=skip_word(p);
-			p=skip_space(p);
+			p=skip_space(p2);
 			if(*p != '(') {
 				disp_error_message("need '('",p);
 			}
@@ -1383,7 +1395,8 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		*flag = 0;
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_IF) {
-		const char *p2 = p;
+		const char *bp = p;
+		const char *p2;
 		// if 最終場所へ飛ばす
 		sprintf(label,"goto __IF%x_FIN;",syntax.curly[pos].index);
 		syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1397,14 +1410,14 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 
 		syntax.curly[pos].count++;
 		p = skip_space(p);
-		if(!syntax.curly[pos].flag && !strncasecmp(p,"else",4) && !ISALPHA(p[4])) {
+		p2 = skip_word(p);
+		if(!syntax.curly[pos].flag && p2 - p == 4 && !strncasecmp(p,"else",4)) {
 			// else  or else - if
-			p = skip_word(p);
-			p = skip_space(p);
-			if(!strncasecmp(p,"if",2) && !ISALPHA(p[2])) {
+			p = skip_space(p2);
+			p2 = skip_word(p);
+			if(p2 - p == 2 && !strncasecmp(p,"if",2)) {
 				// else - if
-				p=skip_word(p);
-				p=skip_space(p);
+				p=skip_space(p2);
 				if(*p != '(') {
 					disp_error_message("need '('",p);
 				}
@@ -1434,7 +1447,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		set_label(l,script_pos,p);
 		if(syntax.curly[pos].flag == 1) {
 			// このifに対するelseじゃないのでポインタの位置は同じ
-			return p2;
+			return bp;
 		}
 		return p;
 	} else if(syntax.curly[pos].type == TYPE_DO) {
@@ -1452,9 +1465,8 @@ const char* parse_syntax_close_sub(const char* p,int* flag) {
 		// 条件が偽なら終了地点に飛ばす
 		p = skip_space(p);
 		p2 = skip_word(p);
-		if(p2 - p != 5 || strncasecmp("while",p,5)) {
+		if(p2 - p != 5 || strncasecmp(p,"while",5))
 			disp_error_message("parse_syntax: need 'while'",p);
-		}
 
 		p = skip_space(p2);
 		if(*p != '(') {
@@ -1696,6 +1708,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
+		int i;
+		const int size = sizeof(syntax.curly)/sizeof(syntax.curly[0]);
 		if( error_report )
 			script_error(src,file,line,error_msg,error_pos);
 		aFree( error_msg );
@@ -1703,9 +1717,10 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		script_pos  = 0;
 		script_size = 0;
 		script_buf  = NULL;
-		for(i=LABEL_START;i<str_num;i++){
+		for(i=LABEL_START;i<str_num;i++)
 			if(str_data[i].type == C_NOP) str_data[i].type = C_NAME;
-		}
+		for(i=0; i<size; i++)
+			linkdb_final(&syntax.curly[i].case_label);
 		return NULL;
 	}
 
