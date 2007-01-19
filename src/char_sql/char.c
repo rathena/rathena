@@ -1686,7 +1686,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	set_char_online(-1, 99,sd->account_id);
 
 	//search char.
-	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d'",char_db, sd->account_id);
+	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_num` < '9'",char_db, sd->account_id);
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
