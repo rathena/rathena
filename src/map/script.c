@@ -140,9 +140,7 @@ static struct {
 		int index;
 		int count;
 		int flag;
-#if 0 
 		struct linkdb_node *case_label;
-#endif
 	} curly[256];		// 右カッコの情報
 	int curly_count;	// 右カッコの数
 	int index;			// スクリプト内で使用した構文の数
@@ -960,9 +958,7 @@ const char* parse_curly_close(const char* p) {
 		sprintf(label,"__SW%x_FIN",syntax.curly[pos].index);
 		l=add_str(label);
 		set_label(l,script_pos, p);
-#if 0 
 		linkdb_final(&syntax.curly[pos].case_label);	// free the list of case label
-#endif
 		syntax.curly_count--;
 		return p+1;
 	} else {
@@ -1027,13 +1023,8 @@ const char* parse_syntax(const char* p) {
 				return p+1;
 			} else {
 				char label[256];
-#if 0 //See next #if 0
 				int  l,v;
 				char *np;
-#else
-				int len;
-				int  l;
-#endif
 				if(syntax.curly[pos].count != 1) {
 					// FALLTHRU 用のジャンプ
 					sprintf(label,"goto __SW%x_%xJ;",syntax.curly[pos].index,syntax.curly[pos].count);
@@ -1051,36 +1042,31 @@ const char* parse_syntax(const char* p) {
 				if(p == p2) {
 					disp_error_message("parse_syntax: expect space ' '",p);
 				}
-#if 0
 				//TODO: This is incomplete as it doesn't takes into account const.txt entries!
 				// check whether case label is integer or not
 				v = strtol(p,&np,0);
-				if(np == p)
-					disp_error_message("parse_syntax: 'case' label not integer",p);
-				if((*p == '-' || *p == '+') && isdigit(p[1]))	// pre-skip because '-' can not skip_word
-					p++;
-				p = skip_word(p);
-				if(np != p)
-					disp_error_message("parse_syntax: 'case' label not integer",np);
+				if(np == p) { //Check for constants
+					p2 = skip_word(p);
+					v = p2-p; // length of word at p2
+					memcpy(label,p,v);
+					label[v]='\0';
+					v = search_str(label);
+					if (v < 0 || str_data[v].type != C_INT)
+						disp_error_message("parse_syntax: 'case' label not integer",p);
+					v = str_data[v].val;
+					p = skip_word(p);
+				} else { //Numeric value
+					if((*p == '-' || *p == '+') && isdigit(p[1]))	// pre-skip because '-' can not skip_word
+						p++;
+					p = skip_word(p);
+					if(np != p)
+						disp_error_message("parse_syntax: 'case' label not integer",np);
+				}
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
 				sprintf(label,"if(%d != $@__SW%x_VAL) goto __SW%x_%x;",
 					v,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
-#else
-				p2 = p;
-				if((*p == '-' || *p == '+') && isdigit(p[1]))	// pre-skip because '-' can not skip_word
-					p++;
-				p = skip_word(p);
-				len = p-p2; // length of word at p2
-				p = skip_space(p);
-				if(*p != ':')
-					disp_error_message("parse_syntax: expect ':'",p);
-				memcpy(label,"if(",3);
-				memcpy(label+3,p2,len);
-				sprintf(label+3+len," != $@__SW%x_VAL) goto __SW%x_%x;",
-					syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
-#endif
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				// ２回parse しないとダメ
 				p2 = parse_line(label);
@@ -1092,12 +1078,11 @@ const char* parse_syntax(const char* p) {
 					l=add_str(label);
 					set_label(l,script_pos,p);
 				}
-#if 0 //TODO: pending fix on converting constants to numbers.
 				// check duplication of case label [Rayce]
 				if(linkdb_search(&syntax.curly[pos].case_label, (void*)v) != NULL)
 					disp_error_message("parse_syntax: dup 'case'",p);
 				linkdb_insert(&syntax.curly[pos].case_label, (void*)v, (void*)1);
-#endif			
+
 				sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 			
@@ -1734,9 +1719,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
 		int i;
-#if 0 
 		const int size = sizeof(syntax.curly)/sizeof(syntax.curly[0]);
-#endif
 		if( error_report )
 			script_error(src,file,line,error_msg,error_pos);
 		aFree( error_msg );
@@ -1746,10 +1729,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		script_buf  = NULL;
 		for(i=LABEL_START;i<str_num;i++)
 			if(str_data[i].type == C_NOP) str_data[i].type = C_NAME;
-#if 0 
 		for(i=0; i<size; i++)
 			linkdb_final(&syntax.curly[i].case_label);
-#endif
 		return NULL;
 	}
 
