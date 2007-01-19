@@ -2035,7 +2035,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	//Display damage.
 	switch(skillid){
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
-		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5, dmg.blewcount);
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
 	//Skills that need be passed as a normal attack for the client to display correctly.
 	case HVAN_EXPLOSION:
@@ -2055,7 +2055,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		//Disabling skill animation doesn't works on multi-hit.
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
 			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv,
-			(flag&SD_ANIMATION && dmg.div_ < 2?5:type), dmg.blewcount);
+			(flag&SD_ANIMATION && dmg.div_ < 2?5:type));
 		break;
 	}
 	
@@ -3217,7 +3217,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
 			0, abs(skill_get_num(skillid, skilllv)),
-			skillid, skilllv, skill_get_hit(skillid), 0);
+			skillid, skilllv, skill_get_hit(skillid));
 		map_freeblock_unlock();
 		return 1;
 	}
@@ -5726,7 +5726,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			if (unit_movepos(src, src->x+dx, src->y+dy, 1, 1))
 			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);
-				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5, 0);
+				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skillid, ud->skilllv, 5);
 			}
 			clif_skill_fail(sd,ud->skillid,0,0);
 		}

@@ -9,7 +9,6 @@
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
-#include "../common/malloc.h"
 #include "itemdb.h"
 #include "map.h"
 #include "log.h"
