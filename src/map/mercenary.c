@@ -748,6 +748,8 @@ void merc_reset_stats(struct homun_data *hd)
 	hom->luk = db->baseLUK*10;
 	hom->exp = 0;
 	hd->exp_next = hexptbl[0];
+	memset(&hd->homunculus.hskill, 0, sizeof hd->homunculus.hskill);
+	hd->homunculus.skillpts = 0;
 }
 
 int read_homunculusdb(void)
