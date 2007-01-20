@@ -856,6 +856,9 @@ is_atcommand(const int fd, struct map_session_data* sd, const char* message) {
 	if (!*str)
 		return AtCommand_None;
 
+	if(str[0] == '|' && strlen(str) >= 4 && str[3] == atcommand_symbol)
+		str += 3; // skip 10/11-langtype's codepage indicator, if detected
+
 	return is_atcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
@@ -875,10 +878,7 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
 		return AtCommand_None;
 	}
 
-	if(p[0] == '|')
-		p += 3;
-
-	if (*p == atcommand_symbol) { // check first char, try to skip |00 (or something else) [Lance]
+	if (*p == atcommand_symbol) { // check first char
 		char command[101];
 		int i = 0;
 		memset(info, 0, sizeof(AtCommandInfo));
@@ -4232,19 +4232,12 @@ int atcommand_param(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	int index, value = 0, new_value, max;
+	int i, value = 0, new_value, max;
 	const char* param[] = { "@str", "@agi", "@vit", "@int", "@dex", "@luk", NULL };
 	short* status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 	
-	status[0] = &sd->status.str;
-	status[1] = &sd->status.agi;
-	status[2] = &sd->status.vit;
-	status[3] = &sd->status.int_;
-	status[4] = &sd->status.dex;
-	status[5] = &sd->status.luk;
-
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
@@ -4253,30 +4246,30 @@ int atcommand_param(
 		return -1;
 	}
 
-	index = -1;
-	for (index = 0; index < sizeof(param)/sizeof(param[0]); index++) {
-		if (strcmpi(command, param[index]) == 0)
-			break;
-	}
-	if (index == sizeof(param)/sizeof(param[0]) || index > MAX_STATUS_TYPE) {
-		// normaly impossible...
+	for (i = 0; param[i] != NULL; i++)
+		if (strcmpi(command, param[i]) == 0)
+			break;	
+
+	if (param[i] == NULL || i > MAX_STATUS_TYPE) { // normaly impossible...
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustement>).");
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 
+	status[0] = &sd->status.str;
+	status[1] = &sd->status.agi;
+	status[2] = &sd->status.vit;
+	status[3] = &sd->status.int_;
+	status[4] = &sd->status.dex;
+	status[5] = &sd->status.luk;
+
 	max = pc_maxparameter(sd);
-	if (value > 0 && *status[index] > max - value)
-		new_value = max;
-	else if (value < 0 && *status[index] <= -value)
-		new_value = 1;
-	else
-		new_value = *status[index] + value;
+	new_value = cap_value(*status[i] + value, 1, max);
 	
-	if (new_value != (int)*status[index]) {
-		*status[index] = new_value;
-		clif_updatestatus(sd, SP_STR + index);
-		clif_updatestatus(sd, SP_USTR + index);
+	if (new_value != (int)*status[i]) {
+		*status[i] = new_value;
+		clif_updatestatus(sd, SP_STR + i);
+		clif_updatestatus(sd, SP_USTR + i);
 		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_txt(42)); // Stat changed.
 	} else {

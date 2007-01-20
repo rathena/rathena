@@ -194,6 +194,9 @@ is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
 	if (!*str)
 		return CharCommand_None;
 
+	if(str[0] == '|' && strlen(str) >= 4 && str[3] == charcommand_symbol)
+		str += 3; // skip 10/11-langtype's codepage indicator, if detected
+
 	return is_charcommand_sub(fd,sd,str,pc_isGM(sd));
 }
 
@@ -213,10 +216,7 @@ CharCommandType charcommand(struct map_session_data* sd, const int level, const 
 		return CharCommand_None;
 	}
 
-	if(p[0] == '|')
-		p += 3;
-
-	if (*p == charcommand_symbol) { // check first char, try to skip |00 (or something else) [Lance]
+	if (*p == charcommand_symbol) { // check first char
 		char command[101];
 		int i = 0;
 		memset(info, 0, sizeof(CharCommandInfo));
