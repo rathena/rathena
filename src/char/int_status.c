@@ -146,7 +146,7 @@ void inter_status_save()
 	int lock;
 
 	if ((fp = lock_fopen(scdata_txt, &lock)) == NULL) {
-		ShowError("int_status: cant write [%s] !!! data is lost !!!\n", scdata_txt);
+		ShowError("int_status: can't write [%s] !!! data is lost !!!\n", scdata_txt);
 		return;
 	}
 	scdata_db->foreach(scdata_db, inter_status_save_sub, fp);

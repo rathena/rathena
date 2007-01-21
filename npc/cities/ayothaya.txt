@@ -11,7 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 0.1 Added a Sailor NPC to get back to Alberta [ZoDIaC]
 //= 0.2 fixed coords, dialogues
-//= 0.3 Fixed Warp name, ayotaya.gat doesnt exist, even though iRO 
+//= 0.3 Fixed Warp name, ayotaya.gat doesn't exist, even though iRO 
 //= 	decided to call it Ayotaya, it really is Ayothaya, like 
 //=	that Yuno/Juno thing
 //= 0.4 Added the official warp npc for Ayothaya. [MasterOfMuppets]

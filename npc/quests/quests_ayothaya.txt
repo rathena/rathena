@@ -120,7 +120,7 @@ ayothaya.gat,233,105,7	script	Shuda	838,{
 	if(weddingring==4) goto L_QuestComplete;
 	if(weddingring==5) goto L_QuestOver;
 	if(countitem(7288)>=1) goto L_RingFound;
-	mes "Oh please wont you help me, my partner has gone missing, but not before droping our ^FF0000Engagement Ring^000000 maybe there is a way of ^0000FFfishing^000000 it out of the sea.";
+	mes "Oh please won't you help me, my partner has gone missing, but not before droping our ^FF0000Engagement Ring^000000 maybe there is a way of ^0000FFfishing^000000 it out of the sea.";
 	set weddingring,1;
 	close;
 L_RingFound:
@@ -288,10 +288,10 @@ L_Groom:
 	mes "[Annon]";
 	mes "So I see now, my ex-partner has sent you to see if I'm OK.";
 	mes " ";
-	mes "Can you go and tell her I'm ok, but I cant go through with the marriage.";
+	mes "Can you go and tell her I'm ok, but I can't go through with the marriage.";
 	next;
 	mes "[Annon]";
-	mes "I cant really give a reason, just tell her that I love her, but not enough to spend the rest of my life with her.";
+	mes "I can't really give a reason, just tell her that I love her, but not enough to spend the rest of my life with her.";
 	next;
 	mes "[Annon]";
 	mes "I hope she will understand.";

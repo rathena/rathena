@@ -578,7 +578,7 @@ M_Menu:
 			goto R4_End;
 		R4_3:
 			mes "[Friend of Youth]";
-			mes "You have the ability to leap towards the future! But the past has a hold of your ankle and wont let go.";
+			mes "You have the ability to leap towards the future! But the past has a hold of your ankle and won't let go.";
 			next;
 			mes "[Friend of Youth]";
 			mes "Break free and move towards the future and be prepared to face what lies ahead!";	

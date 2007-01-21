@@ -92,7 +92,7 @@ M_Divorce:
 	mes "It might take some time...";
 	mes "So don't go away, and stay here!";
 	next;
-	//ShowEffect "Deviruchi#Divorce" EF_MAGICROD   Dont know, what to do here >.>
+	//ShowEffect "Deviruchi#Divorce" EF_MAGICROD   Don't know, what to do here >.>
 	//ShowEffect "" EF_DEVIL		       same
 	percentheal -100,-100;
 	divorce;

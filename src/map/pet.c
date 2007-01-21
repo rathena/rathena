@@ -861,7 +861,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 				pd->move_fail_count++;
 				if(pd->move_fail_count>1000){
 					if(battle_config.error_log)
-						ShowWarning("PET cant move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
+						ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
 					pd->move_fail_count=0;
 					pd->ud.canmove_tick = tick + 60000;
 					return 0;

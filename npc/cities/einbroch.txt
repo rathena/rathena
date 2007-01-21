@@ -434,13 +434,13 @@ einbroch.gat,228,121,5	script	Little Toby	855,{
 	mes "My parents are suposed";
 	mes "to come get me, but I still";
 	mes "haven't found them! We just";
-	mes "moved here, so i dont know";
+	mes "moved here, so i don't know";
 	mes "where anything is!";
 	next;
 	mes "[Little Toby]";
 	mes "W-wait!";
 	mes "Where are you";
-	mes "going?! Dont leave";
+	mes "going?! Don't leave";
 	mes "me, I'm all alone...!";
 	close;
 

@@ -359,7 +359,7 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 
 	/*
 	You may be thinking what about diagonal
-	moves? Cant they cause a error with this some how?
+	moves? Can't they cause a error with this somehow?
 	Answer is NO! The only time this can cause a error
 	is if the target block lies on the diagonal and
 	is non walkable. But rember we already checked that

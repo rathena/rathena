@@ -90,7 +90,7 @@ L_Start:
 	mes "as an Alchemist and be able to join our researches.";
 	next;
 	mes "[Parmry Gianino]";
-	mes "But we dont accept everyone.";
+	mes "But we don't accept everyone.";
 	mes "You must have a lot of effort, tenacity, and be able to devote yourself to research.";
 	next;
 	mes "[Parmry Gianino]";
@@ -228,7 +228,7 @@ L_Merc:
 	next;
 	mes "[Rasputin Gregory]";
 	mes "Kikiki... Go, leave this place.";
-	mes "Dont loiter ... Kekeke.";
+	mes "Don't loiter ... Kekeke.";
 	close;
 L_Start:
 	if(ALCH_Q2 == 1) goto L_ReTest;
@@ -425,7 +425,7 @@ L_Total:
 	next;
 	mes "[Rasputin Gregory]";
 	mes "Kikikikekeke.";
-	mes "Dont think this is the end of it!";
+	mes "Don't think this is the end of it!";
 	close;
 
 	L_Failed:
@@ -450,7 +450,7 @@ L_Done:
 	next;
 	mes "[Rasputin Gregory]";
 	mes "Kikikikekeke.";
-	mes "Dont think this is the end of it!";
+	mes "Don't think this is the end of it!";
 	close;
 L_Skip:
 	mes "Hmm... you have a pretty high job level..... I'll be nice today and let you pass.";
@@ -526,7 +526,7 @@ L_Start:
 		next;
 		mes "[Darwin]";
 		mes "Lets just say that it was about the relationship between wolf and flowers...";
-		mes "I wont tell you the details.";
+		mes "I won't tell you the details.";
 		next;
 		mes "[Darwin]";
 		mes "But yes ... it was a flower.";
@@ -672,7 +672,7 @@ L_NotEnuf:
 	mes "[Darwin]";
 	mes "...You must've forgotten the materials to bring.";
 	mes "I'll tell you again.";
-	mes "Dont forget them this time.";
+	mes "Don't forget them this time.";
 	next;
 	mes "[Darwin]";
 	mes "^5533FF3 Medicine Bowls";
@@ -769,7 +769,7 @@ L_Start:
 			close;
 	M_Bye:
 		mes "[Van Helmont]";
-		mes "If you dont have business here just go away. Ok!!!";
+		mes "If you don't have business here just go away. Ok!!!";
 		close;
 L_Check:	
 	if((MISC_QUEST & 4)==0) goto L_NotRdy; //this's a Morgenstein Quest check
@@ -1027,7 +1027,7 @@ alde_alche.gat,101,184,4	script	Vincent Carsciallo	122,{
 	mes "Hmmm? What may a civilian have to do here?";
 	next;
 	mes "[Vincent Carsciallo]";
-	mes "There's nothing amusing. Dont wander and leave.";
+	mes "There's nothing amusing. Don't wander and leave.";
 	close;
 L_Merc:
 	if(ALCH_Q == 7) goto L_Change;

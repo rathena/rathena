@@ -4250,7 +4250,7 @@ int atcommand_param(
 		if (strcmpi(command, param[i]) == 0)
 			break;	
 
-	if (param[i] == NULL || i > MAX_STATUS_TYPE) { // normaly impossible...
+	if (param[i] == NULL || i > MAX_STATUS_TYPE) { // normally impossible...
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustement>).");
 		clif_displaymessage(fd, atcmd_output);
 		return -1;

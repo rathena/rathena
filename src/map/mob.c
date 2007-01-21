@@ -1029,7 +1029,7 @@ int mob_randomwalk(struct mob_data *md,int tick)
 		md->move_fail_count++;
 		if(md->move_fail_count>1000){
 			if(battle_config.error_log)
-				ShowWarning("MOB cant move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map[md->bl.m].name, md->bl.x, md->bl.y);
+				ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map[md->bl.m].name, md->bl.x, md->bl.y);
 			md->move_fail_count=0;
 			mob_spawn(md);
 		}

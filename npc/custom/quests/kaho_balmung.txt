@@ -70,7 +70,7 @@ Lend:
 	close;
 NoItems:
 	mes "[Royal Messenger]";
-	mes "Sorry you dont have all the items or zeny I need.";
+	mes "Sorry you don't have all the items or zeny I need.";
 	mes "Come back when you have them all";
 	close;
 }

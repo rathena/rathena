@@ -670,8 +670,8 @@ int do_sendrecv(int next)
 			continue;
 
 		//POSTSEND: Does write EVER BLOCK? NO!! not unless WE ARE CURRENTLY SENDING SOMETHING
-		//Or just have opened a connection and dont know if its ready
-		//And since eA isn't multi threaded and all the sockets are non blocking THIS ISNT A PROBLEM! [Meruru]
+		//Or just have opened a connection and don't know if its ready
+		//And since eA isn't multi threaded and all the sockets are non blocking THIS ISN'T A PROBLEM! [Meruru]
 
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
@@ -703,7 +703,7 @@ int do_sendrecv(int next)
 		}
 
 		//Does write EVER BLOCK. NO not unless WE ARE CURRENTALLY SENDING SOMETHING
-		//And sence eA isnt multi threaded THIS ISNT A PROBLEM!
+		//And sence eA isnt multi threaded THIS ISN'T A PROBLEM!
 		if(session[i]->wdata_size && session[i]->func_send)
 			session[i]->func_send(i);
 	

@@ -236,7 +236,7 @@ int inter_party_save() {
 	int lock;
 
 	if ((fp = lock_fopen(party_txt, &lock)) == NULL) {
-		ShowError("int_party: cant write [%s] !!! data is lost !!!\n", party_txt);
+		ShowError("int_party: can't write [%s] !!! data is lost !!!\n", party_txt);
 		return 1;
 	}
 	party_db->foreach(party_db, inter_party_save_sub, fp);

@@ -156,7 +156,7 @@ int inter_accreg_save(void) {
 	int lock;
 
 	if ((fp = lock_fopen(accreg_txt,&lock)) == NULL) {
-		ShowError("int_accreg: cant write [%s] !!! data is lost !!!\n", accreg_txt);
+		ShowError("int_accreg: can't write [%s] !!! data is lost !!!\n", accreg_txt);
 		return 1;
 	}
 	accreg_db->foreach(accreg_db, inter_accreg_save_sub,fp);

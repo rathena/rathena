@@ -71,7 +71,7 @@ OnInit:
 //
 //		Puts:
 //	Everything the NPC does.  If you are at the right one, increase your order variable, if not, tell you where to head next on the list, when you finish, offer you to change ring properties.
-//	Whenever you dont have a ring, the script will push one on you in ALL instances (wrong NPC, right NPC, and done quest).
+//	Whenever you don't have a ring, the script will push one on you in ALL instances (wrong NPC, right NPC, and done quest).
 //////////////////////////	
 
 function	script	PXC_Disguiser	{
@@ -154,7 +154,7 @@ Complete:
 //////////////////////////
 function	script	PXC_DoMenu	{
 
-	//set menu options to mob names, doing the first one manualy so we dont have an empty :
+	//set menu options to mob names, doing the first one manualy so we don't have an empty :
 	set $@menu$, getmonsterinfo(getarg(0),MOB_NAME);
 
 	for(set $@i, getarg(0)+1; $@i <= getarg(1); set $@i, $@i + 1){

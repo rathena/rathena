@@ -1668,8 +1668,8 @@ int parse_login(int fd) {
 						sprintf(error,"dynamic ban (ip and account).");
 						break;
 					case 1:	// 0 = Unregistered ID
-						sprintf(tmpsql,tmp_sql,"Unregisterd ID.");
-						sprintf(error,"Unregisterd ID.");
+						sprintf(tmpsql,tmp_sql,"Unregistered ID.");
+						sprintf(error,"Unregistered ID.");
 						break;
 					case 2:	// 1 = Incorrect Password
 						sprintf(tmpsql,tmp_sql,"Incorrect Password.");

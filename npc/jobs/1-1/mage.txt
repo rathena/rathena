@@ -448,7 +448,7 @@ moc_ruins.gat,91,150,5	script	Ponka-Hontas	93,{
 		L0NoZ:
 			mes "[Mage Guildsman]";
 			mes "Pfff, You are too poor to buy our noble Solution!";
-			mes "Bring 50 Zeny, go to the mercant sell something, it will not be too hard I hope";
+			mes "Bring 50 Zeny, go to a merchant and sell something, it will not be too hard I hope.";
 			close;
 	L1:
 		mes "[Mage Guildsman]";
@@ -487,7 +487,7 @@ pay_arche.gat,122,100,5	script	Dollshoi	88,{
 		L0NoZ:
 			mes "[Mage Guildsman]";
 			mes "Pfff, You are too poor to buy our noble Solution!";
-			mes "Bring 50 Zeny, go to the mercant sell something, it will not be too hard I hope";
+			mes "Bring 50 Zeny, go to a merchant and sell something, it will not be too hard I hope.";
 			close;
 	L1:
 		mes "[Mage Guildsman]";

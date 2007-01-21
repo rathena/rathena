@@ -140,7 +140,7 @@ end;
 l_nolisten:
 next;
 mes "["+strcharinfo(0)+"]";
-mes "I dont think this is interesting for me.";
+mes "I don't think this is interesting for me.";
 close;
 end;
 
@@ -155,8 +155,8 @@ mes "What was last night? I've heard nothing about it. Anything strange had happ
 menu "I've heard you speaking to somebody about strange things.",-,"Nothing, sorry",L_NOTHING;
 next;
 mes "[Ghalstein]";
-mes "I think you are mistaken guy. I dont know what are you talking about";
-menu "Dont make a fool from me.",-,"Ok, sory",L_NOTHING;
+mes "I think you are mistaken guy. I don't know what are you talking about";
+menu "Don't make a fool from me.",-,"Ok, sory",L_NOTHING;
 next;
 mes "[Ghalstein]";
 mes "I say you, that i hadn't speak to anybody yesterday.Hey, Protector come here plese";
@@ -215,7 +215,7 @@ close;
 
 l_curious:
 mes "[Ghalstein]";
-mes "even so i dont want to speak to smb who say such fool things. Cya.";
+mes "even so i don't want to speak to smb who say such fool things. Cya.";
 close;
 
 L_NOTHX:
@@ -225,7 +225,7 @@ close;
 
 L_NOTHING:
 mes "[Ghalstein]";
-mes "I've never think guy like you can think this way about me. I dont want to speak to you anymore";
+mes "I've never think guy like you can think this way about me. I don't want to speak to you anymore";
 close;
 
 l_overweight:
@@ -269,7 +269,7 @@ close;
 
 l_alreadydone:
 mes "["+strcharinfo(0)+"]";
-mes "I have already done this quest. I dont want to go there once more time!";
+mes "I have already done this quest. I don't want to go there once more time!";
 close;
 }
 //=======================================================================
@@ -286,7 +286,7 @@ mes "Well, Now i suppose everything will be ok.";
 close2;
 npctalk "Creeep... Creeeep-Creep...*pfu*.";
 mes "["+strcharinfo(0)+"]";
-mes "Oooops....I dont think this machien will work anymore... I'll go better from here";
+mes "Oooops....I don't think this machine will work anymore... I'll go better from here";
 close;
 end;
 l_nottake:

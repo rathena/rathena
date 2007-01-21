@@ -64,7 +64,7 @@ M_NO:
 L_DONE:
 	mes "[Bearded Man]";
 	mes "Sorry, I can only make one per person.";
-	mes "We dont want too many beards now. Right?";
+	mes "We don't want too many beards now. Right?";
 	emotion 29;
 	close;
 

@@ -643,13 +643,13 @@ L_NOZENY:
 	mes "You do not have enough zeny!";
 	close;
 L_WEIGHT:
-	mes "You cant hold that many of that item";
+	mes "You can't hold that many of that item!";
 	close;
 L_BELOW:
 	mes "You have to buy a POSITIVE amount of items!";
 	close;
 L_ABOVE:
-	mes "You cant buy this much of this item!";
+	mes "You can't buy this much of this item!";
 	close;
 }
 

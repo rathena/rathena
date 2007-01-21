@@ -489,7 +489,7 @@ int inter_guild_save() {
 	int lock;
 
 	if ((fp = lock_fopen(guild_txt, &lock)) == NULL) {
-		ShowError("int_guild: cant write [%s] !!! data is lost !!!\n", guild_txt);
+		ShowError("int_guild: can't write [%s] !!! data is lost !!!\n", guild_txt);
 		return 1;
 	}
 	guild_db->foreach(guild_db, inter_guild_save_sub, fp);
@@ -498,7 +498,7 @@ int inter_guild_save() {
 //	printf("int_guild: %s saved.\n", guild_txt);
 
 	if ((fp = lock_fopen(castle_txt,&lock)) == NULL) {
-		ShowError("int_guild: cant write [%s] !!! data is lost !!!\n", castle_txt);
+		ShowError("int_guild: can't write [%s] !!! data is lost !!!\n", castle_txt);
 		return 1;
 	}
 	castle_db->foreach(castle_db, inter_castle_save_sub, fp);

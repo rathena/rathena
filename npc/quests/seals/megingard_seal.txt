@@ -2955,7 +2955,7 @@ jawaii_in.gat,44,110,0	script	Security Officer#megin	734,{
 		mes "the paradise resort!";
 		next;
 		mes "[The Nineball]";
-		mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please dont hesitate to report to me as soon as you can~";
+		mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
 		next;
 		mes "[The Nineball]";
 		mes "I've been told that there have";
@@ -2971,7 +2971,7 @@ jawaii_in.gat,44,110,0	script	Security Officer#megin	734,{
 			mes "the paradise resort!";
 			next;
 			mes "[The Nineball]";
-			mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please dont hesitate to report to me as soon as you can~";
+			mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
 			next;
 			mes "[The Nineball]";
 			mes "I've been told that there have";
@@ -2998,7 +2998,7 @@ jawaii_in.gat,44,110,0	script	Security Officer#megin	734,{
 	mes "the paradise resort!";
 	next;
 	mes "[The Nineball]";
-	mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please dont hesitate to report to me as soon as you can~";
+	mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
 	next;
 	mes "[The Nineball]";
 	mes "I've been told that there have";

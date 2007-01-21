@@ -426,7 +426,7 @@ L_Test:
 	mes "This test will be on your knowledge of Knights.  You will also be asked about your opinions of Knights...";
 	next;
 	mes "[Sir James Syracuse]";
-	mes "Dont' be nervous, I'll only be asking a few simple questions.";
+	mes "Don't be nervous, I'll only be asking a few simple questions.";
 	next;
 	menu "Let's go",M_0,"I'm not ready yet.",M_End;
 	

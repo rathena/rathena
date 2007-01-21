@@ -106,7 +106,7 @@ int convert_init(void){
 		ShowStatus("Converting Storage Database...\n");
 		fp=fopen(storage_txt,"r");
 		if(fp==NULL){
-			ShowError("cant't read : %s\n",storage_txt);
+			ShowError("can't read : %s\n",storage_txt);
 			return 0;
 		}
 		lineno=count=0;
@@ -243,7 +243,7 @@ int convert_init(void){
 		ShowStatus("Converting Guild Storage Database...\n");
 		fp=fopen(guild_storage_txt,"r");
 		if(fp==NULL){
-			ShowError("cant't read : %s\n",guild_storage_txt);
+			ShowError("can't read : %s\n",guild_storage_txt);
 			return 0;
 		}
 		lineno=count=0;

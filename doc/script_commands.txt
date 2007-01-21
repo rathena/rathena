@@ -2200,7 +2200,7 @@ Maybe you want to make a room only guildmasters can enter:
         set @GID,getcharid(2);
         if(@GID==0) goto L_NoGuild;
         if(strcharinfo(0)==getguildmaster(@GID)) goto L_GuildMaster;
-        mes "Sorry you dont own the guild you are in";
+        mes "Sorry you don't own the guild you are in";
         close;
     L_NoGuild:
         mes "Sorry you are not in a guild";
@@ -2270,9 +2270,9 @@ something equiped:
         mes "What a lovely Tiara you have on";
         close;
 
-You can also use it to make sure people dont pass a point before removing an 
-item totally from them. Let's say you dont want people to wear Legion Plate 
-armor, but also dont want them to equip if after the check, you would do this:
+You can also use it to make sure people don't pass a point before removing an 
+item totally from them. Let's say you don't want people to wear Legion Plate 
+armor, but also don't want them to equip if after the check, you would do this:
 
         if ((getequipid(2) == 2341) || (getequipid(2) == 2342) goto L_EquipedLegionPlate; 
     // the || is used as an or argument, there is 2341 and 2342 cause there are 
@@ -2408,7 +2408,7 @@ equippable custom items as a flag or something.
 If no item is equipped in this slot, or if it doesn't have a weapon level 
 according to the database, 0 will be returned.
 
-    if(getequipweaponlv(4)==0) mes "Seems you dont have a weapon on";
+    if(getequipweaponlv(4)==0) mes "Seems you don't have a weapon on";
     if(getequipweaponlv(4)==1) mes "You are holding a lvl 1 weapon";
     if(getequipweaponlv(4)==2) mes "You are holding a lvl 2 weapon";
     if(getequipweaponlv(4)==3) mes "You are holding a lvl 3 weapon";
@@ -2660,7 +2660,7 @@ has a skill or not, and it can tell you if the level is high enough.
 Example 1:
 
         f (getskilllv(152)) goto L_HasSkillThrowStone;
-        mes "You dont have Throw Stone";
+        mes "You don't have Throw Stone";
         close;
     L_HasSkillThrowStone:
         mes "You have got the skill Throw Stone";

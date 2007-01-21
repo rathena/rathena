@@ -1,7 +1,7 @@
 airplane.gat,236,63,4    script    Hallen    55,{
     if (fragmentauest>3) {
 	mes "[Hallen]";
-	mes "Nice weather, isnt it?";
+	mes "Nice weather, isn't it?";
 	close;
 	}
 	if (fragmentauest==2) {
@@ -21,7 +21,7 @@ airplane.gat,236,63,4    script    Hallen    55,{
 	if (airshipquest != 5) {
             mes "[Hallen]";
             mes "You should better ask captain about the airship";
-            mes "You cant understand me if you dont do that...";
+            mes "You can't understand me if you don't do that...";
             close;
         };
         mes "You see its about the airship works. Heart of Ymir...";
@@ -31,7 +31,7 @@ airplane.gat,236,63,4    script    Hallen    55,{
 	next;
         mes "[Hallen]";
         mes "I really want to know something about it.. if somebody could help me...";
-        mes "pity I cant go to einbroch Laboratory...";
+        mes "pity I can't go to einbroch Laboratory...";
         mes "never mind it just my feelings. Thanks for help..";
         next;
         if (select("I can do it for you:Sup, guy..") == 1) {
@@ -64,7 +64,7 @@ airplane.gat,236,63,4    script    Hallen    55,{
         close;
     l_inter:
         mes "[Hallen]";
-        mes "You are really shy to tell us. ^_- It doesnt matter";
+        mes "You are really shy to tell us. ^_- It doesn't matter";
         mes "we all know about your doings.";
         mes "Glad to see such a hero i can say";
         close;

@@ -134,7 +134,7 @@ int inter_pet_save()
 	FILE *fp;
 	int lock;
 	if( (fp=lock_fopen(pet_txt,&lock))==NULL ){
-		ShowError("int_pet: cant write [%s] !!! data is lost !!!\n",pet_txt);
+		ShowError("int_pet: can't write [%s] !!! data is lost !!!\n",pet_txt);
 		return 1;
 	}
 	pet_db->foreach(pet_db,inter_pet_save_sub,fp);

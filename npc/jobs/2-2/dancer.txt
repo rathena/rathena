@@ -107,7 +107,7 @@ Larcher:
 	mes "Sightseers visit from all other the place, to watch the dancers.";
 	next;
 	mes "[Aire]";
-	mes "We can also train new dancers here, obviously for a price, we dont want to go out of business.";
+	mes "We can also train new dancers here, obviously for a price, we don't want to go out of business.";
 	next;
 	mes "[Aire]";
 	mes "You must first fill in the application form.";
@@ -205,7 +205,7 @@ LItem1:
 	if ((countitem(938) >= 20) && (countitem(501) >= 5) && (countitem(909) >= 3) && (countitem(2403) >= 1) && (Zeny >= 10000)) goto LItem1OK;
 	mes "[Aire]";
 	mes "Something is wrong here.";
-	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "Seems you don't have enough items, we need everything that was asked for.";
 	mes "They are all necessary for you to be taught.";
 	mes "In case you have forgotten, please bring.";
 	next;
@@ -217,14 +217,14 @@ LItem1:
 	mes "^0000FF3 Jellopy^000000";
 	next;
 	mes "[Aire]";
-	mes "Dont forget to get everything.";
+	mes "Don't forget to get everything.";
 	mes "What are you waiting for?";
 	mes "see you back here soon";
 	close;
 LItem2:
 	if ((countitem(1055) >= 5) && (countitem(2405) >= 1) && (Zeny >= 10000)) goto LItem2OK;
 	mes "Something is wrong here.";
-	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "Seems you don't have enough items, we need everything that was asked for.";
 	mes "They are all necessary for you to be taught.";
 	mes "In case you have forgotten, please bring.";
 	next;
@@ -234,14 +234,14 @@ LItem2:
 	mes "^0000FF5 earthworm skins^000000";
 	next;
 	mes "[Aire]";
-	mes "Dont forget to get everything.";
+	mes "Don't forget to get everything.";
 	mes "What are you waiting for?";
 	mes "see you back here soon";
 	close;
 LItem3:
 	if ((countitem(965) >= 2) && (countitem(503) >= 5) && (countitem(909) >= 20) && (countitem(1020) >= 10) && (countitem(2401) >= 1)) goto LItem3OK;
 	mes "Something is wrong here.";
-	mes "Seems you dont have enough items, we need everything that was asked for.";
+	mes "Seems you don't have enough items, we need everything that was asked for.";
 	mes "They are all necessary for you to be taught.";
 	mes "In case you have forgotten, please bring.";
 	next;
@@ -253,7 +253,7 @@ LItem3:
 	mes "^0000FF10 Black Hair^000000";
 	next;
 	mes "[Aire]";
-	mes "Dont forget to get everything.";
+	mes "Don't forget to get everything.";
 	mes "What are you waiting for?";
 	mes "see you back here soon";
 	close;
@@ -635,7 +635,7 @@ LStart2:
 		mes "There are some other things you will need to do, so just be ready with your skills and bow just incase.";
 		next;
 		mes "[Bijou]";
-		mes "Dont worry if you have no experience of dance, that is what this is for, so you dont need to worry.";
+		mes "Don't worry if you have no experience of dance, that is what this is for, so you don't need to worry.";
 		close;
 	Lwarp:
 		mes "[Bijou]";

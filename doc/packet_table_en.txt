@@ -212,7 +212,7 @@ R 0092 <map name>.16B <X>.w <Y>.w <IP>.l <port>.w
 	map change to the other server
 R 0093
 	8月中に1回だけ観測。謎
-	this packet observed in august once. i dont know what it is.
+	this packet observed in august once. i don't know what it is.
 S 0094 <ID>.l
 	IDのキャラ名等要求。0095か0195の返答があるはず
 	request a character name for ID. 0095 or 0195 response is expected.
@@ -680,7 +680,7 @@ R 0119 <ID>.l <param1>.w <param2>.w <param3>.w ?.B
 	param2=20 ANGELUS状態?
 	param2=20 ANGELUS?
 	param3=01 サイトかルワッチ?
-	param3-01 site or ruwatch? (i dont know skill names in english :()
+	param3-01 sight or ruwach?
 	param3=0b ハイディング状態?
 	param3=0b hiding?
 	param3=0b クローキング状態?

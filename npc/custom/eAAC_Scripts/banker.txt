@@ -183,7 +183,7 @@ next;
 		next;
 		mes @npcname$;
 		mes "So, you want to exchange "+@coinamount+" "+@coinname$+" ?";
-		menu "Yes, I want to exchange this much",L_Proceed,"No, I want to exchange something else",L_CoinZeny,"No, I want to input another number",L_Inputing,"No, I dont want to exchange anything",L_Menu;
+		menu "Yes, I want to exchange this much",L_Proceed,"No, I want to exchange something else",L_CoinZeny,"No, I want to input another number",L_Inputing,"No, I don't want to exchange anything",L_Menu;
 
 	L_Proceed:
 		next;
@@ -429,7 +429,7 @@ L_Mix:
 	if (@totalzeny > @zenyamount || @totalzeny < 0) goto L_Overzeny;
 	mes @npcname$;
 	mes "Is this ok?: "+@bronzecoins+" "+@name1$+"s, "+@silvercoins+" "+@name2$+"s, "+@goldcoins+" "+@name3$+"s, "+@mithrilcoins+" "+@name4$+"s, for a total amount of "+@totalzeny;
-	menu "Yes, it's ok",L_Payoff,"No, I want to re-intro them",L_Mix,"Sorry, I dont want anything",L_Menu;
+	menu "Yes, it's ok",L_Payoff,"No, I want to re-intro them",L_Mix,"Sorry, I don't want anything",L_Menu;
 
 L_Payoff:
 	next;

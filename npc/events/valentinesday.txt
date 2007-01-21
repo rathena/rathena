@@ -40,7 +40,7 @@ M_CHOCO:
 	mes "I knew it!";
 	mes "But I can't sell you more then 5 at once....but, if you really need more....";
 	mes "you can come back again.";
-	mes "So how many do u want?";
+	mes "So how many do you want?";
 	next;
 	set @needmon,0;
 	input @flag_num;
@@ -59,13 +59,13 @@ M_CHOCO:
 
 L_ERR:
 	mes "[Stephen]";
-	mes "I'm sorry but I can't give u that many.";
+	mes "I'm sorry but I can't give you that many.";
 L_NONE:
 	close;
 
 L_NOTENO:
 	mes "[Stephen]";
-	mes "I'm sorry but it seems u cant afford to buy these off me";
+	mes "I'm sorry but it seems you can't afford to buy these off me.";
 	close;
 }
 

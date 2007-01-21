@@ -1093,7 +1093,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd) {
 		return c; //Only Normalize non-first classes (and non-super novice)
 	
 	skill_point = pc_calc_skillpoint(sd);
-	if(pc_checkskill(sd, NV_BASIC) < 9) //Consider Novice Tree when you dont have NV_BASIC maxed.
+	if(pc_checkskill(sd, NV_BASIC) < 9) //Consider Novice Tree when you don't have NV_BASIC maxed.
 		c = MAPID_NOVICE;
 	else if (sd->status.skill_point >= (int)sd->status.job_level
 		&& ((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
@@ -5057,7 +5057,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 
-	if(map[sd->bl.m].flag.pvp_nightmaredrop){ // Moved this outside so it works when PVP isnt enabled and during pk mode [Ancyker]
+	if(map[sd->bl.m].flag.pvp_nightmaredrop){ // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
 			int type = map[sd->bl.m].drop_list[j].drop_type;

@@ -47,7 +47,7 @@ close;
 
 l_not:
 mes "[Kamenasai]";
-mes "It's a pity. But i cant make you change your mind. GL&HF guy. Cya";
+mes "It's a pity. But i can't make you change your mind. GL&HF guy. Cya";
 close;
 }
 
@@ -72,7 +72,7 @@ next;
 menu "Well, i'm, from Kamenasai",-,"hm... Can i borow some money? ^_-",l_nothing;
 mes "[Kazien]";
 mes "Oh, sorry my friend. You come to help me, don't you.";
-mes "Thanks alot. I'm too busy here and cant go myself, so i let my frind to help me";
+mes "Thanks alot. I'm too busy here and can't go myself, so i let my frind to help me";
 mes "His choice is you... So. Can you keep a secret?";
 next;
 menu "Of course i can",-,"i'm not sure.",l_goaway;
@@ -83,7 +83,7 @@ close;
 
 l_nothing:
 mes "[Kazien]";
-mes "Then, please leave me alone. I dont have any wish to speak to you.";
+mes "Then, please leave me alone. I don't have any wish to speak to you.";
 close;
 
 l_goaway:
@@ -93,7 +93,7 @@ close;
 
 l_part1:
 mes "[Kazien]";
-mes "I see. You dont tell That guard about your quest, so i can rely on you. It was your first task.";
+mes "I see. You don't tell That guard about your quest, so i can rely on you. It was your first task.";
 mes "Now i shall tell you all. I am trying to make some buisness. But i can't deliver goods by myself.";
 mes "So i need somebody. And this somebody is you, "+strcharinfo(0)+".";
 next;
@@ -112,8 +112,8 @@ close;
 l_nochance:
 if (rand(10)==9) goto l_forget;
 mes "[Kazien]";
-mes "You cant keep any secret! What do you want from me?";
-mes "I dont want to see you anymore! Go somewhere else and never come here!";
+mes "You can't keep any secret! What do you want from me?";
+mes "I don't want to see you anymore! Go somewhere else and never come here!";
 close;
 
 l_wtfisthat:
@@ -131,12 +131,12 @@ close;
 l_zadolbal:
 if (quest_shadow_misc==2) goto l_leftthis;
 mes "[Kazien]";
-mes "Hm... He dont answer...You know thats strange. Something is wrong..";
+mes "Hm... He doesn't answer...You know that's strange. Something is wrong..";
 mes "And this something can destroy our plans....";
 next;
 menu "Also bandits.. and goods",-,"In every way i'm leaving this",l_leftthis;
 mes "[Kazien]";
-mes "Hm.. So you dont still receive goods.. And you say that bandits atack you...";
+mes "Hm.. So you don't still receive goods.. And you say that bandits atack you...";
 mes "Now i understand. Go to Lyozien and be careful!";
 monster "airplane_01.gat",96,48,"Rogue",1268,1,"Man::OnMyMobDeath";
 getexp 150000,0;
@@ -159,7 +159,7 @@ menu "Everything was really cool. I have lots of fun",-,"It was the wersest thin
 mes "[Kazien]";
 mes "Well... in everycase.^_^ I think you were really a good comrad";
 mes "["+strcharinfo(0)+"]";
-mes "I dont think so about you. Because i work for you and i must know what ware the goods";
+mes "I don't think so about you. Because i work for you and i must know what ware the goods";
 next;
 mes "[Kazien]";
 mes "Don't you think that it was me who give you work, let me dicide what you must know";
@@ -180,7 +180,7 @@ mes "...................................";
 mes "[Kazien]";
 mes "Well... in everycase. I think you were really a good comrade";
 mes "["+strcharinfo(0)+"]";
-mes "I dont think so. Because i work for you and i must know what was there";
+mes "I don't think so. Because i work for you and i must know what was there";
 next;
 mes "[Kazien]";
 mes "Don't you think that it was me who give you work, let me dicide what you must know";
@@ -224,7 +224,7 @@ mes "...................................";
 mes "[Kazien]";
 mes "Well... in everycase. I think you were really a good comrade";
 mes "["+strcharinfo(0)+"]";
-mes "I dont think so. Because i work for you and i must know what was there";
+mes "I don't think so. Because i work for you and i must know what was there";
 next;
 mes "[Kazien]";
 mes "Don't you think that it was me who give you work, let me dicide what you must know";
@@ -250,10 +250,10 @@ close;
 
 l_done:
 mes "[Guard]";
-mes "Hey. Stop. What do you want here? Dont you know that this is restrickted zone?";
+mes "Hey. Stop. What do you want here? Don't you know that this is restrickted zone?";
 mes "Tell me why are you here?";
 next;
-menu "Well...I'm leaving now. I dont know that",-,"Hm... Kazien asked me to find Garins.",l_garins;
+menu "Well...I'm leaving now. I don't know that",-,"Hm... Kazien asked me to find Garins.",l_garins;
 close2;
 set quest_shadow,4;
 end;
@@ -314,7 +314,7 @@ close;
 
 l_talked:
 mes "[Lyozien]";
-mes "Well... You say He dont answer... I suppose You better go to Kazien and tell him this.";
+mes "Well... You say He doesn't answer... I suppose You better go to Kazien and tell him this.";
 mes "It seemes to that it wasnt our plan.. i fear... Noway. Hurry up to Kazien";
 set quest_shadow,8;
 close;
@@ -322,7 +322,7 @@ close;
 l_nuinah:
 if mobcount("airplane_01.gat","Man::OnMyMobDeath")==0 goto ondeath;
 mes "[Lyozien]";
-mes "Well.. I really dont know. But i will never tell you wat are the goods";
+mes "Well.. I really don't know. But i will never tell you wat are the goods";
 mes "hey, Bandit is there! LOOK!!!";
 close;
 
@@ -407,7 +407,7 @@ mes "[Ahmar]";
 mes "You look very ill. You know?";
 next;
 mes "["+strcharinfo(0)+"]";
-mes "I dunno. Dont you know about atack on your goods? Some of them were broken. And i examine them..";
+mes "I dunno. Don't you know about atack on your goods? Some of them were broken. And i examine them..";
 next;
 mes "[Ahmer]";
 mes "What?? You look at them?? Its bad. go to Lyozine. Hurry!";

@@ -482,7 +482,7 @@ aldebaran.gat,137,118,5	script	Fredzilla	4020,0,0,{
  	npcspeed 140;
 OnTouch:
 	mes "[Fredzilla]";
-	mes "I dont really know what I do";
+	mes "I don't really know what I do";
 	mes "Well I have made some scripts, translated some scripts and corrected some scripts.";
 	next;
 	mes "[Fredzilla]";

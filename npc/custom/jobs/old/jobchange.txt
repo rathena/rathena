@@ -267,7 +267,7 @@ Lsniper:
 	jobchange 35;// Job: Job_Sniper
 	next;
 	mes "[ ^0065DFJobra^000000 ]";
-	mes "You know what... since I'm just soooo nice... (as long as you dont piss me off *grumble grumble*)";
+	mes "You know what... since I'm just soooo nice... (as long as you don't piss me off *grumble grumble*)";
 	mes "I'm gonna give you a complimentary falcon! Use it well! Oh.. and you might wanna wear a hat, this falcon sometimes, uh... poops..";
 	cutin "kafra_01",255;
 	setfalcon;
@@ -464,7 +464,7 @@ LSecondClass:
 		jobchange 11;// Job: Job_Hunter
 		next;
 		mes "[ ^0065DFJobra^000000 ]";
-		mes "You know what... since I'm just soooo nice... (as long as you dont piss me off *grumble grumble*)";
+		mes "You know what... since I'm just soooo nice... (as long as you don't piss me off *grumble grumble*)";
 		mes "I'm gonna give you a complimentary falcon! Use it well! Oh.. and you might wanna wear a hat, this falcon sometimes, uh... poops..";
 		cutin "kafra_01",255;
 		setfalcon;
@@ -476,7 +476,7 @@ LSecondClass:
 		next;
 		mes "[ ^0065DFJobra^000000 ]";
 		mes "YOU'RE NOT AN ARCHER >_<....";
-		mes "WTF?! Do you really think you can magically turn into a Hunter!? I DONT THINK SO BIYATCH!!! >8-(...";
+		mes "WTF?! Do you really think you can magically turn into a Hunter!? I DON'T THINK SO BIYATCH!!! >8-(...";
 		mes "Go away! *grumble grumble*";
 		cutin "kafra_01",255;
 		close;

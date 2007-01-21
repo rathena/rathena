@@ -2094,7 +2094,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 		mes "And I am going to pay you back!";
 		mes "I have traveled to a lot of places,";
 		mes "and learn to create a lot of things.";
-		mes "May I know what do you wnat?";
+		mes "May I know what do you want?";
 		next;
 		mes "[Human]";
 		mes "Oh yes..."; //here we go again =3
@@ -3220,7 +3220,7 @@ in_orcs01.gat,31,93,1	script	Orc Warrior#1	1023,2,2{
 				mes "[Orc Warrior]";
 				mes "And, don't question me.";
 				mes "I won't give you the rights to question my opinion.";
-				mes "And dont you dream that,";
+				mes "And don't you dream that,";
 				mes "I will give you anything.";
 				mes "Do you still want to talk under these circumstances?";
 				mes "Decendent of human?";

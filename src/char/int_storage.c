@@ -199,7 +199,7 @@ int inter_storage_init()
 
 	fp=fopen(storage_txt,"r");
 	if(fp==NULL){
-		ShowError("cant't read : %s\n",storage_txt);
+		ShowError("can't read : %s\n",storage_txt);
 		return 1;
 	}
 	while(fgets(line,65535,fp)){
@@ -227,7 +227,7 @@ int inter_storage_init()
 
 	fp=fopen(guild_storage_txt,"r");
 	if(fp==NULL){
-		ShowError("cant't read : %s\n",guild_storage_txt);
+		ShowError("can't read : %s\n",guild_storage_txt);
 		return 1;
 	}
 	while(fgets(line,65535,fp)){
@@ -276,7 +276,7 @@ int inter_storage_save()
 	FILE *fp;
 	int lock;
 	if( (fp=lock_fopen(storage_txt,&lock))==NULL ){
-		ShowError("int_storage: cant write [%s] !!! data is lost !!!\n",storage_txt);
+		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",storage_txt);
 		return 1;
 	}
 	storage_db->foreach(storage_db,inter_storage_save_sub,fp);
@@ -304,7 +304,7 @@ int inter_guild_storage_save()
 	FILE *fp;
 	int  lock;
 	if( (fp=lock_fopen(guild_storage_txt,&lock))==NULL ){
-		ShowError("int_storage: cant write [%s] !!! data is lost !!!\n",guild_storage_txt);
+		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",guild_storage_txt);
 		return 1;
 	}
 	guild_storage_db->foreach(guild_storage_db,inter_guild_storage_save_sub,fp);

@@ -82,7 +82,7 @@ mes "There are Plenty of rooms with MVP's in them so don't all fight over the on
 next;
 mes "If you can't get along, and there is too much complaining about people stealing MVP kills and items... then this place will be removed.";
 next;
-mes "Now the npc's are in groups of monsters, there are 4 different mvps per each npc, i wont tell you which it's a surprise hehe.";
+mes "Now the npc's are in groups of monsters, there are 4 different mvps per each npc, i won't tell you which it's a surprise hehe.";
 next;
 mes "Good luck, Live long and Prosper!.";
 close;

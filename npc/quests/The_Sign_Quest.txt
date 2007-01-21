@@ -5803,7 +5803,7 @@ L_Success:
 	delitem 7177,countitem(7177); //we delete all the pieces, or else u can't reborn
 	mes "While you were gone, I managed to";
 	mes "restore the Sobbing Starlight. Why";
-	mes "dont you go ahead and take a";
+	mes "don't you go ahead and take a";
 	mes "look?";
 	next;
 	getitem 7178,1;
@@ -8174,7 +8174,7 @@ que_sign01.gat,122,141,5	script	Witch#2	792,{
 	mes "anyone know that I've asked";
 	mes "you to bring me the Symbol of";
 	mes "Nine Realms. I especially";
-	mes "dont want Serin to find out.";
+	mes "don't want Serin to find out.";
 	next;
 	mes "[Kirkena]";
 	mes "If I can help it,";

@@ -58,7 +58,7 @@ L_NameLoop:
 	set @num,@num+1;
 	if(@num<10) goto L_NameLoop;
 	if(getarraysize($AItems)==10) goto L_AFull;
-	menu "I want to register an item now",L_IRegister,"I dont want to leave an item",-;
+	menu "I want to register an item now",L_IRegister,"I don't want to leave an item",-;
 L_End:
 	mes "[Auctioneer]";
 	mes "Ok, come back whenever";
@@ -183,7 +183,7 @@ L_AItemsLoop:
 	close;
 L_NotEnough:
 	mes "[Auctioneer]";
-	mes "Seems you dont have that much "+getitemname(@setitem)+"'s";
+	mes "Seems you don't have that much "+getitemname(@setitem)+"'s";
 	close;
 // If the Auction has enterd phase 2, it will run this, during this time items you can bid on registerd
 // No items can be retrieved during this time, they are now stuck
@@ -238,7 +238,7 @@ L_LowZeny:
 	mes "Please either get more money, or bid lower";
 	close;
 L_CantBid:
-	mes "Sorry, you cant bid on your own lots";
+	mes "Sorry, you can't bid on your own lots";
 	close;
 L_LowBid:
 	mes "[Auctioneer]";
@@ -342,7 +342,7 @@ L_Winner:
 	close;
 L_2lowzeny:
 	mes "[Auctioneer]";
-	mes "Sorry it seems you dont have enough zeny on you, please acquire more";
+	mes "Sorry it seems you don't have enough zeny on you, please acquire more";
 	close;
 L_Back:
 	mes "[Auctioneer]";

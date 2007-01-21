@@ -163,7 +163,7 @@ int inter_homun_save()
 	FILE *fp;
 	int lock;
 	if( (fp=lock_fopen(homun_txt,&lock))==NULL ){
-		ShowError("int_homun: cant write [%s] !!! data is lost !!!\n",homun_txt);
+		ShowError("int_homun: can't write [%s] !!! data is lost !!!\n",homun_txt);
 		return 1;
 	}
 	homun_db->foreach(homun_db,inter_homun_save_sub,fp);

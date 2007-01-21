@@ -32,7 +32,7 @@ alberta.gat,188,64,4	script	Sugar	91,{
 	mes "heartfelt like";
 	mes "the sweetness of the present some how.";
 	next;
-	menu "Please give me!",-,"I dont need it.",M_END,"The teacher.",M_L1;
+	menu "Please give me!",-,"I don't need it.",M_END,"The teacher.",M_L1;
 
 	mes "[Sugar]";
 	mes "Yes!";
@@ -82,7 +82,7 @@ L_INPUT:
 	mes "These sweets are really delicious.";
 	mes "Since my teacher of sweet is the No.1 teacher's in world!";
 	mes "Although you may eat by yourself";
-	mes "dont eat so much or you'll grow fat.";
+	mes "don't eat so much or you'll grow fat.";
 	mes "Please take care!!!";
 	close;
 
@@ -97,7 +97,7 @@ M_L1:
 	mes "[Sugar]";
 	mes "Although selling is seemingly to carried out ....";
 	mes "Where he is now?";
-	mes "Which I dont know.";
+	mes "Which I don't know.";
 	close;
 
 L_ERROR:

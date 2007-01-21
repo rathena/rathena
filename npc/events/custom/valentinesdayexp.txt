@@ -125,7 +125,7 @@ L_NONE:
 
 L_NOTENO:
 	mes "[Stephen]";
-	mes "I'm sorry but it seems you cant afford to buy these of me.";
+	mes "I'm sorry but it seems you can't afford to buy these of me.";
 	close;
 }
 
@@ -188,7 +188,7 @@ L_NONE:
 
 L_NOTENO:
 	mes "[Jainie]";
-	mes "I'm sorry but it seems you cant afford to buy these of me.";
+	mes "I'm sorry but it seems you can't afford to buy these of me.";
 	close;
 
 L_NOMILK:

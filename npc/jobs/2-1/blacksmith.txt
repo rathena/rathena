@@ -700,10 +700,10 @@ L_CheckTest2:
 		mes "ULTRA GLADIUS Geshupenschte Mk II!!";
 		next;
 		mes "[Geshupenschte]";
-		mes "Isnt it so pretty ^_^";
+		mes "Isn't it so pretty ^_^";
 		next;
 		mes "[Geshupenschte]";
-		mes "Well, go to Morroc and give it the Wickebine and bring the receipt back.";
+		mes "Well, go to Morroc and give it to Wickebine and bring the receipt back.";
 		close;
 
 		sL_NtEnuf2:

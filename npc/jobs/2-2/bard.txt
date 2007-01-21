@@ -123,7 +123,7 @@ M_1:
 	next;
 	mes "[Lalo]";
 	mes "Hmm.. that's always a good song to sing.";
-	mes "How it was it? Dont you think it's a nice song?";
+	mes "How it was it? Don't you think it's a nice song?";
 	next;
 	menu "Yes, it was really nice",-,"No, not really...",M_NO;
 
@@ -156,7 +156,7 @@ M_NOTHING:
 	mes "[Lalo]";
 	mes "Hunting is good... but you can't";
 	mes "forget to relax once in a while.";
-	mes "Youth is short and wont come again";
+	mes "Youth is short and won't come again";
 	mes "once it passes by..";
 	close;
 
@@ -197,7 +197,7 @@ L_UGLYFLOWER:
 M_NOTHAVE:
 	mes "[Lalo]";
 	mes "Well suit your self.";
-	mes "I dont like that flower anyway.";
+	mes "I don't like that flower anyway.";
 	close;
 
 L_FLOWER1:

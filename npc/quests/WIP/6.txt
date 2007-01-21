@@ -11,7 +11,7 @@ close;
 if (airshipquest==3) {
 mes "[Fayroll]";
 mes "Oh, you have finished that work. Great. Now i shall read this letter.";
-mes "Dont interrupt me please";
+mes "Don't interrupt me please";
 delitem 7276,1;
 set airshipquest,4;
 //addtimer 30000,"Captain::OnFinish";  Возможно сделать так. Но тут по таймеру, а не по кликам на НПЦ
@@ -38,20 +38,20 @@ if (select("yes,about airships:no, nothing") == 1) {
 	menu "I will help you. But what must I do?",-,"No, sorry, I have no time for this.",L_SORRY;
 		mes "[Fayroll]";
 		mes " You see, I have a brother. He is also a captain of airplane in Juno to Lighthalzen airship.";
-		mes "As we are on different ships, i cant communicate with him. Yor is to deliver this letter to him.";
+		mes "As we are on different ships, i can't communicate with him. Yor is to deliver this letter to him.";
 		mes "If you will do this, I shall tell you the secret.";
 		getitem 7276,1;  //Tarloks letter. Не нашел в базе
 		set airshipquest,1;
 } else {
 	mes "[Fayroll]";
-	mes "Then dont interrupt me. I have alot of work to do.";
+	mes "Then don't interrupt me. I have a lot of work to do.";
 	mes "Go to the Casino on ship. And spen some time there";
 }
 close;
 
 L_SORRY:
 mes "[Fayroll]";
-mes "Ye this is bad, but i cant insist on it. Follow your way";
+mes "Ye this is bad, but i can't insist on it. Follow your way";
 mes "See you the other day.";
 close;
 
@@ -66,8 +66,8 @@ mes "that moves the giant beauty. Do you understand now?";
 next;
 menu "Is That all???",-;
 mes "[Fayroll]";
-mes "You cant lift this thing up only with steam.";
-mes "thats why the machien ^5566FF'Enchancer'^000000 is used";
+mes "You can't lift this thing up only with steam.";
+mes "thats why the machine ^5566FF'Enchancer'^000000 is used";
 mes "It is working on Heart of Ymir. Thats all the secret. Now go.";
 set airshipquest,0;
 getexp 200000,10000;

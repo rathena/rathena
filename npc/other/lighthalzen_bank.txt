@@ -31,8 +31,8 @@ lhz_in02.gat,28,39,3	script	Helen	703,{
 	mes "[Helen]";
 	mes "You know, maybe when";
 	mes "I grow up, i'll be a bank";
-	mes "clerk. That sounds liek a";
-	mes "really nice jobm, don't you";
+	mes "clerk. That sounds like a";
+	mes "really nice job, don't you";
 	mes "think? It's laid back and posh...";
 	close;
 }

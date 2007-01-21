@@ -8640,7 +8640,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 
 	message = (unsigned char*)RFIFOP(fd,4);
 	if (strlen(message) < strlen(sd->status.name) || //If the incoming string is too short...
-		strncmp(message, sd->status.name, strlen(sd->status.name)) != 0) //Or the name does not matches...
+		strncmp(message, sd->status.name, strlen(sd->status.name)) != 0) //Or the name does not match...
 	{
 		//Hacked message, or infamous "client desynch" issue where they pick
 		//one char while loading another. Just kick them out to correct it.
@@ -9129,14 +9129,14 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	// player is on this map-server
 	if (dstsd->fd == fd) {
 		// if you send to your self, don't send anything to others
-		// but, normaly, it's impossible!
+		// but, normally, it's impossible!
 		clif_wis_message(fd, wisp_server_name,
 			"You can not page yourself. Sorry.",
 			strlen("You can not page yourself. Sorry.") + 1);
 		aFree(command);
 		return;
 	}
-	// otherwise, send message and answer immediatly
+	// otherwise, send message and answer immediately
 	if (dstsd->state.ignoreAll) {
 		if (dstsd->sc.option & OPTION_INVISIBLE && pc_isGM(sd) < pc_isGM(dstsd))
 			clif_wis_end(fd, 1); // 1: target character is not loged in
@@ -11829,7 +11829,7 @@ int clif_parse(int fd) {
 		dump = 1;
 
 		if ((fp = fopen(packet_txt, "a")) == NULL) {
-			ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
+			ShowError("clif.c: can't write [%s] !!! data is lost !!!\n", packet_txt);
 			return 1;
 		} else {
 			time(&now);
@@ -11878,7 +11878,7 @@ int clif_parse(int fd) {
 		dump = 1;
 
 		if ((fp = fopen(packet_txt, "a")) == NULL) {
-			ShowError("clif.c: cant write [%s] !!! data is lost !!!\n", packet_txt);
+			ShowError("clif.c: can't write [%s] !!! data is lost !!!\n", packet_txt);
 			return 1;
 		} else {
 			time(&now);
@@ -12304,7 +12304,7 @@ int do_init_clif(void) {
 
 	set_defaultparse(clif_parse);
 	if (!make_listen_bind(bind_ip,map_port)) {
-		ShowFatalError("cant bind game port\n");
+		ShowFatalError("can't bind game port\n");
 		exit(1);
 	}
 

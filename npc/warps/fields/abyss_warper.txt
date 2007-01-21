@@ -45,7 +45,7 @@ L_Check:
 	end;
 
 L_No_Items:
-	mes "You dont have enough items";
+	mes "You don't have enough items";
 	close;
 
 OnTimer10000:

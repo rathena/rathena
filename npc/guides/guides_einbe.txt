@@ -66,7 +66,7 @@ L_TOOL:
 	goto L_WIPE;
 L_SWORD:
 	mes "[Einbech Guide]";
-	mes "The Swordman Guild is located in the eastern outskirts of Einbech. ";
+	mes "The Swordman Guild is located in the eastern outskirts of Einbech.";
 	mes "It's under construction and they haven't started accepting applications.";
 	viewpoint 1,253,109,4,0xFF00FF;
 	next; 

@@ -72,7 +72,7 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 			mes "[Dwayne]";
 			mes "Hahahaha~";
 			mes "You can't fool me!";
-			mes "You dont have enough";
+			mes "You don't have enough";
 			mes "Zeny for that many!";
 			close;
 		}
