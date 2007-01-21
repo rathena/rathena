@@ -8039,7 +8039,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 			clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
 			return 0;
-		}				
+		}
 		break;
 	case MO_CALLSPIRITS:
 		if(sd->spiritball >= lv) {

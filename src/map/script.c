@@ -61,8 +61,11 @@
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
 /// Returns the index of the last data in the stack
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
+/// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+/// Returns if the stack data is a string
 #define script_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
+/// Returns if the stack data is an int
 #define script_isint(data) ( (data)->type == C_INT )
 
 #define FETCH(n, t) \
@@ -1368,13 +1371,13 @@ const char* parse_syntax(const char* p) {
 
 			// ğŒ‚ª‹U‚È‚çI—¹’n“_‚É”ò‚Î‚·
 			sprintf(label,"__WL%x_FIN",syntax.curly[syntax.curly_count].index);
+			syntax.curly_count++;
 			add_scriptl(add_str("jump_zero"));
 			add_scriptc(C_ARG);
 			p=parse_expr(p);
 			p=skip_space(p);
 			add_scriptl(add_str(label));
 			add_scriptc(C_FUNC);
-			syntax.curly_count++;
 			return p;
 		}
 		break;
