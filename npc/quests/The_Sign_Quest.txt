@@ -2450,7 +2450,7 @@ if($signmazemonster == 0)
 }
 else
 {
-	killmonster "prt_maze02.gat","OnMonsterDead";
+	killmonster "prt_maze02.gat","Sign_Alch_Summon::OnMonsterDead";
 	set $signmazemonster,0;
 	goto Loopback;
 }

@@ -1148,7 +1148,7 @@ sF_Spin:
 
 
 // Kafra Pavianne -----------------------------
-aldeba_in.gat,81,166,4	script	Kafra Pavianee	117,{
+aldeba_in.gat,81,166,4	script	Kafra Pavianne	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Pavianne]";
 	mes "Welcome! I'm Pavianne,";

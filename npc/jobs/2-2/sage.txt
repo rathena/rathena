@@ -22,7 +22,7 @@
 //= 1.7 Fixed tuition fee. Fixed some answers, names & typos, added missing labels [Lupus]
 //= 1.7a Moved JFunc back in the main file, fixed typos [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
-//= 2.0a Fixed double warp [KarLaeda] 
+//= 2.0a Fixed double warp [KarLaeda]
 //============================================================ 
 
 

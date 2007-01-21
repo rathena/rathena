@@ -24,10 +24,11 @@
 //= 3.2 - Fixed a problem where eAthena would crash if a
 //=	  query returned NULL.
 //= 3.3 - Optimized query speeds by combining a few select 
-//=	  queries into one. Requires Trunk 7975.
+//=	  queries into one. Requires Trunk 7975 OR
+//=	  Stable 8637.
 //===== Compatible With =====================================
 //= eAthena - any version that contains the new query_sql
-//=	      command (Trunk 7975).
+//=	      command (Stable 8637 OR Trunk 7975).
 //===== Description =========================================
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.

@@ -4,13 +4,6 @@ Lupus
 	* Looking for exploits, optimization, bugs hunt
 	* Adding new cards, checking/adding mobs/items
 	* EXP quests for Blacksmith, Merchant, Alchemist
-Mass Zero
-	* Fixing grammatical errors.
-	* Fixing small bugs.
-	* Adding small stuff.
-	* Redoing lots of the custom scripts.
-Massdriller
-	* Correcting & Bugfixing scripts
 erKURITA
 	* Warps maintainment
 Evera
@@ -33,6 +26,11 @@ KarLaeda
 
 Date		Added
 ======
+2007/01/21
+	* Synchronization of the trunk&stable npc directories [ultramage]
+	- fixed one sign quest OnMonsterDead bug (copy from stable)
+	- removed the temp sign quest script
+	- some minor typo hunting
 2007/01/12
 	* Fixed exploits in Valentine Event Scripts [KarLaeda]
 2007/01/11

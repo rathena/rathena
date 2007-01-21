@@ -70,7 +70,7 @@ niflheim.gat,186,190,5	script	Wandering Man	798,{
 	viewpoint 2,219,198,2,0xCC6600;
 	viewpoint 2,219,170,3,0x66FF33;
 	viewpoint 2,189,210,4,0x3366FF;
-	mes "[Wandering  Man]";
+	mes "[Wandering Man]";
 	mes "I removed all the indications,";
 	mes "If you still need any directions, come back and talk to me again.";
 	close;
