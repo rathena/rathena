@@ -20,6 +20,8 @@
 
 ========================
 
+01/21
+	* Fixed equip location of Father's Mustaches and Father's Sunglasses [Lupus]
 01/18
 	* Fixed Ulle's Cap + Odin's Blessing Combo, thanks to happylight [Lupus]
 01/06

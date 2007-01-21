@@ -1734,7 +1734,7 @@
 5151,Headset_OST,Note Headphones,5,20,,200,,4,,1,0xFFFFFFFF,7,2,768,,0,1,220,{ bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000; },{},{}
 5152,Chinese_Crown,Phoenix Crown,5,20,,2000,,2,,0,0xFFFFFFFF,7,2,768,,1,1,221,{ bonus2 bResEff,Eff_Stun,1000; bonus bInt,1; },{},{}
 5153,Angeling_Hair_Pin,Angeling Pin,5,20,,700,,3,,0,0xFFFFFFFF,7,2,256,,0,1,222,{ bonus bFlee,5; if (isequipped(2358)==0) end; bonus bLuk,6; bonus bFlee,5; bonus bInt,2; },{},{}
-5154,Sunglasses_F,Father's Sunglasses,5,20,,100,,3,,0,0xFFFFFFFF,7,2,256,,0,0,12,{},{},{}
+5154,Sunglasses_F,Father's Sunglasses,5,20,,100,,3,,0,0xFFFFFFFF,7,2,512,,0,0,12,{},{},{}
 5155,Granpa_Beard_F,Father's White Beard,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,25,{ bonus bBaseAtk,20; },{},{}
 5156,Flu_Mask_F,Father's Mask,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,0,0,8,{ bonus bMatkRate,1; },{},{}
 5157,Viking_Helm_,Orc Helm,5,20,,500,,5,,1,0x000654E2,7,2,256,,0,1,86,{},{},{}
