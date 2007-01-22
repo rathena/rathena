@@ -4403,7 +4403,7 @@ int buildin_menu(struct script_state *st)
 			if(buf[i] == ':')
 				max++;
 		}
-		sd->max_menu = max;
+		sd->npc_menu = max; //Reuse to store max menu entries. Avoids the need of an extra variable.
 		clif_scriptmenu(sd,st->oid,buf);
 		aFree(buf);
 	} else if(sd->npc_menu==0xff){	// cancel
@@ -10637,7 +10637,7 @@ int buildin_select(struct script_state *st)
 			if(buf[i] == ':')
 				max++;
 		}
-		sd->max_menu = max;
+		sd->npc_menu = max; //Reuse to store max menu entries. Avoids the need of an extra variable.
 		clif_scriptmenu(sd,st->oid,buf);
 		aFree(buf);
 	} else if(sd->npc_menu==0xff){
@@ -10683,7 +10683,7 @@ int buildin_prompt(struct script_state *st)
 			if(buf[i] == ':')
 				max++;
 		}
-		sd->max_menu = max;
+		sd->npc_menu = max; //Reuse to store max menu entries. Avoids the need of an extra variable.
 		clif_scriptmenu(sd,st->oid,buf);
 		aFree(buf);
 	} else {

@@ -10023,7 +10023,7 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 	RFIFOHEAD(fd);
 
 	select = RFIFOB(fd,6);
-	if((select > sd->max_menu && select != 0xff) || !select){
+	if((select > sd->npc_menu && select != 0xff) || !select){
 		ShowWarning("Hack on NPC Select Menu: %s (AID: %d)!\n",sd->status.name,sd->bl.id);
 		clif_GM_kick(sd,sd,0);
 	} else {
