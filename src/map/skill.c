@@ -1930,8 +1930,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 
-	if (damage > 0 && src != bl && src == dsrc)
-		rdamage = battle_calc_return_damage(bl, skillid, &damage, dmg.flag);
+	if (damage > 0 && src != bl && src == dsrc && skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
+		rdamage = battle_calc_return_damage(bl, &damage, dmg.flag);
 
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
