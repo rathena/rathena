@@ -20,6 +20,9 @@
 
 ========================
 
+01/22
+	* Removed homunculus entries from mob_db as they are no longer needed.
+	  [Skotlex]
 01/21
 	* Fixed equip location of Father's Mustaches and Father's Sunglasses [Lupus]
 01/18

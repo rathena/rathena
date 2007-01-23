@@ -330,6 +330,7 @@ enum {
 	SI_WATERWEAPON		= 91,
 	SI_WINDWEAPON		= 92,
 	SI_EARTHWEAPON		= 93,
+	SI_UNDEAD			= 97,
 // 102 = again gloria - from what I saw on screenshots, I wonder if it isn't gospel... [DracoRPG]
 	SI_AURABLADE		= 103,
 	SI_PARRYING		= 104,
@@ -406,6 +407,9 @@ enum {
 	SI_FOODDEX			= 244,
 	SI_FOODINT			= 245,
 	SI_FOODLUK			= 246,
+	SI_FOODFLEE			= 247,
+	SI_FOODHIT			= 248,
+	SI_FOODCRI			= 249,
 };
 
 // JOINTBEAT stackable ailments

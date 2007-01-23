@@ -8449,7 +8449,9 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	if (clif_cant_act(sd) && sd->sc.opt1 != OPT1_STONEWAIT)
+	if (sd->sc.opt1 && sd->sc.opt1 == OPT1_STONEWAIT)
+		; //You CAN walk on this OPT1 value.
+	else if (clif_cant_act(sd))
 		return;
 
 	if(sd->sc.count && sd->sc.data[SC_RUN].timer != -1)

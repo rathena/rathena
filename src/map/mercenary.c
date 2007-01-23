@@ -44,6 +44,16 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data);
 
 static unsigned int hexptbl[MAX_LEVEL];
 
+//For holding the view data of npc classes. [Skotlex]
+static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
+
+struct view_data* merc_get_hom_viewdata(int class_)
+{	//Returns the viewdata for homunculus
+	if (homdb_checkid(class_))
+		return &hom_viewdb[class_-HM_CLASS_BASE];
+	return NULL;
+}
+
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
 	clif_hominfo(hd->master,hd,0);
@@ -976,11 +986,17 @@ void merc_skill_reload(void)
 
 int do_init_merc(void)
 {
+	int class_;
 	read_homunculusdb();
 	read_homunculus_expdb();
 	read_homunculus_skilldb();
 	// Add homunc timer function to timer func list [Toms]
 	add_timer_func_list(merc_hom_hungry, "merc_hom_hungry");
+
+	//Stock view data for homuncs
+	memset(&hom_viewdb, 0, sizeof(hom_viewdb));
+	for (class_ = HM_CLASS_BASE; class_ <= HM_CLASS_MAX; class_++) 
+		hom_viewdb[class_-HM_CLASS_BASE].class_ = class_;
 	return 0;
 }
 

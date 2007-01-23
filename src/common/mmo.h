@@ -105,7 +105,7 @@
 #define MAX_HOMUNSKILL 16
 #define MAX_HOMUNCULUS_CLASS	16	//[orn]
 #define HM_CLASS_BASE 6001
-#define HM_CLASS_MAX 6099
+#define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
 
 struct item {
 	int id;
