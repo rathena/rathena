@@ -1,5 +1,7 @@
 Date	Added
 
+2007/01/22
+	* Moved the homunculus setting from pet.conf to homunc.conf [Skotlex]
 2007/01/12
 	* Updated the information about ip rules and DDoS protection in 
 	  packet_athena.conf and commented out the line "allow: all" so 

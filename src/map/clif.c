@@ -8292,8 +8292,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Homunc mimic their master's speed on each map change. [Skotlex]
 		if (battle_config.hom_setting&0x8)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED);
-//		Since hom is inmune to land effects, unneeded.
-//		skill_unit_move(&sd->hd->bl,gettick(),1);
+		if (!battle_config.hom_setting&0x2)
+			skill_unit_move(&sd->hd->bl,gettick(),1);
 	}
 
 	if(sd->state.connect_new) {

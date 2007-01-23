@@ -3849,7 +3849,7 @@ static const struct battle_data_int {
 	{ "mob_remove_delay",                  &battle_config.mob_remove_delay	},
 	{ "sg_miracle_skill_min_duration",		&battle_config.sg_miracle_skill_duration_min },
 	{ "sg_miracle_skill_max_duration",		&battle_config.sg_miracle_skill_duration_max },
-	{ "hvan_explosion_intimate",					&battle_config.hvan_explosion_intimate },	//[orn]
+	{ "hvan_explosion_intimate",				&battle_config.hvan_explosion_intimate },	//[orn]
 };
 
 int battle_set_value(char *w1, char *w2) {

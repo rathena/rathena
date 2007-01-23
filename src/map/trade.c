@@ -17,7 +17,6 @@
 #include "intif.h"
 #include "atcommand.h"
 #include "log.h"
-#include "../common/malloc.h"
 
 //Max distance from traders to enable a trade to take place.
 #define TRADE_DISTANCE 2
