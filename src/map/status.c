@@ -425,8 +425,8 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_STRFOOD] = SI_FOODSTR;
 	StatusIconChangeTable[SC_AGIFOOD] = SI_FOODAGI;
 	StatusIconChangeTable[SC_VITFOOD] = SI_FOODVIT;
-	StatusIconChangeTable[SC_INTFOOD] = SI_FOODDEX;
-	StatusIconChangeTable[SC_DEXFOOD] = SI_FOODINT;
+	StatusIconChangeTable[SC_INTFOOD] = SI_FOODINT;
+	StatusIconChangeTable[SC_DEXFOOD] = SI_FOODDEX;
 	StatusIconChangeTable[SC_LUKFOOD] = SI_FOODLUK;
 	StatusIconChangeTable[SC_FLEEFOOD] = SI_FOODFLEE;
 	StatusIconChangeTable[SC_HITFOOD] = SI_FOODHIT;
