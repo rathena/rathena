@@ -50,6 +50,7 @@ enum {
 #define merc_is_hom_active(x) (x && x->homunculus.vaporize != 1 && x->battle_status.hp > 0)
 int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
+struct view_data* merc_get_hom_viewdata(int class_);
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp);
 int merc_hom_dead(struct homun_data *hd, struct block_list *src);
 void merc_hom_skillup(struct homun_data *hd,int skillnum);

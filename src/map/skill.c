@@ -2090,6 +2090,15 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if (su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 			damage = 0; //Only Heaven's drive may damage traps. [Skotlex]
 	}
+
+	if (dmg.dmg_lv == ATK_DEF && (type = skill_get_walkdelay(skillid, skilllv)) > 0)
+	{	//Skills with can't walk delay also stop normal attacking for that
+		//duration when the attack connects. [Skotlex]
+		struct unit_data *ud = unit_bl2ud(src);
+		if (ud && DIFF_TICK(ud->attackabletime, tick + type) < 0)
+			ud->attackabletime = tick + type;
+	}
+
 	if (!dmg.amotion) {
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if (dmg.dmg_lv == ATK_DEF || damage > 0) {
