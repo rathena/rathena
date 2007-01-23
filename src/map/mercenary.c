@@ -995,8 +995,8 @@ int do_init_merc(void)
 
 	//Stock view data for homuncs
 	memset(&hom_viewdb, 0, sizeof(hom_viewdb));
-	for (class_ = HM_CLASS_BASE; class_ <= HM_CLASS_MAX; class_++) 
-		hom_viewdb[class_-HM_CLASS_BASE].class_ = class_;
+	for (class_ = 0; class_ < sizeof(hom_viewdb)/sizeof(hom_viewdb[0]); class_++) 
+		hom_viewdb[class_].class_ = HM_CLASS_BASE+class_;
 	return 0;
 }
 
