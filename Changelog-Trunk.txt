@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/23
+	* Changed the night status from 149 to 160, which seems to work so much
+	  better, and also enabled simplifying the night code.
 	* A skill's walk delay will also delay your can-attack time when the skill
 	  connects, since this is the behaviour of Sonic Blows as described by
 	  Tharis.
