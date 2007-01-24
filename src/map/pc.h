@@ -279,7 +279,9 @@ extern struct skill_tree_entry skill_tree[MAX_PC_CLASS][MAX_SKILL_TREE];
 
 int pc_read_gm_account(int fd);
 int pc_setinvincibletimer(struct map_session_data *sd,int);
-int pc_delinvincibletimer(struct map_session_data *sd);
+void pc_delinvincibletimer_sub(struct map_session_data *sd);
+#define pc_delinvincibletimer(sd) if ((sd)->invincible_timer != INVALID_TIMER) pc_delinvincibletimer_sub(sd)
+
 int pc_addspiritball(struct map_session_data *sd,int,int);
 int pc_delspiritball(struct map_session_data *sd,int,int);
 void pc_addfame(struct map_session_data *sd,int count);

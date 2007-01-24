@@ -8471,9 +8471,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 		return;
 
 	pc_stop_attack(sd);
-
-	if (sd->invincible_timer != -1)
-		pc_delinvincibletimer(sd);
+	pc_delinvincibletimer(sd);
 
 	cmd = RFIFOW(fd,0);
 	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
@@ -8892,9 +8890,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 				return;
 			}
 		}
-		if (sd->invincible_timer != -1)
-			pc_delinvincibletimer(sd);
 
+		pc_delinvincibletimer(sd);
 		sd->idletime = last_tick;
 		unit_attack(&sd->bl, target_id, action_type != 0);
 		break;
@@ -9313,8 +9310,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd) {
 	if (clif_trading(sd))
 		return;
 	
-	if (sd->invincible_timer != -1)
-		pc_delinvincibletimer(sd);
+	pc_delinvincibletimer(sd);
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
@@ -9789,8 +9785,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
-	if (sd->invincible_timer != -1)
-		pc_delinvincibletimer(sd);
+	pc_delinvincibletimer(sd);
 	
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
@@ -9889,8 +9884,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
-	if (sd->invincible_timer != -1)
-		pc_delinvincibletimer(sd);
+	pc_delinvincibletimer(sd);
 	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
@@ -9953,8 +9947,7 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
-	if(sd->invincible_timer != -1)
-		pc_delinvincibletimer(sd);
+	pc_delinvincibletimer(sd);
 
 	skill_castend_map(sd,RFIFOW(fd,2),(char*)RFIFOP(fd,4));
 }

@@ -131,15 +131,10 @@ int pc_setinvincibletimer(struct map_session_data *sd,int val) {
 	return 0;
 }
 
-int pc_delinvincibletimer(struct map_session_data *sd) {
-	nullpo_retr(0, sd);
-
-	if(sd->invincible_timer != INVALID_TIMER) {
-		delete_timer(sd->invincible_timer,pc_invincible_timer);
-		sd->invincible_timer = INVALID_TIMER;
-		skill_unit_move(&sd->bl,gettick(),1);
-	}
-	return 0;
+void pc_delinvincibletimer_sub(struct map_session_data *sd) {
+	delete_timer(sd->invincible_timer,pc_invincible_timer);
+	sd->invincible_timer = INVALID_TIMER;
+	skill_unit_move(&sd->bl,gettick(),1);
 }
 
 static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data) {
@@ -606,6 +601,8 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 
 	sd->followtimer = -1; // [MouseJstr]
 	sd->invincible_timer = -1;
+	sd->npc_timer_id = -1;
+	sd->pvp_timer = -1;
 	
 	sd->canuseitem_tick = tick;
 	sd->cantalk_tick = tick;
@@ -649,11 +646,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	// ƒCƒxƒ“ƒg?ŒW‚Ì‰Šú‰»
 	for(i = 0; i < MAX_EVENTTIMER; i++)
 		sd->eventtimer[i] = -1;
-
-	sd->npc_timer_id = -1;
-	
-	// Moved PVP timer initialisation before set_pos
-	sd->pvp_timer = -1;
 
 	for (i = 0; i < 3; i++)
 		sd->hate_mob[i] = -1;
