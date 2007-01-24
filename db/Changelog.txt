@@ -20,6 +20,9 @@
 
 ========================
 
+01/24
+	* Fixed a typo in skill_cast_db.txt making the server skip NJ_KUNAI [ultramage]
+	  Reported in http://www.eathena.ws/board/index.php?showtopic=136136
 01/22
 	* Removed homunculus entries from mob_db as they are no longer needed.
 	  [Skotlex]
