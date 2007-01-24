@@ -36,7 +36,7 @@ prtg_cas01.gat,112,181,0	script	Abrai	55,{
 prtg_cas02.gat,94,61,0	script	Rhay	55,{
 	if(callfunc("F_GldManager","Rhay","prtg_cas02",201,229,"Pt02") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas02.gat",75,71,"Soldier Guardian",1287,1,"Guardian_Pt02::GuardianDied",0; 
+	if(@GDnum==10) guardian "prtg_cas02.gat",75,71,"Soldier Guardian",1287,1,"Guardian_Pt02::OnGuardianDied",0; 
 	if(@GDnum==11) guardian "prtg_cas02.gat",56,31,"Soldier Guardian",1287,1,"Guardian_Pt02::OnGuardianDied",1; 
 	if(@GDnum==12) guardian "prtg_cas02.gat",42,223,"Soldier Guardian",1287,1,"Guardian_Pt02::OnGuardianDied",2;
 	if(@GDnum==13) guardian "prtg_cas02.gat",44,195,"Archer Guardian",1285,1,"Guardian_Pt02::OnGuardianDied",3; 
