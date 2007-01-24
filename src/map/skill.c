@@ -1105,12 +1105,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case AS_GRIMTOOTH:
-		{
-			int type = dstsd?SC_SLOWDOWN:SC_STOP;
-			if (tsc->data[type].timer == -1)
-				sc_start(bl,type,100,skilllv,skill_get_time2(skillid, skilllv));
-			break;
-		}
+		skill = dstsd?SC_SLOWDOWN:SC_STOP;
+		if (tsc->data[skill].timer == -1)
+			sc_start(bl,skill,100,skilllv,skill_get_time2(skillid, skilllv));
+		break;
 	case MG_FROSTDIVER:
 	case WZ_FROSTNOVA:
 		sc_start(bl,SC_FREEZE,skilllv*3+35,skilllv,skill_get_time2(skillid,skilllv));
@@ -1274,15 +1272,14 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(bl, SC_BLEEDING,50, skilllv, skill_get_time2(skillid,skilllv));
 		break;
-/*
+
 	case LK_JOINTBEAT:
-	{
-		int flag = 0;
-		//##TODO how should this be done? the ailment has to be calculated before because it also affects the damage [FlavioJS]
-		sc_start2(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
+		skill = SkillStatusChangeTable(skillid);
+		if (tsc->data[skill].val4) {
+			sc_start2(bl,skill,(5*skilllv+5),skilllv,tsc->data[skill].val4&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
+			tsc->data[skill].val4 = 0;
+		}
 		break;
-	}
-*/
 	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*SkillLV% chance.
 		switch(rand()%3) {
@@ -1629,9 +1626,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 --------------------------------------------------------------------------*/
 int skill_break_equip (struct block_list *bl, unsigned short where, int rate, int flag) 
 {
-	static int where_list[4] = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
-	static int scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
-	static int scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
+	const int where_list[4] = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
+	const int scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
+	const int scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
 	struct status_change *sc = status_get_sc(bl);
 	int i,j;
 	TBL_PC *sd;
@@ -2786,9 +2783,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		case 4: flag |= BREAK_WAIST; break;
 		case 5: flag |= BREAK_NECK; break;
 		}
+		//Seems a little ugly, but we have done this or worse with other skills like Storm Gust. [Skotlex]
+		//val3 holds the status that it should start when it connects.
+		sc = status_get_sc(bl);
+		if (sc) sc->data[SkillStatusChangeTable(skillid)].val4 = flag;
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		//##TODO this is a quick&dirty hack. How do I pass the selected ailment to skill_additional_effect? [FlavioJS]
-		sc_start2(bl,SkillStatusChangeTable(skillid),(5*skilllv+5),skilllv,flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
 		break;
 
 	case MO_COMBOFINISH:

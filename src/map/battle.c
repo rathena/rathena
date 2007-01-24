@@ -1481,7 +1481,10 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 40*skill_lv;
 					break;
 				case LK_JOINTBEAT:
-					skillratio += 10*skill_lv-50;
+					i = 10*skill_lv-50;
+					// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
+					if (wflag&BREAK_NECK) i*=2;
+					skillratio += i;
 					break;
 				case ASC_METEORASSAULT:
 					skillratio += 40*skill_lv-60;
@@ -2079,10 +2082,6 @@ static struct Damage battle_calc_weapon_attack(
 	{	//Breaker's int-based damage (a misc attack?)
 		struct Damage md = battle_calc_misc_attack(src, target, skill_num, skill_lv, wflag);
 		wd.damage += md.damage;
-	} else if( skill_num == LK_JOINTBEAT && wflag&BREAK_NECK ) {
-		//##TODO should this be here?[FlavioJS]
-		// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
-		wd.damage *= 2; // 2x damage when breaking neck
 	}
 
 	if (wd.damage || wd.damage2) {

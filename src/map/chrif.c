@@ -929,7 +929,7 @@ int chrif_divorce(int char_id, int partner_id)
 	if (!char_id || !partner_id)
 		return 0;
 
-	nullpo_retr(0, sd = map_nick2sd(map_charid2nick(partner_id)));
+	nullpo_retr(0, sd = map_charid2sd(partner_id));
 	if (sd->status.partner_id == char_id) {
 		int i;
 		//—£¥(‘Š•û‚ÍŠù‚ÉƒLƒƒƒ‰‚ªÁ‚¦‚Ä‚¢‚é”¤‚È‚Ì‚Å)
