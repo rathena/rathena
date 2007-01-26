@@ -768,6 +768,11 @@ new_zone02.gat,115,111,4	script	Item Instructor	726,{
 				mes "just for listening.";
 				set BaseExp,BaseExp+155;
 				next;
+			} else {
+				mes "[Alice]";
+				mes "Umm... You can drink";
+				mes "it later I guess.";
+				next;
 			}
 			disable_items;	
 			mes "[Alice]";

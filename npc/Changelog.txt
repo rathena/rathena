@@ -26,6 +26,10 @@ KarLaeda
 
 Date		Added
 ======
+2007/01/26
+	* Added a missing dialogue branch in novice.txt
+	* Fixed a monster spawn typo in hu_fild05 and lou_fild01 [ultramage]
+	  Ref: http://www.eathena.ws/board/index.php?showtopic=136426
 2007/01/24
 	* Fixed one missing 'On' in prtg_managers.txt [ultramage]
 2007/01/21
