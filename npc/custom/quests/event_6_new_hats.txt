@@ -17,7 +17,7 @@
 //===== Additional Comments: =================================
 //= Event New Hats by RedxSwordxHero 
 //= Ported and improved with timers [Lupus]
-//= Thanks to x[tsk],fixed all item requirments to iRO specs exept
+//= Thanks to x[tsk],fixed all item requirements to iRO specs exept
 //= for hats which cannot be made on the real server. [Lupus]
 //= 1.2 removed already existing official hat quests [Lupus]
 //= 1.3 Spiffed up the NPC coords and their appearance [Lupus]

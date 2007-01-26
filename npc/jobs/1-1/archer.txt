@@ -45,7 +45,7 @@ payon_in02.gat,64,71,4	script	Archer Guildsman	59,{
 		next;
 		mes "[Archer Guildsman]";
 		if(JobLevel < 10) {
-			mes "It seems that you are not qualified to become an Archer yet.  Please take a look at the job requirments once more.";
+			mes "It seems that you are not qualified to become an Archer yet.  Please take a look at the job requirements once more.";
 			close;
 		}
 		set job_archer_q,1;

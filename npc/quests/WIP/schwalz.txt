@@ -237,12 +237,12 @@ close;
 Quest_enable:
 if (countitem (7345) >= 10) && (countitem(7347) >=10) && (countitem(7346) >=1) goto Quest_end;
 mes "[Ghalstein]";
-mes "You havent geather items yet. Come back when you should.";
+mes "You haven't gathered the items yet. Come back when you should.";
 close;
 
 Quest_end:
 mes "[Ghalstein]";
-mes "Well done. You have finished my part of quest.";
+mes "Well done. You have finished my part of the quest.";
 mes "Now, Visit Gushaar. He can be found sowhere around Yuno.";
 next;
 mes "[Ghalstein]";

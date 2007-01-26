@@ -84,7 +84,7 @@ A_Cannot:
 A_Yes:
 	mes "[Oliver]";
 	mes "Good to hear it!";
-	mes "But do you meet the requirments for adoption?";
+	mes "But do you meet the requirements for adoption?";
 	next;
 	mes "[Oliver]";
 	mes "We can't just give out babies at the drop of a hat.";
@@ -143,17 +143,17 @@ prt_church.gat,172,177,3	script	Adoption Lady	103,{
 	mes "[Inanna]";
 	deltimer "timeadopt::OnAdopt";
 	addtimer 300000,"timeadopt::OnAdopt";
-	mes "So you think you meet our strict requirments?";
+	mes "So you think you meet our strict requirements?";
 	mes "Let's see here, are you over level 70?";
 	next;
 	menu "Yes, I am over level 70",A_lvl,"No, sorry to bother you",-;
 	mes "[Inanna]";
-	mes "Oh, I am sorry to hear that, please return when you meet this requirment.";
-	callfunc "AdoptReset","the parent didnt meet level requirments";
+	mes "Oh, I am sorry to hear that, please return when you meet this requirement.";
+	callfunc "AdoptReset","the parent didn't meet level requirements";
 	close;
 A_SeeFriend:
 	mes "[Inanna]";
-	mes "Seems you havent talked to my friend here.";
+	mes "Seems you haven't talked to my friend here.";
 	mes "He will refer you to me, when he thinks you are ready.";
 	close;
 A_lvl:
@@ -163,7 +163,7 @@ A_lvl:
 	next;
  	mes "[Inanna]";
 	mes "I can't give a baby to you";
-	callfunc "AdoptReset","the parent didnt meet level requirments";
+	callfunc "AdoptReset","the parent didn't meet level requirements";
 	close;
 A_lvlpassed:
 	mes "[Inanna]";
@@ -183,7 +183,7 @@ A_lvlpassed:
 	close;
 A_Noring:
 	mes "[Inanna]";
-	mes "I can't believe you are in a loving marrige when you don't have your ring on you at all times!!!";
+	mes "I can't believe you are in a loving marriage when you don't have your ring on you at all times!!!";
 	next;
 	mes "[Inanna]";
 	mes "I don't believe you deserve a baby.";
@@ -240,7 +240,7 @@ A_agree:
 	if(BaseLevel >= 70) goto A_lvltwo;
 	mes "[Inanna]";
 	mes "Sorry you are not over level 70.";
-	callfunc "AdoptReset","the 2nd parent didnt meet the level requirments";
+	callfunc "AdoptReset","the 2nd parent didn't meet the level requirements";
 	close;
 A_lvltwo:
 	if ( countitem(2634)>0 || countitem(2635)>0 ) goto A_Wedringtwo;
@@ -251,7 +251,7 @@ A_lvltwo:
 A_Wedringtwo:
 	if (getchildid()>0) goto A_AlreadyHaveBaby;
 	mes "[Inanna]";
-	mes "You have checked out, and have passed all the requirments.";
+	mes "You have checked out, and have passed all the requirements.";
 	mes "All you need is a novice to adopt.";
 	next;
 	mes "[Inanna]";
@@ -295,7 +295,7 @@ A_FinalTest:
 	mes "[Inanna]";
 	mes "Please calm down.";
 	mes "I will try and find better parents for you next time.";
-	callfunc "AdoptReset","the novice didnt want to be adopted";
+	callfunc "AdoptReset","the novice didn't want to be adopted";
 	close;
 A_BabyYes:
 	mes "[Inanna]";

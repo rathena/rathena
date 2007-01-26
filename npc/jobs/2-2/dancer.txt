@@ -581,7 +581,7 @@ Lcheckpt:
 		mes "You got a total of "+@dcpoint+" points......";
 	if ((@dcpoint >= 80) && (DANC_Q == 5)) goto LpointOK;
 	if ((@dcpoint >= 70) && (DANC_Q == 6)) goto LpointOK;
-		mes "I am going to need to disqualify you, cause you didnt reach the required ammount.";
+		mes "I am going to need to disqualify you, because you didn't reach the required ammount.";
 		next;
 		mes "[Bijou]";
 		mes "You are allowed to take the test again if you like, for no extra charge.";
@@ -591,7 +591,7 @@ Lcheckpt:
 		close;
 	LpointOK:
 		if (@dcpoint == 100) mes "That is amazing, 100% correct.";
-		if (@dcpoint != 100) mes "Even though you didnt get all the questions right, you have still passed.";
+		if (@dcpoint != 100) mes "Even though you didn't get all the questions right, you have still passed.";
 		next;
 		mes "[Bijou]";
 		mes "The next thing you need to do is pass a physical test of speed and timing";

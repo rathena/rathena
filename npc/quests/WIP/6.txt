@@ -114,7 +114,7 @@ close;
 L_FINISH:
 if (countitem(7340)<2 && countitem(576)<2) {
 mes "[Dulu]";
-mes "You havent geather items yet";
+mes "You haven't gathered the items yet";
 close;
 }
 mes "[Dulu]";

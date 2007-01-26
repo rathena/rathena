@@ -154,7 +154,7 @@ Complete:
 //////////////////////////
 function	script	PXC_DoMenu	{
 
-	//set menu options to mob names, doing the first one manualy so we don't have an empty :
+	//set menu options to mob names, doing the first one manually so we don't have an empty :
 	set $@menu$, getmonsterinfo(getarg(0),MOB_NAME);
 
 	for(set $@i, getarg(0)+1; $@i <= getarg(1); set $@i, $@i + 1){

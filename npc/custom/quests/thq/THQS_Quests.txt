@@ -557,7 +557,7 @@ N_QuestComp:
 N_QuestStart:
 	mes "[Wizard]";
 	mes "Hello, the reason why I brought you here was because of a long time ago I made a friend, which happened to be a Whipser.";
-	mes "He told me that he was always bullied by the other ghosts down there and I havent seen him in a while.";
+	mes "He told me that he was always bullied by the other ghosts down there and I haven't seen him in a while.";
 	mes "Thinking of the worse case here, I want vengance!";
 	mes " ";
 	mes "Bring me 50 Fabrics!";

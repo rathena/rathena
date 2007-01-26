@@ -59,7 +59,7 @@ rachel.gat,91,273,4	script	Masked Man	880,{
 			next;
 			getitem 5175,1;
 			mes @npcname$;
-			mes "You didnt get this from me by the way...";
+			mes "You didn't get this from me by the way...";
 			close;
 
 

@@ -392,7 +392,7 @@ case 1:
 case 2:
 	next;
 	mes "set the map in the ^0000FFmapname.gat^000000 format";
-	mes "when this warpmap is set the option for players will show once they meet the requirments";
+	mes "when this warpmap is set the option for players will show once they meet the requirements";
 	mes "to disable Special Warp Menu option clear this !";
 	input $QW_SP_WarpMap$;
 	goto SpecialWarpMenu;

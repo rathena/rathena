@@ -269,7 +269,7 @@ L_SoldLoop:
 	if(@num<10) goto L_SoldLoop;
 	mes "[Auctioneer]";
 	mes "Sorry it seems you have either picked up all you items, money";
-	mes "or you didnt register any items in this auction";
+	mes "or you didn't register any items in this auction";
 	close;
 L_Sold:
 	mes "[Auctioneer]";
@@ -303,9 +303,9 @@ L_GiveBack:
 	set $paid[@num],3;
 	close;
 L_NoMoney:
-	mes "Sorry to say this but they havent paid this yet";
+	mes "Sorry to say this but they haven't paid this yet";
 	mes "You can go and talk to them now, or you can wait";
-	mes "If they havent paid by the time the next Auction starts come back to me to retrieve your item(s)";
+	mes "If they haven't paid by the time the next Auction starts come back to me to retrieve your item(s)";
 	close;
 
 // Check starts here for if you won any items during this auction, futher options follow
@@ -318,7 +318,7 @@ L_WonLoop:
 L_CarryOn:
 	set @num,@num+1;
 	if(@num<10) goto L_WonLoop;
-	mes "Sorry you didnt win any of the lots, please try again next time";
+	mes "Sorry you didn't win any of the lots, please try again next time";
 	close;
 L_Winner:
 	if($paid[@num]>0) goto L_CarryOn;

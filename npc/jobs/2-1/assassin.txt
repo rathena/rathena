@@ -665,7 +665,7 @@ OnTouch:
 			next;
 			mes "[Nameless One]";
 			mes "The higher the level of the skill, the longer the poison stays in effect.  You will need a Red Gemstone to use this skill.";
-			mes "Level 5 Enchant Poison is a requirment for learning Venom Dust.";
+			mes "Level 5 Enchant Poison is a requirement for learning Venom Dust.";
 			next;
 			mes "[Nameless One]";
 			mes "^5533FF'Venom Splasher'^000000.  Not only does this skill poison a target, but it makes the target explode splashing venom everywhere.";

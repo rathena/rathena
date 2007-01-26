@@ -496,7 +496,7 @@ doitagain:
 	if($fred == 0) npctalk "I have the most optimized Dev NPC";
 	if($fred == 1) npctalk "Yeah I am a Dev, what do you mean I'm just a member on the forum !!!";
 	if($fred == 2) npctalk "I probably the worst speller on the Dev team.";
-	if($fred == 3) npctalk "You didnt think I was a real player did you?!?";
+	if($fred == 3) npctalk "You didn't think I was a real player did you?!?";
 	if($fred == 4) npctalk "Golden, Ripe, Boneless Bananas, 39 Cents A Pound.";
 	if($fred == 5) npctalk "All those who believe in telekinesis, raise my hand.";
 	if($fred > 5 || $fred < 0) goto doitagain;
