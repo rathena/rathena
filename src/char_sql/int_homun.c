@@ -183,9 +183,7 @@ int mapif_load_homunculus(int fd){
 		homun_pt->hunger = 0;
 	else if(homun_pt->hunger > 100)
 		homun_pt->hunger = 100;
-	if(homun_pt->intimacy < 0)
-		homun_pt->intimacy = 0;
-	else if(homun_pt->intimacy > 100000)
+	if(homun_pt->intimacy > 100000)
 		homun_pt->intimacy = 100000;
 
 	mysql_free_result(sql_res);

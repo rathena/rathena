@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/26
+	* Added a wrapper to delete_timer so it prints out from where the
+	  invocation was done.
+	* Fixed Splash attacks consuming 2 ammo on each attack. [Skotlex]
 	* Added some more freedom for the txt log paths since 32 wasn't enough
 	* Removed log_uptime that was accidentally introduced in r1208 [ultramage]
 2007/01/24

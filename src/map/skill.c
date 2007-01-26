@@ -3217,6 +3217,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 					sd->splash_range, BL_CHAR,
 					src, skillid, skilllv, tick, flag | BCT_ENEMY | 1,
 					skill_castend_damage_id);
+				flag|=1; //Set flag to 1 so ammo is not double-consumed. [Skotlex]
 			}
 		}
 		break;

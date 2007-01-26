@@ -346,7 +346,8 @@ void plugins_init(void)
 	export_symbol(addr_,            SYMBOL_ADDR);
 	// timers
 	export_symbol(get_uptime,              SYMBOL_GET_UPTIME);
-	export_symbol(delete_timer,            SYMBOL_DELETE_TIMER);
+//	export_symbol(delete_timer,            SYMBOL_DELETE_TIMER);
+	export_symbol(delete_timer_sub,        SYMBOL_DELETE_TIMER);
 	export_symbol(add_timer_func_list,     SYMBOL_ADD_TIMER_FUNC_LIST);
 	export_symbol(add_timer_interval,      SYMBOL_ADD_TIMER_INTERVAL);
 	export_symbol(add_timer,               SYMBOL_ADD_TIMER);

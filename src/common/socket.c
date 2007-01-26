@@ -1076,7 +1076,7 @@ int RFIFOSKIP(int fd,int len)
 
 	s = session[fd];
 
-	if ( s->rdata_size - s->rdata_pos - len < 0 ) {
+	if ( s->rdata_size < s->rdata_pos + len ) {
 		//fprintf(stderr,"too many skip\n");
 		//exit(1);
 		//better than a COMPLETE program abort // TEST! :)

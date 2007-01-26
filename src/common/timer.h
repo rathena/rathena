@@ -41,7 +41,9 @@ unsigned int gettick(void);
 
 int add_timer(unsigned int,TimerFunc f,int,int);
 int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int interval);
-int delete_timer(int,TimerFunc f);
+//int delete_timer(int,TimerFunc f);
+int delete_timer_sub(int,TimerFunc f, const char* file, int line);
+#define delete_timer(id, f) delete_timer_sub(id, f, __FILE__, __LINE__)
 
 int addtick_timer(int tid,unsigned int tick);
 int settick_timer(int tid,unsigned int tick);
