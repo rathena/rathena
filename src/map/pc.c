@@ -1081,14 +1081,17 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd) {
 	int skill_point;
 	int c = sd->class_;
 	
-	if (!battle_config.skillup_limit || !(sd->class_&JOBL_2) || (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
-		return c; //Only Normalize non-first classes (and non-super novice)
+	if (!battle_config.skillup_limit)
+		return c;
 	
 	skill_point = pc_calc_skillpoint(sd);
 	if(pc_checkskill(sd, NV_BASIC) < 9) //Consider Novice Tree when you don't have NV_BASIC maxed.
 		c = MAPID_NOVICE;
-	else if (sd->status.skill_point >= (int)sd->status.job_level
-		&& ((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
+	else
+	//Do not send S. Novices to first class (Novice)
+	if ((sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE &&
+		sd->status.skill_point >= (int)sd->status.job_level &&
+		((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
 		//Send it to first class.
 		c &= MAPID_BASEMASK;
 	}
