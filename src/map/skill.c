@@ -1369,7 +1369,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		for(i=0; i < MAX_PC_BONUS && sd->addeff[i].flag; i++)
 		{
 			rate = sd->addeff[i].rate;
-			if (attack_type&BF_RANGED) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
+			if (attack_type&BF_LONG) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 				rate += sd->addeff[i].arrow_rate;
 			if (!rate) continue;
 
