@@ -3801,6 +3801,7 @@ static const struct battle_data_short {
 	{ "override_mob_names", 				&battle_config.override_mob_names },
 	{ "min_chat_delay",						&battle_config.min_chat_delay },
 	{ "friend_auto_add",						&battle_config.friend_auto_add },
+	{ "hom_rename",                     &battle_config.hom_rename },
 	{ "homunculus_show_growth",					&battle_config.homunculus_show_growth },	//[orn]
 	{ "homunculus_friendly_rate",				&battle_config.homunculus_friendly_rate },
 };
@@ -4048,10 +4049,10 @@ void battle_set_defaults() {
 	battle_config.pc_cloak_check_type = 1;
 	battle_config.monster_cloak_check_type = 0;
 	battle_config.estimation_type = 3;
-	battle_config.gvg_short_damage_rate = 100;
-	battle_config.gvg_long_damage_rate = 75;
+	battle_config.gvg_short_damage_rate = 80;
+	battle_config.gvg_long_damage_rate = 80;
 	battle_config.gvg_weapon_damage_rate = 60;
-	battle_config.gvg_magic_damage_rate = 50;
+	battle_config.gvg_magic_damage_rate = 60;
 	battle_config.gvg_misc_damage_rate = 60;
 	battle_config.gvg_flee_penalty = 20;
 	battle_config.gvg_eliminate_time = 7000;
@@ -4244,6 +4245,7 @@ void battle_set_defaults() {
 	battle_config.min_chat_delay = 0;
 	battle_config.friend_auto_add = 1;
 	battle_config.hvan_explosion_intimate = 45000;	//[orn]
+	battle_config.hom_rename=0;
 	battle_config.homunculus_show_growth = 0;	//[orn]
 	battle_config.homunculus_friendly_rate = 100;
 }

@@ -1379,7 +1379,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),hd->homunculus.name,NAME_LENGTH);
 	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
-	WBUFB(buf,26)=hd->homunculus.rename_flag | (hd->homunculus.vaporize << 1) | (hd->homunculus.hp?0:4);
+	WBUFB(buf,26)=(battle_config.hom_rename?0:hd->homunculus.rename_flag) | (hd->homunculus.vaporize << 1) | (hd->homunculus.hp?0:4);
 	WBUFW(buf,27)=hd->homunculus.level;
 	WBUFW(buf,29)=hd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
@@ -1481,18 +1481,9 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 	return;
 }
 
-void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {	//[orn]
-	struct homun_data *hd;
+void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	nullpo_retv(sd);
-
-	if((hd=sd->hd) == NULL)
-		return;
-
-	memcpy(hd->homunculus.name,RFIFOP(fd,2),24);
-	hd->homunculus.rename_flag = 1;
-	clif_hominfo(sd,hd,0);
-	clif_charnameack(sd->fd,&hd->bl);
+	merc_hom_change_name(sd,RFIFOP(fd,2));
 }
 
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
@@ -6264,7 +6255,7 @@ int clif_send_petstatus(struct map_session_data *sd)
 	WFIFOHEAD(fd,packet_len(0x1a2));
 	WFIFOW(fd,0)=0x1a2;
 	memcpy(WFIFOP(fd,2),pet->name,NAME_LENGTH);
-	WFIFOB(fd,26)=(battle_config.pet_rename == 1)? 0:pet->rename_flag;
+	WFIFOB(fd,26)=battle_config.pet_rename?0:pet->rename_flag;
 	WFIFOW(fd,27)=pet->level;
 	WFIFOW(fd,29)=pet->hungry;
 	WFIFOW(fd,31)=pet->intimate;
@@ -10832,7 +10823,7 @@ void clif_parse_SendEmotion(int fd, struct map_session_data *sd) {
 
 void clif_parse_ChangePetName(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	pet_change_name(sd,(char*)RFIFOP(fd,2), 0);
+	pet_change_name(sd,(char*)RFIFOP(fd,2));
 }
 
 // Kick (right click menu for GM "(name) force to quit")

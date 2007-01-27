@@ -27,7 +27,7 @@
 #include "mercenary.h" //albator
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -35,8 +35,8 @@ static const int packet_len_table[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
-	-1,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
+	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
+	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
 extern int char_fd;		// inter serverのfdはchar_fdを使う
@@ -112,20 +112,21 @@ int intif_delete_petdata(int pet_id)
 
 	return 1;
 }
-int intif_rename_pet(struct map_session_data *sd,char *name)
+
+int intif_rename(struct map_session_data *sd, int type, char *name)
 {
 	if (CheckForCharServer())
 		return 1;
 
 	WFIFOHEAD(inter_fd,NAME_LENGTH+11);
-	WFIFOW(inter_fd,0) = 0x3084;
+	WFIFOW(inter_fd,0) = 0x3006;
 	WFIFOL(inter_fd,2) = sd->status.account_id;
 	WFIFOL(inter_fd,6) = sd->status.char_id;
-	memcpy(WFIFOP(inter_fd,10),name, NAME_LENGTH);
-	WFIFOSET(inter_fd,NAME_LENGTH+11);
+	WFIFOB(inter_fd,10) = type;  //Type: 0 - PC, 1 - PET, 2 - HOM
+	memcpy(WFIFOP(inter_fd,11),name, NAME_LENGTH);
+	WFIFOSET(inter_fd,NAME_LENGTH+12);
 	return 0;
 }
-
 
 // GMメッセージを送信
 int intif_GMmessage(char* mes,int len,int flag)
@@ -1414,19 +1415,24 @@ int intif_parse_DeletePetOk(int fd)
 	return 0;
 }
 
-int intif_parse_RenamePetOk(int fd)
+int intif_parse_ChangeNameOk(int fd)
 {
 	struct map_session_data *sd = NULL;
 	RFIFOHEAD(fd);
 	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL ||
 		sd->status.char_id != RFIFOL(fd,6))
 		return 0;
-	if (RFIFOB(fd,10) == 0) {
-		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name for your pet.
-		clif_send_petstatus(sd); //Send status so client knows oet name change got rejected.
-		return 0;
+
+	switch (RFIFOB(fd,10)) {
+	case 0: //Players [NOT SUPPORTED YET]
+		break;
+	case 1: //Pets
+		pet_change_name_ack(sd, RFIFOP(fd,12), RFIFOB(fd,11));
+		break;
+	case 2: //Hom
+		merc_hom_change_name_ack(sd, RFIFOP(fd,12), RFIFOB(fd,11));
+		break;
 	}
-	pet_change_name(sd, RFIFOP(fd,11),1);
 	return 0;
 }
 
@@ -1523,6 +1529,7 @@ int intif_parse(int fd)
 	case 0x3802:	intif_parse_WisEnd(fd); break;
 	case 0x3803:	mapif_parse_WisToGM(fd); break;
 	case 0x3804:	intif_parse_Registers(fd); break;
+	case 0x3806:   intif_parse_ChangeNameOk(fd); break;
 	case 0x3810:	intif_parse_LoadStorage(fd); break;
 	case 0x3811:	intif_parse_SaveStorage(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
@@ -1557,7 +1564,6 @@ int intif_parse(int fd)
 	case 0x3881:	intif_parse_RecvPetData(fd); break;
 	case 0x3882:	intif_parse_SavePetOk(fd); break;
 	case 0x3883:	intif_parse_DeletePetOk(fd); break;
-	case 0x3884:   intif_parse_RenamePetOk(fd); break;
 	case 0x3890:	intif_parse_CreateHomunculus(fd); break;
 	case 0x3891:	intif_parse_RecvHomunculusData(fd); break;
 	case 0x3892:	intif_parse_SaveHomunculusOk(fd); break;

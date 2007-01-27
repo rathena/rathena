@@ -1,5 +1,8 @@
 Date	Added
 
+2007/01/26
+	* Added battle config hom_rename (homunc.txt) to enable renaming the
+	  homunculus multiple times. Defaults to no.
 2007/01/22
 	* Moved the homunculus setting from pet.conf to homunc.conf [Skotlex]
 2007/01/12

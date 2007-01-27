@@ -65,7 +65,7 @@ int inter_send_packet_length[]={
 };
 // recv. packet list
 int inter_recv_packet_length[]={
-	-1,-1, 7,-1, -1,13, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3000-0x300f
+	-1,-1, 7,-1, -1,13,36, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3000-0x300f
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0, //0x3010-0x301f
 	-1, 6,-1,14, 14,19, 6,-1, 14,14, 0, 0,  0, 0,  0, 0, //0x3020-0x302f
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1, //0x3030-0x303f
@@ -73,12 +73,12 @@ int inter_recv_packet_length[]={
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	48,14,-1, 6, 35, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3080-0x308f
+	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3080-0x308f
 	-1,10,-1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3090 - 0x309f  Homunculus packets [albator]
 };
 
 struct WisData {
-	int id, fd, count,len;
+	int id, fd, count, len;
 	unsigned long tick;
 	unsigned char src[24], dst[24], msg[512];
 };
@@ -760,6 +760,49 @@ int mapif_parse_RegistryRequest(int fd)
 	return 1;
 }
 
+static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, int flag, char *name){
+	WFIFOHEAD(fd, NAME_LENGTH+13);
+	WFIFOW(fd, 0) =0x3806;
+	WFIFOL(fd, 2) =account_id;
+	WFIFOL(fd, 6) =char_id;
+	WFIFOB(fd,10) =type;
+	WFIFOB(fd,11) =flag;
+	memcpy(WFIFOP(fd, 12), name, NAME_LENGTH);
+	WFIFOSET(fd, NAME_LENGTH+13);
+}
+
+int mapif_parse_NameChangeRequest(int fd)
+{
+	RFIFOHEAD(fd);
+	int account_id = RFIFOL(fd, 2);
+	int char_id = RFIFOL(fd, 6);
+	int type = RFIFOB(fd, 10);
+	char *name =RFIFOP(fd, 11);
+	int i;
+
+	// Check Authorised letters/symbols in the name
+	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) == NULL) {
+			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
+			return 0;
+		}
+	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
+		for (i = 0; i < NAME_LENGTH && name[i]; i++)
+		if (strchr(char_name_letters, name[i]) != NULL) {
+			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
+			return 0;
+		}
+	}
+	//TODO: type holds the type of object to rename.
+	//If it were a player, it needs to have the guild information and db information
+	//updated here, because changing it on the map won't make it be saved [Skotlex]
+
+	//name allowed.
+	mapif_namechange_ack(fd, account_id, char_id, type, 1, name);
+	return 0;
+}
+
 //--------------------------------------------------------
 int inter_parse_frommap(int fd)
 {
@@ -786,6 +829,7 @@ int inter_parse_frommap(int fd)
 	case 0x3003: mapif_parse_WisToGM(fd); break;
 	case 0x3004: mapif_parse_Registry(fd); break;
 	case 0x3005: mapif_parse_RegistryRequest(fd); break;
+	case 0x3006: mapif_parse_NameChangeRequest(fd); break;
 	default:
 		if(inter_party_parse_frommap(fd))
 			break;

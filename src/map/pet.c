@@ -26,6 +26,7 @@
 #include "script.h"
 #include "skill.h"
 #include "unit.h"
+#include "atcommand.h"
 
 #define MIN_PETTHINKTIME 100
 
@@ -683,7 +684,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	return 0;
 }
 
-int pet_change_name(struct map_session_data *sd,char *name, int flag) //flag 0 = check name, 1 = good name
+int pet_change_name(struct map_session_data *sd,char *name)
 {
 	int i;
 	struct pet_data *pd;
@@ -698,19 +699,24 @@ int pet_change_name(struct map_session_data *sd,char *name, int flag) //flag 0 =
 			return 1;
 	}
 
-	if (!flag)
-		return intif_rename_pet(sd, name);
-	
-	pet_stop_walking(pd,1);
-	
-	memcpy(pd->pet.name, name, NAME_LENGTH-1);
+	return intif_rename_pet(sd, name);
+}
 
+int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
+{
+	struct pet_data *pd = sd->pd;
+	if (!pd) return 0;
+	if (!flag) {
+		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name for your pet.
+		clif_send_petstatus(sd); //Send status so client knows oet name change got rejected.
+		return 0;
+	}
+	memcpy(pd->pet.name, name, NAME_LENGTH-1);
 	clif_charnameack (0,&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip(pd);
 	clif_send_petstatus(sd);
-
-	return 0;
+	return 1;
 }
 
 int pet_equipitem(struct map_session_data *sd,int index)

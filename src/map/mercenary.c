@@ -494,6 +494,41 @@ int merc_hom_hungry_timer_delete(struct homun_data *hd)
 	return 1;
 }
 
+int merc_hom_change_name(struct map_session_data *sd,char *name)
+{
+	int i;
+	struct homun_data *hd;
+	nullpo_retr(1, sd);
+
+	hd = sd->hd;
+	if (!merc_is_hom_active(hd))
+		return 1;
+	if(hd->homunculus.rename_flag && !battle_config.hom_rename)
+		return 1;
+
+	for(i=0;i<NAME_LENGTH && name[i];i++){
+		if( !(name[i]&0xe0) || name[i]==0x7f)
+			return 1;
+	}
+
+	return intif_rename_hom(sd, name);
+}
+
+int merc_hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
+{
+	struct homun_data *hd = sd->hd;
+	if (!merc_is_hom_active(hd)) return 0;
+	if (!flag) {
+		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name
+		return 0;
+	}
+	strncpy(hd->homunculus.name,name,NAME_LENGTH);
+	clif_charnameack (0,&hd->bl);
+	hd->homunculus.rename_flag = 1;
+	clif_hominfo(sd,hd,0);
+	return 1;
+}
+
 int search_homunculusDB_index(int key,int type)
 {
 	int i;

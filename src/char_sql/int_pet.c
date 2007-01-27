@@ -200,19 +200,6 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_rename_pet_ack(int fd, int account_id, int char_id, int flag, char *name){
-	WFIFOHEAD(fd, NAME_LENGTH+12);
-	WFIFOW(fd, 0) =0x3884;
-	WFIFOL(fd, 2) =account_id;
-	WFIFOL(fd, 6) =char_id;
-	WFIFOB(fd, 10) =flag;
-	memcpy(WFIFOP(fd, 11), name, NAME_LENGTH);
-	WFIFOSET(fd, NAME_LENGTH+12);
-
-	return 0;
-}
-
-
 int mapif_create_pet(int fd, int account_id, int char_id, short pet_class, short pet_lv, short pet_egg_id,
 	short pet_equip, short intimate, short hungry, char rename_flag, char incuvate, char *pet_name){
 
@@ -303,28 +290,6 @@ int mapif_delete_pet(int fd, int pet_id){
 	return 0;
 }
 
-int mapif_rename_pet(int fd, int account_id, int char_id, char *name){
-	int i;
-
-	// Check Authorised letters/symbols in the name of the pet
-	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) == NULL) {
-			mapif_rename_pet_ack(fd, account_id, char_id, 0, name);
-			return 0;
-		}
-	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) != NULL) {
-			mapif_rename_pet_ack(fd, account_id, char_id, 0, name);
-			return 0;
-		}
-	}
-
-	mapif_rename_pet_ack(fd, account_id, char_id, 1, name);
-	return 0;
-}
-
 int mapif_parse_CreatePet(int fd){
 	RFIFOHEAD(fd);
 	mapif_create_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOW(fd, 10), RFIFOW(fd, 12), RFIFOW(fd, 14), RFIFOW(fd, 16), RFIFOW(fd, 18),
@@ -350,12 +315,6 @@ int mapif_parse_DeletePet(int fd){
 	return 0;
 }
 
-int mapif_parse_RenamePet(int fd){
-	RFIFOHEAD(fd);
-	mapif_rename_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10));
-	return 0;
-}
-
 int inter_pet_parse_frommap(int fd){
 	RFIFOHEAD(fd);
 	switch(RFIFOW(fd, 0)){
@@ -363,7 +322,6 @@ int inter_pet_parse_frommap(int fd){
 	case 0x3081: mapif_parse_LoadPet(fd); break;
 	case 0x3082: mapif_parse_SavePet(fd); break;
 	case 0x3083: mapif_parse_DeletePet(fd); break;
-	case 0x3084: mapif_parse_RenamePet(fd); break;
 	default:
 		return 0;
 	}
