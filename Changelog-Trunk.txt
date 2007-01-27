@@ -4,11 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/26
+	* Removed all those useless read-from-GRF features noone would ever use,
+	  also removed cutincard script command as a consequence [DracoRPG]
+	  - this is only the beginning of full grfio disparition from map-server
 	* Now assassins can equip arrows, and status arrows trigger on any ranged
 	  physical attack: mimics Grimtooth + status arrow "Aegis bug" [DracoRPG]
 	* Added some random Storage Password packets thingies [DracoRPG]
-	  -> Those 2 things affect too few code to break anything, or so I hope as
-	     I can't try compiling atm :s
 	* Kaite and Assumptio no longer stack. One will remove the other in the
 	  same way Assumptio and Kyrie do.
 	* Made homunculus renaming go through the char-server so it can be

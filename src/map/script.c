@@ -3565,7 +3565,6 @@ int buildin_getequippercentrefinery(struct script_state *st);
 int buildin_successrefitem(struct script_state *st);
 int buildin_failedrefitem(struct script_state *st);
 int buildin_cutin(struct script_state *st);
-int buildin_cutincard(struct script_state *st);
 int buildin_statusup(struct script_state *st);
 int buildin_statusup2(struct script_state *st);
 int buildin_bonus(struct script_state *st);
@@ -3866,7 +3865,6 @@ struct script_function buildin_func[] = {
 	{buildin_enableitemuse,"enable_items",""},
 	{buildin_disableitemuse,"disable_items",""},
 	{buildin_cutin,"cutin","si"},
-	{buildin_cutincard,"cutincard","i"},
 	{buildin_viewpoint,"viewpoint","iiiii"},
 	{buildin_heal,"heal","ii"},
 	{buildin_itemheal,"itemheal","ii"},
@@ -5179,22 +5177,6 @@ int buildin_cutin(struct script_state *st)
 
 	clif_cutin(script_rid2sd(st),st->stack->stack_data[st->start+2].u.str,type);
 
-	return 0;
-}
-/*==========================================
- * カードのイラストを表示する
- *------------------------------------------
- */
-int buildin_cutincard(struct script_state *st)
-{
-	int itemid;
-	struct item_data *i_data;
-
-	itemid=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	
-	i_data = itemdb_exists(itemid);
-	if (i_data)
-		clif_cutin(script_rid2sd(st),i_data->cardillustname,4);
 	return 0;
 }
 

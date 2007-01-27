@@ -8,17 +8,12 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
-#include "../common/grfio.h"
 #include "../common/strlib.h"
 #include "map.h"
 #include "battle.h"
 #include "itemdb.h"
 #include "script.h"
 #include "pc.h"
-
-// ** ITEMDB_OVERRIDE_NAME_VERBOSE **
-//   定義すると、itemdb.txtとgrfで名前が異なる場合、表示します.
-//#define ITEMDB_OVERRIDE_NAME_VERBOSE	1
 
 static struct dbt* item_db;
 
@@ -571,152 +566,6 @@ static void itemdb_read_itemgroup(void)
 	}
 	return;
 }
-/*==========================================
- * アイテムの名前テーブルを読み込む
- *------------------------------------------
- */
-static int itemdb_read_itemnametable(void)
-{
-	char *buf,*p;
-	int s;
-
-	buf=(char *) grfio_reads("data\\idnum2itemdisplaynametable.txt",&s);
-
-	if(buf==NULL)
-		return -1;
-
-	buf[s]=0;
-	for(p=buf;p-buf<s;){
-		int nameid;
-		char buf2[64]; //Why 64? What's this for, other than holding an item's name? [Skotlex]
-
-		if(	sscanf(p,"%d#%[^#]#",&nameid,buf2)==2 ){
-
-#ifdef ITEMDB_OVERRIDE_NAME_VERBOSE
-			if( itemdb_exists(nameid) &&
-				strncmp(itemdb_search(nameid)->jname,buf2,ITEM_NAME_LENGTH)!=0 ){
-				ShowNotice("[override] %d %s => %s\n",nameid
-					,itemdb_search(nameid)->jname,buf2);
-			}
-#endif
-
-			strncpy(itemdb_search(nameid)->jname,buf2,ITEM_NAME_LENGTH-1);
-		}
-
-		p=strchr(p,10);
-		if(!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\idnum2itemdisplaynametable.txt");
-
-	return 0;
-}
-
-/*==========================================
- * カードイラストのリソース名前テーブルを読み込む
- *------------------------------------------
- */
-static int itemdb_read_cardillustnametable(void)
-{
-	char *buf,*p;
-	int s;
-
-	buf=(char *) grfio_reads("data\\num2cardillustnametable.txt",&s);
-
-	if(buf==NULL)
-		return -1;
-
-	buf[s]=0;
-	for(p=buf;p-buf<s;){
-		int nameid;
-		char buf2[64];
-
-		if(	sscanf(p,"%d#%[^#]#",&nameid,buf2)==2 ){
-			strcat(buf2,".bmp");
-			memcpy(itemdb_search(nameid)->cardillustname,buf2,64);
-		}
-		
-		p=strchr(p,10);
-		if(!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\num2cardillustnametable.txt");
-
-	return 0;
-}
-
-//
-// 初期化
-//
-/*==========================================
- *
- *------------------------------------------
- */
-static int itemdb_read_itemslottable(void)
-{
-	char *buf, *p;
-	int s;
-
-	buf = (char *)grfio_reads("data\\itemslottable.txt", &s);
-	if (buf == NULL)
-		return -1;
-	buf[s] = 0;
-	for (p = buf; p - buf < s; ) {
-		int nameid, equip;
-		struct item_data* item;
-		sscanf(p, "%d#%d#", &nameid, &equip);
-		item = itemdb_search(nameid);
-		if (equip && item && itemdb_isequip2(item))
-			item->equip = equip;
-		p = strchr(p, 10);
-		if(!p) break;
-		p++;
-		p=strchr(p, 10);
-		if(!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\itemslottable.txt");
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-static int itemdb_read_itemslotcounttable(void)
-{
-	char *buf, *p;
-	int s;
-
-	buf = (char *)grfio_reads("data\\itemslotcounttable.txt", &s);
-	if (buf == NULL)
-		return -1;
-	buf[s] = 0;
-	for (p = buf; p - buf < s;){
-		int nameid, slot;
-		sscanf(p, "%d#%d#", &nameid, &slot);
-		if (slot > MAX_SLOTS)
-		{
-			ShowWarning("itemdb_read_itemslotcounttable: Item %d specifies %d slots, but the server only supports up to %d\n", nameid, slot, MAX_SLOTS);
-			slot = MAX_SLOTS;
-		}
-		itemdb_slot(nameid) = slot;
-		p = strchr(p,10);
-		if(!p) break;
-		p++;
-		p = strchr(p,10);
-		if(!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", "data\\itemslotcounttable.txt");
-
-	return 0;
-}
 
 /*==========================================
  * 装備制限ファイル読み出し
@@ -1202,14 +1051,6 @@ static void itemdb_read(void)
 	itemdb_read_itemavail();
 	itemdb_read_noequip();
 	itemdb_read_itemtrade();
-	if (battle_config.cardillust_read_grffile)
-		itemdb_read_cardillustnametable();
-	if (battle_config.item_equip_override_grffile)
-		itemdb_read_itemslottable();
-	if (battle_config.item_slots_override_grffile)
-		itemdb_read_itemslotcounttable();
-	if (battle_config.item_name_override_grffile)
-		itemdb_read_itemnametable();
 }
 
 /*==========================================

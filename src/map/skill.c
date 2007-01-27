@@ -11,7 +11,6 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
-#include "../common/grfio.h"
 #include "../common/ers.h"
 
 #include "skill.h"
@@ -11571,62 +11570,9 @@ int skill_readdb (void)
 	return 0;
 }
 
-/*===============================================
- * For reading leveluseskillspamount.txt [Celest]
- *-----------------------------------------------
- */
-static int skill_read_skillspamount (void)
-{
-	char *buf,*p;
-	struct skill_db *skill = NULL;
-	int s, idx, new_flag=1, level=1, sp=0;
-
-	buf=(char *) grfio_reads("data\\leveluseskillspamount.txt",&s);
-
-	if(buf==NULL)
-		return -1;
-
-	buf[s]=0;
-	for(p=buf;p-buf<s;){
-		char buf2[64];
-
-		if (sscanf(p,"%[@]",buf2) == 1) {
-			level = 1;
-			new_flag = 1;
-		} else if (new_flag && sscanf(p,"%[^#]#",buf2) == 1) {
-			for (idx=0; skill_names[idx].id != 0; idx++) {
-				if (strstr(buf2, skill_names[idx].name) != NULL) {
-					//Apply Guild/Homunc adjustment.
-					sp = skill_names[idx].id;
-					if (sp >= GD_SKILLBASE) sp = GD_SKILLRANGEMIN + sp - GD_SKILLBASE;
-					if (sp >= HM_SKILLBASE) sp = HM_SKILLRANGEMIN + sp - HM_SKILLBASE;
-					if (sp < 1 || sp >= MAX_SKILL_DB)
-						continue;
-					skill = &skill_db[sp];
-					new_flag = 0;
-					break;
-				}
-			}
-		} else if (!new_flag && sscanf(p,"%d#",&sp) == 1) {
-			skill->sp[level-1]=sp;
-			level++;
-		}
-
-		p=strchr(p,10);
-		if(!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\leveluseskillspamount.txt");
-
-	return 0;
-}
-
 void skill_reload (void)
 {
 	skill_readdb();
-	if (battle_config.skill_sp_override_grffile)
-		skill_read_skillspamount();
 }
 
 /*==========================================
@@ -11641,9 +11587,6 @@ int do_init_skill (void)
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 	
-	if (battle_config.skill_sp_override_grffile)
-		skill_read_skillspamount();
-
 	add_timer_func_list(skill_unit_timer,"skill_unit_timer");
 	add_timer_func_list(skill_castend_id,"skill_castend_id");
 	add_timer_func_list(skill_castend_pos,"skill_castend_pos");

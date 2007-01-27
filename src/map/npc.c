@@ -3016,9 +3016,6 @@ int do_init_npc(void)
 	for (busy = 1; busy < MAX_NPC_CLASS; busy++) 
 		npc_viewdb[busy].class_ = busy;
 	busy = 0;
-	// indoorrswtable.txt and etcinfo.txt [Celest]
-	if (battle_config.indoors_override_grffile)
-		npc_read_indoors();
 
 	// comparing only the first 24 chars of labels that are 50 chars long isn't that nice
 	// will cause "duplicated" labels where actually no dup is...

@@ -203,12 +203,6 @@ extern struct Battle_Config {
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
 	unsigned short natural_heal_weight_rate;
-	unsigned short item_name_override_grffile;
-	unsigned short indoors_override_grffile;	// [Celest]
-	unsigned short skill_sp_override_grffile;	// [Celest]
-	unsigned short cardillust_read_grffile;
-	unsigned short item_equip_override_grffile;
-	unsigned short item_slots_override_grffile;
 	unsigned short arrow_decrement;
 	unsigned short max_aspd;
 	unsigned short max_walk_speed;	//Maximum walking speed after buffs [Skotlex]

@@ -3696,12 +3696,6 @@ void do_final(void) {
 	//we probably don't need the cache open at all times 'yet', so this is closed by mapsource_final [celest]
 	//map_cache_close();
 
-	// We probably don't need the grfio after server bootup 'yet' too. So this is closed near the end of do_init [Lance]
-	if((battle_config.cardillust_read_grffile || battle_config.item_equip_override_grffile || 
-		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile ||
-		battle_config.skill_sp_override_grffile))
-		grfio_final();
-
 	for (i = 0; i < map_num; i++)
 		if (map[i].m >= 0)
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
@@ -3990,17 +3984,6 @@ int do_init(int argc, char *argv[]) {
 
 	if (battle_config.pk_mode == 1)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
-
-	if(!(battle_config.cardillust_read_grffile || battle_config.item_equip_override_grffile || 
-		battle_config.item_slots_override_grffile || battle_config.item_name_override_grffile ||
-		battle_config.skill_sp_override_grffile))
-		grfio_final(); // Unused after reading all maps.
-
-	//However, some reload functions still use it,disable them.
-	//battle_config.cardillust_read_grffile =
-	//battle_config.item_equip_override_grffile =
-	//battle_config.item_slots_override_grffile =
-	//battle_config.item_name_override_grffile = 0;
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 

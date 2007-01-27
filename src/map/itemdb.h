@@ -37,7 +37,6 @@ struct item_data {
 	int nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 	char prefix[NAME_LENGTH],suffix[NAME_LENGTH];
-	char cardillustname[64];
 	//Do not add stuff between value_buy and wlv (see how getiteminfo works)
 	int value_buy;
 	int value_sell;

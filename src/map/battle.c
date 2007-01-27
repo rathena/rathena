@@ -3587,12 +3587,6 @@ static const struct battle_data_short {
 	{ "wedding_ignorepalette",             &battle_config.wedding_ignorepalette	},	//[Skotlex]
 	{ "xmas_ignorepalette",                &battle_config.xmas_ignorepalette	},	// [Valaris]
 	{ "natural_heal_weight_rate",          &battle_config.natural_heal_weight_rate	},
-	{ "item_name_override_grffile",        &battle_config.item_name_override_grffile},
-	{ "item_equip_override_grffile",       &battle_config.item_equip_override_grffile},	// [Celest]
-	{ "item_slots_override_grffile",       &battle_config.item_slots_override_grffile},	// [Celest]
-	{ "indoors_override_grffile",          &battle_config.indoors_override_grffile},	// [Celest]
-	{ "skill_sp_override_grffile",         &battle_config.skill_sp_override_grffile},	// [Celest]
-	{ "cardillust_read_grffile",           &battle_config.cardillust_read_grffile},	// [Celest]
 	{ "arrow_decrement",                   &battle_config.arrow_decrement			},
 	{ "max_aspd",                          &battle_config.max_aspd					},
 	{ "max_walk_speed",                    &battle_config.max_walk_speed			},
@@ -4004,12 +3998,6 @@ void battle_set_defaults() {
 	battle_config.natural_healsp_interval=8000;
 	battle_config.natural_heal_skill_interval=10000;
 	battle_config.natural_heal_weight_rate=50;
-	battle_config.item_name_override_grffile=1;
-	battle_config.item_equip_override_grffile=0;	// [Celest]
-	battle_config.item_slots_override_grffile=0;	// [Celest]
-	battle_config.indoors_override_grffile=0;	// [Celest]
-	battle_config.skill_sp_override_grffile=0;	// [Celest]
-	battle_config.cardillust_read_grffile=0;	// [Celest]
 	battle_config.arrow_decrement=1;
 	battle_config.max_aspd = 199;
 	battle_config.max_walk_speed = 300;
