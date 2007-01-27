@@ -187,7 +187,6 @@ enum AtCommandType {
 	AtCommand_ChangeSex, // by MC Cameri
 	AtCommand_Mute, // [celest]
 	AtCommand_WhoZeny, // [Valaris] <-- LOL...(MC Cameri) worth it.
-	AtCommand_HappyHappyJoyJoy, // [Valaris]
 	AtCommand_Refresh, // by MC Cameri
 	AtCommand_PetId, // by MC Cameri
 	AtCommand_Identify, // by MC Cameri
@@ -244,7 +243,6 @@ enum AtCommandType {
 	AtCommand_Version, // by Ancyker
 
 	AtCommand_MuteArea, // MouseJstr
-	AtCommand_Shuffle, // MouseJstr
 	AtCommand_Rates, // MouseJstr
 
 	AtCommand_ItemInfo, // Lupus

@@ -60,7 +60,6 @@ ACMD_FUNC(whomap2);
 ACMD_FUNC(whomap3);
 ACMD_FUNC(whogm); // by Yor
 ACMD_FUNC(whozeny); // [Valaris]
-ACMD_FUNC(happyhappyjoyjoy); // [Valaris]
 ACMD_FUNC(save);
 ACMD_FUNC(load);
 ACMD_FUNC(speed);
@@ -270,7 +269,6 @@ ACMD_FUNC(adopt); // by Veider
 ACMD_FUNC(version); // by Ancyker
 
 ACMD_FUNC(mutearea); // by MouseJstr
-ACMD_FUNC(shuffle); // by MouseJstr
 ACMD_FUNC(rates); // by MouseJstr
 
 ACMD_FUNC(iteminfo); // Lupus
@@ -325,6 +323,7 @@ ACMD_FUNC(showmobs); //KarLaeda
 static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Rura,               "@rura",            40, atcommand_rura },
 	{ AtCommand_Warp,               "@warp",            40, atcommand_rura },
+	{ AtCommand_MapMove,            "@mapmove",         40, atcommand_rura }, // /mm command
 	{ AtCommand_Where,              "@where",            1, atcommand_where },
 	{ AtCommand_JumpTo,             "@jumpto",          20, atcommand_jumpto }, // + /shift
 	{ AtCommand_JumpTo,             "@warpto",          20, atcommand_jumpto },
@@ -332,7 +331,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Jump,               "@jump",            40, atcommand_jump },
 	{ AtCommand_Who,                "@who",             20, atcommand_who },
 	{ AtCommand_Who,                "@whois",           20, atcommand_who },
-	{ AtCommand_Who,                "@w",               20, atcommand_who },
 	{ AtCommand_Who2,               "@who2",            20, atcommand_who2 },
 	{ AtCommand_Who3,               "@who3",            20, atcommand_who3 },
 	{ AtCommand_WhoMap,             "@whomap",          20, atcommand_whomap },
@@ -431,7 +429,6 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_AgitEnd,            "@agitend",         60, atcommand_agitend },
 	{ AtCommand_MapExit,            "@mapexit",         99, atcommand_mapexit },
 	{ AtCommand_IDSearch,           "@idsearch",        60, atcommand_idsearch },
-	{ AtCommand_MapMove,            "@mapmove",         40, atcommand_rura }, // /mm command
 	{ AtCommand_Broadcast,          "@broadcast",       40, atcommand_broadcast }, // /b and /nb command
 	{ AtCommand_LocalBroadcast,     "@localbroadcast",  40, atcommand_localbroadcast }, // /lb and /nlb command
 	{ AtCommand_RecallAll,          "@recallall",       80, atcommand_recallall },
@@ -482,17 +479,15 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Unloadnpc,          "@unloadnpc",       80, atcommand_unloadnpc }, // []
 	{ AtCommand_ServerTime,         "@time",             1, atcommand_servertime }, // by Yor
 	{ AtCommand_ServerTime,         "@date",             1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,         "@server_date",      1, atcommand_servertime }, // by Yor
 	{ AtCommand_ServerTime,         "@serverdate",       1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,         "@server_time",      1, atcommand_servertime }, // by Yor
 	{ AtCommand_ServerTime,         "@servertime",       1, atcommand_servertime }, // by Yor
 	{ AtCommand_CharDelItem,        "@chardelitem",     60, atcommand_chardelitem }, // by Yor
 	{ AtCommand_Jail,               "@jail",            60, atcommand_jail }, // by Yor
 	{ AtCommand_UnJail,             "@unjail",          60, atcommand_unjail }, // by Yor
 	{ AtCommand_UnJail,             "@discharge",       60, atcommand_unjail }, // by Yor
-	{ AtCommand_JailFor,            "@jailfor",         20, atcommand_jailfor }, //Meruru
-	{ AtCommand_JailTime,           "@jailtime",        1, atcommand_jailtime }, //Change this to 0 in atcommand_conf.txt if you want it accessible to players (you most likely will ;))
-	{ AtCommand_CharJailTime,       "@charjailtime",    20, atcommand_charjailtime },
+	{ AtCommand_JailFor,            "@jailfor",         60, atcommand_jailfor }, //Meruru
+	{ AtCommand_JailTime,           "@jailtime",         1, atcommand_jailtime },
+	{ AtCommand_CharJailTime,       "@charjailtime",    60, atcommand_charjailtime },
 	{ AtCommand_Disguise,           "@disguise",        20, atcommand_disguise }, // [Valaris]
 	{ AtCommand_UnDisguise,         "@undisguise",      20, atcommand_undisguise }, // by Yor
 	{ AtCommand_CharDisguise,       "@chardisguise",    60, atcommand_chardisguise }, // Kalaspuff
@@ -505,13 +500,13 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_SkillOn,            "@skillon",         80, atcommand_skillon }, // by MouseJstr
 	{ AtCommand_SkillOff,           "@skilloff",        80, atcommand_skilloff }, // by MouseJstr
 	{ AtCommand_Killer,             "@killer",          60, atcommand_killer }, // by MouseJstr
-	{ AtCommand_NpcMove,            "@npcmove",         20, atcommand_npcmove }, // by MouseJstr
+	{ AtCommand_NpcMove,            "@npcmove",         80, atcommand_npcmove }, // by MouseJstr
 	{ AtCommand_Killable,           "@killable",        40, atcommand_killable }, // by MouseJstr
 	{ AtCommand_CharKillable,       "@charkillable",    40, atcommand_charkillable }, // by MouseJstr
 	{ AtCommand_Dropall,            "@dropall",         40, atcommand_dropall }, // MouseJstr
-	{ AtCommand_Chardropall,        "@chardropall",     40, atcommand_chardropall }, // MouseJstr
+	{ AtCommand_Chardropall,        "@chardropall",     60, atcommand_chardropall }, // MouseJstr
 	{ AtCommand_Storeall,           "@storeall",        40, atcommand_storeall }, // MouseJstr
-	{ AtCommand_Charstoreall,       "@charstoreall",    40, atcommand_charstoreall }, // MouseJstr
+	{ AtCommand_Charstoreall,       "@charstoreall",    60, atcommand_charstoreall }, // MouseJstr
 	{ AtCommand_Skillid,            "@skillid",         40, atcommand_skillid }, // MouseJstr
 	{ AtCommand_Useskill,           "@useskill",        40, atcommand_useskill }, // MouseJstr
 //	{ AtCommand_Rain,               "@rain",            99, atcommand_rain }, //Client no longer supports rain!
@@ -526,17 +521,15 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_AdjGmLvl,           "@adjgmlvl",        99, atcommand_adjgmlvl },
 	{ AtCommand_AdjCmdLvl,          "@adjcmdlvl",       99, atcommand_adjcmdlvl },
 	{ AtCommand_Trade,              "@trade",           60, atcommand_trade },
-	{ AtCommand_Send,               "@send",            60, atcommand_send },
+	{ AtCommand_Send,               "@send",            99, atcommand_send },
 	{ AtCommand_SetBattleFlag,      "@setbattleflag",   99, atcommand_setbattleflag },
 	{ AtCommand_UnMute,             "@unmute",          80, atcommand_unmute }, // [Valaris]
 	{ AtCommand_Clearweather,       "@clearweather",    99, atcommand_clearweather }, // Dexity
 	{ AtCommand_UpTime,             "@uptime",           1, atcommand_uptime }, // by MC Cameri
-	{ AtCommand_ChangeSex,          "@changesex",       60, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken] <- why not? [Skotlex]
-	{ AtCommand_Mute,               "@mute",            99, atcommand_mute }, // [celest]
-	{ AtCommand_Mute,               "@red",             99, atcommand_mute }, // [celest]
+	{ AtCommand_ChangeSex,          "@changesex",       60, atcommand_changesex }, // by MC Cameri
+	{ AtCommand_Mute,               "@mute",            80, atcommand_mute }, // [celest]
 	{ AtCommand_WhoZeny,            "@whozeny",         20, atcommand_whozeny }, // [Valaris]
-	{ AtCommand_HappyHappyJoyJoy,   "@happyhappyjoyjoy",40, atcommand_happyhappyjoyjoy }, // [Valaris]
-	{ AtCommand_Refresh,             "@refresh",         1, atcommand_refresh }, // by MC Cameri
+	{ AtCommand_Refresh,            "@refresh",          1, atcommand_refresh }, // by MC Cameri
 	{ AtCommand_PetId,              "@petid",           40, atcommand_petid }, // by MC Cameri
 	{ AtCommand_Identify,           "@identify",        40, atcommand_identify }, // by MC Cameri
 	{ AtCommand_Gmotd,              "@gmotd",           20, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
@@ -586,21 +579,21 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_KillId2,            "@killid2",         60, atcommand_killid2 }, // [Dino9021]
 	{ AtCommand_CharKillableId,     "@charkillableid",  40, atcommand_charkillableid }, // [Dino9021]
 	{ AtCommand_CharKillableId2,    "@charkillableid2", 40, atcommand_charkillableid2 }, // [Dino9021]
+
 	{ AtCommand_Sound,              "@sound",           40, atcommand_sound },
 	{ AtCommand_UndisguiseAll,      "@undisguiseall",   99, atcommand_undisguiseall },
 	{ AtCommand_DisguiseAll,        "@disguiseall",     99, atcommand_disguiseall },
-	{ AtCommand_ChangeLook,         "@changelook",      99, atcommand_changelook },
+	{ AtCommand_ChangeLook,         "@changelook",      60, atcommand_changelook },
 	{ AtCommand_AutoLoot,           "@autoloot",        10, atcommand_autoloot }, // Upa-Kun
 	{ AtCommand_MobInfo,            "@mobinfo",          1, atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,            "@monsterinfo",      1, atcommand_mobinfo }, // [Lupus]
 	{ AtCommand_MobInfo,            "@mi",               1, atcommand_mobinfo }, // [Lupus]
-	{ AtCommand_Exp,                "@exp",              0, atcommand_exp }, // [Skotlex]
+	{ AtCommand_Exp,                "@exp",              1, atcommand_exp }, // [Skotlex]
 	{ AtCommand_Adopt,              "@adopt",           40, atcommand_adopt }, // [Veider]
 	{ AtCommand_Version,            "@version",          1, atcommand_version },
 
 	{ AtCommand_MuteArea,           "@mutearea",        99, atcommand_mutearea }, // MouseJstr
 	{ AtCommand_MuteArea,           "@stfu",            99, atcommand_mutearea }, // MouseJstr
-	{ AtCommand_Shuffle,            "@shuffle",         40, atcommand_shuffle }, // MouseJstr
 	{ AtCommand_Rates,              "@rates",            1, atcommand_rates }, // MouseJstr
 
 	{ AtCommand_ItemInfo,           "@iteminfo",         1, atcommand_iteminfo }, // [Lupus]
@@ -2063,31 +2056,6 @@ int atcommand_whozeny(
 	return 0;
 }
 
-
-// cause random emote on all online players [Valaris]
-int atcommand_happyhappyjoyjoy(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i,e, users;
-
-	nullpo_retr(-1, sd);
-
-	pl_allsd = map_getallusers(&users);
-
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			e=rand()%40;
-			if(e==34)
-				e = 0;
-			clif_emotion(&pl_sd->bl,e);
-		}
-	}
-
-	return 0;
-}
-
 /*==========================================
  *
  *------------------------------------------
@@ -3243,18 +3211,6 @@ int atcommand_hair_style(const int fd, struct map_session_data* sd, const char* 
 	}
 
 	return 0;
-}
-
-/*==========================================
- * @charhairstyle by [MouseJstr]
- *------------------------------------------
- */
-int
-atcommand_charhairstyle(const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-	nullpo_retr(-1, sd);
-    return 0;
 }
 
 /*==========================================
@@ -6103,7 +6059,10 @@ int atcommand_repairall(
 	return 0;
 }
 
-// Removed @nuke for now in favor of alchemist marine sphere skill [Valaris]
+/*==========================================
+ * @nuke [Valaris]
+ *------------------------------------------
+ */
 int atcommand_nuke(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
@@ -10282,45 +10241,6 @@ int atcommand_mutearea(
 	return 0;
 }
 
-static int atcommand_shuffle_sub(struct block_list *bl,va_list ap)
-{
-  struct map_session_data *pl_sd = (struct map_session_data *) bl;
-  if (bl == NULL)
-    return 0;
-
-  if (!pc_isGM(pl_sd)) 
-    pc_setpos(pl_sd, pl_sd->mapindex, rand() % 399 + 1, rand() % 399 + 1, 3);
-
-  return 0;
-}
-
-/*==========================================
- * @shuffle by MouseJstr
- *------------------------------------------
- */
-int atcommand_shuffle(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-{
-  nullpo_retr(0, sd);
-
-  if (strcmp(message, "area")== 0) {
-    map_foreachinarea(atcommand_shuffle_sub,sd->bl.m, 
-      sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE, 
-      sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_PC);  
-  } else if (strcmp(message, "map")== 0) {
-    map_foreachinmap(atcommand_shuffle_sub,sd->bl.m, BL_PC);
-  } else if (strcmp(message, "world") == 0) {
-    struct map_session_data **pl_allsd;
-    int i, users;
-	 pl_allsd = map_getallusers(&users);
-    for (i = 0; i < users; i++) 
-        atcommand_shuffle_sub(&pl_allsd[i]->bl, 0);
-  } else 
-    clif_displaymessage(fd, "options are area, map, or world");
-
-  return 0;
-}
 
 int atcommand_rates(
 	const int fd, struct map_session_data* sd,
