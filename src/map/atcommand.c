@@ -28,7 +28,7 @@
 #include "skill.h"
 #include "mob.h"
 #include "pet.h"
-#include "mercenary.h"	//[orn]
+#include "mercenary.h" //[orn]
 #include "battle.h"
 #include "party.h"
 #include "guild.h"
@@ -263,8 +263,8 @@ ACMD_FUNC(sound);
 ACMD_FUNC(undisguiseall);
 ACMD_FUNC(disguiseall);
 ACMD_FUNC(changelook);
-ACMD_FUNC(mobinfo);	//by Lupus
-ACMD_FUNC(exp);	// by Skotlex
+ACMD_FUNC(mobinfo); //by Lupus
+ACMD_FUNC(exp); // by Skotlex
 ACMD_FUNC(adopt); // by Veider
 
 ACMD_FUNC(version); // by Ancyker
@@ -304,351 +304,351 @@ ACMD_FUNC(commands); // [Skotlex]
 ACMD_FUNC(noask); //LuzZza
 ACMD_FUNC(request); //[Skotlex]
 
-ACMD_FUNC(homlevel);	//[orn]
-ACMD_FUNC(homevolution);	//[orn]
-ACMD_FUNC(makehomun);	//[orn]
-ACMD_FUNC(homfriendly);	//[orn]
-ACMD_FUNC(homhungry);	//[orn]
-ACMD_FUNC(homtalk);	//[orn]
-ACMD_FUNC(hominfo);	//[Toms]
-ACMD_FUNC(homstats);	//[Skotlex]
-ACMD_FUNC(homshuffle);	//[Skotlex]
+ACMD_FUNC(homlevel); //[orn]
+ACMD_FUNC(homevolution); //[orn]
+ACMD_FUNC(makehomun); //[orn]
+ACMD_FUNC(homfriendly); //[orn]
+ACMD_FUNC(homhungry); //[orn]
+ACMD_FUNC(homtalk); //[orn]
+ACMD_FUNC(hominfo); //[Toms]
+ACMD_FUNC(homstats); //[Skotlex]
+ACMD_FUNC(homshuffle); //[Skotlex]
 ACMD_FUNC(showmobs); //KarLaeda
 
 /*==========================================
- *AtCommandInfo atcommand_info[]ç\ë¢ëÃÇÃíËã`
+ *AtCommandInfo atcommand_info[] structure definition
  *------------------------------------------
  */
 
 // First char of commands is configured in atcommand_athena.conf. Leave @ in this list for default value.
 // to set default level, read atcommand_athena.conf first please.
 static AtCommandInfo atcommand_info[] = {
-	{ AtCommand_Rura,				"@rura",			40, atcommand_rura },
-	{ AtCommand_Warp,				"@warp",			40, atcommand_rura },
-	{ AtCommand_Where,			"@where",			 1, atcommand_where },
-	{ AtCommand_JumpTo,			"@jumpto",			20, atcommand_jumpto }, // + /shift
-	{ AtCommand_JumpTo,			"@warpto",			20, atcommand_jumpto },
-	{ AtCommand_JumpTo,			"@goto",			20, atcommand_jumpto },
-	{ AtCommand_Jump,				"@jump",			40, atcommand_jump },
-	{ AtCommand_Who,				"@who",			20, atcommand_who },
-	{ AtCommand_Who,				"@whois",			20, atcommand_who },
-	{ AtCommand_Who,				"@w",				20, atcommand_who },
-	{ AtCommand_Who2,				"@who2",			20, atcommand_who2 },
-	{ AtCommand_Who3,				"@who3",			20, atcommand_who3 },
-	{ AtCommand_WhoMap,			"@whomap",			20, atcommand_whomap },
-	{ AtCommand_WhoMap2,			"@whomap2",			20, atcommand_whomap2 },
-	{ AtCommand_WhoMap3,			"@whomap3",			20, atcommand_whomap3 },
-	{ AtCommand_WhoGM,			"@whogm",			20, atcommand_whogm }, // by Yor
-	{ AtCommand_Save,				"@save",			40, atcommand_save },
-	{ AtCommand_Load,				"@return",			40, atcommand_load },
-	{ AtCommand_Load,				"@load",			40, atcommand_load },
-	{ AtCommand_Speed,			"@speed",			40, atcommand_speed },
-	{ AtCommand_CharSpeed,		"@charspeed",		40, atcommand_charspeed },
-	{ AtCommand_Storage,			"@storage",			 1, atcommand_storage },
-	{ AtCommand_GuildStorage,		"@gstorage",		50, atcommand_guildstorage },
-	{ AtCommand_Option,			"@option",			40, atcommand_option },
-	{ AtCommand_Hide,				"@hide",			40, atcommand_hide }, // + /hide
-	{ AtCommand_JobChange,			"@jobchange",		40, atcommand_jobchange },
-	{ AtCommand_JobChange,			"@job",			40, atcommand_jobchange },
-	{ AtCommand_Die,				"@die",			 1, atcommand_die },
-	{ AtCommand_Kill,				"@kill",			60, atcommand_kill },
-	{ AtCommand_Alive,			"@alive",			60, atcommand_alive },
-	{ AtCommand_Kami,				"@kami",			40, atcommand_kami },
-	{ AtCommand_KamiB,			"@kamib",			40, atcommand_kami },
-	{ AtCommand_KamiC,				"@kamic",			40, atcommand_kami }, //[LuzZza]
-	{ AtCommand_Heal,				"@heal",			40, atcommand_heal },
-	{ AtCommand_Item,				"@item",			60, atcommand_item },
-	{ AtCommand_Item2,			"@item2",			60, atcommand_item2 },
-	{ AtCommand_ItemReset,			"@itemreset",		40, atcommand_itemreset },
-	{ AtCommand_BaseLevelUp,		"@lvup",			60, atcommand_baselevelup },
-	{ AtCommand_BaseLevelUp,		"@blevel",			60, atcommand_baselevelup },
-	{ AtCommand_BaseLevelUp,		"@baselvlup",		60, atcommand_baselevelup },
-	{ AtCommand_JobLevelUp,			"@jlevel",			60, atcommand_joblevelup },
-	{ AtCommand_JobLevelUp,			"@joblvup",			60, atcommand_joblevelup },
-	{ AtCommand_JobLevelUp,			"@joblvlup",		60, atcommand_joblevelup },
-	{ AtCommand_H,				"@h",				20, atcommand_help },
-	{ AtCommand_Help,				"@help",			20, atcommand_help },
-	{ AtCommand_H2,				"@h2",			20, atcommand_help2 },
-	{ AtCommand_Help2,			"@help2",			20, atcommand_help2 },
-	{ AtCommand_GM,				"@gm",			100,atcommand_gm },
-	{ AtCommand_PvPOff,			"@pvpoff",			40, atcommand_pvpoff },
-	{ AtCommand_PvPOn,			"@pvpon",			40, atcommand_pvpon },
-	{ AtCommand_GvGOff,			"@gvgoff",			40, atcommand_gvgoff },
-	{ AtCommand_GvGOff,			"@gpvpoff",			40, atcommand_gvgoff },
-	{ AtCommand_GvGOn,			"@gvgon",			40, atcommand_gvgon },
-	{ AtCommand_GvGOn,			"@gpvpon",			40, atcommand_gvgon },
-	{ AtCommand_Model,			"@model",			20, atcommand_model },
-	{ AtCommand_Go,				"@go",			10, atcommand_go },
-	{ AtCommand_Spawn,			"@monster",			50, atcommand_monster },
-	{ AtCommand_Spawn,			"@spawn",			50, atcommand_monster },
-	{ AtCommand_MonsterSmall,		"@monstersmall",		50, atcommand_monstersmall },
-	{ AtCommand_MonsterBig,			"@monsterbig",		50, atcommand_monsterbig },
-	{ AtCommand_KillMonster,		"@killmonster",		60, atcommand_killmonster },
-	{ AtCommand_KillMonster2,		"@killmonster2",		40, atcommand_killmonster2 },
-	{ AtCommand_Refine,			"@refine",			60, atcommand_refine },
-	{ AtCommand_Produce,			"@produce",         	60, atcommand_produce },
-	{ AtCommand_Memo,				"@memo",			40, atcommand_memo },
-	{ AtCommand_GAT,				"@gat",			99, atcommand_gat }, // debug function
-	{ AtCommand_Packet,			"@packet",			99, atcommand_packet }, // debug function
-	{ AtCommand_Packet,			"@packetmode",		99, atcommand_packet }, // debug function
-	{ AtCommand_WaterLevel,			"@waterlevel",		99, atcommand_waterlevel }, // debug function
-	{ AtCommand_StatusPoint,		"@stpoint",			60, atcommand_statuspoint },
-	{ AtCommand_SkillPoint,			"@skpoint",			60, atcommand_skillpoint },
-	{ AtCommand_Zeny,				"@zeny",			60, atcommand_zeny },
-	{ AtCommand_Strength,			"@str",			60, atcommand_param },
-	{ AtCommand_Agility,			"@agi",			60, atcommand_param },
-	{ AtCommand_Vitality,			"@vit",			60, atcommand_param },
-	{ AtCommand_Intelligence,		"@int",			60, atcommand_param },
-	{ AtCommand_Dexterity,			"@dex",			60, atcommand_param },
-	{ AtCommand_Luck,				"@luk",			60, atcommand_param },
-	{ AtCommand_GuildLevelUp,		"@guildlvup",		60, atcommand_guildlevelup },
-	{ AtCommand_GuildLevelUp,		"@guildlvlup",		60, atcommand_guildlevelup },
-	{ AtCommand_MakeEgg,			"@makeegg",			60, atcommand_makeegg },
-	{ AtCommand_Hatch,			"@hatch",			60, atcommand_hatch },
-	{ AtCommand_PetFriendly,		"@petfriendly",		40, atcommand_petfriendly },
-	{ AtCommand_PetHungry,			"@pethungry",		40, atcommand_pethungry },
-	{ AtCommand_PetRename,			"@petrename",		 1, atcommand_petrename },
-	{ AtCommand_Recall,			"@recall",			60, atcommand_recall }, // + /recall
-	{ AtCommand_Revive,			"@revive",			60, atcommand_revive },
-	{ AtCommand_Night,			"@night",			80, atcommand_night },
-	{ AtCommand_Day,				"@day",			80, atcommand_day },
-	{ AtCommand_Doom,				"@doom",			80, atcommand_doom },
-	{ AtCommand_DoomMap,			"@doommap",			80, atcommand_doommap },
-	{ AtCommand_Raise,			"@raise",			80, atcommand_raise },
-	{ AtCommand_RaiseMap,			"@raisemap",		80, atcommand_raisemap },
-	{ AtCommand_Kick,				"@kick",			20, atcommand_kick }, // + right click menu for GM "(name) force to quit"
-	{ AtCommand_KickAll,			"@kickall",			99, atcommand_kickall },
-	{ AtCommand_AllSkill,			"@allskill",		60, atcommand_allskill },
-	{ AtCommand_AllSkill,			"@allskills",		60, atcommand_allskill },
-	{ AtCommand_AllSkill,			"@skillall",		60, atcommand_allskill },
-	{ AtCommand_AllSkill,			"@skillsall",		60, atcommand_allskill },
-	{ AtCommand_QuestSkill,			"@questskill",		40, atcommand_questskill },
-	{ AtCommand_LostSkill,			"@lostskill",		40, atcommand_lostskill },
-	{ AtCommand_SpiritBall,			"@spiritball",		40, atcommand_spiritball },
-	{ AtCommand_Party,			"@party",			 1, atcommand_party },
-	{ AtCommand_Guild,			"@guild",			50, atcommand_guild },
-	{ AtCommand_AgitStart,			"@agitstart",		60, atcommand_agitstart },
-	{ AtCommand_AgitEnd,			"@agitend",			60, atcommand_agitend },
-	{ AtCommand_MapExit,			"@mapexit",			99, atcommand_mapexit },
-	{ AtCommand_IDSearch,			"@idsearch",		60, atcommand_idsearch },
-	{ AtCommand_MapMove,			"@mapmove",			40, atcommand_rura }, // /mm command
-	{ AtCommand_Broadcast,			"@broadcast",		40, atcommand_broadcast }, // /b and /nb command
-	{ AtCommand_LocalBroadcast,		"@localbroadcast",	40, atcommand_localbroadcast }, // /lb and /nlb command
-	{ AtCommand_RecallAll,			"@recallall",		80, atcommand_recallall },
-	{ AtCommand_ReloadItemDB,		"@reloaditemdb",		99, atcommand_reloaditemdb }, // admin command
-	{ AtCommand_ReloadMobDB,		"@reloadmobdb",		99, atcommand_reloadmobdb }, // admin command
-	{ AtCommand_ReloadSkillDB,		"@reloadskilldb",		99, atcommand_reloadskilldb }, // admin command
-	{ AtCommand_ReloadScript,		"@reloadscript",		99, atcommand_reloadscript }, // admin command
-	{ AtCommand_ReloadGMDB,			"@reloadgmdb",		99, atcommand_reloadgmdb }, // admin command
-	{ AtCommand_ReloadAtcommand,		"@reloadatcommand",	99, atcommand_reloadatcommand },
-	{ AtCommand_ReloadBattleConf,		"@reloadbattleconf",	99, atcommand_reloadbattleconf },
-	{ AtCommand_ReloadStatusDB,		"@reloadstatusdb",	99, atcommand_reloadstatusdb },
-	{ AtCommand_ReloadPcDB,			"@reloadpcdb",		99, atcommand_reloadpcdb },
-	{ AtCommand_ReloadMOTD,			"@reloadmotd",		99, atcommand_reloadmotd }, // [Valaris]
-	{ AtCommand_MapInfo,			"@mapinfo",			99, atcommand_mapinfo },
-	{ AtCommand_Dye,				"@dye",			40, atcommand_dye }, // by fritz
-	{ AtCommand_Dye,				"@ccolor",			40, atcommand_dye }, // by fritz
-	{ AtCommand_Hstyle,			"@hairstyle", 		40, atcommand_hair_style }, // by fritz
-	{ AtCommand_Hstyle,			"@hstyle",			40, atcommand_hair_style }, // by fritz
-	{ AtCommand_Hcolor,			"@haircolor",		40, atcommand_hair_color }, // by fritz
-	{ AtCommand_Hcolor,			"@hcolor",			40, atcommand_hair_color }, // by fritz
-	{ AtCommand_StatAll,			"@statall",			60, atcommand_stat_all }, // by fritz
-	{ AtCommand_StatAll,			"@statsall",		60, atcommand_stat_all },
-	{ AtCommand_StatAll,			"@allstats",		60, atcommand_stat_all }, // by fritz
-	{ AtCommand_StatAll,			"@allstat",			60, atcommand_stat_all }, // by fritz
-	{ AtCommand_CharBlock,			"@block",			60, atcommand_char_block }, // by Yor
-	{ AtCommand_CharBlock,			"@charblock",		60, atcommand_char_block }, // by Yor
-	{ AtCommand_CharBan,			"@ban",			60, atcommand_char_ban }, // by Yor
-	{ AtCommand_CharBan,			"@banish",			60, atcommand_char_ban }, // by Yor
-	{ AtCommand_CharBan,			"@charban",			60, atcommand_char_ban }, // by Yor
-	{ AtCommand_CharBan,			"@charbanish",		60, atcommand_char_ban }, // by Yor
-	{ AtCommand_CharUnBlock,		"@unblock",			60, atcommand_char_unblock }, // by Yor
-	{ AtCommand_CharUnBlock,		"@charunblock",		60, atcommand_char_unblock }, // by Yor
-	{ AtCommand_CharUnBan,			"@unban",			60, atcommand_char_unban }, // by Yor
-	{ AtCommand_CharUnBan,			"@unbanish",		60, atcommand_char_unban }, // by Yor
-	{ AtCommand_CharUnBan,			"@charunban",		60, atcommand_char_unban }, // by Yor
-	{ AtCommand_CharUnBan,			"@charunbanish",		60, atcommand_char_unban }, // by Yor
-	{ AtCommand_MountPeco,			"@mountpeco",		20, atcommand_mount_peco }, // by Valaris
-	{ AtCommand_CharMountPeco,		"@charmountpeco",		50, atcommand_char_mount_peco }, // by Yor
-	{ AtCommand_GuildSpy,			"@guildspy",		60, atcommand_guildspy }, // [Syrus22]
-	{ AtCommand_PartySpy,			"@partyspy",		60, atcommand_partyspy }, // [Syrus22]
-	{ AtCommand_RepairAll,			"@repairall",		60, atcommand_repairall }, // [Valaris]
-	{ AtCommand_GuildRecall,		"@guildrecall",		60, atcommand_guildrecall }, // by Yor
-	{ AtCommand_PartyRecall,		"@partyrecall",		60, atcommand_partyrecall }, // by Yor
-	{ AtCommand_Nuke,				"@nuke",			60, atcommand_nuke }, // [Valaris]
-	{ AtCommand_Shownpc,			"@shownpc",			80, atcommand_shownpc }, // []
-	{ AtCommand_Hidenpc,			"@hidenpc",			80, atcommand_hidenpc }, // []
-	{ AtCommand_Loadnpc,			"@loadnpc",			80, atcommand_loadnpc }, // []
-	{ AtCommand_Unloadnpc,			"@unloadnpc",		80, atcommand_unloadnpc }, // []
-	{ AtCommand_ServerTime,			"@time",			 1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,			"@date",			 1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,			"@server_date",		 1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,			"@serverdate",		 1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,			"@server_time",		 1, atcommand_servertime }, // by Yor
-	{ AtCommand_ServerTime,			"@servertime",		 1, atcommand_servertime }, // by Yor
-	{ AtCommand_CharDelItem,		"@chardelitem",		60, atcommand_chardelitem }, // by Yor
-	{ AtCommand_Jail,				"@jail",			60, atcommand_jail }, // by Yor
-	{ AtCommand_UnJail,			"@unjail",			60, atcommand_unjail }, // by Yor
-	{ AtCommand_UnJail,			"@discharge",		60, atcommand_unjail }, // by Yor
-	{ AtCommand_JailFor,				"@jailfor",		20, atcommand_jailfor }, //Meruru
-	{ AtCommand_JailTime,			"@jailtime", 		1, atcommand_jailtime }, //Change this to 0 in atcommand_conf.txt if you want it accessible to players (you most likely will ;))
-	{ AtCommand_CharJailTime,		"@charjailtime",	20, atcommand_charjailtime },
-	{ AtCommand_Disguise,			"@disguise",		20, atcommand_disguise }, // [Valaris]
-	{ AtCommand_UnDisguise,			"@undisguise",		20, atcommand_undisguise }, // by Yor
-	{ AtCommand_CharDisguise,		"@chardisguise",		60, atcommand_chardisguise }, // Kalaspuff
-	{ AtCommand_CharUnDisguise,		"@charundisguise",	60, atcommand_charundisguise }, // Kalaspuff
-	{ AtCommand_EMail,			"@email",			 1, atcommand_email }, // by Yor
-	{ AtCommand_Effect,			"@effect",			40, atcommand_effect }, // by Apple
-	{ AtCommand_Char_Cart_List,		"@charcartlist",		40, atcommand_character_cart_list }, // by Yor
-	{ AtCommand_Follow,			"@follow",			20, atcommand_follow }, // by MouseJstr
-	{ AtCommand_AddWarp,			"@addwarp",			60, atcommand_addwarp }, // by MouseJstr
-	{ AtCommand_SkillOn,			"@skillon",			80, atcommand_skillon }, // by MouseJstr
-	{ AtCommand_SkillOff,			"@skilloff",		80, atcommand_skilloff }, // by MouseJstr
-	{ AtCommand_Killer,			"@killer",			60, atcommand_killer }, // by MouseJstr
-	{ AtCommand_NpcMove,			"@npcmove",			20, atcommand_npcmove }, // by MouseJstr
-	{ AtCommand_Killable,			"@killable",		40, atcommand_killable }, // by MouseJstr
-	{ AtCommand_CharKillable,		"@charkillable",		40, atcommand_charkillable }, // by MouseJstr
-	{ AtCommand_Dropall,			"@dropall",			40, atcommand_dropall }, // MouseJstr
-	{ AtCommand_Chardropall,		"@chardropall",		40, atcommand_chardropall }, // MouseJstr
-	{ AtCommand_Storeall,			"@storeall",		40, atcommand_storeall }, // MouseJstr
-	{ AtCommand_Charstoreall,		"@charstoreall",		40, atcommand_charstoreall }, // MouseJstr
-	{ AtCommand_Skillid,			"@skillid",			40, atcommand_skillid }, // MouseJstr
-	{ AtCommand_Useskill,			"@useskill",		40, atcommand_useskill }, // MouseJstr
-//	{ AtCommand_Rain,				"@rain",			99, atcommand_rain }, //Client no longer supports rain!
-	{ AtCommand_Snow,				"@snow",			99, atcommand_snow },
-	{ AtCommand_Sakura,			"@sakura",			99, atcommand_sakura },
-	{ AtCommand_Clouds,			"@clouds",			99, atcommand_clouds },
-	{ AtCommand_Clouds2,			"@clouds2",			99, atcommand_clouds2 },
-	{ AtCommand_Fog,				"@fog",			99, atcommand_fog },
-	{ AtCommand_Fireworks,			"@fireworks",		99, atcommand_fireworks },
-	{ AtCommand_Leaves,			"@leaves",			99, atcommand_leaves },
-	{ AtCommand_Summon,			"@summon",			60, atcommand_summon },
-	{ AtCommand_AdjGmLvl,			"@adjgmlvl",		99, atcommand_adjgmlvl },
-	{ AtCommand_AdjCmdLvl,			"@adjcmdlvl",		99, atcommand_adjcmdlvl },
-	{ AtCommand_Trade,			"@trade",			60, atcommand_trade },
-	{ AtCommand_Send,				"@send",			60, atcommand_send },
-	{ AtCommand_SetBattleFlag,		"@setbattleflag",		99, atcommand_setbattleflag },
-	{ AtCommand_UnMute,			"@unmute",			80, atcommand_unmute }, // [Valaris]
-	{ AtCommand_Clearweather,		"@clearweather",		99, atcommand_clearweather }, // Dexity
-	{ AtCommand_UpTime,			"@uptime",			 1, atcommand_uptime }, // by MC Cameri
-	{ AtCommand_ChangeSex,			"@changesex",		 60, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken] <- why not? [Skotlex]
-	{ AtCommand_Mute,				"@mute",			99, atcommand_mute }, // [celest]
-	{ AtCommand_Mute,				"@red",			99, atcommand_mute }, // [celest]
-	{ AtCommand_WhoZeny,			"@whozeny",			20, atcommand_whozeny }, // [Valaris]
-	{ AtCommand_HappyHappyJoyJoy,		"@happyhappyjoyjoy",	40, atcommand_happyhappyjoyjoy }, // [Valaris]
-	{ AtCommand_Refresh,	        	"@refresh",			 1, atcommand_refresh }, // by MC Cameri
-	{ AtCommand_PetId,	    	    	"@petid",			40, atcommand_petid }, // by MC Cameri
-	{ AtCommand_Identify,	   	    	"@identify",		40, atcommand_identify }, // by MC Cameri
-	{ AtCommand_Gmotd,			"@gmotd",			20, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
-	{ AtCommand_MiscEffect,			"@misceffect",		50, atcommand_misceffect }, // by MC Cameri
-	{ AtCommand_MobSearch,			"@mobsearch",		10, atcommand_mobsearch },
-	{ AtCommand_CleanMap,			"@cleanmap",		40, atcommand_cleanmap },
-	{ AtCommand_NpcTalk,			"@npctalk",			20, atcommand_npctalk },
-	{ AtCommand_PetTalk,			"@pettalk",			10, atcommand_pettalk },
-	{ AtCommand_Users,			"@users",			40, atcommand_users },
-	{ AtCommand_ResetState,			"@reset",			40, atcommand_reset },
+	{ AtCommand_Rura,               "@rura",            40, atcommand_rura },
+	{ AtCommand_Warp,               "@warp",            40, atcommand_rura },
+	{ AtCommand_Where,              "@where",            1, atcommand_where },
+	{ AtCommand_JumpTo,             "@jumpto",          20, atcommand_jumpto }, // + /shift
+	{ AtCommand_JumpTo,             "@warpto",          20, atcommand_jumpto },
+	{ AtCommand_JumpTo,             "@goto",            20, atcommand_jumpto },
+	{ AtCommand_Jump,               "@jump",            40, atcommand_jump },
+	{ AtCommand_Who,                "@who",             20, atcommand_who },
+	{ AtCommand_Who,                "@whois",           20, atcommand_who },
+	{ AtCommand_Who,                "@w",               20, atcommand_who },
+	{ AtCommand_Who2,               "@who2",            20, atcommand_who2 },
+	{ AtCommand_Who3,               "@who3",            20, atcommand_who3 },
+	{ AtCommand_WhoMap,             "@whomap",          20, atcommand_whomap },
+	{ AtCommand_WhoMap2,            "@whomap2",         20, atcommand_whomap2 },
+	{ AtCommand_WhoMap3,            "@whomap3",         20, atcommand_whomap3 },
+	{ AtCommand_WhoGM,              "@whogm",           20, atcommand_whogm }, // by Yor
+	{ AtCommand_Save,               "@save",            40, atcommand_save },
+	{ AtCommand_Load,               "@return",          40, atcommand_load },
+	{ AtCommand_Load,               "@load",            40, atcommand_load },
+	{ AtCommand_Speed,              "@speed",           40, atcommand_speed },
+	{ AtCommand_CharSpeed,          "@charspeed",       40, atcommand_charspeed },
+	{ AtCommand_Storage,            "@storage",          1, atcommand_storage },
+	{ AtCommand_GuildStorage,       "@gstorage",        50, atcommand_guildstorage },
+	{ AtCommand_Option,             "@option",          40, atcommand_option },
+	{ AtCommand_Hide,               "@hide",            40, atcommand_hide }, // + /hide
+	{ AtCommand_JobChange,          "@jobchange",       40, atcommand_jobchange },
+	{ AtCommand_JobChange,          "@job",             40, atcommand_jobchange },
+	{ AtCommand_Die,                "@die",              1, atcommand_die },
+	{ AtCommand_Kill,               "@kill",            60, atcommand_kill },
+	{ AtCommand_Alive,              "@alive",           60, atcommand_alive },
+	{ AtCommand_Kami,               "@kami",            40, atcommand_kami },
+	{ AtCommand_KamiB,              "@kamib",           40, atcommand_kami },
+	{ AtCommand_KamiC,              "@kamic",           40, atcommand_kami }, //[LuzZza]
+	{ AtCommand_Heal,               "@heal",            40, atcommand_heal },
+	{ AtCommand_Item,               "@item",            60, atcommand_item },
+	{ AtCommand_Item2,              "@item2",           60, atcommand_item2 },
+	{ AtCommand_ItemReset,          "@itemreset",       40, atcommand_itemreset },
+	{ AtCommand_BaseLevelUp,        "@lvup",            60, atcommand_baselevelup },
+	{ AtCommand_BaseLevelUp,        "@blevel",          60, atcommand_baselevelup },
+	{ AtCommand_BaseLevelUp,        "@baselvlup",       60, atcommand_baselevelup },
+	{ AtCommand_JobLevelUp,         "@jlevel",          60, atcommand_joblevelup },
+	{ AtCommand_JobLevelUp,         "@joblvup",         60, atcommand_joblevelup },
+	{ AtCommand_JobLevelUp,         "@joblvlup",        60, atcommand_joblevelup },
+	{ AtCommand_H,                  "@h",               20, atcommand_help },
+	{ AtCommand_Help,               "@help",            20, atcommand_help },
+	{ AtCommand_H2,                 "@h2",              20, atcommand_help2 },
+	{ AtCommand_Help2,              "@help2",           20, atcommand_help2 },
+	{ AtCommand_GM,                 "@gm",             100, atcommand_gm },
+	{ AtCommand_PvPOff,             "@pvpoff",          40, atcommand_pvpoff },
+	{ AtCommand_PvPOn,              "@pvpon",           40, atcommand_pvpon },
+	{ AtCommand_GvGOff,             "@gvgoff",          40, atcommand_gvgoff },
+	{ AtCommand_GvGOff,             "@gpvpoff",         40, atcommand_gvgoff },
+	{ AtCommand_GvGOn,              "@gvgon",           40, atcommand_gvgon },
+	{ AtCommand_GvGOn,              "@gpvpon",          40, atcommand_gvgon },
+	{ AtCommand_Model,              "@model",           20, atcommand_model },
+	{ AtCommand_Go,                 "@go",              10, atcommand_go },
+	{ AtCommand_Spawn,              "@monster",         50, atcommand_monster },
+	{ AtCommand_Spawn,              "@spawn",           50, atcommand_monster },
+	{ AtCommand_MonsterSmall,       "@monstersmall",    50, atcommand_monstersmall },
+	{ AtCommand_MonsterBig,         "@monsterbig",      50, atcommand_monsterbig },
+	{ AtCommand_KillMonster,        "@killmonster",     60, atcommand_killmonster },
+	{ AtCommand_KillMonster2,       "@killmonster2",    40, atcommand_killmonster2 },
+	{ AtCommand_Refine,             "@refine",          60, atcommand_refine },
+	{ AtCommand_Produce,            "@produce",         60, atcommand_produce },
+	{ AtCommand_Memo,               "@memo",            40, atcommand_memo },
+	{ AtCommand_GAT,                "@gat",             99, atcommand_gat }, // debug function
+	{ AtCommand_Packet,             "@packet",          99, atcommand_packet }, // debug function
+	{ AtCommand_Packet,             "@packetmode",      99, atcommand_packet }, // debug function
+	{ AtCommand_WaterLevel,         "@waterlevel",      99, atcommand_waterlevel }, // debug function
+	{ AtCommand_StatusPoint,        "@stpoint",         60, atcommand_statuspoint },
+	{ AtCommand_SkillPoint,         "@skpoint",         60, atcommand_skillpoint },
+	{ AtCommand_Zeny,               "@zeny",            60, atcommand_zeny },
+	{ AtCommand_Strength,           "@str",             60, atcommand_param },
+	{ AtCommand_Agility,            "@agi",             60, atcommand_param },
+	{ AtCommand_Vitality,           "@vit",             60, atcommand_param },
+	{ AtCommand_Intelligence,       "@int",             60, atcommand_param },
+	{ AtCommand_Dexterity,          "@dex",             60, atcommand_param },
+	{ AtCommand_Luck,               "@luk",             60, atcommand_param },
+	{ AtCommand_GuildLevelUp,       "@guildlvup",       60, atcommand_guildlevelup },
+	{ AtCommand_GuildLevelUp,       "@guildlvlup",      60, atcommand_guildlevelup },
+	{ AtCommand_MakeEgg,            "@makeegg",         60, atcommand_makeegg },
+	{ AtCommand_Hatch,              "@hatch",           60, atcommand_hatch },
+	{ AtCommand_PetFriendly,        "@petfriendly",     40, atcommand_petfriendly },
+	{ AtCommand_PetHungry,          "@pethungry",       40, atcommand_pethungry },
+	{ AtCommand_PetRename,          "@petrename",        1, atcommand_petrename },
+	{ AtCommand_Recall,             "@recall",          60, atcommand_recall }, // + /recall
+	{ AtCommand_Revive,             "@revive",          60, atcommand_revive },
+	{ AtCommand_Night,              "@night",           80, atcommand_night },
+	{ AtCommand_Day,                "@day",             80, atcommand_day },
+	{ AtCommand_Doom,               "@doom",            80, atcommand_doom },
+	{ AtCommand_DoomMap,            "@doommap",         80, atcommand_doommap },
+	{ AtCommand_Raise,              "@raise",           80, atcommand_raise },
+	{ AtCommand_RaiseMap,           "@raisemap",        80, atcommand_raisemap },
+	{ AtCommand_Kick,               "@kick",            20, atcommand_kick }, // + right click menu for GM "(name) force to quit"
+	{ AtCommand_KickAll,            "@kickall",         99, atcommand_kickall },
+	{ AtCommand_AllSkill,           "@allskill",        60, atcommand_allskill },
+	{ AtCommand_AllSkill,           "@allskills",       60, atcommand_allskill },
+	{ AtCommand_AllSkill,           "@skillall",        60, atcommand_allskill },
+	{ AtCommand_AllSkill,           "@skillsall",       60, atcommand_allskill },
+	{ AtCommand_QuestSkill,         "@questskill",      40, atcommand_questskill },
+	{ AtCommand_LostSkill,          "@lostskill",       40, atcommand_lostskill },
+	{ AtCommand_SpiritBall,         "@spiritball",      40, atcommand_spiritball },
+	{ AtCommand_Party,              "@party",            1, atcommand_party },
+	{ AtCommand_Guild,              "@guild",           50, atcommand_guild },
+	{ AtCommand_AgitStart,          "@agitstart",       60, atcommand_agitstart },
+	{ AtCommand_AgitEnd,            "@agitend",         60, atcommand_agitend },
+	{ AtCommand_MapExit,            "@mapexit",         99, atcommand_mapexit },
+	{ AtCommand_IDSearch,           "@idsearch",        60, atcommand_idsearch },
+	{ AtCommand_MapMove,            "@mapmove",         40, atcommand_rura }, // /mm command
+	{ AtCommand_Broadcast,          "@broadcast",       40, atcommand_broadcast }, // /b and /nb command
+	{ AtCommand_LocalBroadcast,     "@localbroadcast",  40, atcommand_localbroadcast }, // /lb and /nlb command
+	{ AtCommand_RecallAll,          "@recallall",       80, atcommand_recallall },
+	{ AtCommand_ReloadItemDB,       "@reloaditemdb",    99, atcommand_reloaditemdb }, // admin command
+	{ AtCommand_ReloadMobDB,        "@reloadmobdb",     99, atcommand_reloadmobdb }, // admin command
+	{ AtCommand_ReloadSkillDB,      "@reloadskilldb",   99, atcommand_reloadskilldb }, // admin command
+	{ AtCommand_ReloadScript,       "@reloadscript",    99, atcommand_reloadscript }, // admin command
+	{ AtCommand_ReloadGMDB,         "@reloadgmdb",      99, atcommand_reloadgmdb }, // admin command
+	{ AtCommand_ReloadAtcommand,    "@reloadatcommand", 99, atcommand_reloadatcommand },
+	{ AtCommand_ReloadBattleConf,   "@reloadbattleconf",99, atcommand_reloadbattleconf },
+	{ AtCommand_ReloadStatusDB,     "@reloadstatusdb",  99, atcommand_reloadstatusdb },
+	{ AtCommand_ReloadPcDB,         "@reloadpcdb",      99, atcommand_reloadpcdb },
+	{ AtCommand_ReloadMOTD,         "@reloadmotd",      99, atcommand_reloadmotd }, // [Valaris]
+	{ AtCommand_MapInfo,            "@mapinfo",         99, atcommand_mapinfo },
+	{ AtCommand_Dye,                "@dye",             40, atcommand_dye }, // by fritz
+	{ AtCommand_Dye,                "@ccolor",          40, atcommand_dye }, // by fritz
+	{ AtCommand_Hstyle,             "@hairstyle",       40, atcommand_hair_style }, // by fritz
+	{ AtCommand_Hstyle,             "@hstyle",          40, atcommand_hair_style }, // by fritz
+	{ AtCommand_Hcolor,             "@haircolor",       40, atcommand_hair_color }, // by fritz
+	{ AtCommand_Hcolor,             "@hcolor",          40, atcommand_hair_color }, // by fritz
+	{ AtCommand_StatAll,            "@statall",         60, atcommand_stat_all }, // by fritz
+	{ AtCommand_StatAll,            "@statsall",        60, atcommand_stat_all },
+	{ AtCommand_StatAll,            "@allstats",        60, atcommand_stat_all }, // by fritz
+	{ AtCommand_StatAll,            "@allstat",         60, atcommand_stat_all }, // by fritz
+	{ AtCommand_CharBlock,          "@block",           60, atcommand_char_block }, // by Yor
+	{ AtCommand_CharBlock,          "@charblock",       60, atcommand_char_block }, // by Yor
+	{ AtCommand_CharBan,            "@ban",             60, atcommand_char_ban }, // by Yor
+	{ AtCommand_CharBan,            "@banish",          60, atcommand_char_ban }, // by Yor
+	{ AtCommand_CharBan,            "@charban",         60, atcommand_char_ban }, // by Yor
+	{ AtCommand_CharBan,            "@charbanish",      60, atcommand_char_ban }, // by Yor
+	{ AtCommand_CharUnBlock,        "@unblock",         60, atcommand_char_unblock }, // by Yor
+	{ AtCommand_CharUnBlock,        "@charunblock",     60, atcommand_char_unblock }, // by Yor
+	{ AtCommand_CharUnBan,          "@unban",           60, atcommand_char_unban }, // by Yor
+	{ AtCommand_CharUnBan,          "@unbanish",        60, atcommand_char_unban }, // by Yor
+	{ AtCommand_CharUnBan,          "@charunban",       60, atcommand_char_unban }, // by Yor
+	{ AtCommand_CharUnBan,          "@charunbanish",    60, atcommand_char_unban }, // by Yor
+	{ AtCommand_MountPeco,          "@mountpeco",       20, atcommand_mount_peco }, // by Valaris
+	{ AtCommand_CharMountPeco,      "@charmountpeco",   50, atcommand_char_mount_peco }, // by Yor
+	{ AtCommand_GuildSpy,           "@guildspy",        60, atcommand_guildspy }, // [Syrus22]
+	{ AtCommand_PartySpy,           "@partyspy",        60, atcommand_partyspy }, // [Syrus22]
+	{ AtCommand_RepairAll,          "@repairall",       60, atcommand_repairall }, // [Valaris]
+	{ AtCommand_GuildRecall,        "@guildrecall",     60, atcommand_guildrecall }, // by Yor
+	{ AtCommand_PartyRecall,        "@partyrecall",     60, atcommand_partyrecall }, // by Yor
+	{ AtCommand_Nuke,               "@nuke",            60, atcommand_nuke }, // [Valaris]
+	{ AtCommand_Shownpc,            "@shownpc",         80, atcommand_shownpc }, // []
+	{ AtCommand_Hidenpc,            "@hidenpc",         80, atcommand_hidenpc }, // []
+	{ AtCommand_Loadnpc,            "@loadnpc",         80, atcommand_loadnpc }, // []
+	{ AtCommand_Unloadnpc,          "@unloadnpc",       80, atcommand_unloadnpc }, // []
+	{ AtCommand_ServerTime,         "@time",             1, atcommand_servertime }, // by Yor
+	{ AtCommand_ServerTime,         "@date",             1, atcommand_servertime }, // by Yor
+	{ AtCommand_ServerTime,         "@server_date",      1, atcommand_servertime }, // by Yor
+	{ AtCommand_ServerTime,         "@serverdate",       1, atcommand_servertime }, // by Yor
+	{ AtCommand_ServerTime,         "@server_time",      1, atcommand_servertime }, // by Yor
+	{ AtCommand_ServerTime,         "@servertime",       1, atcommand_servertime }, // by Yor
+	{ AtCommand_CharDelItem,        "@chardelitem",     60, atcommand_chardelitem }, // by Yor
+	{ AtCommand_Jail,               "@jail",            60, atcommand_jail }, // by Yor
+	{ AtCommand_UnJail,             "@unjail",          60, atcommand_unjail }, // by Yor
+	{ AtCommand_UnJail,             "@discharge",       60, atcommand_unjail }, // by Yor
+	{ AtCommand_JailFor,            "@jailfor",         20, atcommand_jailfor }, //Meruru
+	{ AtCommand_JailTime,           "@jailtime",        1, atcommand_jailtime }, //Change this to 0 in atcommand_conf.txt if you want it accessible to players (you most likely will ;))
+	{ AtCommand_CharJailTime,       "@charjailtime",    20, atcommand_charjailtime },
+	{ AtCommand_Disguise,           "@disguise",        20, atcommand_disguise }, // [Valaris]
+	{ AtCommand_UnDisguise,         "@undisguise",      20, atcommand_undisguise }, // by Yor
+	{ AtCommand_CharDisguise,       "@chardisguise",    60, atcommand_chardisguise }, // Kalaspuff
+	{ AtCommand_CharUnDisguise,     "@charundisguise",  60, atcommand_charundisguise }, // Kalaspuff
+	{ AtCommand_EMail,              "@email",            1, atcommand_email }, // by Yor
+	{ AtCommand_Effect,             "@effect",          40, atcommand_effect }, // by Apple
+	{ AtCommand_Char_Cart_List,     "@charcartlist",    40, atcommand_character_cart_list }, // by Yor
+	{ AtCommand_Follow,             "@follow",          20, atcommand_follow }, // by MouseJstr
+	{ AtCommand_AddWarp,            "@addwarp",         60, atcommand_addwarp }, // by MouseJstr
+	{ AtCommand_SkillOn,            "@skillon",         80, atcommand_skillon }, // by MouseJstr
+	{ AtCommand_SkillOff,           "@skilloff",        80, atcommand_skilloff }, // by MouseJstr
+	{ AtCommand_Killer,             "@killer",          60, atcommand_killer }, // by MouseJstr
+	{ AtCommand_NpcMove,            "@npcmove",         20, atcommand_npcmove }, // by MouseJstr
+	{ AtCommand_Killable,           "@killable",        40, atcommand_killable }, // by MouseJstr
+	{ AtCommand_CharKillable,       "@charkillable",    40, atcommand_charkillable }, // by MouseJstr
+	{ AtCommand_Dropall,            "@dropall",         40, atcommand_dropall }, // MouseJstr
+	{ AtCommand_Chardropall,        "@chardropall",     40, atcommand_chardropall }, // MouseJstr
+	{ AtCommand_Storeall,           "@storeall",        40, atcommand_storeall }, // MouseJstr
+	{ AtCommand_Charstoreall,       "@charstoreall",    40, atcommand_charstoreall }, // MouseJstr
+	{ AtCommand_Skillid,            "@skillid",         40, atcommand_skillid }, // MouseJstr
+	{ AtCommand_Useskill,           "@useskill",        40, atcommand_useskill }, // MouseJstr
+//	{ AtCommand_Rain,               "@rain",            99, atcommand_rain }, //Client no longer supports rain!
+	{ AtCommand_Snow,               "@snow",            99, atcommand_snow },
+	{ AtCommand_Sakura,             "@sakura",          99, atcommand_sakura },
+	{ AtCommand_Clouds,             "@clouds",          99, atcommand_clouds },
+	{ AtCommand_Clouds2,            "@clouds2",         99, atcommand_clouds2 },
+	{ AtCommand_Fog,                "@fog",             99, atcommand_fog },
+	{ AtCommand_Fireworks,          "@fireworks",       99, atcommand_fireworks },
+	{ AtCommand_Leaves,             "@leaves",          99, atcommand_leaves },
+	{ AtCommand_Summon,             "@summon",          60, atcommand_summon },
+	{ AtCommand_AdjGmLvl,           "@adjgmlvl",        99, atcommand_adjgmlvl },
+	{ AtCommand_AdjCmdLvl,          "@adjcmdlvl",       99, atcommand_adjcmdlvl },
+	{ AtCommand_Trade,              "@trade",           60, atcommand_trade },
+	{ AtCommand_Send,               "@send",            60, atcommand_send },
+	{ AtCommand_SetBattleFlag,      "@setbattleflag",   99, atcommand_setbattleflag },
+	{ AtCommand_UnMute,             "@unmute",          80, atcommand_unmute }, // [Valaris]
+	{ AtCommand_Clearweather,       "@clearweather",    99, atcommand_clearweather }, // Dexity
+	{ AtCommand_UpTime,             "@uptime",           1, atcommand_uptime }, // by MC Cameri
+	{ AtCommand_ChangeSex,          "@changesex",       60, atcommand_changesex }, // by MC Cameri <- do we still need this? [Foruken] <- why not? [Skotlex]
+	{ AtCommand_Mute,               "@mute",            99, atcommand_mute }, // [celest]
+	{ AtCommand_Mute,               "@red",             99, atcommand_mute }, // [celest]
+	{ AtCommand_WhoZeny,            "@whozeny",         20, atcommand_whozeny }, // [Valaris]
+	{ AtCommand_HappyHappyJoyJoy,   "@happyhappyjoyjoy",40, atcommand_happyhappyjoyjoy }, // [Valaris]
+	{ AtCommand_Refresh,             "@refresh",         1, atcommand_refresh }, // by MC Cameri
+	{ AtCommand_PetId,              "@petid",           40, atcommand_petid }, // by MC Cameri
+	{ AtCommand_Identify,           "@identify",        40, atcommand_identify }, // by MC Cameri
+	{ AtCommand_Gmotd,              "@gmotd",           20, atcommand_gmotd }, // Added by MC Cameri, created by davidsiaw
+	{ AtCommand_MiscEffect,         "@misceffect",      50, atcommand_misceffect }, // by MC Cameri
+	{ AtCommand_MobSearch,          "@mobsearch",       10, atcommand_mobsearch },
+	{ AtCommand_CleanMap,           "@cleanmap",        40, atcommand_cleanmap },
+	{ AtCommand_NpcTalk,            "@npctalk",         20, atcommand_npctalk },
+	{ AtCommand_PetTalk,            "@pettalk",         10, atcommand_pettalk },
+	{ AtCommand_Users,              "@users",           40, atcommand_users },
+	{ AtCommand_ResetState,         "@reset",           40, atcommand_reset },
 
 #ifndef TXT_ONLY // sql-only commands
-	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ListMail,			"@listmail",		 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ListNewMail,		"@listnewmail",		 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ReadMail,			"@readmail",		 1, atcommand_readmail }, // [Valaris]
-	{ AtCommand_DeleteMail,			"@deletemail",		 1, atcommand_readmail }, // [Valaris]
-	{ AtCommand_SendMail,			"@sendmail",		 1, atcommand_sendmail }, // [Valaris]
-	{ AtCommand_SendPriorityMail,		"@sendprioritymail",	80, atcommand_sendmail }, // [Valaris]
-	{ AtCommand_RefreshOnline,		"@refreshonline",		99, atcommand_refreshonline }, // [Valaris]
+	{ AtCommand_CheckMail,          "@checkmail",        1, atcommand_listmail }, // [Valaris]
+	{ AtCommand_ListMail,           "@listmail",         1, atcommand_listmail }, // [Valaris]
+	{ AtCommand_ListNewMail,        "@listnewmail",      1, atcommand_listmail }, // [Valaris]
+	{ AtCommand_ReadMail,           "@readmail",         1, atcommand_readmail }, // [Valaris]
+	{ AtCommand_DeleteMail,         "@deletemail",       1, atcommand_readmail }, // [Valaris]
+	{ AtCommand_SendMail,           "@sendmail",         1, atcommand_sendmail }, // [Valaris]
+	{ AtCommand_SendPriorityMail,   "@sendprioritymail",80, atcommand_sendmail }, // [Valaris]
+	{ AtCommand_RefreshOnline,      "@refreshonline",   99, atcommand_refreshonline }, // [Valaris]
 
 #endif /* TXT_ONLY */
-	{ AtCommand_SkillTree,			"@skilltree",		40, atcommand_skilltree }, // [MouseJstr]
-	{ AtCommand_Marry,			"@marry",			40, atcommand_marry }, // [MouseJstr]
-	{ AtCommand_Divorce,			"@divorce",			40, atcommand_divorce }, // [MouseJstr]
-	{ AtCommand_Grind,			"@grind",			99, atcommand_grind }, // [MouseJstr]
-	{ AtCommand_Grind2,			"@grind2",			99, atcommand_grind2 }, // [MouseJstr]
+	{ AtCommand_SkillTree,          "@skilltree",       40, atcommand_skilltree }, // [MouseJstr]
+	{ AtCommand_Marry,              "@marry",           40, atcommand_marry }, // [MouseJstr]
+	{ AtCommand_Divorce,            "@divorce",         40, atcommand_divorce }, // [MouseJstr]
+	{ AtCommand_Grind,              "@grind",           99, atcommand_grind }, // [MouseJstr]
+	{ AtCommand_Grind2,             "@grind2",          99, atcommand_grind2 }, // [MouseJstr]
 
 #ifdef DMALLOC
-	{ AtCommand_DMStart,			"@dmstart",			99, atcommand_dmstart }, // [MouseJstr]
-	{ AtCommand_DMTick,			"@dmtick",			99, atcommand_dmtick }, // [MouseJstr]
+	{ AtCommand_DMStart,            "@dmstart",         99, atcommand_dmstart }, // [MouseJstr]
+	{ AtCommand_DMTick,             "@dmtick",          99, atcommand_dmtick }, // [MouseJstr]
 #endif
 
-	{ AtCommand_JumpToId,			"@jumptoid",		20, atcommand_jumptoid }, // [Dino9021]
-	{ AtCommand_JumpToId,			"@warptoid",		20, atcommand_jumptoid }, // [Dino9021]
-	{ AtCommand_JumpToId,			"@gotoid",			20, atcommand_jumptoid }, // [Dino9021]
-	{ AtCommand_JumpToId2,			"@jumptoid2",		20, atcommand_jumptoid2 }, // [Dino9021]
-	{ AtCommand_JumpToId2,			"@warptoid2",		20, atcommand_jumptoid2 }, // [Dino9021]
-	{ AtCommand_JumpToId2,			"@gotoid2",			20, atcommand_jumptoid2 }, // [Dino9021]
-	{ AtCommand_RecallId,			"@recallid",		60, atcommand_recallid }, // [Dino9021]
-	{ AtCommand_RecallId2,			"@recallid2",		60, atcommand_recallid2 }, // [Dino9021]
-	{ AtCommand_KickId,			"@kickid",			99, atcommand_kickid }, // [Dino9021]
-	{ AtCommand_KickId2,			"@kickid2",			99, atcommand_kickid2 }, // [Dino9021]
-	{ AtCommand_ReviveId,			"@reviveid",		60, atcommand_reviveid }, // [Dino9021]
-	{ AtCommand_ReviveId2,			"@reviveid2",		60, atcommand_reviveid2 }, // [Dino9021]
-	{ AtCommand_KillId,			"@killid",			60, atcommand_killid }, // [Dino9021]
-	{ AtCommand_KillId2,			"@killid2",			60, atcommand_killid2 }, // [Dino9021]
-	{ AtCommand_CharKillableId,		"@charkillableid",	40, atcommand_charkillableid }, // [Dino9021]
-	{ AtCommand_CharKillableId2,		"@charkillableid2",	40, atcommand_charkillableid2 }, // [Dino9021]
-	{ AtCommand_Sound,			"@sound",			40, atcommand_sound },
-	{ AtCommand_UndisguiseAll,		"@undisguiseall",		99, atcommand_undisguiseall },
-	{ AtCommand_DisguiseAll,		"@disguiseall",		99, atcommand_disguiseall },
-	{ AtCommand_ChangeLook,			"@changelook",		99, atcommand_changelook },
-	{ AtCommand_AutoLoot,			"@autoloot",		10, atcommand_autoloot }, // Upa-Kun
-	{ AtCommand_MobInfo,			"@mobinfo",			 1, atcommand_mobinfo }, // [Lupus]
-	{ AtCommand_MobInfo,			"@monsterinfo",		 1, atcommand_mobinfo }, // [Lupus]
-	{ AtCommand_MobInfo,			"@mi",			 1, atcommand_mobinfo }, // [Lupus]
-	{ AtCommand_Exp,				"@exp",	0,	atcommand_exp },	// [Skotlex]
-	{ AtCommand_Adopt,            	"@adopt",			40, atcommand_adopt }, // [Veider]
-	{ AtCommand_Version,			"@version",			 1, atcommand_version },
+	{ AtCommand_JumpToId,           "@jumptoid",        20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId,           "@warptoid",        20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId,           "@gotoid",          20, atcommand_jumptoid }, // [Dino9021]
+	{ AtCommand_JumpToId2,          "@jumptoid2",       20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_JumpToId2,          "@warptoid2",       20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_JumpToId2,          "@gotoid2",         20, atcommand_jumptoid2 }, // [Dino9021]
+	{ AtCommand_RecallId,           "@recallid",        60, atcommand_recallid }, // [Dino9021]
+	{ AtCommand_RecallId2,          "@recallid2",       60, atcommand_recallid2 }, // [Dino9021]
+	{ AtCommand_KickId,             "@kickid",          99, atcommand_kickid }, // [Dino9021]
+	{ AtCommand_KickId2,            "@kickid2",         99, atcommand_kickid2 }, // [Dino9021]
+	{ AtCommand_ReviveId,           "@reviveid",        60, atcommand_reviveid }, // [Dino9021]
+	{ AtCommand_ReviveId2,          "@reviveid2",       60, atcommand_reviveid2 }, // [Dino9021]
+	{ AtCommand_KillId,             "@killid",          60, atcommand_killid }, // [Dino9021]
+	{ AtCommand_KillId2,            "@killid2",         60, atcommand_killid2 }, // [Dino9021]
+	{ AtCommand_CharKillableId,     "@charkillableid",  40, atcommand_charkillableid }, // [Dino9021]
+	{ AtCommand_CharKillableId2,    "@charkillableid2", 40, atcommand_charkillableid2 }, // [Dino9021]
+	{ AtCommand_Sound,              "@sound",           40, atcommand_sound },
+	{ AtCommand_UndisguiseAll,      "@undisguiseall",   99, atcommand_undisguiseall },
+	{ AtCommand_DisguiseAll,        "@disguiseall",     99, atcommand_disguiseall },
+	{ AtCommand_ChangeLook,         "@changelook",      99, atcommand_changelook },
+	{ AtCommand_AutoLoot,           "@autoloot",        10, atcommand_autoloot }, // Upa-Kun
+	{ AtCommand_MobInfo,            "@mobinfo",          1, atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_MobInfo,            "@monsterinfo",      1, atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_MobInfo,            "@mi",               1, atcommand_mobinfo }, // [Lupus]
+	{ AtCommand_Exp,                "@exp",              0, atcommand_exp }, // [Skotlex]
+	{ AtCommand_Adopt,              "@adopt",           40, atcommand_adopt }, // [Veider]
+	{ AtCommand_Version,            "@version",          1, atcommand_version },
 
-	{ AtCommand_MuteArea,			"@mutearea",		99, atcommand_mutearea }, // MouseJstr
-	{ AtCommand_MuteArea,			"@stfu",			99, atcommand_mutearea }, // MouseJstr
-	{ AtCommand_Shuffle,			"@shuffle",			40, atcommand_shuffle }, // MouseJstr
-	{ AtCommand_Rates,			"@rates",			 1, atcommand_rates }, // MouseJstr
+	{ AtCommand_MuteArea,           "@mutearea",        99, atcommand_mutearea }, // MouseJstr
+	{ AtCommand_MuteArea,           "@stfu",            99, atcommand_mutearea }, // MouseJstr
+	{ AtCommand_Shuffle,            "@shuffle",         40, atcommand_shuffle }, // MouseJstr
+	{ AtCommand_Rates,              "@rates",            1, atcommand_rates }, // MouseJstr
 
-	{ AtCommand_ItemInfo,			"@iteminfo",		 1, atcommand_iteminfo }, // [Lupus]
-	{ AtCommand_ItemInfo,			"@ii",			 1, atcommand_iteminfo }, // [Lupus]
-	{ AtCommand_WhoDrops,			"@whodrops",	 1, atcommand_whodrops }, // [Skotlex]
-	{ AtCommand_MapFlag,			"@mapflag",			99, atcommand_mapflag }, // [Lupus]
+	{ AtCommand_ItemInfo,           "@iteminfo",         1, atcommand_iteminfo }, // [Lupus]
+	{ AtCommand_ItemInfo,           "@ii",               1, atcommand_iteminfo }, // [Lupus]
+	{ AtCommand_WhoDrops,           "@whodrops",         1, atcommand_whodrops }, // [Skotlex]
+	{ AtCommand_MapFlag,            "@mapflag",         99, atcommand_mapflag }, // [Lupus]
 
-	{ AtCommand_Me,					"@me",			20, atcommand_me }, //added by massdriller, code by lordalfa
-	{ AtCommand_MonsterIgnore,		"@monsterignore",		99, atcommand_monsterignore }, // [Valaris]
-	{ AtCommand_MonsterIgnore,		"@battleignore",		99, atcommand_monsterignore },
-	{ AtCommand_FakeName,			"@fakename",		20, atcommand_fakename }, // [Valaris]
-	{ AtCommand_Size,				"@size",			20, atcommand_size },
-	{ AtCommand_ShowExp,			"@showexp", 		10, atcommand_showexp},
-	{ AtCommand_ShowZeny,			"@showzeny", 		10, atcommand_showzeny},
-	{ AtCommand_ShowDelay,			"@showdelay",		 1, atcommand_showdelay},
-	{ AtCommand_AutoTrade,			"@autotrade",		10, atcommand_autotrade }, // durf
-	{ AtCommand_AutoTrade,			"@at",			10, atcommand_autotrade },
-	{ AtCommand_ChangeGM,			"@changegm",		10, atcommand_changegm }, // durf
-	{ AtCommand_ChangeLeader,		"@changeleader",		10, atcommand_changeleader }, // durf
-	{ AtCommand_PartyOption,		"@partyoption",		10, atcommand_partyoption}, // durf
-	{ AtCommand_Invite,				"@invite",			 1, atcommand_invite }, // By LuzZza
-	{ AtCommand_Duel,				"@duel",			 1, atcommand_duel }, // By LuzZza
-	{ AtCommand_Leave,				"@leave",			 1, atcommand_leave }, // By LuzZza
-	{ AtCommand_Accept,				"@accept",			 1, atcommand_accept }, // By LuzZza
-	{ AtCommand_Reject,				"@reject",			 1, atcommand_reject }, // By LuzZza
-	{ AtCommand_Away,				"@away",			 1, atcommand_away }, // [LuzZza]
-	{ AtCommand_Away,				"@aw",				 1, atcommand_away }, // [LuzZza]
-	{ AtCommand_Main,				"@main",			 1, atcommand_main }, // [LuzZza]
-	{ AtCommand_Clone,				"@clone",			50, atcommand_clone },
-	{ AtCommand_Clone,				"@slaveclone",		50, atcommand_clone },
-	{ AtCommand_Clone,				"@evilclone",		50, atcommand_clone }, // [Valaris]
-	{ AtCommand_ToNPC,				"@tonpc",			40, atcommand_tonpc }, // LuzZza
-	{ AtCommand_Commands,			"@commands",		1, atcommand_commands }, // [Skotlex]
-	{ AtCommand_NoAsk,				"@noask",			1, atcommand_noask }, // [LuzZza]
-	{ AtCommand_Request,				"@request",			20, atcommand_request }, // [Skotlex]
+	{ AtCommand_Me,                 "@me",              20, atcommand_me }, //added by massdriller, code by lordalfa
+	{ AtCommand_MonsterIgnore,      "@monsterignore",   99, atcommand_monsterignore }, // [Valaris]
+	{ AtCommand_MonsterIgnore,      "@battleignore",    99, atcommand_monsterignore },
+	{ AtCommand_FakeName,           "@fakename",        20, atcommand_fakename }, // [Valaris]
+	{ AtCommand_Size,               "@size",            20, atcommand_size },
+	{ AtCommand_ShowExp,            "@showexp",         10, atcommand_showexp},
+	{ AtCommand_ShowZeny,           "@showzeny",        10, atcommand_showzeny},
+	{ AtCommand_ShowDelay,          "@showdelay",        1, atcommand_showdelay},
+	{ AtCommand_AutoTrade,          "@autotrade",       10, atcommand_autotrade }, // durf
+	{ AtCommand_AutoTrade,          "@at",              10, atcommand_autotrade },
+	{ AtCommand_ChangeGM,           "@changegm",        10, atcommand_changegm }, // durf
+	{ AtCommand_ChangeLeader,       "@changeleader",    10, atcommand_changeleader }, // durf
+	{ AtCommand_PartyOption,        "@partyoption",     10, atcommand_partyoption}, // durf
+	{ AtCommand_Invite,             "@invite",           1, atcommand_invite }, // By LuzZza
+	{ AtCommand_Duel,               "@duel",             1, atcommand_duel }, // By LuzZza
+	{ AtCommand_Leave,              "@leave",            1, atcommand_leave }, // By LuzZza
+	{ AtCommand_Accept,             "@accept",           1, atcommand_accept }, // By LuzZza
+	{ AtCommand_Reject,             "@reject",           1, atcommand_reject }, // By LuzZza
+	{ AtCommand_Away,               "@away",             1, atcommand_away }, // [LuzZza]
+	{ AtCommand_Away,               "@aw",               1, atcommand_away }, // [LuzZza]
+	{ AtCommand_Main,               "@main",             1, atcommand_main }, // [LuzZza]
+	{ AtCommand_Clone,              "@clone",           50, atcommand_clone },
+	{ AtCommand_Clone,              "@slaveclone",      50, atcommand_clone },
+	{ AtCommand_Clone,              "@evilclone",       50, atcommand_clone }, // [Valaris]
+	{ AtCommand_ToNPC,              "@tonpc",           40, atcommand_tonpc }, // LuzZza
+	{ AtCommand_Commands,           "@commands",         1, atcommand_commands }, // [Skotlex]
+	{ AtCommand_NoAsk,              "@noask",            1, atcommand_noask }, // [LuzZza]
+	{ AtCommand_Request,            "@request",         20, atcommand_request }, // [Skotlex]
 
-	{ AtCommand_HomLevel,				"@homlvup",		60, atcommand_homlevel	},
-	{ AtCommand_HomEvolution,				"@homevolution",	60, atcommand_homevolution	},
-	{ AtCommand_MakeHomun,				"@makehomun",	60, atcommand_makehomun	},
-	{ AtCommand_HomFriendly,			"@homfriendly",		60, atcommand_homfriendly },
-	{ AtCommand_HomHungry,			"@homhungry",		60, atcommand_homhungry },
-	{ AtCommand_HomTalk,			"@homtalk",		10, atcommand_homtalk },
-	{ AtCommand_HomInfo,			"@hominfo",		1, atcommand_hominfo },
-	{ AtCommand_HomStats,			"@homstats",		1, atcommand_homstats },
-	{ AtCommand_HomShuffle,			"@homshuffle",		60, atcommand_homshuffle },
-	{ AtCommand_ShowMobs,			"@showmobs",		10, atcommand_showmobs },  //KarLaeda
+	{ AtCommand_HomLevel,           "@homlvup",         60, atcommand_homlevel	},
+	{ AtCommand_HomEvolution,       "@homevolution",    60, atcommand_homevolution	},
+	{ AtCommand_MakeHomun,          "@makehomun",       60, atcommand_makehomun	},
+	{ AtCommand_HomFriendly,        "@homfriendly",     60, atcommand_homfriendly },
+	{ AtCommand_HomHungry,          "@homhungry",       60, atcommand_homhungry },
+	{ AtCommand_HomTalk,            "@homtalk",         10, atcommand_homtalk },
+	{ AtCommand_HomInfo,            "@hominfo",          1, atcommand_hominfo },
+	{ AtCommand_HomStats,           "@homstats",         1, atcommand_homstats },
+	{ AtCommand_HomShuffle,         "@homshuffle",      60, atcommand_homshuffle },
+	{ AtCommand_ShowMobs,           "@showmobs",        10, atcommand_showmobs },  //KarLaeda
 // add new commands before this line
-	{ AtCommand_Unknown,			NULL,				 1, NULL }
+	{ AtCommand_Unknown,            NULL,                1, NULL }
 };
 
 /*=========================================
