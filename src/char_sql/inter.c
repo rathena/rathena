@@ -773,12 +773,15 @@ static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, 
 
 int mapif_parse_NameChangeRequest(int fd)
 {
-	RFIFOHEAD(fd);
-	int account_id = RFIFOL(fd, 2);
-	int char_id = RFIFOL(fd, 6);
-	int type = RFIFOB(fd, 10);
-	char *name =RFIFOP(fd, 11);
+	int account_id, char_id, type;
+	char* name;
 	int i;
+
+	RFIFOHEAD(fd);
+	account_id = RFIFOL(fd, 2);
+	char_id = RFIFOL(fd, 6);
+	type = RFIFOB(fd, 10);
+	name = RFIFOP(fd, 11);
 
 	// Check Authorised letters/symbols in the name
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
