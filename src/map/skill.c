@@ -1374,8 +1374,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (!(sd->addeff[i].flag&ATF_LONG && sd->addeff[i].flag&ATF_SHORT))
 			{	//Trigger has range consideration.
-				if ((sd->addeff[i].flag&ATF_LONG && !type) ||
-					(sd->addeff[i].flag&ATF_SHORT && type))
+				if ((sd->addeff[i].flag&ATF_LONG && !sd->state.arrow_atk) ||
+					(sd->addeff[i].flag&ATF_SHORT && sd->state.arrow_atk))
 					continue; //Range Failed.
 			}
 			type =  sd->addeff[i].id;
