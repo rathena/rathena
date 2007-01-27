@@ -707,6 +707,8 @@ packet_ver: 18
 0x0193,2,closekafra,0
 0x20e,10
 0x237,2,rankingpk,0
+0x23a,4
+0x23b,3,storagepassword,0 // 3 is wrong, size to be determined
 0x23d,-1
 0x23e,4
 //Start mail system?

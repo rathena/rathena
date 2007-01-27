@@ -1481,71 +1481,6 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) {	//[orn]
 	return;
 }
 
-void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {
-	RFIFOHEAD(fd);
-	merc_hom_change_name(sd,RFIFOP(fd,2));
-}
-
-void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
-
-	nullpo_retv(sd);
-
-	if(!merc_is_hom_active(sd->hd))
-		return;
-
-	if (!unit_can_move(&sd->hd->bl))
-		return;
-	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0);
-}
-
-void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
-	int x,y,cmd;
-	RFIFOHEAD(fd);
-	nullpo_retv(sd);
-
-	if(!merc_is_hom_active(sd->hd))
-		return;
-
-	cmd = RFIFOW(fd,0);
-	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
-	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
-
-	if (!unit_can_move(&sd->hd->bl))
-		return;
-
-	unit_walktoxy(&(sd->hd->bl),x,y,0);
-}
-
-void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
-	struct block_list *target;
-	RFIFOHEAD(fd);
-	nullpo_retv(sd);
-
-	if(!merc_is_hom_active(sd->hd))
-		return;
-	
-	if ((target = map_id2bl(RFIFOL(fd,6))) == NULL || status_isdead(target)) 
-		return;
-
-	merc_stop_walking(sd->hd, 1);
-	merc_stop_attack(sd->hd);
-	unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
-}
-
-void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
-	int cmd;
-
-	RFIFOHEAD(fd);
-	cmd = RFIFOW(fd,0);
-
-	if(!merc_is_hom_active(sd->hd))
-		return;
-
-	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
-}
-
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail)	//[orn]
 {
 	int fd=sd->fd;
@@ -10290,6 +10225,15 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd) {
 }
 
 /*==========================================
+ * Kafra storage protection password system
+ *------------------------------------------
+ */
+void clif_parse_StoragePassword(int fd, struct map_session_data *sd) {
+	//TODO
+}
+
+
+/*==========================================
  * パーティを作る
  *------------------------------------------
  */
@@ -11685,6 +11629,77 @@ void clif_parse_AdoptRequest(int fd,struct map_session_data *sd) {
 		WFIFOSET(fd, packet_len(0x1f9));
 	}
 }
+
+
+/*==========================================
+ * Homunculus packets
+ *------------------------------------------
+ */
+void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd) {
+	RFIFOHEAD(fd);
+	merc_hom_change_name(sd,RFIFOP(fd,2));
+}
+
+void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
+
+	nullpo_retv(sd);
+
+	if(!merc_is_hom_active(sd->hd))
+		return;
+
+	if (!unit_can_move(&sd->hd->bl))
+		return;
+	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0);
+}
+
+void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
+	int x,y,cmd;
+	RFIFOHEAD(fd);
+	nullpo_retv(sd);
+
+	if(!merc_is_hom_active(sd->hd))
+		return;
+
+	cmd = RFIFOW(fd,0);
+	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
+		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
+	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
+		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
+
+	if (!unit_can_move(&sd->hd->bl))
+		return;
+
+	unit_walktoxy(&(sd->hd->bl),x,y,0);
+}
+
+void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
+	struct block_list *target;
+	RFIFOHEAD(fd);
+	nullpo_retv(sd);
+
+	if(!merc_is_hom_active(sd->hd))
+		return;
+	
+	if ((target = map_id2bl(RFIFOL(fd,6))) == NULL || status_isdead(target)) 
+		return;
+
+	merc_stop_walking(sd->hd, 1);
+	merc_stop_attack(sd->hd);
+	unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
+}
+
+void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]
+	int cmd;
+
+	RFIFOHEAD(fd);
+	cmd = RFIFOW(fd,0);
+
+	if(!merc_is_hom_active(sd->hd))
+		return;
+
+	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------
@@ -12133,6 +12148,7 @@ static int packetdb_readdb(void)
 		{clif_parse_HomMoveTo,"hommoveto"},
 		{clif_parse_HomAttack,"homattack"},
 		{clif_parse_HomMenu,"hommenu"},
+		{clif_parse_StoragePassword,"storagepassword"},
 		{NULL,NULL}
 	};
 
