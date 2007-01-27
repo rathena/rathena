@@ -4820,7 +4820,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	case SC_ASSUMPTIO:
 		if(sc->data[SC_KYRIE].timer!=-1)
 			status_change_end(bl,SC_KYRIE,-1);
+		if(sc->data[SC_KAITE].timer!=-1)
+			status_change_end(bl,SC_KAITE,-1);
 		break;
+	case SC_KAITE:
+		if(sc->data[SC_ASSUMPTIO].timer!=-1 )
+			status_change_end(bl,SC_ASSUMPTIO,-1);
+		break;
+
 	case SC_CARTBOOST:
 		if(sc->data[SC_DECREASEAGI].timer!=-1 )
 		{	//Cancel Decrease Agi, but take no further effect [Skotlex]
