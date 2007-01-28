@@ -1,5 +1,8 @@
 Date	Added
 
+2007/01/28
+	* Fixed the description of @summon
+	* Fixed @nuke's position (I edited the wrong file by accident)
 2007/01/27
 	* Atcommand fixup [ultramage]
 	- removed atcommands @w, @server_date/time, @red, @happyhappyjoyjoy, @shuffle
