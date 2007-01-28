@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/27
+	* Reformatted and translated atcommand.c
+	- in the process improved @marry, allowing spaces after the first comma
 	* Simple cleanup
 	- removed atcommands @w, @server_date/time, @red, @happyhappyjoyjoy, @shuffle
 	- synced gm level of @jailfor, @charjailtime, @npcmove, @chardropall,
