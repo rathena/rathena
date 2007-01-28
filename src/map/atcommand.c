@@ -2253,7 +2253,7 @@ int atcommand_hide(const int fd, struct map_session_data* sd, const char* comman
 }
 
 /*==========================================
- * 転職する upperを指定すると転生や養子にもなれる
+ * Changes a character's class
  *------------------------------------------
  */
 int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* command, const char* message)

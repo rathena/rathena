@@ -1,5 +1,13 @@
 Date	Added
 
+2007/01/27
+	* Atcommand fixup [ultramage]
+	- removed atcommands @w, @server_date/time, @red, @happyhappyjoyjoy, @shuffle
+	- synced gm level of @jailfor, @charjailtime, @npcmove, @chardropall,
+	  @charstoreall, @send, @mute, @changelook, @exp and @nuke
+	- added conf entries for @whozeny, @kamic, @tonpc, @petid, @identify, @adopt,
+	  @trade, @changelook, @send
+	- reorganized the atcommands a bit
 2007/01/26
 	* Added battle config hom_rename (homunc.txt) to enable renaming the
 	  homunculus multiple times. Defaults to no.

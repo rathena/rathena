@@ -154,13 +154,6 @@
 ////////////////////////////////////////////////
 
 unsigned int malloc_usage (void);
-#ifndef INLINE
-	#ifdef _WIN32
-		#define INLINE 
-	#else
-		#define INLINE inline
-	#endif
-#endif
 void malloc_init (void);
 void malloc_final (void);
 

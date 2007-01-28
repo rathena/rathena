@@ -621,7 +621,7 @@ int chrif_changegm(int id, const char *pass, int len)
 
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, len + 8);
+	WFIFOHEAD(char_fd, len + 8);
 	WFIFOW(char_fd,0) = 0x2b0a;
 	WFIFOW(char_fd,2) = len + 8;
 	WFIFOL(char_fd,4) = id;

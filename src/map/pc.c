@@ -796,7 +796,7 @@ int pc_reg_received(struct map_session_data *sd)
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
 
 	if ((sd->class_&MAPID_BASEMASK)==MAPID_TAEKWON)
-  	{	//Better check for class rather than skill to prevent "skill resets" from unsetting this
+	{	//Better check for class rather than skill to prevent "skill resets" from unsetting this
 		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
 		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
 	}
@@ -3268,7 +3268,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		char message[128];
 		i_data = itemdb_search(itemid);
 		sprintf (message, msg_txt(542), (sd->status.name != NULL)?sd->status.name :"GM", md->db->jname, i_data->jname, (float)md->db->dropitem[i].p/100);
-		//MSG: "'%s' stole %s's %s (chance: %%%0.02f)"
+		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_GMmessage(message,strlen(message)+1,0);
 	}
 	return 1;
