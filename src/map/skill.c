@@ -8265,8 +8265,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	}
 	case CG_HERMODE:
-		if (map_foreachinrange (skill_check_condition_hermod_sub, &sd->bl,
-			skill_get_splash(skill, lv), BL_NPC) < 1)
+		if(!npc_check_areanpc(1,sd->bl.m,sd->bl.x,sd->bl.y,skill_get_splash(skill, lv)))
 		{
 			clif_skill_fail(sd,skill,0,0);
 			return 0;

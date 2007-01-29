@@ -3654,9 +3654,12 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed += 300;
 
 	if(sc->data[SC_GATLINGFEVER].timer==-1)
-	{	//% increases (they don't stack, with the exception of Speedup1? @.@)
+	{	//% increases (they don't stack, with a few exception)
 		if(sc->data[SC_SPEEDUP1].timer!=-1)
 			speed -= speed * 50/100;
+		else if(sc->data[SC_AVOID].timer!=-1)
+			speed -= speed * sc->data[SC_AVOID].val2/100;
+
 		if(sc->data[SC_RUN].timer!=-1)
 			speed -= speed * 50/100;
 		else if(sc->data[SC_SPEEDUP0].timer!=-1)
@@ -3669,8 +3672,6 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			speed -= speed * 20/100;
 		else if(sc->data[SC_BERSERK].timer!=-1)
 			speed -= speed * 20/100;
-		else if(sc->data[SC_AVOID].timer!=-1)
-			speed -= speed * sc->data[SC_AVOID].val2/100;
 		else if(sc->data[SC_WINDWALK].timer!=-1)
 			speed -= speed * sc->data[SC_WINDWALK].val3/100;
 	}

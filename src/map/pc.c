@@ -4874,8 +4874,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	pc_setdead(sd);
+	//Reset menu skills/item skills
+	if (sd->skillitem)
+		sd->skillitem = sd->skillitemlv = 0;
+	if (sd->menuskill_id)
+		sd->menuskill_id = sd->menuskill_lv = 0;
 	//Reset ticks.
 	sd->hp_loss_tick = sd->sp_loss_tick = 0;
+
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
 

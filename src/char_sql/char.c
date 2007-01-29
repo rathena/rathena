@@ -1455,9 +1455,9 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 int delete_char_sql(int char_id, int partner_id)
 {
 	char char_name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Name needs be escaped.
-	int account_id=0, party_id=0, guild_id=0, char_base_level=0;
+	int account_id, party_id, guild_id, hom_id, char_base_level;
 	
-	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`hom_id` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -1483,6 +1483,7 @@ int delete_char_sql(int char_id, int partner_id)
 	party_id = atoi(sql_row[2]);
 	guild_id = atoi(sql_row[3]);
 	char_base_level = atoi(sql_row[4]);
+	hom_id = atoi(sql_row[5]);
 	mysql_free_result(sql_res); //Let's free this as soon as possible to avoid problems later on.
 
 	//check for config char del condition [Lupus]
@@ -1544,6 +1545,10 @@ int delete_char_sql(int char_id, int partner_id)
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
+
+	/* remove homunculus */ 
+	if (hom_id)
+		inter_delete_homunculus(hom_id);
 
 	/* delete char's friends list */
 	sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id` = '%d'",friend_db, char_id);

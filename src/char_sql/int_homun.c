@@ -212,27 +212,33 @@ int mapif_load_homunculus(int fd){
 	return mapif_info_homunculus(fd, RFIFOL(fd,2), homun_pt);
 }
 
-
+int inter_delete_homunculus(int hom_id)
+{
+	sprintf(tmp_sql, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", hom_id);
+	if(mysql_query(&mysql_handle, tmp_sql))
+	{
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		mapif_homunculus_deleted(fd, 0);
+		return 0;
+	}
+	
+	sprintf(tmp_sql, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", hom_id);
+	if(mysql_query(&mysql_handle, tmp_sql))
+	{
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		mapif_homunculus_deleted(fd, 0);
+		return 0;
+	}
+	mapif_homunculus_deleted(fd, 1);
+	return 1;
+}
 
 int mapif_delete_homunculus(int fd)
 {
 	RFIFOHEAD(fd);
-	sprintf(tmp_sql, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", RFIFOL(fd,2));
-	if(mysql_query(&mysql_handle, tmp_sql))
-	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return mapif_homunculus_deleted(fd, 0);
-	}
-	
-	sprintf(tmp_sql, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", RFIFOL(fd,2));
-	if(mysql_query(&mysql_handle, tmp_sql))
-	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return mapif_homunculus_deleted(fd, 0);
-	}
-	return mapif_homunculus_deleted(fd, 1);
+	inter_delete_homunculus(RFIFOL(fd,2));
 }
 
 int mapif_rename_homun_ack(int fd, int account_id, int char_id, unsigned char flag, char *name){
