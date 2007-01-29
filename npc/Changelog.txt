@@ -26,6 +26,10 @@ KarLaeda
 
 Date		Added
 ======
+2007/01/29
+	* Moved the custom events entries into scripts_custom.conf
+	* Removed old custom geffenia warper since TSQ is done
+	* Removed the duplicit and untranslated alchemist.txt event [ultramage]
 2007/01/26
 	* More typo fixes
 	* Added a missing dialogue branch in novice.txt
