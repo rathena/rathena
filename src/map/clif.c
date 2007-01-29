@@ -10545,6 +10545,18 @@ void clif_parse_GuildChangeNotice(int fd,struct map_session_data *sd) {
 	if(!sd->state.gmaster_flag)
 		return;
 
+	// compensate for the client's double marker bug (in both strings)
+	if ((RFIFOB(fd, 6) == '|') && (RFIFOB(fd, 6+3) == '|')) {
+		memmove(RFIFOP(fd, 6+3), RFIFOP(fd, 6+6), 60-6); memset(RFIFOP(fd, 60-3), 0x00, 3); // drop the duplicate marker
+	}
+	if ((RFIFOB(fd, 66) == '|') && (RFIFOB(fd, 66+3) == '|')) {
+		memmove(RFIFOP(fd, 66+3), RFIFOP(fd, 66+6), 180-6); memset(RFIFOP(fd, 180-3), 0x00, 3); // drop the duplicate marker
+	}
+	// compensate for the client's adding of an extra space at the end of the message
+	if (RFIFOB(fd, 66) == '|') {
+		memset(RFIFOP(fd, 66 + strnlen(RFIFOP(fd, 66), 120)-1), 0x00, 1); // delete extra space at the end
+	}
+
 	guild_change_notice(sd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,66));
 }
 
