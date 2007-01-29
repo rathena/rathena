@@ -3977,6 +3977,9 @@ int do_init(int argc, char *argv[]) {
 
 	npc_event_do_oninit();	// npcのOnInitイベント?行
 
+	//Done loading with the maps, no need for the grf module anymore.
+	grfio_final();
+
 	if ( console ) {
 		set_defaultconsoleparse(parse_console);
 		start_console();
