@@ -219,7 +219,6 @@ int inter_delete_homunculus(int hom_id)
 	{
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		mapif_homunculus_deleted(fd, 0);
 		return 0;
 	}
 	
@@ -228,17 +227,15 @@ int inter_delete_homunculus(int hom_id)
 	{
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		mapif_homunculus_deleted(fd, 0);
 		return 0;
 	}
-	mapif_homunculus_deleted(fd, 1);
 	return 1;
 }
 
 int mapif_delete_homunculus(int fd)
 {
 	RFIFOHEAD(fd);
-	inter_delete_homunculus(RFIFOL(fd,2));
+	mapif_homunculus_deleted(fd, inter_delete_homunculus(RFIFOL(fd,2)));
 }
 
 int mapif_rename_homun_ack(int fd, int account_id, int char_id, unsigned char flag, char *name){

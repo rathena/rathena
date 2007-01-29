@@ -6245,7 +6245,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	}
 
 	if (sc && sc->data[SC_MAGICPOWER].timer != -1)
-		status_change_end(&sd->bl,SC_MAGICPOWER,-1);
+		status_change_end(src,SC_MAGICPOWER,-1);
 
 	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow if a ground skill was not invoked. [Skotlex]
 		battle_consume_ammo(sd, skillid, skilllv);
@@ -7812,16 +7812,6 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 		(*c)++;
 
 	return 1;
-}
-
-static int skill_check_condition_hermod_sub(struct block_list *bl,va_list ap)
-{
-	struct npc_data *nd;
-	nd=(struct npc_data*)bl;
-
-	if (nd->bl.subtype == WARP)
-		return 1;
-	return 0;
 }
 
 /*==========================================

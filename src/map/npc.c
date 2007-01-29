@@ -1012,7 +1012,7 @@ int npc_touch_areanpc2(struct block_list *bl)
 int npc_check_areanpc(int flag,int m,int x,int y,int range)
 {
 	int i;
-	int x0,y0,y0,y1;
+	int x0,y0,x1,y1;
 	int xs,ys;
 
 	if (range < 0) return 0;
