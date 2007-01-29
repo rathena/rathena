@@ -3,19 +3,362 @@
 //===== By: ==================================================
 //= Reddozen, Cypress, Zefris
 //===== Current Version: =====================================
-//= 0.5
+//= 1.0
 //===== Compatible With: =====================================
-//= Any eAthena Version
+//= eAthena SVN 6769+ (temporary npc variables)
 //===== Description: =========================================
-//= Random items from 3crt diamonds in Comodo
+//= Random items from 3carat diamonds in Comodo
 //===== Additional Comments: =================================
 //= 0.1- so far just a basic setup, and working on the function
 //= 0.2- fixed some spelling errors and set zeny,zeny - (@amount * 55000)[Cypress]
 //= 0.3- Revised the gambling NPC using the official Aegis script [MasterOfMuppets]
-//=	 for information. Thanks to Zefris for doing it for me.
+//=      for information. Thanks to Zefris for doing it for me.
 //= 0.4- Fixed an exploit. thanks to reddozen [MasterOfMuppets]
 //= 0.5- Moved item check to the proper place [Lupus]
+//= 1.0- Synced the script with aegis and reformatted it for readability [ultramage]
+//=      Corrected the npc giving you Cotton Shirt instead of Adventurer's Suit[1]
+//=      Added comments to items so people know what the NPC is about
+//=      Added missing emotions and cutins
 //============================================================ 
+
+comodo.gat,219,160,3	script	Kachua	91,{
+
+	cutin "katsua01.bmp",2;
+	mes "[Kachua]";
+	mes "Diamonds...!";
+	mes "I simply can't get my mind off";
+	mes "them! Ever since that man";
+	mes "showed me that diamond,";
+	mes "it's been all I think about!";
+	next;
+	switch(select("Would you like to have mine?", "Ah, what a shame...")) {
+	case 1:
+		if(countitem(732) > 0) {
+			mes "[Kachua]";
+			mes "Are you sure you don't mind";
+			mes "giving this to me? Thank you";
+			mes "so much! I don't have much in";
+			mes "the way of money, but i can give";
+			mes "you something from one of my";
+			mes "collections~";
+			next;
+			if(Weight >= MaxWeight/2) {
+				cutin "katsua01.bmp",255;
+				cutin "katsua03.bmp",2;
+				mes "[Kachua]";
+				mes "Errr...";
+				mes "You brought too many things.";
+				mes "You can't receive this item now.";
+				mes "You better reorganize your inventory and try again.";
+				close2;
+				cutin "katsua03.bmp",255;
+				end;
+			} else {
+				if(countitem(732) == 0) { // anti-hack
+					logmes "Hack: Tried to bypass item check.";
+					cutin "katsua01.bmp",255;					
+					close;
+				}
+				
+				delitem 732,1;
+				mes "[Kachua]";
+				mes "So what would";
+				mes "you like to have?";
+				next;
+				
+				switch(select("Weapon", "Armor", "Garment", "Helmet", "Shoes", "Shield")) {
+				
+				case 1: // Weapons
+						set @gamble1,rand(1,1000);
+						if ((@gamble1 > 920) && (@gamble1 < 931)) {
+							set @gamble2,rand(1,51);
+							if      (@gamble2 ==  1) set @item,1128; // Haedonggum[2]
+							else if (@gamble2 ==  2) set @item,1120; // Tsurugi[2]
+							else if (@gamble2 ==  3) set @item,1127; // Saber[3]
+							else if (@gamble2 ==  4) set @item,1158; // Two-Handed Sword[2]
+							else if (@gamble2 ==  5) set @item,1155; // Bastard Sword[3]
+							else if (@gamble2 ==  6) set @item,1220; // Gladius[3]
+							else if (@gamble2 ==  7) set @item,1222; // Damascus[1]
+							else if (@gamble2 ==  8) set @item,1253; // Katar[2]
+							else if (@gamble2 ==  9) set @item,1529; // Iron Driver
+							else if (@gamble2 == 10) set @item,1251; // Jur[3]
+							else if (@gamble2 == 11) set @item,1361; // Two-Handed Axe[2]
+							else if (@gamble2 == 12) set @item,1258; // Katar of Raging Blaze
+							else if (@gamble2 == 13) set @item,1257; // Katar of Quaking
+							else if (@gamble2 == 14) set @item,1256; // Katar of Frozen Icicle
+							else if (@gamble2 == 15) set @item,1259; // Katar of Piercing Wind
+							else if (@gamble2 == 16) set @item,1260; // Sharpened Legbone of Ghoul
+							else if (@gamble2 == 17) set @item,1716; // Gakkung Bow[2]
+							else if (@gamble2 == 18) set @item,1715; // Arbalest[2]
+							else if (@gamble2 == 19) set @item,1711; // Crossbow[3]
+							else if (@gamble2 == 20) set @item,1702; // Bow[4]
+							else if (@gamble2 == 21) set @item,1520; // Chain[3]
+							else if (@gamble2 == 22) set @item,1610; // Arc Wand[1]
+							else if (@gamble2 == 23) set @item,1615; // Evil Bone Wand
+							else if (@gamble2 == 24) set @item,1602; // Rod[4]
+							else if (@gamble2 == 25) set @item,1461; // Trident[3]
+							else if (@gamble2 == 26) set @item,1402; // Javelin[4]
+							else if (@gamble2 == 27) set @item,1953; // Line[3]
+							else if (@gamble2 == 28) set @item,1957; // Rante Whip[1]
+							else if (@gamble2 == 29) set @item,1552; // Tablet[1]
+							else if (@gamble2 == 30) set @item,1551; // Bible[2]
+							else if (@gamble2 == 31) set @item,1553; // Book of Billows
+							else if (@gamble2 == 32) set @item,1554; // Book of Mother Earth
+							else if (@gamble2 == 33) set @item,1555; // Book of the Blazing Sun
+							else if (@gamble2 == 34) set @item,1556; // Book of Gust of Wind
+							else if (@gamble2 == 35) set @item,1951; // Rope[4]
+							else if (@gamble2 == 36) set @item,1959; // Tail Whip[2]
+							else if (@gamble2 == 37) set @item,1961; // Whip[2]
+							else if (@gamble2 == 38) set @item,1955; // Wire Whip[3]
+							else if (@gamble2 == 39) set @item,1810; // Claw[2]
+							else if (@gamble2 == 40) set @item,1910; // Harp[2]
+							else if (@gamble2 == 41) set @item,1906; // Lute[3]
+							else if (@gamble2 == 42) set @item,1902; // Violin[4]
+							else if (@gamble2 == 43) set @item,1904; // Mandolin[3]
+							else if (@gamble2 == 44) set @item,1912; // Gumoongoh[2]
+							else if (@gamble2 == 45) set @item,1908; // Guitar[1]
+							else if (@gamble2 == 46) set @item,1808; // Fist[1]
+							else if (@gamble2 == 47) set @item,1802; // Waghnak[4]
+							else if (@gamble2 == 48) set @item,1812; // Finger[2]
+							else if (@gamble2 == 49) set @item,1806; // Studded Knuckles[3]
+							else if (@gamble2 == 50) set @item,1804; // Knuckle Duster[3]
+							else if (@gamble2 == 51) set @item,1550; // Book[3]
+						}
+						else if ((@gamble1 >   0) && (@gamble1 <  201)) set @item,1201; // Knife[3]
+						else if ((@gamble1 > 200) && (@gamble1 <  301)) set @item,1101; // Sword[3]
+						else if ((@gamble1 > 300) && (@gamble1 <  401)) set @item,1601; // Rod[3]
+						else if ((@gamble1 > 400) && (@gamble1 <  501)) set @item,1116; // Katana[3]
+						else if ((@gamble1 > 500) && (@gamble1 <  601)) set @item,1250; // Jur[2]
+						else if ((@gamble1 > 600) && (@gamble1 <  701)) set @item,1301; // Axe[3]
+						else if ((@gamble1 > 700) && (@gamble1 <  801)) set @item,1701; // Bow[3]
+						else if ((@gamble1 > 800) && (@gamble1 <  851)) set @item,1504; // Mace[3]
+						else if ((@gamble1 > 850) && (@gamble1 <  901)) set @item,1604; // Wand[2]
+						else if ((@gamble1 > 900) && (@gamble1 <  911)) set @item,1108; // Blade[4]
+						else if ((@gamble1 > 910) && (@gamble1 <  921)) set @item,1163; // Claymore
+						else if ((@gamble1 > 930) && (@gamble1 <  961)) set @item,1522; // Stunner
+						else if ((@gamble1 > 960) && (@gamble1 <  971)) set @item,1608; // Staff[3]
+						else if ((@gamble1 > 970) && (@gamble1 <  981)) set @item,1408; // Pike[4]
+						else if ((@gamble1 > 980) && (@gamble1 <  991)) set @item,1452; // Guisarme[3]
+						else if ((@gamble1 > 990) && (@gamble1 < 1001)) set @item,1208; // Main Gauche[4]
+				break;
+	
+				case 2: // Armors
+						set @gamble1,rand(1,500);
+						if ((@gamble1 > 299) && (@gamble1 < 302)) {
+							set @gamble2,rand(1,30);
+							if      ((@gamble2 >  0) && (@gamble2 <  3)) set @item,2315; // Chain Mail[1]
+							else if ((@gamble2 >  2) && (@gamble2 <  5)) set @item,2336; // Thief Clothes[1]
+							else if ((@gamble2 >  4) && (@gamble2 <  7)) set @item,2318; // Lord's Clothes[1]
+							else if ((@gamble2 >  6) && (@gamble2 <  9)) set @item,2326; // Saint's Robe[1]
+							else if ((@gamble2 >  8) && (@gamble2 < 11)) set @item,2327; // Holy Robe
+							else if ((@gamble2 > 10) && (@gamble2 < 13)) set @item,2317; // Full Plate[1]
+							else if ((@gamble2 > 12) && (@gamble2 < 15)) set @item,2331; // Tights[1]
+							else if ((@gamble2 > 14) && (@gamble2 < 17)) set @item,2342; // Legion Plate Armor[1]
+							else if ((@gamble2 > 16) && (@gamble2 < 19)) set @item,2311; // Mink Coat[1]
+							else if ((@gamble2 > 18) && (@gamble2 < 21)) set @item,2320; // Formal Suit[1]
+							else if ((@gamble2 > 20) && (@gamble2 < 23)) set @item,2319; // Glittering Jacket[1]
+							else if ((@gamble2 > 22) && (@gamble2 < 25)) set @item,2344; // Lucius's Fierce Armor of Volcano
+							else if ((@gamble2 > 24) && (@gamble2 < 27)) set @item,2346; // Saphien's Armor of Ocean
+							else if ((@gamble2 > 26) && (@gamble2 < 29)) set @item,2348; // Aebeccee's Raging Typhoon Armor
+							else if ((@gamble2 > 28) && (@gamble2 < 31)) set @item,2350; // Claytos Cracking Earth Armor
+						}
+						else if ((@gamble1 >   0) && (@gamble1 <  51)) set @item,2301; // Cotton Shirt
+						else if ((@gamble1 >  50) && (@gamble1 < 101)) set @item,2302; // Cotton Shirt[1]
+						else if ((@gamble1 > 100) && (@gamble1 < 151)) set @item,2303; // Jacket
+						else if ((@gamble1 > 150) && (@gamble1 < 201)) set @item,2304; // Jacket[1]
+						else if ((@gamble1 > 200) && (@gamble1 < 251)) set @item,2305; // Adventurer's Suit
+						else if ((@gamble1 > 250) && (@gamble1 < 300)) set @item,2306; // Adventurer's Suit[1]
+						else if ((@gamble1 > 301) && (@gamble1 < 351)) set @item,2307; // Mantle
+						else if ((@gamble1 > 350) && (@gamble1 < 401)) set @item,2309; // Coat
+						else if ((@gamble1 > 400) && (@gamble1 < 402)) set @item,2322; // Silk Robe[1]
+						else if ((@gamble1 > 401) && (@gamble1 < 403)) set @item,2310; // Coat[1]
+						else if ((@gamble1 > 402) && (@gamble1 < 411)) set @item,2306; // Adventurer's Suit[1]
+						else if ((@gamble1 > 410) && (@gamble1 < 416)) set @item,2308; // Mantle[1]
+						else if ((@gamble1 > 415) && (@gamble1 < 421)) set @item,2313; // Padded Armor[1]
+						else if ((@gamble1 > 420) && (@gamble1 < 426)) set @item,2337; // Ninja Suit
+						else if ((@gamble1 > 425) && (@gamble1 < 431)) set @item,2316; // Full Plate
+						else if ((@gamble1 > 430) && (@gamble1 < 436)) set @item,2325; // Saint's Robe
+						else if ((@gamble1 > 435) && (@gamble1 < 441)) set @item,2341; // Legion Plate Armor
+						else if ((@gamble1 > 440) && (@gamble1 < 446)) set @item,2330; // Tights
+						else if ((@gamble1 > 445) && (@gamble1 < 451)) set @item,2314; // Chain Mail
+						else if ((@gamble1 > 450) && (@gamble1 < 456)) set @item,2335; // Thief Clothes
+						else if ((@gamble1 > 455) && (@gamble1 < 461)) set @item,2324; // Scapulare[1]
+						else if ((@gamble1 > 460) && (@gamble1 < 466)) set @item,2329; // Wooden Mail[1]
+						else if ((@gamble1 > 465) && (@gamble1 < 471)) set @item,2340; // Novice Breastplate[1]
+						else if ((@gamble1 > 470) && (@gamble1 < 476)) set @item,2312; // Padded Armor
+						else if ((@gamble1 > 475) && (@gamble1 < 481)) set @item,2339; // Pantie
+						else if ((@gamble1 > 480) && (@gamble1 < 486)) set @item,2328; // Wooden Mail
+						else if ((@gamble1 > 485) && (@gamble1 < 491)) set @item,2321; // Silk Robe
+						else if ((@gamble1 > 490) && (@gamble1 < 501)) set @item,2323; // Scapulare
+				break;
+	
+				case 3:  // Garments
+						set @gamble1,rand(1,500);
+						if ((@gamble1 > 200) && (@gamble1 < 204))
+						{
+							set @gamble2,rand(1,11);
+							if      ((@gamble2 >  0) && (@gamble2 <  3)) set @item,2506; // Manteau[1]
+							else if ((@gamble2 >  2) && (@gamble2 <  5)) set @item,2504; // Muffler[1]
+							else if ((@gamble2 >  4) && (@gamble2 <  8)) set @item,2508; // Ragamuffin Manteau
+							else if ((@gamble2 >  7) && (@gamble2 < 11)) set @item,2507; // Ancient Cape
+							else if (@gamble2 == 11)                     set @item,2523; // Undershirt[1]
+						}
+						else if ((@gamble1 >   0) && (@gamble1 < 101)) set @item,2503; // Muffler
+						else if ((@gamble1 > 100) && (@gamble1 < 201)) set @item,2505; // Manteau
+						else if ((@gamble1 > 203) && (@gamble1 < 451)) set @item,2501; // Hood
+						else if ((@gamble1 > 450) && (@gamble1 < 501)) set @item,2502; // Hood[1]
+				break;
+	
+				case 4: // Headgears
+						set @gamble1,rand(1,1000);
+						if ((@gamble1 > 299) && (@gamble1 < 304))
+						{
+							set @gamble2,rand(1,76);
+							if      ((@gamble2 >  0) && (@gamble2 <  3)) set @item,5109; // Red Bonnet
+							else if ((@gamble2 >  2) && (@gamble2 <  5)) set @item,2285; // Apple of Archer
+							else if ((@gamble2 >  4) && (@gamble2 <  7)) set @item,2255; // Evil Wing
+							else if ((@gamble2 >  6) && (@gamble2 <  9)) set @item,5045; // Magician Hat
+							else if ((@gamble2 >  8) && (@gamble2 < 11)) set @item,2233; // Circlet[1]
+							else if ((@gamble2 > 10) && (@gamble2 < 13)) set @item,2231; // Gemmed Sallet[1]
+							else if ((@gamble2 > 12) && (@gamble2 < 15)) set @item,2217; // Biretta[1]
+							else if ((@gamble2 > 14) && (@gamble2 < 17)) set @item,2206; // Wedding Veil
+							else if ((@gamble2 > 16) && (@gamble2 < 19)) set @item,2246; // Golden Gear
+							else if ((@gamble2 > 18) && (@gamble2 < 21)) set @item,2261; // Army Cap
+							else if ((@gamble2 > 20) && (@gamble2 < 23)) set @item,2287; // Pirate Bandana
+							else if ((@gamble2 > 22) && (@gamble2 < 25)) set @item,5012; // Ph.D Hat
+							else if ((@gamble2 > 24) && (@gamble2 < 27)) set @item,2244; // Big Ribbon
+							else if ((@gamble2 > 26) && (@gamble2 < 29)) set @item,5057; // Black Cat Ears
+							else if ((@gamble2 > 28) && (@gamble2 < 31)) set @item,2248; // Western Grace
+							else if ((@gamble2 > 30) && (@gamble2 < 33)) set @item,2223; // Turban[1]
+							else if ((@gamble2 > 32) && (@gamble2 < 35)) set @item,2247; // Romantic Gent
+							else if ((@gamble2 > 34) && (@gamble2 < 37)) set @item,2245; // Sweet Gent
+							else if ((@gamble2 > 36) && (@gamble2 < 39)) set @item,5003; // Joker Jester
+							else if ((@gamble2 > 38) && (@gamble2 < 41)) set @item,2225; // Goggles[1]
+							else if ((@gamble2 > 40) && (@gamble2 < 43)) set @item,5017; // Bone Helm
+							else if ((@gamble2 > 42) && (@gamble2 < 45)) set @item,5030; // Panda Hat
+							else if ((@gamble2 > 44) && (@gamble2 < 47)) set @item,5035; // Poring Hat
+							else if ((@gamble2 > 46) && (@gamble2 < 49)) set @item,2250; // Cute Ribbon
+							else if ((@gamble2 > 48) && (@gamble2 < 51)) set @item,2277; // Nurse Cap
+							else if ((@gamble2 > 50) && (@gamble2 < 53)) set @item,5011; // Aerial
+							else if ((@gamble2 > 52) && (@gamble2 < 55)) set @item,2290; // Funeral Hat
+							else if ((@gamble2 > 54) && (@gamble2 < 57)) set @item,5010; // Indian Fillet
+							else if ((@gamble2 > 56) && (@gamble2 < 60)) set @item,2259; // Mini Propeller
+							else if ((@gamble2 > 59) && (@gamble2 < 62)) set @item,5008; // Puppy Love
+							else if ((@gamble2 > 61) && (@gamble2 < 63)) set @item,2249; // Coronet
+							else if ((@gamble2 > 62) && (@gamble2 < 65)) set @item,2229; // Helm[1]
+							else if (@gamble2 == 65)                     set @item,2258; // Spiky Band
+							else if (@gamble2 == 66)                     set @item,2274; // Ghost Bandana
+							else if (@gamble2 == 67)                     set @item,5019; // Corsair
+							else if (@gamble2 == 68)                     set @item,2254; // Angel Wing
+							else if (@gamble2 == 69)                     set @item,5007; // Grand Circlet
+							else if (@gamble2 == 70)                     set @item,5066; // Succubus Horn
+							else if (@gamble2 == 71)                     set @item,2235; // Crown
+							else if (@gamble2 == 72)                     set @item,2234; // Tiara
+							else if (@gamble2 == 73)                     set @item,2256; // Majestic Goat
+							else if (@gamble2 == 74)                     set @item,5093; // Coif[1]
+							else if (@gamble2 == 75)                     set @item,5072; // Incubus Horn
+							else if (@gamble2 == 76)                     set @item,2231; // Gemmed Sallet[1]
+						}
+						else if ((@gamble1 >   0) && (@gamble1 <  101)) set @item,2226; // Cap
+						else if ((@gamble1 > 100) && (@gamble1 <  201)) set @item,2211; // Bandana
+						else if ((@gamble1 > 200) && (@gamble1 <  300)) set @item,2209; // Ribbon[1]
+						else if ((@gamble1 > 303) && (@gamble1 <  401)) set @item,2220; // Hat
+						else if ((@gamble1 > 400) && (@gamble1 <  501)) set @item,2232; // Circlet
+						else if ((@gamble1 > 500) && (@gamble1 <  601)) set @item,2216; // Biretta
+						else if ((@gamble1 > 600) && (@gamble1 <  701)) set @item,2230; // Gemmed Sallet
+						else if ((@gamble1 > 700) && (@gamble1 <  801)) set @item,2224; // Goggles
+						else if ((@gamble1 > 800) && (@gamble1 <  901)) set @item,2222; // Turban
+						else if ((@gamble1 > 900) && (@gamble1 <  906)) set @item,2228; // Helm
+						else if ((@gamble1 > 905) && (@gamble1 <  911)) set @item,2252; // Wizard Hat
+						else if ((@gamble1 > 910) && (@gamble1 <  916)) set @item,2227; // Cap[1]
+						else if ((@gamble1 > 915) && (@gamble1 <  921)) set @item,2221; // Hat[1]
+						else if ((@gamble1 > 920) && (@gamble1 <  926)) set @item,2299; // Orc Helm
+						else if ((@gamble1 > 925) && (@gamble1 <  931)) set @item,2236; // Santa Hat
+						else if ((@gamble1 > 930) && (@gamble1 <  936)) set @item,2275; // Red Bandana
+						else if ((@gamble1 > 935) && (@gamble1 <  941)) set @item,5015; // Egg Shell
+						else if ((@gamble1 > 940) && (@gamble1 <  946)) set @item,5061; // Flower Hairpin
+						else if ((@gamble1 > 945) && (@gamble1 <  951)) set @item,5092; // Coif
+						else if ((@gamble1 > 950) && (@gamble1 < 1001)) set @item,2226; // Cap
+				break;
+				case 5: // Footgear
+						set @gamble1,rand(1,500);
+						if ((@gamble1 > 299) && (@gamble1 < 303))
+						{
+							set @gamble2,rand(1,10);
+							if      ((@gamble2 > 0) && (@gamble2 <  3)) set @item,2406; // Boots[1]
+							else if ((@gamble2 > 2) && (@gamble2 <  5)) set @item,2412; // Greaves[1]
+							else if ((@gamble2 > 4) && (@gamble2 <  8)) set @item,2404; // Shoes[1]
+							else if ((@gamble2 > 7) && (@gamble2 < 11)) set @item,2407; // Crystal Pumps
+						}
+						else if ((@gamble1 >   0) && (@gamble1 < 201)) set @item,2401; // Sandals
+						else if ((@gamble1 > 200) && (@gamble1 < 300)) set @item,2408; // Shackles
+						else if ((@gamble1 > 302) && (@gamble1 < 351)) set @item,2411; // Greaves
+						else if ((@gamble1 > 350) && (@gamble1 < 401)) set @item,2403; // Shoes
+						else if ((@gamble1 > 400) && (@gamble1 < 451)) set @item,2405; // Boots
+						else if ((@gamble1 > 450) && (@gamble1 < 476)) set @item,2409; // High Heels
+						else if ((@gamble1 > 475) && (@gamble1 < 501)) set @item,2402; // Sandals[1]
+				break;
+	
+				case 6: // Shields
+						set @gamble1,rand(1,500);
+						if ((@gamble1 > 200) && (@gamble1 < 205))
+						{
+							set @gamble2,rand(1,10);
+							if      ((@gamble2 > 0) && (@gamble2 <  3)) set @item,2104; // Buckler[1]
+							else if ((@gamble2 > 2) && (@gamble2 <  5)) set @item,2106; // Shield[1]
+							else if ((@gamble2 > 4) && (@gamble2 <  7)) set @item,2102; // Guard[1]
+							else if ((@gamble2 > 6) && (@gamble2 <  9)) set @item,2111; // Sacred Mission
+							else if ((@gamble2 > 8) && (@gamble2 < 11)) set @item,2109; // Memory Book
+						}
+						else if ((@gamble1 >   0) && (@gamble1 < 201)) set @item,2101; // Guard
+						else if ((@gamble1 > 204) && (@gamble1 < 301)) set @item,2103; // Buckler
+						else if ((@gamble1 > 300) && (@gamble1 < 401)) set @item,2107; // Mirror Shield
+						else if ((@gamble1 > 401) && (@gamble1 < 481)) set @item,2105; // Shield
+						else if ((@gamble1 > 480) && (@gamble1 < 501)) set @item,2108; // Mirror Shield
+				break;
+				default: // Cancel button / hack
+						cutin "katsua01.bmp",255;
+						close;
+				break;
+				}
+				
+				getitem @item,1;
+			
+				cutin "katsua01.bmp",255;
+				cutin "katsua02.bmp",2;
+				mes "[Kachua]";
+				mes "Ah~ that Diamond is so beautiful.";
+				mes "I wish I could repay you better.";
+				close2;
+				cutin "katsua02.bmp",255;
+				end;
+			}
+			close;
+		} else {
+			cutin "katsua01.bmp",255;
+			cutin "katsua03.bmp",2;
+			mes "[Kachua]";
+			mes "*piff*";
+			mes "You don't have any diamonds!";
+			mes "Don't even try to fool me!";
+			close2;
+			cutin "katsua03.bmp",255;
+			end;
+		}
+	break;
+	case 2:
+		mes "[Kachua]";
+		mes "Yes, I know...";
+		mes "Even among everything";
+		mes "in my collections, nothing";
+		mes "compares to diamonds...";
+		close2;
+		cutin "katsua01.bmp",255;
+		end;
+	break;
+	}
+	close;
+}
 
 mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 
@@ -23,26 +366,15 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 	mes "Wahahahaha~";
 	mes "I've dug up a fortune!";
 	next;
-
 	mes "[Dwayne]";
 	mes "Diamonds! Hundreds and";
 	mes "thousands of Diamonds,";
 	mes "all of them mine!";
 	mes "I'm rich!";
+	emotion e_heh;
 	next;
-
-	menu "I want to buy some.",L1,"Congratulations.",-;
-
-	mes "[Dwayne]";
-	mes "Haha, thank you~";
-	mes "If by any chance";
-	mes "you need a diamond,";
-	mes "please drop by.";
-	mes "I'll sell them to";
-	mes "you at a cheap price.";
-	close;
-
-	L1:
+	switch(select("I want to buy some.", "Congratulations.")) {
+	case 1:
 		mes "[Dwayne]";
 		mes "Ah, you have an";
 		mes "eye for valuables!";
@@ -51,24 +383,31 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 		mes "55,000 Zeny for a diamond,";
 		mes "how does that sound?";
 		next;
-
 		mes "[Dwayne]";
 		mes "How many";
 		mes "diamonds do you need?";
 		mes "If you change your mind";
 		mes "please enter '0' to cancel";
 		next;
-
-		set @amount, 0;
-		input @amount;
-		if(@amount<1){
-			mes "[Dwayne]";
-			mes "Alright, you've";
-			mes "canceled the trade.";
-			mes "Take care!";
-			close;
+		while(1) {
+			input .@amount;
+			if (.@amount <= 0) {
+				mes "[Dwayne]";
+				mes "Alright, you've";
+				mes "canceled the trade.";
+				mes "Take care!";
+				close;
+			} else if (.@amount > 500) {
+				mes "[Dwayne]";
+				mes "The maximum number you can enter is 500.";
+				mes "Please enter no more than 500.";
+				next;
+			} else {
+				break;
+			}
 		}
-		if((@amount*55000>zeny) || (@amount>500)){
+		set .@price, .@amount * 55000;
+		if (Zeny < .@price) {
 			mes "[Dwayne]";
 			mes "Hahahaha~";
 			mes "You can't fool me!";
@@ -76,520 +415,33 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 			mes "Zeny for that many!";
 			close;
 		}
-		set zeny,zeny - (@amount * 55000);
-		getitem 732, @amount;
+		if (!checkweight(732, .@amount)) {
+			mes "[Dwayne]";
+			mes "Errr... You brought too many things.";
+			mes "You can't receive this item at this time.";
+			mes "You better reorganise your inventory and try again.";
+			close;
+		}
+		set Zeny, Zeny - .@price;
+		getitem 732, .@amount;
 		mes "[Dwayne]";
 		mes "Thank you for";
 		mes "buying my diamonds!";
 		mes "You're welcome to";
 		mes "come back anytime.";
 		close;
-
-}
-
-
-comodo.gat,219,160,3	script	Kachua	91,{
-
-	mes "[Kachua]";
-	mes "Diamonds...!";
-	mes "I simply can't get my mind off";
-	mes "them! Ever since that man showed me";
-	mes "that diamond, it's been all I think";
-	mes "about!";
-	next;
-	menu "Would you like to have mine?",L_1,"Ah, what a shame...",-;
-
-	mes "[Kachua]";
-	mes "Yes, I know...";
-	mes "Even among everything";
-	mes "in my collections, nothing";
-	mes "compares to diamonds...";
-	close;
-
-	L_1:
-		mes "[Kachua]";
-		mes "Are you sure you don't mind";
-		mes "giving this to me? Thank you";
-		mes "so much! I don't have much in";
-		mes "the way of money, but i can give";
-		mes "you something from one of my";
-		mes "collections~";
-		next;
-
-		mes "[Kachua]";
-		mes "So what would";
-		mes "you like to have?";
-		next;
-	
-		set @item,512;
-		switch( select( "Weapon", "Armor", "Garment", "Helmet", "Shoes", "Shield" ) )
-		{
-										case 1: // Weapons
-											set @gamble,rand(1,1000);
-											if ((@gamble > 920) && (@gamble < 931))
-												{
-												set @gamble2,rand(1,51);
-												if (@gamble2 == 1)
-													set @item,1128;
-												else if (@gamble2 == 2)
-													set @item,1120;
-												else if (@gamble2 == 3)
-													set @item,1127;
-												else if (@gamble2 == 4)
-													set @item,1158;
-												else if (@gamble2 == 5)
-													set @item,1155;
-												else if (@gamble2 == 6)
-													set @item,1220;
-												else if (@gamble2 == 7)
-													set @item,1222;
-												else if (@gamble2 == 8)
-													set @item,1253;
-												else if (@gamble2 == 9)
-													set @item,1529;
-												else if (@gamble2 == 10)
-													set @item,1251;
-												else if (@gamble2 == 11)
-													set @item,1361;
-												else if (@gamble2 == 12)
-													set @item,1258;
-												else if (@gamble2 == 13)
-													set @item,1257;
-												else if (@gamble2 == 14)
-													set @item,1256;
-												else if (@gamble2 == 15)
-													set @item,1259;
-												else if (@gamble2 == 16)
-													set @item,1260;
-												else if (@gamble2 == 17)
-													set @item,1716;
-												else if (@gamble2 == 18)
-													set @item,1715;
-												else if (@gamble2 == 19)
-													set @item,1711;
-												else if (@gamble2 == 20)
-													set @item,1702;
-												else if (@gamble2 == 21)
-													set @item,1520;
-												else if (@gamble2 == 22)
-													set @item,1610;
-												else if (@gamble2 == 23)
-													set @item,1615;
-												else if (@gamble2 == 24)
-													set @item,1602;
-												else if (@gamble2 == 25)
-													set @item,1461;
-												else if (@gamble2 == 26)
-													set @item,1402;
-												else if (@gamble2 == 27)
-													set @item,1953;
-												else if (@gamble2 == 28)
-													set @item,1957;
-												else if (@gamble2 == 29)
-													set @item,1552;
-												else if (@gamble2 == 30)
-													set @item,1551;
-												else if (@gamble2 == 31)
-													set @item,1553;
-												else if (@gamble2 == 32)
-													set @item,1554;
-												else if (@gamble2 == 33)
-													set @item,1555;
-												else if (@gamble2 == 34)
-													set @item,1556;
-												else if (@gamble2 == 35)
-													set @item,1951;
-												else if (@gamble2 == 36)
-													set @item,1959;
-												else if (@gamble2 == 37)
-													set @item,1961;
-												else if (@gamble2 == 38)
-													set @item,1955;
-												else if (@gamble2 == 39)
-													set @item,1810;
-												else if (@gamble2 == 40)
-													set @item,1910;
-												else if (@gamble2 == 41)
-													set @item,1906;
-												else if (@gamble2 == 42)
-													set @item,1902;
-												else if (@gamble2 == 43)
-													set @item,1904;
-												else if (@gamble2 == 44)
-													set @item,1912;
-												else if (@gamble2 == 45)
-													set @item,1908;
-												else if (@gamble2 == 46)
-													set @item,1808;
-												else if (@gamble2 == 47)
-													set @item,1802;
-												else if (@gamble2 == 48)
-													set @item,1812;
-												else if (@gamble2 == 49)
-													set @item,1806;
-												else if (@gamble2 == 50)
-													set @item,1804;
-												else if (@gamble2 == 51)
-													set @item,1550;
-												}
-											else if ((@gamble > 0) && (@gamble < 201))
-												set @item,1201;
-											else if ((@gamble > 200) && (@gamble < 301))
-												set @item,1101;
-											else if ((@gamble > 300) && (@gamble < 401))
-												set @item,1601;
-											else if ((@gamble > 400) && (@gamble < 501))
-												set @item,1116;
-											else if ((@gamble > 500) && (@gamble < 601))
-												set @item,1250;
-											else if ((@gamble > 600) && (@gamble < 701))
-												set @item,1301;
-											else if ((@gamble > 700) && (@gamble < 801))
-												set @item,1701;
-											else if ((@gamble > 800) && (@gamble < 851))
-												set @item,1504;
-											else if ((@gamble > 850) && (@gamble < 901))
-												set @item,1604;
-											else if ((@gamble > 900) && (@gamble < 911))
-												set @item,1108;
-											else if ((@gamble > 910) && (@gamble < 921))
-												set @item,1163;
-											else if ((@gamble > 930) && (@gamble < 961))
-												set @item,1522;
-											else if ((@gamble > 960) && (@gamble < 971))
-												set @item,1608;
-											else if ((@gamble > 970) && (@gamble < 981))
-												set @item,1408;
-											else if ((@gamble > 980) && (@gamble < 991))
-												set @item,1452;
-											else if ((@gamble > 990) && (@gamble < 1001))
-												set @item,1208;
-									break;
-
-									case 2: // Armors
-										set @gamble,rand(1,500);
-											if ((@gamble > 299) && (@gamble < 302))
-												{
-												set @gamble2,rand(1,30);
-												if ((@gamble2 > 0) && (@gamble2 < 3))
-													set @item,2315;
-												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													set @item,2336;
-												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													set @item,2318;
-												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													set @item,2326;
-												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													set @item,2327;
-												else if ((@gamble2 > 10) && (@gamble2 < 13))
-													set @item,2317;
-												else if ((@gamble2 > 12) && (@gamble2 < 15))
-													set @item,2331;
-												else if ((@gamble2 > 14) && (@gamble2 < 17))
-													set @item,2342;
-												else if ((@gamble2 > 16) && (@gamble2 < 19))
-													set @item,2311;
-												else if ((@gamble2 > 18) && (@gamble2 < 21))
-													set @item,2320;
-												else if ((@gamble2 > 20) && (@gamble2 < 23))
-													set @item,2319;
-												else if ((@gamble2 > 22) && (@gamble2 < 25))
-													set @item,2344;
-												else if ((@gamble2 > 24) && (@gamble2 < 27))
-													set @item,2346;
-												else if ((@gamble2 > 26) && (@gamble2 < 29))
-													set @item,2348;
-												else if ((@gamble2 > 28) && (@gamble2 < 31))
-													set @item,2350;
-												}
-											else if ((@gamble > 0) && (@gamble < 51))
-												set @item,2301;
-											else if ((@gamble > 50) && (@gamble < 101))
-												set @item,2302;
-											else if ((@gamble > 100) && (@gamble < 151))
-												set @item,2303;
-											else if ((@gamble > 150) && (@gamble < 201))
-												set @item,2304;
-											else if ((@gamble > 200) && (@gamble < 251))
-												set @item,2305;
-											else if ((@gamble > 250) && (@gamble < 300))
-												set @item,2301;
-											else if ((@gamble > 301) && (@gamble < 351))
-												set @item,2307;
-											else if ((@gamble > 350) && (@gamble < 401))
-												set @item,2309;
-											else if ((@gamble > 400) && (@gamble < 402))
-												set @item,2322;
-											else if ((@gamble > 401) && (@gamble < 403))
-												set @item,2310;
-											else if ((@gamble > 402) && (@gamble < 411))
-												set @item,2306;
-											else if ((@gamble > 410) && (@gamble < 416))
-												set @item,2308;
-											else if ((@gamble > 415) && (@gamble < 421))
-												set @item,2313;
-											else if ((@gamble > 420) && (@gamble < 426))
-												set @item,2337;
-											else if ((@gamble > 425) && (@gamble < 431))
-												set @item,2316;
-											else if ((@gamble > 430) && (@gamble < 436))
-												set @item,2325;
-											else if ((@gamble > 435) && (@gamble < 441))
-												set @item,2341;
-											else if ((@gamble > 440) && (@gamble < 446))
-												set @item,2330;
-											else if ((@gamble > 445) && (@gamble < 451))
-												set @item,2314;
-											else if ((@gamble > 450) && (@gamble < 456))
-												set @item,2335;
-											else if ((@gamble > 455) && (@gamble < 461))
-												set @item,2324;
-											else if ((@gamble > 460) && (@gamble < 466))
-												set @item,2329;
-											else if ((@gamble > 465) && (@gamble < 471))
-												set @item,2340;
-											else if ((@gamble > 470) && (@gamble < 476))
-												set @item,2312;
-											else if ((@gamble > 475) && (@gamble < 481))
-												set @item,2339;
-											else if ((@gamble > 480) && (@gamble < 486))
-												set @item,2328;
-											else if ((@gamble > 485) && (@gamble < 491))
-												set @item,2321;
-											else if ((@gamble > 490) && (@gamble < 501))
-												set @item,2323;
-									break;
-
-									case 3:  // Garments
-										set @gamble,rand(1,500);
-											if ((@gamble > 200) && (@gamble < 204))
-												{
-												set @gamble2,rand(1,11);
-												if ((@gamble2 > 0) && (@gamble2 < 3))
-													set @item,2506;
-												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													set @item,2504;
-												else if ((@gamble2 > 4) && (@gamble2 < 8))
-													set @item,2508;
-												else if ((@gamble2 > 7) && (@gamble2 < 11))
-													set @item,2507;
-												else if (@gamble2 == 11)
-													set @item,2523;
-												}
-											else if ((@gamble > 0) && (@gamble < 101))
-												set @item,2503;
-											else if ((@gamble > 100) && (@gamble < 201))
-												set @item,2505;
-											else if ((@gamble > 203) && (@gamble < 451))
-												set @item,2501;
-											else if ((@gamble > 450) && (@gamble < 501))
-												set @item,2502;
-									break;
-
-									case 4: //headgears
-										set @gamble,rand(1,1000);
-											if ((@gamble > 299) && (@gamble < 304))
-												{
-												set @gamble2,rand(1,76);
-												if ((@gamble2 > 0) && (@gamble2 < 3))
-													set @item,5109;
-												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													set @item,2285;
-												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													set @item,2255;
-												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													set @item,5045;
-												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													set @item,2233;
-												else if ((@gamble2 > 10) && (@gamble2 < 13))
-													set @item,2231;
-												else if ((@gamble2 > 12) && (@gamble2 < 15))
-													set @item,2217;
-												else if ((@gamble2 > 14) && (@gamble2 < 17))
-													set @item,2206;
-												else if ((@gamble2 > 16) && (@gamble2 < 19))
-													set @item,2246;
-												else if ((@gamble2 > 18) && (@gamble2 < 21))
-													set @item,2261;
-												else if ((@gamble2 > 20) && (@gamble2 < 23))
-													set @item,2287;
-												else if ((@gamble2 > 22) && (@gamble2 < 25))
-													set @item,5012;
-												else if ((@gamble2 > 24) && (@gamble2 < 27))
-													set @item,2244;
-												else if ((@gamble2 > 26) && (@gamble2 < 29))
-													set @item,5057;
-												else if ((@gamble2 > 28) && (@gamble2 < 31))
-													set @item,2248;
-												else if ((@gamble2 > 30) && (@gamble2 < 33))
-													set @item,2223;
-												else if ((@gamble2 > 32) && (@gamble2 < 35))
-													set @item,2247;
-												else if ((@gamble2 > 34) && (@gamble2 < 37))
-													set @item,2245;
-												else if ((@gamble2 > 36) && (@gamble2 < 39))
-													set @item,5003;
-												else if ((@gamble2 > 38) && (@gamble2 < 41))
-													set @item,2225;
-												else if ((@gamble2 > 40) && (@gamble2 < 43))
-													set @item,5017;
-												else if ((@gamble2 > 42) && (@gamble2 < 45))
-													set @item,5030;
-												else if ((@gamble2 > 44) && (@gamble2 < 47))
-													set @item,5035;
-												else if ((@gamble2 > 46) && (@gamble2 < 49))
-													set @item,2250;
-												else if ((@gamble2 > 48) && (@gamble2 < 51))
-													set @item,2277;
-												else if ((@gamble2 > 50) && (@gamble2 < 53))
-													set @item,5011;
-												else if ((@gamble2 > 52) && (@gamble2 < 55))
-													set @item,2290;
-												else if ((@gamble2 > 54) && (@gamble2 < 57))
-													set @item,5010;
-												else if ((@gamble2 > 56) && (@gamble2 < 60))
-													set @item,2259;
-												else if ((@gamble2 > 59) && (@gamble2 < 62))
-													set @item,5008;
-												else if ((@gamble2 > 61) && (@gamble2 < 63))
-													set @item,2249;
-												else if ((@gamble2 > 62) && (@gamble2 < 65))
-													set @item,2229;
-												else if (@gamble2 == 65)
-													set @item,2258;
-												else if (@gamble2 == 66)
-													set @item,2274;
-												else if (@gamble2 == 67)
-													set @item,5019;
-												else if (@gamble2 == 68)
-													set @item,2254;
-												else if (@gamble2 == 69)
-													set @item,5007;
-												else if (@gamble2 == 70)
-													set @item,5066;
-												else if (@gamble2 == 71)
-													set @item,2235;
-												else if (@gamble2 == 72)
-													set @item,2234;
-												else if (@gamble2 == 73)
-													set @item,2256;
-												else if (@gamble2 == 74)
-													set @item,5093;
-												else if (@gamble2 == 75)
-													set @item,5072;
-												else if (@gamble2 == 76)
-													set @item,2231;
-												}
-											else if ((@gamble > 0) && (@gamble < 101))
-												set @item,2226;
-											else if ((@gamble > 100) && (@gamble < 201))
-												set @item,2211;
-											else if ((@gamble > 200) && (@gamble < 300))
-												set @item,2209;
-											else if ((@gamble > 303) && (@gamble < 401))
-												set @item,2220;
-											else if ((@gamble > 400) && (@gamble < 501))
-												set @item,2232;
-											else if ((@gamble > 500) && (@gamble < 601))
-												set @item,2216;
-											else if ((@gamble > 600) && (@gamble < 701))
-												set @item,2230;
-											else if ((@gamble > 700) && (@gamble < 801))
-												set @item,2224;
-											else if ((@gamble > 800) && (@gamble < 901))
-												set @item,2222;
-											else if ((@gamble > 900) && (@gamble < 906))
-												set @item,2228;
-											else if ((@gamble > 905) && (@gamble < 911))
-												set @item,2252;
-											else if ((@gamble > 910) && (@gamble < 916))
-												set @item,2227;
-											else if ((@gamble > 915) && (@gamble < 921))
-												set @item,2221;
-											else if ((@gamble > 920) && (@gamble < 926))
-												set @item,2299;
-											else if ((@gamble > 925) && (@gamble < 931))
-												set @item,2236;
-											else if ((@gamble > 930) && (@gamble < 936))
-												set @item,2275;
-											else if ((@gamble > 935) && (@gamble < 941))
-												set @item,5015;
-											else if ((@gamble > 940) && (@gamble < 946))
-												set @item,5061;
-											else if ((@gamble > 945) && (@gamble < 951))
-												set @item,5092;
-											else if ((@gamble > 950) && (@gamble < 1001))
-												set @item,2226;
-									break;
-
-									case 5: //footgear
-											set @gamble,rand(1,500);
-											if ((@gamble > 299) && (@gamble < 303))
-												{
-												set @gamble2,rand(1,10);
-												if ((@gamble2 > 0) && (@gamble2 < 3))
-													set @item,2406;
-												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													set @item,2412;
-												else if ((@gamble2 > 4) && (@gamble2 < 8))
-													set @item,2404;
-												else if ((@gamble2 > 7) && (@gamble2 < 11))
-													set @item,2407;
-												}
-											else if ((@gamble > 0) && (@gamble < 201))
-												set @item,2401;
-											else if ((@gamble > 200) && (@gamble < 300))
-												set @item,2408;
-											else if ((@gamble > 302) && (@gamble < 351))
-												set @item,2411;
-											else if ((@gamble > 350) && (@gamble < 401))
-												set @item,2403;
-											else if ((@gamble > 400) && (@gamble < 451))
-												set @item,2405;
-											else if ((@gamble > 450) && (@gamble < 476))
-												set @item,2409;
-											else if ((@gamble > 475) && (@gamble < 501))
-												set @item,2402;
-									break;
-
-									case 6: //Shields
-											set @gamble,rand(1,500);
-											if ((@gamble > 200) && (@gamble < 205))
-												{
-												set @gamble2,rand(1,10);
-												if ((@gamble2 > 0) && (@gamble2 < 3))
-													set @item,2104;
-												else if ((@gamble2 > 2) && (@gamble2 < 5))
-													set @item,2106;
-												else if ((@gamble2 > 4) && (@gamble2 < 7))
-													set @item,2102;
-												else if ((@gamble2 > 6) && (@gamble2 < 9))
-													set @item,2111;
-												else if ((@gamble2 > 8) && (@gamble2 < 11))
-													set @item,2109;
-												}
-											else if ((@gamble > 0) && (@gamble < 201))
-												set @item,2101;
-											else if ((@gamble > 204) && (@gamble < 301))
-												set @item,2103;
-											else if ((@gamble > 300) && (@gamble < 401))
-												set @item,2107;
-											else if ((@gamble > 401) && (@gamble < 481))
-												set @item,2105;
-											else if ((@gamble > 480) && (@gamble < 501))
-												set @item,2108;
-									break;
-		}
-	if(countitem(732) < 1){
-		mes "[Kachua]";
-		mes "*piff*";
-		mes "You don't have any";
-		mes "diamonds! Don't even";
-		mes "try to fool me!";
+	break;
+	case 2:
+		mes "[Dwayne]";
+		mes "Haha, thank you~";
+		mes "If by any chance";
+		mes "you need a diamond,";
+		mes "please drop by.";
+		mes "I'll sell them to";
+		mes "you at a cheap price.";
 		close;
+	break;
 	}
-	delitem 732,1;
-	getitem @item,1;
 	close;
 }
 
@@ -617,4 +469,149 @@ comodo.gat,204,148,7	script	Devellin	90,{
 	mes "diamond in exchange...";
 	close;
 
+}
+
+comodo.gat,210,154,4	script	Suspicious Guy	118,{
+
+	if (BaseClass == Job_Thief) {
+		mes "[Cain]";
+		mes "Heeeey...";
+		mes "It seems we share the same line of";
+		mes "work, you and me, Heh heh, lemme";
+		mes "give  you a hot tip.";
+		next;
+		mes "[Cain]";
+		mes "I've been charging other people for";
+		mes "this information, but since, shall";
+		mes "we say, we work in the same";
+		mes "professional field, I don't have";
+		mes "the heart to take your zeny.";
+		next;
+		mes "[Cain]";
+		mes "You see that lady over there?";
+		mes "She's just totally in love with" ;
+		mes "diamonds. And from what my sources";
+		mes "tell me, she's loaded. Tons and";
+		mes "tons of valuables.";
+		next;
+		mes "[Cain]";
+		mes "I'm talking' rare items.";
+		mes "I took the liberty of sneaking a";
+		mes "peek at what she owns, and saw";
+		mes "she's got a helmet with goat horns";
+		mes "and even a crown! She's so rich";
+		mes "it's ridiculous!";
+		next;
+		mes "[Cain]";
+		mes "The buzz that's been going around";
+		mes "is that she's got a cache of rare";
+		mes "equipment and weapons too! So";
+		mes "whaddya say? Wanna be partners in";
+		mes "crime and rob her house?";
+		next;
+		switch(select("No, thanks.", "Sweet, I'm in.")) {
+		case 1:
+			mes "[Cain]";
+			mes "Wha... ?";
+			mes "C'mon I thought pilfering was";
+			mes "something you do! Aw well, I'm";
+			mes "gonna do it, but stay hushed on";
+			mes "this, got it?";
+			close;
+		break;
+		case 2:
+			mes "[Cain]";
+			mes "Ha ha ha!";
+			mes "... Dork!";
+			mes "I'm just jivin'";
+			mes "so fuggedabout it!";
+			next;
+			mes "[Cain]";
+			mes "Ah right. Supposedly, there's a";
+			mes "mountain where tons of diamonds are";
+			mes "burried. A pal o'mine says there's";
+			mes "a mine near the mountain too, so I";
+			mes "guess if you went to the mine,";
+			mes "you'd find Diamonds.";
+			next;
+			mes "[Cain]";
+			mes "I guess it can't hurt to gather";
+			mes "some Diamonds there and try to";
+			mes "exchange them for whatever the old";
+			mes "lady's got. Take care, pal~";
+			close;
+		break;
+		}
+		close;
+	} else {
+		mes "[Cain]";
+		mes "Hey...";
+		mes "I got a hot tip for you.";
+		mes "It'll cost you 500 zeny";
+		mes "and trust me, it's worth it.";
+		mes "So whaddya say... ?";
+		next;
+		switch(select("Alright.", "No, thanks.")) {
+		case 1:
+			if(Zeny >= 500) {
+				set Zeny, Zeny - 500;
+				mes "[Cain]";
+				mes "You see that lady over there?";
+				mes "She's just totally in love with" ;
+				mes "diamonds. And from what my sources";
+				mes "tell me, she's loaded. Tons and";
+				mes "tons of valuables.";
+				next;
+				mes "[Cain]";
+				mes "I'm talking' rare items.";
+				mes "I took the liberty of sneaking a";
+				mes "peek at what she owns, and saw";
+				mes "she's got a helmet with goat horns";
+				mes "and even a crown! She's so rich";
+				mes "it's ridiculous!";
+				next;
+				mes "[Cain]";
+				mes "There's a chance that rare";
+				mes "equipment and weapons might be";
+				mes "yours! She'll give anything for a";
+				mes "3carat diamond. So if you have any";
+				mes "of those, you might as well see";
+				mes "her.";
+				next;
+				mes "[Cain]";
+				mes "Ah right. Supposedly, there's a";
+				mes "mountain where tons of diamonds";
+				mes "are burried. A pal o'mine says";
+				mes "there's a mine near the mountain";
+				mes "too, so I guess if you went to the";
+				mes "mine, you'd find Diamonds.";
+				next;
+				mes "[Cain]";
+				mes "I guess it can't hurt to gather";
+				mes "some Diamonds there and try to";
+				mes "exchange them for whatever the old";
+				mes "lady's got. Take care, pal~";
+				close;
+			} else {
+				mes "[Cain]";
+				mes "What the hell?!";
+				mes "Don't you even have any money? Didn't I";
+				mes "say 500 zeny? Hey man, Info like";
+				mes "this doesn't come cheap!";
+				close;
+			}
+		break;
+		case 2:
+			mes "[Cain]";
+			mes "Hey hey!";
+			mes "What are you, a cheapskate? You";
+			mes "understand that everything has its";
+			mes "price and this information is so";
+			mes "worth it. C'mon, you can't pass";
+			mes "this up, can you?";
+			close;
+		break;
+		}
+		close;
+	}
 }

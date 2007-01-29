@@ -27,6 +27,10 @@ KarLaeda
 Date		Added
 ======
 2007/01/29
+	* Updated the comodo gambling script
+	- synced the structure with the aegis script (with neccessary adjustments)
+	- added a missing emotion and cutins (using jA's method)
+	- added a missing npc
 	* Moved the custom events entries into scripts_custom.conf
 	* Removed old custom geffenia warper since TSQ is done
 	* Removed the duplicit and untranslated alchemist.txt event [ultramage]
