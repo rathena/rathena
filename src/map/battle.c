@@ -3640,10 +3640,6 @@ static const struct battle_data_short {
 	{ "party_skill_penalty",               &battle_config.party_skill_penalty		},
 	{ "monster_class_change_full_recover", &battle_config.monster_class_change_full_recover },
 	{ "produce_item_name_input",           &battle_config.produce_item_name_input	},
-	{ "produce_potion_name_input",         &battle_config.produce_potion_name_input},
-	{ "making_arrow_name_input",           &battle_config.making_arrow_name_input	},
-	{ "holywater_name_input",              &battle_config.holywater_name_input		},
-	{ "cdp_name_input",                    &battle_config.cdp_name_input		},
 	{ "display_skill_fail",                &battle_config.display_skill_fail	},
 	{ "chat_warpportal",                   &battle_config.chat_warpportal			},
 	{ "mob_warp",                          &battle_config.mob_warp	},
@@ -4056,11 +4052,7 @@ void battle_set_defaults() {
 	battle_config.land_skill_limit = BL_ALL;
 	battle_config.party_skill_penalty = 1;
 	battle_config.monster_class_change_full_recover = 1;
-	battle_config.produce_item_name_input = 1;
-	battle_config.produce_potion_name_input = 1;
-	battle_config.making_arrow_name_input = 1;
-	battle_config.holywater_name_input = 1;
-	battle_config.cdp_name_input = 1;
+	battle_config.produce_item_name_input = 0x3;
 	battle_config.display_skill_fail = 0;
 	battle_config.chat_warpportal = 0;
 	battle_config.mob_warp = 0;

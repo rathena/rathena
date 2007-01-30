@@ -236,6 +236,7 @@ int mapif_delete_homunculus(int fd)
 {
 	RFIFOHEAD(fd);
 	mapif_homunculus_deleted(fd, inter_delete_homunculus(RFIFOL(fd,2)));
+	return 1;
 }
 
 int mapif_rename_homun_ack(int fd, int account_id, int char_id, unsigned char flag, char *name){

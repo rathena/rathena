@@ -1,5 +1,14 @@
 Date	Added
 
+2007/01/29
+	* Collapsed config settings produce_item_name_input,
+	  produce_potion_name_input, making_arrow_name_input, holywater_name_input,
+	  cdp_name_input into a single config produce_item_name_input which uses
+	  bitmasks to determine what it affects. See battle/item.conf for details.
+	* Updated arrow_decrement to have 3 possible values: Disabled, Enabled, and
+	  Enabled + Autoguess (gives arrow consumption as appropiate to
+	  plagiarized/acquired skills). eA previously had a hardcoded '2' setting,
+	  now it's 1 by default as it should be. [Skotlex]
 2007/01/28
 	* Fixed the description of @summon
 	* Fixed @nuke's position (I edited the wrong file by accident)

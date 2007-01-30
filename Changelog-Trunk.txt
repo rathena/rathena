@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/01/30
+	* Corrected char deletion not working (column is called homun_id, not
+	  hom_id...)
+	* Collapsed config settings produce_item_name_input,
+	  produce_potion_name_input, making_arrow_name_input, holywater_name_input,
+	  cdp_name_input into a single config produce_item_name_input which uses
+	  bitmasks to determine what it affects.
+	* Updated arrow_decrement to have 3 possible values: Disabled, Enabled, and
+	  Enabled + Autoguess (gives arrow consumption as appropiate to
+	  plagiarized/acquired skills).
 2007/01/29
 	* Corrected the homunculus deletion functions so that the homunculus is
 	  deleted together with the character.

@@ -32,6 +32,7 @@
 #include "db.h"
 #include "malloc.h"
 #include "int_guild.h"
+#include "int_homun.h"
 #include "char.h"
 
 #ifndef TXT_SQL_CONVERT
@@ -1457,7 +1458,7 @@ int delete_char_sql(int char_id, int partner_id)
 	char char_name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Name needs be escaped.
 	int account_id, party_id, guild_id, hom_id, char_base_level;
 	
-	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`hom_id` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
+	sprintf(tmp_sql, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`homun_id` FROM `%s` WHERE `char_id`='%d'",char_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
