@@ -2873,34 +2873,6 @@ static void npc_read_event_script(void)
 		}
 	}
 }
-static int npc_read_indoors (void)
-{
-	char *buf, *p;
-	int s, m;
-
-	buf = (char *)grfio_reads("data\\indoorrswtable.txt",&s);
-	if (buf == NULL)
-		return -1;
-	buf[s] = 0;
-
-	for (p = buf; p - buf < s; ) {
-		char map_name[64];
-		if (sscanf(p, "%15[^#]#", map_name) == 1) {
-			size_t pos = strlen(map_name) - 4;	// replace '.xxx' extension
-			memcpy(map_name+pos,".gat",4);		// with '.gat'
-			if ((m = map_mapname2mapid(map_name)) >= 0)
-				map[m].flag.indoors = 1;
-		}
-
-		p = strchr(p, 10);
-		if (!p) break;
-		p++;
-	}
-	aFree(buf);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","data\\indoorrswtable.txt");
-
-	return 0;
-}
 
 /*==========================================
  *
