@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/01/30
+	* 'Long Range Attacked' mob skill conditions will no longer trigger on
+	  magic attacks.
 	* Corrected char deletion not working (column is called homun_id, not
 	  hom_id...)
 	* Collapsed config settings produce_item_name_input,

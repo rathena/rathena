@@ -20,6 +20,10 @@
 
 ========================
 
+01/30
+	* Blood Drain and Energy Drain have their range updated to 7.
+	* Changed the element of Blood Drain from 'take weapon's element' to Dark.
+	  [Skotlex]
 01/24
 	* Fixed a typo in skill_cast_db.txt making the server skip NJ_KUNAI [ultramage]
 	  Reported in http://www.eathena.ws/board/index.php?showtopic=136136

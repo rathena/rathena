@@ -2861,7 +2861,7 @@ int mobskill_event(struct mob_data *md, struct block_list *src, unsigned int tic
 		res = mobskill_use(md, tick, flag);
 	else if (flag&BF_SHORT)
 		res = mobskill_use(md, tick, MSC_CLOSEDATTACKED);
-	else if (flag&BF_LONG)
+	else if (flag&BF_LONG && !(flag&BF_MAGIC)) //Long-attacked should not include magic.
 		res = mobskill_use(md, tick, MSC_LONGRANGEATTACKED);
 	
 	if (!res)

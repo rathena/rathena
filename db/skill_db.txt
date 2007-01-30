@@ -222,8 +222,8 @@
 196,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_SUMMONSLAVE#Follower Summons#
 197,0,0,4,0,1,0,10,1,no,0,2,0,none,0	//NPC_EMOTION#Emotion#
 198,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_TRANSFORMATION#Transformation#
-199,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
-200,9,6,1,7,0,0,10,1,no,0,2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
+199,7,6,1,7,0,0,10,1,no,0,2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
+200,7,6,1,7,0,0,10,1,no,0,2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
 201,0,0,4,0,1,0,10,1,no,0,2,0,weapon,0	//NPC_KEEPING#Keeping#
 202,2,6,1,7,0,0,5,1,no,0,2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
 203,9,6,1,7,1,0,10,1,no,0,2,0,magic,0	//NPC_DARKBLESSING#Dark Blessing#
