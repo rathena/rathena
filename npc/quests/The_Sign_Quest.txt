@@ -3162,7 +3162,7 @@ L_quiztime:
 
 
 			case 18:
-				menu "Medicine Bowl",s_correct,"Witch Starsand",-,"Empty Bottle",-,"Empty Potion Bottle",-;
+				menu "Medicine Bowl",-,"Witch Starsand",-,"Empty Bottle",s_correct,"Empty Potion Bottle",s_correct;
 					set @questiondone18,1;
 					break;
 				s_correct:
