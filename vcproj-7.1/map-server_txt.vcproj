@@ -175,9 +175,6 @@
 				RelativePath="..\src\common\ers.c">
 			</File>
 			<File
-				RelativePath="..\src\common\graph.c">
-			</File>
-			<File
 				RelativePath="..\src\common\grfio.c">
 			</File>
 			<File
@@ -324,9 +321,6 @@
 			</File>
 			<File
 				RelativePath="..\src\common\ers.h">
-			</File>
-			<File
-				RelativePath="..\src\common\graph.h">
 			</File>
 			<File
 				RelativePath="..\src\common\grfio.h">

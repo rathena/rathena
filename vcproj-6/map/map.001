@@ -82,14 +82,6 @@ SOURCE=..\..\src\common\ers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\graph.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\common\graph.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\common\grfio.c
 # End Source File
 # Begin Source File
