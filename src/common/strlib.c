@@ -192,3 +192,13 @@ char *_strtok_r(char *s1, const char *s2, char **lasts)
 	return ret;
 }
 #endif
+
+#if !defined(WIN32) || (defined(_MSC_VER) && _MSC_VER < 1400)
+/* Find the length of STRING, but scan at most MAXLEN characters.
+   If no '\0' terminator is found in that many characters, return MAXLEN.  */
+size_t strnlen (const char* string, size_t maxlen)
+{
+  const char* end = memchr (string, '\0', maxlen);
+  return end ? (size_t) (end - string) : maxlen;
+}
+#endif

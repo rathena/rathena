@@ -21,4 +21,9 @@ char *_strtok_r(char *s1, const char *s2, char **lasts);
 int remove_control_chars(unsigned char *);
 char *trim(char *str, const char *delim);
 const char *stristr(const char *haystack, const char *needle);
+
+#if !defined(WIN32) || (defined(_MSC_VER) && _MSC_VER < 1400)
+size_t strnlen (const char* string, size_t maxlen);
+#endif
+
 #endif
