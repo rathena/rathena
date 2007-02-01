@@ -43,6 +43,8 @@
 //= 2.11.20070109 - removed the unused flag argument in guildskill, added an 
 //=       optional argument to setcart,setfalcon,setriding and other cleanups 
 //=       [FlavioJS]
+//= 2.12.20070201 - Added npcshopitem, npcshopadditem, npcshopdelitem and
+//=       npcshopattach [Skotlex]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -3592,6 +3594,59 @@ The function returns 1 on success, and the script is not automatically
 closed, so be careful to not do any item trading on the same script to prevent
 possible exploits (if possible, use close or close2 before invoking the shop
 itself).
+
+---------------------------------------
+
+*npcshopitem "<name>",<itemId>,<Price>{,<itemId>,<Price>{,<itemId>,<Price>{,...}}}
+
+This command lets you override the contents of an existing npc shop. The
+current sell list will be wiped, and only the items specified with the price
+specified will be for sale.
+
+The function returns 1 if shop was updated successfully, or 0 if not found.
+
+Note that you cannot use -1 to specify default selling price!
+
+---------------------------------------
+
+*npcshopadditem "<name>",<itemId>,<Price>{,<itemId>,<Price>{,<itemId>,<Price>{,...}}}
+
+This command will add more items at the end of the selling list for the
+specified npc shop. If you specify an item already for sell, that item will
+appear twice on the sell list.
+
+The function returns 1 if shop was updated successfully, or 0 if not found.
+
+Note that you cannot use -1 to specify default selling price!
+
+---------------------------------------
+
+*npcshopdelitem "<name>",<itemId>{,<itemId>{,<itemId>{,...}}}
+
+This command will remove items from the specified npc shop.
+If the item to remove exists more than once on the shop, all instances will be
+removed.
+
+Note that the function returns 1 even if no items were removed. The return
+value is only to confirm that the shop was indeed found.
+
+---------------------------------------
+
+*npcshopattach "<name>"{,<flag>}
+
+This command will attach the current script to the given npc shop.
+When a script is attached to a shop, the events "OnBuyItem" and "OnSellItem"
+of your script will be executed whenever a player buys/sells from the shop.
+Additionally, the arrays @bought_nameid[], @bought_quantity[] or @sold_nameid[]
+and @sold_quantity[] will be filled up with the items and quantities
+bought/sold.
+
+The optional parameter specifies whether to attach ("1") or detach ("0") from
+the shop (the default is to attach). Note that detaching will detach any npc
+attached to the shop, even if it's from another script, while attaching will
+override any other script that may be already attached.
+
+The function returns 0 if the shop was not found, 1 otherwise.
 
 ---------------------------------------
 
