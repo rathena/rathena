@@ -18,6 +18,7 @@
 #include "../common/version.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "chrif.h"
@@ -8249,6 +8250,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.night = 1;
 			clif_status_load(&sd->bl, SI_NIGHT, 1);
 		}
+
 		// Notify everyone that this char logged in [Skotlex].
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
