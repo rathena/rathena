@@ -1,5 +1,7 @@
 Date	Added
 
+2007/02/01
+	* Improved a bit the description of the mvp item get time config settings.
 2007/01/29
 	* Collapsed config settings produce_item_name_input,
 	  produce_potion_name_input, making_arrow_name_input, holywater_name_input,

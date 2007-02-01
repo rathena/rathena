@@ -36,7 +36,6 @@ enum {
 struct item_data {
 	int nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
-	char prefix[NAME_LENGTH],suffix[NAME_LENGTH];
 	//Do not add stuff between value_buy and wlv (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
@@ -68,7 +67,6 @@ struct item_data {
 		unsigned value_notdc : 1;
 		unsigned value_notoc : 1;
 		short no_equip;
-		unsigned no_use : 1;
 		unsigned no_refine : 1;	// [celest]
 		unsigned delay_consume : 1;	// Signifies items that are not consumed inmediately upon double-click [Skotlex]
 		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]

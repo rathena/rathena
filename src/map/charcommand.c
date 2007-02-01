@@ -1043,7 +1043,10 @@ int charcommand_item(
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || sscanf(message, "%99s %d %23[^\n]", item_name, &number, character) < 3) {
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %23[^\n]", item_name, &number, character) < 3 &&
+		sscanf(message, "%99s %d %23[^\n]", item_name, &number, character) < 3
+	)) {
 		clif_displaymessage(fd, "Please, enter an item name/id (usage: #item <item name or ID> <quantity> <char name>).");
 		return -1;
 	}

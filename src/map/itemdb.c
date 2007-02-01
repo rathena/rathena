@@ -28,29 +28,22 @@ struct item_data dummy_item; //This is the default dummy item used for non-exist
 // name = item alias, so we should find items aliases first. if not found then look for "jname" (full name)
 int itemdb_searchname_sub(DBKey key,void *data,va_list ap)
 {
-	struct item_data *item=(struct item_data *)data,**dst;
+	struct item_data *item=(struct item_data *)data,**dst,**dst2;
 	char *str;
 	str=va_arg(ap,char *);
 	dst=va_arg(ap,struct item_data **);
+	dst2=va_arg(ap,struct item_data **);
 	if(item == &dummy_item) return 0;
-	if( strcmpi(item->name,str)==0 ) //by lupus
-		*dst=item;
-	return 0;
-}
 
-/*==========================================
- * –¼‘O‚ÅŒŸõ—p
- *------------------------------------------
- */
-int itemdb_searchjname_sub(int key,void *data,va_list ap)
-{
-	struct item_data *item=(struct item_data *)data,**dst;
-	char *str;
-	str=va_arg(ap,char *);
-	dst=va_arg(ap,struct item_data **);
-	if(item == &dummy_item) return 0;
-	if( strcmpi(item->jname,str)==0 )
+	//Absolute priority to Aegis code name.
+	if (*dst != NULL) return 0;
+	if( strcmpi(item->name,str)==0 )
 		*dst=item;
+
+	//Second priority to Client displayed name.
+	if (*dst2 != NULL) return 0;
+	if( strcmpi(item->jname,str)==0 )
+		*dst2=item;
 	return 0;
 }
 
@@ -60,9 +53,10 @@ int itemdb_searchjname_sub(int key,void *data,va_list ap)
  */
 struct item_data* itemdb_searchname(const char *str)
 {
-	struct item_data *item=NULL;
-	item_db->foreach(item_db,itemdb_searchname_sub,str,&item);
-	return item;
+	struct item_data *item=NULL, *item2=NULL;
+
+	item_db->foreach(item_db,itemdb_searchname_sub,str,&item,&item2);
+	return item?item:item2;
 }
 
 static int itemdb_searchname_array_sub(DBKey key,void * data,va_list ap)

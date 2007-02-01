@@ -2549,7 +2549,10 @@ int atcommand_item(const int fd, struct map_session_data* sd, const char* comman
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || sscanf(message, "%99s %d", item_name, &number) < 1) {
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
+		sscanf(message, "%99s %d", item_name, &number) < 1
+	)) {
 		clif_displaymessage(fd, "Please, enter an item name/id (usage: @item <item name or ID> [quantity]).");
 		return -1;
 	}
@@ -2608,7 +2611,10 @@ int atcommand_item2(const int fd, struct map_session_data* sd, const char* comma
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9) {
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
+		sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
+	)) {
 		clif_displaymessage(fd, "Please, enter all informations (usage: @item2 <item name or ID> <quantity>");
 		clif_displaymessage(fd, "  <Identify_flag> <refine> <attribut> <Card1> <Card2> <Card3> <Card4>).");
 		return -1;
@@ -3752,7 +3758,10 @@ int atcommand_produce(const int fd, struct map_session_data* sd, const char* com
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || sscanf(message, "%99s %d %d", item_name, &attribute, &star) < 1) {
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &attribute, &star) < 1 &&
+		sscanf(message, "%99s %d %d", item_name, &attribute, &star) < 1
+	)) {
 		clif_displaymessage(fd, "Please, enter at least an item name/id (usage: @produce <equip name or equip ID> <element> <# of very's>).");
 		return -1;
 	}
@@ -6125,7 +6134,10 @@ int atcommand_chardelitem(const int fd, struct map_session_data* sd, const char*
 	memset(item_name, '\0', sizeof(item_name));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%s %d %99[^\n]", item_name, &number, atcmd_player_name) < 3 || number < 1) {
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %99[^\n]", item_name, &number, atcmd_player_name) < 3 &&
+		sscanf(message, "%s %d %99[^\n]", item_name, &number, atcmd_player_name) < 3
+	) || number < 1) {
 		clif_displaymessage(fd, "Please, enter an item name/id, a quantity and a player name (usage: @chardelitem <item_name_or_ID> <quantity> <player>).");
 		return -1;
 	}
