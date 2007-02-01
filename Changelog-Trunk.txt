@@ -3,11 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2007/01/31
+2007/02/01
+	* Corrected homunculus's aspd being halved after using some aspd adjusting
+	  skill.
+	* Removed the log info message 'created homunc...', and the 'loaded homunc'
+	  message will only show if the save_log is enabled.
 	* When when a party-member levels up, the level change is sent to the
 	  char-server to update the even-share range values.
 	* When joining a gvg_dungeon, the pvp packet will be sent to signal
 	  versus. With this gvg dungeons should be working correctly now. [Skotlex]
+2007/01/31
 	* Changes in the VS8 project files: [FlavioJS]
 	- synchronized the settings between the projects
 	- joined all .h and .cpp files and grouped them based on the src subfolder

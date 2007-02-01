@@ -268,9 +268,6 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 
 	nullpo_retr(0, bl);
 	
-	if ( status_isdead(bl) )	//[orn]
-		return 0;
-
 	ud = unit_bl2ud(bl);
 	
 	if( ud == NULL) return 0;
@@ -676,9 +673,6 @@ int unit_can_move(struct block_list *bl)
 		return 0;
 		
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
-		return 0;
-
-  	if (status_isdead(bl))
 		return 0;
 
 	if (sd && (

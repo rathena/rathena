@@ -188,7 +188,7 @@
 218,Divest helm,4,4000
 219,Snatch,4,4000
 220,Scribble,1,4000
-221,Piece,2,4000
+221,Piece,1,0
 222,Remover,4,4000
 223,Slyness,1,0
 224,Haggle,1,0

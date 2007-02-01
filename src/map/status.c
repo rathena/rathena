@@ -2871,7 +2871,7 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 			skill = skill*status->aspd_rate/1000;
 
 		status->amotion = cap_value(skill,battle_config.max_aspd,2000);
-		status->adelay = 2*status->amotion;
+		status->adelay = status->amotion;
 	}
 
 	if(flag&(SCB_AGI|SCB_DSPD)) {

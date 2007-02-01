@@ -4717,48 +4717,52 @@ int pc_resetstate(struct map_session_data* sd)
  */
 int pc_resetskill(struct map_session_data* sd, int flag)
 {
-	int i, skill, inf2, skill_point=0;
+	int i, lv, inf2, skill_point=0;
 	nullpo_retr(0, sd);
 
 	if (pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 	
 	for (i = 1; i < MAX_SKILL; i++) {
-		if ((skill = sd->status.skill[i].lv) > 0) {
-			inf2 = skill_get_inf2(i);	
-			if ((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL))) //Avoid reseting wedding/linker skills.
-			{
-					if (!sd->status.skill[i].flag)
-						skill_point += skill;
-					else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
-						skill_point += (sd->status.skill[i].flag - 2);
-					if (!(flag&2)) {
-						sd->status.skill[i].lv = 0;
-						sd->status.skill[i].flag = 0;
-					}
-			}
-			else if (battle_config.quest_skill_reset && (inf2&INF2_QUEST_SKILL) && !(flag&2))
-			{
+		lv= sd->status.skill[i].lv;
+		if (lv < 1) continue;
+
+		inf2 = skill_get_inf2(i);
+
+		if(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) //Avoid reseting wedding/linker skills.
+			continue;
+
+		if (inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn)
+		{	//Only handle quest skills in a special way when you can't learn them manually
+			if (battle_config.quest_skill_reset && !(flag&2))
+			{	//Wipe them
 				sd->status.skill[i].lv = 0;
 				sd->status.skill[i].flag = 0;
 			}
-		} else {
+			continue;
+		}
+		if (!sd->status.skill[i].flag)
+			skill_point += lv;
+		else if (sd->status.skill[i].flag > 2 && sd->status.skill[i].flag != 13)
+			skill_point += (sd->status.skill[i].flag - 2);
+
+		if (!(flag&2)) {
 			sd->status.skill[i].lv = 0;
+			sd->status.skill[i].flag = 0;
 		}
 	}
 	
-	if (!(flag&2)) {
-		if (sd->status.skill_point > USHRT_MAX - skill_point)
-			sd->status.skill_point = USHRT_MAX;
-		else
-			sd->status.skill_point += skill_point;
-	
-		if (flag&1) {
-			clif_updatestatus(sd,SP_SKILLPOINT);
-			clif_skillinfoblock(sd);
-			status_calc_pc(sd,0);
-		}
+	if (flag&2 || !skill_point) return skill_point;
+
+	if (sd->status.skill_point > USHRT_MAX - skill_point)
+		sd->status.skill_point = USHRT_MAX;
+	else
+		sd->status.skill_point += skill_point;
+
+	if (flag&1) {
+		clif_updatestatus(sd,SP_SKILLPOINT);
+		clif_skillinfoblock(sd);
+		status_calc_pc(sd,0);
 	}
 	return skill_point;
 }

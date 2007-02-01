@@ -20,6 +20,15 @@
 
 ========================
 
+02/01
+	* Corrected item 1459 (unused Partizan with no slots) being wlv3 instead of
+	  2 (as the other two partizans)
+	* Changed the name of the four second versions of homunculi to not have a
+	  2. (so you get a 'lif' and not a 'lif2')
+	* Removed flag graffiti from abracadabra.
+	* Updated the stun times of Bash, Npc-StunAttack and meteor Assault to 5
+	  secs as reported by Ultra Mage (still pending more data to see if all
+	  others need updating as well)
 01/30
 	* Blood Drain and Energy Drain have their range updated to 7.
 	* Changed the element of Blood Drain from 'take weapon's element' to Dark.
