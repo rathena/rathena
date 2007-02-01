@@ -73,6 +73,7 @@ struct mob_db {
 
 enum {
 	MST_TARGET =	0,
+	MST_RANDOM,	//Random Target!
 	MST_SELF,
 	MST_FRIEND,
 	MST_MASTER,

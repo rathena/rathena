@@ -53,9 +53,6 @@ static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 	int target_id;
 	int *c;
 
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-
 	bl_list = va_arg(ap, struct block_list **);
 	c = va_arg(ap, int *);
 	target_id = va_arg(ap, int);
@@ -105,6 +102,41 @@ int battle_gettarget(struct block_list *bl)
 	}
 	return 0;
 }
+
+static int battle_getenemy_sub(struct block_list *bl, va_list ap)
+{
+	struct block_list **bl_list;
+	struct block_list *target;
+	int *c;
+
+	bl_list = va_arg(ap, struct block_list **);
+	c = va_arg(ap, int *);
+	target = va_arg(ap, struct block_list *);
+
+	if (bl->id == target->id)
+		return 0;
+	if (*c >= 24)
+		return 0;
+
+	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
+		bl_list[(*c)++] = bl;
+		return 1;
+	}
+	return 0;	
+}
+
+// Picks a random enemy of the given type (BL_PC, BL_CHAR, etc) within the range given. [Skotlex]
+struct block_list* battle_getenemy(struct block_list *target, int type, int range)
+{
+	struct block_list *bl_list[24];
+	int c = 0;
+	memset(bl_list, 0, sizeof(bl_list));
+	map_foreachinrange(battle_getenemy_sub, target, range, type, bl_list, &c, target);
+	if (c == 0 || c > 24)
+		return NULL;
+	return bl_list[rand()%c];
+}
+
 // ƒ_ƒ??[ƒW‚Ì’x‰„
 struct delay_damage {
 	struct block_list *src;

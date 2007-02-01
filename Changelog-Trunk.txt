@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/01
+	* Added support for mob skill target 'randomtarget', when specified, it
+	  will pick a random enemy from within the skill's cast range. [Skotlex]
 	* Added string function strnlen [ultramage]
 	- This thing is useful for removing potential out-of-bounds crashes.
 	  Had to #ifdef it because some systems implement it, some don't provide

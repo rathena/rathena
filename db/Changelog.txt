@@ -21,6 +21,9 @@
 ========================
 
 02/01
+	* Updated the mob_db so that all skills from non-moving mobs that specified
+	  'target' as enemy will use 'randomtarget' instead.
+	* Amon Ra's meteors now use randomtarget instead of self.
 	* Corrected item 1459 (unused Partizan with no slots) being wlv3 instead of
 	  2 (as the other two partizans)
 	* Changed the name of the four second versions of homunculi to not have a

@@ -2757,6 +2757,10 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			short x = 0, y = 0;
 			if (ms[i].target <= MST_AROUND) {
 				switch (ms[i].target) {
+					case MST_RANDOM: //Pick a random enemy within skill range.
+						bl = battle_getenemy(&md->bl, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM,
+							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+						break;
 					case MST_TARGET:
 					case MST_AROUND5:
 					case MST_AROUND6:
@@ -2805,6 +2809,10 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			if (ms[i].target <= MST_MASTER) {
 				struct block_list *bl;
 				switch (ms[i].target) {
+					case MST_RANDOM: //Pick a random enemy within skill range.
+						bl = battle_getenemy(&md->bl, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM,
+							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+						break;
 					case MST_TARGET:
 						bl = map_id2bl(md->target_id);
 						break;
@@ -3657,6 +3665,7 @@ static int mob_readskilldb(void)
 		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
 	}, target[] = {
 		{	"target",	MST_TARGET	},
+		{	"randomtarget",	MST_RANDOM	},
 		{	"self",		MST_SELF	},
 		{	"friend",	MST_FRIEND	},
 		{	"master",	MST_MASTER	},
