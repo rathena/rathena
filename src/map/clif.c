@@ -8175,9 +8175,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if (map[sd->bl.m].flag.gvg_dungeon)
 	{
-		clif_set0199(fd,2); //TODO: Figure out the real thing to do here.
+		clif_set0199(fd, 1); //TODO: Figure out the real packet to send here.
 		if (!sd->pvp_point)
+		{
 			sd->pvp_point=5; //Need to die twice to be warped out.
+			sd->pvp_won=0;
+			sd->pvp_lost=0;
+		}
 	}
 
 	if(map_flag_gvg(sd->bl.m))

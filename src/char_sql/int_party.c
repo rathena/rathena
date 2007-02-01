@@ -716,7 +716,7 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
 		mapif_party_info(-1,&p->party);
 	return 0;
 }
-// When member goes to other map
+// When member goes to other map or levels up.
 int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id, unsigned short map, int online, unsigned int lv)
 {
 	struct party_data *p;
@@ -726,45 +726,51 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 	if (p == NULL)
 		return 0;
 
-	for(i = 0; i < MAX_PARTY; i++) {
-		if(p->party.member[i].account_id == account_id &&
-			p->party.member[i].char_id == char_id)
+	for(i = 0; i < MAX_PARTY && 
+		(p->party.member[i].account_id != account_id ||
+		p->party.member[i].char_id != char_id); i++);
+
+	if (i == MAX_PARTY) return 0;
+
+	if (p->party.member[i].online != online)
+	{
+		p->party.member[i].online = online;
+		if (online)
+			p->party.count++;
+		else
+			p->party.count--;
+		// Even share check situations: Family state (always breaks)
+		// character logging on/off is max/min level (update level range) 
+		// or character logging on/off has a different level (update level range using new level)
+		if (p->family ||
+			(p->party.member[i].lv <= p->min_lv || p->party.member[i].lv >= p->max_lv) ||
+			(p->party.member[i].lv != lv && (lv <= p->min_lv || lv >= p->max_lv))
+			)
 		{
-			p->party.member[i].map = map;
-			if (p->party.member[i].online != online)
-			{
-				p->party.member[i].online = online;
-				if (online)
-					p->party.count++;
-				else
-					p->party.count--;
-				// Even share check situations: Family state (always breaks)
-				// character logging on/off is max/min level (update level range) 
-				// or character logging on/off has a different level (update level range using new level)
-				if (p->family ||
-					(p->party.member[i].lv <= p->min_lv || p->party.member[i].lv >= p->max_lv) ||
-					(p->party.member[i].lv != lv && (lv <= p->min_lv || lv >= p->max_lv))
-					)
-				{
-					p->party.member[i].lv = lv;
-					int_party_check_lv(p);
-				}
-			}
-			if (p->party.member[i].lv != lv) {
-				if(p->party.member[i].lv == p->min_lv ||
-					p->party.member[i].lv == p->max_lv)
-				{
-					p->party.member[i].lv = lv;
-					int_party_check_lv(p);
-				} else
-					p->party.member[i].lv = lv;
-			}
-			mapif_party_membermoved(&p->party, i);
-			break;
+			p->party.member[i].lv = lv;
+			int_party_check_lv(p);
 		}
+	}
+
+	if (p->party.member[i].lv != lv) {
+		if(p->party.member[i].lv == p->min_lv ||
+			p->party.member[i].lv == p->max_lv)
+		{
+			p->party.member[i].lv = lv;
+			int_party_check_lv(p);
+		} else
+			p->party.member[i].lv = lv;
+		//There is no need to send level update to map servers
+		//since they do nothing with it.
+	}
+
+	if (p->party.member[i].map != map) {
+		p->party.member[i].map = map;
+		mapif_party_membermoved(&p->party, i);
 	}
 	return 0;
 }
+
 // パーティ解散要求
 int mapif_parse_BreakParty(int fd,int party_id)
 {

@@ -4100,6 +4100,9 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 	//LORDALFA - LVLUPEVENT
 	if(sd->state.event_baselvup)
 		npc_script_event(sd, NPCE_BASELVUP);
+
+	if(sd->status.party_id)
+		party_send_levelup(sd);
 	return 1;
 }
 

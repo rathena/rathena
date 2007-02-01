@@ -508,15 +508,14 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 	return 0;
 }
 
-int party_send_movemap(struct map_session_data *sd)
+void party_send_movemap(struct map_session_data *sd)
 {
 	int i;
 	struct party_data *p;
 
-	nullpo_retr(0, sd);
-
 	if( sd->status.party_id==0 )
-		return 0;
+		return;
+
 	intif_party_changemap(sd,1);
 
 	p=party_search(sd->status.party_id);
@@ -532,7 +531,7 @@ int party_send_movemap(struct map_session_data *sd)
 	}
 	
 	if( sd->state.party_sent )
-		return 0;
+		return;
 
 	party_check_conflict(sd);
 	
@@ -546,7 +545,12 @@ int party_send_movemap(struct map_session_data *sd)
 		}
 	}
 	
-	return 0;
+	return;
+}
+
+void party_send_levelup(struct map_session_data *sd)
+{
+	intif_party_changemap(sd,1);
 }
 
 int party_send_logout(struct map_session_data *sd)
