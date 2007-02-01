@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug-login"
-			IntermediateDirectory="Debug-login"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
@@ -44,18 +44,13 @@
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="true"
 				EnableFunctionLevelLinking="true"
-				DisableLanguageExtensions="false"
 				DefaultCharIsUnsigned="false"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				WarnAsError="false"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 				CompileAs="1"
@@ -73,12 +68,12 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
 				ShowProgress="0"
-				OutputFile="..\login-server.exe"
+				OutputFile="$(OutDir)\login-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\login-server.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -109,8 +104,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release-login"
-			IntermediateDirectory="Release-login"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -162,15 +157,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
-				OutputFile="..\login-server.exe"
+				OutputFile="$(OutDir)\login-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\login-server.pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -203,16 +199,34 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="login_txt"
+			>
+			<File
+				RelativePath="..\src\login\login.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login\login.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="common"
 			>
 			<File
 				RelativePath="..\src\common\core.c"
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\core.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\db.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.h"
 				>
 			</File>
 			<File
@@ -224,11 +238,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
+				RelativePath="..\src\common\grfio.h"
 				>
 			</File>
 			<File
@@ -236,7 +246,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login\login.c"
+				RelativePath="..\src\common\lock.h"
 				>
 			</File>
 			<File
@@ -244,67 +254,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\md5calc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\nullpo.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\showmsg.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\socket.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\strlib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\timer.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\utils.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			>
-			<File
-				RelativePath="..\src\common\core.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\db.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\lock.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\login\login.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\common\malloc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.c"
 				>
 			</File>
 			<File
@@ -316,6 +270,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\nullpo.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\nullpo.h"
 				>
 			</File>
@@ -324,7 +282,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\plugins.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\plugins.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c"
 				>
 			</File>
 			<File
@@ -332,7 +298,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\socket.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c"
 				>
 			</File>
 			<File
@@ -340,7 +314,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
 				>
 			</File>
 			<File
@@ -349,6 +331,46 @@
 			</File>
 			<File
 				RelativePath="..\src\common\version.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			>
+			<File
+				RelativePath="..\src\zlib\crypt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zconf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zlib.h"
 				>
 			</File>
 		</Filter>

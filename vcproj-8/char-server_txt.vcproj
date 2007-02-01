@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug-char"
-			IntermediateDirectory="Debug-char"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -45,6 +45,7 @@
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="true"
@@ -67,12 +68,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
-				OutputFile="..\char-server.exe"
+				OutputFile="$(OutDir)\char-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\char-server.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -103,8 +104,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release-char"
-			IntermediateDirectory="Release-char"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -126,7 +127,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
+				Optimization="2"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
@@ -156,12 +157,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
-				OutputFile="..\char-server.exe"
+				OutputFile="$(OutDir)\char-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\char-server.pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -198,32 +199,22 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="char_txt"
 			>
 			<File
 				RelativePath="..\src\char\char.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\core.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\db.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\ers.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.c"
+				RelativePath="..\src\char\char.h"
 				>
 			</File>
 			<File
 				RelativePath="..\src\char\int_guild.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_guild.h"
 				>
 			</File>
 			<File
@@ -235,99 +226,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_pet.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_status.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_storage.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\inter.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\lock.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\malloc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\mapindex.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\nullpo.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\showmsg.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\socket.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\strlib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\timer.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\utils.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			>
-			<File
-				RelativePath="..\src\char\char.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\core.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\db.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_guild.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\char\int_party.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_pet.c"
 				>
 			</File>
 			<File
@@ -335,7 +238,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_status.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_status.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_storage.c"
 				>
 			</File>
 			<File
@@ -343,7 +254,47 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\inter.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\inter.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="common"
+			>
+			<File
+				RelativePath="..\src\common\core.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\ers.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\lock.c"
 				>
 			</File>
 			<File
@@ -351,7 +302,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\malloc.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\malloc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mapindex.c"
 				>
 			</File>
 			<File
@@ -363,6 +322,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\nullpo.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\nullpo.h"
 				>
 			</File>
@@ -371,7 +334,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\plugins.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\plugins.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c"
 				>
 			</File>
 			<File
@@ -379,7 +350,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\socket.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c"
 				>
 			</File>
 			<File
@@ -387,7 +366,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
 				>
 			</File>
 			<File
@@ -396,6 +383,46 @@
 			</File>
 			<File
 				RelativePath="..\src\common\version.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			>
+			<File
+				RelativePath="..\src\zlib\crypt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zconf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zlib.h"
 				>
 			</File>
 		</Filter>

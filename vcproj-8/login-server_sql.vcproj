@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug-sqllogin"
-			IntermediateDirectory="Debug-sqllogin"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -45,8 +45,10 @@
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -66,13 +68,13 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
-				OutputFile="..\login-server_sql.exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
-				IgnoreDefaultLibraryNames="LIBCMT"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -103,8 +105,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release-sqllogin"
-			IntermediateDirectory="Release-sqllogin"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -126,10 +128,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				RuntimeLibrary="0"
@@ -154,16 +159,17 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib"
-				OutputFile="..\login-server_sql.exe"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -196,16 +202,34 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="login_sql"
+			>
+			<File
+				RelativePath="..\src\login_sql\login.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\login_sql\login.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="common"
 			>
 			<File
 				RelativePath="..\src\common\core.c"
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\core.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\db.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.h"
 				>
 			</File>
 			<File
@@ -217,11 +241,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
+				RelativePath="..\src\common\grfio.h"
 				>
 			</File>
 			<File
@@ -229,7 +249,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\login_sql\login.c"
+				RelativePath="..\src\common\lock.h"
 				>
 			</File>
 			<File
@@ -237,67 +257,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\md5calc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\nullpo.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\showmsg.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\socket.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\strlib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\timer.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\utils.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			>
-			<File
-				RelativePath="..\src\common\core.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\db.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\lock.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\login_sql\login.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\common\malloc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.c"
 				>
 			</File>
 			<File
@@ -309,6 +273,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\nullpo.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\nullpo.h"
 				>
 			</File>
@@ -317,7 +285,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\plugins.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\plugins.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c"
 				>
 			</File>
 			<File
@@ -325,7 +301,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\socket.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c"
 				>
 			</File>
 			<File
@@ -333,7 +317,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
 				>
 			</File>
 			<File
@@ -342,6 +334,46 @@
 			</File>
 			<File
 				RelativePath="..\src\common\version.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			>
+			<File
+				RelativePath="..\src\zlib\crypt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zconf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zlib.h"
 				>
 			</File>
 		</Filter>

@@ -17,8 +17,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug-map"
-			IntermediateDirectory="Debug-map"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
@@ -49,7 +49,6 @@
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="true"
 				DefaultCharIsUnsigned="false"
-				ForceConformanceInForLoopScope="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
@@ -69,12 +68,12 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
-				OutputFile="..\map-server.exe"
+				OutputFile="$(OutDir)\map-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
@@ -105,8 +104,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release-map"
-			IntermediateDirectory="Release-map"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -134,6 +133,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="true"
@@ -158,15 +158,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib pcre.lib"
-				OutputFile="..\map-server.exe"
+				OutputFile="$(OutDir)\map-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)/$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\map-server.pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -199,12 +200,14 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="map_txt"
 			>
 			<File
 				RelativePath="..\src\map\atcommand.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\atcommand.h"
 				>
 			</File>
 			<File
@@ -212,7 +215,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\battle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\charcommand.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\charcommand.h"
 				>
 			</File>
 			<File
@@ -220,7 +231,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\charsave.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\chat.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\chat.h"
 				>
 			</File>
 			<File
@@ -228,11 +247,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\chrif.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\clif.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\core.c"
+				RelativePath="..\src\map\clif.h"
 				>
 			</File>
 			<File
@@ -240,15 +263,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\db.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\ers.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.c"
+				RelativePath="..\src\map\date.h"
 				>
 			</File>
 			<File
@@ -256,15 +271,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\guild.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\intif.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
+				RelativePath="..\src\map\intif.h"
 				>
 			</File>
 			<File
@@ -272,11 +287,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\irc.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\itemdb.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\lock.c"
+				RelativePath="..\src\map\itemdb.h"
 				>
 			</File>
 			<File
@@ -284,11 +303,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\log.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\mail.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\malloc.c"
+				RelativePath="..\src\map\mail.h"
 				>
 			</File>
 			<File
@@ -296,7 +319,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\mapindex.c"
+				RelativePath="..\src\map\map.h"
 				>
 			</File>
 			<File
@@ -304,7 +327,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\mercenary.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\mob.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\mob.h"
 				>
 			</File>
 			<File
@@ -312,15 +343,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\npc.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\npc_chat.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\nullpo.c"
+				RelativePath="..\src\map\party.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\party.c"
+				RelativePath="..\src\map\party.h"
 				>
 			</File>
 			<File
@@ -332,190 +367,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\pet.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\script.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\showmsg.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\skill.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\socket.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\status.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\storage.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\strlib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\timer.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\trade.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\unit.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\utils.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\vending.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			>
-			<File
-				RelativePath="..\src\map\atcommand.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\battle.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\cbasetypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\charcommand.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\charsave.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\chat.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\chrif.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\clif.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\core.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\date.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\db.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\ers.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\guild.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\intif.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\irc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\itemdb.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\limits.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\lock.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\log.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\mail.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\malloc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\map.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\mapindex.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\mercenary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\mmo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\mob.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\npc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\nullpo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\party.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\map\pc.h"
 				>
 			</File>
@@ -524,15 +375,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\pet.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\pet.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.h"
+				RelativePath="..\src\map\script.c"
 				>
 			</File>
 			<File
@@ -540,7 +391,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\showmsg.h"
+				RelativePath="..\src\map\skill.c"
 				>
 			</File>
 			<File
@@ -548,7 +399,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\socket.h"
+				RelativePath="..\src\map\status.c"
 				>
 			</File>
 			<File
@@ -556,15 +407,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\storage.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\storage.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\strlib.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\timer.h"
+				RelativePath="..\src\map\trade.c"
 				>
 			</File>
 			<File
@@ -572,15 +423,187 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\unit.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\unit.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\utils.h"
+				RelativePath="..\src\map\vending.c"
 				>
 			</File>
 			<File
 				RelativePath="..\src\map\vending.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			>
+			<File
+				RelativePath="..\src\zlib\crypt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\iowin32.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zconf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\zlib\zlib.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="common"
+			>
+			<File
+				RelativePath="..\src\common\cbasetypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\core.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\db.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\ers.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\ers.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\grfio.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\lock.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\lock.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mapindex.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mapindex.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mmo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\nullpo.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\nullpo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\plugin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\plugins.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\plugins.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\socket.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.h"
 				>
 			</File>
 			<File
