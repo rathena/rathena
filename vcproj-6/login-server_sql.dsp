@@ -39,8 +39,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /I "..\src\mysql" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/login_sql/login-server_sql.pch" /YX /Fo"tmp/login_sql/" /Fd"tmp/login_sql/" /FD /c
-# ADD BASE RSC /l 0x419 /d "NDEBUG"
-# ADD RSC /l 0x405
+# ADD BASE RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
