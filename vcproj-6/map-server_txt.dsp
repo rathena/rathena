@@ -1,23 +1,23 @@
-# Microsoft Developer Studio Project File - Name="map" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="map_txt" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=map - Win32 Release
+CFG=map_txt - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "map.mak".
+!MESSAGE NMAKE /f "map-server_txt.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "map.mak" CFG="map - Win32 Release"
+!MESSAGE NMAKE /f "map-server_txt.mak" CFG="map_txt - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "map - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "map_txt - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -38,152 +38,153 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "..\..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /YX /FD /c
+# ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/map_txt/map-server_txt.pch" /YX /Fo"tmp/map_txt/" /Fd"tmp/map_txt/" /FD /c
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
-# ADD RSC /l 0x419 /d "NDEBUG"
+# ADD RSC /l 0x405
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib WSOCK32.lib zdll.lib pcre.lib /nologo /subsystem:console /machine:I386 /out:"../../map-server.exe" /libpath:"../../lib"
+# ADD LINK32 WSOCK32.lib pcre.lib zdll.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/map_txt/map-server_txt.pdb" /machine:I386 /out:"../map-server_txt.exe" /libpath:"../lib"
+# SUBTRACT LINK32 /pdb:none
 # Begin Target
 
-# Name "map - Win32 Release"
+# Name "map_txt - Win32 Release"
 # Begin Group "common"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\common\cbasetypes.h
+SOURCE=..\src\common\cbasetypes.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\core.c
+SOURCE=..\src\common\core.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\core.h
+SOURCE=..\src\common\core.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\db.c
+SOURCE=..\src\common\db.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\db.h
+SOURCE=..\src\common\db.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\ers.c
+SOURCE=..\src\common\ers.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\ers.h
+SOURCE=..\src\common\ers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\grfio.c
+SOURCE=..\src\common\grfio.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\grfio.h
+SOURCE=..\src\common\grfio.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\lock.c
+SOURCE=..\src\common\lock.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\lock.h
+SOURCE=..\src\common\lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\malloc.c
+SOURCE=..\src\common\malloc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\malloc.h
+SOURCE=..\src\common\malloc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mapindex.c
+SOURCE=..\src\common\mapindex.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mapindex.h
+SOURCE=..\src\common\mapindex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mmo.h
+SOURCE=..\src\common\mmo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\nullpo.c
+SOURCE=..\src\common\nullpo.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\nullpo.h
+SOURCE=..\src\common\nullpo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugin.h
+SOURCE=..\src\common\plugin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugins.c
+SOURCE=..\src\common\plugins.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugins.h
+SOURCE=..\src\common\plugins.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\showmsg.c
+SOURCE=..\src\common\showmsg.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\showmsg.h
+SOURCE=..\src\common\showmsg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\socket.c
+SOURCE=..\src\common\socket.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\socket.h
+SOURCE=..\src\common\socket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\strlib.c
+SOURCE=..\src\common\strlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\strlib.h
+SOURCE=..\src\common\strlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\svnversion.h
+SOURCE=..\src\common\svnversion.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\timer.c
+SOURCE=..\src\common\timer.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\timer.h
+SOURCE=..\src\common\timer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\utils.c
+SOURCE=..\src\common\utils.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\utils.h
+SOURCE=..\src\common\utils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\version.h
+SOURCE=..\src\common\version.h
 # End Source File
 # End Group
 # Begin Group "map"
@@ -194,123 +195,123 @@ SOURCE=..\..\src\common\version.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\map\atcommand.c
+SOURCE=..\src\map\atcommand.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\battle.c
+SOURCE=..\src\map\battle.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\charcommand.c
+SOURCE=..\src\map\charcommand.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\charsave.c
+SOURCE=..\src\map\charsave.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\chat.c
+SOURCE=..\src\map\chat.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\chrif.c
+SOURCE=..\src\map\chrif.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\clif.c
+SOURCE=..\src\map\clif.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\date.c
+SOURCE=..\src\map\date.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\guild.c
+SOURCE=..\src\map\guild.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\intif.c
+SOURCE=..\src\map\intif.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\irc.c
+SOURCE=..\src\map\irc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\itemdb.c
+SOURCE=..\src\map\itemdb.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\log.c
+SOURCE=..\src\map\log.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mail.c
+SOURCE=..\src\map\mail.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\map.c
+SOURCE=..\src\map\map.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mercenary.c
+SOURCE=..\src\map\mercenary.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mob.c
+SOURCE=..\src\map\mob.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\npc.c
+SOURCE=..\src\map\npc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\npc_chat.c
+SOURCE=..\src\map\npc_chat.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\party.c
+SOURCE=..\src\map\party.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\path.c
+SOURCE=..\src\map\path.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\pc.c
+SOURCE=..\src\map\pc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\pet.c
+SOURCE=..\src\map\pet.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\script.c
+SOURCE=..\src\map\script.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\skill.c
+SOURCE=..\src\map\skill.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\status.c
+SOURCE=..\src\map\status.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\storage.c
+SOURCE=..\src\map\storage.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\trade.c
+SOURCE=..\src\map\trade.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\unit.c
+SOURCE=..\src\map\unit.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\vending.c
+SOURCE=..\src\map\vending.c
 # End Source File
 # End Group
 # Begin Group "h"
@@ -318,119 +319,119 @@ SOURCE=..\..\src\map\vending.c
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\map\atcommand.h
+SOURCE=..\src\map\atcommand.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\battle.h
+SOURCE=..\src\map\battle.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\charcommand.h
+SOURCE=..\src\map\charcommand.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\charsave.h
+SOURCE=..\src\map\charsave.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\chat.h
+SOURCE=..\src\map\chat.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\chrif.h
+SOURCE=..\src\map\chrif.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\clif.h
+SOURCE=..\src\map\clif.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\date.h
+SOURCE=..\src\map\date.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\guild.h
+SOURCE=..\src\map\guild.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\intif.h
+SOURCE=..\src\map\intif.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\irc.h
+SOURCE=..\src\map\irc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\itemdb.h
+SOURCE=..\src\map\itemdb.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\log.h
+SOURCE=..\src\map\log.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mail.h
+SOURCE=..\src\map\mail.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\map.h
+SOURCE=..\src\map\map.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mercenary.h
+SOURCE=..\src\map\mercenary.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\mob.h
+SOURCE=..\src\map\mob.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\npc.h
+SOURCE=..\src\map\npc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\party.h
+SOURCE=..\src\map\party.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\pc.h
+SOURCE=..\src\map\pc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\pcre.h
+SOURCE=..\src\map\pcre.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\pet.h
+SOURCE=..\src\map\pet.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\script.h
+SOURCE=..\src\map\script.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\skill.h
+SOURCE=..\src\map\skill.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\status.h
+SOURCE=..\src\map\status.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\storage.h
+SOURCE=..\src\map\storage.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\trade.h
+SOURCE=..\src\map\trade.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\unit.h
+SOURCE=..\src\map\unit.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\map\vending.h
+SOURCE=..\src\map\vending.h
 # End Source File
 # End Group
 # End Group
@@ -439,39 +440,39 @@ SOURCE=..\..\src\map\vending.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\zlib\crypt.h
+SOURCE=..\src\zlib\crypt.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\ioapi.c
+SOURCE=..\src\zlib\ioapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\ioapi.h
+SOURCE=..\src\zlib\ioapi.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\iowin32.c
+SOURCE=..\src\zlib\iowin32.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\iowin32.h
+SOURCE=..\src\zlib\iowin32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\unzip.c
+SOURCE=..\src\zlib\unzip.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\unzip.h
+SOURCE=..\src\zlib\unzip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\zconf.h
+SOURCE=..\src\zlib\zconf.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\zlib.h
+SOURCE=..\src\zlib\zlib.h
 # End Source File
 # End Group
 # End Target

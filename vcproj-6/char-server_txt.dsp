@@ -1,23 +1,23 @@
-# Microsoft Developer Studio Project File - Name="char" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="char_txt" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=char - Win32 Release
+CFG=char_txt - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "char.mak".
+!MESSAGE NMAKE /f "char-server_txt.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "char.mak" CFG="char - Win32 Release"
+!MESSAGE NMAKE /f "char-server_txt.mak" CFG="char_txt - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "char - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "char_txt - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -38,148 +38,149 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "..\..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D PACKETVER=6 /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /YX /FD /c
+# ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/char_txt/char-server_txt.pch" /YX /Fo"tmp/char_txt/" /Fd"tmp/char_txt/" /FD /c
 # ADD BASE RSC /l 0x419 /d "NDEBUG"
-# ADD RSC /l 0x419 /d "NDEBUG"
+# ADD RSC /l 0x405
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib zdll.lib /nologo /subsystem:console /machine:I386 /out:"../../char.exe" /libpath:"../../lib"
+# ADD LINK32 wsock32.lib zdll.lib ws2_32.lib /nologo /subsystem:console /pdb:"tmp/char-txt/char-server_txt.pdb" /machine:I386 /out:"../char-server_txt.exe" /libpath:"../lib"
+# SUBTRACT LINK32 /pdb:none
 # Begin Target
 
-# Name "char - Win32 Release"
+# Name "char_txt - Win32 Release"
 # Begin Group "common"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\common\cbasetypes.h
+SOURCE=..\src\common\cbasetypes.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\core.c
+SOURCE=..\src\common\core.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\core.h
+SOURCE=..\src\common\core.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\db.c
+SOURCE=..\src\common\db.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\db.h
+SOURCE=..\src\common\db.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\ers.c
+SOURCE=..\src\common\ers.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\ers.h
+SOURCE=..\src\common\ers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\grfio.c
+SOURCE=..\src\common\grfio.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\grfio.h
+SOURCE=..\src\common\grfio.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\lock.c
+SOURCE=..\src\common\lock.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\lock.h
+SOURCE=..\src\common\lock.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\malloc.c
+SOURCE=..\src\common\malloc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\malloc.h
+SOURCE=..\src\common\malloc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mapindex.c
+SOURCE=..\src\common\mapindex.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mapindex.h
+SOURCE=..\src\common\mapindex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\mmo.h
+SOURCE=..\src\common\mmo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\nullpo.c
+SOURCE=..\src\common\nullpo.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\nullpo.h
+SOURCE=..\src\common\nullpo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugin.h
+SOURCE=..\src\common\plugin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugins.c
+SOURCE=..\src\common\plugins.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\plugins.h
+SOURCE=..\src\common\plugins.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\showmsg.c
+SOURCE=..\src\common\showmsg.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\showmsg.h
+SOURCE=..\src\common\showmsg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\socket.c
+SOURCE=..\src\common\socket.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\socket.h
+SOURCE=..\src\common\socket.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\strlib.c
+SOURCE=..\src\common\strlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\strlib.h
+SOURCE=..\src\common\strlib.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\timer.c
+SOURCE=..\src\common\timer.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\timer.h
+SOURCE=..\src\common\timer.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\utils.c
+SOURCE=..\src\common\utils.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\utils.h
+SOURCE=..\src\common\utils.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\common\version.h
+SOURCE=..\src\common\version.h
 # End Source File
 # End Group
 # Begin Group "char"
@@ -187,59 +188,67 @@ SOURCE=..\..\src\common\version.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\char\char.c
+SOURCE=..\src\char\char.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\char.h
+SOURCE=..\src\char\char.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_guild.c
+SOURCE=..\src\char\int_guild.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_guild.h
+SOURCE=..\src\char\int_guild.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_party.c
+SOURCE=..\src\char\int_homun.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_party.h
+SOURCE=..\src\char\int_homun.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_pet.c
+SOURCE=..\src\char\int_party.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_pet.h
+SOURCE=..\src\char\int_party.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_status.c
+SOURCE=..\src\char\int_pet.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_status.h
+SOURCE=..\src\char\int_pet.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_storage.c
+SOURCE=..\src\char\int_status.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\int_storage.h
+SOURCE=..\src\char\int_status.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\inter.c
+SOURCE=..\src\char\int_storage.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\char\inter.h
+SOURCE=..\src\char\int_storage.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\char\inter.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\char\inter.h
 # End Source File
 # End Group
 # Begin Group "zlib"
@@ -247,39 +256,39 @@ SOURCE=..\..\src\char\inter.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=..\..\src\zlib\crypt.h
+SOURCE=..\src\zlib\crypt.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\ioapi.c
+SOURCE=..\src\zlib\ioapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\ioapi.h
+SOURCE=..\src\zlib\ioapi.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\iowin32.c
+SOURCE=..\src\zlib\iowin32.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\iowin32.h
+SOURCE=..\src\zlib\iowin32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\unzip.c
+SOURCE=..\src\zlib\unzip.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\unzip.h
+SOURCE=..\src\zlib\unzip.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\zconf.h
+SOURCE=..\src\zlib\zconf.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\zlib\zlib.h
+SOURCE=..\src\zlib\zlib.h
 # End Source File
 # End Group
 # End Target
