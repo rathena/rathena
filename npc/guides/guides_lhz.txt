@@ -192,7 +192,7 @@ s_Guide:
 s_Yes:
 	set @tempguide,1;
 s_Cont:
-	menu "^FF0000Rekenber Corporation",s_Rekenber,"^000000Train Station",s_Train,"Police Station",s_Police,"Bank",s_Bank,"Hotel",s_Hotel,"Airport",s_Airport,"Merchant Guild",s_Merchant,"Jewel Shop",s_Jewel,"Weapon Shop",s_Weap,"Department Store",s_Store,"Cancel",-;
+	menu "^FF0000Rekenber Corporation^000000",s_Rekenber,"Train Station",s_Train,"Police Station",s_Police,"Bank",s_Bank,"Hotel",s_Hotel,"Airport",s_Airport,"Merchant Guild",s_Merchant,"Jewel Shop",s_Jewel,"Weapon Shop",s_Weap,"Department Store",s_Store,"Cancel",-;
 
 	mes "[Lighthalzen Guide]";
 	mes "Please ask me to \"Remove";

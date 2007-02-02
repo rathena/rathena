@@ -3182,7 +3182,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	itemid=va_arg(ap,int);
 
 	if((item=itemdb_exists(itemid))==NULL)
-		sprintf(output,"%s stole an Unknown Item.",sd->status.name);
+		sprintf(output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
 	else
 		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);

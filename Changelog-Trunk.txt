@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/01
+	* Minor details (pdb file location, improved debug, npc typo)
 	* Cleaned up the npcshop(add/del)item script commands, fixed a possible
 	  dangling pointer crash caused by their improper use of realloc. They no
 	  longer automatically attach the script to the shop, and they will return

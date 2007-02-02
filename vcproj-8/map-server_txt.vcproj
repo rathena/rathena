@@ -73,7 +73,7 @@
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)\map-server.pdb"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
