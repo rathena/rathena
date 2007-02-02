@@ -42,7 +42,7 @@ int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, 
 	titlelen = cap_value(titlelen, 0, sizeof(cd->title)-1); // empty string achievable by using custom client
 	// the following two input strings aren't zero terminated, have to handle it manually
 	memcpy(cd->pass, pass, 8); cd->pass[8]= '\0';
-	memcpy(cd->title, title, titlelen);	cd->title[titlelen] = '\0';
+	memcpy(cd->title, title, titlelen); cd->title[titlelen] = '\0';
 
 	cd->owner = (struct block_list **)(&cd->usersd[0]);
 	cd->usersd[0] = sd;
