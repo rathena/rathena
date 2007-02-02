@@ -6757,8 +6757,10 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 			ShowFatalError("skill_castend_map: out of memory !\n");
 			exit(1);
 		}
-		memcpy(group->valstr,talkie_mes,MESSAGE_SIZE-1);
-		group->valstr[MESSAGE_SIZE-1] = '\0';
+		if (sd)
+			memcpy(group->valstr,sd->message,MESSAGE_SIZE);
+		else //Eh... we have to write something here... even though mobs shouldn't use this. [Skotlex]
+			strcpy(group->valstr, "Boo!");
 	}
 
 	//Why redefine local variables when the ones of the function can be reused? [Skotlex]

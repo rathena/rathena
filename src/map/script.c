@@ -1045,7 +1045,6 @@ const char* parse_syntax(const char* p) {
 				if(p == p2) {
 					disp_error_message("parse_syntax: expect space ' '",p);
 				}
-				//TODO: This is incomplete as it doesn't takes into account const.txt entries!
 				// check whether case label is integer or not
 				v = strtol(p,&np,0);
 				if(np == p) { //Check for constants

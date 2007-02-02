@@ -159,7 +159,10 @@ enum {
 	MAPID_BABY_SOUL_LINKER,
 };
 
-//Don't change this, as the client seems to always send/receive 80 characters as it currently is. [Skotlex]
+//Talk max size: <name> : <message of 70> [Skotlex]
+#define CHAT_SIZE	(NAME_LENGTH + 3 + 70)
+//Max size when inputting a string with those 'npc input boxes'
+//(also used for Graffiti, Talkie Box, Vending, and Chatrooms)
 #define MESSAGE_SIZE 80
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
@@ -1310,8 +1313,6 @@ extern char motd_txt[];
 extern char help_txt[];
 extern char help2_txt[];
 extern char charhelp_txt[];
-
-extern char talkie_mes[];
 
 extern char wisp_server_name[];
 

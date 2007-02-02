@@ -12,6 +12,7 @@
 #include "itemdb.h"
 #include "map.h"
 #include "log.h"
+#include "battle.h"
 
 #ifndef SQL_DEBUG
 	#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y)) //supports ' in names and runs faster [Kevin]
@@ -273,7 +274,7 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 	FILE *logfp;
 #ifndef TXT_ONLY
 	char t_name[NAME_LENGTH*2];
-	char t_msg[MESSAGE_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
+	char t_msg[CHAT_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
 #endif
 
 	if(!log_config.enable_logs)
@@ -282,6 +283,12 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
+		if (strlen(message) > CHAT_SIZE) {
+			if (battle_config.error_log)
+				ShowError("log atcommand: Received message too long from player %s (%d:%d)!\n",
+					sd->status.name, sd->status.account_id, sd->status.char_id);
+			return 0;
+		}
 		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES(NOW(), '%d', '%d', '%s', '%s', '%s') ",
 			log_config.log_gm_db, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), mapindex_id2name(sd->mapindex), jstrescapecpy(t_msg, (char *)message));
 		if(mysql_query(&logmysql_handle, tmp_sql))
@@ -358,7 +365,7 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 	FILE *logfp;
 #ifndef TXT_ONLY
 	char t_charname[NAME_LENGTH*2];
-	char t_msg[MESSAGE_SIZE*2+1]; //Chat line fully escaped, with an extra space just in case.
+	char t_msg[CHAT_SIZE*2+1]; //Chat line fully escaped, with an extra space just in case.
 #endif
 	
 	//Check ON/OFF
@@ -367,6 +374,12 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0){
+		if (strlen(message) > CHAT_SIZE) {
+			if (battle_config.error_log)
+				ShowError("log chat: Received message too long from type %d (%d:%d)!\n",
+					type_id, src_accid, src_charid);
+			return 0;
+		}
 		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s')", 
 		 	log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y, jstrescapecpy(t_charname, dst_charname), jstrescapecpy(t_msg, message));
 	

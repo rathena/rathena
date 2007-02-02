@@ -4889,7 +4889,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	//Reset ticks.
 	sd->hp_loss_tick = sd->sp_loss_tick = 0;
 
-
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
 
 	if (sd->state.event_death){
