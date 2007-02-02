@@ -1273,8 +1273,8 @@ enum {
 struct chat_data {
 	struct block_list bl;
 
-	unsigned char pass[8];   /* password */
-	unsigned char title[61]; /* room title MAX 60 */
+	unsigned char pass[8+1];   /* password */
+	unsigned char title[60+1]; /* room title */
 	unsigned char limit;     /* join limit */
 	unsigned char trigger;
 	unsigned char users;     /* current users */

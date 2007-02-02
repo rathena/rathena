@@ -17,10 +17,10 @@
 int chat_triggerevent(struct chat_data *cd);
 
 /*==========================================
- * チャットルーム作成
+ * chatroom creation
  *------------------------------------------
  */
-int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,char* title,int titlelen)
+int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, char* title, int titlelen)
 {
 	struct chat_data *cd;
 
@@ -39,11 +39,10 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
 	cd->limit = limit;
 	cd->pub = pub;
 	cd->users = 1;
-	memcpy(cd->pass,pass,8);
-	cd->pass[7]= '\0'; //Overflow check... [Skotlex]
-	if(titlelen>=sizeof(cd->title)-1) titlelen=sizeof(cd->title)-1;
-	memcpy(cd->title,title,titlelen);
-	cd->title[titlelen]=0;
+	titlelen = cap_value(titlelen, 0, sizeof(cd->title)-1); // empty string achievable by using custom client
+	// the following two input strings aren't zero terminated, have to handle it manually
+	memcpy(cd->pass, pass, 8); cd->pass[8]= '\0';
+	memcpy(cd->title, title, titlelen);	cd->title[titlelen] = '\0';
 
 	cd->owner = (struct block_list **)(&cd->usersd[0]);
 	cd->usersd[0] = sd;
@@ -70,7 +69,7 @@ int chat_createchat(struct map_session_data *sd,int limit,int pub,char* pass,cha
  * 既存チャットルームに参加
  *------------------------------------------
  */
-int chat_joinchat (struct map_session_data *sd, int chatid, char* pass)
+int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
 {
 	struct chat_data *cd;
 
