@@ -4,9 +4,27 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/02
+	* Fine-tuned the global message processing function [ultramage]
+	- now detects access-out-of-rfifo attempts (idea from eA++)
+	- uses the new CHAT_SIZE define to restrict message lengths
+	- detects Frost Joke/Dazzler and gives them more freedom (from Freya)
+	- more strict non-conformant message detection 
+	- logging every problem to the mapserver console
 	* Resetting skills will now automatically remove peco, falcon, cart and
 	  homunculus (vaporize).
-	* Fixed random mob picking choosing clones. [Skotlex]
+	* Fixed random mob picking choosing clones.
+	* Fixed critical spots that could be exploited [Skotlex]
+	- The define MESSAGE_SIZE was wrong! It is only used for input boxes.
+	  Therefore now it is only used for Vending, Talkie box and Graffiti
+	- Added new define CHAT_SIZE which holds the max length that a client
+	  can send from the chat buffer
+	- Added define msg_len_check which crops incoming client text if it's
+	  longer than CHAT_SIZE. Added cropping to all incoming messages except
+	  normal chatting which is already accounted for.
+	- Removed variable talkie_mes, this is now handled by sd->message
+	- Cleaned up parser functions for /b /lb, gm kick, /shift, /recall
+	- Added crash protection to the logging functions when they receive
+	  a too long string.
 2007/02/01
 	* Restricted global messages to 255 characters (client shows only ~80 anyway,
 	  wanted to use 127 but frost joke's lines are longer than that ...)

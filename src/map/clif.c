@@ -8550,38 +8550,55 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 }
 
 /*==========================================
- *
+ * Validates and processes global messages
  *------------------------------------------
  */
 void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f3 <packet len>.w <strz>.?B
 {
 	char* message;
-	unsigned int messagelen, packetlen, stringlen;
+	unsigned int packetlen, messagelen, namelen;
 
 	RFIFOHEAD(fd);
 
 	packetlen = RFIFOW(fd,2);
-	if (packetlen < 4 + 1) { // at least an empty string is expected
-		ShowWarning("clif_parse_globalmessage: Received malformed packet!");
+	if (packetlen > RFIFOREST(fd)) { // there has to be enough data to read
+		ShowWarning("clif_parse_GlobalMessage: Received malformed packet from player '%s' (length is incorrect)!", sd->status.name);
+		return;
+	}
+	if (packetlen < 4 + 1) { // 4-byte header and at least an empty string is expected
+		ShowWarning("clif_parse_GlobalMessage: Received malformed packet from player '%s' (no message data)!", sd->status.name);
 		return;
 	}
 
 	message = (char*)RFIFOP(fd,4);
-	messagelen = strnlen(message, 255) + 1;
-	if (messagelen == 256) { // message rejected for being too long
-		message[256] = '\0';
-		ShowWarning("clif_parse_globalmessage: Player '%s' sent a message too long ('%s')!", sd->status.name, message);
-		return;
+	messagelen = packetlen - 4; // let's trust the client here, nothing can go wrong and it saves us one strlen()
+	if (messagelen > CHAT_SIZE) { // messages mustn't be too long
+		int i;
+		// special case here - allow some more freedom for frost joke & dazzler 
+		for(i = 0; i < MAX_SKILLTIMERSKILL; i++) // the only way to check ~.~
+			if (sd->ud.skilltimerskill[i]->timer != -1 && (sd->ud.skilltimerskill[i]->skill_id == BA_FROSTJOKE || sd->ud.skilltimerskill[i]->skill_id == DC_SCREAM))
+				break;
+		if (i == MAX_SKILLTIMERSKILL) { // normal message, too long
+			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, CHAT_SIZE, message);
+			return;
+		}
+		if (messagelen > 255) { // frost joke/dazzler, but still too long
+			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, 255, message);
+			return;
+		}
 	}
-	
-	stringlen = packetlen - 4;
-	if (messagelen != stringlen || //If the client is lying about the length...
-		messagelen < strlen(sd->status.name) + 1 || //Or the incoming string is too short...
-		strncmp(message, sd->status.name, strnlen(sd->status.name, NAME_LENGTH)) != 0) //Or the name does not match...
+	if (message[messagelen-1] != '\0') { // message must be zero-terminated
+		ShowWarning("clif_parse_GlobalMessage: Player '%s' sent an unterminated string!", sd->status.name);
+		return;		
+	}
+
+	namelen = strnlen(sd->status.name, NAME_LENGTH - 1);
+	if (strncmp(message, sd->status.name, namelen) || // the name has to match the speaker's name
+		message[namelen] != ' ' || message[namelen+1] != ':' || message[namelen+2] != ' ') // completely, not just the prefix
 	{
-		//Hacked message, or infamous "client desynch" issue where they pick
-		//one char while loading another. Just kick them out to correct it.
-		clif_setwaitclose(fd);
+		//Hacked message, or infamous "client desynch" issue where they pick one char while loading another.
+		clif_setwaitclose(fd); // Just kick them out to correct it.
+		ShowWarning("clif_parse_GlobalMessage: Player '%.*s' sent a messsage using an incorrect name ('%s')! Forcing a relog...", namelen, sd->status.name, message);
 		return;
 	}
 	
