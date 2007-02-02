@@ -8551,14 +8551,31 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
  *
  *------------------------------------------
  */
-void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <len>.w <str>.?B
-	char *message, *buf, buf2[128];
-	RFIFOHEAD(fd);
-	WFIFOHEAD(fd, RFIFOW(fd,2) + 4);
+void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f3 <packet len>.w <strz>.?B
+{
+	char* message;
+	unsigned int messagelen, packetlen, stringlen;
 
-	message = (unsigned char*)RFIFOP(fd,4);
-	if (strlen(message) < strlen(sd->status.name) || //If the incoming string is too short...
-		strncmp(message, sd->status.name, strlen(sd->status.name)) != 0) //Or the name does not match...
+	RFIFOHEAD(fd);
+
+	packetlen = RFIFOW(fd,2);
+	if (packetlen < 4 + 1) { // at least an empty string is expected
+		ShowWarning("clif_parse_globalmessage: Received malformed packet!");
+		return;
+	}
+
+	message = (char*)RFIFOP(fd,4);
+	messagelen = strnlen(message, 255) + 1;
+	if (messagelen == 256) { // message rejected for being too long
+		message[256] = '\0';
+		ShowWarning("clif_parse_globalmessage: Player '%s' sent a message too long ('%s')!", sd->status.name, message);
+		return;
+	}
+	
+	stringlen = packetlen - 4;
+	if (messagelen != stringlen || //If the client is lying about the length...
+		messagelen < strlen(sd->status.name) + 1 || //Or the incoming string is too short...
+		strncmp(message, sd->status.name, strnlen(sd->status.name, NAME_LENGTH)) != 0) //Or the name does not match...
 	{
 		//Hacked message, or infamous "client desynch" issue where they pick
 		//one char while loading another. Just kick them out to correct it.
@@ -8566,8 +8583,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		return;
 	}
 	
-	if ((is_atcommand(fd, sd, message) != AtCommand_None) ||
-		(is_charcommand(fd, sd, message) != CharCommand_None))
+	if (is_atcommand(fd, sd, message) != AtCommand_None ||
+		is_charcommand(fd, sd, message) != CharCommand_None)
 		return;
 
 	if (sd->sc.count &&
@@ -8582,22 +8599,16 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	if (RFIFOW(fd,2)+4 < 128)
-		buf = buf2; //Use a static buffer.
-	else
-		buf = (unsigned char*)aMallocA((RFIFOW(fd,2) + 4)*sizeof(char));
-
 	// send message to others
-	WBUFW(buf,0) = 0x8d;
-	WBUFW(buf,2) = RFIFOW(fd,2) + 4; // len of message - 4 + 8
-	WBUFL(buf,4) = sd->bl.id;
-	memcpy(WBUFP(buf,8), message, RFIFOW(fd,2) - 4);
-	clif_send(buf, WBUFW(buf,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
-
-	if(buf != buf2) aFree(buf);
+	WFIFOHEAD(fd, messagelen + 8);
+	WFIFOW(fd,0) = 0x8d;
+	WFIFOW(fd,2) = messagelen + 8;
+	WFIFOL(fd,4) = sd->bl.id;
+	memcpy(WFIFOP(fd,8), message, messagelen);
+	clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	// send back message to the speaker
-	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
+	memcpy(WFIFOP(fd,0), RFIFOP(fd,0), packetlen);
 	WFIFOW(fd,0) = 0x8e;
 	WFIFOSET(fd, WFIFOW(fd,2));
 
@@ -8608,6 +8619,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 
 	// Celest
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) { //Super Novice.
+		char buf[256];
 		int next = pc_nextbaseexp(sd);
 		if (next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0) {
 			switch (sd->state.snovice_flag) {
@@ -8616,8 +8628,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) { // S 008c <
 					sd->state.snovice_flag++;
 				break;
 			case 1:
-				sprintf(buf2, msg_txt(505), sd->status.name);
-				if (strstr(message, buf2))
+				sprintf(buf, msg_txt(505), sd->status.name);
+				if (strstr(message, buf))
 					sd->state.snovice_flag++;
 				break;
 			case 2:
