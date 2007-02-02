@@ -4720,8 +4720,24 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 	int i, lv, inf2, skill_point=0;
 	nullpo_retr(0, sd);
 
-	if (pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd))
-		clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
+	if(!(flag&2))
+	{	//Remove stuff lost when resetting skills.
+		if (pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd))
+			clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
+		i = sd->sc.option;
+		if (i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING))
+		i&=~OPTION_RIDING;
+		if(i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART))
+			i&=~OPTION_CART;
+		if(i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON))
+			i&=~OPTION_FALCON;
+
+		if(i != sd->sc.option)
+			pc_setoption(sd, i);
+
+		if(merc_is_hom_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN))
+			merc_hom_vaporize(sd, 0);
+	}
 	
 	for (i = 1; i < MAX_SKILL; i++) {
 		lv= sd->status.skill[i].lv;

@@ -257,6 +257,7 @@ int mob_get_random_id(int type, int flag, int lv) {
 		class_ = rand() % MAX_MOB_DB;
 		mob = mob_db(class_);
 	} while ((mob == mob_dummy ||
+		mob_is_clone(class_) ||
 		(flag&1 && mob->summonper[type] <= rand() % 1000000) ||
 		(flag&2 && lv < mob->lv) ||
 		(flag&4 && mob->status.mode&MD_BOSS) ||
