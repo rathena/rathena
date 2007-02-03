@@ -4328,6 +4328,7 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	}
 	
 	fd=sd->fd;
+	if (!fd) return 0;
 
 	if(battle_config.display_skill_fail&1)
 		return 0; //Disable all skill failed messages
@@ -8336,24 +8337,6 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd) {
 	return;
 }
 
-static int clif_walktoxy_timer(int tid, unsigned int tick, int id, int data)
-{
-	struct map_session_data *sd;
-	short x,y;
-
-	if (!session[id] || (sd = session[id]->session_data) == NULL)
-		return 0;
-	
-	if (!unit_can_move(&sd->bl))
-		return 0;
-
-	x = data>>16;
-	y = data&0xffff;
-
-	unit_walktoxy(&sd->bl, x, y, 0);
-	return 1;
-}
-
 /*==========================================
  *
  *------------------------------------------
@@ -8361,7 +8344,6 @@ static int clif_walktoxy_timer(int tid, unsigned int tick, int id, int data)
 void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	int x, y;
 	int cmd;
-	unsigned int tick;
 	RFIFOHEAD(fd);
 
 	if (pc_isdead(sd)) {
@@ -8388,16 +8370,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	//Set last idle time... [Skotlex]
 	sd->idletime = last_tick;
 	
-	tick = gettick();
-	if (DIFF_TICK(sd->ud.canmove_tick, tick) > 0 &&
-		DIFF_TICK(sd->ud.canmove_tick, tick) < 2000)
-  	{	// Delay walking command. [Skotlex]
-		add_timer(sd->ud.canmove_tick+1, clif_walktoxy_timer, fd, (x<<16)|y);
-		return;
-	}
-	if (!unit_can_move(&sd->bl))
-		return;
-	unit_walktoxy(&sd->bl, x, y, 0);
+	unit_walktoxy(&sd->bl, x, y, 4);
 }
 
 /*==========================================
@@ -11712,9 +11685,7 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd) {	//[orn]
 	if(!merc_is_hom_active(sd->hd))
 		return;
 
-	if (!unit_can_move(&sd->hd->bl))
-		return;
-	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 0);
+	unit_walktoxy(&sd->hd->bl, sd->bl.x,sd->bl.y-1, 4);
 }
 
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
@@ -11731,10 +11702,7 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
 		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
 
-	if (!unit_can_move(&sd->hd->bl))
-		return;
-
-	unit_walktoxy(&(sd->hd->bl),x,y,0);
+	unit_walktoxy(&(sd->hd->bl),x,y,4);
 }
 
 void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
@@ -12391,7 +12359,6 @@ int do_init_clif(void) {
 	add_timer_func_list(clif_waitclose, "clif_waitclose");
 	add_timer_func_list(clif_clearchar_delay_sub, "clif_clearchar_delay_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
-	add_timer_func_list(clif_walktoxy_timer, "clif_walktoxy_timer");
 	return 0;
 }
 

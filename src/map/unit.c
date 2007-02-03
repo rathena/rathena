@@ -261,8 +261,21 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-//Easy parameter: &1 -> 1/0 = easy/hard, &2 -> force walking.
-int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
+static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, int data)
+{
+	struct block_list *bl = map_id2bl(id);
+
+	if (!bl || bl->prev == NULL)
+		return 0;
+	unit_walktoxy(bl, data>>16, data&0xffff, 0);
+	return 1;
+}
+
+//flag parameter:
+//&1 -> 1/0 = easy/hard
+//&2 -> force walking
+//&4 -> Delay walking if the reason you can't walk is the canwalk delay
+int unit_walktoxy( struct block_list *bl, int x, int y, int flag) {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;
 
@@ -272,10 +285,17 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int easy) {
 	
 	if( ud == NULL) return 0;
 
-	if(!(easy&2) && (!status_get_mode(bl)&MD_CANMOVE || !unit_can_move(bl)))
+	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
+		DIFF_TICK(ud->canmove_tick, gettick()) < 2000)
+  	{	// Delay walking command. [Skotlex]
+		add_timer(ud->canmove_tick+1, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF));
+		return 1;
+	}
+
+	if(!(flag&2) && (!status_get_mode(bl)&MD_CANMOVE || !unit_can_move(bl)))
 		return 0;
 	
-	ud->state.walk_easy = easy&1;
+	ud->state.walk_easy = flag&1;
 	ud->target = 0;
 	ud->to_x = x;
 	ud->to_y = y;
@@ -1905,7 +1925,7 @@ int do_init_unit(void) {
 	add_timer_func_list(unit_attack_timer,  "unit_attack_timer");
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
 	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
-
+	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
 	return 0;
 }
 
