@@ -5031,11 +5031,10 @@ specifically, apparently, named items may not have cards in them, slots or no -
 these data slots are taken by the character ID who's name is inscribed. Only one 
 remains free and it's not quite clear if a card may be there.
 
-Items that may not be equipped may NOT be inscribed with a name with this 
-function. Which is why this is a function which will return a value - 1 if an 
-item was successfully created and 0 if it wasn't for whatever reason. Like 
-'getitem' this function will also take an 'english name' from the itemdb 
-database as an item name and will return 0 if nothing is found.
+This function will return 1 if an item was successfully created and 0 if it
+wasn't for whatever reason. Like 'getitem', this function will also accept an
+'english name' from the item database as an item name and will return 0 if no
+such item exists.
 
 ---------------------------------------
 
