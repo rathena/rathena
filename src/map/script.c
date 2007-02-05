@@ -1872,18 +1872,14 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 //
 enum {RUN = 0,STOP,END,RERUNLINE,GOTO,RETFUNC};
 
-/*==========================================
- * rid‚©‚çsd‚Ö‚Ì‰ðŒˆ
- *------------------------------------------
- */
+/// Returns the player attached to this script, identified by the rid.
+/// If there is no player attached, the script is terminated.
 struct map_session_data *script_rid2sd(struct script_state *st)
 {
 	struct map_session_data *sd=map_id2sd(st->rid);
 	if(!sd){
 		ShowError("script_rid2sd: fatal error ! player not attached!\n");
-		report_src(st);
-		//## I would also terminate script execution. [FlavioJS]
-		//st->state = END;
+		st->state = END;
 	}
 	return sd;
 }
@@ -3869,7 +3865,7 @@ struct script_function buildin_func[] = {
 	{buildin_heal,"heal","ii"},
 	{buildin_itemheal,"itemheal","ii"},
 	{buildin_percentheal,"percentheal","ii"},
-	{buildin_rand,"rand","i*"},
+	{buildin_rand,"rand","i?"},
 	{buildin_countitem,"countitem","i"},
 	{buildin_countitem2,"countitem2","iiiiiiii"},
 	{buildin_checkweight,"checkweight","ii"},
@@ -4435,34 +4431,35 @@ int buildin_menu(struct script_state *st)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int buildin_rand(struct script_state *st)
+/// Returns a random number from 0 to <range>-1.
+/// Or returns a random number from <min> to <max>.
+/// If <min> is greater than <max>, their numbers are switched.
+/// rand(<range>) -> <int>
+/// rand(<min>,<max>) -> <int>
+int buildin_rand(struct script_state* st)
 {
-	int range,min,max;
+	int range;
+	int min;
+	int max;
 
-	if (st->end > st->start+3){
-		min = conv_num(st,& (st->stack->stack_data[st->start+2]));
-		max = conv_num(st,& (st->stack->stack_data[st->start+3]));
-		if (max == min){ //Why would someone do this?
-			push_val(st->stack,C_INT,min);
-			return 0;
-		}
-		if(max<min){
-			int tmp = min;
-			min = max;
-			max = tmp;
-		}
+	if( script_hasdata(st,3) )
+	{// min,max
+		min = conv_num(st, script_getdata(st,2));
+		max = conv_num(st, script_getdata(st,3));
+		if( max < min )
+			swap(min, max);
 		range = max - min + 1;
-		if (range == 0) range = 1;
-		push_val(st->stack,C_INT,rand()%range+min);
-	} else {
-		range = conv_num(st,& (st->stack->stack_data[st->start+2]));
-		if (range == 0) range = 1;
-		push_val(st->stack,C_INT,rand()%range);
 	}
+	else
+	{// range
+		min = 0;
+		range = conv_num(st, script_getdata(st,2));
+	}
+	if( range <= 1 )
+		script_pushint(st, min);
+	else
+		script_pushint(st, rand()%range + min);
+
 	return 0;
 }
 
@@ -6516,7 +6513,7 @@ int buildin_bonus(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0; // no player attached
+		return 1; // no player attached
 
 	type = conv_num(st, script_getdata(st,2));
 	switch( script_lastdata(st) ){
@@ -6561,7 +6558,7 @@ int buildin_skill(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0; // no player attached
+		return 1;// no player attached, report source
 
 	id    = conv_num(st, script_getdata(st,2));
 	level = conv_num(st, script_getdata(st,3));
@@ -6584,7 +6581,7 @@ int buildin_addtoskill(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0; // no player attached
+		return 1;// no player attached, report source
 
 	id    = conv_num(st, script_getdata(st,2));
 	level = conv_num(st, script_getdata(st,3));
@@ -6606,7 +6603,7 @@ int buildin_guildskill(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0; // needs player attached
+		return 1;// no player attached, report source
 
 	id    = conv_num(st, script_getdata(st,2));
 	level = conv_num(st, script_getdata(st,3));
@@ -6624,10 +6621,8 @@ int buildin_getskilllv(struct script_state* st)
 	TBL_PC* sd;
 
 	sd = script_rid2sd(st);
-	if( sd == NULL ){
-		script_pushint(st, 0);
-		return 0; // needs player attached
-	}
+	if( sd == NULL )
+		return 1;// no player attached, report source
 
 	id = conv_num(st, script_getdata(st,2));
 	script_pushint(st, pc_checkskill(sd,id));
@@ -6688,10 +6683,8 @@ int buildin_getgmlevel(struct script_state* st)
 	TBL_PC* sd;
 
 	sd = script_rid2sd(st);
-	if( sd == NULL ){
-		script_pushint(st, 0);
-		return 0; // needs player attached
-	}
+	if( sd == NULL )
+		return 1;// no player attached, report source
 
 	script_pushint(st, pc_isGM(sd));
 
@@ -6715,7 +6708,7 @@ int buildin_checkoption(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	option = conv_num(st, script_getdata(st,2));
 	if( sd->sc.option&option )
@@ -6735,7 +6728,7 @@ int buildin_checkoption1(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	opt1 = conv_num(st, script_getdata(st,2));
 	if( sd->sc.opt1 == opt1 )
@@ -6755,7 +6748,7 @@ int buildin_checkoption2(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	opt2 = conv_num(st, script_getdata(st,2));
 	if( sd->sc.opt2&opt2 )
@@ -6776,7 +6769,7 @@ int buildin_setoption(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// needs player attached
+		return 1;// no player attached, report source
 
 	option = conv_num(st, script_getdata(st,2));
 	if( script_hasdata(st,3) )
@@ -6804,7 +6797,7 @@ int buildin_checkcart(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	if( pc_iscarton(sd) )
 		script_pushint(st, 1);
@@ -6823,7 +6816,7 @@ int buildin_setcart(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// needs player attached
+		return 1;// no player attached, report source
 
 	if( script_hasdata(st,2) )
 		type = conv_num(st, script_getdata(st,2));
@@ -6841,7 +6834,7 @@ int buildin_checkfalcon(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	if( pc_isfalcon(sd) )
 		script_pushint(st, 1);
@@ -6860,7 +6853,7 @@ int buildin_setfalcon(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// needs player attached
+		return 1;// no player attached, report source
 
 	if( script_hasdata(st,2) )
 		flag = conv_num(st, script_getdata(st,2));
@@ -6879,7 +6872,7 @@ int buildin_checkriding(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return buildin_end(st);// needs player attached
+		return 1;// no player attached, report source
 
 	if( pc_isriding(sd) )
 		script_pushint(st, 1);
@@ -6898,7 +6891,7 @@ int buildin_setriding(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// needs player attached
+		return 1;// no player attached, report source
 
 	if( script_hasdata(st,2) )
 		flag = conv_num(st, script_getdata(st,2));
@@ -6920,7 +6913,7 @@ int buildin_savepoint(struct script_state* st)
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
-		return 0;// needs player attached
+		return 1;// no player attached, report source
 
 	str = conv_str(st, script_getdata(st,2));
 	x   = conv_num(st, script_getdata(st,3));
