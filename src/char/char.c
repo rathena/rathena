@@ -4403,9 +4403,6 @@ int do_init(int argc, char **argv) {
 			strcpy(char_ip_str, buf);
 			char_ip = inet_addr(char_ip_str);
 		}
-
-		if (ptr[0] == 192 && ptr[1] == 168)
-			ShowWarning("Firewall detected.. edit subnet_athena.conf and char_athena.conf\n");
 	}
 
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
