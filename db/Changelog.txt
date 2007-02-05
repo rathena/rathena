@@ -20,6 +20,8 @@
 
 ========================
 
+02/05
+	* Fixed Venom Splasher not being Poison elemental
 02/02
 	* Completed Amon Ra's spell list. Note that they probably need a delay
 	  added because of the way eA differs from Aegis on the skillused condition.

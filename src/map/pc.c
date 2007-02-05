@@ -4558,6 +4558,9 @@ int pc_allskillup(struct map_session_data *sd)
 		}
 	}
 	status_calc_pc(sd,0);
+	//Required because if you could level up all skills previously, 
+	//the update will not be sent as only the lv variable changes.
+	clif_skillinfoblock(sd);
 	return 0;
 }
 

@@ -9702,8 +9702,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
-	pc_delinvincibletimer(sd);
-	
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
 		
@@ -9755,6 +9753,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 			skilllv = tmp;
 	}
 
+	pc_delinvincibletimer(sd);
+	
 	if (skilllv)
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 

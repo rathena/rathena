@@ -725,13 +725,13 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
 	{	
 		if (md->state.provoke_flag == target->id)
 			return 1;
-		else if (!battle_config.mob_ai&0x4)
+		else if (!(battle_config.mob_ai&0x4))
 			return 0;
 	}
 	
 	switch (md->state.skillstate) {
 		case MSS_BERSERK:
-			if (!mode&MD_CHANGETARGET_MELEE)
+			if (!(mode&MD_CHANGETARGET_MELEE))
 				return 0;
 			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
 		case MSS_RUSH:

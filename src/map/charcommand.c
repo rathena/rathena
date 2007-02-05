@@ -1298,63 +1298,62 @@ int charcommand_baselevel(
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(player)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change base level only lower or same gm level
-
-			if (level > 0) {
-				if (pl_sd->status.base_level == pc_maxbaselv(sd)) {	// check for max level by Valaris
-					clif_displaymessage(fd, msg_table[91]); // Character's base level can't go any higher.
-					return 0;
-				}	// End Addition
-				if ((unsigned int)level > pc_maxbaselv(pl_sd) ||
-					pl_sd->status.base_level > pc_maxbaselv(pl_sd) -level)
-					level = pc_maxbaselv(pl_sd) - pl_sd->status.base_level;
-				for (i = 1; i <= level; i++)
-					status_point += (pl_sd->status.base_level + i + 14) / 5;
-				if (pl_sd->status.status_point > USHRT_MAX -  status_point)
-					pl_sd->status.status_point = USHRT_MAX;
-				else
-					pl_sd->status.status_point += status_point;
-				pl_sd->status.base_level += (unsigned int)level;
-				clif_updatestatus(pl_sd, SP_BASELEVEL);
-				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
-				clif_updatestatus(pl_sd, SP_STATUSPOINT);
-				status_calc_pc(pl_sd, 0);
-				status_percent_heal(&pl_sd->bl, 100, 100);
-				clif_misceffect(&pl_sd->bl, 0);
-				clif_displaymessage(fd, msg_table[65]); // Character's base level raised.
-			} else {
-				if (pl_sd->status.base_level == 1) {
-					clif_displaymessage(fd, msg_table[193]); // Character's base level can't go any lower.
-					return -1;
-				}
-				level *= -1;
-				if ((unsigned int)level >= pl_sd->status.base_level)
-					level = pl_sd->status.base_level -1;
-				if (pl_sd->status.status_point > 0) {
-					for (i = 0; i > -level; i--)
-						status_point += (pl_sd->status.base_level +i + 14) / 5;
-					if (pl_sd->status.status_point < status_point)
-						pc_resetstate(pl_sd);
-					if (pl_sd->status.status_point < status_point)
-						pl_sd->status.status_point = 0;
-					else
-						pl_sd->status.status_point -= status_point;
-					clif_updatestatus(pl_sd, SP_STATUSPOINT);
-				} // to add: remove status points from stats
-				pl_sd->status.base_level -= (unsigned int)level;
-				clif_updatestatus(pl_sd, SP_BASELEVEL);
-				clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
-				status_calc_pc(pl_sd, 0);
-				clif_displaymessage(fd, msg_table[66]); // Character's base level lowered.
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
+	if ((pl_sd = map_nick2sd(player)) == NULL) {
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
+	}
+	if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change base level only lower or same gm level
+		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (level > 0) {
+		if (pl_sd->status.base_level == pc_maxbaselv(pl_sd)) {	// check for max level by Valaris
+			clif_displaymessage(fd, msg_table[91]); // Character's base level can't go any higher.
+			return 0;
+		}	// End Addition
+		if ((unsigned int)level > pc_maxbaselv(pl_sd) ||
+			pl_sd->status.base_level > pc_maxbaselv(pl_sd) -level)
+			level = pc_maxbaselv(pl_sd) - pl_sd->status.base_level;
+		for (i = 1; i <= level; i++)
+			status_point += (pl_sd->status.base_level + i + 14) / 5;
+
+		if (pl_sd->status.status_point > USHRT_MAX -  status_point)
+			pl_sd->status.status_point = USHRT_MAX;
+		else
+			pl_sd->status.status_point += status_point;
+		pl_sd->status.base_level += (unsigned int)level;
+		clif_updatestatus(pl_sd, SP_BASELEVEL);
+		clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
+		clif_updatestatus(pl_sd, SP_STATUSPOINT);
+		status_calc_pc(pl_sd, 0);
+		status_percent_heal(&pl_sd->bl, 100, 100);
+		clif_misceffect(&pl_sd->bl, 0);
+		clif_displaymessage(fd, msg_table[65]); // Character's base level raised.
+	} else {
+		if (pl_sd->status.base_level == 1) {
+			clif_displaymessage(fd, msg_table[193]); // Character's base level can't go any lower.
+			return -1;
+		}
+		level *= -1;
+		if ((unsigned int)level >= pl_sd->status.base_level)
+			level = pl_sd->status.base_level -1;
+		if (pl_sd->status.status_point > 0) {
+			for (i = 0; i > -level; i--)
+				status_point += (pl_sd->status.base_level +i + 14) / 5;
+			if (pl_sd->status.status_point < status_point)
+				pc_resetstate(pl_sd);
+			if (pl_sd->status.status_point < status_point)
+				pl_sd->status.status_point = 0;
+			else
+				pl_sd->status.status_point -= status_point;
+			clif_updatestatus(pl_sd, SP_STATUSPOINT);
+		} // to add: remove status points from stats
+		pl_sd->status.base_level -= (unsigned int)level;
+		clif_updatestatus(pl_sd, SP_BASELEVEL);
+		clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
+		status_calc_pc(pl_sd, 0);
+		clif_displaymessage(fd, msg_table[66]); // Character's base level lowered.
 	}
 
 	return 0; //³íI—¹

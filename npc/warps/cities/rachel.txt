@@ -56,7 +56,7 @@ ra_temsky.gat,99,135,0	warp	rasky002	1,1,ra_temsky.gat,99,112
 ra_temsky.gat,112,143,0	warp	rasky003	1,1,ra_temsky.gat,141,139
 ra_temsky.gat,137,139,0	warp	rasky004	1,1,ra_temsky.gat,108,143
 ra_temsky.gat,87,143,0	warp	rasky005	1,1,ra_temsky.gat,58,139
-ra_temsky.gat,62,139,0	warp	rasky004	1,1,ra_temsky.gat,91,143
+ra_temsky.gat,62,139,0	warp	rasky006	1,1,ra_temsky.gat,91,143
 
 //Rachel Temple
 ra_temple.gat,119,21,0	warp	rachel002	1,1,rachel.gat,149,244
