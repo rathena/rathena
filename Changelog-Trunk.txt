@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/05
+	* Changed the 'getpartyleader' script command so that it returns a map
+	  name instead of the useless mapindex number. Also fixed it so that it
+	  doesn't throw a 'args of aFree is not valid pointer' error.
+	  (although I'm not at all sure that the fix is correct)
+	  Ref: http://www.eathena.ws/board/index.php?showtopic=137274
 	* Removed the silly and misleading 'firewall detected' message
 2007/02/03
 	* Added missing vc6 project file

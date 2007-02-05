@@ -3877,7 +3877,7 @@ struct script_function buildin_func[] = {
 	{buildin_getcharid,"getcharid","i*"},
 	{buildin_getpartyname,"getpartyname","i"},
 	{buildin_getpartymember,"getpartymember","i*"},
-	{buildin_getpartyleader,"getpartyleader","i*"},
+	{buildin_getpartyleader,"getpartyleader","i?"},
 	{buildin_getguildname,"getguildname","i"},
 	{buildin_getguildmaster,"getguildmaster","i"},
 	{buildin_getguildmasterid,"getguildmasterid","i"},
@@ -6006,13 +6006,13 @@ int buildin_getpartyleader(struct script_state *st)
 			push_val(st->stack,C_INT,p->party.member[i].class_);
 		break;
 		case 4:
-			push_val(st->stack,C_INT,p->party.member[i].map);
+			push_str(st->stack,C_CONSTSTR,(char*)mapindex_id2name(p->party.member[i].map));
 		break;
 		case 5:
 			push_val(st->stack,C_INT,p->party.member[i].lv);
 		break;
 		default:
-			push_str(st->stack,C_STR,p->party.member[i].name);
+			push_str(st->stack,C_CONSTSTR,p->party.member[i].name);
 		break;
 	}
 	return 0;

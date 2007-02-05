@@ -2155,18 +2155,19 @@ Example:
 
 *getpartyleader <party id>,[<type>];
 
-This function returns some information about the given party-id's leader. When type is ommitted,
-the default information retrieved is Character name of the party leader. Possible types are:
+This function returns some information about the given party-id's leader.
+When type is ommitted, the default information retrieved is the leader's name.
+Possible types are:
 
 	1: Leader account id
 	2: Leader character id
 	3: Leader's class
-	4: Leader's current map index
+	4: Leader's current map name
 	5: Leader's current level as stored on the party structure (may not be
 	   current level if leader leveled up recently).
 
-If retrieval fails (leader not found or party does not exists), "null" is returned instead of character name,
-and -1 is returned for the other types.
+If retrieval fails (leader not found or party does not exist), this function
+returns "null" instead of the character name, and -1 is for the other types.
 
 ---------------------------------------
 *getguildname(<guild id>)
@@ -3548,7 +3549,8 @@ four values:
 - val3 is the second element, val4 is the resistance to said element.
 eg: sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
 
-'sc_end' will remove a specified status effect.
+'sc_end' will remove a specified status effect. If SC_All is used (-1), it will
+do a complete removal of all statuses (although permanent ones will re-apply).
 
 You can see the full list of status effects caused by skills in 
 'src/map/status.h' - they are currently not fully documented, but most of that 
