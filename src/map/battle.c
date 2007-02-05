@@ -899,14 +899,13 @@ static struct Damage battle_calc_weapon_attack(
 				 wd.blewcount += sd->skillblown[i].val;
 		}
 	}
+
 	//Set miscellaneous data that needs be filled regardless of hit/miss
 	if(
 		(sd && sd->state.arrow_atk) ||
 		(!sd && ((skill_num && skill_get_ammotype(skill_num)) || sstatus->rhw.range>3))
-	) {
-		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+	)
 		flag.arrow = 1;
-	}
 	
 	if(skill_num){
 		wd.flag=(wd.flag&~BF_SKILLMASK)|BF_SKILL;
@@ -919,36 +918,15 @@ static struct Damage battle_calc_weapon_attack(
 					else
 						wd.div_ = sd->spiritball_old;
 				}
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 			case HT_PHANTASMIC:
 				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
 				flag.arrow = 1;
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
-			case GS_DESPERADO:
-			case GS_DUST:
-				//This one is the opposite, it consumes ammo, but should count as short range.
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
-				break;
+
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
 				flag.weapon = 0;
-			case AS_GRIMTOOTH:
-			case KN_SPEARBOOMERANG:
-			case NPC_RANGEATTACK:
-			case LK_SPIRALPIERCE:
-			case ASC_BREAKER:
-			case AM_ACIDTERROR:
-			case ITM_TOMAHAWK:	//Tomahawk is a ranged attack! [Skotlex]
-			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS:
-			case NJ_HUUMA:
-			case NJ_ISSEN:
-			case GS_TRIPLEACTION:
-			case GS_BULLSEYE:
-			case GS_MAGICALBULLET:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 				break;
 
 			case KN_PIERCE:
@@ -961,18 +939,11 @@ static struct Damage battle_calc_weapon_attack(
 				break;
 				
 			case GS_GROUNDDRIFT:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 			case KN_SPEARSTAB:
 			case KN_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
 				wd.blewcount=0;
-				break;
-
-			case CR_SHIELDCHARGE:
-//				flag.weapon = 0;
-			case NPC_PIERCINGATT:
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
 				break;
 
 			case KN_AUTOCOUNTER:
@@ -983,26 +954,24 @@ static struct Damage battle_calc_weapon_attack(
 				flag.cri = 1; //Always critical skill.
 				break;
 		}
-	}
 
-	if (skill_num && battle_config.skillrange_by_distance &&
-		(src->type&battle_config.skillrange_by_distance)
-	) { //Skill range based on distance between src/target [Skotlex]
-		if (check_distance_bl(src, target, 3))
-			wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
-		else
-			wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-	}
+		//Skill Range Criteria
+		if (battle_config.skillrange_by_distance &&
+			(src->type&battle_config.skillrange_by_distance)
+		) { //based on distance between src/target [Skotlex]
+			if (check_distance_bl(src, target, 3))
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
+			else
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+		} else { //based on used skill's range
+			if (skill_get_range(skill_num, skill_lv) < 5)
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
+			else
+				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+		}
+	} else if (flag.arrow) //Make the normal attack ranged.
+		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 	
-/* Apparently counter attack no longer causes you to be critical'ed by mobs. [Skotlex]
-	//Check for counter 
-	if(!skill_num)
-	{
-		if(tsc && tsc->data[SC_AUTOCOUNTER].timer != -1)
-		//If it got here and you had autocounter active, then the direction/range does not matches: critical
-			flag.cri = 1;
-	}	//End counter-check
-*/
 	if (!skill_num && tstatus->flee2 && rand()%1000 < tstatus->flee2)
 	{	//Check for Lucky Dodge
 		wd.type=0x0b;
@@ -2206,7 +2175,7 @@ struct Damage battle_calc_magic_attack(
 	ad.amotion=skill_get_inf(skill_num)&INF_GROUND_SKILL?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 	ad.dmotion=tstatus->dmotion;
 	ad.blewcount = skill_get_blewcount(skill_num,skill_lv);
-	ad.flag=BF_MAGIC|BF_LONG|BF_SKILL;
+	ad.flag=BF_MAGIC|BF_SKILL;
 	ad.dmg_lv=ATK_DEF;
 	
 	BL_CAST(BL_PC, src, sd);
@@ -2231,10 +2200,16 @@ struct Damage battle_calc_magic_attack(
 		}
 	}
 
+	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
 		(src->type&battle_config.skillrange_by_distance)
-	)	{ //Skill range based on distance between src/target [Skotlex]
+	)	{ //based on distance between src/target [Skotlex]
 		if (check_distance_bl(src, target, 3))
+			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
+		else
+			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
+	} else { //based on used skill's range
+		if (skill_get_range(skill_num, skill_lv) < 5)
 			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
 		else
 			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
@@ -2563,7 +2538,7 @@ struct Damage  battle_calc_misc_attack(
 	md.div_=skill_get_num( skill_num,skill_lv );
 	md.blewcount=skill_get_blewcount(skill_num,skill_lv);
 	md.dmg_lv=ATK_DEF;
-	md.flag=BF_MISC|BF_SHORT|BF_SKILL;
+	md.flag=BF_MISC|BF_SKILL;
 
 	flag.cardfix = flag.elefix = flag.hit = 1;
 	
@@ -2586,19 +2561,12 @@ struct Damage  battle_calc_misc_attack(
 
 	//Misc Settings
 	switch(skill_num){
+	case ASC_BREAKER:
+		flag.elefix = 0;
+		break;
 	case PA_PRESSURE:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
-		flag.cardfix = 0;
-	case ASC_BREAKER:
-		flag.elefix = 0;
-	case HT_BLITZBEAT:
-	case TF_THROWSTONE:
-	case SN_FALCONASSAULT:
-	case PA_GOSPEL:
-	case CR_ACIDDEMONSTRATION:
-		md.flag = (md.flag&~BF_RANGEMASK)|BF_LONG;
-		break;
 	case HVAN_EXPLOSION:
 	case NPC_SELFDESTRUCTION:
 	case NPC_SMOKING:
@@ -2609,10 +2577,16 @@ struct Damage  battle_calc_misc_attack(
 		break;
 	}
 	
+	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
 		(src->type&battle_config.skillrange_by_distance)
-	) { //Skill range based on distance between src/target [Skotlex]
+	) { //based on distance between src/target [Skotlex]
 		if (check_distance_bl(src, target, 3))
+			md.flag=(md.flag&~BF_RANGEMASK)|BF_SHORT;
+		else
+			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;
+	} else { //based on used skill's range
+		if (skill_get_range(skill_num, skill_lv) < 5)
 			md.flag=(md.flag&~BF_RANGEMASK)|BF_SHORT;
 		else
 			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;

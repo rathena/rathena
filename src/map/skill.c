@@ -11206,7 +11206,7 @@ int skill_readdb (void)
 		else
 			skill_db[i].castcancel=0;
 		skill_db[i].cast_def_rate=atoi(split[10]);
-		skill_db[i].inf2=atoi(split[11]);
+		skill_db[i].inf2=(int)strtol(split[11], NULL, 0);
 		skill_db[i].maxcount=atoi(split[12]);
 		if(strcmpi(split[13],"weapon") == 0)
 			skill_db[i].skill_type=BF_WEAPON;

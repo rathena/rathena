@@ -1,7 +1,7 @@
 //id,range,hit,inf,pl,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count
 // 01 ID
-// 02 range (combo skills do not check for range when used, if 0 and skill is 
-//    not inf = 4, use attack range)
+// 02 range (combo skills do not check for range when used,
+//           if range is < 5, the skill is considered melee-range)
 // 03 hit (8- repeated hitting, 6- single-hit)
 // 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
 // 05 pl attributes (0- nothing, 1- water, 2- earth, 3- fire, 4- wind,
@@ -14,12 +14,20 @@
 //    negative values just show number of hits without increasing total damage)
 // 10 castcancelled (it is cancelled at 1. Are not cancelled with 0)
 // 11 defense-reduction rate during cast.
-// 12 inf2 (skill information 2) (1- quest skill,  2- npc skill, 4- wedding skill
-//    8- spirit skill, 16- guild skill, 32- song/dance, 64- ensemble skill
-//    128- trap (can be targetted), 256- skill that damages/targets yourself
-//    512- cannot be casted on self (if inf = 4, auto-select target skill)
-//    1024- usable only on party-members, 2048- usable only on guild-mates
-//    4096- allow usage on enemies too (use with 1024/2048))
+// 12 inf2 (skill information 2):
+//    0x0001- quest skill
+//    0x0002- npc skill
+//    0x0004- wedding skill
+//    0x0008- spirit skill
+//    0x0010- guild skill
+//    0x0020- song/dance
+//    0x0040- ensemble skill
+//    0x0080- trap
+//    0x0100- skill that damages/targets yourself
+//    0x0200- cannot be casted on self (if inf = 4, auto-select target skill)
+//    0x0400- usable only on party-members
+//    0x0800- usable only on guild-mates
+//    0x1000- allow usage on enemies too (use with 0x0400/0x0800)
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled.
 // 14 attack type (none, weapon, magic, misc)
@@ -90,9 +98,9 @@
 64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//KN_CAVALIERMASTERY#Cavalier Mastery#
 65,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//PR_MACEMASTERY#Mace Mastery#
 66,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//PR_IMPOSITIO#Impositio Manus#	
-67,9,6,16,0,1,0,3,1,yes,0,512,0,magic,0	//PR_SUFFRAGIUM#Suffragium#
+67,9,6,16,0,1,0,3,1,yes,0,0x200,0,magic,0	//PR_SUFFRAGIUM#Suffragium#
 68,9,6,16,6,1,0,5,1,yes,0,0,0,magic,0	//PR_ASPERSIO#Aspersio#
-69,9,6,2,0,3,1,5,1,yes,0,64,0,magic,0	//PR_BENEDICTIO#B.S Sacramenti#
+69,9,6,2,0,3,1,5,1,yes,0,0x40,0,magic,0	//PR_BENEDICTIO#B.S Sacramenti#
 70,9,6,2,6,1,0,10,1,yes,0,0,0,magic,1	//PR_SANCTUARY#Sanctuary#
 71,9,6,16,0,1,0,4,1,yes,0,0,0,magic,0	//PR_SLOWPOISON#Slow Poison#
 72,9,6,16,0,1,0,1,1,yes,0,0,0,magic,0	//PR_STRECOVERY#Status Recovery#
@@ -138,15 +146,15 @@
 112,0,6,4,0,3,-1,5,1,no,0,0,0,weapon,0	//BS_WEAPONPERFECT#Weapon Perfection#
 113,0,6,4,0,3,-1,5,1,no,0,0,0,weapon,0	//BS_OVERTHRUST#Power-Thrust#
 114,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//BS_MAXIMIZE#Maximize Power#
-115,3,6,2,0,1,0,5,1,no,0,128,0,misc,6:7:8:9:10	//HT_SKIDTRAP#Skid Trap#
-116,3,6,2,2,0,0,5,1,no,0,128,0,misc,0	//HT_LANDMINE#Land Mine#
-117,3,6,2,0,1,0,5,1,no,0,128,0,misc,0	//HT_ANKLESNARE#Ankle Snare#
-118,3,6,2,0,2,1,5,1,no,0,128,0,misc,0	//HT_SHOCKWAVE#Shockwave Trap#
-119,3,6,2,0,3,2,5,1,no,0,128,0,misc,0	//HT_SANDMAN#Sandman#
-120,3,6,2,0,3,1,5,1,no,0,128,0,misc,0	//HT_FLASHER#Flasher#
-121,3,6,2,1,2,1,5,1,no,0,128,0,misc,0	//HT_FREEZINGTRAP#Freezing Trap#
-122,3,6,2,4,2,1,5,1,no,0,128,0,misc,0	//HT_BLASTMINE#Blast Mine#
-123,3,6,2,3,2,2,5,1,no,0,128,0,misc,0	//HT_CLAYMORETRAP#Claymore Trap#
+115,3,6,2,0,1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10	//HT_SKIDTRAP#Skid Trap#
+116,3,6,2,2,0,0,5,1,no,0,0x80,0,misc,0	//HT_LANDMINE#Land Mine#
+117,3,6,2,0,1,0,5,1,no,0,0x80,0,misc,0	//HT_ANKLESNARE#Ankle Snare#
+118,3,6,2,0,2,1,5,1,no,0,0x80,0,misc,0	//HT_SHOCKWAVE#Shockwave Trap#
+119,3,6,2,0,3,2,5,1,no,0,0x80,0,misc,0	//HT_SANDMAN#Sandman#
+120,3,6,2,0,3,1,5,1,no,0,0x80,0,misc,0	//HT_FLASHER#Flasher#
+121,3,6,2,1,2,1,5,1,no,0,0x80,0,misc,0	//HT_FREEZINGTRAP#Freezing Trap#
+122,3,6,2,4,2,1,5,1,no,0,0x80,0,misc,0	//HT_BLASTMINE#Blast Mine#
+123,3,6,2,3,2,2,5,1,no,0,0x80,0,misc,0	//HT_CLAYMORETRAP#Claymore Trap#
 124,2,6,32,0,1,0,1,1,no,0,0,0,misc,0	//HT_REMOVETRAP#Remove Trap#
 125,3,6,2,0,1,0,1,1,no,0,0,0,misc,0	//HT_TALKIEBOX#Talkie Box#
 126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//HT_BEASTBANE#Beast Bane#
@@ -161,78 +169,78 @@
 135,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//AS_CLOAKING#Cloaking#
 136,-1,8,1,-1,0,0,10,8,no,0,0,0,weapon,0	//AS_SONICBLOW#Sonic Blow#
 137,3:4:5:6:7,6,1,-1,2,1,5,1,no,0,0,0,weapon,0	//AS_GRIMTOOTH#Grimtooth#
-138,1,6,16,5,1,0,10,1,no,0,1024,0,weapon,0	//AS_ENCHANTPOISON#Enchant Poison#
+138,1,6,16,5,1,0,10,1,no,0,0x400,weapon,0	//AS_ENCHANTPOISON#Enchant Poison#
 139,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//AS_POISONREACT#Poison React#
 140,2,6,2,5,1,0,10,1,no,0,0,0,weapon,0	//AS_VENOMDUST#Venom Dust#
 141,1,6,1,5,1,2,10,1,yes,0,0,0,weapon,0	//AS_SPLASHER#Venom Splasher#
-142,0,6,4,0,1,0,1,1,no,0,1,0,none,0	//NV_FIRSTAID#First Aid#
-143,0,6,4,0,1,0,1,1,no,0,1,0,none,0	//NV_TRICKDEAD#Act Dead#
-144,0,0,0,0,0,0,1,0,no,0,1,0,none,0	//SM_MOVINGRECOVERY#Moving HP-Recovery#
-145,0,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//SM_FATALBLOW#Attack Weak Point#
-146,0,6,4,0,1,0,1,1,no,0,1,0,weapon,0	//SM_AUTOBERSERK#Auto Berserk#
-147,0,0,4,0,1,0,1,0,no,0,1,0,weapon,0	//AC_MAKINGARROW#Arrow Crafting#
-148,-9,6,1,-1,2,0,1,1,no,0,1,0,weapon,6	//AC_CHARGEARROW#Arrow Repel#
-149,1,6,1,2,0,0,1,1,no,0,1,0,weapon,0	//TF_SPRINKLESAND#Throw Sand#
-150,0,6,4,0,1,0,1,1,no,0,1,0,weapon,5	//TF_BACKSLIDING#Back Sliding#
-151,0,6,4,0,1,0,1,1,no,0,1,0,none,0	//TF_PICKSTONE#Find Stone#
-152,7,6,1,0,0,0,1,1,no,0,1,0,misc,0	//TF_THROWSTONE#Stone Fling#
-153,1,6,1,-1,2,1,1,1,no,0,1,0,weapon,2	//MC_CARTREVOLUTION#Cart Revolution#
-154,0,6,4,0,1,0,1,1,no,0,1,0,none,0	//MC_CHANGECART#Change Cart#
-155,0,6,4,0,1,0,1,1,no,0,1,0,weapon,0	//MC_LOUD#Crazy Uproar#
-156,9,6,1,6,0,0,1,1,yes,0,1,0,magic,0	//AL_HOLYLIGHT#Holy Light#
-157,0,6,4,0,1,0,1,1,yes,0,1,0,magic,0	//MG_ENERGYCOAT#Energy Coat#
-158,3,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_PIERCINGATT#Thrusting attack#
-159,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_MENTALBREAKER#Spirit Destruction#
-160,9,6,1,0,0,0,10,1,no,0,2,0,weapon,0	//NPC_RANGEATTACK#Stand off attack#
-161,0,0,4,0,1,0,1,1,no,0,2,0,magic,0	//NPC_ATTRICHANGE#Run Attribute Change#
-162,0,0,4,1,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEWATER#Water Attribute Change#
-163,0,0,4,2,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEGROUND#Earth Attribute Change#
-164,0,0,4,3,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEFIRE#Fire Attribute Change#
-165,0,0,4,4,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEWIND#Wind Attribute Change#
-166,0,0,4,5,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEPOISON#Poison Attribute Change#
-167,0,0,4,6,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEHOLY#Holy Attribute Change#
-168,0,0,4,7,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
-169,0,0,4,8,1,0,1,1,no,0,2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
-170,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
-171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
-172,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
-173,1,6,4,3,2,5,10,1,no,0,2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
-174,-1,6,1,-1,2,3,1,1,no,0,2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
-175,0,0,4,0,1,0,10,1,no,0,2,0,misc,0	//NPC_SUICIDE#Suicide#
-176,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_POISON#Poison Attack#
-177,7,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
-178,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
-179,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,7,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
-181,7,6,1,7,0,0,5,1,no,0,2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
-182,-1,6,1,-1,0,0,5,1,no,0,2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
-183,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
-184,-1,6,1,1,0,0,10,1,no,0,2,0,weapon,0	//NPC_WATERATTACK#Water Attribute Attack#
-185,-1,6,1,2,0,0,10,1,no,0,2,0,weapon,0	//NPC_GROUNDATTACK#Earth Attribute Attack#
-186,-1,6,1,3,0,0,10,1,no,0,2,0,weapon,0	//NPC_FIREATTACK#Fire Attribute Attack#
-187,-1,6,1,4,0,0,10,1,no,0,2,0,weapon,0	//NPC_WINDATTACK#Wind Attribute Attack#
-188,-1,6,1,5,0,0,10,1,no,0,2,0,weapon,0	//NPC_POISONATTACK#Poison Attribute Attack#
-189,-1,6,1,6,0,0,10,1,no,0,2,0,weapon,0	//NPC_HOLYATTACK#Holy Attribute Attack#
-190,-1,6,1,7,0,0,10,1,no,0,2,0,weapon,0	//NPC_DARKNESSATTACK#Shadow Attribute Attack#
-191,-1,6,1,8,0,0,10,1,no,0,2,0,weapon,0	//NPC_TELEKINESISATTACK#Sense Attribute Attack#
-192,-1,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_MAGICALATTACK#Demon Shock Attack#
-193,0,0,4,0,1,0,10,1,no,0,2,0,none,0	//NPC_METAMORPHOSIS#Metamorphosis#
-194,0,0,4,0,1,0,10,1,no,0,2,0,none,0	//NPC_PROVOCATION#Provocation#
-195,0,6,4,0,0,0,10,1,no,0,2,0,misc,0	//NPC_SMOKING#Smoking#
-196,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_SUMMONSLAVE#Follower Summons#
-197,0,0,4,0,1,0,10,1,no,0,2,0,none,0	//NPC_EMOTION#Emotion#
-198,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_TRANSFORMATION#Transformation#
-199,7,6,1,7,0,0,10,1,no,0,2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
-200,7,6,1,7,0,0,10,1,no,0,2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
-201,0,0,4,0,1,0,10,1,no,0,2,0,weapon,0	//NPC_KEEPING#Keeping#
-202,2,6,1,7,0,0,5,1,no,0,2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
-203,9,6,1,7,1,0,10,1,no,0,2,0,magic,0	//NPC_DARKBLESSING#Dark Blessing#
-204,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_BARRIER#Barrier#
-205,0,0,4,0,1,0,10,1,no,0,2,0,weapon,0	//NPC_DEFENDER#Defender#
-206,1,6,1,-1,1,0,10,1,no,0,2,0,weapon,0	//NPC_LICK#Lick#
-207,9,0,1,0,1,0,10,1,no,0,2,0,magic,0	//NPC_HALLUCINATION#Hallucination#
-208,0,0,4,0,1,0,1,1,no,0,2,0,magic,0	//NPC_REBIRTH#Rebirth#
-209,0,0,4,0,1,0,10,1,no,0,2,0,magic,0	//NPC_SUMMONMONSTER#Monster Summons#
+142,0,6,4,0,1,0,1,1,no,0,0x1,0,none,0	//NV_FIRSTAID#First Aid#
+143,0,6,4,0,1,0,1,1,no,0,0x1,0,none,0	//NV_TRICKDEAD#Act Dead#
+144,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0	//SM_MOVINGRECOVERY#Moving HP-Recovery#
+145,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0	//SM_FATALBLOW#Attack Weak Point#
+146,0,6,4,0,1,0,1,1,no,0,0x1,0,weapon,0	//SM_AUTOBERSERK#Auto Berserk#
+147,0,0,4,0,1,0,1,0,no,0,0x1,0,weapon,0	//AC_MAKINGARROW#Arrow Crafting#
+148,-9,6,1,-1,2,0,1,1,no,0,0x1,0,weapon,6	//AC_CHARGEARROW#Arrow Repel#
+149,1,6,1,2,0,0,1,1,no,0,0x1,0,weapon,0	//TF_SPRINKLESAND#Throw Sand#
+150,0,6,4,0,1,0,1,1,no,0,0x1,0,weapon,5	//TF_BACKSLIDING#Back Sliding#
+151,0,6,4,0,1,0,1,1,no,0,0x1,0,none,0	//TF_PICKSTONE#Find Stone#
+152,7,6,1,0,0,0,1,1,no,0,0x1,0,misc,0	//TF_THROWSTONE#Stone Fling#
+153,1,6,1,-1,2,1,1,1,no,0,0x1,0,weapon,2	//MC_CARTREVOLUTION#Cart Revolution#
+154,0,6,4,0,1,0,1,1,no,0,0x1,0,none,0	//MC_CHANGECART#Change Cart#
+155,0,6,4,0,1,0,1,1,no,0,0x1,0,weapon,0	//MC_LOUD#Crazy Uproar#
+156,9,6,1,6,0,0,1,1,yes,0,0x1,0,magic,0	//AL_HOLYLIGHT#Holy Light#
+157,0,6,4,0,1,0,1,1,yes,0,0x1,0,magic,0	//MG_ENERGYCOAT#Energy Coat#
+158,3,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_PIERCINGATT#Thrusting attack#
+159,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_MENTALBREAKER#Spirit Destruction#
+160,9,6,1,0,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANGEATTACK#Stand off attack#
+161,0,0,4,0,1,0,1,1,no,0,0x2,0,magic,0	//NPC_ATTRICHANGE#Run Attribute Change#
+162,0,0,4,1,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEWATER#Water Attribute Change#
+163,0,0,4,2,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEGROUND#Earth Attribute Change#
+164,0,0,4,3,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEFIRE#Fire Attribute Change#
+165,0,0,4,4,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEWIND#Wind Attribute Change#
+166,0,0,4,5,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEPOISON#Poison Attribute Change#
+167,0,0,4,6,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEHOLY#Holy Attribute Change#
+168,0,0,4,7,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
+169,0,0,4,8,1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
+170,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
+171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
+172,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
+173,1,6,4,3,2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
+174,-1,6,1,-1,2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
+175,0,0,4,0,1,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
+176,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
+177,7,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
+178,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
+179,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
+180,7,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+181,7,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
+182,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
+183,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
+184,-1,6,1,1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WATERATTACK#Water Attribute Attack#
+185,-1,6,1,2,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_GROUNDATTACK#Earth Attribute Attack#
+186,-1,6,1,3,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_FIREATTACK#Fire Attribute Attack#
+187,-1,6,1,4,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WINDATTACK#Wind Attribute Attack#
+188,-1,6,1,5,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_POISONATTACK#Poison Attribute Attack#
+189,-1,6,1,6,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_HOLYATTACK#Holy Attribute Attack#
+190,-1,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_DARKNESSATTACK#Shadow Attribute Attack#
+191,-1,6,1,8,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_TELEKINESISATTACK#Sense Attribute Attack#
+192,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_MAGICALATTACK#Demon Shock Attack#
+193,0,0,4,0,1,0,10,1,no,0,0x2,0,none,0	//NPC_METAMORPHOSIS#Metamorphosis#
+194,0,0,4,0,1,0,10,1,no,0,0x2,0,none,0	//NPC_PROVOCATION#Provocation#
+195,0,6,4,0,0,0,10,1,no,0,0x2,0,misc,0	//NPC_SMOKING#Smoking#
+196,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_SUMMONSLAVE#Follower Summons#
+197,0,0,4,0,1,0,10,1,no,0,0x2,0,none,0	//NPC_EMOTION#Emotion#
+198,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_TRANSFORMATION#Transformation#
+199,7,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
+200,7,6,1,7,0,0,10,1,no,0,0x2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
+201,0,0,4,0,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_KEEPING#Keeping#
+202,2,6,1,7,0,0,5,1,no,0,0x2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
+203,9,6,1,7,1,0,10,1,no,0,0x2,0,magic,0	//NPC_DARKBLESSING#Dark Blessing#
+204,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_BARRIER#Barrier#
+205,0,0,4,0,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_DEFENDER#Defender#
+206,1,6,1,-1,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_LICK#Lick#
+207,9,0,1,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_HALLUCINATION#Hallucination#
+208,0,0,4,0,1,0,1,1,no,0,0x2,0,magic,0	//NPC_REBIRTH#Rebirth#
+209,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_SUMMONMONSTER#Monster Summons#
 210,0,0,0,-1,0,0,10,0,no,0,0,0,weapon,0	//RG_SNATCHER#Gank#
 211,1,6,1,0,1,0,10,1,no,0,0,0,weapon,0	//RG_STEALCOIN#Mug#
 212,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//RG_BACKSTAP#Back Stab#
@@ -254,14 +262,14 @@
 228,0,6,4,0,1,0,10,0,no,0,0,0,none,0	//AM_PHARMACY#Prepare Potion#
 229,9,6,2,3,1,0,5,1,yes,0,0,0,weapon,0	//AM_DEMONSTRATION#Bomb#
 230,9,6,1,0,0,0,5,1,yes,0,0,0,weapon,0	//AM_ACIDTERROR#Acid Terror#
-231,9,6,16,0,1,0,5,1,yes,0,3072,0,none,0	//AM_POTIONPITCHER#Aid Potion#
+231,9,6,16,0,1,0,5,1,yes,0,0xC00,0,none,0	//AM_POTIONPITCHER#Aid Potion#
 232,4,6,2,0,1,0,5,1,no,0,0,5,none,0	//AM_CANNIBALIZE#Summon Flora#
 233,1,6,2,0,1,0,5,1,no,0,0,3,none,0	//AM_SPHEREMINE#Summon Marine Sphere#
 234,1,6,16,0,1,0,5,1,yes,0,0,0,weapon,0	//AM_CP_WEAPON#Alchemical Weapon#
 235,1,6,16,0,1,0,5,1,yes,0,0,0,weapon,0	//AM_CP_SHIELD#Synthesized Shield#
 236,1,6,16,0,1,0,5,1,yes,0,0,0,weapon,0	//AM_CP_ARMOR#Synthetic Armor#
 237,1,6,16,0,1,0,5,1,yes,0,0,0,weapon,0	//AM_CP_HELM#Biochemical Helm#
-238,0,0,0,0,0,0,1,0,no,0,1,0,none,0	//AM_BIOETHICS#Basis of Life#
+238,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0	//AM_BIOETHICS#Basis of Life#
 //239,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//AM_BIOTECHNOLOGY#Biotechnology#
 //240,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//AM_CREATECREATURE#Life Creation#
 //241,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//AM_CULTIVATION#Cultivation#
@@ -277,9 +285,9 @@
 251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0	//CR_SHIELDBOOMERANG#Shield Boomerang#
 252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0	//CR_REFLECTSHIELD#Shield Reflect#
 253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0	//CR_HOLYCROSS#Holy Cross#
-254,0,6,4,6,0,0,10,1,no,33,256,0,magic,0	//CR_GRANDCROSS#Grand Cross#
-255,7:8:9:10:11,6,16,0,1,0,5,1,yes,0,1536,0,none,0	//CR_DEVOTION#Sacrifice#
-256,9,6,16,0,1,0,5,1,yes,0,512,0,none,0	//CR_PROVIDENCE#Resistant Souls#
+254,5,6,4,6,0,0,10,1,no,33,0x100,0,magic,0	//CR_GRANDCROSS#Grand Cross#
+255,7:8:9:10:11,6,16,0,1,0,5,1,yes,0,0x600,0,none,0	//CR_DEVOTION#Sacrifice#
+256,9,6,16,0,1,0,5,1,yes,0,0x200,0,none,0	//CR_PROVIDENCE#Resistant Souls#
 257,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//CR_DEFENDER#Defending Aura#
 258,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//CR_SPEARQUICKEN#Spear Quicken#
 259,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//MO_IRONHAND#Iron Fists#
@@ -294,90 +302,90 @@
 268,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//MO_STEELBODY#Mental Strength#
 269,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//MO_BLADESTOP#Root#
 270,0,6,4,0,1,0,5,0,no,0,0,0,weapon,0	//MO_EXPLOSIONSPIRITS#Fury#
-271,-2,6,4,0,0,0,5,1,yes,0,512,0,weapon,0	//MO_EXTREMITYFIST#Asura Strike#
-272,-2,8,4,-1,0,0,5,-4,no,0,512,0,weapon,0	//MO_CHAINCOMBO#Raging Quadruple Blow#
-273,-2,6,4,-1,2,2,5,1,no,0,512,0,weapon,0	//MO_COMBOFINISH#Raging Thrust#
+271,-2,6,4,0,0,0,5,1,yes,0,0x200,0,weapon,0	//MO_EXTREMITYFIST#Asura Strike#
+272,-2,8,4,-1,0,0,5,-4,no,0,0x200,0,weapon,0	//MO_CHAINCOMBO#Raging Quadruple Blow#
+273,-2,6,4,-1,2,2,5,1,no,0,0x200,0,weapon,0	//MO_COMBOFINISH#Raging Thrust#
 274,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//SA_ADVANCEDBOOK#Study#
 275,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//SA_CASTCANCEL#Cast Cancel#
 276,0,6,4,0,1,0,5,1,yes,0,0,0,magic,0	//SA_MAGICROD#Magic Rod#
 277,9,6,1,0,1,0,5,1,yes,0,0,0,magic,0	//SA_SPELLBREAKER#Spell Break#
 278,0,0,0,0,0,0,10,0,no,0,0,0,magic,0	//SA_FREECAST#Free Cast#
 279,0,6,4,0,1,0,10,1,yes,0,0,0,magic,0	//SA_AUTOSPELL#Hindsight#
-280,9,6,16,0,1,0,5,1,yes,0,3072,0,magic,0	//SA_FLAMELAUNCHER#Endow Blaze#
-281,9,6,16,0,1,0,5,1,yes,0,3072,0,magic,0	//SA_FROSTWEAPON#Endow Tsunami#
-282,9,6,16,0,1,0,5,1,yes,0,3072,0,magic,0	//SA_LIGHTNINGLOADER#Endow Tornado#
-283,9,6,16,0,1,0,5,1,yes,0,3072,0,magic,0	//SA_SEISMICWEAPON#Endow Quake#
+280,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FLAMELAUNCHER#Endow Blaze#
+281,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FROSTWEAPON#Endow Tsunami#
+282,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_LIGHTNINGLOADER#Endow Tornado#
+283,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_SEISMICWEAPON#Endow Quake#
 284,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//SA_DRAGONOLOGY#Dragonology#
 285,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VOLCANO#Volcano#
 286,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
 287,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
 288,3,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
-289,9,6,1,0,1,0,5,1,yes,0,7680,0,magic,0	//SA_DISPELL#Dispel#
+289,9,6,1,0,1,0,5,1,yes,0,0x1E00,0,magic,0	//SA_DISPELL#Dispel#
 290,0,6,4,0,1,0,10,1,yes,0,0,0,magic,0	//SA_ABRACADABRA#Hocus-pocus#
-291,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_MONOCELL#Monocell#
-292,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_CLASSCHANGE#Class Change#
-293,0,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_SUMMONMONSTER#Summon Monster#
-294,9,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_REVERSEORCISH#Orcish Face#
-295,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_DEATH#Death#
-296,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_FORTUNE#Fortune#
-297,9,6,1,0,1,0,1,1,yes,0,2,0,magic,0	//SA_TAMINGMONSTER#Tame Monster#
-298,9,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_QUESTION#Question#
-299,9,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_GRAVITY#Gravity#
-300,9,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_LEVELUP#Level Up#
-301,9,6,4,0,0,0,1,1,yes,0,2,0,magic,0	//SA_INSTANTDEATH#Instant Death#
-302,9,6,4,0,1,0,1,1,yes,0,2,0,magic,0	//SA_FULLRECOVERY#Full Recovery#
-303,9,6,4,0,0,0,1,1,yes,0,2,0,magic,0	//SA_COMA#Coma#
+291,9,6,1,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_MONOCELL#Monocell#
+292,9,6,1,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_CLASSCHANGE#Class Change#
+293,0,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_SUMMONMONSTER#Summon Monster#
+294,9,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_REVERSEORCISH#Orcish Face#
+295,9,6,1,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_DEATH#Death#
+296,9,6,1,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_FORTUNE#Fortune#
+297,9,6,1,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_TAMINGMONSTER#Tame Monster#
+298,9,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_QUESTION#Question#
+299,9,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_GRAVITY#Gravity#
+300,9,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_LEVELUP#Level Up#
+301,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0	//SA_INSTANTDEATH#Instant Death#
+302,9,6,4,0,1,0,1,1,yes,0,0x2,0,magic,0	//SA_FULLRECOVERY#Full Recovery#
+303,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0	//SA_COMA#Coma#
 304,0,6,4,0,1,0,1,1,no,0,0,0,none,0	//BD_ADAPTATION#Amp#
 305,0,6,4,0,1,0,1,1,no,0,0,0,none,0	//BD_ENCORE#Encore#
-306,0,6,4,0,1,0,1,1,no,0,64,0,misc,0	//BD_LULLABY#Lullaby#
-307,0,6,4,0,1,0,5,1,no,0,64,0,misc,0	//BD_RICHMANKIM#Mental Sensing#
-308,0,6,4,0,1,0,1,1,no,0,64,0,misc,0	//BD_ETERNALCHAOS#Down Tempo#
-309,0,6,4,0,1,0,5,1,no,0,64,0,misc,0	//BD_DRUMBATTLEFIELD#Battle Theme#
-310,0,6,4,0,1,0,5,1,no,0,64,0,misc,0	//BD_RINGNIBELUNGEN#Harmonic Lick#
-311,0,6,4,0,1,0,1,1,no,0,64,0,misc,0	//BD_ROKISWEIL#Classical Pluck#
-312,0,6,4,0,1,0,1,1,no,0,64,0,misc,0	//BD_INTOABYSS#Power Chord#
-313,0,6,4,0,1,0,5,1,no,0,64,0,misc,0	//BD_SIEGFRIED#Acoustic Rhythm#
-//314,0,0,0,0,0,0,1,1,no,0,64,0,misc,0	//BD_RAGNAROK#Ragnarok#
+306,0,6,4,0,1,0,1,1,no,0,0x40,0,misc,0	//BD_LULLABY#Lullaby#
+307,0,6,4,0,1,0,5,1,no,0,0x40,0,misc,0	//BD_RICHMANKIM#Mental Sensing#
+308,0,6,4,0,1,0,1,1,no,0,0x40,0,misc,0	//BD_ETERNALCHAOS#Down Tempo#
+309,0,6,4,0,1,0,5,1,no,0,0x40,0,misc,0	//BD_DRUMBATTLEFIELD#Battle Theme#
+310,0,6,4,0,1,0,5,1,no,0,0x40,0,misc,0	//BD_RINGNIBELUNGEN#Harmonic Lick#
+311,0,6,4,0,1,0,1,1,no,0,0x40,0,misc,0	//BD_ROKISWEIL#Classical Pluck#
+312,0,6,4,0,1,0,1,1,no,0,0x40,0,misc,0	//BD_INTOABYSS#Power Chord#
+313,0,6,4,0,1,0,5,1,no,0,0x40,0,misc,0	//BD_SIEGFRIED#Acoustic Rhythm#
+//314,0,0,0,0,0,0,1,1,no,0,0x40,0,misc,0	//BD_RAGNAROK#Ragnarok#
 315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//BA_MUSICALLESSON#Music Lesson#
 316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//BA_MUSICALSTRIKE#Melody Strike#
-317,0,8,4,0,1,0,5,1,no,0,32,0,misc,0	//BA_DISSONANCE#Unchained Serenade#
+317,0,8,4,0,1,0,5,1,no,0,0x20,0,misc,0	//BA_DISSONANCE#Unchained Serenade#
 318,0,6,4,0,3,-1,5,1,no,0,0,0,misc,0	//BA_FROSTJOKE#Unbarring Octave#
-319,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_WHISTLE#Perfect Tablature#
-320,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_ASSASSINCROSS#Impressive Riff#
-321,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_POEMBRAGI#Magic Strings#
-322,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//BA_APPLEIDUN#Song of Lutie#
+319,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//BA_WHISTLE#Perfect Tablature#
+320,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//BA_ASSASSINCROSS#Impressive Riff#
+321,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//BA_POEMBRAGI#Magic Strings#
+322,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//BA_APPLEIDUN#Song of Lutie#
 323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//DC_DANCINGLESSON#Dance Lessons#
 324,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//DC_THROWARROW#Slinging Arrow#
-325,0,8,4,0,1,0,5,1,no,0,32,0,misc,0	//DC_UGLYDANCE#Hip Shaker#
+325,0,8,4,0,1,0,5,1,no,0,0x2032,0,misc,0	//DC_UGLYDANCE#Hip Shaker#
 326,0,6,4,0,3,-1,5,1,no,0,0,0,misc,0	//DC_SCREAM#Dazzler#
-327,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//DC_HUMMING#Focus Ballet#
-328,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//DC_DONTFORGETME#Slow Grace#
-329,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//DC_FORTUNEKISS#Lady Luck#
-330,0,6,4,0,1,0,10,1,no,0,32,0,misc,0	//DC_SERVICEFORYOU#Gypsy's Kiss#
-331,0,6,4,0,1,0,10,0,no,0,2,0,none,0	//NPC_RANDOMMOVE
-332,0,6,4,0,1,0,10,0,no,0,2,0,none,0	//NPC_SPEEDUP
-333,0,6,4,0,1,0,1,0,no,0,2,0,none,0	//NPC_REVENGE
-334,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_MALE#I Will Protect You#
-335,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_FEMALE#I Look up to You#
-336,9,6,4,0,1,3,1,1,yes,0,4,1,none,0	//WE_CALLPARTNER#I miss You#
-337,9,6,1,-1,0,0,1,1,no,0,2,0,weapon,0	//ITM_TOMAHAWK#Throw Tomahawk#
-338,-1,8,1,7,0,0,0,-2,no,0,2,0,weapon,0	//NPC_DARKCROSS#Cross of Darkness#
-339,0,6,4,7,0,0,10,1,no,33,258,0,magic,0		//NPC_GRANDDARKNESS#Grand cross of Darkness#
-340,9,8,1,7,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,2,0,magic,0	//NPC_DARKSTRIKE#Soul Strike of Darkness#
-341,9,8,1,7,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,2,0,magic,2:3:3:4:4:5:5:6:6:7	//NPC_DARKTHUNDER#Darkness Jupiter#
-342,9,6,1,0,1,0,1,0,no,0,2,0,none,0	//NPC_STOP
-343,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKWEAPON#Break weapon#
-344,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKARMOR#Break armor#
-345,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKHELM#Break helm#
-346,9,6,1,-1,0,0,10,1,no,0,2,0,weapon,0	//NPC_BREAKSHIELD#Break shield#
-347,-1,6,1,9,0,0,10,1,no,0,2,0,weapon,0	//NPC_UNDEADATTACK
-348,9,0,1,9,1,0,10,1,no,0,2,0,magic,0	//NPC_CHANGEUNDEAD
-349,0,6,4,0,1,0,10,0,no,0,2,0,weapon,0	//NPC_POWERUP
-350,0,6,4,0,1,0,10,0,no,0,2,0,none,0	//NPC_AGIUP
-351,0,0,0,0,1,0,0,0,no,0,2,0,none,0	//NPC_SIEGEMODE
-352,2,0,4,0,1,0,1,0,no,0,2,0,none,0	//NPC_CALLSLAVE
-353,0,0,0,0,1,0,0,0,no,0,2,0,none,0	//NPC_INVISIBLE
-354,2,6,4,0,1,0,20,0,no,0,2,0,misc,0	//NPC_RUN
+327,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_HUMMING#Focus Ballet#
+328,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_DONTFORGETME#Slow Grace#
+329,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_FORTUNEKISS#Lady Luck#
+330,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_SERVICEFORYOU#Gypsy's Kiss#
+331,0,6,4,0,1,0,10,0,no,0,0x2,0,none,0	//NPC_RANDOMMOVE
+332,0,6,4,0,1,0,10,0,no,0,0x2,0,none,0	//NPC_SPEEDUP
+333,0,6,4,0,1,0,1,0,no,0,0x2,0,none,0	//NPC_REVENGE
+334,9,6,4,0,1,0,1,1,yes,0,0x4,0,none,0	//WE_MALE#I Will Protect You#
+335,9,6,4,0,1,0,1,1,yes,0,0x4,0,none,0	//WE_FEMALE#I Look up to You#
+336,9,6,4,0,1,3,1,1,yes,0,0x4,1,none,0	//WE_CALLPARTNER#I miss You#
+337,9,6,1,-1,0,0,1,1,no,0,0x2,0,weapon,0	//ITM_TOMAHAWK#Throw Tomahawk#
+338,-1,8,1,7,0,0,0,-2,no,0,0x2,0,weapon,0	//NPC_DARKCROSS#Cross of Darkness#
+339,5,6,4,7,0,0,10,1,no,33,0x102,0,magic,0		//NPC_GRANDDARKNESS#Grand cross of Darkness#
+340,9,8,1,7,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0x2,0,magic,0	//NPC_DARKSTRIKE#Soul Strike of Darkness#
+341,9,8,1,7,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0x2,0,magic,2:3:3:4:4:5:5:6:6:7	//NPC_DARKTHUNDER#Darkness Jupiter#
+342,9,6,1,0,1,0,1,0,no,0,0x2,0,none,0	//NPC_STOP
+343,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKWEAPON#Break weapon#
+344,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKARMOR#Break armor#
+345,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKHELM#Break helm#
+346,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKSHIELD#Break shield#
+347,-1,6,1,9,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_UNDEADATTACK
+348,9,0,1,9,1,0,10,1,no,0,0x2,0,magic,0	//NPC_CHANGEUNDEAD
+349,0,6,4,0,1,0,10,0,no,0,0x2,0,weapon,0	//NPC_POWERUP
+350,0,6,4,0,1,0,10,0,no,0,0x2,0,none,0	//NPC_AGIUP
+351,0,0,0,0,1,0,0,0,no,0,0x2,0,none,0	//NPC_SIEGEMODE
+352,2,0,4,0,1,0,1,0,no,0,0x2,0,none,0	//NPC_CALLSLAVE
+353,0,0,0,0,1,0,0,0,no,0,0x2,0,none,0	//NPC_INVISIBLE
+354,2,6,4,0,1,0,20,0,no,0,0x2,0,misc,0	//NPC_RUN
 355,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//LK_AURABLADE#Aura Blade#
 356,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//LK_PARRYING#Parrying#
 357,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//LK_CONCENTRATION#Concentration#
@@ -392,16 +400,16 @@
 366,0,6,4,0,1,0,10,1,no,0,0,0,magic,0	//HW_MAGICPOWER#Mystical Amplification#
 367,9,8,1,0,0,0,5,1,no,0,0,0,misc,0	//PA_PRESSURE#Gloria Domini#
 368,0,6,4,0,1,0,5,1,yes,0,0,0,weapon,0	//PA_SACRIFICE# Martyr's Reckoning#
-369,0,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
+369,5,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
 370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3	//CH_PALMSTRIKE#Raging Palm Strike#
-371,-2,8,4,-1,0,0,5,1,no,0,512,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
-372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,512,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
+371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
+372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
 373,0,6,4,0,1,0,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#Health Conversion#
-374,9,6,16,0,1,0,1,1,yes,0,7168,0,none,0	//PF_SOULCHANGE#Soul Exhale#
+374,9,6,16,0,1,0,1,1,yes,0,0x1E00,0,none,0	//PF_SOULCHANGE#Soul Exhale#
 375,9,6,1,0,0,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
 376,0,0,0,0,1,0,5,1,no,0,0,0,weapon,0	//ASC_KATAR#Advanced Katar Mastery#
 //377,0,0,4,0,1,0,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#Hallucination Walk#
-378,0,6,4,5,1,0,5,1,no,0,1024,0,weapon,0	//ASC_EDP#Deadly Poison Enchantment#
+378,0,6,4,5,1,0,5,1,no,0,0,0,weapon,0	//ASC_EDP#Deadly Poison Enchantment#
 379,9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0	//ASC_BREAKER#Soul Destroyer#
 380,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//SN_SIGHT#Falcon Eyes#
 381,5,8,1,0,0,0,5,1,yes,0,0,0,misc,0	//SN_FALCONASSAULT#Falcon Assault#
@@ -418,8 +426,8 @@
 392,0,0,4,0,1,0,1,1,yes,0,0,0,none,0	//CR_ALCHEMY#Alchemy#
 393,0,0,4,0,1,0,1,1,yes,0,0,0,none,0	//CR_SYNTHESISPOTION#Potion Synthesis#
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0	//CG_ARROWVULCAN#Vulcan Arrow#
-395,0,0,4,0,1,3,1,1,yes,0,64,0,misc,2	//CG_MOONLIT#Sheltering Bliss#
-396,-1,6,16,0,1,0,1,1,yes,0,1536,0,none,0	//CG_MARIONETTE#Marionette Control#
+395,0,0,4,0,1,3,1,1,yes,0,0x40,0,misc,2	//CG_MOONLIT#Sheltering Bliss#
+396,-1,6,16,0,1,0,1,1,yes,0,0x600,0,none,0	//CG_MARIONETTE#Marionette Control#
 397,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0	//LK_SPIRALPIERCE#Spiral Pierce#
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//LK_HEADCRUSH#Traumatic Blow#
 399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//LK_JOINTBEAT#Vital Strike#
@@ -427,24 +435,24 @@
 401,0,6,4,0,1,0,1,1,yes,0,0,0,none,0	//CH_SOULCOLLECT#Zen#
 402,9,6,1,0,1,0,5,1,no,0,0,0,none,0	//PF_MINDBREAKER#Mind Breaker#
 403,0,0,4,0,1,0,1,1,yes,0,0,0,magic,0	//PF_MEMORIZE#Foresight#
-404,9,6,2,2,1,0,5,1,yes,0,256,2,magic,0	//PF_FOGWALL#Blinding Mist#
+404,9,6,2,2,1,0,5,1,yes,0,0x100,2,magic,0	//PF_FOGWALL#Blinding Mist#
 405,7,6,1,0,1,0,1,1,no,0,0,3,magic,0	//PF_SPIDERWEB#Fiber Lock#
 406,0,6,4,-1,2,2,10,1,no,33,0,0,weapon,0	//ASC_METEORASSAULT#Meteor Assault#
 407,0,6,4,0,1,0,1,0,no,0,0,0,none,0	//ASC_CDP#Create Deadly Poison#
-408,9,6,4,0,1,0,1,1,yes,0,4,0,none,0	//WE_BABY#Baby#
-409,9,6,4,0,1,3,1,1,yes,0,4,1,none,0	//WE_CALLPARENT#Call Parent#
-410,9,6,4,0,1,3,1,1,yes,0,4,1,none,0	//WE_CALLBABY#Call Baby#
+408,9,6,4,0,1,0,1,1,yes,0,0x4,0,none,0	//WE_BABY#Baby#
+409,9,6,4,0,1,3,1,1,yes,0,0x4,1,none,0	//WE_CALLPARENT#Call Parent#
+410,9,6,4,0,1,3,1,1,yes,0,0x4,1,none,0	//WE_CALLBABY#Call Baby#
 411,0,6,4,0,1,0,10,1,yes,0,0,0,misc,4	//TK_RUN#Running#
 412,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYSTORM#Prepare Whirlwind#
-413,-2,8,4,-1,2,2,7,-3,no,0,512,0,weapon,0	//TK_STORMKICK#Whirlwind Kick#
+413,-2,8,4,-1,2,2,7,-3,no,0,0x200,0,weapon,0	//TK_STORMKICK#Whirlwind Kick#
 414,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYDOWN#Prepare Axe Kick#
-415,-2,8,4,-1,0,0,7,-3,no,0,512,0,weapon,0	//TK_DOWNKICK#Axe Kick#
+415,-2,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0	//TK_DOWNKICK#Axe Kick#
 416,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYTURN#Prepare Round Kick#
-417,-2,8,4,-1,2,1,7,-3,no,0,512,0,weapon,2	//TK_TURNKICK#Round Kick#
+417,-2,8,4,-1,2,1,7,-3,no,0,0x200,0,weapon,2	//TK_TURNKICK#Round Kick#
 418,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_READYCOUNTER#Prepare Counter Kick#
-419,-2,8,4,-1,0,0,7,-3,no,0,512,0,weapon,0	//TK_COUNTER#Counter Kick#
+419,-2,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0	//TK_COUNTER#Counter Kick#
 420,0,6,4,0,1,0,1,1,no,0,0,0,weapon,0	//TK_DODGE#Break Fall#
-421,9,8,4,-1,0,0,7,-3,no,0,512,0,weapon,0	//TK_JUMPKICK#Flying Side Kick#
+421,9,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0	//TK_JUMPKICK#Flying Side Kick#
 422,0,0,0,0,0,1,10,0,no,0,0,0,none,0	//TK_HPTIME#Peaceful Rest#
 423,0,0,0,0,0,1,10,0,no,0,0,0,none,0	//TK_SPTIME#Enjoyable Rest#
 424,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//TK_POWER#Fighting Chant#
@@ -468,23 +476,23 @@
 442,0,0,0,0,0,0,3,0,no,0,0,0,none,0	//SG_FRIEND#Friend of the Sun, Moon and Stars#
 443,0,0,0,0,0,0,10,0,no,0,0,0,none,0	//SG_KNOWLEDGE#Knowledge of the Sun, Moon and Stars#
 444,0,6,4,0,1,0,1,1,no,0,0,0,misc,0	//SG_FUSION#Union of the Sun, Moon and Stars#
-445,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ALCHEMIST#Spirit of the Alchemist#
-446,9,6,16,0,1,0,1,1,yes,0,3080,0,none,0	//AM_BERSERKPITCHER#Berserk Pitcher#
-447,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_MONK#Spirit of the Monk#
-448,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_STAR#Spirit of the Star Knight#
-449,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SAGE#Spirit of the Professor#
-450,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_CRUSADER#Spirit of the Crusader#
-451,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SUPERNOVICE#Spirit of the Supernovice#
-452,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_KNIGHT#Spirit of the Knight#
-453,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_WIZARD#Spirit of the Wizard#
-454,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_PRIEST#Spirit of the Priest#
-455,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_BARDDANCER#Spirit of the Artist#
-456,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ROGUE#Spirit of the Rogue#
-457,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_ASSASIN#Spirit of the Assasin#
-458,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_BLACKSMITH#Spirit of the Blacksmith#
-459,0,6,4,0,3,-1,1,1,no,0,8,0,weapon,0 //BS_ADRENALINE2#Full Adrenaline Rush#
-460,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_HUNTER#Spirit of the Hunter#
-461,9,6,16,0,1,0,5,1,yes,0,512,0,magic,0	//SL_SOULLINKER#Spirit of the Soul Linker#
+445,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_ALCHEMIST#Spirit of the Alchemist#
+446,9,6,16,0,1,0,1,1,yes,0,0xC08,0,none,0	//AM_BERSERKPITCHER#Berserk Pitcher#
+447,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_MONK#Spirit of the Monk#
+448,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_STAR#Spirit of the Star Knight#
+449,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_SAGE#Spirit of the Professor#
+450,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_CRUSADER#Spirit of the Crusader#
+451,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_SUPERNOVICE#Spirit of the Supernovice#
+452,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_KNIGHT#Spirit of the Knight#
+453,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_WIZARD#Spirit of the Wizard#
+454,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_PRIEST#Spirit of the Priest#
+455,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_BARDDANCER#Spirit of the Artist#
+456,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_ROGUE#Spirit of the Rogue#
+457,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_ASSASIN#Spirit of the Assasin#
+458,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_BLACKSMITH#Spirit of the Blacksmith#
+459,0,6,4,0,3,-1,1,1,no,0,0x8,0,weapon,0 //BS_ADRENALINE2#Full Adrenaline Rush#
+460,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_HUNTER#Spirit of the Hunter#
+461,9,6,16,0,1,0,5,1,yes,0,0x200,0,magic,0	//SL_SOULLINKER#Spirit of the Soul Linker#
 462,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAIZEL#Kaizel#
 463,9,6,16,0,1,0,7,1,yes,0,0,0,magic,0 //SL_KAAHI#Kahai#
 464,9,6,16,0,1,0,3,1,yes,0,0,0,magic,0 //SL_KAUPE#Kauf#
@@ -497,7 +505,7 @@
 471,9,6,1,0,1,0,3,1,no,0,0,0,magic,0 //SL_SKE#Esk#
 472,9,6,1,0,1,0,3,1,no,0,0,0,magic,0 //SL_SKA#Eska#
 473,0,0,0,0,0,0,0,0,no,0,0,0,none,0	//SM_SELFPROVOKE##
-474,0,0,4,0,1,0,10,1,no,0,2,0,none,0	//NPC_EMOTION_ON##
+474,0,0,4,0,1,0,10,1,no,0,0x2,0,none,0	//NPC_EMOTION_ON##
 475,0,0,4,0,1,0,1,1,yes,0,0,0,none,0	//ST_PRESERVE#Preserve#
 476,1,6,1,0,1,0,5,1,yes,0,0,0,weapon,0	//ST_FULLSTRIP#Divest All#
 477,0,6,4,0,1,0,10,1,no,0,0,0,weapon,0	//WS_WEAPONREFINE#Upgrade Weapon#
@@ -511,19 +519,18 @@
 485,-2,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//WS_CARTTERMINATION#Cart Termination#
 486,0,6,4,0,1,0,5,1,no,0,0,0,weapon,0	//WS_OVERTHRUSTMAX#Maximum Power Thrust#
 487,0,6,4,0,1,0,5,1,no,0,0,0,none,0	//CG_LONGINGFREEDOM#Longing for Freedom#
-488,0,6,4,0,1,1,5,1,no,0,64,0,misc,0	//CG_HERMODE#Wand of Hermod#
+488,0,6,4,0,1,1,5,1,no,0,0x40,0,misc,0	//CG_HERMODE#Wand of Hermod#
 489,9,6,1,0,1,0,5,1,no,0,0,0,misc,0	//CG_TAROTCARD#Tarot Card of Fate#
 490,9,8,1,0,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0	//CR_ACIDDEMONSTRATION#Acid Demonstration#
 491,1,6,2,0,1,0,2,1,no,0,0,0,none,0	//CR_CULTIVATION#Cultivation#
 
 493,0,6,4,0,1,0,1,1,no,0,0,0,none,0	//TK_MISSION#Taekwon Mission#
 494,9,6,16,0,1,0,5,1,yes,0,0,0,magic,0	//SL_HIGH#Spirit of Rebirth#
-495,0,6,4,0,1,0,1,1,no,0,8,0,weapon,0	//KN_ONEHAND#Onehand Quicken#
-496,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT1#Twilight Alchemy 1#
-497,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT2#Twilight Alchemy 2#
-498,0,6,4,0,1,0,1,0,no,0,8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
-499,-9,8,4,-1,0,0,1,2,no,0,520,0,weapon,0	//HT_POWER#Beast Strafing#
-//Temp Plugs(using bash as base)
+495,0,6,4,0,1,0,1,1,no,0,0x8,0,weapon,0	//KN_ONEHAND#Onehand Quicken#
+496,0,6,4,0,1,0,1,0,no,0,0x8,0,none,0	//AM_TWILIGHT1#Twilight Alchemy 1#
+497,0,6,4,0,1,0,1,0,no,0,0x8,0,none,0	//AM_TWILIGHT2#Twilight Alchemy 2#
+498,0,6,4,0,1,0,1,0,no,0,0x8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
+499,-9,8,4,-1,0,0,1,2,no,0,0x208,0,weapon,0	//HT_POWER#Beast Strafing#
 500,0,6,4,0,0,0,5,1,no,0,0,0,misc,0	//GS_GLITTERING#Flip the Coin#
 501,9,6,1,-1,0,0,1,1,no,0,0,0,misc,0	//GS_FLING#Fling#
 502,-9,8,1,-1,0,0,1,3,no,0,0,0,weapon,0	//GS_TRIPLEACTION#Triple Action#
@@ -570,27 +577,26 @@
 543,0,6,4,0,1,0,5,1,yes,0,0,0,none,0	//NJ_NEN#NJ_NEN#
 544,-5,6,1,0,0,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#
 
-1001,9,6,1,-1,0,0,1,1,no,0,1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
-1002,0,6,4,0,1,0,1,0,no,0,1,0,weapon,2	//CR_SHRINK#Shrink#
-1003,0,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//AS_SONICACCEL#Sonic Acceleration#
-1004,9,8,1,0,0,0,1,1,no,0,1,0,weapon,0	//AS_VENOMKNIFE#Throw Venom Knive#
-1005,1,6,1,0,1,0,1,1,no,0,1,0,weapon,0	//RG_CLOSECONFINE#Close Confine#
-1006,0,6,4,3,0,2,1,1,yes,0,1,0,magic,3	//WZ_SIGHTBLASTER#Sight Blaster#
-1007,0,6,4,0,1,0,10,0,no,0,1,0,none,0	//SA_CREATECON#Create Converter#
-1008,9,6,1,1,1,0,1,1,yes,0,1,0,magic,0	//SA_ELEMENTWATER#Elemental Change Water#
-1009,-9,6,1,0,0,0,1,1,no,0,1,0,weapon,3	//HT_PHANTASMIC#Phantasmic Arrow#
-1010,9,6,1,0,1,0,1,0,no,0,1,0,misc,0	//BA_PANGVOICE#Pang Voice#
-1011,9,6,1,0,1,0,1,0,no,0,1,0,misc,0	//DC_WINKCHARM#Wink of Charm#
-1012,0,0,0,0,0,0,1,0,no,0,1,0,weapon,0	//BS_UNFAIRLYTRICK#Unfair Trick#
-1013,0,6,4,0,3,2,1,0,no,0,1,0,weapon,0	//BS_GREED#Greed#
-1014,0,6,4,6,3,14,1,0,yes,0,1,0,magic,0	//PR_REDEMPTIO#Redemptio#
-1015,9,6,16,0,1,0,1,1,no,0,1025,0,weapon,0	//MO_KITRANSLATION#Ki Translation#
-1016,-1,6,1,-1,2,1,1,1,no,0,1,0,weapon,5	//MO_BALKYOUNG#Ki Explosion#
-1017,9,6,1,2,1,0,1,1,yes,0,1,0,magic,0	//SA_ELEMENTGROUND#Elemental Change Earth#
-1018,9,6,1,3,1,0,1,1,yes,0,1,0,magic,0	//SA_ELEMENTFIRE#Elemental Change Fire#
-1019,9,6,1,4,1,0,1,1,yes,0,1,0,magic,0	//SA_ELEMENTWIND#Elemental Change Wind#
+1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
+1002,0,6,4,0,1,0,1,0,no,0,0x1,0,weapon,2	//CR_SHRINK#Shrink#
+1003,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0	//AS_SONICACCEL#Sonic Acceleration#
+1004,9,8,1,0,0,0,1,1,no,0,0x1,0,weapon,0	//AS_VENOMKNIFE#Throw Venom Knive#
+1005,1,6,1,0,1,0,1,1,no,0,0x1,0,weapon,0	//RG_CLOSECONFINE#Close Confine#
+1006,0,6,4,3,0,2,1,1,yes,0,0x1,0,magic,3	//WZ_SIGHTBLASTER#Sight Blaster#
+1007,0,6,4,0,1,0,10,0,no,0,0x1,0,none,0	//SA_CREATECON#Create Converter#
+1008,9,6,1,1,1,0,1,1,yes,0,0x1,0,magic,0	//SA_ELEMENTWATER#Elemental Change Water#
+1009,-9,6,1,0,0,0,1,1,no,0,0x1,0,weapon,3	//HT_PHANTASMIC#Phantasmic Arrow#
+1010,9,6,1,0,1,0,1,0,no,0,0x1,0,misc,0	//BA_PANGVOICE#Pang Voice#
+1011,9,6,1,0,1,0,1,0,no,0,0x1,0,misc,0	//DC_WINKCHARM#Wink of Charm#
+1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0	//BS_UNFAIRLYTRICK#Unfair Trick#
+1013,0,6,4,0,3,2,1,0,no,0,0x1,0,weapon,0	//BS_GREED#Greed#
+1014,0,6,4,6,3,14,1,0,yes,0,0x1,0,magic,0	//PR_REDEMPTIO#Redemptio#
+1015,9,6,16,0,1,0,1,1,no,0,0x401,0,weapon,0	//MO_KITRANSLATION#Ki Translation#
+1016,-1,6,1,-1,2,1,1,1,no,0,0x1,0,weapon,5	//MO_BALKYOUNG#Ki Explosion#
+1017,9,6,1,2,1,0,1,1,yes,0,0x1,0,magic,0	//SA_ELEMENTGROUND#Elemental Change Earth#
+1018,9,6,1,3,1,0,1,1,yes,0,0x1,0,magic,0	//SA_ELEMENTFIRE#Elemental Change Fire#
+1019,9,6,1,4,1,0,1,1,yes,0,0x1,0,magic,0	//SA_ELEMENTWIND#Elemental Change Wind#
 
-//homunculus
 8001,9,6,4,0,1,0,5,1,no,0,0,0,magic,0	//HLIF_HEAL#Healing hand#
 8002,0,6,4,0,3,-1,5,1,no,0,0,0,none,0	//HLIF_AVOID
 8003,0,0,0,0,0,1,5,0,no,0,0,0,none,0	//HLIF_BRAIN
@@ -608,19 +614,18 @@
 8015,0,0,0,0,1,0,5,0,no,0,0,0,none,0	//HVAN_INSTRUCT
 8016,0,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
 
-//id,range,hit,inf,pl,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count
-10000,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_APPROVAL#Approval#
-10001,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_KAFRACONTRACT#Kafra Contract#
-10002,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_GUARDRESEARCH#Guardian Research#
-10003,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_GUARDUP#Guardian Training#
-10004,0,0,0,0,0,0,10,0,no,0,16,0,none,0	//GD_EXTENSION#Guild Extension#
-10005,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_GLORYGUILD#Guild's Glory#
-10006,0,0,0,0,0,2,1,0,no,0,16,0,none,0	//GD_LEADERSHIP#Great Leadership#
-10007,0,0,0,0,0,2,1,0,no,0,16,0,none,0	//GD_GLORYWOUNDS#Wounds of Glory#
-10008,0,0,0,0,0,2,1,0,no,0,16,0,none,0	//GD_SOULCOLD#Cold Soul#
-10009,0,0,0,0,0,2,1,0,no,0,16,0,none,0	//GD_HAWKEYES#Sharp Eyes#
-10010,0,0,4,0,3,15,1,0,yes,0,16,0,none,0	//GD_BATTLEORDER#Battle Orders#
-10011,0,0,4,0,3,15,3,0,yes,0,16,0,none,0	//GD_REGENERATION#Regeneration#
-10012,0,0,4,0,3,15,1,0,yes,0,16,0,none,0	//GD_RESTORE#Restore#
-10013,0,0,4,0,3,0,1,0,yes,0,16,0,none,0	//GD_EMERGENCYCALL#Rally Guild#
-10014,0,0,0,0,0,0,1,0,no,0,16,0,none,0	//GD_DEVELOPMENT#Extend Guild#
+10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_APPROVAL#Approval#
+10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_KAFRACONTRACT#Kafra Contract#
+10002,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_GUARDRESEARCH#Guardian Research#
+10003,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_GUARDUP#Guardian Training#
+10004,0,0,0,0,0,0,10,0,no,0,0x10,0,none,0	//GD_EXTENSION#Guild Extension#
+10005,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_GLORYGUILD#Guild's Glory#
+10006,0,0,0,0,0,2,1,0,no,0,0x10,0,none,0	//GD_LEADERSHIP#Great Leadership#
+10007,0,0,0,0,0,2,1,0,no,0,0x10,0,none,0	//GD_GLORYWOUNDS#Wounds of Glory#
+10008,0,0,0,0,0,2,1,0,no,0,0x10,0,none,0	//GD_SOULCOLD#Cold Soul#
+10009,0,0,0,0,0,2,1,0,no,0,0x10,0,none,0	//GD_HAWKEYES#Sharp Eyes#
+10010,0,0,4,0,3,15,1,0,yes,0,0x10,0,none,0	//GD_BATTLEORDER#Battle Orders#
+10011,0,0,4,0,3,15,3,0,yes,0,0x10,0,none,0	//GD_REGENERATION#Regeneration#
+10012,0,0,4,0,3,15,1,0,yes,0,0x10,0,none,0	//GD_RESTORE#Restore#
+10013,0,0,4,0,3,0,1,0,yes,0,0x10,0,none,0	//GD_EMERGENCYCALL#Rally Guild#
+10014,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_DEVELOPMENT#Extend Guild#

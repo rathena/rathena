@@ -8614,19 +8614,19 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f
 		char buf[256];
 		int next = pc_nextbaseexp(sd);
 		if (next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0) {
-			switch (sd->state.snovice_flag) {
+			switch (sd->state.snovice_call_flag) {
 			case 0:
 				if (strstr(message, msg_txt(504)))
-					sd->state.snovice_flag++;
+					sd->state.snovice_call_flag++;
 				break;
 			case 1:
 				sprintf(buf, msg_txt(505), sd->status.name);
 				if (strstr(message, buf))
-					sd->state.snovice_flag++;
+					sd->state.snovice_call_flag++;
 				break;
 			case 2:
 				if (strstr(message, msg_txt(506)))
-					sd->state.snovice_flag++;
+					sd->state.snovice_call_flag++;
 				break;
 			case 3:
 				if (skillnotok(MO_EXPLOSIONSPIRITS,sd))
@@ -8634,7 +8634,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f
 				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
 					sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
 						17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				sd->state.snovice_flag = 0;
+				sd->state.snovice_call_flag= 0;
 				break;
 			}
 		}

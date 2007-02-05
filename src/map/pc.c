@@ -282,9 +282,9 @@ int pc_setrestartvalue(struct map_session_data *sd,int type) {
 	if (type&1)
 	{	//Normal resurrection
 		status->hp = 1; //Otherwise status_heal may fail if dead.
-		if(sd->state.snovice_flag == 4) { // [Celest]
+		if(sd->state.snovice_dead_flag == 1) { // [Celest]
 			status_heal(&sd->bl, status->max_hp, status->max_sp, 1);
-			sd->state.snovice_flag = 0;
+			sd->state.snovice_dead_flag = 2;
 			sc_start(&sd->bl,SkillStatusChangeTable(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
 		} else
 			status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
@@ -4090,6 +4090,8 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		if (sd->state.snovice_dead_flag == 2)
+			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
 	{
@@ -5021,15 +5023,16 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	// activate Steel body if a super novice dies at 99+% exp [celest]
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag)
+  	{
 		if ((i=pc_nextbaseexp(sd))<=0)
 			i=sd->status.base_exp;
 		if (i>0 && (j=sd->status.base_exp*1000/i)>=990 && j<1000 && !map_flag_gvg(sd->bl.m))
-			sd->state.snovice_flag = 4;
+			sd->state.snovice_dead_flag = 1;
 	}
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
-	if(battle_config.death_penalty_type && sd->state.snovice_flag != 4
+	if(battle_config.death_penalty_type && sd->state.snovice_dead_flag != 1
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
 		&& sd->sc.data[SC_BABY].timer == -1)
@@ -5172,14 +5175,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		sc_start(&sd->bl,SkillStatusChangeTable(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,j));
 		return 0;
 	}
-	if (sd->state.snovice_flag == 4)
+	if (sd->state.snovice_dead_flag == 1)
 	{
 		pc_setstand(sd);
 		status_change_clear(&sd->bl,0);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_resurrection(&sd->bl, 1);
-		sd->state.snovice_flag = 0;
+		sd->state.snovice_dead_flag = 2;
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 		sc_start(&sd->bl,SkillStatusChangeTable(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));

@@ -567,7 +567,8 @@ struct map_session_data {
 		unsigned gangsterparadise : 1;
 		unsigned rest : 1;
 		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
-		unsigned snovice_flag : 4;
+		unsigned snovice_call_flag : 2; //Summon Angel (stage 1~3)
+		unsigned snovice_dead_flag : 2; //Explosion spirits on death: 0 off, 1 active, 2 used.
 		// originally by Qamera, adapted by celest
 		unsigned event_death : 1;
 		unsigned event_kill_pc : 1;
