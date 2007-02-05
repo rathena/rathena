@@ -12007,7 +12007,7 @@ int buildin_npcshopattach(struct script_state *st)
 	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
 	int flag = 1;
 
-	if( script_hasdata(st,3) )
+	if( script_hasdata(st,2) )
 		flag = conv_num(st, script_getdata(st,3));
 
 	nd = npc_name2id(npcname);
