@@ -2075,7 +2075,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		clif_mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd, &md->bl, mexp,0);
 		log_mvp[1] = mexp;
-		if(!map[m].flag.nomvploot && !(type&1))
+		if(map[m].flag.nomvploot || type&1)
+			; //No drops.
+		else
 		for(j=0;j<3;j++){
 			i = rand() % 3;
 			

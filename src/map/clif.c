@@ -11706,19 +11706,12 @@ void clif_parse_HomMoveTo(int fd,struct map_session_data *sd) {	//[orn]
 }
 
 void clif_parse_HomAttack(int fd,struct map_session_data *sd) {	//[orn]
-	struct block_list *target;
 	RFIFOHEAD(fd);
-	nullpo_retv(sd);
 
 	if(!merc_is_hom_active(sd->hd))
 		return;
 	
-	if ((target = map_id2bl(RFIFOL(fd,6))) == NULL || status_isdead(target)) 
-		return;
-
-	merc_stop_walking(sd->hd, 1);
-	merc_stop_attack(sd->hd);
-	unit_attack(&sd->hd->bl,RFIFOL(fd,6),1) ;
+	unit_attack(&sd->hd->bl,RFIFOL(fd,6),0) ;
 }
 
 void clif_parse_HomMenu(int fd, struct map_session_data *sd) {	//[orn]

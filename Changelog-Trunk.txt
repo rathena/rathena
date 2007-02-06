@@ -4,10 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/06
+	* Cleaned up homunc attack request parsing. Homunculus no longer goes into
+	  auto-attack (ctrl+click) mode since the client does every attack request
+	  individually.
 	* Fixed char-server not sending party status update when a member logs
 	  on/off.
 	* Fixed crash when parsing guild member information change from the
-	  char-server when the specified character is not found in the guild.
+	  char-server if the specified character is not found in the guild.
 	* Fixed MvP mobs giving exp when killed even if they shouldn't.
 2007/02/05
 	* Fixed @lvup, #lvup not doing a stat reset and lowering your status points
