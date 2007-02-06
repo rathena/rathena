@@ -4,6 +4,9 @@
 #define DUMP_UNKNOWN_PACKET	0
 #define DUMP_ALL_PACKETS	0
 
+//Talk max size: <name> : <message of 70> [Skotlex]
+#define CHAT_SIZE	(NAME_LENGTH + 3 + CHATBOX_SIZE)
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -94,7 +97,7 @@ struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 #define disguised(bl) (bl->type==BL_PC && ((TBL_PC*)bl)->disguise)
 
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex\]
-#define mes_len_check(mes, len) if (len > CHAT_SIZE) { mes[CHAT_SIZE-1] = '\0'; len = CHAT_SIZE; } else mes[len-1] = '\0';
+#define mes_len_check(mes, len, max) if (len > max) { mes[max-1] = '\0'; len = max; } else mes[len-1] = '\0';
 static char map_ip_str[128];
 static in_addr_t map_ip;
 static in_addr_t bind_ip = INADDR_ANY;
@@ -8665,23 +8668,25 @@ int clif_message(struct block_list *bl, char* msg)
  */
 void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 // /m /mapmove (as @rura GM command)
-	char output[30]; // 17+4+4=26, 30 max.
-	char message[34]; // "/mm "+output
-	char map_name[MAP_NAME_LENGTH]; //Err... map names are 15+'\0' in size, not 16+'\0' [Skotlex]
+	char output[MAP_NAME_LENGTH+15]; // Max length of a short: ' -6XXXX' -> 7 digits
+	char message[MAP_NAME_LENGTH+15+5]; // "/mm "+output
+	char *map_name;
 	RFIFOHEAD(fd);
 
-	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
-	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_MapMove))) {
-		memcpy(map_name, RFIFOP(fd,2), MAP_NAME_LENGTH-1);
-		map_name[MAP_NAME_LENGTH-1]='\0';
-		sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
-		atcommand_rura(fd, sd, "@rura", output);
-		if((log_config.gm) && (get_atcommand_level(AtCommand_MapMove) >= log_config.gm)) {
-			sprintf(message, "/mm %s", output);
-			log_atcommand(sd, message);
-		}
-	}
+	if (battle_config.atc_gmonly && !pc_isGM(sd))
+		return;
+	if(pc_isGM(sd) < get_atcommand_level(AtCommand_MapMove))
+		return;
 
+	map_name = RFIFOP(fd,2);
+	map_name[MAP_NAME_LENGTH-1]='\0';
+	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
+	atcommand_rura(fd, sd, "@rura", output);
+	if(log_config.gm && get_atcommand_level(AtCommand_MapMove) >= log_config.gm)
+	{
+		sprintf(message, "/mm %s", output);
+		log_atcommand(sd, message);
+	}
 	return;
 }
 
@@ -8950,7 +8955,8 @@ void clif_parse_Wis(int fd, struct map_session_data *sd) { // S 0096 <len>.w <ni
 	msg = command;	
 	msg+= sprintf(command, "%s : ", sd->status.name);
 	memcpy(msg, RFIFOP(fd, 28), len);
-	mes_len_check(msg, len);
+	mes_len_check(msg, len, CHATBOX_SIZE);
+
 	if ((is_charcommand(fd, sd, command) != CharCommand_None) ||
 		(is_atcommand(fd, sd, command) != AtCommand_None)) {
 		aFree(command);
@@ -9118,7 +9124,7 @@ void clif_parse_GMmessage(int fd, struct map_session_data *sd) {
 
 	size = WFIFOW(fd,2)-4;
 	mes = RFIFOP(fd,4);
-	mes_len_check(mes, size);
+	mes_len_check(mes, size, CHAT_SIZE);
 
 	intif_GMmessage(mes, size, 0);
 	if(log_config.gm && lv >= log_config.gm) {
@@ -10097,20 +10103,18 @@ void clif_parse_SolveCharName(int fd, struct map_session_data *sd) {
  */
 void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
-	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
-		pc_isGM(sd) >= get_atcommand_level(AtCommand_ResetState)) {
-		switch(RFIFOW(fd,2)){
-		case 0:
-			pc_resetstate(sd);
-			break;
-		case 1:
-			pc_resetskill(sd,1);
-			break;
-		}
-		if((log_config.gm) && (get_atcommand_level(AtCommand_ResetState) >= log_config.gm)) {
-			log_atcommand(sd, RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
-		}
-	}
+	if (battle_config.atc_gmonly && !pc_isGM(sd))
+		return;
+	if (pc_isGM(sd) < get_atcommand_level(AtCommand_ResetState))
+		return;
+
+	if (RFIFOW(fd,2))
+		pc_resetskill(sd,1);
+	else
+		pc_resetstate(sd);
+
+	if(log_config.gm && get_atcommand_level(AtCommand_ResetState >= log_config.gm))
+		log_atcommand(sd, RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
 }
 
 /*==========================================
@@ -10130,7 +10134,7 @@ void clif_parse_LGMmessage(int fd, struct map_session_data *sd) {
 
 	len = RFIFOW(fd,2) - 4;
 	mes = RFIFOP(fd,4);
-	mes_len_check(mes, len);
+	mes_len_check(mes, len, CHAT_SIZE);
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = len+4;
@@ -10364,7 +10368,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 	len = RFIFOW(fd,2) - 4;
 	mes = RFIFOP(fd,4);
-	mes_len_check(mes, len);
+	mes_len_check(mes, len, CHAT_SIZE);
 
 	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
 		is_atcommand(fd, sd, mes) != AtCommand_None)
@@ -10641,7 +10645,7 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 	len = RFIFOW(fd,2) - 4;
 	mes = RFIFOP(fd,4);
-	mes_len_check(mes, len);
+	mes_len_check(mes, len, CHAT_SIZE);
 
 	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
 		is_atcommand(fd, sd, mes) != AtCommand_None)
@@ -10894,64 +10898,65 @@ void clif_parse_Recall(int fd, struct map_session_data *sd) {	// Added by RoVeRT
 }
 
 /*==========================================
- * /monster /item rewriten by [Yor]
+ * /monster /item 
  *------------------------------------------
  */
 void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd) {
-	char monster_item_name[NAME_LENGTH+10]; //Additional space is for logging, eg: "@monster Poring"
+	char *monster_item_name;
+	char message[NAME_LENGTH+10]; //For logging.
 	int level;
+	RFIFOHEAD(fd);
 
-	memset(monster_item_name, '\0', sizeof(monster_item_name));
+	if (battle_config.atc_gmonly && !pc_isGM(sd))
+		return;
 
-	if (battle_config.atc_gmonly == 0 || pc_isGM(sd)) {
-		RFIFOHEAD(fd);
-		memcpy(monster_item_name, RFIFOP(fd,2), NAME_LENGTH);
+	monster_item_name = RFIFOP(fd,2);
+	monster_item_name[NAME_LENGTH-1] = '\0';
 
-		if (mobdb_searchname(monster_item_name) != 0) {
-			if (pc_isGM(sd) >= (level =get_atcommand_level(AtCommand_Spawn)))	// changed from AtCommand_Monster for Skots [Reddozen]
-			{
-				atcommand_monster(fd, sd, "@spawn", monster_item_name); // as @spawn
-				if(log_config.gm && level >= log_config.gm)
-				{	//Log action. [Skotlex]
-					snprintf(monster_item_name, sizeof(monster_item_name)-1, "@spawn %s", RFIFOP(fd,2));
-					log_atcommand(sd, monster_item_name);
-				}
-			}
-		} else if (itemdb_searchname(monster_item_name) != NULL) {
-			if (pc_isGM(sd) >= (level = get_atcommand_level(AtCommand_Item)))
-			{
-				atcommand_item(fd, sd, "@item", monster_item_name); // as @item
-				if(log_config.gm && level >= log_config.gm)
-				{	//Log action. [Skotlex]
-					snprintf(monster_item_name, sizeof(monster_item_name)-1, "@item %s", RFIFOP(fd,2));
-					log_atcommand(sd, monster_item_name);
-				}
-			}
+	if (mobdb_searchname(monster_item_name)) {
+		if (pc_isGM(sd) < (level=get_atcommand_level(AtCommand_Spawn)))
+			return;
+		atcommand_monster(fd, sd, "@spawn", monster_item_name); // as @spawn
+		if(log_config.gm && level >= log_config.gm)
+		{	//Log action. [Skotlex]
+			snprintf(message, sizeof(message)-1, "@spawn %s", monster_item_name);
+			log_atcommand(sd, message);
 		}
+		return;
+	}
+	if (itemdb_searchname(monster_item_name) == NULL)
+		return;
+	if (pc_isGM(sd) < (level = get_atcommand_level(AtCommand_Item)))
+		return;
+	atcommand_item(fd, sd, "@item", monster_item_name); // as @item
+	if(log_config.gm && level >= log_config.gm)
+	{	//Log action. [Skotlex]
+		sprintf(message, "@item %s", monster_item_name);
+		log_atcommand(sd, message);
 	}
 }
 
 void clif_parse_GMHide(int fd, struct map_session_data *sd) {	// Modified by [Yor]
-	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) &&
-	    (pc_isGM(sd) >= get_atcommand_level(AtCommand_Hide))) {
-		if (sd->sc.option & OPTION_INVISIBLE) {
-			sd->sc.option &= ~OPTION_INVISIBLE;
-			if (sd->disguise)
-				status_set_viewdata(&sd->bl, sd->disguise);
-			else
-				status_set_viewdata(&sd->bl, sd->status.class_);
-			clif_displaymessage(fd, "Invisible: Off.");
-		} else {
-			sd->sc.option |= OPTION_INVISIBLE;
-			//Experimental hidden mode, changes your view class to invisible [Skotlex]
-			sd->vd.class_ = INVISIBLE_CLASS;
-			clif_displaymessage(fd, "Invisible: On.");
-			if((log_config.gm) && (get_atcommand_level(AtCommand_Hide) >= log_config.gm)) {
-				log_atcommand(sd, "/hide");
-			}
-		}
-		clif_changeoption(&sd->bl);
+	if (battle_config.atc_gmonly && !pc_isGM(sd))
+		return;
+	if (pc_isGM(sd) < get_atcommand_level(AtCommand_Hide))
+		return;
+
+	if (sd->sc.option & OPTION_INVISIBLE) {
+		sd->sc.option &= ~OPTION_INVISIBLE;
+		if (sd->disguise)
+			status_set_viewdata(&sd->bl, sd->disguise);
+		else
+			status_set_viewdata(&sd->bl, sd->status.class_);
+		clif_displaymessage(fd, "Invisible: Off.");
+	} else {
+		sd->sc.option |= OPTION_INVISIBLE;
+		sd->vd.class_ = INVISIBLE_CLASS;
+		clif_displaymessage(fd, "Invisible: On.");
+		if(log_config.gm && get_atcommand_level(AtCommand_Hide) >= log_config.gm)
+			log_atcommand(sd, "/hide");
 	}
+	clif_changeoption(&sd->bl);
 }
 
 /*==========================================

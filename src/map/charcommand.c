@@ -1302,7 +1302,7 @@ int charcommand_baselevel(
 		clif_displaymessage(fd, msg_table[3]); // Character not found.
 		return -1;
 	}
-	if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change base level only lower or same gm level
+	if (pc_isGM(sd) < pc_isGM(pl_sd)) { // you can change base level only lower or same gm level
 		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
 		return -1;
 	}
