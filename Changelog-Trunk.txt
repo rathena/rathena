@@ -14,7 +14,6 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* The inf2 parameter of the skill_db is now red as an hexadecimal.
 	* The super novice self-revive angel will now trigger only once per
 	  session, if you relog you can have it trigger again. [Skotlex]
-	* Applied Dj-Yhn's fix to 'npcshopattach' [ultramage]
 	* Fixed the skill tree not always updating when using @allskill
 	* Probably fixed the target-change on melee attack setting not working.
 	* Moved the deletion of the invincible timer when using skills so that it
