@@ -1338,17 +1338,15 @@ int charcommand_baselevel(
 		level *= -1;
 		if ((unsigned int)level >= pl_sd->status.base_level)
 			level = pl_sd->status.base_level -1;
-		if (pl_sd->status.status_point > 0) {
-			for (i = 0; i > -level; i--)
-				status_point += (pl_sd->status.base_level +i + 14) / 5;
-			if (pl_sd->status.status_point < status_point)
-				pc_resetstate(pl_sd);
-			if (pl_sd->status.status_point < status_point)
-				pl_sd->status.status_point = 0;
-			else
-				pl_sd->status.status_point -= status_point;
-			clif_updatestatus(pl_sd, SP_STATUSPOINT);
-		} // to add: remove status points from stats
+		for (i = 0; i > -level; i--)
+			status_point += (pl_sd->status.base_level +i + 14) / 5;
+		if (pl_sd->status.status_point < status_point)
+			pc_resetstate(pl_sd);
+		if (pl_sd->status.status_point < status_point)
+			pl_sd->status.status_point = 0;
+		else
+			pl_sd->status.status_point -= status_point;
+		clif_updatestatus(pl_sd, SP_STATUSPOINT);
 		pl_sd->status.base_level -= (unsigned int)level;
 		clif_updatestatus(pl_sd, SP_BASELEVEL);
 		clif_updatestatus(pl_sd, SP_NEXTBASEEXP);

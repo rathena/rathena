@@ -2743,17 +2743,15 @@ int atcommand_baselevelup(const int fd, struct map_session_data* sd, const char*
 		level*=-1;
 		if ((unsigned int)level >= sd->status.base_level)
 			level = sd->status.base_level-1;
-		if (sd->status.status_point > 0) {
-			for (i = 0; i > -level; i--)
-				status_point += (sd->status.base_level + i + 14) / 5;
-			if (sd->status.status_point < status_point)
-				pc_resetstate(sd);
-			if (sd->status.status_point < status_point)
-				sd->status.status_point = 0;
-			else
-				sd->status.status_point -= status_point;
-			clif_updatestatus(sd, SP_STATUSPOINT);
-		} /* to add: remove status points from stats */
+		for (i = 0; i > -level; i--)
+			status_point += (sd->status.base_level + i + 14) / 5;
+		if (sd->status.status_point < status_point)
+			pc_resetstate(sd);
+		if (sd->status.status_point < status_point)
+			sd->status.status_point = 0;
+		else
+			sd->status.status_point -= status_point;
+		clif_updatestatus(sd, SP_STATUSPOINT);
 		sd->status.base_level -= (unsigned int)level;
 		clif_updatestatus(sd, SP_BASELEVEL);
 		clif_updatestatus(sd, SP_NEXTBASEEXP);

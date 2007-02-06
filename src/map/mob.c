@@ -2058,7 +2058,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double exp;
 		
 		//mapflag: noexp check [Lorky]
-		if (map[m].flag.nobaseexp)
+		if (map[m].flag.nobaseexp || !(type&2))
 			exp =1; 
 		else {
 			exp = md->db->mexp;
@@ -2075,7 +2075,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		clif_mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd, &md->bl, mexp,0);
 		log_mvp[1] = mexp;
-		if(!map[m].flag.nomvploot)
+		if(!map[m].flag.nomvploot && !(type&1))
 		for(j=0;j<3;j++){
 			i = rand() % 3;
 			

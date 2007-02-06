@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/05
+	* Fixed @lvup, #lvup not doing a stat reset and lowering your status points
+	  if you had 0 status points at that time.
+	* Fixed MvP exp and item rewards being given even when the mob_dead flag
+	  specifies you should not receive exp or items.
 	* Updated the code so that now a range of a skill is determined by the
 	  skill's range in the db. Now only skills with less than 5 cells of range
 	  are melee.
