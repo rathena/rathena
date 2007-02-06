@@ -1267,6 +1267,8 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 	if( g==NULL )
 		return 0;
 	idx=guild_getindex(g,account_id,char_id);
+	if (idx == -1)
+		return 0;
 	switch(type){
 	case GMI_POSITION:
 		g->member[idx].position=dd;

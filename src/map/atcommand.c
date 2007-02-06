@@ -9861,7 +9861,8 @@ int atcommand_fakename(const int fd, struct map_session_data* sd, const char* co
 		return 0;
 	}
 	
-	memcpy(sd->fakename,name,NAME_LENGTH-1);
+	memcpy(sd->fakename,name,NAME_LENGTH);
+	sd->fakename[NAME_LENGTH-1] = '\0';
 	clif_charnameack(0, &sd->bl);
 	clif_displaymessage(sd->fd,"Fake name enabled.");
 	

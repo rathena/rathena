@@ -750,6 +750,8 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 			p->party.member[i].lv = lv;
 			int_party_check_lv(p);
 		}
+		//Send online/offline update.
+		mapif_party_membermoved(&p->party, i);
 	}
 
 	if (p->party.member[i].lv != lv) {

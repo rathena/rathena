@@ -2058,7 +2058,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		double exp;
 		
 		//mapflag: noexp check [Lorky]
-		if (map[m].flag.nobaseexp || !(type&2))
+		if (map[m].flag.nobaseexp || type&2)
 			exp =1; 
 		else {
 			exp = md->db->mexp;
