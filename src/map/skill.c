@@ -3307,7 +3307,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 		default:
 			//Skill is actually ground placed.
-			if ((src == bl || skillid == PF_SPIDERWEB) && skill_get_unit_id(skillid,0))
+			if (src == bl && skill_get_unit_id(skillid,0))
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
@@ -5556,11 +5556,12 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 		case AM_RESURRECTHOMUN:
+		case PF_SPIDERWEB:
 			//Find a random spot to place the skill. [Skotlex]
 			inf2 = skill_get_splash(ud->skillid, ud->skilllv);
 			ud->skillx = src->x + inf2;
 			ud->skilly = src->y + inf2;
-			if (!map_random_dir(src, &ud->skillx, &ud->skilly)) {
+			if (inf2 && !map_random_dir(src, &ud->skillx, &ud->skilly)) {
 				ud->skillx = src->x;
 				ud->skilly = src->y;
 			}

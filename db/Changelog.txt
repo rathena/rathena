@@ -21,6 +21,7 @@
 ========================
 
 02/07
+	* Modified Spider web so that it can't be casted on top of another web.
 	* Updated the range of BioExplosion and Self Destruction so they count as
 	  ranged skills.
 02/05
