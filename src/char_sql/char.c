@@ -3410,8 +3410,6 @@ int parse_char(int fd) {
 			}
 
 			set_char_online(i, auth_fifo[auth_fifo_pos].char_id, auth_fifo[auth_fifo_pos].account_id);
-			//Checks to see if the even share setting of the party must be broken.
-			inter_party_logged(char_dat.party_id, char_dat.account_id, char_dat.char_id);
 			auth_fifo_pos++;
 			break;
 
