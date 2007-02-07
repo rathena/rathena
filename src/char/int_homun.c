@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "../common/mmo.h"
+#include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/db.h"
 #include "../common/lock.h"

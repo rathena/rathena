@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include "../common/cbasetypes.h"
+#include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"

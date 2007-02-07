@@ -9347,7 +9347,7 @@ int atcommand_homhungry(const int fd, struct map_session_data* sd, const char* c
 }
 
 /*==========================================
- * modify homunculus hunger [orn]
+ * make the homunculus speak [orn]
  *------------------------------------------
  */
 int atcommand_homtalk(const int fd, struct map_session_data* sd, const char* command, const char* message)

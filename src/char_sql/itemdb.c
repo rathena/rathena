@@ -10,6 +10,7 @@
 #include "inter.h"
 #include "char.h"
 #include "utils.h"
+#include "../common/malloc.h"
 #include "../common/showmsg.h"
 
 #define MAX_RANDITEM	2000

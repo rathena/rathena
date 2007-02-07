@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "char.h"
+#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 

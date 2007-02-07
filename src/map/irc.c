@@ -1,4 +1,8 @@
+#ifndef _IRC_H_
+#define _IRC_H_
+
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -541,3 +545,5 @@ int irc_read_conf(char *file) {
 
 	return 1;
 }
+
+#endif //_IRC_H_

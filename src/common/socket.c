@@ -103,10 +103,9 @@ void set_defaultparse(int (*defaultparse)(int))
 
 void set_nonblocking(int fd, int yes)
 {
-	// I don't think we need this
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
 	if(mode_neg)
-		setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof yes);
+		setsockopt(fd, IPPROTO_TCP, TCP_NODELAY,(char *)&yes, sizeof yes);
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
@@ -129,16 +128,16 @@ static void setsocketopts(int fd)
 	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof(yes));
 //	setsockopt(fd, SOL_SOCKET, SO_SNDBUF, (char *) &wfifo_size , sizeof(rfifo_size ));
 //	setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (char *) &rfifo_size , sizeof(rfifo_size ));
-#ifdef __WIN32
-{	//set SO_LINGER option (from Freya)
+
+	// force the socket into no-wait, graceful-close mode (should be the default, but better make sure)
 	//(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/closesocket_2.asp)
+	{
 	struct linger opt;
-	opt.l_onoff = 1;
-	opt.l_linger = 0;
+	opt.l_onoff = 0; // SO_DONTLINGER
+	opt.l_linger = 0; // Do not care
 	if (setsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt)))
 		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection %d!\n",fd);
-}
-#endif
+	}
 }
 
 /*======================================
@@ -148,14 +147,14 @@ static void setsocketopts(int fd)
 static void set_eof(int fd)
 {	//Marks a connection eof and invokes the parse_function to disconnect it right away. [Skotlex]
 	if (session_isActive(fd))
-		session[fd]->eof=1;
+		session[fd]->eof = 1;
 }
 
 static int recv_to_fifo(int fd)
 {
 	int len;
 
-	if( (fd < 0) || (fd >= FD_SETSIZE) || (NULL == session[fd]) || (session[fd]->eof) )
+	if( !session_isActive(fd) )
 		return -1;
 
 	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0);
@@ -218,8 +217,7 @@ static int send_from_fifo(int fd)
 	return 0;
 }
 
-/// Best effort
-/// There's no warranty that the data will be sent.
+/// Best effort - there's no warranty that the data will be sent.
 void flush_fifo(int fd)
 {
 	if(session[fd] != NULL && session[fd]->func_send == send_from_fifo)
@@ -229,9 +227,8 @@ void flush_fifo(int fd)
 void flush_fifos(void)
 {
 	int i;
-	for(i=1;i<fd_max;i++)
-		if(session[i] != NULL &&
-		   session[i]->func_send == send_from_fifo)
+	for(i = 1; i < fd_max; i++)
+		if(session[i] != NULL && session[i]->func_send == send_from_fifo)
 			send_from_fifo(i);
 }
 
@@ -327,7 +324,7 @@ int make_listen_bind(long ip,int port)
 		exit(1);
 	}
 
-	if(fd_max<=fd) fd_max=fd+1;
+	if(fd_max <= fd) fd_max = fd + 1;
 	FD_SET(fd, &readfds );
 
 	CREATE(session[fd], struct socket_data, 1);
@@ -489,7 +486,7 @@ int realloc_writefifo(int fd, size_t addition)
 	return 0;
 }
 
-int WFIFOSET(int fd,int len)
+int WFIFOSET(int fd, int len)
 {
 	size_t newreserve;
 	struct socket_data *s = session[fd];
@@ -668,7 +665,7 @@ int do_parsepacket(void)
 {
 	int i;
 	struct socket_data *sd;
-	for(i = 1; i < fd_max; i++){
+	for(i = 1; i < fd_max; i++) {
 		sd = session[i];
 		if(!sd)
 			continue;
@@ -1017,7 +1014,7 @@ int RFIFOSKIP(int fd,int len)
 {
     struct socket_data *s;
 
-	if ( !session_isActive(fd) ) //Nullpo error here[Kevin]
+	if ( !session_isActive(fd) )
 		return 0;
 
 	s = session[fd];
@@ -1195,9 +1192,9 @@ void socket_init(void)
 	// initialise last send-receive tick
 	last_tick = time(0);
 
-	// session[0] is for disconnected sessions of the map server, and as such, 
+	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
-	//##TODO "flush" this session periodically O.O [FlavioJS]
+	// ##TODO "flush" this session periodically O.O [FlavioJS]
 	CREATE(session[0], struct socket_data, 1);
 	CREATE(session[0]->rdata, unsigned char, 2*rfifo_size);
 	CREATE(session[0]->wdata, unsigned char, 2*wfifo_size);
@@ -1218,8 +1215,8 @@ void socket_init(void)
 
 
 int session_isValid(int fd)
-{	//End of Exam has pointed out that fd==0 is actually an unconnected session! [Skotlex]
-	return ( (fd>0) && (fd<FD_SETSIZE) && (NULL!=session[fd]) );
+{
+	return ( (fd > 0) && (fd < FD_SETSIZE) && (session[fd] != NULL) );
 }
 
 int session_isActive(int fd)
@@ -1227,7 +1224,8 @@ int session_isActive(int fd)
 	return ( session_isValid(fd) && !session[fd]->eof );
 }
 
-in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str) {
+in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str)
+{
 	struct hostent *h = gethostbyname(hostname);
 	char ip_buf[16];
 	unsigned char ip2[4];

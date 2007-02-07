@@ -10,6 +10,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
+#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/socket.h"
 #include "../common/showmsg.h"

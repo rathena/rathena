@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/07
+	* Cleaning up of the socket code [ultramage]
+	- Shuffled includes around for files that were leeching off of socket.h
+	- Added code that enforces standard shutdown behavior for sockets
 	* Removed old script bonuses bMatk, bMatk1, bMatk2.
 	* Fixed char-server not sending online notification when a party member
 	  logs in.

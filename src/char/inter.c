@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 

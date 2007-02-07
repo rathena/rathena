@@ -4,10 +4,12 @@
 // original code from athena
 // SQL conversion by Jioh L. Jung
 
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "char.h"
+#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 #include "inter.h"
