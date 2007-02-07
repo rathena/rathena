@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/02/07
+	* Moved CHAT_SIZE back to map.h because log_atcommand uses it on sql 
+	  builds. (moved to clif.c in r9811) [FlavioJS]
 2007/02/06
 	* Cleaned up the script engine's get_val() function [ultramage]
 	- changed the long if-spaghetti into a compact switch statement
@@ -38,6 +41,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Moved the deletion of the invincible timer when using skills so that it
 	  is not deleted for skills such as Ashura (when just selecting a target)
 	  [Skotlex]
+2007/02/03
 	* Continuing the checking of script buildin functions and stop the script 
 	  execution when an attached player is required but not found.
 	  This task will be referenced as Ticket #41 from now on. [FlavioJS]
@@ -49,7 +53,6 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  (although I'm not at all sure that the fix is correct)
 	  Ref: http://www.eathena.ws/board/index.php?showtopic=137274
 	* Removed the silly and misleading 'firewall detected' message
-2007/02/03
 	* Added missing vc6 project file
 	* Corrected a lie in the script documentation [ultramage]
 2007/02/02

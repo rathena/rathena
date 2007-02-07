@@ -164,6 +164,8 @@ enum {
 #define MESSAGE_SIZE 80
 //String length you can write in the 'talking box'
 #define CHATBOX_SIZE 70
+//Talk max size: <name> : <message of 70> [Skotlex]
+#define CHAT_SIZE	(NAME_LENGTH + 3 + CHATBOX_SIZE)
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 

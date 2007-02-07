@@ -4,9 +4,6 @@
 #define DUMP_UNKNOWN_PACKET	0
 #define DUMP_ALL_PACKETS	0
 
-//Talk max size: <name> : <message of 70> [Skotlex]
-#define CHAT_SIZE	(NAME_LENGTH + 3 + CHATBOX_SIZE)
-
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
