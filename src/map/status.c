@@ -1211,13 +1211,12 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	//Non players get the value set, players need to stack with previous bonuses.
 	if (bl->type != BL_PC)
 		status->batk = 
-		status->matk_min = status->matk_max =
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 = 0;
 
-	status->matk_min += status_base_matk_min(status);
-	status->matk_max += status_base_matk_max(status);
+	status->matk_min = status_base_matk_min(status);
+	status->matk_max = status_base_matk_max(status);
 
 	status->hit += level + status->dex;
 	status->flee += level + status->agi;
@@ -2665,8 +2664,10 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 		status->matk_max = status_base_matk_max(status);
 
 		//Bonuses from previous matk
-		status->matk_max += b_status->matk_max - status_base_matk_max(b_status);
-		status->matk_min += b_status->matk_min - status_base_matk_min(b_status);
+		if(sd->matk_rate != 100){
+			status->matk_max = status->matk_max * sd->matk_rate/100;
+			status->matk_min = status->matk_min * sd->matk_rate/100;
+		}
 
 		status->matk_min = status_calc_matk(&sd->bl, &sd->sc, status->matk_min);
 		status->matk_max = status_calc_matk(&sd->bl, &sd->sc, status->matk_max);

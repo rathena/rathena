@@ -483,6 +483,8 @@ int inter_party_logged(int party_id, int account_id, int char_id)
 				if(p->party.member[i].lv < p->min_lv ||
 					p->party.member[i].lv > p->max_lv)
 					int_party_check_lv(p);
+				//Send online update to map servers
+				mapif_party_membermoved(&p->party, i);
 			}
 			break;
 		}

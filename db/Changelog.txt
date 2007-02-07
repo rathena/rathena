@@ -20,6 +20,9 @@
 
 ========================
 
+02/07
+	* Updated the range of BioExplosion and Self Destruction so they count as
+	  ranged skills.
 02/05
 	* Updated comments and inf2 values of the skill_db to use the new format.
 	* Soul Change now can't be casted on self.

@@ -204,7 +204,7 @@
 170,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
 171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
 172,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
-173,1,6,4,3,2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
+173,5,6,4,3,2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
 174,-1,6,1,-1,2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
 175,0,0,4,0,1,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
 176,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
@@ -612,7 +612,7 @@
 8013,9,6,1,0,0,0,5,1:2:3:4:5,no,0,0,0,magic,0	//HVAN_CAPRICE
 8014,0,6,4,0,1,0,5,0,no,0,0,0,none,0	//HVAN_CHAOTIC
 8015,0,0,0,0,1,0,5,0,no,0,0,0,none,0	//HVAN_INSTRUCT
-8016,0,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
+8016,5,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
 
 10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_APPROVAL#Approval#
 10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_KAFRACONTRACT#Kafra Contract#

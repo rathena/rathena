@@ -1338,26 +1338,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->batk = cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
-	case SP_MATK1:
-		if(sd->state.lr_flag != 2) {
-			bonus = status->matk_max + val;
-			status->matk_max = cap_value(bonus, 0, USHRT_MAX);
-		}
-		break;
-	case SP_MATK2:
-		if(sd->state.lr_flag != 2) {
-			bonus = status->matk_min + val;
-			status->matk_min = cap_value(bonus, 0, USHRT_MAX);
-		}
-		break;
-	case SP_MATK:
-		if(sd->state.lr_flag != 2) {
-			bonus = status->matk_max + val;
-			status->matk_max = cap_value(bonus, 0, USHRT_MAX);
-			bonus = status->matk_min + val;
-			status->matk_min = cap_value(bonus, 0, USHRT_MAX);
-		}
-		break;
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->def + val;
@@ -4639,10 +4619,9 @@ int pc_resetlvl(struct map_session_data* sd,int type)
 				pc_unequipitem(sd,sd->equip_index[i],2);
 	}
 
-	if ((type == 1 || type == 2 || type == 3) && sd->status.party_id) {
-		//Send map-change packet to do a level range check and break party settings. [Skotlex]
-		party_send_movemap(sd);
-	}
+	if ((type == 1 || type == 2 || type == 3) && sd->status.party_id)
+		party_send_levelup(sd);
+
 	status_calc_pc(sd,0);
 	clif_skillinfoblock(sd);
 

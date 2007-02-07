@@ -261,8 +261,6 @@ bDex		17
 bLuk		18
 bAtk		41
 bAtk2		42
-bMatk1		43
-bMatk2		44
 bDef		45
 bDef2		46
 bMdef		47
@@ -299,7 +297,6 @@ bNearAtkDef	1020
 bLongAtkDef	1021
 bDoubleRate	1022
 bDoubleAddRate	1023
-bMatk		1024
 bMatkRate	1025
 bIgnoreDefEle	1026
 bIgnoreDefRace	1027
