@@ -1886,95 +1886,81 @@ struct map_session_data *script_rid2sd(struct script_state *st)
 
 
 /*==========================================
- * •Ï”‚Ì“Ç‚İæ‚è
- *------------------------------------------
- */
-int get_val(struct script_state*st,struct script_data* data)
+ * Retrieves the value of a script variable
+ *------------------------------------------*/
+int get_val(struct script_state* st, struct script_data* data)
 {
-	struct map_session_data *sd=NULL;
-	if(data->type==C_NAME){
-		char *name=str_buf+str_data[data->u.num&0x00ffffff].str;
-		char prefix=*name;
-		char postfix=name[strlen(name)-1];
+	struct map_session_data* sd = NULL;
+	char *name, prefix, postfix;
+	
+	if(data->type != C_NAME) return 0;
 
-		if(not_server_variable(prefix)){
-			if((sd=script_rid2sd(st))==NULL)
-				ShowError("get_val error name?:%s\n",name);
-		}
-		if(postfix=='$'){
+	name = str_buf + str_data[data->u.num&0x00ffffff].str;
+	prefix = name[0]; postfix = name[strlen(name)-1];
 
-			data->type=C_CONSTSTR;
-			if( prefix=='@'){
-				if(sd)
-					data->u.str = pc_readregstr(sd,data->u.num);
-			}else if(prefix=='$'){
-				data->u.str = (char *)idb_get(mapregstr_db,data->u.num);
-			}else if(prefix=='#'){
-				if( name[1]=='#'){
-					if(sd)
-					data->u.str = pc_readaccountreg2str(sd,name);
-				}else{
-					if(sd)
-					data->u.str = pc_readaccountregstr(sd,name);
-				}
- 			}else if(prefix=='.') {
-				struct linkdb_node **n;
-				if( data->ref ) {
-					n = data->ref;
-				} else if( name[1] == '@' ) {
-					n = st->stack->var_function;
-				} else {
-					n = &st->script->script_vars;
-				}
-				data->u.str = linkdb_search(n, (void*)data->u.num );
-			}else{
-				if(sd)
-				data->u.str = pc_readglobalreg_str(sd,name);
- 			} // [zBuffer]
-			/*else{
-				ShowWarning("script: get_val: illegal scope string variable.\n");
-				data->u.str = "!!ERROR!!";
-			}*/
-			if( data->u.str == NULL )
-				data->u.str ="";
-
-		}else{
-
-			data->type=C_INT;
-			if(str_data[data->u.num&0x00ffffff].type==C_INT){
-				data->u.num = str_data[data->u.num&0x00ffffff].val;
-			}else if(str_data[data->u.num&0x00ffffff].type==C_PARAM){
-				if(sd)
-					data->u.num = pc_readparam(sd,str_data[data->u.num&0x00ffffff].val);
-			}else if(prefix=='@'){
-				if(sd)
-					data->u.num = pc_readreg(sd,data->u.num);
-			}else if(prefix=='$'){
-				data->u.num = (int)idb_get(mapreg_db,data->u.num);
-			}else if(prefix=='#'){
-				if( name[1]=='#'){
-					if(sd)
-						data->u.num = pc_readaccountreg2(sd,name);
-				}else{
-					if(sd)
-						data->u.num = pc_readaccountreg(sd,name);
-				}
-			}else if(prefix=='.'){
-				struct linkdb_node **n;
-				if( data->ref ) {
-					n = data->ref;
-				} else if( name[1] == '@' ) {
-					n = st->stack->var_function;
-				} else {
-					n = &st->script->script_vars;
-				}
-				data->u.num = (int)linkdb_search(n, (void*)data->u.num);
-			}else{
-				if(sd)
-					data->u.num = pc_readglobalreg(sd,name);
-			}
-		}
+	if(not_server_variable(prefix)) {
+		sd = script_rid2sd(st);
+		if (!sd) { // needs player attached
+			// throw error, load some meaningful default values and return
+			ShowError("get_val error, cannot access player variable '%s'\n", name);
+			if (postfix == '$') { data->type = C_CONSTSTR; data->u.str = ""; } else { data->type = C_INT; data->u.num = 0; }
+			return 0;
+		}			
 	}
+
+	if(postfix == '$') { // string variable
+
+		data->type = C_CONSTSTR;
+
+		switch (prefix) {
+		case '@':
+			data->u.str = pc_readregstr(sd, data->u.num); break;
+		case '$':
+			data->u.str = (char *)idb_get(mapregstr_db,data->u.num); break;
+		case '#':
+			data->u.str = (name[1] == '#') ? pc_readaccountreg2str(sd, name) : pc_readaccountregstr(sd, name); break;
+		case '.': {
+			struct linkdb_node** n;
+			n = (data->ref) ? data->ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
+			data->u.str = linkdb_search(n, (void*)data->u.num);
+			}
+			break;
+		default:
+			data->u.str = pc_readglobalreg_str(sd, name); break;
+		}
+
+		if( data->u.str == NULL )
+			data->u.str = "";
+
+	} else { // integer variable
+
+		data->type = C_INT;
+
+		if(str_data[data->u.num&0x00ffffff].type == C_INT) {
+			data->u.num = str_data[data->u.num&0x00ffffff].val;
+		} else if(str_data[data->u.num&0x00ffffff].type == C_PARAM) {
+			data->u.num = pc_readparam(sd, str_data[data->u.num&0x00ffffff].val);
+		}
+		else
+		switch (prefix) {
+		case '@':
+			data->u.num = pc_readreg(sd, data->u.num); break;
+		case '$':
+			data->u.num = (int)idb_get(mapreg_db, data->u.num); break;
+		case '#':
+			data->u.num = (name[1] == '#') ? pc_readaccountreg2(sd, name) : pc_readaccountreg(sd, name); break;
+		case '.': {
+			struct linkdb_node** n;
+			n = (data->ref) ? data->ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
+			data->u.num = (int)linkdb_search(n, (void*)data->u.num);
+			}
+			break;
+		default:
+			data->u.num = pc_readglobalreg(sd, name); break;
+		}
+
+	}
+
 	return 0;
 }
 /*==========================================
