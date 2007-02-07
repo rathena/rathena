@@ -4319,10 +4319,9 @@ int do_init(int argc, char **argv){
 	if(char_gm_read)
 		read_gm_account();
 
-
-	if ( console ) {
-	    set_defaultconsoleparse(parse_console);
-	   	start_console();
+	if( console )
+	{
+		//##TODO invoke a CONSOLE_START plugin event
 	}
 
 	//Cleaning the tables for NULL entrys @ startup [Sirius]

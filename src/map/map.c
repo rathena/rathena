@@ -3978,9 +3978,9 @@ int do_init(int argc, char *argv[]) {
 	//Done loading with the maps, no need for the grf module anymore.
 	grfio_final();
 
-	if ( console ) {
-		set_defaultconsoleparse(parse_console);
-		start_console();
+	if( console )
+	{
+		//##TODO invoke a CONSOLE_START plugin event
 	}
 
 	if (battle_config.pk_mode == 1)

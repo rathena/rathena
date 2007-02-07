@@ -4439,10 +4439,10 @@ int do_init(int argc, char **argv) {
 	add_timer_interval(gettick() + autosave_interval, mmo_char_sync_timer, 0, 0, autosave_interval);
 
 	char_read_fame_list(); //Read fame lists.
-	
-	if(console) {
-	    set_defaultconsoleparse(parse_console);
-	   	start_console();
+
+	if( console )
+	{
+		//##TODO invoke a CONSOLE_START plugin event
 	}
 
 	char_log("The char-server is ready (Server is listening on the port %d)." RETCODE, char_port);

@@ -4186,9 +4186,10 @@ int do_init(int argc, char **argv) {
 		add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");
 		add_timer_interval(gettick() + ip_sync_interval, sync_ip_addresses, 0, 0, ip_sync_interval);
 	}
-	if(console) {
-		set_defaultconsoleparse(parse_console);
-	   	start_console();
+
+	if( console )
+	{
+		//##TODO invoke a CONSOLE_START plugin event
 	}
 
 	new_reg_tick=gettick();

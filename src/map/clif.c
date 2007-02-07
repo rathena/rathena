@@ -4858,7 +4858,7 @@ int clif_displaymessage(const int fd, char* mes)
 	// invalid pointer?
 	nullpo_retr(-1, mes);
 	
-	//Console [Wizputer] //Scrapped, as these are shared by disconnected players =X [Skotlex]
+	//Scrapped, as these are shared by disconnected players =X [Skotlex]
 	if (fd == 0)
 		return 0;
 	else {

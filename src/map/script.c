@@ -250,7 +250,7 @@ enum {
 	MF_GUILDLOCK
 };
 
-//Reports on the console the src of an script error.
+//Reports on the console the src of a script error.
 static void report_src(struct script_state *st) {
 	struct block_list *bl;
 	if (!st->oid) return; //Can't report source.

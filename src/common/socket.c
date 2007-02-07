@@ -86,8 +86,6 @@ struct socket_data *session[FD_SETSIZE];
 static int null_parse(int fd);
 static int (*default_func_parse)(int) = null_parse;
 
-static int null_console_parse(char *buf);
-static int (*default_console_parse)(char*) = null_console_parse;
 #ifndef MINICORE
 static int connect_check(unsigned int ip);
 #else
@@ -344,38 +342,6 @@ int make_listen_port(int port)
 	return make_listen_bind(INADDR_ANY,port);
 }
 
-// Console Reciever [Wizputer]
-int console_recieve(int i)
-{
-	int n;
-	char *buf;
-
-	CREATE(buf, char, 64);
-
-	n = read(0, buf , 64);
-	if ( n < 0 )
-		ShowError("Console input read error\n");
-	else
-	{
-		ShowNotice ("Sorry, the console is currently non-functional.\n");
-//		session[0]->func_console(buf);
-	}
-
-	aFree(buf);
-	return 0;
-}
-
-void set_defaultconsoleparse(int (*defaultparse)(char*))
-{
-	default_console_parse = defaultparse;
-}
-
-static int null_console_parse(char *buf)
-{
-	ShowMessage("null_console_parse : %s\n",buf);
-	return 0;
-}
-
 // function parse table
 // To-do: -- use dynamic arrays
 //        -- add a register_parse_func();
@@ -399,26 +365,6 @@ void func_parse_check (struct socket_data *sd)
 
 	// undefined -- treat as raw socket (using default parse)
 	sd->type = SESSION_RAW;
-}
-
-// Console Input [Wizputer]
-int start_console(void)
-{
-	//Until a better plan is came up with... can't be using session[0] anymore! [Skotlex]
-	ShowNotice("The console is currently nonfunctional.\n");
-	return 0;
-
-	FD_SET(0,&readfds);
-
-	if (!session[0]) {	// dummy socket already uses fd 0
-		CREATE(session[0], struct socket_data, 1);
-	}
-	memset(session[0],0,sizeof(*session[0]));
-
-	session[0]->func_recv = console_recieve;
-	session[0]->func_console = default_console_parse;
-
-	return 0;
 }
 
 int make_connection(long ip,int port)
@@ -1249,8 +1195,9 @@ void socket_init(void)
 	// initialise last send-receive tick
 	last_tick = time(0);
 
-	// session[0] Was for the console (whatever that was?), but is now currently used for disconnected sessions of the map
-	// server, and as such, should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
+	// session[0] is for disconnected sessions of the map server, and as such, 
+	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
+	//##TODO "flush" this session periodically O.O [FlavioJS]
 	CREATE(session[0], struct socket_data, 1);
 	CREATE(session[0]->rdata, unsigned char, 2*rfifo_size);
 	CREATE(session[0]->wdata, unsigned char, 2*wfifo_size);
@@ -1272,7 +1219,6 @@ void socket_init(void)
 
 int session_isValid(int fd)
 {	//End of Exam has pointed out that fd==0 is actually an unconnected session! [Skotlex]
-	//But this is not so true, it is used... for... something. The console uses it, would this not cause problems? [Skotlex]
 	return ( (fd>0) && (fd<FD_SETSIZE) && (NULL!=session[fd]) );
 }
 

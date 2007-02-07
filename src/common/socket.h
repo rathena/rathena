@@ -121,7 +121,6 @@ struct socket_data{
 	int (*func_recv)(int);
 	int (*func_send)(int);
 	int (*func_parse)(int);
-	int (*func_console)(char*);
 	void* session_data;
 	void* session_data2;
 	enum SessionType type;
@@ -168,10 +167,7 @@ extern void flush_fifo(int fd);
 extern void flush_fifos(void);
 extern void set_nonblocking(int fd, int yes);
 
-int start_console(void);
-
 void set_defaultparse(int (*defaultparse)(int));
-void set_defaultconsoleparse(int (*defaultparse)(char*));
 
 //Resolves the hostname and stores the string representation of the string in ip.
 //Meant to simplify calls to gethostbyname without the need of all the
