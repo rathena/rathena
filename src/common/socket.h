@@ -69,15 +69,6 @@
 #define TOL(n) ((uint32)((n)&UINT32_MAX))
 
 
-// Session type
-enum SessionType {
-	SESSION_UNKNOWN	= -1,
-	SESSION_RAW		= 0,
-	SESSION_HTTP	= 1,
-//-----------------
-	SESSION_MAX		= 2
-};
-
 // Struct declaration
 
 struct socket_data {
@@ -93,15 +84,7 @@ struct socket_data {
 	int (*func_parse)(int);
 	void* session_data;
 	void* session_data2;
-	enum SessionType type;
 };
-
-// Parse functions table
-struct func_parse_table {
-	int (*func)(int);
-	int (*check)(struct socket_data *);
-};
-extern struct func_parse_table func_parse_table[SESSION_MAX];
 
 
 // Data prototype declaration

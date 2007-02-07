@@ -7,6 +7,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Cleaning up of the socket code [ultramage]
 	- Shuffled includes around for files that were leeching off of socket.h
 	- Added code that enforces standard shutdown behavior for sockets
+	- Wiped out the poorly written parse code from r2211
 	* Removed old script bonuses bMatk, bMatk1, bMatk2.
 	* Fixed char-server not sending online notification when a party member
 	  logs in.

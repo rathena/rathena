@@ -282,7 +282,6 @@ static int connect_client(int listen_fd)
 	session[fd]->func_parse  = (session[listen_fd]->func_parse) ? session[listen_fd]->func_parse : default_func_parse;
 	session[fd]->client_addr = client_address;
 	session[fd]->rdata_tick  = last_tick;
-	session[fd]->type        = SESSION_UNKNOWN;	// undefined type
 
 	//ShowMessage("new_session : %d %d\n",fd,session[fd]->eof);
 	return fd;
@@ -337,31 +336,6 @@ int make_listen_bind(long ip,int port)
 int make_listen_port(int port)
 {
 	return make_listen_bind(INADDR_ANY,port);
-}
-
-// function parse table
-// To-do: -- use dynamic arrays
-//        -- add a register_parse_func();
-struct func_parse_table func_parse_table[SESSION_MAX];
-
-int default_func_check (struct socket_data *sd) { return 1; }
-
-void func_parse_check (struct socket_data *sd)
-{
-	int i;
-	for (i = SESSION_HTTP; i < SESSION_MAX; i++) {
-		if (func_parse_table[i].func &&
-			func_parse_table[i].check &&
-			func_parse_table[i].check(sd) != 0)
-		{
-			sd->type = i;
-			sd->func_parse = func_parse_table[i].func;
-			return;
-		}
-	}
-
-	// undefined -- treat as raw socket (using default parse)
-	sd->type = SESSION_RAW;
 }
 
 int make_connection(long ip,int port)
@@ -675,10 +649,7 @@ int do_parsepacket(void)
 		}
 		if(sd->rdata_size == 0 && sd->eof == 0)
 			continue;
-		if(sd->func_parse){
-			if(sd->type == SESSION_UNKNOWN)
-				func_parse_check(sd);
-			if(sd->type != SESSION_UNKNOWN)
+		if(sd->func_parse) {
 				sd->func_parse(i);
 			if(!session[i])
 				continue;
@@ -1200,10 +1171,6 @@ void socket_init(void)
 	CREATE(session[0]->wdata, unsigned char, 2*wfifo_size);
 	session[0]->max_rdata   = 2*rfifo_size;
 	session[0]->max_wdata   = 2*wfifo_size;
-
-	memset(func_parse_table, 0, sizeof(func_parse_table));
-	func_parse_table[SESSION_RAW].check = default_func_check;
-	func_parse_table[SESSION_RAW].func = default_func_parse;
 
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes

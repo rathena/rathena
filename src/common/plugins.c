@@ -337,7 +337,6 @@ void plugins_init(void)
 	register_plugin_func(EVENT_ATHENA_FINAL);
 
 	// networking
-	export_symbol(func_parse_table, SYMBOL_FUNC_PARSE_TABLE);
 	export_symbol(RFIFOSKIP,        SYMBOL_RFIFOSKIP);
 	export_symbol(WFIFOSET,         SYMBOL_WFIFOSET);
 	export_symbol(delete_session,   SYMBOL_DELETE_SESSION);
