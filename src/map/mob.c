@@ -1122,37 +1122,44 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if (md->attacked_id && mode&MD_CANATTACK)
 	{
 		if (md->attacked_id == md->target_id)
-		{
+		{	//Rude attacked check.
 			if (!battle_check_range(&md->bl, tbl, md->status.rhw.range) &&
-				(
-					(!can_move && battle_config.mob_ai&0x2) ||
+				(	//Can't attack back and can't reach back.
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
+					  	(battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB].timer != -1)) ||
 					(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH))
 				) &&
-				DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
-				md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			)
-			{	//Rude-attacked (avoid triggering due to can-walk delay).
-				if (!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move)
-					unit_escape(bl, tbl, rand()%10 +1);
+				md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
+				!mobskill_use(md, tick, MSC_RUDEATTACKED) && //If can't rude Attack
+				can_move && unit_escape(bl, tbl, rand()%10 +1)) //Attempt escape
+			{	//Escaped
+				md->attacked_id = 0;
+				return 0;
 			}
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||
 				(dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE ||
 				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
-				(battle_config.mob_ai&0x2 && !status_check_skilluse(bl, abl, 0, 0)) ||
-				!mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH) ||
-				(	//Gangster Paradise check
-					abl->type == BL_PC && !(mode&MD_BOSS) &&
-					((TBL_PC*)abl)->state.gangsterparadise
+				(battle_config.mob_ai&0x2 && !status_check_skilluse(bl, abl, 0, 0)) || //Retaliate check
+				(!battle_check_range(&md->bl, abl, md->status.rhw.range) &&
+					( //Reach check
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
+							(battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB].timer != -1)) ||
+						!mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+					)
 				)
-			)	{	//Can't attack back
+			)	{	//Rude attacked
 				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
-					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move)
-						unit_escape(bl, abl, rand()%10 +1);
+					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move &&
+					unit_escape(bl, abl, rand()%10 +1))
+				{	//Escaped.
+					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
+					md->attacked_id = 0;
+					return 0;
+				}
 			} else if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
-				md->attacked_id = 0; //Simply unlock, shouldn't attempt to run away when in dumb_ai mode.
 			} else { //Attackable
 				if (!tbl || dist < md->status.rhw.range || !check_distance_bl(&md->bl, tbl, dist)
 					|| battle_gettarget(tbl) != md->bl.id)

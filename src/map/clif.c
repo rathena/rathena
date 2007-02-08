@@ -8548,11 +8548,12 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	if (messagelen > CHAT_SIZE) { // messages mustn't be too long
 		int i;
 		// special case here - allow some more freedom for frost joke & dazzler 
-		for(i = 0; i < MAX_SKILLTIMERSKILL; i++) // the only way to check ~.~
-			if (sd->ud.skilltimerskill[i] && sd->ud.skilltimerskill[i]->timer != -1 &&
-			   (sd->ud.skilltimerskill[i]->skill_id == BA_FROSTJOKE || sd->ud.skilltimerskill[i]->skill_id == DC_SCREAM))
-				break;
-		if (i == MAX_SKILLTIMERSKILL) { // normal message, too long
+		// TODO:? You could use a state flag when FrostJoke/Scream is used, and unset it once the skill triggers. [Skotlex]
+		for(i = 0; i < MAX_SKILLTIMERSKILL && sd->ud.skilltimerskill[i] &&
+			sd->ud.skilltimerskill[i]->skill_id != BA_FROSTJOKE &&
+			sd->ud.skilltimerskill[i]->skill_id != DC_SCREAM; i++);
+
+		if (i == MAX_SKILLTIMERSKILL || !sd->ud.skilltimerskill[i]) { // normal message, too long
 			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, CHAT_SIZE, message);
 			return;
 		}
