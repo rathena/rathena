@@ -8524,9 +8524,9 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 
 /*==========================================
  * Validates and processes global messages
- *------------------------------------------
- */
-void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f3 <packet len>.w <strz>.?B
+ * S 008c/00f3 <packet len>.w <strz>.?B
+ *------------------------------------------*/
+void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 {
 	char* message;
 	unsigned int packetlen, messagelen, namelen;
@@ -8549,7 +8549,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) // S 008c/00f
 		int i;
 		// special case here - allow some more freedom for frost joke & dazzler 
 		for(i = 0; i < MAX_SKILLTIMERSKILL; i++) // the only way to check ~.~
-			if (sd->ud.skilltimerskill[i]->timer != -1 && (sd->ud.skilltimerskill[i]->skill_id == BA_FROSTJOKE || sd->ud.skilltimerskill[i]->skill_id == DC_SCREAM))
+			if (sd->ud.skilltimerskill[i] && sd->ud.skilltimerskill[i]->timer != -1 &&
+			   (sd->ud.skilltimerskill[i]->skill_id == BA_FROSTJOKE || sd->ud.skilltimerskill[i]->skill_id == DC_SCREAM))
 				break;
 		if (i == MAX_SKILLTIMERSKILL) { // normal message, too long
 			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, CHAT_SIZE, message);
