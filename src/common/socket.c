@@ -66,6 +66,9 @@ time_t last_tick;
 time_t stall_time = 60;
 int ip_rules = 1;
 
+uint32 addr_[16];   // ip addresses of local host (host byte order)
+int naddr_ = 0;   // # of ip addresses
+
 #ifndef TCP_FRAME_LEN
 #define TCP_FRAME_LEN	1024
 #endif
@@ -83,8 +86,7 @@ size_t wfifo_size = (16*1024);
 
 struct socket_data *session[FD_SETSIZE];
 
-static int null_parse(int fd);
-static int (*default_func_parse)(int) = null_parse;
+int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
 
 #ifndef MINICORE
 static int connect_check(unsigned int ip);
@@ -93,14 +95,40 @@ static int connect_check(unsigned int ip);
 #endif
 
 /*======================================
- *	CORE : Set function
- *--------------------------------------
- */
-void set_defaultparse(int (*defaultparse)(int))
+ *	CORE : Default processing functions
+ *--------------------------------------*/
+int null_recv(int fd);
+int null_send(int fd);
+int null_parse(int fd);
+
+int null_recv(int fd)
+{
+	return 0;
+}
+
+int null_send(int fd)
+{
+	return 0;
+}
+
+int null_parse(int fd)
+{
+	//ShowMessage("null_parse : %d\n",fd);
+	session[fd]->rdata_pos = session[fd]->rdata_size; //RFIFOSKIP(fd, RFIFOREST(fd)); simplify calculation
+	return 0;
+}
+
+int (*default_func_parse)(int fd) = null_parse;
+
+void set_defaultparse(int (*defaultparse)(int fd))
 {
 	default_func_parse = defaultparse;
 }
 
+
+/*======================================
+ *	CORE : Socket options
+ *--------------------------------------*/
 void set_nonblocking(int fd, int yes)
 {
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
@@ -232,26 +260,16 @@ void flush_fifos(void)
 			send_from_fifo(i);
 }
 
-static int null_parse(int fd)
-{
-	ShowMessage("null_parse : %d\n",fd);
-	session[fd]->rdata_pos = session[fd]->rdata_size; //RFIFOSKIP(fd, RFIFOREST(fd)); simplify calculation
-	return 0;
-}
-
 /*======================================
- *	CORE : Socket Function
- *--------------------------------------
- */
-
-static int connect_client(int listen_fd)
+ *	CORE : Connection functions
+ *--------------------------------------*/
+int connect_client(int listen_fd)
 {
 	int fd;
 	struct sockaddr_in client_address;
 	socklen_t len;
-	//ShowMessage("connect_client : %d\n",listen_fd);
 
-	len=sizeof(client_address);
+	len = sizeof(client_address);
 
 	fd = accept(listen_fd,(struct sockaddr*)&client_address,&len);
 	if ( fd == INVALID_SOCKET ) {
@@ -271,19 +289,9 @@ static int connect_client(int listen_fd)
 	if( fd_max <= fd )
 		fd_max = fd + 1;
 
-	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
-
-	session[fd]->max_rdata   = rfifo_size;
-	session[fd]->max_wdata   = wfifo_size;
-	session[fd]->func_recv   = recv_to_fifo;
-	session[fd]->func_send   = send_from_fifo;
-	session[fd]->func_parse  = (session[listen_fd]->func_parse) ? session[listen_fd]->func_parse : default_func_parse;
+	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = client_address;
-	session[fd]->rdata_tick  = last_tick;
 
-	//ShowMessage("new_session : %d %d\n",fd,session[fd]->eof);
 	return fd;
 }
 
@@ -326,9 +334,7 @@ int make_listen_bind(long ip,int port)
 	if(fd_max <= fd) fd_max = fd + 1;
 	FD_SET(fd, &readfds );
 
-	CREATE(session[fd], struct socket_data, 1);
-
-	session[fd]->func_recv = connect_client;
+	create_session(fd, connect_client, null_send, null_parse);
 
 	return fd;
 }
@@ -338,7 +344,7 @@ int make_listen_port(int port)
 	return make_listen_bind(INADDR_ANY,port);
 }
 
-int make_connection(long ip,int port)
+int make_connection(long ip, int port)
 {
 	struct sockaddr_in server_address;
 	int fd;
@@ -373,32 +379,23 @@ int make_connection(long ip,int port)
 		fd_max = fd + 1;
 	FD_SET(fd,&readfds);
 
-	CREATE(session[fd], struct socket_data, 1);
-	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
-	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
-
-	session[fd]->max_rdata  = rfifo_size;
-	session[fd]->max_wdata  = wfifo_size;
-	session[fd]->func_recv  = recv_to_fifo;
-	session[fd]->func_send  = send_from_fifo;
-	session[fd]->func_parse = default_func_parse;
-	session[fd]->rdata_tick = last_tick;
+	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 
 	return fd;
 }
 
-void free_session_mem(int fd)
+int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
 {
-	if (session[fd]){
-		if (session[fd]->rdata)
-			aFree(session[fd]->rdata);
-		if (session[fd]->wdata)
-			aFree(session[fd]->wdata);
-		if (session[fd]->session_data)
-			aFree(session[fd]->session_data);
-		aFree(session[fd]);
-		session[fd] = NULL;
-	}
+	CREATE(session[fd], struct socket_data, 1);
+	CREATE(session[fd]->rdata, unsigned char, rfifo_size);
+	CREATE(session[fd]->wdata, unsigned char, wfifo_size);
+	session[fd]->max_rdata  = rfifo_size;
+	session[fd]->max_wdata  = wfifo_size;
+	session[fd]->func_recv  = func_recv;
+	session[fd]->func_send  = func_send;
+	session[fd]->func_parse = func_parse;
+	session[fd]->rdata_tick = last_tick;
+	return 0;
 }
 
 int delete_session(int fd)
@@ -406,8 +403,13 @@ int delete_session(int fd)
 	if (fd <= 0 || fd >= FD_SETSIZE)
 		return -1;
 	FD_CLR(fd, &readfds);
-	free_session_mem(fd);
-	//ShowMessage("delete_session:%d\n",fd);
+	if (session[fd]) {
+		aFree(session[fd]->rdata);
+		aFree(session[fd]->wdata);
+		aFree(session[fd]->session_data);
+		aFree(session[fd]);
+		session[fd] = NULL;
+	}
 	return 0;
 }
 
@@ -416,12 +418,12 @@ int realloc_fifo(int fd,unsigned int rfifo_size,unsigned int wfifo_size)
 	if( !session_isValid(fd) )
 		return 0;
 
-	if( session[fd]->max_rdata != rfifo_size && session[fd]->rdata_size < rfifo_size){
+	if( session[fd]->max_rdata != rfifo_size && session[fd]->rdata_size < rfifo_size) {
 		RECREATE(session[fd]->rdata, unsigned char, rfifo_size);
 		session[fd]->max_rdata  = rfifo_size;
 	}
 
-	if( session[fd]->max_wdata != wfifo_size && session[fd]->wdata_size < wfifo_size){
+	if( session[fd]->max_wdata != wfifo_size && session[fd]->wdata_size < wfifo_size) {
 		RECREATE(session[fd]->wdata, unsigned char, wfifo_size);
 		session[fd]->max_wdata  = wfifo_size;
 	}
@@ -446,10 +448,9 @@ int realloc_writefifo(int fd, size_t addition)
 			newsize = session[fd]->max_wdata/2;
 		else
 			return 0; //No change
-	} else if( session[fd]->max_wdata>wfifo_size &&
-	  	(session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
+	} else if( session[fd]->max_wdata > wfifo_size && (session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
 	{	// shrink rule, shrink by 2 when only a quater of the fifo is used, don't shrink below 4*addition
-		newsize = session[fd]->max_wdata/2;
+		newsize = session[fd]->max_wdata / 2;
 	}
 	else // no change
 		return 0;
@@ -460,10 +461,30 @@ int realloc_writefifo(int fd, size_t addition)
 	return 0;
 }
 
+int RFIFOSKIP(int fd,int len)
+{
+    struct socket_data *s;
+
+	if ( !session_isActive(fd) )
+		return 0;
+
+	s = session[fd];
+
+	if ( s->rdata_size < s->rdata_pos + len ) {
+		//fprintf(stderr,"too many skip\n");
+		//exit(1);
+		//better than a COMPLETE program abort // TEST! :)
+		ShowError("too many skip (%d) now skipped: %d (FD: %d)\n", len, RFIFOREST(fd), fd);
+		len = RFIFOREST(fd);
+	}
+	s->rdata_pos = s->rdata_pos + len;
+	return 0;
+}
+
 int WFIFOSET(int fd, int len)
 {
 	size_t newreserve;
-	struct socket_data *s = session[fd];
+	struct socket_data* s = session[fd];
 
 	if( !session_isValid(fd) || s->wdata == NULL )
 		return 0;
@@ -475,7 +496,7 @@ int WFIFOSET(int fd, int len)
 		ShowFatalError("socket: Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %d bytes on a %d/%d bytes buffer.\n", fd,
 			sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3], len, s->wdata_size, s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n",
-			(*(unsigned short*)(s->wdata+s->wdata_size)));
+			(*(unsigned short*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(1);
 	}
@@ -483,7 +504,7 @@ int WFIFOSET(int fd, int len)
 	s->wdata_size += len;
 	// always keep a wfifo_size reserve in the buffer
 	// For inter-server connections, let the reserve be 1/4th of the link size.
-	newreserve = s->wdata_size + (s->max_wdata>=FIFOSIZE_SERVERLINK?FIFOSIZE_SERVERLINK/4:wfifo_size);
+	newreserve = s->wdata_size + (s->max_wdata >= FIFOSIZE_SERVERLINK ? FIFOSIZE_SERVERLINK / 4 : wfifo_size);
 
 	if(s->wdata_size >= frame_size)
 		send_from_fifo(fd);
@@ -498,13 +519,12 @@ int WFIFOSET(int fd, int len)
 
 int do_sendrecv(int next)
 {
-	fd_set rfd,efd; //Added the Error Set so that such sockets can be made eof. They are the same as the rfd for now. [Skotlex]
+	fd_set rfd;
 	struct sockaddr_in	addr_check;
 	struct timeval timeout;
 	int ret,i,size;
 
 	last_tick = time(0);
-
 
 	//PRESEND Need to do this to ensure that the clients get something to do
 	//which hopefully will cause them to send packets. [Meruru]
@@ -513,18 +533,16 @@ int do_sendrecv(int next)
 		if(!session[i])
 			continue;
 
-		if(session[i]->wdata_size && session[i]->func_send)
+		if(session[i]->wdata_size)
 			session[i]->func_send(i);
 	}
 
 	timeout.tv_sec  = next/1000;
 	timeout.tv_usec = next%1000*1000;
 
-	for(memcpy(&rfd, &readfds, sizeof(rfd)),
-		memcpy(&efd, &readfds, sizeof(efd));
-		(ret = select(fd_max, &rfd, NULL, &efd, &timeout))<0;
-		memcpy(&rfd, &readfds, sizeof(rfd)),
-		memcpy(&efd, &readfds, sizeof(efd)))
+	for(memcpy(&rfd, &readfds, sizeof(rfd));
+		(ret = select(fd_max, &rfd, NULL, NULL, &timeout))<0;
+		memcpy(&rfd, &readfds, sizeof(rfd)))
 	{
 		if(s_errno != S_ENOTSOCK)
 			return 0;
@@ -551,9 +569,8 @@ int do_sendrecv(int next)
 					ShowError("Deleting invalid session %d\n", i);
 				  	//So the code can react accordingly
 					session[i]->eof = 1;
-					if(session[i]->func_parse)
-						session[i]->func_parse(i);
-					free_session_mem(i); //free the bad session
+					session[i]->func_parse(i);
+					delete_session(i); //free the bad session
 					continue;
 				}
 
@@ -564,21 +581,12 @@ int do_sendrecv(int next)
 		fd_max = ret;
 	}
 
-	//ok under windows to use FD_ISSET is FUCKING stupid
-	//because windows uses an array so lets do them part by part [Meruru]
 #ifdef _WIN32
-		//Do the socket sets. Unlike linux which uses a bit mask windows uses
-		//a array. So calls to FS_ISSET are SLOW AS SHIT. So we have to do
-		//a special case for them which actually turns out ok [Meruru]
+	// on windows, enumerating all members of the fd_set is way faster if we access the internals
 	for(i=0;i<(int)rfd.fd_count;i++)
 	{
-		if(session[rfd.fd_array[i]] &&
-			session[rfd.fd_array[i]]->func_recv)
+		if(session[rfd.fd_array[i]])
 			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
-	}
-	for(i=0;i<(int)efd.fd_count;i++) {
-		ShowDebug("do_sendrecv: Connection error on Session %d.\n", efd.fd_array[i]);
-		set_eof(efd.fd_array[i]);
 	}
 
 	for (i = 1; i < fd_max; i++)
@@ -586,48 +594,33 @@ int do_sendrecv(int next)
 		if(!session[i])
 			continue;
 
-		//POSTSEND: Does write EVER BLOCK? NO!! not unless WE ARE CURRENTLY SENDING SOMETHING
-		//Or just have opened a connection and don't know if its ready
-		//And since eA isn't multi threaded and all the sockets are non blocking THIS ISN'T A PROBLEM! [Meruru]
-
-		if(session[i]->wdata_size && session[i]->func_send)
+		if(session[i]->wdata_size)
 			session[i]->func_send(i);
 
 		if(session[i]->eof) //func_send can't free a session, this is safe.
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
-			if (session[i]->func_parse)
-				session[i]->func_parse(i); //This should close the session inmediately.
+			session[i]->func_parse(i); //This should close the session inmediately.
 		}
 	}
 
-#else //where under linux its just a bit check so its smart [Meruru]
-
-	for (i = 1; i < fd_max; i++){
+#else
+	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
+	for (i = 1; i < fd_max; i++)
+	{
 		if(!session[i])
 			continue;
 
-		if(FD_ISSET(i,&efd)){
-			//ShowMessage("error:%d\n",i);
-			ShowDebug("do_sendrecv: Connection error on Session %d.\n", i);
-			set_eof(i);
-			continue;
-		}
-
 		if(FD_ISSET(i,&rfd)){
 			//ShowMessage("read:%d\n",i);
-			if(session[i]->func_recv)
-				session[i]->func_recv(i);
+			session[i]->func_recv(i);
 		}
 
-		//Does write EVER BLOCK. NO not unless WE ARE CURRENTALLY SENDING SOMETHING
-		//And sence eA isnt multi threaded THIS ISN'T A PROBLEM!
-		if(session[i]->wdata_size && session[i]->func_send)
+		if(session[i]->wdata_size)
 			session[i]->func_send(i);
 	
 		if(session[i]->eof)
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
-			if (session[i]->func_parse)
-				session[i]->func_parse(i); //This should close the session inmediately.
+			session[i]->func_parse(i); //This should close the session inmediately.
 		}
 	}
 #endif
@@ -639,7 +632,8 @@ int do_parsepacket(void)
 {
 	int i;
 	struct socket_data *sd;
-	for(i = 1; i < fd_max; i++) {
+	for(i = 1; i < fd_max; i++)
+	{
 		sd = session[i];
 		if(!sd)
 			continue;
@@ -649,15 +643,15 @@ int do_parsepacket(void)
 		}
 		if(sd->rdata_size == 0 && sd->eof == 0)
 			continue;
-		if(sd->func_parse) {
-				sd->func_parse(i);
-			if(!session[i])
-				continue;
-			/* after parse, check client's RFIFO size to know if there is an invalid packet (too big and not parsed) */
-			if (session[i]->rdata_size == rfifo_size && session[i]->max_rdata == rfifo_size) {
-				session[i]->eof = 1;
-				continue;
-			}
+
+		sd->func_parse(i);
+
+		if(!session[i])
+			continue;
+		/* after parse, check client's RFIFO size to know if there is an invalid packet (too big and not parsed) */
+		if (session[i]->rdata_size == rfifo_size && session[i]->max_rdata == rfifo_size) {
+			session[i]->eof = 1;
+			continue;
 		}
 		RFIFOFLUSH(i);
 	}
@@ -981,29 +975,6 @@ int socket_config_read(const char *cfgName) {
 	return 0;
 }
 
-int RFIFOSKIP(int fd,int len)
-{
-    struct socket_data *s;
-
-	if ( !session_isActive(fd) )
-		return 0;
-
-	s = session[fd];
-
-	if ( s->rdata_size < s->rdata_pos + len ) {
-		//fprintf(stderr,"too many skip\n");
-		//exit(1);
-		//better than a COMPLETE program abort // TEST! :)
-		ShowError("too many skip (%d) now skipped: %d (FD: %d)\n", len, RFIFOREST(fd), fd);
-		len = RFIFOREST(fd);
-	}
-	s->rdata_pos = s->rdata_pos+len;
-	return 0;
-}
-
-
-uint32 addr_[16];   // ip addresses of local host (host byte order)
-int naddr_ = 0;   // # of ip addresses
 
 void socket_final (void)
 {
@@ -1166,11 +1137,7 @@ void socket_init(void)
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
 	// ##TODO "flush" this session periodically O.O [FlavioJS]
-	CREATE(session[0], struct socket_data, 1);
-	CREATE(session[0]->rdata, unsigned char, 2*rfifo_size);
-	CREATE(session[0]->wdata, unsigned char, 2*wfifo_size);
-	session[0]->max_rdata   = 2*rfifo_size;
-	session[0]->max_wdata   = 2*wfifo_size;
+	create_session(0, null_recv, null_send, null_parse);
 
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes

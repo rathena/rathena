@@ -14,6 +14,7 @@
 #endif
 
 #include "../common/cbasetypes.h"
+#include <time.h>
 
 // define declaration
 
@@ -70,6 +71,9 @@
 
 
 // Struct declaration
+typedef int (*RecvFunc)(int fd);
+typedef int (*SendFunc)(int fd);
+typedef int (*ParseFunc)(int fd);
 
 struct socket_data {
 	unsigned char eof;
@@ -79,11 +83,10 @@ struct socket_data {
 	size_t rdata_pos;
 	time_t rdata_tick;
 	struct sockaddr_in client_addr;
-	int (*func_recv)(int);
-	int (*func_send)(int);
-	int (*func_parse)(int);
 	void* session_data;
-	void* session_data2;
+	RecvFunc func_recv;
+	SendFunc func_send;
+	ParseFunc func_parse;
 };
 
 
@@ -107,7 +110,7 @@ extern int session_isActive(int fd);
 int make_listen_port(int);
 int make_listen_bind(long,int);
 int make_connection(long,int);
-int delete_session(int);
+int delete_session(int fd);
 int realloc_fifo(int fd,unsigned int rfifo_size,unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd,int len);

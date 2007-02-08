@@ -4,6 +4,20 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/07
+	* More aggressive cleaning up of the socket code [ultramage]
+	- removed unused session_data2 entry in sd
+	- added a new create_session() function, helps keep things cleaner
+	  (although it's ad-hoc and not perfect, since this is C)
+	- undid r4978 since it was getting in the way (re-add it if you need it)
+	- added defines for the recv, send and parse func pointers
+	- added null functions for the three actions, and made create_session()
+	  calls use those instead of NULL pointers; insignificant penalty and now:
+	- since all three funcs are always initialized, removed all those NULL checks 
+	- removed the efd set, since as the people from the developernet forums
+	  pointed out, it's only for out-of-band data and NOT for error checking
+	  (in fact, select() bails out without giving any info if it errors out)
+	- reorganized the randomly placed socket.c contents somewhat
+	- it'll be a miracle if this works like it should ^^;
 	* Modified spider web so that the skill_unit_db flag restrictions may take
 	  place. [Skotlex]
 	* Cleaning up of the socket code [ultramage]
