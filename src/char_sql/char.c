@@ -64,7 +64,6 @@ int save_log = 0; //Have the logs be off by default when converting
 #else
 int save_log = 1;
 int db_use_sqldbs;
-int connection_ping_interval = 0;
 
 char login_db[256] = "login";
 char login_db_account_id[32] = "account_id";
@@ -4033,8 +4032,6 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(item_db_db,w2);
 		}else if(strcmpi(w1,"item_db2_db")==0){
 			strcpy(item_db2_db,w2);
-		} else if(strcmpi(w1,"connection_ping_interval")==0) {
-			connection_ping_interval = config_switch(w2);
 #endif
 		//support the import command, just like any other config
 		}else if(strcmpi(w1,"import")==0){

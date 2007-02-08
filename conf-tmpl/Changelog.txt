@@ -1,5 +1,8 @@
 Date	Added
 
+2007/02/08
+	* Since the mysql ping interval is now autoconfigured, removed
+	the connection_ping_interval config setting in inter_athena.conf
 2007/02/01
 	* Improved a bit the description of the mvp item get time config settings.
 2007/01/29

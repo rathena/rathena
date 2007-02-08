@@ -297,10 +297,9 @@ int inter_log(char *fmt,...)
 	return 0;
 }
 
-/*======================================================
- * Does a mysql_ping to all connection handles. [Skotlex]
- *------------------------------------------------------
- */
+/*=============================================
+ * Does a mysql_ping to all connection handles
+ *---------------------------------------------*/
 int inter_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
@@ -309,6 +308,34 @@ int inter_sql_ping(int tid, unsigned int tick, int id, int data)
 		mysql_ping(&lmysql_handle);
 	return 0;
 }
+
+
+int sql_ping_init(void)
+{
+	int connection_timeout, connection_ping_interval;
+
+	// set a default value first
+	connection_timeout = 28800; // 8 hours
+
+	// ask the mysql server for the timeout value
+	if (!mysql_query(&mysql_handle, "SHOW VARIABLES LIKE 'wait_timeout'")
+	&& (sql_res = mysql_store_result(&mysql_handle)) != NULL) {
+		sql_row = mysql_fetch_row(sql_res);
+		if (sql_row)
+			connection_timeout = atoi(sql_row[1]);
+		if (connection_timeout < 60)
+			connection_timeout = 60;
+		mysql_free_result(sql_res);
+	}
+
+	// establish keepalive
+	connection_ping_interval = connection_timeout - 30; // 30-second reserve
+	add_timer_func_list(inter_sql_ping, "inter_sql_ping");
+	add_timer_interval(gettick() + connection_ping_interval*1000, inter_sql_ping, 0, 0, connection_ping_interval*1000);
+
+	return 0;
+}
+
 #endif //TXT_SQL_CONVERT
 
 // initialize
@@ -370,11 +397,7 @@ int inter_init_sql(const char *file)
 	inter_homunculus_sql_init(); // albator
 	inter_accreg_sql_init();
 
-	if (connection_ping_interval) {
-		add_timer_func_list(inter_sql_ping, "inter_sql_ping");
-		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
-				inter_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
-	}
+	sql_ping_init();
 #endif //TXT_SQL_CONVERT
 	return 0;
 }

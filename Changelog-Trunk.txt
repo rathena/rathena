@@ -8,6 +8,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  idling on the ground waiting for a new target.
 	* Cleaned up some the rude-attacked code, being attacked while under spider
 	  web now triggers rude-attacked. [Skotlex]
+	* Added code for SQL that will automatically detect the ping interval
+	  at startup, and copy-pasted it around the code; removed the conf setting
 	* Added a missing null pointer check in clif_parse_globalmessage
 	* Fixed the new socket code, which was triggering the inactivity timeout
 	  on the servers' listening sockets

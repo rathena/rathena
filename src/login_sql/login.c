@@ -89,6 +89,8 @@ static int online_check=1; //When set to 1, login server rejects incoming player
 static int ip_sync_interval = 0;
 
 MYSQL mysql_handle;
+MYSQL_RES* 	sql_res ;
+MYSQL_ROW	sql_row ;
 
 int ipban = 1;
 int dynamic_account_ban = 1;
@@ -109,7 +111,6 @@ char login_db[256] = "login";
 int log_login=1; //Whether to log the logins or not. [Skotlex]
 char loginlog_db[256] = "loginlog";
 bool login_gm_read = true;
-int connection_ping_interval = 0;
 
 // added to help out custom login tables, without having to recompile
 // source so options are kept in the login_athena.conf or the inter_athena.conf
@@ -348,14 +349,39 @@ int e_mail_check(char *email) {
 	return 1;
 }
 
-/*======================================================
- * Does a mysql_ping to all connection handles. [Skotlex]
- *------------------------------------------------------
- */
+/*=============================================
+ * Does a mysql_ping to all connection handles
+ *---------------------------------------------*/
 int login_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	mysql_ping(&mysql_handle);
+	return 0;
+}
+
+int sql_ping_init(void)
+{
+	int connection_timeout, connection_ping_interval;
+
+	// set a default value first
+	connection_timeout = 28800; // 8 hours
+
+	// ask the mysql server for the timeout value
+	if (!mysql_query(&mysql_handle, "SHOW VARIABLES LIKE 'wait_timeout'")
+	&& (sql_res = mysql_store_result(&mysql_handle)) != NULL) {
+		sql_row = mysql_fetch_row(sql_res);
+		if (sql_row)
+			connection_timeout = atoi(sql_row[1]);
+		if (connection_timeout < 60)
+			connection_timeout = 60;
+		mysql_free_result(sql_res);
+	}
+
+	// establish keepalive
+	connection_ping_interval = connection_timeout - 30; // 30-second reserve
+	add_timer_func_list(login_sql_ping, "login_sql_ping");
+	add_timer_interval(gettick() + connection_ping_interval*1000, login_sql_ping, 0, 0, connection_ping_interval*1000);
+
 	return 0;
 }
 
@@ -400,11 +426,8 @@ int mmo_auth_sqldb_init(void) {
 		}
 	}
 
-	if (connection_ping_interval) {
-		add_timer_func_list(login_sql_ping, "login_sql_ping");
-		add_timer_interval(gettick()+connection_ping_interval*60*60*1000,
-				login_sql_ping, 0, 0, connection_ping_interval*60*60*1000);
-	}
+	sql_ping_init();
+
 	return 0;
 }
 
@@ -2282,9 +2305,6 @@ void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n",w2);
 		} 
-		else if(strcmpi(w1,"connection_ping_interval")==0) {
-			connection_ping_interval = atoi(w2);
-		}
 		else if(strcmpi(w1,"default_codepage")==0){
 			strcpy(default_codepage, w2);
 			ShowStatus ("set default_codepage : %s\n",w2);
