@@ -979,7 +979,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		{	//Stuned/Frozen/etc
 			if (flag != 1) //Can't cast, casted stuff can't damage. 
 				return 0;
-			if (!skill_get_inf(skill_num)&INF_GROUND_SKILL)
+			if (!(skill_get_inf(skill_num)&INF_GROUND_SKILL))
 				return 0; //Targetted spells can't come off.
 		}
 
@@ -1530,7 +1530,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	int i,index;
 	int skill,refinedef=0;
 
-	if(sd->state.connect_new && !first&1) //Shouldn't invoke yet until player is done loading.
+	if(sd->state.connect_new && !(first&1)) //Shouldn't invoke yet until player is done loading.
 		return -1;
 
 	if (++calculating > 10) //Too many recursive calls!
@@ -2921,7 +2921,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		return;
 	}
 
-	if((!bl->type&(BL_REGEN)) && (!sc || !sc->count)) { //No difference.
+	if((!(bl->type&BL_REGEN)) && (!sc || !sc->count)) { //No difference.
 		status_cpy(status, b_status);
 		return;
 	}

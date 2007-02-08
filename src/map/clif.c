@@ -8212,7 +8212,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Homunc mimic their master's speed on each map change. [Skotlex]
 		if (battle_config.hom_setting&0x8)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED);
-		if (!battle_config.hom_setting&0x2)
+		if (!(battle_config.hom_setting&0x2))
 			skill_unit_move(&sd->hd->bl,gettick(),1);
 	}
 

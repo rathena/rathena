@@ -4,7 +4,7 @@
 //           if range is < 5, the skill is considered melee-range)
 // 03 hit (8- repeated hitting, 6- single-hit)
 // 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
-// 05 pl attributes (0- nothing, 1- water, 2- earth, 3- fire, 4- wind,
+// 05 pl attributes (0- neutral, 1- water, 2- earth, 3- fire, 4- wind,
 //    5- poison, 6- saint, 7- darkness, 8- sense, 9- immortality)
 // 06 nk (0- normal skill, 1-no damage skill, 2-splash damage skill,
 //    3-no damage area skill, 4-splash and split damage skill)
@@ -230,14 +230,14 @@
 196,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_SUMMONSLAVE#Follower Summons#
 197,0,0,4,0,1,0,10,1,no,0,0x2,0,none,0	//NPC_EMOTION#Emotion#
 198,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_TRANSFORMATION#Transformation#
-199,7,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
-200,7,6,1,7,0,0,10,1,no,0,0x2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
-201,0,0,4,0,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_KEEPING#Keeping#
+199,7,6,1,7,0,0,1,1,no,0,0x2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
+200,7,6,1,7,0,0,1,1,no,0,0x2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
+201,0,0,4,0,1,0,1,1,no,0,0x2,0,weapon,0	//NPC_KEEPING#Keeping#
 202,2,6,1,7,0,0,5,1,no,0,0x2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
 203,9,6,1,7,1,0,10,1,no,0,0x2,0,magic,0	//NPC_DARKBLESSING#Dark Blessing#
-204,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_BARRIER#Barrier#
-205,0,0,4,0,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_DEFENDER#Defender#
-206,1,6,1,-1,1,0,10,1,no,0,0x2,0,weapon,0	//NPC_LICK#Lick#
+204,0,0,4,0,1,0,1,1,no,0,0x2,0,magic,0	//NPC_BARRIER#Barrier#
+205,0,0,4,0,1,0,1,1,no,0,0x2,0,weapon,0	//NPC_DEFENDER#Defender#
+206,1,6,1,-1,1,0,5,1,no,0,0x2,0,weapon,0	//NPC_LICK#Lick#
 207,9,0,1,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_HALLUCINATION#Hallucination#
 208,0,0,4,0,1,0,1,1,no,0,0x2,0,magic,0	//NPC_REBIRTH#Rebirth#
 209,0,0,4,0,1,0,10,1,no,0,0x2,0,magic,0	//NPC_SUMMONMONSTER#Monster Summons#
@@ -311,14 +311,14 @@
 277,9,6,1,0,1,0,5,1,yes,0,0,0,magic,0	//SA_SPELLBREAKER#Spell Break#
 278,0,0,0,0,0,0,10,0,no,0,0,0,magic,0	//SA_FREECAST#Free Cast#
 279,0,6,4,0,1,0,10,1,yes,0,0,0,magic,0	//SA_AUTOSPELL#Hindsight#
-280,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FLAMELAUNCHER#Endow Blaze#
-281,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FROSTWEAPON#Endow Tsunami#
-282,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_LIGHTNINGLOADER#Endow Tornado#
-283,9,6,16,0,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_SEISMICWEAPON#Endow Quake#
+280,9,6,16,3,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FLAMELAUNCHER#Endow Blaze#
+281,9,6,16,1,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_FROSTWEAPON#Endow Tsunami#
+282,9,6,16,4,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_LIGHTNINGLOADER#Endow Tornado#
+283,9,6,16,2,1,0,5,1,yes,0,0xC00,0,magic,0	//SA_SEISMICWEAPON#Endow Quake#
 284,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//SA_DRAGONOLOGY#Dragonology#
-285,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VOLCANO#Volcano#
-286,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
-287,2,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
+285,2,6,2,3,1,0,5,1,yes,0,0,0,magic,0	//SA_VOLCANO#Volcano#
+286,2,6,2,1,1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
+287,2,6,2,4,1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
 288,3,6,2,0,1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
 289,9,6,1,0,1,0,5,1,yes,0,0x1E00,0,magic,0	//SA_DISPELL#Dispel#
 290,0,6,4,0,1,0,10,1,yes,0,0,0,magic,0	//SA_ABRACADABRA#Hocus-pocus#
@@ -356,7 +356,7 @@
 322,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//BA_APPLEIDUN#Song of Lutie#
 323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//DC_DANCINGLESSON#Dance Lessons#
 324,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//DC_THROWARROW#Slinging Arrow#
-325,0,8,4,0,1,0,5,1,no,0,0x2032,0,misc,0	//DC_UGLYDANCE#Hip Shaker#
+325,0,8,4,0,1,0,5,1,no,0,0x20,0,misc,0	//DC_UGLYDANCE#Hip Shaker#
 326,0,6,4,0,3,-1,5,1,no,0,0,0,misc,0	//DC_SCREAM#Dazzler#
 327,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_HUMMING#Focus Ballet#
 328,0,6,4,0,1,0,10,1,no,0,0x20,0,misc,0	//DC_DONTFORGETME#Slow Grace#

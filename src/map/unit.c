@@ -292,7 +292,7 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int flag) {
 		return 1;
 	}
 
-	if(!(flag&2) && (!status_get_mode(bl)&MD_CANMOVE || !unit_can_move(bl)))
+	if(!(flag&2) && (!(status_get_mode(bl)&MD_CANMOVE) || !unit_can_move(bl)))
 		return 0;
 	
 	ud->state.walk_easy = flag&1;
