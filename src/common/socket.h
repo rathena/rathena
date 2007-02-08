@@ -81,8 +81,8 @@ struct socket_data {
 	size_t max_rdata, max_wdata;
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
-	time_t rdata_tick;
-	struct sockaddr_in client_addr;
+	time_t rdata_tick; // time of last receive (for detecting timeouts)
+	struct sockaddr_in client_addr; // remote client address (zero for s2s connections)
 	void* session_data;
 	RecvFunc func_recv;
 	SendFunc func_send;

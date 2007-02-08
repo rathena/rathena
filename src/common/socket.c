@@ -133,7 +133,7 @@ void set_nonblocking(int fd, int yes)
 {
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
 	if(mode_neg)
-		setsockopt(fd, IPPROTO_TCP, TCP_NODELAY,(char *)&yes, sizeof yes);
+		setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof yes);
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
@@ -291,6 +291,7 @@ int connect_client(int listen_fd)
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = client_address;
+	session[fd]->rdata_tick = last_tick;
 
 	return fd;
 }
@@ -380,6 +381,7 @@ int make_connection(long ip, int port)
 	FD_SET(fd,&readfds);
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
+	session[fd]->rdata_tick = last_tick;
 
 	return fd;
 }
@@ -394,7 +396,6 @@ int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc fun
 	session[fd]->func_recv  = func_recv;
 	session[fd]->func_send  = func_send;
 	session[fd]->func_parse = func_parse;
-	session[fd]->rdata_tick = last_tick;
 	return 0;
 }
 
