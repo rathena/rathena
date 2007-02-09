@@ -964,7 +964,7 @@ static struct Damage battle_calc_weapon_attack(
 			else
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
 		} else { //based on used skill's range
-			if (skill_get_range(skill_num, skill_lv) < 5)
+			if (skill_get_range2(src, skill_num, skill_lv) < 5)
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
 			else
 				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
@@ -2209,7 +2209,7 @@ struct Damage battle_calc_magic_attack(
 		else
 			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
 	} else { //based on used skill's range
-		if (skill_get_range(skill_num, skill_lv) < 5)
+		if (skill_get_range2(src, skill_num, skill_lv) < 5)
 			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
 		else
 			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
@@ -2586,7 +2586,7 @@ struct Damage  battle_calc_misc_attack(
 		else
 			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;
 	} else { //based on used skill's range
-		if (skill_get_range(skill_num, skill_lv) < 5)
+		if (skill_get_range2(src, skill_num, skill_lv) < 5)
 			md.flag=(md.flag&~BF_RANGEMASK)|BF_SHORT;
 		else
 			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;
