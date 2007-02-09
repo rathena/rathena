@@ -312,7 +312,7 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int flag) {
 		return 1;
 	}
 
-	if (ud->attacktimer != -1) {
+	if(ud->attacktimer != -1) {
 		delete_timer( ud->attacktimer, unit_attack_timer );
 		ud->attacktimer = -1;
 	}
@@ -373,16 +373,16 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		return 1;
 	}
 
-	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
+	if(DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 	{	//Can't move, wait a bit before invoking the movement.
 		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 		return 1;
 	}
 
-	if (!unit_can_move(bl))
+	if(!unit_can_move(bl))
 		return 0;
 
-	if (ud->attacktimer != -1) {
+	if(ud->attacktimer != -1) {
 		delete_timer( ud->attacktimer, unit_attack_timer );
 		ud->attacktimer = -1;
 	}

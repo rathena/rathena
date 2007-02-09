@@ -5372,9 +5372,10 @@ int clif_item_refine_list(struct map_session_data *sd)
 	}
 	WFIFOW(fd,2)=c*13+4;
 	WFIFOSET(fd,WFIFOW(fd,2));
-	sd->menuskill_id = WS_WEAPONREFINE;
-	sd->menuskill_lv = skilllv;
-
+	if (c > 0) {
+		sd->menuskill_id = WS_WEAPONREFINE;
+		sd->menuskill_lv = skilllv;
+	}
 	return 0;
 }
 
