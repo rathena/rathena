@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.00.20070208
+//= 3.02.20070209
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -56,6 +56,9 @@
 //= 3.01.20070209
 //=       Updated 'cutin' (removed lies, removed outdated bmp list) [ultramage]
 //=       Removed 'cutincard' since eA no longer implements it
+//= 3.02.20070209
+//=       Corrected/updated info on Xor/setd/getd/callfunc/callsub/return and 
+//=       updated some examples to use "better" code. [FlavioJS]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -644,6 +647,13 @@ Resume of the allowed variable and array scopes
 |.@Int     | OK!  | OK!   |
 +----------+------+-------+
 
+Variable References
+-------------------
+
+//##TODO
+
+
+
 Operators
 ---------
 
@@ -677,7 +687,7 @@ you can not compare numbers to strings.
 
 Examples:
 
- 1=1 is True.
+ 1==1 is True.
  1<2 is True while 1>2 is False.
  @x>2 is True if @x is equal to 3. But it isn't true if @x is 2.
 
@@ -688,18 +698,18 @@ strings by alphabet would be pointless anyway.
 Comparisons can be stacked in the same condition:
 
  && - Is True if and only if BOTH sides are true.
-      ('1==1 && 2=2' is true. '2=1 && 1=1' is false.)
+      ('1==1 && 2==2' is true. '2==1 && 1==1' is false.)
  || - Is True if either side of this expression is True.
 
- 1=1 && 2=2 is True.
- 1=1 && 2=1 is False.
- 1=1 || 2=1 is True.
+ 1==1 && 2==2 is True.
+ 1==1 && 2==1 is False.
+ 1==1 || 2==1 is True.
 
 Logical bitwise operators work only on numbers, and they are the following:
 
  << - Left shift.
  >> - Right shift.
- 	Left shift moves the binary 1(s) of a number n positions to the left,
+	Left shift moves the binary 1(s) of a number n positions to the left,
 	which is the same as multiplying by 2, n times.
 	In the other hand, Right shift moves the binary 1(s) of a number n positions
 	to the right, which is the same as dividing by 2, n times.
@@ -747,19 +757,28 @@ Logical bitwise operators work only on numbers, and they are the following:
 	This would return the messages about option 2, 3 and 5 being shown (since we've set
 	the 2,4 and 16 bit to 1).
  ^  - Xor.
-	The bitwise operator XOR (eXclusive OR) sets to 0 a binary position if both numbers have a 1
-	in the said position. On the other hand, it sets to 1 if there's a 1 in any of the number in
-	the said binary position.
-	This is the counter-part of the OR operator, the opposite if you like. This is used to remove a
-	bitmask, which is the same as substracting it.
+	The bitwise operator XOR (eXclusive OR) sets a binary position to 0 if both 
+	numbers have the same value in the said position. On the other hand, it 
+	sets to 1 if they have different values in the said binary position.
+	This is another way of setting and unsetting bits in bitmasks.
 	
 	Example:
-	- We set the variable first:
-		set a,2|4|8|16; // this would be the same as 2+4+8+16 = 30
-	- After some checks, we find he didn't do the third quest, which we asigned the 3rd value (8)
-	  so now we have to remove it:
-		set a,a^8; //this would be the same as 30-8 = 22. 22 = 16+4+2, which are the flags left.
-		
+	- First let's set the quests that are currently in progress:
+		set inProgress,1|8|16; // quest 1,8 and 16 are in progress
+	- After playing for a bit, the player starts another quest:
+		if( inProgress&2 == 0 ){
+			// this will set the bit for quest 2 (inProgress has that bit set to 0)
+			set inProgress,inProgress^2;
+			mes "Quest 2: find a newbie and be helpfull to him for an hour.";
+			close;
+		}
+	- After spending some time reading info on Xor's, the player finally completes quest 1:
+		if( inProgress&1 && isComplete ){
+			// this will unset the bit for quest 1 (inProgress has that bit set to 1)
+			set inProgress,inProgress^1;
+			mes "Quest 1 complete!! You unlocked the secrets of the Xor dinasty, use them wisely.";
+			close;
+		}
 
 Labels
 ------
@@ -849,9 +868,8 @@ Example:
 monster "prontera.gat",123,42,"Poringz0rd",2341,23,"Master::OnThisMobDeath";
 
 amatsu.gat,13,152,4	script	Master	767,{
-
-mes "Hi there";
-close;
+	mes "Hi there";
+	close;
 
 OnThisMobDeath:
 	announce "Hey, "+strcharinfo(0)+" just killed a Poringz0rd!",bc_blue|bc_all;
@@ -1008,7 +1026,7 @@ of 'end' stops this, and ends the script.
 This command will set a variable to the value that the expression results in. 
 This is the only way to set a variable directly.
 
-This is the most basic script command and is uses a lot whenever you try to do 
+This is the most basic script command and is used a lot whenever you try to do 
 anything more advanced than just printing text into a messagebox.
 
     set @x,100;
@@ -1022,10 +1040,12 @@ integer in this language) and make @x equal it.
 
 ---------------------------------------
 
-*setd "variable name",<value>;
+*setd "<variable name>",<value>;
 
 Works almost identical as set, just that the variable name is identified as a string, 
 thus can be constructed dynamically.
+This command is equivalent to:
+set getd("variable name"),<value>;
 
 Example:
 set $var$, "Poring";
@@ -1040,23 +1060,29 @@ mes $Poporing123$; // Will return Poporing is cool.
 
 *getd("<variable name>")
 
-Retrieves variable, name can be constructed dynamically. Refer to setd for usage.
+Returns a reference to a variable, the name can be constructed dynamically.
+Refer to setd for usage.
 
 Example:
+set getd("$varRefence"), 1;
 set @i, getd("$pikachu");
 
 ---------------------------------------
 
-*getvariableofnpc <variable name>,<npc name>;
+*getvariableofnpc(<variable>,"<npc name>")
 
-Enables you to get a NPC variable (. prefix) from the given NPC. This can only be used to get . variables.
+Returns a reference to a NPC variable (. prefix) from the target NPC.
+This can only be used to get . variables.
 Example(s):
 
-//This will return the value or .var, note that this can't be used, since the value isn't catched.
-	getvariableofnpc .var,"A NPC";
+//This will return the value of .var, note that this can't be used, since the value isn't catched.
+	getvariableofnpc(.var,"TargetNPC");
 	
-//This will set the .v variable to the value of the A NPC's .var variable.
-	set .v,getvariableofnpc(.var,"A NPC");
+//This will set the .v variable to the value of the TargetNPC's .var variable.
+	set .v,getvariableofnpc(.var,"TargetNPC");
+	
+//This will set the .var variable of TargetNPC to 1.
+	set getvariableofnpc(.var,"TargetNPC"),1;
 
 ---------------------------------------
 
@@ -1065,11 +1091,13 @@ Example(s):
 This command will make the script jump to a label, usually used in conjunction 
 with other command, such as "if", but often used on it's own.
 
-           ...
-           goto Label;
-           mes "This will not be seen";
-    Label:
-           mes "This will be seen";
+	...
+	goto Label;
+	mes "This will not be seen";
+Label:
+	mes "This will be seen";
+
+Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_ó)
 
 ---------------------------------------
 
@@ -1115,37 +1143,35 @@ with the strings that should go into the menu at this execution, making sure not
 to leave any gaps. Normally, you do it with a loop and an extra counter, like 
 this:
 
-    setarray @possiblemenuitems$[0],<list of potential menu items>;
-    set @i,0; // That's our loop counter.
-    set @j,0; // That's the menu lines counter.
-
-    makemenuloop:
-
-    // We record the number of option into the list of options actually 
-    // available. That 'condition' is whatever condition that determines whether 
-    // a menu item number @i actually goes into the menu or not.
-
-    if (<condition>) set @menulist$[@j],@possiblemenuitems$[@i];
-
-    // We just copied the string, we do need it's number for later though, so we 
-    // file it away as well.
-    
-    if (<condition>) set @menureference[@j],@i;
-
-    // Since we've just added a menu item into the list, we increment the menu 
-    // lines counter.    
-    
-    if (<condition>) set @j,@j+1;
-
-    // We go on to the next possible menu item.
-
-    set @i,@i+1;
-
-    // And continue looping through the list of possible menu items until it 
-    // ends.
-    
-    if (@i<=getarraysize(@possiblemenuitems)) goto makemenuloop;
-
+	setarray @possiblemenuitems$[0],<list of potential menu items>;
+	set @j,0; // That's the menu lines counter.
+	
+	// We loop through the list of possible menu items.
+	// @i is our loop counter.
+	for( set @i,0; @i<getarraysize(@possiblemenuitems$) ; set @i,@i+1 )
+	{
+		// That 'condition' is whatever condition that determines whether 
+		// a menu item number @i actually goes into the menu or not.
+		
+		if (<condition>)
+		{
+			// We record the option into the list of options actually available.
+			
+			set @menulist$[@j],@possiblemenuitems$[@i];
+			
+			// We just copied the string, we do need it's number for later 
+			// though, so we record it as well.
+			
+			set @menureference[@j],@i;
+			
+			// Since we've just added a menu item into the list, we increment 
+			// the menu lines counter.
+			
+			set @j,@j+1;
+		}
+		
+		// We go on to the next possible menu item.
+	}
 
 This will create you an array @menulist$ which contains the text of all items 
 that should actually go into the menu based on your condition, and an array 
@@ -1153,10 +1179,10 @@ that should actually go into the menu based on your condition, and an array
 (Remember, arrays start with 0.) There's less of them than the possible menu 
 items you've defined, but the menu command can handle the empty lines - only if 
 they are last in the list, and if it's made this way, they are. Now comes a 
-
-    // X is whatever the most menu items you expect to handle.
 dirty trick:
-    menu @menulist$[0],-,@menulist$[1],-,....@menulist$[<X>],-;
+
+	// X is whatever the most menu items you expect to handle.
+	menu @menulist$[0],-,@menulist$[1],-,....@menulist$[<X>],-;
 
 This calls up a menu of all your items. Since you didn't copy some of the 
 possible menu items into the list, it's end is empty and so no menu items will 
@@ -1229,36 +1255,44 @@ invoking character, to allow entering of a number or a string. This has many
 uses, one example would be a guessing game, also making use of the 'rand' 
 function:
 
-        mes "[Woman]";
-        mes "Try and guess the number I am thinking of.";
-        mes "The number will be between 1 and 10.";
-        next;
-        set @number, rand(1,10);
-        input @guess;
-        if(@guess==@number) goto L_Correct;
-        mes "[Woman]";
-        mes "Sorry, that wasn't the number I was thinking of.";
-        close;
-    L_Correct:
-        mes "[Woman]";
-        mes "Well done that was the number I was thinking of";
-        close;
+	mes "[Woman]";
+	mes "Try and guess the number I am thinking of.";
+	mes "The number will be between 1 and 10.";
+	next;
+	set @number, rand(1,10);
+	input @guess;
+	if(@guess==@number)
+	{
+		mes "[Woman]";
+		mes "Well done that was the number I was thinking of";
+		close;
+	}
+	else
+	{
+		mes "[Woman]";
+		mes "Sorry, that wasn't the number I was thinking of.";
+		close;
+	}
 
 If you give the input command a string variable to put the input in, it will 
 allow the player to enter text. Otherwise, only numbers will be allowed.
 
-        mes "[Woman]";
-        mes "Please say HELLO";
-        next;
-        input @var$;
-        if(@var$=="HELLO") goto L_Correct;
-        mes "[Woman]";
-        mes "Sorry you got it wrong";
-        close;
-    L_Correct:
-        mes "[Woman]";
-        mes "Well done you typed it correctly";
-        close;
+	mes "[Woman]";
+	mes "Please say HELLO";
+	next;
+	input @var$;
+	if(@var$=="HELLO")
+	{
+		mes "[Woman]";
+		mes "Well done you typed it correctly";
+		close;
+	}
+	else
+	{
+		mes "[Woman]";
+		mes "Sorry you got it wrong";
+		close;
+	}
 
 Notice that in current SVN, you may not input a negative number with this 
 command. This was done to prevent exploits in badly written scripts, which would 
@@ -1275,19 +1309,19 @@ This command lets you call up a function NPC. A function NPC can be called from
 any script on any map server. Using the 'return' command it will come back to 
 the place that called it.
 
-    place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
-        mes "[Woman]"
-        mes "Lets see if you win";
-        callfunc "funcNPC";
-        mes "Well done you have won";
-        close;
-    }
-    function%TAB%script%TAB%funcNPC%TAB%{
-        set @win, rand(2);
-        if(@win==0) return;
-        mes "Sorry you lost";
-        end;
-    }
+	place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
+		mes "[Woman]"
+		mes "Lets see if you win";
+		callfunc "funcNPC";
+		mes "Well done you have won";
+		close;
+	}
+	function%TAB%script%TAB%funcNPC%TAB%{
+		set @win, rand(2);
+		if(@win==0) return;
+		mes "Sorry you lost";
+		end;
+	}
 
 You can pass arguments to your function - values telling it what exactly to do -
 which will be available there with getarg() (see 'getarg')
@@ -1297,24 +1331,22 @@ If you want to return a real value from inside your function NPC, it is better
 to write it in the function form, which will also work and will make the script 
 generally cleaner:
 
-    place.gat,50,50,6%TAB%script%TAB%Man%TAB%115,{
-        mes "[Man]"
-        mes "Gimme a number!";
-        next;
-        input @number;
-        if (callfunc("OddFunc",@number)) mes "It's Odd!";
-        close;
-    }
-    function%TAB%script%TAB%OddFunc%TAB%{
-            if (getarg(0)%2==0) goto ItsEven;
-            return (1);
-        ItsEven:
-            return (0);
-    }
+	place.gat,50,50,6%TAB%script%TAB%Man%TAB%115,{
+		mes "[Man]"
+		mes "Gimme a number!";
+		next;
+		input @number;
+		if (callfunc("OddFunc",@number)) mes "It's Odd!";
+		close;
+	}
+	function%TAB%script%TAB%OddFunc%TAB%{
+		if (getarg(0)%2==0) return 0;// it's even
+		return 1;// it's odd
+	}
 
 ---------------------------------------
 
-*callsub <label name>{,<argument>,...<argument>};
+*callsub <label>{,<argument>,...<argument>};
 
 This command will go to a specified label within the current script (do NOT use 
 quotes around it) coming in as if it were a 'callfunc' call, and pass it 
@@ -1326,48 +1358,50 @@ you like, to save space and time, without creating extra NPC objects which are
 needed with 'callfunc'. A label is not callable in this manner from another 
 script.
 
-           mes "[Woman]"
-           mes "Lets see if you win";
-           callsub Check;
-           mes "Well done you have won";
-    Check:
-           set @win, rand(2);
-           if(@win==0) return;
-           mes "Sorry you lost";
-           
+		mes "[Woman]"
+		mes "Lets see if you win";
+		callsub Check;
+		mes "Well done you have won";
+		close;
+	Check:
+		set @win, rand(2);
+		if(@win==0) return;
+		mes "Sorry you lost";
+		close;
+
 ---------------------------------------
 
 *getarg(<number>)
 
 This function is used when you use the 'callsub' or 'callfunc' commands. In the 
 call you can specify variables that will make that call different from another 
-one. This function willwill return an argument the function or subroutine was 
+one. This function will return an argument the function or subroutine was 
 called with, and is the normal way to get them. 
-This is another thing that can let you use the same but of code more than once. 
+This is another thing that can let you use the same code more than once. 
 
 Argument numbering starts with 0, i.e. the first argument you gave is number 0. 
 If no such argument was given, a zero is returned.
 
-    place.gat,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
-        mes "[Woman]";
-        mes "Lets see if you win";
-        callfunc "funcNPC",2;
-        mes "Well done you have won";
+	place.gat,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
+		mes "[Woman]";
+		mes "Lets see if you win";
+		callfunc "funcNPC",2;
+		mes "Well done you have won";
 
-    ...
+	...
 
-    place.gat,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
-        mes "[Woman]";
-        mes "Lets see if you win";
-        callfunc "funcNPC",5;
-        mes "Well done you have won";
+	place.gat,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
+		mes "[Woman]";
+		mes "Lets see if you win";
+		callfunc "funcNPC",5;
+		mes "Well done you have won";
 
-    ...
+	...
 
-    function%TAB%script%TAB%funcNPC%TAB%{
-        set @win, rand(getarg(0));
-        if(@win==0) return;
-        mes "Sorry you lost";
+	function%TAB%script%TAB%funcNPC%TAB%{
+		set @win, rand(getarg(0));
+		if(@win==0) return;
+		mes "Sorry you lost";
 
 "woman1" NPC object calls the funcNPC. The argument it gives in this call is 
 stated as 2, so when the random number is generated by the 'rand' function, it 
@@ -1377,53 +1411,20 @@ calling the function, so the random number could be 0, 1, 2, 3 or 4, this makes
 
 You can pass multiple arguments in a function call:
 
-    callfunc "funcNPC",5,4,3;
+	callfunc "funcNPC",5,4,3;
 
 getarg(0) would be 5, getarg(1) would be 4 and getarg(2) would be 3.
 
-'getarg()' can also be used to carry information back from using the "callfunc" 
-script command, if the 'return' command is set to return a value: 
-
-    place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
-        mes "[Woman]";
-        mes "Lets see if you win";
-        callfunc "funcNPC";
-        mes "Well it seems you have "+getarg(0);
-    }
-    function%TAB%script%TAB%funcNPC%TAB%{
-        set @win, rand(2);
-        if(@win==0) return(won);
-        return(lost);
-    }
-        
-It is, however, better to use 'set' to get this value instead (see 'callfunc') 
-because otherwise you can't call functions from within other functions. (Return 
-values mess up the stack.)        
-
 ---------------------------------------
 
-*return {(<value>)};
+*return {<value>};
 
 When you use callsub or callfunc, this command allows you to go back to the 
 calling script. You can optionally return with a value telling the calling 
-program what exactly happened. To get at this value, you will have to use the 
-'set' command:
+program what exactly happened.
 
-    set <variable>,callfunc "<your function>"
-
-Note the round brackets. Turns out you have to enclose just about anything in 
-brackets if it isn't a straight number for the return command to work with it:
-
-    return (@x+@y);
-
-Also note that
-
-    if (<condition>) return (<whatever>);
-
-does NOT always work, even though it would make scripts a lot cleaner, and it 
-might be wiser to avoid using it like that.
-
-For an example see 'callfunc' and 'callsub'
+	callfunc "<your function>";// when nothing is returned
+	set <variable>,callfunc("<your function>");// when a value is being returned
 
 ---------------------------------------
 
