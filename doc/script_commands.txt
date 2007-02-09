@@ -25,14 +25,14 @@
 //=       other news. (Rika again) +10kb :) 
 //= 2.2 - added getItemInfo description [Lupus]
 //= 2.3 - added plenty of info for recent (and not so) script commands I added
-//        [Skotlex]
+//=       [Skotlex]
 //= 2.4 - Explained the upper parameter of jobchange. [Skotlex]
 //= 2.5 - Added pow, sqrt and distance. [Lance]
 //= 2.6 - Added setd and getd. [Lance]
 //= 2.7 - petstat command. [Lance]
-//= 2.7a - delitem2, countitems2 commands [Lupus]
-//= 2.7b - clone command [Skotlex]
-//= 2.7c - disguise / undisguise, query_sql commands [Lupus]
+//= 2.7a- delitem2, countitems2 commands [Lupus]
+//= 2.7b- clone command [Skotlex]
+//= 2.7c- disguise / undisguise, query_sql commands [Lupus]
 //= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a
 //=       clearer explanation of atoi.Gave a better explanation of OnLabels
 //=       and modified monster explanation due that L_Label isn't working with
@@ -46,13 +46,16 @@
 //= 2.12.20070201 - Added npcshopitem, npcshopadditem, npcshopdelitem and
 //=       npcshopattach [Skotlex]
 //= 3.00.20070208
-//=		 - Explained Logical Bitwise Operators. 
-//=		   Dj-Yhn contributed to AND (&) operator, rest by myself. [erKURITA]
-//=		 - Added a resume of allowed variable and arrays scopes. [erKURITA]
-//=		 - Re-organized the script commands, and grouped them depending
-//=		   on what they do. [erKURITA]
-//=		 - Added a packload of commands that were missing, 
-//=		   and corrected some of the wrong ones [Dj-Yhn, erKURITA & Trancid]
+//=       - Explained Logical Bitwise Operators. 
+//=         Dj-Yhn contributed to AND (&) operator, rest by myself. [erKURITA]
+//=       - Added a resume of allowed variable and arrays scopes. [erKURITA]
+//=       - Re-organized the script commands, and grouped them depending
+//=         on what they do. [erKURITA]
+//=       - Added a packload of commands that were missing, 
+//=         and corrected some of the wrong ones [Dj-Yhn, erKURITA & Trancid]
+//= 3.01.20070209
+//=       Updated 'cutin' (removed lies, removed outdated bmp list) [ultramage]
+//=       Removed 'cutincard' since eA no longer implements it
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -1062,7 +1065,7 @@ Example(s):
 This command will make the script jump to a label, usually used in conjunction 
 with other command, such as "if", but often used on it's own.
 
-		   ...
+           ...
            goto Label;
            mes "This will not be seen";
     Label:
@@ -5530,17 +5533,17 @@ memory of where the points are set whatsoever.
 
 ---------------------------------------
 
-*cutin "<filename with no extension>",<position>;
+*cutin "<filename>",<position>;
 
 This command will display a picture stored in the GRF file in the client for the 
 player. 
 
 The files are taken from '\data\texture\A_A£AIèIíÑAI´ß\illust' directory in the 
-GRF file. The filename must be given with no extension, '.bmp' is added by the 
-client itself and you can't have any other picture format displayed as a cutin. 
-The biggest one that comes with the client is 400x503 pixels, and the smallest 
-is 303x493 pixels, it is not known how big a picture has to be before the client 
-goes insane. Bright magenta (color FF00FF) is considered to be transparent in 
+GRF file. Also it seems that card cutins from \cardbmp will work here as well. 
+Only bitmaps (images stored in the bitmap format) will actually get displayed. 
+The '.bmp' extension is optional. 
+The client has no problem rendering huge 4096x4096 bitmaps, but usually they're 
+around 500x500. Bright magenta (color FF00FF) is considered to be transparent in 
 these pictures. You can easily add and alter them, but how to do this is outside 
 of the scope of this document.
 
@@ -5566,44 +5569,6 @@ any given time, any new cutins will replace it.
 
     // This will remove all pictures displayed.
     cutin "",255;
-
-The client comes with those cutin pictures preinstalled which you can use:
-
-mets_alpha  - This is a old fat man, holding a pipe, also with a pocket watch 
-              and cane
-pay_soldier - Wanna take a wild guess, thats right, the Soldiers that appear in 
-              Payon :D
-prt_soldier - Obvious
-ein_soldier - This guy looks cool, you've got to see him ;) This picture is for 
-              the new Einbroch guards
-moc_soldier - Obvious
-gef_soldier - Obvious
-katsua01    - It is not certain who this girl is (There is no sprite coming with 
-katsua02    - the client that seems to match very well) but she is believed to 
-katsua03    - be an NPC in official Comodo. The three pictures give different 
-              facial expressions.
-kafra_01    - Obvious
-kafra_02    - Obvious
-kafra_03    - Obvious
-kafra_04    - Obvious
-kafra_05    - Obvious
-kafra_06    - Obvious
-kafra_07    - Do I need to mention this one again ;)
-
----------------------------------------
-
-*cutincard <item id>;
-
-This command will display a card picture as a cutin on the client connected to 
-the invoking character, with position number 4 (middle of screen, movable, but 
-no title bar). See 'cutin'. To remove this cutin, use the regular 'cutin' 
-command. Unlike the 'cutin' command, it will not take a filename, but will 
-instead take an item ID. It will then refer to the text file listing card images 
-which is normally found within your server's copy of the GRF file to find the 
-real (korean) filename.
-
-If your server doesn't have that text file in that GRF or can't read it, it 
-probably won't work.
 
 ---------------------------------------
 
