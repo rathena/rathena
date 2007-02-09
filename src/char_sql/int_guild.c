@@ -1399,7 +1399,7 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 			g->member[i].modified = (GS_MEMBER_NEW | GS_MEMBER_MODIFIED);
 			mapif_guild_memberadded(fd,guild_id,m->account_id,m->char_id,0);
 			if (!guild_calcinfo(g)) //Send members if it was not invoked.
-				mapif_guild_info(fd,g);
+				mapif_guild_info(-1,g);
 
 			g->save_flag |= GS_MEMBER;
 			if (g->save_flag&GS_REMOVE)

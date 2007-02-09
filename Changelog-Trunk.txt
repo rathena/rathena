@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/02/09
+	* Fixed char server SQL not sending the guild info update to other map
+	  servers when a new member is added.
 2007/02/08
 	* Modified Spider Web so it can instantly retrap a target, rather than
 	  idling on the ground waiting for a new target.
