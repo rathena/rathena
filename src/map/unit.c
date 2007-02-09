@@ -43,6 +43,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl) {
 	return NULL;
 }
 
+static int unit_attack_timer(int tid,unsigned int tick,int id,int data);
 static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data);
 
 int unit_walktoxy_sub(struct block_list *bl)
@@ -309,9 +310,14 @@ int unit_walktoxy( struct block_list *bl, int x, int y, int flag) {
 		// timerŠÖ”‚©‚çunit_walktoxy_sub‚ðŒÄ‚Ô‚æ‚¤‚É‚·‚é
 		ud->state.change_walk_target = 1;
 		return 1;
-	} else {
-		return unit_walktoxy_sub(bl);
 	}
+
+	if (ud->attacktimer != -1) {
+		delete_timer( ud->attacktimer, unit_attack_timer );
+		ud->attacktimer = -1;
+	}
+
+	return unit_walktoxy_sub(bl);
 }
 
 static int unit_walktobl_sub(int tid,unsigned int tick,int id,int data)
@@ -366,13 +372,21 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		ud->state.change_walk_target = 1;
 		return 1;
 	}
+
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 	{	//Can't move, wait a bit before invoking the movement.
 		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
 		return 1;
-	} else if (!unit_can_move(bl))
+	}
+
+	if (!unit_can_move(bl))
 		return 0;
-	
+
+	if (ud->attacktimer != -1) {
+		delete_timer( ud->attacktimer, unit_attack_timer );
+		ud->attacktimer = -1;
+	}
+
 	return unit_walktoxy_sub(bl);
 }
 

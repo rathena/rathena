@@ -8359,7 +8359,6 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd) {
 	if(sd->sc.count && sd->sc.data[SC_RUN].timer != -1)
 		return;
 
-	pc_stop_attack(sd);
 	pc_delinvincibletimer(sd);
 
 	cmd = RFIFOW(fd,0);
