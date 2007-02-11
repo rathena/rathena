@@ -81,6 +81,7 @@ int npc_remove_map(struct npc_data *nd);
 void npc_unload_duplicates (struct npc_data *nd);
 int npc_unload(struct npc_data *nd);
 int npc_reload(void);
+void npc_read_event_script(void);
 int npc_script_event(TBL_PC* sd, int type);
 
 extern char *current_file;

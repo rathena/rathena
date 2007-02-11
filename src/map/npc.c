@@ -2825,7 +2825,7 @@ static int npc_read_event_script_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-static void npc_read_event_script(void)
+void npc_read_event_script(void)
 {
 	int i;
 	unsigned char buf[64]="::";
