@@ -19,7 +19,10 @@
 	-----
 
 ========================
-
+02/10
+	* Fixed Armeyer Dinze Card [Playtester]
+	* Reverted Fly Wing and Butterfly Wing to the old version [Playtester]
+	- old version has less problems
 02/09
 	* Spider web can again be recasted on target. [Skotlex]
 02/08
