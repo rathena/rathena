@@ -5727,40 +5727,42 @@ int clif_party_join_info(struct party *p, struct map_session_data *sd)
 
 
 /*==========================================
- * パーティ情報送信
- *------------------------------------------
- */
-int clif_party_info(struct party_data *p,int fd)
+ * Sends party information
+ * R 00fb <len>.w <party name>.24B {<ID>.l <nick>.24B <map name>.16B <leader>.B <offline>.B}.46B*
+ *------------------------------------------*/
+int clif_party_info(struct party_data* p, int fd)
 {
-	unsigned char buf[1024];
-	int i,c;
-	struct map_session_data *sd=NULL;
+	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH+1+1)*MAX_PARTY];
+	struct map_session_data* sd = NULL;
+	int i, c;
 
 	nullpo_retr(0, p);
 
-	WBUFW(buf,0)=0xfb;
-	memcpy(WBUFP(buf,4),p->party.name,NAME_LENGTH);
-	for(i=c=0;i<MAX_PARTY;i++){
-		struct party_member *m=&p->party.member[i];
-		if(!m->account_id)
-			continue;
-		if(sd==NULL) sd=p->data[i].sd;
-		WBUFL(buf,28+c*46)=m->account_id;
-		memcpy(WBUFP(buf,28+c*46+ 4),m->name,NAME_LENGTH);
-		memcpy(WBUFP(buf,28+c*46+28),mapindex_id2name(m->map),MAP_NAME_LENGTH);
-		WBUFB(buf,28+c*46+44)=(m->leader)?0:1;
-		WBUFB(buf,28+c*46+45)=(m->online)?0:1;
+	WBUFW(buf,0) = 0xfb;
+	memcpy(WBUFP(buf,4), p->party.name, NAME_LENGTH);
+	for(i = 0, c = 0; i < MAX_PARTY; i++)
+	{
+		struct party_member* m = &p->party.member[i];
+		if(!m->account_id) continue;
+
+		if(sd == NULL) sd = p->data[i].sd; // need at least one member's 'sd' so clif_send() can identify the party
+
+		WBUFL(buf,28+c*46) = m->account_id;
+		memcpy(WBUFP(buf,28+c*46+4), m->name, NAME_LENGTH);
+		memcpy(WBUFP(buf,28+c*46+28), mapindex_id2name(m->map), MAP_NAME_LENGTH);
+		WBUFB(buf,28+c*46+44) = (m->leader) ? 0 : 1;
+		WBUFB(buf,28+c*46+45) = (m->online) ? 0 : 1;
 		c++;
 	}
-	WBUFW(buf,2)=28+c*46;
-	if(fd>=0){	// fdが設定されてるならそれに送る
-		WFIFOHEAD(fd, 28+c*46);
-		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
-		WFIFOSET(fd,WFIFOW(fd,2));
-		return 9;
-	}
-	if(sd!=NULL)
-		clif_send(buf,WBUFW(buf,2),&sd->bl,PARTY);
+	WBUFW(buf,2) = 28+c*46;
+
+	if(fd >= 0) // send only to self
+		if (session[fd] && session[fd]->session_data)
+			clif_send(buf, WBUFW(buf,2), &((struct map_session_data *)session[fd]->session_data)->bl, SELF);
+	else // send to whole party
+		if(sd)
+			clif_send(buf, WBUFW(buf,2), &sd->bl, PARTY);
+	
 	return 0;
 }
 /*==========================================
