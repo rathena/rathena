@@ -2413,11 +2413,12 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 
 	status->aspd_rate = 1000;
 
+	/* //this calc is useless since status_calc_bl(SCB_ALL) does it already
 	skill = (1000 -4*status->agi -status->dex)
 			*hd->homunculusDB->baseASPD/1000;
 
 	status->amotion = cap_value(skill,battle_config.max_aspd,2000);
-	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
+	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.*/
 
 	status_calc_misc(&hd->bl, status, hom->level);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
