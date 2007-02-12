@@ -5756,12 +5756,13 @@ int clif_party_info(struct party_data* p, int fd)
 	}
 	WBUFW(buf,2) = 28+c*46;
 
-	if(fd >= 0) // send only to self
+	if(fd >= 0) { // send only to self
 		if (session[fd] && session[fd]->session_data)
 			clif_send(buf, WBUFW(buf,2), &((struct map_session_data *)session[fd]->session_data)->bl, SELF);
-	else // send to whole party
+	} else { // send to whole party
 		if(sd)
 			clif_send(buf, WBUFW(buf,2), &sd->bl, PARTY);
+	}
 	
 	return 0;
 }
