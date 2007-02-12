@@ -9126,7 +9126,7 @@ void clif_parse_GMmessage(int fd, struct map_session_data *sd) {
 	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Broadcast)))
 		return;
 
-	size = WFIFOW(fd,2)-4;
+	size = RFIFOW(fd,2)-4;
 	mes = RFIFOP(fd,4);
 	mes_len_check(mes, size, CHAT_SIZE);
 
