@@ -2420,6 +2420,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
+	status_cpy(&hd->battle_status, status);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
 	if (memcmp(&b_status, status, sizeof(struct status_data)))

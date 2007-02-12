@@ -1056,8 +1056,8 @@ int npc_check_areanpc(int flag,int m,int x,int y,int range)
 		default:
 			continue;
 		}
-		if (x0 >= map[m].npc[i]->bl.x-xs/2 && x1 < map[m].npc[i]->bl.x-xs/2+xs &&
-		   y0 >= map[m].npc[i]->bl.y-ys/2 && y1 < map[m].npc[i]->bl.y-ys/2+ys)
+		if (x1 >= map[m].npc[i]->bl.x-xs/2 && x0 < map[m].npc[i]->bl.x-xs/2+xs &&
+			y1 >= map[m].npc[i]->bl.y-ys/2 && y0 < map[m].npc[i]->bl.y-ys/2+ys)
 			break;
 	}
 	if (i==map[m].npc_num)
