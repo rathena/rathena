@@ -5550,24 +5550,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		return 0;
 	}
 
-	switch (ud->skillid) {
-		//These should become skill_castend_pos
-		case WE_CALLPARTNER:
-		case WE_CALLPARENT:
-		case WE_CALLBABY:
-		case AM_RESURRECTHOMUN:
-		case PF_SPIDERWEB:
-			//Find a random spot to place the skill. [Skotlex]
-			inf2 = skill_get_splash(ud->skillid, ud->skilllv);
-			ud->skillx = src->x + inf2;
-			ud->skilly = src->y + inf2;
-			if (inf2 && !map_random_dir(src, &ud->skillx, &ud->skilly)) {
-				ud->skillx = src->x;
-				ud->skilly = src->y;
-			}
-			return skill_castend_pos(tid,tick,id,data);
-	}
-
 	if(ud->skillid != SA_CASTCANCEL ) {
 		if( ud->skilltimer != tid ) {
 			ShowError("skill_castend_id: Timer mismatch %d!=%d!\n", ud->skilltimer, tid);
@@ -5584,11 +5566,30 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	else
 		target = map_id2bl(ud->skilltarget);
 
+
 	// Use a do so that you can break out of it when the skill fails.
 	do {
 		if(!target || target->prev==NULL) break;
 
 		if(src->m != target->m || status_isdead(src)) break;
+
+		switch (ud->skillid) {
+			//These should become skill_castend_pos
+			case WE_CALLPARTNER:
+			case WE_CALLPARENT:
+			case WE_CALLBABY:
+			case AM_RESURRECTHOMUN:
+			case PF_SPIDERWEB:
+				//Find a random spot to place the skill. [Skotlex]
+				inf2 = skill_get_splash(ud->skillid, ud->skilllv);
+				ud->skillx = target->x + inf2;
+				ud->skilly = target->y + inf2;
+				if (inf2 && !map_random_dir(target, &ud->skillx, &ud->skilly)) {
+					ud->skillx = target->x;
+					ud->skilly = target->y;
+				}
+				return skill_castend_pos(tid,tick,id,data);
+		}
 
 		if(ud->skillid == RG_BACKSTAP) {
 			int dir = map_calc_dir(src,target->x,target->y),t_dir = unit_getdir(target);

@@ -2838,9 +2838,9 @@ account ID.
 
 -------------------------
 
-*isloggedin(<character id>)
+*isloggedin(<account id>)
 
-This function returns 1 if the specified character is logged in and 0 if they 
+This function returns 1 if the specified account is logged in and 0 if they 
 aren't.
 
 ---------------------------------------

@@ -996,6 +996,8 @@ int map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y,
 	va_list ap;
 	int blockcount=bl_list_count,i,c;
 
+	if (x < 0 || y < 0 || x >= map[m].xs || y >= map[m].ys) return 0;
+
 	va_start(ap,type);
 
 	by=y/BLOCK_SIZE;

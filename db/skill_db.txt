@@ -400,7 +400,7 @@
 366,0,6,4,0,1,0,10,1,no,0,0,0,magic,0	//HW_MAGICPOWER#Mystical Amplification#
 367,9,8,1,0,0,0,5,1,no,0,0,0,misc,0	//PA_PRESSURE#Gloria Domini#
 368,0,6,4,0,1,0,5,1,yes,0,0,0,weapon,0	//PA_SACRIFICE# Martyr's Reckoning#
-369,5,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
+369,0,6,4,0,1,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
 370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3	//CH_PALMSTRIKE#Raging Palm Strike#
 371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
 372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
@@ -612,7 +612,7 @@
 8013,9,6,1,0,0,0,5,1:2:3:4:5,no,0,0,0,magic,0	//HVAN_CAPRICE
 8014,0,6,4,0,1,0,5,0,no,0,0,0,none,0	//HVAN_CHAOTIC
 8015,0,0,0,0,1,0,5,0,no,0,0,0,none,0	//HVAN_INSTRUCT
-8016,5,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
+8016,4,6,4,-1,2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
 
 10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_APPROVAL#Approval#
 10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_KAFRACONTRACT#Kafra Contract#

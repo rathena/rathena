@@ -19,6 +19,9 @@
 	-----
 
 ========================
+02/12
+	* Corrected range of self destruction / bio explosion to be equal to their
+	  splash range. [Skotlex]
 02/10
 	* Fixed Armeyer Dinze Card [Playtester]
 	* Reverted Fly Wing and Butterfly Wing to the old version [Playtester]

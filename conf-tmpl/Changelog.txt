@@ -1,5 +1,8 @@
 Date	Added
 
+2007/02/12
+	* Corrected the meaning of "skill_display_fail&2", made 2 the default
+	  setting. [Skotlex]
 2007/02/08
 	* Since the mysql ping interval is now autoconfigured, removed
 	the connection_ping_interval config setting in inter_athena.conf

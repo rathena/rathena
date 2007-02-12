@@ -8298,6 +8298,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_load(&sd->bl, SI_DEVIL, 1);  //blindness [Komurka]
 
+	if (sd->sc.opt2) //Client loses these on warp.
+		clif_changeoption(&sd->bl);
+
 	clif_weather_check(sd);
 	
 	map_foreachinarea(clif_getareachar,sd->bl.m,

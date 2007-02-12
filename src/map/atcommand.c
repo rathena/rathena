@@ -4167,14 +4167,14 @@ int atcommand_stat_all(const int fd, struct map_session_data* sd, const char* co
 			*status[index] = new_value;
 			clif_updatestatus(sd, SP_STR + index);
 			clif_updatestatus(sd, SP_USTR + index);
-			status_calc_pc(sd, 0);
 			count++;
 		}
 	}
 
-	if (count > 0) // if at least 1 stat modified
+	if (count > 0) { // if at least 1 stat modified
+		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_txt(84)); // All stats changed!
-	else {
+	} else {
 		if (value < 0)
 			clif_displaymessage(fd, msg_txt(177)); // Impossible to decrease a stat.
 		else

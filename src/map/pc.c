@@ -613,7 +613,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (battle_config.disp_zeny)
 		sd->state.showzeny = 1;
 	
-	if (battle_config.display_skill_fail&2)
+	if (!(battle_config.display_skill_fail&2))
 		sd->state.showdelay = 1;
 		
 	// Request all registries.
