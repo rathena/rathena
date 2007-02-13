@@ -809,15 +809,11 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 	if (skill)
 	{
 		qty = skill_get_ammo_qty(skill, lv);
-		if (!qty) {	//Generic skill that consumes ammo?
-			qty = skill_get_num(skill, lv);
-			if (qty < 0) qty *= -1;
-			else
-			if (qty == 0) qty = 1;
-		}
+		if (!qty) qty = 1;
 	}
-	if(sd->equip_index[10]>=0) //Qty check should have been done in skill_check_condition
-		pc_delitem(sd,sd->equip_index[10],qty,0);
+
+	if(sd->equip_index[EQI_AMMO]>=0) //Qty check should have been done in skill_check_condition
+		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0);
 }
 
 struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);

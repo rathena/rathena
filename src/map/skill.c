@@ -7938,10 +7938,15 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	hp_rate = skill_db[j].hp_rate[lv-1];
 	sp_rate = skill_db[j].sp_rate[lv-1];
 	zeny = skill_db[j].zeny[lv-1];
-	weapon = skill_db[j].weapon;
-	ammo = skill_db[j].ammo;
-	ammo_qty = skill_db[j].ammo_qty[lv-1];
-	state = skill_db[j].state;
+
+	if (!type) { //These should only be checked on begin casting.
+		weapon = skill_db[j].weapon;
+		ammo = skill_db[j].ammo;
+		ammo_qty = skill_db[j].ammo_qty[lv-1];
+		state = skill_db[j].state;
+	} else
+		weapon = ammo = ammo_qty = state = 0;
+
 	spiritball = skill_db[j].spiritball[lv-1];
 	mhp = skill_db[j].mhp[lv-1];
 	for(i = 0; i < 10; i++) {
@@ -7963,12 +7968,14 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	else
 		sp += (status->max_sp * (-sp_rate))/100;
 
-	if (!ammo && skill && skill_isammotype(sd, skill))
+	if (weapon && !ammo && skill && skill_isammotype(sd, skill))
 	{	//Assume this skill is using the weapon, therefore it requires arrows.
 		ammo = 0xFFFFFFFF; //Enable use on all ammo types.
-		ammo_qty = skill_get_num(skill, lv);
-		if (ammo_qty < 0) ammo_qty *= -1;
+		ammo_qty = 1;
 	}
+
+	//Can only update state when weapon/arrow info is checked.
+	if (weapon) sd->state.arrow_atk = ammo?1:0;
 
 	switch(skill) { // Check for cost reductions due to skills & SCs
 		case MC_MAMMONITE:
@@ -8400,12 +8407,12 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			clif_skill_fail(sd,skill,1,0);		/* SP不足：失敗通知 */
 			return 0;
 		}
-		if( zeny>0 && sd->status.zeny < zeny) {
+		if(zeny>0 && sd->status.zeny < zeny) {
 			clif_skill_fail(sd,skill,5,0);
 			return 0;
 		}
 	
-		if(!pc_check_weapontype(sd,weapon)) {
+		if(weapon && !pc_check_weapontype(sd,weapon)) {
 			clif_skill_fail(sd,skill,6,0);
 			return 0;
 		}
@@ -8431,7 +8438,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 	}
 
-	if(!type)//States are only checked on begin-casting. [Skotlex]
 	switch(state) {
 	case ST_HIDING:
 		if(!(sc && sc->option&OPTION_HIDE)) {
@@ -8557,8 +8563,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 
 	if(!(type&1))
 		return 1;
-
-	sd->state.arrow_atk = ammo?1:0; //Update arrow-atk state on cast-end.
 
 	if(delitem_flag) {
 		for(i=0;i<10;i++) {
