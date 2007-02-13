@@ -19,6 +19,8 @@
 	-----
 
 ========================
+02/13
+	* Fixed Bacsojin's mob id in mob_boss [Playtester]
 02/12
 	* Reverted Venom Splasher's element to take your weapon's
 	* Corrected range of self destruction / bio explosion to be equal to their
