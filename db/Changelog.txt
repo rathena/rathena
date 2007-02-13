@@ -20,6 +20,7 @@
 
 ========================
 02/12
+	* Reverted Venom Splasher's element to take your weapon's
 	* Corrected range of self destruction / bio explosion to be equal to their
 	  splash range. [Skotlex]
 02/10

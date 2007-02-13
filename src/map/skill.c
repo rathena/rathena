@@ -875,8 +875,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			return 0;
 		break;
 		case AL_TELEPORT:
-			//Flywing/ButterflyWing are checked elsewhere
-			if(map[m].flag.noteleport && sd->skillitem != skillid) {
+			if(map[m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
 			}
@@ -5566,7 +5565,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	else
 		target = map_id2bl(ud->skilltarget);
 
-
 	// Use a do so that you can break out of it when the skill fails.
 	do {
 		if(!target || target->prev==NULL) break;
@@ -5588,6 +5586,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 					ud->skillx = target->x;
 					ud->skilly = target->y;
 				}
+				ud->skilltimer=tid;
 				return skill_castend_pos(tid,tick,id,data);
 		}
 
@@ -5692,9 +5691,6 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			skill_castend_nodamage_id(src,target,ud->skillid,ud->skilllv,tick,0);
 		else
 			skill_castend_damage_id(src,target,ud->skillid,ud->skilllv,tick,0);
-
-		if (sd && sd->skillitem == ud->skillid) //Clear item skill data.
-			sd->skillitem = sd->skillitemlv = 0;
 
 		sc = status_get_sc(src);
 		if(sc && sc->count && sc->data[SC_MAGICPOWER].timer != -1 && ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL)
@@ -5856,9 +5852,6 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
-
-		if (sd && sd->skillitem == ud->skillid) //Clear item skill data.
-			sd->skillitem = sd->skillitemlv = 0;
 
 		if (ud->skilltimer == -1) {
 			if (md) md->skillidx = -1;
@@ -7922,6 +7915,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			else
 				pc_delitem(sd,i,1,0);
 		}
+		if (type&1) //Casting finished
+			sd->skillitem = sd->skillitemlv = 0;
 		return 1;
 	}
 	// for the guild skills [celest]

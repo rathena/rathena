@@ -2984,7 +2984,7 @@ int do_final_npc(void)
 		if ((bl = map_id2bl(i))){
 			if (bl->type == BL_NPC)
 				npc_unload((struct npc_data *)bl);
-			else if (bl->type&(BL_MOB|BL_PET))//# why BL_PET? [FlavioJS] //# Because this is invoked after saving/wiping all players, which would include all pets. This bit of code will take care of any pets without a master that are still lingering in the map. [Skotlex]
+			else if (bl->type&(BL_MOB|BL_PET|BL_HOM))
 				unit_free(bl, 0);
 		}
 	}
