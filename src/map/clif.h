@@ -225,6 +225,7 @@ void clif_equiplist(struct map_session_data *sd);
 int clif_cart_additem(struct map_session_data*,int,int,int);
 int clif_cart_delitem(struct map_session_data*,int,int);
 void clif_cartlist(struct map_session_data *sd);
+void clif_clearcart(int fd);
 
 int clif_item_identify_list(struct map_session_data *sd);
 int clif_item_identified(struct map_session_data *sd,int idx,int flag);

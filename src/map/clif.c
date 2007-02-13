@@ -2391,6 +2391,15 @@ void clif_cartlist(struct map_session_data *sd)
 	return;
 }
 
+/// Client behaviour:
+/// Closes the cart storage and removes all it's items from memory.
+/// The Num & Weight values of the cart are left untouched and the cart is NOT removed.
+void clif_clearcart(int fd)
+{
+	WFIFOHEAD(fd, packet_len(0x12b));
+	WFIFOW(fd,0) = 0x12b;
+}
+
 // Guild XY locators [Valaris]
 int clif_guild_xy(struct map_session_data *sd)
 {
@@ -9612,8 +9621,19 @@ void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
  */
 void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 {
+	int type;
+
 	RFIFOHEAD(fd);
-	pc_setcart(sd,RFIFOW(fd,2));
+	type = (int)RFIFOW(fd,2);
+
+	if( (type == 5 && sd->status.base_level <= 90) ||
+		(type == 4 && sd->status.base_level <= 80) ||
+		(type == 3 && sd->status.base_level <= 65) ||
+		(type == 2 && sd->status.base_level <= 40) ||
+		pc_setcart(sd,type) )
+	{
+		LOG_SUSPICIOUS(sd,"clif_parse_ChangeCart: player doesn't have the required level");
+	}
 }
 
 /*==========================================

@@ -2218,10 +2218,6 @@ int atcommand_option(const int fd, struct map_session_data* sd, const char* comm
 
 	sd->sc.opt1 = param1;
 	sd->sc.opt2 = param2;
-	if (!(sd->sc.option & OPTION_CART) && param3 & OPTION_CART) {
-		clif_cartlist(sd);
-		clif_updatestatus(sd, SP_CARTINFO);
-	}
 	pc_setoption(sd, param3);
 	
 	clif_displaymessage(fd, msg_txt(9)); // Options changed.
@@ -5666,14 +5662,14 @@ int atcommand_mount_peco(const int fd, struct map_session_data* sd, const char* 
 
 	if (!pc_isriding(sd)) { // if actually no peco
 		if (pc_checkskill(sd, KN_RIDING)) {
-			pc_setoption(sd, sd->sc.option | 0x0020);
+			pc_setoption(sd, sd->sc.option | OPTION_RIDING);
 			clif_displaymessage(fd, msg_txt(102)); // Mounted Peco.
 		} else {
 			clif_displaymessage(fd, msg_txt(213)); // You can not mount a peco with your job.
 			return -1;
 		}
 	} else {	//Dismount
-		pc_setoption(sd, sd->sc.option & ~0x0020);
+		pc_setoption(sd, sd->sc.option & ~OPTION_RIDING);
 		clif_displaymessage(fd, msg_txt(214)); // Unmounted Peco.
 	}
 
@@ -5700,14 +5696,14 @@ int atcommand_char_mount_peco(const int fd, struct map_session_data* sd, const c
 
 		if (!pc_isriding(pl_sd)) { // if actually no peco
 			if (pc_checkskill(pl_sd, KN_RIDING)) {
-				pc_setoption(pl_sd, pl_sd->sc.option | 0x0020);
+				pc_setoption(pl_sd, pl_sd->sc.option | OPTION_RIDING);
 				clif_displaymessage(fd, msg_txt(216)); // Mounted Peco.
 			} else {
 				clif_displaymessage(fd, msg_txt(217)); // You can not mount a peco with your job.
 				return -1;
 			}
 		} else {	//Dismount
-			pc_setoption(pl_sd, pl_sd->sc.option & ~0x0020);
+			pc_setoption(pl_sd, pl_sd->sc.option & ~OPTION_RIDING);
 			clif_displaymessage(fd, msg_txt(218)); // Unmounted Peco.
 		}
 	} else {

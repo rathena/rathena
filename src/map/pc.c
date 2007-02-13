@@ -5737,15 +5737,18 @@ int pc_setoption(struct map_session_data *sd,int type)
 	}
 	if(type&OPTION_CART && !(p_type&OPTION_CART))
   	{ //Cart On
+		clif_cartlist(sd);
+		clif_updatestatus(sd, SP_CARTINFO);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
 			status_calc_pc(sd,0); //Apply speed penalty.
 	} else
 	if(!(type&OPTION_CART) && p_type&OPTION_CART)
 	{ //Cart Off
+		clif_clearcart(sd->fd);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
 			status_calc_pc(sd,0); //Remove speed penalty.
 	}
-			
+
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
 		clif_status_load(&sd->bl,SI_FALCON,1);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
@@ -5784,27 +5787,22 @@ int pc_setoption(struct map_session_data *sd,int type)
  */
 int pc_setcart(struct map_session_data *sd,int type)
 {
-	int cart[6]={0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
+	int cart[6] = {0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
 	int option;
-	nullpo_retr(0, sd);
-	
-	if (type < 0 || type > 5)
-		return 0; //Never trust the values sent by the client! [Skotlex]
 
-	if(pc_checkskill(sd,MC_PUSHCART)>0){ // プッシュカ?トスキル所持
-		option = sd->sc.option;
-		//This should preserve the current option, only modifying the cart bit.
-		option&=~OPTION_CART;
-		option|=cart[type];
-		if(!pc_iscarton(sd)){ // カ?トを付けていない
-			pc_setoption(sd,option);
-			clif_cartlist(sd);
-			clif_updatestatus(sd,SP_CARTINFO);
-		}
-		else{
-			pc_setoption(sd,option);
-		}
-	}
+	nullpo_retr(0, sd);
+
+	if( type < 0 || type > 5 )
+		return 1;// Never trust the values sent by the client! [Skotlex]
+
+	if( pc_checkskill(sd,MC_PUSHCART) <= 0 )
+		return 1;// Push cart is required
+
+	// Update option
+	option = sd->sc.option;
+	option &= ~OPTION_CART;// clear cart bits
+	option |= cart[type]; // set cart
+	pc_setoption(sd, option);
 
 	return 0;
 }

@@ -52,9 +52,10 @@
 #include <time.h>
 #include <setjmp.h>
 
+//
+// struct script_state* st;
+//
 
-
-///////////////////////////////////////////////////////////////////////////////
 /// Returns the stack_data at the target index
 #define script_getdata(st,i) &((st)->stack->stack_data[(st)->start+(i)])
 /// Returns if the stack contains data at the target index
@@ -63,10 +64,17 @@
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 /// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
-/// Returns if the stack data is a string
-#define script_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
-/// Returns if the stack data is an int
-#define script_isint(data) ( (data)->type == C_INT )
+
+//
+// struct script_data* data;
+//
+
+/// Returns if the script data is a string
+#define data_isstring(data) ( (data)->type == C_STR || (data)->type == C_CONSTSTR )
+/// Returns if the script data is an int
+#define data_isint(data) ( (data)->type == C_INT )
+/// Returns if the script data is a reference
+#define data_isreference(data) ( (data)->type == C_NAME )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
@@ -1567,15 +1575,16 @@ static void add_buildin_func(void)
 	int i,n;
 	const char* p;
 	for( i=0; buildin_func[i].func; i++ ){
-		/// arg must follow the pattern: (v|s|i|l)*\?*\*?
-		/// 'v' - value (either string or int)
-		/// 's' - string
-		/// 'i' - int
-		/// 'l' - label
-		/// '?' - one optional parameter
-		/// '*' - unknown number of optional parameters
+		// arg must follow the pattern: (v|s|i|r|l)*\?*\*?
+		// 'v' - value (either string or int or reference)
+		// 's' - string
+		// 'i' - int
+		// 'r' - reference (of a variable)
+		// 'l' - label
+		// '?' - one optional parameter
+		// '*' - unknown number of optional parameters
 		p=buildin_func[i].arg;
-		while( *p == 'v' || *p == 's' || *p == 'i' || *p == 'l' ) ++p;
+		while( *p == 'v' || *p == 's' || *p == 'i' || *p == 'r' || *p == 'l' ) ++p;
 		while( *p == '?' ) ++p;
 		if( *p == '*' ) ++p;
 		if( *p != 0){
@@ -3355,6 +3364,7 @@ static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
  */
 int do_final_script()
 {
+#ifdef DEBUG_RUN
 	if (battle_config.etc_log)
 	{
 		FILE *fp = fopen("hash_dump.txt","wt");
@@ -3408,6 +3418,7 @@ int do_final_script()
 			fclose(fp);
 		}
 	}
+#endif
 
 	if(mapreg_dirty>=0)
 		script_save_mapreg();
@@ -4138,7 +4149,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),
 	BUILDIN_DEF(awake,"s"),
-	BUILDIN_DEF(getvariableofnpc,"is"),
+	BUILDIN_DEF(getvariableofnpc,"rs"),
 	// [blackhole89] -->
 	BUILDIN_DEF(warpportal,"iisii"),
 	// <--- [blackhole89]
@@ -5346,7 +5357,7 @@ BUILDIN_FUNC(getitem)
 
 	data=script_getdata(st,2);
 	get_val(st,data);
-	if( script_isstring(data) )
+	if( data_isstring(data) )
 	{// "<item name>"
 		const char *name=conv_str(st,data);
 		struct item_data *item_data = itemdb_searchname(name);
@@ -5356,7 +5367,7 @@ BUILDIN_FUNC(getitem)
 			return 1; //No item created.
 		}
 		nameid=item_data->nameid;
-	} else if( script_isint(data) )
+	} else if( data_isint(data) )
 	{// <item id>
 		nameid=conv_num(st,data);
 		//Violet Box, Blue Box, etc - random item pick
@@ -9665,10 +9676,10 @@ BUILDIN_FUNC(guardian)
 	} else if( script_hasdata(st,8) ){
 		data=script_getdata(st,8);
 		get_val(st,data);
-		if( script_isstring(data) )
+		if( data_isstring(data) )
 		{// "<event label>"
 			evt=conv_str(st,script_getdata(st,8));
-		} else if( script_isint(data) )
+		} else if( data_isint(data) )
 		{// <guardian index>
 			guardian=conv_num(st,script_getdata(st,8));
 		} else {
@@ -12860,63 +12871,84 @@ BUILDIN_FUNC(awake)
 	return 0;
 }
 
-// getvariableofnpc(<param>, <npc name>);
+/// Returns a reference to a variable of the target NPC.
+/// Returns 0 if an error occurs.
+///
+/// getvariableofnpc(<variable>, "<npc name>") -> <reference>
 BUILDIN_FUNC(getvariableofnpc)
 {
-	if( st->stack->stack_data[st->start+2].type != C_NAME ) {
-		// ‘æˆêˆø”‚ª•Ï”–¼‚¶‚á‚È‚¢
-		printf("getvariableofnpc: param not name\n");
-		push_val(st->stack,C_INT,0);
-	} else {
-		int num = st->stack->stack_data[st->start+2].u.num;
-		char *var_name = str_buf+str_data[num&0x00ffffff].str;
-		char *npc_name = conv_str(st,& (st->stack->stack_data[st->start+3]));
-		struct npc_data *nd = npc_name2id(npc_name);
-		if( var_name[0] != '.' || var_name[1] == '@' ) {
-			// ' •Ï”ˆÈŠO‚Íƒ_ƒ
-			printf("getvariableofnpc: invalid scope %s\n", var_name);
-			push_val(st->stack,C_INT,0);
-		} else if( nd == NULL || nd->bl.subtype != SCRIPT || !nd->u.scr.script) {
-			// NPC ‚ªŒ©‚Â‚©‚ç‚È‚¢ or SCRIPTˆÈŠO‚ÌNPC
-			printf("getvariableofnpc: can't find npc %s\n", npc_name);
-			push_val(st->stack,C_INT,0);
-		} else {
-			push_val2(st->stack,C_NAME,num, &nd->u.scr.script->script_vars );
+	struct script_data* data;
+
+	data = script_getdata(st,2);
+	if( !data_isreference(data) )
+	{// Not a reference (aka varaible name)
+		ShowError("script: getvariableofnpc: first argument is not a variable name\n");
+		st->state = END;
+		return 1;
+	}
+	else
+	{
+		int num = data->u.num;
+		char* var_name = str_buf + str_data[num&0x00ffffff].str;
+		char* npc_name = conv_str(st, script_getdata(st,3));
+		struct npc_data* nd = npc_name2id(npc_name);
+		if( var_name[0] != '.' || var_name[1] == '@' )
+		{// not a npc variable
+			ShowError("script: getvariableofnpc: invalid scope %s (not npc variable)\n", var_name);
+			st->state = END;
+			return 1;
+		}
+		else if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
+		{// NPC not found or has no script
+			ShowError("script: getvariableofnpc: can't find npc %s\n", npc_name);
+			st->state = END;
+			return 1;
+		}
+		else
+		{// push variable reference
+			push_val2(st->stack, C_NAME, num, &nd->u.scr.script->script_vars );
 		}
 	}
 	return 0;
 }
 
-// [blackhole89] --->
-
-// Set a warp portal.
+/// Opens a warp portal.
+/// Has no "portal opening" effect/sound, it opens the portal immediately.
+///
+/// warpportal(<src x>,<src y>,"<target map>",<target x>,<target y>);
+///
+/// @author blackhole89
 BUILDIN_FUNC(warpportal)
 {
-	struct skill_unit_group *group;
+	int spx;
+	int spy;
 	unsigned short mapindex;
-	long spx,spy,tpx,tpy;
-	struct block_list *bl=map_id2bl(st->oid);
+	int tpx;
+	int tpy;
+	struct skill_unit_group* group;
+	struct block_list* bl;
 
-	nullpo_retr(0,bl);
-
-	spx=conv_num(st, & (st->stack->stack_data[st->start+2]));
-	spy=conv_num(st, & (st->stack->stack_data[st->start+3]));
-	mapindex  = mapindex_name2id((char*)conv_str(st,& (st->stack->stack_data[st->start+4])));
-	printf("mapindex: %d\n",mapindex);
-	tpx=conv_num(st, & (st->stack->stack_data[st->start+5]));
-	tpy=conv_num(st, & (st->stack->stack_data[st->start+6]));
-
-	if(!mapindex) return 0;
-
-	if((group=skill_unitsetting(bl,AL_WARP,4,spx,spy,1))==NULL) {
-		return 0;
+	bl = map_id2bl(st->oid);
+	if( bl == NULL )
+	{
+		ShowError("script: warpportal: npc is needed");
+		return 1;
 	}
 
-	group->val2=(tpx<<16)|tpy;
+	spx = conv_num(st, script_getdata(st,2));
+	spy = conv_num(st, script_getdata(st,3));
+	mapindex = mapindex_name2id(conv_str(st, script_getdata(st,4)));
+	tpx = conv_num(st, script_getdata(st,5));
+	tpy = conv_num(st, script_getdata(st,6));
+
+	if( mapindex == 0 )
+		return 0;// map not found
+
+	group = skill_unitsetting(bl, AL_WARP, 4, spx, spy, 1);
+	if( group == NULL )
+		return 0;// failed
+	group->val2 = (tpx<<16) | tpy;
 	group->val3 = mapindex;
 
 	return 0;
 }
-
-// <-- [blackhole89]
-
