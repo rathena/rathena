@@ -182,7 +182,7 @@ prt_fild08.gat,175,374,3	script	Bard#brising	51,{
 						close;
 					L_NewsBord:
 						mes "[Nelliorde]";
-						mes "Well, to the north is the Schwaltzwald Republic.";
+						mes "Well, to the north is the Schwarzwald Republic.";
 						mes "There, you'll find Juno,";
 						mes "the 'City of Sages.'";
 						next;
@@ -633,7 +633,7 @@ prt_fild08.gat,175,374,3	script	Bard#brising	51,{
 						close;
 					L_NewsBord2:
 						mes "[Nelliorde]";
-						mes "Well, to the north is the Schwaltzwald Republic.";
+						mes "Well, to the north is the Schwarzwald Republic.";
 						mes "There, you'll find Juno,";
 						mes "the 'City of Sages.'";
 						next;

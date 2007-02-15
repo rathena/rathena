@@ -207,7 +207,7 @@ s_Rekenber:
 	mes "[Lighthalzen Guide]";
 	mes "Rekenber Corporation,";
 	mes "the largest company in";
-	mes "the Schwartzwald Republic,";
+	mes "the Schwarzwald Republic,";
 	mes "is located in the northwestern";
 	mes "Lighthalzen. You can't miss";
 	mes "the headquarters building.";
@@ -264,7 +264,7 @@ s_Airport:
 	mes "The Airport is to the far";
 	mes "west of the Central Promenade";
 	mes "You can travel anywhere within";
-	mes "the Schwartzwald Republic by";
+	mes "the Schwarzwald Republic by";
 	mes "riding one of the Airships.";
 	if(@tempguide)viewpoint 1,266,76,6,0x00FF00;
 	next;

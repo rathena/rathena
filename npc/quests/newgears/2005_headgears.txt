@@ -263,7 +263,7 @@ lighthalzen.gat,143,68,0	script	Strange Guy#LhzHat	47,{
 				mes "Morris Poe?";
 				mes "Renown detective?";
 				mes "Advocate for justice in";
-				mes "the Schwaltzvalt Republic?";
+				mes "the Schwarzwald Republic?";
 				mes "Surely you recognize one";
 				mes "of my esteemed titles.";
 				next;

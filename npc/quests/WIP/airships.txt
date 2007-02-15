@@ -763,7 +763,7 @@ izlude.gat,201,54,3	script	Airship Staff#izl	91,{
 hugel.gat,182,150,3	script	Airship Staff#hu	91,{
 
 	mes "[Airship Staff]";
-	mes "Welcome to the Schwartzwald Republic's Airship.";
+	mes "Welcome to the Schwarzwald Republic's Airship.";
 	mes "How may I help you?";
 	next;
 	menu "Board the Airship",-,"Cancel",L_Cancel;

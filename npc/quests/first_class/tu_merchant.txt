@@ -1277,7 +1277,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 	}
 
 	mes "[Jayon]";
-	mes "The Schwaltzwald Republic...";
+	mes "The Schwarzwald Republic...";
 	mes "It's a really interesting country. There's Juno and a few other places worth looking around. ";
 	next;
 	mes "[Jayon]";

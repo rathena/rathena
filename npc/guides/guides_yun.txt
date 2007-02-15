@@ -11,7 +11,7 @@
 //===== Additional Comments: ================================= 
 //= Edited Miss Yoon text. Added town soldiers by usul. Edited town soldiers
 //= and added map location option for them. [kobra_k88]
-//= 1.1 Changed sprites and cutins to Schwartzald Republic ones
+//= 1.1 Changed sprites and cutins to Schwarzwald Republic ones
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.3 Updated the mini map localization function. [Musashiden]
 //= 1.4 Juno Guides are now up to date according to iRO. [Musashiden]

@@ -602,7 +602,7 @@ function	script	F_DTS_Warp	{
 			mes "details, please visit our";
 			mes "headquarters in the city of";
 			mes "Lighthalzen located in the";
-			mes "Schwaltzvalt Republic.";
+			mes "Schwarzwald Republic.";
 			mes "Thank you for your time.";
 			break;
 		case 1:

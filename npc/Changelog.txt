@@ -26,6 +26,8 @@ KarLaeda
 
 Date		Added
 ======
+2007/02/15
+	* Corrected all Schwarzwald typos (except for the WIP one) [ultramage]
 2007/01/30
 	* Fixed a mistake in one quiz in the the sign quest [ultramage]
 2007/01/29

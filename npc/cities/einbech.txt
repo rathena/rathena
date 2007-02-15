@@ -814,7 +814,7 @@ einbech.gat,151,168,4	script	Tollaf	854,{
 	mes "live so much better than we";
 	mes "do, especially those snobs in";
 	mes "Einbroch! Einbech must be the";
-	mes "worst town of Schwartzwald Republic.";
+	mes "worst town of Schwarzwald Republic.";
 	mes "No, it's the worst in the world!";
 	close;
 }

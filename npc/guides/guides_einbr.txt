@@ -146,7 +146,7 @@ M_2:
 
 L_NOTICE:
 	mes "[Einbroch Guide]";
-	mes "Through the technology of the Schwartzwalt Republic, we've upgraded to a digital information system that allows us to mark locations on your Mini-Map for easier navigation.";
+	mes "Through the technology of the Schwarzwald Republic, we've upgraded to a digital information system that allows us to mark locations on your Mini-Map for easier navigation.";
 	next;
   	mes "[Einbroch Guide]";
   	mes "Your Mini-Map is located in the upper right corner of the screen.";

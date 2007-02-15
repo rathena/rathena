@@ -3734,7 +3734,7 @@ s_Forge:
 	mes "and this is my forge~! I am";
 	mes "the most elegant Blacksmith";
 	mes "and the best chef here in the";
-	mes "Schwartzwald Republic~";
+	mes "Schwarzwald Republic~";
 	next;
 	mes "[Uwe]";
 	mes "So, how can";

@@ -98,7 +98,7 @@ einbroch.gat,94,267,4	script	Airship Staff	91,{
 	mes "Please use this door to";
 	mes "board the Airship wich stops";
 	mes "over Lighthalzen and Juno in";
-	mes "the Schwaltzvalt Republic";
+	mes "the Schwarzwald Republic";
 	next;
 	mes "[Airship Staff]";
 	mes "Otherwise, if Einbroch is";
