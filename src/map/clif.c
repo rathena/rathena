@@ -5739,10 +5739,10 @@ int clif_party_join_info(struct party *p, struct map_session_data *sd)
  * Sends party information
  * R 00fb <len>.w <party name>.24B {<ID>.l <nick>.24B <map name>.16B <leader>.B <offline>.B}.46B*
  *------------------------------------------*/
-int clif_party_info(struct party_data* p, int fd)
+int clif_party_info(struct party_data* p, struct map_session_data *sd)
 {
 	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH+1+1)*MAX_PARTY];
-	struct map_session_data* sd = NULL;
+	struct map_session_data* party_sd = NULL;
 	int i, c;
 
 	nullpo_retr(0, p);
@@ -5754,7 +5754,7 @@ int clif_party_info(struct party_data* p, int fd)
 		struct party_member* m = &p->party.member[i];
 		if(!m->account_id) continue;
 
-		if(sd == NULL) sd = p->data[i].sd; // need at least one member's 'sd' so clif_send() can identify the party
+		if(party_sd == NULL) party_sd = p->data[i].sd;
 
 		WBUFL(buf,28+c*46) = m->account_id;
 		memcpy(WBUFP(buf,28+c*46+4), m->name, NAME_LENGTH);
@@ -5765,12 +5765,10 @@ int clif_party_info(struct party_data* p, int fd)
 	}
 	WBUFW(buf,2) = 28+c*46;
 
-	if(fd >= 0) { // send only to self
-		if (session[fd] && session[fd]->session_data)
-			clif_send(buf, WBUFW(buf,2), &((struct map_session_data *)session[fd]->session_data)->bl, SELF);
-	} else { // send to whole party
-		if(sd)
-			clif_send(buf, WBUFW(buf,2), &sd->bl, PARTY);
+	if(sd) { // send only to self
+		clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
+	} else if (party_sd) { // send to whole party
+		clif_send(buf, WBUFW(buf,2), &party_sd->bl, PARTY);
 	}
 	
 	return 0;

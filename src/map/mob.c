@@ -3215,9 +3215,8 @@ int mob_parse_dbrow(char** str)
 	memcpy(db->sprite, str[1], NAME_LENGTH-1);
 	memcpy(db->jname, str[2], NAME_LENGTH-1);
 	memcpy(db->name, str[3], NAME_LENGTH-1);
-	
-	db->lv = cap_value(atoi(str[4]), 1, USHRT_MAX);
-	
+	db->lv = atoi(str[4]);
+	db->lv = cap_value(db->lv, 1, USHRT_MAX);
 	status->max_hp = atoi(str[5]);
 	status->max_sp = atoi(str[6]);
 	
@@ -3232,14 +3231,19 @@ int mob_parse_dbrow(char** str)
 	status->rhw.atk2 = atoi(str[11]);
 	status->def = atoi(str[12]);
 	status->mdef = atoi(str[13]);
-	
+	status->str = atoi(str[14]);
+	status->agi = atoi(str[15]);
+	status->vit = atoi(str[16]);
+	status->int_ = atoi(str[17]);
+	status->dex = atoi(str[18]);
+	status->luk = atoi(str[19]);
 	//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
-	status->str = cap_value(atoi(str[14]), 1, USHRT_MAX);
-	status->agi = cap_value(atoi(str[15]), 1, USHRT_MAX);
-	status->vit = cap_value(atoi(str[16]), 1, USHRT_MAX);
-	status->int_ = cap_value(atoi(str[17]), 1, USHRT_MAX);
-	status->dex = cap_value(atoi(str[18]), 1, USHRT_MAX);
-	status->luk = cap_value(atoi(str[19]), 1, USHRT_MAX);
+	if (status->str < 1) status->str = 1;
+	if (status->agi < 1) status->agi = 1;
+	if (status->vit < 1) status->vit = 1;
+	if (status->int_< 1) status->int_= 1;
+	if (status->dex < 1) status->dex = 1;
+	if (status->luk < 1) status->luk = 1;
 	
 	db->range2 = atoi(str[20]);
 	db->range3 = atoi(str[21]);

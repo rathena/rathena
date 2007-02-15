@@ -244,7 +244,7 @@ int party_recv_info(struct party *sp)
 			continue;
 		clif_party_main_info(p,-1);
 		clif_party_option(p,sd,0x100);
-		clif_party_info(p,-1);
+		clif_party_info(p,NULL);
 		sd->state.party_sent=1;
 	}
 	
@@ -504,7 +504,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 		return 0;
 	}
 	
-	clif_party_info(p,-1);
+	clif_party_info(p,NULL);
 	return 0;
 }
 
@@ -540,7 +540,7 @@ void party_send_movemap(struct map_session_data *sd)
 		if(sd->status.party_id==p->party.party_id){
 			clif_party_main_info(p,sd->fd);
 			clif_party_option(p,sd,0x100);
-			clif_party_info(p,sd->fd);
+			clif_party_info(p,sd);
 			sd->state.party_sent=1;
 		}
 	}
