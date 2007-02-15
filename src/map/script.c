@@ -1973,96 +1973,82 @@ int get_val(struct script_state* st, struct script_data* data)
 	return 0;
 }
 /*==========================================
- * •Ï”‚Ì“Ç‚İæ‚è2
- *------------------------------------------
- */
-void* get_val2(struct script_state*st,int num,struct linkdb_node **ref)
+ * Retrieves the value of a script variable
+ *------------------------------------------*/
+void* get_val2(struct script_state* st, int num, struct linkdb_node** ref)
 {
 	struct script_data dat;
-	dat.type=C_NAME;
-	dat.u.num=num;
-	dat.ref=ref;
-	get_val(st,&dat);
-	if( dat.type==C_INT ) return (void*)dat.u.num;
-	else return (void*)dat.u.str;
+	dat.type = C_NAME;
+	dat.u.num = num;
+	dat.ref = ref;
+	get_val(st, &dat);
+	return (dat.type == C_INT) ? (void*)dat.u.num : (void*)dat.u.str;
 }
 
 /*==========================================
- * •Ï”İ’è—p
- *------------------------------------------
- */
-static int set_reg(struct script_state*st,struct map_session_data *sd,int num,char *name,void *v,struct linkdb_node** ref)
+ * Stores the value of a script variable
+ *------------------------------------------*/
+static int set_reg(struct script_state* st, struct map_session_data* sd, int num, char* name, void* value, struct linkdb_node** ref)
 {
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
+	char prefix = name[0]; char postfix = name[strlen(name)-1];
 
-	if( postfix=='$' ){
-		char *str=(char*)v;
-		if( prefix=='@'){
-			pc_setregstr(sd,num,str);
-		}else if(prefix=='$') {
-			mapreg_setregstr(num,str);
-		}else if(prefix=='#') {
-			if( name[1]=='#' )
-				pc_setaccountreg2str(sd,name,str);
-			else
-				pc_setaccountregstr(sd,name,str);
- 		}else if(prefix=='.') {
-			char *p;
-			struct linkdb_node **n;
-			if( ref ) {
-				n = ref;
-			} else if( name[1] == '@' ) {
-				n = st->stack->var_function;
-			} else {
-				n = &st->script->script_vars;
-			}
+	if (postfix == '$') { // string variable
+
+		char* str = (char*)value;
+		switch (prefix) {
+		case '@':
+			pc_setregstr(sd, num, str); break;
+		case '$':
+			mapreg_setregstr(num, str); break;
+		case '#':
+			(name[1] == '#') ? pc_setaccountreg2str(sd, name, str) : pc_setaccountregstr(sd, name, str); break;
+		case '.': {
+			char* p;
+			struct linkdb_node** n;
+			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
 			p = linkdb_search(n, (void*)num);
-			if(p) {
+			if (p) {
 				linkdb_erase(n, (void*)num);
 				aFree(p);
 			}
-			if( ((char*)v)[0] )
-				linkdb_insert(n, (void*)num, aStrdup(v));
-		}else{
-			pc_setglobalreg_str(sd,name,str);
- 		} // [zBuffer]
-	}else{
-		// ”’l
-		int val = (int)v;
-		if(str_data[num&0x00ffffff].type==C_PARAM){
-			pc_setparam(sd,str_data[num&0x00ffffff].val,val);
-		}else if(prefix=='@') {
-			pc_setreg(sd,num,val);
-		}else if(prefix=='$') {
-			mapreg_setreg(num,val);
-		}else if(prefix=='#') {
-			if( name[1]=='#' )
-				pc_setaccountreg2(sd,name,val);
-			else
-				pc_setaccountreg(sd,name,val);
-		}else if(prefix == '.') {
-			struct linkdb_node **n;
-			if( ref ) {
-				n = ref;
-			} else if( name[1] == '@' ) {
-				n = st->stack->var_function;
-			} else {
-				n = &st->script->script_vars;
+			if (str[0]) linkdb_insert(n, (void*)num, aStrdup(str));
 			}
-			if( val == 0 ) {
+			break;
+		default:
+			pc_setglobalreg_str(sd, name, str); break;
+		}
+
+	} else { // integer variable
+
+		int val = (int)value;
+		if(str_data[num&0x00ffffff].type == C_PARAM)
+			pc_setparam(sd, str_data[num&0x00ffffff].val, val);
+		else
+		switch (prefix) {
+		case '@':
+			pc_setreg(sd, num, val); break;
+		case '$':
+			mapreg_setreg(num, val); break;
+		case '#':
+			(name[1] == '#') ? pc_setaccountreg2(sd, name, val) : pc_setaccountreg(sd, name, val); break;
+		case '.': {
+			struct linkdb_node** n;
+			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
+			if (val == 0)
 				linkdb_erase(n, (void*)num);
-			} else {
+			else 
 				linkdb_replace(n, (void*)num, (void*)val);
 			}
-		}else{
-			pc_setglobalreg(sd,name,val);
+			break;
+		default:
+			pc_setglobalreg(sd, name, val); break;
 		}
 	}
+
 	return 0;
 }
 
-int set_var(struct map_session_data *sd, char *name, void *val)
+int set_var(struct map_session_data* sd, char* name, void* val)
 {
     return set_reg(NULL, sd, add_str(name), name, val, NULL);
 }
@@ -6015,13 +6001,13 @@ BUILDIN_FUNC(getpartyleader)
 			push_val(st->stack,C_INT,p->party.member[i].class_);
 		break;
 		case 4:
-			push_str(st->stack,C_CONSTSTR,(char*)mapindex_id2name(p->party.member[i].map));
+			push_str(st->stack,C_STR,aStrdup(mapindex_id2name(p->party.member[i].map)));
 		break;
 		case 5:
 			push_val(st->stack,C_INT,p->party.member[i].lv);
 		break;
 		default:
-			push_str(st->stack,C_CONSTSTR,p->party.member[i].name);
+			push_str(st->stack,C_STR,aStrdup(p->party.member[i].name));
 		break;
 	}
 	return 0;
