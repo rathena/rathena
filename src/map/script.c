@@ -6659,25 +6659,6 @@ BUILDIN_FUNC(getgdskilllv)
 		script_pushint(st, guild_checkskill(g,skill_id));
 
 	return 0;
-/*
-	int skill_id;
-	TBL_PC* sd;
-	struct guild* g = NULL;
-
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0; // needs player attached
-
-	skill_id = conv_num(st, script_getdata(st,2));
-	if( sd->status.guild_id > 0 )
-		g = guild_search(sd->status.guild_id);
-	if( g == NULL )
-		script_pushint(st, -1);
-	else
-		script_pushint(st, guild_checkskill(g,skill_id+9999));
-
-	return 0;
-*/
 }
 
 /// Returns the 'basic_skill_check' setting.

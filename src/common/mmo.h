@@ -9,7 +9,7 @@
 #include "utils.h" // _WIN32
 
 // server protocol version
-#define PACKETVER			7
+#define PACKETVER			8
 
 #define FIFOSIZE_SERVERLINK	256*1024
 
