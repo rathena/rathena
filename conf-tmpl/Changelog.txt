@@ -1,5 +1,8 @@
 Date	Added
-
+2007/02/16
+	* Collapsed config settings "sg_miracle_skill_min_duration" and
+	  "sg_miracle_skill_max_duration" into "sg_miracle_skill_duration", which
+	  defaults to an hour (skill.conf).
 2007/02/12
 	* Corrected the meaning of "skill_display_fail&2", made 2 the default
 	  setting. [Skotlex]

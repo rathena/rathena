@@ -19,14 +19,14 @@
 
 gefg_cas01.gat,198,182,0	script	Guardian_G01	-1,{
 OnAgitInit:
-	if (GetCastleData("gefg_cas01.gat",10) == 1) guardian "gefg_cas01.gat",30,178,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",0;
-	if (GetCastleData("gefg_cas01.gat",11) == 1) guardian "gefg_cas01.gat",64,180,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",1;
-	if (GetCastleData("gefg_cas01.gat",12) == 1) guardian "gefg_cas01.gat",61,25,"Soldier Guardian",1287,1,"Guardian_G01::OnGuardianDied",2;
-	if (GetCastleData("gefg_cas01.gat",13) == 1) guardian "gefg_cas01.gat",61,44,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",3;
-	if (GetCastleData("gefg_cas01.gat",14) == 1) guardian "gefg_cas01.gat",189,43,"Archer Guardian",1285,1,"Guardian_G01::OnGuardianDied",4;
-	if (GetCastleData("gefg_cas01.gat",15) == 1) guardian "gefg_cas01.gat",51,192,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",5;
-	if (GetCastleData("gefg_cas01.gat",16) == 1) guardian "gefg_cas01.gat",49,67,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",6;
-	if (GetCastleData("gefg_cas01.gat",17) == 1) guardian "gefg_cas01.gat",181,14,"Knight Guardian",1286,1,"Guardian_G01::OnGuardianDied",7;
+	if (GetCastleData("gefg_cas01.gat",10) == 1) guardian "gefg_cas01.gat",30,178,"Soldier Guardian",1287,"Guardian_G01::OnGuardianDied",0;
+	if (GetCastleData("gefg_cas01.gat",11) == 1) guardian "gefg_cas01.gat",64,180,"Soldier Guardian",1287,"Guardian_G01::OnGuardianDied",1;
+	if (GetCastleData("gefg_cas01.gat",12) == 1) guardian "gefg_cas01.gat",61,25,"Soldier Guardian",1287,"Guardian_G01::OnGuardianDied",2;
+	if (GetCastleData("gefg_cas01.gat",13) == 1) guardian "gefg_cas01.gat",61,44,"Archer Guardian",1285,"Guardian_G01::OnGuardianDied",3;
+	if (GetCastleData("gefg_cas01.gat",14) == 1) guardian "gefg_cas01.gat",189,43,"Archer Guardian",1285,"Guardian_G01::OnGuardianDied",4;
+	if (GetCastleData("gefg_cas01.gat",15) == 1) guardian "gefg_cas01.gat",51,192,"Knight Guardian",1286,"Guardian_G01::OnGuardianDied",5;
+	if (GetCastleData("gefg_cas01.gat",16) == 1) guardian "gefg_cas01.gat",49,67,"Knight Guardian",1286,"Guardian_G01::OnGuardianDied",6;
+	if (GetCastleData("gefg_cas01.gat",17) == 1) guardian "gefg_cas01.gat",181,14,"Knight Guardian",1286,"Guardian_G01::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
@@ -37,14 +37,14 @@ OnGuardianDied:
 //------------------------------------------------------------------------------
 gefg_cas02.gat,176,178,0	script	Guardian_G02	-1,{
 OnAgitInit:
-	if (GetCastleData("gefg_cas02.gat",10) == 1) guardian "gefg_cas02.gat",22,135,"Soldier Guardian",1287,1,"Guardian_G02::OnGuardianDied",0;
-	if (GetCastleData("gefg_cas02.gat",11) == 1) guardian "gefg_cas02.gat",33,40,"Soldier Guardian",1287,1,"Guardian_G02::OnGuardianDied",1;
-	if (GetCastleData("gefg_cas02.gat",12) == 1) guardian "gefg_cas02.gat",158,11,"Soldier Guardian",1287,1,"Guardian_G02::OnGuardianDied",2;
-	if (GetCastleData("gefg_cas02.gat",13) == 1) guardian "gefg_cas02.gat",64,140,"Archer Guardian",1285,1,"Guardian_G02::OnGuardianDied",3;
-	if (GetCastleData("gefg_cas02.gat",14) == 1) guardian "gefg_cas02.gat",36,140,"Archer Guardian",1285,1,"Guardian_G02::OnGuardianDied",4;
-	if (GetCastleData("gefg_cas02.gat",15) == 1) guardian "gefg_cas02.gat",166,45,"Knight Guardian",1286,1,"Guardian_G02::OnGuardianDied",5;
-	if (GetCastleData("gefg_cas02.gat",16) == 1) guardian "gefg_cas02.gat",10,39,"Knight Guardian",1286,1,"Guardian_G02::OnGuardianDied",6;
-	if (GetCastleData("gefg_cas02.gat",17) == 1) guardian "gefg_cas02.gat",166,35,"Knight Guardian",1286,1,"Guardian_G02::OnGuardianDied",7;
+	if (GetCastleData("gefg_cas02.gat",10) == 1) guardian "gefg_cas02.gat",22,135,"Soldier Guardian",1287,"Guardian_G02::OnGuardianDied",0;
+	if (GetCastleData("gefg_cas02.gat",11) == 1) guardian "gefg_cas02.gat",33,40,"Soldier Guardian",1287,"Guardian_G02::OnGuardianDied",1;
+	if (GetCastleData("gefg_cas02.gat",12) == 1) guardian "gefg_cas02.gat",158,11,"Soldier Guardian",1287,"Guardian_G02::OnGuardianDied",2;
+	if (GetCastleData("gefg_cas02.gat",13) == 1) guardian "gefg_cas02.gat",64,140,"Archer Guardian",1285,"Guardian_G02::OnGuardianDied",3;
+	if (GetCastleData("gefg_cas02.gat",14) == 1) guardian "gefg_cas02.gat",36,140,"Archer Guardian",1285,"Guardian_G02::OnGuardianDied",4;
+	if (GetCastleData("gefg_cas02.gat",15) == 1) guardian "gefg_cas02.gat",166,45,"Knight Guardian",1286,"Guardian_G02::OnGuardianDied",5;
+	if (GetCastleData("gefg_cas02.gat",16) == 1) guardian "gefg_cas02.gat",10,39,"Knight Guardian",1286,"Guardian_G02::OnGuardianDied",6;
+	if (GetCastleData("gefg_cas02.gat",17) == 1) guardian "gefg_cas02.gat",166,35,"Knight Guardian",1286,"Guardian_G02::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
@@ -55,14 +55,14 @@ OnGuardianDied:
 //------------------------------------------------------------------------------
 gefg_cas03.gat,245,167,0	script	Guardian_G03	-1,{
 OnAgitInit:
-	if (GetCastleData("gefg_cas03.gat",10) == 1) guardian "gefg_cas03.gat",101,53,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",0;
-	if (GetCastleData("gefg_cas03.gat",11) == 1) guardian "gefg_cas03.gat",158,40,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",1;
-	if (GetCastleData("gefg_cas03.gat",12) == 1) guardian "gefg_cas03.gat",158,67,"Soldier Guardian",1287,1,"Guardian_G03::OnGuardianDied",2;
-	if (GetCastleData("gefg_cas03.gat",13) == 1) guardian "gefg_cas03.gat",229,53,"Archer Guardian",1285,1,"Guardian_G03::OnGuardianDied",3;
-	if (GetCastleData("gefg_cas03.gat",14) == 1) guardian "gefg_cas03.gat",248,53,"Archer Guardian",1285,1,"Guardian_G03::OnGuardianDied",4;
-	if (GetCastleData("gefg_cas03.gat",15) == 1) guardian "gefg_cas03.gat",122,53,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",5;
-	if (GetCastleData("gefg_cas03.gat",16) == 1) guardian "gefg_cas03.gat",243,35,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",6;
-	if (GetCastleData("gefg_cas03.gat",17) == 1) guardian "gefg_cas03.gat",234,33,"Knight Guardian",1286,1,"Guardian_G03::OnGuardianDied",7;
+	if (GetCastleData("gefg_cas03.gat",10) == 1) guardian "gefg_cas03.gat",101,53,"Soldier Guardian",1287,"Guardian_G03::OnGuardianDied",0;
+	if (GetCastleData("gefg_cas03.gat",11) == 1) guardian "gefg_cas03.gat",158,40,"Soldier Guardian",1287,"Guardian_G03::OnGuardianDied",1;
+	if (GetCastleData("gefg_cas03.gat",12) == 1) guardian "gefg_cas03.gat",158,67,"Soldier Guardian",1287,"Guardian_G03::OnGuardianDied",2;
+	if (GetCastleData("gefg_cas03.gat",13) == 1) guardian "gefg_cas03.gat",229,53,"Archer Guardian",1285,"Guardian_G03::OnGuardianDied",3;
+	if (GetCastleData("gefg_cas03.gat",14) == 1) guardian "gefg_cas03.gat",248,53,"Archer Guardian",1285,"Guardian_G03::OnGuardianDied",4;
+	if (GetCastleData("gefg_cas03.gat",15) == 1) guardian "gefg_cas03.gat",122,53,"Knight Guardian",1286,"Guardian_G03::OnGuardianDied",5;
+	if (GetCastleData("gefg_cas03.gat",16) == 1) guardian "gefg_cas03.gat",243,35,"Knight Guardian",1286,"Guardian_G03::OnGuardianDied",6;
+	if (GetCastleData("gefg_cas03.gat",17) == 1) guardian "gefg_cas03.gat",234,33,"Knight Guardian",1286,"Guardian_G03::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
@@ -73,14 +73,14 @@ OnGuardianDied:
 //------------------------------------------------------------------------------
 gefg_cas04.gat,174,178,0	script	Guardian_G04	-1,{
 OnAgitInit:
-	if (GetCastleData("gefg_cas04.gat",10) == 1) guardian "gefg_cas04.gat",49,203,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",0;
-	if (GetCastleData("gefg_cas04.gat",11) == 1) guardian "gefg_cas04.gat",148,50,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",1;
-	if (GetCastleData("gefg_cas04.gat",12) == 1) guardian "gefg_cas04.gat",57,20,"Soldier Guardian",1287,1,"Guardian_G04::OnGuardianDied",2;
-	if (GetCastleData("gefg_cas04.gat",13) == 1) guardian "gefg_cas04.gat",34,218,"Archer Guardian",1285,1,"Guardian_G04::OnGuardianDied",3;
-	if (GetCastleData("gefg_cas04.gat",14) == 1) guardian "gefg_cas04.gat",167,42,"Archer Guardian",1285,1,"Guardian_G04::OnGuardianDied",4;
-	if (GetCastleData("gefg_cas04.gat",15) == 1) guardian "gefg_cas04.gat",18,52,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",5;
-	if (GetCastleData("gefg_cas04.gat",16) == 1) guardian "gefg_cas04.gat",50,48,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",6;
-	if (GetCastleData("gefg_cas04.gat",17) == 1) guardian "gefg_cas04.gat",160,66,"Knight Guardian",1286,1,"Guardian_G04::OnGuardianDied",7;
+	if (GetCastleData("gefg_cas04.gat",10) == 1) guardian "gefg_cas04.gat",49,203,"Soldier Guardian",1287,"Guardian_G04::OnGuardianDied",0;
+	if (GetCastleData("gefg_cas04.gat",11) == 1) guardian "gefg_cas04.gat",148,50,"Soldier Guardian",1287,"Guardian_G04::OnGuardianDied",1;
+	if (GetCastleData("gefg_cas04.gat",12) == 1) guardian "gefg_cas04.gat",57,20,"Soldier Guardian",1287,"Guardian_G04::OnGuardianDied",2;
+	if (GetCastleData("gefg_cas04.gat",13) == 1) guardian "gefg_cas04.gat",34,218,"Archer Guardian",1285,"Guardian_G04::OnGuardianDied",3;
+	if (GetCastleData("gefg_cas04.gat",14) == 1) guardian "gefg_cas04.gat",167,42,"Archer Guardian",1285,"Guardian_G04::OnGuardianDied",4;
+	if (GetCastleData("gefg_cas04.gat",15) == 1) guardian "gefg_cas04.gat",18,52,"Knight Guardian",1286,"Guardian_G04::OnGuardianDied",5;
+	if (GetCastleData("gefg_cas04.gat",16) == 1) guardian "gefg_cas04.gat",50,48,"Knight Guardian",1286,"Guardian_G04::OnGuardianDied",6;
+	if (GetCastleData("gefg_cas04.gat",17) == 1) guardian "gefg_cas04.gat",160,66,"Knight Guardian",1286,"Guardian_G04::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
@@ -91,14 +91,14 @@ OnGuardianDied:
 //------------------------------------------------------------------------------
 gefg_cas05.gat,194,184,0	script	Guardian_G05	-1,{
 OnAgitInit:
-	if (GetCastleData("gefg_cas05.gat",10) == 1) guardian "gefg_cas05.gat",54,149,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",0;
-	if (GetCastleData("gefg_cas05.gat",11) == 1) guardian "gefg_cas05.gat",80,31,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",1;
-	if (GetCastleData("gefg_cas05.gat",12) == 1) guardian "gefg_cas05.gat",52,32,"Soldier Guardian",1287,1,"Guardian_G05::OnGuardianDied",2;
-	if (GetCastleData("gefg_cas05.gat",13) == 1) guardian "gefg_cas05.gat",77,149,"Archer Guardian",1285,1,"Guardian_G05::OnGuardianDied",3;
-	if (GetCastleData("gefg_cas05.gat",14) == 1) guardian "gefg_cas05.gat",65,18,"Archer Guardian",1285,1,"Guardian_G05::OnGuardianDied",4;
-	if (GetCastleData("gefg_cas05.gat",15) == 1) guardian "gefg_cas05.gat",66,54,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",5;
-	if (GetCastleData("gefg_cas05.gat",16) == 1) guardian "gefg_cas05.gat",187,43,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",6;
-	if (GetCastleData("gefg_cas05.gat",17) == 1) guardian "gefg_cas05.gat",167,43,"Knight Guardian",1286,1,"Guardian_G05::OnGuardianDied",7;
+	if (GetCastleData("gefg_cas05.gat",10) == 1) guardian "gefg_cas05.gat",54,149,"Soldier Guardian",1287,"Guardian_G05::OnGuardianDied",0;
+	if (GetCastleData("gefg_cas05.gat",11) == 1) guardian "gefg_cas05.gat",80,31,"Soldier Guardian",1287,"Guardian_G05::OnGuardianDied",1;
+	if (GetCastleData("gefg_cas05.gat",12) == 1) guardian "gefg_cas05.gat",52,32,"Soldier Guardian",1287,"Guardian_G05::OnGuardianDied",2;
+	if (GetCastleData("gefg_cas05.gat",13) == 1) guardian "gefg_cas05.gat",77,149,"Archer Guardian",1285,"Guardian_G05::OnGuardianDied",3;
+	if (GetCastleData("gefg_cas05.gat",14) == 1) guardian "gefg_cas05.gat",65,18,"Archer Guardian",1285,"Guardian_G05::OnGuardianDied",4;
+	if (GetCastleData("gefg_cas05.gat",15) == 1) guardian "gefg_cas05.gat",66,54,"Knight Guardian",1286,"Guardian_G05::OnGuardianDied",5;
+	if (GetCastleData("gefg_cas05.gat",16) == 1) guardian "gefg_cas05.gat",187,43,"Knight Guardian",1286,"Guardian_G05::OnGuardianDied",6;
+	if (GetCastleData("gefg_cas05.gat",17) == 1) guardian "gefg_cas05.gat",167,43,"Knight Guardian",1286,"Guardian_G05::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:

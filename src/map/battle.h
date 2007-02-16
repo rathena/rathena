@@ -425,8 +425,7 @@ extern struct Battle_Config {
 
 	unsigned short sg_angel_skill_ratio;
 	unsigned short sg_miracle_skill_ratio;
-	int sg_miracle_skill_duration_min;
-	int sg_miracle_skill_duration_max;
+	int sg_miracle_skill_duration;
 	unsigned short autospell_stacking; //Enables autospell cards to stack. [Skotlex]
 	unsigned short override_mob_names; //Enables overriding spawn mob names with the mob_db names. [Skotlex]
 	unsigned short min_chat_delay; //Minimum time between client messages. [Skotlex]

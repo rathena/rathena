@@ -456,28 +456,30 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
  * Summoning Guardians [Valaris]
  *------------------------------------------
  */
-int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
-	int x,int y,const char *mobname,int class_,int amount,const char *event,int guardian)
+int mob_spawn_guardian(char *mapname,short x,short y,const char *mobname,int class_,const char *event,int guardian)
 {
 	struct mob_data *md=NULL;
 	struct spawn_data data;
 	struct guild *g=NULL;
 	struct guild_castle *gc;
-	int m, count;
+	int m;
 	memset(&data, 0, sizeof(struct spawn_data));
 	data.num = 1;
 
-	if( sd && strcmp(mapname,"this")==0)
-		m=sd->bl.m;
-	else
-		m=map_mapname2mapid(mapname);
+	m=map_mapname2mapid(mapname);
 
-	if(m<0 || amount<=0)
+	if(m<0)
+	{
+		ShowWarning("mob_spawn_guardian: Map [%s] not found.\n", mapname);
 		return 0;
+	}
 	data.m = m;
-	data.num = amount;
-	if(class_<0)
-		return 0;
+	data.num = 1;
+	if(class_<=0) {
+		class_ = mob_get_random_id(-class_-1, 1, 99);
+		if (!class_) return 0;
+	}
+
 	data.class_ = class_;
 
 	if(guardian < 0 || guardian >= MAX_GUARDIANS)
@@ -485,15 +487,12 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 		ShowError("mob_spawn_guardian: Invalid guardian index %d for guardian %d (castle map %s)\n", guardian, class_, map[m].name);
 		return 0;
 	}
-	if (amount > 1)
-		ShowWarning("mob_spawn_guardian: Spawning %d guardians in position %d (castle map %s)\n", amount, map[m].name);
 	
-	if(sd){
-		if(x<=0) x=sd->bl.x;
-		if(y<=0) y=sd->bl.y;
+	if((x<=0 || y<=0) && !map_search_freecell(NULL, m, &x, &y, -1,-1, 0))
+	{
+		ShowWarning("mob_spawn_guardian: Couldn't locate a spawn cell for guardian class %d (index %d) at castle map %s\n",class_, guardian, map[m].name);
+		return 0;
 	}
-	else if(x<=0 || y<=0)
-		ShowWarning("mob_spawn_guardian: Invalid coordinates (%d,%d)\n",x,y);
 	data.x = x;
 	data.y = y;
 	strncpy(data.name, mobname, NAME_LENGTH-1);
@@ -513,26 +512,32 @@ int mob_spawn_guardian(struct map_session_data *sd,char *mapname,
 		g = guild_search(gc->guild_id);
 
 	if (gc->guardian[guardian].id)
-		ShowWarning("mob_spawn_guardian: Spawning guardian in position %d which already has a guardian (castle map %s)\n", guardian, map[m].name);
-	
-	for(count=0;count<data.num;count++){
-		md= mob_spawn_dataset(&data);
-		md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
-		md->guardian_data->number = guardian;
-		md->guardian_data->guild_id = gc->guild_id;
-		md->guardian_data->castle = gc;
-		gc->guardian[guardian].id = md->bl.id;
-		if (g)
+  	{	//Check if guardian already exists, refuse to spawn if so.
+		struct mob_data *md2 = (TBL_MOB*)map_id2bl(gc->guardian[guardian].id);
+		if (md2 && md2->bl.type == BL_MOB &&
+			md2->guardian_data && md2->guardian_data->number == guardian)
 		{
-			md->guardian_data->emblem_id = g->emblem_id;
-			memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
-			md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
-		} else if (md->guardian_data->guild_id)
-			add_timer(gettick()+5000,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
-		mob_spawn(md);
+			ShowError("mob_spawn_guardian: Attempted to spawn guardian in position %d which already has a guardian (castle map %s)\n", guardian, map[m].name);
+			return 0;
+		}
 	}
 
-	return (amount>0)?md->bl.id:0;
+	md= mob_spawn_dataset(&data);
+	md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
+	md->guardian_data->number = guardian;
+	md->guardian_data->guild_id = gc->guild_id;
+	md->guardian_data->castle = gc;
+	gc->guardian[guardian].id = md->bl.id;
+	if (g)
+	{
+		md->guardian_data->emblem_id = g->emblem_id;
+		memcpy (md->guardian_data->guild_name, g->name, NAME_LENGTH);
+		md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
+	} else if (md->guardian_data->guild_id)
+		add_timer(gettick()+5000,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
+	mob_spawn(md);
+
+	return md->bl.id;
 }
 
 /*==========================================

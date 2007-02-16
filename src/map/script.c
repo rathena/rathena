@@ -4010,7 +4010,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(soundeffect,"si"),
 	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
 	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
-	BUILDIN_DEF(guardian,"siisii??"),	// summon guardians
+	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
 	BUILDIN_DEF(guardianinfo,"i"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
@@ -9626,12 +9626,12 @@ BUILDIN_FUNC(strmobinfo)
 
 /*==========================================
  * Summon guardians [Valaris]
- * guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"}{,<guardian index>};
+ * guardian "<map name>",<x>,<y>,"<name to show>",<mob id>,{,"<event label>"}{,<guardian index>};
  *------------------------------------------
  */
 BUILDIN_FUNC(guardian)
 {
-	int class_=0,amount=1,x=0,y=0,guardian=0;
+	int class_=0,x=0,y=0,guardian=0;
 	char *str,*map,*evt="";
 	struct script_data *data;
 
@@ -9640,21 +9640,20 @@ BUILDIN_FUNC(guardian)
 	y	  =conv_num(st,script_getdata(st,4));
 	str	  =conv_str(st,script_getdata(st,5));
 	class_=conv_num(st,script_getdata(st,6));
-	amount=conv_num(st,script_getdata(st,7));
 
-	if( script_hasdata(st,9) )
+	if( script_hasdata(st,8) )
 	{// "<event label>",<guardian index>
-		evt=conv_str(st,script_getdata(st,8));
-		guardian=conv_num(st,script_getdata(st,9));
-	} else if( script_hasdata(st,8) ){
-		data=script_getdata(st,8);
+		evt=conv_str(st,script_getdata(st,7));
+		guardian=conv_num(st,script_getdata(st,8));
+	} else if( script_hasdata(st,7) ){
+		data=script_getdata(st,7);
 		get_val(st,data);
 		if( data_isstring(data) )
 		{// "<event label>"
-			evt=conv_str(st,script_getdata(st,8));
+			evt=conv_str(st,script_getdata(st,7));
 		} else if( data_isint(data) )
 		{// <guardian index>
-			guardian=conv_num(st,script_getdata(st,8));
+			guardian=conv_num(st,script_getdata(st,7));
 		} else {
 			ShowError("buildin_guardian: invalid data type for argument #8 (%d).", data->type);
 			report_src(st);
@@ -9663,8 +9662,7 @@ BUILDIN_FUNC(guardian)
 	}
 
 	check_event(st, evt);
-
-	mob_spawn_guardian(map_id2sd(st->rid),map,x,y,str,class_,amount,evt,guardian);
+	mob_spawn_guardian(map,x,y,str,class_,evt,guardian);
 
 	return 0;
 }

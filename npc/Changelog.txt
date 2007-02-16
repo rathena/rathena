@@ -26,6 +26,9 @@ KarLaeda
 
 Date		Added
 ======
+2007/02/17
+	* Updated WoE scripts since the "guardian" script command no longer has a
+	  "amount" argument. [Skotlex]
 2007/02/15
 	* Corrected all Schwarzwald typos (except for the WIP one) [ultramage]
 2007/01/30

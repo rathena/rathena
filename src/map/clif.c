@@ -5681,56 +5681,27 @@ int clif_party_created(struct map_session_data *sd,int flag)
 	return 0;
 }
 
-int clif_party_main_info(struct party_data *p, int fd)
+int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 {
-	struct map_session_data *sd;
-	int i;
 	unsigned char buf[96];
-	
-	for (i=0; i<MAX_PARTY && !p->party.member[i].leader; i++);
-	if (i >= MAX_PARTY) return 0; //Should never happen...
-	sd = p->data[i].sd;
-	WBUFW(buf,0)=0x1e9;
-	WBUFL(buf,2)= p->party.member[i].account_id;
-	WBUFL(buf,6)= 0; //We don't know yet what this long is about.
-	WBUFW(buf,10)=sd?sd->bl.x:0;
-	WBUFW(buf,12)=sd?sd->bl.y:0;
-	WBUFB(buf,14)=(p->party.member[i].online)?0:1;	//This byte is also unconfirmed...
-	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
-	memcpy(WBUFP(buf,39), p->party.member[i].name, NAME_LENGTH);
-	memcpy(WBUFP(buf,63), mapindex_id2name(p->party.member[i].map), MAP_NAME_LENGTH);
-	WBUFB(buf,79) = (p->party.item&1)?1:0;
-	WBUFB(buf,80) = (p->party.item&2)?1:0;
-	if(fd>=0){
-		WFIFOHEAD(fd,packet_len(0x1e9));
-		memcpy(WFIFOP(fd,0),buf,packet_len(0x1e9));
-		WFIFOSET(fd,packet_len(0x1e9));
-		return 1;
-	}
-	if (!sd) {
-		for (i=0; i<MAX_PARTY && !p->data[i].sd; i++)
+	if (!sd) { //Pick any party member (this call is used when changing item share rules)
+		int i;
+		for (i=0; i<MAX_PARTY && !p->data[i].sd; i++);
 		if (i >= MAX_PARTY) return 0; //Should never happen...
-		sd=p->data[i].sd;
+		sd = p->data[i].sd;
 	}
-	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY);
-	return 1;
-}
-
-int clif_party_join_info(struct party *p, struct map_session_data *sd)
-{
-	unsigned char buf[96];
 	WBUFW(buf,0)=0x1e9;
 	WBUFL(buf,2)= sd->status.account_id;
 	WBUFL(buf,6)= 0; //Apparently setting this to 1 makes you adoptable.
 	WBUFW(buf,10)=sd->bl.x;
 	WBUFW(buf,12)=sd->bl.y;
-	WBUFB(buf,14)=0; //Unconfirmed byte.
-	memcpy(WBUFP(buf,15), p->name, NAME_LENGTH);
+	WBUFB(buf,14)=0; //Unconfirmed byte, could be online/offline.
+	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,63), mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
-	WBUFB(buf,79) = (p->item&1)?1:0;
-	WBUFB(buf,80) = (p->item&2)?1:0;
-	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY_WOS);
+	WBUFB(buf,79) = (p->party.item&1)?1:0;
+	WBUFB(buf,80) = (p->party.item&2)?1:0;
+	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY);
 	return 1;
 }
 

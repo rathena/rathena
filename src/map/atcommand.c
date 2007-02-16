@@ -7670,7 +7670,6 @@ int atcommand_changeleader(const int fd, struct map_session_data* sd, const char
 
 	intif_party_leaderchange(p->party.party_id,p->party.member[pl_mi].account_id,p->party.member[pl_mi].char_id);
 	//Update info.
-	clif_party_main_info(p,-1);
 	clif_party_info(p,NULL);
 	
 	return 0;  
