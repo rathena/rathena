@@ -59,6 +59,10 @@
 //= 3.02.20070209
 //=       Corrected/updated info on Xor/setd/getd/callfunc/callsub/return and 
 //=       updated some examples to use "better" code. [FlavioJS]
+//= 3.03.20070216
+//=       Expanded/clarified information on npc timers, added info about the
+//=       new attach flag for script commands startnpctimer/ stopnpctimer/ 
+//=       initnpctimer [Skotlex]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -4815,9 +4819,12 @@ is.
 
 ---------------------------------------
 
-*initnpctimer{ "<NPC object name>"};
-*stopnpctimer{ "<NPC object name>"};
-*startnpctimer{ "<NPC object name>"};
+*initnpctimer{ "<NPC object name>" {, <Attach Flag>} } |
+             {"<NPC object name>" | <Attach Flag> };
+*stopnpctimer{ "<NPC object name>" {, <Detach Flag>}  } |
+             { "<NPC object name>" | <Detach Flag> };
+*startnpctimer{ "<NPC object name>" {, <Attach Flag>} } |
+              { "<NPC object name>" | <Attach Flag> };
 *setnpctimer <tick>{,"<NPC object name>"};
 *getnpctimer(<type of information>{,"<NPC object name>"});
 *attachnpctimer {"<character name>"};
@@ -4844,17 +4851,19 @@ To create the timer, use the 'initnpctimer', which will start it running.
 'stopnpctimer' will pause the timer, without clearing the current tick, while 
 'startnpctimer' will let the paused timer continue.
 
-It is not quite clear whether the new invocations will always have a RID. 
-Apparently, the RID that was in effect when the timer was initialised will still 
-be attached to these executions in some cases, but it's not quite clear -
-experiment with RID-dependent commands, like 'mes', and tell us what happens and 
-who gets the message, if anyone.
+By default timers do not have a RID attached, which lets the timers continue even
+if the player that started them logs off. To attach a RID to a timer, you can
+either use the "attach flag" optional value when using initnpctimer/startnpctimer, 
+likewise, the optional flag of stopnpctimer detaches any RID after stopping
+the timer. One a player is attached to a timer, it stays attached to all
+timers from that script until detached manually. You can have multiple
+npctimers going on at the same time as long as each one has a different player
+attached (think of each RID being used as an independant timer).
 
-Even if they don't have a RID by default, 'attachnpctimer' will allow you to 
-explicitly attach a character's RID to the timer, which will make them the 
-target for all character-referencing commands and functions, not to mention 
-variables. 'detachnpctimer' will make the RID zero, making all character-
-referencing functions fail with an error.
+The other method to attach/detach a RID is through the script commands
+'attachnpctimer' and 'detachnpctimer'. Once attached, that will make the
+character the target for all character-referencing commands and functions,
+not to mention variables.
 
 'setnpctimer' will explicitly set the timer to a given tick. To make it useful, 
 you will need the 'getnpctimer' function, which the type of information argument 

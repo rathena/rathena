@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Script check #1. [Lance]
 //= 2.2 Fixed unpassable part, thx2 Alis [Lupus]
+//= 2.3 Updated initnpctimer to attach player to jobDq script [Skotlex]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -689,7 +690,7 @@ job_duncer.gat,32,152,6	script	Guide::dancew	69,{
 	OnWarp:
 	warpwaitingpc "job_duncer.gat",70,112,1;
 	disablewaitingroomevent;
-	       initnpctimer "jobDq";
+	       initnpctimer "jobDq",1;
 	end;
 OnInit:
 	waitingroom "Dance lesson waiting room",20,"dancew::OnWarp",1;
@@ -1052,6 +1053,6 @@ OnInit:
 //		close;
 //Lgo:
 //	warp "job_duncer.gat",70,112;
-//	initnpctimer "jobDq";
+//	initnpctimer "jobDq",1;
 //	end;
 //}

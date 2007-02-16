@@ -26,7 +26,8 @@ KarLaeda
 
 Date		Added
 ======
-2007/02/17
+2007/02/16
+	* Updated the Dancer job quest to attach a player to the main timer script.
 	* Updated WoE scripts since the "guardian" script command no longer has a
 	  "amount" argument. [Skotlex]
 2007/02/15
