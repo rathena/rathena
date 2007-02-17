@@ -10800,7 +10800,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd) {
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
 		return;
 
-	if (pc_isGM(sd) >= (lv=get_atcommand_level(AtCommand_Kick)))
+	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Kick)))
 		return;
 
 	tid = RFIFOL(fd,2);
