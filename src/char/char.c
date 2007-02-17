@@ -1660,12 +1660,12 @@ int count_users(void) {
 }
 
 /// Writes char data to the buffer in the format used by the client.
-/// Used in packets 0x6b (chars info) and 0x67 (new char info)
-/// size = 104
-int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
+/// Used in packets 0x6b (chars info) and 0x6d (new char info)
+/// Returns the size (106 or 108)
+int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p, int new_charscreen)
 {
-	if( p == NULL || buf == NULL )
-		return 1;// Fail
+	if( buf == NULL || p == NULL )
+		return 0;
 
 	WBUFL(buf,0) = p->char_id;
 	WBUFL(buf,4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
@@ -1707,7 +1707,14 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 	WBUFB(buf,102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 	WBUFB(buf,103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 
-	return 0;
+	//Updated packet structure with rename-button included. Credits to Sara-chan
+	WBUFW(buf,104) = p->char_num;
+	if( new_charscreen )
+	{
+		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
+		return 108;
+	}
+	return 106;
 }
 
 //----------------------------------------
@@ -1715,53 +1722,38 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num;
-	struct mmo_charstatus *p;
-	const int offset = 24;
-	WFIFOHEAD(fd, offset + 9*108);
 
-	set_char_online(-1, 99,sd->account_id);
+	set_char_online(-1, 99, sd->account_id);
 
 	found_num = 0;
 	for(i = 0; i < char_num; i++) {
 		if (char_dat[i].status.account_id == sd->account_id) {
 			sd->found_char[found_num] = i;
-			found_num++;
-			if (found_num == 9)
+			if( ++found_num == 9 )
 				break;
 		}
 	}
 	for(i = found_num; i < 9; i++)
 		sd->found_char[i] = -1;
 
-#if PACKETVER > 7
-	//Updated packet structure with rename-button included. Credits to Sara-chan
-	memset(WFIFOP(fd,0), 0, offset + found_num * 108);
-	WFIFOW(fd,2) = offset + found_num * 108;
-#else
-	memset(WFIFOP(fd,0), 0, offset + found_num * 106);
-	WFIFOW(fd,2) = offset + found_num * 106;
-#endif
-	WFIFOW(fd,0) = 0x6b;
 
-	for(i = 0; i < found_num; i++) {
-		p = &char_dat[sd->found_char[i]].status;
-#if PACKETVER > 7
-		j = offset + (i * 108); // increase speed of code
-#else
-		j = offset + (i * 106); // increase speed of code
-#endif
+	j = 24;// offset
+	{
+		WFIFOHEAD(fd, j + found_num*108);
+		WFIFOW(fd,0) = 0x6b;
+		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
 
-		mmo_char_tobuf(WFIFOP(fd,j), p);
-
-#if PACKETVER > 7
-		WFIFOW(fd,j+104) = p->char_num;
-		WFIFOW(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
+		for(i = 0; i < found_num; i++)
+		{
+#if PACKETVER > 7 
+			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status, 1);
 #else
-		WFIFOB(fd,j+104) = p->char_num;
+			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status, 0);
 #endif
+		}
+		WFIFOW(fd,2) = j;// packet len
+		WFIFOSET(fd,j);
 	}
-
-	WFIFOSET(fd,WFIFOW(fd,2));
 
 	return 0;
 }
@@ -3642,21 +3634,16 @@ int parse_char(int fd) {
 				break;
 			}
 		{	//Send to player.
+			int len;
 			WFIFOHEAD(fd, 110);
 			WFIFOW(fd,0) = 0x6d;
-			memset(WFIFOP(fd,2), 0, 108);
-
-			mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status);
-
 #if PACKETVER > 7
-			//Updated packet structure with rename-button included. Credits to Sara-chan
-			WFIFOW(fd,2+104) = char_dat[i].status.char_num;
-			WFIFOB(fd,2+106) = 1; //Rename bit.
-			WFIFOSET(fd,110);
+			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status, 1);
 #else
-			WFIFOB(fd,2+104) = char_dat[i].status.char_num;
-			WFIFOSET(fd,108);
-#endif	
+			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status, 0);
+#endif
+			WFIFOSET(fd,len);
+
 			RFIFOSKIP(fd,37);
 		}
 			for(ch = 0; ch < 9; ch++) {
