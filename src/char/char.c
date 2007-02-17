@@ -1659,6 +1659,57 @@ int count_users(void) {
 	return users;
 }
 
+/// Writes char data to the buffer in the format used by the client.
+/// Used in packets 0x6b (chars info) and 0x67 (new char info)
+/// size = 104
+int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
+{
+	if( p == NULL || buf == NULL )
+		return 1;// Fail
+
+	WBUFL(buf,0) = p->char_id;
+	WBUFL(buf,4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
+	WBUFL(buf,8) = p->zeny;
+	WBUFL(buf,12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
+	WBUFL(buf,16) = p->job_level;
+
+	WBUFL(buf,20) = 0;// probably opt1
+	WBUFL(buf,24) = 0;// probably opt2
+	WBUFL(buf,28) = p->option;
+
+	WBUFL(buf,32) = p->karma;
+	WBUFL(buf,36) = p->manner;
+
+	WBUFW(buf,40) = (p->status_point > SHRT_MAX) ? SHRT_MAX : p->status_point;
+	WBUFW(buf,42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
+	WBUFW(buf,44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
+	WBUFW(buf,46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
+	WBUFW(buf,48) = (p->max_sp > SHRT_MAX) ? SHRT_MAX : p->max_sp;
+	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
+	WBUFW(buf,52) = p->class_;
+	WBUFW(buf,54) = p->hair;
+	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
+	WBUFW(buf,58) = p->base_level;
+	WBUFW(buf,60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
+	WBUFW(buf,62) = p->head_bottom;
+	WBUFW(buf,64) = p->shield;
+	WBUFW(buf,66) = p->head_top;
+	WBUFW(buf,68) = p->head_mid;
+	WBUFW(buf,70) = p->hair_color;
+	WBUFW(buf,72) = p->clothes_color;
+
+	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
+
+	WBUFB(buf,98) = (p->str > UCHAR_MAX) ? UCHAR_MAX : p->str;
+	WBUFB(buf,99) = (p->agi > UCHAR_MAX) ? UCHAR_MAX : p->agi;
+	WBUFB(buf,100) = (p->vit > UCHAR_MAX) ? UCHAR_MAX : p->vit;
+	WBUFB(buf,101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
+	WBUFB(buf,102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
+	WBUFB(buf,103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
+
+	return 0;
+}
+
 //----------------------------------------
 // Function to send characters to a player
 //----------------------------------------
@@ -1700,45 +1751,8 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		j = offset + (i * 106); // increase speed of code
 #endif
 
-		WFIFOL(fd,j) = p->char_id;
-		WFIFOL(fd,j+4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
-		WFIFOL(fd,j+8) = p->zeny;
-		WFIFOL(fd,j+12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
-		WFIFOL(fd,j+16) = p->job_level;
+		mmo_char_tobuf(WFIFOP(fd,j), p);
 
-		WFIFOL(fd,j+20) = 0;
-		WFIFOL(fd,j+24) = 0;
-		WFIFOL(fd,j+28) = p->option;
-
-		WFIFOL(fd,j+32) = p->karma;
-		WFIFOL(fd,j+36) = p->manner;
-
-		WFIFOW(fd,j+40) = (p->status_point > SHRT_MAX) ? SHRT_MAX : p->status_point;
-		WFIFOW(fd,j+42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
-		WFIFOW(fd,j+44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
-		WFIFOW(fd,j+46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
-		WFIFOW(fd,j+48) = (p->max_sp > SHRT_MAX) ? SHRT_MAX : p->max_sp;
-		WFIFOW(fd,j+50) = DEFAULT_WALK_SPEED; // p->speed;
-		WFIFOW(fd,j+52) = p->class_;
-		WFIFOW(fd,j+54) = p->hair;
-		WFIFOW(fd,j+56) = p->option&0x20?0:p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
-		WFIFOW(fd,j+58) = p->base_level;
-		WFIFOW(fd,j+60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
-		WFIFOW(fd,j+62) = p->head_bottom;
-		WFIFOW(fd,j+64) = p->shield;
-		WFIFOW(fd,j+66) = p->head_top;
-		WFIFOW(fd,j+68) = p->head_mid;
-		WFIFOW(fd,j+70) = p->hair_color;
-		WFIFOW(fd,j+72) = p->clothes_color;
-
-		memcpy(WFIFOP(fd,j+74), p->name, NAME_LENGTH);
-
-		WFIFOB(fd,j+98) = (p->str > UCHAR_MAX) ? UCHAR_MAX : p->str;
-		WFIFOB(fd,j+99) = (p->agi > UCHAR_MAX) ? UCHAR_MAX : p->agi;
-		WFIFOB(fd,j+100) = (p->vit > UCHAR_MAX) ? UCHAR_MAX : p->vit;
-		WFIFOB(fd,j+101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
-		WFIFOB(fd,j+102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
-		WFIFOB(fd,j+103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
 #if PACKETVER > 7
 		WFIFOW(fd,j+104) = p->char_num;
 		WFIFOW(fd,j+106) = 1; //TODO: Handle this rename bit: 0 to enable renaming
@@ -3632,40 +3646,8 @@ int parse_char(int fd) {
 			WFIFOW(fd,0) = 0x6d;
 			memset(WFIFOP(fd,2), 0, 108);
 
-			WFIFOL(fd,2) = char_dat[i].status.char_id;
-			WFIFOL(fd,2+4) = char_dat[i].status.base_exp>LONG_MAX?LONG_MAX:char_dat[i].status.base_exp;
-			WFIFOL(fd,2+8) = char_dat[i].status.zeny;
-			WFIFOL(fd,2+12) = char_dat[i].status.job_exp>LONG_MAX?LONG_MAX:char_dat[i].status.job_exp;
-			WFIFOL(fd,2+16) = char_dat[i].status.job_level;
+			mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status);
 
-			WFIFOL(fd,2+28) = char_dat[i].status.karma;
-			WFIFOL(fd,2+32) = char_dat[i].status.manner;
-
-			WFIFOW(fd,2+40) = 0x30;
-			WFIFOW(fd,2+42) = (char_dat[i].status.hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.hp;
-			WFIFOW(fd,2+44) = (char_dat[i].status.max_hp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_hp;
-			WFIFOW(fd,2+46) = (char_dat[i].status.sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.sp;
-			WFIFOW(fd,2+48) = (char_dat[i].status.max_sp > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.max_sp;
-			WFIFOW(fd,2+50) = DEFAULT_WALK_SPEED;
-			WFIFOW(fd,2+52) = char_dat[i].status.class_;
-			WFIFOW(fd,2+54) = char_dat[i].status.hair;
-
-			WFIFOW(fd,2+58) = char_dat[i].status.base_level;
-			WFIFOW(fd,2+60) = (char_dat[i].status.skill_point > SHRT_MAX) ? SHRT_MAX : char_dat[i].status.skill_point;
-
-			WFIFOW(fd,2+64) = char_dat[i].status.shield;
-			WFIFOW(fd,2+66) = char_dat[i].status.head_top;
-			WFIFOW(fd,2+68) = char_dat[i].status.head_mid;
-			WFIFOW(fd,2+70) = char_dat[i].status.hair_color;
-
-			memcpy(WFIFOP(fd,2+74), char_dat[i].status.name, NAME_LENGTH);
-
-			WFIFOB(fd,2+98) = (char_dat[i].status.str > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.str;
-			WFIFOB(fd,2+99) = (char_dat[i].status.agi > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.agi;
-			WFIFOB(fd,2+100) = (char_dat[i].status.vit > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.vit;
-			WFIFOB(fd,2+101) = (char_dat[i].status.int_ > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.int_;
-			WFIFOB(fd,2+102) = (char_dat[i].status.dex > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.dex;
-			WFIFOB(fd,2+103) = (char_dat[i].status.luk > UCHAR_MAX) ? UCHAR_MAX : char_dat[i].status.luk;
 #if PACKETVER > 7
 			//Updated packet structure with rename-button included. Credits to Sara-chan
 			WFIFOW(fd,2+104) = char_dat[i].status.char_num;
