@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena 1+ with eaclass(); RO Episode 4+
 //===== Description: =========================================
@@ -23,13 +23,49 @@
 //= 1.4 Restricted it to 80 Base Level [Lupus]
 //= 1.5 According to official info: 1 Treasure Chest per Castle
 //= 1.6 Only 1st Class < 60 BaseLevel Players can participate
+//= 1.7 Guilds with Emergency Call or with 9+ skill points
+//=		can't take part in NWoE. [Lupus]
 //=	TODO: The official entrance is in Izlude.
 //============================================================
 
 
 prontera.gat,146,163,6	script	Novice Castles	729,{
 	mes "[Cita]";
-	mes "Hey! I'm a new usher of Novice Castles.";
+	if(getcharid(2)!=0){
+		if(getgdskilllv(getcharid(2),10013)){
+			mes "I see... your guild has Emergency Call mastered.";
+			mes "You can't enter the Novice Caste area.";
+			emotion e_hmm;
+			emotion e_wah,1;
+			close;
+		}
+		if(
+			getgdskilllv(getcharid(2),10000) +
+			getgdskilllv(getcharid(2),10001) +
+			getgdskilllv(getcharid(2),10002) +
+			getgdskilllv(getcharid(2),10003) +
+			getgdskilllv(getcharid(2),10004) +
+			getgdskilllv(getcharid(2),10005) +
+			getgdskilllv(getcharid(2),10006) +
+			getgdskilllv(getcharid(2),10007) +
+			getgdskilllv(getcharid(2),10008) +
+			getgdskilllv(getcharid(2),10009) +
+			getgdskilllv(getcharid(2),10010) +
+			getgdskilllv(getcharid(2),10011) +
+			getgdskilllv(getcharid(2),10012) +
+			getgdskilllv(getcharid(2),10013) +
+			getgdskilllv(getcharid(2),10014) > 9
+		){
+			mes "I see... your guild has Emergency Call mastered.";
+			mes "You can't enter the Novice Caste area.";
+			emotion e_hmm;
+			emotion e_wah,1;
+			close;
+		}
+	} else {
+		mes "^FF0000You have to enter a guild to be able to hit Emperium!^000000";
+	}
+	mes "I'm a new usher of Novice Castles.";
 	next;
 	if( !(eaclass()&(EAJL_2|EAJL_UPPER)) && BaseLevel<60 )
 		menu "Warp me to Novice Castles",M_WARP,"Cancel",-;
