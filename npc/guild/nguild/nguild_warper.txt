@@ -34,7 +34,7 @@ prontera.gat,146,163,6	script	Novice Castles	729,{
 	if(getcharid(2)!=0){
 		if(getgdskilllv(getcharid(2),10013)){
 			mes "I see... your guild has Emergency Call mastered.";
-			mes "You can't enter the Novice Caste area.";
+			mes "You cannot enter the Novice Castle area.";
 			emotion e_hmm;
 			emotion e_wah,1;
 			close;
@@ -57,7 +57,7 @@ prontera.gat,146,163,6	script	Novice Castles	729,{
 			getgdskilllv(getcharid(2),10014) > 9
 		){
 			mes "I see... your guild has Emergency Call mastered.";
-			mes "You can't enter the Novice Caste area.";
+			mes "You cannot enter the Novice Castle area.";
 			emotion e_hmm;
 			emotion e_wah,1;
 			close;
