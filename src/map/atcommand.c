@@ -6845,7 +6845,7 @@ int atcommand_character_cart_list(const int fd, struct map_session_data* sd, con
 	memset(outputtmp, '\0', sizeof(outputtmp));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @charitemlist <char name>).");
+		clif_displaymessage(fd, "Please, enter a player name (usage: @cartlist <char name>).");
 		return -1;
 	}
 
