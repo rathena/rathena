@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 2.1 Script check #1. [Lance]
 //= 2.2 Fixed unpassable part, thx2 Alis [Lupus]
 //= 2.3 Updated initnpctimer to attach player to jobDq script [Skotlex]
+//= 2.4 Attached chrid to be able obtain player's SP on mobs death, optimized a bit [Lupus]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -734,11 +735,11 @@ OnTimer21000:
 	mapannounce "job_duncer.gat","Bijou: Stay still!",8;
 	end;
 OnTimer26000:
-	set @skillcheck,Sp;
+	set $@DQSP,SP;
 	mapannounce "job_duncer.gat","Bijou: Use 'Improved Concentration'!",8;
 	end;
 OnTimer29000:
-	if (@skillcheck==Sp) goto OnTimer80000;
+	if ($@DQSP==SP) goto OnTimer80000;
 	donpcevent "::OnDE1";
 	mapannounce "job_duncer.gat","Bijou: To the left.  [ < ]",8;
 	callsub L_SUB2,2000;
@@ -792,8 +793,9 @@ OnTimer68000:
 OnTimer71000:
 	donpcevent "::OnDE1";
 	mapannounce "job_duncer.gat","Bijou:  Kill the monster using Arrow Shower!",8;
-	set @skillcheck,Sp;
-	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie::OnStart";
+	set $@DQRID,getcharid(3);
+	set $@DQSP,SP;
+	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie::OnDie";
 	end;
 OnTimer76000:
 	killmonsterall "job_duncer.gat";
@@ -853,20 +855,30 @@ L_SUB5:
 }
 job_duncer.gat,0,0,0	script	jddie	-1,{
 
-OnStart:
-	if (@skillcheck==Sp) set @check,1;
-	if (@check==0) mapannounce "job_duncer.gat","Dancer: Well done, you were very skillful, and have passed the test.",8;
-	if (@check==1) mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to use arrow shower to kill the monster",8;
+OnDie:
+	if ($@DQRID && isloggedin($@DQRID)) {
+		attachrid($@DQRID);
+		if ($@DQSP==SP)
+			mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to use arrow shower to kill the monster",8;
+		else {
+			mapannounce "job_duncer.gat","Dancer: Well done, you were very skillful, and have passed the test.",8;
+			set DANC_Q,10;
+		}
+	}
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
 	disablenpc "lowertile";
 	disablenpc "middletile";
-	if (@check==0)	set DANC_Q,10;
+
 	stopnpctimer "jobDq";
 	enablewaitingroomevent "dancew";
-	if (@check==1)	set @check,0;
-	warp "job_duncer.gat",69,102;
+
+	if ($@DQRID && isloggedin($@DQRID))
+		warp "job_duncer.gat",69,102;
+
+	set $@DQRID,0;
+	set $@DQSP,0;
 	end;
 }
 job_duncer.gat,63,110,4	script	Back dancer #1::jdt1	724,{
