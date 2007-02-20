@@ -27,6 +27,7 @@
 //= 2.3 Updated initnpctimer to attach player to jobDq script [Skotlex]
 //= 2.4 Attached chrid to be able obtain player's SP on mobs death, optimized a bit [Lupus]
 //= 2.5 Final fix of obtaining chrid. Now works, no warnings [Lupus]
+//= 	changed 'Improved Concentration' to 'Attention Concentrate'
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -505,7 +506,7 @@ L2_2:
 	mes "While doing this type of dance, you wear special shoes that make loud sounds";
 	mes "What is this type of dancing called?";
 	next;
-	menu "Tap dance",-,"Improved Concentration",L2_3,"Tango",L2_3,"Salsa",L2_3;
+	menu "Tap dance",-,"Attention Concentrate",L2_3,"Tango",L2_3,"Salsa",L2_3;
 		set @dcpoint,@dcpoint+10;
 L2_3:
 	mes "[Bijou]";
@@ -740,7 +741,7 @@ OnTimer21000:
 	end;
 OnTimer26000:
 	set $@DQSP,SP;
-	mapannounce "job_duncer.gat","Bijou: Use 'Improved Concentration'!",8;
+	mapannounce "job_duncer.gat","Bijou: Use 'Attention Concentrate'!",8;
 	end;
 OnTimer29000:
 	if ($@DQSP==SP) goto OnTimer80000;
