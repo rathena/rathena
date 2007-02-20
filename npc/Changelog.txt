@@ -26,6 +26,8 @@ KarLaeda
 
 Date		Added
 ======
+2007/02/21
+	* Fixed and Tested Dancing part of Dancer Job Quest (the rest chrid issues) [Lupus]
 2007/02/19
 	* Fixed Dancer Job Quest mob::OnDie / SP check issues [Lupus]
 	* Guilds with Emergency Call skill mastered or with 9+ skill points [Lupus]

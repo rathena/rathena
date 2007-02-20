@@ -2,11 +2,11 @@
 //= Dancer Job Quest
 //===== By: ==================================================
 //= Kalen - Original jAthena
-//= Fredzilla - Converted
+//= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
-//= eAthena Final
+//= eAthena 9880+
 //===== Description: ========================================= 
 //= Dancer job quest based off a jAthena script and other sources for clarity
 //===== Additional Comments: ================================= 
@@ -26,6 +26,7 @@
 //= 2.2 Fixed unpassable part, thx2 Alis [Lupus]
 //= 2.3 Updated initnpctimer to attach player to jobDq script [Skotlex]
 //= 2.4 Attached chrid to be able obtain player's SP on mobs death, optimized a bit [Lupus]
+//= 2.5 Final fix of obtaining chrid. Now works, no warnings [Lupus]
 //============================================================
 
 //= Warning Warp to escape the quest if need be
@@ -688,12 +689,15 @@ Ljobchange:
 //=Start of the 3rd quest is here, once complete you go back to Bijou to change job
 job_duncer.gat,32,152,6	script	Guide::dancew	69,{
 	end;
-	OnWarp:
+OnWarp:
 	warpwaitingpc "job_duncer.gat",70,112,1;
+	set $@DQRID,$@warpwaitingpc[0];
+	if( attachrid($@DQRID)==0 ) goto OnInit;
 	disablewaitingroomevent;
-	       initnpctimer "jobDq",1;
+	initnpctimer "jobDq",1;
 	end;
 OnInit:
+	set $@DQRID,0;
 	waitingroom "Dance lesson waiting room",20,"dancew::OnWarp",1;
 	end;
 }
@@ -793,7 +797,6 @@ OnTimer68000:
 OnTimer71000:
 	donpcevent "::OnDE1";
 	mapannounce "job_duncer.gat","Bijou:  Kill the monster using Arrow Shower!",8;
-	set $@DQRID,getcharid(3);
 	set $@DQSP,SP;
 	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie::OnDie";
 	end;
@@ -958,7 +961,7 @@ OnTimer5000:
 job_duncer.gat,69,113,4	script	uppertile	139,1,1,{
 	end;
 OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" the failed to make it in time.",8;
+	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+" but you failed to make it in time.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
