@@ -3,6 +3,7 @@
 
 #ifndef _MALLOC_H_
 #define _MALLOC_H_
+
 // Q: What are the 'a'-variant allocation functions?
 // A: They allocate memory from the stack, which is automatically 
 //    freed when the invoking function returns.
@@ -157,4 +158,4 @@ unsigned int malloc_usage (void);
 void malloc_init (void);
 void malloc_final (void);
 
-#endif
+#endif /* _MALLOC_H_ */

@@ -19,4 +19,5 @@ extern char castle_txt[1024];
 //For the TXT->SQL converter
 int inter_guild_fromstr(char *str, struct guild *g);
 int inter_guildcastle_fromstr(char *str, struct guild_castle *gc);
-#endif
+
+#endif /* _INT_GUILD_H_ */

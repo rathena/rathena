@@ -702,4 +702,4 @@ void* linkdb_search ( struct linkdb_node** head, void *key);
 void* linkdb_erase  ( struct linkdb_node** head, void *key);
 void  linkdb_final  ( struct linkdb_node** head );
 
-#endif
+#endif /* _DB_H_ */

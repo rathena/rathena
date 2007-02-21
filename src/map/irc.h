@@ -1,3 +1,9 @@
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#ifndef _IRC_H_
+#define _IRC_H_
+
 #include "map.h"
 
 // IRC .conf file [Zido]
@@ -53,3 +59,5 @@ int set_access(char *nick,int level); // [Zido]
 int get_access(char *nick); // [Zido]
 int irc_rmnames(void); // [Zido]
 int irc_read_conf(char *file); // [Zido]
+
+#endif /* _IRC_H_ */

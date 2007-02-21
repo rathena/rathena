@@ -444,4 +444,4 @@ extern void battle_set_defaults(void);
 extern int battle_set_value(char *, char *);
 int battle_get_value(char *);
 
-#endif
+#endif /* _BATTLE_H_ */

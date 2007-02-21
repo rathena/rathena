@@ -65,5 +65,4 @@ int read_petdb(void);
 int do_init_pet(void);
 int do_final_pet(void);
 
-#endif
-
+#endif /* _PET_H_ */

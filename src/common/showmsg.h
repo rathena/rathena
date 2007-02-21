@@ -93,4 +93,4 @@ extern int ShowDebug(const char *, ...);
 extern int ShowError(const char *, ...);
 extern int ShowFatalError(const char *, ...);
 
-#endif
+#endif /* _SHOWMSG_H_ */

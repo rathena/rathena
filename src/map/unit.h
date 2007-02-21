@@ -1,6 +1,6 @@
-// Copyright (c) jAthena Dev Teams - Licensed under GNU GPL
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-// Merged originally from jA by Skotlex
+
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
@@ -69,4 +69,5 @@ int do_final_unit(void);
 
 extern const int dirx[8];
 extern const int diry[8];
+
 #endif /* _UNIT_H_ */

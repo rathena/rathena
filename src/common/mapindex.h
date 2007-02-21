@@ -1,5 +1,9 @@
-#ifndef _MAX_INDEX_H
-#define _MAX_INDEX_H
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#ifndef _MAPINDEX_H_
+#define _MAPINDEX_H_
+
 //File in charge of assigning a numberic ID to each map in existance for space saving when passing map info between servers.
 extern char mapindex_cfgfile[80];
 
@@ -38,4 +42,4 @@ const char* mapindex_id2name(unsigned short);
 void mapindex_init(void);
 void mapindex_final(void);
 
-#endif
+#endif /* _MAPINDEX_H_ */

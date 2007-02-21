@@ -14,4 +14,5 @@ int inter_storage_parse_frommap(int fd);
 //Exported for use in the TXT-SQL converter.
 int storage_tosql(int account_id,struct storage *p);
 int guild_storage_tosql(int guild_id, struct guild_storage *p);
-#endif
+
+#endif /* _INT_STORAGE_SQL_H_ */

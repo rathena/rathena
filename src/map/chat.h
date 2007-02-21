@@ -19,4 +19,4 @@ int chat_enableevent(struct chat_data *cd);
 int chat_disableevent(struct chat_data *cd);
 int chat_npckickall(struct chat_data *cd);
 
-#endif
+#endif /* _CHAT_H_ */

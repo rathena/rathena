@@ -657,4 +657,4 @@ int status_check_visibility(struct block_list *src, struct block_list *target); 
 int status_readdb(void);
 int do_init_status(void);
 
-#endif
+#endif /* _STATUS_H_ */

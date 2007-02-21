@@ -59,4 +59,4 @@ unsigned long get_uptime(void);
 void timer_init(void);
 void timer_final(void);
 
-#endif	// _TIMER_H_
+#endif /* _TIMER_H_ */

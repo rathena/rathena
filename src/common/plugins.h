@@ -63,4 +63,4 @@ void plugin_unload(Plugin* plugin);
 void plugins_init(void);
 void plugins_final(void);
 
-#endif	// _PLUGINS_H_
+#endif /* _PLUGINS_H_ */

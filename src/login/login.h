@@ -39,4 +39,5 @@ struct mmo_char_server {
 
 extern struct mmo_char_server server[MAX_SERVERS];
 extern int server_fd[MAX_SERVERS];
-#endif
+
+#endif /* _LOGIN_H_ */

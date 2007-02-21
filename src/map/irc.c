@@ -1,5 +1,5 @@
-#ifndef _IRC_H_
-#define _IRC_H_
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include <ctype.h>
 #include <stdio.h>
@@ -545,5 +545,3 @@ int irc_read_conf(char *file) {
 
 	return 1;
 }
-
-#endif //_IRC_H_

@@ -55,4 +55,4 @@ int do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
-#endif
+#endif /* _CHRIF_H_ */

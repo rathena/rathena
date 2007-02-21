@@ -20,4 +20,4 @@ extern void set_server_type(void);
 extern void set_termfunc(void (*termfunc)(void));
 extern void do_final(void);
 
-#endif	// _CORE_H_
+#endif /* _CORE_H_ */

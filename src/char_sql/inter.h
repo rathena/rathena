@@ -53,4 +53,5 @@ extern char login_db_server_db[32];
 extern char main_chat_nick[16];
 
 int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type);
-#endif
+
+#endif /* _INTER_SQL_H_ */

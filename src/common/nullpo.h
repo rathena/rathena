@@ -234,4 +234,4 @@ void nullpo_info_f(const char *file, int line, const char *func,
                    __attribute__((format(printf,4,5)));
 
 
-#endif
+#endif /* _NULLPO_H_ */

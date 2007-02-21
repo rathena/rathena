@@ -27,4 +27,4 @@
 // C言語の仕様上、最初に0を付けると8進数になるので間違えないで下さい。
 #define ATHENA_MOD_VERSION	1249	// mod version (patch No.)
 
-#endif
+#endif /* _VERSION_H_ */

@@ -1,4 +1,4 @@
-// (c) eAthena Dev Team - Licensed under GNU GPL
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef _LADMIN_H_
@@ -10,4 +10,4 @@
 							// It is made into 2 at the time of passwordencrypt2.
 							// When it is made 3, it corresponds to both.
 
-#endif
+#endif /* _LADMIN_H_ */

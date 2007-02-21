@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef __INT_STATUS__
-#define __INT_STATUS__
+#ifndef _INT_STATUS_H_
+#define _INT_STATUS_H_
 
 #include "char.h"
 
@@ -21,4 +21,5 @@ void inter_status_save(void);
 void status_init(void);
 void status_final(void);
 #endif
-#endif
+
+#endif /* _INT_STATUS_H_ */

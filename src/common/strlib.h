@@ -1,8 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _J_STR_LIB_H_
-#define _J_STR_LIB_H_
+#ifndef _STRLIB_H_
+#define _STRLIB_H_
+
 #define J_MAX_MALLOC_SIZE 65535
 // String function library.
 // code by Jioh L. Jung (ziozzang@4wish.net)
@@ -26,4 +27,4 @@ const char *stristr(const char *haystack, const char *needle);
 size_t strnlen (const char* string, size_t maxlen);
 #endif
 
-#endif
+#endif /* _STRLIB_H_ */

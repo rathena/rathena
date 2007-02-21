@@ -203,4 +203,4 @@ int mob_clone_delete(int class_);
 
 void mob_reload(void);
 
-#endif
+#endif /* _MOB_H_ */

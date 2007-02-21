@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef COMMON_UTILS_H
-#define COMMON_UTILS_H
+#ifndef _UTILS_H_
+#define _UTILS_H_
 
 #include <stdarg.h>
 
@@ -41,4 +41,4 @@ extern unsigned short GetWord(unsigned long val, size_t num);
 extern unsigned short MakeWord(unsigned char byte0, unsigned char byte1);
 extern unsigned long MakeDWord(unsigned short word0, unsigned short word1);
 
-#endif
+#endif /* _UTILS_H_ */

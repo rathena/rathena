@@ -511,4 +511,4 @@ enum {
 	#endif
 #endif
 
-#endif	// _MMO_H_
+#endif /* _MMO_H_ */

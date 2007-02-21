@@ -25,4 +25,5 @@ extern char main_chat_nick[16];
 //For TXT->SQL conversion
 extern char accreg_txt[];
 int inter_accreg_fromstr(const char *str, struct accreg *reg);
-#endif
+
+#endif /* _INTER_H_ */

@@ -53,4 +53,4 @@ extern struct Log_Config {
 	char log_branch_db[32], log_pick_db[32], log_zeny_db[32], log_mvpdrop_db[32], log_gm_db[32], log_npc_db[32], log_chat_db[32];
 } log_config;
 
-#endif
+#endif /* _LOG_H_ */

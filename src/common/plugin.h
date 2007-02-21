@@ -80,4 +80,4 @@ typedef void Plugin_Event_Func(void);
 #define PLUGIN_EVENTS_TABLE	struct _Plugin_Event_Table plugin_event_table[]
 void** plugin_call_table;
 
-#endif	// _PLUGIN_H_
+#endif /* _PLUGIN_H_ */

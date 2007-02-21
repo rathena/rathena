@@ -141,4 +141,4 @@ int socket_getips(uint32* ips, int max);
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
 extern int naddr_;   // # of ip addresses
 
-#endif	// _SOCKET_H_
+#endif /* _SOCKET_H_ */

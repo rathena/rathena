@@ -15,4 +15,5 @@ int inter_pet_sql_init(void);
 
 //Exported for use in the TXT-SQL converter.
 int inter_pet_tosql(int pet_id, struct s_pet *p);
-#endif
+
+#endif /* _INT_PET_SQL_H_ */

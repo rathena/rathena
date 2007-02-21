@@ -1,5 +1,9 @@
-// Homunculus and future Mercenary system code go here [Celest]
-// implemented by [orn]
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#ifndef _MERCENARY_H_
+#define _MERCENARY_H_
+
 struct homunculus_db {
 	int class_ ;
 	char name[NAME_LENGTH];
@@ -81,3 +85,5 @@ int merc_skill_tree_get_max(int id, int b_class);
 void merc_hom_init_timers(struct homun_data * hd);
 void merc_skill_reload(void);
 void merc_reload(void);
+
+#endif /* _MERCENARY_H_ */

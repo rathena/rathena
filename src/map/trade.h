@@ -12,4 +12,4 @@ void trade_tradeok(struct map_session_data *sd);
 void trade_tradecancel(struct map_session_data *sd);
 void trade_tradecommit(struct map_session_data *sd);
 
-#endif	// _TRADE_H_
+#endif /* _TRADE_H_ */

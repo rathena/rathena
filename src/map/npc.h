@@ -88,5 +88,4 @@ extern char *current_file;
 
 struct npc_data *fake_nd;
 
-#endif
-
+#endif /* _NPC_H_ */

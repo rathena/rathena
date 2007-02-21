@@ -18,4 +18,4 @@
 	void charsave_save_scdata(int account_id, int char_id, struct status_change* sc_data, int max_sc);
 #endif
 
-#endif
+#endif /* _CHARSAVE_H_ */

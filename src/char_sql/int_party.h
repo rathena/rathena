@@ -26,4 +26,5 @@ int inter_party_CharOnline(int char_id, int party_id);
 int inter_party_CharOffline(int char_id, int party_id);
 //Required for the TXT->SQL converter
 int inter_party_tosql(struct party *p, int flag, int index);
-#endif
+
+#endif /* _INT_PARTY_SQL_H_ */

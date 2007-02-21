@@ -956,4 +956,4 @@ enum {
 	UNT_GROUNDDRIFT_FIRE,
 };
 
-#endif
+#endif /* _SKILL_H_ */

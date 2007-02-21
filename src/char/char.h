@@ -55,4 +55,5 @@ extern char char_txt[];
 int char_config_read(const char *cfgName);
 int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg, int *reg_num);
 int parse_friend_txt(struct mmo_charstatus *p);
-#endif
+
+#endif /* _CHAR_H_ */

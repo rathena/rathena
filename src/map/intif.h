@@ -70,4 +70,4 @@ int intif_homunculus_requestdelete(int homun_id);
 
 int CheckForCharServer(void);
 
-#endif
+#endif /* _INTIF_H_ */

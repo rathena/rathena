@@ -3,6 +3,7 @@
 
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
+
 #include "mmo.h"
 
 //FIXME: Maybe it would be better to move this enum to mmo.h,
@@ -40,4 +41,4 @@ int itemdb_isequip2(struct item_data *);
 void do_final_itemdb(void);
 int do_init_itemdb(void);
 
-#endif
+#endif /* _ITEMDB_H_ */

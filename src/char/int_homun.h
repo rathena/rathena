@@ -13,4 +13,4 @@ int inter_homun_parse_frommap(int fd);
 
 extern char homun_txt[1024];
 
-#endif
+#endif /* _INT_HOMUN_H_ */

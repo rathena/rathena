@@ -1503,4 +1503,4 @@ typedef struct homun_data       TBL_HOM;
 extern int lowest_gm_level;
 extern char main_chat_nick[16];
 
-#endif
+#endif /* _MAP_H_ */

@@ -91,4 +91,4 @@ int guild_agit_break(struct mob_data *md);
 
 void do_final_guild(void);
 
-#endif
+#endif /* _GUILD_H_ */

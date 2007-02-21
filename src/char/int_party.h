@@ -16,4 +16,5 @@ extern char party_txt[1024];
 
 //For the TXT->SQL converter
 int inter_party_fromstr(char *str, struct party *p);
-#endif
+
+#endif /* _INT_PARTY_H_ */

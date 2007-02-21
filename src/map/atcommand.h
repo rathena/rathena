@@ -325,5 +325,4 @@ extern char atcommand_symbol;
 #define MAX_MSG 1000
 extern char* msg_table[MAX_MSG];
 
-#endif
-
+#endif /* _ATCOMMAND_H_ */

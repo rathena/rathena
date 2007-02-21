@@ -42,4 +42,4 @@ int storage_comp_item(const void *_i1, const void *_i2);
 void sortage_sortitem(struct storage* stor);
 void sortage_gsortitem(struct guild_storage* gstor);
 
-#endif
+#endif /* _STORAGE_H_ */

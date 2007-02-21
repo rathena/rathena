@@ -90,5 +90,4 @@ int script_reload(void);
 
 extern char mapreg_txt[];
 
-#endif
-
+#endif /* _SCRIPT_H_ */

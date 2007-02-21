@@ -4,4 +4,4 @@
 void MD5_String(const char * string, char * output);
 void MD5_String2binary(const char * string, char * output);
 
-#endif
+#endif /* _MD5CALC_H_ */

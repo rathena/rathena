@@ -19,4 +19,5 @@ extern char guild_storage_txt[1024];
 //Exported for use in the TXT-SQL converter.
 int storage_fromstr(char *str,struct storage *p);
 int guild_storage_fromstr(char *str,struct guild_storage *p);
-#endif
+
+#endif /* _INT_STORAGE_H_ */

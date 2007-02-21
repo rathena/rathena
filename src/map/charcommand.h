@@ -70,5 +70,5 @@ int get_charcommand_level(const CharCommandType type);
 
 int charcommand_config_read(const char *cfgName);
 extern char charcommand_symbol;
-#endif
 
+#endif /* _CHARCOMMAND_H_ */

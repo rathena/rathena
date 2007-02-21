@@ -142,4 +142,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 int do_init_itemdb(void);
 
-#endif
+#endif /* _ITEMDB_H_ */

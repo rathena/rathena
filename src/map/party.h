@@ -47,4 +47,4 @@ int party_sub_count(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int type,...);
 
 
-#endif
+#endif /* _PARTY_H_ */

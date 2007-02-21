@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGIN_H_
-#define _LOGIN_H_
+#ifndef _LOGIN_SQL_H_
+#define _LOGIN_SQL_H_
 
 #define MAX_SERVERS 30
 
@@ -51,4 +51,4 @@ struct mmo_char_server {
 };
 
 
-#endif
+#endif /* _LOGIN_SQL_H_ */
