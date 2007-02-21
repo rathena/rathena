@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team [Ori:LunatikBunnie] [Cur:Lance]
 //===== Current Version: =====================================
-//= 1.5
+//= 1.5a
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk 6674
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.4 Added NJ/GS, changed all job numbers to Job_* constants. 
 //=    All credits go to pxxx [Skotlex]
 //= 1.5 Rewrite everything from scratch. [Lance]
+//= 1.5a fixed Baby -> Super Baby change. Switched to JobName() [Lupus]
 //============================================================
 prontera.gat,153,193,6	script	Job Master	123,{
 	mes "^ff0000[Job Master]^000000";
@@ -66,7 +67,10 @@ prontera.gat,153,193,6	script	Job Master	123,{
 						case 7:
 							if(Class == Job_Novice_High) goto L_noReq;
 							if($@JC_SupNovM > BaseLevel) goto L_BvError;
-							set @target_job, Job_SuperNovice;
+							if(Upper == 2)
+								set @target_job, Job_Super_Baby;
+							else
+								set @target_job, Job_SuperNovice;
 							break;
 						case 8:
 							if(Class == Job_Novice_High) goto L_noReq;
@@ -84,7 +88,7 @@ prontera.gat,153,193,6	script	Job Master	123,{
 							break;
 					}
 			}
-			mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
+			mes "Are you sure you want to change to " + JobName(@target_job) + "?";
 			if(select("No","Yes") == 2){
 				callfunc "Job_Change", @target_job;
 				if(@target_job == Job_Gunsliger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {
@@ -148,10 +152,10 @@ prontera.gat,153,193,6	script	Job Master	123,{
 							break;
 					}
 					mes "Welcome, please select the job you wish to change into";
-					set @target_job, @job_opt[select(callfunc("getJobName",@job_opt[0]), callfunc("getJobName",@job_opt[1]))-1];
+					set @target_job, @job_opt[select(JobName(@job_opt[0]), JobName(@job_opt[1]))-1];
 					if(Class > Job_Novice_High && Class < Job_Lord_Knight) set @target_job, @target_job + 4001;
 				}
-				mes "Are you sure you want to change to " + callfunc("getJobName",@target_job) + "?";
+				mes "Are you sure you want to change to " + JobName(@target_job) + "?";
 				if(select("No","Yes")==2){
 					callfunc "Job_Change", @target_job;
 					if(@target_job == Job_Star_Gladiator || @target_job == Job_Soul_Linker) {
