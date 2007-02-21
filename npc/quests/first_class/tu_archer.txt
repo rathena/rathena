@@ -391,7 +391,7 @@ payon_in02.gat,47,13,3	script	Master Kavaruk	55,{
 			next;
 			mes "[Master Kavaruk]";
 			if(Class == Job_Archer || Class == Job_Archer_High || Class == Job_Baby_Archer){
-				mes "Now it is time to experience the principles you've just learned firsthand. Go speak to ^3131FFReidin Corse^000000, who is just outside of this building, and he'll tell you about the different skills.";
+				mes "Now it is time to experience the principles you've just learned firsthand. Go speak to ^3131FFRaiden Karus^000000, who is just outside of this building, and he'll tell you about the different skills.";
 				set tu_archer01, 4;
 			} else {
 				mes "Still, there's no need for you to do any field training since only Archers can actually participate";
@@ -400,7 +400,7 @@ payon_in02.gat,47,13,3	script	Master Kavaruk	55,{
 			close;
 
 		} else if(tu_archer01 == 4){
-			mes "Reidin Corse is just outside of this building. Didn't you see him on your way in?";
+			mes "Raiden Karus is just outside of this building. Didn't you see him on your way in?";
 			close;
 
 		}
@@ -411,10 +411,10 @@ payon_in02.gat,47,13,3	script	Master Kavaruk	55,{
 	close;
 }
 
-//=================================================Reidin Corse====================================================
-pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
+//=================================================Raiden Karus====================================================
+pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	if(MaxWeight - Weight < 2000){
 		mes "Hey, you're carrying an";
 		mes "awful lot of stuff. You ought";
@@ -430,7 +430,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			next;
 			switch(select("Tell me about skills.:Er, not really...")){
 			case 1:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Huh. So Master";
 				mes "Kavaruk told you";
 				mes "to come to me, eh?";
@@ -439,7 +439,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				next;
 				break;
 			case 2:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Huh...?";
 				mes "Alright. You sure";
 				mes "you've got nothing";
@@ -448,18 +448,18 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 				break;
 			}
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Fine. I'm an incredibly";
 			mes "busy guy, but I'll make time for you. I'll teach you what I know about Archer skills... On one condition!";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "From here on out, you gotta";
 			mes "call me ^3131FFChief^000000, got it? Stick with me and you'll become the second best archer in the world! How";
 			mes "about it, kid?";
 			next;
 			switch(select("You got it, Chief!", "Ugh, no thanks~!")){
 			case 1:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Ho ho!";
 				mes "That's the way to go!";
 				mes "Good good~ Call me Chief";
@@ -467,12 +467,12 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				next;
 				break;
 			case 2:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Huh? What kind of attitude";
 				mes "is that? Ah, I get it. You're not mature enough to recognize greatness when it's right";
 				mes "before you.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Don't worry...";
 				mes "When you come crawlin'";
 				mes "back, I'll reconsider";
@@ -480,14 +480,14 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				close;
 				break;
 			}
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Let's see...";
 			mes "How much do you know?";
 			mes "Mmmmmmmmmm...";
 			next;
-			mes "^3355FFReidin Corse narrows his experienced eyes and sizes you up.^000000";
+			mes "^3355FFRaiden Karus narrows his experienced eyes and sizes you up.^000000";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			if(JobLevel > 39){
 				mes "Hey! You're ready to change jobs, aren't you? Don't waste time here and just get a new job already! Eh, or you can ask Master Kavaruk for something to do.";
 				close;
@@ -496,7 +496,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "up. Okay? Good.";
 				next;
 				set tu_archer01, 5;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Okay, I'm ready to begin the lessons! Come back over here once you've got your bow and arrows and everything else ready, got it?";
 				close;
 			} else {
@@ -505,7 +505,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "a little experienced, there's still room for you to learn. So try and keep up, got it?";
 				next;
 				set tu_archer01, 5;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Well, I'm ready to teach whenever you're ready to learn. Come back once your bow and arrows and everything else is ready, alright?";
 				close;
 			}
@@ -513,33 +513,33 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "You ready? I think it's fair to remind you that I won't tolerate any complaining! Just do what";
 			mes "I say and you'll be the second best Archer in the world! After me, of course~";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "If you don't like it, you can just quit! No reason to stick around";
 			mes "if you can't keep up with the Chief, anyway.";
 			next;
 			switch(select("Please teach me... Chief!:I want to quit.")){
 			case 1:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "That's what I'm talkin' about! Yeah! Just trust me and you'll learn almost everything about Archer skills! Let's get started!";
 				next;
 				menu "Yes, Chief!",-;
 
 				emotion e_ok;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Great...!";
 				mes "I like your style!";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Now, open your Skill Window (Alt+S). You oughta be able to see two skills: ^FF0000Owl's Eye^000000 and ^FF0000Double Strafe^000000. First, I'll talk about Owl's Eye.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "We Archers need to be able to preceive the movements of our targets from far away. Now, even during the night, nothing can escape the eyes of an owl.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "So we gotta train our vision so that we see the way owls do. Now";
 				mes "if you can't aim at your targets, you'd be horrible at archery, right? You gotta have Accuracy!";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				set @skill_owl, getskilllv(43);
 				if(@skill_owl < 3){
 					set tu_archer01, 6;
@@ -547,14 +547,14 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					mes "is to learn ^3131FFLevel 3 Owl's Eye^000000!";
 					mes "From Prontera, if you travel south, south and then west, you can fight Condors for your training.";
 					next;
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "You can head somewhere";
 					mes "else if you want, but if you don't know any training areas, then";
 					mes "just follow my great advice.";
 					next;
 					switch(select("I'll follow your advice, Chief!:I'll hunt somewhere else...")){
 					case 1:
-						mes "[Reidin Corse]";
+						mes "[Raiden Karus]";
 						mes "I'll send you to";
 						mes "Prontera for now,";
 						mes "so don't forget the";
@@ -564,7 +564,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 						next;
 						switch(select("Leave right away~", "W-wait, let me get ready!")){
 							case 1:
-								mes "[Reidin Corse]";
+								mes "[Raiden Karus]";
 								mes "When you struggle";
 								mes "through the hardships";
 								mes "of training, just think";
@@ -573,7 +573,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 								mes "ever: me.";
 								emotion e_dots;
 								next;
-								mes "[Reidin Corse]";
+								mes "[Raiden Karus]";
 								mes "Okay...!";
 								mes "Off you go!";
 								mes "To Prontera!";
@@ -582,7 +582,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 								end;
 								break;
 							case 2:
-								mes "[Reidin Corse]";
+								mes "[Raiden Karus]";
 								mes "Hm...?";
 								mes "What do you possibly";
 								mes "need to prepare? Alright,";
@@ -594,7 +594,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 						break;
 					case 2:
 						emotion e_an;
-						mes "[Reidin Corse]";
+						mes "[Raiden Karus]";
 						mes "Say what...?";
 						mes "Alright, then.";
 						mes "But the next time";
@@ -613,7 +613,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				}
 				break;
 			case 2:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Huh. Okay.";
 				mes "And here I was";
 				mes "getting ready to";
@@ -631,7 +631,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "waiting for a while!";
 				next;
 				emotion e_gasp;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Ah, but your eyes look a lot sharper than they used to be.";
 				mes "Here, this is a small, special reward for you.";
 				//misceffect EF_WIND ;
@@ -639,12 +639,12 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				set BaseExp, BaseExp + 500;
 				next;
 				emotion e_pif;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Not bad, but you really should master Owl's Eye. That means";
 				mes "you need to learn it all the way";
 				mes "up to Level 10!";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Now, I guess I'll";
 				mes "talk about a different";
 				mes "skill in my next lecture, kay?";
@@ -667,19 +667,19 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "able to see the Vulture's Eye";
 			mes "skill in the list too.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Now when you think";
 			mes "about vultures, what";
 			mes "exactly comes to mind?";
 			next;
 			switch(select("Sharp, precise eyes.", "You, Chief.")){
 			case 1:
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Exactly!";
 				break;
 			case 2:
 				emotion e_lv2;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Hahahaha!";
 				mes "Well, I am famous";
 				mes "for my incredible";
@@ -688,25 +688,25 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				break;
 			}
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Vultures circle the sky, find a target on the ground, and then very swiftly swoop down and ensnare their prey in their claws.";
 			next;
 			emotion e_lv;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "No doubt about it.";
 			mes "Vultures are awesome!";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "The ^3131FFVulture's Eye^000000 skill allows";
 			mes "you to train your vision to be like a vulture's. You'll increase your Attack Accuracy and can target enemies from further away.";
 			next;
 			emotion e_no;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "I know that you can attack";
 			mes "from a distance now, but don't";
 			mes "be satisfied with just your current attack range. Learn Vulture's Eye so you can attack from even further distances.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Now for your";
 			mes "second assignment!";
 			mes "Go hunt Mandagora!";
@@ -720,7 +720,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "Alright, Mandagora usually live around Mt. Mjolnir. I can send you to Prontera, so just travel north, then east from there to find";
 				mes "some of them.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Remember, the most";
 				mes "important thing is to level the Vulture's Eye skill and test the distance of your attack range.";
 				if(MaxWeight - Weight < 1000){
@@ -730,19 +730,19 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					next;
 				} else {
 					next;
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Here's a little something to encourage you. Since Mandagora are Earth property monsters, these Fire Arrows will work really well.";
 					set tu_archer01, 8;
 					getitem 1752, 300;
 					next;
 				}
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Alright~";
 				mes "Ready to go?";
 				next;
 				switch(select("Let's go!", "W-wait a minute!")){
 				case 1: 
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
@@ -750,7 +750,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					end;
 					break;
 				case 2:
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "You still need";
 					mes "to get ready?";
 					mes "Hurry it up!";
@@ -762,7 +762,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "Wait a minute...";
 				emotion e_what;
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "You already";
 				mes "learned Vulture's Eye!";
 				mes "Why did I spend so much time explaining about it? Well, I guess we're ready to move on to the next lesson...";
@@ -775,14 +775,14 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			if(@eagle < 3){
 				mes "Mandagora lives in the area north and east of Prontera. Learn up to Level 3 Vulture's Eye and get acquainted with your attack range.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Okay...";
 				mes "Are you";
 				mes "ready to go?";
 				next;
 				switch(select("Go.", "Wait a moment.")){
 				case 1: 
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
@@ -790,7 +790,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					end;
 					break;
 				case 2:
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "You still need";
 					mes "to get ready?";
 					mes "Hurry it up!";
@@ -811,11 +811,11 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "You know, Owl's Eye";
 			mes "and Vulture's Eye.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Even though you may not be doing anything, Passive Skills are always in effect. Now, it's time for me to teach you about an Active Skill";
 			mes "for Archers. Ready?";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Today I'll tell";
 			mes "you all about";
 			mes "^3131FFDouble Strafe^000000!";
@@ -829,23 +829,23 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "I already know";
 				mes "about Double Strafe.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "...";
 				mes "......";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "^333333*Sigh*^000000";
 				mes "Next lesson...";
 				set tu_archer01, 10;
 				close;
 			} else {
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Just like its name, Double Strafe allows you to attack enemies with your arrows twice in a row! Booyah~";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "As Double Strafe's level rises, its attack strength also increases. If you master this skill, you can do a great amount of damage to your enemies!";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Hold your bow and arrow";
 				mes "like this, concentrate, aim,";
 				mes "then fire twice with all your";
@@ -859,10 +859,10 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				}
 				emotion e_no1;
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Now, there's another skill known as ^FF0000Arrow Shower^000000. Where Double Strafe uses 2 Arrows, Arrow Shower fires a bunch of arrows at once.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Not even I can handle";
 				mes "Arrow Shower all that well since it's really hard. Still, maybe if you trained more at it, you'd manage to pull it off?";
 				emotion e_heh;
@@ -872,19 +872,19 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Hydras^000000!";
 			emotion e_no1;
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "There's a ship that";
 			mes "leads to Byalan Island in Izlude, Prontera's satellite city. Ride that ship to Byalan Island.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "In the center of that island is the entrance to a dungeon where a lot of Hydras live. Remember that it's a water dungeon, and that ^3131FFWater resists Fire^000000, ^3131FFbut is weak against Wind^000000.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Now go and bring ^3131FF10 Tentacles^000000";
 			mes "from hunting Hydra and ^3131FF1 Crystal Blue^000000, which you can get from hunting the Mushrooms there.";
 			mes "Bring all of that and you pass~";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "It's easier to find Izlude if you pass by Prontera, so head towards the fields near Prontera. Alright, off you go, " + strcharinfo(0) + "~";
 			set tu_archer01, 11;
 			close;
@@ -899,7 +899,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					mes "Let's see now...";
 					next;
 					emotion e_no1;
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Good! You pass.";
 					mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
 					//misceffect EF_WIND;
@@ -920,21 +920,21 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "Alright, now there's only";
 			mes "one more skill you need to know about. Personally, I think this one is crucial for every Archer...";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Open your Skill Window.";
 			mes "Make sure that you learn";
 			mes "^FF0000Increase Concentration^000000.";
 			mes "Now, how can I describe";
 			mes "how to do it?";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "I guess that first, you gotta quiet your mind and enter a state of complete concentration. Steadily draw your bowstring back. If there's even a millisecond of imbalance, you'll miss.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "We use Increase Concentration";
 			mes "to keep ourselves calm and focused to ^3131FFmaximize certain abilities and stats^000000. This skill enhances our performance as Archers immensely!";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "You might not be able";
 			mes "to see it now, but as you become more skilled, you'll eventually recognize all the benefits of this skill.";
 			set tu_archer01, 13;
@@ -946,29 +946,29 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "done with all of your lessons.";
 			emotion e_pif;
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Ah, but it's not time for";
 			mes "you to relax yet! Since I've given you a midterm, it's only fitting that I also give you a final!";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Surprised, huh?";
 			mes "Well, this test is a little harder, but I'll help you out so there's";
 			mes "no need for you to fret.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Now, go to Mt. Mjolnir and hunt Floras. Your test will be to bring back ^3131FF5 Maneater Blossoms^000000 and";
 			mes "^3131FF20 Stems^000000.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "I know it's a little dangerous,";
 			mes "but I've got a pal who'll be there to help you. Of course, she's still in training, but...";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Oh...";
 			mes "And one last thing.";
 			mes "Take some of these.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			if(MaxWeight - Weight < 2100){
 				mes "H-hey!";
 				mes "Why are you carrying";
@@ -991,10 +991,10 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "now! Yeap, I can see it";
 				mes "in your eyes.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Right, did you get a chance to meet my Acolyte pal, Mafra? She's pretty shy, but I hope you two got along.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "I'm happy to tell";
 				mes "you that you've passed";
 				mes "my final exam! Here, take";
@@ -1005,17 +1005,17 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				set JobExp,JobExp+3000;
 				getitem 1770, 500;
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Well, it's like you're a full fledged Archer now. Honestly,";
 				mes "I've got nothing more to teach you. Well, about archery, anyway.";
 				emotion e_heh;
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Well, if you talk to him, Master Kavaruk might have something for you to do. He happens to have me running around to doing errands";
 				mes "for him too. That creep!";
 				emotion e_pif;
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "Well, "+ strcharinfo(0) +",";
 				mes "It'd make me really happy if you get to the point where you develop a true love for the art of archery. I'll see you sometime, okay?";
 				emotion e_no1;
@@ -1027,13 +1027,13 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 				mes "^3131FF5 Maneater Blossoms^000000";
 				mes "and ^3131FF20 Stems^000000.";
 				next;
-				mes "[Reidin Corse]";
+				mes "[Raiden Karus]";
 				mes "From Prontera, you'd get to Mt. Mjolnir by traveling ^3131FFnorth^000000, ^3131FFnorth^000000 and then ^3131FFeast^000000. But if you want,";
 				mes "I can just send you there.";
 				next;
 				switch(select("Go!:W-Wait!")){
 				case 1:
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Alright!";
 					mes "Oh, and if you get";
 					mes "the chance, give a hello to my Acolyte pal over there for me~";
@@ -1043,7 +1043,7 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 					end;
 					break;
 				case 2:
-					mes "[Reidin Corse]";
+					mes "[Raiden Karus]";
 					mes "Huh?";
 					mes "Um, sure. But";
 					mes "there's no reason to";
@@ -1058,11 +1058,11 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "There's so much lush greenery";
 			mes "and the birds are always singing. Payon really is peaceful.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Of course, I've got friends here that I can trust with my life. We always argue, but we all want what's best for each other.";
 			emotion e_pif;
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "Wouldn't you";
 			mes "agree that it's";
 			mes "wonderful to have";
@@ -1072,36 +1072,36 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 			mes "I really like this town.";
 			mes "Everything is green and birds singing all around.. such a peaceful place Payon is.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "I feel so happy laying in the grass and looking up at the sky.";
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "It might also be because I have my trustable friends here with me. Haha.";
 			mes "We always argue, but we care for each other deep down inside.";
 			emotion e_pif;
 			next;
-			mes "[Reidin Corse]";
+			mes "[Raiden Karus]";
 			mes "..'friend' is a wonderful word. Don't you agree?";
 			close;
 		}
 	}
-	mes "Allow me to introduce myself. I'm the Archer of all Archers, ^3131FFReidin Corse^000000, Master of the Icarus Guild!";
+	mes "Allow me to introduce myself. I'm the Archer of all Archers, ^3131FFRaiden Karus^000000, Master of the Icarus Guild!";
 	next;
 	emotion e_no1;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "Right now, we're having a special event! The application fee for the Icarus Guild has been slashed by 50%! Join now and there'll be no annual fees!";
 	next;
 	emotion e_lv;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "During our special event, we'll have no job class restrictions!";
 	mes "As an added bonus, all new male members will be introduced to beautiful Dancer girls!";
 	next;
 	emotion e_heh;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "And new female members will have the special opportunity to go out on a date with me! Don't miss out!";
 	next;
 	emotion e_cash;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "Join right now";
 	mes "for a one time fee of only ^3131FF1,000,000, zeny^000000! Hurry and join the Icarus Guild while";
 	mes "this offer still lasts!";
@@ -1109,19 +1109,19 @@ pay_arche.gat,103,165,5	script	Reidin Corse#tu	832,{
 	emotion e_pif;
 	
 	mes "[Arpesto]";
-	mes "Reidin...";
+	mes "Raiden...";
 	mes "Stop messing around.";
 	mes "Hey there, kid. The real";
 	mes "master of the Icarus Guild";
 	mes "is in that building.";
 	next;
 	emotion e_omg;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "Arpesto...!";
 	mes "Why'd you...?!";
 	next;
 	emotion e_ag;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "^333333*Sigh*^000000";
 	mes "You got me, you got me.";
 	mes "There's no application fee.";
@@ -1136,7 +1136,7 @@ pay_arche.gat,109,169,3	script	Arpesto	712,{
 	mes "The sky still looks clear, but recently the winds that have been blowing through the land seem to carry with them an air of misfortune.";
 	next;
 	emotion e_pif;
-	mes "[Reidin Corse]";
+	mes "[Raiden Karus]";
 	mes "So...";
 	mes "Danger's coming?";
 	mes "Heh! Chill, gramps~";
@@ -1364,12 +1364,12 @@ mjolnir_11.gat,27,223,3	script	Acolyte#tu	95,{
 		if(gettime(3) >= 18 && gettime(3) < 22){
 			mes "H-hello!";
 			mes "Umm, umm...";
-			mes "Are you R-Reidin Corse's";
+			mes "Are you R-Raiden Karus's";
 			mes "friend t-too?";
 			next;
 			mes "[Acolyte]";
 			mes "M-my name is Mafra.";
-			mes "Ever since he saved my life, Reidin has a-always been a good f-friend to me. He's such a great Archer";
+			mes "Ever since he saved my life, Raiden has a-always been a good f-friend to me. He's such a great Archer";
 			mes "and a really nice person!";
 			next;
 			mes "[Acolyte]";
@@ -1384,7 +1384,7 @@ mjolnir_11.gat,27,223,3	script	Acolyte#tu	95,{
 			mes "Let's h-help each other train!";
 			mes "Um, is that okay?";
 			next;
-			switch(select("Sure.:No thanks.:Reidin Corse is mine!")){
+			switch(select("Sure.:No thanks.:Raiden Karus is mine!")){
 			case 1:
 				mes "[Acolyte]";
 				mes "Wow!";
@@ -1482,7 +1482,7 @@ mjolnir_11.gat,27,223,3	script	Acolyte#tu	95,{
 			//misceffect EF_SLEEPATTACK;
 			next;
 			mes "[Acolyte]";
-			mes "Reidin Corse?";
+			mes "Raiden Karus?";
 			mes "I can't believe";
 			mes "I feel asleep fo--";
 			mes "^666666Zzzzzzz...^000000";
