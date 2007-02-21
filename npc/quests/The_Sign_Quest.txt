@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -25,7 +25,7 @@
 //= 1.5 Fixed exploits and bugs. Plus add a removal of exttra sobbing pieces
 //= 	as suggested Tantarian, to let people Reborn [Lupus]
 //= 1.6 Minor fix, thanks to theultramage for pointing it out. [MasterOfMuppets]
-//= 1.7 Fixed exploit [KarLaeda]
+//= 1.7 Fixed exploit [KarLaeda] 1.7a, fixed wrong dialogue [Lupus]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -778,7 +778,7 @@ L_Where:
 	cutin "",255;
 	end;
 }
-	else if(signquest == 64)
+	else if(signquest >= 64)
 {
 	mes "[Metz]";
 	mes "Thank you so much";

@@ -30,6 +30,7 @@ Date		Added
 	* Dancer Job Quest v 3.0. Optimized, fixed typos, added missing dialogues [Lupus]
 		- not fully tested yet! U can use v2.5 as 100% working
 	- Moved NPC Master Kavaruk (overlapped Phantasmic Arrow Skill quest NPC)
+	- The Sign Quest, minor dialogue fix, thanks to theultramage 
 	* Fixed and Tested Dancing part of Dancer Job Quest (the rest chrid issues) [Lupus]
 2007/02/19
 	* Fixed Dancer Job Quest mob::OnDie / SP check issues [Lupus]
