@@ -167,9 +167,7 @@ job_duncer.gat,43,93,4	script	Aire	724,{
 	case 2:
 	case 3:
 	case 4:
-		if(DANC_Q==2 && (countitem(938) >= 20) && (countitem(501) >= 5) && (countitem(909) >= 3)
-			&& (countitem(2403) >= 1) && (Zeny >= 10000)){
-
+		if(DANC_Q==2 && countitem(938) >= 20 && countitem(501) >= 5 && countitem(909) >= 3 && countitem(2403) >= 1 && Zeny >= 10000) {
 			set Zeny,Zeny-10000;
 			delitem 938,20;
 			delitem 501,5;
@@ -177,23 +175,19 @@ job_duncer.gat,43,93,4	script	Aire	724,{
 			delitem 2403,1;
 			goto L_DONE;
 		}
-		if(DANC_Q==3 && countitem(1055) >= 5) && (countitem(2405) >= 1) && (Zeny >= 10000)){
-
+		if(DANC_Q==3 && countitem(1055) >= 5 && countitem(2405) >= 1 && Zeny >= 10000) {
 			set Zeny,Zeny-10000;
 			delitem 1055,5;
 			delitem 2405,1;
 			goto L_DONE;
 		}
-		if(DANC_Q==4 && countitem(965) >= 2 && countitem(503) >= 5 && countitem(909) >= 20
-			&& countitem(1020) >= 10 && countitem(2401) >= 1){
-
+		if(DANC_Q==4 && countitem(965) >= 2 && countitem(503) >= 5 && countitem(909) >= 20 && countitem(1020) >= 10 && countitem(2401) >= 1) {
 			delitem 965,2;
 			delitem 503,5;
 			delitem 909,20;
 			delitem 1020,10;
 			delitem 2401,1;
 			goto L_DONE;
-
 		}
 		mes "Something is wrong here.";
 		mes "Seems you don't have enough items, we need everything that was asked for.";
