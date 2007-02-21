@@ -1656,7 +1656,7 @@ int parse_login(int fd) {
 						WFIFOL(fd,8)=account.account_id;
 						WFIFOL(fd,12)=account.login_id2;
 						WFIFOL(fd,16)=0;
-						memcpy(WFIFOP(fd,20),account.lastlogin,24);
+						//memcpy(WFIFOP(fd,20),account.lastlogin,24);
 						WFIFOB(fd,46)=account.sex;
 						WFIFOSET(fd,47+32*server_num);
 						if(auth_fifo_pos>=AUTH_FIFO_SIZE)

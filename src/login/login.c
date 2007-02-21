@@ -3193,7 +3193,7 @@ int parse_login(int fd) {
 						WFIFOL(fd,8) = account.account_id;
 						WFIFOL(fd,12) = account.login_id2;
 						WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
-						memcpy(WFIFOP(fd,20), account.lastlogin, 24); // in old version, that was for name (not more used)
+						//memcpy(WFIFOP(fd,20), account.lastlogin, 24); // in old version, that was for name (not more used)
 						WFIFOB(fd,46) = account.sex;
 						WFIFOSET(fd,47+32*server_num);
 						if (auth_fifo_pos >= AUTH_FIFO_SIZE)

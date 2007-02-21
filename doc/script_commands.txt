@@ -4855,7 +4855,7 @@ By default timers do not have a RID attached, which lets the timers continue eve
 if the player that started them logs off. To attach a RID to a timer, you can
 either use the "attach flag" optional value when using initnpctimer/startnpctimer, 
 likewise, the optional flag of stopnpctimer detaches any RID after stopping
-the timer. One a player is attached to a timer, it stays attached to all
+the timer. Once a player is attached to a timer, it stays attached to all
 timers from that script until detached manually. You can have multiple
 npctimers going on at the same time as long as each one has a different player
 attached (think of each RID being used as an independant timer).

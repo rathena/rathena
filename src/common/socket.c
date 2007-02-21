@@ -589,6 +589,15 @@ int do_sendrecv(int next)
 		if(session[rfd.fd_array[i]])
 			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
 	}
+#else
+	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
+	//TODO: select() returns the number of readable sockets; use that to exit the fd_max loop faster
+	for (i = 1; i < fd_max; i++)
+	{
+		if(FD_ISSET(i,&rfd) && session[i])
+			session[i]->func_recv(i);
+	}
+#endif
 
 	for (i = 1; i < fd_max; i++)
 	{
@@ -603,28 +612,6 @@ int do_sendrecv(int next)
 			session[i]->func_parse(i); //This should close the session inmediately.
 		}
 	}
-
-#else
-	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
-	for (i = 1; i < fd_max; i++)
-	{
-		if(!session[i])
-			continue;
-
-		if(FD_ISSET(i,&rfd)){
-			//ShowMessage("read:%d\n",i);
-			session[i]->func_recv(i);
-		}
-
-		if(session[i]->wdata_size)
-			session[i]->func_send(i);
-	
-		if(session[i]->eof)
-		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
-			session[i]->func_parse(i); //This should close the session inmediately.
-		}
-	}
-#endif
 
 	return 0;
 }
