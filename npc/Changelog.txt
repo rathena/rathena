@@ -26,6 +26,8 @@ KarLaeda
 
 Date		Added
 ======
+2007/02/22
+	* Added official Hugel Cool Event Corp. Staff, thanks to Gepard [Lupus]
 2007/02/21
 	* Fixed a parenthesis typo in the dance quest [ultramage]
 	* Dancer Job Quest v 3.0. Optimized, fixed typos, added missing dialogues [Lupus]

@@ -1,0 +1,127 @@
+//===== eAthena Script ======================================= 
+//= Cool Event Corp. Staff
+//===== By: ================================================== 
+//= Gepard
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= eAthena
+//===== Description: ========================================= 
+//= Cool Event Corp. Staff (Save, Storage & Pushcart Service)
+//= in Hugel
+//===== Additional Comments: ================================= 
+//= 1.0 First version, iRO Sakray X.4 [Gepard]
+//= 1.1 Optimized, fixed a conditional bug [Lupus]
+//============================================================ 
+
+hugel.gat,88,168,4	script	Cool Event Corp. Staff#hk	874,{
+
+	mes "[Cool Event Corp. Staff]";
+	mes "Welcome to Cool Event Corp.";
+	mes "Our staff is always working";
+	mes "to surpass your expactations";
+	mes "for quality service. So how";
+	mes "may I assist you today?";
+	next;
+
+	switch(select("Save:Use Storage:Rent a Pushcart:Cancel")){
+	case 1:
+		mes "[Cool Event Corp. Staff]";
+		mes "Your Respawn Point";
+		mes "has been saved here";
+		mes "in the village of Hugel.";
+		mes "Thank you for using the";
+		mes "Cool Event Corp. service~";
+		emotion e_thx;
+		savepoint "hugel.gat",96,155;
+		close;
+	case 2:
+		mes "[Cool Event Corp. Staff]";
+		if(basicskillcheck() || getskilllv(1) < 6){
+			mes "I'm sorry, but you";
+			mes "need the Novice's";
+			mes "Basic Skill Level 6 to";
+			mes "use the Storage Service.";
+			emotion e_sry;
+			close;
+		}
+		if(Zeny < 40){
+			mes "I'm sorry, but you don't";
+			mes "have enough Zeny to use";
+			mes "the Storage Service. Our";
+			mes "Storage access fee is 40 Zeny.";
+			emotion e_cash;
+			close;
+		}
+		set Zeny, Zeny - 40;
+		set RESRVPTS, RESRVPTS + 4;
+		mes "Let me open your personal";
+		mes "storage for you right away.";
+		mes "Thanks for supporting Cool";
+		mes "Event Corp. by using our";
+		mes "services. Have a good day~";
+		close2;
+		openstorage;
+		end;
+	case 3:
+		mes "[Cool Event Corp. Staff]";
+		if(baseClass != Job_Merchant){
+			mes "I'm sorry, but the";
+			mes "Pushcart rental service";
+			mes "is only available to Merchants,";
+			mes "Blacksmiths, White Smiths,";
+			mes "Alchemists and Creators.";
+			emotion e_sry;
+			close;
+		}
+		if(getskilllv(39) == 0){
+			mes "You can only rent a cart after";
+			mes "learning the Pushcart Skill.";
+			close;
+		}
+		if(checkcart() == 1){
+			mes "You already have";
+			mes "a Pushcart equipped.";
+			mes "Unfortunately, we can't";
+			mes "rent more than one to";
+			mes "each customer at a time.";
+			close;
+		}
+		if(countitem(7061)){
+			delitem 7061,1;
+			setcart;
+			close;
+		}
+		mes "The Pushcart rental";
+		mes "fee is 800 Zeny. Would";
+		mes "you like to rent a Pushcart?";
+		next;
+		if(select("Rent a Pushcart:Cancel") == 1){
+			if(Zeny < 800){
+				mes "[Cool Event Corp. Staff]";
+				mes "I'm sorry, but you";
+				mes "don't have enough";
+				mes "Zeny to pay the Pushcart";
+				mes "rental fee of 800 Zeny.";
+				emotion e_cash;
+				close;
+			} else {
+				set Zeny, Zeny - 800;
+				set RESRVPTS, RESRVPTS + 80;
+				setcart;
+				close;
+			}
+		}
+		close;
+	case 4:
+	default:
+		mes "[Cool Event Corp. Staff]";
+		mes "Cool Event Corp. is always";
+		mes "striving to provide the best";
+		mes "services for our customers.";
+		mes "Help us become the best by";
+		mes "providing us with your opinions";
+		mes "and honest feedback. Thank you.";
+		close;
+	}
+}
