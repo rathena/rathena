@@ -392,9 +392,6 @@ int mmo_auth_sqldb_init(void) {
 
 	ShowStatus("Login server init....\n");
 
-	// memory initialize
-	ShowStatus("memory initialize....\n");
-
 	mysql_init(&mysql_handle);
 
 	// DB connection start
@@ -636,7 +633,6 @@ int mmo_auth( struct mmo_account* account , int fd){
 	// End DNS Blacklist check [Zido]
 
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
-	//ShowInfo("auth start for %s...\n", ip);
 
 	//accountreg with _M/_F .. [Sirius]
 	len = strlen(account->userid) -2;
@@ -735,11 +731,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 		} else {
 			jstrescapecpy(user_password, account->passwd);
 		}
-		//ShowInfo("account id ok encval:%d\n",account->passwdenc);
+
 #ifdef PASSWORDENC
 		if (account->passwdenc > 0) {
 			int j = account->passwdenc;
-			//ShowInfo("start md5calc..\n");
+
 			if (j > 2)
 				j = 1;
 			do {
@@ -749,18 +745,14 @@ int mmo_auth( struct mmo_account* account , int fd){
 					sprintf(md5str, "%s%s", sql_row[2], md5key);
 				} else
 					md5str[0] = 0;
-				//ShowDebug("j:%d mdstr:%s\n", j, md5str);
 				MD5_String2binary(md5str, md5bin);
 				encpasswdok = (memcmp(user_password, md5bin, 16) == 0);
 			} while (j < 2 && !encpasswdok && (j++) != account->passwdenc);
-			//printf("key[%s] md5 [%s] ", md5key, md5);
-			//ShowInfo("client [%s] accountpass [%s]\n", user_password, sql_row[2]);
-			//ShowInfo("end md5calc..\n");
 		}
 #endif
 		if ((strcmp(user_password, sql_row[2]) && !encpasswdok)) {
 			if (account->passwdenc == 0) {
-				ShowNotice("auth failed pass error %s %s %s" RETCODE, tmpstr, account->userid, user_password);
+				ShowInfo("auth failed pass error %s %s %s" RETCODE, tmpstr, account->userid, user_password);
 #ifdef PASSWORDENC
 			} else {
 				char logbuf[1024], *p = logbuf;
@@ -775,12 +767,11 @@ int mmo_auth( struct mmo_account* account , int fd){
 				for(j = 0; j < md5keylen; j++)
 					p += sprintf(p, "%02x", ((unsigned char *)md5key)[j]);
 				p += sprintf(p, "]" RETCODE);
-				ShowNotice("%s\n", p);
+				ShowInfo("%s\n", p);
 #endif
 			}
 			return 1;
 		}
-		//ShowInfo("auth ok %s %s" RETCODE, tmpstr, account->userid);
 	}
 
 /*
@@ -869,7 +860,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 		unsigned char buf[8];
 		if (data && data->char_server > -1) {
 			//Request char servers to kick this account out. [Skotlex]
-			ShowWarning("User [%s] is already online - Rejected.\n",sql_row[1]);
+			ShowNotice("User [%s] is already online - Rejected.\n",sql_row[1]);
 			WBUFW(buf,0) = 0x2734;
 			WBUFL(buf,2) = atol(sql_row[0]);
 			charif_sendallwos(-1, buf, 6);
@@ -990,7 +981,6 @@ int parse_fromchar(int fd){
 					!auth_fifo[i].delflag)
 				{
 					auth_fifo[i].delflag = 1;
-					ShowDebug("auth -> %d\n", i);
 					break;
 				}
 			}
@@ -1462,15 +1452,15 @@ int lan_subnetcheck(long p) {
 
 			sbn = (unsigned char *)&subnet[i].subnet;
 			msk = (unsigned char *)&subnet[i].mask;
-
+/*
 			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
 				src[0], src[1], src[2], src[3], sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
-
+*/
 			return subnet[i].char_ip;
 		}
 	}
 
-	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", src[0], src[1], src[2], src[3]);
+//	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", src[0], src[1], src[2], src[3]);
 	return 0;
 }
 
@@ -1501,7 +1491,7 @@ int login_ip_ban_check(unsigned char *p, unsigned long ipl)
 	}
 		
 	// ip ban ok.
-	ShowWarning("packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
+	ShowInfo("Packet from banned ip : %d.%d.%d.%d\n" RETCODE, p[0], p[1], p[2], p[3]);
 
 	if (log_login)
 	{
@@ -1548,7 +1538,6 @@ int parse_login(int fd) {
 	}
 
 	while(RFIFOREST(fd)>=2 && !session[fd]->eof){
-//		ShowDebug("parse_login : %d %d packet case=%x\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
 
 		switch(RFIFOW(fd,0)){
 		case 0x200:		// New alive packet: structure: 0x200 <account.userid>.24B. used to verify if client is always alive.
@@ -1599,7 +1588,7 @@ int parse_login(int fd) {
 			memcpy(account.passwd,RFIFOP(fd, 30),NAME_LENGTH);
 			account.passwd[23] = '\0';
 
-			ShowInfo("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
+//			ShowDebug("client connection request %s from %d.%d.%d.%d\n", RFIFOP(fd, 6), p[0], p[1], p[2], p[3]);
 #ifdef PASSWORDENC
 			account.passwdenc= (RFIFOW(fd,0)!=0x01dd)?0:PASSWORDENC;
 #else
@@ -1860,8 +1849,6 @@ int parse_login(int fd) {
 			WFIFOW(fd,2)=4+md5keylen;
 			memcpy(WFIFOP(fd,4),md5key,md5keylen);
 			WFIFOSET(fd,WFIFOW(fd,2));
-
-			ShowDebug("Request Password key -%s\n",md5key);
 			RFIFOSKIP(fd,2);
 		}
 			break;
@@ -2363,23 +2350,17 @@ int do_init(int argc,char **argv){
 	sql_config_read(SQL_CONF_NAME);
 	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
 	//Generate Passworded Key.
-	ShowInfo("Initializing md5key...\n");
 	memset(md5key, 0, sizeof(md5key));
 	md5keylen=rand()%4+12;
 	for(i=0;i<md5keylen;i++)
 		md5key[i]=rand()%255+1;
-	ShowInfo("md5key setup complete\n");
 
 
-	ShowInfo("set FIFO Size\n");
 	for(i=0;i<AUTH_FIFO_SIZE;i++)
 		auth_fifo[i].delflag=1;
-	ShowInfo("set FIFO Size complete\n");
 
-	ShowInfo("set max servers\n");
 	for(i=0;i<MAX_SERVERS;i++)
 		server_fd[i]=-1;
-	ShowInfo("set max servers complete\n");
 	//server port open & binding
 
 	// Online user database init
@@ -2389,9 +2370,7 @@ int do_init(int argc,char **argv){
 	login_fd = make_listen_bind(bind_ip?bind_ip:INADDR_ANY,login_port);
 
 	//Auth start
-	ShowInfo("Running mmo_auth_sqldb_init()\n");
 	mmo_auth_sqldb_init();
-	ShowInfo("finished mmo_auth_sqldb_init()\n");
 
 	if(login_gm_read)
 		//Read account information.
@@ -2401,7 +2380,6 @@ int do_init(int argc,char **argv){
 	set_defaultparse(parse_login);
 
 	// ban deleter timer - 1 minute term
-	ShowStatus("add interval tic (ip_ban_check)....\n");
 	add_timer_func_list(ip_ban_check,"ip_ban_check");
 	add_timer_interval(gettick()+10, ip_ban_check,0,0,60*1000);
 
