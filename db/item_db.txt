@@ -2367,29 +2367,41 @@
 7576,Blue-coloured_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7577,Yellow-coloured_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7578,Countermagic_Crystal,Countermagic Crystal,3,,10,10,,,,,,,,,,,,,{},{},{}
-7579,Silk_Handkerchief_of_Zhi_Nu,Silk Handkerchief of Zhi Nu,3,,10,10,,,,,,,,,,,,,{},{},{}
-7581,Celebration_Document,Celebration Document,3,,10,10,,,,,,,,,,,,,{},{},{}
-7582,Jewel_of_Destruction,Jewel of Destruction,3,,10,10,,,,,,,,,,,,,{},{},{}
-7583,Evil_Mind,Evil Mind,3,,10,10,,,,,,,,,,,,,{},{},{}
-7584,Guard's_First_Proof,Guard's First Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
-7585,Guard's_Second_Proof,Guard's Second Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
-7586,Guard's_Third_Proof,Guard's Third Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
-7587,Guard's_Fourth_Proof,Guard's Fourth Proof,3,,10,10,,,,,,,,,,,,,{},{},{}
-7588,IPOD_Coupon,IPOD Coupon,3,,10,10,,,,,,,,,,,,,{},{},{}
-7589,Lettered_Moon_Snack_01,Lettered Moon Snack 01,3,,10,10,,,,,,,,,,,,,{},{},{}
-7590,Lettered_Moon_Snack_02,Lettered Moon Snack 02,3,,10,10,,,,,,,,,,,,,{},{},{}
-7591,Lettered_Moon_Snack_03,Lettered Moon Snack 03,3,,10,10,,,,,,,,,,,,,{},{},{}
-7592,Lettered_Moon_Snack_04,Lettered Moon Snack 04,3,,10,10,,,,,,,,,,,,,{},{},{}
-7593,Lettered_Moon_Snack_05,Lettered Moon Snack 05,3,,10,10,,,,,,,,,,,,,{},{},{}
+7579,Silk_Handkerchief_of_Zhi,Silk Handkerchief of Zhi Nu,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7580,Black_Marble,Black Marble,3,,10,10,,,,,,,,,,,,,{},{},{}
+7581,Anniversary_Document,Celebration Document,3,,10,10,,,,,,,,,,,,,{},{},{}
+7582,Jewel_of_Destruction,Jewel of Destruction,3,,5,10,,,,,,,,,,,,,{},{},{}
+7583,Evil_Heart,Evil Mind,3,,5,10,,,,,,,,,,,,,{},{},{}
+7584,Guard's_1st_Proof,Guard's First Proof,3,,5,10,,,,,,,,,,,,,{},{},{}
+7585,Guard's_2nd_Proof,Guard's Second Proof,3,,5,10,,,,,,,,,,,,,{},{},{}
+7586,Guard's_3rd_Proof,Guard's Third Proof,3,,5,10,,,,,,,,,,,,,{},{},{}
+7587,Guard's_4th_Proof,Guard's Fourth Proof,3,,5,10,,,,,,,,,,,,,{},{},{}
+7588,IPOD_Coupon,IPOD Coupon,3,,5,10,,,,,,,,,,,,,{},{},{}
+7589,Lettered_Snack_01,Lettered Moon Snack 01,3,,10,10,,,,,,,,,,,,,{},{},{}
+7590,Lettered_Snack_02,Lettered Moon Snack 02,3,,10,10,,,,,,,,,,,,,{},{},{}
+7591,Lettered_Snack_03,Lettered Moon Snack 03,3,,10,10,,,,,,,,,,,,,{},{},{}
+7592,Lettered_Snack_04,Lettered Moon Snack 04,3,,10,10,,,,,,,,,,,,,{},{},{}
+7593,Lettered_Snack_05,Lettered Moon Snack 05,3,,10,10,,,,,,,,,,,,,{},{},{}
 7594,Sonia's_Letter,Sonia's Letter,3,,10,10,,,,,,,,,,,,,{},{},{}
 7595,Special_Sword,Special Sword,3,,10,10,,,,,,,,,,,,,{},{},{}
 7596,Special_Shield,Special Shield,3,,10,10,,,,,,,,,,,,,{},{},{}
 7597,Magic_Stone,Magic Stone,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7598,Blue_I_Card,Blue I Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7599,Blue_D_Card,Blue D Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7600,Blue_K_Card,Blue K Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7601,Blue_S_Card,Blue S Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7602,Blue_R_Card,Blue R Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+//7598,Blue_I_Card,Blue I Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+//7599,Blue_D_Card,Blue D Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+//7600,Blue_K_Card,Blue K Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+//7601,Blue_S_Card,Blue S Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+//7602,Blue_R_Card,Blue R Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7603,RO_Party_Ticket,RO Party Ticket,3,,0,10,,,,,,,,,,,,,{},{},{}
+7604,Flour,Flour,3,,0,10,,,,,,,,,,,,,{},{},{}
+7605,Egg_,Egg,3,,0,10,,,,,,,,,,,,,{},{},{}
+7606,Coin,Coin,3,,0,10,,,,,,,,,,,,,{},{},{}
+7607,Neck_Of_Evil_Dragon,Neck of Evil Dragon,3,,5,10,,,,,,,,,,,,,{},{},{}
+7608,Premium_Ticket,Premium Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7609,Pumpkin_Mojo,Pumpkin Mojo,3,,0,10,,,,,,,,,,,,,{},{},{}
+7610,Food_Stamp,Food Stamp,3,,500,10,,,,,,,,,,,,,{},{},{}
+7611,Symbol_Of_Fox,Symbol of Fox,3,,10,10,,,,,,,,,,,,,{},{},{}
+7612,Heart_Of_Fox_Queen,Heart of Fox Queen,3,,1,10,,,,,,,,,,,,,{},{},{}
+7613,Small_Rice_Dough,Small Rice Dough,3,,0,0,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}

@@ -19,6 +19,8 @@
 	-----
 
 ========================
+02/23
+	* Added and fixed some etc items [Playtester]
 02/13
 	* Fixed Bacsojin's mob id in mob_boss [Playtester]
 02/12
