@@ -11195,7 +11195,7 @@ int skill_readdb (void)
 		skill_db[i].hit=atoi(split[2]);
 		skill_db[i].inf=atoi(split[3]);
 		skill_db[i].pl=atoi(split[4]);
-		skill_db[i].nk=atoi(split[5]);
+		skill_db[i].nk=(int)strtol(split[5], NULL, 0);
 		skill_split_atoi(split[6],skill_db[i].splash);
 		skill_db[i].max=atoi(split[7]);
 		skill_split_atoi(split[8],skill_db[i].num);

@@ -19,6 +19,8 @@
 	-----
 
 ========================
+02/24
+	* Updated skill_db.txt using the new nk values in hexadecimal. [Skotlex]
 02/23
 	* Official Aegis names for cards [Playtester]
 	* Updated Box of thunder to use "agi up" effect for 30 secs instead of NPC

@@ -20,11 +20,17 @@
 #define INF_SUPPORT_SKILL 16
 #define INF_TARGET_TRAP 32
 
-//Constants to identify a skill's nk value.
-//The NK value applies only to non INF_GROUND_SKILL skills.
-#define NK_NO_DAMAGE 0x1
-#define NK_SPLASH (0x2|0x4) // 0x4 = splash & split
-#define NK_SPLASHSPLIT 0x4
+//Constants to identify a skill's nk value (damage properties)
+//The NK value applies only to non INF_GROUND_SKILL skills
+//when determining skill castend function to invoke.
+#define NK_NO_DAMAGE 0x01
+#define NK_SPLASH (0x02|0x04) // 0x4 = splash & split
+#define NK_SPLASHSPLIT 0x04
+#define NK_NO_CARDFIX 0x08
+#define NK_NO_ELEFIX 0x10
+#define NK_IGNORE_DEF 0x20
+#define NK_IGNORE_FLEE 0x40
+
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
 #define INF2_QUEST_SKILL 1
