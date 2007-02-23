@@ -11442,7 +11442,10 @@ int skill_readdb (void)
 			}
 			k++;
 			if(k >= MAX_SKILL_PRODUCE_DB)
+			{
+				ShowError("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
 				break;
+			}
 		}
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);

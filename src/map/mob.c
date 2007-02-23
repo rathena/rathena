@@ -2486,7 +2486,13 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 			data.x = md2->bl.x;
 			data.y = md2->bl.y;
 		}
-		strcpy(data.name, "--ja--");	//These two need to be loaded from the db for each slave.
+
+		//These two need to be loaded from the db for each slave.
+		if(battle_config.override_mob_names==1)
+			strcpy(data.name,"--en--");
+		else
+			strcpy(data.name,"--ja--");
+
 		data.level = 0;
 		if (!mob_parse_dataset(&data))
 			continue;
