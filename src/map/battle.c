@@ -486,7 +486,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	if (sc && sc->count) {
 	}
 */	
-	if (battle_config.pk_mode && sd && damage)
+	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage)
   	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 			if (flag&BF_WEAPON)

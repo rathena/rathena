@@ -11412,6 +11412,7 @@ int skill_readdb (void)
 	skill_init_unit_layout();
 
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
+	k=0;
 	for(m=0;m<2;m++){
 		sprintf(path, "%s/%s", db_path, filename[m]);
 		fp=fopen(path,"r");
@@ -11421,7 +11422,6 @@ int skill_readdb (void)
 			ShowError("can't read %s\n",path);
 			return 1;
 		}
-		k=0;
 		while(fgets(line,1020,fp)){
 			char *split[7 + MAX_PRODUCE_RESOURCE * 2];
 			int x,y;

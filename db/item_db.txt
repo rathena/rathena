@@ -2495,7 +2495,7 @@
 12026,Egg_Girl,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Effect Boxes
 12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
-12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp1,20000,0; },{},{}
+12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,30000,0; },{},{}
 12029,Gloomy_Box,Box of Gloom,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 45,1,"Improve Concentration"; },{},{}
 12030,Box_Of_Grudge,Box of Resentment,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}

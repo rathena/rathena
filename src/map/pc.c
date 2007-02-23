@@ -946,7 +946,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	do {
 		flag = 0;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++) {
-			int j, f, inf2;
+			int j, f, k, inf2;
 
 			if(sd->status.skill[id].id)
 				continue; //Skill already known.
@@ -954,9 +954,19 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			f = 1;
 			if(!battle_config.skillfree) {
 				for(j = 0; j < 5; j++) {
-					if( skill_tree[c][i].need[j].id && pc_checkskill(sd,skill_tree[c][i].need[j].id) < skill_tree[c][i].need[j].lv) {
-						f = 0; // one or more prerequisites wasn't satisfied
-						break;
+					if((k=skill_tree[c][i].need[j].id))
+					{
+						if (!sd->status.skill[k].id || sd->status.skill[k].flag == 13)
+							k = 0; //Not learned.
+						else if (sd->status.skill[k].flag) //Real lerned level
+							k = sd->status.skill[skill_tree[c][i].need[j].id].flag-2;
+						else
+							k = pc_checkskill(sd,k);
+						if (k < skill_tree[c][i].need[j].lv)
+						{
+							f=0;
+							break;
+						}
 					}
 				}
 				if (sd->status.job_level < skill_tree[c][i].joblv)
@@ -1021,17 +1031,25 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill) {
 	do {
 		flag=0;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){
-			int j,f=1;
+			int j,f=1, k;
 
 			if(sd->status.skill[id].id) //Already learned
 				continue;
 			
 			for(j=0;j<5;j++) {
-				if( skill_tree[c][i].need[j].id &&
-					pc_checkskill(sd,skill_tree[c][i].need[j].id) <
-					skill_tree[c][i].need[j].lv) {
-					f=0;
-					break;
+				if((k=skill_tree[c][i].need[j].id))
+				{
+					if (!sd->status.skill[k].id || sd->status.skill[k].flag == 13)
+						k = 0; //Not learned.
+					else if (sd->status.skill[k].flag) //Real lerned level
+						k = sd->status.skill[skill_tree[c][i].need[j].id].flag-2;
+					else
+						k = pc_checkskill(sd,k);
+					if (k < skill_tree[c][i].need[j].lv)
+					{
+						f=0;
+						break;
+					}
 				}
 			}
 			if (!f)

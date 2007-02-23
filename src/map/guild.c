@@ -789,6 +789,7 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 int guild_expulsion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes)
 {
+	struct map_session_data *tsd;
 	struct guild *g;
 	int i,ps;
 
@@ -799,11 +800,17 @@ int guild_expulsion(struct map_session_data *sd,int guild_id,
 	if(g==NULL)
 		return 0;
 
-	if(sd->status.guild_id!=guild_id || map[sd->bl.m].flag.gvg_castle) //Can't leave inside guild castles.
+	if(sd->status.guild_id!=guild_id)
 		return 0;
 
 	if( (ps=guild_getposition(sd,g))<0 || !(g->position[ps].mode&0x0010) )
 		return 0;	//Expulsion permission
+
+  	//Can't leave inside guild castles.
+	if ((tsd = map_id2sd(account_id)) == NULL ||
+		tsd->status.char_id != char_id ||
+		map[tsd->bl.m].flag.gvg_castle)
+		return 0;
 
 	for(i=0;i<g->max_member;i++){	// Š‘®‚µ‚Ä‚¢‚é‚©
 		if(g->member[i].account_id==account_id &&

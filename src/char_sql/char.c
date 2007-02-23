@@ -1742,7 +1742,6 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p, int new_charscreen)
 
 int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	int i, j, found_num = 0;
-	struct mmo_charstatus *p = NULL;
 
 	set_char_online(-1, 99,sd->account_id);
 

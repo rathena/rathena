@@ -3,6 +3,14 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/02/23
+	* Guild expulsion now will fail when the character to be kicked is in a
+	  guild castle (rather than checking for the character doing the expulsion)
+	* pk damage reduction settings now will take effect only on Player VS
+	  player damage.
+	* Fixed produce_db2.txt entries overwriting produce_db.txt ones.
+	* Fixed item-granted/plagiarized skills unlocking skill trees when only
+	  your real learned level should. [Skotlex]
 2007/02/21
 	* Applied a consistent look to all header files (copyright, ifdefs)
 	* Minor stuff (typos, socket.c, junk in login reply packet) [ultramage]
