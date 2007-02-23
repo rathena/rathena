@@ -20,6 +20,7 @@
 
 ========================
 02/23
+	* Official Aegis names for cards [Playtester]
 	* Updated Box of thunder to use "agi up" effect for 30 secs instead of NPC
 	  Agi Up for 20. [Skotlex]
 	* Added and fixed some etc items [Playtester]
