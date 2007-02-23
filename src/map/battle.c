@@ -1377,6 +1377,9 @@ static struct Damage battle_calc_weapon_attack(
 				case AS_SONICBLOW:
 					skillratio += -50+5*skill_lv;
 					break;
+				case AS_VENOMKNIFE:
+					flag.cardfix = 0;
+					break;
 				case TF_SPRINKLESAND:
 					skillratio += 30;
 					break;
@@ -1639,7 +1642,8 @@ static struct Damage battle_calc_weapon_attack(
 
 			if(sc->data[SC_EDP].timer != -1 &&
 			  	skill_num != ASC_BREAKER &&
-				skill_num != ASC_METEORASSAULT)
+				skill_num != ASC_METEORASSAULT &&
+				skill_num != AS_VENOMKNIFE)
 				ATK_ADDRATE(sc->data[SC_EDP].val3);
 		}
 

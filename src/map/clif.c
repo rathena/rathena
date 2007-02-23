@@ -8489,8 +8489,10 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd) {
 	if (!bl) return;
 
 	sc = status_get_sc(bl);
-	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) && pc_isGM(sd) < battle_config.hack_info_GM_level)
-	{
+	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl) &&
+		bl->type != BL_NPC && //Skip hidden NPCs which can be seen using Maya Purple
+		pc_isGM(sd) < battle_config.hack_info_GM_level
+	) {
 		//GM characters (with client side GM enabled are able to see invisible stuff) [Lance]
 		//Asked name of invisible player, this shouldn't be possible!
 		//Possible bot? Thanks to veider and qspirit
@@ -9703,14 +9705,17 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
-		
+	
+	if(sd->menuskill_id)
+		return; //Can't use skills while a menu is open.
+	
 	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 		return;
 	}
-		
+
 	sd->skillitem = sd->skillitemlv = 0;
 	if (skillnum == MO_EXTREMITYFIST) {
 		if ((sd->sc.data[SC_COMBO].timer == -1 ||
@@ -9801,7 +9806,11 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
+	if(sd->menuskill_id)
+		return; //Can't use skills while a menu is open.
+
 	pc_delinvincibletimer(sd);
+
 	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
@@ -9864,6 +9873,9 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
 		return;
 	
+	if(sd->menuskill_id && sd->menuskill_id != RFIFOW(fd,2))
+		return; //Can't use skills while a menu is open.
+
 	pc_delinvincibletimer(sd);
 
 	skill_castend_map(sd,RFIFOW(fd,2),(char*)RFIFOP(fd,4));

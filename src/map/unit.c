@@ -809,6 +809,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		//Target_id checking.
 		if(skillnotok(skill_num, sd)) // [MouseJstr]
 			return 0;
+
 		switch(skill_num)
 		{	//Check for skills that auto-select target
 		case MO_CHAINCOMBO:

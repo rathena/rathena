@@ -12936,16 +12936,13 @@ BUILDIN_FUNC(getvariableofnpc)
 			st->state = END;
 			return 1;
 		}
-		else if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
+		if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
 		{// NPC not found or has no script
 			ShowError("script: getvariableofnpc: can't find npc %s\n", npc_name);
 			st->state = END;
 			return 1;
 		}
-		else
-		{// push variable reference
-			push_val2(st->stack, C_NAME, num, &nd->u.scr.script->script_vars );
-		}
+		push_val2(st->stack, C_NAME, num, &nd->u.scr.script->script_vars );
 	}
 	return 0;
 }

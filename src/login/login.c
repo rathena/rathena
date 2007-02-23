@@ -3031,7 +3031,7 @@ int parse_admin(int fd) {
 int lan_subnetcheck(long *p) {
 
 	int i;
-	unsigned char *sbn, *msk, *src = (unsigned char *)p;
+	unsigned char *sbn, *msk/*, *src = (unsigned char *)p*/;
 	
 	for(i=0; i<subnet_count; i++) {
 	

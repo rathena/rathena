@@ -329,7 +329,7 @@ moment - if you need that, try it and tell us of the results.
 
 ** Define a 'floating' NPC object.
 
--%TAB%script%TAB%-1,{<code>}
+-%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
 
 This will define an NPC object not triggerable by normal means. This would 
 normally mean it's pointless since it can't do anything, but there are 

@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/02/24
+	* Adjusted menu-based skills so you can't reuse the same skill until you've
+	  dealt with the menu.
+	* Adjust autospells so that removing an autospell works when the script of
+	  the card that removes the autospell is triggered before the script that
+	  adds the spell.
+	* The "requested name of gm-hidden char" warning will not be displayed when
+	  the object in question is an NPC (since you can use Intravision to do
+	  this).
+	* Venom Knife no longer takes into accounts cards or EDP.
 2007/02/23
 	* Guild expulsion now will fail when the character to be kicked is in a
 	  guild castle (rather than checking for the character doing the expulsion)
