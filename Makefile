@@ -42,6 +42,7 @@ OPT += -Wall -Wno-sign-compare
 # LIBS += -L/usr/local/lib -lpcre
 
 PLATFORM = $(shell uname)
+ARCH = $(shell uname -m)
 
 ifeq ($(findstring Linux,$(PLATFORM)), Linux)
    LIBS += -ldl
@@ -71,6 +72,10 @@ ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
    else
       OS_TYPE = -DCYGWIN
    endif
+endif
+
+ifeq ($(findstring x86_64,$(ARCH)), x86_64)
+    OPT += -m32
 endif
 
 CFLAGS = $(OPT) -I../common $(OS_TYPE)
