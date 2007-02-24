@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.02.20070209
+//= 3.03.20070226
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -63,6 +63,8 @@
 //=       Expanded/clarified information on npc timers, added info about the
 //=       new attach flag for script commands startnpctimer/ stopnpctimer/ 
 //=       initnpctimer [Skotlex]
+//= 3.03.20070226
+//=       Updated makeitem and how to include " in strings [Lupus]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -577,6 +579,10 @@ or a function to set something, it's usually preferable to use that instead. The
 notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of zeny.
 
+Strings
+-------
+
+To include symbol '"' in a string you should use prefix '\"'
 
 
 Arrays
@@ -2354,7 +2360,7 @@ when you want to check item cards or if it's signed. Useful for such quests as
 	
 --------------------------------------
 
-* getitemslots (<item id>);
+*getitemslots (<item id>);
 
 Returns the amount of slots the item has.
 
@@ -3704,7 +3710,7 @@ Example:
 	}
 
 ---------------------------------------
-
+!!!!!!!!!!!!!!!
 *makeitem <item id>,<amount>,<X>,<Y>,"<map name>";
 *makeitem "<item name>",<amount>,<X>,<Y>,"<map name>";
 
@@ -3720,6 +3726,7 @@ specified location.
 This item will still disappear just like any other dropped item. Like 'getitem', 
 it also accepts an 'english name' field from the database and creates apples if 
 the name isn't found.
+If the map name is given as "this", the map the invoking character is on will be used.
 
 ---------------------------------------
 
