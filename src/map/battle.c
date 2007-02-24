@@ -2580,8 +2580,8 @@ struct Damage  battle_calc_misc_attack(
 	
 	if (!(nk&NK_IGNORE_FLEE))
 	{
-		i = 0; //Temp for "hit or no hit"
 		struct status_change *sc = status_get_sc(target);
+		i = 0; //Temp for "hit or no hit"
 		if(sc && sc->opt1 && sc->opt1 != OPT1_STONEWAIT)
 			i = 1;
 		else {
