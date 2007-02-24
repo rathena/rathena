@@ -201,12 +201,43 @@ int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
 
 enum c_op {
-	C_NOP,C_POS,C_INT,C_PARAM,C_FUNC,C_STR,C_CONSTSTR,C_ARG,
-	C_NAME,C_EOL, C_RETINFO,
-	C_USERFUNC, C_USERFUNC_POS, // user defined functions
+	C_NOP,
+	C_POS,
+	C_INT, // number
+	C_PARAM, // parameter variable (see pc_readparam/pc_setparam)
+	C_FUNC, // buildin function call
+	C_STR, // string (free'd automatically)
+	C_CONSTSTR, // string (not free'd)
+	C_ARG, // start of argument list
+	C_NAME,
+	C_EOL, // end of line (extra stack values are cleared)
+	C_RETINFO,
+	C_USERFUNC, // internal script function
+	C_USERFUNC_POS, // internal script function label
 
-	C_OP3,C_LOR,C_LAND,C_LE,C_LT,C_GE,C_GT,C_EQ,C_NE,   //operator
-	C_XOR,C_OR,C_AND,C_ADD,C_SUB,C_MUL,C_DIV,C_MOD,C_NEG,C_LNOT,C_NOT,C_R_SHIFT,C_L_SHIFT
+	// operators
+	C_OP3, // a ? b : c
+	C_LOR, // a || b
+	C_LAND, // a && b
+	C_LE, // a <= b
+	C_LT, // a < b
+	C_GE, // a >= b
+	C_GT, // a > b
+	C_EQ, // a == b
+	C_NE, // a != b
+	C_XOR, // a ^ b
+	C_OR, // a | b
+	C_AND, // a & b
+	C_ADD, // a + b
+	C_SUB, // a - b
+	C_MUL, // a * b
+	C_DIV, // a / b
+	C_MOD, // a % b
+	C_NEG, // - a
+	C_LNOT, // ! a
+	C_NOT, // ~ a
+	C_R_SHIFT, // a << b
+	C_L_SHIFT // a >> b
 };
 
 enum {
@@ -981,7 +1012,8 @@ const char* parse_curly_close(const char* p) {
 // 構文関連の処理
 //	 break, case, continue, default, do, for, function,
 //	 if, switch, while をこの内部で処理します。
-const char* parse_syntax(const char* p) {
+const char* parse_syntax(const char* p)
+{
 	const char *p2 = skip_word(p);
 
 	switch(*p) {
@@ -1264,43 +1296,47 @@ const char* parse_syntax(const char* p) {
 			l=add_str(label);
 			set_label(l,script_pos,p);
 			return p;
-		} else if(p2 - p == 8 && !strncasecmp(p,"function",8)) {
+		}
+		else if( p2 - p == 8 && strncasecmp(p,"function",8) == 0 )
+		{// internal script function
 			const char *func_name;
-			// function
-			p=skip_space(p2);
-			if(p == p2)
-				disp_error_message("parse_syntax: expect space ' '",p);
-			// function - name
-			func_name = p;
-			p=skip_word(p);
-			if(*skip_space(p) == ';') {
-				// 関数の宣言 - 名前を登録して終わり
+
+			func_name = skip_space(p2);
+			p = skip_word(func_name);
+			if( p == func_name )
+				disp_error_message("parse_syntax:function: function name is missing or invalid", p);
+			if( *skip_space(p) == ';' )
+			{// function <name> ;
+				// function declaration - just register the name
 				int l;
-				l=add_word(func_name);
-				if(str_data[l].type == C_NOP)
+				l = add_word(func_name);
+				if( str_data[l].type == C_NOP )//## ??? [FlavioJS]
 					str_data[l].type = C_USERFUNC;
 				return skip_space(p) + 1;
-			} else {
-				// 関数の中身
+			}
+			else
+			{// function <name> <line/block of code>
 				char label[256];
 				int l;
+
 				syntax.curly[syntax.curly_count].type  = TYPE_USERFUNC;
 				syntax.curly[syntax.curly_count].count = 1;
 				syntax.curly[syntax.curly_count].index = syntax.index++;
 				syntax.curly[syntax.curly_count].flag  = 0;
-				syntax.curly_count++;
+				++syntax.curly_count;
 
-				// 関数終了まで飛ばす
-				sprintf(label,"goto __FN%x_FIN;",syntax.curly[syntax.curly_count-1].index);
-				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
+				// Jump over the function code
+				sprintf(label, "goto __FN%x_FIN;", syntax.curly[syntax.curly_count-1].index);
+				syntax.curly[syntax.curly_count].type = TYPE_NULL;
+				++syntax.curly_count;
 				parse_line(label);
-				syntax.curly_count--;
+				--syntax.curly_count;
 
-				// 関数名のラベルを付ける
+				// Set the position of the function (label)
 				l=add_word(func_name);
-				if(str_data[l].type == C_NOP)
+				if( str_data[l].type == C_NOP )//## ??? [FlavioJS]
 					str_data[l].type = C_USERFUNC;
-				set_label(l,script_pos,p);
+				set_label(l, script_pos, p);
 				if( parse_options&SCRIPT_USE_LABEL_DB )
 					strdb_put(scriptlabel_db, GETSTRING(str_data[l].str), (void*)script_pos);
 				return skip_space(p);
