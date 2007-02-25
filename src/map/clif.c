@@ -1960,10 +1960,9 @@ int clif_scriptinputstr(struct map_session_data *sd, int npcid) {
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
+/// npc_id is ignored in the client
+/// type=2     : Remove viewpoint
+/// type=other : Show viewpoint
 int clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, int y, int id, int color) {
 	int fd;
 
@@ -2928,10 +2927,13 @@ int clif_arrowequip(struct map_session_data *sd,int val)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
+/// Ammunition action message.
+/// type=0 : MsgStringTable[242]="Please equip the proper ammunition first."
+/// type=1 : MsgStringTable[243]="You can't Attack or use Skills because your Weight Limit has been exceeded."
+/// type=2 : MsgStringTable[244]="You can't use Skills because Weight Limit has been exceeded."
+/// type=3 : assassin, baby_assassin, assassin_cross => MsgStringTable[1040]="You have equipped throwing daggers."
+///          gunslinger => MsgStringTable[1175]="Bullets have been equipped."
+///          NOT ninja => MsgStringTable[245]="Ammunition has been equipped."
 int clif_arrow_fail(struct map_session_data *sd,int type)
 {
 	int fd;
@@ -9589,7 +9591,7 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 		(type == 2 && sd->status.base_level <= 40) ||
 		pc_setcart(sd,type) )
 	{
-		LOG_SUSPICIOUS(sd,"clif_parse_ChangeCart: player doesn't have the required level");
+		LOG_SUSPICIOUS(sd,"clif_parse_ChangeCart");
 	}
 }
 
@@ -11282,8 +11284,11 @@ void clif_friendslist_send(struct map_session_data *sd) {
 	}
 }
 
-
-// Status for adding friend - 0: successfull 1: not exist/rejected 2: over limit
+/// Reply for add friend request: (success => type 0)
+/// type=0 : MsgStringTable[821]="You have become friends with (%s)."
+/// type=1 : MsgStringTable[822]="(%s) does not want to be friends with you."
+/// type=2 : MsgStringTable[819]="Your Friend List is full."
+/// type=3 : MsgStringTable[820]="(%s)'s Friend List is full."
 void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_data *f_sd, int type)
 {
 	int fd;

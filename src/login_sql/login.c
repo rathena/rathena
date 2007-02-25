@@ -1444,15 +1444,14 @@ int parse_fromchar(int fd){
 int lan_subnetcheck(long p) {
 
 	int i;
-	unsigned char *sbn, *msk, *src = (unsigned char *)&p;
+	//unsigned char *sbn, *msk, *src = (unsigned char *)&p;
 
 	for(i=0; i<subnet_count; i++) {
 
 		if(subnet[i].subnet == (p & subnet[i].mask)) {
-
+/*
 			sbn = (unsigned char *)&subnet[i].subnet;
 			msk = (unsigned char *)&subnet[i].mask;
-/*
 			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
 				src[0], src[1], src[2], src[3], sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
 */

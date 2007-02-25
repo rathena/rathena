@@ -236,8 +236,8 @@ enum c_op {
 	C_NEG, // - a
 	C_LNOT, // ! a
 	C_NOT, // ~ a
-	C_R_SHIFT, // a << b
-	C_L_SHIFT // a >> b
+	C_R_SHIFT, // a >> b
+	C_L_SHIFT // a << b
 };
 
 enum {
@@ -567,76 +567,90 @@ void set_label(int l,int pos, const char* script_pos)
 	}
 }
 
-/*==========================================
- * スペース/コメント読み飛ばし
- *------------------------------------------
- */
-static const char *skip_space(const char *p)
+/// Skips spaces and/or comments.
+static
+const char* skip_space(const char* p)
 {
-	for(;;){
-		while(ISSPACE(*p))
+	for(;;)
+	{
+		while( ISSPACE(*p) )
 			++p;
-		if( *p=='/' && p[1]=='/' ){
+		if( *p == '/' && p[1] == '/' )
+		{// line comment
 			while(*p && *p!='\n')
 				++p;
-		} else if( *p=='/' && p[1]=='*' ){
-			p+=2;
-			if(*p) ++p;
-			while( *p && (p[-1]!='*' || *p!='/') )
-				p++;
-			if(*p)
-				++p;
-			else
-				disp_error_message("skip_space: unexpected eof @ block comment",p);
-		} else
+		}
+		else if( *p == '/' && p[1] == '*' )
+		{// block comment
+			p += 2;
+			for(;;)
+			{
+				if( *p == '\0' )
+					disp_error_message("script:skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+				if( *p == '*' || p[1] == '/' )
+				{// end of block comment
+					p += 2;
+					break;
+				}
+			}
+		}
+		else
 			break;
 	}
 	return p;
 }
 
-/*==========================================
- * １単語スキップ
- *------------------------------------------
- */
-static const char *skip_word(const char *p)
+/// Skips a word.
+/// A word consists of undercores and/or alfanumeric characters,
+/// and valid variable prefixes/postfixes.
+static
+const char* skip_word(const char* p)
 {
 	// prefix
-	if(*p=='.') p++;
-	if(*p=='$') p++;	// MAP鯖内共有変数用
-	if(*p=='@') p++;	// 一時的変数用(like weiss)
-	if(*p=='#') p++;	// account変数用
-	if(*p=='#') p++;	// ワールドaccount変数用
+	switch( *p )
+	{
+	case '@':// temporary char variable
+		++p; break;
+	case '#':// account variable
+		p += ( p[1] == '#' ? 2 : 1 ); break;
+	case '.':// npc variable
+		p += ( p[1] == '@' ? 2 : 1 ); break;
+	case '$':// global variable
+		p += ( p[1] == '@' ? 2 : 1 ); break;
+	}
 
-	//# Changing from unsigned char to signed char makes p never be able to go above 0x81, but what IS 0x81 for? [Skotlex]
-	//# It's for multibyte encodings like Shift-JIS. Unfortunately this can be problematic for singlebyte encodings.
-	//  Using (*p)>>7 would yield the appropriate result but it's better to restrict words to ASCII characters only. [FlavioJS]
 	while( ISALNUM(*p) || *p == '_' )
 		++p;
+
 	// postfix
-	if(*p=='$') p++;	// 文字列変数
+	if( *p == '$' )// string
+		p++;
 
 	return p;
 }
 
-/// Adds a word to str_data
-int add_word(const char *p)
+/// Adds a word to str_data.
+/// @see skip_word
+/// @see add_str
+static
+int add_word(const char* p)
 {
-	char *word;
+	char* word;
 	int len;
 	int i;
 
 	// Check for a word
-	len = skip_word(p)-p;
+	len = skip_word(p) - p;
 	if( len == 0 )
-		disp_error_message("add_word: not a word",p);
+		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alfanumeric characters, and valid variable prefixes/postfixes.", p);
 
-	// Copy the word
-	CREATE(word,char,len+1);
-	memcpy(word,p,len);
-	word[len]=0;
+	// Duplicate the word
+	CREATE(word, char, len+1);
+	memcpy(word, p, len);
+	word[len] = 0;
 	
 	// add the word
-	i=add_str(word);
+	i = add_str(word);
 	aFree(word);
 	return i;
 }
@@ -644,7 +658,8 @@ int add_word(const char *p)
 /// Parses a function call.
 /// The argument list can have parenthesis or not.
 /// The number of arguments is checked.
-static const char* parse_callfunc(const char *p, int require_paren)
+static
+const char* parse_callfunc(const char* p, int require_paren)
 {
 	const char* p2;
 	const char* arg=NULL;
