@@ -988,7 +988,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			|| (sc->data[SC_AUTOCOUNTER].timer != -1 && !flag)
 			|| (sc->data[SC_GOSPEL].timer != -1 && sc->data[SC_GOSPEL].val4 == BCT_SELF && skill_num != PA_GOSPEL)
 			|| (sc->data[SC_GRAVITATION].timer != -1 && sc->data[SC_GRAVITATION].val3 == BCT_SELF && skill_num != HW_GRAVITATION)
-			|| (sc->data[SC_CLOAKING].timer != -1 && sc->data[SC_CLOAKING].val1 < 3 && skill_num != AS_CLOAKING)
+//			|| (sc->data[SC_CLOAKING].timer != -1 && sc->data[SC_CLOAKING].val1 < 3 && skill_num != AS_CLOAKING) //Official sites say it blocks attack/skill usage, ingame proof says it does not.
 		)
 			return 0;
 
@@ -6628,7 +6628,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_STONE:
-		if(sc->opt1 == OPT1_STONEWAIT) {
+		if(sc->opt1 == OPT1_STONEWAIT && sc->data[type].val3) {
 			sc->data[type].val4 = 0;
 			unit_stop_walking(bl,1);
 			sc->opt1 = OPT1_STONE;

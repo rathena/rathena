@@ -86,6 +86,8 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_load(int nameid);
 struct item_data* itemdb_search(int nameid);
 struct item_data* itemdb_exists(int nameid);
+#define itemdb_name(n) itemdb_search(n)->name
+#define itemdb_jname(n) itemdb_search(n)->jname
 #define itemdb_type(n) itemdb_search(n)->type
 #define itemdb_atk(n) itemdb_search(n)->atk
 #define itemdb_def(n) itemdb_search(n)->def

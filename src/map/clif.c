@@ -9707,8 +9707,12 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 		target_id = sd->bl.id;
 	
 	if(sd->menuskill_id)
-		return; //Can't use skills while a menu is open.
-	
+	{
+		if (sd->menuskill_id == SA_TAMINGMONSTER)
+			sd->menuskill_id = sd->menuskill_lv = 0; //Cancel pet capture.
+		else
+			return; //Can't use skills while a menu is open.
+	}
 	if (sd->skillitem == skillnum) {
 		if (skilllv != sd->skillitemlv)
 			skilllv = sd->skillitemlv;
@@ -9807,7 +9811,12 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 		return;
 	
 	if(sd->menuskill_id)
-		return; //Can't use skills while a menu is open.
+	{
+		if (sd->menuskill_id == SA_TAMINGMONSTER)
+			sd->menuskill_id = sd->menuskill_lv = 0; //Cancel pet capture.
+		else
+			return; //Can't use skills while a menu is open.
+	}
 
 	pc_delinvincibletimer(sd);
 
