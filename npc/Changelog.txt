@@ -29,6 +29,7 @@ Date		Added
 2007/02/27
 	* Added alternate bonus item to Alchemist Quest, thanks to b3nn0 [Lupus]
 	- Made Dancer Quest bonus item to be give as in other quests
+	- Updated Deviruchi-divorcer (we can't divorce offline chars..) + added proper effects
 2007/02/22
 	* Added official Hugel Cool Event Corp. Staff, thanks to Gepard [Lupus]
 2007/02/21

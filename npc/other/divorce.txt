@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Perkka, Scriptor, LightFighter
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1 +
 //===== Description: ========================================= 
@@ -11,19 +11,19 @@
 //===== Additional Comments: ================================= 
 //= Both players should be online to get divorced
 //= Fixed menu [Lupus]
+//= 1.1 Added check if the patner's online, added effects [Lupus]
 //============================================================ 
 
 
 nif_in.gat,190,112,5	script	Deviruchi#divorce	1109,{
+	mes "[Deviruchi]";
 	if (getpartnerid() == 0) {
-		mes "[Deviruchi]";
 		mes "Kekeke, humans are always alone in the end,";
 		mes "The feeling of lonely is just temporarily.";
 		mes "If you feel lonely, how about getting a pet?";
 		mes "I, the Deviruchi is quite popular recently, you know...";
 		close;
 	}
-	mes "[Deviruchi]";
 	mes "You don't look good...";
 	mes "Anything that you have done that makes you feel regret now?";
 	mes "You must know that I am not willing to help happy people.";
@@ -85,28 +85,32 @@ M_NewLife:
 	close;
 
 M_Divorce:
-	if (Zeny < 2500000) goto NoMoney;
-	set Zeny, Zeny - 2500000;
 	mes "[Deviruchi]";
+	if (!isloggedin(getpartnerid())) {
+		mes "Kekeke, humans are so stupid,";
+		mes "Your lover should be online... Kekeke";
+		emotion e_heh;
+		close;
+	}
+	if (Zeny < 2500000){
+		mes "Haven't I said 2,500,000 zeny?";
+		mes "This is the payment for Deviruchi to help you.";
+		mes "If you don't even have that money,";
+		mes "you can rot with that married life of yours... kekeke";
+		close;
+	}
+	set Zeny, Zeny - 2500000;
 	mes "Before you change your mind again, I will proceed with your divorce now!!";
 	mes "It might take some time...";
 	mes "So don't go away, and stay here!";
 	next;
-	//ShowEffect "Deviruchi#Divorce" EF_MAGICROD   Don't know, what to do here >.>
-	//ShowEffect "" EF_DEVIL		       same
-	percentheal -100,-100;
+	specialeffect 244;	//EF_MAGICROD
+	specialeffect2 259;	//EF_DEVIL (now use a custom id)
 	divorce;
+	percentheal -100,-100;
 	mes "[Deviruchi]";
 	mes "Kekeke, you are free now!";
 	mes "Throw away all your sinking feelings!";
 	mes "You should thank Deviruchi.....!";
-	close;
-
-NoMoney:
-	mes "[Deviruchi]";
-	mes "Haven't I said 2,500,000 zeny?";
-	mes "This is the payment for Deviruchi to help you.";
-	mes "If you don't even have that money,";
-	mes "you can rot with that married life of yours... kekeke";
 	close;
 }
