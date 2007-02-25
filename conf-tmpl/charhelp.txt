@@ -24,4 +24,3 @@
  60:#undisguise <char name> - Cancels disguise of a player
  60:#changesex <name> - Changes sex of a player (all characters of the account)
  60:#warp/#rura+ <mapname> <x> <y> <char name> - Warps character to location of choice
-1

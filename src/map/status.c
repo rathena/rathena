@@ -3656,7 +3656,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed += 300;
 
 	if(sc->data[SC_GATLINGFEVER].timer==-1)
-	{	//% increases (they don't stack, with a few exception)
+	{	//% increases (they don't stack, with a few exceptions)
 		if(sc->data[SC_SPEEDUP1].timer!=-1)
 			speed -= speed * 50/100;
 		else if(sc->data[SC_AVOID].timer!=-1)

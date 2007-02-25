@@ -3,33 +3,38 @@
 - Explanation of the item_db.txt file and structure.
 
 ID: Item id
-JName: Server name to reference the item in scripts and lookups, should use no
-spaces.
+
+AegisName: Server name to reference the item in scripts and lookups,
+           should use no spaces.
 
 Name: Name in english for displaying as output for @ and script commands.
 
 Type: 
-	0 Healing item.
-	2 Usable item.
-	3 Etc item
-	4 Weapon
-	5 Armor/Garment/Boots/Headgear
-	6 Card
-	7 Pet egg
-	8 Pet equipment
-	10 Ammo (Arrows/Bullets/etc)
-	11 Usable with delayed consumption (item is lost from inventory after
-		selecting a target, for use with skills and pet lures)
+	0	Healing item.
+	2	Usable item.
+	3	Etc item
+	4	Weapon
+	5	Armor/Garment/Boots/Headgear
+	6	Card
+	7	Pet egg
+	8	Pet equipment
+	10	Ammo (Arrows/Bullets/etc)
+	11	Usable with delayed consumption (item is lost from inventory
+		after selecting a target, for use with skills and pet lures)
 
-Price: Default buying price. When not specified, becomes double the sell price.
-Sell: Default buying price. When not specified, becomes half the buy price.
+Buy: Default buying price. When not specified, becomes double the sell price.
+
+Sell: Default selling price. When not specified, becomes half the buy price.
 
 Weight: Item's weight. Each 10 is 1 weight.
 
 ATK: Weapon's attack
+
 DEF: Armor's defense
+
 Range: Weapon's attack range
-Slot: Amount of slots item possesses.
+
+Slots: Amount of slots the item possesses.
 
 Job: Equippable jobs. Uses the following bitmask table:
 
@@ -81,12 +86,14 @@ Loc: Equipment's placement. Values are:
 	2^7 128 = Accessory 2
 
 wLV: Weapon level.
+
 eLV: Base level required to be able to equip.
+
 Refineable: 1 if the item can be refined, 0 otherwise.
 
 View: For normal items, defines a replacement view-sprite for the item (eg:
-	Making apples look like apple juice). The special case are weapons and ammo
-	where this value indicates the weapon-class of the item.
+      Making apples look like apple juice). The special case are weapons
+      and ammo where this value indicates the weapon-class of the item.
 
 	For weapons, the types are:
 		0: bare fist
@@ -123,3 +130,9 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		7: Kunais
 
 Script: Script to execute when the item is used/equipped.
+
+OnEquip_Script: Script to execute when the item is equipped.
+                Warning, not all item bonuses will work here as expected.
+
+OnUnequip_Script: Script to execute when the item is unequipped.
+                  Warning, not all item bonuses will work here as expected.

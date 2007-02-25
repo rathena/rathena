@@ -5075,41 +5075,42 @@ BUILDIN_FUNC(copyarray)
 	}
 	return 0;
 }
+
 /*==========================================
- * 配列変数のサイズ所得
- *------------------------------------------
- */
-static int getarraysize(struct script_state *st,int num,int postfix,struct linkdb_node** ref)
+ * Returns the size of the specified array
+ *------------------------------------------*/
+static int getarraysize(struct script_state* st, int num, int postfix, struct linkdb_node** ref)
 {
-	int i=(num>>24),c=(i==0? -1:i); // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
-	if(postfix == '$'){
-		for(;i<128;i++){
-			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24),ref);
-			if(*((char*)v)) c=i;
+	//TODO: unreadable; remove +-1 trick, remove weird for loop, remove typecast
+	int i = (num>>24), c = (i==0?-1:i); // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
+	
+	if(postfix == '$') {
+		for(; i < 128; i++) {
+			void* v = get_val2(st, (num & 0x00FFFFFF) + (i<<24), ref);
+			if(*((char*)v)) c = i;
 		}
-	}else{
-		for(;i<128;i++){
-			void *v=get_val2(st,(num & 0x00FFFFFF)+(i<<24),ref);
-			if((int)v) c=i;
+	} else {
+		for(; i < 128; i++) {
+			void* v = get_val2(st, (num & 0x00FFFFFF) + (i<<24), ref);
+			if((int)v) c = i;
 		}
 	}
-	return c+1;
+	return c + 1;
 }
 
 BUILDIN_FUNC(getarraysize)
 {
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
+	int num = st->stack->stack_data[st->start+2].u.num;
+	char* name = str_buf + str_data[num&0x00ffffff].str;
+	char prefix = name[0], postfix = name[strlen(name)-1];
 
-	if( prefix!='$' && prefix!='@' && prefix!='.' ){
-		ShowWarning("buildin_copyarray: illegal scope !\n");
-		push_val(st->stack,C_INT,0);
+	if( prefix != '$' && prefix != '@' && prefix != '.' ) {
+		ShowWarning("buildin_getarraysize: illegal scope !\n");
+		push_val(st->stack, C_INT, 0);
 		return 1;
 	}
 
-	push_val(st->stack,C_INT,getarraysize(st,num,postfix,st->stack->stack_data[st->start+2].ref));
+	push_val(st->stack, C_INT, getarraysize(st, num, postfix, st->stack->stack_data[st->start+2].ref));
 	return 0;
 }
 /*==========================================
@@ -6146,7 +6147,7 @@ BUILDIN_FUNC(strcharinfo)
 	num=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	switch(num){
 		case 0:
-			push_str(st->stack,C_CONSTSTR,sd->status.name);
+			push_str(st->stack,C_STR,aStrdup(sd->status.name));
 			break;
 		case 1:
 			buf=buildin_getpartyname_sub(sd->status.party_id);

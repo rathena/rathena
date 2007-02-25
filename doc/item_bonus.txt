@@ -77,7 +77,6 @@ bonus bDefEle,n;				Gives the player's defense element n
 bonus bSplashRange n;			Splash attack radius + n (e.g. n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc | only the highest among all is applied)
 bonus bSplashAddRange n;		Splash attack radius + n (e.g. n=1 makes a 3*3 cells area, n=2 a 5*5 area, etc)
 
-bonus bInfiniteEndure,n;		Unlimited Endure effect, n is meaningless 
 bonus bRestartFullRecover,n;		When reviving, HP and SP are fully filled (n is meaningless)
 bonus bNoCastCancel,n;			Prevents casting from being interrupted when hit (does not work in GvG | n is meaningless)
 bonus bNoCastCancel2,n;			Prevents casting from being interrupted when hit (works even in GvG | n is meaningless)

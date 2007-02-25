@@ -2001,7 +2001,7 @@ Possible types are:
 	   current level if leader leveled up recently).
 
 If retrieval fails (leader not found or party does not exist), this function
-returns "null" instead of the character name, and -1 is for the other types.
+returns "null" instead of the character name, and -1 for the other types.
 
 ---------------------------------------
 
