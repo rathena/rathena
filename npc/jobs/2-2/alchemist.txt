@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
 //= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
+//= 2.4 Added alternative prizes according to JobLevel [Lupus]
 //============================================================ 
 
 
@@ -128,6 +129,7 @@ L_Start:
 		mes "[Parmry Gianino]";
 		mes "When you come back I will also collect the ^5533FF50,000^000000 zeny fee so don't forget about that either.";
 		mes "See you soon...";
+		set JBLVL, JobLevel; // used to determine what item to get at the end
 		set ALCH_Q,1;
 		close;
 L_LowLvl:
@@ -304,7 +306,7 @@ L_Start:
 		mes "Muffler, Boots, and Ear Muffs?";
 		next;
 		input @num;
-		if(@num == 19) set @score,@score+10;
+		if(@num == 20) set @score,@score+10;
 	q8:	
 		mes "[Rasputin Gregory]";
 		mes "If you buy 5 Helms with a 24%";
@@ -1057,6 +1059,7 @@ L_Change:
 	}
 	mes "Oh, Ok. You joined and learned the basics, too. Well done.";
 	next;
+	set @gift,JBLVL;
 	callfunc "Job_Change",Job_Alchem;
 	callfunc "F_ClearJobVar";
 	emotion e_grat;
@@ -1064,7 +1067,10 @@ L_Change:
 	mes "From now on, you are also a member of the Union as an Alchemist.";
 	mes "I hope you learn a lot...";
 	next;
-	getitem 7127,1;
+	if(@gift==50)
+		getitem 7133,1;
+	else
+		getitem 7127,1;
 	mes "[Vincent Carsciallo]";
 	mes "Here's a little something. ";
 	mes "Use it to start off with some research.";

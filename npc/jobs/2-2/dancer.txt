@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= eAthena 9880+
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 2.5 Final fix of chrid issues, changed 'Improved
 //=	Concentration' to 'Attention Concentrate' [Lupus]
 //= 3.0 Some optimization, typos, added missing dialogues (4Kb lighter) [Lupus]
+//= 3.1 Implemented JOBLVL as in other quests [Lupus]
 //============================================================
 
 //= Warning Warp to escape the quest if need to
@@ -145,6 +146,7 @@ job_duncer.gat,43,93,4	script	Aire	724,{
 		next;
 		mes "[Aire]";
 		mes "When you have time for the next part of your journey talk to me again.";	
+		set JBLVL, JobLevel; // used to determine what item to get at the end
 		set DANC_Q,1;
 		close;
 
@@ -294,7 +296,7 @@ job_duncer.gat,95,93,4	script	Bijou	101,{
 		mes "[Bijou]";
 		mes "It will be your job to bring joy to all the people in Rune Midgard.";
 		next;
-		set @JobLevel,JobLevel;
+		set @gift,JBLVL;
 		mes "[Bijou]";
 		mes "Watch each time you dance from now on.";
 		next;
@@ -305,7 +307,7 @@ job_duncer.gat,95,93,4	script	Bijou	101,{
 		next;
 		mes "[Bijou]";
 		mes "This present is from me!";
-		if(@JobLevel==50) {
+		if(@gift==50) {
 			getitem 1953,1;
 			mes "Since you are very experienced I have given you a Line, instead of a simple Rope that normal people would get.";
 			mes "Now take you Line, and be the best Dancer you can be!";
