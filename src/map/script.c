@@ -592,6 +592,7 @@ const char* skip_space(const char* p)
 					p += 2;
 					break;
 				}
+				++p;
 			}
 		}
 		else
