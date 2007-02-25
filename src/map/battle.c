@@ -1367,10 +1367,8 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_DARKNESSATTACK:
 				case NPC_UNDEADATTACK:
 				case NPC_TELEKINESISATTACK:
-					skillratio += 100*(skill_lv-1);
-					break;
 				case NPC_BLOODDRAIN:
-					skillratio += 100*skill_lv;
+					skillratio += 100*(skill_lv-1);
 					break;
 				case RG_BACKSTAP:
 					if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)

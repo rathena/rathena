@@ -8034,7 +8034,6 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		return;
 	} else
 	{// packet version accepted
-		TBL_PC* old_sd;
 		struct block_list* bl;
 		if( (bl=map_id2bl(account_id)) != NULL && bl->type != BL_PC )
 		{// non-player object already has that id
@@ -8044,19 +8043,6 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 			WFIFOB(fd,2) = 3; // Rejected by server
 			WFIFOSET(fd,packet_len(0x6a));
 			clif_setwaitclose(fd);
-			return;
-		}
-		if( (old_sd=map_id2sd(account_id)) != NULL ){
-			// if same account already connected, we disconnect the 2 sessions
-			//Check for characters with no connection (includes those that are using autotrade) [durf],[Skotlex]
-			if (old_sd->state.finalsave || !old_sd->state.auth)
-				; //Previous player is not done loading.
-				//Or he has quit, but is not done saving on the charserver.
-			else if (old_sd->fd)
-				clif_authfail_fd(old_sd->fd, 2); // same id
-			else 
-				map_quit(old_sd);
-			clif_authfail_fd(fd, 8); // still recognizes last connection
 			return;
 		}
 	}
