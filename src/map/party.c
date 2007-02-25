@@ -21,6 +21,7 @@
 #include "log.h"
 #include "skill.h"
 #include "status.h"
+#include "itemdb.h"
 
 static DB party_db;
 int party_share_level = 10;
