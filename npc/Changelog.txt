@@ -26,6 +26,8 @@ KarLaeda
 
 Date		Added
 ======
+2007/02/28
+	* Fixed 2 questions in Rasputin's test, thanks to vvCC [Lupus]
 2007/02/27
 	* Added alternate bonus item to Alchemist Quest, thanks to b3nn0 [Lupus]
 	- Made Dancer Quest bonus item to be give as in other quests

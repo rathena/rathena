@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
 //= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
 //= 2.4 Added alternative prizes according to JobLevel [Lupus]
+//= 2.4a Fixed 2 wrong answers in Rasputin's test [Lupus]
 //============================================================ 
 
 
@@ -141,11 +142,11 @@ L_Check:
 	next;
 	mes "[Parmry Gianino]";
 	if(countitem(612) < 100) goto L_NoItems;
-	if(countitem(1005) > 0 && countitem(1006) > 0) goto L_Skip;
+	if(countitem(1005) && countitem(1006)) goto L_Skip;
 	if(zeny < 50000) goto L_NoZeny;
  	set zeny,zeny - 50000;
 	delitem 612, 100;
-	mes "You have 50,000 zeny...... You brought 100 mini furnaces.... Great!";
+	mes "You have 50,000 zeny...... You brought 100 Mini Furnaces.... Great!";
 	mes "Now you are ready to learn the basics of being an Alchemist.";
 	next;
 
@@ -172,7 +173,7 @@ L_Skip:
 	mes "That means you don't have to pay the membership fee.";
 	next;
 	mes "[Parmry Gianino]";
-	mes "Excellent.  Now I'll just take the Book, Hammer, 100 mini furnaces, and you'll be all set to learn the basics of being an Alchemist.";
+	mes "Excellent.  Now I'll just take the Book, Hammer, 100 Mini Furnaces, and you'll be all set to learn the basics of being an Alchemist.";
 	next;
 	delitem 1005,1;
 	delitem 1006,1;
@@ -310,12 +311,11 @@ L_Start:
 	q8:	
 		mes "[Rasputin Gregory]";
 		mes "If you buy 5 Helms with a 24%";
-		mes "discount ";
-		mes "and sell it at 20%, how much do you";
-		mes "earn?";
+		mes "discount and sell it at 20%,";
+		mes "how much do you earn?";
 		next;
 		input @num;
-		if(@num == 1760) set @score,@score+10;
+		if(@num == 8800) set @score,@score+10;
 		goto L_Total;
 
 L_ReTest:
@@ -406,9 +406,8 @@ L_ReTest:
 		mes "[Rasputin Gregory]";
 		mes "How much zeny do you make";
 		mes "if you buy Tights at a 24%";
-		mes "discount";
-		mes "and sell it at 20% of the normal";
-		mes "price?";
+		mes "discount and sell it at 20%";
+		mes "of the normal price?";
 		next;
 		input @num;
 		if(@num == 2840) set @score,@score+10;
