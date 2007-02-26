@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/27
+	* NPC_AGIUP now boosts flee by 100% and duration is 5+5*lv secs, as stated
+	  on the Ragnarok Bible.
+	* Fixed Soul Breaker's misc part not ignoring flee.
+	* Fixed misc attack's flee check being backwards (the less hit%, the more
+	  chance you had to connect)
+	* Corrected the range check in vending.c [Skotlex]
 	* Added map & distance check to vending to prevent WPE hacks. [Lupus]
 		E.g. buying items from WoE castle
 	* Fixed a compiler warning in char_sql\login.c

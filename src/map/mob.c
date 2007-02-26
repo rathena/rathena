@@ -46,6 +46,9 @@
 
 #define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
 
+//Used to determine default enemy type of mobs (for use in eachinrange calls)
+#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM)
+
 //Dynamic mob database, allows saving of memory when there's big gaps in the mob_db [Skotlex]
 struct mob_db *mob_db_data[MAX_MOB_DB+1];
 struct mob_db *mob_dummy = NULL;	//Dummy mob to be returned when a non-existant one is requested.
@@ -1199,13 +1202,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
 	{
 		map_foreachinrange (mob_ai_sub_hard_activesearch, &md->bl,
-			view_range, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM, md, &tbl);
+			view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl);
 	} else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
 	{
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl,
-				search_size, (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM), md, &tbl);
+				search_size, DEFAULT_ENEMY_TYPE(md), md, &tbl);
 	}
 
 	if (!tbl) { //No targets available.
@@ -2779,7 +2782,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			if (ms[i].target <= MST_AROUND) {
 				switch (ms[i].target) {
 					case MST_RANDOM: //Pick a random enemy within skill range.
-						bl = battle_getenemy(&md->bl, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM,
+						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
 							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
 						break;
 					case MST_TARGET:
@@ -2831,7 +2834,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				struct block_list *bl;
 				switch (ms[i].target) {
 					case MST_RANDOM: //Pick a random enemy within skill range.
-						bl = battle_getenemy(&md->bl, md->special_state.ai?BL_CHAR:BL_PC|BL_HOM,
+						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
 							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
 						break;
 					case MST_TARGET:

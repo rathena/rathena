@@ -70,7 +70,7 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 		return;
 	if (vsd->vender_id == sd->bl.id)
 		return;
-	if (sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, TRADE_DISTANCE)
+	if (sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE)
 	) {
 		clif_buyvending(sd, 0, 32767, 4); // too far [Lupus]
 		//probably... we should add either a hack log / or a proper message. But normal player won't see ie anyway

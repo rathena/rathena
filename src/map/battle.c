@@ -2571,6 +2571,7 @@ struct Damage  battle_calc_misc_attack(
 		break ;
 	case ASC_BREAKER:
 		md.damage = 500+rand()%500 + 5*skill_lv * sstatus->int_;
+		nk|=NK_IGNORE_FLEE; //Only Breaker's Misc part always hits.
 		break;
 	}
 	
@@ -2609,7 +2610,7 @@ struct Damage  battle_calc_misc_attack(
 			else if (hitrate < battle_config.min_hitrate)
 				hitrate = battle_config.min_hitrate;
 
-			if(rand()%100 >= hitrate)
+			if(rand()%100 < hitrate)
 				i = 1;
 		}
 		if (!i) {
