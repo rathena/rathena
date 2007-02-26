@@ -1076,7 +1076,6 @@ int chrif_disconnectplayer(int fd){
 
 		case 3: //server overpopulated
 			clif_authfail_fd(sd->fd, 4);
-
 		break;
 
 		case 4: //out of time payd for .. (avail)
@@ -1087,8 +1086,7 @@ int chrif_disconnectplayer(int fd){
 			clif_authfail_fd(sd->fd, 15);
 		break;
 	}
-
-return 0;
+	return 0;
 }
 
 /*==========================================

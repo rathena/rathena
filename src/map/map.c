@@ -1695,6 +1695,8 @@ int map_quit(struct map_session_data *sd) {
 			unit_remove_map(&sd->bl, 0);
 			if (sd->pd && sd->pd->bl.prev != NULL)
 				unit_remove_map(&sd->pd->bl, 0);
+			if (sd->hd && sd->hd->bl.prev != NULL)
+			  	unit_remove_map(&sd->hd->bl, 0);
 		}
 	}
 

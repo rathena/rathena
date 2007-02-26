@@ -4096,10 +4096,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		i = ((!md || md->special_state.ai == 2) && !map_flag_vs(src->m))?
 			BCT_ENEMY:BCT_ALL;
 		clif_skill_nodamage(src, src, skillid, -1, 1);
+		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
 		map_foreachinrange(skill_area_sub, bl,
 			skill_get_splash(skillid, skilllv), BL_CHAR,
 			src, skillid, skilllv, tick, flag|i,
 			skill_castend_damage_id);
+		map_addblock(src);
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
