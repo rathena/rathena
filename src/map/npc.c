@@ -598,7 +598,7 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
 	struct npc_timerevent_list *te;
 	struct timer_event_data *ted = (struct timer_event_data*)data;
 	struct map_session_data *sd=NULL;
-	
+
 	if( nd==NULL ){
 		ShowError("npc_timerevent: NPC not found??\n");
 		return 0;
@@ -743,6 +743,8 @@ int npc_timerevent_stop(struct npc_data *nd)
  */
 void npc_timerevent_quit(struct map_session_data *sd) {
 	struct TimerData *td;
+	struct npc_data* nd;
+	struct timer_event_data *ted;
 	if (sd->npc_timer_id == -1)
 		return;
 	td = get_timer(sd->npc_timer_id);
@@ -750,9 +752,43 @@ void npc_timerevent_quit(struct map_session_data *sd) {
 		sd->npc_timer_id = -1;
 		return; //??
 	}
-	delete_timer(sd->npc_timer_id,npc_timerevent);
+	nd = (struct npc_data *)map_id2bl(td->id);
+	ted = (struct timer_event_data*)td->data;
+	delete_timer(sd->npc_timer_id, npc_timerevent);
 	sd->npc_timer_id = -1;
-	ers_free(timer_event_ers, (struct event_timer_data*)td->data);
+	if (nd && nd->bl.type == BL_NPC)
+	{	//Execute OnTimerQuit
+		char buf[sizeof(nd->exname)+sizeof("::OnTimerQuit")+1];
+		struct event_data *ev;
+		sprintf(buf,"%s::OnTimerQuit",nd->exname);
+		ev = strdb_get(ev_db,(unsigned char*)buf);
+		if(ev && ev->nd != nd) {
+			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
+			ev = NULL;
+		}
+		if (ev) {
+			int old_rid,old_timer;
+			unsigned int old_tick;
+			//Set timer related info.
+			old_rid = nd->u.scr.rid;
+			nd->u.scr.rid = sd->bl.id;
+
+			old_tick = nd->u.scr.timertick;
+			nd->u.scr.timertick=ted->otick;
+
+			old_timer = nd->u.scr.timer;
+			nd->u.scr.timer=ted->time;
+		
+			//Execute label
+			run_script(nd->u.scr.script,ev->pos,sd->bl.id,nd->bl.id);
+
+			//Restore previous data.
+			nd->u.scr.rid = old_rid;
+			nd->u.scr.timer = old_timer;
+			nd->u.scr.timertick = old_tick;
+		}
+	}
+	ers_free(timer_event_ers, ted);
 }
 
 /*==========================================

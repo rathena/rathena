@@ -573,9 +573,9 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		return 1;
 	}
 
-	if( (old_sd=map_id2sd(sd->status.account_id)) != NULL ){
+	if( (old_sd=map_id2sd(st->account_id)) != NULL ){
 		if (old_sd->state.finalsave || !old_sd->state.auth)
-			; //Previous player is not done loading, No need to kick.
+			; //Previous player is not done loading/quiting, No need to kick.
 		else if (old_sd->fd)
 			clif_authfail_fd(old_sd->fd, 2); // same id
 		else 
@@ -583,14 +583,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_authfail_fd(sd->fd, 8); // still recognizes last connection
 		return 1;
 	}
-
-	if (map_id2sd(st->account_id) != NULL)
-	{	//Somehow a second connection has managed to go through the double-connection
-		//check in clif_parse_WantToConnection! [Skotlex]
-		clif_authfail_fd(sd->fd, 0);
-		return 1;
-	}
-
 	memcpy(&sd->status, st, sizeof(*st));
 
 	//Set the map-server used job id. [Skotlex]

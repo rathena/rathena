@@ -65,6 +65,8 @@
 //=       initnpctimer [Skotlex]
 //= 3.03.20070226
 //=       Updated makeitem and how to include " in strings [Lupus]
+//= 3.03.20070228
+//=       Added info on OnTimerQuit label to npctimer section. [Skotlex]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -4871,6 +4873,10 @@ The other method to attach/detach a RID is through the script commands
 'attachnpctimer' and 'detachnpctimer'. Once attached, that will make the
 character the target for all character-referencing commands and functions,
 not to mention variables.
+
+If the player that is attached to the npctimer logs out, the "OnTimerQuit:"
+event label of that npc will be triggered, so you can do the appropiate
+cleanup (the player is still attached when this event is triggered).
 
 'setnpctimer' will explicitly set the timer to a given tick. To make it useful, 
 you will need the 'getnpctimer' function, which the type of information argument 
