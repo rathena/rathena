@@ -509,10 +509,6 @@ void chrif_authok(int fd) {
 	struct auth_node *auth_data;
 	RFIFOHEAD(fd);
 	
-	if (map_id2sd(RFIFOL(fd, 4)) != NULL)
-	//Someone with this account is already in! Do not store the info to prevent possible sync exploits. [Skotlex]
-		return;
-	
 	if ((auth_data =uidb_get(auth_db, RFIFOL(fd, 4))) != NULL)
 	{	//Is the character already awaiting authorization?
 		if (auth_data->sd)
