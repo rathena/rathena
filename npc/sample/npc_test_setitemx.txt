@@ -1,0 +1,70 @@
+//by Lupus.
+// SVN TRUNK 9940+ only
+
+//setiteminfo(itemID,n,Value), where n
+//		0 value_buy;
+//		1 value_sell;
+//		2 type;
+//		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
+//				if = 0, then monsters don't drop it at all (rare or a quest item)
+//				if = 10000, then this item is sold in NPC shops only
+//		4 sex;
+//		5 equip;
+//		6 weight;
+//		7 atk;
+//		8 def;
+//		9 range;
+//		10 slot;
+//		11 look;
+//		12 elv;
+//		13 wlv;
+
+prontera.gat,164,161,5	script	Lupus	1013,{
+	menu "Make Knife[3] Edible",M_1,
+		"Make Apple Equippable",M_2,
+		"Edible Knife = Full SP",M_3,
+		"Knife = Weapon + 3 Notes",M_4;
+	close;
+
+M_1:
+	//WORKS!
+	mes "Ok. We Made Knife[3] Edible";
+	setiteminfo(1201,2,0); //type = 0 : potion
+	setitemscript(1201,"{dispbottom \"* You used Knife[3]\";}");
+	close;
+
+M_2:
+	//WORKS!
+	mes "Ok. We Made Apple Equippable";
+	//item type -> headgear
+	setiteminfo(512,2,5); //type = 5
+	//where to equip to
+	setiteminfo(512,5,512); //equip = 512
+	//set as headgear location
+	setiteminfo(512,11,256); //loc = 256
+	//set Headgear Sprite ID
+	setiteminfo(512,14,85); //view id = 85
+
+	setitemscript(512,"{dispbottom \"* Other item's changed\";}",0);
+	setitemscript(512,"{dispbottom \"* Equipped\";}",1);
+	setitemscript(512,"{dispbottom \"* Unequipped\";}",2);
+	close;
+
+M_3:
+	//WORKS!
+	mes "Ok. Now Edible Knife[3] restores your SP";
+	setitemscript(1201,2,0);
+	setitemscript(1201,"{dispbottom \"* You ate Knife[3] + Full SP\"; percentheal 0,100;}");
+	close;
+
+M_4:
+	//WORKS!
+	mes "Ok. We Made Knife... a weapon. But added 3 notes.";
+	setiteminfo(1201,2,4); //type = 4 : weapon again
+	setitemscript(1201,"{dispbottom \"* 1 Used\";}",0);
+	setitemscript(1201,"{dispbottom \"* 2 Equipped\";}",1);
+	setitemscript(1201,"{dispbottom \"* 3 Unequipped\";}",2);
+	close;
+
+}
+

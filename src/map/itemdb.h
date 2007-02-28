@@ -51,6 +51,7 @@ struct item_data {
 	int look;
 	int elv;
 	int wlv;
+	int view_id;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
@@ -73,7 +74,6 @@ struct item_data {
 		unsigned autoequip: 1;
 	} flag;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
-	int view_id;
 };
 
 struct item_group {

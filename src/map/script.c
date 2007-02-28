@@ -3793,6 +3793,7 @@ BUILDIN_FUNC(charisalpha);//isalpha [valaris]
 BUILDIN_FUNC(fakenpcname); // [Lance]
 BUILDIN_FUNC(compare); // Lordalfa, to bring strstr to Scripting Engine
 BUILDIN_FUNC(getiteminfo); //[Lupus] returns Items Buy / sell Price, etc info
+BUILDIN_FUNC(setiteminfo); //[Lupus] set Items Buy / sell Price, etc info
 BUILDIN_FUNC(getequipcardid); //[Lupus] returns card id from quipped item card slot N
 // [zBuffer] List of mathematics commands --->
 BUILDIN_FUNC(sqrt);
@@ -4130,6 +4131,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(fakenpcname,"ssi"), // [Lance]
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
+	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
 	BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
 	// [zBuffer] List of mathematics commands --->
 	BUILDIN_DEF(sqrt,"i"),
@@ -4151,7 +4153,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(autoequip,"ii"),
 	BUILDIN_DEF(setbattleflag,"ss"),
 	BUILDIN_DEF(getbattleflag,"s"),
-	BUILDIN_DEF(setitemscript,"is"), //Set NEW item bonus script. Lupus
+	BUILDIN_DEF(setitemscript,"is*"), //Set NEW item bonus script. Lupus
 	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
 	BUILDIN_DEF(undisguise,"*"), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
@@ -9882,6 +9884,7 @@ BUILDIN_FUNC(getitemslots)
 		11 look;
 		12 elv;
 		13 wlv;
+		14 view id
  *------------------------------------------
  */
 BUILDIN_FUNC(getiteminfo)
@@ -9897,6 +9900,50 @@ BUILDIN_FUNC(getiteminfo)
 	if (i_data && n>=0 && n<14) {
 		item_arr = (int*)&i_data->value_buy;
 		push_val(st->stack,C_INT,item_arr[n]);
+	} else
+		push_val(st->stack,C_INT,-1);
+	return 0;
+}
+
+/*==========================================
+ * Set some values of an item [Lupus]
+ * Price, Weight, etc...
+	setiteminfo(itemID,n,Value), where n
+		0 value_buy;
+		1 value_sell;
+		2 type;
+		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
+				if = 0, then monsters don't drop it at all (rare or a quest item)
+				if = 10000, then this item is sold in NPC shops only
+		4 sex;
+		5 equip;
+		6 weight;
+		7 atk;
+		8 def;
+		9 range;
+		10 slot;
+		11 look;
+		12 elv;
+		13 wlv;
+		14 view id
+  * Returns Value or -1 if the wrong field's been set
+ *------------------------------------------
+ */
+BUILDIN_FUNC(setiteminfo)
+{
+	int item_id,n,value;
+	int *item_arr;
+	struct item_data *i_data;
+
+	item_id	= conv_num(st,& (st->stack->stack_data[st->start+2]));
+	n	= conv_num(st,& (st->stack->stack_data[st->start+3]));
+	value	= conv_num(st,& (st->stack->stack_data[st->start+4]));
+	i_data = itemdb_exists(item_id);
+
+	if (i_data && n>=0 && n<14) {
+		item_arr = (int*)&i_data->value_buy;
+		item_arr[n] = value;
+		push_val(st->stack,C_INT,value);
 	} else
 		push_val(st->stack,C_INT,-1);
 	return 0;
@@ -12133,23 +12180,36 @@ BUILDIN_FUNC(npcshopattach)
 /*==========================================
  * Returns some values of an item [Lupus]
  * Price, Weight, etc...
-	setiteminfo(itemID,"{new item bonus script}");
+	setitemscript(itemID,"{new item bonus script}",[n]);
+   Where n:
+	0 - script
+	1 - Equip script
+	2 - Unequip script
  *------------------------------------------
  */
 BUILDIN_FUNC(setitemscript)
 {
-	int item_id;
+	int item_id,n=0;
 	char *script;
 	struct item_data *i_data;
+	struct script_code *dstscript;
 
 	item_id	= conv_num(st,& (st->stack->stack_data[st->start+2]));
 	script = conv_str(st,& (st->stack->stack_data[st->start+3]));
+	if( st->end>st->start+4 )
+		n=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	i_data = itemdb_exists(item_id);
 
-	if (i_data && script!=NULL && script[0]=='{') {
-		if(i_data->script!=NULL)
-			script_free_code(i_data->script);
-		i_data->script = parse_script(script, "script_setitemscript", 0, 0);
+	if (i_data && script!=NULL && script[0]=='{' && n<3) {
+		if(n==2)
+			dstscript = i_data->unequip_script;
+		else if(n==1)
+			dstscript = i_data->equip_script;
+		else
+			dstscript = i_data->script;
+		if(dstscript)
+			script_free_code(dstscript);
+		dstscript = parse_script(script, "script_setitemscript", 0, 0);
 		push_val(st->stack,C_INT,1);
 	} else
 		push_val(st->stack,C_INT,0);
