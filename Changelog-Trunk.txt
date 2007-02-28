@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/02/28
+	* Added the source and VC8 project for my experimental mapcache generator;
+	  it is NOT compatible with eA's current mapcache but uses a brand new format
+	  that I still have to embed into the map-server [DracoRPG]
 2007/02/27
 	* NPC_AGIUP now boosts flee by 100% and duration is 5+5*lv secs, as stated
 	  on the Ragnarok Bible.
