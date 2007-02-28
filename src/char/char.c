@@ -1662,7 +1662,7 @@ int count_users(void) {
 /// Writes char data to the buffer in the format used by the client.
 /// Used in packets 0x6b (chars info) and 0x6d (new char info)
 /// Returns the size (106 or 108)
-int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p, int new_charscreen)
+int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 {
 	if( buf == NULL || p == NULL )
 		return 0;
@@ -1706,15 +1706,16 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p, int new_charscreen)
 	WBUFB(buf,101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
 	WBUFB(buf,102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
 	WBUFB(buf,103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
-
 	//Updated packet structure with rename-button included. Credits to Sara-chan
+#if PACKETVER > 7 
 	WBUFW(buf,104) = p->char_num;
-	if( new_charscreen )
-	{
-		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
-		return 108;
-	}
+	WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
+	return 108;
+#else
+	WBUFB(buf,104) = p->char_num;
 	return 106;
+#endif
+
 }
 
 //----------------------------------------
@@ -1744,13 +1745,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
 
 		for(i = 0; i < found_num; i++)
-		{
-#if PACKETVER > 7 
-			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status, 1);
-#else
-			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status, 0);
-#endif
-		}
+			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status);
 		WFIFOW(fd,2) = j;// packet len
 		WFIFOSET(fd,j);
 	}
@@ -3637,13 +3632,8 @@ int parse_char(int fd) {
 			int len;
 			WFIFOHEAD(fd, 110);
 			WFIFOW(fd,0) = 0x6d;
-#if PACKETVER > 7
-			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status, 1);
-#else
-			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status, 0);
-#endif
+			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status);
 			WFIFOSET(fd,len);
-
 			RFIFOSKIP(fd,37);
 		}
 			for(ch = 0; ch < 9; ch++) {
