@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 1.7b
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 	as suggested Tantarian, to let people Reborn [Lupus]
 //= 1.6 Minor fix, thanks to theultramage for pointing it out. [MasterOfMuppets]
 //= 1.7 Fixed exploit [KarLaeda] 1.7a, fixed wrong dialogue [Lupus]
+//= 1.7b Fixed possible exploit [Lupus]
 //============================================================ 
 //===== Configuration : ======================================
 prontera.gat,1,1,1	script	TheSignConfig	-1,{
@@ -6463,7 +6464,7 @@ himinn.gat,48,86,5	script	Valkyrie#2	811,{
 	mes "travel there and ferret";
 	mes "out true darkness from";
 	mes "one of the hearts there...";
-	set signquest,33;
+	if(signquest==32)set signquest,33;
 	close2;
 	warp "geffen.gat",120,100;
 	end;
