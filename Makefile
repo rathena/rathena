@@ -25,6 +25,8 @@ OPT += -ffast-math
 OPT += -Wall -Wno-sign-compare
 # Uncomment this one if you are using GCC 4.X
 # OPT += -Wno-unused-parameter -Wno-pointer-sign
+# Server Packet Protocol version (also defined in src/common/mmo.h)
+# OPT += -DPACKETVER=8
 # Makes map-wide script variables be saved to SQL instead of TXT files.
 # OPT += -DMAPREGSQL
 # Turbo is an alternate socket access implementation which should be faster.

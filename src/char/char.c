@@ -2676,6 +2676,16 @@ int char_send_fame_list(int fd) {
 	return 0;
 }
 
+void char_update_fame_list(int type, int index, int fame)
+{
+	char buf[9];
+	WBUFW(buf,0) = 0x2b22;
+	WBUFB(buf,2) = type;
+	WBUFB(buf,3) = index;
+	WBUFL(buf,4) = fame;
+	mapif_sendall(buf, 8);
+}
+
 int search_mapserver(unsigned short map, long ip, short port);
 
 int parse_frommap(int fd) {
@@ -3174,7 +3184,7 @@ int parse_frommap(int fd) {
 						(pos == size-1 || fame > list[pos+1].fame)
 					) { //No change in order.
 						list[(int)pos].fame = fame;
-						char_send_fame_list(fd);
+						char_update_fame_list(type, pos, fame);
 						break;
 					}
 					// If the player's already in the list, remove the entry and shift the following ones 1 step up
