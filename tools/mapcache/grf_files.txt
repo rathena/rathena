@@ -1,0 +1,14 @@
+//-----------------------------------------
+// GRF List
+//-----------------------------------------
+
+grf: C:\Jeux\RO\sdata.grf
+
+// You may add more in this format
+// grf: <data file path>
+
+//------ Others ---------------------------
+
+//Path to directory that contains the data dir 
+//NOTE: Path must include trailing backslash, only one data_dir entry is supported.
+//data_dir: C:\Program Files\Gravity\RO\
