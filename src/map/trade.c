@@ -162,7 +162,7 @@ int impossible_trade_check(struct map_session_data *sd) {
 
 	nullpo_retr(1, sd);
 	
-    if(sd->deal.zeny > sd->status.zeny)
+	if(sd->deal.zeny > sd->status.zeny)
 	{
 		pc_setglobalreg(sd,"ZENY_HACKER",1);
 		return -1;
@@ -222,6 +222,9 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
 	int trade_i, i, amount, n;
+
+	if(sd->state.finalsave || tsd->state.finalsave)
+		return 0; //Item transferring fails 
 
 	// check zenys value against hackers (Zeny was already checked on time of adding, but you never know when you lost some zeny since then.
 	if(sd->deal.zeny > sd->status.zeny || (tsd->status.zeny > MAX_ZENY - sd->deal.zeny))

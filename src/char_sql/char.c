@@ -180,6 +180,7 @@ int console = 0;
 struct online_char_data {
 	int account_id;
 	int char_id;
+	int fd;
 	short server;
 	unsigned waiting_disconnect :1;
 };
@@ -204,6 +205,7 @@ static void * create_online_char_data(DBKey key, va_list args) {
 	character->account_id = key.i;
 	character->char_id = -1;
   	character->server = -1;
+	character->fd = -1;
 	return character;
 }
 
@@ -1787,6 +1789,53 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	return 0;
 }
 
+static void char_auth_ok(int fd, struct char_session_data *sd)
+{
+	struct online_char_data* character;
+	if (max_connect_user && count_users() >= max_connect_user &&
+		isGM(sd->account_id) < gm_allow_level) {
+		// refuse connection (over populated)
+		WFIFOW(fd,0) = 0x6c;
+		WFIFOW(fd,2) = 0;
+		WFIFOSET(fd,3);
+		return;
+	}
+
+	if (online_check && (character = idb_get(online_char_db, sd->account_id)))
+	{	// check if character is not online already. [Skotlex]
+		if (character->server > -1)
+		{	//Character already online. KICK KICK KICK
+			mapif_disconnectplayer(server_fd[character->server],
+				character->account_id, character->char_id, 2);
+			if (!character->waiting_disconnect)
+				add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
+			character->waiting_disconnect = 1;
+			WFIFOW(fd,0) = 0x81;
+			WFIFOB(fd,2) = 8;
+			WFIFOSET(fd,3);
+			return;
+		}
+		if (character->fd >= 0 && character->fd != fd)
+		{	//There's already a connection from this account that hasn't picked a char yet.
+			WFIFOW(fd,0) = 0x81;
+			WFIFOB(fd,2) = 8;
+			WFIFOSET(fd,3);
+			return;
+		}
+		character->fd = fd;
+	}
+	if (login_fd > 0) {
+		// request to login-server to obtain e-mail/time limit
+		WFIFOHEAD(login_fd, 6);
+		WFIFOW(login_fd,0) = 0x2716;
+		WFIFOL(login_fd,2) = sd->account_id;
+		WFIFOSET(login_fd,6);
+	}
+	// send characters to player
+	mmo_char_send006b(fd, sd);
+}
+
+
 int send_accounts_tologin(int tid, unsigned int tick, int id, int data);
 
 int parse_tologin(int fd) {
@@ -1845,34 +1894,23 @@ int parse_tologin(int fd) {
 		case 0x2713:
 			if(RFIFOREST(fd)<51)
 				return 0;
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2)) {
+
+			for(i = 0; i < fd_max && !(
+				session[i] &&
+				(sd = (struct char_session_data*)session[i]->session_data) &&
+			 	sd->account_id == RFIFOL(fd,2))
+				; i++);
+
+			if (i < fd_max) {
+				if (RFIFOB(fd,6) != 0) {
 					WFIFOHEAD(i,3);
-					if (RFIFOB(fd,6) != 0) {
-						WFIFOW(i,0) = 0x6c;
-						WFIFOB(i,2) = 0x42;
-						WFIFOSET(i,3);
-					} else if (max_connect_user == 0 || count_users() < max_connect_user) {
-//						if (max_connect_user == 0)
-//							printf("max_connect_user (unlimited) -> accepted.\n");
-//						else
-//							printf("count_users(): %d < max_connect_user (%d) -> accepted.\n", count_users(), max_connect_user);
-						sd->connect_until_time = (time_t)RFIFOL(fd,47);
-						memcpy(sd->email, RFIFOP(fd, 7), 40);
-						// send characters to player
-						mmo_char_send006b(i, sd);
-					} else if(isGM(sd->account_id) >= gm_allow_level) {
-						sd->connect_until_time = (time_t)RFIFOL(fd,47);
-						memcpy(sd->email, RFIFOP(fd, 7), 40);
-						// send characters to player
-						mmo_char_send006b(i, sd);
-					} else {
-						// refuse connection: too much online players
-//						printf("count_users(): %d < max_connect_use (%d) -> fail...\n", count_users(), max_connect_user);
-						WFIFOW(i,0) = 0x6c;
-						WFIFOW(i,2) = 0;
-						WFIFOSET(i,3);
-					}
+					WFIFOW(i,0) = 0x6c;
+					WFIFOB(i,2) = 0x42;
+					WFIFOSET(i,3);
+				} else {
+					sd->connect_until_time = (time_t)RFIFOL(fd,47);
+					memcpy(sd->email, RFIFOP(fd, 7), 40);
+					char_auth_ok(i, sd);
 				}
 			}
 			RFIFOSKIP(fd,51);
@@ -3136,6 +3174,8 @@ int parse_char(int fd) {
 			struct online_char_data* data = idb_get(online_char_db, sd->account_id);
 			if (!data || data->server== -1) //If it is not in any server, send it offline. [Skotlex]
 				set_char_offline(99,sd->account_id);
+			if (data && data->fd == fd)
+				data->fd = -1;
 		}
 		do_close(fd);
 		return 0;
@@ -3190,74 +3230,21 @@ int parse_char(int fd) {
 			WFIFOL(fd, 0) = RFIFOL(fd, 2);
 			WFIFOSET(fd, 4);
 
-			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if (auth_fifo[i].account_id == sd->account_id &&
-				    auth_fifo[i].login_id1 == sd->login_id1 &&
+			for(i = 0;
+				i < AUTH_FIFO_SIZE && !(
+				auth_fifo[i].account_id == sd->account_id &&
+				auth_fifo[i].login_id1 == sd->login_id1 &&
 #if CMP_AUTHFIFO_LOGIN2 != 0
-				    auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
+				auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
 #endif
-				    (!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
-				    auth_fifo[i].delflag == 2) {
+				(!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
+				auth_fifo[i].delflag == 2)
+				; i++);
+		  
+			if (i < AUTH_FIFO_SIZE) {
 				auth_fifo[i].delflag = 1;
-
-				if (online_check)
-				{	// check if character is not online already. [Skotlex]
-					struct online_char_data* character;
-					character = idb_get(online_char_db, sd->account_id);
-
-					if (character) 
-					{
-						if (character->server > -1)
-						{	//Character already online. KICK KICK KICK
-							mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
-							if (!character->waiting_disconnect)
-								add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
-							character->waiting_disconnect = 1;
-						/* Not a good idea because this would trigger when you do a char-change from the map server! [Skotlex]
-						} else { //Kick from char server.
-							struct char_session_data *tsd;
-							int i;
-							for(i = 0; i < fd_max; i++) {
-								if (session[i] && i != fd && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == sd->account_id)
-								{
-									WFIFOW(i,0) = 0x81;
-									WFIFOB(i,2) = 2;
-									WFIFOSET(i,3);
-									break;
-								}
-							if (i == fd_max) //Shouldn't happen, but just in case.
-								set_char_offline(99, sd->account_id);
-							}
-						*/
-							WFIFOW(fd,0) = 0x81;
-							WFIFOB(fd,2) = 8;
-							WFIFOSET(fd,3);
-							break;
-						}
-					}
-				}
-
-				if (max_connect_user == 0 || count_users() < max_connect_user) {
-					if (login_fd > 0) { // don't send request if no login-server
-						// request to login-server to obtain e-mail/time limit
-						WFIFOHEAD(login_fd, 6);
-						WFIFOW(login_fd,0) = 0x2716;
-						WFIFOL(login_fd,2) = sd->account_id;
-						WFIFOSET(login_fd,6);
-					}
-					// send characters to player
-					mmo_char_send006b(fd, sd);
-				} else {
-					// refuse connection (over populated)
-					WFIFOW(fd,0) = 0x6c;
-					WFIFOW(fd,2) = 0;
-					WFIFOSET(fd,3);
-				}
-//				printf("connection request> set delflag 1(o:2)- account_id:%d/login_id1:%d(fifo_id:%d)\n", sd->account_id, sd->login_id1, i);
-				break;
-				}
-			}
-			if (i == AUTH_FIFO_SIZE) {
+				char_auth_ok(fd, sd);
+			} else {
 				if (login_fd > 0) { // don't send request if no login-server
 					WFIFOHEAD(login_fd,19);
 					WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account

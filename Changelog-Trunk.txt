@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/01
+	* Added a check to prevent trades from being commited if either character
+	  is in final-save state.
+	* Checked and cleaned up the online_check code in the char-server. Further
+	  connections to the char-server are rejected when the account already has a
+	  connection (previously this would happen only if there was already another
+	  character IN game, not just waiting on the char-select screen). [Skotlex]
 2007/02/28
 	* Added the source and VC8 project for my experimental mapcache generator;
 	  it is NOT compatible with eA's current mapcache but uses a brand new format
