@@ -18,6 +18,7 @@
 //= 1.4 Fixed exploits [Lupus]
 //= 1.4a Fixed some typos [IVBela] 1.4b  Gershaun -> Gershuan
 //= 	changed perm. variables to temp ones [Lupus]
+//= 1.4b Added missing 1 Banana Juice requirement to Cart Revolution [DracoRPG]
 //============================================================
 
 
@@ -246,7 +247,8 @@ L_Start:
 			mes "20 Fly wings,";
 			mes "15 Iron,";
 			mes "5 Tentacles,";
-			mes "2 Grape Juice^000000.";
+			mes "2 Grape Juice,";
+			mes "1 Banana Juice^000000.";
 			next;
 			mes "[Gershuan]";
 			mes "Come back when you have all of these items.  Good luck.";
@@ -266,7 +268,8 @@ L_Start:
 			close;
 
 L_GetSkill:
-	if((countitem(533)<2) || (countitem(998)<15) || (countitem(938)<30) || (countitem(601)<20) || (countitem(962)<5)) goto sM_0;
+	if((countitem(532)<1) || (countitem(533)<2) || (countitem(998)<15) || (countitem(938)<30) || (countitem(601)<20) || (countitem(962)<5)) goto sM_0;
+	delitem 532,1;
 	delitem 533,2;
 	delitem 998,15;
 	delitem 938,30;

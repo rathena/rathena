@@ -18,6 +18,7 @@
 //= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Inverted the weight check for Greed [DracoRPG]
 //============================================================
 
 
@@ -29,7 +30,7 @@ geffen.gat,172,53,7	script	Goodday	826,{
 	mes "[Goodday]";
 	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
 	if(getskilllv(1013)) goto L_alreadyhave;
-	if(Weight < 5000 || (Weight > MaxWeight-MaxWeight/10)) goto L_notstrong;
+	if(Weight < MaxWeight-5000) goto L_notstrong; // You must carry so much that you cannot add 500 more (weight is x10!)
 
 	mes "You look pretty strong, so I'll";
 	mes "teach you a little trick I found";
@@ -43,8 +44,8 @@ L_notstrong:
 	mes "Come back when you're strong";
 	mes "enough to handle the weight";
 	mes "of my ability. You will need";
-	mes "to be able to carry over 5000";
-	mes "weight, and not be over 90%.";
+	mes "to carry so much that you won't";
+	mes "be able to add 500 more weight.";
 	close;
 
 L_nosmith:
