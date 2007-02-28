@@ -9,6 +9,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 		now u can set one of 3 item scripts: use/update, equip, unequip
 		But it works only if the original item had 3 non empty scriptsin ITEM_DB
 		can't fix this issue yet
+		1201,Knife,Knife,4,50,,400,17,,1,3,0xFE9F7EEF,7,2,2,1,1,1,1,{dispbottom "1";},{dispbottom "2";},{dispbottom "3";}
+		and... if u've used this function, later @reloaditemdb may crush the map server ^_-
 	- Check npc/sample/npc_test_setitemx.txt as example of setiteminfo & setitemscript
 2007/03/01
 	* Fixed the definition of warpwaitingpc so that it allows an optional
