@@ -30,6 +30,7 @@ Date		Added
 	* The Sign: Fixed possible exploit, thanks to happylight [Lupus]
 	- Added npc/sample/npc_test_setitemx.txt
 	- Redo "conditional bug" in cool_event_corp.txt. That wasn't a bug.
+	- Fixed ingredients check in Slot Enchant, thanks to Tantarian
 2007/02/28
 	* Fixes to Merchant/Smith skill quests according to ragnainfo wiki [DracoRPG]
 	- Added missing 1 Banana Juice requirement to Cart Revolution quest

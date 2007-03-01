@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sousuke_PL
 //===== Current Version: =====================================
-//= 0.3
+//= 1.0
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 0.1b Removed duplicates [Toms]
 //= 0.2	Added missing next;'s [Evera]
 //= 0.3 Fixed Zweihander[+] id [Lupus]
+//= 1.0 Fixed ingredients check [Lupus]
 //============================================================
 
 
@@ -613,7 +614,7 @@ function	script	addslot2	{
 
            if(countitem(@olditem)<1) goto L_NoItem;
            if(Zeny<@addprice) goto L_NoZeny;
-           if((countitem(@itemup1)<@itemupiece1) && (countitem(@itemup2)<@itemupiece2)) goto L_NoItemUp;
+           if(countitem(@itemup1)<@itemupiece1 || countitem(@itemup2)<@itemupiece2) goto L_NoItemUp;
 
            delitem @itemup1,@itemupiece1;
            delitem @itemup2,@itemupiece2;
