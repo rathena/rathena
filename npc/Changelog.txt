@@ -31,6 +31,7 @@ Date		Added
 	- Added npc/sample/npc_test_setitemx.txt
 	- Redo "conditional bug" in cool_event_corp.txt. That wasn't a bug.
 	- Fixed ingredients check in Slot Enchant, thanks to Tantarian
+	- Removed duplicated NPC from Yuno.txt (implemented in sleipnir_seal.txt)
 2007/02/28
 	* Fixes to Merchant/Smith skill quests according to ragnainfo wiki [DracoRPG]
 	- Added missing 1 Banana Juice requirement to Cart Revolution quest
