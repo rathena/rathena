@@ -2698,7 +2698,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case TF_POISON:
 	case TF_SPRINKLESAND:
 	case AC_CHARGEARROW:
-	case RG_RAID:
 	case RG_INTIMIDATE:
 	case AM_ACIDTERROR:
 	case BA_MUSICALSTRIKE:
@@ -2929,6 +2928,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case AC_SHOWER:	
 	case MG_NAPALMBEAT:
 	case MG_FIREBALL:
+	case RG_RAID:
 	case HW_NAPALMVULCAN:
 	case NJ_HUUMA:
 	case NJ_BAKUENRYU:
@@ -4003,6 +4003,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,SC_STUN,(20 + 10 * skilllv),skilllv,skill_get_time2(skillid,skilllv)));
 		break;
 	case RG_RAID:
+		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub, bl,
 			skill_get_splash(skillid, skilllv), BL_CHAR,

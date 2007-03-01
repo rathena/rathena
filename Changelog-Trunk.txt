@@ -13,6 +13,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 		and... if u've used this function, later @reloaditemdb may crush the map server ^_-
 	- Check npc/sample/npc_test_setitemx.txt as example of setiteminfo & setitemscript
 2007/03/01
+	* Corrected raid not doing the "can hit?" check on splash area targets.
 	* Fixed the definition of warpwaitingpc so that it allows an optional
 	  argument (number of people to warp).
 	* Modified the Palm Strike packet so the initial hit animation does not
