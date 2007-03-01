@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Gepard
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, iRO Sakray X.4 [Gepard]
 //= 1.1 Optimized, fixed a conditional bug [Lupus]
+//= 1.1a Redo back. It wasn't a bug [Lupus]
 //============================================================ 
 
 hugel.gat,88,168,4	script	Cool Event Corp. Staff#hk	874,{
@@ -37,7 +38,7 @@ hugel.gat,88,168,4	script	Cool Event Corp. Staff#hk	874,{
 		close;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() || getskilllv(1) < 6){
+		if(basicskillcheck() && getskilllv(1) < 6){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";
