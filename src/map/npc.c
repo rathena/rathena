@@ -2307,14 +2307,14 @@ int npc_parse_mob2 (struct spawn_data *mob, int index)
 	int i;
 	struct mob_data *md;
 
-	for (i = 0; i < mob->num; i++) {
+	for (i = mob->skip; i < mob->num; i++) {
 		md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		md->spawn_n = index;
 		md->special_state.cached = (index>=0);	//If mob is cached on map, it is dynamically removed
 		mob_spawn(md);
 	}
-
+	mob->skip = 0;
 	return 1;
 }
 

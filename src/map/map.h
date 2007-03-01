@@ -917,6 +917,7 @@ struct spawn_data {
 	unsigned short m,x,y;	//Spawn information (map, point, spawn-area around point)
 	signed short xs,ys;
 	unsigned short num; //Number of mobs using this structure.
+	unsigned short skip; //Number of mobs to skip when spawning them (for mob_remove_damageed: no)
 	unsigned int level; //Custom level.
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
 	struct {

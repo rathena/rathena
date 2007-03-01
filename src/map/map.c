@@ -2025,7 +2025,11 @@ int mob_cache_cleanup_sub(struct block_list *bl, va_list ap) {
 		return 0;
 	if (!battle_config.mob_remove_damaged && 
 		md->status.hp < md->status.max_hp)
+	{
+		if (md->spawn && md->spawn_n >= 0) //Do not respawn mob later.
+			map[md->spawn->m].moblist[md->spawn_n]->skip++;
 		return 0; //Do not remove damaged mobs.
+	}
 	
 	unit_free(&md->bl,0);
 

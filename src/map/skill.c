@@ -8331,6 +8331,14 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 1;
 		if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_STAR)
 			break;
+		//Auron insists we should implement SP consumption when you are not Soul Linked. [Skotlex]
+		if(sp>0 && type&1)
+		{ 
+			if (status->sp < (unsigned int)sp)
+				clif_skill_fail(sd,skill,1,0);
+			else
+				status_zap(&sd->bl, 0, sp);
+		}
 		return 0;
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
