@@ -805,6 +805,36 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0);
 }
 
+static int battle_range_type(
+	struct block_list *src, struct block_list *target,
+	int skill_num, int skill_lv)
+{	//Skill Range Criteria
+	if (battle_config.skillrange_by_distance &&
+		(src->type&battle_config.skillrange_by_distance)
+	) { //based on distance between src/target [Skotlex]
+		if (check_distance_bl(src, target, 5))
+			return BF_SHORT;
+		return BF_LONG;
+	}
+	//based on used skill's range
+	if (skill_get_range2(src, skill_num, skill_lv) < 5)
+		return BF_SHORT;
+	return BF_LONG;
+}
+
+static int battle_blewcount_bonus(struct map_session_data *sd, int skill_num)
+{
+	int i;
+	if (!sd->skillblown[0].id)
+		return 0;
+	//Apply the bonus blewcount. [Skotlex]
+	for (i = 0; i < MAX_PC_BONUS && sd->skillblown[i].id; i++) {
+		if (sd->skillblown[i].id == skill_num)
+			return sd->skillblown[i].val;
+	}
+	return 0;
+}
+
 struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 
@@ -863,7 +893,8 @@ static struct Damage battle_calc_weapon_attack(
 		wd.amotion >>= 1;
 	wd.dmotion=tstatus->dmotion;
 	wd.blewcount=skill_get_blewcount(skill_num,skill_lv);
-	wd.flag=BF_SHORT|BF_WEAPON|BF_NORMAL; //Initial Flag
+	wd.flag = BF_WEAPON; //Initial Flag
+	wd.flag|= skill_num?BF_SKILL:BF_NORMAL;
 	wd.dmg_lv=ATK_DEF;	//This assumption simplifies the assignation later
 	nk = skill_get_nk(skill_num);
 	flag.hit	= nk&NK_IGNORE_FLEE?1:0;
@@ -877,14 +908,8 @@ static struct Damage battle_calc_weapon_attack(
 	BL_CAST(BL_PC, src, sd);
 	BL_CAST(BL_PC, target, tsd);
 
-	if(sd) {
-		if (sd->skillblown[0].id != 0)
-		{	//Apply the bonus blewcount. [Skotlex]
-			for (i = 0; i < 5 && sd->skillblown[i].id != 0 && sd->skillblown[i].id != skill_num; i++);
-			if (i < 5 && sd->skillblown[i].id == skill_num)
-				 wd.blewcount += sd->skillblown[i].val;
-		}
-	}
+	if(sd)
+		wd.blewcount += battle_blewcount_bonus(sd, skill_num);
 
 	//Set miscellaneous data that needs be filled regardless of hit/miss
 	if(
@@ -894,7 +919,7 @@ static struct Damage battle_calc_weapon_attack(
 		flag.arrow = 1;
 	
 	if(skill_num){
-		wd.flag=(wd.flag&~BF_SKILLMASK)|BF_SKILL;
+		wd.flag |= battle_range_type(src, target, skill_num, skill_lv);
 		switch(skill_num)
 		{
 			case MO_FINGEROFFENSIVE:
@@ -940,23 +965,8 @@ static struct Damage battle_calc_weapon_attack(
 				flag.cri = 1; //Always critical skill.
 				break;
 		}
-
-		//Skill Range Criteria
-		if (battle_config.skillrange_by_distance &&
-			(src->type&battle_config.skillrange_by_distance)
-		) { //based on distance between src/target [Skotlex]
-			if (check_distance_bl(src, target, 5))
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
-			else
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-		} else { //based on used skill's range
-			if (skill_get_range2(src, skill_num, skill_lv) < 5)
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_SHORT;
-			else
-				wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
-		}
-	} else if (flag.arrow) //Make the normal attack ranged.
-		wd.flag=(wd.flag&~BF_RANGEMASK)|BF_LONG;
+	} else //Range for normal attacks.
+		wd.flag |= flag.arrow?BF_LONG:BF_SHORT;
 	
 	if (!skill_num && tstatus->flee2 && rand()%1000 < tstatus->flee2)
 	{	//Check for Lucky Dodge
@@ -1238,14 +1248,13 @@ static struct Damage battle_calc_weapon_attack(
 				if (flag.lh)
 					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
 
-				// Added split damage for Huuma
-				if (skill_num == NJ_HUUMA)
-				{	// Divide ATK in case of multiple targets skill
+				if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 					if(wflag>0)
 						wd.damage/= wflag;
 					else if(battle_config.error_log)
-						ShowError("0 enemies targeted by Throw Huuma, divide per 0 avoided!\n");
+						ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
 				}
+
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
 				if(sd)
 				{
@@ -2139,29 +2148,11 @@ struct Damage battle_calc_magic_attack(
 	//Set miscellaneous data that needs be filled
 	if(sd) {
 		sd->state.arrow_atk = 0;
-		if (sd->skillblown[0].id != 0)
-		{	//Apply the bonus blewcount. [Skotlex]
-			for (i = 0; i < MAX_PC_BONUS && sd->skillblown[i].id != 0 && sd->skillblown[i].id != skill_num; i++);
-			if (i < MAX_PC_BONUS && sd->skillblown[i].id == skill_num)
-				ad.blewcount += sd->skillblown[i].val;
-		}
+		ad.blewcount += battle_blewcount_bonus(sd, skill_num);
 	}
 
 	//Skill Range Criteria
-	if (battle_config.skillrange_by_distance &&
-		(src->type&battle_config.skillrange_by_distance)
-	)	{ //based on distance between src/target [Skotlex]
-		if (check_distance_bl(src, target, 5))
-			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
-		else
-			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
-	} else { //based on used skill's range
-		if (skill_get_range2(src, skill_num, skill_lv) < 5)
-			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_SHORT;
-		else
-			ad.flag=(ad.flag&~BF_RANGEMASK)|BF_LONG;
-	}
-
+	ad.flag |= battle_range_type(src, target, skill_num, skill_lv);
 	flag.infdef=(tstatus->mode&MD_PLANT?1:0);
 		
 	switch(skill_num)
@@ -2229,11 +2220,11 @@ struct Damage battle_calc_magic_attack(
 					MATK_ADD(sstatus->matk_min);
 				}
 
-				if(skill_num == MG_NAPALMBEAT || skill_num == HW_NAPALMVULCAN){ // Divide MATK in case of multiple targets skill
+				if(nk&NK_SPLASHSPLIT){ // Divide MATK in case of multiple targets skill
 					if(mflag>0)
 						ad.damage/= mflag;
 					else if(battle_config.error_log)
-						ShowError("0 enemies targeted by Napalm Beat/Vulcan, divide per 0 avoided!\n");
+						ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
 				}
 
 				switch(skill_num){
@@ -2467,12 +2458,7 @@ struct Damage  battle_calc_misc_attack(
 	
 	if(sd) {
 		sd->state.arrow_atk = 0;
-		if (sd->skillblown[0].id != 0)
-		{	//Apply the bonus blewcount. [Skotlex]
-			for (i = 0; i < MAX_PC_BONUS && sd->skillblown[i].id != 0 && sd->skillblown[i].id != skill_num; i++);
-			if (i < MAX_PC_BONUS && sd->skillblown[i].id == skill_num)
-				md.blewcount += sd->skillblown[i].val;
-		}
+		md.blewcount += battle_blewcount_bonus(sd, skill_num);
 	}
 
 	s_ele = skill_get_pl(skill_num);
@@ -2480,19 +2466,7 @@ struct Damage  battle_calc_misc_attack(
 		s_ele = ELE_NEUTRAL;
 
 	//Skill Range Criteria
-	if (battle_config.skillrange_by_distance &&
-		(src->type&battle_config.skillrange_by_distance)
-	) { //based on distance between src/target [Skotlex]
-		if (check_distance_bl(src, target, 5))
-			md.flag=(md.flag&~BF_RANGEMASK)|BF_SHORT;
-		else
-			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;
-	} else { //based on used skill's range
-		if (skill_get_range2(src, skill_num, skill_lv) < 5)
-			md.flag=(md.flag&~BF_RANGEMASK)|BF_SHORT;
-		else
-			md.flag=(md.flag&~BF_RANGEMASK)|BF_LONG;
-	}
+	md.flag |= battle_range_type(src, target, skill_num, skill_lv);
 
 	switch(skill_num){
 	case HT_LANDMINE:
@@ -2510,8 +2484,8 @@ struct Damage  battle_calc_misc_attack(
 		if(!sd || (skill = pc_checkskill(sd,HT_STEELCROW)) <= 0)
 			skill=0;
 		md.damage=(sstatus->dex/10+sstatus->int_/2+skill*3+40)*2;
-		if(mflag > 1)
-			md.damage /= mflag;
+		if(mflag > 1) //Autocasted Blitz.
+			nk|=NK_SPLASHSPLIT;
 		
 		if (skill_num == HT_BLITZBEAT)
 			break;
@@ -2574,7 +2548,14 @@ struct Damage  battle_calc_misc_attack(
 		nk|=NK_IGNORE_FLEE; //Only Breaker's Misc part always hits.
 		break;
 	}
-	
+
+	if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
+		if(mflag>0)
+			md.damage/= mflag;
+		else if(battle_config.error_log)
+			ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
+	}
+
 	damage_div_fix(md.damage, md.div_);
 	
 	if (!(nk&NK_IGNORE_FLEE))

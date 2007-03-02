@@ -2039,6 +2039,7 @@ void* get_val2(struct script_state* st, int num, struct linkdb_node** ref)
 
 /*==========================================
  * Stores the value of a script variable
+ * Return value is 0 on fail, 1 on success.
  *------------------------------------------*/
 static int set_reg(struct script_state* st, struct map_session_data* sd, int num, char* name, void* value, struct linkdb_node** ref)
 {
@@ -2049,11 +2050,13 @@ static int set_reg(struct script_state* st, struct map_session_data* sd, int num
 		char* str = (char*)value;
 		switch (prefix) {
 		case '@':
-			pc_setregstr(sd, num, str); break;
+			return pc_setregstr(sd, num, str);
 		case '$':
-			mapreg_setregstr(num, str); break;
+			return mapreg_setregstr(num, str);
 		case '#':
-			(name[1] == '#') ? pc_setaccountreg2str(sd, name, str) : pc_setaccountregstr(sd, name, str); break;
+			return (name[1] == '#') ?
+				pc_setaccountreg2str(sd, name, str) :
+				pc_setaccountregstr(sd, name, str);
 		case '.': {
 			char* p;
 			struct linkdb_node** n;
@@ -2065,24 +2068,26 @@ static int set_reg(struct script_state* st, struct map_session_data* sd, int num
 			}
 			if (str[0]) linkdb_insert(n, (void*)num, aStrdup(str));
 			}
-			break;
+			return 1;
 		default:
-			pc_setglobalreg_str(sd, name, str); break;
+			return pc_setglobalreg_str(sd, name, str);
 		}
 
 	} else { // integer variable
 
 		int val = (int)value;
 		if(str_data[num&0x00ffffff].type == C_PARAM)
-			pc_setparam(sd, str_data[num&0x00ffffff].val, val);
-		else
+			return pc_setparam(sd, str_data[num&0x00ffffff].val, val);
+
 		switch (prefix) {
 		case '@':
-			pc_setreg(sd, num, val); break;
+			return pc_setreg(sd, num, val);
 		case '$':
-			mapreg_setreg(num, val); break;
+			return mapreg_setreg(num, val);
 		case '#':
-			(name[1] == '#') ? pc_setaccountreg2(sd, name, val) : pc_setaccountreg(sd, name, val); break;
+			return (name[1] == '#') ?
+				pc_setaccountreg2(sd, name, val) :
+				pc_setaccountreg(sd, name, val);
 		case '.': {
 			struct linkdb_node** n;
 			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
@@ -2091,13 +2096,11 @@ static int set_reg(struct script_state* st, struct map_session_data* sd, int num
 			else 
 				linkdb_replace(n, (void*)num, (void*)val);
 			}
-			break;
+			return 1;
 		default:
-			pc_setglobalreg(sd, name, val); break;
+			return pc_setglobalreg(sd, name, val);
 		}
 	}
-
-	return 0;
 }
 
 int set_var(struct map_session_data* sd, char* name, void* val)
@@ -3036,7 +3039,7 @@ int mapreg_setreg(int num,int val)
 	}
 
 	mapreg_dirty=1;
-	return 0;
+	return 1;
 }
 /*==========================================
  * 文字列型マップ変数の変更
@@ -3064,7 +3067,7 @@ int mapreg_setregstr(int num,const char *str)
 #endif
 		idb_remove(mapregstr_db,num);
 		mapreg_dirty=1;
-		return 0;
+		return 1;
 	}
 	p=(char *)aMallocA((strlen(str)+1)*sizeof(char));
 	strcpy(p,str);
@@ -3082,7 +3085,7 @@ int mapreg_setregstr(int num,const char *str)
 	}
 #endif
 	mapreg_dirty=1;
-	return 0;
+	return 1;
 }
 
 /*==========================================

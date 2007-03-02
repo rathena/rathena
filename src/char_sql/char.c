@@ -1898,7 +1898,7 @@ int parse_tologin(int fd) {
 			for(i = 0; i < fd_max && !(
 				session[i] &&
 				(sd = (struct char_session_data*)session[i]->session_data) &&
-			 	sd->account_id == RFIFOL(fd,2))
+				sd->account_id == RFIFOL(fd,2))
 				; i++);
 
 			if (i < fd_max) {

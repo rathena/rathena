@@ -5434,7 +5434,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	}
 	clif_updatestatus(sd,type);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -5910,7 +5910,7 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 	for (i = 0; i < sd->reg_num; i++) {
 		if (sd->reg[i].index == reg){
 			sd->reg[i].data = val;
-			return 0;
+			return 1;
 		}
 	}
 	sd->reg_num++;
@@ -5919,7 +5919,7 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 	sd->reg[i].index = reg;
 	sd->reg[i].data = val;
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -5956,7 +5956,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 	for(i=0;i<sd->regstr_num;i++)
 		if(sd->regstr[i].index==reg){
 			strcpy(sd->regstr[i].data,str);
-			return 0;
+			return 1;
 		}
 
 	sd->regstr_num++;
@@ -5969,7 +5969,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 	sd->regstr[i].index = reg;
 	strcpy(sd->regstr[i].data, str);
 
-	return 0;
+	return 1;
 }
 
 int pc_readregistry(struct map_session_data *sd,const char *reg,int type) {
@@ -6099,14 +6099,14 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 				break;
 			}
 		}
-		return 0;
+		return 1;
 	}
 	// change value if found
 	for(i = 0; i < *max; i++) {
 		if (strcmp(sd_reg[i].str, reg) == 0) {
 			sprintf(sd_reg[i].value, "%d", val); 
 			sd->state.reg_dirty |= 1<<(type-1);
-			return 0;
+			return 1;
 		}
 	}
 
@@ -6117,13 +6117,13 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 		sprintf(sd_reg[i].value, "%d", val); 
 		(*max)++;
 		sd->state.reg_dirty |= 1<<(type-1);
-		return 0;
+		return 1;
 	}
 
 	if(battle_config.error_log)
 		ShowError("pc_setregistry : couldn't set %s, limit of registries reached (%d)\n", reg, regmax);
 
-	return 1;
+	return 0;
 }
 
 int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type) {
@@ -6134,7 +6134,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 	if (reg[strlen(reg)-1] != '$') {
 		if(battle_config.error_log)
 			ShowError("pc_setregistry_str : reg %s must be string (end in '$') to use this!\n", reg);
-		return 1;
+		return 0;
 	}
 
 	switch (type) {
@@ -6159,7 +6159,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 	if (*max == -1) {
 		if(battle_config.error_log)
 			ShowError("pc_setregistry_str : refusing to set %s (type %d) until vars are received.\n", reg, type);
-		return 1;
+		return 0;
 	}
 	
 	// delete reg
@@ -6175,7 +6175,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 				break;
 			}
 		}
-		return 0;
+		return 1;
 	}
 	// change value if found
 	for(i = 0; i < *max; i++) {
@@ -6183,7 +6183,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 			strncpy(sd_reg[i].value, val, 256);
 			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 			if (type!=3) intif_saveregistry(sd,type);
-			return 0;
+			return 1;
 		}
 	}
 
@@ -6195,13 +6195,13 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 		(*max)++;
 		sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 		if (type!=3) intif_saveregistry(sd,type);
-		return 0;
+		return 1;
 	}
 
 	if(battle_config.error_log)
 		ShowError("pc_setregistry : couldn't set %s, limit of registries reached (%d)\n", reg, regmax);
 
-	return 1;
+	return 0;
 }
 
 /*==========================================
