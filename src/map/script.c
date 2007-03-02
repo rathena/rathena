@@ -9058,6 +9058,7 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 
 	if(!md->guardian_data && md->class_ != MOBID_EMPERIUM)
 		status_kill(bl);
+
 	return 0;
 }
 

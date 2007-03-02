@@ -1558,15 +1558,15 @@ L_Menu1_2:
 		L_Test1_14:
 			mes "15. Which one isn't necessary to unlock the Blacksmith skill 'Maximize Power'?";
 			next;
-			menu "Hilt Bending",L_Test1_15,"Skin Tempering",-,"Hammer Fall",L_Test1_15,"Weapon Perfection",L_Test1_15;
+			menu "Hilt Binding",L_Test1_15,"Skin Tempering",-,"Hammer Fall",L_Test1_15,"Weapon Perfection",L_Test1_15;
 			set @sage_test2,@sage_test2+5;
 		L_Test1_15:
-			mes "16. What is the defense power and supplemental ability of a Ribbon?";
+			mes "16. What is the defense power and supplemental ability of a Cute Ribbon?";
 			next;
 			menu "0 / SP +20",L_Test1_16,"0 / SP +30",L_Test1_16,"1 / SP +20",-,"1 / SP +30",L_Test1_16;
 			set @sage_test2,@sage_test2+5;
 		L_Test1_16:
-			mes "17. Which class can't equip a Saint Robe?";
+			mes "17. Which class can't equip a Saint's Robe?";
 			next;
 		//Swordsmen can't equip it either as of this writing.
 			menu "Swordsman",-,"Merchant",L_Test1_17,"Thief",-,"Acolyte",L_Test1_17;
@@ -1584,7 +1584,7 @@ L_Menu1_2:
 		L_Test1_19:
 			mes "20. Which tree is said to be the world's root?";
 			next;
-			menu "Igg Drasil",-,"Idrasil",L_Menu2_3,"Master",L_Menu2_3,"Old Tree",L_Menu2_3;
+			menu "Yggdrasil",-,"Idrasil",L_Menu2_3,"Master",L_Menu2_3,"Old Tree",L_Menu2_3;
 			set @sage_test2,@sage_test2+5;
 			goto L_Menu2_3;
 	//==================================

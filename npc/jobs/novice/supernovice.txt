@@ -216,7 +216,7 @@ L_Otherjob:
 
 
 // -- Car Rental --
-aldebaran.gat,54,238,5	script	Kafra	117,{
+aldebaran.gat,54,238,5	script	Kafra::kaf_sn	117,{
 	if(BaseJob != Job_SuperNovice) goto L_Otherjob;
 	if(checkcart() == 1) goto L_GotCart;
 	mes "[Kafra]";
