@@ -528,7 +528,6 @@ void party_send_movemap(struct map_session_data *sd)
 				continue;
 			clif_party_xy_single(sd->fd, p->data[i].sd);
 		}
-		
 	}
 	
 	if( sd->state.party_sent )

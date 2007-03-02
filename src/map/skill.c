@@ -7126,16 +7126,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 				break;
 				case WZ_STORMGUST:
-					if (skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0) > 0
-						&& tsc)
-					{	//Increase freeze counter if attack connects.
-						if (tsc->data[SC_FREEZE].val4 == sg->group_id)
-							tsc->data[SC_FREEZE].val3++; //SG hit counter.
-						else { //New SG
-							tsc->data[SC_FREEZE].val4 = sg->group_id;
-							tsc->data[SC_FREEZE].val3 = 1;
-						}
+					if (tsc && tsc->data[SC_FREEZE].val4 != sg->group_id)
+					{	//Reset hit counter when under new storm gust.
+						tsc->data[SC_FREEZE].val4 = sg->group_id;
+						tsc->data[SC_FREEZE].val3 = 0;
 					}
+					if (skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0) > 0
+						&& tsc) //Increase freeze counter if attack connects.
+						tsc->data[SC_FREEZE].val3++; //SG hit counter.
 				break;
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);			
