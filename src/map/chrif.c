@@ -1627,7 +1627,8 @@ int auth_db_final(DBKey k,void *d,va_list ap) {
  */
 int do_final_chrif(void)
 {
-	delete_session(char_fd);
+	if (char_fd > 0)
+		do_close(char_fd);
 	auth_db->destroy(auth_db, auth_db_final);
 	return 0;
 }

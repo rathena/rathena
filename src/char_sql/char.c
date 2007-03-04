@@ -3888,8 +3888,10 @@ void do_final(void) {
 		gm_account = 0;
 	}
 
-	delete_session(login_fd);
-	delete_session(char_fd);
+	if (login_fd > 0)
+		do_close(login_fd);
+	if (char_fd > 0)
+		do_close(char_fd);
 	char_db_->destroy(char_db_, NULL);
 	online_char_db->destroy(online_char_db, NULL);
 

@@ -474,12 +474,13 @@ void mmo_db_close(void) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 			}
-			delete_session(fd);
+			do_close(fd);
 		}
 	}
 	mysql_close(&mysql_handle);
 	ShowStatus("close DB connect....\n");
-	delete_session(login_fd);
+	if (login_fd > 0)
+		do_close(login_fd);
 }
 
 //-----------------------------------------------------

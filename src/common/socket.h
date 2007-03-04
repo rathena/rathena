@@ -108,7 +108,6 @@ extern int session_isActive(int fd);
 
 int make_listen_bind(long,int);
 int make_connection(long,int);
-int delete_session(int fd);
 int realloc_fifo(int fd,unsigned int rfifo_size,unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd,int len);

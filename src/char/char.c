@@ -4278,8 +4278,10 @@ void do_final(void) {
 	if(gm_account) aFree(gm_account);
 	if(char_dat) aFree(char_dat);
 
-	delete_session(login_fd);
-	delete_session(char_fd);
+	if (login_fd > 0)
+		do_close(login_fd);
+	if (char_fd > 0)
+		do_close(char_fd);
 
 #ifdef ENABLE_SC_SAVING
 	status_final();

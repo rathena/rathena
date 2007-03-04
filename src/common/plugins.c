@@ -339,7 +339,7 @@ void plugins_init(void)
 	// networking
 	export_symbol(RFIFOSKIP,        SYMBOL_RFIFOSKIP);
 	export_symbol(WFIFOSET,         SYMBOL_WFIFOSET);
-	export_symbol(delete_session,   SYMBOL_DELETE_SESSION);
+	export_symbol(do_close,   SYMBOL_DELETE_SESSION);
 	export_symbol(session,          SYMBOL_SESSION);
 	export_symbol(&fd_max,          SYMBOL_FD_MAX);
 	export_symbol(addr_,            SYMBOL_ADDR);
