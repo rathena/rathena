@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 
 #ifdef __WIN32
@@ -51,9 +52,6 @@
 	#define S_ECONNABORTED ECONNABORTED
 #endif
 
-#include <fcntl.h>
-#include <string.h>
-
 #include "../common/socket.h"
 #include "../common/mmo.h"
 #include "../common/timer.h"
@@ -64,17 +62,11 @@ fd_set readfds;
 int fd_max;
 time_t last_tick;
 time_t stall_time = 60;
-int ip_rules = 1;
 
 uint32 addr_[16];   // ip addresses of local host (host byte order)
 int naddr_ = 0;   // # of ip addresses
 
-#ifndef TCP_FRAME_LEN
-#define TCP_FRAME_LEN	1024
-#endif
-
-static int mode_neg=1;
-static size_t frame_size=TCP_FRAME_LEN;
+#define MODE_NODELAY 1 // disables|enables packet buffering
 
 // values derived from freya
 // a player that send more than 2k is probably a hacker without be parsed
@@ -82,45 +74,26 @@ static size_t frame_size=TCP_FRAME_LEN;
 size_t rfifo_size = (16*1024);
 size_t wfifo_size = (16*1024);
 
-#define CONVIP(ip) ip&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,ip>>24
-
-struct socket_data *session[FD_SETSIZE];
+struct socket_data* session[FD_SETSIZE];
 
 int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
 
 #ifndef MINICORE
-static int connect_check(unsigned int ip);
-#else
-	#define connect_check(n)	1
+	int ip_rules = 1;
+	static int connect_check(unsigned int ip);
 #endif
+
 
 /*======================================
  *	CORE : Default processing functions
  *--------------------------------------*/
-int null_recv(int fd);
-int null_send(int fd);
-int null_parse(int fd);
+int null_recv(int fd) { return 0; }
+int null_send(int fd) { return 0; }
+int null_parse(int fd) { return 0; }
 
-int null_recv(int fd)
-{
-	return 0;
-}
+ParseFunc default_func_parse = null_parse;
 
-int null_send(int fd)
-{
-	return 0;
-}
-
-int null_parse(int fd)
-{
-	//ShowMessage("null_parse : %d\n",fd);
-	session[fd]->rdata_pos = session[fd]->rdata_size; //RFIFOSKIP(fd, RFIFOREST(fd)); simplify calculation
-	return 0;
-}
-
-int (*default_func_parse)(int fd) = null_parse;
-
-void set_defaultparse(int (*defaultparse)(int fd))
+void set_defaultparse(ParseFunc defaultparse)
 {
 	default_func_parse = defaultparse;
 }
@@ -132,7 +105,7 @@ void set_defaultparse(int (*defaultparse)(int fd))
 void set_nonblocking(int fd, int yes)
 {
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
-	if(mode_neg)
+	if(MODE_NODELAY)
 		setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof yes);
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
@@ -141,7 +114,7 @@ void set_nonblocking(int fd, int yes)
 		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", s_errno);
 }
 
-static void setsocketopts(int fd)
+void setsocketopts(int fd)
 {
 	int yes = 1; // reuse fix
 #ifndef WIN32
@@ -153,7 +126,7 @@ static void setsocketopts(int fd)
 	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
 #endif
 #endif
-	setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,(char *)&yes,sizeof(yes));
+	setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof(yes));
 //	setsockopt(fd, SOL_SOCKET, SO_SNDBUF, (char *) &wfifo_size , sizeof(rfifo_size ));
 //	setsockopt(fd, SOL_SOCKET, SO_RCVBUF, (char *) &rfifo_size , sizeof(rfifo_size ));
 
@@ -170,15 +143,14 @@ static void setsocketopts(int fd)
 
 /*======================================
  *	CORE : Socket Sub Function
- *--------------------------------------
- */
-static void set_eof(int fd)
-{	//Marks a connection eof and invokes the parse_function to disconnect it right away. [Skotlex]
+ *--------------------------------------*/
+void set_eof(int fd)
+{
 	if (session_isActive(fd))
 		session[fd]->eof = 1;
 }
 
-static int recv_to_fifo(int fd)
+int recv_to_fifo(int fd)
 {
 	int len;
 
@@ -199,7 +171,7 @@ static int recv_to_fifo(int fd)
 		return 0;
 	}
 
-	if (len <= 0) {	//Normal connection end.
+	if (len == 0) { //Normal connection end.
 		set_eof(fd);
 		return 0;
 	}
@@ -209,7 +181,7 @@ static int recv_to_fifo(int fd)
 	return 0;
 }
 
-static int send_from_fifo(int fd)
+int send_from_fifo(int fd)
 {
 	int len;
 
@@ -248,16 +220,15 @@ static int send_from_fifo(int fd)
 /// Best effort - there's no warranty that the data will be sent.
 void flush_fifo(int fd)
 {
-	if(session[fd] != NULL && session[fd]->func_send == send_from_fifo)
-		send_from_fifo(fd);
+	if(session[fd] != NULL)
+		session[fd]->func_send(fd);
 }
 
 void flush_fifos(void)
 {
 	int i;
 	for(i = 1; i < fd_max; i++)
-		if(session[i] != NULL && session[i]->func_send == send_from_fifo)
-			send_from_fifo(i);
+		flush_fifo(i);
 }
 
 /*======================================
@@ -280,11 +251,14 @@ int connect_client(int listen_fd)
 	setsocketopts(fd);
 	set_nonblocking(fd, 1);
 
+#ifndef MINICORE
 	if( ip_rules && !connect_check(*(uint32*)(&client_address.sin_addr)) ){
 		do_close(fd);
 		return -1;
-	} else
-		FD_SET(fd,&readfds);
+	}
+#endif
+
+	FD_SET(fd,&readfds);
 
 	if( fd_max <= fd )
 		fd_max = fd + 1;
@@ -338,11 +312,6 @@ int make_listen_bind(long ip,int port)
 	create_session(fd, connect_client, null_send, null_parse);
 
 	return fd;
-}
-
-int make_listen_port(int port)
-{
-	return make_listen_bind(INADDR_ANY,port);
 }
 
 int make_connection(long ip, int port)
@@ -443,7 +412,7 @@ int realloc_writefifo(int fd, size_t addition)
 		newsize = wfifo_size;
 		while( session[fd]->wdata_size + addition > newsize ) newsize += newsize;
 	}
-	else if( session[fd]->max_wdata>=FIFOSIZE_SERVERLINK) {
+	else if( session[fd]->max_wdata >= FIFOSIZE_SERVERLINK) {
 		//Inter-server adjust. [Skotlex]
 		if ((session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata)
 			newsize = session[fd]->max_wdata/2;
@@ -507,10 +476,6 @@ int WFIFOSET(int fd, int len)
 	// For inter-server connections, let the reserve be 1/4th of the link size.
 	newreserve = s->wdata_size + (s->max_wdata >= FIFOSIZE_SERVERLINK ? FIFOSIZE_SERVERLINK / 4 : wfifo_size);
 
-	if(s->wdata_size >= frame_size)
-		send_from_fifo(fd);
-
-	// realloc after sending
 	// readfifo does not need to be realloced at all
 	// Even the inter-server buffer may need reallocating! [Skotlex]
 	realloc_writefifo(fd, newreserve);
@@ -619,23 +584,21 @@ int do_sendrecv(int next)
 int do_parsepacket(void)
 {
 	int i;
-	struct socket_data *sd;
 	for(i = 1; i < fd_max; i++)
 	{
-		sd = session[i];
-		if(!sd)
-			continue;
-		if (sd->rdata_tick && DIFF_TICK(last_tick,sd->rdata_tick) > stall_time) {
-			ShowInfo ("Session #%d timed out\n", i);
-			sd->eof = 1;
-		}
-		if(sd->rdata_size == 0 && sd->eof == 0)
+		if(!session[i])
 			continue;
 
-		sd->func_parse(i);
+		if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time) {
+			ShowInfo ("Session #%d timed out\n", i);
+			session[i]->eof = 1;
+		}
+
+		session[i]->func_parse(i);
 
 		if(!session[i])
 			continue;
+
 		/* after parse, check client's RFIFO size to know if there is an invalid packet (too big and not parsed) */
 		if (session[i]->rdata_size == rfifo_size && session[i]->max_rdata == rfifo_size) {
 			session[i]->eof = 1;
@@ -683,6 +646,8 @@ static int ddos_autoreset = 10*60*1000;
 /// The array's index for any ip is ip&0xFFFF
 static ConnectHistory* connect_history[0x10000];
 
+#define CONVIP(ip) ip&0xFF,(ip>>8)&0xFF,(ip>>16)&0xFF,ip>>24
+
 static int connect_check_(uint32 ip);
 
 /// Verifies if the IP can connect. (with debug info)
@@ -690,9 +655,8 @@ static int connect_check_(uint32 ip);
 static int connect_check(uint32 ip)
 {
 	int result = connect_check_(ip);
-	if( access_debug ){
-		ShowMessage("connect_check: Connection from %d.%d.%d.%d %s\n",
-			CONVIP(ip),result ? "allowed." : "denied!");
+	if( access_debug ) {
+		ShowMessage("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip),result ? "allowed." : "denied!");
 	}
 	return result;
 }
@@ -905,7 +869,7 @@ int socket_config_read(const char *cfgName) {
 			continue;
 		if(strcmpi(w1,"stall_time")==0){
 			stall_time = atoi(w2);
-	#ifndef MINICORE
+#ifndef MINICORE
 		} else if( strcmpi(w1,"enable_ip_rules") == 0 ){
 			if( strcmpi(w2,"yes") == 0 )
 				ip_rules = 1;
@@ -946,17 +910,8 @@ int socket_config_read(const char *cfgName) {
 				access_debug = 0;
 			else
 				access_debug = atoi(w2);
-	#endif
-		} else if (strcmpi(w1, "mode_neg") == 0)
-		{
-			if(strcmpi(w2,"yes")==0)
-				mode_neg = 1;
-			else if(strcmpi(w2,"no")==0)
-				mode_neg = 0;
-			else mode_neg = atoi(w2);
-		} else if (strcmpi(w1, "frame_size") == 0)
-			frame_size = (size_t)strtoul(w2, NULL, 10);
-		else if (strcmpi(w1, "import") == 0)
+#endif
+		} else if (strcmpi(w1, "import") == 0)
 			socket_config_read(w2);
 	}
 	fclose(fp);

@@ -1,4 +1,6 @@
 Date	Added
+2007/03/05
+	* Removed mode_neg and frame_size from packet_athena.conf [ultramage]
 2007/02/16
 	* Collapsed config settings "sg_miracle_skill_min_duration" and
 	  "sg_miracle_skill_max_duration" into "sg_miracle_skill_duration", which

@@ -16,22 +16,32 @@
 #include "../common/cbasetypes.h"
 #include <time.h>
 
-// define declaration
 
+// socket I/O macros
 #ifdef TURBO
 #define RFIFOVAR(fd) rbPtr ## fd
+#define WFIFOVAR(fd) wbPtr ## fd
 #define RFIFOHEAD(fd) uint8 *RFIFOVAR(fd) = session[fd]->rdata+session[fd]->rdata_pos
+#define WFIFOHEAD(fd, x) uint8 *WFIFOVAR(fd) = ( (fd) > 0 && session[fd] ? session[fd]->wdata+session[fd]->wdata_size : NULL )
 #define RFIFOP(fd,pos) ( &RFIFOVAR(fd) + (pos) )
+#define WFIFOP(fd,pos) ( &WFIFOVAR(fd) + (pos) )
 #else
 #define RFIFOHEAD(fd)
+#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
+#define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 #endif
+
 #define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
+#define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
 #define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
+#define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
+#define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
+#define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
+
 #define RFIFOREST(fd)  (session[fd]->rdata_size - session[fd]->rdata_pos)
-//#define RFIFOSKIP(fd,len) ((session[fd]->rdata_size - session[fd]->rdata_pos - (len) < 0) ? (fprintf(stderr,"too many skip\n"),exit(1)) : (session[fd]->rdata_pos += (len)))
 #define RFIFOFLUSH(fd) \
 	do { \
 		if(session[fd]->rdata_size == session[fd]->rdata_pos){ \
@@ -42,28 +52,17 @@
 			session[fd]->rdata_pos = 0; \
 		} \
 	} while(0)
+
+// buffer I/O macros
 #define RBUFP(p,pos) (((uint8*)(p)) + (pos))
 #define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
 
-#ifdef TURBO
-#define WFIFOVAR(fd) wbPtr ## fd
-#define WFIFOHEAD(fd, x) uint8 *WFIFOVAR(fd) = ( (fd) > 0 && session[fd] ? session[fd]->wdata+session[fd]->wdata_size : NULL )
-#define WFIFOP(fd,pos) ( &WFIFOVAR(fd) + (pos) )
-#else
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
-#define WFIFOP(fd,pos) (session[fd]->wdata+session[fd]->wdata_size+(pos))
-#endif
-#define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
-#define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
-#define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
-#define WFIFOSPACE(fd) (session[fd]->max_wdata-session[fd]->wdata_size)
-//#define WFIFOSET(fd,len) (session[fd]->wdata_size = (session[fd]->wdata_size + (len) + 2048 < session[fd]->max_wdata) ? session[fd]->wdata_size + len : session[fd]->wdata_size)
 #define WBUFP(p,pos) (((uint8*)(p)) + (pos))
-#define WBUFB(p,pos) (*(uint8*)((p) + (pos)))
-#define WBUFW(p,pos) (*(uint16*)((p) + (pos)))
-#define WBUFL(p,pos) (*(uint32*)((p) + (pos)))
+#define WBUFB(p,pos) (*(uint8*)WBUFP((p),(pos)))
+#define WBUFW(p,pos) (*(uint16*)WBUFP((p),(pos)))
+#define WBUFL(p,pos) (*(uint32*)WBUFP((p),(pos)))
 
 #define TOB(n) ((uint8)((n)&UINT8_MAX))
 #define TOW(n) ((uint16)((n)&UINT16_MAX))
@@ -92,7 +91,7 @@ struct socket_data {
 
 // Data prototype declaration
 
-extern struct socket_data *session[FD_SETSIZE];
+extern struct socket_data* session[FD_SETSIZE];
 
 extern int fd_max;
 
@@ -107,7 +106,6 @@ extern int session_isActive(int fd);
 
 // Function prototype declaration
 
-int make_listen_port(int);
 int make_listen_bind(long,int);
 int make_connection(long,int);
 int delete_session(int fd);
@@ -126,7 +124,7 @@ extern void flush_fifo(int fd);
 extern void flush_fifos(void);
 extern void set_nonblocking(int fd, int yes);
 
-void set_defaultparse(int (*defaultparse)(int));
+void set_defaultparse(ParseFunc defaultparse);
 
 //Resolves the hostname and stores the string representation of the string in ip.
 //Meant to simplify calls to gethostbyname without the need of all the

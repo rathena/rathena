@@ -2722,7 +2722,7 @@ int parse_frommap(int fd) {
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2 && !session[fd]->eof) {
+	while(RFIFOREST(fd) >= 2) {
 		//ShowDebug("Received packet 0x%4x (%d bytes) from map-server (connection %d)\n", RFIFOW(fd, 0), RFIFOREST(fd), fd);
 
 		switch(RFIFOW(fd,0)) {

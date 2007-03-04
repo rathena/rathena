@@ -2478,7 +2478,7 @@ int parse_frommap(int fd) {
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2 && !session[fd]->eof) {
+	while(RFIFOREST(fd) >= 2) {
 		switch(RFIFOW(fd, 0)) {
 
 		// map-server alive packet
