@@ -3267,8 +3267,7 @@ int parse_fromlogin(int fd) {
 			printf("Impossible to have a connection with the login-server [%s:%d] !\n", loginserverip, loginserverport);
 			ladmin_log("Impossible to have a connection with the login-server [%s:%d] !" RETCODE, loginserverip, loginserverport);
 		}
-		close(fd);
-		delete_session(fd);
+		do_close(fd);
 		exit (0);
 	}
 
@@ -4368,7 +4367,6 @@ int ladmin_config_read(const char *cfgName) {
 void do_final(void) {
 
 	if (already_exit_function == 0) {
-		delete_session(login_fd);
 
 		if (defaultlanguage == 'F') {
 			printf("\033[0m----Fin de Ladmin (fin normale avec fermeture de tous les fichiers).\n");
@@ -4379,6 +4377,7 @@ void do_final(void) {
 		}
 
 		already_exit_function = 1;
+		do_close(login_fd);
 	}
 }
 
