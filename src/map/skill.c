@@ -1408,7 +1408,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if (skillnotok(skill, sd))
 				continue;
 
-			skilllv = (sd->autospell[i].lv > 0) ? sd->autospell[i].lv : 1;
+			skilllv = sd->autospell[i].lv?sd->autospell[i].lv:1;
+			if (skilllv < 0) skilllv = 1+rand()%(-skilllv);
+
 			rate = (!sd->state.arrow_atk) ? sd->autospell[i].rate : sd->autospell[i].rate / 2;
 
 			if (rand()%1000 > rate)
@@ -1569,12 +1571,12 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		struct unit_data *ud;
 		int i, skillid, skilllv, rate;
 
-		for (i = 0; i < MAX_PC_BONUS; i++) {
-			if (dstsd->autospell2[i].id == 0)
-				break;
+		for (i = 0; i < MAX_PC_BONUS && dstsd->autospell2[i].id; i++) {
 
 			skillid = (dstsd->autospell2[i].id > 0) ? dstsd->autospell2[i].id : -dstsd->autospell2[i].id;
-			skilllv = (dstsd->autospell2[i].lv > 0) ? dstsd->autospell2[i].lv : 1;
+			skilllv = dstsd->autospell2[i].lv?dstsd->autospell2[i].lv:1;
+			if (skilllv < 0) skilllv = 1+rand()%(-skilllv);
+
 			rate = ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) ?
 				dstsd->autospell2[i].rate : dstsd->autospell2[i].rate / 2;
 			

@@ -1121,13 +1121,20 @@ static struct Damage battle_calc_weapon_attack(
 				hitrate += 10*skill_lv;
 				break;
 			case KN_AUTOCOUNTER:
+			case PA_SHIELDCHAIN:
+			case NPC_WATERATTACK:
+			case NPC_GROUNDATTACK:
+			case NPC_FIREATTACK:
+			case NPC_WINDATTACK:
+			case NPC_POISONATTACK:
+			case NPC_HOLYATTACK:
+			case NPC_DARKNESSATTACK:
+			case NPC_UNDEADATTACK:
+			case NPC_TELEKINESISATTACK:
 				hitrate += 20;
 				break;
 			case KN_PIERCE:
 				hitrate += hitrate*(5*skill_lv)/100;
-				break;
-			case PA_SHIELDCHAIN:
-				hitrate += 20;
 				break;
 			case AS_SONICBLOW:
 				if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
