@@ -2077,8 +2077,10 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		nd->u.scr.ys = 0;
 	}
 
-	while ((p = strchr(w3,':'))) {
+	p = strchr(w3,':');
+	while (p) {
 		if (p[1] == ':') break;
+		p = strchr(p+1, ':');
 	}
 	if (p) {
 		*p = 0;
