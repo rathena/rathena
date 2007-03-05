@@ -20,6 +20,9 @@
 
 ========================
 03/06
+	* Added various new headgears thanks to Argatlahm [Playtester]
+	- some headgears might not be fully official, feel free to report bugs if you find any
+	- also updated item_db.sql
 	* Fixed some weapons and their prices [Playtester]
 	* Fixed Aegis name, price and weight of all special type items [Playtester]
 	- beware of exploits due to the changed prices
