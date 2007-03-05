@@ -1,0 +1,1 @@
+alter table `loginlog` modify `user` varchar(255) NOT NULL default '';
