@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/06
+	* Added the 2 new packet versions to packet_db.txt [Zephiris]
 03/02
 	* Updated the stun length to 5 secs of: Meteor Storm, Sonic Blow, Throw
 	  Stone, Sightless Raid, Smite, Cart Termination.

@@ -1,4 +1,7 @@
 Date	Added
+
+2007/03/06
+	* Added the two new packet versions to battle/client.conf [Zephiris]
 2007/03/05
 	* Removed mode_neg and frame_size from packet_athena.conf [ultramage]
 2007/02/16

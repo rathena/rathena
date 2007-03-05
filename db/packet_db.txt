@@ -819,5 +819,50 @@ packet_ver: 19
 //2006-10-17aSakexe
 0x028A,18
 
-// Add new packets here
+//2006-10-23aSakexe
+0x006d,110
+
+//2007-01-08aSakexe (http://www.eathena.ws/board/index.php?s=&showtopic=141398&view=findpost&p=779954)
 packet_ver: 20
+0x006d,110
+0x0072,30,useskilltoid,10:14:26
+0x007e,120,useskilltopos,10:19:23:38:40
+0x0085,14,changedir,10:13
+0x0089,11,ticksend,7
+0x008c,17,getcharnamerequest,13
+0x0094,17,movetokafra,4:13
+0x009b,35,wanttoconnection,7:21:26:30:34
+0x009f,21,useitem,7:17
+0x00a2,10,solvecharname,6
+0x00a7,8,walktoxy,5
+0x00f3,-1,globalmessage,2:4
+0x00f5,11,takeitem,7
+0x00f7,15,movefromkafra,3:11
+0x0113,40,useskilltopos,10:19:23:38
+0x0116,19,dropitem,11:17
+0x0190,10,actionrequest,4:9
+0x0193,2,closekafra,0
+
+//2007-02-12aSakexe (http://www.eathena.ws/board/index.php?s=&showtopic=141398&view=findpost&p=779954)
+packet_ver: 21
+0x006d,110
+0x0072,25,useskilltoid,6:10:21
+0x007e,102,useskilltopos,5:9:12:20:22
+0x0085,11,changedir,7:10
+0x0089,8,ticksend,4
+0x008c,11,getcharnamerequest,7
+0x0094,14,movetokafra,7:10
+0x009b,26,wanttoconnection,4:9:17:18:25
+0x009f,14,useitem,4:10
+0x00a2,15,solvecharname,11
+0x00a7,8,walktoxy,5
+0x00f3,-1,globalmessage,2:4
+0x00f5,8,takeitem,4
+0x00f7,22,movefromkafra,14:18
+0x0113,22,useskilltopos,5:9:12:20
+0x0116,10,dropitem,5:8
+0x0190,19,actionrequest,5:18
+0x0193,2,closekafra,0
+
+// Add new packets here
+packet_ver: 22
