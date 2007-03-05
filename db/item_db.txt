@@ -102,7 +102,7 @@
 604,Branch_Of_Dead_Tree,Dead Branch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-1,1,""; },{},{}
 605,Anodyne,Anodyne,0,2000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ENDURE,10000,1; },{},{}
 606,Aloebera,Aloevera,0,1500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_PROVOKE,30000,1; },{},{}
-607,Yggdrasilberry,Yggdrasil Berry,0,2,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
+607,Yggdrasilberry,Yggdrasil Berry,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
 608,Seed_Of_Yggdrasil,Yggdrasil Seed,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 609,Amulet,Amulet,2,100,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 610,Leaf_Of_Yggdrasil,Yggdrasil Leaf,11,4000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,1,"Resurrection"; },{},{}
@@ -142,59 +142,59 @@
 641,Contracts_In_Shadow,Contracts in Shadow,11,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1109; },{},{}
 642,Book_Of_Devil,Book of the Devil,11,1800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1101; },{},{}
 643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ bpet; },{},{}
-644,Gift_Box,Gift Box,2,2,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+644,Gift_Box,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 // ASPD Potions
 645,Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
 657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
-658,Union_Of_Tribe,Tribal Solidarity,2,1000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
+658,Union_Of_Tribe,Tribal Solidarity,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 // New Pet Tames
 659,Heart_Of_Her,Her Heart,11,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
-660,Prohibition_Red_Candle,Forbidden Red Candle,11,,10000,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
-661,Sway_Apron,Soft Apron,11,,10000,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
+660,Prohibition_Red_Candle,Forbidden Red Candle,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
+661,Sway_Apron,Soft Apron,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
 662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,240000,0; },{},{}
-663,Korea_Rice_Cake,Songpyun,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
+663,Korea_Rice_Cake,Songpyun,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
 664,Gift_Box_1,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 665,Gift_Box_2,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 666,Gift_Box_3,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 667,Gift_Box_4,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-668,Handsei,Red_Envelope,2,1,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
-669,Rice_Cake_Soup,Rice-Cake Soup,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
+668,Handsei,Red_Envelope,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
+669,Rice_Cake_Soup,Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
 // Coins
-670,Gold_Coin_Moneybag,Bag of Gold Coins,2,,10,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-671,Gold_Coin,Gold Coin,2,,10,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-672,Copper_Coin_Moneybag,Bag of Bronze Coins,2,,10,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-673,Copper_Coin,Bronze Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-674,Mithril_Coin,Mithril Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-675,Silver_Coin,Silver Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-676,Silver_Coin_Moneybag,Bag of Silver Coins,2,,10,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-677,White_Gold_Coin,Platinum Coin,2,,10,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+670,Gold_Coin_Moneybag,Bag of Gold Coins,2,100000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+671,Gold_Coin,Gold Coin,2,10000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+672,Copper_Coin_Moneybag,Bag of Bronze Coins,2,1000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+673,Copper_Coin,Bronze Coin,2,100,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+674,Mithril_Coin,Mithril Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+675,Silver_Coin,Silver Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+676,Silver_Coin_Moneybag,Bag of Silver Coins,2,50000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
+677,White_Gold_Coin,Platinum Coin,2,2000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == 4013) { sc_start SC_Poison,600000,0; sc_start SC_ASPDPOTION3,30000,0; } else percentheal -100,0; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,3,,,,,,{ itemheal 50,50; },{},{}
-680,Magical_Carnation,Magic Carnation,2,,10,1000,,,,,0xFFFFFFFF,7,3,,,,,,{ itemheal 25,0; },{},{}
+680,Magical_Carnation,Magic Carnation,2,,0,1000,,,,,0xFFFFFFFF,7,3,,,,,,{ itemheal 25,0; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 // ATK/MATK Potions
-682,Realgar_Wine,Distilled Fighting Spirit,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,30; },{},{}
-683,Exorcize_Herb,Herb of Incantation,0,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,30; },{},{}
-684,Durian,Durian,0,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKPOTION,60000,10; },{},{}
-685,RAMADAN,Ramadan,0,20,,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+682,Realgar_Wine,Distilled Fighting Spirit,0,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,30; },{},{}
+683,Exorcize_Herb,Herb of Incantation,0,,0,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,30; },{},{}
+684,Durian,Durian,0,15000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKPOTION,60000,10; },{},{}
+685,RAMADAN,Ramadan,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Scrolls
-686,Earth_Scroll_1_3,Level 3 Earth Spike,11,650,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,3,"Earth Spike Level 3"; },{},{}
-687,Earth_Scroll_1_5,Level 5 Earth Spike,11,1300,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,5,"Earth Spike Level 5"; },{},{}
-688,Cold_Scroll_1_3,Level 3 Cold Bolt,11,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,3,"Cold Bolt Level 3"; },{},{}
-689,Cold_Scroll_1_5,Level 5 Cold Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,5,"Cold Bolt Level 5"; },{},{}
-690,Fire_Scroll_1_3,Level 3 Fire Bolt,11,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,3,"Fire Bolt Level 3"; },{},{}
-691,Fire_Scroll_1_5,Level 5 Fire Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,5,"Fire bolt Level 5"; },{},{}
-692,Wind_Scroll_1_3,Level 3 Lightening Bolt,11,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,3,"Lightning Bolt Level 3"; },{},{}
-693,Wind_Scroll_1_5,Level 5 Lightening Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,5,"Lightning Bolt Level 5"; },{},{}
-694,Ghost_Scroll_1_3,Level 3 Soul Strike,11,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,3,"Soul Strike Level 3"; },{},{}
-695,Ghost_Scroll_1_5,Level 5 Soul Strike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,5,"Soul Strike Level 5"; },{},{}
-696,Fire_Scroll_2_1,Level 1 Fire Ball,11,500,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,1,"Fire Ball Level 1"; },{},{}
-697,Fire_Scroll_2_5,Level 5 Fire Ball,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,5,"Fire Ball Level 5"; },{},{}
-698,Fire_Scroll_3_1,Level 1 Fire Wall,11,350,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,1,"Fire Wall Level 1"; },{},{}
-699,Fire_Scroll_3_5,Level 5 Fire Wall,11,700,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,5,"Fire Wall Level 5"; },{},{}
-700,Cold_Scroll_2_1,Level 1 Frost Diver,11,350,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,1,"Frost Diver Level 1"; },{},{}
+686,Earth_Scroll_1_3,Level 3 Earth Spike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,3,"Earth Spike Level 3"; },{},{}
+687,Earth_Scroll_1_5,Level 5 Earth Spike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,5,"Earth Spike Level 5"; },{},{}
+688,Cold_Scroll_1_3,Level 3 Cold Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,3,"Cold Bolt Level 3"; },{},{}
+689,Cold_Scroll_1_5,Level 5 Cold Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,5,"Cold Bolt Level 5"; },{},{}
+690,Fire_Scroll_1_3,Level 3 Fire Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,3,"Fire Bolt Level 3"; },{},{}
+691,Fire_Scroll_1_5,Level 5 Fire Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,5,"Fire bolt Level 5"; },{},{}
+692,Wind_Scroll_1_3,Level 3 Lightening Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,3,"Lightning Bolt Level 3"; },{},{}
+693,Wind_Scroll_1_5,Level 5 Lightening Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,5,"Lightning Bolt Level 5"; },{},{}
+694,Ghost_Scroll_1_3,Level 3 Soul Strike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,3,"Soul Strike Level 3"; },{},{}
+695,Ghost_Scroll_1_5,Level 5 Soul Strike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,5,"Soul Strike Level 5"; },{},{}
+696,Fire_Scroll_2_1,Level 1 Fire Ball,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,1,"Fire Ball Level 1"; },{},{}
+697,Fire_Scroll_2_5,Level 5 Fire Ball,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,5,"Fire Ball Level 5"; },{},{}
+698,Fire_Scroll_3_1,Level 1 Fire Wall,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,1,"Fire Wall Level 1"; },{},{}
+699,Fire_Scroll_3_5,Level 5 Fire Wall,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,5,"Fire Wall Level 5"; },{},{}
+700,Cold_Scroll_2_1,Level 1 Frost Diver,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,1,"Frost Diver Level 1"; },{},{}
 // Etc Items
 //===================================================================
 701,Ora_Ora,Ora Ora,3,,27500,200,,,,,,,,,,,,,{},{},{}
@@ -2464,35 +2464,35 @@
 // More Usable Items
 //===================================================================
 // Scrolls
-12000,Cold_Scroll_2_5,Level 5 Frost Diver,11,700,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,5,"Frost Diver Level 5"; },{},{}
+12000,Cold_Scroll_2_5,Level 5 Frost Diver,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,5,"Frost Diver Level 5"; },{},{}
 12001,Holy_Scroll_1_3,Level 3 Heal,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,3,"Heal Level 3"; },{},{}
 12002,Holy_Scroll_1_5,Level 5 Heal,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,5,"Heal Level 5"; },{},{}
-12003,Holy_Scroll_2_1,Level 1 Teleport,11,100,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 26,1,"Teleport Level 1"; },{},{}
+12003,Holy_Scroll_2_1,Level 1 Teleport,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 26,1,"Teleport Level 1"; },{},{}
 // Arrow Quivers
-12004,Arrow_Container,Quiver,2,500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1750,500; },{},{}
-12005,Iron_Arrow_Container,Iron Arrow Quiver,2,1000,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1770,500; },{},{}
-12006,Steel_Arrow_Container,Steel Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1753,500; },{},{}
-12007,Ori_Arrow_Container,Oridecon Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1765,500; },{},{}
-12008,Fire_Arrow_Container,Fire Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1752,500; },{},{}
-12009,Silver_Arrow_Container,Silver Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1751,500; },{},{}
-12010,Wind_Arrow_Container,Wind Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1755,500; },{},{}
-12011,Stone_Arrow_Container,Stone Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1756,500; },{},{}
-12012,Crystal_Arrow_Container,Crystal Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1754,500; },{},{}
-12013,Shadow_Arrow_Container,Shadow Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1767,500; },{},{}
-12014,Imma_Arrow_Container,Immaterial Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1757,500; },{},{}
-12015,Rusty_Arrow_Container,Rusty Arrow Quiver,2,1500,,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1762,500; },{},{}
+12004,Arrow_Container,Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1750,500; },{},{}
+12005,Iron_Arrow_Container,Iron Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1770,500; },{},{}
+12006,Steel_Arrow_Container,Steel Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1753,500; },{},{}
+12007,Ori_Arrow_Container,Oridecon Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1765,500; },{},{}
+12008,Fire_Arrow_Container,Fire Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1752,500; },{},{}
+12009,Silver_Arrow_Container,Silver Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1751,500; },{},{}
+12010,Wind_Arrow_Container,Wind Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1755,500; },{},{}
+12011,Stone_Arrow_Container,Stone Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1756,500; },{},{}
+12012,Crystal_Arrow_Container,Crystal Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1754,500; },{},{}
+12013,Shadow_Arrow_Container,Shadow Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1767,500; },{},{}
+12014,Imma_Arrow_Container,Immaterial Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1757,500; },{},{}
+12015,Rusty_Arrow_Container,Rusty Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1762,500; },{},{}
 // Speed Potions
-12016,Speed_Up_Potion,Speed Potion,0,1000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp1,5000,0; },{},{}
-12017,Slow_Down_Potion,Slow Potion,0,1000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12018,Fire_Cracker,Firecracker,2,100,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(256); },{},{}
-12019,Holy_Egg,Holy Egg,2,,10,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,2,"Resurrection"; },{},{}
+12016,Speed_Up_Potion,Speed Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp1,5000,0; },{},{}
+12017,Slow_Down_Potion,Slow Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12018,Fire_Cracker,Firecracker,2,,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(256); },{},{}
+12019,Holy_Egg,Holy Egg,2,,1,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,2,"Resurrection"; },{},{}
 12020,Water_Of_Darkness,Cursed_Water,0,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SHADOWWEAPON, 1200000, 1; },{},{}
-12021,Pork_Belly,Pork,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
-12022,Spareribs,Galbi,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
-12023,Giftbox_China,Wrapped Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-12024,Red_Pouch_Of_Surprise,Red Pouch,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12025,Egg_Boy,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12026,Egg_Girl,Dano Festival Egg,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12021,Pork_Belly,Pork,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
+12022,Spareribs,Galbi,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
+12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+12024,Red_Pouch_Of_Surprise,Red Pouch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Effect Boxes
 12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
 12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,30000,0; },{},{}
@@ -2502,11 +2502,11 @@
 12032,Box_Of_Storm,Box of Storms,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,0; },{},{}
 12033,Box_Of_Sunlight,Box of Sunlight,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,20000,0; },{},{}
 12034,Painting_Box,Box of Panting,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(100)<30) sc_start SC_Silence,30000,0; },{},{}
-12035,Lotto_Box01,Lotto Box 01,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
-12036,Lotto_Box02,Lotto Box 02,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7371,7380),1; },{},{}
-12037,Lotto_Box03,Lotto Box 03,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7381,7390),1; },{},{}
-12038,Lotto_Box04,Lotto Box 04,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_LottoBox),1; },{},{}
-12039,Lotto_Box05,Lotto Box 05,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7542,7546),1; },{},{}
+12035,Lotto_Box01,Lotto Box 01,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
+12036,Lotto_Box02,Lotto Box 02,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7371,7380),1; },{},{}
+12037,Lotto_Box03,Lotto Box 03,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7381,7390),1; },{},{}
+12038,Lotto_Box04,Lotto Box 04,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_LottoBox),1; },{},{}
+12039,Lotto_Box05,Lotto Box 05,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7542,7546),1; },{},{}
 12040,Stone_Of_Intelligence_,Stone of Sage,2,,50000,300,,,,,0xFFFFFFFF,7,2,,,,,,{ homevolution ; },{},{}
 // Mixed Foods (+1 to +5)
 12041,Str_Dish01,Fried Grasshopper Legs,0,2000,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 1; percentheal 5,0; },{},{}
@@ -2585,18 +2585,18 @@
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}
 12113,Vermilion_The_Beach,Vermilion on the Beach,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Stun,10000,1; },{},{}
 // Elemental Converters
-12114,Flame_Converter,Flame Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FIREWEAPON,180000,1; },{},{}
-12115,Frost_Converter,Frost Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,1; },{},{}
-12116,Seismic_Converter,Seismic Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EARTHWEAPON,180000,1; },{},{}
-12117,Lighting_Converter,Lightning Elemental Converter,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WINDWEAPON,180000,1; },{},{}
+12114,Flame_Converter,Flame Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FIREWEAPON,180000,1; },{},{}
+12115,Frost_Converter,Frost Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,1; },{},{}
+12116,Seismic_Converter,Seismic Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EARTHWEAPON,180000,1; },{},{}
+12117,Lighting_Converter,Lightning Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WINDWEAPON,180000,1; },{},{}
 // Elemental Resistance Potions
-12118,Resist_Fire_Potion,Fire Resist Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; },{},{}
-12119,Resist_Cold_Potion,Cold Resist Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; },{},{}
-12120,Resist_Earth_Potion,Earth Resist Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Earth,20,Ele_Fire,-15; },{},{}
-12121,Resist_Wind_Potion,Thunder Resist Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Wind,20,Ele_Earth,-15; },{},{}
+12118,Resist_Fire_Potion,Fire Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; },{},{}
+12119,Resist_Cold_Potion,Cold Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; },{},{}
+12120,Resist_Earth_Potion,Earth Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Earth,20,Ele_Fire,-15; },{},{}
+12121,Resist_Wind_Potion,Thunder Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Wind,20,Ele_Earth,-15; },{},{}
 12122,Sesame_Pastry,Sesame Pastry,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_HitFood,1200000,30; },{},{}
-12123,Honey_Pastry,Honey Pastry,0,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FleeFood,1200000,30; },{},{}
-12124,Rainbow_Cake,Rainbow Cake,0,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BATKFood,1200000,10; sc_start SC_MATKFood,120000,10; },{},{}
+12123,Honey_Pastry,Honey Pastry,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FleeFood,1200000,30; },{},{}
+12124,Rainbow_Cake,Rainbow Cake,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BATKFood,1200000,10; sc_start SC_MATKFood,120000,10; },{},{}
 // Cooking Sets
 12125,Outdoor_Cooker,Outdoor Cooking Kit,2,500,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
 12126,Home_Cooking_Set,Home Cooking Kit,2,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 12; },{},{}
@@ -2604,66 +2604,77 @@
 12128,Imperial_Cooking_Kits,Royal Cooking Kit,2,5000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 14; },{},{}
 12129,Fantastic_Cooking_Kits,Fantastic Cooking Kit,2,10000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 15; },{},{}
 //
-12130,Cookie_Bag,Cookie Bag,2,,10,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; },{},{}
-12131,Lucky_Potion,Lucky Potion,0,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12132,Red_Bag,Santa's Bag,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
-12133,McDonald's_Ice_Cone,McDonald's Ice Cone,0,50,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
-12134,Red_Envelope_,Red Envelope,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
+12130,Cookie_Bag,Cookie Bag,2,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; },{},{}
+12131,Lucky_Potion,Lucky Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12132,Red_Bag,Santa's Bag,2,,0,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
+12133,Ice_Cream_,McDonald's Ice Cone,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
+12134,Red_Envelope_,Red Envelope,2,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 12135,Green_Ale,Green Ale,2,,10,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; if(rand(100) >= 90)sc_start SC_Confusion,10000,0; },{},{}
-12136,Women's_Bundle,Women's Bundle,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
-12137,First_Stage,First Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12138,Second_Stage,Second Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12139,Third_Stage,Third Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12140,Fourth_Stage,Fourth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12141,Fifth_Stage,Fifth Stage,2,,10,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12142,Book_of_Magic,Book of Magic,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1800000, 10; },{},{}
-12143,Red_Can,Red Can,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,25; },{},{}
-12144,Lightning_Sphere_Pack,Lightning Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13204,500; },{},{}
-12145,Blind_Sphere_Pack,Blind Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13206,500; },{},{}
-12146,Poison_Sphere_Pack,Poison Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13205,500; },{},{}
-12147,Freezing_Sphere_Pack,Freezing Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13207,500; },{},{}
-12148,Flare_Sphere_Pack,Flare Sphere Pack,2,,10,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13203,500; },{},{}
-12149,Bullet_Casing,Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; },{},{}
-12150,Shell_of_Blood_Casing,Shell of Blood Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; },{},{}
-12151,Silver_Bullet_Casing,Silver Bullet Casing,2,,10,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; },{},{}
-12152,Special_Gift,Special Gift,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12153,Archer_Mercenary_Summon_Scroll_Level_1,Archer Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12154,Archer_Mercenary_Summon_Scroll_Level_2,Archer Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12155,Archer_Mercenary_Summon_Scroll_Level_3,Archer Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12156,Archer_Mercenary_Summon_Scroll_Level_4,Archer Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12157,Archer_Mercenary_Summon_Scroll_Level_5,Archer Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12158,Archer_Mercenary_Summon_Scroll_Level_6,Archer Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12159,Archer_Mercenary_Summon_Scroll_Level_7,Archer Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12160,Archer_Mercenary_Summon_Scroll_Level_8,Archer Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12161,Archer_Mercenary_Summon_Scroll_Level_9,Archer Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12162,Archer_Mercenary_Summon_Scroll_Level_10,Archer Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12163,Swordsman_Mercenary_Summon_Scroll_Level_1,Swordsman Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12164,Swordsman_Mercenary_Summon_Scroll_Level_2,Swordsman Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12165,Swordsman_Mercenary_Summon_Scroll_Level_3,Swordsman Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12166,Swordsman_Mercenary_Summon_Scroll_Level_4,Swordsman Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12167,Swordsman_Mercenary_Summon_Scroll_Level_5,Swordsman Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12168,Swordsman_Mercenary_Summon_Scroll_Level_6,Swordsman Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12169,Swordsman_Mercenary_Summon_Scroll_Level_7,Swordsman Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12170,Swordsman_Mercenary_Summon_Scroll_Level_8,Swordsman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12171,Swordsman_Mercenary_Summon_Scroll_Level_9,Swordsman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12172,Swordsman_Mercenary_Summon_Scroll_Level_10,Swordsman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12173,Spearman_Mercenary_Summon_Scroll_Level_1,Spearman Mercenary Summon Scroll Level 1,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12174,Spearman_Mercenary_Summon_Scroll_Level_2,Spearman Mercenary Summon Scroll Level 2,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12175,Spearman_Mercenary_Summon_Scroll_Level_3,Spearman Mercenary Summon Scroll Level 3,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12176,Spearman_Mercenary_Summon_Scroll_Level_4,Spearman Mercenary Summon Scroll Level 4,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12177,Spearman_Mercenary_Summon_Scroll_Level_5,Spearman Mercenary Summon Scroll Level 5,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12178,Spearman_Mercenary_Summon_Scroll_Level_6,Spearman Mercenary Summon Scroll Level 6,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12179,Spearman_Mercenary_Summon_Scroll_Level_7,Spearman Mercenary Summon Scroll Level 7,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12180,Spearman_Mercenary_Summon_Scroll_Level_8,Spearman Mercenary Summon Scroll Level 8,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12181,Spearman_Mercenary_Summon_Scroll_Level_9,Spearman Mercenary Summon Scroll Level 9,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12182,Spearman_Mercenary_Summon_Scroll_Level_10,Spearman Mercenary Summon Scroll Level 10,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12183,Holy_Arrow_Container,Holy Arrow Quiver,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
-12184,Mercenary's_Red_Potion,Mercenary's Red Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12185,Mercenary's_Blue_Potion,Mercenary's Blue Potion,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12186,Old_Red_Box,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12187,Old_Green_Box,Old Green Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12188,Fantastic_Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
-12189,Old_Red_Box_,Old Red Box,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12136,Women's_Bundle,Women's Bundle,2,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
+12137,1st_Stage_Prize,First Stage,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12138,2nd_Stage_Prize,Second Stage,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12139,3rd_Stage_Prize,Third Stage,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12140,4th_Stage_Prize,Fourth Stage,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12141,5th_Stage_Prize,Fifth Stage,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12142,Magic_Book,Book of Magic,2,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1800000, 10; },{},{}
+12143,Red_Can,Red Can,2,50000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,25; },{},{}
+12144,Sphere_Case_Wind,Lightning Sphere Pack,2,,1,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13204,500; },{},{}
+12145,Sphere_Case_Darkness,Blind Sphere Pack,2,,1,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13206,500; },{},{}
+12146,Sphere_Case_Poison,Poison Sphere Pack,2,,1,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13205,500; },{},{}
+12147,Sphere_Case_Water,Freezing Sphere Pack,2,,1,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13207,500; },{},{}
+12148,Sphere_Case_Fire,Flare Sphere Pack,2,,1,350,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13203,500; },{},{}
+12149,Bullet_Case,Bullet Casing,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13200,500; },{},{}
+12150,Bullet_Case_Blood,Shell of Blood Casing,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13202,500; },{},{}
+12151,Bullet_Case_Silver,Silver Bullet Casing,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13201,500; },{},{}
+12152,Special_Present,Special Gift,2,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12153,Merc_Archer_Scroll_Lv1,Archer Mercenary Summon Scroll Level 1,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12154,Merc_Archer_Scroll_Lv2,Archer Mercenary Summon Scroll Level 2,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12155,Merc_Archer_Scroll_Lv3,Archer Mercenary Summon Scroll Level 3,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12156,Merc_Archer_Scroll_Lv4,Archer Mercenary Summon Scroll Level 4,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12157,Merc_Archer_Scroll_Lv5,Archer Mercenary Summon Scroll Level 5,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12158,Merc_Archer_Scroll_Lv6,Archer Mercenary Summon Scroll Level 6,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12159,Merc_Archer_Scroll_Lv7,Archer Mercenary Summon Scroll Level 7,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12160,Merc_Archer_Scroll_Lv8,Archer Mercenary Summon Scroll Level 8,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12161,Merc_Archer_Scroll_Lv9,Archer Mercenary Summon Scroll Level 9,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12162,Merc_Archer_Scroll_Lv10,Archer Mercenary Summon Scroll Level 10,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12163,Merc_Sword_Scroll_Lv1,Swordsman Mercenary Summon Scroll Level 1,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12164,Merc_Sword_Scroll_Lv2,Swordsman Mercenary Summon Scroll Level 2,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12165,Merc_Sword_Scroll_Lv3,Swordsman Mercenary Summon Scroll Level 3,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12166,Merc_Sword_Scroll_Lv4,Swordsman Mercenary Summon Scroll Level 4,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12167,Merc_Sword_Scroll_Lv5,Swordsman Mercenary Summon Scroll Level 5,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12168,Merc_Sword_Scroll_Lv6,Swordsman Mercenary Summon Scroll Level 6,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12169,Merc_Sword_Scroll_Lv7,Swordsman Mercenary Summon Scroll Level 7,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12170,Merc_Sword_Scroll_Lv8,Swordsman Mercenary Summon Scroll Level 8,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12171,Merc_Sword_Scroll_Lv9,Swordsman Mercenary Summon Scroll Level 9,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12172,Merc_Sword_Scroll_Lv10,Swordsman Mercenary Summon Scroll Level 10,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12173,Merc_Spear_Scroll_Lv1,Spearman Mercenary Summon Scroll Level 1,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12174,Merc_Spear_Scroll_Lv2,Spearman Mercenary Summon Scroll Level 2,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12175,Merc_Spear_Scroll_Lv3,Spearman Mercenary Summon Scroll Level 3,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12176,Merc_Spear_Scroll_Lv4,Spearman Mercenary Summon Scroll Level 4,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12177,Merc_Spear_Scroll_Lv5,Spearman Mercenary Summon Scroll Level 5,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12178,Merc_Spear_Scroll_Lv6,Spearman Mercenary Summon Scroll Level 6,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12179,Merc_Spear_Scroll_Lv7,Spearman Mercenary Summon Scroll Level 7,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12180,Merc_Spear_Scroll_Lv8,Spearman Mercenary Summon Scroll Level 8,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12181,Merc_Spear_Scroll_Lv9,Spearman Mercenary Summon Scroll Level 9,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12182,Merc_Spear_Scroll_Lv10,Spearman Mercenary Summon Scroll Level 10,2,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12183,Holy_Arrow_Container,Holy Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1772,500; },{},{}
+12184,Red_Mercenary_Potion,Mercenary's Red Potion,2,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12185,Blue_Mercenary_Potion,Mercenary's Blue Potion,2,1000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12186,Red_Box,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12187,Green_Box,Old Green Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12188,Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
+12189,Red_Box_,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12190,Moon_Cake,Moon Cake,2,,1,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12191,Special_Moon_Cake,Special Moon Cake,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12192,Pumpkin_Pie,Pumpkin Pie,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12193,Brizel,Brizel,2,,10,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12194,Present_From_Home,Present from Home,2,,10,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12195,Rich_Rice_Cake,Rich Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12196,Filling_Rice_Cake,Filling Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12197,Salty_Rice_Cake,Salty Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12198,Lucky_Rice_Cake,Lucky Rice Cake,2,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12199,Rice_Scroll,Rice Scroll,2,,0,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12200,Event_Cake,Event Cake,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // More Weapons
 //===================================================================
 // Daggers

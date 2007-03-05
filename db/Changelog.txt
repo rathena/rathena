@@ -20,6 +20,8 @@
 
 ========================
 03/06
+	* Fixed Aegis name, price and weight of all special type items [Playtester]
+	- beware of exploits due to the changed prices
 	* Soul Breaker no longer ignores elemental adjustments. [Skotlex]
 	* Added the 2 new packet versions to packet_db.txt [Zephiris]
 03/02
