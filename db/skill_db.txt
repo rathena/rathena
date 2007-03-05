@@ -416,7 +416,7 @@
 376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0	//ASC_KATAR#Advanced Katar Mastery#
 //377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#Hallucination Walk#
 378,0,6,4,5,0x1,0,5,1,no,0,0,0,weapon,0	//ASC_EDP#Deadly Poison Enchantment#
-379,9,6,1,-1,0x18,0,10,1,yes,0,0,0,weapon,0	//ASC_BREAKER#Soul Destroyer#
+379,9,6,1,-1,0x8,0,10,1,yes,0,0,0,weapon,0	//ASC_BREAKER#Soul Destroyer#
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	//SN_SIGHT#Falcon Eyes#
 381,5,8,1,0,0x40,0,5,1,yes,0,0,0,misc,0	//SN_FALCONASSAULT#Falcon Assault#
 382,4,8,1,-1,0,2,5,1,yes,0,0,0,weapon,0	//SN_SHARPSHOOTING#Focused Arrow Strike#

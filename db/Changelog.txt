@@ -20,6 +20,7 @@
 
 ========================
 03/06
+	* Soul Breaker no longer ignores elemental adjustments. [Skotlex]
 	* Added the 2 new packet versions to packet_db.txt [Zephiris]
 03/02
 	* Updated the stun length to 5 secs of: Meteor Storm, Sonic Blow, Throw
