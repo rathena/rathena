@@ -20,6 +20,9 @@
 
 ========================
 03/06
+	* Corrected the NK values of skills (0x08 -> 0x80): Self Destruction,
+	  Smoking, Pressure, Fling, Zeny Nage, BioExplosion
+	* Soul Burn & Gravitation got NK 0x80 (previously hardcoded) [Skotlex]
 	* Added various new headgears thanks to Argatlahm [Playtester]
 	- some headgears might not be fully official, feel free to report bugs if you find any
 	- also updated item_db.sql

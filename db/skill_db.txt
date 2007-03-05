@@ -6,14 +6,15 @@
 // 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
 // 05 pl attributes (0- neutral, 1- water, 2- earth, 3- fire, 4- wind,
 //    5- poison, 6- saint, 7- darkness, 8- sense, 9- immortality)
-// 06 nk (
+// 06 nk (skill damage properties):
 //    0x01 - No damage skill
 //    0x02 - Has splash area
 //    0x04 - Damage should be split among targets
-//    0x08 - Skill ignores caster's % damage cards
+//    0x08 - Skill ignores caster's % damage cards (misc type always ignores)
 //    0x10 - Skill ignores elemental adjustments
 //    0x20 - Skill ignores target's defense (misc type always ignores)
 //    0x40 - Skill ignores target's flee (magic type always ignores)
+//    0x80 - Skill ignores target's def cards
 // 07 splash/effect range (-1 for screen-wide)
 // 08 MaxLv
 // 09 Number of hits (when positive, damage is increased by hits, 
@@ -210,7 +211,7 @@
 170,-1,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
 171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
 172,-1,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
-173,5,6,4,3,0x5A,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
+173,5,6,4,3,0xD2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
 174,-1,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
 175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
 176,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
@@ -232,7 +233,7 @@
 192,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_MAGICALATTACK#Demon Shock Attack#
 193,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	//NPC_METAMORPHOSIS#Metamorphosis#
 194,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	//NPC_PROVOCATION#Provocation#
-195,0,6,4,0,0x58,0,10,1,no,0,0x2,0,misc,0	//NPC_SMOKING#Smoking#
+195,0,6,4,0,0xD0,0,10,1,no,0,0x2,0,misc,0	//NPC_SMOKING#Smoking#
 196,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0	//NPC_SUMMONSLAVE#Follower Summons#
 197,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	//NPC_EMOTION#Emotion#
 198,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0	//NPC_TRANSFORMATION#Transformation#
@@ -404,7 +405,7 @@
 364,0,0,0,0,0,0,10,1,no,0,0,0,magic,0	//HW_SOULDRAIN#Soul Drain#
 365,9,8,1,-1,0,0,1,1,yes,0,0,0,weapon,0	//HW_MAGICCRASHER#Stave Crasher#
 366,0,6,4,0,0x1,0,10,1,no,0,0,0,magic,0	//HW_MAGICPOWER#Mystical Amplification#
-367,9,8,1,0,0x58,0,5,1,no,0,0,0,misc,0	//PA_PRESSURE#Gloria Domini#
+367,9,8,1,0,0xD0,0,5,1,no,0,0,0,misc,0	//PA_PRESSURE#Gloria Domini#
 368,0,6,4,0,0x61,0,5,1,yes,0,0,0,weapon,0	//PA_SACRIFICE# Martyr's Reckoning#
 369,0,6,4,0,0x41,0,10,1,yes,0,0,0,misc,0	//PA_GOSPEL#Battle Chant#
 370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3	//CH_PALMSTRIKE#Raging Palm Strike#
@@ -412,7 +413,7 @@
 372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
 373,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#Health Conversion#
 374,9,6,16,0,0x1,0,1,1,yes,0,0x1E00,0,none,0	//PF_SOULCHANGE#Soul Exhale#
-375,9,6,1,0,0x18,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
+375,9,6,1,0,0x98,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
 376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0	//ASC_KATAR#Advanced Katar Mastery#
 //377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#Hallucination Walk#
 378,0,6,4,5,0x1,0,5,1,no,0,0,0,weapon,0	//ASC_EDP#Deadly Poison Enchantment#
@@ -521,7 +522,7 @@
 481,0,0,0,0,0,0,5,0,no,0,0,0,none,0	//HP_MANARECHARGE#Mana Recharge#
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0	//PF_DOUBLECASTING#Double Casting#
 483,9,6,2,0,0x1,1,1,1,no,0,0,0,none,0	//HW_GANBANTEIN#Ganbantein#
-484,9,6,2,2,0x31,0,5,1,yes,0,0,0,magic,0	//HW_GRAVITATION#Gravity Field#
+484,9,6,2,2,0xB1,0,5,1,yes,0,0,0,magic,0	//HW_GRAVITATION#Gravity Field#
 485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0	//WS_CARTTERMINATION#Cart Termination#
 486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0	//WS_OVERTHRUSTMAX#Maximum Power Thrust#
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0	//CG_LONGINGFREEDOM#Longing for Freedom#
@@ -538,7 +539,7 @@
 498,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0	//AM_TWILIGHT3#Twilight Alchemy 3#
 499,-9,8,4,-1,0,0,1,2,no,0,0x208,0,weapon,0	//HT_POWER#Beast Strafing#
 500,0,6,4,0,0x40,0,5,1,no,0,0,0,misc,0	//GS_GLITTERING#Flip the Coin#
-501,9,6,1,-1,0x58,0,1,1,no,0,0,0,misc,0	//GS_FLING#Fling#
+501,9,6,1,-1,0xD0,0,1,1,no,0,0,0,misc,0	//GS_FLING#Fling#
 502,-9,8,1,-1,0,0,1,3,no,0,0,0,weapon,0	//GS_TRIPLEACTION#Triple Action#
 503,-9,6,1,-1,0x8,0,1,1,no,0,0,0,weapon,0	//GS_BULLSEYE#Bulls Eye#
 504,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0	//GS_MADNESSCANCEL#Madness Canceler#
@@ -563,7 +564,7 @@
 523,9,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0	//NJ_SYURIKEN#NJ_SYURIKEN#
 524,9,8,1,-1,0x40,0,5,3,no,0,0,0,weapon,0	//NJ_KUNAI#NJ_KUNAI#
 525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0,0,weapon,0	//NJ_HUUMA#NJ_HUUMA#
-526,9,6,1,0,0x58,0,10,1,no,0,0,0,misc,0	//NJ_ZENYNAGE#NJ_ZENYNAGE#
+526,9,6,1,0,0xD0,0,10,1,no,0,0,0,misc,0	//NJ_ZENYNAGE#NJ_ZENYNAGE#
 527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3	//NJ_TATAMIGAESHI#NJ_TATAMIGAESHI#
 528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//NJ_KASUMIKIRI#NJ_KASUMIKIRI#
 529,7:9:11:13:15,6,2,0,0x1,0,5,1,no,0,0,0,none,0	//NJ_SHADOWJUMP#NJ_SHADOWJUMP#
@@ -618,7 +619,7 @@
 8013,9,6,1,0,0,0,5,1:2:3:4:5,no,0,0,0,magic,0	//HVAN_CAPRICE
 8014,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0	//HVAN_CHAOTIC
 8015,0,0,0,0,0x1,0,5,0,no,0,0,0,none,0	//HVAN_INSTRUCT
-8016,4,6,4,-1,0x5A,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
+8016,4,6,4,-1,0xD2,4,3,1,no,0,0,0,misc,0	//HVAN_EXPLOSION
 
 10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_APPROVAL#Approval#
 10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0	//GD_KAFRACONTRACT#Kafra Contract#

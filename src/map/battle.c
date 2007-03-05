@@ -307,7 +307,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		}
 	
 		if(sc->data[SC_AUTOGUARD].timer != -1 && flag&BF_WEAPON &&
-			!(skill_get_nk(skill_num)&NK_NO_CARDFIX) &&
+			!(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) &&
 			rand()%100 < sc->data[SC_AUTOGUARD].val2) {
 			int delay;
 			clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sc->data[SC_AUTOGUARD].val1,1);
@@ -363,7 +363,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 		if ((sc->data[SC_UTSUSEMI].timer != -1 || sc->data[SC_BUNSINJYUTSU].timer != -1)
 		&& 
-			flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX))
+			flag&BF_WEAPON && !(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK))
 		{
 			if (sc->data[SC_UTSUSEMI].timer != -1) {
 				clif_specialeffect(bl, 462, AREA);
@@ -1845,7 +1845,7 @@ static struct Damage battle_calc_weapon_attack(
 		}
 
 		//Card Fix, sd side
-		if ((wd.damage || wd.damage2) && !(nk&NK_NO_CARDFIX))
+		if ((wd.damage || wd.damage2) && !(nk&NK_NO_CARDFIX_ATK))
 		{
 			short cardfix = 1000, cardfix_ = 1000;
 			short t_race2 = status_get_race2(target);	
@@ -1918,17 +1918,21 @@ static struct Damage battle_calc_weapon_attack(
 		}
 	} //if (sd)
 
-	//Card Fix, tsd side - Cards always apply on the target. [Skotlex]
-	if (tsd) {
+	//Card Fix, tsd sid
+	if (tsd && !(nk&NK_NO_CARDFIX_DEF))
+	{
 		short s_race2,s_class;
 		short cardfix=1000;
 
 		s_race2 = status_get_race2(src);
 		s_class = status_get_class(src);
 
-		cardfix=cardfix*(100-tsd->subele[s_ele])/100;
-		if (flag.lh && s_ele_ != s_ele)
-			cardfix=cardfix*(100-tsd->subele[s_ele_])/100;
+		if (!(nk&NK_NO_ELEFIX))
+		{
+			cardfix=cardfix*(100-tsd->subele[s_ele])/100;
+			if (flag.lh && s_ele_ != s_ele)
+				cardfix=cardfix*(100-tsd->subele[s_ele_])/100;
+		}
 		cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
  		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
@@ -2364,7 +2368,7 @@ struct Damage battle_calc_magic_attack(
 		if (!(nk&NK_NO_ELEFIX))
 			ad.damage=battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
-		if (sd && !(nk&NK_NO_CARDFIX)) {
+		if (sd && !(nk&NK_NO_CARDFIX_ATK)) {
 			short t_class = status_get_class(target);
 			short cardfix=1000;
 
@@ -2383,8 +2387,8 @@ struct Damage battle_calc_magic_attack(
 				MATK_RATE(cardfix/10);
 		}
 
-		if (tsd && skill_num != HW_GRAVITATION && skill_num != PF_SOULBURN)
-	  	{ //Card fixes always apply on the target side. [Skotlex]
+		if (tsd && !(nk&NK_NO_CARDFIX_DEF))
+	  	{	//Target cards.
 			short s_race2=status_get_race2(src);
 			short s_class= status_get_class(src);
 			short cardfix=1000;
@@ -2605,7 +2609,7 @@ struct Damage  battle_calc_misc_attack(
 		}
 	}
 
-	if(md.damage && tsd && !(nk&NK_NO_CARDFIX)){
+	if(md.damage && tsd && !(nk&NK_NO_CARDFIX_DEF)){
 		int cardfix = 10000;
 		int race2 = status_get_race2(src);
 		if (!(nk&NK_NO_ELEFIX))
