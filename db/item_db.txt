@@ -1790,7 +1790,7 @@
 5207,Golden_Ring,Angel Blessing,5,20,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,0,260,{ bonus bLuk,1; bonus2 bSubEle,Ele_Holy,5; },{},{}
 5208,Rideword_Hat,Rideword Hat,5,,10,300,,2,,1,0xFFFFFFFE,7,2,256,,40,1,262,{ bonus2 bHPDrainRate,5,8; bonus2 bSPDrainRate,1,4; bonus2 bHPLossRate,10,5000; },{},{}
 5209,Baseball_Cap__,iRO Baseball Cap,5,,10,300,,2,,0,0xFFFFFFFE,7,2,256,,,1,263,{},{},{}
-5210,Flying_Angel,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bInt,1; bonus bAgi,1; bonus bCastrate,-3; bonus bAspdAddRate,3; },{},{}
+5210,Flying_Angel,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bCastrate,-3; bonus bAspdRate,3; },{},{}
 5211,Ribbon_Hat,Ribbon Hat,5,,10,200,,2,,1,0xFFFFFFFF,7,2,256,,20,1,265,{ bonus bMdef,7; },{},{}
 5212,Solar_Panels,Solar Panels,5,,10,1000,,3,,1,0xFFFFFFFF,7,2,256,,30,1,266,{ bonus bMaxHP,50; bonus bMaxSP,10; skill 24,1; },{},{}
 5213,Rabbit_Ears,Rabbit Ears,5,,10,200,,2,,0,0xFFFFFFFF,7,2,256,,,1,267,{ bonus bAgi,2; bonus bMdef,3; },{},{}
@@ -1839,7 +1839,7 @@
 5263,Pagdayaw,Pagdayaw,5,,10,100,,1,,0,0xFFFFFFFE,7,2,769,,20,1,303,{ bonus2 bSubEle,1,1; bonus2 bSubEle,2,1; bonus2 bSubEle,3,1; bonus2 bSubEle,4,1; bonus2 bAddEff,Eff_Curse,3; },{},{}
 5264,Australian_Flag_Hat,Australian Flag Hat,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,,1,304,{ bonus bAllStats,2; },{},{}
 //There are some headgears missing
-5269,Flying_Angel_,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bAspdAddRate,3; bonus bSpeedAddRate,3; },{},{}
+5269,Flying_Angel_,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bAspdRate,3; bonus bSpeedAddRate,3; },{},{}
 5270,Autumn_Leaves_,Autumn Leaves,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,241,{ bonus bFlee2,5; },{},{}
 5271,Chinese_Crown_,Phoenix Crown,5,20,,500,,4,,1,0xFFFFFFFF,7,2,768,,0,1,221,{ bonus bMdef,3; bonus2 bSubRace,10,getequiprefinerycnt(1); },{},{}
 5272,Raspberry_Mask_,Smiling Mask,5,20,,100,,2,,0,0xFFFFFFFF,7,2,513,,0,0,253,{ bonus4 bAutoSpell,6,5,300,1; },{},{}

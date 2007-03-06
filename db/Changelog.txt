@@ -20,6 +20,7 @@
 
 ========================
 03/06
+	* Fixed Flying Angel headgear [Playtester]
 	* Corrected the NK values of skills (0x08 -> 0x80): Self Destruction,
 	  Smoking, Pressure, Fling, Zeny Nage, BioExplosion
 	* Soul Burn & Gravitation got NK 0x80 (previously hardcoded) [Skotlex]
