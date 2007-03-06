@@ -30,7 +30,7 @@
 #define NK_NO_ELEFIX 0x10
 #define NK_IGNORE_DEF 0x20
 #define NK_IGNORE_FLEE 0x40
-#define NK_NO_CARDFIX_DEF 0x08
+#define NK_NO_CARDFIX_DEF 0x80
 
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.

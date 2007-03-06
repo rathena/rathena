@@ -3003,13 +3003,14 @@ int parse_frommap(int fd) {
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
 				return 0;
 		{
-			char motd[256], t_name[512]; //Required for jstrescapecpy [Skotlex]
+			char motd[256], t_name[2*sizeof(char)*sizeof(server_name)+1], t_motd[512]; //Required for jstrescapecpy [Skotlex]
 			strncpy(motd, RFIFOP(fd,10), 255); //First copy it to make sure the motd fits.
 			motd[255]='\0';
-			jstrescapecpy(t_name,motd);
-
+			jstrescapecpy(t_motd,motd);
+			jstrescapecpy(t_name,server_name);
+		
 			sprintf(tmp_sql, "INSERT INTO `ragsrvinfo` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d',`motd`='%s'",
-				fd, server_name, RFIFOW(fd,2), RFIFOW(fd,4), RFIFOW(fd,6), t_name);
+				fd, t_name, RFIFOW(fd,2), RFIFOW(fd,4), RFIFOW(fd,6), t_motd);
 			if (mysql_query(&mysql_handle, tmp_sql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);

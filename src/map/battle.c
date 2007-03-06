@@ -2554,7 +2554,7 @@ struct Damage  battle_calc_misc_attack(
 		break ;
 	case ASC_BREAKER:
 		md.damage = 500+rand()%500 + 5*skill_lv * sstatus->int_;
-		nk|=NK_IGNORE_FLEE; //Only Breaker's Misc part always hits.
+		nk|=NK_IGNORE_FLEE|NK_NO_ELEFIX; //These two are not properties of the weapon based part.
 		break;
 	}
 

@@ -2725,10 +2725,6 @@ int atcommand_baselevelup(const int fd, struct map_session_data* sd, const char*
 		else
 			sd->status.status_point += status_point;
 		sd->status.base_level += (unsigned int)level;
-		clif_updatestatus(sd, SP_BASELEVEL);
-		clif_updatestatus(sd, SP_NEXTBASEEXP);
-		clif_updatestatus(sd, SP_STATUSPOINT);
-		status_calc_pc(sd, 0);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
 		clif_displaymessage(fd, msg_txt(21)); /* Base level raised. */
@@ -2748,14 +2744,15 @@ int atcommand_baselevelup(const int fd, struct map_session_data* sd, const char*
 			sd->status.status_point = 0;
 		else
 			sd->status.status_point -= status_point;
-		clif_updatestatus(sd, SP_STATUSPOINT);
 		sd->status.base_level -= (unsigned int)level;
-		clif_updatestatus(sd, SP_BASELEVEL);
-		clif_updatestatus(sd, SP_NEXTBASEEXP);
-		status_calc_pc(sd, 0);
 		clif_displaymessage(fd, msg_txt(22)); /* Base level lowered. */
 	}
-
+	clif_updatestatus(sd, SP_STATUSPOINT);
+	clif_updatestatus(sd, SP_BASELEVEL);
+	clif_updatestatus(sd, SP_NEXTBASEEXP);
+	status_calc_pc(sd, 0);
+	if(sd->status.party_id)
+		party_send_levelup(sd);
 	return 0;
 }
 
