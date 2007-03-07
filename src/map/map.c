@@ -2447,6 +2447,20 @@ struct map_cache_info {
 
 FILE *map_cache_fp;
 
+char *map_normalize_name(char *mapname)
+{
+	char *ptr, *ptr2;
+	ptr = strchr(mapname, '.');
+	if (ptr) { //Check and remove extension.
+		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
+			ptr = ptr2; //Skip to the last dot.
+		if(stricmp(ptr,".gat") == 0 ||
+			stricmp(ptr,".afm") == 0)
+			*ptr = '\0'; //Remove extension.
+	}
+	return mapname;
+}
+
 int map_readmap(struct map_data *m)
 {
 	int i;
@@ -2489,7 +2503,8 @@ int map_addmap(char *mapname) {
 		CL_WHITE"%s"CL_RESET"', the limit of maps has been reached.\n",mapname);
 		return 1;
 	}
-	memcpy(map[map_num].name, mapname, MAP_NAME_LENGTH-1);
+
+	memcpy(map[map_num].name, map_normalize_name(mapname), MAP_NAME_LENGTH-1);
 	map_num++;
 	return 0;
 }
@@ -2529,7 +2544,10 @@ int map_readallmaps()
 	int maps_removed = 0;
 
 	if(!(map_cache_fp = fopen(map_cache_file, "rb")))
-		ShowError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
+	{
+		ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
+		exit(1); //No use launching server if maps can't be read.
+	}
 
 	ShowStatus("Loading maps...\n");
 
