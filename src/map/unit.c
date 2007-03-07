@@ -1739,6 +1739,8 @@ int unit_remove_map(struct block_list *bl, int clrtype) {
 /*==========================================
  * Function to free all related resources to the bl
  * if unit is on map, it is removed using the clrtype specified
+ * If clrtype is <0, no saving is performed. This is only for non-authed
+ * objects that shouldn't be on a map yet.
  *------------------------------------------
  */
 
@@ -1825,9 +1827,11 @@ int unit_free(struct block_list *bl, int clrtype) {
 		guild_send_memberinfoshort(sd,0);
 		pc_cleareventtimer(sd);		
 		pc_delspiritball(sd,sd->spiritball,1);
-		chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
-		pc_makesavestatus(sd);
-		pc_clean_skilltree(sd);
+		if (clrtype >= 0) {
+			chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
+			pc_makesavestatus(sd);
+			pc_clean_skilltree(sd);
+		}
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;
 		struct map_session_data *sd = pd->msd;
@@ -1870,12 +1874,14 @@ int unit_free(struct block_list *bl, int clrtype) {
 			aFree (pd->loot);
 			pd->loot = NULL;
 		}
-		if(pd->pet.intimate > 0)
-			intif_save_petdata(pd->pet.account_id,&pd->pet);
-		else
-		{	//Remove pet.
-			intif_delete_petdata(pd->pet.pet_id);
-			if (sd) sd->status.pet_id = 0;
+		if (clrtype >= 0) {
+			if(pd->pet.intimate > 0)
+				intif_save_petdata(pd->pet.account_id,&pd->pet);
+			else
+			{	//Remove pet.
+				intif_delete_petdata(pd->pet.pet_id);
+				if (sd) sd->status.pet_id = 0;
+			}
 		}
 		if (sd) sd->pd = NULL;
 	} else if(bl->type == BL_MOB) {
@@ -1912,12 +1918,14 @@ int unit_free(struct block_list *bl, int clrtype) {
 		struct map_session_data *sd = hd->master;
 		// Desactive timers
 		merc_hom_hungry_timer_delete(hd);
-		if (hd->homunculus.intimacy > 0)
-			merc_save(hd); 
-		else
-		{
-			intif_homunculus_requestdelete(hd->homunculus.hom_id);
-			if (sd) sd->status.hom_id = 0;
+		if (clrtype >= 0) {
+			if (hd->homunculus.intimacy > 0)
+				merc_save(hd); 
+			else
+			{
+				intif_homunculus_requestdelete(hd->homunculus.hom_id);
+				if (sd) sd->status.hom_id = 0;
+			}
 		}
 		if(sd) sd->hd = NULL;
 	}

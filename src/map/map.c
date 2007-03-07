@@ -1669,6 +1669,8 @@ void map_deliddb(struct block_list *bl) {
 int map_quit(struct map_session_data *sd) {
 
 	if(!sd->state.auth) { //Removing a player that hasn't even finished loading
+		if (sd->pd) unit_free(&sd->pd->bl,-1);
+		if (sd->hd) unit_free(&sd->hd->bl,-1);
 		idb_remove(pc_db,sd->status.account_id);
 		idb_remove(charid_db,sd->status.char_id);
 		idb_remove(id_db,sd->bl.id);

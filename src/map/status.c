@@ -2370,8 +2370,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK;
 		status->speed = DEFAULT_WALK_SPEED;
-		if (battle_config.hom_setting&0x8 &&
-			hd->master && hd->master->state.auth) //Master needs be authed to have valid speed.
+		if (battle_config.hom_setting&0x8 && hd->master)
 			status->speed = status_get_speed(&hd->master->bl);
 
 		status->hp = 1;

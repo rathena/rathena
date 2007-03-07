@@ -358,7 +358,8 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	sd->bl.type      = BL_PC;
 	sd->canlog_tick  = gettick();
 	sd->state.waitingdisconnect = 0;
-
+	//Required to prevent homunculus copuing a base speed of 0.
+	sd->battle_status.speed = sd->base_status.speed = DEFAULT_WALK_SPEED;
 	return 0;
 }
 
