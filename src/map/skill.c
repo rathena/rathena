@@ -1369,10 +1369,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				rate += sd->addeff[i].arrow_rate;
 			if (!rate) continue;
 
-			if (!(sd->addeff[i].flag&ATF_LONG && sd->addeff[i].flag&ATF_SHORT))
+			if ((sd->addeff[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT))
 			{	//Trigger has range consideration.
-				if ((sd->addeff[i].flag&ATF_LONG && !sd->state.arrow_atk) ||
-					(sd->addeff[i].flag&ATF_SHORT && sd->state.arrow_atk))
+				if((sd->addeff[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+					(sd->addeff[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
 			type =  sd->addeff[i].id;
@@ -1542,18 +1542,17 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		for(i=0; i < MAX_PC_BONUS && dstsd->addeff2[i].flag; i++)
 		{
 			rate = dstsd->addeff2[i].rate;
-			type = (sd && sd->state.arrow_atk) || (status_get_range(src)>2);
-			if (type)
+			if (attack_type&BF_LONG)
 				rate+=dstsd->addeff2[i].arrow_rate;
 			if (!rate) continue;
 			
-			if (!(dstsd->addeff2[i].flag&ATF_LONG && dstsd->addeff2[i].flag&ATF_SHORT))
+			if ((dstsd->addeff2[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT))
 			{	//Trigger has range consideration.
-				if ((dstsd->addeff2[i].flag&ATF_LONG && !type) ||
-					(dstsd->addeff2[i].flag&ATF_SHORT && type))
+				if((dstsd->addeff2[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+					(dstsd->addeff2[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
-			type =  dstsd->addeff2[i].id;
+			type = dstsd->addeff2[i].id;
 			time = skill_get_time2(StatusSkillChangeTable[type],7);
 			
 			if (dstsd->addeff2[i].flag&ATF_TARGET)
@@ -7266,9 +7265,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_GOSPEL:
-			if (rand()%100 > sg->skill_lv*10)
+			if (rand()%100 > sg->skill_lv*10 || ss == bl)
 				break;
-			if (ss != bl && battle_check_target(ss,bl,BCT_PARTY)>0) { // Support Effect only on party, not guild
+			if (battle_check_target(ss,bl,BCT_PARTY)>0)
+			{ // Support Effect only on party, not guild
 				int i = rand()%13; // Positive buff count
 				type = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
 				switch (i)
@@ -7327,7 +7327,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						break;
 				}
 			}
-			else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0) { // Offensive Effect
+			else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
+			{ // Offensive Effect
 				int i = rand()%9; // Negative buff count
 				type = skill_get_time2(sg->skill_id, sg->skill_lv);
 				switch (i)
