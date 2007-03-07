@@ -58,7 +58,6 @@ enum AtCommandType {
 	AtCommand_Model,
 	AtCommand_Go,
 	AtCommand_Spawn,
-	//AtCommand_Monster,	// removed for Skots [Reddozen]
 	AtCommand_MonsterSmall,
 	AtCommand_MonsterBig,
 	AtCommand_KillMonster,
@@ -68,7 +67,6 @@ enum AtCommandType {
 	AtCommand_Memo,
 	AtCommand_GAT,
 	AtCommand_Packet,
-	AtCommand_WaterLevel,
 	AtCommand_StatusPoint,
 	AtCommand_SkillPoint,
 	AtCommand_Zeny,

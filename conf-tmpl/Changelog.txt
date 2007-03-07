@@ -1,5 +1,10 @@
 Date	Added
 
+2007/03/08
+	* Adjustments for the new mapcache [DracoRPG]
+	- Removed ".gat" from map names in maps_athena.conf
+	- Removed read_map_from_cache option as there's no more choice to do
+	- Removed afm_dir option as there's no more need for AFM/AF2 support
 2007/03/06
 	* Added the two new packet versions to battle/client.conf [Zephiris]
 2007/03/05

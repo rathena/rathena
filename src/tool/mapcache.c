@@ -14,7 +14,7 @@
 
 char grf_list_file[256] = "tools/mapcache/grf_files.txt";
 char map_list_file[256] = "tools/mapcache/map_list.txt";
-char map_cache_file[256] = "map_cache.dat";
+char map_cache_file[256] = "db/map_cache.dat";
 
 #define MAP_NAME_LENGTH 16
 #define NO_WATER 1000000
@@ -26,6 +26,9 @@ struct map_data {
 	unsigned char *cells;
 };
 
+// This is the main header found at the very beginning of the file
+unsigned short map_count;
+
 // This is the header appended before every compressed map cells info
 struct map_cache_info {
 	char name[MAP_NAME_LENGTH];
@@ -35,15 +38,9 @@ struct map_cache_info {
 	long len;
 };
 
-// This is the main header found at the very beginning of the file
-struct map_cache_head {
-	short sizeof_header;
-	short sizeof_mapinfo;
-	long filesize;
-	unsigned short map_count;
-} header;
-
 FILE *map_cache_fp;
+
+int filesize;
 
 
 // Read map from GRF's GAT and RSW files
@@ -118,11 +115,11 @@ void cache_map(char *name, unsigned short index, struct map_data *m)
 	info.len = len;
 
 	// Append map header then compressed cells at the end of the file
-	fseek(map_cache_fp, header.filesize, SEEK_SET);
+	fseek(map_cache_fp, filesize, SEEK_SET);
 	fwrite(&info, sizeof(struct map_cache_info), 1, map_cache_fp);
 	fwrite(write_buf, 1, len, map_cache_fp);
-	header.map_count++;
-	header.filesize += header.sizeof_mapinfo + len;
+	map_count++;
+	filesize += sizeof(struct map_cache_info) + len;
 
 	free(write_buf);
 	free(m->cells);
@@ -161,10 +158,8 @@ int main(int argc, char *argv[])
 	}
 
 	// Initialize the main header
-	header.sizeof_header = sizeof(struct map_cache_head);
-	header.sizeof_mapinfo = sizeof(struct map_cache_info);
-	header.map_count = 0;
-	header.filesize = sizeof(struct map_cache_head);
+	map_count = 0;
+	filesize = sizeof(map_count);
 
 	// Read and process the map list
 	while(fgets(line, 1020, list)){
@@ -190,13 +185,13 @@ int main(int argc, char *argv[])
 	printf("Closing map cache: %s\n", map_cache_file);
 	// Write the main header and close the map cache
 	fseek(map_cache_fp, 0, SEEK_SET);
-	fwrite(&header, sizeof(struct map_cache_head), 1, map_cache_fp);
+	fwrite(&map_count, sizeof(map_count), 1, map_cache_fp);
 	fclose(map_cache_fp);
 
 	printf("Finalizing grfio\n");
 	grfio_final();
 
-	printf("%d maps cached\n", header.map_count);
+	printf("%d maps cached\n", map_count);
 
 	return 0;
 }

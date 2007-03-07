@@ -19,7 +19,10 @@
 	-----
 
 ========================
-
+03/08
+	* Added new map_cache.dat containing every map you need at the moment [DracoRPG]
+	  - Beware as it was built by a little-endian (i386), for a little-endian!
+	  - It will be updated by devs when new maps will be added to eA
 03/07
 	* Updated skills that shouldn't ignore the target's cards: Smoking, Fling,
 	  Zenynage. [Skotlex]

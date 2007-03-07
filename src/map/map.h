@@ -1073,18 +1073,15 @@ struct map_data {
 #ifdef CELL_NOSTACK
 	unsigned char *cell_bl; //Holds amount of bls in any given cell.
 #endif
-	char *alias; // [MouseJstr]
 	struct block_list **block;
 	struct block_list **block_mob;
 	int *block_count,*block_mob_count;
 	int m;
 	short xs,ys;
 	short bxs,bys;
-	int water_height;
 	int npc_num;
 	int users;
 	struct map_flag {
-		unsigned alias : 1;
 		unsigned nomemo : 1;
 		unsigned noteleport : 1;
 		unsigned noreturn : 1;

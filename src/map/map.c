@@ -142,8 +142,6 @@ static int block_free_count = 0, block_free_lock = 0;
 static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
-static char afm_dir[1024] = ""; // [Valaris]
-
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
 
@@ -161,11 +159,7 @@ struct charid2nick {
 	int req_id;
 };
 
-// ｫﾞｫﾃｫﾗｫｭｫ罩ﾃｫｷｫ袮ﾗ鯑ｫﾕｫ鬮ｰ(map_athana.conf?ｪﾎread_map_from_cacheｪﾇ・)
-// 0:ﾗﾗ鯑ｪｷｪﾊｪ､ 1:ﾞｪ?ﾜﾁ 2:?ﾜﾁ
-int  map_read_flag = READ_FROM_GAT;
-char map_cache_file[256]="db/map.info"; // ｫﾞｫﾃｫﾗｫｭｫ罩ﾃｫｷｫ雖ﾕｫ｡ｫ､ｫ・｣
-
+char map_cache_file[256]="db/map_cache.dat";
 char db_path[256] = "db";
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
@@ -2432,328 +2426,58 @@ int map_eraseipport(unsigned short mapindex,unsigned long ip,int port)
 	return 0;
 }
 
-#define NO_WATER 1000000
-
-static int map_setwaterheight_sub(int m) {
-	char fn[256];
-	char *gat;
-	int x,y;
-	int wh;
-	struct gat_1cell {float high[4]; int type;} *p = NULL;
-	
-	if (m < 0)
-		return 0;
-	wh = map[m].water_height;
-		
-	sprintf(fn,"data\\%s",mapindex_id2name(map[m].index));
-
-	// read & convert fn
-	// again, might not need to be unsigned char
-	gat = (char *) grfio_read (fn);
-	if (gat == NULL)
-		return 0;
-
-	for (y = 0; y < map[m].ys; y++) {
-		p = (struct gat_1cell*)(gat+y*map[m].xs*20+14);
-		for (x = 0; x < map[m].xs; x++) {
-			if (wh != NO_WATER && p->type == 0) //Set water cell
-				map[m].gat[x+y*map[m].xs] = (p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
-			else //Remove water cell
-				map[m].gat[x+y*map[m].xs] = p->type==3?0:p->type;
-			p++;
-		}
-	}
-	aFree(gat);
-	return 1;
-}
-int map_setwaterheight(int m, char *mapname, int height) {
-	if (height < 0)
-		height = NO_WATER;
-	map[m].water_height = height;
-	return map_setwaterheight_sub(m);
-}
-
-/* map_readwaterheight
- * Reads from the .rsw for each map
- * Returns water height (or NO_WATER if file doesn't exist)
- * or other error is encountered.
- * This receives a map-name, and changes the extension to rsw if it isn't set already.
- * Assumed path for file is data/mapname.rsw
- * Credits to LittleWolf
- */
-int map_waterheight(char *mapname) {
-	char fn[256];
- 	char *rsw, *found;
-	float whtemp;
-	int wh;
-
-	//Look up for the rsw
-	if(!strstr(mapname,"data\\"))
-		sprintf(fn,"data\\%s", mapname);
-	else
-		strcpy(fn, mapname);
-
-	found = grfio_find_file(fn);
-	if (!found)
-		; //Stick to the current fn
-	else if(!strstr(found,"data\\"))
-		sprintf(fn,"data\\%s", found);
-	else
-		strcpy(fn, found);
-	
-	rsw = strstr(fn, ".");
-	if (rsw && strstr(fn, ".rsw") == NULL)
-		sprintf(rsw,".rsw");
-	// read & convert fn
-	// again, might not need to be unsigned char
-	rsw = (char *) grfio_read (fn);
-	if (rsw)
-	{	//Load water height from file
-		whtemp = *(float*)(rsw+166);
-		wh = (int) whtemp;
-		aFree(rsw);
-		return wh;
-	}
-	ShowWarning("Failed to find water level for (%s)\n", mapname, fn);
-	return NO_WATER;
-}
-
 /*==========================================
-* マップキャッシュに追加する
+* Map cache reading
 *===========================================*/
 
-// マップキャッシュの最大値
-#define MAX_MAP_CACHE 768
+// This is the main header found at the very beginning of the file
+/*struct map_cache_head {
+	long filesize;
+	unsigned short map_count;
+};*/
 
-//各マップごとの最小限情報を入れるもの、READ_FROM_BITMAP用
+// This is the header appended before every compressed map cells info
 struct map_cache_info {
-	char fn[32];//ファイル名
-	int xs,ys; //幅と高さ
-	int water_height;
-	int pos;  // データが入れてある場所
-	int compressed;     // zilb通せるようにする為の予約
-	int compressed_len; // zilb通せるようにする為の予約
-}; // 56 byte
-
-struct map_cache_head {
-	int sizeof_header;
-	int sizeof_map;
-	// 上の２つ改変不可
-	int nmaps; // マップの個数
-	int filesize;
+	char name[MAP_NAME_LENGTH];
+	unsigned short index;
+	short xs;
+	short ys;
+	long len;
 };
 
-struct {
-	struct map_cache_head head;
-	struct map_cache_info *map;
-	FILE *fp;
-	int dirty;
-} map_cache;
+FILE *map_cache_fp;
 
-static int map_cache_open(char *fn);
-static void map_cache_close(void);
-static int map_cache_read(struct map_data *m);
-static int map_cache_write(struct map_data *m);
-
-static int map_cache_open(char *fn)
+int map_readmap(struct map_data *m)
 {
-	if (map_cache.fp)
-		map_cache_close();
-	map_cache.fp = fopen(fn, "r+b");
-	if (map_cache.fp) {
-		fread(&map_cache.head,1,sizeof(struct map_cache_head),map_cache.fp);
-		fseek(map_cache.fp,0,SEEK_END);
-		if(
-			map_cache.head.sizeof_header == sizeof(struct map_cache_head) &&
-			map_cache.head.sizeof_map    == sizeof(struct map_cache_info) &&
-			map_cache.head.filesize      == ftell(map_cache.fp)
-		) {
-			// キャッシュ読み甲ﾝ成功
-			map_cache.map = (struct map_cache_info *) aMalloc(sizeof(struct map_cache_info) * map_cache.head.nmaps);
-			fseek(map_cache.fp,sizeof(struct map_cache_head),SEEK_SET);
-			fread(map_cache.map,sizeof(struct map_cache_info),map_cache.head.nmaps,map_cache.fp);
+	int i;
+	unsigned short map_count;
+	struct map_cache_info info;
+	unsigned long size;
+	unsigned char *buf;
+
+	fseek(map_cache_fp, 0, SEEK_SET);
+	fread(&map_count, sizeof(map_count), 1, map_cache_fp);
+
+	for(i = 0; i < map_count; i++) {
+		fread(&info, sizeof(info), 1, map_cache_fp);
+		if(strcmp(m->name, info.name) == 0) { // Map found
+			m->index = info.index;
+			m->xs = info.xs;
+			m->ys = info.ys;
+			m->gat = (unsigned char *)aMalloc(m->xs*m->ys); // Allocate room for map cells data
+			buf = aMalloc(info.len); // Allocate a temp buffer to read the zipped map
+			fread(buf, info.len, 1, map_cache_fp);
+			size = m->xs*m->ys;
+			decode_zip(m->gat, &size, buf, info.len); // Unzip the map from the buffer
+			aFree(buf);
 			return 1;
-		}
-		fclose(map_cache.fp);
+		} else // Map not found, jump to the beginning of the next map info header
+			fseek(map_cache_fp, info.len, SEEK_CUR);
 	}
-	// 読み甲ﾝに失敗したので新規に作成する
-	map_cache.fp = fopen(fn,"wb");
-	if(map_cache.fp) {
-		memset(&map_cache.head,0,sizeof(struct map_cache_head));
-		map_cache.map   = (struct map_cache_info *) aCalloc(sizeof(struct map_cache_info),MAX_MAP_CACHE);
-		map_cache.head.nmaps         = MAX_MAP_CACHE;
-		map_cache.head.sizeof_header = sizeof(struct map_cache_head);
-		map_cache.head.sizeof_map    = sizeof(struct map_cache_info);
 
-		map_cache.head.filesize  = sizeof(struct map_cache_head);
-		map_cache.head.filesize += sizeof(struct map_cache_info) * map_cache.head.nmaps;
-
-		map_cache.dirty = 1;
-		return 1;
-	}
 	return 0;
 }
 
-static void map_cache_close(void)
-{
-	if(!map_cache.fp) { return; }
-	if(map_cache.dirty) {
-		fseek(map_cache.fp,0,SEEK_SET);
-		fwrite(&map_cache.head,1,sizeof(struct map_cache_head),map_cache.fp);
-		fwrite(map_cache.map,map_cache.head.nmaps,sizeof(struct map_cache_info),map_cache.fp);
-	}
-	fclose(map_cache.fp);
-	aFree(map_cache.map);
-	map_cache.fp = NULL;
-	return;
-}
-
-int map_cache_read(struct map_data *m)
-{
-	int i;
-	if(!map_cache.fp) { return 0; }
-	for(i = 0;i < map_cache.head.nmaps ; i++) {
-		if(!strcmp(m->name,map_cache.map[i].fn)) {
-			if(map_cache.map[i].compressed == 0) {
-				// 非圧縮ファイル
-				int size = map_cache.map[i].xs * map_cache.map[i].ys;
-				m->xs = map_cache.map[i].xs;
-				m->ys = map_cache.map[i].ys;
-				m->water_height = map_cache.map[i].water_height;
-				m->gat = (unsigned char *)aCalloc(m->xs * m->ys,sizeof(unsigned char));
-				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
-				if(fread(m->gat,1,size,map_cache.fp) == size) {
-					// 成功
-					return 1;
-				} else {
-					// なぜかファイル後半が欠けてるので読み直し
-					m->xs = 0; m->ys = 0; aFree(m->gat); m->gat = NULL;
-					return 0;
-				}
-			} else if(map_cache.map[i].compressed == 1) {
-				// 圧縮フラグ=1 : zlib
-				unsigned char *buf;
-				unsigned long dest_len;
-				int size_compress = map_cache.map[i].compressed_len;
-				m->xs = map_cache.map[i].xs;
-				m->ys = map_cache.map[i].ys;
-				m->water_height = map_cache.map[i].water_height;
-				m->gat = (unsigned char *)aMalloc(m->xs * m->ys * sizeof(unsigned char));
-				buf = (unsigned char*)aMalloc(size_compress);
-				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
-				if(fread(buf,1,size_compress,map_cache.fp) != size_compress) {
-					// なぜかファイル後半が欠けてるので読み直し
-					ShowError("fread error\n");
-					aFree(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
-					aFree(buf);
-					return 0;
-				}
-				dest_len = m->xs * m->ys;
-				decode_zip(m->gat,&dest_len,buf,size_compress);
-				if(dest_len != map_cache.map[i].xs * map_cache.map[i].ys) {
-					// 正常に解凍が出来てない
-					aFree(m->gat); m->xs = 0; m->ys = 0; m->gat = NULL;
-					aFree(buf);
-					return 0;
-				}
-				aFree(buf);
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
-
-static int map_cache_write(struct map_data *m)
-{
-	int i;
-	unsigned long len_new , len_old;
-	char *write_buf;
-	if(!map_cache.fp) { return 0; }
-	for(i = 0;i < map_cache.head.nmaps ; i++) {
-		if(!strcmp(m->name,map_cache.map[i].fn)) {
-			// 同じエントリーがあれば上書き
-			if(map_cache.map[i].compressed == 0) {
-				len_old = map_cache.map[i].xs * map_cache.map[i].ys;
-			} else if(map_cache.map[i].compressed == 1) {
-				len_old = map_cache.map[i].compressed_len;
-			} else {
-				// サポートされてない形式なので長さ０
-				len_old = 0;
-			}
-			if(map_read_flag == 2) {
-				// 圧縮保存
-				// さすがに２倍に膨れる事はないという事で
-				write_buf = (char *) aMalloc(m->xs * m->ys * 2);
-				len_new = m->xs * m->ys * 2;
-				encode_zip((unsigned char *) write_buf,&len_new,m->gat,m->xs * m->ys);
-				map_cache.map[i].compressed     = 1;
-				map_cache.map[i].compressed_len = len_new;
-			} else {
-				len_new = m->xs * m->ys;
-				write_buf = (char *) m->gat;
-				map_cache.map[i].compressed     = 0;
-				map_cache.map[i].compressed_len = 0;
-			}
-			if(len_new <= len_old) {
-				// サイズが同じか小さくなったので場所は変わらない
-				fseek(map_cache.fp,map_cache.map[i].pos,SEEK_SET);
-				fwrite(write_buf,1,len_new,map_cache.fp);
-			} else {
-				// 新しい場所に登録
-				fseek(map_cache.fp,map_cache.head.filesize,SEEK_SET);
-				fwrite(write_buf,1,len_new,map_cache.fp);
-				map_cache.map[i].pos = map_cache.head.filesize;
-				map_cache.head.filesize += len_new;
-			}
-			map_cache.map[i].xs  = m->xs;
-			map_cache.map[i].ys  = m->ys;
-			map_cache.map[i].water_height = m->water_height;
-			map_cache.dirty = 1;
-			if(map_read_flag == 2) {
-				aFree(write_buf);
-			}
-			return 0;
-		}
-	}
-	// 同じエントリが無ければ書き甲ﾟる場所を探す
-	for(i = 0;i < map_cache.head.nmaps ; i++) {
-		if(map_cache.map[i].fn[0] == 0) {
-			// 新しい場所に登録
-			if(map_read_flag == 2) {
-				write_buf = (char *) aMalloc(m->xs * m->ys * 2);
-				len_new = m->xs * m->ys * 2;
-				encode_zip((unsigned char *) write_buf,&len_new,m->gat,m->xs * m->ys);
-				map_cache.map[i].compressed     = 1;
-				map_cache.map[i].compressed_len = len_new;
-			} else {
-				len_new = m->xs * m->ys;
-				write_buf = (char *) m->gat;
-				map_cache.map[i].compressed     = 0;
-				map_cache.map[i].compressed_len = 0;
-			}
-			strncpy(map_cache.map[i].fn,m->name,sizeof(map_cache.map[0].fn));
-			fseek(map_cache.fp,map_cache.head.filesize,SEEK_SET);
-			fwrite(write_buf,1,len_new,map_cache.fp);
-			map_cache.map[i].pos = map_cache.head.filesize;
-			map_cache.map[i].xs  = m->xs;
-			map_cache.map[i].ys  = m->ys;
-			map_cache.map[i].water_height = m->water_height;
-			map_cache.head.filesize += len_new;
-			map_cache.dirty = 1;
-			if(map_read_flag == 2)
-				aFree(write_buf);
-			return 0;
-		}
-	}
-	// 書き甲ﾟなかった
-	return 1;
-}
-
-/*==========================================
- * ?み?むmapを追加する
- *------------------------------------------
- */
 int map_addmap(char *mapname) {
 	if (strcmpi(mapname,"clear")==0) {
 		map_num=0;
@@ -2770,10 +2494,6 @@ int map_addmap(char *mapname) {
 	return 0;
 }
 
-/*==========================================
- * Removes the map in the index passed.
- *------------------------------------------
- */
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist\n",map[id].name);
@@ -2781,10 +2501,6 @@ static void map_delmapid(int id)
 	map_num--;
 }
 
-/*==========================================
- * ?み?むmapを削除する
- *------------------------------------------
- */
 int map_delmap(char *mapname) {
 
 	int i;
@@ -2803,323 +2519,29 @@ int map_delmap(char *mapname) {
 	return 0;
 }
 
-////////////////////////////////////////////////
-
-/*
-	Advanced Fusion Maps Support
-	(c) 2003-2004, The Fusion Project
-	- AlexKreuz
-
-	The following code has been provided by me for eAthena
-	under the GNU GPL.  It provides Advanced Fusion
-	Map, the map format desgined by me for Fusion, support
-	for the eAthena emulator.
-
-	I understand that because it is under the GPL
-	that other emulators may very well use this code in their
-	GNU project as well.
-
-	The AFM map format was not originally a part of the GNU
-	GPL. It originated from scratch by my own hand.  I understand
-	that distributing this code to read the AFM maps with eAthena
-	causes the GPL to apply to this code.  But the actual AFM
-	maps are STILL copyrighted to the Fusion Project.  By choosing
-
-	In exchange for that 'act of faith' I ask for the following.
-
-	A) Give credit where it is due.  If you use this code, do not
-	   place your name on the changelog.  Credit should be given
-	   to AlexKreuz.
-	B) As an act of courtesy, ask me and let me know that you are putting
-	   AFM support in your project.  You will have my blessings if you do.
-	C) Use the code in its entirety INCLUDING the copyright message.
-	   Although the code provided may now be GPL, the AFM maps are not
-	   and so I ask you to display the copyright message on the STARTUP
-	   SCREEN as I have done here. (refer to core.c)
-	   "Advanced Fusion Maps (c) 2003-2004 The Fusion Project"
-
-	Without this copyright, you are NOT entitled to bundle or distribute
-	the AFM maps at all.  On top of that, your "support" for AFM maps
-	becomes just as shady as your "support" for Gravity GRF files.
-
-	The bottom line is this.  I know that there are those of you who
-	would like to use this code but aren't going to want to provide the
-	proper credit.  I know this because I speak frome experience.  If
-	you are one of those people who is going to try to get around my
-	requests, then save your breath because I don't want to hear it.
-
-	I have zero faith in GPL and I know and accept that if you choose to
-	not display the copyright for the AFMs then there is absolutely nothing
-	I can do about it.  I am not about to start a legal battle over something
-	this silly.
-
-	Provide the proper credit because you believe in the GPL.  If you choose
-	not to and would rather argue about it, consider the GPL failed.
-
-	October 18th, 2004
-	- AlexKreuz
-	- The Fusion Project
-	*/
-static int map_loadafm (struct map_data *m, char *fn)
-{
-	// check if .afm file exists
-	FILE *afm_file = fopen(fn, "r");
-	if (afm_file != NULL) {
-		int x,y,xs,ys;
-		char afm_line[65535];
-		int afm_size[2];
-		char *str;
-
-		//Gotta skip the first two lines which are just a header of sorts.
-		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
-		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
-		str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
-		if (!str) return 0;
-		sscanf(str , "%d%d", &afm_size[0], &afm_size[1]);
-
-		xs = m->xs = afm_size[0];
-		ys = m->ys = afm_size[1];
-		m->water_height = map_waterheight(m->name);
-		// check this, unsigned where it might not need to be
-		m->gat = (unsigned char*)aMallocA(xs * ys);
-
-		for (y = 0; y < ys; y++) {
-			str = fgets(afm_line, sizeof(afm_line)-1, afm_file);
-			for (x = 0; x < xs; x++)
-				m->gat[x+y*xs] = str[x]-48;
-		}
-
-		fclose(afm_file);
-		return 1;
-	}
-
-	return 0;
-}
-/*==================================
- * .AFM format
- *----------------------------------
- */
-int map_readafm (struct map_data *m)
-{
-	char afm_name[256] = "";
-	char fn[256], *p;
-
-	// convert map name to .afm
-	if(!strstr(m->name, ".afm")) {
-		// check if it's necessary to replace the extension - speeds up loading a bit
-		strncpy(afm_name, m->name, strlen(m->name) - 4);
-		strcat(afm_name, ".afm");
-	} else {
-		strcpy(afm_name, m->name);
-	}
-	
-	sprintf(fn, "%s\\%s", afm_dir, afm_name);
-	for (p = &fn[0]; *p != 0; p++)
-		if (*p == '\\') *p = '/';	// * At the time of Unix
-
-	return map_loadafm(m, fn);
-}
-/*==================================
- * .AF2 format
- *----------------------------------
- */
-int map_readaf2 (struct map_data *m)
-{
-	FILE *af2_file;
-	char af2_name[256] = "";
-	char fn[256], *p, *out;
-	
-	// convert map name to .af2
-	p = out = m->name;
-	while ((p = strchr(p, '/')) != NULL)
-		out = ++p;
-	strncpy (af2_name, out, strlen(out));
-	// grr, this is so troublesome >.< [celest]
-	p = strrchr (af2_name, '.');
-	if (p) *p++ = 0;
-	strcat(af2_name, ".af2");	
-	sprintf(fn, "%s\\%s", afm_dir, af2_name);
-	for (p = &fn[0]; *p != 0; p++)
-		if (*p == '\\') *p = '/';	// * At the time of Unix
-
-	// check if .af2 file exists
-	af2_file = fopen(fn, "r");
-	if (af2_file != NULL) {
-		char out_file[256];
-
-		fclose(af2_file);
-		
-		// convert map name to .out
-		strncpy (out_file, out, strlen(out));
-		p = strrchr (out_file, '.');
-		if (p) *p++ = 0;
-		strcat(out_file, ".out");
-
-		// unzip .out file and use loadafm()
-		if (deflate_file(fn, out_file) &&
-			map_loadafm(m, out_file))
-		{
-			unlink (out_file);
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-
-/*==========================================
- * マップ1枚読み甲ﾝ
- * ===================================================*/
-//static int map_readmap(int m,char *fn, char *alias, int *map_cache, int maxmap) {
-
-/*==================================
- * .GAT format
- *----------------------------------
- */
-int map_readgat (struct map_data *m)
-{
-	char fn[256];
-	char *gat;
-	int wh,x,y,xs,ys;
-	struct gat_1cell {float high[4]; int type;} *p = NULL;
-	
-	if (strstr(m->name,".gat") == NULL)
-		return 0;
-
-	sprintf(fn,"data\\%s",m->name);
-
-	// read & convert fn
-	// again, might not need to be unsigned char
-	gat = (char *) grfio_read (fn);
-	if (gat == NULL)
-		return 0;
-
-	xs = m->xs = *(int*)(gat+6);
-	ys = m->ys = *(int*)(gat+10);
-	m->gat = (unsigned char *)aMallocA((m->xs * m->ys)*sizeof(unsigned char));
-
-	m->water_height = wh = map_waterheight(m->name);
-	for (y = 0; y < ys; y++) {
-		p = (struct gat_1cell*)(gat+y*xs*20+14);
-		for (x = 0; x < xs; x++) {
-			if (wh != NO_WATER && p->type == 0)
-				// 水場判定
-				m->gat[x+y*xs] = (p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
-			else
-				m->gat[x+y*xs] = p->type;
-			p++;
-		}
-	}
-
-	aFree(gat);
-
-	return 1;
-}
-
-//////////////////////////////////////////////////////
-
-static int map_cache_init (void);
-static int map_readafm_init (void);
-static int map_readaf2_init (void);
-static int map_readgat_init (void);
-
-// Todo: Properly implement this system as plugins/safer code [Celest]
-enum {
-	MAP_CACHE = 0,	// jAthena map cache
-	MAP_AFM,	// Advanced Fusion Map
-	MAP_AF2,	// Advanced Fusion Map
-	MAP_GAT,	// GRF map
-	MAP_MAXSOURCE
-};
-// in descending order
-int (*mapsource_init[MAP_MAXSOURCE])(void) = {
-	map_cache_init,
-	map_readafm_init,
-	map_readaf2_init,
-	map_readgat_init
-};
-int (*mapsource_read[MAP_MAXSOURCE])(struct map_data *) = {
-	map_cache_read,
-	map_readafm,
-	map_readaf2,
-	map_readgat
-};
-void (*mapsource_final[MAP_MAXSOURCE])(void) = {
-	map_cache_close,
-	NULL,
-	NULL,
-	NULL
-};
-
-static int map_cache_init (void)
-{
-	if (map_read_flag >= READ_FROM_BITMAP && map_cache_open(map_cache_file)) {
-		ShowMessage("[cache] ");
-		return 1;
-	}
-
-	return 0;
-}
-static int map_readafm_init (void)
-{
-	ShowMessage("[afm] ");
-	return 1;
-}
-static int map_readaf2_init (void)
-{
-	// check if AFM loading is available,
-	// otherwise disable AF2 loading
-	if (mapsource_read[1] != NULL) {
-		ShowMessage("[af2] ");
-		return 1;
-	}
-
-	return 0;
-}
-static int map_readgat_init (void)
-{
-	ShowMessage("[gat] ");
-	return 1;
-}
-
 /*======================================
  * Initiate maps loading stage
  *--------------------------------------
  */
-int map_readallmaps (void)
+int map_readallmaps()
 {
-	// pre-loading stage
 	int i;
 	int maps_removed = 0;
-	int maps_cached = 0;
 
-	ShowMessage(CL_GREEN"[Status]"CL_RESET": Loading Maps with... "CL_WHITE);
+	if(!(map_cache_fp = fopen(map_cache_file, "rb")))
+		ShowError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
 
-	for (i = 0; i < MAP_MAXSOURCE; i++) {
-		if (mapsource_init[i] &&	// check if source requires initialisation
-			mapsource_init[i]() == 0)	// if init failed
-		{
-			// remove all loading methods associated with this source
-			mapsource_init[i] = NULL;
-			mapsource_read[i] = NULL;
-			mapsource_final[i] = NULL;
-		}
-	}
+	ShowStatus("Loading maps...\n");
 
-	ShowMessage(CL_RESET"\n");
-
-	// initiate map loading
-	for (i = 0; i < map_num; i++)
+	for(i = 0; i < map_num; i++)
 	{
-		int success = 0;
 		static int lasti = -1;
 		static int last_time = -1;
 		int j = i*20/map_num;
+		size_t size;
 
 		// show progress
-		if (map_num &&	//avoid map-server crashing if there are 0 maps
-			(j != lasti || last_time != time(0)))
+		if(j != lasti || last_time != time(0))
 		{
 			char progress[21] = "                    ";
 			char c = '-';
@@ -3141,99 +2563,52 @@ int map_readallmaps (void)
 			fflush(stdout);
 		}
 
-		// pre-init some data
-		map[i].alias = NULL;
-		map[i].m = i;
-		memset (map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
-		map[i].mob_delete_timer = -1;	//Initialize timer [Skotlex]
-		if (battle_config.pk_mode)
-			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
-
-		for (j = 0; j < MAP_MAXSOURCE; j++)
-		{
-			if (mapsource_read[j] &&	// check if map source is valid
-				mapsource_read[j](&map[i]))	// check if map source is available
-			{
-				// successful, now initialise map
-				size_t size;
-				char *alias;
-
-				if (map[i].alias && (alias = strstr(map[i].name, "<")) != NULL) {	// alias has been set by one of the sources
-					*alias++ = '\0';
-				}
-				if (map[i].alias)
-					map[i].index = mapindex_name2id(map[i].alias);
-				else
-					map[i].index = mapindex_name2id(map[i].name);
-				
-				if (!map[i].index) {
-					if (map[i].alias)
-						ShowWarning("Map %s (alias %s) is not in the map-index cache!\n", map[i].name, map[i].alias);
-					else
-						ShowWarning("Map %s is not in the map-index cache!\n", map[i].name);
-					success = 0; //Can't load a map that isn't in our cache.
-					if (map[i].gat) {
-						aFree(map[i].gat);
-						map[i].gat = NULL;	
-					}
-					break;
-				}
-				if (uidb_get(map_db,(unsigned int)map[i].index) != NULL) {
-					ShowWarning("Map %s already loaded!\n", map[i].name);
-					success = 0; //Can't load a map already in the db
-					if (map[i].gat) {
-						aFree(map[i].gat);
-						map[i].gat = NULL;	
-					}
-					break;
-				}
-
-				map[i].cell = (unsigned char *)aCalloc(map[i].xs * map[i].ys, sizeof(unsigned char));
-#ifdef CELL_NOSTACK
-				map[i].cell_bl = (unsigned char *)aCalloc(map[i].xs * map[i].ys, sizeof(unsigned char));
-#endif
-
-				map[i].bxs = (map[i].xs + BLOCK_SIZE - 1) / BLOCK_SIZE;
-				map[i].bys = (map[i].ys + BLOCK_SIZE - 1) / BLOCK_SIZE;
-				
-				// default experience multiplicator
-				map[i].jexp = 100;
-				map[i].bexp = 100;
-				
-				size = map[i].bxs * map[i].bys * sizeof(struct block_list*);
-				map[i].block = (struct block_list**)aCalloc(size, 1);
-				map[i].block_mob = (struct block_list**)aCalloc(size, 1);
-
-				size = map[i].bxs * map[i].bys * sizeof(int);
-				map[i].block_count = (int*)aCallocA(size, 1);
-				map[i].block_mob_count = (int*)aCallocA(size, 1);
-
-				uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
-
-				// cache our map if necessary
-				if (j != MAP_CACHE && mapsource_read[MAP_CACHE] != NULL) {	// map data is not cached yet
-					map_cache_write(&map[i]);
-					maps_cached++;
-				}
-
-				// next map
-				success = 1;
-				break;
-			}
-		}
-
-		// no sources have been found, so remove map from list
-		if (!success) {
+		if(!map_readmap(&map[i])) {
 			map_delmapid(i);
 			maps_removed++;
 			i--;
+			continue;
 		}
-	}
 
-	// unload map sources
-	for (i = 0; i < MAP_MAXSOURCE; i++) {
-		if (mapsource_final[i])
-			mapsource_final[i]();
+		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL) {
+			ShowWarning("Map %s already loaded!\n", map[i].name);
+			if (map[i].gat) {
+				aFree(map[i].gat);
+				map[i].gat = NULL;	
+			}
+			map_delmapid(i);
+			maps_removed++;
+			i--;
+			continue;
+		}
+
+		map[i].m = i;
+		memset(map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
+		map[i].mob_delete_timer = -1;	//Initialize timer [Skotlex]
+		if(battle_config.pk_mode)
+			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
+
+		map[i].cell = (unsigned char *)aCalloc(map[i].xs * map[i].ys, sizeof(unsigned char));
+#ifdef CELL_NOSTACK
+		map[i].cell_bl = (unsigned char *)aCalloc(map[i].xs * map[i].ys, sizeof(unsigned char));
+#endif
+
+		map[i].bxs = (map[i].xs + BLOCK_SIZE - 1) / BLOCK_SIZE;
+		map[i].bys = (map[i].ys + BLOCK_SIZE - 1) / BLOCK_SIZE;
+		
+		// default experience multiplicators
+		map[i].jexp = 100;
+		map[i].bexp = 100;
+		
+		size = map[i].bxs * map[i].bys * sizeof(struct block_list*);
+		map[i].block = (struct block_list**)aCalloc(size, 1);
+		map[i].block_mob = (struct block_list**)aCalloc(size, 1);
+
+		size = map[i].bxs * map[i].bys * sizeof(int);
+		map[i].block_count = (int*)aCallocA(size, 1);
+		map[i].block_mob_count = (int*)aCallocA(size, 1);
+
+		uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 	}
 
 	// finished map loading
@@ -3241,9 +2616,7 @@ int map_readallmaps (void)
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%30s\n",map_num,"");
 
 	if (maps_removed)
-		ShowNotice("Maps Removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
-	if (maps_cached)
-		ShowNotice("Maps Added to Cache: '"CL_WHITE"%d"CL_RESET"'\n",maps_cached);
+		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);
 
 	return 0;
 }
@@ -3409,19 +2782,10 @@ int map_config_read(char *cfgName) {
 				strcpy(charhelp_txt, w2);
 			} else if (strcmpi(w1, "mapreg_txt") == 0) {
 				strcpy(mapreg_txt, w2);
-			} else if(strcmpi(w1,"read_map_from_cache") == 0){
-				if (atoi(w2) == 2)
-					map_read_flag = READ_FROM_BITMAP_COMPRESSED;
-				else if (atoi(w2) == 1)
-					map_read_flag = READ_FROM_BITMAP;
-				else
-					map_read_flag = READ_FROM_GAT;
 			} else if(strcmpi(w1,"map_cache_file") == 0) {
 				strncpy(map_cache_file,w2,255);
 			} else if(strcmpi(w1,"db_path") == 0) {
 				strncpy(db_path,w2,255);
-			} else if(strcmpi(w1,"afm_dir") == 0) {
-				strcpy(afm_dir, w2);
 			} else if (strcmpi(w1, "console") == 0) {
 				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 ) {
 					console = 1;
@@ -3740,9 +3104,6 @@ void do_final(void) {
 
 	ShowStatus("Terminating...\n");
 
-	//we probably don't need the cache open at all times 'yet', so this is closed by mapsource_final [celest]
-	//map_cache_close();
-
 	for (i = 0; i < map_num; i++)
 		if (map[i].m >= 0)
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
@@ -3761,9 +3122,8 @@ void do_final(void) {
 
 	do_final_atcommand();
 	do_final_battle();
-	do_final_chrif(); // この内部でキャラを全て切断する
+	do_final_chrif();
 	do_final_npc();
-//	map_removenpc();
 	do_final_script();
 	do_final_itemdb();
 	do_final_storage();
@@ -3803,8 +3163,6 @@ void do_final(void) {
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);
 	charid_db->destroy(charid_db, NULL);
-
-//#endif
 
 #ifndef TXT_ONLY
     map_sql_close();
