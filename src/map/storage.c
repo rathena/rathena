@@ -18,6 +18,7 @@
 #include "guild.h"
 #include "battle.h"
 #include "atcommand.h"
+#include "log.h"
 
 static struct dbt *storage_db;
 static struct dbt *guild_storage_db;
@@ -188,6 +189,8 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 				stor->storage_[i].amount+=amount;
 				clif_storageitemadded(sd,stor,i,amount);
 				stor->dirty = 1;
+				if(log_config.enable_logs&0x800)
+					log_pick_pc(sd, "R", item_data->nameid, -amount, item_data);
 				return 0;
 			}
 		}
@@ -204,6 +207,8 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 	clif_storageitemadded(sd,stor,i,amount);
 	clif_updatestorageamount(sd,stor);
 	stor->dirty = 1;
+	if(log_config.enable_logs&0x800)
+		log_pick_pc(sd, "R", item_data->nameid, -amount, item_data);
 	return 0;
 }
 /*==========================================
@@ -217,6 +222,8 @@ static int storage_delitem(struct map_session_data *sd,struct storage *stor,int 
 		return 1;
 
 	stor->storage_[n].amount-=amount;
+	if(log_config.enable_logs&0x800)
+		log_pick_pc(sd, "R", stor->storage_[n].nameid, amount, &stor->storage_[n]);
 	if(stor->storage_[n].amount==0){
 		memset(&stor->storage_[n],0,sizeof(stor->storage_[0]));
 		stor->storage_amount--;
@@ -537,6 +544,8 @@ int guild_storage_additem(struct map_session_data *sd,struct guild_storage *stor
 				stor->storage_[i].amount+=amount;
 				clif_guildstorageitemadded(sd,stor,i,amount);
 				stor->dirty = 1;
+				if(log_config.enable_logs&0x1000)
+					log_pick_pc(sd, "G", item_data->nameid, -amount, item_data);
 				return 0;
 			}
 		}
@@ -553,6 +562,8 @@ int guild_storage_additem(struct map_session_data *sd,struct guild_storage *stor
 	clif_guildstorageitemadded(sd,stor,i,amount);
 	clif_updateguildstorageamount(sd,stor);
 	stor->dirty = 1;
+	if(log_config.enable_logs&0x1000)
+		log_pick_pc(sd, "G", item_data->nameid, -amount, item_data);
 	return 0;
 }
 
@@ -565,6 +576,8 @@ int guild_storage_delitem(struct map_session_data *sd,struct guild_storage *stor
 		return 1;
 
 	stor->storage_[n].amount-=amount;
+	if(log_config.enable_logs&0x1000)
+		log_pick_pc(sd, "G", stor->storage_[n].nameid, amount, &stor->storage_[n]);
 	if(stor->storage_[n].amount==0){
 		memset(&stor->storage_[n],0,sizeof(stor->storage_[0]));
 		stor->storage_amount--;

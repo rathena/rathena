@@ -9147,6 +9147,8 @@ BUILDIN_FUNC(getcastledata)
 	struct guild_castle *gc;
 	int i,j;
 
+	map_normalize_name(mapname);
+
 	if( st->end>st->start+4 && index==0){
 		for(i=0,j=-1;i<MAX_GUILDCASTLE;i++)
 			if( (gc=guild_castle_search(i)) != NULL &&
@@ -9209,6 +9211,8 @@ BUILDIN_FUNC(setcastledata)
 	int value=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	struct guild_castle *gc;
 	int i;
+
+	map_normalize_name(mapname);
 
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		if( (gc=guild_castle_search(i)) != NULL ){
