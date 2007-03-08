@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/09
+	* Updated various one-handed weapons [Playtester]
 03/08
 	* Added new map_cache.dat containing every map you need at the moment [DracoRPG]
 	  - Beware as it was built by a little-endian (i386), for a little-endian!
