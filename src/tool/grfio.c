@@ -31,7 +31,6 @@
 #include <sys/stat.h>
 
 #include "grfio.h"
-#include "../common/mmo.h"
 #include "../zlib/unzip.h"
 
 #define CHUNK 16384
@@ -54,13 +53,13 @@ static char data_dir[1024] = "";	// "../";
 //----------------------------
 //	file entry table struct
 //----------------------------
-typedef struct {
+typedef struct _FILELIST {
 	int 	srclen;				// compressed size
 	int		srclen_aligned;		//
 	int		declen;				// original size
 	int		srcpos;
-	short	next;
-	int	cycle;
+	int		next;
+	int		cycle;
 	char	type;
 	char	fn[128-4*5];		// file name
 	char	*fnd;
@@ -219,7 +218,7 @@ static void decode_des_etc(BYTE *buf,int len,int type,int cycle)
 			BitConvert(buf,BitSwapTable2);
 		} else {
 			if(cnt==7 && type==0){
-				int a;
+				BYTE a;
 				BYTE tmp[8];
 				*(DWORD*)tmp     = *(DWORD*)buf;
 				*(DWORD*)(tmp+4) = *(DWORD*)(buf+4);
@@ -599,7 +598,7 @@ void* grfio_reads(char *fname, int *size)
 					decode_des_etc(buf, entry->srclen_aligned, entry->cycle == 0, entry->cycle);
 				len = entry->declen;
 				decode_zip(buf2, &len, buf, entry->srclen);
-				if (len != entry->declen) {
+				if (len != (uLong)entry->declen) {
 					printf("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
 					free(buf);
 					free(buf2);
@@ -679,7 +678,8 @@ static int grfio_entryread(char *gfname,int gentry)
 
 		// Get an entry
 		for (entry = 0,ofs = 0; entry < entrys; entry++) {
-			int ofs2, srclen, srccount, type;
+			int ofs2, srclen, srccount;
+			unsigned char type;
 			char *period_ptr;
 			FILELIST aentry;
 
@@ -764,7 +764,7 @@ static int grfio_entryread(char *gfname,int gentry)
 				exit(1);
 			}
 			//ofs2 = ofs+strlen((char*)(grf_filelist+ofs))+1;
-			ofs2 = ofs + strlen(fname)+1;
+			ofs2 = ofs + (int)strlen(fname)+1;
 			type = grf_filelist[ofs2+12];
 			if (type == 1 || type == 3 || type == 5) {
 				srclen = getlong(grf_filelist+ofs2);
@@ -896,7 +896,7 @@ static int grfio_add(char *fname)
 
 char *grfio_alloc_ptr(char *fname)
 {
-	int len;
+	size_t len;
 	char *buf;
 
 	if (gentry_entrys >= GENTRY_LIMIT) {

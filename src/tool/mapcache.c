@@ -42,52 +42,101 @@ FILE *map_cache_fp;
 
 int filesize;
 
+/// Converts an unsigned short (16 bits) from current machine order to little-endian
+unsigned short MakeUShortLE(unsigned short val)
+{
+	unsigned char buf[2];
+	buf[0] = (unsigned char)( (val & 0x00FF)         );
+	buf[1] = (unsigned char)( (val & 0xFF00) >> 0x08 );
+	return *((unsigned short*)buf);
+}
+
+/// Converts a short (16 bits) from current machine order to little-endian
+short MakeShortLE(short val)
+{
+	unsigned char buf[2];
+	buf[0] = (unsigned char)( (val & 0x00FF)         );
+	buf[1] = (unsigned char)( (val & 0xFF00) >> 0x08 );
+	return *((short*)buf);
+}
+
+/// Converts a long (32 bits) from current machine order to little-endian
+long MakeLongLE(long val)
+{
+	unsigned char buf[4];
+	buf[0] = (unsigned char)( (val & 0x000000FF)         );
+	buf[1] = (unsigned char)( (val & 0x0000FF00) >> 0x08 );
+	buf[2] = (unsigned char)( (val & 0x00FF0000) >> 0x10 );
+	buf[3] = (unsigned char)( (val & 0xFF000000) >> 0x18 );
+	return *((long*)buf);
+}
+
+/// Reads an unsigned long (32 bits) in little-endian from the buffer
+unsigned long GetULong(const unsigned char *buf)
+{
+	return	 ( ((unsigned long)(buf[0]))         )
+			|( ((unsigned long)(buf[1])) << 0x08 )
+			|( ((unsigned long)(buf[2])) << 0x10 )
+			|( ((unsigned long)(buf[3])) << 0x18 );
+}
+
+// Reads a float (32 bits) from the buffer
+float GetFloat(const unsigned char *buf)
+{
+	unsigned long val = GetULong(buf);
+	return *((float*)&val);
+}
+
 
 // Read map from GRF's GAT and RSW files
 int read_map(char *name, struct map_data *m)
 {
 	char filename[256];
-	char *gat, *rsw;
+	unsigned char *gat, *rsw;
 	int water_height;
-	int x, y, xs, ys;
-	struct gat_cell {
-		float height[4];
-		int type;
-	} *p = NULL;
+	size_t xy, off, num_cells;
+	float height[4];
+	unsigned long type;
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
-	gat = (char *)grfio_read(filename);
+	gat = (unsigned char *)grfio_read(filename);
 	if (gat == NULL)
 		return 0;
 
 	// Open map RSW
 	sprintf(filename,"data\\%s.rsw", name);
-	rsw = (char *)grfio_read(filename);
+	rsw = (unsigned char *)grfio_read(filename);
 
 	// Read water height
 	if (rsw) { 
-		float temp = *(float*)(rsw+166);
-		water_height = (int)temp;
+		water_height = (int)GetFloat(rsw+166);
 		free(rsw);
 	} else
 		water_height = NO_WATER;
 
 	// Read map size and allocate needed memory
-	xs = m->xs = *(int*)(gat+6);
-	ys = m->ys = *(int*)(gat+10);
-	m->cells = (unsigned char *)malloc(xs*ys);
+	m->xs = (short)GetULong(gat+6);
+	m->ys = (short)GetULong(gat+10);
+	num_cells = (size_t)m->xs*m->ys;
+	m->cells = (unsigned char *)malloc(num_cells);
 
 	// Set cell properties
-	for (y = 0; y < ys; y++) {
-		p = (struct gat_cell*)(gat+14+y*xs*20);
-		for (x = 0; x < xs; x++) {
-			if (water_height != NO_WATER && p->type == 0 && (p->height[0] > water_height || p->height[1] > water_height || p->height[2] > water_height || p->height[3] > water_height))
-				m->cells[x+y*xs] = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
-			else
-				m->cells[x+y*xs] = p->type;
-			p++;
-		}
+	off = 14;
+	for (xy = 0; xy < num_cells; xy++)
+	{
+		// Height of the corners
+		height[0] = GetFloat( gat + off      );
+		height[1] = GetFloat( gat + off + 4  );
+		height[2] = GetFloat( gat + off + 8  );
+		height[3] = GetFloat( gat + off + 12 );
+		// Type of cell
+		type      = GetULong( gat + off + 16 );
+		off += 20;
+		if (water_height != NO_WATER && type == 0 && (height[0] > water_height || height[1] > water_height || height[2] > water_height || height[3] > water_height))
+			m->cells[xy] = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
+		else
+			m->cells[xy] = (unsigned char)type;
 	}
 
 	free(gat);
@@ -109,10 +158,10 @@ void cache_map(char *name, unsigned short index, struct map_data *m)
 
 	// Fill the map header
 	strncpy(info.name, name, MAP_NAME_LENGTH);
-	info.index = index;
-	info.xs = m->xs;
-	info.ys = m->ys;
-	info.len = len;
+	info.index = MakeUShortLE(index);
+	info.xs = MakeShortLE(m->xs);
+	info.ys = MakeShortLE(m->ys);
+	info.len = MakeLongLE((long)len);
 
 	// Append map header then compressed cells at the end of the file
 	fseek(map_cache_fp, filesize, SEEK_SET);
@@ -146,13 +195,15 @@ int main(int argc, char *argv[])
 	grfio_init(grf_list_file);
 
 	printf("Opening map cache: %s\n", map_cache_file);
-	if(!(map_cache_fp = fopen(map_cache_file, "wb"))) {
+	map_cache_fp = fopen(map_cache_file, "wb");
+	if( map_cache_fp == NULL ) {
 		printf("Failure when opening map cache file %s\n", map_cache_file);
 		exit(1);
 	}
 
 	printf("Opening map list: %s\n", map_list_file);
-	if(!(list = fopen(map_list_file, "r"))) {
+	list = fopen(map_list_file, "r");
+	if( list == NULL ) {
 		printf("Failure when opening maps list file %s\n", map_list_file);
 		exit(1);
 	}
