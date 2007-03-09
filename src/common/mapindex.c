@@ -68,7 +68,7 @@ static int mapindex_addmap(int index, const char *name)
 	return 1;
 }
 
-unsigned short mapindex_name2id(char* name) {
+unsigned short mapindex_name2id(const char* name) {
 	//TODO: Perhaps use a db to speed this up? [Skotlex]
 	int i;
 	int length = strlen(name);

@@ -2112,7 +2112,7 @@ int set_var(struct map_session_data* sd, char* name, void* val)
  * 文字列への変換
  *------------------------------------------
  */
-char* conv_str(struct script_state *st,struct script_data *data)
+const char* conv_str(struct script_state *st,struct script_data *data)
 {
 	get_val(st,data);
 	if(data->type==C_INT){
@@ -2379,7 +2379,7 @@ int isstr(struct script_data *c) {
 void op_3(struct script_state *st) {
 	int flag = 0;
 	if( isstr(&st->stack->stack_data[st->stack->sp-3])) {
-		char *str = conv_str(st,& (st->stack->stack_data[st->stack->sp-3]));
+		const char *str = conv_str(st,& (st->stack->stack_data[st->stack->sp-3]));
 		flag = str[0];
 	} else {
 		flag = conv_num(st,& (st->stack->stack_data[st->stack->sp-3]));
@@ -4210,7 +4210,7 @@ struct script_function buildin_func[] = {
 BUILDIN_FUNC(mes)
 {
 	struct map_session_data *sd = script_rid2sd(st);
-	char *mes = conv_str(st, &(st->stack->stack_data[st->start+2]));
+	const char *mes = conv_str(st, &(st->stack->stack_data[st->start+2]));
 	if (sd)
 		clif_scriptmes(sd, st->oid, mes);
 	return 0;
@@ -4243,7 +4243,7 @@ BUILDIN_FUNC(goto)
 BUILDIN_FUNC(callfunc)
 {
 	struct script_code *scr, *oldscr;
-	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
 	if( (scr=strdb_get(userfunc_db,str)) ){
 		int i,j;
@@ -4522,7 +4522,7 @@ BUILDIN_FUNC(rand)
 BUILDIN_FUNC(warp)
 {
 	int x,y;
-	char *str;
+	const char *str;
 	struct map_session_data *sd=script_rid2sd(st);
 
 	nullpo_retr(0, sd);
@@ -4563,8 +4563,8 @@ BUILDIN_FUNC(areawarp)
 {
 	int x,y,m;
 	unsigned int index;
-	char *str;
-	char *mapname;
+	const char *str;
+	const char *mapname;
 	int x0,y0,x1,y1;
 
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -4599,7 +4599,7 @@ BUILDIN_FUNC(areawarp)
 BUILDIN_FUNC(warpchar)
 {
 	int x,y,a,i;
-	char *str;
+	const char *str;
 	struct map_session_data *sd, **pl_allsd;
 	int users;
 	
@@ -4637,7 +4637,7 @@ BUILDIN_FUNC(warpchar)
 BUILDIN_FUNC(warpparty)
 {
 	int x,y;
-	char *str;
+	const char *str;
 	int p_id;
 	int i;
 	unsigned short mapindex;
@@ -4721,7 +4721,7 @@ BUILDIN_FUNC(warpguild)
 {
 	int x,y;
 	unsigned short mapindex;
-	char *str;
+	const char *str;
 	int g;
 	int i;
 	struct map_session_data *pl_sd, **pl_allsd;
@@ -4972,7 +4972,7 @@ BUILDIN_FUNC(set)
 
 	if( postfix=='$' ){
 		// 文字列
-		char *str = conv_str(st,& (st->stack->stack_data[st->start+3]));
+		const char *str = conv_str(st,& (st->stack->stack_data[st->start+3]));
 		set_reg(st,sd,num,name,(void*)str,st->stack->stack_data[st->start+2].ref);
 	}else{
 		// 数値
@@ -5650,7 +5650,7 @@ BUILDIN_FUNC(makeitem)
 {
 	int nameid,amount,flag = 0;
 	int x,y,m;
-	char *mapname;
+	const char *mapname;
 	struct item item_tmp;
 	struct script_data *data;
 
@@ -6944,7 +6944,7 @@ BUILDIN_FUNC(savepoint)
 	int x;
 	int y;
 	short map;
-	char* str;
+	const char* str;
 	TBL_PC* sd;
 
 	sd = script_rid2sd(st);
@@ -7051,7 +7051,7 @@ BUILDIN_FUNC(gettime)	/* Asgard Version */
 BUILDIN_FUNC(gettimestr)
 {
 	char *tmpstr;
-	char *fmtstr;
+	const char *fmtstr;
 	int maxlen;
 	time_t now = time(NULL);
 
@@ -7092,7 +7092,7 @@ BUILDIN_FUNC(guildopenstorage)
 BUILDIN_FUNC(itemskill)
 {
 	int id,lv;
-	char *str;
+	const char *str;
 	struct map_session_data *sd=script_rid2sd(st);
 
 	id=conv_num(st,& (st->stack->stack_data[st->start+2]));
@@ -7196,7 +7196,7 @@ BUILDIN_FUNC(guildchangegm)
 {
 	struct map_session_data *sd;
 	int guild_id;
-	char *name;
+	const char *name;
 
 	guild_id = conv_num(st,& (st->stack->stack_data[st->start+2]));
 	name = conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -7217,7 +7217,7 @@ BUILDIN_FUNC(guildchangegm)
 BUILDIN_FUNC(monster)
 {
 	int class_,amount,x,y;
-	char *str,*map,*event="";
+	const char *str,*map,*event="";
 
 	map	=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x	=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7244,7 +7244,7 @@ BUILDIN_FUNC(monster)
 BUILDIN_FUNC(areamonster)
 {
 	int class_,amount,x0,y0,x1,y1;
-	char *str,*map,*event="";
+	const char *str,*map,*event="";
 
 	map	=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x0	=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7283,7 +7283,7 @@ static int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(killmonster)
 {
-	char *mapname,*event;
+	const char *mapname,*event;
 	int m,allflag=0;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -7305,7 +7305,7 @@ static int buildin_killmonsterall_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(killmonsterall)
 {
-	char *mapname;
+	const char *mapname;
 	int m;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
@@ -7326,7 +7326,7 @@ BUILDIN_FUNC(clone)
 	struct map_session_data *sd, *msd=NULL;
 	int char_id,master_id=0,x,y, mode = 0, flag = 0, m;
 	unsigned int duration = 0;
-	char *map,*event="";
+	const char *map,*event="";
 
 	map=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7373,7 +7373,7 @@ BUILDIN_FUNC(clone)
  */
 BUILDIN_FUNC(doevent)
 {
-	char *event;
+	const char *event;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	check_event(st, event);
 	npc_event(map_id2sd(st->rid),event,0);
@@ -7385,7 +7385,7 @@ BUILDIN_FUNC(doevent)
  */
 BUILDIN_FUNC(donpcevent)
 {
-	char *event;
+	const char *event;
 	event=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	check_event(st, event);
 	npc_event_do(event);
@@ -7397,7 +7397,7 @@ BUILDIN_FUNC(donpcevent)
  */
 BUILDIN_FUNC(addtimer)
 {
-	char *event;
+	const char *event;
 	int tick;
 	tick=conv_num(st, script_getdata(st,2));
 	event=conv_str(st, script_getdata(st,3));
@@ -7411,7 +7411,7 @@ BUILDIN_FUNC(addtimer)
  */
 BUILDIN_FUNC(deltimer)
 {
-	char *event;
+	const char *event;
 	event=conv_str(st, script_getdata(st,2));
 	check_event(st, event);
 	pc_deleventtimer(script_rid2sd(st),event);
@@ -7423,7 +7423,7 @@ BUILDIN_FUNC(deltimer)
  */
 BUILDIN_FUNC(addtimercount)
 {
-	char *event;
+	const char *event;
 	int tick;
 	event=conv_str(st, script_getdata(st,2));
 	tick=conv_num(st, script_getdata(st,3));
@@ -7667,7 +7667,7 @@ BUILDIN_FUNC(playerattached)
  */
 BUILDIN_FUNC(announce)
 {
-	char *str, *color=NULL;
+	const char *str, *color=NULL;
 	int flag;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	flag=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7709,7 +7709,7 @@ static int buildin_mapannounce_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(mapannounce)
 {
-	char *mapname,*str, *color=NULL;
+	const char *mapname,*str, *color=NULL;
 	int flag,m;
 
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -7731,7 +7731,7 @@ BUILDIN_FUNC(mapannounce)
  */
 BUILDIN_FUNC(areaannounce)
 {
-	char *map,*str,*color=NULL;
+	const char *map,*str,*color=NULL;
 	int flag,m;
 	int x0,y0,x1,y1;
 
@@ -7801,7 +7801,7 @@ BUILDIN_FUNC(getusersname)
  */
 BUILDIN_FUNC(getmapguildusers)
 {
-	char *str;
+	const char *str;
 	int m, gid;
 	int i=0,c=0;
 	struct guild *g = NULL;
@@ -7830,7 +7830,7 @@ BUILDIN_FUNC(getmapguildusers)
  */
 BUILDIN_FUNC(getmapusers)
 {
-	char *str;
+	const char *str;
 	int m;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	if( (m=map_mapname2mapid(str))< 0){
@@ -7852,7 +7852,7 @@ static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(getareausers)
 {
-	char *str;
+	const char *str;
 	int m,x0,y0,x1,y1,users=0;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x0=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -7886,7 +7886,7 @@ static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(getareadropitem)
 {
-	char *str;
+	const char *str;
 	int m,x0,y0,x1,y1,item,amount=0;
 	struct script_data *data;
 
@@ -7922,7 +7922,7 @@ BUILDIN_FUNC(getareadropitem)
  */
 BUILDIN_FUNC(enablenpc)
 {
-	char *str;
+	const char *str;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	npc_enable(str,1);
 	return 0;
@@ -7933,7 +7933,7 @@ BUILDIN_FUNC(enablenpc)
  */
 BUILDIN_FUNC(disablenpc)
 {
-	char *str;
+	const char *str;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	npc_enable(str,0);
 	return 0;
@@ -7969,7 +7969,7 @@ BUILDIN_FUNC(disablearena)	// Added by RoVeRT
  */
 BUILDIN_FUNC(hideoffnpc)
 {
-	char *str;
+	const char *str;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	npc_enable(str,2);
 	return 0;
@@ -7980,7 +7980,7 @@ BUILDIN_FUNC(hideoffnpc)
  */
 BUILDIN_FUNC(hideonnpc)
 {
-	char *str;
+	const char *str;
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	npc_enable(str,4);
 	return 0;
@@ -8347,7 +8347,7 @@ BUILDIN_FUNC(changesex)
  */
 BUILDIN_FUNC(waitingroom)
 {
-	char *name,*ev="";
+	const char *name,*ev="";
 	int limit, trigger = 0,pub=1;
 	name=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	limit= conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8383,7 +8383,7 @@ BUILDIN_FUNC(globalmes)
 {
 	struct block_list *bl = map_id2bl(st->oid);
 	struct npc_data *nd = (struct npc_data *)bl;
-	char *name=NULL,*mes;
+	const char *name=NULL,*mes;
 
 	mes=conv_str(st,& (st->stack->stack_data[st->start+2]));	// メッセージの取得
 	if(mes==NULL) return 0;
@@ -8520,7 +8520,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 BUILDIN_FUNC(warpwaitingpc)
 {
 	int x,y,i,n;
-	char *str;
+	const char *str;
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 	struct chat_data *cd;
 	struct map_session_data *sd;
@@ -8595,7 +8595,7 @@ BUILDIN_FUNC(setmapflagnosave)
 {
 	int m,x,y;
 	unsigned short mapindex;
-	char *str,*str2;
+	const char *str,*str2;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	str2=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -8617,8 +8617,8 @@ BUILDIN_FUNC(setmapflagnosave)
 BUILDIN_FUNC(setmapflag)
 {
 	int m,i;
-	char *str;
-	char *val=NULL;
+	const char *str;
+	const char *val=NULL;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	i=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8770,7 +8770,7 @@ BUILDIN_FUNC(setmapflag)
 BUILDIN_FUNC(removemapflag)
 {
 	int m,i;
-	char *str;
+	const char *str;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	i=conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -8922,7 +8922,7 @@ BUILDIN_FUNC(removemapflag)
 BUILDIN_FUNC(pvpon)
 {
 	int m,i,users;
-	char *str;
+	const char *str;
 	struct map_session_data *pl_sd=NULL, **pl_allsd;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -8965,7 +8965,7 @@ static int buildin_pvpoff_sub(struct block_list *bl,va_list ap) {
 BUILDIN_FUNC(pvpoff)
 {
 	int m;
-	char *str;
+	const char *str;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
@@ -8985,7 +8985,7 @@ BUILDIN_FUNC(pvpoff)
 BUILDIN_FUNC(gvgon)
 {
 	int m;
-	char *str;
+	const char *str;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
@@ -8999,7 +8999,7 @@ BUILDIN_FUNC(gvgon)
 BUILDIN_FUNC(gvgoff)
 {
 	int m;
-	char *str;
+	const char *str;
 
 	str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	m = map_mapname2mapid(str);
@@ -9067,7 +9067,7 @@ static int buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 
 BUILDIN_FUNC(maprespawnguildid)
 {
-	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int g_id=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	int flag=conv_num(st,& (st->stack->stack_data[st->start+4]));
 
@@ -9122,7 +9122,7 @@ BUILDIN_FUNC(flagemblem)
 
 BUILDIN_FUNC(getcastlename)
 {
-	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	struct guild_castle *gc=NULL;
 	int i;
 	for(i=0;i<MAX_GUILDCASTLE;i++){
@@ -9141,9 +9141,9 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	char *event=NULL;
+	const char *event=NULL;
 	struct guild_castle *gc;
 	int i,j;
 
@@ -9206,7 +9206,7 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	int value=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	struct guild_castle *gc;
@@ -9278,7 +9278,7 @@ BUILDIN_FUNC(setcastledata)
 BUILDIN_FUNC(requestguildinfo)
 {
 	int guild_id=conv_num(st,& (st->stack->stack_data[st->start+2]));
-	char *event=NULL;
+	const char *event=NULL;
 
 	if( st->end>st->start+3 ){
 		event=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -9481,8 +9481,8 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 	int x,y,m,check_val=0,check_ID=0,i=0;
 	struct guild *g = NULL;
 	struct party_data *p = NULL;
-	char *str;
-	char *mapname;
+	const char *str;
+	const char *mapname;
 	unsigned int index;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -9531,7 +9531,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 
 BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 {
-	char *npc,*command;
+	const char *npc,*command;
 
 	npc=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	command=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -9570,7 +9570,7 @@ static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by Ro
 
 BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 {
-	char *mapname,*event;
+	const char *mapname,*event;
 	int m;
 	mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	event=conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -9587,7 +9587,7 @@ BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 }
 BUILDIN_FUNC(marriage)
 {
-	char *partner=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *partner=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	struct map_session_data *sd=script_rid2sd(st);
 	struct map_session_data *p_sd=map_nick2sd(partner);
 
@@ -9688,7 +9688,7 @@ BUILDIN_FUNC(warppartner)
 {
 	int x,y;
 	unsigned short mapindex;
-	char *str;
+	const char *str;
 	struct map_session_data *sd=script_rid2sd(st);
 	struct map_session_data *p_sd=NULL;
 
@@ -9761,7 +9761,7 @@ BUILDIN_FUNC(strmobinfo)
 BUILDIN_FUNC(guardian)
 {
 	int class_=0,x=0,y=0,guardian=0;
-	char *str,*map,*evt="";
+	const char *str,*map,*evt="";
 	struct script_data *data;
 
 	map	  =conv_str(st,script_getdata(st,2));
@@ -10215,7 +10215,7 @@ BUILDIN_FUNC(soundeffect)
 
 	// Redundn
 	struct map_session_data *sd=script_rid2sd(st);
-	char *name;
+	const char *name;
 	int type=0;
 
 
@@ -10250,7 +10250,7 @@ int soundeffect_sub(struct block_list* bl,va_list ap)
 BUILDIN_FUNC(soundeffectall)
 {
 	// [Lance] - Improved.
-	char *name, *map = NULL;
+	const char *name, *map = NULL;
 	struct block_list *bl;
 	int type, coverage, x0, y0, x1, y1;
 
@@ -10541,7 +10541,7 @@ BUILDIN_FUNC(nude)
 BUILDIN_FUNC(atcommand)
 {
 	struct map_session_data *sd=NULL;
-	char *cmd;
+	const char *cmd;
 
 	cmd = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	if (st->rid)
@@ -10578,7 +10578,7 @@ BUILDIN_FUNC(atcommand)
 BUILDIN_FUNC(charcommand)
 {
 	struct map_session_data *sd=NULL;
-	char *cmd;
+	const char *cmd;
 	
 	cmd = conv_str(st,& (st->stack->stack_data[st->start+2]));
 
@@ -10621,7 +10621,7 @@ BUILDIN_FUNC(charcommand)
 BUILDIN_FUNC(dispbottom)
 {
 	struct map_session_data *sd=script_rid2sd(st);
-	char *message;
+	const char *message;
 	message=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	if(sd)
 		clif_disp_onlyself(sd,message,(int)strlen(message));
@@ -10844,7 +10844,7 @@ BUILDIN_FUNC(prompt)
  */
 BUILDIN_FUNC(getmapmobs)
 {
-	char *str=NULL;
+	const char *str=NULL;
 	int m=-1,bx,by,i;
 	int count=0,c;
 	struct block_list *bl;
@@ -10889,7 +10889,7 @@ BUILDIN_FUNC(getmapmobs)
 BUILDIN_FUNC(movenpc)
 {
 	TBL_NPC *nd = NULL;
-	char *npc;
+	const char *npc;
 	int x,y;
 	short m;
 
@@ -10922,7 +10922,7 @@ BUILDIN_FUNC(movenpc)
 BUILDIN_FUNC(message)
 {
 	struct map_session_data *sd;
-	char *msg,*player;
+	const char *msg,*player;
 	struct map_session_data *pl_sd = NULL;
 
 	sd = script_rid2sd(st);
@@ -10945,7 +10945,7 @@ BUILDIN_FUNC(message)
 
 BUILDIN_FUNC(npctalk)
 {
-	char *str;
+	const char *str;
 	char message[255];
 
 	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
@@ -11265,7 +11265,7 @@ BUILDIN_FUNC(logmes)
 BUILDIN_FUNC(summon)
 {
 	int _class, timeout=0;
-	char *str,*event="";
+	const char *str,*event="";
 	struct map_session_data *sd;
 	struct mob_data *md;
 	int tick = gettick();
@@ -11581,9 +11581,9 @@ BUILDIN_FUNC(adopt)
 {
 	int ret;
 	
-	char *parent1 = conv_str(st,& (st->stack->stack_data[st->start+2]));
-	char *parent2 = conv_str(st,& (st->stack->stack_data[st->start+3]));
-	char *child = conv_str(st,& (st->stack->stack_data[st->start+4]));
+	const char *parent1 = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *parent2 = conv_str(st,& (st->stack->stack_data[st->start+3]));
+	const char *child = conv_str(st,& (st->stack->stack_data[st->start+4]));
 
 	struct map_session_data *p1_sd = map_nick2sd(parent1);
 	struct map_session_data *p2_sd = map_nick2sd(parent2);
@@ -11671,7 +11671,7 @@ BUILDIN_FUNC(autoequip)
 
 BUILDIN_FUNC(setbattleflag)
 {
-	char *flag, *value;
+	const char *flag, *value;
 
 	flag = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	value = conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -11686,7 +11686,7 @@ BUILDIN_FUNC(setbattleflag)
 
 BUILDIN_FUNC(getbattleflag)
 {
-	char *flag;
+	const char *flag;
 	flag = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	push_val(st->stack,C_INT,battle_get_value(flag));
 	return 0;
@@ -11698,7 +11698,7 @@ BUILDIN_FUNC(getbattleflag)
 BUILDIN_FUNC(getstrlen)
 {
 
-	char *str = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *str = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int len = (str) ? (int)strlen(str) : 0;
 
 	push_val(st->stack,C_INT,len);
@@ -11710,8 +11710,7 @@ BUILDIN_FUNC(getstrlen)
 //-------------------------------------------------------
 BUILDIN_FUNC(charisalpha)
 {
-
-	char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 	int pos=conv_num(st,& (st->stack->stack_data[st->start+3]));
 
 	int val = ( str && pos>0 && (unsigned int)pos<strlen(str) ) ? ISALPHA( str[pos] ) : 0;
@@ -11723,8 +11722,8 @@ BUILDIN_FUNC(charisalpha)
 // [Lance]
 BUILDIN_FUNC(fakenpcname)
 {
-	char *name;
-	char *newname;
+	const char *name;
+	const char *newname;
 	int look;
 	name = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	newname = conv_str(st,& (st->stack->stack_data[st->start+3]));
@@ -11739,7 +11738,7 @@ BUILDIN_FUNC(fakenpcname)
 
 BUILDIN_FUNC(atoi)
 {
-	char *value;
+	const char *value;
 	value = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	push_val(st->stack, C_INT, atoi(value));
 	return 0;
@@ -11750,16 +11749,12 @@ BUILDIN_FUNC(atoi)
 //-----------------------------------------------------------------------//
 BUILDIN_FUNC(compare)
 {
-   char *message;
-   char *cmpstring;
+	const char *message;
+   const char *cmpstring;
    int j;
    message = conv_str(st,& (st->stack->stack_data[st->start+2]));
    cmpstring = conv_str(st,& (st->stack->stack_data[st->start+3]));
-   for (j = 0; message[j]; j++)
-    message[j] = TOLOWER(message[j]);
-   for (j = 0; cmpstring[j]; j++)
-    cmpstring[j] = TOLOWER(cmpstring[j]);    
-   push_val(st->stack,C_INT,(strstr(message,cmpstring) != NULL));
+   push_val(st->stack,C_INT,(stristr(message,cmpstring) != NULL));
    return 0;
 }
 
@@ -11801,7 +11796,7 @@ BUILDIN_FUNC(distance)
 BUILDIN_FUNC(checkcell)
 {
 	int m;
-	char *map = conv_str(st, &(st->stack->stack_data[st->start+2]));
+	const char *map = conv_str(st, &(st->stack->stack_data[st->start+2]));
 	m = mapindex_name2id(map);
 	if(m){
 		push_val(st->stack, C_INT, map_getcell(m, conv_num(st, &(st->stack->stack_data[st->start+3])), conv_num(st, &(st->stack->stack_data[st->start+4])),conv_num(st, &(st->stack->stack_data[st->start+5]))));
@@ -11822,8 +11817,8 @@ void setd_sub(struct script_state *st, struct map_session_data *sd, char *varnam
 BUILDIN_FUNC(setd)
 {
 	struct map_session_data *sd=NULL;
-	char varname[100], *buffer;
-	char *value;
+	char varname[100];
+	const char *value, *buffer;
 	int elem;
 	buffer = conv_str(st, & (st->stack->stack_data[st->start+2]));
 	value = conv_str(st,  & (st->stack->stack_data[st->start+3]));
@@ -11846,7 +11841,8 @@ BUILDIN_FUNC(setd)
 BUILDIN_FUNC(query_sql)
 {
 #ifndef TXT_ONLY
-	char *name = NULL, *query;
+	char *name = NULL;
+	const char *query;
 	int num, i = 0,j, nb_rows;
 	struct { char * dst_var_name; char type; } row[32];
 	struct map_session_data *sd = (st->rid)? script_rid2sd(st) : NULL;
@@ -11925,7 +11921,8 @@ BUILDIN_FUNC(query_sql)
 //Allows escaping of a given string.
 BUILDIN_FUNC(escape_sql)
 {
-	char *t_query, *query;
+	const char *query;
+	char *t_query;
 	query = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	
 	t_query = aMallocA((strlen(query)*2+1)*sizeof(char));
@@ -11936,7 +11933,8 @@ BUILDIN_FUNC(escape_sql)
 
 BUILDIN_FUNC(getd)
 {
-	char varname[100], *buffer;
+	char varname[100];
+	const char *buffer;
 	//struct script_data dat;
 	int elem;
 
@@ -11997,7 +11995,7 @@ BUILDIN_FUNC(callshop)
 {
 	struct map_session_data *sd = NULL;
 	struct npc_data *nd;
-	char *shopname;
+	const char *shopname;
 	int flag = 0;
 	sd = script_rid2sd(st);
 	if (!sd) {
@@ -12040,7 +12038,7 @@ BUILDIN_FUNC(npcshopitem)
 	int i = 3;
 	int amount;
 
-	char* npcname = conv_str(st, & (st->stack->stack_data[st->start + 2]));
+	const char* npcname = conv_str(st, & (st->stack->stack_data[st->start + 2]));
 	nd = npc_name2id(npcname);
 
 	if(!nd || nd->bl.subtype!=SHOP)
@@ -12080,7 +12078,7 @@ BUILDIN_FUNC(npcshopadditem)
 	int i = 3;
 	int amount;
 
-	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
+	const char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
 	nd = npc_name2id(npcname);
 
 	if (!nd || nd->bl.subtype!=SHOP)
@@ -12122,7 +12120,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	int i=3;
 	int size = 0;
 
-	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
+	const char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
 	nd = npc_name2id(npcname);
 
 	if (!nd || nd->bl.subtype!=SHOP)
@@ -12163,7 +12161,7 @@ BUILDIN_FUNC(npcshopdelitem)
 BUILDIN_FUNC(npcshopattach)
 {
 	struct npc_data *nd=NULL;
-	char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
+	const char* npcname = conv_str(st, & (st->stack->stack_data[st->start+2]));
 	int flag = 1;
 
 	if( script_hasdata(st,3) )
@@ -12198,7 +12196,7 @@ BUILDIN_FUNC(npcshopattach)
 BUILDIN_FUNC(setitemscript)
 {
 	int item_id,n=0;
-	char *script;
+	const char *script;
 	struct item_data *i_data;
 	struct script_code *dstscript;
 
@@ -12412,7 +12410,7 @@ int axtoi(char *hexStg)
 // [Lance] Hex string to integer converter
 BUILDIN_FUNC(axtoi)
 {
-	char *hex = conv_str(st,& (st->stack->stack_data[st->start+2]));
+	const char *hex = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	push_val(st->stack, C_INT, axtoi(hex));	
 	return 0;
 }
@@ -12513,7 +12511,7 @@ BUILDIN_FUNC(pcstopfollow)
 BUILDIN_FUNC(mobspawn)
 {
 	int class_,x,y,id;
-	char *str,*map;
+	const char *str,*map;
 
 	// Who?
 	str		=conv_str(st,& (st->stack->stack_data[st->start+2]));
@@ -12691,7 +12689,7 @@ BUILDIN_FUNC(setmobdata)
 BUILDIN_FUNC(mobassist)
 {
 	int id;
-	char *target;
+	const char *target;
 	struct mob_data *md = NULL;
 	struct block_list *bl = NULL;
 	struct unit_data *ud;
@@ -12724,7 +12722,7 @@ BUILDIN_FUNC(mobattach)
 	int id;
 	struct mob_data *md = NULL;
 	struct npc_data *nd = NULL;
-	char *npcname = NULL;
+	const char *npcname = NULL;
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
 	if(st->end > st->start + 3){
 		npcname = conv_str(st, & (st->stack->stack_data[st->start+3]));
@@ -12777,7 +12775,7 @@ BUILDIN_FUNC(unitkill)
 BUILDIN_FUNC(unitwarp)
 {
 	int id,x,y,m = 0;
-	char *map;
+	const char *map;
 	struct block_list *bl = NULL;
 
 	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
@@ -12799,7 +12797,7 @@ BUILDIN_FUNC(unitwarp)
 BUILDIN_FUNC(unitattack)
 {
 	int id = 0, actiontype = 0;
-	char *target = NULL;
+	const char *target = NULL;
 	struct map_session_data *sd = NULL;
 	struct block_list *bl = NULL, *tbl = NULL;
 	
@@ -12856,7 +12854,7 @@ BUILDIN_FUNC(unitstop)
 
 BUILDIN_FUNC(unittalk)
 {
-	char *str;
+	const char *str;
 	int id;
 	char message[255];
 
@@ -13048,7 +13046,7 @@ BUILDIN_FUNC(getvariableofnpc)
 	{
 		int num = data->u.num;
 		char* var_name = str_buf + str_data[num&0x00ffffff].str;
-		char* npc_name = conv_str(st, script_getdata(st,3));
+		const char* npc_name = conv_str(st, script_getdata(st,3));
 		struct npc_data* nd = npc_name2id(npc_name);
 		if( var_name[0] != '.' || var_name[1] == '@' )
 		{// not a npc variable

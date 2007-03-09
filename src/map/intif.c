@@ -129,7 +129,7 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
 }
 
 // GMメッセージを送信
-int intif_GMmessage(char* mes,int len,int flag)
+int intif_GMmessage(const char* mes,int len,int flag)
 {
 	int lp = (flag&0x10) ? 8 : 4;
 
@@ -152,7 +152,7 @@ int intif_GMmessage(char* mes,int len,int flag)
 	return 0;
 }
 
-int intif_announce(char* mes,int len, unsigned long color, int flag)
+int intif_announce(const char* mes,int len, unsigned long color, int flag)
 {
 	// Send to the local players
 	if(color == 0xFE000000) // This is main chat message [LuzZza]

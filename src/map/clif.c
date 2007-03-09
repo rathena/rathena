@@ -1820,7 +1820,7 @@ int clif_selllist(struct map_session_data *sd) {
  *
  *------------------------------------------
  */
-int clif_scriptmes(struct map_session_data *sd, int npcid, char *mes) {
+int clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes) {
 	int fd = sd->fd;
 	int slen = strlen(mes) + 9;
 	WFIFOHEAD(fd, slen);
@@ -7348,7 +7348,7 @@ void clif_sitting(struct map_session_data *sd)
  *
  *------------------------------------------
  */
-int clif_disp_onlyself(struct map_session_data *sd, char *mes, int len)
+int clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
 {
 	int fd;
 	nullpo_retr(0, sd);
@@ -7492,7 +7492,7 @@ int clif_wisall(struct map_session_data *sd,int type,int flag)
  * サウンドエフェクト
  *------------------------------------------
  */
-void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type)
+void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type)
 {
 	int fd;
 
@@ -7511,7 +7511,7 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *na
 	return;
 }
 
-int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage)
+int clif_soundeffectall(struct block_list *bl, const char *name, int type, int coverage)
 {
 	unsigned char buf[40];
 	memset(buf, 0, packet_len(0x1d3));

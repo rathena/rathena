@@ -83,7 +83,7 @@ int clif_fixpos2(struct block_list *);	// area
 int clif_npcbuysell(struct map_session_data*,int);	//self
 int clif_buylist(struct map_session_data*,struct npc_data*);	//self
 int clif_selllist(struct map_session_data*);	//self
-int clif_scriptmes(struct map_session_data*,int,char*);	//self
+int clif_scriptmes(struct map_session_data*,int,const char*);	//self
 int clif_scriptnext(struct map_session_data*,int);	//self
 int clif_scriptclose(struct map_session_data*,int);	//self
 int clif_scriptmenu(struct map_session_data*,int,char*);	//self
@@ -134,8 +134,8 @@ void clif_divorced(struct map_session_data *sd, char *);
 //void clif_callpartner(struct map_session_data *sd);
 void clif_adopt_process(struct map_session_data *sd);
 void clif_sitting(struct map_session_data *sd);
-void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,char *name,int type);
-int clif_soundeffectall(struct block_list *bl, char *name, int type, int coverage);
+void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type);
+int clif_soundeffectall(struct block_list *bl, const char *name, int type, int coverage);
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick);
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd);
 
@@ -296,12 +296,12 @@ int clif_guild_xy_remove(struct map_session_data *sd);
 
 
 // atcommand
-int clif_displaymessage(const int fd,char* mes);
-int clif_disp_onlyself(struct map_session_data *sd,char *mes,int len);
+int clif_displaymessage(const int fd,const char* mes);
+int clif_disp_onlyself(struct map_session_data *sd,const char *mes,int len);
 void clif_disp_message(struct block_list *src, char *mes, int len, int type);
 int clif_GMmessage(struct block_list *bl,char* mes,int len,int flag);
 void clif_MainChatMessage(char* message); //luzza
-int clif_announce(struct block_list *bl, char* mes, int len, unsigned long color, int flag);
+int clif_announce(struct block_list *bl, const char* mes, int len, unsigned long color, int flag);
 int clif_heal(int fd,int type,int val);
 int clif_resurrection(struct block_list *bl,int type);
 int clif_set0199(int fd,int type);

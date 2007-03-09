@@ -37,7 +37,7 @@ extern char mapindex_cfgfile[80];
 #define MAP_VEINS "veins.gat"
 #define MAP_JAIL "sec_pri.gat"
 #define MAP_NOVICE "new_zone01.gat"
-unsigned short mapindex_name2id(char*);
+unsigned short mapindex_name2id(const char*);
 const char* mapindex_id2name(unsigned short);
 void mapindex_init(void);
 void mapindex_final(void);

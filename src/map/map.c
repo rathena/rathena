@@ -1802,7 +1802,7 @@ struct map_session_data * map_charid2sd(int id) {
  * return map_session_data pointer or NULL
  *------------------------------------------
  */
-struct map_session_data * map_nick2sd(char *nick) {
+struct map_session_data * map_nick2sd(const char *nick) {
 	int i, users;
 	struct map_session_data *pl_sd = NULL, **pl_allsd;
 
