@@ -311,7 +311,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
  * The MOB appearance for one time (for scripts)
  *------------------------------------------
  */
-int mob_once_spawn (struct map_session_data *sd, char *mapname,
+int mob_once_spawn (struct map_session_data *sd, const char *mapname,
 	short x, short y, const char *mobname, int class_, int amount, const char *event)
 {
 	struct mob_data *md = NULL;
@@ -364,7 +364,7 @@ int mob_once_spawn (struct map_session_data *sd, char *mapname,
  * The MOB appearance for one time (& area specification for scripts)
  *------------------------------------------
  */
-int mob_once_spawn_area(struct map_session_data *sd,char *mapname,
+int mob_once_spawn_area(struct map_session_data *sd,const char *mapname,
 	int x0,int y0,int x1,int y1,
 	const char *mobname,int class_,int amount,const char *event)
 {
@@ -459,7 +459,7 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
  * Summoning Guardians [Valaris]
  *------------------------------------------
  */
-int mob_spawn_guardian(char *mapname,short x,short y,const char *mobname,int class_,const char *event,int guardian)
+int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian)
 {
 	struct mob_data *md=NULL;
 	struct spawn_data data;

@@ -38,7 +38,7 @@ int npc_event_dequeue(struct map_session_data *sd);
 int npc_event_timer(int tid,unsigned int tick,int id,int data);
 int npc_event(struct map_session_data *sd,const unsigned char *npcname,int);
 int npc_timer_event(const unsigned char *eventname);				// Added by RoVeRT
-int npc_command(struct map_session_data *sd,const unsigned char *npcname,char *command);
+int npc_command(struct map_session_data* sd, const char* npcname, const char* command);
 int npc_touch_areanpc(struct map_session_data *,int,int,int);
 int npc_touch_areanpc2(struct block_list *bl); // [Skotlex]
 int npc_check_areanpc(int flag,int m,int x,int y,int range);
@@ -52,7 +52,7 @@ int npc_selllist(struct map_session_data *,int,unsigned short *);
 int npc_parse_mob(char *w1,char *w2,char *w3,char *w4);
 int npc_parse_mob2 (struct spawn_data*, int index); // [Wizputer]
 int npc_parse_warp(char *w1,char *w2,char *w3,char *w4);
-int npc_globalmessage(const char *name,char *mes);
+int npc_globalmessage(const char *name,const char *mes);
 
 int npc_enable(const char *name,int flag);
 int npc_changename(const char *name, const char *newname, short look); // [Lance]

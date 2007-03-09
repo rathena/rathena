@@ -43,7 +43,7 @@ char* jstrescape (char* pt) {
 	return &pt[0];
 }
 
-char* jstrescapecpy (char* pt,char* spt) {
+char* jstrescapecpy (char* pt, const char* spt) {
 	//copy from here
 	//WARNING: Target string pt should be able to hold strlen(spt)*2, as each time
 	//a escape character is found, the target's final length increases! [Skotlex]

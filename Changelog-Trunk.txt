@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/03/09
+	* Added info on packet 0x86 (simple move packet). Not usable until a clear 
+	  separation between entering sight/leaving sight/walking in sight is done.
+	* Propagating const char* from the script engine.
+	* ".gat" is appended to the map name before sending the changemapserver
+	  packet to the client. [FlavioJS]
 	* Normalized the mapname in guild get/set castle data, should fix guild
 	  flags.
 	* Added log options 0x800/0x1000 to log storage moves ('R') and guild

@@ -377,6 +377,7 @@ int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, 
 int chrif_changemapserverack(int fd)
 {
 	struct map_session_data *sd;
+	char mapname[MAP_NAME_LENGTH+1];
 	RFIFOHEAD(fd);
 	sd = map_id2sd(RFIFOL(fd,2));
 
@@ -389,7 +390,8 @@ int chrif_changemapserverack(int fd)
 		clif_authfail_fd(sd->fd, 0);
 		return 0;
 	}
-	clif_changemapserver(sd, (char*)mapindex_id2name(RFIFOW(fd,18)), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28));
+	sprintf(mapname, "%s.gat", mapindex_id2name(RFIFOW(fd,18)));
+	clif_changemapserver(sd, mapname, RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28));
 
 	//Player has been saved already, remove him from memory. [Skotlex]	
 	map_quit(sd);

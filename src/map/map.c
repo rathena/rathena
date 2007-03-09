@@ -2072,7 +2072,7 @@ void map_removemobs(int m)
  * map–¼‚©‚çmap”Ô?‚Ö?Š·
  *------------------------------------------
  */
-int map_mapname2mapid(char *name) {
+int map_mapname2mapid(const char* name) {
 	unsigned short map_index;
 	map_index = mapindex_name2id(name);
 	if (!map_index)

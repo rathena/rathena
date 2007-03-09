@@ -1101,7 +1101,7 @@ int session_isActive(int fd)
 	return ( session_isValid(fd) && !session[fd]->eof );
 }
 
-in_addr_t resolve_hostbyname(char* hostname, unsigned char *ip, char *ip_str)
+in_addr_t resolve_hostbyname(const char* hostname, unsigned char* ip, char* ip_str)
 {
 	struct hostent *h = gethostbyname(hostname);
 	char ip_buf[16];

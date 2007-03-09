@@ -1375,7 +1375,7 @@ struct map_session_data * map_charid2sd(int);
 struct map_session_data * map_id2sd(int);
 struct block_list * map_id2bl(int);
 int map_mapindex2mapid(unsigned short mapindex);
-int map_mapname2mapid(char*);
+int map_mapname2mapid(const char* name);
 int map_mapname2ipport(unsigned short,int*,int*);
 int map_setipport(unsigned short map,unsigned long ip,int port);
 int map_eraseipport(unsigned short map,unsigned long ip,int port);

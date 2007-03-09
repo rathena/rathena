@@ -4245,7 +4245,7 @@ BUILDIN_FUNC(callfunc)
 	struct script_code *scr, *oldscr;
 	const char *str=conv_str(st,& (st->stack->stack_data[st->start+2]));
 
-	if( (scr=strdb_get(userfunc_db,str)) ){
+	if( (scr=strdb_get(userfunc_db,(unsigned char*)str)) ){
 		int i,j;
 		struct linkdb_node **oldval = st->stack->var_function;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
@@ -9141,12 +9141,14 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	char mapname[MAP_NAME_LENGTH+1];
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	const char *event=NULL;
 	struct guild_castle *gc;
 	int i,j;
 
+	strncpy(mapname, conv_str(st,script_getdata(st,2)), MAP_NAME_LENGTH);
+	mapname[MAP_NAME_LENGTH] = '\0';
 	map_normalize_name(mapname);
 
 	if( st->end>st->start+4 && index==0){
@@ -9206,12 +9208,14 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
+	char mapname[MAP_NAME_LENGTH+1];
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	int value=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	struct guild_castle *gc;
 	int i;
 
+	strncpy(mapname, conv_str(st,script_getdata(st,2)), MAP_NAME_LENGTH);
+	mapname[MAP_NAME_LENGTH] = '\0';
 	map_normalize_name(mapname);
 
 	for(i=0;i<MAX_GUILDCASTLE;i++){
@@ -11751,7 +11755,6 @@ BUILDIN_FUNC(compare)
 {
 	const char *message;
    const char *cmpstring;
-   int j;
    message = conv_str(st,& (st->stack->stack_data[st->start+2]));
    cmpstring = conv_str(st,& (st->stack->stack_data[st->start+3]));
    push_val(st->stack,C_INT,(stristr(message,cmpstring) != NULL));
@@ -12374,7 +12377,7 @@ BUILDIN_FUNC(checkchatting) // check chatting [Marka]
 	return 0;
 }
 
-int axtoi(char *hexStg)
+int axtoi(const char *hexStg)
 {
 	int n = 0;         // position in string
 	int m = 0;         // position in digit[] to shift

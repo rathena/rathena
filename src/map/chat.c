@@ -276,7 +276,7 @@ int chat_kickchat(struct map_session_data *sd,char *kickusername)
  * npcチャットルーム作成
  *------------------------------------------
  */
-int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,char* title,int titlelen,const char *ev)
+int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,const char* title,int titlelen,const char *ev)
 {
 	struct chat_data *cd;
 

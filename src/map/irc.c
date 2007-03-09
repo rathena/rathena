@@ -64,7 +64,7 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
-void irc_announce(char *buf)
+void irc_announce(const char* buf)
 {
 	char send_string[256];
 	// memset(send_string,'\0',256); // NOT REQUIRED

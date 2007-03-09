@@ -441,7 +441,7 @@ void do_final_battle(void);
 extern int battle_config_read(const char *cfgName);
 extern void battle_validate_conf(void);
 extern void battle_set_defaults(void);
-extern int battle_set_value(char *, char *);
-int battle_get_value(char *);
+int battle_set_value(const char* w1, const char* w2);
+int battle_get_value(const char* w1);
 
 #endif /* _BATTLE_H_ */

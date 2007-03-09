@@ -914,13 +914,13 @@ int npc_event (struct map_session_data *sd, const unsigned char *eventname, int 
 
 int npc_command_sub(DBKey key,void *data,va_list ap)
 {
-	unsigned char *p = key.str;
+	const char* p = (const char*)key.str;
 	struct event_data *ev=(struct event_data *)data;
-	unsigned char *npcname=va_arg(ap,char *);
-	char *command=va_arg(ap,char *);
+	const char* npcname = va_arg(ap, const char*);
+	const char* command = va_arg(ap, const char*);
 	unsigned char temp[100];
 
-	if(strcmp(ev->nd->name,npcname)==0 && (p=strchr(p,':')) && p && strnicmp("::OnCommand",p,10)==0 ){
+	if(strcmp(ev->nd->name,npcname)==0 && (p=strchr(p,':')) && strnicmp("::OnCommand",p,10)==0 ){
 		sscanf(&p[11],"%s",temp);
 
 		if (strcmp(command,temp)==0)
@@ -930,9 +930,9 @@ int npc_command_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-int npc_command(struct map_session_data *sd,const unsigned char *npcname,char *command)
+int npc_command(struct map_session_data* sd, const char* npcname, const char* command)
 {
-	ev_db->foreach(ev_db,npc_command_sub,npcname,command);
+	ev_db->foreach(ev_db, npc_command_sub, npcname, command);
 
 	return 0;
 }
@@ -1152,7 +1152,7 @@ TBL_NPC *npc_checknear(struct map_session_data *sd,struct block_list *bl)
  * NPCのオープンチャット発言
  *------------------------------------------
  */
-int npc_globalmessage(const char *name,char *mes)
+int npc_globalmessage(const char *name,const char *mes)
 {
 	struct npc_data *nd=(struct npc_data *) strdb_get(npcname_db,(unsigned char*)name);
 	char temp[100];

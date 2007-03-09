@@ -3741,7 +3741,7 @@ static const struct battle_data_int {
 	{ "hvan_explosion_intimate",				&battle_config.hvan_explosion_intimate },	//[orn]
 };
 
-int battle_set_value(char *w1, char *w2) {
+int battle_set_value(const char* w1, const char* w2) {
 	int i;
 	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
 		if (strcmpi(w1, battle_data_short[i].str) == 0) {
@@ -3756,7 +3756,7 @@ int battle_set_value(char *w1, char *w2) {
 	return 0;
 }
 
-int battle_get_value(char *w1) {
+int battle_get_value(const char* w1) {
 	int i;
 	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
 		if (strcmpi(w1, battle_data_short[i].str) == 0) {

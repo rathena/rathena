@@ -9,7 +9,7 @@
 // code by Jioh L. Jung (ziozzang@4wish.net)
 // This code is under license "BSD"
 char* jstrescape (char* pt);
-char* jstrescapecpy (char* pt,char* spt);
+char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt,char* spt, int size);
 
 #ifdef __WIN32
