@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/11
+	* Fixed some autocast rates of the new headgears [Playtester]
 03/09
 	* Updated various one-handed weapons [Playtester]
 03/08
