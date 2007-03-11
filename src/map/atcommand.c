@@ -2163,6 +2163,9 @@ int atcommand_charspeed(const int fd, struct map_session_data* sd, const char* c
 int atcommand_storage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
+	
+	if (sd->npc_id || sd->vender_id || sd->state.trading || sd->state.storage_flag)
+		return -1;
 
 	if (storage_storageopen(sd) == 1)
   	{	//Already open.
@@ -2182,21 +2185,24 @@ int atcommand_guildstorage(const int fd, struct map_session_data* sd, const char
 	struct storage *stor; //changes from Freya/Yor
 	nullpo_retr(-1, sd);
 
-	if (sd->status.guild_id > 0) {
-		if (sd->state.storage_flag) {
-			clif_displaymessage(fd, msg_txt(251));
-			return -1;
-		}
-		if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
-			clif_displaymessage(fd, msg_txt(251));
-			return -1;
-		}
-		storage_guild_storageopen(sd);
-	} else {
+	if (!sd->status.guild_id) {
 		clif_displaymessage(fd, msg_txt(252));
 		return -1;
 	}
 
+	if (sd->npc_id || sd->vender_id || sd->state.trading || sd->state.storage_flag)
+		return -1;
+
+	if (sd->state.storage_flag) {
+		clif_displaymessage(fd, msg_txt(251));
+		return -1;
+	}
+
+	if ((stor = account2storage2(sd->status.account_id)) != NULL && stor->storage_status == 1) {
+		clif_displaymessage(fd, msg_txt(251));
+		return -1;
+	}
+	storage_guild_storageopen(sd);
 	return 0;
 }
 

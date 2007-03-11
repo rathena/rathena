@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/03/12
+	* @storage/@gstorage will no longer work if you have a trade or a storage
+	  opened already.
+	* Corrected script command movenpc so it properly moves the ontouch npc
+	  cells as well.
 	* Changed the unit-walk packet to be 0x86 as pointed out by FlavioJS. This
 	  new packet is much smaller, and should greatly decrease bandwidth usage.
 	  The only drawback is that the character will not display at all if the

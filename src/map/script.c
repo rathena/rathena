@@ -10895,7 +10895,6 @@ BUILDIN_FUNC(movenpc)
 	TBL_NPC *nd = NULL;
 	const char *npc;
 	int x,y;
-	short m;
 
 	npc = conv_str(st,& (st->stack->stack_data[st->start+2]));
 	x = conv_num(st,& (st->stack->stack_data[st->start+3]));
@@ -10904,17 +10903,7 @@ BUILDIN_FUNC(movenpc)
 	if ((nd = npc_name2id(npc)) == NULL)
 		return -1;
 
-	if ((m=nd->bl.m) < 0 || nd->bl.prev == NULL)
-		return -1;	//Not on a map.
-	
-	if (x < 0) x = 0;
-	else if (x >= map[m].xs) x = map[m].xs-1;
-	if (y < 0) y = 0;
-	else if (y >= map[m].ys) y = map[m].ys-1;
-	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-
+	npc_movenpc(nd, x, y);
 	return 0;
 }
 

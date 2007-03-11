@@ -1662,7 +1662,7 @@ void npc_delsrcfile (char *name)
 int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 {
 	int x, y, xs, ys, to_x, to_y, m;
-	int i, j;
+	int i;
 	char mapname[MAP_NAME_LENGTH], to_mapname[MAP_NAME_LENGTH];
 	struct npc_data *nd;
 
@@ -1704,18 +1704,10 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 	nd->u.warp.y = to_y;
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = ys;
-
-	for (i = 0; i < ys; i++) {
-		for (j = 0; j < xs; j++) {
-			if (map_getcell(m, x-xs/2+j, y-ys/2+i, CELL_CHKNOPASS))
-				continue;
-			map_setcell(m, x-xs/2+j, y-ys/2+i, CELL_SETNPC);
-		}
-	}
-
 	npc_warp++;
 	nd->bl.type = BL_NPC;
 	nd->bl.subtype = WARP;
+	npc_setcells(nd);
 	map_addblock(&nd->bl);
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
@@ -2055,20 +2047,9 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 
 	if (sscanf(w4, "%d,%d,%d", &class_, &xs, &ys) == 3) {
 		// ê⁄êGå^NPC
-		int i, j;
 
 		if (xs >= 0) xs = xs * 2 + 1;
 		if (ys >= 0) ys = ys * 2 + 1;
-
-		if (m >= 0) {
-			for (i = 0; i < ys; i++) {
-				for (j = 0; j < xs; j++) {
-					if (map_getcell(m, x - xs/2 + j, y - ys/2 + i, CELL_CHKNOPASS))
-						continue;
-					map_setcell(m, x - xs/2 + j, y - ys/2 + i, CELL_SETNPC);
-				}
-			}
-		}
 		nd->u.scr.xs = xs;
 		nd->u.scr.ys = ys;
 	} else {
@@ -2119,6 +2100,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
+		npc_setcells(nd);
 		map_addblock(&nd->bl);
 		// Unused. You can always use xxx::OnXXXX events. Have this removed to improve perfomance.
 		/*if (evflag) {	// ÉCÉxÉìÉgå^
@@ -2217,6 +2199,86 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	return 0;
 }
 
+void npc_setcells(struct npc_data *nd)
+{
+	int m = nd->bl.m, x = nd->bl.x, y = nd->bl.y, xs, ys;
+	int i,j;
+
+	if (nd->bl.subtype == WARP) {
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+	} else {
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+	}
+
+	if (m < 0 || xs < 1 || ys < 1)
+		return;
+
+	for (i = 0; i < ys; i++) {
+		for (j = 0; j < xs; j++) {
+			if (map_getcell(m, x-xs/2+j, y-ys/2+i, CELL_CHKNOPASS))
+				continue;
+			map_setcell(m, x-xs/2+j, y-ys/2+i, CELL_SETNPC);
+		}
+	}
+}
+
+int npc_unsetcells_sub(struct block_list *bl, va_list ap)
+{
+	struct npc_data *nd = (struct npc_data*)bl;
+	int id =  va_arg(ap,int);
+	if (nd->bl.id == id) return 0;
+	npc_setcells(nd);
+	return 1;
+}
+
+void npc_unsetcells(struct npc_data *nd)
+{
+	int m = nd->bl.m, x = nd->bl.x, y = nd->bl.y, xs, ys;
+	int i,j, x0, x1, y0, y1;
+
+	if (nd->bl.subtype == WARP) {
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+	} else {
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+	}
+
+	if (m < 0 || xs < 1 || ys < 1)
+		return;
+
+	//Locate max range on which we can localte npce cells
+	for(x0 = x-xs/2; x0 > 0 && map_getcell(m, x0, y, CELL_CHKNPC); x0--);
+	for(x1 = x+xs/2-1; x1 < map[m].xs && map_getcell(m, x1, y, CELL_CHKNPC); x1++);
+	for(y0 = y-ys/2; y0 > 0 && map_getcell(m, x, y0, CELL_CHKNPC); y0--);
+	for(y1 = y+ys/2-1; y1 < map[m].xs && map_getcell(m, x, y1, CELL_CHKNPC); y1++);
+
+	for (i = 0; i < ys; i++) {
+		for (j = 0; j < xs; j++)
+			map_setcell(m, x-xs/2+j, y-ys/2+i, CELL_CLRNPC);
+	}
+	//Reset NPC cells for other nearby npcs.
+	map_foreachinarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id);
+}
+
+void npc_movenpc(struct npc_data *nd, int x, int y)
+{
+	const int m = nd->bl.m;
+	if (m < 0 || nd->bl.prev == NULL) return;	//Not on a map.
+
+	if (x < 0) x = 0;
+	else if (x >= map[m].xs) x = map[m].xs-1;
+	if (y < 0) y = 0;
+	else if (y >= map[m].ys) y = map[m].ys-1;
+
+	npc_unsetcells(nd);
+	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_moveblock(&nd->bl, x, y, gettick());
+	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	npc_setcells(nd);
+}
 /*==========================================
  * functionçsâêÕ
  *------------------------------------------
