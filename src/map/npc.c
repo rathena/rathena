@@ -1567,6 +1567,7 @@ int npc_unload(struct npc_data *nd)
 			if (nd->u.scr.label_list) {
 				aFree(nd->u.scr.label_list);
 				nd->u.scr.label_list = NULL;
+				nd->u.scr.label_list_num = 0;
 			}
 		}
 	}
