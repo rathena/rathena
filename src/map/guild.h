@@ -76,7 +76,7 @@ int guild_skillupack(int guild_id,int skill_num,int account_id);
 int guild_break(struct map_session_data *sd,char *name);
 int guild_broken(int guild_id,int flag);
 int guild_gm_change(int guild_id, struct map_session_data *sd);
-int guild_gm_changed(int guild_id, int pos);
+int guild_gm_changed(int guild_id, int account_id, int char_id);
 
 int guild_addcastleinfoevent(int castle_id,int index,const char *name);
 int guild_castledataload(int castle_id,int index);

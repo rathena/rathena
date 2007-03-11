@@ -877,13 +877,14 @@ int mapif_guild_emblem(struct guild *g) {
 	return 0;
 }
 
-int mapif_guild_master_changed(struct guild *g, int position)
+int mapif_guild_master_changed(struct guild *g, int aid, int cid)
 {
 	unsigned char buf[12];
 	WBUFW(buf,0)=0x3843;
 	WBUFL(buf,2)=g->guild_id;
-	WBUFL(buf,6)=position;
-	mapif_sendall(buf,10);
+	WBUFL(buf,6)=aid;
+	WBUFL(buf,10)=cid;
+	mapif_sendall(buf,14);
 	return 0;
 }
 
@@ -1517,7 +1518,7 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 		g->master[len] = '\0';
 
 	ShowInfo("int_guild: Guildmaster Changed to %s (Guild %d - %s)\n",name, guild_id, g->name);
-	return mapif_guild_master_changed(g, pos);
+	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id);
 }
 
 // map server ‚©‚ç‚Ì’ÊM

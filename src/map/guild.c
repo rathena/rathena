@@ -1603,16 +1603,24 @@ int guild_gm_change(int guild_id, struct map_session_data *sd)
 }
 
 //Notification from Char server that a guild's master has changed. [Skotlex]
-int guild_gm_changed(int guild_id, int pos)
+int guild_gm_changed(int guild_id, int account_id, int char_id)
 {
 	struct guild *g;
 	struct guild_member gm;
-	
+	int pos;
+
 	g=guild_search(guild_id);
-	
-	if (!g || pos < 0 || pos > g->max_member)
+
+	if (!g)
 		return 0;
-	
+
+	for(pos=0; pos<g->max_member && !(
+		g->member[pos].account_id==account_id &&
+		g->member[pos].char_id==char_id);
+		pos++);
+
+	if (pos == 0 || pos == g->max_member) return 0;
+
 	memcpy(&gm, &g->member[pos], sizeof (struct guild_member));
 	memcpy(&g->member[pos], &g->member[0], sizeof(struct guild_member));
 	memcpy(&g->member[0], &gm, sizeof(struct guild_member));
