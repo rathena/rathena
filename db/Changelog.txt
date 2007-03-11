@@ -19,6 +19,10 @@
 	-----
 
 ========================
+03/12
+	* Updated the "AddEffWhenHit" cards [Playtester]
+	- chances got lowered according to Aegis, Freya, cRO and euRO
+	- Lion Mask has 5% chance of silence instead of 3%
 03/11
 	* Fixed some autocast rates of the new headgears [Playtester]
 03/09
