@@ -8,6 +8,7 @@
 
 #define WARP_CLASS 45
 #define WARP_DEBUG_CLASS 722
+#define FLAG_CLASS 722
 #define INVISIBLE_CLASS 32767
 
 #define MAX_NPC_CLASS 1000

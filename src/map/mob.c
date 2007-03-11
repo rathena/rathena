@@ -2699,8 +2699,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		c2 = ms[i].cond2;
 		
 		if (ms[i].state != md->state.skillstate) {
-			if (md->state.skillstate != MSS_DEAD && (
-				ms[i].state == MSS_ANY || (ms[i].state == MSS_ANYTARGET && md->target_id)
+			if (md->state.skillstate != MSS_DEAD && (ms[i].state == MSS_ANY ||
+				(ms[i].state == MSS_ANYTARGET && md->target_id && md->state.skillstate != MSS_LOOT)
 			)) //ANYTARGET works with any state as long as there's a target. [Skotlex]
 				;
 			else

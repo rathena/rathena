@@ -130,8 +130,8 @@ int npc_enable(const char *name,int flag)
 	else	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
 		nd->sc.option|= OPTION_INVISIBLE;
 
-	if (nd->class_ == WARP_CLASS)
-	{	//Client won't display option changes for warp portals [Toms]
+	if (nd->class_ == WARP_CLASS || nd->class_ == FLAG_CLASS)
+	{	//Client won't display option changes for these classes [Toms]
 		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
 			clif_clearchar(&nd->bl, 0);
 		else

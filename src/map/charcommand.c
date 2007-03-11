@@ -1255,7 +1255,7 @@ int charcommand_fakename(
 		return -1;
 	}
 
-	if(strlen(name) < 1 || !name) {
+	if(!name[0]) {
 		if(strlen(pl_sd->fakename) > 1) {
 			pl_sd->fakename[0]='\0';
 			clif_charnameack(0, &pl_sd->bl);

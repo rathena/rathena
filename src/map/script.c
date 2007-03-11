@@ -5263,6 +5263,11 @@ BUILDIN_FUNC(countitem)
 
 	sd = script_rid2sd(st);
 
+	if (!sd) {
+		push_val(st->stack,C_INT,0);
+		return 0;
+	}
+
 	data=&(st->stack->stack_data[st->start+2]);
 	get_val(st,data);
 	if( data->type==C_STR || data->type==C_CONSTSTR ){
@@ -5302,6 +5307,11 @@ BUILDIN_FUNC(countitem2)
 	struct script_data *data;
 
 	sd = script_rid2sd(st);
+
+	if (!sd) {
+		push_val(st->stack,C_INT,0);
+		return 0;
+	}
 
 	data=&(st->stack->stack_data[st->start+2]);
 	get_val(st,data);
@@ -5737,9 +5747,9 @@ BUILDIN_FUNC(delitem)
 		if(sd->inventory_data[i]->type==IT_PETEGG &&
 			sd->status.inventory[i].card[0] == CARD0_PET)
 		{
-			if (intif_delete_petdata(MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2])))
+			if (!intif_delete_petdata(MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2])))
 				continue; //pet couldn't be sent for deletion.
-		}
+		} else
 		//is this item important? does it have cards? or Player's name? or Refined/Upgraded
 		if(itemdb_isspecial(sd->status.inventory[i].card[0]) ||
 			sd->status.inventory[i].card[0] ||
@@ -10468,14 +10478,15 @@ BUILDIN_FUNC(skilleffect)
  */
 BUILDIN_FUNC(npcskilleffect)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	struct block_list *bl= map_id2bl(st->oid);
 
 	int skillid=conv_num(st,& (st->stack->stack_data[st->start+2]));
 	int skilllv=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	int x=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	int y=conv_num(st,& (st->stack->stack_data[st->start+5]));
 
-	clif_skill_poseffect(&nd->bl,skillid,skilllv,x,y,gettick());
+	if (bl)
+		clif_skill_poseffect(bl,skillid,skilllv,x,y,gettick());
 
 	return 0;
 }
