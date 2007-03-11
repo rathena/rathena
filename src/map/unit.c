@@ -85,7 +85,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		((TBL_PC *)bl)->head_dir = 0;
 		clif_walkok((TBL_PC*)bl);
 	}
-	clif_move(bl);
+	clif_move(ud);
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
@@ -204,7 +204,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 				return 0;
 			}
 			//Resend walk packet for proper Self Destruction display.
-			clif_move(bl);
+			clif_move(ud);
 		}
 	}
 

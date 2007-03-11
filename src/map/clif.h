@@ -73,7 +73,7 @@ int clif_clearchar_delay(unsigned int,struct block_list *,int);
 int clif_clearchar_id(int,int,int);
 int clif_spawn(struct block_list*);	//area
 int clif_walkok(struct map_session_data*);	// self
-int clif_move(struct block_list*);	// area
+void clif_move(struct unit_data *ud); //area
 int clif_changemap(struct map_session_data*,short,int,int);	//self
 int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x, int y, int ip, int port);	//self
 int clif_blown(struct block_list *); // area

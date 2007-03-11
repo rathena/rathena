@@ -1512,114 +1512,25 @@ int clif_walkok(struct map_session_data *sd)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_movepc(struct map_session_data *sd) {
-	unsigned char buf[256];
-
-	nullpo_retr(0, sd);
-
-	if (map[sd->bl.m].flag.snow
-		|| map[sd->bl.m].flag.clouds
-		|| map[sd->bl.m].flag.fog
-		|| map[sd->bl.m].flag.fireworks
-		|| map[sd->bl.m].flag.sakura
-		|| map[sd->bl.m].flag.leaves
-		|| map[sd->bl.m].flag.rain
-		|| map[sd->bl.m].flag.clouds2
-	) {
-		memset(buf,0,packet_len(0x7b));
-		WBUFW(buf,0)=0x7b;
-		WBUFL(buf,2)=-10;
-		WBUFW(buf,6)=sd->battle_status.speed;
-		WBUFW(buf,8)=0;
-		WBUFW(buf,10)=0;
-		WBUFW(buf,12)=OPTION_INVISIBLE;
-		WBUFW(buf,14)=100;
-		WBUFL(buf,22)=gettick();
-		WBUFPOS2(buf,50,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y,8,8);
-		WBUFB(buf,56)=5;
-		WBUFB(buf,57)=5;
-		clif_send(buf, packet_len(0x7b), &sd->bl, SELF);
-	}
-
-	return 0;
-}
-
 /// Move the unit (does nothing if the client has no info about the unit)
 /// Note: unit must not be self
-//##TODO make sure insight/outsight code is solid enough before using this [FlavioJS]
-/*
-void clif_moveunit(int fd, struct unit_data* ud)
+void clif_move(struct unit_data *ud)
 {
-	struct block_list* bl;
-
-	bl = ud->bl;
-
-	WFIFOHEAD(fd, packet_len(0x86));
-	WFIFOW(fd,0)=0x86;
-	WFIFOL(fd,2)=bl->id;
-	WFIFOPOS2(fd,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-	WFIFOL(fd,12)=gettick();
-	WFIFOSET(fd, packet_len(0x86));
-}
-*/
-
-/*==========================================
- *
- *------------------------------------------
- */
-int clif_move(struct block_list *bl) {
-	struct view_data *vd;
-	struct unit_data *ud;
-	unsigned char buf[256];
-	int len;
-
-	nullpo_retr(0, bl);
-	
+	unsigned char buf[16];
+	struct view_data* vd;
+	struct block_list* bl = ud->bl;
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
-		return 0;
+		return; //This performance check is needed to keep GM-hidden objects from being notified to bots.
 	
-	ud = unit_bl2ud(bl);
-	nullpo_retr(0, ud);
-	
-	len = clif_set007b(bl,vd,ud,buf);
-	clif_send(buf,len,bl,AREA_WOS);
+	WBUFW(buf,0)=0x86;
+	WBUFL(buf,2)=bl->id;
+	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
+	WBUFL(buf,12)=gettick();
+	clif_send(buf, 16, bl, AREA_WOS);
 	if (disguised(bl))
-		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
-		
-	//Stupid client that needs this resent every time someone walks :X
-	if(vd->cloth_color)
-		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
-
-	switch(bl->type)
-	{
-	case BL_PC:
-		{
-			TBL_PC *sd = ((TBL_PC*)bl);
-//			clif_movepc(sd);
-			if(sd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffect(&sd->bl,423,AREA);
-			else if(sd->state.size==1)
-				clif_specialeffect(&sd->bl,421,AREA);
-		}
-		break;
-	case BL_MOB:
-		{
-			TBL_MOB *md = ((TBL_MOB*)bl);
-			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,423,AREA);
-			else if(md->special_state.size==1)
-				clif_specialeffect(&md->bl,421,AREA);
-		}
-		break;
-	}
-	return 0;
+		clif_setdisguise((TBL_PC*)bl, buf, 16, 0);
 }
-
 
 /*==========================================
  * Delays the map_quit of a player after they are disconnected. [Skotlex]
