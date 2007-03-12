@@ -2540,7 +2540,7 @@ int map_delmap(char *mapname) {
  * Initiate maps loading stage
  *--------------------------------------
  */
-int map_readallmaps()
+int map_readallmaps (void)
 {
 	int i;
 	int maps_removed = 0;
