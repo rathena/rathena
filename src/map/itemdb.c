@@ -742,7 +742,8 @@ static int itemdb_read_sqldb(void)
 						//(yggdrasil leaf, spells & pet lures) [Skotlex]
 						id->type = IT_USABLE;
 						id->flag.delay_consume=1;
-					}
+					} else //In case of an itemdb reload and the item type changed.
+						id->flag.delay_consume=0;
 
 					// If price_buy is not NULL and price_sell is not NULL...
 					if ((sql_row[4] != NULL) && (sql_row[5] != NULL)) {

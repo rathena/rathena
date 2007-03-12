@@ -1867,6 +1867,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		return 0;
 
 	dmg=battle_calc_attack(attack_type,src,bl,skillid,skilllv,flag&0xFFF);
+	attack_type|=dmg.flag; //Add on the rest of attack properties.
 
 	//Skotlex: Adjusted to the new system
 	if(src->type==BL_PET)
