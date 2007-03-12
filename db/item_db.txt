@@ -522,8 +522,8 @@
 1168,Zweihander,Zweihander,4,,10,2200,200,,1,0,0x00004082,7,2,34,4,48,1,3,{},{},{}
 1169,Executioner_,Executioner,4,,10,2200,155,,1,0,0x00004082,7,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_DemiHuman,20; bonus2 bSubRace,RC_DemiHuman,-10; bonus bAtkEle,Ele_Dark; },{},{}
 1170,Katzbalger,Katzbalger,4,,10,2000,175,,1,0,0x00004082,7,2,34,4,48,1,3,{ bonus bVit,5; bonus bDef,10; },{},{}
-1171,Zweihander__,Zweihander,4,,10,2200,200,,1,2,0x00004082,7,2,34,4,48,1,3,{},{},{}
-1172,Claymore__,Claymore,4,74000,,2500,180,,1,2,0x00004080,7,2,34,3,33,1,3,{},{},{}
+1171,Zweihander_,Zweihander,4,,10,2200,200,,1,2,0x00004082,7,2,34,4,48,1,3,{},{},{}
+1172,Claymore_,Claymore,4,74000,,2500,180,,1,2,0x00004080,7,2,34,3,33,1,3,{},{},{}
 // Daggers
 1201,Knife,Knife,4,50,,400,17,,1,3,0xFE9F7EEF,7,2,2,1,1,1,1,{},{},{}
 1202,Knife_,Knife,4,50,,400,17,,1,4,0xFE9F7EEF,7,2,2,1,1,1,1,{},{},{}
@@ -639,7 +639,7 @@
 1415,Skewer,Brocca,4,,10,850,100,,3,0,0x00004082,7,2,2,4,48,1,4,{ bonus bIgnoreDefRace,RC_NonBoss; bonus2 bAddEle,Ele_Neutral,25; },{},{}
 1416,Tjungkuletti,Tjungkuletti,4,,10,1000,95,,3,0,0x00004082,7,2,2,4,48,1,4,{ bonus2 bSPDrainValue,1,1; bonus bSPGainValue,5; },{},{}
 1417,Pole_Axe,Pole Axe,4,,10,3800,160,,3,1,0x00004082,7,2,2,3,71,1,4,{ bonus bStr,1; bonus bInt,2; bonus bDex,1; },{},{}
-1418,Gungnir__,Gungnir,4,,10,500,120,,3,2,0x00004082,7,2,2,4,4,1,4,{ bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; },{},{}
+1418,Gungnir_,Gungnir,4,,10,500,120,,3,2,0x00004082,7,2,2,4,4,1,4,{ bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; },{},{}
 // 2-Handed Spears
 1451,Guisarme,Guisarme,4,13000,,1000,84,,3,2,0x00004082,7,2,34,2,18,1,5,{},{},{}
 1452,Guisarme_,Guisarme,4,13000,,1000,84,,3,3,0x00004082,7,2,34,2,18,1,5,{},{},{}
