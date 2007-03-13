@@ -2757,7 +2757,7 @@
 13013,Muraseme_,Murasame,4,,10,700,95,,1,2,0x02000000,7,2,2,2,24,1,1,{ bonus bAtkEle,Ele_Water; bonus2 bCriticalAddRace,RC_DemiHuman,10; },{},{}
 13014,Hakujin,Hakujin,4,,10,800,120,,1,0,0x02000000,7,2,2,3,42,1,1,{ bonus4 bAutoSpell,28,1,10,0; },{},{}
 13015,Hakujin_,Hakujin,4,,10,800,120,,1,1,0x02000000,7,2,2,3,42,1,1,{ bonus4 bAutoSpell,28,1,10,0; },{},{}
-13016,Poison_Knife__,Poison Knife,4,,10,800,64,,1,2,0x028F5EEE,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,3000; },{},{}
+13016,Poison_Knife_,Poison Knife,4,,10,800,64,,1,2,0x028F5EEE,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,3000; },{},{}
 13017,Ice_Pick_,Ice Pick,4,,10,600,70,,1,1,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bDefRatioAtkRace,RC_Boss; bonus bDefRatioAtkRace,RC_NonBoss; },{},{}
 13018,Sucsamad_,Sucsamad,4,,10,800,140,,1,1,0x028F5EEE,7,2,2,4,36,1,1,{ bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Wind,10; bonus bUnbreakableWeapon,0; },{},{}
 13019,Ginnungagap_,Ginnungagap,4,,10,700,148,,1,1,0x008F5EEF,7,2,2,4,70,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; bonus2 bAddEff2,Eff_Blind,50; },{},{}

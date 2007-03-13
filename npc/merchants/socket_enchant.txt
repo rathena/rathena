@@ -667,7 +667,7 @@ function	script	addslot2	{
 
 function	script	f_weapon_c	{
   
-      set @rateit,50;  //success rate
+      set @rateit,40;  //success rate
       set @addprice,200000;
       set @itemup,1010;
       set @itemupiece,10;
@@ -764,7 +764,7 @@ function	script	f_weapon_s2	{
 
 function	script	f_armor_c	{
 
-      set @rateit,50;  //success rate
+      set @rateit,40;  //success rate
       set @addprice,200000;
       set @itemup,999;
       set @itemupiece,3;
