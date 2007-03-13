@@ -1596,14 +1596,17 @@ void clif_setwaitclose(int fd) {
  */
 int clif_changemap(struct map_session_data *sd, short map, int x, int y) {
 	int fd;
+	char map_name[MAP_NAME_LENGTH];
 	
 	nullpo_retr(0, sd);
 
 	fd = sd->fd;
-	
+
+	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(map));
+
 	WFIFOHEAD(fd, packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
-	memcpy(WFIFOP(fd,2), mapindex_id2name(map), MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,2), map_name, MAP_NAME_LENGTH);
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOSET(fd, packet_len(0x91));
@@ -5616,12 +5619,17 @@ int clif_party_created(struct map_session_data *sd,int flag)
 int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 {
 	unsigned char buf[96];
+	char map_name[MAP_NAME_LENGTH];
+
 	if (!sd) { //Pick any party member (this call is used when changing item share rules)
 		int i;
 		for (i=0; i<MAX_PARTY && !p->data[i].sd; i++);
 		if (i >= MAX_PARTY) return 0; //Should never happen...
 		sd = p->data[i].sd;
 	}
+
+	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->mapindex));
+
 	WBUFW(buf,0)=0x1e9;
 	WBUFL(buf,2)= sd->status.account_id;
 	WBUFL(buf,6)= 0; //Apparently setting this to 1 makes you adoptable.
@@ -5630,7 +5638,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 	WBUFB(buf,14)=0; //Unconfirmed byte, could be online/offline.
 	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
-	memcpy(WBUFP(buf,63), mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
+	memcpy(WBUFP(buf,63), map_name, MAP_NAME_LENGTH);
 	WBUFB(buf,79) = (p->party.item&1)?1:0;
 	WBUFB(buf,80) = (p->party.item&2)?1:0;
 	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY);
@@ -5655,13 +5663,17 @@ int clif_party_info(struct party_data* p, struct map_session_data *sd)
 	for(i = 0, c = 0; i < MAX_PARTY; i++)
 	{
 		struct party_member* m = &p->party.member[i];
+		char map_name[MAP_NAME_LENGTH];
+
 		if(!m->account_id) continue;
 
 		if(party_sd == NULL) party_sd = p->data[i].sd;
 
+		snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(m->map));
+
 		WBUFL(buf,28+c*46) = m->account_id;
 		memcpy(WBUFP(buf,28+c*46+4), m->name, NAME_LENGTH);
-		memcpy(WBUFP(buf,28+c*46+28), mapindex_id2name(m->map), MAP_NAME_LENGTH);
+		memcpy(WBUFP(buf,28+c*46+28), map_name, MAP_NAME_LENGTH);
 		WBUFB(buf,28+c*46+44) = (m->leader) ? 0 : 1;
 		WBUFB(buf,28+c*46+45) = (m->online) ? 0 : 1;
 		c++;
@@ -5940,9 +5952,12 @@ int clif_hpmeter(struct map_session_data *sd)
 int clif_party_move(struct party *p,struct map_session_data *sd,int online)
 {
 	unsigned char buf[128];
+	char map_name[MAP_NAME_LENGTH];
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, p);
+
+	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", map[sd->bl.m].name);
 
 	WBUFW(buf, 0)=0x104;
 	WBUFL(buf, 2)=sd->status.account_id;
@@ -5952,7 +5967,7 @@ int clif_party_move(struct party *p,struct map_session_data *sd,int online)
 	WBUFB(buf,14)=!online;
 	memcpy(WBUFP(buf,15),p->name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39),sd->status.name, NAME_LENGTH);
-	memcpy(WBUFP(buf,63),map[sd->bl.m].name, MAP_NAME_LENGTH);
+	memcpy(WBUFP(buf,63),map_name, MAP_NAME_LENGTH);
 	clif_send(buf,packet_len(0x104),&sd->bl,PARTY);
 	return 0;
 }
@@ -7794,9 +7809,13 @@ void clif_gospel_info(struct map_session_data *sd, int type)
 void clif_feel_info(struct map_session_data *sd, unsigned char feel_level, unsigned char type)
 {
 	int fd=sd->fd;
+	char map_name[MAP_NAME_LENGTH];
+
+	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->feel_map[feel_level].index));
+
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0)=0x20e;
-	memcpy(WFIFOP(fd,2),mapindex_id2name(sd->feel_map[feel_level].index), MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,2),map_name, MAP_NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOB(fd,30)=feel_level;
 	WFIFOB(fd,31)=type?1:0;

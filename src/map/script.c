@@ -4593,7 +4593,7 @@ BUILDIN_FUNC(areawarp)
  * warpchar [LuzZza]
  * Useful for warp one player from 
  * another player npc-session.
- * Using: warpchar "mapname.gat",x,y,Char_ID;
+ * Using: warpchar "mapname",x,y,Char_ID;
  *------------------------------------------
  */
 BUILDIN_FUNC(warpchar)
@@ -4631,7 +4631,7 @@ BUILDIN_FUNC(warpchar)
  
 /*==========================================
  * Warpparty - [Fredzilla]
- * Syntax: warpparty "mapname.gat",x,y,Party_ID;
+ * Syntax: warpparty "mapname",x,y,Party_ID;
  *------------------------------------------
  */
 BUILDIN_FUNC(warpparty)
@@ -4714,7 +4714,7 @@ BUILDIN_FUNC(warpparty)
 }
 /*==========================================
  * Warpguild - [Fredzilla]
- * Syntax: warpguild "mapname.gat",x,y,Guild_ID;
+ * Syntax: warpguild "mapname",x,y,Guild_ID;
  *------------------------------------------
  */
 BUILDIN_FUNC(warpguild)
@@ -7806,7 +7806,7 @@ BUILDIN_FUNC(getusersname)
 	return 0;
 }
 /*==========================================
- * getmapguildusers("mapname.gat",guild ID) Returns the number guild members present on a map [Reddozen]
+ * getmapguildusers("mapname",guild ID) Returns the number guild members present on a map [Reddozen]
  *------------------------------------------
  */
 BUILDIN_FUNC(getmapguildusers)
@@ -9132,16 +9132,12 @@ BUILDIN_FUNC(flagemblem)
 
 BUILDIN_FUNC(getcastlename)
 {
-	const char *mapname=conv_str(st,& (st->stack->stack_data[st->start+2]));
-	struct guild_castle *gc=NULL;
-	int i;
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		if( (gc=guild_castle_search(i)) != NULL ){
-			if(strcmp(mapname,gc->map_name)==0){
-				break;
-			}
-		}
-	}
+	char mapname[MAP_NAME_LENGTH];
+	struct guild_castle *gc;
+
+	strncpy(mapname, conv_str(st,script_getdata(st,2)), MAP_NAME_LENGTH);
+	gc = guild_mapname2gc(mapname);
+
 	if(gc)
 		push_str(st->stack,C_CONSTSTR,gc->castle_name);
 	else
@@ -9151,66 +9147,67 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	char mapname[MAP_NAME_LENGTH+1];
+	char mapname[MAP_NAME_LENGTH];
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	const char *event=NULL;
 	struct guild_castle *gc;
-	int i,j;
+	int i;
 
 	strncpy(mapname, conv_str(st,script_getdata(st,2)), MAP_NAME_LENGTH);
-	mapname[MAP_NAME_LENGTH] = '\0';
-	map_normalize_name(mapname);
+	gc = guild_mapname2gc(mapname);
 
-	if( st->end>st->start+4 && index==0){
-		for(i=0,j=-1;i<MAX_GUILDCASTLE;i++)
-			if( (gc=guild_castle_search(i)) != NULL &&
-				strcmp(mapname,gc->map_name)==0 )
-				j=i;
-		if(j>=0){
-			event=conv_str(st,& (st->stack->stack_data[st->start+4]));
-			check_event(st, event);
-			guild_addcastleinfoevent(j,17,event);
-		}
+	if(st->end>st->start+4 && index==0 && gc) {
+		event=conv_str(st,& (st->stack->stack_data[st->start+4]));
+		check_event(st, event);
+		guild_addcastleinfoevent(gc->castle_id,17,event);
 	}
 
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		if( (gc=guild_castle_search(i)) != NULL ){
-			if(strcmp(mapname,gc->map_name)==0){
-				switch(index){
-				case 0: for(j=1;j<26;j++) guild_castledataload(gc->castle_id,j); break;  // Initialize[AgitInit]
-				case 1: push_val(st->stack,C_INT,gc->guild_id); break;
-				case 2: push_val(st->stack,C_INT,gc->economy); break;
-				case 3: push_val(st->stack,C_INT,gc->defense); break;
-				case 4: push_val(st->stack,C_INT,gc->triggerE); break;
-				case 5: push_val(st->stack,C_INT,gc->triggerD); break;
-				case 6: push_val(st->stack,C_INT,gc->nextTime); break;
-				case 7: push_val(st->stack,C_INT,gc->payTime); break;
-				case 8: push_val(st->stack,C_INT,gc->createTime); break;
-				case 9: push_val(st->stack,C_INT,gc->visibleC); break;
-				case 10:
-				case 11:
-				case 12:
-				case 13:
-				case 14:
-				case 15:
-				case 16:
-				case 17:
-					push_val(st->stack,C_INT,gc->guardian[index-10].visible); break;
-				case 18:
-				case 19:
-				case 20:
-				case 21:
-				case 22:
-				case 23:
-				case 24:
-				case 25:
-					push_val(st->stack,C_INT,gc->guardian[index-18].hp); break;
-				default:
-					push_val(st->stack,C_INT,0); break;
-				}
-				return 0;
-			}
+	if(gc){
+		switch(index){
+			case 0:
+				for(i=1;i<26;i++) // Initialize[AgitInit]
+					guild_castledataload(gc->castle_id,i);
+				break;
+			case 1:
+				push_val(st->stack,C_INT,gc->guild_id); break;
+			case 2:
+				push_val(st->stack,C_INT,gc->economy); break;
+			case 3:
+				push_val(st->stack,C_INT,gc->defense); break;
+			case 4:
+				push_val(st->stack,C_INT,gc->triggerE); break;
+			case 5:
+				push_val(st->stack,C_INT,gc->triggerD); break;
+			case 6:
+				push_val(st->stack,C_INT,gc->nextTime); break;
+			case 7:
+				push_val(st->stack,C_INT,gc->payTime); break;
+			case 8:
+				push_val(st->stack,C_INT,gc->createTime); break;
+			case 9:
+				push_val(st->stack,C_INT,gc->visibleC); break;
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+				push_val(st->stack,C_INT,gc->guardian[index-10].visible); break;
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+			case 23:
+			case 24:
+			case 25:
+				push_val(st->stack,C_INT,gc->guardian[index-18].hp); break;
+			default:
+				push_val(st->stack,C_INT,0); break;
 		}
+		return 0;
 	}
 	push_val(st->stack,C_INT,0);
 	return 0;
@@ -9218,69 +9215,72 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	char mapname[MAP_NAME_LENGTH+1];
+	char mapname[MAP_NAME_LENGTH];
 	int index=conv_num(st,& (st->stack->stack_data[st->start+3]));
 	int value=conv_num(st,& (st->stack->stack_data[st->start+4]));
 	struct guild_castle *gc;
-	int i;
 
 	strncpy(mapname, conv_str(st,script_getdata(st,2)), MAP_NAME_LENGTH);
-	mapname[MAP_NAME_LENGTH] = '\0';
-	map_normalize_name(mapname);
+	gc = guild_mapname2gc(mapname);
 
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		if( (gc=guild_castle_search(i)) != NULL ){
-			if(strcmp(mapname,gc->map_name)==0){
-				// Save Data byself First
-				switch(index){
-				case 1: gc->guild_id = value; break;
-				case 2: gc->economy = value; break;
-				case 3: gc->defense = value; break;
-				case 4: gc->triggerE = value; break;
-				case 5: gc->triggerD = value; break;
-				case 6: gc->nextTime = value; break;
-				case 7: gc->payTime = value; break;
-				case 8: gc->createTime = value; break;
-				case 9: gc->visibleC = value; break;
-				case 10:
-				case 11:
-				case 12:
-				case 13:
-				case 14:
-				case 15:
-				case 16:
-				case 17:
-					gc->guardian[index-10].visible = value; break;
-				case 18:
-				case 19:
-				case 20:
-				case 21:
-				case 22:
-				case 23:
-				case 24:
-				case 25:
-					gc->guardian[index-18].hp = value;
-					if (gc->guardian[index-18].id)
-				  	{	//Update this mob's HP.
-						struct block_list *bl = map_id2bl(gc->guardian[index-18].id);
-						if (!bl)
-					  	{	//Wrong target?
-							gc->guardian[index-18].id = 0;
-							break;
-						}
-						if (value < 1) {
-							status_kill(bl);
-							break;
-						}
-						status_set_hp(bl, value, 0);
+	if(gc) {
+		// Save Data byself First
+		switch(index){
+			case 1:
+				gc->guild_id = value; break;
+			case 2:
+				gc->economy = value; break;
+			case 3:
+				gc->defense = value; break;
+			case 4:
+				gc->triggerE = value; break;
+			case 5:
+				gc->triggerD = value; break;
+			case 6:
+				gc->nextTime = value; break;
+			case 7:
+				gc->payTime = value; break;
+			case 8:
+				gc->createTime = value; break;
+			case 9:
+				gc->visibleC = value; break;
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+				gc->guardian[index-10].visible = value; break;
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+			case 23:
+			case 24:
+			case 25:
+				gc->guardian[index-18].hp = value;
+				if (gc->guardian[index-18].id)
+		  		{	//Update this mob's HP.
+					struct block_list *bl = map_id2bl(gc->guardian[index-18].id);
+					if (!bl)
+			  		{	//Wrong target?
+						gc->guardian[index-18].id = 0;
+						break;
 					}
-					break;
-				default: return 0;
+					if (value < 1) {
+						status_kill(bl);
+						break;
+					}
+					status_set_hp(bl, value, 0);
 				}
-				guild_castledatasave(gc->castle_id,index,value);
+				break;
+			default:
 				return 0;
-			}
 		}
+		guild_castledatasave(gc->castle_id,index,value);
 	}
 	return 0;
 }
@@ -10853,7 +10853,7 @@ BUILDIN_FUNC(prompt)
 /*==========================================
  * GetMapMobs
 	returns mob counts on a set map:
-	e.g. GetMapMobs("prontera.gat")
+	e.g. GetMapMobs("prontera")
 	use "this" - for player's map
  *------------------------------------------
  */

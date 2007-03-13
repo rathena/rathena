@@ -2432,12 +2432,6 @@ int map_eraseipport(unsigned short mapindex,unsigned long ip,int port)
 * Map cache reading
 *===========================================*/
 
-// This is the main header found at the very beginning of the file
-/*struct map_cache_head {
-	long filesize;
-	unsigned short map_count;
-};*/
-
 // This is the header appended before every compressed map cells info
 struct map_cache_info {
 	char name[MAP_NAME_LENGTH];
@@ -2449,6 +2443,7 @@ struct map_cache_info {
 
 FILE *map_cache_fp;
 
+// Removes the extension from a map name
 char *map_normalize_name(char *mapname)
 {
 	char *ptr, *ptr2;
@@ -2457,7 +2452,8 @@ char *map_normalize_name(char *mapname)
 		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
 			ptr = ptr2; //Skip to the last dot.
 		if(stricmp(ptr,".gat") == 0 ||
-			stricmp(ptr,".afm") == 0)
+			stricmp(ptr,".afm") == 0 ||
+			stricmp(ptr,".af2") == 0)
 			*ptr = '\0'; //Remove extension.
 	}
 	return mapname;
@@ -2470,6 +2466,9 @@ int map_readmap(struct map_data *m)
 	struct map_cache_info info;
 	unsigned long size;
 	unsigned char *buf;
+
+	if(!map_cache_fp)
+		return 0;
 
 	fseek(map_cache_fp, 0, SEEK_SET);
 	fread(&map_count, sizeof(map_count), 1, map_cache_fp);
@@ -2628,6 +2627,7 @@ int map_readallmaps (void)
 		map[i].block_count = (int*)aCallocA(size, 1);
 		map[i].block_mob_count = (int*)aCallocA(size, 1);
 
+		mapindex_addmap(map[i].index, map[i].name);
 		uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 	}
 
@@ -3177,8 +3177,6 @@ void do_final(void) {
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 	}
-
-	mapindex_final();
 	
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);
@@ -3337,9 +3335,6 @@ int do_init(int argc, char *argv[]) {
 		charsql_db_init(1); //Connecting to chardb
 #endif /* not TXT_ONLY */
 
-	mapindex_init();
-	grfio_init(GRF_PATH_FILENAME);
-
 	map_readallmaps();
 
 	add_timer_func_list(map_freeblock_timer, "map_freeblock_timer");
@@ -3377,9 +3372,6 @@ int do_init(int argc, char *argv[]) {
 #endif /* not TXT_ONLY */
 
 	npc_event_do_oninit();	// npcのOnInitイベント?行
-
-	//Done loading with the maps, no need for the grf module anymore.
-	grfio_final();
 
 	if( console )
 	{

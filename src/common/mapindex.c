@@ -20,11 +20,11 @@ struct indexes {
 
 static unsigned short max_index = 0;
 
-char mapindex_cfgfile[80] = "db/map_index.txt";
+char mapindex_cfgfile[80] = "db/map_list.txt";
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
-static int mapindex_addmap(int index, const char *name)
+int mapindex_addmap(int index, const char *name)
 {
 	char map_name[1024];
 	char *ext;
@@ -41,25 +41,13 @@ static int mapindex_addmap(int index, const char *name)
 		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
 		return 0;
 	}
-	if ((ext = strstr(map_name, ".gat")) != NULL) { //Gat map
+	if ((ext = strstr(map_name, ".")) != NULL) { // Remove extension
 		length = ext-map_name;
-	} else if ((ext = strstr(map_name, ".afm")) != NULL || (ext = strstr(map_name, ".af2")) != NULL) { //afm map
-		length = ext-map_name;
-		sprintf(ext, ".gat"); //Change the extension to gat
-	} else if ((ext = strstr(map_name, ".")) != NULL) { //Generic extension?
-		length = ext-map_name;
-		sprintf(ext, ".gat");
-	} else { //No extension?
-		length = strlen(map_name);
-		strcat(map_name, ".gat");
-	}
-	if (length > MAP_NAME_LENGTH - 4) {
-		ShowError("(mapindex_add) Adjusted Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
-		return 0;
+		sprintf(ext, "\0");
 	}
 
 	if (indexes[index].length)
-		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", indexes[index].name, map_name);
+		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
 
 	strncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
 	indexes[index].length = length;
@@ -77,7 +65,7 @@ unsigned short mapindex_name2id(const char* name) {
 		length = ext-name; //Base map-name length without the extension.
 	for (i = 1; i < max_index; i++)
 	{
-		if (indexes[i].length == length && strncmp(indexes[i].name,name,length)==0)
+		if (strncmp(indexes[i].name,name,length)==0)
 			return i;
 	}
 #ifdef MAPINDEX_AUTOADD

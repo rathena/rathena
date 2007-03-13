@@ -12,8 +12,8 @@
 
 #include "grfio.h"
 
-char grf_list_file[256] = "tools/mapcache/grf_files.txt";
-char map_list_file[256] = "tools/mapcache/map_list.txt";
+char grf_list_file[256] = "db/grf_files.txt";
+char map_list_file[256] = "db/map_list.txt";
 char map_cache_file[256] = "db/map_cache.dat";
 
 #define MAP_NAME_LENGTH 16
@@ -226,8 +226,7 @@ int main(int argc, char *argv[])
 					printf("Map file not found in GRF\n");
 				// If the 2nd argument is omitted at next line, we'll keep last used index + 1
 				index++;
-		} else
-				printf("Skipping incorrect line\n");
+		}
 	}
 
 	printf("Closing map list: %s\n", map_list_file);

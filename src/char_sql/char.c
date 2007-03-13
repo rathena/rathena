@@ -3359,10 +3359,12 @@ int parse_char(int fd) {
 				char_dat.last_point.map = j;
 			}
 			{	//Send player to map.
+				char map_name[MAP_NAME_LENGTH];
+				snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(char_dat.last_point.map));	
 				WFIFOHEAD(fd,28);
 				WFIFOW(fd, 0) =0x71;
 				WFIFOL(fd, 2) =char_dat.char_id;
-				memcpy(WFIFOP(fd,6), mapindex_id2name(char_dat.last_point.map), MAP_NAME_LENGTH);
+				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH);
 
 				// Advanced subnet check [LuzZza]
 				if((subnet_map_ip = lan_subnetcheck((long *)p)))

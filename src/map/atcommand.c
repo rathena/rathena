@@ -1327,9 +1327,6 @@ int atcommand_rura( const int fd, struct map_session_data* sd, const char* comma
 			return -1;
 	}
 
-	if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-		strcat(map_name, ".gat");
-
 	mapindex = mapindex_name2id(map_name);
 	if (mapindex)
 		m = map_mapindex2mapid(mapindex);
@@ -1713,8 +1710,6 @@ int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* com
 		map_id = sd->bl.m;
 	else {
 		sscanf(message, "%15s", map_name);
-		if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(map_name, ".gat");
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -1771,8 +1766,6 @@ int atcommand_whomap2(const int fd, struct map_session_data* sd, const char* com
 		map_id = sd->bl.m;
 	else {
 		sscanf(message, "%15s", map_name);
-		if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(map_name, ".gat");
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -1835,8 +1828,6 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 		map_id = sd->bl.m;
 	else {
 		sscanf(message, "%15s", map_name);
-		if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(map_name, ".gat");
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -3252,77 +3243,75 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 		clif_displaymessage(fd, " 24=Veins");
 		return -1;
 	} else {
-		// get possible name of the city and add .gat if not in the name
+		// get possible name of the city
 		map_name[MAP_NAME_LENGTH-1] = '\0';
 		for (i = 0; map_name[i]; i++)
 			map_name[i] = tolower(map_name[i]);
-		if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(map_name, ".gat");
 		// try to see if it's a name, and not a number (try a lot of possibilities, write errors and abbreviations too)
-		if (strncmp(map_name, "prontera.gat", 3) == 0) { // 3 first characters
+		if (strncmp(map_name, "prontera", 3) == 0) { // 3 first characters
 			town = 0;
-		} else if (strncmp(map_name, "morocc.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "morocc", 3) == 0) { // 3 first characters
 			town = 1;
-		} else if (strncmp(map_name, "geffen.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "geffen", 3) == 0) { // 3 first characters
 			town = 2;
-		} else if (strncmp(map_name, "payon.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "paion.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "payon", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "paion", 3) == 0) { // writing error (3 first characters)
 			town = 3;
-		} else if (strncmp(map_name, "alberta.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "alberta", 3) == 0) { // 3 first characters
 			town = 4;
-		} else if (strncmp(map_name, "izlude.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "islude.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "izlude", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "islude", 3) == 0) { // writing error (3 first characters)
 			town = 5;
-		} else if (strncmp(map_name, "aldebaran.gat", 3) == 0 || // 3 first characters
-		           strcmp(map_name,  "al.gat") == 0) { // al (de baran)
+		} else if (strncmp(map_name, "aldebaran", 3) == 0 || // 3 first characters
+		           strcmp(map_name,  "al") == 0) { // al (de baran)
 			town = 6;
-		} else if (strncmp(map_name, "lutie.gat", 3) == 0 || // name of the city, not name of the map (3 first characters)
-		           strcmp(map_name,  "christmas.gat") == 0 || // name of the symbol
-		           strncmp(map_name, "xmas.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "x-mas.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "lutie", 3) == 0 || // name of the city, not name of the map (3 first characters)
+		           strcmp(map_name,  "christmas") == 0 || // name of the symbol
+		           strncmp(map_name, "xmas", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "x-mas", 3) == 0) { // writing error (3 first characters)
 			town = 7;
-		} else if (strncmp(map_name, "comodo.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "comodo", 3) == 0) { // 3 first characters
 			town = 8;
-		} else if (strncmp(map_name, "yuno.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "yuno", 3) == 0) { // 3 first characters
 			town = 9;
-		} else if (strncmp(map_name, "amatsu.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "ammatsu.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "amatsu", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "ammatsu", 3) == 0) { // writing error (3 first characters)
 			town = 10;
-		} else if (strncmp(map_name, "gonryun.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "gonryun", 3) == 0) { // 3 first characters
 			town = 11;
-		} else if (strncmp(map_name, "umbala.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "umbala", 3) == 0) { // 3 first characters
 			town = 12;
-		} else if (strncmp(map_name, "niflheim.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "niflheim", 3) == 0) { // 3 first characters
 			town = 13;
-		} else if (strncmp(map_name, "louyang.gat", 3) == 0) { // 3 first characters
+		} else if (strncmp(map_name, "louyang", 3) == 0) { // 3 first characters
 			town = 14;
-		} else if (strncmp(map_name, "new_zone01.gat", 3) == 0 || // 3 first characters (or "newbies")
-		           strncmp(map_name, "startpoint.gat", 3) == 0 || // name of the position (3 first characters)
-		           strncmp(map_name, "begining.gat", 3) == 0) { // name of the position (3 first characters)
+		} else if (strncmp(map_name, "new_zone01", 3) == 0 || // 3 first characters (or "newbies")
+		           strncmp(map_name, "startpoint", 3) == 0 || // name of the position (3 first characters)
+		           strncmp(map_name, "begining", 3) == 0) { // name of the position (3 first characters)
 			town = 15;
-		} else if (strncmp(map_name, "sec_pri.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "prison.gat", 3) == 0 || // name of the position (3 first characters)
-		           strncmp(map_name, "jails.gat", 3) == 0) { // name of the position
+		} else if (strncmp(map_name, "sec_pri", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "prison", 3) == 0 || // name of the position (3 first characters)
+		           strncmp(map_name, "jails", 3) == 0) { // name of the position
 			town = 16;
-		} else if (strncmp(map_name, "jawaii.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "jawai.gat", 3) == 0) { // writing error (3 first characters)
+		} else if (strncmp(map_name, "jawaii", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "jawai", 3) == 0) { // writing error (3 first characters)
 			town = 17;
-		} else if (strncmp(map_name, "ayothaya.gat", 2) == 0 || // 2 first characters
-		           strncmp(map_name, "ayotaya.gat", 2) == 0) { // writing error (2 first characters)
+		} else if (strncmp(map_name, "ayothaya", 2) == 0 || // 2 first characters
+		           strncmp(map_name, "ayotaya", 2) == 0) { // writing error (2 first characters)
 			town = 18;
-		} else if (strncmp(map_name, "einbroch.gat", 5) == 0 || // 5 first characters
-		           strncmp(map_name, "ainbroch.gat", 5) == 0) { // writing error (5 first characters)
+		} else if (strncmp(map_name, "einbroch", 5) == 0 || // 5 first characters
+		           strncmp(map_name, "ainbroch", 5) == 0) { // writing error (5 first characters)
 			town = 19;
-		} else if (strncmp(map_name, "lighthalzen.gat", 3) == 0 || // 3 first characters
-		           strncmp(map_name, "reichthalzen.gat", 3) == 0) { // 'alternative' name (3 first characters)
+		} else if (strncmp(map_name, "lighthalzen", 3) == 0 || // 3 first characters
+		           strncmp(map_name, "reichthalzen", 3) == 0) { // 'alternative' name (3 first characters)
 			town = 20;
-		} else if (strncmp(map_name, "einbech.gat", 3) == 0) {		// 3 first characters
+		} else if (strncmp(map_name, "einbech", 3) == 0) {		// 3 first characters
 			town = 21;
-		} else if (strncmp(map_name, "hugel.gat", 3) == 0) {		// 3 first characters
+		} else if (strncmp(map_name, "hugel", 3) == 0) {		// 3 first characters
 			town = 22;
-		} else if (strncmp(map_name, "rachel.gat", 3) == 0) {		// 3 first characters
+		} else if (strncmp(map_name, "rachel", 3) == 0) {		// 3 first characters
 			town = 23;
-		} else if (strncmp(map_name, "veins.gat", 3) == 0) {		// 3 first characters
+		} else if (strncmp(map_name, "veins", 3) == 0) {		// 3 first characters
 			town = 24;
 		}
  
@@ -3650,8 +3639,6 @@ void atcommand_killmonster_sub(const int fd, struct map_session_data* sd, const 
 	if (!message || !*message || sscanf(message, "%15s", map_name) < 1)
 		map_id = sd->bl.m;
 	else {
-		if (strstr(map_name, ".gat") == NULL && strstr(map_name, ".afm") == NULL && strlen(map_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(map_name, ".gat");
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -5446,8 +5433,6 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		atcmd_player_name[MAP_NAME_LENGTH] = '\0';
 		m_id =  map_mapindex2mapid(sd->mapindex);
 	} else {
-		if (strstr(atcmd_player_name, ".gat") == NULL && strstr(atcmd_player_name, ".afm") == NULL && strlen(atcmd_player_name) < MAP_NAME_LENGTH-4) // 16 - 4 (.gat)
-			strcat(atcmd_player_name, ".gat");
 		m_id = map_mapname2mapid(atcmd_player_name);
 	}
 	if (m_id < 0) {

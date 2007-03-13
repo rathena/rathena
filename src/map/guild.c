@@ -253,6 +253,9 @@ struct guild_castle *guild_mapname2gc(char *mapname)
 {
 	int i;
 	struct guild_castle *gc=NULL;
+
+	map_normalize_name(mapname);
+
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		gc=guild_castle_search(i);
 		if(!gc) continue;
@@ -261,14 +264,15 @@ struct guild_castle *guild_mapname2gc(char *mapname)
 	return NULL;
 }
 
-struct guild_castle *guild_mapindex2gc(short mapname)
+struct guild_castle *guild_mapindex2gc(short mapindex)
 {
 	int i;
 	struct guild_castle *gc=NULL;
+
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		gc=guild_castle_search(i);
 		if(!gc) continue;
-		if(strcmp(gc->map_name,mapindex_id2name(mapname))==0) return gc;
+		if(strcmp(gc->map_name,mapindex_id2name(mapindex))==0) return gc;
 	}
 	return NULL;
 }

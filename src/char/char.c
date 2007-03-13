@@ -3539,11 +3539,15 @@ int parse_char(int fd) {
 				ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(cd->last_point.map), mapindex_id2name(j));
 				cd->last_point.map = j;
 			}
-			{	//Send player to map
+			{
+				//Send player to map
+				char map_name[MAP_NAME_LENGTH];
+				snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(cd->last_point.map));
+
 				WFIFOHEAD(fd, 28);
 				WFIFOW(fd,0) = 0x71;
 				WFIFOL(fd,2) = cd->char_id;
-				memcpy(WFIFOP(fd,6), mapindex_id2name(cd->last_point.map), MAP_NAME_LENGTH);
+				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH);
 			
 				// Advanced subnet check [LuzZza]
 				if((subnet_map_ip = lan_subnetcheck((long *)p)))
@@ -4170,15 +4174,13 @@ int char_config_read(const char *cfgName) {
 			int x, y;
 			if (sscanf(w2, "%[^,],%d,%d", map, &x, &y) < 3)
 				continue;
-			if (strstr(map, ".gat") != NULL) { // Verify at least if '.gat' is in the map name
-				start_point.map = mapindex_name2id(map);
-				if (!start_point.map) {
-					ShowError("Specified start_point %s not found in map-index cache.\n", map);
-					start_point.map = 0;
-				}
-				start_point.x = x;
-				start_point.y = y;
+			start_point.map = mapindex_name2id(map);
+			if (!start_point.map) {
+				ShowError("Specified start_point %s not found in map-index cache.\n", map);
+				start_point.map = 0;
 			}
+			start_point.x = x;
+			start_point.y = y;
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			log_char = atoi(w2);
 		} else if (strcmpi(w1, "start_zeny") == 0) {
@@ -4318,7 +4320,7 @@ int do_init(int argc, char **argv) {
 	int i;
 
 	mapindex_init(); //Needed here for the start-point reading.
-	start_point.map = mapindex_name2id("new_zone01.gat");
+	start_point.map = mapindex_name2id("new_zone01");
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	char_lan_config_read((argc > 3) ? argv[3] : LOGIN_LAN_CONF_NAME);
 
