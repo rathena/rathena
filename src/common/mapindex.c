@@ -43,7 +43,7 @@ int mapindex_addmap(int index, const char *name)
 	}
 	if ((ext = strstr(map_name, ".")) != NULL) { // Remove extension
 		length = ext-map_name;
-		sprintf(ext, "\0");
+		*ext = '\0';
 	}
 
 	if (indexes[index].length)
