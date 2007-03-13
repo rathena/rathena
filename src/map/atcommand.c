@@ -2922,6 +2922,17 @@ int atcommand_gm(const int fd, struct map_session_data* sd, const char* command,
 	return 0;
 }
 
+static int atcommand_stopattack(struct block_list *bl,va_list ap)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+	int id = va_arg(ap, int);
+	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target))
+	{
+		unit_stop_attack(bl);
+		return 1;
+	}
+	return 0;
+}
 /*==========================================
  *
  *------------------------------------------
@@ -2953,6 +2964,7 @@ int atcommand_pvpoff(const int fd, struct map_session_data* sd, const char* comm
 	map[sd->bl.m].flag.pvp = 0;
 	clif_send0199(sd->bl.m, 0);
 	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
+	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(31)); // PvP: Off.
 	return 0;
 }
@@ -3005,6 +3017,7 @@ int atcommand_gvgoff(const int fd, struct map_session_data* sd, const char* comm
 	if (map[sd->bl.m].flag.gvg) {
 		map[sd->bl.m].flag.gvg = 0;
 		clif_send0199(sd->bl.m, 0);
+		map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 		clif_displaymessage(fd, msg_txt(33)); // GvG: Off.
 	} else {
 		clif_displaymessage(fd, msg_txt(162)); // GvG is already Off.
@@ -6888,10 +6901,11 @@ int atcommand_killer(const int fd, struct map_session_data* sd, const char* comm
 	sd->state.killer = !sd->state.killer;
 
 	if(sd->state.killer)
-	  clif_displaymessage(fd, msg_txt(241));
-	else
-	  clif_displaymessage(fd, msg_txt(287));
-
+		clif_displaymessage(fd, msg_txt(241));
+	else {
+		clif_displaymessage(fd, msg_txt(287));
+		pc_stop_attack(sd);
+	}
 	return 0;
 }
 
@@ -6906,10 +6920,11 @@ int atcommand_killable(const int fd, struct map_session_data* sd, const char* co
 	sd->state.killable = !sd->state.killable;
 
 	if(sd->state.killable)
-	  clif_displaymessage(fd, msg_txt(242));
-	else
-	  clif_displaymessage(fd, msg_txt(288));
-
+		clif_displaymessage(fd, msg_txt(242));
+	else {
+		clif_displaymessage(fd, msg_txt(288));
+		map_foreachinrange(atcommand_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
+	}
 	return 0;
 }
 

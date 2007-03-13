@@ -5805,6 +5805,8 @@ int pc_setoption(struct map_session_data *sd,int type)
 		new_look = sd->vd.class_;
 	}
 	if (new_look) {
+		//Stop attacking on new view change (to prevent wedding/santa attacks.
+		pc_stop_attack(sd);
 		clif_changelook(&sd->bl,LOOK_BASE,new_look);
 		if (sd->vd.cloth_color)
 			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);

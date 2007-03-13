@@ -2121,7 +2121,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				intif_GMmessage(message,strlen(message)+1,0);
 			}
 
-			if(mvp_sd->weight*2 > mvp_sd->max_weight)
+			if((temp = mvp_sd->weight*2 > mvp_sd->max_weight))
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd,second_sd,third_sd,1);
 			else if((temp = pc_additem(mvp_sd,&item,1))) {
 				clif_additem(sd,0,0,temp);
@@ -2130,7 +2130,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			
 			if(log_config.enable_logs&0x200)	{//Logs items, MVP prizes [Lupus]
 				log_pick_mob(md, "M", item.nameid, -1, NULL);
-				log_pick_pc(mvp_sd, "P", item.nameid, 1, NULL);
+				if (!temp)
+					log_pick_pc(mvp_sd, "P", item.nameid, 1, NULL);
 			}
 			break;
 		}

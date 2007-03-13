@@ -4625,15 +4625,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			for(i=0;i<SC_MAX;i++){
 				if (tsc->data[i].timer == -1)
 					continue;
-				if(i==SC_HALLUCINATION || i==SC_WEIGHT50 || i==SC_WEIGHT90
-					|| i==SC_STRIPWEAPON || i==SC_STRIPSHIELD || i==SC_STRIPARMOR || i==SC_STRIPHELM
-					|| i==SC_CP_WEAPON || i==SC_CP_SHIELD || i==SC_CP_ARMOR || i==SC_CP_HELM
-					|| i==SC_COMBO || i==SC_DANCING || i==SC_GUILDAURA || i==SC_EDP
-					|| i==SC_AUTOBERSERK  || i==SC_CARTBOOST || i==SC_MELTDOWN
-					|| i==SC_SAFETYWALL || i==SC_SMA || i==SC_SPEEDUP0
-					|| i==SC_NOCHAT
-					)
+				switch (i) {
+				case SC_WEIGHT50:    case SC_WEIGHT90:    case SC_HALLUCINATION: 
+				case SC_STRIPWEAPON: case SC_STRIPSHIELD: case SC_STRIPARMOR:
+			  	case SC_STRIPHELM:   case SC_CP_WEAPON:   case SC_CP_SHIELD:
+				case SC_CP_ARMOR:    case SC_CP_HELM:     case SC_COMBO:
+				case SC_STRFOOD:     case SC_AGIFOOD:     case SC_VITFOOD:
+				case SC_INTFOOD:     case SC_DEXFOOD:     case SC_LUKFOOD:
+				case SC_HITFOOD:     case SC_FLEEFOOD:    case SC_BATKFOOD:
+				case SC_WATKFOOD:    case SC_MATKFOOD:    case SC_DANCING:
+				case SC_GUILDAURA:   case SC_EDP:         case SC_AUTOBERSERK:
+				case SC_CARTBOOST:   case SC_MELTDOWN:    case SC_SAFETYWALL:
+				case SC_SMA:         case SC_SPEEDUP0:    case SC_NOCHAT:
+				case SC_ANKLE:
 					continue;
+				}
 				if(i==SC_BERSERK) tsc->data[i].val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl,i,-1);
 			}
@@ -4712,10 +4718,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				else
 					hp = 0;
 				
-				if (skilllv > 1 && sp) //Recover some of the SP used
+				if (sp) //Recover some of the SP used
 					sp = sp*(25*(skilllv-1))/100;
-				else
-					sp = 0;
 
 				if(hp || sp)
 					status_heal(src, hp, sp, 2);
