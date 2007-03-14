@@ -525,9 +525,9 @@ void party_send_movemap(struct map_session_data *sd)
 	if(!sd->state.party_sent) {
 		party_check_member(&p->party);
 		if(sd->status.party_id==p->party.party_id){
-			clif_party_member_info(p,sd);
 			clif_party_option(p,sd,0x100);
 			clif_party_info(p,sd);
+			clif_party_member_info(p,sd);
 			sd->state.party_sent=1;
 		}
 	}

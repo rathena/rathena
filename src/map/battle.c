@@ -987,7 +987,7 @@ static struct Damage battle_calc_weapon_attack(
 	if (skill_num == GS_GROUNDDRIFT)
 		s_ele = s_ele_ = wflag; //element comes in flag.
 
-	if (s_ele != ELE_NEUTRAL && (battle_config.attack_attr_none&src->type))
+	if (s_ele == ELE_NEUTRAL && (battle_config.attack_attr_none&src->type))
 		nk|=NK_NO_ELEFIX;
 
 	if(!skill_num)
