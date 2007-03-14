@@ -278,7 +278,7 @@ void initChangeTables(void) {
 	add_sc(NPC_STOP, SC_STOP);
 	set_sc(NPC_BREAKWEAPON, SC_BROKENWEAPON, SI_BROKENWEAPON, SCB_NONE);
 	set_sc(NPC_BREAKARMOR, SC_BROKENARMOR, SI_BROKENARMOR, SCB_NONE);
-	add_sc(NPC_CHANGEUNDEAD, SC_ELEMENTALCHANGE);
+	set_sc(NPC_CHANGEUNDEAD, SC_CHANGEUNDEAD, SI_UNDEAD, SCB_DEF_ELE);
 	set_sc(NPC_POWERUP, SC_INCDEXRATE, SI_BLANK, SCB_DEX);
 	set_sc(NPC_AGIUP, SC_INCFLEERATE, SI_BLANK, SCB_AGI);
 	add_sc(NPC_INVISIBLE, SC_CLOAKING);
@@ -421,7 +421,6 @@ void initChangeTables(void) {
 	//This seems wrong as it sets the same icon to all skills that change your 
 	//element, but alas, all of them are mob-target only with the exception of
 	//NPC_CHANGEUNDEAD, so this should be alright. [Skotlex]
-	StatusIconChangeTable[SC_ELEMENTALCHANGE] = SI_UNDEAD;
 	StatusIconChangeTable[SC_STRFOOD] = SI_FOODSTR;
 	StatusIconChangeTable[SC_AGIFOOD] = SI_FOODAGI;
 	StatusIconChangeTable[SC_VITFOOD] = SI_FOODVIT;
@@ -3871,6 +3870,8 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
 		return ELE_EARTH;
 	if( sc->data[SC_BENEDICTIO].timer!=-1 )
 		return ELE_HOLY;
+	if( sc->data[SC_CHANGEUNDEAD].timer!=-1)
+		return sc->data[SC_CHANGEUNDEAD].val3;
 	if( sc->data[SC_ELEMENTALCHANGE].timer!=-1)
 		return sc->data[SC_ELEMENTALCHANGE].val3;
 	return cap_value(element,0,UCHAR_MAX);
@@ -3885,6 +3886,8 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 	if( sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
 		return 1;
 	if( sc->data[SC_BENEDICTIO].timer!=-1 )
+		return 1;
+	if( sc->data[SC_CHANGEUNDEAD].timer!=-1)
 		return 1;
 	if(sc->data[SC_ELEMENTALCHANGE].timer!=-1)
 		return sc->data[SC_ELEMENTALCHANGE].val4;
@@ -4561,6 +4564,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	case SC_CURSE:
 		//Dark Elementals are inmune to curse.
 		if (status->def_ele == ELE_DARK && !(flag&1))
+			return 0;
+	break;
+	case SC_CHANGEUNDEAD: //Undead/Dark are inmune to it.
+		if ((status->def_ele == ELE_DARK || undead_flag) && !(flag&1))
 			return 0;
 	break;
 	case SC_COMA:

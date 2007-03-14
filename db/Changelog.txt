@@ -19,6 +19,9 @@
 	-----
 
 ========================
+03/15
+	* Increased Shield Chain's range by one. It is now a ranged skill.
+	  [Skotlex]
 03/12
 	* Updated the "AddEffWhenHit" cards [Playtester]
 	- chances got lowered according to Aegis, Freya, cRO and euRO
