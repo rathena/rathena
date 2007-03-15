@@ -4258,10 +4258,38 @@ int clif_skillcastcancel(struct block_list* bl)
 	return 0;
 }
 
-/*==========================================
- * スキル詠唱失敗
- *------------------------------------------
- */
+
+/// only when type==0:
+///  if(skill_id==NV_BASIC)
+///   btype==0 "skill failed" MsgStringTable[159]
+///   btype==1 "no emotions" MsgStringTable[160]
+///   btype==2 "no sit" MsgStringTable[161]
+///   btype==3 "no chat" MsgStringTable[162]
+///   btype==4 "no party" MsgStringTable[163]
+///   btype==5 "no shout" MsgStringTable[164]
+///   btype==6 "no PKing" MsgStringTable[165]
+///   btype==7 "no alligning" MsgStringTable[383]
+///   btype>=8: ignored
+///  if(skill_id==AL_WARP) "not enough skill level" MsgStringTable[214]
+///  if(skill_id==TF_STEAL) "steal failed" MsgStringTable[205]
+///  if(skill_id==TF_POISON) "envenom failed" MsgStringTable[207]
+///  otherwise "skill failed" MsgStringTable[204]
+/// btype irrelevant
+///  type==1 "insufficient SP" MsgStringTable[202]
+///  type==2 "insufficient HP" MsgStringTable[203]
+///  type==3 "insufficient materials" MsgStringTable[808]
+///  type==4 "there is a delay after using a skill" MsgStringTable[219]
+///  type==5 "insufficient zeny" MsgStringTable[233]
+///  type==6 "wrong weapon" MsgStringTable[239]
+///  type==7 "red jemstone needed" MsgStringTable[246]
+///  type==8 "blue jemstone needed" MsgStringTable[247]
+///  type==9 "overweight" MsgStringTable[580]
+///  type==10 "skill failed" MsgStringTable[285]
+///  type>=11 ignored
+///
+/// if(success!=0) doesn't display any of the previous messages
+/// Note: when this packet is received an unknown flag is always set to 0,
+/// suggesting this is an ACK packet for the UseSkill packets and should be sent on success too [FlavioJS]
 int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 {
 	int fd;
@@ -4289,9 +4317,8 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 	WFIFOHEAD(fd,packet_len(0x110));
 	WFIFOW(fd,0) = 0x110;
 	WFIFOW(fd,2) = skill_id;
-	WFIFOW(fd,4) = btype;
-	WFIFOW(fd,6) = 0;
-	WFIFOB(fd,8) = 0;
+	WFIFOL(fd,4) = btype;
+	WFIFOB(fd,8) = 0;// success?
 	WFIFOB(fd,9) = type;
 	WFIFOSET(fd,packet_len(0x110));
 
@@ -5031,7 +5058,7 @@ int clif_send0199(int map,int type)
  * 精錬エフェクトを送信する
  *------------------------------------------
  */
-int clif_refine(int fd,struct map_session_data *sd,int fail,int index,int val)
+void clif_refine(int fd, int fail, int index, int val)
 {
 	WFIFOHEAD(fd,packet_len(0x188));
 	WFIFOW(fd,0)=0x188;
@@ -5039,8 +5066,19 @@ int clif_refine(int fd,struct map_session_data *sd,int fail,int index,int val)
 	WFIFOW(fd,4)=index+2;
 	WFIFOW(fd,6)=val;
 	WFIFOSET(fd,packet_len(0x188));
+}
 
-	return 0;
+/// result=0: "weapon upgrated: %s" MsgStringTable[911] in rgb(0,255,255)
+/// result=1: "weapon upgrated: %s" MsgStringTable[912] in rgb(0,205,205)
+/// result=2: "cannot upgrade %s until you level up the upgrade weapon skill" MsgStringTable[913] in rgb(255,200,200)
+/// result=3: "you lack the item %s to upgrade the weapon" MsgStringTable[914] in rgb(255,200,200)
+void clif_upgrademessage(int fd, int result, int item_id)
+{
+	WFIFOHEAD(fd,packet_len(0x223));
+	WFIFOW(fd,0)=0x223;
+	WFIFOL(fd,2)=result;
+	WFIFOW(fd,6)=item_id;
+	WFIFOSET(fd,packet_len(0x223));
 }
 
 /*==========================================
@@ -7433,10 +7471,10 @@ int clif_wisall(struct map_session_data *sd,int type,int flag)
 
 	return 0;
 }
-/*==========================================
- * サウンドエフェクト
- *------------------------------------------
- */
+
+/// type=0: play the music once
+/// type=1: play the music for the specified amount of time (maybe)
+/// type=2: stop the sound?
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type)
 {
 	int fd;
@@ -7449,7 +7487,7 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const ch
 	WFIFOW(fd,0)=0x1d3;
 	memcpy(WFIFOP(fd,2),name,NAME_LENGTH);
 	WFIFOB(fd,26)=type;
-	WFIFOL(fd,27)=0;
+	WFIFOL(fd,27)=0;// time
 	WFIFOL(fd,31)=bl->id;
 	WFIFOSET(fd,packet_len(0x1d3));
 
@@ -11762,6 +11800,7 @@ int clif_parse(int fd) {
 //	printf("clif_parse: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 	cmd = RFIFOW(fd,0);
+	ShowDebug("Received packet 0x%4X\n", cmd);
 
 	// get packet version before to parse
 	packet_ver = 0;

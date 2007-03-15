@@ -4177,15 +4177,15 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setmobdata,"iii"),
 	BUILDIN_DEF(mobassist,"i*"),
 	BUILDIN_DEF(mobattach,"i*"),
-	BUILDIN_DEF(unitwalk,"i*"),
+	BUILDIN_DEF(unitwalk,"ii?"),
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),
-	BUILDIN_DEF(unitattack,"i*"),
+	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstop,"i"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitdeadsit,"ii"),
-	BUILDIN_DEF(unitskilluseid,"iii*"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskilluseid,"iii?"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iiiii"), // [Celest]
 // <--- [zBuffer] List of mob control commands
 	BUILDIN_DEF(sleep,"i"),
@@ -6469,7 +6469,7 @@ BUILDIN_FUNC(successrefitem)
 		sd->status.inventory[i].refine++;
 		pc_unequipitem(sd,i,2);
 
-		clif_refine(sd->fd,sd,0,i,sd->status.inventory[i].refine);
+		clif_refine(sd->fd,0,i,sd->status.inventory[i].refine);
 		clif_delitem(sd,i,1);
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -6520,7 +6520,7 @@ BUILDIN_FUNC(failedrefitem)
 		sd->status.inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3);
 		// 精錬失敗エフェクトのパケット
-		clif_refine(sd->fd,sd,1,i,sd->status.inventory[i].refine);
+		clif_refine(sd->fd,1,i,sd->status.inventory[i].refine);
 
 		pc_delitem(sd,i,1,0);
 		// 他の人にも失敗を通知
@@ -12743,60 +12743,83 @@ BUILDIN_FUNC(mobattach)
 	return 0;
 }
 
+/// Makes the unit walk to target position or map
+/// Returns if it was successfull
+///
+/// unitwalk(<unit_id>,<x>,<y>) -> <bool>;
+/// unitwalk(<unit_id>,<map_id>) -> <bool>;
 BUILDIN_FUNC(unitwalk)
 {
-	int id,x,y = 0;
-	struct block_list *bl = NULL;
+	struct block_list* bl;
 
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	x = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	if(st->end > st->start+4)
-		y = conv_num(st, & (st->stack->stack_data[st->start+4]));
-
-	bl = map_id2bl(id);
-	if(bl){
-		if(y)
-			push_val(st->stack,C_INT,unit_walktoxy(bl,x,y,0)); // We'll use harder calculations.
-		else
-			push_val(st->stack,C_INT,unit_walktobl(bl,map_id2bl(x),65025,1));
-	} else {
-		push_val(st->stack,C_INT,0);
+	bl = map_id2bl(conv_num(st, script_getdata(st,2)));
+	if( bl == NULL )
+	{
+		script_pushint(st, 0);
+	}
+	else if( script_hasdata(st,4) )
+	{
+		int x = conv_num(st, script_getdata(st,3));
+		int y = conv_num(st, script_getdata(st,4));
+		script_pushint(st, unit_walktoxy(bl,x,y,0));// We'll use harder calculations.
+	}
+	else
+	{
+		int map_id = conv_num(st, script_getdata(st,3));
+		script_pushint(st, unit_walktobl(bl,map_id2bl(map_id),65025,1));
 	}
 
 	return 0;
 }
 
+/// Kills the unit
+///
+/// unitkill <unit_id>;
 BUILDIN_FUNC(unitkill)
 {
-	struct block_list *bl = map_id2bl(conv_num(st, & (st->stack->stack_data[st->start+2])));
-	if(bl)
+	struct block_list* bl = map_id2bl(conv_num(st, script_getdata(st,2)));
+	if( bl != NULL )
 		status_kill(bl);
 
 	return 0;
 }
 
+/// Warps the unit to the target position in the target map
+/// Returns if it was successfull
+///
+/// unitwarp(<unit_id>,"<map name>",<x>,<y>) -> <bool>;
 BUILDIN_FUNC(unitwarp)
 {
-	int id,x,y,m = 0;
-	const char *map;
-	struct block_list *bl = NULL;
+	int unit_id;
+	int map;
+	short x;
+	short y;
+	struct block_list* bl;
 
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	map = conv_str(st, & (st->stack->stack_data[st->start+3]));
-	x = conv_num(st, & (st->stack->stack_data[st->start+4]));
-	y = conv_num(st, & (st->stack->stack_data[st->start+5]));
+	unit_id = conv_num(st, script_getdata(st,2));
+	map = map_mapname2mapid(conv_str(st, script_getdata(st,3)));
+	x = (short)conv_num(st, script_getdata(st,4));
+	y = (short)conv_num(st, script_getdata(st,5));
 
-	bl = map_id2bl(id);
-	m = map_mapname2mapid(map);
-	if(m && bl){
-		push_val(st->stack,C_INT,unit_warp(bl, m, (short)x, (short)y, 0));
-	} else {
-		push_val(st->stack,C_INT,0);
+	bl = map_id2bl(unit_id);
+	if( map != 0 && bl != NULL )
+	{
+		script_pushint(st, unit_warp(bl,map,x,y,0));
+	}
+	else
+	{
+		script_pushint(st, 0);
 	}
 
 	return 0;
 }
 
+/// TODO clean up
+///
+/// unitattack(<unit_id>,"<target name>",<action type>) -> <bool>;
+/// unitattack(<unit_id>,<target_id>,<action type>) -> <bool>;
+/// unitattack(<unit_id>,"<target name>") -> <bool>;
+/// unitattack(<unit_id>,<target_id>) -> <bool>;
 BUILDIN_FUNC(unitattack)
 {
 	int id = 0, actiontype = 0;
@@ -12837,67 +12860,92 @@ BUILDIN_FUNC(unitattack)
 	return 0;
 }
 
+/// Makes the unit stop attacking and moving
+///
+/// unitstop <unit_id>;
 BUILDIN_FUNC(unitstop)
 {
-	int id;
-	struct block_list *bl = NULL;
+	int unit_id;
+	struct block_list* bl;
 
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
+	unit_id = conv_num(st, script_getdata(st,2));
 
-	bl = map_id2bl(id);
-	if(bl){
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+	{
 		unit_stop_attack(bl);
 		unit_stop_walking(bl,0);
-		if(bl->type == BL_MOB)
-			((TBL_MOB *)bl)->target_id = 0;
+		if( bl->type == BL_MOB )
+			((TBL_MOB*)bl)->target_id = 0;
 	}
 
 	return 0;
 }
 
+/// Makes the unit say the message
+///
+/// unittalk <unit_id>,"<message>";
 BUILDIN_FUNC(unittalk)
 {
-	const char *str;
-	int id;
-	char message[255];
+	int unit_id;
+	const char* message;
+	struct block_list* bl;
 
-	struct block_list *bl = NULL;
+	unit_id = conv_num(st, script_getdata(st,2));
+	message = conv_str(st, script_getdata(st,3));
 
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	str=conv_str(st,& (st->stack->stack_data[st->start+3]));
-
-	bl = map_id2bl(id);
-	if(bl) {
-		memcpy(message, status_get_name(bl), NAME_LENGTH);
-		strcat(message," : ");
-		strncat(message,str, 228); //Prevent overflow possibility. [Skotlex]
-		clif_message(bl, message);
-		if(bl->type == BL_PC)
-			clif_displaymessage(((TBL_PC*)bl)->fd, message);
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+	{
+		struct StringBuf* buf = StringBuf_Malloc();
+		StringBuf_Printf(buf, "%s : %s", status_get_name(bl), message);
+		clif_message(bl, StringBuf_Value(buf));
+		if( bl->type == BL_PC )
+			clif_displaymessage(((TBL_PC*)bl)->fd, StringBuf_Value(buf));
+		StringBuf_Free(buf);
 	}
 
 	return 0;
 }
 
+/// Makes the unit do an emotion
+///
+/// unitemote <unit_id>,<emotion>;
+///
+/// @see e_* in const.txt
 BUILDIN_FUNC(unitemote)
 {
-	int id, emo;
-	struct block_list *bl= NULL;
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	emo = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	if((bl = map_id2bl(id)))
-		clif_emotion(bl,emo);
+	int unit_id;
+	int emotion;
+	struct block_list* bl;
+
+	unit_id = conv_num(st, script_getdata(st,2));
+	emotion = conv_num(st, script_getdata(st,3));
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+		clif_emotion(bl, emotion);
+
 	return 0;
 }
 
+/// Makes the unit do an action
+/// TODO actions
+///
+/// unitdeadsit <unit_id>,<action>;
 BUILDIN_FUNC(unitdeadsit)
 {
-	int id, action;
-	struct block_list *bl = NULL;
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	action = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	if((bl = map_id2bl(id))){
-		if(action > -1 && action < 4){
+	int unit_id;
+	int action;
+	struct block_list* bl;
+
+	unit_id = conv_num(st, script_getdata(st,2));
+	action  = conv_num(st, script_getdata(st,3));
+
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+	{
+		if( action > -1 && action < 4 )
+		{
 			unsigned char buf[61] = "";
 			struct view_data *vd = status_get_viewdata(bl);
 			if (vd) vd->dead_sit = action;
@@ -12905,116 +12953,149 @@ BUILDIN_FUNC(unitdeadsit)
 			WBUFL(buf, 2) = bl->id;
 			WBUFB(buf,26) = (unsigned char)action;
 			clif_send(buf, 61, bl, AREA);
-		}else {
-			ShowError("buildin_unitdeadsit: Invalid action.\n");
-			report_src(st);
 		}
-	}else{
-		ShowError("buildin_unitdeadsit: Target is not found.\n");
-		report_src(st);
 	}
+
 	return 0;
 }
 
+/// Makes the unit cast the skill on the target or self if no target is specified
+///
+/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>};
 BUILDIN_FUNC(unitskilluseid)
 {
-	int id,skid,sklv;
-	struct block_list *bl = NULL;
+	int unit_id;
+	int skill_id;
+	int skill_lv;
+	int target_id;
+	struct block_list* bl;
 
-	id = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	skid=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	sklv=conv_num(st,& (st->stack->stack_data[st->start+4]));
+	unit_id  = conv_num(st, script_getdata(st,2));
+	skill_id = conv_num(st, script_getdata(st,3));
+	skill_lv = conv_num(st, script_getdata(st,4));
+	target_id = ( script_hasdata(st,5) ? conv_num(st,script_getdata(st,5)) : unit_id );
 
-	if ((bl = map_id2bl(id)))
-		unit_skilluse_id(bl,(st->end>st->start+5)?conv_num(st,& (st->stack->stack_data[st->start+5])):bl->id,skid,sklv);
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+		unit_skilluse_id(bl, target_id, skill_id, skill_lv);
 
 	return 0;
 }
 
+/// Makes the unit cast the skill on the target position.
+///
+/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>;
 BUILDIN_FUNC(unitskillusepos)
 {
-	int skid,sklv,x,y,id;
-	struct block_list *bl = NULL;
+	int unit_id;
+	int skill_id;
+	int skill_lv;
+	int skill_x;
+	int skill_y;
+	struct block_list* bl;
 
-	id = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	skid=conv_num(st,& (st->stack->stack_data[st->start+3]));
-	sklv=conv_num(st,& (st->stack->stack_data[st->start+4]));
-	x=conv_num(st,& (st->stack->stack_data[st->start+5]));
-	y=conv_num(st,& (st->stack->stack_data[st->start+6]));
+	unit_id  = conv_num(st, script_getdata(st,2));
+	skill_id = conv_num(st, script_getdata(st,3));
+	skill_lv = conv_num(st, script_getdata(st,4));
+	skill_x  = conv_num(st, script_getdata(st,5));
+	skill_y  = conv_num(st, script_getdata(st,6));
 
-	if ((bl=map_id2bl(id)))
-		unit_skilluse_pos(bl,x,y,skid,sklv);
+	bl = map_id2bl(unit_id);
+	if( bl != NULL )
+		unit_skilluse_pos(bl, skill_x, skill_y, skill_id, skill_lv);
 
 	return 0;
 }
 
 // <--- [zBuffer] List of mob control commands
 
-// sleep <mili sec>
+/// Pauses the execution of the script, detaching the player
+///
+/// sleep <mili seconds>;
 BUILDIN_FUNC(sleep)
 {
-	int tick = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	struct map_session_data *sd = map_id2sd(st->rid);
-	if(sd && sd->npc_id == st->oid) {
+	int ticks;
+	TBL_PC* sd;
+	
+	ticks = conv_num(st, script_getdata(st,2));
+	sd = map_id2sd(st->rid);
+
+	// detach the player
+	if( sd && sd->npc_id == st->oid )
+	{
 		sd->npc_id = 0;
 	}
 	st->rid = 0;
-	if(tick <= 0) {
-		// 何もしない
-	} else if( !st->sleep.tick ) {
-		// 初回実行
+
+	if( ticks <= 0 )
+	{// do nothing
+	}
+	else if( st->sleep.tick == 0 )
+	{// sleep for the target amount of time
 		st->state = RERUNLINE;
-		st->sleep.tick = tick;
-	} else {
-		// 続行
+		st->sleep.tick = ticks;
+	}
+	else
+	{// sleep time is over
 		st->sleep.tick = 0;
 	}
 	return 0;
 }
 
-// sleep2 <mili sec>
+/// Pauses the execution of the script, keeping the player attached
+/// Returns if a player is still attached
+///
+/// sleep2(<mili secconds>) -> <bool>
 BUILDIN_FUNC(sleep2)
 {
-	int tick = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	if( tick <= 0 ) {
-		// 0ms の待機時間を指定された
-		push_val(st->stack,C_INT,map_id2sd(st->rid) != NULL);
-	} else if( !st->sleep.tick ) {
-		// 初回実行時
+	int ticks;
+	
+	ticks = conv_num(st, script_getdata(st,2));
+
+	if( ticks <= 0 )
+	{// do nothing
+		script_pushint(st, (map_id2sd(st->rid)!=NULL));
+	}
+	else if( !st->sleep.tick )
+	{// sleep for the target amount of time
 		st->state = RERUNLINE;
-		st->sleep.tick = tick;
-	} else {
-		push_val(st->stack,C_INT,map_id2sd(st->rid) != NULL);
+		st->sleep.tick = ticks;
+	}
+	else
+	{// sleep time is over
 		st->sleep.tick = 0;
+		script_pushint(st, (map_id2sd(st->rid)!=NULL));
 	}
 	return 0;
 }
 
-/*==========================================
- * 指定NPCの全てのsleepを再開する
- *------------------------------------------
- */
+/// Awakes all the sleep timers of the target npc
+///
+/// awake "<npc name>";
 BUILDIN_FUNC(awake)
 {
-	struct npc_data *nd;
+	struct npc_data* nd;
 	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
 
-	nd = npc_name2id(conv_str(st,& (st->stack->stack_data[st->start+2])));
-	if(nd == NULL)
+	nd = npc_name2id(conv_str(st, script_getdata(st,2)));
+	if( nd == NULL )
 		return 0;
 
-	while( node ) {
-		if( (int)node->key == nd->bl.id) {
-			struct script_state *tst    = node->data;
-			struct map_session_data *sd = map_id2sd(tst->rid);
+	while( node )
+	{
+		if( (int)node->key == nd->bl.id )
+		{// sleep timer for the npc
+			struct script_state* tst = (struct script_state*)node->data;
+			TBL_PC* sd = map_id2sd(tst->rid);
 
-			if( tst->sleep.timer == -1 ) {
+			if( tst->sleep.timer == -1 )
+			{// already awake ???
 				node = node->next;
 				continue;
 			}
-			if((sd && sd->status.char_id != tst->sleep.charid) || (tst->rid && !sd))
-			{	//Cancel Execution
-				tst->state=END;
+			if( (sd && sd->status.char_id != tst->sleep.charid) || (tst->rid && !sd))
+			{// char not online anymore / another char of the same account is online - Cancel execution
+				tst->state = END;
 				tst->rid = 0;
 			}
 
@@ -13023,7 +13104,9 @@ BUILDIN_FUNC(awake)
 			tst->sleep.timer = -1;
 			tst->sleep.tick = 0;
 			run_script_main(tst);
-		} else {
+		}
+		else
+		{
 			node = node->next;
 		}
 	}
@@ -13071,7 +13154,7 @@ BUILDIN_FUNC(getvariableofnpc)
 /// Opens a warp portal.
 /// Has no "portal opening" effect/sound, it opens the portal immediately.
 ///
-/// warpportal(<src x>,<src y>,"<target map>",<target x>,<target y>);
+/// warpportal <source x>,<source y>,"<target map>",<target x>,<target y>;
 ///
 /// @author blackhole89
 BUILDIN_FUNC(warpportal)
@@ -13087,7 +13170,7 @@ BUILDIN_FUNC(warpportal)
 	bl = map_id2bl(st->oid);
 	if( bl == NULL )
 	{
-		ShowError("script: warpportal: npc is needed");
+		ShowError("script:warpportal: npc is needed");
 		return 1;
 	}
 

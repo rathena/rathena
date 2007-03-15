@@ -307,7 +307,8 @@ int clif_resurrection(struct block_list *bl,int type);
 int clif_set0199(int fd,int type);
 int clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 int clif_send0199(int map,int type);
-int clif_refine(int fd,struct map_session_data *sd,int fail,int index,int val);
+void clif_refine(int fd, int fail, int index, int val);
+void clif_upgrademessage(int fd, int result, int item_id);
 
 //petsystem
 int clif_catch_process(struct map_session_data *sd);

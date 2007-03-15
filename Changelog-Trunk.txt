@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/16
+	* Corrected the structure and added info on the skill fail packet (0x110).
+	* Added packet 0x223 as clif_upgrademessage (not used yet).
+	* More work on Ticket #41. [FlavioJS]
 2007/03/15
 	* Added SC_CHANGEUNDEAD to differentiate it from the other elemental change
 	  skills. It now fails on Undead/Dark elemental targets.
