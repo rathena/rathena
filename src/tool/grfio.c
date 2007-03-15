@@ -42,6 +42,7 @@
 	#ifndef __FREEBSD__
 		#include <zlib.h>
 	#endif
+	#define strcmpi strcasecmp
 #endif
 
 typedef	unsigned char	BYTE;

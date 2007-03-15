@@ -8,7 +8,8 @@ convert:
 
 mapcache:
 	$(MAKE) -C ../zlib
-	$(CC) -o ../../$@ mapcache.c ../zlib/unz.o
+	$(CC) -c -o grfio.o grfio.c
+	$(CC) -o ../../$@ mapcache.c grfio.o ../zlib/unz.o -lz
 
 clean:
 	rm -rf ../../tools/adduser ../../tools/convert ../../mapcache
