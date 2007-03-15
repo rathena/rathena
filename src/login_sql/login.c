@@ -875,8 +875,7 @@ int mmo_auth( struct mmo_account* account , int fd){
 	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
 	account->login_id2 = rand();
-	memcpy(tmpstr, sql_row[3], 19);
-	memcpy(account->lastlogin, tmpstr, 24);
+	strncpy(account->lastlogin, sql_row[3], 24);
 	account->sex = sql_row[5][0] == 'S' ? 2 : sql_row[5][0]=='M';
 	account->level = atoi(sql_row[10]) > 99 ? 99 : atoi(sql_row[10]); // as was in isGM() [zzo]
 
