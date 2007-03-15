@@ -7471,10 +7471,10 @@ int clif_wisall(struct map_session_data *sd,int type,int flag)
 
 	return 0;
 }
-
-/// type=0: play the music once
-/// type=1: play the music for the specified amount of time (maybe)
-/// type=2: stop the sound?
+/*==========================================
+ * サウンドエフェクト
+ *------------------------------------------
+ */
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type)
 {
 	int fd;
@@ -7487,7 +7487,7 @@ void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const ch
 	WFIFOW(fd,0)=0x1d3;
 	memcpy(WFIFOP(fd,2),name,NAME_LENGTH);
 	WFIFOB(fd,26)=type;
-	WFIFOL(fd,27)=0;// time
+	WFIFOL(fd,27)=0;
 	WFIFOL(fd,31)=bl->id;
 	WFIFOSET(fd,packet_len(0x1d3));
 
@@ -11800,7 +11800,6 @@ int clif_parse(int fd) {
 //	printf("clif_parse: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 	cmd = RFIFOW(fd,0);
-	ShowDebug("Received packet 0x%4X\n", cmd);
 
 	// get packet version before to parse
 	packet_ver = 0;
