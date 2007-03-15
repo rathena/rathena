@@ -10,6 +10,9 @@ CC = gcc -pipe
 MAKE = make
 # MAKE = gmake
 
+# Detecting gcc version
+GCC_VERSION = $(shell $(CC) -v 2>&1 | grep version | cut -d' ' -f3  | cut -d'.' -f1)
+
 OPT = -g
 OPT += -O2
 # OPT += -O3
@@ -23,8 +26,9 @@ OPT += -ffast-math
 # OPT += -fstack-protector
 # OPT += -fomit-frame-pointer
 OPT += -Wall -Wno-sign-compare
-# Uncomment this one if you are using GCC 4.X
-# OPT += -Wno-unused-parameter -Wno-pointer-sign
+ifeq ($(GCC_VERSION), 4)
+	OPT += -Wno-unused-parameter -Wno-pointer-sign
+endif
 # Server Packet Protocol version (also defined in src/common/mmo.h)
 # OPT += -DPACKETVER=8
 # Makes map-wide script variables be saved to SQL instead of TXT files.
