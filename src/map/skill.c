@@ -8970,7 +8970,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 					ep = item->equip;
 					pc_unequipitem(sd,idx,3);
 				}
-				clif_refine(sd->fd,sd,0,idx,item->refine);
+				clif_refine(sd->fd,0,idx,item->refine);
 				clif_delitem(sd,idx,1);
 				clif_additem(sd,idx,1,0);
 				if (ep)
@@ -8996,7 +8996,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				item->refine = 0;
 				if(item->equip)
 					pc_unequipitem(sd,idx,3);
-				clif_refine(sd->fd,sd,1,idx,item->refine);
+				clif_refine(sd->fd,1,idx,item->refine);
 				pc_delitem(sd,idx,1,0);
 				clif_misceffect(&sd->bl,2);
 				clif_emotion(&sd->bl, 23);
